@@ -1,3 +1,8 @@
+2005-02-15  Willie Walker <william.walker@sun.com>
+
+	* Nearly every source file: added much documentation and many
+	  TODO comments.
+
 2005-02-10  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca.py (init): remove call to core.init() as this
