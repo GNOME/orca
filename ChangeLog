@@ -1,5 +1,7 @@
 2005-04-01  Willie Walker <william.walker@sun.com>
 
+	* default-keybindings.ppy, default.py, speech.py: add sayAgain
+	support to repeat last utterance spoken
 	* default.py: more work to be in line with gnopernicus
 	* rolenames.py: import text for speech and Braille from gnopernicus
 	* speech.py: interrupt speech when given something new to say

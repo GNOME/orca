@@ -43,6 +43,9 @@ speakers = {}
 #
 initialized = False
 
+# Last text and voice spoken.
+#
+lastText = None
 
 def createSpeaker (driverName, voiceName):
     """Internal to speech module only.
@@ -248,7 +251,8 @@ def say (voiceName, text):
 
     global initialized
     global speakers
-
+    global lastText
+    
     if not initialized:
         return -1
 
@@ -274,11 +278,20 @@ def say (voiceName, text):
     #debug.printStack ()
     try:
         s.stop ()
+        lastText = [voiceName, text]
         return s.say (text)
     except:
         debug.printException ()
 
 
+def sayAgain ():
+    """Speaks the last text again.
+    """
+
+    if lastText:
+        say (lastText[0], lastText[1])
+
+    
 def stop (voiceName):
     """Stops the specified voice.  This will tell the voice to stop
     all requests in progress and delete all requests waiting to be spoken.

@@ -1162,6 +1162,10 @@ def onBrlKey (region, position):
 #                                                                      #
 ########################################################################
 
+def sayAgain ():
+    speech.sayAgain ()
+
+    
 # sayAllText contains the AccessibleText object of the document
 # currently being read
 #
