@@ -35,29 +35,8 @@ import kbd
 if settings.useBraille:
     import brl
 
-# Default event dispatcher names
-
-import dispatcher
-
 # The EventListener class - Objects of this type are used by script
 # objects to encapsulate the information containined by event listeners
-
-class EventListener:
-    def __init__(self, type, func):
-        self.type = type
-        self.func = func
-
-    # Register the listener with the core module
-
-    def register (self):
-
-        core.registerEventListener (self.func, self.type)
-
-    # deregister the event listener with at-spi
-
-    def deregister (self):
-
-        core.unregisterEventListener (self.func, self.type)
 
 # The script class
 
@@ -65,15 +44,18 @@ class script:
 
     # Script object constructor
 
-    def __init__ (self, appname):
+    def __init__ (self, app):
 
-        self.appname = appname
+        # Store a reference to the app
 
-        # The keybindings script file name takes the form
-        # appname-keybindings.py
+        self.app = app
 
-        self.bindingsname = appname+"-keybindings"
-        self.listeners = []
+        # Make an empty dictionary of event listeners
+
+        self.listeners = {}
+
+        # Setup empty keybindings
+
         self.keybindings = {}
 
     # Loads a script - Loads the app-specific script and keybindings
@@ -86,35 +68,36 @@ class script:
 
         # Load the default script and default keybindings
 
-        default = __import__ ("default")
-        defbindings = __import__ ("default-keybindings")
+        self.default = __import__ ("default")
+        self.default_bindings = __import__ ("default-keybindings")
 
         # Load app-specific script and keybindings
 
         try:
-            mod = __import__ (self.appname)
+            self.mod = __import__ (self.app.name)
         except:
-            mod = None
+            self.mod = None
         try:
-            bindings = __import__ (self.bindingsname)
+            bindingsname = self.app.name + "-keybindings"
+            self.bindings_mod = __import__ (bindingsname)
         except:
-            bindings = None
+            self.bindings_mod = None
 
         # If the app-specific Python module has a function called
         # onBrlKey, this function should be used to handle Braille
         # display callbacks
 
         try:
-            func = getattr (mod, "onBrlKey")
+            func = getattr (self.mod, "onBrlKey")
         except:
             try:
-                func = getattr (default,"onBrlKey")
+                func = getattr (self.default,"onBrlKey")
             except:
                 func = None
         if func:
             self.onBrlKey = func
 
-        # Connect event dispatchers - dispatcher.py defines the names
+        # Connect event dispatchers - a11y.py defines the names
         # of functions that may be in a script for responding to
         # various types of events, and their corresponding at-spi
         # event names.  We iterate through the list of known event
@@ -123,18 +106,21 @@ class script:
         # the default module.  If we find an event handler, we add it
         # to the script.
 
-        for key in dispatcher.event.keys ():
+        for key in a11y.dispatcher.keys ():
             try:
-                func = getattr (mod, key)
+                func = getattr (self.mod, key)
             except:
                 try:
-                    func = getattr (default, key)
+                    func = getattr (self.default, key)
                 except:
                     func = None
+
+            # If we found a function, add it to this script's list of
+            # event listeners
+
             if func:
-                type = dispatcher.event[key]
-                l = EventListener (type, func)
-                self.listeners.append (l)
+                type = a11y.dispatcher[key]
+                self.listeners[type] = func
 
         # Key binding sets are hash tables.  the keys are the string
         # names of key combinations, and the values are the names of
@@ -144,13 +130,13 @@ class script:
         # app-specific keybinding that duplicates a default one
         # overrides it.
 
-        for key in defbindings.keybindings.keys ():
-                funcname = defbindings.keybindings[key]
+        for key in self.default_bindings.keybindings.keys ():
+                funcname = self.default_bindings.keybindings[key]
                 try:
-                    func = getattr (mod, funcname)
+                    func = getattr (self.mod, funcname)
                 except:
                     try:
-                        func = getattr (default, funcname)
+                        func = getattr (self.default, funcname)
                     except:
                         func = None
                 if func:
@@ -159,14 +145,14 @@ class script:
         # Add app-specific keybindings - These override the defaults
         # if there are duplicates.
 
-        if bindings:
-            for key in bindings.keybindings.keys ():
-                funcname = bindings.keybindings[key]
+        if self.bindings_mod:
+            for key in self.bindings_mod.keybindings.keys ():
+                funcname = self.bindings_mod.keybindings[key]
                 try:
-                    func = getattr (mod, funcname)
+                    func = getattr (self.mod, funcname)
                 except:
                     try:
-                        func = getattr (default, funcname)
+                        func = getattr (self.default, funcname)
                     except:
                         func = None
                     if func:
@@ -174,104 +160,24 @@ class script:
 
         return True
 
-    # Activate the script - This function registers all the event
-    # listeners and registers the appropriate keybindings
+    # Reload the modules underlying a script
 
-    def activate (self):
+    def reload (self):
 
-        # Register all the listeners
+        # Reload the default module and keybindings
 
-        for l in self.listeners:
-            l.register ()
+        reload (self.default)
+        reload (self.default_bindings)
 
-        # Activate the keybindings
+        # Try to reload the app-specific module and key bindings
 
-        kbd.keybindings = self.keybindings
+        try:
+            reload (self.mod)
+        except:
+            pass
+        try:
+            reload (self.bindings_mod)
+        except:
+            pass
 
-        # Activate the onBrlKey callback
-
-        if settings.useBraille:
-            brl.registerCallback (self.onBrlKey)
-        
-    # Deactivate the script - This deregisters all event listeners and
-    # keybindings
-
-    def deactivate (self):
-
-        # Deregister all the listeners
-
-        for l in self.listeners:
-            l.deregister ()
-
-        # Deactivate keybindings
-
-        kbd.keybindings = None
-
-        # Deactivate the onBrlKey callback
-
-        if settings.useBraille:
-            brl.unregisterCallback ()
-
-# A dictionary of the currently loaded scripts
-
-scripts = {}
-
-# A reference to the currently active script
-
-active = None
-
-# Function to load a script
-
-def load (name):
-    global scripts
-
-    try:
-        s = scripts[name]
-        return False
-    except:
-        pass
-    s = script (name)
-    s.load ()
-    scripts[name] = s
-    return True
-
-# Function to unload a script
-
-def unload (name):
-    global scripts
-
-    try:
-        del scripts[name]
-        return True
-    except:
-        return False
-
-# Determine whether a script is loaded
-
-def isLoaded (name):
-    global scripts
-
-    try:
-        script = scripts[name]
-        return True
-    except:
-        return False
-
-# Activate a particular script
-
-def activate (name):
-    global scripts
-    global active
-
-    if active:
-        if active.appname != name:
-            active.deactivate ()
-        else:
-            return False
-    try:
-        active = scripts[name]
-        active.activate ()
-        return True
-    except:
-        return False
 
