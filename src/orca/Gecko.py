@@ -194,7 +194,7 @@ def sayAll ():
     sayAllObjectIndex = 0
 
     # Speak the name of the page, then start say all mode.  When the
-    name of the page has finished speaking, say all mode will be
+    # name of the page has finished speaking, say all mode will be
     # active and the first chunk of the page will be read
 
     speech.say ("default", activePage.name)
