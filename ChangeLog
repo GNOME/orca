@@ -1,5 +1,10 @@
 2005-02-15  Willie Walker <william.walker@sun.com>
 
+	* Remove src/orca/dispatcher.py as it was obsoleted by the
+	  dispathcher table in a11y.py.
+
+2005-02-15  Willie Walker <william.walker@sun.com>
+
 	* Nearly every source file: added much documentation and many
 	  TODO comments.
 
