@@ -12,6 +12,7 @@ orca_pathdir=$(pythondir)
 orca_python_PYTHON = \
 	a11y.py \
 	chnames.py \
+	debug.py \
 	default.py \
 	default-keybindings.py \
 	gaim.py \
