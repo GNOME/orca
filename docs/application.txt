@@ -1,0 +1,12 @@
+Application handling in Orca
+=========
+When a new app appears as a child of the desktop, Orca creates an
+object to respond to that app; it puts into that object references to the functions in
+default.py and the keyboard handling code in default-keybindings.py; then
+it looks for a Python script with a name of the form <appname.py>, and loads into the new
+app object references to the functions from that script (overriding the existing ones of the
+same name); and finally it looks for <appname-keybindings.py> and loads into
+the new app object the keybindings from that file (overriding the ones from default-keybindings.py if there are duplicates).
+
+
+

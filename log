@@ -1,0 +1,324 @@
+{ test ! -d orca-0.0.3 || { find orca-0.0.3 -type d ! -perm -200 -exec chmod u+w {} ';' && rm -fr orca-0.0.3; }; }
+mkdir orca-0.0.3
+/bin/sh ./mkinstalldirs orca-0.0.3/src/orca
+mkdir -p -- orca-0.0.3/src/orca
+list='src'; for subdir in $list; do \
+  if test "$subdir" = .; then :; else \
+    test -d orca-0.0.3/$subdir \
+    || mkdir orca-0.0.3/$subdir \
+    || exit 1; \
+    (cd $subdir && \
+      make  \
+        top_distdir="." \
+        distdir=../orca-0.0.3/$subdir \
+        distdir) \
+      || exit 1; \
+  fi; \
+done
+make[1]: Entering directory `/home/marc/orca/src'
+list='brl core orca'; for subdir in $list; do \
+  if test "$subdir" = .; then :; else \
+    test -d ../orca-0.0.3/src/$subdir \
+    || mkdir ../orca-0.0.3/src/$subdir \
+    || exit 1; \
+    (cd $subdir && \
+      make  \
+        top_distdir="." \
+        distdir=../../orca-0.0.3/src/$subdir \
+        distdir) \
+      || exit 1; \
+  fi; \
+done
+make[2]: Entering directory `/home/marc/orca/src/brl'
+make[2]: Leaving directory `/home/marc/orca/src/brl'
+make[2]: Entering directory `/home/marc/orca/src/core'
+make[2]: Leaving directory `/home/marc/orca/src/core'
+make[2]: Entering directory `/home/marc/orca/src/orca'
+make[2]: Leaving directory `/home/marc/orca/src/orca'
+make[1]: Leaving directory `/home/marc/orca/src'
+find orca-0.0.3 -type d ! -perm -777 -exec chmod a+rwx {} \; -o \
+  ! -type d ! -perm -444 -links 1 -exec chmod a+r {} \; -o \
+  ! -type d ! -perm -400 -exec chmod a+r {} \; -o \
+  ! -type d ! -perm -444 -exec /bin/sh /home/marc/orca/install-sh -c -m a+r {} {} \; \
+|| chmod -R a+r orca-0.0.3
+/bin/sh /home/marc/orca/missing --run tar chof - orca-0.0.3 | GZIP=--best gzip -c >orca-0.0.3.tar.gz
+{ test ! -d orca-0.0.3 || { find orca-0.0.3 -type d ! -perm -200 -exec chmod u+w {} ';' && rm -fr orca-0.0.3; }; }
+{ test ! -d orca-0.0.3 || { find orca-0.0.3 -type d ! -perm -200 -exec chmod u+w {} ';' && rm -fr orca-0.0.3; }; }
+GZIP=--best gunzip -c orca-0.0.3.tar.gz | /bin/sh /home/marc/orca/missing --run tar xf -
+chmod -R a-w orca-0.0.3; chmod a+w orca-0.0.3
+mkdir orca-0.0.3/_build
+mkdir orca-0.0.3/_inst
+chmod a-w orca-0.0.3
+dc_install_base=`CDPATH="${ZSH_VERSION+.}:" && cd orca-0.0.3/_inst && pwd | sed -e 's,^[^:\\/]:[\\/],/,'` \
+  && dc_destdir="${TMPDIR-/tmp}/am-dc-$$/" \
+  && cd orca-0.0.3/_build \
+  && ../configure --srcdir=.. --prefix="$dc_install_base" \
+     \
+  && make  \
+  && make  dvi \
+  && make  check \
+  && make  install \
+  && make  installcheck \
+  && make  uninstall \
+  && make  distuninstallcheck_dir="$dc_install_base" \
+        distuninstallcheck \
+  && chmod -R a-w "$dc_install_base" \
+  && ({ \
+       (cd ../.. && /bin/sh ./mkinstalldirs "$dc_destdir") \
+       && make  DESTDIR="$dc_destdir" install \
+       && make  DESTDIR="$dc_destdir" uninstall \
+       && make  DESTDIR="$dc_destdir" \
+            distuninstallcheck_dir="$dc_destdir" distuninstallcheck; \
+      } || { rm -rf "$dc_destdir"; exit 1; }) \
+  && rm -rf "$dc_destdir" \
+  && make  dist-gzip \
+  && rm -f orca-0.0.3.tar.gz \
+  && make  distcleancheck
+checking for a BSD-compatible install... /usr/bin/install -c
+checking whether build environment is sane... yes
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether to enable maintainer-specific portions of Makefiles... no
+checking for gcc... gcc
+checking for C compiler default output file name... a.out
+checking whether the C compiler works... yes
+checking whether we are cross compiling... no
+checking for suffix of executables... 
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether gcc accepts -g... yes
+checking for gcc option to accept ANSI C... none needed
+checking for style of include used by make... GNU
+checking dependency style of gcc... gcc3
+checking for a BSD-compatible install... /usr/bin/install -c
+checking for strerror in -lcposix... no
+checking build system type... i686-redhat-linux-gnu
+checking host system type... i686-redhat-linux-gnu
+checking for a sed that does not truncate output... /bin/sed
+checking for egrep... grep -E
+checking for ld used by gcc... /usr/bin/ld
+checking if the linker (/usr/bin/ld) is GNU ld... yes
+checking for /usr/bin/ld option to reload object files... -r
+checking for BSD-compatible nm... /usr/bin/nm -B
+checking whether ln -s works... yes
+checking how to recognise dependent libraries... pass_all
+checking how to run the C preprocessor... gcc -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking dlfcn.h usability... yes
+checking dlfcn.h presence... yes
+checking for dlfcn.h... yes
+checking for g++... g++
+checking whether we are using the GNU C++ compiler... yes
+checking whether g++ accepts -g... yes
+checking dependency style of g++... gcc3
+checking how to run the C++ preprocessor... g++ -E
+checking for g77... g77
+checking whether we are using the GNU Fortran 77 compiler... yes
+checking whether g77 accepts -g... yes
+checking the maximum length of command line arguments... 32768
+checking command to parse /usr/bin/nm -B output from gcc object... ok
+checking for objdir... .libs
+checking for ar... ar
+checking for ranlib... ranlib
+checking for strip... strip
+checking if gcc static flag  works... yes
+checking if gcc supports -fno-rtti -fno-exceptions... no
+checking for gcc option to produce PIC... -fPIC
+checking if gcc PIC flag -fPIC works... yes
+checking if gcc supports -c -o file.o... yes
+checking whether the gcc linker (/usr/bin/ld) supports shared libraries... yes
+checking whether -lc should be explicitly linked in... no
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether stripping libraries is possible... yes
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... yes
+checking whether to build static libraries... no
+configure: creating libtool
+appending configuration tag "CXX" to libtool
+checking for ld used by g++... /usr/bin/ld
+checking if the linker (/usr/bin/ld) is GNU ld... yes
+checking whether the g++ linker (/usr/bin/ld) supports shared libraries... yes
+checking for g++ option to produce PIC... -fPIC
+checking if g++ PIC flag -fPIC works... yes
+checking if g++ supports -c -o file.o... yes
+checking whether the g++ linker (/usr/bin/ld) supports shared libraries... yes
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether stripping libraries is possible... yes
+appending configuration tag "F77" to libtool
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... yes
+checking whether to build static libraries... no
+checking for g77 option to produce PIC... -fPIC
+checking if g77 PIC flag -fPIC works... yes
+checking if g77 supports -c -o file.o... yes
+checking whether the g77 linker (/usr/bin/ld) supports shared libraries... yes
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether stripping libraries is possible... yes
+checking for pkg-config... /usr/bin/pkg-config
+checking for 	glib-2.0 >= 2.0.0... yes
+checking brl_CFLAGS... -I/opt/gnome-2.6/include/glib-2.0 -I/opt/gnome-2.6/lib/glib-2.0/include  
+checking brl_LIBS... -L/opt/gnome-2.6/lib -lglib-2.0  
+checking for 	libbonobo-2.0 >= 2.0.0... yes
+checking core_CFLAGS... -DORBIT2=1 -I/opt/gnome-2.6/include/libbonobo-2.0 -I/opt/gnome-2.6/include/glib-2.0 -I/opt/gnome-2.6/lib/glib-2.0/include -I/opt/gnome-2.6/include/orbit-2.0 -I/opt/gnome-2.6/include/bonobo-activation-2.0  
+checking core_LIBS... -pthread -Wl,--export-dynamic -L/opt/gnome-2.6/lib -lbonobo-2 -lbonobo-activation -lORBit-2 -lgobject-2.0 -lgthread-2.0 -lm -lgmodule-2.0 -ldl -lglib-2.0  
+../configure: line 19496: pyorbit-2: command not found
+checking for a Python interpreter with version >= 2.0... python
+checking for python... /usr/bin/python
+checking for python version... 2.3
+checking for python platform... linux2
+checking for python script directory... ${prefix}/lib/python2.3/site-packages
+checking for python extension module directory... ${exec_prefix}/lib/python2.3/site-packages
+checking for headers required to compile python extensions... found
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating src/Makefile
+config.status: creating src/brl/Makefile
+config.status: creating src/core/Makefile
+config.status: creating src/orca/Makefile
+config.status: creating src/orca/orca
+config.status: creating src/orca/orca-setup
+config.status: creating config.h
+config.status: executing depfiles commands
+make[1]: Entering directory `/home/marc/orca/orca-0.0.3/_build'
+make  all-recursive
+make[2]: Entering directory `/home/marc/orca/orca-0.0.3/_build'
+Making all in src
+make[3]: Entering directory `/home/marc/orca/orca-0.0.3/_build/src'
+Making all in brl
+make[4]: Entering directory `/home/marc/orca/orca-0.0.3/_build/src/brl'
+if /bin/sh ../../libtool --mode=compile gcc -DHAVE_CONFIG_H -I. -I../../../src/brl -I../..    -I/opt/gnome-2.6/include/glib-2.0 -I/opt/gnome-2.6/lib/glib-2.0/include   -I/usr/include/python2.3 -g -O2 -MT brlmodule_la-brlmodule.lo -MD -MP -MF ".deps/brlmodule_la-brlmodule.Tpo" \
+  -c -o brlmodule_la-brlmodule.lo `test -f 'brlmodule.c' || echo '../../../src/brl/'`brlmodule.c; \
+then mv -f ".deps/brlmodule_la-brlmodule.Tpo" ".deps/brlmodule_la-brlmodule.Plo"; \
+else rm -f ".deps/brlmodule_la-brlmodule.Tpo"; exit 1; \
+fi
+mkdir .libs
+ gcc -DHAVE_CONFIG_H -I. -I../../../src/brl -I../.. -I/opt/gnome-2.6/include/glib-2.0 -I/opt/gnome-2.6/lib/glib-2.0/include -I/usr/include/python2.3 -g -O2 -MT brlmodule_la-brlmodule.lo -MD -MP -MF .deps/brlmodule_la-brlmodule.Tpo -c ../../../src/brl/brlmodule.c  -fPIC -DPIC -o .libs/brlmodule_la-brlmodule.o
+In file included from /usr/include/python2.3/Python.h:8,
+                 from ../../../src/brl/brlmodule.c:26:
+/usr/include/python2.3/pyconfig.h:847:1: warning: "_POSIX_C_SOURCE" redefined
+In file included from /usr/include/string.h:26,
+                 from ../../../src/brl/brlmodule.c:22:
+/usr/include/features.h:171:1: warning: this is the location of the previous definition
+/bin/sh ../../libtool --mode=link gcc  -g -O2   -o brlmodule.la -rpath /home/marc/orca/orca-0.0.3/_inst/lib/python2.3/site-packages/orca -module -avoid-version brlmodule_la-brlmodule.lo -L/opt/gnome-2.6/lib -lglib-2.0   
+gcc -shared  .libs/brlmodule_la-brlmodule.o  -Wl,--rpath -Wl,/opt/gnome-2.6/lib -Wl,--rpath -Wl,/opt/gnome-2.6/lib -L/opt/gnome-2.6/lib /opt/gnome-2.6/lib/libglib-2.0.so  -Wl,-soname -Wl,brlmodule.so -o .libs/brlmodule.so
+creating brlmodule.la
+(cd .libs && rm -f brlmodule.la && ln -s ../brlmodule.la brlmodule.la)
+make[4]: Leaving directory `/home/marc/orca/orca-0.0.3/_build/src/brl'
+Making all in core
+make[4]: Entering directory `/home/marc/orca/orca-0.0.3/_build/src/core'
+make  all-am
+make[5]: Entering directory `/home/marc/orca/orca-0.0.3/_build/src/core'
+if /bin/sh ../../libtool --mode=compile gcc -DHAVE_CONFIG_H -I. -I../../../src/core -I../..    -DORBIT2=1 -I/opt/gnome-2.6/include/libbonobo-2.0 -I/opt/gnome-2.6/include/glib-2.0 -I/opt/gnome-2.6/lib/glib-2.0/include -I/opt/gnome-2.6/include/orbit-2.0 -I/opt/gnome-2.6/include/bonobo-activation-2.0   -I/usr/include/python2.3 -g -O2 -MT coremodule_la-Accessibility-stubs.lo -MD -MP -MF ".deps/coremodule_la-Accessibility-stubs.Tpo" \
+  -c -o coremodule_la-Accessibility-stubs.lo `test -f 'Accessibility-stubs.c' || echo '../../../src/core/'`Accessibility-stubs.c; \
+then mv -f ".deps/coremodule_la-Accessibility-stubs.Tpo" ".deps/coremodule_la-Accessibility-stubs.Plo"; \
+else rm -f ".deps/coremodule_la-Accessibility-stubs.Tpo"; exit 1; \
+fi
+mkdir .libs
+ gcc -DHAVE_CONFIG_H -I. -I../../../src/core -I../.. -DORBIT2=1 -I/opt/gnome-2.6/include/libbonobo-2.0 -I/opt/gnome-2.6/include/glib-2.0 -I/opt/gnome-2.6/lib/glib-2.0/include -I/opt/gnome-2.6/include/orbit-2.0 -I/opt/gnome-2.6/include/bonobo-activation-2.0 -I/usr/include/python2.3 -g -O2 -MT coremodule_la-Accessibility-stubs.lo -MD -MP -MF .deps/coremodule_la-Accessibility-stubs.Tpo -c ../../../src/core/Accessibility-stubs.c  -fPIC -DPIC -o .libs/coremodule_la-Accessibility-stubs.o
+if /bin/sh ../../libtool --mode=compile gcc -DHAVE_CONFIG_H -I. -I../../../src/core -I../..    -DORBIT2=1 -I/opt/gnome-2.6/include/libbonobo-2.0 -I/opt/gnome-2.6/include/glib-2.0 -I/opt/gnome-2.6/lib/glib-2.0/include -I/opt/gnome-2.6/include/orbit-2.0 -I/opt/gnome-2.6/include/bonobo-activation-2.0   -I/usr/include/python2.3 -g -O2 -MT coremodule_la-Accessibility-skels.lo -MD -MP -MF ".deps/coremodule_la-Accessibility-skels.Tpo" \
+  -c -o coremodule_la-Accessibility-skels.lo `test -f 'Accessibility-skels.c' || echo '../../../src/core/'`Accessibility-skels.c; \
+then mv -f ".deps/coremodule_la-Accessibility-skels.Tpo" ".deps/coremodule_la-Accessibility-skels.Plo"; \
+else rm -f ".deps/coremodule_la-Accessibility-skels.Tpo"; exit 1; \
+fi
+ gcc -DHAVE_CONFIG_H -I. -I../../../src/core -I../.. -DORBIT2=1 -I/opt/gnome-2.6/include/libbonobo-2.0 -I/opt/gnome-2.6/include/glib-2.0 -I/opt/gnome-2.6/lib/glib-2.0/include -I/opt/gnome-2.6/include/orbit-2.0 -I/opt/gnome-2.6/include/bonobo-activation-2.0 -I/usr/include/python2.3 -g -O2 -MT coremodule_la-Accessibility-skels.lo -MD -MP -MF .deps/coremodule_la-Accessibility-skels.Tpo -c ../../../src/core/Accessibility-skels.c  -fPIC -DPIC -o .libs/coremodule_la-Accessibility-skels.o
+if /bin/sh ../../libtool --mode=compile gcc -DHAVE_CONFIG_H -I. -I../../../src/core -I../..    -DORBIT2=1 -I/opt/gnome-2.6/include/libbonobo-2.0 -I/opt/gnome-2.6/include/glib-2.0 -I/opt/gnome-2.6/lib/glib-2.0/include -I/opt/gnome-2.6/include/orbit-2.0 -I/opt/gnome-2.6/include/bonobo-activation-2.0   -I/usr/include/python2.3 -g -O2 -MT coremodule_la-Accessibility-common.lo -MD -MP -MF ".deps/coremodule_la-Accessibility-common.Tpo" \
+  -c -o coremodule_la-Accessibility-common.lo `test -f 'Accessibility-common.c' || echo '../../../src/core/'`Accessibility-common.c; \
+then mv -f ".deps/coremodule_la-Accessibility-common.Tpo" ".deps/coremodule_la-Accessibility-common.Plo"; \
+else rm -f ".deps/coremodule_la-Accessibility-common.Tpo"; exit 1; \
+fi
+ gcc -DHAVE_CONFIG_H -I. -I../../../src/core -I../.. -DORBIT2=1 -I/opt/gnome-2.6/include/libbonobo-2.0 -I/opt/gnome-2.6/include/glib-2.0 -I/opt/gnome-2.6/lib/glib-2.0/include -I/opt/gnome-2.6/include/orbit-2.0 -I/opt/gnome-2.6/include/bonobo-activation-2.0 -I/usr/include/python2.3 -g -O2 -MT coremodule_la-Accessibility-common.lo -MD -MP -MF .deps/coremodule_la-Accessibility-common.Tpo -c ../../../src/core/Accessibility-common.c  -fPIC -DPIC -o .libs/coremodule_la-Accessibility-common.o
+if /bin/sh ../../libtool --mode=compile gcc -DHAVE_CONFIG_H -I. -I../../../src/core -I../..    -DORBIT2=1 -I/opt/gnome-2.6/include/libbonobo-2.0 -I/opt/gnome-2.6/include/glib-2.0 -I/opt/gnome-2.6/lib/glib-2.0/include -I/opt/gnome-2.6/include/orbit-2.0 -I/opt/gnome-2.6/include/bonobo-activation-2.0   -I/usr/include/python2.3 -g -O2 -MT coremodule_la-eventlistener.lo -MD -MP -MF ".deps/coremodule_la-eventlistener.Tpo" \
+  -c -o coremodule_la-eventlistener.lo `test -f 'eventlistener.c' || echo '../../../src/core/'`eventlistener.c; \
+then mv -f ".deps/coremodule_la-eventlistener.Tpo" ".deps/coremodule_la-eventlistener.Plo"; \
+else rm -f ".deps/coremodule_la-eventlistener.Tpo"; exit 1; \
+fi
+ gcc -DHAVE_CONFIG_H -I. -I../../../src/core -I../.. -DORBIT2=1 -I/opt/gnome-2.6/include/libbonobo-2.0 -I/opt/gnome-2.6/include/glib-2.0 -I/opt/gnome-2.6/lib/glib-2.0/include -I/opt/gnome-2.6/include/orbit-2.0 -I/opt/gnome-2.6/include/bonobo-activation-2.0 -I/usr/include/python2.3 -g -O2 -MT coremodule_la-eventlistener.lo -MD -MP -MF .deps/coremodule_la-eventlistener.Tpo -c ../../../src/core/eventlistener.c  -fPIC -DPIC -o .libs/coremodule_la-eventlistener.o
+../../../src/core/eventlistener.c:23:27: eventlistener.h: No such file or directory
+../../../src/core/eventlistener.c:24:26: pyaccessible.h: No such file or directory
+../../../src/core/eventlistener.c:25:21: pyevent.h: No such file or directory
+../../../src/core/eventlistener.c:29: error: syntax error before '*' token
+../../../src/core/eventlistener.c:29: warning: data definition has no type or storage class
+../../../src/core/eventlistener.c:33: error: syntax error before "servant"
+../../../src/core/eventlistener.c: In function `event_listener_notify_event':
+../../../src/core/eventlistener.c:37: error: `EventListener' undeclared (first use in this function)
+../../../src/core/eventlistener.c:37: error: (Each undeclared identifier is reported only once
+../../../src/core/eventlistener.c:37: error: for each function it appears in.)
+../../../src/core/eventlistener.c:37: error: `el' undeclared (first use in this function)
+../../../src/core/eventlistener.c:37: error: `servant' undeclared (first use in this function)
+../../../src/core/eventlistener.c:42: error: `e' undeclared (first use in this function)
+../../../src/core/eventlistener.c: At top level:
+../../../src/core/eventlistener.c:46: error: syntax error before '*' token
+../../../src/core/eventlistener.c:47: error: syntax error before '*' token
+../../../src/core/eventlistener.c: In function `event_listener_new':
+../../../src/core/eventlistener.c:51: error: `EventListener' undeclared (first use in this function)
+../../../src/core/eventlistener.c:51: error: `el' undeclared (first use in this function)
+../../../src/core/eventlistener.c:51: error: `EVENT_LISTENER_TYPE' undeclared (first use in this function)
+../../../src/core/eventlistener.c:51: error: `NULL' undeclared (first use in this function)
+../../../src/core/eventlistener.c:52: error: `l' undeclared (first use in this function)
+../../../src/core/eventlistener.c:54: error: `f' undeclared (first use in this function)
+../../../src/core/eventlistener.c:55: error: `queue' undeclared (first use in this function)
+../../../src/core/eventlistener.c: At top level:
+../../../src/core/eventlistener.c:61: error: syntax error before '*' token
+../../../src/core/eventlistener.c: In function `event_listener_dispatch':
+../../../src/core/eventlistener.c:64: error: `PyObject' undeclared (first use in this function)
+../../../src/core/eventlistener.c:64: error: `event' undeclared (first use in this function)
+../../../src/core/eventlistener.c:65: error: `GSList' undeclared (first use in this function)
+../../../src/core/eventlistener.c:65: error: `tmp' undeclared (first use in this function)
+../../../src/core/eventlistener.c:68: error: `el' undeclared (first use in this function)
+../../../src/core/eventlistener.c:70: error: `event_listener_func' undeclared (first use in this function)
+../../../src/core/eventlistener.c:70: error: syntax error before "f"
+../../../src/core/eventlistener.c:71: error: `f' used prior to declaration
+../../../src/core/eventlistener.c:71: error: `e' undeclared (first use in this function)
+../../../src/core/eventlistener.c:78: error: `l' undeclared (first use in this function)
+../../../src/core/eventlistener.c:78: error: syntax error before ')' token
+../../../src/core/eventlistener.c: At top level:
+../../../src/core/eventlistener.c:93: error: syntax error before '*' token
+../../../src/core/eventlistener.c: In function `event_listener_init':
+../../../src/core/eventlistener.c:95: error: `el' undeclared (first use in this function)
+../../../src/core/eventlistener.c:95: error: `NULL' undeclared (first use in this function)
+../../../src/core/eventlistener.c: At top level:
+../../../src/core/eventlistener.c:102: error: syntax error before '*' token
+../../../src/core/eventlistener.c: In function `event_listener_finalize':
+../../../src/core/eventlistener.c:104: error: `GSList' undeclared (first use in this function)
+../../../src/core/eventlistener.c:104: error: `tmp' undeclared (first use in this function)
+../../../src/core/eventlistener.c:105: error: `EventListener' undeclared (first use in this function)
+../../../src/core/eventlistener.c:105: error: `el' undeclared (first use in this function)
+../../../src/core/eventlistener.c:105: error: `object' undeclared (first use in this function)
+../../../src/core/eventlistener.c:108: error: `PyObject' undeclared (first use in this function)
+../../../src/core/eventlistener.c:108: error: syntax error before ')' token
+../../../src/core/eventlistener.c:114: error: request for member `finalize' in something not a structure or union
+../../../src/core/eventlistener.c: At top level:
+../../../src/core/eventlistener.c:118: error: syntax error before '*' token
+../../../src/core/eventlistener.c: In function `event_listener_class_init':
+../../../src/core/eventlistener.c:120: error: `GObjectClass' undeclared (first use in this function)
+../../../src/core/eventlistener.c:120: error: `object_class' undeclared (first use in this function)
+../../../src/core/eventlistener.c:120: error: `klass' undeclared (first use in this function)
+../../../src/core/eventlistener.c:121: error: `POA_Accessibility_EventListener__epv' undeclared (first use in this function)
+../../../src/core/eventlistener.c:121: error: `epv' undeclared (first use in this function)
+../../../src/core/eventlistener.c:122: warning: assignment makes pointer from integer without a cast
+../../../src/core/eventlistener.c: At top level:
+../../../src/core/eventlistener.c:133: error: syntax error before '(' token
+../../../src/core/eventlistener.c:134: error: syntax error before ')' token
+make[5]: *** [coremodule_la-eventlistener.lo] Error 1
+make[5]: Leaving directory `/home/marc/orca/orca-0.0.3/_build/src/core'
+make[4]: *** [all] Error 2
+make[4]: Leaving directory `/home/marc/orca/orca-0.0.3/_build/src/core'
+make[3]: *** [all-recursive] Error 1
+make[3]: Leaving directory `/home/marc/orca/orca-0.0.3/_build/src'
+make[2]: *** [all-recursive] Error 1
+make[2]: Leaving directory `/home/marc/orca/orca-0.0.3/_build'
+make[1]: *** [all] Error 2
+make[1]: Leaving directory `/home/marc/orca/orca-0.0.3/_build'
+make: *** [distcheck] Error 2

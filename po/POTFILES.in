@@ -1,0 +1,9 @@
+# List of source files containing translatable strings.
+# Please keep this file sorted alphabetically.
+src/orca/chnames.py
+src/orca/gaim.py
+src/orca/Gecko.py
+src/orca/orca-setup.in
+src/orca/orca.in
+src/orca/orca.py
+src/orca/rolenames.py

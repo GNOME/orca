@@ -1,0 +1,67 @@
+The Orca Speech System
+
+The Orca speech system is contained in the Python module called
+speech.py.  It uses gnome-speech to produce speech.  It provides the
+following convenience features on top of gnome-speech:
+
+* A list of the currently working gnome-speech drivers on the system
+* Multiple named voices
+* A pluggable say all system
+
+Orca speech setup and shutdown
+==========
+Before using any of the features of the Orca speech system, the speech
+module must be imported and the init function must be called:
+
+import speech
+speech.init ()
+
+The init function returns true if initialization is successful, false
+otherwise.  Initialization could fail if an exception occurs within
+gnome-speech while activating the various drivers.  the init function
+does the following:
+
+* Gets a list of installed gnome-speech drivers from bonobo-activation
+* Attempts to initialize each of them, and adds the successfully
+  initialized drivers to its list of working drivers
+* If a per-user settings.py file is found, the init function creates
+  the voices it defines
+
+The list of working GNOME Speech drivers is available as
+speech.drivers.
+
+Calling the shutdown function frees all the resources used by the
+speech module.
+
+Using the user-defined named voices
+==========
+the per-user settings file defines the various voices that Orca uses.
+These voices can be referred to by name using the say and stop
+functions.  For example:
+
+speech.say ("default", "Hello, this is the default voice.")
+speech.stop ("default") # Makes the default voice shut up
+
+Note that if the specified voice is not found, the voice named
+"default" is used.
+
+The Say All System
+==========
+The Orca speech module has a say all system that can be used to create
+code which reads documents.  The say all system allows the client to
+register two callbacks - one to be called whan another chunk of text
+should be spoken, and a second when say all mode ends (either because
+the user pressed a key, or because no more text is available).
+
+To use say all mode, the client should speak the first chunk of text,
+and then call the startSayAllFunction.  the first parameter is the
+name voice to use, the second is the function to be called when
+another chunk of text is needed, and the third parameter is the
+function to call when say all stops.
+
+The callback function which gets the next chunk to speak, should get
+the next chunk of text and speak it.  This function takes no
+arguments.
+
+The function to be called when say all ends receives the offset in the
+current text chunk where speech stopped.

@@ -1,0 +1,2 @@
+SUBDIRS = docs po src
+

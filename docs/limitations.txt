@@ -1,0 +1,27 @@
+The most significant current architectural limitation has to do with
+the way in which events are sent from at-spi - event listeners receive
+events from all applications in the system.  Currently, only one Orca
+script is active at one time, which means that events for all
+applications are sent to that script.  To fix this, an application
+attribute must be added to the core.Accessible object, so that the
+source of a given event can be easily identified.  We also must remove
+the idea that only one script is active at a time - scripts should be
+activated when they are loaded (which means when the application is
+loaded).  These two changes would at least make it possible for
+app-specific scripts to do the right thing.  An obvious improvement on
+this approach would be to more tightly couple the scripting support
+with the core so that it simply callsthe correct script's event
+handler function.
+
+Another common task required by scripts that needs some more thought
+is uniquely identifying objects within an application.  Scripts under
+Windows take advantage of such facilities as control IDS which
+uniquely identify various controls within a dialog.  Since we have no
+such facility, investigating algorithms for generating keys which
+uniquely and consistantly identify objects would be very useful.
+
+It seems that the minimal caching approaches used in core.Accessible
+improve performance noticeably, especially in Java applications.
+There are many more areas where caching could be beneficial -
+AccessibleText content for example.
+

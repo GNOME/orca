@@ -1,0 +1,102 @@
+AC_INIT(ChangeLog)
+
+ORCA_MAJOR_VERSION=0
+ORCA_MINOR_VERSION=0
+ORCA_MICRO_VERSION=12
+ORCA_VERSION="$ORCA_MAJOR_VERSION.$ORCA_MINOR_VERSION.$ORCA_MICRO_VERSION"
+AM_INIT_AUTOMAKE(orca, $ORCA_VERSION)
+AC_SUBST(ORCA_VERSION)
+
+# libtool versioning
+LT_CURRENT=0
+LT_REVISION=0
+LT_AGE=0
+LT_VERSION_INFO='-version-info ${LT_CURRENT}:${LT_REVISION}:${LT_AGE}'
+AC_SUBST(LT_VERSION_INFO)
+AC_SUBST(LT_RELEASE)
+AC_SUBST(LT_CURRENT)
+AC_SUBST(LT_REVISION)
+AC_SUBST(LT_AGE)
+
+dnl Specify a header configuration file
+AM_CONFIG_HEADER(config.h)
+
+dnl Initialize maintainer mode
+AM_MAINTAINER_MODE
+
+dnl Gettext stuff
+
+GETTEXT_PACKAGE=orca
+AC_SUBST(GETTEXT_PACKAGE)
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [Gettext package])
+ALL_LINGUAS=
+AM_GLIB_GNU_GETTEXT
+
+dnl Checks for programs
+AC_PROG_CC
+AC_PROG_INSTALL
+AC_ISC_POSIX
+
+dnl Initialize libtool
+AM_DISABLE_STATIC
+AM_PROG_LIBTOOL
+
+# Setup brl module build
+
+PKG_CHECK_MODULES(brl, \
+	glib-2.0 >= 2.0.0)
+
+# Find the idl compiler
+
+ORBIT_IDL=`pkg-config --variable=orbit_idl ORBit-2.0`
+AC_SUBST(ORBIT_IDL)
+
+# Find the at-spi IDL
+
+AT_SPI_IDLDIR=`pkg-config --variable=idldir cspi-1.0`
+AC_SUBST(AT_SPI_IDLDIR)
+
+# Find the bonobo IDL
+
+BONOBO_IDLDIR=`pkg-config --variable=idldir libbonobo-2.0`
+
+# Find the bonobo-activation IDL
+
+BONOBO_ACTIVATION_IDLDIR=`pkg-config --variable=idldir bonobo-activation-2.0`
+
+AT_SPI_IDLFLAGS="-I$BONOBO_IDLDIR -I$BONOBO_ACTIVATION_IDLDIR -I$AT_SPI_IDLDIR"
+AC_SUBST(AT_SPI_IDLFLAGS)
+
+# Setup build of core module
+
+PKG_CHECK_MODULES(core, \
+	libbonobo-2.0 >= 2.0.0 pyorbit-2 >= 2.0.0)
+
+# Check for Python
+
+AM_PATH_PYTHON(2.0)
+
+# Find the headers needed to build extensions
+
+AM_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(Could not find Python yeaders needed to build Python extensions)])
+
+# There should be a better way to do this
+
+PYTHON_PKGDIR=$prefix/lib/python$PYTHON_VERSION/site-packages
+AC_SUBST(PYTHON_PKGDIR)
+
+AC_SUBST(orca_LIBS)
+AC_SUBST(orca_CFLAGS)
+
+AC_OUTPUT([ 
+Makefile
+docs/Makefile
+po/Makefile.in
+src/Makefile
+src/brl/Makefile
+src/core/Makefile
+src/orca/Makefile
+src/orca/orca
+src/orca/orca-setup
+src/orca/orca_i18n.py
+])

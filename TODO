@@ -1,0 +1,5 @@
+- Make the kbd module maintain a stack of keypresses, rather than only
+  the last indibidual keypress
+- Add an application member to the core.Accessible object which
+  referes to the application which contains the object
+
