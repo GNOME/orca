@@ -23,6 +23,7 @@ import core
 import settings  # user settings
 import speech
 import brl
+import mag
 import script
 import kbd
 import debug
@@ -256,6 +257,9 @@ def init ():
         else:
             debug.println ("Braille module has NOT been initialized.")
 
+    if getattr (settings, "useMagnifier", False):
+        mag.init ()
+
     # Build list of accessible apps.
     #
     buildAppList ()
@@ -338,6 +342,9 @@ def shutdown ():
         return False
 
     speech.say ("default", _("goodbye."))
+    brl.clear ()
+    brl.addRegion (_("Goodbye."), 8, 0)
+    brl.refresh ()
 
     # Deregister our event listeners
     #
@@ -354,6 +361,8 @@ def shutdown ():
         speech.shutdown ()
     if getattr (settings, "useBraille", False):
         brl.shutdown ();
+    if getattr (settings, "useMagnifier", False):
+        mag.shutdown ();
 
     core.bonobo.main_quit ()
 

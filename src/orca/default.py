@@ -31,6 +31,7 @@ import settings                   # user settings
 import kbd
 import speech
 import brl
+import mag
 from orca_i18n import _           # for gettext support
 import debug
 
@@ -710,6 +711,10 @@ def onFocus (event):
     
     global presenters
 
+    # Magnify the object.  [[[TODO: WDW - this is a hack for now.]]]
+    #
+    mag.magnifyAccessible (event.source)
+    
     if presenters.has_key (event.source.role):
         p = presenters[event.source.role]
         try:
@@ -798,6 +803,10 @@ def onCaretMoved (event):
     Arguments:
     - event: the Event
     """
+
+    # Magnify the object.  [[[TODO: WDW - this is a hack for now.]]]
+    #
+    mag.magnifyAccessible (event.source)
 
     # Update the Braille display
     #
