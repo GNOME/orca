@@ -1,3 +1,48 @@
+2004-06-25    <marc.mulcahy@sun.com>
+
+	* NEWS: UPdated.
+
+	* configure.in: UPdated version to 0.1.0.
+
+	* src/orca/gaim.py: Updated to new accessible wrappers and script
+	model.
+
+	* src/orca/Makefile.am (orca_python_PYTHON): Added gnome-terminal
+	and metacity scripts.
+
+	* src/orca/script.py: Changed the way scripts work.  All scripts
+	are loaded at once -- script activation was changed to include
+	activating keybinding sets and brlKey handlers.
+
+	* src/orca/rolenames.py (getRoleName): Use new accessible wrapper.
+
+	* src/orca/orca.py (init): Register event listeners for tracking
+	window activation/deactivation for activating/deactivating
+	scripts.
+	(processEvent): Changed event processing to filter all at-spi
+	events through one function which decides which script should
+	receive each event.
+
+	* src/orca/default.py: UPdated to use new accesible wrappers.
+
+	* src/orca/a11y.py: Added an accessible wrapper in pythohn. MOved
+	all the listeners which update the object caches to a11y.py.
+
+	* src/core/eventlistener.c: Don't include pyaccessible.h.
+
+	* src/core/pyevent.c: The pyevent no longer includes a
+	pyaccessible as the source -- it includes a pycorba_object.
+	(pyevent_dealloc): Free the any_data.
+	(pyevent_get_source): The source is now a pycora_object rather
+	than a pyaccessible.
+
+	* src/core/coremodule.c: Removed pyaccessible stuff including all
+	the event handlers which refresh the cache.
+
+	* Removed src/core/pyaccessible.c and src/core/pyaccessible.h --
+	the accessible wrappers are now written in PYthon in
+	src/orca/a11y.py.
+
 2004-06-10  Marc Mulcahy  <marc.mulcahy@sun.com>
 
 	* src/orca/Makefile.am (orca_python_PYTHON): Add a default
