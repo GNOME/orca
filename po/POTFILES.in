@@ -4,6 +4,7 @@ src/orca/Gecko.py
 src/orca/chnames.py
 src/orca/default.py
 src/orca/gaim.py
+src/orca/metacity.py
 src/orca/orca-setup.in
 src/orca/orca.in
 src/orca/orca.py

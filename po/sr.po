@@ -1,0 +1,254 @@
+# Serbian translation of orca
+# Courtesy of Prevod.org team (http://prevod.org/) -- 2003, 2004.
+#
+# This file is distributed under the same license as the orca package.
+#
+# Maintainer: Данило Шеган <dsegan@gmx.net>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: orca\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-10-16 09:38+0200\n"
+"PO-Revision-Date: 2004-10-16 09:45+0200\n"
+"Last-Translator: Данило Шеган <danilo@prevod.org>\n"
+"Language-Team: Serbian (sr) <gnom@prevod.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3;    plural=n%10==1 && n%100!=11 ? 0 :    n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#: src/orca/Gecko.py:180
+msgid "No page to read."
+msgstr "Нема странице за читање."
+
+#: src/orca/Gecko.py:188
+msgid "Reading web page failed."
+msgstr "Неуспешно читање веб странице."
+
+#: src/orca/chnames.py:27
+msgid "space"
+msgstr "размак"
+
+#: src/orca/chnames.py:28
+msgid "bang"
+msgstr "узвичник"
+
+#: src/orca/chnames.py:29
+msgid "quote"
+msgstr "наводник"
+
+#: src/orca/chnames.py:30
+msgid "number"
+msgstr "број"
+
+#: src/orca/chnames.py:31
+msgid "dollar"
+msgstr "долар"
+
+#: src/orca/chnames.py:32
+msgid "percent"
+msgstr "проценат"
+
+#: src/orca/chnames.py:33
+msgid "and"
+msgstr "амперсанд"
+
+#: src/orca/chnames.py:34
+msgid "tick"
+msgstr "једноструки наводник"
+
+#: src/orca/chnames.py:35
+msgid "left"
+msgstr "лево"
+
+#: src/orca/chnames.py:36
+msgid "right"
+msgstr "десно"
+
+#: src/orca/chnames.py:37
+msgid "star"
+msgstr "звездица"
+
+#: src/orca/chnames.py:38
+msgid "plus"
+msgstr "плус"
+
+#: src/orca/chnames.py:39
+msgid "comma"
+msgstr "запета"
+
+#: src/orca/chnames.py:40
+msgid "dash"
+msgstr "црта"
+
+#: src/orca/chnames.py:41
+msgid "dot"
+msgstr "тачка"
+
+#: src/orca/chnames.py:42
+msgid "slash"
+msgstr "коса црта"
+
+#: src/orca/chnames.py:43
+msgid "question"
+msgstr "упитник"
+
+# bug: colon?
+#: src/orca/chnames.py:44
+msgid "collun"
+msgstr "двотачка"
+
+#: src/orca/chnames.py:45
+msgid "semi"
+msgstr "тачка-запета"
+
+#: src/orca/chnames.py:46
+msgid "less"
+msgstr "мање"
+
+#: src/orca/chnames.py:47
+msgid "greater"
+msgstr "веће"
+
+#: src/orca/chnames.py:48
+msgid "left bracket"
+msgstr "лева угласта"
+
+#: src/orca/chnames.py:49
+msgid "right bracket"
+msgstr "десна угласта"
+
+#: src/orca/chnames.py:50
+msgid "left brace"
+msgstr "лева витичаста"
+
+#: src/orca/chnames.py:51
+msgid "right brace"
+msgstr "десна витичаста"
+
+#: src/orca/chnames.py:52
+msgid "back"
+msgstr "обрнута коса црта"
+
+#: src/orca/chnames.py:53
+msgid "bar"
+msgstr "усправна линија"
+
+#: src/orca/default.py:834
+msgid "Not a document."
+msgstr "Није документ."
+
+#: src/orca/gaim.py:55
+msgid " chat"
+msgstr " ћаскање"
+
+#: src/orca/gaim.py:81
+msgid " instant message"
+msgstr " брза порука"
+
+#: src/orca/gaim.py:137
+msgid "Input"
+msgstr "Улаз"
+
+#: src/orca/gaim.py:139
+msgid "Message Log"
+msgstr "Дневник порука"
+
+#: src/orca/metacity.py:40
+msgid "inaccessible"
+msgstr "недоступно"
+
+#: src/orca/orca-setup.in:34
+msgid "Creating .orca directory."
+msgstr "Правим .orca директоријум."
+
+#: src/orca/orca-setup.in:61
+#, c-format
+msgid "Select %s voice: "
+msgstr "Изаберите %s глас: "
+
+#: src/orca/orca-setup.in:65 src/orca/orca-setup.in:107
+#, c-format
+msgid "%d. %s"
+msgstr "%d. %s"
+
+#: src/orca/orca-setup.in:68
+msgid "Enter choice."
+msgstr "Унесите избор."
+
+#: src/orca/orca-setup.in:69 src/orca/orca-setup.in:109
+msgid "Enter choice: "
+msgstr "Унесите избор:"
+
+# ево и гонича ;)
+#: src/orca/orca-setup.in:91
+msgid "No working GNOME Speech drivers found."
+msgstr "Нису нађени исправни гоничи Гномовог говора."
+
+#: src/orca/orca-setup.in:94
+msgid "Select default synthesizer:"
+msgstr "Изаберите подразумевани синтетизатор:"
+
+#: src/orca/orca-setup.in:104
+msgid "Welcome to Orca setup."
+msgstr "Добродошли у подешавање Орке."
+
+#: src/orca/orca-setup.in:105
+msgid "Select default speech synthesizer"
+msgstr "Изаберите подразумевани синтетизатор говора"
+
+#: src/orca/orca-setup.in:112
+msgid "Speech will not be used.\n"
+msgstr "Говор се неће користити.\n"
+
+#: src/orca/orca-setup.in:134
+msgid "Create another voice? enter y or n."
+msgstr "Направити још један глас? унесите y (да) или n (не)"
+
+#: src/orca/orca-setup.in:143
+msgid "Enter voice name: "
+msgstr "Унесите име гласа:"
+
+#: src/orca/orca-setup.in:151
+msgid "Use key echo, enter y or n: "
+msgstr "Изговарати тастере, унесите y (да) или n (не):"
+
+#: src/orca/orca-setup.in:174
+msgid "Braille support appears to work, use it?  Enter y or n. "
+msgstr "Брајова подршка изгледа да ради, користити је? Унесите y (да) или n (не):"
+
+#: src/orca/orca.py:117
+msgid "User logged out - shutting down."
+msgstr "Корисник је одјављен — завршавам."
+
+#. We couldn't initialize the core-- this proably means that we
+#. couldn't activate the accessibility registry
+#: src/orca/orca.py:222
+msgid "The Orca core could not be initialized."
+msgstr "Језгро Орке се не може покренути."
+
+#: src/orca/orca.py:285
+msgid "Welcome to Orca."
+msgstr "Добродошли у Орку."
+
+#: src/orca/orca.py:332
+msgid "goodbye."
+msgstr "збогом."
+
+#: src/orca/rolenames.py:28
+msgid "button"
+msgstr "дугме"
+
+#: src/orca/rolenames.py:29
+msgid "list view"
+msgstr "приказ списка"
+
+#: src/orca/rolenames.py:30 src/orca/rolenames.py:31
+msgid "tree view"
+msgstr "приказ стабла"
+
+#: src/orca/rolenames.py:33
+msgid "tab"
+msgstr "таб"
+

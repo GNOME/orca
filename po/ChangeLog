@@ -1,3 +1,9 @@
+2004-10-16  Danilo Šegan  <dsegan@gmx.net>
+
+	* sr.po, sr@Latn.po: Added Serbian translation.
+
+	* POTFILES.in: Added src/orca/metacity.py.
+
 2004-09-09  Ankit Patel <ankit@redhat.com>
 
 	* gu.po: Added Gujarati Translation.
