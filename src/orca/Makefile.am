@@ -23,6 +23,7 @@ orca_python_PYTHON = \
 	orca_i18n.py \
 	rolenames.py \
 	script.py \
+	settings.py \
 	speech.py
 
 orca_pythondir=$(pythondir)/orca
