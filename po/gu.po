@@ -196,7 +196,7 @@ msgid "Speech will not be used.\n"
 msgstr "બોલી વપરાશે નહિં.\n"
 
 #: src/orca/orca-setup.in:134
-msgid "Create another voice? enter y or n."
+msgid "Create another voice?  Enter y or n: "
 msgstr "બીજો અવાજ બનાવવો છે? હ અથવા ન દાખલ કરો."
 
 #: src/orca/orca-setup.in:143
@@ -204,7 +204,7 @@ msgid "Enter voice name: "
 msgstr "અવાજ નામ દાખલ કરો: "
 
 #: src/orca/orca-setup.in:151
-msgid "Use key echo, enter y or n: "
+msgid "Use key echo?  Enter y or n: "
 msgstr "કી ઈકો વાપરો, હ અથવા ન દાખલ કરો: "
 
 #: src/orca/orca-setup.in:174

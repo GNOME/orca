@@ -203,16 +203,16 @@ msgid "Speech will not be used.\n"
 msgstr "Govor se neće koristiti.\n"
 
 #: src/orca/orca-setup.in:134
-msgid "Create another voice? enter y or n."
-msgstr "Napraviti još jedan glas? unesite y (da) ili n (ne)"
+msgid "Create another voice?  Enter y or n: "
+msgstr "Napraviti još jedan glas?  Unesite y (da) ili n (ne): "
 
 #: src/orca/orca-setup.in:143
 msgid "Enter voice name: "
 msgstr "Unesite ime glasa:"
 
 #: src/orca/orca-setup.in:151
-msgid "Use key echo, enter y or n: "
-msgstr "Izgovarati tastere, unesite y (da) ili n (ne):"
+msgid "Use key echo?  Enter y or n: "
+msgstr "Izgovarati tastere?  Unesite y (da) ili n (ne): "
 
 #: src/orca/orca-setup.in:174
 msgid "Braille support appears to work, use it?  Enter y or n. "

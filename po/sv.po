@@ -199,16 +199,16 @@ msgid "Speech will not be used.\n"
 msgstr "Tal kommer inte att användas.\n"
 
 #: src/orca/orca-setup.in:139
-msgid "Create another voice? enter y or n."
-msgstr "Skapa ytterligare en röst? ange y (ja) eller n (nej)."
+msgid "Create another voice?  Enter y or n: "
+msgstr "Skapa ytterligare en röst?  Ange y (ja) eller n (nej): "
 
 #: src/orca/orca-setup.in:148
 msgid "Enter voice name: "
 msgstr "Ange röstnamn: "
 
 #: src/orca/orca-setup.in:156
-msgid "Use key echo, enter y or n: "
-msgstr "Använd tangentekning, ange y (ja) eller n (nej): "
+msgid "Use key echo?  Enter y or n: "
+msgstr "Använd tangentekning?  Ange y (ja) eller n (nej): "
 
 #: src/orca/orca-setup.in:179
 msgid "Braille support appears to work, use it?  Enter y or n. "

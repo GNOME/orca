@@ -200,16 +200,16 @@ msgid "Speech will not be used.\n"
 msgstr "Řeč se nebude používat.\n"
 
 #: src/orca/orca-setup.in:134
-msgid "Create another voice? enter y or n."
-msgstr "Vytvořit další hlas? zadejte y nebo n."
+msgid "Create another voice?  Enter y or n: "
+msgstr "Vytvořit další hlas?  Zadejte y nebo n: "
 
 #: src/orca/orca-setup.in:143
 msgid "Enter voice name: "
 msgstr "Zadejte název hlasu: "
 
 #: src/orca/orca-setup.in:151
-msgid "Use key echo, enter y or n: "
-msgstr "Používat ozvěnu kláves, zadejte y nebo n: "
+msgid "Use key echo?  Enter y or n: "
+msgstr "Používat ozvěnu kláves?  Zadejte y nebo n: "
 
 #: src/orca/orca-setup.in:174
 msgid "Braille support appears to work, use it?  Enter y or n. "

@@ -194,7 +194,7 @@ msgid "Speech will not be used.\n"
 msgstr "语音将不会被使用。\n"
 
 #: src/orca/orca-setup.in:139
-msgid "Create another voice? enter y or n."
+msgid "Create another voice?  Enter y or n: "
 msgstr "创建另一个声音？输入 y 或 n 。"
 
 #: src/orca/orca-setup.in:148
@@ -202,7 +202,7 @@ msgid "Enter voice name: "
 msgstr "输入声音名称："
 
 #: src/orca/orca-setup.in:156
-msgid "Use key echo, enter y or n: "
+msgid "Use key echo?  Enter y or n: "
 msgstr "使用键会显，输入 y 或 n ："
 
 #: src/orca/orca-setup.in:179

@@ -199,16 +199,16 @@ msgid "Speech will not be used.\n"
 msgstr "Spraak zal niet worden gebruikt.\n"
 
 #: src/orca/orca-setup.in:134
-msgid "Create another voice? enter y or n."
-msgstr "Een andere stem aanmaken? geef j of n."
+msgid "Create another voice?  Enter y or n: "
+msgstr "Een andere stem aanmaken?  Geef j of n: "
 
 #: src/orca/orca-setup.in:143
 msgid "Enter voice name: "
 msgstr "Geef stemnaam: "
 
 #: src/orca/orca-setup.in:151
-msgid "Use key echo, enter y or n: "
-msgstr "Toets echo gebruiken, geef j of n: "
+msgid "Use key echo?  Enter y or n: "
+msgstr "Toets echo gebruiken?  Geef j of n: "
 
 #: src/orca/orca-setup.in:174
 msgid "Braille support appears to work, use it?  Enter y or n. "

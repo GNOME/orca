@@ -568,16 +568,16 @@ msgid "Speech will not be used.\n"
 msgstr "Sprachausgabe wird nicht benutzt.\n"
 
 #: src/orca/orca-setup.in:134
-msgid "Create another voice? enter y or n."
+msgid "Create another voice?  Enter y or n: "
 msgstr ""
-"Eine andere Stimme erstellen? Geben Sie »y« für Ja oder »n« für Nein ein."
+"Eine andere Stimme erstellen?  Geben Sie »y« für Ja oder »n« für Nein ein."
 
 #: src/orca/orca-setup.in:143
 msgid "Enter voice name: "
 msgstr "Stimmenbezeichnung eingeben:"
 
 #: src/orca/orca-setup.in:151
-msgid "Use key echo, enter y or n: "
+msgid "Use key echo?  Enter y or n: "
 msgstr ""
 "Soll die Tastaturglocke benutzt werden? Geben Sie »y« für Ja oder »n« für "
 "Nein ein."

@@ -200,7 +200,7 @@ msgid "Speech will not be used.\n"
 msgstr "ਧੁਨੀ ਨਹੀਂ ਵਰਤੀ ਜਾਵੇਗੀ।\n"
 
 #: src/orca/orca-setup.in:134
-msgid "Create another voice? enter y or n."
+msgid "Create another voice?  Enter y or n: "
 msgstr "ਹੋਰ ਧੁਨੀ ਬਣਾਉਣੀ ਹੈ? y ਜਾਂ n ਦਿਓ।"
 
 #: src/orca/orca-setup.in:143
@@ -208,7 +208,7 @@ msgid "Enter voice name: "
 msgstr "ਧੁਨੀ ਨਾਂ ਦਿਓ: "
 
 #: src/orca/orca-setup.in:151
-msgid "Use key echo, enter y or n: "
+msgid "Use key echo?  Enter y or n: "
 msgstr "ਸਵਿੱਚ ਧੁਨੀ ਵਰਤੋਂ, y ਜਾਂ n ਭਰੋ: "
 
 #: src/orca/orca-setup.in:174

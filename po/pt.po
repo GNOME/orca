@@ -560,16 +560,16 @@ msgid "Speech will not be used.\n"
 msgstr "A locução não será utilizada.\n"
 
 #: src/orca/orca-setup.in:139
-msgid "Create another voice? enter y or n."
-msgstr "Criar outra voz? introduza y (sim) ou n (não)."
+msgid "Create another voice?  Enter y or n: "
+msgstr "Criar outra voz?  Introduza y (sim) ou n (não): "
 
 #: src/orca/orca-setup.in:148
 msgid "Enter voice name: "
 msgstr "Introduza o nome da voz: "
 
 #: src/orca/orca-setup.in:156
-msgid "Use key echo, enter y or n: "
-msgstr "Utilizar eco de tecla, introduza y (sim) ou n (não): "
+msgid "Use key echo?  Enter y or n: "
+msgstr "Utilizar eco de tecla?  Introduza y (sim) ou n (não): "
 
 #: src/orca/orca-setup.in:179
 msgid "Braille support appears to work, use it?  Enter y or n. "
