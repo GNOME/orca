@@ -419,37 +419,37 @@ brl_module_init (PyObject *self)
 
 	brlapi_library = dlopen ("libbrlapi.so", RTLD_LAZY);
 	if (!brlapi_library)
-		return NULL;
+		return PyInt_FromLong (0);
 
 	/* Load the functions */
 
 	brlapi_initializeConnection = dlsym (brlapi_library, "brlapi_initializeConnection");
 	if (!brlapi_initializeConnection)
-		return NULL;
+		return PyInt_FromLong (0);
 	brlapi_closeConnection = dlsym (brlapi_library, "brlapi_closeConnection");
 	if (!brlapi_closeConnection)
-		return NULL;
+		return PyInt_FromLong (0);
 	brlapi_getDriverId = dlsym (brlapi_library, "brlapi_getDriverId");
 	if (!brlapi_getDriverId)
-		return NULL;
+		return PyInt_FromLong (0);
 	brlapi_getDriverName = dlsym (brlapi_library, "brlapi_getDriverName");
 	if (!brlapi_getDriverName)
-		return NULL;
+		return PyInt_FromLong (0);
 	brlapi_getDisplaySize = dlsym (brlapi_library, "brlapi_getDisplaySize");
 	if (!brlapi_getDisplaySize)
-		return NULL;
+		return PyInt_FromLong (0);
 	brlapi_getTty = dlsym (brlapi_library, "brlapi_getTty");
 	if (!brlapi_getTty)
-		return NULL;
+		return PyInt_FromLong (0);
 	brlapi_leaveTty = dlsym (brlapi_library, "brlapi_leaveTty");
 	if (!brlapi_leaveTty)
-		return NULL;
+		return PyInt_FromLong (0);
 	brlapi_writeBrl = dlsym (brlapi_library, "brlapi_writeBrl");
 	if (!brlapi_writeBrl)
-		return NULL;
+		return PyInt_FromLong (0);
 	brlapi_readCommand = dlsym (brlapi_library, "brlapi_readCommand");
 	if (!brlapi_readCommand)
-		return NULL;
+		return PyInt_FromLong (0);
 
 	/* Connect to brltty */
 
