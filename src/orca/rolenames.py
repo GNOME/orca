@@ -34,7 +34,7 @@ rolenames["page tab"] = _("tab")
 
 
 def getRoleName (obj):
-    name = obj.getRoleName ()
+    name = obj.role
     try:
         return rolenames[name]
     except:
