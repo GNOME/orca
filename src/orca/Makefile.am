@@ -14,7 +14,6 @@ orca_python_PYTHON = \
 	chnames.py \
 	default.py \
 	default-keybindings.py \
-	dispatcher.py \
 	gaim.py \
 	gcalctool.py \
 	Gecko.py \
