@@ -1,0 +1,42 @@
+Summary: Orca -- scripting test bed for screen reading
+Name: orca
+Version: @VERSION@
+Release: 1
+License: LGPL
+Group: Desktop/Accessibility
+URL: http://www.gnome.org/
+Source0: orca-%{version}.tar.gz
+BuildRoot: %{_tmppath}/orca-%{version}-%{release}-buildroot
+BuildRequires:	gnome-common >= 2.7.0
+Requires:	at-spi >= 1.4.0
+Requires:	gnome-speech >= 0.3.4
+Requires:	python >= 2.3
+Requires:	pyorbit
+Requires:	pygtk2
+Requires:	gnome-python2
+
+%description
+scripting test bed for screen reading
+
+%prep
+%setup -q
+
+%build
+%configure
+make
+
+%install
+rm -rf $RPM_BUILD_ROOT
+%makeinstall
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%files
+%defattr(-,root,root,-)
+%doc
+%{_bindir}/orca-setup
+%{_bindir}/orca
+%{_libdir}/python?.?/site-packages/orca
+%{_libdir}/python?.?/site-packages/orca.pth
+%{_datadir}/locale/*/*
