@@ -52,3 +52,11 @@ sservices include:
 	  display, and scrolling management
 	* Convenience functions for finding the labels of objects,
 	  getting all the objects within a given object, etc.
+
+Initial Setup
+==========
+Before running orca, you should run orca-setup.  Orca-setup creates a
+.orca directory in your home directry.  This directory stores your
+user settings, as well as any scripts which you use that are not part
+of the default Orca installation.
+
