@@ -20,6 +20,7 @@ orca_python_PYTHON = \
 	Gecko.py \
 	gnome-terminal.py \
 	kbd.py \
+	mag.py \
 	metacity.py \
 	orca.py \
 	orca_i18n.py \
