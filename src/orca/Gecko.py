@@ -64,7 +64,7 @@ def presentNextHypertext ():
             # If it's an image, read the image's name using the image voice
 
             text = obj.name
-            if obj.getRoleName () == "image":
+            if obj.role == "image":
 
                 # If we're getting the file name of the image, don't read it
 
@@ -206,17 +206,20 @@ def sayAll ():
 def onFocus (event):
     global activePage
 
+    
+    if event.source.role != "panel":
+        return default.onFocus (event)
+    
     # If it's not a panel, do the default
 
-    if event.source.getRoleName () != "panel":
-        default.onFocus (event)
+    default.onFocus (event)
 
     # If the panel has no name, don't touch it
 
     if len(event.source.name) == 0:
         return
 
-    activePage = a11y.getAccessible(event.source)
+    activePage = event.source
 
 
 # This function is called when a hyperlink is selected - This happens
