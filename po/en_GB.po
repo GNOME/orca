@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-07 21:14+0100\n"
-"PO-Revision-Date: 2004-09-07 21:14+0100\n"
+"POT-Creation-Date: 2004-10-17 14:59+0100\n"
+"PO-Revision-Date: 2004-10-17 14:59+0100\n"
 "Last-Translator: David Lodge <dave@cirt.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -151,6 +151,10 @@ msgstr "Input"
 msgid "Message Log"
 msgstr "Message Log"
 
+#: src/orca/metacity.py:40
+msgid "inaccessible"
+msgstr "inaccessible"
+
 #: src/orca/orca-setup.in:34
 msgid "Creating .orca directory."
 msgstr "Creating .orca directory."
@@ -160,7 +164,8 @@ msgstr "Creating .orca directory."
 msgid "Select %s voice: "
 msgstr "Select %s voice: "
 
-#: src/orca/orca-setup.in:65 src/orca/orca-setup.in:107
+#: src/orca/orca-setup.in:65
+#: src/orca/orca-setup.in:107
 #, c-format
 msgid "%d. %s"
 msgstr "%d. %s"
@@ -169,7 +174,8 @@ msgstr "%d. %s"
 msgid "Enter choice."
 msgstr "Enter choice."
 
-#: src/orca/orca-setup.in:69 src/orca/orca-setup.in:109
+#: src/orca/orca-setup.in:69
+#: src/orca/orca-setup.in:109
 msgid "Enter choice: "
 msgstr "Enter choice: "
 
@@ -214,7 +220,6 @@ msgid "User logged out - shutting down."
 msgstr "User logged out - shutting down."
 
 #. We couldn't initialize the core-- this proably means that we
-#. couldn't activate the accessibility registry
 #: src/orca/orca.py:222
 msgid "The Orca core could not be initialized."
 msgstr "The Orca core could not be initialised."
@@ -235,10 +240,12 @@ msgstr "button"
 msgid "list view"
 msgstr "list view"
 
-#: src/orca/rolenames.py:30 src/orca/rolenames.py:31
+#: src/orca/rolenames.py:30
+#: src/orca/rolenames.py:31
 msgid "tree view"
 msgstr "tree view"
 
 #: src/orca/rolenames.py:33
 msgid "tab"
 msgstr "tab"
+
