@@ -72,19 +72,66 @@ def magnifyAccessible (acc):
     - acc: the accessible
     """
 
+    global roi
+    
     extents = acc.extents
     if extents is None:
         return
-    
-    x1 = extents.x
-    y1 = extents.y  
 
-    x2 = x1 + roiWidth
-    y2 = y1 + roiHeight
+    # Determine if the accessible is partially to the left, right,
+    # above, or below the current region of interest (ROI).
+    #
+    left = extents.x < roi.x1
+    right = (extents.x + extents.width) > roi.x2
+    above = extents.y < roi.y1
+    below = (extents.y + extents.height) > roi.y2
 
-    if (x1 >= roi.x1) and (x2 <= roi.x2) and (y1 >= roi.y1) and (y2 <= roi.y2):
+    # If it is already completely showing, do nothing.
+    #
+    visibleX = not (left or right)
+    visibleY = not (above or below)
+
+    if visibleX and visibleY:
         return
     
+    # The algorithm is devised to move the ROI as little as possible, yet
+    # favor the top left side of the object [[[TODO: WDW - the left/right
+    # top/bottom favoring should probably depend upon the locale.  Also,
+    # I had the notion of including a floating point snap factor between
+    # 0.0 and 1.0 that would determine how to position the object in the
+    # window relative to the ROI edges.  A snap factor of -1 would mean to
+    # snap to the closest edge.  A snap factor of 0.0 would snap to the
+    # left most or top most edge, a snap factor of 1.0 would snap to the
+    # right most or bottom most edge.  Any number in between would divide
+    # the two.]]]
+    #
+    x1 = roi.x1
+    x2 = roi.x2 
+    y1 = roi.y1
+    y2 = roi.y2
+    
+    if left:
+        x1 = extents.x
+        x2 = x1 + roiWidth
+    elif right:
+        if extents.width > roiWidth:
+            x1 = extents.x
+            x2 = x1 + roiWidth
+        else:
+            x2 = extents.x + extents.width
+            x1 = x2 - roiWidth
+        
+    if above:
+        y1 = extents.y
+        y2 = y1 + roiHeight
+    elif below:
+        if extents.height > roiHeight:
+            y1 = extents.y
+            y2 = y1 + roiHeight
+        else:
+            y2 = extents.y + extents.height
+            y1 = y2 - roiHeight
+        
     setROI (GNOME.Magnifier.RectBounds (x1, y1, x2, y2))
 
     
@@ -208,8 +255,6 @@ def init ():
     maxROIX = sourceDisplayBounds.x2 - (roiWidth / 2)
     maxROIY = sourceDisplayBounds.y2 - (roiHeight / 2)
 
-    print minROIX, minROIY, maxROIX, maxROIY
-    
     #pbag.setValue("viewport", CORBA.Any(CORBA.TypeCode(viewport.typecode().repo_id),GNOME.Magnifier.RectBounds(0,0,512,780)))
     #zoomer.moveResize(GNOME.Magnifier.RectBounds(256,256,600,600))
     #zoomer.setMagFactor(1.0, 1.0)

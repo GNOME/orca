@@ -244,7 +244,6 @@ class Accessible:
             return None
         else:
             self.extents = self.component.getExtents(coordinateType)
-            print self.extents
             return self.extents
         
 
