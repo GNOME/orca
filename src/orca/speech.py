@@ -272,7 +272,11 @@ def say (voiceName, text):
     #
     debug.println("speech.say (" + text + ")")
     #debug.printStack ()
-    return s.say (text)
+    try:
+        s.stop ()
+        return s.say (text)
+    except:
+        debug.printException ()
 
 
 def stop (voiceName):
