@@ -45,7 +45,7 @@ def onWindowActivated (event):
     # If we haven't found the display, and this is a toplevel window,
     # look for the display in this window
 
-    if display is None and event.source.getRoleName() () == a"text":
+    if display is None and event.source.role == "text":
 
         # It's the only text object in GCalctool's main window
 
