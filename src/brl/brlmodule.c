@@ -33,7 +33,7 @@ static void (*brlapi_closeConnection) (void);
 static char *(*brlapi_getDriverId) (void);
 static char *(*brlapi_getDriverName) (void);
 static int (*brlapi_getDisplaySize) (unsigned int *, unsigned int *);
-static int (*brlapi_getTty) (unsigned int, unsigned int, void *);
+static int (*brlapi_getTty) (int, int);
 static int (*brlapi_leaveTty) (void);
 static int (*brlapi_writeBrl) (unsigned int cursor, const char *text);
 static int (*brlapi_readCommand) (unsigned int, unsigned int *);
@@ -387,6 +387,7 @@ static gboolean brlapi_io_cb (GIOChannel *ch,
 
 static PyObject *brl_module_init (PyObject *self) {
 	int fd;
+        int ttyNum;
 
 	if (brl_initialized)
 	{
@@ -397,38 +398,76 @@ static PyObject *brl_module_init (PyObject *self) {
 	/* Open the brlapi library */
 
 	brlapi_library = dlopen ("libbrlapi.so", RTLD_LAZY);
-	if (!brlapi_library)
+	if (!brlapi_library) {
+  	        fprintf (stderr, 
+			 "Failed to load libbrlapi.so\n");
 		return PyInt_FromLong (0);
+	}
 
 	/* Load the functions */
 
 	brlapi_initializeConnection = dlsym (brlapi_library, "brlapi_initializeConnection");
-	if (!brlapi_initializeConnection)
+	if (!brlapi_initializeConnection) {
+  	        fprintf (stderr, 
+			 "Failed to find brlapi_initializeConnection in brltty.\n");
 		return PyInt_FromLong (0);
+	}
+
 	brlapi_closeConnection = dlsym (brlapi_library, "brlapi_closeConnection");
-	if (!brlapi_closeConnection)
+	if (!brlapi_closeConnection) {
+  	        fprintf (stderr,
+			 "Failed to find brlapi_closeConnection in brltty.\n");
 		return PyInt_FromLong (0);
+	}
+
 	brlapi_getDriverId = dlsym (brlapi_library, "brlapi_getDriverId");
-	if (!brlapi_getDriverId)
+	if (!brlapi_getDriverId) {
+  	        fprintf (stderr, 
+			 "Failed to find brlapi_getDriverId in brltty.\n");
 		return PyInt_FromLong (0);
+	}
+
 	brlapi_getDriverName = dlsym (brlapi_library, "brlapi_getDriverName");
-	if (!brlapi_getDriverName)
+	if (!brlapi_getDriverName) {
 		return PyInt_FromLong (0);
+  	        fprintf (stderr,
+			 "Failed to find brlapi_getDriverName in brltty.\n");
+	}
+
 	brlapi_getDisplaySize = dlsym (brlapi_library, "brlapi_getDisplaySize");
-	if (!brlapi_getDisplaySize)
+	if (!brlapi_getDisplaySize) {
+  	        fprintf (stderr,
+			 "Failed to find brlapi_getDisplaySize in brltty.\n");
 		return PyInt_FromLong (0);
+	}
+
 	brlapi_getTty = dlsym (brlapi_library, "brlapi_getTty");
-	if (!brlapi_getTty)
+	if (!brlapi_getTty) {
+  	        fprintf (stderr, 
+			 "Failed to find brlapi_getTty in brltty.\n");
 		return PyInt_FromLong (0);
+	}
+
 	brlapi_leaveTty = dlsym (brlapi_library, "brlapi_leaveTty");
-	if (!brlapi_leaveTty)
+	if (!brlapi_leaveTty) {
+  	        fprintf (stderr,
+			 "Failed to find brlapi_leaveTty in brltty.\n");
 		return PyInt_FromLong (0);
-	brlapi_writeBrl = dlsym (brlapi_library, "brlapi_writeBrl");
-	if (!brlapi_writeBrl)
+	}
+
+	brlapi_writeBrl = dlsym (brlapi_library, "brlapi_writeText");
+	if (!brlapi_writeBrl) {
+  	        fprintf (stderr,
+			 "Failed to find brlapi_writeText in brltty.\n");
 		return PyInt_FromLong (0);
-	brlapi_readCommand = dlsym (brlapi_library, "brlapi_readCommand");
-	if (!brlapi_readCommand)
+	}
+
+	brlapi_readCommand = dlsym (brlapi_library, "brlapi_readKey");
+	if (!brlapi_readCommand) {
+  	        fprintf (stderr,
+			 "Failed to find brlapi_readKey in brltty.\n");
 		return PyInt_FromLong (0);
+	}
 
 	/* Connect to brltty */
 
@@ -438,7 +477,13 @@ static PyObject *brl_module_init (PyObject *self) {
 		
 		/* Take over the owning tty */
 
-		brlapi_getTty (-1, 2, NULL);
+ 	        ttyNum = brlapi_getTty (-1, /* Search for CONTROLVT      */
+					0); /* HOW = give me BRLCOMMANDS */
+		if (ttyNum == -1) {
+ 		        fprintf (stderr,
+				 "Failed on call to brlapi_getTty in brltty.\n");
+			return PyInt_FromLong (0);
+		}
 
 		/* Cache the Braille display size */
 
@@ -456,6 +501,8 @@ static PyObject *brl_module_init (PyObject *self) {
 	}
 	else
 	{
+  	        fprintf (stderr,
+			 "Failed on call to brlapi_initializeConnection in brltty.\n");
 		brlapi_fd = -1;
 	}
 	return PyInt_FromLong (brl_initialized);
@@ -463,8 +510,10 @@ static PyObject *brl_module_init (PyObject *self) {
 
 
 static PyObject *brl_module_shutdown (PyObject *self) {
-	if (brl_initialized)
+        if (brl_initialized) {
+  	        brlapi_leaveTty ();
 		brlapi_closeConnection ();
+	}
 	brl_initialized = 0;
 	return PyInt_FromLong (1);;
 }
