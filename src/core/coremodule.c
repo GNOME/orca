@@ -22,7 +22,6 @@
 
 #include <libbonobo.h>
 #include "eventlistener.h"
-#include "pyaccessible.h"
 #include "pyevent.h"
 
 static gboolean core_initialized = FALSE;
@@ -34,10 +33,6 @@ static PyObject *core_module = NULL;
 /* A CORBA object reference to the at-spi registry */
 
 static Accessibility_Registry registry = CORBA_OBJECT_NIL;
-
-/* A PyObject representing the desktop */
-
-static PyObject *desktop = NULL;
 
 /* Hash table of the current registered event listeners */
 
@@ -135,116 +130,6 @@ register_event_listener (const char *type,
 }
 
 
-/*
- *
- * Following are the internal core module callbacks which respond to
- * various at-spi events.  they mostly take care of invalidating the
- * various attributes of the pyaccessible objects in the cache.
- *
- */
-
-/*
- *
- * When an object goes defunct, remove it from the cache alltogether
- *
- */
-
-static void
-defunct_handler (Accessibility_Event *e)
-{
-	PyAccessible *pyacc = pyaccessible_find (e->source);
-	if (!pyacc)
-		return;
-	pyaccessible_remove (pyacc);
-	Py_DECREF (pyacc);
-}
-
-
-/*
- *
- * When an accessible object's name changes, invalidate the cached
- * name attribute of the corresponding pyaccessible if one exists
- *
- */
-
-static void
-name_change_handler (Accessibility_Event *e)
-{
-	PyAccessible *pyacc = pyaccessible_find (e->source);
-	if (!pyacc)
-		return;
-	
-	pyaccessible_invalidate_attribute (pyacc, ATTR_NAME);
-	Py_DECREF (pyacc);
-}
-
-
-/*
- *
- * If an accessible object's parent changes, invalidate the parent
- * attribute of the corresponding pyacccessible if one exists
- *
- */
-
-static void
-parent_change_handler (Accessibility_Event *e)
-{
-	PyAccessible *pyacc = pyaccessible_find (e->source);
-	if (!pyacc)
-		return;
-	
-	pyaccessible_invalidate_attribute (pyacc, ATTR_PARENT);
-	Py_DECREF (pyacc);
-}
-
-
-/*
- *
- * If an accessible object's state changes, invalidate the state
- * attribute of the corresponding pyaccessible object is one exists
- *
- */
-
-static void
-state_change_handler (Accessibility_Event *e)
-{
-	PyAccessible *pyacc = pyaccessible_find (e->source);
-	if (!pyacc)
-		return;
-	
-	pyaccessible_invalidate_attribute (pyacc, ATTR_STATE);
-	Py_DECREF (pyacc);
-}
-
-
-/*
- *
- * If an accessible object's children change, invalidate the child
- * count attribute of the corresponding pyaccessible object if one
- * exists
- *
- */
-
-static void
-children_change_handler (Accessibility_Event *e)
-{
-	PyAccessible *pyacc = pyaccessible_find (e->source);
-	if (!pyacc)
-		return;
-	
-	pyaccessible_invalidate_attribute (pyacc, ATTR_CHILD_COUNT);
-	Py_DECREF (pyacc);
-}
-
-
-/*
- *
- * Initialize the core module
- *
- * This is standard Python stuff
- *
- */
-
 static PyObject *
 core_module_init (PyObject *self)
 {
@@ -259,10 +144,6 @@ core_module_init (PyObject *self)
 		PyErr_SetString (PyExc_RuntimeError, "Core already initialized");
 		return NULL;
 	}
-
-	/* Initialize pyaccessible support */
-
-	pyaccessible_init (core_module);
 
 	/* Initialize the pyevent code */
 	
@@ -307,17 +188,8 @@ core_module_init (PyObject *self)
 		return;
 	}
 	
-	desktop = pyaccessible_new (d);
-	PyModule_AddObject (core_module, "desktop", desktop);
-
-	/* Install event listeners */
-
-	register_event_listener ("object:property-change:accessible-name", name_change_handler);
-	register_event_listener ("object:property-change:accessible-parent", parent_change_handler);
-	register_event_listener ("object:state-changed:defunct", defunct_handler);
-	register_event_listener ("object:state-changed:stale", defunct_handler);
-	register_event_listener ("object:state-changed:", state_change_handler);
-	register_event_listener ("object:children-changed:", children_change_handler);
+	PyModule_AddObject (core_module, "desktop", 
+			    pycorba_object_new(d));
 
 	core_initialized = TRUE;
 	return PyInt_FromLong (1);
@@ -531,7 +403,6 @@ core_module_unregisterEventListener (PyObject *self,
 static PyMethodDef core_methods[] = {
 	{"init", (PyCFunction) core_module_init, METH_NOARGS},
 	{"shutdown", (PyCFunction) core_module_shutdown, METH_NOARGS},
-	{"getRegistry", (PyCFunction) core_module_getRegistry, METH_NOARGS},
 	{"registerEventListener", (PyCFunction) core_module_registerEventListener, METH_VARARGS},
 	{"unregisterEventListener", (PyCFunction) core_module_unregisterEventListener, METH_VARARGS},
 	{NULL, NULL}
