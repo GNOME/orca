@@ -7,4 +7,5 @@ config.log
 config.status
 configure
 libtool
+orca.spec
 stamp-h1
