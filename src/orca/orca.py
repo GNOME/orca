@@ -210,6 +210,18 @@ def init ():
     if initialized:
         return False
 
+    # Initialize the Orca core
+
+    try:
+        core.init ()
+    except:
+
+        # We couldn't initialize the core-- this proably means that we
+        # couldn't activate the accessibility registry
+
+        print _("The Orca core could not be initialized.")
+        return
+
     # Initialize a11y support
 
     a11y.init ()
