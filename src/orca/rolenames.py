@@ -453,10 +453,10 @@ def getRoleName (obj):
     Returns a string containing the localized name of the object.
     """
 
-    return getRoleNameAsSpeech (obj)
+    return getSpeechRoleName (obj)
 
 
-def getRoleNameAsSpeech (obj):
+def getSpeechForRoleName (obj):
     """Returns the localized name of the given Accessible object; the name is
     suitable to be spoken.  If a localized name cannot be discovered, this
     will return the string as defined by the at-spi.
@@ -476,7 +476,7 @@ def getRoleNameAsSpeech (obj):
         return name
 
 
-def getRoleNameAsShortBraille (obj):
+def getShortBrailleForRoleName (obj):
     """Returns the localized name of the given Accessible object; the name is
     a short string suitable for a Braille display.  If a localized name cannot
     be discovered, this will return the string as defined by the at-spi.
@@ -496,7 +496,7 @@ def getRoleNameAsShortBraille (obj):
         return name
 
 
-def getRoleNameAsLongBraille (obj):
+def getLongBrailleForRoleName (obj):
     """Returns the localized name of the given Accessible object; the name is
     a long string suitable for a Braille display.  If a localized name cannot
     be discovered, this will return the string as defined by the at-spi.

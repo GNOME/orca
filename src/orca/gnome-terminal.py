@@ -25,4 +25,4 @@ def onTextDeleted (event):
             and (event.source.parent != a11y.focusedObject):
         pass
     else:
-        default.brlUpdateText (event.source)
+        default.brailleUpdateText (event.source)

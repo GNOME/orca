@@ -26,75 +26,34 @@ information to the user based upon the object's role."""
 import core
 import a11y
 import orca
-from rolenames import getRoleName # localized role names
-import settings                   # user settings
+import settings                                  # user settings
 import kbd
 import speech
 import brl
 import mag
-from orca_i18n import _           # for gettext support
 import debug
 
+from orca_i18n import _                          # for gettext support
+from rolenames import getSpeechForRoleName       # localized role names
+from rolenames import getShortBrailleForRoleName # localized role names
+
 ########################################################################
 #                                                                      #
-# PRESENTATION FUNCTIONS                                               #
+# INFORMATION GATHERING FUNCTIONS                                      #
 #                                                                      #
-# The following functions present various types of objects via speech  #
-# and Braille.  All the functions take the object as the first         #
-# parameter, and a boolean specifying whether the object had focus     #
-# already or not.                                                      #
-#                                                                      #
-# [[[TODO: WDW - don't really get the Braille region stuff yet.  This  #
-# was an experiment of Marc's that we talked about in Hawaii, but I'm  #
-# still not fully grasping the concept.]]]                             #
-#                                                                      #
-# [[[TODO: WDW - the order of presentation should be configurable by   #
-# the user.]]]                                                         #
-#                                                                      #
-# [[[TODO: WDW - much i18n to be done here.]]]                         #
-#                                                                      #
-# [[[TODO: WDW - need to think about impact on magnification.]]]       #
+# Functions that extract information from objects for the purposes of  #
+# being spoken or presented on a Braille display.                      #
 #                                                                      #
 ########################################################################
 
-def getAvailabilityForSpeech (obj):
-    """Returns a string to be spoken that describes the availability
-    of the given object.
+def getAcceleratorAndShortcut(obj):
+    """Gets the accelerator string (and possibly shortcut) for the given
+    object.
 
     Arguments:
     - obj: the Accessible object
 
-    Returns a string to be spoken.
-    """
-    
-    if obj.state.count (core.Accessibility.STATE_SENSITIVE):
-        return _("available") + ". "
-    else:
-        return _("unavailable") + ". "
-
-    
-def getNameAndRoleForSpeech (obj):
-    """Returns a string to be spoken that describes the name and role
-    of the given object.
-
-    Arguments:
-    - obj: the Accessible object
-
-    Returns a string to be spoken.
-    """
-
-    text = a11y.getLabel (obj) + " " + getRoleName(obj) + ". "
-    return text;
-
-
-def getAcceleratorForSpeech (obj):
-    """Returns a string to be spoken that describes the keyboard
-    accelerator (and possibly shortcut) for the given object.
-
-    Arguments:
-    - obj: the Accessible object
-
-    Returns a string to be spoken.
+    A list containing the accelerator and shortcut for the given object.
     """
 
     try:
@@ -103,7 +62,7 @@ def getAcceleratorForSpeech (obj):
         pass
 
     if action is None:
-        return ""
+        return ["", ""]
 
     # [[[TODO: WDW - assumes the first keybinding is all that we care about.]]]
     #
@@ -131,141 +90,153 @@ def getAcceleratorForSpeech (obj):
     accelerator  = accelerator.replace("<","")
     accelerator  = accelerator.replace(">"," ")
 
-    if len (fullShortcut) > 0:
-        text = _("shortcut") + " " + fullShortcut + ". "
-    else:
-        text = ""
+    return [accelerator, fullShortcut]
 
+
+def getSpeechForAvailability (obj):
+    """Returns a string to be spoken that describes the availability
+    of the given object.
+
+    Arguments:
+    - obj: the Accessible object
+
+    Returns a string to be spoken.
+    """
+    
+    if obj.state.count (core.Accessibility.STATE_SENSITIVE):
+        return _("available") + ". "
+    else:
+        return _("unavailable") + ". "
+
+    
+def getSpeechForNameAndRole (obj):
+    """Returns a string to be spoken that describes the name and role
+    of the given object.
+
+    Arguments:
+    - obj: the Accessible object
+
+    Returns a string to be spoken.
+    """
+
+    text = a11y.getLabel (obj) + " " + getSpeechForRoleName (obj) + ". "
+    return text;
+
+
+def getSpeechForAccelerator (obj):
+    """Returns a string to be spoken that describes the keyboard
+    accelerator (and possibly shortcut) for the given object.
+
+    Arguments:
+    - obj: the Accessible object
+
+    Returns a string to be spoken.
+    """
+
+    result = getAcceleratorAndShortcut (obj)
+
+    accelerator = result[0]
+    shortcut = result[1]
+
+    text = ""
+    if len (shortcut) > 0:
+        text += _("shortcut") + " " + shortcut + ". "
     if len (accelerator) > 0:
         text += _("accelerator") + " " + accelerator + ". "
         
     return text;
 
 
-def speakButton (obj):
-    """Speaks the current button's name, role, any accelerators, and
-    availability.
+def getBrailleForNameAndRole (obj):
+    """Returns a string to be displayed in Braille that describes the name and
+    role of the given object.
 
     Arguments:
-    - obj: the Accessible menu item or a menu
+    - obj: the Accessible object
+
+    Returns a string to be displayed in Braille.
     """
 
-    text = getNameAndRoleForSpeech (obj) \
-           + getAcceleratorForSpeech (obj) \
-           + getAvailabilityForSpeech (obj)
+    text = getShortBrailleForRoleName (obj) + " " + a11y.getLabel (obj)
+    return text;
+
+
+def getBrailleForAccelerator (obj):
+    """Returns a string to be displayed in Braille that describes the keyboard
+    accelerator (and possibly shortcut) for the given object.
+
+    Arguments:
+    - obj: the Accessible object
+
+    Returns a string to be displayed in Braille.
+    """
+
+    result = getAcceleratorAndShortcut (obj)
+
+    accelerator = result[0]
+    shortcut = result[1]
+
+    text = ""
+    if len (shortcut) > 0:
+        text += "(" + shortcut + ")"
+    if len (accelerator) > 0:
+        text +=  "(" + accelerator + ")"
+        
+    return text;
+
+
+def getSpeech (obj, includeAvailability=False):
+    """Gets text to be spoken for the current object's name, role, any
+    accelerators, and availability.
+
+    Arguments:
+    - obj: an Accessible
+    """
+
+    text = getSpeechForNameAndRole (obj) \
+           + getSpeechForAccelerator (obj)
+
+    if includeAvailability:
+        text += getSpeechForAvailability (obj)
     
     text = text.replace ("...", _(" dot dot dot"), 1)
 
-    speech.say ("default", text)
+    return text
 
-    
-def menuPresenter (obj, already_focused):
-    """Speaks the menu item that is currently selected and updates
-    the Braille display to show all menu items, with the cursor under
-    the currently selected item.
+
+def getBraille (obj):
+    """Gets Braille to be displayed for object's name, role, and accelerators.
 
     Arguments:
-    - obj: the Accessible menu item or a menu
-    - already_focused: if False, the obj just received focus
+    - obj: an Accessible
     """
+
+    text = getBrailleForNameAndRole (obj) \
+           + " " + getBrailleForAccelerator (obj)
     
-    menu = obj.parent
-    selected = obj.index
-    childCount = menu.childCount
-    i = 0
-
-    # Put the menu on the Braille display - Put each menu item in its
-    # own region on the Braille display
-    #
-    while i < childCount:
-        name = a11y.getLabel (menu.child (i))
-        brl.addRegion (name, len(name)+2, 0)
-        i = i + 1
-
-    # Put the Braille cursor under the selected item
-    #
-    if selected >= 0:
-        brl.setCursor (selected, 0)
-
-    # Put the text on the Braille display
-    #
-    brl.refresh ()
-
-    speakButton (obj)
-
-    i = 0
-    itemCount = 0
-    while i < obj.childCount:
-        child = obj.child (i)
-        if child.role != "separator":
-            itemCount += 1
-        i += 1
-        
-    if itemCount == 1:
-        speech.say ("default", "one item.")
-    elif itemCount > 1:
-        speech.say ("default", "%d items." % itemCount)
+    return text
 
 
-def pageTabPresenter (obj, already_focused):
-    """Speaks the currently selected page tab and displays the page
-    tab list on the Braille display, with the cursor under the currently
-    selected page tab.
+def getTextLineAtCaret (obj):
+    """Gets the line of text where the caret is.
 
-    Arguments:
-    - obj: the currently selected Accessible page tab
-    - already_focused: if False, the obj just received focus
-    """
-   
-    tablist = obj.parent
-    selected = obj.index
-    childCount = tablist.childCount
-
-    # Put each page tab in its own region on the Braille display
-    #
-    i = 0
-    while i < childCount:
-        name = a11y.getLabel (tablist.child (i))
-        brl.addRegion (name, len(name)+2, 0)
-        i = i + 1
-
-    # Put the Braille cursor under the currently selected page tab
-    #
-    if selected >= 0:
-        brl.setCursor (selected, 0)
-
-    # Put the text on the display
-    #
-    brl.refresh ()
-
-    # Speak the currently selected page tab
-    #
-    text = a11y.getLabel (obj) + " " + getRoleName (obj)
-    speech.say ("default", text)
-
-
-def brlUpdateText (obj):
-    """Displays an object containing text on the Braille display.
-
-    Arguments:
+    Argument:
     - obj: an Accessible object that implements the AccessibleText
            interface
-    """
 
-    parent = obj.parent
-    if parent.role == "combo box":
-        label = a11y.getLabel (parent)
-    else:
-        label = a11y.getLabel (obj)
+    Returns the line of text where the caret is.
+    """
 
     # Get the the AccessibleText interrface
     #
     text = a11y.getText (obj)
-    offset = text.caretOffset
-    display_size = brl.getDisplaySize ()
 
+    if text is None:
+        return ["", 0, 0]
+    
     # Get the line containing the caret
     #
+    offset = text.caretOffset
     line = text.getTextAtOffset (offset,
                                  core.Accessibility.TEXT_BOUNDARY_LINE_START)
 
@@ -278,10 +249,37 @@ def brlUpdateText (obj):
     else:
         content = line[0]
 
+    return [content, offset, line[1]]
+
+
+########################################################################
+#                                                                      #
+# ACCESSIBLE TEXT OUTPUT FUNCTIONS                                     #
+#                                                                      #
+# Functions for handling output to speech and Braille.                 #
+#                                                                      #
+########################################################################
+
+def brailleUpdateText (obj):
+    """Displays an object containing text on the Braille display.
+
+    Arguments:
+    - obj: an Accessible object that implements the AccessibleText
+           interface
+    """
+
+    parent = obj.parent
+    if parent and (parent.role == "combo box"):
+        label = a11y.getLabel (parent)
+    else:
+        label = a11y.getLabel (obj)
+
+
     # The label and text each get their own region - The label region
     # size is the length of the label's text + 1 or half the display
     # length, whidhever is less
     #
+    display_size = brl.getDisplaySize ()
     label_region_size = len(label)
     if label_region_size > display_size/2-1:
             label_region_size = display_size/2-1
@@ -291,7 +289,15 @@ def brlUpdateText (obj):
         # Subtract the space that is left for us to use on the display
         #
         display_size = display_size - (label_region_size+1)
-    text_region = brl.addRegion (content, display_size, 0)
+
+    # Get the line containing the caret
+    #
+    result = getTextLineAtCaret (obj)
+    line = result[0]
+    caretOffset = result[1]
+    lineOffset = result[2]
+    
+    text_region = brl.addRegion (line, display_size, 0)
 
     # Make the advance keys scroll the region containing the text
     #
@@ -302,7 +308,7 @@ def brlUpdateText (obj):
     # that the cursor position is specified as an offset from the
     # beginning of the text
     #
-    brl.setCursor (text_region, offset-line[1])
+    brl.setCursor (text_region, caretOffset-lineOffset)
 
     # Post the text to the display
     #
@@ -320,11 +326,8 @@ def sayLine (obj):
     
     # Get the AccessibleText interface of the provided object
     #
-    text = a11y.getText (obj)
-    offset = text.caretOffset
-    line = text.getTextAtOffset (offset,
-                                 core.Accessibility.TEXT_BOUNDARY_LINE_START)
-    speech.say ("default", line[0])
+    result = getTextLineAtCaret (obj)
+    speech.say ("default", result[0])
     
 
 def sayWord (obj):
@@ -359,7 +362,125 @@ def sayCharacter (obj):
         speech.say ("uppercase", character)
     else:
         speech.say ("default", character)
+
+
+########################################################################
+#                                                                      #
+# PRESENTATION FUNCTIONS                                               #
+#                                                                      #
+# The following functions present various types of objects via speech  #
+# and Braille.  All the functions take the object as the first         #
+# parameter, and a boolean specifying whether the object had focus     #
+# already or not.                                                      #
+#                                                                      #
+# [[[TODO: WDW - don't really get the Braille region stuff yet.  This  #
+# was an experiment of Marc's that we talked about in Hawaii, but I'm  #
+# still not fully grasping the concept.]]]                             #
+#                                                                      #
+# [[[TODO: WDW - the order of presentation should be configurable by   #
+# the user.]]]                                                         #
+#                                                                      #
+# [[[TODO: WDW - much i18n to be done here.]]]                         #
+#                                                                      #
+# [[[TODO: WDW - need to think about impact on magnification.]]]       #
+#                                                                      #
+########################################################################
+
     
+def menuPresenter (obj, already_focused):
+    """Speaks the menu item that is currently selected and updates
+    the Braille display to show all menu items, with the cursor under
+    the currently selected item.
+
+    Arguments:
+    - obj: the Accessible menu item or a menu
+    - already_focused: if False, the obj just received focus
+    """
+    
+    # Put the menu on the Braille display - Put each menu item in its
+    # own region on the Braille display
+    #
+    name = "MNU" # [[[TODO: WDW - should get this from rolenames.py]]]
+    brl.addRegion (name, len(name)+2, 0)
+
+    menu = obj.parent
+    selected = obj.index
+    childCount = menu.childCount
+
+    i = 0
+    while i < childCount:
+        name = a11y.getLabel (menu.child (i))
+        brl.addRegion (name, len(name)+2, 0)
+        i = i + 1
+
+    # Put the Braille cursor under the selected item
+    #
+    if selected >= 0:
+        brl.setCursor (selected, 0)
+
+    # Put the text on the Braille display
+    #
+    brl.refresh ()
+
+    # Now speak it...
+    #
+    text = getSpeech (obj)
+
+    i = 0
+    itemCount = 0
+    while i < obj.childCount:
+        child = obj.child (i)
+        if child.role != "separator":
+            itemCount += 1
+        i += 1
+        
+    if itemCount == 1:
+        text += " " + _("one item") + "."
+    else:
+        text += (" %d " % itemCount) + _("items") + "."
+
+    speech.say ("default", text)
+
+    
+def pageTabPresenter (obj, already_focused):
+    """Speaks the currently selected page tab and displays the page
+    tab list on the Braille display, with the cursor under the currently
+    selected page tab.
+
+    Arguments:
+    - obj: the currently selected Accessible page tab
+    - already_focused: if False, the obj just received focus
+    """
+   
+    # Put each page tab in its own region on the Braille display
+    #
+    name = "PTL" # [[[TODO: WDW - should get this from rolenames.py]]]
+    brl.addRegion (name, len(name)+2, 0)
+
+    tablist = obj.parent
+    selected = obj.index
+    childCount = tablist.childCount
+
+    i = 0
+    while i < childCount:
+        name = a11y.getLabel (tablist.child (i))
+        brl.addRegion (name, len(name)+2, 0)
+        i = i + 1
+
+    # Put the Braille cursor under the currently selected page tab
+    #
+    if selected >= 0:
+        brl.setCursor (selected, 0)
+
+    # Put the text on the display
+    #
+    brl.refresh ()
+
+    # Now speak it...
+    #
+    text = getSpeech (obj)
+    speech.say ("default", text)
+
 
 def textPresenter (obj, already_focused):
     """Speaks line the containing the caret and displays the line containing
@@ -370,8 +491,9 @@ def textPresenter (obj, already_focused):
     - already_focused: if False, the obj just received focus
     """
     
-    brlUpdateText (obj)
-    text = a11y.getLabel (obj) + " " + getRoleName (obj)
+    brailleUpdateText (obj)
+
+    text = getSpeech (obj)
     speech.say ("default", text)
     sayLine (obj)
 
@@ -402,11 +524,8 @@ def comboBoxPresenter (obj, already_focused):
             label_region_size = (display_left/2)-1
         brl.addRegion (label, label_region_size, 0)
         display_left = display_left - label_region_size
-        speak_text = label
-    else:
-        speak_text = ""
         
-    speak_text = speak_text + " " + getRoleName (obj)
+    speak_text = getSpeechForNameAndRole (obj)
 
     # Find the last (if any) element of the combo box that contains text.
     #
@@ -456,9 +575,7 @@ def tablePresenter (obj, already_focused):
     # Only speak the table's name if it didn't already have focus
     #
     if already_focused == False:
-        name = obj.name
-        role = getRoleName (obj)
-        speech.say ("default", name + " " + role)
+        speech.say ("default", getSpeechForNameAndRole (obj))
 
     # Get the selected rows of the table
     #
@@ -506,7 +623,7 @@ def tablePresenter (obj, already_focused):
 
 def checkBoxPresenter (obj, already_focused):
     """Speaks the name and state of the obj and also displays it in
-    Braille.  A"(*)" in Braille indicates the checkbox is checked whereas
+    Braille.  An "(x)" in Braille indicates the checkbox is checked whereas
     a "( )" indicates it is unchecked.
 
     Arguments:
@@ -514,11 +631,6 @@ def checkBoxPresenter (obj, already_focused):
     - already_focused: if False, the obj just received focus
     """
     
-    label = a11y.getLabel (obj)
-    role = getRoleName (obj)
-    text = ""
-    brltext = ""
-
     # If the checkbox is checked, indicate this in speech and Braille
     #
     set = obj.state
@@ -526,15 +638,19 @@ def checkBoxPresenter (obj, already_focused):
         # If it's not already focused, say it's name
         #
         if already_focused == False:
-            text = label + " " + role
-        text = text + " checked"
-        brltext = "(*) " + label
+            text = getSpeech (obj) + " " + _("checked") + "."
+        else:
+            text = _("checked") + "."
+        brltext = getShortBrailleForRoleName (obj) + " (x) " \
+                  + a11y.getLabel (obj)
     else:
         if already_focused == False:
-            text = label + " " + role
-        text = text + " not checked"
-        if getattr (settings, "useBraille", False):
-            brltext = "( ) " + label
+            text = getSpeech (obj) + " " + _("not checked") + "."
+        else:
+            text = _("not checked") + "."
+        brltext = getShortBrailleForRoleName (obj) + " ( ) " \
+                  + a11y.getLabel (obj)
+
     brl.writeMessage (brltext)
     brl.refresh ()
     speech.say ("default", text)
@@ -542,7 +658,7 @@ def checkBoxPresenter (obj, already_focused):
 
 def radioButtonPresenter (obj, already_focused):
     """Speaks the name and state of the obj and also displays it in
-    Braille.  A"(*)" in Braille indicates the checkbox is checked whereas
+    Braille.  A"(x)" in Braille indicates the checkbox is checked whereas
     a "( )" indicates it is unchecked.  [[[TODO: WDW - this also appears
     to attempt to show the radio button group name as well as all the
     other buttons in the group on the Braille display.  Not quite sure
@@ -554,7 +670,7 @@ def radioButtonPresenter (obj, already_focused):
     """
     
     label = a11y.getLabel (obj)
-    role = getRoleName (obj)
+    role = getSpeechForRoleName (obj)
     group = a11y.getGroup (obj)
     groupName = a11y.getLabel (group)
 
@@ -565,7 +681,7 @@ def radioButtonPresenter (obj, already_focused):
         if already_focused == False:
             text = groupName + " " + label + " " + role
         text = text + " checked"
-        brltext = "(*) " + label
+        brltext = "(x) " + label
     else:
         if already_focused == False:
             text = groupName + " " + label + " " + role
@@ -588,21 +704,21 @@ def radioButtonPresenter (obj, already_focused):
 
 
 def buttonPresenter (obj, already_focused):
-    """Speaks a button and displays its name on the Braille display.
+    """Speaks a button and displays it on the Braille display.
     
     Arguments:
     - obj: the Accessible button
     - already_focused: if False, the obj just received focus
     """
 
-    name = a11y.getLabel (obj)
-    brl.writeMessage (name)
-    speakButton (obj)
-
+    brl.writeMessage (getBraille (obj))
+    brl.refresh ()
+    speech.say ("default", getSpeech (obj, True))
+    
 
 def defaultPresenter (obj, has_focus):
     """Default presenter that just speaks and Brailles and object's
-    label and role name.
+    label, role name, and accelerator (if it exists).
 
     Arguments:
     - obj: the Accessible component
@@ -610,10 +726,9 @@ def defaultPresenter (obj, has_focus):
     """
 
     #debug.println ("Using default presenter.")
-    
-    text = a11y.getLabel (obj) + " " + getRoleName (obj)
-    brl.writeMessage (text)
-    speech.say ("default", text)
+
+    speech.say ("default", getSpeech (obj))
+    brl.writeMessage (getBraille (obj))
     
 
 # Present a dialog box - This function displays the name of the dialog
@@ -632,7 +747,7 @@ def dialogPresenter (obj, already_focused):
     """
     
     text = a11y.getLabel (obj)
-    text = text + " " + getRoleName (obj)
+    text = text + " " + getSpeechForRoleName (obj)
 
     # Find all the labels in the dialog
     #
@@ -654,8 +769,8 @@ def dialogPresenter (obj, already_focused):
 # Dictionary that maps role names to the above presenter functions
 #
 presenters = {}
-presenters["menu"] = menuPresenter
-presenters["menu item"] = menuPresenter
+#presenters["menu"] = menuPresenter
+#presenters["menu item"] = menuPresenter
 presenters["page tab"] = pageTabPresenter
 presenters["text"] = textPresenter
 presenters["password text"] = textPresenter
@@ -667,7 +782,7 @@ presenters["table"] = tablePresenter
 presenters["combo box"] = comboBoxPresenter
 presenters["dialog"] = dialogPresenter
 presenters["alert"] = dialogPresenter
-presenters["radio button"] = radioButtonPresenter
+presenters["radio button"] = checkBoxPresenter
 presenters["radio menu item"] = checkBoxPresenter
 presenters["push button"] = buttonPresenter
 presenters["button"] = buttonPresenter
@@ -814,7 +929,7 @@ def onCaretMoved (event):
 
     # Update the Braille display
     #
-    brlUpdateText (event.source)
+    brailleUpdateText (event.source)
 
     # If this move is in response to an up or down arrow, read the line.
     # [[[TODO: WDW - this motion assumes arrow key events.  In an editor
@@ -856,7 +971,7 @@ def onTextInserted (event):
            and (event.source.parent != a11y.focusedObject):
         pass
     else:
-        brlUpdateText (event.source)
+        braillelUpdateText (event.source)
 
 
 def onTextDeleted (event):
@@ -874,7 +989,7 @@ def onTextDeleted (event):
             and (event.source.parent != a11y.focusedObject):
         pass
     else:
-        brlUpdateText (event.source)
+        braillelUpdateText (event.source)
 
     # The any_data member of the event object has the deleted text in
     # it - If the last key pressed was a backspace or delete key,
@@ -1016,7 +1131,7 @@ def onBrlKey (region, position):
     # object?
     #
     try:
-        h = brl_key_handlers[a11y.focusedObject.getRoleName ()]
+        h = brl_key_handlers[a11y.focusedObject.role]
         h (a11y.focusedObject, region, position)
     except:
         debug.printException ()
