@@ -1,6 +1,6 @@
 # English/Canada translation of orca.
-# Copyright (C) 2004 THE orca'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the orca package.
+# Copyright (C) 2004 Adam Weinberger and the GNOME Foundation
+# This file is distributed under the same licence as the orca package.
 # Adam Weinberger <adamw@gnome.org>, 2004.
 # 
 # 
@@ -8,19 +8,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-30 14:18-0700\n"
-"PO-Revision-Date: 2004-05-30 14:20-0700\n"
+"POT-Creation-Date: 2004-08-28 02:14-0400\n"
+"PO-Revision-Date: 2004-08-28 14:20-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
-#: src/orca/Gecko.py:181
+#: src/orca/Gecko.py:180
 msgid "No page to read."
 msgstr "No page to read."
 
-#: src/orca/Gecko.py:189
+#: src/orca/Gecko.py:188
 msgid "Reading web page failed."
 msgstr "Reading web page failed."
 
@@ -30,7 +30,7 @@ msgstr "space"
 
 #: src/orca/chnames.py:28
 msgid "bang"
-msgstr "bang"
+msgstr "exclamation point"
 
 #: src/orca/chnames.py:29
 msgid "quote"
@@ -94,7 +94,7 @@ msgstr "question"
 
 #: src/orca/chnames.py:44
 msgid "collun"
-msgstr "collun"
+msgstr "colon"
 
 #: src/orca/chnames.py:45
 msgid "semi"
@@ -132,93 +132,99 @@ msgstr "back"
 msgid "bar"
 msgstr "bar"
 
-#: src/orca/default.py:832
+#: src/orca/default.py:834
 msgid "Not a document."
 msgstr "Not a document."
 
-#: src/orca/gaim.py:59
+#: src/orca/gaim.py:55
 msgid " chat"
 msgstr " chat"
 
-#: src/orca/gaim.py:82
+#: src/orca/gaim.py:81
 msgid " instant message"
 msgstr " instant message"
 
-#: src/orca/gaim.py:138
+#: src/orca/gaim.py:137
 msgid "Input"
 msgstr "Input"
 
-#: src/orca/gaim.py:140
+#: src/orca/gaim.py:139
 msgid "Message Log"
 msgstr "Message Log"
 
-#: src/orca/orca-setup.in:39
+#: src/orca/orca-setup.in:34
 msgid "Creating .orca directory."
 msgstr "Creating .orca directory."
 
-#: src/orca/orca-setup.in:66
+#: src/orca/orca-setup.in:61
 #, c-format
 msgid "Select %s voice: "
 msgstr "Select %s voice: "
 
-#: src/orca/orca-setup.in:70 src/orca/orca-setup.in:112
+#: src/orca/orca-setup.in:65 src/orca/orca-setup.in:107
 #, c-format
 msgid "%d. %s"
 msgstr "%d. %s"
 
-#: src/orca/orca-setup.in:73
+#: src/orca/orca-setup.in:68
 msgid "Enter choice."
 msgstr "Enter choice."
 
-#: src/orca/orca-setup.in:74 src/orca/orca-setup.in:114
+#: src/orca/orca-setup.in:69 src/orca/orca-setup.in:109
 msgid "Enter choice: "
 msgstr "Enter choice: "
 
-#: src/orca/orca-setup.in:96
+#: src/orca/orca-setup.in:91
 msgid "No working GNOME Speech drivers found."
 msgstr "No working GNOME Speech drivers found."
 
-#: src/orca/orca-setup.in:99
+#: src/orca/orca-setup.in:94
 msgid "Select default synthesizer:"
 msgstr "Select default synthesizer:"
 
-#: src/orca/orca-setup.in:109
+#: src/orca/orca-setup.in:104
 msgid "Welcome to Orca setup."
 msgstr "Welcome to Orca setup."
 
-#: src/orca/orca-setup.in:110
+#: src/orca/orca-setup.in:105
 msgid "Select default speech synthesizer"
 msgstr "Select default speech synthesizer"
 
-#: src/orca/orca-setup.in:117
+#: src/orca/orca-setup.in:112
 msgid "Speech will not be used.\n"
 msgstr "Speech will not be used.\n"
 
-#: src/orca/orca-setup.in:139
+#: src/orca/orca-setup.in:134
 msgid "Create another voice? enter y or n."
-msgstr "Create another voice? enter y or n."
+msgstr "Create another voice?  Enter y or n."
 
-#: src/orca/orca-setup.in:148
+#: src/orca/orca-setup.in:143
 msgid "Enter voice name: "
 msgstr "Enter voice name: "
 
-#: src/orca/orca-setup.in:156
+#: src/orca/orca-setup.in:151
 msgid "Use key echo, enter y or n: "
-msgstr "Use key echo, enter y or n: "
+msgstr "Use key echo?  Enter y or n: "
 
-#: src/orca/orca-setup.in:179
+#: src/orca/orca-setup.in:174
 msgid "Braille support appears to work, use it?  Enter y or n. "
-msgstr "Braille support appears to work, use it?  Enter y or n. "
+msgstr "Braille support appears to work.  Use it?  Enter y or n. "
 
-#: src/orca/orca.in:46
-msgid "Welcome to Orca."
-msgstr "Welcome to Orca."
-
-#: src/orca/orca.py:81
+#: src/orca/orca.py:117
 msgid "User logged out - shutting down."
 msgstr "User logged out - shutting down."
 
-#: src/orca/orca.py:183
+#. We couldn't initialize the core-- this proably means that we
+#. couldn't activate the accessibility registry
+#: src/orca/orca.py:222
+msgid "The Orca core could not be initialized."
+msgstr "The Orca core could not be initialized."
+
+#: src/orca/orca.py:285
+msgid "Welcome to Orca."
+msgstr "Welcome to Orca."
+
+#: src/orca/orca.py:332
 msgid "goodbye."
 msgstr "goodbye."
 
@@ -237,4 +243,3 @@ msgstr "tree view"
 #: src/orca/rolenames.py:33
 msgid "tab"
 msgstr "tab"
-
