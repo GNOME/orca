@@ -25,10 +25,18 @@
     </copyright>
     <revhistory>
       <revision>
+        <revnumber>0.2</revnumber>
+        <date>03 Mar 2005</date>
+        <authorinitials>wdw</authorinitials>
+        <revremark>More requirements based on discussion with 
+        Peter Korn</revremark>
+      </revision>
+      <revision>
         <revnumber>0.1</revnumber>
         <date>16 Feb 2005</date>
         <authorinitials>wdw</authorinitials>
-        <revremark>First release</revremark>
+        <revremark>First release - Architecture based on Marc
+        Mulcahy's Prototype</revremark>
       </revision>
     </revhistory>
   </bookinfo>
@@ -111,6 +119,20 @@
         which is the window that has keyboard focus.  When first
         starting up and when the active window has changed, Orca will
         provide a short summary of the active window.  The
+        presentation of the summary will follow the &style-guide;.
+        </para>
+
+      </section>
+
+      <section><title>Track and Present Object with Focus</title>
+
+        <para> Orca must be able to track the currently active object.
+        The active object may be different things depending upon
+        context, but includes the following: the object with keyboard
+        focus and the text caret. </para>
+
+        <para> When first starting up and when the active object, Orca
+        will provide a short summary of the active object.  The
         presentation of the summary will follow the &style-guide;.
         </para>
 
@@ -204,6 +226,24 @@
             engines, however, so Orca will support this feature if the
             underlying engine(s) support it.  </para>
           </listitem>
+          <listitem>
+            <para> <emphasis role="bold">Spelling Mode</emphasis> -
+            Orca must be able to optionally spell out words, either
+            letter by letter or by military (e.g., alpha, bravo,
+            charlie) spelling. </para>
+          </listitem>
+          <listitem>
+            <para> <emphasis role="bold">Verbalized
+            Punctuation</emphasis> - Orca must be able to optionally
+            verbalize punctuation. </para>
+          </listitem>
+          <listitem>
+            <para> <emphasis role="bold">Repeated Character
+            Count</emphasis> - Orca must be able to optionally
+            compress the repetition of character by saying something
+            such as "25 dashes" instead of "dash dash dash dash
+            dash..."</para>
+          </listitem>
         </itemizedlist>
       </section>
 
@@ -230,6 +270,10 @@
         support will need to mirror the keyboard event handling?  In
         addition, perhaps the Braille input can also be used to drive
         review mode on the Braille display?  </para>
+
+        <para> &todo; Look at using Braille display and touch cursors 
+        for selection and to relay additional information via speech.
+        </para>
 
       </section>
 
@@ -292,6 +336,62 @@
         application will also follow the &style-guide;, the overall
         presentation depends largely upon the application being
         reviewed.  </para>
+
+        <para> &todo; Add notions of "flat review," "hierarchical review,"
+        and "hybrid review (in/out of lists)". </para>
+
+      </section>
+
+      <section><title>Where Am I?</title>
+
+	<para> Orca will provide a means for a user to determine where
+        the current focus is on the desktop, including which object has 
+        focus, which window it is in, which application, which workspace, 
+        etc. </para>
+
+      </section>
+
+      <section><title>List All Applications</title>
+
+	<para> Orca will provide a means for a user to determine all
+        applications running on the desktop as well as all open windows
+        on the desktop. </para>
+
+      </section>
+
+      <section><title>Watched Objects</title>
+
+	<para> Orca will allow users to indicate interest in an
+	object.  Once interest has been given, Orca will notify the
+	user of changes to that object, whether it or its window has
+	focus or not. </para>
+
+      </section>
+
+      <section><title>Bookmarked Objects</title>
+
+	<para> Orca will allow users to indicate interest in an
+	object.  Once interest has been given, Orca will provide a
+	means for a user to quickly give that object keyboard
+	focus. </para>
+
+      </section>
+
+      <section><title>Search for Objects</title>
+
+	<para> Orca will allow users to enter a string to search for
+	an object in the current window or entire desktop.  If the
+	object is found (i.e., the string matches the accessible
+	name), the object (and it's window if necessary) will be given
+	keyboard focus. </para>
+
+      </section>
+
+      <section><title>Search for Text Based on Attribute</title>
+
+	<para> Orca will allow the user to search for the next
+	occurence of a given attribute (e.g., italics) in a region of
+	text. </para>
 
       </section>
 
@@ -552,6 +652,15 @@
   <chapter id="style-guide"><title>Style Guide</title>
 
     <para> To be written.  </para>
+
+    <para> &todo; Include order of presentation of object information.
+    </para>
+
+    <para> &todo; Include what to do when events come from objects in
+    windows that do not have focus. </para>
+
+    <para> &todo; Include what to do when an object has more than one
+    kind of accessible action. </para>
 
   </chapter>
 
@@ -859,7 +968,7 @@
         components is depicted.</title>
       <mediaobject>
         <imageobject>
-          <imagedata fileref="architecture.jpg" format="jpg">
+          <imagedata fileref="architecture.jpg" format="JPEG">
         </imageobject>
         <textobject>
           <phrase>Orca Architecture</phrase>
@@ -1091,7 +1200,7 @@
 	  "listeners" and "keybindings" attributes.</title>
 	  <mediaobject>
 	    <imageobject>
-	      <imagedata fileref="script.jpg" format="jpg">
+	      <imagedata fileref="script.jpg" format="JPEG">
 	    </imageobject>
 	    <textobject>
 	      <phrase>Orca Architecture</phrase>
