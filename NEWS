@@ -1,1 +1,4 @@
-No news is good news
+0.0.13
+* Added spec file
+* Sorted out packaging issues
+* Fixed automatic dialog reading
