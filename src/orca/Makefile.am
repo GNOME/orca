@@ -18,7 +18,9 @@ orca_python_PYTHON = \
 	gaim.py \
 	gcalctool.py \
 	Gecko.py \
+	gnome-terminal.py \
 	kbd.py \
+	metacity.py \
 	orca.py \
 	orca_i18n.py \
 	rolenames.py \
