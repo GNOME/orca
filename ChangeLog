@@ -1,3 +1,7 @@
+2004-09-09  Ankit Patel <ankit@redhat.com>
+
+	* configure.in: Added 'gu' (Gujarati) to ALL_LINGUAS.
+
 2004-08-27  Marc Mulcahy  <marc.mulcahy@sun.com>
 
 	* src/orca/orca.py (init): Display an error message and exit if
