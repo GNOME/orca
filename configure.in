@@ -2,7 +2,7 @@ AC_INIT(ChangeLog)
 
 ORCA_MAJOR_VERSION=0
 ORCA_MINOR_VERSION=0
-ORCA_MICRO_VERSION=12
+ORCA_MICRO_VERSION=13
 ORCA_VERSION="$ORCA_MAJOR_VERSION.$ORCA_MINOR_VERSION.$ORCA_MICRO_VERSION"
 AM_INIT_AUTOMAKE(orca, $ORCA_VERSION)
 AC_SUBST(ORCA_VERSION)
@@ -80,16 +80,12 @@ AM_PATH_PYTHON(2.0)
 
 AM_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(Could not find Python yeaders needed to build Python extensions)])
 
-# There should be a better way to do this
-
-PYTHON_PKGDIR=$prefix/lib/python$PYTHON_VERSION/site-packages
-AC_SUBST(PYTHON_PKGDIR)
-
 AC_SUBST(orca_LIBS)
 AC_SUBST(orca_CFLAGS)
 
 AC_OUTPUT([ 
 Makefile
+orca.spec
 docs/Makefile
 po/Makefile.in
 src/Makefile
