@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-28 02:14-0400\n"
-"PO-Revision-Date: 2004-08-28 14:20-0400\n"
+"POT-Creation-Date: 2004-10-17 15:12-0400\n"
+"PO-Revision-Date: 2004-10-17 14:20-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -151,6 +151,10 @@ msgstr "Input"
 #: src/orca/gaim.py:139
 msgid "Message Log"
 msgstr "Message Log"
+
+#: src/orca/metacity.py:40
+msgid "inaccessible"
+msgstr "inaccessible"
 
 #: src/orca/orca-setup.in:34
 msgid "Creating .orca directory."
