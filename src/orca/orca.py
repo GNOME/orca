@@ -124,9 +124,7 @@ def onChildrenChanged (e):
             s = script.script (app)
             s.load ()
             scripts[app] = s
-            speech.say ("default", "Script for " + app.name + " loaded")
         elif e.type == "object:children-changed:remove":
-            speech.say ("default", "unloading")
             app = apps[e.detail1]
             del scripts[app]
         buildAppList ()
@@ -280,7 +278,6 @@ def start ():
 
     if win:
 
-        speech.say ("default", "Found active application")
 
         # Active the script for this window
 
