@@ -2,6 +2,7 @@
 
 import a11y
 import speech
+import default
 
 def onTextInserted (e):
     if e.source.role != "terminal":
@@ -24,4 +25,4 @@ def onTextDeleted (event):
             and (event.source.parent != a11y.focusedObject):
         pass
     else:
-        brlUpdateText (event.source)
+        default.brlUpdateText (event.source)
