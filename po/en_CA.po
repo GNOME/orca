@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-26 02:29-0500\n"
-"PO-Revision-Date: 2005-03-26 14:20-0400\n"
+"POT-Creation-Date: 2005-04-01 12:48-0500\n"
+"PO-Revision-Date: 2005-04-01 14:20-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -132,27 +132,27 @@ msgstr "back"
 msgid "bar"
 msgstr "bar"
 
-#: ../src/orca/default.py:70
+#: ../src/orca/default.py:71
 msgid "available"
 msgstr "available"
 
-#: ../src/orca/default.py:72
+#: ../src/orca/default.py:73
 msgid "unavailable"
 msgstr "unavailable"
 
-#: ../src/orca/default.py:134
+#: ../src/orca/default.py:135
 msgid "shortcut"
 msgstr "shortcut"
 
-#: ../src/orca/default.py:139
+#: ../src/orca/default.py:140
 msgid "accelerator"
 msgstr "accelerator"
 
-#: ../src/orca/default.py:156
+#: ../src/orca/default.py:157
 msgid " dot dot dot"
 msgstr " dot dot dot"
 
-#: ../src/orca/default.py:1114
+#: ../src/orca/default.py:1127
 msgid "Not a document."
 msgstr "Not a document."
 
@@ -226,17 +226,21 @@ msgstr "Use key echo?  Enter y or n: "
 msgid "Braille support appears to work, use it?  Enter y or n. "
 msgstr "Braille support appears to work.  Use it?  Enter y or n. "
 
-#: ../src/orca/orca.py:92
+#: ../src/orca/orca.py:93
 msgid "User logged out - shutting down."
 msgstr "User logged out - shutting down."
 
-#: ../src/orca/orca.py:292 ../src/orca/orca.py:296
+#: ../src/orca/orca.py:296 ../src/orca/orca.py:300
 msgid "Welcome to Orca."
 msgstr "Welcome to Orca."
 
-#: ../src/orca/orca.py:340
+#: ../src/orca/orca.py:344
 msgid "goodbye."
 msgstr "goodbye."
+
+#: ../src/orca/orca.py:346
+msgid "Goodbye."
+msgstr "Goodbye."
 
 #: ../src/orca/rolenames.py:30
 msgid "button"
