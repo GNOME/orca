@@ -39,5 +39,4 @@ import orca
 import speech
 
 orca.init ()
-speech.say ("default", _("Welcome to Orca."))
 orca.start ()
