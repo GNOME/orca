@@ -1,3 +1,7 @@
+2005-02-03  Alessio Frusciante  <algol@firenze.linux.it>
+
+	* configure.in: Added "it" (Italian) to ALL_LINGUAS.
+
 2004-01-17	Amanpreet Singh Alam <amanpreetalam@yahoo.com>
 
 	* configure.in: "pa" is Added to ALL_LINGUAS

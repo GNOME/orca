@@ -1,0 +1,250 @@
+# Italian translation of Orca
+# Traduzione italiana di Orca
+# Copyright (C) 2005 Sun Microsystems Inc.
+# This file is distributed under the same license as the Orca package.
+# Aldo "Xoen" Giambelluca <xoen@email.it>, 2005.
+msgid ""
+msgstr ""
+"Project-Id-Version: Orca 0.1.0\n"
+"POT-Creation-Date: 2005-01-18 11:22+0100\n"
+"PO-Revision-Date: 2005-01-24 07:43+0100\n"
+"Last-Translator: Aldo \"Xoen\" Giambelluca <xoen@email.it>\n"
+"Language-Team: Italian <tp@lists.linux.it>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/orca/Gecko.py:180
+msgid "No page to read."
+msgstr "Nessuna pagina da leggere."
+
+#: src/orca/Gecko.py:188
+msgid "Reading web page failed."
+msgstr "Lettura della pagina web fallita."
+
+#: src/orca/chnames.py:27
+msgid "space"
+msgstr "spazio"
+
+#: src/orca/chnames.py:28
+msgid "bang"
+msgstr "punto esclamativo"
+
+#: src/orca/chnames.py:29
+msgid "quote"
+msgstr "virgolette"
+
+#: src/orca/chnames.py:30
+msgid "number"
+msgstr "numero"
+
+#: src/orca/chnames.py:31
+msgid "dollar"
+msgstr "dollaro"
+
+#: src/orca/chnames.py:32
+msgid "percent"
+msgstr "percentuale"
+
+#: src/orca/chnames.py:33
+#, fuzzy
+msgid "and"
+msgstr "e commerciale"
+
+#: src/orca/chnames.py:34
+msgid "tick"
+msgstr "apice"
+
+#: src/orca/chnames.py:35
+msgid "left"
+msgstr "sinistra"
+
+#: src/orca/chnames.py:36
+msgid "right"
+msgstr "destra"
+
+#: src/orca/chnames.py:37
+msgid "star"
+msgstr "asterisco"
+
+#: src/orca/chnames.py:38
+msgid "plus"
+msgstr "più"
+
+#: src/orca/chnames.py:39
+msgid "comma"
+msgstr "virgola"
+
+#: src/orca/chnames.py:40
+msgid "dash"
+msgstr "trattino"
+
+#: src/orca/chnames.py:41
+msgid "dot"
+msgstr "punto"
+
+#: src/orca/chnames.py:42
+msgid "slash"
+msgstr "slash"
+
+#: src/orca/chnames.py:43
+msgid "question"
+msgstr "punto interrogativo"
+
+#: src/orca/chnames.py:44
+msgid "collun"
+msgstr "due punti"
+
+#: src/orca/chnames.py:45
+msgid "semi"
+msgstr "punto e virgola"
+
+#: src/orca/chnames.py:46
+msgid "less"
+msgstr "minore"
+
+#: src/orca/chnames.py:47
+msgid "greater"
+msgstr "maggiore"
+
+#: src/orca/chnames.py:48
+msgid "left bracket"
+msgstr "parentesi aperta"
+
+#: src/orca/chnames.py:49
+msgid "right bracket"
+msgstr "parentesi chiusa"
+
+#: src/orca/chnames.py:50
+msgid "left brace"
+msgstr "parentesi graffa aperta"
+
+#: src/orca/chnames.py:51
+msgid "right brace"
+msgstr "parentesi graffa chiusa"
+
+#: src/orca/chnames.py:52
+msgid "back"
+msgstr "backslash"
+
+#: src/orca/chnames.py:53
+msgid "bar"
+msgstr "barra verticale"
+
+#: src/orca/default.py:834
+msgid "Not a document."
+msgstr "Non è un documento."
+
+#: src/orca/gaim.py:55
+msgid " chat"
+msgstr " chat"
+
+#: src/orca/gaim.py:81
+msgid " instant message"
+msgstr " messaggio istantaneo"
+
+#: src/orca/gaim.py:137
+#, fuzzy
+msgid "Input"
+msgstr "Input"
+
+#: src/orca/gaim.py:139
+msgid "Message Log"
+msgstr "Log dei messaggi"
+
+#: src/orca/metacity.py:40
+msgid "inaccessible"
+msgstr "inaccessibile"
+
+#: src/orca/orca-setup.in:34
+msgid "Creating .orca directory."
+msgstr "Creazione directory .orca."
+
+#: src/orca/orca-setup.in:61
+#, c-format
+msgid "Select %s voice: "
+msgstr "Selezionare voce %s: "
+
+#: src/orca/orca-setup.in:65 src/orca/orca-setup.in:107
+#, c-format
+msgid "%d. %s"
+msgstr "%d. %s"
+
+#: src/orca/orca-setup.in:68
+msgid "Enter choice."
+msgstr "Inserire scelta."
+
+#: src/orca/orca-setup.in:69 src/orca/orca-setup.in:109
+msgid "Enter choice: "
+msgstr "Inserire scelta: "
+
+#: src/orca/orca-setup.in:91
+msgid "No working GNOME Speech drivers found."
+msgstr "Non è stato trovato nessun driver GNOME Speech funzionante."
+
+#: src/orca/orca-setup.in:94
+msgid "Select default synthesizer:"
+msgstr "Selezionare sintetizzatore vocale predefinito:"
+
+#: src/orca/orca-setup.in:104
+msgid "Welcome to Orca setup."
+msgstr "Benvenuto nelle impostazioni di Orca"
+
+#: src/orca/orca-setup.in:105
+msgid "Select default speech synthesizer"
+msgstr "Selezionare sintetizzatore vocale predefinito"
+
+#: src/orca/orca-setup.in:112
+msgid "Speech will not be used.\n"
+msgstr "Speech non verrà usato.\n"
+
+#: src/orca/orca-setup.in:134
+msgid "Create another voice? enter y or n."
+msgstr "Creare un'altra voce? inserire y o n."
+
+#: src/orca/orca-setup.in:143
+msgid "Enter voice name: "
+msgstr "Inserire nome voce: "
+
+#: src/orca/orca-setup.in:151
+#, fuzzy
+msgid "Use key echo, enter y or n: "
+msgstr "Usare eco tasti, inserire y o n: "
+
+#: src/orca/orca-setup.in:174
+msgid "Braille support appears to work, use it?  Enter y or n. "
+msgstr "Il supporto per braille sembra funzionare, usarlo? Inserire y o n. "
+
+#: src/orca/orca.py:117
+msgid "User logged out - shutting down."
+msgstr "Utente uscito - spegnimento."
+
+#. We couldn't initialize the core-- this proably means that we
+#. couldn't activate the accessibility registry
+#: src/orca/orca.py:222
+msgid "The Orca core could not be initialized."
+msgstr "Impossibile inizializzare il nucleo di Orca."
+
+#: src/orca/orca.py:285
+msgid "Welcome to Orca."
+msgstr "Benvenuto in Orca"
+
+#: src/orca/orca.py:332
+msgid "goodbye."
+msgstr "ciao."
+
+#: src/orca/rolenames.py:28
+msgid "button"
+msgstr "pulsante"
+
+#: src/orca/rolenames.py:29
+msgid "list view"
+msgstr "vista lista"
+
+#: src/orca/rolenames.py:30 src/orca/rolenames.py:31
+msgid "tree view"
+msgstr "vista ad albero"
+
+#: src/orca/rolenames.py:33
+msgid "tab"
+msgstr "linguetta"
