@@ -20,12 +20,9 @@
 from core import ORBit, bonobo
 import sys
 
-# Import user settings if they're present
+# Import user settings
 
-try:
-    import settings
-except:
-    settings = None
+import settings
 
 # Import character pronunciations
 
@@ -158,22 +155,26 @@ def init():
         if isInitialized:
             drivers.append (driver)
 
-    # Create the speakers - If we have no per-user settings.py file,
-    # which is the case when the speech module is used by orca-setup,
-    # then don't do this
+    # Create the speakers
 
-    if settings is not None:
-        for voiceName in settings.voices.keys ():
-            desc = settings.voices[voiceName]
-            s = createSpeaker (desc[0], desc[1])
-            if s is not None:
-                s = s._narrow (GNOME.Speech.Speaker)
-                s.setParameterValue ("rate", desc[2])
-                s.setParameterValue ("pitch", desc[3])
-                s.setParameterValue ("volume", desc[4])
-                speakers[voiceName] = s
-                s.registerSpeechCallback (cb._this())
+    for voiceName in settings.voices.keys ():
+        desc = settings.voices[voiceName]
+        s = createSpeaker (desc[0], desc[1])
+        if s is not None:
+            s = s._narrow (GNOME.Speech.Speaker)
+            s.setParameterValue ("rate", desc[2])
+            s.setParameterValue ("pitch", desc[3])
+            s.setParameterValue ("volume", desc[4])
+            speakers[voiceName] = s
+            s.registerSpeechCallback (cb._this())
 
+    # If no speakers were defined, select the first voice of the first
+    # working driver as the default
+
+    if len(speakers) == 0 and len(drivers) > 0:
+            voices = drivers[0].getAllVoices ()
+            if len(voices) > 0:
+                speakers["default"] = drivers[0].createSpeaker(voices[0])._narrow(GNOME.Speech.Speaker)
     initialized = True
     return True
 
