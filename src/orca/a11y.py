@@ -69,12 +69,9 @@ class Accessible:
         
         Returns the associated Python Accessible.
         """
-        
-        try:
-            existing = Accessible.cache[acc]
+
+        if Accessible.cache.has_key (acc):
             return
-        except:
-            pass
 
         # The acc reference might be an Accessibility_Accessible or an
         # Accessibility_Application, so try both
@@ -192,24 +189,24 @@ class Accessible:
         # [[[TODO: WDW - this code seems like it might break if this
         # object is an application to begin with.]]]
         #
-        debug.println("Finding app for source=(" + self.name
-                      + ") role=(" + getRoleName (self) + ")")
+        #debug.println("Finding app for source=(" + self.name
+        #              + ") role=(" + getRoleName (self) + ")")
         obj = self
         while (obj.parent != None) and (obj != obj.parent):
             obj = obj.parent
-            debug.println("--> parent=(" + obj.name
-                          + ") role=(" + getRoleName (obj) + ")")
+            #debug.println("--> parent=(" + obj.name
+            #              + ") role=(" + getRoleName (obj) + ")")
 
         if (obj.parent != None):
-            debug.println("--> obj=(" + obj.name
-                          + ") role=(" + getRoleName (obj)
-                          + ") parent=(" + obj.parent + ")")
+            #debug.println("--> obj=(" + obj.name
+            #              + ") role=(" + getRoleName (obj)
+            #              + ") parent=(" + obj.parent.name + ")")
             if (obj == obj.parent):
-                debug.println("    obj == obj.parent!")
-        else:
-            debug.println("--> obj=(" + obj.name
-                          + ") role=(" + getRoleName (obj)
-                          + ") parent=(None)")
+                debug.println("    ERROR: obj == obj.parent!")
+        #else:
+        #    debug.println("--> obj=(" + obj.name
+        #                  + ") role=(" + getRoleName (obj)
+        #                  + ") parent=(None)")
             
         if (obj == obj.parent) or (obj.role != "application"):
             self.app = None
@@ -262,21 +259,20 @@ class Accessible:
         Returns the child at the given index.  [[[TODO: WDW - what to do
         when an index out of bounds occurs?]]]
         """
-        
-        acc = self.acc.getChildAtIndex (index)
-        newChild = makeAccessible(acc)
 
         # Save away details we now know about this child
         #
-        newChild.index = index
-        newChild.parent = self
         try:
+            acc = self.acc.getChildAtIndex (index)
+            newChild = makeAccessible(acc)
+            newChild.index = index
+            newChild.parent = self
             newChild.app = self.app
+            return newChild
         except:
-            pass
+            debug.pringException ()
+            return None
         
-        return newChild
-
 
 def makeAccessible (acc):
     """Make an Accessible.  This is used instead of a simple calls to
@@ -291,11 +287,12 @@ def makeAccessible (acc):
 
     if acc is None:
         return None
-    
-    try:
+
+    if Accessible.cache.has_key (acc):
         obj = Accessible.cache[acc]
-    except:
+    else:
         obj = Accessible (acc)
+
     return obj
 
 
@@ -355,10 +352,10 @@ def onFocus (e):
 
     # We need this hack fo the time being due to a bug in Nautilus,
     # which makes it impossible to traverse to the application from
-    # some objects within Nautilus.  [[[TODO: WDW - verify and
-    # possibly remove this hack at some point.]]]
+    # some objects within Nautilus.  [[[TODO: WDW - removed this because
+    # it was causing a very odd interaction with Mozilla.]]]
     #
-    focusedObject.app = focusedApp
+    #focusedObject.app = focusedApp
 
 
 def onNameChanged (e):
@@ -368,12 +365,9 @@ def onNameChanged (e):
     Arguments:
     - e: the Python Event object
     """
-    
-    try:
-        obj = Accessible.cache[e.source]
-        obj.name = e.any_data
-    except:
-        pass
+
+    obj = makeAccessible (e.source)
+    obj.name = e.any_data
 
 
 def onDescriptionChanged (e):
@@ -384,11 +378,8 @@ def onDescriptionChanged (e):
     - e: the Python Event object
     """
 
-    try:
-        obj = Accessible.cache[e.source]
-        obj.description = e.any_data
-    except:
-        pass
+    obj = makeAccessible (e.source)
+    obj.description = e.any_data
 
 
 def onParentChanged (e):
@@ -399,16 +390,13 @@ def onParentChanged (e):
     - e: the Python Event object
     """
 
-    try:
-        # [[[TODO: WDW - might want to see what this del is doing - we
-        # might need to del the parent and app from the cache so we
-        # don't run into a memory leak.]]]
-        #
-        obj = Accessible.cache[e.source]
+    obj = makeAccessible (e.source)
+    
+    if getattr (obj, "parent", None):
         del obj.parent
+
+    if getattr (obj, "app", None):
         del obj.app
-    except:
-        pass
 
 
 def onStateChanged (e):
@@ -419,11 +407,11 @@ def onStateChanged (e):
     - e: the Python Event object
     """
 
-    try:
-        obj = Accessible.cache[e.source]
+    obj = makeAccessible (e.source)
+    
+    if getattr (obj, "state", None):
         del obj.state
-    except:
-        pass
+
 
 def onChildrenChanged (e):
     """Core module event listener called when an object's child count
@@ -432,11 +420,11 @@ def onChildrenChanged (e):
     Arguments:
     - e: the Python Event object
     """
-    try:
-        obj = Accessible.cache[e.source]
+
+    obj = makeAccessible (e.source)
+
+    if getattr (obj, "childCount", None):
         del obj.childCount
-    except:
-        pass
 
 
 def onDefunct (e):
@@ -446,10 +434,9 @@ def onDefunct (e):
     Arguments:
     - e: the Python Event object
     """
-    try:
+
+    if Accessible.cache.has_key (e.source):
         del Accessible.cache[e.source]
-    except:
-        pass
 
 
 
@@ -563,9 +550,9 @@ def getObjects (root):
         #
         i = tmp.index
         while tmp != root and i >= tmp.parent.childCount-1:
-            try:
-                t = objvisitted[tmp]
-            except:
+            if objvisitted.has_key (tmp):
+                pass
+            else:
                 objlist.append (tmp)
                 objvisitted[tmp] = True
             tmp = tmp.parent
@@ -575,9 +562,9 @@ def getObjects (root):
         #
         if tmp == root:
             break
-        try:
-            t = objvisitted[tmp]
-        except:
+        elif objvisitted.has_key (tmp):
+            pass
+        else:
             objlist.append (tmp)
             objvisitted[tmp] = True
 

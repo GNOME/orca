@@ -206,7 +206,7 @@ def keyEcho (key):
     - key: a string representing the key name to echo.
     """
     
-    if not settings.keyEcho:
+    if not getattr (settings, "keyEcho", False):
         return
     if key.isupper ():
         speech.say ("uppercase", key)
@@ -259,7 +259,7 @@ def onKeyEvent (event):
             # Key presses clear the Braille display
             # [[[TODO:  WDW - is this what we want?]]]
             #
-            if settings.useBraille:
+            if getattr (settings, "useBraille", False):
                 brl.clear ()
     else:
         if event.event_string == "KP_Insert":
@@ -272,11 +272,14 @@ def onKeyEvent (event):
 
         # Execute a key binding if we have one
         #
-        try:
+        if keybindings.has_key (keystring):
             func = keybindings[keystring]
-            return func ()
-        except:
-            return False
+            try:
+                return func ()
+            except:
+                debug.printException ()
+                
+        return False
 
 
 def init ():

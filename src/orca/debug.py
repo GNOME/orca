@@ -24,8 +24,17 @@ import core
 import orca
 import settings                   # user settings
 from rolenames import getRoleName # localized role names
+import sys
+import traceback
 
+def debugEnabled ():
+    """Returns True if the debug flag is set to True in settings.py; False
+    otherwise.
+    """
 
+    return getattr (settings, "debug", False)
+
+    
 def getStates (obj):
     """Returns a space-delimited string composed of the given object's
     Accessible state attribute.
@@ -106,21 +115,39 @@ def getStates (obj):
     return stateString;
 
 
-def println (text):
-    """Prints the text to stdout if settings.debug is enabled.
+def printException ():
+    """Prints out information regarding the current exception.
+
+    Arguments:
+    - indent: a string containing spaces for indentation
+    """
+
+    println ()
+    if debugEnabled ():
+        traceback.print_exc ()
+    println ()
+
+
+def printStack ():
+    """Prints out the current stack.
+    """
+
+    println ()
+    if debugEnabled ():
+        traceback.print_stack ()
+    println ()
+
+
+def println (text = ""):
+    """Prints the text to stdout if debug is enabled.
     
     Arguments:
     - text: the text to print
     """
 
-    # There may not even be a debug field in settings, so we need to
-    # catch this.
-    #
-    try:
-        if settings.debug:
-            print text
-    except:
-        pass
+    if debugEnabled ():
+        print text
+
 
 def listDetails (indent, accessible):
     """Lists the details of the given accessible with the given

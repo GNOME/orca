@@ -50,6 +50,7 @@ class Script:
     #
     cache = {} 
 
+
     def __init__ (self, app):
 
         """Creates a script.  Populates the "listeners" table using the module
@@ -67,14 +68,17 @@ class Script:
         Arguments:
         - app: the Python Accessible application to create a script for
         """
-        
-        try:
-            existing = Script.cache[app]
+
+        if Script.cache.has_key (app):
             return
-        except:
-            pass
 
         self.app = app
+        
+        if app:
+            self.name = self.app.name
+        else:
+            self.name = "default"
+            
         self.listeners = {}
         self.keybindings = {}
         
@@ -85,14 +89,10 @@ class Script:
 
         # Load app-specific script and keybindings
         #
-        try:
-            loadCustomScript = settings.useCustomScripts
-        except:
-            loadCustomScript = True
-            
-        if loadCustomScript:
+        if getattr (settings, "useCustomScripts", True):
             try:
                 self.mod = __import__ (self.app.name)
+                self.name = self.app.name + " (custom)"
             except:
                 self.mod = None
             try:
@@ -110,13 +110,9 @@ class Script:
         # to handle Braille key events much like we handle keyboard
         # events.]]]
         #
-        try:
-            func = getattr (self.mod, "onBrlKey")
-        except:
-            try:
-                func = getattr (self.default,"onBrlKey")
-            except:
-                func = None
+        func = getattr (self.mod, "onBrlKey", None)
+        if func is None:
+            func = getattr (self.default,"onBrlKey", None)
         if func:
             self.onBrlKey = func
 
@@ -130,13 +126,9 @@ class Script:
         # "listeners" dictionary.
         #
         for key in a11y.dispatcher.keys ():
-            try:
-                func = getattr (self.mod, key)
-            except:
-                try:
-                    func = getattr (self.default, key)
-                except:
-                    func = None
+            func = getattr (self.mod, key, None)
+            if func is None:
+                func = getattr (self.default, key, None)
             if func:
                 type = a11y.dispatcher[key]
                 self.listeners[type] = func
@@ -151,30 +143,24 @@ class Script:
         #
         for key in self.default_bindings.keybindings.keys ():
             funcname = self.default_bindings.keybindings[key]
-            try:
-                func = getattr (self.mod, funcname)
-            except:
-                try:
-                    func = getattr (self.default, funcname)
-                except:
-                    func = None
+            func = getattr (self.mod, funcname, None)
+            if func is None:
+                func = getattr (self.default, funcname, None)
             if func:
                 self.keybindings[key] = func
 
         if self.bindings_mod:
             for key in self.bindings_mod.keybindings.keys ():
                 funcname = self.bindings_mod.keybindings[key]
-                try:
-                    func = getattr (self.mod, funcname)
-                except:
-                    try:
-                        func = getattr (self.default, funcname)
-                    except:
-                        func = None
+                func = getattr (self.mod, funcname, None)
+                if func is None:
+                    func = getattr (self.default, funcname, None)
                 if func:
                     self.keybindings[key] = func
 
+        Script.cache[app] = self
 
+        
     def reload (self):
         """Reloads the default and app-specific modules for the script.
         
@@ -220,7 +206,7 @@ def getScript (app):
     
     try:
         script = Script.cache[app]
-        s.reload ()
+        script.reload ()
     except:
         script = Script (app)
         
@@ -239,4 +225,3 @@ def deleteScript (app):
     else:
         del Script.cache[app]
     
-

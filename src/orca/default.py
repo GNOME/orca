@@ -56,7 +56,108 @@ import debug
 #                                                                      #
 ########################################################################
 
+def getAvailabilityForSpeech (obj):
+    """Returns a string to be spoken that describes the availability
+    of the given object.
 
+    Arguments:
+    - obj: the Accessible object
+
+    Returns a string to be spoken.
+    """
+    
+    if obj.state.count (core.Accessibility.STATE_SENSITIVE):
+        return _("available") + ". "
+    else:
+        return _("unavailable") + ". "
+
+    
+def getNameAndRoleForSpeech (obj):
+    """Returns a string to be spoken that describes the name and role
+    of the given object.
+
+    Arguments:
+    - obj: the Accessible object
+
+    Returns a string to be spoken.
+    """
+
+    text = a11y.getLabel (obj) + " " + getRoleName(obj) + ". "
+    return text;
+
+
+def getAcceleratorForSpeech (obj):
+    """Returns a string to be spoken that describes the keyboard
+    accelerator (and possibly shortcut) for the given object.
+
+    Arguments:
+    - obj: the Accessible object
+
+    Returns a string to be spoken.
+    """
+
+    try:
+        action = a11y.getAction(obj)
+    except:
+        pass
+
+    if action is None:
+        return ""
+
+    # [[[TODO: WDW - assumes the first keybinding is all that we care about.]]]
+    #
+    bindingStrings = action.getKeyBinding (0).split (';')
+
+    #debug.println ("KEYBINDINGS: " + action.getKeyBinding (0))
+                  
+    # [[[TODO: WDW - assumes menu items have three bindings]]]
+    #
+    if len (bindingStrings) == 3:
+        mnemonic       = bindingStrings[0]
+        fullShortcut   = bindingStrings[1]
+        accelerator    = bindingStrings[2]
+    elif len (bindingStrings) > 0:
+        fullShortcut   = bindingStrings[0]
+        accelerator    = ""
+    else:
+        fullShortcut   = ""
+        accelerator    = ""
+        
+    fullShortcut = fullShortcut.replace("<","")
+    fullShortcut = fullShortcut.replace(">"," ")
+    fullShortcut = fullShortcut.replace(":"," ")
+
+    accelerator  = accelerator.replace("<","")
+    accelerator  = accelerator.replace(">"," ")
+
+    if len (fullShortcut) > 0:
+        text = _("shortcut") + " " + fullShortcut + ". "
+    else:
+        text = ""
+
+    if len (accelerator) > 0:
+        text += _("accelerator") + " " + accelerator + ". "
+        
+    return text;
+
+
+def speakButton (obj):
+    """Speaks the current button's name, role, any accelerators, and
+    availability.
+
+    Arguments:
+    - obj: the Accessible menu item or a menu
+    """
+
+    text = getNameAndRoleForSpeech (obj) \
+           + getAcceleratorForSpeech (obj) \
+           + getAvailabilityForSpeech (obj)
+    
+    text = text.replace ("...", _(" dot dot dot"), 1)
+
+    speech.say ("default", text)
+
+    
 def menuPresenter (obj, already_focused):
     """Speaks the menu item that is currently selected and updates
     the Braille display to show all menu items, with the cursor under
@@ -89,14 +190,20 @@ def menuPresenter (obj, already_focused):
     #
     brl.refresh ()
 
-    # Speak the selected menu item.   [[[TODO: WDW - can we get the
-    # role name from some at-spi constant?]]]
-    #
-    if obj.role == "menu item":
-        text = a11y.getLabel (obj)
-    else:
-        text = a11y.getLabel (obj) + " " + getRoleName(obj)
-    speech.say ("default", text)
+    speakButton (obj)
+
+    i = 0
+    itemCount = 0
+    while i < obj.childCount:
+        child = obj.child (i)
+        if child.role != "separator":
+            itemCount += 1
+        i += 1
+        
+    if itemCount == 1:
+        speech.say ("default", "one item.")
+    elif itemCount > 1:
+        speech.say ("default", "%d items." % itemCount)
 
 
 def pageTabPresenter (obj, already_focused):
@@ -143,7 +250,7 @@ def brlUpdateText (obj):
     - obj: an Accessible object that implements the AccessibleText
            interface
     """
-    
+
     parent = obj.parent
     if parent.role == "combo box":
         label = a11y.getLabel (parent)
@@ -425,7 +532,7 @@ def checkBoxPresenter (obj, already_focused):
         if already_focused == False:
             text = label + " " + role
         text = text + " not checked"
-        if settings.useBraille:
+        if getattr (settings, "useBraille", False):
             brltext = "( ) " + label
     brl.writeMessage (brltext)
     brl.refresh ()
@@ -486,11 +593,10 @@ def buttonPresenter (obj, already_focused):
     - obj: the Accessible button
     - already_focused: if False, the obj just received focus
     """
-    
+
     name = a11y.getLabel (obj)
     brl.writeMessage (name)
-    text = name + " " + getRoleName (obj)
-    speech.say ("default", text)
+    speakButton (obj)
 
 
 def defaultPresenter (obj, has_focus):
@@ -502,6 +608,8 @@ def defaultPresenter (obj, has_focus):
     - already_focused: if False, the obj just received focus
     """
 
+    #debug.println ("Using default presenter.")
+    
     text = a11y.getLabel (obj) + " " + getRoleName (obj)
     brl.writeMessage (text)
     speech.say ("default", text)
@@ -551,6 +659,7 @@ presenters["page tab"] = pageTabPresenter
 presenters["text"] = textPresenter
 presenters["password text"] = textPresenter
 presenters["check box"] = checkBoxPresenter
+presenters["check menu item"] = checkBoxPresenter
 presenters["tree table"] = tablePresenter
 presenters["tree"] = tablePresenter
 presenters["table"] = tablePresenter
@@ -558,7 +667,9 @@ presenters["combo box"] = comboBoxPresenter
 presenters["dialog"] = dialogPresenter
 presenters["alert"] = dialogPresenter
 presenters["radio button"] = radioButtonPresenter
+presenters["radio menu item"] = checkBoxPresenter
 presenters["push button"] = buttonPresenter
+presenters["button"] = buttonPresenter
 
 
 ########################################################################
@@ -579,11 +690,14 @@ def onWindowActivated (event):
     """
 
     global presenters
-    
-    try:
+
+    if presenters.has_key (event.source.role):
         p = presenters[event.source.role]
-        p (event.source, False)
-    except:
+        try:
+            p (event.source, False)
+        except:
+            debug.printException ()
+    else:
         defaultPresenter (event.source, False)
 
 
@@ -596,12 +710,14 @@ def onFocus (event):
     
     global presenters
 
-    try:
+    if presenters.has_key (event.source.role):
         p = presenters[event.source.role]
-        p (event.source, False)
-    except:
+        try:
+            p (event.source, False)
+        except:
+            debug.printException ()
+    else:
         defaultPresenter (event.source, False)
-        return
 
 
 # This dictionary defines the presenters which should be called when
@@ -631,7 +747,7 @@ def onStateChanged (event):
     
     # Should we re-present the object?
     #
-    try:
+    if state_change_notifiers.has_key (event.source.role):
         notifiers = state_change_notifiers[event.source.role]
         found = False
         for state in notifiers:
@@ -639,13 +755,15 @@ def onStateChanged (event):
                 found = True
                 break
         if found:
-            try:
+            if presenters.has_key (event.source.role):
                 p = presenters[event.source.role]
-                p (event.source, True)
-            except:
+                try:
+                    p (event.source, True)
+                except:
+                    debug.printException ()
+                    defaultPresenter (event.source, True)
+            else:
                 defaultPresenter (event.source, True)
-    except:
-        pass
 
 
 # This dictionary defines which presenters should be used if an
@@ -666,11 +784,12 @@ def onSelectionChanged (event):
     
     # Do we care?
     #
-    try:
+    if selection_changed_handlers.has_key (event.source.role):
         p = selection_changed_handlers[event.source.role]
-        p (event.source, True)
-    except:
-        pass
+        try:
+            p (event.source, True)
+        except:
+            debug.printException ()
     
 
 def onCaretMoved (event):
@@ -756,8 +875,6 @@ def onTextDeleted (event):
             speech.say ("uppercase", text)
         else:
             speech.say ("default", text)
-
-
 
 
 # Quit the screen reader
@@ -889,6 +1006,7 @@ def onBrlKey (region, position):
         h = brl_key_handlers[a11y.focusedObject.getRoleName ()]
         h (a11y.focusedObject, region, position)
     except:
+        debug.printException ()
         # We don't have a specific handler - see if the focused object
         # has an AccessibleAction interface, and if so, do the first
         # action it lists

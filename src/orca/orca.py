@@ -51,12 +51,9 @@ def buildAppList ():
     i = core.desktop.childCount-1
     while i >= 0:
         acc = core.desktop.getChildAtIndex (i)
-        try:
-            app = a11y.makeAccessible(acc)
-            if app != None:
-                apps.insert (0, app)
-        except:
-            pass
+        app = a11y.makeAccessible(acc)
+        if app != None:
+            apps.insert (0, app)
         i = i-1
 
 
@@ -72,8 +69,9 @@ def activateApp (app):
     speech.stop ("default")
 
     s = script.getScript (app)
+    debug.println ("ACTIVATED SCRIPT: " + s.name)
     kbd.keybindings = s.keybindings
-    brl.onBrlKey = s.onBrlKey
+    brl.onBrlKey = s.onBrlKey    
     
 
 # Track
@@ -101,12 +99,18 @@ def onChildrenChanged (e):
             obj = core.desktop.getChildAtIndex (e.detail1)
             app = a11y.makeAccessible (obj)
         elif e.type == "object:children-changed:remove":
-            app = apps[e.detail1]
-            script.deleteScript (app)
+            try:
+                # [[[TODO: WDW - understand why the e.detail1 app might
+                # not always be in the apps list.]]]
+                #
+                app = apps[e.detail1]
+                script.deleteScript (app)
+            except:
+                pass
             
-        # [[[WDW - Note the call to buildAppList - that will update
-        # the apps[] list.  If this logic is changed in the future,
-        # the apps list will most likely needed to be updated here.
+        # [[[TODO: WDW - Note the call to buildAppList - that will update the
+        # apps[] list.  If this logic is changed in the future, the apps list
+        # will most likely needed to be updated here.]]]
         #
         buildAppList ()
 
@@ -120,7 +124,8 @@ def onWindowActivated (e):
     - e: at-spi event from the at-api registry
     """
 
-    activateApp (a11y.makeAccessible(e.source).app)
+    acc = a11y.makeAccessible (e.source)
+    activateApp (acc.app)
 
 
 class Event:
@@ -157,8 +162,8 @@ def processEvent (e):
     event.any_data = e.any_data
     event.source = source
 
-    debug.println ("Event: type=(" + event.type + ")")
-    debug.listDetails("       ", source)
+    #debug.println ("Event: type=(" + event.type + ")")
+    #debug.listDetails("       ", source)
                        
     # See if we have a script for this event.  Note that the event type in the
     # listeners dictionary may not be as specific as the event type we
@@ -178,26 +183,25 @@ def processEvent (e):
             sys.stderr.write ("ERROR: app not found; source=(" + source.name 
                               + ") event = " + event.type + ").\n")
 
-    try:
-        s = script.getScript (source.app)
+    s = script.getScript (source.app)
 
-        found = False
-        keys = s.listeners.keys()
-        for key in s.listeners.keys():
-            if e.type.startswith(key):
-                func = s.listeners[key]
-                debug.println("       Using " + key +
-                              " listener for ")
-                debug.println("             " + e.type)
-                func (event)
-                found = True
-                break
-        if found == False:
-            debug.println("       No listener for " + e.type)
-    except:
-        debug.println("       ERROR handling " + e.type)
-        pass
-    
+    found = False
+    keys = s.listeners.keys()
+    for key in s.listeners.keys():
+        if e.type.startswith(key):
+            func = s.listeners[key]
+            found = True
+            break
+
+    if found == True:
+        # We do not want orca to crash if an ill-behaved script causes
+        # an exception.
+        #
+        try:
+            func (event)
+        except:
+            debug.printException ()
+
 
 def findActiveWindow ():
     """Traverses the list of known apps looking for one who has an
@@ -238,14 +242,20 @@ def init ():
 
     a11y.init ()
     kbd.init ()
-    if settings.useSpeech:  speech.init ()
+    if getattr (settings, "useSpeech", True):
+        speech.init ()
     
     # [[[TODO: WDW - do we need to register onBrlKey as a listener,
     # or....do we need to modify the brl module so that onBrlKey will
     # be called from the brl module?]]]
     #
-    if settings.useBraille: brl.init ()
-    
+    if getattr (settings, "useBraille", False):
+        initialized = brl.init ()
+        if initialized:
+            debug.println ("Braille module has been initialized.")
+        else:
+            debug.println ("Braille module has NOT been initialized.")
+
     # Build list of accessible apps.
     #
     buildAppList ()
@@ -281,7 +291,15 @@ def start ():
 
     speech.say ("default", _("Welcome to Orca."))
 
-    # Find the currently active toplevel window and activate its script.
+    print "HERE"
+    try:
+        brl.clear ()
+        brl.addRegion (_("Welcome to Orca."), 16, 0)
+        brl.refresh ()
+    except:
+        debug.printException ()
+    
+    # Find the cusrrently active toplevel window and activate its script.
     #
     win = findActiveWindow ()
     if win:
@@ -299,9 +317,9 @@ def start ():
     
         try:
             s = script.getScript (win.app)
-            s.listeners["window:activate"](e)
+            s.listeners["window:activate"] (e)
         except:
-            pass
+            debug.printException ()
 
     core.bonobo.main ()
 
@@ -333,8 +351,10 @@ def shutdown ():
     #
     kbd.shutdown ()
     a11y.shutdown ()
-    if settings.useSpeech:  speech.shutdown ()
-    if settings.useBraille: brl.shutdown ();
+    if getattr (settings, "useSpeech", True):
+        speech.shutdown ()
+    if getattr (settings, "useBraille", False):
+        brl.shutdown ();
 
     core.bonobo.main_quit ()
 

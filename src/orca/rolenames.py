@@ -47,8 +47,8 @@ def getRoleName (obj):
     """
     
     name = obj.role
-    try:
+    if rolenames.has_key (name):
         return rolenames[name]
-    except:
+    else:
         return name
 

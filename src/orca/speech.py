@@ -245,7 +245,7 @@ def say (voiceName, text):
     this result?  In addition, this is asynchronous (i.e., doesn't
     wait for the text to be spoken), right?]]]
     """
-    
+
     global initialized
     global speakers
 
@@ -254,9 +254,9 @@ def say (voiceName, text):
 
     # Do we have the specified voice?
     #
-    try:
+    if speakers.has_key (voiceName):
         s = speakers[voiceName]
-    except:
+    else:
         s = speakers["default"]
 
     # If the text to speak is a single character, see if we have a
@@ -271,6 +271,7 @@ def say (voiceName, text):
     # Send the text to the GNOME Speech speaker
     #
     debug.println("speech.say (" + text + ")")
+    #debug.printStack ()
     return s.say (text)
 
 
@@ -288,11 +289,9 @@ def stop (voiceName):
     if not initialized:
         return
 
-    try:
+    if speakers.has_key (voiceName):
         s = speakers[voiceName]
         s.stop ()
-    except:
-        pass
 
 
 ########################################################################
