@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004 Sun Microsystems Inc.
+# Copyright 2004-2005 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -17,14 +17,16 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-# Orca i18n
+"""Provides a method, getRoleName, that converts the role name of an
+Accessible object into a localized string.
+"""
 
-from orca_i18n import _
+from orca_i18n import _ # for gettext support
 
-# Role pronunciations
-
+# [[[TODO: WDW - make sure these match, and are complete.  The keys
+# appear to be taken from /gnome/at-spi/cspi/spi_accessible.c:role_names.]]]
+#
 rolenames = {}
-
 rolenames["push button"] = _("button")
 rolenames["layered pane"] = _("list view")
 rolenames["tree table"] = _("tree view")
@@ -34,10 +36,19 @@ rolenames["page tab"] = _("tab")
 
 
 def getRoleName (obj):
+    """Returns the localized name of the given Accessible object.
+    If a localized name cannot be discovered, this will return
+    the string as defined by the at-spi.
+    
+    Arguments:
+    - obj: an Accessible object
+
+    Returns a string containing the localized name of the object.
+    """
+    
     name = obj.role
     try:
         return rolenames[name]
     except:
         return name
 
-    

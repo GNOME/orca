@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004 Sun Microsystems Inc.
+# Copyright 2004-2005 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -17,7 +17,11 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-# Keybindings
+"""Provides the default keybindings for orca.  These will always
+be in effect for all scripts unless overridden by an application
+specific script.  Note - this is the best place to put global
+keybindings.
+"""
 
 keybindings = {}
 keybindings["F12"] = "quit"

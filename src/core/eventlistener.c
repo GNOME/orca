@@ -57,7 +57,6 @@ event_listener_new (EventQueue *queue,
 	EventListener *el = g_object_new (EVENT_LISTENER_TYPE, NULL);
 	if (l != NULL)
 		el->pylisteners = l;
-	el->funcs = f;
 	el->queue = queue;
 	return el;
 }
@@ -70,14 +69,6 @@ event_listener_dispatch (EventListener *el,
 	PyObject *event;
 	GSList *tmp;
 	
- 	/* Call the C functions */
-
-	for (tmp = el->funcs; tmp; tmp = tmp->next)
-	{
-		event_listener_func f = (event_listener_func) tmp->data;
-		f (e);
-	}
-
         /* Dispatch to the Python listener */
 
 	for (tmp = el->pylisteners; tmp; tmp = tmp->next)
@@ -100,7 +91,6 @@ static void
 event_listener_init (EventListener *el)
 {
 	el->queue = NULL;
-	el->funcs = NULL;
 	el->pylisteners = NULL;
 }
 
@@ -116,8 +106,6 @@ event_listener_finalize (GObject *object)
 	}
 	if (el->pylisteners)
 		g_slist_free (el->pylisteners);
-	if (el->funcs)
-		g_slist_free (el->funcs);
 	parent_class->finalize (object);
 }
 

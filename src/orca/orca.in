@@ -2,7 +2,7 @@
 
 # Orca
 #
-# Copyright 2004 Sun Microsystems Inc.
+# Copyright 2004-2005 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -19,24 +19,21 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-# Ensure that the correct packages are in the system's module search
-# path
+"""The script to run to start orca.  Loads the user's ~/.orca/settings.py
+(if it exists) and then runs orca.
+"""
 
 import os, sys
-
-# Orca i18n
-
 from orca_i18n import _
 
-# Add the user's personal .orca directory
-
-orcadir = os.path.join (os.environ["HOME"], ".orca")
-sys.path.insert (0, orcadir)
-
-# Setup orca
+# Grab the user's ~/.orca/settings.py ahead of the default settings.py.
+# If the ~/.orca.settings.py does not exist, then orca will default to
+# the settings.py in this directory.
+#
+userprefs = os.path.join (os.environ["HOME"], ".orca")
+sys.path.insert (0, userprefs)
 
 import orca
-import speech
 
 orca.init ()
 orca.start ()

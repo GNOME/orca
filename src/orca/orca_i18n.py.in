@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004 Sun Microsystems Inc.
+# Copyright 2004-2005 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -17,18 +17,21 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-# Used for creating localedir path
+"""Provides i18n support for orca using the gettext module.  Tells
+gettext where to find localized strings and creates an alias, _, that
+maps to the gettext.gettext function.  This function will accept a
+string and return a localized string for that string.
+"""
 
-import os
-
-# Import gettext support
-
-import gettext
+import os       # to get localdir path
+import gettext  # to get gettext (i18n) support
 
 # Alias gettext.gettext to _
-
+#
 _ = gettext.gettext
 
+# Tell gettext where to find localized strings.
+#
 localedir = os.path.join ("@prefix@", "@DATADIRNAME@", "locale")
 gettext.bindtextdomain ("@GETTEXT_PACKAGE@", localedir)
 

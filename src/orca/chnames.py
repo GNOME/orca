@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004 Sun Microsystems Inc.
+# Copyright 2004-2005 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -17,11 +17,11 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-# Orca i18n
+"""Exposes a dictionary, chnames, that maps punctuation characters
+into localized words.
+"""
 
-from orca_i18n import _
-
-# Pronunciations for various characters
+from orca_i18n import _ # for gettext support
 
 chnames = {}
 chnames[" "] = _("space")

@@ -1,7 +1,7 @@
 /*
  * Orca
  *
- * Copyright 2004 Sun Microsystems Inc.
+ * Copyright 2004-2005 Sun Microsystems Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -24,189 +24,141 @@
 #include "eventlistener.h"
 #include "pyevent.h"
 
+/**
+ * If TRUE, then this module has been intialized (see initcore).
+ */
 static gboolean core_initialized = FALSE;
 
-/* A Python object reference to the core module itself */
 
-static PyObject *core_module = NULL;
+/**
+ * Python object reference to the core module itself.
+ */
+static PyObject *core_module;
 
-/* A CORBA object reference to the at-spi registry */
 
+/**
+ * CORBA object reference to the at-spi registry 
+ */
 static Accessibility_Registry registry = CORBA_OBJECT_NIL;
 
-/* Hash table of the current registered event listeners */
 
+/**
+ * Hash table of the current registered event listeners.  The keys
+ * represent the name of the events (a quark'd string), and the values
+ * represent pointers to EventListeners (see eventlistener.h).  The
+ * hash table is used to allow a maximum of one listener to be added
+ * directly to the Accessiblity Registry for any given event type.
+ *
+ * The core_module_registerEventListener and
+ * core_module_unregisterEventListener methods are exposed to Python
+ * as registerEventListener and unregisterEventListener.  These methods
+ * manage the EventListeners in this hash table, and keep any Python
+ * listeners sorted in the order they were registered.
+ */
 static GHashTable *listeners = NULL;
 
-/*
- * One global event queue-- the design is such that we could have
- * multiple queues in the future if the need arises
- *
- */
 
+/**
+ * Global event queue -- entries are added to this queue via 
+ * eventlistener.c:event_listener_notify_event, and are dispatched
+ * via the event_queue.c:event_queue_idle_handler, which ultimately calls
+ * event_listener.c:event_listener_dispatch.
+ *
+ * The design is such that we could have multiple queues in the future
+ * if the need arises
+ */
 static EventQueue *queue = NULL;
 
 
-/*
+/**
+ * core_module_init:
+ * @self: the core module as seen by Python
+ * 
+ * The Python init() method for the core Python module.  Initializes
+ * contact with the at-spi Accessibility_Registry and also adds the
+ * "registry" and "desktop" attributes to the core module so that they
+ * can be accessed from Python.
  *
- * The core module's event listeners are GObjects which can reference
- * both a list of C callback functions, as well as a list of Python  objects
- * (which are callback functions written in Python).  Only one EventListener object should be registered for any
- * given at-spi event type at any given time.
- *
- * The C functions are always called first in the order in which they
- * were registered, so that the core can do any
- * internal processing that must happen before events are dispatchd to
- * the Python scripts.  then the Python callbacks are called in the
- * order in which they were registered.
- *
+ * Returns: 1 on success, NULL (plus a raised exception) on failure
  */
-
-
-/*
- *
- * Register a C function to receive at-spi event notifications.
- * Python callbacks are registered via the Python interface to the
- * core module defined later.
- *
- * This function searches for an EventListener object with the specified
- * event type.  If one is found, then the specified C function is
- * chained to the end of its list of C functions.  If one is not
- * found, a new EventListener is created, and the specified C function
- * is added as its only C callback.
- *
- */
-
-static void
-register_event_listener (const char *type,
-			 event_listener_func f)
-{
-	GQuark type_quark;
-	CORBA_Environment ev;
-	EventListener *el;
-	
-	/* Generate the key for the hash table lookup */
-
-	type_quark = g_quark_from_string (type);
-	
-	/* Do we already have a listener for this event type */
-
-	el = g_hash_table_lookup (listeners, (gpointer) type_quark);
-	if (!el)
-	{
-	
-		/* Create a new event listener */
-
-		GSList *funcs = g_slist_prepend (NULL, f);
-		el = event_listener_new (queue, funcs, NULL);
-		g_hash_table_insert (listeners, (gpointer) type_quark, el);
-
-
-		/* Register the EventListener object with at-spi */
-
-		CORBA_exception_init (&ev);
-		Accessibility_Registry_registerGlobalEventListener (registry,
-								    bonobo_object_corba_objref (BONOBO_OBJECT(el)),
-								    type,
-								    &ev);
-
-		/* If an exception was thrown, return an error */
-
-		if (ev._major != CORBA_NO_EXCEPTION)
-		{
-			g_hash_table_remove (listeners, (gpointer) type_quark);
-			PyErr_SetString (PyExc_RuntimeError, "Couldn't register event listener with at-spi");
-			return;
-		}
-		CORBA_exception_free (&ev);
-	}
-	else
-	{
-		
-		/* Add this C callback to the existing listener */
-		
-		el->funcs = g_slist_append (el->funcs, f);
-	}
-}
-
-
-static PyObject *
-core_module_init (PyObject *self)
-{
+static PyObject *core_module_init (PyObject *self) {
 	CORBA_Environment ev;
 	Accessibility_Desktop d;
 	char *obj_id;
 
-	/* Don't double-initialize */
-
-	if (core_initialized)
-	{
-		PyErr_SetString (PyExc_RuntimeError, "Core already initialized");
+	/* Don't double-initialize 
+	 */
+	if (core_initialized) {
+		PyErr_SetString (PyExc_RuntimeError, 
+				 "Core already initialized");
 		return NULL;
 	}
 
-	/* Initialize the pyevent code */
-	
+	/* Initialize the pyevent code, adding the Python "Event" class.
+	 */
 	pyevent_init (core_module);
 
-	/* Make an empty event listeners hash table */
-
+	/* Make an empty event listeners hash table 
+	 */
 	listeners = g_hash_table_new (NULL, NULL);
 
-	/* Create the global event queue */
-
+	/* Create the global event queue 
+	 */
 	queue = event_queue_new ();
 
-        /* The OAFIID of the registry */
-
-	obj_id = "OAFIID:Accessibility_Registry:1.0";
-	
-	/* Attempt to activate the registry */
-
+	/* Attempt to activate the registry and add it as the "registry"
+	 * attribute to the core module.
+	 */
 	CORBA_exception_init (&ev);
+	obj_id = "OAFIID:Accessibility_Registry:1.0";
 	registry = bonobo_activation_activate_from_id (obj_id, 0, NULL, &ev);
-	if (ev._major != CORBA_NO_EXCEPTION)
-	{
-		PyErr_SetString (PyExc_RuntimeError, "Could not activate accessibility registry");
+
+	if (ev._major != CORBA_NO_EXCEPTION) {
+		CORBA_exception_free (&ev);
+		PyErr_SetString (PyExc_RuntimeError, 
+				 "Could not activate accessibility registry");
 		return NULL;
 	}
 	
-	/* Add a reference to the registry to the module */
-
-	PyModule_AddObject (core_module, "registry",
+	PyModule_AddObject (core_module, 
+			    "registry",
 			    pycorba_object_new (registry));
 
-        /* Get the desktop */
-
+        /* Get the desktop and add it as the "desktop attribute to the core 
+	 * module.  [[[TODO:  WDW - I think there may be the notion of more
+	 * than one desktop.]]]
+	 */
 	d = Accessibility_Registry_getDesktop (registry,
 					       0,
 					       &ev);
 
-	if (ev._major != CORBA_NO_EXCEPTION)
-	{
-		PyErr_SetString (PyExc_RuntimeError, "Could not access the desktop");
+	if (ev._major != CORBA_NO_EXCEPTION) {
+		CORBA_exception_free (&ev);
+		PyErr_SetString (PyExc_RuntimeError, 
+				 "Could not access the desktop");
 		return NULL;
 	}
 	
-	PyModule_AddObject (core_module, "desktop", 
+	PyModule_AddObject (core_module, 
+			    "desktop", 
 			    pycorba_object_new(d));
 
+	CORBA_exception_free (&ev);
 	core_initialized = TRUE;
 	return PyInt_FromLong (1);
 }
 
 
-/*
+/**
+ * core_check_init:
  *
  * Throw a Python exception if the core module is not initialized
  *
+ * Returns: TRUE if the module is initialized or FALSE (plus a raised
+ * exception) if not.
  */
-
-static gboolean
-core_check_init ()
-{
-	if (!core_initialized)
-	{
+static gboolean core_check_init () {
+	if (!core_initialized) {
 		PyErr_SetString (PyExc_RuntimeError, "Core not initialized");
 		return FALSE;
 	}
@@ -214,49 +166,37 @@ core_check_init ()
 }
 
 
-/*
+/**
+ * core_module_shutdown:
+ * @self: the core module as seen by Python
  *
- * Free all the resources allocated by the core module
+ * Free all the resources allocated by the core module, quits from
+ * the Bonobo main loop, and resets the initialized state to FALSE.
  *
+ * Returns: 1 on success or NULL (plus a raised exception) on failure,
+ * which occurs if the core module has not been initialized.
  */
-
-static PyObject *
-core_module_shutdown (PyObject *self)
+static PyObject *core_module_shutdown (PyObject *self)
 {
-	if (!core_check_init ())
+	if (!core_check_init ()) {
 		return NULL;
+	}
 
-	if (registry != CORBA_OBJECT_NIL)
-	{
+	if (registry != CORBA_OBJECT_NIL) {
 		bonobo_object_release_unref (registry, NULL);
 		registry = CORBA_OBJECT_NIL;
 	}
 	g_hash_table_destroy (listeners);
-	bonobo_main_quit ();
 	core_initialized = FALSE;
 	return PyInt_FromLong (1);
 }
 
 
-/*
- *
- * Return a pycorba_object reference to the at-spi registry
- *
- */
-
-static PyObject *
-core_module_getRegistry (PyObject *self)
-{
-	PyObject *obj;
-
-	if (!core_check_init ())
-		return NULL;
-	obj = pycorba_object_new (registry);
-	return obj;
-}
-
-
-/*
+/**
+ * core_module_registerEventListener:
+ * @self: the core module as seen by Python
+ * @args: the arguments, which should be a Python function pointer and
+ * a string that specifies an at-spi event name
  *
  * Register a Python event listener callback function to respond to
  * at-spi events.  This function checks to see if an event listener
@@ -266,12 +206,10 @@ core_module_getRegistry (PyObject *self)
  * specified Python callback as the only callback in its list of
  * Python callbacks
  *
+ * Returns: 1 on success and NULL (and a raised exception) on failure
  */
-
-static PyObject *
-core_module_registerEventListener (PyObject *self,
-				   PyObject *args)
-{
+static PyObject *core_module_registerEventListener (PyObject *self,
+						    PyObject *args) {
  	GQuark type_quark;
 	CORBA_Environment ev;
 	PyObject *listener;
@@ -279,144 +217,213 @@ core_module_registerEventListener (PyObject *self,
 	EventListener *el;
 	GSList *listener_list;
 
-	if (!core_check_init ())
+	if (!core_check_init ()) {
 		return NULL;
+	}
 
-	/* Get the arguments */
-
-	if (!PyArg_ParseTuple (args, "Os:registerEventListener", &listener, &event_name))
+	/* Get the arguments.
+	 */
+	if (!PyArg_ParseTuple (args, 
+			       "Os:registerEventListener", 
+			       &listener, 
+			       &event_name)) {
 		return NULL;
-	Py_INCREF (listener);
+	}
+	Py_INCREF (listener); /* [[[TODO: WDW - check to make sure we
+				 DECREF in the right places.]]] */
 
-	/* Do we already have a listener registered for this event type? */
-
+	/* Do we already have a listener registered for this event type? 
+	 */
         type_quark = g_quark_from_string (event_name);
 	el = g_hash_table_lookup (listeners, (gpointer) type_quark);
-	
-	if (!el)
-	{
-
-		/* Create the bonobo event listener */
-
+	if (!el) {
+		/* Create the bonobo event listener and register it with
+		 * at-spi.
+		 */
 		listener_list = g_slist_prepend (NULL, listener);
 		el = event_listener_new (queue, NULL, listener_list);
-
-		/* Add it to our hash table */
-
-		g_hash_table_insert (listeners, (gpointer) type_quark, el);
-
-		/* Register it with at-spi */
-
 		CORBA_exception_init (&ev);
-		Accessibility_Registry_registerGlobalEventListener (registry,
-								    bonobo_object_corba_objref (BONOBO_OBJECT(el)),
-								    event_name,
-								    &ev);
+		Accessibility_Registry_registerGlobalEventListener (
+			registry,
+			bonobo_object_corba_objref (BONOBO_OBJECT(el)),
+			event_name,
+			&ev);
 
-		/* If an exception was thrown, return an error */
-
-		if (ev._major != CORBA_NO_EXCEPTION)
-		{
-			g_hash_table_remove (listeners, (gpointer) type_quark);
-			PyErr_SetString (PyExc_RuntimeError, "Couldn't register event listener with at-spi");
+		/* If an exception was thrown, return an error 
+		 */
+		if (ev._major != CORBA_NO_EXCEPTION) {
+			/* [[[TODO: WDW - finalize/free el (which also
+			 * frees up listener_list and DECREF
+			 * listener?)
+			 */
+			CORBA_exception_free (&ev);
+			PyErr_SetString (
+				PyExc_RuntimeError, 
+				"Couldn't register event listener with at-spi");
 			return NULL;
+		} else {
+			CORBA_exception_free (&ev);
+			g_hash_table_insert (listeners, 
+					     (gpointer) type_quark, 
+					     el);
 		}
-		CORBA_exception_free (&ev);
-	}
-	else
-	{
+	} else {
 		el->pylisteners = g_slist_append (el->pylisteners, listener);
 	}
 	return PyInt_FromLong (1);
 }
 
 
-/*
+/**
+ * core_module_isEventListenerRegistered:
+ * @self: the core module as seen by Python
+ * @args: the argument, which should be a string that specifies an at-spi 
+ * event name
  *
- * Unregister a Python event listener callback
+ * Checks to see if a given listener for the given event has already
+ * been registered.
  *
+ * Returns: True if the event listener has been registered, False if it
+ * has not and NULL (and a raised exception) on failure
  */
+static PyObject *core_module_isEventListenerRegistered (PyObject *self,
+							PyObject *args) {
+ 	GQuark type_quark;
+	char *event_name;
+	EventListener *el;
 
-static PyObject *
-core_module_unregisterEventListener (PyObject *self,
-				     PyObject *args)
-{
+	if (!core_check_init ()) {
+		return NULL;
+	}
+
+	/* Get the arguments.
+	 */
+	if (!PyArg_ParseTuple (args, 
+			       "s:isEventListenerRegistered", 
+			       &event_name)) {
+		return NULL;
+	}
+
+	/* Do we already have a listener registered for this event type? 
+	 */
+        type_quark = g_quark_from_string (event_name);
+	el = g_hash_table_lookup (listeners, (gpointer) type_quark);
+	if (!el) {
+		return PyBool_FromLong (0);
+	} else {
+		return PyBool_FromLong (1);
+	}
+}
+
+
+/**
+ * core_module_unregisterEventListener:
+ * @self: the core module as seen by Python
+ * @args: the arguments, which should be a Python function pointer and
+ * a string that specifies an at-spi event name
+ *
+ * Unregisters a Python event listener callback
+ *
+ * Returns: 1 on sucess and NULL (and a raised exception) on failure
+ */
+static PyObject *core_module_unregisterEventListener (PyObject *self,
+						      PyObject *args) {
 	GQuark type_quark;
 	CORBA_Environment ev;
 	char *event_name;
 	PyObject *listener;
 	EventListener *el;
 
-	/* Parse arguments */
-
-	if (!PyArg_ParseTuple (args, "Os:unregisterEventListener", &listener, &event_name))
+	/* Parse arguments 
+	 */
+	if (!PyArg_ParseTuple (args, 
+			       "Os:unregisterEventListener", 
+			       &listener, 
+			       &event_name)) {
 		return NULL;
+	}
 
-	/* See if we have it in our list */
-
+	/* See if we have it in our list and remove it.  If we don't
+	 * have it (e.g., lookup on the event name returns nothing or
+	 * the listener was never registered), this is considered a
+	 * no-op.
+	 */
 	type_quark = g_quark_from_string (event_name);
 	el = g_hash_table_lookup (listeners, (gpointer) type_quark);
-	if (!el)
+	if (!el) {
 		return PyInt_FromLong (1);
+	}
 
 	el->pylisteners = g_slist_remove (el->pylisteners, listener);
-
-        /* If the event listener has no callbacks, get rid of it */
-
-	if (el->pylisteners == NULL && el->funcs == NULL)
-	{
-
-                /* Unregister it from at-spi */
-
+	
+        /* If the event listener has no more callbacks, unregister
+	 * from the at-spi.
+	 */
+	if (el->pylisteners == NULL) {
 		CORBA_exception_init (&ev);
-		Accessibility_Registry_deregisterGlobalEventListener (registry,
-								      bonobo_object_corba_objref (BONOBO_OBJECT(el)),
-								      event_name,
-								      &ev);
+		Accessibility_Registry_deregisterGlobalEventListener (
+			registry,
+			bonobo_object_corba_objref (BONOBO_OBJECT(el)),
+			event_name,
+			&ev);
 
-		/* If unregistration failed, throw an exception */
-
-		if (ev._major != CORBA_NO_EXCEPTION)
-		{
-			PyErr_SetString (PyExc_RuntimeError, "Could not unregister event listener from at-spi");
+		/* If unregistration failed, throw an exception 
+		 */
+		if (ev._major != CORBA_NO_EXCEPTION) {
+			CORBA_exception_free (&ev);
+			PyErr_SetString (PyExc_RuntimeError, 
+					 "Could not unregister event listener from at-spi");
 			return NULL;
 		}
 	
 		CORBA_exception_free (&ev);
 
-		/* Destroy the listener and remove it from our list */
-
+		/* Destroy the listener and remove it from our list 
+		 */
 		g_hash_table_remove (listeners, (gpointer) type_quark);
-	
 		Py_DECREF (listener);
 	}
+
 	return PyInt_FromLong (1);
 }
 
 
-/*
- *
- * This table lists the methods exported by the core module
- *
+/**
+ * Methods exported by the core module to Python - maps Python method
+ * names to the method names in this file.
  */
-
 static PyMethodDef core_methods[] = {
-	{"init", (PyCFunction) core_module_init, METH_NOARGS},
-	{"shutdown", (PyCFunction) core_module_shutdown, METH_NOARGS},
-	{"registerEventListener", (PyCFunction) core_module_registerEventListener, METH_VARARGS},
-	{"unregisterEventListener", (PyCFunction) core_module_unregisterEventListener, METH_VARARGS},
+	{"init", 
+	 (PyCFunction) core_module_init, 
+	 METH_NOARGS},
+	{"shutdown", 
+	 (PyCFunction) core_module_shutdown, 
+	 METH_NOARGS},
+	{"registerEventListener", 
+	 (PyCFunction) core_module_registerEventListener, 
+	 METH_VARARGS},
+	{"isEventListenerRegistered", 
+	 (PyCFunction) core_module_isEventListenerRegistered, 
+	 METH_VARARGS},
+	{"unregisterEventListener", 
+	 (PyCFunction) core_module_unregisterEventListener, 
+	 METH_VARARGS},
 	{NULL, NULL}
 };
 
-/*
+/**
+ * initcore:
+ * 
+ * Called by python when the core module is imported.  Sets up the
+ * core_methods that can be called from Python.  Imports the ORBit
+ * module and exposes it as "core.ORBit." Imports the Bonobo module
+ * and exposes it as "core.bonobo."  Initializes AT-SPI accessibility
+ * support and exposes it as "core.Accessibility" and
+ * "core.Accessibility__POA".
  *
- * This function is called by python when the core module is imported
- *
+ * Returns: void, but also raises an exception on failure
  */
-
-void
-initcore (void)
-{
+void initcore (void) {
 	PyObject *dict;
 	PyObject *load_typelib;
 	PyObject *pyorbit_module;
@@ -430,105 +437,92 @@ initcore (void)
 
 	core_module = Py_InitModule ("core", core_methods);
 
-	/* Import the pyorbit module */
-
+	/* Import the pyorbit module, initialize it, and allow access
+	 * to it as "core.ORBit."  [[[TODO: WDW - the call to
+	 * init_pyorbit also does a PyImport_ImportModul ("ORBit").
+	 * Not sure what the impact of this is.]]]
+	 */
 	pyorbit_module = PyImport_ImportModule ("ORBit");
-
-	/* Initialize pyorbit */
-
 	init_pyorbit ();
-
-        if (!pyorbit_module)
-	{
-		PyErr_SetString (PyExc_RuntimeError, "Can not load ORBit2 support");
+        if (!pyorbit_module) {
+		PyErr_SetString (PyExc_ImportError, 
+				 "Can not load ORBit2 support");
 		return;
 	}
-
-	/* Allow access to the ORBit module through the core module */
-
 	PyModule_AddObject (core_module, "ORBit", pyorbit_module);
 	
-        /* Import bonobo support */
 
+        /* Import bonobo support and allow access to it as "core.bonobo"
+	 */
 	bonobo_module = PyImport_ImportModule ("bonobo");
-
-        if (!bonobo_module)
-	{
-		PyErr_SetString (PyExc_RuntimeError, "Can not load Bonobo support");
+        if (!bonobo_module) {
+		PyErr_SetString (PyExc_ImportError, 
+				 "Can not load Bonobo support");
 		return;
 	}
-
-	/* Allow access to the bonobo module through the core module */
-
 	PyModule_AddObject (core_module, "bonobo", bonobo_module);
 
-        /* Get pyorbit's dictionary */
 
+	/* We need to initialize a bunch of ORBit stuff so we can get
+	 * to the Accessibility and Accessibility__POA module
+	 */
 	dict = PyModule_GetDict (pyorbit_module);
-
-	if (!dict)
-	{
-		PyErr_SetString (PyExc_RuntimeError, "Can not load ORBit2's module dictionary");
+	if (!dict) {
+		PyErr_SetString (PyExc_AttributeError, 
+				 "Can not load ORBit2's module dictionary");
 		return;
 	}
 	
-	/* Find the load_typelib function */
-	
 	load_typelib = PyDict_GetItemString (dict, "load_typelib");
-
-	if (!load_typelib)
-	{
-		PyErr_SetString (PyExc_RuntimeError, "Can not find the load_typelib function for ORBit2");
+	if (!load_typelib) {
+		PyErr_SetString (PyExc_KeyError, 
+				 "Can not find the load_typelib function for ORBit2");
 		return;
 	}
 	
 	PyObject_CallFunction (load_typelib, "s", a11y_module_name);
 	
-	/* Find the CORBA submodule */
-	
 	corba_module = PyDict_GetItemString (dict, "CORBA");
-
-	if (!corba_module)
-	{
-		PyErr_SetString (PyExc_RuntimeError, "Can not find the CORBA submodule of  ORBit2");
+	if (!corba_module) {
+		PyErr_SetString (PyExc_KeyError, 
+				 "Can not find the CORBA submodule of  ORBit2");
 		return;
 	}
 	
-	/* Find and call the ORB_init function of the CORBA submodule */
-
 	dict = PyModule_GetDict (corba_module);
-
 	orb_init = PyDict_GetItemString (dict, "ORB_init");
-	if (!orb_init)
-	{
-		PyErr_SetString (PyExc_RuntimeError, "Can not find the CORBA.ORB_init functioninthe  ORBit2 module");
+	if (!orb_init) {
+		PyErr_SetString (PyExc_KeyError, 
+				 "Can not find the CORBA.ORB_init functioninthe  ORBit2 module");
 		return;
 	}
 
 	PyObject_CallFunction (orb_init, "");
 	
-	/* Import the at-spi bindings */
-
+	/* Allow access to the Accessibility and Accessibility__POA
+	 * modules through the core module as "core.Accessibility"
+	 * and "core.Accessibility__POA."
+	 */
 	a11y_module = PyImport_ImportModule (a11y_module_name);
-        if (!a11y_module)
-	{
-		PyErr_SetString (PyExc_RuntimeError, "Can not load accessibility support");
+        if (!a11y_module) {
+		PyErr_SetString (PyExc_ImportError, 
+				 "Can not load accessibility support");
 		return;
 	}
+
 	a11y_poa_module = PyImport_ImportModule (a11y_poa_module_name);
         if (!a11y_poa_module)
 	{
-		PyErr_SetString (PyExc_RuntimeError, "Can not load accessibility support");
+		PyErr_SetString (PyExc_ImportError, 
+				 "Can not load accessibility support");
 		return;
 	}
 
-	/*
-	* 
-	* Allow access to the Accessibility and Accessibility__POA
-	* modules through the core module
-	*
-	*/
-	
-	PyModule_AddObject (core_module, a11y_module_name, a11y_module);
-	PyModule_AddObject (core_module, a11y_poa_module_name, a11y_poa_module);
+	PyModule_AddObject (core_module, 
+			    a11y_module_name, 
+			    a11y_module);
+
+	PyModule_AddObject (core_module, 
+			    a11y_poa_module_name, 
+			    a11y_poa_module);
 }

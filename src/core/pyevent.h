@@ -1,7 +1,7 @@
 /*
  * Orca
  *
- * Copyright 2004 Sun Microsystems Inc.
+ * Copyright 2004-2005 Sun Microsystems Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -23,14 +23,36 @@
 #include <glib.h>
 #include "Accessibility.h"
 
-
+/**
+ * The data structure used to back the Python Event.  Keeps track of
+ * the Accessibility_Event that was used to create this object.
+ */
 typedef struct {
 	PyObject_HEAD
 	Accessibility_Event *e;
 } PyEvent;
 
 
-void
-pyevent_init (PyObject *mod);
-PyObject *
-pyevent_new (const Accessibility_Event *e);
+/**
+ * pyevent_init:
+ * @mod: the module which to add this to
+ *
+ * Adds the "Event" class as an attribute of the given module.  For
+ * example, if the core module calls this method, the Event class will
+ * become available as "core.Event".
+ *
+ * Returns: void
+ */
+void pyevent_init (PyObject *mod);
+
+
+/**
+ * pyevent_new:
+ * @e: the Accessibility_Event received from the at-spi
+ *
+ * Creates a new Event that delegates to the given Accessibility_Event
+ * for information.
+ *
+ * Returns: a Python Event instance
+ */
+PyObject *pyevent_new (const Accessibility_Event *e);

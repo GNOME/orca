@@ -49,10 +49,6 @@ typedef struct {
 	
 	EventQueue *queue;
 
-        /* A C function */
-
-	GSList *funcs;
-	
 	/* A Python function */
 
 	GSList *pylisteners;

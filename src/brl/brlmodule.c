@@ -1,7 +1,7 @@
 /*
  * Orca
  *
- * Copyright 2004 Sun Microsystems Inc.
+ * Copyright 2004-2005 Sun Microsystems Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -26,8 +26,8 @@
 #include <Python.h>
 
 
-/* Brlapi function pointers */
-
+/* Brlapi function pointers 
+ */
 static int (*brlapi_initializeConnection) (void *, void *);
 static void (*brlapi_closeConnection) (void);
 static char *(*brlapi_getDriverId) (void);
@@ -39,9 +39,8 @@ static int (*brlapi_writeBrl) (unsigned int cursor, const char *text);
 static int (*brlapi_readCommand) (unsigned int, unsigned int *);
 
 /* From brldefs.h -- since hard linking/compilation of this module
- * isn't an options
+ * isn't an option
  */
-
 typedef enum {
   /* special commands which must be first and remain in order */
   CMD_NOOP = 0 /* do nothing */,
@@ -137,8 +136,8 @@ typedef enum {
   DriverCommandCount /* must be last */
 } DriverCommand;
 
-/* Brlapi related variables */
-
+/* Brlapi related variables 
+ */
 static void *brlapi_library;
 static long brl_initialized = 0;
 static int brlapi_fd = -1;
@@ -146,13 +145,15 @@ static int brlapi_display_size_x = 0;
 static int brlapi_display_size_y = 0;
 static GIOChannel *brlapi_channel = NULL;
 
-/* Python callback for Braille command notifications */
 
+/* Python callback for Braille command notifications.
+ * Only ONE callback can be registered at a time.
+ */
 static PyObject *brl_callback = NULL;
 
 
-/* Braille regions */
-
+/* Braille regions 
+*/
 typedef struct {
 	char *text;
 	int len;
@@ -169,11 +170,9 @@ static int physical_display_position = 0;
 static virtual_display_length = 0;
 
 
-static brl_region *
-brl_region_new (const gchar *text,
-	    int size,
-	    int display_start)
-{
+static brl_region *brl_region_new (const gchar *text,
+				   int size,
+				   int display_start) {
 	brl_region *region = g_new (brl_region, 1);
 
 	region->len = strlen (text);
@@ -185,19 +184,15 @@ brl_region_new (const gchar *text,
 }
 
 
-static void
-brl_region_destroy (brl_region *region)
-{
+static void brl_region_destroy (brl_region *region) {
 	g_return_if_fail (region);
 	g_free (region->text);
 	g_free (region);
 }
 
 
-static gboolean
-brl_region_scroll (brl_region *region,
-		   int scroll_amount)
-{
+static gboolean brl_region_scroll (brl_region *region,
+				   int scroll_amount) {
 	g_return_if_fail (region);
 	
 	if (region->display_start+scroll_amount < 0 ||
@@ -208,9 +203,7 @@ brl_region_scroll (brl_region *region,
 }
 
 
-static gboolean
-brl_scroll_virtual_display (int scroll_amount)
-{
+static gboolean brl_scroll_virtual_display (int scroll_amount) {
 	if (physical_display_position+scroll_amount < 0 ||
 	    physical_display_position+scroll_amount >= virtual_display_length)
 		return FALSE;
@@ -219,9 +212,7 @@ brl_scroll_virtual_display (int scroll_amount)
 }
 
 
-static void
-refresh (void)
-{
+static void refresh (void) {
 	gchar *display;
 	GList *tmp;
 	brl_region *region;
@@ -262,9 +253,7 @@ refresh (void)
 }
 
 
-static void
-clear (void)
-{
+static void clear (void) {
 	brl_region *region;
 	GList *tmp;
  
@@ -282,9 +271,7 @@ clear (void)
 }
 
 
-static gint
-brl_region_add (brl_region *region)
-{
+static gint brl_region_add (brl_region *region) {
 	brl_region *cur;
 	GList *tmp;
 	gint region_num = 0;
@@ -303,9 +290,7 @@ brl_region_add (brl_region *region)
 }
 
 
-static void
-brl_region_remove (gint region_num)
-{
+static void brl_region_remove (gint region_num) {
 	GList *l = g_list_nth (brl_regions, region_num);
 	brl_region *region;
 
@@ -318,11 +303,9 @@ brl_region_remove (gint region_num)
 }
 
 
-static void
-brl_region_update (int region_num,
-		   const char *text,
-		   int display_start)
-{
+static void brl_region_update (int region_num,
+			       const char *text,
+			       int display_start) {
 	GList *l = g_list_nth (brl_regions, region_num);
 	brl_region *region;
 
@@ -337,11 +320,9 @@ brl_region_update (int region_num,
 }
 
 
-static gboolean
-brlapi_io_cb (GIOChannel *ch,
-	      GIOCondition condition,
-	      void *data)
-{
+static gboolean brlapi_io_cb (GIOChannel *ch,
+			      GIOCondition condition,
+			      void *data) {
 	unsigned int  keypress;
 	int region_num = -1;
 	int region_position = -1;
@@ -404,9 +385,7 @@ brlapi_io_cb (GIOChannel *ch,
 }
 
 
-static PyObject *
-brl_module_init (PyObject *self)
-{
+static PyObject *brl_module_init (PyObject *self) {
 	int fd;
 
 	if (brl_initialized)
@@ -483,9 +462,7 @@ brl_module_init (PyObject *self)
 }
 
 
-static PyObject *
-brl_module_shutdown (PyObject *self)
-{
+static PyObject *brl_module_shutdown (PyObject *self) {
 	if (brl_initialized)
 		brlapi_closeConnection ();
 	brl_initialized = 0;
@@ -493,9 +470,7 @@ brl_module_shutdown (PyObject *self)
 }
 
 
-static PyObject *
-brl_module_getDriverId (PyObject *self)
-{
+static PyObject *brl_module_getDriverId (PyObject *self) {
 	if (!brl_initialized)
 	{
 		Py_INCREF (Py_None);
@@ -505,9 +480,7 @@ brl_module_getDriverId (PyObject *self)
 }
 
 
-static PyObject *
-brl_module_getDriverName (PyObject *self)
-{
+static PyObject *brl_module_getDriverName (PyObject *self) {
 	if (!brl_initialized)
 	{
 		Py_INCREF (Py_None);
@@ -517,9 +490,7 @@ brl_module_getDriverName (PyObject *self)
 }
 
 
-static PyObject *
-brl_module_getDisplaySize (PyObject *self)
-{
+static PyObject *brl_module_getDisplaySize (PyObject *self) {
 	int x, y;
 	if (!brl_initialized)
 	{
@@ -531,10 +502,8 @@ brl_module_getDisplaySize (PyObject *self)
 }
 
 
-static PyObject *
-brl_module_writeMessage (PyObject *self,
-			PyObject *args)
-{
+static PyObject *brl_module_writeMessage (PyObject *self,
+					  PyObject *args) {
 	char *str;
 	brl_region *region;
 	
@@ -553,9 +522,7 @@ brl_module_writeMessage (PyObject *self,
 }
 
 
-static PyObject *
-brl_module_clear (PyObject *self)
-{
+static PyObject *brl_module_clear (PyObject *self) {
 	if (brl_initialized)
 		clear ();
 	Py_INCREF (Py_None);
@@ -563,9 +530,7 @@ brl_module_clear (PyObject *self)
 }
 
 
-static PyObject *
-brl_module_refresh (PyObject *self)
-{
+static PyObject *brl_module_refresh (PyObject *self) {
 	if (brl_initialized)
 		refresh ();
 	Py_INCREF (Py_None);
@@ -573,10 +538,8 @@ brl_module_refresh (PyObject *self)
 }
 
 
-static PyObject *
-brl_module_addRegion (PyObject *self,
-		      PyObject *args)
-{
+static PyObject *brl_module_addRegion (PyObject *self,
+				       PyObject *args) {
 	char *text;
 	int size;
 	int display_start;
@@ -598,10 +561,8 @@ brl_module_addRegion (PyObject *self,
 }
 
 
-static PyObject *
-brl_module_removeRegion (PyObject *self,
-		      PyObject *args)
-{
+static PyObject *brl_module_removeRegion (PyObject *self,
+					  PyObject *args) {
 	int region_num;
 	
 	if (!PyArg_ParseTuple (args, "i:removeRegion", &region_num))
@@ -613,10 +574,8 @@ brl_module_removeRegion (PyObject *self,
 }
 
 
-static PyObject *
-brl_module_updateRegion (PyObject *self,
-		      PyObject *args)
-{
+static PyObject *brl_module_updateRegion (PyObject *self,
+					  PyObject *args) {
 	int region_num;
 	char *text;
 	int display_start;
@@ -633,10 +592,8 @@ brl_module_updateRegion (PyObject *self,
 }
 
 
-static PyObject *
-brl_module_setCursor (PyObject *self,
-		      PyObject *args)
-{
+static PyObject *brl_module_setCursor (PyObject *self,
+				       PyObject *args) {
 	GList *l;
 	int region_num;
 	int cursor_position;
@@ -680,10 +637,8 @@ brl_module_setCursor (PyObject *self,
 }
 
 
-static PyObject *
-brl_module_setScrollRegion (PyObject *self,
-			    PyObject *args)
-{
+static PyObject *brl_module_setScrollRegion (PyObject *self,
+					     PyObject *args) {
 	brl_region *region;
 	int region_num;
 	GList *l;
@@ -702,10 +657,8 @@ brl_module_setScrollRegion (PyObject *self,
 }
 
 
-static PyObject *
-brl_module_registerCallback (PyObject *self,
-			     PyObject *args)
-{
+static PyObject *brl_module_registerCallback (PyObject *self,
+					      PyObject *args) {
  	if (brl_callback)
 		Py_DECREF (brl_callback);
 	if (brl_initialized)
@@ -718,9 +671,7 @@ brl_module_registerCallback (PyObject *self,
 }
 
 
-static PyObject *
-brl_module_unregisterCallback (PyObject *self)
-{
+static PyObject *brl_module_unregisterCallback (PyObject *self) {
  	if (brl_callback)
 		Py_DECREF (brl_callback);
 	brl_callback = NULL;
@@ -748,8 +699,6 @@ static PyMethodDef brl_methods[] = {
 	{NULL, NULL}
 };
 
-void
-initbrl (void)
-{
-	(void)Py_InitModule ("brl", brl_methods);
+void initbrl (void) {
+	(void) Py_InitModule ("brl", brl_methods);
 }
