@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-18 06:17+0200\n"
-"PO-Revision-Date: 2004-10-18 11:50+0200\n"
+"POT-Creation-Date: 2005-03-31 03:43+0200\n"
+"PO-Revision-Date: 2005-03-31 11:03+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -133,7 +133,27 @@ msgstr "zpětné lomítko"
 msgid "bar"
 msgstr "svislá čára"
 
-#: src/orca/default.py:834
+#: src/orca/default.py:70
+msgid "available"
+msgstr "k dispozici"
+
+#: src/orca/default.py:72
+msgid "unavailable"
+msgstr "není k dispozici"
+
+#: src/orca/default.py:134
+msgid "shortcut"
+msgstr "zkratka"
+
+#: src/orca/default.py:139
+msgid "accelerator"
+msgstr "klávesová zkratka"
+
+#: src/orca/default.py:156
+msgid " dot dot dot"
+msgstr " tečka tečka tečka"
+
+#: src/orca/default.py:1114
 msgid "Not a document."
 msgstr "Není dokument."
 
@@ -157,94 +177,89 @@ msgstr "Záznam zpráv"
 msgid "inaccessible"
 msgstr "nepřístupné"
 
-#: src/orca/orca-setup.in:34
+#: src/orca/orca-setup.in:35
 msgid "Creating .orca directory."
 msgstr "Vytvářím adresář .orca."
 
-#: src/orca/orca-setup.in:61
+#: src/orca/orca-setup.in:91
 #, c-format
 msgid "Select %s voice: "
 msgstr "Zvolte hlas %s: "
 
-#: src/orca/orca-setup.in:65 src/orca/orca-setup.in:107
+#: src/orca/orca-setup.in:95 src/orca/orca-setup.in:152
 #, c-format
 msgid "%d. %s"
 msgstr "%d. %s"
 
-#: src/orca/orca-setup.in:68
-msgid "Enter choice."
-msgstr "Zadejte volbu."
-
-#: src/orca/orca-setup.in:69 src/orca/orca-setup.in:109
+#: src/orca/orca-setup.in:97 src/orca/orca-setup.in:154
 msgid "Enter choice: "
 msgstr "Zadejte volbu:"
 
-#: src/orca/orca-setup.in:91
+#: src/orca/orca-setup.in:136
 msgid "No working GNOME Speech drivers found."
 msgstr "Nenalezeny fungující ovladače GNOME Speech."
 
-#: src/orca/orca-setup.in:94
-msgid "Select default synthesizer:"
-msgstr "Zvolte implicitní syntetizér:"
-
-#: src/orca/orca-setup.in:104
+#: src/orca/orca-setup.in:149
 msgid "Welcome to Orca setup."
 msgstr "Vítejte v nastavení Orca."
 
-#: src/orca/orca-setup.in:105
+#: src/orca/orca-setup.in:150
 msgid "Select default speech synthesizer"
 msgstr "Zvolte implicitní syntetizér řeči"
 
-#: src/orca/orca-setup.in:112
+#: src/orca/orca-setup.in:156
 msgid "Speech will not be used.\n"
 msgstr "Řeč se nebude používat.\n"
 
-#: src/orca/orca-setup.in:134
+#: src/orca/orca-setup.in:180
 msgid "Create another voice?  Enter y or n: "
 msgstr "Vytvořit další hlas?  Zadejte y nebo n: "
 
-#: src/orca/orca-setup.in:143
+#: src/orca/orca-setup.in:188
 msgid "Enter voice name: "
 msgstr "Zadejte název hlasu: "
 
-#: src/orca/orca-setup.in:151
+#: src/orca/orca-setup.in:193
 msgid "Use key echo?  Enter y or n: "
 msgstr "Používat ozvěnu kláves?  Zadejte y nebo n: "
 
-#: src/orca/orca-setup.in:174
+#: src/orca/orca-setup.in:220
 msgid "Braille support appears to work, use it?  Enter y or n. "
 msgstr "Podpora Braille zřejmě funguje, používat ji? Zadejte y nebo n."
 
-#: src/orca/orca.py:117
+#: src/orca/orca.py:92
 msgid "User logged out - shutting down."
 msgstr "Uživatel odhlášen - končím."
 
-#. We couldn't initialize the core-- this proably means that we
-#. couldn't activate the accessibility registry
-#: src/orca/orca.py:222
-msgid "The Orca core could not be initialized."
-msgstr "Nebylo možné inicializovat jádro Orca."
-
-#: src/orca/orca.py:285
+#: src/orca/orca.py:292 src/orca/orca.py:296
 msgid "Welcome to Orca."
 msgstr "Vítá vás Orca."
 
-#: src/orca/orca.py:332
+#: src/orca/orca.py:340
 msgid "goodbye."
 msgstr "nashledanou."
 
-#: src/orca/rolenames.py:28
+#: src/orca/rolenames.py:30
 msgid "button"
 msgstr "tlačítko"
 
-#: src/orca/rolenames.py:29
+#: src/orca/rolenames.py:31
 msgid "list view"
 msgstr "zobrazení seznamu"
 
-#: src/orca/rolenames.py:30 src/orca/rolenames.py:31
+#: src/orca/rolenames.py:32 src/orca/rolenames.py:33
 msgid "tree view"
 msgstr "zobrazení stromu"
 
-#: src/orca/rolenames.py:33
+#: src/orca/rolenames.py:35
 msgid "tab"
 msgstr "záložka"
+
+#~ msgid "Enter choice."
+#~ msgstr "Zadejte volbu."
+
+#~ msgid "Select default synthesizer:"
+#~ msgstr "Zvolte implicitní syntetizér:"
+
+#~ msgid "The Orca core could not be initialized."
+#~ msgstr "Nebylo možné inicializovat jádro Orca."
