@@ -1,0 +1,6 @@
+Accessibility-common.c
+Accessibility-skels.c
+Accessibility-stubs.c
+Accessibility.h
+Makefile
+Makefile.in
