@@ -40,7 +40,5 @@ coremodule_la_SOURCES = \
 	eventlistener.h \
 	eventqueue.c \
 	eventqueue.h \
-	pyaccessible.c \
-	pyaccessible.h \
 	pyevent.c \
 	pyevent.h
