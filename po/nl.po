@@ -8,19 +8,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-18 20:51+0200\n"
-"PO-Revision-Date: 2004-06-19 14:58+0200\n"
+"POT-Creation-Date: 2004-08-27 04:09+0200\n"
+"PO-Revision-Date: 2004-08-27 14:08+0200\n"
 "Last-Translator: Elros Cyriatan <cyriatan@fastmail.fm>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit"
 
-#: src/orca/Gecko.py:181
+#: src/orca/Gecko.py:180
 msgid "No page to read."
 msgstr "Geen pagina om te lezen."
 
-#: src/orca/Gecko.py:189
+#: src/orca/Gecko.py:188
 msgid "Reading web page failed."
 msgstr "Lezen van webpagina mislukt."
 
@@ -30,7 +30,7 @@ msgstr "spatie"
 
 #: src/orca/chnames.py:28
 msgid "bang"
-msgstr ""
+msgstr "uitroepteken"
 
 #: src/orca/chnames.py:29
 msgid "quote"
@@ -126,29 +126,29 @@ msgstr "rechter accolade"
 
 #: src/orca/chnames.py:52
 msgid "back"
-msgstr ""
+msgstr "terug"
 
 #: src/orca/chnames.py:53
 msgid "bar"
 msgstr "balk"
 
-#: src/orca/default.py:830
+#: src/orca/default.py:834
 msgid "Not a document."
 msgstr "Geen document."
 
-#: src/orca/gaim.py:59
+#: src/orca/gaim.py:55
 msgid " chat"
 msgstr " chat"
 
-#: src/orca/gaim.py:82
+#: src/orca/gaim.py:81
 msgid " instant message"
 msgstr " instant message"
 
-#: src/orca/gaim.py:138
+#: src/orca/gaim.py:137
 msgid "Input"
 msgstr "Invoer"
 
-#: src/orca/gaim.py:140
+#: src/orca/gaim.py:139
 msgid "Message Log"
 msgstr "Berichtenlog"
 
@@ -210,15 +210,15 @@ msgstr "Toets echo gebruiken, geef j of n: "
 msgid "Braille support appears to work, use it?  Enter y or n. "
 msgstr "Braille-ondersteuning lijkt te werken, gebruiken?  Geef j of n. "
 
-#: src/orca/orca.in:42
-msgid "Welcome to Orca."
-msgstr "Welkom bij Orca."
-
-#: src/orca/orca.py:81
+#: src/orca/orca.py:117
 msgid "User logged out - shutting down."
 msgstr "Gebruiker afgemeld - bezig met afsluiten."
 
-#: src/orca/orca.py:183
+#: src/orca/orca.py:273
+msgid "Welcome to Orca."
+msgstr "Welkom bij Orca."
+
+#: src/orca/orca.py:320
 msgid "goodbye."
 msgstr "tot ziens."
 
