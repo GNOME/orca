@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-31 22:57+0200\n"
-"PO-Revision-Date: 2004-08-31 22:58+0200\n"
+"POT-Creation-Date: 2004-10-22 22:22+0200\n"
+"PO-Revision-Date: 2004-10-22 22:22+0200\n"
 "Last-Translator: Hendrik Brandt <eru@gmx.li>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -65,7 +65,7 @@ msgstr ""
 #. If there is no active page, we can't do say all
 #: src/orca/Gecko.py:180
 msgid "No page to read."
-msgstr "Keine Seite zum lesen"
+msgstr "Keine Seite zum Lesen"
 
 #. Get all the objects on the page
 #: src/orca/Gecko.py:188
@@ -208,7 +208,7 @@ msgstr "Zurück"
 
 #: src/orca/chnames.py:53
 msgid "bar"
-msgstr ""
+msgstr "Balken"
 
 #. Orca
 #.
@@ -511,6 +511,19 @@ msgstr "Eingabe"
 #: src/orca/gaim.py:139
 msgid "Message Log"
 msgstr "Nachrichtenmitschnitt"
+
+#. Metacity script
+#. The status bar in metacity tells us what toplevel window will be
+#. activated when tab is released
+#. If it's not the statusbar's name changing, ignore it
+#. We have to stop speech, as Metacity has a key grab and we're not
+#. getting keys
+#. Do we know about this window?  Traverse through our list of apps
+#. and go through the toplevel windows in each to see if we know
+#. about this one
+#: src/orca/metacity.py:40
+msgid "inaccessible"
+msgstr "unzugänglich"
 
 #: src/orca/orca-setup.in:34
 msgid "Creating .orca directory."
