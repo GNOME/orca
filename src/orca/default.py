@@ -711,7 +711,11 @@ def onFocus (event):
     
     global presenters
 
-    # Magnify the object.  [[[TODO: WDW - this is a hack for now.]]]
+    # Magnify the object.  [[[TODO: WDW - this is a hack for now.  The
+    # individual presenters should probably know what to do.  This raises the
+    # possible issue, however, that we might need different presenters for
+    # different modes (e.g., braille presenters, speech presenters,
+    # magnification presentaters).]]]
     #
     mag.magnifyAccessible (event.source)
     

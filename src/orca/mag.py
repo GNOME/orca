@@ -20,11 +20,13 @@
 """Manages the magnifier for orca.  [[[TODO: WDW - this is very very early
 in development.  One might even say it is pre-prototype.]]]
 """
+import core
 import debug
 import CORBA
 import GNOME
 from core import bonobo
 import settings
+import time
 
 # If True, this module has been initialized.
 #
@@ -63,6 +65,11 @@ roi = None
 #
 zoomer = None
 
+# The time of the last mouse event.
+#
+lastMouseEventTime = time.time ()
+
+
 def magnifyAccessible (acc):
     """Sets the region of interest to the upper left of the given
     accessible, if it implements the Component interface.  Otherwise,
@@ -73,11 +80,21 @@ def magnifyAccessible (acc):
     """
 
     global roi
+    global lastMouseEventTime
     
     extents = acc.extents
     if extents is None:
         return
 
+    # Avoid jerking the display around if the mouse is what ended up causing
+    # this event.  We guess this by seeing if this request has come in within
+    # a close period of time.  [[[TODO: WDW - this is a hack and really
+    # doesn't belong here.  Plus, the delta probably should be adjustable.]]]
+    #
+    currentTime = time.time ()
+    if (currentTime - lastMouseEventTime) < 0.2: # 200 milliseconds
+        return
+    
     # Determine if the accessible is partially to the left, right,
     # above, or below the current region of interest (ROI).
     #
@@ -177,6 +194,15 @@ def setROI (rect):
     zoomer.setROI (roi)
     zoomer.markDirty (roi)  # [[[TODO: WDW - for some reason, this seems
                             # necessary.]]]
+
+
+# Used for tracking the pointer.
+#
+def onMouseEvent (e):
+    global lastMouseEventTime
+    lastMouseEventTime = time.time ()
+    setROICenter (e.detail1, e.detail2)
+
     
 def init ():
     """Initializes the magnifier, bringing the magnifier up on the
@@ -259,6 +285,8 @@ def init ():
     #zoomer.moveResize(GNOME.Magnifier.RectBounds(256,256,600,600))
     #zoomer.setMagFactor(1.0, 1.0)
 
+    core.registerEventListener (onMouseEvent, "mouse:abs")
+    
     initialized = True
 
     # Zoom to the upper left corner of the display for now.
