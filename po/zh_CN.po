@@ -1,0 +1,238 @@
+# Simplified Chinese translation for orca.
+# Copyright (C) 2004 Free Software Foundation, Inc.
+# This file is distributed under the same license as the PACKAGE package.
+# Li Shaojie <storm-119@163.com> ,2004 
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: orca\n"
+"POT-Creation-Date: 2004-06-06 15:24+0200\n"
+"PO-Revision-Date: 2004-06-01 16:49+0800\n"
+"Last-Translator: storm <storm-119@163.com>\n"
+"Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
+
+#: src/orca/Gecko.py:181
+msgid "No page to read."
+msgstr "没有可读取的页面。"
+
+#: src/orca/Gecko.py:189
+msgid "Reading web page failed."
+msgstr "读取网页失败。"
+
+#: src/orca/chnames.py:27
+msgid "space"
+msgstr "空格"
+
+#: src/orca/chnames.py:28
+msgid "bang"
+msgstr "撞击符"
+
+#: src/orca/chnames.py:29
+msgid "quote"
+msgstr "引号"
+
+#: src/orca/chnames.py:30
+msgid "number"
+msgstr "数字"
+
+#: src/orca/chnames.py:31
+msgid "dollar"
+msgstr "美元"
+
+#: src/orca/chnames.py:32
+msgid "percent"
+msgstr "百分数"
+
+#: src/orca/chnames.py:33
+msgid "and"
+msgstr "和"
+
+#: src/orca/chnames.py:34
+msgid "tick"
+msgstr "勾号"
+
+#: src/orca/chnames.py:35
+msgid "left"
+msgstr "左"
+
+#: src/orca/chnames.py:36
+msgid "right"
+msgstr "右"
+
+#: src/orca/chnames.py:37
+msgid "star"
+msgstr "星号"
+
+#: src/orca/chnames.py:38
+msgid "plus"
+msgstr "加"
+
+#: src/orca/chnames.py:39
+msgid "comma"
+msgstr "逗号"
+
+#: src/orca/chnames.py:40
+msgid "dash"
+msgstr "破折号"
+
+#: src/orca/chnames.py:41
+msgid "dot"
+msgstr "点"
+
+#: src/orca/chnames.py:42
+msgid "slash"
+msgstr "斜线"
+
+#: src/orca/chnames.py:43
+msgid "question"
+msgstr "问题"
+
+#: src/orca/chnames.py:44
+msgid "collun"
+msgstr "列"
+
+#: src/orca/chnames.py:45
+msgid "semi"
+msgstr "半"
+
+#: src/orca/chnames.py:46
+msgid "less"
+msgstr "少于"
+
+#: src/orca/chnames.py:47
+msgid "greater"
+msgstr "多于"
+
+#: src/orca/chnames.py:48
+msgid "left bracket"
+msgstr "左括号"
+
+#: src/orca/chnames.py:49
+msgid "right bracket"
+msgstr "右括号"
+
+#: src/orca/chnames.py:50
+msgid "left brace"
+msgstr "左花括号"
+
+#: src/orca/chnames.py:51
+msgid "right brace"
+msgstr "右花括号"
+
+#: src/orca/chnames.py:52
+msgid "back"
+msgstr "后退"
+
+#: src/orca/chnames.py:53
+msgid "bar"
+msgstr "栏"
+
+#: src/orca/default.py:832
+msgid "Not a document."
+msgstr "不是文档。"
+
+#: src/orca/gaim.py:59
+msgid " chat"
+msgstr "聊天"
+
+#: src/orca/gaim.py:82
+msgid " instant message"
+msgstr "即时消息"
+
+#: src/orca/gaim.py:138
+msgid "Input"
+msgstr "输入"
+
+#: src/orca/gaim.py:140
+msgid "Message Log"
+msgstr "消息日志"
+
+#: src/orca/orca-setup.in:39
+msgid "Creating .orca directory."
+msgstr "创建 .orca 目录。"
+
+#: src/orca/orca-setup.in:66
+#, c-format
+msgid "Select %s voice: "
+msgstr "选择 %s 声音："
+
+#: src/orca/orca-setup.in:70 src/orca/orca-setup.in:112
+#, c-format
+msgid "%d. %s"
+msgstr "%d. %s"
+
+#: src/orca/orca-setup.in:73
+msgid "Enter choice."
+msgstr "输入选择。"
+
+#: src/orca/orca-setup.in:74 src/orca/orca-setup.in:114
+msgid "Enter choice: "
+msgstr "输入选择："
+
+#: src/orca/orca-setup.in:96
+msgid "No working GNOME Speech drivers found."
+msgstr "没有发现工作的 GNOME 语音驱动。"
+
+#: src/orca/orca-setup.in:99
+msgid "Select default synthesizer:"
+msgstr "选择默认合成器："
+
+#: src/orca/orca-setup.in:109
+msgid "Welcome to Orca setup."
+msgstr "欢迎来到 Orca 设置。"
+
+#: src/orca/orca-setup.in:110
+msgid "Select default speech synthesizer"
+msgstr "选择默认的语音合成器"
+
+#: src/orca/orca-setup.in:117
+msgid "Speech will not be used.\n"
+msgstr "语音将不会被使用。\n"
+
+#: src/orca/orca-setup.in:139
+msgid "Create another voice? enter y or n."
+msgstr "创建另一个声音？输入 y 或 n 。"
+
+#: src/orca/orca-setup.in:148
+msgid "Enter voice name: "
+msgstr "输入声音名称："
+
+#: src/orca/orca-setup.in:156
+msgid "Use key echo, enter y or n: "
+msgstr "使用键会显，输入 y 或 n ："
+
+#: src/orca/orca-setup.in:179
+msgid "Braille support appears to work, use it?  Enter y or n. "
+msgstr "布莱尔点字法支持看来可以使用，要使用吗？输入 y 或 n 。"
+
+#: src/orca/orca.in:46
+msgid "Welcome to Orca."
+msgstr "欢迎来到 Orca。"
+
+#: src/orca/orca.py:81
+msgid "User logged out - shutting down."
+msgstr "用户注销 - 关机。"
+
+#: src/orca/orca.py:183
+msgid "goodbye."
+msgstr "再见。"
+
+#: src/orca/rolenames.py:28
+msgid "button"
+msgstr "按钮"
+
+#: src/orca/rolenames.py:29
+msgid "list view"
+msgstr "列表视图"
+
+#: src/orca/rolenames.py:30 src/orca/rolenames.py:31
+msgid "tree view"
+msgstr "树视图"
+
+#: src/orca/rolenames.py:33
+msgid "tab"
+msgstr "标签"
