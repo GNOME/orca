@@ -1,3 +1,38 @@
+2004-06-10  Marc Mulcahy  <marc.mulcahy@sun.com>
+
+	* src/orca/Makefile.am (orca_python_PYTHON): Add a default
+	settings file.
+
+	* src/orca/speech.py (init): If the settings file does not specify
+	any voices, as is the case for the default settings file, then
+	select the first voice of the first driver as the default.
+
+	* src/brl/brlmodule.c (brl_module_init): Return false rather than
+	returning NULL when the brlapi library can't be found, or any
+	functions within brlapi can't be found.
+
+	* configure.in: Don't use PYTHON_PKGDIR.
+	Change version number to 0.0.13.
+	Generate spec file.
+
+	* Makefile.am (EXTRA_DIST): Added spec file to the distribution.
+
+	* NEWS: Updated.
+
+	* orca.spec.in: Checked spec file into cvs.
+
+	* src/orca/orca.in: Remove path fiddling which is broken when
+	packaging Orca anyway.
+
+	* src/orca/orca-setup.in: Remove path fiddling which is broken
+	when packaging Orca anyway.
+
+	* src/orca/Makefile.am (orca_path_DATA): Added orca.pth to solve
+	packaging issues.
+
+	* src/orca/Makefile.am (orca_python_PYTHON): Install orca_i18n.py
+	in the right place.
+
 2004-06-10  Gustavo Noronha Silva  <kov@debian.org>
 
 	* configure.in: added pt_BR to ALL_LINGUAS
