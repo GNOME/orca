@@ -37,6 +37,7 @@ used by scripts to determine what keyboard actions may have caused an
 at-spi event.
 """
 
+import debug
 import core
 import a11y
 import settings
@@ -266,6 +267,7 @@ def onKeyEvent (event):
             
     if keystring:
         lastKey = keystring
+        debug.println ("Key Event: " + keystring)
         keyEcho (keystring)
 
         # Execute a key binding if we have one

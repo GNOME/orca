@@ -26,3 +26,5 @@ keybindings.
 keybindings = {}
 keybindings["F12"] = "quit"
 keybindings["F11"] = "sayAll"
+keybindings["F5"] = "debugListApps"
+keybindings["F6"] = "debugListActiveApp"

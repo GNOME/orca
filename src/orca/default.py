@@ -32,7 +32,7 @@ import kbd
 import speech
 import brl
 from orca_i18n import _           # for gettext support
-
+import debug
 
 ########################################################################
 #                                                                      #
@@ -1007,3 +1007,22 @@ def sayAll ():
     speech.startSayAll ("default", sayAllGetChunk, sayAllStopped)
     sayLine (a11y.focusedObject)
     
+
+########################################################################
+#                                                                      #
+# DEBUG support.                                                       #
+#                                                                      #
+########################################################################
+
+def debugListApps ():
+    """Prints a list of all known applications to stdout if the
+    settings.debug flag is enabled."""
+
+    debug.listApps ()
+    return True 
+
+def debugListActiveApp ():
+    """Prints details about the currently active application."""
+
+    debug.listActiveApp ()
+    return True 

@@ -25,16 +25,9 @@ import speech
 import brl
 import script
 import kbd
+import debug
+from rolenames import getRoleName # localized role names
 from orca_i18n import _ # for gettext support
-
-# Dictionary that maintains all the scripts known to orca.  The keys
-# are the Accessible.app attributes, which are Accessibility_Application
-# instances.  The values are Script instances.  [[[TODO: WDW - I have been
-# told there are bugs in apps at-spi implementations that prevent us from
-# getting an app from an accessible.  This could cause issues with finding
-# scripts.
-#
-scripts = {}
 
 # List of all the running apps we know about.  Each element is a Python
 # Accessible instance.
@@ -68,7 +61,7 @@ def buildAppList ():
 
 
 def activateApp (app):
-    """Called when a top-level window is activate.  It reloads the
+    """Called when a top-level window is activated.  It reloads the
     script associated with the top-level window's application and
     activates the script's keybindings.
 
@@ -76,20 +69,9 @@ def activateApp (app):
     - app: the Python Accessible instance representing the application
     """
     
-    global scripts
-
     speech.stop ("default")
 
-    try:
-        s = scripts[app]
-    except:
-        sys.stderr.write ("No script found for " + app.name + ".\n")
-        return
-
-    s.reload ()
-
-    # Make this scripts keybindings active
-    #
+    s = script.getScript (app)
     kbd.keybindings = s.keybindings
     brl.onBrlKey = s.onBrlKey
     
@@ -118,12 +100,9 @@ def onChildrenChanged (e):
         if e.type == "object:children-changed:add":
             obj = core.desktop.getChildAtIndex (e.detail1)
             app = a11y.makeAccessible (obj)
-            s = script.Script (app)
-            s.load ()
-            scripts[app] = s
         elif e.type == "object:children-changed:remove":
             app = apps[e.detail1]
-            del scripts[app]
+            script.deleteScript (app)
             
         # [[[WDW - Note the call to buildAppList - that will update
         # the apps[] list.  If this logic is changed in the future,
@@ -165,8 +144,6 @@ def processEvent (e):
     - e: an at-spi event.
     """
     
-    global scripts
-    
     # Create an Accessible for the source
     #
     source = a11y.makeAccessible (e.source)
@@ -180,21 +157,46 @@ def processEvent (e):
     event.any_data = e.any_data
     event.source = source
 
-    # See if we have a script for this event.  [[[TODO: WDW - probably
-    # should take into account if the app is active or not.  Perhaps the
-    # script for the app should do this as it might be the best one to
+    debug.println ("Event: type=(" + event.type + ")")
+    debug.listDetails("       ", source)
+                       
+    # See if we have a script for this event.  Note that the event type in the
+    # listeners dictionary may not be as specific as the event type we
+    # received (e.g., the listeners dictionary might contain the key
+    # "object:state-changed:" and the event.type might be
+    # "object:state-changed:focused" So, we find the listener whose event type
+    # begins with this event's type.  [[[TODO: WDW - the order of the
+    # a11y.dispatcher table should reflect this; that is, it should be ordered
+    # in terms of most specific type to most generic type.]]]  [[[TODO: WDW -
+    # probably should take into account if the app is active or not.  Perhaps
+    # the script for the app should do this as it might be the best one to
     # determine if it should speak or not.]]]
     #
     if source.app is None:
-        sys.stderr.write ("App not found for " + source.name
-                          + " (event.type = " + e.type + ").\n")
-    else:
-        try:
-            s = scripts[source.app]
-            func = s.listeners[e.type]
-            func (event)
-        except:
-            pass
+        set = source.state
+        if source.state.count (core.Accessibility.STATE_DEFUNCT) == 0:
+            sys.stderr.write ("ERROR: app not found; source=(" + source.name 
+                              + ") event = " + event.type + ").\n")
+
+    try:
+        s = script.getScript (source.app)
+
+        found = False
+        keys = s.listeners.keys()
+        for key in s.listeners.keys():
+            if e.type.startswith(key):
+                func = s.listeners[key]
+                debug.println("       Using " + key +
+                              " listener for ")
+                debug.println("             " + e.type)
+                func (event)
+                found = True
+                break
+        if found == False:
+            debug.println("       No listener for " + e.type)
+    except:
+        debug.println("       ERROR handling " + e.type)
+        pass
     
 
 def findActiveWindow ():
@@ -214,6 +216,7 @@ def findActiveWindow ():
             if state.count (core.Accessibility.STATE_ACTIVE) > 0:
                 return app.child(i)
             i = i+1
+
     return None
 
 
@@ -261,13 +264,6 @@ def init ():
     for type in a11y.dispatcher.values():
         core.registerEventListener (processEvent, type)
 
-    # Attempt to load scripts for all currently running apps
-    #
-    for app in apps:
-        s = script.Script (app)
-        scripts[app] = s
-        s.load ()
-
     initialized = True
     return True
 
@@ -279,7 +275,6 @@ def start ():
     """
 
     global initialized
-    global scripts
     
     if not initialized:
         return False
@@ -303,7 +298,7 @@ def start ():
         e.any_data = None
     
         try:
-            s = scripts[win.app]
+            s = script.getScript (win.app)
             s.listeners["window:activate"](e)
         except:
             pass

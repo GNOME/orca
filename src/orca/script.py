@@ -19,8 +19,13 @@
 
 """Defines the Script class."""
 
+import debug
 import a11y
+import settings
 
+# The default script - used when the app is unknown (i.e., None)
+#
+default = None    
 
 class Script:
     """Manages the event handling logic of orca.  Instances of this
@@ -40,38 +45,38 @@ class Script:
     the modules to be loaded include the "-keybindings" suffix.
     """
     
+    # The cache of the currently known scripts.  The key is the Python
+    # Accessible application, and the value is the script for that app.
+    #
+    cache = {} 
+
     def __init__ (self, app):
-        """Creates an empty script.  The load() method does the
-        actual work of populating the "listeners" and "keybindings"
-        tables.
 
-        Arguments:
-        - app: the Python Accessible application to create a script for
-        """
-        
-        self.app = app
-        self.listeners = {}
-        self.keybindings = {}
-
-
-    def load (self):
-        """Loads a script.
-
-        Populates the "listeners" table using the module for the
-        application associated with the script instance (the name of the
-        module must match the name of the application [[[TODO: WDW - this
-        probably needs to be fixed if applications are going to have
-        different names for different locales.]]]), if it exists.  The
-        script then looks to the default.py module and adds listeners
-        from that module only if they do not already exist in the
-        "listeners" table.
+        """Creates a script.  Populates the "listeners" table using the module
+        for the application associated with the script instance (the name of
+        the module must match the name of the application [[[TODO: WDW - this
+        probably needs to be fixed if applications are going to have different
+        names for different locales.]]]), if it exists.  The script then looks
+        to the default.py module and adds listeners from that module only if
+        they do not already exist in the "listeners" table.
 
         Also populates the "keybindings" table in a similar way as the
         "listeners" table, except the names of the modules to be loaded
         include the "-keybindings" suffix.
 
-        Returns True.
+        Arguments:
+        - app: the Python Accessible application to create a script for
         """
+        
+        try:
+            existing = Script.cache[app]
+            return
+        except:
+            pass
+
+        self.app = app
+        self.listeners = {}
+        self.keybindings = {}
         
         # Load the default script and default keybindings.  
         #
@@ -81,15 +86,24 @@ class Script:
         # Load app-specific script and keybindings
         #
         try:
-            self.mod = __import__ (self.app.name)
+            loadCustomScript = settings.useCustomScripts
         except:
+            loadCustomScript = True
+            
+        if loadCustomScript:
+            try:
+                self.mod = __import__ (self.app.name)
+            except:
+                self.mod = None
+            try:
+                bindingsname = self.app.name + "-keybindings"
+                self.bindings_mod = __import__ (bindingsname)
+            except:
+                self.bindings_mod = None
+        else:
             self.mod = None
-        try:
-            bindingsname = self.app.name + "-keybindings"
-            self.bindings_mod = __import__ (bindingsname)
-        except:
-            self.bindings_mod = None
-
+            self.bindings_mod = None                
+            
         # If the app-specific Python module has a function called
         # onBrlKey, this function should be used to handle Braille
         # display callbacks.  [[[TODO: WDW - probably should look
@@ -160,8 +174,6 @@ class Script:
                 if func:
                     self.keybindings[key] = func
 
-        return True
-
 
     def reload (self):
         """Reloads the default and app-specific modules for the script.
@@ -185,4 +197,46 @@ class Script:
         except:
             pass
 
+
+def getScript (app):
+    """Get a script for an app (and make it if necessary).  This is used
+    instead of a simple calls to Script's constructor.
+
+    Arguments:
+    - app: the Python app
+
+    Returns an instance of a Script.
+    """
+
+    global default
+
+    # We might not know what the app is.  In this case, just defer to the
+    # default script for support.
+    #
+    if app is None:
+        if default is None:
+            default = Script (None)
+        return default
+    
+    try:
+        script = Script.cache[app]
+        s.reload ()
+    except:
+        script = Script (app)
+        
+    return script
+
+
+def deleteScript (app):
+    """Deletes a script for an app (if it exists).
+
+    Arguments:
+    - app: the Python app
+    """
+
+    if app is None:
+        pass
+    else:
+        del Script.cache[app]
+    
 

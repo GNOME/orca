@@ -21,7 +21,7 @@
 
 Provides support for voice styles, speaking, and sayAll mode.
 """
-
+import debug
 from core import ORBit, bonobo
 import sys
 import settings
@@ -270,6 +270,7 @@ def say (voiceName, text):
 
     # Send the text to the GNOME Speech speaker
     #
+    debug.println("speech.say (" + text + ")")
     return s.say (text)
 
 

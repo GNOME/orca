@@ -29,7 +29,8 @@ Accessible objects.
 import os
 import sys
 import core     # The Orca core module - written in C
-
+import debug
+from rolenames import getRoleName # localized role names
 
 # The Accessible that currently has keyboard focus
 #
@@ -191,9 +192,24 @@ class Accessible:
         # [[[TODO: WDW - this code seems like it might break if this
         # object is an application to begin with.]]]
         #
+        debug.println("Finding app for source=(" + self.name
+                      + ") role=(" + getRoleName (self) + ")")
         obj = self
         while (obj.parent != None) and (obj != obj.parent):
             obj = obj.parent
+            debug.println("--> parent=(" + obj.name
+                          + ") role=(" + getRoleName (obj) + ")")
+
+        if (obj.parent != None):
+            debug.println("--> obj=(" + obj.name
+                          + ") role=(" + getRoleName (obj)
+                          + ") parent=(" + obj.parent + ")")
+            if (obj == obj.parent):
+                debug.println("    obj == obj.parent!")
+        else:
+            debug.println("--> obj=(" + obj.name
+                          + ") role=(" + getRoleName (obj)
+                          + ") parent=(None)")
             
         if (obj == obj.parent) or (obj.role != "application"):
             self.app = None
@@ -297,16 +313,16 @@ def makeAccessible (acc):
 # consider moving this to the script module at some point.]]]
 #
 dispatcher = {}
-dispatcher["onWindowActivated"] = "window:activate"
-dispatcher["onWindowDestroyed"] = "window:destroy"
-dispatcher["onFocus"] = "focus:"
-dispatcher["onStateChanged"] = "object:state-changed:"
+dispatcher["onNameChanged"]      = "object:property-change:accessible-name"
+dispatcher["onTextInserted"]     = "object:text-changed:insert"
+dispatcher["onTextDeleted"]      = "object:text-changed:delete"
+dispatcher["onStateChanged"]     = "object:state-changed:"
 dispatcher["onSelectionChanged"] = "object:selection-changed"
-dispatcher["onCaretMoved"] = "object:text-caret-moved"
-dispatcher["onTextInserted"] = "object:text-changed:insert"
-dispatcher["onTextDeleted"] = "object:text-changed:delete"
-dispatcher["onLinkSelected"] = "object:link-selected"
-dispatcher["onNameChanged"] = "object:property-change:accessible-name"
+dispatcher["onCaretMoved"]       = "object:text-caret-moved"
+dispatcher["onLinkSelected"]     = "object:link-selected"
+dispatcher["onWindowActivated"]  = "window:activate"
+dispatcher["onWindowDestroyed"]  = "window:destroy"
+dispatcher["onFocus"]            = "focus:"
 
 
 def onWindowActivated (e):
