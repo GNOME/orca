@@ -1,0 +1,251 @@
+# translation of pa.po to Punjabi
+# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+# Amanpreet Singh Alam <aalam@redhat.com>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pa\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-01-18 12:26+0530\n"
+"PO-Revision-Date: 2005-01-18 12:50+0530\n"
+"Last-Translator: Amanpreet Singh Alam <aalam@redhat.com>\n"
+"Language-Team: Punjabi <fedora-trans-pa@redhat.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.9.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: src/orca/Gecko.py:180
+msgid "No page to read."
+msgstr "ਪੜਨ ਲਈ ਕੋਈ ਸਫਾ ਨਹੀਂ ਹੈ।"
+
+#: src/orca/Gecko.py:188
+msgid "Reading web page failed."
+msgstr "ਵੈੱਬ ਸਫੇ ਨੂੰ ਪੜਨ ਵਿੱਚ ਅਸਫਲ ਹੈ।"
+
+#: src/orca/chnames.py:27
+msgid "space"
+msgstr "ਖਾਲੀ ਥਾਂ"
+
+#: src/orca/chnames.py:28
+msgid "bang"
+msgstr "ਬੰਗ"
+
+#: src/orca/chnames.py:29
+msgid "quote"
+msgstr "ਕਾਮੇ"
+
+#: src/orca/chnames.py:30
+msgid "number"
+msgstr "ਅੰਕ"
+
+#: src/orca/chnames.py:31
+msgid "dollar"
+msgstr "ਡਾਲਰ"
+
+#: src/orca/chnames.py:32
+msgid "percent"
+msgstr "ਪ੍ਰਤੀਸ਼ਤ"
+
+#: src/orca/chnames.py:33
+msgid "and"
+msgstr "ਅਤੇ"
+
+#: src/orca/chnames.py:34
+msgid "tick"
+msgstr "ਟਿੱਕ"
+
+#: src/orca/chnames.py:35
+msgid "left"
+msgstr "ਖੱਬੇ"
+
+#: src/orca/chnames.py:36
+msgid "right"
+msgstr "ਸੱਜੇ"
+
+#: src/orca/chnames.py:37
+msgid "star"
+msgstr "ਤਾਰਾ"
+
+#: src/orca/chnames.py:38
+msgid "plus"
+msgstr "ਜੋੜ"
+
+#: src/orca/chnames.py:39
+msgid "comma"
+msgstr "ਕਾਮਾ"
+
+#: src/orca/chnames.py:40
+msgid "dash"
+msgstr "ਡੈਸ਼"
+
+#: src/orca/chnames.py:41
+msgid "dot"
+msgstr "ਬਿੰਦੀ"
+
+#: src/orca/chnames.py:42
+msgid "slash"
+msgstr "ਸਲੇਸ਼"
+
+#: src/orca/chnames.py:43
+msgid "question"
+msgstr "ਸਵਾਲੀਆ"
+
+#: src/orca/chnames.py:44
+msgid "collun"
+msgstr "ਕਾਮਾ"
+
+#: src/orca/chnames.py:45
+msgid "semi"
+msgstr "ਅਰਧ"
+
+#: src/orca/chnames.py:46
+msgid "less"
+msgstr "ਘੱਟ"
+
+#: src/orca/chnames.py:47
+msgid "greater"
+msgstr "ਵੱਧ"
+
+#: src/orca/chnames.py:48
+msgid "left bracket"
+msgstr "ਖੱਬੀ ਬਰੈਕਟ"
+
+#: src/orca/chnames.py:49
+msgid "right bracket"
+msgstr "ਸੱਜੀ ਬਰੈਕਟ"
+
+#: src/orca/chnames.py:50
+msgid "left brace"
+msgstr "ਖੱਬੀ ਛੋਟੀ ਬਰੈਕਟ"
+
+#: src/orca/chnames.py:51
+msgid "right brace"
+msgstr "ਸੱਜੇ ਬਰੈਕਟ"
+
+#: src/orca/chnames.py:52
+msgid "back"
+msgstr "ਪਿੱਛੇ"
+
+#: src/orca/chnames.py:53
+msgid "bar"
+msgstr "ਡੰਡੀ"
+
+#: src/orca/default.py:834
+msgid "Not a document."
+msgstr "ਕੋਈ ਦਸਤਾਵੇਜ਼ ਨਹੀਂ ਹੈ।"
+
+#: src/orca/gaim.py:55
+msgid " chat"
+msgstr " ਗੱਲਬਾਤ"
+
+#: src/orca/gaim.py:81
+msgid " instant message"
+msgstr " ਤੁਰੰਤ ਸੁਨੇਹਾ"
+
+#: src/orca/gaim.py:137
+msgid "Input"
+msgstr "ਇੰਪੁੱਟ"
+
+#: src/orca/gaim.py:139
+msgid "Message Log"
+msgstr "ਸੁਨੇਹਾ ਲਾਗ"
+
+#: src/orca/metacity.py:40
+msgid "inaccessible"
+msgstr "ਨਾ-ਪਹੁੰਚਯੋਗ"
+
+#: src/orca/orca-setup.in:34
+msgid "Creating .orca directory."
+msgstr ".orca ਡਾਇਰੈਕਟਰੀ ਬਣਾਓ"
+
+#: src/orca/orca-setup.in:61
+#, c-format
+msgid "Select %s voice: "
+msgstr "%s ਆਵਾਜ਼ ਚੁਣੋ: "
+
+#: src/orca/orca-setup.in:65 src/orca/orca-setup.in:107
+#, c-format
+msgid "%d. %s"
+msgstr "%d. %s"
+
+#: src/orca/orca-setup.in:68
+msgid "Enter choice."
+msgstr "ਚੋਣ ਦਿਓ।"
+
+#: src/orca/orca-setup.in:69 src/orca/orca-setup.in:109
+msgid "Enter choice: "
+msgstr "ਚੋਣ ਦਿਓ: "
+
+#: src/orca/orca-setup.in:91
+msgid "No working GNOME Speech drivers found."
+msgstr "ਕੋਈ ਕੰਮ ਕਰਦਾ ਗਨੋਮ ਆਵਾਜ਼ ਡਰਾਇਵਰ ਨਹੀਂ ਲੱਭਾ ਹੈ।"
+
+#: src/orca/orca-setup.in:94
+msgid "Select default synthesizer:"
+msgstr "ਮੂਲ ਸੰਸਲੇਸ਼ਕ ਚੁਣੋ: "
+
+#: src/orca/orca-setup.in:104
+msgid "Welcome to Orca setup."
+msgstr "ਓਰਸਾ ਸੈੱਟਅੱਪ ਤੇ ਜੀ ਆਇਆਂ ਨੂੰ।"
+
+#: src/orca/orca-setup.in:105
+msgid "Select default speech synthesizer"
+msgstr "ਮੂਲ ਧੁਨੀ ਸੰਸਲੇਸ਼ਕ ਦੀ ਚੋਣ ਕਰੋ"
+
+#: src/orca/orca-setup.in:112
+msgid "Speech will not be used.\n"
+msgstr "ਧੁਨੀ ਨਹੀਂ ਵਰਤੀ ਜਾਵੇਗੀ।\n"
+
+#: src/orca/orca-setup.in:134
+msgid "Create another voice? enter y or n."
+msgstr "ਹੋਰ ਧੁਨੀ ਬਣਾਉਣੀ ਹੈ? y ਜਾਂ n ਦਿਓ।"
+
+#: src/orca/orca-setup.in:143
+msgid "Enter voice name: "
+msgstr "ਧੁਨੀ ਨਾਂ ਦਿਓ: "
+
+#: src/orca/orca-setup.in:151
+msgid "Use key echo, enter y or n: "
+msgstr "ਸਵਿੱਚ ਧੁਨੀ ਵਰਤੋਂ, y ਜਾਂ n ਭਰੋ: "
+
+#: src/orca/orca-setup.in:174
+msgid "Braille support appears to work, use it?  Enter y or n. "
+msgstr "ਬਰਾਇਲ ਸਹਿਯੋਗ ਕੰਮ ਕਰਦਾ ਜਾਪਦਾ ਹੈ, ਇਸ ਨੂੰ ਵਰਤਣਾ ਹੈ? y ਜਾਂ n ਭਰੋ।"
+
+#: src/orca/orca.py:117
+msgid "User logged out - shutting down."
+msgstr "ਉਪਭੋਗਤਾ ਲਾੱਗ ਆਉਟ ਹੈ - ਬੰਦ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ।"
+
+#. We couldn't initialize the core-- this proably means that we
+#. couldn't activate the accessibility registry
+#: src/orca/orca.py:222
+msgid "The Orca core could not be initialized."
+msgstr "ਓਰਸਾ ਮੂਲ ਨੂੰ ਸ਼ੁਰੂ ਨਹੀ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ।"
+
+#: src/orca/orca.py:285
+msgid "Welcome to Orca."
+msgstr "ਓਰਸਾ ਤੇ ਜੀ ਆਇਆਂ ਨੂੰ।"
+
+#: src/orca/orca.py:332
+msgid "goodbye."
+msgstr "ਚੰਗਾ ਬਈ!"
+
+#: src/orca/rolenames.py:28
+msgid "button"
+msgstr "ਬਟਨ"
+
+#: src/orca/rolenames.py:29
+msgid "list view"
+msgstr "ਸੂਚੀਬੱਧ ਦਰਿਸ਼"
+
+#: src/orca/rolenames.py:30 src/orca/rolenames.py:31
+msgid "tree view"
+msgstr "ਲੜੀ ਦਰਿਸ਼"
+
+#: src/orca/rolenames.py:33
+msgid "tab"
+msgstr "ਟੈਬ"
+
