@@ -1,3 +1,11 @@
+2005-03-31  Willie Walker <william.walker@sun.com>
+
+	* gnome-terminal.py:  call default.brlUpdateText
+	* a11y.py: add capability to get component extents from 
+	an accessible
+	* orca.py, default.py: add beginnings of magnification support
+	* mag.py: early magnification support
+	
 2005-03-25  Willie Walker <william.walker@sun.com>
 
 	* Upgrade to brltty-3.6.1 (TODO: perhaps add backwards
