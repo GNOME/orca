@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-02 14:58+0200\n"
-"PO-Revision-Date: 2004-07-02 15:03+0200\n"
+"POT-Creation-Date: 2004-08-31 22:57+0200\n"
+"PO-Revision-Date: 2004-08-31 22:58+0200\n"
 "Last-Translator: Hendrik Brandt <eru@gmx.li>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -556,7 +556,8 @@ msgstr "Sprachausgabe wird nicht benutzt.\n"
 
 #: src/orca/orca-setup.in:134
 msgid "Create another voice? enter y or n."
-msgstr "Eine andere Stimme erstellen? Geben Sie »y« für Ja oder »n« für Nein ein."
+msgstr ""
+"Eine andere Stimme erstellen? Geben Sie »y« für Ja oder »n« für Nein ein."
 
 #: src/orca/orca-setup.in:143
 msgid "Enter voice name: "
@@ -564,12 +565,15 @@ msgstr "Stimmenbezeichnung eingeben:"
 
 #: src/orca/orca-setup.in:151
 msgid "Use key echo, enter y or n: "
-msgstr "Soll die Tastaturglocke benutzt werden? Geben Sie »y« für Ja oder »n« für Nein ein."
+msgstr ""
+"Soll die Tastaturglocke benutzt werden? Geben Sie »y« für Ja oder »n« für "
+"Nein ein."
 
 #: src/orca/orca-setup.in:174
 msgid "Braille support appears to work, use it?  Enter y or n. "
-msgstr "Die Braille-Unterstützung scheint zu funktionieren - soll diese genutzt werden? Geben Sie »y« für "
-"Ja oder »n« für Nein ein."
+msgstr ""
+"Die Braille-Unterstützung scheint zu funktionieren - soll diese genutzt "
+"werden? Geben Sie »y« für Ja oder »n« für Nein ein."
 
 #. Orca
 #.
@@ -629,6 +633,13 @@ msgstr "Benutzer hat sich abgemeldet - Programm wird beendet."
 #. Travers through the list of known apps
 #. Traverse through all the toplevels of each app, looking for one with state active
 #. Orca initialized
+#. Initialize the Orca core
+#. We couldn't initialize the core-- this proably means that we
+#. couldn't activate the accessibility registry
+#: src/orca/orca.py:222
+msgid "The Orca core could not be initialized."
+msgstr "Der Orca-Kern konnte nicht initialisiert werden."
+
 #. Initialize a11y support
 #. Initialize keyboard hooks
 #. Setup speakers
@@ -641,7 +652,7 @@ msgstr "Benutzer hat sich abgemeldet - Programm wird beendet."
 #. Create a script for this application and add it to our list of scripts
 #. Load the script
 #. Start Orca - This starts the Bonobo main loop
-#: src/orca/orca.py:273
+#: src/orca/orca.py:285
 msgid "Welcome to Orca."
 msgstr "Willkommen bei Orca."
 
@@ -653,7 +664,7 @@ msgstr "Willkommen bei Orca."
 #. Send our fake event to the script -- this may fail if for some
 #. reason the script doesn't have an onWindowActivated function
 #. Stop Orca - This cleans up resources and quits the Bonobo main loop
-#: src/orca/orca.py:320
+#: src/orca/orca.py:332
 msgid "goodbye."
 msgstr "Auf Wiedersehen."
 
