@@ -73,15 +73,6 @@ class Accessible:
         if Accessible.cache.has_key (acc):
             return
 
-        # We want to get to this accessible's component attributes sometimes
-        #
-        try:
-            self.component = acc.queryInterface (
-                "IDL:Accessibility/Component:1.0")
-        except:
-            self.component = None
-            pass        
-        
         # The acc reference might be an Accessibility_Accessible or an
         # Accessibility_Application, so try both
         #
@@ -240,10 +231,11 @@ class Accessible:
         Component interface.
         """
 
-        if self.component is None:
+        component = getComponent (self)
+        if component is None:
             return None
         else:
-            self.extents = self.component.getExtents(coordinateType)
+            self.extents = component.getExtents(coordinateType)
             return self.extents
         
 
@@ -723,7 +715,7 @@ def getAccessible (obj):
     the Accessibility_Accessible interface.
 
     Arguments:
-    - obj: [[[TODO: WDW - need to determine object type.]]]
+    - obj: an Accessible instance
 
     Returns an object that implements the Accessibility_Accessible
     interface for this object or None if this object doesn't implement
@@ -741,7 +733,7 @@ def getAction (obj):
     the Accessibility_Action interface.
 
     Arguments:
-    - obj: [[[TODO: WDW - need to determine object type.]]]
+    - obj: an Accessible instance
 
     Returns an object that implements the Accessibility_Action
     interface for this object or None if this object doesn't implement
@@ -760,7 +752,7 @@ def getComponent (obj):
     the Accessibility_Component interface.
 
     Arguments:
-    - obj: [[[TODO: WDW - need to determine object type.]]]
+    - obj: an Accessible instance
 
     Returns an object that implements the Accessibility_Component
     interface for this object or None if this object doesn't implement
@@ -779,7 +771,7 @@ def getHypertext (obj):
     the Accessibility_Hypertext interface.
 
     Arguments:
-    - obj: [[[TODO: WDW - need to determine object type.]]]
+    - obj: an Accessible instance
 
     Returns an object that implements the Accessibility_Hypertext
     interface for this object or None if this object doesn't implement
@@ -798,7 +790,7 @@ def getSelection (obj):
     the Accessibility_Selection interface.
 
     Arguments:
-    - obj: [[[TODO: WDW - need to determine object type.]]]
+    - obj: an Accessible instance
 
     Returns an object that implements the Accessibility_Selection
     interface for this object or None if this object doesn't implement
@@ -817,7 +809,7 @@ def getTable (obj):
     the Accessibility_Table interface.
 
     Arguments:
-    - obj: [[[TODO: WDW - need to determine object type.]]]
+    - obj: an Accessible instance
 
     Returns an object that implements the Accessibility_Table
     interface for this object or None if this object doesn't implement
@@ -836,7 +828,7 @@ def getText (obj):
     the Accessibility_Text interface.
 
     Arguments:
-    - obj: [[[TODO: WDW - need to determine object type.]]]
+    - obj: an Accessible instance
 
     Returns an object that implements the Accessibility_Text
     interface for this object or None if this object doesn't implement
@@ -855,7 +847,7 @@ def getValue (obj):
     the Accessibility_Value interface.
 
     Arguments:
-    - obj: [[[TODO: WDW - need to determine object type.]]]
+    - obj: an Accessible instance
 
     Returns an object that implements the Accessibility_Value
     interface for this object or None if this object doesn't implement
