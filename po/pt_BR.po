@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-31 12:11+0200\n"
+"POT-Creation-Date: 2004-10-17 12:43+0200\n"
 "PO-Revision-Date: 2004-08-31 15:10-0300\n"
 "Last-Translator: Raphael Higino <raphaelh@uai.com.br>\n"
 "Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
@@ -149,7 +149,11 @@ msgstr "Entrada"
 
 #: src/orca/gaim.py:139
 msgid "Message Log"
-msgstr "Log de mensagens"
+msgstr "Log de Mensagens"
+
+#: src/orca/metacity.py:40
+msgid "inaccessible"
+msgstr "inacessível"
 
 #: src/orca/orca-setup.in:34
 msgid "Creating .orca directory."
