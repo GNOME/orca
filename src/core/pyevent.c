@@ -22,7 +22,6 @@
 
 #include <Python.h>
 #include <pyorbit.h>
-#include "pyaccessible.h"
 #include "pyevent.h"
 
 
@@ -30,6 +29,7 @@ static void
 pyevent_dealloc (PyEvent *e)
 {
 	bonobo_object_release_unref (e->e->source);
+	CORBA_free (&(e->e->any_data));
 	CORBA_free (e->e);
 }
 
@@ -44,7 +44,7 @@ pyevent_get_type (PyEvent *self)
 static PyObject *
 pyevent_get_source (PyEvent *self)
 {
-	return pyaccessible_new (self->e->source);
+	return pycorba_object_new (self->e->source);
 }
 
 
