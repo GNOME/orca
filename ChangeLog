@@ -1,3 +1,9 @@
+2005-02-10  Willie Walker <william.walker@sun.com>
+
+	* src/orca/speech.py (init): add extra parameters to call to
+	bonobo.activation.activate_from_id as a result of change to
+	gnome-python on 2004-12-13.
+
 2005-02-03  Alessio Frusciante  <algol@firenze.linux.it>
 
 	* configure.in: Added "it" (Italian) to ALL_LINGUAS.

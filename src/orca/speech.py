@@ -137,7 +137,7 @@ def init():
     drivers = []
     for server in servers:
         try:
-            driver = bonobo.activation.activate_from_id (server.iid)
+            driver = bonobo.activation.activate_from_id (server.iid, 0, False)
         except:
             continue
             
