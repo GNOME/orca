@@ -1,0 +1,240 @@
+# Czech translation of orca.
+# Copyright (C) 2004 orca'S COPYRIGHT HOLDER
+# Copyright (C) 2004 Miloslav Trmac <mitr@volny.cz>
+# This file is distributed under the same license as the orca package.
+# Miloslav Trmac <mitr@volny.cz>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: orca VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-05-29 15:21+0200\n"
+"PO-Revision-Date: 2004-05-29 18:14+0200\n"
+"Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
+"Language-Team: Czech <cs@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/orca/Gecko.py:181
+msgid "No page to read."
+msgstr "Není žádná stránka ke čtení."
+
+#: src/orca/Gecko.py:189
+msgid "Reading web page failed."
+msgstr "Čtení WWW stránky selhalo."
+
+#: src/orca/chnames.py:27
+msgid "space"
+msgstr "mezera"
+
+#: src/orca/chnames.py:28
+msgid "bang"
+msgstr "vykřičník"
+
+#: src/orca/chnames.py:29
+msgid "quote"
+msgstr "uvozovky"
+
+#: src/orca/chnames.py:30
+msgid "number"
+msgstr "číslo"
+
+#: src/orca/chnames.py:31
+msgid "dollar"
+msgstr "dolar"
+
+#: src/orca/chnames.py:32
+msgid "percent"
+msgstr "procent"
+
+#: src/orca/chnames.py:33
+msgid "and"
+msgstr "a"
+
+#: src/orca/chnames.py:34
+msgid "tick"
+msgstr "apostrof"
+
+#: src/orca/chnames.py:35
+msgid "left"
+msgstr "levý"
+
+#: src/orca/chnames.py:36
+msgid "right"
+msgstr "pravý"
+
+#: src/orca/chnames.py:37
+msgid "star"
+msgstr "hvězdička"
+
+#: src/orca/chnames.py:38
+msgid "plus"
+msgstr "plus"
+
+#: src/orca/chnames.py:39
+msgid "comma"
+msgstr "čárka"
+
+#: src/orca/chnames.py:40
+msgid "dash"
+msgstr "pomlčka"
+
+#: src/orca/chnames.py:41
+msgid "dot"
+msgstr "tečka"
+
+#: src/orca/chnames.py:42
+msgid "slash"
+msgstr "lomítko"
+
+#: src/orca/chnames.py:43
+msgid "question"
+msgstr "otazník"
+
+# FIXME: s/collun/collon/
+#: src/orca/chnames.py:44
+msgid "collun"
+msgstr "dvojtečka"
+
+#: src/orca/chnames.py:45
+msgid "semi"
+msgstr "středník"
+
+#: src/orca/chnames.py:46
+msgid "less"
+msgstr "menší"
+
+#: src/orca/chnames.py:47
+msgid "greater"
+msgstr "větší"
+
+#: src/orca/chnames.py:48
+msgid "left bracket"
+msgstr "levá hranatá závorka"
+
+#: src/orca/chnames.py:49
+msgid "right bracket"
+msgstr "pravá hranatá závorka"
+
+#: src/orca/chnames.py:50
+msgid "left brace"
+msgstr "levá složená závorka"
+
+#: src/orca/chnames.py:51
+msgid "right brace"
+msgstr "pravá složená závorka"
+
+#: src/orca/chnames.py:52
+msgid "back"
+msgstr "zpětné lomítko"
+
+#: src/orca/chnames.py:53
+msgid "bar"
+msgstr "svislá čára"
+
+#: src/orca/default.py:832
+msgid "Not a document."
+msgstr "Není dokument."
+
+#: src/orca/gaim.py:59
+msgid " chat"
+msgstr " chat"
+
+#: src/orca/gaim.py:82
+msgid " instant message"
+msgstr " instant message"
+
+#: src/orca/gaim.py:138
+msgid "Input"
+msgstr "Vstup"
+
+#: src/orca/gaim.py:140
+msgid "Message Log"
+msgstr "Záznam zpráv"
+
+#: src/orca/orca-setup.in:39
+msgid "Creating .orca directory."
+msgstr "Vytvářím adresář .orca."
+
+#: src/orca/orca-setup.in:66
+#, c-format
+msgid "Select %s voice: "
+msgstr "Zvolte hlas %s: "
+
+#: src/orca/orca-setup.in:70 src/orca/orca-setup.in:112
+#, c-format
+msgid "%d. %s"
+msgstr "%d. %s"
+
+#: src/orca/orca-setup.in:73
+msgid "Enter choice."
+msgstr "Zadejte volbu."
+
+#: src/orca/orca-setup.in:74 src/orca/orca-setup.in:114
+msgid "Enter choice: "
+msgstr "Zadejte volbu:"
+
+#: src/orca/orca-setup.in:96
+msgid "No working GNOME Speech drivers found."
+msgstr "Nenalezeny fungující ovladače GNOME Speech."
+
+#: src/orca/orca-setup.in:99
+msgid "Select default synthesizer:"
+msgstr "Zvolte implicitní syntetizér:"
+
+#: src/orca/orca-setup.in:109
+msgid "Welcome to Orca setup."
+msgstr "Vítejte v nastavení Orca."
+
+#: src/orca/orca-setup.in:110
+msgid "Select default speech synthesizer"
+msgstr "Zvolte implicitní syntetizér řeči"
+
+#: src/orca/orca-setup.in:117
+msgid "Speech will not be used.\n"
+msgstr "Řeč se nebude používat.\n"
+
+#: src/orca/orca-setup.in:139
+msgid "Create another voice? enter y or n."
+msgstr "Vytvořit další hlas? zadejte y nebo n."
+
+#: src/orca/orca-setup.in:148
+msgid "Enter voice name: "
+msgstr "Zadejte název hlasu: "
+
+#: src/orca/orca-setup.in:156
+msgid "Use key echo, enter y or n: "
+msgstr "Používat ozvěnu kláves, zadejte y nebo n: "
+
+#: src/orca/orca-setup.in:179
+msgid "Braille support appears to work, use it?  Enter y or n. "
+msgstr "Podpora Braille zřejmě funguje, používat ji? Zadejte y nebo n."
+
+#: src/orca/orca.in:46
+msgid "Welcome to Orca."
+msgstr "Vítá vás Orca."
+
+#: src/orca/orca.py:81
+msgid "User logged out - shutting down."
+msgstr "Uživatel odhlášen - končím."
+
+#: src/orca/orca.py:183
+msgid "goodbye."
+msgstr "nashledanou."
+
+#: src/orca/rolenames.py:28
+msgid "button"
+msgstr "tlačítko"
+
+#: src/orca/rolenames.py:29
+msgid "list view"
+msgstr "zobrazení seznamu"
+
+#: src/orca/rolenames.py:30 src/orca/rolenames.py:31
+msgid "tree view"
+msgstr "zobrazení stromu"
+
+#: src/orca/rolenames.py:33
+msgid "tab"
+msgstr "záložka"
