@@ -73,6 +73,15 @@ class Accessible:
         if Accessible.cache.has_key (acc):
             return
 
+        # We want to get to this accessible's component attributes sometimes
+        #
+        try:
+            self.component = acc.queryInterface (
+                "IDL:Accessibility/Component:1.0")
+        except:
+            self.component = None
+            pass        
+        
         # The acc reference might be an Accessibility_Accessible or an
         # Accessibility_Application, so try both
         #
@@ -216,6 +225,29 @@ class Accessible:
         return self.app
 
 
+    def __get_extents (self, coordinateType = 0):
+        """Returns the object's accessible extents as an
+        Accessibility.BoundingBox object, or None if the object doesn't
+        implement the Accessibility Component interface.
+
+        Arguments:
+        - coordinateType: 0 = get the extents in screen coordinates,
+                          1 = get the extents in window coordinates
+
+        Returns:
+        This object's accessible extents as an Accessibility.BoundingBox
+        object, or None if the object doesn't implement the Accessibility
+        Component interface.
+        """
+
+        if self.component is None:
+            return None
+        else:
+            self.extents = self.component.getExtents(coordinateType)
+            print self.extents
+            return self.extents
+        
+
     def __getattr__ (self, attr):
         """Created virtual attributes for the Accessible object to make
         the syntax a bit nicer (e.g., acc.name rather than acc.name()).
@@ -244,6 +276,8 @@ class Accessible:
             return self.__get_relations ()
         elif attr == "app":
             return self.__get_app ()
+        elif attr == "extents":
+            return self.__get_extents ()
 
         # If we can't find the attribute, defer to the base object
         #
@@ -270,7 +304,7 @@ class Accessible:
             newChild.app = self.app
             return newChild
         except:
-            debug.pringException ()
+            debug.printException ()
             return None
         
 
