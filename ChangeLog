@@ -1,5 +1,10 @@
 2005-02-10  Willie Walker <william.walker@sun.com>
 
+	* src/orca/orca.py (init): remove call to core.init() as this
+	is done in a11y.init().  The dual call was causing orca to crash.
+
+2005-02-10  Willie Walker <william.walker@sun.com>
+
 	* src/orca/speech.py (init): add extra parameters to call to
 	bonobo.activation.activate_from_id as a result of change to
 	gnome-python on 2004-12-13.
