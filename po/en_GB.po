@@ -1,0 +1,674 @@
+# English (British) translation.
+# Copyright (C) 2004 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the orca package.
+# Gareth Owen <gowen72@yahoo.com>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: orca\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-06-02 20:39-0400\n"
+"PO-Revision-Date: 2004-06-02 20:41-0400\n"
+"Last-Translator: Gareth Owen <gowen72@yahoo.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Orca
+#.
+#. Copyright 2004 Sun Microsystems Inc.
+#.
+#. This library is free software; you can redistribute it and/or
+#. modify it under the terms of the GNU Library General Public
+#. License as published by the Free Software Foundation; either
+#. version 2 of the License, or (at your option) any later version.
+#.
+#. This library is distributed in the hope that it will be useful,
+#. but WITHOUT ANY WARRANTY; without even the implied warranty of
+#. MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#. Library General Public License for more details.
+#.
+#. You should have received a copy of the GNU Library General Public
+#. License along with this library; if not, write to the
+#. Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+#. Boston, MA 02111-1307, USA.
+#. Orca i18n
+#. The Mozilla version of say all reads text from multiple objects
+#. The current object being read
+#. The number of objects to speak
+#. The object representing the root of the currently active page
+#. Advance to the next hypertext object in the say all list and speak it
+#. Find the next object with text
+#. If it's an image, read the image's name using the image voice
+#. If we're getting the file name of the image, don't read it
+#. Stop looking for more objects, we're speaking one now
+#. Get the entire contents of this hypertext object
+#. Get the hypertext interface to this object
+#. Speak this hypertext object in chunks
+#. Split up the links
+#. We don't get proper start and end offsets, so hack
+#. hack hack
+#. Get the text of the hyperlink
+#. If there is text between where we are now and the beginning of the link, read it first
+#. Speak the text of the hyperlink using the hyperlink voice
+#. We're done speaking the hyperlinks - if there's text
+#. left, spaek it
+#. If we have no more objects to speak, end say all mode
+#. This function is called by say all mode when another chunk of text
+#. is needed
+#. This function is called when say all mode is finished - it currently
+#. does nothing
+#. this function starts say all for Mozilla
+#. If there is no active page, we can't do say all
+#: src/orca/Gecko.py:181
+msgid "No page to read."
+msgstr "No page to read."
+
+#. Get all the objects on the page
+#: src/orca/Gecko.py:189
+msgid "Reading web page failed."
+msgstr "Reading web page failed."
+
+#. Set up say all mode
+#. Speak the name of the page, then start say all mode.  When the
+#. active and the first chunk of the page will be read
+#. This function is called whenever an object within Mozilla receives
+#. focus
+#. If it's not a panel, do the default
+#. If the panel has no name, don't touch it
+#. This function is called when a hyperlink is selected - This happens
+#. when a link is navigated to using tab/shift-tab
+#. Orca
+#.
+#. Copyright 2004 Sun Microsystems Inc.
+#.
+#. This library is free software; you can redistribute it and/or
+#. modify it under the terms of the GNU Library General Public
+#. License as published by the Free Software Foundation; either
+#. version 2 of the License, or (at your option) any later version.
+#.
+#. This library is distributed in the hope that it will be useful,
+#. but WITHOUT ANY WARRANTY; without even the implied warranty of
+#. MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#. Library General Public License for more details.
+#.
+#. You should have received a copy of the GNU Library General Public
+#. License along with this library; if not, write to the
+#. Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+#. Boston, MA 02111-1307, USA.
+#. Orca i18n
+#. Pronunciations for various characters
+#: src/orca/chnames.py:27
+msgid "space"
+msgstr "space"
+
+#: src/orca/chnames.py:28
+msgid "bang"
+msgstr "bang"
+
+#: src/orca/chnames.py:29
+msgid "quote"
+msgstr "quote"
+
+#: src/orca/chnames.py:30
+msgid "number"
+msgstr "number"
+
+#: src/orca/chnames.py:31
+msgid "dollar"
+msgstr "dollar"
+
+#: src/orca/chnames.py:32
+msgid "percent"
+msgstr "percent"
+
+#: src/orca/chnames.py:33
+msgid "and"
+msgstr "and"
+
+#: src/orca/chnames.py:34
+msgid "tick"
+msgstr "tick"
+
+#: src/orca/chnames.py:35
+msgid "left"
+msgstr "left"
+
+#: src/orca/chnames.py:36
+msgid "right"
+msgstr "right"
+
+#: src/orca/chnames.py:37
+msgid "star"
+msgstr "star"
+
+#: src/orca/chnames.py:38
+msgid "plus"
+msgstr "plus"
+
+#: src/orca/chnames.py:39
+msgid "comma"
+msgstr "comma"
+
+#: src/orca/chnames.py:40
+msgid "dash"
+msgstr "dash"
+
+#: src/orca/chnames.py:41
+msgid "dot"
+msgstr "dot"
+
+#: src/orca/chnames.py:42
+msgid "slash"
+msgstr "slash"
+
+#: src/orca/chnames.py:43
+msgid "question"
+msgstr "question"
+
+#: src/orca/chnames.py:44
+msgid "collun"
+msgstr "colon"
+
+#: src/orca/chnames.py:45
+msgid "semi"
+msgstr "semi"
+
+#: src/orca/chnames.py:46
+msgid "less"
+msgstr "less"
+
+#: src/orca/chnames.py:47
+msgid "greater"
+msgstr "greater"
+
+#: src/orca/chnames.py:48
+msgid "left bracket"
+msgstr "left bracket"
+
+#: src/orca/chnames.py:49
+msgid "right bracket"
+msgstr "right bracket"
+
+#: src/orca/chnames.py:50
+msgid "left brace"
+msgstr "left brace"
+
+#: src/orca/chnames.py:51
+msgid "right brace"
+msgstr "right brace"
+
+#: src/orca/chnames.py:52
+msgid "back"
+msgstr "back"
+
+#: src/orca/chnames.py:53
+msgid "bar"
+msgstr "bar"
+
+#. Orca
+#.
+#. Copyright 2004 Sun Microsystems Inc.
+#.
+#. This library is free software; you can redistribute it and/or
+#. modify it under the terms of the GNU Library General Public
+#. License as published by the Free Software Foundation; either
+#. version 2 of the License, or (at your option) any later version.
+#.
+#. This library is distributed in the hope that it will be useful,
+#. but WITHOUT ANY WARRANTY; without even the implied warranty of
+#. MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#. Library General Public License for more details.
+#.
+#. You should have received a copy of the GNU Library General Public
+#. License along with this library; if not, write to the
+#. Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+#. Boston, MA 02111-1307, USA.
+#. Customized role pronunciations
+#. User settings
+#. Keyboard hooks
+#. Speech support
+#. Braille support
+#. Orca i18n
+#. The following functions present various types of objects - all
+#. presentation functions handle both speech and Braille.  All
+#. functions take the object as the first parameter, and a boolean
+#. specifying whether the object had focus already or not
+#. Present menus - This function speaks the menu item which current is
+#. selected, an updates the Braille display to show all menu items with
+#. the cursor under the currently selected item.  The object passed as
+#. the first parameter is a menu item or a menu.
+#. Put the menu on the Braille display - Put each menu item in its
+#. own region on the Braille display
+#. Put the Braille cursor under the selected item
+#. Put the text on the Braille display
+#. Speak the selected menu item
+#. Present a page tab list - This function displays the page tab list
+#. on the Braille display and speaks the currently selected page tab,
+#. and puts the Braille cursor under the currently selected page tab.
+#. the object passed to this function as the first parameter is the
+#. currently selected page tab.
+#. Put each page tab in its own region on the Braille display
+#. Put the Braille cursor under the currently selected page tab
+#. Put the text on the display
+#. Speak the currently selected page tab
+#. this function displays an object containing text on the Braille
+#. display - It takes the Accessible object and retrieves the
+#. AccessibleText interface, since it may also need access to the
+#. object's label
+#. If this is the child of a combo box, use the combo boxe's label
+#. Get the the AccessibleText interrface
+#. Get the line containing the caret
+#. Line is actually a list of objects-- the first is the actual
+#. text of the line, the second is the start offset, and the third
+#. is the end offset
+#. Sometimes we get the trailing line-feed-- remove it
+#. The label and text each get their own region - The label region
+#. size is the length of the label's text + 1 or half the display
+#. length, whidhever is less
+#. Subtract the space that is left for us to use on the display
+#. Make the advance keys scroll the region containing the text
+#. Position the cursor at the caret position - Note that the region
+#. containing the text can be longer than the physical display, and
+#. tthat the cursor position is specified as an offset from the
+#. beginning of the text
+#. Post the text to the display
+#. Speak the line of an AccessibleText object which contains the caret
+#. Get the AccessibleText interface of the provided object
+#. Spaek the word containing the caret
+#. Speak the character under the caret
+#. Present a text object - This displays the line containing the caret
+#. on the Braille display, and speaks the line containing the caret
+#. with speech
+#. Update the Braille display
+#. Present a combo box in speech and Braille
+#. See if this combo box  has a text object in it
+#. Put the combo box's label, if any, in it's own region on the
+#. Braille display
+#. The region containing the label should be the length of the
+#. label's text +1 or half the display length, whichever is
+#. smaller
+#. If the bomxo box has a text object, display it in the combo
+#. box's content region of the Braille display
+#. Make the advance keys scroll the content region
+#. Otherwise, the combo box's name will contain it's value -
+#. display that in the combo box's content region on the Braille
+#. display
+#. Present a table object for speech and Braille - This function speaks
+#. and Brailles the name and role of the table, and then speaks and
+#. Brailles the selected items in the table
+#. Only speak the table's name if it didn't already have focus
+#. Get the accessible table interface of the object
+#. Get the selected rows of the table
+#. Add the text of all the selected cells together
+#. If the cell has children, get a list of them
+#. Otherwise, just make a list with the cell itelf as the
+#. only member
+#. Add the text of all the cells to the text string to be
+#. displayed/spoken
+#. Put each line of text in the cell in it's own
+#. region on the Braille display, so there is
+#. tactile separation between them
+#. Put the text on the Braille display
+#. Present a checkbox - This function displays ( ) and the object's
+#. name on the display.  An x between the ( and ) indicates that the
+#. checkbox is checked.  It also sppeaks the name of the object and
+#. whether it is checked or unchecked
+#. Get the state of the checkbox
+#. If the checkbox is checked, indicate this in speech and Braille
+#. If it's not already focused, say it's name
+#. Present a radio button - This function is essentially the same as
+#. the checkbox presenter, except that it attempts to find the
+#. radio button's group
+#. Find group
+#. Put the group name and the radio button's label each in their
+#. own region
+#. If the radio button's label is too long to fit in it's region,
+#. make the advance keys scroll that radio button name region
+#. Present a button - Displays the button name on the Braille display
+#. and speaks it
+#. Presenter which is used if we don't have a role specific one
+#. Speak and Braille the object's label and role
+#. Present a dialog box - This function displays the name of the dialog
+#. on the Braille display.  It speaks the title of the dialog.  It
+#. then searches the dialog for labels which are not associated
+#. with any other objects, and reads their contents
+#. Find all the labels in the dialog
+#. Add the names of only those labels which are not associated with
+#. other objects (I.E., do empty relation setss)
+#. This hash table maps role names to the above presenter functions
+#. This function gets called whenever an object gets focus
+#. Do we have a role specific presenter for this type of object
+#. Nope, use the default
+#. This function is called whenever a toplevel window is activated
+#. Do we have a role specific presenter for this type of object?
+#. This hash table defines which presenters should be used if an
+#. object's selection changes
+#. This function is called if an object's selection changes
+#. See if we have an object specific presente registered to be
+#. called when this type of object's selection changes
+#. Don't do anything if we don't have a role-specific presenter
+#. This hash table defines the presenters which should be called when
+#. various states change for various types of objects.  The only
+#. current example is that this table defines that the
+#. checkBoxPresenter function should be called when the CHECKED state
+#. changes on an object of role "checkbox"
+#. This function is called whenever an object's state changes - Note
+#. that currently, state changes for non-focused objects are ignored
+#. Don't notify for state changes for non-focussed objects
+#. Should we re-present the object?
+#. WE found a notifier - is the state that just changed in our
+#. list?
+#. We're supposed to notify the user about this state change - do
+#. we have a presenter for this type of object
+#. This function is called whenever the caret moves
+#. Update the Braille display
+#. If this move is in response to an up or down arrow, read the line
+#. Control-left and control-right arrows speak the word under the
+#. caret
+#. Right and left arrows speak the character under the cursor
+#. This function is called whenever text is inserted into an object
+#. Ignore text insertions to non-focused objects, unless the
+#. currently focused object is the parent of the object to which
+#. text was inserted
+#. This function is called whenever text is deleted from an object
+#. Ignore text deletions from non-focused objects, unless the
+#. currently focused object is the parent of the object from which
+#. text was deleted
+#. The any_data member of the event object has the deleted text in
+#. it - If the last key pressed was a backspace or delete key,
+#. speak the deleted text
+#. Quit the screen reader
+#. The following functions handle Braille key presses from the display
+#. - These functions receive an object to which the keypress was
+#. directed, the region number which generated the key press, and the
+#. offset of the key within the region
+#. Handle Braille key presses directed at menus
+#. Each menu item/menu displayed is in its own region - so the
+#. region_num will indicate which menu/menu item to select
+#. Get the AccessibleAction interface and do the first one
+#. This function is called when Braille keys are directed at page tabs
+#. Each page tab will be displayed in its own region of the Braille
+#. display - so the region number will indicate the page tab to
+#. select
+#. Select the clicked page tab
+#. This function is called when Braille keypresses are directed at text
+#. objects
+#. The line containing the caret is displayed on the display - so
+#. the content region of the Braille display that generated the
+#. keypress contains that line.  Therefore, the absolute offset to
+#. move the caret to can be derived by the offset of the key plus the
+#. offset of the beginning of the line containing the caret
+#. This hash table defines the Braille key handlers for the various types
+#. of objects
+#. This function is called whenever a cursor key is pressed on the
+#. Braille display
+#. Clear the Braille display memory (does not clear the physical
+#. disply)
+#. Do we have a Braille key handler for the role of the focused
+#. object?
+#. We don't have a specific handler - see if the focused object
+#. has an AccessibleAction interface, and if so, do the first
+#. action it lists
+#. The following functions related to the sayAll system - This system
+#. is designed to be pluggable such that sayAll commands could be
+#. implemented for various types of objects.  The current
+#. implementation only works for reading the text of single text
+#. objects.  This implementation will need to be extended to support
+#. reading of more complex documents such as web pages in Yelp/Mozilla,
+#. and documents within StarOffice
+#. sayAllText contains the AccessibleText object of the document
+#. currently being read
+#. sayAllPosition is the current position within sayAllText
+#. Get the next line of text to read
+#. If the line is empty (which only happens at the end of the
+#. document), quit.  Note that blank lines are returned as lines
+#. of length 1 character which is the newline character
+#. Speak the line
+#. Set the say all position to the beginning of the line being read
+#. Return true to continue reading
+#. This function is called when sayAll mode is interrupted - the only
+#. parameter is the position within the current chunk where speech
+#. was interrupted
+#. Move the caret to the position where speech was interrupted
+#. This function initiates say all mode
+#. If the focused object isn't text, we don't know how to read it
+#: src/orca/default.py:832
+msgid "Not a document."
+msgstr "Not a document."
+
+#. Setup say all mode
+#. Start reading at the caret offset
+#. Start say all by speaking the current line - the end of speech
+#. marker which occurs when this call to say is finished will cause
+#. the say all process to continue
+#. Initiate say all mode with the speech subsystem - providing the
+#. sayAllGetChunk and sayAllStopped callbacks
+#. Orca
+#.
+#. Copyright 2004 Sun Microsystems Inc.
+#.
+#. This library is free software; you can redistribute it and/or
+#. modify it under the terms of the GNU Library General Public
+#. License as published by the Free Software Foundation; either
+#. version 2 of the License, or (at your option) any later version.
+#.
+#. This library is distributed in the hope that it will be useful,
+#. but WITHOUT ANY WARRANTY; without even the implied warranty of
+#. MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#. Library General Public License for more details.
+#.
+#. You should have received a copy of the GNU Library General Public
+#. License along with this library; if not, write to the
+#. Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+#. Boston, MA 02111-1307, USA.
+#. Orca i18n
+#. If we've found a chat window, set a global reference to it and read
+#. it
+#. The chat window has threee text boxes in it (the chat topic, the
+#. message log, and the text entry field).  find them all - they're
+#. always returned in the same order
+#. The second entry is the output log - Due to current
+#. architectural limitations, the only way to refer to the current
+#. script object is through the script.active reference - global
+#. variables to this module may be shared across multiple scripts
+#. (although it's unlikely in this case) - the only practical case
+#. where module-level variables actually are shared across multiple
+#. applications is in the default script.  but since these scripts
+#. serve as example code, the technically proper way to store
+#. variables is in the script object, referenced by script.active
+#. Speak the title of the chat
+#: src/orca/gaim.py:59
+msgid " chat"
+msgstr " chat"
+
+#. When we've found an instant mesage window, keep a reference to it
+#. There are two text boxes in each IM window (the message log, and
+#. the text entry field).  They are always returned in the same
+#. order
+#. The first entry is the output log
+#. Speak the title of the IM
+#: src/orca/gaim.py:82
+msgid " instant message"
+msgstr " instant message"
+
+#. This function is called whenever one of Gaim's toplevel windows is
+#. activated
+#. If it's not a standard window, do the normal behavior since it
+#. won't have an IM or chat in it
+#. Frames with two text boxes are considered to be instant message
+#. dinwos, and those with three are considered chats.  This works for
+#. now, but we need a more robust way of doing this sort of thing for
+#. the general case
+#. This function is called whenever text is inserted into one of Gaim's
+#. text objects.  If the object is an instant message or chat, speak
+#. the text
+#. If we're not watching anything, do the default behavior
+#. this function is called when any object in Gaim gets the focus
+#. The text boxes in chat and IM windows have no names - so we give
+#. them some here
+#: src/orca/gaim.py:138
+msgid "Input"
+msgstr "Input"
+
+#: src/orca/gaim.py:140
+msgid "Message Log"
+msgstr "Message Log"
+
+#: src/orca/orca-setup.in:39
+msgid "Creating .orca directory."
+msgstr "Creating .orca directory."
+
+#: src/orca/orca-setup.in:66
+#, c-format
+msgid "Select %s voice: "
+msgstr "Select %s voice: "
+
+#: src/orca/orca-setup.in:70 src/orca/orca-setup.in:112
+#, c-format
+msgid "%d. %s"
+msgstr "%d. %s"
+
+#: src/orca/orca-setup.in:73
+msgid "Enter choice."
+msgstr "Enter choice."
+
+#: src/orca/orca-setup.in:74 src/orca/orca-setup.in:114
+msgid "Enter choice: "
+msgstr "Enter choice: "
+
+#: src/orca/orca-setup.in:96
+msgid "No working GNOME Speech drivers found."
+msgstr "No working GNOME Speech drivers found."
+
+#: src/orca/orca-setup.in:99
+msgid "Select default synthesizer:"
+msgstr "Select default synthesiser:"
+
+#: src/orca/orca-setup.in:109
+msgid "Welcome to Orca setup."
+msgstr "Welcome to Orca setup."
+
+#: src/orca/orca-setup.in:110
+msgid "Select default speech synthesizer"
+msgstr "Select default speech synthesiser"
+
+#: src/orca/orca-setup.in:117
+msgid "Speech will not be used.\n"
+msgstr "Speech will not be used.\n"
+
+#: src/orca/orca-setup.in:139
+msgid "Create another voice? enter y or n."
+msgstr "Create another voice? enter y or n."
+
+#: src/orca/orca-setup.in:148
+msgid "Enter voice name: "
+msgstr "Enter voice name: "
+
+#: src/orca/orca-setup.in:156
+msgid "Use key echo, enter y or n: "
+msgstr "Use key echo, enter y or n: "
+
+#: src/orca/orca-setup.in:179
+msgid "Braille support appears to work, use it?  Enter y or n. "
+msgstr "Braille support appears to work, use it?  Enter y or n. "
+
+#: src/orca/orca.in:46
+msgid "Welcome to Orca."
+msgstr "Welcome to Orca."
+
+#. Orca
+#.
+#. Copyright 2004 Sun Microsystems Inc.
+#.
+#. This library is free software; you can redistribute it and/or
+#. modify it under the terms of the GNU Library General Public
+#. License as published by the Free Software Foundation; either
+#. version 2 of the License, or (at your option) any later version.
+#.
+#. This library is distributed in the hope that it will be useful,
+#. but WITHOUT ANY WARRANTY; without even the implied warranty of
+#. MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#. Library General Public License for more details.
+#.
+#. You should have received a copy of the GNU Library General Public
+#. License along with this library; if not, write to the
+#. Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+#. Boston, MA 02111-1307, USA.
+#. Accessibility support
+#. Import user settings
+#. Speech support
+#. Braille support
+#. Script management
+#. Keyboard hooks
+#. Orca i18n
+#. List of running apps
+#. Build the list of currently runing apps
+#. Track children-changed events on the desktop to determine when apps
+#. start and stop
+#. If the desktop is empty, the user has logged out-- shutdown Orca
+#: src/orca/orca.py:81
+msgid "User logged out - shutting down."
+msgstr "User logged out - shutting down."
+
+#. Activate scripts when their apps' toplevel windows are activated
+#. Clear the Braille display on Window Activations
+#. Orca initialized
+#. Initialize the core
+#. Initialize a11y support
+#. Initialize keyboard hooks
+#. Setup speakers
+#. Initialize Braille support
+#. Build list of accessible apps
+#. Load the default script
+#. Activate the default script
+#. Attempt to load scripts for all currently running apps
+#. Start Orca - This starts the Bonobo main loop
+#. Stop Orca - This cleans up resources and quits the Bonobo main loop
+#: src/orca/orca.py:183
+msgid "goodbye."
+msgstr "goodbye."
+
+#. Deregister our event listeners
+#. Shutdown the keyboard support
+#. Shutdown accessibility utility functions
+#. Shutdown Braille support
+#. Shutdown speech support
+#. Shutdown Bonobo
+#. Shutdown the core
+#. Orca
+#.
+#. Copyright 2004 Sun Microsystems Inc.
+#.
+#. This library is free software; you can redistribute it and/or
+#. modify it under the terms of the GNU Library General Public
+#. License as published by the Free Software Foundation; either
+#. version 2 of the License, or (at your option) any later version.
+#.
+#. This library is distributed in the hope that it will be useful,
+#. but WITHOUT ANY WARRANTY; without even the implied warranty of
+#. MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#. Library General Public License for more details.
+#.
+#. You should have received a copy of the GNU Library General Public
+#. License along with this library; if not, write to the
+#. Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+#. Boston, MA 02111-1307, USA.
+#. Orca i18n
+#. Role pronunciations
+#: src/orca/rolenames.py:28
+msgid "button"
+msgstr "button"
+
+#: src/orca/rolenames.py:29
+msgid "list view"
+msgstr "list view"
+
+#: src/orca/rolenames.py:30 src/orca/rolenames.py:31
+msgid "tree view"
+msgstr "tree view"
+
+#: src/orca/rolenames.py:33
+msgid "tab"
+msgstr "tab"
