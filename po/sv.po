@@ -1,0 +1,247 @@
+# Swedish messages for orca.
+# Copyright (C) 2004 Free Software Foundation, Inc.
+# Christian Rose <menthos@menthos.com>, 2004.
+#
+# $Id$
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: orca\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-05-27 18:22+0200\n"
+"PO-Revision-Date: 2004-05-27 18:22+0200\n"
+"Last-Translator: Christian Rose <menthos@menthos.com>\n"
+"Language-Team: Swedish <sv@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/orca/Gecko.py:181
+msgid "No page to read."
+msgstr "Ingen sida att läsa."
+
+#: src/orca/Gecko.py:189
+msgid "Reading web page failed."
+msgstr "Läsning av webbsida misslyckades."
+
+#: src/orca/chnames.py:27
+msgid "space"
+msgstr "blanksteg"
+
+#: src/orca/chnames.py:28
+#, fuzzy
+msgid "bang"
+msgstr "Tango"
+
+#: src/orca/chnames.py:29
+msgid "quote"
+msgstr "citattecken"
+
+#: src/orca/chnames.py:30
+msgid "number"
+msgstr "tal"
+
+#: src/orca/chnames.py:31
+msgid "dollar"
+msgstr "dollartecken"
+
+#: src/orca/chnames.py:32
+msgid "percent"
+msgstr "procenttecken"
+
+#: src/orca/chnames.py:33
+msgid "and"
+msgstr "ochtecken"
+
+#: src/orca/chnames.py:34
+#, fuzzy
+msgid "tick"
+msgstr "_Fast"
+
+#: src/orca/chnames.py:35
+msgid "left"
+msgstr "vänster"
+
+#: src/orca/chnames.py:36
+msgid "right"
+msgstr "höger"
+
+#: src/orca/chnames.py:37
+msgid "star"
+msgstr "stjärna"
+
+#: src/orca/chnames.py:38
+msgid "plus"
+msgstr "plustecken"
+
+#: src/orca/chnames.py:39
+msgid "comma"
+msgstr "komma"
+
+#: src/orca/chnames.py:40
+msgid "dash"
+msgstr "streck"
+
+#: src/orca/chnames.py:41
+msgid "dot"
+msgstr "punkt"
+
+#: src/orca/chnames.py:42
+msgid "slash"
+msgstr "snedstreck"
+
+#: src/orca/chnames.py:43
+msgid "question"
+msgstr "frågetecken"
+
+#: src/orca/chnames.py:44
+#, fuzzy
+msgid "collun"
+msgstr "Kolumn"
+
+#: src/orca/chnames.py:45
+msgid "semi"
+msgstr "semikolon"
+
+#: src/orca/chnames.py:46
+msgid "less"
+msgstr "mindre än-tecken"
+
+#: src/orca/chnames.py:47
+msgid "greater"
+msgstr "större än-tecken"
+
+#: src/orca/chnames.py:48
+msgid "left bracket"
+msgstr "vänsterhakparentes"
+
+#: src/orca/chnames.py:49
+msgid "right bracket"
+msgstr "högerhakparentes"
+
+#: src/orca/chnames.py:50
+msgid "left brace"
+msgstr "vänsterklammerparentes"
+
+#: src/orca/chnames.py:51
+msgid "right brace"
+msgstr "högerklammerparentes"
+
+#: src/orca/chnames.py:52
+msgid "back"
+msgstr "tillbaka"
+
+#: src/orca/chnames.py:53
+msgid "bar"
+msgstr "lodstreck"
+
+#: src/orca/default.py:832
+msgid "Not a document."
+msgstr ""
+
+#: src/orca/gaim.py:59
+#, fuzzy
+msgid " chat"
+msgstr "ingen markör"
+
+#: src/orca/gaim.py:82
+msgid " instant message"
+msgstr ""
+
+#: src/orca/gaim.py:138
+msgid "Input"
+msgstr "Indata"
+
+#: src/orca/gaim.py:140
+msgid "Message Log"
+msgstr "Meddelandelogg"
+
+#: src/orca/orca-setup.in:39
+msgid "Creating .orca directory."
+msgstr "Skapar .orca-katalog."
+
+#: src/orca/orca-setup.in:66
+#, c-format
+msgid "Select %s voice: "
+msgstr "Välj rösten %s: "
+
+#: src/orca/orca-setup.in:70 src/orca/orca-setup.in:112
+#, c-format
+msgid "%d. %s"
+msgstr "%d. %s"
+
+#: src/orca/orca-setup.in:73
+msgid "Enter choice."
+msgstr "Ange val."
+
+#: src/orca/orca-setup.in:74 src/orca/orca-setup.in:114
+msgid "Enter choice: "
+msgstr "Ange val: "
+
+#: src/orca/orca-setup.in:96
+msgid "No working GNOME Speech drivers found."
+msgstr ""
+
+#: src/orca/orca-setup.in:99
+msgid "Select default synthesizer:"
+msgstr ""
+
+#: src/orca/orca-setup.in:109
+msgid "Welcome to Orca setup."
+msgstr "Välkommen till konfigurationen av Orca."
+
+#: src/orca/orca-setup.in:110
+msgid "Select default speech synthesizer"
+msgstr ""
+
+#: src/orca/orca-setup.in:117
+msgid "Speech will not be used.\n"
+msgstr "Tal kommer inte att användas.\n"
+
+#: src/orca/orca-setup.in:139
+msgid "Create another voice? enter y or n."
+msgstr "Skapa ytterligare en röst? ange y (ja) eller n (nej)."
+
+#: src/orca/orca-setup.in:148
+msgid "Enter voice name: "
+msgstr "Ange röstnamn: "
+
+#: src/orca/orca-setup.in:156
+msgid "Use key echo, enter y or n: "
+msgstr "Använd tangentekning, ange y (ja) eller n (nej): "
+
+#: src/orca/orca-setup.in:179
+msgid "Braille support appears to work, use it?  Enter y or n. "
+msgstr ""
+"Stödet för Braille verkar fungera, använda det? Ange y (ja) eller n (nej). "
+
+#: src/orca/orca.in:46
+msgid "Welcome to Orca."
+msgstr "Välkommen till Orca."
+
+#: src/orca/orca.py:81
+msgid "User logged out - shutting down."
+msgstr "Användaren loggade ut - stänger ned."
+
+#: src/orca/orca.py:183
+msgid "goodbye."
+msgstr "hejdå."
+
+#: src/orca/rolenames.py:28
+msgid "button"
+msgstr "knapp"
+
+#: src/orca/rolenames.py:29
+msgid "list view"
+msgstr "listvy"
+
+#: src/orca/rolenames.py:30 src/orca/rolenames.py:31
+msgid "tree view"
+msgstr "trädvy"
+
+#: src/orca/rolenames.py:33
+msgid "tab"
+msgstr "tabulator"
+
+#~ msgid "Speech will not be used."
+#~ msgstr "Tal kommer inte att användas."

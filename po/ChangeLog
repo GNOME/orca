@@ -1,6 +1,9 @@
+2004-05-27  Christian Rose  <menthos@menthos.com>
+
+	* sv.po: Added Swedish translation.
+	* POTFILES.in: Added missing file and sorted.
+
 2004-05-19  Marc Mulcahy  <marc@plbb.net>
 
 	* Created.
-
-	
 

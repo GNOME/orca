@@ -1,3 +1,7 @@
+2004-05-27  Christian Rose  <menthos@menthos.com>
+
+	* configure.in: Added "sv" to ALL_LINGUAS.
+
 2004-05-26  Marc Mulcahy  <marc.mulcahy@sun.com>
 
 	* Added .cvsignore files.
@@ -10,4 +14,3 @@
 
 	* Initial cvs import.
 	
-
