@@ -23,7 +23,8 @@ import core
 import settings  # user settings
 import speech
 import brl
-import mag
+#import mag - [[[TODO: WDW - disable until I can figure out how to
+#             resolve the GNOME reference in mag.py.]]]
 import script
 import kbd
 import debug
