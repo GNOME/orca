@@ -138,10 +138,13 @@ class Accessible:
 
     def __get_relations (self):
 
-        # Get the state set
+        # Get the relation set
 
-        self.relations = self.acc.getRelationSet ()
-
+        relations = self.acc.getRelationSet ()
+        self.relations = []
+        for relation in relations:
+            self.relations.append (relation._narrow (core.Accessibility.Relation))
+                                   
         return self.relations
 
 
@@ -154,7 +157,7 @@ class Accessible:
         obj = self
         while obj.parent != None and obj != obj.parent:
             obj = obj.parent
-        if obj == obj.parent:
+        if obj == obj.parent or obj.role != "application":
             self.app = None
         else:
             self.app = obj
@@ -235,7 +238,8 @@ focussedApp = None
 def onWindowActivated (e):
     global focussedApp
 
-    focussedApp = makeAccessible (e.source.parent)
+    source = e.source._narrow (core.Accessibility.Accessible)
+    focussedApp = makeAccessible (source.parent)
 
 def onFocus (e):
     global focussedObject
@@ -243,9 +247,11 @@ def onFocus (e):
 
     focussedObject = makeAccessible (e.source)
 
-    # WE need this hack fo the time being due to a bug in Nautilus,
+    # We need this hack fo the time being due to a bug in Nautilus,
     # which makes it impossible to traverse to the application from
     # some objects withint Nautilus
+
+    focussedObject.app = focussedApp
 
 # This function is called when an object's name changes
 
@@ -510,7 +516,7 @@ def getLabel (obj):
     relations = obj.relations
     for relation in relations:
         if relation.getRelationType () == core.Accessibility.RELATION_LABELLED_BY:
-            target = relation.getTarget (0)
+            target = makeAccessible(relation.getTarget (0))
             label = target.name
             break
 
