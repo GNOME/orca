@@ -1,0 +1,1477 @@
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook V3.1//EN" [
+  <!ENTITY todo '<emphasis>TODO:</emphasis>'>
+  <!ENTITY detail '<emphasis>IMPLEMENTATION DETAIL:</emphasis>'>
+  <!ENTITY requirements '<link linkend="requirements">requirements</link>'>
+  <!ENTITY func-spec '<link linkend="func-spec">functional specification</link>'>
+  <!ENTITY style-guide '<link linkend="style-guide">style guide</link>'>
+  <!ENTITY architecture '<link linkend="architecture">architecture</link>'>
+]>
+<book>
+  <bookinfo>
+    <title>Orca Screen Reader Programmer's Guide</title>
+    <authorgroup>
+      <author>
+        <firstname>Willie</firstname><surname>Walker</surname>
+        <affiliation>
+          <orgname>Sun Microsystems, Inc.</orgname>
+          <orgdiv>Accessibility Program Office</orgdiv>
+        </affiliation>
+      </author>
+    </authorgroup>
+    <date>February 16, 2005</date>
+    <copyright>
+      <year>2005</year>
+      <holder>Sun Microsystems, Inc.</holder>
+    </copyright>
+    <revhistory>
+      <revision>
+        <revnumber>0.1</revnumber>
+        <date>16 Feb 2005</date>
+        <authorinitials>wdw</authorinitials>
+        <revremark>First release</revremark>
+      </revision>
+    </revhistory>
+  </bookinfo>
+
+
+
+  <!--
+  ************************************************************************
+  *                                                                      *
+  * INTRODUCTION                                                         *
+  *                                                                      *
+  ************************************************************************
+  -->
+
+  <chapter id="introduction"><title>Introduction</title>
+
+    <para> The purpose of a screen reader is to provide a non-visual
+    interface to applications.  While the interface tends to be
+    primarily for "viewing" only, screen readers sometimes also
+    provide alternative means for navigating the screen and providing
+    input to applications.  </para>
+
+    <para> A screen reader's primary use is as an assistive technology
+    for people with visual impairments.  In this respect, the
+    non-visual access tends to be in the form of speech synthesis and
+    refreshable Braille displays.  The control of the screen reader
+    tends to be through the system keyboard, but may also include the
+    input keys on a Braille display.  In addition, screen readers
+    often coexist and collaborate with other assistive technologies,
+    such as screen magnifiers.  </para>
+
+    <para> Orca is intended to be a screen reader for the GNOME
+    platform.  This document discusses the &requirements;,
+    &func-spec;, and &architecture; of Orca.  </para>
+
+    <section><title>Intended Audience</title>
+
+      <para> The intended audience for this document are the
+      developers of Orca as well as developers wishing to extend Orca
+      through custom scripts.  </para>
+
+    </section>
+
+  </chapter>
+
+
+
+  <!--
+  ************************************************************************
+  *                                                                      *
+  * REQUIREMENTS                                                         *
+  *                                                                      *
+  ************************************************************************
+  -->
+
+  <chapter id="requirements"><title>Requirements</title>
+
+    <para> The Orca requirements can be broken into two main areas:
+    those which are necessary for end users of Orca, and those which
+    are necessary for people wishing to extend or enhance the
+    capabilities of Orca via scripts.  </para>
+
+    <section><title>End-User Requirements</title>
+
+      <para> Orca must supply at least the following end-user
+      features.  </para>
+
+      <section><title>Available at All Times</title>
+
+        <para> Orca will often be the only vehicle by which many users
+        will be able to access the system.  As such, it must be able
+        to be made available at all times, including accessing system
+        login and screen-saver screens.  </para>
+
+      </section>
+
+      <section><title>Track and Present Active Application/Window</title>
+
+        <para> Orca must be able to track the currently active window,
+        which is the window that has keyboard focus.  When first
+        starting up and when the active window has changed, Orca will
+        provide a short summary of the active window.  The
+        presentation of the summary will follow the &style-guide;.
+        </para>
+
+      </section>
+
+      <section><title>Permit Presentation of Information from Other 
+                      Applications/Windows</title>
+
+        <para> Orca must also allow for the presentation of
+        information of applications/windows that do not have keyboard
+        focus.  This will typically be driven from AT-SPI events from
+        the application/window as well as input device events.  The
+        presentation will typically be information that the user has
+        optionally requested.  Examples of such information include
+        announcing the time of day, announcing the subject/sender of
+        incoming e-mail, etc.  </para>
+
+      </section>
+
+      <section><title>Configurable Presentation and Interaction</title>
+
+        <para> Different users have different capabilities (e.g., some
+        may be able to hear some synthesis voices better than others;
+        some may use Braille while others do not) and desires (e.g.,
+        some may prefer faster speaking rates).  As such, the general
+        manner and means by which Orca presents information to the
+        user must be configurable by the end user.  </para>
+
+        <para> &todo; need to define the configurable parameters.
+        This not only include the use of speech/mag/Braille, but also
+        how they are used.  The prior paragraph touches on this, but
+        it also includes things such as what is to be spoken and the
+        order in which they are spoken (e.g., role, label, text).
+        </para>
+
+        <para> It is desirable, but not required, to allow the user to
+        change (and test) configuration settings while Orca is
+        running.  </para>
+
+      </section>
+
+      <section><title>Speech Synthesis</title>
+
+        <para> One of the primary non-visual ways to present a
+        graphical display to a user is via speech synthesis.  Note
+        that Orca need not be a speech synthesizer, but it must be
+        able to drive one.  The most important functionality Orca
+        needs for speech synthesis are as follows: </para>
+
+        <itemizedlist>
+          <listitem>
+            <para> <emphasis role="bold">General Synthesis</emphasis>
+            - Orca must be able to speak an utterance (e.g., a word, a
+            label, a sentence, etc.) or set of utterances (e.g., a
+            paragraph or entire document).  The utterance being spoken
+            must be able to interrupted at any time.  </para>
+          </listitem>
+          <listitem>
+            <para> <emphasis role="bold">Voice Styles</emphasis> -
+            Orca must be able to identify and allow the user to select
+            between the voices available on the various synthesis
+            engines available on the system.  In addition, Orca must
+            allow the user to customize parameter settings for the
+            voices, such as average pitch, speaking rate, and volume.
+            The combination of {voice, pitch, rate, volume} will be
+            known as a "voice style."  Orca will provide the user with
+            the ability to select the voice styles to be used for
+            various speaking operations (e.g., default, uppercase,
+            warning, alarm, etc.).  At a minimum, Orca will support a
+            "default" style to be used for the majority (if not all)
+            of the speaking operations.  </para>
+          </listitem>
+          <listitem>
+            <para> <emphasis role="bold">Speaking Rate
+            Modification</emphasis> - While the speaking rate will
+            generally remained fixed once configured, users may
+            sometimes which to speed up or slow down the presentation
+            of speech.  While it is ideal that user can do this while
+            the synthesis engine is speaking, such functionality is
+            typically not provided by the majority of speech synthesis
+            engines.  Orca must, however, allow the user to change the
+            speaking rate that will be used for the next utterance,
+            should the underlying engine support changes to speaking
+            rate.  </para>
+          </listitem>
+          <listitem>
+            <para> <emphasis role="bold">Multilingual Text</emphasis>
+            - Orca should provide the ability to speak a single
+            utterance that contains words or phrases from multiple
+            locales.  This is an emerging area for speech synthesis
+            engines, however, so Orca will support this feature if the
+            underlying engine(s) support it.  </para>
+          </listitem>
+        </itemizedlist>
+      </section>
+
+      <section><title>Refreshable Braille</title>
+
+        <para> Braille is another primary non-visual presentation mode
+        for screen readers.  As with speech synthesis, Orca need not
+        directly support a Braille display, but it must be able to
+        drive one.  The primary end requirements for a Braille display
+        are as follows: </para>
+
+        <para> &todo; Obtain the requirements needed for a Braille
+        display.  Marc also did some interesting prototype work with
+        using as much of the Braille display as possible to provide as
+        much information as possible (e.g., displaying all items in a
+        menu as opposed to just the one that is currently selected).
+        Given the large variations across Braille displays, this
+        appears to be a fairly in-depth task.  In addition, I'm not
+        sure what input events can be generated by a Braille display -
+        this seems to vary as widely as the number of displays.  Right
+        now, however, Orca seems to respond to just one input event
+        (onBrlKey), and will merely invoke accessible actions or set
+        cursor positions in response to it.  Perhaps the Braille input
+        support will need to mirror the keyboard event handling?  In
+        addition, perhaps the Braille input can also be used to drive
+        review mode on the Braille display?  </para>
+
+      </section>
+
+      <section><title>Transparent to Traditional 
+                      Keyboard Navigation Methods</title>
+
+        <para> Orca must allow users to navigate through the desktop
+        and applications on the desktop using the system keyboard
+        navigation gestures (e.g., Alt+Tab to select the next window).
+        In other words, Orca must not interfere with traditional
+        keyboard navigation.  </para>
+
+      </section>
+
+      <section><title>Key Echo</title>
+
+        <para> Orca must provide a feature that optionally speaks the
+        name of the key that the user just typed.  A key being spoken
+        must be able to be interrupted at any time.  </para>
+
+      </section>
+
+      <section><title>Text Echo</title>
+
+        <para> Orca must provide a feature that optionally speaks text
+        insertion and deletion events, typically echoing the word just
+        typed or deleted.  Text being spoken must be able to be
+        interrupted at any time.  </para>
+
+      </section>
+
+      <section><title>Command Echo</title>
+
+        <para> Orca must provide a feature that optionally speaks the
+        command that was invoked when the user pressed a key that is
+        to be interpreted by Orca.  This feature is generally used as
+        a learning feature to permit users to learn the effects of
+        Orca key bindings.  A command being spoken must be able to be
+        interrupted at any time.  </para>
+
+      </section>
+
+      <section><title>Review Mode</title>
+
+        <para> Orca must provide the ability for a user to review the
+        contents of the desktop or a given application.  This is
+        typically done by the user making a single well-known keyboard
+        gesture indicating "review," with Orca reacting by presenting
+        the area to be reviewed.  At any time, the user can interrupt
+        the review mode, causing presentations such as speech output
+        to stop immediately.  </para>
+
+        <para> Another option for review mode includes the ability to
+        use a set of well-known keyboard gestures to quickly skim the
+        contents of the display.  </para>
+
+        <para> The review of the desktop will follow the
+        &style-guide;, and will at least provide a short summary of
+        the available applications.  While the review of an
+        application will also follow the &style-guide;, the overall
+        presentation depends largely upon the application being
+        reviewed.  </para>
+
+      </section>
+
+      <section><title>Document Reading</title>
+
+        <para> Orca must provide the ability for a user to read the
+        contents of a document, such as e-mail or a word processing
+        document.  As the document is read, Orca will instruct the
+        associated application to scroll so as to keep the portion
+        being read visible on the screen.  The invocation of the
+        document reading will be triggered via a well-known keystroke
+        and may be stopped at any time by the user.  &todo; Specify
+        behavior - does same keystroke start/stop the reading?
+        </para>
+
+        <para> While the reading of a document will follow the
+        &style-guide;, the overall presentation depends largely upon
+        the document being read (e.g., is it a text document,
+        spreadsheet, web page, etc.?).  </para>
+
+      </section>
+
+      <section><title>Customizable Behavior Per Application 
+                      ("Scripting")</title>
+
+        <para> It is expected that the default behavior will provide
+        good access to all applications that use the AT-SPI.  However,
+        to provide dramatically improved access, Orca must be able to
+        provide customized behavior for individual applications.  For
+        example, one can envision a script for an e-mail application
+        that can provide prioritized access to one's inbox.  Another
+        example may be that the script provides keyboard access to
+        select and copy displayed text to the system clipboard in the
+        event the application doesn't support this (e.g., the only way
+        to select text in a terminal window is to use a mouse - a
+        script might create new keybindings to allow a user to do this
+        from the keyboard).  </para>
+
+      </section>
+
+      <section><title>Co-exist Seamlessly with Other Assistive 
+                      Technology</title>
+
+        <para> It is not uncommon for users to use other assistive
+        technologies, such as screen magnifiers, simultaneously to
+        access their displays.  As such, Orca must be able to co-exist
+        (i.e., not interfere) with other assistive technologies in use
+        by the user.  </para>
+
+      </section>
+
+      <section><title>Drive Region of Interest for Screen Magnifiers</title>
+
+        <para> In addition to co-existing with each other, a screen
+        magnifier and a screen reader must be in sync with each other.
+        That is, while the screen reader is presenting a portion of
+        the display, the screen magnifier must also be showing that
+        portion of the display.  </para>
+
+        <para> A stand-alone screen magnifier can simply track
+        keyboard focus and other such events, allowing it to operate
+        somewhat independently of a screen reader.  A difficulty
+        arises, however, when a screen reader is reviewing an area of
+        the screen that is larger than the screen magnifier can
+        display at once.  In this case, the screen magnifier needs to
+        know that the region of interest has changed, and the screen
+        reader is the one that knows the new region of interest.
+        </para>
+
+        <para> Note that Orca must not only be able to detect the
+        existence of a screen magnifier when it starts up, but it must
+        also be able to detect if a screen magnifier has started at
+        some point in the future.  </para>
+
+      </section>
+
+      <section><title>Acceptable Response Time</title>
+
+        <para> The screen reader must not degrade the perceptible
+        performance of the system.  That is, user should be able to
+        detect any decrease is responsiveness of the desktop when the
+        screen reader is being used.  In addition, a user's
+        interaction with the screen reader should appear as crisp and
+        as lively as normal interaction with the display via
+        traditional interfaces (e.g., the keyboard).  </para>
+
+        <para> Since speech synthesis will often be the primary
+        presentation mode of Orca (Braille is the other), acceptable
+        performance of the speech synthesis output is very important.
+        Orca must be able to provide speech synthesis that meets or
+        exceeds the following performance metrics: </para>
+
+        <itemizedlist>
+          <listitem>
+            <para> <emphasis role="bold">Time to First
+            Sound</emphasis> - The time between when a speech
+            synthesizer gets a request to speak and when the
+            synthesizer actually starts speaking must be minimal
+            (e.g., 30ms).  </para>
+          </listitem>
+          <listitem>
+            <para> <emphasis role="bold">Time to Cancel</emphasis> -
+            Orca must be able to cancel speech synthesis in progress,
+            and the time to cancel must be minimal (e.g., 30ms).
+            Furthermore, the time between when a cancel is issued and
+            the time the next utterance is to be spoken must be
+            minimal (e.g., 30ms).  </para>
+          </listitem>
+        </itemizedlist>
+
+        <para> &todo; Determine reasonable Braille response times.
+        </para>
+
+        <note><title>Performance Scope</title> 
+
+          <para> It is understandable that much of the response time
+          may be due to other factors such as the response time of
+          Bonobo and the underlying speech engine, etc.  As such, the
+          primary responsibility of Orca and each application script
+          is to process AT-SPI and keyboard events as quickly as
+          possible.  </para>
+
+        </note>
+
+      </section>
+
+      <section><title>Failure Resilient</title>
+
+        <para>In the event that Orca fails or a component of the
+        system that Orca depends upon fails, the system should be able
+        to heal (and perhaps restart) itself appropriately.  </para>
+
+      </section>
+
+      <section><title>Consistent Style</title>
+
+        <para> It is expected that access to applications will be
+        driven primarily via customized "scripts," with a fallback
+        ("default") script to be used in the absence of a customized
+        script.  </para>
+
+        <para> While each script can provide dramatically different
+        access to an application, it is expected that scripts will
+        provide a users with a consistent style to access
+        applications.  Orca will provide the &style-guide;, a
+        well-documented "default" script, and several application
+        scripts that demonstrate and promote this style.
+        </para>
+
+      </section>
+
+      <section><title>Documentation and Tutorials</title>
+
+        <para> Although it is a reasonable goal that Orca should
+        attempt to achieve, users cannot be expected to be able set up
+        and use Orca without documentation.  Like other systems, such
+        as JAWS, Orca must provide documentation and tutorials on the
+        installation, configuration and use of Orca.  This
+        documentation must come in form(s) that are accessible to
+        people who need to use the screen reader (e.g., accessible
+        text and audio).  </para>
+
+      </section>
+
+    </section> <!-- End-User Requirements -->
+
+    <section><title>Script-Writer Requirements</title>
+
+      <para> The following requirements are needed for Orca to be an
+      effective and extensible system.  </para>
+
+      <section><title>Extensible by Third Parties</title>
+
+        <para> Orca is to be an extensible platform to which third
+        parties can add value to without the need to modify the core
+        system.  The primary method for extension will be the ability
+        to add customized scripts.  Orca will detect these scripts in
+        a well-known location {&todo; TBD}, and will also be able to
+        dynamically load new and modified scripts at run time.
+        </para>
+
+      </section>
+
+      <section><title>Ease of Script Development</title>
+
+        <para> In order to attract script developers and to create a
+        thriving script developer community, the creation of scripts
+        for Orca must be a relatively simple and well documented
+        process.  Ideally, the learning curve should be minimal and a
+        skilled developer should be able to start writing scripts
+        after approximately one day of learning.  </para>
+
+        <para> The script development environment must also include
+        debugging and profiling tools to aid in script development.
+        </para>
+
+      </section>
+
+      <section><title>Script-Writing Specification and Examples</title>
+
+        <para> While many developers will likely develop their scripts
+        by example, Orca must also provide the specification for a
+        script in order to document the supported behavior.  In
+        addition, the "default" script for Orca will serve as an
+        example of appropriate style, and must be well documented.
+        </para>
+
+      </section>
+
+      <section><title>Online Script Repository</title>
+
+        <para> To also help foster a thriving community of script
+        developers, there should be a publicly accessible repository
+        for people to contribute and access scripts.  </para>
+
+      </section>
+
+      <section><title>Access to AT-SPI Objects and Events</title>
+
+        <para> Because the AT-SPI will be the means by which Orca
+        obtains information about the desktop and its applications,
+        and will also be the means by which Orca will manipulate
+        (e.g., activate buttons) objects on the desktop, script
+        writers need access to AT-SPI objects and events.  </para>
+
+      </section>
+
+      <section><title>Intercept and Interpret Keyboard Events</title>
+
+        <para> The keyboard will be a primary method for the user to
+        interact with Orca.  Orca may introduce new keyboard gestures,
+        such as those for review mode, that should not be interpreted
+        by applications.  As such, Orca will need to be able to
+        intercept and interpret keyboard events and potentially
+        prevent them from reaching the GNOME desktop.  </para>
+
+        <para> Orca must also not interfere, however, with other
+        assistive technologies such as the AccessX functionality of
+        XKB <citation><xref linkend="xkb"
+        endterm="xkb.abbrev"/></citation>.  </para>
+
+      </section>
+
+    </section>
+
+  </chapter>
+
+
+
+  <!--
+  ************************************************************************
+  *                                                                      *
+  * STYLE GUIDE                                                          *
+  *                                                                      *
+  ************************************************************************
+  -->
+
+  <chapter id="style-guide"><title>Style Guide</title>
+
+    <para> To be written.  </para>
+
+  </chapter>
+
+
+  <!--
+  ************************************************************************
+  *                                                                      *
+  * FUNCTIONAL SPECIFICATION                                             *
+  *                                                                      *
+  ************************************************************************
+  -->
+
+  <chapter id="func-spec"><title>Functional Specification</title>
+
+    <para> Orca's functional specification is driven by the
+    &requirements;.  </para>
+
+    <section><title>Prerequisites</title>
+
+      <para> To narrow the scope of Orca, Orca will use existing
+      software where available.  For example, as mentioned in the
+      requirements, Orca is a screen reader that needs to be able to
+      interact with speech synthesis, Braille, and screen
+      magnification services, but it need not be the provider of such
+      services.  Given this, Orca has the following dependencies.
+      </para>
+
+      <section><title>gnome-speech v0.3.4 or better</title>
+
+        <para> With respect to speech synthesis, there is an existing
+        component of the GNOME platform that provides fundamental
+        speech synthesis support: gnome-speech <citation><xref
+        linkend="gnome-speech" endterm="gnome-speech.abbrev"/>
+        </citation>.  The gnome-speech component provides a
+        CORBA-based approach to access speech synthesizers as network
+        services.  Because gnome-speech appears to meet the underlying
+        speech synthesis requirements of Orca, Orca will depend upon
+        gnome-speech for TTS support.  </para>
+
+      </section>
+
+      <section><title>brltty v3.6.1 or better</title>
+
+        <para> With respect to Braille, there is an existing package
+        that provides fundamental Braille I/O support: brltty
+        <citation><xref linkend="brltty" endterm="brltty.abbrev"/>
+        </citation>.  Brltty provides access to a variety of Braille
+        displays, and consists of a library and a daemon to provide
+        programmatic interaction with the display.  Because brltty
+        appears to meet the underlying Braille requirements of Orca,
+        Orca will depend up brltty for Braille support. &todo; There
+        is also gnome-braille which might be more in line with
+        gnome-speech and gnome-mag.  </para>
+
+      </section>
+
+      <section><title>gnome-mag v0.11.11 or better</title>
+
+        <para> With respect to magnification, there is an existing
+        component of the GNOME platform that provides fundamental
+        screen magnification support: gnome-mag <citation><xref
+        linkend="gnome-mag" endterm="gnome-mag.abbrev"/> </citation>.
+        The gnome-mag component provides a CORBA-based approach to
+        access and manipulate a screen magnifier as a network service.
+        Because gnome-mag appears to meet the underlying screen
+        magnification requirements for Orca, Orca will depend up
+        gnome-mag for screen magnification support.  </para>
+
+      </section>
+
+      <section><title>at-spi v1.6.2 or better</title>
+
+        <para> Orca's means of gathering information about the desktop
+        as well interacting with the desktop will be done through the
+        AT-SPI <citation><xref linkend="at-spi"
+        endterm="at-spi.abbrev"/> </citation>.  As such, a functioning
+        AT-SPI environment is mandatory.  The AT-SPI provides a
+        CORBA-based approach to detect, examine, and manipulate
+        desktop and application content.  It supports the registration
+        of event listeners for changes to desktop and application
+        content.  Finally, the AT-SPI supports the registration of
+        listeners for input device events, with an option for these
+        listeners to intercept (and possibly consume) the events
+        before they are processed by the desktop or applications on
+        the desktop.  </para>
+
+      </section>
+
+      <section><title>python v2.4 or better</title>
+
+        <para> Orca will be written in the Python programming
+        language, and will depend upon features found in Python
+        versions 2.4 and greater.  &todo; Verify this.  We may be able
+        to get by with earlier versions.  </para>
+
+      </section>
+
+    </section>
+
+    <section><title>Configuration</title>
+
+      <para> Orca will provide a utility (e.g., a command-line script
+      and/or GUI) that permits the end user to configure at least the
+      following features.  Note that the configuration utility must be
+      accessible to the end user (e.g., via speech synthesis and/or
+      Braille).  </para>
+
+      <itemizedlist>
+        <listitem>
+          <para> <emphasis role="bold">Speech Synthesis</emphasis> -
+          The use of speech synthesis will be enabled by default, but
+          some users (e.g., those that solely use Braille) may not
+          want to use it.  </para>
+        </listitem>
+        <listitem>
+          <para> <emphasis role="bold">Voice Styles</emphasis> - Orca
+          will, at a minimum, permit the user to specify the default
+          voice to be used for the majority of presentations that use
+          speech synthesis.  The default voice not only includes the
+          speech synthesis driver and speaker to be used, but also
+          includes the average pitch, rate, and volume parameters for
+          the voice.  If available, Orca will also identify and allow
+          the user to configure other speaking styles (e.g., "upper
+          case," "warning," etc.).  </para>
+        </listitem>
+        <listitem>
+	  <para> <emphasis role="bold">Text Generation
+	  Template</emphasis> - Orca will provide the user with the
+	  ability to select (and perhaps define) the template that
+	  will be used for generating the text to be spoken.  For
+	  example, the user may wish to have a template of "{object
+	  role} {object label}" for speaking buttons.  &todo; this
+	  could be an endless pit of customization.  We need to define
+	  the things that are of use to most people.  </para>
+	</listitem>
+        <listitem>
+          <para> <emphasis role="bold">Key Echo</emphasis> - If
+          enabled, Orca will speak each key that the user presses.
+          </para>
+        </listitem>
+        <listitem>
+          <para> <emphasis role="bold">Text Echo</emphasis> - If
+          enabled, Orca will speak each word that the user types.
+          </para>
+        </listitem>
+        <listitem>
+          <para> <emphasis role="bold">Command Echo</emphasis> - If
+          enabled, Orca will speak each command that the user types.
+          </para>
+        </listitem>
+        <listitem>
+          <para> <emphasis role="bold">Braille</emphasis> - If a
+          Braille display is available, Orca will offer the option to
+          use it.  </para>
+        </listitem>
+        <listitem>
+          <para> <emphasis role="bold">Screen Magnification
+          Synchronization</emphasis> - If Orca detects a screen
+          magnifier is present, this feature will determine if Orca
+          drives the region of interest of the screen magnifier.
+          Furthermore, if a screen magnifier is started after Orca is
+          already running, then Orca will detect this and synchronize
+          with the screen magnifier.  &todo; Should the end-user
+          configuration include the option to start Orca and the
+          screen magnifier at the same time?  If so, is this part of
+          the Orca configuration or part of some other system setting?
+          </para>
+        </listitem>
+      </itemizedlist>
+
+      <para> Whenever the configuration utility is run, the
+      configuration parameters will be saved.  </para>
+
+    </section>
+
+    <section><title>Behavior</title>
+
+      <para> This section describes the overall behavior of Orca.
+      Details about the architecture and implementation can be found
+      in the &architecture; section.  </para>
+
+      <section><title>Start Up</title>
+
+        <para> When Orca is run, it will check for user settings.  In
+        the event that the user has not created any specific settings,
+        Orca will fallback to the default settings.  If the user
+        wishes to customize Orca, they will need to run the
+        configuration utility, which guides them through the Orca
+        configuration process.  </para>
+
+        <para> Orca will then present a localized message to the user
+        that is has been activated (e.g., "Welcome to Orca version
+        1.0").  </para>
+
+        <para> Orca will then "attach" to the desktop via the AT-SPI,
+        obtaining information about the applications on the desktop.
+        As it discovers each application, Orca will instantiate a
+        custom script for each application.  </para>
+
+        <para> &todo; Define location and naming convention for
+        scripts.  </para>
+
+        <para> The custom scripts will typically extend/override the
+        behavior of the "default" script by providing specialized
+        handlers for specific AT-SPI object and input device events
+        (keyboard and Braille).  </para>
+
+	<para> After obtaining desktop information and creating custom
+	scripts for each application, Orca will then detect the
+	currently active window and use its associated script to
+	present a brief summary of the window's content following the
+	guidelines in the &style-guide;.  </para>
+
+      </section>
+
+      <section><title>Use</title>
+
+	<para> As the user navigates around the desktop and within
+	applications using "normal" keyboard navigation gestures, Orca
+	will receive events (e.g., focus, window activation, etc.) 
+	from the AT-SPI.  It will associate each event with a custom
+	script and pass that event onto the script for handling.  The
+	typical script will present the information to the user
+	according to the guidelines in the &style-guide;.  </para>
+
+	<para> As applications come and go on the desktop, Orca will
+	be notified via the AT-SPI, and will create/remove custom
+	scripts for those applications accordingly.  </para>
+
+        <para> In addition, as the user types on the keyboard, Orca
+        will receive the keyboard events prior to their interpretation
+        by the desktop.  Orca will pass the event on to the active
+        script for interpretation. The script may consume the event,
+        preventing it from being interpreted by the desktop.  </para>
+
+	<para> Orca itself may also provide global keyboard bindings
+	to control its behavior, such as the following: changing
+	speaking rate and volume, entering/exiting review mode,
+	navigating during review mode, etc.  &todo; Need to specify
+	how to do this; perhaps through a "global script" that Orca
+	itself maintains?  </para>
+
+	<para> Finally, the user may use keys on their Braille device
+	to drive Orca.  Orca will receive these events and process
+	them in a manner similar to the way it manages keyboard
+	events.  </para>
+
+	<para> If at any time Orca detects a failure in any component
+	that it depends upon, it will announce this to the user if
+	possible.  Orca will then attempt to "heal" itself and move on
+	if appropriate (and possible).  In the event that Orca itself
+	suffers a catastrophic failure, the system should be able to
+	detect this and restart Orca.  </para>
+
+	<para> A user will typically use Orca during the entire time
+	the X server is running, including during system login as well
+	as when screen saver is running.  Thus, in addition to
+	providing access to the "normal" desktop, Orca will also
+	provide access to these special screens.  </para>
+
+      </section>
+
+    </section>
+
+    <section><title>Reasonable Access to Key Desktop Apps</title>
+
+      <para> Related to customizable behavior is the need to provide
+      reasonable access to "key" applications.  That is, while Orca's
+      default script will generally provide some level of access to
+      applications, it is highly desirable to provide compelling
+      access to key desktop applications.  The list of these key
+      applications has yet to be identified, but include the web
+      browser, e-mail application, collaboration tool, calendar, word
+      processor, and terminal.  </para>
+
+      <para> Furthermore, Orca must also provide documentation and
+      tutorials on how to access and use these key applications.
+      </para>
+
+    </section>
+
+  </chapter>
+
+
+  <!--
+  ************************************************************************
+  *                                                                      *
+  * ARCHITECTURE                                                         *
+  *                                                                      *
+  ************************************************************************
+  -->
+
+  <chapter id="architecture"><title>Architecture and Implementation</title>
+
+    <para> As illustrated in the Orca architecture diagram, the main
+    components of Orca are as follows: interaction with desktop
+    applications that support the AT-SPI, interaction with system
+    services (e.g., speech, Braille, magnification), Orca itself, and
+    Orca extensions.  </para>
+
+    <figure>
+      <title>Orca Architecture Diagram. The main sections are the
+        desktop applications, AT-SPI, Orca, Orca extensions (scripts),
+        and system services. The key communication between the
+        components is depicted.</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="architecture.jpg" format="jpg">
+        </imageobject>
+        <textobject>
+          <phrase>Orca Architecture</phrase>
+        </textobject>
+      </mediaobject>      
+    </figure>
+
+    <para> The following sections describe the architecture in more
+    detail.  </para>
+
+    <section><title>Desktop and AT-SPI</title>
+      
+      <para> Orca's sole view of any application on the desktop is via
+      the AT-SPI <citation><xref linkend="at-spi"
+      endterm="at-spi.abbrev"/></citation>.  The AT-SPI is a
+      Bonobo-based technology <citation><xref linkend="bonobo"
+      endterm="bonobo.abbrev"/></citation> that provides a common
+      interface for the desktop and its applications to expose their
+      GUI component hierarchy to assistive technologies such as Orca.
+      AT-SPI support is provided by toolkits such as GNOME's GTK+
+      toolkit (via gail <citation><xref linkend="gail"
+      endterm="gail.abbrev"/></citation>), and has been created for
+      the Java platform as well as the custom toolkits used by
+      applications such as Mozilla and Open Office.  </para>
+
+      <para> Orca's interaction with the AT-SPI is managed through the
+      following Orca modules: </para>
+
+      <section><title>core</title>
+
+        <para> The <emphasis role="bold">core</emphasis> module
+        (Python support written in C) provides Orca's Python interface
+        to the system's AT-SPI Registry.  </para>
+        
+	<para> The core module provides Orca with the ability to
+	enumerate the various workspaces and applications running on
+	the display, as well as determine the existence of various
+	physical heads (e.g., dual headed system).  This also gives
+	Orca the ability to register/deregister listeners for AT-SPI
+	object (e.g., window activation, focus changed, etc.)  and
+	device (e.g., keyboard) events.  In addition, the core also
+	provides Orca's interface to the Bonobo main and main_quit
+	methods, allowing Orca to interact with the AT-SPI.
+	</para>
+
+        <para> &detail; To reduce system traffic, the core module will
+        only register a maximum of one AT-SPI listener for any given
+        AT-SPI event type, and will multiplex the notification of
+        AT-SPI events to any listeners registered by Orca.  </para>
+ 
+        <para> &detail; Because processing AT-SPI object events can be
+        time consuming, and because the notification of AT-SPI object
+        events is relatively "bursty," the core maintains a queue of
+        AT-SPI object events.  Events are added to the queue when they
+        are received, and events on the queue are dispatched via the
+        GLib idle handler.  &todo; Need to understand relation between
+        the GLib idle handler and the Bonobo main loop.  </para>
+
+        <para> &detail; Like the AT-SPI object events, the core module
+        only permit a maximum of one device event listener to be
+        registered with the AT-SPI. Unlike AT-SPI object events, Orca
+        must process keyboard events immediately and quickly.  As
+        such, the core component will dispatch keyboard events to the
+        keyboard event listeners registered by Orca.  </para>
+
+        <para> &detail; Because Orca is most often interested in the
+        last of any particular event type to happen (e.g., the last
+        focus event or the last window activated event), there may be
+        an opportunity to compress the event queue.  This is an
+        optimization that might be looked at in the future, but will
+        not be done for now.  </para>
+
+        <para> &todo; The system needs to be able to cope with
+        failure.  Right now, if Orca fails while handling a keyboard
+        event, the whole desktop can hang.  I'm curious if the
+        AT-SPI-enabled app can heal when the connection to Orca is
+        broken or if there is a timeout?  Conversations with Bill
+        Haneman lead me to believe there is no such thing as a timeout
+        for the synchronous form of device event notification.
+        </para>
+
+      </section>
+
+      <section><title>a11y</title>
+
+        <para> The <emphasis role="bold">a11y</emphasis> module
+        provides an Accessible class (written in Python) that serves
+        as a delegate to CORBA objects that implement the AT-SPI
+        Accessible and Application interfaces.  These objects can be
+        obtained in three ways: </para>
+
+	<orderedlist numeration="arabic">
+	  <listitem>
+	    <para> From the AT-SPI Registry (via the core module) </para>
+	  </listitem>
+	  <listitem>
+	    <para> From an AT-SPI Registry event (listener registered
+	    via the core module) </para>
+	  </listitem>
+	  <listitem>
+	    <para> As a child from another Accessible </para>
+	  </listitem>
+	</orderedlist>
+
+        <para> The Accessible class permits Orca to obtain information
+        about Accessible objects as well as manipulate those objects
+        (e.g., activate actions, set cursor position, etc.).  The a11y
+        module also provides a set of convenience utilities for
+        examining Accessible objects and their children.  </para>
+
+        <para> The a11y module also maintains a "dispatcher" table
+        that maps AT-SPI event types to function names.  For example,
+        this table will map the AT-SPI event type of "window:activate"
+        to the Orca function name of "onWindowActivated".  This table
+        is used primarily by scripts, which are described in the next
+        section.  </para>
+
+        <para> &detail; For efficiency purposes, the a11y component
+        maintains a cache of Accessible objects, copying the values of
+        common Accessible object attributes (e.g., name, description,
+        role, state, etc.) to a local store.  As such, no external
+        entity should create an Accessible using the class
+        constructor.  Instead, all Accessible instances are created
+        using the a11y.makeAccessible function.  This lowers the
+        network traffic of Orca by reducing the need to make repeated
+        CORBA calls for common attributes.  The a11y module also
+        registers for AT-SPI object events for the purposes of keeping
+        the cache consistent with the AT-SPI object state.  </para>
+
+      </section>
+
+    </section>
+
+    <section><title>Orca</title>
+
+      <para> The main logic of Orca lives primarily in the orca
+      module, but support is broken into other modules as appropriate
+      (e.g., a kbd module needed to provide convenience classes and
+      methods for keyboard events and keyboard event history).
+      </para>
+
+      <para> The following sections describe the orca module and its
+      supporting modules in more detail. </para>
+
+      <section><title>orca</title>
+
+        <para> The orca module is the "main entry point" of Orca.  It
+        initializes all the components that Orca uses (core, a11y,
+        speech, brl, mag) and loads the user's settings.  </para>
+
+	<para> At initialization time, the orca module also determines
+	all the applications on the desktop and registers the
+	"windowActivated" function for "window:activate" events (tells
+	Orca when a window receives keyboard focus) and registers the
+	"childrenChanged" function for "object:children_changed:"
+	events (tells Orca when a window is created or
+	destroyed). These functions permit the orca module to keep its
+	apps and scripts attributes up to date.</para>
+
+	<para> For each application that it discovers on the desktop,
+	the orca module creates a script instance to be used for
+	handling that application (see the "script" description in the
+	next section).  </para>
+
+        <para> Finally, the orca module registers the "processEvent"
+        function with the core module to be notified whenever an
+        AT-SPI object event is received.  When an AT-SPI object event
+        is received, the orca module determines the application script
+        associated with the event and passes the event onto that
+        script for processing.  Note that the event is passed on
+        regardless of whether the application associated with the
+        script has focus or not.  That is, it is the script's
+        responsibility to determine if the presentation of the
+        information is dependent on focus. </para>
+
+      </section>
+
+      <section><title>settings</title> 
+
+	<para> The <emphasis role="bold">settings</emphasis> module
+	holds preferences set by the user during configuration.  These
+	settings include the following: use of speech and/or Braille,
+	voice styles, key echo, text echo, and command echo (see the
+	&requirements; and &func-spec; for details on these features).
+        </para>
+
+        <para> When starting, the orca module will first look for the
+        settings module in the user's ~/.orca directory.  If this
+        module exists, it will be used.  If it doesn't, then the
+        default settings module will be used.  </para>
+
+      </section>
+
+      <section><title>kbd</title>
+
+	<para> The <emphasis role="bold">kbd</emphasis> module
+	provides the keyboard-event handling support for Orca.
+	Keyboard events are handled via two key elements of the kbd
+	module: the "keybindings" attribute and the "onKeyEvent"
+	function.
+        </para>
+
+	<para> The "keybindings" attribute is a table that maps key
+	event names (e.g., "F12") to functions in scripts.  Orca
+	updates this table each time a new script is activated,
+	effectively replacing the existing table with the keybindings
+	table from the script. </para>
+
+        <para> When the orca module initializes the kbd module, the
+        kbd module registers the "onKeyEvent" function as the function
+        to dispatch all AT-SPI keyboard events received by Orca.  The
+        onKeyEvent also handles the key echo feature of Orca. </para>
+
+        <para> The kbd module also maintains a record of the last key
+        pressed, enabling scripts to refer to it for hints about why a
+        particular AT-SPI object event may have happened. </para>
+
+      </section>
+
+      <section id="script"><title>script</title>
+
+	<para> The actual presentation of information to the user is
+	done via "scripts," which are instances of the Script class
+	that is defined in the <emphasis role="bold">script</emphasis>
+	module. </para>
+
+	<figure>
+	  <title>Orca Script Diagram. The main components are the
+	  "listeners" and "keybindings" attributes.</title>
+	  <mediaobject>
+	    <imageobject>
+	      <imagedata fileref="script.jpg" format="jpg">
+	    </imageobject>
+	    <textobject>
+	      <phrase>Orca Architecture</phrase>
+	    </textobject>
+	  </mediaobject>      
+	</figure>
+
+        <para> As depicted in the previous diagram, each script
+        instance keeps track of the following attributes: </para>
+
+	<itemizedlist>
+
+	  <listitem>
+
+	    <para> <emphasis role="bold">listeners</emphasis> - a
+	    table that maps AT-SPI object event names (e.g.,
+	    "window:activate", "object:state-changed",
+	    "object:link-selected") to functions </para>
+
+	  </listitem>
+
+	  <listitem>
+
+	    <para> <emphasis role="bold">keybindings</emphasis> - a
+	    table that maps keystroke events (e.g., "F12") to
+	    functions </para>
+
+	  </listitem>
+
+	</itemizedlist>
+
+        <para> When the orca module creates a script for an
+        application, it passes the Accessible application object to
+        the Script constructor.  When orca then tells the script
+        instance to load itself, the script instance effectively
+        performs the following operations: </para>
+
+	<orderedlist numeration="arabic">
+
+	  <listitem>
+
+	    <para> <emphasis role="bold">initialize "listeners"
+	    attribute from the default script</emphasis> - the script
+	    will identify all functions from the default script that
+	    are listed in the "dispatcher" table of the a11y module,
+	    and then populate the "listeners" attribute of the script
+	    with the matching functions that it finds. </para>
+
+          </listitem>
+
+	  <listitem>
+
+            <para> <emphasis role="bold">override/extend "listeners"
+            attribute using the application-specific script</emphasis>
+            - the script will then attempt to locate a custom script
+            for the application, based upon the application name
+            (&todo; not sure this naming scheme will work across
+            locales).  If a custom script can be found, the script
+            will identify all functions in the custom script that are
+            listed in the "dispatcher" table of the a11y module.  For
+            each matching function, the script will override or extend
+            the "listeners" attribute accordingly.  As such, the
+            custom script will always override or extend the default
+            script. </para>
+
+          </listitem>
+
+	  <listitem>
+
+	    <para> <emphasis role="bold">initialize "keybindings"
+	    attribute from the default script</emphasis> - the script
+	    will populate its "keybindings" attribute using the
+	    "keybindings" attribute from the default-keybindings
+	    module. </para>
+
+          </listitem>
+
+	  <listitem>
+
+            <para> <emphasis role="bold">override/extend "keybindings"
+            attribute from the application-specific script</emphasis>
+            - just as it handles the "listeners" attribute, the script
+            will attempt to find a keybindings module for the
+            application.  The name of the keybindings module will be
+            the name of the application with a "-keybindings" suffix,
+            and will contain a "keybindings" attribute that defines
+            the keybindings specific to the script.  As with the
+            "listeners" attribute, the custom script will always
+            override or extend the "keybindings" attribute of the
+            default script. </para>
+
+	  </listitem>
+
+	</orderedlist>
+
+	<para> &todo; Loading a script is a very efficient and fast
+	process in Python, especially for the expected size of scripts
+	intended for Orca's use.  As such, Orca may reload a script
+	each time the window for the script is activated.
+	Alternatively, Orca may provide a global keyboard "refresh"
+	gesture that will reload all scripts in use. </para>
+
+      </section>
+
+      <section><title>default</title>
+
+        <para> The default script is intended to be the base for all
+        scripts that provide customized behavior per application, and
+        is also intended to provide the behavior for when there is no
+        custom script for an application.  </para>
+
+	<para> As described previously, the default module provides a
+	set of functions whose names match those in the a11y module's
+	"dispatcher" table.  Each of these functions, in turn, will
+	call out to a set of "presenter" functions that presents the
+	information to the user.  Custom scripts wishing to override
+	the behavior of the default module merely need to define new
+	functions with the same name; the orca module will give
+	preference to the functions in the custom script and will
+	fallback to those in the default script in the event that the
+	custom script has not provided customized behavior. </para>
+
+        <para> Associated with the default module is a
+        default-keybindings module, which defines a "keybindings"
+        table to be used by the kbd module as described previously.
+        &todo; probably merge this with the default module.
+        </para>
+
+      </section>
+
+      <section><title>i18n</title> 
+
+	<para>To be written.  Discuss orca_i18n, chnames, and
+	rolenames.</para>
+
+      </section>
+
+    </section>
+
+    <section><title>Orca Extensions</title>
+
+      <para> Extending Orca's behavior is done by writing two new
+      modules for each application: one to handle the events and
+      presentation of information, and one to define the keybindings
+      table.  &todo; probably merge these into one module.  </para>
+
+      <para> As mentioned previously, it is expected that most
+      extensions will extend/override functions in the default module.
+      The primary reason for this is that the default module will
+      typically provide the majority of desired behavior.  As such,
+      modules that extend the default module will tend to have most of
+      their work done for them and will only need to focus on those
+      aspects that need specific handling for the application.
+      </para>
+
+      <para> Orca extensions will be installed in a "well known place"
+      {&todo; TBD}, and can be read and managed by Orca even after Orca
+      has been started.
+      </para>
+
+    </section>
+
+    <section><title>System Services</title>
+
+      <para> Orca relies on existing system services to provide
+      support for speech synthesis, Braille, and screen magnification.
+      To interact with these services, Orca provides the modules
+      described in the following sections.
+      </para>
+
+      <section><title>speech</title>
+
+	<para> The <emphasis role="bold">speech</emphasis> module
+	provides Orca's Python interface to the system's gnome-speech
+	<citation><xref linkend="gnome-speech"
+	endterm="gnome-speech.abbrev"/></citation> CORBA service(s).
+	The speech component is used for interacting with speech
+	synthesis engines during both the configuration and use of
+	Orca.  The speech component provides methods for the following
+	capabilities:
+        </para>
+
+          <itemizedlist>
+	  <listitem>
+	    <para> <emphasis role="bold">list of available
+	    drivers</emphasis> - several speech drivers (engines) may
+	    be available on the system.  The speech module permits
+	    Orca to identify and interact with each of the drivers.
+	    The list of drivers will be available in a human-readable
+	    form.
+            </para>
+	  </listitem>
+	  <listitem>
+	    <para> <emphasis role="bold">list of available
+	    voices</emphasis> - permits Orca to enumerate the
+	    available voices for each driver, along with the settable
+	    parameters for each voice (e.g., pitch, rate, etc.).  The
+	    list of voices is available in a human-readable form.
+            </para>
+	  </listitem>
+	  <listitem>
+	    <para> <emphasis role="bold">voice selection</emphasis> -
+	    permits Orca to select which voice is to be used for
+	    speech synthesis, and also permits Orca to set the
+	    parameters of the voices.
+            </para>
+	  </listitem>
+	  <listitem>
+	    <para> <emphasis role="bold">speak text</emphasis> -
+	    provides Orca with the ability to request that text be
+	    spoken.  Repeated calls to speak text will interrupt and
+	    cancel any prior speak operation in progress.  The speech
+	    module will support Unicode strings.
+            </para>
+	  </listitem>
+	  <listitem>
+	    <para> <emphasis role="bold">cancel</emphasis> - the
+	    speech module permits Orca to cancel any speech operation
+	    in progress.
+            </para>
+	  </listitem>
+	  <listitem>
+	    <para> <emphasis role="bold">event notification</emphasis>
+	    - permits the registration for notification of speech
+	    started and ended events for a a call to "speak," and will
+	    also permit for the registration for notification of
+	    speech progress events (e.g., word started).
+            </para>
+	  </listitem>
+	</itemizedlist>
+
+      </section>
+
+      <section><title>brl</title>
+
+	<para> The <emphasis role="bold">brl</emphasis> module
+	provides Orca's Python interface to the system's brltty
+	<citation><xref linkend="brltty"
+	endterm="brltty.abbrev"/></citation>.  daemon.  The brltty
+	daemon, in turn, provides the interface to Braille devices for
+	both displaying Braille and receiving input from the user.
+	(Note that the spelling "brl" is used because that is the
+	common English Braille spelling for "Braille.")
+        </para>
+
+	<para> &todo; Need to determine the exact interface here.
+        </para>
+
+      </section>
+
+      <section><title>mag</title>
+
+	<para> The <emphasis role="bold">mag</emphasis> module
+	provides Orca's Python interface to the system's gnome-mag
+	<citation><xref linkend="gnome-mag"
+	endterm="gnome-mag.abbrev"/></citation> CORBA service(s).  The
+	magnification component provides methods that permit Orca
+	discover screen magnification services and set their desktop
+	region of interest.
+        </para>
+
+      </section>
+
+    </section>
+
+  </chapter>
+
+
+  <!--
+  ************************************************************************
+  *                                                                      *
+  * SCRIPT SPECIFICATION                                                 *
+  *                                                                      *
+  ************************************************************************
+  -->
+
+  <chapter><title>Script Specification</title>
+
+    <para> To be written.
+    </para>
+
+  </chapter>
+
+
+  <!--
+  ************************************************************************
+  *                                                                      *
+  * BIBLIOGRAPHY                                                         *
+  *                                                                      *
+  ************************************************************************
+  -->
+
+  <bibliography>
+    <biblioentry role="unpublished" id="at-spi">
+      <abbrev id="at-spi.abbrev">AT-SPI</abbrev>
+      <authorgroup>
+        <author><firstname>Bill</firstname><surname>Haneman</surname></author>
+        <author><firstname>Marc</firstname><surname>Mulcahy</surname></author>
+        <author><firstname>Michael</firstname><surname>Meeks</surname></author>
+      </authorgroup>
+      <title><ulink url="http://directory.fsf.org/accessibility/at-spi.html">
+        AT-SPI</ulink>
+    </title>
+    </biblioentry>
+
+    <biblioentry role="unpublished" id="bonobo">
+      <abbrev id="bonobo.abbrev">Bonobo</abbrev>
+      <author><firstname>George</firstname><surname>Lebl</surname></author>
+      <title><ulink url="http://lidn.sourceforge.net/articles/gnomenclatureintrotobonobo/">
+        Gnomenclature: Intro to bonobo</ulink>
+    </title>
+    </biblioentry>
+
+    <biblioentry role="unpublished" id="brltty">
+      <abbrev id="brltty.abbrev">BRLTTY</abbrev>
+      <authorgroup>
+        <author><firstname>Dave</firstname><surname>Meilke</surname></author>
+        <author><firstname>Nicolas</firstname><surname>Pitre</surname></author>
+        <author><firstname>Stephane</firstname><surname>Doyon</surname></author>
+      </authorgroup>
+      <title><ulink url="http://directory.fsf.org/accessibility/brltty.html">
+        BRLTTY</ulink>
+    </title>
+    </biblioentry>
+
+    <biblioentry role="unpublished" id="gail">
+      <abbrev id="gail.abbrev">GAIL</abbrev>
+      <author><firstname>Bill</firstname><surname>Haneman</surname></author>
+      <title><ulink url="http://freshmeat.net/projects/gail/">
+        GAIL</ulink>
+    </title>
+    </biblioentry>
+
+    <biblioentry role="unpublished" id="gnome-mag">
+      <abbrev id="gnome-mag.abbrev">Gnome-Mag</abbrev>
+      <author><firstname>Bill</firstname><surname>Haneman</surname></author>
+      <title><ulink url="http://directory.fsf.org/accessibility/gnome-mag.html">
+        Gnome-Mag</ulink>
+    </title>
+    </biblioentry>
+
+    <biblioentry role="unpublished" id="gnome-speech">
+      <abbrev id="gnome-speech.abbrev">Gnome-Speech</abbrev>
+      <authorgroup>
+        <author><firstname>Marc</firstname><surname>Mulcahy</surname></author>
+        <author><firstname>Michael</firstname><surname>Meeks</surname></author>
+      </authorgroup>
+      <title><ulink url="http://directory.fsf.org/accessibility/gnome-speech.html">
+        Gnome-Speech</ulink>
+    </title>
+    </biblioentry>
+
+    <biblioentry role="unpublished" id="gnopernicus">
+      <abbrev id="gnopernicus.abbrev">Gnopernicus</abbrev>
+      <author><firstname>Remus</firstname><surname>Draica</surname></author>
+      <title><ulink url="http://directory.fsf.org/accessibility/gnopernicus.html">
+        Gnopernicus</ulink>
+    </title>
+    </biblioentry>
+
+    <biblioentry role="unpublished" id="jaws">
+      <abbrev id="jaws.abbrev">JAWS</abbrev>
+      <author><firstname></firstname><surname>Freedom Scientific</surname></author>
+      <title><ulink url="http://www.freedomscientific.com/fsproducts/softwarejaws.asp">
+        JAWS</ulink>
+    </title>
+    </biblioentry>
+
+    <biblioentry role="unpublished" id="xkb">
+      <abbrev id="xkb.abbrev">XKB</abbrev>
+      <authorgroup>
+        <author><firstname>Erik</firstname><surname>Fortune</surname></author>
+        <author><firstname>William</firstname><surname>Walker</surname></author>
+        <author><firstname>Donna</firstname><surname>Converse</surname></author>
+        <author><firstname>George</firstname><surname>Sachs</surname></author>
+      </authorgroup>
+      <title><ulink url="http://matrix.netsoc.tcd.ie/hcksplat/work/XKBlib.pdf">
+        The XKB keyboard extension</ulink>
+    </title>
+    </biblioentry>
+  </bibliography>
+
+</book>
