@@ -1,249 +1,255 @@
 # English/Canada translation of orca.
-# Copyright (C) 2004 Adam Weinberger and the GNOME Foundation
+# Copyright (C) 2004-2005 Adam Weinberger and the GNOME Foundation
 # This file is distributed under the same licence as the orca package.
-# Adam Weinberger <adamw@gnome.org>, 2004.
+# Adam Weinberger <adamw@gnome.org>, 2004, 2005.
 # 
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-17 15:12-0400\n"
-"PO-Revision-Date: 2004-10-17 14:20-0400\n"
+"POT-Creation-Date: 2005-03-26 02:29-0500\n"
+"PO-Revision-Date: 2005-03-26 14:20-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/orca/Gecko.py:180
+#: ../src/orca/Gecko.py:180
 msgid "No page to read."
 msgstr "No page to read."
 
-#: src/orca/Gecko.py:188
+#: ../src/orca/Gecko.py:188
 msgid "Reading web page failed."
 msgstr "Reading web page failed."
 
-#: src/orca/chnames.py:27
+#: ../src/orca/chnames.py:27
 msgid "space"
 msgstr "space"
 
-#: src/orca/chnames.py:28
+#: ../src/orca/chnames.py:28
 msgid "bang"
 msgstr "exclamation point"
 
-#: src/orca/chnames.py:29
+#: ../src/orca/chnames.py:29
 msgid "quote"
 msgstr "quote"
 
-#: src/orca/chnames.py:30
+#: ../src/orca/chnames.py:30
 msgid "number"
 msgstr "number"
 
-#: src/orca/chnames.py:31
+#: ../src/orca/chnames.py:31
 msgid "dollar"
 msgstr "dollar"
 
-#: src/orca/chnames.py:32
+#: ../src/orca/chnames.py:32
 msgid "percent"
 msgstr "percent"
 
-#: src/orca/chnames.py:33
+#: ../src/orca/chnames.py:33
 msgid "and"
 msgstr "and"
 
-#: src/orca/chnames.py:34
+#: ../src/orca/chnames.py:34
 msgid "tick"
 msgstr "tick"
 
-#: src/orca/chnames.py:35
+#: ../src/orca/chnames.py:35
 msgid "left"
 msgstr "left"
 
-#: src/orca/chnames.py:36
+#: ../src/orca/chnames.py:36
 msgid "right"
 msgstr "right"
 
-#: src/orca/chnames.py:37
+#: ../src/orca/chnames.py:37
 msgid "star"
 msgstr "star"
 
-#: src/orca/chnames.py:38
+#: ../src/orca/chnames.py:38
 msgid "plus"
 msgstr "plus"
 
-#: src/orca/chnames.py:39
+#: ../src/orca/chnames.py:39
 msgid "comma"
 msgstr "comma"
 
-#: src/orca/chnames.py:40
+#: ../src/orca/chnames.py:40
 msgid "dash"
 msgstr "dash"
 
-#: src/orca/chnames.py:41
+#: ../src/orca/chnames.py:41
 msgid "dot"
 msgstr "dot"
 
-#: src/orca/chnames.py:42
+#: ../src/orca/chnames.py:42
 msgid "slash"
 msgstr "slash"
 
-#: src/orca/chnames.py:43
+#: ../src/orca/chnames.py:43
 msgid "question"
 msgstr "question"
 
-#: src/orca/chnames.py:44
+#: ../src/orca/chnames.py:44
 msgid "collun"
 msgstr "colon"
 
-#: src/orca/chnames.py:45
+#: ../src/orca/chnames.py:45
 msgid "semi"
 msgstr "semi"
 
-#: src/orca/chnames.py:46
+#: ../src/orca/chnames.py:46
 msgid "less"
 msgstr "less"
 
-#: src/orca/chnames.py:47
+#: ../src/orca/chnames.py:47
 msgid "greater"
 msgstr "greater"
 
-#: src/orca/chnames.py:48
+#: ../src/orca/chnames.py:48
 msgid "left bracket"
 msgstr "left bracket"
 
-#: src/orca/chnames.py:49
+#: ../src/orca/chnames.py:49
 msgid "right bracket"
 msgstr "right bracket"
 
-#: src/orca/chnames.py:50
+#: ../src/orca/chnames.py:50
 msgid "left brace"
 msgstr "left brace"
 
-#: src/orca/chnames.py:51
+#: ../src/orca/chnames.py:51
 msgid "right brace"
 msgstr "right brace"
 
-#: src/orca/chnames.py:52
+#: ../src/orca/chnames.py:52
 msgid "back"
 msgstr "back"
 
-#: src/orca/chnames.py:53
+#: ../src/orca/chnames.py:53
 msgid "bar"
 msgstr "bar"
 
-#: src/orca/default.py:834
+#: ../src/orca/default.py:70
+msgid "available"
+msgstr "available"
+
+#: ../src/orca/default.py:72
+msgid "unavailable"
+msgstr "unavailable"
+
+#: ../src/orca/default.py:134
+msgid "shortcut"
+msgstr "shortcut"
+
+#: ../src/orca/default.py:139
+msgid "accelerator"
+msgstr "accelerator"
+
+#: ../src/orca/default.py:156
+msgid " dot dot dot"
+msgstr " dot dot dot"
+
+#: ../src/orca/default.py:1114
 msgid "Not a document."
 msgstr "Not a document."
 
-#: src/orca/gaim.py:55
+#: ../src/orca/gaim.py:55
 msgid " chat"
 msgstr " chat"
 
-#: src/orca/gaim.py:81
+#: ../src/orca/gaim.py:81
 msgid " instant message"
 msgstr " instant message"
 
-#: src/orca/gaim.py:137
+#: ../src/orca/gaim.py:137
 msgid "Input"
 msgstr "Input"
 
-#: src/orca/gaim.py:139
+#: ../src/orca/gaim.py:139
 msgid "Message Log"
 msgstr "Message Log"
 
-#: src/orca/metacity.py:40
+#: ../src/orca/metacity.py:40
 msgid "inaccessible"
 msgstr "inaccessible"
 
-#: src/orca/orca-setup.in:34
+#: ../src/orca/orca-setup.in:35
 msgid "Creating .orca directory."
 msgstr "Creating .orca directory."
 
-#: src/orca/orca-setup.in:61
+#: ../src/orca/orca-setup.in:91
 #, c-format
 msgid "Select %s voice: "
 msgstr "Select %s voice: "
 
-#: src/orca/orca-setup.in:65 src/orca/orca-setup.in:107
+#: ../src/orca/orca-setup.in:95 ../src/orca/orca-setup.in:152
 #, c-format
 msgid "%d. %s"
 msgstr "%d. %s"
 
-#: src/orca/orca-setup.in:68
-msgid "Enter choice."
-msgstr "Enter choice."
-
-#: src/orca/orca-setup.in:69 src/orca/orca-setup.in:109
+#: ../src/orca/orca-setup.in:97 ../src/orca/orca-setup.in:154
 msgid "Enter choice: "
 msgstr "Enter choice: "
 
-#: src/orca/orca-setup.in:91
+#: ../src/orca/orca-setup.in:136
 msgid "No working GNOME Speech drivers found."
 msgstr "No working GNOME Speech drivers found."
 
-#: src/orca/orca-setup.in:94
-msgid "Select default synthesizer:"
-msgstr "Select default synthesizer:"
-
-#: src/orca/orca-setup.in:104
+#: ../src/orca/orca-setup.in:149
 msgid "Welcome to Orca setup."
 msgstr "Welcome to Orca setup."
 
-#: src/orca/orca-setup.in:105
+#: ../src/orca/orca-setup.in:150
 msgid "Select default speech synthesizer"
 msgstr "Select default speech synthesizer"
 
-#: src/orca/orca-setup.in:112
+#: ../src/orca/orca-setup.in:156
 msgid "Speech will not be used.\n"
 msgstr "Speech will not be used.\n"
 
-#: src/orca/orca-setup.in:134
+#: ../src/orca/orca-setup.in:180
 msgid "Create another voice?  Enter y or n: "
 msgstr "Create another voice?  Enter y or n: "
 
-#: src/orca/orca-setup.in:143
+#: ../src/orca/orca-setup.in:188
 msgid "Enter voice name: "
 msgstr "Enter voice name: "
 
-#: src/orca/orca-setup.in:151
+#: ../src/orca/orca-setup.in:193
 msgid "Use key echo?  Enter y or n: "
 msgstr "Use key echo?  Enter y or n: "
 
-#: src/orca/orca-setup.in:174
+#: ../src/orca/orca-setup.in:220
 msgid "Braille support appears to work, use it?  Enter y or n. "
 msgstr "Braille support appears to work.  Use it?  Enter y or n. "
 
-#: src/orca/orca.py:117
+#: ../src/orca/orca.py:92
 msgid "User logged out - shutting down."
 msgstr "User logged out - shutting down."
 
-#. We couldn't initialize the core-- this proably means that we
-#. couldn't activate the accessibility registry
-#: src/orca/orca.py:222
-msgid "The Orca core could not be initialized."
-msgstr "The Orca core could not be initialized."
-
-#: src/orca/orca.py:285
+#: ../src/orca/orca.py:292 ../src/orca/orca.py:296
 msgid "Welcome to Orca."
 msgstr "Welcome to Orca."
 
-#: src/orca/orca.py:332
+#: ../src/orca/orca.py:340
 msgid "goodbye."
 msgstr "goodbye."
 
-#: src/orca/rolenames.py:28
+#: ../src/orca/rolenames.py:30
 msgid "button"
 msgstr "button"
 
-#: src/orca/rolenames.py:29
+#: ../src/orca/rolenames.py:31
 msgid "list view"
 msgstr "list view"
 
-#: src/orca/rolenames.py:30 src/orca/rolenames.py:31
+#: ../src/orca/rolenames.py:32 ../src/orca/rolenames.py:33
 msgid "tree view"
 msgstr "tree view"
 
-#: src/orca/rolenames.py:33
+#: ../src/orca/rolenames.py:35
 msgid "tab"
 msgstr "tab"
