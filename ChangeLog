@@ -1,3 +1,25 @@
+2004-06-30    <marc.mulcahy@sun.com>
+
+	* src/orca/a11y.py (Accessible.__get_relations): New
+	implementation which makes sure relations are narrowed to make
+	sure things work right with Java.
+	(Accessible.__get_app): Get app also fails if the thing it finds
+	is not an application.
+	(onWindowActivated): Make sure focussedAp is narrowed so it works
+	right with Java.
+	(onFocus): Since we're tracking the active application, objects
+	which get focus get their app attribute set to the active
+	application-- this hack is needed for Nautilus.
+	(getLabel): Ensure the target that we get from a relation is an
+	accessible wrapper.
+
+	* src/orca/Gecko.py (presentNextHypertext): Fixed to use new
+	accessible wrapper.
+	(onFocus): Fixed to use new accessible wrapper.
+
+	* src/orca/orca.in: Don't speak "selcome to Orca" here-- now
+	spoken in orca.py in start.
+
 2004-06-28  Christophe Merlet  <redfox@redfoxcenter.org>
 
 	* configure.in: Added "fr" (French) to ALL_LINGUAS.
