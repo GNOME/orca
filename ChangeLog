@@ -1,3 +1,17 @@
+2005-03-25  Willie Walker <william.walker@sun.com>
+
+	* Upgrade to brltty-3.6.1 (TODO: perhaps add backwards
+	compatibility in if people complain.).
+	* Add *.pyc (compiled *.py files) to src/orca/.cvsignore.
+	* Use try/except blocks more sparingly to allow for easier
+	debugging.  Also add more debugging features to debug.py.
+	A quite note on debugging: add "debug = True" to 
+	~/.orca/settings.py to turn debugging on.
+	* Fix presentation of radio and checkbox menu items.
+	* Make menus speak like Gnopernicus for now.
+	* Backout a11y.py workaround for Nautilus shortcomings; it turns
+	out this workaround was hurting the overall logic.
+	
 2005-02-15  Willie Walker <william.walker@sun.com>
 
 	* Remove src/orca/dispatcher.py as it was obsoleted by the
