@@ -29,7 +29,7 @@ dnl Gettext stuff
 GETTEXT_PACKAGE=orca
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [Gettext package])
-ALL_LINGUAS="cs de en_CA en_GB es fr gu nl pt pt_BR sr sr@Latn sv zh_CN"
+ALL_LINGUAS="cs de en_CA en_GB es fr gu nl pa pt pt_BR sr sr@Latn sv zh_CN"
 AM_GLIB_GNU_GETTEXT
 
 dnl Checks for programs

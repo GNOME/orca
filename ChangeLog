@@ -1,3 +1,7 @@
+2004-01-17	Amanpreet Singh Alam <amanpreetalam@yahoo.com>
+
+	* configure.in: "pa" is Added to ALL_LINGUAS
+
 2004-10-16  Danilo Šegan  <dsegan@gmx.net>
 
 	* configure.in: Added "sr" and "sr@Latn" to ALL_LINGUAS.
