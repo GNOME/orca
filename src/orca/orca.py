@@ -291,7 +291,6 @@ def start ():
 
     speech.say ("default", _("Welcome to Orca."))
 
-    print "HERE"
     try:
         brl.clear ()
         brl.addRegion (_("Welcome to Orca."), 16, 0)
