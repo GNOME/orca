@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-21 20:21+0200\n"
-"PO-Revision-Date: 2004-08-21 20:44+0200\n"
+"POT-Creation-Date: 2004-08-24 21:39+0200\n"
+"PO-Revision-Date: 2004-08-24 21:41+0200\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -31,11 +31,11 @@ msgstr "espacio"
 
 #: src/orca/chnames.py:28
 msgid "bang"
-msgstr ""
+msgstr "admiración"
 
 #: src/orca/chnames.py:29
 msgid "quote"
-msgstr ""
+msgstr "comillas"
 
 #: src/orca/chnames.py:30
 msgid "number"
@@ -50,21 +50,18 @@ msgid "percent"
 msgstr "porcentaje"
 
 #: src/orca/chnames.py:33
-#, fuzzy
 msgid "and"
 msgstr "y"
 
 #: src/orca/chnames.py:34
 msgid "tick"
-msgstr ""
+msgstr "comilla"
 
 #: src/orca/chnames.py:35
-#, fuzzy
 msgid "left"
 msgstr "izquierda"
 
 #: src/orca/chnames.py:36
-#, fuzzy
 msgid "right"
 msgstr "derecha"
 
@@ -130,7 +127,7 @@ msgstr "llave derecha"
 
 #: src/orca/chnames.py:52
 msgid "back"
-msgstr ""
+msgstr "atrás"
 
 #: src/orca/chnames.py:53
 msgid "bar"
@@ -142,7 +139,7 @@ msgstr "No es un documento."
 
 #: src/orca/gaim.py:55
 msgid " chat"
-msgstr ""
+msgstr "charla"
 
 #: src/orca/gaim.py:81
 msgid " instant message"
@@ -204,19 +201,19 @@ msgstr "¿Crear otra voz? responda y o n."
 
 #: src/orca/orca-setup.in:143
 msgid "Enter voice name: "
-msgstr "Introduza el nombre de la voz:"
+msgstr "Introduzca el nombre de la voz:"
 
 #: src/orca/orca-setup.in:151
 msgid "Use key echo, enter y or n: "
-msgstr ""
+msgstr "Use la tecla de eco, Intro, y o n:"
 
 #: src/orca/orca-setup.in:174
 msgid "Braille support appears to work, use it?  Enter y or n. "
-msgstr ""
+msgstr "El soporte Braille parece funcionar, ¿desea usarlo? Pulse s o n."
 
 #: src/orca/orca.py:117
 msgid "User logged out - shutting down."
-msgstr ""
+msgstr "El usuario cerró la sesión - apagando."
 
 #: src/orca/orca.py:273
 msgid "Welcome to Orca."
@@ -232,11 +229,11 @@ msgstr "botón"
 
 #: src/orca/rolenames.py:29
 msgid "list view"
-msgstr ""
+msgstr "vista de lista"
 
 #: src/orca/rolenames.py:30 src/orca/rolenames.py:31
 msgid "tree view"
-msgstr ""
+msgstr "vista de árbol"
 
 #: src/orca/rolenames.py:33
 msgid "tab"
