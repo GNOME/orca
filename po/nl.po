@@ -1,0 +1,240 @@
+# Dutch translation of orca.
+# Copyright (C) 2004 Free Software Foundation, Inc.
+# This file is distributed under the same license as the orca package.
+# Elros Cyriatan <cyriatan@fastmail.fm>, 2004.
+# 
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: orca HEAD\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-06-18 20:51+0200\n"
+"PO-Revision-Date: 2004-06-19 14:58+0200\n"
+"Last-Translator: Elros Cyriatan <cyriatan@fastmail.fm>\n"
+"Language-Team: Dutch <vertaling@nl.linux.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit"
+
+#: src/orca/Gecko.py:181
+msgid "No page to read."
+msgstr "Geen pagina om te lezen."
+
+#: src/orca/Gecko.py:189
+msgid "Reading web page failed."
+msgstr "Lezen van webpagina mislukt."
+
+#: src/orca/chnames.py:27
+msgid "space"
+msgstr "spatie"
+
+#: src/orca/chnames.py:28
+msgid "bang"
+msgstr ""
+
+#: src/orca/chnames.py:29
+msgid "quote"
+msgstr "aanhalingsteken"
+
+#: src/orca/chnames.py:30
+msgid "number"
+msgstr "getal"
+
+#: src/orca/chnames.py:31
+msgid "dollar"
+msgstr "dollar"
+
+#: src/orca/chnames.py:32
+msgid "percent"
+msgstr "procent"
+
+#: src/orca/chnames.py:33
+msgid "and"
+msgstr "en"
+
+#: src/orca/chnames.py:34
+msgid "tick"
+msgstr "tik"
+
+#: src/orca/chnames.py:35
+msgid "left"
+msgstr "links"
+
+#: src/orca/chnames.py:36
+msgid "right"
+msgstr "rechts"
+
+#: src/orca/chnames.py:37
+msgid "star"
+msgstr "ster"
+
+#: src/orca/chnames.py:38
+msgid "plus"
+msgstr "plus"
+
+#: src/orca/chnames.py:39
+msgid "comma"
+msgstr "komma"
+
+#: src/orca/chnames.py:40
+msgid "dash"
+msgstr "streepje"
+
+#: src/orca/chnames.py:41
+msgid "dot"
+msgstr "punt"
+
+#: src/orca/chnames.py:42
+msgid "slash"
+msgstr "slash"
+
+#: src/orca/chnames.py:43
+msgid "question"
+msgstr "vraag"
+
+#: src/orca/chnames.py:44
+msgid "collun"
+msgstr "dubbele punt"
+
+#: src/orca/chnames.py:45
+msgid "semi"
+msgstr "punt-komma"
+
+#: src/orca/chnames.py:46
+msgid "less"
+msgstr "kleiner dan"
+
+#: src/orca/chnames.py:47
+msgid "greater"
+msgstr "groter dan"
+
+#: src/orca/chnames.py:48
+msgid "left bracket"
+msgstr "linker bracket"
+
+#: src/orca/chnames.py:49
+msgid "right bracket"
+msgstr "rechter bracket"
+
+#: src/orca/chnames.py:50
+msgid "left brace"
+msgstr "linker accolade"
+
+#: src/orca/chnames.py:51
+msgid "right brace"
+msgstr "rechter accolade"
+
+#: src/orca/chnames.py:52
+msgid "back"
+msgstr ""
+
+#: src/orca/chnames.py:53
+msgid "bar"
+msgstr "balk"
+
+#: src/orca/default.py:830
+msgid "Not a document."
+msgstr "Geen document."
+
+#: src/orca/gaim.py:59
+msgid " chat"
+msgstr " chat"
+
+#: src/orca/gaim.py:82
+msgid " instant message"
+msgstr " instant message"
+
+#: src/orca/gaim.py:138
+msgid "Input"
+msgstr "Invoer"
+
+#: src/orca/gaim.py:140
+msgid "Message Log"
+msgstr "Berichtenlog"
+
+#: src/orca/orca-setup.in:34
+msgid "Creating .orca directory."
+msgstr "Bezig met aanmaken .orca map."
+
+#: src/orca/orca-setup.in:61
+#, c-format
+msgid "Select %s voice: "
+msgstr "Kies %s stem: "
+
+#: src/orca/orca-setup.in:65 src/orca/orca-setup.in:107
+#, c-format
+msgid "%d. %s"
+msgstr "%d. %s"
+
+#: src/orca/orca-setup.in:68
+msgid "Enter choice."
+msgstr "Geef keuze."
+
+#: src/orca/orca-setup.in:69 src/orca/orca-setup.in:109
+msgid "Enter choice: "
+msgstr "Geef keuze: "
+
+#: src/orca/orca-setup.in:91
+msgid "No working GNOME Speech drivers found."
+msgstr "Geen werkende GNOME spraakstuurprogramma's gevonden."
+
+#: src/orca/orca-setup.in:94
+msgid "Select default synthesizer:"
+msgstr "Kies standaard synthesizer:"
+
+#: src/orca/orca-setup.in:104
+msgid "Welcome to Orca setup."
+msgstr "Welkom bij de Orca configuratie."
+
+#: src/orca/orca-setup.in:105
+msgid "Select default speech synthesizer"
+msgstr "Kies standaard stemsynthesizer"
+
+#: src/orca/orca-setup.in:112
+msgid "Speech will not be used.\n"
+msgstr "Spraak zal niet worden gebruikt.\n"
+
+#: src/orca/orca-setup.in:134
+msgid "Create another voice? enter y or n."
+msgstr "Een andere stem aanmaken? geef j of n."
+
+#: src/orca/orca-setup.in:143
+msgid "Enter voice name: "
+msgstr "Geef stemnaam: "
+
+#: src/orca/orca-setup.in:151
+msgid "Use key echo, enter y or n: "
+msgstr "Toets echo gebruiken, geef j of n: "
+
+#: src/orca/orca-setup.in:174
+msgid "Braille support appears to work, use it?  Enter y or n. "
+msgstr "Braille-ondersteuning lijkt te werken, gebruiken?  Geef j of n. "
+
+#: src/orca/orca.in:42
+msgid "Welcome to Orca."
+msgstr "Welkom bij Orca."
+
+#: src/orca/orca.py:81
+msgid "User logged out - shutting down."
+msgstr "Gebruiker afgemeld - bezig met afsluiten."
+
+#: src/orca/orca.py:183
+msgid "goodbye."
+msgstr "tot ziens."
+
+#: src/orca/rolenames.py:28
+msgid "button"
+msgstr "knop"
+
+#: src/orca/rolenames.py:29
+msgid "list view"
+msgstr "lijstweergave"
+
+#: src/orca/rolenames.py:30 src/orca/rolenames.py:31
+msgid "tree view"
+msgstr "boomweergave"
+
+#: src/orca/rolenames.py:33
+msgid "tab"
+msgstr "tab"
+
