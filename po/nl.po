@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-27 04:09+0200\n"
-"PO-Revision-Date: 2004-08-27 14:08+0200\n"
+"POT-Creation-Date: 2004-09-07 20:18+0200\n"
+"PO-Revision-Date: 2004-09-07 20:53+0200\n"
 "Last-Translator: Elros Cyriatan <cyriatan@fastmail.fm>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
 "MIME-Version: 1.0\n"
@@ -214,11 +214,17 @@ msgstr "Braille-ondersteuning lijkt te werken, gebruiken?  Geef j of n. "
 msgid "User logged out - shutting down."
 msgstr "Gebruiker afgemeld - bezig met afsluiten."
 
-#: src/orca/orca.py:273
+#. We couldn't initialize the core-- this proably means that we
+#. couldn't activate the accessibility registry
+#: src/orca/orca.py:222
+msgid "The Orca core could not be initialized."
+msgstr "De Orca-kern kon niet worden geïnitialiseerd."
+
+#: src/orca/orca.py:285
 msgid "Welcome to Orca."
 msgstr "Welkom bij Orca."
 
-#: src/orca/orca.py:320
+#: src/orca/orca.py:332
 msgid "goodbye."
 msgstr "tot ziens."
 
