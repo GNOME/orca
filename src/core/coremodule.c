@@ -168,7 +168,7 @@ core_module_init (PyObject *self)
 	if (ev._major != CORBA_NO_EXCEPTION)
 	{
 		PyErr_SetString (PyExc_RuntimeError, "Could not activate accessibility registry");
-		return;
+		return NULL;
 	}
 	
 	/* Add a reference to the registry to the module */
@@ -185,7 +185,7 @@ core_module_init (PyObject *self)
 	if (ev._major != CORBA_NO_EXCEPTION)
 	{
 		PyErr_SetString (PyExc_RuntimeError, "Could not access the desktop");
-		return;
+		return NULL;
 	}
 	
 	PyModule_AddObject (core_module, "desktop", 
