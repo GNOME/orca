@@ -461,8 +461,6 @@ def dialogPresenter (dlg, already_focussed):
 
     labels = a11y.findByRole (dlg, "label")
 
-    speech.say ("default", str(len(labels)) + " labels in dialog")
-
     # Add the names of only those labels which are not associated with
     # other objects (I.E., do empty relation setss)
 
@@ -520,7 +518,7 @@ def onWindowActivated (event):
     # Do we have a role specific presenter for this type of object?
     
     try:
-        p = presenters[event.source.getRole ()]
+        p = presenters[event.source.getRoleName ()]
 
     except:
         pass
