@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-29 20:27+0200\n"
-"PO-Revision-Date: 2004-05-30 11:56-0300\n"
+"POT-Creation-Date: 2004-06-20 20:38+0200\n"
+"PO-Revision-Date: 2004-06-20 17:41-0300\n"
 "Last-Translator: Raphael Higino <raphaelh@uai.com.br>\n"
 "Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
 "MIME-Version: 1.0\n"
@@ -29,7 +29,7 @@ msgstr "espaço"
 
 #: src/orca/chnames.py:28
 msgid "bang"
-msgstr ""
+msgstr "exclamação"
 
 #: src/orca/chnames.py:29
 msgid "quote"
@@ -53,7 +53,7 @@ msgstr "e comercial"
 
 #: src/orca/chnames.py:34
 msgid "tick"
-msgstr ""
+msgstr "crase"
 
 #: src/orca/chnames.py:35
 msgid "left"
@@ -129,9 +129,9 @@ msgstr "contra-barra"
 
 #: src/orca/chnames.py:53
 msgid "bar"
-msgstr ""
+msgstr "pipe"
 
-#: src/orca/default.py:832
+#: src/orca/default.py:830
 msgid "Not a document."
 msgstr "Não é um documento."
 
@@ -151,65 +151,65 @@ msgstr "Entrada"
 msgid "Message Log"
 msgstr "Log de mensagens"
 
-#: src/orca/orca-setup.in:39
+#: src/orca/orca-setup.in:34
 msgid "Creating .orca directory."
 msgstr "Criando diretório .orca."
 
-#: src/orca/orca-setup.in:66
+#: src/orca/orca-setup.in:61
 #, c-format
 msgid "Select %s voice: "
 msgstr "Selecionar voz de %s: "
 
-#: src/orca/orca-setup.in:70 src/orca/orca-setup.in:112
+#: src/orca/orca-setup.in:65 src/orca/orca-setup.in:107
 #, c-format
 msgid "%d. %s"
 msgstr "%d. %s"
 
-#: src/orca/orca-setup.in:73
+#: src/orca/orca-setup.in:68
 msgid "Enter choice."
 msgstr "Digitar escolha."
 
-#: src/orca/orca-setup.in:74 src/orca/orca-setup.in:114
+#: src/orca/orca-setup.in:69 src/orca/orca-setup.in:109
 msgid "Enter choice: "
 msgstr "Digite a escolha: "
 
-#: src/orca/orca-setup.in:96
+#: src/orca/orca-setup.in:91
 msgid "No working GNOME Speech drivers found."
 msgstr "Nenhum driver de síntese de voz do GNOME funcionando encontrado."
 
-#: src/orca/orca-setup.in:99
+#: src/orca/orca-setup.in:94
 msgid "Select default synthesizer:"
 msgstr "Selecione o sintetizador padrão:"
 
-#: src/orca/orca-setup.in:109
+#: src/orca/orca-setup.in:104
 msgid "Welcome to Orca setup."
 msgstr "Bem-vindo(a) à configuração do Orca."
 
-#: src/orca/orca-setup.in:110
+#: src/orca/orca-setup.in:105
 msgid "Select default speech synthesizer"
 msgstr "Selecione o sintetizador de voz padrão"
 
-#: src/orca/orca-setup.in:117
+#: src/orca/orca-setup.in:112
 msgid "Speech will not be used.\n"
 msgstr "Não será usada síntese de voz.\n"
 
-#: src/orca/orca-setup.in:139
+#: src/orca/orca-setup.in:134
 msgid "Create another voice? enter y or n."
 msgstr "Criar uma outra voz? aperte s ou n."
 
-#: src/orca/orca-setup.in:148
+#: src/orca/orca-setup.in:143
 msgid "Enter voice name: "
 msgstr "Digite o nome da voz: "
 
-#: src/orca/orca-setup.in:156
+#: src/orca/orca-setup.in:151
 msgid "Use key echo, enter y or n: "
 msgstr "Usar eco de tecla, aperte s ou n: "
 
-#: src/orca/orca-setup.in:179
+#: src/orca/orca-setup.in:174
 msgid "Braille support appears to work, use it?  Enter y or n. "
 msgstr "O suporte a braille parece funcionar, usá-lo?  Aperte s ou n. "
 
-#: src/orca/orca.in:46
+#: src/orca/orca.in:42
 msgid "Welcome to Orca."
 msgstr "Bem-vindo(a) ao Orca."
 
