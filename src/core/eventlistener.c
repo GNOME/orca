@@ -21,7 +21,6 @@
  */
 
 #include "eventlistener.h"
-#include "pyaccessible.h"
 #include "pyevent.h"
 
 
