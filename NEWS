@@ -1,3 +1,10 @@
+0.1.0
+* Changed scripting model -- scripts are now always all loaded at once
+and the Orca event proesor decides which script should receive which
+events
+
+==========
+
 0.0.13
 * Added spec file
 * Sorted out packaging issues
