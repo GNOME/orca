@@ -29,29 +29,25 @@ from rolenames import getRoleName
 
 from orca_i18n import _
 
+# References to the text input and output areas
+
+input = None
+output = None
+
 # If we've found a chat window, set a global reference to it and read
 # it
 
 def setChat (obj):
+    global input
+    global output
 
     # The chat window has threee text boxes in it (the chat topic, the
     # message log, and the text entry field).  find them all - they're
     # always returned in the same order
 
     entries = a11y.findByRole (obj, "text")
-
-    # The second entry is the output log - Due to current
-    # architectural limitations, the only way to refer to the current
-    # script object is through the script.active reference - global
-    # variables to this module may be shared across multiple scripts
-    # (although it's unlikely in this case) - the only practical case
-    # where module-level variables actually are shared across multiple
-    # applications is in the default script.  but since these scripts
-    # serve as example code, the technically proper way to store
-    # variables is in the script object, referenced by script.active
-
-    script.active.output = entries[1]
-    script.active.input = entries[2]
+    output = entries[1]
+    input = entries[2]
 
     # Speak the title of the chat
 
@@ -59,12 +55,15 @@ def setChat (obj):
     text = label + _(" chat")
     brl.writeMessage (text)
     speech.say ("default", text)
+        
     
 
 # When we've found an instant mesage window, keep a reference to it
 
 def setIm (obj):
-
+    global input
+    global output
+    
     # There are two text boxes in each IM window (the message log, and
     # the text entry field).  They are always returned in the same
     # order
@@ -74,8 +73,8 @@ def setIm (obj):
 
     # The first entry is the output log
 
-    script.active.output = entries[0]
-    script.active.input = entries[1]
+    output = entries[0]
+    input = entries[1]
 
     # Speak the title of the IM
     label = a11y.getLabel (obj)
@@ -91,9 +90,9 @@ def onWindowActivated (event):
     # If it's not a standard window, do the normal behavior since it
     # won't have an IM or chat in it
 
-    if event.source.getRoleName () != "frame":
-        script.active.output = None
-        script.active.input = None
+    if event.source.role != "frame":
+        output = None
+        input = None
         return default.onWindowActivated (event)
 
 
@@ -108,8 +107,8 @@ def onWindowActivated (event):
     elif len(entries) == 3:
         setChat (event.source)
     else:
-        script.active.output = None
-        script.active.input = None
+        output = None
+        input = None
         return default.onWindowActivated (event)
 
 # This function is called whenever text is inserted into one of Gaim's
@@ -120,7 +119,7 @@ def onTextInserted (event):
 
     # If we're not watching anything, do the default behavior
 
-    if script.active.output == None or event.source != script.active.output:
+    if output == None or event.source != output:
         return default.onTextInserted (event)
 
     txt = a11y.getText (event.source)
@@ -134,9 +133,9 @@ def onFocus (event):
     # The text boxes in chat and IM windows have no names - so we give
     # them some here
 
-    if event.source == script.active.input:
+    if event.source == input:
         text = _("Input")
-    elif event.source == script.active.output:
+    elif event.source == output:
         text = _("Message Log")
     else:
         return default.onFocus (event)
