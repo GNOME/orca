@@ -28,10 +28,6 @@ import os, sys
 
 from orca_i18n import _
 
-sys.path.insert (0, "@PYTHON_PKGDIR@")
-sys.path.insert (0, "@PYTHON_PKGDIR@/orca")
-sys.path.insert (0, "@PYTHON_PKGDIR@/gtk-2.0")
-
 # Add the user's personal .orca directory
 
 orcadir = os.path.join (os.environ["HOME"], ".orca")

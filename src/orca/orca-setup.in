@@ -25,11 +25,6 @@ import os, sys, time
 
 from orca_i18n import _
 
-sys.path.insert (0, "@PYTHON_PKGDIR@")
-sys.path.insert (0, "@PYTHON_PKGDIR@/orca")
-sys.path.insert (0, "@PYTHON_PKGDIR@/gtk-2.0")
-sys.path.insert (0, ".")
-
 # Create the user's .orca directory
 
 orcadir = os.path.join (os.environ["HOME"], ".orca")
