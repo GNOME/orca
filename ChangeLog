@@ -1,3 +1,7 @@
+2004-08-21  Francisco Javier F. Serrador  <serrador@cvs.gnome.org>
+
+	* configure.in: Added "es" (Spanish) translation.
+
 2004-07-02  Hendrik Brandt  <hebra@cvs.gnome.org>
 
 	* configure.in: Added "de" (German) to ALL_LINGUAS.
