@@ -58,7 +58,7 @@ from orca_i18n import _
 
 def menuPresenter (obj, already_focussed):
     menu = obj.parent
-    selected = obj.getIndexInParent ()
+    selected = obj.index
     childCount = menu.childCount
     i = 0
 
@@ -66,7 +66,7 @@ def menuPresenter (obj, already_focussed):
     # own region on the Braille display
 
     while i < childCount:
-        name = a11y.getLabel (menu.getChildAtIndex (i))
+        name = a11y.getLabel (menu.child (i))
         brl.addRegion (name, len(name)+2, 0)
         i = i + 1
 
@@ -81,7 +81,7 @@ def menuPresenter (obj, already_focussed):
 
     # Speak the selected menu item
 
-    if obj.getRoleName() == "menu item":
+    if obj.role == "menu item":
         text = a11y.getLabel (obj)
     else:
         text = a11y.getLabel (obj) + " " + getRoleName(obj)
@@ -95,14 +95,14 @@ def menuPresenter (obj, already_focussed):
 
 def pageTabPresenter (obj, already_focussed):
     tablist = obj.parent
-    selected = obj.getIndexInParent ()
+    selected = obj.index
     childCount = tablist.childCount
 
     # Put each page tab in its own region on the Braille display
 
     i = 0
     while i < childCount:
-        name = a11y.getLabel (tablist.getChildAtIndex (i))
+        name = a11y.getLabel (tablist.child (i))
         brl.addRegion (name, len(name)+2, 0)
         i = i + 1
 
@@ -127,10 +127,12 @@ def pageTabPresenter (obj, already_focussed):
 
 def brlUpdateText (obj):
 
+    # If we're not using Braille, bail out now!
+
     # If this is the child of a combo box, use the combo boxe's label
 
     parent = obj.parent
-    if parent.getRoleName () == "combo box":
+    if parent.role == "combo box":
         label = a11y.getLabel (parent)
     else:
         label = a11y.getLabel (obj)
@@ -240,8 +242,8 @@ def comboBoxPresenter (obj, already_focussed):
     # See if this combo box  has a text object in it
 
     while i < children:
-        child = obj.getChildAtIndex (i)
-        if child.getRoleName () == "text":
+        child = obj.child (i)
+        if child.role == "text":
             text = child
             has_text = True
         i = i + 1
@@ -321,6 +323,7 @@ def tablePresenter (obj, already_focussed):
         col = 0
         while col < cols:
             acc = table.getAccessibleAt (row, col)
+            acc = a11y.makeAccessible (acc)
 
             # If the cell has children, get a list of them
 
@@ -366,11 +369,11 @@ def checkBoxPresenter (obj, already_focussed):
 
     # Get the state of the checkbox
 
-    set = obj.getState ()
+    set = obj.state
 
     # If the checkbox is checked, indicate this in speech and Braille
 
-    if set.contains (core.Accessibility.STATE_CHECKED):
+    if set.count (core.Accessibility.STATE_CHECKED):
 
         # If it's not already focused, say it's name
 
@@ -403,8 +406,8 @@ def radioButtonPresenter (obj, already_focussed):
     role = getRoleName (obj)
     text = ""
     brltext = ""
-    states = obj.getState ()
-    if states.contains (core.Accessibility.STATE_CHECKED):
+    states = obj.state
+    if states.count (core.Accessibility.STATE_CHECKED):
         if already_focussed == False:
             text = groupName + " " + label + " " + role
         text = text + " checked"
@@ -465,7 +468,7 @@ def dialogPresenter (dlg, already_focussed):
     # other objects (I.E., do empty relation setss)
 
     for label in labels:
-        set = label.getRelationSet ()
+        set = label.relations
         if len(set) == 0:
             text = text + " " + label.name
     brl.writeMessage (text)
@@ -496,7 +499,7 @@ presenters["push button"] = buttonPresenter
 def onFocus (event):
     global presenters
 
-    roleName = event.source.getRoleName ()
+    roleName = event.source.role
 
     # Do we have a role specific presenter for this type of object
 
@@ -518,7 +521,7 @@ def onWindowActivated (event):
     # Do we have a role specific presenter for this type of object?
     
     try:
-        p = presenters[event.source.getRoleName ()]
+        p = presenters[event.source.role]
 
     except:
         pass
@@ -543,7 +546,7 @@ def onSelectionChanged (event):
     # called when this type of object's selection changes
 
     try:
-        p = selection_changed_handlers[event.source.getRoleName ()]
+        p = selection_changed_handlers[event.source.role]
 
     # Don't do anything if we don't have a role-specific presenter
 
@@ -576,7 +579,7 @@ def onStateChanged (event):
     # Should we re-present the object?
 
     try:
-        notifiers = state_change_notifiers[event.source.getRoleName ()]
+        notifiers = state_change_notifiers[event.source.role]
     except:
         return
 
@@ -596,7 +599,7 @@ def onStateChanged (event):
     # we have a presenter for this type of object
     
     try:
-        p = presenters[event.source.getRoleName ()]
+        p = presenters[event.source.role]
     except:
         defaultPresenter (event.source, True)
         return
@@ -651,7 +654,8 @@ def onTextDeleted (event):
     if event.source != a11y.focussedObject and \
            event.source.parent != a11y.focussedObject:
         return
-    brlUpdateText (event.source)
+    if settings.useBraille == True:
+        brlUpdateText (event.source)
 
     # The any_data member of the event object has the deleted text in
     # it - If the last key pressed was a backspace or delete key,
@@ -683,7 +687,7 @@ def menuBrlKeyHandler (obj, region, position):
     # region_num will indicate which menu/menu item to select
 
     menu = obj.parent
-    child = menu.getChildAtIndex (region)
+    child = menu.child (region)
 
     # Get the AccessibleAction interface and do the first one
 
