@@ -79,9 +79,13 @@ def magnifyAccessible (acc):
     - acc: the accessible
     """
 
+    global initialized
     global roi
     global lastMouseEventTime
     
+    if not initialized:
+        return
+
     extents = acc.extents
     if extents is None:
         return
