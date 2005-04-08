@@ -1,3 +1,13 @@
+2005-04-08  Willie Walker <william.walker@sun.com>
+
+	* src/orca/{a11y.py, debug.py, default.py, kbd.py, metacity,py,
+	orca.py, rolenames.py, speech.py}: finer grained control over
+	debugging.  Debugging is now set by a numerical value rather than
+	a boolean.  See debug.py for the different levels.  To turn
+	debugging on, set "debugLevel = 500" (or some appropriate number)
+	in settings.py.  For backwards compatibility, "debug = True" in
+	this file will default to debug.LEVEL_FINER.
+
 2005-04-05  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Makefile.am: add debug.py to orca_python_PYTHON

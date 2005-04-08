@@ -68,7 +68,8 @@ def getAcceleratorAndShortcut(obj):
     #
     bindingStrings = action.getKeyBinding (0).split (';')
 
-    #debug.println ("KEYBINDINGS: " + action.getKeyBinding (0))
+    debug.println (debug.LEVEL_FINEST,
+                   "KEYBINDINGS: " + action.getKeyBinding (0))
                   
     # [[[TODO: WDW - assumes menu items have three bindings]]]
     #
@@ -268,11 +269,18 @@ def brailleUpdateText (obj):
            interface
     """
 
-    parent = obj.parent
-    if parent and (parent.role == "combo box"):
-        label = a11y.getLabel (parent)
-    else:
-        label = a11y.getLabel (obj)
+    label = None
+    if obj.role == "terminal":
+        frame = a11y.getFrame (obj)
+        if frame:
+            label = frame.name
+
+    if label is None:
+        parent = obj.parent
+        if parent and (parent.role == "combo box"):
+            label = a11y.getLabel (parent)
+        else:
+            label = a11y.getLabel (obj)
 
 
     # The label and text each get their own region - The label region
@@ -386,6 +394,23 @@ def sayCharacter (obj):
 #                                                                      #
 ########################################################################
 
+def debugPresenter (presenterName, obj, already_focused):
+    """Prints debug.LEVEL_FINER information regarding the presenter.
+
+    Arguments:
+    - presenterName: the name of the presenter
+    - obj: the object being presented
+    - already_focused: boolean staing if object just received focus
+    """
+
+    debug.println (debug.LEVEL_FINER,
+                   "PRESENTER: %s" % presenterName)
+    debug.println (debug.LEVEL_FINER,
+                   "           obj             = %s" % obj.name)
+    debug.println (debug.LEVEL_FINER,
+                   "           role            = %s" % obj.role)
+    debug.println (debug.LEVEL_FINER,
+                   "           already_focused = %s" % already_focused)
     
 def menuPresenter (obj, already_focused):
     """Speaks the menu item that is currently selected and updates
@@ -396,6 +421,8 @@ def menuPresenter (obj, already_focused):
     - obj: the Accessible menu item or a menu
     - already_focused: if False, the obj just received focus
     """
+    
+    debugPresenter ("default.menuPresenter", obj, already_focused)
     
     # Put the menu on the Braille display - Put each menu item in its
     # own region on the Braille display
@@ -452,6 +479,8 @@ def pageTabPresenter (obj, already_focused):
     - already_focused: if False, the obj just received focus
     """
    
+    debugPresenter ("default.pageTabPresenter", obj, already_focused)
+    
     # Put each page tab in its own region on the Braille display
     #
     name = "PTL" # [[[TODO: WDW - should get this from rolenames.py]]]
@@ -491,6 +520,8 @@ def textPresenter (obj, already_focused):
     - already_focused: if False, the obj just received focus
     """
     
+    debugPresenter ("default.textPresenter", obj, already_focused)
+    
     brailleUpdateText (obj)
 
     text = getSpeech (obj)
@@ -507,6 +538,8 @@ def comboBoxPresenter (obj, already_focused):
     - obj: the Accessible combo box
     - already_focused: if False, the obj just received focus
     """
+    
+    debugPresenter ("default.comboBoxPresenter", obj, already_focused)
     
     # Put the combo box's label, if any, in it's own region on the
     # Braille display
@@ -572,6 +605,8 @@ def tablePresenter (obj, already_focused):
     - already_focused: if False, the obj just received focus
     """
         
+    debugPresenter ("default.tablePresenter", obj, already_focused)
+    
     # Only speak the table's name if it didn't already have focus
     #
     if already_focused == False:
@@ -623,13 +658,15 @@ def tablePresenter (obj, already_focused):
 
 def checkBoxPresenter (obj, already_focused):
     """Speaks the name and state of the obj and also displays it in
-    Braille.  An "(x)" in Braille indicates the checkbox is checked whereas
+    Braille.  An "(=)" in Braille indicates the checkbox is checked whereas
     a "( )" indicates it is unchecked.
 
     Arguments:
     - obj: the Accessible check box
     - already_focused: if False, the obj just received focus
     """
+    
+    debugPresenter ("default.checkBoxPresenter", obj, already_focused)
     
     # If the checkbox is checked, indicate this in speech and Braille
     #
@@ -641,7 +678,7 @@ def checkBoxPresenter (obj, already_focused):
             text = getSpeech (obj) + " " + _("checked") + "."
         else:
             text = _("checked") + "."
-        brltext = getShortBrailleForRoleName (obj) + " (x) " \
+        brltext = getShortBrailleForRoleName (obj) + " (=) " \
                   + a11y.getLabel (obj)
     else:
         if already_focused == False:
@@ -658,7 +695,7 @@ def checkBoxPresenter (obj, already_focused):
 
 def radioButtonPresenter (obj, already_focused):
     """Speaks the name and state of the obj and also displays it in
-    Braille.  A"(x)" in Braille indicates the checkbox is checked whereas
+    Braille.  A"(=)" in Braille indicates the checkbox is checked whereas
     a "( )" indicates it is unchecked.  [[[TODO: WDW - this also appears
     to attempt to show the radio button group name as well as all the
     other buttons in the group on the Braille display.  Not quite sure
@@ -668,6 +705,8 @@ def radioButtonPresenter (obj, already_focused):
     - obj: the Accessible radio button
     - already_focused: if False, the obj just received focus
     """
+    
+    debugPresenter ("default.radioButtonPresenter", obj, already_focused)
     
     label = a11y.getLabel (obj)
     role = getSpeechForRoleName (obj)
@@ -681,7 +720,7 @@ def radioButtonPresenter (obj, already_focused):
         if already_focused == False:
             text = groupName + " " + label + " " + role
         text = text + " checked"
-        brltext = "(x) " + label
+        brltext = "(=) " + label
     else:
         if already_focused == False:
             text = groupName + " " + label + " " + role
@@ -711,12 +750,14 @@ def buttonPresenter (obj, already_focused):
     - already_focused: if False, the obj just received focus
     """
 
+    debugPresenter ("default.buttonPresenter", obj, already_focused)
+    
     brl.writeMessage (getBraille (obj))
     brl.refresh ()
     speech.say ("default", getSpeech (obj, True))
     
 
-def defaultPresenter (obj, has_focus):
+def defaultPresenter (obj, already_focused):
     """Default presenter that just speaks and Brailles and object's
     label, role name, and accelerator (if it exists).
 
@@ -725,8 +766,8 @@ def defaultPresenter (obj, has_focus):
     - already_focused: if False, the obj just received focus
     """
 
-    #debug.println ("Using default presenter.")
-
+    debugPresenter ("default.defaultPresenter", obj, already_focused)
+    
     speech.say ("default", getSpeech (obj))
     brl.writeMessage (getBraille (obj))
     
@@ -745,6 +786,8 @@ def dialogPresenter (obj, already_focused):
     - obj: the Accessible dialog
     - already_focused: if False, the obj just received focus
     """
+    
+    debugPresenter ("default.dialogPresenter", obj, already_focused)
     
     text = a11y.getLabel (obj)
     text = text + " " + getSpeechForRoleName (obj)
@@ -769,7 +812,7 @@ def dialogPresenter (obj, already_focused):
 # Dictionary that maps role names to the above presenter functions
 #
 presenters = {}
-#presenters["menu"] = menuPresenter
+presenters["menu"] = menuPresenter
 #presenters["menu item"] = menuPresenter
 presenters["page tab"] = pageTabPresenter
 presenters["text"] = textPresenter
@@ -812,7 +855,7 @@ def onWindowActivated (event):
         try:
             p (event.source, False)
         except:
-            debug.printException ()
+            debug.printException (debug.LEVEL_SEVERE)
     else:
         defaultPresenter (event.source, False)
 
@@ -839,7 +882,7 @@ def onFocus (event):
         try:
             p (event.source, False)
         except:
-            debug.printException ()
+            debug.printException (debug.LEVEL_SEVERE)
     else:
         defaultPresenter (event.source, False)
 
@@ -884,7 +927,7 @@ def onStateChanged (event):
                 try:
                     p (event.source, True)
                 except:
-                    debug.printException ()
+                    debug.printException (debug.LEVEL_SEVERE)
                     defaultPresenter (event.source, True)
             else:
                 defaultPresenter (event.source, True)
@@ -913,7 +956,7 @@ def onSelectionChanged (event):
         try:
             p (event.source, True)
         except:
-            debug.printException ()
+            debug.printException (debug.LEVEL_SEVERE)
     
 
 def onCaretMoved (event):
@@ -1134,7 +1177,7 @@ def onBrlKey (region, position):
         h = brl_key_handlers[a11y.focusedObject.role]
         h (a11y.focusedObject, region, position)
     except:
-        debug.printException ()
+        debug.printException (debug.LEVEL_SEVERE)
         # We don't have a specific handler - see if the focused object
         # has an AccessibleAction interface, and if so, do the first
         # action it lists
@@ -1268,11 +1311,11 @@ def debugListApps ():
     """Prints a list of all known applications to stdout if the
     settings.debug flag is enabled."""
 
-    debug.listApps ()
+    debug.listApps (debug.LEVEL_OFF)
     return True 
 
 def debugListActiveApp ():
     """Prints details about the currently active application."""
 
-    debug.listActiveApp ()
+    debug.listActiveApp (debug.LEVEL_OFF)
     return True 

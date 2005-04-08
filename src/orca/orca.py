@@ -71,7 +71,7 @@ def activateApp (app):
     speech.stop ("default")
 
     s = script.getScript (app)
-    debug.println ("ACTIVATED SCRIPT: " + s.name)
+    debug.println (debug.LEVEL_FINE, "ACTIVATED SCRIPT: " + s.name)
     kbd.keybindings = s.keybindings
     brl.onBrlKey = s.onBrlKey    
     
@@ -164,8 +164,8 @@ def processEvent (e):
     event.any_data = e.any_data
     event.source = source
 
-    #debug.println ("Event: type=(" + event.type + ")")
-    #debug.listDetails("       ", source)
+    debug.println (debug.LEVEL_FINEST, "EVENT: type=(" + event.type + ")")
+    debug.listDetails (debug.LEVEL_FINEST, "       ", source)
                        
     # See if we have a script for this event.  Note that the event type in the
     # listeners dictionary may not be as specific as the event type we
@@ -200,9 +200,10 @@ def processEvent (e):
         # an exception.
         #
         try:
+            debug.println (debug.LEVEL_FINER, func)
             func (event)
         except:
-            debug.printException ()
+            debug.printException (debug.LEVEL_SEVERE)
 
 
 def findActiveWindow ():
@@ -246,7 +247,12 @@ def init ():
     kbd.init ()
     if getattr (settings, "useSpeech", True):
         speech.init ()
-    
+        debug.println (debug.LEVEL_CONFIGURATION,
+                       "Speech module has been initialized.")
+    else:
+        debug.println (debug.LEVEL_CONFIGURATION,
+                       "Speech module has NOT been initialized.")
+        
     # [[[TODO: WDW - do we need to register onBrlKey as a listener,
     # or....do we need to modify the brl module so that onBrlKey will
     # be called from the brl module?]]]
@@ -254,12 +260,19 @@ def init ():
     if getattr (settings, "useBraille", False):
         initialized = brl.init ()
         if initialized:
-            debug.println ("Braille module has been initialized.")
+            debug.println (debug.LEVEL_CONFIGURATION,
+                           "Braille module has been initialized.")
         else:
-            debug.println ("Braille module has NOT been initialized.")
+            debug.println (debug.LEVEL_CONFIGURATION,
+                           "Braille module has NOT been initialized.")
 
     if getattr (settings, "useMagnifier", False):
         mag.init ()
+        debug.println (debug.LEVEL_CONFIGURATION,
+                       "Magnification module has been initialized.")
+    else:
+        debug.println (debug.LEVEL_CONFIGURATION,
+                       "Magnification module has NOT been initialized.")
 
     # Build list of accessible apps.
     #
@@ -294,14 +307,13 @@ def start ():
     if not initialized:
         return False
 
-    speech.say ("default", _("Welcome to Orca."))
-
     try:
+        speech.say ("default", _("Welcome to Orca."))
         brl.clear ()
         brl.addRegion (_("Welcome to Orca."), 16, 0)
         brl.refresh ()
     except:
-        debug.printException ()
+        debug.printException (debug.LEVEL_SEVERE)
     
     # Find the cusrrently active toplevel window and activate its script.
     #
@@ -323,7 +335,7 @@ def start ():
             s = script.getScript (win.app)
             s.listeners["window:activate"] (e)
         except:
-            debug.printException ()
+            debug.printException (debug.LEVEL_SEVERE)
 
     core.bonobo.main ()
 

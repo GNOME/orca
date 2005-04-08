@@ -185,28 +185,27 @@ class Accessible:
         the indication of an at-spi bug).
         """
         
-        # Traverse up the tree until we find the app.
         # [[[TODO: WDW - this code seems like it might break if this
         # object is an application to begin with.]]]
         #
-        #debug.println("Finding app for source=(" + self.name
-        #              + ") role=(" + getRoleName (self) + ")")
+        debug.println(debug.LEVEL_FINEST,
+                      "Finding app for source=(" + self.name + ")")
         obj = self
         while (obj.parent != None) and (obj != obj.parent):
             obj = obj.parent
-            #debug.println("--> parent=(" + obj.name
-            #              + ") role=(" + getRoleName (obj) + ")")
-
+            debug.println(debug.LEVEL_FINEST,
+                          "--> parent=(" + obj.name + ")")
         if (obj.parent != None):
-            #debug.println("--> obj=(" + obj.name
-            #              + ") role=(" + getRoleName (obj)
-            #              + ") parent=(" + obj.parent.name + ")")
+            debug.println(debug.LEVEL_FINEST,
+                          "--> obj=(" + obj.name
+                          + ") parent=(" + obj.parent.name + ")")
             if (obj == obj.parent):
-                debug.println("    ERROR: obj == obj.parent!")
-        #else:
-        #    debug.println("--> obj=(" + obj.name
-        #                  + ") role=(" + getRoleName (obj)
-        #                  + ") parent=(None)")
+                debug.println(debug.LEVEL_SEVERE,
+                              "    ERROR: obj == obj.parent!")
+        else:
+            debug.println(debug.LEVEL_FINEST,
+                          "--> obj=(" + obj.name
+                          + ") parent=(None)")
             
         if (obj == obj.parent) or (obj.role != "application"):
             self.app = None
@@ -295,7 +294,7 @@ class Accessible:
             newChild.app = self.app
             return newChild
         except:
-            debug.printException ()
+            debug.printException (debug.LEVEL_SEVERE)
             return None
         
 
@@ -650,6 +649,23 @@ def findByName (root, name):
     return objlist
 
 
+def getFrame (obj):
+    """Returns the frame containing this object, or None if this object
+    is not inside a frame.
+
+    Arguments:
+    - obj: the Accessible object
+    """
+
+    while (obj != None) and (obj != obj.parent) and (obj.role != "frame"):
+        obj = obj.parent
+
+    if obj and (obj.role == "frame"):
+        return obj
+    else:
+        return None
+
+    
 def getLabel (obj):
     """Returns an object's label as a string.  The label is determined
     using the following logic:

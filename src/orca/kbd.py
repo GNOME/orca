@@ -267,7 +267,7 @@ def onKeyEvent (event):
             
     if keystring:
         lastKey = keystring
-        debug.println ("Key Event: " + keystring)
+        debug.println (debug.LEVEL_INFO, "Key Event: " + keystring)
         keyEcho (keystring)
 
         # Execute a key binding if we have one
@@ -277,7 +277,7 @@ def onKeyEvent (event):
             try:
                 return func ()
             except:
-                debug.printException ()
+                debug.printException (debug.LEVEL_SEVERE)
                 
         return False
 

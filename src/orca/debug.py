@@ -27,9 +27,67 @@ from rolenames import getRoleName # localized role names
 import sys
 import traceback
 
-def debugEnabled ():
+# Used to turn off all debugging.
+#
+LEVEL_OFF = 10000
+
+# Used to describe events of considerable importance and which will prevent
+# normal program execution.
+#
+LEVEL_SEVERE = 1000
+
+# Used to decribe events of interest to end users or system managers or which
+# indicate potential problems.
+#
+LEVEL_WARNING = 900
+
+# Used to indicate reasonably significant messages that make sense to end users
+# and system managers.
+#
+LEVEL_INFO = 800
+
+# Used to indicate static configuration information to assist in debugging
+# problems that may be associated with a particular configuration.
+#
+LEVEL_CONFIGURATION = 700
+
+# Used for lowest volume of detailed tracing information.
+#
+LEVEL_FINE = 600
+
+# Used for medium volume of detailed tracing information.
+#
+LEVEL_FINER = 500
+
+# Used for maximum volume of detailed tracing information.
+#
+LEVEL_FINEST = 400
+
+# Used for all detailed tracing information, even finer than LEVEL_FINEST
+#
+LEVEL_ALL = 0
+
+
+def debugLevel ():
+    """Returns the debug level settings.py, with a default value of
+    LEVEL_SEVERE.  The various levels can be LEVEL_OFF, LEVEL_SEVERE,
+    LEVEL_WARNING, LEVEL_INFO, LEVEL_CONFIG, LEVEL_FINE, LEVEL_FINER,
+    LEVEL_FINEST, LEVEL_ALL.
+    """
+
+    # Backwards compatibility - if "debug" is set, set the debug level
+    # to LEVEL_FINE.
+    #
+    if debug ():
+        return LEVEL_FINER
+    
+    return getattr (settings, "debugLevel", LEVEL_SEVERE)
+
+    
+def debug ():
     """Returns True if the debug flag is set to True in settings.py; False
-    otherwise.
+    otherwise.  This method has been deprecated.  The proper way to do
+    debugging is now via debug levels (see debugLevel).
     """
 
     return getattr (settings, "debug", False)
@@ -115,93 +173,116 @@ def getStates (obj):
     return stateString;
 
 
-def printException ():
+def printException (level):
     """Prints out information regarding the current exception.
 
     Arguments:
-    - indent: a string containing spaces for indentation
+    - level: the accepted debug level
     """
 
-    println ()
-    if debugEnabled ():
+    if level >= debugLevel ():
+        println (level)
         traceback.print_exc ()
-    println ()
+        println (level)
 
 
-def printStack ():
+def printStack (level):
     """Prints out the current stack.
+
+    Arguments:
+    - level: the accepted debug level
     """
 
-    println ()
-    if debugEnabled ():
+    if level >= debugLevel ():
+        println (level)
         traceback.print_stack ()
-    println ()
+        println (level)
 
 
-def println (text = ""):
+def println (level, text = ""):
     """Prints the text to stdout if debug is enabled.
     
     Arguments:
-    - text: the text to print
+    - level: the accepted debug level
+    - text: the text to print (default is a blank line)
     """
 
-    if debugEnabled ():
+    if level >= debugLevel ():
         print text
 
 
-def listDetails (indent, accessible):
+def listDetails (level, indent, accessible):
     """Lists the details of the given accessible with the given
     indentation.
 
     Arguments:
+    - level: the accepted debug level
     - indent: a string containing spaces for indentation
     - accessible: the accessible whose details are to be listed
     """
 
-    println ("%sname   = (%s)" % (indent, accessible.name))
-    println ("%srole   = (%s)" % (indent, getRoleName(accessible)))
-    println ("%sstate  = (%s)" % (indent, getStates(accessible)))
+    if level < debugLevel ():
+        return
+    
+    println (level, "%sname   = (%s)" % (indent, accessible.name))
+    println (level, "%srole   = (%s)" % (indent, getRoleName(accessible)))
+    println (level, "%sstate  = (%s)" % (indent, getStates(accessible)))
 
     if accessible.app is None:
-        println ("%sapp    = (None)" % indent)
+        println (level, "%sapp    = (None)" % indent)
     else:
-        println ("%sapp    = (%s)" % (indent, accessible.app.name))
+        println (level, "%sapp    = (%s)" % (indent, accessible.app.name))
         
     
-def listApps ():
-    """Prints a list of all applications to stdout"""
+def listApps (level):
+    """Prints a list of all applications to stdout
 
-    println ("There are %d apps" % len(orca.apps))
+    Arguments:
+    - level: the accepted debug level
+    """
+
+    if level < debugLevel ():
+        return
+    
+    println (level, "There are %d apps" % len(orca.apps))
     for app in orca.apps:
-        println ("  %s (childCount=%d)" % (app.name, app.childCount))
+        println (level, "  %s (childCount=%d)" % (app.name, app.childCount))
         count = 0
         while count < app.childCount:
-            println ("    Child %d:" % count)
+            println (level, "    Child %d:" % count)
             child = app.child (count)
-            listDetails ("      ", child)
+            listDetails (level, "      ", child)
             if child.parent != app:
-                println("      WARNING: child's parent is not app!!!")
+                println(level, "      WARNING: child's parent is not app!!!")
             count += 1
 
 
-def listActiveApp ():
-    """Prints the active application."""
+def listActiveApp (level):
+    """Prints the active application.
 
-    println ("Current active application:")
+    Arguments:
+    - level: the accepted debug level
+    """
+
+    if level < debugLevel ():
+        return    
+    
+    println (level, "Current active application:")
     window = orca.findActiveWindow ()
     if window is None:
-        println ("  None")
+        println (level, "  None")
     else:
         app = window.app
         if app is None:
-            println ("  None")
+            println (level, "  None")
         else:
-            listDetails("  ", app)
+            listDetails(level, "  ", app)
             count = 0
             while count < app.childCount:
-                println ("    Child %d:" % count)
+                println (level, "    Child %d:" % count)
                 child = app.child (count)
-                listDetails ("    ", child)
+                listDetails (level, "    ", child)
                 if child.parent != app:
-                    println("      WARNING: child's parent is not app!!!")
+                    println(level,
+                            "      WARNING: child's parent is not app!!!")
                 count += 1

@@ -274,14 +274,13 @@ def say (voiceName, text):
 
     # Send the text to the GNOME Speech speaker
     #
-    debug.println("speech.say (" + text + ")")
-    #debug.printStack ()
+    debug.println(debug.LEVEL_INFO, "speech.say (" + text + ")")
     try:
         s.stop ()
         lastText = [voiceName, text]
         return s.say (text)
     except:
-        debug.printException ()
+        debug.printException (debug.LEVEL_SEVERE)
 
 
 def sayAgain ():
@@ -356,7 +355,7 @@ def sayAllSpeechEnded ():
     if not onSayAllGetChunk ():
         # Call the client's sayAllStopped function
         #
-        onSayAllStopped ()
+        onSayAllStopped (0)
 
         # Clear the members of the speech callback
         #

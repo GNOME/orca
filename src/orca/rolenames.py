@@ -453,7 +453,7 @@ def getRoleName (obj):
     Returns a string containing the localized name of the object.
     """
 
-    return getSpeechRoleName (obj)
+    return getSpeechForRoleName (obj)
 
 
 def getSpeechForRoleName (obj):
@@ -472,7 +472,7 @@ def getSpeechForRoleName (obj):
     if rolenames.has_key (name):
         return rolenames[name].speech
     else:
-        debug.println ("No rolename for %s" % name)
+        debug.println (debug.LEVEL_WARNING, "No rolename for %s" % name)
         return name
 
 
@@ -492,7 +492,7 @@ def getShortBrailleForRoleName (obj):
     if rolenames.has_key (name):
         return rolenames[name].brailleShort
     else:
-        debug.println ("No rolename for %s" % name)
+        debug.println (debug.LEVEL_WARNING, "No rolename for %s" % name)
         return name
 
 
@@ -512,5 +512,5 @@ def getLongBrailleForRoleName (obj):
     if rolenames.has_key (name):
         return rolenames[name].brailleLong
     else:
-        debug.println ("No rolename for %s" % name)
+        debug.println (debug.LEVEL_WARNING, "No rolename for %s" % name)
         return name

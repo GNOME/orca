@@ -35,9 +35,11 @@ def onNameChanged (e):
             elif win.name == name:
                 found = True
             i = i + 1
-    speech.say ("status", name)
+
+    text = name
     if found == False:
-        speech.say ("status", _("inaccessible"))
+        text += ". " + _("inaccessible")
         
+    speech.say ("status", text)
 
 
