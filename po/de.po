@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-01 00:05+0200\n"
-"PO-Revision-Date: 2005-04-01 00:07+0200\n"
+"POT-Creation-Date: 2005-04-09 13:08+0200\n"
+"PO-Revision-Date: 2005-04-09 13:32+0200\n"
 "Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -101,7 +101,7 @@ msgstr "Semikolon"
 
 #: src/orca/chnames.py:46
 msgid "less"
-msgstr "weniger"
+msgstr "kleiner"
 
 #: src/orca/chnames.py:47
 msgid "greater"
@@ -131,33 +131,49 @@ msgstr "Zurück"
 msgid "bar"
 msgstr "Balken"
 
-#: src/orca/default.py:70
+#: src/orca/default.py:108
 msgid "available"
 msgstr "verfügbar"
 
-#: src/orca/default.py:72
+#: src/orca/default.py:110
 msgid "unavailable"
 msgstr "nicht verfügbar"
 
-#: src/orca/default.py:134
+#: src/orca/default.py:144
 msgid "shortcut"
 msgstr "Verknüpfung"
 
-#: src/orca/default.py:139
+#: src/orca/default.py:146
 msgid "accelerator"
 msgstr "Tastenkürzel"
 
-#: src/orca/default.py:156
+#: src/orca/default.py:203
 msgid " dot dot dot"
 msgstr " Punkt Punkt Punkt"
 
-#: src/orca/default.py:1114
+#: src/orca/default.py:465
+msgid "one item"
+msgstr "ein Element"
+
+#: src/orca/default.py:467
+msgid "items"
+msgstr "Elemente"
+
+#: src/orca/default.py:678 src/orca/default.py:680
+msgid "checked"
+msgstr "ausgewählt"
+
+#: src/orca/default.py:685 src/orca/default.py:687
+msgid "not checked"
+msgstr "nicht ausgewählt"
+
+#: src/orca/default.py:1289
 msgid "Not a document."
 msgstr "Kein Dokument."
 
 #: src/orca/gaim.py:55
 msgid " chat"
-msgstr "Chat"
+msgstr " Chat"
 
 #: src/orca/gaim.py:81
 msgid " instant message"
@@ -171,7 +187,7 @@ msgstr "Eingabe"
 msgid "Message Log"
 msgstr "Nachrichtenmitschnitt"
 
-#: src/orca/metacity.py:40
+#: src/orca/metacity.py:41
 msgid "inaccessible"
 msgstr "unzugänglich"
 
@@ -191,7 +207,7 @@ msgstr "%d. %s"
 
 #: src/orca/orca-setup.in:97 src/orca/orca-setup.in:154
 msgid "Enter choice: "
-msgstr "Wahl eingeben:"
+msgstr "Wahl eingeben: "
 
 #: src/orca/orca-setup.in:136
 msgid "No working GNOME Speech drivers found."
@@ -203,7 +219,7 @@ msgstr "Willkommen bei den Orca-Einstellungen."
 
 #: src/orca/orca-setup.in:150
 msgid "Select default speech synthesizer"
-msgstr "Vorgabe-Sprach-Synthesizer auswählen"
+msgstr "Standardsprach-Synthesizer auswählen"
 
 #: src/orca/orca-setup.in:156
 msgid "Speech will not be used.\n"
@@ -216,7 +232,7 @@ msgstr ""
 
 #: src/orca/orca-setup.in:188
 msgid "Enter voice name: "
-msgstr "Stimmenbezeichnung eingeben:"
+msgstr "Stimmenbezeichnung eingeben: "
 
 #: src/orca/orca-setup.in:193
 msgid "Use key echo?  Enter y or n: "
@@ -224,37 +240,911 @@ msgstr ""
 "Soll die Tastaturglocke benutzt werden? Geben Sie »y« für Ja oder »n« für "
 "Nein ein."
 
-#: src/orca/orca-setup.in:220
+#: src/orca/orca-setup.in:221
 msgid "Braille support appears to work, use it?  Enter y or n. "
 msgstr ""
 "Die Braille-Unterstützung scheint zu funktionieren - soll diese genutzt "
 "werden? Geben Sie »y« für Ja oder »n« für Nein ein."
 
-#: src/orca/orca.py:92
+#: src/orca/orca.py:94
 msgid "User logged out - shutting down."
 msgstr "Benutzer hat sich abgemeldet - Programm wird beendet."
 
-#: src/orca/orca.py:292 src/orca/orca.py:296
+#: src/orca/orca.py:311 src/orca/orca.py:313
 msgid "Welcome to Orca."
 msgstr "Willkommen bei Orca."
 
-#: src/orca/orca.py:340
+#: src/orca/orca.py:357
 msgid "goodbye."
 msgstr "Auf Wiedersehen."
 
-#: src/orca/rolenames.py:30
-msgid "button"
-msgstr "Schalter."
+#: src/orca/orca.py:359
+msgid "Goodbye."
+msgstr "Auf Wiedersehen."
 
-#: src/orca/rolenames.py:31
-msgid "list view"
-msgstr "Listenansicht"
+#: src/orca/rolenames.py:59
+msgid "UNK"
+msgstr "UNB"
 
-#: src/orca/rolenames.py:32 src/orca/rolenames.py:33
-msgid "tree view"
-msgstr "Baumansicht"
+#: src/orca/rolenames.py:60
+msgid "UNKNOWN"
+msgstr "UNBEKANNT"
 
-#: src/orca/rolenames.py:35
-msgid "tab"
-msgstr "Zeilenvorsprung."
+#: src/orca/rolenames.py:61
+msgid "unknown"
+msgstr "unbekannt"
+
+#: src/orca/rolenames.py:64
+msgid "???"
+msgstr "???"
+
+#: src/orca/rolenames.py:65
+msgid "INVALID"
+msgstr "UNGÜLTIG"
+
+#: src/orca/rolenames.py:66
+msgid "invalid"
+msgstr "ungültig"
+
+#: src/orca/rolenames.py:69
+msgid "ALR"
+msgstr "WRN"
+
+#: src/orca/rolenames.py:70
+msgid "ALERT"
+msgstr "WARNUNG"
+
+#: src/orca/rolenames.py:71
+msgid "alert"
+msgstr "Warnung"
+
+#: src/orca/rolenames.py:74
+msgid "CNV"
+msgstr "CNV"
+
+#: src/orca/rolenames.py:75
+msgid "CANVAS"
+msgstr "CANVAS"
+
+#: src/orca/rolenames.py:76
+msgid "canvas"
+msgstr "Canvas"
+
+#: src/orca/rolenames.py:79
+msgid "CHK"
+msgstr "AKF"
+
+#: src/orca/rolenames.py:80
+msgid "CHECK_BOX"
+msgstr "ANKREUZFELD"
+
+#: src/orca/rolenames.py:81
+msgid "check box"
+msgstr "Ankreuzfeld"
+
+#: src/orca/rolenames.py:84 src/orca/rolenames.py:199
+#: src/orca/rolenames.py:249
+msgid "MIT"
+msgstr "MEI"
+
+#: src/orca/rolenames.py:85 src/orca/rolenames.py:200
+#: src/orca/rolenames.py:250
+msgid "MENU ITEM"
+msgstr "MENÜEINTRAG"
+
+#: src/orca/rolenames.py:86
+msgid "check Menu item"
+msgstr "Menüeintrag wählen"
+
+#: src/orca/rolenames.py:89
+msgid "CCH"
+msgstr "FAW"
+
+#: src/orca/rolenames.py:90
+msgid "COLOR CHOOSER"
+msgstr "FARBWÄHLER"
+
+#: src/orca/rolenames.py:91
+msgid "color chooser"
+msgstr "Farbwähler"
+
+#: src/orca/rolenames.py:94
+msgid "CHD"
+msgstr "SPK"
+
+#: src/orca/rolenames.py:95
+msgid "COLUMN HEADER"
+msgstr "SPALTENKOPF"
+
+#: src/orca/rolenames.py:96
+msgid "column header"
+msgstr "Spaltenkopf"
+
+#: src/orca/rolenames.py:99
+msgid "CBO"
+msgstr ""
+
+#: src/orca/rolenames.py:100
+msgid "COMBO BOX"
+msgstr ""
+
+#: src/orca/rolenames.py:101
+msgid "combo box"
+msgstr ""
+
+#: src/orca/rolenames.py:104
+msgid "DIC"
+msgstr "DSY"
+
+#: src/orca/rolenames.py:105
+msgid "DESKTOP ICON"
+msgstr "DESKTOP-SYMBOL"
+
+#: src/orca/rolenames.py:106
+msgid "desktop icon"
+msgstr "Desktop-Symbol"
+
+#: src/orca/rolenames.py:109
+msgid "DFR"
+msgstr "DBE"
+
+#: src/orca/rolenames.py:110
+msgid "DESKTOP FRAME"
+msgstr "DESKTOP-BEREICH"
+
+#: src/orca/rolenames.py:111
+msgid "desktop frame"
+msgstr "Desktop-Bereich"
+
+#: src/orca/rolenames.py:114
+msgid "DLG"
+msgstr "DLG"
+
+#: src/orca/rolenames.py:115
+msgid "DIALOG"
+msgstr "DIALOG"
+
+#: src/orca/rolenames.py:116
+msgid "dialog"
+msgstr "Dialog"
+
+#: src/orca/rolenames.py:119
+msgid "DIP"
+msgstr "ORB"
+
+#: src/orca/rolenames.py:120
+msgid "DIRECTORY PANE"
+msgstr "ORDNERBEREICH"
+
+#: src/orca/rolenames.py:121
+msgid "directory pane"
+msgstr "Ordnerbereich"
+
+#: src/orca/rolenames.py:124
+msgid "FCH"
+msgstr "DAW"
+
+#: src/orca/rolenames.py:125
+msgid "FILE CHOOSER"
+msgstr "DATEIAUSWÄHLER"
+
+#: src/orca/rolenames.py:126
+msgid "file chooser"
+msgstr "Dateiauswähler"
+
+#: src/orca/rolenames.py:129
+msgid "FLR"
+msgstr "PLH"
+
+#: src/orca/rolenames.py:130
+msgid "FILLER"
+msgstr "PLATZHALTER"
+
+#: src/orca/rolenames.py:131
+msgid "filler"
+msgstr "Platzhalter"
+
+#: src/orca/rolenames.py:134
+msgid "FRM"
+msgstr "RHM"
+
+#: src/orca/rolenames.py:135
+msgid "FRAME"
+msgstr "RAHMEN"
+
+#: src/orca/rolenames.py:136
+msgid "frame"
+msgstr "Rahmen"
+
+#: src/orca/rolenames.py:139
+msgid "GPN"
+msgstr "DAU"
+
+#: src/orca/rolenames.py:140
+msgid "GLASS PANE"
+msgstr "DURCHSICHTIGER AUSSCHNITT"
+
+#: src/orca/rolenames.py:141
+msgid "glass pane"
+msgstr "durchsichtiger Ausschnitt"
+
+#: src/orca/rolenames.py:144
+msgid "HTM"
+msgstr "HTM"
+
+#: src/orca/rolenames.py:145
+msgid "HTML CONTAINER"
+msgstr "HTML-CONTAINER"
+
+#: src/orca/rolenames.py:146
+msgid "h T M L container"
+msgstr "h T M L Container"
+
+#: src/orca/rolenames.py:149 src/orca/rolenames.py:174
+msgid "LNK"
+msgstr "LNK"
+
+#: src/orca/rolenames.py:150 src/orca/rolenames.py:175
+msgid "LINK"
+msgstr "LINK"
+
+#: src/orca/rolenames.py:151 src/orca/rolenames.py:176
+msgid "link"
+msgstr "Link"
+
+#: src/orca/rolenames.py:154
+msgid "ICO"
+msgstr "SYM"
+
+#: src/orca/rolenames.py:155
+msgid "ICON"
+msgstr "SYMBOL"
+
+#: src/orca/rolenames.py:156
+msgid "icon"
+msgstr "Symbol"
+
+#: src/orca/rolenames.py:159
+msgid "IFR"
+msgstr "IFR"
+
+#: src/orca/rolenames.py:160
+msgid "INTERNAL FRAME"
+msgstr "INTERNER FRAME"
+
+#: src/orca/rolenames.py:161
+msgid "internal frame"
+msgstr "Interner Frame"
+
+#: src/orca/rolenames.py:164
+msgid "LBL"
+msgstr "BEZ"
+
+#: src/orca/rolenames.py:165
+msgid "LABEL"
+msgstr "BEZEICHNUNG"
+
+#: src/orca/rolenames.py:166
+msgid "label"
+msgstr "Bezeichnung"
+
+#: src/orca/rolenames.py:169
+msgid "LPN"
+msgstr "GAU"
+
+#: src/orca/rolenames.py:170
+msgid "LAYERED PANE"
+msgstr "GESCHICHTETER BEREICH"
+
+#: src/orca/rolenames.py:171
+msgid "layered pane"
+msgstr "geschichteter Bereich"
+
+#: src/orca/rolenames.py:179
+msgid "LST"
+msgstr "LST"
+
+#: src/orca/rolenames.py:180
+msgid "LIST"
+msgstr "LISTE"
+
+#: src/orca/rolenames.py:181
+msgid "list"
+msgstr "Liste"
+
+#: src/orca/rolenames.py:184
+msgid "LIT"
+msgstr "LIE"
+
+#: src/orca/rolenames.py:185
+msgid "LIST ITEM"
+msgstr "LISTENEINTRAG"
+
+#: src/orca/rolenames.py:186
+msgid "list item"
+msgstr "Listeneintrag"
+
+#: src/orca/rolenames.py:189
+msgid "MNU"
+msgstr "MNÜ"
+
+#: src/orca/rolenames.py:190
+msgid "MENU"
+msgstr "MENÜ"
+
+#: src/orca/rolenames.py:191
+msgid "menu"
+msgstr "Menü"
+
+#: src/orca/rolenames.py:194
+msgid "MBR"
+msgstr "MLS"
+
+#: src/orca/rolenames.py:195
+msgid "MENU BAR"
+msgstr "MENÜÖEISTE"
+
+#: src/orca/rolenames.py:196
+msgid "menu bar"
+msgstr "Menüleiste"
+
+#: src/orca/rolenames.py:201
+msgid "menu item"
+msgstr "Menüeintrag"
+
+#: src/orca/rolenames.py:204
+msgid "OPN"
+msgstr "OPT"
+
+#: src/orca/rolenames.py:205
+msgid "OPTION PANE"
+msgstr "OPTIONENBEREICH"
+
+#: src/orca/rolenames.py:206
+msgid "option pane"
+msgstr "Optionenbereich"
+
+#: src/orca/rolenames.py:209
+msgid "PGT"
+msgstr ""
+
+#: src/orca/rolenames.py:210
+msgid "PAGE TAB"
+msgstr ""
+
+#: src/orca/rolenames.py:211
+msgid "page tab"
+msgstr ""
+
+#: src/orca/rolenames.py:214
+msgid "PTL"
+msgstr ""
+
+#: src/orca/rolenames.py:215
+msgid "PAGE TAB LIST"
+msgstr ""
+
+#: src/orca/rolenames.py:216
+msgid "page tab list"
+msgstr ""
+
+#: src/orca/rolenames.py:219
+msgid "PNL"
+msgstr "PNL"
+
+#: src/orca/rolenames.py:220
+msgid "PANEL"
+msgstr "PANEL"
+
+#: src/orca/rolenames.py:221
+msgid "panel"
+msgstr "Panel"
+
+#: src/orca/rolenames.py:224
+msgid "PWD"
+msgstr "PWT"
+
+#: src/orca/rolenames.py:225
+msgid "PASSWORD TEXT"
+msgstr "PASSWORTTEXT"
+
+#: src/orca/rolenames.py:226
+msgid "password text"
+msgstr "Passworttext"
+
+#: src/orca/rolenames.py:229
+msgid "PMN"
+msgstr "AMN"
+
+#: src/orca/rolenames.py:230
+msgid "POPUP MENU"
+msgstr "AUFKLAPPMENÜ"
+
+#: src/orca/rolenames.py:231
+msgid "popup menu"
+msgstr "Aufklappmenü"
+
+#: src/orca/rolenames.py:234
+msgid "PRG"
+msgstr "FRT"
+
+#: src/orca/rolenames.py:235
+msgid "PROGRESS BAR"
+msgstr "FORTSCHRITTSANZEIGE"
+
+#: src/orca/rolenames.py:236
+msgid "progress bar"
+msgstr "Fortschrittsanzeige"
+
+#: src/orca/rolenames.py:239
+msgid "PBT"
+msgstr "DKK"
+
+#: src/orca/rolenames.py:240
+msgid "PUSH BUTTON"
+msgstr "DRÜCKKNOPF"
+
+#: src/orca/rolenames.py:241
+msgid "push button"
+msgstr "Drückknopf"
+
+#: src/orca/rolenames.py:244
+msgid "RAD"
+msgstr "MNO"
+
+#: src/orca/rolenames.py:245
+msgid "RADIO BUTTON"
+msgstr "MONOWAHL-SCHALTER"
+
+#: src/orca/rolenames.py:246
+msgid "radio button"
+msgstr "Monowahl-Schalter"
+
+#: src/orca/rolenames.py:251
+msgid "radio Menu item"
+msgstr "Monowahl-Menüeintrag"
+
+#: src/orca/rolenames.py:254
+msgid "RPN"
+msgstr ""
+
+#: src/orca/rolenames.py:255
+msgid "ROOT PANE"
+msgstr ""
+
+#: src/orca/rolenames.py:256
+msgid "root pane"
+msgstr ""
+
+#: src/orca/rolenames.py:259
+msgid "RHD"
+msgstr "RKP"
+
+#: src/orca/rolenames.py:260
+msgid "ROW HEADER"
+msgstr "REIHENKOPF"
+
+#: src/orca/rolenames.py:261
+msgid "row header"
+msgstr "Reihenkopf"
+
+#: src/orca/rolenames.py:264
+msgid "SCR"
+msgstr ""
+
+#: src/orca/rolenames.py:265
+msgid "SCROLL BAR"
+msgstr ""
+
+#: src/orca/rolenames.py:266
+msgid "scroll bar"
+msgstr "Bildlaufleiste"
+
+#: src/orca/rolenames.py:269 src/orca/rolenames.py:409
+msgid "SPN"
+msgstr ""
+
+#: src/orca/rolenames.py:270
+msgid "SCROLL PANE"
+msgstr ""
+
+#: src/orca/rolenames.py:271
+msgid "scroll pane"
+msgstr ""
+
+#: src/orca/rolenames.py:274
+msgid "SEP"
+msgstr "TRZ"
+
+#: src/orca/rolenames.py:275
+msgid "SEPARATOR"
+msgstr "TRENNZEICHEN"
+
+#: src/orca/rolenames.py:276
+msgid "separator"
+msgstr "Trennzeichen"
+
+#: src/orca/rolenames.py:279
+msgid "SLD"
+msgstr "SRG"
+
+#: src/orca/rolenames.py:280
+msgid "SLIDER"
+msgstr "SCHIEBEREGLER"
+
+#: src/orca/rolenames.py:281
+msgid "slider"
+msgstr "Schieberegler"
+
+#: src/orca/rolenames.py:284
+msgid "SPP"
+msgstr "GBE"
+
+#: src/orca/rolenames.py:285
+msgid "SPLIT PANE"
+msgstr "GETEILTER BEREICH"
+
+#: src/orca/rolenames.py:286
+msgid "split pane"
+msgstr "geteilter Bereich"
+
+#: src/orca/rolenames.py:289
+msgid "STA"
+msgstr "STA"
+
+#: src/orca/rolenames.py:290
+msgid "STATUS BAR"
+msgstr "STATUSZEILE"
+
+#: src/orca/rolenames.py:291
+msgid "status bar"
+msgstr "Statuszeile"
+
+#: src/orca/rolenames.py:294
+msgid "TAB"
+msgstr "TAB"
+
+#: src/orca/rolenames.py:295
+msgid "TABLE"
+msgstr "TABELLE"
+
+#: src/orca/rolenames.py:296
+msgid "table"
+msgstr "Tabelle"
+
+#: src/orca/rolenames.py:299
+msgid "CEL"
+msgstr "ZEL"
+
+#: src/orca/rolenames.py:300
+msgid "TABLE CELL"
+msgstr "TABELLENZELLE"
+
+#: src/orca/rolenames.py:301
+msgid "table cell"
+msgstr "Tabellenzelle"
+
+#: src/orca/rolenames.py:304 src/orca/rolenames.py:429
+msgid "TCH"
+msgstr "TSK"
+
+#: src/orca/rolenames.py:305
+msgid "TABLE COLUMN HEADER"
+msgstr "TABELLENSPALTENKOPF"
+
+#: src/orca/rolenames.py:306
+msgid "table column header"
+msgstr "Tabellenspaltenkopf"
+
+#: src/orca/rolenames.py:309
+msgid "TRH"
+msgstr "TRK"
+
+#: src/orca/rolenames.py:310
+msgid "TABLE ROW HEADER"
+msgstr "TABELLENREIHENKOPF"
+
+#: src/orca/rolenames.py:311
+msgid "table row header"
+msgstr "Tabellenreihenkopf"
+
+#: src/orca/rolenames.py:314 src/orca/rolenames.py:319
+msgid "TXT"
+msgstr "TXT"
+
+#: src/orca/rolenames.py:315
+msgid "MULTI LINE TEXT"
+msgstr "MEHRZEILIGER TEXT"
+
+#: src/orca/rolenames.py:316
+msgid "multi Line Text"
+msgstr "mehrzeiliger Text"
+
+#: src/orca/rolenames.py:320
+msgid "SINGLE LINE TEXT"
+msgstr "EINZEILIGER TEXT"
+
+#: src/orca/rolenames.py:321
+msgid "single Line Text"
+msgstr "einzeiliger Text"
+
+#: src/orca/rolenames.py:324
+msgid "TOG"
+msgstr ""
+
+#: src/orca/rolenames.py:325
+msgid "TOGGLE BUTTON"
+msgstr ""
+
+#: src/orca/rolenames.py:326
+msgid "toggle button"
+msgstr "Umschalter"
+
+#: src/orca/rolenames.py:329
+msgid "TOL"
+msgstr "WRZ"
+
+#: src/orca/rolenames.py:330
+msgid "TOOL BAR"
+msgstr "WERKZEUGLEISTE"
+
+#: src/orca/rolenames.py:331
+msgid "tool bar"
+msgstr "Werkzeugleiste"
+
+#: src/orca/rolenames.py:334
+msgid "TIP"
+msgstr "TIP"
+
+#: src/orca/rolenames.py:335
+msgid "TOOL TIP"
+msgstr "KURZTIPP"
+
+#: src/orca/rolenames.py:336
+msgid "tool tip"
+msgstr "Kurztipp"
+
+#: src/orca/rolenames.py:339
+msgid "TRE"
+msgstr "BUM"
+
+#: src/orca/rolenames.py:340
+msgid "TREE"
+msgstr "BAUM"
+
+#: src/orca/rolenames.py:341
+msgid "tree"
+msgstr "Baum"
+
+#: src/orca/rolenames.py:344
+msgid "TRI"
+msgstr "BME"
+
+#: src/orca/rolenames.py:345
+msgid "TREE ITEM"
+msgstr "BAUMELEMENT"
+
+#: src/orca/rolenames.py:346
+msgid "tree item"
+msgstr "Baumelement"
+
+#: src/orca/rolenames.py:349
+msgid "TRT"
+msgstr "TBM"
+
+#: src/orca/rolenames.py:350
+msgid "TREE TABLE"
+msgstr "TABELLENBAUM"
+
+#: src/orca/rolenames.py:351
+msgid "tree table"
+msgstr "Tabellenbaum"
+
+#: src/orca/rolenames.py:354
+msgid "VWP"
+msgstr "DAR"
+
+#: src/orca/rolenames.py:355
+msgid "VIEWPORT"
+msgstr "DARSTELLUNGSBEREICH"
+
+#: src/orca/rolenames.py:356
+msgid "viewport"
+msgstr "Darstellungsbereich"
+
+#: src/orca/rolenames.py:359
+msgid "WND"
+msgstr "FEN"
+
+#: src/orca/rolenames.py:360
+msgid "WINDOW"
+msgstr "FENSTER"
+
+#: src/orca/rolenames.py:361
+msgid "window"
+msgstr "Fenster"
+
+#: src/orca/rolenames.py:364
+msgid "ACC"
+msgstr ""
+
+#: src/orca/rolenames.py:365
+msgid "ACCELERATOR LABEL"
+msgstr ""
+
+#: src/orca/rolenames.py:366
+msgid "accelerator label"
+msgstr "Tastenkürzelbezeichnung"
+
+#: src/orca/rolenames.py:369
+msgid "ANI"
+msgstr "ANI"
+
+#: src/orca/rolenames.py:370
+msgid "ANIMATION"
+msgstr "ANIMATION"
+
+#: src/orca/rolenames.py:371
+msgid "animation"
+msgstr "Animation"
+
+#: src/orca/rolenames.py:374
+msgid "ARR"
+msgstr "PFL"
+
+#: src/orca/rolenames.py:375
+msgid "ARROW"
+msgstr "PFEIL"
+
+#: src/orca/rolenames.py:376
+msgid "arrow"
+msgstr "Pfeil"
+
+#: src/orca/rolenames.py:379
+msgid "CAL"
+msgstr "KAL"
+
+#: src/orca/rolenames.py:380
+msgid "CALENDAR"
+msgstr "KALENDER"
+
+#: src/orca/rolenames.py:381
+msgid "calendar"
+msgstr "Kalender"
+
+#: src/orca/rolenames.py:384
+msgid "DAT"
+msgstr "DAT"
+
+#: src/orca/rolenames.py:385
+msgid "DATE EDITOR"
+msgstr "DATUMSEDITOR"
+
+#: src/orca/rolenames.py:386
+msgid "date editor"
+msgstr "Datumseditor"
+
+#: src/orca/rolenames.py:389
+msgid "DIL"
+msgstr "EWN"
+
+#: src/orca/rolenames.py:390
+msgid "DIAL"
+msgstr "EINWÄHLEN"
+
+#: src/orca/rolenames.py:391
+msgid "dial"
+msgstr "einwählen"
+
+#: src/orca/rolenames.py:394
+msgid "DRW"
+msgstr "ZBE"
+
+#: src/orca/rolenames.py:395
+msgid "DRAWING AREA"
+msgstr "ZEICHENBEREICH"
+
+#: src/orca/rolenames.py:396
+msgid "drawing area"
+msgstr "Zeichenbereich"
+
+#: src/orca/rolenames.py:399
+msgid "FNT"
+msgstr "SCH"
+
+#: src/orca/rolenames.py:400
+msgid "FONT CHOOSER"
+msgstr "SCHRIFTENWÄHLER"
+
+#: src/orca/rolenames.py:401
+msgid "font chooser"
+msgstr "Schriftenwähler"
+
+#: src/orca/rolenames.py:404
+msgid "IMG"
+msgstr "BLD"
+
+#: src/orca/rolenames.py:405
+msgid "IMAGE"
+msgstr "BILD"
+
+#: src/orca/rolenames.py:406
+msgid "image"
+msgstr "Bild"
+
+#: src/orca/rolenames.py:410
+msgid "SPIN BUTTON"
+msgstr "DREHKNOPF"
+
+#: src/orca/rolenames.py:411
+msgid "spin button"
+msgstr "Drehknopf"
+
+#: src/orca/rolenames.py:414
+msgid "TRM"
+msgstr "TRM"
+
+#: src/orca/rolenames.py:415
+msgid "TERMINAL"
+msgstr "TERMINAL"
+
+#: src/orca/rolenames.py:416
+msgid "terminal"
+msgstr "Terminal"
+
+#: src/orca/rolenames.py:419
+msgid "EXT"
+msgstr "ERW"
+
+#: src/orca/rolenames.py:420
+msgid "EXTENDED"
+msgstr "ERWEITERT"
+
+#: src/orca/rolenames.py:421
+msgid "extended"
+msgstr "erweitert"
+
+#: src/orca/rolenames.py:424
+msgid "TLI"
+msgstr "TBZ"
+
+#: src/orca/rolenames.py:425
+msgid "TABLE LINE"
+msgstr "TABELLENZEILE"
+
+#: src/orca/rolenames.py:426
+msgid "table line"
+msgstr "Tabellenzeile"
+
+#: src/orca/rolenames.py:430
+msgid "TABLE COLUMNS HEADER"
+msgstr "TABELLENSPALTENKOPF"
+
+#: src/orca/rolenames.py:431
+msgid "table columns header"
+msgstr "Tabellenspaltenkopf"
+
+#: src/orca/rolenames.py:434
+msgid "TIT"
+msgstr "TIT"
+
+#: src/orca/rolenames.py:435
+msgid "TITLE BAR"
+msgstr "TITELLEISTE"
+
+#: src/orca/rolenames.py:436
+msgid "title bar"
+msgstr "Titelleiste"
+
+#: src/orca/rolenames.py:439
+msgid "EDB"
+msgstr ""
+
+#: src/orca/rolenames.py:440
+msgid "EDIT BAR"
+msgstr ""
+
+#: src/orca/rolenames.py:441
+msgid "edit bar"
+msgstr ""
 
