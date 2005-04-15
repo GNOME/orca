@@ -158,15 +158,11 @@ def init ():
     for server in servers:
         try:
             driver = bonobo.activation.activate_from_id (server.iid, 0, False)
+            driver = driver._narrow (GNOME.Speech.SynthesisDriver)
+            isInitialized = driver.isInitialized ()
         except:
             continue
             
-        # Ensure what we have is a SynthesisDriver object - This
-        # is needed for Java CORBA ORB interoperability
-        #
-        driver = driver._narrow (GNOME.Speech.SynthesisDriver)
-        isInitialized = driver.isInitialized ()
-
         # Only initialize the driver if someone else hasn't
         # initialized it already.  [[[TODO: WDW - unless we're doing
         # the configuration, we probably do not want to initialize
@@ -307,9 +303,12 @@ def stop (voiceName):
 
     if speakers.has_key (voiceName):
         s = speakers[voiceName]
-        s.stop ()
+        try:
+            s.stop ()
+        except:
+            debug.printException (debug.LEVEL_SEVERE)
 
-
+            
 ########################################################################
 #                                                                      #
 # SAYALL SUPPORT                                                       #    

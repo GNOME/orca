@@ -45,30 +45,49 @@ class Rolename:
         self.speech = speech
 
 
-# Table derived from gnopernicus/srcore/srpres.c.
-#
-# [[[TODO: WDW - make sure these match, and are complete.  The keys
-# appear to be taken from /gnome/at-spi/cspi/spi_accessible.c:role_names.]]]
+# Table derived from atk/atk/atkobject.c:role_items and
+# gnopernicus/srcore/srpres.c.  The first part matches the ATK role items
+# in order, and the second consists of gnopernicus additions.
 #
 # [[[TODO: WDW - For some reason, the C SPI wants to put dashes in the role
 # name whereas Python gets the name without dashes.
 #
+# [[[TODO: WDW - the AT-SPI also has getLocalizedRoleName, which might a
+# more appropriate thing to use, as it covers the situation where an app
+# has developed a brand new component with a brand new role.]]]
+#
 rolenames = {}
-
-rolenames["unknown"] = Rolename("unknown",
-                                _("UNK"),
-                                _("UNKNOWN"),
-                                _("unknown"))
 
 rolenames["invalid"] = Rolename("invalid",
                                 _("???"),
                                 _("INVALID"),
                                 _("invalid"))
 
+rolenames["accelerator label"] = Rolename("accelerator label",
+                                          _("ACC"),
+                                          _("ACCELERATOR LABEL"),
+                                          _("accelerator label"))
+
 rolenames["alert"] = Rolename("alert",
                               _("ALR"),
                               _("ALERT"),
                               _("alert"))
+
+rolenames["animation"] = Rolename("animation",
+                                  _("ANI"),
+                                  _("ANIMATION"),
+                                  _("animation"))
+
+rolenames["arrow"] = Rolename("arrow",
+                              _("ARR"),
+                              _("ARROW"),
+                              _("arrow"))
+
+rolenames["calendar"] = Rolename("calendar",
+                                 _("CAL"),
+                                 _("CALENDAR"),
+                                 _("calendar"))
+
 
 rolenames["canvas"] = Rolename("canvas",
                                _("CNV"),
@@ -100,6 +119,11 @@ rolenames["combo box"] = Rolename("combo box",
                                   _("COMBO BOX"),
                                   _("combo box"))
 
+rolenames["dateeditor"] = Rolename("dateeditor",
+                                    _("DAT"),
+                                    _("DATE EDITOR"),
+                                    _("date editor"))
+
 rolenames["desktop icon"] = Rolename("desktop icon",
                                      _("DIC"),
                                      _("DESKTOP ICON"),
@@ -109,6 +133,11 @@ rolenames["desktop frame"] = Rolename("desktop frame",
                                       _("DFR"),
                                       _("DESKTOP FRAME"),
                                       _("desktop frame"))
+
+rolenames["dial"] = Rolename("dial",
+                             _("DIL"),
+                             _("DIAL"),
+                             _("dial"))
 
 rolenames["dialog"] = Rolename("dialog",
                                _("DLG"),
@@ -120,6 +149,11 @@ rolenames["directory pane"] = Rolename("directory pane",
                                        _("DIRECTORY PANE"),
                                        _("directory pane"))
 
+rolenames["drawing area"] = Rolename("drawing area",
+                                     _("DRW"),
+                                     _("DRAWING AREA"),
+                                     _("drawing area"))
+
 rolenames["file chooser"] = Rolename("file chooser",
                                      _("FCH"),
                                      _("FILE CHOOSER"),
@@ -129,6 +163,11 @@ rolenames["filler"] = Rolename("filler",
                                _("FLR"),
                                _("FILLER"),
                                _("filler"))
+
+rolenames["fontchooser"] = Rolename("fontchooser",
+                                    _("FNT"),
+                                    _("FONT CHOOSER"),
+                                    _("font chooser"))
 
 rolenames["frame"] = Rolename("frame",
                               _("FRM"),
@@ -140,20 +179,20 @@ rolenames["glass pane"] = Rolename("glass pane",
                                    _("GLASS PANE"),
                                    _("glass pane"))
 
-rolenames["HTML container"] = Rolename("HTML container",
+rolenames["html container"] = Rolename("html container",
                                        _("HTM"),
                                        _("HTML CONTAINER"),
                                        _("h T M L container"))
-
-rolenames["hyper link"] = Rolename("hyper link",
-                                   _("LNK"),
-                                   _("LINK"),
-                                   _("link"))
 
 rolenames["icon"] = Rolename("icon",
                              _("ICO"),
                              _("ICON"),
                              _("icon"))
+
+rolenames["image"] = Rolename("image",
+                              _("IMG"),
+                              _("IMAGE"),
+                              _("image"))
 
 rolenames["internal frame"] = Rolename("internal frame",
                                        _("IFR"),
@@ -169,11 +208,6 @@ rolenames["layered pane"] = Rolename("layered pane",
                                      _("LPN"),
                                      _("LAYERED PANE"),
                                      _("layered pane"))
-
-rolenames["link"] = Rolename("link",
-                             _("LNK"),
-                             _("LINK"),
-                             _("link"))
 
 rolenames["list"] = Rolename("list",
                              _("LST"),
@@ -285,6 +319,11 @@ rolenames["split pane"] = Rolename("split pane",
                                    _("SPLIT PANE"),
                                    _("split pane"))
 
+rolenames["spin button"] = Rolename("spin button",
+                                    _("SPN"),
+                                    _("SPIN BUTTON"),
+                                    _("spin button"))
+
 rolenames["status bar"] = Rolename("status bar",
                                    _("STA"),
                                    _("STATUS BAR"),
@@ -310,15 +349,20 @@ rolenames["table row header"] = Rolename("table row header",
                                          _("TABLE ROW HEADER"),
                                          _("table row header"))
 
-rolenames["multi line text"] = Rolename("multi line text",
-                                        _("TXT"),
-                                        _("MULTI LINE TEXT"),
-                                        _("multi Line Text"))
+rolenames["tear off menu item"] = Rolename("tear off menu item",
+                                           _("TOM"),
+                                           _("TEAR OFF MENU ITEM"),
+                                           _("tear off menu item"))
 
-rolenames["single line text"] = Rolename("single line text",
-                                         _("TXT"),
-                                         _("SINGLE LINE TEXT"),
-                                         _("single Line Text"))
+rolenames["terminal"] = Rolename("terminal",
+                                 _("TRM"),
+                                 _("TERMINAL"),
+                                 _("terminal"))
+
+rolenames["text"] = Rolename("text",
+                             _("TXT"),
+                             _("TEXT"),
+                             _("text"))
 
 rolenames["toggle button"] = Rolename("toggle button",
                                       _("TOG"),
@@ -340,15 +384,15 @@ rolenames["tree"] = Rolename("tree",
                              _("TREE"),
                              _("tree"))
 
-rolenames["tree item"] = Rolename("tree item",
-                                  _("TRI"),
-                                  _("TREE ITEM"),
-                                  _("tree item"))
-
 rolenames["tree table"] = Rolename("tree table",
                                    _("TRT"),
                                    _("TREE TABLE"),
                                    _("tree table"))
+
+rolenames["unknown"] = Rolename("unknown",
+                                _("UNK"),
+                                _("UNKNOWN"),
+                                _("unknown"))
 
 rolenames["viewport"] = Rolename("viewport",
                                  _("VWP"),
@@ -360,65 +404,69 @@ rolenames["window"] = Rolename("window",
                                _("WINDOW"),
                                _("window"))
 
-rolenames["accelerator label"] = Rolename("accelerator label",
-                                          _("ACC"),
-                                          _("ACCELERATOR LABEL"),
-                                          _("accelerator label"))
+rolenames["header"] = Rolename("header",
+                               _("HDR"),
+                               _("HEADER"),
+                               _("header"))
 
-rolenames["animation"] = Rolename("animation",
-                                  _("ANI"),
-                                  _("ANIMATION"),
-                                  _("animation"))
+rolenames["footer"] = Rolename("footer",
+                               _("FTR"),
+                               _("FOOTER"),
+                               _("footer"))
 
-rolenames["arrow"] = Rolename("arrow",
-                              _("ARR"),
-                              _("ARROW"),
-                              _("arrow"))
+rolenames["paragraph"] = Rolename("paragraph",
+                               _("PGH"),
+                               _("PARAGRAPH"),
+                               _("paragraph"))
 
-rolenames["calendar"] = Rolename("calendar",
-                                 _("CAL"),
-                                 _("CALENDAR"),
-                                 _("calendar"))
+rolenames["application"] = Rolename("application",
+                                    _("APP"),
+                                    _("APPLICATION"),
+                                    _("application"))
 
-rolenames["date editor"] = Rolename("date editor",
-                                    _("DAT"),
-                                    _("DATE EDITOR"),
-                                    _("date editor"))
+rolenames["autocomplete"] = Rolename("autocomplete",
+                                     _("AUT"),
+                                     _("AUTO COMPLETE"),
+                                     _("autocomplete"))
 
-rolenames["dial"] = Rolename("dial",
-                             _("DIL"),
-                             _("DIAL"),
-                             _("dial"))
+rolenames["edit bar"] = Rolename("edit bar",
+                                 _("EDB"),
+                                 _("EDIT BAR"),
+                                 _("edit bar"))
 
-rolenames["drawing area"] = Rolename("drawing area",
-                                     _("DRW"),
-                                     _("DRAWING AREA"),
-                                     _("drawing area"))
+rolenames["embedded component"] = Rolename("embedded component",
+                                           _("EMB"),
+                                           _("EMBEDDED COMPONENT"),
+                                           _("embedded component"))
 
-rolenames["font chooser"] = Rolename("font chooser",
-                                     _("FNT"),
-                                     _("FONT CHOOSER"),
-                                     _("font chooser"))
 
-rolenames["image"] = Rolename("image",
-                              _("IMG"),
-                              _("IMAGE"),
-                              _("image"))
 
-rolenames["spin button"] = Rolename("spin button",
-                                    _("SPN"),
-                                    _("SPIN BUTTON"),
-                                    _("spin button"))
-
-rolenames["terminal"] = Rolename("terminal",
-                                 _("TRM"),
-                                 _("TERMINAL"),
-                                 _("terminal"))
-
+# Extra stuff from Gnopernicus.
+#
 rolenames["extended"] = Rolename("extended",
                                  _("EXT"),
                                  _("EXTENDED"),
                                  _("extended"))
+
+rolenames["hyper link"] = Rolename("hyper link",
+                                   _("LNK"),
+                                   _("LINK"),
+                                   _("link"))
+
+rolenames["link"] = Rolename("link",
+                             _("LNK"),
+                             _("LINK"),
+                             _("link"))
+
+rolenames["multi line text"] = Rolename("multi line text",
+                                        _("TXT"),
+                                        _("MULTI LINE TEXT"),
+                                        _("multi Line Text"))
+
+rolenames["single line text"] = Rolename("single line text",
+                                         _("TXT"),
+                                         _("SINGLE LINE TEXT"),
+                                         _("single Line Text"))
 
 rolenames["table line"] = Rolename("table line",
                                    _("TLI"),
@@ -435,10 +483,10 @@ rolenames["title bar"] = Rolename("title bar",
                                   _("TITLE BAR"),
                                   _("title bar"))
 
-rolenames["edit bar"] = Rolename("edit bar",
-                                 _("EDB"),
-                                 _("EDIT BAR"),
-                                 _("edit bar"))
+rolenames["tree item"] = Rolename("tree item",
+                                  _("TRI"),
+                                  _("TREE ITEM"),
+                                  _("tree item"))
 
 
 

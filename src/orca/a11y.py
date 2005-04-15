@@ -338,6 +338,7 @@ dispatcher["onNameChanged"]      = "object:property-change:accessible-name"
 dispatcher["onTextInserted"]     = "object:text-changed:insert"
 dispatcher["onTextDeleted"]      = "object:text-changed:delete"
 dispatcher["onStateChanged"]     = "object:state-changed:"
+dispatcher["onValueChanged"]     = "object:value-changed:"
 dispatcher["onSelectionChanged"] = "object:selection-changed"
 dispatcher["onCaretMoved"]       = "object:text-caret-moved"
 dispatcher["onLinkSelected"]     = "object:link-selected"
@@ -713,16 +714,30 @@ def getLabel (obj):
 
 
 def getGroup (obj):
-    """Returns an object's group.  [[[TODO: MM - This is busted for
-    now.  It currently just returns the object's parent.]]]
+    """Returns a list of an object's group members if it has a MEMBER_OF
+    relation, or None if it doesn't.  Note that an object itself will also be
+    a part of the list that is returned.
 
     Arguments:
     - obj: the Accessible object
 
-    Returns the objects group.
+    Returns the list of the object's group members it has a MEMBER_OF
+    relation, or None if it doesn't.
     """
-    
-    return obj.parent
+
+    i = 0
+    group = []
+    relations = obj.relations
+    for relation in relations:
+        if relation.getRelationType () \
+               == core.Accessibility.RELATION_MEMBER_OF:
+            group[i] = makeAccessible(relation.getTarget (0))
+            i = i + 1
+
+    if i:
+        return group
+    else:
+        return None
 
 
 def getAccessible (obj):
