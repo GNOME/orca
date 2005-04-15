@@ -651,16 +651,365 @@
 
   <chapter id="style-guide"><title>Style Guide</title>
 
-    <para> To be written.  </para>
+    <para> &todo; this section is under construction. </para>
 
-    <para> &todo; Include order of presentation of object information.
-    </para>
+    <para> &todo; Include "where am I?" </para>
 
     <para> &todo; Include what to do when events come from objects in
     windows that do not have focus. </para>
 
     <para> &todo; Include what to do when an object has more than one
     kind of accessible action. </para>
+
+    <section><title>Default Presentation of Individual Objects</title>
+
+      <para>Orca's goal is to present individual objects with a
+      consistent style for both speech and Braille.  The default.py
+      module contains the logic for this consistent style, which
+      custom scripts are welcome to override, extend, or model their
+      presentation after.  </para>
+
+      <para>The default script for Orca provides a number of
+      "presenter functions", each of which specializes in presenting
+      an object based upon its role and whether or not it just
+      received focus.  The default script also provides a fallback
+      presentation function (the "default presenter") to handle the
+      case where a more specialized presenter function doesn't
+      exist. </para>
+
+      <para>The mode of presentation (e.g., speech or Braille)
+      determines how the script presents the object.  In the case of
+      speech, the primary goal is to succinctly present the most
+      useful information early followed by more detailed information.
+      At any time, the user can interrupt the speech output and/or
+      move on to the next object of interest.  Although the speech
+      output may be ungrammatical at times, this presentation style
+      permits the user to navigate a GUI using speech in a quick
+      fashion, yet still be able to learn more detail about an object
+      of interest.</para>
+
+      <para>In the case of Braille, the primary goal is to make
+      effective use of the potentially limited number of Braille cells
+      on the refreshable display while also providing a consistent
+      spatial location for common information.  For example, the role
+      of the object being presented will typically be represented as
+      an abbreviation in the first three cells of the Braille display.
+      Like speech, the goal is to be able permit a user to navigate
+      the GUI using Braille in a quick fashion, yet still be able to
+      learn more detail about an object in question. </para>
+
+      <para> &todo; The discussion so far treats speech and Braille as
+      separate systems.  There is ample room for research on how the two
+      can be used to provide complimentary access. </para>
+
+      <para>When a typical Orca script receives an event from the
+      AT-SPI, it determines the object associated with that event and
+      chooses whether to present the object or not.  The choice to
+      present typically involves the type of event and whether the
+      associated application has focus or not.  If it chooses to
+      present that object, the typical Orca script will initially
+      structure its presentation of the object on two factors: the
+      role name of the object and whether or not the object just
+      received keyboard focus.  </para>
+
+      <para>When an object first gets keyboard focus, the speech
+      output of the default presenter is as follows for the en_US
+      locale: </para>
+
+      <programlisting>label role [value] ["shortcut" shortcut] ["accelerator" accelerator]</programlisting>
+
+      <para>Where:</para>
+
+      <itemizedlist>
+        <listitem>
+	  <para>Specific text to be presented is contained in quotes.
+	  </para>
+	</listitem>
+        <listitem>
+	  <para>At most one space character is used between the elements.
+	  </para>
+	</listitem>
+        <listitem>
+	  <para>Optional elements are contained between the characters
+	  "[" and "]".  For example, if an object does not
+	  have a value or a shortcut does not exist, then Orca will
+	  present nothing for the value or shortcut.
+	  </para>
+	</listitem>
+        <listitem>
+          <para> <emphasis role="bold">label</emphasis> is the first
+          non-empty string obtained by first looking at the label of
+          the LABELED_BY object for this object (if it exists), then
+          the accessible name of this object, and finally the
+          accessible description of this object.  </para>
+	</listitem>
+        <listitem>
+	  <para> <emphasis role="bold">role</emphasis> is the
+	  localized human consumable string describing the AT-SPI
+	  rolename of this object as determined by the rolenames.py
+	  module.  </para>
+	</listitem>
+        <listitem>
+	  <para> <emphasis role="bold">value</emphasis> is the value
+	  of this object, if the value exists.  Note that the value
+	  depends upon the role of the object.  For example, for check
+	  box items, the value will be one of "checked" or "not
+	  checked."  For single line text fields, the value will be
+	  the line of text.  Please see the specific sections below
+	  for how the value is obtained from individual
+	  objects. </para>
+	</listitem>
+        <listitem>
+	  <para> <emphasis role="bold">shortcut</emphasis> is the
+	  string representing the keyboard shortcut to activate the
+	  object (e.g., "Alt f n"). </para>
+	</listitem>
+        <listitem>
+	  <para> <emphasis role="bold">accelerator</emphasis> is the
+	  string representing the keyboard accelerator to activate the
+	  object (e.g., "Control n"). </para>
+        </listitem>
+      </itemizedlist>
+
+      <para>If an object's value changes while it already has keyboard focus,
+      then the only thing spoken will be the new value. </para>
+
+      <para>For Braille, the behavior of the default presenter is as
+      follows for the en_US locale: </para>
+
+      <programlisting>TRN label [value] ["(" shortcut ")"] ["(" accelerator ")"]</programlisting>
+
+      <para>Where:</para>
+      <itemizedlist>
+        <listitem>
+	  <para>Label, shortcut, and accelerator are the same as in
+	  the speech output.</para>
+	</listitem>
+        <listitem>
+	  <para> <emphasis role="bold">TRN</emphasis> is the object's
+	  "three letter rolename" as determined by the rolenames.py
+	  module. </para>
+        </listitem>
+      </itemizedlist>
+
+      <para>For refreshable Braille displays with cursor buttons
+      (i.e., buttons on each cell), the default Braille presenter will
+      also position the Braille cursor under the first cell of the
+      value if it exists, or the first cell of the label if the value
+      does not exist.  </para>
+
+      <para>The following sections describe the specialized
+      presentation functions, where the AT-SPI role name for which
+      they are specialized is listed in parentheses in the section
+      title.  The notation in the following sections is the same as
+      above, with the addition of "{" and "}": mutually exclusive
+      alternative elements are contained between the characters "{"
+      and "}".  For example, given the alternative list of
+      {"available", "unavailable"}, Orca will present one or the other
+      to the user.  </para>
+
+<para>
+invalid
+accelerator label
+alert
+animation
+arrow
+calendar
+canvas
+color chooser
+column header
+dateeditor
+desktop icon
+desktop frame
+dial
+dialog
+directory pane
+drawing area
+file chooser
+filler
+fontchooser
+frame
+glass pane
+html container
+icon
+image
+internal frame
+label
+layered pane
+list
+list item
+option pane
+page tab
+page tab list
+panel
+password text
+popup menu
+progress bar
+root pane
+row header
+scroll bar
+scroll pane
+separator
+slider
+split pane
+spin button
+status bar
+table
+table cell
+table column header
+table row header
+terminal
+text
+tool bar
+tool tip
+tree
+tree table
+unknown
+viewport
+window
+header
+footer
+paragraph
+application
+autocomplete
+edit bar
+embedded component
+extended
+hyper link
+link
+multi line text
+single line text
+table line
+table columns header
+title bar
+tree item
+</para>
+
+      <section><title>pushButtonPresenter ("push button")</title>
+        <para>The pushButtonPresenter presents objects of role "push
+        button" and does so identically to the defaultPresenter.  No
+        value will be presented.  The pushButtonPresenter will place
+        the Braille cursor under the first character of the button's
+        label; pressing any cursor button associated with the label
+        will cause a click action on the associated button.
+        </para>
+      </section>
+
+      <section><title>toggleButtonPresenter ("check box", "toggle button")</title>
+	<para>Speech:</para>
+	<programlisting>label role {"checked", "not checked"} ["shortcut" shortcut] ["accelerator" accelerator]</programlisting>
+	<para>If the button's value changes while it has focus, the presenter will only speak the new value.</para>
+	<para>Braille:</para>
+        <programlisting>TRN {"-", "="} label ["(" shortcut ")"] ["(" accelerator ")"]</programlisting>
+
+	<para>The unchecked value of the button is represented by "-",
+	which is dots 3-6 in Braille, and the checked value is
+	represented by a "=", which is dots 1-2-3-4-5-6 in Braille.
+	The toggleButtonPresenter will place the Braille cursor under
+	the first character of the button's value ("-" or "=");
+	pressing any cursor button associated with the label or the
+	button's value cause a click action on the associated button.
+	</para>
+      </section>
+
+      <section><title>radioButtonPresenter ("radio button")</title>
+	<para>Radio buttons occur in radio button groups.  As such,
+	knowing both the name of the radio button group and the number
+	of buttons in the group is important.</para>
+	<para>Speech:</para>
+	<programlisting>group label role {"checked", "not checked"} ["shortcut" shortcut] ["accelerator" accelerator]</programlisting>
+	<para>Where group is the name of the radio button group.</para>
+	<para>Braille:</para>
+        <programlisting>TRN group ("(" {"'", "7"} label")")*</programlisting>
+	<para>With this, entire radio button group is presented on the
+	Braille display, with each radio button surrounded in
+	parentheses.  The unchecked state of a radio button is
+	represented by a "'" which is dot 3 in Braille, and the
+	checked state is represented by a "7", which is dots 2-3-5-6
+	in Braille (CBC).  The Braille cursor is placed under the
+	radio button with keyboard focus.  If the user presses any
+	cursor button associated with a radio button, it will cause a
+	click action on that button.</para> <para>&todo; Would like to
+	also present the shortcut and accelerator somehow.  Perhaps
+	this could be one of those things where speech compliments the
+	Braille?  Or, perhaps we can take advantage of Braille
+	displays that have two buttons per cell to do this (i.e.,
+	pressing the other button causes Orca to speak the extra
+	info)? </para>
+      </section>
+
+      <section><title>menuBarPresenter ("menu bar")</title>
+	<para>It is rare that the menu bar alone will be presented.
+	Instead, the menus in the menu bar will be presented. However,
+        in the event a menu bar is to be presented, it will be presented
+        as follows.</para>
+	<para>Speech:</para>
+	<programlisting>role (menulabel)*</programlisting>
+	<para>Where menulabel is the label of a menu in the menu bar.</para>
+	<para>Braille:</para>
+        <programlisting>TRN ("("menulabel")")*</programlisting>
+	<para>With this, entire contents of the menu bar is presented
+	on the Braille display, with each menu surrounded in
+	parentheses.  The Braille cursor is placed under the menu with
+	keyboard focus.  If the user presses any cursor button
+	associated with a menu, it will cause a click action on that
+	menu.</para>
+      </section>
+
+      <section><title>menuPresenter ("menu", "menu item", "check menu item", "radio menu item", "tear off menu item")</title>
+
+	<para>Like menu bars, menus and their associated contents will
+	be treated as a related group of objects.</para>
+
+	<para>Speech for "menu":</para>
+	<programlisting>label role ["shortcut" shortcut] ["accelerator" accelerator] n " items. "</programlisting>
+	<para>Where n is the number of keyboard accessible items in the menu.</para>
+
+	<para>Speech for "check menu item", "radio menu item", and "tear off menu item":</para>
+	<programlisting>label role ["shortcut" shortcut] ["accelerator" accelerator]"</programlisting>
+
+	<para>Braille:</para>
+        <programlisting>TRN label ("(" {"", "o", "___", "-", "=", "'", "7"} itemlabel")")*</programlisting>
+
+	<para>With this, entire menu is presented on the Braille
+	display, with each menu item surrounded in parentheses.
+	"Normal" menu items are merely presented using their label.
+	Menus within menus are prefixed with an "o" to indicate they
+	are menus (NOTE: you can view the "o" as meaning "openable" or
+	view it as a triangle shape - dots 1-3-5 in Braille).  Tear
+	off menus have no label and are represented by "___".  Check
+	menu items are prefixed by their value, "-" (unchecked) or "="
+	(checked).  Radio menu items are prefixed by their value, "'"
+	(unchecked) or "7" (checked).  The Braille cursor is placed
+	under the menu item with keyboard focus.  If the user presses
+	any cursor button associated with a menu item, it will cause a
+	click action on that item.</para>
+	<para>&todo; Would like to also present the shortcut and
+	accelerator somehow.  Perhaps this could be one of those things where
+        speech compliments the Braille?  Or, perhaps we can take advantage of
+        Braille displays that have two buttons per cell to do this? </para>
+      </section>
+
+      <section><title>comboBoxPresenter ("combo box")</title>
+
+	<para>Like menus, combo boxes and their associated contents will
+	be treated as a related group of objects.</para>
+
+	<para>Speech:</para>
+	<programlisting>label role value ["shortcut" shortcut] ["accelerator" accelerator]</programlisting>
+	<para>Where value is the text of the current selection. As the selection changes, only the the text of the new selection will be spoken.  %todo; Need to be able to tell whether the combo box has editable text or not.</para>
+
+	<para>Braille:</para>
+        <programlisting>TRN label ("("itemlabel")")*</programlisting>
+
+	<para>With this, the entire combo box is presented on the
+	Braille display, with each item surrounded in parentheses.
+	%todo; Need to worry about combo boxes with lots and lots of
+	entries.  Also need to indicate if a combo box has editable
+	text or not.</para>
+      </section>
+
+    </section>
 
   </chapter>
 
