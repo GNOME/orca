@@ -1,3 +1,15 @@
+2005-04-15  Willie Walker <william.walker@sun.com>
+
+	* src/orca/a11y.py: add an attempt at getting the group
+	* src/orca/rolenames.py: sync up with ATK rolenames
+	* src/orca/speech.py: capture CORBA failures for now
+	* src/orca/default.py: passes at defaultPresenter,
+	pushButtonPresenter, toggleButtonPresenter, radioButtonPresenter,
+	menuBarPresenter, menuPresenter, and sliderPresenter.
+	* docs/programmers-guide/programmers-guide.{sgml,pdf}: some 
+	level of introduction to style.  Still much work to do when it
+	comes to notions of levels of verbosity and speaker style.
+	
 2005-04-08  Willie Walker <william.walker@sun.com>
 
 	* src/orca/{a11y.py, debug.py, default.py, kbd.py, metacity,py,
