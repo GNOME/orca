@@ -175,6 +175,7 @@ def init ():
 
     # Create the speakers
     #
+    speakers = {}
     for voiceName in settings.voices.keys ():
         desc = settings.voices[voiceName]
         s = createSpeaker (desc[0], desc[1])
@@ -218,16 +219,37 @@ def shutdown ():
         return False
 
     for speaker in speakers.values():
-        speaker.unref ()
+        try:
+            speaker.unref ()
+        except:
+            pass
+        
     del speakers
 
     for driver in drivers:
-        driver.unref ()
+        try:
+            driver.unref ()
+        except:
+            pass
+        
     del drivers
 
     initialized = False
     
     return True
+
+
+def reset ():
+    """Shuts the speech module down and then reinitializes it.  This
+    method is typically to be executed in the event that a failure
+    occurred while attempting to speak.
+
+    Returns True if the module has been reset and a connection was
+    re-established with the speech service.
+    """
+
+    shutdown ()
+    return init ()
 
 # Speak text - This function takes the voice name and the text to
 # speak as parameters
@@ -277,6 +299,7 @@ def say (voiceName, text):
         return s.say (text)
     except:
         debug.printException (debug.LEVEL_SEVERE)
+        reset ()
 
 
 def sayAgain ():
@@ -307,7 +330,7 @@ def stop (voiceName):
             s.stop ()
         except:
             debug.printException (debug.LEVEL_SEVERE)
-
+            reset ()
             
 ########################################################################
 #                                                                      #

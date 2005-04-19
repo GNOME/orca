@@ -22,7 +22,6 @@
 import a11y
 import core
 import orca
-import settings                   # user settings
 from rolenames import getRoleName # localized role names
 import sys
 import traceback
@@ -68,30 +67,23 @@ LEVEL_FINEST = 400
 LEVEL_ALL = 0
 
 
-def debugLevel ():
-    """Returns the debug level settings.py, with a default value of
-    LEVEL_SEVERE.  The various levels can be LEVEL_OFF, LEVEL_SEVERE,
-    LEVEL_WARNING, LEVEL_INFO, LEVEL_CONFIG, LEVEL_FINE, LEVEL_FINER,
-    LEVEL_FINEST, LEVEL_ALL.
+debugLevel = LEVEL_SEVERE
+
+def setDebugLevel (newLevel):
+    """Sets the debug level.  The various levels can be LEVEL_OFF,
+    LEVEL_SEVERE, LEVEL_WARNING, LEVEL_INFO, LEVEL_CONFIG, LEVEL_FINE,
+    LEVEL_FINER, LEVEL_FINEST, LEVEL_ALL.
+
+    Arguments:
+    - newLevel: the new debugLevel
     """
 
-    # Backwards compatibility - if "debug" is set, set the debug level
-    # to LEVEL_FINE.
-    #
-    if debug ():
-        return LEVEL_FINER
+    global debugLevel
     
-    return getattr (settings, "debugLevel", LEVEL_SEVERE)
-
+    println(debugLevel, "Changing debugLevel to %d" % newLevel)
+    debugLevel = newLevel
+    println(debugLevel, "Changed debugLevel to %d" % debugLevel)
     
-def debug ():
-    """Returns True if the debug flag is set to True in settings.py; False
-    otherwise.  This method has been deprecated.  The proper way to do
-    debugging is now via debug levels (see debugLevel).
-    """
-
-    return getattr (settings, "debug", False)
-
     
 def getStates (obj):
     """Returns a space-delimited string composed of the given object's
@@ -180,7 +172,7 @@ def printException (level):
     - level: the accepted debug level
     """
 
-    if level >= debugLevel ():
+    if level >= debugLevel:
         println (level)
         traceback.print_exc ()
         println (level)
@@ -193,7 +185,7 @@ def printStack (level):
     - level: the accepted debug level
     """
 
-    if level >= debugLevel ():
+    if level >= debugLevel:
         println (level)
         traceback.print_stack ()
         println (level)
@@ -207,7 +199,7 @@ def println (level, text = ""):
     - text: the text to print (default is a blank line)
     """
 
-    if level >= debugLevel ():
+    if level >= debugLevel:
         print text
 
 
@@ -221,7 +213,7 @@ def listDetails (level, indent, accessible):
     - accessible: the accessible whose details are to be listed
     """
 
-    if level < debugLevel ():
+    if level < debugLevel:
         return
     
     println (level, "%sname   = (%s)" % (indent, accessible.name))
@@ -241,7 +233,7 @@ def listApps (level):
     - level: the accepted debug level
     """
 
-    if level < debugLevel ():
+    if level < debugLevel:
         return
     
     println (level, "There are %d apps" % len(orca.apps))
@@ -264,7 +256,7 @@ def listActiveApp (level):
     - level: the accepted debug level
     """
 
-    if level < debugLevel ():
+    if level < debugLevel:
         return    
     
     println (level, "Current active application:")

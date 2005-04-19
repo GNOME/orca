@@ -1,3 +1,15 @@
+2005-04-19  Willie Walker <william.walker@sun.com>
+
+	* src/orc/debug.py: allow debugLevel to be set/used on the fly
+	rather than the somewhat static way it was being done.  The
+	way to use it now is to "import debug" in settings.py (or anywhere
+	else) and then do "debug.setDebugLevel(debug.LEVEL_CONFIGURATION)"
+	somewhere else.
+	* src/orca/speech.py: more gracefully recover from failures
+	if/when the speech service dies.  Right now, on any failure, the
+	speech module will reset and reconnect to the speech server 
+	rather than just groaning about a COMM_FAILURE.
+	
 2005-04-15  Willie Walker <william.walker@sun.com>
 
 	* src/orca/a11y.py: add an attempt at getting the group
