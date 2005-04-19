@@ -1,62 +1,80 @@
-Scripting test bed for screen reading.
+Orca 0.1.0
+
+Introduction
+========================================================================
+
+Orca a scriptable screen reader that is currently under development.
+As such it is highly unstable and undergoes frequent changes.  To
+read more about Orca, please refer to the "Programmer's Guide" in 
+the docs/programmers-guide directory.
+
 
 Build Requirements
-==========
+========================================================================
+
 Building Orca requires the following to be installed:
-	* Python version 2.2 or 2.3
-	* pyorbit - Python bindings for ORBit2
-	* pygtk - GTK+ Python bindings
-	* gnome-python - Python bindings for various GNOME libraries
-	* Recent version of at-spi
-	* gnome-speech version 0.3.0 or greater
-	* BRLTTY 3.5 for Braille support (note that Orca builds fine
-	  without BRLTTY installed, but Braille support will work)
+
+	* Python 2.3         - Python platform
+	* pyorbit 2.0.1      - Python bindings for ORBit2
+	* pygtk 2.4.1        - GTK+ Python bindings
+	* gnome-python 2.6.2 - Python bindings for various GNOME libraries
+	* gnome-speech 0.3.0 - GNOME speech synthesis services
+	* gnome-mag 0.11.14  - GNOME screen magnification services (note 
+			       that Orca builds find without gnome-mag,
+			       but magnification will not work)
+	* BRLTTY 3.6.1       - Braille support (note that Orca builds fine
+	                       without BRLTTY installed, but Braille support 
+                               will work)
+	* at-spi 1.6.2       - GNOME assistive technology framework
+
 
 Overview
-==========
-One of the biggest challenges in screen reading technology is
-providing a consistant user experience across multiple applications
-which may use objects in different ways, and to allow quick access to
-information which may not be easily accessible through an
-application's keyboard navigation commands.  Orca is an initial
-attempt to explore how to solve some of these difficulties.  Some
-common scenarios which Orca's script-based architecture would be
-suited to solve:
+========================================================================
+
+One of the biggest challenges in screen reading technology is providing a
+consistant user experience across multiple applications which may use objects
+in different ways, and to allow quick access to information which may not be
+easily accessible through an application's keyboard navigation commands.  Orca
+is an initial attempt to explore how to solve some of these difficulties.
+Some common scenarios which Orca's script-based architecture would be suited
+to solve:
 
 * An application which displays text of interest to the user in a
   non-focusable object
-* Create hot keys to be used in certain applications to collect and
-  read various pieces of information
-* Causing the Braille display to show status information retrieved
-  from status bars or other objects in the application
 
-Orca Overview
-==========
-Orca is written in Python and C.  Orca's low-level connection to the
-at-spi is a Python module written in C, and the upper-level logic is
-entirely written in Python.  Orca defines a set of default behaviors
-(reactions to application events) and key bindings (reaction to user
-key presses).  These default behaviors and key bindings can be
-overwritten on a per-application basis.  Orca creates a script object
-for each running application, which merges both the default behaviors
-and key bindings, and the application specific ones.  Orca provides the
-infrastructure to activate and deactivate scripts, as well as a host
-of services accessible from within the scripts.  Some of these
-sservices include:
-	* A speech module which provides named voices which are
-	  definable by the user, and a subsystem for reading long documents
-	  called the "Say All" system
-	* A Braille module which uses BRLTTY to provide high-level
-	  Braille services to scripts - these services include Braille keyboard
-	  callback support, software-based virtual regions for the Braille
-	  display, and scrolling management
-	* Convenience functions for finding the labels of objects,
-	  getting all the objects within a given object, etc.
+* Create hot keys to be used in certain applications to collect and read
+  various pieces of information
+
+* Causing the Braille display to show status information retrieved from status
+  bars or other objects in the application
+
+Orca is written in Python and C.  Orca's low-level connection to the at-spi is
+a Python module written in C, and the upper-level logic is entirely written in
+Python.  Orca defines a set of default behaviors (reactions to application
+events) and key bindings (reaction to user key presses).  These default
+behaviors and key bindings can be overwritten on a per-application basis.
+Orca creates a script object for each running application, which merges both
+the default behaviors and key bindings, and the application specific ones.
+Orca provides the infrastructure to activate and deactivate scripts, as well
+as a host of services accessible from within the scripts.  Some of these
+services include:
+
+* A speech module which provides named voices which are definable by the user,
+  and a subsystem for reading long documents called the "Say All" system
+
+* A Braille module which uses BRLTTY to provide high-level Braille services to
+  scripts - these services include Braille keyboard callback support,
+  software-based virtual regions for the Braille display, and scrolling
+  management
+
+* Convenience functions for finding the labels of objects, getting all the
+  objects within a given object, etc.
+
 
 Initial Setup
-==========
+========================================================================
+
 Before running orca, you should run orca-setup.  Orca-setup creates a
 .orca directory in your home directry.  This directory stores your
 user settings, as well as any scripts which you use that are not part
 of the default Orca installation.
-
