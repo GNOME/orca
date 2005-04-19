@@ -1,6 +1,15 @@
 2005-04-19  Willie Walker <william.walker@sun.com>
 
-	* src/orc/debug.py: allow debugLevel to be set/used on the fly
+	* src/orca/default.py: fix bug in the way state_change_notifiers
+	were handled (list with one item was being exploded into
+	individual characters, which is not what we want), improve page
+	tab presenter, update text presenter.
+	* src/orca/gnome-terminal.py: remove the text event handlers
+	because they were identical to default.py.
+	
+2005-04-19  Willie Walker <william.walker@sun.com>
+
+	* src/orca/debug.py: allow debugLevel to be set/used on the fly
 	rather than the somewhat static way it was being done.  The
 	way to use it now is to "import debug" in settings.py (or anywhere
 	else) and then do "debug.setDebugLevel(debug.LEVEL_CONFIGURATION)"

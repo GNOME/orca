@@ -106,9 +106,9 @@ def getSpeechForAvailability (obj):
     """
     
     if obj.state.count (core.Accessibility.STATE_SENSITIVE):
-        return _("available") + ". "
+        return _("available")
     else:
-        return _("unavailable") + ". "
+        return _("unavailable")
 
     
 def getSpeechForAccelerator (obj):
@@ -169,11 +169,13 @@ def getSpeech (obj, includeAvailability=False):
     if obj.role == "tear off menu item":
         text = _("tear off menu item") + "."
     else:
-        text = a11y.getLabel (obj) + " " + getSpeechForRoleName (obj) + ". " \
-               + getSpeechForAccelerator (obj)
+        text = a11y.getLabel (obj) + " " + getSpeechForRoleName (obj) + "."
+        accel = getSpeechForAccelerator (obj)
+        if len (accel) > 0:
+            text = text + " " + accel
 
     if includeAvailability:
-        text += getSpeechForAvailability (obj)
+        text = text + " " + getSpeechForAvailability (obj) + "."
     
     text = text.replace ("...", _(" dot dot dot"), 1)
 
@@ -232,6 +234,7 @@ def brailleUpdateText (obj):
     """
 
     label = None
+    
     if obj.role == "terminal":
         frame = a11y.getFrame (obj)
         if frame:
@@ -244,41 +247,17 @@ def brailleUpdateText (obj):
         else:
             label = a11y.getLabel (obj)
 
+    brltext = getShortBrailleForRoleName (obj) + " "
+    beginningOfText = len(brltext)
 
-    # The label and text each get their own region - The label region
-    # size is the length of the label's text + 1 or half the display
-    # length, whidhever is less
-    #
-    display_size = brl.getDisplaySize ()
-    label_region_size = len(label)
-    if label_region_size > display_size/2-1:
-            label_region_size = display_size/2-1
-    if label_region_size > 0:
-        brl.addRegion (label, label_region_size+1, 0)
-
-        # Subtract the space that is left for us to use on the display
-        #
-        display_size = display_size - (label_region_size+1)
-
-    # Get the line containing the caret
-    #
     result = getTextLineAtCaret (obj)
-    line = result[0]
+    line = result[0]    
     caretOffset = result[1]
     lineOffset = result[2]
     
-    text_region = brl.addRegion (line, display_size, 0)
-
-    # Make the advance keys scroll the region containing the text
-    #
-    brl.setScrollRegion (text_region)
-
-    # Position the cursor at the caret position - Note that the region
-    # containing the text can be longer than the physical display, and
-    # that the cursor position is specified as an offset from the
-    # beginning of the text
-    #
-    brl.setCursor (text_region, caretOffset-lineOffset)
+    brltext = brltext + line
+    brl.writeMessage (brltext)
+    brl.setCursor (0, beginningOfText+caretOffset-lineOffset)
     brl.refresh ()
 
 
@@ -410,7 +389,7 @@ def pushButtonPresenter (obj, already_focused):
     brl.setCursor (0, 4)
     brl.refresh ()
     
-    speech.say ("default", getSpeech (obj, already_focused))
+    speech.say ("default", getSpeech (obj))
     
 
 def toggleButtonPresenter (obj, already_focused):
@@ -432,14 +411,20 @@ def toggleButtonPresenter (obj, already_focused):
         # If it's not already focused, say it's name
         #
         if already_focused == False:
-            text = getSpeech (obj) + ". " + _("checked") + "."
+            text = a11y.getLabel (obj) + " " \
+                   + getSpeechForRoleName (obj) + ". " \
+                   + _("checked") + ". " \
+                   + getSpeechForAccelerator (obj)
         else:
             text = _("checked") + "."
         brltext = getShortBrailleForRoleName (obj) + " " + "=" + " " \
                   + a11y.getLabel (obj)
     else:
         if already_focused == False:
-            text = getSpeech (obj) + ". " + _("not checked") + "."
+            text = a11y.getLabel (obj) + " " \
+                   + getSpeechForRoleName (obj) + ". " \
+                   + _("not checked") + "." \
+                   + getSpeechForAccelerator (obj)
         else:
             text = _("not checked") + "."
         brltext = getShortBrailleForRoleName (obj) + " " + "-" + " " \
@@ -449,7 +434,7 @@ def toggleButtonPresenter (obj, already_focused):
     brl.setCursor (0, 6)
     brl.refresh ()
     
-    speech.say ("default", text + " " + getSpeechForAccelerator (obj))
+    speech.say ("default", text)
 
 
 def radioButtonPresenter (obj, already_focused):
@@ -643,7 +628,7 @@ def menuPresenter (obj, already_focused):
         
     # Now do the speech.
     #
-    text = getSpeech(obj) + "."
+    text = getSpeech(obj)
     if obj.role == "menu":
         i = 0
         itemCount = 0
@@ -708,14 +693,15 @@ def sliderPresenter (obj, already_focused):
         text = a11y.getLabel(obj) + " " + getSpeechForRoleName (obj) + ". " \
                + _("Value: %s") % valueString + ". " \
                + _("Minimum value: %s") % minString + ". " \
-               + _("Maximum value: %s") % maxString + ". "
+               + _("Maximum value: %s") % maxString + ". " \
+               + getSpeechForAccelerator (obj)
 
     brltext = getShortBrailleForRoleName (obj) + " " + a11y.getLabel (obj) \
               + "(%s %s %s)" % (minString, valueString, maxString)
 
     brl.writeMessage (brltext + " " + getBrailleForAccelerator (obj))
     
-    speech.say ("default", text + " " + getSpeechForAccelerator (obj))
+    speech.say ("default", text)
 
 
 def pageTabPresenter (obj, already_focused):
@@ -724,39 +710,48 @@ def pageTabPresenter (obj, already_focused):
     selected page tab.
 
     Arguments:
-    - obj: the currently selected Accessible page tab
+    - obj: the currently selected Accessible page tab or page tab list
     - already_focused: if False, the obj just received focus
     """
    
     debugPresenter ("default.pageTabPresenter", obj, already_focused)
     
-    # Put each page tab in its own region on the Braille display
+    # Put the menu on the Braille display - Put each menu item in its
+    # own region on the Braille display
     #
-    name = "PTL" # [[[TODO: WDW - should get this from rolenames.py]]]
-    brl.addRegion (name, len(name)+2, 0)
+    if obj.role == "page tab list":
+        tablist = obj
+    else:
+        tablist = obj.parent
 
-    tablist = obj.parent
+    brltext = getShortBrailleForRoleName (tablist) + " "
+
+    cursor = -1
     selected = obj.index
-    childCount = tablist.childCount
-
+    childCount = tablist.childCount    
     i = 0
     while i < childCount:
+        if i == selected:
+            cursor = len(brltext) + 1
         name = a11y.getLabel (tablist.child (i))
-        brl.addRegion (name, len(name)+2, 0)
+        brltext = brltext + "(" + name + ")"
         i = i + 1
 
-    # Put the Braille cursor under the currently selected page tab
+    brl.writeMessage (brltext)
+    if cursor >= 0:
+        brl.setCursor (0, cursor)
+        brl.refresh ()
+    
+    # Now do the speech.
     #
-    if selected >= 0:
-        brl.setCursor (selected, 0)
-
-    # Put the text on the display
-    #
-    brl.refresh ()
-
-    # Now speak it...
-    #
-    text = getSpeech (obj)
+    if obj.role == "page tab":
+        text = getSpeech(obj)
+    else:
+        text = getSpeechForRoleName (tablist) + "."
+        if tablist.childCount == 1:
+            text += " " + _("one tab") + "."
+        else:
+            text += (" %d " % tablist.childCount) + _("tabs") + "."
     speech.say ("default", text)
 
 
@@ -774,8 +769,9 @@ def textPresenter (obj, already_focused):
     brailleUpdateText (obj)
 
     text = getSpeech (obj)
+    result = getTextLineAtCaret (obj)
+    text = text + " " + result[0]
     speech.say ("default", text)
-    sayLine (obj)
 
 
 def comboBoxPresenter (obj, already_focused):
@@ -956,14 +952,19 @@ presenters["dialog"]             = dialogPresenter
 presenters["menu"]               = menuPresenter
 presenters["menu bar"]           = menuBarPresenter
 presenters["menu item"]          = menuPresenter
+presenters["multi line text"]    = textPresenter
 presenters["page tab"]           = pageTabPresenter
+presenters["page tab list"]      = pageTabPresenter
 presenters["password text"]      = textPresenter
 presenters["push button"]        = pushButtonPresenter
 presenters["radio button"]       = radioButtonPresenter
 presenters["radio menu item"]    = menuPresenter
+presenters["single line text"]   = textPresenter
 presenters["slider"]             = sliderPresenter
+presenters["spin button"]        = textPresenter
 presenters["table"]              = tablePresenter
 presenters["tear off menu item"] = menuPresenter
+presenters["terminal"]           = textPresenter
 presenters["text"]               = textPresenter
 presenters["toggle button"]      = toggleButtonPresenter
 presenters["tree"]               = tablePresenter
@@ -1032,8 +1033,8 @@ def onFocus (event):
 # we care about.
 #
 state_change_notifiers = {}
-state_change_notifiers["check box"] = ("checked")
-state_change_notifiers["toggle button"] = ("checked")
+state_change_notifiers["check box"] = ("checked", None)
+state_change_notifiers["toggle button"] = ("checked", None)
 
 def onStateChanged (event):
     """Called whenever an object's state changes.  Currently, the
@@ -1055,7 +1056,7 @@ def onStateChanged (event):
         notifiers = state_change_notifiers[event.source.role]
         found = False
         for state in notifiers:
-            if event.type.find (state) != -1:
+            if state and event.type.endswith (state):
                 found = True
                 break
         if found:
@@ -1080,8 +1081,6 @@ def onValueChanged (event):
     
     global presenters
     global state_change_notifiers
-
-    print "HERE:", event.type
         
     if event.source != a11y.focusedObject:
         return
@@ -1179,6 +1178,11 @@ def onTextInserted (event):
         pass
     else:
         brailleUpdateText (event.source)
+        text = event.any_data
+        if text.isupper ():
+            speech.say ("uppercase", text)
+        else:
+            speech.say ("default", text)
 
 
 def onTextDeleted (event):
@@ -1205,7 +1209,7 @@ def onTextDeleted (event):
     # as vi or emacs.
     #
     text = event.any_data
-    if (kbd.lastKey == "BackSpace") or (kbd.lastKey != "Delete"):
+    if (kbd.lastKey == "BackSpace") or (kbd.lastKey == "Delete"):
         if text.isupper ():
             speech.say ("uppercase", text)
         else:
