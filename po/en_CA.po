@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-16 14:04-0400\n"
-"PO-Revision-Date: 2005-04-16 14:20-0400\n"
+"POT-Creation-Date: 2005-04-20 16:34-0400\n"
+"PO-Revision-Date: 2005-04-20 14:20-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -152,48 +152,56 @@ msgstr "accelerator"
 msgid "tear off menu item"
 msgstr "tear off menu item"
 
-#: ../src/orca/default.py:178
+#: ../src/orca/default.py:180
 msgid " dot dot dot"
 msgstr " dot dot dot"
 
-#: ../src/orca/default.py:435 ../src/orca/default.py:437
-#: ../src/orca/default.py:492 ../src/orca/default.py:494
+#: ../src/orca/default.py:425 ../src/orca/default.py:428
+#: ../src/orca/default.py:486 ../src/orca/default.py:488
 msgid "checked"
 msgstr "checked"
 
-#: ../src/orca/default.py:442 ../src/orca/default.py:444
-#: ../src/orca/default.py:498 ../src/orca/default.py:500
+#: ../src/orca/default.py:435 ../src/orca/default.py:438
+#: ../src/orca/default.py:492 ../src/orca/default.py:494
 msgid "not checked"
 msgstr "not checked"
 
-#: ../src/orca/default.py:633
+#: ../src/orca/default.py:627
 msgid "___"
 msgstr "___"
 
-#: ../src/orca/default.py:657
+#: ../src/orca/default.py:651
 msgid "one item"
 msgstr "one item"
 
-#: ../src/orca/default.py:659
+#: ../src/orca/default.py:653
 msgid "items"
 msgstr "items"
 
-#: ../src/orca/default.py:709
+#: ../src/orca/default.py:703
 #, python-format
 msgid "Value: %s"
 msgstr "Value: %s"
 
-#: ../src/orca/default.py:710
+#: ../src/orca/default.py:704
 #, python-format
 msgid "Minimum value: %s"
 msgstr "Minimum value: %s"
 
-#: ../src/orca/default.py:711
+#: ../src/orca/default.py:705
 #, python-format
 msgid "Maximum value: %s"
 msgstr "Maximum value: %s"
 
-#: ../src/orca/default.py:1453
+#: ../src/orca/default.py:761
+msgid "one tab"
+msgstr "one tab"
+
+#: ../src/orca/default.py:763
+msgid "tabs"
+msgstr "tabs"
+
+#: ../src/orca/default.py:1499
 msgid "Not a document."
 msgstr "Not a document."
 
