@@ -240,12 +240,21 @@ def brailleUpdateText (obj):
         if frame:
             label = frame.name
 
-    if label is None:
+    # Treat the beastly combo box specially.
+    #
+    comboBox = None
+    if (obj.role == "combo box"):
+        comboBox = obj
+    else:
         parent = obj.parent
         if parent and (parent.role == "combo box"):
-            label = a11y.getLabel (parent)
-        else:
-            label = a11y.getLabel (obj)
+            comboBox = parent
+    if comboBox:
+        comboBoxPresenter (comboBox, True, False)
+        return
+        
+    if label is None:
+        label = a11y.getLabel (obj)
 
     brltext = getShortBrailleForRoleName (obj) + " "
     beginningOfText = len(brltext)
@@ -697,7 +706,7 @@ def sliderPresenter (obj, already_focused):
                + getSpeechForAccelerator (obj)
 
     brltext = getShortBrailleForRoleName (obj) + " " + a11y.getLabel (obj) \
-              + "(%s %s %s)" % (minString, valueString, maxString)
+              + " " + "(%s %s %s)" % (minString, valueString, maxString)
 
     brl.writeMessage (brltext + " " + getBrailleForAccelerator (obj))
     
@@ -774,7 +783,7 @@ def textPresenter (obj, already_focused):
     speech.say ("default", text)
 
 
-def comboBoxPresenter (obj, already_focused):
+def comboBoxPresenter (obj, already_focused, speak=True):
     """Speaks line the containing the caret and displays the line containing
     the caret on the Braille display.  [[[TODO: WDW - this presenter seems
     to be a bit broken.]]]
@@ -786,60 +795,92 @@ def comboBoxPresenter (obj, already_focused):
     
     debugPresenter ("default.comboBoxPresenter", obj, already_focused)
     
-    # Put the combo box's label, if any, in it's own region on the
-    # Braille display
-    #
-    display_left = brl.getDisplaySize ()
     label = a11y.getLabel (obj)
-
+    brltext = getShortBrailleForRoleName (obj) + " "
+    text = ""
+    
     if (label is not None) and (len (label) > 0):
-        # The region containing the label should be the length of the
-        # label's text +1 or half the display length, whichever is
-        # smaller
-        #
-        label_region_size = len(label)+1
-        if label_region_size > (display_left/2)-1:
-            label_region_size = (display_left/2)-1
-        brl.addRegion (label, label_region_size, 0)
-        display_left = display_left - label_region_size
-        
-    speak_text = a11y.getLabel (obj) + " " + getSpeechForRoleName (obj) + ". "
+        brltext = brltext + label + " "
+        text = label + " "
 
+    text = text + getSpeechForRoleName (obj) + ". "    
 
-    # Find the last (if any) element of the combo box that contains text.
+    # Find the text displayed in the combo box.  This is either:
     #
-    text = None
+    # 1) The last text object that's a child of the combo box
+    # 2) The selected child of the combo box.
+    # 3) The contents of the text of the combo box itself when
+    #    treated as a text object.
+    #
+    # Preference is given to #1, if it exists.
+    #
+    # [[[TODO: WDW - Combo boxes are complex beasts.  This algorithm
+    # needs serious work.]]]
+    #
+    selectedItem = None
+    comboSelection = a11y.getSelection (obj)
+    if comboSelection and comboSelection.nSelectedChildren > 0:
+        print "*** COMBOBOX HAS THIS MANY SELECTED CHILDREN: ", comboSelection.nSelectedChildren
+        selectedItem = a11y.makeAccessible(comboSelection.getSelectedChild(0))
+
+    result = getTextLineAtCaret (obj)
+    selectedText = result[0]
+    
+    cursor = -1
+    textObj = None
     children = obj.childCount
     i = 0
     while i < children:
         child = obj.child (i)
         if child.role == "text":
-            text = child
+            textObj = child
+        elif child.role == "menu":
+            menuItemCount = child.childCount
+            j = 0
+            while j < menuItemCount:
+                item = child.child(j)
+                label = a11y.getLabel(item)
+                if item == selectedItem \
+                       or label == selectedText:
+                    cursor = len(brltext) + 1
+                brltext = brltext + "(" + label + ")"
+                j = j + 1
         i = i + 1
-        
-    # If the combo box has a text object, display it in the combo
-    # box's content region of the Braille display.  Otherwise, the
-    # combo box's name will contain it's value - display that in the
-    # combo box's content region on the Braille display.
-    #
-    # [[[TODO: WDW - something seems broken here.  I'm guessing what
-    # is supposed to be happening is that each of the combo box's
-    # items is to be displayed on the Braille display, much like a
-    # menu.]]]
-    #
-    if text:
-        txt = a11y.getText (text)
-        contents = txt.getText (0, -1)
-        region_num = brl.addRegion (contents, display_left, 0)
-        brl.setCursor (region_num, txt.caretOffset)
-        brl.setScrollRegion (region_num)
-    else:
-        contents = obj.name
-        brl.addRegion (contents, display_left, 0)
-        brl.refresh ()
-        speak_text = speak_text + ", " + contents
 
-    speech.say ("default", speak_text)
+    if already_focused:
+        text = ""
+
+    if textObj:
+        print "*** Using textObj."
+        result = getTextLineAtCaret (textObj)
+        line = result[0]    
+        caretOffset = result[1]
+        lineOffset = result[2]
+        brltext = brltext + "("
+        beginningOfText = len(brltext)
+        brltext = brltext + line
+        brltext = brltext + " )"
+        cursor = beginningOfText+caretOffset-lineOffset
+        text = text + line + "."
+    elif selectedItem:
+        print "*** Using selectedItem."
+        text = text + a11y.getLabel(selectedItem) + "."
+    elif len(selectedText) > 0:
+        print "*** Using selectedText."
+        text = text + selectedText + "."
+    else:
+        debug.println(debug.LEVEL_SEVERE,
+                      "ERROR: Could not find selected item for combo box.")
+
+    print "*** BRLTEXT", brltext
+    
+    brl.writeMessage(brltext)
+    if cursor >= 0:
+        brl.setCursor(0, cursor)
+        brl.refresh ()
+        
+    if speak:
+        speech.say ("default", text)
                                     
 
 def tablePresenter (obj, already_focused):
@@ -1101,6 +1142,7 @@ def onValueChanged (event):
 # the value represents the presenter function.
 #
 selection_changed_handlers = {}
+selection_changed_handlers["combo box"] = comboBoxPresenter
 selection_changed_handlers["table"] = tablePresenter
 selection_changed_handlers["tree table"] = tablePresenter
 
