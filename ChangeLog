@@ -1,5 +1,9 @@
 2005-04-19  Willie Walker <william.walker@sun.com>
 
+	* src/orca/default.py: attempt at comboBoxPresenter.
+
+2005-04-19  Willie Walker <william.walker@sun.com>
+
 	* src/orca/default.py: fix bug in the way state_change_notifiers
 	were handled (list with one item was being exploded into
 	individual characters, which is not what we want), improve page
