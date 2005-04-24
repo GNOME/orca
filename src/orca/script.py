@@ -19,8 +19,7 @@
 
 """Defines the Script class."""
 
-import debug
-import a11y
+import orca
 import settings
 
 # The default script - used when the app is unknown (i.e., None)
@@ -51,7 +50,7 @@ class Script:
     cache = {} 
 
 
-    def __init__ (self, app):
+    def __init__(self, app):
 
         """Creates a script.  Populates the "listeners" table using the module
         for the application associated with the script instance (the name of
@@ -69,7 +68,7 @@ class Script:
         - app: the Python Accessible application to create a script for
         """
 
-        if Script.cache.has_key (app):
+        if Script.cache.has_key(app):
             return
 
         self.app = app
@@ -84,20 +83,20 @@ class Script:
         
         # Load the default script and default keybindings.  
         #
-        self.default = __import__ ("default")
-        self.default_bindings = __import__ ("default-keybindings")
+        self.default = __import__("default")
+        self.default_bindings = __import__("default-keybindings")
 
         # Load app-specific script and keybindings
         #
-        if getattr (settings, "useCustomScripts", True):
+        if getattr(settings, "useCustomScripts", True):
             try:
-                self.mod = __import__ (self.app.name)
+                self.mod = __import__(self.app.name)
                 self.name = self.app.name + " (custom)"
             except:
                 self.mod = None
             try:
                 bindingsname = self.app.name + "-keybindings"
-                self.bindings_mod = __import__ (bindingsname)
+                self.bindings_mod = __import__(bindingsname)
             except:
                 self.bindings_mod = None
         else:
@@ -110,13 +109,13 @@ class Script:
         # to handle Braille key events much like we handle keyboard
         # events.]]]
         #
-        func = getattr (self.mod, "onBrlKey", None)
+        func = getattr(self.mod, "onBrlKey", None)
         if func is None:
-            func = getattr (self.default,"onBrlKey", None)
+            func = getattr(self.default,"onBrlKey", None)
         if func:
             self.onBrlKey = func
 
-        # Populate the "listeners" table - a11y.py defines the names
+        # Populate the "listeners" table - orca.py defines the names
         # of functions allowed in a script for responding to various
         # types of events, and their corresponding at-spi event names.
         # We iterate through the list of allowed event handler names,
@@ -125,12 +124,12 @@ class Script:
         # module.  If we find an event handler, we add it to the
         # "listeners" dictionary.
         #
-        for key in a11y.dispatcher.keys ():
-            func = getattr (self.mod, key, None)
+        for key in orca.dispatcher.keys():
+            func = getattr(self.mod, key, None)
             if func is None:
-                func = getattr (self.default, key, None)
+                func = getattr(self.default, key, None)
             if func:
-                type = a11y.dispatcher[key]
+                type = orca.dispatcher[key]
                 self.listeners[type] = func
 
         # Populate the "keybindings" table.  The keys are the string
@@ -141,27 +140,27 @@ class Script:
         # keybindings always replace default ones for the same key
         # combinations.
         #
-        for key in self.default_bindings.keybindings.keys ():
+        for key in self.default_bindings.keybindings.keys():
             funcname = self.default_bindings.keybindings[key]
-            func = getattr (self.mod, funcname, None)
+            func = getattr(self.mod, funcname, None)
             if func is None:
-                func = getattr (self.default, funcname, None)
+                func = getattr(self.default, funcname, None)
             if func:
                 self.keybindings[key] = func
 
         if self.bindings_mod:
-            for key in self.bindings_mod.keybindings.keys ():
+            for key in self.bindings_mod.keybindings.keys():
                 funcname = self.bindings_mod.keybindings[key]
-                func = getattr (self.mod, funcname, None)
+                func = getattr(self.mod, funcname, None)
                 if func is None:
-                    func = getattr (self.default, funcname, None)
+                    func = getattr(self.default, funcname, None)
                 if func:
                     self.keybindings[key] = func
 
         Script.cache[app] = self
 
         
-    def reload (self):
+    def reload(self):
         """Reloads the default and app-specific modules for the script.
         
         [[[TODO: WDW - not sure this really repopulates the listeners and
@@ -171,20 +170,20 @@ class Script:
         between the load and the reload.]]]
         """
 
-        reload (self.default)
-        reload (self.default_bindings)
+        reload(self.default)
+        reload(self.default_bindings)
 
         try:
-            reload (self.mod)
+            reload(self.mod)
         except:
             pass
         try:
-            reload (self.bindings_mod)
+            reload(self.bindings_mod)
         except:
             pass
 
 
-def getScript (app):
+def getScript(app):
     """Get a script for an app (and make it if necessary).  This is used
     instead of a simple calls to Script's constructor.
 
@@ -201,19 +200,19 @@ def getScript (app):
     #
     if app is None:
         if default is None:
-            default = Script (None)
+            default = Script(None)
         return default
     
     try:
         script = Script.cache[app]
-        script.reload ()
+        script.reload()
     except:
-        script = Script (app)
+        script = Script(app)
         
     return script
 
 
-def deleteScript (app):
+def deleteScript(app):
     """Deletes a script for an app (if it exists).
 
     Arguments:

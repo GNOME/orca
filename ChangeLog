@@ -1,3 +1,8 @@
+2005-04-24  Willie Walker <william.walker@sun.com>
+
+	* src/orca/*.py: anal-retentive refactoring and surface level
+	formatting of code.
+
 2005-04-19  Willie Walker <william.walker@sun.com>
 
 	* src/orca/default.py: attempt at comboBoxPresenter.

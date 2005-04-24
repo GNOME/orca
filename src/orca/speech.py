@@ -22,12 +22,12 @@
 Provides support for voice styles, speaking, and sayAll mode.
 """
 import debug
-from core import ORBit, bonobo
-import sys
 import settings
-from chnames import chnames  # character (e.g., punctuation) pronunciations
 
-ORBit.load_typelib ('GNOME_Speech')
+from chnames import chnames  # character (e.g., punctuation) pronunciations
+from core import ORBit, bonobo
+
+ORBit.load_typelib('GNOME_Speech')
 import GNOME.Speech, GNOME__POA.Speech
 
 # Global list of active gnome-spech drivers
@@ -47,7 +47,7 @@ initialized = False
 #
 lastText = None
 
-def createSpeaker (driverName, voiceName):
+def createSpeaker(driverName, voiceName):
     """Internal to speech module only.
 
     Creates a GNOME Speech speaker based on a speech driver name and a voice
@@ -76,19 +76,19 @@ def createSpeaker (driverName, voiceName):
     # [[[TODO: MM - This could probably just as easily be done with a
     # better use of getVoices.]]]
     #
-    voices = driver.getAllVoices ()
+    voices = driver.getAllVoices()
     found = False
     for voice in voices:
-        if voice.name.find (voiceName) >= 0:
+        if voice.name.find(voiceName) >= 0:
             found = True
             break
     if not found:
         return None
 
-    return driver.createSpeaker (voice)
+    return driver.createSpeaker(voice)
 
 
-class SpeechCallback (GNOME__POA.Speech.SpeechCallback):
+class SpeechCallback(GNOME__POA.Speech.SpeechCallback):
     """Implements gnome-speech's SpeechCallback class.  The speech
     module uses only one global callback object which is used for
     tasks such as sayAll mode.
@@ -97,12 +97,12 @@ class SpeechCallback (GNOME__POA.Speech.SpeechCallback):
     current speaking position.
     """
 
-    def __init__ (self):
+    def __init__(self):
         self.onSpeechEnded = None
         self.position = 0
 
 
-    def notify (self, type, id, offset):
+    def notify(self, type, id, offset):
         """Called by GNOME Speech when the GNOME Speech driver generates
         a callback.
 
@@ -116,7 +116,7 @@ class SpeechCallback (GNOME__POA.Speech.SpeechCallback):
         #
         if type == GNOME.Speech.speech_callback_speech_ended:
             if self.onSpeechEnded:
-                self.onSpeechEnded ()
+                self.onSpeechEnded()
 
         # Update our speaking position if we get a speech progress
         # notification.  [[[TODO: WDW - need to be able use this to
@@ -128,10 +128,10 @@ class SpeechCallback (GNOME__POA.Speech.SpeechCallback):
 
 # Global speech callback instance.
 #
-cb = SpeechCallback ()
+cb = SpeechCallback()
 
 
-def init ():
+def init():
     """Initializes the speech module, connecting to the various speech
     drivers and creating the various speakersvoice styles defined in the
     user's settings.py.
@@ -151,15 +151,15 @@ def init ():
     # Get a list of all the drivers on the system and find out how many
     # of them work.
     #
-    servers = bonobo.activation.query (
-        "repo_ids.has ('IDL:GNOME/Speech/SynthesisDriver:0.3')")
+    servers = bonobo.activation.query(
+        "repo_ids.has('IDL:GNOME/Speech/SynthesisDriver:0.3')")
 
     drivers = []
     for server in servers:
         try:
-            driver = bonobo.activation.activate_from_id (server.iid, 0, False)
-            driver = driver._narrow (GNOME.Speech.SynthesisDriver)
-            isInitialized = driver.isInitialized ()
+            driver = bonobo.activation.activate_from_id(server.iid, 0, False)
+            driver = driver._narrow(GNOME.Speech.SynthesisDriver)
+            isInitialized = driver.isInitialized()
         except:
             continue
             
@@ -169,29 +169,29 @@ def init ():
         # all the drivers.]]]
         #
         if not isInitialized:
-            isInitialized = driver.driverInit ()
+            isInitialized = driver.driverInit()
         if isInitialized:
-            drivers.append (driver)
+            drivers.append(driver)
 
     # Create the speakers
     #
     speakers = {}
-    for voiceName in settings.voices.keys ():
+    for voiceName in settings.voices.keys():
         desc = settings.voices[voiceName]
-        s = createSpeaker (desc[0], desc[1])
+        s = createSpeaker(desc[0], desc[1])
         if s is not None:
-            s = s._narrow (GNOME.Speech.Speaker)
-            s.setParameterValue ("rate", desc[2])
-            s.setParameterValue ("pitch", desc[3])
-            s.setParameterValue ("volume", desc[4])
+            s = s._narrow(GNOME.Speech.Speaker)
+            s.setParameterValue("rate", desc[2])
+            s.setParameterValue("pitch", desc[3])
+            s.setParameterValue("volume", desc[4])
             speakers[voiceName] = s
-            s.registerSpeechCallback (cb._this())
+            s.registerSpeechCallback(cb._this())
 
     # If no speakers were defined, select the first voice of the first
     # working driver as the default
     #
     if len(speakers) == 0 and len(drivers) > 0:
-        voices = drivers[0].getAllVoices ()
+        voices = drivers[0].getAllVoices()
         if len(voices) > 0:
             speakers["default"] = drivers[0].createSpeaker(
                 voices[0])._narrow(GNOME.Speech.Speaker)
@@ -201,7 +201,7 @@ def init ():
     return True
 
 
-def shutdown ():
+def shutdown():
     """Shuts down the speech module, freeing speakers, disconnecting
     from the GNOME speech drivers, and reseting the initialized state
     to False.  [[[TODO: WDW - make sure this is shutting down
@@ -220,7 +220,7 @@ def shutdown ():
 
     for speaker in speakers.values():
         try:
-            speaker.unref ()
+            speaker.unref()
         except:
             pass
         
@@ -228,7 +228,7 @@ def shutdown ():
 
     for driver in drivers:
         try:
-            driver.unref ()
+            driver.unref()
         except:
             pass
         
@@ -239,7 +239,7 @@ def shutdown ():
     return True
 
 
-def reset ():
+def reset():
     """Shuts the speech module down and then reinitializes it.  This
     method is typically to be executed in the event that a failure
     occurred while attempting to speak.
@@ -248,13 +248,13 @@ def reset ():
     re-established with the speech service.
     """
 
-    shutdown ()
-    return init ()
+    shutdown()
+    return init()
 
 # Speak text - This function takes the voice name and the text to
 # speak as parameters
 
-def say (voiceName, text):
+def say(voiceName, text):
     """Speaks the given text using the given voice style.
 
     Arguments:
@@ -276,7 +276,7 @@ def say (voiceName, text):
 
     # Do we have the specified voice?
     #
-    if speakers.has_key (voiceName):
+    if speakers.has_key(voiceName):
         s = speakers[voiceName]
     else:
         s = speakers["default"]
@@ -292,25 +292,25 @@ def say (voiceName, text):
 
     # Send the text to the GNOME Speech speaker
     #
-    debug.println(debug.LEVEL_INFO, "speech.say (" + text + ")")
+    debug.println(debug.LEVEL_INFO, "speech.say(" + text + ")")
     try:
-        s.stop ()
+        s.stop()
         lastText = [voiceName, text]
-        return s.say (text)
+        return s.say(text)
     except:
-        debug.printException (debug.LEVEL_SEVERE)
-        reset ()
+        debug.printException(debug.LEVEL_SEVERE)
+        reset()
 
 
-def sayAgain ():
+def sayAgain():
     """Speaks the last text again.
     """
 
     if lastText:
-        say (lastText[0], lastText[1])
+        say(lastText[0], lastText[1])
 
     
-def stop (voiceName):
+def stop(voiceName):
     """Stops the specified voice.  This will tell the voice to stop
     all requests in progress and delete all requests waiting to be spoken.
 
@@ -324,13 +324,13 @@ def stop (voiceName):
     if not initialized:
         return
 
-    if speakers.has_key (voiceName):
+    if speakers.has_key(voiceName):
         s = speakers[voiceName]
         try:
-            s.stop ()
+            s.stop()
         except:
-            debug.printException (debug.LEVEL_SEVERE)
-            reset ()
+            debug.printException(debug.LEVEL_SEVERE)
+            reset()
             
 ########################################################################
 #                                                                      #
@@ -361,7 +361,7 @@ sayAllEnabled = False
 # This function is called in sayAll mode when speech for a chunk of
 # text has ended
 
-def sayAllSpeechEnded ():
+def sayAllSpeechEnded():
     """Called in sayAll mode when speech for a chunk of text has
     ended.  This will prompt sayAll mode to attempt to speak the
     next chunk of text.
@@ -374,10 +374,10 @@ def sayAllSpeechEnded ():
 
     # If calling sayAllGetChunk fails, then we're done
     #
-    if not onSayAllGetChunk ():
+    if not onSayAllGetChunk():
         # Call the client's sayAllStopped function
         #
-        onSayAllStopped (0)
+        onSayAllStopped(0)
 
         # Clear the members of the speech callback
         #
@@ -385,7 +385,7 @@ def sayAllSpeechEnded ():
         sayAllEnabled = False
 
 
-def startSayAll (voiceName, getChunk, onStopped):
+def startSayAll(voiceName, getChunk, onStopped):
     """Starts sayAll mode.  Takes the name of the voice style to be
     used, a reference to the function to speak another chunk of
     text, and a reference to a function to be called when sayAll
@@ -415,7 +415,7 @@ def startSayAll (voiceName, getChunk, onStopped):
     sayAllEnabled = True
     
 
-def stopSayAll ():
+def stopSayAll():
     """Stops the sayAll mode currently in progress.
     """
     
@@ -424,6 +424,6 @@ def stopSayAll ():
     global sayAllVoiceName
 
     cb.onSpeechEnded = None
-    stop (sayAllVoiceName)
-    onSayAllStopped (cb.position)
+    stop(sayAllVoiceName)
+    onSayAllStopped(cb.position)
     sayAllEnabled = False

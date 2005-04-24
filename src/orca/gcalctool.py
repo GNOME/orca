@@ -17,12 +17,12 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-import core
-import kbd
-import speech
+import a11y
 import brl
 import default
-
+import kbd
+import rolenames
+import speech
 
 # A reference to the display
 
@@ -37,7 +37,7 @@ display_txt = None
 # This function is run whenever a toplevel window in gcalctool is
 # activated
 
-def onWindowActivated (event):
+def onWindowActivated(event):
     global display
     global display_txt
 
@@ -45,26 +45,26 @@ def onWindowActivated (event):
     # If we haven't found the display, and this is a toplevel window,
     # look for the display in this window
 
-    if display is None and event.source.role == "text":
+    if display is None and event.source.role == rolenames.ROLE_TEXT:
 
         # It's the only text object in GCalctool's main window
 
-        d = a11y.findByRole (event.source, "text")
+        d = a11y.findByRole(event.source, rolenames.ROLE_TEXT)
         display = d[0]
-        display_txt = a11y.getText (display)
-        contents = display_txt.getText (0, -1)
-        brl.writeMessage (contents)
+        display_txt = a11y.getText(display)
+        contents = display_txt.getText(0, -1)
+        brl.writeMessage(contents)
 
     # Call the default onWindowActivated function
 
-    default.onWindowActivated (event)
+    default.onWindowActivated(event)
 
 
 # This is an attempt to only read the display when enter or equals is
 # pressed - so when we get text insertions to the display, speak
 # them if the last key pressed was enter or equals
 
-def onTextInserted (event):
+def onTextInserted(event):
     global display
     global display_txt
 
@@ -73,10 +73,10 @@ def onTextInserted (event):
         # Always update the Braille display but only speak if the last
         # key pressed was enter or equals
 
-        contents = display_txt.getText (0, -1)
-        brl.writeMessage (contents)
+        contents = display_txt.getText(0, -1)
+        brl.writeMessage(contents)
         if kbd.lastKey == "Return" or kbd.lastKey == "=":
-            speech.say ("default", contents)
+            speech.say("default", contents)
             
         
         

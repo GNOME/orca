@@ -19,11 +19,9 @@
 
 """Provides debug utilities for Orca."""
 
-import a11y
 import core
 import orca
 from rolenames import getRoleName # localized role names
-import sys
 import traceback
 
 # Used to turn off all debugging.
@@ -69,7 +67,7 @@ LEVEL_ALL = 0
 
 debugLevel = LEVEL_SEVERE
 
-def setDebugLevel (newLevel):
+def setDebugLevel(newLevel):
     """Sets the debug level.  The various levels can be LEVEL_OFF,
     LEVEL_SEVERE, LEVEL_WARNING, LEVEL_INFO, LEVEL_CONFIG, LEVEL_FINE,
     LEVEL_FINER, LEVEL_FINEST, LEVEL_ALL.
@@ -85,7 +83,7 @@ def setDebugLevel (newLevel):
     println(debugLevel, "Changed debugLevel to %d" % debugLevel)
     
     
-def getStates (obj):
+def getStates(obj):
     """Returns a space-delimited string composed of the given object's
     Accessible state attribute.
 
@@ -95,77 +93,77 @@ def getStates (obj):
     
     set = obj.state
     stateString = " "
-    if set.count (core.Accessibility.STATE_INVALID):
+    if set.count(core.Accessibility.STATE_INVALID):
         stateString += "INVALID "
-    if set.count (core.Accessibility.STATE_ACTIVE):
+    if set.count(core.Accessibility.STATE_ACTIVE):
         stateString += "ACTIVE "
-    if set.count (core.Accessibility.STATE_ARMED):
+    if set.count(core.Accessibility.STATE_ARMED):
         stateString += "ARMED "
-    if set.count (core.Accessibility.STATE_BUSY):
+    if set.count(core.Accessibility.STATE_BUSY):
         stateString += "BUSY "
-    if set.count (core.Accessibility.STATE_CHECKED):
+    if set.count(core.Accessibility.STATE_CHECKED):
         stateString += "CHECKED "
-    if set.count (core.Accessibility.STATE_COLLAPSED):
+    if set.count(core.Accessibility.STATE_COLLAPSED):
         stateString += "COLLAPSED "
-    if set.count (core.Accessibility.STATE_DEFUNCT):
+    if set.count(core.Accessibility.STATE_DEFUNCT):
         stateString += "DEFUNCT "
-    if set.count (core.Accessibility.STATE_EDITABLE):
+    if set.count(core.Accessibility.STATE_EDITABLE):
         stateString += "EDITABLE "
-    if set.count (core.Accessibility.STATE_ENABLED):
+    if set.count(core.Accessibility.STATE_ENABLED):
         stateString += "ENABLED "
-    if set.count (core.Accessibility.STATE_EXPANDABLE):
+    if set.count(core.Accessibility.STATE_EXPANDABLE):
         stateString += "EXPANDABLE "
-    if set.count (core.Accessibility.STATE_EXPANDED):
+    if set.count(core.Accessibility.STATE_EXPANDED):
         stateString += "EXPANDED "
-    if set.count (core.Accessibility.STATE_FOCUSABLE):
+    if set.count(core.Accessibility.STATE_FOCUSABLE):
         stateString += "FOCUSABLE "
-    if set.count (core.Accessibility.STATE_FOCUSED):
+    if set.count(core.Accessibility.STATE_FOCUSED):
         stateString += "FOCUSED "
-    if set.count (core.Accessibility.STATE_HAS_TOOLTIP):
+    if set.count(core.Accessibility.STATE_HAS_TOOLTIP):
         stateString += "HAS_TOOLTIP "
-    if set.count (core.Accessibility.STATE_HORIZONTAL):
+    if set.count(core.Accessibility.STATE_HORIZONTAL):
         stateString += "HORIZONTAL "
-    if set.count (core.Accessibility.STATE_ICONIFIED):
+    if set.count(core.Accessibility.STATE_ICONIFIED):
         stateString += "ICONIFIED "
-    if set.count (core.Accessibility.STATE_MODAL):
+    if set.count(core.Accessibility.STATE_MODAL):
         stateString += "MODAL "
-    if set.count (core.Accessibility.STATE_MULTI_LINE):
+    if set.count(core.Accessibility.STATE_MULTI_LINE):
         stateString += "MULTI_LINE "
-    if set.count (core.Accessibility.STATE_MULTISELECTABLE):
+    if set.count(core.Accessibility.STATE_MULTISELECTABLE):
         stateString += "MULTISELECTABLE "
-    if set.count (core.Accessibility.STATE_OPAQUE):
+    if set.count(core.Accessibility.STATE_OPAQUE):
         stateString += "OPAQUE "
-    if set.count (core.Accessibility.STATE_PRESSED):
+    if set.count(core.Accessibility.STATE_PRESSED):
         stateString += "PRESSED "
-    if set.count (core.Accessibility.STATE_RESIZABLE):
+    if set.count(core.Accessibility.STATE_RESIZABLE):
         stateString += "RESIZABLE "
-    if set.count (core.Accessibility.STATE_SELECTABLE):
+    if set.count(core.Accessibility.STATE_SELECTABLE):
         stateString += "SELECTABLE "
-    if set.count (core.Accessibility.STATE_SELECTED):
+    if set.count(core.Accessibility.STATE_SELECTED):
         stateString += "SELECTED "
-    if set.count (core.Accessibility.STATE_SENSITIVE):
+    if set.count(core.Accessibility.STATE_SENSITIVE):
         stateString += "SENSITIVE "
-    if set.count (core.Accessibility.STATE_SHOWING):
+    if set.count(core.Accessibility.STATE_SHOWING):
         stateString += "SHOWING "
-    if set.count (core.Accessibility.STATE_SINGLE_LINE):
+    if set.count(core.Accessibility.STATE_SINGLE_LINE):
         stateString += "SINGLE_LINE " 
-    if set.count (core.Accessibility.STATE_STALE):
+    if set.count(core.Accessibility.STATE_STALE):
         stateString += "STALE "
-    if set.count (core.Accessibility.STATE_TRANSIENT):
+    if set.count(core.Accessibility.STATE_TRANSIENT):
         stateString += "TRANSIENT " 
-    if set.count (core.Accessibility.STATE_VERTICAL):
+    if set.count(core.Accessibility.STATE_VERTICAL):
         stateString += "VERTICAL "
-    if set.count (core.Accessibility.STATE_VISIBLE):
+    if set.count(core.Accessibility.STATE_VISIBLE):
         stateString += "VISIBLE "
-    if set.count (core.Accessibility.STATE_MANAGES_DESCENDANTS):
+    if set.count(core.Accessibility.STATE_MANAGES_DESCENDANTS):
         stateString += "MANAGES_DESCENDANTS "
-    if set.count (core.Accessibility.STATE_INDETERMINATE):
+    if set.count(core.Accessibility.STATE_INDETERMINATE):
         stateString += "INDETERMINATE "
 
     return stateString;
 
 
-def printException (level):
+def printException(level):
     """Prints out information regarding the current exception.
 
     Arguments:
@@ -173,12 +171,12 @@ def printException (level):
     """
 
     if level >= debugLevel:
-        println (level)
-        traceback.print_exc ()
-        println (level)
+        println(level)
+        traceback.print_exc()
+        println(level)
 
 
-def printStack (level):
+def printStack(level):
     """Prints out the current stack.
 
     Arguments:
@@ -186,12 +184,12 @@ def printStack (level):
     """
 
     if level >= debugLevel:
-        println (level)
-        traceback.print_stack ()
-        println (level)
+        println(level)
+        traceback.print_stack()
+        println(level)
 
 
-def println (level, text = ""):
+def println(level, text = ""):
     """Prints the text to stdout if debug is enabled.
     
     Arguments:
@@ -203,7 +201,7 @@ def println (level, text = ""):
         print text
 
 
-def listDetails (level, indent, accessible):
+def listDetails(level, indent, accessible):
     """Lists the details of the given accessible with the given
     indentation.
 
@@ -216,17 +214,17 @@ def listDetails (level, indent, accessible):
     if level < debugLevel:
         return
     
-    println (level, "%sname   = (%s)" % (indent, accessible.name))
-    println (level, "%srole   = (%s)" % (indent, getRoleName(accessible)))
-    println (level, "%sstate  = (%s)" % (indent, getStates(accessible)))
+    println(level, "%sname   = (%s)" % (indent, accessible.name))
+    println(level, "%srole   = (%s)" % (indent, getRoleName(accessible)))
+    println(level, "%sstate  = (%s)" % (indent, getStates(accessible)))
 
     if accessible.app is None:
-        println (level, "%sapp    = (None)" % indent)
+        println(level, "%sapp    = (None)" % indent)
     else:
-        println (level, "%sapp    = (%s)" % (indent, accessible.app.name))
+        println(level, "%sapp    = (%s)" % (indent, accessible.app.name))
         
     
-def listApps (level):
+def listApps(level):
     """Prints a list of all applications to stdout
 
     Arguments:
@@ -236,20 +234,20 @@ def listApps (level):
     if level < debugLevel:
         return
     
-    println (level, "There are %d apps" % len(orca.apps))
+    println(level, "There are %d apps" % len(orca.apps))
     for app in orca.apps:
-        println (level, "  %s (childCount=%d)" % (app.name, app.childCount))
+        println(level, "  %s (childCount=%d)" % (app.name, app.childCount))
         count = 0
         while count < app.childCount:
-            println (level, "    Child %d:" % count)
-            child = app.child (count)
-            listDetails (level, "      ", child)
+            println(level, "    Child %d:" % count)
+            child = app.child(count)
+            listDetails(level, "      ", child)
             if child.parent != app:
                 println(level, "      WARNING: child's parent is not app!!!")
             count += 1
 
 
-def listActiveApp (level):
+def listActiveApp(level):
     """Prints the active application.
 
     Arguments:
@@ -259,21 +257,21 @@ def listActiveApp (level):
     if level < debugLevel:
         return    
     
-    println (level, "Current active application:")
-    window = orca.findActiveWindow ()
+    println(level, "Current active application:")
+    window = orca.findActiveWindow()
     if window is None:
-        println (level, "  None")
+        println(level, "  None")
     else:
         app = window.app
         if app is None:
-            println (level, "  None")
+            println(level, "  None")
         else:
             listDetails(level, "  ", app)
             count = 0
             while count < app.childCount:
-                println (level, "    Child %d:" % count)
-                child = app.child (count)
-                listDetails (level, "    ", child)
+                println(level, "    Child %d:" % count)
+                child = app.child(count)
+                listDetails(level, "    ", child)
                 if child.parent != app:
                     println(level,
                             "      WARNING: child's parent is not app!!!")

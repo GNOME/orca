@@ -20,12 +20,11 @@
 """Manages the magnifier for orca.  [[[TODO: WDW - this is very very early
 in development.  One might even say it is pre-prototype.]]]
 """
+
 import core
-import debug
+from core import bonobo
 import CORBA
 import GNOME
-from core import bonobo
-import settings
 import time
 
 # If True, this module has been initialized.
@@ -67,10 +66,10 @@ zoomer = None
 
 # The time of the last mouse event.
 #
-lastMouseEventTime = time.time ()
+lastMouseEventTime = time.time()
 
 
-def magnifyAccessible (acc):
+def magnifyAccessible(acc):
     """Sets the region of interest to the upper left of the given
     accessible, if it implements the Component interface.  Otherwise,
     does nothing.
@@ -95,7 +94,7 @@ def magnifyAccessible (acc):
     # a close period of time.  [[[TODO: WDW - this is a hack and really
     # doesn't belong here.  Plus, the delta probably should be adjustable.]]]
     #
-    currentTime = time.time ()
+    currentTime = time.time()
     if (currentTime - lastMouseEventTime) < 0.2: # 200 milliseconds
         return
     
@@ -153,10 +152,10 @@ def magnifyAccessible (acc):
             y2 = extents.y + extents.height
             y1 = y2 - roiHeight
         
-    setROI (GNOME.Magnifier.RectBounds (x1, y1, x2, y2))
+    setROI(GNOME.Magnifier.RectBounds(x1, y1, x2, y2))
 
     
-def setROICenter (x, y):
+def setROICenter(x, y):
     """Centers the region of interest around the given point.
 
     Arguments:
@@ -183,10 +182,10 @@ def setROICenter (x, y):
     x2 = x1 + roiWidth
     y2 = y1 + roiHeight
 
-    setROI (GNOME.Magnifier.RectBounds (x1, y1, x2, y2))
+    setROI(GNOME.Magnifier.RectBounds(x1, y1, x2, y2))
 
 
-def setROI (rect):
+def setROI(rect):
     """Sets the region of interest.
 
     Arguments:
@@ -195,20 +194,24 @@ def setROI (rect):
     
     global roi
     roi = rect
-    zoomer.setROI (roi)
-    zoomer.markDirty (roi)  # [[[TODO: WDW - for some reason, this seems
-                            # necessary.]]]
+    zoomer.setROI(roi)
+    zoomer.markDirty(roi)  # [[[TODO: WDW - for some reason, this seems
+                           # necessary.]]]
 
 
 # Used for tracking the pointer.
 #
-def onMouseEvent (e):
+def onMouseEvent(e):
+    """
+    Arguments:
+    - e: at-spi event from the at-api registry
+    """
     global lastMouseEventTime
-    lastMouseEventTime = time.time ()
-    setROICenter (e.detail1, e.detail2)
+    lastMouseEventTime = time.time()
+    setROICenter(e.detail1, e.detail2)
 
     
-def init ():
+def init():
     """Initializes the magnifier, bringing the magnifier up on the
     display.
     
@@ -230,10 +233,10 @@ def init ():
     if initialized:
         return False
 
-    magnifier = bonobo.get_object ("OAFIID:GNOME_Magnifier_Magnifier:0.9",
-                                   "GNOME/Magnifier/Magnifier")
+    magnifier = bonobo.get_object("OAFIID:GNOME_Magnifier_Magnifier:0.9",
+                                  "GNOME/Magnifier/Magnifier")
 
-    pbag = magnifier.getProperties ()
+    pbag = magnifier.getProperties()
     sourceDisplayBounds = pbag.getValue("source-display-bounds").value()
 
     #print "MAGNIFIER PROPERTIES:"
@@ -268,10 +271,10 @@ def init ():
     #    managed = pbag.getValue("is-managed").value()
     #    print "Managed:  ", managed
 
-    zoomers =  magnifier.getZoomRegions ()
+    zoomers =  magnifier.getZoomRegions()
     zoomer = zoomers[0]
 
-    pbag = zoomer.getProperties ()
+    pbag = zoomer.getProperties()
     viewport = pbag.getValue("viewport").value()
     magx = pbag.getValue("mag-factor-x").value()
     magy = pbag.getValue("mag-factor-y").value()
@@ -289,18 +292,18 @@ def init ():
     #zoomer.moveResize(GNOME.Magnifier.RectBounds(256,256,600,600))
     #zoomer.setMagFactor(1.0, 1.0)
 
-    core.registerEventListener (onMouseEvent, "mouse:abs")
+    core.registerEventListener(onMouseEvent, "mouse:abs")
     
     initialized = True
 
     # Zoom to the upper left corner of the display for now.
     #
-    setROICenter (0, 0)
+    setROICenter(0, 0)
 
     return True
 
 
-def shutdown ():
+def shutdown():
     """Shuts down the magnifier module.
     Returns True if the shutdown procedure was run or False if this
     module has not been initialized.
@@ -312,8 +315,8 @@ def shutdown ():
     if not initialized:
         return False
 
-    magnifier.clearAllZoomRegions ()
-    magnifier.dispose ()
+    magnifier.clearAllZoomRegions()
+    magnifier.dispose()
     magnifier = None
     
     initialized = False

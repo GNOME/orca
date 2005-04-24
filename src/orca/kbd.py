@@ -37,12 +37,11 @@ used by scripts to determine what keyboard actions may have caused an
 at-spi event.
 """
 
-import debug
+import brl
 import core
-import a11y
+import debug
 import settings
 import speech
-import brl
 
 # Dictionary representing the keybindings.  Orca is expected to replace
 # this dictionary each time a new script is activated (using the keybindings
@@ -73,7 +72,7 @@ listeners = None
 initialized = False
 
 
-class KeystrokeListener (core.Accessibility__POA.DeviceEventListener):
+class KeystrokeListener(core.Accessibility__POA.DeviceEventListener):
     """Encapsulates all the information associated with at-spi key
     listeners.  [[[TODO: MM - Currently, under the covers, this class
     uses at-spi's toolkit listeners, but this could be changed if/when
@@ -107,14 +106,27 @@ class KeystrokeListener (core.Accessibility__POA.DeviceEventListener):
         self.keyset = []
         self.type = [core.Accessibility.KEY_PRESSED_EVENT,
                      core.Accessibility.KEY_RELEASED_EVENT]
-        self.mode = core.Accessibility.EventListenerMode ()
+        self.mode = core.Accessibility.EventListenerMode()
         self.mode.preemptive = preemptive
         self.mode.synchronous = preemptive
         self.mode._global = isGlobal
         self.func = func
 
 
-    def notifyEvent (self, event):
+    def ref(self): pass
+    
+
+    def unref(self): pass
+    
+
+    def queryInterface(self, repo_id):
+        if repo_id == "IDL:Accessibility/EventListener:1.0":
+            return self._this()
+        else:
+            return None
+
+
+    def notifyEvent(self, event):
         """Called by the at-spi registry when a key is pressed or released.
 
         Arguments:
@@ -123,51 +135,38 @@ class KeystrokeListener (core.Accessibility__POA.DeviceEventListener):
         Returns True if the event has been consumed.
         """
 
-        return self.func (event)
+        return self.func(event)
 
 
-    def register (self):
+    def register(self):
         """Registers this listener with the at-spi registry.
         """
         
         global registry
 
-        # [[[TODO: MM - This seems to always throw an exception, even
-        # when it works, so we put it in a try catch block.  WDW - is
-        # it possible that this happens because the keyset is empty?]]]
-        # 
-        try:
-            d = core.registry.getDeviceEventController ()
-            d.registerKeystrokeListener (self._this(), 
-                                         self.keyset, 
-                                         self.mask, 
-                                         self.type, 
-                                         self.mode)
-        except:
-            pass
+        self._default_POA().the_POAManager.activate()
+        d = core.registry.getDeviceEventController()
+        d.registerKeystrokeListener(self._this(), 
+                                    self.keyset, 
+                                    self.mask, 
+                                    self.type, 
+                                    self.mode)
 
 
-    def deregister (self):
+    def deregister(self):
         """Deregisters this listener with the at-spi registry.
         """
         
         global registry
 
-        # [[[TODO: MM - This seems to always throw an exception, even
-        # when it works, so we put it in a try catch block.  WDW - is
-        # it possible that this happens because the keyset is empty?]]]
-        # 
-        try:
-            d = core.registry.getDeviceEventController ()
-            d.deregisterKeystrokeListener (self._this(), 
-                                           self.keyset, 
-                                           self.mask, 
-                                           self.type)
-        except:
-            pass
+        d = core.registry.getDeviceEventController()
+        d.deregisterKeystrokeListener(self._this(), 
+                                      self.keyset, 
+                                      self.mask, 
+                                      self.type)
 
 
-def getModifierString (modifier):
+def getModifierString(modifier):
     """Converts a set of modifer states into a text string
 
     Arguments:
@@ -184,11 +183,11 @@ def getModifierString (modifier):
     # actual key symbol (e.g., upper or lower case), but others may not.]]]
     #
     if insertPressed:
-        l.append ("insert")
-    if modifier & (1<<core.Accessibility.MODIFIER_CONTROL):
-        l.append ("control")
-    if modifier & (1<<core.Accessibility.MODIFIER_ALT):
-        l.append ("alt")
+        l.append("insert")
+    if modifier & (1 << core.Accessibility.MODIFIER_CONTROL):
+        l.append("control")
+    if modifier & (1 << core.Accessibility.MODIFIER_ALT):
+        l.append("alt")
     for mod in l:
         if s == "":
             s = mod
@@ -197,7 +196,7 @@ def getModifierString (modifier):
     return s
 
 
-def keyEcho (key):
+def keyEcho(key):
     """If the keyEcho setting is enabled, echoes the key via speech.
     Uppercase keys will be spoken using the "uppercase" voice style,
     whereas lowercase keys will be spoken using the "default" voice style.
@@ -206,19 +205,19 @@ def keyEcho (key):
     - key: a string representing the key name to echo.
     """
     
-    if not getattr (settings, "keyEcho", False):
+    if not getattr(settings, "keyEcho", False):
         return
-    if key.isupper ():
-        speech.say ("uppercase", key)
+    if key.isupper():
+        speech.say("uppercase", key)
     else:
-        speech.say ("default", key)
+        speech.say("default", key)
 
 
 
 # This function is called whenever a key is pressed - It is called by
 # our event listener which is listening to at-spi key events
 
-def onKeyEvent (event):
+def onKeyEvent(event):
     """The primary key event handler for orca.  Keeps track of various
     attributes, such as the lastKey and insertPressed.  Also calls
     keyEcho as well as any function that may exist in the keybindings
@@ -242,7 +241,7 @@ def onKeyEvent (event):
         if event.event_string == "KP_Insert":
             insertPressed = True
         else:
-            mods = getModifierString (event.modifiers)
+            mods = getModifierString(event.modifiers)
             if mods:
                 keystring = mods + "+" + event.event_string
             else:
@@ -252,37 +251,37 @@ def onKeyEvent (event):
             # enabled, a key press stops it
             #
             if speech.sayAllEnabled:
-                speech.stopSayAll ()
+                speech.stopSayAll()
             else:
-                speech.stop ("default")
+                speech.stop("default")
 
             # Key presses clear the Braille display
             # [[[TODO:  WDW - is this what we want?]]]
             #
-            if getattr (settings, "useBraille", False):
-                brl.clear ()
+            if getattr(settings, "useBraille", False):
+                brl.clear()
     else:
         if event.event_string == "KP_Insert":
             insertPressed = False
             
     if keystring:
         lastKey = keystring
-        debug.println (debug.LEVEL_INFO, "Key Event: " + keystring)
-        keyEcho (keystring)
+        debug.println(debug.LEVEL_INFO, "kbd.onKeyEvent: " + keystring)
+        keyEcho(keystring)
 
         # Execute a key binding if we have one
         #
-        if keybindings.has_key (keystring):
+        if keybindings.has_key(keystring):
             func = keybindings[keystring]
             try:
-                return func ()
+                return func()
             except:
-                debug.printException (debug.LEVEL_SEVERE)
+                debug.printException(debug.LEVEL_SEVERE)
                 
         return False
 
 
-def init ():
+def init():
     """Initializes this module and registers keystroke listeners for
     a complete set of keyboard events from the at-spi.
 
@@ -298,17 +297,17 @@ def init ():
     
     listeners = []
     i = 0
-    while i <= (1<<core.Accessibility.MODIFIER_NUMLOCK):
-        kl = KeystrokeListener (onKeyEvent, i, True, False)
-        kl.register ()
-        listeners.append (kl)
-        i = i+1
+    while i <= (1 << core.Accessibility.MODIFIER_NUMLOCK):
+        kl = KeystrokeListener(onKeyEvent, i, True, False)
+        kl.register()
+        listeners.append(kl)
+        i = i + 1
         
     initialized = True
     return True
 
 
-def shutdown ():
+def shutdown():
     """Unregisters all event listeners from the at-spi registry and
     resets the initialized state to False.
 
@@ -324,7 +323,7 @@ def shutdown ():
         return False
 
     for l in listeners:
-        l.deregister ()
+        l.deregister()
     del listeners
 
     insertPressed = False

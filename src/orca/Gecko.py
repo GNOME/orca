@@ -17,10 +17,10 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-import core
 import a11y
-import speech
 import default
+import rolenames
+import speech
 
 # Orca i18n
 
@@ -45,7 +45,7 @@ activePage = None
 
 # Advance to the next hypertext object in the say all list and speak it
 
-def presentNextHypertext ():
+def presentNextHypertext():
     global sayAllObjectIndex
     global sayAllObjectIndex
 
@@ -58,26 +58,26 @@ def presentNextHypertext ():
     while text == "" and sayAllObjectIndex < sayAllObjectCount:
         obj = sayAllObjects[sayAllObjectIndex]
         sayAllObjectIndex = sayAllObjectIndex + 1
-        txt = a11y.getText (obj)
+        txt = a11y.getText(obj)
         if txt is None:
 
             # If it's an image, read the image's name using the image voice
 
             text = obj.name
-            if obj.role == "image":
+            if obj.role == rolenames.ROLE_IMAGE:
 
                 # If we're getting the file name of the image, don't read it
 
-                if text.find (".gif") >= 0 or \
-                       text.find (".gif") >= 0 or \
-                       text.find (".jpg") >= 0:
+                if text.find(".gif") >= 0 or \
+                       text.find(".gif") >= 0 or \
+                       text.find(".jpg") >= 0:
                     text = ""
                     sayAllObjectIndex = sayAllObjectIndex + 1
                     continue
                 else:
-                    speech.say ("image", text)
+                    speech.say("image", text)
             elif text is not "":
-                speech.say ("default", text)
+                speech.say("default", text)
             if text == "":
                 sayAllObjectIndex = sayAllObjectIndex + 1
                 continue
@@ -89,17 +89,17 @@ def presentNextHypertext ():
 
         # Get the entire contents of this hypertext object
 
-        text = txt.getText (0, -1)
+        text = txt.getText(0, -1)
 
         # Get the hypertext interface to this object
 
-        ht = a11y.getHypertext (obj)
+        ht = a11y.getHypertext(obj)
         if ht is None:
             nLinks = 0
         else:
-            nLinks = ht.getNLinks ()
+            nLinks = ht.getNLinks()
         if nLinks == 0:
-            speech.say ("default", text)
+            speech.say("default", text)
 
         # Speak this hypertext object in chunks
 
@@ -110,16 +110,16 @@ def presentNextHypertext ():
             position = 0
             i = 0
             while i < nLinks:
-                hl = ht.getLink (i)
+                hl = ht.getLink(i)
 
                 # We don't get proper start and end offsets, so hack
                 # hack hack
 
                 # Get the text of the hyperlink
 
-                anchor = hl.getObject (0)
+                anchor = hl.getObject(0)
                 name = anchor.name
-                start = text[position:].find (name)
+                start = text[position:].find(name)
                 if start == -1:
                     break
                 start = start+position
@@ -128,11 +128,11 @@ def presentNextHypertext ():
                 # If there is text between where we are now and the beginning of the link, read it first
 
                 if start != position:
-                    speech.say ("default", text[position:start])
+                    speech.say("default", text[position:start])
 
                 # Speak the text of the hyperlink using the hyperlink voice
 
-                speech.say ("hyperlink", text[start:end])
+                speech.say("hyperlink", text[start:end])
                 position = end
                 i = i + 1
 
@@ -140,7 +140,7 @@ def presentNextHypertext ():
             # left, spaek it
 
             if end < len(text):
-                speech.say ("default", text[end:])
+                speech.say("default", text[end:])
 
     # If we have no more objects to speak, end say all mode
 
@@ -153,22 +153,22 @@ def presentNextHypertext ():
 # This function is called by say all mode when another chunk of text
 # is needed
 
-def getChunk ():
+def getChunk():
     global sayAllObjects
     global sayAllObjectIndex
     global sayAllObjectCount
 
-    return presentNextHypertext ()
+    return presentNextHypertext()
 
 # This function is called when say all mode is finished - it currently
 # does nothing
 
-def sayAllDone (position):
+def sayAllDone(position):
     pass
 
 # this function starts say all for Mozilla
 
-def sayAll ():
+def sayAll():
     global activePage
     global sayAllObjects
     global sayAllObjectIndex
@@ -177,15 +177,15 @@ def sayAll ():
     # If there is no active page, we can't do say all
 
     if activePage is None:
-        speech.say ("default", _("No page to read."))
+        speech.say("default", _("No page to read."))
         return
 
     # Get all the objects on the page
 
     try:
-        sayAllObjects = a11y.getObjects (activePage)
+        sayAllObjects = a11y.getObjects(activePage)
     except:
-        speech.say ("default", _("Reading web page failed."))
+        speech.say("default", _("Reading web page failed."))
         return
 
     # Set up say all mode
@@ -197,22 +197,22 @@ def sayAll ():
     # name of the page has finished speaking, say all mode will be
     # active and the first chunk of the page will be read
 
-    speech.say ("default", activePage.name)
-    speech.startSayAll ("default", getChunk, sayAllDone)
+    speech.say("default", activePage.name)
+    speech.startSayAll("default", getChunk, sayAllDone)
 
 # This function is called whenever an object within Mozilla receives
 # focus
 
-def onFocus (event):
+def onFocus(event):
     global activePage
 
     
-    if event.source.role != "panel":
-        return default.onFocus (event)
+    if event.source.role != rolenames.ROLE_PANEL:
+        return default.onFocus(event)
     
     # If it's not a panel, do the default
 
-    default.onFocus (event)
+    default.onFocus(event)
 
     # If the panel has no name, don't touch it
 
@@ -225,10 +225,10 @@ def onFocus (event):
 # This function is called when a hyperlink is selected - This happens
 # when a link is navigated to using tab/shift-tab
 
-def onLinkSelected (event):
-    txt = a11y.getText (event.source)
+def onLinkSelected(event):
+    txt = a11y.getText(event.source)
     if txt is None:
-        speech.say ("hyperlink", "link")
+        speech.say("hyperlink", "link")
     else:
-        text = txt.getText (0, -1)
-        speech.say ("hyperlink", text)
+        text = txt.getText(0, -1)
+        speech.say("hyperlink", text)
