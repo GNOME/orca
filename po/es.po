@@ -1,3 +1,4 @@
+# translation of orca1.HEAD.es.po to Spanish
 # translation of orca.HEAD.es.po to Spanish
 # Traducción de Orca al Español
 # This file is distributed under the same license as the ORCA package.
@@ -7,10 +8,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: orca.HEAD.es\n"
+"Project-Id-Version: orca1.HEAD.es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-16 11:26+0000\n"
-"PO-Revision-Date: 2005-04-17 20:42+0200\n"
+"POT-Creation-Date: 2005-04-24 03:57+0000\n"
+"PO-Revision-Date: 2005-04-24 14:08+0200\n"
 "Last-Translator: Maria Majadas <maria.majadas@hispalinux.es>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -155,48 +156,56 @@ msgstr "acelerador"
 msgid "tear off menu item"
 msgstr "arrancar menú"
 
-#: ../src/orca/default.py:178
+#: ../src/orca/default.py:180
 msgid " dot dot dot"
 msgstr "punto punto punto"
 
-#: ../src/orca/default.py:435 ../src/orca/default.py:437
-#: ../src/orca/default.py:492 ../src/orca/default.py:494
+#: ../src/orca/default.py:425 ../src/orca/default.py:428
+#: ../src/orca/default.py:486 ../src/orca/default.py:488
 msgid "checked"
 msgstr "comprobado"
 
-#: ../src/orca/default.py:442 ../src/orca/default.py:444
-#: ../src/orca/default.py:498 ../src/orca/default.py:500
+#: ../src/orca/default.py:435 ../src/orca/default.py:438
+#: ../src/orca/default.py:492 ../src/orca/default.py:494
 msgid "not checked"
 msgstr "no comprobado"
 
-#: ../src/orca/default.py:633
+#: ../src/orca/default.py:627
 msgid "___"
 msgstr "___"
 
-#: ../src/orca/default.py:657
+#: ../src/orca/default.py:651
 msgid "one item"
 msgstr "un elemento"
 
-#: ../src/orca/default.py:659
+#: ../src/orca/default.py:653
 msgid "items"
 msgstr "elementos"
 
-#: ../src/orca/default.py:709
+#: ../src/orca/default.py:703
 #, python-format
 msgid "Value: %s"
 msgstr "Valor: %s"
 
-#: ../src/orca/default.py:710
+#: ../src/orca/default.py:704
 #, python-format
 msgid "Minimum value: %s"
 msgstr "Valor minimo: %s"
 
-#: ../src/orca/default.py:711
+#: ../src/orca/default.py:705
 #, python-format
 msgid "Maximum value: %s"
 msgstr "Valor máximo: %s"
 
-#: ../src/orca/default.py:1453
+#: ../src/orca/default.py:761
+msgid "one tab"
+msgstr "una pestaña"
+
+#: ../src/orca/default.py:763
+msgid "tabs"
+msgstr "pestañas"
+
+#: ../src/orca/default.py:1499
 msgid "Not a document."
 msgstr "No es un documento."
 
