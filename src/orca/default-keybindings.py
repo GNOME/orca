@@ -26,6 +26,3 @@ keybindings.
 keybindings = {}
 keybindings["F9"] = "sayAgain"
 keybindings["F11"] = "sayAll"
-keybindings["F12"] = "quit"
-keybindings["F5"] = "debugListApps"
-keybindings["F6"] = "debugListActiveApp"

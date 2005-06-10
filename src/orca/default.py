@@ -1193,7 +1193,7 @@ def onCaretMoved(event):
     # such as vi, line up and down is done via other actions such as
     # "i" or "j".  We may need to think about this a little harder.]]]
     #
-    if kbd.lastKey == "Up" or kbd.lastKey == "Down":
+    if orca.lastKey == "Up" or orca.lastKey == "Down":
         sayLine(event.source)
 
     # Control-left and control-right arrows speak the word under the
@@ -1204,12 +1204,12 @@ def onCaretMoved(event):
     # when moving forward, it ends up at the end of the word and
     # when moving backward, it ends up at the beginning of the word.]]]
     #
-    if kbd.lastKey == "control+Right" or kbd.lastKey == "control+Left":
+    if orca.lastKey == "control+Right" or orca.lastKey == "control+Left":
         sayWord(event.source)
 
     # Right and left arrows speak the character under the cursor
     #
-    if kbd.lastKey == "Right" or kbd.lastKey == "Left":
+    if orca.lastKey == "Right" or orca.lastKey == "Left":
         sayCharacter(event.source)
  
 
@@ -1260,7 +1260,7 @@ def onTextDeleted(event):
     # as vi or emacs.
     #
     text = event.any_data
-    if (kbd.lastKey == "BackSpace") or (kbd.lastKey == "Delete"):
+    if (orca.lastKey == "BackSpace") or (orca.lastKey == "Delete"):
         if text.isupper():
             speech.say("uppercase", text)
         else:
@@ -1298,27 +1298,6 @@ def onActiveDescendantChanged(event):
     print "*** HERE:", rowDesc, colDesc
     print
     
-    
-    
-# Quit the screen reader
-
-def quit():
-    """Quits the screen reader.
-
-    [[[TODO: WDW - so...I think this is bad because quit will typically
-    be invoked from a keyboard event.  All keyboard events in orca are
-    handled via synchronous methods.  orca.shutdown kills everything, so
-    when this method returns, it is going to to cause some major issues
-    because the event handler is going to want to return a value to the
-    at-spi registry, but we just shut everything down.  I believe this
-    is what is causing the segmentation fault when you quit orca.  I'm
-    not quite sure of reliable ways to quit, I guess it may involve
-    something like deregistering all listeners (keyboard and event) and
-    placing a sentinel on the core event queue.]]]
-    """
-    
-    orca.shutdown()
-
 
 ########################################################################
 #                                                                      #
@@ -1551,23 +1530,3 @@ def sayAll():
     #
     speech.startSayAll("default", sayAllGetChunk, sayAllStopped)
     sayLine(orca.focusedObject)
-    
-
-########################################################################
-#                                                                      #
-# DEBUG support.                                                       #
-#                                                                      #
-########################################################################
-
-def debugListApps():
-    """Prints a list of all known applications to stdout if debug
-    is enabled."""
-
-    debug.listApps(debug.LEVEL_OFF)
-    return True 
-
-def debugListActiveApp():
-    """Prints details about the currently active application."""
-
-    debug.listActiveApp(debug.LEVEL_OFF)
-    return True 

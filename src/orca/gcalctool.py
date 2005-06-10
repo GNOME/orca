@@ -75,7 +75,7 @@ def onTextInserted(event):
 
         contents = display_txt.getText(0, -1)
         brl.writeMessage(contents)
-        if kbd.lastKey == "Return" or kbd.lastKey == "=":
+        if orca.lastKey == "Return" or orca.lastKey == "=":
             speech.say("default", contents)
             
         

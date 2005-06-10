@@ -17,7 +17,10 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-"""Provides debug utilities for Orca."""
+"""Provides debug utilities for Orca.  Debugging is managed by a
+debug level, which is set by calling the setDebugLevel method.  All
+other methods take a debug level, which is compared to the current
+debug level to determine if the content should be output."""
 
 import core
 import orca
@@ -34,7 +37,7 @@ LEVEL_OFF = 10000
 LEVEL_SEVERE = 1000
 
 # Used to decribe events of interest to end users or system managers or which
-# indicate potential problems.
+# indicate potential problems, but which Orca can deal with without crashing.
 #
 LEVEL_WARNING = 900
 
@@ -44,19 +47,24 @@ LEVEL_WARNING = 900
 LEVEL_INFO = 800
 
 # Used to indicate static configuration information to assist in debugging
-# problems that may be associated with a particular configuration.
+# problems that may be associated with a particular configuration.  For
+# example, used to say if a particular feature (e.g., speech, braille, etc.)
+# is enabled or not.
 #
 LEVEL_CONFIGURATION = 700
 
-# Used for lowest volume of detailed tracing information.
+# Used for lowest volume of detailed tracing information.  For example,
+# used to indicate a script has been activated.
 #
 LEVEL_FINE = 600
 
-# Used for medium volume of detailed tracing information.
+# Used for medium volume of detailed tracing information.  For example,
+# used to indicate a particular focus tracking presenter has been called.
 #
 LEVEL_FINER = 500
 
-# Used for maximum volume of detailed tracing information.
+# Used for maximum volume of detailed tracing information.  For example,
+# used to display all AT-SPI object events.
 #
 LEVEL_FINEST = 400
 

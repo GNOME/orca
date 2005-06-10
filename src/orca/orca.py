@@ -31,6 +31,62 @@ import debug
 from rolenames import getRoleName # localized role names
 from orca_i18n import _ # for gettext support
 
+import focus_tracking_presenter
+import hierarchical_presenter
+
+# If True, this module has been initialized.
+#
+initialized = False
+
+
+# The known presentation managers.
+#
+PRESENTATION_MANAGERS = [focus_tracking_presenter,
+                         hierarchical_presenter]
+
+# The current presentation manager, which is an index into the
+# PRESENTATION_MANAGERS list.
+#
+currentPresentationManager = -1
+
+
+def switchToPresentationManager(index):
+    """Switches to the given presentation manager.
+
+    Arguments:
+    - index: an index into PRESENTATION_MANAGERS
+    """
+
+    global currentPresentationManager
+    
+    if currentPresentationManager > 0:
+        PRESENTATION_MANAGERS[currentPresentationManager].deactivate()
+
+    currentPresentationManager = index
+
+    # Wrap the presenter index around.
+    #
+    if currentPresentationManager >= len(PRESENTATION_MANAGERS):
+        currentPresentationManager = 0
+    elif currentPresentationManager < 0:
+        currentPresentationManager = len(PRESENTATION_MANAGERS) - 1
+        
+    PRESENTATION_MANAGERS[currentPresentationManager].activate()
+
+
+def switchToNextPresentationManager():
+    """Switches to the next presentation manager."""
+
+    global currentPresentationManager
+    
+    switchToPresentationManager(currentPresentationManager + 1)
+
+    
+########################################################################
+#                                                                      #
+# METHODS TO HANDLE APPLICATION LIST AND FOCUSED OBJECTS               #
+#                                                                      #
+########################################################################
 
 # List of all the running apps we know about.  Each element is a Python
 # Accessible instance.
@@ -38,216 +94,14 @@ from orca_i18n import _ # for gettext support
 apps = []
 
 
-# The Accessible that currently has keyboard focus
-#
-focusedObject = None
-
-
 # The Accessible application whose window currently has focus
 #
 focusedApp = None
 
 
-# If True, this module has been initialized.
+# The Accessible that currently has keyboard focus
 #
-initialized = False
-
-
-def buildAppList():
-    """Retrieves the list of currently running apps for the desktop and
-    populates the apps list attribute with these apps.
-    """
-    
-    global apps
-
-    apps = []
-
-    i = core.desktop.childCount-1
-    while i >= 0:
-        acc = core.desktop.getChildAtIndex(i)
-        app = a11y.makeAccessible(acc)
-        if app != None:
-            apps.insert(0, app)
-        i = i-1
-
-
-def activateApp(app):
-    """Called when a top-level window is activated.  It reloads the
-    script associated with the top-level window's application and
-    activates the script's keybindings.
-
-    Arguments:
-    - app: the Python Accessible instance representing the application
-    """
-    
-    speech.stop("default")
-
-    s = script.getScript(app)
-    debug.println(debug.LEVEL_FINE, "ACTIVATED SCRIPT: " + s.name)
-    kbd.keybindings = s.keybindings
-    brl.onBrlKey = s.onBrlKey    
-    
-
-# Track
-
-def onChildrenChanged(e):
-    """Tracks children-changed events on the desktop to determine when
-    apps start and stop.
-
-    Arguments:
-    - e: at-spi event from the at-api registry
-    """
-    
-    if e.source == core.desktop:
-
-        # If the desktop is empty, the user has logged out-- shutdown Orca
-        #
-        if core.desktop.childCount == 0:
-            speech.say("default", _("User logged out - shutting down."))
-            shutdown()
-            return
-
-        # Otherwise, an application has been created or removed.
-        #
-        if e.type == "object:children-changed:add":
-            obj = core.desktop.getChildAtIndex(e.detail1)
-            app = a11y.makeAccessible(obj)
-        elif e.type == "object:children-changed:remove":
-            try:
-                # [[[TODO: WDW - understand why the e.detail1 app might
-                # not always be in the apps list.]]]
-                #
-                app = apps[e.detail1]
-                script.deleteScript(app)
-            except:
-                pass
-            
-        # [[[TODO: WDW - Note the call to buildAppList - that will update the
-        # apps[] list.  If this logic is changed in the future, the apps list
-        # will most likely needed to be updated here.]]]
-        #
-        buildAppList()
-
-    
-def onWindowActivated(e):
-    """When toplevel windows are activated, reload the script
-    associated with the window's application and set the script's
-    keybidings as the active bindings.
-
-    Arguments:
-    - e: at-spi event from the at-api registry
-    """
-
-    global focusedApp
-    
-    acc = a11y.makeAccessible(e.source)
-    focusedApp = acc.app
-    activateApp(focusedApp)
-
-
-def onFocus(e):
-    """Core module event listener called when focus changes.  Saves
-    away the associated application in the focusedApp attribute and the
-    associated object in the focusedObject attribute.
-
-    Arguments:
-    - e: at-spi event from the at-api registry
-    """
-    
-    global focusedObject
-    global focusedApp
-
-    focusedObject = a11y.makeAccessible(e.source)
-
-    # We need this hack fo the time being due to a bug in Nautilus,
-    # which makes it impossible to traverse to the application from
-    # some objects within Nautilus.  [[[TODO: WDW - removed this because
-    # it was causing a very odd interaction with Mozilla.]]]
-    #
-    #focusedObject.app = focusedApp
-
-
-class Event:
-   """Dummy class for converting the source of an event to an
-   Accessible object.  We need this since the core.event object we
-   get from the core is read-only.  So, we create this dummy event
-   object to contain a copy of all the event members with the source
-   converted to an Accessible.
-   """
-
-   pass
-
-
-def processEvent(e):
-    """Handles all events destined for scripts.  [[[TODO: WDW - the event
-    type we received can be more specific than the event type we registered
-    for.  We need to handle this.]]] [[[TODO: WDW - there may not be an
-    active app.  We need to handle this.]]]
-
-    Arguments:
-    - e: an at-spi event.
-    """
-    
-    # Create an Accessible for the source
-    #
-    source = a11y.makeAccessible(e.source)
-
-    # Copy relevant details from the event.
-    #
-    event = Event()
-    event.type = e.type
-    event.detail1 = e.detail1
-    event.detail2 = e.detail2
-    event.any_data = e.any_data
-    event.source = source
-
-    debug.println(debug.LEVEL_FINEST, "EVENT: type=(" + event.type + ")")
-    debug.listDetails(debug.LEVEL_FINEST, "       ", source)
-                       
-    # See if we have a script for this event.  Note that the event type in the
-    # listeners dictionary may not be as specific as the event type we
-    # received (e.g., the listeners dictionary might contain the key
-    # "object:state-changed:" and the event.type might be
-    # "object:state-changed:focused" So, we find the listener whose event type
-    # begins with this event's type.  [[[TODO: WDW - the order of the
-    # a11y.dispatcher table should reflect this; that is, it should be ordered
-    # in terms of most specific type to most generic type.]]]  [[[TODO: WDW -
-    # probably should take into account if the app is active or not.  Perhaps
-    # the script for the app should do this as it might be the best one to
-    # determine if it should speak or not.]]]
-    #
-    if source.app is None:
-        set = source.state
-        if source.state.count(core.Accessibility.STATE_DEFUNCT) == 0:
-            sys.stderr.write("ERROR: app not found; source=(" + source.name 
-                             + ") event = " + event.type + ").\n")
-        
-    s = script.getScript(source.app)
-
-    found = False
-    keys = s.listeners.keys()
-    for key in s.listeners.keys():
-        if e.type.startswith(key):
-            func = s.listeners[key]
-            found = True
-            break
-
-    if found:
-        # We do not want orca to crash if an ill-behaved script causes
-        # an exception.
-        #
-        try:
-            debug.println(debug.LEVEL_FINE, \
-                          "orca.processEvent: " \
-                          + "source: name=(" + source.name + ") " \
-                          + "role=(" + source.role + ")\n" \
-                          + "                   " \
-                          + "func:   (" + func.func_name + ")\n" \
-                          + "                   " \
-                          + "script: (" + s.name + ")")
-            func(event)
-        except:
-            debug.printException(debug.LEVEL_SEVERE)
+focusedObject = None
 
 
 def findActiveWindow():
@@ -271,40 +125,159 @@ def findActiveWindow():
     return None
 
 
-# This dictionary maps at-spi event names to Python function names
-# which are to be used in scripts.  For example, it maps "focus:"
-# events to call a script function called onFocus and
-# "window:activate" to onWindowActivated.  [[[TODO: WDW - might
-# consider moving this to the script module at some point.]]]
-#
-dispatcher = {}
-dispatcher["onNameChanged"]             = "object:property-change:accessible-name"
-dispatcher["onTextSelectionChanged"]    = "object:text-selection-changed"
-dispatcher["onTextInserted"]            = "object:text-changed:insert"
-dispatcher["onTextDeleted"]             = "object:text-changed:delete"
-dispatcher["onStateChanged"]            = "object:state-changed:"
-dispatcher["onValueChanged"]            = "object:value-changed:"
-dispatcher["onSelectionChanged"]        = "object:selection-changed"
-dispatcher["onCaretMoved"]              = "object:text-caret-moved"
-dispatcher["onLinkSelected"]            = "object:link-selected"
-dispatcher["onPropertyChanged"]         = "object:property-change:"
-dispatcher["onSelectionChanged"]        = "object:selection-changed"
-dispatcher["onActiveDescendantChanged"] = "object:active-descendant-changed"
-dispatcher["onVisibleDataChanged"]      = "object:visible-changed"
-dispatcher["onChildrenChanged"]         = "object:children-changed:"
-dispatcher["onWindowActivated"]         = "window:activate"
-dispatcher["onWindowCreated"]           = "window:create"
-dispatcher["onWindowDeactivated"]       = "window:deactivate"
-dispatcher["onWindowDestroyed"]         = "window:destroy"
-dispatcher["onWindowDeactivated"]       = "window:deactivated"
-dispatcher["onWindowMaximized"]         = "window:maximize"
-dispatcher["onWindowMinimized"]         = "window:minimize"
-dispatcher["onWindowRenamed"]           = "window:rename"
-dispatcher["onWindowRestored"]          = "window:restore"
-dispatcher["onWindowSwitched"]          = "window:switch"
-dispatcher["onWindowTitlelized"]        = "window:titlelize"
-dispatcher["onFocus"]                   = "focus:"
+def buildAppList():
+    """Retrieves the list of currently running apps for the desktop and
+    populates the apps list attribute with these apps.
+    """
+    
+    global apps
 
+    apps = []
+
+    i = core.desktop.childCount-1
+    while i >= 0:
+        acc = core.desktop.getChildAtIndex(i)
+        app = a11y.makeAccessible(acc)
+        if app != None:
+            apps.insert(0, app)
+        i = i-1
+
+
+def onChildrenChanged(e):
+    """Tracks children-changed events on the desktop to determine when
+    apps start and stop.
+
+    Arguments:
+    - e: at-spi event from the at-api registry
+    """
+    
+    if e.source == core.desktop:
+
+        # If the desktop is empty, the user has logged out-- shutdown Orca
+        #
+        if core.desktop.childCount == 0:
+            speech.say("default", _("User logged out - shutting down."))
+            shutdown()
+            return
+
+        # [[[TODO: WDW - Note the call to buildAppList - that will update the
+        # apps[] list.  If this logic is changed in the future, the apps list
+        # will most likely needed to be updated here.]]]
+        #
+        buildAppList()
+
+    
+def onWindowActivated(e):
+    """Keeps track of the application whose window has focus.
+
+    Arguments:
+    - e: at-spi event from the at-api registry
+    """
+
+    global focusedApp
+    
+    acc = a11y.makeAccessible(e.source)
+    focusedApp = acc.app
+
+
+def onFocus(e):
+    """Keeps track of object and application with focus.
+
+    Arguments:
+    - e: at-spi event from the at-api registry
+    """
+    
+    global focusedObject
+    global focusedApp
+
+    focusedObject = a11y.makeAccessible(e.source)
+    focusedApp = focusedObject.app
+
+
+########################################################################
+#                                                                      #
+# METHODS FOR PRE-PROCESSING AND MASSAGING AT-SPI OBJECT EVENTS        #
+#                                                                      #
+# AT-SPI events are receieved here and converted into a Python object  #
+# for processing by the rest of Orca.  [[[TODO: WDW - this might be a  #
+# spot to coalesce and massage AT-SPI events into events useful to a   #
+# screen reader.]]]                                                    #
+#                                                                      #
+########################################################################
+
+class Event:
+   """Dummy class for converting the source of an event to an
+   Accessible object.  We need this since the core.event object we
+   get from the core is read-only.  So, we create this dummy event
+   object to contain a copy of all the event members with the source
+   converted to an Accessible.
+   """
+   pass
+
+
+def processObjectEvent(e):
+    """Handles all events destined for scripts.  [[[TODO: WDW - the event
+    type we received can be more specific than the event type we registered
+    for.  We need to handle this.]]] [[[TODO: WDW - there may not be an
+    active app.  We need to handle this.]]]
+
+    Arguments:
+    - e: an at-spi event.
+    """
+    
+    global currentPresentationManager
+    
+    # Create an Accessible for the source
+    #
+    source = a11y.makeAccessible(e.source)
+
+    # Copy relevant details from the event.
+    #
+    event = Event()
+    event.type = e.type
+    event.detail1 = e.detail1
+    event.detail2 = e.detail2
+    event.any_data = e.any_data
+    event.source = source
+
+    debug.println(debug.LEVEL_FINEST, "EVENT: type=(%s)" % event.type)
+    debug.println(debug.LEVEL_FINEST, "EVENT:   source  =(%s)" % event.source.name)
+    debug.println(debug.LEVEL_FINEST, "EVENT:   detail1 =(%d)" % event.detail1)
+    debug.println(debug.LEVEL_FINEST, "EVENT:   detail2 =(%d)" % event.detail2)
+    
+    debug.println(debug.LEVEL_FINEST, "EVENT: type=(" + event.type + ")")
+    debug.listDetails(debug.LEVEL_FINEST, "       ", source)
+
+    # [[[TODO: WDW - probably should check for index out of bounds.]]]
+    #
+    PRESENTATION_MANAGERS[currentPresentationManager].processObjectEvent(event)
+
+
+########################################################################
+#                                                                      #
+# DEBUG support.                                                       #
+#                                                                      #
+########################################################################
+
+def debugListApps():
+    """Prints a list of all known applications to stdout if debug
+    is enabled."""
+
+    debug.listApps(debug.LEVEL_OFF)
+    return True 
+
+def debugListActiveApp():
+    """Prints details about the currently active application."""
+
+    debug.listActiveApp(debug.LEVEL_OFF)
+    return True 
+
+
+########################################################################
+#                                                                      #
+# METHODS FOR HANDLING THE INITIALIZATION, SHUTDOWN, AND USE.          #
+#                                                                      #
+########################################################################
 
 def init():
     """Initialize the orca module, which initializes a11y, kbd, speech,
@@ -322,7 +295,7 @@ def init():
         return False
 
     a11y.init()
-    kbd.init()
+    kbd.init(processKeyEvent)
     if getattr(settings, "useSpeech", True):
         speech.init()
         debug.println(debug.LEVEL_CONFIGURATION,
@@ -371,9 +344,11 @@ def init():
     core.registerEventListener(onFocus, "focus:")
     
     # Register for all the at-api events we may ever care about.
+    # [[[TODO: WDW - this probably should be stuffed in the
+    # focus_tracking_presenter?]]]]
     #
-    for type in dispatcher.values():
-        core.registerEventListener(processEvent, type)
+    for type in script.EVENT_MAP.values():
+        core.registerEventListener(processObjectEvent, type)
 
     initialized = True
     return True
@@ -402,23 +377,9 @@ def start():
     #
     win = findActiveWindow()
     if win:
-        activateApp(win.app)
+        focusedApp = win.app
 
-        # Generate a fake window activation event so the application
-        # can tell the user about itself.
-        #
-        e = Event()
-        e.source = win
-        e.type = "window:activate"
-        e.detail1 = 0
-        e.detail2 = 0
-        e.any_data = None
-    
-        try:
-            s = script.getScript(win.app)
-            s.listeners["window:activate"](e)
-        except:
-            debug.printException(debug.LEVEL_SEVERE)
+    switchToPresentationManager(0) # focus_tracking_presenter
 
     core.bonobo.main()
 
@@ -446,8 +407,8 @@ def shutdown():
     #
     core.unregisterEventListener(onChildrenChanged,
                                  "object:children-changed:")
-    for key in dispatcher.keys():
-        core.unregisterEventListener(processEvent, key)
+    for key in script.EVENT_MAP.keys():
+        core.unregisterEventListener(processObjectEvent, key)
 
     # Shutdown all the other support.
     #
@@ -464,3 +425,132 @@ def shutdown():
 
     initialized = False
     return True
+
+
+########################################################################
+#                                                                      #
+# METHODS FOR PRE-PROCESSING AND MASSAGING KEYBOARD EVENTS.            #
+#                                                                      #
+# All keyboard events are funnelled through here first.  Orca itself   #
+# might have global keybindings (e.g., to switch between presenters),  #
+# but it will typically pass the event onto the currently active       #
+# active presentation manager.                                         #
+#                                                                      #
+########################################################################
+
+# Keybindings that Orca itself cares about.
+#
+keybindings = {}
+keybindings["F12"] = shutdown
+keybindings["F5"] = debugListApps
+keybindings["F6"] = debugListActiveApp
+keybindings["F8"] = switchToNextPresentationManager
+
+# The string representing the last key pressed.
+#
+lastKey = None
+
+
+def getModifierString(modifier):
+    """Converts a set of modifer states into a text string
+
+    Arguments:
+    - modifer: the modifiers field from an at-spi DeviceEvent
+
+    Returns a string consisting of modifier names separated by "+"'s.
+    """
+    
+    s = ""
+    l = []
+
+    # [[[TODO: WDW - need to consider all modifiers: SHIFT, SHIFTLOCK,
+    # NUMLOCK, META, META2, META3.  Some of these may be handled via the
+    # actual key symbol (e.g., upper or lower case), but others may not.]]]
+    #
+    if modifier & (1 << core.Accessibility.MODIFIER_CONTROL):
+        l.append("control")
+    if modifier & (1 << core.Accessibility.MODIFIER_ALT):
+        l.append("alt")
+    for mod in l:
+        if s == "":
+            s = mod
+        else:
+            s = s + "+" + mod
+    return s
+
+
+def keyEcho(key):
+    """If the keyEcho setting is enabled, echoes the key via speech.
+    Uppercase keys will be spoken using the "uppercase" voice style,
+    whereas lowercase keys will be spoken using the "default" voice style.
+
+    Arguments:
+    - key: a string representing the key name to echo.
+    """
+    
+    if not getattr(settings, "keyEcho", False):
+        return
+    if key.isupper():
+        speech.say("uppercase", key)
+    else:
+        speech.say("default", key)
+
+
+def processKeyEvent(event):
+    """The primary key event handler for Orca.  Keeps track of various
+    attributes, such as the lastKey and insertPressed.  Also calls
+    keyEcho as well as any function that may exist in the keybindings
+    dictionary for the key event.  This method is called synchronously
+    from the at-spi registry and should be performant.  In addition, it
+    must return True if it has consumed the event (and False if not).
+    
+    Arguments:
+    - event: an at-spi DeviceEvent
+
+    Returns True if the event should be consumed.
+    """
+    
+    global lastKey
+    global currentPresentationManager
+    
+    keystring = ""
+
+    if event.type == core.Accessibility.KEY_PRESSED_EVENT:
+        mods = getModifierString(event.modifiers)
+        if mods:
+            keystring = mods + "+" + event.event_string
+        else:
+            keystring = event.event_string
+
+        # Key presses always interrupt speech - If say all mode is
+        # enabled, a key press stops it
+        #
+        if speech.sayAllEnabled:
+            speech.stopSayAll()
+        else:
+            speech.stop("default")
+
+        # Key presses clear the Braille display
+        # [[[TODO:  WDW - is this what we want?]]]
+        #
+        if getattr(settings, "useBraille", False):
+            brl.clear()
+            
+    if keystring:
+        lastKey = keystring
+        debug.println(debug.LEVEL_FINE, "orca.processKeyEvent: " + keystring)
+        keyEcho(keystring)
+
+        # Orca gets first stab at the event.  Then, the presenter gets
+        # a shot.
+        #
+        if keybindings.has_key(keystring):
+            try:
+                func = keybindings[keystring]
+                return func()
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+                return False
+        else:
+            return PRESENTATION_MANAGERS[currentPresentationManager].processKeyEvent( \
+                keystring)

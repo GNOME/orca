@@ -24,7 +24,11 @@ a cache of Accessibility_Accessible objects and to keep that cache in sync
 with the real objects.  Each Accessible instance is backed by an
 Accessibility_Accessible object.
 
-Also provides a number of convenience functions for working with
+The main entry point to this module is the makeAccessible factory method.
+This class keeps a cache of known accessible objects and only creates a
+new one if necessary.
+
+This module also provides a number of convenience functions for working with
 Accessible objects.
 """
 
@@ -813,10 +817,10 @@ def getValue(obj):
 
     Arguments:
     - obj: an Accessible instance
-
-    Returns an object that implements the Accessibility_Value
-    interface for this object or None if this object doesn't implement
-    the Accessibility_Value interface.
+ 
+    Returns an object that implements the Accessibility_Value interface for
+    this object or None if this object doesn't implement the
+    Accessibility_Value interface.
     """
 
     bobj = obj.acc._narrow(core.Accessibility.Accessible)

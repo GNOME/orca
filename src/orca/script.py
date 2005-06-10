@@ -17,7 +17,18 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-"""Defines the Script class."""
+"""Defines the Script class.  The main entry point into this class
+is the getScript factory method, to which one passes an application.
+This class maintains a set of known script instances and will only
+create a new script for an application if necessary.  To tell the
+factory a script is no longer needed, use the deleteScript method.
+
+Each script maintains a set of keybindings and listeners as well
+as an onBrlKey field.  The keybindings field is a dictionary
+where the keys are keystrings and the values are function pointers.
+The listeners field is also a dictionary where the keys are
+at-spi event names and the values are function pointers.  The
+onBrlKey field is a function pointer."""
 
 import orca
 import settings
@@ -25,6 +36,40 @@ import settings
 # The default script - used when the app is unknown (i.e., None)
 #
 default = None    
+
+# This dictionary maps at-spi event names to Python function names
+# which are to be used in scripts.  For example, it maps "focus:"
+# events to call a script function called onFocus and
+# "window:activate" to onWindowActivated.  [[[TODO: WDW - might
+# consider moving this to the script module at some point.]]]
+#
+EVENT_MAP = {}
+EVENT_MAP["onNameChanged"]             = "object:property-change:accessible-name"
+EVENT_MAP["onTextSelectionChanged"]    = "object:text-selection-changed"
+EVENT_MAP["onTextInserted"]            = "object:text-changed:insert"
+EVENT_MAP["onTextDeleted"]             = "object:text-changed:delete"
+EVENT_MAP["onStateChanged"]            = "object:state-changed:"
+EVENT_MAP["onValueChanged"]            = "object:value-changed:"
+EVENT_MAP["onSelectionChanged"]        = "object:selection-changed"
+EVENT_MAP["onCaretMoved"]              = "object:text-caret-moved"
+EVENT_MAP["onLinkSelected"]            = "object:link-selected"
+EVENT_MAP["onPropertyChanged"]         = "object:property-change:"
+EVENT_MAP["onSelectionChanged"]        = "object:selection-changed"
+EVENT_MAP["onActiveDescendantChanged"] = "object:active-descendant-changed"
+EVENT_MAP["onVisibleDataChanged"]      = "object:visible-changed"
+EVENT_MAP["onChildrenChanged"]         = "object:children-changed:"
+EVENT_MAP["onWindowActivated"]         = "window:activate"
+EVENT_MAP["onWindowCreated"]           = "window:create"
+EVENT_MAP["onWindowDeactivated"]       = "window:deactivate"
+EVENT_MAP["onWindowDestroyed"]         = "window:destroy"
+EVENT_MAP["onWindowDeactivated"]       = "window:deactivated"
+EVENT_MAP["onWindowMaximized"]         = "window:maximize"
+EVENT_MAP["onWindowMinimized"]         = "window:minimize"
+EVENT_MAP["onWindowRenamed"]           = "window:rename"
+EVENT_MAP["onWindowRestored"]          = "window:restore"
+EVENT_MAP["onWindowSwitched"]          = "window:switch"
+EVENT_MAP["onWindowTitlelized"]        = "window:titlelize"
+EVENT_MAP["onFocus"]                   = "focus:"
 
 class Script:
     """Manages the event handling logic of orca.  Instances of this
@@ -68,6 +113,8 @@ class Script:
         - app: the Python Accessible application to create a script for
         """
 
+        global EVENT_MAP
+        
         if Script.cache.has_key(app):
             return
 
@@ -124,12 +171,12 @@ class Script:
         # module.  If we find an event handler, we add it to the
         # "listeners" dictionary.
         #
-        for key in orca.dispatcher.keys():
+        for key in EVENT_MAP.keys():
             func = getattr(self.mod, key, None)
             if func is None:
                 func = getattr(self.default, key, None)
             if func:
-                type = orca.dispatcher[key]
+                type = EVENT_MAP[key]
                 self.listeners[type] = func
 
         # Populate the "keybindings" table.  The keys are the string

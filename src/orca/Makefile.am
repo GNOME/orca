@@ -15,10 +15,12 @@ orca_python_PYTHON = \
 	debug.py \
 	default.py \
 	default-keybindings.py \
+	focus_tracking_presenter.py \
 	gaim.py \
 	gcalctool.py \
 	Gecko.py \
 	gnome-terminal.py \
+	hierarchical_presenter.py \
 	kbd.py \
 	mag.py \
 	metacity.py \

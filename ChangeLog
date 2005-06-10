@@ -1,3 +1,12 @@
+2005-06-10  Willie Walker <william.walker@sun.com>
+
+	* src/orca/*.py: add notion of a "presentation manager" to allow
+	for presentation managers such as "focus tracking", "flat review"
+	and "hierarchical".  Split the current presentation code out from
+	orca.py into focus_tracking_presenter.py.  Also created new (and
+	very experimental) hierarchical_presenter.py to allow for some
+	detailed exploration of the at-spi component hierarchy.	
+	
 2005-04-24  Willie Walker <william.walker@sun.com>
 
 	* src/orca/*.py: anal-retentive refactoring and surface level
