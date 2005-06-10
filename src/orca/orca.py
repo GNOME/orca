@@ -240,12 +240,7 @@ def processObjectEvent(e):
     event.any_data = e.any_data
     event.source = source
 
-    debug.println(debug.LEVEL_FINEST, "EVENT: type=(%s)" % event.type)
-    debug.println(debug.LEVEL_FINEST, "EVENT:   source  =(%s)" % event.source.name)
-    debug.println(debug.LEVEL_FINEST, "EVENT:   detail1 =(%d)" % event.detail1)
-    debug.println(debug.LEVEL_FINEST, "EVENT:   detail2 =(%d)" % event.detail2)
-    
-    debug.println(debug.LEVEL_FINEST, "EVENT: type=(" + event.type + ")")
+    debug.printObjectEvent(debug.LEVEL_FINEST, event)
     debug.listDetails(debug.LEVEL_FINEST, "       ", source)
 
     # [[[TODO: WDW - probably should check for index out of bounds.]]]
@@ -538,7 +533,7 @@ def processKeyEvent(event):
             
     if keystring:
         lastKey = keystring
-        debug.println(debug.LEVEL_FINE, "orca.processKeyEvent: " + keystring)
+        debug.printKeyEvent(debug.LEVEL_FINE, keystring)
         keyEcho(keystring)
 
         # Orca gets first stab at the event.  Then, the presenter gets

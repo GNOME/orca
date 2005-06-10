@@ -1,5 +1,9 @@
 2005-06-10  Willie Walker <william.walker@sun.com>
 
+	* src/orca/orca.py,debug.py: add the ability to filter event
+	output based on a regular expression.  This is for debug purposes
+	only.  The next step is to enable a keystroke in Orca to allow
+	the filter to be set/reset to allow for specific event tracking.
 	* src/orca/*.py: add notion of a "presentation manager" to allow
 	for presentation managers such as "focus tracking", "flat review"
 	and "hierarchical".  Split the current presentation code out from
