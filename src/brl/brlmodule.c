@@ -333,6 +333,7 @@ static gboolean brlapi_io_cb (GIOChannel *ch,
 
 	while (brlapi_readCommand (0, &keypress) == 1)
 	{
+		printf("brlapi_io_cb - keypress = %d\n", keypress);
 		switch (keypress) {
 		case CMD_FWINRT:
 			if (scroll_region) {
