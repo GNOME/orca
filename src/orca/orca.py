@@ -510,12 +510,33 @@ def processKeyEvent(event):
     
     keystring = ""
 
+    print "KEYEVENT: hw_code=%d" % event.hw_code
+    print "          modifiers=%d" % event.modifiers
+    print "          event_string=(%s)" % event.event_string, len(event.event_string)
+    print "          is_text=", event.is_text
+
+    event_string = event.event_string
     if event.type == core.Accessibility.KEY_PRESSED_EVENT:
+        # The control characters come through as control characters, so we
+        # just turn them into their ASCII equivalent.  NOTE that the upper
+        # case ASCII characters will be used (e.g., ctrl+a will be turned into
+        # the string "control+A").  All these checks here are to just do some
+        # sanity checking before doing the conversion. [[[TODO: WDW - this is
+        # making assumptions about mapping ASCII control characters to to
+        # UTF-8, I think.]]]
+        #
+        if (event.modifiers & (1 << core.Accessibility.MODIFIER_CONTROL)) \
+           and (not event.is_text) and (len(event.event_string) == 1):
+            value = ord(event.event_string[0])
+            if value < 32:
+                event_string = chr(value + 0x40)
+
         mods = getModifierString(event.modifiers)
+
         if mods:
-            keystring = mods + "+" + event.event_string
+            keystring = mods + "+" + event_string
         else:
-            keystring = event.event_string
+            keystring = event_string
 
         # Key presses always interrupt speech - If say all mode is
         # enabled, a key press stops it

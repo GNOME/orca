@@ -1,3 +1,8 @@
+2005-06-13  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca.py: make processKeyEvent a little (maybe not a
+	lot) smarter about handling control characters.
+	
 2005-06-10  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca.py,debug.py: add the ability to filter event
