@@ -466,6 +466,12 @@ def getModifierString(modifier):
         l.append("control")
     if modifier & (1 << core.Accessibility.MODIFIER_ALT):
         l.append("alt")
+    if modifier & (1 << core.Accessibility.MODIFIER_META):
+        l.append("meta")
+    if modifier & (1 << core.Accessibility.MODIFIER_META2):
+        l.append("meta2")
+    if modifier & (1 << core.Accessibility.MODIFIER_META3):
+        l.append("meta3")
     for mod in l:
         if s == "":
             s = mod
@@ -510,10 +516,10 @@ def processKeyEvent(event):
     
     keystring = ""
 
-    print "KEYEVENT: hw_code=%d" % event.hw_code
-    print "          modifiers=%d" % event.modifiers
-    print "          event_string=(%s)" % event.event_string, len(event.event_string)
-    print "          is_text=", event.is_text
+    #print "KEYEVENT: hw_code=%d" % event.hw_code
+    #print "          modifiers=%d" % event.modifiers
+    #print "          event_string=(%s)" % event.event_string, len(event.event_string)
+    #print "          is_text=", event.is_text
 
     event_string = event.event_string
     if event.type == core.Accessibility.KEY_PRESSED_EVENT:
