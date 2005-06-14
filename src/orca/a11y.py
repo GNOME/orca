@@ -113,16 +113,17 @@ class Accessible:
         this object has no parent, None will be returned.
         """
 
-        # [[[TODO: WDW - we might try looking to see if the
-        # self.parent attribute has already been set.]]]
+        # We will never set self.parent if the backing accessible doesn't
+        # have a parent.  The reason we do this is that we may sometimes
+        # get events for objects without a parent, but then the object ends
+        # up getting a parent later on.
         #
         obj = self.acc.parent
         if obj is None:
-            self.parent = None
-            return self.parent
-
-        self.parent = makeAccessible(obj);
-        return self.parent;
+            return None
+        else:
+            self.parent = makeAccessible(obj);
+            return self.parent;
 
 
     def __get_child_count(self):
