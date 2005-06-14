@@ -582,7 +582,8 @@ def processKeyEvent(event):
     
     keystring = ""
 
-    #print "KEYEVENT: hw_code=%d" % event.hw_code
+    #print "KEYEVENT: type=%d" % event.type
+    #print "          hw_code=%d" % event.hw_code
     #print "          modifiers=%d" % event.modifiers
     #print "          event_string=(%s)" % event.event_string, len(event.event_string)
     #print "          is_text=", event.is_text
