@@ -107,11 +107,7 @@ def processObjectEvent(event):
     #
     if event.source.app is None:
         set = event.source.state
-        if event.source.state.count(core.Accessibility.STATE_DEFUNCT) == 0:
-            sys.stderr.write("ERROR: app not found; source=(" \
-                             + event.source.name  \
-                             + ") event = " + event.type + ").\n")
-        else:
+        if event.source.state.count(core.Accessibility.STATE_DEFUNCT) > 0:
             return
         
     s = script.getScript(event.source.app)
