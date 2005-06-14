@@ -260,7 +260,7 @@ def printObjectEvent(level, event):
 
     Arguments:
     - level: the accepted debug level
-    - event: the AT-SPI event to print
+    - event: the Python Event to print
     """
 
     global eventDebugLevel
@@ -274,9 +274,11 @@ def printObjectEvent(level, event):
     level = max(level, eventDebugLevel)
     
     println(level, "OBJECT EVENT: type    = (%s)" % event.type)
-    println(level, "              source  = (%s)" % event.source.name)
     println(level, "              detail1 = (%d)" % event.detail1)
     println(level, "              detail2 = (%d)" % event.detail2)
+    if event.source:
+        println(level, "              source:")
+        listDetails(level, "                ", event.source)
 
     
 def printKeyEvent(level, keystring):
