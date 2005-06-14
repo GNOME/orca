@@ -34,6 +34,10 @@ from orca_i18n import _ # for gettext support
 import focus_tracking_presenter
 import hierarchical_presenter
 
+import pygtk
+import gtk
+
+
 # If True, this module has been initialized.
 #
 initialized = False
@@ -420,6 +424,68 @@ def shutdown():
 
     initialized = False
     return True
+
+
+########################################################################
+#                                                                      #
+# METHODS FOR DRAWING RECTANGLES AROUND OBJECTS ON THE SCREEN          #
+#                                                                      #
+########################################################################
+
+# The last drawn rectangle.  This is used for remembering what we
+# need to erase on the screen.
+#
+visibleRectangle = None
+
+def outlineAccessible(accessible):
+    """Draws a rectangular outline around the accessible, erasing the
+    last drawn rectangle in the process."""
+
+    global visibleRectangle
+
+    display = None
+    
+    try:
+        display = gtk.gdk.display_get_default()
+    except:
+        display = gtk.gdk.display(":0")
+
+    if display is None:
+        debug.println(debug.LEVEL_SEVERE,
+                      "orca.outlineAccessible could not open display.")
+        return
+    
+    screen = display.get_default_screen()
+    root_window = screen.get_root_window()
+    graphics_context = root_window.new_gc()
+    graphics_context.set_subwindow(gtk.gdk.INCLUDE_INFERIORS)
+    graphics_context.set_function(gtk.gdk.INVERT)
+    graphics_context.set_line_attributes(3,                  # width
+                                         gtk.gdk.LINE_SOLID, # style
+                                         gtk.gdk.CAP_BUTT,   # end style
+                                         gtk.gdk.JOIN_MITER) # join style
+
+    # Erase the old rectangle.
+    #
+    if visibleRectangle:
+        root_window.draw_rectangle(graphics_context,
+                                   False,                    # Fill
+                                   visibleRectangle.x,
+                                   visibleRectangle.y,
+                                   visibleRectangle.width,
+                                   visibleRectangle.height)
+        visibleRectangle = None
+
+    if accessible:
+        component = a11y.getComponent(accessible)
+        if component:
+            visibleRectangle = component.getExtents(0) # coord type = screen
+            root_window.draw_rectangle(graphics_context,
+                                       False,                  # Fill
+                                       visibleRectangle.x,
+                                       visibleRectangle.y,
+                                       visibleRectangle.width,
+                                       visibleRectangle.height)
 
 
 ########################################################################

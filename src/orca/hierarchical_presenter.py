@@ -68,6 +68,7 @@ import orca
 from orca_i18n import _                          # for gettext support
 from rolenames import getShortBrailleForRoleName # localized role names
 
+
 # NAVIGATION_MODE_INTEROBJECT = between objects
 # Press Shift+Tab to enter this mode.
 #
@@ -102,6 +103,7 @@ SPECIALIZATION_LENGTH             = 11
 
 currentObjectSpecializations = []
 currentSpecialization = SPECIALIZATION_ACTION
+
 
 ########################################################################
 #                                                                      #
@@ -142,7 +144,7 @@ def getIndentText(accessible):
 
     return text
 
-    
+
 def displayAccessible(accessible):
     """Displays an accessible."""
     
@@ -166,7 +168,9 @@ def displayAccessible(accessible):
     brl.writeMessage(brltext)
     brl.refresh()
 
+    orca.outlineAccessible(accessible)
 
+    
 def navigateInterObject(keystring):
     """Navigates between objects in the component hierarchy."""
 

@@ -1,3 +1,9 @@
+2005-06-14  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca.py,hierarchical_presenter.py: add simple code to
+	draw outlines around an accessible.  This has the impact of now
+	requiring the DISPLAY to be set before running Orca.
+	
 2005-06-13  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca.py: make processKeyEvent a little (maybe not a
