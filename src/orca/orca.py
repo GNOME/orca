@@ -304,14 +304,11 @@ def init():
         debug.println(debug.LEVEL_CONFIGURATION,
                       "Speech module has NOT been initialized.")
         
-    # [[[TODO: WDW - do we need to register _onBrlKey as a listener,
-    # or....do we need to modify the brl module so that onBrlKey will
-    # be called from the brl module?]]]
-    #
     if getattr(settings, "useBraille", False):
         if brl.init():
             debug.println(debug.LEVEL_CONFIGURATION,
                           "Braille module has been initialized.")
+            brl.registerCallback(processBrailleEvent)
         else:
             debug.println(debug.LEVEL_CONFIGURATION,
                           "Braille module has NOT been initialized.")
@@ -404,16 +401,21 @@ def shutdown():
     #
     core.unregisterEventListener(onChildrenChanged,
                                  "object:children-changed:")
+    core.unregisterEventListener(onWindowActivated,
+                                 "window:activate")
+    core.unregisterEventListener(onFocus,
+                                 "focus:")
     for key in script.EVENT_MAP.keys():
         core.unregisterEventListener(processObjectEvent, key)
 
     # Shutdown all the other support.
     #
-    kbd.shutdown()
+    kbd.shutdown() # automatically unregisters processKeyEvent
     a11y.shutdown()
     if getattr(settings, "useSpeech", True):
         speech.shutdown()
     if getattr(settings, "useBraille", False):
+        brl.unregisterCallback()
         brl.shutdown();
     if getattr(settings, "useMagnifier", False):
         mag.shutdown();
@@ -486,6 +488,32 @@ def outlineAccessible(accessible):
                                        _visibleRectangle.height)
 
 
+########################################################################
+#                                                                      #
+# METHODS FOR PRE-PROCESSING AND MASSAGING BRAILLE KEY EVENTS.         #
+#                                                                      #
+# All Braille events are funnelled through here first.  Orca itself    #
+# might have global bindings (e.g., to switch between presenters),     #
+# but it will typically pass the event onto the currently active       #
+# active presentation manager.                                         #
+#                                                                      #
+########################################################################
+
+def processBrailleEvent(region, position):
+    """The primary Braille key event handler for Orca.
+    [[[TODO: WDW - Braille handling will be redone at some point.]]]
+    
+    Arguments:
+    - level: the accepted debug level
+    - region: the Braille region that had the event
+    - position: the cursor routing key position in the region
+    """
+    
+    debug.printBrailleEvent(debug.LEVEL_FINE, region, position)
+    return _PRESENTATION_MANAGERS[_currentPresentationManager].\
+           processBrailleEvent(region, position)
+
+    
 ########################################################################
 #                                                                      #
 # METHODS FOR PRE-PROCESSING AND MASSAGING KEYBOARD EVENTS.            #

@@ -1395,6 +1395,9 @@ def onBrlKey(region, position):
     - region: the Braille region which generated the press
     - position: the offset within the region
     """
+
+    if orca.focusedObject is None:
+        return
     
     # Clear the Braille display memory (does not clear the physical
     # display)
