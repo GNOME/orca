@@ -1,5 +1,23 @@
+2005-06-15  Willie Walker <william.walker@sun.com>
+
+	* src/orca/debug.py,src/orca/default.py,src/orca/orca/py: begin
+	bringing Braille input back to life.
+	* src/orca/*.py: try to follow the public/private naming
+	convention (i.e., use "_" prefix for private fields) more.
+	* src/orca/script.py: renamed "mod"-related fields to "custom"
+	because I kept getting confused.
+	* src/orca/focus_tracking_presenter.py,src/orca/orca.py,
+	src/orca/script.py,src/orca/gaim.py: only reload a script
+	when a window is activated (the current implementation was
+	reloading a script for every event received).
+	
 2005-06-14  Willie Walker <william.walker@sun.com>
 
+	* src/orca/a11y.py: don't set object's parent attribute if it has
+	not been defined yet; instead just return None from __getattr__.
+	* src/orca/focus_tracking_presenter.py: get rid of 
+	"ERROR: app not found" message.
+	* src/orca/debug.py: reformatting of event output.
 	* src/orca/orca.py,hierarchical_presenter.py: add simple code to
 	draw outlines around an accessible.  This has the impact of now
 	requiring the DISPLAY to be set before running Orca.
