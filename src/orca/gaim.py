@@ -36,23 +36,23 @@ from orca_i18n import _
 
 # References to the text input and output areas
 #
-input = None
-output = None
+_input = None
+_output = None
 
-def setChat(obj):
+def _setChat(obj):
     """If we've found a chat window, set a global reference to it and read it.
     """
     
-    global input
-    global output
+    global _input
+    global _output
 
     # The chat window has threee text boxes in it (the chat topic, the
     # message log, and the text entry field).  find them all - they're
     # always returned in the same order
     #
     entries = a11y.findByRole(obj, rolenames.ROLE_TEXT)
-    output = entries[1]
-    input = entries[2]
+    _output = entries[1]
+    _input = entries[2]
 
     # Speak the title of the chat
     #
@@ -62,20 +62,20 @@ def setChat(obj):
     speech.say("default", text)
         
     
-def setIm(obj):
+def _setIm(obj):
     """If we've found an IM window, set a global reference to it and read it.
     """
 
-    global input
-    global output
+    global _input
+    global _output
     
     # There are two text boxes in each IM window (the message log, and
     # the text entry field).  They are always returned in the same
     # order.   
     #
     entries = a11y.findByRole(obj, rolenames.ROLE_TEXT)
-    output = entries[0]
-    input = entries[1]
+    _output = entries[0]
+    _input = entries[1]
 
     # Speak the title of the IM
     #
@@ -89,15 +89,15 @@ def onWindowActivated(event):
     """Called whenever one of Gaim's toplevel windows is activated.
     """
 
-    global input
-    global output
+    global _input
+    global _output
     
     # If it's not a standard window, do the normal behavior since it
     # won't have an IM or chat in it
     #
     if event.source.role != rolenames.ROLE_FRAME:
-        output = None
-        input = None
+        _output = None
+        _input = None
         return default.onWindowActivated(event)
 
 
@@ -109,12 +109,12 @@ def onWindowActivated(event):
     entries = a11y.findByRole(event.source, rolenames.ROLE_TEXT)
     
     if len(entries) == 2:
-        setIm(event.source)
+        _setIm(event.source)
     elif len(entries) == 3:
-        setChat(event.source)
+        _setChat(event.source)
     else:
-        output = None
-        input = None
+        _output = None
+        _input = None
         return default.onWindowActivated(event)
 
 
@@ -124,13 +124,13 @@ def onTextInserted(event):
     watching anything, do the default behavior.
     """
 
-    global output
+    global _output
 
-    if output == None or event.source != output:
+    if (_output == None) or (event.source != _output):
         return default.onTextInserted(event)
 
     txt = a11y.getText(event.source)
-    text = txt.getText(event.detail1, event.detail1+event.detail2)
+    text = txt.getText(event.detail1, event.detail1 + event.detail2)
     speech.say("default", text)
 
 
@@ -141,9 +141,9 @@ def onFocus(event):
     # The text boxes in chat and IM windows have no names - so we give
     # them some here
     #
-    if event.source == input:
+    if event.source == _input:
         text = _("Input")
-    elif event.source == output:
+    elif event.source == _output:
         text = _("Message Log")
     else:
         return default.onFocus(event)

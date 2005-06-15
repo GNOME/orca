@@ -73,9 +73,9 @@ LEVEL_FINEST = 400
 LEVEL_ALL = 0
 
 
-debugLevel = LEVEL_SEVERE
-eventDebugLevel = LEVEL_FINEST
-eventDebugFilter = None  # see setEventDebugFilter
+_debugLevel = LEVEL_SEVERE
+_eventDebugLevel = LEVEL_FINEST
+_eventDebugFilter = None  # see setEventDebugFilter
 
 
 def setDebugLevel(newLevel):
@@ -84,29 +84,29 @@ def setDebugLevel(newLevel):
     LEVEL_FINER, LEVEL_FINEST, LEVEL_ALL.
 
     Arguments:
-    - newLevel: the new debugLevel
+    - newLevel: the new debug level
     """
 
-    global debugLevel
+    global _debugLevel
     
-    println(debugLevel, "Changing debugLevel to %d" % newLevel)
-    debugLevel = newLevel
-    println(debugLevel, "Changed debugLevel to %d" % debugLevel)
+    println(_debugLevel, "Changing debug level to %d" % newLevel)
+    _debugLevel = newLevel
+    println(_debugLevel, "Changed debug level to %d" % _debugLevel)
     
 
 def setEventDebugLevel(newLevel):
     """Sets the event debug level.  This can be used to override the level
     value passed to printObjectEvent and printKeyEvent.  That is, if
     eventDebugLevel has a higher value that the debug level passed into these
-    methods, then eventDebugLevel will be used as the level.
+    methods, then the event debug level will be used as the level.
     
     Arguments:
-    - newLevel: the new debugLevel
+    - newLevel: the new debug level
     """
 
-    global eventDebugLevel
+    global _eventDebugLevel
 
-    eventDebugLevel = newLevel
+    _eventDebugLevel = newLevel
     
 
 def setEventDebugFilter(regExpression):
@@ -123,9 +123,9 @@ def setEventDebugFilter(regExpression):
     - regExpression: a compiled regular expression from the re module
     """
 
-    global eventDebugFilter
+    global _eventDebugFilter
     
-    eventDebugFilter = regExpression
+    _eventDebugFilter = regExpression
     
     
 def getStates(obj):
@@ -215,9 +215,9 @@ def printException(level):
     - level: the accepted debug level
     """
 
-    global debugLevel
+    global _debugLevel
 
-    if level >= debugLevel:
+    if level >= _debugLevel:
         println(level)
         traceback.print_exc()
         println(level)
@@ -230,9 +230,9 @@ def printStack(level):
     - level: the accepted debug level
     """
 
-    global debugLevel
+    global _debugLevel
 
-    if level >= debugLevel:
+    if level >= _debugLevel:
         println(level)
         traceback.print_stack()
         println(level)
@@ -246,9 +246,9 @@ def println(level, text = ""):
     - text: the text to print (default is a blank line)
     """
 
-    global debugLevel
+    global _debugLevel
 
-    if level >= debugLevel:
+    if level >= _debugLevel:
         print text
 
 
@@ -263,15 +263,15 @@ def printObjectEvent(level, event):
     - event: the Python Event to print
     """
 
-    global eventDebugLevel
-    global eventDebugFilter
+    global _eventDebugLevel
+    global _eventDebugFilter
 
-    if eventDebugFilter:
-        match = eventDebugFilter.match(event.type)
+    if _eventDebugFilter:
+        match = _eventDebugFilter.match(event.type)
         if match is None:
             return
         
-    level = max(level, eventDebugLevel)
+    level = max(level, _eventDebugLevel)
     
     println(level, "OBJECT EVENT: type    = (%s)" % event.type)
     println(level, "              detail1 = (%d)" % event.detail1)
@@ -290,9 +290,9 @@ def printKeyEvent(level, keystring):
     - event: the keystring to print
     """
 
-    global eventDebugLevel
+    global _eventDebugLevel
 
-    println(max(level, eventDebugLevel),
+    println(max(level, _eventDebugLevel),
             "KEY EVENT: (%s)" % keystring)
 
     
@@ -306,9 +306,9 @@ def listDetails(level, indent, accessible):
     - accessible: the accessible whose details are to be listed
     """
 
-    global debugLevel
+    global _debugLevel
     
-    if level < debugLevel:
+    if level < _debugLevel:
         return
     
     println(level, "%sname   = (%s)" % (indent, accessible.name))
@@ -328,9 +328,9 @@ def listApps(level):
     - level: the accepted debug level
     """
 
-    global debugLevel
+    global _debugLevel
     
-    if level < debugLevel:
+    if level < _debugLevel:
         return
     
     println(level, "There are %d apps" % len(orca.apps))
@@ -353,9 +353,9 @@ def listActiveApp(level):
     - level: the accepted debug level
     """
 
-    global debugLevel
+    global _debugLevel
     
-    if level < debugLevel:
+    if level < _debugLevel:
         return    
     
     println(level, "Current active application:")

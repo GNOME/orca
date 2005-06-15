@@ -30,11 +30,11 @@ import core
 # A list of the various listeners we have registered with the at-spi
 # registry.
 #
-listeners = None
+_listeners = None
 
 # If True, this module has been initialized.
 #
-initialized = False
+_initialized = False
 
 
 class KeystrokeListener(core.Accessibility__POA.DeviceEventListener):
@@ -142,21 +142,21 @@ def init(onKeyEvent):
     module has already been initialized.
     """
     
-    global initialized
-    global listeners
+    global _initialized
+    global _listeners
 
-    if initialized:
+    if _initialized:
         return False
     
-    listeners = []
+    _listeners = []
     i = 0
     while i <= (1 << core.Accessibility.MODIFIER_NUMLOCK):
         kl = KeystrokeListener(onKeyEvent, i, True, False)
         kl.register()
-        listeners.append(kl)
+        _listeners.append(kl)
         i = i + 1
         
-    initialized = True
+    _initialized = True
     return True
 
 
@@ -168,18 +168,16 @@ def shutdown():
     module has not yet been initialized.
     """
     
-    global initialized
-    global insertPressed
-    global listeners
+    global _initialized
+    global _listeners
 
-    if not initialized:
+    if not _initialized:
         return False
 
-    for l in listeners:
+    for l in _listeners:
         l.deregister()
-    del listeners
+    del _listeners
 
-    insertPressed = False
-    initialized = False
+    _initialized = False
 
     return True

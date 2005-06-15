@@ -29,44 +29,44 @@ import time
 
 # If True, this module has been initialized.
 #
-initialized = False
+_initialized = False
 
 # The Magnifier
 #
-magnifier = None
+_magnifier = None
 
 # The GNOME.Magnifier.RectBounds, in unzoomed system coordinates, of the
 # display that is being magnified.
 #
-sourceDisplayBounds = None
+_sourceDisplayBounds = None
 
 # The width and height, in unzoomed system coordinates of the rectangle that,
 # when magnified, will fill the viewport of the magnifier - this needs to be
 # sync'd with the magnification factors of the zoom area.
 #
-roiWidth = 0
-roiHeight = 0
+_roiWidth = 0
+_roiHeight = 0
 
 # Minimum values for the center of the ROI
 #
-minROIX = 0
-maxROIX = 0
-minROIY = 0
-maxROIY = 0
+_minROIX = 0
+_maxROIX = 0
+_minROIY = 0
+_maxROIY = 0
 
 # The current region of interest.
 #
-roi = None
+_roi = None
 
 # The ZoomRegion we care about [[[TODO: WDW - we should be more careful about
 # just what we're doing here.  The Magnifier allows more than one ZoomRegion
 # and we're just picking up the first one.]]]
 #
-zoomer = None
+_zoomer = None
 
 # The time of the last mouse event.
 #
-lastMouseEventTime = time.time()
+_lastMouseEventTime = time.time()
 
 
 def magnifyAccessible(acc):
@@ -78,11 +78,11 @@ def magnifyAccessible(acc):
     - acc: the accessible
     """
 
-    global initialized
-    global roi
-    global lastMouseEventTime
+    global _initialized
+    global _roi
+    global _lastMouseEventTime
     
-    if not initialized:
+    if not _initialized:
         return
 
     extents = acc.extents
@@ -95,16 +95,16 @@ def magnifyAccessible(acc):
     # doesn't belong here.  Plus, the delta probably should be adjustable.]]]
     #
     currentTime = time.time()
-    if (currentTime - lastMouseEventTime) < 0.2: # 200 milliseconds
+    if (currentTime - _lastMouseEventTime) < 0.2: # 200 milliseconds
         return
     
     # Determine if the accessible is partially to the left, right,
     # above, or below the current region of interest (ROI).
     #
-    left = extents.x < roi.x1
-    right = (extents.x + extents.width) > roi.x2
-    above = extents.y < roi.y1
-    below = (extents.y + extents.height) > roi.y2
+    left = extents.x < _roi.x1
+    right = (extents.x + extents.width) > _roi.x2
+    above = extents.y < _roi.y1
+    below = (extents.y + extents.height) > _roi.y2
 
     # If it is already completely showing, do nothing.
     #
@@ -125,37 +125,37 @@ def magnifyAccessible(acc):
     # right most or bottom most edge.  Any number in between would divide
     # the two.]]]
     #
-    x1 = roi.x1
-    x2 = roi.x2 
-    y1 = roi.y1
-    y2 = roi.y2
+    x1 = _roi.x1
+    x2 = _roi.x2 
+    y1 = _roi.y1
+    y2 = _roi.y2
     
     if left:
         x1 = extents.x
-        x2 = x1 + roiWidth
+        x2 = x1 + _roiWidth
     elif right:
-        if extents.width > roiWidth:
+        if extents.width > _roiWidth:
             x1 = extents.x
-            x2 = x1 + roiWidth
+            x2 = x1 + _roiWidth
         else:
             x2 = extents.x + extents.width
-            x1 = x2 - roiWidth
+            x1 = x2 - _roiWidth
         
     if above:
         y1 = extents.y
-        y2 = y1 + roiHeight
+        y2 = y1 + _roiHeight
     elif below:
-        if extents.height > roiHeight:
+        if extents.height > _roiHeight:
             y1 = extents.y
-            y2 = y1 + roiHeight
+            y2 = y1 + _roiHeight
         else:
             y2 = extents.y + extents.height
-            y1 = y2 - roiHeight
+            y1 = y2 - _roiHeight
         
-    setROI(GNOME.Magnifier.RectBounds(x1, y1, x2, y2))
+    _setROI(GNOME.Magnifier.RectBounds(x1, y1, x2, y2))
 
     
-def setROICenter(x, y):
+def _setROICenter(x, y):
     """Centers the region of interest around the given point.
 
     Arguments:
@@ -163,40 +163,40 @@ def setROICenter(x, y):
     - y: integer in unzoomed system coordinates representing y component
     """
 
-    if not initialized:
+    if not _initialized:
         return
 
-    if x < minROIX:
-        x = minROIX
-    elif x > maxROIX:
-        x = maxROIX
+    if x < _minROIX:
+        x = _minROIX
+    elif x > _maxROIX:
+        x = _maxROIX
         
-    if y < minROIY:
-        y = minROIY
-    elif y > maxROIY:
-        y = maxROIY
+    if y < _minROIY:
+        y = _minROIY
+    elif y > _maxROIY:
+        y = _maxROIY
 
-    x1 = x - (roiWidth / 2)
-    y1 = y - (roiHeight / 2)
+    x1 = x - (_roiWidth / 2)
+    y1 = y - (_roiHeight / 2)
 
-    x2 = x1 + roiWidth
-    y2 = y1 + roiHeight
+    x2 = x1 + _roiWidth
+    y2 = y1 + _roiHeight
 
-    setROI(GNOME.Magnifier.RectBounds(x1, y1, x2, y2))
+    _setROI(GNOME.Magnifier.RectBounds(x1, y1, x2, y2))
 
 
-def setROI(rect):
+def _setROI(rect):
     """Sets the region of interest.
 
     Arguments:
     - rect: A GNOME.Magnifier.RectBounds object.
     """
     
-    global roi
-    roi = rect
-    zoomer.setROI(roi)
-    zoomer.markDirty(roi)  # [[[TODO: WDW - for some reason, this seems
-                           # necessary.]]]
+    global _roi
+    _roi = rect
+    _zoomer.setROI(_roi)
+    _zoomer.markDirty(_roi)  # [[[TODO: WDW - for some reason, this seems
+                             # necessary.]]]
 
 
 # Used for tracking the pointer.
@@ -206,9 +206,9 @@ def onMouseEvent(e):
     Arguments:
     - e: at-spi event from the at-api registry
     """
-    global lastMouseEventTime
-    lastMouseEventTime = time.time()
-    setROICenter(e.detail1, e.detail2)
+    global _lastMouseEventTime
+    _lastMouseEventTime = time.time()
+    _setROICenter(e.detail1, e.detail2)
 
     
 def init():
@@ -219,28 +219,28 @@ def init():
     module has already been initialized.
     """
     
-    global initialized
-    global magnifier
-    global zoomer
-    global sourceDisplayBounds
-    global roiWidth
-    global roiHeight
-    global minROIX
-    global minROIY
-    global maxROIX
-    global maxROIY
+    global _initialized
+    global _magnifier
+    global _zoomer
+    global _sourceDisplayBounds
+    global _roiWidth
+    global _roiHeight
+    global _minROIX
+    global _minROIY
+    global _maxROIX
+    global _maxROIY
     
-    if initialized:
+    if _initialized:
         return False
 
-    magnifier = bonobo.get_object("OAFIID:GNOME_Magnifier_Magnifier:0.9",
-                                  "GNOME/Magnifier/Magnifier")
+    _magnifier = bonobo.get_object("OAFIID:GNOME_Magnifier_Magnifier:0.9",
+                                   "GNOME/Magnifier/Magnifier")
 
-    pbag = magnifier.getProperties()
-    sourceDisplayBounds = pbag.getValue("source-display-bounds").value()
+    pbag = _magnifier.getProperties()
+    _sourceDisplayBounds = pbag.getValue("source-display-bounds").value()
 
     #print "MAGNIFIER PROPERTIES:"
-    #pbag = magnifier.getProperties ()
+    #pbag = _magnifier.getProperties ()
     #slots = pbag.getKeys ("")
     #print "Available slots: ", pbag.getKeys("")
     #for slot in slots:
@@ -253,7 +253,7 @@ def init():
 
     #print
     #print "ZOOMER PROPERTIES:"
-    #zoomers = magnifier.getZoomRegions ()    
+    #zoomers = _magnifier.getZoomRegions ()    
     #for zoomer in zoomers:
     #    print zoomer
     #    pbag = zoomer.getProperties ()
@@ -271,22 +271,22 @@ def init():
     #    managed = pbag.getValue("is-managed").value()
     #    print "Managed:  ", managed
 
-    zoomers =  magnifier.getZoomRegions()
-    zoomer = zoomers[0]
+    zoomers = _magnifier.getZoomRegions()
+    _zoomer = zoomers[0]
 
-    pbag = zoomer.getProperties()
+    pbag = _zoomer.getProperties()
     viewport = pbag.getValue("viewport").value()
     magx = pbag.getValue("mag-factor-x").value()
     magy = pbag.getValue("mag-factor-y").value()
 
-    roiWidth = (viewport.x2 - viewport.x1) / magx
-    roiHeight = (viewport.y2 - viewport.y1) / magy
+    _roiWidth = (viewport.x2 - viewport.x1) / magx
+    _roiHeight = (viewport.y2 - viewport.y1) / magy
 
-    minROIX = sourceDisplayBounds.x1 + (roiWidth / 2)
-    minROIY = sourceDisplayBounds.y1 + (roiHeight / 2)
+    _minROIX = _sourceDisplayBounds.x1 + (_roiWidth / 2)
+    _minROIY = _sourceDisplayBounds.y1 + (_roiHeight / 2)
 
-    maxROIX = sourceDisplayBounds.x2 - (roiWidth / 2)
-    maxROIY = sourceDisplayBounds.y2 - (roiHeight / 2)
+    _maxROIX = _sourceDisplayBounds.x2 - (_roiWidth / 2)
+    _maxROIY = _sourceDisplayBounds.y2 - (_roiHeight / 2)
 
     #pbag.setValue("viewport", CORBA.Any(CORBA.TypeCode(viewport.typecode().repo_id),GNOME.Magnifier.RectBounds(0,0,512,780)))
     #zoomer.moveResize(GNOME.Magnifier.RectBounds(256,256,600,600))
@@ -294,11 +294,11 @@ def init():
 
     core.registerEventListener(onMouseEvent, "mouse:abs")
     
-    initialized = True
+    _initialized = True
 
     # Zoom to the upper left corner of the display for now.
     #
-    setROICenter(0, 0)
+    _setROICenter(0, 0)
 
     return True
 
@@ -309,16 +309,16 @@ def shutdown():
     module has not been initialized.
     """
     
-    global initialized
-    global magnifier
+    global _initialized
+    global _magnifier
 
-    if not initialized:
+    if not _initialized:
         return False
 
-    magnifier.clearAllZoomRegions()
-    magnifier.dispose()
-    magnifier = None
+    _magnifier.clearAllZoomRegions()
+    _magnifier.dispose()
+    _magnifier = None
     
-    initialized = False
+    _initialized = False
     
     return True

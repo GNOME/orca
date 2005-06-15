@@ -72,37 +72,37 @@ from rolenames import getShortBrailleForRoleName # localized role names
 # NAVIGATION_MODE_INTEROBJECT = between objects
 # Press Shift+Tab to enter this mode.
 #
-NAVIGATION_MODE_INTEROBJECT = 0
+_NAVIGATION_MODE_INTEROBJECT = 0
 
 # NAVIGATION_MODE_INTRAOBJECT = between specializations in object
 # Press Tab to enter this mode.
 #
-NAVIGATION_MODE_INTRAOBJECT = 1
+_NAVIGATION_MODE_INTRAOBJECT = 1
 
 # Current navigation mode.
 #
-navigationMode = NAVIGATION_MODE_INTEROBJECT
+_navigationMode = _NAVIGATION_MODE_INTEROBJECT
 
 # The currently active object.
 #
-currentObject = None
+_currentObject = None
 
-SPECIALIZATION_NONE               = -1
-SPECIALIZATION_ACTION             = 0
-SPECIALIZATION_COMPONENT          = 1
-SPECIALIZATION_EDITABLE_TEXT      = 2
-SPECIALIZATION_HYPERTEXT          = 3
-SPECIALIZATION_IMAGE              = 4
-SPECIALIZATION_RELATION           = 5
-SPECIALIZATION_SELECTION          = 6
-SPECIALIZATION_STREAMABLE_CONTENT = 7
-SPECIALIZATION_TABLE              = 8
-SPECIALIZATION_TEXT               = 9
-SPECIALIZATION_VALUE              = 10
-SPECIALIZATION_LENGTH             = 11
+_SPECIALIZATION_NONE               = -1
+_SPECIALIZATION_ACTION             = 0
+_SPECIALIZATION_COMPONENT          = 1
+_SPECIALIZATION_EDITABLE_TEXT      = 2
+_SPECIALIZATION_HYPERTEXT          = 3
+_SPECIALIZATION_IMAGE              = 4
+_SPECIALIZATION_RELATION           = 5
+_SPECIALIZATION_SELECTION          = 6
+_SPECIALIZATION_STREAMABLE_CONTENT = 7
+_SPECIALIZATION_TABLE              = 8
+_SPECIALIZATION_TEXT               = 9
+_SPECIALIZATION_VALUE              = 10
+_SPECIALIZATION_LENGTH             = 11
 
-currentObjectSpecializations = []
-currentSpecialization = SPECIALIZATION_ACTION
+_currentObjectSpecializations = []
+_currentSpecialization = _SPECIALIZATION_ACTION
 
 
 ########################################################################
@@ -111,7 +111,7 @@ currentSpecialization = SPECIALIZATION_ACTION
 #                                                                      #
 ########################################################################
 
-def getApplicationIndex(accessible):
+def _getApplicationIndex(accessible):
     """Determines the desktop index of the application for the given
     accessible
     """
@@ -122,11 +122,11 @@ def getApplicationIndex(accessible):
             return i
         i = i + 1
 
-    sys.stderr.write("ERROR: hierarchical_presenter.getApplicationIndex:\n")
+    sys.stderr.write("ERROR: hierarchical_presenter._getApplicationIndex:\n")
     sys.stderr.write("ERROR: accessible does not have an application!\n")
     
 
-def getIndentText(accessible):
+def _getIndentText(accessible):
     """Creates a string of numbers where each number represents a child
     index in the parent.  For example, '8 5 4' means the 4th child of
     the 5th child of the 8th child.
@@ -145,7 +145,7 @@ def getIndentText(accessible):
     return text
 
 
-def displayAccessible(accessible):
+def _displayAccessible(accessible):
     """Displays an accessible."""
     
     if accessible.childCount:
@@ -153,8 +153,8 @@ def displayAccessible(accessible):
     else:
         brltext = "  "
 
-    brltext = brltext + ("%d " % getApplicationIndex(accessible))
-    indentText = getIndentText(accessible)
+    brltext = brltext + ("%d " % _getApplicationIndex(accessible))
+    indentText = _getIndentText(accessible)
     if indentText != "":
         brltext = brltext + indentText + " "
 
@@ -171,41 +171,41 @@ def displayAccessible(accessible):
     orca.outlineAccessible(accessible)
 
     
-def navigateInterObject(keystring):
+def _navigateInterObject(keystring):
     """Navigates between objects in the component hierarchy."""
 
-    global currentObject
+    global _currentObject
 
     if keystring == "Up":
-        if currentObject.app == currentObject:
-            index = max(getApplicationIndex(currentObject) - 1, 0)
-            currentObject = orca.apps[index]
-            displayAccessible(currentObject)
+        if _currentObject.app == _currentObject:
+            index = max(_getApplicationIndex(_currentObject) - 1, 0)
+            _currentObject = orca.apps[index]
+            _displayAccessible(_currentObject)
         else:
-            parent = currentObject.parent
-            index = max(currentObject.index - 1, 0)
-            currentObject = parent.child(index)
-            displayAccessible(currentObject)
+            parent = _currentObject.parent
+            index = max(_currentObject.index - 1, 0)
+            _currentObject = parent.child(index)
+            _displayAccessible(_currentObject)
     elif keystring == "Down":
-        if currentObject.app == currentObject:
-            index = min(getApplicationIndex(currentObject) + 1,
+        if _currentObject.app == _currentObject:
+            index = min(_getApplicationIndex(_currentObject) + 1,
                         len(orca.apps) - 1)
-            currentObject = orca.apps[index]
-            displayAccessible(currentObject)
+            _currentObject = orca.apps[index]
+            _displayAccessible(_currentObject)
         else:
-            parent = currentObject.parent
-            index = min(currentObject.index + 1, parent.childCount - 1)
-            currentObject = parent.child(index)
-            displayAccessible(currentObject)
+            parent = _currentObject.parent
+            index = min(_currentObject.index + 1, parent.childCount - 1)
+            _currentObject = parent.child(index)
+            _displayAccessible(_currentObject)
     elif keystring == "Left":
-        parent = currentObject.parent
+        parent = _currentObject.parent
         if parent:
-            currentObject = currentObject.parent
-            displayAccessible(currentObject)
+            _currentObject = _currentObject.parent
+            _displayAccessible(_currentObject)
     elif keystring == "Right":
-        if currentObject.childCount:
-            currentObject = currentObject.child(0)
-            displayAccessible(currentObject)
+        if _currentObject.childCount:
+            _currentObject = _currentObject.child(0)
+            _displayAccessible(_currentObject)
     
 
 ########################################################################
@@ -214,35 +214,35 @@ def navigateInterObject(keystring):
 #                                                                      #
 ########################################################################
 
-def getSpecializations(accessible):
+def _getSpecializations(accessible):
     """Gets all the specializations for an accessible and populates
     the global currentObjectSpecializations list with them."""
 
-    global currentObjectSpecializations
+    global _currentObjectSpecializations
     
-    currentObjectSpecializations = []
+    _currentObjectSpecializations = []
     i = 0
-    while i < SPECIALIZATION_LENGTH:
-        currentObjectSpecializations.append(None)
+    while i < _SPECIALIZATION_LENGTH:
+        _currentObjectSpecializations.append(None)
         i = i + 1
         
-    currentObjectSpecializations[SPECIALIZATION_ACTION] = \
+    _currentObjectSpecializations[_SPECIALIZATION_ACTION] = \
         a11y.getAction(accessible)
-    currentObjectSpecializations[SPECIALIZATION_COMPONENT] = \
+    _currentObjectSpecializations[_SPECIALIZATION_COMPONENT] = \
         a11y.getComponent(accessible)
-    currentObjectSpecializations[SPECIALIZATION_HYPERTEXT] = \
+    _currentObjectSpecializations[_SPECIALIZATION_HYPERTEXT] = \
         a11y.getHypertext(accessible)
-    currentObjectSpecializations[SPECIALIZATION_SELECTION] = \
+    _currentObjectSpecializations[_SPECIALIZATION_SELECTION] = \
         a11y.getSelection(accessible)
-    currentObjectSpecializations[SPECIALIZATION_TABLE] = \
+    _currentObjectSpecializations[_SPECIALIZATION_TABLE] = \
         a11y.getTable(accessible)
-    currentObjectSpecializations[SPECIALIZATION_TEXT] = \
+    _currentObjectSpecializations[_SPECIALIZATION_TEXT] = \
         a11y.getText(accessible)
-    currentObjectSpecializations[SPECIALIZATION_VALUE] = \
+    _currentObjectSpecializations[_SPECIALIZATION_VALUE] = \
         a11y.getValue(accessible)
 
 
-def displayActionSpecialization(action):
+def _displayActionSpecialization(action):
     """Displays the contents of an accessible action."""
 
     if action is None:
@@ -260,7 +260,7 @@ def displayActionSpecialization(action):
     brl.refresh()
 
     
-def displayComponentSpecialization(component):
+def _displayComponentSpecialization(component):
     """Displays the contents of an accessible component."""
 
     if component is None:
@@ -277,7 +277,7 @@ def displayComponentSpecialization(component):
     brl.refresh()
 
     
-def displayHypertextSpecialization(hypertext):
+def _displayHypertextSpecialization(hypertext):
     """Displays the contents of an accessible hypertext."""
 
     if hypertext is None:
@@ -291,7 +291,7 @@ def displayHypertextSpecialization(hypertext):
     brl.refresh()
 
     
-def displaySelectionSpecialization(selection):
+def _displaySelectionSpecialization(selection):
     """Displays the contents of an accessible selection."""
 
     if selection is None:
@@ -305,7 +305,7 @@ def displaySelectionSpecialization(selection):
     brl.refresh()
 
     
-def displayTableSpecialization(table):
+def _displayTableSpecialization(table):
     """Displays the contents of an accessible table."""
 
     if table is None:
@@ -319,7 +319,7 @@ def displayTableSpecialization(table):
     brl.refresh()
 
     
-def displayTextSpecialization(text):
+def _displayTextSpecialization(text):
     """Displays the contents of an accessible text."""
 
     if text is None:
@@ -333,7 +333,7 @@ def displayTextSpecialization(text):
     brl.refresh()
 
 
-def displayValueSpecialization(value):
+def _displayValueSpecialization(value):
     """Displays the contents of an accessible value."""
 
     if value is None:
@@ -348,7 +348,7 @@ def displayValueSpecialization(value):
     brl.refresh()
 
 
-def displaySpecialization(specialization):
+def _displaySpecialization(specialization):
     """Displays a specialization.  Will do nothing if the object
     does not have this specialization.
 
@@ -356,73 +356,73 @@ def displaySpecialization(specialization):
     - specialization: index into currentObjectSpecializations
     """
 
-    global currentObjectSpecializations
-    global currentSpecialization
+    global _currentObjectSpecializations
+    global _currentSpecialization
 
     # [[[TODO: WDW - Some things are commented out below because
     # a11y.py doesn't give them to us yet.]]]
     #
-    if currentSpecialization == SPECIALIZATION_ACTION:
-        displayActionSpecialization(
-            currentObjectSpecializations[currentSpecialization])
-    elif currentSpecialization == SPECIALIZATION_COMPONENT:
-        displayComponentSpecialization(
-            currentObjectSpecializations[currentSpecialization])
-#    elif currentSpecialization == SPECIALIZATION_EDITABLE_TEXT:
-#        displayTextSpecialization(
-#            currentObjectSpecializations[currentSpecialization])
-    elif currentSpecialization == SPECIALIZATION_HYPERTEXT:
-        displayHypertextSpecialization(
-            currentObjectSpecializations[currentSpecialization])
-#    elif currentSpecialization == SPECIALIZATION_IMAGE:
-#        displayImageSpecialization(
-#            currentObjectSpecializations[currentSpecialization])
-#    elif currentSpecialization == SPECIALIZATION_RELATION:
-#        displayRelationSpecialization(
-#            currentObjectSpecializations[currentSpecialization])
-    elif currentSpecialization == SPECIALIZATION_SELECTION:
-        displaySelectionSpecialization(
-            currentObjectSpecializations[currentSpecialization])
-    elif currentSpecialization == SPECIALIZATION_TABLE:
-        displayTableSpecialization(
-            currentObjectSpecializations[currentSpecialization])
-    elif currentSpecialization == SPECIALIZATION_TEXT:
-        displayTextSpecialization(
-            currentObjectSpecializations[currentSpecialization])
-    elif currentSpecialization == SPECIALIZATION_VALUE:
-        displayValueSpecialization(
-            currentObjectSpecializations[currentSpecialization])
+    if _currentSpecialization == _SPECIALIZATION_ACTION:
+        _displayActionSpecialization(
+            _currentObjectSpecializations[_currentSpecialization])
+    elif _currentSpecialization == _SPECIALIZATION_COMPONENT:
+        _displayComponentSpecialization(
+            _currentObjectSpecializations[_currentSpecialization])
+#    elif _currentSpecialization == _SPECIALIZATION_EDITABLE_TEXT:
+#        _displayTextSpecialization(
+#            _currentObjectSpecializations[_currentSpecialization])
+    elif _currentSpecialization == _SPECIALIZATION_HYPERTEXT:
+        _displayHypertextSpecialization(
+            _currentObjectSpecializations[_currentSpecialization])
+#    elif _currentSpecialization == _SPECIALIZATION_IMAGE:
+#        _displayImageSpecialization(
+#            _currentObjectSpecializations[_currentSpecialization])
+#    elif _currentSpecialization == _SPECIALIZATION_RELATION:
+#        _displayRelationSpecialization(
+#            _currentObjectSpecializations[_currentSpecialization])
+    elif _currentSpecialization == _SPECIALIZATION_SELECTION:
+        _displaySelectionSpecialization(
+            _currentObjectSpecializations[_currentSpecialization])
+    elif _currentSpecialization == _SPECIALIZATION_TABLE:
+        _displayTableSpecialization(
+            _currentObjectSpecializations[_currentSpecialization])
+    elif _currentSpecialization == _SPECIALIZATION_TEXT:
+        _displayTextSpecialization(
+            _currentObjectSpecializations[_currentSpecialization])
+    elif _currentSpecialization == _SPECIALIZATION_VALUE:
+        _displayValueSpecialization(
+            _currentObjectSpecializations[_currentSpecialization])
 
         
-def navigateIntraObject(keystring):
+def _navigateIntraObject(keystring):
     """Navigates between specializations of an object."""
 
-    global currentObjectSpecializations
-    global currentSpecialization
+    global _currentObjectSpecializations
+    global _currentSpecialization
 
     # Want to find the previous non-None specialization
     #
     if keystring == "Up":
-        i = currentSpecialization - 1
+        i = _currentSpecialization - 1
         while i >= 0:
-            if currentObjectSpecializations[i]:
+            if _currentObjectSpecializations[i]:
                 break
             i = i - 1
         if i >= 0:
-            currentSpecialization = i
-            displaySpecialization(currentSpecialization)
+            _currentSpecialization = i
+            _displaySpecialization(currentSpecialization)
             
     # Want to find the next non-None specialization
     #
     if keystring == "Down":
-        i = currentSpecialization + 1
-        while i < len(currentObjectSpecializations):
-            if currentObjectSpecializations[i]:
+        i = _currentSpecialization + 1
+        while i < len(_currentObjectSpecializations):
+            if _currentObjectSpecializations[i]:
                 break
             i = i + 1
-        if i < len(currentObjectSpecializations):
-            currentSpecialization = i
-            displaySpecialization(currentSpecialization)
+        if i < len(_currentObjectSpecializations):
+            _currentSpecialization = i
+            _displaySpecialization(_currentSpecialization)
             
 
 ########################################################################
@@ -454,32 +454,32 @@ def processKeyEvent(keystring):
     Returns True if the event should be consumed.
     """
 
-    global navigationMode
-    global currentObjectSpecializations
-    global currentSpecialization
+    global _navigationMode
+    global _currentObjectSpecializations
+    global _currentSpecialization
     
     if keystring == "Tab":
-        getSpecializations(currentObject)
+        _getSpecializations(_currentObject)
         i = 0
-        currentSpecialization = SPECIALIZATION_NONE
-        while i < len(currentObjectSpecializations):
-            if currentObjectSpecializations[i]:
-                currentSpecialization = i
+        _currentSpecialization = _SPECIALIZATION_NONE
+        while i < len(_currentObjectSpecializations):
+            if _currentObjectSpecializations[i]:
+                _currentSpecialization = i
                 break
             i = i + 1
-        if currentSpecialization != SPECIALIZATION_NONE:
-            navigationMode = NAVIGATION_MODE_INTRAOBJECT
-            displaySpecialization(currentSpecialization)
+        if _currentSpecialization != _SPECIALIZATION_NONE:
+            _navigationMode = _NAVIGATION_MODE_INTRAOBJECT
+            _displaySpecialization(_currentSpecialization)
         else:
-            navigationMode = NAVIGATION_MODE_INTEROBJECT
-            displayAccessible(currentObject)
+            _navigationMode = _NAVIGATION_MODE_INTEROBJECT
+            _displayAccessible(_currentObject)
     elif keystring == "ISO_Left_Tab":
-        navigationMode = NAVIGATION_MODE_INTEROBJECT
-        displayAccessible(currentObject)
-    elif navigationMode == NAVIGATION_MODE_INTEROBJECT:
-        navigateInterObject(keystring)
-    elif navigationMode == NAVIGATION_MODE_INTRAOBJECT:
-        navigateIntraObject(keystring)
+        _navigationMode = _NAVIGATION_MODE_INTEROBJECT
+        _displayAccessible(_currentObject)
+    elif _navigationMode == _NAVIGATION_MODE_INTEROBJECT:
+        _navigateInterObject(keystring)
+    elif _navigationMode == _NAVIGATION_MODE_INTRAOBJECT:
+        _navigateIntraObject(keystring)
         
     return True
 
@@ -497,15 +497,15 @@ def processBrailleEvent(region, position):
 def activate():
     """Called when this presentation manager is activated."""
 
-    global currentObject
+    global _currentObject
     
     speech.say("default", _("Switching to hierarchical navigation mode."))
 
     win = orca.findActiveWindow()
     
     if win:
-        currentObject = win.app
-        displayAccessible(currentObject)
+        _currentObject = win.app
+        _displayAccessible(_currentObject)
         
 def deactivate():
     """Called when this presentation manager is deactivated."""

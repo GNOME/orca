@@ -50,7 +50,7 @@ from orca_i18n import _                          # for gettext support
 # The currently active script - this script will get all keyboard
 # and Braille events.
 #
-activeScript = None
+_activeScript = None
 
 
 def activateScript(app):
@@ -62,13 +62,13 @@ def activateScript(app):
     - app: the Python Accessible instance representing the application
     """
 
-    global activeScript
+    global _activeScript
     
     speech.stop("default")
 
-    activeScript = script.getScript(app)
-    activeScript.reload()
-    debug.println(debug.LEVEL_FINE, "ACTIVATED SCRIPT: " + activeScript.name)
+    _activeScript = script.getScript(app)
+    _activeScript.reload()
+    debug.println(debug.LEVEL_FINE, "ACTIVATED SCRIPT: " + _activeScript.name)
 
 
 def processObjectEvent(event):
@@ -151,9 +151,9 @@ def processKeyEvent(keystring):
     Returns True if the event should be consumed.
     """
 
-    if activeScript and activeScript.keybindings.has_key(keystring):
+    if _activeScript and _activeScript.keybindings.has_key(keystring):
         try:
-            func = activeScript.keybindings[keystring]
+            func = _activeScript.keybindings[keystring]
             return func()
         except:
             debug.printException(debug.LEVEL_SEVERE)
@@ -170,7 +170,7 @@ def processBrailleEvent(region, position):
     """
 
     try:
-        activeScript.onBrlKey(region, position)
+        _activeScript.onBrlKey(region, position)
     except:
         pass
         

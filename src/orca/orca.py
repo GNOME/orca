@@ -40,50 +40,50 @@ import gtk
 
 # If True, this module has been initialized.
 #
-initialized = False
+_initialized = False
 
 
 # The known presentation managers.
 #
-PRESENTATION_MANAGERS = [focus_tracking_presenter,
-                         hierarchical_presenter]
+_PRESENTATION_MANAGERS = [focus_tracking_presenter,
+                          hierarchical_presenter]
 
 # The current presentation manager, which is an index into the
-# PRESENTATION_MANAGERS list.
+# _PRESENTATION_MANAGERS list.
 #
-currentPresentationManager = -1
+_currentPresentationManager = -1
 
 
-def switchToPresentationManager(index):
+def _switchToPresentationManager(index):
     """Switches to the given presentation manager.
 
     Arguments:
-    - index: an index into PRESENTATION_MANAGERS
+    - index: an index into _PRESENTATION_MANAGERS
     """
 
-    global currentPresentationManager
+    global _currentPresentationManager
     
-    if currentPresentationManager > 0:
-        PRESENTATION_MANAGERS[currentPresentationManager].deactivate()
+    if _currentPresentationManager > 0:
+        _PRESENTATION_MANAGERS[_currentPresentationManager].deactivate()
 
-    currentPresentationManager = index
+    _currentPresentationManager = index
 
     # Wrap the presenter index around.
     #
-    if currentPresentationManager >= len(PRESENTATION_MANAGERS):
-        currentPresentationManager = 0
-    elif currentPresentationManager < 0:
-        currentPresentationManager = len(PRESENTATION_MANAGERS) - 1
+    if _currentPresentationManager >= len(_PRESENTATION_MANAGERS):
+        _currentPresentationManager = 0
+    elif _currentPresentationManager < 0:
+        _currentPresentationManager = len(_PRESENTATION_MANAGERS) - 1
         
-    PRESENTATION_MANAGERS[currentPresentationManager].activate()
+    _PRESENTATION_MANAGERS[_currentPresentationManager].activate()
 
 
-def switchToNextPresentationManager():
+def _switchToNextPresentationManager():
     """Switches to the next presentation manager."""
 
-    global currentPresentationManager
+    global _currentPresentationManager
     
-    switchToPresentationManager(currentPresentationManager + 1)
+    _switchToPresentationManager(_currentPresentationManager + 1)
 
     
 ########################################################################
@@ -108,6 +108,24 @@ focusedApp = None
 focusedObject = None
 
 
+def _buildAppList():
+    """Retrieves the list of currently running apps for the desktop and
+    populates the apps list attribute with these apps.
+    """
+    
+    global apps
+
+    apps = []
+
+    i = core.desktop.childCount-1
+    while i >= 0:
+        acc = core.desktop.getChildAtIndex(i)
+        app = a11y.makeAccessible(acc)
+        if app != None:
+            apps.insert(0, app)
+        i = i-1
+
+
 def findActiveWindow():
     """Traverses the list of known apps looking for one who has an
     immediate child (i.e., a window) whose state includes the active state.
@@ -129,24 +147,6 @@ def findActiveWindow():
     return None
 
 
-def buildAppList():
-    """Retrieves the list of currently running apps for the desktop and
-    populates the apps list attribute with these apps.
-    """
-    
-    global apps
-
-    apps = []
-
-    i = core.desktop.childCount-1
-    while i >= 0:
-        acc = core.desktop.getChildAtIndex(i)
-        app = a11y.makeAccessible(acc)
-        if app != None:
-            apps.insert(0, app)
-        i = i-1
-
-
 def onChildrenChanged(e):
     """Tracks children-changed events on the desktop to determine when
     apps start and stop.
@@ -164,11 +164,11 @@ def onChildrenChanged(e):
             shutdown()
             return
 
-        # [[[TODO: WDW - Note the call to buildAppList - that will update the
+        # [[[TODO: WDW - Note the call to _buildAppList - that will update the
         # apps[] list.  If this logic is changed in the future, the apps list
         # will most likely needed to be updated here.]]]
         #
-        buildAppList()
+        _buildAppList()
 
     
 def onWindowActivated(e):
@@ -229,7 +229,7 @@ def processObjectEvent(e):
     - e: an at-spi event.
     """
     
-    global currentPresentationManager
+    global _currentPresentationManager
     
     # Create an Accessible for the source
     #
@@ -249,7 +249,8 @@ def processObjectEvent(e):
 
     # [[[TODO: WDW - probably should check for index out of bounds.]]]
     #
-    PRESENTATION_MANAGERS[currentPresentationManager].processObjectEvent(event)
+    _PRESENTATION_MANAGERS[_currentPresentationManager].processObjectEvent(\
+        event)
 
 
 ########################################################################
@@ -287,10 +288,10 @@ def init():
     module has already been initialized.
     """
     
-    global initialized
+    global _initialized
     global apps
     
-    if initialized:
+    if _initialized:
         return False
 
     a11y.init()
@@ -303,13 +304,12 @@ def init():
         debug.println(debug.LEVEL_CONFIGURATION,
                       "Speech module has NOT been initialized.")
         
-    # [[[TODO: WDW - do we need to register onBrlKey as a listener,
+    # [[[TODO: WDW - do we need to register _onBrlKey as a listener,
     # or....do we need to modify the brl module so that onBrlKey will
     # be called from the brl module?]]]
     #
     if getattr(settings, "useBraille", False):
-        initialized = brl.init()
-        if initialized:
+        if brl.init():
             debug.println(debug.LEVEL_CONFIGURATION,
                           "Braille module has been initialized.")
         else:
@@ -326,7 +326,7 @@ def init():
 
     # Build list of accessible apps.
     #
-    buildAppList()
+    _buildAppList()
 
     # Create and load an app's script when it is added to the desktop
     #
@@ -347,7 +347,7 @@ def init():
     for type in script.EVENT_MAP.values():
         core.registerEventListener(processObjectEvent, type)
 
-    initialized = True
+    _initialized = True
     return True
 
 
@@ -357,9 +357,9 @@ def start():
     Returns False only if this module has not been initialized.
     """
 
-    global initialized
+    global _initialized
     
-    if not initialized:
+    if not _initialized:
         return False
 
     try:
@@ -376,7 +376,7 @@ def start():
     if win:
         focusedApp = win.app
 
-    switchToPresentationManager(0) # focus_tracking_presenter
+    _switchToPresentationManager(0) # focus_tracking_presenter
 
     core.bonobo.main()
 
@@ -389,10 +389,10 @@ def shutdown():
     was never initialized.
     """
     
-    global initialized
+    global _initialized
     global apps
 
-    if not initialized:
+    if not _initialized:
         return False
 
     speech.say("default", _("goodbye."))
@@ -420,7 +420,7 @@ def shutdown():
 
     core.bonobo.main_quit()
 
-    initialized = False
+    _initialized = False
     return True
 
 
@@ -433,13 +433,13 @@ def shutdown():
 # The last drawn rectangle.  This is used for remembering what we
 # need to erase on the screen.
 #
-visibleRectangle = None
+_visibleRectangle = None
 
 def outlineAccessible(accessible):
     """Draws a rectangular outline around the accessible, erasing the
     last drawn rectangle in the process."""
 
-    global visibleRectangle
+    global _visibleRectangle
 
     display = None
     
@@ -465,25 +465,25 @@ def outlineAccessible(accessible):
 
     # Erase the old rectangle.
     #
-    if visibleRectangle:
+    if _visibleRectangle:
         root_window.draw_rectangle(graphics_context,
                                    False,                    # Fill
-                                   visibleRectangle.x,
-                                   visibleRectangle.y,
-                                   visibleRectangle.width,
-                                   visibleRectangle.height)
-        visibleRectangle = None
+                                   _visibleRectangle.x,
+                                   _visibleRectangle.y,
+                                   _visibleRectangle.width,
+                                   _visibleRectangle.height)
+        _visibleRectangle = None
 
     if accessible:
         component = a11y.getComponent(accessible)
         if component:
-            visibleRectangle = component.getExtents(0) # coord type = screen
+            _visibleRectangle = component.getExtents(0) # coord type = screen
             root_window.draw_rectangle(graphics_context,
                                        False,                  # Fill
-                                       visibleRectangle.x,
-                                       visibleRectangle.y,
-                                       visibleRectangle.width,
-                                       visibleRectangle.height)
+                                       _visibleRectangle.x,
+                                       _visibleRectangle.y,
+                                       _visibleRectangle.width,
+                                       _visibleRectangle.height)
 
 
 ########################################################################
@@ -499,18 +499,18 @@ def outlineAccessible(accessible):
 
 # Keybindings that Orca itself cares about.
 #
-keybindings = {}
-keybindings["F12"] = shutdown
-keybindings["F5"] = debugListApps
-keybindings["F6"] = debugListActiveApp
-keybindings["F8"] = switchToNextPresentationManager
+_keybindings = {}
+_keybindings["F12"] = shutdown
+_keybindings["F5"]  = debugListApps
+_keybindings["F6"]  = debugListActiveApp
+_keybindings["F8"]  = _switchToNextPresentationManager
 
 # The string representing the last key pressed.
 #
 lastKey = None
 
 
-def getModifierString(modifier):
+def _getModifierString(modifier):
     """Converts a set of modifer states into a text string
 
     Arguments:
@@ -544,7 +544,7 @@ def getModifierString(modifier):
     return s
 
 
-def keyEcho(key):
+def _keyEcho(key):
     """If the keyEcho setting is enabled, echoes the key via speech.
     Uppercase keys will be spoken using the "uppercase" voice style,
     whereas lowercase keys will be spoken using the "default" voice style.
@@ -564,7 +564,7 @@ def keyEcho(key):
 def processKeyEvent(event):
     """The primary key event handler for Orca.  Keeps track of various
     attributes, such as the lastKey and insertPressed.  Also calls
-    keyEcho as well as any function that may exist in the keybindings
+    keyEcho as well as any function that may exist in the _keybindings
     dictionary for the key event.  This method is called synchronously
     from the at-spi registry and should be performant.  In addition, it
     must return True if it has consumed the event (and False if not).
@@ -576,7 +576,7 @@ def processKeyEvent(event):
     """
     
     global lastKey
-    global currentPresentationManager
+    global _currentPresentationManager
     
     keystring = ""
 
@@ -602,7 +602,7 @@ def processKeyEvent(event):
             if value < 32:
                 event_string = chr(value + 0x40)
 
-        mods = getModifierString(event.modifiers)
+        mods = _getModifierString(event.modifiers)
 
         if mods:
             keystring = mods + "+" + event_string
@@ -626,18 +626,18 @@ def processKeyEvent(event):
     if keystring:
         lastKey = keystring
         debug.printKeyEvent(debug.LEVEL_FINE, keystring)
-        keyEcho(keystring)
+        _keyEcho(keystring)
 
         # Orca gets first stab at the event.  Then, the presenter gets
         # a shot.
         #
-        if keybindings.has_key(keystring):
+        if _keybindings.has_key(keystring):
             try:
-                func = keybindings[keystring]
+                func = _keybindings[keystring]
                 return func()
             except:
                 debug.printException(debug.LEVEL_SEVERE)
                 return False
         else:
-            return PRESENTATION_MANAGERS[currentPresentationManager].processKeyEvent( \
-                keystring)
+            return _PRESENTATION_MANAGERS[_currentPresentationManager].\
+                   processKeyEvent(keystring)

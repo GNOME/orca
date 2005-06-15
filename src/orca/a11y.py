@@ -52,7 +52,7 @@ class Accessible:
     # The cache of the currently active accessible objects.  The key is
     # the at-spi Accessible, and the value is the Python Accessible.
     #
-    cache = {} 
+    _cache = {} 
 
     def __init__(self, acc):
         """Obtains, and creates if necessary, a Python Accessible from
@@ -65,7 +65,7 @@ class Accessible:
         Returns the associated Python Accessible.
         """
 
-        if Accessible.cache.has_key(acc):
+        if Accessible._cache.has_key(acc):
             return
 
         # The acc reference might be an Accessibility_Accessible or an
@@ -80,7 +80,7 @@ class Accessible:
         # new object away in the cache.
         #
         self.acc.ref()
-        Accessible.cache[acc] = self
+        Accessible._cache[acc] = self
 
 
     def __del__(self):
@@ -309,8 +309,8 @@ def makeAccessible(acc):
     if acc is None:
         return None
 
-    if Accessible.cache.has_key(acc):
-        obj = Accessible.cache[acc]
+    if Accessible._cache.has_key(acc):
+        obj = Accessible._cache[acc]
     else:
         obj = Accessible(acc)
 
@@ -401,8 +401,8 @@ def onDefunct(e):
     - e: at-spi event from the at-api registry
     """
 
-    if Accessible.cache.has_key(e.source):
-        del Accessible.cache[e.source]
+    if Accessible._cache.has_key(e.source):
+        del Accessible._cache[e.source]
 
 
 
@@ -412,7 +412,7 @@ def onDefunct(e):
 #                                                                      #
 ########################################################################
 
-initialized = False
+_initialized = False
 
 def init():
     """Initialize the a11y module.  This also intializes the core
@@ -422,8 +422,8 @@ def init():
     Returns True if the module has been successfully initialized.
     """
     
-    global initialized
-    if initialized:
+    global _initialized
+    if _initialized:
         return True
 
     # Register our various listeners.
@@ -442,7 +442,7 @@ def init():
     core.registerEventListener(
         onChildrenChanged, "object:children-changed:")
 
-    initialized = True
+    _initialized = True
     return True
 
 
@@ -451,14 +451,14 @@ def shutdown():
     [[[TODO: WDW - should this free the cache as well?]]]
     """
     
-    global initialized
+    global _initialized
 
-    if not initialized:
+    if not _initialized:
         return False
 
     core.shutdown()
 
-    initialized = False
+    _initialized = False
     return True
 
 
@@ -697,6 +697,7 @@ def getAccessible(obj):
         acc = acc._narrow(core.Accessibility.Accessible)
     return acc
 
+
 def getAction(obj):
     """Returns an object that implements the Accessibility_Action
     interface for this object, or None if this object doesn't implement
@@ -715,6 +716,7 @@ def getAction(obj):
     if action is not None:
         action = action._narrow(core.Accessibility.Action)
     return action
+
 
 def getComponent(obj):
     """Returns an object that implements the Accessibility_Component
@@ -735,6 +737,7 @@ def getComponent(obj):
         component = component._narrow(core.Accessibility.Component)
     return component
 
+
 def getHypertext(obj):
     """Returns an object that implements the Accessibility_Hypertext
     interface for this object, or None if this object doesn't implement
@@ -753,6 +756,7 @@ def getHypertext(obj):
     if hypertext is not None:
         hypertext = hypertext._narrow(core.Accessibility.Hypertext)
     return hypertext
+
 
 def getSelection(obj):
     """Returns an object that implements the Accessibility_Selection
@@ -773,6 +777,7 @@ def getSelection(obj):
         sel = sel._narrow(core.Accessibility.Selection)
     return sel
 
+
 def getTable(obj):
     """Returns an object that implements the Accessibility_Table
     interface for this object, or None if this object doesn't implement
@@ -792,6 +797,7 @@ def getTable(obj):
         table = table._narrow(core.Accessibility.Table)
     return table
 
+
 def getText(obj):
     """Returns an object that implements the Accessibility_Text
     interface for this object, or None if this object doesn't implement
@@ -810,6 +816,7 @@ def getText(obj):
     if text is not None:
         text = text._narrow(core.Accessibility.Text)
     return text
+
 
 def getValue(obj):
     """Returns an object that implements the Accessibility_Value

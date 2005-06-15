@@ -35,7 +35,7 @@ import settings
 
 # The default script - used when the app is unknown (i.e., None)
 #
-default = None    
+_default = None    
 
 # This dictionary maps at-spi event names to Python function names
 # which are to be used in scripts.  For example, it maps "focus:"
@@ -92,7 +92,7 @@ class Script:
     # The cache of the currently known scripts.  The key is the Python
     # Accessible application, and the value is the script for that app.
     #
-    cache = {} 
+    _cache = {} 
 
 
     def __init__(self, app):
@@ -115,7 +115,7 @@ class Script:
 
         global EVENT_MAP
         
-        if Script.cache.has_key(app):
+        if Script._cache.has_key(app):
             return
 
         self.app = app
@@ -130,25 +130,25 @@ class Script:
         
         # Load the default script and default keybindings.  
         #
-        self.default = __import__("default")
-        self.default_bindings = __import__("default-keybindings")
+        self._default = __import__("default")
+        self._default_bindings = __import__("default-keybindings")
 
         # Load app-specific script and keybindings
         #
         if getattr(settings, "useCustomScripts", True):
             try:
-                self.custom = __import__(self.app.name)
+                self._custom = __import__(self.app.name)
                 self.name = self.app.name + " (custom)"
             except:
-                self.custom = None
+                self._custom = None
             try:
                 bindingsname = self.app.name + "-keybindings"
-                self.custom_bindings = __import__(bindingsname)
+                self._custom_bindings = __import__(bindingsname)
             except:
-                self.custom_bindings = None
+                self._custom_bindings = None
         else:
-            self.custom = None
-            self.custom_bindings = None                
+            self._custom = None
+            self._custom_bindings = None                
             
         # If the app-specific Python module has a function called
         # onBrlKey, this function should be used to handle Braille
@@ -156,9 +156,9 @@ class Script:
         # to handle Braille key events much like we handle keyboard
         # events.]]]
         #
-        func = getattr(self.custom, "onBrlKey", None)
+        func = getattr(self._custom, "onBrlKey", None)
         if func is None:
-            func = getattr(self.default,"onBrlKey", None)
+            func = getattr(self._default,"onBrlKey", None)
         if func:
             self.onBrlKey = func
 
@@ -172,9 +172,9 @@ class Script:
         # "listeners" dictionary.
         #
         for key in EVENT_MAP.keys():
-            func = getattr(self.custom, key, None)
+            func = getattr(self._custom, key, None)
             if func is None:
-                func = getattr(self.default, key, None)
+                func = getattr(self._default, key, None)
             if func:
                 type = EVENT_MAP[key]
                 self.listeners[type] = func
@@ -187,24 +187,24 @@ class Script:
         # keybindings always replace default ones for the same key
         # combinations.
         #
-        for key in self.default_bindings.keybindings.keys():
-            funcname = self.default_bindings.keybindings[key]
-            func = getattr(self.custom, funcname, None)
+        for key in self._default_bindings.keybindings.keys():
+            funcname = self._default_bindings.keybindings[key]
+            func = getattr(self._custom, funcname, None)
             if func is None:
-                func = getattr(self.default, funcname, None)
+                func = getattr(self._default, funcname, None)
             if func:
                 self.keybindings[key] = func
 
-        if self.custom_bindings:
-            for key in self.custom_bindings.keybindings.keys():
-                funcname = self.custom_bindings.keybindings[key]
-                func = getattr(self.custom, funcname, None)
+        if self._custom_bindings:
+            for key in self._custom_bindings.keybindings.keys():
+                funcname = self._custom_bindings.keybindings[key]
+                func = getattr(self._custom, funcname, None)
                 if func is None:
-                    func = getattr(self.default, funcname, None)
+                    func = getattr(self._default, funcname, None)
                 if func:
                     self.keybindings[key] = func
 
-        Script.cache[app] = self
+        Script._cache[app] = self
 
         
     def reload(self):
@@ -217,15 +217,15 @@ class Script:
         between the load and the reload.]]]
         """
 
-        reload(self.default)
-        reload(self.default_bindings)
+        reload(self._default)
+        reload(self._default_bindings)
 
         try:
-            reload(self.custom)
+            reload(self._custom)
         except:
             pass
         try:
-            reload(self.custom_bindings)
+            reload(self._custom_bindings)
         except:
             pass
 
@@ -240,18 +240,18 @@ def getScript(app):
     Returns an instance of a Script.
     """
 
-    global default
+    global _default
 
     # We might not know what the app is.  In this case, just defer to the
     # default script for support.
     #
     if app is None:
-        if default is None:
-            default = Script(None)
-        return default
+        if _default is None:
+            _default = Script(None)
+        return _default
     
     try:
-        script = Script.cache[app]
+        script = Script._cache[app]
     except:
         script = Script(app)
         
@@ -268,5 +268,5 @@ def deleteScript(app):
     if app is None:
         pass
     else:
-        del Script.cache[app]
+        del Script._cache[app]
     

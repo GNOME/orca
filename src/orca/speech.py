@@ -32,20 +32,20 @@ import GNOME.Speech, GNOME__POA.Speech
 
 # Global list of active gnome-spech drivers
 #
-drivers = []
+_drivers = []
 
 # Dictionary of speakers.  The key is the voice style name (e.g., "default")
 # and the value is the speaker.
 #
-speakers = {}
+_speakers = {}
 
 # If True, this module has been initialized.
 #
-initialized = False
+_initialized = False
 
-# Last text and voice spoken.
+# List containing last voice and text spoken.
 #
-lastText = None
+_lastText = None
 
 def createSpeaker(driverName, voiceName):
     """Internal to speech module only.
@@ -61,12 +61,12 @@ def createSpeaker(driverName, voiceName):
     created or the driver cannot be found.
     """
     
-    global drivers
+    global _drivers
 
     # Find the specified GNOME Speech driver
     #
     found = False
-    for driver in drivers:
+    for driver in _drivers:
         if driver.synthesizerName.find(driverName) >= 0:
             found = True
             break
@@ -128,7 +128,7 @@ class SpeechCallback(GNOME__POA.Speech.SpeechCallback):
 
 # Global speech callback instance.
 #
-cb = SpeechCallback()
+_cb = SpeechCallback()
 
 
 def init():
@@ -140,12 +140,12 @@ def init():
     module has already been initialized.
     """
     
-    global initialized
-    global drivers
-    global speakers
-    global cb
+    global _initialized
+    global _drivers
+    global _speakers
+    global _cb
 
-    if initialized:
+    if _initialized:
         return False
 
     # Get a list of all the drivers on the system and find out how many
@@ -154,7 +154,7 @@ def init():
     servers = bonobo.activation.query(
         "repo_ids.has('IDL:GNOME/Speech/SynthesisDriver:0.3')")
 
-    drivers = []
+    _drivers = []
     for server in servers:
         try:
             driver = bonobo.activation.activate_from_id(server.iid, 0, False)
@@ -171,11 +171,11 @@ def init():
         if not isInitialized:
             isInitialized = driver.driverInit()
         if isInitialized:
-            drivers.append(driver)
+            _drivers.append(driver)
 
     # Create the speakers
     #
-    speakers = {}
+    _speakers = {}
     for voiceName in settings.voices.keys():
         desc = settings.voices[voiceName]
         s = createSpeaker(desc[0], desc[1])
@@ -184,19 +184,19 @@ def init():
             s.setParameterValue("rate", desc[2])
             s.setParameterValue("pitch", desc[3])
             s.setParameterValue("volume", desc[4])
-            speakers[voiceName] = s
-            s.registerSpeechCallback(cb._this())
+            _speakers[voiceName] = s
+            s.registerSpeechCallback(_cb._this())
 
     # If no speakers were defined, select the first voice of the first
     # working driver as the default
     #
-    if len(speakers) == 0 and len(drivers) > 0:
-        voices = drivers[0].getAllVoices()
+    if len(_speakers) == 0 and len(_drivers) > 0:
+        voices = _drivers[0].getAllVoices()
         if len(voices) > 0:
-            speakers["default"] = drivers[0].createSpeaker(
+            _speakers["default"] = _drivers[0].createSpeaker(
                 voices[0])._narrow(GNOME.Speech.Speaker)
 
-    initialized = True
+    _initialized = True
 
     return True
 
@@ -211,30 +211,30 @@ def shutdown():
     module has not been initialized.
     """
     
-    global initialized
-    global speakers
-    global drivers
+    global _initialized
+    global _speakers
+    global _drivers
 
-    if not initialized:
+    if not _initialized:
         return False
 
-    for speaker in speakers.values():
+    for speaker in _speakers.values():
         try:
             speaker.unref()
         except:
             pass
         
-    del speakers
+    del _speakers
 
-    for driver in drivers:
+    for driver in _drivers:
         try:
             driver.unref()
         except:
             pass
         
-    del drivers
+    del _drivers
 
-    initialized = False
+    _initialized = False
     
     return True
 
@@ -267,19 +267,19 @@ def say(voiceName, text):
     wait for the text to be spoken), right?]]]
     """
 
-    global initialized
-    global speakers
-    global lastText
+    global _initialized
+    global _speakers
+    global _lastText
     
-    if not initialized:
+    if not _initialized:
         return -1
 
     # Do we have the specified voice?
     #
-    if speakers.has_key(voiceName):
-        s = speakers[voiceName]
+    if _speakers.has_key(voiceName):
+        s = _speakers[voiceName]
     else:
-        s = speakers["default"]
+        s = _speakers["default"]
 
     # If the text to speak is a single character, see if we have a
     # customized character pronunciation
@@ -295,7 +295,7 @@ def say(voiceName, text):
     debug.println(debug.LEVEL_INFO, "speech.say(" + text + ")")
     try:
         s.stop()
-        lastText = [voiceName, text]
+        _lastText = [voiceName, text]
         return s.say(text)
     except:
         debug.printException(debug.LEVEL_SEVERE)
@@ -306,8 +306,8 @@ def sayAgain():
     """Speaks the last text again.
     """
 
-    if lastText:
-        say(lastText[0], lastText[1])
+    if _lastText:
+        say(_lastText[0], _lastText[1])
 
     
 def stop(voiceName):
@@ -318,14 +318,14 @@ def stop(voiceName):
     - voiceName: the name of the voice style (e.g., "default")
     """
     
-    global initialized
-    global speakers
+    global _initialized
+    global _speakers
 
-    if not initialized:
+    if not _initialized:
         return
 
-    if speakers.has_key(voiceName):
-        s = speakers[voiceName]
+    if _speakers.has_key(voiceName):
+        s = _speakers[voiceName]
         try:
             s.stop()
         except:
@@ -369,7 +369,7 @@ def sayAllSpeechEnded():
     """
     
     global sayAllEnabled
-    global cb
+    global _cb
     global onSayAllGetChunk
 
     # If calling sayAllGetChunk fails, then we're done
@@ -381,7 +381,7 @@ def sayAllSpeechEnded():
 
         # Clear the members of the speech callback
         #
-        cb.onSpeechEnded = None
+        _cb.onSpeechEnded = None
         sayAllEnabled = False
 
 
@@ -405,13 +405,13 @@ def startSayAll(voiceName, getChunk, onStopped):
     global sayAllEnabled
     global onSayAllGetChunk
     global onSayAllStopped
-    global cb
+    global _cb
     global sayAllVoiceName
     
     onSayAllGetChunk = getChunk
     onSayAllStopped = onStopped
     sayAllVoiceName = voiceName
-    cb.onSpeechEnded = sayAllSpeechEnded
+    _cb.onSpeechEnded = sayAllSpeechEnded
     sayAllEnabled = True
     
 
@@ -420,10 +420,10 @@ def stopSayAll():
     """
     
     global sayAllEnabled
-    global cb
+    global _cb
     global sayAllVoiceName
 
-    cb.onSpeechEnded = None
+    _cb.onSpeechEnded = None
     stop(sayAllVoiceName)
-    onSayAllStopped(cb.position)
+    onSayAllStopped(_cb.position)
     sayAllEnabled = False
