@@ -137,18 +137,18 @@ class Script:
         #
         if getattr(settings, "useCustomScripts", True):
             try:
-                self.mod = __import__(self.app.name)
+                self.custom = __import__(self.app.name)
                 self.name = self.app.name + " (custom)"
             except:
-                self.mod = None
+                self.custom = None
             try:
                 bindingsname = self.app.name + "-keybindings"
-                self.bindings_mod = __import__(bindingsname)
+                self.custom_bindings = __import__(bindingsname)
             except:
-                self.bindings_mod = None
+                self.custom_bindings = None
         else:
-            self.mod = None
-            self.bindings_mod = None                
+            self.custom = None
+            self.custom_bindings = None                
             
         # If the app-specific Python module has a function called
         # onBrlKey, this function should be used to handle Braille
@@ -156,7 +156,7 @@ class Script:
         # to handle Braille key events much like we handle keyboard
         # events.]]]
         #
-        func = getattr(self.mod, "onBrlKey", None)
+        func = getattr(self.custom, "onBrlKey", None)
         if func is None:
             func = getattr(self.default,"onBrlKey", None)
         if func:
@@ -172,7 +172,7 @@ class Script:
         # "listeners" dictionary.
         #
         for key in EVENT_MAP.keys():
-            func = getattr(self.mod, key, None)
+            func = getattr(self.custom, key, None)
             if func is None:
                 func = getattr(self.default, key, None)
             if func:
@@ -189,16 +189,16 @@ class Script:
         #
         for key in self.default_bindings.keybindings.keys():
             funcname = self.default_bindings.keybindings[key]
-            func = getattr(self.mod, funcname, None)
+            func = getattr(self.custom, funcname, None)
             if func is None:
                 func = getattr(self.default, funcname, None)
             if func:
                 self.keybindings[key] = func
 
-        if self.bindings_mod:
-            for key in self.bindings_mod.keybindings.keys():
-                funcname = self.bindings_mod.keybindings[key]
-                func = getattr(self.mod, funcname, None)
+        if self.custom_bindings:
+            for key in self.custom_bindings.keybindings.keys():
+                funcname = self.custom_bindings.keybindings[key]
+                func = getattr(self.custom, funcname, None)
                 if func is None:
                     func = getattr(self.default, funcname, None)
                 if func:
@@ -221,11 +221,11 @@ class Script:
         reload(self.default_bindings)
 
         try:
-            reload(self.mod)
+            reload(self.custom)
         except:
             pass
         try:
-            reload(self.bindings_mod)
+            reload(self.custom_bindings)
         except:
             pass
 
