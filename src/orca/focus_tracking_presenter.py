@@ -67,6 +67,7 @@ def activateScript(app):
     speech.stop("default")
 
     activeScript = script.getScript(app)
+    activeScript.reload()
     debug.println(debug.LEVEL_FINE, "ACTIVATED SCRIPT: " + activeScript.name)
 
 

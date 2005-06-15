@@ -332,9 +332,7 @@ def init():
     #
     core.registerEventListener(onChildrenChanged, "object:children-changed:")
 
-    # Reload a script's modules and activate it's keybindings when a
-    # toplevel of the application is activated.  Also keep track of
-    # the application with focus.
+    # Keep track of the application with focus.
     #
     core.registerEventListener(onWindowActivated, "window:activate")
 

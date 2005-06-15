@@ -252,7 +252,6 @@ def getScript(app):
     
     try:
         script = Script.cache[app]
-        script.reload()
     except:
         script = Script(app)
         
