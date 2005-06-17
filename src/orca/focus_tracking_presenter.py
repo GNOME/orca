@@ -161,16 +161,15 @@ def processKeyEvent(keystring):
     return False
 
 
-def processBrailleEvent(region, position):
+def processBrailleEvent(command):
     """Called whenever a cursor key is pressed on the Braille display.
-
+    
     Arguments:
-    - region: the Braille region which generated the press
-    - position: the offset within the region
+    - command: the BrlAPI command for the key that was pressed.
     """
 
     try:
-        _activeScript.onBrlKey(region, position)
+        _activeScript.onBrlKey(command)
     except:
         pass
         

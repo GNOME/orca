@@ -58,7 +58,7 @@ def _setChat(obj):
     #
     label = a11y.getLabel(obj)
     text = label + _(" chat")
-    brl.writeMessage(text)
+    brl.writeText(0, text)
     speech.say("default", text)
         
     
@@ -81,7 +81,7 @@ def _setIm(obj):
     #
     label = a11y.getLabel(obj)
     text = label + _(" instant message")
-    brl.writeMessage(text)
+    brl.writeText(0, text)
     speech.say("default", text)
 
 

@@ -165,8 +165,7 @@ def _displayAccessible(accessible):
 
     debug.println(debug.LEVEL_INFO, brltext)
         
-    brl.writeMessage(brltext)
-    brl.refresh()
+    brl.writeText(0, brltext)
 
     orca.outlineAccessible(accessible)
 
@@ -256,8 +255,7 @@ def _displayActionSpecialization(action):
 
     debug.println(debug.LEVEL_INFO, brltext)
         
-    brl.writeMessage(brltext)
-    brl.refresh()
+    brl.writeText(0, brltext)
 
     
 def _displayComponentSpecialization(component):
@@ -273,8 +271,7 @@ def _displayComponentSpecialization(component):
 
     debug.println(debug.LEVEL_INFO, brltext)
         
-    brl.writeMessage(brltext)
-    brl.refresh()
+    brl.writeText(0, brltext)
 
     
 def _displayHypertextSpecialization(hypertext):
@@ -287,8 +284,7 @@ def _displayHypertextSpecialization(hypertext):
 
     debug.println(debug.LEVEL_INFO, brltext)
         
-    brl.writeMessage(brltext)
-    brl.refresh()
+    brl.writeText(0, brltext)
 
     
 def _displaySelectionSpecialization(selection):
@@ -301,8 +297,7 @@ def _displaySelectionSpecialization(selection):
 
     debug.println(debug.LEVEL_INFO, brltext)
         
-    brl.writeMessage(brltext)
-    brl.refresh()
+    brl.writeText(0, brltext)
 
     
 def _displayTableSpecialization(table):
@@ -315,8 +310,7 @@ def _displayTableSpecialization(table):
 
     debug.println(debug.LEVEL_INFO, brltext)
         
-    brl.writeMessage(brltext)
-    brl.refresh()
+    brl.writeText(0, brltext)
 
     
 def _displayTextSpecialization(text):
@@ -329,8 +323,7 @@ def _displayTextSpecialization(text):
 
     debug.println(debug.LEVEL_INFO, brltext)
         
-    brl.writeMessage(brltext)
-    brl.refresh()
+    brl.writeText(0, brltext)
 
 
 def _displayValueSpecialization(value):
@@ -344,8 +337,7 @@ def _displayValueSpecialization(value):
 
     debug.println(debug.LEVEL_INFO, brltext)
         
-    brl.writeMessage(brltext)
-    brl.refresh()
+    brl.writeText(0, brltext)
 
 
 def _displaySpecialization(specialization):
@@ -484,12 +476,11 @@ def processKeyEvent(keystring):
     return True
 
 
-def processBrailleEvent(region, position):
+def processBrailleEvent(command):
     """Called whenever a cursor key is pressed on the Braille display.
 
     Arguments:
-    - region: the Braille region which generated the press
-    - position: the offset within the region
+    - command: the BrlAPI command for the key that was pressed.
     """
     pass
         

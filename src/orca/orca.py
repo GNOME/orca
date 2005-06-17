@@ -305,7 +305,9 @@ def init():
                       "Speech module has NOT been initialized.")
         
     if getattr(settings, "useBraille", False):
-        if brl.init():
+        # [[[TODO: WDW - do not hardcode to 7.]]]
+        #
+        if brl.init(7):
             debug.println(debug.LEVEL_CONFIGURATION,
                           "Braille module has been initialized.")
             brl.registerCallback(processBrailleEvent)
@@ -361,9 +363,7 @@ def start():
 
     try:
         speech.say("default", _("Welcome to Orca."))
-        brl.clear()
-        brl.addRegion(_("Welcome to Orca."), 16, 0)
-        brl.refresh()
+        brl.writeText(0, _("Welcome to Orca."))
     except:
         debug.printException(debug.LEVEL_SEVERE)
     
@@ -393,9 +393,7 @@ def shutdown():
         return False
 
     speech.say("default", _("goodbye."))
-    brl.clear()
-    brl.addRegion(_("Goodbye."), 8, 0)
-    brl.refresh()
+    brl.writeText(0, _("Goodbye."))
 
     # Deregister our event listeners
     #
@@ -499,19 +497,20 @@ def outlineAccessible(accessible):
 #                                                                      #
 ########################################################################
 
-def processBrailleEvent(region, position):
+def processBrailleEvent(command):
     """The primary Braille key event handler for Orca.
-    [[[TODO: WDW - Braille handling will be redone at some point.]]]
     
     Arguments:
-    - level: the accepted debug level
-    - region: the Braille region that had the event
-    - position: the cursor routing key position in the region
+    - command: the BrlAPI command for the key that was pressed.
     """
-    
-    debug.printBrailleEvent(debug.LEVEL_FINE, region, position)
+
+    # [[[TODO: WDW - need to better understand why BrlTTY is giving
+    # us larger values on the Alva display.]]]
+    #
+    command = command & 0xfff
+    debug.printBrailleEvent(debug.LEVEL_FINE, command)
     return _PRESENTATION_MANAGERS[_currentPresentationManager].\
-           processBrailleEvent(region, position)
+           processBrailleEvent(command)
 
     
 ########################################################################
@@ -645,11 +644,10 @@ def processKeyEvent(event):
         else:
             speech.stop("default")
 
-        # Key presses clear the Braille display
         # [[[TODO:  WDW - is this what we want?]]]
         #
         if getattr(settings, "useBraille", False):
-            brl.clear()
+            brl.writeText(0, "")
             
     if keystring:
         lastKey = keystring

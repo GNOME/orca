@@ -296,21 +296,18 @@ def printKeyEvent(level, keystring):
             "KEY EVENT: (%s)" % keystring)
 
     
-def printBrailleEvent(level, region, position):
+def printBrailleEvent(level, command):
     """Prints out a Braille event.  The given level may be overridden
     if the eventDebugLevel (see setEventDebugLevel) is greater.
-    [[[TODO: WDW - Braille handling will be redone at some point.]]]
     
     Arguments:
-    - level: the accepted debug level
-    - region: the Braille region that had the event
-    - position: the cursor routing key position in the region
+    - command: the BrlAPI command for the key that was pressed.
     """
 
     global _eventDebugLevel
 
     println(max(level, _eventDebugLevel),
-            "BRAILLE EVENT: region=%d position=%d" % (region, position))
+            "BRAILLE EVENT: command=%x" % command)
 
     
 def listDetails(level, indent, accessible):

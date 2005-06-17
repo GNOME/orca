@@ -53,7 +53,7 @@ def onWindowActivated(event):
         display = d[0]
         display_txt = a11y.getText(display)
         contents = display_txt.getText(0, -1)
-        brl.writeMessage(contents)
+        brl.writeText(0, contents)
 
     # Call the default onWindowActivated function
 
@@ -74,7 +74,7 @@ def onTextInserted(event):
         # key pressed was enter or equals
 
         contents = display_txt.getText(0, -1)
-        brl.writeMessage(contents)
+        brl.writeText(0, contents)
         if orca.lastKey == "Return" or orca.lastKey == "=":
             speech.say("default", contents)
             
