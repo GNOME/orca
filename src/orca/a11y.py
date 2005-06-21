@@ -836,3 +836,38 @@ def getValue(obj):
     if value is not None:
         value = value._narrow(core.Accessibility.Value)
     return value
+
+
+def getTextLineAtCaret(obj):
+    """Gets the line of text where the caret is.
+
+    Argument:
+    - obj: an Accessible object that implements the AccessibleText
+           interface
+
+    Returns the line of text where the caret is.
+    """
+
+    # Get the the AccessibleText interrface
+    #
+    text = getText(obj)
+
+    if text is None:
+        return ["", 0, 0]
+    
+    # Get the line containing the caret
+    #
+    offset = text.caretOffset
+    line = text.getTextAtOffset(offset,
+                                core.Accessibility.TEXT_BOUNDARY_LINE_START)
+
+    # Line is actually a list of objects-- the first is the actual
+    # text of the line, the second is the start offset, and the third
+    # is the end offset.  Sometimes we get the trailing line-feed-- remove it
+    #
+    if line[0][-1:] == "\n":
+        content = line[0][:-1]
+    else:
+        content = line[0]
+
+    return [content, offset, line[1]]

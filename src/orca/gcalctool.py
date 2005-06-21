@@ -18,11 +18,11 @@
 # Boston, MA 02111-1307, USA.
 
 import a11y
-import brl
 import default
 import kbd
 import rolenames
 import speech
+import braille
 
 # A reference to the display
 
@@ -53,7 +53,7 @@ def onWindowActivated(event):
         display = d[0]
         display_txt = a11y.getText(display)
         contents = display_txt.getText(0, -1)
-        brl.writeText(0, contents)
+        braille.displayMessage(contents)
 
     # Call the default onWindowActivated function
 
@@ -74,7 +74,7 @@ def onTextInserted(event):
         # key pressed was enter or equals
 
         contents = display_txt.getText(0, -1)
-        brl.writeText(0, contents)
+        braille.displayMessage(contents)
         if orca.lastKey == "Return" or orca.lastKey == "=":
             speech.say("default", contents)
             

@@ -56,10 +56,8 @@ than end users.
 import sys
 import a11y
 import core
-import brl
 import speech
-#import mag - [[[TODO: WDW - disable until I can figure out how to
-#             resolve the GNOME reference in mag.py.]]]
+import braille
 import script
 import debug
 
@@ -165,7 +163,7 @@ def _displayAccessible(accessible):
 
     debug.println(debug.LEVEL_INFO, brltext)
         
-    brl.writeText(0, brltext)
+    braille.displayMessage(brltext)
 
     orca.outlineAccessible(accessible)
 
@@ -255,7 +253,7 @@ def _displayActionSpecialization(action):
 
     debug.println(debug.LEVEL_INFO, brltext)
         
-    brl.writeText(0, brltext)
+    braille.displayMessage(brltext)
 
     
 def _displayComponentSpecialization(component):
@@ -271,7 +269,7 @@ def _displayComponentSpecialization(component):
 
     debug.println(debug.LEVEL_INFO, brltext)
         
-    brl.writeText(0, brltext)
+    braille.displayMessage(brltext)
 
     
 def _displayHypertextSpecialization(hypertext):
@@ -284,7 +282,7 @@ def _displayHypertextSpecialization(hypertext):
 
     debug.println(debug.LEVEL_INFO, brltext)
         
-    brl.writeText(0, brltext)
+    braille.displayMessage(brltext)
 
     
 def _displaySelectionSpecialization(selection):
@@ -297,7 +295,7 @@ def _displaySelectionSpecialization(selection):
 
     debug.println(debug.LEVEL_INFO, brltext)
         
-    brl.writeText(0, brltext)
+    braille.displayMessage(brltext)
 
     
 def _displayTableSpecialization(table):
@@ -310,7 +308,7 @@ def _displayTableSpecialization(table):
 
     debug.println(debug.LEVEL_INFO, brltext)
         
-    brl.writeText(0, brltext)
+    braille.displayMessage(brltext)
 
     
 def _displayTextSpecialization(text):
@@ -323,7 +321,7 @@ def _displayTextSpecialization(text):
 
     debug.println(debug.LEVEL_INFO, brltext)
         
-    brl.writeText(0, brltext)
+    braille.displayMessage(brltext)
 
 
 def _displayValueSpecialization(value):
@@ -337,7 +335,7 @@ def _displayValueSpecialization(value):
 
     debug.println(debug.LEVEL_INFO, brltext)
         
-    brl.writeText(0, brltext)
+    braille.displayMessage(brltext)
 
 
 def _displaySpecialization(specialization):

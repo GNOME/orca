@@ -26,6 +26,7 @@ import core
 import orca
 from rolenames import getRoleName # localized role names
 import traceback
+import braille
 
 # Used to turn off all debugging.
 #
@@ -306,8 +307,12 @@ def printBrailleEvent(level, command):
 
     global _eventDebugLevel
 
-    println(max(level, _eventDebugLevel),
-            "BRAILLE EVENT: command=%x" % command)
+    if (command >= 0) and (command < len(braille.BRLAPI_COMMANDS)):
+        println(max(level, _eventDebugLevel),
+                "BRAILLE EVENT: command=%s" % braille.BRLAPI_COMMANDS[command])
+    else:
+        println(max(level, _eventDebugLevel),
+                "BRAILLE EVENT: command=%x" % command)
 
     
 def listDetails(level, indent, accessible):

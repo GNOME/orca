@@ -23,10 +23,10 @@ time.
 """
 
 import a11y
-import brl
 import default
 import rolenames
 import speech
+import braille
 
 from rolenames import getRoleName
 
@@ -58,7 +58,7 @@ def _setChat(obj):
     #
     label = a11y.getLabel(obj)
     text = label + _(" chat")
-    brl.writeText(0, text)
+    braille.displayMessage(text)
     speech.say("default", text)
         
     
@@ -81,7 +81,7 @@ def _setIm(obj):
     #
     label = a11y.getLabel(obj)
     text = label + _(" instant message")
-    brl.writeText(0, text)
+    braille.displayMessage(text)
     speech.say("default", text)
 
 

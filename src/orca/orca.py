@@ -22,7 +22,7 @@ import a11y
 import core
 import settings  # user settings
 import speech
-import brl
+import braille
 #import mag - [[[TODO: WDW - disable until I can figure out how to
 #             resolve the GNOME reference in mag.py.]]]
 import script
@@ -305,15 +305,7 @@ def init():
                       "Speech module has NOT been initialized.")
         
     if getattr(settings, "useBraille", False):
-        # [[[TODO: WDW - do not hardcode to 7.]]]
-        #
-        if brl.init(7):
-            debug.println(debug.LEVEL_CONFIGURATION,
-                          "Braille module has been initialized.")
-            brl.registerCallback(processBrailleEvent)
-        else:
-            debug.println(debug.LEVEL_CONFIGURATION,
-                          "Braille module has NOT been initialized.")
+        braille.init(7)
 
     if getattr(settings, "useMagnifier", False):
         mag.init()
@@ -363,7 +355,7 @@ def start():
 
     try:
         speech.say("default", _("Welcome to Orca."))
-        brl.writeText(0, _("Welcome to Orca."))
+        braille.displayMessage(_("Welcome to Orca."))
     except:
         debug.printException(debug.LEVEL_SEVERE)
     
@@ -393,7 +385,7 @@ def shutdown():
         return False
 
     speech.say("default", _("goodbye."))
-    brl.writeText(0, _("Goodbye."))
+    braille.displayMessage(_("Goodbye."))
 
     # Deregister our event listeners
     #
@@ -413,8 +405,7 @@ def shutdown():
     if getattr(settings, "useSpeech", True):
         speech.shutdown()
     if getattr(settings, "useBraille", False):
-        brl.unregisterCallback()
-        brl.shutdown();
+        braille.shutdown();
     if getattr(settings, "useMagnifier", False):
         mag.shutdown();
 
@@ -484,33 +475,6 @@ def outlineAccessible(accessible):
                                        _visibleRectangle.y,
                                        _visibleRectangle.width,
                                        _visibleRectangle.height)
-
-
-########################################################################
-#                                                                      #
-# METHODS FOR PRE-PROCESSING AND MASSAGING BRAILLE KEY EVENTS.         #
-#                                                                      #
-# All Braille events are funnelled through here first.  Orca itself    #
-# might have global bindings (e.g., to switch between presenters),     #
-# but it will typically pass the event onto the currently active       #
-# active presentation manager.                                         #
-#                                                                      #
-########################################################################
-
-def processBrailleEvent(command):
-    """The primary Braille key event handler for Orca.
-    
-    Arguments:
-    - command: the BrlAPI command for the key that was pressed.
-    """
-
-    # [[[TODO: WDW - need to better understand why BrlTTY is giving
-    # us larger values on the Alva display.]]]
-    #
-    command = command & 0xfff
-    debug.printBrailleEvent(debug.LEVEL_FINE, command)
-    return _PRESENTATION_MANAGERS[_currentPresentationManager].\
-           processBrailleEvent(command)
 
     
 ########################################################################
@@ -643,11 +607,6 @@ def processKeyEvent(event):
             speech.stopSayAll()
         else:
             speech.stop("default")
-
-        # [[[TODO:  WDW - is this what we want?]]]
-        #
-        if getattr(settings, "useBraille", False):
-            brl.writeText(0, "")
             
     if keystring:
         lastKey = keystring

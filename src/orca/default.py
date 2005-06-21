@@ -26,7 +26,6 @@ information to the user based upon the object's role."""
 import math
 
 import a11y
-import brl
 import core
 import debug
 import kbd
@@ -34,6 +33,7 @@ import mag
 import orca
 import rolenames
 import speech
+import braille
 
 from orca_i18n import _                          # for gettext support
 from rolenames import getSpeechForRoleName       # localized role names
@@ -191,41 +191,6 @@ def getSpeech(obj, includeAvailability=False):
     return text
 
 
-def getTextLineAtCaret(obj):
-    """Gets the line of text where the caret is.
-
-    Argument:
-    - obj: an Accessible object that implements the AccessibleText
-           interface
-
-    Returns the line of text where the caret is.
-    """
-
-    # Get the the AccessibleText interrface
-    #
-    text = a11y.getText(obj)
-
-    if text is None:
-        return ["", 0, 0]
-    
-    # Get the line containing the caret
-    #
-    offset = text.caretOffset
-    line = text.getTextAtOffset(offset,
-                                core.Accessibility.TEXT_BOUNDARY_LINE_START)
-
-    # Line is actually a list of objects-- the first is the actual
-    # text of the line, the second is the start offset, and the third
-    # is the end offset.  Sometimes we get the trailing line-feed-- remove it
-    #
-    if line[0][-1:] == "\n":
-        content = line[0][:-1]
-    else:
-        content = line[0]
-
-    return [content, offset, line[1]]
-
-
 ########################################################################
 #                                                                      #
 # ACCESSIBLE TEXT OUTPUT FUNCTIONS                                     #
@@ -265,25 +230,33 @@ def brailleUpdateText(obj):
     if label is None:
         label = a11y.getLabel(obj)
 
-    brltext = getShortBrailleForRoleName(obj) + " "
-    beginningOfText = len(brltext)
+    line = braille.Line()
 
-    result = getTextLineAtCaret(obj)
-    line = result[0]    
+    brltext = getShortBrailleForRoleName(obj) + " "
+    line.addRegion(braille.Region(brltext))
+
+    beginningOfText = len(brltext)
+    result = a11y.getTextLineAtCaret(obj)
+    brltext = result[0]    
     caretOffset = result[1]
     lineOffset = result[2]
-    
-    brltext = brltext + line
+
+    line.addRegion(braille.Text(obj, brltext, lineOffset, caretOffset))
 
     # Empty lines seem to wreak havoc on the offsets returned by
-    # getTextLineAtCaret, so we trap for this.
+    # a11y.getTextLineAtCaret, so we trap for this.
     #
-    cursor = beginningOfText + caretOffset - lineOffset + 1
-    if cursor >= beginningOfText:
-        brl.writeText(cursor, brltext)
-    else:
-        brl.writeText(0, brltext)
+    braille.clear()
+    braille.addLine(line)
 
+    cursor = beginningOfText + caretOffset - lineOffset
+    if cursor >= beginningOfText:
+        braille.setCursor(cursor, 0)
+    else:
+        braille.setCursor(-1, -1)
+
+    braille.refresh()
+    
 
 def sayLine(obj):
     """Speaks the line of an AccessibleText object that contains the
@@ -296,7 +269,7 @@ def sayLine(obj):
     
     # Get the AccessibleText interface of the provided object
     #
-    result = getTextLineAtCaret(obj)
+    result = a11y.getTextLineAtCaret(obj)
     speech.say("default", result[0])
     
 
@@ -385,11 +358,16 @@ def defaultPresenter(obj, already_focused):
     """
 
     debugPresenter("default.defaultPresenter", obj, already_focused)
-    
-    brailleText = getShortBrailleForRoleName(obj) + " " \
-                  + a11y.getLabel(obj) + " " \
-                  + getBrailleForAccelerator(obj)    
-    brl.writeText(5, brailleText)
+
+    line = braille.Line()
+    line.addRegion(braille.Region(getShortBrailleForRoleName(obj) + " "))
+    componentRegion = braille.Component(obj)
+    line.addRegion(componentRegion)
+    line.addRegion(braille.Region(" " + getBrailleForAccelerator(obj)))
+    braille.clear()
+    braille.addLine(line)
+    braille.setFocus(componentRegion)
+    braille.refresh()
     
     speech.say("default", getSpeech(obj))
     
@@ -404,10 +382,16 @@ def pushButtonPresenter(obj, already_focused):
 
     debugPresenter("default.pushButtonPresenter", obj, already_focused)
     
-    brailleText = getShortBrailleForRoleName(obj) + " " \
-                  + a11y.getLabel(obj) + " " \
-                  + getBrailleForAccelerator(obj)
-    brl.writeText(5, brailleText)
+    line = braille.Line()
+    line.addRegion(braille.Region(getShortBrailleForRoleName(obj) + " "))
+    buttonRegion = braille.Component(obj)
+    line.addRegion(buttonRegion)
+    line.addRegion(braille.Region(" " + getBrailleForAccelerator(obj)))
+
+    braille.clear()
+    braille.addLine(line)
+    braille.setFocus(buttonRegion)
+    braille.refresh()
     
     speech.say("default", getSpeech(obj))
     
@@ -423,6 +407,8 @@ def toggleButtonPresenter(obj, already_focused):
     """
     
     debugPresenter("default.toggleButtonPresenter", obj, already_focused)
+
+    line = braille.Line()
     
     # If the checkbox is checked, indicate this in speech and Braille
     #
@@ -437,8 +423,6 @@ def toggleButtonPresenter(obj, already_focused):
                    + getSpeechForAccelerator(obj)
         else:
             text = _("checked") + "."
-        brltext = getShortBrailleForRoleName(obj) + " " + "=" + " " \
-                  + a11y.getLabel(obj)
     else:
         if already_focused == False:
             text = a11y.getLabel(obj) + " " \
@@ -447,10 +431,16 @@ def toggleButtonPresenter(obj, already_focused):
                    + getSpeechForAccelerator(obj)
         else:
             text = _("not checked") + "."
-        brltext = getShortBrailleForRoleName(obj) + " " + "-" + " " \
-                  + a11y.getLabel(obj)
 
-    brl.writeText(7, brltext + " " + getBrailleForAccelerator(obj))
+    line.addRegion(braille.Region(getShortBrailleForRoleName(obj) + " "))
+    toggleRegion = braille.ToggleButton(obj)
+    line.addRegion(toggleRegion)
+    line.addRegion(braille.Region(" " + getBrailleForAccelerator(obj)))
+    
+    braille.clear()
+    braille.addLine(line)
+    braille.setFocus(toggleRegion)
+    braille.refresh()
     
     speech.say("default", text)
 
@@ -475,8 +465,8 @@ def radioButtonPresenter(obj, already_focused):
     role = getSpeechForRoleName(obj)
     text = ""
     brltext = getShortBrailleForRoleName(obj) + " "
-    cursor = 0
-    
+    cursor = -1
+   
     # If the radio button is in a group, we handle it differently (i.e.,
     # we say the group name and also display as much as we can in Braille).
     # [[[TODO: WDW - this is way broken for now, so we just skip it.]]]
@@ -516,7 +506,7 @@ def radioButtonPresenter(obj, already_focused):
                               " in a radio button group!")
             else:
                 if i == selected:
-                    cursor = len(brltext) + 2
+                    cursor = len(brltext) + 1
                 set = child.state
                 if set.count(core.Accessibility.STATE_CHECKED):
                     brltext = brltext + "(7 " + a11y.getLabel(child) + ")"
@@ -524,7 +514,7 @@ def radioButtonPresenter(obj, already_focused):
                     brltext = brltext + "(' " + a11y.getLabel(child) + ")"
             i = i + 1
     else:
-        cursor = len(brltext) + 3
+        cursor = len(brltext) + 2
         set = obj.state
         if set.count(core.Accessibility.STATE_CHECKED):
             brltext = brltext + "7" + " " + a11y.getLabel(obj)
@@ -532,12 +522,12 @@ def radioButtonPresenter(obj, already_focused):
             brltext = brltext + "'" + " " + a11y.getLabel(obj)
         brltext = brltext + " " + getBrailleForAccelerator(obj)
  
-    if cursor == 0:
+    if cursor == -1:
         debug.println(debug.LEVEL_SEVERE,
                       "ERROR: Did not find self (" + a11y.getLabel(obj) + \
                       ") in its own radio button group!")
         
-    brl.writeText(cursor, brltext)
+    braille.displayMessage(brltext, cursor)
         
     speech.say("default", text)
 
@@ -558,22 +548,30 @@ def menuBarPresenter(obj, already_focused):
     # own region on the Braille display
     #
     text = getSpeechForRoleName(obj) + "."
-    brltext = getShortBrailleForRoleName(obj) + " "
 
-    cursor = 0
+    line = braille.Line()
+    line.addRegion(braille.Region(getShortBrailleForRoleName(obj) + " "))
+
+    selectedMenu = None
     selection = a11y.getSelection(obj)            
     childCount = obj.childCount
     i = 0
     while i < childCount:
         label = ally.getLabel(obj.child(i))
         text = text + ", " + label
+        line.addRegion(braille.Region("("))
+        menuRegion = braille.Component(obj.child(i))
+        line.addRegion(menuRegion)
+        line.addRegion(braille.Region(")"))
         if selection and selection.isChildSelected(i):
-            cursor = len(brltext) + 2
-        brltext = brltext + "(" + label + ")"
+            selectedMenu = menuRegion
         i = i + 1
         
-    brl.writeText(cursor, brltext)
-        
+    braille.clear()
+    braille.addLine(line)
+    braille.setFocus(selectedMenu)
+    braille.refresh()
+    
     speech.say("default", text)
 
     
@@ -602,10 +600,11 @@ def menuPresenter(obj, already_focused):
                       + a11y.getLabel(obj))
         return
     
-    brltext = getShortBrailleForRoleName(menu) + " " \
-              + a11y.getLabel(menu) + " "
+    line = braille.Line()
+    line.addRegion(braille.Region(getShortBrailleForRoleName(menu) + " "
+                                  + a11y.getLabel(menu) + " "))
 
-    cursor = 0    
+    selectedItem = None
     selection = a11y.getSelection(menu)
     childCount = menu.childCount
     i = 0
@@ -613,29 +612,33 @@ def menuPresenter(obj, already_focused):
         child = menu.child(i)
         if child.role != rolenames.ROLE_SEPARATOR \
             and child.state.count(core.Accessibility.STATE_SENSITIVE):
-            if selection and selection.isChildSelected(i):
-                cursor = len(brltext) + 2
-            checked = child.state.count(core.Accessibility.STATE_CHECKED)
-            name = a11y.getLabel(child)
+            
             if child.role == rolenames.ROLE_CHECK_MENU_ITEM:
-                if checked != 0:
-                    name = "= " + name
-                else:
-                    name = "- " + name
+                region = braille.ToggleButton(child)
             elif child.role == rolenames.ROLE_RADIO_MENU_ITEM:
-                if checked != 0:
-                    name = "7 " + name
-                else:
-                    name = "' " + name
+                region = braille.RadioButton(child)
             elif child.role == rolenames.ROLE_TEAR_OFF_MENU_ITEM:
-                name = _("___")
+                region = braille.Component(child, _("___"))
             elif child.role == rolenames.ROLE_MENU:
-                name = "o " + name
-            brltext = brltext + "(" + name + ")"
+                region = braille.Component(
+                    child, "o " + a11y.getLabel(child))
+            else:
+                region = braille.Component(child)
+
+            if region:
+                line.addRegion(braille.Region("("))
+                line.addRegion(region)
+                line.addRegion(braille.Region(")"))
+                if selection and selection.isChildSelected(i):
+                    selectedItem = region
+                
         i = i + 1
 
-    brl.writeText(cursor, brltext)
-        
+    braille.clear()
+    braille.addLine(line)
+    braille.setFocus(selectedItem)
+    braille.refresh()
+    
     # Now do the speech.
     #
     text = getSpeech(obj)
@@ -709,7 +712,7 @@ def sliderPresenter(obj, already_focused):
     brltext = getShortBrailleForRoleName(obj) + " " + a11y.getLabel(obj) \
               + " " + "(%s %s %s)" % (minString, valueString, maxString)
 
-    brl.writeText(0, brltext + " " + getBrailleForAccelerator(obj))
+    braille.displayMessage(brltext + " " + getBrailleForAccelerator(obj))
     
     speech.say("default", text)
 
@@ -736,18 +739,18 @@ def pageTabPresenter(obj, already_focused):
 
     brltext = getShortBrailleForRoleName(tablist) + " "
 
-    cursor = 0
+    cursor = -1
     selected = obj.index
     childCount = tablist.childCount    
     i = 0
     while i < childCount:
         if i == selected:
-            cursor = len(brltext) + 2
+            cursor = len(brltext) + 1
         name = a11y.getLabel(tablist.child(i))
         brltext = brltext + "(" + name + ")"
         i = i + 1
 
-    brl.writeText(cursor, brltext)
+    braille.displayMessage(brltext, cursor)
     
     # Now do the speech.
     #
@@ -776,7 +779,7 @@ def textPresenter(obj, already_focused):
     brailleUpdateText(obj)
 
     text = getSpeech(obj)
-    result = getTextLineAtCaret(obj)
+    result = a11y.getTextLineAtCaret(obj)
     text = text + " " + result[0]
     speech.say("default", text)
 
@@ -820,10 +823,10 @@ def comboBoxPresenter(obj, already_focused, speak=True):
     if comboSelection and comboSelection.nSelectedChildren > 0:
         selectedItem = a11y.makeAccessible(comboSelection.getSelectedChild(0))
 
-    result = getTextLineAtCaret(obj)
+    result = a11y.getTextLineAtCaret(obj)
     selectedText = result[0]
     
-    cursor = 0
+    cursor = -1
     textObj = None
     children = obj.childCount
     i = 0
@@ -848,7 +851,7 @@ def comboBoxPresenter(obj, already_focused, speak=True):
         text = ""
 
     if textObj:
-        result = getTextLineAtCaret(textObj)
+        result = a11y.getTextLineAtCaret(textObj)
         line = result[0]    
         caretOffset = result[1]
         lineOffset = result[2]
@@ -856,7 +859,7 @@ def comboBoxPresenter(obj, already_focused, speak=True):
         beginningOfText = len(brltext)
         brltext = brltext + line
         brltext = brltext + " )"
-        cursor = beginningOfText+caretOffset-lineOffset+1
+        cursor = beginningOfText+caretOffset-lineOffset
         text = text + line + "."
     elif selectedItem:
         text = text + a11y.getLabel(selectedItem) + "."
@@ -866,7 +869,7 @@ def comboBoxPresenter(obj, already_focused, speak=True):
         debug.println(debug.LEVEL_SEVERE,
                       "ERROR: Could not find selected item for combo box.")
 
-    brl.writeText(cursor, brltext)
+    braille.displayMessage(brltext, cursor)
     
     if speak:
         speech.say("default", text)
@@ -930,7 +933,7 @@ def tablePresenter(obj, already_focused):
 
     # Put the text on the Braille display
     #
-    brl.writeText(0, text)
+    braille.displayMessage(text)
     speech.say("default", text)
 
 
@@ -966,7 +969,7 @@ def dialogPresenter(obj, already_focused):
         if len(set) == 0:
             text = text + " " + label.name
             
-    brl.writeText(0, text)
+    braille.displayMessage(text)
     
     speech.say("default", text)
 
@@ -1009,7 +1012,6 @@ presenters["tree table"]         = tablePresenter
 # are named after the keys in the a11y.dispatcher dictionary.          #
 #                                                                      #
 ########################################################################
-
 
 def onWindowActivated(event):
     """Called whenever a toplevel window is activated.
