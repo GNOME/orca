@@ -1,3 +1,8 @@
+2005-06-22  Willie Walker <william.walker@sun.com>
+
+	* src/orca/*: put Orca in its own "orca" package to avoid
+	cluttering the default python namespace.
+	
 2005-06-21  Willie Walker <william.walker@sun.com>
 
 	* src/orca/*.py: incorporate prototype Braille support.
