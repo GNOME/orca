@@ -81,6 +81,9 @@ def processObjectEvent(event):
     - event: a Python Event (the one created from an at-spi event).
     """
 
+    if event.type == "object:state-changed:defunct":
+        return
+
     if event.type == "window:activate":
         activateScript(event.source.app)
     elif (event.source == core.desktop) \
@@ -108,7 +111,10 @@ def processObjectEvent(event):
     #
     if event.source.app is None:
         set = event.source.state
-        if event.source.state.count(core.Accessibility.STATE_DEFUNCT) > 0:
+        try:
+            if event.source.state.count(core.Accessibility.STATE_DEFUNCT) > 0:
+                return
+        except:
             return
         
     s = script.getScript(event.source.app)

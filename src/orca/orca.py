@@ -233,7 +233,10 @@ def processObjectEvent(e):
     
     # Create an Accessible for the source
     #
-    source = a11y.makeAccessible(e.source)
+    if e.type == "object:state-changed:defunct":
+        source = None
+    else:
+        source = a11y.makeAccessible(e.source)
 
     # Copy relevant details from the event.
     #

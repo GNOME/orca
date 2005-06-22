@@ -374,6 +374,11 @@ def onStateChanged(e):
     - e: at-spi event from the at-api registry
     """
 
+    # We'll handle defunct objects on the onDefunct method.
+    #
+    if e.type == "object:state-changed:defunct":
+        return
+    
     obj = makeAccessible(e.source)
     
     if getattr(obj, "state", None):
