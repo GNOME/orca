@@ -21,10 +21,11 @@
 
 Provides support for voice styles, speaking, and sayAll mode.
 """
+
 import debug
 import settings
 
-from chnames import chnames  # character (e.g., punctuation) pronunciations
+from chnames import chnames
 from core import ORBit, bonobo
 
 ORBit.load_typelib('GNOME_Speech')
@@ -32,7 +33,7 @@ import GNOME.Speech, GNOME__POA.Speech
 
 # Global list of active gnome-spech drivers
 #
-_drivers = []
+drivers = []
 
 # Dictionary of speakers.  The key is the voice style name (e.g., "default")
 # and the value is the speaker.
@@ -61,12 +62,12 @@ def createSpeaker(driverName, voiceName):
     created or the driver cannot be found.
     """
     
-    global _drivers
+    global drivers
 
     # Find the specified GNOME Speech driver
     #
     found = False
-    for driver in _drivers:
+    for driver in drivers:
         if driver.synthesizerName.find(driverName) >= 0:
             found = True
             break
@@ -140,8 +141,9 @@ def init():
     module has already been initialized.
     """
     
+    global drivers
+
     global _initialized
-    global _drivers
     global _speakers
     global _cb
 
@@ -154,7 +156,7 @@ def init():
     servers = bonobo.activation.query(
         "repo_ids.has('IDL:GNOME/Speech/SynthesisDriver:0.3')")
 
-    _drivers = []
+    drivers = []
     for server in servers:
         try:
             driver = bonobo.activation.activate_from_id(server.iid, 0, False)
@@ -170,14 +172,16 @@ def init():
         #
         if not isInitialized:
             isInitialized = driver.driverInit()
+
         if isInitialized:
-            _drivers.append(driver)
+            drivers.append(driver)
 
     # Create the speakers
     #
     _speakers = {}
-    for voiceName in settings.voices.keys():
-        desc = settings.voices[voiceName]
+    voices = settings.getSetting("voices", {})
+    for voiceName in voices.keys():
+        desc = voices[voiceName]
         s = createSpeaker(desc[0], desc[1])
         if s is not None:
             s = s._narrow(GNOME.Speech.Speaker)
@@ -190,10 +194,10 @@ def init():
     # If no speakers were defined, select the first voice of the first
     # working driver as the default
     #
-    if len(_speakers) == 0 and len(_drivers) > 0:
-        voices = _drivers[0].getAllVoices()
+    if len(_speakers) == 0 and len(drivers) > 0:
+        voices = drivers[0].getAllVoices()
         if len(voices) > 0:
-            _speakers["default"] = _drivers[0].createSpeaker(
+            _speakers["default"] = drivers[0].createSpeaker(
                 voices[0])._narrow(GNOME.Speech.Speaker)
 
     _initialized = True
@@ -211,9 +215,10 @@ def shutdown():
     module has not been initialized.
     """
     
+    global drivers
+
     global _initialized
     global _speakers
-    global _drivers
 
     if not _initialized:
         return False
@@ -226,13 +231,13 @@ def shutdown():
         
     del _speakers
 
-    for driver in _drivers:
+    for driver in drivers:
         try:
             driver.unref()
         except:
             pass
         
-    del _drivers
+    del drivers
 
     _initialized = False
     

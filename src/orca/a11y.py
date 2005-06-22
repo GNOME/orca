@@ -88,9 +88,10 @@ class Accessible:
         [[[TODO: WDW - shouldn't this also remove the element from the
         cache?]]]
         """
-        
-        self.acc.unref()
-
+        try:
+            self.acc.unref()
+        except:
+            pass
 
     def __get_name(self):
         """Returns the object's accessible name as a string.

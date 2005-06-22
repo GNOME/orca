@@ -35,17 +35,18 @@ event.
 """
 
 import sys
+
 import a11y
 import core
-import speech
-#import mag - [[[TODO: WDW - disable until I can figure out how to
-#             resolve the GNOME reference in mag.py.]]]
-import script
 import debug
-
+#import mag - [[[TODO: WDW - disable until I can figure out how
+#             to resolve the GNOME reference in mag.py.]]]
 import orca
+import script
+import speech
 
-from orca_i18n import _                          # for gettext support
+from orca_i18n import _ # for gettext support
+
 
 # The currently active script - this script will get all keyboard
 # and Braille events.
@@ -69,7 +70,6 @@ def activateScript(app):
     _activeScript = script.getScript(app)
     _activeScript.reload()
     debug.println(debug.LEVEL_FINE, "ACTIVATED SCRIPT: " + _activeScript.name)
-
 
 def processObjectEvent(event):
     """Handles all events destined for scripts.  [[[TODO: WDW - the event
@@ -178,7 +178,7 @@ def activate():
     """Called when this presentation manager is activated."""
 
     speech.say("default", _("Switching to focus tracking mode."))
-
+        
     win = orca.findActiveWindow()
     if win:
         # Generate a fake window activation event so the application

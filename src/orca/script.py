@@ -30,8 +30,8 @@ The listeners field is also a dictionary where the keys are
 at-spi event names and the values are function pointers.  The
 onBrlKey field is a function pointer."""
 
-import orca
 import settings
+import orca
 
 # The default script - used when the app is unknown (i.e., None)
 #
@@ -70,6 +70,7 @@ EVENT_MAP["onWindowRestored"]          = "window:restore"
 EVENT_MAP["onWindowSwitched"]          = "window:switch"
 EVENT_MAP["onWindowTitlelized"]        = "window:titlelize"
 EVENT_MAP["onFocus"]                   = "focus:"
+
 
 class Script:
     """Manages the event handling logic of orca.  Instances of this
@@ -130,12 +131,20 @@ class Script:
         
         # Load the default script and default keybindings.  
         #
-        self._default = __import__("default")
-        self._default_bindings = __import__("default-keybindings")
-
+        self._default = \
+            __import__("default",
+                       globals(),
+                       locals(),
+                       [''])
+        self._default_bindings = \
+            __import__("default-keybindings",
+                       globals(),
+                       locals(),
+                       [''])
+        
         # Load app-specific script and keybindings
         #
-        if getattr(settings, "useCustomScripts", True):
+        if settings.getSetting("useCustomScripts", True):
             try:
                 self._custom = __import__(self.app.name)
                 self.name = self.app.name + " (custom)"

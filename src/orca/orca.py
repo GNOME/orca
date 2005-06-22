@@ -17,25 +17,25 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+import gtk
+import pygtk
 import sys
+
 import a11y
-import core
-import settings  # user settings
-import speech
 import braille
+import core
+import debug
+import focus_tracking_presenter
+import hierarchical_presenter
+import kbd
 #import mag - [[[TODO: WDW - disable until I can figure out how to
 #             resolve the GNOME reference in mag.py.]]]
 import script
-import kbd
-import debug
+import settings
+import speech
+
 from rolenames import getRoleName # localized role names
-from orca_i18n import _ # for gettext support
-
-import focus_tracking_presenter
-import hierarchical_presenter
-
-import pygtk
-import gtk
+from orca_i18n import _           # for gettext support
 
 
 # If True, this module has been initialized.
@@ -296,7 +296,7 @@ def init():
 
     a11y.init()
     kbd.init(processKeyEvent)
-    if getattr(settings, "useSpeech", True):
+    if settings.getSetting("useSpeech", True):
         speech.init()
         debug.println(debug.LEVEL_CONFIGURATION,
                       "Speech module has been initialized.")
@@ -304,10 +304,10 @@ def init():
         debug.println(debug.LEVEL_CONFIGURATION,
                       "Speech module has NOT been initialized.")
         
-    if getattr(settings, "useBraille", False):
+    if settings.getSetting("useBraille", False):
         braille.init(7)
 
-    if getattr(settings, "useMagnifier", False):
+    if settings.getSetting("useMagnifier", False):
         mag.init()
         debug.println(debug.LEVEL_CONFIGURATION,
                       "Magnification module has been initialized.")
@@ -402,11 +402,11 @@ def shutdown():
     #
     kbd.shutdown() # automatically unregisters processKeyEvent
     a11y.shutdown()
-    if getattr(settings, "useSpeech", True):
+    if settings.getSetting("useSpeech", True):
         speech.shutdown()
-    if getattr(settings, "useBraille", False):
+    if settings.getSetting("useBraille", False):
         braille.shutdown();
-    if getattr(settings, "useMagnifier", False):
+    if settings.getSetting("useMagnifier", False):
         mag.shutdown();
 
     core.bonobo.main_quit()
@@ -544,7 +544,7 @@ def _keyEcho(key):
     - key: a string representing the key name to echo.
     """
     
-    if not getattr(settings, "keyEcho", False):
+    if not settings.getSetting("keyEcho", False):
         return
     if key.isupper():
         speech.say("uppercase", key)
@@ -568,7 +568,7 @@ def processKeyEvent(event):
     
     global lastKey
     global _currentPresentationManager
-    
+
     keystring = ""
 
     #print "KEYEVENT: type=%d" % event.type
@@ -626,3 +626,5 @@ def processKeyEvent(event):
         else:
             return _PRESENTATION_MANAGERS[_currentPresentationManager].\
                    processKeyEvent(keystring)
+
+    return False

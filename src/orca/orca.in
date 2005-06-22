@@ -24,7 +24,7 @@
 """
 
 import os, sys
-from orca_i18n import _
+from orca.orca_i18n import _
 
 # Grab the user's ~/.orca/settings.py ahead of the default settings.py.
 # If the ~/.orca.settings.py does not exist, then orca will default to
@@ -33,7 +33,7 @@ from orca_i18n import _
 userprefs = os.path.join (os.environ["HOME"], ".orca")
 sys.path.insert (0, userprefs)
 
-import orca
+import orca.orca as orca
 
 orca.init ()
 orca.start ()

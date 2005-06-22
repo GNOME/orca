@@ -26,6 +26,7 @@ information to the user based upon the object's role."""
 import math
 
 import a11y
+import braille
 import core
 import debug
 import kbd
@@ -33,11 +34,11 @@ import mag
 import orca
 import rolenames
 import speech
-import braille
 
 from orca_i18n import _                          # for gettext support
-from rolenames import getSpeechForRoleName       # localized role names
 from rolenames import getShortBrailleForRoleName # localized role names
+from rolenames import getSpeechForRoleName       # localized role names
+
 
 ########################################################################
 #                                                                      #
@@ -364,13 +365,14 @@ def defaultPresenter(obj, already_focused):
     componentRegion = braille.Component(obj)
     line.addRegion(componentRegion)
     line.addRegion(braille.Region(" " + getBrailleForAccelerator(obj)))
+    
     braille.clear()
     braille.addLine(line)
     braille.setFocus(componentRegion)
-    braille.refresh()
+    braille.refresh()    
     
     speech.say("default", getSpeech(obj))
-    
+
 
 def pushButtonPresenter(obj, already_focused):
     """Speaks a button and displays it on the Braille display.
@@ -1028,7 +1030,7 @@ def onWindowActivated(event):
             p(event.source, False)
         except:
             debug.printException(debug.LEVEL_SEVERE)
-    else:
+    else: 
         defaultPresenter(event.source, False)
 
 

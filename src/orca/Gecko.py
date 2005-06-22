@@ -17,14 +17,12 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-import a11y
-import default
-import rolenames
-import speech
+from orca import a11y
+from orca import default
+from orca import rolenames
+from orca import speech
 
-# Orca i18n
-
-from orca_i18n import _
+from orca.orca_i18n import _
 
 
 # The Mozilla version of say all reads text from multiple objects

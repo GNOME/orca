@@ -73,8 +73,8 @@ After initialization, a typical use of this module would be as follows:
 
 import a11y
 import brl
-import core
 import debug
+import core
 
 # If True, this module has been initialized.
 #
@@ -378,6 +378,9 @@ def setCursor(x, y):
     - x: the 0-based x location for all of the logical content
     - y: the 0-based line number (default = 0)
     """
+
+    if not _initialized:
+        return
     
     _cursorPosition[0] = x
     _cursorPosition[1] = y
@@ -542,7 +545,8 @@ def init(tty=7):
     else:
         debug.println(debug.LEVEL_CONFIGURATION,
                       "Braille module has NOT been initialized.")
-
+        return False
+    
     # [[[TODO: WDW - For some reason, BrlTTY wants to say the height of the
     # Vario is 40 so we hardcode it to 1 for now.]]]
     #

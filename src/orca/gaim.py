@@ -23,16 +23,13 @@ time.
 """
 
 import a11y
+import braille
 import default
 import rolenames
 import speech
-import braille
-
-from rolenames import getRoleName
-
-# Orca i18n
 
 from orca_i18n import _
+from rolenames import getRoleName
 
 # References to the text input and output areas
 #

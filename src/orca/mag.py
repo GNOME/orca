@@ -23,6 +23,7 @@ in development.  One might even say it is pre-prototype.]]]
 
 import core
 from core import bonobo
+
 import CORBA
 import GNOME
 import time

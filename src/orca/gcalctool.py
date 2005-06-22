@@ -18,11 +18,12 @@
 # Boston, MA 02111-1307, USA.
 
 import a11y
+import braille
 import default
 import kbd
 import rolenames
 import speech
-import braille
+import orca
 
 # A reference to the display
 
@@ -31,7 +32,6 @@ display = None
 # A reference to the accessible text interface of the display
 
 display_txt = None
-
 
 
 # This function is run whenever a toplevel window in gcalctool is
@@ -44,8 +44,8 @@ def onWindowActivated(event):
 
     # If we haven't found the display, and this is a toplevel window,
     # look for the display in this window
-
-    if display is None and event.source.role == rolenames.ROLE_TEXT:
+    #
+    if display is None and event.source.role == rolenames.ROLE_FRAME:
 
         # It's the only text object in GCalctool's main window
 
@@ -56,23 +56,22 @@ def onWindowActivated(event):
         braille.displayMessage(contents)
 
     # Call the default onWindowActivated function
-
+    #
     default.onWindowActivated(event)
 
 
 # This is an attempt to only read the display when enter or equals is
 # pressed - so when we get text insertions to the display, speak
 # them if the last key pressed was enter or equals
-
+#
 def onTextInserted(event):
     global display
     global display_txt
 
+    # Always update the Braille display but only speak if the last
+    # key pressed was enter or equals
+    #
     if event.source == display:
-
-        # Always update the Braille display but only speak if the last
-        # key pressed was enter or equals
-
         contents = display_txt.getText(0, -1)
         braille.displayMessage(contents)
         if orca.lastKey == "Return" or orca.lastKey == "=":

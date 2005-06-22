@@ -22,11 +22,14 @@ debug level, which is set by calling the setDebugLevel method.  All
 other methods take a debug level, which is compared to the current
 debug level to determine if the content should be output."""
 
+import traceback
+
+import braille
 import core
 import orca
-from rolenames import getRoleName # localized role names
-import traceback
-import braille
+
+from rolenames import getRoleName
+
 
 # Used to turn off all debugging.
 #

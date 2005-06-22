@@ -54,13 +54,13 @@ than end users.
 """
 
 import sys
-import a11y
-import core
-import speech
-import braille
-import script
-import debug
 
+import a11y
+import braille
+import debug
+import core
+import script
+import speech
 import orca
 
 from orca_i18n import _                          # for gettext support

@@ -1,8 +1,8 @@
 # Metacity script
 
+import rolenames
 import orca
 import speech
-import rolenames
 
 from orca_i18n import _
 
