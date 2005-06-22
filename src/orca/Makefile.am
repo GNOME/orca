@@ -4,9 +4,6 @@ orca_SCRIPTS = \
 
 orcadir=$(prefix)/bin
 
-orca_path_DATA = \
-	orca.pth
-
 orca_pathdir=$(pythondir)
 
 orca_python_PYTHON = \
@@ -33,4 +30,3 @@ orca_python_PYTHON = \
 
 orca_pythondir=$(pythondir)/orca
 
-EXTRA_DIST=$(orca_path_DATA)
