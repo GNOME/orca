@@ -7,7 +7,9 @@ orcadir=$(prefix)/bin
 orca_pathdir=$(pythondir)
 
 orca_python_PYTHON = \
+	__init__.py \
 	a11y.py \
+	braille.py \
 	chnames.py \
 	debug.py \
 	default.py \
