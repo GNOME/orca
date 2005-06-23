@@ -69,6 +69,10 @@ After initialization, a typical use of this module would be as follows:
     braille.addLine(line)
     braille.setCursor(x,y)
     braille.refresh()
+
+NOTE: for the most part, this module will happily do as requested if it isn't
+initialized.  The only impact will be that nothing will be displayed on the
+Braille display.
 """
 
 import a11y
@@ -177,6 +181,11 @@ _viewport = [0, 0]
 #
 _cursorPosition = [-1, -1]
 
+# The callback to call on a BrlTTY input event.  This is passed to
+# the init method.
+#
+_callback = None
+
 
 class Region:
     """A Braille region to be displayed on the display.  The width of
@@ -232,7 +241,8 @@ class Component(Region):
         
         actions = a11y.getAction(self.accessible)
         if actions is None:
-            pass
+            debug.println(debug.LEVEL_FINER,
+                          "braille.Component.processCursorKey: no action")
         else:
             actions.doAction(0)
         
@@ -485,9 +495,11 @@ def displayMessage(message, cursor=-1):
 
         
 def _processBrailleEvent(command):
-    """Handles BrlTTY command events.  This will either intercept panning
-    keys to pan the viewport, or will pass on cursor routing keys to the
-    Regions for handling by them.
+    """Handles BrlTTY command events.  This passes commands on to Orca for
+    processing.  If Orca does not handle them (as indicated by a return value
+    of false from the callback passed to init, it will attempt to handle the
+    command itself - either by panning the viewport or passing cursor routing
+    keys to the Regions for handling.
     
     Arguments:
     - command: the BrlAPI command for the key that was pressed.
@@ -504,6 +516,17 @@ def _processBrailleEvent(command):
     command = command & 0xfff
     debug.printBrailleEvent(debug.LEVEL_FINE, command)
 
+    if _callback:
+        try:
+            # Like key event handlers, a return value of True means
+            # the command was consumed.
+            #
+            if _callback(command):
+                return
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
+            return
+        
     if (command >= 0) and (command < len(BRLAPI_COMMANDS)):
         commandString = BRLAPI_COMMANDS[command]
         if commandString == "CMD_FWINLT":
@@ -523,10 +546,11 @@ def _processBrailleEvent(command):
             _lines[lineNum].processCursorKey(cursor)
 
 
-def init(tty=7):
+def init(callback=None, tty=7):
     """Initializes the braille module, connecting to the BrlTTY driver.
 
     Arguments:
+    - callback: the method to call with a BrlTTY input event.
     - tty: the tty port to take ownership of (default = 7)
     Returns True if the initialization procedure was run or False if this
     module has already been initialized.
@@ -534,10 +558,13 @@ def init(tty=7):
 
     global _initialized
     global _displaySize
-
+    global _callback
+    
     if _initialized:
         return False
 
+    _callback = callback
+    
     if brl.init(tty):
         debug.println(debug.LEVEL_CONFIGURATION,
                       "Braille module has been initialized.")

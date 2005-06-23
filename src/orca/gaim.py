@@ -24,126 +24,169 @@ time.
 
 import a11y
 import braille
-import default
 import rolenames
 import speech
 
 from orca_i18n import _
 from rolenames import getRoleName
 
-# References to the text input and output areas
-#
-_input = None
-_output = None
+from default import Default
 
-def _setChat(obj):
-    """If we've found a chat window, set a global reference to it and read it.
+########################################################################
+#                                                                      #
+# The factory method for this module.  All Scripts are expected to     #
+# have this method, and it is the sole way that instances of scripts   #
+# should be created.                                                   #
+#                                                                      #
+########################################################################
+
+def getScript(app):
+    """Factory method to create a new Default script for the given
+    application.  This method should be used for creating all
+    instances of this script class.
+
+    Arguments:
+    - app: the application to create a script for (should be gaim)
     """
     
-    global _input
-    global _output
+    return Gaim(app)
 
-    # The chat window has threee text boxes in it (the chat topic, the
-    # message log, and the text entry field).  find them all - they're
-    # always returned in the same order
-    #
-    entries = a11y.findByRole(obj, rolenames.ROLE_TEXT)
-    _output = entries[1]
-    _input = entries[2]
 
-    # Speak the title of the chat
-    #
-    label = a11y.getLabel(obj)
-    text = label + _(" chat")
-    braille.displayMessage(text)
-    speech.say("default", text)
+########################################################################
+#                                                                      #
+# The Gaim script class.                                               #
+#                                                                      #
+########################################################################
+
+class Gaim(Default):
+
+    def __init__(self, app):
+        """Creates a new script for the given application.  Callers
+        should use the getScript factory method instead of calling
+        this constructor directly.
         
+        Arguments:
+        - app: the application to create a script for.
+        """
+
+        Default.__init__(self, app)
+
+        self._output = None
+        self._input = None
+        
+
+    def _setChat(self, obj):
+        """If we've found a chat window, set a reference to it and read it.
+
+        Arguments:
+        - obj: the gaim frame
+        """
     
-def _setIm(obj):
-    """If we've found an IM window, set a global reference to it and read it.
-    """
+        # The chat window has three text boxes in it (the chat topic, the
+        # message log, and the text entry field).  find them all - they're
+        # always returned in the same order
+        #
+        entries = a11y.findByRole(obj, rolenames.ROLE_TEXT)
+        self._output = entries[1]
+        self._input = entries[2]
 
-    global _input
-    global _output
+        # Speak the title of the chat
+        #
+        label = a11y.getLabel(obj)
+        text = label + _(" chat")
+        braille.displayMessage(text)
+        speech.say("default", text)
+
+        
+    def _setIm(self, obj):
+        """If we've found an IM window, set a reference to it and read it.
+
+        Arguments:
+        - obj: the gaim frame
+        """
+
+        # There are two text boxes in each IM window (the message log, and
+        # the text entry field).  They are always returned in the same
+        # order.   
+        #
+        entries = a11y.findByRole(obj, rolenames.ROLE_TEXT)
+        self._output = entries[0]
+        self._input = entries[1]
+
+        # Speak the title of the IM
+        #
+        label = a11y.getLabel(obj)
+        text = label + _(" instant message")
+        braille.displayMessage(text)
+        speech.say("default", text)
+
+
+    def onWindowActivated(self, event):
+        """Called whenever one of Gaim's toplevel windows is activated.
+
+        Arguments:
+        - event: the window activated Event
+        """
     
-    # There are two text boxes in each IM window (the message log, and
-    # the text entry field).  They are always returned in the same
-    # order.   
-    #
-    entries = a11y.findByRole(obj, rolenames.ROLE_TEXT)
-    _output = entries[0]
-    _input = entries[1]
+        # If it's not a standard window, do the normal behavior since it
+        # won't have an IM or chat in it
+        #
+        if event.source.role != rolenames.ROLE_FRAME:
+            self._output = None
+            self._input = None
+            return Default.onWindowActivated(self, event)
 
-    # Speak the title of the IM
-    #
-    label = a11y.getLabel(obj)
-    text = label + _(" instant message")
-    braille.displayMessage(text)
-    speech.say("default", text)
-
-
-def onWindowActivated(event):
-    """Called whenever one of Gaim's toplevel windows is activated.
-    """
-
-    global _input
-    global _output
+        # Frames with two text boxes are considered to be instant message
+        # windows, and those with three are considered chats.  This works for
+        # now, but we need a more robust way of doing this sort of thing for
+        # the general case
+        #
+        entries = a11y.findByRole(event.source, rolenames.ROLE_TEXT)
     
-    # If it's not a standard window, do the normal behavior since it
-    # won't have an IM or chat in it
-    #
-    if event.source.role != rolenames.ROLE_FRAME:
-        _output = None
-        _input = None
-        return default.onWindowActivated(event)
+        if len(entries) == 2:
+            self._setIm(self, event.source)
+        elif len(entries) == 3:
+            self._setChat(self, event.source)
+        else:
+            self._output = None
+            self._input = None
+            
+        return Default.onWindowActivated(self, event)
 
 
-    # Frames with two text boxes are considered to be instant message
-    # windows, and those with three are considered chats.  This works for
-    # now, but we need a more robust way of doing this sort of thing for
-    # the general case
-    #
-    entries = a11y.findByRole(event.source, rolenames.ROLE_TEXT)
+    def onTextInserted(self, event):
+        """Called whenever text is inserted into one of Gaim's text objects.
+        If the object is an instant message or chat, speak the text If we're
+        not watching anything, do the default behavior.
+
+        Arguments:
+        - event: the text inserted Event
+        """
+
+        if (self._output == None) or (event.source != self._output):
+            return Default.onTextInserted(self, event)
+
+        txt = a11y.getText(event.source)
+        text = txt.getText(event.detail1, event.detail1 + event.detail2)
+        speech.say("default", text)
+
+
+    def onFocus(self, event):
+        """Called when any object in Gaim gets the focus.
+
+        Arguments:
+        - event: the focus Event
+        """
+
+        # The text boxes in chat and IM windows have no names - so we give
+        # them some here
+        #
+        if event.source == self._input:
+            text = _("Input")
+        elif event.source == _self.output:
+            text = _("Message Log")
+        else:
+            return Default.onFocus(self, event)
     
-    if len(entries) == 2:
-        _setIm(event.source)
-    elif len(entries) == 3:
-        _setChat(event.source)
-    else:
-        _output = None
-        _input = None
-        return default.onWindowActivated(event)
-
-
-def onTextInserted(event):
-    """Called whenever text is inserted into one of Gaim's text objects.  If
-    the object is an instant message or chat, speak the text If we're not
-    watching anything, do the default behavior.
-    """
-
-    global _output
-
-    if (_output == None) or (event.source != _output):
-        return default.onTextInserted(event)
-
-    txt = a11y.getText(event.source)
-    text = txt.getText(event.detail1, event.detail1 + event.detail2)
-    speech.say("default", text)
-
-
-def onFocus(event):
-    """Called when any object in Gaim gets the focus.
-    """
-
-    # The text boxes in chat and IM windows have no names - so we give
-    # them some here
-    #
-    if event.source == _input:
-        text = _("Input")
-    elif event.source == _output:
-        text = _("Message Log")
-    else:
-        return default.onFocus(event)
-    
-    text = text + " " + getRoleName(event.source)
-    speech.say("default", text)
+        text = text + " " + getRoleName(event.source)
+        speech.say("default", text)

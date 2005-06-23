@@ -13,7 +13,6 @@ orca_python_PYTHON = \
 	chnames.py \
 	debug.py \
 	default.py \
-	default-keybindings.py \
 	focus_tracking_presenter.py \
 	gaim.py \
 	gcalctool.py \

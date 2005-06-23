@@ -19,63 +19,100 @@
 
 import a11y
 import braille
-import default
 import kbd
 import rolenames
 import speech
 import orca
 
-# A reference to the display
+from default import Default
 
-display = None
+########################################################################
+#                                                                      #
+# The factory method for this module.  All Scripts are expected to     #
+# have this method, and it is the sole way that instances of scripts   #
+# should be created.                                                   #
+#                                                                      #
+########################################################################
 
-# A reference to the accessible text interface of the display
+def getScript(app):
+    """Factory method to create a new Default script for the given
+    application.  This method should be used for creating all
+    instances of this script class.
 
-display_txt = None
+    Arguments:
+    - app: the application to create a script for (should be gcalctool)
+    """
 
-
-# This function is run whenever a toplevel window in gcalctool is
-# activated
-
-def onWindowActivated(event):
-    global display
-    global display_txt
-
-
-    # If we haven't found the display, and this is a toplevel window,
-    # look for the display in this window
-    #
-    if display is None and event.source.role == rolenames.ROLE_FRAME:
-
-        # It's the only text object in GCalctool's main window
-
-        d = a11y.findByRole(event.source, rolenames.ROLE_TEXT)
-        display = d[0]
-        display_txt = a11y.getText(display)
-        contents = display_txt.getText(0, -1)
-        braille.displayMessage(contents)
-
-    # Call the default onWindowActivated function
-    #
-    default.onWindowActivated(event)
+    return GCalcTool(app)
 
 
-# This is an attempt to only read the display when enter or equals is
-# pressed - so when we get text insertions to the display, speak
-# them if the last key pressed was enter or equals
-#
-def onTextInserted(event):
-    global display
-    global display_txt
+########################################################################
+#                                                                      #
+# The GCalcTool script class.                                          #
+#                                                                      #
+########################################################################
 
-    # Always update the Braille display but only speak if the last
-    # key pressed was enter or equals
-    #
-    if event.source == display:
-        contents = display_txt.getText(0, -1)
-        braille.displayMessage(contents)
-        if orca.lastKey == "Return" or orca.lastKey == "=":
-            speech.say("default", contents)
-            
+class GCalcTool(Default):
+
+    def __init__(self, app):
+        """Creates a new script for the given application.  Callers
+        should use the getScript factory method instead of calling
+        this constructor directly.
         
+        Arguments:
+        - app: the application to create a script for.
+        """
         
+        Default.__init__(self, app)
+
+        self._display = None
+        self._display_txt = None
+
+        
+    def onWindowActivated(self, event):
+        """Called whenever one of gcalctool's toplevel windows is activated.
+
+        Arguments:
+        - event: the window activated Event
+        """
+
+        # If we haven't found the display, and this is a toplevel window,
+        # look for the display in this window
+        #
+        if (self._display is None) \
+               and (event.source.role == rolenames.ROLE_FRAME):
+
+            # It's the only text object in GCalctool's main window
+            #
+            d = a11y.findByRole(event.source, rolenames.ROLE_TEXT)
+            self._display = d[0]
+            self._display_txt = a11y.getText(self._display)
+            contents = self._display_txt.getText(0, -1)
+            braille.displayMessage(contents)
+
+            # Call the default onWindowActivated function
+            #
+            Default.onWindowActivated(self, event)
+
+
+    def onTextInserted(self, event):
+        """Called whenever text is inserted into gcalctool's text display.
+        If the object is an instant message or chat, speak the text If we're
+        not watching anything, do the default behavior.
+
+        Arguments:
+        - event: the text inserted Event
+        """
+
+        # This is an attempt to only read the display when enter or equals is
+        # pressed - so when we get text insertions to the display, speak
+        # them if the last key pressed was enter or equals.
+        #
+        # Always update the Braille display but only speak if the last
+        # key pressed was enter or equals
+        #
+        if event.source == self._display:
+            contents = self._display_txt.getText(0, -1)
+            braille.displayMessage(contents)
+            if orca.lastKey == "Return" or orca.lastKey == "=":
+                speech.say("default", contents)

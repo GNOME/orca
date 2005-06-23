@@ -1,3 +1,10 @@
+2005-06-23  Willie Walker <william.walker@sun.com>
+
+	* src/orca/*: bite the bullet and make scripts full-fledged
+	classes.  This allow scripts to better maintain state across
+	activations of the same window, and to allow for more unique
+	scripts when running the same application more than once.
+	
 2005-06-22  Willie Walker <william.walker@sun.com>
 
 	* src/orca/*: put Orca in its own "orca" package to avoid

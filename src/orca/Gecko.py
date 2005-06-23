@@ -18,11 +18,98 @@
 # Boston, MA 02111-1307, USA.
 
 from orca import a11y
-from orca import default
 from orca import rolenames
 from orca import speech
 
 from orca.orca_i18n import _
+
+from default import Default
+
+########################################################################
+#                                                                      #
+# The factory method for this module.  All Scripts are expected to     #
+# have this method, and it is the sole way that instances of scripts   #
+# should be created.                                                   #
+#                                                                      #
+########################################################################
+
+def getScript(app):
+    return Gecko(app)
+
+
+########################################################################
+#                                                                      #
+# The Gecko script class.                                              #
+#                                                                      #
+########################################################################
+
+class Gecko(Default):
+    def __init__(self, app):
+        Default.__init__(self, app)
+
+        self.listeners["object:link-selected"] = self.onLinkSelected
+
+    def sayAll():
+        global activePage
+        global sayAllObjects
+        global sayAllObjectIndex
+        global sayAllObjectCount
+
+        # If there is no active page, we can't do say all
+        #
+        if activePage is None:
+            speech.say("default", _("No page to read."))
+            return
+
+        # Get all the objects on the page
+        #
+        try:
+            sayAllObjects = a11y.getObjects(activePage)
+        except:
+            speech.say("default", _("Reading web page failed."))
+            return
+
+        # Set up say all mode
+        #
+        sayAllObjectCount = len(sayAllObjects)
+        sayAllObjectIndex = 0
+
+        # Speak the name of the page, then start say all mode.  When the
+        # name of the page has finished speaking, say all mode will be
+        # active and the first chunk of the page will be read
+        #
+        speech.say("default", activePage.name)
+        speech.startSayAll("default", getChunk, sayAllDone)
+
+        
+    # This function is called whenever an object within Mozilla receives
+    # focus
+    def onFocus(self, event):
+
+        if event.source.role != rolenames.ROLE_PANEL:
+            return Default.onFocus(self, event)
+    
+        # If it's not a panel, do the default
+        #
+        Default.onFocus(self, event)
+
+        # If the panel has no name, don't touch it
+        #
+        if len(event.source.name) == 0:
+            return
+
+        self.activePage = event.source
+
+
+    # This function is called when a hyperlink is selected - This happens
+    # when a link is navigated to using tab/shift-tab
+    def onLinkSelected(event):
+        txt = a11y.getText(event.source)
+        if txt is None:
+            speech.say("hyperlink", "link")
+        else:
+            text = txt.getText(0, -1)
+            speech.say("hyperlink", text)
 
 
 # The Mozilla version of say all reads text from multiple objects
@@ -164,69 +251,4 @@ def getChunk():
 def sayAllDone(position):
     pass
 
-# this function starts say all for Mozilla
 
-def sayAll():
-    global activePage
-    global sayAllObjects
-    global sayAllObjectIndex
-    global sayAllObjectCount
-
-    # If there is no active page, we can't do say all
-
-    if activePage is None:
-        speech.say("default", _("No page to read."))
-        return
-
-    # Get all the objects on the page
-
-    try:
-        sayAllObjects = a11y.getObjects(activePage)
-    except:
-        speech.say("default", _("Reading web page failed."))
-        return
-
-    # Set up say all mode
-
-    sayAllObjectCount = len(sayAllObjects)
-    sayAllObjectIndex = 0
-
-    # Speak the name of the page, then start say all mode.  When the
-    # name of the page has finished speaking, say all mode will be
-    # active and the first chunk of the page will be read
-
-    speech.say("default", activePage.name)
-    speech.startSayAll("default", getChunk, sayAllDone)
-
-# This function is called whenever an object within Mozilla receives
-# focus
-
-def onFocus(event):
-    global activePage
-
-    
-    if event.source.role != rolenames.ROLE_PANEL:
-        return default.onFocus(event)
-    
-    # If it's not a panel, do the default
-
-    default.onFocus(event)
-
-    # If the panel has no name, don't touch it
-
-    if len(event.source.name) == 0:
-        return
-
-    activePage = event.source
-
-
-# This function is called when a hyperlink is selected - This happens
-# when a link is navigated to using tab/shift-tab
-
-def onLinkSelected(event):
-    txt = a11y.getText(event.source)
-    if txt is None:
-        speech.say("hyperlink", "link")
-    else:
-        text = txt.getText(0, -1)
-        speech.say("hyperlink", text)

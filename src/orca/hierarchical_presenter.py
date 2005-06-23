@@ -21,7 +21,6 @@
 Orca.  This is mostly for exploratory purposes.  The main entry points into
 this module are for the presentation manager contract:
 
-    processObjectEvent  - handles all object events
     processKeyEvent     - handles all keyboard events
     processBrailleEvent - handles all Braille input events
     activate            - called when this manager is enabled
@@ -421,17 +420,6 @@ def _navigateIntraObject(keystring):
 #                                                                      #
 ########################################################################
 
-def processObjectEvent(event):
-    """Handles all events destined for scripts.  We don't care about
-    this for now, but we might want to do something clever, such as
-    set the currentObject at some point.[[[TODO: WDW - the event
-
-    Arguments:
-    - event: a Python Event (the one created from an at-spi event).
-    """
-    pass
-
-
 def processKeyEvent(keystring):
     """Processes the given keyboard event based on the keybinding from the
     currently active script. This method is called synchronously from the
@@ -439,7 +427,7 @@ def processKeyEvent(keystring):
     True if it has consumed the event (and False if not).
     
     Arguments:
-    - keystring: a keyboard event string from kbd.py
+    - keystring: a keyboard event string
 
     Returns True if the event should be consumed.
     """
@@ -476,11 +464,14 @@ def processKeyEvent(keystring):
 
 def processBrailleEvent(command):
     """Called whenever a cursor key is pressed on the Braille display.
-
+    
     Arguments:
     - command: the BrlAPI command for the key that was pressed.
+
+    Returns True if the command was consumed; otherwise False
     """
-    pass
+
+    return False
         
 
 def activate():

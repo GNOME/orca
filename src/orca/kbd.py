@@ -23,6 +23,13 @@ These instances maintain a function pointer to call when their
 notifyEvent method is called by the at-spi registry.  This function
 is expected to handle the keyboard event and return True if they
 have consumed the event.
+
+For the purposes of Orca, the main entry points to this module are:
+
+    init:     registers a bazillion listeners with AT-SPI and funnels
+              them all through a single listener.
+              
+    shutdown: unregisters all the listeners.
 """
 
 import core
@@ -131,7 +138,7 @@ class KeystrokeListener(core.Accessibility__POA.DeviceEventListener):
                                       self.type)
 
 
-def init(onKeyEvent):
+def init(keyEventHandler):
     """Initializes this module and registers keystroke listeners for
     a complete set of keyboard events from the at-spi.
 
@@ -151,7 +158,7 @@ def init(onKeyEvent):
     _listeners = []
     i = 0
     while i <= (1 << core.Accessibility.MODIFIER_NUMLOCK):
-        kl = KeystrokeListener(onKeyEvent, i, True, False)
+        kl = KeystrokeListener(keyEventHandler, i, True, False)
         kl.register()
         _listeners.append(kl)
         i = i + 1

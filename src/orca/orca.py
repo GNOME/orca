@@ -43,6 +43,16 @@ from orca_i18n import _           # for gettext support
 _initialized = False
 
 
+########################################################################
+#                                                                      #
+# METHODS FOR HANDLING PRESENTATION MANAGERS                           #
+#                                                                      #
+# A presentation manager is what reacts to AT-SPI object events as     #
+# well as user input events (keyboard and Braille) to present info     #
+# to the user.                                                         #
+#                                                                      #
+########################################################################
+
 # The known presentation managers.
 #
 _PRESENTATION_MANAGERS = [focus_tracking_presenter,
@@ -121,9 +131,9 @@ def _buildAppList():
     while i >= 0:
         acc = core.desktop.getChildAtIndex(i)
         app = a11y.makeAccessible(acc)
-        if app != None:
+        if not app is None:
             apps.insert(0, app)
-        i = i-1
+        i = i - 1
 
 
 def findActiveWindow():
@@ -200,61 +210,26 @@ def onFocus(e):
 
 ########################################################################
 #                                                                      #
-# METHODS FOR PRE-PROCESSING AND MASSAGING AT-SPI OBJECT EVENTS        #
-#                                                                      #
-# AT-SPI events are receieved here and converted into a Python object  #
-# for processing by the rest of Orca.  [[[TODO: WDW - this might be a  #
-# spot to coalesce and massage AT-SPI events into events useful to a   #
-# screen reader.]]]                                                    #
+# METHODS FOR PRE-PROCESSING AND MASSAGING BRAILLE EVENTS.             #
 #                                                                      #
 ########################################################################
-
-class Event:
-   """Dummy class for converting the source of an event to an
-   Accessible object.  We need this since the core.event object we
-   get from the core is read-only.  So, we create this dummy event
-   object to contain a copy of all the event members with the source
-   converted to an Accessible.
-   """
-   pass
-
-
-def processObjectEvent(e):
-    """Handles all events destined for scripts.  [[[TODO: WDW - the event
-    type we received can be more specific than the event type we registered
-    for.  We need to handle this.]]] [[[TODO: WDW - there may not be an
-    active app.  We need to handle this.]]]
-
+    
+def processBrailleEvent(command):
+    """Called whenever a  key is pressed on the Braille display.
+    
     Arguments:
-    - e: an at-spi event.
+    - command: the BrlAPI command for the key that was pressed.
+
+    Returns True if the event was consumed; otherwise False
     """
+
+    try:
+        return _PRESENTATION_MANAGERS[_currentPresentationManager].\
+               processBrailleEvent(command)
+    except:
+        debug.printException(debug.LEVEL_SEVERE)
+        return False
     
-    global _currentPresentationManager
-    
-    # Create an Accessible for the source
-    #
-    if e.type == "object:state-changed:defunct":
-        source = None
-    else:
-        source = a11y.makeAccessible(e.source)
-
-    # Copy relevant details from the event.
-    #
-    event = Event()
-    event.type = e.type
-    event.detail1 = e.detail1
-    event.detail2 = e.detail2
-    event.any_data = e.any_data
-    event.source = source
-
-    debug.printObjectEvent(debug.LEVEL_FINEST, event)
-    debug.listDetails(debug.LEVEL_FINEST, "       ", source)
-
-    # [[[TODO: WDW - probably should check for index out of bounds.]]]
-    #
-    _PRESENTATION_MANAGERS[_currentPresentationManager].processObjectEvent(\
-        event)
-
 
 ########################################################################
 #                                                                      #
@@ -298,6 +273,7 @@ def init():
         return False
 
     a11y.init()
+    
     kbd.init(processKeyEvent)
     if settings.getSetting("useSpeech", True):
         speech.init()
@@ -308,7 +284,7 @@ def init():
                       "Speech module has NOT been initialized.")
         
     if settings.getSetting("useBraille", False):
-        braille.init(7)
+        braille.init(processBrailleEvent, 7)
 
     if settings.getSetting("useMagnifier", False):
         mag.init()
@@ -334,13 +310,6 @@ def init():
     #
     core.registerEventListener(onFocus, "focus:")
     
-    # Register for all the at-api events we may ever care about.
-    # [[[TODO: WDW - this probably should be stuffed in the
-    # focus_tracking_presenter?]]]]
-    #
-    for type in script.EVENT_MAP.values():
-        core.registerEventListener(processObjectEvent, type)
-
     _initialized = True
     return True
 
@@ -398,8 +367,10 @@ def shutdown():
                                  "window:activate")
     core.unregisterEventListener(onFocus,
                                  "focus:")
-    for key in script.EVENT_MAP.keys():
-        core.unregisterEventListener(processObjectEvent, key)
+
+    if _currentPresentationManager > 0:
+        _PRESENTATION_MANAGERS[_currentPresentationManager].deactivate()
+
 
     # Shutdown all the other support.
     #
@@ -479,7 +450,7 @@ def outlineAccessible(accessible):
                                        _visibleRectangle.width,
                                        _visibleRectangle.height)
 
-    
+
 ########################################################################
 #                                                                      #
 # METHODS FOR PRE-PROCESSING AND MASSAGING KEYBOARD EVENTS.            #
@@ -498,6 +469,7 @@ _keybindings["F12"] = shutdown
 _keybindings["F5"]  = debugListApps
 _keybindings["F6"]  = debugListActiveApp
 _keybindings["F8"]  = _switchToNextPresentationManager
+
 
 # The string representing the last key pressed.
 #
@@ -617,7 +589,7 @@ def processKeyEvent(event):
         _keyEcho(keystring)
 
         # Orca gets first stab at the event.  Then, the presenter gets
-        # a shot.
+        # a shot. [[[TODO: WDW - might want to let the presenter try first?]]]
         #
         if _keybindings.has_key(keystring):
             try:
@@ -627,7 +599,12 @@ def processKeyEvent(event):
                 debug.printException(debug.LEVEL_SEVERE)
                 return False
         else:
-            return _PRESENTATION_MANAGERS[_currentPresentationManager].\
-                   processKeyEvent(keystring)
-
+            try:
+                return _PRESENTATION_MANAGERS[_currentPresentationManager].\
+                       processKeyEvent(keystring)
+            except:
+                pass
+            
     return False
+
+

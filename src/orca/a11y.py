@@ -26,7 +26,8 @@ Accessibility_Accessible object.
 
 The main entry point to this module is the makeAccessible factory method.
 This class keeps a cache of known accessible objects and only creates a
-new one if necessary.
+new one if necessary.  [[[TODO:  WDW - might consider the new-style class
+__new__ method to handle singletons like this.]]]
 
 This module also provides a number of convenience functions for working with
 Accessible objects.
@@ -37,10 +38,10 @@ import debug
 import rolenames
 
 class Accessible:
-    """Wraps at-spi Accessible objects and caches properties such as
+    """Wraps AT-SPI Accessible objects and caches properties such as
     name, description, and parent.
 
-    It also adds some properties to the at-spi Accessible including
+    It also adds some properties to the AT-SPI Accessible including
     the Application to which the object belongs.
 
     For efficiency purposes, this class also maintains a cache of all
@@ -48,23 +49,28 @@ class Accessible:
     from that cache instead of creating a duplicate object.
     """
 
-
     # The cache of the currently active accessible objects.  The key is
-    # the at-spi Accessible, and the value is the Python Accessible.
+    # the AT-SPI Accessible, and the value is the Python Accessible.
+    # [[[TODO: WDW - probably should look at the __new__ method as a means
+    # to handle singletons.]]]
     #
     _cache = {} 
 
     def __init__(self, acc):
         """Obtains, and creates if necessary, a Python Accessible from
-        an at-spi Accessibility_Accessible.  Applications should not
+        an AT-SPI Accessibility_Accessible.  Applications should not
         call this method, but should instead call makeAccessible.
         
         Arguments:
-        - acc: the at-spi Accessibility_Accessible
+        - acc: the AT-SPI Accessibility_Accessible
         
         Returns the associated Python Accessible.
         """
 
+        # [[[TODO: WDW - should do an assert here to make sure we're
+        # getting a raw AT-SPI Accessible and not one of our own locally
+        # cached Accessible instances.]]]
+        #
         if Accessible._cache.has_key(acc):
             return
 
@@ -76,7 +82,7 @@ class Accessible:
         except:
             self.acc = acc._narrow(core.Accessibility.Application)
 
-        # Save a reference to the at-spi object, and also save this
+        # Save a reference to the AT-SPI object, and also save this
         # new object away in the cache.
         #
         self.acc.ref()
@@ -84,14 +90,14 @@ class Accessible:
 
 
     def __del__(self):
-        """Unrefs the at-spi Accessible associated with this object.
-        [[[TODO: WDW - shouldn't this also remove the element from the
-        cache?]]]
+        """Unrefs the AT-SPI Accessible associated with this object.
         """
         try:
+            del Accessible._cache[sel.acc]
             self.acc.unref()
         except:
             pass
+
 
     def __get_name(self):
         """Returns the object's accessible name as a string.
@@ -177,9 +183,9 @@ class Accessible:
 
 
     def __get_app(self):
-        """Returns the at-spi Accessibility_Application associated with this
+        """Returns the AT-SPI Accessibility_Application associated with this
         object.  Returns None if the application cannot be found (usually
-        the indication of an at-spi bug).
+        the indication of an AT-SPI bug).
         """
         
         # [[[TODO: WDW - this code seems like it might break if this
@@ -239,7 +245,10 @@ class Accessible:
     def __getattr__(self, attr):
         """Created virtual attributes for the Accessible object to make
         the syntax a bit nicer (e.g., acc.name rather than acc.name()).
-
+        This method is also called if and only if the given attribute
+        does not exist in the object.  Thus, we're effectively lazily
+        building a cache to the remote object attributes here.
+        
         Arguments:
         - attr: a string indicating the attribute name to retrieve
 
@@ -266,11 +275,11 @@ class Accessible:
             return self.__get_app()
         elif attr == "extents":
             return self.__get_extents()
+        elif attr.startswith('__') and attr.endswith('__'):
+            raise AttributeError, attr
+        else:
+            return self.__dict__[attr]
 
-        # If we can't find the attribute, defer to the base object
-        #
-        return super(object, self).__getattr__(name)
-    
 
     def child(self, index):
         """Returns the specified child of this object.
@@ -302,13 +311,15 @@ def makeAccessible(acc):
     cache.
 
     Arguments:
-    - acc: the at-spi Accessibility_Accessible
+    - acc: the AT-SPI Accessibility_Accessible
 
     Returns a Python Accessible.
     """
 
     if acc is None:
         return None
+
+    obj = None
 
     if Accessible._cache.has_key(acc):
         obj = Accessible._cache[acc]
@@ -321,7 +332,7 @@ def makeAccessible(acc):
 
 ########################################################################
 #                                                                      #
-# Methods for handling at-spi events.                                  #
+# Methods for handling AT-SPI events.                                  #
 #                                                                      #
 ########################################################################
 
@@ -330,7 +341,7 @@ def onNameChanged(e):
     changes.  Updates the cache accordingly.
 
     Arguments:
-    - e: at-spi event from the at-api registry
+    - e: AT-SPI event from the AT-SPI registry
     """
 
     obj = makeAccessible(e.source)
@@ -342,7 +353,7 @@ def onDescriptionChanged(e):
     changes.  Updates the cache accordingly.
 
     Arguments:
-    - e: at-spi event from the at-api registry
+    - e: AT-SPI event from the AT-SPI registry
     """
 
     obj = makeAccessible(e.source)
@@ -354,24 +365,26 @@ def onParentChanged(e):
     changes.  Updates the cache accordingly.
 
     Arguments:
-    - e: at-spi event from the at-api registry
+    - e: AT-SPI event from the AT-SPI registry
     """
 
+    # This could fail if the e.source is now defunct.
+    #
     obj = makeAccessible(e.source)
     
     if getattr(obj, "parent", None):
         del obj.parent
-
+        
     if getattr(obj, "app", None):
         del obj.app
-
+    
 
 def onStateChanged(e):
     """Core module event listener called when an object's state
     changes.  Updates the cache accordingly.
 
     Arguments:
-    - e: at-spi event from the at-api registry
+    - e: AT-SPI event from the AT-SPI registry
     """
 
     # We'll handle defunct objects on the onDefunct method.
@@ -390,7 +403,7 @@ def onChildrenChanged(e):
     changes.  Updates the cache accordingly.
 
     Arguments:
-    - e: at-spi event from the at-api registry
+    - e: AT-SPI event from the AT-SPI registry
     """
 
     obj = makeAccessible(e.source)
@@ -404,7 +417,7 @@ def onDefunct(e):
     defunct.  Removes the object from the cache accordingly.
 
     Arguments:
-    - e: at-spi event from the at-api registry
+    - e: AT-SPI event from the AT-SPI registry
     """
 
     if Accessible._cache.has_key(e.source):

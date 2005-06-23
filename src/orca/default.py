@@ -17,11 +17,11 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-"""The default script for presenting information to the user using
+"""The Default Script for presenting information to the user using
 both speech and Braille.
 
-Provides a number of presenter functions that display Accessible object
-information to the user based upon the object's role."""
+This module also provides a number of presenter functions that display
+Accessible object information to the user based upon the object's role."""
 
 import math
 
@@ -30,7 +30,8 @@ import braille
 import core
 import debug
 import kbd
-import mag
+#import mag - [[[TODO: WDW - disable until I can figure out how to
+#             resolve the GNOME reference in mag.py.]]]
 import orca
 import rolenames
 import speech
@@ -39,10 +40,399 @@ from orca_i18n import _                          # for gettext support
 from rolenames import getShortBrailleForRoleName # localized role names
 from rolenames import getSpeechForRoleName       # localized role names
 
+from script import Script
 
 ########################################################################
 #                                                                      #
-# INFORMATION GATHERING FUNCTIONS                                      #
+# The factory method for this module.  All Scripts are expected to     #
+# have this method, and it is the sole way that instances of scripts   #
+# should be created.                                                   #
+#                                                                      #
+########################################################################
+
+def getScript(app):
+    """Factory method to create a new Default script for the given
+    application.  This method should be used for creating all
+    instances of this script class.
+
+    Arguments:
+    - app: the application to create a script for
+    """
+    
+    return Default(app)
+
+
+########################################################################
+#                                                                      #
+# The Default script class.                                            #
+#                                                                      #
+########################################################################
+
+class Default(Script):
+    
+    def __init__(self, app):
+        """Creates a new script for the given application.  Callers
+        should use the getScript factory method instead of calling
+        this constructor directly.
+        
+        Arguments:
+        - app: the application to create a script for.
+        """
+        
+        Script.__init__(self, app)
+        
+        self.keybindings["F9"] = self.sayAgain
+        self.keybindings["F11"] = self.sayAll
+
+        #self.listeners["object:property-change:accessible-name"] = \
+        #    self.onNameChanged 
+        #self.listeners["object:text-selection-changed"]          = \
+        #    self.onTextSelectionChanged 
+        self.listeners["object:text-changed:insert"]             = \
+            self.onTextInserted 
+        self.listeners["object:text-changed:delete"]             = \
+            self.onTextDeleted
+        self.listeners["object:state-changed:"]                  = \
+            self.onStateChanged
+        self.listeners["object:property-change:accessible-value"] = \
+            self.onValueChanged
+        self.listeners["object:value-changed:"]                  = \
+            self.onValueChanged
+        self.listeners["object:selection-changed"]               = \
+            self.onSelectionChanged
+        self.listeners["object:text-caret-moved"]                = \
+            self.onCaretMoved
+        #self.listeners["object:link-selected"]                   = \
+        #    self.onLinkSelected
+        #self.listeners["object:property-change:"]                = \
+        #    self.onPropertyChanged
+        self.listeners["object:active-descendant-changed"]       = \
+            self.onActiveDescendantChanged
+        #self.listeners["object:visible-changed"]                 = \
+        #    self.onVisibleDataChanged
+        #self.listeners["object:children-changed:"]               = \
+        #    self.onChildrenChanged
+        self.listeners["window:activate"]                        = \
+            self.onWindowActivated
+        #self.listeners["window:create"]                          = \
+        #    self.onWindowCreated
+        #self.listeners["window:destroy"]                         = \
+        #    self.onWindowDestroyed
+        #self.listeners["window:deactivated"]                     = \
+        #    self.onWindowDeactivated
+        #self.listeners["window:maximize"]                        = \
+        #    self.onWindowMaximized
+        #self.listeners["window:minimize"]                        = \
+        #    self.onWindowMinimized
+        #self.listeners["window:rename"]                          = \
+        #    self.onWindowRenamed
+        #self.listeners["window:restore"]                         = \
+        #    self.onWindowRestored
+        #self.listeners["window:switch"]                          = \
+        #    self.onWindowSwitched
+        #self.listeners["window:titlelize"]                       = \
+        #    self.onWindowTitlelized
+        self.listeners["focus:"]                                 = \
+            self.onFocus
+        
+
+    def sayAgain(self):
+        """Tells speech to repeat what was last spoken.
+        """
+        speech.sayAgain()
+
+    
+    def sayAll(self):
+        """Initiates sayAll mode and attempts to say all the text of the
+        currently focused Accessible text object.  [[[TODO: WDW - the entire
+        sayAll mechanism is likely to be severely broken.]]]
+        """
+    
+        global sayAllText
+        global sayAllPosition
+
+        # If the focused object isn't text, we don't know how to read it
+        #
+        txt = None
+        try:
+            txt = a11y.getText(orca.focusedObject)
+        except:
+            pass
+    
+        if txt is None:
+            speech.say("default", _("Not a document."))
+            return
+    
+        sayAllText = txt
+        sayAllPosition = txt.caretOffset
+
+        # Initialize sayAll mode with the speech subsystem - providing the
+        # sayAllGetChunk and sayAllStopped callbacks.  Once we call sayLine,
+        # the sayAll mode will begin executing when it receives the associated
+        # speech callback.
+        #
+        speech.startSayAll("default", sayAllGetChunk, sayAllStopped)
+        sayLine(orca.focusedObject)
+
+
+    def onTextInserted(self, event):
+        """Called whenever text is inserted into an object.
+
+        Arguments:
+        - event: the Event
+        """
+
+        # Ignore text insertions to non-focused objects, unless the
+        # currently focused object is the parent of the object to which
+        # text was inserted
+        #
+        if (event.source == orca.focusedObject) \
+               or (event.source.parent == orca.focusedObject):
+            brailleUpdateText(event.source)
+            text = event.any_data
+            if text.isupper():
+                speech.say("uppercase", text)
+            else:
+                speech.say("default", text)
+
+
+    def onTextDeleted(self, event):
+        """Called whenever text is deleted from an object.
+
+        Arguments:
+        - event: the Event
+        """
+    
+        # Ignore text deletions from non-focused objects, unless the
+        # currently focused object is the parent of the object from which
+        # text was deleted
+        #
+        if (event.source != orca.focusedObject) \
+               and (event.source.parent != orca.focusedObject):
+            pass
+        else:
+            brailleUpdateText(event.source)
+
+        # The any_data member of the event object has the deleted text in
+        # it - If the last key pressed was a backspace or delete key,
+        # speak the deleted text.  [[[TODO: WDW - again, need to think
+        # about the ramifications of this when it comes to editors such
+        # as vi or emacs.
+        #
+        text = event.any_data
+        if (orca.lastKey == "BackSpace") or (orca.lastKey == "Delete"):
+            if text.isupper():
+                speech.say("uppercase", text)
+            else:
+                speech.say("default", text)
+
+
+    def onStateChanged(self, event):
+        """Called whenever an object's state changes.  Currently, the
+        state changes for non-focused objects are ignored.
+
+        Arguments:
+        - event: the Event
+        """
+    
+        global presenters
+        global state_change_notifiers
+
+        if event.source != orca.focusedObject:
+            return
+
+        # Should we present the object again?
+        #
+        if state_change_notifiers.has_key(event.source.role):
+            notifiers = state_change_notifiers[event.source.role]
+            found = False
+            for state in notifiers:
+                if state and event.type.endswith(state):
+                    found = True
+                    break
+            if found:
+                if presenters.has_key(event.source.role):
+                    p = presenters[event.source.role]
+                    try:
+                        p(event.source, True)
+                    except:
+                        debug.printException(debug.LEVEL_SEVERE)
+                        defaultPresenter(event.source, True)
+                else:
+                    defaultPresenter(event.source, True)
+
+
+    def onValueChanged(self, event):
+        """Called whenever an object's value changes.  Currently, the
+        value changes for non-focused objects are ignored.
+
+        Arguments:
+        - event: the Event
+        """
+    
+        global presenters
+
+        if event.source != orca.focusedObject:
+            return
+
+        if presenters.has_key(event.source.role):
+            p = presenters[event.source.role]
+            try:
+                p(event.source, True)
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+                defaultPresenter(event.source, True)
+        else:
+            defaultPresenter(event.source, True)
+
+
+    def onSelectionChanged(self, event):
+        """Called when an object's selection changes.
+
+        Arguments:
+        - event: the Event
+        """
+    
+        # Do we care?
+        #
+        if selection_changed_handlers.has_key(event.source.role):
+            p = selection_changed_handlers[event.source.role]
+            try:
+                p(event.source, True)
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+
+
+    def onCaretMoved(self, event):
+        """Called whenever the caret moves.
+
+        Arguments:
+        - event: the Event
+        """
+
+        # Magnify the object.  [[[TODO: WDW - this is a hack for now.]]]
+        #
+        #mag.magnifyAccessible(event.source)
+
+        # Update the Braille display
+        #
+        brailleUpdateText(event.source)
+
+        # If this move is in response to an up or down arrow, read the line.
+        # [[[TODO: WDW - this motion assumes arrow key events.  In an editor
+        # such as vi, line up and down is done via other actions such as
+        # "i" or "j".  We may need to think about this a little harder.]]]
+        #
+        if orca.lastKey == "Up" or orca.lastKey == "Down":
+            sayLine(event.source)
+
+        # Control-left and control-right arrows speak the word under the
+        # caret.  [[[TODO: WDW - need to make sure the actions work as
+        # expected.  For example, will the caret always end up at the
+        # end of a word, or will it end up at the beginning of a word.
+        # There seems to be some confusion in gedit about this.  That is,
+        # when moving forward, it ends up at the end of the word and
+        # when moving backward, it ends up at the beginning of the word.]]]
+        #
+        if orca.lastKey == "control+Right" or orca.lastKey == "control+Left":
+            sayWord(event.source)
+
+        # Right and left arrows speak the character under the cursor
+        #
+        if orca.lastKey == "Right" or orca.lastKey == "Left":
+            sayCharacter(event.source)
+
+
+    def onPropertyChanged(self, event):
+        """Called whenever a property on an object changes.
+
+        Arguments:
+        - event: the Event
+        """
+        pass
+
+
+    def onActiveDescendantChanged(self, event):
+        """Called when an object who manages its own descendants detects a
+        change in one of its children.
+        
+        Arguments:
+        - event: the Event
+        """
+
+        print "*** HERE:", event.source, event.source.name, event.source.role
+        child = a11y.makeAccessible(event.any_data)
+        print "*** HERE:", child.name, child.role, child.childCount
+        print "*** HERE:", event.detail1, event.detail2
+        index = event.detail1
+        table = a11y.getTable(event.source)
+        rowDesc = table.getRowDescription(index)
+        colDesc = table.getColumnDescription(index)
+        print "*** HERE:", rowDesc, colDesc
+
+        row = a11y.makeAccessible(table.getRowHeader(index))
+        print "*** HERE:", row
+        rowDesc = ""
+        if row:
+            rowDesc = row.name
+        col = a11y.makeAccessible(table.getColumnHeader(index))
+        print "*** HERE:", col
+        colDesc = ""
+        if col:
+            colDesc = col.name
+        print "*** HERE:", rowDesc, colDesc
+        print
+
+
+    def onWindowActivated(self, event):
+        """Called whenever a toplevel window is activated.
+        
+        Arguments:
+        - event: the Event
+        """
+
+        global presenters
+
+        if presenters.has_key(event.source.role):
+            p = presenters[event.source.role]
+            try:
+                p(event.source, False)
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+        else: 
+            defaultPresenter(event.source, False)
+
+
+    def onFocus(self, event):
+        """Called whenever an object gets focus.
+        
+        Arguments:
+        - event: the Event
+        """
+    
+        global presenters
+
+        # Magnify the object.  [[[TODO: WDW - this is a hack for now.  The
+        # individual presenters should probably know what to do.  This raises
+        # the possible issue, however, that we might need different presenters
+        # for different modes (e.g., braille presenters, speech presenters,
+        # magnification presentaters).]]]
+        #
+        #mag.magnifyAccessible(event.source)
+    
+        if presenters.has_key(event.source.role):
+            p = presenters[event.source.role]
+            try:
+                p(event.source, False)
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+        else:
+            defaultPresenter(event.source, False)
+
+
+########################################################################
+#                                                                      #
+# INFORMATION GATHERING UTILITIES                                      #
 #                                                                      #
 # Functions that extract information from objects for the purposes of  #
 # being spoken or presented on a Braille display.                      #
@@ -196,7 +586,8 @@ def getSpeech(obj, includeAvailability=False):
 #                                                                      #
 # ACCESSIBLE TEXT OUTPUT FUNCTIONS                                     #
 #                                                                      #
-# Functions for handling output to speech and Braille.                 #
+# Functions for handling output of AccessibleText objects to speech    #
+# and Braille.                                                         #
 #                                                                      #
 ########################################################################
 
@@ -316,10 +707,6 @@ def sayCharacter(obj):
 # and Braille.  All the functions take the object as the first         #
 # parameter, and a boolean specifying whether the object had focus     #
 # already or not.                                                      #
-#                                                                      #
-# [[[TODO: WDW - don't really get the Braille region stuff yet.  This  #
-# was an experiment of Marc's that we talked about in Hawaii, but I'm  #
-# still not fully grasping the concept.]]]                             #
 #                                                                      #
 # [[[TODO: WDW - the order of presentation should be configurable by   #
 # the user.]]]                                                         #
@@ -739,20 +1126,26 @@ def pageTabPresenter(obj, already_focused):
     else:
         tablist = obj.parent
 
-    brltext = getShortBrailleForRoleName(tablist) + " "
-
-    cursor = -1
+    line = braille.Line()
+    line.addRegion(braille.Region(getShortBrailleForRoleName(tablist) + " "))
+    
     selected = obj.index
+    selectedTab = None
     childCount = tablist.childCount    
     i = 0
     while i < childCount:
+        line.addRegion(braille.Region("("))
+        tabRegion = braille.Component(tablist.child(i))
+        line.addRegion(tabRegion)
+        line.addRegion(braille.Region(")"))
         if i == selected:
-            cursor = len(brltext) + 1
-        name = a11y.getLabel(tablist.child(i))
-        brltext = brltext + "(" + name + ")"
+            selectedTab = tabRegion
         i = i + 1
 
-    braille.displayMessage(brltext, cursor)
+    braille.clear()
+    braille.addLine(line)
+    braille.setFocus(selectedTab)
+    braille.refresh()
     
     # Now do the speech.
     #
@@ -939,11 +1332,6 @@ def tablePresenter(obj, already_focused):
     speech.say("default", text)
 
 
-# Present a dialog box - This function displays the name of the dialog
-# on the Braille display.  It speaks the title of the dialog.  It
-# then searches the dialog for labels which are not associated
-# with any other objects, and reads their contents
-
 def dialogPresenter(obj, already_focused):
     """Speaks the title of the dialog and displays it on the Braille display.
     Also reads the contents of labels inside the dialog that are not
@@ -976,425 +1364,6 @@ def dialogPresenter(obj, already_focused):
     speech.say("default", text)
 
 
-# Dictionary that maps role names to the above presenter functions
-#
-presenters = {}
-presenters["alert"]              = dialogPresenter
-presenters["check box"]          = toggleButtonPresenter
-presenters["check menu item"]    = menuPresenter
-presenters["combo box"]          = comboBoxPresenter
-presenters["dialog"]             = dialogPresenter
-presenters["menu"]               = menuPresenter
-presenters["menu bar"]           = menuBarPresenter
-presenters["menu item"]          = menuPresenter
-presenters["multi line text"]    = textPresenter
-presenters["page tab"]           = pageTabPresenter
-presenters["page tab list"]      = pageTabPresenter
-presenters["password text"]      = textPresenter
-presenters["push button"]        = pushButtonPresenter
-presenters["radio button"]       = radioButtonPresenter
-presenters["radio menu item"]    = menuPresenter
-presenters["single line text"]   = textPresenter
-presenters["slider"]             = sliderPresenter
-presenters["spin button"]        = textPresenter
-presenters["table"]              = tablePresenter
-presenters["tear off menu item"] = menuPresenter
-presenters["terminal"]           = textPresenter
-presenters["text"]               = textPresenter
-presenters["toggle button"]      = toggleButtonPresenter
-presenters["tree"]               = tablePresenter
-presenters["tree table"]         = tablePresenter
-
-
-########################################################################
-#                                                                      #
-# AT-SPI EVENT HANDLERS                                                #
-#                                                                      #
-# The following functions represent the listeners for this script, and #
-# are named after the keys in the a11y.dispatcher dictionary.          #
-#                                                                      #
-########################################################################
-
-def onWindowActivated(event):
-    """Called whenever a toplevel window is activated.
-
-    Arguments:
-    - event: the Event
-    """
-
-    global presenters
-
-    if presenters.has_key(event.source.role):
-        p = presenters[event.source.role]
-        try:
-            p(event.source, False)
-        except:
-            debug.printException(debug.LEVEL_SEVERE)
-    else: 
-        defaultPresenter(event.source, False)
-
-
-def onFocus(event):
-    """Called whenever an object gets focus.
-
-    Arguments:
-    - event: the Event
-    """
-    
-    global presenters
-
-    # Magnify the object.  [[[TODO: WDW - this is a hack for now.  The
-    # individual presenters should probably know what to do.  This raises the
-    # possible issue, however, that we might need different presenters for
-    # different modes (e.g., braille presenters, speech presenters,
-    # magnification presentaters).]]]
-    #
-    mag.magnifyAccessible(event.source)
-    
-    if presenters.has_key(event.source.role):
-        p = presenters[event.source.role]
-        try:
-            p(event.source, False)
-        except:
-            debug.printException(debug.LEVEL_SEVERE)
-    else:
-        defaultPresenter(event.source, False)
-
-
-# This dictionary defines the presenters which should be called when
-# various states change for various types of objects.  The key
-# represents the role and the value represents a list of states that
-# we care about.
-#
-state_change_notifiers = {}
-state_change_notifiers["check box"] = ("checked", None)
-state_change_notifiers["toggle button"] = ("checked", None)
-
-def onStateChanged(event):
-    """Called whenever an object's state changes.  Currently, the
-    state changes for non-focused objects are ignored.
-
-    Arguments:
-    - event: the Event
-    """
-    
-    global presenters
-    global state_change_notifiers
-
-    if event.source != orca.focusedObject:
-        return
-
-    # Should we re-present the object?
-    #
-    if state_change_notifiers.has_key(event.source.role):
-        notifiers = state_change_notifiers[event.source.role]
-        found = False
-        for state in notifiers:
-            if state and event.type.endswith(state):
-                found = True
-                break
-        if found:
-            if presenters.has_key(event.source.role):
-                p = presenters[event.source.role]
-                try:
-                    p(event.source, True)
-                except:
-                    debug.printException(debug.LEVEL_SEVERE)
-                    defaultPresenter(event.source, True)
-            else:
-                defaultPresenter(event.source, True)
-
-
-def onValueChanged(event):
-    """Called whenever an object's value changes.  Currently, the
-    value changes for non-focused objects are ignored.
-
-    Arguments:
-    - event: the Event
-    """
-    
-    global presenters
-    global state_change_notifiers
-        
-    if event.source != orca.focusedObject:
-        return
-
-    if presenters.has_key(event.source.role):
-        p = presenters[event.source.role]
-        try:
-            p(event.source, True)
-        except:
-            debug.printException(debug.LEVEL_SEVERE)
-            defaultPresenter(event.source, True)
-        else:
-            defaultPresenter(event.source, True)
-
-
-# This dictionary defines which presenters should be used if an
-# object's selection changes.  The key represents the role and
-# the value represents the presenter function.
-#
-selection_changed_handlers = {}
-selection_changed_handlers["combo box"] = comboBoxPresenter
-selection_changed_handlers["table"] = tablePresenter
-selection_changed_handlers["tree table"] = tablePresenter
-
-
-def onSelectionChanged(event):
-    """Called when an object's selection changes.
-
-    Arguments:
-    - event: the Event
-    """
-    
-    # Do we care?
-    #
-    if selection_changed_handlers.has_key(event.source.role):
-        p = selection_changed_handlers[event.source.role]
-        try:
-            p(event.source, True)
-        except:
-            debug.printException(debug.LEVEL_SEVERE)
-    
-
-def onCaretMoved(event):
-    """Called whenever the caret moves.
-
-    Arguments:
-    - event: the Event
-    """
-
-    # Magnify the object.  [[[TODO: WDW - this is a hack for now.]]]
-    #
-    mag.magnifyAccessible(event.source)
-
-    # Update the Braille display
-    #
-    brailleUpdateText(event.source)
-
-    # If this move is in response to an up or down arrow, read the line.
-    # [[[TODO: WDW - this motion assumes arrow key events.  In an editor
-    # such as vi, line up and down is done via other actions such as
-    # "i" or "j".  We may need to think about this a little harder.]]]
-    #
-    if orca.lastKey == "Up" or orca.lastKey == "Down":
-        sayLine(event.source)
-
-    # Control-left and control-right arrows speak the word under the
-    # caret.  [[[TODO: WDW - need to make sure the actions work as
-    # expected.  For example, will the caret always end up at the
-    # end of a word, or will it end up at the beginning of a word.
-    # There seems to be some confusion in gedit about this.  That is,
-    # when moving forward, it ends up at the end of the word and
-    # when moving backward, it ends up at the beginning of the word.]]]
-    #
-    if orca.lastKey == "control+Right" or orca.lastKey == "control+Left":
-        sayWord(event.source)
-
-    # Right and left arrows speak the character under the cursor
-    #
-    if orca.lastKey == "Right" or orca.lastKey == "Left":
-        sayCharacter(event.source)
- 
-
-def onTextInserted(event):
-    """Called whenever text is inserted into an object.
-
-    Arguments:
-    - event: the Event
-    """
-
-    # Ignore text insertions to non-focused objects, unless the
-    # currently focused object is the parent of the object to which
-    # text was inserted
-    #
-    if (event.source != orca.focusedObject) \
-           and (event.source.parent != orca.focusedObject):
-        pass
-    else:
-        brailleUpdateText(event.source)
-        text = event.any_data
-        if text.isupper():
-            speech.say("uppercase", text)
-        else:
-            speech.say("default", text)
-
-
-def onTextDeleted(event):
-    """Called whenever text is deleted from an object.
-
-    Arguments:
-    - event: the Event
-    """
-    
-    # Ignore text deletions from non-focused objects, unless the
-    # currently focused object is the parent of the object from which
-    # text was deleted
-    #
-    if (event.source != orca.focusedObject) \
-            and (event.source.parent != orca.focusedObject):
-        pass
-    else:
-        brailleUpdateText(event.source)
-
-    # The any_data member of the event object has the deleted text in
-    # it - If the last key pressed was a backspace or delete key,
-    # speak the deleted text.  [[[TODO: WDW - again, need to think
-    # about the ramifications of this when it comes to editors such
-    # as vi or emacs.
-    #
-    text = event.any_data
-    if (orca.lastKey == "BackSpace") or (orca.lastKey == "Delete"):
-        if text.isupper():
-            speech.say("uppercase", text)
-        else:
-            speech.say("default", text)
-
-
-def onActiveDescendantChanged(event):
-    """Called when an object who manages its own descendants detects a
-    change in one of its children.
-
-    Arguments:
-    - event: the Event
-    """
-
-    print "*** HERE:", event.source, event.source.name, event.source.role
-    child = a11y.makeAccessible(event.any_data)
-    print "*** HERE:", child.name, child.role, child.childCount
-    print "*** HERE:", event.detail1, event.detail2
-    index = event.detail1
-    table = a11y.getTable(event.source)
-    rowDesc = table.getRowDescription(index)
-    colDesc = table.getColumnDescription(index)
-    print "*** HERE:", rowDesc, colDesc
-
-    row = a11y.makeAccessible(table.getRowHeader(index))
-    print "*** HERE:", row
-    rowDesc = ""
-    if row:
-        rowDesc = row.name
-    col = a11y.makeAccessible(table.getColumnHeader(index))
-    print "*** HERE:", col
-    colDesc = ""
-    if col:
-        colDesc = col.name
-    print "*** HERE:", rowDesc, colDesc
-    print
-    
-
-########################################################################
-#                                                                      #
-# BRAILLE KEY EVENT HANDLERS                                           #    
-#                                                                      #
-# The following functions handle Braille key presses from the display. #
-# These functions receive an object to which the keypress was          #
-# directed, the region number which generated the key press, and the   #
-# offset of the key within the region.                                 #
-#                                                                      #
-########################################################################
-
-# Handle Braille key presses directed at menus
-
-def menuBrlKeyHandler(obj, command):
-    """Handles Braille key presses directed at menus.
-    
-    Arguments:
-    - command: the BrlAPI command for the key that was pressed.
-    """
-    
-    # Each menu item/menu displayed is in its own region - so the
-    # region_num will indicate which menu/menu item to select
-    #
-    #menu = obj.parent
-    #child = menu.child(region)
-
-    # Get the AccessibleAction interface and do the first one
-    #
-    #a = a11y.getAction(child)
-    #a.doAction(0)
-
-
-def pageTabBrlKeyHandler(obj, command):
-    """Handles Braille key presses directed at page tabs.
-    
-    Arguments:
-    - command: the BrlAPI command for the key that was pressed.
-    """
-
-    # Each page tab will be displayed in its own region of the Braille
-    # display - so the region number will indicate the page tab to
-    # select
-    #
-    #tablist = obj.parent
-    
-    # Select the clicked page tab
-    #
-    #sel = a11y.getSelection(tablist)
-    #sel.selectChild(region)
-
-
-def textBrlKeyHandler(obj, command):
-    """Handles Braille key presses directed at text objects.
-    
-    Arguments:
-    - command: the BrlAPI command for the key that was pressed.
-    """
-
-    # The line containing the caret is displayed on the display - so
-    # the content region of the Braille display that generated the
-    # keypress contains that line.  Therefore, the absolute offset to
-    # move the caret to can be derived by the offset of the key plus the
-    # offset of the beginning of the line containing the caret
-    #
-    #text = a11y.getText(obj)
-    #line = text.getTextAtOffset(text.caretOffset,
-    #                            core.Accessibility.TEXT_BOUNDARY_LINE_START)
-    #cursor_position = position+line[1]
-    #text.setCaretOffset(cursor_position)
-
-# This dictionary defines the Braille key handlers for the various types
-# of objects.  The key represents the role name and the value represents
-# the function.
-#
-brl_key_handlers = {}
-brl_key_handlers["menu"] = menuBrlKeyHandler
-brl_key_handlers["menu item"] = menuBrlKeyHandler
-brl_key_handlers["page tab"] = pageTabBrlKeyHandler
-brl_key_handlers["text"] = textBrlKeyHandler
-
-# This function is called whenever a cursor key is pressed on the
-# Braille display
-
-def onBrlKey(command):
-    """Called whenever a cursor key is pressed on the Braille display.
-    
-    Arguments:
-    - command: the BrlAPI command for the key that was pressed.
-    """
-
-    if orca.focusedObject is None:
-        return
-    
-    # Do we have a Braille key handler for the role of the focused
-    # object?
-    #
-    try:
-       h = brl_key_handlers[orca.focusedObject.role]
-       h(orca.focusedObject, command)
-    except:
-        debug.printException(debug.LEVEL_SEVERE)
-        # We don't have a specific handler - see if the focused object
-        # has an AccessibleAction interface, and if so, do the first
-        # action it lists
-        #
-        a = a11y.getAction(orca.focusedObject)
-        if a is None:
-            pass
-        else:
-            a.doAction(0)
-
-
 ########################################################################
 #                                                                      #
 # SAYALL SUPPORT                                                       #    
@@ -1411,10 +1380,6 @@ def onBrlKey(command):
 #                                                                      #
 ########################################################################
 
-def sayAgain():
-    speech.sayAgain()
-
-    
 # sayAllText contains the AccessibleText object of the document
 # currently being read
 #
@@ -1473,35 +1438,57 @@ def sayAllStopped(position):
 
     sayAllText.setCaretOffset(sayAllPosition + position)
 
-# This function initiates say all mode
 
-def sayAll():
-    """Initiates sayAll mode and attempts to say all the text of the
-    currently focused Accessible text object.
-    """
-    
-    global sayAllText
-    global sayAllPosition
+########################################################################
+#                                                                      #
+# VARIOUS DICTIONARIES TO HELP DRIVE THINGS.                           #
+#                                                                      #
+########################################################################
 
-    # If the focused object isn't text, we don't know how to read it
-    #
-    txt = None
-    try:
-        txt = a11y.getText(orca.focusedObject)
-    except:
-        pass
-    
-    if txt is None:
-        speech.say("default", _("Not a document."))
-        return
-    
-    sayAllText = txt
-    sayAllPosition = txt.caretOffset
+# Dictionary that maps role names to the presenter functions for those roles.
+#
+presenters = {}
+presenters["alert"]              = dialogPresenter
+presenters["check box"]          = toggleButtonPresenter
+presenters["check menu item"]    = menuPresenter
+presenters["combo box"]          = comboBoxPresenter
+presenters["dialog"]             = dialogPresenter
+presenters["menu"]               = menuPresenter
+presenters["menu bar"]           = menuBarPresenter
+presenters["menu item"]          = menuPresenter
+presenters["multi line text"]    = textPresenter
+presenters["page tab"]           = pageTabPresenter
+presenters["page tab list"]      = pageTabPresenter
+presenters["password text"]      = textPresenter
+presenters["push button"]        = pushButtonPresenter
+presenters["radio button"]       = radioButtonPresenter
+presenters["radio menu item"]    = menuPresenter
+presenters["single line text"]   = textPresenter
+presenters["slider"]             = sliderPresenter
+presenters["spin button"]        = textPresenter
+presenters["table"]              = tablePresenter
+presenters["tear off menu item"] = menuPresenter
+presenters["terminal"]           = textPresenter
+presenters["text"]               = textPresenter
+presenters["toggle button"]      = toggleButtonPresenter
+presenters["tree"]               = tablePresenter
+presenters["tree table"]         = tablePresenter
 
-    # Initialize sayAll mode with the speech subsystem - providing the
-    # sayAllGetChunk and sayAllStopped callbacks.  Once we call sayLine,
-    # the sayAll mode will begin executing when it receives the associated
-    # speech callback.
-    #
-    speech.startSayAll("default", sayAllGetChunk, sayAllStopped)
-    sayLine(orca.focusedObject)
+
+# Dictionary that defines the presenters which should be called when various
+# states change for various types of objects.  The key represents the role and
+# the value represents a list of states that we care about.
+#
+state_change_notifiers = {}
+state_change_notifiers["check box"] = ("checked", None)
+state_change_notifiers["toggle button"] = ("checked", None)
+
+
+# Dictionary that defines which presenters should be used if an object's
+# selection changes.  The key represents the role and the value represents the
+# presenter function.
+#
+selection_changed_handlers = {}
+selection_changed_handlers["combo box"]  = comboBoxPresenter
+selection_changed_handlers["table"]      = tablePresenter
+selection_changed_handlers["tree table"] = tablePresenter
