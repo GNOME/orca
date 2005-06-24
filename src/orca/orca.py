@@ -236,19 +236,59 @@ def processBrailleEvent(command):
 # DEBUG support.                                                       #
 #                                                                      #
 ########################################################################
+    
+def printApps(keystring=None):
+    """Prints a list of all applications to stdout
 
-def debugListApps(keystring=None):
-    """Prints a list of all known applications to stdout if debug
-    is enabled."""
+    Arguments:
+    - keystring: the key event (if any) which caused this to be called.
+    """
 
-    debug.listApps(debug.LEVEL_OFF)
-    return True 
+    level = debug.LEVEL_OFF
+    
+    debug.println(level, "There are %d apps" % len(apps))
+    for app in apps:
+        debug.println(level,
+                      "  %s (childCount=%d)" % (app.name, app.childCount))
+        count = 0
+        while count < app.childCount:
+            debug.println(level, "    Child %d:" % count)
+            child = app.child(count)
+            a11y.printDetails(level, "      ", child)
+            if child.parent != app:
+                debug.println(level,
+                              "      WARNING: child's parent is not app!!!")
+            count += 1
 
-def debugListActiveApp(keystring=None):
-    """Prints details about the currently active application."""
 
-    debug.listActiveApp(debug.LEVEL_OFF)
-    return True 
+def printActiveApp(keystring=None):
+    """Prints the active application.
+
+    Arguments:
+    - keystring: the key event (if any) which caused this to be called.
+    """
+    
+    level = debug.LEVEL_OFF
+    
+    debug.println(level, "Current active application:")
+    window = findActiveWindow()
+    if window is None:
+        debug.println(level, "  None")
+    else:
+        app = window.app
+        if app is None:
+            debug.println(level, "  None")
+        else:
+            a11y.printDetails(level, "  ", app)
+            count = 0
+            while count < app.childCount:
+                debug.println(level, "    Child %d:" % count)
+                child = app.child(count)
+                a11y.printDetails(level, "    ", child)
+                if child.parent != app:
+                    debug.println(level,
+                                  "      WARNING: child's parent is not app!!!")
+                count += 1
 
 
 ########################################################################
@@ -466,8 +506,8 @@ def outlineAccessible(accessible):
 #
 _keybindings = {}
 _keybindings["F12"] = shutdown
-_keybindings["F5"]  = debugListApps
-_keybindings["F6"]  = debugListActiveApp
+_keybindings["F5"]  = printApps
+_keybindings["F6"]  = printActiveApp
 _keybindings["F8"]  = _switchToNextPresentationManager
 
 
@@ -585,7 +625,7 @@ def processKeyEvent(event):
             
     if keystring:
         lastKey = keystring
-        debug.printKeyEvent(debug.LEVEL_FINE, keystring)
+        debug.printInputEvent(debug.LEVEL_FINE, "KEY EVENT: %s" % keystring)
         _keyEcho(keystring)
 
         # Orca gets first stab at the event.  Then, the presenter gets

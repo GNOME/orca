@@ -37,6 +37,155 @@ import core
 import debug
 import rolenames
 
+########################################################################
+#                                                                      #
+# DEBUG support.                                                       #
+#                                                                      #
+########################################################################
+            
+def getStates(obj):
+    """Returns a space-delimited string composed of the given object's
+    Accessible state attribute.  This is for debug purposes.
+
+    Arguments:
+    - obj: an Accessible
+    """
+    
+    set = obj.state
+    stateString = " "
+    if set.count(core.Accessibility.STATE_INVALID):
+        stateString += "INVALID "
+    if set.count(core.Accessibility.STATE_ACTIVE):
+        stateString += "ACTIVE "
+    if set.count(core.Accessibility.STATE_ARMED):
+        stateString += "ARMED "
+    if set.count(core.Accessibility.STATE_BUSY):
+        stateString += "BUSY "
+    if set.count(core.Accessibility.STATE_CHECKED):
+        stateString += "CHECKED "
+    if set.count(core.Accessibility.STATE_COLLAPSED):
+        stateString += "COLLAPSED "
+    if set.count(core.Accessibility.STATE_DEFUNCT):
+        stateString += "DEFUNCT "
+    if set.count(core.Accessibility.STATE_EDITABLE):
+        stateString += "EDITABLE "
+    if set.count(core.Accessibility.STATE_ENABLED):
+        stateString += "ENABLED "
+    if set.count(core.Accessibility.STATE_EXPANDABLE):
+        stateString += "EXPANDABLE "
+    if set.count(core.Accessibility.STATE_EXPANDED):
+        stateString += "EXPANDED "
+    if set.count(core.Accessibility.STATE_FOCUSABLE):
+        stateString += "FOCUSABLE "
+    if set.count(core.Accessibility.STATE_FOCUSED):
+        stateString += "FOCUSED "
+    if set.count(core.Accessibility.STATE_HAS_TOOLTIP):
+        stateString += "HAS_TOOLTIP "
+    if set.count(core.Accessibility.STATE_HORIZONTAL):
+        stateString += "HORIZONTAL "
+    if set.count(core.Accessibility.STATE_ICONIFIED):
+        stateString += "ICONIFIED "
+    if set.count(core.Accessibility.STATE_MODAL):
+        stateString += "MODAL "
+    if set.count(core.Accessibility.STATE_MULTI_LINE):
+        stateString += "MULTI_LINE "
+    if set.count(core.Accessibility.STATE_MULTISELECTABLE):
+        stateString += "MULTISELECTABLE "
+    if set.count(core.Accessibility.STATE_OPAQUE):
+        stateString += "OPAQUE "
+    if set.count(core.Accessibility.STATE_PRESSED):
+        stateString += "PRESSED "
+    if set.count(core.Accessibility.STATE_RESIZABLE):
+        stateString += "RESIZABLE "
+    if set.count(core.Accessibility.STATE_SELECTABLE):
+        stateString += "SELECTABLE "
+    if set.count(core.Accessibility.STATE_SELECTED):
+        stateString += "SELECTED "
+    if set.count(core.Accessibility.STATE_SENSITIVE):
+        stateString += "SENSITIVE "
+    if set.count(core.Accessibility.STATE_SHOWING):
+        stateString += "SHOWING "
+    if set.count(core.Accessibility.STATE_SINGLE_LINE):
+        stateString += "SINGLE_LINE " 
+    if set.count(core.Accessibility.STATE_STALE):
+        stateString += "STALE "
+    if set.count(core.Accessibility.STATE_TRANSIENT):
+        stateString += "TRANSIENT " 
+    if set.count(core.Accessibility.STATE_VERTICAL):
+        stateString += "VERTICAL "
+    if set.count(core.Accessibility.STATE_VISIBLE):
+        stateString += "VISIBLE "
+    if set.count(core.Accessibility.STATE_MANAGES_DESCENDANTS):
+        stateString += "MANAGES_DESCENDANTS "
+    if set.count(core.Accessibility.STATE_INDETERMINATE):
+        stateString += "INDETERMINATE "
+
+    return stateString;
+
+
+def accessibleToString(indent, accessible):
+    if not accessible:
+        return None
+    
+    string = ""
+    string = string + "%sname   = (%s)\n" \
+             % (indent, accessible.name)
+    string = string + "%srole   = (%s)\n" \
+             % (indent, rolenames.getRoleName(accessible))
+    string = string +  "%sstate  = (%s)\n" \
+             % (indent, getStates(accessible))
+
+    if accessible.app is None:
+        string = string + "%sapp    = (None)" % indent
+    else:
+        string = string + "%sapp    = (%s)" % (indent, accessible.app.name)
+
+    return string
+
+
+def printDetails(level, indent, accessible):
+    """Lists the details of the given accessible with the given
+    indentation.
+
+    Arguments:
+    - level: the accepted debug level
+    - indent: a string containing spaces for indentation
+    - accessible: the accessible whose details are to be listed
+    """
+
+    debug.println(level, accessibleToString(indent, accessible))
+        
+
+########################################################################
+#                                                                      #
+# The Accessible class.                                                #
+#                                                                      #
+########################################################################
+    
+def makeAccessible(acc):
+    """Make an Accessible.  This is used instead of a simple calls to
+    Accessible's constructor because the object may already be in the
+    cache.
+
+    Arguments:
+    - acc: the AT-SPI Accessibility_Accessible
+
+    Returns a Python Accessible.
+    """
+
+    if acc is None:
+        return None
+
+    obj = None
+
+    if Accessible._cache.has_key(acc):
+        obj = Accessible._cache[acc]
+    else:
+        obj = Accessible(acc)
+
+    return obj
+
+
 class Accessible:
     """Wraps AT-SPI Accessible objects and caches properties such as
     name, description, and parent.
@@ -303,31 +452,6 @@ class Accessible:
         except:
             debug.printException(debug.LEVEL_SEVERE)
             return None
-        
-
-def makeAccessible(acc):
-    """Make an Accessible.  This is used instead of a simple calls to
-    Accessible's constructor because the object may already be in the
-    cache.
-
-    Arguments:
-    - acc: the AT-SPI Accessibility_Accessible
-
-    Returns a Python Accessible.
-    """
-
-    if acc is None:
-        return None
-
-    obj = None
-
-    if Accessible._cache.has_key(acc):
-        obj = Accessible._cache[acc]
-    else:
-        obj = Accessible(acc)
-
-    return obj
-
 
 
 ########################################################################
@@ -422,7 +546,6 @@ def onDefunct(e):
 
     if Accessible._cache.has_key(e.source):
         del Accessible._cache[e.source]
-
 
 
 ########################################################################

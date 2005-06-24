@@ -77,8 +77,8 @@ Braille display.
 
 import a11y
 import brl
-import debug
 import core
+import debug
 
 # If True, this module has been initialized.
 #
@@ -186,6 +186,25 @@ _cursorPosition = [-1, -1]
 #
 _callback = None
 
+
+def _printBrailleEvent(level, command):
+    """Prints out a Braille event.  The given level may be overridden
+    if the eventDebugLevel (see debug.setEventDebugLevel) is greater in
+    debug.py.
+    
+    Arguments:
+    - command: the BrlAPI command for the key that was pressed.
+    """
+
+    if (command >= 0) and (command < len(BRLAPI_COMMANDS)):
+        debug.printInputEvent(
+            level,
+            "BRAILLE EVENT: %s" % BRLAPI_COMMANDS[command])
+    else:
+        debug.printInputEvent(
+            level,
+            "BRAILLE EVENT: %x" % command)
+    
 
 class Region:
     """A Braille region to be displayed on the display.  The width of
@@ -514,7 +533,7 @@ def _processBrailleEvent(command):
     # it off using 0xfff.]]]
     #
     command = command & 0xfff
-    debug.printBrailleEvent(debug.LEVEL_FINE, command)
+    _printBrailleEvent(debug.LEVEL_FINE, command)
 
     if _callback:
         try:

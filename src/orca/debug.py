@@ -24,12 +24,6 @@ debug level to determine if the content should be output."""
 
 import traceback
 
-import braille
-import core
-import orca
-
-from rolenames import getRoleName
-
 
 # Used to turn off all debugging.
 #
@@ -100,7 +94,7 @@ def setDebugLevel(newLevel):
 
 def setEventDebugLevel(newLevel):
     """Sets the event debug level.  This can be used to override the level
-    value passed to printObjectEvent and printKeyEvent.  That is, if
+    value passed to printObjectEvent and printInputEvent.  That is, if
     eventDebugLevel has a higher value that the debug level passed into these
     methods, then the event debug level will be used as the level.
     
@@ -130,86 +124,6 @@ def setEventDebugFilter(regExpression):
     global _eventDebugFilter
     
     _eventDebugFilter = regExpression
-    
-    
-def getStates(obj):
-    """Returns a space-delimited string composed of the given object's
-    Accessible state attribute.
-
-    Arguments:
-    - obj: an Accessible
-    """
-    
-    set = obj.state
-    stateString = " "
-    if set.count(core.Accessibility.STATE_INVALID):
-        stateString += "INVALID "
-    if set.count(core.Accessibility.STATE_ACTIVE):
-        stateString += "ACTIVE "
-    if set.count(core.Accessibility.STATE_ARMED):
-        stateString += "ARMED "
-    if set.count(core.Accessibility.STATE_BUSY):
-        stateString += "BUSY "
-    if set.count(core.Accessibility.STATE_CHECKED):
-        stateString += "CHECKED "
-    if set.count(core.Accessibility.STATE_COLLAPSED):
-        stateString += "COLLAPSED "
-    if set.count(core.Accessibility.STATE_DEFUNCT):
-        stateString += "DEFUNCT "
-    if set.count(core.Accessibility.STATE_EDITABLE):
-        stateString += "EDITABLE "
-    if set.count(core.Accessibility.STATE_ENABLED):
-        stateString += "ENABLED "
-    if set.count(core.Accessibility.STATE_EXPANDABLE):
-        stateString += "EXPANDABLE "
-    if set.count(core.Accessibility.STATE_EXPANDED):
-        stateString += "EXPANDED "
-    if set.count(core.Accessibility.STATE_FOCUSABLE):
-        stateString += "FOCUSABLE "
-    if set.count(core.Accessibility.STATE_FOCUSED):
-        stateString += "FOCUSED "
-    if set.count(core.Accessibility.STATE_HAS_TOOLTIP):
-        stateString += "HAS_TOOLTIP "
-    if set.count(core.Accessibility.STATE_HORIZONTAL):
-        stateString += "HORIZONTAL "
-    if set.count(core.Accessibility.STATE_ICONIFIED):
-        stateString += "ICONIFIED "
-    if set.count(core.Accessibility.STATE_MODAL):
-        stateString += "MODAL "
-    if set.count(core.Accessibility.STATE_MULTI_LINE):
-        stateString += "MULTI_LINE "
-    if set.count(core.Accessibility.STATE_MULTISELECTABLE):
-        stateString += "MULTISELECTABLE "
-    if set.count(core.Accessibility.STATE_OPAQUE):
-        stateString += "OPAQUE "
-    if set.count(core.Accessibility.STATE_PRESSED):
-        stateString += "PRESSED "
-    if set.count(core.Accessibility.STATE_RESIZABLE):
-        stateString += "RESIZABLE "
-    if set.count(core.Accessibility.STATE_SELECTABLE):
-        stateString += "SELECTABLE "
-    if set.count(core.Accessibility.STATE_SELECTED):
-        stateString += "SELECTED "
-    if set.count(core.Accessibility.STATE_SENSITIVE):
-        stateString += "SENSITIVE "
-    if set.count(core.Accessibility.STATE_SHOWING):
-        stateString += "SHOWING "
-    if set.count(core.Accessibility.STATE_SINGLE_LINE):
-        stateString += "SINGLE_LINE " 
-    if set.count(core.Accessibility.STATE_STALE):
-        stateString += "STALE "
-    if set.count(core.Accessibility.STATE_TRANSIENT):
-        stateString += "TRANSIENT " 
-    if set.count(core.Accessibility.STATE_VERTICAL):
-        stateString += "VERTICAL "
-    if set.count(core.Accessibility.STATE_VISIBLE):
-        stateString += "VISIBLE "
-    if set.count(core.Accessibility.STATE_MANAGES_DESCENDANTS):
-        stateString += "MANAGES_DESCENDANTS "
-    if set.count(core.Accessibility.STATE_INDETERMINATE):
-        stateString += "INDETERMINATE "
-
-    return stateString;
 
 
 def printException(level):
@@ -256,7 +170,7 @@ def println(level, text = ""):
         print text
 
 
-def printObjectEvent(level, event):
+def printObjectEvent(level, event, sourceInfo=None):
     """Prints out an Python Event object.  The given level may be overridden
     if the eventDebugLevel (see setEventDebugLevel) is greater.  Furthermore,
     only events with event types matching the eventDebugFilter regular
@@ -280,122 +194,21 @@ def printObjectEvent(level, event):
     println(level, "OBJECT EVENT: type    = (%s)" % event.type)
     println(level, "              detail1 = (%d)" % event.detail1)
     println(level, "              detail2 = (%d)" % event.detail2)
-    if event.source:
+
+    if sourceInfo:
         println(level, "              source:")
-        listDetails(level, "                ", event.source)
+        println(level, sourceInfo)
 
     
-def printKeyEvent(level, keystring):
-    """Prints out a keystring.  The given level may be overridden
+def printInputEvent(level, string):
+    """Prints out an input event.  The given level may be overridden
     if the eventDebugLevel (see setEventDebugLevel) is greater.
 
     Arguments:
     - level: the accepted debug level
-    - event: the keystring to print
+    - string: the string representing the input event
     """
 
     global _eventDebugLevel
 
-    println(max(level, _eventDebugLevel),
-            "KEY EVENT: (%s)" % keystring)
-
-    
-def printBrailleEvent(level, command):
-    """Prints out a Braille event.  The given level may be overridden
-    if the eventDebugLevel (see setEventDebugLevel) is greater.
-    
-    Arguments:
-    - command: the BrlAPI command for the key that was pressed.
-    """
-
-    global _eventDebugLevel
-
-    if (command >= 0) and (command < len(braille.BRLAPI_COMMANDS)):
-        println(max(level, _eventDebugLevel),
-                "BRAILLE EVENT: command=%s" % braille.BRLAPI_COMMANDS[command])
-    else:
-        println(max(level, _eventDebugLevel),
-                "BRAILLE EVENT: command=%x" % command)
-
-    
-def listDetails(level, indent, accessible):
-    """Lists the details of the given accessible with the given
-    indentation.
-
-    Arguments:
-    - level: the accepted debug level
-    - indent: a string containing spaces for indentation
-    - accessible: the accessible whose details are to be listed
-    """
-
-    global _debugLevel
-    
-    if level < _debugLevel:
-        return
-    
-    println(level, "%sname   = (%s)" % (indent, accessible.name))
-    println(level, "%srole   = (%s)" % (indent, getRoleName(accessible)))
-    println(level, "%sstate  = (%s)" % (indent, getStates(accessible)))
-
-    if accessible.app is None:
-        println(level, "%sapp    = (None)" % indent)
-    else:
-        println(level, "%sapp    = (%s)" % (indent, accessible.app.name))
-        
-    
-def listApps(level):
-    """Prints a list of all applications to stdout
-
-    Arguments:
-    - level: the accepted debug level
-    """
-
-    global _debugLevel
-    
-    if level < _debugLevel:
-        return
-    
-    println(level, "There are %d apps" % len(orca.apps))
-    for app in orca.apps:
-        println(level, "  %s (childCount=%d)" % (app.name, app.childCount))
-        count = 0
-        while count < app.childCount:
-            println(level, "    Child %d:" % count)
-            child = app.child(count)
-            listDetails(level, "      ", child)
-            if child.parent != app:
-                println(level, "      WARNING: child's parent is not app!!!")
-            count += 1
-
-
-def listActiveApp(level):
-    """Prints the active application.
-
-    Arguments:
-    - level: the accepted debug level
-    """
-
-    global _debugLevel
-    
-    if level < _debugLevel:
-        return    
-    
-    println(level, "Current active application:")
-    window = orca.findActiveWindow()
-    if window is None:
-        println(level, "  None")
-    else:
-        app = window.app
-        if app is None:
-            println(level, "  None")
-        else:
-            listDetails(level, "  ", app)
-            count = 0
-            while count < app.childCount:
-                println(level, "    Child %d:" % count)
-                child = app.child(count)
-                listDetails(level, "    ", child)
-                if child.parent != app:
-                    println(level,
-                            "      WARNING: child's parent is not app!!!")
-                count += 1
+    println(max(level, _eventDebugLevel), string)
