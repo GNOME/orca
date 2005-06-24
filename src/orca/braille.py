@@ -198,7 +198,7 @@ def _printBrailleEvent(level, command):
     if (command >= 0) and (command < len(BRLAPI_COMMANDS)):
         debug.printInputEvent(
             level,
-            "BRAILLE EVENT: %s" % BRLAPI_COMMANDS[command])
+            "BRAILLE EVENT: %s (%x)" % (BRLAPI_COMMANDS[command], command))
     else:
         debug.printInputEvent(
             level,
@@ -544,7 +544,7 @@ def _processBrailleEvent(command):
         except:
             debug.printException(debug.LEVEL_SEVERE)
             return
-        
+
     if (command >= 0) and (command < len(BRLAPI_COMMANDS)):
         commandString = BRLAPI_COMMANDS[command]
         if commandString == "CMD_FWINLT":

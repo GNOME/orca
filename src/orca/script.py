@@ -47,6 +47,7 @@ class Script:
             
         self.listeners = {}
         self.keybindings = {}
+        self.braillebindings = {}
         
         
     def processObjectEvent(self, event):
@@ -89,22 +90,22 @@ class Script:
         """
 
         consumed = False
-        user_keybindings = None
+        user_bindings = None
 
         # We'll let the user keybindings take precedence.  First, we'll
         # check to see if they have keybindings specific for the particular
         # application, then we'll check to see if they have any default
         # bindings to use.
         #
-        user_keybindings_map = settings.getSetting("keybindings_map",{})
-        if user_keybindings_map.has_key(self.name):
-            user_keybindings = user_keybindings_map[self.name]
-        elif user_keybindings_map.has_key("default"):
-            user_keybindings = user_keybindings_map["default"]
+        user_bindings_map = settings.getSetting("keybindings_map",{})
+        if user_bindings_map.has_key(self.name):
+            user_bindings = user_bindings_map[self.name]
+        elif user_bindings_map.has_key("default"):
+            user_bindings = user_bindings_map["default"]
 
-        if user_keybindings and user_keybindings.has_key(keystring):
+        if user_bindings and user_bindings.has_key(keystring):
             try:
-                consumed = user_keybindings[keystring](keystring, self)
+                consumed = user_bindings[keystring](keystring, self)
             except:
                 debug.printException(debug.LEVEL_SEVERE)
                 
@@ -125,4 +126,31 @@ class Script:
 
         Returns True if the command was consumed; otherwise False
         """
-        return False
+
+        consumed = False
+        user_bindings = None
+
+        # We'll let the user keybindings take precedence.  First, we'll
+        # check to see if they have keybindings specific for the particular
+        # application, then we'll check to see if they have any default
+        # bindings to use.
+        #
+        user_bindings_map = settings.getSetting("braillebindings_map",{})
+        if user_bindings_map.has_key(self.name):
+            user_bindings = user_bindings_map[self.name]
+        elif user_bindings_map.has_key("default"):
+            user_bindings = user_bindings_map["default"]
+
+        if user_bindings and user_bindings.has_key(command):
+            try:
+                consumed = user_bindings[command](command, self)
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+                
+        if (not consumed) and self.braillebindings.has_key(command):
+            try:
+                consumed = self.braillebindings[command](command, self)
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+
+        return consumed

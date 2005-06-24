@@ -330,7 +330,7 @@ def processBrailleEvent(command):
         try:
             return _activeScript.processBrailleEvent(command)
         except:
-            pass
+            debug.printException(debug.LEVEL_SEVERE)
 
     return False
         

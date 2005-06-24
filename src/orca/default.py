@@ -960,10 +960,10 @@ def menuBarPresenter(obj, already_focused):
     while i < childCount:
         label = obj.child(i).label
         text = text + ", " + label
-        line.addRegion(braille.Region("("))
         menuRegion = braille.Component(obj.child(i))
         line.addRegion(menuRegion)
-        line.addRegion(braille.Region(")"))
+        if i < (childCount - 1):
+            line.addRegion(braille.Region(" _ "))
         if selection and selection.isChildSelected(i):
             selectedMenu = menuRegion
         i = i + 1
@@ -1026,12 +1026,12 @@ def menuPresenter(obj, already_focused):
             else:
                 region = braille.Component(child)
 
-            if region:
-                line.addRegion(braille.Region("("))
-                line.addRegion(region)
-                line.addRegion(braille.Region(")"))
-                if selection and selection.isChildSelected(i):
-                    selectedItem = region
+            line.addRegion(region)
+            if i < (childCount - 1):
+                line.addRegion(braille.Region(" _ "))
+
+            if selection and selection.isChildSelected(i):
+                selectedItem = region
                 
         i = i + 1
 
@@ -1146,10 +1146,10 @@ def pageTabPresenter(obj, already_focused):
     childCount = tablist.childCount    
     i = 0
     while i < childCount:
-        line.addRegion(braille.Region("("))
         tabRegion = braille.Component(tablist.child(i))
         line.addRegion(tabRegion)
-        line.addRegion(braille.Region(")"))
+        if i < (childCount - 1):
+            line.addRegion(braille.Region(" _ "))
         if i == selected:
             selectedTab = tabRegion
         i = i + 1
