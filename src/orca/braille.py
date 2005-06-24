@@ -75,7 +75,6 @@ initialized.  The only impact will be that nothing will be displayed on the
 Braille display.
 """
 
-import a11y
 import brl
 import core
 import debug
@@ -243,14 +242,14 @@ class Component(Region):
 
         Arguments:
         - accessible: the accessible
-        - string: the string to use (default = a11y.getLabel(accessible))
+        - string: the string to use (default = accessible.label)
         """
         
         self.accessible = accessible
         if string:
             self.string = string
         else:
-            self.string = a11y.getLabel(self.accessible)
+            self.string = self.accessible.label
 
     def processCursorKey(self, offset):
         """Processes a cursor key press on this Component.  The offset is
@@ -258,7 +257,7 @@ class Component(Region):
         associated with this region.  Note that the zeroeth character may have
         been scrolled off the display."""
         
-        actions = a11y.getAction(self.accessible)
+        actions = self.accessible.action
         if actions is None:
             debug.println(debug.LEVEL_FINER,
                           "braille.Component.processCursorKey: no action")
@@ -276,9 +275,9 @@ class ToggleButton(Component):
         self.accessible = accessible
         set = self.accessible.state
         if set.count(core.Accessibility.STATE_CHECKED):
-            self.string = "<x> " + a11y.getLabel(self.accessible)
+            self.string = "<x> " + self.accessible.label
         else:
-            self.string = "< > " + a11y.getLabel(self.accessible)
+            self.string = "< > " + self.accessible.label
 
             
 class RadioButton(Component):
@@ -292,9 +291,9 @@ class RadioButton(Component):
         self.accessible = accessible
         set = self.accessible.state
         if set.count(core.Accessibility.STATE_CHECKED):
-            self.string = "<x>" + a11y.getLabel(self.accessible)
+            self.string = "<x>" + self.accessible.label
         else:
-            self.string = "< > " + a11y.getLabel(self.accessible)
+            self.string = "< > " + self.accessible.label
 
             
 class Text(Region):
@@ -314,7 +313,7 @@ class Text(Region):
         """
         
         self.accessible = accessible
-        self.text = a11y.getText(accessible)
+        self.text = accessible.text
         self.string = line + " "
         self.lineOffset = lineOffset
         self.caretOffset = caretOffset

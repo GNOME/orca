@@ -33,7 +33,7 @@ from orca.orca_i18n import _
 userprefs = os.path.join (os.environ["HOME"], ".orca")
 sys.path.insert (0, userprefs)
 
-import orca.orca as orca
+import orca.orca
 
-orca.init ()
-orca.start ()
+orca.orca.init ()
+orca.orca.start ()

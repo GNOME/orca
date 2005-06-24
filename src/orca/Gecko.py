@@ -104,7 +104,7 @@ class Gecko(Default):
     # This function is called when a hyperlink is selected - This happens
     # when a link is navigated to using tab/shift-tab
     def onLinkSelected(event):
-        txt = a11y.getText(event.source)
+        txt = event.source.text
         if txt is None:
             speech.say("hyperlink", "link")
         else:
@@ -143,7 +143,7 @@ def presentNextHypertext():
     while text == "" and sayAllObjectIndex < sayAllObjectCount:
         obj = sayAllObjects[sayAllObjectIndex]
         sayAllObjectIndex = sayAllObjectIndex + 1
-        txt = a11y.getText(obj)
+        txt = obj.text
         if txt is None:
 
             # If it's an image, read the image's name using the image voice
@@ -178,7 +178,7 @@ def presentNextHypertext():
 
         # Get the hypertext interface to this object
 
-        ht = a11y.getHypertext(obj)
+        ht = obj.hypertext
         if ht is None:
             nLinks = 0
         else:

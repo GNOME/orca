@@ -168,7 +168,7 @@ class Default(Script):
         #
         txt = None
         try:
-            txt = a11y.getText(orca.focusedObject)
+            txt = orca.focusedObject.text
         except:
             pass
     
@@ -380,7 +380,7 @@ class Default(Script):
         print "*** HERE:", child.name, child.role, child.childCount
         print "*** HERE:", event.detail1, event.detail2
         index = event.detail1
-        table = a11y.getTable(event.source)
+        table = event.source.table
         rowDesc = table.getRowDescription(index)
         colDesc = table.getColumnDescription(index)
         print "*** HERE:", rowDesc, colDesc
@@ -464,10 +464,7 @@ def getAcceleratorAndShortcut(obj):
     A list containing the accelerator and shortcut for the given object.
     """
 
-    try:
-        action = a11y.getAction(obj)
-    except:
-        action = None
+    action = obj.action
 
     if action is None:
         return ["", ""]
@@ -583,7 +580,7 @@ def getSpeech(obj, includeAvailability=False):
             if frame:
                 label = frame.name
         if label is None:
-            label = a11y.getLabel(obj)
+            label = obj.label
         text =  label + " " + getSpeechForRoleName(obj) + "."
         accel = getSpeechForAccelerator(obj)
         if len(accel) > 0:
@@ -635,7 +632,7 @@ def brailleUpdateText(obj):
         return
         
     if label is None:
-        label = a11y.getLabel(obj)
+        label = obj.label
 
     line = braille.Line()
 
@@ -689,7 +686,7 @@ def sayWord(obj):
            interface
     """
     
-    text = a11y.getText(obj)
+    text = obj.text
     offset = text.caretOffset
     word = text.getTextAtOffset(offset,
                                 core.Accessibility.TEXT_BOUNDARY_WORD_START)
@@ -705,7 +702,7 @@ def sayCharacter(obj):
            interface
     """
     
-    text = a11y.getText(obj)
+    text = obj.text
     offset = text.caretOffset
     character = text.getText(offset, offset+1)
     if character.isupper():
@@ -821,7 +818,7 @@ def toggleButtonPresenter(obj, already_focused):
         # If it's not already focused, say it's name
         #
         if already_focused == False:
-            text = a11y.getLabel(obj) + " " \
+            text = obj.label + " " \
                    + getSpeechForRoleName(obj) + ". " \
                    + _("checked") + ". " \
                    + getSpeechForAccelerator(obj)
@@ -829,7 +826,7 @@ def toggleButtonPresenter(obj, already_focused):
             text = _("checked") + "."
     else:
         if already_focused == False:
-            text = a11y.getLabel(obj) + " " \
+            text = obj.label + " " \
                    + getSpeechForRoleName(obj) + ". " \
                    + _("not checked") + "." \
                    + getSpeechForAccelerator(obj)
@@ -865,7 +862,7 @@ def radioButtonPresenter(obj, already_focused):
     debugPresenter("default.radioButtonPresenter", obj, already_focused)
 
     selected = obj.index
-    label = a11y.getLabel(obj)
+    label = obj.label
     role = getSpeechForRoleName(obj)
     text = ""
     brltext = getShortBrailleForRoleName(obj) + " "
@@ -877,7 +874,7 @@ def radioButtonPresenter(obj, already_focused):
     #group = a11y.getGroup (obj)
     group = None
     if group:
-        groupName = a11y.getLabel(group)
+        groupName = group.label
         if (len(groupName) > 0):
             text = text + groupName + ". "
             brltext = brltext + groupName + " "
@@ -913,22 +910,22 @@ def radioButtonPresenter(obj, already_focused):
                     cursor = len(brltext) + 1
                 set = child.state
                 if set.count(core.Accessibility.STATE_CHECKED):
-                    brltext = brltext + "(7 " + a11y.getLabel(child) + ")"
+                    brltext = brltext + "(7 " + child.label + ")"
                 else:
-                    brltext = brltext + "(' " + a11y.getLabel(child) + ")"
+                    brltext = brltext + "(' " + child.label + ")"
             i = i + 1
     else:
         cursor = len(brltext) + 2
         set = obj.state
         if set.count(core.Accessibility.STATE_CHECKED):
-            brltext = brltext + "7" + " " + a11y.getLabel(obj)
+            brltext = brltext + "7" + " " + obj.label
         else:
-            brltext = brltext + "'" + " " + a11y.getLabel(obj)
+            brltext = brltext + "'" + " " + obj.label
         brltext = brltext + " " + getBrailleForAccelerator(obj)
  
     if cursor == -1:
         debug.println(debug.LEVEL_SEVERE,
-                      "ERROR: Did not find self (" + a11y.getLabel(obj) + \
+                      "ERROR: Did not find self (" + obj.label + \
                       ") in its own radio button group!")
         
     braille.displayMessage(brltext, cursor)
@@ -957,11 +954,11 @@ def menuBarPresenter(obj, already_focused):
     line.addRegion(braille.Region(getShortBrailleForRoleName(obj) + " "))
 
     selectedMenu = None
-    selection = a11y.getSelection(obj)            
+    selection = obj.selection
     childCount = obj.childCount
     i = 0
     while i < childCount:
-        label = ally.getLabel(obj.child(i))
+        label = obj.child(i).label
         text = text + ", " + label
         line.addRegion(braille.Region("("))
         menuRegion = braille.Component(obj.child(i))
@@ -1001,15 +998,15 @@ def menuPresenter(obj, already_focused):
 
     if menu is None:
         debug.println(debug.LEVEL_SEVERE, "No menu found for " \
-                      + a11y.getLabel(obj))
+                      + obj.label)
         return
     
     line = braille.Line()
     line.addRegion(braille.Region(getShortBrailleForRoleName(menu) + " "
-                                  + a11y.getLabel(menu) + " "))
+                                  + menu.label + " "))
 
     selectedItem = None
-    selection = a11y.getSelection(menu)
+    selection = menu.selection
     childCount = menu.childCount
     i = 0
     while i < childCount:
@@ -1025,7 +1022,7 @@ def menuPresenter(obj, already_focused):
                 region = braille.Component(child, _("___"))
             elif child.role == rolenames.ROLE_MENU:
                 region = braille.Component(
-                    child, "o " + a11y.getLabel(child))
+                    child, "o " + child.label)
             else:
                 region = braille.Component(child)
 
@@ -1073,7 +1070,7 @@ def sliderPresenter(obj, already_focused):
 
     debugPresenter("default.sliderPresenter", obj, already_focused)
 
-    value = a11y.getValue(obj)
+    value = obj.value
 
     # OK, this craziness is all about trying to figure out the most
     # meaningful formatting string for the floating point values.
@@ -1107,13 +1104,13 @@ def sliderPresenter(obj, already_focused):
     if already_focused:
         text = valueString
     else:
-        text = a11y.getLabel(obj) + " " + getSpeechForRoleName(obj) + ". " \
+        text = obj.label + " " + getSpeechForRoleName(obj) + ". " \
                + _("Value: %s") % valueString + ". " \
                + _("Minimum value: %s") % minString + ". " \
                + _("Maximum value: %s") % maxString + ". " \
                + getSpeechForAccelerator(obj)
 
-    brltext = getShortBrailleForRoleName(obj) + " " + a11y.getLabel(obj) \
+    brltext = getShortBrailleForRoleName(obj) + " " + obj.label \
               + " " + "(%s %s %s)" % (minString, valueString, maxString)
 
     braille.displayMessage(brltext + " " + getBrailleForAccelerator(obj))
@@ -1206,7 +1203,7 @@ def comboBoxPresenter(obj, already_focused, speak=True):
     
     debugPresenter("default.comboBoxPresenter", obj, already_focused)
     
-    label = a11y.getLabel(obj)
+    label = obj.label
     brltext = getShortBrailleForRoleName(obj) + " "
     text = ""
     
@@ -1229,7 +1226,7 @@ def comboBoxPresenter(obj, already_focused, speak=True):
     # needs serious work.]]]
     #
     selectedItem = None
-    comboSelection = a11y.getSelection(obj)
+    comboSelection = obj.selection
     if comboSelection and comboSelection.nSelectedChildren > 0:
         selectedItem = a11y.makeAccessible(comboSelection.getSelectedChild(0))
 
@@ -1249,7 +1246,7 @@ def comboBoxPresenter(obj, already_focused, speak=True):
             j = 0
             while j < menuItemCount:
                 item = child.child(j)
-                label = a11y.getLabel(item)
+                label = item.label
                 if item == selectedItem \
                        or label == selectedText:
                     cursor = len(brltext) + 2
@@ -1272,7 +1269,7 @@ def comboBoxPresenter(obj, already_focused, speak=True):
         cursor = beginningOfText+caretOffset-lineOffset
         text = text + line + "."
     elif selectedItem:
-        text = text + a11y.getLabel(selectedItem) + "."
+        text = text + selectedItem.label + "."
     elif len(selectedText) > 0:
         text = text + selectedText + "."
     else:
@@ -1300,12 +1297,12 @@ def tablePresenter(obj, already_focused):
     #
     if already_focused == False:
         speech.say("default",
-                   a11y.getLabel(obj) + " " + getSpeechForRoleName(obj) \
+                   obj.label + " " + getSpeechForRoleName(obj) \
                    + ". ")
 
     # Get the selected rows of the table
     #
-    table = a11y.getTable(obj)
+    table = obj.table
     rows = table.getSelectedRows()
     cols = table.nColumns
 
@@ -1359,7 +1356,7 @@ def dialogPresenter(obj, already_focused):
     
     debugPresenter("default.dialogPresenter", obj, already_focused)
     
-    text = a11y.getLabel(obj)
+    text = obj.label
     text = text + " " + getSpeechForRoleName(obj)
 
     # Find all the labels in the dialog

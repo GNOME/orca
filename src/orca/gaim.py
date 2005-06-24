@@ -92,7 +92,7 @@ class Gaim(Default):
 
         # Speak the title of the chat
         #
-        label = a11y.getLabel(obj)
+        label = obj.label
         text = label + _(" chat")
         braille.displayMessage(text)
         speech.say("default", text)
@@ -115,7 +115,7 @@ class Gaim(Default):
 
         # Speak the title of the IM
         #
-        label = a11y.getLabel(obj)
+        label = obj.label
         text = label + _(" instant message")
         braille.displayMessage(text)
         speech.say("default", text)
@@ -166,7 +166,7 @@ class Gaim(Default):
         if (self._output == None) or (event.source != self._output):
             return Default.onTextInserted(self, event)
 
-        txt = a11y.getText(event.source)
+        txt = event.source.text
         text = txt.getText(event.detail1, event.detail1 + event.detail2)
         speech.say("default", text)
 

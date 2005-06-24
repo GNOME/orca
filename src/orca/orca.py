@@ -30,13 +30,10 @@ import hierarchical_presenter
 import kbd
 #import mag - [[[TODO: WDW - disable until I can figure out how to
 #             resolve the GNOME reference in mag.py.]]]
-import script
 import settings
 import speech
 
-from rolenames import getRoleName # localized role names
 from orca_i18n import _           # for gettext support
-
 
 # If True, this module has been initialized.
 #
@@ -73,7 +70,7 @@ def _switchToPresentationManager(index):
 
     global _currentPresentationManager
     
-    if _currentPresentationManager > 0:
+    if _currentPresentationManager >= 0:
         _PRESENTATION_MANAGERS[_currentPresentationManager].deactivate()
 
     _currentPresentationManager = index
@@ -382,7 +379,7 @@ def start():
     core.bonobo.main()
 
 
-def shutdown(keystring=None):
+def shutdown(keystring=None, script=None):
     """Stop orca.  Unregisters any event listeners and cleans up.  Also
     quits the bonobo main loop and resets the initialized state to False.
 
@@ -408,7 +405,7 @@ def shutdown(keystring=None):
     core.unregisterEventListener(onFocus,
                                  "focus:")
 
-    if _currentPresentationManager > 0:
+    if _currentPresentationManager >= 0:
         _PRESENTATION_MANAGERS[_currentPresentationManager].deactivate()
 
 
@@ -480,7 +477,7 @@ def outlineAccessible(accessible):
         _visibleRectangle = None
 
     if accessible:
-        component = a11y.getComponent(accessible)
+        component = accessible.component
         if component:
             _visibleRectangle = component.getExtents(0) # coord type = screen
             root_window.draw_rectangle(graphics_context,

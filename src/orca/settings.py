@@ -30,14 +30,8 @@ keyEcho = False
 useSpeech = True
 useBraille = False
 
-try:
-    userSettings = __import__("user-settings")
-except ImportError:
-    userSettings = None
-except:
-    debug.printException(debug.LEVEL_SEVERE)
-    userSettings = None
-    
+_userSettings = None
+
 def getSetting(name, default=None):
     """Obtain the value for the given named attribute, trying from the
     user settings first.  If the named attribute doesn't exist, then the
@@ -49,9 +43,30 @@ def getSetting(name, default=None):
                either the user settings or here.
     """
 
+    global _userSettings
+
+    # This little hack is for the following reason:
+    #
+    # We want to lazily delay the importing of user settings (that is,
+    # we do not want to import it when this module is loaded).
+    #
+    # We only want to try once.
+    #
+    # So...if _userSettings is None, we haven't tried loading it yet.
+    # If it is 0, we've tried and failed.
+    #
+    if _userSettings == None:
+        try:
+            _userSettings = __import__("user-settings")
+        except ImportError:
+            _userSettings = 0
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
+            _userSettings = 0
+    
     thisModule = sys.modules[__name__]
-    if userSettings and hasattr(userSettings, name):
-        return getattr(userSettings, name)
+    if _userSettings and hasattr(_userSettings, name):
+        return getattr(_userSettings, name)
     elif hasattr(thisModule, name):
         return getattr(thisModule, name)
     else:

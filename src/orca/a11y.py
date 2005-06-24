@@ -43,7 +43,7 @@ import rolenames
 #                                                                      #
 ########################################################################
             
-def getStates(obj):
+def getStateString(obj):
     """Returns a space-delimited string composed of the given object's
     Accessible state attribute.  This is for debug purposes.
 
@@ -133,7 +133,7 @@ def accessibleToString(indent, accessible):
     string = string + "%srole   = (%s)\n" \
              % (indent, rolenames.getRoleName(accessible))
     string = string +  "%sstate  = (%s)\n" \
-             % (indent, getStates(accessible))
+             % (indent, getStateString(accessible))
 
     if accessible.app is None:
         string = string + "%sapp    = (None)" % indent
@@ -383,13 +383,160 @@ class Accessible:
         Component interface.
         """
 
-        component = getComponent(self)
+        component = self.component
         if component is None:
             return None
         else:
             self.extents = component.getExtents(coordinateType)
             return self.extents
         
+
+    def __get_label(self):
+        """Returns an object's label as a string.  The label is determined
+        using the following logic:
+
+        1. If the object has a LABELLED_BY relation, return the text of
+           the targets of this relation
+
+        2. Else if the object has no LABELLED_BY relation, return the name
+           
+        3. Else if the object has no name, return the description
+
+        4. Else return an empty string
+        """
+
+        label = ""
+
+        # Does the object have a relation set?
+        #
+        relations = self.relations
+        for relation in relations:
+            if relation.getRelationType() \
+                   == core.Accessibility.RELATION_LABELLED_BY:
+                target = makeAccessible(relation.getTarget(0))
+                label = target.name
+                break
+
+        # If the object doesn't have a relation, but has a name, return
+        # that
+        #
+        if (len(label) == 0) and (self.name is not None) \
+               and (len(self.name) > 0):
+            label = self.name
+
+        # If the object has no name, but has a description, return that
+        #
+        elif (len(label) == 0) and (self.description is not None) \
+                 and (len(self.description) > 0):
+            label = self.description
+
+        self.label = label
+        return self.label
+
+
+    def __get_action(self):
+        """Returns an object that implements the Accessibility_Action
+        interface for this object, or None if this object doesn't implement
+        the Accessibility_Action interface.
+        """
+
+        bobj = self.acc._narrow(core.Accessibility.Accessible)
+        action = bobj.queryInterface("IDL:Accessibility/Action:1.0")
+        if action is not None:
+            action = action._narrow(core.Accessibility.Action)
+        self.action = action
+        return self.action
+
+
+    def __get_component(self):
+        """Returns an object that implements the Accessibility_Component
+        interface for this object, or None if this object doesn't implement
+        the Accessibility_Component interface.
+        """
+
+        self.component = None
+
+        try:
+            bobj = self.acc._narrow(core.Accessibility.Accessible)
+            component = bobj.queryInterface("IDL:Accessibility/Component:1.0")
+            if component is not None:
+                component = component._narrow(core.Accessibility.Component)
+                self.component = component
+        except:
+            pass
+        
+        return self.component
+
+
+    def __get_hypertext(self):
+        """Returns an object that implements the Accessibility_Hypertext
+        interface for this object, or None if this object doesn't implement
+        the Accessibility_Hypertext interface.
+        """
+
+        bobj = self.acc._narrow(core.Accessibility.Accessible)
+        hypertext = bobj.queryInterface("IDL:Accessibility/Hypertext:1.0")
+        if hypertext is not None:
+            hypertext = hypertext._narrow(core.Accessibility.Hypertext)
+        self.hypertext = hypertext
+        return self.hypertext
+
+
+    def __get_selection(self):
+        """Returns an object that implements the Accessibility_Selection
+        interface for this object, or None if this object doesn't implement
+        the Accessibility_Selection interface.
+        """
+
+        bobj = self.acc._narrow(core.Accessibility.Accessible)
+        sel = bobj.queryInterface("IDL:Accessibility/Selection:1.0")
+        if sel is not None:
+            sel = sel._narrow(core.Accessibility.Selection)
+        self.selection = sel
+        return self.selection
+
+
+    def __get_table(self):
+        """Returns an object that implements the Accessibility_Table
+        interface for this object, or None if this object doesn't implement
+        the Accessibility_Table interface.
+        """
+
+        bobj = self.acc._narrow(core.Accessibility.Accessible)
+        table = bobj.queryInterface("IDL:Accessibility/Table:1.0")
+        if table is not None:
+            table = table._narrow(core.Accessibility.Table)
+        self.table = table
+        return self.table
+
+
+    def __get_text(self):
+        """Returns an object that implements the Accessibility_Text
+        interface for this object, or None if this object doesn't implement
+        the Accessibility_Text interface.
+        """
+
+        bobj = self.acc._narrow(core.Accessibility.Accessible)
+        text = bobj.queryInterface("IDL:Accessibility/Text:1.0")
+        if text is not None:
+            text = text._narrow(core.Accessibility.Text)
+        self.text = text
+        return self.text
+
+
+    def __get_value(self):
+        """Returns an object that implements the Accessibility_Value
+        interface for this object, or None if this object doesn't implement
+        the Accessibility_Value interface.
+        """
+
+        bobj = self.acc._narrow(core.Accessibility.Accessible)
+        value = bobj.queryInterface("IDL:Accessibility/Value:1.0")
+        if value is not None:
+            value = value._narrow(core.Accessibility.Value)
+        self.value = value
+        return self.value
+
 
     def __getattr__(self, attr):
         """Created virtual attributes for the Accessible object to make
@@ -403,9 +550,11 @@ class Accessible:
 
         Returns the value of the given attribute.
         """
-        
+
         if attr == "name":
             return self.__get_name()
+        elif attr == "label":
+            return self.__get_label()
         elif attr == "description":
             return self.__get_description()
         elif attr == "parent":
@@ -424,6 +573,20 @@ class Accessible:
             return self.__get_app()
         elif attr == "extents":
             return self.__get_extents()
+        elif attr == "action":
+            return self.__get_action()
+        elif attr == "component":
+            return self.__get_component()
+        elif attr == "hypertext":
+            return self.__get_hypertext()
+        elif attr == "selection":
+            return self.__get_selection()
+        elif attr == "table":
+            return self.__get_table()
+        elif attr == "text":
+            return self.__get_text()
+        elif attr == "value":
+            return self.__get_value()
         elif attr.startswith('__') and attr.endswith('__'):
             raise AttributeError, attr
         else:
@@ -747,52 +910,6 @@ def getFrame(obj):
     else:
         return None
 
-    
-def getLabel(obj):
-    """Returns an object's label as a string.  The label is determined
-    using the following logic:
-
-        1. If the object has a LABELLED_BY relation, return the text of
-           the targets of this relation
-
-        2. Else if the object has no LABELLED_BY relation, return the name
-
-        3. Else if the object has no name, return the description
-
-        4. Else return an empty string
-       
-    Arguments:
-    - obj: the Accessible object
-
-    Returns the object's label as a string.
-    """
-
-    label = ""
-
-    # Does the object have a relation set?
-    #
-    relations = obj.relations
-    for relation in relations:
-        if relation.getRelationType() \
-               == core.Accessibility.RELATION_LABELLED_BY:
-            target = makeAccessible(relation.getTarget(0))
-            label = target.name
-            break
-
-    # If the object doesn't have a relation, but has a name, return
-    # that
-    #
-    if (len(label) == 0) and (obj.name is not None) and (len(obj.name) > 0):
-        label = obj.name
-
-    # If the object has no name, but has a description, return that
-    #
-    elif (len(label) == 0) and (obj.description is not None) \
-             and (len(obj.description) > 0):
-        label = obj.description
-
-    return label
-
 
 def getGroup(obj):
     """Returns a list of an object's group members if it has a MEMBER_OF
@@ -821,165 +938,6 @@ def getGroup(obj):
         return None
 
 
-def getAccessible(obj):
-    """Returns an object that implements the Accessibility_Accessible
-    interface for this object, or None if this object doesn't implement
-    the Accessibility_Accessible interface.
-
-    Arguments:
-    - obj: an Accessible instance
-
-    Returns an object that implements the Accessibility_Accessible
-    interface for this object or None if this object doesn't implement
-    the Accessibility_Accessible interface.
-    """
-    
-    acc = obj.queryInterface("IDL:Accessibility/Accessible:1.0")
-    if acc is not None:
-        acc = acc._narrow(core.Accessibility.Accessible)
-    return acc
-
-
-def getAction(obj):
-    """Returns an object that implements the Accessibility_Action
-    interface for this object, or None if this object doesn't implement
-    the Accessibility_Action interface.
-
-    Arguments:
-    - obj: an Accessible instance
-
-    Returns an object that implements the Accessibility_Action
-    interface for this object or None if this object doesn't implement
-    the Accessibility_Action interface.
-    """
-
-    bobj = obj.acc._narrow(core.Accessibility.Accessible)
-    action = bobj.queryInterface("IDL:Accessibility/Action:1.0")
-    if action is not None:
-        action = action._narrow(core.Accessibility.Action)
-    return action
-
-
-def getComponent(obj):
-    """Returns an object that implements the Accessibility_Component
-    interface for this object, or None if this object doesn't implement
-    the Accessibility_Component interface.
-
-    Arguments:
-    - obj: an Accessible instance
-
-    Returns an object that implements the Accessibility_Component
-    interface for this object or None if this object doesn't implement
-    the Accessibility_Component interface.
-    """
-
-    bobj = obj.acc._narrow(core.Accessibility.Accessible)
-    component = bobj.queryInterface("IDL:Accessibility/Component:1.0")
-    if component is not None:
-        component = component._narrow(core.Accessibility.Component)
-    return component
-
-
-def getHypertext(obj):
-    """Returns an object that implements the Accessibility_Hypertext
-    interface for this object, or None if this object doesn't implement
-    the Accessibility_Hypertext interface.
-
-    Arguments:
-    - obj: an Accessible instance
-
-    Returns an object that implements the Accessibility_Hypertext
-    interface for this object or None if this object doesn't implement
-    the Accessibility_Hypertext interface.
-    """
-
-    bobj = obj.acc._narrow(core.Accessibility.Accessible)
-    hypertext = bobj.queryInterface("IDL:Accessibility/Hypertext:1.0")
-    if hypertext is not None:
-        hypertext = hypertext._narrow(core.Accessibility.Hypertext)
-    return hypertext
-
-
-def getSelection(obj):
-    """Returns an object that implements the Accessibility_Selection
-    interface for this object, or None if this object doesn't implement
-    the Accessibility_Selection interface.
-
-    Arguments:
-    - obj: an Accessible instance
-
-    Returns an object that implements the Accessibility_Selection
-    interface for this object or None if this object doesn't implement
-    the Accessibility_Selection interface.
-    """
-
-    bobj = obj.acc._narrow(core.Accessibility.Accessible)
-    sel = bobj.queryInterface("IDL:Accessibility/Selection:1.0")
-    if sel is not None:
-        sel = sel._narrow(core.Accessibility.Selection)
-    return sel
-
-
-def getTable(obj):
-    """Returns an object that implements the Accessibility_Table
-    interface for this object, or None if this object doesn't implement
-    the Accessibility_Table interface.
-
-    Arguments:
-    - obj: an Accessible instance
-
-    Returns an object that implements the Accessibility_Table
-    interface for this object or None if this object doesn't implement
-    the Accessibility_Table interface.
-    """
-
-    bobj = obj.acc._narrow(core.Accessibility.Accessible)
-    table = bobj.queryInterface("IDL:Accessibility/Table:1.0")
-    if table is not None:
-        table = table._narrow(core.Accessibility.Table)
-    return table
-
-
-def getText(obj):
-    """Returns an object that implements the Accessibility_Text
-    interface for this object, or None if this object doesn't implement
-    the Accessibility_Text interface.
-
-    Arguments:
-    - obj: an Accessible instance
-
-    Returns an object that implements the Accessibility_Text
-    interface for this object or None if this object doesn't implement
-    the Accessibility_Text interface.
-    """
-
-    bobj = obj.acc._narrow(core.Accessibility.Accessible)
-    text = bobj.queryInterface("IDL:Accessibility/Text:1.0")
-    if text is not None:
-        text = text._narrow(core.Accessibility.Text)
-    return text
-
-
-def getValue(obj):
-    """Returns an object that implements the Accessibility_Value
-    interface for this object, or None if this object doesn't implement
-    the Accessibility_Value interface.
-
-    Arguments:
-    - obj: an Accessible instance
- 
-    Returns an object that implements the Accessibility_Value interface for
-    this object or None if this object doesn't implement the
-    Accessibility_Value interface.
-    """
-
-    bobj = obj.acc._narrow(core.Accessibility.Accessible)
-    value = bobj.queryInterface("IDL:Accessibility/Value:1.0")
-    if value is not None:
-        value = value._narrow(core.Accessibility.Value)
-    return value
-
-
 def getTextLineAtCaret(obj):
     """Gets the line of text where the caret is.
 
@@ -992,7 +950,7 @@ def getTextLineAtCaret(obj):
 
     # Get the the AccessibleText interrface
     #
-    text = getText(obj)
+    text = obj.text
 
     if text is None:
         return ["", 0, 0]

@@ -86,7 +86,7 @@ class GCalcTool(Default):
             #
             d = a11y.findByRole(event.source, rolenames.ROLE_TEXT)
             self._display = d[0]
-            self._display_txt = a11y.getText(self._display)
+            self._display_txt = self._display.text
             contents = self._display_txt.getText(0, -1)
             braille.displayMessage(contents)
 

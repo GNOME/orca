@@ -36,28 +36,22 @@ event.
 import sys
 
 import a11y
+import default
 import core
 import debug
 #import mag - [[[TODO: WDW - disable until I can figure out how
 #             to resolve the GNOME reference in mag.py.]]]
 import orca
 import script
+import settings
 import speech
 
 from orca_i18n import _ # for gettext support
 
-# The currently active script - this script will get all keyboard
-# and Braille events.
-#
-_activeScript = None
-
 
 ########################################################################
 #                                                                      #
-# METHODS FOR PRE-PROCESSING AND MASSAGING AT-SPI OBJECT EVENTS        #
-#                                                                      #
-# AT-SPI events are receieved here and converted into a Python object  #
-# for processing by the rest of Orca.                                  #
+# METHODS FOR KEEPING TRACK OF LISTENERS REGISTERED WITH CORE          #
 #                                                                      #
 ########################################################################
 
@@ -72,7 +66,7 @@ _activeScript = None
 #
 _listenerCounts = {}
 
-def registerEventListener(eventType):
+def _registerEventListener(eventType):
     """Tells this module to listen for the given event type.
 
     Arguments:
@@ -86,9 +80,8 @@ def registerEventListener(eventType):
     else:
         core.registerEventListener(processObjectEvent, eventType)
         _listenerCounts[eventType] = 1
-
             
-def unregisterEventListener(eventType):
+def _unregisterEventListener(eventType):
     """Tells this module to stop listening for the given event type.
 
     Arguments:
@@ -102,6 +95,122 @@ def unregisterEventListener(eventType):
         core.unregisterEventListener(processObjectEvent, eventType)
         del _listenerCounts[eventType]
 
+def _registerEventListeners(script):
+    """Tells the focus_tracking_presenter module to listen for all the event
+    types of interest to the script.
+
+    Arguments:
+    - script: the script.
+    """
+
+    for eventType in script.listeners.keys():
+        _registerEventListener(eventType)
+
+            
+def _unregisterEventListeners(script):
+    """Tells the focus_tracking_presenter module to stop listening for all the
+    event types of interest to the script.
+
+    Arguments:
+    - script: the script.
+    """
+
+    for eventType in script.listeners.keys():
+        _unregisterEventListener(eventType)
+            
+########################################################################
+#                                                                      #
+# METHODS FOR KEEPING TRACK OF KNOWN SCRIPTS.                          #
+#                                                                      #
+########################################################################
+
+# The cache of the currently known scripts.  The key is the Python
+# Accessible application, and the value is the script for that app.
+#
+_known_scripts = {} 
+
+
+# The default script - used when the app is unknown (i.e., None)
+#
+_default = None    
+
+
+# The currently active script - this script will get all keyboard
+# and Braille events.
+#
+_activeScript = None
+
+
+def _getScript(app):
+    """Get a script for an app (and make it if necessary).  This is used
+    instead of a simple calls to Script's constructor.
+
+    Arguments:
+    - app: the Python app
+
+    Returns an instance of a Script.
+    """
+
+    global _default
+
+    # We might not know what the app is.  In this case, just defer to the
+    # default script for support.
+    #
+    if app is None:
+        if _default is None:
+            _default = default.getScript(None)
+            _registerEventListeners(_default)
+        return _default
+    elif _known_scripts.has_key(app):
+        return _known_scripts[app]
+    elif settings.getSetting("useCustomScripts", True):
+        try:
+            module = __import__(app.name, globals(), locals(), [''])
+            try:
+                script = module.getScript(app)
+            except:
+                # We do not want the getScript method to fail.  If it does,
+                # we want to let the script developer know what went wrong,
+                # but wee also want to move along without crashing Orca.
+                #
+                debug.printException(debug.LEVEL_SEVERE)
+                script = default.getScript(app)                    
+        except:
+            # It's ok if a custom script doesn't exist.
+            #
+            script = default.getScript(app)
+    else:
+        script = default.getScript(app)
+
+    _known_scripts[app] = script
+    _registerEventListeners(script)
+
+    return script
+
+
+def _deleteScript(app):
+    """Deletes a script for an app (if it exists).
+
+    Arguments:
+    - app: the Python app
+    """
+
+    if app:
+        if _known_scripts.has_key(app):
+            script = _known_scripts[app]
+            _unregisterEventListeners(script)
+            debug.println(debug.LEVEL_FINE, "DELETED SCRIPT: ", script.name)
+            del _known_scripts[app]
+
+
+########################################################################
+#                                                                      #
+# METHODS FOR PRE-PROCESSING AND MASSAGING AT-SPI OBJECT EVENTS        #
+#                                                                      #
+# AT-SPI events are receieved here and converted into a Python object  #
+# for processing by the rest of Orca.                                  #
+#                                                                      #
+########################################################################
 
 class Event:
    """Dummy class for converting the source of an event to an
@@ -139,8 +248,6 @@ def processObjectEvent(e):
     event.any_data = e.any_data
     event.source = a11y.makeAccessible(e.source)
 
-    print event.source
-    
     debug.printObjectEvent(debug.LEVEL_FINEST,
                            event,
                            a11y.accessibleToString("                ",
@@ -156,7 +263,7 @@ def processObjectEvent(e):
     #
     if event.type == "window:activate":
         speech.stop("default")
-        _activeScript = script.getScript(event.source.app)
+        _activeScript = _getScript(event.source.app)
         debug.println(debug.LEVEL_FINE, "ACTIVATED SCRIPT: " \
                       + _activeScript.name)
     elif event.type == "object:children-changed:remove":
@@ -165,7 +272,7 @@ def processObjectEvent(e):
         #
         if e.source == core.desktop:
             try:
-                script.deleteScript(event.source.app)
+                _deleteScript(event.source.app)
                 return
             except:
                 debug.printException(debug.LEVEL_SEVERE)
@@ -179,7 +286,7 @@ def processObjectEvent(e):
         except:
             return
         
-    s = script.getScript(event.source.app)
+    s = _getScript(event.source.app)
 
     try:
         s.processObjectEvent(event)
@@ -233,8 +340,8 @@ def activate():
 
     speech.say("default", _("Switching to focus tracking mode."))
 
-    registerEventListener("window:activate")
-    registerEventListener("object:children-changed:remove")
+    _registerEventListener("window:activate")
+    _registerEventListener("object:children-changed:remove")
 
     win = orca.findActiveWindow()
     if win:
@@ -254,6 +361,8 @@ def activate():
 def deactivate():
     """Called when this presentation manager is deactivated."""
 
+    global _listenerCounts
+    
     for key in _listenerCounts.keys():
         core.unregisterEventListener(processObjectEvent, key)
     _listenerCounts = {}

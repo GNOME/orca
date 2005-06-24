@@ -158,9 +158,9 @@ def _displayAccessible(accessible):
     brltext = brltext + getShortBrailleForRoleName(accessible) + " " \
               + accessible.name + " " \
               + accessible.description + " " \
-              + debug.getStates(accessible)
+              + a11y.getStateString(accessible)
 
-    debug.println(debug.LEVEL_INFO, brltext)
+    debug.println(debug.LEVEL_OFF, brltext)
         
     braille.displayMessage(brltext)
 
@@ -223,19 +223,19 @@ def _getSpecializations(accessible):
         i = i + 1
         
     _currentObjectSpecializations[_SPECIALIZATION_ACTION] = \
-        a11y.getAction(accessible)
+        accessible.action
     _currentObjectSpecializations[_SPECIALIZATION_COMPONENT] = \
-        a11y.getComponent(accessible)
+        accessible.component
     _currentObjectSpecializations[_SPECIALIZATION_HYPERTEXT] = \
-        a11y.getHypertext(accessible)
+        accessible.hypertext
     _currentObjectSpecializations[_SPECIALIZATION_SELECTION] = \
-        a11y.getSelection(accessible)
+        accessible.selection
     _currentObjectSpecializations[_SPECIALIZATION_TABLE] = \
-        a11y.getTable(accessible)
+        accessible.table
     _currentObjectSpecializations[_SPECIALIZATION_TEXT] = \
-        a11y.getText(accessible)
+        accessible.text
     _currentObjectSpecializations[_SPECIALIZATION_VALUE] = \
-        a11y.getValue(accessible)
+        accessible.value
 
 
 def _displayActionSpecialization(action):
