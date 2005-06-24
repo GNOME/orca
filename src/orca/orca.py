@@ -88,7 +88,7 @@ def _switchToPresentationManager(index):
     _PRESENTATION_MANAGERS[_currentPresentationManager].activate()
 
 
-def _switchToNextPresentationManager():
+def _switchToNextPresentationManager(keystring=None):
     """Switches to the next presentation manager."""
 
     global _currentPresentationManager
@@ -237,14 +237,14 @@ def processBrailleEvent(command):
 #                                                                      #
 ########################################################################
 
-def debugListApps():
+def debugListApps(keystring=None):
     """Prints a list of all known applications to stdout if debug
     is enabled."""
 
     debug.listApps(debug.LEVEL_OFF)
     return True 
 
-def debugListActiveApp():
+def debugListActiveApp(keystring=None):
     """Prints details about the currently active application."""
 
     debug.listActiveApp(debug.LEVEL_OFF)
@@ -342,7 +342,7 @@ def start():
     core.bonobo.main()
 
 
-def shutdown():
+def shutdown(keystring=None):
     """Stop orca.  Unregisters any event listeners and cleans up.  Also
     quits the bonobo main loop and resets the initialized state to False.
 
@@ -594,7 +594,7 @@ def processKeyEvent(event):
         if _keybindings.has_key(keystring):
             try:
                 func = _keybindings[keystring]
-                return func()
+                return func(keystring)
             except:
                 debug.printException(debug.LEVEL_SEVERE)
                 return False

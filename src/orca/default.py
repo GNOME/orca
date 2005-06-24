@@ -80,7 +80,10 @@ class Default(Script):
         """
         
         Script.__init__(self, app)
-        
+
+        # [[[TODO: WDW - need a way for the user settings to override
+        # these.]]]
+        #
         self.keybindings["F9"] = self.sayAgain
         self.keybindings["F11"] = self.sayAll
 
@@ -136,16 +139,26 @@ class Default(Script):
             self.onFocus
         
 
-    def sayAgain(self):
+    def sayAgain(self, keystring, script):
         """Tells speech to repeat what was last spoken.
+        
+        Arguments:
+        - keystring: the keyboard event that caused this to be called
+        - script: the script calling this (should be self)
         """
         speech.sayAgain()
 
+        return True
+
     
-    def sayAll(self):
+    def sayAll(self, keystring, script):
         """Initiates sayAll mode and attempts to say all the text of the
         currently focused Accessible text object.  [[[TODO: WDW - the entire
         sayAll mechanism is likely to be severely broken.]]]
+        
+        Arguments:
+        - keystring: the keyboard event that caused this to be called
+        - script: the script calling this (should be self)
         """
     
         global sayAllText
@@ -173,6 +186,8 @@ class Default(Script):
         #
         speech.startSayAll("default", sayAllGetChunk, sayAllStopped)
         sayLine(orca.focusedObject)
+
+        return True
 
 
     def onTextInserted(self, event):

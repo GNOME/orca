@@ -23,6 +23,7 @@ case of gdm) or doesn't have the specified attribute.
 """
 
 import sys
+import debug
 
 voices = {}
 keyEcho = False
@@ -31,7 +32,10 @@ useBraille = False
 
 try:
     userSettings = __import__("user-settings")
+except ImportError:
+    userSettings = None
 except:
+    debug.printException(debug.LEVEL_SEVERE)
     userSettings = None
     
 def getSetting(name, default=None):

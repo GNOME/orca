@@ -85,8 +85,15 @@ class Script:
         - event: the Event
         """
 
-        # This calls the first listener it finds whose key *begins with*
-        # or is the same as the event.type.
+        # This calls the first listener it finds whose key *begins with* or is
+        # the same as the event.type.  The reason we do this is that the event
+        # type in the listeners dictionary may not be as specific as the event
+        # type we received (e.g., the listeners dictionary might contain the
+        # key "object:state-changed:" and the event.type might be
+        # "object:state-changed:focused".  [[[TODO: WDW - the order of the
+        # keys is *not* deterministic, and is not guaranteed to be related
+        # to the order in which they were added.  So...we need to do something
+        # different here.]]]
         #
         for key in self.listeners.keys():
             if event.type.startswith(key):
@@ -108,13 +115,34 @@ class Script:
         Returns True if the event should be consumed.
         """
 
-        if self.keybindings.has_key(keystring):
+        consumed = False
+        user_keybindings = None
+
+        # We'll let the user keybindings take precedence.  First, we'll
+        # check to see if they have keybindings specific for the particular
+        # application, then we'll check to see if they have any default
+        # bindings to use.
+        #
+        user_keybindings_map = settings.getSetting("keybindings_map",{})
+        if user_keybindings_map.has_key(self.name):
+            user_keybindings = user_keybindings_map[self.name]
+        elif user_keybindings_map.has_key("default"):
+            user_keybindings = user_keybindings_map["default"]
+
+        if user_keybindings and user_keybindings.has_key(keystring):
             try:
-                return self.keybindings[keystring]()
+                consumed = user_keybindings[keystring](keystring, self)
             except:
                 debug.printException(debug.LEVEL_SEVERE)
-        return False
-            
+                
+        if (not consumed) and self.keybindings.has_key(keystring):
+            try:
+                consumed = self.keybindings[keystring](keystring, self)
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+
+        return consumed
+        
 
     def processBrailleEvent(self, command):
         """Called whenever a cursor key is pressed on the Braille display.
@@ -179,7 +207,6 @@ def getScript(app):
             module = __import__(app.name, globals(), locals(), [''])
             try:
                 script = module.getScript(app)
-                script.name = app.name + " (custom)"
             except:
                 # We do not want the getScript method to fail.  If it does,
                 # we want to let the scrip developer know what went wrong.
