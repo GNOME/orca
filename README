@@ -24,7 +24,7 @@ Building Orca requires the following to be installed:
 			       but magnification will not work)
 	* BRLTTY 3.6.1       - Braille support (note that Orca builds fine
 	                       without BRLTTY installed, but Braille support 
-                               will work)
+                               will work without it)
 	* at-spi 1.6.2       - GNOME assistive technology framework
 
 

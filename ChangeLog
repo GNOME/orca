@@ -1,3 +1,10 @@
+2005-06-24  Willie Walker <william.walker@sun.com>
+
+	* src/orca/default.py, src/orca/orca.py, src/orca/settings.py,
+	src/orca/script.py: rough pass at allowing user defined
+	keybindings to override key bindings in scripts.
+	* TODO: update to include issues with autogen.
+	
 2005-06-23  Willie Walker <william.walker@sun.com>
 
 	* src/orca/*: bite the bullet and make scripts full-fledged
