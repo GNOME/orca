@@ -377,7 +377,7 @@ def start():
 
     _switchToPresentationManager(0) # focus_tracking_presenter
 
-    # Register a signal handler for ctrl-C, control-z
+    # Register a signal handler for ctrl-C
     #
     signal.signal(signal.SIGINT, shutdown)
 
