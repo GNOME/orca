@@ -83,78 +83,78 @@ import debug
 #
 _initialized = False
 
-# The index for each of these maps to BrlAPI's brldefs.h file.
+# Each of these maps to BrlAPI's brldefs.h file.
 #
-BRLAPI_COMMANDS = [
-  "CMD_NOOP",
-  "CMD_LNUP",
-  "CMD_LNDN",
-  "CMD_WINUP",
-  "CMD_WINDN",
-  "CMD_PRDIFLN",
-  "CMD_NXDIFLN",
-  "CMD_ATTRUP",
-  "CMD_ATTRDN",
-  "CMD_TOP",
-  "CMD_BOT",
-  "CMD_TOP_LEFT",
-  "CMD_BOT_LEFT",
-  "CMD_PRPGRPH",
-  "CMD_NXPGRPH",
-  "CMD_PRPROMPT",
-  "CMD_NXPROMPT",
-  "CMD_PRSEARCH",
-  "CMD_NXSEARCH",
-  "CMD_CHRLT",
-  "CMD_CHRRT",
-  "CMD_HWINLT",
-  "CMD_HWINRT",
-  "CMD_FWINLT",
-  "CMD_FWINRT",
-  "CMD_FWINLTSKIP",
-  "CMD_FWINRTSKIP",
-  "CMD_LNBEG",
-  "CMD_LNEND",
-  "CMD_HOME",
-  "CMD_BACK",
-  "CMD_FREEZE",
-  "CMD_DISPMD",
-  "CMD_SIXDOTS",
-  "CMD_SLIDEWIN",
-  "CMD_SKPIDLNS",
-  "CMD_SKPBLNKWINS",
-  "CMD_CSRVIS",
-  "CMD_CSRHIDE",
-  "CMD_CSRTRK",
-  "CMD_CSRSIZE",
-  "CMD_CSRBLINK",
-  "CMD_ATTRVIS",
-  "CMD_ATTRBLINK",
-  "CMD_CAPBLINK",
-  "CMD_TUNES",
-  "CMD_HELP",
-  "CMD_INFO",
-  "CMD_LEARN",
-  "CMD_PREFMENU",
-  "CMD_PREFSAVE",
-  "CMD_PREFLOAD",
-  "CMD_MENU_FIRST_ITEM",
-  "CMD_MENU_LAST_ITEM",
-  "CMD_MENU_PREV_ITEM",
-  "CMD_MENU_NEXT_ITEM",
-  "CMD_MENU_PREV_SETTING",
-  "CMD_MENU_NEXT_SETTING",
-  "CMD_SAY_LINE",
-  "CMD_SAY_ABOVE",
-  "CMD_SAY_BELOW",
-  "CMD_MUTE",
-  "CMD_SPKHOME",
-  "CMD_SWITCHVT_PREV",
-  "CMD_SWITCHVT_NEXT",
-  "CMD_CSRJMP_VERT",
-  "CMD_PASTE",
-  "CMD_RESTARTBRL",
-  "CMD_RESTARTSPEECH"]
+CMD_NOOP              = 0x00
+CMD_LNUP              = 0x01
+CMD_LNDN              = 0x02
+CMD_WINUP             = 0x03
+CMD_WINDN             = 0x04
+CMD_PRDIFLN           = 0x05
+CMD_NXDIFLN           = 0x06
+CMD_ATTRUP            = 0x07
+CMD_ATTRDN            = 0x08
+CMD_TOP               = 0x09
+CMD_BOT               = 0x0a
+CMD_TOP_LEFT          = 0x0b
+CMD_BOT_LEFT          = 0x0c
+CMD_PRPGRPH           = 0x0d
+CMD_NXPGRPH           = 0x0e
+CMD_PRPROMPT          = 0x0f
+CMD_NXPROMPT          = 0x10
+CMD_PRSEARCH          = 0x11
+CMD_NXSEARCH          = 0x12
+CMD_CHRLT             = 0x13
+CMD_CHRRT             = 0x14
+CMD_HWINLT            = 0x15
+CMD_HWINRT            = 0x16
+CMD_FWINLT            = 0x17
+CMD_FWINRT            = 0x18
+CMD_FWINLTSKIP        = 0x19
+CMD_FWINRTSKIP        = 0x1a
+CMD_LNBEG             = 0x1b
+CMD_LNEND             = 0x1c
+CMD_HOME              = 0x1d
+CMD_BACK              = 0x1e
+CMD_FREEZE            = 0x1f
+CMD_DISPMD            = 0x20
+CMD_SIXDOTS           = 0x21
+CMD_SLIDEWIN          = 0x22
+CMD_SKPIDLNS          = 0x23
+CMD_SKPBLNKWINS       = 0x24
+CMD_CSRVIS            = 0x25
+CMD_CSRHIDE           = 0x26
+CMD_CSRTRK            = 0x27
+CMD_CSRSIZE           = 0x28
+CMD_CSRBLINK          = 0x29
+CMD_ATTRVIS           = 0x2a
+CMD_ATTRBLINK         = 0x2b
+CMD_CAPBLINK          = 0x2c
+CMD_TUNES             = 0x2d
+CMD_HELP              = 0x2e
+CMD_INFO              = 0x2f
+CMD_LEARN             = 0x30
+CMD_PREFMENU          = 0x31
+CMD_PREFSAVE          = 0x32
+CMD_PREFLOAD          = 0x33
+CMD_MENU_FIRST_ITEM   = 0x34
+CMD_MENU_LAST_ITEM    = 0x35
+CMD_MENU_PREV_ITEM    = 0x36
+CMD_MENU_NEXT_ITEM    = 0x37
+CMD_MENU_PREV_SETTING = 0x38
+CMD_MENU_NEXT_SETTING = 0x39
+CMD_SAY_LINE          = 0x3a
+CMD_SAY_ABOVE         = 0x3b
+CMD_SAY_BELOW         = 0x3c
+CMD_MUTE              = 0x3d
+CMD_SPKHOME           = 0x3e
+CMD_SWITCHVT_PREV     = 0x3f
+CMD_SWITCHVT_NEXT     = 0x40
+CMD_CSRJMP_VERT       = 0x41
+CMD_PASTE             = 0x42
+CMD_RESTARTBRL        = 0x43
+CMD_RESTARTSPEECH     = 0x44
+CMD_MAX               = 0x44
 
 # The size of the physical display (width, height).  The coordinate system of
 # the display is set such that the upper left is (0,0), x values increase from
@@ -195,14 +195,9 @@ def _printBrailleEvent(level, command):
     - command: the BrlAPI command for the key that was pressed.
     """
 
-    if (command >= 0) and (command < len(BRLAPI_COMMANDS)):
-        debug.printInputEvent(
-            level,
-            "BRAILLE EVENT: %s (%x)" % (BRLAPI_COMMANDS[command], command))
-    else:
-        debug.printInputEvent(
-            level,
-            "BRAILLE EVENT: %x" % command)
+    debug.printInputEvent(
+        level,
+        "BRAILLE EVENT: %x" % command)
     
 
 class Region:
@@ -511,7 +506,40 @@ def displayMessage(message, cursor=-1):
     setCursor(cursor, 0)
     refresh()
 
-        
+
+def panLeft(command=None, script=None):
+    """Pans the display to the left.
+    
+    Arguments:
+    - command: the BrlAPI command for the key that was pressed.
+    - script: the script calling this function
+
+    Returns True to mean the command should be consumed.
+    """
+
+    _viewport[0] = max(0, _viewport[0] - _displaySize[0])
+    refresh()
+
+
+def panRight(command=None, script=None):
+    """Pans the display to the right, limiting the pan to the length
+    of the line being displayed.
+   
+    Arguments:
+    - command: the BrlAPI command for the key that was pressed.
+    - script: the script calling this function
+
+    Returns True to mean the command should be consumed.
+    """
+
+    if len(_lines) > 0:
+        lineNum = _viewport[1]    
+        newX = _viewport[0] + _displaySize[0]
+        if newX < len(_lines[lineNum].getString()):
+            _viewport[0] = newX
+            refresh()
+
+    
 def _processBrailleEvent(command):
     """Handles BrlTTY command events.  This passes commands on to Orca for
     processing.  If Orca does not handle them (as indicated by a return value
@@ -540,23 +568,15 @@ def _processBrailleEvent(command):
             # the command was consumed.
             #
             if _callback(command):
-                return
+                return True
         except:
             debug.printException(debug.LEVEL_SEVERE)
-            return
 
-    if (command >= 0) and (command < len(BRLAPI_COMMANDS)):
-        commandString = BRLAPI_COMMANDS[command]
-        if commandString == "CMD_FWINLT":
-            _viewport[0] = max(0, _viewport[0] - _displaySize[0])
-            refresh()
-        elif commandString == "CMD_FWINRT":
-             if len(_lines) > 0:
-                 lineNum = _viewport[1]    
-                 newX = _viewport[0] + _displaySize[0]
-                 if newX < len(_lines[lineNum].getString()):
-                     _viewport[0] = newX
-                     refresh()
+    if (command >= 0) and (command <= CMD_MAX):
+        if command == CMD_FWINLT:
+            panLeft(command)
+        elif command == CMD_FWINRT:
+            panRight(command)
     elif (command >= 0x100) and (command < (0x100 + _displaySize[0])):
         if len(_lines) > 0:
             cursor = (command - 0x100) + _viewport[0]
@@ -577,7 +597,7 @@ def init(callback=None, tty=7):
     global _initialized
     global _displaySize
     global _callback
-    
+
     if _initialized:
         return False
 
