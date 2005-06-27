@@ -19,6 +19,7 @@
 
 import gtk
 import pygtk
+import signal
 import sys
 
 import a11y
@@ -375,6 +376,10 @@ def start():
         focusedApp = win.app
 
     _switchToPresentationManager(0) # focus_tracking_presenter
+
+    # Register a signal handler for ctrl-C, control-z
+    #
+    signal.signal(signal.SIGINT, shutdown)
 
     core.bonobo.main()
 
