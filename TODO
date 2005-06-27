@@ -3,4 +3,4 @@
 - Fix the autogen stuff to better detect package dependencies
 - Fix the autogen stuff to better install Orca in the python site-packages
   area if python isn't installed under --prefix.
-
+- Need to handle AT-SPI failures with respect to CORBA (e.g., COMM_FAILURE).
