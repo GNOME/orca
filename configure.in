@@ -71,7 +71,7 @@ AC_SUBST(AT_SPI_IDLFLAGS)
 
 PKG_CHECK_MODULES(core, \
 	libbonobo-2.0 >= 2.0.0 pyorbit-2 >= 2.0.0 \
-	pygtk-2.0 >= 2.4.1 gnome-python-2.0 >= 2.6.2)
+	pygtk-2.0 >= 2.4.0 gnome-python-2.0 >= 2.6.0)
 
 
 # Check for Python
