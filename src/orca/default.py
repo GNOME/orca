@@ -36,6 +36,8 @@ import orca
 import rolenames
 import speech
 
+from input_event import InputEventHandler
+
 from orca_i18n import _                          # for gettext support
 from rolenames import getShortBrailleForRoleName # localized role names
 from rolenames import getSpeechForRoleName       # localized role names
@@ -81,12 +83,15 @@ class Default(Script):
         
         Script.__init__(self, app)
 
-        # [[[TODO: WDW - need a way for the user settings to override
-        # these.]]]
+        # [[[TODO: WDW - right now, cannot easily refer to instance methods.]]]
         #
-        self.keybindings["F9"] = self.sayAgain
-        self.keybindings["F11"] = self.sayAll
-
+        self.keybindings["F9"] = InputEventHandler(
+            sayAgain,
+            _("Repeats last utterance sent to speech."))
+        self.keybindings["F11"] = InputEventHandler(
+            sayAll,
+            _("Speaks entire document."))
+            
         #self.listeners["object:property-change:accessible-name"] = \
         #    self.onNameChanged 
         #self.listeners["object:text-selection-changed"]          = \
@@ -138,57 +143,6 @@ class Default(Script):
         self.listeners["focus:"]                                 = \
             self.onFocus
         
-
-    def sayAgain(self, keystring, script):
-        """Tells speech to repeat what was last spoken.
-        
-        Arguments:
-        - keystring: the keyboard event that caused this to be called
-        - script: the script calling this (should be self)
-        """
-        speech.sayAgain()
-
-        return True
-
-    
-    def sayAll(self, keystring, script):
-        """Initiates sayAll mode and attempts to say all the text of the
-        currently focused Accessible text object.  [[[TODO: WDW - the entire
-        sayAll mechanism is likely to be severely broken.]]]
-        
-        Arguments:
-        - keystring: the keyboard event that caused this to be called
-        - script: the script calling this (should be self)
-        """
-    
-        global sayAllText
-        global sayAllPosition
-
-        # If the focused object isn't text, we don't know how to read it
-        #
-        txt = None
-        try:
-            txt = orca.focusedObject.text
-        except:
-            pass
-    
-        if txt is None:
-            speech.say("default", _("Not a document."))
-            return
-    
-        sayAllText = txt
-        sayAllPosition = txt.caretOffset
-
-        # Initialize sayAll mode with the speech subsystem - providing the
-        # sayAllGetChunk and sayAllStopped callbacks.  Once we call sayLine,
-        # the sayAll mode will begin executing when it receives the associated
-        # speech callback.
-        #
-        speech.startSayAll("default", sayAllGetChunk, sayAllStopped)
-        sayLine(orca.focusedObject)
-
-        return True
-
 
     def onTextInserted(self, event):
         """Called whenever text is inserted into an object.
@@ -1391,6 +1345,60 @@ def dialogPresenter(obj, already_focused):
 # [[[TODO: WDW - need to think about updating magnifier roi.]]]        #
 #                                                                      #
 ########################################################################
+
+def sayAgain(inputEvent):
+    """Tells speech to repeat what was last spoken.
+        
+    Arguments:
+    - inputEvent: the InputEvent instance that caused this to be called.
+
+    Returns True indicating the event should be consumed.
+    """
+    
+    speech.sayAgain()
+    
+    return True
+    
+    
+def sayAll(inputEvent):
+    """Initiates sayAll mode and attempts to say all the text of the
+    currently focused Accessible text object.  [[[TODO: WDW - the entire
+    sayAll mechanism is likely to be severely broken.]]]
+    
+    Arguments:
+    - inputEvent: the InputEvent instance that caused this to be called.
+
+    Returns True indicating the event should be consumed.
+    """
+    
+    global sayAllText
+    global sayAllPosition
+
+    # If the focused object isn't text, we don't know how to read it
+    #
+    txt = None
+    try:
+        txt = orca.focusedObject.text
+    except:
+        pass
+    
+    if txt is None:
+        speech.say("default", _("Not a document."))
+        return
+    
+    sayAllText = txt
+    sayAllPosition = txt.caretOffset
+
+    # Initialize sayAll mode with the speech subsystem - providing the
+    # sayAllGetChunk and sayAllStopped callbacks.  Once we call sayLine,
+    # the sayAll mode will begin executing when it receives the associated
+    # speech callback.
+    #
+    speech.startSayAll("default", sayAllGetChunk, sayAllStopped)
+    sayLine(orca.focusedObject)
+
+    return True
+
 
 # sayAllText contains the AccessibleText object of the document
 # currently being read

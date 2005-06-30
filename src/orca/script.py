@@ -17,10 +17,14 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-"""Each script maintains a set of keybindings and listeners.  The keybindings
-field is a dictionary where the keys are keystrings and the values are
-function pointers.  The listeners field is also a dictionary where the keys
-are AT-SPI event names and the values are function pointers."""
+"""Each script maintains a set of key bindings, braille bindings, and AT-SPI
+event listeners.  The key bindings are a dictionary where the keys are
+keystrings and the values are instances of InputEventHandler.  The braille
+bindings are also a dictionary where the keys are BrlTTY command integers and
+the values are instances of InputEventHandler.  The listeners field is a
+dictionary where the keys are AT-SPI event names and the values are function
+pointers.
+"""
 
 import debug
 import settings
@@ -77,26 +81,36 @@ class Script:
                     debug.printException(debug.LEVEL_SEVERE)
             
 
-    def processKeyEvent(self, keystring):
+    def processKeyEvent(self, keyboardEvent):
         """Processes the given keyboard event. This method is called
         synchronously from the at-spi registry and should be performant.  In
         addition, it must return True if it has consumed the event (and False
         if not).
-    
+        
         Arguments:
-        - keystring: a keyboard event string
-
-        Returns True if the event should be consumed.
+        - keyboardEvent: an instance of input_event.KeyboardEvent
+        
+        Returns True if the event was consumed; otherwise False
         """
 
-        consumed = False
-        user_bindings = None
-
+        # We'll annotate the event with a reference to this script.
+        # This will allow external scripts to muck with the script
+        # instance if they wish.
+        #
+        keyboardEvent.script = self
+        
         # We'll let the user keybindings take precedence.  First, we'll
         # check to see if they have keybindings specific for the particular
         # application, then we'll check to see if they have any default
         # bindings to use.
         #
+        # [[[TODO: WDW - for performance, these bindings should probably
+        # be conflated at initialization time.
+        #
+        consumed = False
+        user_bindings = None
+        keystring = keyboardEvent.event
+
         user_bindings_map = settings.getSetting("keybindings_map",{})
         if user_bindings_map.has_key(self.name):
             user_bindings = user_bindings_map[self.name]
@@ -105,36 +119,48 @@ class Script:
 
         if user_bindings and user_bindings.has_key(keystring):
             try:
-                consumed = user_bindings[keystring](keystring, self)
+                handler = user_bindings[keystring]
+                consumed = handler.processInputEvent(keyboardEvent)
             except:
                 debug.printException(debug.LEVEL_SEVERE)
                 
         if (not consumed) and self.keybindings.has_key(keystring):
             try:
-                consumed = self.keybindings[keystring](keystring, self)
+                handler = self.keybindings[keystring]
+                consumed = handler.processInputEvent(keyboardEvent)
             except:
                 debug.printException(debug.LEVEL_SEVERE)
 
         return consumed
         
 
-    def processBrailleEvent(self, command):
-        """Called whenever a cursor key is pressed on the Braille display.
+    def processBrailleEvent(self, brailleEvent):
+        """Called whenever a key is pressed on the Braille display.
     
         Arguments:
-        - command: the BrlAPI command for the key that was pressed.
-
-        Returns True if the command was consumed; otherwise False
+        - brailleEvent: an instance of input_event.BrailleEvent
+        
+        Returns True if the event was consumed; otherwise False
         """
 
-        consumed = False
-        user_bindings = None
+        # We'll annotate the event with a reference to this script.
+        # This will allow external scripts to muck with the script
+        # instance if they wish.
+        #
+        brailleEvent.script = self
 
-        # We'll let the user keybindings take precedence.  First, we'll
-        # check to see if they have keybindings specific for the particular
+        # We'll let the user bindings take precedence.  First, we'll
+        # check to see if they have bindings specific for the particular
         # application, then we'll check to see if they have any default
         # bindings to use.
         #
+        # [[[TODO: WDW - for performance, these bindings should probably
+        # be conflated at initialization time.
+        #
+        consumed = False
+        user_bindings = None
+        command = brailleEvent.event
+        
         user_bindings_map = settings.getSetting("braillebindings_map",{})
         if user_bindings_map.has_key(self.name):
             user_bindings = user_bindings_map[self.name]
@@ -143,13 +169,15 @@ class Script:
 
         if user_bindings and user_bindings.has_key(command):
             try:
-                consumed = user_bindings[command](command, self)
+                handler = user_bindings[command]
+                consumed = handler.processInputEvent(brailleEvent)
             except:
                 debug.printException(debug.LEVEL_SEVERE)
                 
         if (not consumed) and self.braillebindings.has_key(command):
             try:
-                consumed = self.braillebindings[command](command, self)
+                handler = self.braillebindings[command]
+                consumed = handler.processInputEvent(brailleEvent)
             except:
                 debug.printException(debug.LEVEL_SEVERE)
 

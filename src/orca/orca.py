@@ -34,6 +34,10 @@ import kbd
 import settings
 import speech
 
+from input_event import BrailleEvent
+from input_event import KeyboardEvent
+from input_event import InputEventHandler
+
 from orca_i18n import _           # for gettext support
 
 # If True, this module has been initialized.
@@ -86,12 +90,20 @@ def _switchToPresentationManager(index):
     _PRESENTATION_MANAGERS[_currentPresentationManager].activate()
 
 
-def _switchToNextPresentationManager(keystring=None):
-    """Switches to the next presentation manager."""
+def _switchToNextPresentationManager(inputEvent=None):
+    """Switches to the next presentation manager.
+
+    Arguments:
+    - inputEvent: the InputEvent instance that caused this to be called.
+
+    Returns True indicating the event should be consumed.
+    """
 
     global _currentPresentationManager
     
     _switchToPresentationManager(_currentPresentationManager + 1)
+
+    return True
 
     
 ########################################################################
@@ -221,13 +233,22 @@ def processBrailleEvent(command):
     Returns True if the event was consumed; otherwise False
     """
 
+    # [[[TODO: WDW - probably should add braille bindings to this module.]]]
+    
+    consumed = False
+
     try:
-        return _PRESENTATION_MANAGERS[_currentPresentationManager].\
-               processBrailleEvent(command)
+        consumed = _PRESENTATION_MANAGERS[_currentPresentationManager].\
+                   processBrailleEvent(BrailleEvent(command))
     except:
         debug.printException(debug.LEVEL_SEVERE)
-        return False
-    
+
+    if (not consumed) and settings.getSetting("learnModeEnabled", False):
+        # [[[TODO: WDW - add a toString to braille.py.]]]
+        consumed = True
+
+    return consumed
+
 
 ########################################################################
 #                                                                      #
@@ -235,11 +256,13 @@ def processBrailleEvent(command):
 #                                                                      #
 ########################################################################
     
-def printApps(keystring=None):
+def printApps(inputEvent=None):
     """Prints a list of all applications to stdout
 
     Arguments:
-    - keystring: the key event (if any) which caused this to be called.
+    - inputEvent: the InputEvent instance that caused this to be called.
+
+    Returns True indicating the event should be consumed.
     """
 
     level = debug.LEVEL_OFF
@@ -258,12 +281,16 @@ def printApps(keystring=None):
                               "      WARNING: child's parent is not app!!!")
             count += 1
 
+    return True
 
-def printActiveApp(keystring=None):
+
+def printActiveApp(inputEvent=None):
     """Prints the active application.
 
     Arguments:
     - keystring: the key event (if any) which caused this to be called.
+
+    Returns True indicating the event should be consumed.
     """
     
     level = debug.LEVEL_OFF
@@ -288,12 +315,41 @@ def printActiveApp(keystring=None):
                                   "      WARNING: child's parent is not app!!!")
                 count += 1
 
+    return True
+
 
 ########################################################################
 #                                                                      #
 # METHODS FOR HANDLING THE INITIALIZATION, SHUTDOWN, AND USE.          #
 #                                                                      #
 ########################################################################
+
+def enterLearnMode(inputEvent=None):
+    """Turns learn mode on.  The user must press the escape key to exit
+    learn mode.
+
+    Returns True to indicate the input event has been consumed.
+    """
+
+    speech.say("default",
+               _("Entering learn mode.  Press any key to hear its function. " \
+                 + "To exit learn mode, press the escape key."))
+    braille.displayMessage(_("Learn mode.  Press escape to exit."))
+    settings.setLearnModeEnabled(True)
+    return True
+
+
+def exitLearnMode(inputEvent=None):
+    """Turns learn mode off.
+
+    Returns True to indicate the input event has been consumed.
+    """
+
+    speech.say("default", _("Exiting learn mode."))
+    braille.displayMessage(_("Exiting learn mode."))
+    settings.setLearnModeEnabled(False)
+    return True
+
 
 def init():
     """Initialize the orca module, which initializes a11y, kbd, speech,
@@ -353,7 +409,7 @@ def init():
 
 
 def start():
-    """Starts orca and also the bonobo main loop.
+    """Starts Orca and also the bonobo main loop.
 
     Returns False only if this module has not been initialized.
     """
@@ -384,8 +440,8 @@ def start():
     core.bonobo.main()
 
 
-def shutdown(keystring=None, script=None):
-    """Stop orca.  Unregisters any event listeners and cleans up.  Also
+def shutdown(inputEvent=None):
+    """Exits Orca.  Unregisters any event listeners and cleans up.  Also
     quits the bonobo main loop and resets the initialized state to False.
 
     Returns True if the shutdown procedure ran or False if this module
@@ -507,11 +563,21 @@ def outlineAccessible(accessible):
 # Keybindings that Orca itself cares about.
 #
 _keybindings = {}
-_keybindings["F12"] = shutdown
-_keybindings["F5"]  = printApps
-_keybindings["F6"]  = printActiveApp
-_keybindings["F8"]  = _switchToNextPresentationManager
-
+_keybindings["alt+F1"] = InputEventHandler(\
+    enterLearnMode,
+    _("Enters learn mode.  Press escape to exit learn mode."))
+_keybindings["F12"] = InputEventHandler(\
+    shutdown,
+    _("Quits Orca"))
+_keybindings["F5"]  = InputEventHandler(\
+    printApps,
+    _("Prints a debug listing of all known applications to the console where Orca is running."))
+_keybindings["F6"]  = InputEventHandler(\
+    printActiveApp,
+    _("Prints debug information about the currently active application to the console where Orca is running."))
+_keybindings["F8"]  = InputEventHandler(\
+    _switchToNextPresentationManager,
+    _("Switches to the next presentation manager."))
 
 # The string representing the last key pressed.
 #
@@ -591,7 +657,7 @@ def processKeyEvent(event):
     #print "KEYEVENT: type=%d" % event.type
     #print "          hw_code=%d" % event.hw_code
     #print "          modifiers=%d" % event.modifiers
-    #print "          event_string=(%s)" % event.event_string, len(event.event_string)
+    #print "          event_string=(%s)" % event.event_string
     #print "          is_text=", event.is_text
 
     event_string = event.event_string
@@ -624,29 +690,38 @@ def processKeyEvent(event):
             speech.stopSayAll()
         else:
             speech.stop("default")
-            
+
+    consumed = False
+    
     if keystring:
         lastKey = keystring
         debug.printInputEvent(debug.LEVEL_FINE, "KEY EVENT: %s" % keystring)
+
         _keyEcho(keystring)
 
+        keyboardEvent = KeyboardEvent(keystring)
+        
         # Orca gets first stab at the event.  Then, the presenter gets
         # a shot. [[[TODO: WDW - might want to let the presenter try first?]]]
         #
         if _keybindings.has_key(keystring):
             try:
-                func = _keybindings[keystring]
-                return func(keystring)
+                handler = _keybindings[keystring]
+                consumed = handler.processInputEvent(keyboardEvent)
             except:
                 debug.printException(debug.LEVEL_SEVERE)
-                return False
         else:
             try:
-                return _PRESENTATION_MANAGERS[_currentPresentationManager].\
-                       processKeyEvent(keystring)
+                consumed = _PRESENTATION_MANAGERS[_currentPresentationManager].\
+                           processKeyEvent(keyboardEvent)
             except:
-                pass
-            
-    return False
+                debug.printException(debug.LEVEL_SEVERE)
 
-
+        if (not consumed) and settings.getSetting("learnModeEnabled", False):
+            braille.displayMessage(keystring)
+            speech.say("default", keystring)
+            if keystring == "Escape":
+                exitLearnMode(keyboardEvent)
+            consumed = True
+        
+    return consumed

@@ -294,14 +294,14 @@ def processObjectEvent(e):
         debug.printException(debug.LEVEL_SEVERE)
 
 
-def processKeyEvent(keystring):
+def processKeyEvent(keyboardEvent):
     """Processes the given keyboard event based on the keybinding from the
     currently active script. This method is called synchronously from the
     at-spi registry and should be performant.  In addition, it must return
     True if it has consumed the event (and False if not).
     
     Arguments:
-    - keystring: a keyboard event string
+    - keyboardEvent: an instance of input_event.KeyboardEvent
 
     Returns True if the event should be consumed.
     """
@@ -310,25 +310,25 @@ def processKeyEvent(keystring):
     
     if _activeScript:
         try:
-            return _activeScript.processKeyEvent(keystring)
+            return _activeScript.processKeyEvent(keyboardEvent)
         except:
             debug.printException(debug.LEVEL_SEVERE)
             
     return False
 
 
-def processBrailleEvent(command):
+def processBrailleEvent(brailleEvent):
     """Called whenever a cursor key is pressed on the Braille display.
     
     Arguments:
-    - command: the BrlAPI command for the key that was pressed.
+    - brailleEvent: an instance of input_event.BrailleEvent
 
     Returns True if the command was consumed; otherwise False
     """
 
     if _activeScript:
         try:
-            return _activeScript.processBrailleEvent(command)
+            return _activeScript.processBrailleEvent(brailleEvent)
         except:
             debug.printException(debug.LEVEL_SEVERE)
 

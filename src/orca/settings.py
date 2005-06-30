@@ -29,8 +29,23 @@ voices = {}
 keyEcho = False
 useSpeech = True
 useBraille = False
+learnModeEnabled = False
 
 _userSettings = None
+
+def setLearnModeEnabled(enabled):
+
+    """Turns learning mode on and off.  If learn mode is enabled, input event
+    handlers will merely report what they do rather than calling the function
+    bound to them.
+
+    Arguments:
+    - enabled: boolean that, if True, will enable learn mode
+    """
+    
+    global learnModeEnabled
+    learnModeEnabled = enabled
+
 
 def getSetting(name, default=None):
     """Obtain the value for the given named attribute, trying from the

@@ -19,6 +19,7 @@ orca_python_PYTHON = \
 	Gecko.py \
 	gnome-terminal.py \
 	hierarchical_presenter.py \
+	input_event.py \
 	kbd.py \
 	mag.py \
 	metacity.py \

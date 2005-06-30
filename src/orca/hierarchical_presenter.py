@@ -420,14 +420,14 @@ def _navigateIntraObject(keystring):
 #                                                                      #
 ########################################################################
 
-def processKeyEvent(keystring):
+def processKeyEvent(keyboardEvent):
     """Processes the given keyboard event based on the keybinding from the
     currently active script. This method is called synchronously from the
     at-spi registry and should be performant.  In addition, it must return
     True if it has consumed the event (and False if not).
     
     Arguments:
-    - keystring: a keyboard event string
+    - keyboardEvent: an instance of input_event.KeyboardEvent
 
     Returns True if the event should be consumed.
     """
@@ -435,7 +435,12 @@ def processKeyEvent(keystring):
     global _navigationMode
     global _currentObjectSpecializations
     global _currentSpecialization
-    
+
+    keystring = keyboardEvent.event
+
+    # [[[TODO: WDW - probably should set these up as keybindings
+    # rather than hardcoding them.]]]
+    #
     if keystring == "Tab":
         _getSpecializations(_currentObject)
         i = 0
@@ -462,11 +467,11 @@ def processKeyEvent(keystring):
     return True
 
 
-def processBrailleEvent(command):
+def processBrailleEvent(brailleEvent):
     """Called whenever a cursor key is pressed on the Braille display.
     
     Arguments:
-    - command: the BrlAPI command for the key that was pressed.
+    - brailleEvent: an instance of input_event.BrailleEvent
 
     Returns True if the command was consumed; otherwise False
     """
