@@ -494,4 +494,6 @@ def activate():
         
 def deactivate():
     """Called when this presentation manager is deactivated."""
-    pass
+    
+    orca.outlineAccessible(None)
+

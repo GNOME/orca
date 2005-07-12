@@ -24,6 +24,10 @@ bindings are also a dictionary where the keys are BrlTTY command integers and
 the values are instances of InputEventHandler.  The listeners field is a
 dictionary where the keys are AT-SPI event names and the values are function
 pointers.
+
+Instances of scripts are intended to be created solely by the
+focus_tracking_presenter, which will call the three main entry points of a
+script instance: processObjectEvent, processKeyEvent, and processBrailleEvent.
 """
 
 import debug
@@ -105,7 +109,7 @@ class Script:
         # bindings to use.
         #
         # [[[TODO: WDW - for performance, these bindings should probably
-        # be conflated at initialization time.
+        # be conflated at initialization time.]]]
         #
         consumed = False
         user_bindings = None
@@ -155,7 +159,7 @@ class Script:
         # bindings to use.
         #
         # [[[TODO: WDW - for performance, these bindings should probably
-        # be conflated at initialization time.
+        # be conflated at initialization time.]]]
         #
         consumed = False
         user_bindings = None

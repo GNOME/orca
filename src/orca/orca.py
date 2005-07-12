@@ -17,8 +17,6 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-import gtk
-import pygtk
 import signal
 import sys
 
@@ -503,6 +501,12 @@ def outlineAccessible(accessible):
     last drawn rectangle in the process."""
 
     global _visibleRectangle
+
+    # [[[WDW - remove this return statement to re-enable the drawing of
+    # rectangles.]]]
+    return
+
+    import gtk
 
     display = None
     

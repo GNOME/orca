@@ -943,10 +943,16 @@ def menuPresenter(obj, already_focused):
     debugPresenter("default.menuPresenter", obj, already_focused)
 
     # Put the menu on the Braille display - Put each menu item in its
-    # own region on the Braille display
+    # own region on the Braille display.  NOTE: we will only display
+    # the contents of a submenu if the submenu is actually showing; we
+    # do this by determining if any items in the submenu are selected
+    # [[[WDW - this is a little hacky, I think.]]]
     #
     if obj.role == rolenames.ROLE_MENU:
         menu = obj
+        selection = menu.selection
+        if not selection or (selection and selection.nSelectedChildren == 0):
+            menu = obj.parent
     else:
         menu = obj.parent
 
