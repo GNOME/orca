@@ -1,0 +1,7676 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HTML
+><HEAD
+><TITLE
+>Orca Documentation Series</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"></HEAD
+><BODY
+CLASS="SET"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="SET"
+><A
+NAME="AEN1"
+></A
+><DIV
+CLASS="TITLEPAGE"
+><H1
+CLASS="TITLE"
+><A
+NAME="AEN1"
+>Orca Documentation Series</A
+></H1
+><H3
+CLASS="CORPAUTHOR"
+>Sun Microsystems, Inc.</H3
+></DIV
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+><A
+HREF="#AEN10"
+>Orca User Experience Design</A
+></DT
+><DT
+><A
+HREF="#AEN1391"
+>Orca Architecture and Functional Specification</A
+></DT
+><DT
+><A
+HREF="#AEN1839"
+>Orca Script Writing Guide</A
+></DT
+><DT
+><A
+HREF="#AEN1856"
+>Orca Testing Plan</A
+></DT
+><DT
+><A
+HREF="#AEN1870"
+>Orca User's Guide</A
+></DT
+></DL
+></DIV
+><DIV
+CLASS="BOOK"
+><A
+NAME="AEN10"
+></A
+><DIV
+CLASS="TITLEPAGE"
+><H1
+CLASS="TITLE"
+><A
+NAME="AEN10"
+>Orca User Experience Design</A
+></H1
+><DIV
+CLASS="LEGALNOTICE"
+><P
+></P
+><A
+NAME="AEN13"
+></A
+><P
+>Copyright 2005, Sun Microsystems, Inc.</P
+><P
+></P
+></DIV
+><HR></DIV
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+><A
+HREF="#AEN15"
+>Foreword</A
+></DT
+><DT
+><A
+HREF="#AEN21"
+>Introduction</A
+></DT
+><DT
+><A
+HREF="#PERSONAS"
+>Personas</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="#LEE"
+>Lee the Programmer</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="#AEN57"
+>Write code in NetBeans</A
+></DT
+><DT
+><A
+HREF="#AEN73"
+>Compile code in NetBeans</A
+></DT
+><DT
+><A
+HREF="#AEN86"
+>Compose document in StarOffice</A
+></DT
+><DT
+><A
+HREF="#AEN114"
+>Read and write e-mail with Evolution</A
+></DT
+><DT
+><A
+HREF="#AEN127"
+>Use terminal windows</A
+></DT
+><DT
+><A
+HREF="#AEN135"
+>Use the calendar tool</A
+></DT
+><DT
+><A
+HREF="#AEN143"
+>Browses the web using Mozilla</A
+></DT
+></DL
+></DD
+><DT
+><A
+HREF="#PAT"
+>Pat the Manager</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="#AEN166"
+>Browses the web using Mozilla</A
+></DT
+><DT
+><A
+HREF="#AEN186"
+>Read and write e-mail with Evolution</A
+></DT
+><DT
+><A
+HREF="#AEN208"
+>Compose presentation in StarOffice</A
+></DT
+><DT
+><A
+HREF="#AEN236"
+>Read help documentation</A
+></DT
+><DT
+><A
+HREF="#AEN244"
+>Compose text document in StarOffice</A
+></DT
+><DT
+><A
+HREF="#AEN264"
+>Use address book</A
+></DT
+><DT
+><A
+HREF="#AEN274"
+>Use the calendar tool</A
+></DT
+></DL
+></DD
+><DT
+><A
+HREF="#KIM"
+>Kim the Admin</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="#AEN282"
+>Use the address book</A
+></DT
+><DT
+><A
+HREF="#AEN296"
+>Use the calendar tool</A
+></DT
+><DT
+><A
+HREF="#AEN310"
+>Browses the web using Mozilla</A
+></DT
+><DT
+><A
+HREF="#AEN319"
+>Read and write e-mail with Evolution</A
+></DT
+><DT
+><A
+HREF="#AEN333"
+>Creates spreadsheet in StarOffice</A
+></DT
+></DL
+></DD
+><DT
+><A
+HREF="#SAM"
+>Sam the IT Guru</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="#AEN358"
+>Use terminal windows</A
+></DT
+><DT
+><A
+HREF="#AEN364"
+>Use GUI-based administration tools</A
+></DT
+></DL
+></DD
+></DL
+></DD
+><DT
+><A
+HREF="#USER_REQUIREMENTS"
+>User Requirements</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="#AEN386"
+>Availability at All Times</A
+></DT
+><DT
+><A
+HREF="#AEN391"
+>Failure Resiliency</A
+></DT
+><DT
+><A
+HREF="#AEN394"
+>Seamless Interaction with Traditional Keyboard Navigation
+      Methods</A
+></DT
+><DT
+><A
+HREF="#AEN397"
+>Seamless Interaction with Other Assistive
+      Technology</A
+></DT
+><DT
+><A
+HREF="#AEN402"
+>Consistent Style</A
+></DT
+><DT
+><A
+HREF="#AEN407"
+>Customizable Behavior Per Application 
+      ("Scripting")</A
+></DT
+><DT
+><A
+HREF="#AEN411"
+>Configurable Presentation and Interaction</A
+></DT
+><DT
+><A
+HREF="#AEN415"
+>Focus Tracking as the Default Mode</A
+></DT
+><DT
+><A
+HREF="#AEN421"
+>Flat Review Mode</A
+></DT
+><DT
+><A
+HREF="#AEN434"
+>Presentation of Text</A
+></DT
+><DT
+><A
+HREF="#AEN454"
+>Learning Mode (Command Echo)</A
+></DT
+><DT
+><A
+HREF="#AEN457"
+>Customizable Gestures</A
+></DT
+><DT
+><A
+HREF="#AEN462"
+>"List All Applications" Command</A
+></DT
+><DT
+><A
+HREF="#AEN467"
+>"Where Am I?" Command</A
+></DT
+><DT
+><A
+HREF="#AEN471"
+>"Jump to Well Known Object" Commands</A
+></DT
+><DT
+><A
+HREF="#AEN474"
+>"Find" Command</A
+></DT
+><DT
+><A
+HREF="#AEN483"
+>Watched Objects</A
+></DT
+><DT
+><A
+HREF="#AEN487"
+>Bookmarked Objects</A
+></DT
+><DT
+><A
+HREF="#AEN491"
+>Document Reading</A
+></DT
+><DT
+><A
+HREF="#AEN498"
+>Ability of Non-focused Windows to Present of
+      Information</A
+></DT
+><DT
+><A
+HREF="#AEN501"
+>Speech Synthesis</A
+></DT
+><DT
+><A
+HREF="#AEN528"
+>Key and Text Echo</A
+></DT
+><DT
+><A
+HREF="#AEN531"
+>Refreshable Braille</A
+></DT
+><DT
+><A
+HREF="#AEN562"
+>Synchronization with Screen Magnifiers</A
+></DT
+><DT
+><A
+HREF="#AEN565"
+>Acceptable Response Time</A
+></DT
+><DT
+><A
+HREF="#AEN581"
+>Documentation and Tutorials</A
+></DT
+></DL
+></DD
+><DT
+><A
+HREF="#STYLE_GUIDE"
+>Default Interaction Styles</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="#GESTURES"
+>Input Style: Keyboard Mappings</A
+></DT
+><DT
+><A
+HREF="#AEN655"
+>Input Style: Braille Mappings</A
+></DT
+><DT
+><A
+HREF="#AEN707"
+>Output Style: Speech Synthesis and Braille</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="#AEN711"
+>General Braille Style</A
+></DT
+><DT
+><A
+HREF="#AEN734"
+>General Speech Style</A
+></DT
+><DT
+><A
+HREF="#AEN738"
+>Output Styles by Role</A
+></DT
+></DL
+></DD
+></DL
+></DD
+><DT
+><A
+HREF="#AEN1362"
+>Bibliography</A
+></DT
+></DL
+></DIV
+><DIV
+CLASS="PREFACE"
+><HR><H1
+><A
+NAME="AEN15"
+></A
+>Foreword</H1
+><P
+>Orca is a flexible, extensible, and powerful assistive
+  technology that provides end-user access to applications and
+  toolkits that support the AT-SPI (e.g., the GNOME desktop).  With
+  early input and continued engagement from its end users, Orca has
+  been designed and implemented by the Sun Microsystems, Inc.,
+  Accessibility Program Office.</P
+><P
+><I
+CLASS="EMPHASIS"
+>NOTE:</I
+> Orca is currently a work in progress.  As a result, this
+  and other books in the Orca Documentation Series are under
+  continuous modification and are also in various states of
+  completeness.</P
+><P
+>This book covers the design of the user experience for Orca.
+    </P
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="AEN21"
+></A
+>Introduction</H1
+><P
+>The development of Orca focused primarily on the
+      requirements of its end users.  Orca's users may require
+      non-visual access methods such as speech and/or braille and they
+      may also require alternative visual access methods such as
+      magnification.</P
+><P
+>When designing Orca, its authors at Sun Microsystems engaged
+      the user community from the start, soliciting feedback on questions
+      such as the following:</P
+><P
+></P
+><UL
+><LI
+><P
+>What tasks do they want to accomplish?</P
+></LI
+><LI
+><P
+>How do they accomplish these tasks?</P
+></LI
+><LI
+><P
+>What should the screen reader present to them?</P
+></LI
+><LI
+><P
+>What is the user experience like?</P
+></LI
+></UL
+><P
+>This book covers the user design of Orca, ranging from a
+      poetic use of Cooper's "Persona" concept 
+      [<SPAN
+CLASS="CITATION"
+><A
+HREF="#COOPER99"
+>cooper99</A
+>&#62;
+      </SPAN
+>]
+      to the development of the end user requirements and default
+      interaction styles for speech synthesis, braille, magnification, 
+      and input devices.</P
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="PERSONAS"
+></A
+>Personas</H1
+><P
+>The Orca user personas are intended to be a tool that helps
+      elicit use cases and <A
+HREF="#USER_REQUIREMENTS"
+>user requirements</A
+>.  The approach
+      is to think of "real" users with specific disabilities
+      performing specific actions.  These personas are meant to cover
+      a range of typical users, both in the tasks they want to
+      accomplish as well as their disabilities.  The Orca user design
+      explored four personas, each of which is discussed in the
+      following sections:</P
+><P
+></P
+><UL
+><LI
+><P
+><A
+HREF="#LEE"
+>Lee</A
+>: a programmer who uses
+        braille</P
+></LI
+><LI
+><P
+><A
+HREF="#PAT"
+>Pat</A
+>: a manager who uses
+          magnification and speech</P
+></LI
+><LI
+><P
+><A
+HREF="#KIM"
+>Kim</A
+>: an administrative
+          assistant who uses speech</P
+></LI
+><LI
+><P
+><A
+HREF="#SAM"
+>Sam</A
+>: an IT staff member who
+          uses speech and braille</P
+></LI
+></UL
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="LEE"
+>Lee the Programmer</A
+></H2
+><P
+>Lee is a programmer who is primarily a braille user and
+        typically performs the tasks outlined in the following
+        sections.</P
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN57"
+>Write code in NetBeans</A
+></H3
+><P
+>Lee edits a program module in NetBeans.  Over the course
+          of this editing, Lee must be able to do the following:</P
+><P
+></P
+><UL
+><LI
+><P
+>Determine proper indenting.  On the braille display,
+              Orca shows this by using blank spaces.  Orca also has an
+              option to compress horizontal spacing so as to better make
+              use of braille real-estate.</P
+><P
+>Lee sometimes uses speech as well, and uses separate
+              commands to have Orca read the indentation level.  When in
+              focus tracking mode, Lee also has the option to turn on
+              the automatic speaking of this information.</P
+></LI
+><LI
+><P
+>See highlighting, attributes and coloring.  On the
+              braille display, Orca shows this in status cells, where
+              the status cells reflect the attributes of the character
+              under the current cursor position.  For braille displays
+              without status cells, attribute information is shown using
+              dots 7 and 8, where a "key on the braille display" is used
+              to cycle through the various attribute types (underline,
+              bold, etc.).</P
+></LI
+><LI
+><P
+>Navigate to and activate buttons and other controls
+              with the braille display, especially those that cannot
+              gain focus using native keystrokes.  For example, some
+              code completion and information windows may not have this
+              ability.  Lee uses
+              functions to quickly move the braille display to various
+              parts of the screen such as "top of screen" or "line 6."
+              This is typically done under flat review mode, and Lee uses
+              the panning and navigation keys on the braille display to do
+              this.</P
+><P
+>When Lee presses touch cursors on the braille display,
+              they behave as if a Lee were performing a single left mouse
+              click on the given object associated with the touch
+              cursor.</P
+></LI
+><LI
+><P
+>Monitor an object on the screen.  When Lee tells
+              Orca to monitor an object by pressing a key in
+              combination with cursor routing buttons on the braille
+              display Orca will reserve an area on the braille display
+              and will continually display all current information for
+              this object.</P
+></LI
+><LI
+><P
+>Set a part of the screen to jump to, such as a
+              status bar.  When Lee lands on an object of interest,
+              Lee will instruct Orca to reserve a keystroke by
+              pressing a key and a touch cursor on the braille display
+              to jump back to the object without moving the active
+              focus. Since Lee is a braille user, Orca also allows Lee
+              to jump to these objects by pressing a combination of a
+              braille display key and touch cursor to jump to a
+              bookmark (e.g., cursor 1 goes to bookmark 1).</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN73"
+>Compile code in NetBeans</A
+></H3
+><P
+>Lee compiles a program module and fixes errors in
+          NetBeans.  Over the course of this task, Lee must be able to
+          do the following:</P
+><P
+></P
+><UL
+><LI
+><P
+>See all errors and warnings.  For example, when Lee
+              compiles a program module, focus will be moved to a window
+              containing errors and warnings.  Focus tracking should
+              behave properly here, and the braille display will show
+              the first line in the errors and warnings window.</P
+><P
+>When Lee has speech enabled, Orca will speak the first
+              line of the message window.</P
+></LI
+><LI
+><P
+>Click on an error with a touch cursor to go to the
+              error.  This acts just like performing a left mouse click
+              on the error to take Lee to the editor window and source
+              line for the error.  Focus tracking behaves properly here,
+              and the braille display will show the line containing the
+              error.</P
+></LI
+><LI
+><P
+>When reviewing the screen, Orca compresses white
+              space on the braille display to allow Lee to review more
+              quickly.  For example, when there are only blanks to the
+              right and Lee presses the pan-right button on the
+              braille display, Orca will take Lee to beginning of the
+              next non-blank line.  Orca also indicates positional
+              information by displaying optional "beginning of line"
+              and "end of line" characters which are standard well
+              known characters on the braille display.  Orca also
+              optionally shows vertical screen position in status
+              cells.  Orca also optionally plays sound effects to
+              indicate line changes.</P
+></LI
+><LI
+><P
+>Run the application being created and access it.
+              General screen reading functionality applies here.</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN86"
+>Compose document in StarOffice</A
+></H3
+><P
+>Lee writes rough draft of an architecture document in
+          StarOffice.  Over the course of this editing, Lee must be able
+          to do the following:</P
+><P
+></P
+><UL
+><LI
+><P
+>Detect text selection.  When Lee selects text in the
+              document, Orca uses dots 7 and 8 on the braille display to
+              indicate the text selection.  Note that this will hide any
+              capitalization held in dot 7, but that's OK.</P
+></LI
+><LI
+><P
+>Use spellcheck to determine misspelled word and read
+              list of possible replacements.  NOTE: Lee wants to be able
+              to see both the spellcheck dialog and the misspelled word
+              in context.  When spellcheck dialog comes up, Orca
+              provides a well known command to say "read the word in its
+              context".  Speech will speak it.  Braille will display it,
+              and any other action snaps Lee back to the spellcheck
+              dialog.</P
+></LI
+><LI
+><P
+>Read documents in grade two braille.  Lee uses a
+              well known command to toggle between grade one and grade two
+              braille.</P
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> Perhaps not a 1.0 requirement.</P
+></LI
+><LI
+><P
+>Detect attributes of text.  Lee does this in the same
+              way as described in "highlighting, attributes and
+              coloring" above.</P
+></LI
+><LI
+><P
+>Easily comprehend tabs and spacing.  Less does this in
+              the same way as described in "determine proper indenting"
+              above.</P
+></LI
+><LI
+><P
+>Bring up a list of toolbar items to quickly access
+              with the keyboard.  For example, some applications are
+              well-behaved and let you move to the toolbar.  Others do
+              not.  Orca provides a well known command that takes Lee
+              to toolbar navigation mode.  Another well known command
+              (e.g., escape) gets you out of this mode.</P
+><P
+><I
+CLASS="EMPHASIS"
+>NOTE:</I
+> this may also be workable via review mode,
+              but the screen reader always attempts to provide Lee
+              with the most efficient means for accomplishing any
+              task.</P
+></LI
+><LI
+><P
+>Review the currently visible window with the braille
+              display without moving the active cursor (e.g., the caret
+              or the object with focus).  Lee uses Orca's flat review
+              mode to do this, and Orca's flat review mode also allows
+              Lee to select an object (and caret position in that
+              object, if caret position applies).</P
+></LI
+><LI
+><P
+>Navigate and read all prompts and controls (including
+              static text) in dialogs such as "Save as..." both in flat
+              review mode and in logical order.</P
+></LI
+><LI
+><P
+>View labels on the same line as the control they refer
+              to followed by the control type.  NOTE: Orca automatically
+              does this in braille when in focus tracking mode, but will
+              not do this when in flat review mode.</P
+></LI
+><LI
+><P
+>Obtain "where am I" info.  In focus tracking mode,
+              Orca's braille display always tells Lee this (e.g., it
+              displays "file open dialog, filename text area, role" on
+              the braille display - see the braille specification
+              document for more information).  Updates to text areas
+              cause automatic panning of braille so as to keep as much
+              of text area on display as possible, with weight given to
+              the caret.</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN114"
+>Read and write e-mail with Evolution</A
+></H3
+><P
+>Lee reads and writes e-mail with Evolution to communicate
+          with team.  Over the course of this task, Lee must be able to
+          do the following:</P
+><P
+></P
+><UL
+><LI
+><P
+>Read all e-mail formats (e.g., plain text and html).
+              Orca relies on Evolution to give it the proper AT-SPI object
+              information for this.</P
+></LI
+><LI
+><P
+>Track the message list and easily be able to determine
+              such info as time, date and message priority.  Orca places
+              all this information on one line of the braille display if
+              at all possible.</P
+></LI
+><LI
+><P
+>Spellcheck an outgoing message as described above.</P
+></LI
+><LI
+><P
+>See autocompletion information as it is appearing.
+              Orca displays this information to Lee on the braille
+              display and keeps the cursor at the current caret
+              position.</P
+><P
+>When Lee has speech enabled, the speech output also speaks
+              the autocomplete values.</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN127"
+>Use terminal windows</A
+></H3
+><P
+>Lee also interacts with terminal windows on a daily basis.
+          While BrlTTY is most likely the better solution for Lee (who
+          is primarily a braille user), Lee may also want to access a
+          GUI terminal on occasion.  Lee needs to be able to do the
+          following:</P
+><P
+></P
+><UL
+><LI
+><P
+>Navigate the terminal window.  Orca updates the
+              braille display to track the cursor in apps such as emacs
+              and vi.  Orca also updates the braille display to track
+              the navigation of fields in terminal apps (such as curses
+              applications).</P
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> Handling curses applications may be a lower
+              priority task at this point.</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN135"
+>Use the calendar tool</A
+></H3
+><P
+>Lee sets up appointment for team design discussion using a
+          calendar tool.  Over the course of this task, Lee needs to be
+          able to do the following:</P
+><P
+></P
+><UL
+><LI
+><P
+>See relevant information about each time slot.  Orca
+              uses braille to show this relevant information (e.g., is
+              that slot available and if not, what is scheduled?).</P
+></LI
+><LI
+><P
+>See the prompts for each field when filling out an
+              appointment.  Orca displays all information for the
+              current field on the braille display if it will fit.  If
+              it will not, Orca supports panning of the braille
+              display.  Orca also makes it possible to restrict
+              panning to the braille concept of the current element
+              which means that the user can not pan away from the
+              information about the current control.</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN143"
+>Browses the web using Mozilla</A
+></H3
+><P
+>Lee uses Mozilla to read JDK JavaDoc, the latest Java Tips
+          and Tricks article, and the latest slashdot content.  Lee
+          needs to be able to do the following:</P
+><P
+></P
+><UL
+><LI
+><P
+>View all links in a list view and also be able to
+              activate them.  Orca allows Lee to arrow through the links
+              and hit first letter (or perhaps enter key) to activate
+              them.</P
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> might need to be concerned about conflict
+              with web forms with buttons such as "Submit All Changes"
+              that will react to presses of the enter key.</P
+></LI
+><LI
+><P
+>Jump past links on the page to get directly to large
+              blocks of text.  Orca provides a well known command to do this.  This
+              is useful for reading documentation and articles where
+              Lee is reading one page after another.</P
+></LI
+><LI
+><P
+>Select, cut, copy and paste blocks of text from a web
+              page.  Orca relies on the semantics of the application to
+              do this.</P
+></LI
+><LI
+><P
+>View the URL of imagemap links with no useful
+              information.  Orca provides this as part of one of its
+              navigation modes.  Ideally, the browser will allow any
+              user to navigate to any link, thus allowing Orca's focus
+              tracking mode to handle this.  If not, however, Orca's
+              flat review mode will provide this functionality.</P
+></LI
+><LI
+><P
+>See labels properly associated with input fields on
+              the braille display; relevant table information should be
+              shown on the display when moving between columns and
+              rows.</P
+></LI
+><LI
+><P
+>Move back and forth between headers (e.g., H1, H2,
+              etc), tables, and frames. Orca relies on the built-in keyboard
+              navigation of Mozilla to do this.</P
+></LI
+><LI
+><P
+>Distinguish links from regular text.  Lee does this in
+              the same manner as described in the "highlighting,
+              attributes and coloring" section above.</P
+></LI
+></UL
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="PAT"
+>Pat the Manager</A
+></H2
+><P
+>Pat is a manager who is primarily a magnifier and speech
+        user and typically performs the tasks outlined in the following
+        sections:</P
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN166"
+>Browses the web using Mozilla</A
+></H3
+><P
+>Each morning before going to work, Pat uses Mozilla to
+          read the daily news from CNN.  To do so, Pat needs to do the
+          following:</P
+><P
+></P
+><UL
+><LI
+><P
+>Jump past links on the page to get directly to large
+              blocks of text.  Orca provides a well known command to do this.  This
+              is useful for reading documentation and articles where
+              Pat is reading one page after another.</P
+></LI
+><LI
+><P
+>Select, cut, copy and paste blocks of text from a web
+              page.  Orca relies on the semantics of Mozilla to do
+              this.</P
+></LI
+><LI
+><P
+>View the URL of imagemap links with no useful
+              information.  Orca provides this as part of one of its
+              navigation modes.  Ideally, Mozilla will allow any user to
+              navigate to any link, thus allowing Orca's focus tracking
+              mode to handle this.  If not, however, Orca's flat review
+              mode will provide this functionality.</P
+></LI
+><LI
+><P
+>Hear and see links, menu items, and buttons as Pat
+              navigates to them using Mozilla's built-in keyboard navigation
+              methods.</P
+></LI
+><LI
+><P
+>Move back and forth between headers (e.g., H1, H2,
+              etc), tables, and frames. Orca relies on the built-in keyboard
+              navigation of Mozilla to do this.</P
+></LI
+><LI
+><P
+>Distinguish links from regular text.  Pat does this in
+              the same manner as described in the "highlighting,
+              attributes and coloring" section above.</P
+></LI
+><LI
+><P
+>Have the document spoken starting from the current
+              position.  Orca provides a well known command to to
+              start reading at the current position and stop when
+              desired.  Orca also automatically tracks and magnifies
+              the text while it is being read.  When reading is
+              stopped, Orca places the caret (if possible) at the end
+              of the last word spoken.</P
+></LI
+><LI
+><P
+>Pat uses Orca's option of using alternative voice
+              styles to indicate various attributes of the text.  Orca
+              also provides a well known command to speak all the attributes
+              of the text at the cursor (e.g., "bold underlined
+              12-point helvetica").</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN186"
+>Read and write e-mail with Evolution</A
+></H3
+><P
+>Pat is also a heavy e-mail user, especially to communicate
+          with Pat's staff and boss.  As such, Pat needs the
+          following:</P
+><P
+></P
+><UL
+><LI
+><P
+>See and hear the highlighted item in the message list.
+              Orca also gives Pat the ability to hear descriptive
+              information about the currently highlighted item.  For
+              example, Pat can determine information such as if the item
+              is unread and/or has an attachment.</P
+></LI
+><LI
+><P
+>Hear and see links, menu items, and buttons as Pat
+              navigates to them using Evolution's built-in keyboard
+              navigation methods.</P
+></LI
+><LI
+><P
+>Have the document spoken starting from the current
+              position.  Orca provides a well known command to start
+              reading at the current position and stop when desired.
+              Orca also automatically tracks and magnifies the text
+              while it is being read.  When reading is stopped, Orca
+              places the caret (if possible) at the end of the last
+              word spoken.</P
+></LI
+><LI
+><P
+>Pat uses Orca's option of using alternative voice
+              styles to indicate various attributes of the text.  Orca
+              also provides a well known command to speak all the attributes
+              of the text at the cursor (e.g., "bold underlined
+              12-point helvetica").</P
+></LI
+><LI
+><P
+>Change the color of the magnified area.  If the full
+              screen is magnified, the entire screen will have the same
+              scheme.  If the lens view is on, then only the lens has
+              that color scheme.  This is important because Pat
+              sometimes loses the location of the lens and the contrast
+              between the magnified area and rest of the screen helps
+              Pat find it.</P
+></LI
+><LI
+><P
+>See and hear prompts and controls in dialogs.  For
+              example, when a search dialog comes up, Pat sees the
+              focused component in the magnified display and hears
+              "subject: edit."</P
+></LI
+><LI
+><P
+>Use one or more well known commands to quickly change
+              magnification level and style.  Magnification styles
+              include things such as: magnification lens that moves
+              around display and fixed magnification window that
+              follows mouse and focused object.  For following the
+              mouse, Orca also provides additional options such as
+              "mouse centered", "optimal least movement", etc.</P
+></LI
+><LI
+><P
+>Commands to turn magnification tracking on and off.</P
+></LI
+><LI
+><P
+>Use multiple zoomers to track both the "locus of
+              focus" as well as other areas of the screen (e.g., status
+              bar).</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN208"
+>Compose presentation in StarOffice</A
+></H3
+><P
+>Pat periodically needs to create an "All Hands"
+          presentation in StarOffice.  To do, Pat needs the
+          following:</P
+><P
+></P
+><UL
+><LI
+><P
+>Select from the slide templates. This might require
+              review mode.</P
+></LI
+><LI
+><P
+>Determine the position on the slide that typed text
+              will appear.</P
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> is this perhaps more for someone who doesn't
+              use magnification?</P
+></LI
+><LI
+><P
+>Determine if the slide is full or if part of text or
+              an object won't fit.</P
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> is this perhaps more for someone who doesn't
+              use magnification?</P
+></LI
+><LI
+><P
+>Cut and paste objects and text from and to a slide.</P
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> the application should provide this, but Pat will
+              still need to be able to determine what is selected.  How
+              will Pat do this?</P
+></LI
+><LI
+><P
+>Move and size objects on a slide.</P
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> is this perhaps more for someone who doesn't
+              use magnification?</P
+></LI
+><LI
+><P
+>Determine bullets and indentation levels for text.</P
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> is this perhaps more for someone who doesn't
+              use magnification?</P
+></LI
+><LI
+><P
+>Pat sometimes invokes a spreadsheet while writing
+              documents.  When doing so, Pat brings up multiple zoomers
+              that place cell location, formulas, etc., in a small area
+              on one of the corners of the screen.  Orca allows the location
+              of the zoomers and what the zoomers track to be completely
+              customized.</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN236"
+>Read help documentation</A
+></H3
+><P
+>Pat needs to be able to read the help documentation, and
+          often needs to do the following:</P
+><P
+></P
+><UL
+><LI
+><P
+>Navigate the contents magnified and with speech.  If
+              a topic has sub-topics Orca makes it clear by speaking
+              so when the topic is highlighted.  Speech also tells Pat
+              what level in the help tree Pat is in.</P
+></LI
+><LI
+><P
+>See and hear each content pane.  Orca automatically
+              reads each content pain when it gains focus and magnifies
+              each word/line as it is read.</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN244"
+>Compose text document in StarOffice</A
+></H3
+><P
+>Pat also writes performance reviews in StarOffice.  To do
+          so, Pat often performs the following tasks:</P
+><P
+></P
+><UL
+><LI
+><P
+>Use spellcheck to determine misspelled word and read
+              list of possible replacements.  By default, Orca speaks
+              the misspelled word followed by the default choice.  NOTE:
+              Pat often wants to be able to see the misspelled word in
+              context.  When spellcheck dialog comes up, Orca provides a
+              well known command to say "read the word in its context".
+              Speech will speak it and the magnifier will show it. Any
+              other action snaps Pat back to the spellcheck
+              dialog.</P
+></LI
+><LI
+><P
+>Pat uses Orca's option of using alternative voice
+              styles to indicate various attributes of the text.  Orca
+              also provides a well known command to speak all the attributes
+              of the text at the cursor (e.g., "bold underlined
+              12-point helvetica").</P
+></LI
+><LI
+><P
+>Hear current character, word and line.  Orca
+              provides one or more well known commands to do this.  When the well known command
+              is pressed a second time, Orca spells the word.
+              When the well known command is pressed a third time, Orca
+              spells the word phonetically.</P
+></LI
+><LI
+><P
+>Hear capitalization. For example, when arrowing across
+              the name "Mike" Orca says 'cap m' 'i' 'k' 'e'.
+              Optionally, Orca changes the pitch for the capital letter.</P
+></LI
+><LI
+><P
+>Bring up a list of toolbar items to quickly access
+              with the keyboard.  For example, some applications are
+              well-behaved and let you move to the toolbar.  Others do
+              not.  Orca provides a well known command that takes Lee
+              to toolbar navigation mode.  Another well known command
+              (e.g., escape) gets you out of this mode.  NOTE: this
+              may also be workable via review mode, but the screen
+              reader always attempts to provide Lee with the most
+              efficient means for accomplishing any task.</P
+></LI
+><LI
+><P
+>Have dialog static text and focus information should
+              automatically be read if a dialog such as "save" or
+              "print" appears.  Orca also provides commands to read this
+              information as well as the entire dialog.</P
+></LI
+><LI
+><P
+>Detect text selection by both seeing the text in the
+              magnifier and also hearing "selected" when navigating
+              character-by-character or word-by-word.  Orca also
+              provides a well known command (e.g., "say selection") to read the
+              currently selected text.</P
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> what happens when there are multiple
+              discontiguous regions selected?</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN264"
+>Use address book</A
+></H3
+><P
+>Pat uses his address book often to locate contact
+        information.  To do so, Pat needs Orca to do the
+        following:</P
+><P
+></P
+><UL
+><LI
+><P
+>Track the address list, speaking and magnifying the
+              currently selected person.</P
+></LI
+><LI
+><P
+>Speak and magnify all controls in the "find" utility
+              as Pat navigates them.</P
+></LI
+><LI
+><P
+>Hear details about an individual contact.  When
+              navigating the found contact, Pat needs to hear and see
+              the label and content of each field.  Orca also provides
+              a well known command to re-read the current label and roll for the
+              focused item.</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN274"
+>Use the calendar tool</A
+></H3
+><P
+>Pat sets up a staff meeting using a calendar tool.  See
+          Lee's stuff above, but apply to speech and mag.</P
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> need to flesh this out some more.</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="KIM"
+>Kim the Admin</A
+></H2
+><P
+>Kim is an administrative assistant who is primarily a speech
+      user.  Kim regularly performs the tasks outlined in the following
+      sections.</P
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN282"
+>Use the address book</A
+></H3
+><P
+>Kim often uses the address book to add and find contact
+          information for Pat.  As such, Kim needs to be able to do the
+          following tasks:</P
+><P
+></P
+><UL
+><LI
+><P
+>Track the address list, speaking the currently
+              selected person.</P
+></LI
+><LI
+><P
+>Speak all controls in the "find" utility as Kim
+              navigates them using the system's built in keyboard
+              navigation commands.</P
+></LI
+><LI
+><P
+>Hear details about an individual contact.  When
+              navigating the found contact, Kim needs to hear the
+              label, content, and roll of each field.  Orca also
+              provides a well known command to re-read the current label and roll
+              for the focused item.</P
+></LI
+><LI
+><P
+>Detect text selection by hearing "selected" when
+              navigating character-by-character or word-by-word.  Orca
+              also provides a well known command (e.g., "say selection") to read the
+              currently selected text.</P
+></LI
+><LI
+><P
+>Read the title and status bar of the current
+              application.  Orca provides this via a well known command
+              to invoke the "Where am I" functionality of
+              Orca.</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN296"
+>Use the calendar tool</A
+></H3
+><P
+>Kim often sets up calendar appointment for Pat and others.
+          To do so, Pat needs Orca to provide the following
+          abilities:</P
+><P
+></P
+><UL
+><LI
+><P
+>Track the date and time views of the calendar.  When
+               navigating, Kim hears, for example, the current time and if an
+               appointment is currently set.</P
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> Mike - write down your ideas for this!</P
+></LI
+><LI
+><P
+>Hear the label for each field and review the
+              information that has been input.</P
+></LI
+><LI
+><P
+>Read the entire appointment.  Orca provides this via
+              a well known command to read an entire dialog.</P
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> this assumes the appointment information is 
+              input via a dialog.</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN310"
+>Browses the web using Mozilla</A
+></H3
+><P
+>Kim often orders office supplies and books travel for
+          others on line.  Kim does this in a manner similar to Pat, but
+          using only speech instead of speech and magnification.  [[[<I
+CLASS="EMPHASIS"
+>TODO:</I
+>
+          - probably need to flesh this out more.]]]  In addition, since
+          Kim often fills out forms, Orca needs to allow for the
+          following:</P
+><P
+></P
+><UL
+><LI
+><P
+>Keystrokes to move between form fields only.  Orca
+              provides functionality to move from one form field to the
+              next or prior skipping all other links.</P
+></LI
+><LI
+><P
+>Automatically read field labels when moving to form
+              fields.</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN319"
+>Read and write e-mail with Evolution</A
+></H3
+><P
+>Kim often coordinates and organizes group meetings using
+        e-mail.  As such, Kim needs to be able to do the
+        following:</P
+><P
+></P
+><UL
+><LI
+><P
+>Hear contacts in the address book and know if they are
+              selected.  </P
+></LI
+><LI
+><P
+>Use spellcheck to determine misspelled word and read
+              list of possible replacements.  By default, Orca speaks
+              the misspelled word followed by the default choice.  NOTE:
+              Kim often wants to be able to hear the misspelled word in
+              context.  When spellcheck dialog comes up, Orca provides a
+              well known command to say "read the word in its context".
+              Speech will speak it.</P
+></LI
+><LI
+><P
+>Kim uses Orca's option of using alternative voice
+              styles to indicate various attributes of the text.  Orca
+              also provides a well known command to speak all the attributes
+              of the text at the cursor (e.g., "bold underlined
+              12-point helvetica").</P
+></LI
+><LI
+><P
+>Hear current character, word and line.  Orca
+              provides a well known command to do this.  When the well known command is
+              pressed a second time, Orca spells the word.  When the
+              well known command is pressed a third time, Orca spells the
+              word phonetically.</P
+></LI
+><LI
+><P
+>Hear capitalization. For example, when arrowing across
+              the name "Mike" Orca says 'cap m' 'i' 'k' 'e'.
+              Optionally, Orca changes the pitch for the capital letter.</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN333"
+>Creates spreadsheet in StarOffice</A
+></H3
+><P
+>Kim sometimes views and updates the group budget, which is
+          maintained as a spreadsheet in StarOffice.  To do so, Kim
+          needs to be able to do the following:</P
+><P
+></P
+><UL
+><LI
+><P
+>Automatically hear cell location and content when
+              navigating between cells.  Orca speaks, for example:
+              "B4" followed by the cell content.  Orca also provides a
+              well known command to speak this information.  Orca also provides
+              an option to automatically speak this information when
+              Kim moves from one cell to the next.</P
+></LI
+><LI
+><P
+>Related to the above, hear row and column headers.
+              Orca supports this via separate well known commands.</P
+></LI
+><LI
+><P
+>Automatically hear formulas if they appear in a cell.
+              Orca speaks these after it speaks the location and content
+              information.</P
+></LI
+><LI
+><P
+>Determine and modify size of cell.</P
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> this might require some emulation of mouse 
+              behavior if StarOffice doesn't provide dialogs to do 
+              this.</P
+></LI
+><LI
+><P
+>Select a range of cells and know that they are
+              selected.  Orca speaks "selected" followed by the begin
+              and end coordinates.</P
+></LI
+><LI
+><P
+>Produce and read simple charts and graphs.</P
+></LI
+><LI
+><P
+>Interact with a print dialog to print finished
+              report.</P
+></LI
+><LI
+><P
+>Automatically hear static text and focus information
+              when a dialog appears such as "file" or "reformat."  Orca
+              also provides commands to re-read this information as well
+              as the entire dialog.</P
+></LI
+></UL
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="SAM"
+>Sam the IT Guru</A
+></H2
+><P
+>Sam is a member IT staff who is primarily a speech and
+         braille user.  Sam regularly performs the following
+         tasks.</P
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN358"
+>Use terminal windows</A
+></H3
+><P
+>Sam regularly interacts with terminal windows.  While
+          BrlTTY is most likely the better solution, Sam may also want to
+          access a GUI terminal to do the following:</P
+><P
+></P
+><UL
+><LI
+><P
+>Navigate the terminal window.  Orca updates the
+              braille display to track the cursor in apps such as emacs
+              and vi.  Orca also updates the braille display to track
+              the navigation of fields in terminal apps (such as curses
+              apps), and provides a "speak the current line" to display
+              this information.</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN364"
+>Use GUI-based administration tools</A
+></H3
+><P
+>Sam interacts with GUI-based tools such as update and
+          network configuration on a daily basis.  This includes the
+          following:</P
+><P
+></P
+><UL
+><LI
+><P
+>Automatically hear static text and focus information
+              when a dialog appears such as "configure network."  Orca
+              also provides commands to re-read this information as well
+              as the entire dialog.</P
+></LI
+><LI
+><P
+>In logical order, navigate and read all prompts and
+              controls (including static text).</P
+></LI
+><LI
+><P
+>See all information for the current field on the
+              braille display if it will fit.  If it will not, Orca
+              supports panning of the braille display.  Orca also
+              makes it possible to restrict panning to the braille
+              concept of the current element.  This will restrict
+              panning from moving away from the braille information
+              presented for the current control.  </P
+></LI
+><LI
+><P
+>Re-read information as requested.</P
+></LI
+><LI
+><P
+>Read an entire dialog with speech.</P
+></LI
+><LI
+><P
+>Watch a particular field in a dialog box (e.g., the "%
+              CPU utilization" field and be notified when it
+              changes.</P
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> how does Sam specify what to watch and
+              how does Orca notify Sam when the value changes?</P
+></LI
+></UL
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="USER_REQUIREMENTS"
+></A
+>User Requirements</H1
+><P
+>Based upon discussions with end users as well as the tasks
+      and ideas from the <A
+HREF="#PERSONAS"
+>personas</A
+>, Orca must supply at least the
+      following end-user features.</P
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN386"
+>Availability at All Times</A
+></H2
+><P
+>Orca will often be the only vehicle by which many users
+        will be able to access the system.  As such, it must be
+        available at all times, including at system login and
+        screen-saver screens.</P
+><P
+>Orca must also be available after the system returns from
+        "standby" or "sleep" mode.</P
+><P
+>Finally, in the event the user's choice of speech synthesis
+        engine becomes unavailable (e.g., expired license), Orca must
+        attempt to find and use an alternative synthesis engine.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN391"
+>Failure Resiliency</A
+></H2
+><P
+>In the event that Orca fails or a component of the
+        system that Orca depends upon fails, the system should be able
+        to heal (and perhaps restart) itself appropriately.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN394"
+>Seamless Interaction with Traditional Keyboard Navigation
+      Methods</A
+></H2
+><P
+>Orca must allow users to navigate through the desktop and
+        applications on the desktop using the system keyboard
+        navigation gestures (e.g., Alt+Tab to select the next window).
+        In other words, Orca must not interfere with traditional
+        keyboard navigation.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN397"
+>Seamless Interaction with Other Assistive
+      Technology</A
+></H2
+><P
+>It is not uncommon for users to simultaneously use other
+        assistive technologies, such as the AccessX features of XKB
+        [<SPAN
+CLASS="CITATION"
+><A
+HREF="#ACCESSX"
+><I
+>XKB</I
+></A
+>&#62;</SPAN
+>], to access their displays.
+        As such, Orca must be able to co-exist (i.e., not interfere)
+        with other assistive technologies in use by the user.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN402"
+>Consistent Style</A
+></H2
+><P
+> It is expected that access to applications will be driven
+        primarily via customized "scripts," with a fallback
+        ("default") script to be used in the absence of a customized
+        script.</P
+><P
+>While each script can provide dramatically different
+        access to an application, it is expected that scripts will
+        provide a users with a consistent style to access
+        applications.  To help with this consistent style, Orca will
+        provide a <A
+HREF="#STYLE_GUIDE"
+>style guide</A
+>, a well-documented "default"
+        script, and several application scripts that demonstrate and
+        promote this style.
+      </P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN407"
+>Customizable Behavior Per Application 
+      ("Scripting")</A
+></H2
+><P
+>It is expected that the default behavior will provide
+        reasonable access to all applications that use the AT-SPI.
+        However, to provide dramatically improved access, Orca must be
+        able to provide customized behavior for individual
+        applications.</P
+><P
+>For example, one can envision a script for an e-mail
+        application that can provide prioritized access to one's
+        inbox.  Another example may be that the script provides
+        keyboard access to select and copy displayed text to the
+        system clipboard in the event the application doesn't support
+        this (e.g., the only way to select text in a terminal window
+        is to use a mouse - a script might create new keybindings to
+        allow a user to do this from the keyboard).</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN411"
+>Configurable Presentation and Interaction</A
+></H2
+><P
+>Different users have different capabilities (e.g., some
+        may be able to hear some synthesis voices better than others;
+        some may use braille while others do not) and desires (e.g.,
+        some may prefer faster speaking rates).  As such, the general
+        manner and means by which Orca presents information to the
+        user must be configurable by the end user.</P
+><P
+>Users must also be able to change configuration settings
+        while Orca is running, including the ability to turn
+        presentation modes (i.e., speech, braille, magnification) on
+        or off without the need to restart Orca.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN415"
+>Focus Tracking as the Default Mode</A
+></H2
+><P
+>Known as "focus tracking," Orca must provide a mode
+        to track the current region of interest, which is usually the
+        object that has keyboard focus.</P
+><P
+>When first starting up and when the region of interest has
+        changed, Orca must provide a short summary of the region of
+        interest, and must also provide a mechanism for the user to
+        obtain more detailed information.  The presentation will
+        follow the <A
+HREF="#STYLE_GUIDE"
+>style guide</A
+>.</P
+><P
+>When navigating text areas in a character-by-character or
+        word-by-word fashion (or any linear fashion for that matter),
+        Orca must provide an option to play an audio cue when the
+        caret crosses line boundaries.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN421"
+>Flat Review Mode</A
+></H2
+><P
+>Orca must provide the ability for a user to review the
+        contents of the desktop or a given application.  This is
+        typically done by the user making a well known command indicating "review,"
+        with Orca reacting by presenting the area to be reviewed.  At
+        any time, the user can interrupt the review mode, causing
+        presentations such as speech output to stop
+        immediately.</P
+><P
+>Another option for review mode includes the ability to
+        use a set of well known commands to quickly skim the contents of the
+        display.</P
+><P
+>The review of the desktop will follow the <A
+HREF="#STYLE_GUIDE"
+>style guide</A
+>,
+        and will at least provide a short summary of the available
+        applications.  While the review of an application will also
+        follow the <A
+HREF="#STYLE_GUIDE"
+>style guide</A
+>, the overall presentation depends
+        largely upon the application being reviewed.</P
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> Add notions of "hierarchical review," and "hybrid
+        review (e.g., in/out of lists)".  Need to flesh out the
+        primary purposes of each.</P
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> Add ability to read a dialog/window.</P
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> As with navigating text, should Orca have an option to
+        play an audio cue when the "next" or "prev" object command takes
+        user to a new line?</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN434"
+>Presentation of Text</A
+></H2
+><P
+>For any given piece of text, Orca must provide the ability
+        to speak the current character, word, or line.  When speaking
+        the current word, Orca must provide the ability to spell it
+        out in either letter-by-letter or phonetic (e.g., military
+        spelling) mode.  When speaking a line or set of lines, Orca
+        must offer the ability to verbalize punctuation.</P
+><P
+>Orca must provide the ability to present the following to the
+        user:</P
+><P
+></P
+><UL
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>Attributes</I
+> - font size,
+            face (bold, italic, etc.), underline, color, etc.</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>Capitalization</I
+> - is it
+            capital or lower case?</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>Selection</I
+> - is the text
+            selected or not?</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>Indentation</I
+> - what is the
+            indentation level?</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>Bounds</I
+> - what is the
+            bounding box of the text (where and size)?</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN454"
+>Learning Mode (Command Echo)</A
+></H2
+><P
+>Orca must provide a feature that optionally presents the
+        command to be invoked when the user presses a key on the
+        keyboard or braille display.  All key events in this mode will
+        be consumed by Orca, thus allowing the user to freely type
+        anything to learn what the effect of the key will be. A
+        command being spoken must be able to be interrupted at any
+        time.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN457"
+>Customizable Gestures</A
+></H2
+><P
+>While Orca will provide a default set of well known 
+        keyboard and braille <A
+HREF="#GESTURES"
+>input gestures</A
+>, users must be able to
+        override these gestures and extend them with gestures of
+        their own choosing.</P
+><P
+>The user interface for defining these gestures must be
+        easy to use.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN462"
+>"List All Applications" Command</A
+></H2
+><P
+>Orca will provide a means for a user to determine all
+        applications running on the desktop as well as all open
+        windows on the desktop.</P
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> the Alt+Tab functionality of the desktop may be
+        sufficient to meet this requirement.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN467"
+>"Where Am I?" Command</A
+></H2
+><P
+>Orca will provide a means for a user to determine information
+        about the current object of interest, including the object
+        itself, which window it is in, which application, which
+        workspace, etc.</P
+><P
+>The object of interest can vary depending upon the
+        navigation mode the user is using at the time.  For example,
+        in focus tracking mode, the object of interest is the object
+        with keyboard focus.  In review mode, the object of interest
+        is the object currently being visited, whether it has keyboard
+        focus or not.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN471"
+>"Jump to Well Known Object" Commands</A
+></H2
+><P
+>There are common locations a user wants to jump to at any
+        given time.  These include the title bar, the status bar, the
+        toolbar, the beginning of a window, the end of a window, the
+        system applet tray, etc.  Orca will provide well known commands for Orca to
+        enter review mode and set the current object of interest to
+        one of these objects.  From this point, the user can use a
+        well known command to go back to the object with focus, give the jumped-to
+        object focus if possible, or perform the equivalent of a mouse
+        click on the jumped-to object.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN474"
+>"Find" Command</A
+></H2
+><P
+>Orca will allow users to enter a string to search for a
+	visible text string in the current window or entire desktop.
+	If the string is found (e.g., the string matches the
+	accessible name of an object or the string matches a string in
+	a text area), Orca will switch to "review mode" and make the
+	associated object the object of interest.  From this point,
+	the user can use a well known command to go back to the object with focus,
+	give the found object focus if possible, or perform the
+	equivalent of a mouse click on the found object.</P
+><P
+>In the event the user is a magnification user, the magnifier
+        will moved to the found object.</P
+><P
+>The search will be performed in the text flow of the
+	locale (e.g., left-to-right, top-to-bottom) from the current
+	point of interest, wrapping back to the beginning of the
+	window if necessary.</P
+><P
+>The search will provide options for requiring a full word
+	match (e.g., "ok" will not match "token") or substring match
+	(e.g., "ok" will match "token").</P
+><P
+>Finally, the "find" command will also allow the user to
+	search for text based on attribute (e.g., "bold"), and the
+	search will allow the user to search based solely on attribute
+	type, text string, or a combination of both.</P
+><P
+><I
+CLASS="EMPHASIS"
+>NOTE:</I
+> this feature is for searching for visible text
+	only.  Traditional searching for text in documents will be
+	supported by application functionality (e.g., the "search"
+	menu item in the application.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN483"
+>Watched Objects</A
+></H2
+><P
+>Orca will allow users to indicate interest in an object.
+	Once interest has been given, Orca will notify the user of
+	changes to that object, whether it or its window has focus or
+	not.  Orca will also provide an option to automatically enter
+	review mode and make the watched object the object of
+	interest.  From this point, the user can use a well known command to go
+	back to the object with focus, give the watched object focus
+	if possible, or perform the equivalent of a mouse click on the
+	watched object.</P
+><P
+>In the event the user is a magnification user, the magnifier
+        will moved to the found object.  Alternatively, the user may 
+        have set up a separate "zoomer" to watch the object.  In this
+        case, the zoomer will always reflect the current state of the
+        watched object.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN487"
+>Bookmarked Objects</A
+></H2
+><P
+>Orca will allow users to define a gesture (keyboard or
+	braille) that will tell Orca to enter review mode and make a
+	particular object the object of interest.  From this point,
+	the user can use a well known command to go back to the object with focus,
+	give the bookmarked object focus if possible, or perform the
+	equivalent of a mouse click on the bookmarked object.</P
+><P
+>In the event the user is a magnification user, the magnifier
+        will moved to the bookmarked object.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN491"
+>Document Reading</A
+></H2
+><P
+>Orca must provide the ability for a user to read the
+        contents of a document, such as e-mail or a word processing
+        document.  As the document is read, Orca will instruct the
+        associated application to scroll so as to keep the portion
+        being read visible on the screen (and magnifier).  The
+        invocation of the document reading will be triggered via a
+        well known command and may be stopped at any time by the user.  When the
+        review stops, the caret will be positioned at the end of the
+        last word spoken (if possible - this depends upon the
+        capabilities of the text area as well as the speech
+        engine).</P
+><P
+>Orca will also provide options to highlight the text
+        being spoken.</P
+><P
+><I
+CLASS="EMPHASIS"
+>NOTE:</I
+> while the reading of a document will follow the
+        <A
+HREF="#STYLE_GUIDE"
+>style guide</A
+>, the overall presentation depends largely upon
+        the document being read (e.g., is it a text document,
+        spreadsheet, web page, etc.?).</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN498"
+>Ability of Non-focused Windows to Present of
+      Information</A
+></H2
+><P
+>Orca must allow for the presentation of information of
+        objects that do not have keyboard focus.  While the
+        presentation will typically be information on objects that the
+        user has requested interest in, it may also come from custom
+        scripts that have decided it is important for them to present
+        something.  Examples of such information include announcing
+        the status of a progress bar, announcing the subject/sender of
+        incoming e-mail, etc.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN501"
+>Speech Synthesis</A
+></H2
+><P
+>One of the primary non-visual ways to present a graphical
+        display to a user is via speech synthesis.  Note that Orca
+        need not be a speech synthesizer, but it must be able to drive
+        one.  The most important functionality Orca needs for speech
+        synthesis are as follows:</P
+><P
+></P
+><UL
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>General Synthesis</I
+> -
+            Orca must be able to speak an utterance (e.g., a word, a
+            label, a sentence, etc.) or set of utterances (e.g., a
+            paragraph or entire document).  The utterance being spoken
+            must be able to interrupted at any time.</P
+><P
+><I
+CLASS="EMPHASIS"
+>IMPLEMENTATION DETAIL:</I
+> if at all possible, the synthesis engine
+            should be able to tell Orca what has been spoken, allowing
+            Orca to synchronize its internal data structures with what
+            has been presented to the user via speech.</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>Voice Styles</I
+> - Orca
+            must be able to identify and allow the user to select
+            between the voices available on the various synthesis
+            engines available on the system.  In addition, Orca must
+            allow the user to customize parameter settings for the
+            voices, such as average pitch, speaking rate, and volume.
+            The combination of {voice, pitch, rate, volume} will be
+            known as a "voice style."  Orca will provide the user with
+            the ability to select the voice styles to be used for
+            various speaking operations (e.g., default, uppercase,
+            warning, alarm, etc.), and may also provide unique "voice
+            style sets" depending upon the navigation mode being used
+            (e.g., focus tracking, review mode, etc.).  At a minimum,
+            Orca will support a "default" style to be used for the
+            majority (if not all) of the speaking operations.</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>Speaking Rate
+            Modification</I
+> - While the speaking rate will
+            generally remained fixed once configured, users may
+            sometimes which to speed up or slow down the presentation
+            of speech.  While it is ideal that user can do this while
+            the synthesis engine is speaking, such functionality is
+            typically not provided by the majority of speech synthesis
+            engines.  Orca must, however, allow the user to change the
+            speaking rate that will be used for the next utterance,
+            should the underlying engine support changes to speaking
+            rate.</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>Multilingual Text</I
+> -
+            Orca should provide the ability to speak a single
+            utterance that contains words or phrases from multiple
+            locales.  This is an emerging area for speech synthesis
+            engines, however, so Orca will support this feature if the
+            underlying engine(s) support it.</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>Spelling Mode</I
+> - Orca
+            must be able to optionally spell out words, either letter
+            by letter or by military (e.g., alpha, bravo, charlie)
+            spelling.</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>Verbalized
+            Punctuation</I
+> - Orca must be able to optionally
+            verbalize punctuation.</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>Repeated Character
+            Count</I
+> - Orca must be able to optionally
+            compress the repetition of character by saying something
+            such as "25 dashes" instead of "dash dash dash dash
+            dash..."</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN528"
+>Key and Text Echo</A
+></H2
+><P
+>Orca must provide a set of options to allow the user to
+        enable the automatic speaking of keys as they are typed,
+        alphanumeric characters as they are entered/deleted, and words
+        as they are entered.  The speech much be interruptable at any
+        time.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN531"
+>Refreshable Braille</A
+></H2
+><P
+>Braille is another primary non-visual presentation mode
+        for screen readers.  As with speech synthesis, Orca need not
+        directly support a braille display, but it must be able to
+        drive one.  The primary end requirements for a braille display
+        are as follows:</P
+><P
+></P
+><UL
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>Work with BrlTTY</I
+> - it
+            is not expected that users will abandon character cell
+            access to their virtual consoles.  To preserve this access
+            (which will be done via BrlTTY), Orca will not interrupt
+            or alter the behavior of BrlTTY.</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>Effective use of
+            space</I
+> - Orca should try to use the cells on the
+            braille display as effectively as possible.  This will be
+            driven primarily by the <A
+HREF="#STYLE_GUIDE"
+>style guide</A
+>, and can also
+            include the the option to effectively compress white
+            space.</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>Effective use of input
+            buttons</I
+> - Orca should use any input buttons on
+            the display as effectively as possible, with the default
+            behavior being the equivalent effect of the BrlTTY
+            bindings for those buttons.  These functions include
+            panning the braille display as well as driving the flat
+            review mode.  The functions also include the ability to
+            quickly toggle features on and off, such as: toggle
+            compression of whitespace, toggle attributes to be shown
+            using dots 7-8 or status cells, toggle between grade I and
+            grade II, etc.</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>Effective use of cursor routing
+            keys</I
+> - Orca should enable the cursor routing
+            keys to be used to click on objects, set slider values,
+            etc.</P
+><P
+>In the event there is a second set of cursor routing
+            keys, Orca will attempt to make effective use of them
+            (e.g., pressing them tells Orca to relay text attribute
+            information via speech).</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>Effective use of input button
+            and cursor routing key combinations</I
+> - Orca
+            should allow the user to use combinations of input buttons
+            and/or cursor routing keys to perform operations such as
+            selecting text, jumping to bookmarks, etc.</P
+><P
+><I
+CLASS="EMPHASIS"
+>NOTE:</I
+> selection of text using combined keyboard and
+            braille actions (e.g., holding the shift key while
+            pressing a cursor routing key) may also be
+            considered.</P
+><P
+><I
+CLASS="EMPHASIS"
+>NOTE:</I
+> input of text using chording of braille keys
+            might be considered, but is not a high priority.</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>Cursor options</I
+> - Orca
+            should provide the user with the ability to show the cursor
+            or not.  If shown, the user should have the ability to make
+            it blink, and should also have the ability to tell it to
+            either take the entire cell or just dots 7-8.</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>Ability to have multiple pan regions
+            on the display</I
+> - watched objects may need to be able
+            to remain on a static area of the display (e.g., the rightmost
+            10 cells).  The braille support should enable this and should
+            also allow the user to pan either the "main" display or the
+            watched area.</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN562"
+>Synchronization with Screen Magnifiers</A
+></H2
+><P
+>In addition to co-existing with each other, a screen
+        magnifier and Orca must be in sync with each other.  For
+        example, when Orca is reviewing an area of the screen that is
+        larger than the screen magnifier can display at once, Orca
+        must inform the screen magnifier that the region of interest
+        has changed.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN565"
+>Acceptable Response Time</A
+></H2
+><P
+>Orca must not degrade the perceptible performance of the
+        system.  That is, user should be able to detect any decrease
+        is responsiveness of the desktop when the Orca is being used.
+        In addition, a user's interaction with Orca should appear as
+        crisp and as lively as normal interaction with the display via
+        traditional interfaces (e.g., the keyboard).</P
+><P
+>Acceptable performance of the speech synthesis output is
+        very important.  Orca must be able to provide speech synthesis
+        that meets or exceeds the following performance
+        metrics:</P
+><P
+></P
+><UL
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>Time to First Sound</I
+> -
+            The time between when a speech synthesizer gets a request
+            to speak and when the synthesizer actually starts speaking
+            must be minimal (e.g., less than 30ms).</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>Time to Cancel</I
+> - Orca
+            must be able to cancel speech synthesis in progress, and
+            the time to cancel must be minimal (e.g., less than 30ms).
+            Furthermore, the time between when a cancel is issued and
+            the time the next utterance is to be spoken must be
+            minimal (e.g., less than 30ms).</P
+></LI
+></UL
+><P
+>All updates to the braille display should occur within
+        50ms of the time the update command was issued.</P
+><P
+>The magnifier should offer smooth performance and show no
+        visible lag.</P
+><DIV
+CLASS="NOTE"
+><P
+></P
+><TABLE
+CLASS="NOTE"
+WIDTH="100%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="./stylesheet-images/note.gif"
+HSPACE="5"
+ALT="Note"></TD
+><TH
+ALIGN="LEFT"
+VALIGN="CENTER"
+><B
+>Performance Scope</B
+></TH
+></TR
+><TR
+><TD
+>&nbsp;</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>It is understandable that much of the response time may
+          be due to factors outside the control of Orca (e.g., Bonobo
+          and the underlying speech engine).  As such, the primary
+          responsibility of Orca and each application script is to
+          process AT-SPI and keyboard events as quickly as possible.
+          </P
+></TD
+></TR
+></TABLE
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN581"
+>Documentation and Tutorials</A
+></H2
+><P
+> Although it is a reasonable goal that Orca should attempt
+        to achieve, users cannot be expected to be able set up and use
+        Orca without documentation.  Like other systems, such as JAWS,
+        Orca must provide documentation and tutorials on the
+        installation, configuration and use of Orca.  This
+        documentation must come in form(s) that are accessible to
+        people who need to use the screen reader (e.g., accessible
+        text and audio).</P
+></DIV
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="STYLE_GUIDE"
+></A
+>Default Interaction Styles</H1
+><P
+>Associated with the discussion of the personas was the
+      notion of a need for consistent and efficient interaction
+      methods for Orca.  This notion resulted in the development of
+      default interaction styles for speech synthesis, braille input
+      and output, magnification, and keyboard control of Orca.  The
+      following sections describe these default interaction styles in
+      more detail.</P
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="GESTURES"
+>Input Style: Keyboard Mappings</A
+></H2
+><P
+>This section describes the default keyboard mappings for the
+        focus tracking and flat review modes of the Orca screen reader.
+        Note that Orca allows these mappings to be overridden and
+        extended, allowing users to define their own keyboard
+        mappings.</P
+><P
+>As with most other available screen readers, the numeric
+        keypad is the primary location for Orca keystrokes.  Where
+        appropriate, the keymap also provides letter-based mnemonics
+        that have been carefully chosen so as to make Orca easier to
+        translate into other languages.  Furthermore, the default
+        mappings have been developed with a minimalist approach so as to
+        allow custom scripts to override and extend the default
+        keyboard behavior while reducing conflict with the default
+        keybindings.</P
+><P
+>Orca will also automatically invoke flat review mode when a
+        command is issued to review any part of the screen that does not
+        have the keyboard focus.</P
+><P
+>Finally, when in flat review mode, Orca will optionally
+        allow the mouse to follow the object of interest.  <I
+CLASS="EMPHASIS"
+>TODO:</I
+> this
+        probably should be moved to the user requirements instead of
+        the key mappings.</P
+><P
+>NOTE: Ideally, a screen reader should provide good access
+        on a laptop, which typically means using the numeric keypad is
+        an inconvenient access method.  As appropriate, Orca's default
+        keyboard mappings may change to reflect this ideal goal;
+        alternatively, Orca may provide another set of keyboard
+        mappings optimized for laptop use.</P
+><P
+>In brief summary, the default keyboard mappings break the
+        numeric keypad into the following logical sections:</P
+><P
+></P
+><UL
+><LI
+><P
+>The top row is for mouse clicks, managing focus, and
+            switching review mode between focus tracking and flat
+            review.</P
+></LI
+><LI
+><P
+>Keypad keys 7, 8, and 9 are for navigating lines</P
+></LI
+><LI
+><P
+>Keypad keys 4, 5, and 6 are for navigating words</P
+></LI
+><LI
+><P
+>Keypad keys 1, 2, and 3 are for navigating characters</P
+></LI
+></UL
+><P
+>In more detail, the keyboard mappings are as follows, and
+        use the "INSERT" key as a modifier (note that Orca will most
+        likely allow the user to define a different key to use instead
+        of "INSERT"):</P
+><P
+></P
+><UL
+><LI
+><P
+>"KEYPAD_/": performs a left mouse click on the current
+             object of interest</P
+></LI
+><LI
+><P
+>"KEYPAD_*":  performs a right mouse click on the current
+             object of interest</P
+></LI
+><LI
+><P
+>"KEYPAD_-": when in flat review, returns to the object
+             with keyboard focus (note that any user action that causes
+             the screen or focus to change will also do this).  If the
+             user is currently in focus tracking mode, pressing this key
+             activates flat review mode.</P
+></LI
+><LI
+><P
+>"KEYPAD_+": reads from current position to end of
+             document.  If any key is pressed afterwards, reading stops
+             and the appropriate object is given appropriate focus
+             (e.g., the text caret will be placed on the last word
+             spoken).  If the user is in a dialog box, pressing this key
+             reads the dialog box in a logical order.</P
+></LI
+><LI
+><P
+>"KEYPAD_ENTER": performs "where am I?"  If this key is
+            pressed twice selection information will be spoken ie all
+            the selected items or text.  </P
+></LI
+><LI
+><P
+>"KEYPAD_.": performs a "screen find."  Pressing this key
+            brings up a dialog where a user can enter a search string
+            and decide where on the screen the search should begin IE
+            from the top or current position.</P
+></LI
+><LI
+><P
+>"KEYPAD_7": moves the review position to the prior line,
+             landing on object closest to current object</P
+></LI
+><LI
+><P
+>"INSERT+KEYPAD_7": moves the review position to the
+          beginning of the current line</P
+></LI
+><LI
+><P
+>"KEYPAD_8": speaks current line.  If flat review has been
+             activated, this acts on the line at the review location.  If
+             the user is in focus tracking mode, the line or item with
+             focus is spoken.  When this key is pressed twice quickly
+             the line is read with formatting and capitalization
+             details.</P
+></LI
+><LI
+><P
+>"KEYPAD_9": moves the review position to the next
+            line</P
+></LI
+><LI
+><P
+>"INSERT+KEYPAD_9": moves the review position to the top
+            of the review area.</P
+></LI
+><LI
+><P
+>"KEYPAD_4": moves the review position to the prior word or
+            item</P
+></LI
+><LI
+><P
+>"KEYPAD_5": speaks the current word or item.  If this key
+             is pressed twice quickly the word is spelled and any
+             capitalization is be announced; three times results in
+             phonetic spelling</P
+></LI
+><LI
+><P
+>"KEYPAD_6": moves the review position to the next word or
+            item</P
+></LI
+><LI
+><P
+>"KEYPAD_1": moves the review position to the prior
+            character</P
+></LI
+><LI
+><P
+>"INSERT+KEYPAD_1": moves the review position to the end
+            of the line</P
+></LI
+><LI
+><P
+>"KEYPAD_2": speaks the current character.  If this key is
+             pressed twice quickly the character is pronounced
+             phonetically (if it is a letter)</P
+></LI
+><LI
+><P
+>"KEYPAD_3": moves the review position to the next
+            character</P
+></LI
+><LI
+><P
+>"INSERT+KEYPAD_3": moves the review position to the
+            bottom of the review area</P
+></LI
+><LI
+><P
+>INSERT+s: speaks the status bar (if there is one)</P
+></LI
+><LI
+><P
+>INSERT+t:  speaks the title of dialog or app</P
+></LI
+><LI
+><P
+>INSERT+v: brings up a verbosity preference dialog.
+             Example settings include whether or not to speak indenting
+             when working with text, speaking capitalization, speak the
+             role of items, speak font information if it changes,
+             etc.</P
+></LI
+><LI
+><P
+>INSERT+RIGHT_ARROW:  increases speech rate</P
+></LI
+><LI
+><P
+>INSERT+LEFT_ARROW: decreases speech rate</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN655"
+>Input Style: Braille Mappings</A
+></H2
+><P
+>This section describes the default braille mappings for the
+        focus tracking and flat review modes of the Orca screen reader.
+        Note that Orca allows these mappings to be overridden and
+        extended, allowing users to define their own braille
+        mappings.</P
+><P
+>Where at all possible, the default braille mappings for
+        Orca will map to their equivalent action in BrlTTY.  This
+        permits users to have a consistent experience with their
+        braille display when using virtual character-cell consoles on
+        their machine as well as the GUI display.</P
+><P
+>The braille key functionality includes the following:</P
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> need to map these to BrlTTY commands.</P
+><P
+></P
+><UL
+><LI
+><P
+>Pan left:</P
+></LI
+><LI
+><P
+>Pan right:</P
+></LI
+><LI
+><P
+>Line up:</P
+></LI
+><LI
+><P
+>Line down:</P
+></LI
+><LI
+><P
+>Beginning of line</P
+></LI
+><LI
+><P
+>End of line</P
+></LI
+><LI
+><P
+>Top of window</P
+></LI
+><LI
+><P
+>Bottom of window:</P
+></LI
+><LI
+><P
+>Return to focus</P
+></LI
+><LI
+><P
+>Cursor routing/clicking</P
+></LI
+><LI
+><P
+>Text selection: accomplished by pressing a touch
+            cursor at the beginning and end of the region that the
+            user wishes to select in conjunction with another well
+            known key on the display.</P
+></LI
+><LI
+><P
+>Set watched area:</P
+></LI
+><LI
+><P
+>Set Bookmarked area</P
+></LI
+><LI
+><P
+>Go to bookmarked area</P
+></LI
+><LI
+><P
+>Go to watched area:</P
+></LI
+></UL
+><P
+>In addition, the following commands will be used to cycle
+        between braille features:</P
+><P
+></P
+><UL
+><LI
+><P
+>Toggle space compression: toggles whether or not
+            spaces are compressed when navigating with the braille
+            display</P
+></LI
+><LI
+><P
+>Toggle grade two on and off:</P
+></LI
+><LI
+><P
+>Toggle what attributes if any are displayed:</P
+></LI
+><LI
+><P
+>Enter verbosity mode:</P
+></LI
+><LI
+><P
+>Toggle keyboard learn mode:</P
+></LI
+><LI
+><P
+>Toggle display style: toggles between the default
+            view, which is the logical presentation of the focus and
+            the contents of the current line [[[WDW - ???]]]</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN707"
+>Output Style: Speech Synthesis and Braille</A
+></H2
+><P
+>This section provides output styles for each relevant
+        Accessible role. <I
+CLASS="EMPHASIS"
+>TODO:</I
+> this is a work in progress.</P
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN711"
+>General Braille Style</A
+></H3
+><P
+>For braille, there are two verbosity levels.  The first
+          is a more verbose level for use with larger braille displays
+          and for those users who are not expert with the Gnome
+          desktop environment.  The second more brief mode is for
+          those who are using a smaller display or who are expert with
+          the Gnome environment.  With braille, Orca should always
+          make an effort to show as much of the actual item with focus
+          as possible, and the user should never be left with a
+          completely blank display unless they are on a blank line in
+          a text editor.</P
+><P
+>A general style for displaying braille is as follows:
+          the line will be built up of several regions and an attempt
+          will be made to start the most meaningful region at a given
+          "homing position."  The idea behind the homing position is
+          that it will be the braille cell of the user's choice (e.g.,
+          the first cell of the display, the middle of the display,
+          etc.) that the user can navigate to quickly.  In the event
+          that the line is too long for the physical display, the
+          homing position will will apply and the line will be clipped
+          to the left and/or right as appropriate; the user can use
+          the panning actions to view the clipped information.  The
+          regions of the line follow a general pattern:</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose: context label [value] rolename</P
+></LI
+><LI
+><P
+>Brief: context label [value]</P
+></LI
+></UL
+><P
+>Where:</P
+><P
+></P
+><UL
+><LI
+><P
+>context is information about the container with focus.
+              Examples include "calculator window," "desktop," "save as
+              dialog," "low disk space alert," etc.  <I
+CLASS="EMPHASIS"
+>TODO:</I
+> context can
+              be composed of nested contexts (e.g., a page tab in a dialog);
+              we need to decide what the context is (e.g., logical visual
+              grouping of objects?)</P
+></LI
+><LI
+><P
+>label is the label of the object, usually obtained by
+              the name of the object or the text of the label that
+              labels the object.  Examples include "File," "OK," "First
+              name:," "Volume:," etc.  The label is generally viewed as
+              the most meaningful region.</P
+></LI
+><LI
+><P
+>[value] (optional) is the value of the object, and varies
+              depending upon the object type.  For example, "&#60;x&#62;" for a 
+              check box, "70%" for a slider, and "Mike Pedersen" for a text
+              field.</P
+></LI
+><LI
+><P
+>rolename is a localized string representing the name
+              of the role of the object.  The user can select between
+              full rolenames (e.g., "check box," "menu item," "push
+              button") or abbreviated rolenames (e.g., "chk," "mit,"
+              "pbt").  Note that the rolename may also appear in
+              brief mode if the role of the object is not clear from
+              the label and surrounding context.</P
+></LI
+></UL
+><P
+>The braille cursor (e.g., dots 7 and 8 on the braille
+          display) will be used to indicate meaningful information as
+          well.  For example, the cursor will indicate caret position
+          in text areas, and the cursor will also be used to indicate
+          the menu item with focus.</P
+><P
+>Finally, the touch cursors on the display will "do the
+          right thing."  When in focus tracking mode, pressing any
+          touch cursor associated with most objects will perform the
+          default action for that object; the obvious exception is
+          text areas, where the touch cursor will move the text caret
+          to that object.  <I
+CLASS="EMPHASIS"
+>TODO:</I
+> define what happens in flat review -
+          this might move keyboard focus to the object, perform a
+          click, etc.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN734"
+>General Speech Style</A
+></H3
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN738"
+>Output Styles by Role</A
+></H3
+><DIV
+CLASS="SECTION"
+><H4
+CLASS="SECTION"
+><A
+NAME="AEN740"
+>accelerator label (ROLE_ACCEL_LABEL)</A
+></H4
+><P
+>An accelerator label is a short string that appears at
+            the end of the text for a menu item (e.g., "CTRL+Z"), and
+            defines the keystrokes that will invoke the action associated
+            with a menu item.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN743"
+>Braille</A
+></H5
+><P
+>When presented, the accelerator will always be
+	      presented after the item it represents and before the
+	      marker that separates menu items.  The braille text for
+	      the accelerator will appear in parentheses with no space
+	      before the opening parenthesis.  Accelerator labels will
+	      only be presented in verbose mode, and will only appear
+	      for the item with focus.  In the event that there are
+	      other things to show (e.g., check buttons or role
+	      names), the accelerator will appear to the far right.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: view menu show mumble &#60;x&#62;(CTRL+M) _ zoom in _ ...</P
+></LI
+><LI
+><P
+>Brief Example: view menu show mumble &#60;x&#62; _ zoom in _ ...</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN751"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN755"
+>alert (ROLE_ALERT)</A
+></H4
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> the AT-SPI makes a distinction between alerts and
+            dialogs.  But, it appears as though the role "alert" is applied
+            to just about any dialog.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN759"
+>Braille</A
+></H5
+><P
+>Any window, regardless if it is an alert, dialog,
+              frame, or window, will appear as the context region on
+              the braille line.  The context string will consist of
+              the title of the window followed by its role.  The
+              remainder of the braille line will consist of
+              information describing the object with focus in the
+              window.  The information will follow the presentation rules
+              for the given role type.</P
+><P
+>In the case of the "alert", the role of the context will
+              be "alert."</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: low disk space alert</P
+></LI
+><LI
+><P
+>Brief Example: low disk space alert</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN768"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN772"
+>animation (ROLE_ANIMATION)</A
+></H4
+><P
+>An animation contains a moving or dynamic image.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN775"
+>Braille</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> should this follow a pattern of "label
+              description role" to be more consistent with the
+              generalized style?</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: animation: Will riding his bike.</P
+></LI
+><LI
+><P
+>Brief Example: animation: Will riding his bike.</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN784"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN788"
+>arrow (ROLE_ARROW)</A
+></H4
+><P
+>An arrow is a 2D directional indicator.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN791"
+>Braille</A
+></H5
+><P
+>An arrow will be represented by the direction the arrow
+              is pointing followed by "arrow."  Any touch cursor associated
+              with the text will click the arrow. <I
+CLASS="EMPHASIS"
+>TODO:</I
+> should the rolename
+              "arrow" appear in brief mode?</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: left arrow</P
+></LI
+><LI
+><P
+>Brief Example: up arrow</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN800"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN804"
+>check box (ROLE_CHECK_BOX)</A
+></H4
+><P
+>A check box represents a choice that can be checked or
+            unchecked and provides an indicator for the current
+            state.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN807"
+>Braille</A
+></H5
+><P
+>The state of a check box will be represented by "&#60; &#62;" if
+              it is unchecked and "&#60;x&#62;" if it is checked.  Any touch
+              cursor associated with the text will click the check box.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: save password: &#60; &#62; checkbox</P
+></LI
+><LI
+><P
+>Brief Example: save password: &#60;x&#62;</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN815"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech - should determine verbosity if state
+              changes while the checkbox has focus.</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN819"
+>check menu item (ROLE_CHECK_MENU_ITEM)</A
+></H4
+><P
+>A check menu represents a menu item that can be
+            checked or unchecked and provides an indicator for the
+            current state.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN822"
+>Braille</A
+></H5
+><P
+>All menus items from a single menu will be shown at
+              the same time (see ROLE_MENU). The state of a check menu
+              item will be represented by "&#60; &#62;" if it is unchecked
+              and "&#60;x&#62;" if it is checked. (See also
+              ROLE_ACCEL_LABEL).  The touch cursors will result in
+              activating the item.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: show status bar &#60; &#62;(CTRL+B) checkmenu</P
+></LI
+><LI
+><P
+>Brief Example: show status bar &#60;x&#62;</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN830"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN834"
+>column header, table column header (ROLE_COLUMN_HEADER, ROLE_TABLE_COLUMN_HEADER)</A
+></H4
+><P
+>A column header is a header for a column of data.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN837"
+>Braille</A
+></H5
+><P
+>A column header will be treated like a button (column
+              headers are usually clickable, typically resorting the
+              rows of the associated table), except it will be followed 
+              by "column heading" in verbose mode.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: monthly income column heading</P
+></LI
+><LI
+><P
+>Brief Example: monthly income</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN845"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN849"
+>combo box (ROLE_COMBO_BOX)</A
+></H4
+><P
+>A combo box is a single line item that contains a list of
+            choices the user can select from, and it can also contain
+            editable text.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN852"
+>Braille</A
+></H5
+><P
+>The verbose and brief modes will show the label followed
+              by the item followed by the word "combo."  If the item is
+              selected, it will be completely underlined with dots 7 &#38; 8
+              to indicate selection.  <I
+CLASS="EMPHASIS"
+>TODO:</I
+> what do we do if the item is
+              editable text?</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: time zone: GMT-8 pacific combo</P
+></LI
+><LI
+><P
+>Brief Example: time zone: GMT-8 pacific combo</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN861"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN865"
+>desktop icon (ROLE_DESKTOP_ICON)</A
+></H4
+><P
+>A desktop icon is an iconified internal frame within a 
+            desktop pane.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN868"
+>Braille</A
+></H5
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: file.txt icon</P
+></LI
+><LI
+><P
+>Brief Example: file.txt icon</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN875"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN879"
+>dial (ROLE_DIAL)</A
+></H4
+><P
+>A dial is a rotatable valuator.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN882"
+>Braille</A
+></H5
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: temperature 50 dial</P
+></LI
+><LI
+><P
+>Brief Example: temperature 50 dial</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN889"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN893"
+>dialog (ROLE_DIALOG)</A
+></H4
+><P
+>A dialog is a top level window with a title and border.
+            <I
+CLASS="EMPHASIS"
+>TODO:</I
+> the AT-SPI makes a distinction between alerts and
+            dialogs.  But, it appears as though the role "alert" is applied
+            to just about any dialog.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN897"
+>Braille</A
+></H5
+><P
+>Any window, regardless if it is an alert, dialog,
+              frame, or window, will appear as the context region on
+              the braille line.  The context string will consist of
+              the title of the window followed by its role.  The
+              remainder of the braille line will consist of
+              information describing the object with focus in the
+              window.  The information will follow the presentation rules
+              for the given role type.</P
+><P
+>In the case of the "dialog", the role of the context will
+              be "dialog."</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: Editing profile "foo" dialog</P
+></LI
+><LI
+><P
+>Brief Example: Editing profile "foo" dialog</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN906"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN910"
+>directory pane (ROLE_DIRECTORY_PANE)</A
+></H4
+><P
+>A directory pane is a pane that allows the user to 
+            navigate through and select the contents of a directory.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN913"
+>Braille</A
+></H5
+><P
+>When in a directory pane, it will be treated like a 
+              part of a context.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: Open file dialog select file directory pane filename: text</P
+></LI
+><LI
+><P
+>Brief Example: Open file dialog select file filename:</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN921"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN925"
+>icon (ROLE_ICON)</A
+></H4
+><P
+>An icon is a small fixed-sized picture typically used to
+            decorate components.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN928"
+>Braille</A
+></H5
+><P
+>The label of the icon (or the component for the icon) will
+              be displayed.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: unread icon</P
+></LI
+><LI
+><P
+>Brief Example: unread</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN936"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN940"
+>image (ROLE_IMAGE)</A
+></H4
+><P
+>An image is a picture, typically static.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN943"
+>Braille</A
+></H5
+><P
+>The label of the icon (or the component for the icon) will
+              be displayed.  <I
+CLASS="EMPHASIS"
+>TODO:</I
+> perhaps show accessible name and/or
+              description of the image?</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: new england in the fall image</P
+></LI
+><LI
+><P
+>Brief Example: new england in the fall</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN952"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN956"
+>html container (ROLE_HTML_CONTAINER)</A
+></H4
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> considerable thought needs to be done here.
+            An idea for links, however, is that their text should
+            be followed by the type of link: "[mailto,ftp,...] link."
+            In addition, it may actually be more beneficial to use
+            sound effects here so as to not interrupt the natural
+            flow of text.  That is, it would be better to speak
+            "press [boop] here to send e-mail to Mike" vs. "press 
+            here mailto link to send e-mail to Mike."</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN960"
+>Braille</A
+></H5
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example:</P
+></LI
+><LI
+><P
+>Brief Example:</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN967"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN971"
+>label (ROLE_LABEL)</A
+></H4
+><P
+>A label is a short string.  It typically labels another
+            object (e.g., a text area), but may be standalone.  When it
+            is standalone, it will be considered "static text."
+            Special handling of labels will only be done in the case
+            where they are static text.  In these cases, the user will
+            discover the text through review mode.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN974"
+>Braille</A
+></H5
+><P
+>Labels will be presented as "raw" text on the
+              display.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: you are low on disk space</P
+></LI
+><LI
+><P
+>Brief Example: you are low on disk space</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN982"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN986"
+>list (ROLE_LIST)</A
+></H4
+><P
+>A list is an object that presents a list of objects to the
+            user and allows them to select one or more of them.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN989"
+>Braille</A
+></H5
+><P
+>Orca will display the label for the list followed by
+              the focused item followed by "list" followed by the
+              position in the list if in verbose mode.  If the item is
+              selected, Orca will completely underline the item using
+              dots 7 and 8.  The touch cursors will toggle the selection
+              of the associated itme.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: state: california list 5 of 50</P
+></LI
+><LI
+><P
+>Brief Example: state: california list</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN997"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN1001"
+>menu (ROLE_MENU)</A
+></H4
+><P
+>A menu contains menu items and lives in a menu bar.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1004"
+>Braille</A
+></H5
+><P
+>Orca will show the menu name followed by the menu
+              items.  The menu item with focus (if there is one) will
+              be the most meaningful object and it will also have the
+              braille cursor.  The touch cursors will activate the
+              associated item.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: file menu new _ save _ quit _ ...</P
+></LI
+><LI
+><P
+>Brief Example: file menu new _ save _ quit _ ...</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1012"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN1016"
+>menu (ROLE_MENU_BAR)</A
+></H4
+><P
+>A menu bar contains a set of menus.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1019"
+>Braille</A
+></H5
+><P
+>Orca will show the "menubar" followed by names of the
+              menu items separated with "_".  %todo; for this and maybe
+              all other objects with mnenonics, how does one determine
+              what the mnemonic is?</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: menubar file _ edit _ view _...</P
+></LI
+><LI
+><P
+>Brief Example: menubar file _ edit _ view _ ...</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1027"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN1031"
+>menu item (ROLE_MENU_ITEM)</A
+></H4
+><P
+>A menu item lives in a menu.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1034"
+>Braille</A
+></H5
+><P
+>All menus items from a single menu will be shown at
+              the same time (see ROLE_MENU).  The menu item with focus
+              (if there is one) will be the most meaningful object and
+              it will also have the braille cursor.  The touch cursors
+              will activate the associated item.  If the menu item
+              is a menu (i.e., a submenu), then it will be followed 
+              by the word "sub" to indicate it is a submenu.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: file menu new _ save _ quit _ ...</P
+></LI
+><LI
+><P
+>Brief Example: file menu new _ save _ quit _ ...</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1042"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN1046"
+>option pane (ROLE_OPTION_PANE)</A
+></H4
+><P
+>An option pane is a specialized pane whose primary used is
+            inside a dialog.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1049"
+>Braille</A
+></H5
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example:</P
+></LI
+><LI
+><P
+>Brief Example:</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1056"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN1060"
+>page tab (ROLE_PAGE_TAB)</A
+></H4
+><P
+>A page tab is a child of a page tab list.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1063"
+>Braille</A
+></H5
+><P
+>A page tab will be viewed as a form of context.  If
+              only the page tab is selected (i.e., the focus is on the
+              name of tab), then the page tab will be presented in the
+              context of the page tab list.  If an object in the tab
+              has focus, however, then the following will be the
+              context and the object will also be displayed.  The
+              object will also be the most meaningful
+              information.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: preferences dialog effects tab</P
+></LI
+><LI
+><P
+>Brief Example: preferences dialog effects tab</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1071"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN1075"
+>page tab list (ROLE_PAGE_TAB_LIST)</A
+></H4
+><P
+>A page tab is an object that presents a series of 
+            panels (page tabs), one at a time.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1078"
+>Braille</A
+></H5
+><P
+>Orca will display "tab list" followed by the list of tabs
+              separated by "_".  The selected tab will get the cursor and
+              will also be the most meaningful information.  The touch
+              cursors will select the associated page tab.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: tab list general _ advanced _ effects _ ...</P
+></LI
+><LI
+><P
+>Brief Example: tab list general _ advanced _ effects _ ...</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1086"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN1090"
+>password text (ROLE_PASSWORD_TEXT)</A
+></H4
+><P
+>Password text objects are used for passwords or other 
+            places where the visible text should not be visibly shown.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1093"
+>Braille</A
+></H5
+><P
+>Orca will treat the password text just like a text object,
+              but will display *'s instead of characters.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: password: ****** text</P
+></LI
+><LI
+><P
+>Brief Example: password: ******</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1101"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN1105"
+>progress bar (ROLE_PROGRESS_BAR)</A
+></H4
+><P
+>A progress bar indicates how much of a task has been
+            completed.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1108"
+>Braille</A
+></H5
+><P
+>Orca will show the label followed by the value followed
+              by "progress."</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: uploading: 57% progress</P
+></LI
+><LI
+><P
+>Brief Example: uploading: 57%</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1116"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN1120"
+>push button (ROLE_PUSH_BUTTON)</A
+></H4
+><P
+>An object the user can manipulate to tell the application
+            to do something.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1123"
+>Braille</A
+></H5
+><P
+>Orca will show the name of the button followed by the
+              state of the button.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: OK pushbutton</P
+></LI
+><LI
+><P
+>Brief Example: OK</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1131"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN1135"
+>radio button (ROLE_RADIO_BUTTON)</A
+></H4
+><P
+>A specialized check box that will cause other radio buttons
+            in the same group to become unchecked when it is checked.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1138"
+>Braille</A
+></H5
+><P
+>The state of a radio button will be represented by
+              "&#38; y" if it is unselected and "&#38;=y" if it is
+              selected.  All buttons from the same radio group will be
+              displayed at once, with the button with focus being the
+              most meaningful information.  Any touch cursor associated
+              with the text will click the radio button.  Furthermore,
+              the name of the radio button group will be used as part
+              of the context.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: Color: Red &#38;=y _  Blue &#38; y _  Green &#38; y</P
+></LI
+><LI
+><P
+>Verbose Example: Color: Red &#38;=y _  Blue &#38; y _  Green &#38; y</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1146"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech - should determine verbosity if state
+              changes while the checkbox has focus.</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN1150"
+>radio menu item (ROLE_RADIO_MENU_ITEM)</A
+></H4
+><P
+>A radio menu represents a menu item that behaves like
+            a radio button.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1153"
+>Braille</A
+></H5
+><P
+>All menus items from a single menu will be shown at
+              the same time (see ROLE_MENU). The state of a radio menu
+              item will be represented by "&#38; y" if it is unchecked
+              and "&#38;=y" if it is checked. (See also
+              ROLE_ACCEL_LABEL).  The touch cursors will result in
+              activating the item.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: Red &#38; y(CTRL+R) radiomenu</P
+></LI
+><LI
+><P
+>Brief Example: Red &#38;=y</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1161"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN1165"
+>row header, table row header (ROLE_ROW_HEADER, ROLE_TABLE_ROW_HEADER)</A
+></H4
+><P
+>A row header is a header for a row of data.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1168"
+>Braille</A
+></H5
+><P
+>Like a column header, a row header will be treated
+              like a button, except it will be followed by "row
+              heading" in verbose mode.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: January row heading</P
+></LI
+><LI
+><P
+>Brief Example: January</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1176"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN1180"
+>scroll bar (ROLE_SCROLL_BAR)</A
+></H4
+><P
+>A scroll bar allows a user to incrementally view a large
+            amount of information.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1183"
+>Braille</A
+></H5
+><P
+>Orca will show the value (in %) followed by the
+              orientation followed by "scrollbar".  NOTE: it is rare
+              that users will use scrollbars.  They will tend to use
+              the page up/down and other navigation keys to move
+              around large areas of text.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: 57% vertical scrollbar</P
+></LI
+><LI
+><P
+>Brief Example: 57% vertical scrollbar</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1191"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN1195"
+>slider (ROLE_SLIDER)</A
+></H4
+><P
+>A slider allows a user to select a value from a bounded
+            range.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1198"
+>Braille</A
+></H5
+><P
+>Orca will show the label, then the value (in %)
+              followed by "slider".</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: volume: 57% slider</P
+></LI
+><LI
+><P
+>Brief Example: volume: 57%</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1206"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN1210"
+>spin button (ROLE_SPIN_BUTTON)</A
+></H4
+><P
+>A spin button is a single line item that contains a list of
+            choices the user can select from.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1213"
+>Braille</A
+></H5
+><P
+>The verbose and brief modes will show the label followed
+              by the item followed by the word "spin."</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: Red: 57 spin</P
+></LI
+><LI
+><P
+>Brief Example: Red: 57 spin</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1221"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN1225"
+>split pane (ROLE_SPLIT_PANE)</A
+></H4
+><P
+>A split pane is a specialized panel that presents two panels
+            at once.  It has a divider than can be dragged.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1228"
+>Braille</A
+></H5
+><P
+>The words "split pane" will become part of the context and
+              the focused object will be the object of interest.  In the
+              event the focus is on the split pane divider, braille will
+              display the percentage of the top or left pane that is shown
+              followed by "split pane divider".</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: open file dialog directory split pane /usr list 5 of 10</P
+></LI
+><LI
+><P
+>Brief Example: open file dialog directory split pane /usr list 5 of 10</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1236"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN1240"
+>table, table cell (ROLE_TABLE, ROLE_TABLE_CELL)</A
+></H4
+><P
+>Tables are a container of data organized in rows and
+            columns.  The interesting aspects of a table include: the
+            row/column headers, the contents of the various cells, and
+            selection.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1243"
+>Braille</A
+></H5
+><P
+>A table will generally be viewed as a context, with
+              focused table component (e.g., header or cell) being the
+              most important information.  In verbose mode, Orca will
+              show the title of a table followed by "table" followed
+              by row and column information followed by the cell data.
+              Brief mode will simply show row and column information
+              followed by cell data.  The cell data will displayed
+              using the given role styles in this style guide followed
+              by "cell."  In brief mode, "cell" will not be shown.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: home runs table row header Mike c4 0 cell</P
+></LI
+><LI
+><P
+>Brief Example: c4 0</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1251"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN1255"
+>(ROLE_)</A
+></H4
+><P
+></P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1258"
+>Braille</A
+></H5
+><P
+></P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example:</P
+></LI
+><LI
+><P
+>Brief Example:</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1266"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN1270"
+>tear off menu item (ROLE_TEAR_OFF_MENU_ITEM)</A
+></H4
+><P
+>A tear off menu item allows a menu to be removed from a menu
+            bar and shown in its own window.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1273"
+>Braille</A
+></H5
+><P
+>All menus items from a single menu will be shown at
+              the same time (see ROLE_MENU).  The menu item with focus
+              (if there is one) will be the most meaningful object and
+              it will also have the braille cursor.  The touch cursors
+              will activate the associated item.  Tear off menu items
+              will be shown with "---" as their label.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: file menu --- _ new _ save _ quit _ ...</P
+></LI
+><LI
+><P
+>Brief Example: file menu --- _ new _ save _ quit _ ...</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1281"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN1285"
+>text (ROLE_TEXT)</A
+></H4
+><P
+>A text object presents text to the user such that the
+            text typically has a caret position, can be single line or
+            multiline, and can be editable.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1288"
+>Braille</A
+></H5
+><P
+>Document text will be displayed optionally with the
+	      following enhancements.  It can optionally be displayed
+	      with proper spacing shown, with a certain attribute
+	      underlined, style information displayed in status cells.
+	      If status cells exist it should be possible to toggle
+	      them between the font, the point size and the attribute.
+              Multiline text will be followed by the current line and
+              total lines.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: first name: willie edit (the cursor is shown and moves with the caret position)</P
+><P
+>Verbose Example: address: 1024 washington way multiline 1 of 2 (the cursor is shown and moves with the caret position)</P
+></LI
+><LI
+><P
+>Brief Example: first name: willie</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1297"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN1301"
+>toggle button (ROLE_TOGGLE_BUTTON)</A
+></H4
+><P
+>A toggle button is a specialized push button that can
+            be checked or unchecked, but does not provide a separate
+            indicator for the current state.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1304"
+>Braille</A
+></H5
+><P
+>The state of a toggle button will be represented by
+              "&#38; y" if it is unselected and "&#38;=y" if it is
+              selected.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: Run &#38;=y toggle</P
+></LI
+><LI
+><P
+>Verbose Example: Run &#38; y</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1312"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech - should determine verbosity if state
+              changes while the toggle button has focus.</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN1316"
+>tool bar (ROLE_TOOL_BAR)</A
+></H4
+><P
+>A tool bar is a bar or palette usually composed of
+            push buttons or toggle buttons, but may also contain other
+            items such as editable text.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1319"
+>Braille</A
+></H5
+><P
+>Verbose mode should show the tool bar followed by
+	      "toolbar" Brief mode should simply show the tool bar.
+	      Each item will be separated with "_".  Same verbosity
+	      rules apply to each item. <I
+CLASS="EMPHASIS"
+>TODO:</I
+> perhaps toolbar should
+              be treated like a context?</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: new button _ save button _ cut
+                  button toolbar </P
+></LI
+><LI
+><P
+>Brief Example: new _ save _ cut</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1328"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN1332"
+>tree, tree table (ROLE_TREE, ROLE_TREE_TABLE)</A
+></H4
+><P
+>A tree presents hierarchical information to the user,
+            allowing them to expand/collapse nodes to limit what it
+            seen.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1335"
+>Braille</A
+></H5
+><P
+>Orca should show the label for the tree followed by
+	      the current item followed by its state followed by the
+	      level followed by tree.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: directory myfolder expanded level 4 tree</P
+></LI
+><LI
+><P
+>Brief Example: directory myfolder leaf level 4 tree</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1343"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H4
+CLASS="SECTION"
+><A
+NAME="AEN1347"
+>window (ROLE_WINDOW)</A
+></H4
+><P
+>A window is a top level window with no title or border.</P
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1350"
+>Braille</A
+></H5
+><P
+>On Alt+Tab, the task switcher will appear.  As it is
+	      on the screen, it will be presented.  The text that
+	      appears (i.e., the window name) will be shown in
+	      braille.  When the window gets focus, it will be the
+              context, and the object with focus in the window will
+              be the most meaningful information.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example:</P
+></LI
+><LI
+><P
+>Brief Example:</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H5
+CLASS="SECTION"
+><A
+NAME="AEN1358"
+>Speech</A
+></H5
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> add speech</P
+></DIV
+></DIV
+></DIV
+></DIV
+></DIV
+><A
+NAME="AEN1362"
+></A
+><HR><H1
+><A
+NAME="AEN1362"
+></A
+>Bibliography</H1
+><DIV
+CLASS="BIBLIOENTRY"
+><A
+NAME="COOPER99"
+></A
+><P
+>[Cooper99]&nbsp;<SPAN
+CLASS="AUTHOR"
+>Alan Cooper</SPAN
+>, 0672316498, Sams, <I
+>The Inmates are Running the Asylum</I
+>, 1999.</P
+><DIV
+CLASS="BIBLIOENTRYBLOCK"
+STYLE="margin-left: 0.5in"
+></DIV
+></DIV
+><DIV
+CLASS="BIBLIOENTRY"
+><A
+NAME="ACCESSX"
+></A
+><P
+>[XKB]&nbsp;<SPAN
+CLASS="AUTHOR"
+>Erik Fortune, </SPAN
+><SPAN
+CLASS="AUTHOR"
+>William Walker, </SPAN
+><SPAN
+CLASS="AUTHOR"
+>Donna Converse, </SPAN
+><SPAN
+CLASS="AUTHOR"
+>and George Sachs</SPAN
+>, <I
+><A
+HREF="http://matrix.netsoc.tcd.ie/hcksplat/work/XKBlib.pdf"
+TARGET="_top"
+>        The XKB keyboard extension</A
+>
+    </I
+>.</P
+><DIV
+CLASS="BIBLIOENTRYBLOCK"
+STYLE="margin-left: 0.5in"
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="BOOK"
+><A
+NAME="AEN1391"
+></A
+><DIV
+CLASS="TITLEPAGE"
+><H1
+CLASS="TITLE"
+><A
+NAME="AEN1391"
+>Orca Architecture and Functional Specification</A
+></H1
+><DIV
+CLASS="LEGALNOTICE"
+><P
+></P
+><A
+NAME="AEN1394"
+></A
+><P
+>Copyright 2005, Sun Microsystems, Inc.</P
+><P
+></P
+></DIV
+><HR></DIV
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+><A
+HREF="#AEN1396"
+>Foreword</A
+></DT
+><DT
+><A
+HREF="#AEN1402"
+>Introduction</A
+></DT
+><DT
+><A
+HREF="#AEN1405"
+>Prerequisites</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="#AEN1408"
+>Python v2.4 or better</A
+></DT
+><DT
+><A
+HREF="#AEN1413"
+>pyorbit v2.0.0 or better</A
+></DT
+><DT
+><A
+HREF="#AEN1416"
+>libbonobo v2.0.0 or better</A
+></DT
+><DT
+><A
+HREF="#AEN1419"
+>gnome-python-2.0 v2.6.0 or better</A
+></DT
+><DT
+><A
+HREF="#AEN1422"
+>pygtk-2.0 v2.4.0 or better</A
+></DT
+><DT
+><A
+HREF="#AEN1425"
+>AT-SPI v1.6.2 or better</A
+></DT
+><DT
+><A
+HREF="#AEN1430"
+>gnome-speech v0.3.4 or better</A
+></DT
+><DT
+><A
+HREF="#AEN1435"
+>BrlTTY v3.6.1 or better</A
+></DT
+><DT
+><A
+HREF="#AEN1440"
+>gnome-mag v0.11.11 or better</A
+></DT
+><DT
+><A
+HREF="#AEN1445"
+>Keyboard Navigation</A
+></DT
+></DL
+></DD
+><DT
+><A
+HREF="#ARCHITECTURE"
+>Architecture and Implementation</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="#AEN1459"
+>Desktop and AT-SPI</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="#AEN1479"
+>core</A
+></DT
+><DT
+><A
+HREF="#AEN1509"
+>kbd</A
+></DT
+><DT
+><A
+HREF="#AEN1531"
+>a11y</A
+></DT
+></DL
+></DD
+><DT
+><A
+HREF="#AEN1542"
+>Orca</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="#AEN1545"
+>orca</A
+></DT
+><DT
+><A
+HREF="#AEN1565"
+>settings</A
+></DT
+></DL
+></DD
+><DT
+><A
+HREF="#SCRIPT"
+>Orca Scripts</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="#INPUTEVENTHANDLER"
+>InputEventHandlers and
+        Learn Mode</A
+></DT
+><DT
+><A
+HREF="#FOCUS"
+>focus_tracking_presenter</A
+></DT
+></DL
+></DD
+><DT
+><A
+HREF="#AEN1668"
+>System Services</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="#AEN1671"
+>speech</A
+></DT
+><DT
+><A
+HREF="#AEN1696"
+>braille</A
+></DT
+><DT
+><A
+HREF="#AEN1725"
+>mag</A
+></DT
+></DL
+></DD
+></DL
+></DD
+><DT
+><A
+HREF="#AEN1731"
+>Internationalization (I18N) Support</A
+></DT
+><DT
+><A
+HREF="#AEN1740"
+>Bibliography</A
+></DT
+></DL
+></DIV
+><DIV
+CLASS="PREFACE"
+><HR><H1
+><A
+NAME="AEN1396"
+></A
+>Foreword</H1
+><P
+>Orca is a flexible, extensible, and powerful assistive
+  technology that provides end-user access to applications and
+  toolkits that support the AT-SPI (e.g., the GNOME desktop).  With
+  early input and continued engagement from its end users, Orca has
+  been designed and implemented by the Sun Microsystems, Inc.,
+  Accessibility Program Office.</P
+><P
+><I
+CLASS="EMPHASIS"
+>NOTE:</I
+> Orca is currently a work in progress.  As a result, this
+  and other books in the Orca Documentation Series are under
+  continuous modification and are also in various states of
+  completeness.</P
+><P
+>This book covers the architecture and functional specification 
+      of Orca.  The specification was driven primarily by the functional 
+      requirements, which, in turn, were driven by the Orca User Experience 
+      Design.
+    </P
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="AEN1402"
+></A
+>Introduction</H1
+><P
+>To be written.  Want to include diagram.  Input model
+      (keyboard and braille event handling).  Output model (speech
+      synthesis, braille, magnification).  Presentation manager
+      description.  Script description.</P
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="AEN1405"
+></A
+>Prerequisites</H1
+><P
+>To help narrow the scope of the Orca development activity,
+      Orca uses existing software where available.  For example, as
+      mentioned in the requirements, Orca is a screen reader that
+      needs to be able to interact with speech synthesis, braille,
+      and screen magnification services, but it need not be the
+      provider of such services.  Given this, Orca has the following
+      dependencies.</P
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN1408"
+>Python v2.4 or better</A
+></H2
+><P
+>Orca is written in the Python programming language, and
+        will depend upon features found in Python versions 2.4 and
+        greater.</P
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> Verify this.  We may be able to get by with
+        earlier versions.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN1413"
+>pyorbit v2.0.0 or better</A
+></H2
+><P
+>PyORBit provides the Python language bindings for ORBit,
+        which is Bonobo's CORBA ORB implementation.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN1416"
+>libbonobo v2.0.0 or better</A
+></H2
+><P
+>libbonobo provides the Python language bindings for Bonobo,
+        which gives Orca access to the AT-SPI.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN1419"
+>gnome-python-2.0 v2.6.0 or better</A
+></H2
+><P
+>GNOME-Python provides the Python language bindings for the
+        GNOME libraries.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN1422"
+>pygtk-2.0 v2.4.0 or better</A
+></H2
+><P
+>PyGTK provides a convenient wrapper for the GTK library
+        for use in Python programs, and takes care of many of the
+        details such as managing memory and type casting. When
+        combined with PyORBit and gnome-python, it can be used to
+        write full featured Gnome applications.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN1425"
+>AT-SPI v1.6.2 or better</A
+></H2
+><P
+> Orca's means of gathering information about the desktop
+        as well interacting with the desktop will be done through
+        the AT-SPI [<SPAN
+CLASS="CITATION"
+><A
+HREF="#AT-SPI"
+><I
+>AT-SPI</I
+></A
+>&#62;</SPAN
+>].  As such, a
+        functioning AT-SPI environment is mandatory.  The AT-SPI
+        provides a CORBA-based approach to detect, examine, and
+        manipulate desktop and application content.  It supports the
+        registration of event listeners for changes to desktop and
+        application content.  Finally, the AT-SPI supports the
+        registration of listeners for input device events, with an
+        option for these listeners to intercept (and possibly
+        consume) the events before they are processed by the desktop
+        or applications on the desktop.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN1430"
+>gnome-speech v0.3.4 or better</A
+></H2
+><P
+>GNOME-Speech [<SPAN
+CLASS="CITATION"
+><A
+HREF="#GNOME-SPEECH"
+><I
+>Gnome-Speech</I
+></A
+>&#62;</SPAN
+>] provides a
+      CORBA-based approach to access speech synthesizers as network
+      services.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN1435"
+>BrlTTY v3.6.1 or better</A
+></H2
+><P
+>BrlTTY [<SPAN
+CLASS="CITATION"
+><A
+HREF="#BRLTTY"
+><I
+>BRLTTY</I
+></A
+>&#62;</SPAN
+>] provides access to a
+        variety of Braille displays, and consists of a library and a
+        daemon to provide programmatic interaction with the
+        display.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN1440"
+>gnome-mag v0.11.11 or better</A
+></H2
+><P
+>GNOME-mag [<SPAN
+CLASS="CITATION"
+><A
+HREF="#GNOME-MAG"
+><I
+>Gnome-Mag</I
+></A
+>&#62;</SPAN
+>] provides a CORBA-based
+      approach to access and manipulate a screen magnifier as a
+      network service.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN1445"
+>Keyboard Navigation</A
+></H2
+><P
+>As much as possible, Orca relies upon the keyboard
+        navigation methods built in to the native platform.  For
+        example, it is expected that the native platform will provide
+        access via traditional methods such as the "tab" key, keyboard
+        mnemonics, and keyboard accelerators.</P
+></DIV
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="ARCHITECTURE"
+></A
+>Architecture and Implementation</H1
+><P
+>As illustrated in the high level Orca architecture diagram,
+      the main components of Orca are as follows: desktop applications
+      that support the AT-SPI, the AT-SPI, Orca itself, Orca Scripts,
+      and system services (e.g., speech, Braille, magnification).</P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="AEN1451"
+></A
+><DIV
+CLASS="MEDIAOBJECT"
+><P
+><IMG
+SRC="architecture.jpg"></P
+></DIV
+><P
+><B
+>Figure 1. High Level Orca Architecture. The main components
+        of Orca are as follows: desktop applications that support the
+        AT-SPI, the AT-SPI, Orca itself, Orca Scripts, and system
+        services.  The key communication between the components is
+        depicted.</B
+></P
+></DIV
+><P
+>The following sections describe the architecture in more
+      detail.</P
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN1459"
+>Desktop and AT-SPI</A
+></H2
+><P
+>Orca's sole view of any application on the desktop is via
+        the AT-SPI [<SPAN
+CLASS="CITATION"
+><A
+HREF="#AT-SPI"
+><I
+>AT-SPI</I
+></A
+>&#62;</SPAN
+>].  The AT-SPI is a
+        CORBA/Bonobo-based technology [<SPAN
+CLASS="CITATION"
+><A
+HREF="#BONOBO"
+><I
+>Bonobo</I
+></A
+>&#62;</SPAN
+>] that provides a common
+        interface for the desktop and its applications to expose their
+        GUI component hierarchy to assistive technologies such as
+        Orca.  AT-SPI support is provided by toolkits such as GNOME's
+        GTK+ toolkit (via gail [<SPAN
+CLASS="CITATION"
+><A
+HREF="#GAIL"
+><I
+>GAIL</I
+></A
+>&#62;</SPAN
+>]), the Java platform (via
+        the Java access bridge <I
+CLASS="EMPHASIS"
+>TODO:</I
+> get link), and the custom
+        toolkits used by applications such as Mozilla and Open
+        Office. <I
+CLASS="EMPHASIS"
+>TODO:</I
+> get links to Mozilla and OOffice bridges.</P
+><P
+>Assistive Technologies interact with the AT-SPI via two
+        primary means: the AT-SPI registry and accessible objects.
+        The AT-SPI registry permits assistive technologies to discover
+        existing applications on the desktop and to register for event
+        notification for all AT-SPI object events (e.g., window
+        creation, focus changes, object state changes, etc.) and
+        device events (e.g., keyboard input events).  Accessible
+        objects provide the assistive technology with information
+        about the application, and tend to mirror the actual GUI
+        component hierarchy.  Accessible objects can be obtained in
+        three ways: </P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>From the AT-SPI Registry via queries on the desktop</P
+></LI
+><LI
+><P
+>From an AT-SPI Registry event</P
+></LI
+><LI
+><P
+>From another Accessible via parent/child relationships
+            and other relationships</P
+></LI
+></OL
+><P
+>Orca's interaction with the AT-SPI is managed through the
+        following Orca modules: core, kbd, and a11y.</P
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN1479"
+>core</A
+></H3
+><P
+>The <I
+CLASS="EMPHASIS"
+>core</I
+> module is an
+          Orca library written in C that provides Orca's Python
+          interface to the system's AT-SPI Registry.  The core module
+          provides Orca with the ability to enumerate the various
+          workspaces and applications running on the display, as well
+          as determine the existence of various physical heads (e.g.,
+          dual headed system).  The core module also gives Orca the
+          ability to register/deregister listeners for AT-SPI object
+          (e.g., window activation, focus changed, etc.)  and device
+          (e.g., keyboard) events.  Finally, the core also provides
+          Orca's interface to the Bonobo main and main_quit methods,
+          allowing Orca to interact with the AT-SPI.</P
+><P
+>As illustrated in the high level Orca architecture
+          diagram, the core module has been used to register event and
+          device listeners with the AT-SPI registry.  Each exemplary
+          desktop application (Firefox, NetBeans, GAIM, StarOffice)
+          emits AT-SPI events to the AT-SPI registry which then
+          delivers them to the core module.  The core module then
+          calls all appropriate listeners for the events it receives
+          from the AT-SPI registry.  In this case, the orca module
+          receives events to keep track of the window with focus and
+          other interesting information, the a11y module (described
+          below) receives events to keep its local cache of accessible
+          objects up to date.  Not depicted, each application script
+          also receives AT-SPI events for components associated with
+          that application, regardless of whether the application has
+          keyboard focus or not.</P
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> document what core exposes (e.g., "bonobo,"
+          "ORBit," "registry," "desktop," "Accessibility,"
+          "Accessibility__POA).</P
+><P
+><I
+CLASS="EMPHASIS"
+>IMPLEMENTATION DETAIL:</I
+> As illustrated in the following diagram, to
+          reduce system traffic, the core module will only register a
+          maximum of one AT-SPI listener for any given AT-SPI event
+          type, and will multiplex the notification of AT-SPI events
+          to any listeners registered by Orca.</P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="AEN1488"
+></A
+><DIV
+CLASS="MEDIAOBJECT"
+><P
+><IMG
+SRC="objectevent_registration.jpg"></P
+></DIV
+><P
+><B
+>Figure 2. AT-SPI Event Registration. Only one listener of any given
+            type is registered with the AT-SPI registry; the core module
+            will multiplex event delivery to interested Orca listeners.</B
+></P
+></DIV
+><P
+><I
+CLASS="EMPHASIS"
+>IMPLEMENTATION DETAIL:</I
+> Because processing AT-SPI object events can be
+          time consuming, and because the notification of AT-SPI
+          object events is relatively "bursty," the core maintains a
+          queue of AT-SPI object events.  As illustrated in the
+          following diagram, events are added to the queue when they
+          are received, and events on the queue are dispatched via the
+          GLib idle handler.  <I
+CLASS="EMPHASIS"
+>TODO:</I
+> Need to understand relation
+          between the GLib idle handler and the Bonobo main
+          loop.</P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="AEN1498"
+></A
+><DIV
+CLASS="MEDIAOBJECT"
+><P
+><IMG
+SRC="objectevent_handling.jpg"></P
+></DIV
+><P
+><B
+>Figure 3. AT-SPI Event Delivery. The core module queues up AT-SPI
+            object events it receives from the AT-SPI registry and delivers
+            those events from a GLib idle hanlder.</B
+></P
+></DIV
+><P
+><I
+CLASS="EMPHASIS"
+>IMPLEMENTATION DETAIL:</I
+> Like the AT-SPI object events, the core module
+          only permits a maximum of one device event listener to be
+          registered with the AT-SPI for each keyboard event
+          type. Unlike AT-SPI object events, Orca must process
+          keyboard events immediately and quickly.  As such, the core
+          component will dispatch keyboard events directly to the
+          keyboard event listeners registered by Orca.</P
+><P
+> <I
+CLASS="EMPHASIS"
+>TODO:</I
+> The system needs to be able to cope with
+          failure.  Right now, if Orca fails while handling a keyboard
+          event, the whole desktop can hang.  I'm curious if the
+          AT-SPI-enabled app can heal when the connection to Orca is
+          broken or if there is a timeout?  Conversations with Bill
+          Haneman lead me to believe there is no such thing as a
+          timeout for the synchronous form of device event
+          notification.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN1509"
+>kbd</A
+></H3
+><P
+>The <I
+CLASS="EMPHASIS"
+>kbd</I
+> module provides
+          Orca's interface to the keyboard events, permitting it to
+          trap and consume keyboard events before they reach an
+          application.  As illustrated in the following diagrams, the
+          orca module (described below) registers a single keyboard
+          device event listener with the AT-SPI registry for each
+          keyboard event type.  Upon receiving a keyboard event, the
+          kbd module immediately notifies the orca listener, which
+          then processes the event. The event listener returns True if
+          Orca has consumed the event (and thus the event should not
+          be sent to the application) or False if it has not.</P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="AEN1513"
+></A
+><DIV
+CLASS="MEDIAOBJECT"
+><P
+><IMG
+SRC="keyevent_registration.jpg"></P
+></DIV
+><P
+><B
+>Figure 4. Keyboard Event Registration. Keyboard events are only
+            registered once at kbd.init().</B
+></P
+></DIV
+><DIV
+CLASS="FIGURE"
+><A
+NAME="AEN1520"
+></A
+><DIV
+CLASS="MEDIAOBJECT"
+><P
+><IMG
+SRC="keyevent_handling_general.jpg"></P
+></DIV
+><P
+><B
+>Figure 5. Keyboard Event Handling. Keyboard events are handled
+            synchronously by the processKeyEvent method of the orca
+            module.</B
+></P
+></DIV
+><P
+><I
+CLASS="EMPHASIS"
+>IMPLEMENTATION DETAIL:</I
+> Because the event handling is synchronous
+          in this case (i.e., the event is not sent to the application 
+          until Orca is finished with it), the event handling must be
+          performant.</P
+><P
+><I
+CLASS="EMPHASIS"
+>IMPLEMENTATION DETAIL:</I
+> For convenience, the kbd module keeps track of
+          the last keyboard event.  This permits scripts to garner
+          hints about why a particular AT-SPI object event may have
+          occurred.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN1531"
+>a11y</A
+></H3
+><P
+>The <I
+CLASS="EMPHASIS"
+>a11y</I
+> module
+          provides an Accessible class, written in Python, that serves
+          as a delegate to CORBA objects that implement the AT-SPI
+          Accessible and Application interfaces.</P
+><P
+>The Accessible class permits Orca to obtain information
+          about Accessible objects as well as manipulate those objects
+          (e.g., activate actions, set cursor position, etc.).  Using
+          the ability to add new properties to a class instance at run
+          time, Orca can also annotate Accessible class instances with
+          additional information.</P
+><P
+>The a11y module also provides a set of convenience
+          utilities for examining Accessible objects and their
+          component hierarchy.</P
+><P
+>Depicted in the high level Orca architecture diagram is
+          the interaction of the currently active script, StarOffice,
+          with the a11y module.  Any of the other scripts can also
+          interact with the a11y module at any time, but their
+          interaction has not been drawn here so as to reduce clutter
+          in the diagram.</P
+><P
+><I
+CLASS="EMPHASIS"
+>IMPLEMENTATION DETAIL:</I
+> For efficiency purposes, the a11y component
+          maintains a cache of Accessible objects, copying the values
+          of common Accessible object attributes (e.g., name,
+          description, role, state, etc.) to a local store.  As such,
+          no external entity should create an Accessible using the
+          class constructor.  Instead, all Accessible instances are
+          created using the a11y.makeAccessible function.  This lowers
+          the network traffic of Orca by reducing the need to make
+          repeated CORBA calls for common attributes.  As depicted in
+          the high level Orca architecture diagram, the a11y module
+          also registers for AT-SPI object events with the core module
+          for the purposes of keeping the cache consistent with the
+          AT-SPI object state.</P
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> miserable things happen when a CORBA failure
+          occurs related to an Accessible object.  Orca needs a way to
+          deal with this.  Because it is too easy to swallow CORBA
+          failures with try/except statements, one alternative might
+          be to have the main orca module register a failure listener
+          with the a11y module and restrict all CORBA calls for
+          accessible objects to the a11y module.  On failure, the a11y
+          module could call the orca failure listener and have it do
+          the "right thing."</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN1542"
+>Orca</A
+></H2
+><P
+>The main logic of Orca lives primarily in the orca module,
+        but support is broken into other modules as appropriate. The
+        following sections describe the orca module and its supporting
+        modules in more detail. </P
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN1545"
+>orca</A
+></H3
+><P
+> The orca module is the "main entry point" of Orca.  It
+          initializes all the components that Orca uses (a11y, core,
+          kbd, speech, braille, mag) and loads the user's settings.
+          It also is the first to receive all keyboard and braille
+          input events and delves them out to other orca components
+          appropriately.</P
+><P
+>The initialization of the orca module is done via a
+          separate trivial script that lives in /usr/bin/orca.  The
+          purpose of this script is to include the user's ~/.orca
+          directory in the search path for Python and to then
+          initialize and start the orca module.</P
+><P
+>A UML-ish interaction diagram of the initialization
+          process is depicted in the following diagram:</P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="AEN1550"
+></A
+><DIV
+CLASS="MEDIAOBJECT"
+><P
+><IMG
+SRC="init_id.jpg"></P
+></DIV
+><P
+><B
+>Figure 6. Orca Initialization Interaction Diagram</B
+></P
+></DIV
+><P
+>When the orca script imports the orca module, it
+          triggers a chain of events.  At this time, the core module
+          attempts to discover and resolve the shared libraries and
+          bindings it will need to interact with the AT-SPI.  This
+          includes establishing Python bindings for ORBit, bonobo,
+          CORBA, and AT-SPI Accessibility. <I
+CLASS="EMPHASIS"
+>TODO:</I
+> failures can occur
+          at this time, and more informative messages need to be
+          issued.  The failures are typically due to prerequisites not
+          being found, which probably should also be handled by the
+          build/install scripts.</P
+><P
+>After the orca script imports the orca module, it then
+          initializes it by calling the module's init method.  At this
+          time, the orca module initialized the a11y module which, in turn,
+          initializes the core module.</P
+><P
+>Upon initialization, the core module discovers/activates
+          the AT-SPI registry and then establishes attributes for
+          the registry and desktop.  At this point, any Python object
+          can then obtain the registry and desktop attributes via
+          core.registry and core.desktop.</P
+><P
+>Once it has initialized the core module, the a11y module
+          registers a number of event listeners that it will use to
+          help keep its internal cache of Accessible objects
+          synchronized with the actual AT-SPI accessible objects of
+          the applications.</P
+><P
+>Once it has initialized the a11y module, the orca module
+          then initializes its interaction with the kbd module as well
+          as the supporting system services: speech, braille, and
+          magnification.  When it initialized the kbd and braille
+          modules, the orca module passes it input event listeners
+          (processKeyEvent and processBrailleEvent) that will be the
+          sole event listener for those modules (those listeners will
+          then multiplex events out to other orca components).</P
+><P
+>As the last steps of initialization, the orca module
+          discovers all the applications on the desktop and then
+          registers AT-SPI object event listeners.  The event
+          listeners are for the events necessary to help it keep track
+          of all the desktop applications as well as the application
+          and object with focus.  These attributes are available to
+          other orca modules as the fields "apps," "focusedApp," and
+          "focusedObject."</P
+><P
+>When the orca script has finished initializing the orca
+          module, it then calls the "start" method of the orca module.
+          The "start" method finds the active window on the display,
+          initializes focus tracking mode, and then calls the bonobo
+          main loop to begin continued interaction with the AT-SPI.
+          From this point on, the orca module is driven completely
+          by keyboard and braille events as well as AT-SPI registry
+          events.  All keyboard events are sent to the processKeyEvent
+          method of the orca module and all braille events are sent
+          to the processBrailleEvent method of the orca module.
+          AT-SPI object events are sent directly to the module 
+          that registers for them (e.g., orca, a11y, and the
+          focus tracking mechanism described below).</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN1565"
+>settings</A
+></H3
+><P
+>The <I
+CLASS="EMPHASIS"
+>settings</I
+> module
+          (not depicted in the high level Orca architecture diagram)
+          holds preferences set by the user during configuration.
+          These settings include the following: use of speech and/or
+          Braille, voice styles, key echo, text echo, and command echo
+          (see the <A
+HREF="#USER_REQUIREMENTS"
+>user requirements</A
+> for details on these
+          features).</P
+><P
+>Any Orca module can request the value of a setting by
+          calling the getSetting method of the settings module.  When
+          first called, this module will import the user-settings
+          module from the ~/.orca directory, if it exists.  The
+          user-settings module is a Python script, allowing it to
+          contain functions, class definitions, etc.  Furthermore, the
+          import of the user-settings module will cause any executable
+          statements to be run, allowing the user-settings module to
+          define/set fields in itself and call functions in other
+          modules.  For example, the user-settings module will
+          typically define the use of output mode (speech, braille,
+          mag) and may also call functions in other modules, such as
+          the setDebugLevel of the debug module.</P
+><P
+>The getSetting method of the settings module is intended
+          to discover field attribute values.  It will first look to
+          the user-settings module for the field, and then fall back
+          to the settings module.  The getSetting method also accepts
+          a default value in the event the field does not exist in
+          either the user-settings or settings module.</P
+><P
+><I
+CLASS="EMPHASIS"
+>IMPLEMENTATION DETAIL:</I
+> the init method of the orca module obtains settings.
+          As a result, the user-settings module is imported very early in
+          the orca life cycle.</P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="SCRIPT"
+>Orca Scripts</A
+></H2
+><P
+>The majority of presentation of information to the user is
+        done via "scripts," which are instances of the Script class
+        that is defined in the <I
+CLASS="EMPHASIS"
+>script</I
+>
+        module. Depicted in the high level Orca architecture diagram
+        are four Script instances: FireFox, NetBeans, GAIM, and
+        StarOffice.  In that diagram, StarOffice has keyboard focus
+        and is thus the "active" script.</P
+><P
+>The following Orca script diagram illustrates the details 
+        of a Script instance:</P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="AEN1579"
+></A
+><DIV
+CLASS="MEDIAOBJECT"
+><P
+><IMG
+SRC="script.jpg"></P
+></DIV
+><P
+><B
+>Figure 7. Orca Script Diagram. Each script maintains three
+          dictionaries: "listeners" for handling AT-SPI object events,
+          "keybindings" for handling keyboard events, and
+          "braillebindings" for handling braille input events.  Each
+          script must also provide the methods "processObjectEvent,"
+          "processKeyEvent," and "processBrailleEvent" to handle the
+          various types of events it can receive.</B
+></P
+></DIV
+><P
+> As depicted in the script diagram, each Script instance
+        has the following entry points as part of its contract:</P
+><P
+></P
+><UL
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>processObjectEvent</I
+> -
+            called when an AT-SPI object event occurs for any object
+            associated with the application for this script.</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>processKeyEvent</I
+> -
+            called with a keyboard input event when the application
+            for this script has GUI focus.</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>processBrailleEvent</I
+> -
+            called with a braille input event when the application for
+            this script has GUI focus.</P
+></LI
+></UL
+><P
+>As also depicted in the script diagram, each script
+        instance keeps track of the following attributes: </P
+><P
+></P
+><UL
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>listeners</I
+> - a table
+            that maps AT-SPI object event names (e.g.,
+            "window:activate", "object:state-changed",
+            "object:link-selected") to functions.  The
+            "processObjectEvent" method will look to the listeners
+            table to handle object events.  In addition, the
+            focus_tracking_presenter module (described below) will
+            look to the listeners table to determine which global
+            AT-SPI listeners it should register with the AT-SPI
+            registry.</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>keybindings</I
+> - a
+            table that maps keystroke events (e.g., "F12") to
+            InputEventHandler instances.  The "processKeyEvent" method
+            will look to the keybindings table to handle keyboard
+            events, and will call the processInputEvent method of the
+            handler for each event (if a handler exists).  The
+            processInputEvent method of the handler must return True
+            if it consumes the event, or False if not.</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>braillebindings</I
+> - a
+              table that maps BrlTTY input events (e.g., "CMD_FWINLT")
+              to InputEventHandler instances.  The
+              "processBrailleEvent" method will look to the
+              braillebindings table to handle BrlTTY input events, and
+              will call the processInputEvent method of the handler
+              for each event (if a handler exists).  The
+              processInputEvent method of the handler must return True
+              if it consumes the event, or False if not.</P
+></LI
+></UL
+><P
+>Subclasses of Scripts are expected to extend and
+        override the listeners, keybindings, and braillebindings
+        fields in their __init__ methods.  Orca provides a Script
+        subclass, Default (default.py), as the base for all scripts
+        to provide customized behavior per application.  Default is
+        intended to adhere to the <A
+HREF="#STYLE_GUIDE"
+>style guide</A
+>.  As such, it
+        is expected that custom scripts will extend the Default
+        class rather than extending the Script class directly.</P
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="INPUTEVENTHANDLER"
+>InputEventHandlers and
+        Learn Mode</A
+></H3
+><P
+>As illustrated in the following diagram,
+          InputEventHandlers serve a purpose of holding a function
+          to call on an input event, and a human consumable string
+          that provides a short description of the function's
+          behavior.  The main purpose for the InputEventHandler is
+          to provide support for the "learn mode" of Orca.</P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="AEN1613"
+></A
+><DIV
+CLASS="MEDIAOBJECT"
+><P
+><IMG
+SRC="inputeventhandler_creation.jpg"></P
+></DIV
+><P
+><B
+>Figure 8. InputEventHandler</B
+></P
+></DIV
+><P
+>InputEventHandler instances can be created by
+          anything, but are typically created by Script instances
+          and the user-settings module. <I
+CLASS="EMPHASIS"
+>TODO:</I
+> document how the
+          user-settings module is used to extend/override input
+          event handling - it can do so on a global and/or per
+          script level.</P
+><P
+>The invocation of InputEventHandler instances is done
+          via its "processInputEvent" method, as illustrated in the
+          following diagram and described below:</P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="AEN1623"
+></A
+><DIV
+CLASS="MEDIAOBJECT"
+><P
+><IMG
+SRC="inputeventhandler_calling.jpg"></P
+></DIV
+><P
+><B
+>Figure 9. InputEventHandler Invocation</B
+></P
+></DIV
+><P
+>When "learn mode" is disabled, the InputEventHandler
+          instance call its associated function and returns the
+          "consumed" return value of that function.</P
+><P
+>When enabled, however, the "learn mode" will take over
+          the entire keyboard and braille display, consuming all
+          input events.  This allows the user to press any key
+          without having that key event be delivered to any
+          application. When the user presses a key, the
+          InputEventHandler instance will present the description of
+          t function associated with that key to the user via
+          speech and/or braille.  If the key has no
+          InputEventHandler associated with it, Orca will merely
+          speak the key.</P
+><P
+>The enabling of learn mode is done via an
+          InputEventHandler instance, allowing for any key binding
+          to be used to turn learn mode on (the orca module provides
+          an "enterLearnMode" function as a convenience for this).
+          Because the learn mode takes over the entire keyboard and
+          braille display, however, the orca module has hardcoded
+          the "Escape" key to exit learn mode.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="FOCUS"
+>focus_tracking_presenter</A
+></H3
+><P
+>All script instances are managed by the
+          focus_tracking_presenter module.</P
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> the "presenter" concept is experimental for
+          now.  The notion of a presenter is that Orca can have
+          several types of mutually exclusive interaction methods,
+          such as focus tracking, flat review, and hierarchical
+          navigation.  Based on the user requirements, however, it
+          has been determined that the modes may not always need to
+          be mutually exclusive.  As such, this architectural aspect
+          of Orca may change.  At this point, however, two
+          presenters exist: the focus_tracking_presenter and the
+          hierarchical_presenter.  The focus_tracking_presenter is
+          described in this section, and the hierarchical_presenter
+          is mostly for debugging and AT-SPI object hierarchy
+          exploration purposes.</P
+><P
+>The focus_tracking_presenter module provides four
+          methods as part of its contract with the orca module:</P
+><P
+></P
+><UL
+><LI
+><P
+> <I
+CLASS="EMPHASIS"
+>activate</I
+> -
+              called when the orca module selects the
+              focus_tracking_presenter as the interaction
+              method.  This method registers core listeners to
+              determine when windows are created and removed.  In
+              addition, it finds the currently active object and
+              speaks information about it.</P
+></LI
+><LI
+><P
+> <I
+CLASS="EMPHASIS"
+>processKeyEvent</I
+> -
+              handles all key events by passing the event directly
+              to the currently active script.</P
+></LI
+><LI
+><P
+> <I
+CLASS="EMPHASIS"
+>processBrailleEvent</I
+> -
+              handles all braille input events by passing the event
+              directly to the currently active script.</P
+></LI
+><LI
+><P
+> <I
+CLASS="EMPHASIS"
+>deactivate</I
+> -
+              called when the orca module selects a different
+              interaction method.  This method unregisters any
+              listeners that may have been registered as part 
+              of activation and the handling of scripts.</P
+></LI
+></UL
+><P
+>The focus_tracking_presenter also defines a
+          processObjectEvent method that it registers with the core
+          module.  The core module will call this method with any
+          AT-SPI object events the focus_tracking_presenter has
+          registered.  One such event is window activation events.
+          When it receives a window activation event, the
+          focus_tracking_presenter will attempt to locate the Script
+          instance for the application associated with the event.
+          If it finds the script, it will make it the "active"
+          script.  If if cannot find the script, the
+          focus_tracking_presenter will create a new Script instance
+          for the application.  The mechanism for creating the
+          script is as follows:</P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>In the case where the AT-SPI gives the
+              focus_tracking_presenter an event associated with no
+              application whatsoever, the focus_tracking_presenter
+              will use a singleton instance of the Default Script
+              subclass (defined in Default.py).</P
+></LI
+><LI
+><P
+>Otherwise, the focus_tracking_presenter will
+              search for a module whose name matches the name of the
+              application (e.g., "gnome-terminal").  If this module
+              exists, the focus_tracking_presenter will use its
+              factory method, getScript, to obtain the Script
+              instance for this application. <I
+CLASS="EMPHASIS"
+>TODO:</I
+> this is error
+              prone and probably should be formalized to something
+              better.</P
+></LI
+><LI
+><P
+>If no such module exists, then the
+              focus_tracking_presenter will create unique instance
+              of the Default script (defined in default.py) for the
+              application.</P
+></LI
+></OL
+><P
+>Whenever it creates a new script instance, the
+          focus_tracking_presenter will query the instance for its
+          "listeners" table and register core listeners any needed
+          AT-SPI object events.</P
+><P
+><I
+CLASS="EMPHASIS"
+>IMPLEMENTATION DETAIL:</I
+> for debugging purposes, Orca also supports a
+          useCustomScripts setting.  If True (the default), then the
+          creation of script instances will follow the above
+          mechanism.  If useCustomScripts is False, however, the
+          focus_tracking_presenter will only instances of the Default
+          Script subclass.</P
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> the inconsistent delivery order and type of
+          events from the various toolkits that implement the AT-SPI
+          is quite troublesome.  Gnopernicus has dealt with this by
+          massaging "raw" AT-SPI events into events of its own design.
+          It may be desirable to roll this logic into
+          focus_tracking_presenter and have it deliver massaged events
+          to scripts rather than raw AT-SPI events.  Alternatively,
+          each script might provide some sort of "massageEvent"
+          function to do this, where the default massageEvent function
+          lives in focus_tracking_presenter.</P
+><P
+> <I
+CLASS="EMPHASIS"
+>TODO:</I
+> Loading a script is a very efficient and fast
+          process in Python, especially for the expected size of
+          scripts intended for Orca's use.  As such, Orca may reload a
+          script each time the window for the script is activated.
+          Alternatively, Orca may provide a global keyboard "refresh"
+          gesture that will reload all scripts in use. </P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN1668"
+>System Services</A
+></H2
+><P
+> Orca relies on existing system services to provide
+        support for speech synthesis, braille, and screen
+        magnification.  To interact with these services, Orca provides
+        the modules described in the following sections.
+      </P
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN1671"
+>speech</A
+></H3
+><P
+> The <I
+CLASS="EMPHASIS"
+>speech</I
+> module
+        provides Orca's Python interface to the system's gnome-speech
+        [<SPAN
+CLASS="CITATION"
+><A
+HREF="#GNOME-SPEECH"
+><I
+>Gnome-Speech</I
+></A
+>&#62;</SPAN
+>] CORBA service(s).
+        The speech component is used for interacting with speech
+        synthesis engines during both the configuration and use of
+        Orca.  The speech component provides methods for the following
+        capabilities:
+        </P
+><P
+></P
+><UL
+><LI
+><P
+> <I
+CLASS="EMPHASIS"
+>list of available
+            drivers</I
+> - several speech drivers (engines) may
+            be available on the system.  The speech module permits
+            Orca to identify and interact with each of the drivers.
+            The list of drivers will be available in a human-readable
+            form.
+            </P
+></LI
+><LI
+><P
+> <I
+CLASS="EMPHASIS"
+>list of available
+            voices</I
+> - permits Orca to enumerate the
+            available voices for each driver, along with the settable
+            parameters for each voice (e.g., pitch, rate, etc.).  The
+            list of voices is available in a human-readable form.
+            </P
+></LI
+><LI
+><P
+> <I
+CLASS="EMPHASIS"
+>voice selection</I
+> -
+            permits Orca to select which voice is to be used for
+            speech synthesis, and also permits Orca to set the
+            parameters of the voices.
+            </P
+></LI
+><LI
+><P
+> <I
+CLASS="EMPHASIS"
+>speak text</I
+> -
+            provides Orca with the ability to request that text be
+            spoken.  Repeated calls to speak text will interrupt and
+            cancel any prior speak operation in progress.  The speech
+            module will support Unicode strings.
+            </P
+></LI
+><LI
+><P
+> <I
+CLASS="EMPHASIS"
+>cancel</I
+> - the
+            speech module permits Orca to cancel any speech operation
+            in progress.
+            </P
+></LI
+><LI
+><P
+> <I
+CLASS="EMPHASIS"
+>event notification</I
+>
+            - permits the registration for notification of speech
+            started and ended events for a a call to "speak," and will
+            also permit for the registration for notification of
+            speech progress events (e.g., word started).
+            </P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN1696"
+>braille</A
+></H3
+><P
+> The <I
+CLASS="EMPHASIS"
+>braille</I
+> module
+          provides Orca's Python interface to the system's brltty
+          [<SPAN
+CLASS="CITATION"
+><A
+HREF="#BRLTTY"
+><I
+>BRLTTY</I
+></A
+>&#62;</SPAN
+>] daemon.  The brltty
+          daemon, in turn, provides the interface to Braille devices
+          for both displaying Braille and receiving input from the
+          user.</P
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> flesh this section out more.</P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="AEN1704"
+></A
+><DIV
+CLASS="MEDIAOBJECT"
+><P
+><IMG
+SRC="brailleevent_registration.jpg"></P
+></DIV
+><P
+><B
+>Figure 10. Braille Event Registration. Braille events are only
+            registered once at braille.init().</B
+></P
+></DIV
+><DIV
+CLASS="FIGURE"
+><A
+NAME="AEN1711"
+></A
+><DIV
+CLASS="MEDIAOBJECT"
+><P
+><IMG
+SRC="brailleevent_handling_general.jpg"></P
+></DIV
+><P
+><B
+>Figure 11. Braille Event Handling. Keyboard events are handled
+            synchronously by the processBrailleEvent method of the orca
+            module.</B
+></P
+></DIV
+><DIV
+CLASS="FIGURE"
+><A
+NAME="AEN1718"
+></A
+><DIV
+CLASS="MEDIAOBJECT"
+><P
+><IMG
+SRC="braille_usage.jpg"></P
+></DIV
+><P
+><B
+>Figure 12. Braille Interaction.</B
+></P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN1725"
+>mag</A
+></H3
+><P
+> The <I
+CLASS="EMPHASIS"
+>mag</I
+> module
+          provides Orca's Python interface to the system's gnome-mag
+          [<SPAN
+CLASS="CITATION"
+><A
+HREF="#GNOME-MAG"
+><I
+>Gnome-Mag</I
+></A
+>&#62;</SPAN
+>] CORBA service(s).
+          The magnification component provides methods that permit
+          Orca discover screen magnification services and set their
+          desktop region of interest.
+        </P
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="AEN1731"
+></A
+>Internationalization (I18N) Support</H1
+><P
+>All human-consumable text obtained from AT-SPI calls is
+      expected to be in a localized form.  As such, Orca does not
+      do any extra localization processing when working with text
+      obtained via the AT-SPI.</P
+><P
+>For text generated by Orca itself, Orca handles
+      internationalization and localization using the [<SPAN
+CLASS="CITATION"
+><A
+HREF="#GETTEXT"
+><I
+>gettext</I
+></A
+>&#62;</SPAN
+>] support
+      of Python.  The gettext support of Python is similar to the GNU
+      gettext module.  Each human consumable string of Orca is US
+      English text wrapped in a call to gettext.gettext.  The call to
+      gettext.gettext will either return a localized string or default
+      to the US English text. Orca depends upon an active and thriving
+      community of open source translators to provide the
+      localizations.</P
+><P
+>The synthesis of localized speech is to be provided by the
+      underlying gnome-speech implementation.</P
+><P
+>The generation of localized braille is to be determined.
+      <I
+CLASS="EMPHASIS"
+>TODO:</I
+> BrlTTY currently does not support this at the moment, but
+      it is expected that the BrlTTY developers will add this in the
+      future.</P
+></DIV
+><A
+NAME="AEN1740"
+></A
+><HR><H1
+><A
+NAME="AEN1740"
+></A
+>Bibliography</H1
+><DIV
+CLASS="BIBLIOENTRY"
+><A
+NAME="AT-SPI"
+></A
+><P
+>[AT-SPI]&nbsp;<SPAN
+CLASS="AUTHOR"
+>Bill Haneman, </SPAN
+><SPAN
+CLASS="AUTHOR"
+>Marc Mulcahy, </SPAN
+><SPAN
+CLASS="AUTHOR"
+>and Michael Meeks</SPAN
+>, <I
+><A
+HREF="http://directory.fsf.org/accessibility/at-spi.html"
+TARGET="_top"
+>        AT-SPI</A
+>
+    </I
+>.</P
+><DIV
+CLASS="BIBLIOENTRYBLOCK"
+STYLE="margin-left: 0.5in"
+></DIV
+></DIV
+><DIV
+CLASS="BIBLIOENTRY"
+><A
+NAME="BONOBO"
+></A
+><P
+>[Bonobo]&nbsp;<SPAN
+CLASS="AUTHOR"
+>George Lebl</SPAN
+>, <I
+><A
+HREF="http://lidn.sourceforge.net/articles/gnomenclatureintrotobonobo/"
+TARGET="_top"
+>        Gnomenclature: Intro to bonobo</A
+>
+    </I
+>.</P
+><DIV
+CLASS="BIBLIOENTRYBLOCK"
+STYLE="margin-left: 0.5in"
+></DIV
+></DIV
+><DIV
+CLASS="BIBLIOENTRY"
+><A
+NAME="BRLTTY"
+></A
+><P
+>[BRLTTY]&nbsp;<SPAN
+CLASS="AUTHOR"
+>Dave Meilke, </SPAN
+><SPAN
+CLASS="AUTHOR"
+>Nicolas Pitre, </SPAN
+><SPAN
+CLASS="AUTHOR"
+>and Stephane Doyon</SPAN
+>, <I
+><A
+HREF="http://directory.fsf.org/accessibility/brltty.html"
+TARGET="_top"
+>        BRLTTY</A
+>
+    </I
+>.</P
+><DIV
+CLASS="BIBLIOENTRYBLOCK"
+STYLE="margin-left: 0.5in"
+></DIV
+></DIV
+><DIV
+CLASS="BIBLIOENTRY"
+><A
+NAME="GAIL"
+></A
+><P
+>[GAIL]&nbsp;<SPAN
+CLASS="AUTHOR"
+>Bill Haneman</SPAN
+>, <I
+><A
+HREF="http://freshmeat.net/projects/gail/"
+TARGET="_top"
+>        GAIL</A
+>
+    </I
+>.</P
+><DIV
+CLASS="BIBLIOENTRYBLOCK"
+STYLE="margin-left: 0.5in"
+></DIV
+></DIV
+><DIV
+CLASS="BIBLIOENTRY"
+><A
+NAME="GETTEXT"
+></A
+><P
+>[gettext]&nbsp;<SPAN
+CLASS="AUTHOR"
+>TODO: Unknown</SPAN
+>, <I
+><A
+HREF="http://docs.python.org/lib/module-gettext.html"
+TARGET="_top"
+>        gettext</A
+>
+    </I
+>.</P
+><DIV
+CLASS="BIBLIOENTRYBLOCK"
+STYLE="margin-left: 0.5in"
+></DIV
+></DIV
+><DIV
+CLASS="BIBLIOENTRY"
+><A
+NAME="GNOME-MAG"
+></A
+><P
+>[Gnome-Mag]&nbsp;<SPAN
+CLASS="AUTHOR"
+>Bill Haneman</SPAN
+>, <I
+><A
+HREF="http://directory.fsf.org/accessibility/gnome-mag.html"
+TARGET="_top"
+>        Gnome-Mag</A
+>
+    </I
+>.</P
+><DIV
+CLASS="BIBLIOENTRYBLOCK"
+STYLE="margin-left: 0.5in"
+></DIV
+></DIV
+><DIV
+CLASS="BIBLIOENTRY"
+><A
+NAME="GNOME-SPEECH"
+></A
+><P
+>[Gnome-Speech]&nbsp;<SPAN
+CLASS="AUTHOR"
+>Marc Mulcahy </SPAN
+><SPAN
+CLASS="AUTHOR"
+>and Michael Meeks</SPAN
+>, <I
+><A
+HREF="http://directory.fsf.org/accessibility/gnome-speech.html"
+TARGET="_top"
+>        Gnome-Speech</A
+>
+    </I
+>.</P
+><DIV
+CLASS="BIBLIOENTRYBLOCK"
+STYLE="margin-left: 0.5in"
+></DIV
+></DIV
+><DIV
+CLASS="BIBLIOENTRY"
+><A
+NAME="GNOPERNICUS"
+></A
+><P
+>[Gnopernicus]&nbsp;<SPAN
+CLASS="AUTHOR"
+>Remus Draica</SPAN
+>, <I
+><A
+HREF="http://directory.fsf.org/accessibility/gnopernicus.html"
+TARGET="_top"
+>        Gnopernicus</A
+>
+    </I
+>.</P
+><DIV
+CLASS="BIBLIOENTRYBLOCK"
+STYLE="margin-left: 0.5in"
+></DIV
+></DIV
+><DIV
+CLASS="BIBLIOENTRY"
+><A
+NAME="JAWS"
+></A
+><P
+>[JAWS]&nbsp;<SPAN
+CLASS="AUTHOR"
+> Freedom Scientific</SPAN
+>, <I
+><A
+HREF="http://www.freedomscientific.com/fsproducts/softwarejaws.asp"
+TARGET="_top"
+>        JAWS</A
+>
+    </I
+>.</P
+><DIV
+CLASS="BIBLIOENTRYBLOCK"
+STYLE="margin-left: 0.5in"
+></DIV
+></DIV
+><DIV
+CLASS="BIBLIOENTRY"
+><A
+NAME="XKB"
+></A
+><P
+>[XKB]&nbsp;<SPAN
+CLASS="AUTHOR"
+>Erik Fortune, </SPAN
+><SPAN
+CLASS="AUTHOR"
+>William Walker, </SPAN
+><SPAN
+CLASS="AUTHOR"
+>Donna Converse, </SPAN
+><SPAN
+CLASS="AUTHOR"
+>and George Sachs</SPAN
+>, <I
+><A
+HREF="http://matrix.netsoc.tcd.ie/hcksplat/work/XKBlib.pdf"
+TARGET="_top"
+>        The XKB keyboard extension</A
+>
+    </I
+>.</P
+><DIV
+CLASS="BIBLIOENTRYBLOCK"
+STYLE="margin-left: 0.5in"
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="BOOK"
+><A
+NAME="AEN1839"
+></A
+><DIV
+CLASS="TITLEPAGE"
+><H1
+CLASS="TITLE"
+><A
+NAME="AEN1839"
+>Orca Script Writing Guide</A
+></H1
+><DIV
+CLASS="LEGALNOTICE"
+><P
+></P
+><A
+NAME="AEN1842"
+></A
+><P
+>Copyright 2005, Sun Microsystems, Inc.</P
+><P
+></P
+></DIV
+><HR></DIV
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+><A
+HREF="#AEN1844"
+>Foreword</A
+></DT
+><DT
+><A
+HREF="#AEN1850"
+>Introduction</A
+></DT
+><DT
+><A
+HREF="#AEN1853"
+>Functions that Orca needs to provide to the user</A
+></DT
+></DL
+></DIV
+><DIV
+CLASS="PREFACE"
+><HR><H1
+><A
+NAME="AEN1844"
+></A
+>Foreword</H1
+><P
+>Orca is a flexible, extensible, and powerful assistive
+  technology that provides end-user access to applications and
+  toolkits that support the AT-SPI (e.g., the GNOME desktop).  With
+  early input and continued engagement from its end users, Orca has
+  been designed and implemented by the Sun Microsystems, Inc.,
+  Accessibility Program Office.</P
+><P
+><I
+CLASS="EMPHASIS"
+>NOTE:</I
+> Orca is currently a work in progress.  As a result, this
+  and other books in the Orca Documentation Series are under
+  continuous modification and are also in various states of
+  completeness.</P
+><P
+>This book is intended for programmers intending to
+      extend Orca's functionality by writing custom scripts.
+    </P
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="AEN1850"
+></A
+>Introduction</H1
+><P
+>To be written.</P
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="AEN1853"
+></A
+>Functions that Orca needs to provide to the user</H1
+><P
+>[[[WDW - Not so sure about this whole book.  Might be better
+      to get rid of it and move things to the user experience and arch 
+      docs.]]]</P
+></DIV
+></DIV
+><DIV
+CLASS="BOOK"
+><A
+NAME="AEN1856"
+></A
+><DIV
+CLASS="TITLEPAGE"
+><H1
+CLASS="TITLE"
+><A
+NAME="AEN1856"
+>Orca Testing Plan</A
+></H1
+><DIV
+CLASS="LEGALNOTICE"
+><P
+></P
+><A
+NAME="AEN1859"
+></A
+><P
+>Copyright 2005, Sun Microsystems, Inc.</P
+><P
+></P
+></DIV
+><HR></DIV
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+><A
+HREF="#AEN1861"
+>Foreword</A
+></DT
+><DT
+><A
+HREF="#AEN1867"
+>Introduction</A
+></DT
+></DL
+></DIV
+><DIV
+CLASS="PREFACE"
+><HR><H1
+><A
+NAME="AEN1861"
+></A
+>Foreword</H1
+><P
+>Orca is a flexible, extensible, and powerful assistive
+  technology that provides end-user access to applications and
+  toolkits that support the AT-SPI (e.g., the GNOME desktop).  With
+  early input and continued engagement from its end users, Orca has
+  been designed and implemented by the Sun Microsystems, Inc.,
+  Accessibility Program Office.</P
+><P
+><I
+CLASS="EMPHASIS"
+>NOTE:</I
+> Orca is currently a work in progress.  As a result, this
+  and other books in the Orca Documentation Series are under
+  continuous modification and are also in various states of
+  completeness.</P
+><P
+>This book contains the testing plan for Orca.
+    </P
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="AEN1867"
+></A
+>Introduction</H1
+><P
+>To be written.</P
+></DIV
+></DIV
+><DIV
+CLASS="BOOK"
+><A
+NAME="AEN1870"
+></A
+><DIV
+CLASS="TITLEPAGE"
+><H1
+CLASS="TITLE"
+><A
+NAME="AEN1870"
+>Orca User's Guide</A
+></H1
+><DIV
+CLASS="LEGALNOTICE"
+><P
+></P
+><A
+NAME="AEN1873"
+></A
+><P
+>Copyright 2005, Sun Microsystems, Inc.</P
+><P
+></P
+></DIV
+><HR></DIV
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+><A
+HREF="#AEN1875"
+>Foreword</A
+></DT
+><DT
+><A
+HREF="#AEN1881"
+>Introduction</A
+></DT
+></DL
+></DIV
+><DIV
+CLASS="PREFACE"
+><HR><H1
+><A
+NAME="AEN1875"
+></A
+>Foreword</H1
+><P
+>Orca is a flexible, extensible, and powerful assistive
+  technology that provides end-user access to applications and
+  toolkits that support the AT-SPI (e.g., the GNOME desktop).  With
+  early input and continued engagement from its end users, Orca has
+  been designed and implemented by the Sun Microsystems, Inc.,
+  Accessibility Program Office.</P
+><P
+><I
+CLASS="EMPHASIS"
+>NOTE:</I
+> Orca is currently a work in progress.  As a result, this
+  and other books in the Orca Documentation Series are under
+  continuous modification and are also in various states of
+  completeness.</P
+><P
+>This book provides a guide for the installation, configuration
+      and use of Orca.  It also includes details on how users can customize 
+      the keyboard and braille input mappings of Orca.
+    </P
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="AEN1881"
+></A
+>Introduction</H1
+><P
+>To be written.</P
+></DIV
+></DIV
+></DIV
+></BODY
+></HTML
+>

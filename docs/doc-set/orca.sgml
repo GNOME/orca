@@ -1,0 +1,52 @@
+<!-- Copyright 2005, Sun Microsystems, Inc. -->
+
+<!DOCTYPE set PUBLIC "-//OASIS//DTD DocBook V4.0//EN"
+[
+<!ENTITY blurb SYSTEM "blurb.sgml">
+<!ENTITY legal SYSTEM "legal.sgml">
+<!ENTITY todo '<emphasis>TODO:</emphasis>'>
+<!ENTITY note '<emphasis>NOTE:</emphasis>'>
+<!ENTITY wkc 'well known command'>
+
+<!ENTITY user_experience SYSTEM "user_experience.sgml">
+  <!ENTITY personas_link '<link linkend="personas">personas</link>'>
+  <!ENTITY user_requirements_link '<link linkend="user_requirements">user requirements</link>'>
+  <!ENTITY style_guide_link '<link linkend="style_guide">style guide</link>'>
+  <!ENTITY gestures_link '<link linkend="gestures">input gestures</link>'>
+  <!ENTITY ue_personas SYSTEM "personas.sgml">
+  <!ENTITY ue_requirements SYSTEM "ue_requirements.sgml">
+  <!ENTITY ue_input_style SYSTEM "ue_input_style.sgml">
+  <!ENTITY ue_output_style SYSTEM "ue_output_style.sgml">
+
+<!ENTITY architecture SYSTEM "architecture.sgml">
+  <!ENTITY detail '<emphasis>IMPLEMENTATION DETAIL:</emphasis>'>
+
+<!ENTITY script_guide SYSTEM "script_guide.sgml">
+
+<!ENTITY testing SYSTEM "testing.sgml">
+
+<!ENTITY user_guide SYSTEM "user_guide.sgml">
+]
+>
+
+<set><title>Orca Documentation Series</title>
+
+  <setinfo>
+    <corpauthor>Sun Microsystems, Inc.</corpauthor>
+    <abstract>
+      &blurb;
+      <para>The Orca documentation series covers the gamut of
+        documentation for Orca, ranging from the user experience
+        design to the testing plan.  The documentation is arranged as
+        a series of books, each of which is dedicated to a particular
+        fact of Orca.</para>
+    </abstract>
+  </setinfo>
+
+  &user_experience;
+  &architecture;
+  &script_guide;
+  &testing;
+  &user_guide;
+
+</set>

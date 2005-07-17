@@ -1,0 +1,131 @@
+<!-- Copyright 2005, Sun Microsystems, Inc. -->
+
+<book>
+  <title>Orca User Experience Design</title>
+  <bookinfo>
+    &legal;
+  </bookinfo>
+
+
+  <!--
+  ************************************************************************
+  *                                                                      *
+  * FORWARD                                                              *
+  *                                                                      *
+  ************************************************************************
+  -->
+
+  <preface><title>Foreword</title>
+    &blurb;
+    <para>This book covers the design of the user experience for Orca.
+    </para>
+  </preface>
+
+
+  <!--
+  ************************************************************************
+  *                                                                      *
+  * INTRODUCTION                                                         *
+  *                                                                      *
+  ************************************************************************
+  -->
+
+  <chapter><title>Introduction</title>
+    <para>The development of Orca focused primarily on the
+      requirements of its end users.  Orca's users may require
+      non-visual access methods such as speech and/or braille and they
+      may also require alternative visual access methods such as
+      magnification.</para>
+
+    <para>When designing Orca, its authors at Sun Microsystems engaged
+      the user community from the start, soliciting feedback on questions
+      such as the following:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>What tasks do they want to accomplish?</para>
+      </listitem>
+      <listitem>
+        <para>How do they accomplish these tasks?</para>
+      </listitem>
+      <listitem>
+        <para>What should the screen reader present to them?</para>
+      </listitem>
+      <listitem>
+        <para>What is the user experience like?</para>
+      </listitem>
+    </itemizedlist>
+
+    <para>This book covers the user design of Orca, ranging from a
+      poetic use of Cooper's "Persona" concept 
+      <citation><xref linkend="cooper99" endterm="cooper99.abbrev"/>
+      </citation>
+      to the development of the end user requirements and default
+      interaction styles for speech synthesis, braille, magnification, 
+      and input devices.</para>
+
+  </chapter>
+
+  &ue_personas;
+  &ue_requirements;
+
+  <!--
+  ************************************************************************
+  *                                                                      *
+  * STYLE GUIDE                                                          *
+  *                                                                      *
+  ************************************************************************
+  -->
+
+  <chapter id="style_guide"><title>Default Interaction Styles</title>
+
+    <para>Associated with the discussion of the personas was the
+      notion of a need for consistent and efficient interaction
+      methods for Orca.  This notion resulted in the development of
+      default interaction styles for speech synthesis, braille input
+      and output, magnification, and keyboard control of Orca.  The
+      following sections describe these default interaction styles in
+      more detail.</para>
+
+    &ue_input_style;
+    &ue_output_style;
+
+  </chapter>
+
+
+  <!--
+  ************************************************************************
+  *                                                                      *
+  * BIBLIOGRAPHY                                                         *
+  *                                                                      *
+  ************************************************************************
+  -->
+
+  <bibliography>
+    <biblioentry id="cooper99" xreflabel="cooper99">
+      <abbrev id="cooper99.abbrev">Cooper99</abbrev>
+      <authorgroup>
+        <author><firstname>Alan</firstname><surname>Cooper</surname></author>
+      </authorgroup>
+      <isbn>0672316498</isbn>
+      <publisher>
+        <publishername>Sams</publishername>
+      </publisher>
+      <title>The Inmates are Running the Asylum</title>
+      <pubdate>1999</pubdate>
+    </biblioentry>
+    <biblioentry role="unpublished" id="accessx">
+      <abbrev id="accessx.abbrev">XKB</abbrev>
+      <authorgroup>
+        <author><firstname>Erik</firstname><surname>Fortune</surname></author>
+        <author><firstname>William</firstname><surname>Walker</surname></author>
+        <author><firstname>Donna</firstname><surname>Converse</surname></author>
+        <author><firstname>George</firstname><surname>Sachs</surname></author>
+      </authorgroup>
+      <title><ulink url="http://matrix.netsoc.tcd.ie/hcksplat/work/XKBlib.pdf">
+        The XKB keyboard extension</ulink>
+    </title>
+    </biblioentry>
+  </bibliography>
+
+</book>

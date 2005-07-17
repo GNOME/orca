@@ -1,0 +1,38 @@
+<!-- Copyright 2005, Sun Microsystems, Inc. -->
+
+<book>
+  <title>Orca User's Guide</title>
+  <bookinfo>
+    &legal;
+  </bookinfo>
+
+
+  <!--
+  ************************************************************************
+  *                                                                      *
+  * FORWARD                                                              *
+  *                                                                      *
+  ************************************************************************
+  -->
+
+  <preface><title>Foreword</title>
+    &blurb;
+    <para>This book provides a guide for the installation, configuration
+      and use of Orca.  It also includes details on how users can customize 
+      the keyboard and braille input mappings of Orca.
+    </para>
+  </preface>
+
+
+  <!--
+  ************************************************************************
+  *                                                                      *
+  * INTRODUCTION                                                         *
+  *                                                                      *
+  ************************************************************************
+  -->
+
+  <chapter><title>Introduction</title>
+    <para>To be written.</para>
+  </chapter>
+</book>

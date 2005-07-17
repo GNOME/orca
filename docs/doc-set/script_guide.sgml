@@ -1,0 +1,59 @@
+<!-- Copyright 2005, Sun Microsystems, Inc. -->
+
+<book>
+  <title>Orca Script Writing Guide</title>
+  <bookinfo>
+    &legal;
+  </bookinfo>
+
+
+
+  <!--
+  ************************************************************************
+  *                                                                      *
+  * FORWARD                                                              *
+  *                                                                      *
+  ************************************************************************
+  -->
+
+  <preface><title>Foreword</title>
+    &blurb;
+    <para>This book is intended for programmers intending to
+      extend Orca's functionality by writing custom scripts.
+    </para>
+  </preface>
+
+
+
+  <!--
+  ************************************************************************
+  *                                                                      *
+  * INTRODUCTION                                                         *
+  *                                                                      *
+  ************************************************************************
+  -->
+
+  <chapter><title>Introduction</title>
+    <para>To be written.</para>
+  </chapter>
+
+
+
+
+
+  <!--
+  ************************************************************************
+  *                                                                      *
+  * SCRIPT CALLABLE FUNCTIONS                                            *
+  *                                                                      *
+  ************************************************************************
+  -->
+
+  <chapter><title>Functions that Orca needs to provide to the user</title>
+    <para>[[[WDW - Not so sure about this whole book.  Might be better
+      to get rid of it and move things to the user experience and arch 
+      docs.]]]</para>
+  </chapter>
+
+
+</book>

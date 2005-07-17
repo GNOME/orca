@@ -1,0 +1,1146 @@
+<!-- Copyright 2005, Sun Microsystems, Inc. -->
+
+    <!--
+    **********************************************************************
+    *                                                                    *
+    * OUTPUT STYLE: SPEECH SYNTHESIS AND BRAILLE                         *
+    *                                                                    *
+    **********************************************************************
+    -->
+
+    <section><title>Output Style: Speech Synthesis and Braille</title>
+
+      <para>This section provides output styles for each relevant
+        Accessible role. &todo; this is a work in progress.</para>
+
+      <section><title>General Braille Style</title>
+        <para>For braille, there are two verbosity levels.  The first
+          is a more verbose level for use with larger braille displays
+          and for those users who are not expert with the Gnome
+          desktop environment.  The second more brief mode is for
+          those who are using a smaller display or who are expert with
+          the Gnome environment.  With braille, Orca should always
+          make an effort to show as much of the actual item with focus
+          as possible, and the user should never be left with a
+          completely blank display unless they are on a blank line in
+          a text editor.</para>
+        <para>A general style for displaying braille is as follows:
+          the line will be built up of several regions and an attempt
+          will be made to start the most meaningful region at a given
+          "homing position."  The idea behind the homing position is
+          that it will be the braille cell of the user's choice (e.g.,
+          the first cell of the display, the middle of the display,
+          etc.) that the user can navigate to quickly.  In the event
+          that the line is too long for the physical display, the
+          homing position will will apply and the line will be clipped
+          to the left and/or right as appropriate; the user can use
+          the panning actions to view the clipped information.  The
+          regions of the line follow a general pattern:</para>
+
+        <itemizedlist>
+          <listitem>
+            <para>Verbose: context label [value] rolename</para>
+          </listitem>
+          <listitem>
+            <para>Brief: context label [value]</para>
+          </listitem>
+        </itemizedlist>
+
+        <para>Where:</para>
+
+        <itemizedlist>
+          <listitem>
+            <para>context is information about the container with focus.
+              Examples include "calculator window," "desktop," "save as
+              dialog," "low disk space alert," etc.  &todo; context can
+              be composed of nested contexts (e.g., a page tab in a dialog);
+              we need to decide what the context is (e.g., logical visual
+              grouping of objects?)</para>
+          </listitem>
+          <listitem>
+            <para>label is the label of the object, usually obtained by
+              the name of the object or the text of the label that
+              labels the object.  Examples include "File," "OK," "First
+              name:," "Volume:," etc.  The label is generally viewed as
+              the most meaningful region.</para>
+          </listitem>
+          <listitem>
+            <para>[value] (optional) is the value of the object, and varies
+              depending upon the object type.  For example, "&lt;x>" for a 
+              check box, "70%" for a slider, and "Mike Pedersen" for a text
+              field.</para>
+          </listitem>
+          <listitem>
+            <para>rolename is a localized string representing the name
+              of the role of the object.  The user can select between
+              full rolenames (e.g., "check box," "menu item," "push
+              button") or abbreviated rolenames (e.g., "chk," "mit,"
+              "pbt").  Note that the rolename may also appear in
+              brief mode if the role of the object is not clear from
+              the label and surrounding context.</para>
+          </listitem>
+        </itemizedlist>
+
+        <para>The braille cursor (e.g., dots 7 and 8 on the braille
+          display) will be used to indicate meaningful information as
+          well.  For example, the cursor will indicate caret position
+          in text areas, and the cursor will also be used to indicate
+          the menu item with focus.</para>    
+        <para>Finally, the touch cursors on the display will "do the
+          right thing."  When in focus tracking mode, pressing any
+          touch cursor associated with most objects will perform the
+          default action for that object; the obvious exception is
+          text areas, where the touch cursor will move the text caret
+          to that object.  &todo; define what happens in flat review -
+          this might move keyboard focus to the object, perform a
+          click, etc.</para>
+      </section>
+
+      <section><title>General Speech Style</title>
+
+
+        <para>&todo; add speech.</para>
+
+
+      </section>
+
+      <section><title>Output Styles by Role</title>
+
+        <section><title>accelerator label (ROLE_ACCEL_LABEL)</title>
+          <para>An accelerator label is a short string that appears at
+            the end of the text for a menu item (e.g., "CTRL+Z"), and
+            defines the keystrokes that will invoke the action associated
+            with a menu item.</para>
+
+          <section><title>Braille</title>
+
+            <para>When presented, the accelerator will always be
+	      presented after the item it represents and before the
+	      marker that separates menu items.  The braille text for
+	      the accelerator will appear in parentheses with no space
+	      before the opening parenthesis.  Accelerator labels will
+	      only be presented in verbose mode, and will only appear
+	      for the item with focus.  In the event that there are
+	      other things to show (e.g., check buttons or role
+	      names), the accelerator will appear to the far right.</para>
+
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: view menu show mumble &lt;x>(CTRL+M) _ zoom in _ ...</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: view menu show mumble &lt;x> _ zoom in _ ...</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>alert (ROLE_ALERT)</title>
+          <para>&todo; the AT-SPI makes a distinction between alerts and
+            dialogs.  But, it appears as though the role "alert" is applied
+            to just about any dialog.</para>
+
+          <section><title>Braille</title>    
+            <para>Any window, regardless if it is an alert, dialog,
+              frame, or window, will appear as the context region on
+              the braille line.  The context string will consist of
+              the title of the window followed by its role.  The
+              remainder of the braille line will consist of
+              information describing the object with focus in the
+              window.  The information will follow the presentation rules
+              for the given role type.</para>
+            <para>In the case of the "alert", the role of the context will
+              be "alert."</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: low disk space alert</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: low disk space alert</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>animation (ROLE_ANIMATION)</title>
+          <para>An animation contains a moving or dynamic image.</para>
+          <section><title>Braille</title>
+            <para>&todo; should this follow a pattern of "label
+              description role" to be more consistent with the
+              generalized style?</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: animation: Will riding his bike.</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: animation: Will riding his bike.</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>arrow (ROLE_ARROW)</title>
+          <para>An arrow is a 2D directional indicator.</para>
+          <section><title>Braille</title>
+            <para>An arrow will be represented by the direction the arrow
+              is pointing followed by "arrow."  Any touch cursor associated
+              with the text will click the arrow. &todo; should the rolename
+              "arrow" appear in brief mode?</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: left arrow</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: up arrow</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>check box (ROLE_CHECK_BOX)</title>
+          <para>A check box represents a choice that can be checked or
+            unchecked and provides an indicator for the current
+            state.</para>
+          <section><title>Braille</title>
+            <para>The state of a check box will be represented by "&lt; >" if
+              it is unchecked and "&lt;x>" if it is checked.  Any touch
+              cursor associated with the text will click the check box.</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: save password: &lt; > checkbox</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: save password: &lt;x></para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech - should determine verbosity if state
+              changes while the checkbox has focus.</para>
+          </section>
+        </section>
+
+        <section><title>check menu item (ROLE_CHECK_MENU_ITEM)</title>
+          <para>A check menu represents a menu item that can be
+            checked or unchecked and provides an indicator for the
+            current state.</para>
+          <section><title>Braille</title>
+            <para>All menus items from a single menu will be shown at
+              the same time (see ROLE_MENU). The state of a check menu
+              item will be represented by "&lt; >" if it is unchecked
+              and "&lt;x>" if it is checked. (See also
+              ROLE_ACCEL_LABEL).  The touch cursors will result in
+              activating the item.</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: show status bar &lt; >(CTRL+B) checkmenu</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: show status bar &lt;x></para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>column header, table column header (ROLE_COLUMN_HEADER, ROLE_TABLE_COLUMN_HEADER)</title>
+          <para>A column header is a header for a column of data.</para>
+          <section><title>Braille</title>
+            <para>A column header will be treated like a button (column
+              headers are usually clickable, typically resorting the
+              rows of the associated table), except it will be followed 
+              by "column heading" in verbose mode.</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: monthly income column heading</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: monthly income</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>combo box (ROLE_COMBO_BOX)</title>
+          <para>A combo box is a single line item that contains a list of
+            choices the user can select from, and it can also contain
+            editable text.</para>
+          <section><title>Braille</title>
+            <para>The verbose and brief modes will show the label followed
+              by the item followed by the word "combo."  If the item is
+              selected, it will be completely underlined with dots 7 & 8
+              to indicate selection.  &todo; what do we do if the item is
+              editable text?</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: time zone: GMT-8 pacific combo</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: time zone: GMT-8 pacific combo</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>desktop icon (ROLE_DESKTOP_ICON)</title>
+          <para>A desktop icon is an iconified internal frame within a 
+            desktop pane.</para>
+          <section><title>Braille</title>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: file.txt icon</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: file.txt icon</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>dial (ROLE_DIAL)</title>
+          <para>A dial is a rotatable valuator.</para>
+          <section><title>Braille</title>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: temperature 50 dial</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: temperature 50 dial</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>dialog (ROLE_DIALOG)</title>
+          <para>A dialog is a top level window with a title and border.
+            &todo; the AT-SPI makes a distinction between alerts and
+            dialogs.  But, it appears as though the role "alert" is applied
+            to just about any dialog.</para>
+
+          <section><title>Braille</title>    
+            <para>Any window, regardless if it is an alert, dialog,
+              frame, or window, will appear as the context region on
+              the braille line.  The context string will consist of
+              the title of the window followed by its role.  The
+              remainder of the braille line will consist of
+              information describing the object with focus in the
+              window.  The information will follow the presentation rules
+              for the given role type.</para>
+            <para>In the case of the "dialog", the role of the context will
+              be "dialog."</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: Editing profile "foo" dialog</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: Editing profile "foo" dialog</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>directory pane (ROLE_DIRECTORY_PANE)</title>
+          <para>A directory pane is a pane that allows the user to 
+            navigate through and select the contents of a directory.</para>
+
+          <section><title>Braille</title>    
+
+            <para>When in a directory pane, it will be treated like a 
+              part of a context.</para>
+
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: Open file dialog select file directory pane filename: text</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: Open file dialog select file filename:</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>icon (ROLE_ICON)</title>
+          <para>An icon is a small fixed-sized picture typically used to
+            decorate components.</para>
+
+          <section><title>Braille</title>    
+            <para>The label of the icon (or the component for the icon) will
+              be displayed.</para>
+
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: unread icon</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: unread</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>image (ROLE_IMAGE)</title>
+          <para>An image is a picture, typically static.</para>
+
+          <section><title>Braille</title>    
+            <para>The label of the icon (or the component for the icon) will
+              be displayed.  &todo; perhaps show accessible name and/or
+              description of the image?</para>
+
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: new england in the fall image</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: new england in the fall</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>html container (ROLE_HTML_CONTAINER)</title>
+          <para>&todo; considerable thought needs to be done here.
+            An idea for links, however, is that their text should
+            be followed by the type of link: "[mailto,ftp,...] link."
+            In addition, it may actually be more beneficial to use
+            sound effects here so as to not interrupt the natural
+            flow of text.  That is, it would be better to speak
+            "press [boop] here to send e-mail to Mike" vs. "press 
+            here mailto link to send e-mail to Mike."</para>
+
+          <section><title>Braille</title>    
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example:</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example:</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>label (ROLE_LABEL)</title>
+          <para>A label is a short string.  It typically labels another
+            object (e.g., a text area), but may be standalone.  When it
+            is standalone, it will be considered "static text."
+            Special handling of labels will only be done in the case
+            where they are static text.  In these cases, the user will
+            discover the text through review mode.</para>
+
+          <section><title>Braille</title>    
+
+            <para>Labels will be presented as "raw" text on the
+              display.</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: you are low on disk space</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: you are low on disk space</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>list (ROLE_LIST)</title>
+          <para>A list is an object that presents a list of objects to the
+            user and allows them to select one or more of them.</para>
+
+          <section><title>Braille</title>    
+
+            <para>Orca will display the label for the list followed by
+              the focused item followed by "list" followed by the
+              position in the list if in verbose mode.  If the item is
+              selected, Orca will completely underline the item using
+              dots 7 and 8.  The touch cursors will toggle the selection
+              of the associated itme.</para>
+
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: state: california list 5 of 50</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: state: california list</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>menu (ROLE_MENU)</title>
+          <para>A menu contains menu items and lives in a menu bar.</para>
+
+          <section><title>Braille</title>    
+
+            <para>Orca will show the menu name followed by the menu
+              items.  The menu item with focus (if there is one) will
+              be the most meaningful object and it will also have the
+              braille cursor.  The touch cursors will activate the
+              associated item.</para>
+     
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: file menu new _ save _ quit _ ...</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: file menu new _ save _ quit _ ...</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>menu (ROLE_MENU_BAR)</title>
+          <para>A menu bar contains a set of menus.</para>
+
+          <section><title>Braille</title>    
+
+            <para>Orca will show the "menubar" followed by names of the
+              menu items separated with "_".  %todo; for this and maybe
+              all other objects with mnenonics, how does one determine
+              what the mnemonic is?</para>
+
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: menubar file _ edit _ view _...</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: menubar file _ edit _ view _ ...</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>menu item (ROLE_MENU_ITEM)</title>
+          <para>A menu item lives in a menu.</para>
+
+          <section><title>Braille</title>    
+
+            <para>All menus items from a single menu will be shown at
+              the same time (see ROLE_MENU).  The menu item with focus
+              (if there is one) will be the most meaningful object and
+              it will also have the braille cursor.  The touch cursors
+              will activate the associated item.  If the menu item
+              is a menu (i.e., a submenu), then it will be followed 
+              by the word "sub" to indicate it is a submenu.</para>
+     
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: file menu new _ save _ quit _ ...</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: file menu new _ save _ quit _ ...</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>option pane (ROLE_OPTION_PANE)</title>
+          <para>An option pane is a specialized pane whose primary used is
+            inside a dialog.</para>
+
+          <section><title>Braille</title>         
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example:</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example:</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>page tab (ROLE_PAGE_TAB)</title>
+          <para>A page tab is a child of a page tab list.</para>
+
+          <section><title>Braille</title>
+            <para>A page tab will be viewed as a form of context.  If
+              only the page tab is selected (i.e., the focus is on the
+              name of tab), then the page tab will be presented in the
+              context of the page tab list.  If an object in the tab
+              has focus, however, then the following will be the
+              context and the object will also be displayed.  The
+              object will also be the most meaningful
+              information.</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: preferences dialog effects tab</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: preferences dialog effects tab</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>page tab list (ROLE_PAGE_TAB_LIST)</title>
+          <para>A page tab is an object that presents a series of 
+            panels (page tabs), one at a time.</para>
+
+          <section><title>Braille</title>
+            <para>Orca will display "tab list" followed by the list of tabs
+              separated by "_".  The selected tab will get the cursor and
+              will also be the most meaningful information.  The touch
+              cursors will select the associated page tab.</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: tab list general _ advanced _ effects _ ...</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: tab list general _ advanced _ effects _ ...</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>password text (ROLE_PASSWORD_TEXT)</title>
+          <para>Password text objects are used for passwords or other 
+            places where the visible text should not be visibly shown.</para>
+
+          <section><title>Braille</title>         
+            <para>Orca will treat the password text just like a text object,
+              but will display *'s instead of characters.</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: password: ****** text</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: password: ******</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>progress bar (ROLE_PROGRESS_BAR)</title>
+          <para>A progress bar indicates how much of a task has been
+            completed.</para>
+
+          <section><title>Braille</title>         
+            <para>Orca will show the label followed by the value followed
+              by "progress."</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: uploading: 57% progress</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: uploading: 57%</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>push button (ROLE_PUSH_BUTTON)</title>
+          <para>An object the user can manipulate to tell the application
+            to do something.</para>
+
+          <section><title>Braille</title>         
+            <para>Orca will show the name of the button followed by the
+              state of the button.</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: OK pushbutton</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: OK</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>radio button (ROLE_RADIO_BUTTON)</title>
+          <para>A specialized check box that will cause other radio buttons
+            in the same group to become unchecked when it is checked.</para>
+          <section><title>Braille</title>
+
+            <para>The state of a radio button will be represented by
+              "&amp; y" if it is unselected and "&amp;=y" if it is
+              selected.  All buttons from the same radio group will be
+              displayed at once, with the button with focus being the
+              most meaningful information.  Any touch cursor associated
+              with the text will click the radio button.  Furthermore,
+              the name of the radio button group will be used as part
+              of the context.</para>
+
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: Color: Red &amp;=y _  Blue &amp; y _  Green &amp; y</para>
+              </listitem>
+              <listitem>
+                <para>Verbose Example: Color: Red &amp;=y _  Blue &amp; y _  Green &amp; y</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech - should determine verbosity if state
+              changes while the checkbox has focus.</para>
+          </section>
+        </section>
+
+        <section><title>radio menu item (ROLE_RADIO_MENU_ITEM)</title>
+          <para>A radio menu represents a menu item that behaves like
+            a radio button.</para>
+          <section><title>Braille</title>
+            <para>All menus items from a single menu will be shown at
+              the same time (see ROLE_MENU). The state of a radio menu
+              item will be represented by "&amp; y" if it is unchecked
+              and "&amp;=y" if it is checked. (See also
+              ROLE_ACCEL_LABEL).  The touch cursors will result in
+              activating the item.</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: Red &amp; y(CTRL+R) radiomenu</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: Red &amp;=y</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>row header, table row header (ROLE_ROW_HEADER, ROLE_TABLE_ROW_HEADER)</title>
+          <para>A row header is a header for a row of data.</para>
+          <section><title>Braille</title>
+            <para>Like a column header, a row header will be treated
+              like a button, except it will be followed by "row
+              heading" in verbose mode.</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: January row heading</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: January</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>scroll bar (ROLE_SCROLL_BAR)</title>
+          <para>A scroll bar allows a user to incrementally view a large
+            amount of information.</para>
+
+          <section><title>Braille</title>         
+
+            <para>Orca will show the value (in %) followed by the
+              orientation followed by "scrollbar".  NOTE: it is rare
+              that users will use scrollbars.  They will tend to use
+              the page up/down and other navigation keys to move
+              around large areas of text.</para>
+
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: 57% vertical scrollbar</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: 57% vertical scrollbar</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>slider (ROLE_SLIDER)</title>
+          <para>A slider allows a user to select a value from a bounded
+            range.</para>
+
+          <section><title>Braille</title>         
+
+            <para>Orca will show the label, then the value (in %)
+              followed by "slider".</para>
+
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: volume: 57% slider</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: volume: 57%</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>spin button (ROLE_SPIN_BUTTON)</title>
+          <para>A spin button is a single line item that contains a list of
+            choices the user can select from.</para>
+          <section><title>Braille</title>
+            <para>The verbose and brief modes will show the label followed
+              by the item followed by the word "spin."</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: Red: 57 spin</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: Red: 57 spin</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>split pane (ROLE_SPLIT_PANE)</title>
+          <para>A split pane is a specialized panel that presents two panels
+            at once.  It has a divider than can be dragged.</para>
+          <section><title>Braille</title>
+            <para>The words "split pane" will become part of the context and
+              the focused object will be the object of interest.  In the
+              event the focus is on the split pane divider, braille will
+              display the percentage of the top or left pane that is shown
+              followed by "split pane divider".</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: open file dialog directory split pane /usr list 5 of 10</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: open file dialog directory split pane /usr list 5 of 10</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>table, table cell (ROLE_TABLE, ROLE_TABLE_CELL)</title>
+
+          <para>Tables are a container of data organized in rows and
+            columns.  The interesting aspects of a table include: the
+            row/column headers, the contents of the various cells, and
+            selection.</para>
+
+          <section><title>Braille</title>
+
+            <para>A table will generally be viewed as a context, with
+              focused table component (e.g., header or cell) being the
+              most important information.  In verbose mode, Orca will
+              show the title of a table followed by "table" followed
+              by row and column information followed by the cell data.
+              Brief mode will simply show row and column information
+              followed by cell data.  The cell data will displayed
+              using the given role styles in this style guide followed
+              by "cell."  In brief mode, "cell" will not be shown.</para>
+
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: home runs table row header Mike c4 0 cell</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: c4 0</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title> (ROLE_)</title>
+          <para></para>
+
+          <section><title>Braille</title>         
+            <para></para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example:</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example:</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+
+        <section><title>tear off menu item (ROLE_TEAR_OFF_MENU_ITEM)</title>
+          <para>A tear off menu item allows a menu to be removed from a menu
+            bar and shown in its own window.</para>
+
+          <section><title>Braille</title>    
+
+            <para>All menus items from a single menu will be shown at
+              the same time (see ROLE_MENU).  The menu item with focus
+              (if there is one) will be the most meaningful object and
+              it will also have the braille cursor.  The touch cursors
+              will activate the associated item.  Tear off menu items
+              will be shown with "---" as their label.</para>
+     
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: file menu --- _ new _ save _ quit _ ...</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: file menu --- _ new _ save _ quit _ ...</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>text (ROLE_TEXT)</title>
+
+          <para>A text object presents text to the user such that the
+            text typically has a caret position, can be single line or
+            multiline, and can be editable.</para>
+
+          <section><title>Braille</title>         
+
+            <para>Document text will be displayed optionally with the
+	      following enhancements.  It can optionally be displayed
+	      with proper spacing shown, with a certain attribute
+	      underlined, style information displayed in status cells.
+	      If status cells exist it should be possible to toggle
+	      them between the font, the point size and the attribute.
+              Multiline text will be followed by the current line and
+              total lines.</para>
+
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: first name: willie edit (the cursor is shown and moves with the caret position)</para>
+                <para>Verbose Example: address: 1024 washington way multiline 1 of 2 (the cursor is shown and moves with the caret position)</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: first name: willie</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>toggle button (ROLE_TOGGLE_BUTTON)</title>
+          <para>A toggle button is a specialized push button that can
+            be checked or unchecked, but does not provide a separate
+            indicator for the current state.</para>
+
+          <section><title>Braille</title>
+
+            <para>The state of a toggle button will be represented by
+              "&amp; y" if it is unselected and "&amp;=y" if it is
+              selected.</para>
+
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: Run &amp;=y toggle</para>
+              </listitem>
+              <listitem>
+                <para>Verbose Example: Run &amp; y</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech - should determine verbosity if state
+              changes while the toggle button has focus.</para>
+          </section>
+        </section>
+
+        <section><title>tool bar (ROLE_TOOL_BAR)</title>
+          <para>A tool bar is a bar or palette usually composed of
+            push buttons or toggle buttons, but may also contain other
+            items such as editable text.</para>
+
+          <section><title>Braille</title>         
+
+            <para>Verbose mode should show the tool bar followed by
+	      "toolbar" Brief mode should simply show the tool bar.
+	      Each item will be separated with "_".  Same verbosity
+	      rules apply to each item. &todo; perhaps toolbar should
+              be treated like a context?</para>
+            <itemizedlist>
+              <listitem>
+
+                <para>Verbose Example: new button _ save button _ cut
+                  button toolbar </para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: new _ save _ cut</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+
+        <section><title>tree, tree table (ROLE_TREE, ROLE_TREE_TABLE)</title>
+          <para>A tree presents hierarchical information to the user,
+            allowing them to expand/collapse nodes to limit what it
+            seen.</para>
+
+          <section><title>Braille</title>         
+
+            <para>Orca should show the label for the tree followed by
+	      the current item followed by its state followed by the
+	      level followed by tree.</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: directory myfolder expanded level 4 tree</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: directory myfolder leaf level 4 tree</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+        <section><title>window (ROLE_WINDOW)</title>
+          <para>A window is a top level window with no title or border.</para>
+
+          <section><title>Braille</title>         
+
+            <para>On Alt+Tab, the task switcher will appear.  As it is
+	      on the screen, it will be presented.  The text that
+	      appears (i.e., the window name) will be shown in
+	      braille.  When the window gets focus, it will be the
+              context, and the object with focus in the window will
+              be the most meaningful information.</para>
+
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example:</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example:</para>
+              </listitem>
+            </itemizedlist>
+          </section>
+
+          <section><title>Speech</title>
+            <para>&todo; add speech</para>
+          </section>
+        </section>
+
+      </section>
+    </section>

@@ -1,0 +1,36 @@
+<!-- Copyright 2005, Sun Microsystems, Inc. -->
+
+<book>
+  <title>Orca Testing Plan</title>
+  <bookinfo>
+    &legal;
+  </bookinfo>
+
+
+  <!--
+  ************************************************************************
+  *                                                                      *
+  * FORWARD                                                              *
+  *                                                                      *
+  ************************************************************************
+  -->
+
+  <preface><title>Foreword</title>
+    &blurb;
+    <para>This book contains the testing plan for Orca.
+    </para>
+  </preface>
+
+
+  <!--
+  ************************************************************************
+  *                                                                      *
+  * INTRODUCTION                                                         *
+  *                                                                      *
+  ************************************************************************
+  -->
+
+  <chapter><title>Introduction</title>
+    <para>To be written.</para>
+  </chapter>
+</book>

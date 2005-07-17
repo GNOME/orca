@@ -1,0 +1,938 @@
+<!-- Copyright 2005, Sun Microsystems, Inc. -->
+
+  <!--
+  ************************************************************************
+  *                                                                      *
+  * PERSONAS                                                             *
+  *                                                                      *
+  ************************************************************************
+  -->
+
+  <chapter id="personas"><title>Personas</title>
+
+    <para>The Orca user personas are intended to be a tool that helps
+      elicit use cases and &user_requirements_link;.  The approach
+      is to think of "real" users with specific disabilities
+      performing specific actions.  These personas are meant to cover
+      a range of typical users, both in the tasks they want to
+      accomplish as well as their disabilities.  The Orca user design
+      explored four personas, each of which is discussed in the
+      following sections:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para><link linkend="Lee">Lee</link>: a programmer who uses
+        braille</para>
+      </listitem>
+      <listitem>
+        <para><link linkend="pat">Pat</link>: a manager who uses
+          magnification and speech</para>
+      </listitem>
+      <listitem>
+        <para><link linkend="kim">Kim</link>: an administrative
+          assistant who uses speech</para>
+      </listitem>
+      <listitem>
+        <para><link linkend="sam">Sam</link>: an IT staff member who
+          uses speech and braille</para>
+      </listitem>
+    </itemizedlist>
+
+    <section id="lee"><title>Lee the Programmer</title>
+
+      <para>Lee is a programmer who is primarily a braille user and
+        typically performs the tasks outlined in the following
+        sections.</para>
+
+      <section><title>Write code in NetBeans</title>
+
+        <para>Lee edits a program module in NetBeans.  Over the course
+          of this editing, Lee must be able to do the following:</para>
+
+        <itemizedlist>
+          <listitem>
+            <para>Determine proper indenting.  On the braille display,
+              Orca shows this by using blank spaces.  Orca also has an
+              option to compress horizontal spacing so as to better make
+              use of braille real-estate.</para>
+            <para>Lee sometimes uses speech as well, and uses separate
+              commands to have Orca read the indentation level.  When in
+              focus tracking mode, Lee also has the option to turn on
+              the automatic speaking of this information.</para>
+          </listitem>
+          <listitem>
+            <para>See highlighting, attributes and coloring.  On the
+              braille display, Orca shows this in status cells, where
+              the status cells reflect the attributes of the character
+              under the current cursor position.  For braille displays
+              without status cells, attribute information is shown using
+              dots 7 and 8, where a "key on the braille display" is used
+              to cycle through the various attribute types (underline,
+              bold, etc.).</para>
+          </listitem>
+          <listitem>
+            <para>Navigate to and activate buttons and other controls
+              with the braille display, especially those that cannot
+              gain focus using native keystrokes.  For example, some
+              code completion and information windows may not have this
+              ability.  Lee uses
+              functions to quickly move the braille display to various
+              parts of the screen such as "top of screen" or "line 6."
+              This is typically done under flat review mode, and Lee uses
+              the panning and navigation keys on the braille display to do
+              this.</para>
+            <para>When Lee presses touch cursors on the braille display,
+              they behave as if a Lee were performing a single left mouse
+              click on the given object associated with the touch
+              cursor.</para>
+          </listitem>
+          <listitem>
+            <para>Monitor an object on the screen.  When Lee tells
+              Orca to monitor an object by pressing a key in
+              combination with cursor routing buttons on the braille
+              display Orca will reserve an area on the braille display
+              and will continually display all current information for
+              this object.</para>
+          </listitem>
+          <listitem>
+            <para>Set a part of the screen to jump to, such as a
+              status bar.  When Lee lands on an object of interest,
+              Lee will instruct Orca to reserve a keystroke by
+              pressing a key and a touch cursor on the braille display
+              to jump back to the object without moving the active
+              focus. Since Lee is a braille user, Orca also allows Lee
+              to jump to these objects by pressing a combination of a
+              braille display key and touch cursor to jump to a
+              bookmark (e.g., cursor 1 goes to bookmark 1).</para>
+          </listitem>
+        </itemizedlist>
+  
+      </section>
+  
+      <section><title>Compile code in NetBeans</title>
+  
+        <para>Lee compiles a program module and fixes errors in
+          NetBeans.  Over the course of this task, Lee must be able to
+          do the following:</para>
+  
+        <itemizedlist>
+          <listitem>
+            <para>See all errors and warnings.  For example, when Lee
+              compiles a program module, focus will be moved to a window
+              containing errors and warnings.  Focus tracking should
+              behave properly here, and the braille display will show
+              the first line in the errors and warnings window.</para>
+            <para>When Lee has speech enabled, Orca will speak the first
+              line of the message window.</para>
+          </listitem>
+          <listitem>
+            <para>Click on an error with a touch cursor to go to the
+              error.  This acts just like performing a left mouse click
+              on the error to take Lee to the editor window and source
+              line for the error.  Focus tracking behaves properly here,
+              and the braille display will show the line containing the
+              error.</para>
+          </listitem>
+          <listitem>
+            <para>When reviewing the screen, Orca compresses white
+              space on the braille display to allow Lee to review more
+              quickly.  For example, when there are only blanks to the
+              right and Lee presses the pan-right button on the
+              braille display, Orca will take Lee to beginning of the
+              next non-blank line.  Orca also indicates positional
+              information by displaying optional "beginning of line"
+              and "end of line" characters which are standard well
+              known characters on the braille display.  Orca also
+              optionally shows vertical screen position in status
+              cells.  Orca also optionally plays sound effects to
+              indicate line changes.</para>
+          </listitem>
+          <listitem>
+            <para>Run the application being created and access it.
+              General screen reading functionality applies here.</para>
+          </listitem>
+        </itemizedlist>
+  
+      </section>
+  
+      <section><title>Compose document in StarOffice</title>
+  
+        <para>Lee writes rough draft of an architecture document in
+          StarOffice.  Over the course of this editing, Lee must be able
+          to do the following:</para>
+  
+        <itemizedlist>
+          <listitem>
+            <para>Detect text selection.  When Lee selects text in the
+              document, Orca uses dots 7 and 8 on the braille display to
+              indicate the text selection.  Note that this will hide any
+              capitalization held in dot 7, but that's OK.</para>
+          </listitem>
+          <listitem>
+            <para>Use spellcheck to determine misspelled word and read
+              list of possible replacements.  NOTE: Lee wants to be able
+              to see both the spellcheck dialog and the misspelled word
+              in context.  When spellcheck dialog comes up, Orca
+              provides a &wkc; to say "read the word in its
+              context".  Speech will speak it.  Braille will display it,
+              and any other action snaps Lee back to the spellcheck
+              dialog.</para>
+          </listitem>
+          <listitem>
+            <para>Read documents in grade two braille.  Lee uses a
+              &wkc; to toggle between grade one and grade two
+              braille.</para>
+            <para>&todo; Perhaps not a 1.0 requirement.</para>
+          </listitem>
+          <listitem>
+            <para>Detect attributes of text.  Lee does this in the same
+              way as described in "highlighting, attributes and
+              coloring" above.</para>
+          </listitem>
+          <listitem>
+            <para>Easily comprehend tabs and spacing.  Less does this in
+              the same way as described in "determine proper indenting"
+              above.</para>
+          </listitem>
+          <listitem>
+            <para>Bring up a list of toolbar items to quickly access
+              with the keyboard.  For example, some applications are
+              well-behaved and let you move to the toolbar.  Others do
+              not.  Orca provides a &wkc; that takes Lee
+              to toolbar navigation mode.  Another &wkc;
+              (e.g., escape) gets you out of this mode.</para>
+            <para>&note; this may also be workable via review mode,
+              but the screen reader always attempts to provide Lee
+              with the most efficient means for accomplishing any
+              task.</para>
+          </listitem>
+          <listitem>
+            <para>Review the currently visible window with the braille
+              display without moving the active cursor (e.g., the caret
+              or the object with focus).  Lee uses Orca's flat review
+              mode to do this, and Orca's flat review mode also allows
+              Lee to select an object (and caret position in that
+              object, if caret position applies).</para>
+          </listitem>
+          <listitem>
+            <para>Navigate and read all prompts and controls (including
+              static text) in dialogs such as "Save as..." both in flat
+              review mode and in logical order.</para>
+          </listitem>
+          <listitem>
+            <para>View labels on the same line as the control they refer
+              to followed by the control type.  NOTE: Orca automatically
+              does this in braille when in focus tracking mode, but will
+              not do this when in flat review mode.</para>
+          </listitem>
+          <listitem>
+            <para>Obtain "where am I" info.  In focus tracking mode,
+              Orca's braille display always tells Lee this (e.g., it
+              displays "file open dialog, filename text area, role" on
+              the braille display - see the braille specification
+              document for more information).  Updates to text areas
+              cause automatic panning of braille so as to keep as much
+              of text area on display as possible, with weight given to
+              the caret.</para>
+          </listitem>
+        </itemizedlist>
+  
+      </section>
+  
+      <section><title>Read and write e-mail with Evolution</title>
+  
+        <para>Lee reads and writes e-mail with Evolution to communicate
+          with team.  Over the course of this task, Lee must be able to
+          do the following:</para>
+  
+        <itemizedlist>
+          <listitem>
+            <para>Read all e-mail formats (e.g., plain text and html).
+              Orca relies on Evolution to give it the proper AT-SPI object
+              information for this.</para>
+          </listitem>
+          <listitem>
+            <para>Track the message list and easily be able to determine
+              such info as time, date and message priority.  Orca places
+              all this information on one line of the braille display if
+              at all possible.</para>
+          </listitem>
+          <listitem>
+            <para>Spellcheck an outgoing message as described above.</para>
+          </listitem>
+          <listitem>
+            <para>See autocompletion information as it is appearing.
+              Orca displays this information to Lee on the braille
+              display and keeps the cursor at the current caret
+              position.</para>
+            <para>When Lee has speech enabled, the speech output also speaks
+              the autocomplete values.</para>
+          </listitem>
+        </itemizedlist>
+  
+      </section>
+  
+      <section><title>Use terminal windows</title>
+  
+        <para>Lee also interacts with terminal windows on a daily basis.
+          While BrlTTY is most likely the better solution for Lee (who
+          is primarily a braille user), Lee may also want to access a
+          GUI terminal on occasion.  Lee needs to be able to do the
+          following:</para>
+  
+        <itemizedlist>
+          <listitem>
+            <para>Navigate the terminal window.  Orca updates the
+              braille display to track the cursor in apps such as emacs
+              and vi.  Orca also updates the braille display to track
+              the navigation of fields in terminal apps (such as curses
+              applications).</para>
+            <para>&todo; Handling curses applications may be a lower
+              priority task at this point.</para>
+          </listitem>
+        </itemizedlist>
+  
+      </section>
+  
+      <section><title>Use the calendar tool</title>
+  
+        <para>Lee sets up appointment for team design discussion using a
+          calendar tool.  Over the course of this task, Lee needs to be
+          able to do the following:</para>
+  
+        <itemizedlist>
+          <listitem>
+            <para>See relevant information about each time slot.  Orca
+              uses braille to show this relevant information (e.g., is
+              that slot available and if not, what is scheduled?).</para>
+          </listitem>
+          <listitem>
+            <para>See the prompts for each field when filling out an
+              appointment.  Orca displays all information for the
+              current field on the braille display if it will fit.  If
+              it will not, Orca supports panning of the braille
+              display.  Orca also makes it possible to restrict
+              panning to the braille concept of the current element
+              which means that the user can not pan away from the
+              information about the current control.</para>
+          </listitem>
+        </itemizedlist>
+  
+      </section>
+  
+      <section><title>Browses the web using Mozilla</title>
+  
+        <para>Lee uses Mozilla to read JDK JavaDoc, the latest Java Tips
+          and Tricks article, and the latest slashdot content.  Lee
+          needs to be able to do the following:</para>
+  
+        <itemizedlist>
+          <listitem>
+            <para>View all links in a list view and also be able to
+              activate them.  Orca allows Lee to arrow through the links
+              and hit first letter (or perhaps enter key) to activate
+              them.</para>
+            <para>&todo; might need to be concerned about conflict
+              with web forms with buttons such as "Submit All Changes"
+              that will react to presses of the enter key.</para>
+          </listitem>
+          <listitem>
+            <para>Jump past links on the page to get directly to large
+              blocks of text.  Orca provides a &wkc; to do this.  This
+              is useful for reading documentation and articles where
+              Lee is reading one page after another.</para>
+          </listitem>
+          <listitem>
+            <para>Select, cut, copy and paste blocks of text from a web
+              page.  Orca relies on the semantics of the application to
+              do this.</para>
+          </listitem>
+          <listitem>
+            <para>View the URL of imagemap links with no useful
+              information.  Orca provides this as part of one of its
+              navigation modes.  Ideally, the browser will allow any
+              user to navigate to any link, thus allowing Orca's focus
+              tracking mode to handle this.  If not, however, Orca's
+              flat review mode will provide this functionality.</para>
+          </listitem>
+          <listitem>
+            <para>See labels properly associated with input fields on
+              the braille display; relevant table information should be
+              shown on the display when moving between columns and
+              rows.</para>
+          </listitem>
+          <listitem>
+            <para>Move back and forth between headers (e.g., H1, H2,
+              etc), tables, and frames. Orca relies on the built-in keyboard
+              navigation of Mozilla to do this.</para>
+          </listitem>
+          <listitem>
+            <para>Distinguish links from regular text.  Lee does this in
+              the same manner as described in the "highlighting,
+              attributes and coloring" section above.</para>
+          </listitem>
+        </itemizedlist>
+      </section>
+    </section>
+  
+    <section id="pat"><title>Pat the Manager</title>
+  
+      <para>Pat is a manager who is primarily a magnifier and speech
+        user and typically performs the tasks outlined in the following
+        sections:</para>
+  
+      <section><title>Browses the web using Mozilla</title>
+  
+        <para>Each morning before going to work, Pat uses Mozilla to
+          read the daily news from CNN.  To do so, Pat needs to do the
+          following:</para>
+  
+        <itemizedlist>
+          <listitem>
+            <para>Jump past links on the page to get directly to large
+              blocks of text.  Orca provides a &wkc; to do this.  This
+              is useful for reading documentation and articles where
+              Pat is reading one page after another.</para>
+          </listitem>
+          <listitem>
+            <para>Select, cut, copy and paste blocks of text from a web
+              page.  Orca relies on the semantics of Mozilla to do
+              this.</para>
+          </listitem>
+          <listitem>
+            <para>View the URL of imagemap links with no useful
+              information.  Orca provides this as part of one of its
+              navigation modes.  Ideally, Mozilla will allow any user to
+              navigate to any link, thus allowing Orca's focus tracking
+              mode to handle this.  If not, however, Orca's flat review
+              mode will provide this functionality.</para>
+          </listitem>
+          <listitem>
+            <para>Hear and see links, menu items, and buttons as Pat
+              navigates to them using Mozilla's built-in keyboard navigation
+              methods.</para>
+          </listitem>
+          <listitem>
+            <para>Move back and forth between headers (e.g., H1, H2,
+              etc), tables, and frames. Orca relies on the built-in keyboard
+              navigation of Mozilla to do this.</para>
+          </listitem>
+          <listitem>
+            <para>Distinguish links from regular text.  Pat does this in
+              the same manner as described in the "highlighting,
+              attributes and coloring" section above.</para>
+          </listitem>
+          <listitem>
+            <para>Have the document spoken starting from the current
+              position.  Orca provides a &wkc; to to
+              start reading at the current position and stop when
+              desired.  Orca also automatically tracks and magnifies
+              the text while it is being read.  When reading is
+              stopped, Orca places the caret (if possible) at the end
+              of the last word spoken.</para>
+          </listitem>
+          <listitem>
+            <para>Pat uses Orca's option of using alternative voice
+              styles to indicate various attributes of the text.  Orca
+              also provides a &wkc; to speak all the attributes
+              of the text at the cursor (e.g., "bold underlined
+              12-point helvetica").</para>
+          </listitem>
+        </itemizedlist>
+      </section>
+  
+      <section><title>Read and write e-mail with Evolution</title>
+  
+        <para>Pat is also a heavy e-mail user, especially to communicate
+          with Pat's staff and boss.  As such, Pat needs the
+          following:</para>
+  
+        <itemizedlist>
+          <listitem>
+            <para>See and hear the highlighted item in the message list.
+              Orca also gives Pat the ability to hear descriptive
+              information about the currently highlighted item.  For
+              example, Pat can determine information such as if the item
+              is unread and/or has an attachment.</para>
+          </listitem>
+          <listitem>
+            <para>Hear and see links, menu items, and buttons as Pat
+              navigates to them using Evolution's built-in keyboard
+              navigation methods.</para>
+          </listitem>
+          <listitem>
+            <para>Have the document spoken starting from the current
+              position.  Orca provides a &wkc; to start
+              reading at the current position and stop when desired.
+              Orca also automatically tracks and magnifies the text
+              while it is being read.  When reading is stopped, Orca
+              places the caret (if possible) at the end of the last
+              word spoken.</para>
+          </listitem>
+          <listitem>
+            <para>Pat uses Orca's option of using alternative voice
+              styles to indicate various attributes of the text.  Orca
+              also provides a &wkc; to speak all the attributes
+              of the text at the cursor (e.g., "bold underlined
+              12-point helvetica").</para>
+          </listitem>
+          <listitem>
+            <para>Change the color of the magnified area.  If the full
+              screen is magnified, the entire screen will have the same
+              scheme.  If the lens view is on, then only the lens has
+              that color scheme.  This is important because Pat
+              sometimes loses the location of the lens and the contrast
+              between the magnified area and rest of the screen helps
+              Pat find it.</para>
+          </listitem>
+          <listitem>
+            <para>See and hear prompts and controls in dialogs.  For
+              example, when a search dialog comes up, Pat sees the
+              focused component in the magnified display and hears
+              "subject: edit."</para>
+          </listitem>
+          <listitem>
+            <para>Use one or more &wkc;s to quickly change
+              magnification level and style.  Magnification styles
+              include things such as: magnification lens that moves
+              around display and fixed magnification window that
+              follows mouse and focused object.  For following the
+              mouse, Orca also provides additional options such as
+              "mouse centered", "optimal least movement", etc.</para>
+              </listitem
+          <listitem>
+            <para>Commands to turn magnification tracking on and off.</para>
+          </listitem>
+          <listitem>
+            <para>Use multiple zoomers to track both the "locus of
+              focus" as well as other areas of the screen (e.g., status
+              bar).</para>
+          </listitem>
+        </itemizedlist>
+      </section>
+  
+      <section><title>Compose presentation in StarOffice</title>
+  
+        <para>Pat periodically needs to create an "All Hands"
+          presentation in StarOffice.  To do, Pat needs the
+          following:</para>
+  
+        <itemizedlist>
+          <listitem>
+            <para>Select from the slide templates. This might require
+              review mode.</para>
+          </listitem>
+          <listitem>
+            <para>Determine the position on the slide that typed text
+              will appear.</para> 
+            <para>&todo; is this perhaps more for someone who doesn't
+              use magnification?</para>
+          </listitem>
+          <listitem>
+            <para>Determine if the slide is full or if part of text or
+              an object won't fit.</para>
+            <para>&todo; is this perhaps more for someone who doesn't
+              use magnification?</para>
+          </listitem>
+          <listitem>
+            <para>Cut and paste objects and text from and to a slide.</para>
+            <para>&todo; the application should provide this, but Pat will
+              still need to be able to determine what is selected.  How
+              will Pat do this?</para>
+          </listitem>
+          <listitem>
+            <para>Move and size objects on a slide.</para>
+            <para>&todo; is this perhaps more for someone who doesn't
+              use magnification?</para>
+          </listitem>
+          <listitem>
+            <para>Determine bullets and indentation levels for text.</para>
+            <para>&todo; is this perhaps more for someone who doesn't
+              use magnification?</para>
+          </listitem>
+          <listitem>
+            <para>Pat sometimes invokes a spreadsheet while writing
+              documents.  When doing so, Pat brings up multiple zoomers
+              that place cell location, formulas, etc., in a small area
+              on one of the corners of the screen.  Orca allows the location
+              of the zoomers and what the zoomers track to be completely
+              customized.</para>
+          </listitem>
+        </itemizedlist>
+      </section>
+  
+      <section><title>Read help documentation</title>
+  
+        <para>Pat needs to be able to read the help documentation, and
+          often needs to do the following:</para>
+  
+        <itemizedlist>
+          <listitem>
+            <para>Navigate the contents magnified and with speech.  If
+              a topic has sub-topics Orca makes it clear by speaking
+              so when the topic is highlighted.  Speech also tells Pat
+              what level in the help tree Pat is in.</para>
+          </listitem>
+          <listitem>
+            <para>See and hear each content pane.  Orca automatically
+              reads each content pain when it gains focus and magnifies
+              each word/line as it is read.</para>
+          </listitem>
+        </itemizedlist>
+      </section>
+  
+      <section><title>Compose text document in StarOffice</title>
+  
+        <para>Pat also writes performance reviews in StarOffice.  To do
+          so, Pat often performs the following tasks:</para>
+  
+        <itemizedlist>
+          <listitem>
+            <para>Use spellcheck to determine misspelled word and read
+              list of possible replacements.  By default, Orca speaks
+              the misspelled word followed by the default choice.  NOTE:
+              Pat often wants to be able to see the misspelled word in
+              context.  When spellcheck dialog comes up, Orca provides a
+              &wkc; to say "read the word in its context".
+              Speech will speak it and the magnifier will show it. Any
+              other action snaps Pat back to the spellcheck
+              dialog.</para>
+          </listitem>
+          <listitem>
+            <para>Pat uses Orca's option of using alternative voice
+              styles to indicate various attributes of the text.  Orca
+              also provides a &wkc; to speak all the attributes
+              of the text at the cursor (e.g., "bold underlined
+              12-point helvetica").</para>
+          </listitem>
+          <listitem>
+            <para>Hear current character, word and line.  Orca
+              provides one or more &wkc;s to do this.  When the &wkc;
+              is pressed a second time, Orca spells the word.
+              When the &wkc; is pressed a third time, Orca
+              spells the word phonetically.</para>
+          </listitem>
+          <listitem>
+            <para>Hear capitalization. For example, when arrowing across
+              the name "Mike" Orca says 'cap m' 'i' 'k' 'e'.
+              Optionally, Orca changes the pitch for the capital letter.</para>
+          </listitem>
+          <listitem>
+            <para>Bring up a list of toolbar items to quickly access
+              with the keyboard.  For example, some applications are
+              well-behaved and let you move to the toolbar.  Others do
+              not.  Orca provides a &wkc; that takes Lee
+              to toolbar navigation mode.  Another &wkc;
+              (e.g., escape) gets you out of this mode.  NOTE: this
+              may also be workable via review mode, but the screen
+              reader always attempts to provide Lee with the most
+              efficient means for accomplishing any task.</para>
+          </listitem>
+          <listitem>
+            <para>Have dialog static text and focus information should
+              automatically be read if a dialog such as "save" or
+              "print" appears.  Orca also provides commands to read this
+              information as well as the entire dialog.</para>
+          </listitem>
+          <listitem>
+            <para>Detect text selection by both seeing the text in the
+              magnifier and also hearing "selected" when navigating
+              character-by-character or word-by-word.  Orca also
+              provides a &wkc; (e.g., "say selection") to read the
+              currently selected text.</para>
+            <para>&todo; what happens when there are multiple
+              discontiguous regions selected?</para>
+          </listitem>
+        </itemizedlist>
+      </section>
+  
+      <section><title>Use address book</title>
+  
+        <para>Pat uses his address book often to locate contact
+        information.  To do so, Pat needs Orca to do the
+        following:</para>
+  
+        <itemizedlist>
+          <listitem>
+            <para>Track the address list, speaking and magnifying the
+              currently selected person.</para>
+          </listitem>
+          <listitem>
+            <para>Speak and magnify all controls in the "find" utility
+              as Pat navigates them.</para>
+          </listitem>
+          <listitem>
+            <para>Hear details about an individual contact.  When
+              navigating the found contact, Pat needs to hear and see
+              the label and content of each field.  Orca also provides
+              a &wkc; to re-read the current label and roll for the
+              focused item.</para>
+          </listitem>
+        </itemizedlist>
+      </section>
+  
+      <section><title>Use the calendar tool</title>
+  
+        <para>Pat sets up a staff meeting using a calendar tool.  See
+          Lee's stuff above, but apply to speech and mag.</para>
+        <para>&todo; need to flesh this out some more.</para>
+  
+      </section>
+  
+    </section>
+  
+    <section id="kim"><title>Kim the Admin</title>
+  
+      <para>Kim is an administrative assistant who is primarily a speech
+      user.  Kim regularly performs the tasks outlined in the following
+      sections.</para>
+  
+      <section><title>Use the address book</title>
+  
+        <para>Kim often uses the address book to add and find contact
+          information for Pat.  As such, Kim needs to be able to do the
+          following tasks:</para>
+  
+        <itemizedlist>
+          <listitem>
+            <para>Track the address list, speaking the currently
+              selected person.</para>
+          </listitem>
+          <listitem>
+            <para>Speak all controls in the "find" utility as Kim
+              navigates them using the system's built in keyboard
+              navigation commands.</para>
+          </listitem>
+          <listitem>
+            <para>Hear details about an individual contact.  When
+              navigating the found contact, Kim needs to hear the
+              label, content, and roll of each field.  Orca also
+              provides a &wkc; to re-read the current label and roll
+              for the focused item.</para>
+          </listitem>
+          <listitem>
+            <para>Detect text selection by hearing "selected" when
+              navigating character-by-character or word-by-word.  Orca
+              also provides a &wkc; (e.g., "say selection") to read the
+              currently selected text.</para>
+          </listitem>
+          <listitem>
+            <para>Read the title and status bar of the current
+              application.  Orca provides this via a &wkc;
+              to invoke the "Where am I" functionality of
+              Orca.</para>
+          </listitem>
+        </itemizedlist>
+      </section>
+  
+      <section><title>Use the calendar tool</title>
+  
+        <para>Kim often sets up calendar appointment for Pat and others.
+          To do so, Pat needs Orca to provide the following
+          abilities:</para>
+  
+        <itemizedlist>
+          <listitem>
+            <para>Track the date and time views of the calendar.  When
+               navigating, Kim hears, for example, the current time and if an
+               appointment is currently set.</para>
+            <para>&todo; Mike - write down your ideas for this!</para>
+          </listitem>
+          <listitem>
+            <para>Hear the label for each field and review the
+              information that has been input.</para>
+          </listitem>
+          <listitem>
+            <para>Read the entire appointment.  Orca provides this via
+              a &wkc; to read an entire dialog.</para>
+            <para>&todo; this assumes the appointment information is 
+              input via a dialog.</para>
+          </listitem>
+        </itemizedlist>
+      </section>
+  
+      <section><title>Browses the web using Mozilla</title>
+  
+        <para>Kim often orders office supplies and books travel for
+          others on line.  Kim does this in a manner similar to Pat, but
+          using only speech instead of speech and magnification.  [[[&todo;
+          - probably need to flesh this out more.]]]  In addition, since
+          Kim often fills out forms, Orca needs to allow for the
+          following:</para>
+  
+        <itemizedlist>
+          <listitem>
+            <para>Keystrokes to move between form fields only.  Orca
+              provides functionality to move from one form field to the
+              next or prior skipping all other links.</para>
+          </listitem>
+          <listitem>
+            <para>Automatically read field labels when moving to form
+              fields.</para>
+          </listitem>
+        </itemizedlist>
+      </section>
+  
+      <section><title>Read and write e-mail with Evolution</title>
+  
+        <para>Kim often coordinates and organizes group meetings using
+        e-mail.  As such, Kim needs to be able to do the
+        following:</para>
+  
+        <itemizedlist>
+          <listitem>
+            <para>Hear contacts in the address book and know if they are
+              selected.  </para>
+          </listitem>
+          <listitem>
+            <para>Use spellcheck to determine misspelled word and read
+              list of possible replacements.  By default, Orca speaks
+              the misspelled word followed by the default choice.  NOTE:
+              Kim often wants to be able to hear the misspelled word in
+              context.  When spellcheck dialog comes up, Orca provides a
+              &wkc; to say "read the word in its context".
+              Speech will speak it.</para>
+          </listitem>
+          <listitem>
+            <para>Kim uses Orca's option of using alternative voice
+              styles to indicate various attributes of the text.  Orca
+              also provides a &wkc; to speak all the attributes
+              of the text at the cursor (e.g., "bold underlined
+              12-point helvetica").</para>
+          </listitem>
+          <listitem>
+            <para>Hear current character, word and line.  Orca
+              provides a &wkc; to do this.  When the &wkc; is
+              pressed a second time, Orca spells the word.  When the
+              &wkc; is pressed a third time, Orca spells the
+              word phonetically.</para>
+          </listitem>
+          <listitem>
+            <para>Hear capitalization. For example, when arrowing across
+              the name "Mike" Orca says 'cap m' 'i' 'k' 'e'.
+              Optionally, Orca changes the pitch for the capital letter.</para>
+          </listitem>
+        </itemizedlist>
+      </section>
+  
+      <section><title>Creates spreadsheet in StarOffice</title>
+  
+        <para>Kim sometimes views and updates the group budget, which is
+          maintained as a spreadsheet in StarOffice.  To do so, Kim
+          needs to be able to do the following:</para>
+  
+        <itemizedlist>
+          <listitem>
+            <para>Automatically hear cell location and content when
+              navigating between cells.  Orca speaks, for example:
+              "B4" followed by the cell content.  Orca also provides a
+              &wkc; to speak this information.  Orca also provides
+              an option to automatically speak this information when
+              Kim moves from one cell to the next.</para>
+          </listitem>
+          <listitem>
+            <para>Related to the above, hear row and column headers.
+              Orca supports this via separate &wkc;s.</para>
+          </listitem>
+          <listitem>
+            <para>Automatically hear formulas if they appear in a cell.
+              Orca speaks these after it speaks the location and content
+              information.</para>
+          </listitem>
+          <listitem>
+            <para>Determine and modify size of cell.</para>
+            <para>&todo; this might require some emulation of mouse 
+              behavior if StarOffice doesn't provide dialogs to do 
+              this.</para>
+          </listitem>
+          <listitem>
+            <para>Select a range of cells and know that they are
+              selected.  Orca speaks "selected" followed by the begin
+              and end coordinates.</para>
+          </listitem>
+          <listitem>
+            <para>Produce and read simple charts and graphs.</para>
+          </listitem>
+          <listitem>
+            <para>Interact with a print dialog to print finished
+              report.</para>
+          </listitem>
+          <listitem>
+            <para>Automatically hear static text and focus information
+              when a dialog appears such as "file" or "reformat."  Orca
+              also provides commands to re-read this information as well
+              as the entire dialog.</para>
+          </listitem>
+        </itemizedlist>
+      </section>
+    </section>
+  
+    <section id="sam"><title>Sam the IT Guru</title>
+  
+      <para>Sam is a member IT staff who is primarily a speech and
+         braille user.  Sam regularly performs the following
+         tasks.</para>
+  
+      <section><title>Use terminal windows</title>
+  
+        <para>Sam regularly interacts with terminal windows.  While
+          BrlTTY is most likely the better solution, Sam may also want to
+          access a GUI terminal to do the following:</para>
+  
+        <itemizedlist>
+          <listitem>
+            <para>Navigate the terminal window.  Orca updates the
+              braille display to track the cursor in apps such as emacs
+              and vi.  Orca also updates the braille display to track
+              the navigation of fields in terminal apps (such as curses
+              apps), and provides a "speak the current line" to display
+              this information.</para>
+          </listitem>
+        </itemizedlist>
+      </section>
+  
+      <section><title>Use GUI-based administration tools</title>
+  
+        <para>Sam interacts with GUI-based tools such as update and
+          network configuration on a daily basis.  This includes the
+          following:</para>
+  
+        <itemizedlist>
+          <listitem>
+            <para>Automatically hear static text and focus information
+              when a dialog appears such as "configure network."  Orca
+              also provides commands to re-read this information as well
+              as the entire dialog.</para>
+          </listitem>
+          <listitem>
+            <para>In logical order, navigate and read all prompts and
+              controls (including static text).</para>
+          </listitem>
+          <listitem>
+            <para>See all information for the current field on the
+              braille display if it will fit.  If it will not, Orca
+              supports panning of the braille display.  Orca also
+              makes it possible to restrict panning to the braille
+              concept of the current element.  This will restrict
+              panning from moving away from the braille information
+              presented for the current control.  </para>
+          </listitem>
+          <listitem>
+            <para>Re-read information as requested.</para>
+          </listitem>
+          <listitem>
+            <para>Read an entire dialog with speech.</para>
+          </listitem>
+          <listitem>
+            <para>Watch a particular field in a dialog box (e.g., the "%
+              CPU utilization" field and be notified when it
+              changes.</para>
+            <para>&todo; how does Sam specify what to watch and
+              how does Orca notify Sam when the value changes?</para>
+          </listitem>
+        </itemizedlist>
+      </section>
+    </section>
+  </chapter>
+
+

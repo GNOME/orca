@@ -1,0 +1,537 @@
+<!-- Copyright 2005, Sun Microsystems, Inc. -->
+
+  <!--
+  ************************************************************************
+  *                                                                      *
+  * USER REQUIREMENTS                                                    *
+  *                                                                      *
+  ************************************************************************
+  -->
+
+  <chapter id="user_requirements"><title>User Requirements</title>
+
+    <para>Based upon discussions with end users as well as the tasks
+      and ideas from the &personas_link;, Orca must supply at least the
+      following end-user features.</para>
+
+    <section><title>Availability at All Times</title>
+      <para>Orca will often be the only vehicle by which many users
+        will be able to access the system.  As such, it must be
+        available at all times, including at system login and
+        screen-saver screens.</para>
+      <para>Orca must also be available after the system returns from
+        "standby" or "sleep" mode.</para>
+      <para>Finally, in the event the user's choice of speech synthesis
+        engine becomes unavailable (e.g., expired license), Orca must
+        attempt to find and use an alternative synthesis engine.</para>
+    </section>
+
+    <section><title>Failure Resiliency</title>
+      <para>In the event that Orca fails or a component of the
+        system that Orca depends upon fails, the system should be able
+        to heal (and perhaps restart) itself appropriately.</para>
+    </section>
+
+    <section><title>Seamless Interaction with Traditional Keyboard Navigation
+      Methods</title>
+      <para>Orca must allow users to navigate through the desktop and
+        applications on the desktop using the system keyboard
+        navigation gestures (e.g., Alt+Tab to select the next window).
+        In other words, Orca must not interfere with traditional
+        keyboard navigation.</para>
+    </section>
+
+    <section><title>Seamless Interaction with Other Assistive
+      Technology</title>
+      <para>It is not uncommon for users to simultaneously use other
+        assistive technologies, such as the AccessX features of XKB
+        <citation><xref linkend="accessx"
+        endterm="accessx.abbrev"/></citation>, to access their displays.
+        As such, Orca must be able to co-exist (i.e., not interfere)
+        with other assistive technologies in use by the user.</para>
+    </section>
+
+    <section><title>Consistent Style</title>
+      <para> It is expected that access to applications will be driven
+        primarily via customized "scripts," with a fallback
+        ("default") script to be used in the absence of a customized
+        script.</para>
+      <para>While each script can provide dramatically different
+        access to an application, it is expected that scripts will
+        provide a users with a consistent style to access
+        applications.  To help with this consistent style, Orca will
+        provide a &style_guide_link;, a well-documented "default"
+        script, and several application scripts that demonstrate and
+        promote this style.
+      </para>
+    </section>
+
+    <section><title>Customizable Behavior Per Application 
+      ("Scripting")</title>
+      <para>It is expected that the default behavior will provide
+        reasonable access to all applications that use the AT-SPI.
+        However, to provide dramatically improved access, Orca must be
+        able to provide customized behavior for individual
+        applications.</para>
+      <para>For example, one can envision a script for an e-mail
+        application that can provide prioritized access to one's
+        inbox.  Another example may be that the script provides
+        keyboard access to select and copy displayed text to the
+        system clipboard in the event the application doesn't support
+        this (e.g., the only way to select text in a terminal window
+        is to use a mouse - a script might create new keybindings to
+        allow a user to do this from the keyboard).</para>
+    </section>
+
+    <section><title>Configurable Presentation and Interaction</title>
+      <para>Different users have different capabilities (e.g., some
+        may be able to hear some synthesis voices better than others;
+        some may use braille while others do not) and desires (e.g.,
+        some may prefer faster speaking rates).  As such, the general
+        manner and means by which Orca presents information to the
+        user must be configurable by the end user.</para>
+      <para>Users must also be able to change configuration settings
+        while Orca is running, including the ability to turn
+        presentation modes (i.e., speech, braille, magnification) on
+        or off without the need to restart Orca.</para>
+    </section>
+
+    <section><title>Focus Tracking as the Default Mode</title>
+      <para>Known as "focus tracking," Orca must provide a mode
+        to track the current region of interest, which is usually the
+        object that has keyboard focus.</para>
+      <para>When first starting up and when the region of interest has
+        changed, Orca must provide a short summary of the region of
+        interest, and must also provide a mechanism for the user to
+        obtain more detailed information.  The presentation will
+        follow the &style_guide_link;.</para>
+      <para>When navigating text areas in a character-by-character or
+        word-by-word fashion (or any linear fashion for that matter),
+        Orca must provide an option to play an audio cue when the
+        caret crosses line boundaries.</para>
+    </section>
+
+    <section><title>Flat Review Mode</title>
+      <para>Orca must provide the ability for a user to review the
+        contents of the desktop or a given application.  This is
+        typically done by the user making a &wkc; indicating "review,"
+        with Orca reacting by presenting the area to be reviewed.  At
+        any time, the user can interrupt the review mode, causing
+        presentations such as speech output to stop
+        immediately.</para>
+      <para>Another option for review mode includes the ability to
+        use a set of &wkc;s to quickly skim the contents of the
+        display.</para>
+      <para>The review of the desktop will follow the &style_guide_link;,
+        and will at least provide a short summary of the available
+        applications.  While the review of an application will also
+        follow the &style_guide_link;, the overall presentation depends
+        largely upon the application being reviewed.</para>
+      <para>&todo; Add notions of "hierarchical review," and "hybrid
+        review (e.g., in/out of lists)".  Need to flesh out the
+        primary purposes of each.</para>
+      <para>&todo; Add ability to read a dialog/window.</para>
+      <para>&todo; As with navigating text, should Orca have an option to
+        play an audio cue when the "next" or "prev" object command takes
+        user to a new line?</para>
+    </section>
+
+    <section><title>Presentation of Text</title>
+      <para>For any given piece of text, Orca must provide the ability
+        to speak the current character, word, or line.  When speaking
+        the current word, Orca must provide the ability to spell it
+        out in either letter-by-letter or phonetic (e.g., military
+        spelling) mode.  When speaking a line or set of lines, Orca
+        must offer the ability to verbalize punctuation.</para>
+      <para>Orca must provide the ability to present the following to the
+        user:</para>
+      <itemizedlist>
+        <listitem>
+          <para><emphasis role="bold">Attributes</emphasis> - font size,
+            face (bold, italic, etc.), underline, color, etc.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Capitalization</emphasis> - is it
+            capital or lower case?</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Selection</emphasis> - is the text
+            selected or not?</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Indentation</emphasis> - what is the
+            indentation level?</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Bounds</emphasis> - what is the
+            bounding box of the text (where and size)?</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+    
+    <section><title>Learning Mode (Command Echo)</title>
+      <para>Orca must provide a feature that optionally presents the
+        command to be invoked when the user presses a key on the
+        keyboard or braille display.  All key events in this mode will
+        be consumed by Orca, thus allowing the user to freely type
+        anything to learn what the effect of the key will be. A
+        command being spoken must be able to be interrupted at any
+        time.</para>
+    </section>
+
+    <section><title>Customizable Gestures</title>
+      <para>While Orca will provide a default set of well known 
+        keyboard and braille &gestures_link;, users must be able to
+        override these gestures and extend them with gestures of
+        their own choosing.</para>
+      <para>The user interface for defining these gestures must be
+        easy to use.</para>
+    </section>
+
+    <section><title>"List All Applications" Command</title>
+      <para>Orca will provide a means for a user to determine all
+        applications running on the desktop as well as all open
+        windows on the desktop.</para>
+      <para>&todo; the Alt+Tab functionality of the desktop may be
+        sufficient to meet this requirement.</para>
+    </section>
+
+    <section><title>"Where Am I?" Command</title>
+      <para>Orca will provide a means for a user to determine information
+        about the current object of interest, including the object
+        itself, which window it is in, which application, which
+        workspace, etc.</para>
+      <para>The object of interest can vary depending upon the
+        navigation mode the user is using at the time.  For example,
+        in focus tracking mode, the object of interest is the object
+        with keyboard focus.  In review mode, the object of interest
+        is the object currently being visited, whether it has keyboard
+        focus or not.</para>
+    </section>
+
+    <section><title>"Jump to Well Known Object" Commands</title>
+      <para>There are common locations a user wants to jump to at any
+        given time.  These include the title bar, the status bar, the
+        toolbar, the beginning of a window, the end of a window, the
+        system applet tray, etc.  Orca will provide &wkc;s for Orca to
+        enter review mode and set the current object of interest to
+        one of these objects.  From this point, the user can use a
+        &wkc; to go back to the object with focus, give the jumped-to
+        object focus if possible, or perform the equivalent of a mouse
+        click on the jumped-to object.</para>
+    </section>
+
+    <section><title>"Find" Command</title>
+      <para>Orca will allow users to enter a string to search for a
+	visible text string in the current window or entire desktop.
+	If the string is found (e.g., the string matches the
+	accessible name of an object or the string matches a string in
+	a text area), Orca will switch to "review mode" and make the
+	associated object the object of interest.  From this point,
+	the user can use a &wkc; to go back to the object with focus,
+	give the found object focus if possible, or perform the
+	equivalent of a mouse click on the found object.</para>
+      <para>In the event the user is a magnification user, the magnifier
+        will moved to the found object.</para>
+      <para>The search will be performed in the text flow of the
+	locale (e.g., left-to-right, top-to-bottom) from the current
+	point of interest, wrapping back to the beginning of the
+	window if necessary.</para> 
+      <para>The search will provide options for requiring a full word
+	match (e.g., "ok" will not match "token") or substring match
+	(e.g., "ok" will match "token").</para> 
+      <para>Finally, the "find" command will also allow the user to
+	search for text based on attribute (e.g., "bold"), and the
+	search will allow the user to search based solely on attribute
+	type, text string, or a combination of both.</para>
+      <para>&note; this feature is for searching for visible text
+	only.  Traditional searching for text in documents will be
+	supported by application functionality (e.g., the "search"
+	menu item in the application.</para>
+    </section>
+
+    <section><title>Watched Objects</title>
+      <para>Orca will allow users to indicate interest in an object.
+	Once interest has been given, Orca will notify the user of
+	changes to that object, whether it or its window has focus or
+	not.  Orca will also provide an option to automatically enter
+	review mode and make the watched object the object of
+	interest.  From this point, the user can use a &wkc; to go
+	back to the object with focus, give the watched object focus
+	if possible, or perform the equivalent of a mouse click on the
+	watched object.</para>
+      <para>In the event the user is a magnification user, the magnifier
+        will moved to the found object.  Alternatively, the user may 
+        have set up a separate "zoomer" to watch the object.  In this
+        case, the zoomer will always reflect the current state of the
+        watched object.</para>
+    </section>
+
+    <section><title>Bookmarked Objects</title>
+      <para>Orca will allow users to define a gesture (keyboard or
+	braille) that will tell Orca to enter review mode and make a
+	particular object the object of interest.  From this point,
+	the user can use a &wkc; to go back to the object with focus,
+	give the bookmarked object focus if possible, or perform the
+	equivalent of a mouse click on the bookmarked object.</para>
+      <para>In the event the user is a magnification user, the magnifier
+        will moved to the bookmarked object.</para>
+    </section>
+
+    <section><title>Document Reading</title>
+      <para>Orca must provide the ability for a user to read the
+        contents of a document, such as e-mail or a word processing
+        document.  As the document is read, Orca will instruct the
+        associated application to scroll so as to keep the portion
+        being read visible on the screen (and magnifier).  The
+        invocation of the document reading will be triggered via a
+        &wkc; and may be stopped at any time by the user.  When the
+        review stops, the caret will be positioned at the end of the
+        last word spoken (if possible - this depends upon the
+        capabilities of the text area as well as the speech
+        engine).</para>
+      <para>Orca will also provide options to highlight the text
+        being spoken.</para>
+      <para>&note; while the reading of a document will follow the
+        &style_guide_link;, the overall presentation depends largely upon
+        the document being read (e.g., is it a text document,
+        spreadsheet, web page, etc.?).</para>
+    </section>
+
+    <section><title>Ability of Non-focused Windows to Present of
+      Information</title>
+      <para>Orca must allow for the presentation of information of
+        objects that do not have keyboard focus.  While the
+        presentation will typically be information on objects that the
+        user has requested interest in, it may also come from custom
+        scripts that have decided it is important for them to present
+        something.  Examples of such information include announcing
+        the status of a progress bar, announcing the subject/sender of
+        incoming e-mail, etc.</para>
+    </section>
+
+    <section><title>Speech Synthesis</title>
+      <para>One of the primary non-visual ways to present a graphical
+        display to a user is via speech synthesis.  Note that Orca
+        need not be a speech synthesizer, but it must be able to drive
+        one.  The most important functionality Orca needs for speech
+        synthesis are as follows:</para>
+      <itemizedlist>
+        <listitem>
+          <para><emphasis role="bold">General Synthesis</emphasis> -
+            Orca must be able to speak an utterance (e.g., a word, a
+            label, a sentence, etc.) or set of utterances (e.g., a
+            paragraph or entire document).  The utterance being spoken
+            must be able to interrupted at any time.</para>
+          <para>&detail; if at all possible, the synthesis engine
+            should be able to tell Orca what has been spoken, allowing
+            Orca to synchronize its internal data structures with what
+            has been presented to the user via speech.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Voice Styles</emphasis> - Orca
+            must be able to identify and allow the user to select
+            between the voices available on the various synthesis
+            engines available on the system.  In addition, Orca must
+            allow the user to customize parameter settings for the
+            voices, such as average pitch, speaking rate, and volume.
+            The combination of {voice, pitch, rate, volume} will be
+            known as a "voice style."  Orca will provide the user with
+            the ability to select the voice styles to be used for
+            various speaking operations (e.g., default, uppercase,
+            warning, alarm, etc.), and may also provide unique "voice
+            style sets" depending upon the navigation mode being used
+            (e.g., focus tracking, review mode, etc.).  At a minimum,
+            Orca will support a "default" style to be used for the
+            majority (if not all) of the speaking operations.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Speaking Rate
+            Modification</emphasis> - While the speaking rate will
+            generally remained fixed once configured, users may
+            sometimes which to speed up or slow down the presentation
+            of speech.  While it is ideal that user can do this while
+            the synthesis engine is speaking, such functionality is
+            typically not provided by the majority of speech synthesis
+            engines.  Orca must, however, allow the user to change the
+            speaking rate that will be used for the next utterance,
+            should the underlying engine support changes to speaking
+            rate.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Multilingual Text</emphasis> -
+            Orca should provide the ability to speak a single
+            utterance that contains words or phrases from multiple
+            locales.  This is an emerging area for speech synthesis
+            engines, however, so Orca will support this feature if the
+            underlying engine(s) support it.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Spelling Mode</emphasis> - Orca
+            must be able to optionally spell out words, either letter
+            by letter or by military (e.g., alpha, bravo, charlie)
+            spelling.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Verbalized
+            Punctuation</emphasis> - Orca must be able to optionally
+            verbalize punctuation.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Repeated Character
+            Count</emphasis> - Orca must be able to optionally
+            compress the repetition of character by saying something
+            such as "25 dashes" instead of "dash dash dash dash
+            dash..."</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+
+    <section><title>Key and Text Echo</title>
+      <para>Orca must provide a set of options to allow the user to
+        enable the automatic speaking of keys as they are typed,
+        alphanumeric characters as they are entered/deleted, and words
+        as they are entered.  The speech much be interruptable at any
+        time.</para>
+    </section>
+
+    <section><title>Refreshable Braille</title>
+      <para>Braille is another primary non-visual presentation mode
+        for screen readers.  As with speech synthesis, Orca need not
+        directly support a braille display, but it must be able to
+        drive one.  The primary end requirements for a braille display
+        are as follows:</para>
+      <itemizedlist>
+        <listitem>
+          <para><emphasis role="bold">Work with BrlTTY</emphasis> - it
+            is not expected that users will abandon character cell
+            access to their virtual consoles.  To preserve this access
+            (which will be done via BrlTTY), Orca will not interrupt
+            or alter the behavior of BrlTTY.</para>
+       </listitem>
+        <listitem>
+          <para><emphasis role="bold">Effective use of
+            space</emphasis> - Orca should try to use the cells on the
+            braille display as effectively as possible.  This will be
+            driven primarily by the &style_guide_link;, and can also
+            include the the option to effectively compress white
+            space.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Effective use of input
+            buttons</emphasis> - Orca should use any input buttons on
+            the display as effectively as possible, with the default
+            behavior being the equivalent effect of the BrlTTY
+            bindings for those buttons.  These functions include
+            panning the braille display as well as driving the flat
+            review mode.  The functions also include the ability to
+            quickly toggle features on and off, such as: toggle
+            compression of whitespace, toggle attributes to be shown
+            using dots 7-8 or status cells, toggle between grade I and
+            grade II, etc.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Effective use of cursor routing
+            keys</emphasis> - Orca should enable the cursor routing
+            keys to be used to click on objects, set slider values,
+            etc.</para>
+          <para>In the event there is a second set of cursor routing
+            keys, Orca will attempt to make effective use of them
+            (e.g., pressing them tells Orca to relay text attribute
+            information via speech).</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Effective use of input button
+            and cursor routing key combinations</emphasis> - Orca
+            should allow the user to use combinations of input buttons
+            and/or cursor routing keys to perform operations such as
+            selecting text, jumping to bookmarks, etc.</para>
+          <para>&note; selection of text using combined keyboard and
+            braille actions (e.g., holding the shift key while
+            pressing a cursor routing key) may also be
+            considered.</para>
+          <para>&note; input of text using chording of braille keys
+            might be considered, but is not a high priority.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Cursor options</emphasis> - Orca
+            should provide the user with the ability to show the cursor
+            or not.  If shown, the user should have the ability to make
+            it blink, and should also have the ability to tell it to
+            either take the entire cell or just dots 7-8.</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Ability to have multiple pan regions
+            on the display</emphasis> - watched objects may need to be able
+            to remain on a static area of the display (e.g., the rightmost
+            10 cells).  The braille support should enable this and should
+            also allow the user to pan either the "main" display or the
+            watched area.</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+
+    <section><title>Synchronization with Screen Magnifiers</title>
+      <para>In addition to co-existing with each other, a screen
+        magnifier and Orca must be in sync with each other.  For
+        example, when Orca is reviewing an area of the screen that is
+        larger than the screen magnifier can display at once, Orca
+        must inform the screen magnifier that the region of interest
+        has changed.</para>
+    </section>
+
+    <section><title>Acceptable Response Time</title>
+
+      <para>Orca must not degrade the perceptible performance of the
+        system.  That is, user should be able to detect any decrease
+        is responsiveness of the desktop when the Orca is being used.
+        In addition, a user's interaction with Orca should appear as
+        crisp and as lively as normal interaction with the display via
+        traditional interfaces (e.g., the keyboard).</para>
+
+      <para>Acceptable performance of the speech synthesis output is
+        very important.  Orca must be able to provide speech synthesis
+        that meets or exceeds the following performance
+        metrics:</para>
+      <itemizedlist>
+        <listitem>
+          <para><emphasis role="bold">Time to First Sound</emphasis> -
+            The time between when a speech synthesizer gets a request
+            to speak and when the synthesizer actually starts speaking
+            must be minimal (e.g., less than 30ms).</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Time to Cancel</emphasis> - Orca
+            must be able to cancel speech synthesis in progress, and
+            the time to cancel must be minimal (e.g., less than 30ms).
+            Furthermore, the time between when a cancel is issued and
+            the time the next utterance is to be spoken must be
+            minimal (e.g., less than 30ms).</para>
+        </listitem>
+      </itemizedlist>
+      <para>All updates to the braille display should occur within
+        50ms of the time the update command was issued.</para>
+      <para>The magnifier should offer smooth performance and show no
+        visible lag.</para>
+      <note><title>Performance Scope</title> 
+        <para>It is understandable that much of the response time may
+          be due to factors outside the control of Orca (e.g., Bonobo
+          and the underlying speech engine).  As such, the primary
+          responsibility of Orca and each application script is to
+          process AT-SPI and keyboard events as quickly as possible.
+          </para>
+      </note>
+    </section>
+
+    <section><title>Documentation and Tutorials</title>
+      <para> Although it is a reasonable goal that Orca should attempt
+        to achieve, users cannot be expected to be able set up and use
+        Orca without documentation.  Like other systems, such as JAWS,
+        Orca must provide documentation and tutorials on the
+        installation, configuration and use of Orca.  This
+        documentation must come in form(s) that are accessible to
+        people who need to use the screen reader (e.g., accessible
+        text and audio).</para>
+    </section>
+
+  </chapter>

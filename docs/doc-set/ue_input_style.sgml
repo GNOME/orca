@@ -1,0 +1,284 @@
+<!-- Copyright 2005, Sun Microsystems, Inc. -->
+
+    <!--
+    **********************************************************************
+    *                                                                    *
+    * INPUT STYLE: KEYBOARD AND BRAILLE INPUT                            *
+    *                                                                    *
+    **********************************************************************
+    -->
+
+    <section id="gestures"><title>Input Style: Keyboard Mappings</title>
+
+      <para>This section describes the default keyboard mappings for the
+        focus tracking and flat review modes of the Orca screen reader.
+        Note that Orca allows these mappings to be overridden and
+        extended, allowing users to define their own keyboard
+        mappings.</para>
+  
+      <para>As with most other available screen readers, the numeric
+        keypad is the primary location for Orca keystrokes.  Where
+        appropriate, the keymap also provides letter-based mnemonics
+        that have been carefully chosen so as to make Orca easier to
+        translate into other languages.  Furthermore, the default
+        mappings have been developed with a minimalist approach so as to
+        allow custom scripts to override and extend the default
+        keyboard behavior while reducing conflict with the default
+        keybindings.</para>
+  
+      <para>Orca will also automatically invoke flat review mode when a
+        command is issued to review any part of the screen that does not
+        have the keyboard focus.</para>
+  
+      <para>Finally, when in flat review mode, Orca will optionally
+        allow the mouse to follow the object of interest.  &todo; this
+        probably should be moved to the user requirements instead of
+        the key mappings.</para>
+  
+      <para>NOTE: Ideally, a screen reader should provide good access
+        on a laptop, which typically means using the numeric keypad is
+        an inconvenient access method.  As appropriate, Orca's default
+        keyboard mappings may change to reflect this ideal goal;
+        alternatively, Orca may provide another set of keyboard
+        mappings optimized for laptop use.</para>
+  
+      <para>In brief summary, the default keyboard mappings break the
+        numeric keypad into the following logical sections:</para>
+  
+      <itemizedlist>
+        <listitem>
+          <para>The top row is for mouse clicks, managing focus, and
+            switching review mode between focus tracking and flat
+            review.</para>
+        </listitem>
+        <listitem>
+          <para>Keypad keys 7, 8, and 9 are for navigating lines</para>
+        </listitem>
+        <listitem>
+          <para>Keypad keys 4, 5, and 6 are for navigating words</para>
+        </listitem>
+        <listitem>
+          <para>Keypad keys 1, 2, and 3 are for navigating characters</para>
+        </listitem>
+      </itemizedlist>
+  
+      <para>In more detail, the keyboard mappings are as follows, and
+        use the "INSERT" key as a modifier (note that Orca will most
+        likely allow the user to define a different key to use instead
+        of "INSERT"):</para>
+  
+      <itemizedlist>
+        <listitem>
+          <para>"KEYPAD_/": performs a left mouse click on the current
+             object of interest</para>
+        </listitem>
+        <listitem>
+          <para>"KEYPAD_*":  performs a right mouse click on the current
+             object of interest</para>
+        </listitem>
+        <listitem>
+          <para>"KEYPAD_-": when in flat review, returns to the object
+             with keyboard focus (note that any user action that causes
+             the screen or focus to change will also do this).  If the
+             user is currently in focus tracking mode, pressing this key
+             activates flat review mode.</para>
+        </listitem>
+        <listitem>
+          <para>"KEYPAD_+": reads from current position to end of
+             document.  If any key is pressed afterwards, reading stops
+             and the appropriate object is given appropriate focus
+             (e.g., the text caret will be placed on the last word
+             spoken).  If the user is in a dialog box, pressing this key
+             reads the dialog box in a logical order.</para>
+        </listitem>
+        <listitem>
+          <para>"KEYPAD_ENTER": performs "where am I?"  If this key is
+            pressed twice selection information will be spoken ie all
+            the selected items or text.  </para>
+        </listitem>
+        <listitem>
+          <para>"KEYPAD_.": performs a "screen find."  Pressing this key
+            brings up a dialog where a user can enter a search string
+            and decide where on the screen the search should begin IE
+            from the top or current position.</para>
+        </listitem>
+        <listitem>
+          <para>"KEYPAD_7": moves the review position to the prior line,
+             landing on object closest to current object</para>
+        </listitem>
+        <listitem>
+          <para>"INSERT+KEYPAD_7": moves the review position to the
+          beginning of the current line</para>
+        </listitem>
+        <listitem>
+          <para>"KEYPAD_8": speaks current line.  If flat review has been
+             activated, this acts on the line at the review location.  If
+             the user is in focus tracking mode, the line or item with
+             focus is spoken.  When this key is pressed twice quickly
+             the line is read with formatting and capitalization
+             details.</para>
+        </listitem>
+        <listitem>
+          <para>"KEYPAD_9": moves the review position to the next
+            line</para>
+        </listitem>
+        <listitem>
+          <para>"INSERT+KEYPAD_9": moves the review position to the top
+            of the review area.</para>
+        </listitem>
+        <listitem>
+          <para>"KEYPAD_4": moves the review position to the prior word or
+            item</para>
+        </listitem>
+        <listitem>
+          <para>"KEYPAD_5": speaks the current word or item.  If this key
+             is pressed twice quickly the word is spelled and any
+             capitalization is be announced; three times results in
+             phonetic spelling</para>
+        </listitem>
+        <listitem>
+          <para>"KEYPAD_6": moves the review position to the next word or
+            item</para>
+        </listitem>
+        <listitem>
+          <para>"KEYPAD_1": moves the review position to the prior
+            character</para>
+        </listitem>
+        <listitem>
+          <para>"INSERT+KEYPAD_1": moves the review position to the end
+            of the line</para>
+        </listitem>
+        <listitem>
+          <para>"KEYPAD_2": speaks the current character.  If this key is
+             pressed twice quickly the character is pronounced
+             phonetically (if it is a letter)</para>
+        </listitem>
+        <listitem>
+          <para>"KEYPAD_3": moves the review position to the next
+            character</para>
+        </listitem>
+        <listitem>
+          <para>"INSERT+KEYPAD_3": moves the review position to the
+            bottom of the review area</para>
+        </listitem>
+        <listitem>
+          <para>INSERT+s: speaks the status bar (if there is one)</para>
+        </listitem>
+        <listitem>
+          <para>INSERT+t:  speaks the title of dialog or app</para>
+        </listitem>
+        <listitem>
+          <para>INSERT+v: brings up a verbosity preference dialog.
+             Example settings include whether or not to speak indenting
+             when working with text, speaking capitalization, speak the
+             role of items, speak font information if it changes,
+             etc.</para>
+        </listitem>
+        <listitem>
+          <para>INSERT+RIGHT_ARROW:  increases speech rate</para>
+        </listitem>
+        <listitem>
+          <para>INSERT+LEFT_ARROW: decreases speech rate</para>
+        </listitem>
+      </itemizedlist>
+
+    </section>
+
+    <section><title>Input Style: Braille Mappings</title>
+
+      <para>This section describes the default braille mappings for the
+        focus tracking and flat review modes of the Orca screen reader.
+        Note that Orca allows these mappings to be overridden and
+        extended, allowing users to define their own braille
+        mappings.</para>
+
+      <para>Where at all possible, the default braille mappings for
+        Orca will map to their equivalent action in BrlTTY.  This
+        permits users to have a consistent experience with their
+        braille display when using virtual character-cell consoles on
+        their machine as well as the GUI display.</para>
+
+      <para>The braille key functionality includes the following:</para>
+      <para>&todo; need to map these to BrlTTY commands.</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Pan left:</para>
+        </listitem>
+        <listitem>
+          <para>Pan right:</para>
+        </listitem>
+        <listitem>
+          <para>Line up:</para>
+        </listitem>
+        <listitem>
+          <para>Line down:</para>
+        </listitem>
+        <listitem>
+          <para>Beginning of line</para>
+        </listitem>
+        <listitem>
+          <para>End of line</para>
+        </listitem>
+        <listitem>
+          <para>Top of window</para>
+        </listitem>
+        <listitem>
+          <para>Bottom of window:</para>
+        </listitem>
+        <listitem>
+          <para>Return to focus</para>
+        </listitem>
+        <listitem>
+          <para>Cursor routing/clicking</para>
+        </listitem>
+        <listitem>
+          <para>Text selection: accomplished by pressing a touch
+            cursor at the beginning and end of the region that the
+            user wishes to select in conjunction with another well
+            known key on the display.</para>
+        </listitem>
+        <listitem>
+          <para>Set watched area:</para>
+        </listitem>
+        <listitem>
+          <para>Set Bookmarked area</para>
+        </listitem>
+        <listitem>
+          <para>Go to bookmarked area</para>
+        </listitem>
+        <listitem>
+          <para>Go to watched area:</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>In addition, the following commands will be used to cycle
+        between braille features:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Toggle space compression: toggles whether or not
+            spaces are compressed when navigating with the braille
+            display</para>
+        </listitem>
+        <listitem>
+	  <para>Toggle grade two on and off:</para>
+        </listitem>
+        <listitem>
+	  <para>Toggle what attributes if any are displayed:</para>
+        </listitem>
+        <listitem>
+	  <para>Enter verbosity mode:</para>
+        </listitem>
+        <listitem>
+          <para>Toggle keyboard learn mode:</para>
+        </listitem>
+        <listitem>
+          <para>Toggle display style: toggles between the default
+            view, which is the logical presentation of the focus and
+            the contents of the current line [[[WDW - ???]]]</para>
+        </listitem>
+      </itemizedlist>
+
+    </section>
+
