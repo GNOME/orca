@@ -11,7 +11,9 @@
     <section><title>Output Style: Speech Synthesis and Braille</title>
 
       <para>This section provides output styles for each relevant
-        Accessible role. &todo; this is a work in progress.</para>
+        Accessible role. &todo; this is a work in progress and will
+        be completed via an iterative prototype process that includes
+        feedback from end users.</para>
 
       <section><title>General Braille Style</title>
         <para>For braille, there are two verbosity levels.  The first
@@ -36,7 +38,6 @@
           to the left and/or right as appropriate; the user can use
           the panning actions to view the clipped information.  The
           regions of the line follow a general pattern:</para>
-
         <itemizedlist>
           <listitem>
             <para>Verbose: context label [value] rolename</para>
@@ -45,9 +46,7 @@
             <para>Brief: context label [value]</para>
           </listitem>
         </itemizedlist>
-
         <para>Where:</para>
-
         <itemizedlist>
           <listitem>
             <para>context is information about the container with focus.
@@ -80,7 +79,6 @@
               the label and surrounding context.</para>
           </listitem>
         </itemizedlist>
-
         <para>The braille cursor (e.g., dots 7 and 8 on the braille
           display) will be used to indicate meaningful information as
           well.  For example, the cursor will indicate caret position
@@ -96,12 +94,13 @@
           click, etc.</para>
       </section>
 
-      <section><title>General Speech Style</title>
-
-
-        <para>&todo; add speech.</para>
-
-
+      <section><title>General Speech Style</title> 
+       <para>For speech, there are two verbosity levels.  The first is
+         a more verbose level for use for those users who are not
+         expert with the Gnome desktop environment or those who like
+         to hear more information.  The second, more brief mode, is
+         for those who who are expert with the Gnome environment.</para>
+       <para>&todo; discuss general style.</para>
       </section>
 
       <section><title>Output Styles by Role</title>
@@ -111,9 +110,7 @@
             the end of the text for a menu item (e.g., "CTRL+Z"), and
             defines the keystrokes that will invoke the action associated
             with a menu item.</para>
-
           <section><title>Braille</title>
-
             <para>When presented, the accelerator will always be
 	      presented after the item it represents and before the
 	      marker that separates menu items.  The braille text for
@@ -123,7 +120,6 @@
 	      for the item with focus.  In the event that there are
 	      other things to show (e.g., check buttons or role
 	      names), the accelerator will appear to the far right.</para>
-
             <itemizedlist>
               <listitem>
                 <para>Verbose Example: view menu show mumble &lt;x>(CTRL+M) _ zoom in _ ...</para>
@@ -133,9 +129,15 @@
               </listitem>
             </itemizedlist>
           </section>
-
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: mumble menu item control m</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: mumble</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -143,7 +145,6 @@
           <para>&todo; the AT-SPI makes a distinction between alerts and
             dialogs.  But, it appears as though the role "alert" is applied
             to just about any dialog.</para>
-
           <section><title>Braille</title>    
             <para>Any window, regardless if it is an alert, dialog,
               frame, or window, will appear as the context region on
@@ -164,9 +165,17 @@
               </listitem>
             </itemizedlist>
           </section>
-
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
+            <para>When a dialog pops up, its title will be spoken followed
+              by relevant static text followed by the active object.</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: "low disk space dialog. you only have 10mb of disk space left.  please delete some files.  OK button.</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: "low disk space dialog. you only have 10mb of disk space left.  please delete some files.  OK button.</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -186,7 +195,15 @@
             </itemizedlist>
           </section>
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
+            <para>Orca will say the roll followed by any descriptive information.</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: animation: Will riding his bike.</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: animation: Will riding his bike.</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -208,7 +225,15 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
+            <para>Orca will speak the direction followed by "arrow."</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: left arrow</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: up arrow</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -231,8 +256,15 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech - should determine verbosity if state
-              changes while the checkbox has focus.</para>
+            <para>Orca will sat the label followed by the word "checkbox" followed its state.</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: save password checkbox checked</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: save password checked</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -258,7 +290,16 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
+            <para>Like a checkbox, Orca will say the item followed by the
+              word "checkmenu" followed by its state.</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: show status bar checkmenu checked</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: show status bar checked</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -280,7 +321,18 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
+            <para>A column header will be treated like a button (column
+              headers are usually clickable, typically resorting the
+              rows of the associated table), except it will be followed 
+              by "column heading" in verbose mode.</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: monthly income column heading</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: monthly income</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -305,7 +357,20 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
+            <para>The verbose and brief modes will speak the label
+              followed by the item followed by the word "combo."  If
+              the item is selected, the word selected will be spoken.
+              &todo; what do we do if the item is editable
+              text?  When a combo box has focus and its selection 
+              changes, just the new selection will be spoken.</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: time zone: GMT-8 pacific combo selected</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: time zone: GMT-8 pacific selected</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -324,7 +389,14 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: file.txt icon</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: file.txt icon</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -342,7 +414,14 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: temperature 50 dial</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: temperature 50 dial</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -374,7 +453,17 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
+            <para>When a dialog gets focus, Orca will say the title of
+              the dialog followed by "dialog" followed by the active
+              object.</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: Editing profile "foo" dialog. OK button.</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: Editing profile "foo" dialog. OK.</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -421,7 +510,14 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: unread icon</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: unread</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -444,7 +540,14 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: new england in the fall image</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: new england in the fall</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -497,7 +600,14 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: you are low on disk space</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: you are low on disk space</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -512,7 +622,7 @@
               position in the list if in verbose mode.  If the item is
               selected, Orca will completely underline the item using
               dots 7 and 8.  The touch cursors will toggle the selection
-              of the associated itme.</para>
+              of the associated item.</para>
 
             <itemizedlist>
               <listitem>
@@ -525,7 +635,14 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: state: california list 5 of 50</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: state: california list</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -551,7 +668,17 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
+            <para>When a menu is entered, its name will be spoken.  If
+              the menu selection changes, only the new selection will
+              be spoken.</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: file menu new control n</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: file menu new</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -576,7 +703,16 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
+            <para>Will speak "menubar" followed by name of menu with
+              focus.</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: menubar file</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: menubar file</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -604,7 +740,16 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
+            <para>Speak the item followed by any sub menu information followed
+              by its accelerator.</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: new submenu control n</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: new submenu</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -624,7 +769,14 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example:</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example:</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -651,7 +803,14 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: preferences dialog effects tab. OK button.</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: preferences dialog effects tab. OK.</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -675,7 +834,15 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
+            <para>When the tab changes, just speak the new tab name.</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: tab list general tab</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: tab list general</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -697,7 +864,14 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: password: text 5 characters</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: password: 5 characters</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -719,7 +893,14 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: uploading: 57% progress</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: uploading: 57%</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -741,7 +922,14 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: OK pushbutton</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: OK</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -770,8 +958,16 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech - should determine verbosity if state
-              changes while the checkbox has focus.</para>
+            <para>Will speak radio button group name upon entry into group,
+              and then just each radio button as it is selected.</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: Color button group: red button</para>
+              </listitem>
+              <listitem>
+                <para>Verbose Example: Color: red</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -796,7 +992,14 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: Red radiomenu selected</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: Red selected</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -817,7 +1020,14 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: January row heading</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: January</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -844,7 +1054,14 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: 57% vertical scrollbar</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: 57% vertical scrollbar</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -868,7 +1085,14 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: volume: 57% slider</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: volume: 57%</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -889,7 +1113,14 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: Red: 57 spin</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: Red: 57 spin</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -913,7 +1144,14 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: open file dialog directory split pane /usr list 5 of 10</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: open file dialog directory split pane /usr list 5 of 10</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -947,30 +1185,16 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
-          </section>
-        </section>
-
-        <section><title> (ROLE_)</title>
-          <para></para>
-
-          <section><title>Braille</title>         
-            <para></para>
             <itemizedlist>
               <listitem>
-                <para>Verbose Example:</para>
+                <para>Verbose Example: home runs table row header Mike c4 0 cell</para>
               </listitem>
               <listitem>
-                <para>Brief Example:</para>
+                <para>Brief Example: c4 0</para>
               </listitem>
             </itemizedlist>
           </section>
-
-          <section><title>Speech</title>
-            <para>&todo; add speech</para>
-          </section>
         </section>
-
 
         <section><title>tear off menu item (ROLE_TEAR_OFF_MENU_ITEM)</title>
           <para>A tear off menu item allows a menu to be removed from a menu
@@ -996,7 +1220,15 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
+            <para>&todo; maybe say "dash dash dash"?</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: tear off menu item</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: tear off</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -1055,8 +1287,16 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech - should determine verbosity if state
-              changes while the toggle button has focus.</para>
+            <para>Only speaks new state if object has focus and state
+              changes.</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: Run toggle pressed</para>
+              </listitem>
+              <listitem>
+                <para>Verbose Example: Run not pressed</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
@@ -1074,7 +1314,6 @@
               be treated like a context?</para>
             <itemizedlist>
               <listitem>
-
                 <para>Verbose Example: new button _ save button _ cut
                   button toolbar </para>
               </listitem>
@@ -1085,10 +1324,16 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: toolbar</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: toolbar</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
-
 
         <section><title>tree, tree table (ROLE_TREE, ROLE_TREE_TABLE)</title>
           <para>A tree presents hierarchical information to the user,
@@ -1111,22 +1356,26 @@
           </section>
 
           <section><title>Speech</title>
-            <para>&todo; add speech</para>
+            <itemizedlist>
+              <listitem>
+                <para>Verbose Example: directory myfolder expanded level 4 tree</para>
+              </listitem>
+              <listitem>
+                <para>Brief Example: directory myfolder leaf level 4 tree</para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
 
         <section><title>window (ROLE_WINDOW)</title>
           <para>A window is a top level window with no title or border.</para>
-
           <section><title>Braille</title>         
-
             <para>On Alt+Tab, the task switcher will appear.  As it is
 	      on the screen, it will be presented.  The text that
 	      appears (i.e., the window name) will be shown in
 	      braille.  When the window gets focus, it will be the
               context, and the object with focus in the window will
               be the most meaningful information.</para>
-
             <itemizedlist>
               <listitem>
                 <para>Verbose Example:</para>
@@ -1136,11 +1385,9 @@
               </listitem>
             </itemizedlist>
           </section>
-
           <section><title>Speech</title>
             <para>&todo; add speech</para>
           </section>
         </section>
-
       </section>
     </section>

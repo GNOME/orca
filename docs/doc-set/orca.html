@@ -44,22 +44,22 @@ HREF="#AEN10"
 ></DT
 ><DT
 ><A
-HREF="#AEN1391"
+HREF="#AEN1502"
 >Orca Architecture and Functional Specification</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1839"
+HREF="#AEN1950"
 >Orca Script Writing Guide</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1856"
+HREF="#AEN1967"
 >Orca Testing Plan</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1870"
+HREF="#AEN1981"
 >Orca User's Guide</A
 ></DT
 ></DL
@@ -436,7 +436,7 @@ HREF="#AEN734"
 ></DT
 ><DT
 ><A
-HREF="#AEN738"
+HREF="#AEN739"
 >Output Styles by Role</A
 ></DT
 ></DL
@@ -445,7 +445,7 @@ HREF="#AEN738"
 ></DD
 ><DT
 ><A
-HREF="#AEN1362"
+HREF="#AEN1473"
 >Bibliography</A
 ></DT
 ></DL
@@ -3107,7 +3107,9 @@ NAME="AEN707"
         Accessible role. <I
 CLASS="EMPHASIS"
 >TODO:</I
-> this is a work in progress.</P
+> this is a work in progress and will
+        be completed via an iterative prototype process that includes
+        feedback from end users.</P
 ><DIV
 CLASS="SECTION"
 ><HR><H3
@@ -3223,17 +3225,23 @@ NAME="AEN734"
 >General Speech Style</A
 ></H3
 ><P
+>For speech, there are two verbosity levels.  The first is
+         a more verbose level for use for those users who are not
+         expert with the Gnome desktop environment or those who like
+         to hear more information.  The second, more brief mode, is
+         for those who who are expert with the Gnome environment.</P
+><P
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
-> add speech.</P
+> discuss general style.</P
 ></DIV
 ><DIV
 CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN738"
+NAME="AEN739"
 >Output Styles by Role</A
 ></H3
 ><DIV
@@ -3241,7 +3249,7 @@ CLASS="SECTION"
 ><H4
 CLASS="SECTION"
 ><A
-NAME="AEN740"
+NAME="AEN741"
 >accelerator label (ROLE_ACCEL_LABEL)</A
 ></H4
 ><P
@@ -3254,7 +3262,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN743"
+NAME="AEN744"
 >Braille</A
 ></H5
 ><P
@@ -3285,14 +3293,21 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN751"
+NAME="AEN752"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech</P
+></P
+><UL
+><LI
+><P
+>Verbose Example: mumble menu item control m</P
+></LI
+><LI
+><P
+>Brief Example: mumble</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -3300,7 +3315,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN755"
+NAME="AEN759"
 >alert (ROLE_ALERT)</A
 ></H4
 ><P
@@ -3315,7 +3330,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN759"
+NAME="AEN763"
 >Braille</A
 ></H5
 ><P
@@ -3348,14 +3363,24 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN768"
+NAME="AEN772"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech</P
+>When a dialog pops up, its title will be spoken followed
+              by relevant static text followed by the active object.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: "low disk space dialog. you only have 10mb of disk space left.  please delete some files.  OK button.</P
+></LI
+><LI
+><P
+>Brief Example: "low disk space dialog. you only have 10mb of disk space left.  please delete some files.  OK button.</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -3363,7 +3388,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN772"
+NAME="AEN780"
 >animation (ROLE_ANIMATION)</A
 ></H4
 ><P
@@ -3373,7 +3398,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN775"
+NAME="AEN783"
 >Braille</A
 ></H5
 ><P
@@ -3401,14 +3426,23 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN784"
+NAME="AEN792"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech</P
+>Orca will say the roll followed by any descriptive information.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: animation: Will riding his bike.</P
+></LI
+><LI
+><P
+>Brief Example: animation: Will riding his bike.</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -3416,7 +3450,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN788"
+NAME="AEN800"
 >arrow (ROLE_ARROW)</A
 ></H4
 ><P
@@ -3426,7 +3460,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN791"
+NAME="AEN803"
 >Braille</A
 ></H5
 ><P
@@ -3455,14 +3489,23 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN800"
+NAME="AEN812"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech</P
+>Orca will speak the direction followed by "arrow."</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: left arrow</P
+></LI
+><LI
+><P
+>Brief Example: up arrow</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -3470,7 +3513,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN804"
+NAME="AEN820"
 >check box (ROLE_CHECK_BOX)</A
 ></H4
 ><P
@@ -3482,7 +3525,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN807"
+NAME="AEN823"
 >Braille</A
 ></H5
 ><P
@@ -3507,15 +3550,23 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN815"
+NAME="AEN831"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech - should determine verbosity if state
-              changes while the checkbox has focus.</P
+>Orca will sat the label followed by the word "checkbox" followed its state.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: save password checkbox checked</P
+></LI
+><LI
+><P
+>Brief Example: save password checked</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -3523,7 +3574,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN819"
+NAME="AEN839"
 >check menu item (ROLE_CHECK_MENU_ITEM)</A
 ></H4
 ><P
@@ -3535,7 +3586,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN822"
+NAME="AEN842"
 >Braille</A
 ></H5
 ><P
@@ -3563,14 +3614,24 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN830"
+NAME="AEN850"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech</P
+>Like a checkbox, Orca will say the item followed by the
+              word "checkmenu" followed by its state.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: show status bar checkmenu checked</P
+></LI
+><LI
+><P
+>Brief Example: show status bar checked</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -3578,7 +3639,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN834"
+NAME="AEN858"
 >column header, table column header (ROLE_COLUMN_HEADER, ROLE_TABLE_COLUMN_HEADER)</A
 ></H4
 ><P
@@ -3588,7 +3649,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN837"
+NAME="AEN861"
 >Braille</A
 ></H5
 ><P
@@ -3614,14 +3675,26 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN845"
+NAME="AEN869"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech</P
+>A column header will be treated like a button (column
+              headers are usually clickable, typically resorting the
+              rows of the associated table), except it will be followed 
+              by "column heading" in verbose mode.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: monthly income column heading</P
+></LI
+><LI
+><P
+>Brief Example: monthly income</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -3629,7 +3702,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN849"
+NAME="AEN877"
 >combo box (ROLE_COMBO_BOX)</A
 ></H4
 ><P
@@ -3641,7 +3714,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN852"
+NAME="AEN880"
 >Braille</A
 ></H5
 ><P
@@ -3671,14 +3744,31 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN861"
+NAME="AEN889"
 >Speech</A
 ></H5
 ><P
-><I
+>The verbose and brief modes will speak the label
+              followed by the item followed by the word "combo."  If
+              the item is selected, the word selected will be spoken.
+              <I
 CLASS="EMPHASIS"
 >TODO:</I
-> add speech</P
+> what do we do if the item is editable
+              text?  When a combo box has focus and its selection 
+              changes, just the new selection will be spoken.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: time zone: GMT-8 pacific combo selected</P
+></LI
+><LI
+><P
+>Brief Example: time zone: GMT-8 pacific selected</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -3686,7 +3776,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN865"
+NAME="AEN898"
 >desktop icon (ROLE_DESKTOP_ICON)</A
 ></H4
 ><P
@@ -3697,7 +3787,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN868"
+NAME="AEN901"
 >Braille</A
 ></H5
 ><P
@@ -3718,14 +3808,21 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN875"
+NAME="AEN908"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech</P
+></P
+><UL
+><LI
+><P
+>Verbose Example: file.txt icon</P
+></LI
+><LI
+><P
+>Brief Example: file.txt icon</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -3733,7 +3830,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN879"
+NAME="AEN915"
 >dial (ROLE_DIAL)</A
 ></H4
 ><P
@@ -3743,7 +3840,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN882"
+NAME="AEN918"
 >Braille</A
 ></H5
 ><P
@@ -3764,14 +3861,21 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN889"
+NAME="AEN925"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech</P
+></P
+><UL
+><LI
+><P
+>Verbose Example: temperature 50 dial</P
+></LI
+><LI
+><P
+>Brief Example: temperature 50 dial</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -3779,7 +3883,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN893"
+NAME="AEN932"
 >dialog (ROLE_DIALOG)</A
 ></H4
 ><P
@@ -3795,7 +3899,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN897"
+NAME="AEN936"
 >Braille</A
 ></H5
 ><P
@@ -3828,14 +3932,25 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN906"
+NAME="AEN945"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech</P
+>When a dialog gets focus, Orca will say the title of
+              the dialog followed by "dialog" followed by the active
+              object.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: Editing profile "foo" dialog. OK button.</P
+></LI
+><LI
+><P
+>Brief Example: Editing profile "foo" dialog. OK.</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -3843,7 +3958,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN910"
+NAME="AEN953"
 >directory pane (ROLE_DIRECTORY_PANE)</A
 ></H4
 ><P
@@ -3854,7 +3969,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN913"
+NAME="AEN956"
 >Braille</A
 ></H5
 ><P
@@ -3878,7 +3993,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN921"
+NAME="AEN964"
 >Speech</A
 ></H5
 ><P
@@ -3893,7 +4008,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN925"
+NAME="AEN968"
 >icon (ROLE_ICON)</A
 ></H4
 ><P
@@ -3904,7 +4019,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN928"
+NAME="AEN971"
 >Braille</A
 ></H5
 ><P
@@ -3928,14 +4043,21 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN936"
+NAME="AEN979"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech</P
+></P
+><UL
+><LI
+><P
+>Verbose Example: unread icon</P
+></LI
+><LI
+><P
+>Brief Example: unread</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -3943,7 +4065,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN940"
+NAME="AEN986"
 >image (ROLE_IMAGE)</A
 ></H4
 ><P
@@ -3953,7 +4075,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN943"
+NAME="AEN989"
 >Braille</A
 ></H5
 ><P
@@ -3981,14 +4103,21 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN952"
+NAME="AEN998"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech</P
+></P
+><UL
+><LI
+><P
+>Verbose Example: new england in the fall image</P
+></LI
+><LI
+><P
+>Brief Example: new england in the fall</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -3996,7 +4125,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN956"
+NAME="AEN1005"
 >html container (ROLE_HTML_CONTAINER)</A
 ></H4
 ><P
@@ -4016,7 +4145,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN960"
+NAME="AEN1009"
 >Braille</A
 ></H5
 ><P
@@ -4037,7 +4166,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN967"
+NAME="AEN1016"
 >Speech</A
 ></H5
 ><P
@@ -4052,7 +4181,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN971"
+NAME="AEN1020"
 >label (ROLE_LABEL)</A
 ></H4
 ><P
@@ -4067,7 +4196,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN974"
+NAME="AEN1023"
 >Braille</A
 ></H5
 ><P
@@ -4091,14 +4220,21 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN982"
+NAME="AEN1031"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech</P
+></P
+><UL
+><LI
+><P
+>Verbose Example: you are low on disk space</P
+></LI
+><LI
+><P
+>Brief Example: you are low on disk space</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -4106,7 +4242,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN986"
+NAME="AEN1038"
 >list (ROLE_LIST)</A
 ></H4
 ><P
@@ -4117,7 +4253,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN989"
+NAME="AEN1041"
 >Braille</A
 ></H5
 ><P
@@ -4126,7 +4262,7 @@ NAME="AEN989"
               position in the list if in verbose mode.  If the item is
               selected, Orca will completely underline the item using
               dots 7 and 8.  The touch cursors will toggle the selection
-              of the associated itme.</P
+              of the associated item.</P
 ><P
 ></P
 ><UL
@@ -4145,14 +4281,21 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN997"
+NAME="AEN1049"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech</P
+></P
+><UL
+><LI
+><P
+>Verbose Example: state: california list 5 of 50</P
+></LI
+><LI
+><P
+>Brief Example: state: california list</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -4160,7 +4303,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN1001"
+NAME="AEN1056"
 >menu (ROLE_MENU)</A
 ></H4
 ><P
@@ -4170,7 +4313,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1004"
+NAME="AEN1059"
 >Braille</A
 ></H5
 ><P
@@ -4197,14 +4340,25 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1012"
+NAME="AEN1067"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech</P
+>When a menu is entered, its name will be spoken.  If
+              the menu selection changes, only the new selection will
+              be spoken.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: file menu new control n</P
+></LI
+><LI
+><P
+>Brief Example: file menu new</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -4212,7 +4366,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN1016"
+NAME="AEN1075"
 >menu (ROLE_MENU_BAR)</A
 ></H4
 ><P
@@ -4222,7 +4376,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1019"
+NAME="AEN1078"
 >Braille</A
 ></H5
 ><P
@@ -4248,14 +4402,24 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1027"
+NAME="AEN1086"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech</P
+>Will speak "menubar" followed by name of menu with
+              focus.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: menubar file</P
+></LI
+><LI
+><P
+>Brief Example: menubar file</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -4263,7 +4427,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN1031"
+NAME="AEN1094"
 >menu item (ROLE_MENU_ITEM)</A
 ></H4
 ><P
@@ -4273,7 +4437,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1034"
+NAME="AEN1097"
 >Braille</A
 ></H5
 ><P
@@ -4302,14 +4466,24 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1042"
+NAME="AEN1105"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech</P
+>Speak the item followed by any sub menu information followed
+              by its accelerator.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: new submenu control n</P
+></LI
+><LI
+><P
+>Brief Example: new submenu</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -4317,7 +4491,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN1046"
+NAME="AEN1113"
 >option pane (ROLE_OPTION_PANE)</A
 ></H4
 ><P
@@ -4328,7 +4502,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1049"
+NAME="AEN1116"
 >Braille</A
 ></H5
 ><P
@@ -4349,14 +4523,21 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1056"
+NAME="AEN1123"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech</P
+></P
+><UL
+><LI
+><P
+>Verbose Example:</P
+></LI
+><LI
+><P
+>Brief Example:</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -4364,7 +4545,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN1060"
+NAME="AEN1130"
 >page tab (ROLE_PAGE_TAB)</A
 ></H4
 ><P
@@ -4374,7 +4555,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1063"
+NAME="AEN1133"
 >Braille</A
 ></H5
 ><P
@@ -4404,14 +4585,21 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1071"
+NAME="AEN1141"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech</P
+></P
+><UL
+><LI
+><P
+>Verbose Example: preferences dialog effects tab. OK button.</P
+></LI
+><LI
+><P
+>Brief Example: preferences dialog effects tab. OK.</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -4419,7 +4607,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN1075"
+NAME="AEN1148"
 >page tab list (ROLE_PAGE_TAB_LIST)</A
 ></H4
 ><P
@@ -4430,7 +4618,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1078"
+NAME="AEN1151"
 >Braille</A
 ></H5
 ><P
@@ -4456,14 +4644,23 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1086"
+NAME="AEN1159"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech</P
+>When the tab changes, just speak the new tab name.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: tab list general tab</P
+></LI
+><LI
+><P
+>Brief Example: tab list general</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -4471,7 +4668,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN1090"
+NAME="AEN1167"
 >password text (ROLE_PASSWORD_TEXT)</A
 ></H4
 ><P
@@ -4482,7 +4679,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1093"
+NAME="AEN1170"
 >Braille</A
 ></H5
 ><P
@@ -4506,14 +4703,21 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1101"
+NAME="AEN1178"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech</P
+></P
+><UL
+><LI
+><P
+>Verbose Example: password: text 5 characters</P
+></LI
+><LI
+><P
+>Brief Example: password: 5 characters</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -4521,7 +4725,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN1105"
+NAME="AEN1185"
 >progress bar (ROLE_PROGRESS_BAR)</A
 ></H4
 ><P
@@ -4532,7 +4736,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1108"
+NAME="AEN1188"
 >Braille</A
 ></H5
 ><P
@@ -4556,14 +4760,21 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1116"
+NAME="AEN1196"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech</P
+></P
+><UL
+><LI
+><P
+>Verbose Example: uploading: 57% progress</P
+></LI
+><LI
+><P
+>Brief Example: uploading: 57%</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -4571,7 +4782,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN1120"
+NAME="AEN1203"
 >push button (ROLE_PUSH_BUTTON)</A
 ></H4
 ><P
@@ -4582,7 +4793,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1123"
+NAME="AEN1206"
 >Braille</A
 ></H5
 ><P
@@ -4606,14 +4817,21 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1131"
+NAME="AEN1214"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech</P
+></P
+><UL
+><LI
+><P
+>Verbose Example: OK pushbutton</P
+></LI
+><LI
+><P
+>Brief Example: OK</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -4621,7 +4839,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN1135"
+NAME="AEN1221"
 >radio button (ROLE_RADIO_BUTTON)</A
 ></H4
 ><P
@@ -4632,7 +4850,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1138"
+NAME="AEN1224"
 >Braille</A
 ></H5
 ><P
@@ -4662,15 +4880,24 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1146"
+NAME="AEN1232"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech - should determine verbosity if state
-              changes while the checkbox has focus.</P
+>Will speak radio button group name upon entry into group,
+              and then just each radio button as it is selected.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: Color button group: red button</P
+></LI
+><LI
+><P
+>Verbose Example: Color: red</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -4678,7 +4905,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN1150"
+NAME="AEN1240"
 >radio menu item (ROLE_RADIO_MENU_ITEM)</A
 ></H4
 ><P
@@ -4689,7 +4916,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1153"
+NAME="AEN1243"
 >Braille</A
 ></H5
 ><P
@@ -4717,14 +4944,21 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1161"
+NAME="AEN1251"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech</P
+></P
+><UL
+><LI
+><P
+>Verbose Example: Red radiomenu selected</P
+></LI
+><LI
+><P
+>Brief Example: Red selected</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -4732,7 +4966,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN1165"
+NAME="AEN1258"
 >row header, table row header (ROLE_ROW_HEADER, ROLE_TABLE_ROW_HEADER)</A
 ></H4
 ><P
@@ -4742,7 +4976,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1168"
+NAME="AEN1261"
 >Braille</A
 ></H5
 ><P
@@ -4767,14 +5001,21 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1176"
+NAME="AEN1269"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech</P
+></P
+><UL
+><LI
+><P
+>Verbose Example: January row heading</P
+></LI
+><LI
+><P
+>Brief Example: January</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -4782,7 +5023,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN1180"
+NAME="AEN1276"
 >scroll bar (ROLE_SCROLL_BAR)</A
 ></H4
 ><P
@@ -4793,7 +5034,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1183"
+NAME="AEN1279"
 >Braille</A
 ></H5
 ><P
@@ -4820,14 +5061,21 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1191"
+NAME="AEN1287"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech</P
+></P
+><UL
+><LI
+><P
+>Verbose Example: 57% vertical scrollbar</P
+></LI
+><LI
+><P
+>Brief Example: 57% vertical scrollbar</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -4835,7 +5083,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN1195"
+NAME="AEN1294"
 >slider (ROLE_SLIDER)</A
 ></H4
 ><P
@@ -4846,7 +5094,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1198"
+NAME="AEN1297"
 >Braille</A
 ></H5
 ><P
@@ -4870,14 +5118,21 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1206"
+NAME="AEN1305"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech</P
+></P
+><UL
+><LI
+><P
+>Verbose Example: volume: 57% slider</P
+></LI
+><LI
+><P
+>Brief Example: volume: 57%</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -4885,7 +5140,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN1210"
+NAME="AEN1312"
 >spin button (ROLE_SPIN_BUTTON)</A
 ></H4
 ><P
@@ -4896,7 +5151,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1213"
+NAME="AEN1315"
 >Braille</A
 ></H5
 ><P
@@ -4920,14 +5175,21 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1221"
+NAME="AEN1323"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech</P
+></P
+><UL
+><LI
+><P
+>Verbose Example: Red: 57 spin</P
+></LI
+><LI
+><P
+>Brief Example: Red: 57 spin</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -4935,7 +5197,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN1225"
+NAME="AEN1330"
 >split pane (ROLE_SPLIT_PANE)</A
 ></H4
 ><P
@@ -4946,7 +5208,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1228"
+NAME="AEN1333"
 >Braille</A
 ></H5
 ><P
@@ -4973,14 +5235,21 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1236"
+NAME="AEN1341"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech</P
+></P
+><UL
+><LI
+><P
+>Verbose Example: open file dialog directory split pane /usr list 5 of 10</P
+></LI
+><LI
+><P
+>Brief Example: open file dialog directory split pane /usr list 5 of 10</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -4988,7 +5257,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN1240"
+NAME="AEN1348"
 >table, table cell (ROLE_TABLE, ROLE_TABLE_CELL)</A
 ></H4
 ><P
@@ -5001,7 +5270,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1243"
+NAME="AEN1351"
 >Braille</A
 ></H5
 ><P
@@ -5032,62 +5301,21 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1251"
+NAME="AEN1359"
 >Speech</A
 ></H5
-><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech</P
-></DIV
-></DIV
-><DIV
-CLASS="SECTION"
-><HR><H4
-CLASS="SECTION"
-><A
-NAME="AEN1255"
->(ROLE_)</A
-></H4
-><P
-></P
-><DIV
-CLASS="SECTION"
-><HR><H5
-CLASS="SECTION"
-><A
-NAME="AEN1258"
->Braille</A
-></H5
-><P
-></P
 ><P
 ></P
 ><UL
 ><LI
 ><P
->Verbose Example:</P
+>Verbose Example: home runs table row header Mike c4 0 cell</P
 ></LI
 ><LI
 ><P
->Brief Example:</P
+>Brief Example: c4 0</P
 ></LI
 ></UL
-></DIV
-><DIV
-CLASS="SECTION"
-><HR><H5
-CLASS="SECTION"
-><A
-NAME="AEN1266"
->Speech</A
-></H5
-><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech</P
 ></DIV
 ></DIV
 ><DIV
@@ -5095,7 +5323,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN1270"
+NAME="AEN1366"
 >tear off menu item (ROLE_TEAR_OFF_MENU_ITEM)</A
 ></H4
 ><P
@@ -5106,7 +5334,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1273"
+NAME="AEN1369"
 >Braille</A
 ></H5
 ><P
@@ -5134,14 +5362,26 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1281"
+NAME="AEN1377"
 >Speech</A
 ></H5
 ><P
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
-> add speech</P
+> maybe say "dash dash dash"?</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: tear off menu item</P
+></LI
+><LI
+><P
+>Brief Example: tear off</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -5149,7 +5389,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN1285"
+NAME="AEN1386"
 >text (ROLE_TEXT)</A
 ></H4
 ><P
@@ -5161,7 +5401,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1288"
+NAME="AEN1389"
 >Braille</A
 ></H5
 ><P
@@ -5193,7 +5433,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1297"
+NAME="AEN1398"
 >Speech</A
 ></H5
 ><P
@@ -5208,7 +5448,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN1301"
+NAME="AEN1402"
 >toggle button (ROLE_TOGGLE_BUTTON)</A
 ></H4
 ><P
@@ -5220,7 +5460,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1304"
+NAME="AEN1405"
 >Braille</A
 ></H5
 ><P
@@ -5245,15 +5485,24 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1312"
+NAME="AEN1413"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech - should determine verbosity if state
-              changes while the toggle button has focus.</P
+>Only speaks new state if object has focus and state
+              changes.</P
+><P
+></P
+><UL
+><LI
+><P
+>Verbose Example: Run toggle pressed</P
+></LI
+><LI
+><P
+>Verbose Example: Run not pressed</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -5261,7 +5510,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN1316"
+NAME="AEN1421"
 >tool bar (ROLE_TOOL_BAR)</A
 ></H4
 ><P
@@ -5273,7 +5522,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1319"
+NAME="AEN1424"
 >Braille</A
 ></H5
 ><P
@@ -5304,14 +5553,21 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1328"
+NAME="AEN1433"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech</P
+></P
+><UL
+><LI
+><P
+>Verbose Example: toolbar</P
+></LI
+><LI
+><P
+>Brief Example: toolbar</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -5319,7 +5575,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN1332"
+NAME="AEN1440"
 >tree, tree table (ROLE_TREE, ROLE_TREE_TABLE)</A
 ></H4
 ><P
@@ -5331,7 +5587,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1335"
+NAME="AEN1443"
 >Braille</A
 ></H5
 ><P
@@ -5356,14 +5612,21 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1343"
+NAME="AEN1451"
 >Speech</A
 ></H5
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> add speech</P
+></P
+><UL
+><LI
+><P
+>Verbose Example: directory myfolder expanded level 4 tree</P
+></LI
+><LI
+><P
+>Brief Example: directory myfolder leaf level 4 tree</P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV
@@ -5371,7 +5634,7 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="AEN1347"
+NAME="AEN1458"
 >window (ROLE_WINDOW)</A
 ></H4
 ><P
@@ -5381,7 +5644,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1350"
+NAME="AEN1461"
 >Braille</A
 ></H5
 ><P
@@ -5409,7 +5672,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1358"
+NAME="AEN1469"
 >Speech</A
 ></H5
 ><P
@@ -5423,11 +5686,11 @@ CLASS="EMPHASIS"
 ></DIV
 ></DIV
 ><A
-NAME="AEN1362"
+NAME="AEN1473"
 ></A
 ><HR><H1
 ><A
-NAME="AEN1362"
+NAME="AEN1473"
 ></A
 >Bibliography</H1
 ><DIV
@@ -5482,14 +5745,14 @@ STYLE="margin-left: 0.5in"
 ><DIV
 CLASS="BOOK"
 ><A
-NAME="AEN1391"
+NAME="AEN1502"
 ></A
 ><DIV
 CLASS="TITLEPAGE"
 ><H1
 CLASS="TITLE"
 ><A
-NAME="AEN1391"
+NAME="AEN1502"
 >Orca Architecture and Functional Specification</A
 ></H1
 ><DIV
@@ -5497,7 +5760,7 @@ CLASS="LEGALNOTICE"
 ><P
 ></P
 ><A
-NAME="AEN1394"
+NAME="AEN1505"
 ></A
 ><P
 >Copyright 2005, Sun Microsystems, Inc.</P
@@ -5514,69 +5777,69 @@ CLASS="TOC"
 ></DT
 ><DT
 ><A
-HREF="#AEN1396"
+HREF="#AEN1507"
 >Foreword</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1402"
+HREF="#AEN1513"
 >Introduction</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1405"
+HREF="#AEN1516"
 >Prerequisites</A
 ></DT
 ><DD
 ><DL
 ><DT
 ><A
-HREF="#AEN1408"
+HREF="#AEN1519"
 >Python v2.4 or better</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1413"
+HREF="#AEN1524"
 >pyorbit v2.0.0 or better</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1416"
+HREF="#AEN1527"
 >libbonobo v2.0.0 or better</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1419"
+HREF="#AEN1530"
 >gnome-python-2.0 v2.6.0 or better</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1422"
+HREF="#AEN1533"
 >pygtk-2.0 v2.4.0 or better</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1425"
+HREF="#AEN1536"
 >AT-SPI v1.6.2 or better</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1430"
+HREF="#AEN1541"
 >gnome-speech v0.3.4 or better</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1435"
+HREF="#AEN1546"
 >BrlTTY v3.6.1 or better</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1440"
+HREF="#AEN1551"
 >gnome-mag v0.11.11 or better</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1445"
+HREF="#AEN1556"
 >Keyboard Navigation</A
 ></DT
 ></DL
@@ -5590,43 +5853,43 @@ HREF="#ARCHITECTURE"
 ><DL
 ><DT
 ><A
-HREF="#AEN1459"
+HREF="#AEN1570"
 >Desktop and AT-SPI</A
 ></DT
 ><DD
 ><DL
 ><DT
 ><A
-HREF="#AEN1479"
+HREF="#AEN1590"
 >core</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1509"
+HREF="#AEN1620"
 >kbd</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1531"
+HREF="#AEN1642"
 >a11y</A
 ></DT
 ></DL
 ></DD
 ><DT
 ><A
-HREF="#AEN1542"
+HREF="#AEN1653"
 >Orca</A
 ></DT
 ><DD
 ><DL
 ><DT
 ><A
-HREF="#AEN1545"
+HREF="#AEN1656"
 >orca</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1565"
+HREF="#AEN1676"
 >settings</A
 ></DT
 ></DL
@@ -5653,24 +5916,24 @@ HREF="#FOCUS"
 ></DD
 ><DT
 ><A
-HREF="#AEN1668"
+HREF="#AEN1779"
 >System Services</A
 ></DT
 ><DD
 ><DL
 ><DT
 ><A
-HREF="#AEN1671"
+HREF="#AEN1782"
 >speech</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1696"
+HREF="#AEN1807"
 >braille</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1725"
+HREF="#AEN1836"
 >mag</A
 ></DT
 ></DL
@@ -5679,12 +5942,12 @@ HREF="#AEN1725"
 ></DD
 ><DT
 ><A
-HREF="#AEN1731"
+HREF="#AEN1842"
 >Internationalization (I18N) Support</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1740"
+HREF="#AEN1851"
 >Bibliography</A
 ></DT
 ></DL
@@ -5693,7 +5956,7 @@ HREF="#AEN1740"
 CLASS="PREFACE"
 ><HR><H1
 ><A
-NAME="AEN1396"
+NAME="AEN1507"
 ></A
 >Foreword</H1
 ><P
@@ -5722,7 +5985,7 @@ CLASS="EMPHASIS"
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN1402"
+NAME="AEN1513"
 ></A
 >Introduction</H1
 ><P
@@ -5735,7 +5998,7 @@ NAME="AEN1402"
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN1405"
+NAME="AEN1516"
 ></A
 >Prerequisites</H1
 ><P
@@ -5751,7 +6014,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1408"
+NAME="AEN1519"
 >Python v2.4 or better</A
 ></H2
 ><P
@@ -5770,7 +6033,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1413"
+NAME="AEN1524"
 >pyorbit v2.0.0 or better</A
 ></H2
 ><P
@@ -5782,7 +6045,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1416"
+NAME="AEN1527"
 >libbonobo v2.0.0 or better</A
 ></H2
 ><P
@@ -5794,7 +6057,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1419"
+NAME="AEN1530"
 >gnome-python-2.0 v2.6.0 or better</A
 ></H2
 ><P
@@ -5806,7 +6069,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1422"
+NAME="AEN1533"
 >pygtk-2.0 v2.4.0 or better</A
 ></H2
 ><P
@@ -5821,7 +6084,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1425"
+NAME="AEN1536"
 >AT-SPI v1.6.2 or better</A
 ></H2
 ><P
@@ -5851,7 +6114,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1430"
+NAME="AEN1541"
 >gnome-speech v0.3.4 or better</A
 ></H2
 ><P
@@ -5872,7 +6135,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1435"
+NAME="AEN1546"
 >BrlTTY v3.6.1 or better</A
 ></H2
 ><P
@@ -5894,7 +6157,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1440"
+NAME="AEN1551"
 >gnome-mag v0.11.11 or better</A
 ></H2
 ><P
@@ -5915,7 +6178,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1445"
+NAME="AEN1556"
 >Keyboard Navigation</A
 ></H2
 ><P
@@ -5941,7 +6204,7 @@ NAME="ARCHITECTURE"
 ><DIV
 CLASS="FIGURE"
 ><A
-NAME="AEN1451"
+NAME="AEN1562"
 ></A
 ><DIV
 CLASS="MEDIAOBJECT"
@@ -5966,7 +6229,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1459"
+NAME="AEN1570"
 >Desktop and AT-SPI</A
 ></H2
 ><P
@@ -6048,7 +6311,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1479"
+NAME="AEN1590"
 >core</A
 ></H3
 ><P
@@ -6102,7 +6365,7 @@ CLASS="EMPHASIS"
 ><DIV
 CLASS="FIGURE"
 ><A
-NAME="AEN1488"
+NAME="AEN1599"
 ></A
 ><DIV
 CLASS="MEDIAOBJECT"
@@ -6136,7 +6399,7 @@ CLASS="EMPHASIS"
 ><DIV
 CLASS="FIGURE"
 ><A
-NAME="AEN1498"
+NAME="AEN1609"
 ></A
 ><DIV
 CLASS="MEDIAOBJECT"
@@ -6180,7 +6443,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1509"
+NAME="AEN1620"
 >kbd</A
 ></H3
 ><P
@@ -6201,7 +6464,7 @@ CLASS="EMPHASIS"
 ><DIV
 CLASS="FIGURE"
 ><A
-NAME="AEN1513"
+NAME="AEN1624"
 ></A
 ><DIV
 CLASS="MEDIAOBJECT"
@@ -6218,7 +6481,7 @@ SRC="keyevent_registration.jpg"></P
 ><DIV
 CLASS="FIGURE"
 ><A
-NAME="AEN1520"
+NAME="AEN1631"
 ></A
 ><DIV
 CLASS="MEDIAOBJECT"
@@ -6255,7 +6518,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1531"
+NAME="AEN1642"
 >a11y</A
 ></H3
 ><P
@@ -6321,7 +6584,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1542"
+NAME="AEN1653"
 >Orca</A
 ></H2
 ><P
@@ -6334,7 +6597,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1545"
+NAME="AEN1656"
 >orca</A
 ></H3
 ><P
@@ -6356,7 +6619,7 @@ NAME="AEN1545"
 ><DIV
 CLASS="FIGURE"
 ><A
-NAME="AEN1550"
+NAME="AEN1661"
 ></A
 ><DIV
 CLASS="MEDIAOBJECT"
@@ -6438,7 +6701,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1565"
+NAME="AEN1676"
 >settings</A
 ></H3
 ><P
@@ -6510,7 +6773,7 @@ CLASS="EMPHASIS"
 ><DIV
 CLASS="FIGURE"
 ><A
-NAME="AEN1579"
+NAME="AEN1690"
 ></A
 ><DIV
 CLASS="MEDIAOBJECT"
@@ -6646,7 +6909,7 @@ NAME="INPUTEVENTHANDLER"
 ><DIV
 CLASS="FIGURE"
 ><A
-NAME="AEN1613"
+NAME="AEN1724"
 ></A
 ><DIV
 CLASS="MEDIAOBJECT"
@@ -6676,7 +6939,7 @@ CLASS="EMPHASIS"
 ><DIV
 CLASS="FIGURE"
 ><A
-NAME="AEN1623"
+NAME="AEN1734"
 ></A
 ><DIV
 CLASS="MEDIAOBJECT"
@@ -6884,7 +7147,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1668"
+NAME="AEN1779"
 >System Services</A
 ></H2
 ><P
@@ -6898,7 +7161,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1671"
+NAME="AEN1782"
 >speech</A
 ></H3
 ><P
@@ -7001,7 +7264,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1696"
+NAME="AEN1807"
 >braille</A
 ></H3
 ><P
@@ -7030,7 +7293,7 @@ CLASS="EMPHASIS"
 ><DIV
 CLASS="FIGURE"
 ><A
-NAME="AEN1704"
+NAME="AEN1815"
 ></A
 ><DIV
 CLASS="MEDIAOBJECT"
@@ -7047,7 +7310,7 @@ SRC="brailleevent_registration.jpg"></P
 ><DIV
 CLASS="FIGURE"
 ><A
-NAME="AEN1711"
+NAME="AEN1822"
 ></A
 ><DIV
 CLASS="MEDIAOBJECT"
@@ -7065,7 +7328,7 @@ SRC="brailleevent_handling_general.jpg"></P
 ><DIV
 CLASS="FIGURE"
 ><A
-NAME="AEN1718"
+NAME="AEN1829"
 ></A
 ><DIV
 CLASS="MEDIAOBJECT"
@@ -7084,7 +7347,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1725"
+NAME="AEN1836"
 >mag</A
 ></H3
 ><P
@@ -7113,7 +7376,7 @@ HREF="#GNOME-MAG"
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN1731"
+NAME="AEN1842"
 ></A
 >Internationalization (I18N) Support</H1
 ><P
@@ -7152,11 +7415,11 @@ CLASS="EMPHASIS"
       future.</P
 ></DIV
 ><A
-NAME="AEN1740"
+NAME="AEN1851"
 ></A
 ><HR><H1
 ><A
-NAME="AEN1740"
+NAME="AEN1851"
 ></A
 >Bibliography</H1
 ><DIV
@@ -7407,14 +7670,14 @@ STYLE="margin-left: 0.5in"
 ><DIV
 CLASS="BOOK"
 ><A
-NAME="AEN1839"
+NAME="AEN1950"
 ></A
 ><DIV
 CLASS="TITLEPAGE"
 ><H1
 CLASS="TITLE"
 ><A
-NAME="AEN1839"
+NAME="AEN1950"
 >Orca Script Writing Guide</A
 ></H1
 ><DIV
@@ -7422,7 +7685,7 @@ CLASS="LEGALNOTICE"
 ><P
 ></P
 ><A
-NAME="AEN1842"
+NAME="AEN1953"
 ></A
 ><P
 >Copyright 2005, Sun Microsystems, Inc.</P
@@ -7439,17 +7702,17 @@ CLASS="TOC"
 ></DT
 ><DT
 ><A
-HREF="#AEN1844"
+HREF="#AEN1955"
 >Foreword</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1850"
+HREF="#AEN1961"
 >Introduction</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1853"
+HREF="#AEN1964"
 >Functions that Orca needs to provide to the user</A
 ></DT
 ></DL
@@ -7458,7 +7721,7 @@ HREF="#AEN1853"
 CLASS="PREFACE"
 ><HR><H1
 ><A
-NAME="AEN1844"
+NAME="AEN1955"
 ></A
 >Foreword</H1
 ><P
@@ -7485,7 +7748,7 @@ CLASS="EMPHASIS"
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN1850"
+NAME="AEN1961"
 ></A
 >Introduction</H1
 ><P
@@ -7495,7 +7758,7 @@ NAME="AEN1850"
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN1853"
+NAME="AEN1964"
 ></A
 >Functions that Orca needs to provide to the user</H1
 ><P
@@ -7507,14 +7770,14 @@ NAME="AEN1853"
 ><DIV
 CLASS="BOOK"
 ><A
-NAME="AEN1856"
+NAME="AEN1967"
 ></A
 ><DIV
 CLASS="TITLEPAGE"
 ><H1
 CLASS="TITLE"
 ><A
-NAME="AEN1856"
+NAME="AEN1967"
 >Orca Testing Plan</A
 ></H1
 ><DIV
@@ -7522,7 +7785,7 @@ CLASS="LEGALNOTICE"
 ><P
 ></P
 ><A
-NAME="AEN1859"
+NAME="AEN1970"
 ></A
 ><P
 >Copyright 2005, Sun Microsystems, Inc.</P
@@ -7539,12 +7802,12 @@ CLASS="TOC"
 ></DT
 ><DT
 ><A
-HREF="#AEN1861"
+HREF="#AEN1972"
 >Foreword</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1867"
+HREF="#AEN1978"
 >Introduction</A
 ></DT
 ></DL
@@ -7553,7 +7816,7 @@ HREF="#AEN1867"
 CLASS="PREFACE"
 ><HR><H1
 ><A
-NAME="AEN1861"
+NAME="AEN1972"
 ></A
 >Foreword</H1
 ><P
@@ -7579,7 +7842,7 @@ CLASS="EMPHASIS"
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN1867"
+NAME="AEN1978"
 ></A
 >Introduction</H1
 ><P
@@ -7589,14 +7852,14 @@ NAME="AEN1867"
 ><DIV
 CLASS="BOOK"
 ><A
-NAME="AEN1870"
+NAME="AEN1981"
 ></A
 ><DIV
 CLASS="TITLEPAGE"
 ><H1
 CLASS="TITLE"
 ><A
-NAME="AEN1870"
+NAME="AEN1981"
 >Orca User's Guide</A
 ></H1
 ><DIV
@@ -7604,7 +7867,7 @@ CLASS="LEGALNOTICE"
 ><P
 ></P
 ><A
-NAME="AEN1873"
+NAME="AEN1984"
 ></A
 ><P
 >Copyright 2005, Sun Microsystems, Inc.</P
@@ -7621,12 +7884,12 @@ CLASS="TOC"
 ></DT
 ><DT
 ><A
-HREF="#AEN1875"
+HREF="#AEN1986"
 >Foreword</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1881"
+HREF="#AEN1992"
 >Introduction</A
 ></DT
 ></DL
@@ -7635,7 +7898,7 @@ HREF="#AEN1881"
 CLASS="PREFACE"
 ><HR><H1
 ><A
-NAME="AEN1875"
+NAME="AEN1986"
 ></A
 >Foreword</H1
 ><P
@@ -7663,7 +7926,7 @@ CLASS="EMPHASIS"
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN1881"
+NAME="AEN1992"
 ></A
 >Introduction</H1
 ><P
