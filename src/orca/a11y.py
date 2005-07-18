@@ -227,10 +227,10 @@ class Accessible:
         # Accessibility_Application, so try both
         #
         try:
-            self.acc = acc._narrow(core.Accessibility.Accessible)
-        except:
             self.acc = acc._narrow(core.Accessibility.Application)
-
+        except:
+            self.acc = acc._narrow(core.Accessibility.Accessible)
+            
         # Save a reference to the AT-SPI object, and also save this
         # new object away in the cache.
         #
@@ -364,7 +364,8 @@ class Accessible:
             self.app = None
         else:
             self.app = obj
-            
+            print "FWEEP: ", obj, obj.acc.toolkitName
+        
         return self.app
 
 
