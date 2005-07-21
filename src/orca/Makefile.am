@@ -10,6 +10,7 @@ orca_python_PYTHON = \
 	__init__.py \
 	a11y.py \
 	braille.py \
+	braillegenerator.py \
 	chnames.py \
 	debug.py \
 	default.py \
@@ -28,7 +29,8 @@ orca_python_PYTHON = \
 	rolenames.py \
 	script.py \
 	settings.py \
-	speech.py
+	speech.py \
+	speechgenerator.py
 
 orca_pythondir=$(pythondir)/orca
 

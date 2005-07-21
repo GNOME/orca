@@ -364,10 +364,8 @@ class Accessible:
             self.app = None
         else:
             self.app = obj
-            print "FWEEP: ", obj, obj.acc.toolkitName
         
         return self.app
-
 
     def __get_extents(self, coordinateType = 0):
         """Returns the object's accessible extents as an
@@ -762,6 +760,19 @@ def shutdown():
     if not _initialized:
         return False
 
+    core.unregisterEventListener(
+        onDefunct, "object:state-changed:defunct")
+    core.unregisterEventListener(
+        onNameChanged, "object:property-change:accessible-name")
+    core.unregisterEventListener(
+        onDescriptionChanged, "object:property-change:accessible-description")
+    core.unregisterEventListener(
+        onParentChanged, "object:property-change:accessible-parent")
+    core.unregisterEventListener(
+        onStateChanged, "object:state-changed:")
+    core.unregisterEventListener(
+        onChildrenChanged, "object:children-changed:")
+
     core.shutdown()
 
     _initialized = False
@@ -972,3 +983,50 @@ def getTextLineAtCaret(obj):
         content = line[0]
 
     return [content, offset, line[1]]
+
+
+def getAcceleratorAndShortcut(obj):
+    """Gets the accelerator string (and possibly shortcut) for the given
+    object.
+
+    Arguments:
+    - obj: the Accessible object
+
+    A list containing the accelerator and shortcut for the given object,
+    where the first element is the accelerator and the second element is
+    the shortcut.
+    """
+
+    action = obj.action
+
+    if action is None:
+        return ["", ""]
+
+    # [[[TODO: WDW - assumes the first keybinding is all that we care about.]]]
+    #
+    bindingStrings = action.getKeyBinding(0).split(';')
+
+    debug.println(debug.LEVEL_FINEST,
+                  "KEYBINDINGS: " + action.getKeyBinding(0))
+                  
+    # [[[TODO: WDW - assumes menu items have three bindings]]]
+    #
+    if len(bindingStrings) == 3:
+        mnemonic       = bindingStrings[0]
+        fullShortcut   = bindingStrings[1]
+        accelerator    = bindingStrings[2]
+    elif len(bindingStrings) > 0:
+        fullShortcut   = bindingStrings[0]
+        accelerator    = ""
+    else:
+        fullShortcut   = ""
+        accelerator    = ""
+        
+    fullShortcut = fullShortcut.replace("<","")
+    fullShortcut = fullShortcut.replace(">"," ")
+    fullShortcut = fullShortcut.replace(":"," ")
+
+    accelerator  = accelerator.replace("<","")
+    accelerator  = accelerator.replace(">"," ")
+
+    return [accelerator, fullShortcut]

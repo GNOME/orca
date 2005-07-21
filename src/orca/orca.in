@@ -23,7 +23,7 @@
 (if it exists) and then runs orca.
 """
 
-import os, sys
+import os, signal, sys
 from orca.orca_i18n import _
 
 # Grab the user's ~/.orca/settings.py ahead of the default settings.py.
@@ -35,5 +35,18 @@ sys.path.insert (0, userprefs)
 
 import orca.orca
 
-orca.orca.init ()
-orca.orca.start ()
+def shutdownAndExit(signum, frame):
+    try:
+	print "Goodbye."
+	orca.orca.shutdown()
+    except:
+        pass
+    sys.exit()
+
+# Register a signal handler for ctrl-C
+#
+signal.signal(signal.SIGINT, shutdownAndExit)
+signal.signal(signal.SIGQUIT, shutdownAndExit)
+
+orca.orca.init()
+orca.orca.start()

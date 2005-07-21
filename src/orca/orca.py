@@ -17,7 +17,6 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-import signal
 import sys
 
 import a11y
@@ -367,6 +366,7 @@ def init():
     a11y.init()
     
     kbd.init(processKeyEvent)
+
     if settings.getSetting("useSpeech", True):
         speech.init()
         debug.println(debug.LEVEL_CONFIGURATION,
@@ -412,6 +412,7 @@ def start():
     Returns False only if this module has not been initialized.
     """
 
+    global focusedApp
     global _initialized
     
     if not _initialized:
@@ -423,17 +424,13 @@ def start():
     except:
         debug.printException(debug.LEVEL_SEVERE)
     
-    # Find the cusrrently active toplevel window and activate its script.
+    # Find the currently active toplevel window and activate its script.
     #
     win = findActiveWindow()
     if win:
         focusedApp = win.app
 
     _switchToPresentationManager(0) # focus_tracking_presenter
-
-    # Register a signal handler for ctrl-C
-    #
-    signal.signal(signal.SIGINT, shutdown)
 
     core.bonobo.main()
 

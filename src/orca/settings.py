@@ -25,6 +25,20 @@ case of gdm) or doesn't have the specified attribute.
 import sys
 import debug
 
+ROLENAME_NONE = 0  # Do not output rolename
+ROLENAME_SHORT = 1 # Output short version of rolename
+ROLENAME_LONG = 2  # Output long version of rolename
+
+speakRolenames = ROLENAME_LONG
+brailleRolenames = ROLENAME_LONG
+
+ACCELERATOR_NONE = 0  # Do not output accelerators
+ACCELERATOR_SHORT = 1 # Output accelerators
+ACCELERATOR_LONG = 2
+
+speakAccelerators = ACCELERATOR_LONG
+brailleAccelerators = ACCELERATOR_SHORT
+
 voices = {}
 keyEcho = False
 useSpeech = True

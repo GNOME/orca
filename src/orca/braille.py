@@ -75,9 +75,15 @@ initialized.  The only impact will be that nothing will be displayed on the
 Braille display.
 """
 
+import a11y
 import brl
 import core
 import debug
+import settings
+
+from orca_i18n import _                          # for gettext support
+from rolenames import getShortBrailleForRoleName # localized role names
+from rolenames import getLongBrailleForRoleName  # localized role names
 
 # If True, this module has been initialized.
 #
@@ -169,16 +175,20 @@ _displaySize = [0, 0]
 #
 _lines = []
 
+# The region with focus.  This will be displayed at the home position.
+#
+_regionWithFocus = None
+
+# A 0-based index on the physical display that specifies where the
+# display of the _regionWithFocus should start.
+#
+_homePosition = 10
+
 # The viewport is a rectangular region of size _displaySize whose upper left
 # corner is defined by the point (x, line number).  As such, the viewport is
 # identified solely by its upper left point.
 #
 _viewport = [0, 0]
-
-# The current cursor position (x, y) on the Braille display.
-# (-1, -1) indicates no cursor is to be drawn.
-#
-_cursorPosition = [-1, -1]
 
 # The callback to call on a BrlTTY input event.  This is passed to
 # the init method.
@@ -206,14 +216,17 @@ class Region:
     method.
     """
 
-    def __init__(self, string=""):
+    def __init__(self, string, cursorOffset=0):
         """Creates a new Region containing the given string.
     
         Arguments:
         - string: the string to be displayed
+        - cursorOffset: a 0-based index saying where to draw the cursor
+                        for this Region if it gets focus.
         """
         
         self.string = string
+        self.cursorOffset = cursorOffset
         
     def getString(self):
         """Returns the string associated with this region."""
@@ -224,7 +237,7 @@ class Region:
         0-based, where 0 represents the leftmost character of string
         associated with this region.  Note that the zeroeth character may have
         been scrolled off the display."""
-        
+        pass
 
 class Component(Region):
     """A subclass of Region backed by an accessible.  This Region will react
@@ -232,20 +245,20 @@ class Component(Region):
     accessible, if a default action exists.
     """
     
-    def __init__(self, accessible, string=None):
+    def __init__(self, accessible, string, cursorOffset=0):
         """Creates a new Component.
 
         Arguments:
         - accessible: the accessible
-        - string: the string to use (default = accessible.label)
+        - string: the string to use to represent the component
+        - cursorOffset: a 0-based index saying where to draw the cursor
+                        for this Region if it gets focus.
         """
         
         self.accessible = accessible
-        if string:
-            self.string = string
-        else:
-            self.string = self.accessible.label
-
+        self.string = string
+        self.cursorOffset = cursorOffset
+        
     def processCursorKey(self, offset):
         """Processes a cursor key press on this Component.  The offset is
         0-based, where 0 represents the leftmost character of string
@@ -260,58 +273,26 @@ class Component(Region):
             actions.doAction(0)
         
 
-class ToggleButton(Component):
-    """A subclass of Region backed by an accessible check box.  This Region
-    will react to any cursor routing key events and perform the default action
-    on the accessible.  This region also includes the state of the check box.
-    """
-    
-    def __init__(self, accessible):
-        self.accessible = accessible
-        set = self.accessible.state
-        if set.count(core.Accessibility.STATE_CHECKED):
-            self.string = "<x> " + self.accessible.label
-        else:
-            self.string = "< > " + self.accessible.label
-
-            
-class RadioButton(Component):
-    """A subclass of Region backed by an accessible radio button.  This Region
-    will react to any cursor routing key events and perform the default action
-    on the accessible.  This region also includes the state of the radio
-    button.
-    """
-    
-    def __init__(self, accessible):
-        self.accessible = accessible
-        set = self.accessible.state
-        if set.count(core.Accessibility.STATE_CHECKED):
-            self.string = "<x>" + self.accessible.label
-        else:
-            self.string = "< > " + self.accessible.label
-
-            
 class Text(Region):
     """A subclass of Region backed by a Text object.  This Region will
     react to any cursor routing key events by positioning the caret in the
-    associated text object. [[[TODO: WDW - need to add in text selection
+    associated text object. The line displayed will be the contents of
+    the text object only.  [[[TODO: WDW - need to add in text selection
     capabilities.]]]"""
     
-    def __init__(self, accessible, line, lineOffset, caretOffset):
+    def __init__(self, accessible):
         """Creates a new Text region.
 
         Arguments:
         - accessible: the accessible that implements AccessibleText
-        - line: the string to display (should be a whole line)
-        - lineOffset: the 0-based index of the character beginning the line
-        - caretOffset: the 0-based index of the caret location
         """
         
         self.accessible = accessible
-        self.text = accessible.text
-        self.string = line + " "
-        self.lineOffset = lineOffset
-        self.caretOffset = caretOffset
+        result = a11y.getTextLineAtCaret(self.accessible)
+        self.string = result[0]
+        self.caretOffset = result[1]
+        self.lineOffset = result[2]
+        self.cursorOffset = self.caretOffset - self.lineOffset
         
     def processCursorKey(self, offset):
         """Processes a cursor key press on this Component.  The offset is
@@ -319,8 +300,7 @@ class Text(Region):
         with this region.  Note that the zeroeth character may have been
         scrolled off the display."""
         
-        linePosition = offset
-        newCaretOffset = self.lineOffset + linePosition
+        newCaretOffset = self.lineOffset + offset
         self.text.setCaretOffset(newCaretOffset)
 
         
@@ -338,12 +318,28 @@ class Line:
     def addRegion(self, region):
         self.regions.append(region)
 
-    def getString(self):
+    def addRegions(self, regions):
+        self.regions.extend(regions)
+
+    def getLineInfo(self):
+        """Computes the complete string for this line as well as a
+        0-based index where the focused region starts on this line.
+        If the region with focus is not on this line, then the index
+        will be -1.
+
+        Returns [string, offsetIndex]
+        """
+
+        global _regionWithFocus
+        
         string = ""
+        focusOffset = -1
         for region in self.regions:
-            string = string + region.getString()
-        return string
-    
+            if region == _regionWithFocus:
+                focusOffset = len(string)
+            string += region.getString()
+        return [string, focusOffset]
+        
     def processCursorKey(self, offset):
         """Processes a cursor key press on this Component.  The offset is
         0-based, where 0 represents the leftmost character of string
@@ -371,10 +367,11 @@ def clear():
     """
 
     global _lines
-    global _cursorPosition
+    global _regionWithFocus
     
     _lines = []
-    _cursorPosition = [-1, -1]
+    _regionWithFocus = None
+    _viewport = [0, 0]
 
 
 def addLine(line):
@@ -392,64 +389,58 @@ def addLine(line):
     _lines.append(line)
     line._index = len(_lines)
 
-    
-def setCursor(x, y):
-    """Sets the cursor position and automatically scrolls the viewport to
-    show the cursor.
 
-    Arguments:
-    - x: the 0-based x location for all of the logical content
-    - y: the 0-based line number (default = 0)
-    """
-
-    if not _initialized:
-        return
-    
-    _cursorPosition[0] = x
-    _cursorPosition[1] = y
-
-    # Automatically scroll the viewport to hold the cursor, if necessary.
-    # The viewport will move up and down line by line if necessary and
-    # left and right by the display size chunks at a time if necessary.
-    #
-    if _cursorPosition[1] >= 0:
-        _viewport[1] = _cursorPosition[1]
-
-    if _cursorPosition[0] >= 0:
-        _viewport[0] = 0
-        while _cursorPosition[0] >= (_viewport[0] + _displaySize[0]):
-            _viewport[0] = _viewport[0] + _displaySize[0]
-
-
-def setFocus(region, offset=0):
-    """Sets the cursor to point to the given region.
+def setFocus(region):
+    """Specififes the region with focus.  This region will be positioned
+    at the home position on a refresh.
 
     Arguments:
     - region: the given region, which much be in a line that has been
               added to the logical display
-    - offset: the offset into the region
     """
 
     global _lines
-    y = 0
+    global _regionWithFocus
+    global _viewport
+
+    _regionWithFocus = region
+    
+    # Find the line whose Region has focus and adjust the viewport
+    # accordingly.
+    #
+    _viewport = [0, 0]
+    if _regionWithFocus is None:
+        return
+
+    # Adjust the viewport according to the new region with focus.
+    # The goal is to have the first cell of the region be in the
+    # home position, but we will give priority to make sure the
+    # cursor for the region is on the display.
+    #
+    lineNum = 0
     done = False
     for line in _lines:
-        x = 0
         for reg in line.regions:
-            if reg == region:
+            if reg == _regionWithFocus:
+                _viewport[1] = lineNum
                 done = True
                 break
-            else:
-                x = x + len(reg.getString())
         if done:
             break
         else:
-            y = y + 1
+            lineNum += 1
 
-    if done:
-        setCursor(x + offset, y)
-    else:
-        setCursor(-1, -1)
+    line = _lines[_viewport[1]]
+    lineInfo = line.getLineInfo()
+    offset = lineInfo[1]
+
+    # If the cursor is too far right, we scroll the viewport
+    # so the cursor will be on the last cell of the display.
+    #
+    if _regionWithFocus.cursorOffset >= _displaySize[0]:
+        offset += _regionWithFocus.cursorOffset - _displaySize[0] + 1
+    
+    _viewport[0] = max(0, offset)
 
         
 def refresh():
@@ -463,23 +454,25 @@ def refresh():
     global _lines
     global _viewport
     global _displaySize
-    global _cursorPosition
+    global _regionWithFocus
 
-    lineNum = _viewport[1]    
+    if len(_lines) == 0:
+        brl.writeText(0, "")
+        return
 
     # Get the string for the line.
     #
-    string = ""
-    if len(_lines) > 0:
-        string = _lines[lineNum].getString()
+    line = _lines[_viewport[1]]
+    lineInfo = line.getLineInfo()    
+    string = lineInfo[0]
 
-    # Convert the logical cursor location (_cursorPosition) to a physical
-    # cursor location.
+    # Now determine the location of the cursor.
     #
     cursor = -1
-    if _cursorPosition[1] == lineNum:
-        if _cursorPosition[0] >= 0:
-            cursor = _cursorPosition[0] - _viewport[0]
+    focusOffset = lineInfo[1]
+    if focusOffset >= 0:
+        cursorOffset = _regionWithFocus.cursorOffset + focusOffset
+        cursor = cursorOffset - _viewport[0]
 
     # Now normalize the cursor position to BrlTTY, which uses 1 as
     # the first cursor position as opposed to 0.
@@ -489,7 +482,7 @@ def refresh():
     else:
         cursor = cursor + 1
 
-    brl.writeText(cursor, string[_viewport[0]:])
+    brl.writeText(cursor, string[max(0, _viewport[0]):])
     
 
 def displayMessage(message, cursor=-1):
@@ -503,7 +496,6 @@ def displayMessage(message, cursor=-1):
     
     clear()
     addLine(Line(Region(message)))
-    setCursor(cursor, 0)
     refresh()
 
 
@@ -517,7 +509,15 @@ def panLeft(command=None, script=None):
     Returns True to mean the command should be consumed.
     """
 
-    _viewport[0] = max(0, _viewport[0] - _displaySize[0])
+    # We're doing something funky here, which is allowing the viewport
+    # to go negative.  The reason for this is to allow panRight's to
+    # take us back where we started.  What we're doing here is to allow
+    # each pan to be a display width at a time, and we'll let the refresh
+    # method take care of odd viewport values.
+    #
+    if _viewport[0] > 0:
+        _viewport[0] = _viewport[0] - _displaySize[0]
+
     refresh()
 
 
@@ -535,7 +535,9 @@ def panRight(command=None, script=None):
     if len(_lines) > 0:
         lineNum = _viewport[1]    
         newX = _viewport[0] + _displaySize[0]
-        if newX < len(_lines[lineNum].getString()):
+        lineInfo = _lines[lineNum].getLineInfo()
+        string = lineInfo[0]
+        if newX < len(string):
             _viewport[0] = newX
             refresh()
 

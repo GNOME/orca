@@ -172,13 +172,13 @@ rolenames[ROLE_CANVAS] = Rolename(ROLE_CANVAS,
 
 rolenames[ROLE_CHECK_BOX] = Rolename(ROLE_CHECK_BOX,
                                      _("CHK"),
-                                     _("CHECK_BOX"),
+                                     _("CHECK BOX"),
                                      _("check box"))
 
 rolenames[ROLE_CHECK_MENU_ITEM] = Rolename(ROLE_CHECK_MENU_ITEM,
-                                           _("MIT"),
-                                           _("MENU ITEM"),
-                                           _("check Menu item"))
+                                           _("CHK"),
+                                           _("CHECK MENU ITEM"),
+                                           _("check menu item"))
 
 rolenames[ROLE_COLOR_CHOOSER] = Rolename(ROLE_COLOR_CHOOSER,
                                          _("CCH"),
@@ -258,7 +258,7 @@ rolenames[ROLE_GLASS_PANE] = Rolename(ROLE_GLASS_PANE,
 rolenames[ROLE_HTML_CONTAINER] = Rolename(ROLE_HTML_CONTAINER,
                                           _("HTM"),
                                           _("HTML CONTAINER"),
-                                          _("h T M L container"))
+                                          _("h t m l container"))
 
 rolenames[ROLE_ICON] = Rolename(ROLE_ICON,
                                 _("ICO"),
@@ -356,8 +356,8 @@ rolenames[ROLE_RADIO_BUTTON] = Rolename(ROLE_RADIO_BUTTON,
                                         _("radio button"))
 
 rolenames[ROLE_RADIO_MENU_ITEM] = Rolename(ROLE_RADIO_MENU_ITEM,
-                                           _("MIT"),
-                                           _("MENU ITEM"),
+                                           _("RAD"),
+                                           _("RADIO MENU ITEM"),
                                            _("radio Menu item"))
 
 rolenames[ROLE_ROOT_PANE] = Rolename(ROLE_ROOT_PANE,
