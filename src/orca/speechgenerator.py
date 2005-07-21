@@ -366,7 +366,7 @@ class SpeechGenerator:
                 text = _("checked") + ". "
         else:
             if already_focused == False:
-                text = getSpeechForLabelAndRole(obj) \
+                text = self.getSpeechForLabelAndRole(obj) \
                        + _("not checked") + ". " \
                        + self.getSpeechForAccelerator(obj) \
                        + self.getSpeechForAvailability(obj)
@@ -389,7 +389,7 @@ class SpeechGenerator:
         
         self.debugGenerator("getSpeechForCheckMenuItem", obj, already_focused)
     
-        return self.getSpeechForCheckBox(obj, already_focused)
+        return self.getSpeechForCheckBox(obj, False)
     
     
     def getSpeechForColumnHeader(self, obj, already_focused):
@@ -844,7 +844,7 @@ class SpeechGenerator:
         
         self.debugGenerator("getSpeechForRadioMenuItem", obj, already_focused)
     
-        return self.getSpeechForRadioButton(obj, already_focused)
+        return self.getSpeechForRadioButton(obj, False)
     
     
     def getSpeechForRowHeader(self, obj, already_focused):
