@@ -42,9 +42,9 @@ event_listener_notify_event (PortableServer_Servant servant,
 {
 	EventListener *el = EVENT_LISTENER(bonobo_object_from_servant(servant));
 
-
-        /* Post the event to the event queue */
-
+        /* Post the event to the event queue.  [[[TODO: WDW - add a sync block
+	 * here to make this thread safe.]]] 
+	 */
 	event_queue_add (el->queue, e, el);
 }
 
