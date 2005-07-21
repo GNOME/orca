@@ -1,3 +1,14 @@
+2005-07-21  Willie Walker <william.walker@sun.com>
+
+	* src/orca/Makefile.am, src/orca/orca.py, src/orca/default.py,
+	src/orca/rolenames.py, src/orca/braillegenerator.py,
+	src/orca/speechgenerator.py, src/orca/settings.py: add speech and
+	braille generator concepts; also do a very rough (and poor) pass
+	at trying to implement the output style guidelines.
+
+	* src/orca/orca.py, src/orca/orca.in: move signal handling to
+	orca.in.
+	
 2005-06-30  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Makefile.am, src/orca/default.py,
