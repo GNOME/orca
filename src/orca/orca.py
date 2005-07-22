@@ -564,7 +564,7 @@ def outlineAccessible(accessible):
 # Keybindings that Orca itself cares about.
 #
 _keybindings = {}
-_keybindings["alt+F1"] = InputEventHandler(\
+_keybindings["insert+F1"] = InputEventHandler(\
     enterLearnMode,
     _("Enters learn mode.  Press escape to exit learn mode."))
 _keybindings["F12"] = InputEventHandler(\
@@ -584,6 +584,12 @@ _keybindings["F8"]  = InputEventHandler(\
 #
 lastKey = None
 
+# True if the insert key is currently pressed.  We will use the insert
+# key as a modifier for Orca, and it will be presented as the "insert"
+# modifier string.
+#
+_insertPressed = False
+
 
 def _getModifierString(modifier):
     """Converts a set of modifer states into a text string
@@ -593,6 +599,8 @@ def _getModifierString(modifier):
 
     Returns a string consisting of modifier names separated by "+"'s.
     """
+
+    global _insertPressed
     
     s = ""
     l = []
@@ -616,6 +624,15 @@ def _getModifierString(modifier):
             s = mod
         else:
             s = s + "+" + mod
+
+    # Insert is treated as an orca modifier.
+    #
+    if _insertPressed:
+        if len(s):
+            s += "+insert"
+        else:
+            s = "insert"
+            
     return s
 
 
@@ -651,6 +668,7 @@ def processKeyEvent(event):
     """
     
     global lastKey
+    global _insertPressed
     global _currentPresentationManager
 
     keystring = ""
@@ -663,6 +681,14 @@ def processKeyEvent(event):
 
     event_string = event.event_string
     if event.type == core.Accessibility.KEY_PRESSED_EVENT:
+
+        # We treat the Insert key as a modifier - so just swallow it and
+        # set our internal state.
+        #
+        if event_string == "Insert":
+            _insertPressed = True
+            return True
+
         # The control characters come through as control characters, so we
         # just turn them into their ASCII equivalent.  NOTE that the upper
         # case ASCII characters will be used (e.g., ctrl+a will be turned into
@@ -678,7 +704,7 @@ def processKeyEvent(event):
                 event_string = chr(value + 0x40)
 
         mods = _getModifierString(event.modifiers)
-
+        
         if mods:
             keystring = mods + "+" + event_string
         else:
@@ -691,7 +717,11 @@ def processKeyEvent(event):
             speech.stopSayAll()
         else:
             speech.stop("default")
-
+    elif event.type == core.Accessibility.KEY_RELEASED_EVENT \
+         and (event_string == "Insert"):
+        _insertPressed = False
+        return True
+        
     consumed = False
     
     if keystring:
