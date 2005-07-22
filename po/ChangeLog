@@ -1,3 +1,8 @@
+2005-07-22  Adam Weinberger  <adamw@gnome.org>
+
+	* POTFILE.in: Add missing files.
+	* en_CA.po: Updated Canadian English translation.
+
 2005-07-13  Hendrik Brandt  <heb@gnome-de.org>
 
 	* de.po: Updated German translation.

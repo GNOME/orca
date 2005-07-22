@@ -1,11 +1,16 @@
 # List of source files containing translatable strings.
 # Please keep this file sorted alphabetically.
 src/orca/Gecko.py
+src/orca/braillegenerator.py
 src/orca/chnames.py
 src/orca/default.py
+src/orca/focus_tracking_presenter.py
 src/orca/gaim.py
+src/orca/hierarchical_presenter.py
 src/orca/metacity.py
 src/orca/orca-setup.in
 src/orca/orca.in
 src/orca/orca.py
 src/orca/rolenames.py
+src/orca/settings.py
+src/orca/speechgenerator.py
