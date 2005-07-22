@@ -379,7 +379,7 @@ class Default(Script):
 
         self.updateBraille(event.source)
         speech.say("default",
-                   self.speechGenerator.getSpeech(event.source, True))
+                   self.speechGenerator.getSpeech(event.source, False))
             
 
     def onFocus(self, event):
@@ -391,7 +391,7 @@ class Default(Script):
     
         self.updateBraille(event.source)
         speech.say("default",
-                   self.speechGenerator.getSpeech(event.source, True))
+                   self.speechGenerator.getSpeech(event.source, False))
 
 
 ########################################################################

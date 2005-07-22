@@ -229,13 +229,14 @@ class SpeechGenerator:
         return generator(obj, already_focused)
 
 
-    def debugGenerator(self, generatorName, obj, already_focused):
+    def debugGenerator(self, generatorName, obj, already_focused, text):
         """Prints debug.LEVEL_FINER information regarding the speech generator.
     
         Arguments:
         - generatorName: the name of the generator
         - obj: the object being presented
-        - already_focused: boolean staing if object just received focus
+        - already_focused: boolean stating if object just received focus
+        - text: the generated text
         """
     
         debug.println(debug.LEVEL_FINER,
@@ -246,6 +247,8 @@ class SpeechGenerator:
                       "           role            = %s" % obj.role)
         debug.println(debug.LEVEL_FINER,
                       "           already_focused = %s" % already_focused)
+        debug.println(debug.LEVEL_FINER,
+                      "           text            = %s" % text)
     
     
     def getDefaultSpeech(self, obj, already_focused):
@@ -260,13 +263,16 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
     
-        self.debugGenerator("getDefaultSpeech", obj, already_focused)
-    
         text = self.getSpeechForLabelAndRole(obj) \
                + self.getSpeechForAccelerator(obj) \
                + self.getSpeechForAvailability(obj)
         
         text = text.replace("...", _(" dot dot dot"), 1)
+    
+        self.debugGenerator("getDefaultSpeech",
+                            obj,
+                            already_focused,
+                            text)
     
         return text
     
@@ -282,8 +288,6 @@ class SpeechGenerator:
         Returns text to be spoken.
         """
         
-        self.debugGenerator("getSpeechForAlert", obj, already_focused)
-        
         text = self.getSpeechForLabelAndRole(obj)
     
         # Find all the labels in the dialog
@@ -298,6 +302,11 @@ class SpeechGenerator:
             if len(set) == 0:
                 text += " " + label.name
     
+        self.debugGenerator("getSpeechForAlert",
+                            obj,
+                            already_focused,
+                            text)
+        
         return text
     
     
@@ -311,12 +320,16 @@ class SpeechGenerator:
         Returns text to be spoken.
         """
         
-        self.debugGenerator("getSpeechForAnimation", obj, already_focused)
-        
         text = self.getSpeechForLabelAndRole(obj)
+        
         if obj.description:
             text += obj.description + ". "
     
+        self.debugGenerator("getSpeechForAnimation",
+                            obj,
+                            already_focused,
+                            text)
+        
         return text
     
     
@@ -330,12 +343,15 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
     
-        self.debugGenerator("getSpeechForArrow", obj, already_focused)
-    
         # [[[TODO: determine orientation of arrow.]]]
         # text = arrow direction (left, right, up, down)
         #
         text = self.getSpeechForLabelAndRole(obj)
+    
+        self.debugGenerator("getSpeechForArrow",
+                            obj,
+                            already_focused,
+                            text)
     
         return text
     
@@ -351,8 +367,6 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
         
-        self.debugGenerator("getSpeechForCheckBox", obj, already_focused)
-    
         set = obj.state
         if set.count(core.Accessibility.STATE_CHECKED):
             # If it's not already focused, say it's name
@@ -373,6 +387,11 @@ class SpeechGenerator:
             else:
                 text = _("not checked") + ". "
     
+        self.debugGenerator("getSpeechForCheckBox",
+                            obj,
+                            already_focused,
+                            text)
+    
         return text
     
     
@@ -387,10 +406,15 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
         
-        self.debugGenerator("getSpeechForCheckMenuItem", obj, already_focused)
-    
-        return self.getSpeechForCheckBox(obj, False)
-    
+        text = self.getSpeechForCheckBox(obj, False)
+        
+        self.debugGenerator("getSpeechForCheckMenuItem",
+                            obj,
+                            already_focused,
+                            text)
+
+        return text
+
     
     def getSpeechForColumnHeader(self, obj, already_focused):
         """Get the speech for a column header.
@@ -401,10 +425,15 @@ class SpeechGenerator:
     
         Returns text to be spoken for the object.
         """
+
+        text = self.getDefaultSpeech(obj, already_focused)
         
-        self.debugGenerator("getSpeechForColumnHeader", obj, already_focused)
+        self.debugGenerator("getSpeechForColumnHeader",
+                            obj,
+                            already_focused,
+                            text)
     
-        return self.getDefaultSpeech(obj, already_focused)
+        return text
     
     
     def getSpeechForComboBox(self, obj, already_focused):
@@ -418,8 +447,6 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
         
-        self.debugGenerator("getSpeechForComboBox", obj, already_focused)
-    
         if already_focused:
             text = ""
         else:
@@ -468,6 +495,11 @@ class SpeechGenerator:
                         debug.LEVEL_SEVERE,
                         "ERROR: Could not find selected item for combo box.")
     
+        self.debugGenerator("getSpeechForComboBox",
+                            obj,
+                            already_focused,
+                            text)
+    
         return text
     
     
@@ -480,10 +512,15 @@ class SpeechGenerator:
     
         Returns text to be spoken for the object.
         """
+
+        text = self.getDefaultSpeech(obj, already_focused)
         
-        self.debugGenerator("getSpeechForDesktopIcon", obj, already_focused)
+        self.debugGenerator("getSpeechForDesktopIcon",
+                            obj,
+                            already_focused,
+                            text)
     
-        return self.getDefaultSpeech(obj, already_focused)
+        return text
     
     
     def getSpeechForDial(self, obj, already_focused):
@@ -498,9 +535,14 @@ class SpeechGenerator:
     
         # [[[TODO: WDW - might need to include the value here?]]]
         #
-        self.debugGenerator("getSpeechForDial", obj, already_focused)
-    
-        return self.getDefaultSpeech(obj, already_focused)
+        text = self.getDefaultSpeech(obj, already_focused)
+        
+        self.debugGenerator("getSpeechForDial",
+                            obj,
+                            already_focused,
+                            text)
+
+        return text
     
     
     def getSpeechForDialog(self, obj, already_focused):
@@ -513,9 +555,14 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
         
-        self.debugGenerator("getSpeechForDialog", obj, already_focused)
+        text = self.getSpeechForAlert(obj, already_focused)
     
-        return self.getSpeechForAlert(obj, already_focused)
+        self.debugGenerator("getSpeechForDialog",
+                            obj,
+                            already_focused,
+                            text)
+
+        return text
     
     
     def getSpeechForDirectoryPane(self, obj, already_focused):
@@ -528,10 +575,16 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
         
-        self.debugGenerator("getSpeechForDirectoryPane", obj, already_focused)
     
-        return self.getDefaultSpeech(obj, already_focused)
+        text = self.getDefaultSpeech(obj, already_focused)
+
+        self.debugGenerator("getSpeechForDirectoryPane",
+                            obj,
+                            already_focused,
+                            text)
     
+        return text
+
     
     def getSpeechForFrame(self, obj, already_focused):
         """Get the speech for a frame.
@@ -542,10 +595,15 @@ class SpeechGenerator:
     
         Returns text to be spoken for the object.
         """
+
+        text = self.getDefaultSpeech(obj, already_focused)
         
-        self.debugGenerator("getSpeechForFrame", obj, already_focused)
+        self.debugGenerator("getSpeechForFrame",
+                            obj,
+                            already_focused,
+                            text)
     
-        return self.getDefaultSpeech(obj, already_focused)
+        return text
     
     
     def getSpeechForHtmlContainer(self, obj, already_focused):
@@ -558,9 +616,14 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
         
-        self.debugGenerator("getSpeechForHtmlContainer", obj, already_focused)
+        text = self.getDefaultSpeech(obj, already_focused)
+        
+        self.debugGenerator("getSpeechForHtmlContainer",
+                            obj,
+                            already_focused,
+                            text)
     
-        return self.getDefaultSpeech(obj, already_focused)
+        return text
     
     
     def getSpeechForIcon(self, obj, already_focused):
@@ -573,9 +636,14 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
         
-        self.debugGenerator("getSpeechForIcon", obj, already_focused)
+        text = self.getDefaultSpeech(obj, already_focused)
+        
+        self.debugGenerator("getSpeechForIcon",
+                            obj,
+                            already_focused,
+                            text)
     
-        return self.getDefaultSpeech(obj, already_focused)
+        return text
     
     
     def getSpeechForImage(self, obj, already_focused):
@@ -588,9 +656,14 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
         
-        self.debugGenerator("getSpeechForImage", obj, already_focused)
+        text = self.getDefaultSpeech(obj, already_focused)
+        
+        self.debugGenerator("getSpeechForImage",
+                            obj,
+                            already_focused,
+                            text)
     
-        return self.getDefaultSpeech(obj, already_focused)
+        return text
     
     
     def getSpeechForLabel(self, obj, already_focused):
@@ -603,9 +676,14 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
         
-        self.debugGenerator("getSpeechForLabel", obj, already_focused)
+        text = self.getDefaultSpeech(obj, already_focused)
+        
+        self.debugGenerator("getSpeechForLabel",
+                            obj,
+                            already_focused,
+                            text)
     
-        return self.getDefaultSpeech(obj, already_focused)
+        return text
     
     
     def getSpeechForList(self, obj, already_focused):
@@ -620,9 +698,14 @@ class SpeechGenerator:
     
         # [[[TODO: WDW - include how many items in the list?]]]
         #
-        self.debugGenerator("getSpeechForList", obj, already_focused)
+        text = self.getDefaultSpeech(obj, already_focused)
+        
+        self.debugGenerator("getSpeechForList",
+                            obj,
+                            already_focused,
+                            text)
     
-        return self.getDefaultSpeech(obj, already_focused)
+        return text
     
     
     def getSpeechForMenu(self, obj, already_focused):
@@ -635,8 +718,6 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
         
-        self.debugGenerator("getSpeechForMenu", obj, already_focused)
-    
         text = self.getDefaultSpeech(obj, already_focused)
     
         i = 0
@@ -652,6 +733,11 @@ class SpeechGenerator:
         else:
             text += ("%d " % itemCount) + _("items") + ". "
     
+        self.debugGenerator("getSpeechForMenu",
+                            obj,
+                            already_focused,
+                            text)
+    
         return text
     
     def getSpeechForMenuBar(self, obj, already_focused):
@@ -664,9 +750,14 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
         
-        self.debugGenerator("getSpeechForMenuBar", obj, already_focused)
+        text = self.getDefaultSpeech(obj, already_focused)
+        
+        self.debugGenerator("getSpeechForMenuBar",
+                            obj,
+                            already_focused,
+                            text)
     
-        return self.getDefaultSpeech(obj, already_focused)
+        return text
     
     
     def getSpeechForMenuItem(self, obj, already_focused):
@@ -679,9 +770,14 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
         
-        self.debugGenerator("getSpeechForMenuItem", obj, already_focused)
+        text = self.getDefaultSpeech(obj, already_focused)
+        
+        self.debugGenerator("getSpeechForMenuItem",
+                            obj,
+                            already_focused,
+                            text)
     
-        return self.getDefaultSpeech(obj, already_focused)
+        return text
     
     
     def getSpeechForText(self, obj, already_focused):
@@ -694,11 +790,14 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
         
-        self.debugGenerator("getSpeechForText", obj, already_focused)
-    
         text = self.getDefaultSpeech(obj, already_focused)
         result = a11y.getTextLineAtCaret(obj)
         text += result[0]
+    
+        self.debugGenerator("getSpeechForText",
+                            obj,
+                            already_focused,
+                            text)
     
         return text
     
@@ -713,9 +812,14 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
         
-        self.debugGenerator("getSpeechForOptionPane", obj, already_focused)
+        text = self.getDefaultSpeech(obj, already_focused)
+
+        self.debugGenerator("getSpeechForOptionPane",
+                            obj,
+                            already_focused,
+                            text)
     
-        return self.getDefaultSpeech(obj, already_focused)
+        return text
     
     
     def getSpeechForPageTab(self, obj, already_focused):
@@ -728,9 +832,14 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
         
-        self.debugGenerator("getSpeechForPageTab", obj, already_focused)
+        text = self.getDefaultSpeech(obj, already_focused)
+
+        self.debugGenerator("getSpeechForPageTab",
+                            obj,
+                            already_focused,
+                            text)
     
-        return self.getDefaultSpeech(obj, already_focused)
+        return text
     
     
     def getSpeechForPageTabList(self, obj, already_focused):
@@ -743,13 +852,16 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
         
-        self.debugGenerator("getSpeechForPageTabList", obj, already_focused)
-    
         text = self.getDefaultSpeech(obj, already_focused)
         if obj.childCount == 1:
             text += _("one tab") + ". "
         else:
             text += ("%d " % tablist.childCount) + _("tabs") + ". "
+    
+        self.debugGenerator("getSpeechForPageTabList",
+                            obj,
+                            already_focused,
+                            text)
     
         return text
     
@@ -765,8 +877,6 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
         
-        self.debugGenerator("getSpeechForProgressBar", obj, already_focused)
-    
         value = obj.value
         percentage = ("%d" % obj.value.currentValue) + " " \
                      + _("percent") + ". "
@@ -777,6 +887,11 @@ class SpeechGenerator:
         else:
             text = percentage
             
+        self.debugGenerator("getSpeechForProgressBar",
+                            obj,
+                            already_focused,
+                            text)
+    
         return text
     
     
@@ -790,9 +905,14 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
         
-        self.debugGenerator("getSpeechForPushButton", obj, already_focused)
+        text = self.getDefaultSpeech(obj, already_focused)
+
+        self.debugGenerator("getSpeechForPushButton",
+                            obj,
+                            already_focused,
+                            text)
     
-        return self.getDefaultSpeech(obj, already_focused)
+        return text
     
     
     def getSpeechForRadioButton(self, obj, already_focused):
@@ -806,8 +926,6 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
         
-        self.debugGenerator("getSpeechForRadioButton", obj, already_focused)
-    
         set = obj.state
         if set.count(core.Accessibility.STATE_CHECKED):
             # If it's not already focused, say it's name
@@ -828,6 +946,11 @@ class SpeechGenerator:
             else:
                 text = _("not selected") + ". "
     
+        self.debugGenerator("getSpeechForRadioButton",
+                            obj,
+                            already_focused,
+                            text)
+    
         return text
     
     
@@ -841,10 +964,15 @@ class SpeechGenerator:
     
         Returns text to be spoken for the object.
         """
+
+        text = self.getSpeechForRadioButton(obj, False)
         
-        self.debugGenerator("getSpeechForRadioMenuItem", obj, already_focused)
+        self.debugGenerator("getSpeechForRadioMenuItem",
+                            obj,
+                            already_focused,
+                            text)
     
-        return self.getSpeechForRadioButton(obj, False)
+        return text
     
     
     def getSpeechForRowHeader(self, obj, already_focused):
@@ -856,10 +984,15 @@ class SpeechGenerator:
     
         Returns text to be spoken for the object.
         """
+
+        text = self.getDefaultSpeech(obj, already_focused)
         
-        self.debugGenerator("getSpeechForRowHeader", obj, already_focused)
+        self.debugGenerator("getSpeechForRowHeader",
+                            obj,
+                            already_focused,
+                            text)
     
-        return self.getDefaultSpeech(obj, already_focused)
+        return text
     
     
     def getSpeechForScrollBar(self, obj, already_focused):
@@ -874,9 +1007,14 @@ class SpeechGenerator:
     
         # [[[TODO: WDW - want to get orientation.]]]
         #
-        self.debugGenerator("getSpeechForScrollBar", obj, already_focused)
+        text = self.getDefaultSpeech(obj, already_focused)
+
+        self.debugGenerator("getSpeechForScrollBar",
+                            obj,
+                            already_focused,
+                            text)
     
-        return self.getDefaultSpeech(obj, already_focused)
+        return text
     
     
     def getSpeechForSlider(self, obj, already_focused):
@@ -890,8 +1028,6 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
         
-        self.debugGenerator("getSpeechForProgressBar", obj, already_focused)
-    
         value = obj.value
     
         # OK, this craziness is all about trying to figure out the most
@@ -931,6 +1067,11 @@ class SpeechGenerator:
                    + self.getSpeechForAccelerator(obj) \
                    + self.getSpeechForAvailability(obj)
         
+        self.debugGenerator("getSpeechForProgressBar",
+                            obj,
+                            already_focused,
+                            text)
+    
         return text
     
     
@@ -945,10 +1086,6 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
     
-        # [[[TODO: WDW - want to get orientation.]]]
-        #
-        self.debugGenerator("getSpeechForSpinButton", obj, already_focused)
-    
         if already_focused:
             text = ""
         else:
@@ -956,6 +1093,11 @@ class SpeechGenerator:
             
         result = a11y.getTextLineAtCaret(obj)
         text += result[0] + ". "
+    
+        self.debugGenerator("getSpeechForSpinButton",
+                            obj,
+                            already_focused,
+                            text)
     
         return text
     
@@ -970,9 +1112,14 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
         
-        self.debugGenerator("getSpeechForSplitPane", obj, already_focused)
+        text = self.getDefaultSpeech(obj, already_focused)
+
+        self.debugGenerator("getSpeechForSplitPane",
+                            obj,
+                            already_focused,
+                            text)
     
-        return self.getDefaultSpeech(obj, already_focused)
+        return text
     
     
     def getSpeechForTable(self, obj, already_focused):
@@ -985,9 +1132,14 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
         
-        self.debugGenerator("getSpeechForTable", obj, already_focused)
+        text = self.getDefaultSpeech(obj, already_focused)
+
+        self.debugGenerator("getSpeechForTable",
+                            obj,
+                            already_focused,
+                            text)
     
-        return self.getDefaultSpeech(obj, already_focused)
+        return text
     
     
     def getSpeechForTableCell(self, obj, already_focused):
@@ -1000,9 +1152,14 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
         
-        self.debugGenerator("getSpeechForTableCell", obj, already_focused)
+        text = self.getDefaultSpeech(obj, already_focused)
+        
+        self.debugGenerator("getSpeechForTableCell",
+                            obj,
+                            already_focused,
+                            text)
     
-        return self.getDefaultSpeech(obj, already_focused)
+        return text
     
     
     def getSpeechForTableColumnHeader(self, obj, already_focused):
@@ -1015,10 +1172,14 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
         
-        self.debugGenerator("getSpeechForTableColumnHeader", \
-                            obj, already_focused)
+        text = self.getSpeechForColumnHeader(obj, already_focused)
+        
+        self.debugGenerator("getSpeechForTableColumnHeader",
+                            obj,
+                            already_focused,
+                            text)
     
-        return self.getSpeechForColumnHeader(obj, already_focused)
+        return text
     
     
     def getSpeechForTableRowHeader(self, obj, already_focused):
@@ -1030,10 +1191,15 @@ class SpeechGenerator:
     
         Returns text to be spoken for the object.
         """
+
+        text = self.getSpeechForRowHeader(obj, already_focused)
         
-        self.debugGenerator("getSpeechForTableRowHeader", obj, already_focused)
+        self.debugGenerator("getSpeechForTableRowHeader",
+                            obj,
+                            already_focused,
+                            text)
     
-        return self.getSpeechForRowHeader(obj, already_focused)
+        return text
     
     
     def getSpeechForTearOffMenuItem(self, obj, already_focused):
@@ -1046,9 +1212,6 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
         
-        self.debugGenerator("getSpeechForTearOffMenuItem", \
-                            obj, already_focused)
-    
         speakRolenames = settings.getSetting("speakRolenames",
                                              settings.ROLENAME_LONG)
         
@@ -1059,6 +1222,11 @@ class SpeechGenerator:
     
         text += ". "
         
+        self.debugGenerator("getSpeechForTearOffMenuItem",
+                            obj,
+                            already_focused,
+                            text)
+    
         return text
     
     
@@ -1071,9 +1239,6 @@ class SpeechGenerator:
     
         Returns text to be spoken for the object.
         """
-        
-        self.debugGenerator("getSpeechForTerminal", obj, already_focused)
-    
         
         text = ""
     
@@ -1093,6 +1258,11 @@ class SpeechGenerator:
     
         text += ". "
         
+        self.debugGenerator("getSpeechForTerminal",
+                            obj,
+                            already_focused,
+                            text)
+            
         return text
     
     
@@ -1107,10 +1277,9 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
         
-        self.debugGenerator("getSpeechForToggleButton", obj, already_focused)
-    
         set = obj.state
-        if set.count(core.Accessibility.STATE_PRESSED):
+        if set.count(core.Accessibility.STATE_PRESSED) \
+               or set.count(core.Accessibility.STATE_CHECKED):
             # If it's not already focused, say it's name
             #
             if already_focused == False:
@@ -1129,6 +1298,11 @@ class SpeechGenerator:
             else:
                 text = _("not pressed") + ". "
     
+        self.debugGenerator("getSpeechForToggleButton",
+                            obj,
+                            already_focused,
+                            text)
+    
         return text
     
     
@@ -1141,10 +1315,15 @@ class SpeechGenerator:
     
         Returns text to be spoken for the object.
         """
+
+        text = self.getDefaultSpeech(obj, already_focused)
         
-        self.debugGenerator("getSpeechForToolBar", obj, already_focused)
+        self.debugGenerator("getSpeechForToolBar",
+                            obj,
+                            already_focused,
+                            text)
     
-        return self.getDefaultSpeech(obj, already_focused)
+        return text
     
     
     def getSpeechForTree(self, obj, already_focused):
@@ -1157,9 +1336,14 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
         
-        self.debugGenerator("getSpeechForTreeTable", obj, already_focused)
+        text = self.getDefaultSpeech(obj, already_focused)
+
+        self.debugGenerator("getSpeechForTreeTable",
+                            obj,
+                            already_focused,
+                            text)
     
-        return self.getDefaultSpeech(obj, already_focused)
+        return text
     
     
     def getSpeechForTreeTable(self, obj, already_focused):
@@ -1171,10 +1355,15 @@ class SpeechGenerator:
     
         Returns text to be spoken for the object.
         """
+
+        text = self.getDefaultSpeech(obj, already_focused)
         
-        self.debugGenerator("getSpeechForTreeTable", obj, already_focused)
+        self.debugGenerator("getSpeechForTreeTable",
+                            obj,
+                            already_focused,
+                            text)
     
-        return self.getDefaultSpeech(obj, already_focused)
+        return text
     
     
     def getSpeechForWindow(self, obj, already_focused):
@@ -1187,7 +1376,11 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
         
-        self.debugGenerator("getSpeechForWindow", obj, already_focused)
+        text = self.getDefaultSpeech(obj, already_focused)
+
+        self.debugGenerator("getSpeechForWindow",
+                            obj,
+                            already_focused,
+                            text)
     
-        return self.getDefaultSpeech(obj, already_focused)
-    
+        return text

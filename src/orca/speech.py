@@ -299,7 +299,7 @@ def say(voiceName, text):
     #
     debug.println(debug.LEVEL_INFO, "speech.say(" + text + ")")
     try:
-        s.stop()
+        #s.stop()
         _lastText = [voiceName, text]
         return s.say(text)
     except:
