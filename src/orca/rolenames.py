@@ -118,9 +118,9 @@ class Rolename:
 
         Arguments:
         - rolename:     the internationalized (e.g., machine) name for the role
-        - speech:       the localized string to speak for speech
         - brailleShort: the localized short string for Braille display
         - brailleLong:  the localized long string for Braille display
+        - speech:       the localized string to speak for speech
         """
 
         self.rolename = rolename
