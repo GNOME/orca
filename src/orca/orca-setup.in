@@ -241,6 +241,17 @@ def setupBraille ():
     else:
         return False
 
+def enableAccessibility():
+    """Enables the GNOME accessibility flag.  Users need to log out and
+    then back in for this to take effect."""
+
+    os.system("gconftool-2 --type bool --set " \
+	      + "/desktop/gnome/interface/accessibility true")
+
+    sayAndPrint("Accessibility support for GNOME has been enabled.")
+    sayAndPrint("You need to log out and log back in for the change "\
+                +"to take effect.")
+
 useSpeech = setupSpeech ()
 if useSpeech == False:
     settings.writelines ("useSpeech = False\n")
@@ -251,5 +262,7 @@ if useBraille:
     settings.writelines ("useBraille = True\n")
 else:
     settings.writelines ("useBraille = False\n")
+
+enableAccessibility()
 
 sayAndPrint ("Orca setup finished.\n", True)
