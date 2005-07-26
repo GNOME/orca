@@ -471,18 +471,21 @@ def refresh():
     cursor = -1
     focusOffset = lineInfo[1]
     if focusOffset >= 0:
-        cursorOffset = _regionWithFocus.cursorOffset + focusOffset
-        cursor = cursorOffset - _viewport[0]
+        cursor = _regionWithFocus.cursorOffset + focusOffset
 
+    startPos = max(0, _viewport[0])
+    endPos = startPos + _displaySize[0]
+    
     # Now normalize the cursor position to BrlTTY, which uses 1 as
     # the first cursor position as opposed to 0.
     #
+    cursor = cursor - startPos
     if (cursor < 0) or (cursor >= _displaySize[0]):
         cursor = 0
     else:
         cursor = cursor + 1
 
-    brl.writeText(cursor, string[max(0, _viewport[0]):])
+    brl.writeText(cursor, string[startPos:endPos])
     
 
 def displayMessage(message, cursor=-1):
@@ -518,8 +521,10 @@ def panLeft(command=None, script=None):
     # method take care of odd viewport values.
     #
     if _viewport[0] > 0:
-        _viewport[0] = _viewport[0] - _displaySize[0]
-
+        # Don't do the funky...
+        #_viewport[0] = _viewport[0] - _displaySize[0]
+        _viewport[0] = max(0, _viewport[0] - _displaySize[0])
+        
     refresh()
 
 
