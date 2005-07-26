@@ -1,3 +1,19 @@
+2005-07-26  Willie Walker <william.walker@sun.com>
+
+	* a11y.py, braille.py, debug.py, default.py,
+	focus_tracking_presenter.py, hierarchical_presenter.py, metacity.py,
+	orca.py, script.py, speechgenerator.py: begin developing the
+	notion of locus of focus and visual appearance change.
+
+2005-07-22  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca.py: add ability to treat the insert key as a
+	modifier.  Use insert+F1 to enter learn mode.
+	* src/orca/speech.py, src/orca/default.py,
+	src/orca/speechgenerator.py: fix some speech generator issues with
+	toggle buttons as well as verbosity (accidentally told the
+	generators to speak too little).
+
 2005-07-21  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Makefile.am, src/orca/orca.py, src/orca/default.py,
