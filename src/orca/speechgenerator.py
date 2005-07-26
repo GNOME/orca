@@ -280,7 +280,7 @@ class SpeechGenerator:
                 text = parent.label + " " \
                        + getSpeechForRoleName(parent) + " " + text
             elif (parent.role != rolenames.ROLE_PANEL) \
-                     or (parent.role != rolenames.ROLE_FILLER):
+                     and (parent.role != rolenames.ROLE_FILLER):
                 text = getSpeechForRoleName(parent) + " " + text
             parent = parent.parent
             

@@ -212,7 +212,6 @@ class Default(Script):
             commonAncestor = self.findCommonAncestor(oldLocusOfFocus,
                                                      newLocusOfFocus)
             if commonAncestor:
-                print "FOO", commonAncestor.name, commonAncestor.role
                 context = self.speechGenerator.getSpeechContext(
                     newLocusOfFocus,
                     commonAncestor)
@@ -372,9 +371,7 @@ class Default(Script):
         - event: the Event
         """
 
-        self.updateBraille(event.source)
-        speech.say("default",
-                   self.speechGenerator.getSpeech(event.source, False))
+        orca.setLocusOfFocus(event, event.source)
             
 
     def onFocus(self, event):
