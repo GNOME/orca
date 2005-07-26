@@ -224,20 +224,34 @@ class Accessible:
             return
 
         # The acc reference might be an Accessibility_Accessible or an
-        # Accessibility_Application, so try both
+        # Accessibility_Application, so try both.  The setting of self.acc
+        # to None here is merely to help with manual and unit testing of
+        # this module.
         #
         try:
             self.acc = acc._narrow(core.Accessibility.Application)
         except:
-            self.acc = acc._narrow(core.Accessibility.Accessible)
-            
+            try:
+                self.acc = acc._narrow(core.Accessibility.Accessible)
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+                self.acc = None
+
+        # Keep track of whether this object is defunct or not.  It's
+        # not the case that we can check the state of a defunct object
+        # to see if its defunct state has been set - remember, the object
+        # is defunct and we cannot ask it anything.
+        #
+        self.defunct = False
+
         # Save a reference to the AT-SPI object, and also save this
         # new object away in the cache.
         #
-        self.acc.ref()
-        Accessible._cache[acc] = self
+        if self.acc:
+            self.acc.ref()
+            Accessible._cache[acc] = self
 
-
+        
     def __del__(self):
         """Unrefs the AT-SPI Accessible associated with this object.
         """
@@ -537,6 +551,20 @@ class Accessible:
         return self.value
 
 
+    def __get_value(self):
+        """Returns an object that implements the Accessibility_Value
+        interface for this object, or None if this object doesn't implement
+        the Accessibility_Value interface.
+        """
+
+        bobj = self.acc._narrow(core.Accessibility.Accessible)
+        value = bobj.queryInterface("IDL:Accessibility/Value:1.0")
+        if value is not None:
+            value = value._narrow(core.Accessibility.Value)
+        self.value = value
+        return self.value
+
+
     def __getattr__(self, attr):
         """Created virtual attributes for the Accessible object to make
         the syntax a bit nicer (e.g., acc.name rather than acc.name()).
@@ -549,7 +577,9 @@ class Accessible:
 
         Returns the value of the given attribute.
         """
-
+ 
+        #print "__getattr__ defunct=%s attr=%s" % (self.defunct, attr)
+        
         if attr == "name":
             return self.__get_name()
         elif attr == "label":
@@ -591,7 +621,6 @@ class Accessible:
         else:
             return self.__dict__[attr]
 
-
     def child(self, index):
         """Returns the specified child of this object.
 
@@ -606,6 +635,8 @@ class Accessible:
         #
         try:
             acc = self.acc.getChildAtIndex(index)
+            if acc is None:
+                return None
             newChild = makeAccessible(acc)
             newChild.index = index
             newChild.parent = self
@@ -630,8 +661,9 @@ def onNameChanged(e):
     - e: AT-SPI event from the AT-SPI registry
     """
 
-    obj = makeAccessible(e.source)
-    obj.name = e.any_data
+    if Accessible._cache.has_key(e.source):
+        obj = Accessible._cache[e.source]
+        obj.name = e.any_data
 
 
 def onDescriptionChanged(e):
@@ -642,8 +674,9 @@ def onDescriptionChanged(e):
     - e: AT-SPI event from the AT-SPI registry
     """
 
-    obj = makeAccessible(e.source)
-    obj.description = e.any_data
+    if Accessible._cache.has_key(e.source):
+        obj = Accessible._cache[e.source]
+        obj.description = e.any_data
 
 
 def onParentChanged(e):
@@ -654,14 +687,27 @@ def onParentChanged(e):
     - e: AT-SPI event from the AT-SPI registry
     """
 
-    # This could fail if the e.source is now defunct.
+    # [[[TODO: WDW - I put this in here for now.  The idea is that
+    # we will probably get parent changed events for objects that
+    # are or will soon be defunct, so let's just forget about the
+    # object rather than try to keep the cache in sync.]]]
+    #
+    if Accessible._cache.has_key(e.source):
+        del Accessible._cache[e.source]
+    return
+    
+    # This could fail if the e.source is now defunct.  [[[TODO: WDW - there
+    # may be some really bad timing issues here.  Remember that the AT-SPI
+    # events are added to a queue for processing later.  So...we could
+    # potentially be processing queued events for an object that has been
+    # pronounced defunct in a later event.]]]
     #
     obj = makeAccessible(e.source)
-    
-    if getattr(obj, "parent", None):
+
+    if obj.__dict__.has_key("parent"):
         del obj.parent
         
-    if getattr(obj, "app", None):
+    if obj.__dict__.has_key("app"):
         del obj.app
     
 
@@ -673,15 +719,16 @@ def onStateChanged(e):
     - e: AT-SPI event from the AT-SPI registry
     """
 
-    # We'll handle defunct objects on the onDefunct method.
-    #
-    if e.type == "object:state-changed:defunct":
-        return
-    
-    obj = makeAccessible(e.source)
-    
-    if getattr(obj, "state", None):
-        del obj.state
+    if Accessible._cache.has_key(e.source):
+        obj = Accessible._cache[e.source]
+        
+        # Let's get rid of defunct objects.  We hate them.
+        #
+        if e.type == "object:state-changed:defunct":
+            obj.defunct = True
+            del Accessible._cache[e.source]
+        elif obj.__dict__.has_key("state"):
+            del obj.state
 
 
 def onChildrenChanged(e):
@@ -692,22 +739,10 @@ def onChildrenChanged(e):
     - e: AT-SPI event from the AT-SPI registry
     """
 
-    obj = makeAccessible(e.source)
-
-    if getattr(obj, "childCount", None):
-        del obj.childCount
-
-
-def onDefunct(e):
-    """Core module event listener called when an object becomes
-    defunct.  Removes the object from the cache accordingly.
-
-    Arguments:
-    - e: AT-SPI event from the AT-SPI registry
-    """
-
     if Accessible._cache.has_key(e.source):
-        del Accessible._cache[e.source]
+        obj = Accessible._cache[e.source]
+        if obj.__dict__.has_key("childCount"):
+            del obj.childCount
 
 
 ########################################################################
@@ -718,6 +753,22 @@ def onDefunct(e):
 
 _initialized = False
 
+
+def isDefunct(acc):
+    """If we've made an Accessible for an object, return True if it has
+    been flagged as defunct.  Otherwise, return False.
+
+    Arguments:
+    - acc: an AT-SPI (not Python) Accessible
+    """
+    
+    if Accessible._cache.has_key(acc):
+        obj = Accessible._cache[acc]
+        return obj.defunct
+    else:
+        return False
+
+    
 def init():
     """Initialize the a11y module.  This also intializes the core
     module and registers the various core module event listeners in
@@ -733,8 +784,6 @@ def init():
     # Register our various listeners.
     #
     core.init()
-    core.registerEventListener(
-        onDefunct, "object:state-changed:defunct")
     core.registerEventListener(
         onNameChanged, "object:property-change:accessible-name")
     core.registerEventListener(
@@ -760,8 +809,6 @@ def shutdown():
     if not _initialized:
         return False
 
-    core.unregisterEventListener(
-        onDefunct, "object:state-changed:defunct")
     core.unregisterEventListener(
         onNameChanged, "object:property-change:accessible-name")
     core.unregisterEventListener(
@@ -791,11 +838,6 @@ def getObjects(root):
     Returns: a list of all objects under the specified object
     """
 
-
-    # All the objects we've found
-    #
-    objvisitted = {}
-
     # The list of object we'll return
     #
     objlist = []
@@ -805,51 +847,16 @@ def getObjects(root):
     if root.childCount <= 0:
         return objlist
 
-    tmp = root.child(0)
-    while tmp != root:
-
-        # Traverse to the bottom of the tre
-        #
-        while tmp.childCount > 0:
-
-            # If tmp is None, we hit the bottom of the tree
-            #
-            if tmp is None:
-                break
-            tmp = tmp.child(0)
-
-            # Avoid traversing into objects which manage their
-            # descendants (tables, etc)
-            #
-            state = tmp.state
-            if state.count(core.Accessibility.STATE_MANAGES_DESCENDANTS):
-                break
-
-        # Move up the tree until the current object has siblings
-        #
-        i = tmp.index
-        while tmp != root and i >= tmp.parent.childCount-1:
-            if objvisitted.has_key(tmp):
-                pass
-            else:
-                objlist.append(tmp)
-                objvisitted[tmp] = True
-            tmp = tmp.parent
-            i = tmp.index
-
-        # If we're at the top, we're done
-        #
-        if tmp == root:
-            break
-        elif objvisitted.has_key(tmp):
-            pass
-        else:
-            objlist.append(tmp)
-            objvisitted[tmp] = True
-
-        # Move to the next sibling
-        #
-        tmp = tmp.parent.child(i + 1)
+    i = root.childCount - 1
+    while i >= 0:
+        child = root.child(i)
+        if child:
+            objlist.append(child)
+            state = child.state
+            if (state.count(core.Accessibility.STATE_MANAGES_DESCENDANTS) == 0) \
+                   and (child.childCount > 0):
+                objlist.extend(getObjects(child))
+        i = i - 1
         
     return objlist
 

@@ -22,6 +22,7 @@ entry points into this module are for the presentation manager contract:
 
     processKeyEvent     - handles all keyboard events
     processBrailleEvent - handles all Braille input events
+    locusOfFocusChanged - notified when orca's locusOfFocus changes
     activate            - called when this manager is enabled
     deactivate          - called when this manager is disabled
 
@@ -229,13 +230,14 @@ def processObjectEvent(e):
     Arguments:
     - e: an at-spi event.
     """
-    
+
     global _activeScript
-    
+
     # We ignore defunct objects and let the a11y module take care of them
     # for us.
     #
-    if e.type == "object:state-changed:defunct":
+    if (e.type == "object:state-changed:defunct") \
+        or a11y.isDefunct(e.source):
         return
 
     # Convert the AT-SPI event into a Python Event that we can annotate.
@@ -278,14 +280,6 @@ def processObjectEvent(e):
                 debug.printException(debug.LEVEL_SEVERE)
                 return
 
-    if event.source.app is None:
-        set = event.source.state
-        try:
-            if event.source.state.count(core.Accessibility.STATE_DEFUNCT) > 0:
-                return
-        except:
-            return
-        
     s = _getScript(event.source.app)
 
     try:
@@ -333,7 +327,50 @@ def processBrailleEvent(brailleEvent):
             debug.printException(debug.LEVEL_SEVERE)
 
     return False
-        
+
+
+def locusOfFocusChanged(event, oldLocusOfFocus, newLocusOfFocus):
+    """Called when the visual object with focus changes.
+
+    Arguments:
+    - event: if not None, the Event that caused the change
+    - oldLocusOfFocus: Accessible that is the old locus of focus
+    - newLocusOfFocus: Accessible that is the new locus of focus
+    """
+
+    global _activeScript
+    
+    if _activeScript:
+        try:
+            _activeScript.locusOfFocusChanged(event,
+                                              oldLocusOfFocus,
+                                              newLocusOfFocus)
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
+            
+
+def visualAppearanceChanged(event, obj):
+    """Called when the visual appearance of an object changes.  This method
+    should not be called for objects whose visual appearance changes solely
+    because of focus -- setLocusOfFocus is used for that.  Instead, it is
+    intended mostly for objects whose notional 'value' has changed, such as a
+    checkbox changing state, a progress bar advancing, a slider moving, text
+    inserted, caret moved, etc.
+
+    Arguments:
+    - event: if not None, the Event that caused this to happen
+    - obj: the Accessible whose visual appearance changed.
+    """
+    
+
+    global _activeScript
+    
+    if _activeScript:
+        try:
+            _activeScript.visualAppearanceChanged(event, obj)
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
+            
 
 def activate():
     """Called when this presentation manager is activated."""

@@ -114,16 +114,9 @@ def _switchToNextPresentationManager(inputEvent=None):
 #
 apps = []
 
-
-# The Accessible application whose window currently has focus
+# The Accessible that has visual focus.
 #
-focusedApp = None
-
-
-# The Accessible that currently has keyboard focus
-#
-focusedObject = None
-
+locusOfFocus = None
 
 def _buildAppList():
     """Retrieves the list of currently running apps for the desktop and
@@ -141,6 +134,71 @@ def _buildAppList():
         if not app is None:
             apps.insert(0, app)
         i = i - 1
+
+
+def setLocusOfFocus(event, obj):
+    """Sets the locus of focus (i.e., the object with visual focus) and
+    notifies the current presentation manager of the change.
+
+    Arguments:
+    - event: if not None, the Event that caused this to happen
+    - obj: the Accessible with the new locus of focus.
+    """
+
+    global locusOfFocus
+
+    if obj == locusOfFocus:
+        return
+
+    oldLocusOfFocus = locusOfFocus
+    locusOfFocus = obj
+
+    if locusOfFocus:
+        if event:
+            debug.println(debug.LEVEL_FINE,
+                          "LOCUS OF FOCUS is now '%s' '%s' (event='%s')" \
+                          % (locusOfFocus.name,
+                             locusOfFocus.role,
+                             event.type))
+        else:
+            debug.println(debug.LEVEL_FINE,
+                          "LOCUS OF FOCUS is now '%s' '%s' (event=None)" \
+                          % (locusOfFocus.name,
+                             locusOfFocus.role))                
+    else:
+        debug.println(debug.LEVEL_FINE, "LOCUS OF FOCUS is now None")
+        
+    if _currentPresentationManager >= 0:
+        _PRESENTATION_MANAGERS[_currentPresentationManager].\
+            locusOfFocusChanged(event, oldLocusOfFocus, locusOfFocus)
+
+
+def visualAppearanceChanged(event, obj):
+    """Called (typically by scripts) when the visual appearance of an object
+    changes and notifies the current presentation manager of the change.  This
+    method should not be called for objects whose visual appearance changes
+    solely because of focus -- setLocusOfFocus is used for that.  Instead, it
+    is intended mostly for objects whose notional 'value' has changed, such as
+    a checkbox changing state, a progress bar advancing, a slider moving, text
+    inserted, caret moved, etc.    
+
+    Arguments:
+    - event: if not None, the Event that caused this to happen
+    - obj: the Accessible whose visual appearance changed.
+    """
+    
+    if event:
+        debug.println(debug.LEVEL_FINE,
+                      "VISUAL APPEARANCE CHANGED for '%s' '%s' (event='%s')" \
+                      % (obj.name, obj.role, event.type))
+    else:
+        debug.println(debug.LEVEL_FINE,
+                      "VISUAL APPEARANCE CHANGED for '%s' '%s' (event=None)" \
+                      % (obj.name, obj.role))
+
+    if _currentPresentationManager >= 0:
+        _PRESENTATION_MANAGERS[_currentPresentationManager].\
+            visualAppearanceChanged(event, obj)
 
 
 def findActiveWindow():
@@ -186,33 +244,6 @@ def onChildrenChanged(e):
         # will most likely needed to be updated here.]]]
         #
         _buildAppList()
-
-    
-def onWindowActivated(e):
-    """Keeps track of the application whose window has focus.
-
-    Arguments:
-    - e: at-spi event from the at-api registry
-    """
-
-    global focusedApp
-    
-    acc = a11y.makeAccessible(e.source)
-    focusedApp = acc.app
-
-
-def onFocus(e):
-    """Keeps track of object and application with focus.
-
-    Arguments:
-    - e: at-spi event from the at-api registry
-    """
-    
-    global focusedObject
-    global focusedApp
-
-    focusedObject = a11y.makeAccessible(e.source)
-    focusedApp = focusedObject.app
 
 
 ########################################################################
@@ -394,14 +425,6 @@ def init():
     #
     core.registerEventListener(onChildrenChanged, "object:children-changed:")
 
-    # Keep track of the application with focus.
-    #
-    core.registerEventListener(onWindowActivated, "window:activate")
-
-    # Keep track of the object with focus.
-    #
-    core.registerEventListener(onFocus, "focus:")
-    
     _initialized = True
     return True
 
@@ -412,7 +435,6 @@ def start():
     Returns False only if this module has not been initialized.
     """
 
-    global focusedApp
     global _initialized
     
     if not _initialized:
@@ -424,12 +446,6 @@ def start():
     except:
         debug.printException(debug.LEVEL_SEVERE)
     
-    # Find the currently active toplevel window and activate its script.
-    #
-    win = findActiveWindow()
-    if win:
-        focusedApp = win.app
-
     _switchToPresentationManager(0) # focus_tracking_presenter
 
     core.bonobo.main()
@@ -456,10 +472,6 @@ def shutdown(inputEvent=None):
     #
     core.unregisterEventListener(onChildrenChanged,
                                  "object:children-changed:")
-    core.unregisterEventListener(onWindowActivated,
-                                 "window:activate")
-    core.unregisterEventListener(onFocus,
-                                 "focus:")
 
     if _currentPresentationManager >= 0:
         _PRESENTATION_MANAGERS[_currentPresentationManager].deactivate()
@@ -741,7 +753,7 @@ def processKeyEvent(event):
                 consumed = handler.processInputEvent(keyboardEvent)
             except:
                 debug.printException(debug.LEVEL_SEVERE)
-        else:
+        elif _currentPresentationManager >= 0:
             try:
                 consumed = _PRESENTATION_MANAGERS[_currentPresentationManager].\
                            processKeyEvent(keyboardEvent)
@@ -754,5 +766,5 @@ def processKeyEvent(event):
             if keystring == "Escape":
                 exitLearnMode(keyboardEvent)
             consumed = True
-        
+
     return consumed

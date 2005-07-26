@@ -186,3 +186,29 @@ class Script:
                 debug.printException(debug.LEVEL_SEVERE)
 
         return consumed
+
+
+    def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
+        """Called when the visual object with focus changes.
+
+        Arguments:
+        - event: if not None, the Event that caused the change
+        - oldLocusOfFocus: Accessible that is the old locus of focus
+        - newLocusOfFocus: Accessible that is the new locus of focus
+        """
+        pass
+
+
+    def visualAppearanceChanged(self, event, obj):
+        """Called when the visual appearance of an object changes.  This
+        method should not be called for objects whose visual appearance
+        changes solely because of focus -- setLocusOfFocus is used for that.
+        Instead, it is intended mostly for objects whose notional 'value' has
+        changed, such as a checkbox changing state, a progress bar advancing,
+        a slider moving, text inserted, caret moved, etc.
+
+        Arguments:
+        - event: if not None, the Event that caused this to happen
+        - obj: the Accessible whose visual appearance changed.
+        """
+        pass

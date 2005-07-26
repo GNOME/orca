@@ -17,6 +17,7 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+import braille
 import rolenames
 import orca
 import speech
@@ -66,6 +67,8 @@ class Metacity(Default):
 
         self.listeners["object:property-change:accessible-name"] = \
             self.onNameChanged 
+        self.listeners["object:state-changed:visible"] = \
+            self.onVisibilityChanged
 
 
     def onNameChanged(self, event):
@@ -79,6 +82,7 @@ class Metacity(Default):
         # If it's not the statusbar's name changing, ignore it
         #
         if event.source.role != rolenames.ROLE_STATUSBAR:
+            Default.onNameChanged(self, event)
             return
 
         # We have to stop speech, as Metacity has a key grab and we're not
@@ -90,7 +94,8 @@ class Metacity(Default):
 
         # Do we know about this window?  Traverse through our list of apps
         # and go through the toplevel windows in each to see if we know
-        # about this one
+        # about this one.  If we do, it's accessible.  If we don't, it is
+        # not.
         #
         found = False
         for app in orca.apps:
@@ -108,4 +113,51 @@ class Metacity(Default):
         if found == False:
             text += ". " + _("inaccessible")
 
+        braille.displayMessage(text)
         speech.say("status", text)
+        
+
+    def onVisibilityChanged(self, event):
+        """The status bar in metacity tells us what toplevel window will be
+        activated when tab is released.
+
+        Arguments:
+        - event: the object:state-changed:visible Event
+        """
+
+        # If it's not the statusbar's name changing, ignore it
+        #
+        if event.source.role != rolenames.ROLE_STATUSBAR:
+            return
+
+        orca.setLocusOfFocus(event, event.source)
+
+
+    def onTextInserted(self, event):
+        """Called whenever text is inserted into an object.
+
+        Arguments:
+        - event: the Event
+        """
+        if event.source.role != rolenames.ROLE_STATUSBAR:
+            Default.onTextInserted(self, event)
+
+        
+    def onTextDeleted(self, event):
+        """Called whenever text is deleted from an object.
+
+        Arguments:
+        - event: the Event
+        """
+        if event.source.role != rolenames.ROLE_STATUSBAR:
+            Default.onTextDeleted(self, event)
+
+
+    def onCaretMoved(self, event):
+        """Called whenever the caret moves.
+
+        Arguments:
+        - event: the Event
+        """
+        if event.source.role != rolenames.ROLE_STATUSBAR:
+            Default.onCaretMoved(self, event)

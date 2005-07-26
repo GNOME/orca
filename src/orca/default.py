@@ -93,8 +93,8 @@ class Default(Script):
             sayAll,
             _("Speaks entire document."))
             
-        #self.listeners["object:property-change:accessible-name"] = \
-        #    self.onNameChanged 
+        self.listeners["object:property-change:accessible-name"] = \
+            self.onNameChanged 
         #self.listeners["object:text-selection-changed"]          = \
         #    self.onTextSelectionChanged 
         self.listeners["object:text-changed:insert"]             = \
@@ -148,6 +148,121 @@ class Default(Script):
         self.speechGenerator = speechgenerator.SpeechGenerator()
 
 
+    def findCommonAncestor(self, a, b):
+        """Finds the common ancestor between Accessible a and Accessible b.
+
+        Arguments:
+        - a: Accessible
+        - b: Accessible
+        """
+
+        if (a is None) or (b is None):
+            return None
+
+        if a == b:
+            return a
+        
+        aParents = [a]
+        parent = a.parent
+        while parent and (parent.parent != parent):
+            aParents.append(parent)
+            parent = parent.parent
+        aParents.reverse()
+
+        bParents = [b]
+        parent = b.parent
+        while parent and (parent.parent != parent):
+            bParents.append(parent)
+            parent = parent.parent
+        bParents.reverse()
+
+        commonAncestor = None
+        
+        maxSearch = min(len(aParents), len(bParents))
+        i = 0
+        while i < maxSearch:
+            if aParents[i] == bParents[i]:
+                commonAncestor = aParents[i]
+                i += 1
+            else:
+                break
+
+        return commonAncestor
+
+    
+    def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
+        """Called when the visual object with focus changes.
+
+        Arguments:
+        - event: if not None, the Event that caused the change
+        - oldLocusOfFocus: Accessible that is the old locus of focus
+        - newLocusOfFocus: Accessible that is the new locus of focus
+        """
+
+        if newLocusOfFocus:
+            self.updateBraille(newLocusOfFocus)
+
+            # Get the text for the object itself.
+            #
+            text = self.speechGenerator.getSpeech(newLocusOfFocus, False)
+
+            # Now figure out how of the container context changed and
+            # speech just what is different.
+            #
+            commonAncestor = self.findCommonAncestor(oldLocusOfFocus,
+                                                     newLocusOfFocus)
+            if commonAncestor:
+                print "FOO", commonAncestor.name, commonAncestor.role
+                context = self.speechGenerator.getSpeechContext(
+                    newLocusOfFocus,
+                    commonAncestor)
+                if len(context) > 0:
+                    text = context + " " + text
+
+            speech.say("default", text)
+        else:
+            message = _("ERROR: NOTHING HAS FOCUS!")
+            braille.displayMessage(message)
+            speech.say("default", message)
+
+
+    def visualAppearanceChanged(self, event, obj):
+        """Called when the visual appearance of an object changes.  This
+        method should not be called for objects whose visual appearance
+        changes solely because of focus -- setLocusOfFocus is used for that.
+        Instead, it is intended mostly for objects whose notional 'value' has
+        changed, such as a checkbox changing state, a progress bar advancing,
+        a slider moving, text inserted, caret moved, etc.
+
+        Arguments:
+        - event: if not None, the Event that caused this to happen
+        - obj: the Accessible whose visual appearance changed.
+        """
+        
+        if obj != orca.locusOfFocus:
+            return
+
+        self.updateBraille(obj)
+        speech.say("default",
+                   self.speechGenerator.getSpeech(event.source, True))
+
+            
+    def getVisualParent(self, obj):
+        """Returns the logical visual container for the given object or None
+        if no such object exists.  The logical visual container differs from
+        the component hierarchy in that it eliminates non-visual layout
+        elements (e.g., panels without names or borders) from the hierarchy.
+        """
+
+        visualParent = None
+        while obj.parent:
+            if len(obj.parent.label) > 0:
+                visualParent = obj.parent
+            obj = obj.parent
+
+        return visualParent
+    
+        
     def updateBraille(self, obj):
         """Updates the braille display to show the give object.
 
@@ -177,6 +292,101 @@ class Default(Script):
     #                                                                      #
     ########################################################################
 
+    def onNameChanged(self, event):
+        """Called whenever a property on an object changes.
+
+        Arguments:
+        - event: the Event
+        """
+        
+        orca.visualAppearanceChanged(event, event.source)
+
+
+    def onStateChanged(self, event):
+        """Called whenever an object's state changes.  Currently, the
+        state changes for non-focused objects are ignored.
+
+        Arguments:
+        - event: the Event
+        """
+    
+        global state_change_notifiers
+
+        # Do we care?
+        #
+        if state_change_notifiers.has_key(event.source.role):
+            notifiers = state_change_notifiers[event.source.role]
+            found = False
+            for state in notifiers:
+                if state and event.type.endswith(state):
+                    found = True
+                    break
+            if found:
+                orca.visualAppearanceChanged(event, event.source)
+
+        
+    def onValueChanged(self, event):
+        """Called whenever an object's value changes.  Currently, the
+        value changes for non-focused objects are ignored.
+
+        Arguments:
+        - event: the Event
+        """
+    
+        orca.visualAppearanceChanged(event, event.source)
+            
+
+    def onSelectionChanged(self, event):
+        """Called when an object's selection changes.
+
+        Arguments:
+        - event: the Event
+        """
+    
+        # Do we care?
+        #
+        if selection_changed_handlers.has_key(event.source.role):
+            orca.visualAppearanceChanged(event, event.source)
+
+
+    def onActiveDescendantChanged(self, event):
+        """Called when an object who manages its own descendants detects a
+        change in one of its children.
+        
+        Arguments:
+        - event: the Event
+        """
+
+        child = a11y.makeAccessible(event.any_data)
+
+        if child.childCount:
+            orca.setLocusOfFocus(event, child.child(1))
+        else:
+            orca.setLocusOfFocus(event, child)
+            
+
+    def onWindowActivated(self, event):
+        """Called whenever a toplevel window is activated.
+        
+        Arguments:
+        - event: the Event
+        """
+
+        self.updateBraille(event.source)
+        speech.say("default",
+                   self.speechGenerator.getSpeech(event.source, False))
+            
+
+    def onFocus(self, event):
+        """Called whenever an object gets focus.
+        
+        Arguments:
+        - event: the Event
+        """
+
+        orca.setLocusOfFocus(event, event.source)
+        
+
     def onTextInserted(self, event):
         """Called whenever text is inserted into an object.
 
@@ -188,8 +398,12 @@ class Default(Script):
         # currently focused object is the parent of the object to which
         # text was inserted
         #
-        if (event.source == orca.focusedObject) \
-               or (event.source.parent == orca.focusedObject):
+        text = event.source.text
+        print "onTextInserted, LENGTH=%d, text='%s'" % (text.characterCount, \
+                                                        event.any_data)
+        
+        if (event.source == orca.locusOfFocus) \
+               or (event.source.parent == orca.locusOfFocus):
             self.updateBraille(event.source)
             text = event.any_data
             if text.isupper():
@@ -209,8 +423,12 @@ class Default(Script):
         # currently focused object is the parent of the object from which
         # text was deleted
         #
-        if (event.source != orca.focusedObject) \
-               and (event.source.parent != orca.focusedObject):
+        text = event.source.text
+        print "onTextDeleted, LENGTH=%d, text='%s'" % (text.characterCount, \
+                                                       event.any_data)
+
+        if (event.source != orca.locusOfFocus) \
+               and (event.source.parent != orca.locusOfFocus):
             pass
         else:
             self.updateBraille(event.source)
@@ -227,66 +445,6 @@ class Default(Script):
                 speech.say("uppercase", text)
             else:
                 speech.say("default", text)
-
-
-    def onStateChanged(self, event):
-        """Called whenever an object's state changes.  Currently, the
-        state changes for non-focused objects are ignored.
-
-        Arguments:
-        - event: the Event
-        """
-    
-        global state_change_notifiers
-
-        if event.source != orca.focusedObject:
-            return
-
-        self.updateBraille(event.source)
-        
-        # Should we speak the object again?
-        #
-        if state_change_notifiers.has_key(event.source.role):
-            notifiers = state_change_notifiers[event.source.role]
-            found = False
-            for state in notifiers:
-                if state and event.type.endswith(state):
-                    found = True
-                    break
-            if found:
-                speech.say("default",
-                           self.speechGenerator.getSpeech(event.source, True))
-
-        
-    def onValueChanged(self, event):
-        """Called whenever an object's value changes.  Currently, the
-        value changes for non-focused objects are ignored.
-
-        Arguments:
-        - event: the Event
-        """
-    
-        if event.source != orca.focusedObject:
-            return
-
-        self.updateBraille(event.source)
-        speech.say("default",
-                   self.speechGenerator.getSpeech(event.source, True))
-            
-
-    def onSelectionChanged(self, event):
-        """Called when an object's selection changes.
-
-        Arguments:
-        - event: the Event
-        """
-    
-        # Do we care?
-        #
-        if selection_changed_handlers.has_key(event.source.role):
-            self.updateBraille(event.source)
-            speech.say("default",
-                       self.speechGenerator.getSpeech(event.source, True))
 
 
     def onCaretMoved(self, event):
@@ -327,71 +485,6 @@ class Default(Script):
         #
         if orca.lastKey == "Right" or orca.lastKey == "Left":
             sayCharacter(event.source)
-
-
-    def onPropertyChanged(self, event):
-        """Called whenever a property on an object changes.
-
-        Arguments:
-        - event: the Event
-        """
-        pass
-
-
-    def onActiveDescendantChanged(self, event):
-        """Called when an object who manages its own descendants detects a
-        change in one of its children.
-        
-        Arguments:
-        - event: the Event
-        """
-
-        print "*** HERE:", event.source, event.source.name, event.source.role
-        child = a11y.makeAccessible(event.any_data)
-        print "*** HERE:", child.name, child.role, child.childCount
-        print "*** HERE:", event.detail1, event.detail2
-        index = event.detail1
-        table = event.source.table
-        rowDesc = table.getRowDescription(index)
-        colDesc = table.getColumnDescription(index)
-        print "*** HERE:", rowDesc, colDesc
-
-        row = a11y.makeAccessible(table.getRowHeader(index))
-        print "*** HERE:", row
-        rowDesc = ""
-        if row:
-            rowDesc = row.name
-        col = a11y.makeAccessible(table.getColumnHeader(index))
-        print "*** HERE:", col
-        colDesc = ""
-        if col:
-            colDesc = col.name
-        print "*** HERE:", rowDesc, colDesc
-        print
-
-
-    def onWindowActivated(self, event):
-        """Called whenever a toplevel window is activated.
-        
-        Arguments:
-        - event: the Event
-        """
-
-        self.updateBraille(event.source)
-        speech.say("default",
-                   self.speechGenerator.getSpeech(event.source, False))
-            
-
-    def onFocus(self, event):
-        """Called whenever an object gets focus.
-        
-        Arguments:
-        - event: the Event
-        """
-    
-        self.updateBraille(event.source)
-        speech.say("default",
-                   self.speechGenerator.getSpeech(event.source, False))
 
 
 ########################################################################
@@ -499,7 +592,7 @@ def sayAll(inputEvent):
     #
     txt = None
     try:
-        txt = orca.focusedObject.text
+        txt = orca.locusOfFocus.text
     except:
         pass
     
@@ -516,7 +609,7 @@ def sayAll(inputEvent):
     # speech callback.
     #
     speech.startSayAll("default", sayAllGetChunk, sayAllStopped)
-    sayLine(orca.focusedObject)
+    sayLine(orca.locusOfFocus)
 
     return True
 

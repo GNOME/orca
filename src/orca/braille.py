@@ -495,7 +495,9 @@ def displayMessage(message, cursor=-1):
     """
     
     clear()
-    addLine(Line(Region(message)))
+    region = Region(message, cursor)
+    addLine(Line(region))
+    setFocus(region)
     refresh()
 
 

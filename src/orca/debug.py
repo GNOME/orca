@@ -179,6 +179,7 @@ def printObjectEvent(level, event, sourceInfo=None):
     Arguments:
     - level: the accepted debug level
     - event: the Python Event to print
+    - sourceInfo: additional string to print out
     """
 
     global _eventDebugLevel

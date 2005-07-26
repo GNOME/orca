@@ -23,6 +23,7 @@ this module are for the presentation manager contract:
 
     processKeyEvent     - handles all keyboard events
     processBrailleEvent - handles all Braille input events
+    locusOfFocusChanged - notified when orca's locusOfFocus changes
     activate            - called when this manager is enabled
     deactivate          - called when this manager is disabled
 
@@ -478,6 +479,17 @@ def processBrailleEvent(brailleEvent):
 
     return False
         
+
+def locusOfFocusChanged(event, oldLocusOfFocus, newLocusOfFocus):
+    """Called when the visual object with focus changes.
+
+    Arguments:
+    - event: if not None, the Event that caused the change
+    - oldLocusOfFocus: Accessible that is the old locus of focus
+    - newLocusOfFocus: Accessible that is the new locus of focus
+    """
+    pass
+
 
 def activate():
     """Called when this presentation manager is activated."""

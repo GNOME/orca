@@ -248,8 +248,44 @@ class SpeechGenerator:
         debug.println(debug.LEVEL_FINER,
                       "           already_focused = %s" % already_focused)
         debug.println(debug.LEVEL_FINER,
-                      "           text            = %s" % text)
+                      "           text            = %s" % text)    
+
     
+    def getSpeechContext(self, obj, stopAncestor=None):
+        """Get the speech that describes the names and role of
+        the container hierarchy of the object, stopping at and
+        not including the stopAncestor.
+    
+        Arguments:
+        - obj: the object
+        - stopAncestor: the anscestor to stop at and not include (None
+          means include all ancestors)
+          
+        Returns a string to be spoken.
+        """
+
+        text = ""
+
+        if obj is None:
+            return text
+
+        if obj is stopAncestor:
+            return text
+        
+        parent = obj.parent
+        while parent and (parent.parent != parent):
+            if parent == stopAncestor:
+                break
+            if len(parent.label) > 0:
+                text = parent.label + " " \
+                       + getSpeechForRoleName(parent) + " " + text
+            elif (parent.role != rolenames.ROLE_PANEL) \
+                     or (parent.role != rolenames.ROLE_FILLER):
+                text = getSpeechForRoleName(parent) + " " + text
+            parent = parent.parent
+            
+        return text
+
     
     def getDefaultSpeech(self, obj, already_focused):
         """Gets text to be spoken for the current object's name, role, and
@@ -720,18 +756,18 @@ class SpeechGenerator:
         
         text = self.getDefaultSpeech(obj, already_focused)
     
-        i = 0
-        itemCount = 0
-        while i < obj.childCount:
-            child = obj.child(i)
-            if child.role != rolenames.ROLE_SEPARATOR:
-                itemCount += 1
-            i += 1
-                    
-        if itemCount == 1:
-            text += _("one item") + ". "
-        else:
-            text += ("%d " % itemCount) + _("items") + ". "
+        #i = 0
+        #itemCount = 0
+        #while i < obj.childCount:
+        #    child = obj.child(i)
+        #    if child.role != rolenames.ROLE_SEPARATOR:
+        #        itemCount += 1
+        #    i += 1
+        #            
+        #if itemCount == 1:
+        #    text += _("one item") + ". "
+        #else:
+        #    text += ("%d " % itemCount) + _("items") + ". "
     
         self.debugGenerator("getSpeechForMenu",
                             obj,
