@@ -200,6 +200,17 @@ class Default(Script):
         if newLocusOfFocus:
             self.updateBraille(newLocusOfFocus)
 
+            # [[[TODO: WDW - This hack is because GTK+ menus give us two
+            # focus events when a submenu gets focus:  the first event
+            # will be for the supermenu and the second will be for the
+            # submenu.  So...we just ignore focus events for menus if the
+            # oldLocusOfFocus is a child of the menu.]]]
+            #
+            if newLocusOfFocus.role == rolenames.ROLE_MENU:
+                if oldLocusOfFocus \
+                   and (oldLocusOfFocus.parent == newLocusOfFocus):
+                    return
+                
             # Get the text for the object itself.
             #
             text = self.speechGenerator.getSpeech(newLocusOfFocus, False)
@@ -213,9 +224,18 @@ class Default(Script):
                 context = self.speechGenerator.getSpeechContext(
                     newLocusOfFocus,
                     commonAncestor)
+                
+                print "COMMON ANCESTOR:", \
+                      newLocusOfFocus.name, \
+                      newLocusOfFocus.role, \
+                      commonAncestor.name, \
+                      commonAncestor.role, \
+                      context
+                      
                 if len(context) > 0:
                     text = context + " " + text
 
+            print event.type, event.source.name, event.source.role
             speech.say("default", text)
         else:
             message = _("ERROR: NOTHING HAS FOCUS!")

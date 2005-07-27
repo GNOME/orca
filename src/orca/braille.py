@@ -239,6 +239,7 @@ class Region:
         been scrolled off the display."""
         pass
 
+
 class Component(Region):
     """A subclass of Region backed by an accessible.  This Region will react
     to any cursor routing key events and perform the default action on the

@@ -238,7 +238,11 @@ class SpeechGenerator:
         """Gets text to be spoken for the current object's name, role, and
         any accelerators.  This is usually the fallback speech generator
         should no other specialized speech generator exist for this object.
-    
+
+        The default speech will be of the following form:
+
+        label [role] [accelerator] [availability]
+        
         Arguments:
         - obj: an Accessible
         - already_focused: True if object just received focus; False otherwise
