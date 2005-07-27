@@ -25,19 +25,24 @@ case of gdm) or doesn't have the specified attribute.
 import sys
 import debug
 
-ROLENAME_NONE = 0  # Do not output rolename
-ROLENAME_SHORT = 1 # Output short version of rolename
-ROLENAME_LONG = 2  # Output long version of rolename
+# Constants for categorizing verbosity levels (see
+# setBrailleVerbosityLevel and setSpeechVerbosityLevel).
+# These will have an impact on the various individual
+# verbosity levels for rolenames, accelerators, etc.
+#
+VERBOSITY_LEVEL_BRIEF   = 0
+VERBOSITY_LEVEL_VERBOSE = 1
 
-speakRolenames = ROLENAME_LONG
-brailleRolenames = ROLENAME_LONG
+speechVerbosityLevel  = VERBOSITY_LEVEL_VERBOSE
+brailleVerbosityLevel = VERBOSITY_LEVEL_VERBOSE
 
-ACCELERATOR_NONE = 0  # Do not output accelerators
-ACCELERATOR_SHORT = 1 # Output accelerators
-ACCELERATOR_LONG = 2
+# Constants for determining braille rolename style.
+#
+BRAILLE_ROLENAME_STYLE_SHORT = 0 # three letter abbreviations
+BRAILLE_ROLENAME_STYLE_LONG  = 1 # full rolename
 
-speakAccelerators = ACCELERATOR_LONG
-brailleAccelerators = ACCELERATOR_SHORT
+brailleRolenameStyle = BRAILLE_ROLENAME_STYLE_LONG
+
 
 voices = {}
 keyEcho = False
@@ -47,8 +52,32 @@ learnModeEnabled = False
 
 _userSettings = None
 
-def setLearnModeEnabled(enabled):
 
+def setSpeechVerbosityLevel(verbosityLevel):
+    """Sets the verbosity level for speech output.
+
+    Arguments:
+    - verbosityLevel: one of VERBOSITY_LEVEL_BRIEF or VERBOSITY_LEVEL_VERBOSE
+    """
+    global speechVerbosityLevel
+    speechVerbosityLevel = verbosityLevel
+    debug.println(debug.LEVEL_CONFIGURATION,
+                  "Changed braille verbosity level to %d" % verbosityLevel)
+
+    
+def setBrailleVerbosityLevel(verbosityLevel):
+    """Sets the verbosity level for braille output.
+
+    Arguments:
+    - verbosityLevel: one of VERBOSITY_LEVEL_BRIEF or VERBOSITY_LEVEL_VERBOSE
+    """
+    global brailleVerbosityLevel
+    brailleVerbosityLevel = verbosityLevel
+    debug.println(debug.LEVEL_CONFIGURATION,
+                  "Changed braille verbosity level to %d" % verbosityLevel)
+
+    
+def setLearnModeEnabled(enabled):
     """Turns learning mode on and off.  If learn mode is enabled, input event
     handlers will merely report what they do rather than calling the function
     bound to them.

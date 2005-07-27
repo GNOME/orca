@@ -34,9 +34,8 @@ import orca
 import rolenames
 import settings
 
-from orca_i18n import _                          # for gettext support
-from rolenames import getShortBrailleForRoleName # localized role names
-from rolenames import getLongBrailleForRoleName  # localized role names
+from orca_i18n import _                     # for gettext support
+from rolenames import getBrailleForRoleName # localized role names
 
 class BrailleGenerator:
     """Takes accessible objects and produces a list of braille Regions
@@ -151,12 +150,20 @@ class BrailleGenerator:
     
         Returns a string to be displayed.
         """
-    
-        brailleAccelerators = settings.getSetting("brailleAccelerators",
-                                                  settings.ACCELERATOR_SHORT)
-    
+
+        # [[[TODO: WDW - we need to figure out if this is something
+        # we want configured or not.  For now, I'm just turning it
+        # off.
+        #
+        return ""
+
         text = ""
-        if not brailleAccelerators == settings.ACCELERATOR_NONE:
+
+        # Right now, we only care if the object is a menu item with
+        #
+        verbosity = settings.getSetting("brailleVerbosityLevel",
+                                        settings.VERBOSITY_LEVEL_VERBOSE)    
+        if verbosity == settings.VERBOSITY_LEVEL_BRIEF:
             return text
         
         result = a11y.getAcceleratorAndShortcut(obj)
@@ -171,8 +178,7 @@ class BrailleGenerator:
     
         # settings.ACCELERATOR_LONG adds in the shortcut.
         #
-        if (brailleAccelerators == settings.ACCELERATOR_LONG) \
-            and (len(shortcut) > 0):
+        if len(shortcut) > 0:
             text += "(" + shortcut + ")"
             
         return text
@@ -276,8 +282,8 @@ class BrailleGenerator:
 
         self._debugGenerator("_getDefaultBrailleRegions", obj)
         
-        brailleRolenames = settings.getSetting("brailleRolenames",
-                                               settings.ROLENAME_LONG)
+        verbosity = settings.getSetting("brailleVerbosityLevel",
+                                        settings.VERBOSITY_LEVEL_VERBOSE)
 
         text = obj.label
         
@@ -285,10 +291,8 @@ class BrailleGenerator:
         if len(value) > 0:
             text += " " + value
         
-        if brailleRolenames == settings.ROLENAME_SHORT:
-            text += " " + getShortBrailleForRoleName(obj)
-        elif brailleRolenames == settings.ROLENAME_LONG:
-            text += " " + getLongBrailleForRoleName(obj)
+        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
+            text += " " + getBrailleForRoleName(obj)
 
         accelerator = self._getBrailleTextForAccelerator(obj)
         if len(accelerator) > 0:
@@ -329,15 +333,13 @@ class BrailleGenerator:
     
         self._debugGenerator("_getBrailleRegionsForAnimation", obj)
     
-        brailleRolenames = settings.getSetting("brailleRolenames",
-                                               settings.ROLENAME_LONG)
-    
+        verbosity = settings.getSetting("brailleVerbosityLevel",
+                                        settings.VERBOSITY_LEVEL_VERBOSE)
+
         text = obj.label
         
-        if brailleRolenames == settings.ROLENAME_SHORT:
-            text += " " + getShortBrailleForRoleName(obj)
-        elif brailleRolenames == settings.ROLENAME_LONG:
-            text += " " + getLongBrailleForRoleName(obj)
+        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
+            text += " " + getBrailleForRoleName(obj)
     
         if obj.description:
             text += " " + obj.description
@@ -384,20 +386,18 @@ class BrailleGenerator:
         
         self._debugGenerator("_getBrailleRegionsForCheckBox", obj)
     
-        brailleRolenames = settings.getSetting("brailleRolenames",
-                                               settings.ROLENAME_LONG)
-    
+        verbosity = settings.getSetting("brailleVerbosityLevel",
+                                        settings.VERBOSITY_LEVEL_VERBOSE)
+
         set = obj.state
         if set.count(core.Accessibility.STATE_CHECKED):
             text = obj.label + " <x>"
         else:
             text = obj.label + " < >"
             
-        if brailleRolenames == settings.ROLENAME_SHORT:
-            text += " " + getShortBrailleForRoleName(obj)
-        elif brailleRolenames == settings.ROLENAME_LONG:
-            text += " " + getLongBrailleForRoleName(obj)
-    
+        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
+            text += " " + getBrailleForRoleName(obj)
+
         accelerator = self._getBrailleTextForAccelerator(obj)
         if len(accelerator) > 0:
             text += " " + accelerator
@@ -716,8 +716,8 @@ class BrailleGenerator:
         
         self._debugGenerator("_getBrailleRegionsForText", obj)
     
-        brailleRolenames = settings.getSetting("brailleRolenames",
-                                               settings.ROLENAME_LONG)
+        verbosity = settings.getSetting("brailleVerbosityLevel",
+                                        settings.VERBOSITY_LEVEL_VERBOSE)
     
         regions = []
     
@@ -725,11 +725,9 @@ class BrailleGenerator:
         textRegion = braille.Text(obj)
         regions.append(textRegion)
         
-        if brailleRolenames == settings.ROLENAME_SHORT:
-            text = " " + getShortBrailleForRoleName(obj)
-        else:
-            text = " " + getLongBrailleForRoleName(obj)
-    
+        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
+            text = " " + getBrailleForRoleName(obj)
+
         regions.append(braille.Region(text))
         
         return [regions, textRegion]
@@ -825,8 +823,8 @@ class BrailleGenerator:
         
         self._debugGenerator("_getBrailleRegionsForRadioButton", obj)
     
-        brailleRolenames = settings.getSetting("brailleRolenames",
-                                               settings.ROLENAME_LONG)
+        verbosity = settings.getSetting("brailleVerbosityLevel",
+                                        settings.VERBOSITY_LEVEL_VERBOSE)
     
         set = obj.state
         if set.count(core.Accessibility.STATE_CHECKED):
@@ -834,11 +832,9 @@ class BrailleGenerator:
         else:
             text = obj.label + " & y"
             
-        if brailleRolenames == settings.ROLENAME_SHORT:
-            text += " " + getShortBrailleForRoleName(obj)
-        elif brailleRolenames == settings.ROLENAME_LONG:
-            text += " " + getLongBrailleForRoleName(obj)
-    
+        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
+            text += " " + getBrailleForRoleName(obj)
+
         accelerator = self._getBrailleTextForAccelerator(obj)
         if len(accelerator) > 0:
             text += " " + accelerator
@@ -1020,13 +1016,11 @@ class BrailleGenerator:
         
         self._debugGenerator("_getBrailleRegionsForTearOffMenuItem", obj)
     
-        brailleRolenames = settings.getSetting("brailleRolenames",
-                                               settings.ROLENAME_LONG)
-    
-        if brailleRolenames == settings.ROLENAME_SHORT:
-            text = getShortBrailleForRoleName(obj)
-        elif brailleRolenames == settings.ROLENAME_LONG:
-            text = getLongBrailleForRoleName(obj)
+        verbosity = settings.getSetting("brailleVerbosityLevel",
+                                        settings.VERBOSITY_LEVEL_VERBOSE)
+
+        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
+            text = " " + getBrailleForRoleName(obj)
     
         regions = []
         componentRegion = braille.Component(obj, text)
@@ -1047,9 +1041,9 @@ class BrailleGenerator:
         
         self._debugGenerator("_getBrailleRegionsForTerminal", obj)
     
-        brailleRolenames = settings.getSetting("brailleRolenames",
-                                               settings.ROLENAME_LONG)
-        
+        verbosity = settings.getSetting("brailleVerbosityLevel",
+                                        settings.VERBOSITY_LEVEL_VERBOSE)
+
         text = ""
     
         label = None
@@ -1060,10 +1054,8 @@ class BrailleGenerator:
             label = obj.label
         text = label
             
-        if brailleRolenames == settings.ROLENAME_SHORT:
-            text = getShortBrailleForRoleName(obj)
-        elif brailleRolenames == settings.ROLENAME_LONG:
-            text = getLongBrailleForRoleName(obj)
+        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
+            text += " " + getBrailleForRoleName(obj)
     
         regions = []
         regions.append(braille.Region(text))

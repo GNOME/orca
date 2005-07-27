@@ -23,6 +23,8 @@ Accessible object into a localized string.
 """
 
 import debug
+import settings
+
 from orca_i18n import _ # for gettext support
 
 ########################################################################
@@ -559,20 +561,6 @@ rolenames[ROLE_EMBEDDED] = Rolename(ROLE_EMBEDDED,
 #                                     _("tree item"))
 
 
-def getRoleName(obj):
-    """Returns the localized name of the given Accessible object.
-    If a localized name cannot be discovered, this will return
-    the string as defined by the at-spi.
-    
-    Arguments:
-    - obj: an Accessible object
-
-    Returns a string containing the localized name of the object.
-    """
-
-    return getSpeechForRoleName(obj)
-
-
 def getSpeechForRoleName(obj):
     """Returns the localized name of the given Accessible object; the name is
     suitable to be spoken.  If a localized name cannot be discovered, this
@@ -631,3 +619,40 @@ def getLongBrailleForRoleName(obj):
     else:
         debug.println(debug.LEVEL_WARNING, "No rolename for %s" % name)
         return name
+
+
+def getBrailleForRoleName(obj):
+    """Returns the localized name of the given Accessible object; the name is
+    a string suitable for a Braille display.  If a localized name cannot
+    be discovered, this will return the string as defined by the at-spi.
+    
+    Arguments:
+    - obj: an Accessible object
+
+    Returns a string containing the localized name of the object suitable for
+    a Braille display.  The actual string will depend upon the value of
+    the 'brailleRolenameStyle' setting.
+    """
+    
+    brailleRolenameStyle = settings.getSetting(
+        "brailleRolenameStyle",
+        settings.BRAILLE_ROLENAME_STYLE_LONG)
+
+    if brailleRolenameStyle == settings.BRAILLE_ROLENAME_STYLE_SHORT:
+        return getShortBrailleForRoleName(obj)
+    else:
+        return getLongBrailleForRoleName(obj)
+
+
+def getRoleName(obj):
+    """Returns the localized name of the given Accessible object.
+    If a localized name cannot be discovered, this will return
+    the string as defined by the at-spi.
+    
+    Arguments:
+    - obj: an Accessible object
+
+    Returns a string containing the localized name of the object.
+    """
+
+    return getSpeechForRoleName(obj)

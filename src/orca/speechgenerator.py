@@ -155,10 +155,10 @@ class SpeechGenerator:
         """
     
         speakAccelerators = settings.getSetting("speakAccelerators",
-                                                settings.ACCELERATOR_LONG)
+                                                False)
     
         text = ""
-        if not speakAccelerators == settings.ACCELERATOR_NONE:
+        if not speakAccelerators:
             return text
         
         result = a11y.getAcceleratorAndShortcut(obj)
@@ -199,12 +199,12 @@ class SpeechGenerator:
         Returns a sentence for the label and role.
         """
         
-        speakRolenames = settings.getSetting("speakRolenames",
-                                             settings.ROLENAME_LONG)
+        verbosity = settings.getSetting("speechVerbosityLevel",
+                                        settings.VERBOSITY_LEVEL_VERBOSE)
     
         text = obj.label
             
-        if not speakRolenames == settings.ROLENAME_NONE:
+        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
             text += " " + getSpeechForRoleName(obj)
     
         text += ". "
@@ -1201,10 +1201,10 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
         
-        speakRolenames = settings.getSetting("speakRolenames",
-                                             settings.ROLENAME_LONG)
-        
-        if not speakRolenames == settings.ROLENAME_NONE:
+        verbosity = settings.getSetting("speechVerbosityLevel",
+                                        settings.VERBOSITY_LEVEL_VERBOSE)
+    
+        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
             text = _("tear off menu item")
         else:
             text = _("tear off")
@@ -1231,9 +1231,9 @@ class SpeechGenerator:
         
         text = ""
     
-        speakRolenames = settings.getSetting("speakRolenames",
-                                             settings.ROLENAME_LONG)
-        
+        verbosity = settings.getSetting("speechVerbosityLevel",
+                                        settings.VERBOSITY_LEVEL_VERBOSE)
+    
         label = None
         frame = a11y.getFrame(obj)
         if frame:
@@ -1242,7 +1242,7 @@ class SpeechGenerator:
             label = obj.label
         text = label
             
-        if not speakRolenames == settings.ROLENAME_NONE:
+        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
             text += " " + getSpeechForRoleName(obj)
     
         text += ". "
