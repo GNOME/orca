@@ -486,6 +486,8 @@ def refresh():
     else:
         cursor = cursor + 1
 
+    print "braille.refresh: ", string[startPos:endPos], cursor
+    
     brl.writeText(cursor, string[startPos:endPos])
     
 
@@ -540,6 +542,8 @@ def panRight(command=None, script=None):
     Returns True to mean the command should be consumed.
     """
 
+    print "braille.panRight (before):", _viewport[0]
+    
     if len(_lines) > 0:
         lineNum = _viewport[1]    
         newX = _viewport[0] + _displaySize[0]
@@ -549,6 +553,8 @@ def panRight(command=None, script=None):
             _viewport[0] = newX
             refresh()
 
+    print "braille.panRight (after): ", _viewport[0]
+    
     
 def _processBrailleEvent(command):
     """Handles BrlTTY command events.  This passes commands on to Orca for
@@ -628,6 +634,10 @@ def init(callback=None, tty=7):
     #_displaySize = (brl.getDisplayWidth(), brl.getDisplayHeight())
     _displaySize = [brl.getDisplayWidth(), 1]
 
+    debug.println(debug.LEVEL_CONFIGURATION,
+                  "braille display size = (%d, %d)" \
+                  % (_displaySize[0], _displaySize[1]))
+    
     clear()
     refresh()
     

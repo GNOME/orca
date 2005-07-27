@@ -288,7 +288,7 @@ class SpeechGenerator:
             set = label.relations
             if len(set) == 0:
                 set = label.state
-                if state.count(core.Accessibility.STATE_SHOWING):
+                if set.count(core.Accessibility.STATE_SHOWING):
                     text += " " + label.name
             
         self._debugGenerator("_getSpeechForAlert",
