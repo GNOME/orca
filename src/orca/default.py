@@ -223,19 +223,9 @@ class Default(Script):
             if commonAncestor:
                 context = self.speechGenerator.getSpeechContext(
                     newLocusOfFocus,
-                    commonAncestor)
-                
-                print "COMMON ANCESTOR:", \
-                      newLocusOfFocus.name, \
-                      newLocusOfFocus.role, \
-                      commonAncestor.name, \
-                      commonAncestor.role, \
-                      context
-                      
+                    commonAncestor)                
                 if len(context) > 0:
                     text = context + " " + text
-
-            print event.type, event.source.name, event.source.role
             speech.say("default", text)
         else:
             message = _("ERROR: NOTHING HAS FOCUS!")
