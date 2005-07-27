@@ -404,8 +404,8 @@ class Default(Script):
         # text was inserted
         #
         text = event.source.text
-        print "onTextInserted, LENGTH=%d, text='%s'" % (text.characterCount, \
-                                                        event.any_data)
+        #print "onTextInserted, LENGTH=%d, text='%s'" % (text.characterCount, \
+        #                                                event.any_data)
         
         if (event.source == orca.locusOfFocus) \
                or (event.source.parent == orca.locusOfFocus):
@@ -429,8 +429,8 @@ class Default(Script):
         # text was deleted
         #
         text = event.source.text
-        print "onTextDeleted, LENGTH=%d, text='%s'" % (text.characterCount, \
-                                                       event.any_data)
+        #print "onTextDeleted, LENGTH=%d, text='%s'" % (text.characterCount, \
+        #                                               event.any_data)
 
         if (event.source != orca.locusOfFocus) \
                and (event.source.parent != orca.locusOfFocus):

@@ -234,10 +234,14 @@ def onChildrenChanged(e):
 
         # If the desktop is empty, the user has logged out-- shutdown Orca
         #
-        if core.desktop.childCount == 0:
-            speech.say("default", _("User logged out - shutting down."))
+        try:
+            if core.desktop.childCount == 0:
+                speech.say("default", _("User logged out - shutting down."))
+                shutdown()
+                return
+        except: # could be a CORBA.COMM_FAILURE
             shutdown()
-            return
+            return            
 
         # [[[TODO: WDW - Note the call to _buildAppList - that will update the
         # apps[] list.  If this logic is changed in the future, the apps list
