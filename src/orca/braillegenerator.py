@@ -47,102 +47,102 @@ class BrailleGenerator:
     def __init__(self, region=None):
         self.brailleGenerators = {}
         self.brailleGenerators["alert"]               = \
-             self.getBrailleRegionsForAlert
+             self._getBrailleRegionsForAlert
         self.brailleGenerators["animation"]           = \
-             self.getBrailleRegionsForAnimation
+             self._getBrailleRegionsForAnimation
         self.brailleGenerators["arrow"]               = \
-             self.getBrailleRegionsForArrow
+             self._getBrailleRegionsForArrow
         self.brailleGenerators["check box"]           = \
-             self.getBrailleRegionsForCheckBox
+             self._getBrailleRegionsForCheckBox
         self.brailleGenerators["check menu item"]     = \
-             self.getBrailleRegionsForCheckMenuItem
+             self._getBrailleRegionsForCheckMenuItem
         self.brailleGenerators["column_header"]       = \
-             self.getBrailleRegionsForColumnHeader
+             self._getBrailleRegionsForColumnHeader
         self.brailleGenerators["combo box"]           = \
-             self.getBrailleRegionsForComboBox
+             self._getBrailleRegionsForComboBox
         self.brailleGenerators["desktop icon"]        = \
-             self.getBrailleRegionsForDesktopIcon
+             self._getBrailleRegionsForDesktopIcon
         self.brailleGenerators["dial"]                = \
-             self.getBrailleRegionsForDial
+             self._getBrailleRegionsForDial
         self.brailleGenerators["dialog"]              = \
-             self.getBrailleRegionsForDialog
+             self._getBrailleRegionsForDialog
         self.brailleGenerators["directory pane"]      = \
-             self.getBrailleRegionsForDirectoryPane
+             self._getBrailleRegionsForDirectoryPane
         self.brailleGenerators["frame"]               = \
-             self.getBrailleRegionsForFrame
+             self._getBrailleRegionsForFrame
         self.brailleGenerators["html container"]      = \
-             self.getBrailleRegionsForHtmlContainer
+             self._getBrailleRegionsForHtmlContainer
         self.brailleGenerators["icon"]                = \
-             self.getBrailleRegionsForIcon
+             self._getBrailleRegionsForIcon
         self.brailleGenerators["image"]               = \
-             self.getBrailleRegionsForImage
+             self._getBrailleRegionsForImage
         self.brailleGenerators["label"]               = \
-             self.getBrailleRegionsForLabel
+             self._getBrailleRegionsForLabel
         self.brailleGenerators["list"]                = \
-             self.getBrailleRegionsForList
+             self._getBrailleRegionsForList
         self.brailleGenerators["menu"]                = \
-             self.getBrailleRegionsForMenu
+             self._getBrailleRegionsForMenu
         self.brailleGenerators["menu bar"]            = \
-             self.getBrailleRegionsForMenuBar
+             self._getBrailleRegionsForMenuBar
         self.brailleGenerators["menu item"]           = \
-             self.getBrailleRegionsForMenuItem
+             self._getBrailleRegionsForMenuItem
         self.brailleGenerators["multi line text"]     = \
-             self.getBrailleRegionsForText
+             self._getBrailleRegionsForText
         self.brailleGenerators["option pane"]         = \
-             self.getBrailleRegionsForOptionPane
+             self._getBrailleRegionsForOptionPane
         self.brailleGenerators["page tab"]            = \
-             self.getBrailleRegionsForPageTab
+             self._getBrailleRegionsForPageTab
         self.brailleGenerators["page tab list"]       = \
-             self.getBrailleRegionsForPageTabList
+             self._getBrailleRegionsForPageTabList
         self.brailleGenerators["password text"]       = \
-             self.getBrailleRegionsForText
+             self._getBrailleRegionsForText
         self.brailleGenerators["progress bar"]        = \
-             self.getBrailleRegionsForProgressBar
+             self._getBrailleRegionsForProgressBar
         self.brailleGenerators["push button"]         = \
-             self.getBrailleRegionsForPushButton
+             self._getBrailleRegionsForPushButton
         self.brailleGenerators["radio button"]        = \
-             self.getBrailleRegionsForRadioButton
+             self._getBrailleRegionsForRadioButton
         self.brailleGenerators["radio menu item"]     = \
-             self.getBrailleRegionsForRadioMenuItem
+             self._getBrailleRegionsForRadioMenuItem
         self.brailleGenerators["row_header"]          = \
-             self.getBrailleRegionsForRowHeader
+             self._getBrailleRegionsForRowHeader
         self.brailleGenerators["scroll bar"]          = \
-             self.getBrailleRegionsForScrollBar
+             self._getBrailleRegionsForScrollBar
         self.brailleGenerators["single line text"]    = \
-             self.getBrailleRegionsForText
+             self._getBrailleRegionsForText
         self.brailleGenerators["slider"]              = \
-             self.getBrailleRegionsForSlider
+             self._getBrailleRegionsForSlider
         self.brailleGenerators["spin button"]         = \
-             self.getBrailleRegionsForSpinButton
+             self._getBrailleRegionsForSpinButton
         self.brailleGenerators["split pane"]          = \
-             self.getBrailleRegionsForSplitPane
+             self._getBrailleRegionsForSplitPane
         self.brailleGenerators["table"]               = \
-             self.getBrailleRegionsForTable
+             self._getBrailleRegionsForTable
         self.brailleGenerators["table cell"]          = \
-             self.getBrailleRegionsForTableCell
+             self._getBrailleRegionsForTableCell
         self.brailleGenerators["table column header"] = \
-             self.getBrailleRegionsForTableColumnHeader
+             self._getBrailleRegionsForTableColumnHeader
         self.brailleGenerators["table row header"]    = \
-             self.getBrailleRegionsForTableRowHeader
+             self._getBrailleRegionsForTableRowHeader
         self.brailleGenerators["tear off menu item"]  = \
-             self.getBrailleRegionsForMenu
+             self._getBrailleRegionsForMenu
         self.brailleGenerators["terminal"]            = \
-             self.getBrailleRegionsForTerminal
+             self._getBrailleRegionsForTerminal
         self.brailleGenerators["text"]                = \
-             self.getBrailleRegionsForText
+             self._getBrailleRegionsForText
         self.brailleGenerators["toggle button"]       = \
-             self.getBrailleRegionsForToggleButton
+             self._getBrailleRegionsForToggleButton
         self.brailleGenerators["tool bar"]            = \
-             self.getBrailleRegionsForToolBar
+             self._getBrailleRegionsForToolBar
         self.brailleGenerators["tree"]                = \
-             self.getBrailleRegionsForTable
+             self._getBrailleRegionsForTable
         self.brailleGenerators["tree table"]          = \
-             self.getBrailleRegionsForTable
+             self._getBrailleRegionsForTable
         self.brailleGenerators["window"]              = \
-             self.getBrailleRegionsForWindow
+             self._getBrailleRegionsForWindow
 
         
-    def getBrailleTextForAccelerator(self, obj):
+    def _getBrailleTextForAccelerator(self, obj):
         """Returns a string to be displayed that describes the keyboard
         accelerator (and possibly shortcut) for the given object.
     
@@ -178,7 +178,7 @@ class BrailleGenerator:
         return text
     
     
-    def getBrailleTextForAvailability(self, obj):
+    def _getBrailleTextForAvailability(self, obj):
         """Returns a string to be displayed that describes the availability
         of the given object.
     
@@ -194,7 +194,7 @@ class BrailleGenerator:
             return _("unavailable")
     
     
-    def getBrailleTextForValue(self, obj):
+    def _getBrailleTextForValue(self, obj):
         """Returns the text to be displayed for the object's current value.
     
         Arguments:
@@ -242,109 +242,8 @@ class BrailleGenerator:
         #
         return valueString
 
-    def getBrailleContext(self, obj):
-        """Get the braille regions that describe the context (i.e.,
-        names/roles of the container hierarchy) of the object.
-    
-        Arguments:
-        - obj: the object
-                          
-        Returns a list of Regions to display.
-        """
 
-        # We want to follow the same grouping logic in getBrailleRegions.
-        # 
-        parent = obj.parent
-        if parent \
-           and ((parent.role == rolenames.ROLE_MENU) \
-                or (parent.role == rolenames.ROLE_MENU_BAR) \
-                or (parent.role == rolenames.ROLE_PAGE_TAB_LIST)):
-            obj = parent
-
-        regions = []
-        while parent:
-            if len(parent.label) > 0:
-                regions.append(braille.Region(" "))
-                result = self.getBrailleRegions(parent, False)
-                regions.extend(result[0])
-            parent = parent.parent
-
-        regions.reverse()
-
-        return regions
-    
-    def getBrailleRegions(self, obj, groupChildren=True):
-        """Get the braille regions for an Accessible object.  This
-        will look first to the specific braille generators and then to
-        the default braille generator.  This method is the primary
-        method that external callers of this class should use.
-    
-        Arguments:
-        - obj: the object
-        - groupChildren: if True, children of an object should be displayed
-                         together with their parent, where each child is
-                         separated by _ and the selected child is the Region
-                         that should get focus.
-                          
-        Returns a list where the first element is a list of Regions to
-        display and the second element is the Region which should get
-        focus.  """
-
-        # If we want to group the children, first see if obj is a child of
-        # something we like to group.  If so, then reset the obj to the obj's
-        # parent.  If not, see if the obj is the container of things we like
-        # to group.  If all fails, we don't try grouping.
-        #
-        reallyGroupChildren = False
-        if groupChildren:
-            parent = obj.parent
-            isChild = parent \
-                      and ((parent.role == rolenames.ROLE_MENU) \
-                           or (parent.role == rolenames.ROLE_MENU_BAR) \
-                           or (parent.role == rolenames.ROLE_PAGE_TAB_LIST))
-            if isChild:
-                obj = parent
-                reallyGroupChildren = True
-            else:
-                reallyGroupChildren = \
-                    (obj.role == rolenames.ROLE_MENU) \
-                    or (obj.role == rolenames.ROLE_MENU_BAR) \
-                    or (obj.role == rolenames.ROLE_PAGE_TAB_LIST)
-            
-        if self.brailleGenerators.has_key(obj.role):
-            generator = self.brailleGenerators[obj.role]
-        else:
-            generator = self.getDefaultBrailleRegions
-
-        result = generator(obj)
-        regions = result[0]
-        selectedRegion = result[1]
-        
-        if reallyGroupChildren:
-            regions.append(braille.Region(" "))
-            selection = obj.selection
-            childCount = obj.childCount
-            i = 0
-            while i < childCount:
-                child = obj.child(i)
-                if child.role != rolenames.ROLE_SEPARATOR \
-                    and child.state.count(core.Accessibility.STATE_SENSITIVE):
-
-                    if (i > 0) and (i < (self, childCount - 1)):
-                        regions.append(braille.Region(" _ "))
-    
-                    result = self.getBrailleRegions(child, False)
-                    regions.extend(result[0])
-    
-                    if selection and selection.isChildSelected(i):
-                        selectedRegion = result[1]
-                    
-                i = i + 1
-            
-        return [regions, selectedRegion]
-
-
-    def debugGenerator(self, generatorName, obj):
+    def _debugGenerator(self, generatorName, obj):
         """Prints debug.LEVEL_FINER information regarding the braille
         generator.
 
@@ -361,7 +260,7 @@ class BrailleGenerator:
                       "           role            = %s" % obj.role)
 
 
-    def getDefaultBrailleRegions(self, obj):
+    def _getDefaultBrailleRegions(self, obj):
         """Gets text to be displayed for the current object's name,
         role, and any accelerators.  This is usually the fallback
         braille generator should no other specialized braille
@@ -375,14 +274,14 @@ class BrailleGenerator:
         focus.
         """
 
-        self.debugGenerator("getDefaultBrailleRegions", obj)
+        self._debugGenerator("_getDefaultBrailleRegions", obj)
         
         brailleRolenames = settings.getSetting("brailleRolenames",
                                                settings.ROLENAME_LONG)
 
         text = obj.label
         
-        value = self.getBrailleTextForValue(obj)
+        value = self._getBrailleTextForValue(obj)
         if len(value) > 0:
             text += " " + value
         
@@ -391,7 +290,7 @@ class BrailleGenerator:
         elif brailleRolenames == settings.ROLENAME_LONG:
             text += " " + getLongBrailleForRoleName(obj)
 
-        accelerator = self.getBrailleTextForAccelerator(obj)
+        accelerator = self._getBrailleTextForAccelerator(obj)
         if len(accelerator) > 0:
             text += " " + accelerator
         
@@ -402,7 +301,7 @@ class BrailleGenerator:
         return [regions, componentRegion]
 
 
-    def getBrailleRegionsForAlert(self, obj):
+    def _getBrailleRegionsForAlert(self, obj):
         """Gets the title of the dialog and the contents of labels inside the
         dialog that are not associated with any other objects.
     
@@ -413,11 +312,11 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
     
-        self.debugGenerator("getBrailleRegionsForAlert", obj)
-        return self.getDefaultBrailleRegions(obj)
+        self._debugGenerator("_getBrailleRegionsForAlert", obj)
+        return self._getDefaultBrailleRegions(obj)
     
     
-    def getBrailleRegionsForAnimation(self, obj):
+    def _getBrailleRegionsForAnimation(self, obj):
         """Gets the title of the dialog and the contents of labels inside the
         dialog that are not associated with any other objects.
     
@@ -428,7 +327,7 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
     
-        self.debugGenerator("getBrailleRegionsForAnimation", obj)
+        self._debugGenerator("_getBrailleRegionsForAnimation", obj)
     
         brailleRolenames = settings.getSetting("brailleRolenames",
                                                settings.ROLENAME_LONG)
@@ -443,7 +342,7 @@ class BrailleGenerator:
         if obj.description:
             text += " " + obj.description
     
-        accelerator = self.getBrailleTextForAccelerator(obj)
+        accelerator = self._getBrailleTextForAccelerator(obj)
         if len(accelerator) > 0:
             text += " " + accelerator
     
@@ -454,7 +353,7 @@ class BrailleGenerator:
         return [regions, componentRegion]
     
     
-    def getBrailleRegionsForArrow(self, obj):
+    def _getBrailleRegionsForArrow(self, obj):
         """Gets text to be displayed for an arrow.
     
         Arguments:
@@ -464,15 +363,15 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
     
-        self.debugGenerator("getBrailleRegionsForArrow", obj)
+        self._debugGenerator("_getBrailleRegionsForArrow", obj)
     
         # [[[TODO: determine orientation of arrow.]]]
         # text = arrow direction (left, right, up, down)
         #
-        return self.getDefaultBrailleRegions(obj)
+        return self._getDefaultBrailleRegions(obj)
     
     
-    def getBrailleRegionsForCheckBox(self, obj):
+    def _getBrailleRegionsForCheckBox(self, obj):
         """Get the braille for a check box.  If the check box already had
         focus, then only the state is displayed.
         
@@ -483,7 +382,7 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForCheckBox", obj)
+        self._debugGenerator("_getBrailleRegionsForCheckBox", obj)
     
         brailleRolenames = settings.getSetting("brailleRolenames",
                                                settings.ROLENAME_LONG)
@@ -499,7 +398,7 @@ class BrailleGenerator:
         elif brailleRolenames == settings.ROLENAME_LONG:
             text += " " + getLongBrailleForRoleName(obj)
     
-        accelerator = self.getBrailleTextForAccelerator(obj)
+        accelerator = self._getBrailleTextForAccelerator(obj)
         if len(accelerator) > 0:
             text += " " + accelerator
     
@@ -510,7 +409,7 @@ class BrailleGenerator:
         return [regions, componentRegion]
     
     
-    def getBrailleRegionsForCheckMenuItem(self, obj):
+    def _getBrailleRegionsForCheckMenuItem(self, obj):
         """Get the braille for a check menu item.  If the check menu item
         already had focus, then only the state is displayed.
         
@@ -521,15 +420,15 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForCheckMenuItem", obj)
+        self._debugGenerator("_getBrailleRegionsForCheckMenuItem", obj)
     
         # [[[TODO: WDW - only show accelerator when the menu item is
         # selected.]]]
         #
-        return self.getBrailleRegionsForCheckBox(obj)
+        return self._getBrailleRegionsForCheckBox(obj)
     
     
-    def getBrailleRegionsForColumnHeader(self, obj):
+    def _getBrailleRegionsForColumnHeader(self, obj):
         """Get the braille for a column header.
         
         Arguments:
@@ -539,12 +438,12 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForColumnHeader", obj)
+        self._debugGenerator("_getBrailleRegionsForColumnHeader", obj)
     
-        return self.getDefaultBrailleRegions(obj)
+        return self._getDefaultBrailleRegions(obj)
     
     
-    def getBrailleRegionsForComboBox(self, obj):
+    def _getBrailleRegionsForComboBox(self, obj):
         """Get the braille for a combo box.  If the combo box already has
         focus, then only the selection is displayed.
         
@@ -555,7 +454,7 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForComboBox", obj)
+        self._debugGenerator("_getBrailleRegionsForComboBox", obj)
     
         regions = []
         regions.append(braille.Region(obj.label + " "))
@@ -605,7 +504,7 @@ class BrailleGenerator:
         return [regions, regions[0]]
     
     
-    def getBrailleRegionsForDesktopIcon(self, obj):
+    def _getBrailleRegionsForDesktopIcon(self, obj):
         """Get the braille for a desktop icon.
         
         Arguments:
@@ -615,12 +514,12 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForDesktopIcon", obj)
+        self._debugGenerator("_getBrailleRegionsForDesktopIcon", obj)
     
-        return self.getDefaultBrailleRegions(obj)
+        return self._getDefaultBrailleRegions(obj)
     
     
-    def getBrailleRegionsForDial(self, obj):
+    def _getBrailleRegionsForDial(self, obj):
         """Get the braille for a dial.
         
         Arguments:
@@ -632,12 +531,12 @@ class BrailleGenerator:
     
         # [[[TODO: WDW - might need to include the value here?]]]
         #
-        self.debugGenerator("getBrailleRegionsForDial", obj)
+        self._debugGenerator("_getBrailleRegionsForDial", obj)
     
-        return self.getDefaultBrailleRegions(obj)
+        return self._getDefaultBrailleRegions(obj)
     
     
-    def getBrailleRegionsForDialog(self, obj):
+    def _getBrailleRegionsForDialog(self, obj):
         """Get the braille for a dialog box.
         
         Arguments:
@@ -647,12 +546,12 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForDialog", obj)
+        self._debugGenerator("_getBrailleRegionsForDialog", obj)
     
-        return self.getBrailleRegionsForAlert(obj)
+        return self._getBrailleRegionsForAlert(obj)
     
     
-    def getBrailleRegionsForDirectoryPane(self, obj):
+    def _getBrailleRegionsForDirectoryPane(self, obj):
         """Get the braille for a directory pane.
         
         Arguments:
@@ -662,12 +561,12 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForDirectoryPane", obj)
+        self._debugGenerator("_getBrailleRegionsForDirectoryPane", obj)
     
-        return self.getDefaultBrailleRegions(obj)
+        return self._getDefaultBrailleRegions(obj)
     
     
-    def getBrailleRegionsForFrame(self, obj):
+    def _getBrailleRegionsForFrame(self, obj):
         """Get the braille for a frame.
         
         Arguments:
@@ -677,12 +576,12 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForFrame", obj)
+        self._debugGenerator("_getBrailleRegionsForFrame", obj)
     
-        return self.getDefaultBrailleRegions(obj)
+        return self._getDefaultBrailleRegions(obj)
     
     
-    def getBrailleRegionsForHtmlContainer(self, obj):
+    def _getBrailleRegionsForHtmlContainer(self, obj):
         """Get the braille for an HTML container.
         
         Arguments:
@@ -692,12 +591,12 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForHtmlContainer", obj)
+        self._debugGenerator("_getBrailleRegionsForHtmlContainer", obj)
     
-        return self.getDefaultBrailleRegions(obj)
+        return self._getDefaultBrailleRegions(obj)
     
     
-    def getBrailleRegionsForIcon(self, obj):
+    def _getBrailleRegionsForIcon(self, obj):
         """Get the braille for an icon.
         
         Arguments:
@@ -707,12 +606,12 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForIcon", obj)
+        self._debugGenerator("_getBrailleRegionsForIcon", obj)
     
-        return self.getDefaultBrailleRegions(obj)
+        return self._getDefaultBrailleRegions(obj)
     
     
-    def getBrailleRegionsForImage(self, obj):
+    def _getBrailleRegionsForImage(self, obj):
         """Get the braille for an image.
         
         Arguments:
@@ -722,12 +621,12 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForImage", obj)
+        self._debugGenerator("_getBrailleRegionsForImage", obj)
     
-        return self.getDefaultBrailleRegions(obj)
+        return self._getDefaultBrailleRegions(obj)
     
     
-    def getBrailleRegionsForLabel(self, obj):
+    def _getBrailleRegionsForLabel(self, obj):
         """Get the braille for a label.
         
         Arguments:
@@ -737,12 +636,12 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForLabel", obj)
+        self._debugGenerator("_getBrailleRegionsForLabel", obj)
     
-        return self.getDefaultBrailleRegions(obj)
+        return self._getDefaultBrailleRegions(obj)
     
     
-    def getBrailleRegionsForList(self, obj):
+    def _getBrailleRegionsForList(self, obj):
         """Get the braille for a list.
         
         Arguments:
@@ -755,12 +654,12 @@ class BrailleGenerator:
         # [[[TODO: WDW - include how many items in the list?]]]
         # Perhaps should also include current list item in here?
         #
-        self.debugGenerator("getBrailleRegionsForList", obj)
+        self._debugGenerator("_getBrailleRegionsForList", obj)
     
-        return self.getDefaultBrailleRegions(obj)
+        return self._getDefaultBrailleRegions(obj)
     
     
-    def getBrailleRegionsForMenu(self, obj):
+    def _getBrailleRegionsForMenu(self, obj):
         """Get the braille for a menu.
         
         Arguments:
@@ -770,12 +669,12 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForMenu", obj)
+        self._debugGenerator("_getBrailleRegionsForMenu", obj)
 
-        return self.getDefaultBrailleRegions(obj)
+        return self._getDefaultBrailleRegions(obj)
 
     
-    def getBrailleRegionsForMenuBar(self, obj):
+    def _getBrailleRegionsForMenuBar(self, obj):
         """Get the braille for a menu bar.
         
         Arguments:
@@ -785,12 +684,12 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForMenuBar", obj)
+        self._debugGenerator("_getBrailleRegionsForMenuBar", obj)
     
-        return self.getDefaultBrailleRegions(obj)
+        return self._getDefaultBrailleRegions(obj)
     
     
-    def getBrailleRegionsForMenuItem(self, obj):
+    def _getBrailleRegionsForMenuItem(self, obj):
         """Get the braille for a menu item.
         
         Arguments:
@@ -800,12 +699,12 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForMenuItem", obj)
+        self._debugGenerator("_getBrailleRegionsForMenuItem", obj)
     
-        return self.getDefaultBrailleRegions(obj)
+        return self._getDefaultBrailleRegions(obj)
     
     
-    def getBrailleRegionsForText(self, obj):
+    def _getBrailleRegionsForText(self, obj):
         """Get the braille for a text component.
         
         Arguments:
@@ -815,7 +714,7 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForText", obj)
+        self._debugGenerator("_getBrailleRegionsForText", obj)
     
         brailleRolenames = settings.getSetting("brailleRolenames",
                                                settings.ROLENAME_LONG)
@@ -837,7 +736,7 @@ class BrailleGenerator:
         #return [regions, regions[0]]
     
     
-    def getBrailleRegionsForOptionPane(self, obj):
+    def _getBrailleRegionsForOptionPane(self, obj):
         """Get the braille for an option pane.
         
         Arguments:
@@ -847,12 +746,12 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForOptionPane", obj)
+        self._debugGenerator("_getBrailleRegionsForOptionPane", obj)
     
-        return self.getDefaultBrailleRegions(obj)
+        return self._getDefaultBrailleRegions(obj)
     
     
-    def getBrailleRegionsForPageTab(self, obj):
+    def _getBrailleRegionsForPageTab(self, obj):
         """Get the braille for a page tab.
         
         Arguments:
@@ -862,12 +761,12 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForPageTab", obj)
+        self._debugGenerator("_getBrailleRegionsForPageTab", obj)
     
-        return self.getDefaultBrailleRegions(obj)
+        return self._getDefaultBrailleRegions(obj)
     
     
-    def getBrailleRegionsForPageTabList(self, obj):
+    def _getBrailleRegionsForPageTabList(self, obj):
         """Get the braille for a page tab list.
         
         Arguments:
@@ -877,12 +776,12 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForPageTabList", obj)
+        self._debugGenerator("_getBrailleRegionsForPageTabList", obj)
     
-        return self.getDefaultBrailleRegions(obj)
+        return self._getDefaultBrailleRegions(obj)
     
     
-    def getBrailleRegionsForProgressBar(self, obj):
+    def _getBrailleRegionsForProgressBar(self, obj):
         """Get the braille for a progress bar.  If the object already
         had focus, just the new value is displayed.
         
@@ -893,12 +792,12 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
     
-        self.debugGenerator("getBrailleRegionsForProgressBar", obj)
+        self._debugGenerator("_getBrailleRegionsForProgressBar", obj)
     
-        return self.getDefaultBrailleRegions(obj)
+        return self._getDefaultBrailleRegions(obj)
     
     
-    def getBrailleRegionsForPushButton(self, obj):
+    def _getBrailleRegionsForPushButton(self, obj):
         """Get the braille for a push button
         
         Arguments:
@@ -908,12 +807,12 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForPushButton", obj)
+        self._debugGenerator("_getBrailleRegionsForPushButton", obj)
     
-        return self.getDefaultBrailleRegions(obj)
+        return self._getDefaultBrailleRegions(obj)
     
     
-    def getBrailleRegionsForRadioButton(self, obj):
+    def _getBrailleRegionsForRadioButton(self, obj):
         """Get the braille for a radio button.  If the button already had
         focus, then only the state is displayed.
         
@@ -924,7 +823,7 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForRadioButton", obj)
+        self._debugGenerator("_getBrailleRegionsForRadioButton", obj)
     
         brailleRolenames = settings.getSetting("brailleRolenames",
                                                settings.ROLENAME_LONG)
@@ -940,7 +839,7 @@ class BrailleGenerator:
         elif brailleRolenames == settings.ROLENAME_LONG:
             text += " " + getLongBrailleForRoleName(obj)
     
-        accelerator = self.getBrailleTextForAccelerator(obj)
+        accelerator = self._getBrailleTextForAccelerator(obj)
         if len(accelerator) > 0:
             text += " " + accelerator
     
@@ -951,7 +850,7 @@ class BrailleGenerator:
         return [regions, componentRegion]
     
     
-    def getBrailleRegionsForRadioMenuItem(self, obj):
+    def _getBrailleRegionsForRadioMenuItem(self, obj):
         """Get the braille for a radio menu item.  If the menu item
         already had focus, then only the state is displayed.
         
@@ -962,15 +861,15 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForRadioMenuItem", obj)
+        self._debugGenerator("_getBrailleRegionsForRadioMenuItem", obj)
     
         # [[[TODO: WDW - only show accelerator when the menu item is
         # selected.]]]
         #
-        return self.getBrailleRegionsForRadioButton(obj)
+        return self._getBrailleRegionsForRadioButton(obj)
     
     
-    def getBrailleRegionsForRowHeader(self, obj):
+    def _getBrailleRegionsForRowHeader(self, obj):
         """Get the braille for a row header.
         
         Arguments:
@@ -980,12 +879,12 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForRowHeader", obj)
+        self._debugGenerator("_getBrailleRegionsForRowHeader", obj)
     
-        return self.getDefaultBrailleRegions(obj)
+        return self._getDefaultBrailleRegions(obj)
     
     
-    def getBrailleRegionsForScrollBar(self, obj):
+    def _getBrailleRegionsForScrollBar(self, obj):
         """Get the braille for a scroll bar.
         
         Arguments:
@@ -997,12 +896,12 @@ class BrailleGenerator:
     
         # [[[TODO: WDW - want to get orientation.]]]
         #
-        self.debugGenerator("getBrailleRegionsForScrollBar", obj)
+        self._debugGenerator("_getBrailleRegionsForScrollBar", obj)
     
-        return self.getDefaultBrailleRegions(obj)
+        return self._getDefaultBrailleRegions(obj)
     
     
-    def getBrailleRegionsForSlider(self, obj):
+    def _getBrailleRegionsForSlider(self, obj):
         """Get the braille for a slider.  If the object already
         had focus, just the value is displayed.
         
@@ -1013,12 +912,12 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForProgressBar", obj)
+        self._debugGenerator("_getBrailleRegionsForProgressBar", obj)
     
-        return self.getDefaultBrailleRegions(obj)
+        return self._getDefaultBrailleRegions(obj)
     
     
-    def getBrailleRegionsForSpinButton(self, obj):
+    def _getBrailleRegionsForSpinButton(self, obj):
         """Get the braille for a spin button.  If the object already has
         focus, then only the new value is displayed.
         
@@ -1029,12 +928,12 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
     
-        self.debugGenerator("getBrailleRegionsForSpinButton", obj)
+        self._debugGenerator("_getBrailleRegionsForSpinButton", obj)
     
-        return self.getBrailleRegionsForText(obj)
+        return self._getBrailleRegionsForText(obj)
     
     
-    def getBrailleRegionsForSplitPane(self, obj):
+    def _getBrailleRegionsForSplitPane(self, obj):
         """Get the braille for a split pane.
         
         Arguments:
@@ -1044,12 +943,12 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForSplitPane", obj)
+        self._debugGenerator("_getBrailleRegionsForSplitPane", obj)
     
-        return self.getDefaultBrailleRegions(obj)
+        return self._getDefaultBrailleRegions(obj)
     
     
-    def getBrailleRegionsForTable(self, obj):
+    def _getBrailleRegionsForTable(self, obj):
         """Get the braille for a table
         
         Arguments:
@@ -1059,12 +958,12 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForTable", obj)
+        self._debugGenerator("_getBrailleRegionsForTable", obj)
     
-        return self.getDefaultBrailleRegions(obj)
+        return self._getDefaultBrailleRegions(obj)
     
     
-    def getBrailleRegionsForTableCell(self, obj):
+    def _getBrailleRegionsForTableCell(self, obj):
         """Get the braille for a table cell
         
         Arguments:
@@ -1074,12 +973,12 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForTableCell", obj)
+        self._debugGenerator("_getBrailleRegionsForTableCell", obj)
     
-        return self.getDefaultBrailleRegions(obj)
+        return self._getDefaultBrailleRegions(obj)
     
     
-    def getBrailleRegionsForTableColumnHeader(self, obj):
+    def _getBrailleRegionsForTableColumnHeader(self, obj):
         """Get the braille for a table column header
         
         Arguments:
@@ -1089,12 +988,12 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForTableColumnHeader", obj)
+        self._debugGenerator("_getBrailleRegionsForTableColumnHeader", obj)
     
-        return self.getBrailleRegionsForColumnHeader(obj)
+        return self._getBrailleRegionsForColumnHeader(obj)
     
     
-    def getBrailleRegionsForTableRowHeader(self, obj):
+    def _getBrailleRegionsForTableRowHeader(self, obj):
         """Get the braille for a table row header
         
         Arguments:
@@ -1104,12 +1003,12 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForTableRowHeader", obj)
+        self._debugGenerator("_getBrailleRegionsForTableRowHeader", obj)
     
-        return self.getBrailleRegionsForRowHeader(obj)
+        return self._getBrailleRegionsForRowHeader(obj)
     
     
-    def getBrailleRegionsForTearOffMenuItem(self, obj):
+    def _getBrailleRegionsForTearOffMenuItem(self, obj):
         """Get the braille for a tear off menu item
         
         Arguments:
@@ -1119,7 +1018,7 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForTearOffMenuItem", obj)
+        self._debugGenerator("_getBrailleRegionsForTearOffMenuItem", obj)
     
         brailleRolenames = settings.getSetting("brailleRolenames",
                                                settings.ROLENAME_LONG)
@@ -1136,7 +1035,7 @@ class BrailleGenerator:
         return [regions, componentRegion]
     
     
-    def getBrailleRegionsForTerminal(self, obj):
+    def _getBrailleRegionsForTerminal(self, obj):
         """Get the braille for a terminal
         
         Arguments:
@@ -1146,7 +1045,7 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForTerminal", obj)
+        self._debugGenerator("_getBrailleRegionsForTerminal", obj)
     
         brailleRolenames = settings.getSetting("brailleRolenames",
                                                settings.ROLENAME_LONG)
@@ -1175,7 +1074,7 @@ class BrailleGenerator:
         return [regions, textRegion]
 
 
-    def getBrailleRegionsForToggleButton(self, obj):
+    def _getBrailleRegionsForToggleButton(self, obj):
         """Get the braille for a toggle button.  If the toggle button already
         had focus, then only the state is displayed.
         
@@ -1186,12 +1085,12 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForToggleButton", obj)
+        self._debugGenerator("_getBrailleRegionsForToggleButton", obj)
     
-        return self.getBrailleRegionsForRadioButton(obj)
+        return self._getBrailleRegionsForRadioButton(obj)
     
     
-    def getBrailleRegionsForToolBar(self, obj):
+    def _getBrailleRegionsForToolBar(self, obj):
         """Get the braille for a tool bar
         
         Arguments:
@@ -1201,12 +1100,12 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForToolBar", obj)
+        self._debugGenerator("_getBrailleRegionsForToolBar", obj)
     
-        return self.getDefaultBrailleRegions(obj)
+        return self._getDefaultBrailleRegions(obj)
     
     
-    def getBrailleRegionsForTree(self, obj):
+    def _getBrailleRegionsForTree(self, obj):
         """Get the braille for a tree
         
         Arguments:
@@ -1216,12 +1115,12 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForTreeTable", obj)
+        self._debugGenerator("_getBrailleRegionsForTreeTable", obj)
     
-        return self.getDefaultBrailleRegions(obj)
+        return self._getDefaultBrailleRegions(obj)
     
     
-    def getBrailleRegionsForTreeTable(self, obj):
+    def _getBrailleRegionsForTreeTable(self, obj):
         """Get the braille for a tree table
         
         Arguments:
@@ -1231,12 +1130,12 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForTreeTable", obj)
+        self._debugGenerator("_getBrailleRegionsForTreeTable", obj)
     
-        return self.getDefaultBrailleRegions(obj)
+        return self._getDefaultBrailleRegions(obj)
     
     
-    def getBrailleRegionsForWindow(self, obj):
+    def _getBrailleRegionsForWindow(self, obj):
         """Get the braille for a window
         
         Arguments:
@@ -1246,7 +1145,109 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
         
-        self.debugGenerator("getBrailleRegionsForWindow", obj)
+        self._debugGenerator("_getBrailleRegionsForWindow", obj)
     
-        return self.getDefaultBrailleRegions(obj)
+        return self._getDefaultBrailleRegions(obj)
     
+    
+    def getBrailleRegions(self, obj, groupChildren=True):
+        """Get the braille regions for an Accessible object.  This
+        will look first to the specific braille generators and then to
+        the default braille generator.  This method is the primary
+        method that external callers of this class should use.
+    
+        Arguments:
+        - obj: the object
+        - groupChildren: if True, children of an object should be displayed
+                         together with their parent, where each child is
+                         separated by _ and the selected child is the Region
+                         that should get focus.
+                          
+        Returns a list where the first element is a list of Regions to
+        display and the second element is the Region which should get
+        focus.  """
+
+        # If we want to group the children, first see if obj is a child of
+        # something we like to group.  If so, then reset the obj to the obj's
+        # parent.  If not, see if the obj is the container of things we like
+        # to group.  If all fails, we don't try grouping.
+        #
+        reallyGroupChildren = False
+        if groupChildren:
+            parent = obj.parent
+            isChild = parent \
+                      and ((parent.role == rolenames.ROLE_MENU) \
+                           or (parent.role == rolenames.ROLE_MENU_BAR) \
+                           or (parent.role == rolenames.ROLE_PAGE_TAB_LIST))
+            if isChild:
+                obj = parent
+                reallyGroupChildren = True
+            else:
+                reallyGroupChildren = \
+                    (obj.role == rolenames.ROLE_MENU) \
+                    or (obj.role == rolenames.ROLE_MENU_BAR) \
+                    or (obj.role == rolenames.ROLE_PAGE_TAB_LIST)
+            
+        if self.brailleGenerators.has_key(obj.role):
+            generator = self.brailleGenerators[obj.role]
+        else:
+            generator = self._getDefaultBrailleRegions
+
+        result = generator(obj)
+        regions = result[0]
+        selectedRegion = result[1]
+        
+        if reallyGroupChildren:
+            regions.append(braille.Region(" "))
+            selection = obj.selection
+            childCount = obj.childCount
+            i = 0
+            while i < childCount:
+                child = obj.child(i)
+                if child.role != rolenames.ROLE_SEPARATOR \
+                    and child.state.count(core.Accessibility.STATE_SENSITIVE):
+
+                    if (i > 0) and (i < (self, childCount - 1)):
+                        regions.append(braille.Region(" _ "))
+    
+                    result = self.getBrailleRegions(child, False)
+                    regions.extend(result[0])
+    
+                    if selection and selection.isChildSelected(i):
+                        selectedRegion = result[1]
+                    
+                i = i + 1
+            
+        return [regions, selectedRegion]
+
+
+    def getBrailleContext(self, obj):
+        """Get the braille regions that describe the context (i.e.,
+        names/roles of the container hierarchy) of the object.
+    
+        Arguments:
+        - obj: the object
+                          
+        Returns a list of Regions to display.
+        """
+
+        # We want to follow the same grouping logic in getBrailleRegions.
+        # 
+        parent = obj.parent
+        if parent \
+           and ((parent.role == rolenames.ROLE_MENU) \
+                or (parent.role == rolenames.ROLE_MENU_BAR) \
+                or (parent.role == rolenames.ROLE_PAGE_TAB_LIST)):
+            obj = parent
+
+        regions = []
+        while parent:
+            if len(parent.label) > 0:
+                regions.append(braille.Region(" "))
+                result = self.getBrailleRegions(parent, False)
+                regions.extend(result[0])
+            parent = parent.parent
+
+        regions.reverse()
+
+        return regions

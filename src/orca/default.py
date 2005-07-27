@@ -40,8 +40,6 @@ import speechgenerator
 from input_event import InputEventHandler
 
 from orca_i18n import _                          # for gettext support
-from rolenames import getShortBrailleForRoleName # localized role names
-from rolenames import getSpeechForRoleName       # localized role names
 
 from script import Script
 
