@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-22 06:41-0400\n"
-"PO-Revision-Date: 2005-07-22 14:20-0400\n"
+"POT-Creation-Date: 2005-07-27 07:26-0400\n"
+"PO-Revision-Date: 2005-07-27 14:20-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -48,7 +48,7 @@ msgstr "number"
 msgid "dollar"
 msgstr "dollar"
 
-#: src/orca/chnames.py:32 src/orca/speechgenerator.py:772
+#: src/orca/chnames.py:32 src/orca/speechgenerator.py:918
 msgid "percent"
 msgstr "percent"
 
@@ -144,11 +144,15 @@ msgstr "Repeats last utterance sent to speech."
 msgid "Speaks entire document."
 msgstr "Speaks entire document."
 
-#: src/orca/default.py:507
+#: src/orca/default.py:223
+msgid "ERROR: NOTHING HAS FOCUS!"
+msgstr "ERROR: NOTHING HAS FOCUS!"
+
+#: src/orca/default.py:597
 msgid "Not a document."
 msgstr "Not a document."
 
-#: src/orca/focus_tracking_presenter.py:341
+#: src/orca/focus_tracking_presenter.py:378
 msgid "Switching to focus tracking mode."
 msgstr "Switching to focus tracking mode."
 
@@ -168,11 +172,11 @@ msgstr "Input"
 msgid "Message Log"
 msgstr "Message Log"
 
-#: src/orca/hierarchical_presenter.py:487
+#: src/orca/hierarchical_presenter.py:499
 msgid "Switching to hierarchical navigation mode."
 msgstr "Switching to hierarchical navigation mode."
 
-#: src/orca/metacity.py:109
+#: src/orca/metacity.py:114
 msgid "inaccessible"
 msgstr "inaccessible"
 
@@ -226,47 +230,47 @@ msgstr "Use key echo?  Enter y or n: "
 msgid "Braille support appears to work, use it?  Enter y or n. "
 msgstr "Braille support appears to work.  Use it?  Enter y or n. "
 
-#: src/orca/orca.py:180
+#: src/orca/orca.py:238
 msgid "User logged out - shutting down."
 msgstr "User logged out - shutting down."
 
-#: src/orca/orca.py:332
+#: src/orca/orca.py:363
 msgid "Entering learn mode.  Press any key to hear its function. "
 msgstr "Entering learn mode.  Press any key to hear its function. "
 
-#: src/orca/orca.py:333
+#: src/orca/orca.py:364
 msgid "To exit learn mode, press the escape key."
 msgstr "To exit learn mode, press the escape key."
 
-#: src/orca/orca.py:334
+#: src/orca/orca.py:365
 msgid "Learn mode.  Press escape to exit."
 msgstr "Learn mode.  Press escape to exit."
 
-#: src/orca/orca.py:345 src/orca/orca.py:346
+#: src/orca/orca.py:376 src/orca/orca.py:377
 msgid "Exiting learn mode."
 msgstr "Exiting learn mode."
 
-#: src/orca/orca.py:422 src/orca/orca.py:423
+#: src/orca/orca.py:444 src/orca/orca.py:445
 msgid "Welcome to Orca."
 msgstr "Welcome to Orca."
 
-#: src/orca/orca.py:452
+#: src/orca/orca.py:468
 msgid "goodbye."
 msgstr "goodbye."
 
-#: src/orca/orca.py:453
+#: src/orca/orca.py:469
 msgid "Goodbye."
 msgstr "Goodbye."
 
-#: src/orca/orca.py:569
+#: src/orca/orca.py:581
 msgid "Enters learn mode.  Press escape to exit learn mode."
 msgstr "Enters learn mode.  Press escape to exit learn mode."
 
-#: src/orca/orca.py:572
+#: src/orca/orca.py:584
 msgid "Quits Orca"
 msgstr "Quits Orca"
 
-#: src/orca/orca.py:575
+#: src/orca/orca.py:587
 msgid ""
 "Prints a debug listing of all known applications to the console where Orca "
 "is running."
@@ -274,7 +278,7 @@ msgstr ""
 "Prints a debug listing of all known applications to the console where Orca "
 "is running."
 
-#: src/orca/orca.py:578
+#: src/orca/orca.py:590
 msgid ""
 "Prints debug information about the currently active application to the "
 "console where Orca is running."
@@ -282,7 +286,7 @@ msgstr ""
 "Prints debug information about the currently active application to the "
 "console where Orca is running."
 
-#: src/orca/orca.py:581
+#: src/orca/orca.py:593
 msgid "Switches to the next presentation manager."
 msgstr "Switches to the next presentation manager."
 
@@ -978,7 +982,7 @@ msgstr "TOM"
 msgid "TEAR OFF MENU ITEM"
 msgstr "TEAR OFF MENU ITEM"
 
-#: src/orca/rolenames.py:431 src/orca/speechgenerator.py:1056
+#: src/orca/rolenames.py:431 src/orca/speechgenerator.py:1255
 msgid "tear off menu item"
 msgstr "tear off menu item"
 
@@ -1194,50 +1198,42 @@ msgstr "shortcut"
 msgid "accelerator"
 msgstr "accelerator"
 
-#: src/orca/speechgenerator.py:269
+#: src/orca/speechgenerator.py:306
 msgid " dot dot dot"
 msgstr " dot dot dot"
 
-#: src/orca/speechgenerator.py:362 src/orca/speechgenerator.py:366
+#: src/orca/speechgenerator.py:412 src/orca/speechgenerator.py:416
 msgid "checked"
 msgstr "checked"
 
-#: src/orca/speechgenerator.py:370 src/orca/speechgenerator.py:374
+#: src/orca/speechgenerator.py:420 src/orca/speechgenerator.py:424
 msgid "not checked"
 msgstr "not checked"
 
-#: src/orca/speechgenerator.py:651
-msgid "one item"
-msgstr "one item"
-
-#: src/orca/speechgenerator.py:653
-msgid "items"
-msgstr "items"
-
-#: src/orca/speechgenerator.py:750
+#: src/orca/speechgenerator.py:893
 msgid "one tab"
 msgstr "one tab"
 
-#: src/orca/speechgenerator.py:752
+#: src/orca/speechgenerator.py:895
 msgid "tabs"
 msgstr "tabs"
 
-#: src/orca/speechgenerator.py:817 src/orca/speechgenerator.py:821
+#: src/orca/speechgenerator.py:971 src/orca/speechgenerator.py:975
 msgid "selected"
 msgstr "selected"
 
-#: src/orca/speechgenerator.py:825 src/orca/speechgenerator.py:829
+#: src/orca/speechgenerator.py:979 src/orca/speechgenerator.py:983
 msgid "not selected"
 msgstr "not selected"
 
-#: src/orca/speechgenerator.py:1058
+#: src/orca/speechgenerator.py:1257
 msgid "tear off"
 msgstr "tear off"
 
-#: src/orca/speechgenerator.py:1118 src/orca/speechgenerator.py:1122
+#: src/orca/speechgenerator.py:1323 src/orca/speechgenerator.py:1327
 msgid "pressed"
 msgstr "pressed"
 
-#: src/orca/speechgenerator.py:1126 src/orca/speechgenerator.py:1130
+#: src/orca/speechgenerator.py:1331 src/orca/speechgenerator.py:1335
 msgid "not pressed"
 msgstr "not pressed"
