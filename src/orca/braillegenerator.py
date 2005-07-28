@@ -53,6 +53,8 @@ class BrailleGenerator:
              self._getBrailleRegionsForArrow
         self.brailleGenerators["check box"]           = \
              self._getBrailleRegionsForCheckBox
+        self.brailleGenerators["check menu"]          = \
+             self._getBrailleRegionsForCheckMenuItem
         self.brailleGenerators["check menu item"]     = \
              self._getBrailleRegionsForCheckMenuItem
         self.brailleGenerators["column_header"]       = \
@@ -101,6 +103,8 @@ class BrailleGenerator:
              self._getBrailleRegionsForPushButton
         self.brailleGenerators["radio button"]        = \
              self._getBrailleRegionsForRadioButton
+        self.brailleGenerators["radio menu"]          = \
+             self._getBrailleRegionsForRadioMenuItem
         self.brailleGenerators["radio menu item"]     = \
              self._getBrailleRegionsForRadioMenuItem
         self.brailleGenerators["row_header"]          = \
@@ -151,33 +155,16 @@ class BrailleGenerator:
         Returns a string to be displayed.
         """
 
-        # [[[TODO: WDW - we need to figure out if this is something
-        # we want configured or not.  For now, I'm just turning it
-        # off.
-        #
-        return ""
-
         text = ""
 
-        # Right now, we only care if the object is a menu item with
-        #
-        verbosity = settings.getSetting("brailleVerbosityLevel",
-                                        settings.VERBOSITY_LEVEL_VERBOSE)    
-        if verbosity == settings.VERBOSITY_LEVEL_BRIEF:
-            return text
-        
         result = a11y.getAcceleratorAndShortcut(obj)
     
         accelerator = result[0]
         shortcut = result[1]
     
-        # settings.ACCELERATOR_SHORT just shows the accelerator
-        #
         if len(accelerator) > 0:
             text += "(" + accelerator + ")"
     
-        # settings.ACCELERATOR_LONG adds in the shortcut.
-        #
         if len(shortcut) > 0:
             text += "(" + shortcut + ")"
             
@@ -294,10 +281,6 @@ class BrailleGenerator:
         if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
             text += " " + getBrailleForRoleName(obj)
 
-        accelerator = self._getBrailleTextForAccelerator(obj)
-        if len(accelerator) > 0:
-            text += " " + accelerator
-        
         regions = []
         componentRegion = braille.Component(obj, text)
         regions.append(componentRegion)
@@ -342,11 +325,7 @@ class BrailleGenerator:
             text += " " + getBrailleForRoleName(obj)
     
         if obj.description:
-            text += " " + obj.description
-    
-        accelerator = self._getBrailleTextForAccelerator(obj)
-        if len(accelerator) > 0:
-            text += " " + accelerator
+            text += ": " + obj.description
     
         regions = []
         componentRegion = braille.Component(obj, text)
@@ -398,10 +377,6 @@ class BrailleGenerator:
         if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
             text += " " + getBrailleForRoleName(obj)
 
-        accelerator = self._getBrailleTextForAccelerator(obj)
-        if len(accelerator) > 0:
-            text += " " + accelerator
-    
         regions = []
         componentRegion = braille.Component(obj, text)
         regions.append(componentRegion)
@@ -421,11 +396,28 @@ class BrailleGenerator:
         """
         
         self._debugGenerator("_getBrailleRegionsForCheckMenuItem", obj)
+        
+        verbosity = settings.getSetting("brailleVerbosityLevel",
+                                        settings.VERBOSITY_LEVEL_VERBOSE)
+
+        set = obj.state
+        if set.count(core.Accessibility.STATE_CHECKED):
+            text = obj.label + " <x>"
+        else:
+            text = obj.label + " < >"
+            
+        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
+            text += " " + getBrailleForRoleName(obj)
+            if obj == orca.locusOfFocus:
+                accelerator = self._getBrailleTextForAccelerator(obj)
+                if len(accelerator) > 0:
+                    text += accelerator
     
-        # [[[TODO: WDW - only show accelerator when the menu item is
-        # selected.]]]
-        #
-        return self._getBrailleRegionsForCheckBox(obj)
+        regions = []
+        componentRegion = braille.Component(obj, text)
+        regions.append(componentRegion)
+    
+        return [regions, componentRegion]
     
     
     def _getBrailleRegionsForColumnHeader(self, obj):
@@ -671,7 +663,23 @@ class BrailleGenerator:
         
         self._debugGenerator("_getBrailleRegionsForMenu", obj)
 
-        return self._getDefaultBrailleRegions(obj)
+        verbosity = settings.getSetting("brailleVerbosityLevel",
+                                        settings.VERBOSITY_LEVEL_VERBOSE)
+
+        text = obj.label
+        
+        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
+            text += " " + getBrailleForRoleName(obj)
+            if obj == orca.locusOfFocus:
+                accelerator = self._getBrailleTextForAccelerator(obj)
+                if len(accelerator) > 0:
+                    text += accelerator
+
+        regions = []
+        componentRegion = braille.Component(obj, text)
+        regions.append(componentRegion)
+
+        return [regions, componentRegion]
 
     
     def _getBrailleRegionsForMenuBar(self, obj):
@@ -700,9 +708,25 @@ class BrailleGenerator:
         """
         
         self._debugGenerator("_getBrailleRegionsForMenuItem", obj)
-    
-        return self._getDefaultBrailleRegions(obj)
-    
+
+        verbosity = settings.getSetting("brailleVerbosityLevel",
+                                        settings.VERBOSITY_LEVEL_VERBOSE)
+
+        text = obj.label
+        
+        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
+            text += " " + getBrailleForRoleName(obj)
+            if obj == orca.locusOfFocus:
+                accelerator = self._getBrailleTextForAccelerator(obj)
+                if len(accelerator) > 0:
+                    text += accelerator
+
+        regions = []
+        componentRegion = braille.Component(obj, text)
+        regions.append(componentRegion)
+
+        return [regions, componentRegion]
+
     
     def _getBrailleRegionsForText(self, obj):
         """Get the braille for a text component.
@@ -835,10 +859,6 @@ class BrailleGenerator:
         if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
             text += " " + getBrailleForRoleName(obj)
 
-        accelerator = self._getBrailleTextForAccelerator(obj)
-        if len(accelerator) > 0:
-            text += " " + accelerator
-    
         regions = []
         componentRegion = braille.Component(obj, text)
         regions.append(componentRegion)
@@ -858,11 +878,28 @@ class BrailleGenerator:
         """
         
         self._debugGenerator("_getBrailleRegionsForRadioMenuItem", obj)
+
+        verbosity = settings.getSetting("brailleVerbosityLevel",
+                                        settings.VERBOSITY_LEVEL_VERBOSE)
     
-        # [[[TODO: WDW - only show accelerator when the menu item is
-        # selected.]]]
-        #
-        return self._getBrailleRegionsForRadioButton(obj)
+        set = obj.state
+        if set.count(core.Accessibility.STATE_CHECKED):
+            text = obj.label + " &=y"
+        else:
+            text = obj.label + " & y"
+            
+        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
+            text += " " + getBrailleForRoleName(obj)
+            if obj == orca.locusOfFocus:
+                accelerator = self._getBrailleTextForAccelerator(obj)
+                if len(accelerator) > 0:
+                    text += accelerator
+
+        regions = []
+        componentRegion = braille.Component(obj, text)
+        regions.append(componentRegion)
+    
+        return [regions, componentRegion]
     
     
     def _getBrailleRegionsForRowHeader(self, obj):

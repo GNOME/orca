@@ -486,7 +486,8 @@ def refresh():
     else:
         cursor = cursor + 1
 
-    #print "braille.refresh: ", string[startPos:endPos], cursor
+    #print "braille.refresh: ", string
+    #print "                 ", string[startPos:endPos], cursor
     
     brl.writeText(cursor, string[startPos:endPos])
     

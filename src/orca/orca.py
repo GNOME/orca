@@ -577,25 +577,6 @@ def outlineAccessible(accessible):
 #                                                                      #
 ########################################################################
 
-# Keybindings that Orca itself cares about.
-#
-_keybindings = {}
-_keybindings["insert+F1"] = InputEventHandler(\
-    enterLearnMode,
-    _("Enters learn mode.  Press escape to exit learn mode."))
-_keybindings["F12"] = InputEventHandler(\
-    shutdown,
-    _("Quits Orca"))
-_keybindings["F5"]  = InputEventHandler(\
-    printApps,
-    _("Prints a debug listing of all known applications to the console where Orca is running."))
-_keybindings["F6"]  = InputEventHandler(\
-    printActiveApp,
-    _("Prints debug information about the currently active application to the console where Orca is running."))
-_keybindings["F8"]  = InputEventHandler(\
-    _switchToNextPresentationManager,
-    _("Switches to the next presentation manager."))
-
 # The string representing the last key pressed.
 #
 lastKey = None
@@ -606,6 +587,12 @@ lastKey = None
 #
 _insertPressed = False
 
+INSERT_MODIFIER  = "insert"
+CONTROL_MODIFIER = "control"
+ALT_MODIFIER     = "alt"
+META_MODIFIER    = "meta"
+META2_MODIFIER   = "meta2"
+META3_MODIFIER   = "meta3"
 
 def _getModifierString(modifier):
     """Converts a set of modifer states into a text string
@@ -626,15 +613,15 @@ def _getModifierString(modifier):
     # actual key symbol (e.g., upper or lower case), but others may not.]]]
     #
     if modifier & (1 << core.Accessibility.MODIFIER_CONTROL):
-        l.append("control")
+        l.append(CONTROL_MODIFIER)
     if modifier & (1 << core.Accessibility.MODIFIER_ALT):
-        l.append("alt")
+        l.append(ALT_MODIFIER)
     if modifier & (1 << core.Accessibility.MODIFIER_META):
-        l.append("meta")
+        l.append(META_MODIFIER)
     if modifier & (1 << core.Accessibility.MODIFIER_META2):
-        l.append("meta2")
+        l.append(META2_MODIFIER)
     if modifier & (1 << core.Accessibility.MODIFIER_META3):
-        l.append("meta3")
+        l.append(META3_MODIFIER)
     for mod in l:
         if s == "":
             s = mod
@@ -645,9 +632,9 @@ def _getModifierString(modifier):
     #
     if _insertPressed:
         if len(s):
-            s += "+insert"
+            s += "+" + INSERT_MODIFIER
         else:
-            s = "insert"
+            s = INSERT_MODIFIER
             
     return s
 
@@ -667,6 +654,26 @@ def _keyEcho(key):
         speech.say("uppercase", key)
     else:
         speech.say("default", key)
+
+
+# Keybindings that Orca itself cares about.
+#
+_keybindings = {}
+_keybindings[INSERT_MODIFIER + "+F1"] = InputEventHandler(\
+    enterLearnMode,
+    _("Enters learn mode.  Press escape to exit learn mode."))
+_keybindings["F12"] = InputEventHandler(\
+    shutdown,
+    _("Quits Orca"))
+_keybindings["F5"]  = InputEventHandler(\
+    printApps,
+    _("Prints a debug listing of all known applications to the console where Orca is running."))
+_keybindings["F6"]  = InputEventHandler(\
+    printActiveApp,
+    _("Prints debug information about the currently active application to the console where Orca is running."))
+_keybindings["F8"]  = InputEventHandler(\
+    _switchToNextPresentationManager,
+    _("Switches to the next presentation manager."))
 
 
 def processKeyEvent(event):

@@ -56,6 +56,8 @@ class SpeechGenerator:
              self._getSpeechForArrow
         self.speechGenerators["check box"]           = \
              self._getSpeechForCheckBox
+        self.speechGenerators["check menu"]          = \
+             self._getSpeechForCheckMenuItem
         self.speechGenerators["check menu item"]     = \
              self._getSpeechForCheckMenuItem
         self.speechGenerators["column_header"]       = \
@@ -104,6 +106,8 @@ class SpeechGenerator:
              self._getSpeechForPushButton
         self.speechGenerators["radio button"]        = \
              self._getSpeechForRadioButton
+        self.speechGenerators["radio menu"]          = \
+             self._getSpeechForRadioMenuItem
         self.speechGenerators["radio menu item"]     = \
              self._getSpeechForRadioMenuItem
         self.speechGenerators["row_header"]          = \
@@ -154,13 +158,6 @@ class SpeechGenerator:
         Returns a string to be spoken.
         """
     
-        speakAccelerators = settings.getSetting("speakAccelerators",
-                                                False)
-    
-        text = ""
-        if not speakAccelerators:
-            return text
-        
         result = a11y.getAcceleratorAndShortcut(obj)
     
         accelerator = result[0]
@@ -251,7 +248,6 @@ class SpeechGenerator:
         """
     
         text = self._getSpeechForLabelAndRole(obj) \
-               + self._getSpeechForAccelerator(obj) \
                + self._getSpeechForAvailability(obj)
         
         text = text.replace("...", _(" dot dot dot"), 1)
@@ -309,7 +305,7 @@ class SpeechGenerator:
         Returns text to be spoken.
         """
         
-        text = self._getSpeechForLabelAndRole(obj)
+        text = self._getSpeechForLabelAndRole(obj) + ". "
         
         if obj.description:
             text += obj.description + ". "
@@ -363,7 +359,6 @@ class SpeechGenerator:
             if already_focused == False:
                 text = self._getSpeechForLabelAndRole(obj) \
                        + _("checked") + ". " \
-                       + self._getSpeechForAccelerator(obj) \
                        + self._getSpeechForAvailability(obj)
             else:
                 text = _("checked") + ". "
@@ -371,7 +366,6 @@ class SpeechGenerator:
             if already_focused == False:
                 text = self._getSpeechForLabelAndRole(obj) \
                        + _("not checked") + ". " \
-                       + self._getSpeechForAccelerator(obj) \
                        + self._getSpeechForAvailability(obj)
             else:
                 text = _("not checked") + ". "
@@ -922,7 +916,6 @@ class SpeechGenerator:
             if already_focused == False:
                 text = self._getSpeechForLabelAndRole(obj) \
                        + _("selected") + ". " \
-                       + self._getSpeechForAccelerator(obj) \
                        + self._getSpeechForAvailability(obj)
             else:
                 text = _("selected") + ". "
@@ -930,7 +923,6 @@ class SpeechGenerator:
             if already_focused == False:
                 text = self._getSpeechForLabelAndRole(obj) \
                        + _("not selected") + ". " \
-                       + self._getSpeechForAccelerator(obj) \
                        + self._getSpeechForAvailability(obj)
             else:
                 text = _("not selected") + ". "
@@ -1053,7 +1045,6 @@ class SpeechGenerator:
             text = valueString
         else:
             text = self._getSpeechForLabelAndRole(obj) + valueString + ". " \
-                   + self._getSpeechForAccelerator(obj) \
                    + self._getSpeechForAvailability(obj)
         
         self._debugGenerator("_getSpeechForProgressBar",
@@ -1274,7 +1265,6 @@ class SpeechGenerator:
             if already_focused == False:
                 text = self._getSpeechForLabelAndRole(obj) \
                        + _("pressed") + ". " \
-                       + self._getSpeechForAccelerator(obj) \
                        + self._getSpeechForAvailability(obj)
             else:
                 text = _("pressed") + ". "
@@ -1282,7 +1272,6 @@ class SpeechGenerator:
             if already_focused == False:
                 text = self._getSpeechForLabelAndRole(obj) \
                        + _("not pressed") + ". " \
-                       + self._getSpeechForAccelerator(obj) \
                        + self._getSpeechForAvailability(obj)
             else:
                 text = _("not pressed") + ". "

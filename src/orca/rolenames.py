@@ -42,6 +42,7 @@ ROLE_CALENDAR            = "calendar"
 ROLE_CANVAS              = "canvas"
 ROLE_CHECK_BOX           = "check box"
 ROLE_CHECK_MENU_ITEM     = "check menu item"
+ROLE_CHECK_MENU          = "check menu" # invented for items that are submenus
 ROLE_COLOR_CHOOSER       = "color chooser"
 ROLE_COLUMN_HEADER       = "column header"
 ROLE_COMBO_BOX           = "combo box"
@@ -78,6 +79,7 @@ ROLE_PROGRESS_BAR        = "progress bar"
 ROLE_PUSH_BUTTON         = "push button"
 ROLE_RADIO_BUTTON        = "radio button"
 ROLE_RADIO_MENU_ITEM     = "radio menu item"
+ROLE_RADIO_MENU          = "radio menu" # invented for items that are submenus
 ROLE_ROOT_PANE           = "root pane"
 ROLE_ROW_HEADER          = "row header"
 ROLE_SCROLL_BAR          = "scroll bar"
@@ -181,6 +183,11 @@ rolenames[ROLE_CHECK_MENU_ITEM] = Rolename(ROLE_CHECK_MENU_ITEM,
                                            _("CHK"),
                                            _("CHECK MENU ITEM"),
                                            _("check menu item"))
+
+rolenames[ROLE_CHECK_MENU] = Rolename(ROLE_CHECK_MENU,
+                                      _("CKM"),
+                                      _("CHECK MENU"),
+                                      _("check menu"))
 
 rolenames[ROLE_COLOR_CHOOSER] = Rolename(ROLE_COLOR_CHOOSER,
                                          _("CCH"),
@@ -360,7 +367,12 @@ rolenames[ROLE_RADIO_BUTTON] = Rolename(ROLE_RADIO_BUTTON,
 rolenames[ROLE_RADIO_MENU_ITEM] = Rolename(ROLE_RADIO_MENU_ITEM,
                                            _("RAD"),
                                            _("RADIO MENU ITEM"),
-                                           _("radio Menu item"))
+                                           _("radio menu item"))
+
+rolenames[ROLE_RADIO_MENU] = Rolename(ROLE_RADIO_MENU,
+                                      _("RDM"),
+                                      _("RADIO MENU"),
+                                      _("radio menu"))
 
 rolenames[ROLE_ROOT_PANE] = Rolename(ROLE_ROOT_PANE,
                                      _("RPN"),

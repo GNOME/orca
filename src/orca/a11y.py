@@ -315,9 +315,26 @@ class Accessible:
     def __get_role(self):
         """Returns the Accessible role name of this object as a string.
         This string is not localized and can be used for comparison.
-        """
         
-        self.role = self.acc.getRoleName()
+        Note that this fudges the rolename of the object to match more closely
+        what it is.  The only thing that is being fudged right now is to
+        coalesce radio and check menu items that are also submenus; gtk-demo
+        has an example of this in its menus demo.
+        """
+
+        role = self.acc.getRoleName()
+
+        # [[[TODO: WDW - HACK to coalesce menu items with children
+        # into menus.]]]
+        #
+        if (role == rolenames.ROLE_CHECK_MENU_ITEM) \
+            and (self.childCount > 0):
+                role = rolenames.ROLE_CHECK_MENU
+        elif (role == rolenames.ROLE_RADIO_MENU_ITEM) \
+            and (self.childCount > 0):
+                role = rolenames.ROLE_RADIO_MENU
+                
+        self.role = role
         return self.role
 
 
