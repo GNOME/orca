@@ -659,18 +659,31 @@ def _keyEcho(key):
 # Keybindings that Orca itself cares about.
 #
 _keybindings = {}
+
 _keybindings[INSERT_MODIFIER + "+F1"] = InputEventHandler(\
     enterLearnMode,
     _("Enters learn mode.  Press escape to exit learn mode."))
+
+_keybindings[INSERT_MODIFIER + "+Left"] = InputEventHandler(\
+    speech.decreaseSpeechRate,
+    _("Decreases the speech rate."))
+
+_keybindings[INSERT_MODIFIER + "+Right"] = InputEventHandler(\
+    speech.increaseSpeechRate,
+    _("Increases the speech rate."))
+
 _keybindings["F12"] = InputEventHandler(\
     shutdown,
     _("Quits Orca"))
+
 _keybindings["F5"]  = InputEventHandler(\
     printApps,
     _("Prints a debug listing of all known applications to the console where Orca is running."))
+
 _keybindings["F6"]  = InputEventHandler(\
     printActiveApp,
     _("Prints debug information about the currently active application to the console where Orca is running."))
+
 _keybindings["F8"]  = InputEventHandler(\
     _switchToNextPresentationManager,
     _("Switches to the next presentation manager."))

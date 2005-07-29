@@ -28,6 +28,8 @@ import settings
 from chnames import chnames
 from core import ORBit, bonobo
 
+from orca_i18n import _           # for gettext support
+
 ORBit.load_typelib('GNOME_Speech')
 import GNOME.Speech, GNOME__POA.Speech
 
@@ -256,9 +258,81 @@ def reset():
     shutdown()
     return init()
 
-# Speak text - This function takes the voice name and the text to
-# speak as parameters
 
+def increaseSpeechRate(inputEvent=None, voiceName=None):
+    """Increases the rate of speech for the given voice name.  If
+    voiceName is None, the rate increase will be applied to all known
+    voices.
+
+    [[[TODO: WDW - this is a hack for now.  Need to take min/max values
+    in account, plus also need to take into account that different engines
+    provide different rate ranges.]]]
+    
+    Arguments:
+    -voiceName: the voice whose speech rate should be increased
+    """
+
+    rateDelta = settings.getSetting("speechRateDelta", 25)
+    if voiceName:
+        if _speakers.has_key(voiceName):
+            s = _speakers[voiceName]    
+            try:
+                rate = s.getParameterValue("rate") + rateDelta
+                if s.setParameterValue("rate", rate):
+                    debug.println(debug.LEVEL_CONFIGURATION,
+                                  "speech.increaseSpeechRate: rate is now " \
+                                  " %d for %s" % (rate, voiceName))
+                    return
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+        debug.println(debug.LEVEL_CONFIGURATION,
+                      "speech.increaseSpeechRate could not" \
+                      " increase the speech rate.")
+    else:
+        for name in _speakers.keys():
+            increaseSpeechRate(inputEvent, name)
+
+    stop("default")
+    say("default", _("The speech rate has been raised."))
+
+        
+def decreaseSpeechRate(inputEvent=None, voiceName=None):
+    """Decreases the rate of speech for the given voice name.  If
+    voiceName is None, the rate decrease will be applied to all known
+    voices.
+
+    [[[TODO: WDW - this is a hack for now.  Need to take min/max values
+    in account, plus also need to take into account that different engines
+    provide different rate ranges.]]]
+    
+    Arguments:
+    -voiceName: the voice whose speech rate should be decreased
+    """
+
+    rateDelta = settings.getSetting("speechRateDelta", 25)
+    if voiceName:
+        if _speakers.has_key(voiceName):
+            s = _speakers[voiceName]    
+            try:
+                rate = s.getParameterValue("rate") - rateDelta
+                if s.setParameterValue("rate", rate):
+                    debug.println(debug.LEVEL_CONFIGURATION,
+                                  "speech.increaseSpeechRate: rate is now " \
+                                  " %d for %s" % (rate, voiceName))
+                    return
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+        debug.println(debug.LEVEL_CONFIGURATION,
+                      "speech.increaseSpeechRate could not" \
+                      " increase the speech rate.")
+    else:
+        for name in _speakers.keys():
+            decreaseSpeechRate(inputEvent, name)
+            
+    stop("default")
+    say("default", _("The speech rate has been lowered."))
+        
+                
 def say(voiceName, text):
     """Speaks the given text using the given voice style.
 
