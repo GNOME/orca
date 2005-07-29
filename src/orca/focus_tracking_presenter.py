@@ -378,6 +378,7 @@ def activate():
     speech.say("default", _("Switching to focus tracking mode."))
 
     _registerEventListener("window:activate")
+    _registerEventListener("window:deactivate")
     _registerEventListener("object:children-changed:remove")
 
     win = orca.findActiveWindow()

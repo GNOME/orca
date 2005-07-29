@@ -200,17 +200,6 @@ class Default(Script):
         if newLocusOfFocus:
             self.updateBraille(newLocusOfFocus)
 
-            # [[[TODO: WDW - This hack is because GTK+ menus give us two
-            # focus events when a submenu gets focus:  the first event
-            # will be for the supermenu and the second will be for the
-            # submenu.  So...we just ignore focus events for menus if the
-            # oldLocusOfFocus is a child of the menu.]]]
-            #
-            if newLocusOfFocus.role == rolenames.ROLE_MENU:
-                if oldLocusOfFocus \
-                   and (oldLocusOfFocus.parent == newLocusOfFocus):
-                    return
-                
             # Get the text for the object itself.
             #
             text = self.speechGenerator.getSpeech(newLocusOfFocus, False)
@@ -388,6 +377,27 @@ class Default(Script):
         Arguments:
         - event: the Event
         """
+
+        # [[[TODO: WDW - HACK to deal with quirky GTK+ menu behavior.
+        # The problem is that when moving to submenus in a menu, the
+        # menu gets focus first and then the submenu gets focus all
+        # with a single keystroke.  So...focus in menus really means
+        # that the object has focus *and* it is selected.  Now, this
+        # assumes the selected state will be set before focus is given,
+        # which appears to be the case from empirical analysis of the
+        # event stream.  But of course, all menu items and menus in
+        # the complete menu path will have their selected state set,
+        # so, we really only care about the leaf menu or menu item
+        # that it selected.]]]
+        #
+        role = event.source.role
+        if (role == rolenames.ROLE_MENU) \
+           or (role == rolenames.ROLE_MENU_ITEM) \
+           or (role == rolenames.ROLE_CHECK_MENU_ITEM) \
+           or (role == rolenames.ROLE_RADIO_MENU_ITEM):
+            selection = event.source.selection
+            if selection and selection.nSelectedChildren > 0:
+                return
 
         orca.setLocusOfFocus(event, event.source)
         
