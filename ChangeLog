@@ -1,3 +1,10 @@
+2005-07-29  Willie Walker <william.walker@sun.com>
+
+	* src/orca/speech.py, src/orca/orca.py: add speech rate
+	increase/decrease functionality (still needs work to make
+	sure it doesn't go out of parameter bounds).
+	* src/orca/braillegenerator.py: style guide work for menus.
+	
 2005-07-26  Willie Walker <william.walker@sun.com>
 
 	* a11y.py, braille.py, debug.py, default.py,
