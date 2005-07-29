@@ -7,6 +7,9 @@
 <!ENTITY todo '<emphasis>TODO:</emphasis>'>
 <!ENTITY note '<emphasis>NOTE:</emphasis>'>
 <!ENTITY wkc 'well known command'>
+<!ENTITY detail '<emphasis>IMPLEMENTATION DETAIL:</emphasis>'>
+<!ENTITY issue '<emphasis>KNOWN ISSUE:</emphasis>'>
+<!ENTITY example '<emphasis>EXAMPLE:</emphasis>'>
 
 <!ENTITY user_experience SYSTEM "user_experience.sgml">
   <!ENTITY personas_link '<link linkend="personas">personas</link>'>
@@ -19,7 +22,6 @@
   <!ENTITY ue_output_style SYSTEM "ue_output_style.sgml">
 
 <!ENTITY architecture SYSTEM "architecture.sgml">
-  <!ENTITY detail '<emphasis>IMPLEMENTATION DETAIL:</emphasis>'>
 
 <!ENTITY script_guide SYSTEM "script_guide.sgml">
 

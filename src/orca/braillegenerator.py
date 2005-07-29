@@ -407,8 +407,8 @@ class BrailleGenerator:
             text = obj.label + " < >"
             
         if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
-            text += " " + getBrailleForRoleName(obj)
             if obj == orca.locusOfFocus:
+                text += " " + getBrailleForRoleName(obj)
                 accelerator = self._getBrailleTextForAccelerator(obj)
                 if len(accelerator) > 0:
                     text += accelerator
@@ -669,8 +669,8 @@ class BrailleGenerator:
         text = obj.label
         
         if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
-            text += " " + getBrailleForRoleName(obj)
             if obj == orca.locusOfFocus:
+                text += " " + getBrailleForRoleName(obj)
                 accelerator = self._getBrailleTextForAccelerator(obj)
                 if len(accelerator) > 0:
                     text += accelerator
@@ -715,8 +715,8 @@ class BrailleGenerator:
         text = obj.label
         
         if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
-            text += " " + getBrailleForRoleName(obj)
             if obj == orca.locusOfFocus:
+                text += " " + getBrailleForRoleName(obj)
                 accelerator = self._getBrailleTextForAccelerator(obj)
                 if len(accelerator) > 0:
                     text += accelerator
@@ -748,15 +748,15 @@ class BrailleGenerator:
         regions.append(braille.Region(obj.label + " "))
         textRegion = braille.Text(obj)
         regions.append(textRegion)
-        
-        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
-            text = " " + getBrailleForRoleName(obj)
 
-        regions.append(braille.Region(text))
+        # We do not want the role at the end of text areas.
+        #
+        #if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
+        #    text = " " + getBrailleForRoleName(obj)
+        #regions.append(braille.Region(text))
         
         return [regions, textRegion]
-        #return [regions, regions[0]]
-    
+
     
     def _getBrailleRegionsForOptionPane(self, obj):
         """Get the braille for an option pane.
@@ -889,8 +889,8 @@ class BrailleGenerator:
             text = obj.label + " & y"
             
         if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
-            text += " " + getBrailleForRoleName(obj)
             if obj == orca.locusOfFocus:
+                text += " " + getBrailleForRoleName(obj)
                 accelerator = self._getBrailleTextForAccelerator(obj)
                 if len(accelerator) > 0:
                     text += accelerator

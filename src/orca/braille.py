@@ -486,8 +486,10 @@ def refresh():
     else:
         cursor = cursor + 1
 
+    debug.println(debug.LEVEL_INFO, "braille.refresh(%s), cursor=%d" \
+                  % (string[startPos:endPos], cursor))
+    
     #print "braille.refresh: ", string
-    #print "                 ", string[startPos:endPos], cursor
     
     brl.writeText(cursor, string[startPos:endPos])
     
