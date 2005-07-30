@@ -1,5 +1,15 @@
+2005-07-30  Willie Walker <william.walker@sun.com>
+
+	* src/orca/speech.py: add recovery from failure to register speech
+	callback with FreeTTS driver on Fedora (it works fine on
+	JDS/Suse).  Not quite sure what is going on here, but something
+	deep in the bowels of CORBA is croaking.
+	
 2005-07-29  Willie Walker <william.walker@sun.com>
 
+	* src/orca/default.py: better handling of menu and focus events
+	for setting the locusOfFocus.
+	
 	* src/orca/speech.py, src/orca/orca.py: add speech rate
 	increase/decrease functionality (still needs work to make
 	sure it doesn't go out of parameter bounds).
