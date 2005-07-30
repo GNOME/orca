@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-29 00:15-0400\n"
-"PO-Revision-Date: 2005-07-29 14:20-0400\n"
+"POT-Creation-Date: 2005-07-30 16:24-0400\n"
+"PO-Revision-Date: 2005-07-30 14:20-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -144,11 +144,11 @@ msgstr "Repeats last utterance sent to speech."
 msgid "Speaks entire document."
 msgstr "Speaks entire document."
 
-#: src/orca/default.py:231
+#: src/orca/default.py:220
 msgid "ERROR: NOTHING HAS FOCUS!"
 msgstr "ERROR: NOTHING HAS FOCUS!"
 
-#: src/orca/default.py:605
+#: src/orca/default.py:615
 msgid "Not a document."
 msgstr "Not a document."
 
@@ -262,15 +262,23 @@ msgstr "goodbye."
 msgid "Goodbye."
 msgstr "Goodbye."
 
-#: src/orca/orca.py:664
+#: src/orca/orca.py:665
 msgid "Enters learn mode.  Press escape to exit learn mode."
 msgstr "Enters learn mode.  Press escape to exit learn mode."
 
-#: src/orca/orca.py:667
+#: src/orca/orca.py:669
+msgid "Decreases the speech rate."
+msgstr "Decreases the speech rate."
+
+#: src/orca/orca.py:673
+msgid "Increases the speech rate."
+msgstr "Increases the speech rate."
+
+#: src/orca/orca.py:677
 msgid "Quits Orca"
 msgstr "Quits Orca"
 
-#: src/orca/orca.py:670
+#: src/orca/orca.py:681
 msgid ""
 "Prints a debug listing of all known applications to the console where Orca "
 "is running."
@@ -278,7 +286,7 @@ msgstr ""
 "Prints a debug listing of all known applications to the console where Orca "
 "is running."
 
-#: src/orca/orca.py:673
+#: src/orca/orca.py:685
 msgid ""
 "Prints debug information about the currently active application to the "
 "console where Orca is running."
@@ -286,7 +294,7 @@ msgstr ""
 "Prints debug information about the currently active application to the "
 "console where Orca is running."
 
-#: src/orca/orca.py:676
+#: src/orca/orca.py:689
 msgid "Switches to the next presentation manager."
 msgstr "Switches to the next presentation manager."
 
