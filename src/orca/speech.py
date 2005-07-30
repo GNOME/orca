@@ -191,8 +191,21 @@ def init():
             s.setParameterValue("pitch", desc[3])
             s.setParameterValue("volume", desc[4])
             _speakers[voiceName] = s
-            s.registerSpeechCallback(_cb._this())
-
+            
+            # [[[TODO: WDW - the register succeeds on JDS/Suse but fails
+            # on Fedora.  Dunno why, but we'll just limp along for now.
+            # BTW, the error is on the freetts-synthesis-driver side:
+            # Jul 30, 2005 4:36:09 AM com.sun.corba.se.impl.ior.IORImpl getProfile
+            # WARNING: "IOP00511201: (INV_OBJREF) IOR must have at least one IIOP profile"
+            # org.omg.CORBA.INV_OBJREF:   vmcid: SUN  minor code: 1201  completed: No
+            #
+            try:
+                s.registerSpeechCallback(_cb._this())
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+                debug.println(debug.LEVEL_CONFIGURATION,
+                              "Will not use speech callbacks.")
+                              
     # If no speakers were defined, select the first voice of the first
     # working driver as the default
     #
