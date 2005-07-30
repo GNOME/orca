@@ -6,5 +6,9 @@
 - Need to handle AT-SPI failures with respect to CORBA (e.g., COMM_FAILURE).
   * Perhaps have a well known "onCommFailure" method in the orca module
     that is called on failures.  This would do the appropriate recovery.
-
 - Implement the style guide for speech and braille.
+- Sometimes on Fedora Core 4, when a terminal is started after orca is
+  running, the terminal comes up with the "unknown" role.
+- Cannot register a callback with FreeTTS driver on Fedora (COMM_FAILURE)
+- GEdit will often hang when you quit it while running Orca
+  
