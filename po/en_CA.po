@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-30 16:24-0400\n"
-"PO-Revision-Date: 2005-07-30 14:20-0400\n"
+"POT-Creation-Date: 2005-07-31 01:00-0400\n"
+"PO-Revision-Date: 2005-07-31 14:20-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1221,6 +1221,14 @@ msgstr "EMBEDDED COMPONENT"
 #: src/orca/rolenames.py:530
 msgid "embedded component"
 msgstr "embedded component"
+
+#: src/orca/speech.py:309
+msgid "The speech rate has been raised."
+msgstr "The speech rate has been raised."
+
+#: src/orca/speech.py:346
+msgid "The speech rate has been lowered."
+msgstr "The speech rate has been lowered."
 
 #: src/orca/speechgenerator.py:167
 msgid "shortcut"

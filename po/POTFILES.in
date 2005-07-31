@@ -13,4 +13,5 @@ src/orca/orca.in
 src/orca/orca.py
 src/orca/rolenames.py
 src/orca/settings.py
+src/orca/speech.py
 src/orca/speechgenerator.py
