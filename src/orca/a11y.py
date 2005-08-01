@@ -244,6 +244,11 @@ class Accessible:
         #
         self.defunct = False
 
+        # [[[TODO: WDW - the AT-SPI appears to give us a different accessible
+        # when we repeatedly ask for the same child of a parent that manages
+        # its descendants.  So...we probably shouldn't cache those kind of
+        # children because we're likely to cause a memory leak.]]]
+        #
         # Save a reference to the AT-SPI object, and also save this
         # new object away in the cache.
         #
@@ -672,6 +677,11 @@ class Accessible:
         when an index out of bounds occurs?]]]
         """
 
+        # [[[TODO: WDW - the AT-SPI appears to give us a different accessible
+        # when we repeatedly ask for the same child of a parent that manages
+        # its descendants.  So...we probably shouldn't cache those kind of
+        # children because we're likely to cause a memory leak.]]]
+        #
         # Save away details we now know about this child
         #
         try:
