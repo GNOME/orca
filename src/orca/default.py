@@ -196,7 +196,38 @@ class Default(Script):
         - oldLocusOfFocus: Accessible that is the old locus of focus
         - newLocusOfFocus: Accessible that is the new locus of focus
         """
+        
+        # [[[TODO: WDW - HACK because parents that manage their descendants
+        # can give us a different object each time we ask for the same
+        # exact child.  So...we do a check here to see if the old object
+        # and new object have the same index in the parent and if they
+        # have the same name.  If so, then they are likely to be the same
+        # object.  The reason we check for the name here is a small sanity
+        # check.  This whole algorithm could fail because one might be
+        # deleting/adding identical elements from/to a list or table, thus
+        # the objects really could be different even though they seem the
+        # same.]]]
+        #
+        if oldLocusOfFocus:
+            oldParent = oldLocusOfFocus.parent
+        else:
+            oldParent = None
+            
+        if newLocusOfFocus:
+            newParent = newLocusOfFocus.parent
+        else:
+            newParent = None
 
+        if newParent and (oldParent == newParent):
+            state = newParent.state
+            if state.count(core.Accessibility.STATE_MANAGES_DESCENDANTS) \
+                and (oldLocusOfFocus.index == newLocusOfFocus.index) \
+                and (oldLocusOfFocus.name == newLocusOfFocus.name):
+                    return
+
+        # Well...now that we got that behind us, let's do what we're supposed
+        # to do.
+        #
         if newLocusOfFocus:
             self.updateBraille(newLocusOfFocus)
 
@@ -347,11 +378,23 @@ class Default(Script):
         Arguments:
         - event: the Event
         """
-    
-        # Do we care?
-        #
-        if selection_changed_handlers.has_key(event.source.role):
-            orca.visualAppearanceChanged(event, event.source)
+
+        # [[[TODO: WDW - HACK layered panes are nutty in that they
+        # will change the selection and tell the selected child it is
+        # focused, but the child will not issue a focus changed event.]]]
+        # 
+        if event.source \
+           and ((event.source.role == rolenames.ROLE_LAYERED_PANE) \
+                or (event.source.role == rolenames.ROLE_TABLE) \
+                or (event.source.role == rolenames.ROLE_TREE_TABLE) \
+                or (event.source.role == rolenames.ROLE_TREE)):
+            if event.source.childCount:
+                selection = event.source.selection
+                if selection and selection.nSelectedChildren > 0:
+                    child = selection.getSelectedChild(0)
+                    if child:
+                        orca.setLocusOfFocus(event, a11y.makeAccessible(child))
+            return
 
 
     def onActiveDescendantChanged(self, event):
@@ -408,7 +451,27 @@ class Default(Script):
             if selection and selection.nSelectedChildren > 0:
                 return
 
-        orca.setLocusOfFocus(event, event.source)
+        # [[[TODO: WDW - HACK to deal with the fact that active cells
+        # may or may not get focus.  Their parents, however, do tend to
+        # get focus, but when the parent gets focus, it really means
+        # that the selected child in it has focus.  Of course, this all
+        # breaks when more than one child is selected.  Then, we really
+        # need to depend upon the model where focus really works.]]]
+        #
+        newFocus = event.source
+        
+        if (event.source.role == rolenames.ROLE_LAYERED_PANE) \
+            or (event.source.role == rolenames.ROLE_TABLE) \
+            or (event.source.role == rolenames.ROLE_TREE_TABLE) \
+            or (event.source.role == rolenames.ROLE_TREE):
+            if event.source.childCount:
+                selection = event.source.selection
+                if selection and selection.nSelectedChildren > 0:
+                    child = selection.getSelectedChild(0)
+                    if child:
+                        newFocus = a11y.makeAccessible(child)
+                        
+        orca.setLocusOfFocus(event, newFocus)
         
 
     def onTextInserted(self, event):
@@ -704,12 +767,3 @@ def sayAllStopped(position):
 state_change_notifiers = {}
 state_change_notifiers["check box"] = ("checked", None)
 state_change_notifiers["toggle button"] = ("checked", None)
-
-
-# Dictionary that defines which objects we care about if an object's
-# selection changes.
-#
-selection_changed_handlers = {}
-selection_changed_handlers["combo box"]  = True
-selection_changed_handlers["table"]      = True
-selection_changed_handlers["tree table"] = True
