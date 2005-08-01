@@ -447,8 +447,32 @@ class Accessible:
                 label = target.name
                 break
 
+        # [[[TODO: WDW - HACK because push buttons can have labels as
+        # their children.  But, they can also be labelled by something.
+        # So...we'll make the label be a combination of the thing
+        # labelling them (above) plus their name or the combination of
+        # the names of their children if the children exist.]]]
+        #
+        if self.role == rolenames.ROLE_PUSH_BUTTON:
+            if (self.name is not None) and (len(self.name) > 0):
+                if len(label) > 0:
+                    label += " " + self.name
+                else:
+                    label = self.name
+            elif self.childCount > 0:
+                i = 0
+                while i < self.childCount:
+                    child = self.child(i)
+                    if child.role == rolenames.ROLE_LABEL:
+                        if (child.name is not None) and (len(child.name) > 0):
+                            if len(label) > 0:
+                                label += " " + child.name
+                            else:
+                                label = child.name
+                    i += 1
+                    
         # If the object doesn't have a relation, but has a name, return
-        # that
+        # the name.
         #
         if (len(label) == 0) and (self.name is not None) \
                and (len(self.name) > 0):
