@@ -1429,12 +1429,12 @@ class SpeechGenerator:
         while parent and (parent.parent != parent):
             if parent == stopAncestor:
                 break
-            if len(parent.label) > 0:
-                text = parent.label + " " \
-                       + getSpeechForRoleName(parent) + " " + text
-            elif (parent.role != rolenames.ROLE_PANEL) \
-                     and (parent.role != rolenames.ROLE_FILLER):
-                text = getSpeechForRoleName(parent) + " " + text
+            if parent.role != rolenames.ROLE_FILLER:
+                if len(parent.label) > 0:
+                    text = parent.label + " " \
+                           + getSpeechForRoleName(parent) + " " + text
+                elif parent.role != rolenames.ROLE_PANEL:
+                    text = getSpeechForRoleName(parent) + " " + text
             parent = parent.parent
             
         return text
