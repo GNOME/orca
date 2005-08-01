@@ -295,6 +295,15 @@ class Default(Script):
         - event: the Event
         """
         
+        # [[[TODO: WDW - HACK because gnome-terminal issues a name changed
+        # event for the edit preferences dialog even though the name really
+        # didn't change.  I'm guessing this is going to be a vagary in all
+        # of GTK+.]]]
+        #
+        if event.source and (event.source.role == rolenames.ROLE_DIALOG) \
+           and (event.source == orca.locusOfFocus):
+            return
+        
         orca.visualAppearanceChanged(event, event.source)
 
 
