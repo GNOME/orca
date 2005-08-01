@@ -31,6 +31,7 @@
 #include <Python.h>
 #include <pyorbit.h>
 #include "pyevent.h"
+#include <libbonobo.h>
 
 /**
  * pyevent_dealloc:
@@ -43,7 +44,7 @@
  * Returns: void.
  */
 static void pyevent_dealloc (PyEvent *e) {
-	bonobo_object_release_unref (e->e->source);
+	bonobo_object_release_unref(e->e->source, NULL);
 	CORBA_free (&(e->e->any_data));
 	CORBA_free (e->e);
 }
