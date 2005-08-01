@@ -448,6 +448,9 @@ class BrailleGenerator:
         
         self._debugGenerator("_getBrailleRegionsForComboBox", obj)
     
+        verbosity = settings.getSetting("brailleVerbosityLevel",
+                                        settings.VERBOSITY_LEVEL_VERBOSE)
+
         regions = []
         regions.append(braille.Region(obj.label + " "))
     
@@ -489,7 +492,10 @@ class BrailleGenerator:
                     debug.println(
                         debug.LEVEL_SEVERE,
                         "ERROR: Could not find selected item for combo box.")
-    
+
+        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
+            regions.append(braille.Region(" " + getBrailleForRoleName(obj)))
+                
         # [[[TODO: WDW - perhaps if a text area was created, we should
         # give focus to it.]]]
         #

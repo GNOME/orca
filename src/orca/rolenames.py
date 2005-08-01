@@ -146,8 +146,8 @@ rolenames[ROLE_INVALID] = Rolename(ROLE_INVALID,
 
 rolenames[ROLE_ACCEL_LABEL] = Rolename(ROLE_ACCEL_LABEL,
                                        _("ACC"),
-                                       _("ACCELERATOR LABEL"),
-                                       _("accelerator label"))
+                                       _("ACCELERATOR"),
+                                       _("accelerator"))
 
 rolenames[ROLE_ALERT] = Rolename(ROLE_ALERT,
                                  _("ALR"),
@@ -181,8 +181,8 @@ rolenames[ROLE_CHECK_BOX] = Rolename(ROLE_CHECK_BOX,
 
 rolenames[ROLE_CHECK_MENU_ITEM] = Rolename(ROLE_CHECK_MENU_ITEM,
                                            _("CHK"),
-                                           _("CHECK MENU ITEM"),
-                                           _("check menu item"))
+                                           _("CHECK ITEM"),
+                                           _("check item"))
 
 rolenames[ROLE_CHECK_MENU] = Rolename(ROLE_CHECK_MENU,
                                       _("CKM"),
@@ -201,7 +201,7 @@ rolenames[ROLE_COLUMN_HEADER] = Rolename(ROLE_COLUMN_HEADER,
 
 rolenames[ROLE_COMBO_BOX] = Rolename(ROLE_COMBO_BOX,
                                      _("CBO"),
-                                     _("COMBO BOX"),
+                                     _("COMBO"),
                                      _("combo box"))
 
 rolenames[ROLE_DATE_EDITOR] = Rolename(ROLE_DATE_EDITOR,
@@ -326,12 +326,12 @@ rolenames[ROLE_OPTION_PANE] = Rolename(ROLE_OPTION_PANE,
 
 rolenames[ROLE_PAGE_TAB] = Rolename(ROLE_PAGE_TAB,
                                     _("PGT"),
-                                    _("PAGE TAB"),
+                                    _("TAB"),
                                     _("page tab"))
 
 rolenames[ROLE_PAGE_TAB_LIST] = Rolename(ROLE_PAGE_TAB_LIST,
                                          _("PTL"),
-                                         _("PAGE TAB LIST"),
+                                         _("TAB LIST"),
                                          _("page tab list"))
 
 rolenames[ROLE_PANEL] = Rolename(ROLE_PANEL,
@@ -351,13 +351,13 @@ rolenames[ROLE_POPUP_MENU] = Rolename(ROLE_POPUP_MENU,
 
 rolenames[ROLE_PROGRESS_BAR] = Rolename(ROLE_PROGRESS_BAR,
                                         _("PRG"),
-                                        _("PROGRESS BAR"),
+                                        _("PROGRESS"),
                                         _("progress bar"))
 
 rolenames[ROLE_PUSH_BUTTON] = Rolename(ROLE_PUSH_BUTTON,
                                        _("PBT"),
-                                       _("PUSH BUTTON"),
-                                       _("push button"))
+                                       _("BUTTON"),
+                                       _("button"))
 
 rolenames[ROLE_RADIO_BUTTON] = Rolename(ROLE_RADIO_BUTTON,
                                         _("RAD"),
@@ -426,18 +426,18 @@ rolenames[ROLE_TABLE] = Rolename(ROLE_TABLE,
 
 rolenames[ROLE_TABLE_CELL] = Rolename(ROLE_TABLE_CELL,
                                       _("CEL"),
-                                      _("TABLE CELL"),
-                                      _("table cell"))
+                                      _("CELL"),
+                                      _("cell"))
 
 rolenames[ROLE_TABLE_COLUMN_HEADER] = Rolename(ROLE_TABLE_COLUMN_HEADER,
-                                               _("TCH"),
-                                               _("TABLE COLUMN HEADER"),
-                                               _("table column header"))
+                                               _("CHD"),
+                                               _("COLUMN HEADER"),
+                                               _("column header"))
 
 rolenames[ROLE_TABLE_ROW_HEADER] = Rolename(ROLE_TABLE_ROW_HEADER,
-                                            _("TRH"),
-                                            _("TABLE ROW HEADER"),
-                                            _("table row header"))
+                                            _("RHD"),
+                                            _("ROW HEADER"),
+                                            _("row header"))
 
 rolenames[ROLE_TEAR_OFF_MENU_ITEM] = Rolename(ROLE_TEAR_OFF_MENU_ITEM,
                                               _("TOM"),

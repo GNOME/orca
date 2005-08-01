@@ -82,6 +82,8 @@ class SpeechGenerator:
              self._getSpeechForImage
         self.speechGenerators["label"]               = \
              self._getSpeechForLabel
+        self.speechGenerators["layered pane"]        = \
+             self._getSpeechForLayeredPane
         self.speechGenerators["list"]                = \
              self._getSpeechForList
         self.speechGenerators["menu"]                = \
@@ -436,10 +438,13 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
         
+        verbosity = settings.getSetting("speechVerbosityLevel",
+                                        settings.VERBOSITY_LEVEL_VERBOSE)
+    
         if already_focused:
             text = ""
         else:
-            text = self._getSpeechForLabelAndRole(obj)
+            text = obj.label + " "
     
         # Find the text displayed in the combo box.  This is either:
         #
@@ -483,7 +488,11 @@ class SpeechGenerator:
                     debug.println(
                         debug.LEVEL_SEVERE,
                         "ERROR: Could not find selected item for combo box.")
-    
+
+        if not already_focused:
+            if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
+                text += " " + getSpeechForRoleName(obj) + ". "
+
         self._debugGenerator("_getSpeechForComboBox",
                              obj,
                              already_focused,
@@ -679,7 +688,7 @@ class SpeechGenerator:
                              text)
     
         return text
-    
+
     
     def _getSpeechForList(self, obj, already_focused):
         """Get the speech for a list.
