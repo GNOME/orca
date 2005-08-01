@@ -120,7 +120,8 @@ static PyObject *brl_module_init(PyObject *self,
 
 	/* Load the functions */
 
-	brlapi_initializeConnection = dlsym(brlapi_library, 
+	brlapi_initializeConnection = 
+                (int (*)(const void *, const void *)) dlsym(brlapi_library, 
 					    "brlapi_initializeConnection");
 	if (!brlapi_initializeConnection) {
   	        fprintf(stderr, 
@@ -128,69 +129,81 @@ static PyObject *brl_module_init(PyObject *self,
 		return PyInt_FromLong(0);
 	}
 
-	brlapi_closeConnection = dlsym(brlapi_library, 
-				       "brlapi_closeConnection");
+	brlapi_closeConnection = 
+                (void (*)(void)) dlsym(brlapi_library, 
+                                       "brlapi_closeConnection");
 	if (!brlapi_closeConnection) {
   	        fprintf(stderr,
 			"Failed to find brlapi_closeConnection in BrlTTY.\n");
 		return PyInt_FromLong(0);
 	}
 
-	brlapi_getDriverId = dlsym(brlapi_library, 
-				   "brlapi_getDriverId");
+	brlapi_getDriverId = 
+                (int (*)(unsigned char *, unsigned int)) dlsym(brlapi_library, 
+				                        "brlapi_getDriverId");
 	if (!brlapi_getDriverId) {
   	        fprintf(stderr, 
 			"Failed to find brlapi_getDriverId in BrlTTY.\n");
 		return PyInt_FromLong(0);
 	}
 
-	brlapi_getDriverName = dlsym(brlapi_library, 
-				     "brlapi_getDriverName");
+	brlapi_getDriverName = 
+                (int (*)(unsigned char *, unsigned int)) dlsym(brlapi_library, 
+				                       "brlapi_getDriverName");
 	if (!brlapi_getDriverName) {
   	        fprintf(stderr,
 			"Failed to find brlapi_getDriverName in BrlTTY.\n");
 		return PyInt_FromLong(0);
 	}
 
-	brlapi_getDisplaySize = dlsym(brlapi_library, 
-				      "brlapi_getDisplaySize");
+	brlapi_getDisplaySize = 
+                (int (*)(unsigned int *, unsigned int *)) dlsym(brlapi_library, 
+				                      "brlapi_getDisplaySize");
 	if (!brlapi_getDisplaySize) {
   	        fprintf(stderr,
 			"Failed to find brlapi_getDisplaySize in BrlTTY.\n");
 		return PyInt_FromLong(0);
 	}
 
-	brlapi_getTty = dlsym(brlapi_library, 
-			      "brlapi_getTty");
+	brlapi_getTty = 
+                (int (*) (int tty, int how)) dlsym(brlapi_library, 
+			                           "brlapi_getTty");
 	if (!brlapi_getTty) {
   	        fprintf(stderr, 
 			"Failed to find brlapi_getTty in BrlTTY.\n");
 		return PyInt_FromLong(0);
 	}
 	
-	brlapi_leaveTty = dlsym(brlapi_library, 
-				"brlapi_leaveTty");
+	brlapi_leaveTty = 
+                (int (*) (void)) dlsym(brlapi_library, 
+				       "brlapi_leaveTty");
 	if (!brlapi_leaveTty) {
   	        fprintf(stderr,
 			"Failed to find brlapi_leaveTty in BrlTTY.\n");
 		return PyInt_FromLong(0);
 	}
 
-	brlapi_writeText = dlsym (brlapi_library, "brlapi_writeText");
+	brlapi_writeText = 
+                (int (*) (int, const unsigned char *)) dlsym(brlapi_library, 
+                                                         "brlapi_writeText");
 	if (!brlapi_writeText) {
   	        fprintf(stderr,
 			"Failed to find brlapi_writeText in BrlTTY.\n");
 		return PyInt_FromLong(0);
 	}
 
-	brlapi_writeDots = dlsym (brlapi_library, "brlapi_writeDots");
+	brlapi_writeDots = 
+                (int (*) (const unsigned char *)) dlsym(brlapi_library, 
+                                                        "brlapi_writeDots");
 	if (!brlapi_writeDots) {
   	        fprintf(stderr,
 			"Failed to find brlapi_writeDots in BrlTTY.\n");
 		return PyInt_FromLong(0);
 	}
 
-	brlapi_readKey = dlsym(brlapi_library, "brlapi_readKey");
+	brlapi_readKey = 
+                (int (*) (int, unsigned int *)) dlsym(brlapi_library, 
+                                                      "brlapi_readKey");
 	if (!brlapi_readKey) {
 	        fprintf(stderr,
 			"Failed to find brlapi_readKey in BrlTTY.\n");
@@ -241,7 +254,7 @@ static PyObject *brl_module_shutdown(PyObject *self) {
 
 
 static PyObject *brl_module_getDriverId (PyObject *self) {
-        char id[3];
+        unsigned char id[3];
 
         if (!brl_initialized) {
 		Py_INCREF (Py_None);
@@ -249,7 +262,7 @@ static PyObject *brl_module_getDriverId (PyObject *self) {
 	}
 
 	if (brlapi_getDriverId(id, sizeof(id)) >= 0) {
-	        PyString_FromString(id);
+	        PyString_FromString((const char *) id);
 	} else {
 		Py_INCREF (Py_None);
 		return Py_None;
@@ -258,7 +271,7 @@ static PyObject *brl_module_getDriverId (PyObject *self) {
 
 
 static PyObject *brl_module_getDriverName(PyObject *self) {
-        char name[80];
+        unsigned char name[80];
 
 	if (!brl_initialized) {
 		Py_INCREF(Py_None);
@@ -266,7 +279,7 @@ static PyObject *brl_module_getDriverName(PyObject *self) {
 	}
 	
 	if (brlapi_getDriverName(name, sizeof(name)) >= 0) {
-	        PyString_FromString(name);
+	        PyString_FromString((const char *) name);
 	} else {
 		Py_INCREF (Py_None);
 		return Py_None;
@@ -275,7 +288,7 @@ static PyObject *brl_module_getDriverName(PyObject *self) {
 
 
 static PyObject *brl_module_getDisplayWidth(PyObject *self) {
-	int x, y;
+	unsigned int x, y;
 
 	if (!brl_initialized) {
 		return PyInt_FromLong(0);
@@ -287,7 +300,7 @@ static PyObject *brl_module_getDisplayWidth(PyObject *self) {
 
 
 static PyObject *brl_module_getDisplayHeight(PyObject *self) {
-	int x, y;
+	unsigned int x, y;
 
 	if (!brl_initialized) {
 		return PyInt_FromLong(0);
@@ -308,7 +321,7 @@ static PyObject *brl_module_writeText(PyObject *self,
 	}
 
 	if (brl_initialized) {
-	    brlapi_writeText(cursor, str);
+	    brlapi_writeText(cursor, (const unsigned char *) str);
 	}	
 
 	Py_INCREF(Py_None);
@@ -325,7 +338,7 @@ static PyObject *brl_module_writeDots(PyObject *self,
 	}
 
 	if (brl_initialized) {
-	    brlapi_writeDots(str);
+	    brlapi_writeDots((const unsigned char *) str);
 	}	
 	Py_INCREF(Py_None);
 	return Py_None;
