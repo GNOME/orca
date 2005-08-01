@@ -1,3 +1,25 @@
+2005-08-01  Willie Walker <william.walker@sun.com>
+
+	* src/orca/speechgenerator.py: try not to speak fillers.
+	* src/orca/default.py: handle issue where parents that manage 
+	descendants will potentially give a unique accessible instance
+	for the same child each time getChildAtIndex is called.
+	* src/orca/default.py: use selection changed events on specific
+	roles to update the locus of focus.
+	* src/orca/speechgenerator.py: remove the speaking of unavailable
+	if the object is an icon.  
+	* src/orca/speechgenerator.py._getSpeechForAlert: when presenting
+	a dialog, do not grab "free" labels that are children of a push
+	button.
+	* src/orca/a11y.py.__get_label: obtain the names of push buttons
+	a little better; push buttons can have labels as children and
+	can also be labelled by something.
+	* src/orca/default.py.onNameChanged: ignore name changes
+	on dialogs that have focus for now; the motivator for this is that
+	gnome-terminal appears to issue name change events on the
+	"Edit" -> "Current Profile..."  dialog even though the name didn't
+	change.
+	
 2005-07-30  Willie Walker <william.walker@sun.com>
 
 	* src/orca/speech.py: add recovery from failure to register speech

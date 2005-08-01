@@ -1,3 +1,6 @@
+- Search all modules for "TODO" - there's a lot.  All "TODO" comments
+  that have a "HACK" in them usually indicate some odd workaround for
+  an apparent AT-SPI implementation oddity.
 - Make the kbd module maintain a stack of keypresses, rather than only
   the last individual keypress
 - Fix the autogen stuff to better detect package dependencies
