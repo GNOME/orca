@@ -481,22 +481,24 @@ class Default(Script):
         - event: the Event
         """
 
-        # Ignore text insertions to non-focused objects, unless the
-        # currently focused object is the parent of the object to which
-        # text was inserted
+        # Ignore text deletions from non-focused objects, unless the
+        # currently focused object is the parent of the object from which
+        # text was deleted
         #
+        if (event.source != orca.locusOfFocus) \
+               and (event.source.parent != orca.locusOfFocus):
+            return
+
         text = event.source.text
         #print "onTextInserted, LENGTH=%d, text='%s'" % (text.characterCount, \
         #                                                event.any_data)
         
-        if (event.source == orca.locusOfFocus) \
-               or (event.source.parent == orca.locusOfFocus):
-            self.updateBraille(event.source)
-            text = event.any_data
-            if text.isupper():
-                speech.say("uppercase", text)
-            else:
-                speech.say("default", text)
+        self.updateBraille(event.source)
+        text = event.any_data
+        if text.isupper():
+            speech.say("uppercase", text)
+        else:
+            speech.say("default", text)
 
 
     def onTextDeleted(self, event):
@@ -510,15 +512,15 @@ class Default(Script):
         # currently focused object is the parent of the object from which
         # text was deleted
         #
+        if (event.source != orca.locusOfFocus) \
+               and (event.source.parent != orca.locusOfFocus):
+            return
+
         text = event.source.text
         #print "onTextDeleted, LENGTH=%d, text='%s'" % (text.characterCount, \
         #                                               event.any_data)
 
-        if (event.source != orca.locusOfFocus) \
-               and (event.source.parent != orca.locusOfFocus):
-            pass
-        else:
-            self.updateBraille(event.source)
+        self.updateBraille(event.source)
 
         # The any_data member of the event object has the deleted text in
         # it - If the last key pressed was a backspace or delete key,
@@ -540,6 +542,14 @@ class Default(Script):
         Arguments:
         - event: the Event
         """
+
+        # Ignore text deletions from non-focused objects, unless the
+        # currently focused object is the parent of the object from which
+        # text was deleted
+        #
+        if (event.source != orca.locusOfFocus) \
+               and (event.source.parent != orca.locusOfFocus):
+            return
 
         # Magnify the object.  [[[TODO: WDW - this is a hack for now.]]]
         #
