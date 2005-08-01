@@ -278,14 +278,20 @@ class SpeechGenerator:
         labels = a11y.findByRole(obj, "label")
     
         # Add the names of only those labels which are not associated with
-        # other objects (i.e., empty relation sets)
+        # other objects (i.e., empty relation sets).  [[[TODO: WDW - HACK:
+        # In addition, do not grab free labels whose parents are push buttons
+        # because push buttons can have labels as children.]]]
         #
         for label in labels:
             set = label.relations
             if len(set) == 0:
-                set = label.state
-                if set.count(core.Accessibility.STATE_SHOWING):
-                    text += " " + label.name
+                parent = label.parent
+                if parent and (parent.role == rolenames.ROLE_PUSH_BUTTON):
+                    pass
+                else:
+                    set = label.state
+                    if set.count(core.Accessibility.STATE_SHOWING):
+                        text += " " + label.name
             
         self._debugGenerator("_getSpeechForAlert",
                              obj,
