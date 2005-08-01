@@ -82,8 +82,6 @@ class SpeechGenerator:
              self._getSpeechForImage
         self.speechGenerators["label"]               = \
              self._getSpeechForLabel
-        self.speechGenerators["layered pane"]        = \
-             self._getSpeechForLayeredPane
         self.speechGenerators["list"]                = \
              self._getSpeechForList
         self.speechGenerators["menu"]                = \
