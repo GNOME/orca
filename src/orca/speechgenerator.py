@@ -618,8 +618,14 @@ class SpeechGenerator:
     
         Returns text to be spoken for the object.
         """
-        
-        text = self._getDefaultSpeech(obj, already_focused)
+
+        # [[[TODO: WDW - HACK to remove availability output because nautilus
+        # doesn't include this information for desktop icons.  If, at some
+        # point, it is determined that availability should be added back in,
+        # then a custom script for nautilus needs to be written to remove the
+        # availability.]]]
+        #
+        text = self._getSpeechForLabelAndRole(obj)
         
         self._debugGenerator("_getSpeechForIcon",
                              obj,
