@@ -255,6 +255,11 @@ class Default(Script):
             # We also only want to speak the one that changed.  If both
             # changed, first speak the row header, then the column header.
             #
+            # We also keep track of tree level depth and only announce
+            # that if it changes.
+            #
+            oldNodeLevel = -1
+            newNodeLevel = -1
             if newLocusOfFocus.role == rolenames.ROLE_TABLE_CELL:
                 if oldParent and oldParent.table:
                     table = oldParent.table
@@ -263,7 +268,7 @@ class Default(Script):
                 else:
                     oldRow = -1
                     oldCol = -1
-                
+
                 if newParent and newParent.table:
                     table = newParent.table
                     newRow = table.getRowAtIndex(newLocusOfFocus.index)
@@ -292,11 +297,22 @@ class Default(Script):
                                         rolenames.ROLE_COLUMN_HEADER].speech
                             text += "."
 
+                oldNodeLevel = a11y.getNodeLevel(oldLocusOfFocus)
+                newNodeLevel = a11y.getNodeLevel(newLocusOfFocus)
+
             # Get the text for the object itself.
             #
             if len(text):
                 text += " "
             text += self.speechGenerator.getSpeech(newLocusOfFocus, False)
+
+            # Now speak the new tree node level if it has changed.
+            #
+            if (oldNodeLevel != newNodeLevel) \
+               and (newNodeLevel >= 0):
+                if len(text) > 0:
+                    text += " "
+                    text += (_("tree level %d") % (newNodeLevel + 1)) + "."
 
             speech.say("default", text)
         else:

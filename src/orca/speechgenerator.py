@@ -1188,16 +1188,6 @@ class SpeechGenerator:
             else:
                 text += _("collapsed") + "."
 
-        # [[[TODO: WDW - HACK to determine the level of this child if
-        # it is a node.]]]
-        #
-        if not already_focused:
-            level = a11y.getNodeLevel(obj)
-            if level >= 0:
-                if len(text) > 0:
-                    text += " "
-                text += (_("tree level %d") % (level + 1)) + "."
-            
         self._debugGenerator("_getSpeechForTableCell",
                              obj,
                              already_focused,

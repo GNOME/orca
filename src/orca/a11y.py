@@ -1051,6 +1051,9 @@ def getNodeLevel(obj):
     Arguments:
     -obj: the Accessible object
     """
+
+    if obj is None:
+        return -1
     
     level = -1
     node = obj
