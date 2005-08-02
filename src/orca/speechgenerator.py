@@ -1183,9 +1183,9 @@ class SpeechGenerator:
             if len(text) > 0:
                 text += " "
             if obj.state.count(core.Accessibility.STATE_EXPANDED):            
-                text += _("expanded.")
+                text += _("expanded") + "."
             else:
-                text += _("collapsed.")
+                text += _("collapsed") + "."
                 
         self._debugGenerator("_getSpeechForTableCell",
                              obj,
