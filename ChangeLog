@@ -2,8 +2,9 @@
 
 	* src/orca/braille.py: add return to home functionality for when
 	the user presses CMD_HOME.
-	* src/orca/default.py, src/orca/speechgenerator.py: do some work
-	on speech for tables.
+	* src/orca/default.py, src/orca/speechgenerator.py,
+	src/orca/braillegenerator.py: do some work on speech and braille
+	for tables.
 
 2005-08-01  Willie Walker <william.walker@sun.com>
 
