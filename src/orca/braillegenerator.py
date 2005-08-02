@@ -1043,6 +1043,7 @@ class BrailleGenerator:
                 if action.getName(i) == "toggle":
                     obj.role = rolenames.ROLE_CHECK_BOX
                     regions = self._getBrailleRegionsForCheckBox(obj)
+                    obj.role = rolenames.ROLE_TABLE_CELL
                     break
                 #elif action.getName(i) == "edit":
                 #    text = self._getSpeechForText(obj, True)
@@ -1061,6 +1062,11 @@ class BrailleGenerator:
             else:
                 regions[0].append(braille.Region(" " + _("collapsed")))
 
+        level = a11y.getNodeLevel(obj)
+        if level >= 0:
+            regions[0].append(braille.Region(" " + _("TREE LEVEL %d") \
+                                             % (level + 1)))
+            
         return regions
     
     

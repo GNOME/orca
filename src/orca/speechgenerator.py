@@ -1167,6 +1167,7 @@ class SpeechGenerator:
                 if action.getName(i) == "toggle":
                     obj.role = rolenames.ROLE_CHECK_BOX
                     text = self._getSpeechForCheckBox(obj, already_focused)
+                    obj.role = rolenames.ROLE_TABLE_CELL
                     break
                 #elif action.getName(i) == "edit":
                 #    text = self._getSpeechForText(obj, True)
@@ -1186,7 +1187,17 @@ class SpeechGenerator:
                 text += _("expanded") + "."
             else:
                 text += _("collapsed") + "."
-                
+
+        # [[[TODO: WDW - HACK to determine the level of this child if
+        # it is a node.]]]
+        #
+        if not already_focused:
+            level = a11y.getNodeLevel(obj)
+            if level >= 0:
+                if len(text) > 0:
+                    text += " "
+                text += (_("tree level %d") % (level + 1)) + "."
+            
         self._debugGenerator("_getSpeechForTableCell",
                              obj,
                              already_focused,
