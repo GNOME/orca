@@ -1043,6 +1043,32 @@ def getTextLineAtCaret(obj):
     return [content, offset, line[1]]
 
 
+def getNodeLevel(obj):
+    """Determines the node level of this object if it is in a tree
+    relation, with 0 being the top level node.  If this object is
+    not in a tree relation, then -1 will be returned.
+
+    Arguments:
+    -obj: the Accessible object
+    """
+    
+    level = -1
+    node = obj
+    done = False
+    while not done:
+        relations = node.relations
+        node = None
+        for relation in relations:
+            if relation.getRelationType() \
+                   == core.Accessibility.RELATION_NODE_CHILD_OF:
+                level += 1
+                node = makeAccessible(relation.getTarget(0))
+                break
+        done = node is None
+
+    return level
+
+    
 def getAcceleratorAndShortcut(obj):
     """Gets the accelerator string (and possibly shortcut) for the given
     object.
