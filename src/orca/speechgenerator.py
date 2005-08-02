@@ -246,9 +246,12 @@ class SpeechGenerator:
         
         Returns text to be spoken for the object.
         """
-    
-        text = self._getSpeechForLabelAndRole(obj) \
-               + self._getSpeechForAvailability(obj)
+
+        text = ""
+
+        if not already_focused:
+            text = self._getSpeechForLabelAndRole(obj) \
+                   + self._getSpeechForAvailability(obj)
         
         text = text.replace("...", _(" dot dot dot"), 1)
     
@@ -1151,8 +1154,39 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
         
-        text = self._getDefaultSpeech(obj, already_focused)
-        
+        text = ""
+
+        # [[[TODO: WDW - Attempt to infer the cell type.  There's a
+        # bunch of stuff we can do here, such as check the EXPANDABLE
+        # state, check the NODE_CHILD_OF relation, etc.]]]
+        #
+        action = obj.action
+        if action:
+            i = 0
+            while i < action.nActions:
+                if action.getName(i) == "toggle":
+                    obj.role = rolenames.ROLE_CHECK_BOX
+                    text = self._getSpeechForCheckBox(obj, already_focused)
+                    break
+                #elif action.getName(i) == "edit":
+                #    text = self._getSpeechForText(obj, True)
+                #    break
+                i += 1
+
+        if (len(text) == 0) and (not already_focused):
+            text = obj.label + "."
+            
+        # [[[TODO: WDW - HACK attempt to determine if this is a node;
+        # if so, describe its state.]]]
+        #
+        if obj.state.count(core.Accessibility.STATE_EXPANDABLE):
+            if len(text) > 0:
+                text += " "
+            if obj.state.count(core.Accessibility.STATE_EXPANDED):            
+                text += _("expanded.")
+            else:
+                text += _("collapsed.")
+                
         self._debugGenerator("_getSpeechForTableCell",
                              obj,
                              already_focused,

@@ -34,14 +34,14 @@ import debug
 #             resolve the GNOME reference in mag.py.]]]
 import orca
 import rolenames
+import settings
 import speech
 import speechgenerator
 
 from input_event import InputEventHandler
-
 from orca_i18n import _                          # for gettext support
-
 from script import Script
+
 
 ########################################################################
 #                                                                      #
@@ -231,10 +231,11 @@ class Default(Script):
         if newLocusOfFocus:
             self.updateBraille(newLocusOfFocus)
 
-            # Get the text for the object itself.
-            #
-            text = self.speechGenerator.getSpeech(newLocusOfFocus, False)
-
+            verbosity = settings.getSetting("speechVerbosityLevel",
+                                            settings.VERBOSITY_LEVEL_VERBOSE)
+    
+            text = ""
+            
             # Now figure out how of the container context changed and
             # speech just what is different.
             #
@@ -245,7 +246,58 @@ class Default(Script):
                     newLocusOfFocus,
                     commonAncestor)                
                 if len(context) > 0:
-                    text = context + " " + text
+                    text = context
+
+            # Now, we'll treat table row and column headers as context
+            # as well.  This requires special handling because we're
+            # making headers seem hierarchical in the context, but they
+            # are not hierarchical in the containment hierarchicy.
+            # We also only want to speak the one that changed.  If both
+            # changed, first speak the row header, then the column header.
+            #
+            if newLocusOfFocus.role == rolenames.ROLE_TABLE_CELL:
+                if oldParent and oldParent.table:
+                    table = oldParent.table
+                    oldRow = table.getRowAtIndex(oldLocusOfFocus.index)
+                    oldCol = table.getColumnAtIndex(oldLocusOfFocus.index)
+                else:
+                    oldRow = -1
+                    oldCol = -1
+                
+                if newParent and newParent.table:
+                    table = newParent.table
+                    newRow = table.getRowAtIndex(newLocusOfFocus.index)
+                    newCol = table.getColumnAtIndex(newLocusOfFocus.index)
+
+                    if newRow != oldRow:
+                        desc = newParent.table.getRowDescription(newRow)
+                        if desc and len(desc):
+                            if len(text):
+                                text += " "
+                            text += desc
+                            if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
+                                text += " " \
+                                        + rolenames.rolenames[\
+                                        rolenames.ROLE_ROW_HEADER].speech
+                            text += "."
+                    if newCol != oldCol:
+                        desc = newParent.table.getColumnDescription(newCol)
+                        if desc and len(desc):
+                            if len(text):
+                                text += " "
+                            text += desc
+                            if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
+                                text += " " \
+                                        + rolenames.rolenames[\
+                                        rolenames.ROLE_COLUMN_HEADER].speech
+                            text += "."
+
+            # Get the text for the object itself.
+            #
+            if len(text):
+                text += " "
+            text += self.speechGenerator.getSpeech(newLocusOfFocus, False)
+
             speech.say("default", text)
         else:
             message = _("ERROR: NOTHING HAS FOCUS!")
@@ -384,10 +436,10 @@ class Default(Script):
         # focused, but the child will not issue a focus changed event.]]]
         # 
         if event.source \
-           and ((event.source.role == rolenames.ROLE_LAYERED_PANE) \
-                or (event.source.role == rolenames.ROLE_TABLE) \
-                or (event.source.role == rolenames.ROLE_TREE_TABLE) \
-                or (event.source.role == rolenames.ROLE_TREE)):
+           and (event.source.role == rolenames.ROLE_LAYERED_PANE):
+#                or (event.source.role == rolenames.ROLE_TABLE) \
+#                or (event.source.role == rolenames.ROLE_TREE_TABLE) \
+#                or (event.source.role == rolenames.ROLE_TREE)):
             if event.source.childCount:
                 selection = event.source.selection
                 if selection and selection.nSelectedChildren > 0:
@@ -775,5 +827,7 @@ def sayAllStopped(position):
 # of states that we care about.
 #
 state_change_notifiers = {}
-state_change_notifiers["check box"] = ("checked", None)
-state_change_notifiers["toggle button"] = ("checked", None)
+state_change_notifiers[rolenames.ROLE_CHECK_BOX]     = ("checked",  None)
+state_change_notifiers[rolenames.ROLE_TOGGLE_BUTTON] = ("checked",  None)
+state_change_notifiers[rolenames.ROLE_TABLE_CELL]    = ("checked",  None)
+state_change_notifiers[rolenames.ROLE_TABLE_CELL]    = ("expanded", None)
