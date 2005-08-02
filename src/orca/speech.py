@@ -282,6 +282,7 @@ def increaseSpeechRate(inputEvent=None, voiceName=None):
     provide different rate ranges.]]]
     
     Arguments:
+    -inputEvent: the input event (if any) causing this to be called
     -voiceName: the voice whose speech rate should be increased
     """
 
@@ -321,6 +322,7 @@ def decreaseSpeechRate(inputEvent=None, voiceName=None):
     provide different rate ranges.]]]
     
     Arguments:
+    -inputEvent: the input event (if any) causing this to be called
     -voiceName: the voice whose speech rate should be decreased
     """
 

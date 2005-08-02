@@ -510,37 +510,29 @@ def displayMessage(message, cursor=-1):
     refresh()
 
 
-def panLeft(command=None, script=None):
+def panLeft(inputEvent=None):
     """Pans the display to the left.
     
     Arguments:
-    - command: the BrlAPI command for the key that was pressed.
-    - script: the script calling this function
+    - inputEvent: the InputEvent instance that caused this to be called.
 
     Returns True to mean the command should be consumed.
     """
 
-    # We're doing something funky here, which is allowing the viewport
-    # to go negative.  The reason for this is to allow panRight's to
-    # take us back where we started.  What we're doing here is to allow
-    # each pan to be a display width at a time, and we'll let the refresh
-    # method take care of odd viewport values.
-    #
     if _viewport[0] > 0:
-        # Don't do the funky...
-        #_viewport[0] = _viewport[0] - _displaySize[0]
         _viewport[0] = max(0, _viewport[0] - _displaySize[0])
         
     refresh()
 
+    return True
 
-def panRight(command=None, script=None):
+
+def panRight(inputEvent=None):
     """Pans the display to the right, limiting the pan to the length
     of the line being displayed.
    
     Arguments:
-    - command: the BrlAPI command for the key that was pressed.
-    - script: the script calling this function
+    - inputEvent: the InputEvent instance that caused this to be called.
 
     Returns True to mean the command should be consumed.
     """
@@ -553,6 +545,25 @@ def panRight(command=None, script=None):
         if newX < len(string):
             _viewport[0] = newX
             refresh()
+
+    return True
+
+
+def returnToRegionWithFocus(inputEvent=None):
+    """Pans the display so the region with focus is displayed.
+    
+    Arguments:
+    - inputEvent: the InputEvent instance that caused this to be called.
+
+    Returns True to mean the command should be consumed.
+    """
+
+    global _regionWithFocus
+
+    setFocus(_regionWithFocus)
+    refresh()
+
+    return True
 
     
 def _processBrailleEvent(command):
@@ -589,9 +600,11 @@ def _processBrailleEvent(command):
 
     if (command >= 0) and (command <= CMD_MAX):
         if command == CMD_FWINLT:
-            panLeft(command)
+            panLeft()
         elif command == CMD_FWINRT:
-            panRight(command)
+            panRight()
+        elif command == CMD_HOME:
+            returnToRegionWithFocus()
     elif (command >= 0x100) and (command < (0x100 + _displaySize[0])):
         if len(_lines) > 0:
             cursor = (command - 0x100) + _viewport[0]
