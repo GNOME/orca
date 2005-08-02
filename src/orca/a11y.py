@@ -715,7 +715,7 @@ def onNameChanged(e):
     if Accessible._cache.has_key(e.source):
         obj = Accessible._cache[e.source]
         obj.name = e.any_data
-
+        del obj.label
 
 def onDescriptionChanged(e):
     """Core module event listener called when an object's description
@@ -728,7 +728,7 @@ def onDescriptionChanged(e):
     if Accessible._cache.has_key(e.source):
         obj = Accessible._cache[e.source]
         obj.description = e.any_data
-
+        del obj.label
 
 def onParentChanged(e):
     """Core module event listener called when an object's parent
