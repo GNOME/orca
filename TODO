@@ -14,4 +14,5 @@
   running, the terminal comes up with the "unknown" role.
 - Cannot register a callback with FreeTTS driver on Fedora (COMM_FAILURE)
 - GEdit will often hang when you quit it while running Orca
-  
+- gnome-terminal: "Edit" -> "Current Profile..." -> "Colors"; press the
+  color palette button.  The color editing widget is a monster.
