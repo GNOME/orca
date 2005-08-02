@@ -308,6 +308,8 @@ def increaseSpeechRate(inputEvent=None, voiceName=None):
     stop("default")
     say("default", _("The speech rate has been raised."))
 
+    return True
+
         
 def decreaseSpeechRate(inputEvent=None, voiceName=None):
     """Decreases the rate of speech for the given voice name.  If
@@ -345,6 +347,8 @@ def decreaseSpeechRate(inputEvent=None, voiceName=None):
     stop("default")
     say("default", _("The speech rate has been lowered."))
         
+    return True
+
                 
 def say(voiceName, text):
     """Speaks the given text using the given voice style.
