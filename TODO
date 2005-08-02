@@ -16,5 +16,3 @@
 - GEdit will often hang when you quit it while running Orca
 - gnome-terminal: "Edit" -> "Current Profile..." -> "Colors"; press the
   color palette button.  The color editing widget is a monster.
-- gtk-demo: go to editable cells and change a cell.  Orca continues to
-  speak it by its old name.
