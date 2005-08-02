@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-31 01:00-0400\n"
-"PO-Revision-Date: 2005-07-31 14:20-0400\n"
+"POT-Creation-Date: 2005-08-02 13:15-0400\n"
+"PO-Revision-Date: 2005-08-02 14:20-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -48,7 +48,7 @@ msgstr "number"
 msgid "dollar"
 msgstr "dollar"
 
-#: src/orca/chnames.py:32 src/orca/speechgenerator.py:865
+#: src/orca/chnames.py:32 src/orca/speechgenerator.py:887
 msgid "percent"
 msgstr "percent"
 
@@ -144,11 +144,11 @@ msgstr "Repeats last utterance sent to speech."
 msgid "Speaks entire document."
 msgstr "Speaks entire document."
 
-#: src/orca/default.py:220
+#: src/orca/default.py:303
 msgid "ERROR: NOTHING HAS FOCUS!"
 msgstr "ERROR: NOTHING HAS FOCUS!"
 
-#: src/orca/default.py:615
+#: src/orca/default.py:749
 msgid "Not a document."
 msgstr "Not a document."
 
@@ -315,12 +315,12 @@ msgid "ACC"
 msgstr "ACC"
 
 #: src/orca/rolenames.py:149
-msgid "ACCELERATOR LABEL"
-msgstr "ACCELERATOR LABEL"
+msgid "ACCELERATOR"
+msgstr "ACCELERATOR"
 
-#: src/orca/rolenames.py:150
-msgid "accelerator label"
-msgstr "accelerator label"
+#: src/orca/rolenames.py:150 src/orca/speechgenerator.py:169
+msgid "accelerator"
+msgstr "accelerator"
 
 #: src/orca/rolenames.py:153
 msgid "ALR"
@@ -395,12 +395,12 @@ msgid "check box"
 msgstr "check box"
 
 #: src/orca/rolenames.py:184
-msgid "CHECK MENU ITEM"
-msgstr "CHECK MENU ITEM"
+msgid "CHECK ITEM"
+msgstr "CHECK ITEM"
 
 #: src/orca/rolenames.py:185
-msgid "check menu item"
-msgstr "check menu item"
+msgid "check item"
+msgstr "check item"
 
 #: src/orca/rolenames.py:188
 msgid "CKM"
@@ -426,15 +426,15 @@ msgstr "COLOUR CHOOSER"
 msgid "color chooser"
 msgstr "colour chooser"
 
-#: src/orca/rolenames.py:198
+#: src/orca/rolenames.py:198 src/orca/rolenames.py:433
 msgid "CHD"
 msgstr "CHD"
 
-#: src/orca/rolenames.py:199
+#: src/orca/rolenames.py:199 src/orca/rolenames.py:434
 msgid "COLUMN HEADER"
 msgstr "COLUMN HEADER"
 
-#: src/orca/rolenames.py:200
+#: src/orca/rolenames.py:200 src/orca/rolenames.py:435
 msgid "column header"
 msgstr "column header"
 
@@ -443,8 +443,8 @@ msgid "CBO"
 msgstr "CBO"
 
 #: src/orca/rolenames.py:204
-msgid "COMBO BOX"
-msgstr "COMBO BOX"
+msgid "COMBO"
+msgstr "COMBO"
 
 #: src/orca/rolenames.py:205
 msgid "combo box"
@@ -742,9 +742,9 @@ msgstr "option pane"
 msgid "PGT"
 msgstr "PGT"
 
-#: src/orca/rolenames.py:329
-msgid "PAGE TAB"
-msgstr "PAGE TAB"
+#: src/orca/rolenames.py:329 src/orca/rolenames.py:423
+msgid "TAB"
+msgstr "TAB"
 
 #: src/orca/rolenames.py:330
 msgid "page tab"
@@ -755,8 +755,8 @@ msgid "PTL"
 msgstr "PTL"
 
 #: src/orca/rolenames.py:334
-msgid "PAGE TAB LIST"
-msgstr "PAGE TAB LIST"
+msgid "TAB LIST"
+msgstr "TAB LIST"
 
 #: src/orca/rolenames.py:335
 msgid "page tab list"
@@ -803,8 +803,8 @@ msgid "PRG"
 msgstr "PRG"
 
 #: src/orca/rolenames.py:354
-msgid "PROGRESS BAR"
-msgstr "PROGRESS BAR"
+msgid "PROGRESS"
+msgstr "PROGRESS"
 
 #: src/orca/rolenames.py:355
 msgid "progress bar"
@@ -815,12 +815,12 @@ msgid "PBT"
 msgstr "PBT"
 
 #: src/orca/rolenames.py:359
-msgid "PUSH BUTTON"
-msgstr "PUSH BUTTON"
+msgid "BUTTON"
+msgstr "BUTTON"
 
 #: src/orca/rolenames.py:360
-msgid "push button"
-msgstr "push button"
+msgid "button"
+msgstr "button"
 
 #: src/orca/rolenames.py:363 src/orca/rolenames.py:368
 msgid "RAD"
@@ -866,15 +866,15 @@ msgstr "ROOT PANE"
 msgid "root pane"
 msgstr "root pane"
 
-#: src/orca/rolenames.py:383
+#: src/orca/rolenames.py:383 src/orca/rolenames.py:438
 msgid "RHD"
 msgstr "RHD"
 
-#: src/orca/rolenames.py:384
+#: src/orca/rolenames.py:384 src/orca/rolenames.py:439
 msgid "ROW HEADER"
 msgstr "ROW HEADER"
 
-#: src/orca/rolenames.py:385
+#: src/orca/rolenames.py:385 src/orca/rolenames.py:440
 msgid "row header"
 msgstr "row header"
 
@@ -958,10 +958,6 @@ msgstr "STATUS BAR"
 msgid "status bar"
 msgstr "status bar"
 
-#: src/orca/rolenames.py:423
-msgid "TAB"
-msgstr "TAB"
-
 #: src/orca/rolenames.py:424
 msgid "TABLE"
 msgstr "TABLE"
@@ -975,36 +971,12 @@ msgid "CEL"
 msgstr "CEL"
 
 #: src/orca/rolenames.py:429
-msgid "TABLE CELL"
-msgstr "TABLE CELL"
+msgid "CELL"
+msgstr "CELL"
 
 #: src/orca/rolenames.py:430
-msgid "table cell"
-msgstr "table cell"
-
-#: src/orca/rolenames.py:433
-msgid "TCH"
-msgstr "TCH"
-
-#: src/orca/rolenames.py:434
-msgid "TABLE COLUMN HEADER"
-msgstr "TABLE COLUMN HEADER"
-
-#: src/orca/rolenames.py:435
-msgid "table column header"
-msgstr "table column header"
-
-#: src/orca/rolenames.py:438
-msgid "TRH"
-msgstr "TRH"
-
-#: src/orca/rolenames.py:439
-msgid "TABLE ROW HEADER"
-msgstr "TABLE ROW HEADER"
-
-#: src/orca/rolenames.py:440
-msgid "table row header"
-msgstr "table row header"
+msgid "cell"
+msgstr "cell"
 
 #: src/orca/rolenames.py:443
 msgid "TOM"
@@ -1014,7 +986,7 @@ msgstr "TOM"
 msgid "TEAR OFF MENU ITEM"
 msgstr "TEAR OFF MENU ITEM"
 
-#: src/orca/rolenames.py:445 src/orca/speechgenerator.py:1199
+#: src/orca/rolenames.py:445 src/orca/speechgenerator.py:1252
 msgid "tear off menu item"
 msgstr "tear off menu item"
 
@@ -1234,46 +1206,50 @@ msgstr "The speech rate has been lowered."
 msgid "shortcut"
 msgstr "shortcut"
 
-#: src/orca/speechgenerator.py:169
-msgid "accelerator"
-msgstr "accelerator"
-
-#: src/orca/speechgenerator.py:253
+#: src/orca/speechgenerator.py:256
 msgid " dot dot dot"
 msgstr " dot dot dot"
 
-#: src/orca/speechgenerator.py:361 src/orca/speechgenerator.py:364
+#: src/orca/speechgenerator.py:370 src/orca/speechgenerator.py:373
 msgid "checked"
 msgstr "checked"
 
-#: src/orca/speechgenerator.py:368 src/orca/speechgenerator.py:371
+#: src/orca/speechgenerator.py:377 src/orca/speechgenerator.py:380
 msgid "not checked"
 msgstr "not checked"
 
-#: src/orca/speechgenerator.py:840
+#: src/orca/speechgenerator.py:862
 msgid "one tab"
 msgstr "one tab"
 
-#: src/orca/speechgenerator.py:842
+#: src/orca/speechgenerator.py:864
 msgid "tabs"
 msgstr "tabs"
 
-#: src/orca/speechgenerator.py:918 src/orca/speechgenerator.py:921
+#: src/orca/speechgenerator.py:940 src/orca/speechgenerator.py:943
 msgid "selected"
 msgstr "selected"
 
-#: src/orca/speechgenerator.py:925 src/orca/speechgenerator.py:928
+#: src/orca/speechgenerator.py:947 src/orca/speechgenerator.py:950
 msgid "not selected"
 msgstr "not selected"
 
-#: src/orca/speechgenerator.py:1201
+#: src/orca/speechgenerator.py:1186
+msgid "expanded."
+msgstr "expanded."
+
+#: src/orca/speechgenerator.py:1188
+msgid "collapsed."
+msgstr "collapsed."
+
+#: src/orca/speechgenerator.py:1254
 msgid "tear off"
 msgstr "tear off"
 
-#: src/orca/speechgenerator.py:1267 src/orca/speechgenerator.py:1270
+#: src/orca/speechgenerator.py:1320 src/orca/speechgenerator.py:1323
 msgid "pressed"
 msgstr "pressed"
 
-#: src/orca/speechgenerator.py:1274 src/orca/speechgenerator.py:1277
+#: src/orca/speechgenerator.py:1327 src/orca/speechgenerator.py:1330
 msgid "not pressed"
 msgstr "not pressed"
