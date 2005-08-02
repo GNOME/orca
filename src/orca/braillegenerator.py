@@ -368,11 +368,15 @@ class BrailleGenerator:
         verbosity = settings.getSetting("brailleVerbosityLevel",
                                         settings.VERBOSITY_LEVEL_VERBOSE)
 
+        text = obj.label
+        if len(text):
+            text += " "
+            
         set = obj.state
         if set.count(core.Accessibility.STATE_CHECKED):
-            text = obj.label + " <x>"
+            text += "<x>"
         else:
-            text = obj.label + " < >"
+            text += "< >"
             
         if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
             text += " " + getBrailleForRoleName(obj)
@@ -400,11 +404,15 @@ class BrailleGenerator:
         verbosity = settings.getSetting("brailleVerbosityLevel",
                                         settings.VERBOSITY_LEVEL_VERBOSE)
 
+        text = obj.label
+        if len(text):
+            text += " "
+
         set = obj.state
         if set.count(core.Accessibility.STATE_CHECKED):
-            text = obj.label + " <x>"
+            text += "<x>"
         else:
-            text = obj.label + " < >"
+            text += "< >"
             
         if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
             if obj == orca.locusOfFocus:
@@ -855,12 +863,16 @@ class BrailleGenerator:
     
         verbosity = settings.getSetting("brailleVerbosityLevel",
                                         settings.VERBOSITY_LEVEL_VERBOSE)
+
+        text = obj.label
+        if len(text):
+            text += " "
     
         set = obj.state
         if set.count(core.Accessibility.STATE_CHECKED):
-            text = obj.label + " &=y"
+            text += "&=y"
         else:
-            text = obj.label + " & y"
+            text += "& y"
             
         if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
             text += " " + getBrailleForRoleName(obj)
@@ -888,11 +900,15 @@ class BrailleGenerator:
         verbosity = settings.getSetting("brailleVerbosityLevel",
                                         settings.VERBOSITY_LEVEL_VERBOSE)
     
+        text = obj.label
+        if len(text):
+            text += " "
+
         set = obj.state
         if set.count(core.Accessibility.STATE_CHECKED):
-            text = obj.label + " &=y"
+            text += "&=y"
         else:
-            text = obj.label + " & y"
+            text += "& y"
             
         if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
             if obj == orca.locusOfFocus:
@@ -1013,8 +1029,39 @@ class BrailleGenerator:
         """
         
         self._debugGenerator("_getBrailleRegionsForTableCell", obj)
-    
-        return self._getDefaultBrailleRegions(obj)
+
+        regions = []
+        
+        # [[[TODO: WDW - Attempt to infer the cell type.  There's a
+        # bunch of stuff we can do here, such as check the EXPANDABLE
+        # state, check the NODE_CHILD_OF relation, etc.]]]
+        #
+        action = obj.action
+        if action:
+            i = 0
+            while i < action.nActions:
+                if action.getName(i) == "toggle":
+                    obj.role = rolenames.ROLE_CHECK_BOX
+                    regions = self._getBrailleRegionsForCheckBox(obj)
+                    break
+                #elif action.getName(i) == "edit":
+                #    text = self._getSpeechForText(obj, True)
+                #    break
+                i += 1
+
+        if len(regions) == 0:
+            regions = self._getDefaultBrailleRegions(obj)
+            
+        # [[[TODO: WDW - HACK attempt to determine if this is a node;
+        # if so, describe its state.]]]
+        #
+        if obj.state.count(core.Accessibility.STATE_EXPANDABLE):
+            if obj.state.count(core.Accessibility.STATE_EXPANDED):            
+                regions[0].append(braille.Region(" " + _("expanded")))
+            else:
+                regions[0].append(braille.Region(" " + _("collapsed")))
+
+        return regions
     
     
     def _getBrailleRegionsForTableColumnHeader(self, obj):
@@ -1266,16 +1313,16 @@ class BrailleGenerator:
         Returns a list of Regions to display.
         """
 
-        # We want to follow the same grouping logic in getBrailleRegions.
-        # 
-        parent = obj.parent
-        if parent \
-           and ((parent.role == rolenames.ROLE_MENU) \
-                or (parent.role == rolenames.ROLE_MENU_BAR) \
-                or (parent.role == rolenames.ROLE_PAGE_TAB_LIST)):
-            obj = parent
+        verbosity = settings.getSetting(
+            "brailleVerbosityLevel",
+            settings.VERBOSITY_LEVEL_VERBOSE)
+
+        brailleRolenameStyle = settings.getSetting(
+            "brailleRolenameStyle",
+            settings.BRAILLE_ROLENAME_STYLE_LONG)
 
         regions = []
+        parent = obj.parent
         while parent:
             if len(parent.label) > 0:
                 regions.append(braille.Region(" "))
@@ -1285,4 +1332,42 @@ class BrailleGenerator:
 
         regions.reverse()
 
+        # Now, we'll treat table row and column headers as context as
+        # well.  This requires special handling because we're making
+        # headers seem hierarchical in the context, but they are not
+        # hierarchical in the containment hierarchicy.  If both exist,
+        # we first show the row header then the column header.
+        #
+        parent = obj.parent
+        if parent and parent.table:
+            row = parent.table.getRowAtIndex(obj.index)
+            desc = parent.table.getRowDescription(row)
+            if desc and len(desc):
+                if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
+                    if brailleRolenameStyle \
+                           == settings.BRAILLE_ROLENAME_STYLE_LONG:
+                        text = desc + " " + rolenames.rolenames[\
+                            rolenames.ROLE_ROW_HEADER].brailleLong
+                    else:
+                        text = desc + " " + rolenames.rolenames[\
+                            rolenames.ROLE_ROW_HEADER].brailleShort
+                else:
+                    text = desc
+                regions.append(braille.Region(text))
+
+            col = parent.table.getColumnAtIndex(obj.index)
+            desc = parent.table.getColumnDescription(col)
+            if desc and len(desc):
+                if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
+                    if brailleRolenameStyle \
+                           == settings.BRAILLE_ROLENAME_STYLE_LONG:
+                        text = desc + " " + rolenames.rolenames[\
+                            rolenames.ROLE_COLUMN_HEADER].brailleLong
+                    else:
+                        text = desc + " " + rolenames.rolenames[\
+                            rolenames.ROLE_COLUMN_HEADER].brailleShort
+                else:
+                    text = desc
+                regions.append(braille.Region(text))
+        
         return regions
