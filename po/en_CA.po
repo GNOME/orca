@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-02 13:15-0400\n"
-"PO-Revision-Date: 2005-08-02 14:20-0400\n"
+"POT-Creation-Date: 2005-08-03 15:56-0400\n"
+"PO-Revision-Date: 2005-08-03 14:20-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -27,6 +27,19 @@ msgstr "Reading web page failed."
 #: src/orca/braillegenerator.py:187 src/orca/speechgenerator.py:187
 msgid "unavailable"
 msgstr "unavailable"
+
+#: src/orca/braillegenerator.py:1061 src/orca/speechgenerator.py:1188
+msgid "expanded"
+msgstr "expanded"
+
+#: src/orca/braillegenerator.py:1063 src/orca/speechgenerator.py:1190
+msgid "collapsed"
+msgstr "collapsed"
+
+#: src/orca/braillegenerator.py:1067
+#, python-format
+msgid "TREE LEVEL %d"
+msgstr "TREE LEVEL %d"
 
 #: src/orca/chnames.py:27
 msgid "space"
@@ -48,7 +61,7 @@ msgstr "number"
 msgid "dollar"
 msgstr "dollar"
 
-#: src/orca/chnames.py:32 src/orca/speechgenerator.py:887
+#: src/orca/chnames.py:32 src/orca/speechgenerator.py:888
 msgid "percent"
 msgstr "percent"
 
@@ -144,11 +157,16 @@ msgstr "Repeats last utterance sent to speech."
 msgid "Speaks entire document."
 msgstr "Speaks entire document."
 
-#: src/orca/default.py:303
+#: src/orca/default.py:315
+#, python-format
+msgid "tree level %d"
+msgstr "tree level %d"
+
+#: src/orca/default.py:319
 msgid "ERROR: NOTHING HAS FOCUS!"
 msgstr "ERROR: NOTHING HAS FOCUS!"
 
-#: src/orca/default.py:749
+#: src/orca/default.py:766
 msgid "Not a document."
 msgstr "Not a document."
 
@@ -986,7 +1004,7 @@ msgstr "TOM"
 msgid "TEAR OFF MENU ITEM"
 msgstr "TEAR OFF MENU ITEM"
 
-#: src/orca/rolenames.py:445 src/orca/speechgenerator.py:1252
+#: src/orca/rolenames.py:445 src/orca/speechgenerator.py:1254
 msgid "tear off menu item"
 msgstr "tear off menu item"
 
@@ -1194,11 +1212,11 @@ msgstr "EMBEDDED COMPONENT"
 msgid "embedded component"
 msgstr "embedded component"
 
-#: src/orca/speech.py:309
+#: src/orca/speech.py:310
 msgid "The speech rate has been raised."
 msgstr "The speech rate has been raised."
 
-#: src/orca/speech.py:346
+#: src/orca/speech.py:350
 msgid "The speech rate has been lowered."
 msgstr "The speech rate has been lowered."
 
@@ -1218,38 +1236,30 @@ msgstr "checked"
 msgid "not checked"
 msgstr "not checked"
 
-#: src/orca/speechgenerator.py:862
+#: src/orca/speechgenerator.py:863
 msgid "one tab"
 msgstr "one tab"
 
-#: src/orca/speechgenerator.py:864
+#: src/orca/speechgenerator.py:865
 msgid "tabs"
 msgstr "tabs"
 
-#: src/orca/speechgenerator.py:940 src/orca/speechgenerator.py:943
+#: src/orca/speechgenerator.py:941 src/orca/speechgenerator.py:944
 msgid "selected"
 msgstr "selected"
 
-#: src/orca/speechgenerator.py:947 src/orca/speechgenerator.py:950
+#: src/orca/speechgenerator.py:948 src/orca/speechgenerator.py:951
 msgid "not selected"
 msgstr "not selected"
 
-#: src/orca/speechgenerator.py:1186
-msgid "expanded."
-msgstr "expanded."
-
-#: src/orca/speechgenerator.py:1188
-msgid "collapsed."
-msgstr "collapsed."
-
-#: src/orca/speechgenerator.py:1254
+#: src/orca/speechgenerator.py:1256
 msgid "tear off"
 msgstr "tear off"
 
-#: src/orca/speechgenerator.py:1320 src/orca/speechgenerator.py:1323
+#: src/orca/speechgenerator.py:1322 src/orca/speechgenerator.py:1325
 msgid "pressed"
 msgstr "pressed"
 
-#: src/orca/speechgenerator.py:1327 src/orca/speechgenerator.py:1330
+#: src/orca/speechgenerator.py:1329 src/orca/speechgenerator.py:1332
 msgid "not pressed"
 msgstr "not pressed"
