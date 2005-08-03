@@ -82,13 +82,34 @@ class GCalcTool(Default):
         if (self._display is None) \
                and (event.source.role == rolenames.ROLE_FRAME):
 
-            # It's the only text object in GCalctool's main window
+            # The widget hierarchy for gcalctool differs depending upon the
+            # version.
+            #
+            # In GNOME 2.6 (gcalctool version 4.3.51 for example), the 
+            # display area was a text_view widget. This can be found by
+            # looking for an accessible object with a role of ROLE_TEXT.
+            #
+            # For GNOME 2.10 and 2.12 there is a scrolled_window containing 
+            # the text_view display. This can be found by looking for an 
+            # accessible object with a role of ROLE_EDITBAR.
+            #
             #
             d = a11y.findByRole(event.source, rolenames.ROLE_TEXT)
-            self._display = d[0]
-            self._display_txt = self._display.text
-            contents = self._display_txt.getText(0, -1)
-            braille.displayMessage(contents)
+            if len(d) == 0:
+                d = a11y.findByRole(event.source, rolenames.ROLE_EDITBAR)
+
+            # If d is an empty list at this point, we're unable to get the
+            # gcalctool display. Inform the user.
+            #
+            if len(d) == 0:
+                contents = "Unable to get calculator display"
+                speech.say("default", contents)
+                braille.displayMessage(contents)
+            else:
+                self._display = d[0]
+                self._display_txt = self._display.text
+                contents = self._display_txt.getText(0, -1)
+                braille.displayMessage(contents)
 
             # Call the default onWindowActivated function
             #
