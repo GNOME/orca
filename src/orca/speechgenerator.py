@@ -595,7 +595,8 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
 
-        text = self._getDefaultSpeech(obj, already_focused)
+        #text = self._getDefaultSpeech(obj, already_focused)
+        text = self._getSpeechForAlert(obj, already_focused)
         
         self._debugGenerator("_getSpeechForFrame",
                              obj,
@@ -1459,8 +1460,23 @@ class SpeechGenerator:
 
         if obj is stopAncestor:
             return text
-        
+
+        # We try to ignore fillers and panels without names.
+        # [[[TODO: WDW - HACK sometimes table cells can be children
+        # of table cells (see the "Browse" dialog of gnome-terminal
+        # via "Edit" -> "Current Profile" -> "General" Tab ->
+        # "Profile icon:" button -> "Browse..." button - each element
+        # in the list is a compound table cell where the icon and
+        # text are child table cells of the table cell).  So...
+        # we happily ignore those as well.  One thing we might
+        # want to do is treat the parent as a compound object.]]]
+        #
         parent = obj.parent
+        if parent \
+            and (obj.role == rolenames.ROLE_TABLE_CELL) \
+            and (parent.role == rolenames.ROLE_TABLE_CELL):
+            parent = parent.parent
+            
         while parent and (parent.parent != parent):
             if parent == stopAncestor:
                 break
