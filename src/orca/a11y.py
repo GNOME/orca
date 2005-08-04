@@ -330,7 +330,10 @@ class Accessible:
         role = self.acc.getRoleName()
 
         # [[[TODO: WDW - HACK to coalesce menu items with children
-        # into menus.]]]
+        # into menus.  The menu demo in gtk-demo does this, and one
+        # might view that as an edge case.  But, in gnome-terminal,
+        # "Terminal" ->  "Set Character Encoding" is a menu item
+        # with children, but it behaves like a menu.]]]
         #
         if (role == rolenames.ROLE_CHECK_MENU_ITEM) \
             and (self.childCount > 0):
@@ -338,6 +341,9 @@ class Accessible:
         elif (role == rolenames.ROLE_RADIO_MENU_ITEM) \
             and (self.childCount > 0):
                 role = rolenames.ROLE_RADIO_MENU
+        elif (role == rolenames.ROLE_MENU_ITEM) \
+            and (self.childCount > 0):
+                role = rolenames.ROLE_MENU
                 
         self.role = role
         return self.role
