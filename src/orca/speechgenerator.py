@@ -162,7 +162,9 @@ class SpeechGenerator:
     
         accelerator = result[0]
         shortcut = result[1]
-    
+
+        text = ""
+        
         if len(shortcut) > 0:
             text += _("shortcut") + " " + shortcut + ". "
         if len(accelerator) > 0:
@@ -253,8 +255,6 @@ class SpeechGenerator:
             text = self._getSpeechForLabelAndRole(obj) \
                    + self._getSpeechForAvailability(obj)
         
-        text = text.replace("...", _(" dot dot dot"), 1)
-    
         self._debugGenerator("_getDefaultSpeech",
                              obj,
                              already_focused,
@@ -400,6 +400,16 @@ class SpeechGenerator:
         
         text = self._getSpeechForCheckBox(obj, False)
         
+        verbosity = settings.getSetting("speechVerbosityLevel",
+                                        settings.VERBOSITY_LEVEL_VERBOSE)
+
+        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
+            if len(text):
+                text += ". "
+            text += self._getSpeechForAccelerator(obj)
+        
+        text = text.replace("...", _(" dot dot dot"), 1)
+    
         self._debugGenerator("_getSpeechForCheckMenuItem",
                              obj,
                              already_focused,
@@ -739,6 +749,15 @@ class SpeechGenerator:
         #else:
         #    text += ("%d " % itemCount) + _("items") + ". "
     
+        verbosity = settings.getSetting("speechVerbosityLevel",
+                                        settings.VERBOSITY_LEVEL_VERBOSE)
+
+        if (obj == orca.locusOfFocus) \
+               and (verbosity == settings.VERBOSITY_LEVEL_VERBOSE):
+            if len(text):
+                text += ". "
+            text += self._getSpeechForAccelerator(obj)
+        
         self._debugGenerator("_getSpeechForMenu",
                              obj,
                              already_focused,
@@ -776,8 +795,20 @@ class SpeechGenerator:
         Returns text to be spoken for the object.
         """
         
-        text = self._getDefaultSpeech(obj, already_focused)
+        verbosity = settings.getSetting("speechVerbosityLevel",
+                                        settings.VERBOSITY_LEVEL_VERBOSE)
+
+        # No need to say "menu item" because we already know that.
+        #
+        text = obj.label
+            
+        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
+            if len(text):
+                text += ". "
+            text += self._getSpeechForAccelerator(obj)
         
+        text = text.replace("...", _(" dot dot dot"), 1)
+    
         self._debugGenerator("_getSpeechForMenuItem",
                              obj,
                              already_focused,
@@ -971,6 +1002,16 @@ class SpeechGenerator:
 
         text = self._getSpeechForRadioButton(obj, False)
         
+        verbosity = settings.getSetting("speechVerbosityLevel",
+                                        settings.VERBOSITY_LEVEL_VERBOSE)
+
+        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
+            if len(text):
+                text += ". "
+            text += self._getSpeechForAccelerator(obj)
+        
+        text = text.replace("...", _(" dot dot dot"), 1)
+    
         self._debugGenerator("_getSpeechForRadioMenuItem",
                              obj,
                              already_focused,
