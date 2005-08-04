@@ -165,8 +165,11 @@ class BrailleGenerator:
         if len(accelerator) > 0:
             text += "(" + accelerator + ")"
     
-        if len(shortcut) > 0:
-            text += "(" + shortcut + ")"
+        # [[[TODO: WDW - various stuff preserved while we work out the
+        # desired verbosity here.]]]
+        #
+        #if len(shortcut) > 0:
+        #    text += "(" + shortcut + ")"
             
         return text
     

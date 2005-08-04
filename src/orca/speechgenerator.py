@@ -164,12 +164,15 @@ class SpeechGenerator:
         shortcut = result[1]
 
         text = ""
-        
+
+        # [[[TODO: WDW - various stuff preserved while we work out the
+        # desired verbosity here.]]]
+        #
         #if len(shortcut) > 0:
         #    text += _("shortcut") + " " + shortcut + ". "
         if len(accelerator) > 0:
-            text += _("accelerator") + " " + accelerator + ". "
-            
+            #text += _("accelerator") + " " + accelerator + ". "
+            text += accelerator + ". "
         return text
     
     
