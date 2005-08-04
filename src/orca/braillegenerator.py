@@ -276,13 +276,17 @@ class BrailleGenerator:
                                         settings.VERBOSITY_LEVEL_VERBOSE)
 
         text = obj.label
-        
+
         value = self._getBrailleTextForValue(obj)
         if len(value) > 0:
-            text += " " + value
+            if len(text):
+                text += " "
+            text += value
         
         if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
-            text += " " + getBrailleForRoleName(obj)
+            if len(text):
+                text += " "
+            text += getBrailleForRoleName(obj)
 
         regions = []
         componentRegion = braille.Component(obj, text)
@@ -325,10 +329,14 @@ class BrailleGenerator:
         text = obj.label
         
         if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
-            text += " " + getBrailleForRoleName(obj)
+            if len(text):
+                text += " "
+            text += getBrailleForRoleName(obj)
     
         if obj.description:
-            text += ": " + obj.description
+            if len(text):
+                text += ": "
+            text += obj.description
     
         regions = []
         componentRegion = braille.Component(obj, text)
@@ -685,9 +693,12 @@ class BrailleGenerator:
 
         text = obj.label
         
+        if len(text):
+            text += " "
+        text += getBrailleForRoleName(obj)
+        
         if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
             if obj == orca.locusOfFocus:
-                text += " " + getBrailleForRoleName(obj)
                 accelerator = self._getBrailleTextForAccelerator(obj)
                 if len(accelerator) > 0:
                     text += accelerator
@@ -733,7 +744,10 @@ class BrailleGenerator:
         
         if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
             if obj == orca.locusOfFocus:
-                text += " " + getBrailleForRoleName(obj)
+                # [[[TODO - WDW comment this out for now until we work
+                # out verbosity.]]]
+                #
+                #text += " " + getBrailleForRoleName(obj)
                 accelerator = self._getBrailleTextForAccelerator(obj)
                 if len(accelerator) > 0:
                     text += accelerator
@@ -1115,11 +1129,7 @@ class BrailleGenerator:
         
         self._debugGenerator("_getBrailleRegionsForTearOffMenuItem", obj)
     
-        verbosity = settings.getSetting("brailleVerbosityLevel",
-                                        settings.VERBOSITY_LEVEL_VERBOSE)
-
-        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
-            text = " " + getBrailleForRoleName(obj)
+        text = getBrailleForRoleName(obj)
     
         regions = []
         componentRegion = braille.Component(obj, text)
@@ -1143,8 +1153,6 @@ class BrailleGenerator:
         verbosity = settings.getSetting("brailleVerbosityLevel",
                                         settings.VERBOSITY_LEVEL_VERBOSE)
 
-        text = ""
-    
         label = None
         frame = a11y.getFrame(obj)
         if frame:
@@ -1154,7 +1162,9 @@ class BrailleGenerator:
         text = label
             
         if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
-            text += " " + getBrailleForRoleName(obj)
+            if len(text):
+                text += " "
+            text += getBrailleForRoleName(obj)
     
         regions = []
         regions.append(braille.Region(text))
@@ -1332,7 +1342,16 @@ class BrailleGenerator:
 
         regions = []
         parent = obj.parent
+        if parent \
+           and ((parent.role == rolenames.ROLE_MENU) \
+                or (parent.role == rolenames.ROLE_MENU_BAR) \
+                or (parent.role == rolenames.ROLE_PAGE_TAB_LIST)):
+            parent = parent.parent        
         while parent:
+            # [[[TODO: WDW - we might want to include more things here
+            # besides just those things that have labels.  For example,
+            # page tab lists might be a nice thing to include.]]]
+            #
             if len(parent.label) > 0:
                 regions.append(braille.Region(" "))
                 result = self.getBrailleRegions(parent, False)

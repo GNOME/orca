@@ -370,7 +370,6 @@ class Default(Script):
         line = braille.Line()
         
         line.addRegions(self.brailleGenerator.getBrailleContext(obj))
-        line.addRegion(braille.Region(" "))
         
         result = self.brailleGenerator.getBrailleRegions(obj)
         line.addRegions(result[0])
