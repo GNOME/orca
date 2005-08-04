@@ -165,8 +165,8 @@ class SpeechGenerator:
 
         text = ""
         
-        if len(shortcut) > 0:
-            text += _("shortcut") + " " + shortcut + ". "
+        #if len(shortcut) > 0:
+        #    text += _("shortcut") + " " + shortcut + ". "
         if len(accelerator) > 0:
             text += _("accelerator") + " " + accelerator + ". "
             

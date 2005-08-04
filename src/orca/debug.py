@@ -192,7 +192,7 @@ def printObjectEvent(level, event, sourceInfo=None):
         
     level = max(level, _eventDebugLevel)
 
-    text = "OBJECT EVENT: type=%-40s detail=(%d,%d)" \
+    text = "OBJECT EVENT: %-40s detail=(%d,%d)" \
            % (event.type, event.detail1, event.detail2)
 
     if sourceInfo:
