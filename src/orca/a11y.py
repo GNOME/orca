@@ -126,20 +126,20 @@ def getStateString(obj):
 def accessibleToString(indent, accessible):
     if not accessible:
         return None
-    
-    string = ""
-    string = string + "%sname   = (%s)\n" \
-             % (indent, accessible.name)
-    string = string + "%srole   = (%s)\n" \
-             % (indent, rolenames.getRoleName(accessible))
-    string = string +  "%sstate  = (%s)\n" \
-             % (indent, getStateString(accessible))
 
+    appname = ""
     if accessible.app is None:
-        string = string + "%sapp    = (None)" % indent
+        appname = "None"
     else:
-        string = string + "%sapp    = (%s)" % (indent, accessible.app.name)
+        appname = accessible.app.name
+        
+    string = indent + " app=%-20s" % ("(" + appname + ")")
 
+    string += " name=(%s) role=(%s) state=(%s)" \
+             % (accessible.name,
+                rolenames.getRoleName(accessible),
+                getStateString(accessible))
+    
     return string
 
 

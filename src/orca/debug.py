@@ -191,14 +191,14 @@ def printObjectEvent(level, event, sourceInfo=None):
             return
         
     level = max(level, _eventDebugLevel)
-    
-    println(level, "OBJECT EVENT: type    = (%s)" % event.type)
-    println(level, "              detail1 = (%d)" % event.detail1)
-    println(level, "              detail2 = (%d)" % event.detail2)
+
+    text = "OBJECT EVENT: type=%-40s detail=(%d,%d)" \
+           % (event.type, event.detail1, event.detail2)
 
     if sourceInfo:
-        println(level, "              source:")
-        println(level, sourceInfo)
+        text += " " + sourceInfo
+
+    println(level, text)
 
     
 def printInputEvent(level, string):

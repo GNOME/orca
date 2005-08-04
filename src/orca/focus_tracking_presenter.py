@@ -252,8 +252,7 @@ def processObjectEvent(e):
 
     debug.printObjectEvent(debug.LEVEL_FINEST,
                            event,
-                           a11y.accessibleToString("                ",
-                                                   event.source))
+                           a11y.accessibleToString("", event.source))
 
     if event.source is None:
         sys.stderr.write("ERROR: received an event with no source.\n")
