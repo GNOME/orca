@@ -387,7 +387,9 @@ def say(voiceName, text):
             text = chnames[text.lower()]
         except:
             pass
-
+    else:
+        text = text.replace("...", _(" dot dot dot"), 1)
+        
     # Send the text to the GNOME Speech speaker
     #
     debug.println(debug.LEVEL_INFO, "speech.say(" + text + ")")
@@ -400,6 +402,19 @@ def say(voiceName, text):
         reset()
 
 
+def sayUtterances(voiceName, utterances):
+    """Speaks the given list of utterances.
+
+    Arguments:
+    - voiceName: the name of the voice style to use (e.g., "default")
+    -utterances: A list containing strings.
+    """
+
+    for text in utterances:
+        if text and len(text):
+            say(voiceName, text)
+
+            
 def sayAgain():
     """Speaks the last text again.
     """

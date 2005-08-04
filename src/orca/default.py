@@ -234,7 +234,7 @@ class Default(Script):
             verbosity = settings.getSetting("speechVerbosityLevel",
                                             settings.VERBOSITY_LEVEL_VERBOSE)
     
-            text = ""
+            utterances = []
             
             # Now figure out how of the container context changed and
             # speech just what is different.
@@ -242,11 +242,9 @@ class Default(Script):
             commonAncestor = self.findCommonAncestor(oldLocusOfFocus,
                                                      newLocusOfFocus)
             if commonAncestor:
-                context = self.speechGenerator.getSpeechContext(
-                    newLocusOfFocus,
-                    commonAncestor)                
-                if len(context) > 0:
-                    text = context
+                utterances.extend(
+                    self.speechGenerator.getSpeechContext(newLocusOfFocus,
+                                                          commonAncestor))
 
             # Now, we'll treat table row and column headers as context
             # as well.  This requires special handling because we're
@@ -277,44 +275,37 @@ class Default(Script):
                     if newRow != oldRow:
                         desc = newParent.table.getRowDescription(newRow)
                         if desc and len(desc):
-                            if len(text):
-                                text += " "
-                            text += desc
+                            text = desc
                             if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
                                 text += " " \
                                         + rolenames.rolenames[\
                                         rolenames.ROLE_ROW_HEADER].speech
-                            text += "."
+                            utterances.append(text)
                     if newCol != oldCol:
                         desc = newParent.table.getColumnDescription(newCol)
                         if desc and len(desc):
-                            if len(text):
-                                text += " "
-                            text += desc
+                            text = desc
                             if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
                                 text += " " \
                                         + rolenames.rolenames[\
                                         rolenames.ROLE_COLUMN_HEADER].speech
-                            text += "."
+                            utterances.append(text)
 
                 oldNodeLevel = a11y.getNodeLevel(oldLocusOfFocus)
                 newNodeLevel = a11y.getNodeLevel(newLocusOfFocus)
 
             # Get the text for the object itself.
             #
-            if len(text):
-                text += " "
-            text += self.speechGenerator.getSpeech(newLocusOfFocus, False)
+            utterances.extend(
+                self.speechGenerator.getSpeech(newLocusOfFocus, False))
 
             # Now speak the new tree node level if it has changed.
             #
             if (oldNodeLevel != newNodeLevel) \
                and (newNodeLevel >= 0):
-                if len(text) > 0:
-                    text += " "
-                    text += (_("tree level %d") % (newNodeLevel + 1)) + "."
+                utterances.append(_("tree level %d") % (newNodeLevel + 1))
 
-            speech.say("default", text)
+            speech.sayUtterances("default", utterances)
         else:
             message = _("ERROR: NOTHING HAS FOCUS!")
             braille.displayMessage(message)
@@ -338,8 +329,9 @@ class Default(Script):
             return
 
         self.updateBraille(obj)
-        speech.say("default",
-                   self.speechGenerator.getSpeech(event.source, True))
+        speech.sayUtterances(
+            "default",
+            self.speechGenerator.getSpeech(event.source, True))
 
             
     def getVisualParent(self, obj):
