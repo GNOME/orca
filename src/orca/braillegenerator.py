@@ -1347,15 +1347,18 @@ class BrailleGenerator:
                 or (parent.role == rolenames.ROLE_MENU_BAR) \
                 or (parent.role == rolenames.ROLE_PAGE_TAB_LIST)):
             parent = parent.parent        
-        while parent:
+        while parent and (parent.parent != parent):
             # [[[TODO: WDW - we might want to include more things here
             # besides just those things that have labels.  For example,
             # page tab lists might be a nice thing to include.]]]
             #
-            if len(parent.label) > 0:
-                regions.append(braille.Region(" "))
-                result = self.getBrailleRegions(parent, False)
-                regions.extend(result[0])
+            if parent.role != rolenames.ROLE_FILLER:
+                if (len(parent.label) > 0) \
+                    or (parent.role != rolenames.ROLE_PANEL):
+                    regions.append(braille.Region(" "))
+                    result = self.getBrailleRegions(parent, False)
+                    regions.extend(result[0])
+                    
             parent = parent.parent
 
         regions.reverse()
