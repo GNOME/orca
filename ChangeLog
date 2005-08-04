@@ -1,3 +1,12 @@
+2005-08-04  Willie Walker <william.walker@sun.com>
+
+	* src/orca/braillegenerator.py: work on verbosity
+	* src/orca/speechgenerator.py, src/orca/speech.py,
+	src/orca/default.py: work on verbosity.  Move speechgenerator to 
+	a list of utterances rather than a single string containing
+	multiple sentences; this avoids spurious punctuation being sent
+	to the synthesis engine.
+	
 2005-08-02  Willie Walker <william.walker@sun.com>
 
 	* src/orca/a11y.py: uncache label on name or description change
