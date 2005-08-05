@@ -837,5 +837,6 @@ def sayAllStopped(position):
 state_change_notifiers = {}
 state_change_notifiers[rolenames.ROLE_CHECK_BOX]     = ("checked",  None)
 state_change_notifiers[rolenames.ROLE_TOGGLE_BUTTON] = ("checked",  None)
-state_change_notifiers[rolenames.ROLE_TABLE_CELL]    = ("checked",  None)
-state_change_notifiers[rolenames.ROLE_TABLE_CELL]    = ("expanded", None)
+state_change_notifiers[rolenames.ROLE_TABLE_CELL]    = ("checked",
+                                                        "expanded",
+                                                        None)
