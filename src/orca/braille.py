@@ -585,7 +585,7 @@ def _processBrailleEvent(command):
     # us larger values on the Alva display.  For now, we just strip
     # it off using 0xfff.]]]
     #
-    command = command & 0xfff
+    # command = command & 0xfff
     _printBrailleEvent(debug.LEVEL_FINE, command)
 
     if _callback:
