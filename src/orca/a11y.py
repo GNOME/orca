@@ -223,19 +223,25 @@ class Accessible:
         if Accessible._cache.has_key(acc):
             return
 
+        self.__origAcc = acc
+        self.__origAcc.ref()
+        Accessible._cache[self.__origAcc] = self
+        
         # The acc reference might be an Accessibility_Accessible or an
-        # Accessibility_Application, so try both.  The setting of self.acc
+        # Accessibility_Application, so try both.  The setting of self._acc
         # to None here is merely to help with manual and unit testing of
         # this module.
         #
+        self._acc = None
         try:
-            self.acc = acc._narrow(core.Accessibility.Application)
+            self._acc = self.__origAcc._narrow(\
+                core.Accessibility.Application)
         except:
             try:
-                self.acc = acc._narrow(core.Accessibility.Accessible)
+                self._acc = self.__origAcc._narrow(\
+                    core.Accessibility.Accessible)
             except:
                 debug.printException(debug.LEVEL_SEVERE)
-                self.acc = None
 
         # Keep track of whether this object is defunct or not.  It's
         # not the case that we can check the state of a defunct object
@@ -252,35 +258,43 @@ class Accessible:
         # Save a reference to the AT-SPI object, and also save this
         # new object away in the cache.
         #
-        if self.acc:
-            self.acc.ref()
-            Accessible._cache[acc] = self
+        if self._acc:
+            self._acc.ref()
 
         
     def __del__(self):
         """Unrefs the AT-SPI Accessible associated with this object.
         """
+
         try:
-            del Accessible._cache[sel.acc]
-            self.acc.unref()
+            if self._acc:
+                self._acc.unref()
+            del Accessible._cache[self.__origAcc]
+            self.__origAcc.unref()
         except:
-            pass
+            debug.printException(debug.LEVEL_SEVERE)
 
 
     def __get_name(self):
         """Returns the object's accessible name as a string.
         """
 
-        self.name = self.acc.name
-        return self.name
+        try:
+            self.name = self._acc.name
+            return self.name
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
 
 
     def __get_description(self):
         """Returns the object's accessible description as a string.
         """
 
-        self.description = self.acc.description
-        return self.description
+        try:
+            self.description = self._acc.description
+            return self.description
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
 
 
     def __get_parent(self):
@@ -293,29 +307,38 @@ class Accessible:
         # get events for objects without a parent, but then the object ends
         # up getting a parent later on.
         #
-        obj = self.acc.parent
-        if obj is None:
-            return None
-        else:
-            self.parent = makeAccessible(obj);
-            return self.parent;
+        try:
+            obj = self._acc.parent
+            if obj is None:
+                return None
+            else:
+                self.parent = makeAccessible(obj);
+                return self.parent;
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
 
 
     def __get_child_count(self):
         """Returns the number of children for this object.
         """
 
-        self.childCount = self.acc.childCount
-        return self.childCount
+        try:
+            self.childCount = self._acc.childCount
+            return self.childCount
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
 
 
     def __get_index(self):
         """Returns the index of this object in its parent's child list.
         """
 
-        self.index = self.acc.getIndexInParent()
-        return self.index
-
+        try:
+            self.index = self._acc.getIndexInParent()
+            return self.index
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
+            
 
     def __get_role(self):
         """Returns the Accessible role name of this object as a string.
@@ -327,51 +350,59 @@ class Accessible:
         has an example of this in its menus demo.
         """
 
-        role = self.acc.getRoleName()
-
-        # [[[TODO: WDW - HACK to coalesce menu items with children
-        # into menus.  The menu demo in gtk-demo does this, and one
-        # might view that as an edge case.  But, in gnome-terminal,
-        # "Terminal" ->  "Set Character Encoding" is a menu item
-        # with children, but it behaves like a menu.]]]
-        #
-        if (role == rolenames.ROLE_CHECK_MENU_ITEM) \
-            and (self.childCount > 0):
-                role = rolenames.ROLE_CHECK_MENU
-        elif (role == rolenames.ROLE_RADIO_MENU_ITEM) \
-            and (self.childCount > 0):
-                role = rolenames.ROLE_RADIO_MENU
-        elif (role == rolenames.ROLE_MENU_ITEM) \
-            and (self.childCount > 0):
-                role = rolenames.ROLE_MENU
-                
-        self.role = role
-        return self.role
-
+        try:
+            role = self._acc.getRoleName()
+    
+            # [[[TODO: WDW - HACK to coalesce menu items with children
+            # into menus.  The menu demo in gtk-demo does this, and one
+            # might view that as an edge case.  But, in gnome-terminal,
+            # "Terminal" ->  "Set Character Encoding" is a menu item
+            # with children, but it behaves like a menu.]]]
+            #
+            if (role == rolenames.ROLE_CHECK_MENU_ITEM) \
+                and (self.childCount > 0):
+                    role = rolenames.ROLE_CHECK_MENU
+            elif (role == rolenames.ROLE_RADIO_MENU_ITEM) \
+                and (self.childCount > 0):
+                    role = rolenames.ROLE_RADIO_MENU
+            elif (role == rolenames.ROLE_MENU_ITEM) \
+                and (self.childCount > 0):
+                    role = rolenames.ROLE_MENU
+                    
+            self.role = role
+            return self.role
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
+            
 
     def __get_state(self):
         """Returns the Accessible StateSeq of this object, which is a
         sequence of Accessible StateTypes.
         """
 
-        set = self.acc.getState()
-        set = set._narrow(core.Accessibility.StateSet)
-        self.state = set.getStates()
-        return self.state
-
+        try:
+            set = self._acc.getState()
+            set = set._narrow(core.Accessibility.StateSet)
+            self.state = set.getStates()
+            return self.state
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
+            
 
     def __get_relations(self):
         """Returns the Accessible RelationSet of this object as a list.
         """
 
-        relations = self.acc.getRelationSet()
-        self.relations = []
-        for relation in relations:
-            self.relations.append(relation._narrow(
-                core.Accessibility.Relation))
-                                   
-        return self.relations
-
+        try:
+            relations = self._acc.getRelationSet()
+            self.relations = []
+            for relation in relations:
+                self.relations.append(relation._narrow(
+                    core.Accessibility.Relation))                           
+            return self.relations
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
+            
 
     def __get_app(self):
         """Returns the AT-SPI Accessibility_Application associated with this
@@ -382,33 +413,37 @@ class Accessible:
         # [[[TODO: WDW - this code seems like it might break if this
         # object is an application to begin with.]]]
         #
-        debug.println(debug.LEVEL_FINEST,
-                      "Finding app for source=(" + self.name + ")")
-        obj = self
-        while (obj.parent != None) and (obj != obj.parent):
-            obj = obj.parent
+        try:
             debug.println(debug.LEVEL_FINEST,
-                          "--> parent=(" + obj.name + ")")
-        if (obj.parent != None):
-            debug.println(debug.LEVEL_FINEST,
-                          "--> obj=(" + obj.name
-                          + ") parent=(" + obj.parent.name + ")")
-            if (obj == obj.parent):
-                debug.println(debug.LEVEL_SEVERE,
-                              "    ERROR: obj == obj.parent!")
-        else:
-            debug.println(debug.LEVEL_FINEST,
-                          "--> obj=(" + obj.name
-                          + ") parent=(None)")
+                          "Finding app for source=(" + self.name + ")")
+            obj = self
+            while (obj.parent != None) and (obj != obj.parent):
+                obj = obj.parent
+                debug.println(debug.LEVEL_FINEST,
+                              "--> parent=(" + obj.name + ")")
+            if (obj.parent != None):
+                debug.println(debug.LEVEL_FINEST,
+                              "--> obj=(" + obj.name
+                              + ") parent=(" + obj.parent.name + ")")
+                if (obj == obj.parent):
+                    debug.println(debug.LEVEL_SEVERE,
+                                  "    ERROR: obj == obj.parent!")
+            else:
+                debug.println(debug.LEVEL_FINEST,
+                              "--> obj=(" + obj.name
+                              + ") parent=(None)")
+                
+            if (obj == obj.parent) \
+                   or (obj.role != rolenames.ROLE_APPLICATION):
+                self.app = None
+            else:
+                self.app = obj
             
-        if (obj == obj.parent) \
-               or (obj.role != rolenames.ROLE_APPLICATION):
-            self.app = None
-        else:
-            self.app = obj
-        
-        return self.app
+            return self.app
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
 
+            
     def __get_extents(self, coordinateType = 0):
         """Returns the object's accessible extents as an
         Accessibility.BoundingBox object, or None if the object doesn't
@@ -424,13 +459,16 @@ class Accessible:
         Component interface.
         """
 
-        component = self.component
-        if component is None:
-            return None
-        else:
-            self.extents = component.getExtents(coordinateType)
-            return self.extents
-        
+        try:
+            component = self.component
+            if component is None:
+                return None
+            else:
+                self.extents = component.getExtents(coordinateType)
+                return self.extents
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
+            
 
     def __get_label(self):
         """Returns an object's label as a string.  The label is determined
@@ -446,57 +484,60 @@ class Accessible:
         4. Else return an empty string
         """
 
-        label = ""
-
-        # Does the object have a relation set?
-        #
-        relations = self.relations
-        for relation in relations:
-            if relation.getRelationType() \
-                   == core.Accessibility.RELATION_LABELLED_BY:
-                target = makeAccessible(relation.getTarget(0))
-                label = target.name
-                break
-
-        # [[[TODO: WDW - HACK because push buttons can have labels as
-        # their children.  But, they can also be labelled by something.
-        # So...we'll make the label be a combination of the thing
-        # labelling them (above) plus their name or the combination of
-        # the names of their children if the children exist.]]]
-        #
-        if self.role == rolenames.ROLE_PUSH_BUTTON:
-            if (self.name is not None) and (len(self.name) > 0):
-                if len(label) > 0:
-                    label += " " + self.name
-                else:
-                    label = self.name
-            elif self.childCount > 0:
-                i = 0
-                while i < self.childCount:
-                    child = self.child(i)
-                    if child.role == rolenames.ROLE_LABEL:
-                        if (child.name is not None) and (len(child.name) > 0):
-                            if len(label) > 0:
-                                label += " " + child.name
-                            else:
-                                label = child.name
-                    i += 1
-                    
-        # If the object doesn't have a relation, but has a name, return
-        # the name.
-        #
-        if (len(label) == 0) and (self.name is not None) \
-               and (len(self.name) > 0):
-            label = self.name
-
-        # If the object has no name, but has a description, return that
-        #
-        elif (len(label) == 0) and (self.description is not None) \
-                 and (len(self.description) > 0):
-            label = self.description
-
-        self.label = label
-        return self.label
+        try:
+            label = ""
+    
+            # Does the object have a relation set?
+            #
+            relations = self.relations
+            for relation in relations:
+                if relation.getRelationType() \
+                       == core.Accessibility.RELATION_LABELLED_BY:
+                    target = makeAccessible(relation.getTarget(0))
+                    label = target.name
+                    break
+    
+            # [[[TODO: WDW - HACK because push buttons can have labels as
+            # their children.  But, they can also be labelled by something.
+            # So...we'll make the label be a combination of the thing
+            # labelling them (above) plus their name or the combination of
+            # the names of their children if the children exist.]]]
+            #
+            if self.role == rolenames.ROLE_PUSH_BUTTON:
+                if (self.name is not None) and (len(self.name) > 0):
+                    if len(label) > 0:
+                        label += " " + self.name
+                    else:
+                        label = self.name
+                elif self.childCount > 0:
+                    i = 0
+                    while i < self.childCount:
+                        child = self.child(i)
+                        if child.role == rolenames.ROLE_LABEL:
+                            if (child.name is not None) and (len(child.name) > 0):
+                                if len(label) > 0:
+                                    label += " " + child.name
+                                else:
+                                    label = child.name
+                        i += 1
+                        
+            # If the object doesn't have a relation, but has a name, return
+            # the name.
+            #
+            if (len(label) == 0) and (self.name is not None) \
+                   and (len(self.name) > 0):
+                label = self.name
+    
+            # If the object has no name, but has a description, return that
+            #
+            elif (len(label) == 0) and (self.description is not None) \
+                     and (len(self.description) > 0):
+                label = self.description
+    
+            self.label = label
+            return self.label
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
 
 
     def __get_action(self):
@@ -505,13 +546,16 @@ class Accessible:
         the Accessibility_Action interface.
         """
 
-        bobj = self.acc._narrow(core.Accessibility.Accessible)
-        action = bobj.queryInterface("IDL:Accessibility/Action:1.0")
-        if action is not None:
-            action = action._narrow(core.Accessibility.Action)
-        self.action = action
-        return self.action
-
+        try:
+            bobj = self._acc._narrow(core.Accessibility.Accessible)
+            action = bobj.queryInterface("IDL:Accessibility/Action:1.0")
+            if action is not None:
+                action = action._narrow(core.Accessibility.Action)
+            self.action = action
+            return self.action
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
+            
 
     def __get_component(self):
         """Returns an object that implements the Accessibility_Component
@@ -519,19 +563,22 @@ class Accessible:
         the Accessibility_Component interface.
         """
 
-        self.component = None
-
         try:
-            bobj = self.acc._narrow(core.Accessibility.Accessible)
-            component = bobj.queryInterface("IDL:Accessibility/Component:1.0")
-            if component is not None:
-                component = component._narrow(core.Accessibility.Component)
-                self.component = component
+            self.component = None
+    
+            try:
+                bobj = self._acc._narrow(core.Accessibility.Accessible)
+                component = bobj.queryInterface("IDL:Accessibility/Component:1.0")
+                if component is not None:
+                    component = component._narrow(core.Accessibility.Component)
+                    self.component = component
+            except:
+                pass
+            
+            return self.component
         except:
-            pass
-        
-        return self.component
-
+            debug.printException(debug.LEVEL_SEVERE)
+            
 
     def __get_hypertext(self):
         """Returns an object that implements the Accessibility_Hypertext
@@ -539,13 +586,16 @@ class Accessible:
         the Accessibility_Hypertext interface.
         """
 
-        bobj = self.acc._narrow(core.Accessibility.Accessible)
-        hypertext = bobj.queryInterface("IDL:Accessibility/Hypertext:1.0")
-        if hypertext is not None:
-            hypertext = hypertext._narrow(core.Accessibility.Hypertext)
-        self.hypertext = hypertext
-        return self.hypertext
-
+        try:
+            bobj = self._acc._narrow(core.Accessibility.Accessible)
+            hypertext = bobj.queryInterface("IDL:Accessibility/Hypertext:1.0")
+            if hypertext is not None:
+                hypertext = hypertext._narrow(core.Accessibility.Hypertext)
+            self.hypertext = hypertext
+            return self.hypertext
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
+            
 
     def __get_selection(self):
         """Returns an object that implements the Accessibility_Selection
@@ -553,13 +603,16 @@ class Accessible:
         the Accessibility_Selection interface.
         """
 
-        bobj = self.acc._narrow(core.Accessibility.Accessible)
-        sel = bobj.queryInterface("IDL:Accessibility/Selection:1.0")
-        if sel is not None:
-            sel = sel._narrow(core.Accessibility.Selection)
-        self.selection = sel
-        return self.selection
-
+        try:
+            bobj = self._acc._narrow(core.Accessibility.Accessible)
+            sel = bobj.queryInterface("IDL:Accessibility/Selection:1.0")
+            if sel is not None:
+                sel = sel._narrow(core.Accessibility.Selection)
+            self.selection = sel
+            return self.selection
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
+            
 
     def __get_table(self):
         """Returns an object that implements the Accessibility_Table
@@ -567,13 +620,16 @@ class Accessible:
         the Accessibility_Table interface.
         """
 
-        bobj = self.acc._narrow(core.Accessibility.Accessible)
-        table = bobj.queryInterface("IDL:Accessibility/Table:1.0")
-        if table is not None:
-            table = table._narrow(core.Accessibility.Table)
-        self.table = table
-        return self.table
-
+        try:
+            bobj = self._acc._narrow(core.Accessibility.Accessible)
+            table = bobj.queryInterface("IDL:Accessibility/Table:1.0")
+            if table is not None:
+                table = table._narrow(core.Accessibility.Table)
+            self.table = table
+            return self.table
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
+            
 
     def __get_text(self):
         """Returns an object that implements the Accessibility_Text
@@ -581,27 +637,16 @@ class Accessible:
         the Accessibility_Text interface.
         """
 
-        bobj = self.acc._narrow(core.Accessibility.Accessible)
-        text = bobj.queryInterface("IDL:Accessibility/Text:1.0")
-        if text is not None:
-            text = text._narrow(core.Accessibility.Text)
-        self.text = text
-        return self.text
-
-
-    def __get_value(self):
-        """Returns an object that implements the Accessibility_Value
-        interface for this object, or None if this object doesn't implement
-        the Accessibility_Value interface.
-        """
-
-        bobj = self.acc._narrow(core.Accessibility.Accessible)
-        value = bobj.queryInterface("IDL:Accessibility/Value:1.0")
-        if value is not None:
-            value = value._narrow(core.Accessibility.Value)
-        self.value = value
-        return self.value
-
+        try:
+            bobj = self._acc._narrow(core.Accessibility.Accessible)
+            text = bobj.queryInterface("IDL:Accessibility/Text:1.0")
+            if text is not None:
+                text = text._narrow(core.Accessibility.Text)
+            self.text = text
+            return self.text
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
+            
 
     def __get_value(self):
         """Returns an object that implements the Accessibility_Value
@@ -609,13 +654,33 @@ class Accessible:
         the Accessibility_Value interface.
         """
 
-        bobj = self.acc._narrow(core.Accessibility.Accessible)
-        value = bobj.queryInterface("IDL:Accessibility/Value:1.0")
-        if value is not None:
-            value = value._narrow(core.Accessibility.Value)
-        self.value = value
-        return self.value
+        try:
+            bobj = self._acc._narrow(core.Accessibility.Accessible)
+            value = bobj.queryInterface("IDL:Accessibility/Value:1.0")
+            if value is not None:
+                value = value._narrow(core.Accessibility.Value)
+            self.value = value
+            return self.value
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
+            
 
+    def __get_value(self):
+        """Returns an object that implements the Accessibility_Value
+        interface for this object, or None if this object doesn't implement
+        the Accessibility_Value interface.
+        """
+
+        try:
+            bobj = self._acc._narrow(core.Accessibility.Accessible)
+            value = bobj.queryInterface("IDL:Accessibility/Value:1.0")
+            if value is not None:
+                value = value._narrow(core.Accessibility.Value)
+            self.value = value
+            return self.value
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
+            
 
     def __getattr__(self, attr):
         """Created virtual attributes for the Accessible object to make
@@ -691,7 +756,7 @@ class Accessible:
         # Save away details we now know about this child
         #
         try:
-            acc = self.acc.getChildAtIndex(index)
+            acc = self._acc.getChildAtIndex(index)
             if acc is None:
                 return None
             newChild = makeAccessible(acc)
@@ -758,7 +823,8 @@ def onParentChanged(e):
     # object rather than try to keep the cache in sync.]]]
     #
     if Accessible._cache.has_key(e.source):
-        del Accessible._cache[e.source]
+        obj = Accessible._cache[e.source]
+        del obj
     return
     
     # This could fail if the e.source is now defunct.  [[[TODO: WDW - there
@@ -791,7 +857,7 @@ def onStateChanged(e):
         #
         if e.type == "object:state-changed:defunct":
             obj.defunct = True
-            del Accessible._cache[e.source]
+            del obj
         elif obj.__dict__.has_key("state"):
             del obj.state
 

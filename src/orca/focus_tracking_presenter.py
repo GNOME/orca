@@ -386,7 +386,7 @@ def activate():
         # can tell the user about itself.
         #
         e = Event()
-        e.source = win.acc
+        e.source = win._acc
         e.type = "window:activate"
         e.detail1 = 0
         e.detail2 = 0
