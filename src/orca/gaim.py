@@ -183,7 +183,7 @@ class Gaim(Default):
         #
         if event.source == self._input:
             text = _("Input")
-        elif event.source == _self.output:
+        elif event.source == self._output:
             text = _("Message Log")
         else:
             return Default.onFocus(self, event)

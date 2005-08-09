@@ -224,7 +224,6 @@ class Accessible:
             return
 
         self.__origAcc = acc
-        self.__origAcc.ref()
         Accessible._cache[self.__origAcc] = self
         
         # The acc reference might be an Accessibility_Accessible or an
@@ -270,7 +269,6 @@ class Accessible:
             if self._acc:
                 self._acc.unref()
             del Accessible._cache[self.__origAcc]
-            self.__origAcc.unref()
         except:
             debug.printException(debug.LEVEL_SEVERE)
 
