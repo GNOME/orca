@@ -1,3 +1,29 @@
+2005-08-10  Willie Walker <william.walker@sun.com>
+
+	* src/orca/braillegenerator.py, src/orca/speechgenerator.py:
+	remove extraneous "region" field from constructor.
+	* src/orca/default.py: add factory methods to get braille and
+	speech generator objects so as to allow subclasses to more
+	easily override the generators.	
+	* src/orca/focus_tracking_presenter.py: ignore the
+	"object:state-changed:iconified" event for now to help avoid
+	tickling a nasty bug with gedit.  Tickling gedit when it is
+	starting can cause gedit to issue the following message:
+	(gedit:31434): GLib-GObject-WARNING **: invalid cast from
+	`SpiAccessible' to `BonoboControlAccessible'.  It seems as though
+	whenever this message is issued, gedit will hang when you try to
+	exit it.	
+	* src/orca/gedit.py, src/orca/Makefile.am: new script to override
+	the _getSpeechForFrame method so as to avoid tickling the same bug
+	described above.
+	* src/orca/a11y.py: add ability to turn local caching of object
+	values on or off via the a11y.CACHE_VALUES field.  The default
+	value is True, which means to do caching.	
+	* src/orca/a11y.py, src/orca/orca.py: start keeping better
+	tracking of CORBA COMM FAILURES; throw a11y.InvalidObjectError
+	exceptions and set the "valid" field of the Accessible to False
+	when these errors are detected.
+	
 2005-08-08  Maxim Dziumanenko <mvd@mylinux.ua>
 
         * configure.in: Added "uk" to ALL_LINGUAS.
