@@ -45,7 +45,11 @@ event_listener_notify_event (PortableServer_Servant servant,
         /* Post the event to the event queue.  [[[TODO: WDW - add a sync block
 	 * here to make this thread safe.]]] 
 	 */
-	event_queue_add (el->queue, e, el);
+#if 1
+	event_queue_add(el->queue, e, el);
+#else
+	event_listener_dispatch(el, e);
+#endif
 }
 
 
