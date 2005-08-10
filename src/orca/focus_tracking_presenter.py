@@ -236,26 +236,47 @@ def processObjectEvent(e):
     # We ignore defunct objects and let the a11y module take care of them
     # for us.
     #
-    if (e.type == "object:state-changed:defunct") \
-        or a11y.isDefunct(e.source):
+    if (e.type == "object:state-changed:defunct"):
+        return
+
+    # [[[TODO: WDW - HACK because tickling gedit when it is starting can
+    # cause gedit to issue the following message:
+    #
+    # (gedit:31434): GLib-GObject-WARNING **: invalid cast from `SpiAccessible' to `BonoboControlAccessible'
+    #
+    # It seems as though whenever this message is issued, gedit will hang
+    # when you try to exit it.  Debugging has shown that the iconfied state
+    # in particular seems to indicate that an object is telling all
+    # assistive technologies to just leave it alone or it will pull the
+    # trigger on the application.]]]
+    #
+    if (e.type == "object:state-changed:iconified"):
         return
 
     # Convert the AT-SPI event into a Python Event that we can annotate.
     # Copy relevant details from the event.
     #
-    event = Event()
-    event.type = e.type
-    event.detail1 = e.detail1
-    event.detail2 = e.detail2
-    event.any_data = e.any_data
-    event.source = a11y.makeAccessible(e.source)
-
-    debug.printObjectEvent(debug.LEVEL_FINEST,
-                           event,
-                           a11y.accessibleToString("", event.source))
+    try:
+        event = Event()
+        event.type = e.type
+        event.detail1 = e.detail1
+        event.detail2 = e.detail2
+        event.any_data = e.any_data
+        event.source = a11y.makeAccessible(e.source)
+        debug.printObjectEvent(debug.LEVEL_FINEST,
+                               event,
+                               a11y.accessibleToString("", event.source))
+    except:
+        # The exception will usually occur when we attempt to retrieve
+        # or make an accessible that no longer has a good CORBA connection.
+        # The cause is usually because the accessible went away and we
+        # don't know it yet.
+        #
+        return
 
     if event.source is None:
-        sys.stderr.write("ERROR: received an event with no source.\n")
+        debug.println(debug.LEVEL_SEVERE,
+                      "ERROR: received an event with no source.")
         return
 
     # [[[TODO: WDW - might want to consider re-introducing the reload

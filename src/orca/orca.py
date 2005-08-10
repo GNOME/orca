@@ -130,9 +130,12 @@ def _buildAppList():
     i = core.desktop.childCount-1
     while i >= 0:
         acc = core.desktop.getChildAtIndex(i)
-        app = a11y.makeAccessible(acc)
-        if not app is None:
-            apps.insert(0, app)
+        try:
+            app = a11y.makeAccessible(acc)
+            if not app is None:
+                apps.insert(0, app)
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
         i = i - 1
 
 
@@ -151,7 +154,12 @@ def setLocusOfFocus(event, obj):
         return
 
     oldLocusOfFocus = locusOfFocus
+    if oldLocusOfFocus and not oldLocusOfFocus.valid:
+        oldLocusOfFocus = None
+
     locusOfFocus = obj
+    if locusOfFocus and not locusOfFocus.valid:
+        locusOfFocus = None
 
     if locusOfFocus:
         if event:

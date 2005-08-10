@@ -17,6 +17,7 @@ orca_python_PYTHON = \
 	focus_tracking_presenter.py \
 	gaim.py \
 	gcalctool.py \
+	gedit.py \
 	Gecko.py \
 	gnome-terminal.py \
 	hierarchical_presenter.py \

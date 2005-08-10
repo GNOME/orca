@@ -42,7 +42,7 @@ class SpeechGenerator:
     entry point.  Subclasses can feel free to override/extend the
     speechGenerators instance field as they see fit."""
     
-    def __init__(self, region=None):
+    def __init__(self):
 
         # Set up a dictionary that maps role names to functions
         # that generate speech for objects that implement that role.

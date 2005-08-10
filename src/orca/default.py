@@ -142,10 +142,24 @@ class Default(Script):
         self.listeners["focus:"]                                 = \
             self.onFocus
         
-        self.brailleGenerator = braillegenerator.BrailleGenerator()
-        self.speechGenerator = speechgenerator.SpeechGenerator()
+        self.brailleGenerator = self.getBrailleGenerator()
+        self.speechGenerator = self.getSpeechGenerator()
 
 
+    def getBrailleGenerator(self):
+        """Returns the braille generator for this script.
+        """
+
+        return braillegenerator.BrailleGenerator()
+
+    
+    def getSpeechGenerator(self):
+        """Returns the speech generator for this script.
+        """
+
+        return speechgenerator.SpeechGenerator()
+
+    
     def findCommonAncestor(self, a, b):
         """Finds the common ancestor between Accessible a and Accessible b.
 
@@ -161,19 +175,25 @@ class Default(Script):
             return a
         
         aParents = [a]
-        parent = a.parent
-        while parent and (parent.parent != parent):
-            aParents.append(parent)
-            parent = parent.parent
-        aParents.reverse()
-
+        try:
+            parent = a.parent
+            while parent and (parent.parent != parent):
+                aParents.append(parent)
+                parent = parent.parent
+            aParents.reverse()
+        except:
+            pass
+        
         bParents = [b]
-        parent = b.parent
-        while parent and (parent.parent != parent):
-            bParents.append(parent)
-            parent = parent.parent
-        bParents.reverse()
-
+        try:
+            parent = b.parent
+            while parent and (parent.parent != parent):
+                bParents.append(parent)
+                parent = parent.parent
+            bParents.reverse()
+        except:
+            pass
+        
         commonAncestor = None
         
         maxSearch = min(len(aParents), len(bParents))
@@ -439,22 +459,27 @@ class Default(Script):
         - event: the Event
         """
 
-        # [[[TODO: WDW - HACK layered panes are nutty in that they
-        # will change the selection and tell the selected child it is
-        # focused, but the child will not issue a focus changed event.]]]
-        # 
-        if event.source \
-           and (event.source.role == rolenames.ROLE_LAYERED_PANE):
-#                or (event.source.role == rolenames.ROLE_TABLE) \
-#                or (event.source.role == rolenames.ROLE_TREE_TABLE) \
-#                or (event.source.role == rolenames.ROLE_TREE)):
-            if event.source.childCount:
-                selection = event.source.selection
-                if selection and selection.nSelectedChildren > 0:
-                    child = selection.getSelectedChild(0)
-                    if child:
-                        orca.setLocusOfFocus(event, a11y.makeAccessible(child))
-            return
+        try:
+            # [[[TODO: WDW - HACK layered panes are nutty in that they
+            # will change the selection and tell the selected child it is
+            # focused, but the child will not issue a focus changed event.]]]
+            # 
+            if event.source \
+               and (event.source.role == rolenames.ROLE_LAYERED_PANE):
+#                    or (event.source.role == rolenames.ROLE_TABLE) \
+#                    or (event.source.role == rolenames.ROLE_TREE_TABLE) \
+#                    or (event.source.role == rolenames.ROLE_TREE)):
+                if event.source.childCount:
+                    selection = event.source.selection
+                    if selection and selection.nSelectedChildren > 0:
+                        child = selection.getSelectedChild(0)
+                        if child:
+                            orca.setLocusOfFocus(event,
+                                                 a11y.makeAccessible(child))
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
+
+        return
 
 
     def onActiveDescendantChanged(self, event):
@@ -465,12 +490,15 @@ class Default(Script):
         - event: the Event
         """
 
-        child = a11y.makeAccessible(event.any_data)
+        try:
+            child = a11y.makeAccessible(event.any_data)
 
-        if child.childCount:
-            orca.setLocusOfFocus(event, child.child(1))
-        else:
-            orca.setLocusOfFocus(event, child)
+            if child.childCount:
+                orca.setLocusOfFocus(event, child.child(1))
+            else:
+                orca.setLocusOfFocus(event, child)
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
             
 
     def onWindowActivated(self, event):

@@ -43,7 +43,7 @@ class BrailleGenerator:
     primary entry point.  Subclasses can feel free to override/extend
     the brailleGenerators instance field as they see fit."""
     
-    def __init__(self, region=None):
+    def __init__(self):
         self.brailleGenerators = {}
         self.brailleGenerators["alert"]               = \
              self._getBrailleRegionsForAlert
