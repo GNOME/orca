@@ -492,9 +492,9 @@ class Accessible:
         """
 
         try:
-            relations = self._acc.getRelationSet()
+            relationSet = self._acc.getRelationSet()
             relations = []
-            for relation in relations:
+            for relation in relationSet:
                 relations.append(relation._narrow(
                     core.Accessibility.Relation))
             if CACHE_VALUES:
