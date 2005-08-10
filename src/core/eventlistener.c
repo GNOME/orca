@@ -23,7 +23,10 @@
 #include "eventlistener.h"
 #include "pyevent.h"
 
-
+#if 0
+#include <pthread.h>
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+#endif
 
 static GObjectClass *parent_class;
 
@@ -42,13 +45,24 @@ event_listener_notify_event (PortableServer_Servant servant,
 {
 	EventListener *el = EVENT_LISTENER(bonobo_object_from_servant(servant));
 
-        /* Post the event to the event queue.  [[[TODO: WDW - add a sync block
-	 * here to make this thread safe.]]] 
+	/* [[[TODO: WDW - need to resolve a deadlock here (I think)
+	 * before enabling this synchronization block.]]]
+	 */
+#if 0
+	pthread_mutex_lock(&mutex);
+#endif
+
+        /* Post the event.  This needs to be synchronized because we
+	 * can be notified of AT-SPI events from multiple threads.
 	 */
 #if 1
 	event_queue_add(el->queue, e, el);
 #else
 	event_listener_dispatch(el, e);
+#endif
+
+#if 0
+	pthread_mutex_unlock(&mutex);
 #endif
 }
 
