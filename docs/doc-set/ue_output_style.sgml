@@ -567,6 +567,10 @@
           <para>An icon is a small fixed-sized picture typically used to
             decorate components.</para>
 
+	  <para>&example; desktop: Press Ctrl+Alt+Tab to select the
+	    "Desktop."  This will give the icons on the desktop focus
+	    and you can move between them using the arrow keys.</para>
+
           <para>&example; gtk-demo: "Application Main Window" demo.  This
             creates an "Application Window" frame.  Click on File->New.
             This brings up an alert as a child of the gtk-demo application.

@@ -203,31 +203,31 @@
 
       <itemizedlist>
         <listitem>
-          <para>Pan left:</para>
+          <para>Pan left: BRL_CMD_FWINLT</para>
         </listitem>
         <listitem>
-          <para>Pan right:</para>
+          <para>Pan right: BRL_CMD_FWINRT</para>
         </listitem>
         <listitem>
-          <para>Line up:</para>
+          <para>Line up: BRL_CMD_LNUP</para>
         </listitem>
         <listitem>
-          <para>Line down:</para>
+          <para>Line down: BRL_CMD_LNDN</para>
         </listitem>
         <listitem>
-          <para>Beginning of line</para>
+          <para>Beginning of line: BRL_CMD_LNBEG</para>
         </listitem>
         <listitem>
-          <para>End of line</para>
+          <para>End of line: BRL_CMD_LNEND</para>
         </listitem>
         <listitem>
-          <para>Top of window</para>
+          <para>Top of window: BRL_CMD_TOP_LEFT</para>
         </listitem>
         <listitem>
-          <para>Bottom of window:</para>
+          <para>Bottom of window: BRL_CMD_BOT</para>
         </listitem>
         <listitem>
-          <para>Return to focus</para>
+          <para>Return to focus: BRL_CMD_HOME</para>
         </listitem>
         <listitem>
           <para>Cursor routing/clicking</para>
@@ -242,10 +242,10 @@
           <para>Set watched area:</para>
         </listitem>
         <listitem>
-          <para>Set Bookmarked area</para>
+          <para>Set Bookmarked area:</para>
         </listitem>
         <listitem>
-          <para>Go to bookmarked area</para>
+          <para>Go to bookmarked area:</para>
         </listitem>
         <listitem>
           <para>Go to watched area:</para>
@@ -257,9 +257,9 @@
 
       <itemizedlist>
         <listitem>
-          <para>Toggle space compression: toggles whether or not
-            spaces are compressed when navigating with the braille
-            display</para>
+          <para>Toggle space compression: BRL_CMD_SLIDEWIN. Toggles
+            whether or not spaces are compressed when navigating with
+            the braille display</para>
         </listitem>
         <listitem>
 	  <para>Toggle grade two on and off:</para>
@@ -268,10 +268,10 @@
 	  <para>Toggle what attributes if any are displayed:</para>
         </listitem>
         <listitem>
-	  <para>Enter verbosity mode:</para>
+	  <para>Enter verbosity mode: BRL_CMD_PREFMENU</para>
         </listitem>
         <listitem>
-          <para>Toggle keyboard learn mode:</para>
+          <para>Toggle keyboard learn mode: BRL_CMD_LEARN</para>
         </listitem>
         <listitem>
           <para>Toggle display style: toggles between the default

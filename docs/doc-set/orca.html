@@ -1,11 +1,11 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <HTML
 ><HEAD
 ><TITLE
 >Orca Documentation Series</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.7"></HEAD
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"></HEAD
 ><BODY
 CLASS="SET"
 BGCOLOR="#FFFFFF"
@@ -44,22 +44,22 @@ HREF="#AEN10"
 ></DT
 ><DT
 ><A
-HREF="#AEN1628"
+HREF="#AEN1630"
 >Orca Architecture and Functional Specification</A
 ></DT
 ><DT
 ><A
-HREF="#AEN2076"
+HREF="#AEN2078"
 >Orca Script Writing Guide</A
 ></DT
 ><DT
 ><A
-HREF="#AEN2093"
+HREF="#AEN2095"
 >Orca Testing Plan</A
 ></DT
 ><DT
 ><A
-HREF="#AEN2107"
+HREF="#AEN2109"
 >Orca User's Guide</A
 ></DT
 ></DL
@@ -445,7 +445,7 @@ HREF="#AEN739"
 ></DD
 ><DT
 ><A
-HREF="#AEN1599"
+HREF="#AEN1601"
 >Bibliography</A
 ></DT
 ></DL
@@ -2693,7 +2693,7 @@ HSPACE="5"
 ALT="Note"></TD
 ><TH
 ALIGN="LEFT"
-VALIGN="CENTER"
+VALIGN="MIDDLE"
 ><B
 >Performance Scope</B
 ></TH
@@ -2996,39 +2996,39 @@ CLASS="EMPHASIS"
 ><UL
 ><LI
 ><P
->Pan left:</P
+>Pan left: BRL_CMD_FWINLT</P
 ></LI
 ><LI
 ><P
->Pan right:</P
+>Pan right: BRL_CMD_FWINRT</P
 ></LI
 ><LI
 ><P
->Line up:</P
+>Line up: BRL_CMD_LNUP</P
 ></LI
 ><LI
 ><P
->Line down:</P
+>Line down: BRL_CMD_LNDN</P
 ></LI
 ><LI
 ><P
->Beginning of line</P
+>Beginning of line: BRL_CMD_LNBEG</P
 ></LI
 ><LI
 ><P
->End of line</P
+>End of line: BRL_CMD_LNEND</P
 ></LI
 ><LI
 ><P
->Top of window</P
+>Top of window: BRL_CMD_TOP_LEFT</P
 ></LI
 ><LI
 ><P
->Bottom of window:</P
+>Bottom of window: BRL_CMD_BOT</P
 ></LI
 ><LI
 ><P
->Return to focus</P
+>Return to focus: BRL_CMD_HOME</P
 ></LI
 ><LI
 ><P
@@ -3047,11 +3047,11 @@ CLASS="EMPHASIS"
 ></LI
 ><LI
 ><P
->Set Bookmarked area</P
+>Set Bookmarked area:</P
 ></LI
 ><LI
 ><P
->Go to bookmarked area</P
+>Go to bookmarked area:</P
 ></LI
 ><LI
 ><P
@@ -3066,9 +3066,9 @@ CLASS="EMPHASIS"
 ><UL
 ><LI
 ><P
->Toggle space compression: toggles whether or not
-            spaces are compressed when navigating with the braille
-            display</P
+>Toggle space compression: BRL_CMD_SLIDEWIN. Toggles
+            whether or not spaces are compressed when navigating with
+            the braille display</P
 ></LI
 ><LI
 ><P
@@ -3080,11 +3080,11 @@ CLASS="EMPHASIS"
 ></LI
 ><LI
 ><P
->Enter verbosity mode:</P
+>Enter verbosity mode: BRL_CMD_PREFMENU</P
 ></LI
 ><LI
 ><P
->Toggle keyboard learn mode:</P
+>Toggle keyboard learn mode: BRL_CMD_LEARN</P
 ></LI
 ><LI
 ><P
@@ -4144,6 +4144,13 @@ NAME="ROLE_ICON"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+> desktop: Press Ctrl+Alt+Tab to select the
+	    "Desktop."  This will give the icons on the desktop focus
+	    and you can move between them using the arrow keys.</P
+><P
+><I
+CLASS="EMPHASIS"
+>EXAMPLE:</I
 > gtk-demo: "Application Main Window" demo.  This
             creates an "Application Window" frame.  Click on File-&#62;New.
             This brings up an alert as a child of the gtk-demo application.
@@ -4171,7 +4178,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1018"
+NAME="AEN1020"
 >Braille</A
 ></H5
 ><P
@@ -4195,7 +4202,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1026"
+NAME="AEN1028"
 >Speech</A
 ></H5
 ><P
@@ -4235,7 +4242,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1038"
+NAME="AEN1040"
 >Braille</A
 ></H5
 ><P
@@ -4263,7 +4270,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1047"
+NAME="AEN1049"
 >Speech</A
 ></H5
 ><P
@@ -4319,7 +4326,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1062"
+NAME="AEN1064"
 >Braille</A
 ></H5
 ><P
@@ -4340,7 +4347,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1069"
+NAME="AEN1071"
 >Speech</A
 ></H5
 ><P
@@ -4379,7 +4386,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1078"
+NAME="AEN1080"
 >Braille</A
 ></H5
 ><P
@@ -4403,7 +4410,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1086"
+NAME="AEN1088"
 >Speech</A
 ></H5
 ><P
@@ -4441,7 +4448,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1098"
+NAME="AEN1100"
 >Braille</A
 ></H5
 ><P
@@ -4469,7 +4476,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1106"
+NAME="AEN1108"
 >Speech</A
 ></H5
 ><P
@@ -4501,7 +4508,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1116"
+NAME="AEN1118"
 >Braille</A
 ></H5
 ><P
@@ -4543,7 +4550,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1128"
+NAME="AEN1130"
 >Speech</A
 ></H5
 ><P
@@ -4584,7 +4591,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1141"
+NAME="AEN1143"
 >Braille</A
 ></H5
 ><P
@@ -4610,7 +4617,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1149"
+NAME="AEN1151"
 >Speech</A
 ></H5
 ><P
@@ -4658,7 +4665,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1164"
+NAME="AEN1166"
 >Braille</A
 ></H5
 ><P
@@ -4687,7 +4694,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1172"
+NAME="AEN1174"
 >Speech</A
 ></H5
 ><P
@@ -4728,7 +4735,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1185"
+NAME="AEN1187"
 >Braille</A
 ></H5
 ><P
@@ -4749,7 +4756,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1192"
+NAME="AEN1194"
 >Speech</A
 ></H5
 ><P
@@ -4801,7 +4808,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1208"
+NAME="AEN1210"
 >Braille</A
 ></H5
 ><P
@@ -4831,7 +4838,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1216"
+NAME="AEN1218"
 >Speech</A
 ></H5
 ><P
@@ -4872,7 +4879,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1229"
+NAME="AEN1231"
 >Braille</A
 ></H5
 ><P
@@ -4898,7 +4905,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1237"
+NAME="AEN1239"
 >Speech</A
 ></H5
 ><P
@@ -4940,7 +4947,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1250"
+NAME="AEN1252"
 >Braille</A
 ></H5
 ><P
@@ -4964,7 +4971,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1258"
+NAME="AEN1260"
 >Speech</A
 ></H5
 ><P
@@ -5002,7 +5009,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1270"
+NAME="AEN1272"
 >Braille</A
 ></H5
 ><P
@@ -5026,7 +5033,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1278"
+NAME="AEN1280"
 >Speech</A
 ></H5
 ><P
@@ -5079,7 +5086,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1294"
+NAME="AEN1296"
 >Braille</A
 ></H5
 ><P
@@ -5103,7 +5110,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1302"
+NAME="AEN1304"
 >Speech</A
 ></H5
 ><P
@@ -5157,7 +5164,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1318"
+NAME="AEN1320"
 >Braille</A
 ></H5
 ><P
@@ -5187,7 +5194,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1326"
+NAME="AEN1328"
 >Speech</A
 ></H5
 ><P
@@ -5229,7 +5236,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1339"
+NAME="AEN1341"
 >Braille</A
 ></H5
 ><P
@@ -5257,7 +5264,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1347"
+NAME="AEN1349"
 >Speech</A
 ></H5
 ><P
@@ -5294,7 +5301,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1359"
+NAME="AEN1361"
 >Braille</A
 ></H5
 ><P
@@ -5319,7 +5326,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1367"
+NAME="AEN1369"
 >Speech</A
 ></H5
 ><P
@@ -5360,7 +5367,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1379"
+NAME="AEN1381"
 >Braille</A
 ></H5
 ><P
@@ -5387,7 +5394,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1387"
+NAME="AEN1389"
 >Speech</A
 ></H5
 ><P
@@ -5426,7 +5433,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1399"
+NAME="AEN1401"
 >Braille</A
 ></H5
 ><P
@@ -5450,7 +5457,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1407"
+NAME="AEN1409"
 >Speech</A
 ></H5
 ><P
@@ -5496,7 +5503,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1419"
+NAME="AEN1421"
 >Braille</A
 ></H5
 ><P
@@ -5520,7 +5527,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1427"
+NAME="AEN1429"
 >Speech</A
 ></H5
 ><P
@@ -5566,7 +5573,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1441"
+NAME="AEN1443"
 >Braille</A
 ></H5
 ><P
@@ -5593,7 +5600,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1449"
+NAME="AEN1451"
 >Speech</A
 ></H5
 ><P
@@ -5635,7 +5642,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1461"
+NAME="AEN1463"
 >Braille</A
 ></H5
 ><P
@@ -5666,7 +5673,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1469"
+NAME="AEN1471"
 >Speech</A
 ></H5
 ><P
@@ -5707,7 +5714,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1481"
+NAME="AEN1483"
 >Braille</A
 ></H5
 ><P
@@ -5735,7 +5742,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1489"
+NAME="AEN1491"
 >Speech</A
 ></H5
 ><P
@@ -5805,7 +5812,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1509"
+NAME="AEN1511"
 >Braille</A
 ></H5
 ><P
@@ -5837,7 +5844,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1518"
+NAME="AEN1520"
 >Speech</A
 ></H5
 ><P
@@ -5871,7 +5878,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1527"
+NAME="AEN1529"
 >Braille</A
 ></H5
 ><P
@@ -5896,7 +5903,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1535"
+NAME="AEN1537"
 >Speech</A
 ></H5
 ><P
@@ -5943,7 +5950,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1548"
+NAME="AEN1550"
 >Braille</A
 ></H5
 ><P
@@ -5974,7 +5981,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1557"
+NAME="AEN1559"
 >Speech</A
 ></H5
 ><P
@@ -6014,7 +6021,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1569"
+NAME="AEN1571"
 >Braille</A
 ></H5
 ><P
@@ -6039,7 +6046,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1577"
+NAME="AEN1579"
 >Speech</A
 ></H5
 ><P
@@ -6071,7 +6078,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1587"
+NAME="AEN1589"
 >Braille</A
 ></H5
 ><P
@@ -6099,7 +6106,7 @@ CLASS="SECTION"
 ><HR><H5
 CLASS="SECTION"
 ><A
-NAME="AEN1595"
+NAME="AEN1597"
 >Speech</A
 ></H5
 ><P
@@ -6113,11 +6120,11 @@ CLASS="EMPHASIS"
 ></DIV
 ></DIV
 ><A
-NAME="AEN1599"
+NAME="AEN1601"
 ></A
 ><HR><H1
 ><A
-NAME="AEN1599"
+NAME="AEN1601"
 ></A
 >Bibliography</H1
 ><DIV
@@ -6172,14 +6179,14 @@ STYLE="margin-left: 0.5in"
 ><DIV
 CLASS="BOOK"
 ><A
-NAME="AEN1628"
+NAME="AEN1630"
 ></A
 ><DIV
 CLASS="TITLEPAGE"
 ><H1
 CLASS="TITLE"
 ><A
-NAME="AEN1628"
+NAME="AEN1630"
 >Orca Architecture and Functional Specification</A
 ></H1
 ><DIV
@@ -6187,7 +6194,7 @@ CLASS="LEGALNOTICE"
 ><P
 ></P
 ><A
-NAME="AEN1631"
+NAME="AEN1633"
 ></A
 ><P
 >Copyright 2005, Sun Microsystems, Inc.</P
@@ -6204,69 +6211,69 @@ CLASS="TOC"
 ></DT
 ><DT
 ><A
-HREF="#AEN1633"
+HREF="#AEN1635"
 >Foreword</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1639"
+HREF="#AEN1641"
 >Introduction</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1642"
+HREF="#AEN1644"
 >Prerequisites</A
 ></DT
 ><DD
 ><DL
 ><DT
 ><A
-HREF="#AEN1645"
+HREF="#AEN1647"
 >Python v2.4 or better</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1650"
+HREF="#AEN1652"
 >pyorbit v2.0.0 or better</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1653"
+HREF="#AEN1655"
 >libbonobo v2.0.0 or better</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1656"
+HREF="#AEN1658"
 >gnome-python-2.0 v2.6.0 or better</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1659"
+HREF="#AEN1661"
 >pygtk-2.0 v2.4.0 or better</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1662"
+HREF="#AEN1664"
 >AT-SPI v1.6.2 or better</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1667"
+HREF="#AEN1669"
 >gnome-speech v0.3.4 or better</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1672"
+HREF="#AEN1674"
 >BrlTTY v3.6.1 or better</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1677"
+HREF="#AEN1679"
 >gnome-mag v0.11.11 or better</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1682"
+HREF="#AEN1684"
 >Keyboard Navigation</A
 ></DT
 ></DL
@@ -6280,43 +6287,43 @@ HREF="#ARCHITECTURE"
 ><DL
 ><DT
 ><A
-HREF="#AEN1696"
+HREF="#AEN1698"
 >Desktop and AT-SPI</A
 ></DT
 ><DD
 ><DL
 ><DT
 ><A
-HREF="#AEN1716"
+HREF="#AEN1718"
 >core</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1746"
+HREF="#AEN1748"
 >kbd</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1768"
+HREF="#AEN1770"
 >a11y</A
 ></DT
 ></DL
 ></DD
 ><DT
 ><A
-HREF="#AEN1779"
+HREF="#AEN1781"
 >Orca</A
 ></DT
 ><DD
 ><DL
 ><DT
 ><A
-HREF="#AEN1782"
+HREF="#AEN1784"
 >orca</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1802"
+HREF="#AEN1804"
 >settings</A
 ></DT
 ></DL
@@ -6343,24 +6350,24 @@ HREF="#FOCUS"
 ></DD
 ><DT
 ><A
-HREF="#AEN1905"
+HREF="#AEN1907"
 >System Services</A
 ></DT
 ><DD
 ><DL
 ><DT
 ><A
-HREF="#AEN1908"
+HREF="#AEN1910"
 >speech</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1933"
+HREF="#AEN1935"
 >braille</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1962"
+HREF="#AEN1964"
 >mag</A
 ></DT
 ></DL
@@ -6369,12 +6376,12 @@ HREF="#AEN1962"
 ></DD
 ><DT
 ><A
-HREF="#AEN1968"
+HREF="#AEN1970"
 >Internationalization (I18N) Support</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1977"
+HREF="#AEN1979"
 >Bibliography</A
 ></DT
 ></DL
@@ -6383,7 +6390,7 @@ HREF="#AEN1977"
 CLASS="PREFACE"
 ><HR><H1
 ><A
-NAME="AEN1633"
+NAME="AEN1635"
 ></A
 >Foreword</H1
 ><P
@@ -6412,7 +6419,7 @@ CLASS="EMPHASIS"
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN1639"
+NAME="AEN1641"
 ></A
 >Introduction</H1
 ><P
@@ -6425,7 +6432,7 @@ NAME="AEN1639"
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN1642"
+NAME="AEN1644"
 ></A
 >Prerequisites</H1
 ><P
@@ -6441,7 +6448,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1645"
+NAME="AEN1647"
 >Python v2.4 or better</A
 ></H2
 ><P
@@ -6460,7 +6467,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1650"
+NAME="AEN1652"
 >pyorbit v2.0.0 or better</A
 ></H2
 ><P
@@ -6472,7 +6479,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1653"
+NAME="AEN1655"
 >libbonobo v2.0.0 or better</A
 ></H2
 ><P
@@ -6484,7 +6491,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1656"
+NAME="AEN1658"
 >gnome-python-2.0 v2.6.0 or better</A
 ></H2
 ><P
@@ -6496,7 +6503,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1659"
+NAME="AEN1661"
 >pygtk-2.0 v2.4.0 or better</A
 ></H2
 ><P
@@ -6511,7 +6518,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1662"
+NAME="AEN1664"
 >AT-SPI v1.6.2 or better</A
 ></H2
 ><P
@@ -6541,7 +6548,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1667"
+NAME="AEN1669"
 >gnome-speech v0.3.4 or better</A
 ></H2
 ><P
@@ -6562,7 +6569,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1672"
+NAME="AEN1674"
 >BrlTTY v3.6.1 or better</A
 ></H2
 ><P
@@ -6584,7 +6591,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1677"
+NAME="AEN1679"
 >gnome-mag v0.11.11 or better</A
 ></H2
 ><P
@@ -6605,7 +6612,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1682"
+NAME="AEN1684"
 >Keyboard Navigation</A
 ></H2
 ><P
@@ -6631,7 +6638,7 @@ NAME="ARCHITECTURE"
 ><DIV
 CLASS="FIGURE"
 ><A
-NAME="AEN1688"
+NAME="AEN1690"
 ></A
 ><DIV
 CLASS="MEDIAOBJECT"
@@ -6656,7 +6663,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1696"
+NAME="AEN1698"
 >Desktop and AT-SPI</A
 ></H2
 ><P
@@ -6738,7 +6745,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1716"
+NAME="AEN1718"
 >core</A
 ></H3
 ><P
@@ -6792,7 +6799,7 @@ CLASS="EMPHASIS"
 ><DIV
 CLASS="FIGURE"
 ><A
-NAME="AEN1725"
+NAME="AEN1727"
 ></A
 ><DIV
 CLASS="MEDIAOBJECT"
@@ -6826,7 +6833,7 @@ CLASS="EMPHASIS"
 ><DIV
 CLASS="FIGURE"
 ><A
-NAME="AEN1735"
+NAME="AEN1737"
 ></A
 ><DIV
 CLASS="MEDIAOBJECT"
@@ -6870,7 +6877,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1746"
+NAME="AEN1748"
 >kbd</A
 ></H3
 ><P
@@ -6891,7 +6898,7 @@ CLASS="EMPHASIS"
 ><DIV
 CLASS="FIGURE"
 ><A
-NAME="AEN1750"
+NAME="AEN1752"
 ></A
 ><DIV
 CLASS="MEDIAOBJECT"
@@ -6908,7 +6915,7 @@ SRC="keyevent_registration.jpg"></P
 ><DIV
 CLASS="FIGURE"
 ><A
-NAME="AEN1757"
+NAME="AEN1759"
 ></A
 ><DIV
 CLASS="MEDIAOBJECT"
@@ -6945,7 +6952,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1768"
+NAME="AEN1770"
 >a11y</A
 ></H3
 ><P
@@ -7011,7 +7018,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1779"
+NAME="AEN1781"
 >Orca</A
 ></H2
 ><P
@@ -7024,7 +7031,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1782"
+NAME="AEN1784"
 >orca</A
 ></H3
 ><P
@@ -7046,7 +7053,7 @@ NAME="AEN1782"
 ><DIV
 CLASS="FIGURE"
 ><A
-NAME="AEN1787"
+NAME="AEN1789"
 ></A
 ><DIV
 CLASS="MEDIAOBJECT"
@@ -7128,7 +7135,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1802"
+NAME="AEN1804"
 >settings</A
 ></H3
 ><P
@@ -7200,7 +7207,7 @@ CLASS="EMPHASIS"
 ><DIV
 CLASS="FIGURE"
 ><A
-NAME="AEN1816"
+NAME="AEN1818"
 ></A
 ><DIV
 CLASS="MEDIAOBJECT"
@@ -7336,7 +7343,7 @@ NAME="INPUTEVENTHANDLER"
 ><DIV
 CLASS="FIGURE"
 ><A
-NAME="AEN1850"
+NAME="AEN1852"
 ></A
 ><DIV
 CLASS="MEDIAOBJECT"
@@ -7366,7 +7373,7 @@ CLASS="EMPHASIS"
 ><DIV
 CLASS="FIGURE"
 ><A
-NAME="AEN1860"
+NAME="AEN1862"
 ></A
 ><DIV
 CLASS="MEDIAOBJECT"
@@ -7574,7 +7581,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1905"
+NAME="AEN1907"
 >System Services</A
 ></H2
 ><P
@@ -7588,7 +7595,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1908"
+NAME="AEN1910"
 >speech</A
 ></H3
 ><P
@@ -7691,7 +7698,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1933"
+NAME="AEN1935"
 >braille</A
 ></H3
 ><P
@@ -7720,7 +7727,7 @@ CLASS="EMPHASIS"
 ><DIV
 CLASS="FIGURE"
 ><A
-NAME="AEN1941"
+NAME="AEN1943"
 ></A
 ><DIV
 CLASS="MEDIAOBJECT"
@@ -7737,7 +7744,7 @@ SRC="brailleevent_registration.jpg"></P
 ><DIV
 CLASS="FIGURE"
 ><A
-NAME="AEN1948"
+NAME="AEN1950"
 ></A
 ><DIV
 CLASS="MEDIAOBJECT"
@@ -7755,7 +7762,7 @@ SRC="brailleevent_handling_general.jpg"></P
 ><DIV
 CLASS="FIGURE"
 ><A
-NAME="AEN1955"
+NAME="AEN1957"
 ></A
 ><DIV
 CLASS="MEDIAOBJECT"
@@ -7774,7 +7781,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1962"
+NAME="AEN1964"
 >mag</A
 ></H3
 ><P
@@ -7803,7 +7810,7 @@ HREF="#GNOME-MAG"
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN1968"
+NAME="AEN1970"
 ></A
 >Internationalization (I18N) Support</H1
 ><P
@@ -7842,11 +7849,11 @@ CLASS="EMPHASIS"
       future.</P
 ></DIV
 ><A
-NAME="AEN1977"
+NAME="AEN1979"
 ></A
 ><HR><H1
 ><A
-NAME="AEN1977"
+NAME="AEN1979"
 ></A
 >Bibliography</H1
 ><DIV
@@ -8097,14 +8104,14 @@ STYLE="margin-left: 0.5in"
 ><DIV
 CLASS="BOOK"
 ><A
-NAME="AEN2076"
+NAME="AEN2078"
 ></A
 ><DIV
 CLASS="TITLEPAGE"
 ><H1
 CLASS="TITLE"
 ><A
-NAME="AEN2076"
+NAME="AEN2078"
 >Orca Script Writing Guide</A
 ></H1
 ><DIV
@@ -8112,7 +8119,7 @@ CLASS="LEGALNOTICE"
 ><P
 ></P
 ><A
-NAME="AEN2079"
+NAME="AEN2081"
 ></A
 ><P
 >Copyright 2005, Sun Microsystems, Inc.</P
@@ -8129,17 +8136,17 @@ CLASS="TOC"
 ></DT
 ><DT
 ><A
-HREF="#AEN2081"
+HREF="#AEN2083"
 >Foreword</A
 ></DT
 ><DT
 ><A
-HREF="#AEN2087"
+HREF="#AEN2089"
 >Introduction</A
 ></DT
 ><DT
 ><A
-HREF="#AEN2090"
+HREF="#AEN2092"
 >Functions that Orca needs to provide to the user</A
 ></DT
 ></DL
@@ -8148,7 +8155,7 @@ HREF="#AEN2090"
 CLASS="PREFACE"
 ><HR><H1
 ><A
-NAME="AEN2081"
+NAME="AEN2083"
 ></A
 >Foreword</H1
 ><P
@@ -8175,7 +8182,7 @@ CLASS="EMPHASIS"
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN2087"
+NAME="AEN2089"
 ></A
 >Introduction</H1
 ><P
@@ -8185,7 +8192,7 @@ NAME="AEN2087"
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN2090"
+NAME="AEN2092"
 ></A
 >Functions that Orca needs to provide to the user</H1
 ><P
@@ -8197,14 +8204,14 @@ NAME="AEN2090"
 ><DIV
 CLASS="BOOK"
 ><A
-NAME="AEN2093"
+NAME="AEN2095"
 ></A
 ><DIV
 CLASS="TITLEPAGE"
 ><H1
 CLASS="TITLE"
 ><A
-NAME="AEN2093"
+NAME="AEN2095"
 >Orca Testing Plan</A
 ></H1
 ><DIV
@@ -8212,7 +8219,7 @@ CLASS="LEGALNOTICE"
 ><P
 ></P
 ><A
-NAME="AEN2096"
+NAME="AEN2098"
 ></A
 ><P
 >Copyright 2005, Sun Microsystems, Inc.</P
@@ -8229,12 +8236,12 @@ CLASS="TOC"
 ></DT
 ><DT
 ><A
-HREF="#AEN2098"
+HREF="#AEN2100"
 >Foreword</A
 ></DT
 ><DT
 ><A
-HREF="#AEN2104"
+HREF="#AEN2106"
 >Introduction</A
 ></DT
 ></DL
@@ -8243,7 +8250,7 @@ HREF="#AEN2104"
 CLASS="PREFACE"
 ><HR><H1
 ><A
-NAME="AEN2098"
+NAME="AEN2100"
 ></A
 >Foreword</H1
 ><P
@@ -8269,7 +8276,7 @@ CLASS="EMPHASIS"
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN2104"
+NAME="AEN2106"
 ></A
 >Introduction</H1
 ><P
@@ -8279,14 +8286,14 @@ NAME="AEN2104"
 ><DIV
 CLASS="BOOK"
 ><A
-NAME="AEN2107"
+NAME="AEN2109"
 ></A
 ><DIV
 CLASS="TITLEPAGE"
 ><H1
 CLASS="TITLE"
 ><A
-NAME="AEN2107"
+NAME="AEN2109"
 >Orca User's Guide</A
 ></H1
 ><DIV
@@ -8294,7 +8301,7 @@ CLASS="LEGALNOTICE"
 ><P
 ></P
 ><A
-NAME="AEN2110"
+NAME="AEN2112"
 ></A
 ><P
 >Copyright 2005, Sun Microsystems, Inc.</P
@@ -8311,12 +8318,12 @@ CLASS="TOC"
 ></DT
 ><DT
 ><A
-HREF="#AEN2112"
+HREF="#AEN2114"
 >Foreword</A
 ></DT
 ><DT
 ><A
-HREF="#AEN2118"
+HREF="#AEN2120"
 >Introduction</A
 ></DT
 ></DL
@@ -8325,7 +8332,7 @@ HREF="#AEN2118"
 CLASS="PREFACE"
 ><HR><H1
 ><A
-NAME="AEN2112"
+NAME="AEN2114"
 ></A
 >Foreword</H1
 ><P
@@ -8353,7 +8360,7 @@ CLASS="EMPHASIS"
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN2118"
+NAME="AEN2120"
 ></A
 >Introduction</H1
 ><P
