@@ -1227,8 +1227,12 @@ def findUnrelatedLabels(root):
     
     # add the names of only those labels which are not associated with
     # other objects (i.e., empty relation sets).  [[[TODO: WDW - HACK:
-    # In addition, do not grab free labels whose parents are push buttons
-    # because push buttons can have labels as children.]]]
+    # In addition, do not grab free labels whose parents are push
+    # buttons because push buttons can have labels as
+    # children.]]][[[TODO: WDW - HACK: panels with labelled borders will
+    # have a child label that does not have its relation set.  So...we
+    # check to see if the panel's name is the same as the label's name.
+    # If so, we ignore the label.]]]
     #
     unrelatedLabels = []
     
@@ -1238,11 +1242,31 @@ def findUnrelatedLabels(root):
             parent = label.parent
             if parent and (parent.role == rolenames.ROLE_PUSH_BUTTON):
                 pass
+            elif parent and (parent.role == rolenames.ROLE_PANEL) \
+               and (parent.name == label.name):
+                pass
             elif label.state.count(core.Accessibility.STATE_SHOWING):
                 unrelatedLabels.append(label)
 
-    return unrelatedLabels
-
+    # Now sort the labels based on their geographic position, top to
+    # bottom, left to right.  This is a very inefficient sort, but the
+    # assumption here is that there will not be a lot of labels to
+    # worry about.
+    #
+    sortedLabels = []
+    for label in unrelatedLabels:
+        index = 0
+        for sortedLabel in sortedLabels:
+            if (label.extents.y > sortedLabel.extents.y) \
+               or ((label.extents.y == sortedLabel.extents.y) \
+                   and (label.extents.x > sortedLabel.extents.x)):
+                index += 1
+            else:
+                break
+        sortedLabels.insert(index, label)
+        
+    #return unrelatedLabels
+    return sortedLabels
 
 def getFrame(obj):
     """Returns the frame containing this object, or None if this object
