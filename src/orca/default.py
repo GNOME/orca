@@ -87,9 +87,12 @@ class Default(Script):
         self.keybindings["F9"] = InputEventHandler(
             sayAgain,
             _("Repeats last utterance sent to speech."))
-        self.keybindings["F11"] = InputEventHandler(
+        self.keybindings[orca.META_MODIFIER+"++"] = InputEventHandler(
             sayAll,
             _("Speaks entire document."))
+        self.keybindings[orca.META_MODIFIER+"+KP_Enter"] = InputEventHandler(
+            self.whereAmI,
+            _("Performs the where am I operation."))
             
         self.listeners["object:property-change:accessible-name"] = \
             self.onNameChanged 
@@ -146,6 +149,73 @@ class Default(Script):
         self.speechGenerator = self.getSpeechGenerator()
 
 
+    def whereAmI(self, inputEvent):
+        self.updateBraille(orca.locusOfFocus)
+
+        verbosity = settings.getSetting("speechVerbosityLevel",
+                                        settings.VERBOSITY_LEVEL_VERBOSE)
+    
+        utterances = []
+            
+        utterances.extend(
+            self.speechGenerator.getSpeechContext(orca.locusOfFocus))
+
+        # Now, we'll treat table row and column headers as context
+        # as well.  This requires special handling because we're
+        # making headers seem hierarchical in the context, but they
+        # are not hierarchical in the containment hierarchicy.
+        # We also only want to speak the one that changed.  If both
+        # changed, first speak the row header, then the column header.
+        #
+        # We also keep track of tree level depth and only announce
+        # that if it changes.
+        #
+        if orca.locusOfFocus.role == rolenames.ROLE_TABLE_CELL:
+            parent = orca.locusOfFocus.parent
+            if parent and parent.table:
+                table = parent.table
+                row = table.getRowAtIndex(orca.locusOfFocus.index)
+                col = table.getColumnAtIndex(orca.locusOfFocus.index)
+
+                desc = parent.table.getRowDescription(row)
+                if desc and len(desc):
+                    text = desc
+                    if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
+                        text += " " \
+                                + rolenames.rolenames[\
+                                        rolenames.ROLE_ROW_HEADER].speech
+                        utterances.append(text)
+
+                desc = newParent.table.getColumnDescription(newCol)
+                if desc and len(desc):
+                    text = desc
+                    if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
+                        text += " " \
+                                + rolenames.rolenames[\
+                                        rolenames.ROLE_COLUMN_HEADER].speech
+                        utterances.append(text)
+
+        # Get the text for the object itself.
+        #
+        utterances.extend(
+            self.speechGenerator.getSpeech(orca.locusOfFocus, False))
+
+        # Now speak the tree node level.
+        #
+        level = a11y.getNodeLevel(orca.locusOfFocus)
+        if level >= 0:
+            utterances.append(_("tree level %d") % (level + 1))
+
+        if orca.locusOfFocus.state.count(\
+                    core.Accessibility.STATE_SENSITIVE) == 0:
+            message = _("Nothing has focus")
+            utterances.extend(message)
+            
+        speech.sayUtterances("default", utterances)
+
+        return True
+
+        
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.
         """
@@ -859,7 +929,7 @@ def sayAll(inputEvent):
     
     if txt is None:
         speech.say("default", _("Not a document."))
-        return
+        return True
     
     sayAllText = txt
     sayAllPosition = txt.caretOffset

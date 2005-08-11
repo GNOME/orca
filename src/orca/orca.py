@@ -615,6 +615,7 @@ ALT_MODIFIER     = "alt"
 META_MODIFIER    = "meta"
 META2_MODIFIER   = "meta2"
 META3_MODIFIER   = "meta3"
+NUMLOCK_MODIFIER = "numlock"
 
 def _getModifierString(modifier):
     """Converts a set of modifer states into a text string
@@ -644,6 +645,8 @@ def _getModifierString(modifier):
         l.append(META2_MODIFIER)
     if modifier & (1 << core.Accessibility.MODIFIER_META3):
         l.append(META3_MODIFIER)
+    if modifier & (1 << core.Accessibility.MODIFIER_NUMLOCK):
+        l.append(NUMLOCK_MODIFIER)
     for mod in l:
         if s == "":
             s = mod
@@ -682,21 +685,30 @@ def _keyEcho(key):
 #
 _keybindings = {}
 
-_keybindings[INSERT_MODIFIER + "+F1"] = InputEventHandler(\
+enterLearnModeHandler = InputEventHandler(\
     enterLearnMode,
     _("Enters learn mode.  Press escape to exit learn mode."))
+_keybindings[INSERT_MODIFIER + "+F1"] = enterLearnModeHandler
+_keybindings[META_MODIFIER + "+" + INSERT_MODIFIER + "+F1"] = \
+                           enterLearnModeHandler
 
-_keybindings[INSERT_MODIFIER + "+Left"] = InputEventHandler(\
+decreaseSpeechRateHandler = InputEventHandler(\
     speech.decreaseSpeechRate,
     _("Decreases the speech rate."))
+_keybindings[INSERT_MODIFIER + "+Left"] = decreaseSpeechRateHandler
+_keybindings[META_MODIFIER + "+" + INSERT_MODIFIER + "+Left"] = \
+                           decreaseSpeechRateHandler
 
-_keybindings[INSERT_MODIFIER + "+Right"] = InputEventHandler(\
+increaseSpeechRateHandler = InputEventHandler(\
     speech.increaseSpeechRate,
     _("Increases the speech rate."))
+_keybindings[INSERT_MODIFIER + "+Right"] = increaseSpeechRateHandler
+_keybindings[META_MODIFIER + "+" + INSERT_MODIFIER + "+Right"] = \
+                           increaseSpeechRateHandler
 
-_keybindings["F12"] = InputEventHandler(\
-    shutdown,
-    _("Quits Orca"))
+shutdownHandler = InputEventHandler(shutdown, _("Quits Orca"))
+_keybindings["F12"] = shutdownHandler
+_keybindings[META_MODIFIER + "+F12"] = shutdownHandler
 
 _keybindings["F5"]  = InputEventHandler(\
     printApps,
