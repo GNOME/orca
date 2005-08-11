@@ -209,6 +209,20 @@ def visualAppearanceChanged(event, obj):
             visualAppearanceChanged(event, obj)
 
 
+def isInActiveApp(obj):
+    """Returns True if the given object is from the same application that
+    currently has keyboard focus.
+
+    Arguments:
+    - obj: an Accessible object
+    """
+
+    if not obj:
+        return False
+    else:
+        return locusOfFocus and (locusOfFocus.app == obj.app)
+
+    
 def findActiveWindow():
     """Traverses the list of known apps looking for one who has an
     immediate child (i.e., a window) whose state includes the active state.

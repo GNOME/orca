@@ -207,7 +207,7 @@ class Default(Script):
 
         return commonAncestor
 
-    
+
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
 
@@ -344,7 +344,44 @@ class Default(Script):
         - event: if not None, the Event that caused this to happen
         - obj: the Accessible whose visual appearance changed.
         """
-        
+
+        # We care if panels are suddenly showing.  The reason for this
+        # is that some applications, such as Evolution, will bring up
+        # a wizard dialog that uses "Forward" and "Backward" buttons
+        # that change the contents of the dialog.  We only discover
+        # this through showing events. [[[TODO: WDW - perhaps what we
+        # really want is to speak unbound labels that are suddenly
+        # showing?  event.detail == 1 means object is showing.]]]
+        #
+        if (obj.role == rolenames.ROLE_PANEL) \
+               and (event.detail1 == 1) \
+               and orca.isInActiveApp(obj):
+
+            # It's only showing if its parent is showing. [[[TODO: WDW -
+            # HACK we stop at the application level because applications
+            # never seem to have their showing state set.]]]
+            #
+            reallyShowing = True
+            parent = obj.parent
+            while reallyShowing \
+                      and parent \
+                      and (parent != parent.parent) \
+                      and (parent.role != rolenames.ROLE_APPLICATION):
+                reallyShowing = parent.state.count(\
+                    core.Accessibility.STATE_SHOWING)
+                parent = parent.parent
+
+            # Find all the unrelated labels in the dialog and speak them.
+            #
+            if reallyShowing:
+                print "HERE!"
+                utterances = []
+                labels = a11y.findUnrelatedLabels(obj)
+                for label in labels:
+                    utterances.append(label.name)
+                speech.sayUtterances("default", utterances)
+                return
+                    
         if obj != orca.locusOfFocus:
             return
 
@@ -863,8 +900,15 @@ def sayAllStopped(position):
 # of states that we care about.
 #
 state_change_notifiers = {}
-state_change_notifiers[rolenames.ROLE_CHECK_BOX]     = ("checked",  None)
-state_change_notifiers[rolenames.ROLE_TOGGLE_BUTTON] = ("checked",  None)
+
+state_change_notifiers[rolenames.ROLE_CHECK_BOX]     = ("checked",
+                                                        None)
+state_change_notifiers[rolenames.ROLE_PANEL]         = ("showing",
+                                                        None)
+state_change_notifiers[rolenames.ROLE_LABEL]         = ("showing",
+                                                        None)
+state_change_notifiers[rolenames.ROLE_TOGGLE_BUTTON] = ("checked",
+                                                        None)
 state_change_notifiers[rolenames.ROLE_TABLE_CELL]    = ("checked",
                                                         "expanded",
                                                         None)

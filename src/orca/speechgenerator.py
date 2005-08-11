@@ -285,31 +285,11 @@ class SpeechGenerator:
         
         utterances = self._getSpeechForLabelAndRole(obj)
     
-        # Find all the labels in the dialog
+        # Find all the unrelated labels in the dialog and speak them.
         #
-        labels = a11y.findByRole(obj, "label")
-    
-        # Add the names of only those labels which are not associated with
-        # other objects (i.e., empty relation sets).  [[[TODO: WDW - HACK:
-        # In addition, do not grab free labels whose parents are push buttons
-        # because push buttons can have labels as children.]]]
-        #
-        text = ""
-        
+        labels = a11y.findUnrelatedLabels(obj)
         for label in labels:
-            set = label.relations
-            if len(set) == 0:
-                parent = label.parent
-                if parent and (parent.role == rolenames.ROLE_PUSH_BUTTON):
-                    pass
-                else:
-                    set = label.state
-                    if set.count(core.Accessibility.STATE_SHOWING):
-                        if len(text):
-                            text += " "
-                        text += label.name
-
-        utterances.append(text)
+            utterances.append(label.name)
         
         self._debugGenerator("_getSpeechForAlert",
                              obj,

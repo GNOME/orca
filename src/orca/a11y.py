@@ -519,42 +519,37 @@ class Accessible:
         # [[[TODO: WDW - this code seems like it might break if this
         # object is an application to begin with.]]]
         #
-        try:
+        debug.println(debug.LEVEL_FINEST,
+                      "Finding app for source=(" + self.name + ")")
+        obj = self
+        while (obj.parent != None) and (obj != obj.parent):
+            obj = obj.parent
             debug.println(debug.LEVEL_FINEST,
-                          "Finding app for source=(" + self.name + ")")
-            obj = self
-            while (obj.parent != None) and (obj != obj.parent):
-                obj = obj.parent
-                debug.println(debug.LEVEL_FINEST,
-                              "--> parent=(" + obj.name + ")")
-            if (obj.parent != None):
-                debug.println(debug.LEVEL_FINEST,
-                              "--> obj=(" + obj.name
-                              + ") parent=(" + obj.parent.name + ")")
-                if (obj == obj.parent):
-                    debug.println(debug.LEVEL_SEVERE,
-                                  "ERROR: obj == obj.parent!")
-                    debug.println(debug.LEVEL_SEVERE,
-                                  "       name=(%s) role=(%s)" \
-                                  % (obj.name, obj.role))
-                    raise InvalidObjectError, "obj == obj.parent"
-            else:
-                debug.println(debug.LEVEL_FINEST,
-                              "--> obj=(" + obj.name
-                              + ") parent=(None)")
+                          "--> parent=(" + obj.name + ")")
+        if (obj.parent != None):
+            debug.println(debug.LEVEL_FINEST,
+                          "--> obj=(" + obj.name
+                          + ") parent=(" + obj.parent.name + ")")
+            if (obj == obj.parent):
+                debug.println(debug.LEVEL_SEVERE,
+                              "ERROR: obj == obj.parent!")
+                debug.println(debug.LEVEL_SEVERE,
+                              "       name=(%s) role=(%s)" \
+                              % (obj.name, obj.role))
+                self.valid = False
+                raise InvalidObjectError, "obj == obj.parent"
+        else:
+            debug.println(debug.LEVEL_FINEST,
+                          "--> obj=(" + obj.name
+                          + ") parent=(None)")
 
-            if (obj == obj.parent) \
-                   or (obj.role != rolenames.ROLE_APPLICATION):
-                return None
-            else:
-                if CACHE_VALUES:
-                    self.app = obj
-                return obj
-        except:
-            debug.printException(debug.LEVEL_FINE)
-            self.valid = False
-            raise InvalidObjectError, "Cannot get application"
+        if (obj == obj.parent) \
+               or (obj.role != rolenames.ROLE_APPLICATION):
             return None
+        else:
+            if CACHE_VALUES:
+                self.app = obj
+            return obj
 
             
     def __get_extents(self, coordinateType = 0):
@@ -609,63 +604,58 @@ class Accessible:
         CORBA.
         """
 
-        try:
-            label = ""
-    
-            # Does the object have a relation set?
-            #
-            relations = self.relations
-            for relation in relations:
-                if relation.getRelationType() \
-                       == core.Accessibility.RELATION_LABELLED_BY:
-                    target = makeAccessible(relation.getTarget(0))
-                    label = target.name
-                    break
-    
-            # [[[TODO: WDW - HACK because push buttons can have labels as
-            # their children.  But, they can also be labelled by something.
-            # So...we'll make the label be a combination of the thing
-            # labelling them (above) plus their name or the combination of
-            # the names of their children if the children exist.]]]
-            #
-            if self.role == rolenames.ROLE_PUSH_BUTTON:
-                if (self.name is not None) and (len(self.name) > 0):
-                    if len(label) > 0:
-                        label += " " + self.name
-                    else:
-                        label = self.name
-                elif self.childCount > 0:
-                    i = 0
-                    while i < self.childCount:
-                        child = self.child(i)
-                        if child.role == rolenames.ROLE_LABEL:
-                            if (child.name is not None) and (len(child.name) > 0):
-                                if len(label) > 0:
-                                    label += " " + child.name
-                                else:
-                                    label = child.name
-                        i += 1
-                        
-            # If the object doesn't have a relation, but has a name, return
-            # the name.
-            #
-            if (len(label) == 0) and (self.name is not None) \
-                   and (len(self.name) > 0):
-                label = self.name
-    
-            # If the object has no name, but has a description, return that
-            #
-            elif (len(label) == 0) and (self.description is not None) \
-                     and (len(self.description) > 0):
-                label = self.description
+        label = ""
 
-            if CACHE_VALUES:
-                self.label = label
-            return label
-        except:
-            debug.printException(debug.LEVEL_FINE)
-            self.valid = False
-            raise InvalidObjectError, "Cannot get label"
+        # Does the object have a relation set?
+        #
+        relations = self.relations
+        for relation in relations:
+            if relation.getRelationType() \
+                   == core.Accessibility.RELATION_LABELLED_BY:
+                target = makeAccessible(relation.getTarget(0))
+                label = target.name
+                break
+
+        # [[[TODO: WDW - HACK because push buttons can have labels as
+        # their children.  But, they can also be labelled by something.
+        # So...we'll make the label be a combination of the thing
+        # labelling them (above) plus their name or the combination of
+        # the names of their children if the children exist.]]]
+        #
+        if self.role == rolenames.ROLE_PUSH_BUTTON:
+            if (self.name is not None) and (len(self.name) > 0):
+                if len(label) > 0:
+                    label += " " + self.name
+                else:
+                    label = self.name
+            elif self.childCount > 0:
+                i = 0
+                while i < self.childCount:
+                    child = self.child(i)
+                    if child.role == rolenames.ROLE_LABEL:
+                        if (child.name is not None) and (len(child.name) > 0):
+                            if len(label) > 0:
+                                label += " " + child.name
+                            else:
+                                label = child.name
+                    i += 1
+                    
+        # If the object doesn't have a relation, but has a name, return
+        # the name.
+        #
+        if (len(label) == 0) and (self.name is not None) \
+               and (len(self.name) > 0):
+            label = self.name
+
+        # If the object has no name, but has a description, return that
+        #
+        elif (len(label) == 0) and (self.description is not None) \
+                 and (len(self.description) > 0):
+            label = self.description
+
+        if CACHE_VALUES:
+            self.label = label
+        return label
 
 
     def __get_action(self):
@@ -1217,6 +1207,41 @@ def findByName(root, name):
         if o.name == name:
             objlist.append(o)
     return objlist
+
+
+def findUnrelatedLabels(root):
+    """Returns a list containing all the unrelated (i.e., have no
+    relations to anything and are not a fundamental element of a
+    more atomic component like a combo box) labels under the given
+    root.  Note that the labels must also be showing on the display.
+
+    Arguments:
+    - root the Accessible object to traverse
+    
+    Returns a list of unrelated labels under the given root.
+    """
+
+    # Find all the labels in the dialog
+    #
+    allLabels = findByRole(root, rolenames.ROLE_LABEL)
+    
+    # add the names of only those labels which are not associated with
+    # other objects (i.e., empty relation sets).  [[[TODO: WDW - HACK:
+    # In addition, do not grab free labels whose parents are push buttons
+    # because push buttons can have labels as children.]]]
+    #
+    unrelatedLabels = []
+    
+    for label in allLabels:
+        set = label.relations
+        if len(set) == 0:
+            parent = label.parent
+            if parent and (parent.role == rolenames.ROLE_PUSH_BUTTON):
+                pass
+            elif label.state.count(core.Accessibility.STATE_SHOWING):
+                unrelatedLabels.append(label)
+
+    return unrelatedLabels
 
 
 def getFrame(obj):
