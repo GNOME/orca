@@ -1,5 +1,9 @@
 2005-08-11  Willie Walker <william.walker@sun.com>
 
+	* src/orca/default.py: hack to better support the very poor
+	application behavior exhibited by Evolution's account setup
+	wizard: it will end up in situations where the active dialog
+	doesn't have any components with focus.
 	* src/orca/orca.py, src/orca/default.py, src/orca/a11y.py,
 	src/orca/speechgenerator.py: first pass at automatically speaking
 	panels when they are realized on the screen.
