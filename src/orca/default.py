@@ -327,7 +327,7 @@ class Default(Script):
 
             speech.sayUtterances("default", utterances)
         else:
-            message = _("ERROR: NOTHING HAS FOCUS!")
+            message = _("Nothing has focus")
             braille.displayMessage(message)
             speech.say("default", message)
 
@@ -374,14 +374,33 @@ class Default(Script):
             # Find all the unrelated labels in the dialog and speak them.
             #
             if reallyShowing:
-                print "HERE!"
                 utterances = []
                 labels = a11y.findUnrelatedLabels(obj)
                 for label in labels:
                     utterances.append(label.name)
-                speech.sayUtterances("default", utterances)
-                return
+
+                # [[[TODO: WDW - HACK to account for the way applications
+                # such as Evolution handle their wizards.  They will set
+                # the "Forward" and "Back" buttons insensitive as appropriate,
+                # which has the side effect of nothing having focus.  So,
+                # we let users know this via speech and braille.  For now,
+                # this awful hack is isolated to when a panel starts showing
+                # in the active application, which is the situation where
+                # these types of poor application behavior has been found
+                # to exist.]]]
+                #
+                if orca.locusOfFocus \
+                   and (orca.locusOfFocus.state.count(\
+                    core.Accessibility.STATE_SENSITIVE) == 0):
+                    message = _("Nothing has focus")
+                    utterances.append(message)
+                    self.updateBraille(orca.locusOfFocus.parent,
+                                       braille.Region(" " + message))
                     
+                speech.sayUtterances("default", utterances)
+                    
+                return
+
         if obj != orca.locusOfFocus:
             return
 
@@ -407,11 +426,12 @@ class Default(Script):
         return visualParent
     
         
-    def updateBraille(self, obj):
+    def updateBraille(self, obj, extraRegion=None):
         """Updates the braille display to show the give object.
 
         Arguments:
         - obj: the Accessible
+        - extra: extra Region to add to the end
         """
 
         braille.clear()
@@ -422,10 +442,16 @@ class Default(Script):
         
         result = self.brailleGenerator.getBrailleRegions(obj)
         line.addRegions(result[0])
-        
+
+        if extraRegion:
+            line.addRegion(extraRegion)
+            
         braille.addLine(line)
-        
-        braille.setFocus(result[1])
+
+        if extraRegion:
+            braille.setFocus(extraRegion)
+        else:
+            braille.setFocus(result[1])
 
         braille.refresh()    
     
@@ -477,6 +503,19 @@ class Default(Script):
             if found:
                 orca.visualAppearanceChanged(event, event.source)
 
+        # [[[TODO: WDW - HACK we'll handle this in the visual appearance
+        # changed handler.]]]
+        #
+        # The object with focus might become insensitive, so we need to
+        # flag that.  This typically occurs in wizard dialogs such as
+        # the account setup assistant in Evolution.
+        #
+        #if event.type.endswith("sensitive") \
+        #   and (event.detail1 == 0) \
+        #   and event.source == orca.locusOfFocus:
+        #    print "FOO INSENSITIVE"
+        #    #orca.setLocusOfFocus(event, None)
+           
         
     def onValueChanged(self, event):
         """Called whenever an object's value changes.  Currently, the
