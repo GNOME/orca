@@ -1352,7 +1352,8 @@ class BrailleGenerator:
             # besides just those things that have labels.  For example,
             # page tab lists might be a nice thing to include.]]]
             #
-            if parent.role != rolenames.ROLE_FILLER:
+            if (parent.role != rolenames.ROLE_FILLER) \
+                and (parent.role != rolenames.ROLE_SPLIT_PANE):
                 if (len(parent.label) > 0) \
                     or (parent.role != rolenames.ROLE_PANEL):
                     regions.append(braille.Region(" "))
