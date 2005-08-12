@@ -127,8 +127,8 @@ def _buildAppList():
 
     apps = []
 
-    i = core.desktop.childCount-1
-    while i >= 0:
+    i = 0
+    while i < core.desktop.childCount:
         acc = core.desktop.getChildAtIndex(i)
         try:
             app = a11y.makeAccessible(acc)
@@ -136,7 +136,7 @@ def _buildAppList():
                 apps.insert(0, app)
         except:
             debug.printException(debug.LEVEL_SEVERE)
-        i = i - 1
+        i += 1
 
 
 def setLocusOfFocus(event, obj):
@@ -239,7 +239,7 @@ def findActiveWindow():
             state = app.child(i).state
             if state.count(core.Accessibility.STATE_ACTIVE) > 0:
                 return app.child(i)
-            i = i+1
+            i += 1
 
     return None
 
