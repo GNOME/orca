@@ -141,292 +141,292 @@ rolenames = {}
 
 rolenames[ROLE_INVALID] = Rolename(ROLE_INVALID,
                                    _("???"),
-                                   _("INVALID"),
+                                   _("Invalid"),
                                    _("invalid"))
 
 rolenames[ROLE_ACCEL_LABEL] = Rolename(ROLE_ACCEL_LABEL,
-                                       _("ACC"),
-                                       _("ACCELERATOR"),
+                                       _("acc"),
+                                       _("Accelerator"),
                                        _("accelerator"))
 
 rolenames[ROLE_ALERT] = Rolename(ROLE_ALERT,
-                                 _("ALR"),
-                                 _("ALERT"),
+                                 _(""),
+                                 _("Alert"),
                                  _("alert"))
 
 rolenames[ROLE_ANIMATION] = Rolename(ROLE_ANIMATION,
-                                     _("ANI"),
-                                     _("ANIMATION"),
+                                     _("Anim"),
+                                     _("Animation"),
                                      _("animation"))
 
 rolenames[ROLE_ARROW] = Rolename(ROLE_ARROW,
-                                 _("ARR"),
-                                 _("ARROW"),
+                                 _("arrow"),
+                                 _("Arrow"),
                                  _("arrow"))
 
 rolenames[ROLE_CALENDAR] = Rolename(ROLE_CALENDAR,
-                                    _("CAL"),
-                                    _("CALENDAR"),
+                                    _("cal"),
+                                    _("Calendar"),
                                     _("calendar"))
 
 rolenames[ROLE_CANVAS] = Rolename(ROLE_CANVAS,
                                   _("CNV"),
-                                  _("CANVAS"),
+                                  _("Canvas"),
                                   _("canvas"))
 
 rolenames[ROLE_CHECK_BOX] = Rolename(ROLE_CHECK_BOX,
-                                     _("CHK"),
-                                     _("CHECK BOX"),
+                                     _("chk"),
+                                     _("CheckBox"),
                                      _("check box"))
 
 rolenames[ROLE_CHECK_MENU_ITEM] = Rolename(ROLE_CHECK_MENU_ITEM,
-                                           _("CHK"),
-                                           _("CHECK ITEM"),
+                                           _("chk"),
+                                           _("CheckItem"),
                                            _("check item"))
 
 rolenames[ROLE_CHECK_MENU] = Rolename(ROLE_CHECK_MENU,
-                                      _("CKM"),
-                                      _("CHECK MENU"),
+                                      _("ckm"),
+                                      _("CheckMenu"),
                                       _("check menu"))
 
 rolenames[ROLE_COLOR_CHOOSER] = Rolename(ROLE_COLOR_CHOOSER,
-                                         _("CCH"),
-                                         _("COLOR CHOOSER"),
+                                         _("clrchsr"),
+                                         _("ColorChooser"),
                                          _("color chooser"))
 
 rolenames[ROLE_COLUMN_HEADER] = Rolename(ROLE_COLUMN_HEADER,
-                                         _("CHD"),
-                                         _("COLUMN HEADER"),
+                                         _("colhead"),
+                                         _("ColumnHeader"),
                                          _("column header"))
 
 rolenames[ROLE_COMBO_BOX] = Rolename(ROLE_COMBO_BOX,
-                                     _("CBO"),
-                                     _("COMBO"),
+                                     _("cbo"),
+                                     _("Combo"),
                                      _("combo box"))
 
 rolenames[ROLE_DATE_EDITOR] = Rolename(ROLE_DATE_EDITOR,
-                                       _("DAT"),
-                                       _("DATE EDITOR"),
+                                       _("dat"),
+                                       _("DateEditor"),
                                        _("date editor"))
 
 rolenames[ROLE_DESKTOP_ICON] = Rolename(ROLE_DESKTOP_ICON,
-                                        _("DIC"),
-                                        _("DESKTOP ICON"),
+                                        _("icon"),
+                                        _("DesktopIcon"),
                                         _("desktop icon"))
 
 rolenames[ROLE_DESKTOP_FRAME] = Rolename(ROLE_DESKTOP_FRAME,
-                                         _("DFR"),
-                                         _("DESKTOP FRAME"),
+                                         _("frame"),
+                                         _("DesktopFrame"),
                                          _("desktop frame"))
 
 rolenames[ROLE_DIAL] = Rolename(ROLE_DIAL,
-                                _("DIL"),
-                                _("DIAL"),
+                                _("dial"),
+                                _("Ddial"),
                                 _("dial"))
 
 rolenames[ROLE_DIALOG] = Rolename(ROLE_DIALOG,
-                                  _("DLG"),
-                                  _("DIALOG"),
+                                  _("dlg"),
+                                  _("Dialog"),
                                   _("dialog"))
 
 rolenames[ROLE_DIRECTORY_PANE] = Rolename(ROLE_DIRECTORY_PANE,
-                                          _("DIP"),
-                                          _("DIRECTORY PANE"),
+                                          _("dip"),
+                                          _("DirectoryPane"),
                                           _("directory pane"))
 
 rolenames[ROLE_DRAWING_AREA] = Rolename(ROLE_DRAWING_AREA,
-                                        _("DRW"),
-                                        _("DRAWING AREA"),
+                                        _("draw"),
+                                        _("DrawingAarea"),
                                         _("drawing area"))
 
 rolenames[ROLE_FILE_CHOOSER] = Rolename(ROLE_FILE_CHOOSER,
-                                        _("FCH"),
-                                        _("FILE CHOOSER"),
+                                        _("fchsr"),
+                                        _("FileChooser"),
                                         _("file chooser"))
 
 rolenames[ROLE_FILLER] = Rolename(ROLE_FILLER,
-                                  _("FLR"),
-                                  _("FILLER"),
+                                  _("flr"),
+                                  _("Filler"),
                                   _("filler"))
 
 rolenames[ROLE_FONT_CHOOSER] = Rolename(ROLE_FONT_CHOOSER,
-                                        _("FNT"),
-                                        _("FONT CHOOSER"),
+                                        _("fnt"),
+                                        _("FontChooser"),
                                         _("font chooser"))
 
 rolenames[ROLE_FRAME] = Rolename(ROLE_FRAME,
-                                 _("FRM"),
-                                 _("FRAME"),
+                                 _("frm"),
+                                 _("Frame"),
                                  _("frame"))
 
 rolenames[ROLE_GLASS_PANE] = Rolename(ROLE_GLASS_PANE,
-                                      _("GPN"),
-                                      _("GLASS PANE"),
+                                      _("gpn"),
+                                      _("GlassPane"),
                                       _("glass pane"))
 
 rolenames[ROLE_HTML_CONTAINER] = Rolename(ROLE_HTML_CONTAINER,
-                                          _("HTM"),
-                                          _("HTML CONTAINER"),
+                                          _("html"),
+                                          _("HtmlContainer"),
                                           _("h t m l container"))
 
 rolenames[ROLE_ICON] = Rolename(ROLE_ICON,
-                                _("ICO"),
-                                _("ICON"),
+                                _("icon"),
+                                _("Icon"),
                                 _("icon"))
 
 rolenames[ROLE_IMAGE] = Rolename(ROLE_IMAGE,
-                                 _("IMG"),
-                                 _("IMAGE"),
+                                 _("img"),
+                                 _("Image"),
                                  _("image"))
 
 rolenames[ROLE_INTERNAL_FRAME] = Rolename(ROLE_INTERNAL_FRAME,
-                                          _("IFR"),
-                                          _("INTERNAL FRAME"),
+                                          _("frame"),
+                                          _("InternalFrame"),
                                           _("internal frame"))
 
 rolenames[ROLE_LABEL] = Rolename(ROLE_LABEL,
-                                 _("LBL"),
-                                 _("LABEL"),
+                                 _("lbl"),
+                                 _("Label"),
                                  _("label"))
 
 rolenames[ROLE_LAYERED_PANE] = Rolename(ROLE_LAYERED_PANE,
-                                        _("LPN"),
-                                        _("LAYERED PANE"),
+                                        _("lyrdpn"),
+                                        _("LayeredPane"),
                                         _("layered pane"))
 
 rolenames[ROLE_LIST] = Rolename(ROLE_LIST,
-                                _("LST"),
-                                _("LIST"),
+                                _("lst"),
+                                _("List"),
                                 _("list"))
 
 rolenames[ROLE_LIST_ITEM] = Rolename(ROLE_LIST_ITEM,
-                                     _("LIT"),
-                                     _("LIST ITEM"),
+                                     _("lstitm"),
+                                     _("ListItem"),
                                      _("list item"))
 
 rolenames[ROLE_MENU] = Rolename(ROLE_MENU,
-                                _("MNU"),
-                                _("MENU"),
+                                _("mnu"),
+                                _("Menu"),
                                 _("menu"))
 
 rolenames[ROLE_MENU_BAR] = Rolename(ROLE_MENU_BAR,
-                                    _("MBR"),
-                                    _("MENU BAR"),
+                                    _("mnubr"),
+                                    _("MenuBar"),
                                     _("menu bar"))
 
 rolenames[ROLE_MENU_ITEM] = Rolename(ROLE_MENU_ITEM,
-                                     _("MIT"),
-                                     _("MENU ITEM"),
+                                     _("mnuitm"),
+                                     _("MenuItem"),
                                      _("menu item"))
 
 rolenames[ROLE_OPTION_PANE] = Rolename(ROLE_OPTION_PANE,
-                                       _("OPN"),
-                                       _("OPTION PANE"),
+                                       _("optnpn"),
+                                       _("OptionPane"),
                                        _("option pane"))
 
 rolenames[ROLE_PAGE_TAB] = Rolename(ROLE_PAGE_TAB,
-                                    _("PGT"),
-                                    _("TAB"),
+                                    _("tab"),
+                                    _("PageTab"),
                                     _("page tab"))
 
 rolenames[ROLE_PAGE_TAB_LIST] = Rolename(ROLE_PAGE_TAB_LIST,
-                                         _("PTL"),
-                                         _("TAB LIST"),
+                                         _("tblst"),
+                                         _("PageTabList"),
                                          _("page tab list"))
 
 rolenames[ROLE_PANEL] = Rolename(ROLE_PANEL,
-                                 _("PNL"),
-                                 _("PANEL"),
+                                 _("pnl"),
+                                 _("Panel"),
                                  _("panel"))
 
 rolenames[ROLE_PASSWORD_TEXT] = Rolename(ROLE_PASSWORD_TEXT,
-                                         _("PWD"),
-                                         _("PASSWORD TEXT"),
-                                         _("password text"))
+                                         _("pwd"),
+                                         _("Password"),
+                                         _("password"))
 
 rolenames[ROLE_POPUP_MENU] = Rolename(ROLE_POPUP_MENU,
-                                      _("PMN"),
-                                      _("POPUP MENU"),
+                                      _("popmnu"),
+                                      _("PopupMenu"),
                                       _("popup menu"))
 
 rolenames[ROLE_PROGRESS_BAR] = Rolename(ROLE_PROGRESS_BAR,
-                                        _("PRG"),
-                                        _("PROGRESS"),
+                                        _("pgbar"),
+                                        _("Progress"),
                                         _("progress bar"))
 
 rolenames[ROLE_PUSH_BUTTON] = Rolename(ROLE_PUSH_BUTTON,
-                                       _("PBT"),
-                                       _("BUTTON"),
+                                       _("btn"),
+                                       _("Button"),
                                        _("button"))
 
 rolenames[ROLE_RADIO_BUTTON] = Rolename(ROLE_RADIO_BUTTON,
-                                        _("RAD"),
-                                        _("RADIO BUTTON"),
+                                        _("radio"),
+                                        _("RadioButton"),
                                         _("radio button"))
 
 rolenames[ROLE_RADIO_MENU_ITEM] = Rolename(ROLE_RADIO_MENU_ITEM,
-                                           _("RAD"),
-                                           _("RADIO MENU ITEM"),
+                                           _("rdmnuitm"),
+                                           _("RadioMenuItem"),
                                            _("radio menu item"))
 
 rolenames[ROLE_RADIO_MENU] = Rolename(ROLE_RADIO_MENU,
-                                      _("RDM"),
-                                      _("RADIO MENU"),
+                                      _("rdmnu"),
+                                      _("RadioMenu"),
                                       _("radio menu"))
 
 rolenames[ROLE_ROOT_PANE] = Rolename(ROLE_ROOT_PANE,
-                                     _("RPN"),
-                                     _("ROOT PANE"),
+                                     _("rtpn"),
+                                     _("RootPane"),
                                      _("root pane"))
 
 rolenames[ROLE_ROW_HEADER] = Rolename(ROLE_ROW_HEADER,
-                                      _("RHD"),
-                                      _("ROW HEADER"),
+                                      _("rwhdr"),
+                                      _("RowHeader"),
                                       _("row header"))
 
 rolenames[ROLE_SCROLL_BAR] = Rolename(ROLE_SCROLL_BAR,
-                                      _("SCR"),
-                                      _("SCROLL BAR"),
+                                      _("scbr"),
+                                      _("ScrollBar"),
                                       _("scroll bar"))
 
 rolenames[ROLE_SCROLL_PANE] = Rolename(ROLE_SCROLL_PANE,
-                                       _("SPN"),
-                                       _("SCROLL PANE"),
+                                       _("scpn"),
+                                       _("ScrollPane"),
                                        _("scroll pane"))
 
 rolenames[ROLE_SEPARATOR] = Rolename(ROLE_SEPARATOR,
-                                     _("SEP"),
-                                     _("SEPARATOR"),
+                                     _("seprtr"),
+                                     _("Separator"),
                                      _("separator"))
 
 rolenames[ROLE_SLIDER] = Rolename(ROLE_SLIDER,
-                                  _("SLD"),
-                                  _("SLIDER"),
+                                  _("sldr"),
+                                  _("Slider"),
                                   _("slider"))
 
 rolenames[ROLE_SPLIT_PANE] = Rolename(ROLE_SPLIT_PANE,
-                                      _("SPP"),
-                                      _("SPLIT PANE"),
+                                      _("spltpn"),
+                                      _("SplitPane"),
                                       _("split pane"))
 
 rolenames[ROLE_SPIN_BUTTON] = Rolename(ROLE_SPIN_BUTTON,
-                                       _("SPN"),
-                                       _("SPIN BUTTON"),
+                                       _("spin"),
+                                       _("SpinButton"),
                                        _("spin button"))
 
 rolenames[ROLE_STATUSBAR] = Rolename(ROLE_STATUSBAR,
-                                     _("STA"),
-                                     _("STATUS BAR"),
+                                     _("statbr"),
+                                     _("StatusBar"),
                                      _("status bar"))
 
 rolenames[ROLE_TABLE] = Rolename(ROLE_TABLE,
-                                 _("TAB"),
-                                 _("TABLE"),
+                                 _("tbl"),
+                                 _("Table"),
                                  _("table"))
 
 rolenames[ROLE_TABLE_CELL] = Rolename(ROLE_TABLE_CELL,
-                                      _("CEL"),
-                                      _("CELL"),
+                                      _("cell"),
+                                      _("Cell"),
                                       _("cell"))
 
 rolenames[ROLE_TABLE_COLUMN_HEADER] = Rolename(ROLE_TABLE_COLUMN_HEADER,
@@ -440,93 +440,93 @@ rolenames[ROLE_TABLE_ROW_HEADER] = Rolename(ROLE_TABLE_ROW_HEADER,
                                             _("row header"))
 
 rolenames[ROLE_TEAR_OFF_MENU_ITEM] = Rolename(ROLE_TEAR_OFF_MENU_ITEM,
-                                              _("TOM"),
-                                              _("TEAR OFF MENU ITEM"),
+                                              _("tomnuitm"),
+                                              _("TearOffMenuItem"),
                                               _("tear off menu item"))
 
 rolenames[ROLE_TERMINAL] = Rolename(ROLE_TERMINAL,
-                                    _("TRM"),
-                                    _("TERMINAL"),
+                                    _("term"),
+                                    _("Terminal"),
                                     _("terminal"))
 
 rolenames[ROLE_TEXT] = Rolename(ROLE_TEXT,
-                                _("TXT"),
-                                _("TEXT"),
+                                _("txt"),
+                                _("Text"),
                                 _("text"))
 
 rolenames[ROLE_TOGGLE_BUTTON] = Rolename(ROLE_TOGGLE_BUTTON,
-                                         _("TOG"),
-                                         _("TOGGLE BUTTON"),
+                                         _("tglbtn"),
+                                         _("ToggleButton"),
                                          _("toggle button"))
 
 rolenames[ROLE_TOOL_BAR] = Rolename(ROLE_TOOL_BAR,
-                                    _("TOL"),
-                                    _("TOOL BAR"),
+                                    _("tbar"),
+                                    _("ToolBar"),
                                     _("tool bar"))
 
 rolenames[ROLE_TOOL_TIP] = Rolename(ROLE_TOOL_TIP,
-                                    _("TIP"),
-                                    _("TOOL TIP"),
+                                    _("tip"),
+                                    _("ToolTip"),
                                     _("tool tip"))
 
 rolenames[ROLE_TREE] = Rolename(ROLE_TREE,
-                                _("TRE"),
-                                _("TREE"),
+                                _("tree"),
+                                _("Tree"),
                                 _("tree"))
 
 rolenames[ROLE_TREE_TABLE] = Rolename(ROLE_TREE_TABLE,
-                                      _("TRT"),
-                                      _("TREE TABLE"),
+                                      _("trtbl"),
+                                      _("TreeTable"),
                                       _("tree table"))
 
 rolenames[ROLE_UNKNOWN] = Rolename(ROLE_UNKNOWN,
-                                   _("UNK"),
-                                   _("UNKNOWN"),
+                                   _("unk"),
+                                   _("Unknown"),
                                    _("unknown"))
 
 rolenames[ROLE_VIEWPORT] = Rolename(ROLE_VIEWPORT,
-                                    _("VWP"),
-                                    _("VIEWPORT"),
+                                    _("vwprt"),
+                                    _("Viewport"),
                                     _("viewport"))
 
 rolenames[ROLE_WINDOW] = Rolename(ROLE_WINDOW,
-                                  _("WND"),
-                                  _("WINDOW"),
+                                  _("wnd"),
+                                  _("Window"),
                                   _("window"))
 
 rolenames[ROLE_HEADER] = Rolename(ROLE_HEADER,
-                                  _("HDR"),
-                                  _("HEADER"),
+                                  _("hdr"),
+                                  _("Header"),
                                   _("header"))
 
 rolenames[ROLE_FOOTER] = Rolename(ROLE_FOOTER,
-                                  _("FTR"),
-                                  _("FOOTER"),
+                                  _("ftr"),
+                                  _("Footer"),
                                   _("footer"))
 
 rolenames[ROLE_PARAGRAPH] = Rolename(ROLE_PARAGRAPH,
-                                     _("PGH"),
-                                     _("PARAGRAPH"),
+                                     _("para"),
+                                     _("Paragraph"),
                                      _("paragraph"))
 
 rolenames[ROLE_APPLICATION] = Rolename(ROLE_APPLICATION,
-                                       _("APP"),
-                                       _("APPLICATION"),
+                                       _("app"),
+                                       _("Application"),
                                        _("application"))
 
 rolenames[ROLE_AUTOCOMPLETE] = Rolename(ROLE_AUTOCOMPLETE,
-                                        _("AUT"),
-                                        _("AUTO COMPLETE"),
+                                        _("auto"),
+                                        _("AutoComplete"),
                                         _("autocomplete"))
 
 rolenames[ROLE_EDITBAR] = Rolename(ROLE_EDITBAR,
-                                   _("EDB"),
-                                   _("EDIT BAR"),
+                                   _("edtbr"),
+                                   _("EditBar"),
                                    _("edit bar"))
 
 rolenames[ROLE_EMBEDDED] = Rolename(ROLE_EMBEDDED,
-                                    _("EMB"),
-                                    _("EMBEDDED COMPONENT"),
+                                    _("emb"),
+                                    _("EmbededComponent"),
                                     _("embedded component"))
 
 
