@@ -776,8 +776,7 @@ class BrailleGenerator:
     
         regions = []
     
-        regions.append(braille.Region(obj.label + " "))
-        textRegion = braille.Text(obj)
+        textRegion = braille.Text(obj, obj.label)
         regions.append(textRegion)
 
         # We do not want the role at the end of text areas.
@@ -788,7 +787,7 @@ class BrailleGenerator:
         
         return [regions, textRegion]
 
-    
+
     def _getBrailleRegionsForOptionPane(self, obj):
         """Get the braille for an option pane.
         

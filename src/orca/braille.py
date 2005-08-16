@@ -276,33 +276,46 @@ class Component(Region):
 
 class Text(Region):
     """A subclass of Region backed by a Text object.  This Region will
-    react to any cursor routing key events by positioning the caret in the
-    associated text object. The line displayed will be the contents of
-    the text object only.  [[[TODO: WDW - need to add in text selection
-    capabilities.]]]"""
+    react to any cursor routing key events by positioning the caret in
+    the associated text object. The line displayed will be the
+    contents of the text object preceded by an optional label.
+    [[[TODO: WDW - need to add in text selection capabilities.]]]"""
     
-    def __init__(self, accessible):
+    def __init__(self, accessible, label=None):
         """Creates a new Text region.
 
         Arguments:
         - accessible: the accessible that implements AccessibleText
+        - label: an optional label to display
         """
         
         self.accessible = accessible
         result = a11y.getTextLineAtCaret(self.accessible)
-        self.string = result[0]
         self.caretOffset = result[1]
         self.lineOffset = result[2]
         self.cursorOffset = self.caretOffset - self.lineOffset
+
+        self.label = label
+        if self.label:
+            self.string = self.label + " " + result[0]
+            self.cursorOffset += len(self.label) + 1
+        else:
+            self.string = result[0]
+            
         
     def processCursorKey(self, offset):
         """Processes a cursor key press on this Component.  The offset is
         0-based, where 0 represents the leftmost character of text associated
         with this region.  Note that the zeroeth character may have been
         scrolled off the display."""
-        
+
+        if self.label:
+            offset = offset - len(self.label) - 1
+            if offset < 0:
+                return
+
         newCaretOffset = self.lineOffset + offset
-        self.text.setCaretOffset(newCaretOffset)
+        self.accessible.text.setCaretOffset(newCaretOffset)
 
         
 class Line:
