@@ -150,7 +150,7 @@ rolenames[ROLE_ACCEL_LABEL] = Rolename(ROLE_ACCEL_LABEL,
                                        _("accelerator"))
 
 rolenames[ROLE_ALERT] = Rolename(ROLE_ALERT,
-                                 _(""),
+                                 _("alert"),
                                  _("Alert"),
                                  _("alert"))
 
@@ -170,7 +170,7 @@ rolenames[ROLE_CALENDAR] = Rolename(ROLE_CALENDAR,
                                     _("calendar"))
 
 rolenames[ROLE_CANVAS] = Rolename(ROLE_CANVAS,
-                                  _("CNV"),
+                                  _("cnv"),
                                   _("Canvas"),
                                   _("canvas"))
 
@@ -195,7 +195,7 @@ rolenames[ROLE_COLOR_CHOOSER] = Rolename(ROLE_COLOR_CHOOSER,
                                          _("color chooser"))
 
 rolenames[ROLE_COLUMN_HEADER] = Rolename(ROLE_COLUMN_HEADER,
-                                         _("colhead"),
+                                         _("colhdr"),
                                          _("ColumnHeader"),
                                          _("column header"))
 
@@ -221,7 +221,7 @@ rolenames[ROLE_DESKTOP_FRAME] = Rolename(ROLE_DESKTOP_FRAME,
 
 rolenames[ROLE_DIAL] = Rolename(ROLE_DIAL,
                                 _("dial"),
-                                _("Ddial"),
+                                _("Dial"),
                                 _("dial"))
 
 rolenames[ROLE_DIALOG] = Rolename(ROLE_DIALOG,
@@ -430,13 +430,13 @@ rolenames[ROLE_TABLE_CELL] = Rolename(ROLE_TABLE_CELL,
                                       _("cell"))
 
 rolenames[ROLE_TABLE_COLUMN_HEADER] = Rolename(ROLE_TABLE_COLUMN_HEADER,
-                                               _("CHD"),
-                                               _("COLUMN HEADER"),
+                                               _("colhdr"),
+                                               _("ColumnHeader"),
                                                _("column header"))
 
 rolenames[ROLE_TABLE_ROW_HEADER] = Rolename(ROLE_TABLE_ROW_HEADER,
-                                            _("RHD"),
-                                            _("ROW HEADER"),
+                                            _("rwhdr"),
+                                            _("RowHeader"),
                                             _("row header"))
 
 rolenames[ROLE_TEAR_OFF_MENU_ITEM] = Rolename(ROLE_TEAR_OFF_MENU_ITEM,
@@ -526,7 +526,7 @@ rolenames[ROLE_EDITBAR] = Rolename(ROLE_EDITBAR,
 
 rolenames[ROLE_EMBEDDED] = Rolename(ROLE_EMBEDDED,
                                     _("emb"),
-                                    _("EmbededComponent"),
+                                    _("EmbeddedComponent"),
                                     _("embedded component"))
 
 
