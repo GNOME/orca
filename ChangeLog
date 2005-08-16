@@ -1,3 +1,9 @@
+2005-08-16  Willie Walker <william.walker@sun.com>
+
+	* src/orca/braille.py, src/orca/braillegenerator.py: show 
+	text lines with their labels.
+	* src/orca/rolenames.py: minor consistency tweaking on rolenames.
+	
 2005-08-11  Willie Walker <william.walker@sun.com>
 
 	* src/orca/default.py: hack to better support the very poor
