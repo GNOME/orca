@@ -1,5 +1,19 @@
 2005-08-16  Willie Walker <william.walker@sun.com>
 
+	* src/orca/braillegenerator.py: reduce verbosity for page tabs.
+	* src/orca/a11y.py, src/orca/speechgenerator.py,
+	src/orca/braillegenerator.py: include accessible image description
+	for icons if it exists.
+	* src/orca/eventsynthesizer.py, src/orca/Makefile.am: create to
+	allow mouse and keyboard events to be synthesized by Orca
+	* src/orca/braille.py: use eventsynthesizer to generate mb1 clicks
+	for those objects that don't have actions (e.g., page tabs).	
+	* src/orca/a11y.py: do not cache extents because they can get out
+	of date if the object is moved and we currently do not have a way
+	to determine if this has happened.
+	
+2005-08-16  Willie Walker <william.walker@sun.com>
+
 	* src/orca/braille.py, src/orca/braillegenerator.py: show 
 	text lines with their labels.
 	* src/orca/rolenames.py: minor consistency tweaking on rolenames.
