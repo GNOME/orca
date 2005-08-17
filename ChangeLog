@@ -1,3 +1,6 @@
+2005-8-16 Mike Pedersen <michael.pedersen@sun.com>
+	/src/orca/src/rolenames.py: reduced verbosity for page tabs and page tab lists
+
 2005-08-16  Willie Walker <william.walker@sun.com>
 
 	* src/orca/braillegenerator.py: reduce verbosity for page tabs.

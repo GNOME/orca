@@ -325,14 +325,14 @@ rolenames[ROLE_OPTION_PANE] = Rolename(ROLE_OPTION_PANE,
                                        _("option pane"))
 
 rolenames[ROLE_PAGE_TAB] = Rolename(ROLE_PAGE_TAB,
-                                    _("tab"),
-                                    _("PageTab"),
-                                    _("page tab"))
+                                    _("page"),
+                                    _("Page"),
+                                    _("page"))
 
 rolenames[ROLE_PAGE_TAB_LIST] = Rolename(ROLE_PAGE_TAB_LIST,
                                          _("tblst"),
-                                         _("PageTabList"),
-                                         _("page tab list"))
+                                         _("TabList"),
+                                         _("tab list"))
 
 rolenames[ROLE_PANEL] = Rolename(ROLE_PANEL,
                                  _("pnl"),
