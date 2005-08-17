@@ -9,3 +9,4 @@ configure
 libtool
 orca.spec
 stamp-h1
+aclocal.m4
