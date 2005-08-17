@@ -625,7 +625,28 @@ class BrailleGenerator:
         
         self._debugGenerator("_getBrailleRegionsForIcon", obj)
     
-        return self._getDefaultBrailleRegions(obj)
+        verbosity = settings.getSetting("brailleVerbosityLevel",
+                                        settings.VERBOSITY_LEVEL_VERBOSE)
+
+        text = obj.label
+
+        if obj.image:
+            description = obj.image.imageDescription
+            if len(description):
+                if len(text):
+                    text += " "
+                text += description
+
+        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
+            if len(text):
+                text += " "
+            text += getBrailleForRoleName(obj)
+
+        regions = []
+        componentRegion = braille.Component(obj, text)
+        regions.append(componentRegion)
+
+        return [regions, componentRegion]
     
     
     def _getBrailleRegionsForImage(self, obj):

@@ -730,6 +730,30 @@ class Accessible:
             raise InvalidObjectError, "Cannot get hypertext interface"
             
 
+    def __get_image(self):
+        """Returns an object that implements the Accessibility_Image
+        interface for this object, or None if this object doesn't implement
+        the Accessibility_Image interface.
+
+        NOTE: this will throw an InvalidObjectError exception if the
+        AT-SPI Accessibility_Accessible can no longer be reached via
+        CORBA.
+        """
+
+        try:
+            bobj = self._acc._narrow(core.Accessibility.Accessible)
+            image = bobj.queryInterface("IDL:Accessibility/Image:1.0")
+            if image is not None:
+                image = image._narrow(core.Accessibility.Image)
+            if CACHE_VALUES:
+                self.image = image
+            return image
+        except:
+            debug.printException(debug.LEVEL_FINE)
+            self.valid = False
+            raise InvalidObjectError, "Cannot get image interface"
+            
+
     def __get_selection(self):
         """Returns an object that implements the Accessibility_Selection
         interface for this object, or None if this object doesn't implement
@@ -871,6 +895,8 @@ class Accessible:
             return self.__get_component()
         elif attr == "hypertext":
             return self.__get_hypertext()
+        elif attr == "image":
+            return self.__get_image()
         elif attr == "selection":
             return self.__get_selection()
         elif attr == "table":

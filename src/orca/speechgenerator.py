@@ -645,14 +645,29 @@ class SpeechGenerator:
         # then a custom script for nautilus needs to be written to remove the
         # availability.]]]
         #
-        utterances = self._getSpeechForLabelAndRole(obj)
-        
+        verbosity = settings.getSetting("speechVerbosityLevel",
+                                        settings.VERBOSITY_LEVEL_VERBOSE)
+
+        text = obj.label
+
+        if obj.image:
+            description = obj.image.imageDescription
+            if len(description):
+                if len(text):
+                    text += " "
+                text += description
+                
+        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
+            if len(text):
+                text += " "
+            text += getSpeechForRoleName(obj)
+    
         self._debugGenerator("_getSpeechForIcon",
                              obj,
                              already_focused,
-                             utterances)
-    
-        return utterances
+                             [text])
+
+        return [text]
     
     
     def _getSpeechForImage(self, obj, already_focused):
