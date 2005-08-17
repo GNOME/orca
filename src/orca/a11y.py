@@ -576,9 +576,16 @@ class Accessible:
             if component is None:
                 return None
             else:
+                # [[[TODO: WDW - caching the extents is dangerous because
+                # the object may move, resulting in the current extents
+                # becoming way out of date.  Perhaps need to cache just
+                # the component interface and suffer the hit for getting
+                # the extents if we cannot figure out how to determine if
+                # the cached extents is out of date.]]]
+                #
                 extents = component.getExtents(coordinateType)
-                if CACHE_VALUES:
-                    self.extents = extents
+                #if CACHE_VALUES:
+                #    self.extents = extents
                 return extents
         except:
             debug.printException(debug.LEVEL_FINE)
