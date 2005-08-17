@@ -79,6 +79,7 @@ import a11y
 import brl
 import core
 import debug
+import eventsynthesizer
 import settings
 
 from orca_i18n import _                          # for gettext support
@@ -267,12 +268,29 @@ class Component(Region):
         been scrolled off the display."""
         
         actions = self.accessible.action
-        if actions is None:
+        if actions:
+            actions.doAction(0)
+        else:
+            
+            # [[[TODO: WDW - HACK to do a mouse button 1 click if we
+            # have to.  For example, page tabs don't have any actions
+            # but we want to be able to select them with the cursor
+            # routing key.]]]
+            #
             debug.println(debug.LEVEL_FINER,
                           "braille.Component.processCursorKey: no action")
-        else:
-            actions.doAction(0)
-        
+            try:
+                extents = self.accessible.extents
+                x = extents.x + extents.width/2
+                y = extents.y + extents.height/2
+                debug.println(
+                    debug.LEVEL_FINER,
+                    "braille.Component.processCursorKey: clicking at (%d, %d)"\
+                    % (x, y))
+                eventsynthesizer.generateMouseEvent(x, y, "b1c")
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+                
 
 class Text(Region):
     """A subclass of Region backed by a Text object.  This Region will
