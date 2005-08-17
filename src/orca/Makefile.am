@@ -14,6 +14,7 @@ orca_python_PYTHON = \
 	chnames.py \
 	debug.py \
 	default.py \
+	eventsynthesizer.py \
 	focus_tracking_presenter.py \
 	gaim.py \
 	gcalctool.py \
