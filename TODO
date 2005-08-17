@@ -18,7 +18,7 @@
 - gnome-terminal: "Edit" -> "Current Profile..." -> "Colors"; press the
   color palette button.  The color editing widget is a monster.
 
-- Page tabs - braille cursors should active them
-- Page tabs - braille should only show role name for tab with focus
+- Orca seg faults when it exits.
+
 - When nothing has focus the old stuff on the braille display should go away.
   It should speak and braille no focus.

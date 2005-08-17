@@ -26,6 +26,9 @@ Building Orca requires the following to be installed:
 	                       without BRLTTY installed, but Braille support 
                                will work without it)
 	* at-spi 1.6.2       - GNOME assistive technology framework
+                               NOTE: need a patch to at-spi/libspi/accessible.c
+			       for GEdit and Evolution to work without crashing
+			       or hanging.
 
 
 Overview
