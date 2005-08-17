@@ -20,6 +20,7 @@
 """Provides support for synthesizing keyboard and mouse events.
 """
 
+import debug
 import core
 
 def generateMouseEvent(x, y, eventName):
@@ -37,9 +38,27 @@ def generateMouseEvent(x, y, eventName):
     - eventName: the event name string (as described above)
     """
 
-    d = core.registry.getDeviceEventController()
+    debug.println(debug.LEVEL_FINER,
+                  "SYNTHESIZING MOUSE EVENT: (%d, %d) %s"\
+                  % (x, y, eventName))
+    
+    d = core.registry.getDeviceEventController()    
     d.generateMouseEvent(x, y, eventName)
     
+
+def clickObject(obj, button):
+    """Performs a button click on the given Accessible.
+
+    Arguments:
+    - obj: the Accessible
+    - button: an integer representing the mouse button number
+    """
+
+    extents = obj.extents
+    x = extents.x + extents.width/2
+    y = extents.y + extents.height/2
+    generateMouseEvent(x, y, "b%dc" % button)
+
 
 def generateKeyboardEvent(keycode, keystring, type):
     """Generates a keyboard event.

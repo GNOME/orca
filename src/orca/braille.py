@@ -280,14 +280,7 @@ class Component(Region):
             debug.println(debug.LEVEL_FINER,
                           "braille.Component.processCursorKey: no action")
             try:
-                extents = self.accessible.extents
-                x = extents.x + extents.width/2
-                y = extents.y + extents.height/2
-                debug.println(
-                    debug.LEVEL_FINER,
-                    "braille.Component.processCursorKey: clicking at (%d, %d)"\
-                    % (x, y))
-                eventsynthesizer.generateMouseEvent(x, y, "b1c")
+                eventsynthesizer.clickObject(self.accessible, 1)
             except:
                 debug.printException(debug.LEVEL_SEVERE)
                 
