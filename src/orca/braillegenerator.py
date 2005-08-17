@@ -815,7 +815,23 @@ class BrailleGenerator:
         
         self._debugGenerator("_getBrailleRegionsForPageTab", obj)
     
-        return self._getDefaultBrailleRegions(obj)
+        verbosity = settings.getSetting("brailleVerbosityLevel",
+                                        settings.VERBOSITY_LEVEL_VERBOSE)
+
+        text = obj.label
+        
+        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
+            if obj == orca.locusOfFocus:
+                text += " " + getBrailleForRoleName(obj)
+                accelerator = self._getBrailleTextForAccelerator(obj)
+                if len(accelerator) > 0:
+                    text += accelerator
+
+        regions = []
+        componentRegion = braille.Component(obj, text)
+        regions.append(componentRegion)
+
+        return [regions, componentRegion]
     
     
     def _getBrailleRegionsForPageTabList(self, obj):
