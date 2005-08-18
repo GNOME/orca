@@ -78,7 +78,6 @@ def go():
 
             delta = min(MAX_SLEEP, (event_time - lastTime) / SPEED_UP)
             if delta > 0:
-                print "Sleeping", delta
                 time.sleep(delta)
             lastTime = event_time
 
