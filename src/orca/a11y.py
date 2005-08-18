@@ -131,7 +131,7 @@ def getStateString(obj):
     if set.count(core.Accessibility.STATE_INDETERMINATE):
         stateString += "INDETERMINATE "
 
-    return stateString;
+    return stateString.strip()
 
 
 def accessibleToString(indent, accessible):
@@ -153,11 +153,11 @@ def accessibleToString(indent, accessible):
     if accessible.app is None:
         appname = "None"
     else:
-        appname = accessible.app.name
+        appname = "'" + accessible.app.name + "'"
         
-    string = indent + " app=%-20s" % ("(" + appname + ")")
+    string = indent + " app=%-20s" % appname
 
-    string += " name=(%s) role=(%s) state=(%s)" \
+    string += " name='%s' role='%s' state='%s'" \
              % (accessible.name,
                 rolenames.getRoleName(accessible),
                 getStateString(accessible))

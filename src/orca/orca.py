@@ -139,13 +139,14 @@ def _buildAppList():
         i += 1
 
 
-def setLocusOfFocus(event, obj):
+def setLocusOfFocus(event, obj, notifyPresentationManager=True):
     """Sets the locus of focus (i.e., the object with visual focus) and
     notifies the current presentation manager of the change.
 
     Arguments:
     - event: if not None, the Event that caused this to happen
     - obj: the Accessible with the new locus of focus.
+    - notifyPresentationManager: if True, propagate this event
     """
 
     global locusOfFocus
@@ -162,21 +163,32 @@ def setLocusOfFocus(event, obj):
         locusOfFocus = None
 
     if locusOfFocus:
+        appname = ""
+        if locusOfFocus.app is None:
+            appname = "None"
+        else:
+            appname = "'" + locusOfFocus.app.name + "'"
+
+        debug.println(debug.LEVEL_FINE,
+                      "LOCUS OF FOCUS: app=%s name='%s' role='%s'" \
+                      % (appname, locusOfFocus.name, locusOfFocus.role))
+                          
         if event:
             debug.println(debug.LEVEL_FINE,
-                          "LOCUS OF FOCUS is now '%s' '%s' (event='%s')" \
-                          % (locusOfFocus.name,
-                             locusOfFocus.role,
-                             event.type))
+                          "                event='%s'" % event.type)
         else:
             debug.println(debug.LEVEL_FINE,
-                          "LOCUS OF FOCUS is now '%s' '%s' (event=None)" \
-                          % (locusOfFocus.name,
-                             locusOfFocus.role))                
+                          "                event=None")
     else:
-        debug.println(debug.LEVEL_FINE, "LOCUS OF FOCUS is now None")
-        
-    if _currentPresentationManager >= 0:
+        if event:
+            debug.println(debug.LEVEL_FINE,
+                          "LOCUS OF FOCUS: None event='%s'" % event.type)
+        else:
+            debug.println(debug.LEVEL_FINE,
+                          "LOCUS OF FOCUS: None event=None")
+            
+
+    if notifyPresentationManager and _currentPresentationManager >= 0:
         _PRESENTATION_MANAGERS[_currentPresentationManager].\
             locusOfFocusChanged(event, oldLocusOfFocus, locusOfFocus)
 
@@ -197,11 +209,11 @@ def visualAppearanceChanged(event, obj):
     
     if event:
         debug.println(debug.LEVEL_FINE,
-                      "VISUAL APPEARANCE CHANGED for '%s' '%s' (event='%s')" \
+                      "VISUAL CHANGE: '%s' '%s' (event='%s')" \
                       % (obj.name, obj.role, event.type))
     else:
         debug.println(debug.LEVEL_FINE,
-                      "VISUAL APPEARANCE CHANGED for '%s' '%s' (event=None)" \
+                      "VISUAL CHANGE: '%s' '%s' (event=None)" \
                       % (obj.name, obj.role))
 
     if _currentPresentationManager >= 0:

@@ -286,7 +286,7 @@ def processObjectEvent(e):
     if event.type == "window:activate":
         speech.stop("default")
         _activeScript = _getScript(event.source.app)
-        debug.println(debug.LEVEL_FINE, "ACTIVATED SCRIPT: " \
+        debug.println(debug.LEVEL_FINE, "ACTIVE SCRIPT: " \
                       + _activeScript.name)
     elif event.type == "object:children-changed:remove":
         # [[[TODO: WDW - something is severely broken.  We are not deleting

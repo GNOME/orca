@@ -194,11 +194,10 @@ def printObjectEvent(level, event, sourceInfo=None):
 
     text = "OBJECT EVENT: %-40s detail=(%d,%d)" \
            % (event.type, event.detail1, event.detail2)
-
-    if sourceInfo:
-        text += " " + sourceInfo
-
     println(level, text)
+    
+    if sourceInfo:
+        println(level, "             " + sourceInfo)
 
     
 def printInputEvent(level, string):

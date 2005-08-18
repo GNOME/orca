@@ -82,8 +82,6 @@ class Default(Script):
         
         Script.__init__(self, app)
 
-        # [[[TODO: WDW - right now, cannot easily refer to instance methods.]]]
-        #
         self.keybindings["F9"] = InputEventHandler(
             sayAgain,
             _("Repeats last utterance sent to speech."))
@@ -94,60 +92,101 @@ class Default(Script):
             self.whereAmI,
             _("Performs the where am I operation."))
             
-        self.listeners["object:property-change:accessible-name"] = \
-            self.onNameChanged 
-        #self.listeners["object:text-selection-changed"]          = \
-        #    self.onTextSelectionChanged 
-        self.listeners["object:text-changed:insert"]             = \
-            self.onTextInserted 
-        self.listeners["object:text-changed:delete"]             = \
-            self.onTextDeleted
-        self.listeners["object:state-changed:"]                  = \
-            self.onStateChanged
-        self.listeners["object:property-change:accessible-value"] = \
-            self.onValueChanged
-        self.listeners["object:value-changed:"]                  = \
-            self.onValueChanged
-        self.listeners["object:selection-changed"]               = \
-            self.onSelectionChanged
-        self.listeners["object:text-caret-moved"]                = \
-            self.onCaretMoved
-        #self.listeners["object:link-selected"]                   = \
-        #    self.onLinkSelected
-        #self.listeners["object:property-change:"]                = \
-        #    self.onPropertyChanged
-        self.listeners["object:active-descendant-changed"]       = \
-            self.onActiveDescendantChanged
-        #self.listeners["object:visible-changed"]                 = \
-        #    self.onVisibleDataChanged
-        #self.listeners["object:children-changed:"]               = \
-        #    self.onChildrenChanged
-        self.listeners["window:activate"]                        = \
-            self.onWindowActivated
-        #self.listeners["window:create"]                          = \
-        #    self.onWindowCreated
-        #self.listeners["window:destroy"]                         = \
-        #    self.onWindowDestroyed
-        #self.listeners["window:deactivated"]                     = \
-        #    self.onWindowDeactivated
-        #self.listeners["window:maximize"]                        = \
-        #    self.onWindowMaximized
-        #self.listeners["window:minimize"]                        = \
-        #    self.onWindowMinimized
-        #self.listeners["window:rename"]                          = \
-        #    self.onWindowRenamed
-        #self.listeners["window:restore"]                         = \
-        #    self.onWindowRestored
-        #self.listeners["window:switch"]                          = \
-        #    self.onWindowSwitched
-        #self.listeners["window:titlelize"]                       = \
-        #    self.onWindowTitlelized
+
         self.listeners["focus:"]                                 = \
             self.onFocus
         
+        #self.listeners["keyboard:modifiers"]                     = \
+        #    self.noOp
+        
+        self.listeners["object:property-change:accessible-name"] = \
+            self.onNameChanged 
+
+        self.listeners["object:text-caret-moved"]                = \
+            self.onCaretMoved
+        self.listeners["object:text-changed:delete"]             = \
+            self.onTextDeleted
+        self.listeners["object:text-changed:insert"]             = \
+            self.onTextInserted 
+        self.listeners["object:text-selection-changed"]          = \
+            self.noOp
+
+        self.listeners["object:active-descendant-changed"]       = \
+            self.onActiveDescendantChanged
+        self.listeners["object:children-changed:"]               = \
+            self.noOp
+        self.listeners["object:link-selected"]                   = \
+            self.noOp
+        self.listeners["object:state-changed:"]                  = \
+            self.onStateChanged
+        self.listeners["object:selection-changed"]               = \
+            self.onSelectionChanged
+        self.listeners["object:property-change:accessible-value"] = \
+            self.onValueChanged
+        self.listeners["object:property-change"] = \
+            self.noOp
+
+        self.listeners["object:value-changed:"]                  = \
+            self.onValueChanged
+        self.listeners["object:visible-changed"]                 = \
+            self.noOp
+
+        self.listeners["window:activate"]                        = \
+            self.onWindowActivated
+        self.listeners["window:create"]                          = \
+            self.noOp
+        self.listeners["window:deactivated"]                     = \
+            self.noOp
+        self.listeners["window:destroy"]                         = \
+            self.noOp
+        self.listeners["window:maximize"]                        = \
+            self.noOp
+        self.listeners["window:minimize"]                        = \
+            self.noOp
+        self.listeners["window:rename"]                          = \
+            self.noOp
+        self.listeners["window:restore"]                         = \
+            self.noOp
+        self.listeners["window:switch"]                          = \
+            self.noOp
+        self.listeners["window:titlelize"]                       = \
+            self.noOp
+
         self.brailleGenerator = self.getBrailleGenerator()
         self.speechGenerator = self.getSpeechGenerator()
 
+
+    def processObjectEvent(self, event):
+        """Processes all object events of interest to this script.  Note
+        that this script may be passed events it doesn't care about, so
+        it needs to react accordingly.
+
+        Arguments:
+        - event: the Event
+        """
+
+        # [[[TODO: WDW - HACK to set Orca's locusOfFocus if we've somehow
+        # gotten out of whack.  This typically happens when going into an
+        # application and we only get a window activated event for it, even
+        # if one of its children has focus.  Since we're doing this, we'll
+        # tell Orca to not propagate this event to us.]]]
+        #
+        # [[[TODO: WDW - additional info - this really isn't necessary because
+        # we typically only run into this problem when Orca is started after
+        # the desktop applications are running.  In real life, this will
+        # most likely not be the case, and a simple "make the world right"
+        # user action can be to just Alt+Tab to force the apps to give us
+        # the events we care about.]]]
+        #
+        #if (event.type.find("focus") == -1) \
+        #   and (event.type.find("state-changed:selected") == -1) \
+        #   and (event.type.find("object:selection-changed") == -1) \
+        #   and (event.type.find("active-descendant") == -1) \
+        #   and event.source.state.count(core.Accessibility.STATE_FOCUSED):
+        #    orca.setLocusOfFocus(event, event.source, False)
+
+        Script.processObjectEvent(self, event)
+    
 
     def whereAmI(self, inputEvent):
         self.updateBraille(orca.locusOfFocus)
@@ -816,6 +855,15 @@ class Default(Script):
         #
         if orca.lastKey == "Right" or orca.lastKey == "Left":
             sayCharacter(event.source)
+
+
+    def noOp(self, event):
+        """Just here to capture events.
+
+        Arguments:
+        - event: the Event
+        """
+        pass
 
 
 ########################################################################
