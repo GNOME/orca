@@ -30,12 +30,13 @@ import orca.core
 # Maximum time, in seconds, to sleep.  This allows us to compress the
 # playback some for users who took their sweet time entering key strokes.
 #
-MAX_SLEEP = 1.0
+MAX_SLEEP = 5.0
 
 # Factor to speed up the playback.  This will compress time by the
-# given amount.
+# given amount.  For example, 2.0 will play the events back twice
+# as fast.
 #
-SPEED_UP  = 2.0
+SPEED_UP  = 1.0
 
 def exit(signum, frame):
     sys.exit()
