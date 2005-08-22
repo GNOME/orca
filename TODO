@@ -12,16 +12,31 @@
 - Implement the style guide for speech and braille.
 - Sometimes on Fedora Core 4, when a terminal is started after orca is
   running, the terminal comes up with the "unknown" role.
-- Cannot register a callback with FreeTTS driver on Fedora (COMM_FAILURE)
+- Cannot register a callback with FreeTTS driver on Fedora (COMM_FAILURE);
+  DECtalk apparently suffers from the same problem.
 - GEdit will often hang when you quit it while running Orca
   > UPDATE: This is the result of an AT-SPI bug that is awaiting a patch.
+    The bug happens when any AT tickles the parental hierarchy of objects
+    that it receives via events.  This appears to be due to an object
+    reuse scheme in libspi.
 - gnome-terminal: "Edit" -> "Current Profile..." -> "Colors"; press the
   color palette button.  The color editing widget is a monster.
-
 - Orca seg faults when it exits.
-
+  > UPDATE: WDW - after some investigation, this seems to be happening
+    when attempting to return from a glib call.  Originally thought
+    this might be due to shutting down bonobo (bonobo.main_quit) when
+    handling a keyboard event.  After prototyping something to shut down
+    on a GLib idle handler, however, this didn't seem to be the case.
 - When nothing has focus the old stuff on the braille display should go away.
-  It should speak and braille no focus.
-
-  When in a text editor such as GEdit doing a find orca should speak the new line landed on.  
+  It should speak and braille "no focus."
+- When in a text editor such as GEdit doing a find orca should speak
+  the new line landed on.
+- AT-SPI is giving Orca not really good information regarding keysyms;
+  it needs to have a better algorithm for this.  A solution to this
+  might be to do what Gnopernicus does, which is to use XKeysymToKeycode
+  to determine keycodes for KeySyms and then use the keycode field of
+  the AT-SPI keyboard events instead of the keystring.
+- The whole keyboard event handling needs some rework as well.  For example,
+  right now, Orca only swallows key presses of keystrokes it cares about;
+  the key releases are always passed on.
 
