@@ -392,7 +392,7 @@ def say(voiceName, text):
         
     # Send the text to the GNOME Speech speaker
     #
-    debug.println(debug.LEVEL_INFO, "speech.say(" + text + ")")
+    debug.println(debug.LEVEL_INFO, "SPEECH OUTPUT: '" + text + "'")
     try:
         #s.stop()
         _lastText = [voiceName, text]

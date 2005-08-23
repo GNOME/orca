@@ -510,10 +510,10 @@ def refresh():
     else:
         cursor = cursor + 1
 
-    debug.println(debug.LEVEL_INFO, "braille.refresh(%s), cursor=%d" \
+    debug.println(debug.LEVEL_INFO, "BRAILLE LINE:  '%s'" % string)
+
+    debug.println(debug.LEVEL_INFO, "     VISIBLE:  '%s', cursor=%d" \
                   % (string[startPos:endPos], cursor))
-    
-    #print "braille.refresh: ", string
     
     brl.writeText(cursor, string[startPos:endPos])
     
