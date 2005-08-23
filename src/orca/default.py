@@ -116,7 +116,7 @@ class Default(Script):
         self.listeners["object:children-changed:"]               = \
             self.noOp
         self.listeners["object:link-selected"]                   = \
-            self.noOp
+            self.onLinkSelected
         self.listeners["object:state-changed:"]                  = \
             self.onStateChanged
         self.listeners["object:selection-changed"]               = \
@@ -571,131 +571,6 @@ class Default(Script):
     #                                                                      #
     ########################################################################
 
-    def onNameChanged(self, event):
-        """Called whenever a property on an object changes.
-
-        Arguments:
-        - event: the Event
-        """
-        
-        # [[[TODO: WDW - HACK because gnome-terminal issues a name changed
-        # event for the edit preferences dialog even though the name really
-        # didn't change.  I'm guessing this is going to be a vagary in all
-        # of GTK+.]]]
-        #
-        if event.source and (event.source.role == rolenames.ROLE_DIALOG) \
-           and (event.source == orca.locusOfFocus):
-            return
-        
-        orca.visualAppearanceChanged(event, event.source)
-
-
-    def onStateChanged(self, event):
-        """Called whenever an object's state changes.  Currently, the
-        state changes for non-focused objects are ignored.
-
-        Arguments:
-        - event: the Event
-        """
-    
-        global state_change_notifiers
-
-        # Do we care?
-        #
-        if state_change_notifiers.has_key(event.source.role):
-            notifiers = state_change_notifiers[event.source.role]
-            found = False
-            for state in notifiers:
-                if state and event.type.endswith(state):
-                    found = True
-                    break
-            if found:
-                orca.visualAppearanceChanged(event, event.source)
-
-        # [[[TODO: WDW - HACK we'll handle this in the visual appearance
-        # changed handler.]]]
-        #
-        # The object with focus might become insensitive, so we need to
-        # flag that.  This typically occurs in wizard dialogs such as
-        # the account setup assistant in Evolution.
-        #
-        #if event.type.endswith("sensitive") \
-        #   and (event.detail1 == 0) \
-        #   and event.source == orca.locusOfFocus:
-        #    print "FOO INSENSITIVE"
-        #    #orca.setLocusOfFocus(event, None)
-           
-        
-    def onValueChanged(self, event):
-        """Called whenever an object's value changes.  Currently, the
-        value changes for non-focused objects are ignored.
-
-        Arguments:
-        - event: the Event
-        """
-    
-        orca.visualAppearanceChanged(event, event.source)
-            
-
-    def onSelectionChanged(self, event):
-        """Called when an object's selection changes.
-
-        Arguments:
-        - event: the Event
-        """
-
-        try:
-            # [[[TODO: WDW - HACK layered panes are nutty in that they
-            # will change the selection and tell the selected child it is
-            # focused, but the child will not issue a focus changed event.]]]
-            # 
-            if event.source \
-               and (event.source.role == rolenames.ROLE_LAYERED_PANE):
-#                    or (event.source.role == rolenames.ROLE_TABLE) \
-#                    or (event.source.role == rolenames.ROLE_TREE_TABLE) \
-#                    or (event.source.role == rolenames.ROLE_TREE)):
-                if event.source.childCount:
-                    selection = event.source.selection
-                    if selection and selection.nSelectedChildren > 0:
-                        child = selection.getSelectedChild(0)
-                        if child:
-                            orca.setLocusOfFocus(event,
-                                                 a11y.makeAccessible(child))
-        except:
-            debug.printException(debug.LEVEL_SEVERE)
-
-        return
-
-
-    def onActiveDescendantChanged(self, event):
-        """Called when an object who manages its own descendants detects a
-        change in one of its children.
-        
-        Arguments:
-        - event: the Event
-        """
-
-        try:
-            child = a11y.makeAccessible(event.any_data)
-
-            if child.childCount:
-                orca.setLocusOfFocus(event, child.child(1))
-            else:
-                orca.setLocusOfFocus(event, child)
-        except:
-            debug.printException(debug.LEVEL_SEVERE)
-            
-
-    def onWindowActivated(self, event):
-        """Called whenever a toplevel window is activated.
-        
-        Arguments:
-        - event: the Event
-        """
-
-        orca.setLocusOfFocus(event, event.source)
-            
-
     def onFocus(self, event):
         """Called whenever an object gets focus.
         
@@ -747,66 +622,23 @@ class Default(Script):
         orca.setLocusOfFocus(event, newFocus)
         
 
-    def onTextInserted(self, event):
-        """Called whenever text is inserted into an object.
+    def onNameChanged(self, event):
+        """Called whenever a property on an object changes.
 
         Arguments:
         - event: the Event
         """
-
-        # Ignore text deletions from non-focused objects, unless the
-        # currently focused object is the parent of the object from which
-        # text was deleted
-        #
-        if (event.source != orca.locusOfFocus) \
-               and (event.source.parent != orca.locusOfFocus):
-            return
-
-        text = event.source.text
-        #print "onTextInserted, LENGTH=%d, text='%s'" % (text.characterCount, \
-        #                                                event.any_data)
         
-        self.updateBraille(event.source)
-        text = event.any_data
-        if text.isupper():
-            speech.say("uppercase", text)
-        else:
-            speech.say("default", text)
-
-
-    def onTextDeleted(self, event):
-        """Called whenever text is deleted from an object.
-
-        Arguments:
-        - event: the Event
-        """
-    
-        # Ignore text deletions from non-focused objects, unless the
-        # currently focused object is the parent of the object from which
-        # text was deleted
+        # [[[TODO: WDW - HACK because gnome-terminal issues a name changed
+        # event for the edit preferences dialog even though the name really
+        # didn't change.  I'm guessing this is going to be a vagary in all
+        # of GTK+.]]]
         #
-        if (event.source != orca.locusOfFocus) \
-               and (event.source.parent != orca.locusOfFocus):
+        if event.source and (event.source.role == rolenames.ROLE_DIALOG) \
+           and (event.source == orca.locusOfFocus):
             return
-
-        text = event.source.text
-        #print "onTextDeleted, LENGTH=%d, text='%s'" % (text.characterCount, \
-        #                                               event.any_data)
-
-        self.updateBraille(event.source)
-
-        # The any_data member of the event object has the deleted text in
-        # it - If the last key pressed was a backspace or delete key,
-        # speak the deleted text.  [[[TODO: WDW - again, need to think
-        # about the ramifications of this when it comes to editors such
-        # as vi or emacs.
-        #
-        text = event.any_data
-        if (orca.lastKey == "BackSpace") or (orca.lastKey == "Delete"):
-            if text.isupper():
-                speech.say("uppercase", text)
-            else:
-                speech.say("default", text)
+        
+        orca.visualAppearanceChanged(event, event.source)
 
 
     def onCaretMoved(self, event):
@@ -856,6 +688,199 @@ class Default(Script):
         if orca.lastKey == "Right" or orca.lastKey == "Left":
             sayCharacter(event.source)
 
+
+    def onTextDeleted(self, event):
+        """Called whenever text is deleted from an object.
+
+        Arguments:
+        - event: the Event
+        """
+    
+        # Ignore text deletions from non-focused objects, unless the
+        # currently focused object is the parent of the object from which
+        # text was deleted
+        #
+        if (event.source != orca.locusOfFocus) \
+               and (event.source.parent != orca.locusOfFocus):
+            return
+
+        text = event.source.text
+        #print "onTextDeleted, LENGTH=%d, text='%s'" % (text.characterCount, \
+        #                                               event.any_data)
+
+        self.updateBraille(event.source)
+
+        # The any_data member of the event object has the deleted text in
+        # it - If the last key pressed was a backspace or delete key,
+        # speak the deleted text.  [[[TODO: WDW - again, need to think
+        # about the ramifications of this when it comes to editors such
+        # as vi or emacs.
+        #
+        text = event.any_data
+        if (orca.lastKey == "BackSpace") or (orca.lastKey == "Delete"):
+            if text.isupper():
+                speech.say("uppercase", text)
+            else:
+                speech.say("default", text)
+
+
+    def onTextInserted(self, event):
+        """Called whenever text is inserted into an object.
+
+        Arguments:
+        - event: the Event
+        """
+
+        # Ignore text deletions from non-focused objects, unless the
+        # currently focused object is the parent of the object from which
+        # text was deleted
+        #
+        if (event.source != orca.locusOfFocus) \
+               and (event.source.parent != orca.locusOfFocus):
+            return
+
+        text = event.source.text
+        #print "onTextInserted, LENGTH=%d, text='%s'" % (text.characterCount, \
+        #                                                event.any_data)
+        
+        self.updateBraille(event.source)
+        text = event.any_data
+        if text.isupper():
+            speech.say("uppercase", text)
+        else:
+            speech.say("default", text)
+
+
+    def onActiveDescendantChanged(self, event):
+        """Called when an object who manages its own descendants detects a
+        change in one of its children.
+        
+        Arguments:
+        - event: the Event
+        """
+
+        try:
+            child = a11y.makeAccessible(event.any_data)
+
+            if child.childCount:
+                orca.setLocusOfFocus(event, child.child(1))
+            else:
+                orca.setLocusOfFocus(event, child)
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
+            
+
+    def onLinkSelected(self, event):
+        """Called when a hyperlink is selected in a text area.
+        
+        Arguments:
+        - event: the Event
+        """
+
+        try:
+            
+            # [[[TODO: WDW - HACK one might think we could expect an
+            # application to keep its name, but it appears as though
+            # yelp has an identity problem and likes to start calling
+            # itself "yelp," but then changes its name to "Mozilla"
+            # on Fedora Core 4 after the user selects a link.  So, we'll
+            # just assume that link-selected events always come from the
+            # application with focus.]]]
+            #
+            #if orca.locusOfFocus \
+            #   and (orca.locusOfFocus.app == event.source.app):
+            #    orca.setLocusOfFocus(event, event.source)
+            orca.setLocusOfFocus(event, event.source)
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
+            
+
+    def onStateChanged(self, event):
+        """Called whenever an object's state changes.  Currently, the
+        state changes for non-focused objects are ignored.
+
+        Arguments:
+        - event: the Event
+        """
+    
+        global state_change_notifiers
+
+        # Do we care?
+        #
+        if state_change_notifiers.has_key(event.source.role):
+            notifiers = state_change_notifiers[event.source.role]
+            found = False
+            for state in notifiers:
+                if state and event.type.endswith(state):
+                    found = True
+                    break
+            if found:
+                orca.visualAppearanceChanged(event, event.source)
+
+        # [[[TODO: WDW - HACK we'll handle this in the visual appearance
+        # changed handler.]]]
+        #
+        # The object with focus might become insensitive, so we need to
+        # flag that.  This typically occurs in wizard dialogs such as
+        # the account setup assistant in Evolution.
+        #
+        #if event.type.endswith("sensitive") \
+        #   and (event.detail1 == 0) \
+        #   and event.source == orca.locusOfFocus:
+        #    print "FOO INSENSITIVE"
+        #    #orca.setLocusOfFocus(event, None)
+           
+        
+    def onSelectionChanged(self, event):
+        """Called when an object's selection changes.
+
+        Arguments:
+        - event: the Event
+        """
+
+        try:
+            # [[[TODO: WDW - HACK layered panes are nutty in that they
+            # will change the selection and tell the selected child it is
+            # focused, but the child will not issue a focus changed event.]]]
+            # 
+            if event.source \
+               and (event.source.role == rolenames.ROLE_LAYERED_PANE):
+#                    or (event.source.role == rolenames.ROLE_TABLE) \
+#                    or (event.source.role == rolenames.ROLE_TREE_TABLE) \
+#                    or (event.source.role == rolenames.ROLE_TREE)):
+                if event.source.childCount:
+                    selection = event.source.selection
+                    if selection and selection.nSelectedChildren > 0:
+                        child = selection.getSelectedChild(0)
+                        if child:
+                            orca.setLocusOfFocus(event,
+                                                 a11y.makeAccessible(child))
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
+
+        return
+
+
+    def onValueChanged(self, event):
+        """Called whenever an object's value changes.  Currently, the
+        value changes for non-focused objects are ignored.
+
+        Arguments:
+        - event: the Event
+        """
+    
+        orca.visualAppearanceChanged(event, event.source)
+            
+
+    def onWindowActivated(self, event):
+        """Called whenever a toplevel window is activated.
+        
+        Arguments:
+        - event: the Event
+        """
+
+        orca.setLocusOfFocus(event, event.source)
+            
 
     def noOp(self, event):
         """Just here to capture events.

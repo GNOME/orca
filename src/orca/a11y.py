@@ -658,7 +658,12 @@ class Accessible:
         #
         elif (len(label) == 0) and (self.description is not None) \
                  and (len(self.description) > 0):
-            label = self.description
+            # [[[TODO: HACK because yelp actually goes through the trouble
+            # of setting the description of some of its text areas to
+            # "no description".]]]
+            #
+            if self.description != "no description":
+                label = self.description
 
         if CACHE_VALUES:
             self.label = label

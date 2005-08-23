@@ -829,7 +829,15 @@ class SpeechGenerator:
         Returns a list of utterances to be spoken for the object.
         """
         
-        utterances = self._getDefaultSpeech(obj, already_focused)
+        # [[[TODO: WDW - HACK to remove availability because some text
+        # areas, such as those in yelp, come up as insensitive though
+        # they really are ineditable.]]]
+        #
+        verbosity = settings.getSetting("speechVerbosityLevel",
+                                        settings.VERBOSITY_LEVEL_VERBOSE)
+
+        utterances = self._getSpeechForLabelAndRole(obj)
+
         result = a11y.getTextLineAtCaret(obj)
         utterances.append(result[0])
     
