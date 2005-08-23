@@ -1,5 +1,8 @@
 2005-08-23  Willie Walker <william.walker@sun.com>
 
+	* src/orca/orca.py, src/orca/focus_tracking_presenter.py: add
+	ability to record keystrokes to a file - press the "Pause" key
+	to start/stop recording.
 	* src/orca/braille.py, src/orca/speech.py: change LEVEL_INFO
 	output to be more test friendly.
 	
