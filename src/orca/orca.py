@@ -17,7 +17,9 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+import gtk
 import sys
+import time
 
 import a11y
 import braille
@@ -354,7 +356,7 @@ def printActiveApp(inputEvent=None):
     """Prints the active application.
 
     Arguments:
-    - keystring: the key event (if any) which caused this to be called.
+    - inputEvent: the key event (if any) which caused this to be called.
 
     Returns True indicating the event should be consumed.
     """
@@ -381,6 +383,89 @@ def printActiveApp(inputEvent=None):
                                   "      WARNING: child's parent is not app!!!")
                 count += 1
 
+    return True
+
+########################################################################
+#                                                                      #
+# Keyboard Event Recording Support                                     #
+#                                                                      #
+########################################################################
+
+_recordingKeystrokes = False
+_keystrokesFile = None
+
+
+def _closeKeystrokeWindow(entry, window):
+    global _keystrokesFile
+    window.destroy()
+    entry_text = entry.get_text()
+    _keystrokesFile = open(entry_text, 'w')
+
+
+def toggleKeystrokeRecording(inputEvent=None):
+    """Toggles the recording of keystrokes on and off.  When the
+    user presses the magic key (Pause), Orca will pop up a window
+    requesting a filename.  When the user presses the close button,
+    Orca will start recording keystrokes to the file and will continue
+    recording them until the user presses the magic key again.
+
+    This functionality is used primarily to help gather keystroke
+    information for regression testing purposes.  The keystrokes are
+    recorded in such a way that they can be played back via the
+    src/tools/play_keystrokes.py utility.
+    
+    Arguments:
+    - inputEvent: the key event (if any) which caused this to be called.
+
+    Returns True indicating the event should be consumed.
+    """
+    
+    global _recordingKeystrokes
+    global _keystrokesFile
+    
+    if _recordingKeystrokes:
+        # If the filename entry window is still up, we don't have a file
+        # yet.
+        #
+        if _keystrokesFile:
+            _keystrokesFile.close()
+            _keystrokesFile = None
+            _recordingKeystrokes = False
+    else:
+        _recordingKeystrokes = True
+        window = gtk.Window(gtk.WINDOW_TOPLEVEL)
+        window.set_title("Keystroke Filename")
+
+        vbox = gtk.VBox(False, 0)
+        window.add(vbox)
+        vbox.show()
+
+        entry = gtk.Entry()
+        entry.set_max_length(50)
+        entry.set_editable(True)
+        entry.set_text("keystrokes.txt")
+        entry.select_region(0, len(entry.get_text()))
+        # For now, do not allow "Return" to close the window - the reason
+        # for this is that the key press closes the window, and the key
+        # release will end up getting recorded.
+        #
+        #entry.connect("activate", _closeKeystrokeWindow, window)
+        vbox.pack_start(entry, True, True, 0)
+        entry.show()
+
+        hbox = gtk.HBox(False, 0)
+        vbox.add(hbox)
+        hbox.show()
+                                  
+        button = gtk.Button(stock=gtk.STOCK_CLOSE)
+        button.connect("clicked", lambda w: _closeKeystrokeWindow(entry, \
+                                                                  window))
+        vbox.pack_start(button, True, True, 0)
+        button.set_flags(gtk.CAN_DEFAULT)
+        button.grab_default()
+        button.show()
+        window.set_modal(True)
+        window.show()
     return True
 
 
@@ -722,6 +807,12 @@ shutdownHandler = InputEventHandler(shutdown, _("Quits Orca"))
 _keybindings["F12"] = shutdownHandler
 _keybindings[META_MODIFIER + "+F12"] = shutdownHandler
 
+keystrokeRecordingHandler = InputEventHandler(\
+    toggleKeystrokeRecording,
+    _("Toggles keystroke recording on and off."))
+_keybindings["Pause"]  = keystrokeRecordingHandler
+_keybindings[META_MODIFIER + "+Pause"]  = keystrokeRecordingHandler
+
 _keybindings["F5"]  = InputEventHandler(\
     printApps,
     _("Prints a debug listing of all known applications to the console where Orca is running."))
@@ -752,14 +843,23 @@ def processKeyEvent(event):
     global lastKey
     global _insertPressed
     global _currentPresentationManager
-
+    global _recordingKeystrokes
+    global _keystrokesFile
+    
     keystring = ""
 
-    #print "KEYEVENT: type=%d" % event.type
-    #print "          hw_code=%d" % event.hw_code
-    #print "          modifiers=%d" % event.modifiers
-    #print "          event_string=(%s)" % event.event_string
-    #print "          is_text=", event.is_text
+    # The order and formating of this information should be the same as
+    # in src/tools/record_keystrokes.py
+    #
+    if _recordingKeystrokes and _keystrokesFile \
+       and (event.event_string != "Pause"):
+        _keystrokesFile.write("KEYEVENT: type=%d\n" % event.type)
+        _keystrokesFile.write("          hw_code=%d\n" % event.hw_code)
+        _keystrokesFile.write("          modifiers=%d\n" % event.modifiers)
+        _keystrokesFile.write("          event_string=(%s)\n" \
+                              % event.event_string)
+        _keystrokesFile.write("          is_text=%s\n" % event.is_text)
+        _keystrokesFile.write("          time=%f\n" % time.time())
 
     event_string = event.event_string
     if event.type == core.Accessibility.KEY_PRESSED_EVENT:

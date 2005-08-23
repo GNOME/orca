@@ -155,7 +155,10 @@ def _getScript(app):
     global _default
 
     # We might not know what the app is.  In this case, just defer to the
-    # default script for support.
+    # default script for support.  Note the hack to check for Orca - this
+    # will occur if Orca pops up its own windows.  We work to make Orca
+    # windows work well with the default script so it will not need a
+    # custom script.
     #
     if app is None:
         if _default is None:
@@ -164,7 +167,8 @@ def _getScript(app):
         return _default
     elif _known_scripts.has_key(app):
         return _known_scripts[app]
-    elif settings.getSetting("useCustomScripts", True):
+    elif settings.getSetting("useCustomScripts", True) \
+             and (app.name != "orca"):
         try:
             module = __import__(app.name, globals(), locals(), [''])
             try:
