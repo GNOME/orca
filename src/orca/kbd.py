@@ -32,6 +32,8 @@ For the purposes of Orca, the main entry points to this module are:
     shutdown: unregisters all the listeners.
 """
 
+import time
+
 import core
 
 # A list of the various listeners we have registered with the at-spi
@@ -136,6 +138,34 @@ class KeystrokeListener(core.Accessibility__POA.DeviceEventListener):
                                       self.keyset, 
                                       self.mask, 
                                       self.type)
+
+
+_keycodeCache = {}
+
+def XKeysymStringToKeycode(keysym):
+    """Converts an XKeysym string (e.g., 'KP_Enter') to a keycode that
+    should match the event.hw_code for key events.
+
+    Arguments:
+    - keysym: a string that is a valid representation of an XKeysym.
+
+    Returns an integer representing a key code that should match the
+    event.hw_code for key events.
+    """
+
+    global _keycodeCache
+    if not _keycodeCache.has_key(keysym):
+        _keycodeCache[keysym] = core.XKeysymStringToKeycode(keysym)
+    return _keycodeCache[keysym]
+
+
+def keyEventToString(event):
+    return ("KEYEVENT: type=%d\n" % event.type) \
+           + ("          hw_code=%d\n" % event.hw_code) \
+           + ("          modifiers=%d\n" % event.modifiers) \
+           + ("          event_string=(%s)\n" % event.event_string) \
+           + ("          is_text=%s\n" % event.is_text) \
+           + ("          time=%f" % time.time())
 
 
 def init(keyEventHandler):
