@@ -28,6 +28,7 @@ import braille
 import debug
 import settings
 import speech
+import time
 
 KEYBOARD_EVENT     = "keyboard"
 BRAILLE_EVENT      = "braille"
@@ -54,11 +55,16 @@ class KeyboardEvent(InputEvent):
         """Creates a new InputEvent of type KEYBOARD_EVENT.
 
         Arguments:
-        - event: the keystring for this event.
+        - event: the AT-SPI keyboard event
         """
         
         InputEvent.__init__(self, KEYBOARD_EVENT)
-        self.event = event
+        self.type = event.type
+        self.hw_code = event.hw_code
+        self.modifiers = event.modifiers
+        self.event_string = event.event_string
+        self.is_text = event.is_text
+        self.time = time.time()
 
 
 class BrailleEvent(InputEvent):

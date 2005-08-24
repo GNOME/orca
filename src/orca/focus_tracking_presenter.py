@@ -20,11 +20,11 @@
 """Provides the focus tracking presentation manager for Orca.  The main
 entry points into this module are for the presentation manager contract:
 
-    processKeyEvent     - handles all keyboard events
-    processBrailleEvent - handles all Braille input events
-    locusOfFocusChanged - notified when orca's locusOfFocus changes
-    activate            - called when this manager is enabled
-    deactivate          - called when this manager is disabled
+    processKeyboardEvent - handles all keyboard events
+    processBrailleEvent  - handles all Braille input events
+    locusOfFocusChanged  - notified when orca's locusOfFocus changes
+    activate             - called when this manager is enabled
+    deactivate           - called when this manager is disabled
 
 This module uses the script module to maintain a set of scripts for all
 running applications, and also keeps the notion of an activeScript.  All
@@ -312,7 +312,7 @@ def processObjectEvent(e):
         debug.printException(debug.LEVEL_SEVERE)
 
 
-def processKeyEvent(keyboardEvent):
+def processKeyboardEvent(keyboardEvent):
     """Processes the given keyboard event based on the keybinding from the
     currently active script. This method is called synchronously from the
     at-spi registry and should be performant.  In addition, it must return
@@ -325,10 +325,10 @@ def processKeyEvent(keyboardEvent):
     """
 
     global _activeScript
-    
+
     if _activeScript:
         try:
-            return _activeScript.processKeyEvent(keyboardEvent)
+            return _activeScript.processKeyboardEvent(keyboardEvent)
         except:
             debug.printException(debug.LEVEL_SEVERE)
             

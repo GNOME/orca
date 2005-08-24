@@ -30,6 +30,7 @@ import braille
 import braillegenerator
 import core
 import debug
+import keybindings
 #import mag - [[[TODO: WDW - disable until I can figure out how to
 #             resolve the GNOME reference in mag.py.]]]
 import orca
@@ -82,16 +83,32 @@ class Default(Script):
         
         Script.__init__(self, app)
 
-        self.keybindings["F9"] = InputEventHandler(
-            sayAgain,
-            _("Repeats last utterance sent to speech."))
-        self.keybindings[orca.META_MODIFIER+"++"] = InputEventHandler(
-            sayAll,
-            _("Speaks entire document."))
-        self.keybindings[orca.META_MODIFIER+"+KP_Enter"] = InputEventHandler(
-            self.whereAmI,
-            _("Performs the where am I operation."))
-            
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "F9", \
+                orca.MODIFIER_ORCA, \
+                orca.MODIFIER_ORCA,
+                InputEventHandler(\
+                    sayAgain,
+                    _("Repeats last utterance sent to speech."))))
+
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_Add", \
+                0, \
+                0, \
+                InputEventHandler(\
+                    sayAll,
+                    _("Speaks entire document."))))
+
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_Enter", \
+                0, \
+                0, \
+                InputEventHandler(\
+                    self.whereAmI,
+                    _("Peforms the where am I operation."))))
 
         self.listeners["focus:"]                                 = \
             self.onFocus

@@ -27,10 +27,12 @@ pointers.
 
 Instances of scripts are intended to be created solely by the
 focus_tracking_presenter, which will call the three main entry points of a
-script instance: processObjectEvent, processKeyEvent, and processBrailleEvent.
+script instance: processObjectEvent, processKeyboardEvent, and
+processBrailleEvent.
 """
 
 import debug
+import keybindings
 import settings
 
 class Script:
@@ -54,8 +56,8 @@ class Script:
             self.name = "default"
             
         self.listeners = {}
-        self.keybindings = {}
         self.braillebindings = {}
+        self.keybindings = keybindings.KeyBindings()
         
         
     def processObjectEvent(self, event):
@@ -83,9 +85,9 @@ class Script:
                     self.listeners[key](event)
                 except:
                     debug.printException(debug.LEVEL_SEVERE)
-            
 
-    def processKeyEvent(self, keyboardEvent):
+            
+    def processKeyboardEvent(self, keyboardEvent):
         """Processes the given keyboard event. This method is called
         synchronously from the at-spi registry and should be performant.  In
         addition, it must return True if it has consumed the event (and False
@@ -111,9 +113,7 @@ class Script:
         # [[[TODO: WDW - for performance, these bindings should probably
         # be conflated at initialization time.]]]
         #
-        consumed = False
         user_bindings = None
-        keystring = keyboardEvent.event
 
         user_bindings_map = settings.getSetting("keybindings_map",{})
         if user_bindings_map.has_key(self.name):
@@ -121,19 +121,11 @@ class Script:
         elif user_bindings_map.has_key("default"):
             user_bindings = user_bindings_map["default"]
 
-        if user_bindings and user_bindings.has_key(keystring):
-            try:
-                handler = user_bindings[keystring]
-                consumed = handler.processInputEvent(keyboardEvent)
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
-                
-        if (not consumed) and self.keybindings.has_key(keystring):
-            try:
-                handler = self.keybindings[keystring]
-                consumed = handler.processInputEvent(keyboardEvent)
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
+        consumed = False
+        if user_bindings:
+            consumed = user_bindings.consumeKeyboardEvent(keyboardEvent)
+        if not consumed:
+            consumed = self.keybindings.consumeKeyboardEvent(keyboardEvent)
 
         return consumed
         

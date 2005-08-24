@@ -19,7 +19,6 @@
 
 import gtk
 import sys
-import time
 
 import a11y
 import braille
@@ -28,6 +27,7 @@ import debug
 import focus_tracking_presenter
 import hierarchical_presenter
 import kbd
+import keybindings
 #import mag - [[[TODO: WDW - disable until I can figure out how to
 #             resolve the GNOME reference in mag.py.]]]
 import settings
@@ -43,6 +43,14 @@ from orca_i18n import _           # for gettext support
 #
 _initialized = False
 
+# Keybindings that Orca itself cares about.
+#
+_keybindings = None
+
+# A new modifier to use (currently bound to the "Insert" key) to represent
+# special Orca key sequences.
+#
+MODIFIER_ORCA = 1 << 8
 
 ########################################################################
 #                                                                      #
@@ -99,7 +107,7 @@ def _switchToNextPresentationManager(inputEvent=None):
     """
 
     global _currentPresentationManager
-    
+
     _switchToPresentationManager(_currentPresentationManager + 1)
 
     return True
@@ -512,6 +520,7 @@ def init():
     """
     
     global _initialized
+    global _keybindings
     global apps
     
     if _initialized:
@@ -519,7 +528,71 @@ def init():
 
     a11y.init()
     
-    kbd.init(processKeyEvent)
+    kbd.init(processKeyboardEvent)
+
+    _keybindings = keybindings.KeyBindings()
+    
+    enterLearnModeHandler = InputEventHandler(\
+        enterLearnMode,
+        _("Enters learn mode.  Press escape to exit learn mode."))
+    _keybindings.add(keybindings.KeyBinding("F1", \
+                                            MODIFIER_ORCA, \
+                                            MODIFIER_ORCA, \
+                                            enterLearnModeHandler))
+
+    decreaseSpeechRateHandler = InputEventHandler(\
+        speech.decreaseSpeechRate,
+        _("Decreases the speech rate."))
+    _keybindings.add(keybindings.KeyBinding("Left", \
+                                            MODIFIER_ORCA, \
+                                            MODIFIER_ORCA,
+                                            decreaseSpeechRateHandler))
+
+    increaseSpeechRateHandler = InputEventHandler(\
+        speech.increaseSpeechRate,
+        _("Increases the speech rate."))
+    _keybindings.add(keybindings.KeyBinding("Right", \
+                                            MODIFIER_ORCA, \
+                                            MODIFIER_ORCA,
+                                            increaseSpeechRateHandler))
+    
+    shutdownHandler = InputEventHandler(shutdown, _("Quits Orca"))
+    _keybindings.add(keybindings.KeyBinding("F12", \
+                                            0, \
+                                            0,
+                                            shutdownHandler))
+
+    keystrokeRecordingHandler = InputEventHandler(\
+        toggleKeystrokeRecording,
+        _("Toggles keystroke recording on and off."))
+    _keybindings.add(keybindings.KeyBinding("Pause", \
+                                            0, \
+                                            0,
+                                            keystrokeRecordingHandler))
+
+    listAppsHandler = InputEventHandler(
+        printApps,
+        _("Prints a debug listing of all known applications to the console where Orca is running."))
+    _keybindings.add(keybindings.KeyBinding("F5", \
+                                            MODIFIER_ORCA, \
+                                            MODIFIER_ORCA,
+                                            listAppsHandler))
+
+    printActiveAppHandler = InputEventHandler(\
+        printActiveApp,
+        _("Prints debug information about the currently active application to the console where Orca is running."))
+    _keybindings.add(keybindings.KeyBinding("F6", \
+                                            MODIFIER_ORCA, \
+                                            MODIFIER_ORCA,
+                                            printActiveAppHandler))
+
+    nextPresentationManagerHandler = InputEventHandler(\
+        _switchToNextPresentationManager,
+        _("Switches to the next presentation manager."))
+    _keybindings.add(keybindings.KeyBinding("F8", \
+                                            MODIFIER_ORCA, \
+                                            MODIFIER_ORCA,
+                                            nextPresentationManagerHandler))
 
     if settings.getSetting("useSpeech", True):
         speech.init()
@@ -602,7 +675,7 @@ def shutdown(inputEvent=None):
 
     # Shutdown all the other support.
     #
-    kbd.shutdown() # automatically unregisters processKeyEvent
+    kbd.shutdown() # automatically unregisters processKeyboardEvent
     a11y.shutdown()
     if settings.getSetting("useSpeech", True):
         speech.shutdown()
@@ -696,69 +769,15 @@ def outlineAccessible(accessible):
 #                                                                      #
 ########################################################################
 
-# The string representing the last key pressed.
+# The KeyboardEvent instance representing the last key pressed.
 #
-lastKey = None
+lastKeyEvent = None
 
 # True if the insert key is currently pressed.  We will use the insert
 # key as a modifier for Orca, and it will be presented as the "insert"
 # modifier string.
 #
 _insertPressed = False
-
-INSERT_MODIFIER  = "insert"
-CONTROL_MODIFIER = "control"
-ALT_MODIFIER     = "alt"
-META_MODIFIER    = "meta"
-META2_MODIFIER   = "meta2"
-META3_MODIFIER   = "meta3"
-NUMLOCK_MODIFIER = "numlock"
-
-def _getModifierString(modifier):
-    """Converts a set of modifer states into a text string
-
-    Arguments:
-    - modifer: the modifiers field from an at-spi DeviceEvent
-
-    Returns a string consisting of modifier names separated by "+"'s.
-    """
-
-    global _insertPressed
-    
-    s = ""
-    l = []
-
-    # [[[TODO: WDW - need to consider all modifiers: SHIFT, SHIFTLOCK,
-    # NUMLOCK, META, META2, META3.  Some of these may be handled via the
-    # actual key symbol (e.g., upper or lower case), but others may not.]]]
-    #
-    if modifier & (1 << core.Accessibility.MODIFIER_CONTROL):
-        l.append(CONTROL_MODIFIER)
-    if modifier & (1 << core.Accessibility.MODIFIER_ALT):
-        l.append(ALT_MODIFIER)
-    if modifier & (1 << core.Accessibility.MODIFIER_META):
-        l.append(META_MODIFIER)
-    if modifier & (1 << core.Accessibility.MODIFIER_META2):
-        l.append(META2_MODIFIER)
-    if modifier & (1 << core.Accessibility.MODIFIER_META3):
-        l.append(META3_MODIFIER)
-    if modifier & (1 << core.Accessibility.MODIFIER_NUMLOCK):
-        l.append(NUMLOCK_MODIFIER)
-    for mod in l:
-        if s == "":
-            s = mod
-        else:
-            s = s + "+" + mod
-
-    # Insert is treated as an orca modifier.
-    #
-    if _insertPressed:
-        if len(s):
-            s += "+" + INSERT_MODIFIER
-        else:
-            s = INSERT_MODIFIER
-            
-    return s
 
 
 def _keyEcho(key):
@@ -777,56 +796,7 @@ def _keyEcho(key):
     else:
         speech.say("default", key)
 
-
-# Keybindings that Orca itself cares about.
-#
-_keybindings = {}
-
-enterLearnModeHandler = InputEventHandler(\
-    enterLearnMode,
-    _("Enters learn mode.  Press escape to exit learn mode."))
-_keybindings[INSERT_MODIFIER + "+F1"] = enterLearnModeHandler
-_keybindings[META_MODIFIER + "+" + INSERT_MODIFIER + "+F1"] = \
-                           enterLearnModeHandler
-
-decreaseSpeechRateHandler = InputEventHandler(\
-    speech.decreaseSpeechRate,
-    _("Decreases the speech rate."))
-_keybindings[INSERT_MODIFIER + "+Left"] = decreaseSpeechRateHandler
-_keybindings[META_MODIFIER + "+" + INSERT_MODIFIER + "+Left"] = \
-                           decreaseSpeechRateHandler
-
-increaseSpeechRateHandler = InputEventHandler(\
-    speech.increaseSpeechRate,
-    _("Increases the speech rate."))
-_keybindings[INSERT_MODIFIER + "+Right"] = increaseSpeechRateHandler
-_keybindings[META_MODIFIER + "+" + INSERT_MODIFIER + "+Right"] = \
-                           increaseSpeechRateHandler
-
-shutdownHandler = InputEventHandler(shutdown, _("Quits Orca"))
-_keybindings["F12"] = shutdownHandler
-_keybindings[META_MODIFIER + "+F12"] = shutdownHandler
-
-keystrokeRecordingHandler = InputEventHandler(\
-    toggleKeystrokeRecording,
-    _("Toggles keystroke recording on and off."))
-_keybindings["Pause"]  = keystrokeRecordingHandler
-_keybindings[META_MODIFIER + "+Pause"]  = keystrokeRecordingHandler
-
-_keybindings["F5"]  = InputEventHandler(\
-    printApps,
-    _("Prints a debug listing of all known applications to the console where Orca is running."))
-
-_keybindings["F6"]  = InputEventHandler(\
-    printActiveApp,
-    _("Prints debug information about the currently active application to the console where Orca is running."))
-
-_keybindings["F8"]  = InputEventHandler(\
-    _switchToNextPresentationManager,
-    _("Switches to the next presentation manager."))
-
-
-def processKeyEvent(event):
+def processKeyboardEvent(event):
     """The primary key event handler for Orca.  Keeps track of various
     attributes, such as the lastKey and insertPressed.  Also calls
     keyEcho as well as any function that may exist in the _keybindings
@@ -840,7 +810,7 @@ def processKeyEvent(event):
     Returns True if the event should be consumed.
     """
     
-    global lastKey
+    global lastKeyEvent
     global _insertPressed
     global _currentPresentationManager
     global _recordingKeystrokes
@@ -848,36 +818,32 @@ def processKeyEvent(event):
     
     keystring = ""
 
-    # The order and formating of this information should be the same as
-    # in src/tools/record_keystrokes.py
+    # Log the keyboard event for future playback, if desired.
     #
+    string = kbd.keyEventToString(event)
     if _recordingKeystrokes and _keystrokesFile \
        and (event.event_string != "Pause"):
-        _keystrokesFile.write("KEYEVENT: type=%d\n" % event.type)
-        _keystrokesFile.write("          hw_code=%d\n" % event.hw_code)
-        _keystrokesFile.write("          modifiers=%d\n" % event.modifiers)
-        _keystrokesFile.write("          event_string=(%s)\n" \
-                              % event.event_string)
-        _keystrokesFile.write("          is_text=%s\n" % event.is_text)
-        _keystrokesFile.write("          time=%f\n" % time.time())
-
-    event_string = event.event_string
+        _keystrokesFile.write(string + "\n")
+    debug.println(debug.LEVEL_FINE, string)
+    
     if event.type == core.Accessibility.KEY_PRESSED_EVENT:
 
-        # We treat the Insert key as a modifier - so just swallow it and
-        # set our internal state.
+        # Key presses always interrupt speech - If say all mode is
+        # enabled, a key press stops it as well and postions the
+        # caret at where the speech stopped.
         #
-        if event_string == "Insert":
-            _insertPressed = True
-            return True
+        if speech.sayAllEnabled:
+            speech.stopSayAll()
+        else:
+            speech.stop("default")
 
-        # The control characters come through as control characters, so we
-        # just turn them into their ASCII equivalent.  NOTE that the upper
-        # case ASCII characters will be used (e.g., ctrl+a will be turned into
-        # the string "control+A").  All these checks here are to just do some
-        # sanity checking before doing the conversion. [[[TODO: WDW - this is
-        # making assumptions about mapping ASCII control characters to to
-        # UTF-8, I think.]]]
+        # The control characters come through as control characters,
+        # so we just turn them into their ASCII equivalent.  NOTE that
+        # the upper case ASCII characters will be used (e.g., ctrl+a
+        # will be turned into the string "A").  All these checks here
+        # are to just do some sanity checking before doing the
+        # conversion. [[[TODO: WDW - this is making assumptions about
+        # mapping ASCII control characters to to UTF-8, I think.]]]
         #
         if (event.modifiers & (1 << core.Accessibility.MODIFIER_CONTROL)) \
            and (not event.is_text) and (len(event.event_string) == 1):
@@ -885,56 +851,43 @@ def processKeyEvent(event):
             if value < 32:
                 event_string = chr(value + 0x40)
 
-        mods = _getModifierString(event.modifiers)
-        
-        if mods:
-            keystring = mods + "+" + event_string
-        else:
-            keystring = event_string
-
-        # Key presses always interrupt speech - If say all mode is
-        # enabled, a key press stops it
+        _keyEcho(event.event_string)    
+    
+        # We treat the Insert key as a modifier - so just swallow it and
+        # set our internal state.
         #
-        if speech.sayAllEnabled:
-            speech.stopSayAll()
-        else:
-            speech.stop("default")
+        if event.event_string == "Insert":
+            _insertPressed = True
+            return True
+
     elif event.type == core.Accessibility.KEY_RELEASED_EVENT \
-         and (event_string == "Insert"):
+         and (event.event_string == "Insert"):
         _insertPressed = False
         return True
         
-    consumed = False
-    
-    if keystring:
-        lastKey = keystring
-        debug.printInputEvent(debug.LEVEL_FINE, "KEY EVENT: %s" % keystring)
+    # Orca gets first stab at the event.  Then, the presenter gets
+    # a shot. [[[TODO: WDW - might want to let the presenter try first?
+    # The main reason this is staying as is is that we may not want
+    # scripts to override fundamental Orca key bindings.]]]
+    #
+    keyboardEvent = KeyboardEvent(event)
+    if _insertPressed:
+        keyboardEvent.modifiers |= MODIFIER_ORCA
 
-        _keyEcho(keystring)
-
-        keyboardEvent = KeyboardEvent(keystring)
+    consumed = _keybindings.consumeKeyboardEvent(keyboardEvent)
+    if (not consumed) and (_currentPresentationManager >= 0):
+        consumed = _PRESENTATION_MANAGERS[_currentPresentationManager].\
+                   processKeyboardEvent(keyboardEvent)
         
-        # Orca gets first stab at the event.  Then, the presenter gets
-        # a shot. [[[TODO: WDW - might want to let the presenter try first?]]]
-        #
-        if _keybindings.has_key(keystring):
-            try:
-                handler = _keybindings[keystring]
-                consumed = handler.processInputEvent(keyboardEvent)
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
-        elif _currentPresentationManager >= 0:
-            try:
-                consumed = _PRESENTATION_MANAGERS[_currentPresentationManager].\
-                           processKeyEvent(keyboardEvent)
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
-
-        if (not consumed) and settings.getSetting("learnModeEnabled", False):
-            braille.displayMessage(keystring)
-            speech.say("default", keystring)
-            if keystring == "Escape":
-                exitLearnMode(keyboardEvent)
-            consumed = True
+    if (not consumed) and settings.getSetting("learnModeEnabled", False):
+        if event.type == core.Accessibility.KEY_PRESSED_EVENT:
+            braille.displayMessage(event.event_string)
+            speech.say("default", event.event_string)
+        elif (event.type == core.Accessibility.KEY_RELEASED_EVENT) \
+             and (event.event_string == "Escape"):
+            exitLearnMode(keyboardEvent)
+        consumed = True
+            
+    lastKeyEvent = keyboardEvent
 
     return consumed
