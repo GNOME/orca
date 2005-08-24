@@ -24,6 +24,7 @@ orca_python_PYTHON = \
 	hierarchical_presenter.py \
 	input_event.py \
 	kbd.py \
+	keybindings.py \
 	mag.py \
 	metacity.py \
 	orca.py \
