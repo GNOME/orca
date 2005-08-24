@@ -50,7 +50,7 @@ _keybindings = None
 # A new modifier to use (currently bound to the "Insert" key) to represent
 # special Orca key sequences.
 #
-MODIFIER_ORCA = 1 << 8
+MODIFIER_ORCA = 8
 
 ########################################################################
 #                                                                      #
@@ -536,24 +536,24 @@ def init():
         enterLearnMode,
         _("Enters learn mode.  Press escape to exit learn mode."))
     _keybindings.add(keybindings.KeyBinding("F1", \
-                                            MODIFIER_ORCA, \
-                                            MODIFIER_ORCA, \
+                                            1 << MODIFIER_ORCA, \
+                                            1 << MODIFIER_ORCA, \
                                             enterLearnModeHandler))
 
     decreaseSpeechRateHandler = InputEventHandler(\
         speech.decreaseSpeechRate,
         _("Decreases the speech rate."))
     _keybindings.add(keybindings.KeyBinding("Left", \
-                                            MODIFIER_ORCA, \
-                                            MODIFIER_ORCA,
+                                            1 << MODIFIER_ORCA, \
+                                            1 << MODIFIER_ORCA,
                                             decreaseSpeechRateHandler))
 
     increaseSpeechRateHandler = InputEventHandler(\
         speech.increaseSpeechRate,
         _("Increases the speech rate."))
     _keybindings.add(keybindings.KeyBinding("Right", \
-                                            MODIFIER_ORCA, \
-                                            MODIFIER_ORCA,
+                                            1 << MODIFIER_ORCA, \
+                                            1 << MODIFIER_ORCA,
                                             increaseSpeechRateHandler))
     
     shutdownHandler = InputEventHandler(shutdown, _("Quits Orca"))
@@ -574,24 +574,24 @@ def init():
         printApps,
         _("Prints a debug listing of all known applications to the console where Orca is running."))
     _keybindings.add(keybindings.KeyBinding("F5", \
-                                            MODIFIER_ORCA, \
-                                            MODIFIER_ORCA,
+                                            1 << MODIFIER_ORCA, \
+                                            1 << MODIFIER_ORCA,
                                             listAppsHandler))
 
     printActiveAppHandler = InputEventHandler(\
         printActiveApp,
         _("Prints debug information about the currently active application to the console where Orca is running."))
     _keybindings.add(keybindings.KeyBinding("F6", \
-                                            MODIFIER_ORCA, \
-                                            MODIFIER_ORCA,
+                                            1 << MODIFIER_ORCA, \
+                                            1 << MODIFIER_ORCA,
                                             printActiveAppHandler))
 
     nextPresentationManagerHandler = InputEventHandler(\
         _switchToNextPresentationManager,
         _("Switches to the next presentation manager."))
     _keybindings.add(keybindings.KeyBinding("F8", \
-                                            MODIFIER_ORCA, \
-                                            MODIFIER_ORCA,
+                                            1 << MODIFIER_ORCA, \
+                                            1 << MODIFIER_ORCA,
                                             nextPresentationManagerHandler))
 
     if settings.getSetting("useSpeech", True):
@@ -771,7 +771,7 @@ def outlineAccessible(accessible):
 
 # The KeyboardEvent instance representing the last key pressed.
 #
-lastKeyEvent = None
+lastKeyboardEvent = None
 
 # True if the insert key is currently pressed.  We will use the insert
 # key as a modifier for Orca, and it will be presented as the "insert"
@@ -798,7 +798,7 @@ def _keyEcho(key):
 
 def processKeyboardEvent(event):
     """The primary key event handler for Orca.  Keeps track of various
-    attributes, such as the lastKey and insertPressed.  Also calls
+    attributes, such as the lastKeyboardEvent and insertPressed.  Also calls
     keyEcho as well as any function that may exist in the _keybindings
     dictionary for the key event.  This method is called synchronously
     from the at-spi registry and should be performant.  In addition, it
@@ -810,7 +810,7 @@ def processKeyboardEvent(event):
     Returns True if the event should be consumed.
     """
     
-    global lastKeyEvent
+    global lastKeyboardEvent
     global _insertPressed
     global _currentPresentationManager
     global _recordingKeystrokes
@@ -872,7 +872,7 @@ def processKeyboardEvent(event):
     #
     keyboardEvent = KeyboardEvent(event)
     if _insertPressed:
-        keyboardEvent.modifiers |= MODIFIER_ORCA
+        keyboardEvent.modifiers |= (1 << MODIFIER_ORCA)
 
     consumed = _keybindings.consumeKeyboardEvent(keyboardEvent)
     if (not consumed) and (_currentPresentationManager >= 0):
@@ -888,6 +888,6 @@ def processKeyboardEvent(event):
             exitLearnMode(keyboardEvent)
         consumed = True
             
-    lastKeyEvent = keyboardEvent
+    lastKeyboardEvent = keyboardEvent
 
     return consumed

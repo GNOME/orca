@@ -86,8 +86,8 @@ class Default(Script):
         self.keybindings.add(
             keybindings.KeyBinding(
                 "F9", \
-                orca.MODIFIER_ORCA, \
-                orca.MODIFIER_ORCA,
+                1 << orca.MODIFIER_ORCA, \
+                1 << orca.MODIFIER_ORCA,
                 InputEventHandler(\
                     sayAgain,
                     _("Repeats last utterance sent to speech."))))
@@ -681,29 +681,40 @@ class Default(Script):
         #
         self.updateBraille(event.source)
 
-        # If this move is in response to an up or down arrow, read the line.
-        # [[[TODO: WDW - this motion assumes arrow key events.  In an editor
-        # such as vi, line up and down is done via other actions such as
-        # "i" or "j".  We may need to think about this a little harder.]]]
+        print orca.lastKeyboardEvent
+        
+        if orca.lastKeyboardEvent is None:
+            return
+
+        # Guess why the caret moved and say something appropriate.
+        # [[[TODO: WDW - this motion assumes traditional GUI
+        # navigation gestures.  In an editor such as vi, line up and
+        # down is done via other actions such as "i" or "j".  We may
+        # need to think about this a little harder.]]]
         #
-        if orca.lastKey == "Up" or orca.lastKey == "Down":
+        string = orca.lastKeyboardEvent.event_string
+        mods = orca.lastKeyboardEvent.modifiers
+        controlMask = 1 << core.Accessibility.MODIFIER_CONTROL
+
+        if (string == "Up") or (string == "Down"):
             sayLine(event.source)
-
-        # Control-left and control-right arrows speak the word under the
-        # caret.  [[[TODO: WDW - need to make sure the actions work as
-        # expected.  For example, will the caret always end up at the
-        # end of a word, or will it end up at the beginning of a word.
-        # There seems to be some confusion in gedit about this.  That is,
-        # when moving forward, it ends up at the end of the word and
-        # when moving backward, it ends up at the beginning of the word.]]]
-        #
-        if orca.lastKey == "control+Right" or orca.lastKey == "control+Left":
-            sayWord(event.source)
-
-        # Right and left arrows speak the character under the cursor
-        #
-        if orca.lastKey == "Right" or orca.lastKey == "Left":
-            sayCharacter(event.source)
+        elif (string == "Left") or (string == "Right"):
+            if (mods & controlMask):
+                sayWord(event.source)
+            else:
+                sayCharacter(event.source)
+        elif string == "Page_Up":
+            if (mods & controlMask):
+                sayCharacter(event.source)
+            else:
+                sayLine(event.source)
+        elif string == "Page_Down":
+            sayLine(event.source)
+        elif (string == "Home") or (string == "End"):
+            if (mods & controlMask):
+                sayLine(event.source)
+            else:
+                sayCharacter(event.source)
 
 
     def onTextDeleted(self, event):

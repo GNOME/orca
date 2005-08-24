@@ -135,5 +135,6 @@ class GCalcTool(Default):
         if event.source == self._display:
             contents = self._display_txt.getText(0, -1)
             braille.displayMessage(contents)
-            if orca.lastKey == "Return" or orca.lastKey == "=":
+            if (orca.lastKeyboardEvent.event_string == "Return") \
+                   or (orca.lastKeyboardEvent.event_string == "="):
                 speech.say("default", contents)
