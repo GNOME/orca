@@ -108,7 +108,7 @@ class Default(Script):
                 0, \
                 InputEventHandler(\
                     self.whereAmI,
-                    _("Peforms the where am I operation."))))
+                    _("Performs the where am I operation."))))
 
         self.listeners["focus:"]                                 = \
             self.onFocus
@@ -681,8 +681,6 @@ class Default(Script):
         #
         self.updateBraille(event.source)
 
-        print orca.lastKeyboardEvent
-        
         if orca.lastKeyboardEvent is None:
             return
 
@@ -744,8 +742,12 @@ class Default(Script):
         # about the ramifications of this when it comes to editors such
         # as vi or emacs.
         #
+        if orca.lastKeyboardEvent is None:
+            return
+        
+        string = orca.lastKeyboardEvent.event_string
         text = event.any_data
-        if (orca.lastKey == "BackSpace") or (orca.lastKey == "Delete"):
+        if (string == "BackSpace") or (string == "Delete"):
             if text.isupper():
                 speech.say("uppercase", text)
             else:

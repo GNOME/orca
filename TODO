@@ -18,7 +18,11 @@
   > UPDATE: This is the result of an AT-SPI bug that is awaiting a patch.
     The bug happens when any AT tickles the parental hierarchy of objects
     that it receives via events.  This appears to be due to an object
-    reuse scheme in libspi.
+    reuse scheme in libspi.  The crux of the problem seems to be that
+    libspi gives us different object types depending upon whether we
+    get an Accessible from an event for by getting it via the "embedded
+    hierarchy" (i.e., looking at children).  This seems to result in
+    a bad state and possibly even memory corruption in the client.
 - gnome-terminal: "Edit" -> "Current Profile..." -> "Colors"; press the
   color palette button.  The color editing widget is a monster.
 - Orca seg faults when it exits.
@@ -31,12 +35,3 @@
   It should speak and braille "no focus."
 - When in a text editor such as GEdit doing a find orca should speak
   the new line landed on.
-- AT-SPI is giving Orca not really good information regarding keysyms;
-  it needs to have a better algorithm for this.  A solution to this
-  might be to do what Gnopernicus does, which is to use XKeysymToKeycode
-  to determine keycodes for KeySyms and then use the keycode field of
-  the AT-SPI keyboard events instead of the keystring.
-- The whole keyboard event handling needs some rework as well.  For example,
-  right now, Orca only swallows key presses of keystrokes it cares about;
-  the key releases are always passed on.
-

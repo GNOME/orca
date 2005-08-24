@@ -1,3 +1,15 @@
+2005-08-24  Willie Walker <william.walker@sun.com>
+
+        * Many files: add keybindings support to workaround the fact that
+	AT-SPI doesn't give us keysyms.  As a result, keypad keys look
+	like other keys on the keyboard (e.g., the left arrow on the
+	keypad looks similar to the left arrow on the keyboard).  The only
+	way to distinguish these things right now is by keycode.
+	But...different systems emit different keycodes, so we need to
+	resolve keycodes at runtime.  Also took this opportunity to fix
+	the problem where key releases of Orca keys were always being
+	passed on to applications rather than being consumed.
+
 2005-08-23  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca.py, src/orca/focus_tracking_presenter.py: add
