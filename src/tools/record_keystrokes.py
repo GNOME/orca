@@ -40,12 +40,7 @@ def processKeyEvent(event):
     if event.event_string == "F12":
         exit(None, None)
         
-    print "KEYEVENT: type=%d" % event.type
-    print "          hw_code=%d" % event.hw_code
-    print "          modifiers=%d" % event.modifiers
-    print "          event_string=(%s)" % event.event_string
-    print "          is_text=%s" % event.is_text
-    print "          time=%f" % time.time()
+    print orca.kbd.keyEventToString(event)
 
     return False
 
