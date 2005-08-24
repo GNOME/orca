@@ -24,6 +24,10 @@
 #include "eventlistener.h"
 #include "pyevent.h"
 
+#include <X11/Xlib.h>
+#include <gdk/gdkx.h>
+
+
 /**
  * If TRUE, then this module has been intialized (see initcore).
  */
@@ -389,6 +393,36 @@ static PyObject *core_module_unregisterEventListener (PyObject *self,
 
 
 /**
+ * core_module_xKeysymToKeycode
+ * @self: the core module as seen by Python
+ * @args: the arguments, which should be a string version of an XKeysym.
+ *
+ * Returns: an integer representing the keycode for the keysym.
+ */
+static PyObject *core_module_xKeysymStringToKeycode (PyObject *self,
+					       PyObject *args) {
+        Display *display = GDK_DISPLAY();
+	char *keysym;
+	unsigned int keycode;
+
+	/* Parse arguments 
+	 */
+	if (!PyArg_ParseTuple (args, 
+			       "s:keysym", 
+			       &keysym)) {
+	        return NULL;
+	}
+
+	keycode = XKeysymToKeycode(display, XStringToKeysym(keysym));
+
+	/* [[[TODO: WDW - I'm not quite sure if long is the right thing
+	 * here.]]]
+	 */
+	return PyInt_FromLong (keycode);
+}
+
+
+/**
  * Methods exported by the core module to Python - maps Python method
  * names to the method names in this file.
  */
@@ -407,6 +441,9 @@ static PyMethodDef core_methods[] = {
 	 METH_VARARGS},
 	{"unregisterEventListener", 
 	 (PyCFunction) core_module_unregisterEventListener, 
+	 METH_VARARGS},
+	{"XKeysymStringToKeycode", 
+	 (PyCFunction) core_module_xKeysymStringToKeycode, 
 	 METH_VARARGS},
 	{NULL, NULL}
 };
