@@ -437,7 +437,10 @@ def processKeyboardEvent(keyboardEvent):
     global _currentObjectSpecializations
     global _currentSpecialization
 
-    keystring = keyboardEvent.event
+    if keyboardEvent.type != core.Accessibility.KEY_PRESSED_EVENT:
+        return
+    
+    keystring = keyboardEvent.event_string
 
     # [[[TODO: WDW - probably should set these up as keybindings
     # rather than hardcoding them.]]]

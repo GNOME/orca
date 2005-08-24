@@ -707,12 +707,6 @@ def outlineAccessible(accessible):
 
     global _visibleRectangle
 
-    # [[[WDW - remove this return statement to re-enable the drawing of
-    # rectangles.]]]
-    return
-
-    import gtk
-
     display = None
     
     try:
