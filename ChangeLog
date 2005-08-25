@@ -1,3 +1,8 @@
+2005-08-25  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca.py, src/orca/a11y.py, src/orca/default.py: begin
+	implementing spatial analysis techniques.
+	
 2005-08-24  Willie Walker <william.walker@sun.com>
 
         * Many files: add keybindings support to workaround the fact that
@@ -8,7 +13,9 @@
 	But...different systems emit different keycodes, so we need to
 	resolve keycodes at runtime.  Also took this opportunity to fix
 	the problem where key releases of Orca keys were always being
-	passed on to applications rather than being consumed.
+	passed on to applications rather than being consumed.  Note that
+	all these changes introduce a new dependency on glib and also
+	require the DISPLAY environment variable to be set.
 
 2005-08-23  Willie Walker <william.walker@sun.com>
 

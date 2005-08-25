@@ -12,6 +12,8 @@
 - Implement the style guide for speech and braille.
 - Sometimes on Fedora Core 4, when a terminal is started after orca is
   running, the terminal comes up with the "unknown" role.
+- Sometimes on Fedora Core 4, the left hand panel (e.g., the list of
+  configuration groups) in kickstart will come up with the "unknown" role.
 - Cannot register a callback with FreeTTS driver on Fedora (COMM_FAILURE);
   DECtalk apparently suffers from the same problem.
 - GEdit will often hang when you quit it while running Orca
