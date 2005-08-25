@@ -343,21 +343,70 @@ def printApps(inputEvent=None):
 
     level = debug.LEVEL_OFF
     
-    debug.println(level, "There are %d apps" % len(apps))
+    debug.println(level, "There are %d Accessible applications" % len(apps))
     for app in apps:
-        debug.println(level,
-                      "  %s (childCount=%d)" % (app.name, app.childCount))
-        count = 0
-        while count < app.childCount:
-            debug.println(level, "    Child %d:" % count)
-            child = app.child(count)
-            a11y.printDetails(level, "      ", child)
+        a11y.printDetails(level, "  App: ", app, False)
+        i = 0
+        while i < app.childCount:
+            child = app.child(i)
+            a11y.printDetails(level, "    Window: ", child, False)
             if child.parent != app:
                 debug.println(level,
                               "      WARNING: child's parent is not app!!!")
-            count += 1
+            i += 1
 
     return True
+
+
+def printAccessibleTree(level, indent, root):
+    a11y.printDetails(level, indent, root, False)
+    i = 0
+    while i < root.childCount:
+        child = root.child(i)
+        if child == root:
+            debug.println(level,
+                          indent + "  " + "WARNING CHILD == PARENT!!!")
+        elif child is None:
+            debug.println(level,
+                          indent + "  " + "WARNING CHILD IS NONE!!!")
+        elif child.parent != root:
+            debug.println(level,
+                          indent + "  " + "WARNING CHILD.PARENT != PARENT!!!")
+        else:
+            printAccessibleTree(level, indent + "  ", child)
+        i += 1
+
+    
+def printAccessiblePaintedTree(level, indent, root):
+    a11y.printDetails(level, indent, root, False)
+
+    extents = root.extents
+    if extents:
+        debug.println(level, \
+                      indent + " extents: (x=%d y=%d w=%d h=%d)" \
+                      % (extents.x, extents.y, extents.width, extents.height))
+        
+    #if root.text:
+    #    extents = root.text.getCharacterExtents(0,0)
+    #    debug.println(level, \
+    #                  indent + " text extents: (x=%d y=%d w=%d h=%d)" \
+    #                  % (extents[0], extents[1], extents[2], extents[3]))
+
+    i = 0
+    while i < root.childCount:
+        child = root.child(i)
+        if child == root:
+            debug.println(level,
+                          indent + "  " + "WARNING CHILD == PARENT!!!")
+        elif child is None:
+            debug.println(level,
+                          indent + "  " + "WARNING CHILD IS NONE!!!")
+        elif child.parent != root:
+            debug.println(level,
+                          indent + "  " + "WARNING CHILD.PARENT != PARENT!!!")
+        elif child.state.count(core.Accessibility.STATE_SHOWING):    
+            printAccessiblePaintedTree(level, indent + "  ", child)
+        i += 1
 
 
 def printActiveApp(inputEvent=None):
@@ -371,27 +420,19 @@ def printActiveApp(inputEvent=None):
     
     level = debug.LEVEL_OFF
     
-    debug.println(level, "Current active application:")
     window = findActiveWindow()
     if window is None:
-        debug.println(level, "  None")
+        debug.println(level, "Active application: None")
     else:
         app = window.app
         if app is None:
-            debug.println(level, "  None")
+            debug.println(level, "Active application: None")
         else:
-            a11y.printDetails(level, "  ", app)
-            count = 0
-            while count < app.childCount:
-                debug.println(level, "    Child %d:" % count)
-                child = app.child(count)
-                a11y.printDetails(level, "    ", child)
-                if child.parent != app:
-                    debug.println(level,
-                                  "      WARNING: child's parent is not app!!!")
-                count += 1
+            debug.println(level, "Active application: %s" % app.name)
+            printAccessiblePaintedTree(level, "  ", findActiveWindow())
 
     return True
+
 
 ########################################################################
 #                                                                      #
@@ -701,7 +742,7 @@ def shutdown(inputEvent=None):
 #
 _visibleRectangle = None
 
-def outlineAccessible(accessible):
+def outlineAccessible(accessible, erasePrevious=True):
     """Draws a rectangular outline around the accessible, erasing the
     last drawn rectangle in the process."""
 
@@ -729,15 +770,16 @@ def outlineAccessible(accessible):
                                          gtk.gdk.CAP_BUTT,   # end style
                                          gtk.gdk.JOIN_MITER) # join style
 
-    # Erase the old rectangle.
+    # Erase the old rectangle.  The +1 and -2 stuff here is an attempt
+    # to draw inside the bounding box of the object.
     #
-    if _visibleRectangle:
+    if _visibleRectangle and erasePrevious:
         root_window.draw_rectangle(graphics_context,
                                    False,                    # Fill
-                                   _visibleRectangle.x,
-                                   _visibleRectangle.y,
-                                   _visibleRectangle.width,
-                                   _visibleRectangle.height)
+                                   _visibleRectangle.x + 1,
+                                   _visibleRectangle.y + 1,
+                                   _visibleRectangle.width - 2,
+                                   _visibleRectangle.height - 2)
         _visibleRectangle = None
 
     if accessible:
@@ -746,10 +788,10 @@ def outlineAccessible(accessible):
             _visibleRectangle = component.getExtents(0) # coord type = screen
             root_window.draw_rectangle(graphics_context,
                                        False,                  # Fill
-                                       _visibleRectangle.x,
-                                       _visibleRectangle.y,
-                                       _visibleRectangle.width,
-                                       _visibleRectangle.height)
+                                       _visibleRectangle.x + 1,
+                                       _visibleRectangle.y + 1,
+                                       _visibleRectangle.width - 2,
+                                       _visibleRectangle.height - 2)
 
 
 ########################################################################

@@ -110,6 +110,15 @@ class Default(Script):
                     self.whereAmI,
                     _("Performs the where am I operation."))))
 
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "Num_Lock", \
+                1 << orca.MODIFIER_ORCA, \
+                1 << orca.MODIFIER_ORCA, \
+                InputEventHandler(\
+                    self.showZones,
+                    _("Paints and prints the visible zones in the active window."))))
+
         self.listeners["focus:"]                                 = \
             self.onFocus
         
@@ -203,7 +212,21 @@ class Default(Script):
         #    orca.setLocusOfFocus(event, event.source, False)
 
         Script.processObjectEvent(self, event)
+
+        
+    def getBrailleGenerator(self):
+        """Returns the braille generator for this script.
+        """
+
+        return braillegenerator.BrailleGenerator()
+
     
+    def getSpeechGenerator(self):
+        """Returns the speech generator for this script.
+        """
+
+        return speechgenerator.SpeechGenerator()
+
 
     def whereAmI(self, inputEvent):
         self.updateBraille(orca.locusOfFocus)
@@ -271,21 +294,7 @@ class Default(Script):
 
         return True
 
-        
-    def getBrailleGenerator(self):
-        """Returns the braille generator for this script.
-        """
 
-        return braillegenerator.BrailleGenerator()
-
-    
-    def getSpeechGenerator(self):
-        """Returns the speech generator for this script.
-        """
-
-        return speechgenerator.SpeechGenerator()
-
-    
     def findCommonAncestor(self, a, b):
         """Finds the common ancestor between Accessible a and Accessible b.
 
@@ -921,6 +930,59 @@ class Default(Script):
         pass
 
 
+    ########################################################################
+    #                                                                      #
+    # Flat review mode support.  [[[TODO: WDW - still under development,   #
+    # but the idea is that a script should be able to provide custom       #
+    # information about layout as well.]]]                                 #
+    #                                                                      #
+    ########################################################################
+
+    def getShowingZones(self):
+        """Returns a list of all interesting, non-intersecting,
+        regions that are drawn in the currently active window.  Each
+        element of the list is the Accessible object associated with a
+        given region.  The term 'zone' here is inherited from OCR
+        algorithms and techniques.
+    
+        The objects are returned in no particular order.
+
+        Arguments:
+        - root: the Accessible object to traverse
+
+        Returns: a list of all objects under the specified object
+        """
+        if (not orca.locusOfFocus) or (orca.locusOfFocus.app != self.app):
+            return []
+
+        obj = orca.locusOfFocus
+        while obj \
+                  and obj.parent \
+                  and (obj.parent.role != rolenames.ROLE_APPLICATION) \
+                  and (obj != obj.parent):
+            obj = obj.parent
+
+        if obj \
+               and obj.parent \
+               and (obj.parent.role == rolenames.ROLE_APPLICATION):
+            return a11y.getShowingZones(obj)
+        else:
+            return []
+        
+        
+    def showZones(self, inputEvent):
+        objlist = self.getShowingZones()
+        if len(objlist):
+            debug.println(debug.LEVEL_OFF,\
+                          "Visible zones for %s:" % self.app.name)
+            for accessible in objlist:
+                a11y.printDetails(debug.LEVEL_OFF, "  ", accessible, False)
+                orca.outlineAccessible(accessible, False)
+        else:
+            debug.println(debug.LEVEL_OFF,\
+                          "No visible zones for %s:" % self.app.name)
+            
+        
 ########################################################################
 #                                                                      #
 # ACCESSIBLE TEXT OUTPUT FUNCTIONS                                     #
@@ -1124,3 +1186,4 @@ state_change_notifiers[rolenames.ROLE_TOGGLE_BUTTON] = ("checked",
 state_change_notifiers[rolenames.ROLE_TABLE_CELL]    = ("checked",
                                                         "expanded",
                                                         None)
+

@@ -134,7 +134,7 @@ def getStateString(obj):
     return stateString.strip()
 
 
-def accessibleToString(indent, accessible):
+def accessibleToString(indent, accessible, includeApp=True):
     """Returns a string, suitable for printing, that describes the
     given accessible.
 
@@ -149,15 +149,17 @@ def accessibleToString(indent, accessible):
     if not accessible:
         return None
 
-    appname = ""
-    if accessible.app is None:
-        appname = "None"
+    if includeApp:
+        appname = ""
+        if accessible.app is None:
+            appname = "None"
+        else:
+            appname = "'" + accessible.app.name + "'"
+        string = indent + " app=%-20s " % appname
     else:
-        appname = "'" + accessible.app.name + "'"
+        string = indent
         
-    string = indent + " app=%-20s" % appname
-
-    string += " name='%s' role='%s' state='%s'" \
+    string += "name='%s' role='%s' state='%s'" \
              % (accessible.name,
                 rolenames.getRoleName(accessible),
                 getStateString(accessible))
@@ -165,7 +167,7 @@ def accessibleToString(indent, accessible):
     return string
 
 
-def printDetails(level, indent, accessible):
+def printDetails(level, indent, accessible, includeApp=True):
     """Lists the details of the given accessible with the given
     indentation.
 
@@ -178,7 +180,7 @@ def printDetails(level, indent, accessible):
     - accessible: the accessible whose details are to be listed
     """
 
-    debug.println(level, accessibleToString(indent, accessible))
+    debug.println(level, accessibleToString(indent, accessible, includeApp))
         
 
 ########################################################################
@@ -534,9 +536,19 @@ class Accessible:
                 debug.println(debug.LEVEL_SEVERE,
                               "ERROR: obj == obj.parent!")
                 debug.println(debug.LEVEL_SEVERE,
-                              "       name=(%s) role=(%s)" \
-                              % (obj.name, obj.role))
-                self.valid = False
+                              accessibleToString("       self: ", \
+                                                 self, \
+                                                 False))
+                obj = self
+                while (obj.parent != None) and (obj != obj.parent):
+                    obj = obj.parent
+                    debug.println(debug.LEVEL_SEVERE,
+                                  accessibleToString("       obj:  ", \
+                                                     obj, \
+                                                     False))
+                print "       obj:  ", obj
+                obj.valid = False
+                #1self.valid = False
                 raise InvalidObjectError, "obj == obj.parent"
         else:
             debug.println(debug.LEVEL_FINEST,
@@ -1185,6 +1197,70 @@ def getObjects(root):
                    and (child.childCount > 0):
                 objlist.extend(getObjects(child))
         i = i - 1
+        
+    return objlist
+
+
+def getShowingZones(root):
+    """Returns a list of all interesting, non-intersecting, regions
+    that are drawn on the screen.  Each element of the list is the
+    Accessible object associated with a given region.  The term
+    'zone' here is inherited from OCR algorithms and techniques.
+    
+    The objects are returned in no particular order.
+
+    Arguments:
+    - root: the Accessible object to traverse
+
+    Returns: a list of objects under the specified object
+    """
+
+    if root is None:
+        return []
+    
+    # If we're at a leaf node, then we've got a good one on our hands.
+    #
+    if root.childCount <= 0:
+        return [root]
+
+    # We'll stop at various objects because, while they do have
+    # children, we logically think of them as one region on the
+    # screen.  [[[TODO: WDW - stopping at menu bars for now because
+    # their menu items tell us they are showing even though they are
+    # not showing.  Until I can figure out a reliable way to get past
+    # these lies, I'm going to ignore them.]]]
+    #
+    if (root.parent and (root.parent.role == rolenames.ROLE_MENU_BAR)) \
+       or (root.role == rolenames.ROLE_COMBO_BOX):
+        return [root]
+    
+    # Otherwise, dig deeper.  [[[TODO: WDW - probably want to do
+    # something a little smarter for parents that manage gazillions of
+    # descendants.]]]
+    #
+    objlist = []
+
+    # We'll include page tabs: while they are parents, they do not
+    # occlude their children.
+    #
+    if root.role == rolenames.ROLE_PAGE_TAB:
+        objlist.append(root)
+        
+    i = 0
+    while i < root.childCount:
+        child = root.child(i)
+        if child == root:
+            debug.println(level,
+                          indent + "  " + "WARNING CHILD == PARENT!!!")
+        elif child is None:
+            debug.println(level,
+                          indent + "  " + "WARNING CHILD IS NONE!!!")
+        elif child.parent != root:
+            debug.println(level,
+                          indent + "  " + "WARNING CHILD.PARENT != PARENT!!!")
+        elif child.state.count(core.Accessibility.STATE_SHOWING):    
+            objlist.extend(getShowingZones(child))
+        i += 1
         
     return objlist
 
