@@ -934,6 +934,7 @@ class Accessible:
         else:
             return self.__dict__[attr]
 
+        
     def child(self, index):
         """Returns the specified child of this object.
 
@@ -1026,8 +1027,7 @@ def onParentChanged(e):
     # object rather than try to keep the cache in sync.]]]
     #
     if Accessible._cache.has_key(e.source):
-        obj = Accessible._cache[e.source]
-        del obj
+        del Accessible._cache[e.source]
     return
     
     # This could fail if the e.source is now defunct.  [[[TODO: WDW - there
@@ -1040,12 +1040,6 @@ def onParentChanged(e):
         obj = makeAccessible(e.source)
     except:
         return
-    
-    if obj.__dict__.has_key("parent"):
-        del obj.parent
-        
-    if obj.__dict__.has_key("app"):
-        del obj.app
     
 
 def onStateChanged(e):
@@ -1250,13 +1244,13 @@ def getShowingZones(root):
     while i < root.childCount:
         child = root.child(i)
         if child == root:
-            debug.println(level,
+            debug.println(debug.LEVEL_SEVERE,
                           indent + "  " + "WARNING CHILD == PARENT!!!")
         elif child is None:
-            debug.println(level,
+            debug.println(debug.LEVEL_SEVERE,
                           indent + "  " + "WARNING CHILD IS NONE!!!")
         elif child.parent != root:
-            debug.println(level,
+            debug.println(debug.LEVEL_SEVERE,
                           indent + "  " + "WARNING CHILD.PARENT != PARENT!!!")
         elif child.state.count(core.Accessibility.STATE_SHOWING):    
             objlist.extend(getShowingZones(child))
