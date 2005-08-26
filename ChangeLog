@@ -1,7 +1,20 @@
+2005-08-26  Willie Walker <william.walker@sun.com>
+
+	* src/orca/braille.py, src/orca/default.py: better scrolling
+	of braille display when the caret moves (e.g., by pressing a
+	touch cursor or doing some keyboard navigation action).
+	* src/orca/default.py: implement simple line clustering 
+	algorithm inspired by a number of seminal OCR publications.
+	* src/orca/braille.py: implement suggestion from Dave Mielke
+	to handle spurious keyboard repeats from various display
+	drivers (e.g., the Alva).
+	
 2005-08-25  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca.py, src/orca/a11y.py, src/orca/default.py: begin
-	implementing spatial analysis techniques.
+	implementing spatial analysis techniques.	
+	* src/orca/a11y.py: clear the cache properly when the parent
+	changes.
 	
 2005-08-24  Willie Walker <william.walker@sun.com>
 
