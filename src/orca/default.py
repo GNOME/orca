@@ -588,7 +588,7 @@ class Default(Script):
         else:
             braille.setFocus(result[1])
 
-        braille.refresh()    
+        braille.refresh(True)    
     
         
     ########################################################################
@@ -686,9 +686,21 @@ class Default(Script):
         #
         #mag.magnifyAccessible(event.source)
 
-        # Update the Braille display
+        # Update the Braille display - if we can just reposition
+        # the cursor, then go for it.
         #
-        self.updateBraille(event.source)
+        brailleNeedsRepainting = True
+        line = braille.getShowingLine()
+        for region in line.regions:
+            if isinstance(region, braille.Text) \
+               and (region.accessible == event.source):
+                if region.repositionCursor():
+                    braille.refresh(True)
+                    brailleNeedsRepainting = False
+                break
+
+        if brailleNeedsRepainting:
+            self.updateBraille(event.source)
 
         if orca.lastKeyboardEvent is None:
             return

@@ -315,8 +315,32 @@ class Text(Region):
             self.string = self.label + " " + result[0]
             self.cursorOffset += len(self.label) + 1
         else:
-            self.string = result[0]
+            self.string = result[0]    
+
+
+    def repositionCursor(self):
+        """Attempts to reposition the cursor in response to a new
+        caret position.  If it is possible (i.e., the caret is on
+        the same line as it was), reposition the cursor and return
+        True.  Otherwise, return False.
+        """
+        
+        result = a11y.getTextLineAtCaret(self.accessible)
+        caretOffset = result[1]
+        lineOffset = result[2]
+        cursorOffset = caretOffset - lineOffset
+        if self.label:
+            cursorOffset += len(self.label) + 1
             
+        if lineOffset != self.lineOffset:
+            return False
+        else:
+            self.caretOffset = caretOffset
+            self.lineOffset = lineOffset
+            self.cursorOffset = cursorOffset
+            
+        return True
+    
         
     def processCursorKey(self, offset):
         """Processes a cursor key press on this Component.  The offset is
@@ -419,6 +443,12 @@ def addLine(line):
     line._index = len(_lines)
 
 
+def getShowingLine():
+    """Returns the Line that is currently being painted on the display.
+    """
+    return _lines[_viewport[1]]
+
+
 def setFocus(region):
     """Specififes the region with focus.  This region will be positioned
     at the home position on a refresh.
@@ -471,13 +501,17 @@ def setFocus(region):
     
     _viewport[0] = max(0, offset)
 
-        
-def refresh():
+
+def refresh(panToCursor = True):
     """Repaints the Braille on the physical display.  This clips the entire
     logical structure by the viewport and also sets the cursor to the
     appropriate location.  [[[TODO: WDW - I'm not sure how BrlTTY handles
     drawing to displays with more than one line, so I'm only going to handle
     drawing one line right now.]]]
+
+    Arguments:
+    - panToCursor: if True, will adjust the viewport so the cursor is
+    showing.
     """
 
     global _lines
@@ -502,9 +536,18 @@ def refresh():
     if focusOffset >= 0:
         cursor = _regionWithFocus.cursorOffset + focusOffset
 
-    startPos = max(0, _viewport[0])
+    # We'll automatically pan the viewport to show the cursor,
+    # if so desired.
+    #
+    if panToCursor and (cursor >= 0):
+        if cursor < _viewport[0]:
+            _viewport[0] = cursor
+        elif cursor >= (_viewport[0] + _displaySize[0]):
+            _viewport[0] = max(0, cursor - _displaySize[0] + 1)
+
+    startPos = _viewport[0]
     endPos = startPos + _displaySize[0]
-    
+
     # Now normalize the cursor position to BrlTTY, which uses 1 as
     # the first cursor position as opposed to 0.
     #
@@ -535,7 +578,7 @@ def displayMessage(message, cursor=-1):
     region = Region(message, cursor)
     addLine(Line(region))
     setFocus(region)
-    refresh()
+    refresh(True)
 
 
 def panLeft(inputEvent=None):
@@ -550,7 +593,7 @@ def panLeft(inputEvent=None):
     if _viewport[0] > 0:
         _viewport[0] = max(0, _viewport[0] - _displaySize[0])
         
-    refresh()
+    refresh(False)
 
     return True
 
@@ -572,7 +615,7 @@ def panRight(inputEvent=None):
         string = lineInfo[0]
         if newX < len(string):
             _viewport[0] = newX
-            refresh()
+            refresh(False)
 
     return True
 
@@ -589,7 +632,7 @@ def returnToRegionWithFocus(inputEvent=None):
     global _regionWithFocus
 
     setFocus(_regionWithFocus)
-    refresh()
+    refresh(True)
 
     return True
 
@@ -690,7 +733,7 @@ def init(callback=None, tty=7):
                   % (_displaySize[0], _displaySize[1]))
     
     clear()
-    refresh()
+    refresh(True)
     
     _initialized = True
 
