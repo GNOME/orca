@@ -163,6 +163,10 @@ CMD_RESTARTBRL        = 0x43
 CMD_RESTARTSPEECH     = 0x44
 CMD_MAX               = 0x44
 
+BRL_FLG_REPEAT_INITIAL= 0x800000
+BRL_FLG_REPEAT_DELAY  = 0x400000
+
+
 # The size of the physical display (width, height).  The coordinate system of
 # the display is set such that the upper left is (0,0), x values increase from
 # left to right, and y values increase from top to bottom.
@@ -612,6 +616,17 @@ def _processBrailleEvent(command):
     # command = command & 0xfff
     _printBrailleEvent(debug.LEVEL_FINE, command)
 
+    # [[[TODO: WDW - related to the above commented out line, DaveM
+    # suspects the Alva driver is sending us a repeat flag.  So...let's
+    # kill a couple birds here until BrlTTY 3.8 fixes the problem:
+    # we'll disable autorepeat and we'll also strip out the autorepeat
+    # flag if this is the first press of a button.]]]
+    #
+    if command & BRL_FLG_REPEAT_INITIAL:
+        command &= ~(BRL_FLG_REPEAT_INITIAL | BRL_FLG_REPEAT_DELAY)
+    elif command & BRL_FLG_REPEAT_DELAY:
+        return True
+    
     if _callback:
         try:
             # Like key event handlers, a return value of True means
