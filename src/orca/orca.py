@@ -778,8 +778,8 @@ def outlineAccessible(accessible, erasePrevious=True):
                                    False,                    # Fill
                                    _visibleRectangle.x + 1,
                                    _visibleRectangle.y + 1,
-                                   _visibleRectangle.width - 2,
-                                   _visibleRectangle.height - 2)
+                                   max(1,_visibleRectangle.width - 2),
+                                   max(1,_visibleRectangle.height - 2))
         _visibleRectangle = None
 
     if accessible:
@@ -790,8 +790,8 @@ def outlineAccessible(accessible, erasePrevious=True):
                                        False,                  # Fill
                                        _visibleRectangle.x + 1,
                                        _visibleRectangle.y + 1,
-                                       _visibleRectangle.width - 2,
-                                       _visibleRectangle.height - 2)
+                                       max(1,_visibleRectangle.width - 2),
+                                       max(1,_visibleRectangle.height - 2))
 
 
 ########################################################################
