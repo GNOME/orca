@@ -444,11 +444,17 @@ _recordingKeystrokes = False
 _keystrokesFile = None
 
 
-def _closeKeystrokeWindow(entry, window):
+def _closeKeystrokeWindowAndRecord(entry, window):
     global _keystrokesFile
     window.destroy()
     entry_text = entry.get_text()
     _keystrokesFile = open(entry_text, 'w')
+
+
+def _closeKeystrokeWindowAndCancel(window):
+    global _recordingKeystrokes
+    window.destroy()
+    _recordingKeystrokes = False
 
 
 def toggleKeystrokeRecording(inputEvent=None):
@@ -506,13 +512,23 @@ def toggleKeystrokeRecording(inputEvent=None):
         vbox.add(hbox)
         hbox.show()
                                   
-        button = gtk.Button(stock=gtk.STOCK_CLOSE)
-        button.connect("clicked", lambda w: _closeKeystrokeWindow(entry, \
-                                                                  window))
-        vbox.pack_start(button, True, True, 0)
-        button.set_flags(gtk.CAN_DEFAULT)
-        button.grab_default()
-        button.show()
+        ok = gtk.Button(stock=gtk.STOCK_OK)
+        ok.connect("clicked", lambda w: _closeKeystrokeWindowAndRecord(\
+            entry, \
+            window))
+
+        cancel = gtk.Button(stock=gtk.STOCK_CANCEL)
+        cancel.connect("clicked", lambda w: _closeKeystrokeWindowAndCancel(\
+            window))
+
+        vbox.pack_start(cancel, True, True, 0)
+        vbox.pack_start(ok, True, True, 0)
+
+        ok.set_flags(gtk.CAN_DEFAULT)
+        ok.grab_default()
+        ok.show()
+        cancel.show()
+
         window.set_modal(True)
         window.show()
     return True
