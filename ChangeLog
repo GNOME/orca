@@ -2,6 +2,8 @@
 
 	* src/orca/orca.py: Add cancel button to record keystrokes dialog.
 	* src/orca/orca-setup.in: fix typo in orcadir name (it was gorcadir).
+	* src/tools/sanity_checker.py: tool to do a rough sanity check on
+	keystroke files recorded by Orca or record_keystrokes.py
 	
 2005-08-26  Willie Walker <william.walker@sun.com>
 
