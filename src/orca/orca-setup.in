@@ -30,7 +30,7 @@ from orca.orca_i18n import _  # for gettext support
 #
 orcadir = os.path.join (os.environ["HOME"], ".orca")
 try:
-    os.chdir (gorcadir)
+    os.chdir (orcadir)
 except:
     print _("Creating .orca directory.")
     try:
