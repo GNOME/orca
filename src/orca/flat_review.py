@@ -81,7 +81,8 @@ class Zone:
 
 def visible(ax, ay, awidth, aheight,
             bx, by, bwidth, bheight):
-
+    """Returns true if any portion of region 'a' is in region 'b'
+    """
     highestBottom = min(ay + aheight, by + bheight)    
     lowestTop = max(ay, by)
 
@@ -103,7 +104,10 @@ def visible(ax, ay, awidth, aheight,
         
 def clip(ax, ay, awidth, aheight,
          bx, by, bwidth, bheight):
-
+    """Clips region 'a' by region 'b' and returns the new region as
+    a list: [x, y, width, height].
+    """
+    
     x = max(ax, bx)
     x2 = min(ax + awidth, bx + bwidth)
     width = x2 - x
@@ -116,14 +120,11 @@ def clip(ax, ay, awidth, aheight,
 
 
 def getZonesFromAccessible(accessible, cliprect):
-    """Returns a list of Zones for the given accessible.  These Zones
-    represent either the single Zone for the entire accessible if it
-    doesn't implement Accessibility_Text, or they will represent the
-    line-by-line Zones for the Accessibility_Text.
+    """Returns a list of Zones for the given accessible.
 
     Arguments:
     - accessible: the accessible
-    - clipRectangle: the extents that the child must fit inside.    
+    - cliprect: the extents that the Zones must fit inside.    
     """
 
     # Get the component extents in screen coordinates.
@@ -198,8 +199,14 @@ def getZonesFromAccessible(accessible, cliprect):
                               extents.width, extents.height,
                               0, 0))
 
-    if accessible.image and accessible.image.imageDescription \
+    # We really want the accessible text information.  But, if we have
+    # and image, and it has a description, we can fall back on it.
+    #
+    if (len(zones) == 0) \
+           and accessible.image \
+           and accessible.image.imageDescription \
            and len(accessible.image.imageDescription):
+        
         [x, y] = accessible.image.getImagePosition(0)
         [width, height] = accessible.image.getImageSize()
         
@@ -220,7 +227,11 @@ def getZonesFromAccessible(accessible, cliprect):
                               clipping[2],
                               clipping[3],
                               0, len(accessible.image.imageDescription)))
-        
+
+    # Well...darn.  Maybe we didn't get anything of use, but we certainly
+    # know there's something there.  If that's the case, we'll just use
+    # the component extents and the name of the accessible.
+    #
     if len(zones) == 0:
         clipping = clip(extents.x, extents.y,
                         extents.width, extents.height,
@@ -272,18 +283,19 @@ def getShowingZones(root):
        or (root.role == rolenames.ROLE_COMBO_BOX):
         return getZonesFromAccessible(root, root.extents)
     
-    # Otherwise, dig deeper.  [[[TODO: WDW - probably want to do
-    # something a little smarter for parents that manage gazillions of
-    # descendants.]]]
+    # Otherwise, dig deeper.
     #
     objlist = []
 
-    # We'll include page tabs: while they are parents, they do not
-    # occlude their children.
+    # We'll include page tabs: while they are parents, their extents do
+    # not contain their children.
     #
     if root.role == rolenames.ROLE_PAGE_TAB:
         objlist.extend(getZonesFromAccessible(root, root.extents))
         
+    # [[[TODO: WDW - probably want to do something a little smarter
+    # for parents that manage gazillions of descendants.]]]
+    #
     i = 0
     while i < root.childCount:
         child = root.child(i)
@@ -304,7 +316,7 @@ def getShowingZones(root):
 
 
 def clusterZonesByLine(zones):
-    """Given a list of interesting accessible objects (the zones),
+    """Given a list of interesting accessible objects (the Zones),
     returns a list of lines in order from the top to bottom, where
     each line is a list of accessible objects in order from left
     to right.
