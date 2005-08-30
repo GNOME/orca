@@ -753,6 +753,41 @@ def shutdown(inputEvent=None):
 #                                                                      #
 ########################################################################
 
+
+def drawOutline(x, y, width, height):
+    """Draws a rectangular outline around the accessible, erasing the
+    last drawn rectangle in the process."""
+
+    display = None
+    
+    try:
+        display = gtk.gdk.display_get_default()
+    except:
+        display = gtk.gdk.display(":0")
+
+    if display is None:
+        debug.println(debug.LEVEL_SEVERE,
+                      "orca.outlineAccessible could not open display.")
+        return
+    
+    screen = display.get_default_screen()
+    root_window = screen.get_root_window()
+    graphics_context = root_window.new_gc()
+    graphics_context.set_subwindow(gtk.gdk.INCLUDE_INFERIORS)
+    graphics_context.set_function(gtk.gdk.INVERT)
+    graphics_context.set_line_attributes(3,                  # width
+                                         gtk.gdk.LINE_SOLID, # style
+                                         gtk.gdk.CAP_BUTT,   # end style
+                                         gtk.gdk.JOIN_MITER) # join style
+
+    root_window.draw_rectangle(graphics_context,
+                               False, # Fill
+                               x + 1,
+                               y + 1,
+                               max(1, width - 2),
+                               max(1, height - 2))
+
+
 # The last drawn rectangle.  This is used for remembering what we
 # need to erase on the screen.
 #
@@ -790,24 +825,16 @@ def outlineAccessible(accessible, erasePrevious=True):
     # to draw inside the bounding box of the object.
     #
     if _visibleRectangle and erasePrevious:
-        root_window.draw_rectangle(graphics_context,
-                                   False,                    # Fill
-                                   _visibleRectangle.x + 1,
-                                   _visibleRectangle.y + 1,
-                                   max(1,_visibleRectangle.width - 2),
-                                   max(1,_visibleRectangle.height - 2))
+        drawOutline(_visibleRectangle.x, _visibleRectangle.y,
+                    _visibleRectangle.width, _visibleRectangle.height)
         _visibleRectangle = None
 
     if accessible:
         component = accessible.component
         if component:
             _visibleRectangle = component.getExtents(0) # coord type = screen
-            root_window.draw_rectangle(graphics_context,
-                                       False,                  # Fill
-                                       _visibleRectangle.x + 1,
-                                       _visibleRectangle.y + 1,
-                                       max(1,_visibleRectangle.width - 2),
-                                       max(1,_visibleRectangle.height - 2))
+            drawOutline(_visibleRectangle.x, _visibleRectangle.y,
+                        _visibleRectangle.width, _visibleRectangle.height)
 
 
 ########################################################################

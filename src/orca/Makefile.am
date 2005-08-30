@@ -15,6 +15,7 @@ orca_python_PYTHON = \
 	debug.py \
 	default.py \
 	eventsynthesizer.py \
+	flat_review.py \
 	focus_tracking_presenter.py \
 	gaim.py \
 	gcalctool.py \

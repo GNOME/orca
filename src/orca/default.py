@@ -30,6 +30,7 @@ import braille
 import braillegenerator
 import core
 import debug
+import flat_review
 import keybindings
 #import mag - [[[TODO: WDW - disable until I can figure out how to
 #             resolve the GNOME reference in mag.py.]]]
@@ -977,109 +978,33 @@ class Default(Script):
         if obj \
                and obj.parent \
                and (obj.parent.role == rolenames.ROLE_APPLICATION):
-            return a11y.getShowingZones(obj)
+            return flat_review.getShowingZones(obj)
         else:
             return []
-        
 
-    def onSameLine(self, a, b):
-        """Returns True if accessibles a and b are on the same line"""
 
-        highestBottom = min(a.zoneExtents.y + a.zoneExtents.height, \
-                            b.zoneExtents.y + b.zoneExtents.height)
-        lowestTop     = max(a.zoneExtents.y, \
-                            b.zoneExtents.y)
-
-        # If we do overlap, lets see how much.  We'll require a 25% overlap
-        # for now...
-        #
-        if lowestTop < highestBottom:
-            overlapAmount = highestBottom - lowestTop
-            shortestHeight = min(a.zoneExtents.height, b.zoneExtents.height)
-            return ((1.0 * overlapAmount) / shortestHeight) > 0.25
-        else:
-            return False
-                            
-        
     def clusterZonesByLine(self, zones):
         """Given a list of interesting accessible objects (the zones),
         returns a list of lines in order from the top to bottom, where
         each line is a list of accessible objects in order from left
-        to right.
-        """
-        
-        if len(zones) == 0:
-            return []
+        to right.  """
 
-        # Annotate the zones with their currently known screen boundaries.
-        #
-        for zone in zones:
-            zone.zoneExtents = zone.component.getExtents(0)
+        return flat_review.clusterZonesByLine(zones)
 
-        # Sort the zones and also find the top most zone - we'll bias
-        # the clustering to the top of the window.  That is, if an
-        # object can be part of multiple clusters, for now it will
-        # become a part of the top most cluster.
-        #
-        numZones = len(zones)
-        i = 0
-        while i < numZones:
-            j = 0
-            while j < (numZones - 1 - i):
-                a = zones[j]
-                b = zones[j + 1]
-                if b.zoneExtents.y < a.zoneExtents.y:
-                    zones[j] = b
-                    zones[j + 1] = a
-                j += 1
-            i += 1
-
-        # Now we cluster the zones.  We create the clusters on the
-        # fly, adding a zone to an existing cluster only if it's
-        # rectangle horizontally overlaps all other zones in the
-        # cluster.
-        #
-        lineClusters = []
-        for clusterCandidate in zones:
-            addedToCluster = False
-            for lineCluster in lineClusters:
-                inCluster = True
-                for zone in lineCluster:
-                    if not self.onSameLine(clusterCandidate, zone):
-                        inCluster = False
-                        break
-                if inCluster:
-                    # Add to cluster based on the x position.
-                    #
-                    i = 0
-                    while i < len(lineCluster):
-                        zone = lineCluster[i]
-                        if clusterCandidate.zoneExtents.x < zone.zoneExtents.x:
-                            break
-                        i += 1
-                    lineCluster.insert(i, clusterCandidate)
-                    addedToCluster = True
-                    break                
-            if not addedToCluster:
-                lineClusters.append([clusterCandidate])
-
-        return lineClusters
-
-                
+    
     def showZones(self, inputEvent):
         """Debug routine to paint rectangles around the discrete
         interesting (e.g., text)  zones in the active window for
         this application.
         """
         
-        zones = self.getShowingZones()
-        lines = self.clusterZonesByLine(zones)
+        lines = self.clusterZonesByLine(self.getShowingZones())
         print "Number of lines:", len(lines)
         for line in lines:
             string = ""
-            for accessible in line:
-                string += " '%s' [%s]" % (accessible.name, accessible.role)
-                orca.outlineAccessible(accessible, False)
+            for zone in line:
+                string += " '%s' [%s]" % (zone.string, zone.accessible.role)
+                orca.drawOutline(zone.x, zone.y, zone.width, zone.height)
             debug.println(debug.LEVEL_OFF, string)
             
         
