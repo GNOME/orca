@@ -84,6 +84,8 @@ class Default(Script):
         
         Script.__init__(self, app)
 
+        self.flatReviewContext = None
+        
         self.keybindings.add(
             keybindings.KeyBinding(
                 "F9", \
@@ -119,6 +121,43 @@ class Default(Script):
                 InputEventHandler(\
                     self.showZones,
                     _("Paints and prints the visible zones in the active window."))))
+
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_Subtract", \
+                0, \
+                0, \
+                InputEventHandler(\
+                    self.toggleReviewMode,
+                    _("Enters and exits flat review mode."))))
+
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_4", \
+                0, \
+                0, \
+                InputEventHandler(\
+                    self.reviewPreviousItem,
+                    _("Moves flat review to the previous item."))))
+
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_5", \
+                0, \
+                0, \
+                InputEventHandler(\
+                    self.reviewCurrentItem,
+                    _("Speaks the current flat review item."))))
+
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_6", \
+                0, \
+                0, \
+                InputEventHandler(\
+                    self.reviewNextItem,
+                    _("Moves flat review to the next item."))))
+
 
         self.listeners["focus:"]                                 = \
             self.onFocus
@@ -352,6 +391,11 @@ class Default(Script):
         - oldLocusOfFocus: Accessible that is the old locus of focus
         - newLocusOfFocus: Accessible that is the new locus of focus
         """
+
+        # We always automatically go back to focus tracking mode when
+        # the focus changes.
+        #
+        self.flatReviewContext = None
         
         # [[[TODO: WDW - HACK because parents that manage their descendants
         # can give us a different object each time we ask for the same
@@ -992,13 +1036,97 @@ class Default(Script):
         return flat_review.clusterZonesByLine(zones)
 
     
+    def getFlatReviewContext(self):
+        if self.flatReviewContext is None:        
+            currentLine = 0
+            currentZone = 0
+            currentZoneOffset = 0
+            lines = self.clusterZonesByLine(self.getShowingZones())
+            done = False
+            for line in lines:
+                currentZone = 0
+                for zone in line:
+                    if zone.accessible == orca.locusOfFocus:
+                        done = True
+                        break
+                    else:
+                        currentZone += 1
+                if done:
+                    break
+                else:
+                    currentLine += 1
+
+            if not done:
+                currentLine = 0
+                currentZone = 0
+                
+            self.flatReviewContext = flat_review.Context(lines,
+                                                         currentLine,
+                                                         currentZone,
+                                                         0)
+            
+        return self.flatReviewContext
+
+
+    def toggleReviewMode(self, inputEvent):
+        context = self.getFlatReviewContext()
+        zone = context.lines[context.currentLine][context.currentZone]
+        orca.drawOutline(zone.x, zone.y, zone.width, zone.height)
+        return True
+
+
+    def reviewPreviousItem(self, inputEvent):
+        context = self.getFlatReviewContext()
+        
+        [string, startOffset, endOffset, x, y, width, height] = \
+                 context.getCurrent()
+        orca.drawOutline(x, y, width, height)
+        
+        context.goPrevious(flat_review.Context.ZONE,
+                           flat_review.Context.WRAP_LINE)
+
+        [string, startOffset, endOffset, x, y, width, height] = \
+                 context.getCurrent()
+        orca.drawOutline(x, y, width, height)
+
+        return True
+
+            
+    def reviewCurrentItem(self, inputEvent):
+        context = self.getFlatReviewContext()
+
+        [string, startOffset, endOffset, x, y, width, height] = \
+                 context.getCurrent()
+        orca.drawOutline(x, y, width, height)
+
+        return True
+
+
+    def reviewNextItem(self, inputEvent):
+        context = self.getFlatReviewContext()
+
+        [string, startOffset, endOffset, x, y, width, height] = \
+                 context.getCurrent()
+        orca.drawOutline(x, y, width, height)
+
+        context.goNext(flat_review.Context.ZONE,
+                       flat_review.Context.WRAP_LINE)
+        
+        [string, startOffset, endOffset, x, y, width, height] = \
+                 context.getCurrent()
+        orca.drawOutline(x, y, width, height)
+        
+        return True
+
+            
     def showZones(self, inputEvent):
         """Debug routine to paint rectangles around the discrete
         interesting (e.g., text)  zones in the active window for
         this application.
         """
-        
-        lines = self.clusterZonesByLine(self.getShowingZones())
+
+        flatReviewContext = self.getFlatReviewContext()
+        lines = flatReviewContext.lines
         print "Number of lines:", len(lines)
         for line in lines:
             string = ""
@@ -1006,7 +1134,8 @@ class Default(Script):
                 string += " '%s' [%s]" % (zone.string, zone.accessible.role)
                 orca.drawOutline(zone.x, zone.y, zone.width, zone.height)
             debug.println(debug.LEVEL_OFF, string)
-            
+        self.flatReviewContext = None
+        
         
 ########################################################################
 #                                                                      #

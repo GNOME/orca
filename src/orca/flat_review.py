@@ -21,12 +21,12 @@ import a11y
 import core
 import rolenames
 
-ZONE_TYPE_COMPONENT = 0
-ZONE_TYPE_TEXT      = 1
-ZONE_TYPE_IMAGE     = 2
-
 class Zone:
     """Represents text that is a portion of a single horizontal line."""
+
+    COMPONENT = 0
+    TEXT      = 1
+    IMAGE     = 2
 
     def __init__(self, 
                  accessible,
@@ -40,7 +40,7 @@ class Zone:
         Arguments:
         - accessible: the Accessible associated with this Zone
         - string: the string being displayed for this Zone
-        - type: one of ZONE_TYPE_COMPONENT, ZONE_TYPE_TEXT, etc.
+        - type: one of COMPONENT, TEXT, etc.
         - extents: x, y, width, height: if the accessible implements
                    Accessibility_Text, these will be the range extents
                    for startOffset and endOffset.  If the accessible
@@ -79,6 +79,137 @@ class Zone:
             return False
                         
 
+class Context:
+    """Information regarding where a user happens to be exploring
+    right now.
+    """
+
+    ZONE      = 0
+    CHARACTER = 1
+    WORD      = 2
+    LINE      = 3
+
+    WRAP_LINE       = 1 << 0
+    WRAP_TOP_BOTTOM = 1 << 1
+    WRAP_ALL        = (WRAP_LINE | WRAP_TOP_BOTTOM)
+    
+    def __init__(self, lines, currentLine, currentZone, currentZoneOffset):
+        """Create a new Context that will be used for handling flat
+        review mode.
+
+        Arguments:
+        - lines: an array of arrays of Zones (see clusterZonesByLine)
+        - currentLine: index pointing into lines
+        - currentZone: index pointing into lines[currentLine]
+        - currentZoneOffset: character index into the string of the
+                             current zone.  Note that this is 0 for
+                             the beginning of the Zone.
+        """
+
+        self.lines             = lines
+        self.currentLine       = currentLine
+        self.currentZone       = currentZone
+        self.currentZoneOffset = currentZoneOffset
+
+
+    def getCurrent(self, type=ZONE):
+        """Gets the string, offset, and extent information for the
+        current locus of interest.
+
+        Arguments:
+        - type: one of ZONE, CHARACTER, WORD, LINE
+
+        Returns: [string, startOffset, endOffset, x, y, width, height]
+        """
+
+        if type == Context.ZONE:
+            zone = self.lines[self.currentLine][self.currentZone]
+            return [zone.string,
+                    zone.startOffset, zone.endOffset,
+                    zone.x, zone.y,
+                    zone.width, zone.height]
+        else:
+            raise Error, "Invalid type: %d" % type
+            
+        
+    def goPrevious(self, type=ZONE, wrap=WRAP_ALL):
+        """Moves this context's locus of interest to the previous type.
+
+        Arguments:
+        - type: one of ZONE, CHARACTER, WORD, LINE
+        - wrap: if True, will cross boundaries, including top and
+                bottom; if False, will stop on boundaries.
+                
+        Returns: [string, startOffset, endOffset, x, y, width, height]
+        """
+
+        if type == Context.ZONE:
+            if self.currentZone > 0:
+                self.currentZone -= 1
+            elif wrap & Context.WRAP_LINE:
+                if self.currentLine > 0:
+                    self.currentLine -= 1
+                    self.currentZone = len(self.lines[self.currentLine]) - 1
+                elif wrap & Context.WRAP_TOP_BOTTOM:
+                    self.currentLine = len(self.lines) - 1
+                    self.currentZone = len(self.lines[self.currentLine]) - 1
+        else:
+            raise Error, "Invalid type: %d" % type
+
+
+    def goNext(self, type=ZONE, wrap=True):
+        """Moves this context's locus of interest to the next type.
+
+        Arguments:
+        - type: one of ZONE, CHARACTER, WORD, LINE
+        - wrap: if True, will cross boundaries, including top and
+                bottom; if False, will stop on boundaries.
+        """
+
+        if type == Context.ZONE:
+            if self.currentZone < (len(self.lines[self.currentLine]) - 1):
+                self.currentZone += 1
+            elif wrap & Context.WRAP_LINE:
+                if self.currentLine < (len(self.lines) - 1):
+                    self.currentLine += 1
+                    self.currentZone = 0
+                elif wrap & Context.WRAP_TOP_BOTTOM:
+                    self.currentLine = 0
+                    self.currentZone = 0
+        else:
+            raise Error, "Invalid type: %d" % type
+
+
+    def goAbove(self, type=ZONE, wrap=True):
+        """Moves this context's locus of interest to the next type
+        that's closest and above the current locus of interest.
+
+        Arguments:
+        - type: one of ZONE, CHARACTER, WORD, LINE
+        - wrap: if True, will cross top/bottom boundaries; if False, will
+                stop on top/bottom boundaries.
+
+        Returns: [string, startOffset, endOffset, x, y, width, height]
+        """
+
+        raise Error, "Invalid type: %d" % type
+
+
+    def getBelow(self, type=ZONE, wrap=True):
+        """Moves this context's locus of interest to the next type
+        that's closest and below the current locus of interest.
+
+        Arguments:
+        - type: one of ZONE, CHARACTER, WORD, LINE
+        - wrap: if True, will cross top/bottom boundaries; if False, will
+                stop on top/bottom boundaries.
+
+        Returns: [string, startOffset, endOffset, x, y, width, height]
+        """
+
+        raise Error, "Invalid type: %d" % type
+
+        
 def visible(ax, ay, awidth, aheight,
             bx, by, bwidth, bheight):
     """Returns true if any portion of region 'a' is in region 'b'
@@ -171,7 +302,7 @@ def getZonesFromAccessible(accessible, cliprect):
                                 cliprect.width, cliprect.height)
                 
                 zones.append(Zone(accessible,
-                                  ZONE_TYPE_TEXT,
+                                  Zone.TEXT,
                                   string, 
                                   clipping[0],
                                   clipping[1],
@@ -193,7 +324,7 @@ def getZonesFromAccessible(accessible, cliprect):
         #
         if len(zones) == 0:
             zones.append(Zone(accessible,
-                              ZONE_TYPE_TEXT,
+                              Zone.TEXT,
                               "",
                               extents.x, extents.y,
                               extents.width, extents.height,
@@ -220,7 +351,7 @@ def getZonesFromAccessible(accessible, cliprect):
                             cliprect.width, cliprect.height)
                 
             zones.append(Zone(accessible, 
-                              ZONE_TYPE_IMAGE,
+                              Zone.IMAGE,
                               accessible.image.imageDescription, 
                               clipping[0],
                               clipping[1],
@@ -238,7 +369,7 @@ def getZonesFromAccessible(accessible, cliprect):
                         cliprect.x, cliprect.y,
                         cliprect.width, cliprect.height)
         zones.append(Zone(accessible,
-                          ZONE_TYPE_COMPONENT,
+                          Zone.COMPONENT,
                           accessible.name,
                           clipping[0],
                           clipping[1],
