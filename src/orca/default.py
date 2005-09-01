@@ -133,12 +133,39 @@ class Default(Script):
 
         self.keybindings.add(
             keybindings.KeyBinding(
+                "KP_7", \
+                1 << orca.MODIFIER_ORCA, \
+                1 << orca.MODIFIER_ORCA, \
+                InputEventHandler(\
+                    self.reviewPreviousLine,
+                    _("Moves to the previous line."))))
+
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_8", \
+                0, \
+                0, \
+                InputEventHandler(\
+                    self.reviewCurrentLine,
+                    _("Speaks the current flat review line."))))
+
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_9", \
+                1 << orca.MODIFIER_ORCA, \
+                1 << orca.MODIFIER_ORCA, \
+                InputEventHandler(\
+                    self.reviewHome,
+                    _("Moves flat review to the home position."))))
+
+        self.keybindings.add(
+            keybindings.KeyBinding(
                 "KP_4", \
                 0, \
                 0, \
                 InputEventHandler(\
                     self.reviewPreviousItem,
-                    _("Moves flat review to the previous item."))))
+                    _("Moves flat review to the previous item or word."))))
 
         self.keybindings.add(
             keybindings.KeyBinding(
@@ -147,7 +174,7 @@ class Default(Script):
                 0, \
                 InputEventHandler(\
                     self.reviewCurrentItem,
-                    _("Speaks the current flat review item."))))
+                    _("Speaks the current flat review item or word."))))
 
         self.keybindings.add(
             keybindings.KeyBinding(
@@ -156,7 +183,44 @@ class Default(Script):
                 0, \
                 InputEventHandler(\
                     self.reviewNextItem,
-                    _("Moves flat review to the next item."))))
+                    _("Moves flat review to the next item or word."))))
+
+
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_1", \
+                1 << orca.MODIFIER_ORCA, \
+                0, \
+                InputEventHandler(\
+                    self.reviewPreviousCharacter,
+                    _("Moves flat review to the previous character."))))
+
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_1", \
+                1 << orca.MODIFIER_ORCA, \
+                1 << orca.MODIFIER_ORCA, \
+                InputEventHandler(\
+                    self.reviewEndOfLine,
+                    _("Moves flat review to the previous character."))))
+
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_2", \
+                0, \
+                0, \
+                InputEventHandler(\
+                    self.reviewCurrentCharacter,
+                    _("Speaks the current flat review character."))))
+
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_3", \
+                0, \
+                0, \
+                InputEventHandler(\
+                    self.reviewNextCharacter,
+                    _("Moves flat review to the next character."))))
 
 
         self.listeners["focus:"]                                 = \
@@ -1069,53 +1133,169 @@ class Default(Script):
 
 
     def toggleReviewMode(self, inputEvent):
-        context = self.getFlatReviewContext()
-        zone = context.lines[context.currentLine][context.currentZone]
-        orca.drawOutline(zone.x, zone.y, zone.width, zone.height)
+        if self.flatReviewContext:
+            orca.drawOutline(-1, 0, 0, 0)
+            self.flatReviewContext = None
+        else:
+            context = self.getFlatReviewContext()
+            [string, startOffset, endOffset, x, y, width, height] = \
+                     context.getCurrent(flat_review.Context.WORD)
+            orca.drawOutline(x, y, width, height)
+
         return True
 
 
+    def reviewPreviousLine(self, inputEvent):
+        context = self.getFlatReviewContext()
+
+        moved = context.goPrevious(flat_review.Context.LINE,
+                                   flat_review.Context.WRAP_LINE)
+        
+        if moved:
+            [string, startOffset, endOffset, x, y, width, height] = \
+                     context.getCurrent(flat_review.Context.LINE)
+            orca.drawOutline(x, y, width, height)
+            
+            if len(string):
+                speech.say("default", string)
+            
+        return True
+
+            
+    def reviewCurrentLine(self, inputEvent):
+        context = self.getFlatReviewContext()
+
+        [string, startOffset, endOffset, x, y, width, height] = \
+                 context.getCurrent(flat_review.Context.LINE)
+        orca.drawOutline(x, y, width, height)
+            
+        if len(string):
+            speech.say("default", string)
+            
+        return True
+
+            
+    def reviewHome(self, inputEvent):
+        context = self.getFlatReviewContext()
+
+        moved = context.goBegin()
+        
+        if moved:
+            [string, startOffset, endOffset, x, y, width, height] = \
+                     context.getCurrent(flat_review.Context.LINE)
+            orca.drawOutline(x, y, width, height)
+            
+            if len(string):
+                speech.say("default", string)
+            
+        return True
+
+            
     def reviewPreviousItem(self, inputEvent):
         context = self.getFlatReviewContext()
-        
-        [string, startOffset, endOffset, x, y, width, height] = \
-                 context.getCurrent()
-        orca.drawOutline(x, y, width, height)
-        
-        context.goPrevious(flat_review.Context.ZONE,
-                           flat_review.Context.WRAP_LINE)
 
-        [string, startOffset, endOffset, x, y, width, height] = \
-                 context.getCurrent()
-        orca.drawOutline(x, y, width, height)
+        moved = context.goPrevious(flat_review.Context.WORD,
+                                   flat_review.Context.WRAP_LINE)
+        
+        if moved:
+            [string, startOffset, endOffset, x, y, width, height] = \
+                     context.getCurrent(flat_review.Context.WORD)
+            orca.drawOutline(x, y, width, height)
 
+            if len(string):
+                speech.say("default", string)
+            
         return True
 
             
     def reviewCurrentItem(self, inputEvent):
         context = self.getFlatReviewContext()
-
         [string, startOffset, endOffset, x, y, width, height] = \
-                 context.getCurrent()
+                 context.getCurrent(flat_review.Context.WORD)
         orca.drawOutline(x, y, width, height)
 
+        if len(string):
+            speech.say("default", string)
+            
         return True
 
 
     def reviewNextItem(self, inputEvent):
         context = self.getFlatReviewContext()
 
+        moved = context.goNext(flat_review.Context.WORD,
+                               flat_review.Context.WRAP_LINE)
+        
+        if moved:
+            [string, startOffset, endOffset, x, y, width, height] = \
+                     context.getCurrent(flat_review.Context.WORD)
+            orca.drawOutline(x, y, width, height)
+            
+            if len(string):
+                speech.say("default", string)
+            
+        return True
+
+            
+    def reviewPreviousCharacter(self, inputEvent):
+        context = self.getFlatReviewContext()
+
+        moved = context.goPrevious(flat_review.Context.CHARACTER,
+                                   flat_review.Context.WRAP_LINE)
+        
+        if moved:
+            [string, startOffset, endOffset, x, y, width, height] = \
+                     context.getCurrent(flat_review.Context.CHARACTER)
+            orca.drawOutline(x, y, width, height)
+
+            if len(string):
+                speech.say("default", string)
+            
+        return True
+
+            
+    def reviewEndOfLine(self, inputEvent):
+        context = self.getFlatReviewContext()
+
+        moved = context.goEnd(flat_review.Context.LINE)
+        
+        if moved:
+            [string, startOffset, endOffset, x, y, width, height] = \
+                     context.getCurrent(flat_review.Context.CHARACTER)
+            orca.drawOutline(x, y, width, height)
+
+            if len(string):
+                speech.say("default", string)
+            
+        return True
+
+            
+    def reviewCurrentCharacter(self, inputEvent):
+        context = self.getFlatReviewContext()
         [string, startOffset, endOffset, x, y, width, height] = \
-                 context.getCurrent()
+                 context.getCurrent(flat_review.Context.CHARACTER)
         orca.drawOutline(x, y, width, height)
 
-        context.goNext(flat_review.Context.ZONE,
-                       flat_review.Context.WRAP_LINE)
+        if len(string):
+            speech.say("default", string)
+            
+        return True
+
+
+    def reviewNextCharacter(self, inputEvent):
+        context = self.getFlatReviewContext()
+
+        moved = context.goNext(flat_review.Context.CHARACTER,
+                               flat_review.Context.WRAP_LINE)
         
-        [string, startOffset, endOffset, x, y, width, height] = \
-                 context.getCurrent()
-        orca.drawOutline(x, y, width, height)
-        
+        if moved:
+            [string, startOffset, endOffset, x, y, width, height] = \
+                     context.getCurrent(flat_review.Context.CHARACTER)
+            orca.drawOutline(x, y, width, height)
+            
+            if len(string):
+                speech.say("default", string)
+            
         return True
 
             
@@ -1132,7 +1312,8 @@ class Default(Script):
             string = ""
             for zone in line:
                 string += " '%s' [%s]" % (zone.string, zone.accessible.role)
-                orca.drawOutline(zone.x, zone.y, zone.width, zone.height)
+                orca.drawOutline(zone.x, zone.y, zone.width, zone.height,
+                                 False)
             debug.println(debug.LEVEL_OFF, string)
         self.flatReviewContext = None
         

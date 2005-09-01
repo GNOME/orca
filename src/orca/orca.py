@@ -753,24 +753,28 @@ def shutdown(inputEvent=None):
 #                                                                      #
 ########################################################################
 
+_display = None
+_visibleRectangle = None
 
-def drawOutline(x, y, width, height):
+def drawOutline(x, y, width, height, erasePrevious=True):
     """Draws a rectangular outline around the accessible, erasing the
     last drawn rectangle in the process."""
 
-    display = None
+    global _display
+    global _visibleRectangle
     
-    try:
-        display = gtk.gdk.display_get_default()
-    except:
-        display = gtk.gdk.display(":0")
+    if _display is None:
+        try:
+            _display = gtk.gdk.display_get_default()
+        except:
+            _display = gtk.gdk.display(":0")
 
-    if display is None:
-        debug.println(debug.LEVEL_SEVERE,
-                      "orca.outlineAccessible could not open display.")
-        return
+        if _display is None:
+            debug.println(debug.LEVEL_SEVERE,
+                          "orca.drawOutline could not open display.")
+            return
     
-    screen = display.get_default_screen()
+    screen = _display.get_default_screen()
     root_window = screen.get_root_window()
     graphics_context = root_window.new_gc()
     graphics_context.set_subwindow(gtk.gdk.INCLUDE_INFERIORS)
@@ -780,6 +784,23 @@ def drawOutline(x, y, width, height):
                                          gtk.gdk.CAP_BUTT,   # end style
                                          gtk.gdk.JOIN_MITER) # join style
 
+    # Erase the old rectangle.
+    #
+    if _visibleRectangle and erasePrevious:
+        drawOutline(_visibleRectangle[0], _visibleRectangle[1],
+                    _visibleRectangle[2], _visibleRectangle[3], False)
+        _visibleRectangle = None
+
+    # We'll use an invalid x value to indicate nothing should be
+    # drawn.
+    #
+    if x < 0:
+        _visibleRectangle = None
+        return
+    
+    # The +1 and -2 stuff here is an attempt to stay within the
+    # bounding box of the object.
+    #
     root_window.draw_rectangle(graphics_context,
                                False, # Fill
                                x + 1,
@@ -787,55 +808,23 @@ def drawOutline(x, y, width, height):
                                max(1, width - 2),
                                max(1, height - 2))
 
+    _visibleRectangle = [x, y, width, height]
 
-# The last drawn rectangle.  This is used for remembering what we
-# need to erase on the screen.
-#
-_visibleRectangle = None
 
 def outlineAccessible(accessible, erasePrevious=True):
     """Draws a rectangular outline around the accessible, erasing the
     last drawn rectangle in the process."""
-
-    global _visibleRectangle
-
-    display = None
-    
-    try:
-        display = gtk.gdk.display_get_default()
-    except:
-        display = gtk.gdk.display(":0")
-
-    if display is None:
-        debug.println(debug.LEVEL_SEVERE,
-                      "orca.outlineAccessible could not open display.")
-        return
-    
-    screen = display.get_default_screen()
-    root_window = screen.get_root_window()
-    graphics_context = root_window.new_gc()
-    graphics_context.set_subwindow(gtk.gdk.INCLUDE_INFERIORS)
-    graphics_context.set_function(gtk.gdk.INVERT)
-    graphics_context.set_line_attributes(3,                  # width
-                                         gtk.gdk.LINE_SOLID, # style
-                                         gtk.gdk.CAP_BUTT,   # end style
-                                         gtk.gdk.JOIN_MITER) # join style
-
-    # Erase the old rectangle.  The +1 and -2 stuff here is an attempt
-    # to draw inside the bounding box of the object.
-    #
-    if _visibleRectangle and erasePrevious:
-        drawOutline(_visibleRectangle.x, _visibleRectangle.y,
-                    _visibleRectangle.width, _visibleRectangle.height)
-        _visibleRectangle = None
 
     if accessible:
         component = accessible.component
         if component:
             _visibleRectangle = component.getExtents(0) # coord type = screen
             drawOutline(_visibleRectangle.x, _visibleRectangle.y,
-                        _visibleRectangle.width, _visibleRectangle.height)
-
+                        _visibleRectangle.width, _visibleRectangle.height,
+                        erasePrevious)
+    else:
+        drawOutline(-1, 0, 0, 0, erasePrevious)
+        
 
 ########################################################################
 #                                                                      #
