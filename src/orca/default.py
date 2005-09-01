@@ -135,10 +135,19 @@ class Default(Script):
             keybindings.KeyBinding(
                 "KP_7", \
                 1 << orca.MODIFIER_ORCA, \
-                1 << orca.MODIFIER_ORCA, \
+                0, \
                 InputEventHandler(\
                     self.reviewPreviousLine,
-                    _("Moves to the previous line."))))
+                    _("Moves flat review to the beginning of the previous line."))))
+
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_7", \
+                1 << orca.MODIFIER_ORCA, \
+                1 << orca.MODIFIER_ORCA, \
+                InputEventHandler(\
+                    self.reviewHome,
+                    _("Moves flat review to the home position."))))
 
         self.keybindings.add(
             keybindings.KeyBinding(
@@ -153,10 +162,19 @@ class Default(Script):
             keybindings.KeyBinding(
                 "KP_9", \
                 1 << orca.MODIFIER_ORCA, \
+                0, \
+                InputEventHandler(\
+                    self.reviewNextLine,
+                    _("Moves flat review to the beginning of the next line."))))
+
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_9", \
+                1 << orca.MODIFIER_ORCA, \
                 1 << orca.MODIFIER_ORCA, \
                 InputEventHandler(\
-                    self.reviewHome,
-                    _("Moves flat review to the home position."))))
+                    self.reviewEnd,
+                    _("Moves flat review to the end position."))))
 
         self.keybindings.add(
             keybindings.KeyBinding(
@@ -202,7 +220,7 @@ class Default(Script):
                 1 << orca.MODIFIER_ORCA, \
                 InputEventHandler(\
                     self.reviewEndOfLine,
-                    _("Moves flat review to the previous character."))))
+                    _("Moves flat review to the end of the line."))))
 
         self.keybindings.add(
             keybindings.KeyBinding(
@@ -1162,6 +1180,22 @@ class Default(Script):
         return True
 
             
+    def reviewHome(self, inputEvent):
+        context = self.getFlatReviewContext()
+
+        moved = context.goBegin()
+        
+        if moved:
+            [string, startOffset, endOffset, x, y, width, height] = \
+                     context.getCurrent(flat_review.Context.LINE)
+            orca.drawOutline(x, y, width, height)
+            
+            if len(string):
+                speech.say("default", string)
+            
+        return True
+
+            
     def reviewCurrentLine(self, inputEvent):
         context = self.getFlatReviewContext()
 
@@ -1175,16 +1209,33 @@ class Default(Script):
         return True
 
             
-    def reviewHome(self, inputEvent):
+    def reviewNextLine(self, inputEvent):
         context = self.getFlatReviewContext()
 
-        moved = context.goBegin()
+        moved = context.goNext(flat_review.Context.LINE,
+                               flat_review.Context.WRAP_LINE)
         
         if moved:
             [string, startOffset, endOffset, x, y, width, height] = \
                      context.getCurrent(flat_review.Context.LINE)
             orca.drawOutline(x, y, width, height)
             
+            if len(string):
+                speech.say("default", string)
+            
+        return True
+
+            
+    def reviewEnd(self, inputEvent):
+        context = self.getFlatReviewContext()
+
+        moved = context.goEnd()
+        
+        if moved:
+            [string, startOffset, endOffset, x, y, width, height] = \
+                     context.getCurrent(flat_review.Context.CHARACTER)
+            orca.drawOutline(x, y, width, height)
+
             if len(string):
                 speech.say("default", string)
             
