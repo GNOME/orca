@@ -164,7 +164,10 @@ class Context:
                     zone.startOffset + self.textOffset,
                     core.Accessibility.TEXT_BOUNDARY_WORD_START)
                 string = string.strip()
-                endOffset = startOffset + len(string)
+                endOffset = min(startOffset + len(string),
+                                zone.startOffset + zone.length)
+                startOffset = max(startOffset, zone.startOffset)
+                string = text.getText(startOffset, endOffset)
                 [x, y, width, height] = text.getRangeExtents(startOffset, 
                                                              endOffset, 
                                                              0)
