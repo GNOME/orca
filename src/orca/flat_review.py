@@ -21,6 +21,10 @@ import a11y
 import core
 import rolenames
 
+# [[[TODO: WDW - this whole thing is a bit shaky right now.  I think
+# it's because I wrote half the code late at night.  I tried to do
+# the right thing, but I think "tried" got reformed as "tired."]]]
+
 class Zone:
     """Represents text that is a portion of a single horizontal line."""
 
@@ -34,7 +38,7 @@ class Zone:
                  string, 
                  x, y, 
                  width, height, 
-                 startOffset, endOffset):
+                 startOffset):
         """Creates a new Zone, which is a horizontal region of text.
 
         Arguments:
@@ -47,7 +51,6 @@ class Zone:
                    does not implement Accessibility_Text, then these will
                    be the extents of the Accessibility_Component.
         - startOffset: index into Accessibility_Text for start of line
-        - endOffset: index into Accessibility_Text for end of line
         """
         
         self.accessible = accessible
@@ -58,7 +61,7 @@ class Zone:
         self.width = width
         self.height = height
         self.startOffset = startOffset
-        self.endOffset = endOffset
+        self.length = len(string)
 
         
     def onSameLine(self, zone):
@@ -103,11 +106,7 @@ class Context:
         - lineIndex:  index pointing into lines
         - zoneIndex:  index pointing into lines[lineIndex]
         - textOffset: character index into the string of the
-                      current zone.  Note that text objects can
-                      be represented by multiples zones, with
-                      one zone per line of text.  In this case,
-                      the text offset represents the total text
-                      offset for the entire text area.
+                      current zone.
         """
 
         self.lines      = lines
@@ -116,6 +115,17 @@ class Context:
         self.textOffset = textOffset
 
 
+    def _debugWhatHappened(self, moved):
+        zone = self.lines[self.lineIndex][self.zoneIndex]
+
+        print "line=%d, zone=%d" % (self.lineIndex, self.zoneIndex)
+        print "  zone.startOffset   = %d" % zone.startOffset
+        print "  self.textOffset    = %d" % self.textOffset
+        print "  zone.length        = %d" % zone.length
+        print "  zone.string        = '%s'" % zone.string
+        print "  moved              =", moved
+
+        
     def getCurrent(self, type=ZONE):
         """Gets the string, offset, and extent information for the
         current locus of interest.
@@ -123,21 +133,20 @@ class Context:
         Arguments:
         - type: one of ZONE, CHARACTER, WORD, LINE
 
-        Returns: [string, startOffset, endOffset, x, y, width, height]
+        Returns: [string, x, y, width, height]
         """
         
         zone = self.lines[self.lineIndex][self.zoneIndex]
             
         if type == Context.ZONE:
             return [zone.string,
-                    zone.startOffset, zone.endOffset,
                     zone.x, zone.y,
                     zone.width, zone.height]
         elif type == Context.CHARACTER:
             text = zone.accessible.text
             if text:
                 [string, startOffset, endOffset] = text.getTextAtOffset(
-                    self.textOffset,
+                    zone.startOffset + self.textOffset,
                     core.Accessibility.TEXT_BOUNDARY_CHAR)
                 string = string.strip()
                 endOffset = startOffset + len(string)
@@ -145,16 +154,14 @@ class Context:
                                                              endOffset, 
                                                              0)
                 return [string,
-                        startOffset,
-                        endOffset,
                         x, y, width, height]
             else:
-                return getCurrent(Context.ZONE)
+                return self.getCurrent(Context.ZONE)
         elif type == Context.WORD:
             text = zone.accessible.text
             if text:
                 [string, startOffset, endOffset] = text.getTextAtOffset(
-                    self.textOffset,
+                    zone.startOffset + self.textOffset,
                     core.Accessibility.TEXT_BOUNDARY_WORD_START)
                 string = string.strip()
                 endOffset = startOffset + len(string)
@@ -162,8 +169,6 @@ class Context:
                                                              endOffset, 
                                                              0)
                 return [string,
-                        startOffset,
-                        endOffset,
                         x, y, width, height]
             else:
                 return self.getCurrent(Context.ZONE)
@@ -187,7 +192,6 @@ class Context:
             if bounds is None:
                 bounds = [-1, -1, -2, -2]
             return [string,
-                    -1, -1,
                     bounds[0], bounds[1],
                     bounds[2] - bounds[0],
                     bounds[3] - bounds[1]]
@@ -241,12 +245,12 @@ class Context:
             lineIndex  = self.lineIndex
             zoneIndex  = len(self.lines[lineIndex]) - 1
             zone       = self.lines[lineIndex][zoneIndex]
-            textOffset = zone.endOffset
+            textOffset = max(0, zone.length - 1)
         elif type == Context.WINDOW:
             lineIndex  = len(self.lines) - 1
             zoneIndex  = len(self.lines[lineIndex]) - 1
             zone       = self.lines[lineIndex][zoneIndex]
-            textOffset = zone.endOffset
+            textOffset = max(0, zone.length - 1)
         else:
             raise Error, "Invalid type: %d" % type
 
@@ -298,29 +302,28 @@ class Context:
             #
             zone = self.lines[self.lineIndex][self.zoneIndex]
             if zone.type == Zone.TEXT:
-                if self.textOffset > zone.startOffset:
+                if self.textOffset > 0:
                     self.textOffset -= 1
                     text = zone.accessible.text
                     [string, startOffset, endOffset] = text.getTextAtOffset(
-                        self.textOffset,
+                        zone.startOffset + self.textOffset,
                         core.Accessibility.TEXT_BOUNDARY_CHAR)
-                    #self.textOffset = startOffset
                     moved = True
                 else:
                     moved = self.goPrevious(Context.ZONE, wrap)
                     if moved:
                         zone = self.lines[self.lineIndex][self.zoneIndex]
                         if zone.type == Zone.TEXT:
-                            self.textOffset = zone.endOffset
-                        if zone.endOffset == 0:
+                            self.textOffset = max(0, zone.length - 1)
+                        if len(zone.string) == 0:
                             self.goPrevious(type, wrap)
             else:
                 moved = self.goPrevious(Context.ZONE, wrap)
                 if moved:
                     zone = self.lines[self.lineIndex][self.zoneIndex]
                     if zone.type == Zone.TEXT:
-                        self.textOffset = zone.endOffset
-                    if zone.endOffset == 0:
+                        self.textOffset = max(0, zone.length - 1)
+                    if len(zone.string) == 0:
                         self.goPrevious(type, wrap)
         elif type == Context.WORD:
             # We can only do WORD and CHARACTER traversal with
@@ -328,40 +331,80 @@ class Context:
             # objects, we'll treat it like a Zone traversal.
             #
             zone = self.lines[self.lineIndex][self.zoneIndex]
-            if zone.type == Zone.TEXT:
-                if self.textOffset > zone.startOffset:
-                    text = zone.accessible.text
-                    [string, startOffset, endOffset] = text.getTextAtOffset(
-                        self.textOffset - 1,
-                        core.Accessibility.TEXT_BOUNDARY_WORD_START)
-                    recalcOffset = True
-                    while (endOffset == 0) or (startOffset < zone.startOffset):
-                        oldZone = zone
-                        moved = self.goPrevious(Context.ZONE, wrap)
-                        if moved:
-                            zone = self.lines[self.lineIndex][self.zoneIndex]
-                            if zone.accessible != oldZone.accessible:
-                                recalcOffset = False
-                                break
-                        else:
-                            break                
-                    if recalcOffset:
-                        moved = startOffset != self.textOffset
-                        self.textOffset = startOffset
-                else:
-                    moved = self.goPrevious(Context.ZONE, wrap)
-                    if moved:
-                        zone = self.lines[self.lineIndex][self.zoneIndex]
-                        if zone.type == Zone.TEXT:
-                            self.textOffset = zone.endOffset
-                            self.goPrevious(type, wrap)
-            else:
+            if zone.type != Zone.TEXT:
                 moved = self.goPrevious(Context.ZONE, wrap)
                 if moved:
                     zone = self.lines[self.lineIndex][self.zoneIndex]
                     if zone.type == Zone.TEXT:
-                        self.textOffset = zone.endOffset
+                        self.textOffset = zone.length
                         self.goPrevious(type, wrap)
+                    [string, x, y, width, height] = \
+                             self.getCurrent(Context.WORD)
+                    if len(string.strip()) == 0:
+                        self.goPrevious(type, wrap)
+                return moved
+
+            # We first think about working within the current Zone
+            # if we can...
+            #
+            text = zone.accessible.text
+            if self.textOffset > 0:
+                # We'll move the text offset to the beginning of the
+                # previous word in the current zone if possible.
+                #
+                [string, startOffset, endOffset] = text.getTextAtOffset(
+                    zone.startOffset + self.textOffset - 1,
+                    core.Accessibility.TEXT_BOUNDARY_WORD_START)
+
+                # We may have ended up with a starting offset not in
+                # this Zone, but in the same text area.  So...we'll
+                # keep trodding backwards until we hit the zone where
+                # the word really is.  We'll also stop if we hit the
+                # beginning or we leave the current accessible text
+                # object (remember that a single text area can be
+                # represented by multiple zones).
+                #
+                recalcOffset = True
+                while (endOffset == 0) or (startOffset < zone.startOffset):
+                    oldZone = zone
+                    moved = self.goPrevious(Context.ZONE, wrap)
+                    if moved:
+                        zone = self.lines[self.lineIndex][self.zoneIndex]
+                        if zone.accessible != oldZone.accessible:
+                            if zone.type == Zone.TEXT:
+                                self.textOffset = max(0, zone.length - 1)
+                            recalcOffset = False
+                            break
+                    else:
+                        break
+                if recalcOffset:
+                    newOffset = startOffset - zone.startOffset
+                    if not moved:
+                        moved = newOffset != self.textOffset
+                    self.textOffset = newOffset
+
+                # Now check to see if we ended up on something empty.
+                # If we did, then move on to the next word.
+                #
+                if moved:
+                    [string, x, y, width, height] = \
+                             self.getCurrent(Context.WORD)
+                    if len(string.strip()) == 0:
+                        self.goPrevious(type, wrap)
+            else:
+                # Othewise, we're currently at the beginning of the
+                # current zone and we need to try the previous zone.
+                #
+                moved = self.goPrevious(Context.ZONE, wrap)
+                if moved:
+                    zone = self.lines[self.lineIndex][self.zoneIndex]
+                    if zone.type == Zone.TEXT:
+                        self.textOffset = zone.length
+                        self.goPrevious(type, wrap)
+                    [string, x, y, width, height] = \
+                             self.getCurrent(Context.WORD)
+                    if len(string.strip()) == 0:
+                        self.goPrevious(type, wrap)            
         elif type == Context.LINE:
             if wrap & Context.WRAP_LINE:
                 if self.lineIndex > 0:
@@ -419,48 +462,77 @@ class Context:
                 moved = self.goNext(Context.ZONE, wrap)
                 if moved:
                     zone = self.lines[self.lineIndex][self.zoneIndex]
-                    if zone.endOffset == 0:
+                    if zone.length == 0:
                         self.goNext(type, wrap)
             else:
-                if self.textOffset <= zone.endOffset:
+                if self.textOffset < max(0, zone.length - 1):
                     self.textOffset += 1
                     text = zone.accessible.text
                     [string, startOffset, endOffset] = text.getTextAtOffset(
-                        self.textOffset,
+                        zone.startOffset + self.textOffset,
                         core.Accessibility.TEXT_BOUNDARY_CHAR)
-                    #self.textOffset = startOffset
                     moved = True
                 else:
                     moved = self.goNext(Context.ZONE, wrap)
                     if moved:
                         zone = self.lines[self.lineIndex][self.zoneIndex]
-                        if zone.endOffset == 0:
+                        if zone.length == 0:
                             self.goNext(type, wrap)
         elif type == Context.WORD:
             # We can only do WORD and CHARACTER traversal with
             # Accessible_Text objects for now.  For all other
             # objects, we'll treat it like a Zone traversal.
             #
-            zone = self.lines[self.lineIndex][self.zoneIndex]
+            # So...if we're on a non-text object, we jump to
+            # the next object.  If it isn't a word, then we
+            # go on from there...
+            #
+            zone = self.lines[self.lineIndex][self.zoneIndex]            
             if zone.type != Zone.TEXT:
-                return self.goNext(Context.ZONE, wrap)
-
-            # We'll move the text offset to the beginning of the
-            # next word.
+                moved = self.goNext(Context.ZONE, wrap)
+                if moved:                    
+                    # We might move to a zone that begins with white
+                    # space.  In this case, the
+                    # TEXT_BOUNDARY_WORD_START will end up prior to
+                    # this zone.  So...we need to take that into
+                    # account. [[[TODO: WDW - I'm not really sure this
+                    # is exactly what is going on there.  This algorithm
+                    # is sloppy and could use some tightening.]]]
+                    #
+                    zone = self.lines[self.lineIndex][self.zoneIndex]
+                    if zone.type == Zone.TEXT:   
+                        text = zone.accessible.text
+                        [string, startOffset, endOffset] = \
+                                 text.getTextAtOffset(
+                            zone.startOffset + self.textOffset,
+                            core.Accessibility.TEXT_BOUNDARY_WORD_START)
+                        if startOffset < zone.startOffset:
+                            self.goNext(type, wrap)
+                    [string, x, y, width, height] = \
+                             self.getCurrent(Context.WORD)
+                    if len(string.strip()) == 0:
+                        self.goNext(type, wrap)
+                return moved
+            
+            # We'll move the text offset to the beginning of the next
+            # word.  We do this by getting the end offset of the
+            # current word and setting our new offset to that.
             #
             text = zone.accessible.text
             [string, startOffset, endOffset] = text.getTextAtOffset(
-                self.textOffset,
+                zone.startOffset + self.textOffset,
                 core.Accessibility.TEXT_BOUNDARY_WORD_START)
 
-            # Keep on trodding across zones until we get to where
-            # the end of the word really is.  We'll also stop if
-            # we hit the end or we leave the current accessible
-            # text object (remember that a single text area can
-            # be represented by multiple zones).
+            # We may have ended up with an offset not in this Zone,
+            # but in the same text area.  So...we'll Keep on trodding
+            # across zones until we get to where the end of the word
+            # really is.  We'll also stop if we hit the end or we
+            # leave the current accessible text object (remember that
+            # a single text area can be represented by multiple
+            # zones).
             #
             recalcOffset = True
-            while (endOffset == 0) or (endOffset >= zone.endOffset):
+            while endOffset >= (zone.startOffset + zone.length):
                 oldZone = zone
                 moved = self.goNext(Context.ZONE, wrap)
                 if moved:
@@ -469,10 +541,26 @@ class Context:
                         recalcOffset = False
                         break
                 else:
-                    break                
+                    break
+
+            # If we are still in the same accessible text object then
+            # we set our new textOffset to the appropriate value without
+            # going beyond the end of the text object.
+            #
             if recalcOffset:
-                moved = self.textOffset != endOffset
-                self.textOffset = endOffset
+                newOffset = endOffset - zone.startOffset
+                if (newOffset != self.textOffset) \
+                   and (newOffset < zone.length):
+                    self.textOffset = newOffset
+                    moved = True
+
+            # Now check to see if we ended up on something empty.
+            # If we did, then move on to the next word.
+            #
+            if moved:
+                [string, x, y, width, height] = self.getCurrent(Context.WORD)
+                if len(string.strip()) == 0:
+                    self.goNext(type, wrap)
         elif type == Context.LINE:
             if wrap & Context.WRAP_LINE:
                 if self.lineIndex < (len(self.lines) - 1):
@@ -628,7 +716,8 @@ def getZonesFromAccessible(accessible, cliprect):
                                   clipping[1],
                                   clipping[2],
                                   clipping[3],
-                                  startOffset, endOffset))
+                                  startOffset))
+                
             elif len(zones):
                 # We'll break out of searching all the text - the idea
                 # here is that we'll at least try to optimize for when
@@ -648,7 +737,7 @@ def getZonesFromAccessible(accessible, cliprect):
                               "",
                               extents.x, extents.y,
                               extents.width, extents.height,
-                              0, 0))
+                              0))
 
     # We really want the accessible text information.  But, if we have
     # and image, and it has a description, we can fall back on it.
@@ -677,7 +766,7 @@ def getZonesFromAccessible(accessible, cliprect):
                               clipping[1],
                               clipping[2],
                               clipping[3],
-                              0, len(accessible.image.imageDescription)))
+                              0))
 
     # Well...darn.  Maybe we didn't get anything of use, but we certainly
     # know there's something there.  If that's the case, we'll just use
@@ -695,8 +784,7 @@ def getZonesFromAccessible(accessible, cliprect):
                           clipping[1],
                           clipping[2],
                           clipping[3],
-                          0,
-                          len(accessible.name)))
+                          0))
     
     return zones
 

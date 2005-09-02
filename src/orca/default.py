@@ -1156,7 +1156,7 @@ class Default(Script):
             self.flatReviewContext = None
         else:
             context = self.getFlatReviewContext()
-            [string, startOffset, endOffset, x, y, width, height] = \
+            [string, x, y, width, height] = \
                      context.getCurrent(flat_review.Context.WORD)
             orca.drawOutline(x, y, width, height)
 
@@ -1170,7 +1170,7 @@ class Default(Script):
                                    flat_review.Context.WRAP_LINE)
         
         if moved:
-            [string, startOffset, endOffset, x, y, width, height] = \
+            [string, x, y, width, height] = \
                      context.getCurrent(flat_review.Context.LINE)
             orca.drawOutline(x, y, width, height)
             
@@ -1186,7 +1186,7 @@ class Default(Script):
         moved = context.goBegin()
         
         if moved:
-            [string, startOffset, endOffset, x, y, width, height] = \
+            [string, x, y, width, height] = \
                      context.getCurrent(flat_review.Context.LINE)
             orca.drawOutline(x, y, width, height)
             
@@ -1199,7 +1199,7 @@ class Default(Script):
     def reviewCurrentLine(self, inputEvent):
         context = self.getFlatReviewContext()
 
-        [string, startOffset, endOffset, x, y, width, height] = \
+        [string, x, y, width, height] = \
                  context.getCurrent(flat_review.Context.LINE)
         orca.drawOutline(x, y, width, height)
             
@@ -1216,7 +1216,7 @@ class Default(Script):
                                flat_review.Context.WRAP_LINE)
         
         if moved:
-            [string, startOffset, endOffset, x, y, width, height] = \
+            [string, x, y, width, height] = \
                      context.getCurrent(flat_review.Context.LINE)
             orca.drawOutline(x, y, width, height)
             
@@ -1232,8 +1232,8 @@ class Default(Script):
         moved = context.goEnd()
         
         if moved:
-            [string, startOffset, endOffset, x, y, width, height] = \
-                     context.getCurrent(flat_review.Context.CHARACTER)
+            [string, x, y, width, height] = \
+                     context.getCurrent(flat_review.Context.LINE)
             orca.drawOutline(x, y, width, height)
 
             if len(string):
@@ -1249,7 +1249,7 @@ class Default(Script):
                                    flat_review.Context.WRAP_LINE)
         
         if moved:
-            [string, startOffset, endOffset, x, y, width, height] = \
+            [string, x, y, width, height] = \
                      context.getCurrent(flat_review.Context.WORD)
             orca.drawOutline(x, y, width, height)
 
@@ -1261,7 +1261,7 @@ class Default(Script):
             
     def reviewCurrentItem(self, inputEvent):
         context = self.getFlatReviewContext()
-        [string, startOffset, endOffset, x, y, width, height] = \
+        [string, x, y, width, height] = \
                  context.getCurrent(flat_review.Context.WORD)
         orca.drawOutline(x, y, width, height)
 
@@ -1278,7 +1278,7 @@ class Default(Script):
                                flat_review.Context.WRAP_LINE)
         
         if moved:
-            [string, startOffset, endOffset, x, y, width, height] = \
+            [string, x, y, width, height] = \
                      context.getCurrent(flat_review.Context.WORD)
             orca.drawOutline(x, y, width, height)
             
@@ -1295,7 +1295,7 @@ class Default(Script):
                                    flat_review.Context.WRAP_LINE)
         
         if moved:
-            [string, startOffset, endOffset, x, y, width, height] = \
+            [string, x, y, width, height] = \
                      context.getCurrent(flat_review.Context.CHARACTER)
             orca.drawOutline(x, y, width, height)
 
@@ -1311,7 +1311,7 @@ class Default(Script):
         moved = context.goEnd(flat_review.Context.LINE)
         
         if moved:
-            [string, startOffset, endOffset, x, y, width, height] = \
+            [string, x, y, width, height] = \
                      context.getCurrent(flat_review.Context.CHARACTER)
             orca.drawOutline(x, y, width, height)
 
@@ -1323,7 +1323,7 @@ class Default(Script):
             
     def reviewCurrentCharacter(self, inputEvent):
         context = self.getFlatReviewContext()
-        [string, startOffset, endOffset, x, y, width, height] = \
+        [string, x, y, width, height] = \
                  context.getCurrent(flat_review.Context.CHARACTER)
         orca.drawOutline(x, y, width, height)
 
@@ -1340,7 +1340,7 @@ class Default(Script):
                                flat_review.Context.WRAP_LINE)
         
         if moved:
-            [string, startOffset, endOffset, x, y, width, height] = \
+            [string, x, y, width, height] = \
                      context.getCurrent(flat_review.Context.CHARACTER)
             orca.drawOutline(x, y, width, height)
             
