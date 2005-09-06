@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-31 17:26-0400\n"
+"POT-Creation-Date: 2005-09-06 19:12-0400\n"
 "PO-Revision-Date: 2005-08-31 14:20-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -170,27 +170,63 @@ msgid "Enters and exits flat review mode."
 msgstr "Enters and exits flat review mode."
 
 #: src/orca/default.py:141
-msgid "Moves flat review to the previous item."
-msgstr "Moves flat review to the previous item."
+msgid "Moves flat review to the beginning of the previous line."
+msgstr "Moves flat review to the beginning of the previous line."
 
 #: src/orca/default.py:150
-msgid "Speaks the current flat review item."
-msgstr "Speaks the current flat review item."
+msgid "Moves flat review to the home position."
+msgstr "Moves flat review to the home position."
 
 #: src/orca/default.py:159
-msgid "Moves flat review to the next item."
-msgstr "Moves flat review to the next item."
+msgid "Speaks the current flat review line."
+msgstr "Speaks the current flat review line."
 
-#: src/orca/default.py:326 src/orca/default.py:506
+#: src/orca/default.py:168
+msgid "Moves flat review to the beginning of the next line."
+msgstr "Moves flat review to the beginning of the next line."
+
+#: src/orca/default.py:177
+msgid "Moves flat review to the end position."
+msgstr "Moves flat review to the end position."
+
+#: src/orca/default.py:186
+msgid "Moves flat review to the previous item or word."
+msgstr "Moves flat review to the previous item or word."
+
+#: src/orca/default.py:195
+msgid "Speaks the current flat review item or word."
+msgstr "Speaks the current flat review item or word."
+
+#: src/orca/default.py:204
+msgid "Moves flat review to the next item or word."
+msgstr "Moves flat review to the next item or word."
+
+#: src/orca/default.py:214
+msgid "Moves flat review to the previous character."
+msgstr "Moves flat review to the previous character."
+
+#: src/orca/default.py:223
+msgid "Moves flat review to the end of the line."
+msgstr "Moves flat review to the end of the line."
+
+#: src/orca/default.py:232
+msgid "Speaks the current flat review character."
+msgstr "Speaks the current flat review character."
+
+#: src/orca/default.py:241
+msgid "Moves flat review to the next character."
+msgstr "Moves flat review to the next character."
+
+#: src/orca/default.py:408 src/orca/default.py:588
 #, python-format
 msgid "tree level %d"
 msgstr "tree level %d"
 
-#: src/orca/default.py:330 src/orca/default.py:510 src/orca/default.py:575
+#: src/orca/default.py:412 src/orca/default.py:592 src/orca/default.py:657
 msgid "Nothing has focus"
 msgstr "Nothing has focus"
 
-#: src/orca/default.py:1250
+#: src/orca/default.py:1482
 msgid "Not a document."
 msgstr "Not a document."
 
