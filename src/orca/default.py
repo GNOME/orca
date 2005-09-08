@@ -128,7 +128,7 @@ class Default(Script):
                 0, \
                 0, \
                 InputEventHandler(\
-                    self.toggleReviewMode,
+                    self.toggleFlatReviewMode,
                     _("Enters and exits flat review mode."))))
 
         self.keybindings.add(
@@ -477,7 +477,8 @@ class Default(Script):
         # We always automatically go back to focus tracking mode when
         # the focus changes.
         #
-        self.flatReviewContext = None
+        if self.flatReviewContext:
+            self.toggleFlatReviewMode()
         
         # [[[TODO: WDW - HACK because parents that manage their descendants
         # can give us a different object each time we ask for the same
@@ -809,6 +810,12 @@ class Default(Script):
                and (event.source.parent != orca.locusOfFocus):
             return
 
+        # We always automatically go back to focus tracking mode when
+        # the caret moves in the focused object.
+        #
+        if self.flatReviewContext:
+            self.toggleFlatReviewMode()
+        
         # Magnify the object.  [[[TODO: WDW - this is a hack for now.]]]
         #
         #mag.magnifyAccessible(event.source)
@@ -1141,16 +1148,41 @@ class Default(Script):
             if not done:
                 currentLine = 0
                 currentZone = 0
+            elif zone.accessible.text:
+                # If we're on an accessible text object, try to start
+                # at the caret position of that object.
+                #
+                caretLine = currentLine
+                caretZone = currentZone
+                caretOffset = zone.accessible.text.caretOffset
+                foundCaret = False
+                for line in lines[caretLine:]:
+                    for zone in line[caretZone:]:
+                        if (caretOffset >= zone.startOffset) \
+                           and (caretOffset \
+                                < (zone.startOffset + zone.length)):
+                            foundCaret = True
+                            break
+                        else:
+                            caretZone += 1
+                    if foundCaret:
+                        currentLine = caretLine
+                        currentZone = caretZone
+                        currentZoneOffset = caretOffset - zone.startOffset
+                        break
+                    else:
+                        caretZone = 0
+                        caretLine += 1
                 
             self.flatReviewContext = flat_review.Context(lines,
                                                          currentLine,
                                                          currentZone,
-                                                         0)
+                                                         currentZoneOffset)
             
         return self.flatReviewContext
 
 
-    def toggleReviewMode(self, inputEvent):
+    def toggleFlatReviewMode(self, inputEvent=None):
         if self.flatReviewContext:
             orca.drawOutline(-1, 0, 0, 0)
             self.flatReviewContext = None
@@ -1162,7 +1194,22 @@ class Default(Script):
 
         return True
 
+    
+    def reviewCurrentLine(self, inputEvent):
+        context = self.getFlatReviewContext()
 
+        [string, x, y, width, height] = \
+                 context.getCurrent(flat_review.Context.LINE)
+        orca.drawOutline(x, y, width, height)
+            
+        if (len(string) == 0) or (string == "\n"):
+            speech.say("default", "blank")
+        else:
+            speech.say("default", string)
+                 
+        return True
+
+            
     def reviewPreviousLine(self, inputEvent):
         context = self.getFlatReviewContext()
 
@@ -1170,13 +1217,8 @@ class Default(Script):
                                    flat_review.Context.WRAP_LINE)
         
         if moved:
-            [string, x, y, width, height] = \
-                     context.getCurrent(flat_review.Context.LINE)
-            orca.drawOutline(x, y, width, height)
-            
-            if len(string):
-                speech.say("default", string)
-            
+            self.reviewCurrentLine(inputEvent)
+                 
         return True
 
             
@@ -1186,26 +1228,8 @@ class Default(Script):
         moved = context.goBegin()
         
         if moved:
-            [string, x, y, width, height] = \
-                     context.getCurrent(flat_review.Context.LINE)
-            orca.drawOutline(x, y, width, height)
-            
-            if len(string):
-                speech.say("default", string)
-            
-        return True
-
-            
-    def reviewCurrentLine(self, inputEvent):
-        context = self.getFlatReviewContext()
-
-        [string, x, y, width, height] = \
-                 context.getCurrent(flat_review.Context.LINE)
-        orca.drawOutline(x, y, width, height)
-            
-        if len(string):
-            speech.say("default", string)
-            
+            self.reviewCurrentLine(inputEvent)
+                 
         return True
 
             
@@ -1216,13 +1240,8 @@ class Default(Script):
                                flat_review.Context.WRAP_LINE)
         
         if moved:
-            [string, x, y, width, height] = \
-                     context.getCurrent(flat_review.Context.LINE)
-            orca.drawOutline(x, y, width, height)
-            
-            if len(string):
-                speech.say("default", string)
-            
+            self.reviewCurrentLine(inputEvent)
+                 
         return True
 
             
@@ -1232,12 +1251,7 @@ class Default(Script):
         moved = context.goEnd()
         
         if moved:
-            [string, x, y, width, height] = \
-                     context.getCurrent(flat_review.Context.LINE)
-            orca.drawOutline(x, y, width, height)
-
-            if len(string):
-                speech.say("default", string)
+            self.reviewCurrentLine(inputEvent)
             
         return True
 
@@ -1288,6 +1302,26 @@ class Default(Script):
         return True
 
             
+    def reviewCurrentCharacter(self, inputEvent):
+        context = self.getFlatReviewContext()
+
+        [string, x, y, width, height] = \
+                 context.getCurrent(flat_review.Context.CHARACTER)
+        orca.drawOutline(x, y, width, height)
+
+        if len(string):
+            [lineString, x, y, width, height] = \
+                         context.getCurrent(flat_review.Context.LINE)
+            if lineString == "\n":
+                speech.say("default", "blank")
+            elif string.isupper():
+                speech.say("uppercase", string)
+            else:
+                speech.say("default", string)
+            
+        return True
+
+
     def reviewPreviousCharacter(self, inputEvent):
         context = self.getFlatReviewContext()
 
@@ -1295,12 +1329,7 @@ class Default(Script):
                                    flat_review.Context.WRAP_LINE)
         
         if moved:
-            [string, x, y, width, height] = \
-                     context.getCurrent(flat_review.Context.CHARACTER)
-            orca.drawOutline(x, y, width, height)
-
-            if len(string):
-                speech.say("default", string)
+            self.reviewCurrentCharacter(inputEvent)
             
         return True
 
@@ -1311,28 +1340,11 @@ class Default(Script):
         moved = context.goEnd(flat_review.Context.LINE)
         
         if moved:
-            [string, x, y, width, height] = \
-                     context.getCurrent(flat_review.Context.CHARACTER)
-            orca.drawOutline(x, y, width, height)
-
-            if len(string):
-                speech.say("default", string)
+            self.reviewCurrentCharacter(inputEvent)
             
         return True
 
             
-    def reviewCurrentCharacter(self, inputEvent):
-        context = self.getFlatReviewContext()
-        [string, x, y, width, height] = \
-                 context.getCurrent(flat_review.Context.CHARACTER)
-        orca.drawOutline(x, y, width, height)
-
-        if len(string):
-            speech.say("default", string)
-            
-        return True
-
-
     def reviewNextCharacter(self, inputEvent):
         context = self.getFlatReviewContext()
 
@@ -1340,12 +1352,7 @@ class Default(Script):
                                flat_review.Context.WRAP_LINE)
         
         if moved:
-            [string, x, y, width, height] = \
-                     context.getCurrent(flat_review.Context.CHARACTER)
-            orca.drawOutline(x, y, width, height)
-            
-            if len(string):
-                speech.say("default", string)
+            self.reviewCurrentCharacter(inputEvent)
             
         return True
 

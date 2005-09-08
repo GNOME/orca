@@ -115,16 +115,54 @@ class Context:
         self.textOffset = textOffset
 
 
-    def _debugWhatHappened(self, moved):
+    def _dumpCurrentState(self):
         zone = self.lines[self.lineIndex][self.zoneIndex]
-
         print "line=%d, zone=%d" % (self.lineIndex, self.zoneIndex)
         print "  zone.startOffset   = %d" % zone.startOffset
         print "  self.textOffset    = %d" % self.textOffset
         print "  zone.length        = %d" % zone.length
         print "  zone.string        = '%s'" % zone.string
-        print "  moved              =", moved
 
+        if text is None:
+            print "  Not Accessibility_Text"
+            return
+
+        print "  getTextBeforeOffset: %d" % text.caretOffset        
+        [string, startOffset, endOffset] = text.getTextBeforeOffset(
+            text.caretOffset,
+            core.Accessibility.TEXT_BOUNDARY_WORD_START)
+        print "    WORD_START: start=%d end=%d string='%s'" \
+              % (startOffset, endOffset, string)
+        [string, startOffset, endOffset] = text.getTextBeforeOffset(
+            text.caretOffset,
+            core.Accessibility.TEXT_BOUNDARY_WORD_END)
+        print "    WORD_END:   start=%d end=%d string='%s'" \
+              % (startOffset, endOffset, string)
+
+        print "  getTextAtOffset: %d" % text.caretOffset        
+        [string, startOffset, endOffset] = text.getTextAtOffset(
+            text.caretOffset,
+            core.Accessibility.TEXT_BOUNDARY_WORD_START)
+        print "    WORD_START: start=%d end=%d string='%s'" \
+              % (startOffset, endOffset, string)
+        [string, startOffset, endOffset] = text.getTextAtOffset(
+            text.caretOffset,
+            core.Accessibility.TEXT_BOUNDARY_WORD_END)
+        print "    WORD_END:   start=%d end=%d string='%s'" \
+              % (startOffset, endOffset, string)
+
+        print "  getTextAfterOffset: %d" % text.caretOffset        
+        [string, startOffset, endOffset] = text.getTextAfterOffset(
+            text.caretOffset,
+            core.Accessibility.TEXT_BOUNDARY_WORD_START)
+        print "    WORD_START: start=%d end=%d string='%s'" \
+              % (startOffset, endOffset, string)
+        [string, startOffset, endOffset] = text.getTextAfterOffset(
+            text.caretOffset,
+            core.Accessibility.TEXT_BOUNDARY_WORD_END)
+        print "    WORD_END:   start=%d end=%d string='%s'" \
+              % (startOffset, endOffset, string)
+        
         
     def getCurrent(self, type=ZONE):
         """Gets the string, offset, and extent information for the
@@ -148,8 +186,6 @@ class Context:
                 [string, startOffset, endOffset] = text.getTextAtOffset(
                     zone.startOffset + self.textOffset,
                     core.Accessibility.TEXT_BOUNDARY_CHAR)
-                string = string.strip()
-                endOffset = startOffset + len(string)
                 [x, y, width, height] = text.getRangeExtents(startOffset, 
                                                              endOffset, 
                                                              0)
@@ -248,12 +284,12 @@ class Context:
             lineIndex  = self.lineIndex
             zoneIndex  = len(self.lines[lineIndex]) - 1
             zone       = self.lines[lineIndex][zoneIndex]
-            textOffset = max(0, zone.length - 1)
+            textOffset = zone.length - 1
         elif type == Context.WINDOW:
             lineIndex  = len(self.lines) - 1
             zoneIndex  = len(self.lines[lineIndex]) - 1
             zone       = self.lines[lineIndex][zoneIndex]
-            textOffset = max(0, zone.length - 1)
+            textOffset = zone.length - 1
         else:
             raise Error, "Invalid type: %d" % type
 
@@ -317,7 +353,7 @@ class Context:
                     if moved:
                         zone = self.lines[self.lineIndex][self.zoneIndex]
                         if zone.type == Zone.TEXT:
-                            self.textOffset = max(0, zone.length - 1)
+                            self.textOffset = zone.length - 1
                         if len(zone.string) == 0:
                             self.goPrevious(type, wrap)
             else:
@@ -325,7 +361,7 @@ class Context:
                 if moved:
                     zone = self.lines[self.lineIndex][self.zoneIndex]
                     if zone.type == Zone.TEXT:
-                        self.textOffset = max(0, zone.length - 1)
+                        self.textOffset = zone.length - 1
                     if len(zone.string) == 0:
                         self.goPrevious(type, wrap)
         elif type == Context.WORD:
@@ -468,7 +504,7 @@ class Context:
                     if zone.length == 0:
                         self.goNext(type, wrap)
             else:
-                if self.textOffset < max(0, zone.length - 1):
+                if self.textOffset < (zone.length - 1):
                     self.textOffset += 1
                     text = zone.accessible.text
                     [string, startOffset, endOffset] = text.getTextAtOffset(
@@ -696,13 +732,7 @@ def getZonesFromAccessible(accessible, cliprect):
                                                          endOffset, 
                                                          0)
 
-            # Sometimes we get the trailing line-feed -- remove it
-            #
-            if string[-1:] == "\n":
-                string = string[:-1]
-                offset = endOffset
-            else:
-                offset = endOffset + 1
+            offset = endOffset
             
             if visible(x, y, width, height, 
                        cliprect.x, cliprect.y, 
@@ -711,7 +741,7 @@ def getZonesFromAccessible(accessible, cliprect):
                 clipping = clip(x, y, width, height,
                                 cliprect.x, cliprect.y,
                                 cliprect.width, cliprect.height)
-                
+
                 zones.append(Zone(accessible,
                                   Zone.TEXT,
                                   string, 
