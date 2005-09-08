@@ -18,6 +18,7 @@
 # Boston, MA 02111-1307, USA.
 
 import a11y
+import debug
 import core
 import rolenames
 
@@ -25,45 +26,143 @@ import rolenames
 # it's because I wrote half the code late at night.  I tried to do
 # the right thing, but I think "tried" got reformed as "tired."]]]
 
+class Char:
+    """Represents a single char of an Accessibility_Text object."""
+    
+    def __init__(self,
+                 word,
+                 index,
+                 string,
+                 x, y, width, height):
+        """Creates a new char.
+
+        Arguments:
+        - word: the Word instance this belongs to
+        - index: the index of this char in the word
+        - string: the actual char
+        - x, y, width, height: the extents of this Char on the screen
+        """
+
+        self.word = word
+        self.string = string
+        self.index = index
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+
+    
+class Word:
+    """Represents a single word of an Accessibility_Text object, or
+    the entire name of an Image or Component if the associated object
+    does not implement the Accessibility_Text interface.  As a rule of
+    thumb, all words derived from an Accessibility_Text interface will
+    start with the word and will end with all chars up to the
+    beginning of the next word.  That is, whitespace and punctuation
+    will usually be tacked on to the end of words."""
+    
+    def __init__(self,
+                 zone,
+                 index,
+                 string,
+                 x, y, width, height):
+        """Creates a new Word.
+
+        Arguments:
+        - zone: the Zone instance this belongs to
+        - index: the index of this word in the Zone
+        - string: the actual string
+        - x, y, width, height: the extents of this Char on the screen"""
+        
+        self.zone = zone
+        self.index = index
+        self.string = string
+        self.length = len(string)
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+
+    def __getattr__(self, attr):
+        """Used for lazily determining the chars of a word.  We do
+        this to reduce the total number of round trip calls to the app,
+        and to also spread the round trip calls out over the lifetime
+        of a flat review context.
+
+        Arguments:
+        - attr: a string indicating the attribute name to retrieve
+
+        Returns the value of the given attribute.
+        """
+ 
+        if attr == "chars":
+            if isinstance(self.zone, TextZone):
+                text = self.zone.accessible.text
+                self.chars = []
+                i = 0
+                while i < self.length:
+                    [char, startOffset, endOffset] = text.getTextAtOffset(
+                        self.startOffset + i,
+                        core.Accessibility.TEXT_BOUNDARY_CHAR)
+                    [x, y, width, height] = text.getRangeExtents(
+                        startOffset,
+                        endOffset,
+                        0)                    
+                    self.chars.append(Char(self,
+                                           i,
+                                           char,
+                                           x, y, width, height))
+                    i += 1
+            else:
+                self.chars = None
+            return self.chars       
+        elif attr.startswith('__') and attr.endswith('__'):
+            raise AttributeError, attr
+        else:
+            return self.__dict__[attr]
+
+        
 class Zone:
     """Represents text that is a portion of a single horizontal line."""
 
-    COMPONENT = 0
-    TEXT      = 1
-    IMAGE     = 2
-
-    def __init__(self, 
+    def __init__(self,
                  accessible,
-                 type,
-                 string, 
+                 string,
                  x, y, 
-                 width, height, 
-                 startOffset):
+                 width, height):
         """Creates a new Zone, which is a horizontal region of text.
 
         Arguments:
         - accessible: the Accessible associated with this Zone
         - string: the string being displayed for this Zone
-        - type: one of COMPONENT, TEXT, etc.
-        - extents: x, y, width, height: if the accessible implements
-                   Accessibility_Text, these will be the range extents
-                   for startOffset and endOffset.  If the accessible
-                   does not implement Accessibility_Text, then these will
-                   be the extents of the Accessibility_Component.
-        - startOffset: index into Accessibility_Text for start of line
+        - extents: x, y, width, height in screen coordinates
         """
-        
+
         self.accessible = accessible
-        self.type = type
         self.string = string
+        self.length = len(string)
         self.x = x
         self.y = y
         self.width = width
         self.height = height
-        self.startOffset = startOffset
-        self.length = len(string)
 
-        
+    def __getattr__(self, attr):
+        """Used for lazily determining the words in a Zone.
+
+        Arguments:
+        - attr: a string indicating the attribute name to retrieve
+
+        Returns the value of the given attribute.
+        """
+ 
+        if attr == "words":
+            self.words = None
+            return self.words        
+        elif attr.startswith('__') and attr.endswith('__'):
+            raise AttributeError, attr
+        else:
+            return self.__dict__[attr]
+
     def onSameLine(self, zone):
         """Returns True if this Zone is on the same horiztonal line as
         the given zone."""
@@ -80,48 +179,175 @@ class Zone:
             return ((1.0 * overlapAmount) / shortestHeight) > 0.25
         else:
             return False
-                        
 
+        
+class TextZone(Zone):
+    """Represents Accessibility_Text that is a portion of a single
+    horizontal line."""
+
+    def __init__(self,
+                 accessible,
+                 startOffset,
+                 string,
+                 x, y, 
+                 width, height):
+        """Creates a new Zone, which is a horizontal region of text.
+
+        Arguments:
+        - accessible: the Accessible associated with this Zone
+        - startOffset: the index of the char in the Accessibility_Text
+                       interface where this Zone starts
+        - string: the string being displayed for this Zone
+        - extents: x, y, width, height in screen coordinates
+        """
+
+        self.accessible = accessible
+        self.startOffset = startOffset
+        self.string = string
+        self.length = len(string)
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+
+    def __getattr__(self, attr):
+        """Used for lazily determining the words in a Zone.
+
+        Arguments:
+        - attr: a string indicating the attribute name to retrieve
+
+        Returns the value of the given attribute.
+        """
+ 
+        if attr == "words":
+            text = self.accessible.text
+            self.words = []
+            i = 0
+            offset = self.startOffset
+            while offset < (self.startOffset + self.length):
+                [string, startOffset, endOffset] = text.getTextAtOffset(
+                    offset,
+                    core.Accessibility.TEXT_BOUNDARY_WORD_START)
+                if (startOffset >= (self.startOffset + self.length)) \
+                   or (startOffset == endOffset):
+                    break
+                else:
+                    startOffset = max(startOffset, self.startOffset)
+                    endOffset = min(endOffset, self.startOffset + self.length)
+                    if startOffset < endOffset:
+                        string = text.getText(startOffset, endOffset)
+                        [x, y, width, height] = text.getRangeExtents(
+                            startOffset, 
+                            endOffset, 
+                            0)
+                        word = Word(self,
+                                    i,
+                                    string,
+                                    x, y, width, height)
+                        self.words.append(word)
+                        
+                        # [[[TODO: WDW - also calculate the actual word
+                        # end offset.  getTextAtOffset as called above
+                        # gives us an end offset that is the beginning
+                        # of the next word.]]]
+                        #
+                        word.startOffset = startOffset
+                        i += 1
+                        
+                offset = endOffset
+                    
+            return self.words
+        
+        elif attr.startswith('__') and attr.endswith('__'):
+            raise AttributeError, attr
+        else:
+            return self.__dict__[attr]
+
+
+class Line:
+    """A Line is a single line across a window and is composed of Zones."""
+
+    def __init__(self,
+                 index,
+                 zones):
+        """Creates a new Line, which is a horizontal region of text.
+
+        Arguments:
+        - index: the index of this Line in the window
+        - zones: the Zones that make up this line
+        """
+
+        self.index = index
+        self.zones = zones
+        
+        bounds = None
+        self.string = ""
+        for zone in self.zones:
+            if bounds is None:
+                bounds = [zone.x, zone.y,
+                          zone.x + zone.width, zone.y + zone.height]
+            else:
+                bounds[0] = min(bounds[0], zone.x)
+                bounds[1] = min(bounds[1], zone.y)
+                bounds[2] = max(bounds[2], zone.x + zone.width)
+                bounds[3] = max(bounds[3], zone.y + zone.height)
+            if len(zone.string):
+                if len(self.string):
+                    self.string += " "
+                self.string += zone.string
+                
+        if bounds is None:
+            bounds = [-1, -1, -1, -1]
+
+        self.x = bounds[0]
+        self.y = bounds[1]
+        self.width = bounds[2] - bounds[0]
+        self.height = bounds[3] - bounds[1]
+
+    
 class Context:
     """Information regarding where a user happens to be exploring
     right now.
     """
 
-    ZONE      = 0
-    CHARACTER = 1
-    WORD      = 2
-    LINE      = 3 # includes all zones on same line
-    WINDOW    = 4
+    ZONE   = 0
+    CHAR   = 1
+    WORD   = 2
+    LINE   = 3 # includes all zones on same line
+    WINDOW = 4
 
     WRAP_LINE       = 1 << 0
     WRAP_TOP_BOTTOM = 1 << 1
     WRAP_ALL        = (WRAP_LINE | WRAP_TOP_BOTTOM)
     
-    def __init__(self, lines, lineIndex, zoneIndex, textOffset):
+    def __init__(self, lines, lineIndex, zoneIndex, wordIndex, charIndex):
         """Create a new Context that will be used for handling flat
         review mode.
 
         Arguments:
-        - lines:      an array of arrays of Zones (see clusterZonesByLine)
-        - lineIndex:  index pointing into lines
-        - zoneIndex:  index pointing into lines[lineIndex]
-        - textOffset: character index into the string of the
-                      current zone.
+        - lines: an array of arrays of Zones (see clusterZonesByLine)
+        - lineIndex: index into lines
+        - zoneIndex: index into lines[lineIndex].zones
+        - wordIndex: index into lines[lineIndex].zones[zoneIndex].words
+        - charIndex: index lines[lineIndex].zones[zoneIndex].words[wordIndex].chars
         """
 
-        self.lines      = lines
-        self.lineIndex  = lineIndex
-        self.zoneIndex  = zoneIndex
-        self.textOffset = textOffset
+        self.lines     = lines
+        self.lineIndex = lineIndex
+        self.zoneIndex = zoneIndex
+        self.wordIndex = wordIndex
+        self.charIndex = charIndex
 
 
     def _dumpCurrentState(self):
-        zone = self.lines[self.lineIndex][self.zoneIndex]
-        print "line=%d, zone=%d" % (self.lineIndex, self.zoneIndex)
-        print "  zone.startOffset   = %d" % zone.startOffset
-        print "  self.textOffset    = %d" % self.textOffset
-        print "  zone.length        = %d" % zone.length
-        print "  zone.string        = '%s'" % zone.string
+        print "line=%d, zone=%d, word=%d, char=%d" \
+              % (self.lineIndex,
+                 self.zoneIndex,
+                 self.wordIndex,
+                 self.zoneIndex)
+
+        zone = self.lines[self.lineIndex].zones[self.zoneIndex]
+        text = zone.accessible.text
 
         if text is None:
             print "  Not Accessibility_Text"
@@ -169,77 +395,72 @@ class Context:
         current locus of interest.
 
         Arguments:
-        - type: one of ZONE, CHARACTER, WORD, LINE
+        - type: one of ZONE, CHAR, WORD, LINE
 
         Returns: [string, x, y, width, height]
         """
-        
-        zone = self.lines[self.lineIndex][self.zoneIndex]
+
+        if (not self.lines) \
+           or (not self.lines[self.lineIndex].zones):
+            return
+
+        zone = self.lines[self.lineIndex].zones[self.zoneIndex]
             
         if type == Context.ZONE:
             return [zone.string,
-                    zone.x, zone.y,
-                    zone.width, zone.height]
-        elif type == Context.CHARACTER:
-            text = zone.accessible.text
-            if text:
-                [string, startOffset, endOffset] = text.getTextAtOffset(
-                    zone.startOffset + self.textOffset,
-                    core.Accessibility.TEXT_BOUNDARY_CHAR)
-                [x, y, width, height] = text.getRangeExtents(startOffset, 
-                                                             endOffset, 
-                                                             0)
-                return [string,
-                        x, y, width, height]
-            else:
-                return self.getCurrent(Context.ZONE)
+                    zone.x,
+                    zone.y,
+                    zone.width,
+                    zone.height]
+        elif type == Context.CHAR:
+            if isinstance(zone, TextZone):
+                text = zone.accessible.text
+                words = zone.words
+                if words:
+                    chars = zone.words[self.wordIndex].chars
+                    if chars:
+                        char = chars[self.charIndex]
+                        return [char.string,
+                                char.x,
+                                char.y,
+                                char.width,
+                                char.height]
+                    else:
+                        word = words[self.wordIndex]
+                        return [word.string,
+                                word.x,
+                                word.y,
+                                word.width,
+                                word.height]
+            return self.getCurrent(Context.ZONE)
         elif type == Context.WORD:
-            text = zone.accessible.text
-            if text:
-                [string, startOffset, endOffset] = text.getTextAtOffset(
-                    zone.startOffset + self.textOffset,
-                    core.Accessibility.TEXT_BOUNDARY_WORD_START)
-                string = string.strip()
-                endOffset = min(startOffset + len(string),
-                                zone.startOffset + zone.length)
-                startOffset = max(startOffset, zone.startOffset)
-                string = text.getText(startOffset, endOffset)
-                [x, y, width, height] = text.getRangeExtents(startOffset, 
-                                                             endOffset, 
-                                                             0)
-                return [string,
-                        x, y, width, height]
-            else:
-                return self.getCurrent(Context.ZONE)
+            if isinstance(zone, TextZone):
+                text = zone.accessible.text
+		# [[[TODO: WDW - not quite sure what the current word is
+		# if we're on whitespace.]]]
+		#
+                words = zone.words
+                if words:
+                    word = words[self.wordIndex]
+                    return [word.string,
+                            word.x,
+                            word.y,
+                            word.width,
+                            word.height]
+            return self.getCurrent(Context.ZONE)
         elif type == Context.LINE:
             line = self.lines[self.lineIndex]
-            bounds = None
-            string = ""
-            for zone in line:
-                if bounds is None:
-                    bounds = [zone.x, zone.y,
-                              zone.x + zone.width, zone.y + zone.height]
-                else:
-                    bounds[0] = min(bounds[0], zone.x)
-                    bounds[1] = min(bounds[1], zone.y)
-                    bounds[2] = max(bounds[2], zone.x + zone.width)
-                    bounds[3] = max(bounds[3], zone.y + zone.height)
-                if len(zone.string):
-                    if len(string):
-                        string += " "
-                    string += zone.string
-            if bounds is None:
-                bounds = [-1, -1, -2, -2]
-            return [string,
-                    bounds[0], bounds[1],
-                    bounds[2] - bounds[0],
-                    bounds[3] - bounds[1]]
+            return [line.string,
+                    line.x,
+                    line.y,
+                    line.width,
+                    line.height]
         else:
             raise Error, "Invalid type: %d" % type
 
             
     def goBegin(self, type=WINDOW):
-        """Moves this context's locus of interest to the first character
+        """Moves this context's locus of interest to the first char
         of the first relevant zone.
 
         Arguments:
@@ -249,67 +470,78 @@ class Context:
         """
 
         if type == Context.LINE:
-            lineIndex  = self.lineIndex
-            zoneIndex  = 0
-            textOffset = 0
+            lineIndex = self.lineIndex
         elif type == Context.WINDOW:
-            lineIndex  = 0
-            zoneIndex  = 0
-            textOffset = 0
+            lineIndex = 0
         else:
             raise Error, "Invalid type: %d" % type
             
+        zoneIndex = 0
+        wordIndex = 0
+        charIndex = 0
+
         moved = (self.lineIndex != lineIndex) \
                 or (self.zoneIndex != zoneIndex) \
-                or (self.textOffset != textOffset)
+                or (self.wordIndex != wordIndex) \
+                or (self.charIndex != charIndex) \
 
-        self.lineIndex  = lineIndex
-        self.zoneIndex  = zoneIndex
-        self.textOffset = textOffset
+        self.lineIndex = lineIndex
+        self.zoneIndex = zoneIndex
+        self.wordIndex = wordIndex
+        self.charIndex = charIndex
 
         return moved
 
     
     def goEnd(self, type=WINDOW):
-        """Moves this context's locus of interest to the last character
+        """Moves this context's locus of interest to the last char
         of the last relevant zone.
 
         Arguments:
-        - type: one of LINE or WINDOW
+        - type: one of ZONE, LINE, or WINDOW
         
         Returns True if the locus of interest actually changed.
         """
 
         if type == Context.LINE:
-            lineIndex  = self.lineIndex
-            zoneIndex  = len(self.lines[lineIndex]) - 1
-            zone       = self.lines[lineIndex][zoneIndex]
-            textOffset = zone.length - 1
+            lineIndex = self.lineIndex
         elif type == Context.WINDOW:
             lineIndex  = len(self.lines) - 1
-            zoneIndex  = len(self.lines[lineIndex]) - 1
-            zone       = self.lines[lineIndex][zoneIndex]
-            textOffset = zone.length - 1
         else:
             raise Error, "Invalid type: %d" % type
 
+        zoneIndex = len(self.lines[lineIndex].zones) - 1
+        zone = self.lines[lineIndex].zones[zoneIndex]
+        if zone.words:
+            wordIndex = len(zone.words) - 1
+            chars = zone.words[wordIndex].chars
+            if chars:
+                charIndex = len(chars) - 1
+            else:
+                charIndex = 0
+        else:
+            wordIndex = 0
+            charIndex = 0
+
         moved = (self.lineIndex != lineIndex) \
                 or (self.zoneIndex != zoneIndex) \
-                or (self.textOffset != textOffset)
+                or (self.wordIndex != wordIndex) \
+                or (self.charIndex != charIndex) \
 
-        self.lineIndex  = lineIndex
-        self.zoneIndex  = zoneIndex
-        self.textOffset = textOffset
+        self.lineIndex = lineIndex
+        self.zoneIndex = zoneIndex
+        self.wordIndex = wordIndex
+        self.charIndex = charIndex
 
         return moved
 
         
     def goPrevious(self, type=ZONE, wrap=WRAP_ALL):
-        """Moves this context's locus of interest to the first character
+        """Moves this context's locus of interest to the first char
         of the previous type.
 
         Arguments:
-        - type: one of ZONE, CHARACTER, WORD, LINE
+        - type: one of ZONE, CHAR, WORD, LINE
         - wrap: if True, will cross boundaries, including top and
                 bottom; if False, will stop on boundaries.                
 
@@ -321,141 +553,59 @@ class Context:
         if type == Context.ZONE:
             if self.zoneIndex > 0:
                 self.zoneIndex -= 1
-                self.textOffset = 0
+                self.wordIndex = 0
+                self.charIndex = 0
                 moved = True
             elif wrap & Context.WRAP_LINE:
                 if self.lineIndex > 0:
                     self.lineIndex -= 1
-                    self.zoneIndex  = len(self.lines[self.lineIndex]) - 1
-                    self.textOffset = 0
+                    self.zoneIndex = len(self.lines[self.lineIndex].zones) - 1
+                    self.wordIndex = 0
+                    self.charIndex = 0
                     moved = True
                 elif wrap & Context.WRAP_TOP_BOTTOM:
-                    self.lineIndex  = len(self.lines) - 1
-                    self.zoneIndex  = len(self.lines[self.lineIndex]) - 1
-                    self.textOffset = 0
+                    self.lineIndex = len(self.lines) - 1
+                    self.zoneIndex = len(self.lines[self.lineIndex].zones) - 1
+                    self.wordIndex = 0
+                    self.charIndex = 0
                     moved = True
-        elif type == Context.CHARACTER:
-            # We can only do WORD and CHARACTER traversal with
-            # Accessible_Text objects for now.  For all other
-            # objects, we'll treat it like a Zone traversal.
-            #
-            zone = self.lines[self.lineIndex][self.zoneIndex]
-            if zone.type == Zone.TEXT:
-                if self.textOffset > 0:
-                    self.textOffset -= 1
-                    text = zone.accessible.text
-                    [string, startOffset, endOffset] = text.getTextAtOffset(
-                        zone.startOffset + self.textOffset,
-                        core.Accessibility.TEXT_BOUNDARY_CHAR)
-                    moved = True
-                else:
-                    moved = self.goPrevious(Context.ZONE, wrap)
-                    if moved:
-                        zone = self.lines[self.lineIndex][self.zoneIndex]
-                        if zone.type == Zone.TEXT:
-                            self.textOffset = zone.length - 1
-                        if len(zone.string) == 0:
-                            self.goPrevious(type, wrap)
+        elif type == Context.CHAR:
+            if self.charIndex > 0:
+                self.charIndex -= 1
+                moved = True
             else:
-                moved = self.goPrevious(Context.ZONE, wrap)
+                moved = self.goPrevious(Context.WORD, wrap)
                 if moved:
-                    zone = self.lines[self.lineIndex][self.zoneIndex]
-                    if zone.type == Zone.TEXT:
-                        self.textOffset = zone.length - 1
-                    if len(zone.string) == 0:
-                        self.goPrevious(type, wrap)
+                    zone = self.lines[self.lineIndex].zones[self.zoneIndex]
+                    if zone.words:
+                        chars = zone.words[self.wordIndex].chars
+                        if chars:
+                            self.charIndex = len(chars) - 1
         elif type == Context.WORD:
-            # We can only do WORD and CHARACTER traversal with
-            # Accessible_Text objects for now.  For all other
-            # objects, we'll treat it like a Zone traversal.
-            #
-            zone = self.lines[self.lineIndex][self.zoneIndex]
-            if zone.type != Zone.TEXT:
-                moved = self.goPrevious(Context.ZONE, wrap)
-                if moved:
-                    zone = self.lines[self.lineIndex][self.zoneIndex]
-                    if zone.type == Zone.TEXT:
-                        self.textOffset = zone.length
-                        self.goPrevious(type, wrap)
-                    [string, x, y, width, height] = \
-                             self.getCurrent(Context.WORD)
-                    if len(string.strip()) == 0:
-                        self.goPrevious(type, wrap)
-                return moved
-
-            # We first think about working within the current Zone
-            # if we can...
-            #
-            text = zone.accessible.text
-            if self.textOffset > 0:
-                # We'll move the text offset to the beginning of the
-                # previous word in the current zone if possible.
-                #
-                [string, startOffset, endOffset] = text.getTextAtOffset(
-                    zone.startOffset + self.textOffset - 1,
-                    core.Accessibility.TEXT_BOUNDARY_WORD_START)
-
-                # We may have ended up with a starting offset not in
-                # this Zone, but in the same text area.  So...we'll
-                # keep trodding backwards until we hit the zone where
-                # the word really is.  We'll also stop if we hit the
-                # beginning or we leave the current accessible text
-                # object (remember that a single text area can be
-                # represented by multiple zones).
-                #
-                recalcOffset = True
-                while (endOffset == 0) or (startOffset < zone.startOffset):
-                    oldZone = zone
-                    moved = self.goPrevious(Context.ZONE, wrap)
-                    if moved:
-                        zone = self.lines[self.lineIndex][self.zoneIndex]
-                        if zone.accessible != oldZone.accessible:
-                            if zone.type == Zone.TEXT:
-                                self.textOffset = max(0, zone.length - 1)
-                            recalcOffset = False
-                            break
-                    else:
-                        break
-                if recalcOffset:
-                    newOffset = startOffset - zone.startOffset
-                    if not moved:
-                        moved = newOffset != self.textOffset
-                    self.textOffset = newOffset
-
-                # Now check to see if we ended up on something empty.
-                # If we did, then move on to the next word.
-                #
-                if moved:
-                    [string, x, y, width, height] = \
-                             self.getCurrent(Context.WORD)
-                    if len(string.strip()) == 0:
-                        self.goPrevious(type, wrap)
+            if self.wordIndex > 0:
+                self.wordIndex -= 1
+                self.charIndex = 0
+                moved = True
             else:
-                # Othewise, we're currently at the beginning of the
-                # current zone and we need to try the previous zone.
-                #
                 moved = self.goPrevious(Context.ZONE, wrap)
                 if moved:
-                    zone = self.lines[self.lineIndex][self.zoneIndex]
-                    if zone.type == Zone.TEXT:
-                        self.textOffset = zone.length
-                        self.goPrevious(type, wrap)
-                    [string, x, y, width, height] = \
-                             self.getCurrent(Context.WORD)
-                    if len(string.strip()) == 0:
-                        self.goPrevious(type, wrap)            
+                    zone = self.lines[self.lineIndex].zones[self.zoneIndex]
+                    if zone.words:
+                        self.wordIndex = len(zone.words) - 1
         elif type == Context.LINE:
             if wrap & Context.WRAP_LINE:
                 if self.lineIndex > 0:
                     self.lineIndex -= 1
-                    self.zoneIndex  = 0
-                    self.textOffset = 0
+                    self.zoneIndex = 0
+                    self.wordIndex = 0
+                    self.charIndex = 0
                     moved = True
                 elif (wrap & Context.WRAP_TOP_BOTTOM) \
                      and (len(lines) != 1):
-                    self.lineIndex  = len(self.lines) - 1
-                    self.zoneIndex  = 0
-                    self.textOffset = 0
+                    self.lineIndex = len(self.lines) - 1
+                    self.zoneIndex = 0
+                    self.wordIndex = 0
+                    self.charIndex = 0
                     moved = True
         else:
             raise Error, "Invalid type: %d" % type
@@ -464,11 +614,11 @@ class Context:
 
 
     def goNext(self, type=ZONE, wrap=True):
-        """Moves this context's locus of interest to first character of
+        """Moves this context's locus of interest to first char of
         the next type.
 
         Arguments:
-        - type: one of ZONE, CHARACTER, WORD, LINE
+        - type: one of ZONE, CHAR, WORD, LINE
         - wrap: if True, will cross boundaries, including top and
                 bottom; if False, will stop on boundaries.
         """
@@ -476,142 +626,63 @@ class Context:
         moved = False
         
         if type == Context.ZONE:
-            if self.zoneIndex < (len(self.lines[self.lineIndex]) - 1):
+            if self.zoneIndex < (len(self.lines[self.lineIndex].zones) - 1):
                 self.zoneIndex += 1
-                self.textOffset = 0
+                self.wordIndex = 0
+                self.charIndex = 0
                 moved = True
             elif wrap & Context.WRAP_LINE:
                 if self.lineIndex < (len(self.lines) - 1):
                     self.lineIndex += 1
                     self.zoneIndex  = 0
-                    self.textOffset = 0
+                    self.wordIndex = 0
+                    self.charIndex = 0
                     moved = True
                 elif wrap & Context.WRAP_TOP_BOTTOM:
                     self.lineIndex  = 0
                     self.zoneIndex  = 0
-                    self.textOffset = 0
+                    self.wordIndex = 0
+                    self.charIndex = 0
                     moved = True
-        elif type == Context.CHARACTER:
-            # We can only do WORD and CHARACTER traversal with
-            # Accessible_Text objects for now.  For all other
-            # objects, we'll treat it like a Zone traversal.
-            #
-            zone = self.lines[self.lineIndex][self.zoneIndex]
-            if zone.type != Zone.TEXT:
-                moved = self.goNext(Context.ZONE, wrap)
-                if moved:
-                    zone = self.lines[self.lineIndex][self.zoneIndex]
-                    if zone.length == 0:
-                        self.goNext(type, wrap)
+        elif type == Context.CHAR:
+            zone = self.lines[self.lineIndex].zones[self.zoneIndex]
+            if zone.words:
+                chars = zone.words[self.wordIndex].chars
+                if chars:
+                    if self.charIndex < (len(chars) - 1):
+                        self.charIndex += 1
+                        moved = True
+                    else:
+                        moved = self.goNext(Context.WORD, wrap)
+                else:
+                    moved = self.goNext(Context.WORD, wrap)
             else:
-                if self.textOffset < (zone.length - 1):
-                    self.textOffset += 1
-                    text = zone.accessible.text
-                    [string, startOffset, endOffset] = text.getTextAtOffset(
-                        zone.startOffset + self.textOffset,
-                        core.Accessibility.TEXT_BOUNDARY_CHAR)
+                moved = self.goNext(Context.ZONE, wrap)
+        elif type == Context.WORD:
+            zone = self.lines[self.lineIndex].zones[self.zoneIndex]            
+            if zone.words:
+                if self.wordIndex < (len(zone.words) - 1):
+                    self.wordIndex += 1
+                    self.charIndex = 0
                     moved = True
                 else:
                     moved = self.goNext(Context.ZONE, wrap)
-                    if moved:
-                        zone = self.lines[self.lineIndex][self.zoneIndex]
-                        if zone.length == 0:
-                            self.goNext(type, wrap)
-        elif type == Context.WORD:
-            # We can only do WORD and CHARACTER traversal with
-            # Accessible_Text objects for now.  For all other
-            # objects, we'll treat it like a Zone traversal.
-            #
-            # So...if we're on a non-text object, we jump to
-            # the next object.  If it isn't a word, then we
-            # go on from there...
-            #
-            zone = self.lines[self.lineIndex][self.zoneIndex]            
-            if zone.type != Zone.TEXT:
+            else:
                 moved = self.goNext(Context.ZONE, wrap)
-                if moved:                    
-                    # We might move to a zone that begins with white
-                    # space.  In this case, the
-                    # TEXT_BOUNDARY_WORD_START will end up prior to
-                    # this zone.  So...we need to take that into
-                    # account. [[[TODO: WDW - I'm not really sure this
-                    # is exactly what is going on there.  This algorithm
-                    # is sloppy and could use some tightening.]]]
-                    #
-                    zone = self.lines[self.lineIndex][self.zoneIndex]
-                    if zone.type == Zone.TEXT:   
-                        text = zone.accessible.text
-                        [string, startOffset, endOffset] = \
-                                 text.getTextAtOffset(
-                            zone.startOffset + self.textOffset,
-                            core.Accessibility.TEXT_BOUNDARY_WORD_START)
-                        if startOffset < zone.startOffset:
-                            self.goNext(type, wrap)
-                    [string, x, y, width, height] = \
-                             self.getCurrent(Context.WORD)
-                    if len(string.strip()) == 0:
-                        self.goNext(type, wrap)
-                return moved
-            
-            # We'll move the text offset to the beginning of the next
-            # word.  We do this by getting the end offset of the
-            # current word and setting our new offset to that.
-            #
-            text = zone.accessible.text
-            [string, startOffset, endOffset] = text.getTextAtOffset(
-                zone.startOffset + self.textOffset,
-                core.Accessibility.TEXT_BOUNDARY_WORD_START)
-
-            # We may have ended up with an offset not in this Zone,
-            # but in the same text area.  So...we'll Keep on trodding
-            # across zones until we get to where the end of the word
-            # really is.  We'll also stop if we hit the end or we
-            # leave the current accessible text object (remember that
-            # a single text area can be represented by multiple
-            # zones).
-            #
-            recalcOffset = True
-            while endOffset >= (zone.startOffset + zone.length):
-                oldZone = zone
-                moved = self.goNext(Context.ZONE, wrap)
-                if moved:
-                    zone = self.lines[self.lineIndex][self.zoneIndex]
-                    if zone.accessible != oldZone.accessible:
-                        recalcOffset = False
-                        break
-                else:
-                    break
-
-            # If we are still in the same accessible text object then
-            # we set our new textOffset to the appropriate value without
-            # going beyond the end of the text object.
-            #
-            if recalcOffset:
-                newOffset = endOffset - zone.startOffset
-                if (newOffset != self.textOffset) \
-                   and (newOffset < zone.length):
-                    self.textOffset = newOffset
-                    moved = True
-
-            # Now check to see if we ended up on something empty.
-            # If we did, then move on to the next word.
-            #
-            if moved:
-                [string, x, y, width, height] = self.getCurrent(Context.WORD)
-                if len(string.strip()) == 0:
-                    self.goNext(type, wrap)
         elif type == Context.LINE:
             if wrap & Context.WRAP_LINE:
                 if self.lineIndex < (len(self.lines) - 1):
                     self.lineIndex += 1
-                    self.zoneIndex  = 0
-                    self.textOffset = 0
+                    self.zoneIndex = 0
+                    self.wordIndex = 0
+                    self.charIndex = 0
                     moved = True
                 elif (wrap & Context.WRAP_TOP_BOTTOM) \
                      and (self.lineIndex != 0):
-                        self.lineIndex  = 0
-                        self.zoneIndex  = 0
-                        self.textOffset = 0
+                        self.lineIndex = 0
+                        self.zoneIndex = 0
+                        self.wordIndex = 0
+                        self.charIndex = 0
                         moved = True
         else:
             raise Error, "Invalid type: %d" % type
@@ -620,12 +691,12 @@ class Context:
     
 
     def goAbove(self, type=ZONE, wrap=True):
-        """Moves this context's locus of interest to first character
+        """Moves this context's locus of interest to first char
         of the type that's closest to and above the current locus of
         interest.
 
         Arguments:
-        - type: one of ZONE, CHARACTER, WORD, LINE
+        - type: one of ZONE, CHAR, WORD, LINE
         - wrap: if True, will cross top/bottom boundaries; if False, will
                 stop on top/bottom boundaries.
 
@@ -640,11 +711,11 @@ class Context:
 
     def getBelow(self, type=ZONE, wrap=True):
         """Moves this context's locus of interest to the first
-        character of the type that's closest to and below the current
+        char of the type that's closest to and below the current
         locus of interest.
 
         Arguments:
-        - type: one of ZONE, CHARACTER, WORD, LINE
+        - type: one of ZONE, CHAR, WORD, LINE
         - wrap: if True, will cross top/bottom boundaries; if False, will
                 stop on top/bottom boundaries.
 
@@ -716,7 +787,12 @@ def getZonesFromAccessible(accessible, cliprect):
         return []
     
     zones = []
-    
+
+    # Now see if there is any accessible text.  If so, find new zones,
+    # where each zone represents a line of this text object.  When
+    # creating the zone, only keep track of the text that is actually
+    # showing on the screen.
+    #
     if accessible.text:
         text = accessible.text
         length = text.characterCount
@@ -742,14 +818,18 @@ def getZonesFromAccessible(accessible, cliprect):
                                 cliprect.x, cliprect.y,
                                 cliprect.width, cliprect.height)
 
-                zones.append(Zone(accessible,
-                                  Zone.TEXT,
-                                  string, 
-                                  clipping[0],
-                                  clipping[1],
-                                  clipping[2],
-                                  clipping[3],
-                                  startOffset))
+		# [[[TODO: WDW - here is where the new string and
+		# startOffset should be calculated.  Do it via
+		# text.getBoundedRanges, passing in the clipping
+		# area and TEXT_CLIP_BOTH.]]]
+		#
+                zones.append(TextZone(accessible,
+                                      startOffset,
+                                      string, 
+                                      clipping[0],
+                                      clipping[1],
+                                      clipping[2],
+                                      clipping[3]))
                 
             elif len(zones):
                 # We'll break out of searching all the text - the idea
@@ -762,18 +842,20 @@ def getZonesFromAccessible(accessible, cliprect):
                 #
                 break
         
-        # We might have a zero length text area.
+        # We might have a zero length text area.  In that case, well,
+        # lets hack...
         #
         if len(zones) == 0:
-            zones.append(Zone(accessible,
-                              Zone.TEXT,
-                              "",
-                              extents.x, extents.y,
-                              extents.width, extents.height,
-                              0))
+            if (accessible.role == rolenames.ROLE_TEXT) \
+               or ((accessible.role == rolenames.ROLE_PASSWORD_TEXT)):
+                zones.append(TextZone(accessible,
+                                      0,
+                                      "",
+                                      extents.x, extents.y,
+                                      extents.width, extents.height))
 
     # We really want the accessible text information.  But, if we have
-    # and image, and it has a description, we can fall back on it.
+    # an image, and it has a description, we can fall back on it.
     #
     if (len(zones) == 0) \
            and accessible.image \
@@ -793,31 +875,34 @@ def getZonesFromAccessible(accessible, cliprect):
                             cliprect.width, cliprect.height)
                 
             zones.append(Zone(accessible, 
-                              Zone.IMAGE,
                               accessible.image.imageDescription, 
                               clipping[0],
                               clipping[1],
                               clipping[2],
-                              clipping[3],
-                              0))
+                              clipping[3]))
 
     # Well...darn.  Maybe we didn't get anything of use, but we certainly
     # know there's something there.  If that's the case, we'll just use
-    # the component extents and the name of the accessible.
+    # the component extents and the name or description of the accessible.
     #
     if len(zones) == 0:
         clipping = clip(extents.x, extents.y,
                         extents.width, extents.height,
                         cliprect.x, cliprect.y,
                         cliprect.width, cliprect.height)
+        if accessible.name and len(accessible.name):
+            string = accessible.name
+        elif accessible.description and len(accessible.description):
+            string = accessible.description
+        else:
+            string = ""
+            
         zones.append(Zone(accessible,
-                          Zone.COMPONENT,
-                          accessible.name,
+                          string,
                           clipping[0],
                           clipping[1],
                           clipping[2],
-                          clipping[3],
-                          0))
+                          clipping[3]))
     
     return zones
 
@@ -828,12 +913,12 @@ def getShowingZones(root):
     Accessible object associated with a given region.  The term
     'zone' here is inherited from OCR algorithms and techniques.
     
-    The objects are returned in no particular order.
+    The Zones are returned in no particular order.
 
     Arguments:
     - root: the Accessible object to traverse
 
-    Returns: a list of objects under the specified object
+    Returns: a list of Zones under the specified object
     """
 
     if root is None:
@@ -944,4 +1029,17 @@ def clusterZonesByLine(zones):
         if not addedToCluster:
             lineClusters.append([clusterCandidate])
 
-    return lineClusters
+    # Now, adjust all the indeces.
+    #
+    lines = []
+    lineIndex = 0
+    for lineCluster in lineClusters:
+        lines.append(Line(lineIndex, lineCluster))
+        zoneIndex = 0
+        for zone in lineCluster:
+            zone.line = lines[lineIndex]
+            zone.index = zoneIndex
+            zoneIndex += 1
+        lineIndex += 1
+        
+    return lines

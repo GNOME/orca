@@ -1126,58 +1126,80 @@ class Default(Script):
 
     
     def getFlatReviewContext(self):
-        if self.flatReviewContext is None:        
-            currentLine = 0
-            currentZone = 0
-            currentZoneOffset = 0
+        if self.flatReviewContext is None:
+            # The first thing we try to do is find which Zone has the
+            # Accessible object with focus.
+            #
+            currentLineIndex = 0
+            currentZoneIndex = 0
+            currentWordIndex = 0
+            currentCharIndex = 0
             lines = self.clusterZonesByLine(self.getShowingZones())
-            done = False
-            for line in lines:
-                currentZone = 0
-                for zone in line:
+            foundZoneWithFocus = False
+            while currentLineIndex < len(lines):
+                line = lines[currentLineIndex]
+                currentZoneIndex = 0
+                while currentZoneIndex < len(line.zones):
+                    zone = line.zones[currentZoneIndex]
                     if zone.accessible == orca.locusOfFocus:
-                        done = True
+                        foundZoneWithFocus = True
                         break
                     else:
-                        currentZone += 1
-                if done:
+                        currentZoneIndex += 1
+                if foundZoneWithFocus:
                     break
                 else:
-                    currentLine += 1
+                    currentLineIndex += 1
 
-            if not done:
-                currentLine = 0
-                currentZone = 0
-            elif zone.accessible.text:
+            # Fallback to the first Zone if we didn't find anything.
+            #
+            if not foundZoneWithFocus:
+                currentLineIndex = 0
+                currentZoneIndex = 0
+            elif isinstance(zone, flat_review.TextZone):
                 # If we're on an accessible text object, try to start
                 # at the caret position of that object.
                 #
-                caretLine = currentLine
-                caretZone = currentZone
+                accessible  = zone.accessible
+                lineIndex   = currentLineIndex
+                zoneIndex   = currentZoneIndex
                 caretOffset = zone.accessible.text.caretOffset
-                foundCaret = False
-                for line in lines[caretLine:]:
-                    for zone in line[caretZone:]:
-                        if (caretOffset >= zone.startOffset) \
-                           and (caretOffset \
-                                < (zone.startOffset + zone.length)):
-                            foundCaret = True
-                            break
-                        else:
-                            caretZone += 1
-                    if foundCaret:
-                        currentLine = caretLine
-                        currentZone = caretZone
-                        currentZoneOffset = caretOffset - zone.startOffset
+                foundZoneWithCaret = False
+                while lineIndex < len(lines):
+                    line = lines[lineIndex]
+                    while zoneIndex < len(line.zones):
+                        zone = line.zones[zoneIndex]
+                        if zone.accessible == accessible:
+                            if (caretOffset >= zone.startOffset) \
+                                   and (caretOffset \
+                                        < (zone.startOffset + zone.length)):
+                                foundZoneWithCaret = True
+                                break
+                        zoneIndex += 1                            
+                    if foundZoneWithCaret:
+                        currentLineIndex = lineIndex
+                        currentZoneIndex = zoneIndex
+                        currentWordIndex = 0
+                        currentCharIndex = 0
+                        offset = zone.startOffset
+                        while currentWordIndex < len(zone.words):
+                            word = zone.words[currentWordIndex]
+                            if (word.length + offset) > caretOffset:
+                                currentCharIndex = caretOffset - offset
+                                break
+                            else:
+                                currentWordIndex += 1
+                                offset += word.length
                         break
                     else:
-                        caretZone = 0
-                        caretLine += 1
-                
+                        zoneIndex = 0
+                        lineIndex += 1
+
             self.flatReviewContext = flat_review.Context(lines,
-                                                         currentLine,
-                                                         currentZone,
-                                                         currentZoneOffset)
+                                                         currentLineIndex,
+                                                         currentZoneIndex,
+                                                         currentWordIndex,
+                                                         currentCharIndex)
             
         return self.flatReviewContext
 
@@ -1203,7 +1225,9 @@ class Default(Script):
         orca.drawOutline(x, y, width, height)
             
         if (len(string) == 0) or (string == "\n"):
-            speech.say("default", "blank")
+            speech.say("default", _("blank"))
+        elif string.isspace():
+            speech.say("default", _("white space"))
         else:
             speech.say("default", string)
                  
@@ -1256,6 +1280,28 @@ class Default(Script):
         return True
 
             
+    def reviewCurrentItem(self, inputEvent):
+        context = self.getFlatReviewContext()
+        [string, x, y, width, height] = \
+                 context.getCurrent(flat_review.Context.WORD)
+        orca.drawOutline(x, y, width, height)
+
+        if (len(string) == 0) or (string == "\n"):
+            speech.say("default", _("blank"))
+        else:
+            [lineString, x, y, width, height] = \
+                         context.getCurrent(flat_review.Context.LINE)
+            if lineString == "\n":
+                speech.say("default", _("blank"))
+            elif string.isspace():
+                speech.say("default", _("white space"))
+            elif string.isupper():
+                speech.say("uppercase", string)
+            else:
+                speech.say("default", string)
+
+        return True
+
     def reviewPreviousItem(self, inputEvent):
         context = self.getFlatReviewContext()
 
@@ -1263,24 +1309,7 @@ class Default(Script):
                                    flat_review.Context.WRAP_LINE)
         
         if moved:
-            [string, x, y, width, height] = \
-                     context.getCurrent(flat_review.Context.WORD)
-            orca.drawOutline(x, y, width, height)
-
-            if len(string):
-                speech.say("default", string)
-            
-        return True
-
-            
-    def reviewCurrentItem(self, inputEvent):
-        context = self.getFlatReviewContext()
-        [string, x, y, width, height] = \
-                 context.getCurrent(flat_review.Context.WORD)
-        orca.drawOutline(x, y, width, height)
-
-        if len(string):
-            speech.say("default", string)
+            self.reviewCurrentItem(inputEvent)
             
         return True
 
@@ -1292,12 +1321,7 @@ class Default(Script):
                                flat_review.Context.WRAP_LINE)
         
         if moved:
-            [string, x, y, width, height] = \
-                     context.getCurrent(flat_review.Context.WORD)
-            orca.drawOutline(x, y, width, height)
-            
-            if len(string):
-                speech.say("default", string)
+            self.reviewCurrentItem(inputEvent)
             
         return True
 
@@ -1306,14 +1330,16 @@ class Default(Script):
         context = self.getFlatReviewContext()
 
         [string, x, y, width, height] = \
-                 context.getCurrent(flat_review.Context.CHARACTER)
+                 context.getCurrent(flat_review.Context.CHAR)
         orca.drawOutline(x, y, width, height)
 
-        if len(string):
+        if (len(string) == 0):
+            speech.say("default", _("blank"))
+        else:
             [lineString, x, y, width, height] = \
                          context.getCurrent(flat_review.Context.LINE)
             if lineString == "\n":
-                speech.say("default", "blank")
+                speech.say("default", _("blank"))
             elif string.isupper():
                 speech.say("uppercase", string)
             else:
@@ -1325,7 +1351,7 @@ class Default(Script):
     def reviewPreviousCharacter(self, inputEvent):
         context = self.getFlatReviewContext()
 
-        moved = context.goPrevious(flat_review.Context.CHARACTER,
+        moved = context.goPrevious(flat_review.Context.CHAR,
                                    flat_review.Context.WRAP_LINE)
         
         if moved:
@@ -1348,7 +1374,7 @@ class Default(Script):
     def reviewNextCharacter(self, inputEvent):
         context = self.getFlatReviewContext()
 
-        moved = context.goNext(flat_review.Context.CHARACTER,
+        moved = context.goNext(flat_review.Context.CHAR,
                                flat_review.Context.WRAP_LINE)
         
         if moved:
@@ -1368,7 +1394,7 @@ class Default(Script):
         print "Number of lines:", len(lines)
         for line in lines:
             string = ""
-            for zone in line:
+            for zone in line.zones:
                 string += " '%s' [%s]" % (zone.string, zone.accessible.role)
                 orca.drawOutline(zone.x, zone.y, zone.width, zone.height,
                                  False)
