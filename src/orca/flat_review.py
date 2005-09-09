@@ -24,10 +24,6 @@ import debug
 import core
 import rolenames
 
-# [[[TODO: WDW - this whole thing is a bit shaky right now.  I think
-# it's because I wrote half the code late at night.  I tried to do
-# the right thing, but I think "tried" got reformed as "tired."]]]
-
 # [[[TODO: WDW - HACK Regular expression to split strings on
 # whitespace boundaries, which is what we'll use for word dividers
 # instead of living at the whim of whomever decided to implement the
@@ -432,9 +428,6 @@ class Context:
         elif type == Context.WORD:
             if isinstance(zone, TextZone):
                 text = zone.accessible.text
-		# [[[TODO: WDW - not quite sure what the current word is
-		# if we're on whitespace.]]]
-		#
                 words = zone.words
                 if words:
                     word = words[self.wordIndex]
@@ -901,11 +894,26 @@ def getZonesFromAccessible(accessible, cliprect):
                                 cliprect.x, cliprect.y,
                                 cliprect.width, cliprect.height)
 
-		# [[[TODO: WDW - here is where the new string and
-		# startOffset should be calculated.  Do it via
-		# text.getBoundedRanges, passing in the clipping
-		# area and TEXT_CLIP_BOTH.]]]
+		# [[[TODO: WDW - HACK it would be nice to clip the
+                # the text by what is really showing on the screen,
+                # but this seems to hang Orca and the client.]]]
 		#
+                #ranges = text.getBoundedRanges(\
+                #    clipping[0],
+                #    clipping[1],
+                #    clipping[2],
+                #    clipping[3],
+                #    0,
+                #    core.Accessibility.TEXT_CLIP_BOTH,
+                #    core.Accessibility.TEXT_CLIP_BOTH)
+                #
+                #print
+                #print "HERE!"
+                #for range in ranges:
+                #    print range.startOffset
+                #    print range.endOffset
+                #    print range.content
+                                                                   
                 zones.append(TextZone(accessible,
                                       startOffset,
                                       string, 

@@ -1251,8 +1251,7 @@ class Default(Script):
 
         moved = context.goBegin()
         
-        if moved:
-            self.reviewCurrentLine(inputEvent)
+        self.reviewCurrentLine(inputEvent)
                  
         return True
 
@@ -1274,8 +1273,7 @@ class Default(Script):
 
         moved = context.goEnd()
         
-        if moved:
-            self.reviewCurrentLine(inputEvent)
+        self.reviewCurrentLine(inputEvent)
             
         return True
 
@@ -1365,8 +1363,7 @@ class Default(Script):
 
         moved = context.goEnd(flat_review.Context.LINE)
         
-        if moved:
-            self.reviewCurrentCharacter(inputEvent)
+        self.reviewCurrentCharacter(inputEvent)
             
         return True
 
