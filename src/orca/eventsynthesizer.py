@@ -60,6 +60,18 @@ def clickObject(obj, button):
     generateMouseEvent(x, y, "b%dc" % button)
 
 
+def clickPoint(x, y, button):
+    """Performs a button click on the given point.
+
+    Arguments:
+    - obj: the Accessible
+    - x, y: the point
+    - button: an integer representing the mouse button number
+    """
+
+    generateMouseEvent(x, y, "b%dc" % button)
+
+
 def generateKeyboardEvent(keycode, keystring, type):
     """Generates a keyboard event.
 

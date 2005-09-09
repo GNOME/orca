@@ -97,6 +97,24 @@ class Default(Script):
 
         self.keybindings.add(
             keybindings.KeyBinding(
+                "KP_Divide", \
+                0, \
+                0, \
+                InputEventHandler(\
+                    self.leftClickReviewItem,
+                    _("Performs left click on current flat review item."))))
+
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_Multiply", \
+                0, \
+                0, \
+                InputEventHandler(\
+                    self.rightClickReviewItem,
+                    _("Performs right click on current flat review item."))))
+
+        self.keybindings.add(
+            keybindings.KeyBinding(
                 "KP_Add", \
                 0, \
                 0, \
@@ -1235,6 +1253,16 @@ class Default(Script):
         return True
 
     
+    def leftClickReviewItem(self, inputEvent=None):
+        context = self.getFlatReviewContext().clickCurrent(1)
+        return True
+    
+    
+    def rightClickReviewItem(self, inputEvent=None):
+        context = self.getFlatReviewContext().clickCurrent(3)
+        return True
+    
+
     def reviewCurrentLine(self, inputEvent):
         context = self.getFlatReviewContext()
 

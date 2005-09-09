@@ -20,8 +20,9 @@
 import re
 
 import a11y
-import debug
 import core
+import debug
+import eventsynthesizer
 import rolenames
 
 # [[[TODO: WDW - HACK Regular expression to split strings on
@@ -381,6 +382,29 @@ class Context:
         print "    WORD_END:   start=%d end=%d string='%s'" \
               % (startOffset, endOffset, string)
         
+
+    def clickCurrent(self, button=1):
+        """Performs a mouse click on the current accessible."""
+
+        if (not self.lines) \
+           or (not self.lines[self.lineIndex].zones):
+            return
+
+        [string, x, y, width, height] = self.getCurrent(Context.CHAR)
+        try:
+            # We try to click slightly to the left of center.  This
+            # is to handle toolkits that will offset the caret position
+            # to the right if you click dead on center of a character.
+            #
+            # [[[TODO: WDW - probably need to go the other way for
+            # locales that read right to left.]]]
+            #
+            eventsynthesizer.clickPoint(x + max(0, (width / 2) - 1),
+                                        y + height/ 2,
+                                        button)
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
+        
         
     def getCurrent(self, type=ZONE):
         """Gets the string, offset, and extent information for the
@@ -525,7 +549,7 @@ class Context:
         return moved
 
         
-    def goPrevious(self, type=ZONE, wrap=WRAP_ALL):
+    def goPrevious(self, type=ZONE, wrap=WRAP_ALL, omitWhitespace=True):
         """Moves this context's locus of interest to the first char
         of the previous type.
 
@@ -563,7 +587,7 @@ class Context:
                 self.charIndex -= 1
                 moved = True
             else:
-                moved = self.goPrevious(Context.WORD, wrap)
+                moved = self.goPrevious(Context.WORD, wrap, False)
                 if moved:
                     zone = self.lines[self.lineIndex].zones[self.zoneIndex]
                     if zone.words:
@@ -593,7 +617,8 @@ class Context:
             # we might need to move some more.
             #
             zone = self.lines[self.lineIndex].zones[self.zoneIndex]
-            if moved \
+            if omitWhitespace \
+               and moved \
                and ((len(zone.words) == 0) \
                     or zone.words[self.wordIndex].string.isspace()):
 
@@ -646,7 +671,7 @@ class Context:
         return moved
 
 
-    def goNext(self, type=ZONE, wrap=WRAP_ALL):
+    def goNext(self, type=ZONE, wrap=WRAP_ALL, omitWhitespace=True):
         """Moves this context's locus of interest to first char of
         the next type.
 
@@ -686,7 +711,7 @@ class Context:
                         self.charIndex += 1
                         moved = True
                     else:
-                        moved = self.goNext(Context.WORD, wrap)
+                        moved = self.goNext(Context.WORD, wrap, False)
                 else:
                     moved = self.goNext(Context.WORD, wrap)
             else:
@@ -713,7 +738,8 @@ class Context:
             # we might need to move some more.
             #
             zone = self.lines[self.lineIndex].zones[self.zoneIndex]
-            if moved \
+            if omitWhitespace \
+               and moved \
                and ((len(zone.words) == 0) \
                     or zone.words[self.wordIndex].string.isspace()):
 
