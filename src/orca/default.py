@@ -179,11 +179,20 @@ class Default(Script):
         self.keybindings.add(
             keybindings.KeyBinding(
                 "KP_4", \
-                0, \
+                1 << orca.MODIFIER_ORCA, \
                 0, \
                 InputEventHandler(\
                     self.reviewPreviousItem,
                     _("Moves flat review to the previous item or word."))))
+
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_4", \
+                1 << orca.MODIFIER_ORCA, \
+                1 << orca.MODIFIER_ORCA, \
+                InputEventHandler(\
+                    self.reviewAbove,
+                    _("Moves flat review to the word above the current word."))))
 
         self.keybindings.add(
             keybindings.KeyBinding(
@@ -197,12 +206,21 @@ class Default(Script):
         self.keybindings.add(
             keybindings.KeyBinding(
                 "KP_6", \
-                0, \
+                1 << orca.MODIFIER_ORCA, \
                 0, \
                 InputEventHandler(\
                     self.reviewNextItem,
                     _("Moves flat review to the next item or word."))))
 
+
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_6", \
+                1 << orca.MODIFIER_ORCA, \
+                1 << orca.MODIFIER_ORCA, \
+                InputEventHandler(\
+                    self.reviewBelow,
+                    _("Moves flat review to the word below the current word."))))
 
         self.keybindings.add(
             keybindings.KeyBinding(
@@ -1377,6 +1395,30 @@ class Default(Script):
         if moved:
             self.reviewCurrentCharacter(inputEvent)
             
+        return True
+
+            
+    def reviewAbove(self, inputEvent):
+        context = self.getFlatReviewContext()
+
+        moved = context.goAbove(flat_review.Context.CHAR,
+                                flat_review.Context.WRAP_LINE)
+        
+        if moved:
+            self.reviewCurrentItem(inputEvent)
+                 
+        return True
+
+            
+    def reviewBelow(self, inputEvent):
+        context = self.getFlatReviewContext()
+
+        moved = context.goBelow(flat_review.Context.CHAR,
+                                flat_review.Context.WRAP_LINE)
+        
+        if moved:
+            self.reviewCurrentItem(inputEvent)
+                 
         return True
 
             

@@ -766,44 +766,78 @@ class Context:
         return moved
     
 
-    def goAbove(self, type=ZONE, wrap=WRAP_ALL):
+    def goAbove(self, type=LINE, wrap=WRAP_ALL):
         """Moves this context's locus of interest to first char
         of the type that's closest to and above the current locus of
         interest.
 
         Arguments:
-        - type: one of ZONE, CHAR, WORD, LINE
+        - type: LINE
         - wrap: if True, will cross top/bottom boundaries; if False, will
                 stop on top/bottom boundaries.
 
         Returns: [string, startOffset, endOffset, x, y, width, height]
         """
 
-        if type == Context.LINE:
+        moved = False
+        if type == Context.CHAR:
+            [string, ax, ay, awidth, aheight] = self.getCurrent(Context.CHAR)
+            moved = self.goPrevious(Context.LINE, wrap)
+            if moved:
+                while True:
+                    [string, bx, by, bwidth, bheight] = \
+                             self.getCurrent(Context.CHAR)
+                    leftMostRightEdge = min(ax + awidth, bx + bwidth)
+                    rightMostLeftEdge = max(ax, bx)
+                    if (rightMostLeftEdge < leftMostRightEdge) \
+                       or (bx >= (ax + awidth)):
+                        break
+                    elif not self.goNext(Context.CHAR, 0):
+                        break
+        elif type == Context.LINE:
             return goPrevious(type, wrap)
         else:
             raise Error, "Invalid type: %d" % type
 
+        return moved
 
-    def getBelow(self, type=ZONE, wrap=WRAP_ALL):
+
+    def goBelow(self, type=LINE, wrap=WRAP_ALL):
         """Moves this context's locus of interest to the first
         char of the type that's closest to and below the current
         locus of interest.
 
         Arguments:
-        - type: one of ZONE, CHAR, WORD, LINE
+        - type: one of WORD, LINE
         - wrap: if True, will cross top/bottom boundaries; if False, will
                 stop on top/bottom boundaries.
 
         Returns: [string, startOffset, endOffset, x, y, width, height]
         """
 
-        if type == Context.LINE:
-            return goNext(type, wrap)
+        moved = False
+        if type == Context.CHAR:
+            [string, ax, ay, awidth, aheight] = self.getCurrent(Context.CHAR)
+            moved = self.goNext(Context.LINE, wrap)
+            if moved:
+                while True:
+                    [string, bx, by, bwidth, bheight] = \
+                             self.getCurrent(Context.CHAR)
+                    leftMostRightEdge = min(ax + awidth, bx + bwidth)
+                    rightMostLeftEdge = max(ax, bx)
+                    if (rightMostLeftEdge < leftMostRightEdge) \
+                       or (bx >= (ax + awidth)):
+                        break
+                    elif not self.goNext(Context.CHAR, 0):
+                        break
+        elif type == Context.LINE:
+            moved = goNext(type, wrap)
         else:
             raise Error, "Invalid type: %d" % type
 
-        
+        return moved
+
+    
 def visible(ax, ay, awidth, aheight,
             bx, by, bwidth, bheight):
     """Returns true if any portion of region 'a' is in region 'b'
