@@ -331,6 +331,14 @@ class Context:
         self.wordIndex = wordIndex
         self.charIndex = charIndex
 
+        # This is used to tell us where we should strive to move to
+        # when going up and down lines to the closest character.
+        # The targetChar is the character where we initially started
+        # moving from, and does not change when one moves up or down
+        # by line.
+        #
+        self.targetCharInfo = None
+        
 
     def _dumpCurrentState(self):
         print "line=%d, zone=%d, word=%d, char=%d" \
@@ -498,11 +506,13 @@ class Context:
                 or (self.wordIndex != wordIndex) \
                 or (self.charIndex != charIndex) \
 
-        self.lineIndex = lineIndex
-        self.zoneIndex = zoneIndex
-        self.wordIndex = wordIndex
-        self.charIndex = charIndex
-
+        if moved:
+            self.lineIndex = lineIndex
+            self.zoneIndex = zoneIndex
+            self.wordIndex = wordIndex
+            self.charIndex = charIndex
+            self.targetCharInfo = self.getCurrent(Context.CHAR) 
+        
         return moved
 
     
@@ -541,11 +551,13 @@ class Context:
                 or (self.wordIndex != wordIndex) \
                 or (self.charIndex != charIndex) \
 
-        self.lineIndex = lineIndex
-        self.zoneIndex = zoneIndex
-        self.wordIndex = wordIndex
-        self.charIndex = charIndex
-
+        if moved:
+            self.lineIndex = lineIndex
+            self.zoneIndex = zoneIndex
+            self.wordIndex = wordIndex
+            self.charIndex = charIndex
+            self.targetCharInfo = self.getCurrent(Context.CHAR) 
+        
         return moved
 
         
@@ -668,6 +680,9 @@ class Context:
         else:
             raise Error, "Invalid type: %d" % type
 
+        if moved and (type != Context.LINE):
+            self.targetCharInfo = self.getCurrent(Context.CHAR) 
+            
         return moved
 
 
@@ -789,6 +804,9 @@ class Context:
         else:
             raise Error, "Invalid type: %d" % type
 
+        if moved and (type != Context.LINE):
+            self.targetCharInfo = self.getCurrent(Context.CHAR) 
+            
         return moved
     
 
@@ -807,19 +825,33 @@ class Context:
 
         moved = False
         if type == Context.CHAR:
-            [string, ax, ay, awidth, aheight] = self.getCurrent(Context.CHAR)
+            # We want to shoot for the closest character, which we've
+            # saved away as self.targetCharInfo, which is the list
+            # [string, x, y, width, height].
+            #
+            if self.targetCharInfo is None:
+                self.targetCharInfo = self.getCurrent(Context.CHAR)
+            target = self.targetCharInfo
+            leftTargetX = target[1]              # x
+            rightTargetX = target[1] + target[3] # x + width
+            
             moved = self.goPrevious(Context.LINE, wrap)
             if moved:
                 while True:
                     [string, bx, by, bwidth, bheight] = \
                              self.getCurrent(Context.CHAR)
-                    leftMostRightEdge = min(ax + awidth, bx + bwidth)
-                    rightMostLeftEdge = max(ax, bx)
+                    leftMostRightEdge = min(rightTargetX, bx + bwidth)
+                    rightMostLeftEdge = max(leftMostRightEdge, bx)
                     if (rightMostLeftEdge < leftMostRightEdge) \
-                       or (bx >= (ax + awidth)):
+                       or (bx >= rightTargetX):
                         break
                     elif not self.goNext(Context.CHAR, 0):
                         break
+
+            # Moving around might have reset the current targetCharInfo,
+            # so we reset it to our saved value.
+            #
+            self.targetCharInfo = target
         elif type == Context.LINE:
             return goPrevious(type, wrap)
         else:
@@ -843,19 +875,33 @@ class Context:
 
         moved = False
         if type == Context.CHAR:
-            [string, ax, ay, awidth, aheight] = self.getCurrent(Context.CHAR)
+            # We want to shoot for the closest character, which we've
+            # saved away as self.targetCharInfo, which is the list
+            # [string, x, y, width, height].
+            #
+            if self.targetCharInfo is None:
+                self.targetCharInfo = self.getCurrent(Context.CHAR)
+            target = self.targetCharInfo
+            leftTargetX = target[1]              # x
+            rightTargetX = target[1] + target[3] # x + width
+            
             moved = self.goNext(Context.LINE, wrap)
             if moved:
                 while True:
                     [string, bx, by, bwidth, bheight] = \
                              self.getCurrent(Context.CHAR)
-                    leftMostRightEdge = min(ax + awidth, bx + bwidth)
-                    rightMostLeftEdge = max(ax, bx)
+                    leftMostRightEdge = min(rightTargetX, bx + bwidth)
+                    rightMostLeftEdge = max(leftTargetX, bx)
                     if (rightMostLeftEdge < leftMostRightEdge) \
-                       or (bx >= (ax + awidth)):
+                       or (bx >= rightTargetX):
                         break
                     elif not self.goNext(Context.CHAR, 0):
                         break
+
+            # Moving around might have reset the current targetCharInfo,
+            # so we reset it to our saved value.
+            #
+            self.targetCharInfo = target
         elif type == Context.LINE:
             moved = goNext(type, wrap)
         else:
