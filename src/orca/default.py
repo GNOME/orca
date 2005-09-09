@@ -1244,12 +1244,14 @@ class Default(Script):
         if self.flatReviewContext:
             orca.drawOutline(-1, 0, 0, 0)
             self.flatReviewContext = None
+            self.updateBraille(orca.locusOfFocus)
         else:
             context = self.getFlatReviewContext()
             [string, x, y, width, height] = \
                      context.getCurrent(flat_review.Context.WORD)
             orca.drawOutline(x, y, width, height)
-
+            self.reviewCurrentItem(inputEvent)
+            
         return True
 
     
@@ -1263,6 +1265,17 @@ class Default(Script):
         return True
     
 
+    def updateBrailleReview(self):
+        context = self.getFlatReviewContext()
+        result = context.getCurrentBrailleRegions()
+        braille.clear()
+        line = braille.Line()
+        line.addRegions(result[0])
+        braille.addLine(line)
+        braille.setFocus(result[1])
+        braille.refresh(True) # True = pan to cursor
+        
+        
     def reviewCurrentLine(self, inputEvent):
         context = self.getFlatReviewContext()
 
@@ -1276,7 +1289,9 @@ class Default(Script):
             speech.say("default", _("white space"))
         else:
             speech.say("default", string)
-                 
+
+        self.updateBrailleReview()
+        
         return True
 
             
@@ -1344,6 +1359,8 @@ class Default(Script):
             else:
                 speech.say("default", string)
 
+        self.updateBrailleReview()        
+
         return True
 
     def reviewPreviousItem(self, inputEvent):
@@ -1389,6 +1406,8 @@ class Default(Script):
             else:
                 speech.say("default", string)
             
+        self.updateBrailleReview()
+        
         return True
 
 

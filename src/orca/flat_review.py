@@ -20,6 +20,7 @@
 import re
 
 import a11y
+import braille
 import core
 import debug
 import eventsynthesizer
@@ -400,14 +401,15 @@ class Context:
 
         [string, x, y, width, height] = self.getCurrent(Context.CHAR)
         try:
-            # We try to click slightly to the left of center.  This
-            # is to handle toolkits that will offset the caret position
-            # to the right if you click dead on center of a character.
+
+            # We try to click to the left of center.  This is to
+            # handle toolkits that will offset the caret position to
+            # the right if you click dead on center of a character.
             #
             # [[[TODO: WDW - probably need to go the other way for
             # locales that read right to left.]]]
             #
-            eventsynthesizer.clickPoint(x + max(0, (width / 2) - 1),
+            eventsynthesizer.clickPoint(x,
                                         y + height/ 2,
                                         button)
         except:
@@ -479,7 +481,60 @@ class Context:
         else:
             raise Error, "Invalid type: %d" % type
 
-            
+
+    def getCurrentBrailleRegions(self):
+        """Gets the braille for the entire current line.
+
+        Returns [regions, regionWithFocus]
+        """
+
+        regions = []
+        focusedRegion = None
+        
+        if (not self.lines) \
+           or (not self.lines[self.lineIndex].zones):
+            return [regions, focusedRegion]
+
+        line = self.lines[self.lineIndex]
+
+        zoneIndex = 0
+        wordIndex = 0
+        charIndex = 0
+        while zoneIndex < len(line.zones):
+            zone = line.zones[zoneIndex]
+            if (zone.accessible.role == rolenames.ROLE_TEXT) \
+               or (zone.accessible.role == rolenames.ROLE_PASSWORD_TEXT) \
+               or (zone.accessible.role == rolenames.ROLE_TERMINAL):
+                region = braille.ReviewText(zone.accessible,
+                                            zone.string,
+                                            zone.startOffset)
+            else:
+                region = braille.Component(zone.accessible, zone.string)
+                
+            if len(regions):
+                regions.append(braille.Region(" "))
+            regions.append(region)
+
+            # We might have the object of interest.
+            # If so, we need to convert the current
+            # character index into an offset into the
+            # string for this zone.
+            #
+            if zoneIndex == self.zoneIndex:
+                regionWithFocus = region
+                regionWithFocus.cursorOffset = 0
+                if zone.words:
+                    wordIndex = 0
+                    while wordIndex < self.wordIndex:
+                        regionWithFocus.cursorOffset += \
+                            len(zone.words[wordIndex].string)
+                        wordIndex += 1
+                regionWithFocus.cursorOffset += self.charIndex
+            zoneIndex += 1
+
+        return [regions, regionWithFocus]
+
+    
     def goBegin(self, type=WINDOW):
         """Moves this context's locus of interest to the first char
         of the first relevant zone.

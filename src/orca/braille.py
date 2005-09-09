@@ -357,6 +357,38 @@ class Text(Region):
         self.accessible.text.setCaretOffset(newCaretOffset)
 
         
+class ReviewText(Region):
+    """A subclass of Region backed by a Text object.  This Region will
+    does not react to the caret changes, but will react if one updates
+    the cursorPosition.  This class is meant to be used by flat review
+    mode to show the current character position.
+    """
+    
+    def __init__(self, accessible, string, lineOffset):
+        """Creates a new Text region.
+
+        Arguments:
+        - accessible: the accessible that implements AccessibleText
+        - string: the string to use to represent the component
+        - lineOffset: the character offset into where the text line starts
+        """
+
+        self.accessible = accessible
+        self.string = string
+        self.lineOffset = lineOffset
+        self.cursorOffset = 0
+        
+
+    def processCursorKey(self, offset):
+        """Processes a cursor key press on this Component.  The offset is
+        0-based, where 0 represents the leftmost character of text associated
+        with this region.  Note that the zeroeth character may have been
+        scrolled off the display."""
+
+        newCaretOffset = self.lineOffset + offset
+        self.accessible.text.setCaretOffset(newCaretOffset)
+
+        
 class Line:
     """A horizontal line on the display.  Each Line is composed of a sequential
     set of Regions.
