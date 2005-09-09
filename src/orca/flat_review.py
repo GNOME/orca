@@ -17,6 +17,8 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+import re
+
 import a11y
 import debug
 import core
@@ -25,6 +27,13 @@ import rolenames
 # [[[TODO: WDW - this whole thing is a bit shaky right now.  I think
 # it's because I wrote half the code late at night.  I tried to do
 # the right thing, but I think "tried" got reformed as "tired."]]]
+
+# [[[TODO: WDW - HACK Regular expression to split strings on
+# whitespace boundaries, which is what we'll use for word dividers
+# instead of living at the whim of whomever decided to implement the
+# AT-SPI interfaces for their toolkit or app.]]]
+#
+whitespace_re = re.compile(r'(\s+)', re.DOTALL | re.IGNORECASE | re.M)
 
 class Char:
     """Represents a single char of an Accessibility_Text object."""
@@ -82,7 +91,7 @@ class Word:
         self.y = y
         self.width = width
         self.height = height
-
+        
     def __getattr__(self, attr):
         """Used for lazily determining the chars of a word.  We do
         this to reduce the total number of round trip calls to the app,
@@ -156,7 +165,7 @@ class Zone:
         """
  
         if attr == "words":
-            self.words = None
+            self.words = []
             return self.words        
         elif attr.startswith('__') and attr.endswith('__'):
             raise AttributeError, attr
@@ -211,7 +220,10 @@ class TextZone(Zone):
         self.height = height
 
     def __getattr__(self, attr):
-        """Used for lazily determining the words in a Zone.
+        """Used for lazily determining the words in a Zone.  The words
+        will either be all whitespace (interword boundaries) or actual
+        words.  To determine if a Word is whitespace, use
+        word.string.isspace()
 
         Arguments:
         - attr: a string indicating the attribute name to retrieve
@@ -222,40 +234,24 @@ class TextZone(Zone):
         if attr == "words":
             text = self.accessible.text
             self.words = []
-            i = 0
+            wordIndex = 0
             offset = self.startOffset
-            while offset < (self.startOffset + self.length):
-                [string, startOffset, endOffset] = text.getTextAtOffset(
-                    offset,
-                    core.Accessibility.TEXT_BOUNDARY_WORD_START)
-                if (startOffset >= (self.startOffset + self.length)) \
-                   or (startOffset == endOffset):
-                    break
-                else:
-                    startOffset = max(startOffset, self.startOffset)
-                    endOffset = min(endOffset, self.startOffset + self.length)
-                    if startOffset < endOffset:
-                        string = text.getText(startOffset, endOffset)
-                        [x, y, width, height] = text.getRangeExtents(
-                            startOffset, 
-                            endOffset, 
-                            0)
-                        word = Word(self,
-                                    i,
-                                    string,
-                                    x, y, width, height)
-                        self.words.append(word)
-                        
-                        # [[[TODO: WDW - also calculate the actual word
-                        # end offset.  getTextAtOffset as called above
-                        # gives us an end offset that is the beginning
-                        # of the next word.]]]
-                        #
-                        word.startOffset = startOffset
-                        i += 1
-                        
-                offset = endOffset
-                    
+            for string in whitespace_re.split(self.string):
+                if len(string):
+                    endOffset = offset + len(string)
+                    [x, y, width, height] = text.getRangeExtents(
+                        offset, 
+                        endOffset, 
+                        0)
+                    word = Word(self,
+                                wordIndex,
+                                string,
+                                x, y, width, height)
+                    word.startOffset = offset
+                    self.words.append(word)
+                    wordIndex += 1
+                    offset = endOffset
+                
             return self.words
         
         elif attr.startswith('__') and attr.endswith('__'):
@@ -582,6 +578,13 @@ class Context:
                         if chars:
                             self.charIndex = len(chars) - 1
         elif type == Context.WORD:
+            zone = self.lines[self.lineIndex].zones[self.zoneIndex]
+            accessible = zone.accessible
+            lineIndex = self.lineIndex
+            zoneIndex = self.zoneIndex
+            wordIndex = self.wordIndex
+            charIndex = self.charIndex
+
             if self.wordIndex > 0:
                 self.wordIndex -= 1
                 self.charIndex = 0
@@ -592,6 +595,43 @@ class Context:
                     zone = self.lines[self.lineIndex].zones[self.zoneIndex]
                     if zone.words:
                         self.wordIndex = len(zone.words) - 1
+
+            # If we landed on a whitespace word or something with no words,
+            # we might need to move some more.
+            #
+            zone = self.lines[self.lineIndex].zones[self.zoneIndex]
+            if moved \
+               and ((len(zone.words) == 0) \
+                    or zone.words[self.wordIndex].string.isspace()):
+
+                # If we're on whitespace in the same zone, then let's
+                # try to move on.  If not, we've definitely moved
+                # across accessibles.  If that's the case, let's try
+                # to find the first 'real' word in the accessible.
+                # If we cannot, then we're just stuck on an accessible
+                # with no words and we should do our best to announce
+                # this to the user (e.g., "whitespace" or "blank").
+                #
+                if zone.accessible == accessible:
+                    moved = self.goPrevious(Context.WORD, wrap)
+                else:
+                    wordIndex = self.wordIndex - 1
+                    while wordIndex >= 0:
+                        if (zone.words[wordIndex].string is None) \
+                            or not len(zone.words[wordIndex].string) \
+                            or zone.words[wordIndex].string.isspace():
+                            wordIndex -= 1
+                        else:
+                            break
+                    if wordIndex >= 0:
+                        self.wordIndex = wordIndex
+
+            if not moved:
+                self.lineIndex = lineIndex
+                self.zoneIndex = zoneIndex
+                self.wordIndex = wordIndex
+                self.charIndex = charIndex
+ 
         elif type == Context.LINE:
             if wrap & Context.WRAP_LINE:
                 if self.lineIndex > 0:
@@ -613,7 +653,7 @@ class Context:
         return moved
 
 
-    def goNext(self, type=ZONE, wrap=True):
+    def goNext(self, type=ZONE, wrap=WRAP_ALL):
         """Moves this context's locus of interest to first char of
         the next type.
 
@@ -659,7 +699,13 @@ class Context:
             else:
                 moved = self.goNext(Context.ZONE, wrap)
         elif type == Context.WORD:
-            zone = self.lines[self.lineIndex].zones[self.zoneIndex]            
+            zone = self.lines[self.lineIndex].zones[self.zoneIndex]
+            accessible = zone.accessible
+            lineIndex = self.lineIndex
+            zoneIndex = self.zoneIndex
+            wordIndex = self.wordIndex
+            charIndex = self.charIndex
+            
             if zone.words:
                 if self.wordIndex < (len(zone.words) - 1):
                     self.wordIndex += 1
@@ -669,6 +715,43 @@ class Context:
                     moved = self.goNext(Context.ZONE, wrap)
             else:
                 moved = self.goNext(Context.ZONE, wrap)
+
+            # If we landed on a whitespace word or something with no words,
+            # we might need to move some more.
+            #
+            zone = self.lines[self.lineIndex].zones[self.zoneIndex]
+            if moved \
+               and ((len(zone.words) == 0) \
+                    or zone.words[self.wordIndex].string.isspace()):
+
+                # If we're on whitespace in the same zone, then let's
+                # try to move on.  If not, we've definitely moved
+                # across accessibles.  If that's the case, let's try
+                # to find the first 'real' word in the accessible.
+                # If we cannot, then we're just stuck on an accessible
+                # with no words and we should do our best to announce
+                # this to the user (e.g., "whitespace" or "blank").
+                #
+                if zone.accessible == accessible:
+                    moved = self.goNext(Context.WORD, wrap)
+                else:
+                    wordIndex = self.wordIndex + 1
+                    while wordIndex < len(zone.words):
+                        if (zone.words[wordIndex].string is None) \
+                            or not len(zone.words[wordIndex].string) \
+                            or zone.words[wordIndex].string.isspace():
+                            wordIndex += 1
+                        else:
+                            break
+                    if wordIndex < len(zone.words):
+                        self.wordIndex = wordIndex
+                        
+            if not moved:
+                self.lineIndex = lineIndex
+                self.zoneIndex = zoneIndex
+                self.wordIndex = wordIndex
+                self.charIndex = charIndex
+                
         elif type == Context.LINE:
             if wrap & Context.WRAP_LINE:
                 if self.lineIndex < (len(self.lines) - 1):
@@ -690,7 +773,7 @@ class Context:
         return moved
     
 
-    def goAbove(self, type=ZONE, wrap=True):
+    def goAbove(self, type=ZONE, wrap=WRAP_ALL):
         """Moves this context's locus of interest to first char
         of the type that's closest to and above the current locus of
         interest.
@@ -709,7 +792,7 @@ class Context:
             raise Error, "Invalid type: %d" % type
 
 
-    def getBelow(self, type=ZONE, wrap=True):
+    def getBelow(self, type=ZONE, wrap=WRAP_ALL):
         """Moves this context's locus of interest to the first
         char of the type that's closest to and below the current
         locus of interest.
