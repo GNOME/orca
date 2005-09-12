@@ -85,7 +85,12 @@ class Default(Script):
         Script.__init__(self, app)
 
         self.flatReviewContext = None
-        
+
+        ################################################################
+        #                                                              #
+        # Keyboard bindings                                            #
+        #                                                              #
+        ################################################################
         self.keybindings.add(
             keybindings.KeyBinding(
                 "F9", \
@@ -149,23 +154,28 @@ class Default(Script):
                     self.toggleFlatReviewMode,
                     _("Enters and exits flat review mode."))))
 
+        reviewPreviousLineHandler = \
+            InputEventHandler(\
+                self.reviewPreviousLine,
+                _("Moves flat review to the beginning of the previous line."))
+        
         self.keybindings.add(
             keybindings.KeyBinding(
                 "KP_7", \
                 1 << orca.MODIFIER_ORCA, \
                 0, \
-                InputEventHandler(\
-                    self.reviewPreviousLine,
-                    _("Moves flat review to the beginning of the previous line."))))
+                reviewPreviousLineHandler))
 
+        reviewHomeHandler = InputEventHandler(\
+            self.reviewHome,
+            _("Moves flat review to the home position."))
+        
         self.keybindings.add(
             keybindings.KeyBinding(
                 "KP_7", \
                 1 << orca.MODIFIER_ORCA, \
                 1 << orca.MODIFIER_ORCA, \
-                InputEventHandler(\
-                    self.reviewHome,
-                    _("Moves flat review to the home position."))))
+                reviewHomeHandler))
 
         self.keybindings.add(
             keybindings.KeyBinding(
@@ -176,14 +186,17 @@ class Default(Script):
                     self.reviewCurrentLine,
                     _("Speaks the current flat review line."))))
 
+        reviewNextLineHandler = \
+            InputEventHandler(\
+                self.reviewNextLine,
+                _("Moves flat review to the beginning of the next line."))
+
         self.keybindings.add(
             keybindings.KeyBinding(
                 "KP_9", \
                 1 << orca.MODIFIER_ORCA, \
                 0, \
-                InputEventHandler(\
-                    self.reviewNextLine,
-                    _("Moves flat review to the beginning of the next line."))))
+                reviewNextLineHandler))
 
         self.keybindings.add(
             keybindings.KeyBinding(
@@ -240,15 +253,18 @@ class Default(Script):
                     self.reviewBelow,
                     _("Moves flat review to the word below the current word."))))
 
+        reviewPreviousCharacterHandler = \
+            InputEventHandler( \
+                self.reviewPreviousCharacter,
+                _("Moves flat review to the previous character."))
+
         self.keybindings.add(
             keybindings.KeyBinding(
                 "KP_1", \
                 1 << orca.MODIFIER_ORCA, \
                 0, \
-                InputEventHandler(\
-                    self.reviewPreviousCharacter,
-                    _("Moves flat review to the previous character."))))
-
+                reviewPreviousCharacterHandler))
+        
         self.keybindings.add(
             keybindings.KeyBinding(
                 "KP_1", \
@@ -267,16 +283,56 @@ class Default(Script):
                     self.reviewCurrentCharacter,
                     _("Speaks the current flat review character."))))
 
+        reviewNextCharacterHandler = \
+            InputEventHandler(\
+            self.reviewNextCharacter,
+            _("Moves flat review to the next character."))
+        
         self.keybindings.add(
             keybindings.KeyBinding(
                 "KP_3", \
                 0, \
                 0, \
-                InputEventHandler(\
-                    self.reviewNextCharacter,
-                    _("Moves flat review to the next character."))))
+                reviewNextCharacterHandler))
 
+        ################################################################
+        #                                                              #
+        # Braille bindings                                             #
+        #                                                              #
+        ################################################################
+        self.braillebindings[braille.CMD_FWINLT] = \
+            InputEventHandler(
+                braille.panLeft,
+                _("Pans the braille display to the left."))
 
+        self.braillebindings[braille.CMD_FWINRT] = \
+            InputEventHandler(
+                braille.panRight,
+                _("Pans the braille display to the right."))
+            
+        self.braillebindings[braille.CMD_LNUP] = reviewPreviousLineHandler
+        self.braillebindings[braille.CMD_LNDN] = reviewNextLineHandler
+
+        self.braillebindings[braille.CMD_CHRLT]= reviewPreviousCharacterHandler
+        self.braillebindings[braille.CMD_CHRRT]= reviewNextCharacterHandler
+        
+        self.braillebindings[braille.CMD_TOP_LEFT] = reviewHomeHandler
+        self.braillebindings[braille.CMD_BOT_LEFT] = \
+            InputEventHandler(
+                self.reviewBottomLeft,
+                _("Moves flat review to the bottom left."))
+
+        self.braillebindings[braille.CMD_HOME] = \
+            InputEventHandler(
+                self.goBrailleHome,
+                _("Returns to object with keyboard focus."))
+
+        
+        ################################################################
+        #                                                              #
+        # AT-SPI object event handlers                                 #
+        #                                                              #
+        ################################################################
         self.listeners["focus:"]                                 = \
             self.onFocus
         
@@ -1239,7 +1295,7 @@ class Default(Script):
             
         return self.flatReviewContext
 
-
+    
     def toggleFlatReviewMode(self, inputEvent=None):
         if self.flatReviewContext:
             orca.drawOutline(-1, 0, 0, 0)
@@ -1253,6 +1309,13 @@ class Default(Script):
             self.reviewCurrentItem(inputEvent)
             
         return True
+
+
+    def goBrailleHome(self, inputEvent=None):
+        if self.flatReviewContext:
+            return self.toggleFlatReviewMode(inputEvent)
+        else:
+            return braille.returnToRegionWithFocus(inputEvent)
 
     
     def leftClickReviewItem(self, inputEvent=None):
@@ -1326,6 +1389,16 @@ class Default(Script):
         if moved:
             self.reviewCurrentLine(inputEvent)
                  
+        return True
+
+            
+    def reviewBottomLeft(self, inputEvent):
+        context = self.getFlatReviewContext()
+
+        moved = context.goEnd(flat_review.Context.WINDOW)
+        moved = context.goBegin(flat_review.Context.LINE)
+        self.reviewCurrentLine(inputEvent)
+            
         return True
 
             

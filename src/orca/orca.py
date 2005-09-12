@@ -313,6 +313,15 @@ def processBrailleEvent(command):
     
     consumed = False
 
+    # Braille key presses always interrupt speech - If say all mode is
+    # enabled, a key press stops it as well and postions the caret at
+    # where the speech stopped.
+    #
+    if speech.sayAllEnabled:
+        speech.stopSayAll()
+    else:
+        speech.stop("default")
+
     try:
         consumed = _PRESENTATION_MANAGERS[_currentPresentationManager].\
                    processBrailleEvent(BrailleEvent(command))

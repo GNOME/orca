@@ -217,6 +217,12 @@ class TextZone(Zone):
         self.width = width
         self.height = height
 
+        # If the accessible for this TextZone is multiline, we will
+        # keep track of the next and previous lines.
+        #
+        self.previousLineZone = None
+        self.nextLineZone = None
+
     def __getattr__(self, attr):
         """Used for lazily determining the words in a Zone.  The words
         will either be all whitespace (interword boundaries) or actual
@@ -1046,6 +1052,7 @@ def getZonesFromAccessible(accessible, cliprect):
                                                          0)
 
             offset = endOffset
+            previousLineZone = None
             
             if visible(x, y, width, height, 
                        cliprect.x, cliprect.y, 
@@ -1075,13 +1082,22 @@ def getZonesFromAccessible(accessible, cliprect):
                 #    print range.endOffset
                 #    print range.content
                                                                    
-                zones.append(TextZone(accessible,
-                                      startOffset,
-                                      string, 
-                                      clipping[0],
-                                      clipping[1],
-                                      clipping[2],
-                                      clipping[3]))
+                zone = TextZone(accessible,
+                                startOffset,
+                                string, 
+                                clipping[0],
+                                clipping[1],
+                                clipping[2],
+                                clipping[3])
+
+                if previousLineZone:
+                    previousLineZone.nextLineZone = zone
+                zone.previousLineZone = previousLineZone
+                zone.nextLineZone = None
+                
+                zones.append(zone)
+
+                previousLineZone = zone
                 
             elif len(zones):
                 # We'll break out of searching all the text - the idea

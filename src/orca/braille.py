@@ -712,14 +712,7 @@ def _processBrailleEvent(command):
         except:
             debug.printException(debug.LEVEL_SEVERE)
 
-    if (command >= 0) and (command <= CMD_MAX):
-        if command == CMD_FWINLT:
-            panLeft()
-        elif command == CMD_FWINRT:
-            panRight()
-        elif command == CMD_HOME:
-            returnToRegionWithFocus()
-    elif (command >= 0x100) and (command < (0x100 + _displaySize[0])):
+    if (command >= 0x100) and (command < (0x100 + _displaySize[0])):
         if len(_lines) > 0:
             cursor = (command - 0x100) + _viewport[0]
             lineNum = _viewport[1]    
