@@ -31,6 +31,7 @@ import braillegenerator
 import core
 import debug
 import flat_review
+import input_event
 import keybindings
 #import mag - [[[TODO: WDW - disable until I can figure out how to
 #             resolve the GNOME reference in mag.py.]]]
@@ -1345,13 +1346,17 @@ class Default(Script):
         [string, x, y, width, height] = \
                  context.getCurrent(flat_review.Context.LINE)
         orca.drawOutline(x, y, width, height)
-            
-        if (len(string) == 0) or (string == "\n"):
-            speech.say("default", _("blank"))
-        elif string.isspace():
-            speech.say("default", _("white space"))
-        else:
-            speech.say("default", string)
+
+        # Don't announce anything from speech if the user used
+        # the Braille display as an input device.
+        #
+        if not isinstance(inputEvent, input_event.BrailleEvent):
+            if (len(string) == 0) or (string == "\n"):
+                speech.say("default", _("blank"))
+            elif string.isspace():
+                speech.say("default", _("white space"))
+            else:
+                speech.say("default", string)
 
         self.updateBrailleReview()
         
@@ -1418,19 +1423,23 @@ class Default(Script):
                  context.getCurrent(flat_review.Context.WORD)
         orca.drawOutline(x, y, width, height)
 
-        if (len(string) == 0) or (string == "\n"):
-            speech.say("default", _("blank"))
-        else:
-            [lineString, x, y, width, height] = \
-                         context.getCurrent(flat_review.Context.LINE)
-            if lineString == "\n":
+        # Don't announce anything from speech if the user used
+        # the Braille display as an input device.
+        #
+        if not isinstance(inputEvent, input_event.BrailleEvent):
+            if (len(string) == 0) or (string == "\n"):
                 speech.say("default", _("blank"))
-            elif string.isspace():
-                speech.say("default", _("white space"))
-            elif string.isupper():
-                speech.say("uppercase", string)
             else:
-                speech.say("default", string)
+                [lineString, x, y, width, height] = \
+                         context.getCurrent(flat_review.Context.LINE)
+                if lineString == "\n":
+                    speech.say("default", _("blank"))
+                elif string.isspace():
+                    speech.say("default", _("white space"))
+                elif string.isupper():
+                    speech.say("uppercase", string)
+                else:
+                    speech.say("default", string)
 
         self.updateBrailleReview()        
 
@@ -1467,17 +1476,21 @@ class Default(Script):
                  context.getCurrent(flat_review.Context.CHAR)
         orca.drawOutline(x, y, width, height)
 
-        if (len(string) == 0):
-            speech.say("default", _("blank"))
-        else:
-            [lineString, x, y, width, height] = \
-                         context.getCurrent(flat_review.Context.LINE)
-            if lineString == "\n":
+        # Don't announce anything from speech if the user used
+        # the Braille display as an input device.
+        #
+        if not isinstance(inputEvent, input_event.BrailleEvent):
+            if (len(string) == 0):
                 speech.say("default", _("blank"))
-            elif string.isupper():
-                speech.say("uppercase", string)
             else:
-                speech.say("default", string)
+                [lineString, x, y, width, height] = \
+                         context.getCurrent(flat_review.Context.LINE)
+                if lineString == "\n":
+                    speech.say("default", _("blank"))
+                elif string.isupper():
+                    speech.say("uppercase", string)
+                else:
+                    speech.say("default", string)
             
         self.updateBrailleReview()
         
