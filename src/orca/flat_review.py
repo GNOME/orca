@@ -1141,13 +1141,14 @@ def getZonesFromAccessible(accessible, cliprect):
             clipping = clip(x, y, width, height,
                             cliprect.x, cliprect.y,
                             cliprect.width, cliprect.height)
-                
-            zones.append(Zone(accessible, 
-                              accessible.image.imageDescription, 
-                              clipping[0],
-                              clipping[1],
-                              clipping[2],
-                              clipping[3]))
+
+            if (clipping[2] != 0) or (clipping[3] != 0):
+                zones.append(Zone(accessible, 
+                                  accessible.image.imageDescription, 
+                                  clipping[0],
+                                  clipping[1],
+                                  clipping[2],
+                                  clipping[3]))
 
     # Well...darn.  Maybe we didn't get anything of use, but we certainly
     # know there's something there.  If that's the case, we'll just use
@@ -1165,12 +1166,13 @@ def getZonesFromAccessible(accessible, cliprect):
         else:
             string = ""
             
-        zones.append(Zone(accessible,
-                          string,
-                          clipping[0],
-                          clipping[1],
-                          clipping[2],
-                          clipping[3]))
+        if (clipping[2] != 0) or (clipping[3] != 0):
+            zones.append(Zone(accessible,
+                              string,
+                              clipping[0],
+                              clipping[1],
+                              clipping[2],
+                              clipping[3]))
     
     return zones
 
