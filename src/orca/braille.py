@@ -375,8 +375,8 @@ class ReviewText(Region):
 
         self.accessible = accessible
         self.string = string
-        if string[-1:] == "\n":
-            string = string[:-1]
+        if self.string[-1:] == "\n":
+            self.string = self.string[:-1]
         self.lineOffset = lineOffset
         self.cursorOffset = 0
         
