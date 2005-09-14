@@ -217,14 +217,17 @@ class Default(Script):
                     self.reviewPreviousItem,
                     _("Moves flat review to the previous item or word."))))
 
+        reviewAboveHandler = \
+            InputEventHandler(\
+                self.reviewAbove,
+                _("Moves flat review to the word above the current word."))
+
         self.keybindings.add(
             keybindings.KeyBinding(
                 "KP_4", \
                 1 << orca.MODIFIER_ORCA, \
                 1 << orca.MODIFIER_ORCA, \
-                InputEventHandler(\
-                    self.reviewAbove,
-                    _("Moves flat review to the word above the current word."))))
+                reviewAboveHandler))
 
         self.keybindings.add(
             keybindings.KeyBinding(
@@ -244,15 +247,17 @@ class Default(Script):
                     self.reviewNextItem,
                     _("Moves flat review to the next item or word."))))
 
-
+        reviewBelowHandler = \
+            InputEventHandler(\
+                self.reviewBelow,
+                _("Moves flat review to the word below the current word."))
+                           
         self.keybindings.add(
             keybindings.KeyBinding(
                 "KP_6", \
                 1 << orca.MODIFIER_ORCA, \
                 1 << orca.MODIFIER_ORCA, \
-                InputEventHandler(\
-                    self.reviewBelow,
-                    _("Moves flat review to the word below the current word."))))
+                reviewBelowHandler))
 
         reviewPreviousCharacterHandler = \
             InputEventHandler( \
@@ -311,8 +316,10 @@ class Default(Script):
                 braille.panRight,
                 _("Pans the braille display to the right."))
             
-        self.braillebindings[braille.CMD_LNUP] = reviewPreviousLineHandler
-        self.braillebindings[braille.CMD_LNDN] = reviewNextLineHandler
+        #self.braillebindings[braille.CMD_LNUP] = reviewPreviousLineHandler
+        #self.braillebindings[braille.CMD_LNDN] = reviewNextLineHandler
+        self.braillebindings[braille.CMD_LNUP] = reviewAboveHandler
+        self.braillebindings[braille.CMD_LNDN] = reviewBelowHandler
 
         self.braillebindings[braille.CMD_CHRLT]= reviewPreviousCharacterHandler
         self.braillebindings[braille.CMD_CHRRT]= reviewNextCharacterHandler
