@@ -316,6 +316,7 @@ class Context:
     LINE   = 3 # includes all zones on same line
     WINDOW = 4
 
+    WRAP_NONE       = 0
     WRAP_LINE       = 1 << 0
     WRAP_TOP_BOTTOM = 1 << 1
     WRAP_ALL        = (WRAP_LINE | WRAP_TOP_BOTTOM)
@@ -421,6 +422,20 @@ class Context:
         except:
             debug.printException(debug.LEVEL_SEVERE)
         
+
+    def getCurrentAccessible(self):
+        """Returns the accessible associated with the current locus of
+        interest.
+        """
+
+        if (not self.lines) \
+           or (not self.lines[self.lineIndex].zones):
+            return [None, -1, -1, -1, -1]
+
+        zone = self.lines[self.lineIndex].zones[self.zoneIndex]
+
+        return zone.accessible
+    
         
     def getCurrent(self, type=ZONE):
         """Gets the string, offset, and extent information for the
@@ -434,7 +449,7 @@ class Context:
 
         if (not self.lines) \
            or (not self.lines[self.lineIndex].zones):
-            return
+            return [None, -1, -1, -1, -1]
 
         zone = self.lines[self.lineIndex].zones[self.zoneIndex]
             
@@ -893,20 +908,18 @@ class Context:
             if self.targetCharInfo is None:
                 self.targetCharInfo = self.getCurrent(Context.CHAR)
             target = self.targetCharInfo
-            leftTargetX = target[1]              # x
-            rightTargetX = target[1] + target[3] # x + width
+
+            [string, x, y, width, height] = target
+            middleTargetX = x + (width / 2)
             
             moved = self.goPrevious(Context.LINE, wrap)
             if moved:
                 while True:
                     [string, bx, by, bwidth, bheight] = \
                              self.getCurrent(Context.CHAR)
-                    leftMostRightEdge = min(rightTargetX, bx + bwidth)
-                    rightMostLeftEdge = max(leftMostRightEdge, bx)
-                    if (rightMostLeftEdge < leftMostRightEdge) \
-                       or (bx >= rightTargetX):
+                    if (bx + width) >= middleTargetX:
                         break
-                    elif not self.goNext(Context.CHAR, 0):
+                    elif not self.goNext(Context.CHAR, Context.WRAP_NONE):
                         break
 
             # Moving around might have reset the current targetCharInfo,
@@ -943,20 +956,18 @@ class Context:
             if self.targetCharInfo is None:
                 self.targetCharInfo = self.getCurrent(Context.CHAR)
             target = self.targetCharInfo
-            leftTargetX = target[1]              # x
-            rightTargetX = target[1] + target[3] # x + width
+            
+            [string, x, y, width, height] = target
+            middleTargetX = x + (width / 2)
             
             moved = self.goNext(Context.LINE, wrap)
             if moved:
                 while True:
                     [string, bx, by, bwidth, bheight] = \
                              self.getCurrent(Context.CHAR)
-                    leftMostRightEdge = min(rightTargetX, bx + bwidth)
-                    rightMostLeftEdge = max(leftTargetX, bx)
-                    if (rightMostLeftEdge < leftMostRightEdge) \
-                       or (bx >= rightTargetX):
+                    if (bx + width) >= middleTargetX:
                         break
-                    elif not self.goNext(Context.CHAR, 0):
+                    elif not self.goNext(Context.CHAR, Context.WRAP_NONE):
                         break
 
             # Moving around might have reset the current targetCharInfo,

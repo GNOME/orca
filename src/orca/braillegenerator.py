@@ -183,7 +183,7 @@ class BrailleGenerator:
         if obj.state.count(core.Accessibility.STATE_SENSITIVE):
             return ""
         else:
-            return _("unavailable")
+            return _("grayed")
     
     
     def _getBrailleTextForValue(self, obj):

@@ -200,6 +200,11 @@ _viewport = [0, 0]
 #
 _callback = None
 
+# If True, the given portion of the currently displayed line is showing
+# on the display.
+#
+endIsShowing = False
+beginningIsShowing = False
 
 def _printBrailleEvent(level, command):
     """Prints out a Braille event.  The given level may be overridden
@@ -552,7 +557,9 @@ def refresh(panToCursor = True):
     global _viewport
     global _displaySize
     global _regionWithFocus
-
+    global endIsShowing
+    global beginningIsShowing
+    
     if len(_lines) == 0:
         brl.writeText(0, "")
         return
@@ -595,7 +602,10 @@ def refresh(panToCursor = True):
 
     debug.println(debug.LEVEL_INFO, "     VISIBLE:  '%s', cursor=%d" \
                   % (string[startPos:endPos], cursor))
-    
+
+    endIsShowing = endPos >= len(string)
+    beginningIsShowing = startPos == 0
+
     brl.writeText(cursor, string[startPos:endPos])
     
 

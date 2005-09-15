@@ -186,7 +186,7 @@ class SpeechGenerator:
 
         utterances = []
         if obj.state.count(core.Accessibility.STATE_SENSITIVE) == 0:
-            utterances.append(_("unavailable"))
+            utterances.append(_("grayed"))
 
         return utterances
     

@@ -317,12 +317,12 @@ class Default(Script):
         ################################################################
         self.braillebindings[braille.CMD_FWINLT] = \
             InputEventHandler(
-                braille.panLeft,
+                self.panBrailleLeft,
                 _("Pans the braille display to the left."))
 
         self.braillebindings[braille.CMD_FWINRT] = \
             InputEventHandler(
-                braille.panRight,
+                self.panBrailleRight,
                 _("Pans the braille display to the right."))
             
         #self.braillebindings[braille.CMD_LNUP] = reviewPreviousLineHandler
@@ -1328,6 +1328,28 @@ class Default(Script):
         return True
 
 
+    def panBrailleLeft(self, inputEvent=None):
+        if self.flatReviewContext:
+            if braille.beginningIsShowing:
+                self.flatReviewContext.goBegin(flat_review.Context.LINE)
+                self.reviewPreviousCharacter(inputEvent)
+            else:
+                return braille.panLeft(inputEvent)
+        else:
+            return braille.panLeft(inputEvent)
+
+
+    def panBrailleRight(self, inputEvent=None):
+        if self.flatReviewContext:
+            if braille.endIsShowing:
+                self.flatReviewContext.goEnd(flat_review.Context.LINE)
+                self.reviewNextCharacter(inputEvent)
+            else:
+                return braille.panRight(inputEvent)
+        else:
+            return braille.panRight(inputEvent)
+
+            
     def goBrailleHome(self, inputEvent=None):
         if self.flatReviewContext:
             return self.toggleFlatReviewMode(inputEvent)
@@ -1467,8 +1489,6 @@ class Default(Script):
         [string, x, y, width, height] = \
                  context.getCurrent(flat_review.Context.ZONE)
         orca.drawOutline(x, y, width, height)
-
-        zone = context.lines[context.lineIndex].zones[context.zoneIndex]
         
         # Don't announce anything from speech if the user used
         # the Braille display as an input device.
@@ -1476,7 +1496,8 @@ class Default(Script):
         if not isinstance(inputEvent, input_event.BrailleEvent):
             speech.sayUtterances(
                 "default",
-                self.speechGenerator.getSpeech(zone.accessible, False))
+                self.speechGenerator.getSpeech(
+                    context.getCurrentAccessible(), False))
             
         return True
 
