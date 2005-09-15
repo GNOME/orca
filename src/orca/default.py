@@ -232,11 +232,20 @@ class Default(Script):
         self.keybindings.add(
             keybindings.KeyBinding(
                 "KP_5", \
-                0, \
+                1 << orca.MODIFIER_ORCA, \
                 0, \
                 InputEventHandler(\
                     self.reviewCurrentItem,
                     _("Speaks the current flat review item or word."))))
+
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_5", \
+                1 << orca.MODIFIER_ORCA, \
+                1 << orca.MODIFIER_ORCA, \
+                InputEventHandler(\
+                    self.reviewCurrentAccessible,
+                    _("Speaks the current flat review object."))))
 
         self.keybindings.add(
             keybindings.KeyBinding(
@@ -1451,6 +1460,26 @@ class Default(Script):
         self.updateBrailleReview()        
 
         return True
+
+
+    def reviewCurrentAccessible(self, inputEvent):
+        context = self.getFlatReviewContext()
+        [string, x, y, width, height] = \
+                 context.getCurrent(flat_review.Context.ZONE)
+        orca.drawOutline(x, y, width, height)
+
+        zone = context.lines[context.lineIndex].zones[context.zoneIndex]
+        
+        # Don't announce anything from speech if the user used
+        # the Braille display as an input device.
+        #
+        if not isinstance(inputEvent, input_event.BrailleEvent):
+            speech.sayUtterances(
+                "default",
+                self.speechGenerator.getSpeech(zone.accessible, False))
+            
+        return True
+
 
     def reviewPreviousItem(self, inputEvent):
         context = self.getFlatReviewContext()

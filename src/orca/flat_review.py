@@ -1164,8 +1164,11 @@ def getZonesFromAccessible(accessible, cliprect):
         elif accessible.description and len(accessible.description):
             string = accessible.description
         else:
-            string = ""
-            
+            string = accessible.label
+
+        if string == "":
+            string = accessible.role
+        
         if (clipping[2] != 0) or (clipping[3] != 0):
             zones.append(Zone(accessible,
                               string,
