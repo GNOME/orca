@@ -48,103 +48,99 @@ class SpeechGenerator:
         # that generate speech for objects that implement that role.
         #
         self.speechGenerators = {}
-        self.speechGenerators["alert"]               = \
+        self.speechGenerators[rolenames.ROLE_ALERT]               = \
              self._getSpeechForAlert
-        self.speechGenerators["animation"]           = \
+        self.speechGenerators[rolenames.ROLE_ANIMATION]           = \
              self._getSpeechForAnimation
-        self.speechGenerators["arrow"]               = \
+        self.speechGenerators[rolenames.ROLE_ARROW]               = \
              self._getSpeechForArrow
-        self.speechGenerators["check box"]           = \
+        self.speechGenerators[rolenames.ROLE_CHECK_BOX]           = \
              self._getSpeechForCheckBox
-        self.speechGenerators["check menu"]          = \
+        self.speechGenerators[rolenames.ROLE_CHECK_MENU]          = \
              self._getSpeechForCheckMenuItem
-        self.speechGenerators["check menu item"]     = \
+        self.speechGenerators[rolenames.ROLE_CHECK_MENU_ITEM]     = \
              self._getSpeechForCheckMenuItem
-        self.speechGenerators["column_header"]       = \
+        self.speechGenerators[rolenames.ROLE_COLUMN_HEADER]       = \
              self._getSpeechForColumnHeader
-        self.speechGenerators["combo box"]           = \
+        self.speechGenerators[rolenames.ROLE_COMBO_BOX]           = \
              self._getSpeechForComboBox
-        self.speechGenerators["desktop icon"]        = \
+        self.speechGenerators[rolenames.ROLE_DESKTOP_ICON]        = \
              self._getSpeechForDesktopIcon
-        self.speechGenerators["dial"]                = \
+        self.speechGenerators[rolenames.ROLE_DIAL]                = \
              self._getSpeechForDial
-        self.speechGenerators["dialog"]              = \
+        self.speechGenerators[rolenames.ROLE_DIALOG]              = \
              self._getSpeechForDialog
-        self.speechGenerators["directory pane"]      = \
+        self.speechGenerators[rolenames.ROLE_DIRECTORY_PANE]      = \
              self._getSpeechForDirectoryPane
-        self.speechGenerators["frame"]               = \
+        self.speechGenerators[rolenames.ROLE_FRAME]               = \
              self._getSpeechForFrame
-        self.speechGenerators["html container"]      = \
+        self.speechGenerators[rolenames.ROLE_HTML_CONTAINER]      = \
              self._getSpeechForHtmlContainer
-        self.speechGenerators["icon"]                = \
+        self.speechGenerators[rolenames.ROLE_ICON]                = \
              self._getSpeechForIcon
-        self.speechGenerators["image"]               = \
+        self.speechGenerators[rolenames.ROLE_IMAGE]               = \
              self._getSpeechForImage
-        self.speechGenerators["label"]               = \
+        self.speechGenerators[rolenames.ROLE_LABEL]               = \
              self._getSpeechForLabel
-        self.speechGenerators["list"]                = \
+        self.speechGenerators[rolenames.ROLE_LIST]                = \
              self._getSpeechForList
-        self.speechGenerators["menu"]                = \
+        self.speechGenerators[rolenames.ROLE_MENU]                = \
              self._getSpeechForMenu
-        self.speechGenerators["menu bar"]            = \
+        self.speechGenerators[rolenames.ROLE_MENU_BAR]            = \
              self._getSpeechForMenuBar
-        self.speechGenerators["menu item"]           = \
+        self.speechGenerators[rolenames.ROLE_MENU_ITEM]           = \
              self._getSpeechForMenuItem
-        self.speechGenerators["multi line text"]     = \
-             self._getSpeechForText
-        self.speechGenerators["option pane"]         = \
+        self.speechGenerators[rolenames.ROLE_OPTION_PANE]         = \
              self._getSpeechForOptionPane
-        self.speechGenerators["page tab"]            = \
+        self.speechGenerators[rolenames.ROLE_PAGE_TAB]            = \
              self._getSpeechForPageTab
-        self.speechGenerators["page tab list"]       = \
+        self.speechGenerators[rolenames.ROLE_PAGE_TAB_LIST]       = \
              self._getSpeechForPageTabList
-        self.speechGenerators["password text"]       = \
+        self.speechGenerators[rolenames.ROLE_PASSWORD_TEXT]       = \
              self._getSpeechForText
-        self.speechGenerators["progress bar"]        = \
+        self.speechGenerators[rolenames.ROLE_PROGRESS_BAR]        = \
              self._getSpeechForProgressBar
-        self.speechGenerators["push button"]         = \
+        self.speechGenerators[rolenames.ROLE_PUSH_BUTTON]         = \
              self._getSpeechForPushButton
-        self.speechGenerators["radio button"]        = \
+        self.speechGenerators[rolenames.ROLE_RADIO_BUTTON]        = \
              self._getSpeechForRadioButton
-        self.speechGenerators["radio menu"]          = \
+        self.speechGenerators[rolenames.ROLE_RADIO_MENU]          = \
              self._getSpeechForRadioMenuItem
-        self.speechGenerators["radio menu item"]     = \
+        self.speechGenerators[rolenames.ROLE_RADIO_MENU_ITEM]     = \
              self._getSpeechForRadioMenuItem
-        self.speechGenerators["row_header"]          = \
+        self.speechGenerators[rolenames.ROLE_ROW_HEADER]          = \
              self._getSpeechForRowHeader
-        self.speechGenerators["scroll bar"]          = \
+        self.speechGenerators[rolenames.ROLE_SCROLL_BAR]          = \
              self._getSpeechForScrollBar
-        self.speechGenerators["single line text"]    = \
-             self._getSpeechForText
-        self.speechGenerators["slider"]              = \
+        self.speechGenerators[rolenames.ROLE_SLIDER]              = \
              self._getSpeechForSlider
-        self.speechGenerators["spin button"]         = \
+        self.speechGenerators[rolenames.ROLE_SPIN_BUTTON]         = \
              self._getSpeechForSpinButton
-        self.speechGenerators["split pane"]          = \
+        self.speechGenerators[rolenames.ROLE_SPLIT_PANE]          = \
              self._getSpeechForSplitPane
-        self.speechGenerators["table"]               = \
+        self.speechGenerators[rolenames.ROLE_TABLE]               = \
              self._getSpeechForTable
-        self.speechGenerators["table cell"]          = \
+        self.speechGenerators[rolenames.ROLE_TABLE_CELL]          = \
              self._getSpeechForTableCell
-        self.speechGenerators["table column header"] = \
+        self.speechGenerators[rolenames.ROLE_TABLE_COLUMN_HEADER] = \
              self._getSpeechForTableColumnHeader
-        self.speechGenerators["table row header"]    = \
+        self.speechGenerators[rolenames.ROLE_TABLE_ROW_HEADER]    = \
              self._getSpeechForTableRowHeader
-        self.speechGenerators["tear off menu item"]  = \
+        self.speechGenerators[rolenames.ROLE_TEAR_OFF_MENU_ITEM]  = \
              self._getSpeechForMenu
-        self.speechGenerators["terminal"]            = \
+        self.speechGenerators[rolenames.ROLE_TERMINAL]            = \
              self._getSpeechForTerminal
-        self.speechGenerators["text"]                = \
+        self.speechGenerators[rolenames.ROLE_TEXT]                = \
              self._getSpeechForText
-        self.speechGenerators["toggle button"]       = \
+        self.speechGenerators[rolenames.ROLE_TOGGLE_BUTTON]       = \
              self._getSpeechForToggleButton
-        self.speechGenerators["tool bar"]            = \
+        self.speechGenerators[rolenames.ROLE_TOOL_BAR]            = \
              self._getSpeechForToolBar
-        self.speechGenerators["tree"]                = \
+        self.speechGenerators[rolenames.ROLE_TREE]                = \
              self._getSpeechForTable
-        self.speechGenerators["tree table"]          = \
+        self.speechGenerators[rolenames.ROLE_TREE_TABLE]          = \
              self._getSpeechForTable
-        self.speechGenerators["window"]              = \
+        self.speechGenerators[rolenames.ROLE_WINDOW]              = \
              self._getSpeechForWindow
 
 
@@ -344,7 +340,7 @@ class SpeechGenerator:
     
         return utterances
     
-    
+
     def _getSpeechForCheckBox(self, obj, already_focused):
         """Get the speech for a check box.  If the check box already had
         focus, then only the state is spoken.

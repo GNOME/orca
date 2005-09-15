@@ -45,103 +45,99 @@ class BrailleGenerator:
     
     def __init__(self):
         self.brailleGenerators = {}
-        self.brailleGenerators["alert"]               = \
+        self.brailleGenerators[rolenames.ROLE_ALERT]               = \
              self._getBrailleRegionsForAlert
-        self.brailleGenerators["animation"]           = \
+        self.brailleGenerators[rolenames.ROLE_ANIMATION]           = \
              self._getBrailleRegionsForAnimation
-        self.brailleGenerators["arrow"]               = \
+        self.brailleGenerators[rolenames.ROLE_ARROW]               = \
              self._getBrailleRegionsForArrow
-        self.brailleGenerators["check box"]           = \
+        self.brailleGenerators[rolenames.ROLE_CHECK_BOX]           = \
              self._getBrailleRegionsForCheckBox
-        self.brailleGenerators["check menu"]          = \
+        self.brailleGenerators[rolenames.ROLE_CHECK_MENU]          = \
              self._getBrailleRegionsForCheckMenuItem
-        self.brailleGenerators["check menu item"]     = \
+        self.brailleGenerators[rolenames.ROLE_CHECK_MENU_ITEM]     = \
              self._getBrailleRegionsForCheckMenuItem
-        self.brailleGenerators["column_header"]       = \
+        self.brailleGenerators[rolenames.ROLE_COLUMN_HEADER]       = \
              self._getBrailleRegionsForColumnHeader
-        self.brailleGenerators["combo box"]           = \
+        self.brailleGenerators[rolenames.ROLE_COMBO_BOX]           = \
              self._getBrailleRegionsForComboBox
-        self.brailleGenerators["desktop icon"]        = \
+        self.brailleGenerators[rolenames.ROLE_DESKTOP_ICON]        = \
              self._getBrailleRegionsForDesktopIcon
-        self.brailleGenerators["dial"]                = \
+        self.brailleGenerators[rolenames.ROLE_DIAL]                = \
              self._getBrailleRegionsForDial
-        self.brailleGenerators["dialog"]              = \
+        self.brailleGenerators[rolenames.ROLE_DIALOG]              = \
              self._getBrailleRegionsForDialog
-        self.brailleGenerators["directory pane"]      = \
+        self.brailleGenerators[rolenames.ROLE_DIRECTORY_PANE]      = \
              self._getBrailleRegionsForDirectoryPane
-        self.brailleGenerators["frame"]               = \
+        self.brailleGenerators[rolenames.ROLE_FRAME]               = \
              self._getBrailleRegionsForFrame
-        self.brailleGenerators["html container"]      = \
+        self.brailleGenerators[rolenames.ROLE_HTML_CONTAINER]      = \
              self._getBrailleRegionsForHtmlContainer
-        self.brailleGenerators["icon"]                = \
+        self.brailleGenerators[rolenames.ROLE_ICON]                = \
              self._getBrailleRegionsForIcon
-        self.brailleGenerators["image"]               = \
+        self.brailleGenerators[rolenames.ROLE_IMAGE]               = \
              self._getBrailleRegionsForImage
-        self.brailleGenerators["label"]               = \
+        self.brailleGenerators[rolenames.ROLE_LABEL]               = \
              self._getBrailleRegionsForLabel
-        self.brailleGenerators["list"]                = \
+        self.brailleGenerators[rolenames.ROLE_LIST]                = \
              self._getBrailleRegionsForList
-        self.brailleGenerators["menu"]                = \
+        self.brailleGenerators[rolenames.ROLE_MENU]                = \
              self._getBrailleRegionsForMenu
-        self.brailleGenerators["menu bar"]            = \
+        self.brailleGenerators[rolenames.ROLE_MENU_BAR]            = \
              self._getBrailleRegionsForMenuBar
-        self.brailleGenerators["menu item"]           = \
+        self.brailleGenerators[rolenames.ROLE_MENU_ITEM]           = \
              self._getBrailleRegionsForMenuItem
-        self.brailleGenerators["multi line text"]     = \
-             self._getBrailleRegionsForText
-        self.brailleGenerators["option pane"]         = \
+        self.brailleGenerators[rolenames.ROLE_OPTION_PANE]         = \
              self._getBrailleRegionsForOptionPane
-        self.brailleGenerators["page tab"]            = \
+        self.brailleGenerators[rolenames.ROLE_PAGE_TAB]            = \
              self._getBrailleRegionsForPageTab
-        self.brailleGenerators["page tab list"]       = \
+        self.brailleGenerators[rolenames.ROLE_PAGE_TAB_LIST]       = \
              self._getBrailleRegionsForPageTabList
-        self.brailleGenerators["password text"]       = \
+        self.brailleGenerators[rolenames.ROLE_PASSWORD_TEXT]       = \
              self._getBrailleRegionsForText
-        self.brailleGenerators["progress bar"]        = \
+        self.brailleGenerators[rolenames.ROLE_PROGRESS_BAR]        = \
              self._getBrailleRegionsForProgressBar
-        self.brailleGenerators["push button"]         = \
+        self.brailleGenerators[rolenames.ROLE_PUSH_BUTTON]         = \
              self._getBrailleRegionsForPushButton
-        self.brailleGenerators["radio button"]        = \
+        self.brailleGenerators[rolenames.ROLE_RADIO_BUTTON]        = \
              self._getBrailleRegionsForRadioButton
-        self.brailleGenerators["radio menu"]          = \
+        self.brailleGenerators[rolenames.ROLE_RADIO_MENU]          = \
              self._getBrailleRegionsForRadioMenuItem
-        self.brailleGenerators["radio menu item"]     = \
+        self.brailleGenerators[rolenames.ROLE_RADIO_MENU_ITEM]     = \
              self._getBrailleRegionsForRadioMenuItem
-        self.brailleGenerators["row_header"]          = \
+        self.brailleGenerators[rolenames.ROLE_ROW_HEADER]          = \
              self._getBrailleRegionsForRowHeader
-        self.brailleGenerators["scroll bar"]          = \
+        self.brailleGenerators[rolenames.ROLE_SCROLL_BAR]          = \
              self._getBrailleRegionsForScrollBar
-        self.brailleGenerators["single line text"]    = \
-             self._getBrailleRegionsForText
-        self.brailleGenerators["slider"]              = \
+        self.brailleGenerators[rolenames.ROLE_SLIDER]              = \
              self._getBrailleRegionsForSlider
-        self.brailleGenerators["spin button"]         = \
+        self.brailleGenerators[rolenames.ROLE_SPIN_BUTTON]         = \
              self._getBrailleRegionsForSpinButton
-        self.brailleGenerators["split pane"]          = \
+        self.brailleGenerators[rolenames.ROLE_SPLIT_PANE]          = \
              self._getBrailleRegionsForSplitPane
-        self.brailleGenerators["table"]               = \
+        self.brailleGenerators[rolenames.ROLE_TABLE]               = \
              self._getBrailleRegionsForTable
-        self.brailleGenerators["table cell"]          = \
+        self.brailleGenerators[rolenames.ROLE_TABLE_CELL]          = \
              self._getBrailleRegionsForTableCell
-        self.brailleGenerators["table column header"] = \
+        self.brailleGenerators[rolenames.ROLE_TABLE_COLUMN_HEADER] = \
              self._getBrailleRegionsForTableColumnHeader
-        self.brailleGenerators["table row header"]    = \
+        self.brailleGenerators[rolenames.ROLE_TABLE_ROW_HEADER]    = \
              self._getBrailleRegionsForTableRowHeader
-        self.brailleGenerators["tear off menu item"]  = \
+        self.brailleGenerators[rolenames.ROLE_TEAR_OFF_MENU_ITEM]  = \
              self._getBrailleRegionsForMenu
-        self.brailleGenerators["terminal"]            = \
+        self.brailleGenerators[rolenames.ROLE_TERMINAL]            = \
              self._getBrailleRegionsForTerminal
-        self.brailleGenerators["text"]                = \
+        self.brailleGenerators[rolenames.ROLE_TEXT]                = \
              self._getBrailleRegionsForText
-        self.brailleGenerators["toggle button"]       = \
+        self.brailleGenerators[rolenames.ROLE_TOGGLE_BUTTON]       = \
              self._getBrailleRegionsForToggleButton
-        self.brailleGenerators["tool bar"]            = \
+        self.brailleGenerators[rolenames.ROLE_TOOL_BAR]            = \
              self._getBrailleRegionsForToolBar
-        self.brailleGenerators["tree"]                = \
+        self.brailleGenerators[rolenames.ROLE_TREE]                = \
              self._getBrailleRegionsForTable
-        self.brailleGenerators["tree table"]          = \
+        self.brailleGenerators[rolenames.ROLE_TREE_TABLE]          = \
              self._getBrailleRegionsForTable
-        self.brailleGenerators["window"]              = \
+        self.brailleGenerators[rolenames.ROLE_WINDOW]              = \
              self._getBrailleRegionsForWindow
 
         
