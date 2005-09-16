@@ -315,7 +315,40 @@ class Line:
         self.width = bounds[2] - bounds[0]
         self.height = bounds[3] - bounds[1]
 
-    
+        self.brailleRegions = None
+
+    def getBrailleRegions(self):
+        if not self.brailleRegions:
+            self.brailleRegions = []
+            brailleOffset = 0
+            for zone in self.zones:
+                if (zone.accessible.role == rolenames.ROLE_TEXT) \
+                   or (zone.accessible.role == rolenames.ROLE_PASSWORD_TEXT) \
+                   or (zone.accessible.role == rolenames.ROLE_TERMINAL):
+                    region = braille.ReviewText(zone.accessible,
+                                                zone.string,
+                                                zone.startOffset,
+                                                zone)
+                else:
+                    region = braille.ReviewComponent(zone.accessible,
+                                                     zone.string,
+                                                     0, # cursor offset
+                                                     zone)
+                if len(self.brailleRegions):
+                    pad = braille.Region(" ")
+                    pad.brailleOffset = brailleOffset
+                    self.brailleRegions.append(pad)
+                    brailleOffset += 1
+
+                zone.brailleRegion = region
+                region.brailleOffset = brailleOffset
+                self.brailleRegions.append(region)
+
+                brailleOffset += len(region.string)
+
+        return self.brailleRegions
+            
+
 class Context:
     """Information regarding where a user happens to be exploring
     right now.
@@ -357,7 +390,7 @@ class Context:
         # by line.
         #
         self.targetCharInfo = None
-        
+
 
     def _dumpCurrentState(self):
         print "line=%d, zone=%d, word=%d, char=%d" \
@@ -426,6 +459,9 @@ class Context:
         self.charIndex = charIndex
         self.targetCharInfo = self.getCurrent(Context.CHAR) 
 
+        #print "Current line=%d zone=%d word=%d char=%d" \
+        #      % (lineIndex, zoneIndex, wordIndex, charIndex)
+        
 
     def clickCurrent(self, button=1):
         """Performs a mouse click on the current accessible."""
@@ -537,44 +573,20 @@ class Context:
         Returns [regions, regionWithFocus]
         """
 
-        regions = []
-        focusedRegion = None
-        
         if (not self.lines) \
            or (not self.lines[self.lineIndex].zones):
-            return [regions, focusedRegion]
+            return [None, None]
 
+        regionWithFocus = None        
         line = self.lines[self.lineIndex]
+        regions = line.getBrailleRegions()
 
-        zoneIndex = 0
-        wordIndex = 0
-        charIndex = 0
-        while zoneIndex < len(line.zones):
-            zone = line.zones[zoneIndex]
-            if (zone.accessible.role == rolenames.ROLE_TEXT) \
-               or (zone.accessible.role == rolenames.ROLE_PASSWORD_TEXT) \
-               or (zone.accessible.role == rolenames.ROLE_TERMINAL):
-                region = braille.ReviewText(zone.accessible,
-                                            zone.string,
-                                            zone.startOffset,
-                                            zone)
-            else:
-                region = braille.ReviewComponent(zone.accessible,
-                                                 zone.string,
-                                                 0, # cursor offset
-                                                 zone)
-                
-            if len(regions):
-                regions.append(braille.Region(" "))
-            regions.append(region)
-
-            # We might have the object of interest.
-            # If so, we need to convert the current
-            # character index into an offset into the
-            # string for this zone.
-            #
-            if zoneIndex == self.zoneIndex:
-                regionWithFocus = region
+        # Now find the current region and the current character offset
+        # into that region.
+        #
+        for zone in line.zones:
+            if zone.index == self.zoneIndex:
+                regionWithFocus = zone.brailleRegion
                 regionWithFocus.cursorOffset = 0
                 if zone.words:
                     wordIndex = 0
@@ -583,8 +595,8 @@ class Context:
                             len(zone.words[wordIndex].string)
                         wordIndex += 1
                 regionWithFocus.cursorOffset += self.charIndex
-            zoneIndex += 1
-
+                break
+            
         return [regions, regionWithFocus]
 
     

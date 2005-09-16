@@ -227,8 +227,7 @@ def _printBrailleEvent(level, command):
 
 class Region:
     """A Braille region to be displayed on the display.  The width of
-    each region is determined by the string obtained from its getString
-    method.
+    each region is determined by its string.
     """
 
     def __init__(self, string, cursorOffset=0):
@@ -243,10 +242,6 @@ class Region:
         self.string = string
         self.cursorOffset = cursorOffset
         
-    def getString(self):
-        """Returns the string associated with this region."""
-        return self.string
-    
     def processCursorKey(self, offset):
         """Processes a cursor key press on this Component.  The offset is
         0-based, where 0 represents the leftmost character of string
@@ -455,7 +450,8 @@ class Line:
         for region in self.regions:
             if region == _regionWithFocus:
                 focusOffset = len(string)
-            string += region.getString()
+            string += region.string
+        
         return [string, focusOffset]
 
     def getRegionAtOffset(self, offset):
@@ -463,7 +459,8 @@ class Line:
         
         Returns the [region, offsetinregion] where the region is
         the region at the given offset, and offsetinregion is the
-        0-based offset from the beginning of the region."""
+        0-based offset from the beginning of the region, representing
+        where in the region the given offset is."""
 
         # Translate the cursor offset for this line into a cursor offset
         # for a region, and then pass the event off to the region for
@@ -473,7 +470,7 @@ class Line:
         string = ""
         pos = 0
         for region in self.regions:
-            string = string + region.getString()
+            string = string + region.string
             if len(string) > offset:
                 break
             else:
@@ -493,14 +490,14 @@ class Line:
 
 def getRegionAtCell(cell):
     """Given a 1-based cell offset, return the braille region
-    associated with that cell."""
+    associated with that cell in the form of [region, offsetinregion]"""
     
     if len(_lines) > 0:
         offset = (cell - 1) + _viewport[0]
         lineNum = _viewport[1]
         return _lines[lineNum].getRegionAtOffset(offset)
     else:
-        return [None, position]
+        return [None, -1]
 
     
 def clear():
@@ -510,12 +507,18 @@ def clear():
 
     global _lines
     global _regionWithFocus
+    global _viewport
     
     _lines = []
     _regionWithFocus = None
     _viewport = [0, 0]
+    
 
+def setLines(lines):
+    global _lines
+    _lines = lines
 
+    
 def addLine(line):
     """Adds a line to the logical display for painting.  The line is added to
     the end of the current list of known lines.  It is necessary for the
@@ -538,7 +541,7 @@ def getShowingLine():
     return _lines[_viewport[1]]
 
 
-def setFocus(region):
+def setFocus(region, panToFocus=True):
     """Specififes the region with focus.  This region will be positioned
     at the home position on a refresh.
 
@@ -552,6 +555,9 @@ def setFocus(region):
     global _viewport
 
     _regionWithFocus = region
+
+    if not panToFocus:
+        return
     
     # Find the line whose Region has focus and adjust the viewport
     # accordingly.
@@ -704,12 +710,10 @@ def panLeft(panAmount=0):
 
     if panAmount == 0:
         panAmount = _displaySize[0]
-        
+
     if _viewport[0] > 0:
         _viewport[0] = max(0, _viewport[0] - panAmount)
         
-    refresh(False)
-
 
 def panRight(panAmount=0):
     """Pans the display to the right, limiting the pan to the length
@@ -730,9 +734,18 @@ def panRight(panAmount=0):
         string = lineInfo[0]
         if newX < len(string):
             _viewport[0] = newX
-            refresh(False)
 
 
+def panToOffset(offset):
+    """Automatically pan left or right to make sure the current offset is
+    showing."""
+
+    while offset < _viewport[0]:
+        panLeft()
+    while offset > (_viewport[0] + _displaySize[0]):
+        panRight()
+
+        
 def returnToRegionWithFocus(inputEvent=None):
     """Pans the display so the region with focus is displayed.
     
