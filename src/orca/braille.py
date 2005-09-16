@@ -206,6 +206,11 @@ _callback = None
 endIsShowing = False
 beginningIsShowing = False
 
+# 1-based offset saying which braille cell has the cursor.  A value
+# of 0 means no cell has the cursor.
+#
+cursorCell = 0
+
 def _printBrailleEvent(level, command):
     """Prints out a Braille event.  The given level may be overridden
     if the eventDebugLevel (see debug.setEventDebugLevel) is greater in
@@ -362,6 +367,26 @@ class Text(Region):
         self.accessible.text.setCaretOffset(newCaretOffset)
 
         
+class ReviewComponent(Component):
+    """A subclass of Component that is to be used for flar review mode."""
+    
+    def __init__(self, accessible, string, cursorOffset, zone):
+        """Creates a new Component.
+
+        Arguments:
+        - accessible: the accessible
+        - string: the string to use to represent the component
+        - cursorOffset: a 0-based index saying where to draw the cursor
+                        for this Region if it gets focus.
+        - zone: the flat review Zone associated with this component
+        """
+        
+        self.accessible = accessible
+        self.string = string
+        self.cursorOffset = cursorOffset
+        self.zone = zone
+
+        
 class ReviewText(Region):
     """A subclass of Region backed by a Text object.  This Region will
     does not react to the caret changes, but will react if one updates
@@ -369,13 +394,14 @@ class ReviewText(Region):
     mode to show the current character position.
     """
     
-    def __init__(self, accessible, string, lineOffset):
+    def __init__(self, accessible, string, lineOffset, zone):
         """Creates a new Text region.
 
         Arguments:
         - accessible: the accessible that implements AccessibleText
         - string: the string to use to represent the component
         - lineOffset: the character offset into where the text line starts
+        - zone: the flat review Zone associated with this component
         """
 
         self.accessible = accessible
@@ -384,7 +410,7 @@ class ReviewText(Region):
             self.string = self.string[:-1]
         self.lineOffset = lineOffset
         self.cursorOffset = 0
-        
+        self.zone = zone
 
     def processCursorKey(self, offset):
         """Processes a cursor key press on this Component.  The offset is
@@ -431,28 +457,52 @@ class Line:
                 focusOffset = len(string)
             string += region.getString()
         return [string, focusOffset]
+
+    def getRegionAtOffset(self, offset):
+        """Finds the Region at the given 0-based offset in this line.
+        
+        Returns the [region, offsetinregion] where the region is
+        the region at the given offset, and offsetinregion is the
+        0-based offset from the beginning of the region."""
+
+        # Translate the cursor offset for this line into a cursor offset
+        # for a region, and then pass the event off to the region for
+        # handling.
+        #
+        region = None
+        string = ""
+        pos = 0
+        for region in self.regions:
+            string = string + region.getString()
+            if len(string) > offset:
+                break
+            else:
+                pos = len(string)
+
+        return [region, offset - pos]    
         
     def processCursorKey(self, offset):
         """Processes a cursor key press on this Component.  The offset is
         0-based, where 0 represents the leftmost character of string
         associated with this line.  Note that the zeroeth character may have
         been scrolled off the display."""
-        
-        # Translate the cursor offset for this line into a cursor offset
-        # for a region, and then pass the event off to the region for
-        # handling.
-        #
-        string = ""
-        pos = 0
-        for region in self.regions:
-            string = string + region.getString()
-            if len(string) > offset:
-                region.processCursorKey(offset - pos)
-                break
-            else:
-                pos = len(string)
+
+        [region, regionOffset] = self.getRegionAtOffset(offset)
+        region.processCursorKey(regionOffset)
 
 
+def getRegionAtCell(cell):
+    """Given a 1-based cell offset, return the braille region
+    associated with that cell."""
+    
+    if len(_lines) > 0:
+        offset = (cell - 1) + _viewport[0]
+        lineNum = _viewport[1]
+        return _lines[lineNum].getRegionAtOffset(offset)
+    else:
+        return [None, position]
+
+    
 def clear():
     """Clears the logical structure, but keeps the Braille display as is
     (until a refresh operation).
@@ -541,7 +591,7 @@ def setFocus(region):
     _viewport[0] = max(0, offset)
 
 
-def refresh(panToCursor = True):
+def refresh(panToCursor = True, targetCursorCell=0):
     """Repaints the Braille on the physical display.  This clips the entire
     logical structure by the viewport and also sets the cursor to the
     appropriate location.  [[[TODO: WDW - I'm not sure how BrlTTY handles
@@ -549,8 +599,16 @@ def refresh(panToCursor = True):
     drawing one line right now.]]]
 
     Arguments:
+    
     - panToCursor: if True, will adjust the viewport so the cursor is
-    showing.
+                   showing.
+    - targetCursorCell: Only effective if panToCursor is True.
+                        0 means automatically place the cursor somewhere
+                        on the display so as to minimize movement but
+                        show as much of the line as possible.  A positive
+                        value is a 1-based target cell from the left side
+                        of the display and a negative value is a 1-based
+                        target cell from the right side of the display.
     """
 
     global _lines
@@ -559,6 +617,7 @@ def refresh(panToCursor = True):
     global _regionWithFocus
     global endIsShowing
     global beginningIsShowing
+    global cursorCell
     
     if len(_lines) == 0:
         brl.writeText(0, "")
@@ -567,24 +626,33 @@ def refresh(panToCursor = True):
     # Get the string for the line.
     #
     line = _lines[_viewport[1]]
-    lineInfo = line.getLineInfo()    
-    string = lineInfo[0]
+    [string, focusOffset] = line.getLineInfo()
 
-    # Now determine the location of the cursor.
+    # Now determine the location of the cursor.  First, we'll figure
+    # out the 1-based offset for where we want the cursor to be.
     #
-    cursor = -1
-    focusOffset = lineInfo[1]
+    if targetCursorCell < 0:
+        targetCursorCell = _displaySize[0] + targetCursorCell + 1
+
+    # Now, we figure out the 0-based offset for where the cursor
+    # actually is in the string.
+    #
+    cursorOffset = -1
     if focusOffset >= 0:
-        cursor = _regionWithFocus.cursorOffset + focusOffset
+        cursorOffset = _regionWithFocus.cursorOffset + focusOffset
 
-    # We'll automatically pan the viewport to show the cursor,
-    # if so desired.
+    # Now, if desired, we'll automatically pan the viewport to show
+    # the cursor.  If there's no targetCursorCell, then we favor the
+    # left of the display if we need to pan left, or we favor the
+    # right of the display if we need to pan right.
     #
-    if panToCursor and (cursor >= 0):
-        if cursor < _viewport[0]:
-            _viewport[0] = cursor
-        elif cursor >= (_viewport[0] + _displaySize[0]):
-            _viewport[0] = max(0, cursor - _displaySize[0] + 1)
+    if panToCursor and (cursorOffset >= 0):
+        if targetCursorCell:
+            _viewport[0] = max(0, cursorOffset - targetCursorCell - 1)
+        elif cursorOffset < _viewport[0]:
+            _viewport[0] = max(0, cursorOffset)
+        elif cursorOffset >= (_viewport[0] + _displaySize[0]):
+            _viewport[0] = max(0, cursorOffset - _displaySize[0] + 1)
 
     startPos = _viewport[0]
     endPos = startPos + _displaySize[0]
@@ -592,21 +660,21 @@ def refresh(panToCursor = True):
     # Now normalize the cursor position to BrlTTY, which uses 1 as
     # the first cursor position as opposed to 0.
     #
-    cursor = cursor - startPos
-    if (cursor < 0) or (cursor >= _displaySize[0]):
-        cursor = 0
+    cursorCell = cursorOffset - startPos
+    if (cursorCell < 0) or (cursorCell >= _displaySize[0]):
+        cursorCell = 0
     else:
-        cursor = cursor + 1
+        cursorCell += 1
 
     debug.println(debug.LEVEL_INFO, "BRAILLE LINE:  '%s'" % string)
 
     debug.println(debug.LEVEL_INFO, "     VISIBLE:  '%s', cursor=%d" \
-                  % (string[startPos:endPos], cursor))
+                  % (string[startPos:endPos], cursorCell))
 
-    endIsShowing = endPos >= len(string)
+    brl.writeText(cursorCell, string[startPos:endPos])
+    
     beginningIsShowing = startPos == 0
-
-    brl.writeText(cursor, string[startPos:endPos])
+    endIsShowing = endPos >= len(string)
     
 
 def displayMessage(message, cursor=-1):
@@ -625,43 +693,44 @@ def displayMessage(message, cursor=-1):
     refresh(True)
 
 
-def panLeft(inputEvent=None):
-    """Pans the display to the left.
+def panLeft(panAmount=0):
+    """Pans the display to the left, limiting the pan to the beginning
+    of the line being displayed.
     
     Arguments:
-    - inputEvent: the InputEvent instance that caused this to be called.
-
-    Returns True to mean the command should be consumed.
+    - panAmount: the amount to pan.  A value of 0 means the entire
+                 width of the physical display.
     """
 
+    if panAmount == 0:
+        panAmount = _displaySize[0]
+        
     if _viewport[0] > 0:
-        _viewport[0] = max(0, _viewport[0] - _displaySize[0])
+        _viewport[0] = max(0, _viewport[0] - panAmount)
         
     refresh(False)
 
-    return True
 
-
-def panRight(inputEvent=None):
+def panRight(panAmount=0):
     """Pans the display to the right, limiting the pan to the length
     of the line being displayed.
    
     Arguments:
-    - inputEvent: the InputEvent instance that caused this to be called.
-
-    Returns True to mean the command should be consumed.
+    - panAmount: the amount to pan.  A value of 0 means the entire
+                 width of the physical display.
     """
 
+    if panAmount == 0:
+        panAmount = _displaySize[0]
+        
     if len(_lines) > 0:
         lineNum = _viewport[1]    
-        newX = _viewport[0] + _displaySize[0]
+        newX = _viewport[0] + panAmount
         lineInfo = _lines[lineNum].getLineInfo()
         string = lineInfo[0]
         if newX < len(string):
             _viewport[0] = newX
             refresh(False)
-
-    return True
 
 
 def returnToRegionWithFocus(inputEvent=None):
