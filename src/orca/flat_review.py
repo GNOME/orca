@@ -187,7 +187,18 @@ class Zone:
         else:
             return False
 
-        
+    def getWordAtOffset(self, charOffset):
+        word = None
+        offset = 0
+        for word in self.words:
+            nextOffset = offset + len(word.string)
+            if nextOffset > charOffset:
+                return [word, charOffset - offset]
+            else:
+                offset = nextOffset
+
+        return [word, offset]
+
 class TextZone(Zone):
     """Represents Accessibility_Text that is a portion of a single
     horizontal line."""
@@ -399,6 +410,23 @@ class Context:
               % (startOffset, endOffset, string)
         
 
+    def setCurrent(self, lineIndex, zoneIndex, wordIndex, charIndex):
+        """Sets the current character of interest.
+
+        Arguments:
+        - lineIndex: index into lines
+        - zoneIndex: index into lines[lineIndex].zones
+        - wordIndex: index into lines[lineIndex].zones[zoneIndex].words
+        - charIndex: index lines[lineIndex].zones[zoneIndex].words[wordIndex].chars
+        """
+
+        self.lineIndex = lineIndex
+        self.zoneIndex = zoneIndex
+        self.wordIndex = wordIndex
+        self.charIndex = charIndex
+        self.targetCharInfo = self.getCurrent(Context.CHAR) 
+
+
     def clickCurrent(self, button=1):
         """Performs a mouse click on the current accessible."""
 
@@ -528,9 +556,13 @@ class Context:
                or (zone.accessible.role == rolenames.ROLE_TERMINAL):
                 region = braille.ReviewText(zone.accessible,
                                             zone.string,
-                                            zone.startOffset)
+                                            zone.startOffset,
+                                            zone)
             else:
-                region = braille.Component(zone.accessible, zone.string)
+                region = braille.ReviewComponent(zone.accessible,
+                                                 zone.string,
+                                                 0, # cursor offset
+                                                 zone)
                 
             if len(regions):
                 regions.append(braille.Region(" "))
