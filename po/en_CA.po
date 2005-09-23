@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-06 19:12-0400\n"
+"POT-Creation-Date: 2005-09-23 09:55-0400\n"
 "PO-Revision-Date: 2005-08-31 14:20-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -24,19 +24,19 @@ msgstr "No page to read."
 msgid "Reading web page failed."
 msgstr "Reading web page failed."
 
-#: src/orca/braillegenerator.py:190 src/orca/speechgenerator.py:193
-msgid "unavailable"
-msgstr "unavailable"
+#: src/orca/braillegenerator.py:186 src/orca/speechgenerator.py:189
+msgid "grayed"
+msgstr "grayed"
 
-#: src/orca/braillegenerator.py:1114 src/orca/speechgenerator.py:1238
+#: src/orca/braillegenerator.py:1110 src/orca/speechgenerator.py:1234
 msgid "expanded"
 msgstr "expanded"
 
-#: src/orca/braillegenerator.py:1116 src/orca/speechgenerator.py:1240
+#: src/orca/braillegenerator.py:1112 src/orca/speechgenerator.py:1236
 msgid "collapsed"
 msgstr "collapsed"
 
-#: src/orca/braillegenerator.py:1120
+#: src/orca/braillegenerator.py:1116
 #, python-format
 msgid "TREE LEVEL %d"
 msgstr "TREE LEVEL %d"
@@ -61,7 +61,7 @@ msgstr "number"
 msgid "dollar"
 msgstr "dollar"
 
-#: src/orca/chnames.py:32 src/orca/speechgenerator.py:929
+#: src/orca/chnames.py:32 src/orca/speechgenerator.py:925
 msgid "percent"
 msgstr "percent"
 
@@ -74,12 +74,12 @@ msgid "tick"
 msgstr "tick"
 
 #: src/orca/chnames.py:35
-msgid "left"
-msgstr "left"
+msgid "left paren"
+msgstr "left paren"
 
 #: src/orca/chnames.py:36
-msgid "right"
-msgstr "right"
+msgid "right paren"
+msgstr "right paren"
 
 #: src/orca/chnames.py:37
 msgid "star"
@@ -110,7 +110,7 @@ msgid "question"
 msgstr "question"
 
 #: src/orca/chnames.py:44
-msgid "collun"
+msgid "colon"
 msgstr "colon"
 
 #: src/orca/chnames.py:45
@@ -118,12 +118,12 @@ msgid "semi"
 msgstr "semi"
 
 #: src/orca/chnames.py:46
-msgid "less"
-msgstr "less"
+msgid "less than"
+msgstr "less than"
 
 #: src/orca/chnames.py:47
-msgid "greater"
-msgstr "greater"
+msgid "greater than"
+msgstr "greater than"
 
 #: src/orca/chnames.py:48
 msgid "left bracket"
@@ -149,84 +149,145 @@ msgstr "back"
 msgid "bar"
 msgstr "bar"
 
-#: src/orca/default.py:96
+#: src/orca/chnames.py:54
+msgid "newline"
+msgstr "newline"
+
+#: src/orca/chnames.py:55
+msgid "tab"
+msgstr "tab"
+
+#: src/orca/default.py:102
 msgid "Repeats last utterance sent to speech."
 msgstr "Repeats last utterance sent to speech."
 
-#: src/orca/default.py:105
+#: src/orca/default.py:111
+msgid "Performs left click on current flat review item."
+msgstr "Performs left click on current flat review item."
+
+#: src/orca/default.py:120
+msgid "Performs right click on current flat review item."
+msgstr "Performs right click on current flat review item."
+
+#: src/orca/default.py:129
 msgid "Speaks entire document."
 msgstr "Speaks entire document."
 
-#: src/orca/default.py:114
+#: src/orca/default.py:138
 msgid "Performs the where am I operation."
 msgstr "Performs the \"Where Am I\" operation."
 
-#: src/orca/default.py:123
+#: src/orca/default.py:147
 msgid "Paints and prints the visible zones in the active window."
 msgstr "Paints and prints the visible zones in the active window."
 
-#: src/orca/default.py:132
+#: src/orca/default.py:156
 msgid "Enters and exits flat review mode."
 msgstr "Enters and exits flat review mode."
 
-#: src/orca/default.py:141
+#: src/orca/default.py:161
 msgid "Moves flat review to the beginning of the previous line."
 msgstr "Moves flat review to the beginning of the previous line."
 
-#: src/orca/default.py:150
+#: src/orca/default.py:172
 msgid "Moves flat review to the home position."
 msgstr "Moves flat review to the home position."
 
-#: src/orca/default.py:159
+#: src/orca/default.py:188
 msgid "Speaks the current flat review line."
 msgstr "Speaks the current flat review line."
 
-#: src/orca/default.py:168
+#: src/orca/default.py:193
 msgid "Moves flat review to the beginning of the next line."
 msgstr "Moves flat review to the beginning of the next line."
 
-#: src/orca/default.py:177
+#: src/orca/default.py:209
 msgid "Moves flat review to the end position."
 msgstr "Moves flat review to the end position."
 
-#: src/orca/default.py:186
+#: src/orca/default.py:218
 msgid "Moves flat review to the previous item or word."
 msgstr "Moves flat review to the previous item or word."
 
-#: src/orca/default.py:195
+#: src/orca/default.py:223
+msgid "Moves flat review to the word above the current word."
+msgstr "Moves flat review to the word above the current word."
+
+#: src/orca/default.py:239
 msgid "Speaks the current flat review item or word."
 msgstr "Speaks the current flat review item or word."
 
-#: src/orca/default.py:204
+#: src/orca/default.py:248
+msgid "Speaks the current flat review object."
+msgstr "Speaks the current flat review object."
+
+#: src/orca/default.py:257
 msgid "Moves flat review to the next item or word."
 msgstr "Moves flat review to the next item or word."
 
-#: src/orca/default.py:214
+#: src/orca/default.py:262
+msgid "Moves flat review to the word below the current word."
+msgstr "Moves flat review to the word below the current word."
+
+#: src/orca/default.py:274
 msgid "Moves flat review to the previous character."
 msgstr "Moves flat review to the previous character."
 
-#: src/orca/default.py:223
+#: src/orca/default.py:290
 msgid "Moves flat review to the end of the line."
 msgstr "Moves flat review to the end of the line."
 
-#: src/orca/default.py:232
+#: src/orca/default.py:299
 msgid "Speaks the current flat review character."
 msgstr "Speaks the current flat review character."
 
-#: src/orca/default.py:241
+#: src/orca/default.py:304
 msgid "Moves flat review to the next character."
 msgstr "Moves flat review to the next character."
 
-#: src/orca/default.py:408 src/orca/default.py:588
+#: src/orca/default.py:321
+msgid "Pans the braille display to the left."
+msgstr "Pans the braille display to the left."
+
+#: src/orca/default.py:326
+msgid "Pans the braille display to the right."
+msgstr "Pans the braille display to the right."
+
+#: src/orca/default.py:331
+msgid "Pans the braille display to the left by one character."
+msgstr "Pans the braille display to the left by one character."
+
+#: src/orca/default.py:336
+msgid "Pans the braille display to the right by one character."
+msgstr "Pans the braille display to the right by one character."
+
+#: src/orca/default.py:345
+msgid "Moves flat review to the bottom left."
+msgstr "Moves flat review to the bottom left."
+
+#: src/orca/default.py:350
+msgid "Returns to object with keyboard focus."
+msgstr "Returns to object with keyboard focus."
+
+#: src/orca/default.py:522 src/orca/default.py:703
 #, python-format
 msgid "tree level %d"
 msgstr "tree level %d"
 
-#: src/orca/default.py:412 src/orca/default.py:592 src/orca/default.py:657
+#: src/orca/default.py:526 src/orca/default.py:707 src/orca/default.py:772
 msgid "Nothing has focus"
 msgstr "Nothing has focus"
 
-#: src/orca/default.py:1482
+#: src/orca/default.py:1467 src/orca/default.py:1543 src/orca/default.py:1548
+#: src/orca/default.py:1615 src/orca/default.py:1620
+msgid "blank"
+msgstr "blank"
+
+#: src/orca/default.py:1469 src/orca/default.py:1550
+msgid "white space"
+msgstr "white space"
+
+#: src/orca/default.py:1822
 msgid "Not a document."
 msgstr "Not a document."
 
@@ -312,43 +373,43 @@ msgstr "Braille support appears to work.  Use it?  Enter y or n. "
 msgid "User logged out - shutting down."
 msgstr "User logged out - shutting down."
 
-#: src/orca/orca.py:551
+#: src/orca/orca.py:560
 msgid "Entering learn mode.  Press any key to hear its function. "
 msgstr "Entering learn mode.  Press any key to hear its function. "
 
-#: src/orca/orca.py:552
+#: src/orca/orca.py:561
 msgid "To exit learn mode, press the escape key."
 msgstr "To exit learn mode, press the escape key."
 
-#: src/orca/orca.py:553
+#: src/orca/orca.py:562
 msgid "Learn mode.  Press escape to exit."
 msgstr "Learn mode.  Press escape to exit."
 
-#: src/orca/orca.py:564 src/orca/orca.py:565
+#: src/orca/orca.py:573 src/orca/orca.py:574
 msgid "Exiting learn mode."
 msgstr "Exiting learn mode."
 
-#: src/orca/orca.py:594
+#: src/orca/orca.py:603
 msgid "Enters learn mode.  Press escape to exit learn mode."
 msgstr "Enters learn mode.  Press escape to exit learn mode."
 
-#: src/orca/orca.py:602
+#: src/orca/orca.py:611
 msgid "Decreases the speech rate."
 msgstr "Decreases the speech rate."
 
-#: src/orca/orca.py:610
+#: src/orca/orca.py:619
 msgid "Increases the speech rate."
 msgstr "Increases the speech rate."
 
-#: src/orca/orca.py:616
+#: src/orca/orca.py:625
 msgid "Quits Orca"
 msgstr "Quits Orca"
 
-#: src/orca/orca.py:624
+#: src/orca/orca.py:633
 msgid "Toggles keystroke recording on and off."
 msgstr "Toggles keystroke recording on and off."
 
-#: src/orca/orca.py:632
+#: src/orca/orca.py:641
 msgid ""
 "Prints a debug listing of all known applications to the console where Orca "
 "is running."
@@ -356,7 +417,7 @@ msgstr ""
 "Prints a debug listing of all known applications to the console where Orca "
 "is running."
 
-#: src/orca/orca.py:640
+#: src/orca/orca.py:649
 msgid ""
 "Prints debug information about the currently active application to the "
 "console where Orca is running."
@@ -364,19 +425,19 @@ msgstr ""
 "Prints debug information about the currently active application to the "
 "console where Orca is running."
 
-#: src/orca/orca.py:648
+#: src/orca/orca.py:657
 msgid "Switches to the next presentation manager."
 msgstr "Switches to the next presentation manager."
 
-#: src/orca/orca.py:697 src/orca/orca.py:698
+#: src/orca/orca.py:706 src/orca/orca.py:707
 msgid "Welcome to Orca."
 msgstr "Welcome to Orca."
 
-#: src/orca/orca.py:721
+#: src/orca/orca.py:730
 msgid "goodbye."
 msgstr "goodbye."
 
-#: src/orca/orca.py:722
+#: src/orca/orca.py:731
 msgid "Goodbye."
 msgstr "Goodbye."
 
@@ -1046,7 +1107,7 @@ msgstr "tomnuitm"
 msgid "TearOffMenuItem"
 msgstr "TearOffMenuItem"
 
-#: src/orca/rolenames.py:445 src/orca/speechgenerator.py:1304
+#: src/orca/rolenames.py:445 src/orca/speechgenerator.py:1300
 msgid "tear off menu item"
 msgstr "tear off menu item"
 
@@ -1262,38 +1323,38 @@ msgstr "The speech rate has been lowered."
 msgid " dot dot dot"
 msgstr " dot dot dot"
 
-#: src/orca/speechgenerator.py:366 src/orca/speechgenerator.py:370
+#: src/orca/speechgenerator.py:362 src/orca/speechgenerator.py:366
 msgid "checked"
 msgstr "checked"
 
-#: src/orca/speechgenerator.py:374 src/orca/speechgenerator.py:378
+#: src/orca/speechgenerator.py:370 src/orca/speechgenerator.py:374
 msgid "not checked"
 msgstr "not checked"
 
-#: src/orca/speechgenerator.py:904
+#: src/orca/speechgenerator.py:900
 msgid "one tab"
 msgstr "one tab"
 
-#: src/orca/speechgenerator.py:906
+#: src/orca/speechgenerator.py:902
 msgid "tabs"
 msgstr "tabs"
 
-#: src/orca/speechgenerator.py:983 src/orca/speechgenerator.py:987
+#: src/orca/speechgenerator.py:979 src/orca/speechgenerator.py:983
 msgid "selected"
 msgstr "selected"
 
-#: src/orca/speechgenerator.py:991 src/orca/speechgenerator.py:995
+#: src/orca/speechgenerator.py:987 src/orca/speechgenerator.py:991
 msgid "not selected"
 msgstr "not selected"
 
-#: src/orca/speechgenerator.py:1306
+#: src/orca/speechgenerator.py:1302
 msgid "tear off"
 msgstr "tear off"
 
-#: src/orca/speechgenerator.py:1367 src/orca/speechgenerator.py:1371
+#: src/orca/speechgenerator.py:1363 src/orca/speechgenerator.py:1367
 msgid "pressed"
 msgstr "pressed"
 
-#: src/orca/speechgenerator.py:1375 src/orca/speechgenerator.py:1379
+#: src/orca/speechgenerator.py:1371 src/orca/speechgenerator.py:1375
 msgid "not pressed"
 msgstr "not pressed"
