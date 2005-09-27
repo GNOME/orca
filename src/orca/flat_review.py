@@ -1231,9 +1231,19 @@ def getZonesFromAccessible(accessible, cliprect):
             string = accessible.label
 
         if string == "":
-            string = accessible.role
-        
-        if (clipping[2] != 0) or (clipping[3] != 0):
+            # [[[TODO: WDW - ooohhhh....this is going to be a headache.
+            # We want to synthesize a string for objects that are there,
+            # but have no text.  For example, scroll bars.  The rub is
+            # that we will sometimes want to do different strings for
+            # speech and braille (e.g., checkbox cells in tables - the
+            # speech will say "checkbox checked" and the braille will
+            # display "checkbox <x>".  Yikes.  That may be a challenge.
+            # So...for now we punt on table cells.]]]
+            #
+            if accessible.role != rolenames.ROLE_TABLE_CELL:
+                string = accessible.role
+    
+        if len(string) and ((clipping[2] != 0) or (clipping[3] != 0)):
             zones.append(Zone(accessible,
                               string,
                               clipping[0],
