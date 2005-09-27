@@ -1,21 +1,26 @@
 - Search all modules for "TODO" - there's a lot.  All "TODO" comments
   that have a "HACK" in them usually indicate some odd workaround for
   an apparent AT-SPI implementation oddity.
+
 - Make the kbd module maintain a stack of keypresses, rather than only
   the last individual keypress
+
 - Fix the autogen stuff to better detect package dependencies
+
 - Fix the autogen stuff to better install Orca in the python site-packages
   area if python isn't installed under --prefix.
-- Need to handle AT-SPI failures with respect to CORBA (e.g., COMM_FAILURE).
-  * Perhaps have a well known "onCommFailure" method in the orca module
-    that is called on failures.  This would do the appropriate recovery.
+
 - Implement the style guide for speech and braille.
+
 - Sometimes on Fedora Core 4, when a terminal is started after orca is
   running, the terminal comes up with the "unknown" role.
+
 - Sometimes on Fedora Core 4, the left hand panel (e.g., the list of
   configuration groups) in kickstart will come up with the "unknown" role.
+
 - Cannot register a callback with FreeTTS driver on Fedora (COMM_FAILURE);
   DECtalk apparently suffers from the same problem.
+
 - GEdit will often hang when you quit it while running Orca
   > UPDATE: This is the result of an AT-SPI bug that is awaiting a patch.
     The bug happens when any AT tickles the parental hierarchy of objects
@@ -25,16 +30,41 @@
     get an Accessible from an event for by getting it via the "embedded
     hierarchy" (i.e., looking at children).  This seems to result in
     a bad state and possibly even memory corruption in the client.
+
 - gnome-terminal: "Edit" -> "Current Profile..." -> "Colors"; press the
   color palette button.  The color editing widget is a monster.
+
 - Orca seg faults when it exits.
   > UPDATE: WDW - after some investigation, this seems to be happening
     when attempting to return from a glib call.  Originally thought
     this might be due to shutting down bonobo (bonobo.main_quit) when
     handling a keyboard event.  After prototyping something to shut down
     on a GLib idle handler, however, this didn't seem to be the case.
+
 - When nothing has focus the old stuff on the braille display should go away.
   It should speak and braille "no focus."
+
 - When in a text editor such as GEdit doing a find orca should speak
   the new line landed on.
+
+- speech.say("uppercase", text) only seems to work once in a sequence
+  of letters
+
+- flat review mode currently places the cursor at the last cell of
+  the display when moving word by word across long lines.  It should
+  attempt to show the entire word.
+
+- flat review mode currently does very little to left align multiline
+  text areas.  It should attempt to consistently place the first character
+  of each line in the same logical cell location.
+
+- Create a tool to analyze scripts to extract keybindings and their
+  "learn mode" documentation as a means to automatically document the
+  input methods for Orca.
+
+- Exiting learn mode should display current locus of focus.
+
+- The volume control in the panel presents a challenge.  It's components
+  should appear in review mode.  In addition, other embedded components
+  in the top panel should not say "blank" in review mode.
 

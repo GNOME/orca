@@ -1,3 +1,44 @@
+2005-09-27  Willie Walker <william.walker@sun.com>
+
+	* src/orca/braille.py, src/orca/default.py, src/orca/flat_review.py,
+	src/orca/braillegenerator.py: more work on keeping the spatial 
+	layout of braille relatively consistent.
+	
+2005-09-16  Willie Walker <william.walker@sun.com>
+
+	* src/orca/braille.py, src/orca/default.py, src/orca/flat_review.py:
+	hopefully a little better at flat review navigation using the 
+	buttons on the braille display
+        * src/orca/braille.py: provide additional methods to find our way
+	around and also provide more control over panning around.
+	* src/orca/flat_review.py: provide ability to explicitly set the
+	character of interest as well as ability to pass a character offset
+	to a zone and find the word associated with it.
+	
+2005-09-15  Willie Walker <william.walker@sun.com>
+
+	* src/orca/speechgenerator.py, src/orca/braillegenerator.py: used
+	rolenames constants instead of hard coded strings.
+	* src/orca/default.py: use "above" and "below" semantics instead
+	of "previous line" and "next line" for BrlTTY LNUP and LNDN.
+	* src/orca/flat_review.py: in flat review mode, automatically pan
+	to begin/end of previous/next lines when panning in braille.
+	
+2005-09-13  Willie Walker <william.walker@sun.com>
+
+	* src/orca/default.py: don't speak flat review info if the user
+	navigated via input from the braille display.
+	* src/orca/braille.py: strip trailing "\n" from lines for flat
+	review mode.
+	* src/orca/flat_review.py: do not add zero-sized zones to flat 
+	review context.
+	
+2005-09-12  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca.py, src/orca/default.py, src/orca/flat_review.py: 
+	more work on flat review - rudimentary braille input and output
+	working.
+	
 2005-09-01  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca.py, src/orca/default.py, src/orca/flat_review.py: 
