@@ -698,7 +698,7 @@ def refresh(panToCursor=True, targetCursorCell=0):
 
     debug.println(debug.LEVEL_INFO, "BRAILLE LINE:  '%s'" % string)
 
-    debug.println(debug.LEVEL_OFF, "     VISIBLE:  '%s', cursor=%d" \
+    debug.println(debug.LEVEL_INFO, "     VISIBLE:  '%s', cursor=%d" \
                   % (string[startPos:endPos], cursorCell))
 
     print
