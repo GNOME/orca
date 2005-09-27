@@ -796,7 +796,7 @@ class BrailleGenerator:
         textRegion = braille.Text(obj, obj.label)
         regions.append(textRegion)
 
-        eol = braille.Region(" $L")
+        eol = braille.Region(" $l")
         regions.append(eol)
 
         # We do not want the role at the end of text areas.

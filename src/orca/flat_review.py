@@ -351,7 +351,7 @@ class Line:
                 pad.brailleOffset = brailleOffset
                 self.brailleRegions.append(pad)
                 brailleOffset += 1
-            eol = braille.Region("$L")
+            eol = braille.Region("$l")
             eol.brailleOffset = brailleOffset
             self.brailleRegions.append(eol)
             
