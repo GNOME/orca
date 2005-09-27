@@ -701,8 +701,6 @@ def refresh(panToCursor=True, targetCursorCell=0):
     debug.println(debug.LEVEL_INFO, "     VISIBLE:  '%s', cursor=%d" \
                   % (string[startPos:endPos], cursorCell))
 
-    print
-    
     brl.writeText(cursorCell, string[startPos:endPos])
     
     beginningIsShowing = startPos == 0

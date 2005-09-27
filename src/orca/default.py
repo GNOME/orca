@@ -814,8 +814,20 @@ class Default(Script):
         braille.clear()
 
         line = braille.Line()
-        
-        line.addRegions(self.brailleGenerator.getBrailleContext(obj))
+
+        # For multiline text areas, we only show the context if we
+        # are on the very first line.  Otherwise, we show only the
+        # line.
+        #
+        if obj.role == rolenames.ROLE_TEXT:
+            text = obj.text
+            [string, startOffset, endOffset] = text.getTextAtOffset(
+                text.caretOffset,
+                core.Accessibility.TEXT_BOUNDARY_LINE_START)
+            if startOffset == 0:
+                line.addRegions(self.brailleGenerator.getBrailleContext(obj))
+        else:
+            line.addRegions(self.brailleGenerator.getBrailleContext(obj))
         
         result = self.brailleGenerator.getBrailleRegions(obj)
         line.addRegions(result[0])
@@ -1433,6 +1445,23 @@ class Default(Script):
 
             self.targetCursorCell = 1
             self.updateBrailleReview(self.targetCursorCell)
+        elif braille.beginningIsShowing and orca.locusOfFocus \
+             and (orca.locusOfFocus.role == rolenames.ROLE_TEXT):
+            # If we're at the beginning of a line of a multiline text
+            # area, then force it's caret to the end of the previous
+            # line.  The assumption here is that we're currently
+            # viewing the line that has the caret -- which is a pretty
+            # good assumption for focus tacking mode.  When we set the
+            # caret position, we will get a caret event, which will
+            # then update the braille.
+            #
+            text = orca.locusOfFocus.text
+            length = text.characterCount
+            [string, startOffset, endOffset] = text.getTextAtOffset(
+                text.caretOffset,
+                core.Accessibility.TEXT_BOUNDARY_LINE_START)
+            if startOffset > 0:
+                text.setCaretOffset(startOffset - 1)
         else:
             braille.panLeft(panAmount)
             braille.refresh(False)
