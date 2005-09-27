@@ -346,6 +346,15 @@ class Line:
 
                 brailleOffset += len(region.string)
 
+            if len(self.brailleRegions):
+                pad = braille.Region(" ")
+                pad.brailleOffset = brailleOffset
+                self.brailleRegions.append(pad)
+                brailleOffset += 1
+            eol = braille.Region("$L")
+            eol.brailleOffset = brailleOffset
+            self.brailleRegions.append(eol)
+            
         return self.brailleRegions
             
 

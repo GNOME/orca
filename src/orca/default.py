@@ -325,15 +325,15 @@ class Default(Script):
                 self.panBrailleRight,
                 _("Pans the braille display to the right."))
             
-        self.braillebindings[braille.CMD_CHRLT] = \
-            InputEventHandler(
-                self.panBrailleLeftOneChar,
-                _("Pans the braille display to the left by one character."))
+        #self.braillebindings[braille.CMD_CHRLT] = \
+        #    InputEventHandler(
+        #        self.panBrailleLeftOneChar,
+        #        _("Pans the braille display to the left by one character."))
 
-        self.braillebindings[braille.CMD_CHRRT] = \
-            InputEventHandler(
-                self.panBrailleRightOneChar,
-                _("Pans the braille display to the right by one character."))
+        #self.braillebindings[braille.CMD_CHRRT] = \
+        #    InputEventHandler(
+        #        self.panBrailleRightOneChar,
+        #        _("Pans the braille display to the right by one character."))
 
         self.braillebindings[braille.CMD_LNUP] = reviewAboveHandler
         self.braillebindings[braille.CMD_LNDN] = reviewBelowHandler
@@ -1273,8 +1273,8 @@ class Default(Script):
                 currentLineIndex = 0
                 currentZoneIndex = 0
             elif isinstance(zone, flat_review.TextZone):
-                # If we're on an accessible text object, try to start
-                # at the caret position of that object.
+                # If we're on an accessible text object, try to set the
+                # review cursor to the  the caret position of that object.
                 #
                 accessible  = zone.accessible
                 lineIndex   = currentLineIndex
@@ -1316,6 +1316,15 @@ class Default(Script):
                                                          currentZoneIndex,
                                                          currentWordIndex,
                                                          currentCharIndex)
+
+            self.justEnteredFlatReviewMode = True
+            
+            # Also, we want to remember where the cursor currently was
+            # when the user was in focus tracking mode.  We'll try to
+            # keep the position the same as we move to characters above
+            # and below us.
+            #
+            self.targetCursorCell = braille.cursorCell
             
         return self.flatReviewContext
 
@@ -1332,13 +1341,20 @@ class Default(Script):
             [string, x, y, width, height] = \
                      context.getCurrent(flat_review.Context.WORD)
             orca.drawOutline(x, y, width, height)
-            self.reviewCurrentItem(inputEvent)
+            self.reviewCurrentItem(inputEvent, self.targetCursorCell)
             
         return True
 
 
     def updateBrailleReview(self, targetCursorCell=0):
+        """Obtains the braille regions for the current flat review line
+        and displays them on the braille display.  If the targetCursorCell
+        is non-0, then an attempt will be made to postion the review cursor
+        at that cell.  Otherwise, we will pan in display-sized increments
+        to show the review cursor."""
+
         context = self.getFlatReviewContext()
+        
         [regions, regionWithFocus] = context.getCurrentBrailleRegions()
 
         line = braille.Line()
@@ -1347,8 +1363,13 @@ class Default(Script):
         braille.setFocus(regionWithFocus, False)
         braille.panToOffset(regionWithFocus.brailleOffset \
                             + regionWithFocus.cursorOffset)
-        braille.refresh(False, targetCursorCell)
-        
+
+        if self.justEnteredFlatReviewMode:
+            braille.refresh(True, self.targetCursorCell)
+            self.justEnteredFlatReviewMode = False
+        else:
+            braille.refresh(True, targetCursorCell)
+
         
     def _setFlatReviewContextToBeginningOfBrailleDisplay(self):
         """Sets the character of interest to be the first character showing
@@ -1363,6 +1384,8 @@ class Default(Script):
                      or isinstance(region, braille.ReviewComponent)):
                 position = max(region.brailleOffset, braille._viewport[0])
                 offset = position - region.brailleOffset
+                self.targetCursorCell = region.brailleOffset \
+                                        - braille._viewport[0]
                 [word, charOffset] = region.zone.getWordAtOffset(offset)
                 if word:
                     self.flatReviewContext.setCurrent(
@@ -1383,7 +1406,11 @@ class Default(Script):
         """Pans the braille display to the left.  If panAmount is non-zero,
         the display is panned by that many cells.  If it is 0, the display
         is panned one full display width.  In flat review mode, panning
-        beyond the beginning will take you to the end of the previous line."""
+        beyond the beginning will take you to the end of the previous line.
+
+        In focus tracking mode, the cursor stays at its logical position.
+        In flat review mode, the review cursor moves to character
+        associated with cell 0."""
         
         if self.flatReviewContext:
             if braille.beginningIsShowing:
@@ -1391,9 +1418,17 @@ class Default(Script):
                 self.reviewPreviousCharacter(inputEvent)
             else:
                 braille.panLeft(panAmount)
-                self._setFlatReviewContextToBeginningOfBrailleDisplay()
-                self.updateBrailleReview()
-                self.reviewCurrentCharacter(inputEvent)
+
+            # This will update our target cursor cell
+            #
+            self._setFlatReviewContextToBeginningOfBrailleDisplay()
+            
+            [string, x, y, width, height] = \
+                self.flatReviewContext.getCurrent(flat_review.Context.CHAR)
+            orca.drawOutline(x, y, width, height)
+
+            self.targetCursorCell = 1
+            self.updateBrailleReview(self.targetCursorCell)
         else:
             braille.panLeft(panAmount)
             braille.refresh(False)
@@ -1402,7 +1437,12 @@ class Default(Script):
 
 
     def panBrailleLeftOneChar(self, inputEvent=None):
-        """Nudges the braille display one character to the left."""
+        """Nudges the braille display one character to the left.
+        
+        In focus tracking mode, the cursor stays at its logical position.
+        In flat review mode, the review cursor moves to character
+        associated with cell 0."""
+        
         self.panBrailleLeft(inputEvent, 1)
 
 
@@ -1410,7 +1450,11 @@ class Default(Script):
         """Pans the braille display to the right.  If panAmount is non-zero,
         the display is panned by that many cells.  If it is 0, the display
         is panned one full display width.  In flat review mode, panning
-        beyond the end will take you to the begininng of the next line."""
+        beyond the end will take you to the begininng of the next line.
+        
+        In focus tracking mode, the cursor stays at its logical position.
+        In flat review mode, the review cursor moves to character
+        associated with cell 0."""
         
         if self.flatReviewContext:
             if braille.endIsShowing:
@@ -1418,9 +1462,34 @@ class Default(Script):
                 self.reviewNextCharacter(inputEvent)
             else:
                 braille.panRight(panAmount)
-                self._setFlatReviewContextToBeginningOfBrailleDisplay()
-                self.updateBrailleReview()
-                self.reviewCurrentCharacter(inputEvent)
+
+            # This will update our target cursor cell
+            #
+            self._setFlatReviewContextToBeginningOfBrailleDisplay()
+
+            [string, x, y, width, height] = \
+                self.flatReviewContext.getCurrent(flat_review.Context.CHAR)
+            
+            orca.drawOutline(x, y, width, height)
+
+            self.targetCursorCell = 1
+            self.updateBrailleReview(self.targetCursorCell)
+        elif braille.endIsShowing and orca.locusOfFocus \
+             and (orca.locusOfFocus.role == rolenames.ROLE_TEXT):
+            # If we're at the end of a line of a multiline text area, then
+            # force it's caret to the beginning of the next line.  The
+            # assumption here is that we're currently viewing the line that
+            # has the caret -- which is a pretty good assumption for focus
+            # tacking mode.  When we set the caret position, we will get a
+            # caret event, which will then update the braille.
+            #
+            text = orca.locusOfFocus.text
+            length = text.characterCount
+            [string, startOffset, endOffset] = text.getTextAtOffset(
+                text.caretOffset,
+                core.Accessibility.TEXT_BOUNDARY_LINE_START)
+            if endOffset < text.characterCount:
+                text.setCaretOffset(endOffset)
         else:
             braille.panRight(panAmount)
             braille.refresh(False)
@@ -1429,7 +1498,12 @@ class Default(Script):
 
 
     def panBrailleRightOneChar(self, inputEvent=None):
-        """Nudges the braille display one character to the right."""
+        """Nudges the braille display one character to the right.
+        
+        In focus tracking mode, the cursor stays at its logical position.
+        In flat review mode, the review cursor moves to character
+        associated with cell 0."""
+
         self.panBrailleRight(inputEvent, 1)
 
 
@@ -1443,16 +1517,22 @@ class Default(Script):
 
     
     def leftClickReviewItem(self, inputEvent=None):
+        """Performs a left mouse button click on the current item."""
+        
         context = self.getFlatReviewContext().clickCurrent(1)
         return True
     
     
     def rightClickReviewItem(self, inputEvent=None):
+        """Performs a right mouse button click on the current item."""
+        
         context = self.getFlatReviewContext().clickCurrent(3)
         return True
     
 
     def reviewCurrentLine(self, inputEvent):
+        """Presents the current flat review line via braille and speech."""
+        
         context = self.getFlatReviewContext()
 
         [string, x, y, width, height] = \
@@ -1476,6 +1556,9 @@ class Default(Script):
 
             
     def reviewPreviousLine(self, inputEvent):
+        """Moves the flat review context to the beginning of the
+        previous line."""
+
         context = self.getFlatReviewContext()
 
         moved = context.goPrevious(flat_review.Context.LINE,
@@ -1483,21 +1566,30 @@ class Default(Script):
         
         if moved:
             self.reviewCurrentLine(inputEvent)
+            self.targetCursorCell = braille.cursorCell
                  
         return True
 
             
     def reviewHome(self, inputEvent):
+        """Moves the flat review context to the top left of the current
+        window."""
+
         context = self.getFlatReviewContext()
 
         moved = context.goBegin()
         
         self.reviewCurrentLine(inputEvent)
+        self.targetCursorCell = braille.cursorCell
                  
         return True
 
             
     def reviewNextLine(self, inputEvent):
+        """Moves the flat review context to the beginning of the
+        next line.  Places the flat review cursor at the beginning
+        of the line."""
+
         context = self.getFlatReviewContext()
 
         moved = context.goNext(flat_review.Context.LINE,
@@ -1505,31 +1597,44 @@ class Default(Script):
         
         if moved:
             self.reviewCurrentLine(inputEvent)
+            self.targetCursorCell = braille.cursorCell
                  
         return True
 
             
     def reviewBottomLeft(self, inputEvent):
+        """Moves the flat review context to the beginning of the
+        last line in the window.  Places the flat review cursor at
+        the beginning of the line."""
+
         context = self.getFlatReviewContext()
 
         moved = context.goEnd(flat_review.Context.WINDOW)
         moved = context.goBegin(flat_review.Context.LINE)
         self.reviewCurrentLine(inputEvent)
+        self.targetCursorCell = braille.cursorCell
             
         return True
 
             
     def reviewEnd(self, inputEvent):
+        """Moves the flat review context to the end of the
+        last line in the window.  Places the flat review cursor
+        at the end of the line."""
+
         context = self.getFlatReviewContext()
 
         moved = context.goEnd()
         
         self.reviewCurrentLine(inputEvent)
+        self.targetCursorCell = braille.cursorCell
             
         return True
 
             
     def reviewCurrentItem(self, inputEvent, targetCursorCell=0):
+        """Presents the current item to the user."""
+
         context = self.getFlatReviewContext()
         [string, x, y, width, height] = \
                  context.getCurrent(flat_review.Context.WORD)
@@ -1577,6 +1682,9 @@ class Default(Script):
 
 
     def reviewPreviousItem(self, inputEvent):
+        """Moves the flat review context to the previous item.  Places
+        the flat review cursor at the beginning of the item."""
+        
         context = self.getFlatReviewContext()
 
         moved = context.goPrevious(flat_review.Context.WORD,
@@ -1584,11 +1692,15 @@ class Default(Script):
         
         if moved:
             self.reviewCurrentItem(inputEvent)
+            self.targetCursorCell = braille.cursorCell
             
         return True
 
 
     def reviewNextItem(self, inputEvent):
+        """Moves the flat review context to the next item.  Places
+        the flat review cursor at the beginning of the item."""
+
         context = self.getFlatReviewContext()
 
         moved = context.goNext(flat_review.Context.WORD,
@@ -1596,6 +1708,7 @@ class Default(Script):
         
         if moved:
             self.reviewCurrentItem(inputEvent)
+            self.targetCursorCell = braille.cursorCell
             
         return True
 
@@ -1629,6 +1742,9 @@ class Default(Script):
 
 
     def reviewPreviousCharacter(self, inputEvent):
+        """Moves the flat review context to the previous character.  Places
+        the flat review cursor at character."""
+
         context = self.getFlatReviewContext()
 
         moved = context.goPrevious(flat_review.Context.CHAR,
@@ -1636,21 +1752,29 @@ class Default(Script):
         
         if moved:
             self.reviewCurrentCharacter(inputEvent)
+            self.targetCursorCell = braille.cursorCell
             
         return True
 
             
     def reviewEndOfLine(self, inputEvent):
+        """Moves the flat review context to the end of the line.  Places
+        the flat review cursor at the end of the line."""
+
         context = self.getFlatReviewContext()
 
         moved = context.goEnd(flat_review.Context.LINE)
         
         self.reviewCurrentCharacter(inputEvent)
+        self.targetCursorCell = braille.cursorCell            
             
         return True
 
             
     def reviewNextCharacter(self, inputEvent):
+        """Moves the flat review context to the next character.  Places
+        the flat review cursor at character."""
+
         context = self.getFlatReviewContext()
 
         moved = context.goNext(flat_review.Context.CHAR,
@@ -1658,34 +1782,39 @@ class Default(Script):
         
         if moved:
             self.reviewCurrentCharacter(inputEvent)
+            self.targetCursorCell = braille.cursorCell
             
         return True
 
             
     def reviewAbove(self, inputEvent):
+        """Moves the flat review context to the character most directly
+        above the current flat review cursor.  Places the flat review
+        cursor at character."""
+
         context = self.getFlatReviewContext()
 
-        targetCursorCell = braille.cursorCell
-        
         moved = context.goAbove(flat_review.Context.CHAR,
                                 flat_review.Context.WRAP_LINE)
         
         if moved:
-            self.reviewCurrentItem(inputEvent, targetCursorCell)
+            self.reviewCurrentItem(inputEvent, self.targetCursorCell)
                  
         return True
 
             
     def reviewBelow(self, inputEvent):
+        """Moves the flat review context to the character most directly
+        below the current flat review cursor.  Places the flat review
+        cursor at character."""
+
         context = self.getFlatReviewContext()
 
-        targetCursorCell = braille.cursorCell
-        
         moved = context.goBelow(flat_review.Context.CHAR,
                                 flat_review.Context.WRAP_LINE)
         
         if moved:
-            self.reviewCurrentItem(inputEvent, targetCursorCell)
+            self.reviewCurrentItem(inputEvent, self.targetCursorCell)
                  
         return True
 
