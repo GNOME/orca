@@ -950,7 +950,9 @@ class Default(Script):
         if brailleNeedsRepainting:
             self.updateBraille(event.source)
 
-        if orca.lastKeyboardEvent is None:
+        if (orca.lastInputEvent is None) \
+            or \
+            (not isinstance(orca.lastInputEvent, input_event.KeyboardEvent)):
             return
 
         # Guess why the caret moved and say something appropriate.
@@ -959,8 +961,8 @@ class Default(Script):
         # down is done via other actions such as "i" or "j".  We may
         # need to think about this a little harder.]]]
         #
-        string = orca.lastKeyboardEvent.event_string
-        mods = orca.lastKeyboardEvent.modifiers
+        string = orca.lastInputEvent.event_string
+        mods = orca.lastInputEvent.modifiers
         controlMask = 1 << core.Accessibility.MODIFIER_CONTROL
 
         if (string == "Up") or (string == "Down"):
@@ -1011,10 +1013,12 @@ class Default(Script):
         # about the ramifications of this when it comes to editors such
         # as vi or emacs.
         #
-        if orca.lastKeyboardEvent is None:
+        if (orca.lastInputEvent is None) \
+            or \
+            (not isinstance(orca.lastInputEvent, input_event.KeyboardEvent)):
             return
-        
-        string = orca.lastKeyboardEvent.event_string
+            
+        string = orca.lastInputEvent.event_string
         text = event.any_data
         if (string == "BackSpace") or (string == "Delete"):
             if text.isupper():

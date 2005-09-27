@@ -309,6 +309,8 @@ def processBrailleEvent(command):
     Returns True if the event was consumed; otherwise False
     """
 
+    global lastInputEvent
+    
     # [[[TODO: WDW - probably should add braille bindings to this module.]]]
     
     consumed = False
@@ -322,9 +324,12 @@ def processBrailleEvent(command):
     else:
         speech.stop("default")
 
+    event = BrailleEvent(command)
+    lastInputEvent = event
+    
     try:
         consumed = _PRESENTATION_MANAGERS[_currentPresentationManager].\
-                   processBrailleEvent(BrailleEvent(command))
+                   processBrailleEvent(event)
     except:
         debug.printException(debug.LEVEL_SEVERE)
 
@@ -846,9 +851,9 @@ def outlineAccessible(accessible, erasePrevious=True):
 #                                                                      #
 ########################################################################
 
-# The KeyboardEvent instance representing the last key pressed.
+# The InputEvent instance representing the last input event.
 #
-lastKeyboardEvent = None
+lastInputEvent = None
 
 # True if the insert key is currently pressed.  We will use the insert
 # key as a modifier for Orca, and it will be presented as the "insert"
@@ -875,7 +880,7 @@ def _keyEcho(key):
 
 def processKeyboardEvent(event):
     """The primary key event handler for Orca.  Keeps track of various
-    attributes, such as the lastKeyboardEvent and insertPressed.  Also calls
+    attributes, such as the lastInputEvent and insertPressed.  Also calls
     keyEcho as well as any function that may exist in the _keybindings
     dictionary for the key event.  This method is called synchronously
     from the at-spi registry and should be performant.  In addition, it
@@ -887,7 +892,7 @@ def processKeyboardEvent(event):
     Returns True if the event should be consumed.
     """
     
-    global lastKeyboardEvent
+    global lastInputEvent
     global _insertPressed
     global _currentPresentationManager
     global _recordingKeystrokes
@@ -965,6 +970,6 @@ def processKeyboardEvent(event):
             exitLearnMode(keyboardEvent)
         consumed = True
             
-    lastKeyboardEvent = keyboardEvent
+    lastInputEvent = keyboardEvent
 
     return consumed

@@ -19,6 +19,7 @@
 
 import a11y
 import braille
+import input_event
 import kbd
 import rolenames
 import speech
@@ -135,6 +136,13 @@ class GCalcTool(Default):
         if event.source == self._display:
             contents = self._display_txt.getText(0, -1)
             braille.displayMessage(contents)
-            if (orca.lastKeyboardEvent.event_string == "Return") \
-                   or (orca.lastKeyboardEvent.event_string == "="):
+
+            if (orca.lastInputEvent is None) \
+                   or \
+                   (not isinstance(orca.lastInputEvent,
+                                   input_event.KeyboardEvent)):
+                return
+
+            if (orca.lastInputEvent.event_string == "Return") \
+                   or (orca.lastInputEvent.event_string == "="):
                 speech.say("default", contents)
