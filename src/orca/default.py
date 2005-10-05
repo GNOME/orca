@@ -397,8 +397,8 @@ class Default(Script):
             self.onWindowActivated
         self.listeners["window:create"]                          = \
             self.noOp
-        self.listeners["window:deactivated"]                     = \
-            self.noOp
+        self.listeners["window:deactivate"]                      = \
+            self.onWindowDeactivated
         self.listeners["window:destroy"]                         = \
             self.noOp
         self.listeners["window:maximize"]                        = \
@@ -523,7 +523,7 @@ class Default(Script):
 
         if orca.locusOfFocus.state.count(\
                     core.Accessibility.STATE_SENSITIVE) == 0:
-            message = _("Nothing has focus")
+            message = _("No focus")
             utterances.extend(message)
             
         speech.sayUtterances("default", utterances)
@@ -704,7 +704,7 @@ class Default(Script):
 
             speech.sayUtterances("default", utterances)
         else:
-            message = _("Nothing has focus")
+            message = _("No focus")
             braille.displayMessage(message)
             speech.say("default", message)
 
@@ -769,7 +769,7 @@ class Default(Script):
                 if orca.locusOfFocus \
                    and (orca.locusOfFocus.state.count(\
                     core.Accessibility.STATE_SENSITIVE) == 0):
-                    message = _("Nothing has focus")
+                    message = _("No focus")
                     utterances.append(message)
                     self.updateBraille(orca.locusOfFocus.parent,
                                        braille.Region(" " + message))
@@ -1195,6 +1195,16 @@ class Default(Script):
         """
 
         orca.setLocusOfFocus(event, event.source)
+            
+
+    def onWindowDeactivated(self, event):
+        """Called whenever a toplevel window is deactivated.
+        
+        Arguments:
+        - event: the Event
+        """
+
+        orca.setLocusOfFocus(event, None)
             
 
     def noOp(self, event):
