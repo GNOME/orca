@@ -1284,7 +1284,8 @@ def getShowingZones(root):
     # get past these lies, I'm going to ignore them.]]]
     #
     if (root.parent and (root.parent.role == rolenames.ROLE_MENU_BAR)) \
-       or (root.role == rolenames.ROLE_COMBO_BOX):
+       or (root.role == rolenames.ROLE_COMBO_BOX) \
+       or (root.role == rolenames.ROLE_TEXT):
         return getZonesFromAccessible(root, root.extents)
     
     # Otherwise, dig deeper.
