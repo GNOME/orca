@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-23 09:55-0400\n"
+"POT-Creation-Date: 2005-10-06 11:59-0400\n"
 "PO-Revision-Date: 2005-08-31 14:20-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -28,15 +28,15 @@ msgstr "Reading web page failed."
 msgid "grayed"
 msgstr "grayed"
 
-#: src/orca/braillegenerator.py:1110 src/orca/speechgenerator.py:1234
+#: src/orca/braillegenerator.py:1113 src/orca/speechgenerator.py:1234
 msgid "expanded"
 msgstr "expanded"
 
-#: src/orca/braillegenerator.py:1112 src/orca/speechgenerator.py:1236
+#: src/orca/braillegenerator.py:1115 src/orca/speechgenerator.py:1236
 msgid "collapsed"
 msgstr "collapsed"
 
-#: src/orca/braillegenerator.py:1116
+#: src/orca/braillegenerator.py:1119
 #, python-format
 msgid "TREE LEVEL %d"
 msgstr "TREE LEVEL %d"
@@ -253,14 +253,6 @@ msgstr "Pans the braille display to the left."
 msgid "Pans the braille display to the right."
 msgstr "Pans the braille display to the right."
 
-#: src/orca/default.py:331
-msgid "Pans the braille display to the left by one character."
-msgstr "Pans the braille display to the left by one character."
-
-#: src/orca/default.py:336
-msgid "Pans the braille display to the right by one character."
-msgstr "Pans the braille display to the right by one character."
-
 #: src/orca/default.py:345
 msgid "Moves flat review to the bottom left."
 msgstr "Moves flat review to the bottom left."
@@ -275,19 +267,19 @@ msgid "tree level %d"
 msgstr "tree level %d"
 
 #: src/orca/default.py:526 src/orca/default.py:707 src/orca/default.py:772
-msgid "Nothing has focus"
-msgstr "Nothing has focus"
+msgid "No focus"
+msgstr "No focus"
 
-#: src/orca/default.py:1467 src/orca/default.py:1543 src/orca/default.py:1548
-#: src/orca/default.py:1615 src/orca/default.py:1620
+#: src/orca/default.py:1590 src/orca/default.py:1691 src/orca/default.py:1696
+#: src/orca/default.py:1771 src/orca/default.py:1776
 msgid "blank"
 msgstr "blank"
 
-#: src/orca/default.py:1469 src/orca/default.py:1550
+#: src/orca/default.py:1592 src/orca/default.py:1698
 msgid "white space"
 msgstr "white space"
 
-#: src/orca/default.py:1822
+#: src/orca/default.py:1994
 msgid "Not a document."
 msgstr "Not a document."
 
@@ -373,43 +365,43 @@ msgstr "Braille support appears to work.  Use it?  Enter y or n. "
 msgid "User logged out - shutting down."
 msgstr "User logged out - shutting down."
 
-#: src/orca/orca.py:560
+#: src/orca/orca.py:565
 msgid "Entering learn mode.  Press any key to hear its function. "
 msgstr "Entering learn mode.  Press any key to hear its function. "
 
-#: src/orca/orca.py:561
+#: src/orca/orca.py:566
 msgid "To exit learn mode, press the escape key."
 msgstr "To exit learn mode, press the escape key."
 
-#: src/orca/orca.py:562
+#: src/orca/orca.py:567
 msgid "Learn mode.  Press escape to exit."
 msgstr "Learn mode.  Press escape to exit."
 
-#: src/orca/orca.py:573 src/orca/orca.py:574
+#: src/orca/orca.py:578 src/orca/orca.py:579
 msgid "Exiting learn mode."
 msgstr "Exiting learn mode."
 
-#: src/orca/orca.py:603
+#: src/orca/orca.py:608
 msgid "Enters learn mode.  Press escape to exit learn mode."
 msgstr "Enters learn mode.  Press escape to exit learn mode."
 
-#: src/orca/orca.py:611
+#: src/orca/orca.py:616
 msgid "Decreases the speech rate."
 msgstr "Decreases the speech rate."
 
-#: src/orca/orca.py:619
+#: src/orca/orca.py:624
 msgid "Increases the speech rate."
 msgstr "Increases the speech rate."
 
-#: src/orca/orca.py:625
+#: src/orca/orca.py:630
 msgid "Quits Orca"
 msgstr "Quits Orca"
 
-#: src/orca/orca.py:633
+#: src/orca/orca.py:638
 msgid "Toggles keystroke recording on and off."
 msgstr "Toggles keystroke recording on and off."
 
-#: src/orca/orca.py:641
+#: src/orca/orca.py:646
 msgid ""
 "Prints a debug listing of all known applications to the console where Orca "
 "is running."
@@ -417,7 +409,7 @@ msgstr ""
 "Prints a debug listing of all known applications to the console where Orca "
 "is running."
 
-#: src/orca/orca.py:649
+#: src/orca/orca.py:654
 msgid ""
 "Prints debug information about the currently active application to the "
 "console where Orca is running."
@@ -425,19 +417,19 @@ msgstr ""
 "Prints debug information about the currently active application to the "
 "console where Orca is running."
 
-#: src/orca/orca.py:657
+#: src/orca/orca.py:662
 msgid "Switches to the next presentation manager."
 msgstr "Switches to the next presentation manager."
 
-#: src/orca/orca.py:706 src/orca/orca.py:707
+#: src/orca/orca.py:711 src/orca/orca.py:712
 msgid "Welcome to Orca."
 msgstr "Welcome to Orca."
 
-#: src/orca/orca.py:730
+#: src/orca/orca.py:735
 msgid "goodbye."
 msgstr "goodbye."
 
-#: src/orca/orca.py:731
+#: src/orca/orca.py:736
 msgid "Goodbye."
 msgstr "Goodbye."
 
