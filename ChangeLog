@@ -1,3 +1,8 @@
+2005-10-06  Willie Walker <william.walker@sun.com>
+        
+        * src/orca/gaim.py: hacking to get chat working again
+        (at least for AIM)
+
 2005-10-05  Willie Walker <william.walker@sun.com>
         
         * src/orca/default.py: add support for no focus.

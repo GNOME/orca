@@ -48,7 +48,7 @@ def getScript(app):
     Arguments:
     - app: the application to create a script for (should be gaim)
     """
-    
+
     return Gaim(app)
 
 
@@ -144,13 +144,13 @@ class Gaim(Default):
         entries = a11y.findByRole(event.source, rolenames.ROLE_TEXT)
     
         if len(entries) == 2:
-            self._setIm(self, event.source)
+            self._setIm(event.source)
         elif len(entries) == 3:
-            self._setChat(self, event.source)
+            self._setChat(event.source)
         else:
             self._output = None
             self._input = None
-            
+
         return Default.onWindowActivated(self, event)
 
 
@@ -163,14 +163,20 @@ class Gaim(Default):
         - event: the text inserted Event
         """
 
-        if (self._output == None) or (event.source != self._output):
-            return Default.onTextInserted(self, event)
+        # [[[TODO: WDW - HACK we seem to be getting object ids for the
+        # same text area.  So, we do something a bit more creative here.]]]
+        #
+        #if (self._output == None) or (event.source != self._output):
+        #    return Default.onTextInserted(self, event)
 
+        if event.source.role != rolenames.ROLE_TEXT:
+            return Default.onTextInserted(self, event)
+        
         txt = event.source.text
         text = txt.getText(event.detail1, event.detail1 + event.detail2)
         speech.say("default", text)
 
-
+        
     def onFocus(self, event):
         """Called when any object in Gaim gets the focus.
 
@@ -187,6 +193,6 @@ class Gaim(Default):
             text = _("Message Log")
         else:
             return Default.onFocus(self, event)
-    
+
         text = text + " " + getRoleName(event.source)
         speech.say("default", text)
