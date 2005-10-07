@@ -1586,7 +1586,7 @@ class Default(Script):
         # the Braille display as an input device.
         #
         if not isinstance(inputEvent, input_event.BrailleEvent):
-            if (len(string) == 0) or (string == "\n"):
+            if (not string) or (len(string) == 0) or (string == "\n"):
                 speech.say("default", _("blank"))
             elif string.isspace():
                 speech.say("default", _("white space"))

@@ -1,5 +1,8 @@
 2005-10-07  Willie Walker <william.walker@sun.com>
 
+	* src/orca/flat_review.py: eliminate a major source of hangs
+	for flat review: getTextAtOffset is typically implemented 
+	incorrectly across (and possibly within) toolkits.
         * src/orca/gaim.py: improved braille and speech experience (at
 	least for AIM)
 

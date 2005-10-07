@@ -1105,12 +1105,29 @@ def getZonesFromAccessible(accessible, cliprect):
         length = text.characterCount
 
         offset = 0
+        lastEndOffset = -1
         while offset < length:
             
             [string, startOffset, endOffset] = text.getTextAtOffset(
                 offset,
                 core.Accessibility.TEXT_BOUNDARY_LINE_START)
 
+            # [[[TODO: WDW - HACK: this is here because getTextAtOffset
+            # tends not to be implemented consistently across toolkits.
+            # Sometimes it behaves properly (i.e., giving us an endOffset
+            # that is the beginning of the next line), sometimes it
+            # doesn't (e.g., giving us an endOffset that is the end of
+            # the current line).  So...we hack.  The whole 'max' deal
+            # is to account for lines that might be a brazillion lines
+            # long.]]]
+            #
+            if endOffset == lastEndOffset:
+                offset = max(offset + 1, lastEndOffset + 1)
+                lastEndOffset = endOffset
+                continue
+            
+            lastEndOffset = endOffset
+            
             [x, y, width, height] = text.getRangeExtents(startOffset, 
                                                          endOffset, 
                                                          0)
