@@ -24,6 +24,8 @@ time.
 
 import a11y
 import braille
+import core
+import orca
 import rolenames
 import speech
 
@@ -169,13 +171,36 @@ class Gaim(Default):
         #if (self._output == None) or (event.source != self._output):
         #    return Default.onTextInserted(self, event)
 
-        if event.source.role != rolenames.ROLE_TEXT:
+        # Do the default action for everything except the display that
+        # is showing the chat.
+        #
+        if (event.source.role != rolenames.ROLE_TEXT):
             return Default.onTextInserted(self, event)
-        
-        txt = event.source.text
-        text = txt.getText(event.detail1, event.detail1 + event.detail2)
-        speech.say("default", text)
 
+        if not event.source.state.count(core.Accessibility.STATE_FOCUSED):
+            # We always automatically go back to focus tracking mode when
+            # someone sends us a message.
+            #
+            if self.flatReviewContext:
+                self.toggleFlatReviewMode()
+
+            txt = event.source.text
+            text = txt.getText(event.detail1, event.detail1 + event.detail2)
+            
+            # A new message inserts a carriage return at the end of the
+            # previous line rather than adding to the end of the current
+            # line (I think).  So...remove the darn thing.
+            #
+            if text[0] == "\n":
+                text = text[1:]
+                
+            braille.displayMessage(text)
+            speech.say("default", text)
+            print "Inserted:", text
+        else:
+            orca.setLocusOfFocus(event, event.source, False)
+            return Default.onTextInserted(self, event)
+            
         
     def onFocus(self, event):
         """Called when any object in Gaim gets the focus.

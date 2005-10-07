@@ -1,3 +1,8 @@
+2005-10-07  Willie Walker <william.walker@sun.com>
+
+        * src/orca/gaim.py: improved braille and speech experience (at
+	least for AIM)
+
 2005-10-06  Willie Walker <william.walker@sun.com>
         
         * src/orca/flat_review.py: handle text objects that have
