@@ -19,7 +19,10 @@
   configuration groups) in kickstart will come up with the "unknown" role.
 
 - Cannot register a callback with FreeTTS driver on Fedora (COMM_FAILURE);
-  DECtalk apparently suffers from the same problem.
+  DECtalk apparently suffers from the same problem.  
+  > UPDATE: This appears to be something that is a well known problem,
+    requiring someone to make a ~/.orbitrc file containing the line:
+    ORBIIOPIPv4=1
 
 - GEdit will often hang when you quit it while running Orca
   > UPDATE: This is the result of an AT-SPI bug that is awaiting a patch.
@@ -30,6 +33,7 @@
     get an Accessible from an event for by getting it via the "embedded
     hierarchy" (i.e., looking at children).  This seems to result in
     a bad state and possibly even memory corruption in the client.
+  > UPDATE: BillH has given us a patch that seems to do the trick here.
 
 - gnome-terminal: "Edit" -> "Current Profile..." -> "Colors"; press the
   color palette button.  The color editing widget is a monster.
@@ -68,3 +72,23 @@
   should appear in review mode.  In addition, other embedded components
   in the top panel should not say "blank" in review mode.
 
+- Tabs should be presented better in both focus tracking and flat review.
+  Right now, they are just output as a "I".  They should be expanded out
+  to spaces on the braille display.
+
+- Check box table cells probably should say "check box" and their state
+  (both braille and speech) in flat review mode.
+
+- The dectalk-synthesis-driver frequently hangs - we need to find out why
+  and either have it exit or restart.
+
+- FreeTTS's "stop" performance is horrible on Solaris 11.
+
+- Empty tree tables should announce themselves as empty.
+
+- Flat review does not find table column headers in the network configuration
+  utility.
+
+- Default.py should probably be divided:  place all common stuff like 
+  locusOfFocus and flat review stuff in default.  Put all event handling
+  in gtk.py, soffice.py, etc.
