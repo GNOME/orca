@@ -693,8 +693,7 @@ class Accessible:
         """
 
         try:
-            bobj = self._acc._narrow(core.Accessibility.Accessible)
-            action = bobj.queryInterface("IDL:Accessibility/Action:1.0")
+            action = self._acc.queryInterface("IDL:Accessibility/Action:1.0")
             if action is not None:
                 action = action._narrow(core.Accessibility.Action)
             if CACHE_VALUES:
@@ -717,8 +716,8 @@ class Accessible:
         """
 
         try:
-            bobj = self._acc._narrow(core.Accessibility.Accessible)
-            component = bobj.queryInterface("IDL:Accessibility/Component:1.0")
+            component = self._acc.queryInterface(\
+                "IDL:Accessibility/Component:1.0")
             if component is not None:
                 component = component._narrow(core.Accessibility.Component)
             if CACHE_VALUES:
@@ -741,8 +740,8 @@ class Accessible:
         """
 
         try:
-            bobj = self._acc._narrow(core.Accessibility.Accessible)
-            hypertext = bobj.queryInterface("IDL:Accessibility/Hypertext:1.0")
+            hypertext = self._acc.queryInterface(\
+                "IDL:Accessibility/Hypertext:1.0")
             if hypertext is not None:
                 hypertext = hypertext._narrow(core.Accessibility.Hypertext)
             if CACHE_VALUES:
@@ -765,8 +764,8 @@ class Accessible:
         """
 
         try:
-            bobj = self._acc._narrow(core.Accessibility.Accessible)
-            image = bobj.queryInterface("IDL:Accessibility/Image:1.0")
+            image = self._acc.queryInterface(\
+                "IDL:Accessibility/Image:1.0")
             if image is not None:
                 image = image._narrow(core.Accessibility.Image)
             if CACHE_VALUES:
@@ -789,8 +788,8 @@ class Accessible:
         """
 
         try:
-            bobj = self._acc._narrow(core.Accessibility.Accessible)
-            selection = bobj.queryInterface("IDL:Accessibility/Selection:1.0")
+            selection = self._acc.queryInterface(\
+                "IDL:Accessibility/Selection:1.0")
             if selection is not None:
                 selection = selection._narrow(core.Accessibility.Selection)
             if CACHE_VALUES:
@@ -813,8 +812,7 @@ class Accessible:
         """
 
         try:
-            bobj = self._acc._narrow(core.Accessibility.Accessible)
-            table = bobj.queryInterface("IDL:Accessibility/Table:1.0")
+            table = self._acc.queryInterface("IDL:Accessibility/Table:1.0")
             if table is not None:
                 table = table._narrow(core.Accessibility.Table)
             if CACHE_VALUES:
@@ -837,8 +835,7 @@ class Accessible:
         """
 
         try:
-            bobj = self._acc._narrow(core.Accessibility.Accessible)
-            text = bobj.queryInterface("IDL:Accessibility/Text:1.0")
+            text = self._acc.queryInterface("IDL:Accessibility/Text:1.0")
             if text is not None:
                 text = text._narrow(core.Accessibility.Text)
             if CACHE_VALUES:
@@ -861,8 +858,7 @@ class Accessible:
         """
 
         try:
-            bobj = self._acc._narrow(core.Accessibility.Accessible)
-            value = bobj.queryInterface("IDL:Accessibility/Value:1.0")
+            value = self._acc.queryInterface("IDL:Accessibility/Value:1.0")
             if value is not None:
                 value = value._narrow(core.Accessibility.Value)
             if CACHE_VALUES:

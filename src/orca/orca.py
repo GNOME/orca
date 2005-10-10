@@ -906,7 +906,7 @@ def processKeyboardEvent(event):
     if _recordingKeystrokes and _keystrokesFile \
        and (event.event_string != "Pause"):
         _keystrokesFile.write(string + "\n")
-    debug.println(debug.LEVEL_FINE, string)
+    debug.printInputEvent(debug.LEVEL_FINE, string)
     
     if event.type == core.Accessibility.KEY_PRESSED_EVENT:
 
