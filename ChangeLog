@@ -1,3 +1,7 @@
+2005-10-11  Pawan Chitrakar  <pchitrakar@gmail.com>
+
+	* configure.in: Added ne in ALL_LINGUAS
+
 2005-10-07  Willie Walker <william.walker@sun.com>
 
 	* src/orca/flat_review.py: eliminate a major source of hangs

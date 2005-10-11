@@ -1,0 +1,1968 @@
+# translation of orca.HEAD.po to Nepali
+# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+# Pawan Chitrakar <pawan@mpp.org.np>, 2005.
+# Shiva Prasad Pokharel <pokharelshiva@hotmail.com>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: orca.HEAD\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-10-11 12:43+0545\n"
+"PO-Revision-Date: 2005-07-04 08:53+0545\n"
+"Last-Translator: Shiva Prasad Pokharel <pokharelshiva@hotmail.com>\n"
+"Language-Team: Nepali <info@mpp.org.np>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.9.1\n"
+"Plural-Forms: Nplurals=2;plural=(n!=1)\n"
+
+#: ../src/orca/Gecko.py:61
+msgid "No page to read."
+msgstr "पढ्नको लागी कुनै पृष्ठ छैन।"
+
+#: ../src/orca/Gecko.py:69
+msgid "Reading web page failed."
+msgstr "पढिरहेको वेव पाना असफल भयो।"
+
+#: ../src/orca/braillegenerator.py:186 ../src/orca/speechgenerator.py:189
+#, fuzzy
+msgid "grayed"
+msgstr "बढी"
+
+#: ../src/orca/braillegenerator.py:1113 ../src/orca/speechgenerator.py:1234
+#, fuzzy
+msgid "expanded"
+msgstr "बिस्तारित"
+
+#: ../src/orca/braillegenerator.py:1115 ../src/orca/speechgenerator.py:1236
+#, fuzzy
+msgid "collapsed"
+msgstr "स्क्रोल फलकयान"
+
+#: ../src/orca/braillegenerator.py:1119
+#, fuzzy, python-format
+msgid "TREE LEVEL %d"
+msgstr "वृक्ष तालिका"
+
+#: ../src/orca/chnames.py:27
+msgid "space"
+msgstr "खाली स्थान"
+
+#: ../src/orca/chnames.py:28
+msgid "bang"
+msgstr "धमाका"
+
+#: ../src/orca/chnames.py:29
+msgid "quote"
+msgstr "ऊध्दरण"
+
+#: ../src/orca/chnames.py:30
+msgid "number"
+msgstr "संख्या"
+
+#: ../src/orca/chnames.py:31
+msgid "dollar"
+msgstr "डोलर"
+
+#: ../src/orca/chnames.py:32 ../src/orca/speechgenerator.py:925
+msgid "percent"
+msgstr "प्रतिशत"
+
+#: ../src/orca/chnames.py:33
+msgid "and"
+msgstr "र"
+
+#: ../src/orca/chnames.py:34
+msgid "tick"
+msgstr "ठिक"
+
+#: ../src/orca/chnames.py:35
+#, fuzzy
+msgid "left paren"
+msgstr "बाँया घेरा"
+
+#: ../src/orca/chnames.py:36
+#, fuzzy
+msgid "right paren"
+msgstr "दाँया घेरा"
+
+#: ../src/orca/chnames.py:37
+msgid "star"
+msgstr "तारा"
+
+#: ../src/orca/chnames.py:38
+msgid "plus"
+msgstr "प्लस"
+
+#: ../src/orca/chnames.py:39
+msgid "comma"
+msgstr "अल्पविराम"
+
+#: ../src/orca/chnames.py:40
+msgid "dash"
+msgstr "ड्यास"
+
+#: ../src/orca/chnames.py:41
+msgid "dot"
+msgstr "डट"
+
+#: ../src/orca/chnames.py:42
+msgid "slash"
+msgstr "स्ल्यास"
+
+#: ../src/orca/chnames.py:43
+msgid "question"
+msgstr "प्रश्न"
+
+#: ../src/orca/chnames.py:44
+#, fuzzy
+msgid "colon"
+msgstr "कोलुन"
+
+#: ../src/orca/chnames.py:45
+msgid "semi"
+msgstr "आधा"
+
+#: ../src/orca/chnames.py:46
+#, fuzzy
+msgid "less than"
+msgstr "सिसा फलक"
+
+#: ../src/orca/chnames.py:47
+#, fuzzy
+msgid "greater than"
+msgstr "बढी"
+
+#: ../src/orca/chnames.py:48
+msgid "left bracket"
+msgstr "बाँया कोष्ठक"
+
+#: ../src/orca/chnames.py:49
+msgid "right bracket"
+msgstr "दाँया कोष्ठक"
+
+#: ../src/orca/chnames.py:50
+msgid "left brace"
+msgstr "बाँया घेरा"
+
+#: ../src/orca/chnames.py:51
+msgid "right brace"
+msgstr "दाँया घेरा"
+
+#: ../src/orca/chnames.py:52
+msgid "back"
+msgstr "पछाडि"
+
+#: ../src/orca/chnames.py:53
+msgid "bar"
+msgstr "पट्टी"
+
+#: ../src/orca/chnames.py:54
+msgid "newline"
+msgstr ""
+
+#: ../src/orca/chnames.py:55
+#, fuzzy
+msgid "tab"
+msgstr "तालिका"
+
+#: ../src/orca/default.py:102
+msgid "Repeats last utterance sent to speech."
+msgstr ""
+
+#: ../src/orca/default.py:111
+msgid "Performs left click on current flat review item."
+msgstr ""
+
+#: ../src/orca/default.py:120
+msgid "Performs right click on current flat review item."
+msgstr ""
+
+#: ../src/orca/default.py:129
+msgid "Speaks entire document."
+msgstr ""
+
+#: ../src/orca/default.py:138
+msgid "Performs the where am I operation."
+msgstr ""
+
+#: ../src/orca/default.py:147
+msgid "Paints and prints the visible zones in the active window."
+msgstr ""
+
+#: ../src/orca/default.py:156
+msgid "Enters and exits flat review mode."
+msgstr ""
+
+#: ../src/orca/default.py:161
+msgid "Moves flat review to the beginning of the previous line."
+msgstr ""
+
+#: ../src/orca/default.py:172
+msgid "Moves flat review to the home position."
+msgstr ""
+
+#: ../src/orca/default.py:188
+msgid "Speaks the current flat review line."
+msgstr ""
+
+#: ../src/orca/default.py:193
+msgid "Moves flat review to the beginning of the next line."
+msgstr ""
+
+#: ../src/orca/default.py:209
+msgid "Moves flat review to the end position."
+msgstr ""
+
+#: ../src/orca/default.py:218
+msgid "Moves flat review to the previous item or word."
+msgstr ""
+
+#: ../src/orca/default.py:223
+msgid "Moves flat review to the word above the current word."
+msgstr ""
+
+#: ../src/orca/default.py:239
+msgid "Speaks the current flat review item or word."
+msgstr ""
+
+#: ../src/orca/default.py:248
+msgid "Speaks the current flat review object."
+msgstr ""
+
+#: ../src/orca/default.py:257
+msgid "Moves flat review to the next item or word."
+msgstr ""
+
+#: ../src/orca/default.py:262
+msgid "Moves flat review to the word below the current word."
+msgstr ""
+
+#: ../src/orca/default.py:274
+msgid "Moves flat review to the previous character."
+msgstr ""
+
+#: ../src/orca/default.py:290
+msgid "Moves flat review to the end of the line."
+msgstr ""
+
+#: ../src/orca/default.py:299
+msgid "Speaks the current flat review character."
+msgstr ""
+
+#: ../src/orca/default.py:304
+msgid "Moves flat review to the next character."
+msgstr ""
+
+#: ../src/orca/default.py:321
+msgid "Pans the braille display to the left."
+msgstr ""
+
+#: ../src/orca/default.py:326
+msgid "Pans the braille display to the right."
+msgstr ""
+
+#: ../src/orca/default.py:345
+msgid "Moves flat review to the bottom left."
+msgstr ""
+
+#: ../src/orca/default.py:350
+msgid "Returns to object with keyboard focus."
+msgstr ""
+
+#: ../src/orca/default.py:522 ../src/orca/default.py:703
+#, fuzzy, python-format
+msgid "tree level %d"
+msgstr "वृक्ष तालिका"
+
+#: ../src/orca/default.py:526 ../src/orca/default.py:707
+#: ../src/orca/default.py:772
+msgid "No focus"
+msgstr ""
+
+#: ../src/orca/default.py:1590 ../src/orca/default.py:1691
+#: ../src/orca/default.py:1696 ../src/orca/default.py:1771
+#: ../src/orca/default.py:1776
+#, fuzzy
+msgid "blank"
+msgstr "लिङ्क"
+
+#: ../src/orca/default.py:1592 ../src/orca/default.py:1698
+#, fuzzy
+msgid "white space"
+msgstr "खाली स्थान"
+
+#: ../src/orca/default.py:1994
+msgid "Not a document."
+msgstr "कागजात होईन।"
+
+#: ../src/orca/focus_tracking_presenter.py:402
+msgid "Switching to focus tracking mode."
+msgstr ""
+
+#: ../src/orca/gaim.py:98
+msgid " chat"
+msgstr "च्याट"
+
+#: ../src/orca/gaim.py:121
+msgid " instant message"
+msgstr "जरुरी सन्देश"
+
+#: ../src/orca/gaim.py:216
+msgid "Input"
+msgstr "आगत"
+
+#: ../src/orca/gaim.py:218
+msgid "Message Log"
+msgstr "सन्देश लग"
+
+#: ../src/orca/hierarchical_presenter.py:502
+msgid "Switching to hierarchical navigation mode."
+msgstr ""
+
+#: ../src/orca/metacity.py:114
+msgid "inaccessible"
+msgstr "अपहुँचयोग्य"
+
+#: ../src/orca/orca-setup.in:35
+msgid "Creating .orca directory."
+msgstr "ओर्का डाईरेक्टोरि सृजना गर्दै।"
+
+#: ../src/orca/orca-setup.in:103
+#, c-format
+msgid "Select %s voice: "
+msgstr "%s आवाज छनोट गर्नुहोस:"
+
+#: ../src/orca/orca-setup.in:107 ../src/orca/orca-setup.in:164
+#, c-format
+msgid "%d. %s"
+msgstr "%d. %s"
+
+#: ../src/orca/orca-setup.in:109 ../src/orca/orca-setup.in:166
+msgid "Enter choice: "
+msgstr "रोजाई प्रविष्टि गर्नुहोस्:"
+
+#: ../src/orca/orca-setup.in:148
+msgid "No working GNOME Speech drivers found."
+msgstr "काम नगर्ने जिी नोम बोलचालक ी भेटायो."
+
+#: ../src/orca/orca-setup.in:161
+msgid "Welcome to Orca setup."
+msgstr "ओर्का सेटअप मा स्वागत छ।"
+
+#: ../src/orca/orca-setup.in:162
+msgid "Select default speech synthesizer"
+msgstr "पूर्व निर्धारित भाषण सेन्थेसाईजरलाई छनोट गर्नुहोस"
+
+#: ../src/orca/orca-setup.in:168
+msgid "Speech will not be used.\n"
+msgstr "भाषन प्रयोग गरिने छैन।\n"
+
+#: ../src/orca/orca-setup.in:192
+msgid "Create another voice?  Enter y or n: "
+msgstr "अर्को आवाज सृजना गर्ने? वाई वा एन प्रविष्ट गर्नुहोस:"
+
+#: ../src/orca/orca-setup.in:200
+msgid "Enter voice name: "
+msgstr "आवाज नाम प्रविष्ट गर्नुहोस:"
+
+#: ../src/orca/orca-setup.in:205
+msgid "Use key echo?  Enter y or n: "
+msgstr "कुञ्ज ध्वनि प्रयोग गर्ने? वाई वा एन प्रविष्ट गर्नुहोस:् हो or होइन "
+
+#: ../src/orca/orca-setup.in:233
+msgid "Braille support appears to work, use it?  Enter y or n. "
+msgstr "ब्राइल सहायताले काम गर्ने देखिन्छ,यसलाई प्रयोग गर्ने?स् हो वा होइप्रविष्टि गर्नुहोस्।"
+
+#: ../src/orca/orca.py:283
+msgid "User logged out - shutting down."
+msgstr "प्रयोगकर्ताले लग आउट गर्यो-वन्द हुदै।"
+
+#: ../src/orca/orca.py:565
+msgid "Entering learn mode.  Press any key to hear its function. "
+msgstr ""
+
+#: ../src/orca/orca.py:566
+msgid "To exit learn mode, press the escape key."
+msgstr ""
+
+#: ../src/orca/orca.py:567
+msgid "Learn mode.  Press escape to exit."
+msgstr ""
+
+#: ../src/orca/orca.py:578 ../src/orca/orca.py:579
+msgid "Exiting learn mode."
+msgstr ""
+
+#: ../src/orca/orca.py:608
+msgid "Enters learn mode.  Press escape to exit learn mode."
+msgstr ""
+
+#: ../src/orca/orca.py:616
+msgid "Decreases the speech rate."
+msgstr ""
+
+#: ../src/orca/orca.py:624
+msgid "Increases the speech rate."
+msgstr ""
+
+#: ../src/orca/orca.py:630
+msgid "Quits Orca"
+msgstr ""
+
+#: ../src/orca/orca.py:638
+msgid "Toggles keystroke recording on and off."
+msgstr ""
+
+#: ../src/orca/orca.py:646
+msgid ""
+"Prints a debug listing of all known applications to the console where Orca "
+"is running."
+msgstr ""
+
+#: ../src/orca/orca.py:654
+msgid ""
+"Prints debug information about the currently active application to the "
+"console where Orca is running."
+msgstr ""
+
+#: ../src/orca/orca.py:662
+msgid "Switches to the next presentation manager."
+msgstr ""
+
+#: ../src/orca/orca.py:711 ../src/orca/orca.py:712
+msgid "Welcome to Orca."
+msgstr "ओर्कामा स्वागत छ."
+
+#: ../src/orca/orca.py:735
+msgid "goodbye."
+msgstr "शुभ विदा"
+
+#: ../src/orca/orca.py:736
+msgid "Goodbye."
+msgstr "शुभ विदा"
+
+#: ../src/orca/rolenames.py:143
+msgid "???"
+msgstr "???"
+
+#: ../src/orca/rolenames.py:144
+#, fuzzy
+msgid "Invalid"
+msgstr "अवैध"
+
+#: ../src/orca/rolenames.py:145
+msgid "invalid"
+msgstr "अवैध"
+
+#: ../src/orca/rolenames.py:148
+msgid "acc"
+msgstr ""
+
+#: ../src/orca/rolenames.py:149
+#, fuzzy
+msgid "Accelerator"
+msgstr "द्रुतक"
+
+#: ../src/orca/rolenames.py:150
+msgid "accelerator"
+msgstr "द्रुतक"
+
+#: ../src/orca/rolenames.py:153 ../src/orca/rolenames.py:155
+msgid "alert"
+msgstr "सतर्कता"
+
+#: ../src/orca/rolenames.py:154
+#, fuzzy
+msgid "Alert"
+msgstr "सतर्कता"
+
+#: ../src/orca/rolenames.py:158
+msgid "Anim"
+msgstr ""
+
+#: ../src/orca/rolenames.py:159
+#, fuzzy
+msgid "Animation"
+msgstr "एनिमेसन"
+
+#: ../src/orca/rolenames.py:160
+msgid "animation"
+msgstr "एनिमेसन"
+
+#: ../src/orca/rolenames.py:163 ../src/orca/rolenames.py:165
+msgid "arrow"
+msgstr "तीर"
+
+#: ../src/orca/rolenames.py:164
+#, fuzzy
+msgid "Arrow"
+msgstr "तीर"
+
+#: ../src/orca/rolenames.py:168
+msgid "cal"
+msgstr ""
+
+#: ../src/orca/rolenames.py:169
+#, fuzzy
+msgid "Calendar"
+msgstr "पात्रो"
+
+#: ../src/orca/rolenames.py:170
+msgid "calendar"
+msgstr "पात्रो"
+
+#: ../src/orca/rolenames.py:173
+#, fuzzy
+msgid "cnv"
+msgstr "चित्रपट"
+
+#: ../src/orca/rolenames.py:174
+#, fuzzy
+msgid "Canvas"
+msgstr "चित्रपट"
+
+#: ../src/orca/rolenames.py:175
+msgid "canvas"
+msgstr "चित्रपट"
+
+#: ../src/orca/rolenames.py:178 ../src/orca/rolenames.py:183
+#, fuzzy
+msgid "chk"
+msgstr "जाँच गरियको"
+
+#: ../src/orca/rolenames.py:179
+#, fuzzy
+msgid "CheckBox"
+msgstr "जाँच-बाकस"
+
+#: ../src/orca/rolenames.py:180
+msgid "check box"
+msgstr "जाँच-बाकस"
+
+#: ../src/orca/rolenames.py:184
+#, fuzzy
+msgid "CheckItem"
+msgstr "जाँच गरियको"
+
+#: ../src/orca/rolenames.py:185
+#, fuzzy
+msgid "check item"
+msgstr "मेनू॒ चीज जाँच गर्नुहोस"
+
+#: ../src/orca/rolenames.py:188
+msgid "ckm"
+msgstr ""
+
+#: ../src/orca/rolenames.py:189
+#, fuzzy
+msgid "CheckMenu"
+msgstr "मेनू॒ चीज जाँच गर्नुहोस"
+
+#: ../src/orca/rolenames.py:190
+#, fuzzy
+msgid "check menu"
+msgstr "मेनू॒ चीज जाँच गर्नुहोस"
+
+#: ../src/orca/rolenames.py:193
+#, fuzzy
+msgid "clrchsr"
+msgstr "रङ्ग छनौटकर्ता"
+
+#: ../src/orca/rolenames.py:194
+#, fuzzy
+msgid "ColorChooser"
+msgstr "रङ्ग छनौटकर्ता"
+
+#: ../src/orca/rolenames.py:195
+msgid "color chooser"
+msgstr "रङ्ग छनौटकर्ता"
+
+#: ../src/orca/rolenames.py:198 ../src/orca/rolenames.py:433
+#, fuzzy
+msgid "colhdr"
+msgstr "स्तम्भ-शीर्षक"
+
+#: ../src/orca/rolenames.py:199 ../src/orca/rolenames.py:434
+#, fuzzy
+msgid "ColumnHeader"
+msgstr "स्तम्भ-शीर्षक"
+
+#: ../src/orca/rolenames.py:200 ../src/orca/rolenames.py:435
+msgid "column header"
+msgstr "स्तम्भ-शीर्षक"
+
+#: ../src/orca/rolenames.py:203
+msgid "cbo"
+msgstr ""
+
+#: ../src/orca/rolenames.py:204
+msgid "Combo"
+msgstr ""
+
+#: ../src/orca/rolenames.py:205
+msgid "combo box"
+msgstr "कम्बो-बाकस"
+
+#: ../src/orca/rolenames.py:208
+#, fuzzy
+msgid "dat"
+msgstr "डट"
+
+#: ../src/orca/rolenames.py:209
+#, fuzzy
+msgid "DateEditor"
+msgstr "मिति सम्पादक"
+
+#: ../src/orca/rolenames.py:210
+msgid "date editor"
+msgstr "मिति सम्पादक"
+
+#: ../src/orca/rolenames.py:213 ../src/orca/rolenames.py:273
+#: ../src/orca/rolenames.py:275
+msgid "icon"
+msgstr "प्रतिमा"
+
+#: ../src/orca/rolenames.py:214
+#, fuzzy
+msgid "DesktopIcon"
+msgstr "डेक्सटप प्रतिमा"
+
+#: ../src/orca/rolenames.py:215
+msgid "desktop icon"
+msgstr "डेक्सटप प्रतिमा"
+
+#: ../src/orca/rolenames.py:218 ../src/orca/rolenames.py:260
+#: ../src/orca/rolenames.py:283
+msgid "frame"
+msgstr "खाका"
+
+#: ../src/orca/rolenames.py:219
+#, fuzzy
+msgid "DesktopFrame"
+msgstr "डेक्सटप-खाका"
+
+#: ../src/orca/rolenames.py:220
+msgid "desktop frame"
+msgstr "डेक्सटप-खाका"
+
+#: ../src/orca/rolenames.py:223 ../src/orca/rolenames.py:225
+msgid "dial"
+msgstr "डायल"
+
+#: ../src/orca/rolenames.py:224
+#, fuzzy
+msgid "Dial"
+msgstr "डायल"
+
+#: ../src/orca/rolenames.py:228
+#, fuzzy
+msgid "dlg"
+msgstr "संवाद"
+
+#: ../src/orca/rolenames.py:229
+#, fuzzy
+msgid "Dialog"
+msgstr "संवाद"
+
+#: ../src/orca/rolenames.py:230
+msgid "dialog"
+msgstr "संवाद"
+
+#: ../src/orca/rolenames.py:233
+msgid "dip"
+msgstr ""
+
+#: ../src/orca/rolenames.py:234
+#, fuzzy
+msgid "DirectoryPane"
+msgstr "निर्देशिका फलक"
+
+#: ../src/orca/rolenames.py:235
+msgid "directory pane"
+msgstr "निर्देशिका फलक"
+
+#: ../src/orca/rolenames.py:238
+msgid "draw"
+msgstr ""
+
+#: ../src/orca/rolenames.py:239
+#, fuzzy
+msgid "DrawingAarea"
+msgstr "रेखाचित्रण क्षेत्र"
+
+#: ../src/orca/rolenames.py:240
+msgid "drawing area"
+msgstr "रेखाचित्रण क्षेत्र"
+
+#: ../src/orca/rolenames.py:243
+msgid "fchsr"
+msgstr ""
+
+#: ../src/orca/rolenames.py:244
+#, fuzzy
+msgid "FileChooser"
+msgstr "फाईल छनोटकर्ता"
+
+#: ../src/orca/rolenames.py:245
+msgid "file chooser"
+msgstr "फाईल छनोटकर्ता"
+
+#: ../src/orca/rolenames.py:248
+#, fuzzy
+msgid "flr"
+msgstr "छान्नु"
+
+#: ../src/orca/rolenames.py:249
+#, fuzzy
+msgid "Filler"
+msgstr "छान्नु"
+
+#: ../src/orca/rolenames.py:250
+msgid "filler"
+msgstr "छान्नु"
+
+#: ../src/orca/rolenames.py:253
+msgid "fnt"
+msgstr ""
+
+#: ../src/orca/rolenames.py:254
+#, fuzzy
+msgid "FontChooser"
+msgstr "फन्ट छनोटकर्ता"
+
+#: ../src/orca/rolenames.py:255
+msgid "font chooser"
+msgstr "फन्ट छनोटकर्ता"
+
+#: ../src/orca/rolenames.py:258
+#, fuzzy
+msgid "frm"
+msgstr "खाका"
+
+#: ../src/orca/rolenames.py:259
+#, fuzzy
+msgid "Frame"
+msgstr "खाका"
+
+#: ../src/orca/rolenames.py:263
+msgid "gpn"
+msgstr ""
+
+#: ../src/orca/rolenames.py:264
+#, fuzzy
+msgid "GlassPane"
+msgstr "सिसा फलक"
+
+#: ../src/orca/rolenames.py:265
+msgid "glass pane"
+msgstr "सिसा फलक"
+
+#: ../src/orca/rolenames.py:268
+msgid "html"
+msgstr ""
+
+#: ../src/orca/rolenames.py:269
+msgid "HtmlContainer"
+msgstr ""
+
+#: ../src/orca/rolenames.py:270
+#, fuzzy
+msgid "h t m l container"
+msgstr "एच टि एम एल संग्रहकर्ता"
+
+#: ../src/orca/rolenames.py:274
+#, fuzzy
+msgid "Icon"
+msgstr "प्रतिमा"
+
+#: ../src/orca/rolenames.py:278
+#, fuzzy
+msgid "img"
+msgstr "आकृती"
+
+#: ../src/orca/rolenames.py:279
+#, fuzzy
+msgid "Image"
+msgstr "आकृती"
+
+#: ../src/orca/rolenames.py:280
+msgid "image"
+msgstr "आकृती"
+
+#: ../src/orca/rolenames.py:284
+#, fuzzy
+msgid "InternalFrame"
+msgstr "आन्तरिक खाका"
+
+#: ../src/orca/rolenames.py:285
+msgid "internal frame"
+msgstr "आन्तरिक खाका"
+
+#: ../src/orca/rolenames.py:288
+#, fuzzy
+msgid "lbl"
+msgstr "तह"
+
+#: ../src/orca/rolenames.py:289
+#, fuzzy
+msgid "Label"
+msgstr "तह"
+
+#: ../src/orca/rolenames.py:290
+msgid "label"
+msgstr "तह"
+
+#: ../src/orca/rolenames.py:293
+#, fuzzy
+msgid "lyrdpn"
+msgstr "तहगत फलक"
+
+#: ../src/orca/rolenames.py:294
+#, fuzzy
+msgid "LayeredPane"
+msgstr "तहगत फलक"
+
+#: ../src/orca/rolenames.py:295
+msgid "layered pane"
+msgstr "तहगत फलक"
+
+#: ../src/orca/rolenames.py:298
+#, fuzzy
+msgid "lst"
+msgstr "सूची"
+
+#: ../src/orca/rolenames.py:299
+#, fuzzy
+msgid "List"
+msgstr "सूची"
+
+#: ../src/orca/rolenames.py:300
+msgid "list"
+msgstr "सूची"
+
+#: ../src/orca/rolenames.py:303
+#, fuzzy
+msgid "lstitm"
+msgstr "सूची वस्तु"
+
+#: ../src/orca/rolenames.py:304
+#, fuzzy
+msgid "ListItem"
+msgstr "सूची वस्तु"
+
+#: ../src/orca/rolenames.py:305
+msgid "list item"
+msgstr "सूची वस्तु"
+
+#: ../src/orca/rolenames.py:308
+#, fuzzy
+msgid "mnu"
+msgstr "मेनु"
+
+#: ../src/orca/rolenames.py:309
+#, fuzzy
+msgid "Menu"
+msgstr "मेनु"
+
+#: ../src/orca/rolenames.py:310
+msgid "menu"
+msgstr "मेनु"
+
+#: ../src/orca/rolenames.py:313
+#, fuzzy
+msgid "mnubr"
+msgstr "मेनु पट्टी"
+
+#: ../src/orca/rolenames.py:314
+#, fuzzy
+msgid "MenuBar"
+msgstr "मेनु पट्टी"
+
+#: ../src/orca/rolenames.py:315
+msgid "menu bar"
+msgstr "मेनु पट्टी"
+
+#: ../src/orca/rolenames.py:318
+#, fuzzy
+msgid "mnuitm"
+msgstr "मेनु वस्तु"
+
+#: ../src/orca/rolenames.py:319
+#, fuzzy
+msgid "MenuItem"
+msgstr "मेनु वस्तु"
+
+#: ../src/orca/rolenames.py:320
+msgid "menu item"
+msgstr "मेनु वस्तु"
+
+#: ../src/orca/rolenames.py:323
+#, fuzzy
+msgid "optnpn"
+msgstr "विकल्प फलक"
+
+#: ../src/orca/rolenames.py:324
+#, fuzzy
+msgid "OptionPane"
+msgstr "विकल्प फलक"
+
+#: ../src/orca/rolenames.py:325
+msgid "option pane"
+msgstr "विकल्प फलक"
+
+#: ../src/orca/rolenames.py:328 ../src/orca/rolenames.py:330
+#, fuzzy
+msgid "page"
+msgstr "आकृती"
+
+#: ../src/orca/rolenames.py:329
+#, fuzzy
+msgid "Page"
+msgstr "आकृती"
+
+#: ../src/orca/rolenames.py:333
+#, fuzzy
+msgid "tblst"
+msgstr "सूची"
+
+#: ../src/orca/rolenames.py:334
+msgid "TabList"
+msgstr ""
+
+#: ../src/orca/rolenames.py:335
+#, fuzzy
+msgid "tab list"
+msgstr "पृष्ठ ट्याव सूची"
+
+#: ../src/orca/rolenames.py:338
+#, fuzzy
+msgid "pnl"
+msgstr "समूह"
+
+#: ../src/orca/rolenames.py:339
+#, fuzzy
+msgid "Panel"
+msgstr "समूह"
+
+#: ../src/orca/rolenames.py:340
+msgid "panel"
+msgstr "समूह"
+
+#: ../src/orca/rolenames.py:343
+msgid "pwd"
+msgstr ""
+
+#: ../src/orca/rolenames.py:344
+#, fuzzy
+msgid "Password"
+msgstr "पासवर्ड पाठ"
+
+#: ../src/orca/rolenames.py:345
+#, fuzzy
+msgid "password"
+msgstr "पासवर्ड पाठ"
+
+#: ../src/orca/rolenames.py:348
+#, fuzzy
+msgid "popmnu"
+msgstr "पपअप मेनु॒"
+
+#: ../src/orca/rolenames.py:349
+#, fuzzy
+msgid "PopupMenu"
+msgstr "पपअप मेनु॒"
+
+#: ../src/orca/rolenames.py:350
+msgid "popup menu"
+msgstr "पपअप मेनु॒"
+
+#: ../src/orca/rolenames.py:353
+#, fuzzy
+msgid "pgbar"
+msgstr "पट्टी"
+
+#: ../src/orca/rolenames.py:354
+#, fuzzy
+msgid "Progress"
+msgstr "प्रगति पट्टी"
+
+#: ../src/orca/rolenames.py:355
+msgid "progress bar"
+msgstr "प्रगति पट्टी"
+
+#: ../src/orca/rolenames.py:358
+msgid "btn"
+msgstr ""
+
+#: ../src/orca/rolenames.py:359
+msgid "Button"
+msgstr ""
+
+#: ../src/orca/rolenames.py:360
+#, fuzzy
+msgid "button"
+msgstr "थिच्ने बटन"
+
+#: ../src/orca/rolenames.py:363
+msgid "radio"
+msgstr ""
+
+#: ../src/orca/rolenames.py:364
+#, fuzzy
+msgid "RadioButton"
+msgstr "रेडियो बटन"
+
+#: ../src/orca/rolenames.py:365
+msgid "radio button"
+msgstr "रेडियो बटन"
+
+#: ../src/orca/rolenames.py:368
+#, fuzzy
+msgid "rdmnuitm"
+msgstr "मेनु वस्तु"
+
+#: ../src/orca/rolenames.py:369
+#, fuzzy
+msgid "RadioMenuItem"
+msgstr "रेडियो मेनू॒ चीज"
+
+#: ../src/orca/rolenames.py:370
+#, fuzzy
+msgid "radio menu item"
+msgstr "रेडियो मेनू॒ चीज"
+
+#: ../src/orca/rolenames.py:373
+#, fuzzy
+msgid "rdmnu"
+msgstr "मेनु"
+
+#: ../src/orca/rolenames.py:374
+#, fuzzy
+msgid "RadioMenu"
+msgstr "रेडियो मेनू॒ चीज"
+
+#: ../src/orca/rolenames.py:375
+#, fuzzy
+msgid "radio menu"
+msgstr "रेडियो मेनू॒ चीज"
+
+#: ../src/orca/rolenames.py:378
+#, fuzzy
+msgid "rtpn"
+msgstr "मूल फलकयान"
+
+#: ../src/orca/rolenames.py:379
+#, fuzzy
+msgid "RootPane"
+msgstr "मूल फलकयान"
+
+#: ../src/orca/rolenames.py:380
+msgid "root pane"
+msgstr "मूल फलकयान"
+
+#: ../src/orca/rolenames.py:383 ../src/orca/rolenames.py:438
+#, fuzzy
+msgid "rwhdr"
+msgstr "पंक्ति शीर्षक"
+
+#: ../src/orca/rolenames.py:384 ../src/orca/rolenames.py:439
+#, fuzzy
+msgid "RowHeader"
+msgstr "पंक्ति शीर्षक"
+
+#: ../src/orca/rolenames.py:385 ../src/orca/rolenames.py:440
+msgid "row header"
+msgstr "पंक्ति शीर्षक"
+
+#: ../src/orca/rolenames.py:388
+msgid "scbr"
+msgstr ""
+
+#: ../src/orca/rolenames.py:389
+#, fuzzy
+msgid "ScrollBar"
+msgstr "स्क्रोल पट्टीर"
+
+#: ../src/orca/rolenames.py:390
+msgid "scroll bar"
+msgstr "स्क्रोल पट्टीर"
+
+#: ../src/orca/rolenames.py:393
+msgid "scpn"
+msgstr ""
+
+#: ../src/orca/rolenames.py:394
+#, fuzzy
+msgid "ScrollPane"
+msgstr "स्क्रोल फलकयान"
+
+#: ../src/orca/rolenames.py:395
+msgid "scroll pane"
+msgstr "स्क्रोल फलकयान"
+
+#: ../src/orca/rolenames.py:398
+#, fuzzy
+msgid "seprtr"
+msgstr "विभाजक"
+
+#: ../src/orca/rolenames.py:399
+#, fuzzy
+msgid "Separator"
+msgstr "विभाजक"
+
+#: ../src/orca/rolenames.py:400
+msgid "separator"
+msgstr "विभाजक"
+
+#: ../src/orca/rolenames.py:403
+#, fuzzy
+msgid "sldr"
+msgstr "स्लाईडर"
+
+#: ../src/orca/rolenames.py:404
+#, fuzzy
+msgid "Slider"
+msgstr "स्लाईडर"
+
+#: ../src/orca/rolenames.py:405
+msgid "slider"
+msgstr "स्लाईडर"
+
+#: ../src/orca/rolenames.py:408
+#, fuzzy
+msgid "spltpn"
+msgstr "छुट्टिएको प्यान"
+
+#: ../src/orca/rolenames.py:409
+#, fuzzy
+msgid "SplitPane"
+msgstr "छुट्टिएको प्यान"
+
+#: ../src/orca/rolenames.py:410
+msgid "split pane"
+msgstr "छुट्टिएको प्यान"
+
+#: ../src/orca/rolenames.py:413
+msgid "spin"
+msgstr ""
+
+#: ../src/orca/rolenames.py:414
+#, fuzzy
+msgid "SpinButton"
+msgstr "स्पीन बटन"
+
+#: ../src/orca/rolenames.py:415
+msgid "spin button"
+msgstr "स्पीन बटन"
+
+#: ../src/orca/rolenames.py:418
+#, fuzzy
+msgid "statbr"
+msgstr "तारा"
+
+#: ../src/orca/rolenames.py:419
+#, fuzzy
+msgid "StatusBar"
+msgstr "स्थिति पट्टी"
+
+#: ../src/orca/rolenames.py:420
+msgid "status bar"
+msgstr "स्थिति पट्टी"
+
+#: ../src/orca/rolenames.py:423
+#, fuzzy
+msgid "tbl"
+msgstr "तालिका"
+
+#: ../src/orca/rolenames.py:424
+#, fuzzy
+msgid "Table"
+msgstr "तालिका"
+
+#: ../src/orca/rolenames.py:425
+msgid "table"
+msgstr "तालिका"
+
+#: ../src/orca/rolenames.py:428 ../src/orca/rolenames.py:430
+#, fuzzy
+msgid "cell"
+msgstr "कोलुन"
+
+#: ../src/orca/rolenames.py:429
+msgid "Cell"
+msgstr ""
+
+#: ../src/orca/rolenames.py:443
+#, fuzzy
+msgid "tomnuitm"
+msgstr "मेनु वस्तु"
+
+#: ../src/orca/rolenames.py:444
+msgid "TearOffMenuItem"
+msgstr ""
+
+#: ../src/orca/rolenames.py:445 ../src/orca/speechgenerator.py:1300
+#, fuzzy
+msgid "tear off menu item"
+msgstr "रेडियो मेनू॒ चीज"
+
+#: ../src/orca/rolenames.py:448
+#, fuzzy
+msgid "term"
+msgstr "टर्मिनल"
+
+#: ../src/orca/rolenames.py:449
+#, fuzzy
+msgid "Terminal"
+msgstr "टर्मिनल"
+
+#: ../src/orca/rolenames.py:450
+msgid "terminal"
+msgstr "टर्मिनल"
+
+#: ../src/orca/rolenames.py:453
+msgid "txt"
+msgstr ""
+
+#: ../src/orca/rolenames.py:454
+msgid "Text"
+msgstr ""
+
+#: ../src/orca/rolenames.py:455
+msgid "text"
+msgstr ""
+
+#: ../src/orca/rolenames.py:458
+#, fuzzy
+msgid "tglbtn"
+msgstr "टगल बटन"
+
+#: ../src/orca/rolenames.py:459
+#, fuzzy
+msgid "ToggleButton"
+msgstr "टगल बटन"
+
+#: ../src/orca/rolenames.py:460
+msgid "toggle button"
+msgstr "टगल बटन"
+
+#: ../src/orca/rolenames.py:463
+#, fuzzy
+msgid "tbar"
+msgstr "पट्टी"
+
+#: ../src/orca/rolenames.py:464
+#, fuzzy
+msgid "ToolBar"
+msgstr "टुल पट्टी"
+
+#: ../src/orca/rolenames.py:465
+msgid "tool bar"
+msgstr "टुल पट्टी"
+
+#: ../src/orca/rolenames.py:468
+msgid "tip"
+msgstr ""
+
+#: ../src/orca/rolenames.py:469
+#, fuzzy
+msgid "ToolTip"
+msgstr "उपकरण टीप"
+
+#: ../src/orca/rolenames.py:470
+msgid "tool tip"
+msgstr "उपकरण टीप"
+
+#: ../src/orca/rolenames.py:473 ../src/orca/rolenames.py:475
+msgid "tree"
+msgstr "वृक्ष"
+
+#: ../src/orca/rolenames.py:474
+#, fuzzy
+msgid "Tree"
+msgstr "वृक्ष"
+
+#: ../src/orca/rolenames.py:478
+#, fuzzy
+msgid "trtbl"
+msgstr "वृक्ष तालिका"
+
+#: ../src/orca/rolenames.py:479
+#, fuzzy
+msgid "TreeTable"
+msgstr "वृक्ष तालिका"
+
+#: ../src/orca/rolenames.py:480
+msgid "tree table"
+msgstr "वृक्ष तालिका"
+
+#: ../src/orca/rolenames.py:483
+#, fuzzy
+msgid "unk"
+msgstr "अज्ञात"
+
+#: ../src/orca/rolenames.py:484
+#, fuzzy
+msgid "Unknown"
+msgstr "अज्ञात"
+
+#: ../src/orca/rolenames.py:485
+msgid "unknown"
+msgstr "अज्ञात"
+
+#: ../src/orca/rolenames.py:488
+#, fuzzy
+msgid "vwprt"
+msgstr "दृष्य विन्दु"
+
+#: ../src/orca/rolenames.py:489
+#, fuzzy
+msgid "Viewport"
+msgstr "दृष्य विन्दु"
+
+#: ../src/orca/rolenames.py:490
+msgid "viewport"
+msgstr "दृष्य विन्दु"
+
+#: ../src/orca/rolenames.py:493
+#, fuzzy
+msgid "wnd"
+msgstr "सन्झ्याल"
+
+#: ../src/orca/rolenames.py:494
+#, fuzzy
+msgid "Window"
+msgstr "सन्झ्याल"
+
+#: ../src/orca/rolenames.py:495
+msgid "window"
+msgstr "सन्झ्याल"
+
+#: ../src/orca/rolenames.py:498
+msgid "hdr"
+msgstr ""
+
+#: ../src/orca/rolenames.py:499
+#, fuzzy
+msgid "Header"
+msgstr "पंक्ति शीर्षक"
+
+#: ../src/orca/rolenames.py:500
+#, fuzzy
+msgid "header"
+msgstr "पंक्ति शीर्षक"
+
+#: ../src/orca/rolenames.py:503
+msgid "ftr"
+msgstr ""
+
+#: ../src/orca/rolenames.py:504
+msgid "Footer"
+msgstr ""
+
+#: ../src/orca/rolenames.py:505
+msgid "footer"
+msgstr ""
+
+#: ../src/orca/rolenames.py:508
+#, fuzzy
+msgid "para"
+msgstr "विभाजक"
+
+#: ../src/orca/rolenames.py:509
+msgid "Paragraph"
+msgstr ""
+
+#: ../src/orca/rolenames.py:510
+msgid "paragraph"
+msgstr ""
+
+#: ../src/orca/rolenames.py:513
+msgid "app"
+msgstr ""
+
+#: ../src/orca/rolenames.py:514
+#, fuzzy
+msgid "Application"
+msgstr "एनिमेसन"
+
+#: ../src/orca/rolenames.py:515
+#, fuzzy
+msgid "application"
+msgstr "एनिमेसन"
+
+#: ../src/orca/rolenames.py:518
+msgid "auto"
+msgstr ""
+
+#: ../src/orca/rolenames.py:519
+msgid "AutoComplete"
+msgstr ""
+
+#: ../src/orca/rolenames.py:520
+msgid "autocomplete"
+msgstr ""
+
+#: ../src/orca/rolenames.py:523
+#, fuzzy
+msgid "edtbr"
+msgstr "सम्पादन पट्टी"
+
+#: ../src/orca/rolenames.py:524
+#, fuzzy
+msgid "EditBar"
+msgstr "सम्पादन पट्टी"
+
+#: ../src/orca/rolenames.py:525
+msgid "edit bar"
+msgstr "सम्पादन पट्टी"
+
+#: ../src/orca/rolenames.py:528
+msgid "emb"
+msgstr ""
+
+#: ../src/orca/rolenames.py:529
+msgid "EmbeddedComponent"
+msgstr ""
+
+#: ../src/orca/rolenames.py:530
+msgid "embedded component"
+msgstr ""
+
+#: ../src/orca/speech.py:310
+msgid "The speech rate has been raised."
+msgstr ""
+
+#: ../src/orca/speech.py:350
+msgid "The speech rate has been lowered."
+msgstr ""
+
+#: ../src/orca/speech.py:391
+msgid " dot dot dot"
+msgstr "डट डट डट"
+
+#: ../src/orca/speechgenerator.py:362 ../src/orca/speechgenerator.py:366
+msgid "checked"
+msgstr "जाँच गरियको"
+
+#: ../src/orca/speechgenerator.py:370 ../src/orca/speechgenerator.py:374
+msgid "not checked"
+msgstr "जाँच नगरियको"
+
+#: ../src/orca/speechgenerator.py:900
+#, fuzzy
+msgid "one tab"
+msgstr "पृष्ठ ट्याव"
+
+#: ../src/orca/speechgenerator.py:902
+#, fuzzy
+msgid "tabs"
+msgstr "तालिका"
+
+#: ../src/orca/speechgenerator.py:979 ../src/orca/speechgenerator.py:983
+msgid "selected"
+msgstr ""
+
+#: ../src/orca/speechgenerator.py:987 ../src/orca/speechgenerator.py:991
+#, fuzzy
+msgid "not selected"
+msgstr "जाँच नगरियको"
+
+#: ../src/orca/speechgenerator.py:1302
+msgid "tear off"
+msgstr ""
+
+#: ../src/orca/speechgenerator.py:1363 ../src/orca/speechgenerator.py:1367
+msgid "pressed"
+msgstr ""
+
+#: ../src/orca/speechgenerator.py:1371 ../src/orca/speechgenerator.py:1375
+#, fuzzy
+msgid "not pressed"
+msgstr "जाँच नगरियको"
+
+#~ msgid "left"
+#~ msgstr "बाँया"
+
+#~ msgid "right"
+#~ msgstr "दाँया"
+
+#~ msgid "less"
+#~ msgstr "थोरै"
+
+#~ msgid "available"
+#~ msgstr "उपलब्ध"
+
+#~ msgid "unavailable"
+#~ msgstr "उपलब्ध नभएको"
+
+#~ msgid "shortcut"
+#~ msgstr "छोटो तरिका"
+
+#~ msgid "one item"
+#~ msgstr "एउटा चीज"
+
+#~ msgid "items"
+#~ msgstr "चीजहरु"
+
+#~ msgid "UNK"
+#~ msgstr "यु एन के"
+
+#~ msgid "UNKNOWN"
+#~ msgstr "अज्ञात"
+
+#~ msgid "INVALID"
+#~ msgstr "अवैध"
+
+#~ msgid "ALR"
+#~ msgstr "ए एल् आर"
+
+#~ msgid "ALERT"
+#~ msgstr "सतर्कता"
+
+#~ msgid "CNV"
+#~ msgstr "सि एन भि"
+
+#~ msgid "CANVAS"
+#~ msgstr "चित्रपट"
+
+#~ msgid "CHK"
+#~ msgstr "सि एच के"
+
+#~ msgid "CHECK_BOX"
+#~ msgstr "जाँच_बाकस"
+
+#~ msgid "MIT"
+#~ msgstr "एम आइ टि"
+
+#~ msgid "MENU ITEM"
+#~ msgstr "मेनु चीज"
+
+#~ msgid "CCH"
+#~ msgstr "सि सि एच"
+
+#~ msgid "COLOR CHOOSER"
+#~ msgstr "रङ्ग छनोटकर्ता"
+
+#~ msgid "CHD"
+#~ msgstr "सि एच डि"
+
+#~ msgid "COLUMN HEADER"
+#~ msgstr "स्तम्भ शिर्षक"
+
+#~ msgid "CBO"
+#~ msgstr "सि बि ओ"
+
+#~ msgid "COMBO BOX"
+#~ msgstr "कम्बो बाकस"
+
+#~ msgid "DIC"
+#~ msgstr "डि आइ सि"
+
+#~ msgid "DESKTOP ICON"
+#~ msgstr "डेक्सटप प्रतिमा"
+
+#~ msgid "DFR"
+#~ msgstr "डि एफ आर"
+
+#~ msgid "DESKTOP FRAME"
+#~ msgstr "डेस्कटप खाका"
+
+#~ msgid "DLG"
+#~ msgstr "डि एल जि"
+
+#~ msgid "DIALOG"
+#~ msgstr "संवाद"
+
+#~ msgid "DIP"
+#~ msgstr "डि आइ पि"
+
+#~ msgid "DIRECTORY PANE"
+#~ msgstr "डाइरेक्टरी फलक"
+
+#~ msgid "FCH"
+#~ msgstr "एफ सि एच"
+
+#~ msgid "FILE CHOOSER"
+#~ msgstr "फाइल छनोटकर्ता"
+
+#~ msgid "FLR"
+#~ msgstr "एफ एल आर"
+
+#~ msgid "FILLER"
+#~ msgstr "छान्नु"
+
+#~ msgid "FRM"
+#~ msgstr "एफ आर एम"
+
+#~ msgid "FRAME"
+#~ msgstr "फ्रेम"
+
+#~ msgid "GPN"
+#~ msgstr "जि पि एन"
+
+#~ msgid "GLASS PANE"
+#~ msgstr "सिसा फलक"
+
+#~ msgid "HTM"
+#~ msgstr "एच टि एम"
+
+#~ msgid "HTML CONTAINER"
+#~ msgstr "एच टि एम एल कन्टेनर"
+
+#~ msgid "LNK"
+#~ msgstr "एल एन के"
+
+#~ msgid "LINK"
+#~ msgstr "लिङ्क"
+
+#~ msgid "ICO"
+#~ msgstr "आइ सि ओ"
+
+#~ msgid "ICON"
+#~ msgstr "प्रतिमा"
+
+#~ msgid "IFR"
+#~ msgstr "आइ एफ आर"
+
+#~ msgid "INTERNAL FRAME"
+#~ msgstr "आन्तरिक खाका"
+
+#~ msgid "LBL"
+#~ msgstr "एल बि एल"
+
+#~ msgid "LABEL"
+#~ msgstr "तह"
+
+#~ msgid "LPN"
+#~ msgstr "एल पि एन"
+
+#~ msgid "LAYERED PANE"
+#~ msgstr "तह फलक"
+
+#~ msgid "LST"
+#~ msgstr "एल एस टि"
+
+#~ msgid "LIST"
+#~ msgstr "सूची"
+
+#~ msgid "LIT"
+#~ msgstr "एल आइ टि"
+
+#~ msgid "LIST ITEM"
+#~ msgstr "सूची बस्तु"
+
+#~ msgid "MNU"
+#~ msgstr "एम एन यु"
+
+#~ msgid "MENU"
+#~ msgstr "मेनु"
+
+#~ msgid "MBR"
+#~ msgstr "एम बि आर"
+
+#~ msgid "MENU BAR"
+#~ msgstr "मेनु बार"
+
+#~ msgid "OPN"
+#~ msgstr "ओ पि एन"
+
+#~ msgid "OPTION PANE"
+#~ msgstr "बिकल्प फलक"
+
+#~ msgid "PGT"
+#~ msgstr "पि जि टि"
+
+#~ msgid "PAGE TAB"
+#~ msgstr "पाना ट्याब"
+
+#~ msgid "PTL"
+#~ msgstr "पि टि एल"
+
+#~ msgid "PAGE TAB LIST"
+#~ msgstr "पेज ट्याब सूची"
+
+#~ msgid "PNL"
+#~ msgstr "पि एन एल"
+
+#~ msgid "PANEL"
+#~ msgstr "प्यानल"
+
+#~ msgid "PWD"
+#~ msgstr "पि डब्लु डि"
+
+#~ msgid "PASSWORD TEXT"
+#~ msgstr "पासवर्ड पाठ"
+
+#~ msgid "PMN"
+#~ msgstr "पि एम एन"
+
+#~ msgid "POPUP MENU"
+#~ msgstr "पपअप मेनु"
+
+#~ msgid "PRG"
+#~ msgstr "पि आर जि"
+
+#~ msgid "PROGRESS BAR"
+#~ msgstr "प्रोग्रेस बार"
+
+#~ msgid "PBT"
+#~ msgstr "पि बि टि"
+
+#~ msgid "PUSH BUTTON"
+#~ msgstr "बटन थिच्नुस"
+
+#~ msgid "RAD"
+#~ msgstr "आर ए डि"
+
+#~ msgid "RADIO BUTTON"
+#~ msgstr "रेडियो बटन"
+
+#~ msgid "RPN"
+#~ msgstr "आर पि एन"
+
+#~ msgid "ROOT PANE"
+#~ msgstr "रुट फलक"
+
+#~ msgid "RHD"
+#~ msgstr "आर एच डि"
+
+#~ msgid "ROW HEADER"
+#~ msgstr "पङ्त्ति शिर्षक"
+
+#~ msgid "SCR"
+#~ msgstr "एस सि आर"
+
+#~ msgid "SCROLL BAR"
+#~ msgstr "स्क्रोल पट्टी"
+
+#~ msgid "SPN"
+#~ msgstr "एस पि एन"
+
+#~ msgid "SCROLL PANE"
+#~ msgstr "स्क्रोल फलक"
+
+#~ msgid "SEP"
+#~ msgstr "एस इ पि"
+
+#~ msgid "SEPARATOR"
+#~ msgstr "बिभाजक"
+
+#~ msgid "SLD"
+#~ msgstr "एस एल डि"
+
+#~ msgid "SLIDER"
+#~ msgstr "स्लाइडर"
+
+#~ msgid "SPP"
+#~ msgstr "एस पि पि"
+
+#~ msgid "SPLIT PANE"
+#~ msgstr "बिभाजन फलक"
+
+#~ msgid "STA"
+#~ msgstr "एस टि ए"
+
+#~ msgid "STATUS BAR"
+#~ msgstr "स्थिति पट्टी"
+
+#~ msgid "TAB"
+#~ msgstr "ट्याव"
+
+#~ msgid "TABLE"
+#~ msgstr "तालिका"
+
+#~ msgid "CEL"
+#~ msgstr "सि इ एल"
+
+#~ msgid "TABLE CELL"
+#~ msgstr "तालिका कक्ष"
+
+#~ msgid "table cell"
+#~ msgstr "तालिका कक्ष"
+
+#~ msgid "TCH"
+#~ msgstr "टि सि एच"
+
+#~ msgid "TABLE COLUMN HEADER"
+#~ msgstr "तालिका स्तम्भ शिर्षक"
+
+#~ msgid "table column header"
+#~ msgstr "तालिका स्तम्भ शीर्षक"
+
+#~ msgid "TRH"
+#~ msgstr "टि आर एच"
+
+#~ msgid "TABLE ROW HEADER"
+#~ msgstr "तालिका पङ्त्ति शिर्षक"
+
+#~ msgid "table row header"
+#~ msgstr "तालिका पंक्ति शीर्षक"
+
+#~ msgid "TXT"
+#~ msgstr "टि एक्स टि"
+
+#~ msgid "MULTI LINE TEXT"
+#~ msgstr "बहु पङ्त्ति पाठ"
+
+#~ msgid "multi Line Text"
+#~ msgstr "वहु रेखा पाठ"
+
+#~ msgid "SINGLE LINE TEXT"
+#~ msgstr "एकल पङ्त्ति पाठ"
+
+#~ msgid "single Line Text"
+#~ msgstr "एकल रेखा पाठ"
+
+#~ msgid "TOG"
+#~ msgstr "टि ओ जि"
+
+#~ msgid "TOGGLE BUTTON"
+#~ msgstr "टुगल बटन"
+
+#~ msgid "TOL"
+#~ msgstr "टि ओ एल"
+
+#~ msgid "TOOL BAR"
+#~ msgstr "उपकरण पट्टी"
+
+#~ msgid "TIP"
+#~ msgstr "टि आइ पि"
+
+#~ msgid "TOOL TIP"
+#~ msgstr "उपकरण टिप"
+
+#~ msgid "TRE"
+#~ msgstr "टि आर इ"
+
+#~ msgid "TREE"
+#~ msgstr "वृक्ष"
+
+#~ msgid "TRI"
+#~ msgstr "टि आर आइ"
+
+#~ msgid "TREE ITEM"
+#~ msgstr "वृक्ष चीज"
+
+#~ msgid "tree item"
+#~ msgstr "वृक्ष चीज"
+
+#~ msgid "TRT"
+#~ msgstr "टि आर टि"
+
+#~ msgid "VWP"
+#~ msgstr "भि डब्लु पि"
+
+#~ msgid "VIEWPORT"
+#~ msgstr "दृष्य विन्दु"
+
+#~ msgid "WND"
+#~ msgstr "डब्लु एन डि"
+
+#~ msgid "WINDOW"
+#~ msgstr "सन्झ्याल"
+
+#~ msgid "ACC"
+#~ msgstr "ए सि सि"
+
+#~ msgid "ACCELERATOR LABEL"
+#~ msgstr "द्रुतक तह"
+
+#~ msgid "accelerator label"
+#~ msgstr "द्रूतकको लेवल"
+
+#~ msgid "ANI"
+#~ msgstr "ए एन आइ"
+
+#~ msgid "ANIMATION"
+#~ msgstr "एनिमेसन"
+
+#~ msgid "ARR"
+#~ msgstr "ए आर आर"
+
+#~ msgid "ARROW"
+#~ msgstr "बाँण"
+
+#~ msgid "CAL"
+#~ msgstr "सि ए एल"
+
+#~ msgid "CALENDAR"
+#~ msgstr "पात्रो"
+
+#~ msgid "DAT"
+#~ msgstr "डि ए टि"
+
+#~ msgid "DATE EDITOR"
+#~ msgstr "मिति सम्पादक"
+
+#~ msgid "DIL"
+#~ msgstr "डि आइ एल"
+
+#~ msgid "DIAL"
+#~ msgstr "डायल"
+
+#~ msgid "DRW"
+#~ msgstr "डि आर डब्लु"
+
+#~ msgid "DRAWING AREA"
+#~ msgstr "रेखाचित्रण क्षेत्र"
+
+#~ msgid "FNT"
+#~ msgstr "एफ एन टि"
+
+#~ msgid "FONT CHOOSER"
+#~ msgstr "फन्ट छनोटकर्ता"
+
+#~ msgid "IMG"
+#~ msgstr "आइ एम जि"
+
+#~ msgid "IMAGE"
+#~ msgstr "आकृती"
+
+#~ msgid "SPIN BUTTON"
+#~ msgstr "स्पिन बटन"
+
+#~ msgid "TRM"
+#~ msgstr "टि आर एम"
+
+#~ msgid "TERMINAL"
+#~ msgstr "टर्मिनल"
+
+#~ msgid "EXT"
+#~ msgstr "इ एक्स टि"
+
+#~ msgid "EXTENDED"
+#~ msgstr "बिस्तारित"
+
+#~ msgid "TLI"
+#~ msgstr "टि एल आइ"
+
+#~ msgid "TABLE LINE"
+#~ msgstr "तालिका पङ्गति"
+
+#~ msgid "table line"
+#~ msgstr "तालिका पङ्गति"
+
+#~ msgid "TABLE COLUMNS HEADER"
+#~ msgstr "तालिका स्तम्भ शिर्षक"
+
+#~ msgid "table columns header"
+#~ msgstr "तालिका स्तम्भहरू शीर्षक"
+
+#~ msgid "TIT"
+#~ msgstr "टि आइ टि"
+
+#~ msgid "TITLE BAR"
+#~ msgstr "शिर्षक पट्टी"
+
+#~ msgid "title bar"
+#~ msgstr "शिर्षक पट्टी"
+
+#~ msgid "EDB"
+#~ msgstr "इ डि बि"
+
+#~ msgid "EDIT BAR"
+#~ msgstr "सम्पादन पट्टी"
