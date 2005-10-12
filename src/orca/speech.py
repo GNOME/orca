@@ -134,11 +134,18 @@ class SpeechCallback(GNOME__POA.Speech.SpeechCallback):
 _cb = SpeechCallback()
 
 
-def init():
+def init(voiceName=None, text=None):
     """Initializes the speech module, connecting to the various speech
     drivers and creating the various speakersvoice styles defined in the
     user's settings.py.
 
+    Arguments:
+    - voiceName: the name of the voice style to use (e.g., "default")
+    - text: the text to speak
+
+    If the arguments are not None, then they will be used to issue a
+    message to the say command.
+    
     Returns True if the initialization procedure was run or False if this
     module has already been initialized.
     """
@@ -217,6 +224,11 @@ def init():
 
     _initialized = True
 
+    # Say something if we're supposed to...
+    #
+    if voiceName and text:
+        say(voiceName, text)
+        
     return True
 
 
@@ -259,17 +271,24 @@ def shutdown():
     return True
 
 
-def reset():
+def reset(voiceName=None, text=None):
     """Shuts the speech module down and then reinitializes it.  This
     method is typically to be executed in the event that a failure
     occurred while attempting to speak.
 
+    Arguments:
+    - voiceName: the name of the voice style to use (e.g., "default")
+    - text: the text to speak
+
+    If the arguments are not None, then they will be used to issue a
+    message to the say command.
+    
     Returns True if the module has been reset and a connection was
     re-established with the speech service.
     """
 
     shutdown()
-    return init()
+    return init(voiceName, text)
 
 
 def increaseSpeechRate(inputEvent=None, voiceName=None):
@@ -398,8 +417,11 @@ def say(voiceName, text):
         _lastText = [voiceName, text]
         return s.say(text)
     except:
+        # On failure, remember what we said, reset our connection to the
+        # speech synthesis driver, and try to say it again.
+        #
         debug.printException(debug.LEVEL_SEVERE)
-        reset()
+        reset(voiceName, text)
 
 
 def sayUtterances(voiceName, utterances):
