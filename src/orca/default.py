@@ -781,6 +781,15 @@ class Default(Script):
         if obj != orca.locusOfFocus:
             return
 
+        if event:
+            debug.println(debug.LEVEL_FINE,
+                          "VISUAL CHANGE: '%s' '%s' (event='%s')" \
+                          % (obj.name, obj.role, event.type))
+        else:
+            debug.println(debug.LEVEL_FINE,
+                          "VISUAL CHANGE: '%s' '%s' (event=None)" \
+                          % (obj.name, obj.role))
+
         self.updateBraille(obj)
         speech.sayUtterances(
             "default",

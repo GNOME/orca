@@ -286,7 +286,7 @@ class Accessible:
             try:
                 self._acc = acc._narrow(core.Accessibility.Accessible)
             except:
-                debug.printException(debug.LEVEL_FINE)
+                debug.printException(debug.LEVEL_SEVERE)
                 raise InvalidObjectError, "Unexpected issues with Accessible"
 
         # [[[TODO: WDW - the AT-SPI appears to give us a different accessible
@@ -311,9 +311,10 @@ class Accessible:
         if self._acc:
             try:
                 self._acc.unref()
-                del Accessible._cache[self.__origAcc]
+                if Accessible._cache.has_key(self.__origAcc):
+                    del Accessible._cache[self.__origAcc]
             except:
-                debug.printException(debug.LEVEL_FINE)
+                debug.printException(debug.LEVEL_SEVERE)
 
 
     def __get_name(self):
@@ -330,7 +331,7 @@ class Accessible:
                 self.name = name
             return name
         except:
-            debug.printException(debug.LEVEL_FINE)
+            debug.printException(debug.LEVEL_WARNING)
             self.valid = False
             raise InvalidObjectError, "Cannot get name"
 
@@ -349,7 +350,7 @@ class Accessible:
                 self.description = self._acc.description
             return description
         except:
-            debug.printException(debug.LEVEL_FINE)
+            debug.printException(debug.LEVEL_WARNING)
             self.valid = False
             raise InvalidObjectError, "Cannot get description"
 
@@ -378,7 +379,7 @@ class Accessible:
                     self.parent = parent
                 return parent;
         except:
-            debug.printException(debug.LEVEL_FINE)
+            debug.printException(debug.LEVEL_WARNING)
             self.valid = False
             raise InvalidObjectError, "Cannot get parent"
 
@@ -397,7 +398,7 @@ class Accessible:
                 self.childCount = childCount
             return childCount
         except:
-            debug.printException(debug.LEVEL_FINE)
+            debug.printException(debug.LEVEL_WARNING)
             self.valid = False
             raise InvalidObjectError, "Cannot get child count"
 
@@ -416,7 +417,7 @@ class Accessible:
                 self.index = index
             return index
         except:
-            debug.printException(debug.LEVEL_FINE)
+            debug.printException(debug.LEVEL_WARNING)
             self.valid = False
             raise InvalidObjectError, "Cannot get index"
             
@@ -458,7 +459,7 @@ class Accessible:
                 self.role = role
             return role
         except:
-            debug.printException(debug.LEVEL_FINE)
+            debug.printException(debug.LEVEL_WARNING)
             self.valid = False
             raise InvalidObjectError, "Cannot get role"
             
@@ -480,7 +481,7 @@ class Accessible:
                 self.state = state
             return state
         except:
-            debug.printException(debug.LEVEL_FINE)
+            debug.printException(debug.LEVEL_WARNING)
             self.valid = False
             raise InvalidObjectError, "Cannot get state"
             
@@ -503,7 +504,7 @@ class Accessible:
                 self.relations = relations
             return relations
         except:
-            debug.printException(debug.LEVEL_FINE)
+            debug.printException(debug.LEVEL_WARNING)
             self.valid = False
             raise InvalidObjectError, "Cannot get relation set"
             
@@ -600,7 +601,7 @@ class Accessible:
                 #    self.extents = extents
                 return extents
         except:
-            debug.printException(debug.LEVEL_FINE)
+            debug.printException(debug.LEVEL_WARNING)
             self.valid = False
             raise InvalidObjectError, "Cannot get component extents"
             
@@ -700,7 +701,7 @@ class Accessible:
                 self.action = action
             return action
         except:
-            debug.printException(debug.LEVEL_FINE)
+            debug.printException(debug.LEVEL_WARNING)
             self.valid = False
             raise InvalidObjectError, "Cannot get action interface"
             
@@ -724,7 +725,7 @@ class Accessible:
                 self.component = component
             return component
         except:
-            debug.printException(debug.LEVEL_FINE)
+            debug.printException(debug.LEVEL_WARNING)
             self.valid = False
             raise InvalidObjectError, "Cannot get component interface"
             
@@ -748,7 +749,7 @@ class Accessible:
                 self.hypertext = hypertext
             return hypertext
         except:
-            debug.printException(debug.LEVEL_FINE)
+            debug.printException(debug.LEVEL_WARNING)
             self.valid = False
             raise InvalidObjectError, "Cannot get hypertext interface"
             
@@ -772,7 +773,7 @@ class Accessible:
                 self.image = image
             return image
         except:
-            debug.printException(debug.LEVEL_FINE)
+            debug.printException(debug.LEVEL_WARNING)
             self.valid = False
             raise InvalidObjectError, "Cannot get image interface"
             
@@ -796,7 +797,7 @@ class Accessible:
                 self.selection = selection
             return selection
         except:
-            debug.printException(debug.LEVEL_FINE)
+            debug.printException(debug.LEVEL_WARNING)
             self.valid = False
             raise InvalidObjectError, "Cannot get selection interface"
             
@@ -819,7 +820,7 @@ class Accessible:
                 self.table = table
             return table
         except:
-            debug.printException(debug.LEVEL_FINE)
+            debug.printException(debug.LEVEL_WARNING)
             self.valid = False
             raise InvalidObjectError, "Cannot get table interface"
             
@@ -842,7 +843,7 @@ class Accessible:
                 self.text = text
             return text
         except:
-            debug.printException(debug.LEVEL_FINE)
+            debug.printException(debug.LEVEL_WARNING)
             self.valid = False
             raise InvalidObjectError, "Cannot get text interface"
             
@@ -865,7 +866,7 @@ class Accessible:
                 self.value = value
             return value
         except:
-            debug.printException(debug.LEVEL_FINE)
+            debug.printException(debug.LEVEL_WARNING)
             self.valid = False
             raise InvalidObjectError, "Cannot get value interface"
 
@@ -962,9 +963,9 @@ class Accessible:
             newChild.app = self.app
             return newChild
         except:
-            debug.printException(debug.LEVEL_FINE)
+            debug.printException(debug.LEVEL_WARNING)
             self.valid = False
-            raise InvalidObjectError, "Cannot get child"
+            raise InvalidObjectError, ("Cannot get child %d" % index)
 
 
 ########################################################################
@@ -1431,9 +1432,6 @@ def getAcceleratorAndShortcut(obj):
     #
     bindingStrings = action.getKeyBinding(0).split(';')
 
-    debug.println(debug.LEVEL_FINEST,
-                  "KEYBINDINGS: " + action.getKeyBinding(0))
-                  
     # [[[TODO: WDW - assumes menu items have three bindings]]]
     #
     if len(bindingStrings) == 3:

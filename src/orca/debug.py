@@ -42,27 +42,42 @@ LEVEL_WARNING = 900
 # Used to indicate reasonably significant messages that make sense to end users
 # and system managers.
 #
+# For the purposes of Orca, LEVEL_INFO means display the text being sent to
+# speech and braille.
+#
 LEVEL_INFO = 800
 
 # Used to indicate static configuration information to assist in debugging
-# problems that may be associated with a particular configuration.  For
-# example, used to say if a particular feature (e.g., speech, braille, etc.)
-# is enabled or not.
+# problems that may be associated with a particular configuration.
+#
+# For the purposes of Orca, LEVEL_CONFIGURATION means display the various
+# apsects of whether a particular feature (e.g., speech, braille, etc.)
+# is enabled or not as well as details about that feature.
 #
 LEVEL_CONFIGURATION = 700
 
-# Used for lowest volume of detailed tracing information.  For example,
-# used to indicate a script has been activated.
+# Used for lowest volume of detailed tracing information.
+#
+# For the purposes of Orca, this is braille and keyboard input, script
+# activation and deletion, locus of focus changes, and visual changes
+# to the locus of focus.
 #
 LEVEL_FINE = 600
 
-# Used for medium volume of detailed tracing information.  For example,
-# used to indicate a particular focus tracking presenter has been called.
+# Used for medium volume of detailed tracing information.
+#
+# For the purposes of Orca, this is for debugging speech and braille
+# generators and tracking the synthesis of device events.
 #
 LEVEL_FINER = 500
 
-# Used for maximum volume of detailed tracing information.  For example,
-# used to display all AT-SPI object events.
+# Used for maximum volume of detailed tracing information.
+#
+# For the purposes of Orca, this is for tracking all AT-SPI object events.
+# NOTE that one can up the debug level of AT-SPI object events by setting
+# the _eventDebugLevel via "setEventDebugLevel."  In addition, one can
+# filter events by creating a regular expression that matches event type
+# names and passing this to "setEventDebugFilter."
 #
 LEVEL_FINEST = 400
 

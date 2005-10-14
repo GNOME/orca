@@ -315,7 +315,7 @@ class Component(Region):
             # but we want to be able to select them with the cursor
             # routing key.]]]
             #
-            debug.println(debug.LEVEL_FINER,
+            debug.println(debug.LEVEL_FINEST,
                           "braille.Component.processCursorKey: no action")
             try:
                 eventsynthesizer.clickObject(self.accessible, 1)

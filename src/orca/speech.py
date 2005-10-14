@@ -198,7 +198,15 @@ def init(voiceName=None, text=None):
             s.setParameterValue("pitch", desc[3])
             s.setParameterValue("volume", desc[4])
             _speakers[voiceName] = s
-            
+
+            debug.println(debug.LEVEL_CONFIGURATION,
+                          voiceName + " voice set to" \
+                          + " driver=" + desc[0] \
+                          + " name=" + desc[1] \
+                          + (" rate=%d" % desc[2]) \
+                          + (" pitch=%d" % desc[3]) \
+                          + (" volume=%d" % desc[4]))                          
+                          
             # [[[TODO: WDW - the register succeeds on JDS/Suse but fails
             # on Fedora.  Dunno why, but we'll just limp along for now.
             # BTW, the error is on the freetts-synthesis-driver side:
@@ -221,6 +229,10 @@ def init(voiceName=None, text=None):
         if len(voices) > 0:
             _speakers["default"] = drivers[0].createSpeaker(
                 voices[0])._narrow(GNOME.Speech.Speaker)
+            debug.println(debug.LEVEL_CONFIGURATION,
+                          "default voice set to" \
+                          + " driver=" + drivers[0].synthesizerName \
+                          + " name=" + voices[0].name)
 
     _initialized = True
 

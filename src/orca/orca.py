@@ -217,15 +217,6 @@ def visualAppearanceChanged(event, obj):
     - obj: the Accessible whose visual appearance changed.
     """
     
-    if event:
-        debug.println(debug.LEVEL_FINE,
-                      "VISUAL CHANGE: '%s' '%s' (event='%s')" \
-                      % (obj.name, obj.role, event.type))
-    else:
-        debug.println(debug.LEVEL_FINE,
-                      "VISUAL CHANGE: '%s' '%s' (event=None)" \
-                      % (obj.name, obj.role))
-
     if _currentPresentationManager >= 0:
         _PRESENTATION_MANAGERS[_currentPresentationManager].\
             visualAppearanceChanged(event, obj)

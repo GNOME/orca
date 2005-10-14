@@ -92,3 +92,11 @@
 - Default.py should probably be divided:  place all common stuff like 
   locusOfFocus and flat review stuff in default.  Put all event handling
   in gtk.py, soffice.py, etc.
+
+- HANG: "Places->Search For Files..."
+        (brings up Search for Files app)
+        Look in folder: Filesystem
+        Search for a file (e.g., "java*.xml")
+        Tab to "Search Results"
+	Orca will hang.
+	
