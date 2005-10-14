@@ -472,6 +472,11 @@ void initcore (void) {
 	char *a11y_module_name = "Accessibility";
 	char *a11y_poa_module_name = "Accessibility__POA";
 
+        Display *display = GDK_DISPLAY();
+	int major_opcode_return;
+	int first_event_return;
+	int first_error_return;
+
 	core_module = Py_InitModule ("core", core_methods);
 
 	/* Import the pyorbit module, initialize it, and allow access
@@ -562,4 +567,17 @@ void initcore (void) {
 	PyModule_AddObject (core_module, 
 			    a11y_poa_module_name, 
 			    a11y_poa_module);
+
+	/* XEvIE is a nice extension that helps us get around a lot
+	 * of keyboard issues.  Let's see if it's present and let
+	 * Python modules know this via "core.xeviePresent" being a
+	 * non-zero value if it is present.
+	 */
+	PyModule_AddIntConstant (core_module, 
+				 "xeviePresent", 
+				 XQueryExtension (display,
+						  "XEVIE",
+						  &major_opcode_return,
+						  &first_event_return,
+						  &first_error_return));
 }
