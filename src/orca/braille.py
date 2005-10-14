@@ -197,9 +197,12 @@ BRL_FLG_REPEAT_DELAY  = 0x400000
 # the display is set such that the upper left is (0,0), x values increase from
 # left to right, and y values increase from top to bottom.
 #
+# For the purposes of testing w/o a braille display, we'll set the display
+# size to width=40 and height=1.
+#
 # [[[TODO: WDW - Only a height of 1 is support at this time.]]]
 #
-_displaySize = [0, 0]
+_displaySize = [40, 1]
 
 # The list of lines on the display.  This represents the entire amount of data
 # to be drawn on the display.  It will be clipped by the viewport if too large.
