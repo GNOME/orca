@@ -1,3 +1,17 @@
+0.2.0
+* Many many changes: new scripting architecture; better support for
+speech and braille; decent support for GTK applications; flat review
+mode.
+* Many localizations also performed by a number of very enthusiastic
+folks: Francisco Javier F. Serrador, Pawan Chitrakar, Adam Weinberger,
+Maxim Dziumanenko, Hendrik Brandt, David Lodge, Raphael Higino, Steve
+Murphy, Miloslav Trmac, Christian Rose, Alessio Frusciante, Aldo
+Giambelluca, Vincent van Adrighem, Danilo Segan, Ankit Patel, Estêvão
+Samuel Procópio, Christophe Merlet, Cedric Corazza, Gustavo Noronha
+Silva, Funda Wang, Gareth Owen, and Duarte Loreto.
+
+==========
+
 0.1.0
 * Changed scripting model -- scripts are now always all loaded at once
 and the Orca event proesor decides which script should receive which

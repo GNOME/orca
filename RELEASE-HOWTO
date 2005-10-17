@@ -1,0 +1,114 @@
+This document provides a step-by-step list to remind Orca
+maintainers how to make a release.
+
+The general instructions for a release are here:
+
+  http://developer.gnome.org/dotplan/for_maintainers.html
+
+Here's a summary for Orca:
+
+
+PREPARE SOURCES FOR THE RELEASE:
+-------------------------------
+
+Modify these lines in ./configure.in:
+
+  ORCA_MAJOR_VERSION=0
+  ORCA_MINOR_VERSION=2
+  ORCA_MICRO_VERSION=0
+
+Modify ./README to make sure is has the right Orca version.
+
+Update ./NEWS based upon entries in ./ChangeLog
+
+
+BUILD THE RELEASE:
+-----------------
+
+./autogen.sh && make && make install &&  make distcheck
+
+
+TEST THE CANDIDATE:
+------------------
+
+cd /tmp
+gunzip -c orca-0.2.0.tar.gz | tar xvf -
+cd orca-0.2.0
+./configure --prefix=/usr
+make
+sudo make install
+orca-setup
+orca
+
+
+TAG THE RELEASE:
+---------------
+
+cvs commit
+cvs tag ORCA_0_2_0
+
+
+UPLOAD THE RELEASE:
+------------------
+
+scp orca-0.2.0.tar.gz wwalker@master.gnome.org:
+ssh master.gnome.org
+install-module orca-0.2.0.tar.gz
+
+
+ANNOUNCE THE RELEASE to gnome-announce-list@gnome.org:
+-----------------------------------------------------
+
+Subject: orca-0.2.0
+
+* What is it ?
+==============
+
+Orca is a scriptable screen reader for the GNOME desktop for people
+with visual impairments.  It is currently in "pre-alpha" form.  Most
+people will *not* want to try orca-0.2.0, but some strong-hearted 
+folks with a sense of humor and hacker mentality will relish the 
+opportunity to help with the future of Orca.
+
+
+* What's changed ?
+==================
+
+==========
+Orca 0.2.0
+==========
+
+Code changes
+        * Yadda yadda yadda (Joe)
+
+Bugfixes
+        * Yadda yadda yadda (Joe) [#123456]
+
+* Where can I get it ?
+======================
+
+Source code:
+http://ftp.gnome.org/pub/GNOME/sources/orca/0.2/orca-0.2.0.tar.gz
+[MD5 sum: 9f12206520311eda477b73e2c07b234c]
+
+Orca 0.2.0 requires: 
+
+	* Python 2.4         - Python platform
+	* pyorbit 2.0.0      - Python bindings for ORBit2
+	* pygtk 2.4.0        - GTK+ Python bindings
+	* gnome-python 2.6.2 - Python bindings for various GNOME libraries
+	* gnome-speech 0.3.8 - GNOME speech synthesis services
+	* gnome-mag 0.11.14  - GNOME screen magnification services (note 
+			       that Orca builds find without gnome-mag,
+			       but magnification will not work)
+	* BRLTTY 3.6.1       - Braille support (note that Orca builds fine
+	                       without BRLTTY installed, but Braille support 
+                               will work without it)
+	* at-spi 1.6.2       - GNOME assistive technology framework
+                               NOTE: need a patch to at-spi/libspi/accessible.c
+			       for GEdit and Evolution to work without crashing
+			       or hanging.
+
+Enjoy.
+
+Will, Mike, Rich, and the Orca community
