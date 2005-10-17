@@ -338,7 +338,7 @@ def increaseSpeechRate(inputEvent=None, voiceName=None):
             increaseSpeechRate(inputEvent, name)
 
     stop("default")
-    say("default", _("The speech rate has been raised."))
+    say("default", _("faster."))
 
     return True
 
@@ -378,7 +378,7 @@ def decreaseSpeechRate(inputEvent=None, voiceName=None):
             decreaseSpeechRate(inputEvent, name)
             
     stop("default")
-    say("default", _("The speech rate has been lowered."))
+    say("default", _("slower"))
         
     return True
 
