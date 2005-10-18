@@ -1,4 +1,4 @@
-Summary: Orca -- scripting test bed for screen reading
+Summary: A screen reader that provides access to the GNOME desktop by people with visual impairments
 Name: orca
 Version: @VERSION@
 Release: 1
@@ -8,15 +8,18 @@ URL: http://www.gnome.org/
 Source0: orca-%{version}.tar.gz
 BuildRoot: %{_tmppath}/orca-%{version}-%{release}-buildroot
 BuildRequires:	gnome-common >= 2.7.0
-Requires:	at-spi >= 1.4.0
-Requires:	gnome-speech >= 0.3.4
-Requires:	python >= 2.3
-Requires:	pyorbit
-Requires:	pygtk2
-Requires:	gnome-python2
+Requires:	at-spi >= 1.6.3
+Requires:	gnome-speech >= 0.3.7
+Requires:	python >= 2.4.0
+Requires:	pyorbit >= 2.0.0
+Requires:	pygtk2 >= 2.6.0
+Requires:	gnome-python2 >= 2.10.0
+Requires:	gnome-mag >= 0.12.0
+Requires:	libbonobo >= 2.8.0
 
 %description
-scripting test bed for screen reading
+A flexible, scriptable, extensible screen reader for the GNOME platform
+that provides access via speech synthesis, braille, and magnification.
 
 %prep
 %setup -q
@@ -38,5 +41,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/orca-setup
 %{_bindir}/orca
 %{_libdir}/python?.?/site-packages/orca
-%{_libdir}/python?.?/site-packages/orca.pth
 %{_datadir}/locale/*/*
+
+%changelog
+* Mon Oct 17 2005 Willie Walker <william.walker@sun.com>
+- Update for 0.2.0.

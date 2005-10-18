@@ -112,3 +112,16 @@ Orca 0.2.0 requires:
 Enjoy.
 
 Will, Mike, Rich, and the Orca community
+
+
+MAKE AN RPM (IF YOU WANT TO)
+----------------------------
+
+See http://www.linux.org/docs/ldp/howto/RPM-HOWTO/
+
+Copy orca.spec and tarball to /usr/src/redhat and do it as root,
+or make $HOME/.rpmmacros (I never got this to work):
+
+%_topdir: /home/wwalker/work/fedora/gnome-head/orca/rpm-build
+
+rpmbuild -ba orca.spec
