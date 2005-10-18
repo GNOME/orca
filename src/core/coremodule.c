@@ -573,6 +573,10 @@ void initcore (void) {
 	 * Python modules know this via "core.xeviePresent" being a
 	 * non-zero value if it is present.
 	 */
+	/*
+	[[[TODO: WDW - comment this out as it should not be called
+	on initialization.  If that happens, it ends up causing
+	orca-setup to seg fault.]]]
 	PyModule_AddIntConstant (core_module, 
 				 "xeviePresent", 
 				 XQueryExtension (display,
@@ -580,4 +584,5 @@ void initcore (void) {
 						  &major_opcode_return,
 						  &first_event_return,
 						  &first_error_return));
+	*/
 }
