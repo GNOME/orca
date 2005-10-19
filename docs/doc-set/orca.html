@@ -54,12 +54,12 @@ HREF="#AEN2078"
 ></DT
 ><DT
 ><A
-HREF="#AEN2095"
+HREF="#AEN2169"
 >Orca Testing Plan</A
 ></DT
 ><DT
 ><A
-HREF="#AEN2109"
+HREF="#AEN2183"
 >Orca User's Guide</A
 ></DT
 ></DL
@@ -8146,9 +8146,67 @@ HREF="#AEN2089"
 ></DT
 ><DT
 ><A
-HREF="#AEN2092"
->Functions that Orca needs to provide to the user</A
+HREF="#AEN2094"
+>Overview</A
 ></DT
+><DD
+><DL
+><DT
+><A
+HREF="#AEN2098"
+>Script Lifecycle</A
+></DT
+><DT
+><A
+HREF="#AEN2135"
+>Script Contract</A
+></DT
+></DL
+></DD
+><DT
+><A
+HREF="#AEN2138"
+>Script Utilities</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="#AEN2141"
+>Debug Utilities</A
+></DT
+><DT
+><A
+HREF="#AEN2145"
+>Speech Output (Say Something)</A
+></DT
+><DT
+><A
+HREF="#AEN2149"
+>Speech Generation (What Do I Say)</A
+></DT
+><DT
+><A
+HREF="#AEN2153"
+>Braille Output (Write Something)</A
+></DT
+><DT
+><A
+HREF="#AEN2157"
+>Braille Generation (What Do I Write)</A
+></DT
+><DT
+><A
+HREF="#AEN2161"
+>Key Bindings</A
+></DT
+><DT
+><A
+HREF="#AEN2165"
+>Braille Bindings</A
+></DT
+></DL
+></DD
 ></DL
 ></DIV
 ><DIV
@@ -8186,32 +8244,354 @@ NAME="AEN2089"
 ></A
 >Introduction</H1
 ><P
->To be written.</P
+>In this document, you will learn how to create your own 
+      custom scripts for Orca.</P
+><P
+>Orca's scripting approach provides a mechanism for providing
+      customized support for the specific user interaction model of an
+      application.  The goal is to provide Orca with the capability of
+      providing a natural feeling and compelling user experience for
+      the various user interaction models of different desktop
+      applications.</P
+><P
+>The Orca scripting approach allows scripts to extend and/or
+      override the behavior of other scripts, thus simplifying the job
+      of a script writer.  To further facilitate script writing, Orca
+      provides a "default" script that provides a reasonable default
+      behavior for Orca.  This will not only serve as the "fallback
+      script" for Orca, but will also typically serve as the "jumping
+      off" point for writing custom scripts.</P
 ></DIV
 ><DIV
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN2092"
+NAME="AEN2094"
 ></A
->Functions that Orca needs to provide to the user</H1
+>Overview</H1
 ><P
->[[[WDW - Not so sure about this whole book.  Might be better
-      to get rid of it and move things to the user experience and arch 
-      docs.]]]</P
+>The primary operating mode of Orca is the "focus tracking
+      mode," where Orca keeps track of the most relevent user
+      interface object that has keyboard focus.  When Orca detects
+      changes to this object, which Orca refers to as the "locus of
+      focus," Orca will present relevant information to the user.</P
+><P
+>As such, the primary goal of a script is to assist Orca in
+      tracking of the locus of focus as well as presenting information
+      about the locus of focus.  A script does this by registering for
+      one or more AT-SPI events and then reacting appropriately when
+      it receives those events.  A script can also intercept and
+      interpret keystrokes and braille input events, allowing it to
+      further extend the behavior of Orca.</P
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN2098"
+>Script Lifecycle</A
+></H2
+><P
+>BIRTH: Orca's "focus_tracking_presenter" module is the
+        sole maintainer of scripts. Whenever it receives a "window
+        activated" event from the AT-SPI Registry, the
+        focus_tracking_presenter will determine the application
+        associated with that event and create a script for that
+        application if necessary.  Only one script instance per
+        application is managed by the focus_tracking_presenter.</P
+><P
+>The script creation process consists of the following
+        steps:</P
+><P
+></P
+><UL
+><LI
+><P
+>The focus_tracking_presenter will attempt to perform a
+            Python "import" using the application name as the name of
+            an Orca module.  For example, for the gnome-terminal
+            application, it will look for gnome-terminal.py.  If it
+            cannot find such a module in the Python search path, the
+            focus_tracking_presenter will create an instance of the
+            "Default" script in default.py.</P
+><P
+><I
+CLASS="EMPHASIS"
+>NOTE:</I
+> it is possible to tell Orca to bypass all custom
+            script creation by setting useCustomScripts=False
+            in your ~/.orca/user-settings.py.  This can be useful for
+            debugging purposes.</P
+></LI
+><LI
+><P
+>Each script module is expected to provide a
+            "getScript" method that takes the accessible application
+            object as an argument.  This method is essentially a
+            factory method that returns an instance of a Script
+            (defined in script.py) or Script subclass.  The
+            constructor for the Script instance is expected to define
+            any keystrokes, braille buttons, and AT-SPI event
+            listeners it is interested in.</P
+></LI
+><LI
+><P
+>The focus_tracking_presenter will then register event
+            listeners for all AT-SPI events associated with script.
+            When the focus_tracking_presenter receives the events, it
+            will pass the event directly to the script associated with
+            the event, regardless if the application associated with
+            the script has focus or not.</P
+><P
+><I
+CLASS="EMPHASIS"
+>IMPLEMENTATION DETAIL:</I
+> the focus_tracking_presenter registers its
+            own "processObjectEvent" method as the AT-SPI event
+            listener.  This method finds (and creates if necessary)
+            the script associated with the event and passes the event
+            onto the required "processObjectEvent" method of the
+            script for processing.  The event has the following
+            fields:</P
+><P
+></P
+><UL
+><LI
+><P
+>type: a string describing the event (e.g., 
+                "window:activated")</P
+></LI
+><LI
+><P
+>detail1, detail2: integer details for the event 
+                (see the AT-SPI documentation)</P
+></LI
+><LI
+><P
+>any_data: something associated with the event 
+                (see the AT-SPI documentation)</P
+></LI
+><LI
+><P
+>source: the Accessible object associated with the 
+                event</P
+></LI
+></UL
+></LI
+><LI
+><P
+>The focus_tracking_presenter also keeps track of the
+            active script (as determined by the script associated
+            with the currently active window) and will pass all
+            keyboard and braille input events to the active
+            script.</P
+><P
+><I
+CLASS="EMPHASIS"
+>IMPLEMENTATION DETAIL:</I
+> the focus_tracking_presenter implements the
+            "processKeyboardEvent" and "processBrailleEvent" methods
+            which are called by the main orca module whenever it
+            receives a keystroke or braille input event.  The
+            focus_tracking_presenter will pass these events onto the
+            required "processKeyboardEvent" or "processBrailleEvent"
+            methods of the active script.</P
+><P
+><I
+CLASS="EMPHASIS"
+>IMPLEMENTATION DETAIL:</I
+> the focus_tracking_presenter provides logic
+            to allow the user's ~/.orca/user-settings.py module to
+            extend and/or override key and braille bindings.
+            This logic is currently latent, however, and is not
+            documented or supported.</P
+></LI
+></UL
+><P
+>LIFE: Whenever a script receives an event, it can do
+        whatever it wants.  Its primary task, however, is to assist
+        Orca in keeping track of the locus of focus.  When a script
+        detects a change in the locus of focus, it should call
+        orca.setLocusOfFocus with the Accessible object that is the
+        new locus of focus.</P
+><P
+><I
+CLASS="EMPHASIS"
+>IMPLEMENTATION DETAIL:</I
+> The orca module has logic to detect if the locus
+        of focus really changed and will propagate the change on as
+        appropriate.  The change is first sent to the
+        "locusOfFocusChanged" method of the focus_tracking_presenter,
+        which then passes the change onto the required
+        "locusOfFocusChanged" method of the active script. The 
+        "locusOfFocusChanged" method is the primary place where a
+        script will present information to the user.</P
+><P
+>In many cases, the locus of focus doesn't change, but some
+        property of the current locus of focus changes.  For example,
+        a checkbox is checked or unchecked, yet remains as the locus
+        of focus.  In these cases, a script should also keep Orca
+        informed by calling orca.visualAppearanceChanged.</P
+><P
+><I
+CLASS="EMPHASIS"
+>IMPLEMENTATION DETAIL:</I
+> Like the locusOfFocusChanged method, the
+        "visualAppearanceChanged" method of the orca module will first
+        call the "visualAppearanceChanged" method of the
+        focus_tracking_presenter, which will then call the required
+        "visualAppearanceChanged" of the active script.  The
+        "visualAppearanceChanged" is the primary place where a script
+        will present information to the user.</P
+><P
+>DEATH: Whenever the focus_tracking_presenter detects that
+        an application has gone away (by determining that the
+        application has been removed from the desktop), it will delete
+        the script for that application and unregister any event
+        listeners associated with that script.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN2135"
+>Script Contract</A
+></H2
+><P
+>The contract for a script is documented in detail in
+        the script.py module.</P
+></DIV
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="AEN2138"
+></A
+>Script Utilities</H1
+><P
+>There are many common things a script wants to do: generate
+      speech, update braille, etc.  In addition, there are many common
+      things a script writer wants to do, especially getting debug
+      output to determine just what the AT-SPI is sending it.</P
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN2141"
+>Debug Utilities</A
+></H2
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> write up various debug utilities and how to enable
+        them.  Also include a "how the heck do I determine what to call
+        my script" section.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN2145"
+>Speech Output (Say Something)</A
+></H2
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> write up the interface to speech synthesis.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN2149"
+>Speech Generation (What Do I Say)</A
+></H2
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> write up the interface to the speech generator
+        module and how it can be used to generate strings for
+        objects.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN2153"
+>Braille Output (Write Something)</A
+></H2
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> write up the interface to braille output.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN2157"
+>Braille Generation (What Do I Write)</A
+></H2
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> write up the interface to the braille generator
+        module and how it can be used to generate strings for
+        objects.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN2161"
+>Key Bindings</A
+></H2
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> write up how to define keybindings.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN2165"
+>Braille Bindings</A
+></H2
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> write up how to define braille bindings.</P
+></DIV
 ></DIV
 ></DIV
 ><DIV
 CLASS="BOOK"
 ><A
-NAME="AEN2095"
+NAME="AEN2169"
 ></A
 ><DIV
 CLASS="TITLEPAGE"
 ><H1
 CLASS="TITLE"
 ><A
-NAME="AEN2095"
+NAME="AEN2169"
 >Orca Testing Plan</A
 ></H1
 ><DIV
@@ -8219,7 +8599,7 @@ CLASS="LEGALNOTICE"
 ><P
 ></P
 ><A
-NAME="AEN2098"
+NAME="AEN2172"
 ></A
 ><P
 >Copyright 2005, Sun Microsystems, Inc.</P
@@ -8236,12 +8616,12 @@ CLASS="TOC"
 ></DT
 ><DT
 ><A
-HREF="#AEN2100"
+HREF="#AEN2174"
 >Foreword</A
 ></DT
 ><DT
 ><A
-HREF="#AEN2106"
+HREF="#AEN2180"
 >Introduction</A
 ></DT
 ></DL
@@ -8250,7 +8630,7 @@ HREF="#AEN2106"
 CLASS="PREFACE"
 ><HR><H1
 ><A
-NAME="AEN2100"
+NAME="AEN2174"
 ></A
 >Foreword</H1
 ><P
@@ -8276,7 +8656,7 @@ CLASS="EMPHASIS"
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN2106"
+NAME="AEN2180"
 ></A
 >Introduction</H1
 ><P
@@ -8286,14 +8666,14 @@ NAME="AEN2106"
 ><DIV
 CLASS="BOOK"
 ><A
-NAME="AEN2109"
+NAME="AEN2183"
 ></A
 ><DIV
 CLASS="TITLEPAGE"
 ><H1
 CLASS="TITLE"
 ><A
-NAME="AEN2109"
+NAME="AEN2183"
 >Orca User's Guide</A
 ></H1
 ><DIV
@@ -8301,7 +8681,7 @@ CLASS="LEGALNOTICE"
 ><P
 ></P
 ><A
-NAME="AEN2112"
+NAME="AEN2186"
 ></A
 ><P
 >Copyright 2005, Sun Microsystems, Inc.</P
@@ -8318,12 +8698,12 @@ CLASS="TOC"
 ></DT
 ><DT
 ><A
-HREF="#AEN2114"
+HREF="#AEN2188"
 >Foreword</A
 ></DT
 ><DT
 ><A
-HREF="#AEN2120"
+HREF="#AEN2194"
 >Introduction</A
 ></DT
 ></DL
@@ -8332,7 +8712,7 @@ HREF="#AEN2120"
 CLASS="PREFACE"
 ><HR><H1
 ><A
-NAME="AEN2114"
+NAME="AEN2188"
 ></A
 >Foreword</H1
 ><P
@@ -8360,7 +8740,7 @@ CLASS="EMPHASIS"
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN2120"
+NAME="AEN2194"
 ></A
 >Introduction</H1
 ><P
