@@ -38,16 +38,6 @@
 - gnome-terminal: "Edit" -> "Current Profile..." -> "Colors"; press the
   color palette button.  The color editing widget is a monster.
 
-- Orca seg faults when it exits.
-  > UPDATE: WDW - after some investigation, this seems to be happening
-    when attempting to return from a glib call.  Originally thought
-    this might be due to shutting down bonobo (bonobo.main_quit) when
-    handling a keyboard event.  After prototyping something to shut down
-    on a GLib idle handler, however, this didn't seem to be the case.
-
-- When nothing has focus the old stuff on the braille display should go away.
-  It should speak and braille "no focus."
-
 - When in a text editor such as GEdit doing a find orca should speak
   the new line landed on.
 
