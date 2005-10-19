@@ -83,6 +83,9 @@
   and either have it exit or restart.
 
 - FreeTTS's "stop" performance is horrible on Solaris 11.
+  >UPDATE: This is a problem with the gnome-speech driver for FreeTTS;
+   it wasn't respecting the "streaming" option and was thus stuck using
+   the clip audio player.  This has been fixed for post gnome-speech-0.3.8.
 
 - Empty tree tables should announce themselves as empty.
 
@@ -100,3 +103,12 @@
         Tab to "Search Results"
 	Orca will hang.
 	
+- The key event handler should:
+  > Use global handlers for synchronous keyboard events - this will
+    (or should) work around the fact that keycodes emitted by Java
+    applications are different from the rest of the world.  Note
+    that this requires the Xserver XEvIE extension to be in place.
+  > Use synchronous listeners sparingly.  For all other things, such
+    as "any keystroke stops speech," one should consider asynchronous
+    listeners.  NOTE: for learn mode, one must have synchronous listeners
+    for all keystrokes.
