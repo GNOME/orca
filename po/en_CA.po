@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-06 11:59-0400\n"
+"POT-Creation-Date: 2005-10-19 15:00-0400\n"
 "PO-Revision-Date: 2005-08-31 14:20-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -270,16 +270,16 @@ msgstr "tree level %d"
 msgid "No focus"
 msgstr "No focus"
 
-#: src/orca/default.py:1590 src/orca/default.py:1691 src/orca/default.py:1696
-#: src/orca/default.py:1771 src/orca/default.py:1776
+#: src/orca/default.py:1599 src/orca/default.py:1700 src/orca/default.py:1705
+#: src/orca/default.py:1780 src/orca/default.py:1785
 msgid "blank"
 msgstr "blank"
 
-#: src/orca/default.py:1592 src/orca/default.py:1698
+#: src/orca/default.py:1601 src/orca/default.py:1707
 msgid "white space"
 msgstr "white space"
 
-#: src/orca/default.py:1994
+#: src/orca/default.py:2003
 msgid "Not a document."
 msgstr "Not a document."
 
@@ -287,19 +287,19 @@ msgstr "Not a document."
 msgid "Switching to focus tracking mode."
 msgstr "Switching to focus tracking mode."
 
-#: src/orca/gaim.py:96
+#: src/orca/gaim.py:98
 msgid " chat"
 msgstr " chat"
 
-#: src/orca/gaim.py:119
+#: src/orca/gaim.py:121
 msgid " instant message"
 msgstr " instant message"
 
-#: src/orca/gaim.py:185
+#: src/orca/gaim.py:216
 msgid "Input"
 msgstr "Input"
 
-#: src/orca/gaim.py:187
+#: src/orca/gaim.py:218
 msgid "Message Log"
 msgstr "Message Log"
 
@@ -361,47 +361,47 @@ msgstr "Use key echo?  Enter y or n: "
 msgid "Braille support appears to work, use it?  Enter y or n. "
 msgstr "Braille support appears to work.  Use it?  Enter y or n. "
 
-#: src/orca/orca.py:283
+#: src/orca/orca.py:274
 msgid "User logged out - shutting down."
 msgstr "User logged out - shutting down."
 
-#: src/orca/orca.py:565
+#: src/orca/orca.py:556
 msgid "Entering learn mode.  Press any key to hear its function. "
 msgstr "Entering learn mode.  Press any key to hear its function. "
 
-#: src/orca/orca.py:566
+#: src/orca/orca.py:557
 msgid "To exit learn mode, press the escape key."
 msgstr "To exit learn mode, press the escape key."
 
-#: src/orca/orca.py:567
+#: src/orca/orca.py:558
 msgid "Learn mode.  Press escape to exit."
 msgstr "Learn mode.  Press escape to exit."
 
-#: src/orca/orca.py:578 src/orca/orca.py:579
+#: src/orca/orca.py:569 src/orca/orca.py:570
 msgid "Exiting learn mode."
 msgstr "Exiting learn mode."
 
-#: src/orca/orca.py:608
+#: src/orca/orca.py:599
 msgid "Enters learn mode.  Press escape to exit learn mode."
 msgstr "Enters learn mode.  Press escape to exit learn mode."
 
-#: src/orca/orca.py:616
+#: src/orca/orca.py:607
 msgid "Decreases the speech rate."
 msgstr "Decreases the speech rate."
 
-#: src/orca/orca.py:624
+#: src/orca/orca.py:615
 msgid "Increases the speech rate."
 msgstr "Increases the speech rate."
 
-#: src/orca/orca.py:630
+#: src/orca/orca.py:621
 msgid "Quits Orca"
 msgstr "Quits Orca"
 
-#: src/orca/orca.py:638
+#: src/orca/orca.py:629
 msgid "Toggles keystroke recording on and off."
 msgstr "Toggles keystroke recording on and off."
 
-#: src/orca/orca.py:646
+#: src/orca/orca.py:637
 msgid ""
 "Prints a debug listing of all known applications to the console where Orca "
 "is running."
@@ -409,7 +409,7 @@ msgstr ""
 "Prints a debug listing of all known applications to the console where Orca "
 "is running."
 
-#: src/orca/orca.py:654
+#: src/orca/orca.py:645
 msgid ""
 "Prints debug information about the currently active application to the "
 "console where Orca is running."
@@ -417,19 +417,19 @@ msgstr ""
 "Prints debug information about the currently active application to the "
 "console where Orca is running."
 
-#: src/orca/orca.py:662
+#: src/orca/orca.py:653
 msgid "Switches to the next presentation manager."
 msgstr "Switches to the next presentation manager."
 
-#: src/orca/orca.py:711 src/orca/orca.py:712
+#: src/orca/orca.py:702 src/orca/orca.py:703
 msgid "Welcome to Orca."
 msgstr "Welcome to Orca."
 
-#: src/orca/orca.py:735
+#: src/orca/orca.py:726
 msgid "goodbye."
 msgstr "goodbye."
 
-#: src/orca/orca.py:736
+#: src/orca/orca.py:727
 msgid "Goodbye."
 msgstr "Goodbye."
 
@@ -1303,15 +1303,15 @@ msgstr "EmbeddedComponent"
 msgid "embedded component"
 msgstr "embedded component"
 
-#: src/orca/speech.py:310
-msgid "The speech rate has been raised."
-msgstr "The speech rate has been raised."
+#: src/orca/speech.py:341
+msgid "faster."
+msgstr "faster."
 
-#: src/orca/speech.py:350
-msgid "The speech rate has been lowered."
-msgstr "The speech rate has been lowered."
+#: src/orca/speech.py:381
+msgid "slower"
+msgstr "slower"
 
-#: src/orca/speech.py:391
+#: src/orca/speech.py:422
 msgid " dot dot dot"
 msgstr " dot dot dot"
 
