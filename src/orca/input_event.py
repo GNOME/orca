@@ -115,7 +115,9 @@ class InputEventHandler:
 
         Arguments:
         - function: the function to call with an InputEvent instance as its
-                    sole argument
+                    sole argument.  The function is expected to return True
+                    if it consumes the event; otherwise it should return
+                    False
         - description: a localized string describing what this InputEvent
                        does
         """
