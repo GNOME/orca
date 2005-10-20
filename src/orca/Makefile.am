@@ -17,17 +17,11 @@ orca_python_PYTHON = \
 	eventsynthesizer.py \
 	flat_review.py \
 	focus_tracking_presenter.py \
-	gaim.py \
-	gcalctool.py \
-	gedit.py \
-	Gecko.py \
-	gnome-terminal.py \
 	hierarchical_presenter.py \
 	input_event.py \
 	kbd.py \
 	keybindings.py \
 	mag.py \
-	metacity.py \
 	orca.py \
 	orca_i18n.py \
 	rolenames.py \
@@ -38,3 +32,4 @@ orca_python_PYTHON = \
 
 orca_pythondir=$(pythondir)/orca
 
+SUBDIRS = scripts

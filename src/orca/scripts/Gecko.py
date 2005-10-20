@@ -23,7 +23,7 @@ from orca import speech
 
 from orca.orca_i18n import _
 
-from default import Default
+from orca.default import Default
 
 ########################################################################
 #                                                                      #

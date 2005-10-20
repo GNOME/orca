@@ -172,7 +172,10 @@ def _createScript(app):
 		module_name = _script_mappings[app.name]
 	    else:
 	    	module_name = app.name
-	    module = __import__(module_name, globals(), locals(), [''])
+	    module = __import__("scripts." + module_name, \
+                                globals(), \
+                                locals(), \
+                                [''])
             try:
                 script = module.getScript(app)
             except:

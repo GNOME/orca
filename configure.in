@@ -94,6 +94,7 @@ src/Makefile
 src/brl/Makefile
 src/core/Makefile
 src/orca/Makefile
+src/orca/scripts/Makefile
 src/orca/orca
 src/orca/orca-setup
 src/orca/orca_i18n.py

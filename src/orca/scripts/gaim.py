@@ -22,17 +22,17 @@ monitor both the IM input and IM output text areas at the same
 time.
 """
 
-import a11y
-import braille
-import core
-import orca
-import rolenames
-import speech
+import orca.a11y
+import orca.braille
+import orca.core
+import orca.orca
+import orca.rolenames
+import orca.speech
 
-from orca_i18n import _
-from rolenames import getRoleName
+from orca.orca_i18n import _
+from orca.rolenames import getRoleName
 
-from default import Default
+from orca.default import Default
 
 ########################################################################
 #                                                                      #

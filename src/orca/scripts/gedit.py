@@ -29,16 +29,16 @@ technologies to just leave it alone or it will pull the trigger on the
 application.]]]
 """
 
-import a11y
-import braille
-import rolenames
-import speech
+import orca.a11y
+import orca.braille
+import orca.rolenames
+import orca.speech
 
-from orca_i18n import _
-from rolenames import getRoleName
+from orca.orca_i18n import _
+from orca.rolenames import getRoleName
 
-from default import Default
-from speechgenerator import SpeechGenerator
+from orca.default import Default
+from orca.speechgenerator import SpeechGenerator
 
 ########################################################################
 #                                                                      #
