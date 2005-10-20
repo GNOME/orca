@@ -84,7 +84,9 @@ class Script:
             self.name = self.app.name
         else:
             self.name = "default"
-            
+
+        self.name += " (class=" + self.__class__.__name__ + ")"
+        
         self.listeners = {}
         self.braillebindings = {}
         self.keybindings = keybindings.KeyBindings()
