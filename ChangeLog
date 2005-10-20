@@ -1,3 +1,8 @@
+2005-10-20  Willie Walker <william.walker@sun.com>
+
+	* src/orca/focus_tracking_presenter.py: add ability to provide
+	a mapping between application name and script module name
+	
 2005-10-19  Willie Walker <william.walker@sun.com>
 
 	* src/orca/script.py, src/orca/input_event.py,

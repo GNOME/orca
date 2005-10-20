@@ -125,6 +125,20 @@ def _unregisterEventListeners(script):
 #                                                                      #
 ########################################################################
 
+# A dictionary that helps us map application names to script module
+# names.  The key is the name of an application, and the value is
+# the name of a script module.  There are some default values here,
+# but one may call the setScriptMapping method of this module to
+# extend or override any mappings.
+#
+_script_mappings = { \
+    "gnome-terminal"          : "gnome-terminal", \
+    "gedit"                   : "gedit",          \
+    "gcalctool"               : "gcalctool",      \
+    "Welcome to StarOffice 8" : "StarOffice",     \
+}
+
+
 # The cache of the currently known scripts.  The key is the Python
 # Accessible application, and the value is the script for that app.
 #
@@ -140,6 +154,42 @@ _default = None
 # and Braille events.
 #
 _activeScript = None
+
+
+def _createScript(app):
+    """For the given application name, create a new script instance.
+    We'll first see if a mapping from appName to module name exists.
+    If it does, we use that.  If it doesn't, we try the app name.
+    If all else fails, we fall back to the default script.
+    """
+
+    global _script_mappings
+
+    if settings.getSetting("useCustomScripts", True) \
+       and (app.name != "orca"):
+        try:
+	    if _script_mappings.has_key(app.name):
+		module_name = _script_mappings[app.name]
+	    else:
+	    	module_name = app.name
+	    module = __import__(module_name, globals(), locals(), [''])
+            try:
+                script = module.getScript(app)
+            except:
+                # We do not want the getScript method to fail.  If it does,
+                # we want to let the script developer know what went wrong,
+                # but we also want to move along without crashing Orca.
+                #
+                debug.printException(debug.LEVEL_SEVERE)
+                script = default.getScript(app)                    
+        except:
+            # It's ok if a custom script doesn't exist.
+            #
+            script = default.getScript(app)
+    else:
+        script = default.getScript(app)
+
+    return script
 
 
 def _getScript(app):
@@ -164,31 +214,13 @@ def _getScript(app):
         if _default is None:
             _default = default.getScript(None)
             _registerEventListeners(_default)
-        return _default
+        script = _default
     elif _known_scripts.has_key(app):
-        return _known_scripts[app]
-    elif settings.getSetting("useCustomScripts", True) \
-             and (app.name != "orca"):
-        try:
-            module = __import__(app.name, globals(), locals(), [''])
-            try:
-                script = module.getScript(app)
-            except:
-                # We do not want the getScript method to fail.  If it does,
-                # we want to let the script developer know what went wrong,
-                # but wee also want to move along without crashing Orca.
-                #
-                debug.printException(debug.LEVEL_SEVERE)
-                script = default.getScript(app)                    
-        except:
-            # It's ok if a custom script doesn't exist.
-            #
-            script = default.getScript(app)
+        script = _known_scripts[app]
     else:
-        script = default.getScript(app)
-
-    _known_scripts[app] = script
-    _registerEventListeners(script)
+	script = _createScript(app)
+    	_known_scripts[app] = script
+    	_registerEventListeners(script)
 
     return script
 
@@ -206,6 +238,21 @@ def _deleteScript(app):
             _unregisterEventListeners(script)
             debug.println(debug.LEVEL_FINE, "DELETED SCRIPT: ", script.name)
             del _known_scripts[app]
+
+
+def setScriptMapping(appName, moduleName):
+    """Tells this module what script module to look for a
+    given application name.
+
+    Arguments:
+    - appName:    the name of an application, typically as obtained
+                  from the 'name' field of an accessible application
+    - moduleName: the name of the Python module containing the script
+                  class definition for the application
+    """
+
+    _script_mappings[appName] = moduleName
+
 
 
 ########################################################################
