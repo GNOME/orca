@@ -2,6 +2,7 @@
 
 	* src/orca/focus_tracking_presenter.py: add ability to provide
 	a mapping between application name and script module name
+        * src/orca/scripts/*: refactor scripts into their own package
 	
 2005-10-19  Willie Walker <william.walker@sun.com>
 
