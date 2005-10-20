@@ -623,6 +623,10 @@ def init():
                                             0, \
                                             0,
                                             shutdownHandler))
+    _keybindings.add(keybindings.KeyBinding("SunF37", \
+                                            0, \
+                                            0,
+                                            shutdownHandler))
 
     keystrokeRecordingHandler = InputEventHandler(\
         toggleKeystrokeRecording,
