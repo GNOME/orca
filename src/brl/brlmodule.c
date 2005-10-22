@@ -114,8 +114,10 @@ static PyObject *brl_module_init(PyObject *self,
          */
 	brlapi_library = dlopen("libbrlapi.so", RTLD_LAZY);
 	if (!brlapi_library) {
-  	        fprintf(stderr, "Failed to load libbrlapi.so\n");
-		return PyInt_FromLong(0);
+		PyErr_SetString(
+		        PyExc_StandardError, 
+			"Failed to load libbrlapi.so");
+		return NULL;
 	}
 
 	/* Load the functions */
@@ -124,90 +126,100 @@ static PyObject *brl_module_init(PyObject *self,
                 (int (*)(const void *, const void *)) dlsym(brlapi_library, 
 					    "brlapi_initializeConnection");
 	if (!brlapi_initializeConnection) {
-  	        fprintf(stderr, 
-			"Failed to find brlapi_initializeConnection in BrlTTY.\n");
-		return PyInt_FromLong(0);
+		PyErr_SetString(
+                        PyExc_StandardError, 
+			"Failed to find brlapi_initializeConnection in BrlTTY");
+		return NULL;
 	}
 
 	brlapi_closeConnection = 
                 (void (*)(void)) dlsym(brlapi_library, 
                                        "brlapi_closeConnection");
 	if (!brlapi_closeConnection) {
-  	        fprintf(stderr,
-			"Failed to find brlapi_closeConnection in BrlTTY.\n");
-		return PyInt_FromLong(0);
+		PyErr_SetString(
+                        PyExc_StandardError, 
+			"Failed to find brlapi_closeConnection in BrlTTY");
+		return NULL;
 	}
 
 	brlapi_getDriverId = 
                 (int (*)(unsigned char *, unsigned int)) dlsym(brlapi_library, 
 				                        "brlapi_getDriverId");
 	if (!brlapi_getDriverId) {
-  	        fprintf(stderr, 
-			"Failed to find brlapi_getDriverId in BrlTTY.\n");
-		return PyInt_FromLong(0);
+		PyErr_SetString(
+                        PyExc_StandardError, 
+			"Failed to find brlapi_getDriverId in BrlTTY");
+		return NULL;
 	}
 
 	brlapi_getDriverName = 
                 (int (*)(unsigned char *, unsigned int)) dlsym(brlapi_library, 
 				                       "brlapi_getDriverName");
 	if (!brlapi_getDriverName) {
-  	        fprintf(stderr,
-			"Failed to find brlapi_getDriverName in BrlTTY.\n");
-		return PyInt_FromLong(0);
+		PyErr_SetString(
+                        PyExc_StandardError, 
+			"Failed to find brlapi_getDriverName in BrlTTY");
+		return NULL;
 	}
 
 	brlapi_getDisplaySize = 
                 (int (*)(unsigned int *, unsigned int *)) dlsym(brlapi_library, 
 				                      "brlapi_getDisplaySize");
 	if (!brlapi_getDisplaySize) {
-  	        fprintf(stderr,
-			"Failed to find brlapi_getDisplaySize in BrlTTY.\n");
-		return PyInt_FromLong(0);
+		PyErr_SetString(
+                        PyExc_StandardError, 
+			"Failed to find brlapi_getDisplaySize in BrlTTY");
+		return NULL;
 	}
 
 	brlapi_getTty = 
                 (int (*) (int tty, int how)) dlsym(brlapi_library, 
 			                           "brlapi_getTty");
 	if (!brlapi_getTty) {
-  	        fprintf(stderr, 
-			"Failed to find brlapi_getTty in BrlTTY.\n");
-		return PyInt_FromLong(0);
+		PyErr_SetString(
+                        PyExc_StandardError, 
+			"Failed to find brlapi_getTty in BrlTTY");
+		return NULL;
 	}
 	
 	brlapi_leaveTty = 
                 (int (*) (void)) dlsym(brlapi_library, 
 				       "brlapi_leaveTty");
 	if (!brlapi_leaveTty) {
-  	        fprintf(stderr,
-			"Failed to find brlapi_leaveTty in BrlTTY.\n");
-		return PyInt_FromLong(0);
+		PyErr_SetString(
+                        PyExc_StandardError, 
+			"Failed to find brlapi_leaveTty in BrlTTY");
+		return NULL;
 	}
 
 	brlapi_writeText = 
                 (int (*) (int, const unsigned char *)) dlsym(brlapi_library, 
                                                          "brlapi_writeText");
 	if (!brlapi_writeText) {
-  	        fprintf(stderr,
-			"Failed to find brlapi_writeText in BrlTTY.\n");
-		return PyInt_FromLong(0);
+		PyErr_SetString(
+                        PyExc_StandardError, 
+			"Failed to find brlapi_writeText in BrlTTY");
+		return NULL;
 	}
 
 	brlapi_writeDots = 
                 (int (*) (const unsigned char *)) dlsym(brlapi_library, 
                                                         "brlapi_writeDots");
 	if (!brlapi_writeDots) {
-  	        fprintf(stderr,
-			"Failed to find brlapi_writeDots in BrlTTY.\n");
-		return PyInt_FromLong(0);
+		PyErr_SetString(
+                        PyExc_StandardError, 
+			"Failed to find brlapi_writeDots in BrlTTY");
+		return NULL;
 	}
 
 	brlapi_readKey = 
                 (int (*) (int, unsigned int *)) dlsym(brlapi_library, 
                                                       "brlapi_readKey");
 	if (!brlapi_readKey) {
-	        fprintf(stderr,
-			"Failed to find brlapi_readKey in BrlTTY.\n");
-		return PyInt_FromLong(0);
+		PyErr_SetString(
+                        PyExc_StandardError, 
+			"Failed to find brlapi_readKey in BrlTTY");
+		return NULL;
 	}
 
 	/* Connect to BrlTTY 
@@ -219,9 +231,10 @@ static PyObject *brl_module_init(PyObject *self,
  	        ttyNum = brlapi_getTty(tty,
 				       0); /* HOW = give me BRLCOMMANDS */
 		if (ttyNum == -1) {
- 		        fprintf(stderr,
-				"Failed on call to brlapi_getTty in BrlTTY.\n");
-			return PyInt_FromLong(0);
+		        PyErr_SetString(
+                                PyExc_StandardError, 
+				"Failed on call to brlapi_getTty in BrlTTY");
+			return NULL;
 		}
 
 		/* Setup the GIOChannel to receive notifications of Braille 
@@ -233,11 +246,13 @@ static PyObject *brl_module_init(PyObject *self,
 			       brlapi_io_cb,
 			       NULL);
 		brl_initialized = 1;
+		return PyInt_FromLong(brl_initialized);
 	} else {
-  	        fprintf(stderr,
-			"Failed on call to brlapi_initializeConnection in BrlTTY.\n");
+	        PyErr_SetString(
+		        PyExc_StandardError, 
+			"Failed on call to brlapi_initializeConnection in BrlTTY");
+		return NULL;
 	}
-	return PyInt_FromLong(brl_initialized);
 }
 
 
