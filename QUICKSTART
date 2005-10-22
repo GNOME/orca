@@ -12,6 +12,14 @@ VIII. REPORTING BUGS
 IX.   CONTRIBUTING
 
 
+NOTE: When using cvs, you may see warnings containing the following
+text:
+
+    failed to open .cvspass for reading"
+
+If you do a "touch ~/.cvspass, you can avoid these warnings.
+
+
 I. BRAILLE:
 -----------
 
@@ -58,7 +66,6 @@ gnome-speech source code, one can perform the following steps:
 
 cd $HOME
 cvs -z3 -d:pserver:anonymous@anoncvs.gnome.org:/cvs/gnome co gnome-speech
-cd gnome-speech
 
 NOTE: before running Orca, one should make sure gnome-speech is
 actually working before assuming there is a problem with Orca.  To

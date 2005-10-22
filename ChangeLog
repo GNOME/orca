@@ -1,3 +1,12 @@
+2005-10-22  Willie Walker <william.walker@sun.com>
+
+	* QUICKSTART: create and update.
+	* src/brl/brlmodule.c: throw exceptions instead of printing
+	  errors when attempting to initialize/connect to BrlTTY.
+	* src/orca/braille.py: set default braille display size to 32
+	  (this is for testing purposes and the default matches the
+	  actual display size of our primary tester)
+	
 2005-10-20  Willie Walker <william.walker@sun.com>
 
 	* src/orca/focus_tracking_presenter.py: add ability to provide
