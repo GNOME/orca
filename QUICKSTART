@@ -1,15 +1,74 @@
 CONTENTS:
---------
+---------
 
-I. ORCA ON UBUNTU 5.10
-II. ORCA ON FEDORA CORE 4
-III. ORCA ON LINUX DISTRIBUTION
-IV. KNOWN PROBLEMS
-V. REPORTING BUGS
+I.    BRAILLE
+II.   SPEECH
+III.  ORCA ON UBUNTU 5.10
+IV.   ORCA ON FEDORA CORE 4
+V.    ORCA ON LINUX DISTRIBUTION
+VI.   WRITING SCRIPTS
+VII.  KNOWN PROBLEMS
+VIII. REPORTING BUGS
+IX.   CONTRIBUTING
 
 
-I. ORCA ON UBUNTU 5.10:
-----------------------
+I. BRAILLE:
+-----------
+
+Orca uses BrlTTY to provide access to braille displays.  One of the
+main reasons for this is that helps Orca cooperate well in an
+environment where a user switches between a graphical and
+non-graphical environment.
+
+Orca has been tested with versions 3.6.2 and 3.7.0 of BrlTTY.  You can
+obtain BrlTTY from http://www.mielke.cc/brltty/.  Here are typical
+commands you will execute to build/install BrlTTY (you might need to
+download compilers and other essential build tools for your platform
+first):
+
+tar xzf brltty-3.7.tar.gz
+cd brltty-3.7
+./configure --prefix=/usr
+make
+sudo make install
+
+Follow the documentation at http://www.mielke.cc/brltty/ for more
+information on building, installing, and running BrlTTY.
+
+
+II. SPEECH:
+-----------
+
+Orca uses gnome-speech to provide speech output.  Gnome-speech is a
+separate GNOME module that provides a service oriented architecture to
+access speech synthesis engines as system services.  Gnome-speech
+provides support for a number of speech synthesis engines, including
+freely available ones: festival and FreeTTS.
+
+FreeTTS can be obtained from http://freetts.sourceforge.net/, and
+requires the Java platform.  Festival ships with Fedora Core 4 by 
+default, and can be obtained for Unbuntu 5.10 by performing the
+following command:
+
+   sudo apt-get install festival
+
+The gnome-speech module contains information on setting up
+gnome-speech for the various synthesis engines.  To obtain the latest
+gnome-speech source code, one can perform the following steps:
+
+cd $HOME
+cvs -z3 -d:pserver:anonymous@anoncvs.gnome.org:/cvs/gnome co gnome-speech
+cd gnome-speech
+
+NOTE: before running Orca, one should make sure gnome-speech is
+actually working before assuming there is a problem with Orca.  To
+test gnome-speech, one can run its "test-speech" application; it will
+provide you with the ability to view and hear the various speech
+synthesis engines that gnome-speech knows about on your system.
+
+
+III. ORCA ON UBUNTU 5.10:
+-------------------------
 
 1) Install from CD.
 
@@ -17,31 +76,28 @@ I. ORCA ON UBUNTU 5.10:
 
    sudo apt-get install emacs21
 
-   sudo apt-get install build-essential \
+   sudo apt-get install build-essential cvs \
+        autoconf automake1.4 automake1.7 automake1.9 \
         docbook docbook-utils docbook-xsl \
         docbook2x doxygen bison flex libpopt-dev jade \
-        cvs 
- 
-   sudo apt-get install autoconf automake1.4 automake1.7 automake1.9
-   sudo apt-get install libtool intltool pkg-config gtk-doc-tools
-   sudo apt-get install x-dev x-window-system-dev
-   sudo apt-get install libgnome-devel libbonobo-dev libbonobo-activation-dev
-   sudo apt-get install libgnomecanvas2-dev
+   	libtool intltool pkg-config gtk-doc-tools \
+   	x-dev x-window-system-dev \
+   	libgnome2-dev libbonobo-activation-dev \
+   	libgnomecanvas2-dev \
+	python-dev python-gnome2-dev python-gtk2-dev
 
-   sudo apt-get install python-dev python-gnome2-dev python-gtk2-dev
-
-3) Checkout/build/install Gail, ATK, AT-SPI
+3) Checkout/build/install ATK, GAIL, AT-SPI
 
    cd $HOME
-   cvs -z3 -d:pserver:anonymous@anoncvs.gnome.org:/cvs/gnome co gail
-   cd gail
+   cvs -z3 -d:pserver:anonymous@anoncvs.gnome.org:/cvs/gnome co atk
+   cd atk
    ./autogen.sh --prefix=/usr
    make
    sudo make install
 
    cd $HOME
-   cvs -z3 -d:pserver:anonymous@anoncvs.gnome.org:/cvs/gnome co atk
-   cd atk
+   cvs -z3 -d:pserver:anonymous@anoncvs.gnome.org:/cvs/gnome co gail
+   cd gail
    ./autogen.sh --prefix=/usr
    make
    sudo make install
@@ -53,24 +109,10 @@ I. ORCA ON UBUNTU 5.10:
    make
    sudo make install
 
-4) Checkout/build/install Gnome-Speech
-
-   For DECtalk:
-       ln -s /usr/local/lib/libtts.so /usr/lib/
-       ln -s /usr/local/lib/libtts_us.so /usr/lib/
-       Also need to copy *.h files into /usr/include/dtk/
-
-   cd $HOME
-   cvs -z3 -d:pserver:anonymous@anoncvs.gnome.org:/cvs/gnome co gnome-speech
-   cd gnome-speech
-   ./autogen.sh --prefix=/usr
-   make
-   sudo make install
-
 5) GOTO SECTION: "ORCA ON LINUX DISTRIBUTION"
 
 
-II. ORCA ON FEDORA CORE 4:
+IV. ORCA ON FEDORA CORE 4:
 -------------------------
 
 1) Do an "everything" install of Fedora Core 4.
@@ -88,11 +130,12 @@ II. ORCA ON FEDORA CORE 4:
 3) GOTO SECTION: "ORCA ON LINUX DISTRIBUTION"
 
 
-III. ORCA ON LINUX DISTRIBUTION:
--------------------------------
+V. ORCA ON LINUX DISTRIBUTION:
+------------------------------
 
 1) Run /usr/bin/test-speech to make sure it works.  If it doesn't,
-   this is a gnome-speech problem.
+   this is a gnome-speech problem.  Refer to the "SPEECH" section
+   for more information on gnome-speech.
 
 2) Checkout/build/install Orca
 
@@ -110,8 +153,24 @@ III. ORCA ON LINUX DISTRIBUTION:
 5) Run /usr/bin/orca
 
 
-IV. KNOWN PROBLEMS:
-------------------
+VI. WRITING SCRIPTS:
+--------------------
+
+Orca is a scriptable screen reader, permitting you to write your own
+custom scripts to provide custom interaction with individual
+applications.
+
+[[[WDW: point to script writing guide (it's in source form in the 
+Orca module under docs/doc-set/script_guide.sgml and is currently
+under development).]]]
+
+[[[WDW: work on a way for people to contribute their scripts back to
+the community.  Perhaps via patches to the orca module, perhaps via
+a web site, perhaps via a mailing list, etc.]]]
+
+
+VII. KNOWN PROBLEMS:
+--------------------
 
 1) Doesn't work on a 64-bit architecture.  Unsure why at this point,
    but you will get the following error:
@@ -124,12 +183,21 @@ IV. KNOWN PROBLEMS:
    ImportError: No module named core
 
 2) test-speech will often fail when you attempt to use the festival
-   speech synthesis engine.  You can fix this by making sure 
-   "localhost" is listed before "localhost.localdomain" in the
-   127.0.0.1 line in /etc/hosts.
+   speech synthesis engine:
 
-V. REPORTING BUGS:
------------------
+   % /usr/bin/test-speech
+   1: OAFIID:GNOME_Speech_SynthesisDriver_Festival:proto0.3
+
+   Select a server: 1
+   Attempting to activate OAFIID:GNOME_Speech_SynthesisDriver_Festival:proto0.3.
+   Server could not be initialized.
+
+   You can fix this by making sure "localhost" is listed before
+   "localhost.localdomain" in the 127.0.0.1 line in /etc/hosts.  
+
+
+VIII. REPORTING BUGS:
+---------------------
 
 Report bugs at http://bugzilla.gnome.org under the "orca" module.
 Note that Orca is not part of the GNOME 2 desktop yet.  So, when it
@@ -137,3 +205,16 @@ comes to selecting the module, you will need to click on the checkbox
 that says "Click here to also show applications not part of the GNOME
 2 Desktop."  Orca will then be listed as the "orca" module.
 
+
+IX. CONTRIBUTING:
+-----------------
+
+[[[WDW: work on this.  For now, people are encouraged to contribute
+bug reports, RFEs, and patches to the orca module via the
+http://bugzilla.gnome.org site.]]]
+
+
+TODO: Need to include the following somewhere:
+
+  * Setting up Java platform and Java Access Bridge
+  * Specific use instructions for specific desktop productivity apps.
