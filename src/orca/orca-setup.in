@@ -23,7 +23,7 @@
 and a command line interface.
 """
 
-import os, sys, time
+import os, commands, sys, time
 from orca.orca_i18n import _  # for gettext support
 
 # Create the user's .orca directory
@@ -245,12 +245,15 @@ def enableAccessibility():
     """Enables the GNOME accessibility flag.  Users need to log out and
     then back in for this to take effect."""
 
-    os.system("gconftool-2 --type bool --set " \
-	      + "/desktop/gnome/interface/accessibility true")
+    alreadyEnabled = commands.getoutput(\
+	"gconftool-2 --get /desktop/gnome/interface/accessibility")
+    if alreadyEnabled != "true":
+        os.system("gconftool-2 --type bool --set " \
+		  + "/desktop/gnome/interface/accessibility true")
 
-    sayAndPrint("Accessibility support for GNOME has been enabled.")
-    sayAndPrint("You need to log out and log back in for the change "\
-                +"to take effect.")
+        sayAndPrint("Accessibility support for GNOME has been enabled.")
+        sayAndPrint("You need to log out and log back in for the change "\
+                    +"to take effect.")
 
 useSpeech = setupSpeech ()
 if useSpeech == False:

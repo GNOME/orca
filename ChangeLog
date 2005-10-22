@@ -6,6 +6,8 @@
 	* src/orca/braille.py: set default braille display size to 32
 	  (this is for testing purposes and the default matches the
 	  actual display size of our primary tester)
+	* src/orca/orca-setup.in: only enable accessibility if it has
+	  not already been enabled, thus avoiding a confusing message
 	
 2005-10-20  Willie Walker <william.walker@sun.com>
 
