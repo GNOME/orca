@@ -201,7 +201,8 @@ VII. KNOWN PROBLEMS:
 
    You can fix this by making sure "localhost" is listed before
    "localhost.localdomain" in the 127.0.0.1 line in /etc/hosts.  
-
+   Or, you can also follow an alternative route described at:
+   http://mail.gnome.org/archives/gnome-accessibility-devel/2005-February/msg00017.html
 
 VIII. REPORTING BUGS:
 ---------------------
