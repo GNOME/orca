@@ -8,8 +8,9 @@ IV.   ORCA ON FEDORA CORE 4
 V.    ORCA ON LINUX DISTRIBUTION
 VI.   WRITING SCRIPTS
 VII.  KNOWN PROBLEMS
-VIII. REPORTING BUGS
-IX.   CONTRIBUTING
+VIII. FAQ
+IX.   REPORTING BUGS
+X.    CONTRIBUTING
 
 
 NOTE: When using cvs, you may see warnings containing the following
@@ -189,6 +190,13 @@ VII. KNOWN PROBLEMS:
        from core import ORBit, bonobo
    ImportError: No module named core
 
+   This appears to be related to competing /usr/lib and /usr/lib64
+   directories.  One way to start hacking around this is to move the contents
+   of /usr/lib64/python2.4/site-packages/orca/* to 
+   of /usr/lib/python2.4/site-packages/orca/* and then deleting
+   of /usr/lib64/python2.4/site-packages/orca.  This works around part
+   of the problem, but gnome-speech has similar issues.
+
 2) test-speech will often fail when you attempt to use the festival
    speech synthesis engine:
 
@@ -204,8 +212,86 @@ VII. KNOWN PROBLEMS:
    Or, you can also follow an alternative route described at:
    http://mail.gnome.org/archives/gnome-accessibility-devel/2005-February/msg00017.html
 
-VIII. REPORTING BUGS:
----------------------
+
+VIII. FAQ:
+----------
+
+Q: Orca isn't speaking, how do I make it work?
+
+A: This is most likely an issue with gnome-speech configuration.  Here's
+   a debugging procedure that can help you narrow down what is going wrong:
+
+   1) Kill all synthesis drivers running on the machine:
+
+      kill -9 \
+      `ps -elf | grep synthesis-driver | grep -v grep | awk '{ print $4 }'`
+   
+   2) In a separate dedicated terminal window, run your gnome-speech
+      synthesis driver of choice.  For example:
+
+      /usr/bin/festival-synthesis-driver
+
+   3) In another separate dedicated terminal window, run the gnome-speech
+      "test-speech" application:
+
+      /usr/bin/test-speech
+
+   4) When test-speech is running, it should show you a listing of 
+      available synthesis drivers, and the one you started in step #2
+      above should be listed.  If it isn't, there's most likely a
+      Bonobo registration problem or your synthesis driver didn't
+      start.  Check the output in the terminal window from step #2
+      and see if it has any messages.  If it does, these will be
+      useful when you contact the gnome-speech folks for help.
+
+      Otherwise, if all is OK, you should see something like the following:
+
+        [wwalker@fedora orca]$ /usr/bin/test-speech
+        1: OAFIID:GNOME_Speech_SynthesisDriver_FreeTTS:proto0.3
+        2: OAFIID:GNOME_Speech_SynthesisDriver_Festival:proto0.3
+        3: OAFIID:GNOME_Speech_SynthesisDriver_Dectalk:proto0.3
+
+        Select a server:
+
+   5) If all is OK so far, from test-speech, select the synthesis 
+      driver you started in step #2.  You should now see something
+      like the following:
+
+        Attempting to activate OAFIID:GNOME_Speech_SynthesisDriver_Festival:proto0.3.
+        Driver name: Festival GNOME Speech Driver
+        Driver version: 0.3
+        Synthesizer name: Festival Speech Synthesis System
+        Synthesizer Version: 1.95
+
+        Enter desired gender ('m' or 'f'): 
+
+      Select 'm' and then 'all':
+
+        Enter desired gender ('m' or 'f'): m
+
+        Enter desired locale, or 'all' to display all voices: all
+        1. kal_diphone (language english)
+        2. ked_diphone (language english)
+
+      At this point, gnome-speech should have spoken something.  If
+      it didn't, check the output in the terminal window you used for
+      step #2.  It may give you some informative information.  For
+      example, perhaps you need to modify your /etc/hosts file as
+      described in the "KNOWN PROBLEMS" section of this document.
+
+
+Q: How do I enable the The Java platform support isn't working for me.
+
+A: The java-access-bridge provides the needed support for interacting
+   with Java applications, including both applications and gnome-speech
+   drivers such as the gnome-speech driver for FreeTTS.
+
+   More information on the java-access-bridge can be found here:
+   http://cvs.gnome.org/viewcvs/*checkout*/java-access-bridge/INSTALL
+
+
+IX. REPORTING BUGS:
+-------------------
 
 Report bugs at http://bugzilla.gnome.org under the "orca" module.
 Note that Orca is not part of the GNOME 2 desktop yet.  So, when it
@@ -214,15 +300,13 @@ that says "Click here to also show applications not part of the GNOME
 2 Desktop."  Orca will then be listed as the "orca" module.
 
 
-IX. CONTRIBUTING:
------------------
+X. CONTRIBUTING:
+----------------
 
 [[[WDW: work on this.  For now, people are encouraged to contribute
 bug reports, RFEs, and patches to the orca module via the
 http://bugzilla.gnome.org site.]]]
 
-
 TODO: Need to include the following somewhere:
 
-  * Setting up Java platform and Java Access Bridge
   * Specific use instructions for specific desktop productivity apps.
