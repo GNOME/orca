@@ -230,7 +230,7 @@ class BrailleGenerator:
         maxString   = formatter % value.maximumValue
     
         # [[[TODO: WDW - probably want to do this as a percentage at some
-        # point?]]]
+        # point?  Logged as bugzilla bug 319743.]]]
         #
         return valueString
 
@@ -353,7 +353,8 @@ class BrailleGenerator:
     
         self._debugGenerator("_getBrailleRegionsForArrow", obj)
     
-        # [[[TODO: determine orientation of arrow.]]]
+        # [[[TODO: determine orientation of arrow. Logged as bugzilla bug
+        # 319744.]]]
         # text = arrow direction (left, right, up, down)
         #
         return self._getDefaultBrailleRegions(obj)
@@ -479,7 +480,7 @@ class BrailleGenerator:
         # Preference is given to #1, if it exists.
         #
         # [[[TODO: WDW - Combo boxes are complex beasts.  This algorithm
-        # needs serious work.]]]
+        # needs serious work.  Logged as bugzilla bug 319745.]]]
         #
         textObj = None
         childCount = obj.childCount
@@ -542,7 +543,8 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
     
-        # [[[TODO: WDW - might need to include the value here?]]]
+        # [[[TODO: WDW - might need to include the value here?  Logged as
+        # bugzilla bug 319746.]]]
         #
         self._debugGenerator("_getBrailleRegionsForDial", obj)
     
@@ -685,8 +687,9 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
     
-        # [[[TODO: WDW - include how many items in the list?]]]
+        # [[[TODO: WDW - include how many items in the list?
         # Perhaps should also include current list item in here?
+        # Logged as bugzilla bug 319749.]]]
         #
         self._debugGenerator("_getBrailleRegionsForList", obj)
     
@@ -1001,7 +1004,8 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
     
-        # [[[TODO: WDW - want to get orientation.]]]
+        # [[[TODO: WDW - want to get orientation.  Logged as bugzilla bug
+        # 319744.]]]
         #
         self._debugGenerator("_getBrailleRegionsForScrollBar", obj)
     
@@ -1086,7 +1090,8 @@ class BrailleGenerator:
         
         # [[[TODO: WDW - Attempt to infer the cell type.  There's a
         # bunch of stuff we can do here, such as check the EXPANDABLE
-        # state, check the NODE_CHILD_OF relation, etc.]]]
+        # state, check the NODE_CHILD_OF relation, etc.  Logged as
+        # bugzilla bug 319750.]]]
         #
         action = obj.action
         if action:
@@ -1385,7 +1390,8 @@ class BrailleGenerator:
         while parent and (parent.parent != parent):
             # [[[TODO: WDW - we might want to include more things here
             # besides just those things that have labels.  For example,
-            # page tab lists might be a nice thing to include.]]]
+            # page tab lists might be a nice thing to include. Logged
+            # as bugzilla bug 319751.]]]
             #
             if (parent.role != rolenames.ROLE_FILLER) \
                 and (parent.role != rolenames.ROLE_SPLIT_PANE):

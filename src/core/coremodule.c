@@ -130,7 +130,7 @@ static PyObject *core_module_init (PyObject *self) {
 
         /* Get the desktop and add it as the "desktop attribute to the core 
 	 * module.  [[[TODO:  WDW - I think there may be the notion of more
-	 * than one desktop.]]]
+	 * than one desktop.  Logged as bugzilla bug 319645.]]]
 	 */
 	d = Accessibility_Registry_getDesktop (registry,
 					       0,
@@ -234,7 +234,8 @@ static PyObject *core_module_registerEventListener (PyObject *self,
 		return NULL;
 	}
 	Py_INCREF (listener); /* [[[TODO: WDW - check to make sure we
-				 DECREF in the right places.]]] */
+				 DECREF in the right places.  Logged as
+                                 bugzilla bug 319646.]]] */
 
 	/* Do we already have a listener registered for this event type? 
 	 */
@@ -416,7 +417,7 @@ static PyObject *core_module_xKeysymStringToKeycode (PyObject *self,
 	keycode = XKeysymToKeycode(display, XStringToKeysym(keysym));
 
 	/* [[[TODO: WDW - I'm not quite sure if long is the right thing
-	 * here.]]]
+	 * here.  Logged as bugzilla bug 319647.]]]
 	 */
 	return PyInt_FromLong (keycode);
 }

@@ -18,7 +18,8 @@
 # Boston, MA 02111-1307, USA.
 
 """Manages the magnifier for orca.  [[[TODO: WDW - this is very very early
-in development.  One might even say it is pre-prototype.]]]
+in development.  One might even say it is pre-prototype.  Magnification
+has also been disabled for now - logged as bugzilla bug 319643.]]]
 """
 
 import core

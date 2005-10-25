@@ -27,7 +27,8 @@ Accessibility_Accessible object.
 The main entry point to this module is the makeAccessible factory method.
 This class keeps a cache of known accessible objects and only creates a
 new one if necessary.  [[[TODO:  WDW - might consider the new-style class
-__new__ method to handle singletons like this.]]]
+__new__ method to handle singletons like this.  Logged as bugzilla bug
+319671.]]]
 
 This module also provides a number of convenience functions for working with
 Accessible objects.
@@ -272,7 +273,7 @@ class Accessible:
         
         # [[[TODO: WDW - should do an assert here to make sure we're
         # getting a raw AT-SPI Accessible and not one of our own locally
-        # cached Accessible instances.]]]
+        # cached Accessible instances. Logged as bugzilla bug 319673.]]]
         #
         assert (not Accessible._cache.has_key(acc)), \
                "Attempt to create an Accessible that's already been made."
@@ -292,7 +293,8 @@ class Accessible:
         # [[[TODO: WDW - the AT-SPI appears to give us a different accessible
         # when we repeatedly ask for the same child of a parent that manages
         # its descendants.  So...we probably shouldn't cache those kind of
-        # children because we're likely to cause a memory leak.]]]
+        # children because we're likely to cause a memory leak. Logged as
+        # bugzilla bug 319675.]]]
         #
         # Save a reference to the AT-SPI object, and also save this
         # new object away in the cache.
@@ -439,12 +441,13 @@ class Accessible:
         try:
             role = self._acc.getRoleName()
     
-            # [[[TODO: WDW - HACK to coalesce menu items with children
-            # into menus.  The menu demo in gtk-demo does this, and one
-            # might view that as an edge case.  But, in gnome-terminal,
-            # "Terminal" ->  "Set Character Encoding" is a menu item
-            # with children, but it behaves like a menu.]]]
-            #
+            # [[[WDW - HACK to coalesce menu items with children into
+            # menus.  The menu demo in gtk-demo does this, and one
+            # might view that as an edge case.  But, in
+            # gnome-terminal, "Terminal" -> "Set Character Encoding"
+            # is a menu item with children, but it behaves like a
+            # menu.]]]
+            # 
             if (role == rolenames.ROLE_CHECK_MENU_ITEM) \
                 and (self.childCount > 0):
                     role = rolenames.ROLE_CHECK_MENU
@@ -520,7 +523,8 @@ class Accessible:
         """
         
         # [[[TODO: WDW - this code seems like it might break if this
-        # object is an application to begin with.]]]
+        # object is an application to begin with. Logged as bugzilla
+        # bug 319677.]]]
         #
         debug.println(debug.LEVEL_FINEST,
                       "Finding app for source=(" + self.name + ")")
@@ -594,7 +598,8 @@ class Accessible:
                 # becoming way out of date.  Perhaps need to cache just
                 # the component interface and suffer the hit for getting
                 # the extents if we cannot figure out how to determine if
-                # the cached extents is out of date.]]]
+                # the cached extents is out of date. Logged as bugzilla
+                # bug 319678.]]]
                 #
                 extents = component.getExtents(coordinateType)
                 #if CACHE_VALUES:
@@ -636,7 +641,7 @@ class Accessible:
                 label = target.name
                 break
 
-        # [[[TODO: WDW - HACK because push buttons can have labels as
+        # [[[WDW - HACK because push buttons can have labels as
         # their children.  But, they can also be labelled by something.
         # So...we'll make the label be a combination of the thing
         # labelling them (above) plus their name or the combination of
@@ -943,7 +948,7 @@ class Accessible:
         - index: an integer specifying which child to obtain
 
         Returns the child at the given index.  [[[TODO: WDW - what to do
-        when an index out of bounds occurs?]]]
+        when an index out of bounds occurs?  Logged as bugzilla bug 319738.]]]
         """
 
         # [[[TODO: WDW - the AT-SPI appears to give us a different accessible
@@ -1128,7 +1133,8 @@ def init():
 
 def shutdown():
     """Shuts down this module as well as the core module.
-    [[[TODO: WDW - should this free the cache as well?]]]
+    [[[TODO: WDW - should this free the cache as well?  Logged as bugzilla
+    bug 319739.]]]
     """
     
     global _initialized
@@ -1198,7 +1204,7 @@ def findByRole(root, role):
     do it's own traversal and not add objects to the list that aren't
     of the specified role.  Instead it uses the traversal from
     getObjects and then deletes objects from the list that aren't of
-    the specified role.]]]
+    the specified role.  Logged as bugzilla bug 319740.]]]
 
     NOTE: this will throw an InvalidObjectError exception if the
     AT-SPI Accessibility_Accessible can no longer be reached via
@@ -1225,7 +1231,7 @@ def findByName(root, name):
     should do it's own traversal and not add objects to the list that
     don't have the specified name.  Instead it uses the traversal from
     getObjects and then deletes objects from the list that don't have
-    the specified name.]]]
+    the specified name. Logged as bugzilla bug 319740.]]]
 
     NOTE: this will throw an InvalidObjectError exception if the
     AT-SPI Accessibility_Accessible can no longer be reached via
@@ -1267,13 +1273,16 @@ def findUnrelatedLabels(root):
     allLabels = findByRole(root, rolenames.ROLE_LABEL)
     
     # add the names of only those labels which are not associated with
-    # other objects (i.e., empty relation sets).  [[[TODO: WDW - HACK:
-    # In addition, do not grab free labels whose parents are push
-    # buttons because push buttons can have labels as
-    # children.]]][[[TODO: WDW - HACK: panels with labelled borders will
-    # have a child label that does not have its relation set.  So...we
-    # check to see if the panel's name is the same as the label's name.
-    # If so, we ignore the label.]]]
+    # other objects (i.e., empty relation sets).
+    #
+    # [[[WDW - HACK: In addition, do not grab free labels whose
+    # parents are push buttons because push buttons can have labels as
+    # children.]]]
+    #
+    # [[[WDW - HACK: panels with labelled borders will have a child
+    # label that does not have its relation set.  So...we check to see
+    # if the panel's name is the same as the label's name.  If so, we
+    # ignore the label.]]]
     #
     unrelatedLabels = []
     
@@ -1428,11 +1437,13 @@ def getAcceleratorAndShortcut(obj):
     if action is None:
         return ["", ""]
 
-    # [[[TODO: WDW - assumes the first keybinding is all that we care about.]]]
+    # [[[TODO: WDW - assumes the first keybinding is all that we care about.
+    # Logged as bugzilla bug 319741.]]]
     #
     bindingStrings = action.getKeyBinding(0).split(';')
 
-    # [[[TODO: WDW - assumes menu items have three bindings]]]
+    # [[[TODO: WDW - assumes menu items have three bindings.  Logged as
+    # bugzilla bug 319741.]]]
     #
     if len(bindingStrings) == 3:
         mnemonic       = bindingStrings[0]

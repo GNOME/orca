@@ -328,7 +328,8 @@ class SpeechGenerator:
         Returns a list of utterances to be spoken for the object.
         """
     
-        # [[[TODO: determine orientation of arrow.]]]
+        # [[[TODO: determine orientation of arrow.  Logged as bugzilla bug
+        # 319744.]]]
         # text = arrow direction (left, right, up, down)
         #
         utterances = self._getSpeechForLabelAndRole(obj)
@@ -456,7 +457,7 @@ class SpeechGenerator:
         # Preference is given to #1, if it exists.
         #
         # [[[TODO: WDW - Combo boxes are complex beasts.  This algorithm
-        # needs serious work.]]]
+        # needs serious work.  Logged as bugzilla bug 319745.]]]
         #
         textObj = None
         childCount = obj.childCount
@@ -531,7 +532,8 @@ class SpeechGenerator:
         Returns a list of utterances to be spoken for the object.
         """
     
-        # [[[TODO: WDW - might need to include the value here?]]]
+        # [[[TODO: WDW - might need to include the value here?  Logged as
+        # bugzilla bug 319746.]]]
         #
         utterances = self._getDefaultSpeech(obj, already_focused)
         
@@ -716,7 +718,8 @@ class SpeechGenerator:
         Returns a list of utterances to be spoken for the object.
         """
     
-        # [[[TODO: WDW - include how many items in the list?]]]
+        # [[[TODO: WDW - include how many items in the list?
+        # Logged as bugzilla bug 319749.]]]
         #
         utterances = self._getDefaultSpeech(obj, already_focused)
         
@@ -1055,7 +1058,8 @@ class SpeechGenerator:
         Returns a list of utterances to be spoken for the object.
         """
     
-        # [[[TODO: WDW - want to get orientation.]]]
+        # [[[TODO: WDW - want to get orientation. Logged as bugzilla bug
+        # 319744.]]]
         #
         utterances = self._getDefaultSpeech(obj, already_focused)
 
@@ -1206,7 +1210,8 @@ class SpeechGenerator:
 
         # [[[TODO: WDW - Attempt to infer the cell type.  There's a
         # bunch of stuff we can do here, such as check the EXPANDABLE
-        # state, check the NODE_CHILD_OF relation, etc.]]]
+        # state, check the NODE_CHILD_OF relation, etc.  Logged as
+        # bugzilla bug 319750.]]]
         #
         action = obj.action
         if action:
@@ -1512,7 +1517,8 @@ class SpeechGenerator:
         # in the list is a compound table cell where the icon and
         # text are child table cells of the table cell).  So...
         # we happily ignore those as well.  One thing we might
-        # want to do is treat the parent as a compound object.]]]
+        # want to do is treat the parent as a compound object.
+        # Logged as bugzilla bug 319751.]]]
         #
         parent = obj.parent
         if parent \

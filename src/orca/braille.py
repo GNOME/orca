@@ -31,7 +31,8 @@ physical display.  In addition, there may be any number of lines.  This module
 uses the physical display as a viewport into this large area, and provides
 support for the user to press BrlTTY command keys to scroll this viewport to
 view all the content.  [[[TODO: WDW - the goal is to support multi-line
-displays, but I've only really built in support for a single line display.]]]
+displays, but I've only really built in support for a single line display.
+Logged as bugzilla bug 319752.]]]
 
 As a means to keep things simple for now, regions can only exist on a single
 line.  That is, a region cannot cross line boundaries.
@@ -310,9 +311,9 @@ class Component(Region):
             actions.doAction(0)
         else:
             
-            # [[[TODO: WDW - HACK to do a mouse button 1 click if we
-            # have to.  For example, page tabs don't have any actions
-            # but we want to be able to select them with the cursor
+            # [[[WDW - HACK to do a mouse button 1 click if we have
+            # to.  For example, page tabs don't have any actions but
+            # we want to be able to select them with the cursor
             # routing key.]]]
             #
             debug.println(debug.LEVEL_FINEST,
@@ -328,7 +329,8 @@ class Text(Region):
     react to any cursor routing key events by positioning the caret in
     the associated text object. The line displayed will be the
     contents of the text object preceded by an optional label.
-    [[[TODO: WDW - need to add in text selection capabilities.]]]"""
+    [[[TODO: WDW - need to add in text selection capabilities.  Logged
+    as bugzilla bug 319754.]]]"""
     
     def __init__(self, accessible, label=None):
         """Creates a new Text region.
@@ -819,18 +821,13 @@ def _processBrailleEvent(command):
     global _viewport
     global _displaySize
 
-    # [[[TODO: WDW - need to better understand why BrlTTY is giving
-    # us larger values on the Alva display.  For now, we just strip
-    # it off using 0xfff.]]]
-    #
-    # command = command & 0xfff
     _printBrailleEvent(debug.LEVEL_FINE, command)
 
-    # [[[TODO: WDW - related to the above commented out line, DaveM
-    # suspects the Alva driver is sending us a repeat flag.  So...let's
-    # kill a couple birds here until BrlTTY 3.8 fixes the problem:
-    # we'll disable autorepeat and we'll also strip out the autorepeat
-    # flag if this is the first press of a button.]]]
+    # [[[TODO: WDW - DaveM suspects the Alva driver is sending us a
+    # repeat flag.  So...let's kill a couple birds here until BrlTTY
+    # 3.8 fixes the problem: we'll disable autorepeat and we'll also
+    # strip out the autorepeat flag if this is the first press of a
+    # button.]]]
     #
     if command & BRL_FLG_REPEAT_INITIAL:
         command &= ~(BRL_FLG_REPEAT_INITIAL | BRL_FLG_REPEAT_DELAY)

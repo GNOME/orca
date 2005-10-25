@@ -26,10 +26,10 @@ import debug
 import eventsynthesizer
 import rolenames
 
-# [[[TODO: WDW - HACK Regular expression to split strings on
-# whitespace boundaries, which is what we'll use for word dividers
-# instead of living at the whim of whomever decided to implement the
-# AT-SPI interfaces for their toolkit or app.]]]
+# [[[WDW - HACK Regular expression to split strings on whitespace
+# boundaries, which is what we'll use for word dividers instead of
+# living at the whim of whomever decided to implement the AT-SPI
+# interfaces for their toolkit or app.]]]
 #
 whitespace_re = re.compile(r'(\s+)', re.DOTALL | re.IGNORECASE | re.M)
 
@@ -485,9 +485,6 @@ class Context:
             # We try to click to the left of center.  This is to
             # handle toolkits that will offset the caret position to
             # the right if you click dead on center of a character.
-            #
-            # [[[TODO: WDW - probably need to go the other way for
-            # locales that read right to left.]]]
             #
             eventsynthesizer.clickPoint(x,
                                         y + height/ 2,
@@ -1112,7 +1109,7 @@ def getZonesFromAccessible(accessible, cliprect):
                 offset,
                 core.Accessibility.TEXT_BOUNDARY_LINE_START)
 
-            # [[[TODO: WDW - HACK: this is here because getTextAtOffset
+            # [[[WDW - HACK: this is here because getTextAtOffset
             # tends not to be implemented consistently across toolkits.
             # Sometimes it behaves properly (i.e., giving us an endOffset
             # that is the beginning of the next line), sometimes it
@@ -1145,7 +1142,8 @@ def getZonesFromAccessible(accessible, cliprect):
 
 		# [[[TODO: WDW - HACK it would be nice to clip the
                 # the text by what is really showing on the screen,
-                # but this seems to hang Orca and the client.]]]
+                # but this seems to hang Orca and the client. Logged
+                # as bugzilla bug 319770.]]]
 		#
                 #ranges = text.getBoundedRanges(\
                 #    clipping[0],
@@ -1187,7 +1185,8 @@ def getZonesFromAccessible(accessible, cliprect):
                 #
                 # [[[TODO: WDW - would be nice to optimize this better.
                 # for example, perhaps we can assume the caret will always
-                # be visible, and we can start our text search from there.]]]
+                # be visible, and we can start our text search from there.
+                # Logged as bugzilla bug 319771.]]]
                 #
                 break
         
@@ -1255,7 +1254,8 @@ def getZonesFromAccessible(accessible, cliprect):
             # speech and braille (e.g., checkbox cells in tables - the
             # speech will say "checkbox checked" and the braille will
             # display "checkbox <x>".  Yikes.  That may be a challenge.
-            # So...for now we punt on table cells.]]]
+            # So...for now we punt on table cells.  Logged as bugzilla
+            # bug 319772.]]]
             #
             if accessible.role != rolenames.ROLE_TABLE_CELL:
                 string = accessible.role
@@ -1310,7 +1310,9 @@ def getShowingZones(root):
     objlist = []
 
     # We'll include page tabs: while they are parents, their extents do
-    # not contain their children.
+    # not contain their children. [[[TODO: WDW - need to consider all
+    # parents, especially those that implement accessible text.  Logged
+    # as bugzilla bug 319773.]]]
     #
     if root.role == rolenames.ROLE_PAGE_TAB:
         objlist.extend(getZonesFromAccessible(root, root.extents))

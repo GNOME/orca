@@ -603,7 +603,7 @@ class Default(Script):
         # check.  This whole algorithm could fail because one might be
         # deleting/adding identical elements from/to a list or table, thus
         # the objects really could be different even though they seem the
-        # same.]]]
+        # same.  Logged as bug 319675.]]]
         #
         if oldLocusOfFocus:
             oldParent = oldLocusOfFocus.parent

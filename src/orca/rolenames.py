@@ -135,7 +135,8 @@ class Rolename:
 
 # [[[TODO: WDW - the AT-SPI also has getLocalizedRoleName, which might a
 # more appropriate thing to use, as it covers the situation where an app
-# has developed a brand new component with a brand new role.]]]
+# has developed a brand new component with a brand new role. Logged as
+# buzilla bug 319780.]]]
 #
 rolenames = {}
 

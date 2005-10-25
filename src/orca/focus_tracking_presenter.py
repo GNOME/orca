@@ -335,7 +335,8 @@ def processObjectEvent(e):
 
     # [[[TODO: WDW - might want to consider re-introducing the reload
     # feature of scripts somewhere around here.  I pulled it out as
-    # part of the big refactor to make scripts object-oriented.]]]
+    # part of the big refactor to make scripts object-oriented. Logged
+    # as bugzilla bug 319777.]]]
     #
     if event.type == "window:activate":
         speech.stop("default")
@@ -344,7 +345,7 @@ def processObjectEvent(e):
                       + _activeScript.name)
     elif event.type == "object:children-changed:remove":
         # [[[TODO: WDW - something is severely broken.  We are not deleting
-        # scripts here.
+        # scripts here.  Logged as bugzilla bug 319776.]]]
         #
         if e.source == core.desktop:
             try:

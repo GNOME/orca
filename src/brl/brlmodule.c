@@ -258,7 +258,8 @@ static PyObject *brl_module_init(PyObject *self,
 
 static PyObject *brl_module_shutdown(PyObject *self) {
         if (brl_initialized) {
-	        /* [[[TODO: WDW - clean up the g_io_channel here?]]] 
+	        /* [[[TODO: WDW - clean up the g_io_channel here?  Logged
+		 * as bugzilla bug 319649.]]] 
 		 */ 
   	        brlapi_leaveTty();
 		brlapi_closeConnection();

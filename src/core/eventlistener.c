@@ -46,7 +46,8 @@ event_listener_notify_event (PortableServer_Servant servant,
 	EventListener *el = EVENT_LISTENER(bonobo_object_from_servant(servant));
 
 	/* [[[TODO: WDW - need to resolve a deadlock here (I think)
-	 * before enabling this synchronization block.]]]
+	 * before enabling this synchronization block. Logged as
+	 * bugzilla bug 319644.]]]
 	 */
 #if 0
 	pthread_mutex_lock(&mutex);

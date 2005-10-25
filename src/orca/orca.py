@@ -29,7 +29,8 @@ import hierarchical_presenter
 import kbd
 import keybindings
 #import mag - [[[TODO: WDW - disable until I can figure out how to
-#             resolve the GNOME reference in mag.py.]]]
+#             resolve the GNOME reference in mag.py.  This is logged
+#             as bugzilla bug 319643.]]]
 import settings
 import speech
 
@@ -919,8 +920,8 @@ def processKeyboardEvent(event):
         # the upper case ASCII characters will be used (e.g., ctrl+a
         # will be turned into the string "A").  All these checks here
         # are to just do some sanity checking before doing the
-        # conversion. [[[TODO: WDW - this is making assumptions about
-        # mapping ASCII control characters to to UTF-8, I think.]]]
+        # conversion. [[[WDW - this is making assumptions about
+        # mapping ASCII control characters to to UTF-8.]]]
         #
         if (event.modifiers & (1 << core.Accessibility.MODIFIER_CONTROL)) \
            and (not event.is_text) and (len(event.event_string) == 1):

@@ -75,8 +75,6 @@ def clickPoint(x, y, button):
 def generateKeyboardEvent(keycode, keystring, type):
     """Generates a keyboard event.
 
-    [[[TODO: WDW - haven't really tested this yet.]]]
-    
     Arguments:
     - keyval: a long integer indicating the keycode or keysym of the key event
               being synthesized.

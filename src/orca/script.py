@@ -118,7 +118,7 @@ class Script:
         # "object:state-changed:focused".  [[[TODO: WDW - the order of the
         # keys is *not* deterministic, and is not guaranteed to be related
         # to the order in which they were added.  So...we need to do something
-        # different here.]]]
+        # different here.  Logged as bugzilla bug 319781.]]]
         #
         for key in self.listeners.keys():
             if event.type.startswith(key):
