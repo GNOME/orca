@@ -400,6 +400,7 @@ class SpeechGenerator:
 
         if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
             utterances.extend(self._getSpeechForAccelerator(obj))
+            utterances.extend(self._getSpeechForAvailability(obj))
         
         self._debugGenerator("_getSpeechForCheckMenuItem",
                              obj,
@@ -762,6 +763,7 @@ class SpeechGenerator:
         if (obj == orca.locusOfFocus) \
                and (verbosity == settings.VERBOSITY_LEVEL_VERBOSE):
             utterances.extend(self._getSpeechForAccelerator(obj))
+            utterances.extend(self._getSpeechForAvailability(obj))
         
         self._debugGenerator("_getSpeechForMenu",
                              obj,
@@ -809,6 +811,7 @@ class SpeechGenerator:
         #
         if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
             utterances.extend(self._getSpeechForAccelerator(obj))
+            utterances.extend(self._getSpeechForAvailability(obj))
         
         self._debugGenerator("_getSpeechForMenuItem",
                              obj,
@@ -1019,6 +1022,7 @@ class SpeechGenerator:
 
         if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
             utterances.extend(self._getSpeechForAccelerator(obj))
+            utterances.extend(self._getSpeechForAvailability(obj))
         
         self._debugGenerator("_getSpeechForRadioMenuItem",
                              obj,
