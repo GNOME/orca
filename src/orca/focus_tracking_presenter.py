@@ -40,8 +40,6 @@ import a11y
 import default
 import core
 import debug
-#import mag - [[[TODO: WDW - disable until I can figure out how
-#             to resolve the GNOME reference in mag.py.]]]
 import orca
 import script
 import settings
