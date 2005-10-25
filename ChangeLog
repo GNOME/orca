@@ -1,3 +1,10 @@
+2005-10-25  Willie Walker <william.walker@sun.com>
+
+	* TODO: Moved all TODOs to bugzilla.gnome.org as bugs and RFEs
+	for the Orca component.  Also went through all the source code
+	and logged all TODOs in there as bugs and RFEs, placing references
+	to the bugzilla bug numbers in the source code.
+	
 2005-10-22  Willie Walker <william.walker@sun.com>
 
 	* QUICKSTART: create and update.
