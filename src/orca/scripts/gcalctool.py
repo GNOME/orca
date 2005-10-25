@@ -17,13 +17,13 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-import orca.a11y
-import orca.braille
-import orca.input_event
-import orca.kbd
-import orca.rolenames
-import orca.speech
-import orca.orca
+import orca.a11y as a11y
+import orca.braille as braille
+import orca.input_event as input_event
+import orca.kbd as kbd
+import orca.rolenames as rolenames
+import orca.speech as speech
+import orca.orca as orca
 
 from orca.default import Default
 

@@ -17,10 +17,10 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-import orca.braille
-import orca.rolenames
-import orca.orca
-import orca.speech
+import orca.braille as braille
+import orca.rolenames as rolenames
+import orca.orca as orca
+import orca.speech as speech
 
 from orca.orca_i18n import _
 

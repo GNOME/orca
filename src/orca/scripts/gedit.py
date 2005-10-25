@@ -29,10 +29,10 @@ technologies to just leave it alone or it will pull the trigger on the
 application.]]]
 """
 
-import orca.a11y
-import orca.braille
-import orca.rolenames
-import orca.speech
+import orca.a11y as a11y
+import orca.braille as braille
+import orca.rolenames as rolenames
+import orca.speech as speech
 
 from orca.orca_i18n import _
 from orca.rolenames import getRoleName
