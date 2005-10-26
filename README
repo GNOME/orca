@@ -22,9 +22,9 @@ Building Orca requires the following to be installed:
 	* gnome-mag 0.11.14  - GNOME screen magnification services (note 
 			       that Orca builds find without gnome-mag,
 			       but magnification will not work)
-	* BRLTTY 3.6.1       - Braille support (note that Orca builds fine
-	                       without BRLTTY installed, but Braille support 
-                               will work without it)
+	* BrlTTY 3.6.1       - Braille support (note that Orca builds fine
+	                       without BrlTTY installed, but Braille support 
+                               will not work without it)
 	* at-spi 1.6.2       - GNOME assistive technology framework
                                NOTE: need a patch to at-spi/libspi/accessible.c
 			       for GEdit and Evolution to work without crashing
