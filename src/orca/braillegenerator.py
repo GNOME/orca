@@ -425,6 +425,9 @@ class BrailleGenerator:
         if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
             if obj == orca.locusOfFocus:
                 text += " " + getBrailleForRoleName(obj)
+                availability = self._getBrailleTextForAvailability(obj)
+                if len(availability) > 0:
+                    text += " " + availability + " "
                 accelerator = self._getBrailleTextForAccelerator(obj)
                 if len(accelerator) > 0:
                     text += accelerator
@@ -719,6 +722,9 @@ class BrailleGenerator:
         
         if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
             if obj == orca.locusOfFocus:
+                availability = self._getBrailleTextForAvailability(obj)
+                if len(availability) > 0:
+                    text += " " + availability + " "
                 accelerator = self._getBrailleTextForAccelerator(obj)
                 if len(accelerator) > 0:
                     text += accelerator
@@ -768,6 +774,9 @@ class BrailleGenerator:
                 # out verbosity.]]]
                 #
                 #text += " " + getBrailleForRoleName(obj)
+                availability = self._getBrailleTextForAvailability(obj)
+                if len(availability) > 0:
+                    text += " " + availability + " "
                 accelerator = self._getBrailleTextForAccelerator(obj)
                 if len(accelerator) > 0:
                     text += accelerator
@@ -968,6 +977,9 @@ class BrailleGenerator:
         if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
             if obj == orca.locusOfFocus:
                 text += " " + getBrailleForRoleName(obj)
+                availability = self._getBrailleTextForAvailability(obj)
+                if len(availability) > 0:
+                    text += " " + availability + " "
                 accelerator = self._getBrailleTextForAccelerator(obj)
                 if len(accelerator) > 0:
                     text += accelerator
@@ -1345,8 +1357,12 @@ class BrailleGenerator:
             i = 0
             while i < childCount:
                 child = obj.child(i)
-                if child.role != rolenames.ROLE_SEPARATOR \
-                    and child.state.count(core.Accessibility.STATE_SENSITIVE):
+
+                if child.role != rolenames.ROLE_SEPARATOR:
+                # the following line has been removed because insensitive
+                # menu items can get focus in StarOffice.
+                #
+                # and child.state.count(core.Accessibility.STATE_SENSITIVE):
 
                     if (i > 0) and (i < (self, childCount - 1)):
                         regions.append(braille.Region(" _ "))

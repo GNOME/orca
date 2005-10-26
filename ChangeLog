@@ -1,3 +1,9 @@
+2005-10-26  Willie Walker <william.walker@sun.com>
+
+	* src/orca/braillegenerator.py, src/orca/speechgenerator.py,
+	various calls to _getBrailleTextForAvailability and
+        _getSpeechForAvailability for radio, check and ordinary menuitems.
+
 2005-10-25  Willie Walker <william.walker@sun.com>
 
 	* TODO: Moved all TODOs to bugzilla.gnome.org as bugs and RFEs
