@@ -1,4 +1,4 @@
-2005-10-26  Willie Walker <william.walker@sun.com>
+2005-10-26  Rich Burridge <rich.burridge@sun.com>
 
 	* src/orca/braillegenerator.py, src/orca/speechgenerator.py,
 	various calls to _getBrailleTextForAvailability and
