@@ -4,7 +4,7 @@ orca_SCRIPTS = \
 
 orcadir=$(prefix)/bin
 
-orca_pathdir=$(pythondir)
+orca_pathdir=$(pyexecdir)
 
 orca_python_PYTHON = \
 	__init__.py \
@@ -30,6 +30,6 @@ orca_python_PYTHON = \
 	speech.py \
 	speechgenerator.py
 
-orca_pythondir=$(pythondir)/orca
+orca_pythondir=$(pyexecdir)/orca
 
 SUBDIRS = scripts
