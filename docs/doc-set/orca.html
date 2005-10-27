@@ -54,12 +54,12 @@ HREF="#AEN2078"
 ></DT
 ><DT
 ><A
-HREF="#AEN2169"
+HREF="#AEN2386"
 >Orca Testing Plan</A
 ></DT
 ><DT
 ><A
-HREF="#AEN2183"
+HREF="#AEN2400"
 >Orca User's Guide</A
 ></DT
 ></DL
@@ -8154,56 +8154,81 @@ HREF="#AEN2094"
 ><DT
 ><A
 HREF="#AEN2098"
->Script Lifecycle</A
+>Script Life Cycle</A
 ></DT
 ><DT
 ><A
-HREF="#AEN2135"
+HREF="#AEN2202"
 >Script Contract</A
 ></DT
 ></DL
 ></DD
 ><DT
 ><A
-HREF="#AEN2138"
+HREF="#AEN2211"
 >Script Utilities</A
 ></DT
 ><DD
 ><DL
 ><DT
 ><A
-HREF="#AEN2141"
+HREF="#DEBUG"
 >Debug Utilities</A
 ></DT
 ><DT
 ><A
-HREF="#AEN2145"
->Speech Output (Say Something)</A
+HREF="#AEN2277"
+>Speech Synthesis</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="#AEN2287"
+><TT
+CLASS="LITERAL"
+>speech.py</TT
+></A
 ></DT
 ><DT
 ><A
-HREF="#AEN2149"
->Speech Generation (What Do I Say)</A
+HREF="#AEN2297"
+><TT
+CLASS="LITERAL"
+>speechgenerator.py</TT
+></A
+></DT
+></DL
+></DD
+><DT
+><A
+HREF="#AEN2326"
+>Braille Output</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="#AEN2336"
+><TT
+CLASS="LITERAL"
+>braille.py</TT
+></A
 ></DT
 ><DT
 ><A
-HREF="#AEN2153"
->Braille Output (Write Something)</A
+HREF="#AEN2344"
+><TT
+CLASS="LITERAL"
+>braillegenerator.py</TT
+></A
 ></DT
+></DL
+></DD
 ><DT
 ><A
-HREF="#AEN2157"
->Braille Generation (What Do I Write)</A
-></DT
-><DT
-><A
-HREF="#AEN2161"
->Key Bindings</A
-></DT
-><DT
-><A
-HREF="#AEN2165"
->Braille Bindings</A
+HREF="#AEN2382"
+>Braille and Key Input Bindings</A
 ></DT
 ></DL
 ></DD
@@ -8271,7 +8296,7 @@ NAME="AEN2094"
 >Overview</H1
 ><P
 >The primary operating mode of Orca is the "focus tracking
-      mode," where Orca keeps track of the most relevent user
+      mode," where Orca keeps track of the most relevant user
       interface object that has keyboard focus.  When Orca detects
       changes to this object, which Orca refers to as the "locus of
       focus," Orca will present relevant information to the user.</P
@@ -8289,16 +8314,29 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN2098"
->Script Lifecycle</A
+>Script Life Cycle</A
 ></H2
 ><P
->BIRTH: Orca's "focus_tracking_presenter" module is the
-        sole maintainer of scripts. Whenever it receives a "window
-        activated" event from the AT-SPI Registry, the
-        focus_tracking_presenter will determine the application
-        associated with that event and create a script for that
-        application if necessary.  Only one script instance per
-        application is managed by the focus_tracking_presenter.</P
+>BIRTH: Orca's <TT
+CLASS="LITERAL"
+>focus_tracking_presenter</TT
+>
+        module is the sole maintainer of scripts. Whenever it receives
+        a <TT
+CLASS="LITERAL"
+>window:activated</TT
+> event from the AT-SPI
+        Registry, the <TT
+CLASS="LITERAL"
+>focus_tracking_presenter</TT
+> will
+        determine the application associated with that event and
+        create a script for that application if necessary.  Only one
+        script instance per application is managed by the
+        <TT
+CLASS="LITERAL"
+>focus_tracking_presenter</TT
+>.</P
 ><P
 >The script creation process consists of the following
         steps:</P
@@ -8307,291 +8345,1199 @@ NAME="AEN2098"
 ><UL
 ><LI
 ><P
->The focus_tracking_presenter will attempt to perform a
-            Python "import" using the application name as the name of
-            an Orca module.  For example, for the gnome-terminal
-            application, it will look for gnome-terminal.py.  If it
-            cannot find such a module in the Python search path, the
-            focus_tracking_presenter will create an instance of the
-            "Default" script in default.py.</P
+>The <TT
+CLASS="LITERAL"
+>focus_tracking_presenter</TT
+> will
+            attempt to perform a Python <TT
+CLASS="LITERAL"
+>import</TT
+>
+            using the application name as the name of an Orca module.
+            For example, for the <TT
+CLASS="LITERAL"
+>gnome-terminal</TT
+>
+            application, the
+            <TT
+CLASS="LITERAL"
+>focus_tracking_presenter</TT
+> will look for
+            the <TT
+CLASS="LITERAL"
+>gnome-terminal.py</TT
+> in the
+            <TT
+CLASS="LITERAL"
+>orca.scripts</TT
+> package (see the script
+            naming discussion in the <A
+HREF="#DEBUG"
+>debug
+            utilities section</A
+> to determine what to name your
+            script).  If it cannot find such a module in the Python
+            search path, the
+            <TT
+CLASS="LITERAL"
+>focus_tracking_presenter</TT
+> will create an
+            instance of the "Default" script in default.py.</P
 ><P
 ><I
 CLASS="EMPHASIS"
 >NOTE:</I
-> it is possible to tell Orca to bypass all custom
-            script creation by setting useCustomScripts=False
-            in your ~/.orca/user-settings.py.  This can be useful for
-            debugging purposes.</P
+> the <TT
+CLASS="LITERAL"
+>focus_tracking_presenter</TT
+>
+            also maintains a table to map application names to script
+            names.  This is useful in many cases, such as if the
+            application name changes over time or the application
+            contains characters that are awkward in file system names.
+            To extend or override this table, one can call the
+            <TT
+CLASS="LITERAL"
+>setScriptMapping</TT
+> method of the
+            <TT
+CLASS="LITERAL"
+>focus_tracking_presenter</TT
+>.</P
+><P
+><I
+CLASS="EMPHASIS"
+>IMPLEMENTATION DETAIL:</I
+> it is possible to tell Orca to bypass all
+            custom script creation by setting
+            <TT
+CLASS="LITERAL"
+>useCustomScripts=False</TT
+> in your
+            <TT
+CLASS="LITERAL"
+>~/.orca/user-settings.py</TT
+>.  This can be
+            useful for debugging purposes.</P
 ></LI
 ><LI
 ><P
 >Each script module is expected to provide a
-            "getScript" method that takes the accessible application
-            object as an argument.  This method is essentially a
-            factory method that returns an instance of a Script
-            (defined in script.py) or Script subclass.  The
-            constructor for the Script instance is expected to define
+            <TT
+CLASS="LITERAL"
+>getScript</TT
+> method that takes the
+            accessible application object as an argument.  This method
+            is essentially a factory method that returns an instance
+            of a <TT
+CLASS="LITERAL"
+>Script</TT
+> (defined in
+            <TT
+CLASS="LITERAL"
+>script.py</TT
+>) or <TT
+CLASS="LITERAL"
+>Script</TT
+>
+            subclass.  The constructor for the
+            <TT
+CLASS="LITERAL"
+>Script</TT
+> instance is expected to define
             any keystrokes, braille buttons, and AT-SPI event
             listeners it is interested in.</P
 ></LI
 ><LI
 ><P
->The focus_tracking_presenter will then register event
-            listeners for all AT-SPI events associated with script.
-            When the focus_tracking_presenter receives the events, it
-            will pass the event directly to the script associated with
-            the event, regardless if the application associated with
-            the script has focus or not.</P
+>Once it has created a script, the
+            <TT
+CLASS="LITERAL"
+>focus_tracking_presenter</TT
+> will register
+            event listeners for all AT-SPI events associated with
+            script.  When the
+            <TT
+CLASS="LITERAL"
+>focus_tracking_presenter</TT
+> receives the
+            events, it will pass the event directly to the script
+            associated with the event, regardless if the application
+            associated with the script has focus or not.</P
 ><P
 ><I
 CLASS="EMPHASIS"
 >IMPLEMENTATION DETAIL:</I
-> the focus_tracking_presenter registers its
-            own "processObjectEvent" method as the AT-SPI event
-            listener.  This method finds (and creates if necessary)
-            the script associated with the event and passes the event
-            onto the required "processObjectEvent" method of the
-            script for processing.  The event has the following
+> the
+            <TT
+CLASS="LITERAL"
+>focus_tracking_presenter</TT
+> registers its
+            own <TT
+CLASS="LITERAL"
+>processObjectEvent</TT
+> method as the
+            AT-SPI event listener.  This method finds (and creates if
+            necessary) the script associated with the event and passes
+            the event onto the required
+            <TT
+CLASS="LITERAL"
+>processObjectEvent</TT
+> method of the script
+            for processing.  The event has the following
             fields:</P
 ><P
 ></P
 ><UL
 ><LI
 ><P
->type: a string describing the event (e.g., 
-                "window:activated")</P
+><TT
+CLASS="LITERAL"
+>type</TT
+>: a string describing the
+                event (e.g.,
+                <TT
+CLASS="LITERAL"
+>window:activated</TT
+>)</P
 ></LI
 ><LI
 ><P
->detail1, detail2: integer details for the event 
-                (see the AT-SPI documentation)</P
+><TT
+CLASS="LITERAL"
+>detail1</TT
+> and
+                <TT
+CLASS="LITERAL"
+>detail2</TT
+>: integer details for the
+                event (see the AT-SPI documentation)</P
 ></LI
 ><LI
 ><P
->any_data: something associated with the event 
-                (see the AT-SPI documentation)</P
+><TT
+CLASS="LITERAL"
+>any_data</TT
+>: something associated
+                with the event (see the AT-SPI documentation)</P
 ></LI
 ><LI
 ><P
->source: the Accessible object associated with the 
-                event</P
+><TT
+CLASS="LITERAL"
+>source</TT
+>: the
+                <TT
+CLASS="LITERAL"
+>Accessible</TT
+> object instance
+                associated with the event</P
 ></LI
 ></UL
 ></LI
 ><LI
 ><P
->The focus_tracking_presenter also keeps track of the
-            active script (as determined by the script associated
-            with the currently active window) and will pass all
-            keyboard and braille input events to the active
-            script.</P
+>The <TT
+CLASS="LITERAL"
+>focus_tracking_presenter</TT
+> also
+            keeps track of the active script (as determined by the
+            script associated with the currently active window) and
+            will pass all keyboard and braille input events to the
+            active script.</P
 ><P
 ><I
 CLASS="EMPHASIS"
 >IMPLEMENTATION DETAIL:</I
-> the focus_tracking_presenter implements the
-            "processKeyboardEvent" and "processBrailleEvent" methods
-            which are called by the main orca module whenever it
-            receives a keystroke or braille input event.  The
-            focus_tracking_presenter will pass these events onto the
-            required "processKeyboardEvent" or "processBrailleEvent"
-            methods of the active script.</P
+> the
+            <TT
+CLASS="LITERAL"
+>focus_tracking_presenter</TT
+> implements the
+            <TT
+CLASS="LITERAL"
+>processKeyboardEvent</TT
+> and
+            <TT
+CLASS="LITERAL"
+>processBrailleEvent</TT
+> methods which are
+            called by the main <TT
+CLASS="LITERAL"
+>orca</TT
+> module whenever
+            it receives a keystroke or braille input event.  The
+            <TT
+CLASS="LITERAL"
+>focus_tracking_presenter</TT
+> will pass
+            these events onto the
+            <TT
+CLASS="LITERAL"
+>processKeyboardEvent</TT
+> and
+            <TT
+CLASS="LITERAL"
+>processBrailleEvent</TT
+> methods of the
+            active script.</P
 ><P
 ><I
 CLASS="EMPHASIS"
 >IMPLEMENTATION DETAIL:</I
-> the focus_tracking_presenter provides logic
-            to allow the user's ~/.orca/user-settings.py module to
-            extend and/or override key and braille bindings.
-            This logic is currently latent, however, and is not
-            documented or supported.</P
+> the
+            <TT
+CLASS="LITERAL"
+>focus_tracking_presenter</TT
+> provides logic
+            to allow the user's
+            <TT
+CLASS="LITERAL"
+>~/.orca/user-settings.py</TT
+> module to
+            extend and/or override key and braille bindings.  This
+            logic is currently latent, however, and is not documented
+            or supported.</P
 ></LI
 ></UL
 ><P
->LIFE: Whenever a script receives an event, it can do
+>LIFE: Whenever a script receives an event, the script can do
         whatever it wants.  Its primary task, however, is to assist
         Orca in keeping track of the locus of focus.  When a script
         detects a change in the locus of focus, it should call
-        orca.setLocusOfFocus with the Accessible object that is the
-        new locus of focus.</P
+        <TT
+CLASS="LITERAL"
+>orca.setLocusOfFocus</TT
+> with the
+        <TT
+CLASS="LITERAL"
+>Accessible</TT
+> object instance that is the new
+        locus of focus.</P
 ><P
 ><I
 CLASS="EMPHASIS"
 >IMPLEMENTATION DETAIL:</I
-> The orca module has logic to detect if the locus
-        of focus really changed and will propagate the change on as
-        appropriate.  The change is first sent to the
-        "locusOfFocusChanged" method of the focus_tracking_presenter,
-        which then passes the change onto the required
-        "locusOfFocusChanged" method of the active script. The 
-        "locusOfFocusChanged" method is the primary place where a
-        script will present information to the user.</P
+> The <TT
+CLASS="LITERAL"
+>orca</TT
+> module has logic to
+        detect if the locus of focus really changed and will propagate
+        the change on as appropriate.  The
+        <TT
+CLASS="LITERAL"
+>orca.setLocusOfFocus</TT
+> method first sends the
+        change to the <TT
+CLASS="LITERAL"
+>locusOfFocusChanged</TT
+> method of
+        the <TT
+CLASS="LITERAL"
+>focus_tracking_presenter</TT
+>, which then
+        passes the change onto the required
+        <TT
+CLASS="LITERAL"
+>locusOfFocusChanged</TT
+> method of the active
+        script. The <TT
+CLASS="LITERAL"
+>locusOfFocusChanged</TT
+> method is
+        the primary place where a script will present information to
+        the user.</P
 ><P
 >In many cases, the locus of focus doesn't change, but some
         property of the current locus of focus changes.  For example,
         a checkbox is checked or unchecked, yet remains as the locus
         of focus.  In these cases, a script should also keep Orca
-        informed by calling orca.visualAppearanceChanged.</P
+        informed by calling
+        <TT
+CLASS="LITERAL"
+>orca.visualAppearanceChanged</TT
+>.</P
 ><P
 ><I
 CLASS="EMPHASIS"
 >IMPLEMENTATION DETAIL:</I
-> Like the locusOfFocusChanged method, the
-        "visualAppearanceChanged" method of the orca module will first
-        call the "visualAppearanceChanged" method of the
-        focus_tracking_presenter, which will then call the required
-        "visualAppearanceChanged" of the active script.  The
-        "visualAppearanceChanged" is the primary place where a script
-        will present information to the user.</P
+> Like the <TT
+CLASS="LITERAL"
+>locusOfFocusChanged</TT
+>
+        method, the <TT
+CLASS="LITERAL"
+>visualAppearanceChanged</TT
+> method
+        of the <TT
+CLASS="LITERAL"
+>orca</TT
+> module will first call the
+        <TT
+CLASS="LITERAL"
+>visualAppearanceChanged</TT
+> method of the
+        <TT
+CLASS="LITERAL"
+>focus_tracking_presenter</TT
+>, which will then
+        call the required <TT
+CLASS="LITERAL"
+>visualAppearanceChanged</TT
+>
+        of the active script.  The
+        <TT
+CLASS="LITERAL"
+>visualAppearanceChanged</TT
+> is the primary
+        place where a script will present such information to the
+        user.</P
 ><P
->DEATH: Whenever the focus_tracking_presenter detects that
-        an application has gone away (by determining that the
-        application has been removed from the desktop), it will delete
-        the script for that application and unregister any event
-        listeners associated with that script.</P
+>DEATH: Whenever the
+        <TT
+CLASS="LITERAL"
+>focus_tracking_presenter</TT
+> detects that an
+        application has gone away (by determining that the application
+        has been removed from the desktop), it will delete the script
+        for that application and unregister any event listeners
+        associated with that script.</P
+><P
+><I
+CLASS="EMPHASIS"
+>IMPLEMENTATION DETAIL:</I
+> the <TT
+CLASS="LITERAL"
+>focus_tracking_presenter</TT
+>
+        determines an application has gone away by detecting a 
+        <TT
+CLASS="LITERAL"
+>object:children-changed:remove</TT
+> event on
+        the desktop.</P
 ></DIV
 ><DIV
 CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN2135"
+NAME="AEN2202"
 >Script Contract</A
 ></H2
 ><P
->The contract for a script is documented in detail in
-        the script.py module.</P
+>The contract for a script is documented in detail in the
+        <TT
+CLASS="LITERAL"
+>script.py</TT
+> module.  The
+        <TT
+CLASS="LITERAL"
+>Default</TT
+> script subclass defined in the
+        <TT
+CLASS="LITERAL"
+>default.py</TT
+> module provides the default
+        behavior for Orca when it encounters applications and toolkits
+        that behave like the GTK toolkit.  It is expected that new
+        scripts will typically extend the <TT
+CLASS="LITERAL"
+>Default</TT
+>
+        script subclass rather than directly extending the
+        <TT
+CLASS="LITERAL"
+>Script</TT
+> class defined in the
+        <TT
+CLASS="LITERAL"
+>script.py</TT
+> module.</P
 ></DIV
 ></DIV
 ><DIV
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN2138"
+NAME="AEN2211"
 ></A
 >Script Utilities</H1
 ><P
 >There are many common things a script wants to do: generate
       speech, update braille, etc.  In addition, there are many common
       things a script writer wants to do, especially getting debug
-      output to determine just what the AT-SPI is sending it.</P
+      output to determine just what the AT-SPI is sending it.  This
+      chapter discusses the debug utilities of Orca as well as a
+      variety of utilities to assist a script in managing speech,
+      braille, and magnification.  Finally, a section has been
+      included that describes how a script can add custom keystroke or
+      braille input behavior.</P
 ><DIV
 CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN2141"
+NAME="DEBUG"
 >Debug Utilities</A
 ></H2
 ><P
+>The debug utilities (defined in the
+        <TT
+CLASS="LITERAL"
+>debug.py</TT
+> module) of Orca provide a means
+        for selectively turning on information to be sent to the
+        console where Orca is running.  This information is quite
+        useful in determining what is happening inside Orca as well as
+        what the AT-SPI is sending to Orca.</P
+><P
+>Let's begin the discussion of the debug utilities with the
+        top question on any script writer's mind: "What do I name my
+        script?"  As you may recall, the name of a script is based
+        upon the name of the application as given to us by the AT-SPI.
+        One of the easy ways to determine this is to listen for
+        <TT
+CLASS="LITERAL"
+>window:activate</TT
+> events that will be issued
+        when an application is started.  These events can then be used
+        to determine the name of the application.</P
+><P
+>Fortunately, the
+        <TT
+CLASS="LITERAL"
+>focus_tracking_presenter</TT
+> already registers
+        for <TT
+CLASS="LITERAL"
+>window:activate</TT
+> events, so all you need
+        to do is tell Orca to print these events out when it receives
+        them.  The method for doing this involves telling the debug
+        utilities what to do, and this can be done by modifying your
+        <TT
+CLASS="LITERAL"
+>~/.orca/user-settings.py</TT
+>.</P
+><P
+>There are two main settings to tell Orca to print out
+        events: an event filter and an event debug level.  The event
+        filter is a regular expression that is used to match AT-SPI
+        event types, and the event debug level specifies a threshold
+        for when to actually print information to the console (for
+        more complete detail on these settings, refer to
+        <TT
+CLASS="LITERAL"
+>debug.py</TT
+>).  These settings can be modified
+        by adding the following lines to your
+        <TT
+CLASS="LITERAL"
+>~/.orca/user-settings.py</TT
+>:</P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>debug.setEventDebugFilter(re.compile('window:activate'))
+debug.setEventDebugLevel(debug.LEVEL_OFF)
+      </PRE
+></TD
+></TR
+></TABLE
+><P
+>Now, when you rerun Orca, it will output information
+        whenever it receives a <TT
+CLASS="LITERAL"
+>window:activate</TT
+>
+        event from the AT-SPI registry.  For example, if you run Star
+        Office, you should see output similar to the following:</P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>OBJECT EVENT: window:activate detail=(0,0) 
+              app='StarOffice' name='StarOffice' role='frame' 
+              state='ENABLED FOCUSABLE RESIZABLE SENSITIVE SHOWING VISIBLE'
+      </PRE
+></TD
+></TR
+></TABLE
+><P
+>The string <TT
+CLASS="LITERAL"
+>app='StarOffice'</TT
+> indicates
+        the name of the application is 'StarOffice.'  As such, if you
+        wanted to write a custom script, you would call it
+        <TT
+CLASS="LITERAL"
+>StarOffice.py</TT
+>.</P
+><P
+>The debug module also includes a number of other methods,
+        each of which is described in more detail in
+        <TT
+CLASS="LITERAL"
+>debug.py</TT
+>.  Note that each method includes a
+        debug level threshold.  The <TT
+CLASS="LITERAL"
+>debug.py</TT
+> module
+        has a description of various level settings and what to expect
+        for output.</P
+><P
+></P
+><UL
+><LI
+><P
+><TT
+CLASS="LITERAL"
+>setDebugLevel(newLevel)</TT
+>: sets the
+            debug level threshold, turning on or off the various debug
+            code built in to the various Orca modules.  This is
+            typically called from
+            <TT
+CLASS="LITERAL"
+>~/.orca/user-settings.py</TT
+>.</P
+></LI
+><LI
+><P
+><TT
+CLASS="LITERAL"
+>setEventDebugLevel(newLevel)</TT
+>:
+            described above; typically called from
+            <TT
+CLASS="LITERAL"
+>~/.orca/user-settings.py</TT
+>.</P
+></LI
+><LI
+><P
+><TT
+CLASS="LITERAL"
+>setEventDebugFilter(regExpression)</TT
+>:
+            described above; typically called from
+            <TT
+CLASS="LITERAL"
+>~/.orca/user-settings.py</TT
+>.</P
+></LI
+><LI
+><P
+><TT
+CLASS="LITERAL"
+>printException(level)</TT
+>: if an
+            exception is caught, this can be used to print out detail
+            about it</P
+></LI
+><LI
+><P
+><TT
+CLASS="LITERAL"
+>printStack(level)</TT
+>: prints the
+            current stack; useful for determining when and why a code
+            path is being executed</P
+></LI
+><LI
+><P
+><TT
+CLASS="LITERAL"
+>println(level, text)</TT
+>: prints the
+            given text; useful for general debug output</P
+></LI
+><LI
+><P
+><TT
+CLASS="LITERAL"
+>printObjectEvent(level, event)</TT
+>:
+            prints out the given AT-SPI event</P
+></LI
+><LI
+><P
+><TT
+CLASS="LITERAL"
+>printObjectEvent(level, event)</TT
+>:
+            prints out the given AT-SPI event, using the event debug
+            level as an additional threshold; this is already used by
+            the <TT
+CLASS="LITERAL"
+>focus_tracking_presenter</TT
+>, so you
+            are unlikely to need it</P
+></LI
+><LI
+><P
+><TT
+CLASS="LITERAL"
+>printInputEvent(level, string)</TT
+>:
+            prints out the given AT-SPI event, using the event debug
+            level as an additional threshold; this is already used by
+            <TT
+CLASS="LITERAL"
+>orca.py</TT
+> (for keyboard events) and
+            <TT
+CLASS="LITERAL"
+>braille.py</TT
+> (for braille events), so you
+            are unlikely to need it</P
+></LI
+></UL
+><P
 ><I
 CLASS="EMPHASIS"
->TODO:</I
-> write up various debug utilities and how to enable
-        them.  Also include a "how the heck do I determine what to call
-        my script" section.</P
+>NOTE:</I
+> One debug level of interest is
+        <TT
+CLASS="LITERAL"
+>debug.LEVEL_FINE</TT
+>.  This level will tell you
+        when a script is activated, and can be useful to determine if
+        Orca is actually finding your script!  For example, when the
+        script for the <TT
+CLASS="LITERAL"
+>gnome-terminal</TT
+> is activated
+        by the <TT
+CLASS="LITERAL"
+>focus_tracking_presenter</TT
+>, you will
+        see the following output:</P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>ACTIVE SCRIPT: gnome-terminal (class=GnomeTerminal)
+      </PRE
+></TD
+></TR
+></TABLE
 ></DIV
 ><DIV
 CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN2145"
->Speech Output (Say Something)</A
+NAME="AEN2277"
+>Speech Synthesis</A
 ></H2
+><P
+>Orca provides two main modules for speech output:
+      <TT
+CLASS="LITERAL"
+>speech.py</TT
+> and
+      <TT
+CLASS="LITERAL"
+>speechgenerator.py</TT
+>. The
+      <TT
+CLASS="LITERAL"
+>speech.py</TT
+> module provides the main interface
+      to the speech synthesis subsystem. The
+      <TT
+CLASS="LITERAL"
+>speechgenerator.py</TT
+> module provides a
+      <TT
+CLASS="LITERAL"
+>SpeechGenerator</TT
+> class that can be used to to
+      actually generate the text to be spoken for various objects.
+      The expected use of the two modules is as follows: a script will
+      instantiate its own instance of a
+      <TT
+CLASS="LITERAL"
+>SpeechGenerator</TT
+> and will use it to generate
+      text to be spoken.  The script will then pass this text to the
+      <TT
+CLASS="LITERAL"
+>speech.py</TT
+> module to be spoken.</P
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN2287"
+><TT
+CLASS="LITERAL"
+>speech.py</TT
+></A
+></H3
+><P
+>For the purposes of script writing, the main entry
+          points of the <TT
+CLASS="LITERAL"
+>speech.py</TT
+> module are
+          <TT
+CLASS="LITERAL"
+>say</TT
+> and <TT
+CLASS="LITERAL"
+>stop</TT
+></P
 ><P
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
-> write up the interface to speech synthesis.</P
+> [[[WDW - I'm not satisfied with
+          <TT
+CLASS="LITERAL"
+>speech.py</TT
+>.  It will change before Orca 1.0 
+          is released, so be aware of this.]]]</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN2297"
+><TT
+CLASS="LITERAL"
+>speechgenerator.py</TT
+></A
+></H3
+><P
+>The primary goal of a <TT
+CLASS="LITERAL"
+>SpeechGenerator</TT
+>
+          is to create text to be spoken for an accessible object.
+          There are two public entry points into a
+          <TT
+CLASS="LITERAL"
+>SpeechGenerator</TT
+>:</P
+><P
+></P
+><UL
+><LI
+><P
+><TT
+CLASS="LITERAL"
+>getSpeech(obj, already_focused)</TT
+>:
+              returns a list (i.e., an array) of strings to be spoken
+              for the given accessible object.  The
+              <TT
+CLASS="LITERAL"
+>already_focused</TT
+> boolean parameter
+              provides a hint to the speech generator about how much
+              text to generate.  For example, if a check box that
+              already has focus is to be spoken, usually the reason
+              for this is that the state changed between checked and
+              unchecked.  As a result, an appropriate thing to do in
+              this situation is to only speak the new change in
+              state.</P
+></LI
+><LI
+><P
+><TT
+CLASS="LITERAL"
+>getSpeechContext(obj,
+              stopAncestor)</TT
+>: returns a list (i.e., an array)
+              of strings to be spoken that describe the visual context
+              of the given accessible object.  This is loosely
+              represented by the hierarchical relationship of the
+              object (i.e., the "Quit" button in the "File" menu in
+              the ...), and the amount of information can be contained
+              by specifying an accessible
+              <TT
+CLASS="LITERAL"
+>stopAncestor</TT
+> above which we do not
+              want to know anything about.  The primary use of this
+              method is to provide the user with feedback regarding
+              the relevant visual context information that changed
+              when the locus of focus changes, but this method is also
+              useful for assisting in "where am I" queries.</P
+></LI
+></UL
+><P
+><I
+CLASS="EMPHASIS"
+>NOTE:</I
+> Orca currently provides some level of support for
+          verbosity via the <TT
+CLASS="LITERAL"
+>VERBOSITY_LEVEL</TT
+> fields
+          of the <TT
+CLASS="LITERAL"
+>settings.py</TT
+> module.  There are
+          currently two verbosity levels:
+          <TT
+CLASS="LITERAL"
+>VERBOSITY_LEVEL_BRIEF</TT
+> and
+          <TT
+CLASS="LITERAL"
+>VERBOSITY_LEVEL_VERBOSE</TT
+>.  A
+          <TT
+CLASS="LITERAL"
+>SpeechGenerator</TT
+> subclass is expected to
+          examine the <TT
+CLASS="LITERAL"
+>speechVerbosityLevel</TT
+> property
+          of the <TT
+CLASS="LITERAL"
+>settings.py</TT
+> module and provide the
+          appropriate level of text.  The verbosity setting can be
+          obtained via the following call to
+          <TT
+CLASS="LITERAL"
+>settings.getSetting</TT
+>:</P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+># Obtain speech verbosity level.  If it has not been set,
+# default to the VERBOSITY_LEVEL_VERBOSE level.
+#
+verbosity = settings.getSetting("speechVerbosityLevel",
+                                settings.VERBOSITY_LEVEL_VERBOSE)
+        </PRE
+></TD
+></TR
+></TABLE
+><P
+>One can currently set the verbosity level from their
+          <TT
+CLASS="LITERAL"
+>~/.orca/user-settings.py</TT
+> module:</P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>settings.setSpeechVerbosityLevel(settings.VERBOSITY_LEVEL_BRIEF)
+        </PRE
+></TD
+></TR
+></TABLE
+></DIV
 ></DIV
 ><DIV
 CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN2149"
->Speech Generation (What Do I Say)</A
+NAME="AEN2326"
+>Braille Output</A
 ></H2
+><P
+>Like speech, Orca provides two main modules for braille:
+      <TT
+CLASS="LITERAL"
+>braille.py</TT
+> and
+      <TT
+CLASS="LITERAL"
+>braillegenerator.py</TT
+>. The
+      <TT
+CLASS="LITERAL"
+>braille.py</TT
+> module provides the main interface
+      to the braille display. The
+      <TT
+CLASS="LITERAL"
+>braillegenerator.py</TT
+> module provides a
+      <TT
+CLASS="LITERAL"
+>BrailleGenerator</TT
+> class that can be used to to
+      actually generate the text to be displayed for various objects.
+      The expected use of the two modules is as follows: a script will
+      instantiate its own instance of a
+      <TT
+CLASS="LITERAL"
+>BrailleGenerator</TT
+> and will use it to generate
+      text to be display.  The script will then pass this text to the
+      <TT
+CLASS="LITERAL"
+>braille.py</TT
+> module to be displayed.</P
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN2336"
+><TT
+CLASS="LITERAL"
+>braille.py</TT
+></A
+></H3
 ><P
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
-> write up the interface to the speech generator
-        module and how it can be used to generate strings for
-        objects.</P
+> [[[WDW - much writing to be done here, especially
+          regarding how regions will provide automatic support for
+          cursor routing keys.]]]</P
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> [[[WDW - I'm not satisfied with
+          <TT
+CLASS="LITERAL"
+>braille.py</TT
+>.  It will change before Orca 1.0 
+          is released, so be aware of this.]]]</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="AEN2344"
+><TT
+CLASS="LITERAL"
+>braillegenerator.py</TT
+></A
+></H3
+><P
+>The primary goal of a <TT
+CLASS="LITERAL"
+>BrailleGenerator</TT
+>
+          is to create text to be displayed for an accessible object.
+          There are two public entry points into a
+          <TT
+CLASS="LITERAL"
+>BrailleGenerator</TT
+>:</P
+><P
+></P
+><UL
+><LI
+><P
+><TT
+CLASS="LITERAL"
+>getBrailleRegions(obj,
+              groupChildren=True)</TT
+>: returns a list of two
+              items: the first is an ordered list of braille
+              <TT
+CLASS="LITERAL"
+>Region</TT
+> instances that represent text
+              to be displayed on the braille display, left-to-right on
+              one line; and the second is an element from the first
+              list that represents which <TT
+CLASS="LITERAL"
+>Region</TT
+> has
+              "focus" and should be represented by the braille cursor
+              on the display.</P
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> [[[WDW - describe grouping of children.]]]</P
+></LI
+><LI
+><P
+><TT
+CLASS="LITERAL"
+>getBrailleContext(obj)</TT
+>: returns
+              an ordered list (i.e., an array) of braille
+              <TT
+CLASS="LITERAL"
+>Region</TT
+> instances that describe the
+              visual context of the given accessible object.  This is
+              loosely represented by the hierarchical relationship of
+              the object (i.e., the "Quit" button in the "File" menu
+              in the ...).</P
+></LI
+></UL
+><P
+>Typically, a script will "build up" a single logical
+          line of text for the braille display.  The beginning of this
+          line will be the result of the call to
+          <TT
+CLASS="LITERAL"
+>getBrailleContext</TT
+> and the remainder of
+          the line will be the result of one or more calls to
+          <TT
+CLASS="LITERAL"
+>getBrailleRegions</TT
+>.  Since the logical
+          line will typically be longer than the number of cells on
+          the braille display, the <TT
+CLASS="LITERAL"
+>braille.py</TT
+>
+          module will scroll to show the braille
+          <TT
+CLASS="LITERAL"
+>Region</TT
+> with focus.  Furthermore, the
+          <TT
+CLASS="LITERAL"
+>braille.py</TT
+> will also respond to BrlTTY
+          input events to allow the user to use braille display input
+          buttons for scrolling to review the entire line.</P
+><P
+><I
+CLASS="EMPHASIS"
+>NOTE:</I
+> Orca currently provides some level of support for
+          verbosity via the <TT
+CLASS="LITERAL"
+>VERBOSITY_LEVEL</TT
+> fields
+          of the <TT
+CLASS="LITERAL"
+>settings.py</TT
+> module.  There are
+          currently two verbosity levels:
+          <TT
+CLASS="LITERAL"
+>VERBOSITY_LEVEL_BRIEF</TT
+> and
+          <TT
+CLASS="LITERAL"
+>VERBOSITY_LEVEL_VERBOSE</TT
+>.  A
+          <TT
+CLASS="LITERAL"
+>BrailleGenerator</TT
+> subclass is expected to
+          examine the <TT
+CLASS="LITERAL"
+>brailleVerbosityLevel</TT
+> property
+          of the <TT
+CLASS="LITERAL"
+>settings.py</TT
+> module and provide the
+          appropriate level of text.  The verbosity setting can be
+          obtained via the following call to
+          <TT
+CLASS="LITERAL"
+>settings.getSetting</TT
+>:</P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+># Obtain braille verbosity level.  If it has not been set,
+# default to the VERBOSITY_LEVEL_VERBOSE level.
+#
+verbosity = settings.getSetting("brailleVerbosityLevel",
+                                settings.VERBOSITY_LEVEL_VERBOSE)
+        </PRE
+></TD
+></TR
+></TABLE
+><P
+>One can currently set the verbosity level from their
+          <TT
+CLASS="LITERAL"
+>~/.orca/user-settings.py</TT
+> module:</P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>settings.setBrailleVerbosityLevel(settings.VERBOSITY_LEVEL_BRIEF)
+        </PRE
+></TD
+></TR
+></TABLE
+></DIV
 ></DIV
 ><DIV
 CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN2153"
->Braille Output (Write Something)</A
+NAME="AEN2382"
+>Braille and Key Input Bindings</A
 ></H2
 ><P
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
-> write up the interface to braille output.</P
-></DIV
-><DIV
-CLASS="SECTION"
-><HR><H2
-CLASS="SECTION"
-><A
-NAME="AEN2157"
->Braille Generation (What Do I Write)</A
-></H2
-><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> write up the interface to the braille generator
-        module and how it can be used to generate strings for
-        objects.</P
-></DIV
-><DIV
-CLASS="SECTION"
-><HR><H2
-CLASS="SECTION"
-><A
-NAME="AEN2161"
->Key Bindings</A
-></H2
-><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> write up how to define keybindings.</P
-></DIV
-><DIV
-CLASS="SECTION"
-><HR><H2
-CLASS="SECTION"
-><A
-NAME="AEN2165"
->Braille Bindings</A
-></H2
-><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> write up how to define braille bindings.</P
+> [[[WDW - write up how to define bindings.]]]</P
 ></DIV
 ></DIV
 ></DIV
 ><DIV
 CLASS="BOOK"
 ><A
-NAME="AEN2169"
+NAME="AEN2386"
 ></A
 ><DIV
 CLASS="TITLEPAGE"
 ><H1
 CLASS="TITLE"
 ><A
-NAME="AEN2169"
+NAME="AEN2386"
 >Orca Testing Plan</A
 ></H1
 ><DIV
@@ -8599,7 +9545,7 @@ CLASS="LEGALNOTICE"
 ><P
 ></P
 ><A
-NAME="AEN2172"
+NAME="AEN2389"
 ></A
 ><P
 >Copyright 2005, Sun Microsystems, Inc.</P
@@ -8616,12 +9562,12 @@ CLASS="TOC"
 ></DT
 ><DT
 ><A
-HREF="#AEN2174"
+HREF="#AEN2391"
 >Foreword</A
 ></DT
 ><DT
 ><A
-HREF="#AEN2180"
+HREF="#AEN2397"
 >Introduction</A
 ></DT
 ></DL
@@ -8630,7 +9576,7 @@ HREF="#AEN2180"
 CLASS="PREFACE"
 ><HR><H1
 ><A
-NAME="AEN2174"
+NAME="AEN2391"
 ></A
 >Foreword</H1
 ><P
@@ -8656,7 +9602,7 @@ CLASS="EMPHASIS"
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN2180"
+NAME="AEN2397"
 ></A
 >Introduction</H1
 ><P
@@ -8666,14 +9612,14 @@ NAME="AEN2180"
 ><DIV
 CLASS="BOOK"
 ><A
-NAME="AEN2183"
+NAME="AEN2400"
 ></A
 ><DIV
 CLASS="TITLEPAGE"
 ><H1
 CLASS="TITLE"
 ><A
-NAME="AEN2183"
+NAME="AEN2400"
 >Orca User's Guide</A
 ></H1
 ><DIV
@@ -8681,7 +9627,7 @@ CLASS="LEGALNOTICE"
 ><P
 ></P
 ><A
-NAME="AEN2186"
+NAME="AEN2403"
 ></A
 ><P
 >Copyright 2005, Sun Microsystems, Inc.</P
@@ -8698,12 +9644,12 @@ CLASS="TOC"
 ></DT
 ><DT
 ><A
-HREF="#AEN2188"
+HREF="#AEN2405"
 >Foreword</A
 ></DT
 ><DT
 ><A
-HREF="#AEN2194"
+HREF="#AEN2411"
 >Introduction</A
 ></DT
 ></DL
@@ -8712,7 +9658,7 @@ HREF="#AEN2194"
 CLASS="PREFACE"
 ><HR><H1
 ><A
-NAME="AEN2188"
+NAME="AEN2405"
 ></A
 >Foreword</H1
 ><P
@@ -8740,7 +9686,7 @@ CLASS="EMPHASIS"
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN2194"
+NAME="AEN2411"
 ></A
 >Introduction</H1
 ><P
