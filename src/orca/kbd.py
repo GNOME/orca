@@ -60,7 +60,7 @@ class KeystrokeListener(core.Accessibility__POA.DeviceEventListener):
     data into my emacs window.]]]
     """
     
-    def __init__(self,  func, mask, preemptive, isGlobal):
+    def __init__(self,  func, keyset, mask, preemptive, isGlobal):
         """Creates a new KeystrokeListener.
 
         Arguments:
@@ -77,7 +77,7 @@ class KeystrokeListener(core.Accessibility__POA.DeviceEventListener):
         """
         
         self.mask = mask
-        self.keyset = []
+        self.keyset = keyset
         self.type = [core.Accessibility.KEY_PRESSED_EVENT,
                      core.Accessibility.KEY_RELEASED_EVENT]
         self.mode = core.Accessibility.EventListenerMode()
@@ -120,11 +120,11 @@ class KeystrokeListener(core.Accessibility__POA.DeviceEventListener):
 
         self._default_POA().the_POAManager.activate()
         d = core.registry.getDeviceEventController()
-        d.registerKeystrokeListener(self._this(), 
-                                    self.keyset, 
-                                    self.mask, 
-                                    self.type, 
-                                    self.mode)
+        return d.registerKeystrokeListener(self._this(), 
+                                           self.keyset, 
+                                           self.mask, 
+                                           self.type, 
+                                           self.mode)
 
 
     def deregister(self):
@@ -187,12 +187,16 @@ def init(keyEventHandler):
     
     _listeners = []
     i = 0
-    while i <= (1 << core.Accessibility.MODIFIER_NUMLOCK):
-        kl = KeystrokeListener(keyEventHandler, i, True, False)
-        kl.register()
+    while i < (1 << (core.Accessibility.MODIFIER_NUMLOCK + 1)):
+        kl = KeystrokeListener(keyEventHandler, # listener
+                               [],              # keyset
+                               i,               # modifier mask
+                               True,            # synchronous
+                               False)           # global
+        kl.register(), i
         _listeners.append(kl)
-        i = i + 1
-        
+        i += 1
+
     _initialized = True
     return True
 
