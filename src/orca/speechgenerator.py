@@ -1479,7 +1479,7 @@ class SpeechGenerator:
     
         Arguments:
         - obj: the object
-        - already_focused: boolean staing if object just received focus
+        - already_focused: boolean stating if object just received focus
 
         Returns a list of utterances to be spoken.
         """
