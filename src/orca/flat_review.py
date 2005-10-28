@@ -1325,15 +1325,15 @@ def getShowingZones(root):
         child = root.child(i)
         if child == root:
             debug.println(debug.LEVEL_WARNING,
-                          "flat_review.getShowingZones: ",
+                          "flat_review.getShowingZones: " +
                           "WARNING CHILD == PARENT!!!")
         elif child is None:
             debug.println(debug.LEVEL_WARNING,
-                          "flat_review.getShowingZones: ",
+                          "flat_review.getShowingZones: " +
                           "WARNING CHILD IS NONE!!!")
         elif child.parent != root:
             debug.println(debug.LEVEL_WARNING,
-                          "flat_review.getShowingZones: ",
+                          "flat_review.getShowingZones: " +
                           "WARNING CHILD.PARENT != PARENT!!!")
         elif child.state.count(core.Accessibility.STATE_SHOWING):    
             objlist.extend(getShowingZones(child))
