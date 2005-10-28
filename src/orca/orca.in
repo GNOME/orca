@@ -19,34 +19,8 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-"""The script to run to start orca.  Loads the user's ~/.orca/settings.py
-(if it exists) and then runs orca.
+"""The script to run orca.
 """
 
-import os, signal, sys
-from orca.orca_i18n import _
-
-# Grab the user's ~/.orca/settings.py ahead of the default settings.py.
-# If the ~/.orca.settings.py does not exist, then orca will default to
-# the settings.py in this directory.
-#
-userprefs = os.path.join (os.environ["HOME"], ".orca")
-sys.path.insert (0, userprefs)
-
 import orca.orca
-
-def shutdownAndExit(signum, frame):
-    try:
-	print "Goodbye."
-	orca.orca.shutdown()
-    except:
-        pass
-    sys.exit()
-
-# Register a signal handler for ctrl-C
-#
-signal.signal(signal.SIGINT, shutdownAndExit)
-signal.signal(signal.SIGQUIT, shutdownAndExit)
-
-orca.orca.init()
-orca.orca.start()
+orca.orca.main()

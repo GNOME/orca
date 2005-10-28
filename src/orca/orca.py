@@ -18,7 +18,7 @@
 # Boston, MA 02111-1307, USA.
 
 import gtk
-import sys
+import os, signal, sys
 
 import a11y
 import braille
@@ -136,6 +136,9 @@ def _buildAppList():
     
     global apps
 
+    debug.println(debug.LEVEL_FINEST,
+                  "orca._buildAppList...")
+
     apps = []
 
     i = 0
@@ -148,6 +151,9 @@ def _buildAppList():
         except:
             debug.printException(debug.LEVEL_SEVERE)
         i += 1
+
+    debug.println(debug.LEVEL_FINEST,
+                  "...orca._buildAppList")
 
 
 def setLocusOfFocus(event, obj, notifyPresentationManager=True):
@@ -254,6 +260,9 @@ def findActiveWindow():
             if state.count(core.Accessibility.STATE_ACTIVE) > 0:
                 return app.child(i)
             i += 1
+            debug.println(debug.LEVEL_FINEST,
+                          "orca.findActiveWindow %d" % i)
+
 
     return None
 
@@ -276,6 +285,7 @@ def onChildrenChanged(e):
                 shutdown()
                 return
         except: # could be a CORBA.COMM_FAILURE
+            debug.printException(debug.LEVEL_FINEST)
             shutdown()
             return            
 
@@ -777,6 +787,7 @@ def drawOutline(x, y, width, height, erasePrevious=True):
         try:
             _display = gtk.gdk.display_get_default()
         except:
+            debug.printException(debug.LEVEL_FINEST)
             _display = gtk.gdk.display(":0")
 
         if _display is None:
@@ -969,3 +980,25 @@ def processKeyboardEvent(event):
     lastInputEvent = keyboardEvent
 
     return consumed
+
+
+def shutdownAndExit(signum, frame):
+    print "Goodbye."
+    try:
+	shutdown()
+    except:
+        pass
+    sys.exit()
+
+
+def main():
+    userprefs = os.path.join (os.environ["HOME"], ".orca")
+    sys.path.insert (0, userprefs)
+    signal.signal(signal.SIGINT, shutdownAndExit)
+    signal.signal(signal.SIGQUIT, shutdownAndExit)
+    init()
+    start()
+
+
+if __name__ == "__main__":
+    main()

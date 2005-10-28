@@ -489,6 +489,9 @@ class BrailleGenerator:
         childCount = obj.childCount
         i = 0
         while i < childCount:
+            debug.println(debug.LEVEL_FINEST,
+                          "braillegenerator._getBrailleRegionsForComboBox " \
+                          + "looking at child %d" % i)
             child = obj.child(i)
             if child.role == rolenames.ROLE_TEXT:
                 textObj = child
@@ -1109,6 +1112,9 @@ class BrailleGenerator:
         if action:
             i = 0
             while i < action.nActions:
+                debug.println(debug.LEVEL_FINEST,
+                    "braillegenerator._getBrailleRegionsForTableCell " \
+                    + "looking at action %d" % i)
                 if action.getName(i) == "toggle":
                     obj.role = rolenames.ROLE_CHECK_BOX
                     regions = self._getBrailleRegionsForCheckBox(obj)
@@ -1356,6 +1362,9 @@ class BrailleGenerator:
             childCount = obj.childCount
             i = 0
             while i < childCount:
+                debug.println(debug.LEVEL_FINEST,
+                    "braillegenerator.getBrailleRegions " \
+                    + "looking at child %d" % i)
                 child = obj.child(i)
 
                 if child.role != rolenames.ROLE_SEPARATOR:

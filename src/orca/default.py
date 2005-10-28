@@ -539,6 +539,9 @@ class Default(Script):
         - b: Accessible
         """
 
+        debug.println(debug.LEVEL_FINEST,
+                      "default.findCommonAncestor...")
+
         if (a is None) or (b is None):
             return None
 
@@ -553,6 +556,7 @@ class Default(Script):
                 parent = parent.parent
             aParents.reverse()
         except:
+            debug.printException(debug.LEVEL_FINEST)
             pass
         
         bParents = [b]
@@ -563,6 +567,7 @@ class Default(Script):
                 parent = parent.parent
             bParents.reverse()
         except:
+            debug.printException(debug.LEVEL_FINEST)
             pass
         
         commonAncestor = None
@@ -575,6 +580,9 @@ class Default(Script):
                 i += 1
             else:
                 break
+
+        debug.println(debug.LEVEL_FINEST,
+                      "...default.findCommonAncestor")
 
         return commonAncestor
 
@@ -744,6 +752,9 @@ class Default(Script):
                       and parent \
                       and (parent != parent.parent) \
                       and (parent.role != rolenames.ROLE_APPLICATION):
+                debug.println(debug.LEVEL_FINEST,
+                              "default.visualAppearanceChanged - " \
+                              + "checking parent")
                 reallyShowing = parent.state.count(\
                     core.Accessibility.STATE_SHOWING)
                 parent = parent.parent
@@ -808,6 +819,9 @@ class Default(Script):
             if len(obj.parent.label) > 0:
                 visualParent = obj.parent
             obj = obj.parent
+            debug.println(debug.LEVEL_FINEST,
+                          "default.getVisualParent - finding parent")
+
 
         return visualParent
     
@@ -1309,7 +1323,7 @@ class Default(Script):
                 currentZoneIndex = 0
             elif isinstance(zone, flat_review.TextZone):
                 # If we're on an accessible text object, try to set the
-                # review cursor to the  the caret position of that object.
+                # review cursor to the caret position of that object.
                 #
                 accessible  = zone.accessible
                 lineIndex   = currentLineIndex
@@ -1997,6 +2011,7 @@ def sayAll(inputEvent):
     try:
         txt = orca.locusOfFocus.text
     except:
+        debug.printException(debug.LEVEL_FINEST)
         pass
     
     if txt is None:

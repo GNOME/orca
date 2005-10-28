@@ -172,6 +172,7 @@ def init(voiceName=None, text=None):
             driver = driver._narrow(GNOME.Speech.SynthesisDriver)
             isInitialized = driver.isInitialized()
         except:
+            debug.printException(debug.LEVEL_FINEST)
             continue
             
         # Only initialize the driver if someone else hasn't
@@ -266,6 +267,7 @@ def shutdown():
         try:
             speaker.unref()
         except:
+            debug.printException(debug.LEVEL_FINEST)
             pass
         
     del _speakers
@@ -274,6 +276,7 @@ def shutdown():
         try:
             driver.unref()
         except:
+            debug.printException(debug.LEVEL_FINEST)
             pass
         
     del drivers
@@ -417,6 +420,7 @@ def say(voiceName, text):
         try:
             text = chnames[text.lower()]
         except:
+            debug.printException(debug.LEVEL_FINEST)
             pass
     else:
         text = text.replace("...", _(" dot dot dot"), 1)

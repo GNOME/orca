@@ -284,6 +284,7 @@ class Accessible:
         try:
             self._acc = acc._narrow(core.Accessibility.Application)
         except:
+            debug.printException(debug.LEVEL_FINEST)
             try:
                 self._acc = acc._narrow(core.Accessibility.Accessible)
             except:
@@ -656,6 +657,8 @@ class Accessible:
             elif self.childCount > 0:
                 i = 0
                 while i < self.childCount:
+                    debug.println(debug.LEVEL_FINEST,
+                                  "a11y.__get_label looking at child %d" % i)
                     child = self.child(i)
                     if child.role == rolenames.ROLE_LABEL:
                         if (child.name is not None) and (len(child.name) > 0):
@@ -994,6 +997,7 @@ def onNameChanged(e):
         try:
             del obj.label
         except:
+            debug.printException(debug.LEVEL_FINEST)
             pass
 
         
@@ -1012,6 +1016,7 @@ def onDescriptionChanged(e):
         try:
             del obj.label
         except:
+            debug.printException(debug.LEVEL_FINEST)
             pass
 
 
@@ -1041,6 +1046,7 @@ def onParentChanged(e):
     try:
         obj = makeAccessible(e.source)
     except:
+        debug.printException(debug.LEVEL_FINEST)
         return
     
 
@@ -1186,6 +1192,8 @@ def getObjects(root):
 
     i = root.childCount - 1
     while i >= 0:
+        debug.println(debug.LEVEL_FINEST,
+                      "a11y.getObjects looking at child %d" % i)
         child = root.child(i)
         if child:
             objlist.append(child)
@@ -1330,10 +1338,14 @@ def getFrame(obj):
     - obj: the Accessible object
     """
 
+    debug.println(debug.LEVEL_FINEST,
+                  "Finding frame for source=(" + obj.name + ")")
+    
     while (obj != None) \
               and (obj != obj.parent) \
               and (obj.role != rolenames.ROLE_FRAME):
         obj = obj.parent
+        debug.println(debug.LEVEL_FINEST, "--> obj=(" + obj.name + ")")
 
     if obj and (obj.role == rolenames.ROLE_FRAME):
         return obj
@@ -1412,6 +1424,7 @@ def getNodeLevel(obj):
                 node = makeAccessible(relation.getTarget(0))
                 break
         done = node is None
+        debug.println(debug.LEVEL_FINEST, "a11y.getNodeLevel %d" % level)
 
     return level
 

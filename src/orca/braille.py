@@ -781,10 +781,14 @@ def panToOffset(offset):
     showing."""
 
     while offset < _viewport[0]:
+        debug.println(debug.LEVEL_FINEST,
+                      "braille.panToOffset (left) %d" % offset)
         if not panLeft():
             break
         
     while offset >= (_viewport[0] + _displaySize[0]):
+        debug.println(debug.LEVEL_FINEST,
+                      "braille.panToOffset (right) %d" % offset)
         if not panRight():
             break
 

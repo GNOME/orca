@@ -218,8 +218,6 @@ def setupBraille ():
     doesn't want it, returns False.
     """
     
-    global setupSpeaker
-
     working = False
     try:
         import orca.braille as braille

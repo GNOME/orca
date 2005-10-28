@@ -464,6 +464,9 @@ class SpeechGenerator:
         childCount = obj.childCount
         i = 0
         while i < childCount:
+            debug.println(debug.LEVEL_FINEST,
+                          "speechgenerator._getSpeechForComboBox " \
+                          + "looking at child %d" % i)
             child = obj.child(i)
             if child.role == rolenames.ROLE_TEXT:
                 textObj = child
@@ -1221,6 +1224,9 @@ class SpeechGenerator:
         if action:
             i = 0
             while i < action.nActions:
+                debug.println(debug.LEVEL_FINEST,
+                    "speechgenerator._getSpeechForTableCell " \
+                    + "looking at action %d" % i)
                 if action.getName(i) == "toggle":
                     obj.role = rolenames.ROLE_CHECK_BOX
                     utterances = self._getSpeechForCheckBox(obj,

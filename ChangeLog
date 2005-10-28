@@ -1,3 +1,13 @@
+2005-10-28  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca.in, src/orca/orca.py: move all logic out of
+	orca.in and move it into a new orca.py:main to help with 
+	debugging.
+	* src/orca/*.py: do not silently pass on any exceptions - at
+	least print an exception at debug.LEVEL_FINEST.  Also attempt
+	to provide some debug output inside while loops that could
+	potentially never exit.
+	
 2005-10-27  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Makefile.am: take care in packaging on 64-bit
