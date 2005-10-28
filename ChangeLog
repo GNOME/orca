@@ -1,5 +1,12 @@
 2005-10-28  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/focus_tracking_presenter.py
+          Added in a "debug.printException(debug.LEVEL_FINEST)" in
+          _createScript() in the exception cluse when trying to load
+          custom scripts (very useful during debugging).
+
+2005-10-28  Rich Burridge <rich.burridge@sun.com>
+
 	* src/orca/flat_review.py: adjusted three debug statements to
           pass two parameters, not three.
 

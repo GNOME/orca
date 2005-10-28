@@ -184,8 +184,11 @@ def _createScript(app):
                 debug.printException(debug.LEVEL_SEVERE)
                 script = default.getScript(app)                    
         except:
-            # It's ok if a custom script doesn't exist.
+            # It's ok if a custom script doesn't exist, but it's also
+            # helpful to let the developer know there was a problem
+            # when debugging.
             #
+            debug.printException(debug.LEVEL_FINEST)
             script = default.getScript(app)
     else:
         script = default.getScript(app)
