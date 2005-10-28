@@ -109,7 +109,8 @@
             script).  If it cannot find such a module in the Python
             search path, the
             <literal>focus_tracking_presenter</literal> will create an
-            instance of the "Default" script in default.py.</para>
+            instance of the <literal>Default</literal> script in
+            default.py.</para>
 
           <para>&note; the <literal>focus_tracking_presenter</literal>
             also maintains a table to map application names to script
@@ -128,16 +129,21 @@
 
         </listitem>
         <listitem>
+
           <para>Each script module is expected to provide a
             <literal>getScript</literal> method that takes the
             accessible application object as an argument.  This method
             is essentially a factory method that returns an instance
             of a <literal>Script</literal> (defined in
             <literal>script.py</literal>) or <literal>Script</literal>
-            subclass.  The constructor for the
-            <literal>Script</literal> instance is expected to define
-            any keystrokes, braille buttons, and AT-SPI event
-            listeners it is interested in.</para>
+            subclass.</para>
+
+          <para>The constructor for the <literal>Script</literal>
+            instance is expected to define any keystrokes, braille
+            buttons, and AT-SPI event listeners it is interested in
+            (see the <link linkend="customization">Customized
+            Behavior</link> section for how to do this).</para>
+
         </listitem>
         <listitem>
 
@@ -280,7 +286,111 @@
 
   </chapter>
     
-      
+
+  <!--
+  ************************************************************************
+  *                                                                      *
+  * CUSTOMIZED BEHAVIOR                                                  *
+  *                                                                      *
+  ************************************************************************
+  -->
+
+  <chapter id="customization"><title>Customized Behavior</title>
+    <para>The mapping to all the customized behavior of a script is done
+      in its constructor.  In its constructor, each script is expected 
+      to extend/override the following fields:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para><literal>listeners</literal>: a dictionary where the
+          keys are strings that match AT-SPI event types (e.g.,
+          <literal>focus:</literal>,
+          <literal>object:text-caret-moved</literal>, etc.), and the
+          values are functions to handle the event.</para>
+      </listitem>
+      <listitem>
+        <para><literal>keybindings</literal>: an instance of 
+          <literal>keybindings.KeyBindings</literal> that defines
+          the keystrokes the script is interested in.</para>
+      </listitem>
+      <listitem>
+        <para><literal>braillebindings</literal>: a dictionary where
+          the keys are BrlTTY commands (e.g., <literal>CMD_HWINLT</literal>,
+          defined in <literal>braille.py</literal>), and the values are
+          <literal>InputEventHandler</literal> instances.</para>
+      </listitem>
+    </itemizedlist>
+
+    <para>The constructor for the <literal>Script</literal> class,
+      which all scripts should ultimately extend (most will extend the
+      <literal>Default</literal> class, which extends
+      <literal>Script</literal>), sets up empty values for each of 
+      these fields.  As such, a subclass merely needs to extend/override
+      these fields.  Each of these fields is described in more detail
+      in the following sections.</para>
+
+    <section><title>Defining Event Listeners</title> 
+
+      <para>As described above, the <literal>listeners</literal> field
+        is a dictionary where the keys are strings that match AT-SPI
+        event types (e.g., <literal>focus:</literal>,
+        <literal>object:text-caret-moved</literal>, etc.), and the
+        values are functions to handle the event.  A script's
+        constructor can modify/extend this dictionary by merely
+        defining an entry:</para>
+
+<programlisting>
+self.listeners["focus:"] = self.onFocus
+</programlisting>
+
+      <para>In the event there is already an entry in the
+        <literal>listeners</literal> dictionary, it will be overridden
+        by the new value.</para>
+
+      <para>As decribed previously, the
+        <literal>focus_tracking_presenter</literal> will register
+        listeners on behalf of a script, and will notify the script of
+        any events via the script's
+        <literal>processObjectEvent</literal> method.  The
+        <literal>processObjectEvent</literal> method of the top level
+        <literal>Script</literal> class examines the
+        <literal>type</literal> field of the given
+        <literal>event</literal>, calling any matching functions from
+        the <literal>listeners</literal> dictionary.  As such, it is
+        unlikely that a <literal>Script</literal> subclass will ever
+        need to override the <literal>processObjectEvent</literal>
+        method.  Instead, it merely needs to populate the
+        <literal>listeners</literal> dictionary as appropriate.</para>
+
+      <para>The function for an event listener merely takes an event
+        and does whatever it wants, and the return value is ignored.
+        For example, the function definition associated with the above
+        <literal>listeners</literal> entry might look like the
+        following, where the <literal>event</literal> is described
+        above:</para>
+
+<programlisting>
+def onFocus(self, event):
+    """Called whenever an object gets focus.
+        
+    Arguments:
+    - event: the Event
+    """
+
+    ...
+    orca.setLocusOfFocus(event, event.source)
+    ...
+</programlisting>
+
+    </section>
+    <section><title>Defining Keyboard Bindings</title>
+      <para>foo</para>
+    </section>
+    <section><title>Defining Braille Bindings</title>
+      <para>foo</para>
+    </section>
+  </chapter>
+
   <!--
   ************************************************************************
   *                                                                      *
@@ -297,9 +407,7 @@
       output to determine just what the AT-SPI is sending it.  This
       chapter discusses the debug utilities of Orca as well as a
       variety of utilities to assist a script in managing speech,
-      braille, and magnification.  Finally, a section has been
-      included that describes how a script can add custom keystroke or
-      braille input behavior.</para>
+      braille, and magnification.</para>
     
     <section id="debug"><title>Debug Utilities</title>
 
@@ -429,6 +537,18 @@ OBJECT EVENT: window:activate detail=(0,0)
       <programlisting>
 ACTIVE SCRIPT: gnome-terminal (class=GnomeTerminal)
       </programlisting>
+
+      <para>Notice that the class of the script instance is included.
+        If you determine that this class is not what you expect when
+        you are developing your custom script, then something went
+        wrong when trying to find or load your custom script.  This
+        can often happen because Python performs a lot of late binding
+        and compilation, thus errors are often not encountered until a
+        specific code path is executed at run time.  You can tell the
+        <literal>focus_tracking_presenter</literal> to give you more
+        information about any possible failures or exceptions it
+        handles in this area by setting the debug level to
+        <literal>debug.LEVEL_FINEST</literal>.</para>
 
     </section>
 
@@ -633,6 +753,33 @@ settings.setBrailleVerbosityLevel(settings.VERBOSITY_LEVEL_BRIEF)
 
     <section><title>Braille and Key Input Bindings</title>
       <para>&todo; [[[WDW - write up how to define bindings.]]]</para>
+
+      <programlisting>
+from orca.input_event import InputEventHandler
+from orca.orca_i18n import _
+
+...
+
+    def __init__(self, app):
+        ...
+        someInputEventHandler = InputEventHandler(\
+            self.myHandler,
+            _("A one line description of this handler."))
+
+
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_6",                   # XKeySym
+                1 << orca.MODIFIER_ORCA,  # Modifiers we care about
+                1 << orca.MODIFIER_ORCA,  # State they must be in
+                someInputEventHandler))   # Handler to handle this
+
+        ...
+
+        self.braillebindings[braille.CMD_LNUP] = someInputEventHandler
+        ...
+      </programlisting>
+        
     </section>
 
   </chapter>

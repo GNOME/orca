@@ -54,12 +54,12 @@ HREF="#AEN2078"
 ></DT
 ><DT
 ><A
-HREF="#AEN2386"
+HREF="#AEN2446"
 >Orca Testing Plan</A
 ></DT
 ><DT
 ><A
-HREF="#AEN2400"
+HREF="#AEN2460"
 >Orca User's Guide</A
 ></DT
 ></DL
@@ -8158,14 +8158,38 @@ HREF="#AEN2098"
 ></DT
 ><DT
 ><A
-HREF="#AEN2202"
+HREF="#AEN2205"
 >Script Contract</A
 ></DT
 ></DL
 ></DD
 ><DT
 ><A
-HREF="#AEN2211"
+HREF="#CUSTOMIZATION"
+>Customized Behavior</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="#AEN2237"
+>Defining Event Listeners</A
+></DT
+><DT
+><A
+HREF="#AEN2261"
+>Defining Keyboard Bindings</A
+></DT
+><DT
+><A
+HREF="#AEN2264"
+>Defining Braille Bindings</A
+></DT
+></DL
+></DD
+><DT
+><A
+HREF="#AEN2267"
 >Script Utilities</A
 ></DT
 ><DD
@@ -8177,14 +8201,14 @@ HREF="#DEBUG"
 ></DT
 ><DT
 ><A
-HREF="#AEN2277"
+HREF="#AEN2336"
 >Speech Synthesis</A
 ></DT
 ><DD
 ><DL
 ><DT
 ><A
-HREF="#AEN2287"
+HREF="#AEN2346"
 ><TT
 CLASS="LITERAL"
 >speech.py</TT
@@ -8192,7 +8216,7 @@ CLASS="LITERAL"
 ></DT
 ><DT
 ><A
-HREF="#AEN2297"
+HREF="#AEN2356"
 ><TT
 CLASS="LITERAL"
 >speechgenerator.py</TT
@@ -8202,14 +8226,14 @@ CLASS="LITERAL"
 ></DD
 ><DT
 ><A
-HREF="#AEN2326"
+HREF="#AEN2385"
 >Braille Output</A
 ></DT
 ><DD
 ><DL
 ><DT
 ><A
-HREF="#AEN2336"
+HREF="#AEN2395"
 ><TT
 CLASS="LITERAL"
 >braille.py</TT
@@ -8217,7 +8241,7 @@ CLASS="LITERAL"
 ></DT
 ><DT
 ><A
-HREF="#AEN2344"
+HREF="#AEN2403"
 ><TT
 CLASS="LITERAL"
 >braillegenerator.py</TT
@@ -8227,7 +8251,7 @@ CLASS="LITERAL"
 ></DD
 ><DT
 ><A
-HREF="#AEN2382"
+HREF="#AEN2441"
 >Braille and Key Input Bindings</A
 ></DT
 ></DL
@@ -8382,7 +8406,11 @@ HREF="#DEBUG"
 CLASS="LITERAL"
 >focus_tracking_presenter</TT
 > will create an
-            instance of the "Default" script in default.py.</P
+            instance of the <TT
+CLASS="LITERAL"
+>Default</TT
+> script in
+            default.py.</P
 ><P
 ><I
 CLASS="EMPHASIS"
@@ -8440,13 +8468,19 @@ CLASS="LITERAL"
 CLASS="LITERAL"
 >Script</TT
 >
-            subclass.  The constructor for the
-            <TT
+            subclass.</P
+><P
+>The constructor for the <TT
 CLASS="LITERAL"
 >Script</TT
-> instance is expected to define
-            any keystrokes, braille buttons, and AT-SPI event
-            listeners it is interested in.</P
+>
+            instance is expected to define any keystrokes, braille
+            buttons, and AT-SPI event listeners it is interested in
+            (see the <A
+HREF="#CUSTOMIZATION"
+>Customized
+            Behavior</A
+> section for how to do this).</P
 ></LI
 ><LI
 ><P
@@ -8722,7 +8756,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN2202"
+NAME="AEN2205"
 >Script Contract</A
 ></H2
 ><P
@@ -8760,7 +8794,234 @@ CLASS="LITERAL"
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN2211"
+NAME="CUSTOMIZATION"
+></A
+>Customized Behavior</H1
+><P
+>The mapping to all the customized behavior of a script is done
+      in its constructor.  In its constructor, each script is expected 
+      to extend/override the following fields:</P
+><P
+></P
+><UL
+><LI
+><P
+><TT
+CLASS="LITERAL"
+>listeners</TT
+>: a dictionary where the
+          keys are strings that match AT-SPI event types (e.g.,
+          <TT
+CLASS="LITERAL"
+>focus:</TT
+>,
+          <TT
+CLASS="LITERAL"
+>object:text-caret-moved</TT
+>, etc.), and the
+          values are functions to handle the event.</P
+></LI
+><LI
+><P
+><TT
+CLASS="LITERAL"
+>keybindings</TT
+>: an instance of 
+          <TT
+CLASS="LITERAL"
+>keybindings.KeyBindings</TT
+> that defines
+          the keystrokes the script is interested in.</P
+></LI
+><LI
+><P
+><TT
+CLASS="LITERAL"
+>braillebindings</TT
+>: a dictionary where
+          the keys are BrlTTY commands (e.g., <TT
+CLASS="LITERAL"
+>CMD_HWINLT</TT
+>,
+          defined in <TT
+CLASS="LITERAL"
+>braille.py</TT
+>), and the values are
+          <TT
+CLASS="LITERAL"
+>InputEventHandler</TT
+> instances.</P
+></LI
+></UL
+><P
+>The constructor for the <TT
+CLASS="LITERAL"
+>Script</TT
+> class,
+      which all scripts should ultimately extend (most will extend the
+      <TT
+CLASS="LITERAL"
+>Default</TT
+> class, which extends
+      <TT
+CLASS="LITERAL"
+>Script</TT
+>), sets up empty values for each of 
+      these fields.  As such, a subclass merely needs to extend/override
+      these fields.  Each of these fields is described in more detail
+      in the following sections.</P
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN2237"
+>Defining Event Listeners</A
+></H2
+><P
+>As described above, the <TT
+CLASS="LITERAL"
+>listeners</TT
+> field
+        is a dictionary where the keys are strings that match AT-SPI
+        event types (e.g., <TT
+CLASS="LITERAL"
+>focus:</TT
+>,
+        <TT
+CLASS="LITERAL"
+>object:text-caret-moved</TT
+>, etc.), and the
+        values are functions to handle the event.  A script's
+        constructor can modify/extend this dictionary by merely
+        defining an entry:</P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>self.listeners["focus:"] = self.onFocus</PRE
+></TD
+></TR
+></TABLE
+><P
+>In the event there is already an entry in the
+        <TT
+CLASS="LITERAL"
+>listeners</TT
+> dictionary, it will be overridden
+        by the new value.</P
+><P
+>As decribed previously, the
+        <TT
+CLASS="LITERAL"
+>focus_tracking_presenter</TT
+> will register
+        listeners on behalf of a script, and will notify the script of
+        any events via the script's
+        <TT
+CLASS="LITERAL"
+>processObjectEvent</TT
+> method.  The
+        <TT
+CLASS="LITERAL"
+>processObjectEvent</TT
+> method of the top level
+        <TT
+CLASS="LITERAL"
+>Script</TT
+> class examines the
+        <TT
+CLASS="LITERAL"
+>type</TT
+> field of the given
+        <TT
+CLASS="LITERAL"
+>event</TT
+>, calling any matching functions from
+        the <TT
+CLASS="LITERAL"
+>listeners</TT
+> dictionary.  As such, it is
+        unlikely that a <TT
+CLASS="LITERAL"
+>Script</TT
+> subclass will ever
+        need to override the <TT
+CLASS="LITERAL"
+>processObjectEvent</TT
+>
+        method.  Instead, it merely needs to populate the
+        <TT
+CLASS="LITERAL"
+>listeners</TT
+> dictionary as appropriate.</P
+><P
+>The function for an event listener merely takes an event
+        and does whatever it wants, and the return value is ignored.
+        For example, the function definition associated with the above
+        <TT
+CLASS="LITERAL"
+>listeners</TT
+> entry might look like the
+        following, where the <TT
+CLASS="LITERAL"
+>event</TT
+> is described
+        above:</P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>def onFocus(self, event):
+    """Called whenever an object gets focus.
+        
+    Arguments:
+    - event: the Event
+    """
+
+    ...
+    orca.setLocusOfFocus(event, event.source)
+    ...</PRE
+></TD
+></TR
+></TABLE
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN2261"
+>Defining Keyboard Bindings</A
+></H2
+><P
+>foo</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN2264"
+>Defining Braille Bindings</A
+></H2
+><P
+>foo</P
+></DIV
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="AEN2267"
 ></A
 >Script Utilities</H1
 ><P
@@ -8770,9 +9031,7 @@ NAME="AEN2211"
       output to determine just what the AT-SPI is sending it.  This
       chapter discusses the debug utilities of Orca as well as a
       variety of utilities to assist a script in managing speech,
-      braille, and magnification.  Finally, a section has been
-      included that describes how a script can add custom keystroke or
-      braille input behavior.</P
+      braille, and magnification.</P
 ><DIV
 CLASS="SECTION"
 ><HR><H2
@@ -9038,13 +9297,31 @@ CLASS="PROGRAMLISTING"
 ></TD
 ></TR
 ></TABLE
+><P
+>Notice that the class of the script instance is included.
+        If you determine that this class is not what you expect when
+        you are developing your custom script, then something went
+        wrong when trying to find or load your custom script.  This
+        can often happen because Python performs a lot of late binding
+        and compilation, thus errors are often not encountered until a
+        specific code path is executed at run time.  You can tell the
+        <TT
+CLASS="LITERAL"
+>focus_tracking_presenter</TT
+> to give you more
+        information about any possible failures or exceptions it
+        handles in this area by setting the debug level to
+        <TT
+CLASS="LITERAL"
+>debug.LEVEL_FINEST</TT
+>.</P
 ></DIV
 ><DIV
 CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN2277"
+NAME="AEN2336"
 >Speech Synthesis</A
 ></H2
 ><P
@@ -9087,7 +9364,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN2287"
+NAME="AEN2346"
 ><TT
 CLASS="LITERAL"
 >speech.py</TT
@@ -9122,7 +9399,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN2297"
+NAME="AEN2356"
 ><TT
 CLASS="LITERAL"
 >speechgenerator.py</TT
@@ -9269,7 +9546,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN2326"
+NAME="AEN2385"
 >Braille Output</A
 ></H2
 ><P
@@ -9312,7 +9589,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN2336"
+NAME="AEN2395"
 ><TT
 CLASS="LITERAL"
 >braille.py</TT
@@ -9341,7 +9618,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN2344"
+NAME="AEN2403"
 ><TT
 CLASS="LITERAL"
 >braillegenerator.py</TT
@@ -9516,7 +9793,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN2382"
+NAME="AEN2441"
 >Braille and Key Input Bindings</A
 ></H2
 ><P
@@ -9524,20 +9801,55 @@ NAME="AEN2382"
 CLASS="EMPHASIS"
 >TODO:</I
 > [[[WDW - write up how to define bindings.]]]</P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>from orca.input_event import InputEventHandler
+from orca.orca_i18n import _
+
+...
+
+    def __init__(self, app):
+        ...
+        someInputEventHandler = InputEventHandler(\
+            self.myHandler,
+            _("A one line description of this handler."))
+
+
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_6",                   # XKeySym
+                1 &#60;&#60; orca.MODIFIER_ORCA,  # Modifiers we care about
+                1 &#60;&#60; orca.MODIFIER_ORCA,  # State they must be in
+                someInputEventHandler))   # Handler to handle this
+
+        ...
+
+        self.braillebindings[braille.CMD_LNUP] = someInputEventHandler
+        ...
+      </PRE
+></TD
+></TR
+></TABLE
 ></DIV
 ></DIV
 ></DIV
 ><DIV
 CLASS="BOOK"
 ><A
-NAME="AEN2386"
+NAME="AEN2446"
 ></A
 ><DIV
 CLASS="TITLEPAGE"
 ><H1
 CLASS="TITLE"
 ><A
-NAME="AEN2386"
+NAME="AEN2446"
 >Orca Testing Plan</A
 ></H1
 ><DIV
@@ -9545,7 +9857,7 @@ CLASS="LEGALNOTICE"
 ><P
 ></P
 ><A
-NAME="AEN2389"
+NAME="AEN2449"
 ></A
 ><P
 >Copyright 2005, Sun Microsystems, Inc.</P
@@ -9562,12 +9874,12 @@ CLASS="TOC"
 ></DT
 ><DT
 ><A
-HREF="#AEN2391"
+HREF="#AEN2451"
 >Foreword</A
 ></DT
 ><DT
 ><A
-HREF="#AEN2397"
+HREF="#AEN2457"
 >Introduction</A
 ></DT
 ></DL
@@ -9576,7 +9888,7 @@ HREF="#AEN2397"
 CLASS="PREFACE"
 ><HR><H1
 ><A
-NAME="AEN2391"
+NAME="AEN2451"
 ></A
 >Foreword</H1
 ><P
@@ -9602,7 +9914,7 @@ CLASS="EMPHASIS"
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN2397"
+NAME="AEN2457"
 ></A
 >Introduction</H1
 ><P
@@ -9612,14 +9924,14 @@ NAME="AEN2397"
 ><DIV
 CLASS="BOOK"
 ><A
-NAME="AEN2400"
+NAME="AEN2460"
 ></A
 ><DIV
 CLASS="TITLEPAGE"
 ><H1
 CLASS="TITLE"
 ><A
-NAME="AEN2400"
+NAME="AEN2460"
 >Orca User's Guide</A
 ></H1
 ><DIV
@@ -9627,7 +9939,7 @@ CLASS="LEGALNOTICE"
 ><P
 ></P
 ><A
-NAME="AEN2403"
+NAME="AEN2463"
 ></A
 ><P
 >Copyright 2005, Sun Microsystems, Inc.</P
@@ -9644,12 +9956,12 @@ CLASS="TOC"
 ></DT
 ><DT
 ><A
-HREF="#AEN2405"
+HREF="#AEN2465"
 >Foreword</A
 ></DT
 ><DT
 ><A
-HREF="#AEN2411"
+HREF="#AEN2471"
 >Introduction</A
 ></DT
 ></DL
@@ -9658,7 +9970,7 @@ HREF="#AEN2411"
 CLASS="PREFACE"
 ><HR><H1
 ><A
-NAME="AEN2405"
+NAME="AEN2465"
 ></A
 >Foreword</H1
 ><P
@@ -9686,7 +9998,7 @@ CLASS="EMPHASIS"
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN2411"
+NAME="AEN2471"
 ></A
 >Introduction</H1
 ><P
