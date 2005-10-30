@@ -672,20 +672,32 @@ def init():
                                             nextPresentationManagerHandler))
 
     if settings.getSetting("useSpeech", True):
-        speech.init()
-        debug.println(debug.LEVEL_CONFIGURATION,
-                      "Speech module has been initialized.")
+        try:
+            speech.init()
+            debug.println(debug.LEVEL_CONFIGURATION,
+                          "Speech module has been initialized.")
+        except:
+            debug.println(debug.LEVEL_SEVERE,
+                          "Could not initialize connection to speech.")
     else:
         debug.println(debug.LEVEL_CONFIGURATION,
                       "Speech module has NOT been initialized.")
         
     if settings.getSetting("useBraille", False):
-        braille.init(processBrailleEvent, 7)
+        try:
+            braille.init(processBrailleEvent, 7)
+        except:
+            debug.println(debug.LEVEL_SEVERE,
+                          "Could not initialize connection to braille.")
 
     if settings.getSetting("useMagnifier", False):
-        mag.init()
-        debug.println(debug.LEVEL_CONFIGURATION,
-                      "Magnification module has been initialized.")
+        try:
+            mag.init()
+            debug.println(debug.LEVEL_CONFIGURATION,
+                          "Magnification module has been initialized.")
+        except:
+            debug.println(debug.LEVEL_SEVERE,
+                          "Could not initialize connection to magnifier.")
     else:
         debug.println(debug.LEVEL_CONFIGURATION,
                       "Magnification module has NOT been initialized.")
