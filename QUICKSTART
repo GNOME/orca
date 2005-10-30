@@ -84,17 +84,18 @@ III. ORCA ON UBUNTU 5.10:
 
    sudo apt-get install emacs21
 
-   sudo apt-get install build-essential cvs \
+   sudo apt-get install build-essential cvs ssh \
         autoconf automake1.4 automake1.7 automake1.9 \
         docbook docbook-utils docbook-xsl \
         docbook2x doxygen bison flex libpopt-dev jade \
    	libtool intltool pkg-config gtk-doc-tools \
    	x-dev x-window-system-dev \
    	libgnome2-dev libbonobo-activation-dev \
+        libbonoboui* libgnomeui-* libpanel-applet* \
    	libgnomecanvas2-dev \
 	python-dev python-gnome2-dev python-gtk2-dev
 
-3) Checkout/build/install ATK, GAIL, AT-SPI
+3) Checkout/build/install ATK, GAIL, LIBGAIL-GNOME, AT-SPI
 
    cd $HOME
    cvs -z3 -d:pserver:anonymous@anoncvs.gnome.org:/cvs/gnome co atk
@@ -106,6 +107,13 @@ III. ORCA ON UBUNTU 5.10:
    cd $HOME
    cvs -z3 -d:pserver:anonymous@anoncvs.gnome.org:/cvs/gnome co gail
    cd gail
+   ./autogen.sh --prefix=/usr
+   make
+   sudo make install
+
+   cd $HOME
+   cvs -z3 -d:pserver:anonymous@anoncvs.gnome.org:/cvs/gnome co libgail-gnome
+   cd libgail-gnome
    ./autogen.sh --prefix=/usr
    make
    sudo make install
