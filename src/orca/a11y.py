@@ -284,7 +284,6 @@ class Accessible:
         try:
             self._acc = acc._narrow(core.Accessibility.Application)
         except:
-            debug.printException(debug.LEVEL_FINEST)
             try:
                 self._acc = acc._narrow(core.Accessibility.Accessible)
             except:

@@ -22,6 +22,7 @@ fallback to local settings if the user settings doesn't exist (e.g., in the
 case of gdm) or doesn't have the specified attribute.
 """
 
+import re
 import sys
 import debug
 
@@ -42,7 +43,6 @@ BRAILLE_ROLENAME_STYLE_SHORT = 0 # three letter abbreviations
 BRAILLE_ROLENAME_STYLE_LONG  = 1 # full rolename
 
 brailleRolenameStyle = BRAILLE_ROLENAME_STYLE_LONG
-
 
 voices = {}
 keyEcho = False
@@ -129,3 +129,61 @@ def getSetting(name, default=None):
         return getattr(thisModule, name)
     else:
         return default
+
+
+
+# A list of package names to search for script modules.  The
+# focus_tracking_presenter will search these in order when
+# looking for a script module.  
+#
+scriptPackages = ["orca-scripts", "scripts"]
+
+
+# A list that helps us map application names to script module
+# names.  The key is the name of an application, and the value is
+# the name of a script module.  There are some default values here,
+# but one may call the setScriptMapping method of this module to
+# extend or override any mappings.
+#
+_scriptMappings = []
+
+
+def setScriptMapping(regExpression, moduleName):
+    """Tells this module what script module to look for a given
+    application name.  The mappings are stored as a list and each
+    new mapping is added to the beginning of the list, meaning it
+    takes precedence over all other mappings.
+
+    Arguments:
+    - regExpression: a regular expression used to match against an
+                     application name
+    - moduleName:    the name of the Python module containing the script
+                     class definition for the application
+    """
+
+    global _scriptMappings
+    
+    _scriptMappings.insert(0, [regExpression, moduleName])
+
+
+def getScriptModuleName(app):
+    """Returns the module name of the script to use for a given
+    application.  Any script mapping set via the setScriptMapping
+    method is searched first, with the ultimate fallback being the
+    name of the application itself.
+
+    Arguments:
+    - app: the application to find a script module name for
+    """
+    
+    for mapping in _scriptMappings:
+        regExpression = mapping[0]
+        moduleName = mapping[1]
+        if regExpression.match(app.name):
+            return moduleName
+
+    return app.name
+
+
+setScriptMapping(re.compile('[\S\s]*StarOffice[\s\S]*'), "StarOffice")
+
