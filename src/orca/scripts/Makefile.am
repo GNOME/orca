@@ -7,7 +7,8 @@ orca_python_PYTHON = \
 	gedit.py \
 	Gecko.py \
 	gnome-terminal.py \
-	metacity.py 
+	metacity.py \
+	StarOffice.py
 
 orca_pythondir=$(pythondir)/orca/scripts
 
