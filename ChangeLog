@@ -1,3 +1,10 @@
+2005-10-31  Willie Walker <william.walker@sun.com>
+
+	* src/orca/a11y.py, src/orca/focus_tracking_presenter.py,
+	src/orca/settings.py: fix for bug 32063 - provide a more
+	flexible, general-purpose, and user-settable script discovery
+	mechanism.
+	
 2005-10-30  Willie Walker <william.walker@sun.com>
 
 	* QUICKSTART: add libgail-gnome to Ubuntu section as well as
