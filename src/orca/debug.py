@@ -89,6 +89,7 @@ LEVEL_ALL = 0
 _debugLevel = LEVEL_SEVERE
 _eventDebugLevel = LEVEL_FINEST
 _eventDebugFilter = None  # see setEventDebugFilter
+_debugFile = None # see setDebugFile
 
 
 def setDebugLevel(newLevel):
@@ -141,6 +142,21 @@ def setEventDebugFilter(regExpression):
     _eventDebugFilter = regExpression
 
 
+def setDebugFile(file):
+    """Sets the debug file.  If this is not set, then all debug output
+    is done via stdout.  If this is set, then all debug output is sent
+    to the file.  This can be useful for debugging because one can pass
+    in a non-buffered file to better track down hangs.
+
+    Arguments:
+    - file: a file created using the built-in 'open' function.
+    """
+
+    global _debugFile
+
+    _debugFile = file
+
+    
 def printException(level):
     """Prints out information regarding the current exception.
 
@@ -152,7 +168,7 @@ def printException(level):
 
     if level >= _debugLevel:
         println(level)
-        traceback.print_exc()
+        traceback.print_exc(100, _debugFile)
         println(level)
 
 
@@ -167,7 +183,7 @@ def printStack(level):
 
     if level >= _debugLevel:
         println(level)
-        traceback.print_stack()
+        traceback.print_stack(None, 100, _debugFile)
         println(level)
 
 
@@ -179,10 +195,14 @@ def println(level, text = ""):
     - text: the text to print (default is a blank line)
     """
 
+    global _debugFile
     global _debugLevel
 
     if level >= _debugLevel:
-        print text
+        if _debugFile:
+            _debugFile.writelines([text,"\n"])
+        else:
+            print text
 
 
 def printObjectEvent(level, event, sourceInfo=None):

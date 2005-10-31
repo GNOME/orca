@@ -5,6 +5,10 @@
 
 2005-10-31  Willie Walker <william.walker@sun.com>
 
+	* src/orca/debug.py: add ability to send debug output to a
+	file (via debug.setDebugFile).  This should allow us to pass
+	in a non-buffered file from user-settings.py, hopefully 
+	allowing us to better track where orca is hanging.
 	* src/orca/*.py, src/orca/scripts/*.py: make the voicename
         for speaking be an optional parameter with a default value
         of "default".
