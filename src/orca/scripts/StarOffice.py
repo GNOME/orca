@@ -78,23 +78,18 @@ class StarOffice(Default):
         - event: the Event
         """
 
-        print "StarOffice: onFocus: called."
-
         # If this is a focus event for a menu or one of the various
         # types of menu item, then just ignore it. Otherwise pass the
         # event onto the parent class to be processed.
 
         role = event.source.role
-        print "StarOffice: onFocus: role %s" % role
 
         if (role == rolenames.ROLE_MENU) \
            or (role == rolenames.ROLE_MENU_ITEM) \
            or (role == rolenames.ROLE_CHECK_MENU_ITEM) \
            or (role == rolenames.ROLE_RADIO_MENU_ITEM):
-            print "StarOffice: onFocus: just returning."
             return
         else:
-            print "StarOffice: onFocus: passing to parent."
             Default.onFocus(self, event)
 
 
@@ -106,27 +101,20 @@ class StarOffice(Default):
         - event: the Event
         """
 
-        print "StarOffice: onStateChanged called."
-
         # If this is an "armed" object-state-changed event for a menu 
         # or one of the various types of menu item, and this object has 
         # the focus, then set the locus of focus. Otherwise pass the
         # event onto the parent class to be processed.
 
-        print "StarOffice: onStateChanged: event.type %s" % event.type
-
         if event.type.endswith("armed"):
             role = event.source.role
-            print "StarOffice: onFocus: role %s" % role
 
             if event.source.state.count(core.Accessibility.STATE_FOCUSED) \
                and ((role == rolenames.ROLE_MENU) or \
                     (role == rolenames.ROLE_MENU_ITEM) or \
                     (role == rolenames.ROLE_CHECK_MENU_ITEM) or \
                     (role == rolenames.ROLE_RADIO_MENU_ITEM)):
-                print "StatOffice: onStateChanged: setting locus of focus."
                 orca.setLocusOfFocus(event, event.source)
                 return
 
-        print "StarOffice: onStateChanged: passing to parent."
         Default.onStateChanged(self, event)
