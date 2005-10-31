@@ -404,7 +404,7 @@ static PyObject *core_module_xKeysymStringToKeycode (PyObject *self,
 					       PyObject *args) {
         Display *display = GDK_DISPLAY();
 	char *keysym;
-	unsigned int keycode;
+	KeyCode keycode;
 
 	/* Parse arguments 
 	 */
@@ -416,9 +416,6 @@ static PyObject *core_module_xKeysymStringToKeycode (PyObject *self,
 
 	keycode = XKeysymToKeycode(display, XStringToKeysym(keysym));
 
-	/* [[[TODO: WDW - I'm not quite sure if long is the right thing
-	 * here.  Logged as bugzilla bug 319647.]]]
-	 */
 	return PyInt_FromLong (keycode);
 }
 
