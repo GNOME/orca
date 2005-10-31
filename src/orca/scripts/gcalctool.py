@@ -104,7 +104,7 @@ class GCalcTool(Default):
             #
             if len(d) == 0:
                 contents = "Unable to get calculator display"
-                speech.say("default", contents)
+                speech.say(contents)
                 braille.displayMessage(contents)
             else:
                 self._display = d[0]
@@ -145,4 +145,4 @@ class GCalcTool(Default):
 
             if (orca.lastInputEvent.event_string == "Return") \
                    or (orca.lastInputEvent.event_string == "="):
-                speech.say("default", contents)
+                speech.say(contents)

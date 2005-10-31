@@ -88,7 +88,7 @@ class Metacity(Default):
         # We have to stop speech, as Metacity has a key grab and we're not
         # getting keys
         #
-        speech.stop("default")
+        speech.stop()
 
         name = event.source.name
 
@@ -114,7 +114,7 @@ class Metacity(Default):
             text += ". " + _("inaccessible")
 
         braille.displayMessage(text)
-        speech.say("status", text)
+        speech.say(text, "status")
         
 
     def onVisibilityChanged(self, event):

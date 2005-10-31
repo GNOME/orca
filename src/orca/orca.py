@@ -281,7 +281,7 @@ def onChildrenChanged(e):
         #
         try:
             if core.desktop.childCount == 0:
-                speech.say("default", _("User logged out - shutting down."))
+                speech.say(_("User logged out - shutting down."))
                 shutdown()
                 return
         except: # could be a CORBA.COMM_FAILURE
@@ -324,7 +324,7 @@ def processBrailleEvent(command):
     if speech.sayAllEnabled:
         speech.stopSayAll()
     else:
-        speech.stop("default")
+        speech.stop()
 
     event = BrailleEvent(command)
     lastInputEvent = event
@@ -563,9 +563,9 @@ def enterLearnMode(inputEvent=None):
     Returns True to indicate the input event has been consumed.
     """
 
-    speech.say("default",
-               _("Entering learn mode.  Press any key to hear its function. " \
-                 + "To exit learn mode, press the escape key."))
+    speech.say(
+        _("Entering learn mode.  Press any key to hear its function. " \
+          + "To exit learn mode, press the escape key."))
     braille.displayMessage(_("Learn mode.  Press escape to exit."))
     settings.setLearnModeEnabled(True)
     return True
@@ -577,7 +577,7 @@ def exitLearnMode(inputEvent=None):
     Returns True to indicate the input event has been consumed.
     """
 
-    speech.say("default", _("Exiting learn mode."))
+    speech.say(_("Exiting learn mode."))
     braille.displayMessage(_("Exiting learn mode."))
     settings.setLearnModeEnabled(False)
     return True
@@ -726,7 +726,7 @@ def start():
         return False
 
     try:
-        speech.say("default", _("Welcome to Orca."))
+        speech.say(_("Welcome to Orca."))
         braille.displayMessage(_("Welcome to Orca."))
     except:
         debug.printException(debug.LEVEL_SEVERE)
@@ -750,7 +750,7 @@ def shutdown(inputEvent=None):
     if not _initialized:
         return False
 
-    speech.say("default", _("goodbye."))
+    speech.say(_("goodbye."))
     braille.displayMessage(_("Goodbye."))
 
     # Deregister our event listeners
@@ -893,9 +893,9 @@ def _keyEcho(key):
     if not settings.getSetting("keyEcho", False):
         return
     if key.isupper():
-        speech.say("uppercase", key)
+        speech.say(key, "uppercase")
     else:
-        speech.say("default", key)
+        speech.say(key)
 
 def processKeyboardEvent(event):
     """The primary key event handler for Orca.  Keeps track of various
@@ -936,7 +936,7 @@ def processKeyboardEvent(event):
         if speech.sayAllEnabled:
             speech.stopSayAll()
         else:
-            speech.stop("default")
+            speech.stop()
 
         # The control characters come through as control characters,
         # so we just turn them into their ASCII equivalent.  NOTE that
@@ -983,7 +983,7 @@ def processKeyboardEvent(event):
     if (not consumed) and settings.getSetting("learnModeEnabled", False):
         if event.type == core.Accessibility.KEY_PRESSED_EVENT:
             braille.displayMessage(event.event_string)
-            speech.say("default", event.event_string)
+            speech.say(event.event_string)
         elif (event.type == core.Accessibility.KEY_RELEASED_EVENT) \
              and (event.event_string == "Escape"):
             exitLearnMode(keyboardEvent)

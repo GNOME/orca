@@ -499,7 +499,7 @@ def activate():
 
     global _currentObject
     
-    speech.say("default", _("Switching to hierarchical navigation mode."))
+    speech.say(_("Switching to hierarchical navigation mode."))
 
     win = orca.findActiveWindow()
     

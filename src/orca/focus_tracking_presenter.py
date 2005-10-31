@@ -326,7 +326,7 @@ def processObjectEvent(e):
     # as bugzilla bug 319777.]]]
     #
     if event.type == "window:activate":
-        speech.stop("default")
+        speech.stop()
         _activeScript = _getScript(event.source.app)
         debug.println(debug.LEVEL_FINE, "ACTIVE SCRIPT: " \
                       + _activeScript.name)
@@ -437,7 +437,7 @@ def visualAppearanceChanged(event, obj):
 def activate():
     """Called when this presentation manager is activated."""
 
-    speech.say("default", _("Switching to focus tracking mode."))
+    speech.say(_("Switching to focus tracking mode."))
 
     _registerEventListener("window:activate")
     _registerEventListener("window:deactivate")

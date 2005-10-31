@@ -146,7 +146,7 @@ class InputEventHandler:
         if settings.getSetting("learnModeEnabled", False):
             if self._description:
                 braille.displayMessage(self._description)
-                speech.say("default", self._description)
+                speech.say(self._description)
                 consumed = True
         else:
             try:

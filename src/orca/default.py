@@ -526,7 +526,7 @@ class Default(Script):
             message = _("No focus")
             utterances.extend(message)
             
-        speech.sayUtterances("default", utterances)
+        speech.sayUtterances(utterances)
 
         return True
 
@@ -710,11 +710,11 @@ class Default(Script):
                and (newNodeLevel >= 0):
                 utterances.append(_("tree level %d") % (newNodeLevel + 1))
 
-            speech.sayUtterances("default", utterances)
+            speech.sayUtterances(utterances)
         else:
             message = _("No focus")
             braille.displayMessage(message)
-            speech.say("default", message)
+            speech.say(message)
 
 
     def visualAppearanceChanged(self, event, obj):
@@ -785,7 +785,7 @@ class Default(Script):
                     self.updateBraille(orca.locusOfFocus.parent,
                                        braille.Region(" " + message))
                     
-                speech.sayUtterances("default", utterances)
+                speech.sayUtterances(utterances)
                     
                 return
 
@@ -803,7 +803,6 @@ class Default(Script):
 
         self.updateBraille(obj)
         speech.sayUtterances(
-            "default",
             self.speechGenerator.getSpeech(event.source, True))
 
             
@@ -880,6 +879,8 @@ class Default(Script):
         Arguments:
         - event: the Event
         """
+ 
+        speech.stop()
 
         # [[[TODO: WDW - HACK to deal with quirky GTK+ menu behavior.
         # The problem is that when moving to submenus in a menu, the
@@ -1057,9 +1058,9 @@ class Default(Script):
         text = event.any_data
         if (string == "BackSpace") or (string == "Delete"):
             if text.isupper():
-                speech.say("uppercase", text)
+                speech.say(text, "uppercase")
             else:
-                speech.say("default", text)
+                speech.say(text)
 
 
     def onTextInserted(self, event):
@@ -1084,9 +1085,9 @@ class Default(Script):
         self.updateBraille(event.source)
         text = event.any_data
         if text.isupper():
-            speech.say("uppercase", text)
+            speech.say(text, "uppercase")
         else:
-            speech.say("default", text)
+            speech.say(text)
 
 
     def onActiveDescendantChanged(self, event):
@@ -1610,11 +1611,11 @@ class Default(Script):
         #
         if not isinstance(inputEvent, input_event.BrailleEvent):
             if (not string) or (len(string) == 0) or (string == "\n"):
-                speech.say("default", _("blank"))
+                speech.say(_("blank"))
             elif string.isspace():
-                speech.say("default", _("white space"))
+                speech.say(_("white space"))
             else:
-                speech.say("default", string)
+                speech.say(string)
 
         self.updateBrailleReview()
         
@@ -1711,18 +1712,18 @@ class Default(Script):
         #
         if not isinstance(inputEvent, input_event.BrailleEvent):
             if (len(string) == 0) or (string == "\n"):
-                speech.say("default", _("blank"))
+                speech.say(_("blank"))
             else:
                 [lineString, x, y, width, height] = \
                          context.getCurrent(flat_review.Context.LINE)
                 if lineString == "\n":
-                    speech.say("default", _("blank"))
+                    speech.say(_("blank"))
                 elif string.isspace():
-                    speech.say("default", _("white space"))
+                    speech.say(_("white space"))
                 elif string.isupper():
-                    speech.say("uppercase", string)
+                    speech.say(string, "uppercase")
                 else:
-                    speech.say("default", string)
+                    speech.say(string)
 
         self.updateBrailleReview(targetCursorCell)        
 
@@ -1740,7 +1741,6 @@ class Default(Script):
         #
         if not isinstance(inputEvent, input_event.BrailleEvent):
             speech.sayUtterances(
-                "default",
                 self.speechGenerator.getSpeech(
                     context.getCurrentAccessible(), False))
             
@@ -1791,16 +1791,16 @@ class Default(Script):
         #
         if not isinstance(inputEvent, input_event.BrailleEvent):
             if (len(string) == 0):
-                speech.say("default", _("blank"))
+                speech.say(_("blank"))
             else:
                 [lineString, x, y, width, height] = \
                          context.getCurrent(flat_review.Context.LINE)
                 if lineString == "\n":
-                    speech.say("default", _("blank"))
+                    speech.say(_("blank"))
                 elif string.isupper():
-                    speech.say("uppercase", string)
+                    speech.say(string, "uppercase")
                 else:
-                    speech.say("default", string)
+                    speech.say(string)
             
         self.updateBrailleReview()
         
@@ -1924,7 +1924,7 @@ def sayLine(obj):
     # Get the AccessibleText interface of the provided object
     #
     result = a11y.getTextLineAtCaret(obj)
-    speech.say("default", result[0])
+    speech.say(result[0])
     
 
 def sayWord(obj):
@@ -1940,7 +1940,7 @@ def sayWord(obj):
     offset = text.caretOffset
     word = text.getTextAtOffset(offset,
                                 core.Accessibility.TEXT_BOUNDARY_WORD_START)
-    speech.say("default", word[0])
+    speech.say(word[0])
     
 
 def sayCharacter(obj):
@@ -1956,9 +1956,9 @@ def sayCharacter(obj):
     offset = text.caretOffset
     character = text.getText(offset, offset+1)
     if character.isupper():
-        speech.say("uppercase", character)
+        speech.say(character, "uppercase")
     else:
-        speech.say("default", character)
+        speech.say(character)
 
 
 ########################################################################
@@ -2015,7 +2015,7 @@ def sayAll(inputEvent):
         pass
     
     if txt is None:
-        speech.say("default", _("Not a document."))
+        speech.say(_("Not a document."))
         return True
     
     sayAllText = txt
@@ -2026,7 +2026,7 @@ def sayAll(inputEvent):
     # the sayAll mode will begin executing when it receives the associated
     # speech callback.
     #
-    speech.startSayAll("default", sayAllGetChunk, sayAllStopped)
+    speech.startSayAll(sayAllGetChunk, sayAllStopped)
     sayLine(orca.locusOfFocus)
 
     return True
@@ -2066,7 +2066,7 @@ def sayAllGetChunk():
 
     # Speak the line
     #
-    speech.say("default", line[0])
+    speech.say(line[0])
 
     # Set the say all position to the beginning of the line being read
     #

@@ -240,7 +240,7 @@ def init(voiceName=None, text=None):
     # Say something if we're supposed to...
     #
     if voiceName and text:
-        say(voiceName, text)
+        say(text, voiceName)
         
     return True
 
@@ -340,8 +340,8 @@ def increaseSpeechRate(inputEvent=None, voiceName=None):
         for name in _speakers.keys():
             increaseSpeechRate(inputEvent, name)
 
-    stop("default")
-    say("default", _("faster."))
+    stop()
+    say(_("faster."))
 
     return True
 
@@ -380,18 +380,18 @@ def decreaseSpeechRate(inputEvent=None, voiceName=None):
         for name in _speakers.keys():
             decreaseSpeechRate(inputEvent, name)
             
-    stop("default")
-    say("default", _("slower"))
+    stop()
+    say(_("slower"))
         
     return True
 
                 
-def say(voiceName, text):
+def say(text, voiceName="default"):
     """Speaks the given text using the given voice style.
 
     Arguments:
-    - voiceName: the name of the voice style to use (e.g., "default")
     - text: the text to speak
+    - voiceName: the name of the voice style to use (e.g., "default")
 
     Returns the result of the GNOME Speech say method call or -1 if
     this module has not been initialized.  [[[TODO: WDW - just what is
@@ -430,7 +430,7 @@ def say(voiceName, text):
     debug.println(debug.LEVEL_INFO, "SPEECH OUTPUT: '" + text + "'")
     try:
         #s.stop()
-        _lastText = [voiceName, text]
+        _lastText = [text, voiceName]
         return s.say(text)
     except:
         # On failure, remember what we said, reset our connection to the
@@ -440,17 +440,17 @@ def say(voiceName, text):
         reset(voiceName, text)
 
 
-def sayUtterances(voiceName, utterances):
+def sayUtterances(utterances, voiceName="default"):
     """Speaks the given list of utterances.
 
     Arguments:
-    - voiceName: the name of the voice style to use (e.g., "default")
     -utterances: A list containing strings.
+    - voiceName: the name of the voice style to use (e.g., "default")
     """
 
     for text in utterances:
         if text and len(text):
-            say(voiceName, text)
+            say(text, voiceName)
 
             
 def sayAgain():
@@ -461,7 +461,7 @@ def sayAgain():
         say(_lastText[0], _lastText[1])
 
     
-def stop(voiceName):
+def stop(voiceName="default"):
     """Stops the specified voice.  This will tell the voice to stop
     all requests in progress and delete all requests waiting to be spoken.
 
