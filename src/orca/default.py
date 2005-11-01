@@ -880,8 +880,6 @@ class Default(Script):
         - event: the Event
         """
  
-        speech.stop()
-
         # [[[TODO: WDW - HACK to deal with quirky GTK+ menu behavior.
         # The problem is that when moving to submenus in a menu, the
         # menu gets focus first and then the submenu gets focus all
