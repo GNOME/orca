@@ -313,6 +313,7 @@ def processObjectEvent(e):
         # The cause is usually because the accessible went away and we
         # don't know it yet.
         #
+        debug.printException(debug.LEVEL_SEVERE)
         return
 
     if event.source is None:

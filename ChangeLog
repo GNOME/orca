@@ -1,3 +1,13 @@
+2005-11-02  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/focus_tracking_presenter.py: added a debug message
+          to one of the except: clauses in processObjectEvent().
+
+        * src/orca/a11.y: adjusted some of the debug messages in the 
+          __get_app routine to check whether obj.name and 
+          obj.parent.name are None, in which case "None" is printed;
+          otherwise "'<name>'".
+
 2005-10-31  Rich Burridge <rich.burridge@sun.com>
 
 	* Initial version of StarOffice.py script. Support for

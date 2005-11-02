@@ -531,12 +531,31 @@ class Accessible:
         obj = self
         while (obj.parent != None) and (obj != obj.parent):
             obj = obj.parent
+            objName = obj.name
+            if objName is None:
+                objName = "None" 
+            else:
+                objName = "'" + objName + "'"
             debug.println(debug.LEVEL_FINEST,
-                          "--> parent=(" + obj.name + ")")
+                          "--> parent=(" + objName + ")")
+
         if (obj.parent != None):
+            objName = obj.name
+            if objName is None:
+                objName = "None"
+            else:
+                objName = "'" + objName + "'"
+
+            parentName = obj.parent.name
+            if parentName is None:
+                parentName = "None"
+            else:
+                parentName = "'" + parentName + "'"
+
             debug.println(debug.LEVEL_FINEST,
-                          "--> obj=(" + obj.name
-                          + ") parent=(" + obj.parent.name + ")")
+                          "--> obj=(" + objName
+                          + ") parent=(" + parentName + ")")
+
             if (obj == obj.parent):
                 debug.println(debug.LEVEL_SEVERE,
                               "ERROR: obj == obj.parent!")
@@ -556,8 +575,13 @@ class Accessible:
                 #1self.valid = False
                 raise InvalidObjectError, "obj == obj.parent"
         else:
+            objName = obj.name
+            if objName is None:
+                objName = "None"
+            else:
+                objName = "'" + objName + "'"
             debug.println(debug.LEVEL_FINEST,
-                          "--> obj=(" + obj.name
+                          "--> obj=(" + objName
                           + ") parent=(None)")
 
         if (obj == obj.parent) \
