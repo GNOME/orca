@@ -25,6 +25,7 @@ import orca.kbd as kbd
 import orca.rolenames as rolenames
 import orca.speech as speech
 import orca.orca as orca
+import orca.keybindings as keybindings
 
 from orca.default import Default
 
@@ -66,6 +67,8 @@ class StarOffice(Default):
         """
         
         Default.__init__(self, app)
+
+        self.keybindings = keybindings.KeyBindings()
 
         self._display = None
         self._display_txt = None

@@ -1,5 +1,14 @@
 2005-11-02  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/scripts/StarOffice.py: added a call to:
+
+          self.keybindings = keybindings.KeyBindings()
+
+          in the __init__ method, to prevent Orca going into flat 
+          review mode when you typed in something like "t".
+
+2005-11-02  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/focus_tracking_presenter.py: added a debug message
           to one of the except: clauses in processObjectEvent().
 
