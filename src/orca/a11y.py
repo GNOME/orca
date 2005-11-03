@@ -146,51 +146,6 @@ def accessibleNameToString(accessible):
         return "None"
 
 
-def accessibleToString(indent, accessible, includeApp=True):
-    """Returns a string, suitable for printing, that describes the
-    given accessible.
-
-    NOTE: this will throw an InvalidObjectError exception if the AT-SPI
-    Accessibility_Accessible can no longer be reached via CORBA.
-
-    Arguments:
-    - indent: A string to prefix the output with
-    - accessible: the Accessible
-    """
-    
-    if not accessible:
-        return ""
-
-    if includeApp:
-        string = indent + " app.name=%-20s " \
-                 % accessibleNameToString(accessible.app)
-    else:
-        string = indent
-
-    string += "name=%s role='%s' state='%s'" \
-              % (accessibleNameToString(accessible),
-                 rolenames.getRoleName(accessible),
-                 getStateString(accessible))
-    
-    return string
-
-
-def printDetails(level, indent, accessible, includeApp=True):
-    """Lists the details of the given accessible with the given
-    indentation.
-
-    NOTE: this will throw an InvalidObjectError exception if the AT-SPI
-    Accessibility_Accessible can no longer be reached via CORBA.
-
-    Arguments:
-    - level: the accepted debug level
-    - indent: a string containing spaces for indentation
-    - accessible: the accessible whose details are to be listed
-    """
-
-    debug.println(level, accessibleToString(indent, accessible, includeApp))
-        
-
 ########################################################################
 #                                                                      #
 # The Accessible class.                                                #
@@ -566,16 +521,12 @@ class Accessible:
                 debug.println(debug.LEVEL_SEVERE,
                               "ERROR: obj == obj.parent!")
                 debug.println(debug.LEVEL_SEVERE,
-                              accessibleToString("       self: ", \
-                                                 self, \
-                                                 False))
+                              self.toString("       self: ", False))
                 obj = self
                 while (obj.parent != None) and (obj != obj.parent):
                     obj = obj.parent
                     debug.println(debug.LEVEL_SEVERE,
-                                  accessibleToString("       obj:  ", \
-                                                     obj, \
-                                                     False))
+                                  obj.toString("       obj:  ", False))
                 print "       obj:  ", obj
                 obj.valid = False
                 #self.valid = False
@@ -998,6 +949,32 @@ class Accessible:
             debug.printException(debug.LEVEL_WARNING)
             self.valid = False
             raise InvalidObjectError, ("Cannot get child %d" % index)
+
+
+    def toString(self, indent="", includeApp=True):
+
+        """Returns a string, suitable for printing, that describes the
+        given accessible.
+
+
+        Arguments:
+        - indent: A string to prefix the output with
+        - includeApp: If True, include information about the app
+                      for this accessible.
+        """
+
+        if includeApp:
+            string = indent + " app.name=%-20s " \
+                     % accessibleNameToString(self.app)
+        else:
+            string = indent
+
+        string += "name=%s role='%s' state='%s'" \
+                  % (accessibleNameToString(self),
+                     rolenames.getRoleName(self),
+                     getStateString(self))
+    
+        return string
 
 
 ########################################################################

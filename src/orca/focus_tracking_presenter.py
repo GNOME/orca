@@ -308,7 +308,7 @@ def processObjectEvent(e):
         event.source = a11y.makeAccessible(e.source)
         debug.printObjectEvent(debug.LEVEL_FINEST,
                                event,
-                               a11y.accessibleToString("", event.source))
+                               event.source.toString())
     except CORBA.COMM_FAILURE:
         debug.printException(debug.LEVEL_SEVERE)
 	a11y.deleteAccessible(e.source)

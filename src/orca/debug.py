@@ -247,3 +247,20 @@ def printInputEvent(level, string):
     global _eventDebugLevel
 
     println(max(level, _eventDebugLevel), string)
+
+
+def printDetails(level, indent, accessible, includeApp=True):
+    """Lists the details of the given accessible with the given
+    indentation.
+
+    Arguments:
+    - level: the accepted debug level
+    - indent: a string containing spaces for indentation
+    - accessible: the accessible whose details are to be listed
+    - includeApp: if True, include information about the app
+    """
+
+    if accessible:
+        println(level, accessible.toString(indent, includeApp))
+        
+

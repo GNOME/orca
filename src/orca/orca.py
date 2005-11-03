@@ -361,11 +361,11 @@ def printApps(inputEvent=None):
     
     debug.println(level, "There are %d Accessible applications" % len(apps))
     for app in apps:
-        a11y.printDetails(level, "  App: ", app, False)
+        debug.printDetails(level, "  App: ", app, False)
         i = 0
         while i < app.childCount:
             child = app.child(i)
-            a11y.printDetails(level, "    Window: ", child, False)
+            debug.printDetails(level, "    Window: ", child, False)
             if child.parent != app:
                 debug.println(level,
                               "      WARNING: child's parent is not app!!!")
@@ -375,7 +375,7 @@ def printApps(inputEvent=None):
 
 
 def printAccessibleTree(level, indent, root):
-    a11y.printDetails(level, indent, root, False)
+    debug.printDetails(level, indent, root, False)
     i = 0
     while i < root.childCount:
         child = root.child(i)
@@ -394,7 +394,7 @@ def printAccessibleTree(level, indent, root):
 
     
 def printAccessiblePaintedTree(level, indent, root):
-    a11y.printDetails(level, indent, root, False)
+    debug.printDetails(level, indent, root, False)
 
     extents = root.extents
     if extents:
