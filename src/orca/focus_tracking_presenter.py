@@ -47,6 +47,8 @@ import speech
 
 from orca_i18n import _ # for gettext support
 
+import CORBA
+
 
 ########################################################################
 #                                                                      #
@@ -307,6 +309,10 @@ def processObjectEvent(e):
         debug.printObjectEvent(debug.LEVEL_FINEST,
                                event,
                                a11y.accessibleToString("", event.source))
+    except CORBA.COMM_FAILURE:
+        debug.printException(debug.LEVEL_SEVERE)
+	a11y.deleteAccessible(e.source)
+	return
     except:
         # The exception will usually occur when we attempt to retrieve
         # or make an accessible that no longer has a good CORBA connection.

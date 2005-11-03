@@ -135,6 +135,17 @@ def getStateString(obj):
     return stateString.strip()
 
 
+def accessibleNameToString(accessible):
+    """Returns the accessible's name in single quotes or 
+    the string None if the accessible does not have a name.
+    """
+
+    if accessible and accessible.name:
+        return "'" + accessible.name + "'"
+    else:
+        return "None"
+
+
 def accessibleToString(indent, accessible, includeApp=True):
     """Returns a string, suitable for printing, that describes the
     given accessible.
@@ -148,22 +159,18 @@ def accessibleToString(indent, accessible, includeApp=True):
     """
     
     if not accessible:
-        return None
+        return ""
 
     if includeApp:
-        appname = ""
-        if accessible.app is None:
-            appname = "None"
-        else:
-            appname = "'" + accessible.app.name + "'"
-        string = indent + " app=%-20s " % appname
+        string = indent + " app.name=%-20s " \
+                 % accessibleNameToString(accessible.app)
     else:
         string = indent
-        
-    string += "name='%s' role='%s' state='%s'" \
-             % (accessible.name,
-                rolenames.getRoleName(accessible),
-                getStateString(accessible))
+
+    string += "name=%s role='%s' state='%s'" \
+              % (accessibleNameToString(accessible),
+                 rolenames.getRoleName(accessible),
+                 getStateString(accessible))
     
     return string
 
@@ -218,6 +225,20 @@ def makeAccessible(acc):
         return obj
     else:
         raise InvalidObjectError, "Attempting to use an invalid accessible"
+
+
+def deleteAccessible(acc):
+    """Delete an Accessible from the cache if it exists.
+
+    Arguments:
+    - acc: the AT-SPI Accessibility_Accessible
+    """
+    if Accessible._cache.has_key(acc):
+	try:
+            del Accessible._cache[acc]
+	except:
+	    pass
+
 
 class InvalidObjectError(EnvironmentError):
     """Used to indicate something is awry with the CORBA connection
@@ -314,7 +335,7 @@ class Accessible:
             try:
                 self._acc.unref()
                 if Accessible._cache.has_key(self.__origAcc):
-                    del Accessible._cache[self.__origAcc]
+                    deleteAccessible(self.__origAcc)
             except:
                 debug.printException(debug.LEVEL_SEVERE)
 
@@ -527,34 +548,19 @@ class Accessible:
         # bug 319677.]]]
         #
         debug.println(debug.LEVEL_FINEST,
-                      "Finding app for source=(" + self.name + ")")
+                      "Finding app for source.name=" \
+	              + accessibleNameToString(self))
         obj = self
         while (obj.parent != None) and (obj != obj.parent):
             obj = obj.parent
-            objName = obj.name
-            if objName is None:
-                objName = "None" 
-            else:
-                objName = "'" + objName + "'"
             debug.println(debug.LEVEL_FINEST,
-                          "--> parent=(" + objName + ")")
+                          "--> parent.name=" + accessibleNameToString(obj))
 
         if (obj.parent != None):
-            objName = obj.name
-            if objName is None:
-                objName = "None"
-            else:
-                objName = "'" + objName + "'"
-
-            parentName = obj.parent.name
-            if parentName is None:
-                parentName = "None"
-            else:
-                parentName = "'" + parentName + "'"
-
             debug.println(debug.LEVEL_FINEST,
-                          "--> obj=(" + objName
-                          + ") parent=(" + parentName + ")")
+                          "--> obj.name=" + accessibleNameToString(obj)
+                          + " parent.name=" 
+			  + accessibleNameToString(obj.parent))
 
             if (obj == obj.parent):
                 debug.println(debug.LEVEL_SEVERE,
@@ -572,17 +578,12 @@ class Accessible:
                                                      False))
                 print "       obj:  ", obj
                 obj.valid = False
-                #1self.valid = False
+                #self.valid = False
                 raise InvalidObjectError, "obj == obj.parent"
         else:
-            objName = obj.name
-            if objName is None:
-                objName = "None"
-            else:
-                objName = "'" + objName + "'"
             debug.println(debug.LEVEL_FINEST,
-                          "--> obj=(" + objName
-                          + ") parent=(None)")
+                          "--> obj.name=" + accessibleNameToString(obj) 
+			  + " parent=None")
 
         if (obj == obj.parent) \
                or (obj.role != rolenames.ROLE_APPLICATION):
@@ -1057,7 +1058,7 @@ def onParentChanged(e):
     # object rather than try to keep the cache in sync.]]]
     #
     if Accessible._cache.has_key(e.source):
-        del Accessible._cache[e.source]
+        deleteAccessible(e.source)
     return
     
     # This could fail if the e.source is now defunct.  [[[TODO: WDW - there
@@ -1362,13 +1363,15 @@ def getFrame(obj):
     """
 
     debug.println(debug.LEVEL_FINEST,
-                  "Finding frame for source=(" + obj.name + ")")
+                  "Finding frame for source.name=" 
+	          + accessibleNameToString(obj))
     
     while (obj != None) \
               and (obj != obj.parent) \
               and (obj.role != rolenames.ROLE_FRAME):
         obj = obj.parent
-        debug.println(debug.LEVEL_FINEST, "--> obj=(" + obj.name + ")")
+        debug.println(debug.LEVEL_FINEST, "--> obj.name=" 
+		      + accessibleNameToString(obj))
 
     if obj and (obj.role == rolenames.ROLE_FRAME):
         return obj
