@@ -1,5 +1,12 @@
 2005-11-03  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/default.py
+          (Per suggestion from Will) Moved the braille.addLine() call
+          in the updateBraille() method, to prevent a "list index out of
+          range" exception.
+
+2005-11-03  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/scripts/StarOffice.py:
           Added a onCaretMoved() method which simply calls the
           same method in its parent class. Now movement from one line in

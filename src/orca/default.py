@@ -836,6 +836,7 @@ class Default(Script):
         braille.clear()
 
         line = braille.Line()
+        braille.addLine(line)
 
         # For multiline text areas, we only show the context if we
         # are on the very first line.  Otherwise, we show only the
@@ -857,8 +858,6 @@ class Default(Script):
         if extraRegion:
             line.addRegion(extraRegion)
             
-        braille.addLine(line)
-
         if extraRegion:
             braille.setFocus(extraRegion)
         else:
