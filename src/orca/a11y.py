@@ -157,9 +157,6 @@ def makeAccessible(acc):
     Accessible's constructor because the object may already be in the
     cache.
 
-    NOTE: this will throw an InvalidObjectError exception if the AT-SPI
-    Accessibility_Accessible can no longer be reached via CORBA.
-
     Arguments:
     - acc: the AT-SPI Accessibility_Accessible
 
@@ -173,13 +170,14 @@ def makeAccessible(acc):
 
     if Accessible._cache.has_key(acc):
         obj = Accessible._cache[acc]
-    else:
+        if not obj.valid:
+            del Accessible._cache[acc]
+            obj = None
+
+    if obj is None:
         obj = Accessible(acc)
 
-    if obj.valid:
-        return obj
-    else:
-        raise InvalidObjectError, "Attempting to use an invalid accessible"
+    return obj 
 
 
 def deleteAccessible(acc):

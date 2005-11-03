@@ -1367,7 +1367,12 @@ class BrailleGenerator:
                     + "looking at child %d" % i)
                 child = obj.child(i)
 
-                if child.role != rolenames.ROLE_SEPARATOR:
+                # [[[TODO: richb - Need to investigate further.
+                # Sometimes, for some unknown reason, the child is None.
+                # We now test for this, rather than cause a traceback.
+                # 
+                if child and child.role != rolenames.ROLE_SEPARATOR:
+
                 # the following line has been removed because insensitive
                 # menu items can get focus in StarOffice.
                 #

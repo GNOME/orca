@@ -74,6 +74,23 @@ class StarOffice(Default):
         self._display_txt = None
 
 
+    def onCaretMoved(self, event):
+        """Called whenever the caret moves.
+
+        Arguments:
+        - event: the Event
+        """
+
+        # [[[TODO: richb - Need to investigate further.
+        # If we subclass this method here, and simple call the same
+        # method in the parent class, then movement from one line in 
+        # a text document to the next, just results in the new line 
+        # being spoken once (compared with both the last line and the 
+        # new line being spoken upto two times each).]]]
+        #
+        Default.onFocus(self, event)
+
+
     def onFocus(self, event):
         """Called whenever an object gets focus.
 

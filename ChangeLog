@@ -1,3 +1,23 @@
+2005-11-03  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/StarOffice.py:
+          Added a onCaretMoved() method which simply calls the
+          same method in its parent class. Now movement from one line in
+          a text document to the next, just results in the new line
+          being spoken once (compared with both the last line and the
+          new line being spoken upto two times each). Need to investigate
+          further why this happens.
+
+        * src/orca/braillegenerator.py
+          Added a check in getBrailleRegions(). Sometimes, for some 
+          unknown reason, the child is None. We now test for this, 
+          rather than cause a traceback.
+
+        * src/orca/a11y.py:
+          Fix from Will. Adjustments to the makeAccessible() method to
+          better handle invalid objects in the local cache. This routine 
+          no longer throws an InvalidObjectError exception.
+
 2005-11-03  Willie Walker <william.walker@sun.com>
 
 	* src/orca/a11y.py, src/orca/orca.py, src/orca/debug.py,
