@@ -292,11 +292,17 @@ def processObjectEvent(e):
     debug.printObjectEvent(debug.LEVEL_FINEST, e)
 
     # Reclaim (delete) any scripts when desktop children go away.
-    # The idea here is that a desktop child is an app.
+    # The idea here is that a desktop child is an app.  We also
+    # generally do not like object:children-changed:remove or
+    # object:property-change:accessible-parent events because they
+    # indicate something is now whacked with the hierarchy, so we
+    # just ignore them.
     #
-    if (e.type == "object:children-changed:remove") \
-       and (e.source == core.desktop):
-        _reclaimScripts()
+    if e.type == "object:children-changed:remove":
+        if e.source == core.desktop:
+            _reclaimScripts()
+        return
+    if e.type == "object:property-change:accessible-parent":
         return
     
     # We ignore defunct objects and let the a11y module take care of them
@@ -332,6 +338,8 @@ def processObjectEvent(e):
         debug.printDetails(debug.LEVEL_FINEST, "    ", event.source)
     except CORBA.COMM_FAILURE:
         debug.printException(debug.LEVEL_SEVERE)
+        debug.println(debug.LEVEL_SEVERE,
+                      "COMM_FAILURE above while processing event: " + e.type)
 	a11y.deleteAccessible(e.source)
 	return
     except:
@@ -348,18 +356,18 @@ def processObjectEvent(e):
     # part of the big refactor to make scripts object-oriented. Logged
     # as bugzilla bug 319777.]]]
     #
-    if event.type == "window:activate":
-        speech.stop()
-        _activeScript = _getScript(event.source.app)
-        debug.println(debug.LEVEL_FINE, "ACTIVE SCRIPT: " \
-                      + _activeScript.name)
-
-    s = _getScript(event.source.app)
-
     try:
+        if event.type == "window:activate":
+            speech.stop()
+            _activeScript = _getScript(event.source.app)
+            debug.println(debug.LEVEL_FINE, "ACTIVE SCRIPT: " \
+                          + _activeScript.name)
+        s = _getScript(event.source.app)
         s.processObjectEvent(event)
     except CORBA.COMM_FAILURE:
         debug.printException(debug.LEVEL_SEVERE)
+        debug.println(debug.LEVEL_SEVERE,
+                      "COMM_FAILURE above while processing event: " + e.type)
 	a11y.deleteAccessible(e.source)        
     except:
         debug.printException(debug.LEVEL_SEVERE)
