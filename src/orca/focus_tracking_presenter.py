@@ -128,7 +128,7 @@ def _unregisterEventListeners(script):
 # The cache of the currently known scripts.  The key is the Python
 # Accessible application, and the value is the script for that app.
 #
-_known_scripts = {} 
+_knownScripts = {} 
 
 
 # The default script - used when the app is unknown (i.e., None)
@@ -222,29 +222,42 @@ def _getScript(app):
             _default = default.getScript(None)
             _registerEventListeners(_default)
         script = _default
-    elif _known_scripts.has_key(app):
-        script = _known_scripts[app]
+    elif _knownScripts.has_key(app):
+        script = _knownScripts[app]
     else:
 	script = _createScript(app)
-    	_known_scripts[app] = script
+    	_knownScripts[app] = script
     	_registerEventListeners(script)
 
     return script
 
 
-def _deleteScript(app):
-    """Deletes a script for an app (if it exists).
-
-    Arguments:
-    - app: the Python app
+def _reclaimScripts():
+    """Compares the list of known scripts to the list of known apps,
+    deleting any scripts as necessary.
     """
 
-    if app:
-        if _known_scripts.has_key(app):
-            script = _known_scripts[app]
+    global _knownScripts
+
+    apps = []
+    
+    i = 0
+    while i < core.desktop.childCount:
+        acc = core.desktop.getChildAtIndex(i)
+        try:
+            app = a11y.makeAccessible(acc)
+            if app:
+                apps.insert(0, app)
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
+        i += 1
+
+    for app in _knownScripts.keys():
+        if apps.count(app) == 0:
+            script = _knownScripts[app]
             _unregisterEventListeners(script)
-            debug.println(debug.LEVEL_FINE, "DELETED SCRIPT: ", script.name)
-            del _known_scripts[app]
+            debug.println(debug.LEVEL_FINE, "DELETED SCRIPT: " + script.name)
+            del _knownScripts[app]
 
 
 ########################################################################
@@ -277,7 +290,15 @@ def processObjectEvent(e):
     global _activeScript
 
     debug.printObjectEvent(debug.LEVEL_FINEST, e)
-        
+
+    # Reclaim (delete) any scripts when desktop children go away.
+    # The idea here is that a desktop child is an app.
+    #
+    if (e.type == "object:children-changed:remove") \
+       and (e.source == core.desktop):
+        _reclaimScripts()
+        return
+    
     # We ignore defunct objects and let the a11y module take care of them
     # for us.
     #
@@ -332,17 +353,6 @@ def processObjectEvent(e):
         _activeScript = _getScript(event.source.app)
         debug.println(debug.LEVEL_FINE, "ACTIVE SCRIPT: " \
                       + _activeScript.name)
-    elif event.type == "object:children-changed:remove":
-        # [[[TODO: WDW - something is severely broken.  We are not deleting
-        # scripts here.  Logged as bugzilla bug 319776.]]]
-        #
-        if e.source == core.desktop:
-            try:
-                _deleteScript(event.source.app)
-                return
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
-                return
 
     s = _getScript(event.source.app)
 
