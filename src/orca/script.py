@@ -122,10 +122,7 @@ class Script:
         #
         for key in self.listeners.keys():
             if event.type.startswith(key):
-                try:
-                    self.listeners[key](event)
-                except:
-                    debug.printException(debug.LEVEL_SEVERE)
+                self.listeners[key](event)
 
             
     def processKeyboardEvent(self, keyboardEvent):
@@ -221,18 +218,12 @@ class Script:
             user_bindings = user_bindings_map["default"]
 
         if user_bindings and user_bindings.has_key(command):
-            try:
-                handler = user_bindings[command]
-                consumed = handler.processInputEvent(brailleEvent)
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
+            handler = user_bindings[command]
+            consumed = handler.processInputEvent(brailleEvent)
                 
         if (not consumed) and self.braillebindings.has_key(command):
-            try:
-                handler = self.braillebindings[command]
-                consumed = handler.processInputEvent(brailleEvent)
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
+            handler = self.braillebindings[command]
+            consumed = handler.processInputEvent(brailleEvent)
 
         return consumed
 

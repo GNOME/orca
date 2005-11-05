@@ -1095,15 +1095,12 @@ class Default(Script):
         - event: the Event
         """
 
-        try:
-            child = a11y.makeAccessible(event.any_data)
+        child = a11y.makeAccessible(event.any_data)
 
-            if child.childCount:
-                orca.setLocusOfFocus(event, child.child(1))
-            else:
-                orca.setLocusOfFocus(event, child)
-        except:
-            debug.printException(debug.LEVEL_SEVERE)
+        if child.childCount:
+            orca.setLocusOfFocus(event, child.child(1))
+        else:
+            orca.setLocusOfFocus(event, child)
             
 
     def onLinkSelected(self, event):
@@ -1113,22 +1110,18 @@ class Default(Script):
         - event: the Event
         """
 
-        try:
-            
-            # [[[TODO: WDW - HACK one might think we could expect an
-            # application to keep its name, but it appears as though
-            # yelp has an identity problem and likes to start calling
-            # itself "yelp," but then changes its name to "Mozilla"
-            # on Fedora Core 4 after the user selects a link.  So, we'll
-            # just assume that link-selected events always come from the
-            # application with focus.]]]
-            #
-            #if orca.locusOfFocus \
-            #   and (orca.locusOfFocus.app == event.source.app):
-            #    orca.setLocusOfFocus(event, event.source)
-            orca.setLocusOfFocus(event, event.source)
-        except:
-            debug.printException(debug.LEVEL_SEVERE)
+        # [[[TODO: WDW - HACK one might think we could expect an
+        # application to keep its name, but it appears as though
+        # yelp has an identity problem and likes to start calling
+        # itself "yelp," but then changes its name to "Mozilla"
+        # on Fedora Core 4 after the user selects a link.  So, we'll
+        # just assume that link-selected events always come from the
+        # application with focus.]]]
+        #
+        #if orca.locusOfFocus \
+        #   and (orca.locusOfFocus.app == event.source.app):
+        #    orca.setLocusOfFocus(event, event.source)
+        orca.setLocusOfFocus(event, event.source)
             
 
     def onStateChanged(self, event):
@@ -1174,27 +1167,22 @@ class Default(Script):
         - event: the Event
         """
 
-        try:
-            # [[[TODO: WDW - HACK layered panes are nutty in that they
-            # will change the selection and tell the selected child it is
-            # focused, but the child will not issue a focus changed event.]]]
-            # 
-            if event.source \
-               and (event.source.role == rolenames.ROLE_LAYERED_PANE):
-#                    or (event.source.role == rolenames.ROLE_TABLE) \
-#                    or (event.source.role == rolenames.ROLE_TREE_TABLE) \
-#                    or (event.source.role == rolenames.ROLE_TREE)):
-                if event.source.childCount:
-                    selection = event.source.selection
-                    if selection and selection.nSelectedChildren > 0:
-                        child = selection.getSelectedChild(0)
-                        if child:
-                            orca.setLocusOfFocus(event,
-                                                 a11y.makeAccessible(child))
-        except:
-            debug.printException(debug.LEVEL_SEVERE)
-
-        return
+        # [[[TODO: WDW - HACK layered panes are nutty in that they
+        # will change the selection and tell the selected child it is
+        # focused, but the child will not issue a focus changed event.]]]
+        # 
+        if event.source \
+           and (event.source.role == rolenames.ROLE_LAYERED_PANE):
+#               or (event.source.role == rolenames.ROLE_TABLE) \
+#               or (event.source.role == rolenames.ROLE_TREE_TABLE) \
+#               or (event.source.role == rolenames.ROLE_TREE)):
+            if event.source.childCount:
+                selection = event.source.selection
+                if selection and selection.nSelectedChildren > 0:
+                    child = selection.getSelectedChild(0)
+                    if child:
+                        orca.setLocusOfFocus(event,
+                                             a11y.makeAccessible(child))
 
 
     def onValueChanged(self, event):

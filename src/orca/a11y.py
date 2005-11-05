@@ -39,6 +39,7 @@ import debug
 import rolenames
 import settings
 
+import CORBA
 
 # If True, attempt to cache accessible object information locally.
 # If False, always use a CORBA call to get the object information.
@@ -55,9 +56,6 @@ CACHE_VALUES = True
 def getStateString(obj):
     """Returns a space-delimited string composed of the given object's
     Accessible state attribute.  This is for debug purposes.
-
-    NOTE: this will throw an InvalidObjectError exception if the AT-SPI
-    Accessibility_Accessible can no longer be reached via CORBA.
 
     Arguments:
     - obj: an Accessible
@@ -186,17 +184,14 @@ def deleteAccessible(acc):
     Arguments:
     - acc: the AT-SPI Accessibility_Accessible
     """
-    if Accessible._cache.has_key(acc):
+
+    if acc and Accessible._cache.has_key(acc):
 	try:
             del Accessible._cache[acc]
 	except:
 	    pass
 
 
-class InvalidObjectError(EnvironmentError):
-    """Used to indicate something is awry with the CORBA connection
-    for an Accessible."""
-    
 class Accessible:
     """Wraps AT-SPI Accessible objects and caches properties such as
     name, description, and parent.
@@ -221,10 +216,6 @@ class Accessible:
         an AT-SPI Accessibility_Accessible.  Applications should not
         call this method, but should instead call makeAccessible.
         
-        NOTE: this will throw an InvalidObjectError exception if the
-        AT-SPI Accessibility_Accessible can no longer be reached via
-        CORBA.
-
         Arguments:
         - acc: the AT-SPI Accessibility_Accessible to back this object
         
@@ -237,6 +228,8 @@ class Accessible:
         # object or not.
         #
         self._acc = None
+        self.__origAcc = None
+
 
         # We'll also keep track of whether this object is any good to
         # us or not.  This object will be deleted when a defunct event
@@ -258,11 +251,7 @@ class Accessible:
         try:
             self._acc = acc._narrow(core.Accessibility.Application)
         except:
-            try:
-                self._acc = acc._narrow(core.Accessibility.Accessible)
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
-                raise InvalidObjectError, "Unexpected issues with Accessible"
+            self._acc = acc._narrow(core.Accessibility.Accessible)
 
         # [[[TODO: WDW - the AT-SPI appears to give us a different accessible
         # when we repeatedly ask for the same child of a parent that manages
@@ -287,57 +276,37 @@ class Accessible:
         if self._acc:
             try:
                 self._acc.unref()
-                if Accessible._cache.has_key(self.__origAcc):
-                    deleteAccessible(self.__origAcc)
             except:
-                debug.printException(debug.LEVEL_SEVERE)
+                pass
+            try:
+                deleteAccessible(self.__origAcc)
+            except:
+                print(dir(self))
 
 
     def __get_name(self):
         """Returns the object's accessible name as a string.
-
-        NOTE: this will throw an InvalidObjectError exception if the
-        AT-SPI Accessibility_Accessible can no longer be reached via
-        CORBA.
         """
 
-        try:
-            name = self._acc.name
-            if CACHE_VALUES:
-                self.name = name
-            return name
-        except:
-            debug.printException(debug.LEVEL_WARNING)
-            self.valid = False
-            raise InvalidObjectError, "Cannot get name"
+        name = self._acc.name
+        if CACHE_VALUES:
+            self.name = name
+        return name
 
 
     def __get_description(self):
         """Returns the object's accessible description as a string.
-
-        NOTE: this will throw an InvalidObjectError exception if the
-        AT-SPI Accessibility_Accessible can no longer be reached via
-        CORBA.
         """
 
-        try:
-            description = self._acc.description
-            if CACHE_VALUES:
-                self.description = self._acc.description
-            return description
-        except:
-            debug.printException(debug.LEVEL_WARNING)
-            self.valid = False
-            raise InvalidObjectError, "Cannot get description"
+        description = self._acc.description
+        if CACHE_VALUES:
+            self.description = self._acc.description
+        return description
 
 
     def __get_parent(self):
         """Returns the object's parent as a Python Accessible.  If
         this object has no parent, None will be returned.
-
-        NOTE: this will throw an InvalidObjectError exception if the
-        AT-SPI Accessibility_Accessible can no longer be reached via
-        CORBA.
         """
 
         # We will never set self.parent if the backing accessible doesn't
@@ -345,58 +314,35 @@ class Accessible:
         # get events for objects without a parent, but then the object ends
         # up getting a parent later on.
         #
-        try:
-            obj = self._acc.parent
-            if obj is None:
-                return None
-            else:
-                parent = makeAccessible(obj);
-                if CACHE_VALUES:
-                    self.parent = parent
-                return parent;
-        except:
-            debug.printException(debug.LEVEL_WARNING)
-            self.valid = False
-            raise InvalidObjectError, "Cannot get parent"
+        obj = self._acc.parent
+        if obj is None:
+            return None
+        else:
+            parent = makeAccessible(obj);
+            if CACHE_VALUES:
+                self.parent = parent
+            return parent;
 
 
     def __get_child_count(self):
         """Returns the number of children for this object.
-
-        NOTE: this will throw an InvalidObjectError exception if the
-        AT-SPI Accessibility_Accessible can no longer be reached via
-        CORBA.
         """
 
-        try:
-            childCount = self._acc.childCount
-            if CACHE_VALUES:
-                self.childCount = childCount
-            return childCount
-        except:
-            debug.printException(debug.LEVEL_WARNING)
-            self.valid = False
-            raise InvalidObjectError, "Cannot get child count"
+        childCount = self._acc.childCount
+        if CACHE_VALUES:
+            self.childCount = childCount
+        return childCount
 
 
     def __get_index(self):
         """Returns the index of this object in its parent's child list.
-
-        NOTE: this will throw an InvalidObjectError exception if the
-        AT-SPI Accessibility_Accessible can no longer be reached via
-        CORBA.
         """
 
-        try:
-            index = self._acc.getIndexInParent()
-            if CACHE_VALUES:
-                self.index = index
-            return index
-        except:
-            debug.printException(debug.LEVEL_WARNING)
-            self.valid = False
-            raise InvalidObjectError, "Cannot get index"
-            
+        index = self._acc.getIndexInParent()
+        if CACHE_VALUES:
+            self.index = index
+        return index
+
 
     def __get_role(self):
         """Returns the Accessible role name of this object as a string.
@@ -406,94 +352,63 @@ class Accessible:
         what it is.  The only thing that is being fudged right now is to
         coalesce radio and check menu items that are also submenus; gtk-demo
         has an example of this in its menus demo.
-
-        NOTE: this will throw an InvalidObjectError exception if the
-        AT-SPI Accessibility_Accessible can no longer be reached via
-        CORBA.
         """
 
-        try:
-            role = self._acc.getRoleName()
-    
-            # [[[WDW - HACK to coalesce menu items with children into
-            # menus.  The menu demo in gtk-demo does this, and one
-            # might view that as an edge case.  But, in
-            # gnome-terminal, "Terminal" -> "Set Character Encoding"
-            # is a menu item with children, but it behaves like a
-            # menu.]]]
-            # 
-            if (role == rolenames.ROLE_CHECK_MENU_ITEM) \
-                and (self.childCount > 0):
-                    role = rolenames.ROLE_CHECK_MENU
-            elif (role == rolenames.ROLE_RADIO_MENU_ITEM) \
-                and (self.childCount > 0):
-                    role = rolenames.ROLE_RADIO_MENU
-            elif (role == rolenames.ROLE_MENU_ITEM) \
-                and (self.childCount > 0):
-                    role = rolenames.ROLE_MENU
+        role = self._acc.getRoleName()
 
-            if CACHE_VALUES:
-                self.role = role
-            return role
-        except:
-            debug.printException(debug.LEVEL_WARNING)
-            self.valid = False
-            raise InvalidObjectError, "Cannot get role"
+        # [[[WDW - HACK to coalesce menu items with children into
+        # menus.  The menu demo in gtk-demo does this, and one
+        # might view that as an edge case.  But, in
+        # gnome-terminal, "Terminal" -> "Set Character Encoding"
+        # is a menu item with children, but it behaves like a
+        # menu.]]]
+        # 
+        if (role == rolenames.ROLE_CHECK_MENU_ITEM) \
+            and (self.childCount > 0):
+                role = rolenames.ROLE_CHECK_MENU
+        elif (role == rolenames.ROLE_RADIO_MENU_ITEM) \
+            and (self.childCount > 0):
+                role = rolenames.ROLE_RADIO_MENU
+        elif (role == rolenames.ROLE_MENU_ITEM) \
+            and (self.childCount > 0):
+                role = rolenames.ROLE_MENU
+
+        if CACHE_VALUES:
+            self.role = role
+        return role
             
 
     def __get_state(self):
         """Returns the Accessible StateSeq of this object, which is a
         sequence of Accessible StateTypes.
-
-        NOTE: this will throw an InvalidObjectError exception if the
-        AT-SPI Accessibility_Accessible can no longer be reached via
-        CORBA.
         """
 
-        try:
-            set = self._acc.getState()
-            set = set._narrow(core.Accessibility.StateSet)
-            state = set.getStates()
-            if CACHE_VALUES:
-                self.state = state
-            return state
-        except:
-            debug.printException(debug.LEVEL_WARNING)
-            self.valid = False
-            raise InvalidObjectError, "Cannot get state"
-            
+        set = self._acc.getState()
+        set = set._narrow(core.Accessibility.StateSet)
+        state = set.getStates()
+        if CACHE_VALUES:
+            self.state = state
+        return state
+
 
     def __get_relations(self):
         """Returns the Accessible RelationSet of this object as a list.
-
-        NOTE: this will throw an InvalidObjectError exception if the
-        AT-SPI Accessibility_Accessible can no longer be reached via
-        CORBA.
         """
 
-        try:
-            relationSet = self._acc.getRelationSet()
-            relations = []
-            for relation in relationSet:
-                relations.append(relation._narrow(
-                    core.Accessibility.Relation))
-            if CACHE_VALUES:
-                self.relations = relations
-            return relations
-        except:
-            debug.printException(debug.LEVEL_WARNING)
-            self.valid = False
-            raise InvalidObjectError, "Cannot get relation set"
-            
+        relationSet = self._acc.getRelationSet()
+        relations = []
+        for relation in relationSet:
+            relations.append(relation._narrow(
+                core.Accessibility.Relation))
+        if CACHE_VALUES:
+            self.relations = relations
+        return relations
+
 
     def __get_app(self):
         """Returns the AT-SPI Accessibility_Application associated with this
         object.  Returns None if the application cannot be found (usually
         the indication of an AT-SPI bug).
-
-        NOTE: this will throw an InvalidObjectError exception if the
-        AT-SPI Accessibility_Accessible can no longer be reached via
-        CORBA.
         """
         
         # [[[TODO: WDW - this code seems like it might break if this
@@ -548,10 +463,6 @@ class Accessible:
         Accessibility.BoundingBox object, or None if the object doesn't
         implement the Accessibility Component interface.
 
-        NOTE: this will throw an InvalidObjectError exception if the
-        AT-SPI Accessibility_Accessible can no longer be reached via
-        CORBA.
-
         Arguments:
         - coordinateType: 0 = get the extents in screen coordinates,
                           1 = get the extents in window coordinates
@@ -562,27 +473,22 @@ class Accessible:
         Component interface.
         """
 
-        try:
-            component = self.component
-            if component is None:
-                return None
-            else:
-                # [[[TODO: WDW - caching the extents is dangerous because
-                # the object may move, resulting in the current extents
-                # becoming way out of date.  Perhaps need to cache just
-                # the component interface and suffer the hit for getting
-                # the extents if we cannot figure out how to determine if
-                # the cached extents is out of date. Logged as bugzilla
-                # bug 319678.]]]
-                #
-                extents = component.getExtents(coordinateType)
-                #if CACHE_VALUES:
-                #    self.extents = extents
-                return extents
-        except:
-            debug.printException(debug.LEVEL_WARNING)
-            self.valid = False
-            raise InvalidObjectError, "Cannot get component extents"
+        component = self.component
+        if component is None:
+            return None
+        else:
+            # [[[TODO: WDW - caching the extents is dangerous because
+            # the object may move, resulting in the current extents
+            # becoming way out of date.  Perhaps need to cache just
+            # the component interface and suffer the hit for getting
+            # the extents if we cannot figure out how to determine if
+            # the cached extents is out of date. Logged as bugzilla
+            # bug 319678.]]]
+            #
+            extents = component.getExtents(coordinateType)
+            #if CACHE_VALUES:
+            #    self.extents = extents
+            return extents
             
 
     def __get_label(self):
@@ -597,10 +503,6 @@ class Accessible:
         3. Else if the object has no name, return the description
 
         4. Else return an empty string
-
-        NOTE: this will throw an InvalidObjectError exception if the
-        AT-SPI Accessibility_Accessible can no longer be reached via
-        CORBA.
         """
 
         label = ""
@@ -668,188 +570,116 @@ class Accessible:
         """Returns an object that implements the Accessibility_Action
         interface for this object, or None if this object doesn't implement
         the Accessibility_Action interface.
-
-        NOTE: this will throw an InvalidObjectError exception if the
-        AT-SPI Accessibility_Accessible can no longer be reached via
-        CORBA.
         """
 
-        try:
-            action = self._acc.queryInterface("IDL:Accessibility/Action:1.0")
-            if action is not None:
-                action = action._narrow(core.Accessibility.Action)
-            if CACHE_VALUES:
-                self.action = action
-            return action
-        except:
-            debug.printException(debug.LEVEL_WARNING)
-            self.valid = False
-            raise InvalidObjectError, "Cannot get action interface"
+        action = self._acc.queryInterface("IDL:Accessibility/Action:1.0")
+        if action is not None:
+            action = action._narrow(core.Accessibility.Action)
+        if CACHE_VALUES:
+            self.action = action
+        return action
             
 
     def __get_component(self):
         """Returns an object that implements the Accessibility_Component
         interface for this object, or None if this object doesn't implement
         the Accessibility_Component interface.
-
-        NOTE: this will throw an InvalidObjectError exception if the
-        AT-SPI Accessibility_Accessible can no longer be reached via
-        CORBA.
         """
 
-        try:
-            component = self._acc.queryInterface(\
-                "IDL:Accessibility/Component:1.0")
-            if component is not None:
-                component = component._narrow(core.Accessibility.Component)
-            if CACHE_VALUES:
-                self.component = component
-            return component
-        except:
-            debug.printException(debug.LEVEL_WARNING)
-            self.valid = False
-            raise InvalidObjectError, "Cannot get component interface"
+        component = self._acc.queryInterface(\
+            "IDL:Accessibility/Component:1.0")
+        if component is not None:
+            component = component._narrow(core.Accessibility.Component)
+        if CACHE_VALUES:
+            self.component = component
+        return component
             
 
     def __get_hypertext(self):
         """Returns an object that implements the Accessibility_Hypertext
         interface for this object, or None if this object doesn't implement
         the Accessibility_Hypertext interface.
-
-        NOTE: this will throw an InvalidObjectError exception if the
-        AT-SPI Accessibility_Accessible can no longer be reached via
-        CORBA.
         """
 
-        try:
-            hypertext = self._acc.queryInterface(\
-                "IDL:Accessibility/Hypertext:1.0")
-            if hypertext is not None:
-                hypertext = hypertext._narrow(core.Accessibility.Hypertext)
-            if CACHE_VALUES:
-                self.hypertext = hypertext
-            return hypertext
-        except:
-            debug.printException(debug.LEVEL_WARNING)
-            self.valid = False
-            raise InvalidObjectError, "Cannot get hypertext interface"
+        hypertext = self._acc.queryInterface(\
+            "IDL:Accessibility/Hypertext:1.0")
+        if hypertext is not None:
+            hypertext = hypertext._narrow(core.Accessibility.Hypertext)
+        if CACHE_VALUES:
+            self.hypertext = hypertext
+        return hypertext
             
 
     def __get_image(self):
         """Returns an object that implements the Accessibility_Image
         interface for this object, or None if this object doesn't implement
         the Accessibility_Image interface.
-
-        NOTE: this will throw an InvalidObjectError exception if the
-        AT-SPI Accessibility_Accessible can no longer be reached via
-        CORBA.
         """
 
-        try:
-            image = self._acc.queryInterface(\
-                "IDL:Accessibility/Image:1.0")
-            if image is not None:
-                image = image._narrow(core.Accessibility.Image)
-            if CACHE_VALUES:
-                self.image = image
-            return image
-        except:
-            debug.printException(debug.LEVEL_WARNING)
-            self.valid = False
-            raise InvalidObjectError, "Cannot get image interface"
+        image = self._acc.queryInterface(\
+            "IDL:Accessibility/Image:1.0")
+        if image is not None:
+            image = image._narrow(core.Accessibility.Image)
+        if CACHE_VALUES:
+            self.image = image
+        return image
             
 
     def __get_selection(self):
         """Returns an object that implements the Accessibility_Selection
         interface for this object, or None if this object doesn't implement
         the Accessibility_Selection interface.
-
-        NOTE: this will throw an InvalidObjectError exception if the
-        AT-SPI Accessibility_Accessible can no longer be reached via
-        CORBA.
         """
 
-        try:
-            selection = self._acc.queryInterface(\
-                "IDL:Accessibility/Selection:1.0")
-            if selection is not None:
-                selection = selection._narrow(core.Accessibility.Selection)
-            if CACHE_VALUES:
-                self.selection = selection
-            return selection
-        except:
-            debug.printException(debug.LEVEL_WARNING)
-            self.valid = False
-            raise InvalidObjectError, "Cannot get selection interface"
-            
+        selection = self._acc.queryInterface(\
+            "IDL:Accessibility/Selection:1.0")
+        if selection is not None:
+            selection = selection._narrow(core.Accessibility.Selection)
+        if CACHE_VALUES:
+            self.selection = selection
+        return selection
+
 
     def __get_table(self):
         """Returns an object that implements the Accessibility_Table
         interface for this object, or None if this object doesn't implement
         the Accessibility_Table interface.
-
-        NOTE: this will throw an InvalidObjectError exception if the
-        AT-SPI Accessibility_Accessible can no longer be reached via
-        CORBA.
         """
 
-        try:
-            table = self._acc.queryInterface("IDL:Accessibility/Table:1.0")
-            if table is not None:
-                table = table._narrow(core.Accessibility.Table)
-            if CACHE_VALUES:
-                self.table = table
-            return table
-        except:
-            debug.printException(debug.LEVEL_WARNING)
-            self.valid = False
-            raise InvalidObjectError, "Cannot get table interface"
+        table = self._acc.queryInterface("IDL:Accessibility/Table:1.0")
+        if table is not None:
+            table = table._narrow(core.Accessibility.Table)
+        if CACHE_VALUES:
+            self.table = table
+        return table
             
 
     def __get_text(self):
         """Returns an object that implements the Accessibility_Text
         interface for this object, or None if this object doesn't implement
         the Accessibility_Text interface.
-
-        NOTE: this will throw an InvalidObjectError exception if the
-        AT-SPI Accessibility_Accessible can no longer be reached via
-        CORBA.
         """
 
-        try:
-            text = self._acc.queryInterface("IDL:Accessibility/Text:1.0")
-            if text is not None:
-                text = text._narrow(core.Accessibility.Text)
-            if CACHE_VALUES:
-                self.text = text
-            return text
-        except:
-            debug.printException(debug.LEVEL_WARNING)
-            self.valid = False
-            raise InvalidObjectError, "Cannot get text interface"
+        text = self._acc.queryInterface("IDL:Accessibility/Text:1.0")
+        if text is not None:
+            text = text._narrow(core.Accessibility.Text)
+        if CACHE_VALUES:
+            self.text = text
+        return text
             
 
     def __get_value(self):
         """Returns an object that implements the Accessibility_Value
         interface for this object, or None if this object doesn't implement
         the Accessibility_Value interface.
-
-        NOTE: this will throw an InvalidObjectError exception if the
-        AT-SPI Accessibility_Accessible can no longer be reached via
-        CORBA.
         """
 
-        try:
-            value = self._acc.queryInterface("IDL:Accessibility/Value:1.0")
-            if value is not None:
-                value = value._narrow(core.Accessibility.Value)
-            if CACHE_VALUES:
-                self.value = value
-            return value
-        except:
-            debug.printException(debug.LEVEL_WARNING)
-            self.valid = False
-            raise InvalidObjectError, "Cannot get value interface"
+        value = self._acc.queryInterface("IDL:Accessibility/Value:1.0")
+        if value is not None:
+            value = value._narrow(core.Accessibility.Value)
+        if CACHE_VALUES:
+            self.value = value
+        return value
 
 
     def __getattr__(self, attr):
@@ -858,10 +688,6 @@ class Accessible:
         This method is also called if and only if the given attribute
         does not exist in the object.  Thus, we're effectively lazily
         building a cache to the remote object attributes here.
-
-        NOTE: this will throw an InvalidObjectError exception if the
-        AT-SPI Accessibility_Accessible can no longer be reached via
-        CORBA.
 
         Arguments:
         - attr: a string indicating the attribute name to retrieve
@@ -916,10 +742,6 @@ class Accessible:
     def child(self, index):
         """Returns the specified child of this object.
 
-        NOTE: this will throw an InvalidObjectError exception if the
-        AT-SPI Accessibility_Accessible can no longer be reached via
-        CORBA.
-
         Arguments:
         - index: an integer specifying which child to obtain
 
@@ -934,19 +756,14 @@ class Accessible:
         #
         # Save away details we now know about this child
         #
-        try:
-            acc = self._acc.getChildAtIndex(index)
-            if acc is None:
-                return None
-            newChild = makeAccessible(acc)
-            newChild.index = index
-            newChild.parent = self
-            newChild.app = self.app
-            return newChild
-        except:
-            debug.printException(debug.LEVEL_WARNING)
-            self.valid = False
-            raise InvalidObjectError, ("Cannot get child %d" % index)
+        acc = self._acc.getChildAtIndex(index)
+        if acc is None:
+            return None
+        newChild = makeAccessible(acc)
+        newChild.index = index
+        newChild.parent = self
+        newChild.app = self.app
+        return newChild
 
 
     def toString(self, indent="", includeApp=True):
@@ -1357,10 +1174,6 @@ def getFrame(obj):
 def getTextLineAtCaret(obj):
     """Gets the line of text where the caret is.
 
-    NOTE: this will throw an InvalidObjectError exception if the
-    AT-SPI Accessibility_Accessible can no longer be reached via
-    CORBA.
-
     Argument:
     - obj: an Accessible object that implements the AccessibleText
            interface
@@ -1370,13 +1183,9 @@ def getTextLineAtCaret(obj):
 
     # Get the the AccessibleText interrface
     #
-    try:
-        text = obj.text
-        if text is None:
-            return ["", 0, 0]
-    except:
-        obj.valid = False
-        raise InvalidObjectError, "Cannot get text interface"
+    text = obj.text
+    if text is None:
+        return ["", 0, 0]
         
     # Get the line containing the caret
     #

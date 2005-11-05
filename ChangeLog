@@ -1,3 +1,9 @@
+2005-11-04  Willie Walker <william.walker@sun.com>
+
+	* src/orca/{a11y,default,focus_tracking_presenter,orca,script}.py:
+	bubble COMM_FAILURES up to a higher level to allow for better
+	tracking and debugging of these events.
+	
 2005-11-03  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py

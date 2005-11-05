@@ -276,6 +276,8 @@ def processObjectEvent(e):
 
     global _activeScript
 
+    debug.printObjectEvent(debug.LEVEL_FINEST, e)
+        
     # We ignore defunct objects and let the a11y module take care of them
     # for us.
     #
@@ -306,19 +308,12 @@ def processObjectEvent(e):
         event.detail2 = e.detail2
         event.any_data = e.any_data
         event.source = a11y.makeAccessible(e.source)
-        debug.printObjectEvent(debug.LEVEL_FINEST,
-                               event,
-                               event.source.toString())
+        debug.printDetails(debug.LEVEL_FINEST, "    ", event.source)
     except CORBA.COMM_FAILURE:
         debug.printException(debug.LEVEL_SEVERE)
 	a11y.deleteAccessible(e.source)
 	return
     except:
-        # The exception will usually occur when we attempt to retrieve
-        # or make an accessible that no longer has a good CORBA connection.
-        # The cause is usually because the accessible went away and we
-        # don't know it yet.
-        #
         debug.printException(debug.LEVEL_SEVERE)
         return
 
@@ -353,6 +348,9 @@ def processObjectEvent(e):
 
     try:
         s.processObjectEvent(event)
+    except CORBA.COMM_FAILURE:
+        debug.printException(debug.LEVEL_SEVERE)
+	a11y.deleteAccessible(e.source)        
     except:
         debug.printException(debug.LEVEL_SEVERE)
 
@@ -372,12 +370,9 @@ def processKeyboardEvent(keyboardEvent):
     global _activeScript
 
     if _activeScript:
-        try:
-            return _activeScript.processKeyboardEvent(keyboardEvent)
-        except:
-            debug.printException(debug.LEVEL_SEVERE)
-            
-    return False
+        return _activeScript.processKeyboardEvent(keyboardEvent)
+    else:
+        return False
 
 
 def processBrailleEvent(brailleEvent):
@@ -390,12 +385,9 @@ def processBrailleEvent(brailleEvent):
     """
 
     if _activeScript:
-        try:
-            return _activeScript.processBrailleEvent(brailleEvent)
-        except:
-            debug.printException(debug.LEVEL_SEVERE)
-
-    return False
+        return _activeScript.processBrailleEvent(brailleEvent)
+    else:
+        return False
 
 
 def locusOfFocusChanged(event, oldLocusOfFocus, newLocusOfFocus):
@@ -410,12 +402,9 @@ def locusOfFocusChanged(event, oldLocusOfFocus, newLocusOfFocus):
     global _activeScript
     
     if _activeScript:
-        try:
-            _activeScript.locusOfFocusChanged(event,
-                                              oldLocusOfFocus,
-                                              newLocusOfFocus)
-        except:
-            debug.printException(debug.LEVEL_SEVERE)
+        _activeScript.locusOfFocusChanged(event,
+                                          oldLocusOfFocus,
+                                          newLocusOfFocus)
             
 
 def visualAppearanceChanged(event, obj):
@@ -435,10 +424,7 @@ def visualAppearanceChanged(event, obj):
     global _activeScript
     
     if _activeScript:
-        try:
-            _activeScript.visualAppearanceChanged(event, obj)
-        except:
-            debug.printException(debug.LEVEL_SEVERE)
+        _activeScript.visualAppearanceChanged(event, obj)
             
 
 def activate():

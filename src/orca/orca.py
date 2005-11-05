@@ -336,7 +336,6 @@ def processBrailleEvent(command):
         debug.printException(debug.LEVEL_SEVERE)
 
     if (not consumed) and settings.getSetting("learnModeEnabled", False):
-        # [[[TODO: WDW - add a toString to braille.py.]]]
         consumed = True
 
     return consumed
@@ -975,20 +974,23 @@ def processKeyboardEvent(event):
     if _insertPressed:
         keyboardEvent.modifiers |= (1 << MODIFIER_ORCA)
 
-    consumed = _keybindings.consumeKeyboardEvent(keyboardEvent)
-    if (not consumed) and (_currentPresentationManager >= 0):
-        consumed = _PRESENTATION_MANAGERS[_currentPresentationManager].\
-                   processKeyboardEvent(keyboardEvent)
+    consumed = False
+    try:
+        consumed = _keybindings.consumeKeyboardEvent(keyboardEvent)
+        if (not consumed) and (_currentPresentationManager >= 0):
+            consumed = _PRESENTATION_MANAGERS[_currentPresentationManager].\
+                       processKeyboardEvent(keyboardEvent)
+        if (not consumed) and settings.getSetting("learnModeEnabled", False):
+            if event.type == core.Accessibility.KEY_PRESSED_EVENT:
+                braille.displayMessage(event.event_string)
+                speech.say(event.event_string)
+            elif (event.type == core.Accessibility.KEY_RELEASED_EVENT) \
+                 and (event.event_string == "Escape"):
+                exitLearnMode(keyboardEvent)
+            consumed = True
+    except:
+        debug.printException(debug.LEVEL_SEVERE)
         
-    if (not consumed) and settings.getSetting("learnModeEnabled", False):
-        if event.type == core.Accessibility.KEY_PRESSED_EVENT:
-            braille.displayMessage(event.event_string)
-            speech.say(event.event_string)
-        elif (event.type == core.Accessibility.KEY_RELEASED_EVENT) \
-             and (event.event_string == "Escape"):
-            exitLearnMode(keyboardEvent)
-        consumed = True
-            
     lastInputEvent = keyboardEvent
 
     return consumed
