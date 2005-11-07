@@ -1,3 +1,5 @@
+SUBDIRS = pydoc
+
 EXTRA_DIST = \
 application.txt \
 braille.txt \

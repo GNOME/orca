@@ -1,3 +1,11 @@
+
+2005-11-07  Rich Burridge <rich.burridge@sun.com>
+
+        * configure.in, docs/pydoc,
+          docs/Makefile.am, docs/pydoc/Makefile.am
+          Added in a new .../docs/pydoc directory where pydoc HTML
+          documentation is generated for all the Orca Python files.
+
 2005-11-05  Willie Walker <william.walker@sun.com>
 
 	* src/orca/focus_tracking_presenter.py: really delete scripts when

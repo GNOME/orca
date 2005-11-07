@@ -89,6 +89,7 @@ AC_OUTPUT([
 Makefile
 orca.spec
 docs/Makefile
+docs/pydoc/Makefile
 po/Makefile.in
 src/Makefile
 src/brl/Makefile
