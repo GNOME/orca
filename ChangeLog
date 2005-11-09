@@ -1,4 +1,5 @@
-
+2005-11-09 Mike Pedersen <michael.pedersen@sun.com>
+	Added test directories
 2005-11-07  Rich Burridge <rich.burridge@sun.com>
 
         * configure.in, docs/pydoc,
