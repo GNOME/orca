@@ -114,7 +114,7 @@ class Metacity(Default):
             text += ". " + _("inaccessible")
 
         braille.displayMessage(text)
-        speech.say(text, "status")
+        speech.speak(text, "status")
         
 
     def onVisibilityChanged(self, event):

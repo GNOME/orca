@@ -17,6 +17,7 @@ orca_python_PYTHON = \
 	eventsynthesizer.py \
 	flat_review.py \
 	focus_tracking_presenter.py \
+	gnomespeechfactory.py \
 	hierarchical_presenter.py \
 	input_event.py \
 	kbd.py \
@@ -28,7 +29,8 @@ orca_python_PYTHON = \
 	script.py \
 	settings.py \
 	speech.py \
-	speechgenerator.py
+	speechgenerator.py \
+	speechserver.py
 
 orca_pythondir=$(pyexecdir)/orca
 

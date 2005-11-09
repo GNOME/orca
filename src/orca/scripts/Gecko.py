@@ -58,7 +58,7 @@ class Gecko(Default):
         # If there is no active page, we can't do say all
         #
         if activePage is None:
-            speech.say(_("No page to read."))
+            speech.speak(_("No page to read."))
             return
 
         # Get all the objects on the page
@@ -66,7 +66,7 @@ class Gecko(Default):
         try:
             sayAllObjects = a11y.getObjects(activePage)
         except:
-            speech.say(_("Reading web page failed."))
+            speech.speak(_("Reading web page failed."))
             return
 
         # Set up say all mode
@@ -78,8 +78,7 @@ class Gecko(Default):
         # name of the page has finished speaking, say all mode will be
         # active and the first chunk of the page will be read
         #
-        speech.say(activePage.name)
-        speech.startSayAll(getChunk, sayAllDone)
+        speech.speak(activePage.name)
 
         
     # This function is called whenever an object within Mozilla receives
@@ -106,10 +105,10 @@ class Gecko(Default):
     def onLinkSelected(event):
         txt = event.source.text
         if txt is None:
-            speech.say(_("link"), "hyperlink")
+            speech.speak(_("link"), "hyperlink")
         else:
             text = txt.getText(0, -1)
-            speech.say(text, "hyperlink")
+            speech.speak(text, "hyperlink")
 
 
 # The Mozilla version of say all reads text from multiple objects
@@ -160,9 +159,9 @@ def presentNextHypertext():
                     sayAllObjectIndex = sayAllObjectIndex + 1
                     continue
                 else:
-                    speech.say(text, "image")
+                    speech.speak(text, "image")
             elif text is not "":
-                speech.say(text)
+                speech.speak(text)
             if text == "":
                 sayAllObjectIndex = sayAllObjectIndex + 1
                 continue
@@ -184,7 +183,7 @@ def presentNextHypertext():
         else:
             nLinks = ht.getNLinks()
         if nLinks == 0:
-            speech.say(text)
+            speech.speak(text)
 
         # Speak this hypertext object in chunks
 
@@ -213,11 +212,11 @@ def presentNextHypertext():
                 # If there is text between where we are now and the beginning of the link, read it first
 
                 if start != position:
-                    speech.say(text[position:start])
+                    speech.speak(text[position:start])
 
                 # Speak the text of the hyperlink using the hyperlink voice
 
-                speech.say(text[start:end], "hyperlink")
+                speech.speak(text[start:end], "hyperlink")
                 position = end
                 i = i + 1
 
@@ -225,7 +224,7 @@ def presentNextHypertext():
             # left, spaek it
 
             if end < len(text):
-                speech.say(text[end:])
+                speech.speak(text[end:])
 
     # If we have no more objects to speak, end say all mode
 

@@ -44,6 +44,8 @@ BRAILLE_ROLENAME_STYLE_LONG  = 1 # full rolename
 
 brailleRolenameStyle = BRAILLE_ROLENAME_STYLE_LONG
 
+speechFactoryModules = ["gnomespeechfactory"]
+
 voices = {}
 keyEcho = False
 useSpeech = True

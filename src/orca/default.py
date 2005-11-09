@@ -92,14 +92,14 @@ class Default(Script):
         # Keyboard bindings                                            #
         #                                                              #
         ################################################################
-        self.keybindings.add(
-            keybindings.KeyBinding(
-                "F9", \
-                1 << orca.MODIFIER_ORCA, \
-                1 << orca.MODIFIER_ORCA,
-                InputEventHandler(\
-                    sayAgain,
-                    _("Repeats last utterance sent to speech."))))
+        #self.keybindings.add(
+        #    keybindings.KeyBinding(
+        #        "F9", \
+        #        1 << orca.MODIFIER_ORCA, \
+        #        1 << orca.MODIFIER_ORCA,
+        #        InputEventHandler(\
+        #            sayAgain,
+        #            _("Repeats last utterance sent to speech."))))
 
         self.keybindings.add(
             keybindings.KeyBinding(
@@ -119,14 +119,14 @@ class Default(Script):
                     self.rightClickReviewItem,
                     _("Performs right click on current flat review item."))))
 
-        self.keybindings.add(
-            keybindings.KeyBinding(
-                "KP_Add", \
-                0, \
-                0, \
-                InputEventHandler(\
-                    sayAll,
-                    _("Speaks entire document."))))
+        #self.keybindings.add(
+        #    keybindings.KeyBinding(
+        #        "KP_Add", \
+        #        0, \
+        #        0, \
+        #        InputEventHandler(\
+        #            sayAll,
+        #            _("Speaks entire document."))))
 
         self.keybindings.add(
             keybindings.KeyBinding(
@@ -526,7 +526,7 @@ class Default(Script):
             message = _("No focus")
             utterances.extend(message)
             
-        speech.sayUtterances(utterances)
+        speech.speakUtterances(utterances)
 
         return True
 
@@ -710,11 +710,11 @@ class Default(Script):
                and (newNodeLevel >= 0):
                 utterances.append(_("tree level %d") % (newNodeLevel + 1))
 
-            speech.sayUtterances(utterances)
+            speech.speakUtterances(utterances)
         else:
             message = _("No focus")
             braille.displayMessage(message)
-            speech.say(message)
+            speech.speak(message)
 
 
     def visualAppearanceChanged(self, event, obj):
@@ -785,7 +785,7 @@ class Default(Script):
                     self.updateBraille(orca.locusOfFocus.parent,
                                        braille.Region(" " + message))
                     
-                speech.sayUtterances(utterances)
+                speech.speakUtterances(utterances)
                     
                 return
 
@@ -802,7 +802,7 @@ class Default(Script):
                           % (obj.name, obj.role))
 
         self.updateBraille(obj)
-        speech.sayUtterances(
+        speech.speakUtterances(
             self.speechGenerator.getSpeech(event.source, True))
 
             
@@ -1055,9 +1055,9 @@ class Default(Script):
         text = event.any_data
         if (string == "BackSpace") or (string == "Delete"):
             if text.isupper():
-                speech.say(text, "uppercase")
+                speech.speak(text, "uppercase")
             else:
-                speech.say(text)
+                speech.speak(text)
 
 
     def onTextInserted(self, event):
@@ -1082,9 +1082,9 @@ class Default(Script):
         self.updateBraille(event.source)
         text = event.any_data
         if text.isupper():
-            speech.say(text, "uppercase")
+            speech.speak(text, "uppercase")
         else:
-            speech.say(text)
+            speech.speak(text)
 
 
     def onActiveDescendantChanged(self, event):
@@ -1596,11 +1596,11 @@ class Default(Script):
         #
         if not isinstance(inputEvent, input_event.BrailleEvent):
             if (not string) or (len(string) == 0) or (string == "\n"):
-                speech.say(_("blank"))
+                speech.speak(_("blank"))
             elif string.isspace():
-                speech.say(_("white space"))
+                speech.speak(_("white space"))
             else:
-                speech.say(string)
+                speech.speak(string)
 
         self.updateBrailleReview()
         
@@ -1697,18 +1697,18 @@ class Default(Script):
         #
         if not isinstance(inputEvent, input_event.BrailleEvent):
             if (len(string) == 0) or (string == "\n"):
-                speech.say(_("blank"))
+                speech.speak(_("blank"))
             else:
                 [lineString, x, y, width, height] = \
                          context.getCurrent(flat_review.Context.LINE)
                 if lineString == "\n":
-                    speech.say(_("blank"))
+                    speech.speak(_("blank"))
                 elif string.isspace():
-                    speech.say(_("white space"))
+                    speech.speak(_("white space"))
                 elif string.isupper():
-                    speech.say(string, "uppercase")
+                    speech.speak(string, "uppercase")
                 else:
-                    speech.say(string)
+                    speech.speak(string)
 
         self.updateBrailleReview(targetCursorCell)        
 
@@ -1725,7 +1725,7 @@ class Default(Script):
         # the Braille display as an input device.
         #
         if not isinstance(inputEvent, input_event.BrailleEvent):
-            speech.sayUtterances(
+            speech.speakUtterances(
                 self.speechGenerator.getSpeech(
                     context.getCurrentAccessible(), False))
             
@@ -1776,16 +1776,16 @@ class Default(Script):
         #
         if not isinstance(inputEvent, input_event.BrailleEvent):
             if (len(string) == 0):
-                speech.say(_("blank"))
+                speech.speak(_("blank"))
             else:
                 [lineString, x, y, width, height] = \
                          context.getCurrent(flat_review.Context.LINE)
                 if lineString == "\n":
-                    speech.say(_("blank"))
+                    speech.speak(_("blank"))
                 elif string.isupper():
-                    speech.say(string, "uppercase")
+                    speech.speak(string, "uppercase")
                 else:
-                    speech.say(string)
+                    speech.speak(string)
             
         self.updateBrailleReview()
         
@@ -1909,7 +1909,7 @@ def sayLine(obj):
     # Get the AccessibleText interface of the provided object
     #
     result = a11y.getTextLineAtCaret(obj)
-    speech.say(result[0])
+    speech.speak(result[0])
     
 
 def sayWord(obj):
@@ -1925,7 +1925,7 @@ def sayWord(obj):
     offset = text.caretOffset
     word = text.getTextAtOffset(offset,
                                 core.Accessibility.TEXT_BOUNDARY_WORD_START)
-    speech.say(word[0])
+    speech.speak(word[0])
     
 
 def sayCharacter(obj):
@@ -1941,140 +1941,9 @@ def sayCharacter(obj):
     offset = text.caretOffset
     character = text.getText(offset, offset+1)
     if character.isupper():
-        speech.say(character, "uppercase")
+        speech.speak(character, "uppercase")
     else:
-        speech.say(character)
-
-
-########################################################################
-#                                                                      #
-# SAYALL SUPPORT                                                       #    
-#                                                                      #
-# The following functions related to the sayAll system.  This system   #
-# is designed to be pluggable such that sayAll commands could be       #
-# implemented for various types of objects.  The current               #
-# implementation only works for reading the text of single text        #
-# objects.  This implementation will need to be extended to support    #
-# reading of more complex documents such as web pages in Yelp/Mozilla, #
-# and documents within StarOffice.                                     #
-#                                                                      #
-# [[[TODO: WDW - need to think about updating magnifier roi.]]]        #
-#                                                                      #
-########################################################################
-
-def sayAgain(inputEvent):
-    """Tells speech to repeat what was last spoken.
-        
-    Arguments:
-    - inputEvent: the InputEvent instance that caused this to be called.
-
-    Returns True indicating the event should be consumed.
-    """
-    
-    speech.sayAgain()
-    
-    return True
-    
-    
-def sayAll(inputEvent):
-    """Initiates sayAll mode and attempts to say all the text of the
-    currently focused Accessible text object.  [[[TODO: WDW - the entire
-    sayAll mechanism is likely to be severely broken.]]]
-    
-    Arguments:
-    - inputEvent: the InputEvent instance that caused this to be called.
-
-    Returns True indicating the event should be consumed.
-    """
-    
-    global sayAllText
-    global sayAllPosition
-
-    # If the focused object isn't text, we don't know how to read it
-    #
-    txt = None
-    try:
-        txt = orca.locusOfFocus.text
-    except:
-        debug.printException(debug.LEVEL_FINEST)
-        pass
-    
-    if txt is None:
-        speech.say(_("Not a document."))
-        return True
-    
-    sayAllText = txt
-    sayAllPosition = txt.caretOffset
-
-    # Initialize sayAll mode with the speech subsystem - providing the
-    # sayAllGetChunk and sayAllStopped callbacks.  Once we call sayLine,
-    # the sayAll mode will begin executing when it receives the associated
-    # speech callback.
-    #
-    speech.startSayAll(sayAllGetChunk, sayAllStopped)
-    sayLine(orca.locusOfFocus)
-
-    return True
-
-
-# sayAllText contains the AccessibleText object of the document
-# currently being read
-#
-sayAllText = None
-
-# sayAllPosition is the current position within sayAllText
-#
-sayAllPosition = 0
-
-def sayAllGetChunk():
-    """Speaks the next chunk of text.
-
-    Returns True if there is still more text to be spoken.
-    """
-    
-    global sayAllText
-    global sayAllPosition
-
-    # Get the next line of text to read
-    #
-    line = sayAllText.getTextAfterOffset(
-        sayAllPosition,
-        core.Accessibility.TEXT_BOUNDARY_LINE_START)
-
-    # If the line is empty (which only happens at the end of the
-    # document [[[TODO: WDW - is this true?]]]), quit.  Note that
-    # blank lines are returned as lines of length 1 character which is
-    # the newline character
-    #
-    if line[1] == line[2]:
-        return False
-
-    # Speak the line
-    #
-    speech.say(line[0])
-
-    # Set the say all position to the beginning of the line being read
-    #
-    sayAllPosition = line[1]
-
-    # Return true to continue reading
-
-    return True
-
-
-def sayAllStopped(position):
-    """Called when sayAll mode is interrupted.
-
-    Arguments:
-    - position: the position within the current chunk where speech
-                was interrupted.
-    """
-    
-    global sayAllText
-    global sayAllPosition
-
-    sayAllText.setCaretOffset(sayAllPosition + position)
-
+        speech.speak(character)
 
 # Dictionary that defines the state changes we care about for various
 # objects.  The key represents the role and the value represents a list

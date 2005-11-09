@@ -97,7 +97,7 @@ class Gaim(Default):
         label = obj.label
         text = label + _(" chat")
         braille.displayMessage(text)
-        speech.say(text)
+        speech.speak(text)
 
         
     def _setIm(self, obj):
@@ -120,7 +120,7 @@ class Gaim(Default):
         label = obj.label
         text = label + _(" instant message")
         braille.displayMessage(text)
-        speech.say(text)
+        speech.speak(text)
 
 
     def onWindowActivated(self, event):
@@ -195,8 +195,7 @@ class Gaim(Default):
                 text = text[1:]
                 
             braille.displayMessage(text)
-            speech.say(text)
-            print "Inserted:", text
+            speech.speak(text)
         else:
             orca.setLocusOfFocus(event, event.source, False)
             return Default.onTextInserted(self, event)
@@ -220,4 +219,4 @@ class Gaim(Default):
             return Default.onFocus(self, event)
 
         text = text + " " + getRoleName(event.source)
-        speech.say(text)
+        speech.speak(text)

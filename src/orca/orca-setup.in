@@ -1,5 +1,5 @@
 #!@PYTHON@
-
+#
 # Orca
 #
 # Copyright 2004-2005 Sun Microsystems Inc.
@@ -62,10 +62,14 @@ settings.writelines ("\n")
 # Speech setup
 #
 import orca.speech as speech
-setupSpeaker = None
+import orca.speechserver as speechserver
 
 
-def sayAndPrint (text, stop=False, getInput=False):
+def sayAndPrint (text, 
+                 stop=False, 
+	         getInput=False,
+		 speechserver=speech, 
+                 acssName="default"):
     """Prints the given text.  In addition, if the setupSpeaker field
     is not None, speaks the given text, optionally interrupting
     anything currently being spoken.
@@ -78,61 +82,15 @@ def sayAndPrint (text, stop=False, getInput=False):
     Returns raw input from the user if getInput is True.
     """
     
-    if setupSpeaker is not None:
-        if stop:
-            setupSpeaker.stop ()
-        setupSpeaker.say (text)
+    if stop:
+	speech.stop()
+    	speechserver.stop()
+    speechserver.speak(text, acssName)
 
     if getInput:
         return raw_input(text)
     else:
-        print text
-        
-
-def makeSpeaker (d, name):
-    """Prompts the user to set up a voice for a given style for a given
-    speech driver.
-
-    Arguments:
-    - d: the speech driver (e.g., Festival)
-    - name: the style (e.g., default)
-
-    Returns: a tuple: (speaker, voice name) or None
-    """
-    voices = d.getAllVoices ()
-    sayAndPrint (_("Select %s voice: ") %(name), True)
-    i = 1
-    voiceCount = len (voices)
-    while i <= voiceCount:
-        sayAndPrint (_("%d. %s") %(i, voices[i-1].name))
-        i = i + 1
-    voice = int (sayAndPrint (_("Enter choice: "), False, True))
-    if voice == 0 or voice > voiceCount:
-        return None
-    v = voices[voice-1]
-    
-    s = d.createSpeaker (v)
-    s = s._narrow (speech.GNOME.Speech.Speaker)
-    return (s, v.name)
-
-
-def saveSpeaker (voicelist, d, s, voicename, name):
-    """Saves the driver, speaker, and voice parameters (rate, pitch, volume)
-    in the voicelist dictionary using the style name as a key.
-
-    Arguments:
-    - voicelist: the voicelist dictionary to update
-    - d: the speech synthesis driver
-    - s: the speaker
-    - voicename: the name of the voice as described by the driver
-    - name: the name of the style (e.g., "default")
-    """
-    
-    pitch = s.getParameterValue ("pitch")
-    rate = s.getParameterValue ("rate")
-    volume = s.getParameterValue ("volume")
-    params = [d.synthesizerName, voicename, rate, pitch, volume]
-    voicelist[name] = params
+        print text        
 
 
 def setupSpeech ():
@@ -142,66 +100,59 @@ def setupSpeech ():
     returns False.
     """
     
-    global setupSpeaker
-    
-    if (not speech.init()) or (len(speech.drivers)) == 0:
-        print _("No working GNOME Speech drivers found.")
+    factories = speech.getSpeechServerFactories()
+    if len(factories) == 0:
+        print _("No working speech drivers found.")
         return False
-    
-    driverCount = len (speech.drivers)
+
+    speech.init()
+    speech.speak(_("Welcome to Orca setup."))
+    speech.speak(_("Select default speech synthesizer."))
+
+    servers = {}
     i = 1
-    while i <= driverCount:
-       
-        # Speak the driver name also
+    for factory in factories:
+	for server in factory.getSpeechServers():
+	    sayAndPrint(_("%d. %s") % (i, server.getInfo()[1]))
+	    servers[i] = [factory, server]
+	    i += 1
 
-        if i == 1:
-            voices = speech.drivers[i-1].getAllVoices ()
-            setupSpeaker = speech.drivers[i-1].createSpeaker (voices[0])
-            setupSpeaker = setupSpeaker._narrow (speech.GNOME.Speech.Speaker)
-            sayAndPrint (_("Welcome to Orca setup."))
-            sayAndPrint (_("Select default speech synthesizer"))
-            del voices
-        sayAndPrint (_("%d. %s") %(i, speech.drivers[i-1].synthesizerName))
-        i = i + 1
-    synth = int (sayAndPrint (_("Enter choice: "), False, True))
-    if synth == 0 or synth > driverCount:
-        sayAndPrint (_("Speech will not be used.\n"), True)
+    choice = int(sayAndPrint(_("Enter choice: "), False, True))
+    if (choice <= 0) or (choice >= i):
+        sayAndPrint(_("Speech will not be used.\n"))
         return False
-    d = speech.drivers[synth-1]
 
-    voices = {}
+    [factory, server] = servers[choice]
 
-    # Prompt for the default voice
-    #
-    (s, voicename) = makeSpeaker (d, "default")
-    saveSpeaker (voices, d, s, voicename, "default")
+    sayAndPrint (_("Select %s voice: ") % server.getInfo()[1], True)
+    voices = {}    
+    i = 1
+    for family in server.getVoiceFamilies():
+        name = family[speechserver.VoiceFamily.NAME]
+        acss = speechserver.ACSS({speechserver.ACSS.FAMILY : family})
+        server.setACSS(name, acss)
+        sayAndPrint(_("%d. %s") % (i, name))
+	voices[i] = acss
+	i += 1
 
-    # Make the uppercase voice the same as default for now, but with a
-    # little higher pitch.
-    #
-    pitch = s.getParameterValue ("pitch")
-    pitch = pitch * 1.5
-    s.setParameterValue ("pitch", pitch)
-    saveSpeaker (voices, d, s, voicename, "uppercase")
+    selection = int(sayAndPrint(_("Enter choice: "), False, True))
+    if selection == 0 or selection >= i:
+        speech.speak(_("Speech will not be used.\n"))
+        return False
 
-    # Prompt for additional voices - these are user-defined voice styles
-    # that will be saved away for now.
-    #
-    anotherVoice = True
-    while anotherVoice:
-        anotherVoice = sayAndPrint (_("Create another voice?  Enter y or n: "),
-                                    False,
-                                    True)
-        if anotherVoice[0:1] == 'Y' or anotherVoice[0:1] == 'y':
-            anotherVoice = True
-        else:
-            anotherVoice = False
-        if anotherVoice:
-            name = sayAndPrint (_("Enter voice name: "), False, True)
-            (s, voicename) = makeSpeaker (d, name)
-            saveSpeaker (voices, d, s, voicename, name)
+    defaultACSS = voices[selection]
+    
+    pitch = defaultACSS[speechserver.ACSS.AVERAGE_PITCH] * 1.5
+    uppercaseACSS = speechserver.ACSS(defaultACSS)
+    uppercaseACSS[speechserver.ACSS.AVERAGE_PITCH] = pitch
 
+    voices = {
+        "default"   : [factory.__name__, server.getInfo()[0], defaultACSS],
+        "uppercase" : [factory.__name__, server.getInfo()[0], uppercaseACSS]
+    }
+        
     settings.writelines ("voices = " + str(voices)+"\n")
+
     keyEcho = sayAndPrint (_("Use key echo?  Enter y or n: "), True, True)
     if keyEcho[0:1] == 'Y' or keyEcho[0:1] == 'y':
         settings.writelines ("keyEcho = True\n")
@@ -239,6 +190,7 @@ def setupBraille ():
     else:
         return False
 
+
 def enableAccessibility():
     """Enables the GNOME accessibility flag.  Users need to log out and
     then back in for this to take effect."""
@@ -252,6 +204,7 @@ def enableAccessibility():
         sayAndPrint("Accessibility support for GNOME has been enabled.")
         sayAndPrint("You need to log out and log back in for the change "\
                     +"to take effect.")
+
 
 useSpeech = setupSpeech ()
 if useSpeech == False:

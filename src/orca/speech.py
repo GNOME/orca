@@ -17,564 +17,143 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-"""Manages the speech for orca.
-
-Provides support for voice styles, speaking, and sayAll mode.
+"""Manages the default speech server for orca.  A script can use this
+as its speech server, or it can feel free to create one of its own.
 """
 
 import debug
 import settings
-
-from chnames import chnames
-from core import ORBit, bonobo
+import speechserver
 
 from orca_i18n import _           # for gettext support
 
-ORBit.load_typelib('GNOME_Speech')
-import GNOME.Speech, GNOME__POA.Speech
-
-# Global list of active gnome-spech drivers
+# The speech server to use for all speech operations.
 #
-drivers = []
+__speechserver = None
 
-# Dictionary of speakers.  The key is the voice style name (e.g., "default")
-# and the value is the speaker.
-#
-_speakers = {}
-
-# If True, this module has been initialized.
-#
-_initialized = False
-
-# List containing last voice and text spoken.
-#
-_lastText = None
-
-def createSpeaker(driverName, voiceName):
-    """Internal to speech module only.
-
-    Creates a GNOME Speech speaker based on a speech driver name and a voice
-    name.
-
-    Arguments:
-    - driverName: speech driver name (e.g., "Festival Speech Synthesis System")
-    - voiceName: voice style name from settings.py
-
-    Returns a speaker from the driver or None if the speaker cannot be
-    created or the driver cannot be found.
+def getSpeechServerFactories():
+    """Imports all known SpeechServer factory modules.  Returns a list
+    of modules that implement the getSpeechServers method, which
+    returns a list of speechserver.SpeechServer instances.
     """
     
-    global drivers
-
-    # Find the specified GNOME Speech driver
-    #
-    found = False
-    for driver in drivers:
-        if driver.synthesizerName.find(driverName) >= 0:
-            found = True
-            break
-    if not found:
-        return None
-
-    # [[[TODO: MM - This could probably just as easily be done with a
-    # better use of getVoices.]]]
-    #
-    voices = driver.getAllVoices()
-    found = False
-    for voice in voices:
-        if voice.name.find(voiceName) >= 0:
-            found = True
-            break
-    if not found:
-        return None
-
-    return driver.createSpeaker(voice)
-
-
-class SpeechCallback(GNOME__POA.Speech.SpeechCallback):
-    """Implements gnome-speech's SpeechCallback class.  The speech
-    module uses only one global callback object which is used for
-    tasks such as sayAll mode.
-
-    SpeechCallback objects contain a speech ended method, as well as the
-    current speaking position.
-    """
-
-    def __init__(self):
-        self.onSpeechEnded = None
-        self.position = 0
-
-
-    def notify(self, type, id, offset):
-        """Called by GNOME Speech when the GNOME Speech driver generates
-        a callback.
-
-        Arguments:
-        - type:
-        - id:
-        - offset:
-        """
-        
-        # Call our speech ended Python function if we have one
-        #
-        if type == GNOME.Speech.speech_callback_speech_ended:
-            if self.onSpeechEnded:
-                self.onSpeechEnded()
-
-        # Update our speaking position if we get a speech progress
-        # notification.  [[[TODO: WDW - need to be able use this to
-        # update the magnifier's region of interest.]]]
-        #
-        elif type == GNOME.Speech.speech_callback_speech_progress:
-            self.position = offset
-
-
-# Global speech callback instance.
-#
-_cb = SpeechCallback()
-
-
-def init(voiceName=None, text=None):
-    """Initializes the speech module, connecting to the various speech
-    drivers and creating the various speakersvoice styles defined in the
-    user's settings.py.
-
-    Arguments:
-    - voiceName: the name of the voice style to use (e.g., "default")
-    - text: the text to speak
-
-    If the arguments are not None, then they will be used to issue a
-    message to the say command.
+    factories = []
     
-    Returns True if the initialization procedure was run or False if this
-    module has already been initialized.
-    """
-    
-    global drivers
+    moduleNames = settings.getSetting("speechFactoryModules",
+                                      ["gnomespeechfactory"])
 
-    global _initialized
-    global _speakers
-    global _cb
-
-    if _initialized:
-        return False
-
-    # Get a list of all the drivers on the system and find out how many
-    # of them work.
-    #
-    servers = bonobo.activation.query(
-        "repo_ids.has('IDL:GNOME/Speech/SynthesisDriver:0.3')")
-
-    drivers = []
-    for server in servers:
+    for moduleName in moduleNames:
         try:
-            driver = bonobo.activation.activate_from_id(server.iid, 0, False)
-            driver = driver._narrow(GNOME.Speech.SynthesisDriver)
-            isInitialized = driver.isInitialized()
-        except:
-            debug.printException(debug.LEVEL_FINEST)
-            continue
-            
-        # Only initialize the driver if someone else hasn't
-        # initialized it already.  [[[TODO: WDW - unless we're doing
-        # the configuration, we probably do not want to initialize
-        # all the drivers.]]]
-        #
-        if not isInitialized:
-            isInitialized = driver.driverInit()
-
-        if isInitialized:
-            drivers.append(driver)
-
-    # Create the speakers
-    #
-    _speakers = {}
-    voices = settings.getSetting("voices", {})
-    for voiceName in voices.keys():
-        desc = voices[voiceName]
-        s = createSpeaker(desc[0], desc[1])
-        if s is not None:
-            s = s._narrow(GNOME.Speech.Speaker)
-            s.setParameterValue("rate", desc[2])
-            s.setParameterValue("pitch", desc[3])
-            s.setParameterValue("volume", desc[4])
-            _speakers[voiceName] = s
-
-            debug.println(debug.LEVEL_CONFIGURATION,
-                          voiceName + " voice set to" \
-                          + " driver=" + desc[0] \
-                          + " name=" + desc[1] \
-                          + (" rate=%d" % desc[2]) \
-                          + (" pitch=%d" % desc[3]) \
-                          + (" volume=%d" % desc[4]))                          
-                          
-            # [[[TODO: WDW - the register succeeds on JDS/Suse but fails
-            # on Fedora.  Dunno why, but we'll just limp along for now.
-            # BTW, the error is on the freetts-synthesis-driver side:
-            # Jul 30, 2005 4:36:09 AM com.sun.corba.se.impl.ior.IORImpl getProfile
-            # WARNING: "IOP00511201: (INV_OBJREF) IOR must have at least one IIOP profile"
-            # org.omg.CORBA.INV_OBJREF:   vmcid: SUN  minor code: 1201  completed: No
-            #
-            try:
-                s.registerSpeechCallback(_cb._this())
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
-                debug.println(debug.LEVEL_CONFIGURATION,
-                              "Will not use speech callbacks.")
-                              
-    # If no speakers were defined, select the first voice of the first
-    # working driver as the default
-    #
-    if len(_speakers) == 0 and len(drivers) > 0:
-        voices = drivers[0].getAllVoices()
-        if len(voices) > 0:
-            _speakers["default"] = drivers[0].createSpeaker(
-                voices[0])._narrow(GNOME.Speech.Speaker)
-            debug.println(debug.LEVEL_CONFIGURATION,
-                          "default voice set to" \
-                          + " driver=" + drivers[0].synthesizerName \
-                          + " name=" + voices[0].name)
-
-    _initialized = True
-
-    # Say something if we're supposed to...
-    #
-    if voiceName and text:
-        say(text, voiceName)
-        
-    return True
-
-
-def shutdown():
-    """Shuts down the speech module, freeing speakers, disconnecting
-    from the GNOME speech drivers, and reseting the initialized state
-    to False.  [[[TODO: WDW - make sure this is shutting down
-    correctly.  Seems like this is too easy.  :-)]]]
-
-    Returns True if the shutdown procedure was run or False if this
-    module has not been initialized.
-    """
-    
-    global drivers
-
-    global _initialized
-    global _speakers
-
-    if not _initialized:
-        return False
-
-    for speaker in _speakers.values():
-        try:
-            speaker.unref()
-        except:
-            debug.printException(debug.LEVEL_FINEST)
-            pass
-        
-    del _speakers
-
-    for driver in drivers:
-        try:
-            driver.unref()
-        except:
-            debug.printException(debug.LEVEL_FINEST)
-            pass
-        
-    del drivers
-
-    _initialized = False
-    
-    return True
-
-
-def reset(voiceName=None, text=None):
-    """Shuts the speech module down and then reinitializes it.  This
-    method is typically to be executed in the event that a failure
-    occurred while attempting to speak.
-
-    Arguments:
-    - voiceName: the name of the voice style to use (e.g., "default")
-    - text: the text to speak
-
-    If the arguments are not None, then they will be used to issue a
-    message to the say command.
-    
-    Returns True if the module has been reset and a connection was
-    re-established with the speech service.
-    """
-
-    shutdown()
-    return init(voiceName, text)
-
-
-def increaseSpeechRate(inputEvent=None, voiceName=None):
-    """Increases the rate of speech for the given voice name.  If
-    voiceName is None, the rate increase will be applied to all known
-    voices.
-
-    [[[TODO: WDW - this is a hack for now.  Need to take min/max values
-    in account, plus also need to take into account that different engines
-    provide different rate ranges.]]]
-    
-    Arguments:
-    -inputEvent: the input event (if any) causing this to be called
-    -voiceName: the voice whose speech rate should be increased
-    """
-
-    rateDelta = settings.getSetting("speechRateDelta", 25)
-    if voiceName:
-        if _speakers.has_key(voiceName):
-            s = _speakers[voiceName]    
-            try:
-                rate = s.getParameterValue("rate") + rateDelta
-                if s.setParameterValue("rate", rate):
-                    debug.println(debug.LEVEL_CONFIGURATION,
-                                  "speech.increaseSpeechRate: rate is now " \
-                                  " %d for %s" % (rate, voiceName))
-                    return
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
-        debug.println(debug.LEVEL_CONFIGURATION,
-                      "speech.increaseSpeechRate could not" \
-                      " increase the speech rate.")
-    else:
-        for name in _speakers.keys():
-            increaseSpeechRate(inputEvent, name)
-
-    stop()
-    say(_("faster."))
-
-    return True
-
-        
-def decreaseSpeechRate(inputEvent=None, voiceName=None):
-    """Decreases the rate of speech for the given voice name.  If
-    voiceName is None, the rate decrease will be applied to all known
-    voices.
-
-    [[[TODO: WDW - this is a hack for now.  Need to take min/max values
-    in account, plus also need to take into account that different engines
-    provide different rate ranges.]]]
-    
-    Arguments:
-    -inputEvent: the input event (if any) causing this to be called
-    -voiceName: the voice whose speech rate should be decreased
-    """
-
-    rateDelta = settings.getSetting("speechRateDelta", 25)
-    if voiceName:
-        if _speakers.has_key(voiceName):
-            s = _speakers[voiceName]    
-            try:
-                rate = s.getParameterValue("rate") - rateDelta
-                if s.setParameterValue("rate", rate):
-                    debug.println(debug.LEVEL_CONFIGURATION,
-                                  "speech.increaseSpeechRate: rate is now " \
-                                  " %d for %s" % (rate, voiceName))
-                    return
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
-        debug.println(debug.LEVEL_CONFIGURATION,
-                      "speech.increaseSpeechRate could not" \
-                      " increase the speech rate.")
-    else:
-        for name in _speakers.keys():
-            decreaseSpeechRate(inputEvent, name)
-            
-    stop()
-    say(_("slower"))
-        
-    return True
-
-                
-def say(text, voiceName="default"):
-    """Speaks the given text using the given voice style.
-
-    Arguments:
-    - text: the text to speak
-    - voiceName: the name of the voice style to use (e.g., "default")
-
-    Returns the result of the GNOME Speech say method call or -1 if
-    this module has not been initialized.  [[[TODO: WDW - just what is
-    this result?  In addition, this is asynchronous (i.e., doesn't
-    wait for the text to be spoken), right?]]]
-    """
-
-    global _initialized
-    global _speakers
-    global _lastText
-    
-    if not _initialized:
-        return -1
-
-    # Do we have the specified voice?
-    #
-    if _speakers.has_key(voiceName):
-        s = _speakers[voiceName]
-    else:
-        s = _speakers["default"]
-
-    # If the text to speak is a single character, see if we have a
-    # customized character pronunciation
-    #
-    if len(text) == 1:
-        try:
-            text = chnames[text.lower()]
-        except:
-            debug.printException(debug.LEVEL_FINEST)
-            pass
-    else:
-        text = text.replace("...", _(" dot dot dot"), 1)
-        
-    # Send the text to the GNOME Speech speaker
-    #
-    debug.println(debug.LEVEL_INFO, "SPEECH OUTPUT: '" + text + "'")
-    try:
-        #s.stop()
-        _lastText = [text, voiceName]
-        return s.say(text)
-    except:
-        # On failure, remember what we said, reset our connection to the
-        # speech synthesis driver, and try to say it again.
-        #
-        debug.printException(debug.LEVEL_SEVERE)
-        reset(voiceName, text)
-
-
-def sayUtterances(utterances, voiceName="default"):
-    """Speaks the given list of utterances.
-
-    Arguments:
-    -utterances: A list containing strings.
-    - voiceName: the name of the voice style to use (e.g., "default")
-    """
-
-    for text in utterances:
-        if text and len(text):
-            say(text, voiceName)
-
-            
-def sayAgain():
-    """Speaks the last text again.
-    """
-
-    if _lastText:
-        say(_lastText[0], _lastText[1])
-
-    
-def stop(voiceName="default"):
-    """Stops the specified voice.  This will tell the voice to stop
-    all requests in progress and delete all requests waiting to be spoken.
-
-    Arguments:
-    - voiceName: the name of the voice style (e.g., "default")
-    """
-    
-    global _initialized
-    global _speakers
-
-    if not _initialized:
-        return
-
-    if _speakers.has_key(voiceName):
-        s = _speakers[voiceName]
-        try:
-            s.stop()
+            module =  __import__(moduleName, 
+                                 globals(), 
+                                 locals(), 
+                                 [''])
+            factories.append(module)
         except:
             debug.printException(debug.LEVEL_SEVERE)
-            reset()
-            
-########################################################################
-#                                                                      #
-# SAYALL SUPPORT                                                       #    
-#                                                                      #
-########################################################################
 
-# onSayAllStopped is a global reference to a function which is called
-# when sayAll mode is interrupted
-#
-onSayAllStopped = None
+    return factories
 
-# onSayAllChunk is a global refernece to a function which is called
-# when sayAll mode needs another chunk of text to speak
-#
-onSayAllGetChunk = None
-
-# sayAllVoiceName is a global string contaiing the name of the voice
-# used in sayAll mode
-#
-sayAllVoiceName = None
-
-# sayAllEnabled is a global flag indicating whether sayAll mode is
-# enabled
-#
-sayAllEnabled = False
-
-# This function is called in sayAll mode when speech for a chunk of
-# text has ended
-
-def sayAllSpeechEnded():
-    """Called in sayAll mode when speech for a chunk of text has
-    ended.  This will prompt sayAll mode to attempt to speak the
-    next chunk of text.
-
-    """
+def init():
     
-    global sayAllEnabled
-    global _cb
-    global onSayAllGetChunk
+    global __speechserver
 
-    # If calling sayAllGetChunk fails, then we're done
+    if __speechserver:
+        return
+
+    # We first try to setup thing from the user's preferences.
+    # If that doesn't work, we'll fall back to the first engine
+    # we find.
     #
-    if not onSayAllGetChunk():
-        # Call the client's sayAllStopped function
-        #
-        onSayAllStopped(0)
+    voices = settings.getSetting("voices", {})
+    factory = None    
+    for voiceName in voices.keys():
+        [moduleName, serverName, acssDict] = voices[voiceName]
+        if not factory:
+            try:
+                factory =  __import__(moduleName, 
+                                      globals(), 
+                                      locals(), 
+                                      [''])
+            except:
+                try:
+                    moduleName = moduleName.replace("orca.","",1)
+                    factory =  __import__(moduleName, 
+                                          globals(), 
+                                          locals(), 
+                                          [''])
+                except:
+                    debug.printException(debug.LEVEL_SEVERE)
+                    
+        if not __speechserver:
+            try:
+                speechservers = factory.getSpeechServers([serverName])
+                __speechserver = speechservers[0]
+            except:
+                debug.printException(debug.LEVEL_SEVERE)                
+        try:
+            acss = speechserver.ACSS(acssDict)
+            __speechserver.setACSS(voiceName, acss)
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
+        
+    if not __speechserver:
+        factories = getSpeechServerFactories()
+        servers = factories[0].getSpeechServers()
+        __speechserver = servers[0]
+        return
+        
+def speak(text, acssName="default"):
+    __speechserver.speak(text, acssName)
 
-        # Clear the members of the speech callback
-        #
-        _cb.onSpeechEnded = None
-        sayAllEnabled = False
+def speakUtterances(utterances, acssName="default"):
+    __speechserver.speakUtterances(utterances, acssName)
+
+def stop():
+    __speechserver.stop()
+
+def increaseSpeechRate(inputEvent=None):
+    __speechserver.increaseSpeechRate()
+    return True
+
+def decreaseSpeechRate(inputEvent=None):
+    __speechserver.decreaseSpeechRate()
+    return True
+
+def shutdown():
+    global __speechserver
+    __speechserver.shutdown()
+    __speechserver = None
 
 
-def startSayAll(voiceName, getChunk, onStopped):
-    """Starts sayAll mode.  Takes the name of the voice style to be
-    used, a reference to the function to speak another chunk of
-    text, and a reference to a function to be called when sayAll
-    mode ends.  This merely sets up pointers and doesn't invoke
-    any speaking actions.
-
-    Implementation note: this depends upon the speech driver giving us
-    speech ended callback notification.
+def testNoSettingsInit():
+    init()
+    speak("testing")
     
-    Arguments:
-    - voiceName: the name of the voice style (e.g., "default")
-    - getChunk: the client/script callback that will speak more text
-    - onStopped: the client/script callback that will be notified when
-                 sayAll mode has been stopped.
-    """
+def testRecreate():
+    module =  __import__("gnomespeechfactory", 
+                         globals(), 
+                         locals(), 
+                         [''])
+    speechservers = module.getSpeechServers(["Fonix DECtalk GNOME Speech Driver"])
+    print speechservers
+    speechservers[0].speak("testing", "default")
+    speechservers[0].shutdown()
     
-    global sayAllEnabled
-    global onSayAllGetChunk
-    global onSayAllStopped
-    global _cb
-    global sayAllVoiceName
-    
-    onSayAllGetChunk = getChunk
-    onSayAllStopped = onStopped
-    sayAllVoiceName = voiceName
-    _cb.onSpeechEnded = sayAllSpeechEnded
-    sayAllEnabled = True
-    
+def test():
+    import speechserver
+    factories = getSpeechServerFactories()
+    for factory in factories:
+        print factory.__name__
+        servers = factory.getSpeechServers()
+        for server in servers:
+            print "    ", server.getInfo()
+            for family in server.getVoiceFamilies():
+                name = family[speechserver.VoiceFamily.NAME]
+                print "      ", name
+                acss = speechserver.ACSS({speechserver.ACSS.FAMILY : family})
+                server.setACSS(name, acss)
+                server.speak(name, name)
+                server.speak("testing", "default")
+            server.shutdown()
 
-def stopSayAll():
-    """Stops the sayAll mode currently in progress.
-    """
-    
-    global sayAllEnabled
-    global _cb
-    global sayAllVoiceName
-
-    _cb.onSpeechEnded = None
-    stop(sayAllVoiceName)
-    onSayAllStopped(_cb.position)
-    sayAllEnabled = False

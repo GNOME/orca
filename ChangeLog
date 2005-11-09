@@ -1,5 +1,18 @@
-2005-11-09 Mike Pedersen <michael.pedersen@sun.com>
-	Added test directories
+2005-11-09  Willie Walker <william.walker@sun.com>
+
+	* src/orca/Makefile.am, src/orca/a11y.py, src/orca/default.py,
+	src/orca/focus_tracking_presenter.py, src/orca/orca-setup.in,
+	src/orca/orca.py, src/orca/settings.py, src/orca/speech.py,
+	src/orca/scripts/Gecko.py, src/orca/scripts/gaim.py,
+	src/orca/scripts/gcalctool.py, src/orca/scripts/metacity.py: First
+	pass at new speech system based on conversations with T.V. Raman.
+	NOTE: THIS REQUIRES YOU TO RERUN ORCA-SETUP.  If you don't orca
+	will fail on startup.
+
+2005-11-09  Mike Pedersen <michael.pedersen@sun.com>
+
+	* Added test directories
+	
 2005-11-07  Rich Burridge <rich.burridge@sun.com>
 
         * configure.in, docs/pydoc,

@@ -448,7 +448,7 @@ def visualAppearanceChanged(event, obj):
 def activate():
     """Called when this presentation manager is activated."""
 
-    speech.say(_("Switching to focus tracking mode."))
+    speech.speak(_("Switching to focus tracking mode."))
 
     _registerEventListener("window:activate")
     _registerEventListener("window:deactivate")

@@ -440,7 +440,6 @@ class Accessible:
                     obj = obj.parent
                     debug.println(debug.LEVEL_SEVERE,
                                   obj.toString("       obj:  ", False))
-                print "       obj:  ", obj
                 obj.valid = False
                 #self.valid = False
                 raise InvalidObjectError, "obj == obj.parent"
