@@ -113,8 +113,8 @@ class SpeechServer:
 
         Arguments:
         - text:     text to be spoken
-        - accsName: name of a speechserver.ACCS instance registered
-                    via a call to setACCS
+        - acssName: name of a speechserver.ACSS instance registered
+                    via a call to setACSS
                     
         Output is produced by the next call to speak.
         """
@@ -125,8 +125,8 @@ class SpeechServer:
 
         Arguments:
         - character: text to be spoken
-        - accsName:  name of a speechserver.ACCS instance registered
-                     via a call to setACCS
+        - acssName:  name of a speechserver.ACSS instance registered
+                     via a call to setACSS
                     
         Output is produced by the next call to speak.
         """
@@ -151,8 +151,8 @@ class SpeechServer:
 
         Arguments:
         - list:     list of strings to be spoken
-        - accsName: name of a speechserver.ACCS instance registered
-                    via a call to setACCS
+        - acssName: name of a speechserver.ACSS instance registered
+                    via a call to setACSS
         """
         pass
     
@@ -162,8 +162,8 @@ class SpeechServer:
 
         Arguments:
         - text:     text to be spoken
-        - accsName: name of a speechserver.ACCS instance registered
-                    via a call to setACCS
+        - acssName: name of a speechserver.ACSS instance registered
+                    via a call to setACSS
         """
         pass
 
@@ -173,7 +173,7 @@ class SpeechServer:
         known ACSSs.
     
         Arguments:
-        -accsName: the ACSS whose speech rate should be increased
+        -acssName: the ACSS whose speech rate should be increased
         """
         pass
     
@@ -183,7 +183,7 @@ class SpeechServer:
         known ACSSs.
 
         Arguments:
-        -accsName: the ACSS whose speech rate should be decreased
+        -acssName: the ACSS whose speech rate should be decreased
         """
         pass
     

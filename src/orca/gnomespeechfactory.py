@@ -223,24 +223,24 @@ class SpeechServer(speechserver.SpeechServer):
 
         return families
 
-    def queueText(self, text="", accsName="default"):
+    def queueText(self, text="", acssName="default"):
         """Adds the text to the queue.
 
         Arguments:
         - text:     text to be spoken
-        - accsName: name of a speechserver.ACCS instance registered
-                    via a call to setACCS
+        - acssName: name of a speechserver.ACSS instance registered
+                    via a call to setACSS
                     
         Output is produced by the next call to speak.
         """
-        self.speak(text, accsName)
+        self.speak(text, acssName)
 
     def queueCharacter(self, character, acssName="default"):
         """Adds a single character to the queue of things to be spoken.
 
         Output is produced by the next call to speak.
         """
-        self.speak(character, accsName)
+        self.speak(character, acssName)
         
     def queueTone(self, pitch=440, duration=50):
         """Adds a tone to the queue.
@@ -261,8 +261,8 @@ class SpeechServer(speechserver.SpeechServer):
 
         Arguments:
         - list:     list of strings to be spoken
-        - accsName: name of a speechserver.ACCS instance registered
-                    via a call to setACCS
+        - acssName: name of a speechserver.ACSS instance registered
+                    via a call to setACSS
         """
 
         for text in list:
@@ -330,19 +330,19 @@ class SpeechServer(speechserver.SpeechServer):
         different engines provide different rate ranges.]]]
     
         Arguments:
-        -accsName: the ACSS whose speech rate should be increased
+        -acssName: the ACSS whose speech rate should be increased
         """
 
         rateDelta = settings.getSetting("speechRateDelta", 25)
-        if accsName:
+        if acssName:
             speaker = self.__getSpeaker(acssName)
             try:
                 rate = speaker.getParameterValue("rate") + rateDelta
                 if speaker.setParameterValue("rate", rate):
-                    self.__acss[acssName][speechserver.ACCS.RATE] = rate
+                    self.__acss[acssName][speechserver.ACSS.RATE] = rate
                     debug.println(debug.LEVEL_CONFIGURATION,
                                   "speech.increaseSpeechRate: rate is now " \
-                                  " %d for %s" % (rate, accsName))
+                                  " %d for %s" % (rate, acssName))
                     return
             except:
                 debug.printException(debug.LEVEL_SEVERE)
@@ -363,19 +363,19 @@ class SpeechServer(speechserver.SpeechServer):
         different engines provide different rate ranges.]]]
     
         Arguments:
-        -accsName: the ACSS whose speech rate should be decreased
+        -acssName: the ACSS whose speech rate should be decreased
         """
 
         rateDelta = settings.getSetting("speechRateDelta", 25)
-        if accsName:
+        if acssName:
             speaker = self.__getSpeaker(acssName)
             try:
                 rate = speaker.getParameterValue("rate") - rateDelta
                 if speaker.setParameterValue("rate", rate):
-                    self.__acss[acssName][speechserver.ACCS.RATE] = rate
+                    self.__acss[acssName][speechserver.ACSS.RATE] = rate
                     debug.println(debug.LEVEL_CONFIGURATION,
                                   "speech.decreaseSpeechRate: rate is now " \
-                                  " %d for %s" % (rate, accsName))
+                                  " %d for %s" % (rate, acssName))
                     return
             except:
                 debug.printException(debug.LEVEL_SEVERE)
@@ -432,7 +432,7 @@ class SpeechServer(speechserver.SpeechServer):
                         isInitialized = driver.driverInit()
                     self.__speakers = {}
                     for name in speakers.keys():
-                        self.setACCS(name, speakers[name][1])
+                        self.setACSS(name, speakers[name][1])
                     if text and acssName:
                         self.speak(text, acssName)
                     break
