@@ -235,13 +235,6 @@ class SpeechServer(speechserver.SpeechServer):
         """
         self.speak(text, acssName)
 
-    def queueCharacter(self, character, acssName="default"):
-        """Adds a single character to the queue of things to be spoken.
-
-        Output is produced by the next call to speak.
-        """
-        self.speak(character, acssName)
-        
     def queueTone(self, pitch=440, duration=50):
         """Adds a tone to the queue.
 
@@ -256,6 +249,16 @@ class SpeechServer(speechserver.SpeechServer):
         """
         pass
 
+    def speakCharacter(self, character, acssName="default"):
+        """Speaks a single character immediately.
+
+        Arguments:
+        - character: text to be spoken
+        - acssName:  name of a speechserver.ACSS instance registered
+                     via a call to setACSS
+        """
+        self.speak(character, acssName)
+        
     def speakUtterances(self, list, acssName="default"):
         """Speaks the given list of utterances immediately.
 
@@ -265,9 +268,11 @@ class SpeechServer(speechserver.SpeechServer):
                     via a call to setACSS
         """
 
+        i = 0
         for text in list:
-            self.speak(text, acssName)            
-
+            self.speak(text, acssName, i == 0)
+            i += 1
+            
     def __getSpeaker(self, acssName):
         if self.__speakers.has_key(acssName):
             return self.__speakers[acssName]
@@ -282,15 +287,24 @@ class SpeechServer(speechserver.SpeechServer):
             self.setACSS("default", acss)
         return self.__speakers["default"]
 
-    def speak(self, text=None, acssName="default"):
+    def speak(self, text=None, acssName="default", interrupt=True):
         """Speaks all queued text immediately.  If text is not None,
         it is added to the queue before speaking.
 
         Arguments:
-        - text: optional text to add to the queue before speaking
+        - text:      optional text to add to the queue before speaking
+        - acssName:  name of a speechserver.ACSS instance registered
+                     via a call to setACSS
+        - interrupt: if True, stops any speech in progress before
+                     speaking the text
         """
 
         speaker = self.__getSpeaker(acssName)
+        
+        if text is None:
+            if interrupt:
+                speech.stop()
+            return
         
         # If the text to speak is a single character, see if we have a
         # customized character pronunciation
@@ -309,7 +323,8 @@ class SpeechServer(speechserver.SpeechServer):
         debug.println(debug.LEVEL_INFO, "SPEECH OUTPUT: '" + text + "'")
 
         try:
-            #speaker.stop()
+            if interrupt:
+                speaker.stop()
             self.__lastText = [text, acssName]
             return speaker.say(text)
         except:

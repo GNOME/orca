@@ -120,18 +120,6 @@ class SpeechServer:
         """
         pass
 
-    def queueCharacter(self, character, acssName="default"):
-        """Adds a single character to the queue of things to be spoken.
-
-        Arguments:
-        - character: text to be spoken
-        - acssName:  name of a speechserver.ACSS instance registered
-                     via a call to setACSS
-                    
-        Output is produced by the next call to speak.
-        """
-        pass
-
     def queueTone(self, pitch=440, duration=50):
         """Adds a tone to the queue.
 
@@ -146,6 +134,16 @@ class SpeechServer:
         """
         pass
     
+    def speaksCharacter(self, character, acssName="default"):
+        """Speaks a single character immediately.
+
+        Arguments:
+        - character: text to be spoken
+        - acssName:  name of a speechserver.ACSS instance registered
+                     via a call to setACSS
+        """
+        pass
+
     def speakUtterances(self, list, acssName="default"):
         """Speaks the given list of utterances immediately.
 
