@@ -240,7 +240,7 @@ static PyObject *core_module_registerEventListener (PyObject *self,
 	/* Do we already have a listener registered for this event type? 
 	 */
         type_quark = g_quark_from_string (event_name);
-	el = g_hash_table_lookup (listeners, (gpointer) type_quark);
+	el = g_hash_table_lookup (listeners, GUINT_TO_POINTER(type_quark));
 	if (!el) {
 		/* Create the bonobo event listener and register it with
 		 * at-spi.
