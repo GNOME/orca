@@ -185,7 +185,7 @@ def _createScript(app):
 
         if module:
             try:
-                script = module.getScript(app)
+                script = module.Script(app)
             except:
                 # We do not want the getScript method to fail.  If it does,
                 # we want to let the script developer know what went wrong,
@@ -194,7 +194,7 @@ def _createScript(app):
                 debug.printException(debug.LEVEL_SEVERE)
 
     if script is None:
-        script = default.getScript(app)
+        script = default.Script(app)
 
     return script
 
@@ -219,7 +219,7 @@ def _getScript(app):
     #
     if app is None:
         if _default is None:
-            _default = default.getScript(None)
+            _default = default.Script(None)
             _registerEventListeners(_default)
         script = _default
     elif _knownScripts.has_key(app):

@@ -37,33 +37,13 @@ import keybindings
 #             resolve the GNOME reference in mag.py.]]]
 import orca
 import rolenames
+import script
 import settings
 import speech
 import speechgenerator
 
 from input_event import InputEventHandler
 from orca_i18n import _                          # for gettext support
-from script import Script
-
-
-########################################################################
-#                                                                      #
-# The factory method for this module.  All Scripts are expected to     #
-# have this method, and it is the sole way that instances of scripts   #
-# should be created.                                                   #
-#                                                                      #
-########################################################################
-
-def getScript(app):
-    """Factory method to create a new Default script for the given
-    application.  This method should be used for creating all
-    instances of this script class.
-
-    Arguments:
-    - app: the application to create a script for
-    """
-    
-    return Default(app)
 
 
 ########################################################################
@@ -72,18 +52,16 @@ def getScript(app):
 #                                                                      #
 ########################################################################
 
-class Default(Script):
+class Script(script.Script):
     
     def __init__(self, app):
-        """Creates a new script for the given application.  Callers
-        should use the getScript factory method instead of calling
-        this constructor directly.
+        """Creates a new script for the given application.
         
         Arguments:
         - app: the application to create a script for.
         """
         
-        Script.__init__(self, app)
+        script.Script.__init__(self, app)
 
         self.flatReviewContext = None
 
@@ -447,7 +425,7 @@ class Default(Script):
         #   and event.source.state.count(core.Accessibility.STATE_FOCUSED):
         #    orca.setLocusOfFocus(event, event.source, False)
 
-        Script.processObjectEvent(self, event)
+        script.Script.processObjectEvent(self, event)
 
         
     def getBrailleGenerator(self):

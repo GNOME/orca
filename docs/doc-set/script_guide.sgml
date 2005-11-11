@@ -131,12 +131,10 @@
         <listitem>
 
           <para>Each script module is expected to provide a
-            <literal>getScript</literal> method that takes the
-            accessible application object as an argument.  This method
-            is essentially a factory method that returns an instance
-            of a <literal>Script</literal> (defined in
-            <literal>script.py</literal>) or <literal>Script</literal>
-            subclass.</para>
+            <literal>Script</literal> class that ultimately extends
+            the <literal>orca.Script</literal> class defined 
+            <literal>script.py</literal>.  The constructor takes the
+            accessible application object as an argument.</para>
 
           <para>The constructor for the <literal>Script</literal>
             instance is expected to define any keystrokes, braille

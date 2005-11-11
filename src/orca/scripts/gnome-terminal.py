@@ -17,27 +17,7 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-from orca.default import Default
-
-########################################################################
-#                                                                      #
-# The factory method for this module.  All Scripts are expected to     #
-# have this method, and it is the sole way that instances of scripts   #
-# should be created.                                                   #
-#                                                                      #
-########################################################################
-
-def getScript(app):
-    """Factory method to create a new Default script for the given
-    application.  This method should be used for creating all
-    instances of this script class.
-
-    Arguments:
-    - app: the application to create a script for (should be gnome-terminal)
-    """
-    
-    return GnomeTerminal(app)
-
+import orca.default as default
 
 ########################################################################
 #                                                                      #
@@ -45,15 +25,13 @@ def getScript(app):
 #                                                                      #
 ########################################################################
 
-class GnomeTerminal(Default):
+class Script(default.Script):
 
     def __init__(self, app):
-        """Creates a new script for the given application.  Callers
-        should use the getScript factory method instead of calling
-        this constructor directly.
+        """Creates a new script for the given application.
         
         Arguments:
         - app: the application to create a script for.
         """
 
-        Default.__init__(self, app)
+        default.Script.__init__(self, app)

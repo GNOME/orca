@@ -1,3 +1,9 @@
+2005-11-11  Willie Walker <william.walker@sun.com>
+
+	* src/orca/default.py, src/orca/focus_tracking_presenter.py,
+	src/orca/scripts/*.py, docs/doc-set/script_guide.sgml: eliminate
+	need for script factory paradigm.  
+	
 2005-11-09  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Makefile.am, src/orca/a11y.py, src/orca/default.py,

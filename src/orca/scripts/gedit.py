@@ -31,34 +31,13 @@ application.]]]
 
 import orca.a11y as a11y
 import orca.braille as braille
+import orca.default as default
 import orca.rolenames as rolenames
 import orca.speech as speech
+import orca.speechgenerator as speechgenerator
 
 from orca.orca_i18n import _
 from orca.rolenames import getRoleName
-
-from orca.default import Default
-from orca.speechgenerator import SpeechGenerator
-
-########################################################################
-#                                                                      #
-# The factory method for this module.  All Scripts are expected to     #
-# have this method, and it is the sole way that instances of scripts   #
-# should be created.                                                   #
-#                                                                      #
-########################################################################
-
-def getScript(app):
-    """Factory method to create a new Default script for the given
-    application.  This method should be used for creating all
-    instances of this script class.
-
-    Arguments:
-    - app: the application to create a script for (should be gaim)
-    """
-    
-    return GEdit(app)
-
 
 ########################################################################
 #                                                                      #
@@ -66,7 +45,7 @@ def getScript(app):
 #                                                                      #
 ########################################################################
 
-class GEditSpeechGenerator(SpeechGenerator):
+class SpeechGenerator(speechgenerator.SpeechGenerator):
     """Overrides _getSpeechForFrame so as to avoid digging into the
     gedit hierarchy and tickling a bug in gedit.
     """
@@ -98,10 +77,9 @@ class GEditSpeechGenerator(SpeechGenerator):
         return utterances
     
     
-class GEdit(Default):
+class Script(default.Script):
 
     def getSpeechGenerator(self):
         """Returns the speech generator for this script.
         """
-
-        return GEditSpeechGenerator()
+        return SpeechGenerator()

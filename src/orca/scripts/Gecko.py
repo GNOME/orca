@@ -17,25 +17,12 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-from orca import a11y
-from orca import rolenames
-from orca import speech
+import orca.a11y as a11y
+import orca.default as default
+import orca.rolenames as rolenames
+import orca.speech as speech
 
 from orca.orca_i18n import _
-
-from orca.default import Default
-
-########################################################################
-#                                                                      #
-# The factory method for this module.  All Scripts are expected to     #
-# have this method, and it is the sole way that instances of scripts   #
-# should be created.                                                   #
-#                                                                      #
-########################################################################
-
-def getScript(app):
-    return Gecko(app)
-
 
 ########################################################################
 #                                                                      #
@@ -43,9 +30,9 @@ def getScript(app):
 #                                                                      #
 ########################################################################
 
-class Gecko(Default):
+class Script(default.Script):
     def __init__(self, app):
-        Default.__init__(self, app)
+        default.Script.__init__(self, app)
 
         self.listeners["object:link-selected"] = self.onLinkSelected
 
@@ -86,11 +73,11 @@ class Gecko(Default):
     def onFocus(self, event):
 
         if event.source.role != rolenames.ROLE_PANEL:
-            return Default.onFocus(self, event)
+            return default.Script.onFocus(self, event)
     
         # If it's not a panel, do the default
         #
-        Default.onFocus(self, event)
+        default.Script.onFocus(self, event)
 
         # If the panel has no name, don't touch it
         #

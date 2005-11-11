@@ -85,7 +85,7 @@ class Script:
         else:
             self.name = "default"
 
-        self.name += " (class=" + self.__class__.__name__ + ")"
+        self.name += " (module=" + self.__module__ + ")"
         
         self.listeners = {}
         self.braillebindings = {}

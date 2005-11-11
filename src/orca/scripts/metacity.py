@@ -18,33 +18,12 @@
 # Boston, MA 02111-1307, USA.
 
 import orca.braille as braille
+import orca.default as default
 import orca.rolenames as rolenames
 import orca.orca as orca
 import orca.speech as speech
 
 from orca.orca_i18n import _
-
-from orca.default import Default
-
-########################################################################
-#                                                                      #
-# The factory method for this module.  All Scripts are expected to     #
-# have this method, and it is the sole way that instances of scripts   #
-# should be created.                                                   #
-#                                                                      #
-########################################################################
-
-def getScript(app):
-    """Factory method to create a new Default script for the given
-    application.  This method should be used for creating all
-    instances of this script class.
-
-    Arguments:
-    - app: the application to create a script for (should be metacity)
-    """
-    
-    return Metacity(app)
-
 
 ########################################################################
 #                                                                      #
@@ -52,18 +31,16 @@ def getScript(app):
 #                                                                      #
 ########################################################################
 
-class Metacity(Default):
+class Script(default.Script):
 
     def __init__(self, app):
-        """Creates a new script for the given application.  Callers
-        should use the getScript factory method instead of calling
-        this constructor directly.
+        """Creates a new script for the given application.
         
         Arguments:
         - app: the application to create a script for.
         """
 
-        Default.__init__(self, app)
+        default.Script.__init__(self, app)
 
         self.listeners["object:property-change:accessible-name"] = \
             self.onNameChanged 
@@ -82,7 +59,7 @@ class Metacity(Default):
         # If it's not the statusbar's name changing, ignore it
         #
         if event.source.role != rolenames.ROLE_STATUSBAR:
-            Default.onNameChanged(self, event)
+            default.Script.onNameChanged(self, event)
             return
 
         # We have to stop speech, as Metacity has a key grab and we're not
@@ -140,7 +117,7 @@ class Metacity(Default):
         - event: the Event
         """
         if event.source.role != rolenames.ROLE_STATUSBAR:
-            Default.onTextInserted(self, event)
+            default.Script.onTextInserted(self, event)
 
         
     def onTextDeleted(self, event):
@@ -150,7 +127,7 @@ class Metacity(Default):
         - event: the Event
         """
         if event.source.role != rolenames.ROLE_STATUSBAR:
-            Default.onTextDeleted(self, event)
+            default.Script.onTextDeleted(self, event)
 
 
     def onCaretMoved(self, event):
@@ -160,4 +137,4 @@ class Metacity(Default):
         - event: the Event
         """
         if event.source.role != rolenames.ROLE_STATUSBAR:
-            Default.onCaretMoved(self, event)
+            default.Script.onCaretMoved(self, event)

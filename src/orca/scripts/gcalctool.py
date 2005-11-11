@@ -19,33 +19,12 @@
 
 import orca.a11y as a11y
 import orca.braille as braille
+import orca.default as default
 import orca.input_event as input_event
 import orca.kbd as kbd
 import orca.rolenames as rolenames
 import orca.speech as speech
 import orca.orca as orca
-
-from orca.default import Default
-
-########################################################################
-#                                                                      #
-# The factory method for this module.  All Scripts are expected to     #
-# have this method, and it is the sole way that instances of scripts   #
-# should be created.                                                   #
-#                                                                      #
-########################################################################
-
-def getScript(app):
-    """Factory method to create a new Default script for the given
-    application.  This method should be used for creating all
-    instances of this script class.
-
-    Arguments:
-    - app: the application to create a script for (should be gcalctool)
-    """
-
-    return GCalcTool(app)
-
 
 ########################################################################
 #                                                                      #
@@ -53,7 +32,7 @@ def getScript(app):
 #                                                                      #
 ########################################################################
 
-class GCalcTool(Default):
+class Script(default.Script):
 
     def __init__(self, app):
         """Creates a new script for the given application.  Callers
@@ -64,7 +43,7 @@ class GCalcTool(Default):
         - app: the application to create a script for.
         """
         
-        Default.__init__(self, app)
+        default.Script.__init__(self, app)
 
         self._display = None
         self._display_txt = None
@@ -114,7 +93,7 @@ class GCalcTool(Default):
 
             # Call the default onWindowActivated function
             #
-            Default.onWindowActivated(self, event)
+            default.Script.onWindowActivated(self, event)
 
 
     def onTextInserted(self, event):

@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004 Sun Microsystems Inc.
+# Copyright 2005 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -20,6 +20,7 @@
 import orca.core as core
 import orca.a11y as a11y
 import orca.braille as braille
+import orca.default as default
 import orca.input_event as input_event
 import orca.kbd as kbd
 import orca.rolenames as rolenames
@@ -27,46 +28,22 @@ import orca.speech as speech
 import orca.orca as orca
 import orca.keybindings as keybindings
 
-from orca.default import Default
-
-########################################################################
-#                                                                      #
-# The factory method for this module.  All Scripts are expected to     #
-# have this method, and it is the sole way that instances of scripts   #
-# should be created.                                                   #
-#                                                                      #
-########################################################################
-
-def getScript(app):
-    """Factory method to create a new Default script for the given
-    application.  This method should be used for creating all
-    instances of this script class.
-
-    Arguments:
-    - app: the application to create a script for (should be gcalctool)
-    """
-
-    return StarOffice(app)
-
-
 ########################################################################
 #                                                                      #
 # The StarOffice script class.                                         #
 #                                                                      #
 ########################################################################
 
-class StarOffice(Default):
+class Script(default.Script):
 
     def __init__(self, app):
-        """Creates a new script for the given application.  Callers
-        should use the getScript factory method instead of calling
-        this constructor directly.
+        """Creates a new script for the given application.
         
         Arguments:
         - app: the application to create a script for.
         """
         
-        Default.__init__(self, app)
+        default.Script.__init__(self, app)
 
         self.keybindings = keybindings.KeyBindings()
 
@@ -88,7 +65,7 @@ class StarOffice(Default):
         # being spoken once (compared with both the last line and the 
         # new line being spoken upto two times each).]]]
         #
-        Default.onFocus(self, event)
+        default.Script.onFocus(self, event)
 
 
     def onFocus(self, event):
@@ -110,7 +87,7 @@ class StarOffice(Default):
            or (role == rolenames.ROLE_RADIO_MENU_ITEM):
             return
         else:
-            Default.onFocus(self, event)
+            default.Script.onFocus(self, event)
 
 
     def onStateChanged(self, event):
@@ -137,4 +114,4 @@ class StarOffice(Default):
                 orca.setLocusOfFocus(event, event.source)
                 return
 
-        Default.onStateChanged(self, event)
+        default.Script.onStateChanged(self, event)

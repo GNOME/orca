@@ -25,6 +25,7 @@ time.
 import orca.a11y as a11y
 import orca.braille as braille
 import orca.core as core
+import orca.default as default
 import orca.orca as orca
 import orca.rolenames as rolenames
 import orca.speech as speech
@@ -32,46 +33,22 @@ import orca.speech as speech
 from orca.orca_i18n import _
 from orca.rolenames import getRoleName
 
-from orca.default import Default
-
-########################################################################
-#                                                                      #
-# The factory method for this module.  All Scripts are expected to     #
-# have this method, and it is the sole way that instances of scripts   #
-# should be created.                                                   #
-#                                                                      #
-########################################################################
-
-def getScript(app):
-    """Factory method to create a new Default script for the given
-    application.  This method should be used for creating all
-    instances of this script class.
-
-    Arguments:
-    - app: the application to create a script for (should be gaim)
-    """
-
-    return Gaim(app)
-
-
 ########################################################################
 #                                                                      #
 # The Gaim script class.                                               #
 #                                                                      #
 ########################################################################
 
-class Gaim(Default):
+class Script(default.Script):
 
     def __init__(self, app):
-        """Creates a new script for the given application.  Callers
-        should use the getScript factory method instead of calling
-        this constructor directly.
+        """Creates a new script for the given application.
         
         Arguments:
         - app: the application to create a script for.
         """
 
-        Default.__init__(self, app)
+        default.Script.__init__(self, app)
 
         self._output = None
         self._input = None
@@ -136,7 +113,7 @@ class Gaim(Default):
         if event.source.role != rolenames.ROLE_FRAME:
             self._output = None
             self._input = None
-            return Default.onWindowActivated(self, event)
+            return default.Script.onWindowActivated(self, event)
 
         # Frames with two text boxes are considered to be instant message
         # windows, and those with three are considered chats.  This works for
@@ -153,7 +130,7 @@ class Gaim(Default):
             self._output = None
             self._input = None
 
-        return Default.onWindowActivated(self, event)
+        return default.Script.onWindowActivated(self, event)
 
 
     def onTextInserted(self, event):
@@ -169,13 +146,13 @@ class Gaim(Default):
         # same text area.  So, we do something a bit more creative here.]]]
         #
         #if (self._output == None) or (event.source != self._output):
-        #    return Default.onTextInserted(self, event)
+        #    return default.Script.onTextInserted(self, event)
 
         # Do the default action for everything except the display that
         # is showing the chat.
         #
         if (event.source.role != rolenames.ROLE_TEXT):
-            return Default.onTextInserted(self, event)
+            return default.Script.onTextInserted(self, event)
 
         if not event.source.state.count(core.Accessibility.STATE_FOCUSED):
             # We always automatically go back to focus tracking mode when
@@ -198,7 +175,7 @@ class Gaim(Default):
             speech.speak(text)
         else:
             orca.setLocusOfFocus(event, event.source, False)
-            return Default.onTextInserted(self, event)
+            return default.Script.onTextInserted(self, event)
             
         
     def onFocus(self, event):
@@ -216,7 +193,7 @@ class Gaim(Default):
         elif event.source == self._output:
             text = _("Message Log")
         else:
-            return Default.onFocus(self, event)
+            return default.Script.onFocus(self, event)
 
         text = text + " " + getRoleName(event.source)
         speech.speak(text)
