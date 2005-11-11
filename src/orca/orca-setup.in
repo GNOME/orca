@@ -112,7 +112,7 @@ def setupSpeech ():
     servers = {}
     i = 1
     for factory in factories:
-	for server in factory.getSpeechServers():
+	for server in factory.SpeechServer.getSpeechServers():
 	    sayAndPrint(_("%d. %s") % (i, server.getInfo()[1]))
 	    servers[i] = [factory, server]
 	    i += 1
