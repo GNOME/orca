@@ -87,7 +87,8 @@ def init():
                     
         if not __speechserver:
             try:
-                speechservers = factory.getSpeechServers([serverName])
+                speechservers = \
+                    factory.SpeechServer.getSpeechServers([serverName])
                 __speechserver = speechservers[0]
             except:
                 debug.printException(debug.LEVEL_SEVERE)                
@@ -99,7 +100,7 @@ def init():
         
     if not __speechserver:
         factories = getSpeechServerFactories()
-        servers = factories[0].getSpeechServers()
+        servers = factories[0].SpeechServer.getSpeechServers()
         __speechserver = servers[0]
         return
         
@@ -135,7 +136,8 @@ def testRecreate():
                          globals(), 
                          locals(), 
                          [''])
-    speechservers = module.getSpeechServers(["Fonix DECtalk GNOME Speech Driver"])
+    speechservers = \
+        module.SpeechServer.getSpeechServers(["Fonix DECtalk GNOME Speech Driver"])
     print speechservers
     speechservers[0].speak("testing", "default")
     speechservers[0].shutdown()

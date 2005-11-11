@@ -34,47 +34,6 @@ from orca_i18n import _           # for gettext support
 ORBit.load_typelib('GNOME_Speech')
 import GNOME.Speech, GNOME__POA.Speech
 
-
-def getSpeechServers(names=None):
-    """Factory method to return a list of SpeechServer instances
-    that are backed by working gnome-speech servers on the system,
-    initializing and activating the drivers for the servers as
-    necessary.
-
-    Arguments:
-    - names: a list indicating the names of gnome-speech servers we
-             care about.  If names is None, all known servers are
-             returned.
-    """
-    
-    # Get a list of all the drivers on the system and find out how many
-    # of them work.
-    #
-    servers = bonobo.activation.query(
-        "repo_ids.has('IDL:GNOME/Speech/SynthesisDriver:0.3')")
-
-    speechServers = []
-
-    for server in servers:
-        try:
-            driver = bonobo.activation.activate_from_id(server.iid,
-                                                        0,
-                                                        False)
-            driver = driver._narrow(GNOME.Speech.SynthesisDriver)
-            if (names is None) \
-               or (names.count(driver.driverName)):
-                isInitialized = driver.isInitialized()
-                if not isInitialized:
-                    isInitialized = driver.driverInit()
-                if isInitialized:
-                    speechServers.append(SpeechServer(driver))
-        except:
-            debug.printException(debug.LEVEL_OFF)
-            continue
-
-    return speechServers
-
-
 class SpeechCallback(GNOME__POA.Speech.SpeechCallback):
     """Implements gnome-speech's SpeechCallback class.  The speech
     module uses only one global callback object which is used for
@@ -131,6 +90,46 @@ class SpeechCallback(GNOME__POA.Speech.SpeechCallback):
 
 class SpeechServer(speechserver.SpeechServer):
     """Provides SpeechServer implementation for gnome-speech."""
+
+    def getSpeechServers(names=None):
+        """Factory method to return a list of SpeechServer instances
+        that are backed by working gnome-speech servers on the system,
+        initializing and activating the drivers for the servers as
+        necessary.
+
+        Arguments:
+        - names: a list indicating the names of gnome-speech servers we
+                 care about.  If names is None, all known servers are
+                 returned.
+        """
+     
+        # Get a list of all the drivers on the system and find out how many
+        # of them work.
+        #
+        servers = bonobo.activation.query(
+            "repo_ids.has('IDL:GNOME/Speech/SynthesisDriver:0.3')")
+
+        speechServers = []
+
+        for server in servers:
+            try:
+                driver = bonobo.activation.activate_from_id(server.iid,
+                                                            0,
+                                                            False)
+                driver = driver._narrow(GNOME.Speech.SynthesisDriver)
+                if (names is None) \
+                   or (names.count(driver.driverName)):
+                    isInitialized = driver.isInitialized()
+                    if not isInitialized:
+                        isInitialized = driver.driverInit()
+                    if isInitialized:
+                        speechServers.append(SpeechServer(driver))
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+
+        return speechServers
+
+    getSpeechServers = staticmethod(getSpeechServers)
 
     def __init__(self, driver, initialSettings=None):
         speechserver.SpeechServer.__init__(self)
