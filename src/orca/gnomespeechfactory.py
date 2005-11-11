@@ -323,8 +323,13 @@ class SpeechServer(speechserver.SpeechServer):
         debug.println(debug.LEVEL_INFO, "SPEECH OUTPUT: '" + text + "'")
 
         try:
-            if interrupt:
-                speaker.stop()
+            # [[[TODO: WDW - back this stop out for now.  The problem is
+            # that we end up clipping too much speech, especially in the
+            # case where we want to speak the contents of a popup before
+            # speaking the object with focus.]]]
+            #
+            #if interrupt:
+            #    speaker.stop()
             self.__lastText = [text, acssName]
             return speaker.say(text)
         except:
