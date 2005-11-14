@@ -1,3 +1,11 @@
+2005-11-14  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/Makefile.am src/orca/keynames.py
+          src/orca/orca.py
+          Before key event are spoken in the _keyEcho() routine, they are 
+          checked against a key event dictionary to see if there are 
+          localized  words to be spoken instead.
+
 2005-11-11  Willie Walker <william.walker@sun.com>
 
 	* src/orca/default.py, src/orca/focus_tracking_presenter.py,

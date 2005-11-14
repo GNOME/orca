@@ -27,6 +27,7 @@ import debug
 import focus_tracking_presenter
 import hierarchical_presenter
 import kbd
+import keynames
 import keybindings
 #import mag - [[[TODO: WDW - disable until I can figure out how to
 #             resolve the GNOME reference in mag.py.  This is logged
@@ -37,6 +38,7 @@ import speech
 from input_event import BrailleEvent
 from input_event import KeyboardEvent
 from input_event import InputEventHandler
+from keynames import keynames
 
 from orca_i18n import _           # for gettext support
 
@@ -889,6 +891,13 @@ def _keyEcho(key):
     if key.isupper():
         speech.speak(key, "uppercase")
     else:
+        # Check to see if there are localized words to be spoken for
+        # this key event.
+        try:
+            key = keynames[key]
+        except:
+            debug.printException(debug.LEVEL_FINEST)
+            pass 
         speech.speak(key)
 
 def processKeyboardEvent(event):

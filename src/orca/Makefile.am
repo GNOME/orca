@@ -22,6 +22,7 @@ orca_python_PYTHON = \
 	input_event.py \
 	kbd.py \
 	keybindings.py \
+	keynames.py \
 	mag.py \
 	orca.py \
 	orca_i18n.py \
