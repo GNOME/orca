@@ -92,10 +92,10 @@ class Script(default.Script):
     def onLinkSelected(event):
         txt = event.source.text
         if txt is None:
-            speech.speak(_("link"), "hyperlink")
+            speech.speak(_("link"), speech.voices["hyperlink"])
         else:
             text = txt.getText(0, -1)
-            speech.speak(text, "hyperlink")
+            speech.speak(text, speech.hyperlinkACSS)
 
 
 # The Mozilla version of say all reads text from multiple objects
@@ -146,7 +146,7 @@ def presentNextHypertext():
                     sayAllObjectIndex = sayAllObjectIndex + 1
                     continue
                 else:
-                    speech.speak(text, "image")
+                    speech.speak(text)
             elif text is not "":
                 speech.speak(text)
             if text == "":
@@ -203,7 +203,7 @@ def presentNextHypertext():
 
                 # Speak the text of the hyperlink using the hyperlink voice
 
-                speech.speak(text[start:end], "hyperlink")
+                speech.speak(text[start:end], speech.voices["hyperlink"])
                 position = end
                 i = i + 1
 

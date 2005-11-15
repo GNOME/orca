@@ -889,7 +889,7 @@ def _keyEcho(key):
     if not settings.getSetting("keyEcho", False):
         return
     if key.isupper():
-        speech.speak(key, "uppercase")
+        speech.speak(key, speech.voices["uppercase"])
     else:
         # Check to see if there are localized words to be spoken for
         # this key event.

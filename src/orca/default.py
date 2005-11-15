@@ -1033,7 +1033,7 @@ class Script(script.Script):
         text = event.any_data
         if (string == "BackSpace") or (string == "Delete"):
             if text.isupper():
-                speech.speak(text, "uppercase")
+                speech.speak(text, speech.voices["uppercase"])
             else:
                 speech.speak(text)
 
@@ -1060,7 +1060,7 @@ class Script(script.Script):
         self.updateBraille(event.source)
         text = event.any_data
         if text.isupper():
-            speech.speak(text, "uppercase")
+            speech.speak(text, speech.voices["uppercase"])
         else:
             speech.speak(text)
 
@@ -1684,7 +1684,7 @@ class Script(script.Script):
                 elif string.isspace():
                     speech.speak(_("white space"))
                 elif string.isupper():
-                    speech.speak(string, "uppercase")
+                    speech.speak(string, speech.voices["uppercase"])
                 else:
                     speech.speak(string)
 
@@ -1761,7 +1761,7 @@ class Script(script.Script):
                 if lineString == "\n":
                     speech.speak(_("blank"))
                 elif string.isupper():
-                    speech.speak(string, "uppercase")
+                    speech.speak(string, speech.voices["uppercase"])
                 else:
                     speech.speak(string)
             
@@ -1919,7 +1919,7 @@ def sayCharacter(obj):
     offset = text.caretOffset
     character = text.getText(offset, offset+1)
     if character.isupper():
-        speech.speak(character, "uppercase")
+        speech.speak(character, speech.voices["uppercase"])
     else:
         speech.speak(character)
 

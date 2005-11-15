@@ -25,11 +25,20 @@ import debug
 import settings
 import speechserver
 
+from acss import ACSS
 from orca_i18n import _           # for gettext support
 
 # The speech server to use for all speech operations.
 #
 __speechserver = None
+
+# Various ACSS settings
+#
+voices = {
+    "default"   : ACSS({}),
+    "uppercase" : ACSS({ACSS.AVERAGE_PITCH : 6}),
+    "hyperlink" : ACSS({ACSS.AVERAGE_PITCH : 4})
+}
 
 def getSpeechServerFactories():
     """Imports all known SpeechServer factory modules.  Returns a list
@@ -39,8 +48,7 @@ def getSpeechServerFactories():
     
     factories = []
     
-    moduleNames = settings.getSetting("speechFactoryModules",
-                                      ["gnomespeechfactory"])
+    moduleNames = settings.getSetting("speechFactoryModules", [])
 
     for moduleName in moduleNames:
         try:
@@ -50,112 +58,127 @@ def getSpeechServerFactories():
                                  [''])
             factories.append(module)
         except:
-            debug.printException(debug.LEVEL_SEVERE)
+            debug.printException(debug.LEVEL_OFF)
 
     return factories
 
 def init():
     
     global __speechserver
+    global voices
 
     if __speechserver:
         return
 
-    # We first try to setup thing from the user's preferences.
-    # If that doesn't work, we'll fall back to the first engine
-    # we find.
+    # First, find the factory module to use.  We will 
+    # allow the user to give their own factory module,
+    # thus we look first in the global name space, and
+    # then we look in the orca namespace.
     #
-    voices = settings.getSetting("voices", {})
-    factory = None    
-    for voiceName in voices.keys():
-        [moduleName, serverName, acssDict] = voices[voiceName]
-        if not factory:
-            try:
-                factory =  __import__(moduleName, 
-                                      globals(), 
-                                      locals(), 
-                                      [''])
-            except:
-                try:
-                    moduleName = moduleName.replace("orca.","",1)
-                    factory =  __import__(moduleName, 
-                                          globals(), 
-                                          locals(), 
-                                          [''])
-                except:
-                    debug.printException(debug.LEVEL_SEVERE)
-                    
-        if not __speechserver:
-            try:
-                speechservers = \
-                    factory.SpeechServer.getSpeechServers([serverName])
-                __speechserver = speechservers[0]
-            except:
-                debug.printException(debug.LEVEL_SEVERE)                
+    moduleName = settings.getSetting(
+	"speechServerFactory", "gnomespeechfactory")
+
+    factory = None
+    try:
+        factory =  __import__(moduleName, 
+                              globals(), 
+                              locals(), 
+                              [''])
+    except:
         try:
-            acss = speechserver.ACSS(acssDict)
-            __speechserver.setACSS(voiceName, acss)
+            moduleName = moduleName.replace("orca.","",1)
+            factory =  __import__(moduleName, 
+                                  globals(), 
+                                  locals(), 
+                                  [''])
         except:
             debug.printException(debug.LEVEL_SEVERE)
-        
-    if not __speechserver:
-        factories = getSpeechServerFactories()
-        servers = factories[0].SpeechServer.getSpeechServers()
-        __speechserver = servers[0]
-        return
-        
-def speak(text, acssName="default"):
-    __speechserver.speak(text, acssName)
 
-def speakUtterances(utterances, acssName="default"):
-    __speechserver.speakUtterances(utterances, acssName)
+    # Now, get the speech server we care about.
+    #
+    speechServerInfo = settings.getSetting(
+	"speechServer", None)
+    
+    __speechserver = \
+	factory.SpeechServer.getSpeechServer(speechServerInfo)
+
+    # Now, get the ACSS's we know we care about.
+    #
+    try:
+	for name in voices:
+ 	    acssProps = settings.getSetting(name + "ACSS", None)
+	    if acssProps:
+	        # Sometimes the 'str' command outputs a list when we don't
+	        # want it to.
+	        #
+	        if acssProps.__class__.__name__ == "list":
+	            acssProps = acssProps[0]
+                acss = ACSS(acssProps)
+	        voices[name] = acss
+    except:
+	debug.printException(debug.LEVEL_OFF)
+
+def __resolveACSS(acss=None):
+    if acss:
+        return acss
+    else:
+        return voices["default"]
+
+def speak(text, acss=None):
+    if __speechserver:
+        __speechserver.speak(text, __resolveACSS(acss))
+
+def speakUtterances(utterances, acss=None):
+    if __speechserver:
+        __speechserver.speakUtterances(utterances, __resolveACSS(acss))
 
 def stop():
-    __speechserver.stop()
+    if __speechserver:
+        __speechserver.stop()
 
 def increaseSpeechRate(inputEvent=None):
-    __speechserver.increaseSpeechRate()
+    if __speechserver:
+        __speechserver.increaseSpeechRate()
     return True
 
 def decreaseSpeechRate(inputEvent=None):
-    __speechserver.decreaseSpeechRate()
+    if __speechserver:
+        __speechserver.decreaseSpeechRate()
     return True
 
 def shutdown():
     global __speechserver
-    __speechserver.shutdown()
-    __speechserver = None
-
+    if __speechserver:
+        __speechserver.shutdown()
+        __speechserver = None
 
 def testNoSettingsInit():
     init()
     speak("testing")
-    
-def testRecreate():
-    module =  __import__("gnomespeechfactory", 
-                         globals(), 
-                         locals(), 
-                         [''])
-    speechservers = \
-        module.SpeechServer.getSpeechServers(["Fonix DECtalk GNOME Speech Driver"])
-    print speechservers
-    speechservers[0].speak("testing", "default")
-    speechservers[0].shutdown()
+    speak("this is higher", ACSS({'average-pitch' : 7}))
+    speak("this is slower", ACSS({'rate' : 3}))
+    speak("this is faster", ACSS({'rate' : 80}))
+    speak("this is quiet",  ACSS({'gain' : 2}))
+    speak("this is loud",   ACSS({'gain' : 10}))
+    speak("this is normal")
     
 def test():
     import speechserver
     factories = getSpeechServerFactories()
     for factory in factories:
         print factory.__name__
-        servers = factory.getSpeechServers()
-        for server in servers:
-            print "    ", server.getInfo()
-            for family in server.getVoiceFamilies():
-                name = family[speechserver.VoiceFamily.NAME]
-                print "      ", name
-                acss = speechserver.ACSS({speechserver.ACSS.FAMILY : family})
-                server.setACSS(name, acss)
-                server.speak(name, name)
-                server.speak("testing", "default")
-            server.shutdown()
-
+        infos = factory.SpeechServer.getSpeechServerInfos()
+        for info in infos:
+            try:
+	        server = factory.SpeechServer.getSpeechServer(info)
+                print "    ", server.getInfo()
+                for family in server.getVoiceFamilies():
+                    name = family[speechserver.VoiceFamily.NAME]
+                    print "      ", name
+                    acss = ACSS({ACSS.FAMILY : family})
+                    server.speak(name, acss)
+                    server.speak("testing")
+                server.shutdown()
+	    except:
+		debug.printException(debug.LEVEL_OFF)
+		pass

@@ -31,6 +31,9 @@ class VoiceFamily(dict):
     NAME   = "name"
     GENDER = "gender"
     LOCALE = "locale"
+
+    MALE   = "male"
+    FEMALE = "female"
     
     settings = {
         NAME   : None,
@@ -43,63 +46,42 @@ class VoiceFamily(dict):
         self.update(VoiceFamily.settings)
         if props is not None:
             self.update(props)
-    
-class ACSS(dict):
-    """Holds ACSS representation of a voice."""
-
-    FAMILY        = 'family'
-    RATE          = 'rate'
-    GAIN          = 'gain'
-    LEFT_VOLUME   = 'left-volume'
-    RIGHT_VOLUME  = 'right-volume'
-    AVERAGE_PITCH = 'average-pitch'
-    PITCH_RANGE   = 'pitch-range'
-    STRESS        = 'stress'
-    RICHNESS      = 'richness'
-    PUNCTUATIONS  = 'punctuations'
-
-    # A value of None means use the engine's default value.
-    #
-    settings = {
-        FAMILY :        None,
-        RATE :          None,
-        GAIN :          None,
-        LEFT_VOLUME :   None,
-        RIGHT_VOLUME :  None,
-        AVERAGE_PITCH : None,
-        PITCH_RANGE :   None, 
-        STRESS :        None,
-        RICHNESS :      None,
-        PUNCTUATIONS :  None
-    }
-
-    def __init__(self,props=None):
-        """Create and initialize ACSS structure."""
-        self.update(ACSS.settings)
-        if props is not None:
-            self.update(props)
-
+            
 
 class SpeechServer:
     
     """Provides speech server abstraction."""
 
-    def __init__(self):
-        self.__acss = {}
+    def getFactoryName():
+ 	"""Returns a localized name describing this factory."""
+	pass
 
-    def setACSS(self, name, acss):
-        """Adds an aural cascading style sheet to this server using
-        the given name as its identifier.  Returns 'True' on success,
-        meaning this ACSS will work with this SpeechServer.
+    getFactoryName = staticmethod(getFactoryName)
 
-        Arguments:
-        - name: the identifier, to be used in calls to say something
-        - acss: the aural cascading style sheet to use
+    def getSpeechServerInfos():
+        """Enumerate available speech servers.
+
+        Returns a list of [name, id] values identifying the available 
+        speech servers.  The name is a human consumable string and the
+	id is an object that can be used to create a speech server
+	via the getSpeechServer method.
         """
-        self.__acss[name] = acss
+        pass
+
+    getSpeechServerInfos = staticmethod(getSpeechServerInfos)
+
+    def getSpeechServer(info):
+        """Gets a given SpeechServer based upon the info.
+        """
+        pass
+
+    getSpeechServer = staticmethod(getSpeechServer)
+
+    def __init__(self):
+        pass
 
     def getInfo(self):
-        """Returns [driverName, synthesizerName]
+        """Returns [name, id]
         """
         pass
 
@@ -108,13 +90,16 @@ class SpeechServer:
         voice families known by the speech server."""
         pass
     
-    def queueText(self, text="", acssName="default"):
+    def queueText(self, text="", acss=None):
         """Adds the text to the queue.
 
         Arguments:
-        - text:     text to be spoken
-        - acssName: name of a speechserver.ACSS instance registered
-                    via a call to setACSS
+        - text: text to be spoken
+        - acss: acss.ACSS instance; if None, 
+		the default voice settings will be used.
+		Otherwise, the acss settings will be
+		used to augment/override the default
+		voice settings.
                     
         Output is produced by the next call to speak.
         """
@@ -134,54 +119,53 @@ class SpeechServer:
         """
         pass
     
-    def speaksCharacter(self, character, acssName="default"):
+    def speakCharacter(self, character, acss=None):
         """Speaks a single character immediately.
 
         Arguments:
         - character: text to be spoken
-        - acssName:  name of a speechserver.ACSS instance registered
-                     via a call to setACSS
+        - acss:      acss.ACSS instance; if None, 
+		     the default voice settings will be used.
+		     Otherwise, the acss settings will be
+		     used to augment/override the default
+		     voice settings.
         """
         pass
 
-    def speakUtterances(self, list, acssName="default"):
+    def speakUtterances(self, list, acss=None):
         """Speaks the given list of utterances immediately.
 
         Arguments:
-        - list:     list of strings to be spoken
-        - acssName: name of a speechserver.ACSS instance registered
-                    via a call to setACSS
+        - list: list of strings to be spoken
+        - acss: acss.ACSS instance; if None, 
+		the default voice settings will be used.
+		Otherwise, the acss settings will be
+		used to augment/override the default
+		voice settings.
         """
         pass
     
-    def speak(self, text=None, acssName="default"):
+    def speak(self, text=None, acss=None):
         """Speaks all queued text immediately.  If text is not None,
         it is added to the queue before speaking.
 
         Arguments:
-        - text:     text to be spoken
-        - acssName: name of a speechserver.ACSS instance registered
-                    via a call to setACSS
+        - text: text to be spoken
+        - acss: acss.ACSS instance; if None, 
+		the default voice settings will be used.
+		Otherwise, the acss settings will be
+		used to augment/override the default
+		voice settings.
         """
         pass
 
-    def increaseSpeechRate(self, acssName=None):
-        """Increases the rate of speech for the given ACSS.  If
-        acssName is None, the rate increase will be applied to all
-        known ACSSs.
-    
-        Arguments:
-        -acssName: the ACSS whose speech rate should be increased
+    def increaseSpeechRate(self):
+        """Increases the speech rate.
         """
         pass
     
-    def decreaseSpeechRate(self, acssName=None):
-        """Decreases the rate of speech for the given ACSS.  If
-        acssName is None, the rate decrease will be applied to all
-        known ACSSs.
-
-        Arguments:
-        -acssName: the ACSS whose speech rate should be decreased
+    def decreaseSpeechRate(self):
+        """Decreases the speech rate.
         """
         pass
     

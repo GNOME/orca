@@ -24,6 +24,7 @@ and a command line interface.
 """
 
 import os, commands, sys, time
+from orca.acss import ACSS
 from orca.orca_i18n import _  # for gettext support
 
 # Create the user's .orca directory
@@ -50,13 +51,25 @@ settings.writelines ("\n")
 settings.writelines ("import orca.debug as debug\n")
 settings.writelines ("import re\n")
 settings.writelines ("\n")
+settings.writelines ("#debug.setDebugLevel(debug.LEVEL_OFF)\n")
+settings.writelines ("debug.setDebugLevel(debug.LEVEL_SEVERE)\n")
+settings.writelines ("#debug.setDebugLevel(debug.LEVEL_WARNING)\n")
+settings.writelines ("#debug.setDebugLevel(debug.LEVEL_INFO)\n")
+settings.writelines ("#debug.setDebugLevel(debug.LEVEL_FINE)\n")
 settings.writelines ("#debug.setDebugLevel(debug.LEVEL_FINER)\n")
+settings.writelines ("#debug.setDebugLevel(debug.LEVEL_FINEST)\n")
+settings.writelines ("#debug.setDebugLevel(debug.LEVEL_ALL)\n")
+settings.writelines ("\n")
+settings.writelines ("#debug.setEventDebugLevel(debug.LEVEL_OFF)\n")
 settings.writelines ("#debug.setEventDebugFilter(None)\n")
 settings.writelines ("#debug.setEventDebugFilter(re.compile('[\S]*focus|[\S]*activ'))\n")
 settings.writelines ("#debug.setEventDebugFilter(re.compile('nomatch'))\n")
 settings.writelines ("#debug.setEventDebugFilter(re.compile('[\S]*:accessible-name'))\n")
-settings.writelines ("#debug.setEventDebugLevel(debug.LEVEL_OFF)\n")
 
+settings.writelines ("\n")
+settings.writelines ("#f = open('debug.out', 'w', 0)\n")
+settings.writelines ("#debug.setDebugFile(f)\n")
+settings.writelines ("\n")
 settings.writelines ("\n")
 
 # Speech setup
@@ -67,10 +80,8 @@ import orca.speechserver as speechserver
 
 def sayAndPrint (text, 
                  stop=False, 
-	         getInput=False,
-		 speechserver=speech, 
-                 acssName="default"):
-    """Prints the given text.  In addition, if the setupSpeaker field
+	         getInput=False):
+    """Prints the given text.  In addition, if the text field
     is not None, speaks the given text, optionally interrupting
     anything currently being spoken.
     
@@ -84,8 +95,7 @@ def sayAndPrint (text,
     
     if stop:
 	speech.stop()
-    	speechserver.stop()
-    speechserver.speak(text, acssName)
+    speech.speak(text)
 
     if getInput:
         return raw_input(text)
@@ -102,56 +112,88 @@ def setupSpeech ():
     
     factories = speech.getSpeechServerFactories()
     if len(factories) == 0:
-        print _("No working speech drivers found.")
+        print _("Speech is unavailable.")
         return False
 
     speech.init()
     speech.speak(_("Welcome to Orca setup."))
-    speech.speak(_("Select default speech synthesizer."))
 
-    servers = {}
-    i = 1
-    for factory in factories:
-	for server in factory.SpeechServer.getSpeechServers():
-	    sayAndPrint(_("%d. %s") % (i, server.getInfo()[1]))
-	    servers[i] = [factory, server]
+    if len(factories) > 1:
+        speech.speak(_("Select desired speech system."))
+	i = 1
+	choices = {}
+        for factory in factories:
+	    sayAndPrint(_("%d. %s") 
+		% (i, factory.SpeechServer.getFactoryName()))
+	    choices[i] = factory
 	    i += 1
+	choice = int(sayAndPrint(_("Enter choice: "), False, True))
+        if (choice <= 0) or (choice >= i):	
+            sayAndPrint(_("Speech will not be used.\n"))
+            return False
+	factory = choices[choice]
+    else:
+	factory = factories[0]
 
-    choice = int(sayAndPrint(_("Enter choice: "), False, True))
-    if (choice <= 0) or (choice >= i):
-        sayAndPrint(_("Speech will not be used.\n"))
+    servers = []
+    for info in factory.SpeechServer.getSpeechServerInfos():
+        try:
+	    server = factory.SpeechServer.getSpeechServer(info)
+	    if server:
+	        servers.append(server)
+        except:
+            pass
+
+    if len(servers) == 0:
+        print _("Speech is unavailable.")
         return False
+    if len(servers) > 1:
+        speech.speak(_("Select desired speech server."))
+	i = 1
+	choices = {}
+        for server in servers:
+	    sayAndPrint(_("%d. %s") % (i, server.getInfo()[0]))
+	    choices[i] = server
+	    i += 1
+	choice = int(sayAndPrint(_("Enter choice: "), False, True))
+        if (choice <= 0) or (choice >= i):	
+            sayAndPrint(_("Speech will not be used.\n"))
+            return False
+	server = choices[choice]
+    else:
+	server = servers[0]
 
-    [factory, server] = servers[choice]
-
-    sayAndPrint (_("Select %s voice: ") % server.getInfo()[1], True)
-    voices = {}    
-    i = 1
-    for family in server.getVoiceFamilies():
-        name = family[speechserver.VoiceFamily.NAME]
-        acss = speechserver.ACSS({speechserver.ACSS.FAMILY : family})
-        server.setACSS(name, acss)
-        sayAndPrint(_("%d. %s") % (i, name))
-	voices[i] = acss
-	i += 1
-
-    selection = int(sayAndPrint(_("Enter choice: "), False, True))
-    if selection == 0 or selection >= i:
-        speech.speak(_("Speech will not be used.\n"))
+    families = server.getVoiceFamilies()
+    if len(families) == 0:
+        print _("Speech is unavailable.")
         return False
+    if len(families) > 1:
+        speech.speak(_("Select desired voice."))
+	i = 1
+	choices = {}
+        for family in families:
+            name = family[speechserver.VoiceFamily.NAME]
+            acss = ACSS({ACSS.FAMILY : family})
+            sayAndPrint(_("%d. %s") % (i, name))
+	    choices[i] = [acss]
+	    i += 1
+	choice = int(sayAndPrint(_("Enter choice: "), False, True))
+        if (choice <= 0) or (choice >= i):	
+            sayAndPrint(_("Speech will not be used.\n"))
+            return False
+	defaultACSS = choices[choice]
+    else:
+        defaultACSS = ACSS({ACSS.FAMILY : families[0]})
 
-    defaultACSS = voices[selection]
-    
-    pitch = defaultACSS[speechserver.ACSS.AVERAGE_PITCH] * 1.5
-    uppercaseACSS = speechserver.ACSS(defaultACSS)
-    uppercaseACSS[speechserver.ACSS.AVERAGE_PITCH] = pitch
+    uppercaseACSS = ACSS({ACSS.AVERAGE_PITCH : 6})
+    hyperlinkACSS = ACSS({ACSS.AVERAGE_PITCH : 4})
 
-    voices = {
-        "default"   : [factory.__name__, server.getInfo()[0], defaultACSS],
-        "uppercase" : [factory.__name__, server.getInfo()[0], uppercaseACSS]
-    }
-        
-    settings.writelines ("voices = " + str(voices)+"\n")
+    settings.writelines("speechServerFactory = '" \
+			+ factory.__name__ + "'\n")
+    settings.writelines("speechServer  = " + repr(server.getInfo())+ "\n")
+    settings.writelines("defaultACSS   = " + repr(defaultACSS)     + "\n")
+    settings.writelines("uppercaseACSS = " + repr(uppercaseACSS)   + "\n")
+    settings.writelines("hyperlinkACSS = " + repr(hyperlinkACSS)   + "\n")
 
     keyEcho = sayAndPrint (_("Use key echo?  Enter y or n: "), True, True)
     if keyEcho[0:1] == 'Y' or keyEcho[0:1] == 'y':

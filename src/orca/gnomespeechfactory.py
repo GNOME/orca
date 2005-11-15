@@ -24,8 +24,10 @@ import chnames
 import core
 import debug
 import settings
+import speech
 import speechserver
 
+from acss import ACSS
 from chnames import chnames
 from core import ORBit, bonobo
 
@@ -91,17 +93,35 @@ class SpeechCallback(GNOME__POA.Speech.SpeechCallback):
 class SpeechServer(speechserver.SpeechServer):
     """Provides SpeechServer implementation for gnome-speech."""
 
-    def getSpeechServers(names=None):
-        """Factory method to return a list of SpeechServer instances
-        that are backed by working gnome-speech servers on the system,
-        initializing and activating the drivers for the servers as
-        necessary.
+    def __activateDriver(iid):
+        driver = bonobo.activation.activate_from_id(iid,
+                                                    0,
+                                                    False)
+        driver = driver._narrow(GNOME.Speech.SynthesisDriver)
+	isInitialized = driver.isInitialized()
+	if not isInitialized:
+	    isInitialized = driver.driverInit()
+	if isInitialized:
+	    return driver
+	else:
+	    return None
 
-        Arguments:
-        - names: a list indicating the names of gnome-speech servers we
-                 care about.  If names is None, all known servers are
-                 returned.
-        """
+    __activateDriver = staticmethod(__activateDriver)
+
+    def getFactoryName():
+ 	"""Returns a localized name describing this factory."""
+	return _("GNOME Speech Services")
+
+    getFactoryName = staticmethod(getFactoryName)
+
+    def getSpeechServerInfos():
+        """Enumerate available speech servers.
+
+        Returns a list of [name, id] values identifying the available 
+        speech servers.  The name is a human consumable string and the
+	id is an object that can be used to create a speech server
+	via the getSpeechServer method.
+	"""
      
         # Get a list of all the drivers on the system and find out how many
         # of them work.
@@ -109,99 +129,205 @@ class SpeechServer(speechserver.SpeechServer):
         servers = bonobo.activation.query(
             "repo_ids.has('IDL:GNOME/Speech/SynthesisDriver:0.3')")
 
-        speechServers = []
+        speechServerInfos = []
 
         for server in servers:
             try:
-                driver = bonobo.activation.activate_from_id(server.iid,
-                                                            0,
-                                                            False)
-                driver = driver._narrow(GNOME.Speech.SynthesisDriver)
-                if (names is None) \
-                   or (names.count(driver.driverName)):
-                    isInitialized = driver.isInitialized()
-                    if not isInitialized:
-                        isInitialized = driver.driverInit()
-                    if isInitialized:
-                        speechServers.append(SpeechServer(driver))
+                driver = SpeechServer.__activateDriver(server.iid)
+		if driver:
+		    speechServerInfos.append([driver.driverName, server.iid])
             except:
-                debug.printException(debug.LEVEL_SEVERE)
+                debug.printException(debug.LEVEL_WARNING)
 
-        return speechServers
+        return speechServerInfos
 
-    getSpeechServers = staticmethod(getSpeechServers)
+    getSpeechServerInfos = staticmethod(getSpeechServerInfos)
 
-    def __init__(self, driver, initialSettings=None):
-        speechserver.SpeechServer.__init__(self)
-        self.__speakers = {}
-        self.driver = driver
-        self.driverName = driver.driverName
-        
-    def setACSS(self, name, acss):
-        """Adds an aural cascading style sheet to this server using
-        the given name as its identifier.  Returns 'True' on success,
-        meaning this ACSS will work with this SpeechServer.
-
-        Arguments:
-        - name: the identifier, to be used in calls to say something
-        - acss: the aural cascading style sheet to use
+    def getSpeechServer(info=None):
+	"""
         """
 
-        # In this implementation for gnome-speech, we create a new
-        # speaker for each ACSS we're given and index the speaker
-        # by the ACSS name.  The speakers will be held in the __speakers
-        # dictionary.
-        #
-        try:
-            family = acss[speechserver.ACSS.FAMILY]
+        servers = bonobo.activation.query(
+            "repo_ids.has('IDL:GNOME/Speech/SynthesisDriver:0.3')")
+
+	if len(servers) == 0:
+	    return None
+
+	server = None     
+
+	# All this logic is to attempt to fall back to a working
+	# driver if the desired one cannot be found or is not
+	# not working.
+	#
+	if info is None:
+	    server = servers[0]
+	else:
+            for s in servers:
+                if s.iid == info[1]:
+		    server = s
+		    break
+
+	if server is None:
+	    return None
+
+	try:
+	    driver = SpeechServer.__activateDriver(server.iid)
+	    return SpeechServer(driver, server.iid)
+	except:
+	    if info:
+		return None
+	    for s in servers:
+		try:
+		    driver = SpeechServer.__activateDriver(s.iid)
+	            if driver:
+		        return SpeechServer(driver, s.iid)
+		except:
+		    debug.printException(debug.LEVEL_WARNING)
+		    pass
+
+	return None    
+
+    getSpeechServer = staticmethod(getSpeechServer)
+
+    def __init__(self, driver, iid):
+        speechserver.SpeechServer.__init__(self)
+        self.__speakers   = {}
+        self.__pitchInfo  = {}
+        self.__rateInfo   = {}
+        self.__volumeInfo = {}
+        self.__driver = driver
+        self.__driverName = driver.driverName
+	self.__iid = iid
+
+    def __getRate(self, speaker):
+        """Gets the voice-independent ACSS rate value of a voice."""
+
+	if not self.__rateInfo.has_key(speaker):
+	    return 50
+
+	[minRate, averageRate, maxRate] = self.__rateInfo[speaker]
+	rate = speaker.getParameterValue("rate")
+	if rate < averageRate:
+	    return int(((rate - minRate) / (averageRate - minRate)) * 50)
+	elif rate > averageRate:
+  	    return 50 \
+                   + int(((rate - averageRate) / (maxRate - averageRate)) * 50)
+	else:
+	    return 50
+
+    def __setRate(self, speaker, acssRate):
+	"""Determines the voice-specific rate setting for the
+	voice-independent ACSS rate value.
+	"""
+
+	if not self.__rateInfo.has_key(speaker):
+	    return
+
+	[minRate, averageRate, maxRate] = self.__rateInfo[speaker]
+	if acssRate < 50:
+	    rate = minRate + acssRate * (averageRate - minRate) / 50
+	elif acssRate > 50:
+	    rate = averageRate \
+		   + (acssRate - 50) * (maxRate - averageRate) / 50
+	else:
+	    rate = averageRate
+
+	speaker.setParameterValue("rate", rate)
+
+    def __setPitch(self, speaker, acssPitch):
+	"""Determines the voice-specific pitch setting for the
+	voice-independent ACSS pitch value.
+	"""
+
+	if not self.__pitchInfo.has_key(speaker):
+	    return
+
+	[minPitch, averagePitch, maxPitch] = self.__pitchInfo[speaker]
+	if acssPitch < 5:
+	    pitch = minPitch + acssPitch * (averagePitch - minPitch) / 5
+	elif acssPitch > 5:
+	    pitch = averagePitch \
+                    + (acssPitch - 5) * (maxPitch - averagePitch) / 5
+	else:
+	    pitch = averagePitch
+
+	speaker.setParameterValue("pitch", pitch)
+
+    def __setVolume(self, speaker, acssGain):
+	"""Determines the voice-specific rate setting for the
+	voice-independent ACSS rate value.
+	"""
+
+	if not self.__volumeInfo.has_key(speaker):
+	    return
+
+	[minVolume, averageVolume, maxVolume] = self.__volumeInfo[speaker]
+	volume = minVolume + acssGain * (maxVolume - minVolume) / 10
+
+	speaker.setParameterValue("volume", volume)
+
+    def __getSpeaker(self, acss=None):
+
+	defaultACSS = speech.voices["default"]
+
+	if acss is None:
+	    acss = defaultACSS
+
+        if self.__speakers.has_key(acss.name()):
+            return self.__speakers[acss.name()]
+
+	# Create a new voice for all unique ACSS's we see.
+	#
+	familyName = None
+	if acss.has_key(ACSS.FAMILY):
+	    family = acss[ACSS.FAMILY]
+            familyName = family[speechserver.VoiceFamily.NAME]
+	elif defaultACSS.has_key(ACSS.FAMILY):
+	    family = defaultACSS[ACSS.FAMILY]
             familyName = family[speechserver.VoiceFamily.NAME]
             
-            voices = self.driver.getAllVoices()
-            found = False
-            for voice in voices:
-                if voice.name == familyName:
-                    found = True
-                    break
+        voices = self.__driver.getAllVoices()
+        found = False
+        for voice in voices:
+            if (not familyName) or (voice.name == familyName):
+                found = True
+                break
 
-            if not found:
-                return False
+        if not found:
+            return None
 
-            s = self.driver.createSpeaker(voice)
-            speaker = s._narrow(GNOME.Speech.Speaker)
+        s = self.__driver.createSpeaker(voice)
+        speaker = s._narrow(GNOME.Speech.Speaker)
 
-            rate = acss[speechserver.ACSS.RATE]
-            if rate:
-                speaker.setParameterValue("rate", rate)
-            else:
-                rate = speaker.getParameterValue ("rate")
-                acss[speechserver.ACSS.RATE] = rate
+	parameters = speaker.getSupportedParameters()
+	for parameter in parameters:
+	    if parameter.name == "rate":
+		self.__rateInfo[speaker] = \
+		    [parameter.min, parameter.current, parameter.max]
+	    elif parameter.name == "pitch":
+		self.__pitchInfo[speaker] = \
+		    [parameter.min, parameter.current, parameter.max]
+	    elif parameter.name == "volume":
+		self.__volumeInfo[speaker] = \
+		    [parameter.min, parameter.current, parameter.max]
 
-            pitch = acss[speechserver.ACSS.AVERAGE_PITCH]
-            if pitch:
-                speaker.setParameterValue("pitch", pitch)
-            else:
-                pitch = speaker.getParameterValue ("pitch")
-                acss[speechserver.ACSS.AVERAGE_PITCH] = pitch
-                
-            volume = acss[speechserver.ACSS.GAIN]
-            if volume:
-                speaker.setParameterValue("volume", volume)
-            else:
-                volume = speaker.getParameterValue ("volume")
-                acss[speechserver.ACSS.GAIN] = volume
+        if acss.has_key(ACSS.RATE):
+            self.__setRate(speaker, acss[ACSS.RATE])
 
-            speechserver.SpeechServer.setACSS(self, name, acss)
-            self.__speakers[name] = speaker
+        if acss.has_key(ACSS.AVERAGE_PITCH):
+            self.__setPitch(speaker, acss[ACSS.AVERAGE_PITCH])
 
-            return True
-        except:
-            debug.printException(debug.LEVEL_SEVERE)
-            return False
+        if acss.has_key(ACSS.GAIN):
+            self.__setVolume(speaker, acss[ACSS.GAIN])
+
+        self.__speakers[acss.name()] = speaker
+
+	return speaker
 
     def getInfo(self):
-        """Returns [driverName, synthesizerName]
+        """Returns [driverName, serverId]
         """
-        return [self.driver.driverName, self.driver.synthesizerName]
+        return [self.__driverName, self.__iid]
 
     def getVoiceFamilies(self):
         """Returns a list of speechserver.VoiceFamily instances
@@ -210,7 +336,7 @@ class SpeechServer(speechserver.SpeechServer):
 
         families = []
         try:
-            for voice in self.driver.getAllVoices():
+            for voice in self.__driver.getAllVoices():
                 props = {
                     speechserver.VoiceFamily.NAME   : voice.name,
                     speechserver.VoiceFamily.LOCALE : voice.language
@@ -222,17 +348,20 @@ class SpeechServer(speechserver.SpeechServer):
 
         return families
 
-    def queueText(self, text="", acssName="default"):
+    def queueText(self, text="", acss=None):
         """Adds the text to the queue.
 
         Arguments:
-        - text:     text to be spoken
-        - acssName: name of a speechserver.ACSS instance registered
-                    via a call to setACSS
+        - text: text to be spoken
+        - acss: acss.ACSS instance; if None, 
+		the default voice settings will be used.
+		Otherwise, the acss settings will be
+		used to augment/override the default
+		voice settings.
                     
         Output is produced by the next call to speak.
         """
-        self.speak(text, acssName)
+        self.speak(text, acss)
 
     def queueTone(self, pitch=440, duration=50):
         """Adds a tone to the queue.
@@ -248,57 +377,55 @@ class SpeechServer(speechserver.SpeechServer):
         """
         pass
 
-    def speakCharacter(self, character, acssName="default"):
+    def speakCharacter(self, character, acss=None):
         """Speaks a single character immediately.
 
         Arguments:
         - character: text to be spoken
-        - acssName:  name of a speechserver.ACSS instance registered
-                     via a call to setACSS
+        - acss:      acss.ACSS instance; if None, 
+		     the default voice settings will be used.
+		     Otherwise, the acss settings will be
+		     used to augment/override the default
+		     voice settings.
         """
-        self.speak(character, acssName)
+        self.speak(character, acss)
         
-    def speakUtterances(self, list, acssName="default"):
+    def speakUtterances(self, list, acss=None):
         """Speaks the given list of utterances immediately.
 
         Arguments:
-        - list:     list of strings to be spoken
-        - acssName: name of a speechserver.ACSS instance registered
-                    via a call to setACSS
+        - list: list of strings to be spoken
+        - acss: acss.ACSS instance; if None, 
+		the default voice settings will be used.
+		Otherwise, the acss settings will be
+		used to augment/override the default
+		voice settings.
         """
-
         i = 0
         for text in list:
-            self.speak(text, acssName, i == 0)
+            self.speak(text, acss, i == 0)
             i += 1
             
-    def __getSpeaker(self, acssName):
-        if self.__speakers.has_key(acssName):
-            return self.__speakers[acssName]
-        elif acssName == "default":
-            voices = self.driver.getAllVoices()
-            props = {
-                speechserver.VoiceFamily.NAME   : voices[0].name,
-                speechserver.VoiceFamily.LOCALE : voices[0].language
-            }
-            family = speechserver.VoiceFamily(props)
-            acss = speechserver.ACSS({speechserver.ACSS.FAMILY : family})
-            self.setACSS("default", acss)
-        return self.__speakers["default"]
-
-    def speak(self, text=None, acssName="default", interrupt=True):
+    def speak(self, text=None, acss=None, interrupt=True):
         """Speaks all queued text immediately.  If text is not None,
         it is added to the queue before speaking.
 
         Arguments:
         - text:      optional text to add to the queue before speaking
-        - acssName:  name of a speechserver.ACSS instance registered
-                     via a call to setACSS
+        - acss:      acss.ACSS instance; if None, 
+		     the default voice settings will be used.
+		     Otherwise, the acss settings will be
+		     used to augment/override the default
+		     voice settings.
         - interrupt: if True, stops any speech in progress before
                      speaking the text
         """
 
-        speaker = self.__getSpeaker(acssName)
+        speaker = self.__getSpeaker(acss)
+        if acss and not acss.has_key(ACSS.RATE):
+	    defaultACSS = speech.voices["default"]
+	    if defaultACSS.has_key(ACSS.RATE):
+                self.__setRate(speaker, defaultACSS[ACSS.RATE])
         
         if text is None:
             if interrupt:
@@ -329,7 +456,7 @@ class SpeechServer(speechserver.SpeechServer):
             #
             #if interrupt:
             #    speaker.stop()
-            self.__lastText = [text, acssName]
+            self.__lastText = [text, acss]
             return speaker.say(text)
         except:
             # On failure, remember what we said, reset our connection to the
@@ -339,40 +466,31 @@ class SpeechServer(speechserver.SpeechServer):
             debug.println(debug.LEVEL_SEVERE, "Restarting speech...")
             self.__reset()
 
-    def increaseSpeechRate(self, acssName=None):
-        """Increases the rate of speech for the given ACSS.  If
-        acssName is None, the rate increase will be applied to all
-        known ACSSs.
+    def increaseSpeechRate(self):
+        """Increases the speech rate.
 
         [[[TODO: WDW - this is a hack for now.  Need to take min/max
         values in account, plus also need to take into account that
         different engines provide different rate ranges.]]]
-    
-        Arguments:
-        -acssName: the ACSS whose speech rate should be increased
         """
 
-        rateDelta = settings.getSetting("speechRateDelta", 25)
-        if acssName:
-            speaker = self.__getSpeaker(acssName)
-            try:
-                rate = speaker.getParameterValue("rate") + rateDelta
-                if speaker.setParameterValue("rate", rate):
-                    self.__acss[acssName][speechserver.ACSS.RATE] = rate
-                    debug.println(debug.LEVEL_CONFIGURATION,
-                                  "speech.increaseSpeechRate: rate is now " \
-                                  " %d for %s" % (rate, acssName))
-                    return
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
-        else:
-            for name in self.__speakers.keys():
-                self.increaseSpeechRate(name)
+	acss = speech.voices["default"]
+	speaker = self.__getSpeaker(acss)
 
-        self.stop()
-        self.speak(_("faster."))
-        
-    def decreaseSpeechRate(self, acssName=None):
+        rateDelta = settings.getSetting("speechRateDelta", 5)
+
+	try:
+            rate = min(100, self.__getRate(speaker) + rateDelta)
+	    acss[ACSS.RATE] = rate
+	    self.__setRate(speaker, rate)
+            debug.println(debug.LEVEL_CONFIGURATION,
+            	          "speech.increaseSpeechRate: rate is now " \
+                          " %d" % rate)
+            self.speak(_("faster."))
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
+
+    def decreaseSpeechRate(self):
         """Decreases the rate of speech for the given ACSS.  If
         acssName is None, the rate decrease will be applied to all
         known ACSSs.
@@ -385,25 +503,21 @@ class SpeechServer(speechserver.SpeechServer):
         -acssName: the ACSS whose speech rate should be decreased
         """
 
-        rateDelta = settings.getSetting("speechRateDelta", 25)
-        if acssName:
-            speaker = self.__getSpeaker(acssName)
-            try:
-                rate = speaker.getParameterValue("rate") - rateDelta
-                if speaker.setParameterValue("rate", rate):
-                    self.__acss[acssName][speechserver.ACSS.RATE] = rate
-                    debug.println(debug.LEVEL_CONFIGURATION,
-                                  "speech.decreaseSpeechRate: rate is now " \
-                                  " %d for %s" % (rate, acssName))
-                    return
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
-        else:
-            for name in self.__speakers.keys():
-                self.decreaseSpeechRate(name)
+	acss = speech.voices["default"]
+	speaker = self.__getSpeaker(acss)
 
-        self.stop()
-        self.speak(_("slower."))
+        rateDelta = settings.getSetting("speechRateDelta", 5)
+
+	try:
+            rate = max(1, self.__getRate(speaker) - rateDelta)
+	    acss[ACSS.RATE] = rate
+	    self.__setRate(speaker, rate)
+            debug.println(debug.LEVEL_CONFIGURATION,
+            	          "speech.decreaseSpeechRate: rate is now " \
+                          " %d" % rate)
+            self.speak(_("slower."))
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
 
     def stop(self):
         """Stops ongoing speech and flushes the queue."""
@@ -424,13 +538,13 @@ class SpeechServer(speechserver.SpeechServer):
         self.__speakers = {}
         
         try:
-            self.driver.unref()
+            self.__driver.unref()
         except:
             pass
 
-        self.driver = None
+        self.__driver = None
     
-    def __reset(self, text=None, acssName=None):
+    def __reset(self, text=None, acss=None):
         """Resets the speech engine."""
         
         speakers = self.__speakers
@@ -440,20 +554,16 @@ class SpeechServer(speechserver.SpeechServer):
             "repo_ids.has('IDL:GNOME/Speech/SynthesisDriver:0.3')")
 
         for server in servers:
-            try:
+	    if server.iid == self.__iid:
                 driver = bonobo.activation.activate_from_id(server.iid,
                                                             0,
                                                             False)
                 driver = driver._narrow(GNOME.Speech.SynthesisDriver)
-                if driver.driverName == self.driverName:
-                    self.driver = driver
-                    if not driver.isInitialized():
-                        isInitialized = driver.driverInit()
-                    self.__speakers = {}
-                    for name in speakers.keys():
-                        self.setACSS(name, speakers[name][1])
-                    if text and acssName:
-                        self.speak(text, acssName)
-                    break
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
+                if not driver.isInitialized():
+                    isInitialized = driver.driverInit()
+                self.__speakers = {}
+                for name in speakers.keys():
+                    self.__getSpeaker(speakers[name])
+                if text:
+                    self.speak(text, acss)
+                break

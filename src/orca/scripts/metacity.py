@@ -91,7 +91,7 @@ class Script(default.Script):
             text += ". " + _("inaccessible")
 
         braille.displayMessage(text)
-        speech.speak(text, "status")
+        speech.speak(text)
         
 
     def onVisibilityChanged(self, event):

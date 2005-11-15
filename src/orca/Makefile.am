@@ -9,11 +9,14 @@ orca_pathdir=$(pyexecdir)
 orca_python_PYTHON = \
 	__init__.py \
 	a11y.py \
+	acss.py \
 	braille.py \
 	braillegenerator.py \
 	chnames.py \
 	debug.py \
+	dectalk.py \
 	default.py \
+	espeechfactory.py \
 	eventsynthesizer.py \
 	flat_review.py \
 	focus_tracking_presenter.py \
@@ -24,6 +27,7 @@ orca_python_PYTHON = \
 	keybindings.py \
 	keynames.py \
 	mag.py \
+	outloud.py \
 	orca.py \
 	orca_i18n.py \
 	rolenames.py \
