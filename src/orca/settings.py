@@ -186,4 +186,4 @@ def getScriptModuleName(app):
 
 
 setScriptMapping(re.compile('[\S\s]*StarOffice[\s\S]*'), "StarOffice")
-
+setScriptMapping(re.compile('[\E\e]*evolution[\e\E]*'), "Evolution")
