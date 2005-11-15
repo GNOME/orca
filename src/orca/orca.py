@@ -38,7 +38,6 @@ import speech
 from input_event import BrailleEvent
 from input_event import KeyboardEvent
 from input_event import InputEventHandler
-from keynames import keynames
 
 from orca_i18n import _           # for gettext support
 
@@ -109,10 +108,7 @@ def _switchToNextPresentationManager(inputEvent=None):
     Returns True indicating the event should be consumed.
     """
 
-    global _currentPresentationManager
-
     _switchToPresentationManager(_currentPresentationManager + 1)
-
     return True
 
     
@@ -847,9 +843,9 @@ def outlineAccessible(accessible, erasePrevious=True):
     if accessible:
         component = accessible.component
         if component:
-            _visibleRectangle = component.getExtents(0) # coord type = screen
-            drawOutline(_visibleRectangle.x, _visibleRectangle.y,
-                        _visibleRectangle.width, _visibleRectangle.height,
+            visibleRectangle = component.getExtents(0) # coord type = screen
+            drawOutline(visibleRectangle.x, visibleRectangle.y,
+                        visibleRectangle.width, visibleRectangle.height,
                         erasePrevious)
     else:
         drawOutline(-1, 0, 0, 0, erasePrevious)
@@ -894,7 +890,7 @@ def _keyEcho(key):
         # Check to see if there are localized words to be spoken for
         # this key event.
         try:
-            key = keynames[key]
+            key = keynames.keynames[key]
         except:
             debug.printException(debug.LEVEL_FINEST)
             pass 
@@ -920,16 +916,16 @@ def processKeyboardEvent(event):
     global _recordingKeystrokes
     global _keystrokesFile
     
-    keystring = ""
-
+    event_string = event.event_string
+    
     # Log the keyboard event for future playback, if desired.
     #
     string = kbd.keyEventToString(event)
     if _recordingKeystrokes and _keystrokesFile \
-       and (event.event_string != "Pause"):
+       and (event_string != "Pause"):
         _keystrokesFile.write(string + "\n")
     debug.printInputEvent(debug.LEVEL_FINE, string)
-    
+
     if event.type == core.Accessibility.KEY_PRESSED_EVENT:
 
         # Key presses always interrupt speech.
@@ -950,17 +946,17 @@ def processKeyboardEvent(event):
             if value < 32:
                 event_string = chr(value + 0x40)
 
-        _keyEcho(event.event_string)    
+        _keyEcho(event_string)    
     
         # We treat the Insert key as a modifier - so just swallow it and
         # set our internal state.
         #
-        if event.event_string == "Insert":
+        if event_string == "Insert":
             _insertPressed = True
             return True
 
     elif event.type == core.Accessibility.KEY_RELEASED_EVENT \
-         and (event.event_string == "Insert"):
+         and (event_string == "Insert"):
         _insertPressed = False
         return True
         
@@ -981,10 +977,10 @@ def processKeyboardEvent(event):
                        processKeyboardEvent(keyboardEvent)
         if (not consumed) and settings.getSetting("learnModeEnabled", False):
             if event.type == core.Accessibility.KEY_PRESSED_EVENT:
-                braille.displayMessage(event.event_string)
-                speech.speak(event.event_string)
+                braille.displayMessage(event_string)
+                speech.speak(event_string)
             elif (event.type == core.Accessibility.KEY_RELEASED_EVENT) \
-                 and (event.event_string == "Escape"):
+                 and (event_string == "Escape"):
                 exitLearnMode(keyboardEvent)
             consumed = True
     except:

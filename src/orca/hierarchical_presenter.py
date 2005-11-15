@@ -59,7 +59,6 @@ import a11y
 import braille
 import debug
 import core
-import script
 import speech
 import orca
 
@@ -130,8 +129,6 @@ def _getIndentText(accessible):
     the 5th child of the 8th child.
     """
     
-    level = 0
-
     text = ""
     while accessible != accessible.app:
         if text == "":
@@ -346,42 +343,39 @@ def _displaySpecialization(specialization):
     - specialization: index into currentObjectSpecializations
     """
 
-    global _currentObjectSpecializations
-    global _currentSpecialization
-
     # [[[TODO: WDW - Some things are commented out below because
     # a11y.py doesn't give them to us yet.]]]
     #
-    if _currentSpecialization == _SPECIALIZATION_ACTION:
+    if specialization == _SPECIALIZATION_ACTION:
         _displayActionSpecialization(
-            _currentObjectSpecializations[_currentSpecialization])
-    elif _currentSpecialization == _SPECIALIZATION_COMPONENT:
+            _currentObjectSpecializations[specialization])
+    elif specialization == _SPECIALIZATION_COMPONENT:
         _displayComponentSpecialization(
-            _currentObjectSpecializations[_currentSpecialization])
-#    elif _currentSpecialization == _SPECIALIZATION_EDITABLE_TEXT:
+            _currentObjectSpecializations[specialization])
+#    elif specialization == _SPECIALIZATION_EDITABLE_TEXT:
 #        _displayTextSpecialization(
-#            _currentObjectSpecializations[_currentSpecialization])
-    elif _currentSpecialization == _SPECIALIZATION_HYPERTEXT:
+#            _currentObjectSpecializations[specialization])
+    elif specialization == _SPECIALIZATION_HYPERTEXT:
         _displayHypertextSpecialization(
-            _currentObjectSpecializations[_currentSpecialization])
-#    elif _currentSpecialization == _SPECIALIZATION_IMAGE:
+            _currentObjectSpecializations[specialization])
+#    elif specialization == _SPECIALIZATION_IMAGE:
 #        _displayImageSpecialization(
-#            _currentObjectSpecializations[_currentSpecialization])
-#    elif _currentSpecialization == _SPECIALIZATION_RELATION:
+#            _currentObjectSpecializations[specialization])
+#    elif specialization == _SPECIALIZATION_RELATION:
 #        _displayRelationSpecialization(
-#            _currentObjectSpecializations[_currentSpecialization])
-    elif _currentSpecialization == _SPECIALIZATION_SELECTION:
+#            _currentObjectSpecializations[specialization])
+    elif specialization == _SPECIALIZATION_SELECTION:
         _displaySelectionSpecialization(
-            _currentObjectSpecializations[_currentSpecialization])
-    elif _currentSpecialization == _SPECIALIZATION_TABLE:
+            _currentObjectSpecializations[specialization])
+    elif specialization == _SPECIALIZATION_TABLE:
         _displayTableSpecialization(
-            _currentObjectSpecializations[_currentSpecialization])
-    elif _currentSpecialization == _SPECIALIZATION_TEXT:
+            _currentObjectSpecializations[specialization])
+    elif specialization == _SPECIALIZATION_TEXT:
         _displayTextSpecialization(
-            _currentObjectSpecializations[_currentSpecialization])
-    elif _currentSpecialization == _SPECIALIZATION_VALUE:
+            _currentObjectSpecializations[specialization])
+    elif specialization == _SPECIALIZATION_VALUE:
         _displayValueSpecialization(
-            _currentObjectSpecializations[_currentSpecialization])
+            _currentObjectSpecializations[specialization])
 
         
 def _navigateIntraObject(keystring):
@@ -400,7 +394,7 @@ def _navigateIntraObject(keystring):
             i = i - 1
         if i >= 0:
             _currentSpecialization = i
-            _displaySpecialization(currentSpecialization)
+            _displaySpecialization(_currentSpecialization)
             
     # Want to find the next non-None specialization
     #
@@ -499,7 +493,7 @@ def activate():
 
     global _currentObject
     
-    speech.say(_("Switching to hierarchical navigation mode."))
+    speech.speak(_("Switching to hierarchical navigation mode."))
 
     win = orca.findActiveWindow()
     

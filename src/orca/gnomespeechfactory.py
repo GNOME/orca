@@ -20,8 +20,6 @@
 """Provides a SpeechServer factory for gnome-speech drivers.
 """
 
-import chnames
-import core
 import debug
 import settings
 import speech
@@ -466,7 +464,7 @@ class SpeechServer(speechserver.SpeechServer):
             debug.println(debug.LEVEL_SEVERE, "Restarting speech...")
             self.__reset()
 
-    def increaseSpeechRate(self):
+    def increaseSpeechRate(self, step=5):
         """Increases the speech rate.
 
         [[[TODO: WDW - this is a hack for now.  Need to take min/max
@@ -477,7 +475,7 @@ class SpeechServer(speechserver.SpeechServer):
 	acss = speech.voices["default"]
 	speaker = self.__getSpeaker(acss)
 
-        rateDelta = settings.getSetting("speechRateDelta", 5)
+        rateDelta = settings.getSetting("speechRateDelta", step)
 
 	try:
             rate = min(100, self.__getRate(speaker) + rateDelta)
@@ -490,7 +488,7 @@ class SpeechServer(speechserver.SpeechServer):
         except:
             debug.printException(debug.LEVEL_SEVERE)
 
-    def decreaseSpeechRate(self):
+    def decreaseSpeechRate(self, step=5):
         """Decreases the rate of speech for the given ACSS.  If
         acssName is None, the rate decrease will be applied to all
         known ACSSs.
@@ -506,7 +504,7 @@ class SpeechServer(speechserver.SpeechServer):
 	acss = speech.voices["default"]
 	speaker = self.__getSpeaker(acss)
 
-        rateDelta = settings.getSetting("speechRateDelta", 5)
+        rateDelta = settings.getSetting("speechRateDelta", step)
 
 	try:
             rate = max(1, self.__getRate(speaker) - rateDelta)
@@ -560,7 +558,7 @@ class SpeechServer(speechserver.SpeechServer):
                                                             False)
                 driver = driver._narrow(GNOME.Speech.SynthesisDriver)
                 if not driver.isInitialized():
-                    isInitialized = driver.driverInit()
+                    driver.driverInit()
                 self.__speakers = {}
                 for name in speakers.keys():
                     self.__getSpeaker(speakers[name])

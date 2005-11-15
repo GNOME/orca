@@ -193,7 +193,7 @@ def init(keyEventHandler):
                                i,               # modifier mask
                                True,            # synchronous
                                False)           # global
-        kl.register(), i
+        kl.register()
         _listeners.append(kl)
         i += 1
 

@@ -89,7 +89,8 @@ class Script(default.Script):
 
     # This function is called when a hyperlink is selected - This happens
     # when a link is navigated to using tab/shift-tab
-    def onLinkSelected(event):
+    #
+    def onLinkSelected(self, event):
         txt = event.source.text
         if txt is None:
             speech.speak(_("link"), speech.voices["hyperlink"])
@@ -147,7 +148,7 @@ def presentNextHypertext():
                     continue
                 else:
                     speech.speak(text)
-            elif text is not "":
+            elif text != "":
                 speech.speak(text)
             if text == "":
                 sayAllObjectIndex = sayAllObjectIndex + 1

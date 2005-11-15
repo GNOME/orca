@@ -23,8 +23,6 @@ both speech and Braille.
 This module also provides a number of presenter functions that display
 Accessible object information to the user based upon the object's role."""
 
-import math
-
 import a11y
 import braille
 import braillegenerator
@@ -42,7 +40,6 @@ import settings
 import speech
 import speechgenerator
 
-from input_event import InputEventHandler
 from orca_i18n import _                          # for gettext support
 
 
@@ -75,7 +72,7 @@ class Script(script.Script):
         #        "F9", \
         #        1 << orca.MODIFIER_ORCA, \
         #        1 << orca.MODIFIER_ORCA,
-        #        InputEventHandler(\
+        #        input_eventInputEventHandler(\
         #            sayAgain,
         #            _("Repeats last utterance sent to speech."))))
 
@@ -84,7 +81,7 @@ class Script(script.Script):
                 "KP_Divide", \
                 0, \
                 0, \
-                InputEventHandler(\
+                input_event.InputEventHandler(\
                     self.leftClickReviewItem,
                     _("Performs left click on current flat review item."))))
 
@@ -93,7 +90,7 @@ class Script(script.Script):
                 "KP_Multiply", \
                 0, \
                 0, \
-                InputEventHandler(\
+                input_event.InputEventHandler(\
                     self.rightClickReviewItem,
                     _("Performs right click on current flat review item."))))
 
@@ -102,7 +99,7 @@ class Script(script.Script):
         #        "KP_Add", \
         #        0, \
         #        0, \
-        #        InputEventHandler(\
+        #        input_event.InputEventHandler(\
         #            sayAll,
         #            _("Speaks entire document."))))
 
@@ -111,7 +108,7 @@ class Script(script.Script):
                 "KP_Enter", \
                 0, \
                 0, \
-                InputEventHandler(\
+                input_event.InputEventHandler(\
                     self.whereAmI,
                     _("Performs the where am I operation."))))
 
@@ -120,7 +117,7 @@ class Script(script.Script):
                 "Num_Lock", \
                 1 << orca.MODIFIER_ORCA, \
                 1 << orca.MODIFIER_ORCA, \
-                InputEventHandler(\
+                input_event.InputEventHandler(\
                     self.showZones,
                     _("Paints and prints the visible zones in the active window."))))
 
@@ -129,12 +126,12 @@ class Script(script.Script):
                 "KP_Subtract", \
                 0, \
                 0, \
-                InputEventHandler(\
+                input_event.InputEventHandler(\
                     self.toggleFlatReviewMode,
                     _("Enters and exits flat review mode."))))
 
         reviewPreviousLineHandler = \
-            InputEventHandler(\
+            input_event.InputEventHandler(\
                 self.reviewPreviousLine,
                 _("Moves flat review to the beginning of the previous line."))
         
@@ -145,7 +142,7 @@ class Script(script.Script):
                 0, \
                 reviewPreviousLineHandler))
 
-        reviewHomeHandler = InputEventHandler(\
+        reviewHomeHandler = input_event.InputEventHandler(\
             self.reviewHome,
             _("Moves flat review to the home position."))
         
@@ -161,12 +158,12 @@ class Script(script.Script):
                 "KP_8", \
                 0, \
                 0, \
-                InputEventHandler(\
+                input_event.InputEventHandler(\
                     self.reviewCurrentLine,
                     _("Speaks the current flat review line."))))
 
         reviewNextLineHandler = \
-            InputEventHandler(\
+            input_event.InputEventHandler(\
                 self.reviewNextLine,
                 _("Moves flat review to the beginning of the next line."))
 
@@ -182,7 +179,7 @@ class Script(script.Script):
                 "KP_9", \
                 1 << orca.MODIFIER_ORCA, \
                 1 << orca.MODIFIER_ORCA, \
-                InputEventHandler(\
+                input_event.InputEventHandler(\
                     self.reviewEnd,
                     _("Moves flat review to the end position."))))
 
@@ -191,12 +188,12 @@ class Script(script.Script):
                 "KP_4", \
                 1 << orca.MODIFIER_ORCA, \
                 0, \
-                InputEventHandler(\
+                input_event.InputEventHandler(\
                     self.reviewPreviousItem,
                     _("Moves flat review to the previous item or word."))))
 
         reviewAboveHandler = \
-            InputEventHandler(\
+            input_event.InputEventHandler(\
                 self.reviewAbove,
                 _("Moves flat review to the word above the current word."))
 
@@ -212,7 +209,7 @@ class Script(script.Script):
                 "KP_5", \
                 1 << orca.MODIFIER_ORCA, \
                 0, \
-                InputEventHandler(\
+                input_event.InputEventHandler(\
                     self.reviewCurrentItem,
                     _("Speaks the current flat review item or word."))))
 
@@ -221,7 +218,7 @@ class Script(script.Script):
                 "KP_5", \
                 1 << orca.MODIFIER_ORCA, \
                 1 << orca.MODIFIER_ORCA, \
-                InputEventHandler(\
+                input_event.InputEventHandler(\
                     self.reviewCurrentAccessible,
                     _("Speaks the current flat review object."))))
 
@@ -230,12 +227,12 @@ class Script(script.Script):
                 "KP_6", \
                 1 << orca.MODIFIER_ORCA, \
                 0, \
-                InputEventHandler(\
+                input_event.InputEventHandler(\
                     self.reviewNextItem,
                     _("Moves flat review to the next item or word."))))
 
         reviewBelowHandler = \
-            InputEventHandler(\
+            input_event.InputEventHandler(\
                 self.reviewBelow,
                 _("Moves flat review to the word below the current word."))
                            
@@ -247,7 +244,7 @@ class Script(script.Script):
                 reviewBelowHandler))
 
         reviewPreviousCharacterHandler = \
-            InputEventHandler( \
+            input_event.InputEventHandler( \
                 self.reviewPreviousCharacter,
                 _("Moves flat review to the previous character."))
 
@@ -263,7 +260,7 @@ class Script(script.Script):
                 "KP_1", \
                 1 << orca.MODIFIER_ORCA, \
                 1 << orca.MODIFIER_ORCA, \
-                InputEventHandler(\
+                input_event.InputEventHandler(\
                     self.reviewEndOfLine,
                     _("Moves flat review to the end of the line."))))
 
@@ -272,12 +269,12 @@ class Script(script.Script):
                 "KP_2", \
                 0, \
                 0, \
-                InputEventHandler(\
+                input_event.InputEventHandler(\
                     self.reviewCurrentCharacter,
                     _("Speaks the current flat review character."))))
 
         reviewNextCharacterHandler = \
-            InputEventHandler(\
+            input_event.InputEventHandler(\
             self.reviewNextCharacter,
             _("Moves flat review to the next character."))
         
@@ -294,22 +291,22 @@ class Script(script.Script):
         #                                                              #
         ################################################################
         self.braillebindings[braille.CMD_FWINLT] = \
-            InputEventHandler(
+            input_event.InputEventHandler(
                 self.panBrailleLeft,
                 _("Pans the braille display to the left."))
 
         self.braillebindings[braille.CMD_FWINRT] = \
-            InputEventHandler(
+            input_event.InputEventHandler(
                 self.panBrailleRight,
                 _("Pans the braille display to the right."))
             
         #self.braillebindings[braille.CMD_CHRLT] = \
-        #    InputEventHandler(
+        #    input_event.InputEventHandler(
         #        self.panBrailleLeftOneChar,
         #        _("Pans the braille display to the left by one character."))
 
         #self.braillebindings[braille.CMD_CHRRT] = \
-        #    InputEventHandler(
+        #    input_event.InputEventHandler(
         #        self.panBrailleRightOneChar,
         #        _("Pans the braille display to the right by one character."))
 
@@ -318,12 +315,12 @@ class Script(script.Script):
 
         self.braillebindings[braille.CMD_TOP_LEFT] = reviewHomeHandler
         self.braillebindings[braille.CMD_BOT_LEFT] = \
-            InputEventHandler(
+            input_event.InputEventHandler(
                 self.reviewBottomLeft,
                 _("Moves flat review to the bottom left."))
 
         self.braillebindings[braille.CMD_HOME] = \
-            InputEventHandler(
+            input_event.InputEventHandler(
                 self.goBrailleHome,
                 _("Returns to object with keyboard focus."))
 
@@ -479,7 +476,7 @@ class Script(script.Script):
                                         rolenames.ROLE_ROW_HEADER].speech
                         utterances.append(text)
 
-                desc = newParent.table.getColumnDescription(newCol)
+                desc = parent.table.getColumnDescription(col)
                 if desc and len(desc):
                     text = desc
                     if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
@@ -1453,7 +1450,6 @@ class Script(script.Script):
             # then update the braille.
             #
             text = orca.locusOfFocus.text
-            length = text.characterCount
             [string, startOffset, endOffset] = text.getTextAtOffset(
                 text.caretOffset,
                 core.Accessibility.TEXT_BOUNDARY_LINE_START)
@@ -1514,7 +1510,6 @@ class Script(script.Script):
             # caret event, which will then update the braille.
             #
             text = orca.locusOfFocus.text
-            length = text.characterCount
             [string, startOffset, endOffset] = text.getTextAtOffset(
                 text.caretOffset,
                 core.Accessibility.TEXT_BOUNDARY_LINE_START)
@@ -1549,14 +1544,14 @@ class Script(script.Script):
     def leftClickReviewItem(self, inputEvent=None):
         """Performs a left mouse button click on the current item."""
         
-        context = self.getFlatReviewContext().clickCurrent(1)
+        self.getFlatReviewContext().clickCurrent(1)
         return True
     
     
     def rightClickReviewItem(self, inputEvent=None):
         """Performs a right mouse button click on the current item."""
         
-        context = self.getFlatReviewContext().clickCurrent(3)
+        self.getFlatReviewContext().clickCurrent(3)
         return True
     
 
@@ -1607,7 +1602,7 @@ class Script(script.Script):
 
         context = self.getFlatReviewContext()
 
-        moved = context.goBegin()
+        context.goBegin()
         
         self.reviewCurrentLine(inputEvent)
         self.targetCursorCell = braille.cursorCell
@@ -1639,8 +1634,8 @@ class Script(script.Script):
 
         context = self.getFlatReviewContext()
 
-        moved = context.goEnd(flat_review.Context.WINDOW)
-        moved = context.goBegin(flat_review.Context.LINE)
+        context.goEnd(flat_review.Context.WINDOW)
+        context.goBegin(flat_review.Context.LINE)
         self.reviewCurrentLine(inputEvent)
         self.targetCursorCell = braille.cursorCell
             
@@ -1653,8 +1648,7 @@ class Script(script.Script):
         at the end of the line."""
 
         context = self.getFlatReviewContext()
-
-        moved = context.goEnd()
+        context.goEnd()
         
         self.reviewCurrentLine(inputEvent)
         self.targetCursorCell = braille.cursorCell
@@ -1791,8 +1785,7 @@ class Script(script.Script):
         the flat review cursor at the end of the line."""
 
         context = self.getFlatReviewContext()
-
-        moved = context.goEnd(flat_review.Context.LINE)
+        context.goEnd(flat_review.Context.LINE)
         
         self.reviewCurrentCharacter(inputEvent)
         self.targetCursorCell = braille.cursorCell            

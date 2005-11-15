@@ -157,7 +157,7 @@ class SpeechGenerator:
         result = a11y.getAcceleratorAndShortcut(obj)
     
         accelerator = result[0]
-        shortcut = result[1]
+        #shortcut = result[1]
 
         utterances = []
 
@@ -354,11 +354,10 @@ class SpeechGenerator:
         """
 
         utterances = []
-        set = obj.state
-        if set.count(core.Accessibility.STATE_CHECKED):
+        if obj.state.count(core.Accessibility.STATE_CHECKED):
             # If it's not already focused, say it's name
             #
-            if already_focused == False:
+            if not already_focused:
                 tmp = self._getSpeechForLabelAndRole(obj)
                 tmp.append(_("checked"))
                 utterances.extend(tmp)
@@ -366,7 +365,7 @@ class SpeechGenerator:
             else:
                 utterances.append(_("checked"))
         else:
-            if already_focused == False:
+            if not already_focused:
                 tmp = self._getSpeechForLabelAndRole(obj)
                 tmp.append(_("not checked"))
                 utterances.extend(tmp)
@@ -838,9 +837,6 @@ class SpeechGenerator:
         # areas, such as those in yelp, come up as insensitive though
         # they really are ineditable.]]]
         #
-        verbosity = settings.getSetting("speechVerbosityLevel",
-                                        settings.VERBOSITY_LEVEL_VERBOSE)
-
         utterances = self._getSpeechForLabelAndRole(obj)
 
         result = a11y.getTextLineAtCaret(obj)
@@ -908,7 +904,7 @@ class SpeechGenerator:
         if obj.childCount == 1:
             utterances.append(_("one tab"))
         else:
-            utterances.append(("%d " % tablist.childCount) + _("tabs"))
+            utterances.append(("%d " % obj.childCount) + _("tabs"))
     
         self._debugGenerator("_getSpeechForPageTabList",
                              obj,
@@ -929,11 +925,10 @@ class SpeechGenerator:
         Returns a list of utterances to be spoken for the object.
         """
         
-        value = obj.value
         percentage = ("%d" % obj.value.currentValue) + " " \
                      + _("percent") + ". "
         
-        if already_focused == False:
+        if not already_focused:
             utterances = self._getSpeechForLabelAndRole(obj)
             utterances.append(percentage)
         else:
@@ -979,11 +974,10 @@ class SpeechGenerator:
         """
         
         utterances = []
-        set = obj.state
-        if set.count(core.Accessibility.STATE_CHECKED):
+        if obj.state.count(core.Accessibility.STATE_CHECKED):
             # If it's not already focused, say it's name
             #
-            if already_focused == False:
+            if not already_focused:
                 tmp = self._getSpeechForLabelAndRole(obj)
                 tmp.append(_("selected"))
                 utterances.extend(tmp)
@@ -991,7 +985,7 @@ class SpeechGenerator:
             else:
                 utterances.append(_("selected"))
         else:
-            if already_focused == False:
+            if not already_focused:
                 tmp = self._getSpeechForLabelAndRole(obj)
                 tmp.append(_("not selected"))
                 utterances.extend(tmp)
@@ -1109,17 +1103,17 @@ class SpeechGenerator:
             decimalPlaces = max(0, -math.log10(minimumIncrement))
         except:
             try:
-                decimalPlaces = max(0, -math.log10(minimumValue))
+                decimalPlaces = max(0, -math.log10(value.minimumValue))
             except:
                 try:
-                    decimalPlaces = max(0, -math.log10(maximumValue))
+                    decimalPlaces = max(0, -math.log10(value.maximumValue))
                 except:
                     decimalPlaces = 0
     
         formatter = "%%.%df" % decimalPlaces
         valueString = formatter % value.currentValue
-        minString   = formatter % value.minimumValue
-        maxString   = formatter % value.maximumValue
+        #minString   = formatter % value.minimumValue
+        #maxString   = formatter % value.maximumValue
     
         if already_focused:
             utterances = [valueString]
@@ -1369,11 +1363,10 @@ class SpeechGenerator:
         """
         
         utterances = []
-        set = obj.state
-        if set.count(core.Accessibility.STATE_CHECKED):
+        if obj.state.count(core.Accessibility.STATE_CHECKED):
             # If it's not already focused, say it's name
             #
-            if already_focused == False:
+            if not already_focused:
                 tmp = self._getSpeechForLabelAndRole(obj)
                 tmp.append(_("pressed"))
                 utterances.extend(tmp)
@@ -1381,7 +1374,7 @@ class SpeechGenerator:
             else:
                 utterances.append(_("pressed"))
         else:
-            if already_focused == False:
+            if not already_focused:
                 tmp = self._getSpeechForLabelAndRole(obj)
                 tmp.append(_("not pressed"))
                 utterances.extend(tmp)

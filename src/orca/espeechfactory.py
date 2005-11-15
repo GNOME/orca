@@ -29,7 +29,7 @@ __all__=['Speaker']
 
 import os, sys
 
-import acss
+import debug
 import speechserver
 
 from orca_i18n import _           # for gettext support
@@ -92,7 +92,7 @@ class SpeechServer(speechserver.SpeechServer):
 	"""
         """
         if info not in SpeechServer.getSpeechServerInfos(): 
-	    raise "EngineException"
+	    raise Exception("No such engine %s" % info[0])
 	return SpeechServer(info[0])
 	        
     getSpeechServer = staticmethod(getSpeechServer)
@@ -102,6 +102,8 @@ class SpeechServer(speechserver.SpeechServer):
                   host='localhost',
                   initial=config):
         """Launches speech engine."""
+
+        SpeechServer.__init__(self)
         
         self._engine = engine
         e = __import__(_getcodes(engine), 
@@ -172,9 +174,9 @@ class SpeechServer(speechserver.SpeechServer):
         """Queue specified silence."""
         self._output.write("sh  %s" %  duration)
     
-    def speakCharacter(self, l):
+    def speakCharacter(self, character, acss=None):
         """Speak single character."""
-        self._output.write("l {%s}\n" %l)
+        self._output.write("l {%s}\n" % character)
 
     def speakUtterances(self, list, acss=None):
         """Speak list of utterances."""
@@ -195,13 +197,13 @@ class SpeechServer(speechserver.SpeechServer):
         else:
             self._output.write("q {%s}\nd\n" %text)
 
-    def increaseSpeechRate(self, step=10):
+    def increaseSpeechRate(self, step=5):
         """Set speech rate."""
         self._settings['rate'] += step
         self._output.write("tts_set_speech_rate %s\n" \
                             % self.getrate(self._settings['rate']))
 
-    def decreaseSpeechRate(self, step=10):
+    def decreaseSpeechRate(self, step=5):
         """Set speech rate."""
         self._settings['rate'] -= step
         self._output.write("tts_set_speech_rate %s\n" \
@@ -262,7 +264,8 @@ class SpeechServer(speechserver.SpeechServer):
 def _getcodes(engine):
     """Helper function that fetches synthesizer codes for a
     specified engine."""
-    if engine not in _codeTable: raise "EngineException"
+    if engine not in _codeTable:
+        raise Exception("No code table for %s" % engine)
     return _codeTable[engine]
 
 _codeTable = {

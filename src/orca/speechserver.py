@@ -159,12 +159,12 @@ class SpeechServer:
         """
         pass
 
-    def increaseSpeechRate(self):
+    def increaseSpeechRate(self, step=5):
         """Increases the speech rate.
         """
         pass
     
-    def decreaseSpeechRate(self):
+    def decreaseSpeechRate(self, step=5):
         """Decreases the speech rate.
         """
         pass

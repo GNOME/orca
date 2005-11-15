@@ -23,7 +23,6 @@ as its speech server, or it can feel free to create one of its own.
 
 import debug
 import settings
-import speechserver
 
 from acss import ACSS
 from orca_i18n import _           # for gettext support

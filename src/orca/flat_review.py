@@ -19,7 +19,6 @@
 
 import re
 
-import a11y
 import braille
 import core
 import debug
@@ -71,6 +70,7 @@ class Word:
     def __init__(self,
                  zone,
                  index,
+                 startOffset,
                  string,
                  x, y, width, height):
         """Creates a new Word.
@@ -83,6 +83,7 @@ class Word:
         
         self.zone = zone
         self.index = index
+        self.startOffset = startOffset
         self.string = string
         self.length = len(string)
         self.x = x
@@ -219,14 +220,8 @@ class TextZone(Zone):
         - extents: x, y, width, height in screen coordinates
         """
 
-        self.accessible = accessible
+        Zone.__init__(self, accessible, string, x, y, width, height)
         self.startOffset = startOffset
-        self.string = string
-        self.length = len(string)
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
 
         # If the accessible for this TextZone is multiline, we will
         # keep track of the next and previous lines.
@@ -260,9 +255,9 @@ class TextZone(Zone):
                         0)
                     word = Word(self,
                                 wordIndex,
+                                offset,
                                 string,
                                 x, y, width, height)
-                    word.startOffset = offset
                     self.words.append(word)
                     wordIndex += 1
                     offset = endOffset
@@ -531,7 +526,6 @@ class Context:
                     zone.height]
         elif type == Context.CHAR:
             if isinstance(zone, TextZone):
-                text = zone.accessible.text
                 words = zone.words
                 if words:
                     chars = zone.words[self.wordIndex].chars
@@ -552,7 +546,6 @@ class Context:
             return self.getCurrent(Context.ZONE)
         elif type == Context.WORD:
             if isinstance(zone, TextZone):
-                text = zone.accessible.text
                 words = zone.words
                 if words:
                     word = words[self.wordIndex]
@@ -570,7 +563,7 @@ class Context:
                     line.width,
                     line.height]
         else:
-            raise Error, "Invalid type: %d" % type
+            raise Exception("Invalid type: %d" % type)
 
 
     def getCurrentBrailleRegions(self):
@@ -621,7 +614,7 @@ class Context:
         elif type == Context.WINDOW:
             lineIndex = 0
         else:
-            raise Error, "Invalid type: %d" % type
+            raise Exception("Invalid type: %d" % type)
             
         zoneIndex = 0
         wordIndex = 0
@@ -657,7 +650,7 @@ class Context:
         elif type == Context.WINDOW:
             lineIndex  = len(self.lines) - 1
         else:
-            raise Error, "Invalid type: %d" % type
+            raise Exception("Invalid type: %d" % type)
 
         zoneIndex = len(self.lines[lineIndex].zones) - 1
         zone = self.lines[lineIndex].zones[zoneIndex]
@@ -797,14 +790,14 @@ class Context:
                     self.charIndex = 0
                     moved = True
                 elif (wrap & Context.WRAP_TOP_BOTTOM) \
-                     and (len(lines) != 1):
+                     and (len(self.lines) != 1):
                     self.lineIndex = len(self.lines) - 1
                     self.zoneIndex = 0
                     self.wordIndex = 0
                     self.charIndex = 0
                     moved = True
         else:
-            raise Error, "Invalid type: %d" % type
+            raise Exception("Invalid type: %d" % type)
 
         if moved and (type != Context.LINE):
             self.targetCharInfo = self.getCurrent(Context.CHAR) 
@@ -928,7 +921,7 @@ class Context:
                         self.charIndex = 0
                         moved = True
         else:
-            raise Error, "Invalid type: %d" % type
+            raise Exception("Invalid type: %d" % type)
 
         if moved and (type != Context.LINE):
             self.targetCharInfo = self.getCurrent(Context.CHAR) 
@@ -977,9 +970,9 @@ class Context:
             #
             self.targetCharInfo = target
         elif type == Context.LINE:
-            return goPrevious(type, wrap)
+            return self.goPrevious(type, wrap)
         else:
-            raise Error, "Invalid type: %d" % type
+            raise Exception("Invalid type: %d" % type)
 
         return moved
 
@@ -1025,9 +1018,9 @@ class Context:
             #
             self.targetCharInfo = target
         elif type == Context.LINE:
-            moved = goNext(type, wrap)
+            moved = self.goNext(type, wrap)
         else:
-            raise Error, "Invalid type: %d" % type
+            raise Exception("Invalid type: %d" % type)
 
         return moved
 

@@ -156,7 +156,7 @@ class BrailleGenerator:
         result = a11y.getAcceleratorAndShortcut(obj)
     
         accelerator = result[0]
-        shortcut = result[1]
+        #shortcut = result[1]
     
         if len(accelerator) > 0:
             text += "(" + accelerator + ")"
@@ -217,17 +217,17 @@ class BrailleGenerator:
             decimalPlaces = max(0, -math.log10(minimumIncrement))
         except:
             try:
-                decimalPlaces = max(0, -math.log10(minimumValue))
+                decimalPlaces = max(0, -math.log10(value.minimumValue))
             except:
                 try:
-                    decimalPlaces = max(0, -math.log10(maximumValue))
+                    decimalPlaces = max(0, -math.log10(value.maximumValue))
                 except:
                     decimalPlaces = 0
     
         formatter = "%%.%df" % decimalPlaces
         valueString = formatter % value.currentValue
-        minString   = formatter % value.minimumValue
-        maxString   = formatter % value.maximumValue
+        #minString   = formatter % value.minimumValue
+        #maxString   = formatter % value.maximumValue
     
         # [[[TODO: WDW - probably want to do this as a percentage at some
         # point?  Logged as bugzilla bug 319743.]]]
@@ -380,8 +380,7 @@ class BrailleGenerator:
         if len(text):
             text += " "
             
-        set = obj.state
-        if set.count(core.Accessibility.STATE_CHECKED):
+        if obj.state.count(core.Accessibility.STATE_CHECKED):
             text += "<x>"
         else:
             text += "< >"
@@ -416,8 +415,7 @@ class BrailleGenerator:
         if len(text):
             text += " "
 
-        set = obj.state
-        if set.count(core.Accessibility.STATE_CHECKED):
+        if obj.state.count(core.Accessibility.STATE_CHECKED):
             text += "<x>"
         else:
             text += "< >"
@@ -803,9 +801,6 @@ class BrailleGenerator:
         
         self._debugGenerator("_getBrailleRegionsForText", obj)
     
-        verbosity = settings.getSetting("brailleVerbosityLevel",
-                                        settings.VERBOSITY_LEVEL_VERBOSE)
-    
         regions = []
     
         textRegion = braille.Text(obj, obj.label)
@@ -935,8 +930,7 @@ class BrailleGenerator:
         if len(text):
             text += " "
     
-        set = obj.state
-        if set.count(core.Accessibility.STATE_CHECKED):
+        if obj.state.count(core.Accessibility.STATE_CHECKED):
             text += "&=y"
         else:
             text += "& y"
@@ -971,8 +965,7 @@ class BrailleGenerator:
         if len(text):
             text += " "
 
-        set = obj.state
-        if set.count(core.Accessibility.STATE_CHECKED):
+        if obj.state.count(core.Accessibility.STATE_CHECKED):
             text += "&=y"
         else:
             text += "& y"

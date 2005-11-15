@@ -37,7 +37,6 @@ Accessible objects.
 import core
 import debug
 import rolenames
-import settings
 
 import CORBA
 
@@ -61,73 +60,73 @@ def getStateString(obj):
     - obj: an Accessible
     """
     
-    set = obj.state
+    stateSet = obj.state
     stateString = " "
-    if set.count(core.Accessibility.STATE_INVALID):
+    if stateSet.count(core.Accessibility.STATE_INVALID):
         stateString += "INVALID "
-    if set.count(core.Accessibility.STATE_ACTIVE):
+    if stateSet.count(core.Accessibility.STATE_ACTIVE):
         stateString += "ACTIVE "
-    if set.count(core.Accessibility.STATE_ARMED):
+    if stateSet.count(core.Accessibility.STATE_ARMED):
         stateString += "ARMED "
-    if set.count(core.Accessibility.STATE_BUSY):
+    if stateSet.count(core.Accessibility.STATE_BUSY):
         stateString += "BUSY "
-    if set.count(core.Accessibility.STATE_CHECKED):
+    if stateSet.count(core.Accessibility.STATE_CHECKED):
         stateString += "CHECKED "
-    if set.count(core.Accessibility.STATE_COLLAPSED):
+    if stateSet.count(core.Accessibility.STATE_COLLAPSED):
         stateString += "COLLAPSED "
-    if set.count(core.Accessibility.STATE_DEFUNCT):
+    if stateSet.count(core.Accessibility.STATE_DEFUNCT):
         stateString += "DEFUNCT "
-    if set.count(core.Accessibility.STATE_EDITABLE):
+    if stateSet.count(core.Accessibility.STATE_EDITABLE):
         stateString += "EDITABLE "
-    if set.count(core.Accessibility.STATE_ENABLED):
+    if stateSet.count(core.Accessibility.STATE_ENABLED):
         stateString += "ENABLED "
-    if set.count(core.Accessibility.STATE_EXPANDABLE):
+    if stateSet.count(core.Accessibility.STATE_EXPANDABLE):
         stateString += "EXPANDABLE "
-    if set.count(core.Accessibility.STATE_EXPANDED):
+    if stateSet.count(core.Accessibility.STATE_EXPANDED):
         stateString += "EXPANDED "
-    if set.count(core.Accessibility.STATE_FOCUSABLE):
+    if stateSet.count(core.Accessibility.STATE_FOCUSABLE):
         stateString += "FOCUSABLE "
-    if set.count(core.Accessibility.STATE_FOCUSED):
+    if stateSet.count(core.Accessibility.STATE_FOCUSED):
         stateString += "FOCUSED "
-    if set.count(core.Accessibility.STATE_HAS_TOOLTIP):
+    if stateSet.count(core.Accessibility.STATE_HAS_TOOLTIP):
         stateString += "HAS_TOOLTIP "
-    if set.count(core.Accessibility.STATE_HORIZONTAL):
+    if stateSet.count(core.Accessibility.STATE_HORIZONTAL):
         stateString += "HORIZONTAL "
-    if set.count(core.Accessibility.STATE_ICONIFIED):
+    if stateSet.count(core.Accessibility.STATE_ICONIFIED):
         stateString += "ICONIFIED "
-    if set.count(core.Accessibility.STATE_MODAL):
+    if stateSet.count(core.Accessibility.STATE_MODAL):
         stateString += "MODAL "
-    if set.count(core.Accessibility.STATE_MULTI_LINE):
+    if stateSet.count(core.Accessibility.STATE_MULTI_LINE):
         stateString += "MULTI_LINE "
-    if set.count(core.Accessibility.STATE_MULTISELECTABLE):
+    if stateSet.count(core.Accessibility.STATE_MULTISELECTABLE):
         stateString += "MULTISELECTABLE "
-    if set.count(core.Accessibility.STATE_OPAQUE):
+    if stateSet.count(core.Accessibility.STATE_OPAQUE):
         stateString += "OPAQUE "
-    if set.count(core.Accessibility.STATE_PRESSED):
+    if stateSet.count(core.Accessibility.STATE_PRESSED):
         stateString += "PRESSED "
-    if set.count(core.Accessibility.STATE_RESIZABLE):
+    if stateSet.count(core.Accessibility.STATE_RESIZABLE):
         stateString += "RESIZABLE "
-    if set.count(core.Accessibility.STATE_SELECTABLE):
+    if stateSet.count(core.Accessibility.STATE_SELECTABLE):
         stateString += "SELECTABLE "
-    if set.count(core.Accessibility.STATE_SELECTED):
+    if stateSet.count(core.Accessibility.STATE_SELECTED):
         stateString += "SELECTED "
-    if set.count(core.Accessibility.STATE_SENSITIVE):
+    if stateSet.count(core.Accessibility.STATE_SENSITIVE):
         stateString += "SENSITIVE "
-    if set.count(core.Accessibility.STATE_SHOWING):
+    if stateSet.count(core.Accessibility.STATE_SHOWING):
         stateString += "SHOWING "
-    if set.count(core.Accessibility.STATE_SINGLE_LINE):
+    if stateSet.count(core.Accessibility.STATE_SINGLE_LINE):
         stateString += "SINGLE_LINE " 
-    if set.count(core.Accessibility.STATE_STALE):
+    if stateSet.count(core.Accessibility.STATE_STALE):
         stateString += "STALE "
-    if set.count(core.Accessibility.STATE_TRANSIENT):
+    if stateSet.count(core.Accessibility.STATE_TRANSIENT):
         stateString += "TRANSIENT " 
-    if set.count(core.Accessibility.STATE_VERTICAL):
+    if stateSet.count(core.Accessibility.STATE_VERTICAL):
         stateString += "VERTICAL "
-    if set.count(core.Accessibility.STATE_VISIBLE):
+    if stateSet.count(core.Accessibility.STATE_VISIBLE):
         stateString += "VISIBLE "
-    if set.count(core.Accessibility.STATE_MANAGES_DESCENDANTS):
+    if stateSet.count(core.Accessibility.STATE_MANAGES_DESCENDANTS):
         stateString += "MANAGES_DESCENDANTS "
-    if set.count(core.Accessibility.STATE_INDETERMINATE):
+    if stateSet.count(core.Accessibility.STATE_INDETERMINATE):
         stateString += "INDETERMINATE "
 
     return stateString.strip()
@@ -383,9 +382,9 @@ class Accessible:
         sequence of Accessible StateTypes.
         """
 
-        set = self._acc.getState()
-        set = set._narrow(core.Accessibility.StateSet)
-        state = set.getStates()
+        s = self._acc.getState()
+        s = s._narrow(core.Accessibility.StateSet)
+        state = s.getStates()
         if CACHE_VALUES:
             self.state = state
         return state
@@ -442,7 +441,7 @@ class Accessible:
                                   obj.toString("       obj:  ", False))
                 obj.valid = False
                 #self.valid = False
-                raise InvalidObjectError, "obj == obj.parent"
+                raise Warning("obj == obj.parent")
         else:
             debug.println(debug.LEVEL_FINEST,
                           "--> obj.name=" + accessibleNameToString(obj) 
@@ -852,18 +851,6 @@ def onParentChanged(e):
         deleteAccessible(e.source)
     return
     
-    # This could fail if the e.source is now defunct.  [[[TODO: WDW - there
-    # may be some really bad timing issues here.  Remember that the AT-SPI
-    # events are added to a queue for processing later.  So...we could
-    # potentially be processing queued events for an object that has been
-    # pronounced defunct in a later event.]]]
-    #
-    try:
-        obj = makeAccessible(e.source)
-    except:
-        debug.printException(debug.LEVEL_FINEST)
-        return
-    
 
 def onStateChanged(e):
     """Core module event listener called when an object's state
@@ -874,14 +861,14 @@ def onStateChanged(e):
     """
 
     if Accessible._cache.has_key(e.source):
-        obj = Accessible._cache[e.source]
-        
         # Let's get rid of defunct objects.  We hate them.
         #
         if e.type == "object:state-changed:defunct":
-            del obj
-        elif obj.__dict__.has_key("state"):
-            del obj.state
+            deleteAccessible(e.source)
+        else:
+            obj = Accessible._cache[e.source]
+            if obj.__dict__.has_key("state"):
+                del obj.state
 
 
 def onChildrenChanged(e):
@@ -1068,12 +1055,12 @@ def findByName(root, name):
     """
 
     objlist = []
-    list = getObjects(root)
+    objects = getObjects(root)
 
     # Create a new list containing only those objects with the
     # specified name
     #
-    for o in list:
+    for o in objects:
         if o.name == name:
             objlist.append(o)
     return objlist
@@ -1110,8 +1097,8 @@ def findUnrelatedLabels(root):
     unrelatedLabels = []
     
     for label in allLabels:
-        set = label.relations
-        if len(set) == 0:
+        relations = label.relations
+        if len(relations) == 0:
             parent = label.parent
             if parent and (parent.role == rolenames.ROLE_PUSH_BUTTON):
                 pass
@@ -1268,7 +1255,7 @@ def getAcceleratorAndShortcut(obj):
     # bugzilla bug 319741.]]]
     #
     if len(bindingStrings) == 3:
-        mnemonic       = bindingStrings[0]
+        #mnemonic       = bindingStrings[0]
         fullShortcut   = bindingStrings[1]
         accelerator    = bindingStrings[2]
     elif len(bindingStrings) > 0:

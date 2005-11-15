@@ -22,6 +22,7 @@ events.
 """
 
 import core
+import debug
 import kbd
 
 class KeyBinding:

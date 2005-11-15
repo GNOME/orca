@@ -34,8 +34,8 @@ import debug
 VERBOSITY_LEVEL_BRIEF   = 0
 VERBOSITY_LEVEL_VERBOSE = 1
 
-speechVerbosityLevel  = VERBOSITY_LEVEL_VERBOSE
-brailleVerbosityLevel = VERBOSITY_LEVEL_VERBOSE
+__speechVerbosityLevel  = VERBOSITY_LEVEL_VERBOSE
+__brailleVerbosityLevel = VERBOSITY_LEVEL_VERBOSE
 
 # Constants for determining braille rolename style.
 #
@@ -44,7 +44,7 @@ BRAILLE_ROLENAME_STYLE_LONG  = 1 # full rolename
 
 brailleRolenameStyle = BRAILLE_ROLENAME_STYLE_LONG
 
-speechFactoryModules = ["gnomespeechfactory","espeechfactory"]
+speechFactoryModules = ["espeechfactory","gnomespeechfactory"]
 
 voices = {}
 keyEcho = False
@@ -61,10 +61,10 @@ def setSpeechVerbosityLevel(verbosityLevel):
     Arguments:
     - verbosityLevel: one of VERBOSITY_LEVEL_BRIEF or VERBOSITY_LEVEL_VERBOSE
     """
-    global speechVerbosityLevel
-    speechVerbosityLevel = verbosityLevel
+    global __speechVerbosityLevel
+    __speechVerbosityLevel = verbosityLevel
     debug.println(debug.LEVEL_CONFIGURATION,
-                  "Changed braille verbosity level to %d" % verbosityLevel)
+                  "Changed speech verbosity level to %d" % verbosityLevel)
 
     
 def setBrailleVerbosityLevel(verbosityLevel):
@@ -73,8 +73,8 @@ def setBrailleVerbosityLevel(verbosityLevel):
     Arguments:
     - verbosityLevel: one of VERBOSITY_LEVEL_BRIEF or VERBOSITY_LEVEL_VERBOSE
     """
-    global brailleVerbosityLevel
-    brailleVerbosityLevel = verbosityLevel
+    global __brailleVerbosityLevel
+    __brailleVerbosityLevel = verbosityLevel
     debug.println(debug.LEVEL_CONFIGURATION,
                   "Changed braille verbosity level to %d" % verbosityLevel)
 

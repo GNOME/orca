@@ -34,14 +34,11 @@ are passed to the active script only if it has indicated interest in the
 event.
 """
 
-import sys
-
 import a11y
 import default
 import core
 import debug
 import orca
-import script
 import settings
 import speech
 
@@ -277,7 +274,19 @@ class Event:
    converted to an Accessible.  It is perfectly OK for event handlers
    to annotate this object with their own attributes.
    """
-   pass
+   def __init__(self, e=None):
+       if e:
+           self.source   = a11y.makeAccessible(e.source)
+           self.type     = e.type
+           self.detail1  = e.detail1
+           self.detail2  = e.detail2
+           self.any_data = e.any_data
+       else:
+           self.source   = None
+           self.type     = None
+           self.detail1  = None
+           self.detail2  = None
+           self.any_data = None
 
 
 def processObjectEvent(e):
@@ -329,12 +338,7 @@ def processObjectEvent(e):
     # Copy relevant details from the event.
     #
     try:
-        event = Event()
-        event.type = e.type
-        event.detail1 = e.detail1
-        event.detail2 = e.detail2
-        event.any_data = e.any_data
-        event.source = a11y.makeAccessible(e.source)
+        event = Event(e)
         debug.printDetails(debug.LEVEL_FINEST, "    ", event.source)
     except CORBA.COMM_FAILURE:
         debug.printException(debug.LEVEL_SEVERE)

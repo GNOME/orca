@@ -87,7 +87,7 @@ class Script(default.Script):
 
         text = name
         
-        if found == False:
+        if not found:
             text += ". " + _("inaccessible")
 
         braille.displayMessage(text)

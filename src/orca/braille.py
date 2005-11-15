@@ -104,10 +104,8 @@ Braille display.
 
 import a11y
 import brl
-import core
 import debug
 import eventsynthesizer
-import settings
 
 from orca_i18n import _                          # for gettext support
 from rolenames import getShortBrailleForRoleName # localized role names
@@ -214,11 +212,6 @@ _lines = []
 #
 _regionWithFocus = None
 
-# A 0-based index on the physical display that specifies where the
-# display of the _regionWithFocus should start.
-#
-_homePosition = 10
-
 # The viewport is a rectangular region of size _displaySize whose upper left
 # corner is defined by the point (x, line number).  As such, the viewport is
 # identified solely by its upper left point.
@@ -268,7 +261,13 @@ class Region:
         - cursorOffset: a 0-based index saying where to draw the cursor
                         for this Region if it gets focus.
         """
-        
+
+        if string is None:
+            string = ""
+            
+        if string[-1:] == "\n":
+            string = string[:-1]
+           
         self.string = string
         self.cursorOffset = cursorOffset
         
@@ -295,10 +294,9 @@ class Component(Region):
         - cursorOffset: a 0-based index saying where to draw the cursor
                         for this Region if it gets focus.
         """
-        
+
+        Region.__init__(self, string, cursorOffset)
         self.accessible = accessible
-        self.string = string
-        self.cursorOffset = cursorOffset
         
     def processCursorKey(self, offset):
         """Processes a cursor key press on this Component.  The offset is
@@ -339,19 +337,21 @@ class Text(Region):
         - accessible: the accessible that implements AccessibleText
         - label: an optional label to display
         """
-        
+
         self.accessible = accessible
         result = a11y.getTextLineAtCaret(self.accessible)
         self.caretOffset = result[1]
         self.lineOffset = result[2]
-        self.cursorOffset = self.caretOffset - self.lineOffset
+        cursorOffset = self.caretOffset - self.lineOffset
 
         self.label = label
         if self.label:
-            self.string = self.label + " " + result[0]
-            self.cursorOffset += len(self.label) + 1
+            string = self.label + " " + result[0]
+            cursorOffset += len(self.label) + 1
         else:
-            self.string = result[0]    
+            string = result[0]
+            
+        Region.__init__(self, string, cursorOffset)
 
 
     def repositionCursor(self):
@@ -406,10 +406,8 @@ class ReviewComponent(Component):
                         for this Region if it gets focus.
         - zone: the flat review Zone associated with this component
         """
-        
-        self.accessible = accessible
-        self.string = string
-        self.cursorOffset = cursorOffset
+
+        Component.__init__(self, accessible, string, cursorOffset)
         self.zone = zone
 
         
@@ -429,13 +427,10 @@ class ReviewText(Region):
         - lineOffset: the character offset into where the text line starts
         - zone: the flat review Zone associated with this component
         """
-
+        
+        Region.__init__(self, string)        
         self.accessible = accessible
-        self.string = string
-        if self.string[-1:] == "\n":
-            self.string = self.string[:-1]
         self.lineOffset = lineOffset
-        self.cursorOffset = 0
         self.zone = zone
 
     def processCursorKey(self, offset):
@@ -801,8 +796,6 @@ def returnToRegionWithFocus(inputEvent=None):
 
     Returns True to mean the command should be consumed.
     """
-
-    global _regionWithFocus
 
     setFocus(_regionWithFocus)
     refresh(True)

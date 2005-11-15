@@ -18,13 +18,8 @@
 # Boston, MA 02111-1307, USA.
 
 import orca.core as core
-import orca.a11y as a11y
-import orca.braille as braille
 import orca.default as default
-import orca.input_event as input_event
-import orca.kbd as kbd
 import orca.rolenames as rolenames
-import orca.speech as speech
 import orca.orca as orca
 import orca.keybindings as keybindings
 
@@ -45,6 +40,11 @@ class Script(default.Script):
         
         default.Script.__init__(self, app)
 
+        # [[[TODO: HACK to blank out keybindings because the
+        # java-access-bridge gives us wrong keycodes.
+        #
+        # See: http://bugzilla.gnome.org/show_bug.cgi?id=318615]]]
+        #
         self.keybindings = keybindings.KeyBindings()
 
         self._display = None
