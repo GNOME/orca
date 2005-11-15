@@ -1,7 +1,12 @@
 2005-11-15  Willie Walker <william.walker@sun.com>
 
+	* src/orca/{braille.py,debug.py,default.py,
+	focus_tracking_presenter.py,hierarchical_presenter.py,kbd.py,
+	mag.py,orca.py,settings.py}: remove unnecessary globals.
+
 	* src/orca/*.py, src/orca/scripts/*.py: gross pychecker
 	sweep to eliminate a number of potential bugs and ugliness.
+	
 	* src/orca/{Makefile.am,acss.py,dectalk.py,default.py,
 	espeechfactory.py,gnomespeechfactory.py,orca-setup.in,
 	orca.py,outloud.py,settings.py,speech.py,speechserver.py},
