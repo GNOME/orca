@@ -1107,8 +1107,6 @@ class Script(script.Script):
         - event: the Event
         """
     
-        global state_change_notifiers
-
         # Do we care?
         #
         if state_change_notifiers.has_key(event.source.role):

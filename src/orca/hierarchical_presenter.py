@@ -381,7 +381,6 @@ def _displaySpecialization(specialization):
 def _navigateIntraObject(keystring):
     """Navigates between specializations of an object."""
 
-    global _currentObjectSpecializations
     global _currentSpecialization
 
     # Want to find the previous non-None specialization
@@ -428,7 +427,6 @@ def processKeyboardEvent(keyboardEvent):
     """
 
     global _navigationMode
-    global _currentObjectSpecializations
     global _currentSpecialization
 
     if keyboardEvent.type != core.Accessibility.KEY_PRESSED_EVENT:

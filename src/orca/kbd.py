@@ -116,8 +116,6 @@ class KeystrokeListener(core.Accessibility__POA.DeviceEventListener):
         """Registers this listener with the at-spi registry.
         """
         
-        global registry
-
         self._default_POA().the_POAManager.activate()
         d = core.registry.getDeviceEventController()
         return d.registerKeystrokeListener(self._this(), 
@@ -131,8 +129,6 @@ class KeystrokeListener(core.Accessibility__POA.DeviceEventListener):
         """Deregisters this listener with the at-spi registry.
         """
         
-        global registry
-
         d = core.registry.getDeviceEventController()
         d.deregisterKeystrokeListener(self._this(), 
                                       self.keyset, 
@@ -153,7 +149,6 @@ def XKeysymStringToKeycode(keysym):
     event.hw_code for key events.
     """
 
-    global _keycodeCache
     if not _keycodeCache.has_key(keysym):
         _keycodeCache[keysym] = core.XKeysymStringToKeycode(keysym)
     return _keycodeCache[keysym]

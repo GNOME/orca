@@ -119,7 +119,6 @@ def setEventDebugLevel(newLevel):
     """
 
     global _eventDebugLevel
-
     _eventDebugLevel = newLevel
     
 
@@ -138,7 +137,6 @@ def setEventDebugFilter(regExpression):
     """
 
     global _eventDebugFilter
-    
     _eventDebugFilter = regExpression
 
 
@@ -153,7 +151,6 @@ def setDebugFile(file):
     """
 
     global _debugFile
-
     _debugFile = file
 
     
@@ -163,8 +160,6 @@ def printException(level):
     Arguments:
     - level: the accepted debug level
     """
-
-    global _debugLevel
 
     if level >= _debugLevel:
         println(level)
@@ -179,8 +174,6 @@ def printStack(level):
     - level: the accepted debug level
     """
 
-    global _debugLevel
-
     if level >= _debugLevel:
         println(level)
         traceback.print_stack(None, 100, _debugFile)
@@ -194,9 +187,6 @@ def println(level, text = ""):
     - level: the accepted debug level
     - text: the text to print (default is a blank line)
     """
-
-    global _debugFile
-    global _debugLevel
 
     if level >= _debugLevel:
         if _debugFile:
@@ -216,9 +206,6 @@ def printObjectEvent(level, event, sourceInfo=None):
     - event: the Python Event to print
     - sourceInfo: additional string to print out
     """
-
-    global _eventDebugLevel
-    global _eventDebugFilter
 
     if _eventDebugFilter:
         match = _eventDebugFilter.match(event.type)
@@ -243,8 +230,6 @@ def printInputEvent(level, string):
     - level: the accepted debug level
     - string: the string representing the input event
     """
-
-    global _eventDebugLevel
 
     println(max(level, _eventDebugLevel), string)
 

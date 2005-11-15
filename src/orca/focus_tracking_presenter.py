@@ -71,8 +71,6 @@ def _registerEventListener(eventType):
     - eventType: the event type.
     """
 
-    global _listenerCounts
-    
     if _listenerCounts.has_key(eventType):
         _listenerCounts[eventType] = _listenerCounts[eventType] + 1
     else:
@@ -86,8 +84,6 @@ def _unregisterEventListener(eventType):
     - eventType: the event type.
     """
 
-    global _listenerCounts
-    
     _listenerCounts[eventType] = _listenerCounts[eventType] - 1
     if _listenerCounts[eventType] == 0:
         core.unregisterEventListener(processObjectEvent, eventType)
@@ -233,8 +229,6 @@ def _reclaimScripts():
     """Compares the list of known scripts to the list of known apps,
     deleting any scripts as necessary.
     """
-
-    global _knownScripts
 
     apps = []
     
@@ -389,8 +383,6 @@ def processKeyboardEvent(keyboardEvent):
     Returns True if the event should be consumed.
     """
 
-    global _activeScript
-
     if _activeScript:
         return _activeScript.processKeyboardEvent(keyboardEvent)
     else:
@@ -421,8 +413,6 @@ def locusOfFocusChanged(event, oldLocusOfFocus, newLocusOfFocus):
     - newLocusOfFocus: Accessible that is the new locus of focus
     """
 
-    global _activeScript
-    
     if _activeScript:
         _activeScript.locusOfFocusChanged(event,
                                           oldLocusOfFocus,
@@ -441,9 +431,6 @@ def visualAppearanceChanged(event, obj):
     - event: if not None, the Event that caused this to happen
     - obj: the Accessible whose visual appearance changed.
     """
-    
-
-    global _activeScript
     
     if _activeScript:
         _activeScript.visualAppearanceChanged(event, obj)

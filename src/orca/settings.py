@@ -163,8 +163,6 @@ def setScriptMapping(regExpression, moduleName):
                      class definition for the application
     """
 
-    global _scriptMappings
-    
     _scriptMappings.insert(0, [regExpression, moduleName])
 
 

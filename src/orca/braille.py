@@ -469,8 +469,6 @@ class Line:
         Returns [string, offsetIndex]
         """
 
-        global _regionWithFocus
-        
         string = ""
         focusOffset = -1
         for region in self.regions:
@@ -537,16 +535,15 @@ def clear():
     global _lines
     global _regionWithFocus
     global _viewport
-    
+
     _lines = []
     _regionWithFocus = None
     _viewport = [0, 0]
-    
 
+    
 def setLines(lines):
     global _lines
     _lines = lines
-
     
 def addLine(line):
     """Adds a line to the logical display for painting.  The line is added to
@@ -579,9 +576,7 @@ def setFocus(region, panToFocus=True):
               added to the logical display
     """
 
-    global _lines
     global _regionWithFocus
-    global _viewport
 
     _regionWithFocus = region
 
@@ -639,11 +634,7 @@ def refresh(panToCursor=True, targetCursorCell=0):
                         of the display and a negative value is a 1-based
                         target cell from the right side of the display.
     """
-
-    global _lines
-    global _viewport
-    global _displaySize
-    global _regionWithFocus
+    
     global endIsShowing
     global beginningIsShowing
     global cursorCell
@@ -813,10 +804,6 @@ def _processBrailleEvent(command):
     Arguments:
     - command: the BrlAPI command for the key that was pressed.
     """
-
-    global _lines
-    global _viewport
-    global _displaySize
 
     _printBrailleEvent(debug.LEVEL_FINE, command)
 

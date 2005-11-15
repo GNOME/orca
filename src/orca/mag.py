@@ -80,10 +80,6 @@ def magnifyAccessible(acc):
     - acc: the accessible
     """
 
-    global _initialized
-    global _roi
-    global _lastMouseEventTime
-    
     if not _initialized:
         return
 
@@ -195,6 +191,7 @@ def _setROI(rect):
     """
     
     global _roi
+
     _roi = rect
     _zoomer.setROI(_roi)
     _zoomer.markDirty(_roi)  # [[[TODO: WDW - for some reason, this seems
@@ -208,7 +205,9 @@ def onMouseEvent(e):
     Arguments:
     - e: at-spi event from the at-api registry
     """
+    
     global _lastMouseEventTime
+
     _lastMouseEventTime = time.time()
     _setROICenter(e.detail1, e.detail2)
 

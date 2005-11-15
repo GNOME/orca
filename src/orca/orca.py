@@ -249,8 +249,6 @@ def findActiveWindow():
     no windows are active.
     """
     
-    global apps
-    
     for app in apps:
         i = 0
         while i < app.childCount:
@@ -586,7 +584,6 @@ def init():
     
     global _initialized
     global _keybindings
-    global apps
     
     if _initialized:
         return False
@@ -737,7 +734,6 @@ def shutdown(inputEvent=None):
     """
     
     global _initialized
-    global apps
 
     if not _initialized:
         return False
@@ -912,9 +908,6 @@ def processKeyboardEvent(event):
     
     global lastInputEvent
     global _insertPressed
-    global _currentPresentationManager
-    global _recordingKeystrokes
-    global _keystrokesFile
     
     event_string = event.event_string
     
