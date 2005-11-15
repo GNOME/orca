@@ -181,8 +181,7 @@ def init(keyEventHandler):
         return False
     
     _listeners = []
-    i = 0
-    while i < (1 << (core.Accessibility.MODIFIER_NUMLOCK + 1)):
+    for i in range(0, (1 << (core.Accessibility.MODIFIER_NUMLOCK + 1))):
         kl = KeystrokeListener(keyEventHandler, # listener
                                [],              # keyset
                                i,               # modifier mask
@@ -190,7 +189,6 @@ def init(keyEventHandler):
                                False)           # global
         kl.register()
         _listeners.append(kl)
-        i += 1
 
     _initialized = True
     return True

@@ -460,16 +460,13 @@ class SpeechGenerator:
         # needs serious work.  Logged as bugzilla bug 319745.]]]
         #
         textObj = None
-        childCount = obj.childCount
-        i = 0
-        while i < childCount:
+        for i in range(0, obj.childCount):
             debug.println(debug.LEVEL_FINEST,
                           "speechgenerator._getSpeechForComboBox " \
                           + "looking at child %d" % i)
             child = obj.child(i)
             if child.role == rolenames.ROLE_TEXT:
                 textObj = child
-            i = i + 1
     
         if textObj:
             result = a11y.getTextLineAtCaret(textObj)
@@ -745,19 +742,6 @@ class SpeechGenerator:
         """
         
         utterances = self._getDefaultSpeech(obj, already_focused)
-    
-        #i = 0
-        #itemCount = 0
-        #while i < obj.childCount:
-        #    child = obj.child(i)
-        #    if child.role != rolenames.ROLE_SEPARATOR:
-        #        itemCount += 1
-        #    i += 1
-        #            
-        #if itemCount == 1:
-        #    utterances.append(_("one item"))
-        #else:
-        #    utterances.append(("%d " % itemCount) + _("items"))
     
         verbosity = settings.getSetting("speechVerbosityLevel",
                                         settings.VERBOSITY_LEVEL_VERBOSE)
@@ -1216,8 +1200,7 @@ class SpeechGenerator:
         #
         action = obj.action
         if action:
-            i = 0
-            while i < action.nActions:
+            for i in range(0, action.nActions):
                 debug.println(debug.LEVEL_FINEST,
                     "speechgenerator._getSpeechForTableCell " \
                     + "looking at action %d" % i)
@@ -1230,7 +1213,6 @@ class SpeechGenerator:
                 #elif action.getName(i) == "edit":
                 #    utterances = self._getSpeechForText(obj, True)
                 #    break
-                i += 1
 
         if (len(utterances) == 0) and (not already_focused):
             utterances = [obj.label]

@@ -588,11 +588,9 @@ class Context:
                 regionWithFocus = zone.brailleRegion
                 regionWithFocus.cursorOffset = 0
                 if zone.words:
-                    wordIndex = 0
-                    while wordIndex < self.wordIndex:
+                    for wordIndex in range(0, self.wordIndex):
                         regionWithFocus.cursorOffset += \
                             len(zone.words[wordIndex].string)
-                        wordIndex += 1
                 regionWithFocus.cursorOffset += self.charIndex
                 break
             
@@ -1313,8 +1311,7 @@ def getShowingZones(root):
     # [[[TODO: WDW - probably want to do something a little smarter
     # for parents that manage gazillions of descendants.]]]
     #
-    i = 0
-    while i < root.childCount:
+    for i in range(0, root.childCount):
         child = root.child(i)
         if child == root:
             debug.println(debug.LEVEL_WARNING,
@@ -1330,7 +1327,6 @@ def getShowingZones(root):
                           "WARNING CHILD.PARENT != PARENT!!!")
         elif child.state.count(core.Accessibility.STATE_SHOWING):    
             objlist.extend(getShowingZones(child))
-        i += 1
         
     return objlist
 
@@ -1351,17 +1347,13 @@ def clusterZonesByLine(zones):
     # become a part of the top most cluster.
     #
     numZones = len(zones)
-    i = 0
-    while i < numZones:
-        j = 0
-        while j < (numZones - 1 - i):
+    for i in range(0, numZones):
+        for j in range(0, numZones - 1 - i):
             a = zones[j]
             b = zones[j + 1]
             if b.y < a.y:
                 zones[j] = b
                 zones[j + 1] = a
-            j += 1
-        i += 1
 
     # Now we cluster the zones.  We create the clusters on the
     # fly, adding a zone to an existing cluster only if it's
@@ -1380,12 +1372,10 @@ def clusterZonesByLine(zones):
             if inCluster:
                 # Add to cluster based on the x position.
                 #
-                i = 0
-                while i < len(lineCluster):
+                for i in range(0, len(lineCluster)):
                     zone = lineCluster[i]
                     if clusterCandidate.x < zone.x:
                         break
-                    i += 1
                 lineCluster.insert(i, clusterCandidate)
                 addedToCluster = True
                 break                

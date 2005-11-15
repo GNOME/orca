@@ -527,9 +527,8 @@ class Accessible:
                     label += " " + self.name
                 else:
                     label = self.name
-            elif self.childCount > 0:
-                i = 0
-                while i < self.childCount:
+            else:
+                for i in range(0, self.childCount):
                     debug.println(debug.LEVEL_FINEST,
                                   "a11y.__get_label looking at child %d" % i)
                     child = self.child(i)
@@ -539,7 +538,6 @@ class Accessible:
                                 label += " " + child.name
                             else:
                                 label = child.name
-                    i += 1
                     
         # If the object doesn't have a relation, but has a name, return
         # the name.
@@ -992,8 +990,7 @@ def getObjects(root):
     if root.childCount <= 0:
         return objlist
 
-    i = root.childCount - 1
-    while i >= 0:
+    for i in range(0, root.childCount):
         debug.println(debug.LEVEL_FINEST,
                       "a11y.getObjects looking at child %d" % i)
         child = root.child(i)
@@ -1003,7 +1000,6 @@ def getObjects(root):
             if (state.count(core.Accessibility.STATE_MANAGES_DESCENDANTS) == 0) \
                    and (child.childCount > 0):
                 objlist.extend(getObjects(child))
-        i = i - 1
         
     return objlist
 

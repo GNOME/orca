@@ -439,13 +439,11 @@ def processKeyboardEvent(keyboardEvent):
     #
     if keystring == "Tab":
         _getSpecializations(_currentObject)
-        i = 0
         _currentSpecialization = _SPECIALIZATION_NONE
-        while i < len(_currentObjectSpecializations):
+        for i in range(0, len(_currentObjectSpecializations)):
             if _currentObjectSpecializations[i]:
                 _currentSpecialization = i
                 break
-            i = i + 1
         if _currentSpecialization != _SPECIALIZATION_NONE:
             _navigationMode = _NAVIGATION_MODE_INTRAOBJECT
             _displaySpecialization(_currentSpecialization)

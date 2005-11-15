@@ -110,7 +110,7 @@ def init():
 	        # Sometimes the 'str' command outputs a list when we don't
 	        # want it to.
 	        #
-	        if acssProps.__class__.__name__ == "list":
+                if type(acssProps) == type([]):
 	            acssProps = acssProps[0]
                 acss = ACSS(acssProps)
 	        voices[name] = acss

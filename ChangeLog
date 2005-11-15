@@ -9,6 +9,11 @@
 
 2005-11-15  Willie Walker <william.walker@sun.com>
 
+	* src/orca/{a11y.py,braillegenerator.py,flat_review.py,
+	focus_tracking_presenter.py,hierarchical_presenter.py,
+	kbd.py,orca.py,speech.py,speechgenerator.py}: use "for i in range"
+	idiom instead of the awkward "while" loops.
+	
 	* src/orca/{braille.py,debug.py,default.py,
 	focus_tracking_presenter.py,hierarchical_presenter.py,kbd.py,
 	mag.py,orca.py,settings.py}: remove unnecessary globals.

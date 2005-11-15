@@ -484,16 +484,13 @@ class BrailleGenerator:
         # needs serious work.  Logged as bugzilla bug 319745.]]]
         #
         textObj = None
-        childCount = obj.childCount
-        i = 0
-        while i < childCount:
+        for i in range(0, obj.childCount):
             debug.println(debug.LEVEL_FINEST,
                           "braillegenerator._getBrailleRegionsForComboBox " \
                           + "looking at child %d" % i)
             child = obj.child(i)
             if child.role == rolenames.ROLE_TEXT:
                 textObj = child
-            i = i + 1
     
         if textObj:
             regions.append(braille.Text(textObj))
@@ -1103,8 +1100,7 @@ class BrailleGenerator:
         #
         action = obj.action
         if action:
-            i = 0
-            while i < action.nActions:
+            for i in range(0, action.nActions):
                 debug.println(debug.LEVEL_FINEST,
                     "braillegenerator._getBrailleRegionsForTableCell " \
                     + "looking at action %d" % i)
@@ -1116,7 +1112,6 @@ class BrailleGenerator:
                 #elif action.getName(i) == "edit":
                 #    text = self._getSpeechForText(obj, True)
                 #    break
-                i += 1
 
         if len(regions) == 0:
             regions = self._getDefaultBrailleRegions(obj)
@@ -1352,9 +1347,7 @@ class BrailleGenerator:
         if reallyGroupChildren:
             regions.append(braille.Region(" "))
             selection = obj.selection
-            childCount = obj.childCount
-            i = 0
-            while i < childCount:
+            for i in range(0, obj.childCount):
                 debug.println(debug.LEVEL_FINEST,
                     "braillegenerator.getBrailleRegions " \
                     + "looking at child %d" % i)
@@ -1371,7 +1364,7 @@ class BrailleGenerator:
                 #
                 # and child.state.count(core.Accessibility.STATE_SENSITIVE):
 
-                    if (i > 0) and (i < (self, childCount - 1)):
+                    if (i > 0) and (i < (self, obj.childCount - 1)):
                         regions.append(braille.Region(" _ "))
     
                     result = self.getBrailleRegions(child, False)
@@ -1379,8 +1372,6 @@ class BrailleGenerator:
     
                     if selection and selection.isChildSelected(i):
                         selectedRegion = result[1]
-                    
-                i = i + 1
             
         return [regions, selectedRegion]
 

@@ -139,8 +139,7 @@ def _buildAppList():
 
     apps = []
 
-    i = 0
-    while i < core.desktop.childCount:
+    for i in range(0, core.desktop.childCount):
         acc = core.desktop.getChildAtIndex(i)
         try:
             app = a11y.makeAccessible(acc)
@@ -148,7 +147,6 @@ def _buildAppList():
                 apps.insert(0, app)
         except:
             debug.printException(debug.LEVEL_SEVERE)
-        i += 1
 
     debug.println(debug.LEVEL_FINEST,
                   "...orca._buildAppList")
@@ -250,15 +248,10 @@ def findActiveWindow():
     """
     
     for app in apps:
-        i = 0
-        while i < app.childCount:
+        for i in range(0, app.childCount):
             state = app.child(i).state
             if state.count(core.Accessibility.STATE_ACTIVE) > 0:
                 return app.child(i)
-            i += 1
-            debug.println(debug.LEVEL_FINEST,
-                          "orca.findActiveWindow %d" % i)
-
 
     return None
 
@@ -352,22 +345,19 @@ def printApps(inputEvent=None):
     debug.println(level, "There are %d Accessible applications" % len(apps))
     for app in apps:
         debug.printDetails(level, "  App: ", app, False)
-        i = 0
-        while i < app.childCount:
+        for i in range(0, app.childCount):
             child = app.child(i)
             debug.printDetails(level, "    Window: ", child, False)
             if child.parent != app:
                 debug.println(level,
                               "      WARNING: child's parent is not app!!!")
-            i += 1
 
     return True
 
 
 def printAccessibleTree(level, indent, root):
     debug.printDetails(level, indent, root, False)
-    i = 0
-    while i < root.childCount:
+    for i in range(0, root.childCount):
         child = root.child(i)
         if child == root:
             debug.println(level,
@@ -380,7 +370,6 @@ def printAccessibleTree(level, indent, root):
                           indent + "  " + "WARNING CHILD.PARENT != PARENT!!!")
         else:
             printAccessibleTree(level, indent + "  ", child)
-        i += 1
 
     
 def printAccessiblePaintedTree(level, indent, root):
@@ -398,8 +387,7 @@ def printAccessiblePaintedTree(level, indent, root):
     #                  indent + " text extents: (x=%d y=%d w=%d h=%d)" \
     #                  % (extents[0], extents[1], extents[2], extents[3]))
 
-    i = 0
-    while i < root.childCount:
+    for i in range(0, root.childCount):
         child = root.child(i)
         if child == root:
             debug.println(level,
@@ -412,7 +400,6 @@ def printAccessiblePaintedTree(level, indent, root):
                           indent + "  " + "WARNING CHILD.PARENT != PARENT!!!")
         elif child.state.count(core.Accessibility.STATE_SHOWING):    
             printAccessiblePaintedTree(level, indent + "  ", child)
-        i += 1
 
 
 def printActiveApp(inputEvent=None):

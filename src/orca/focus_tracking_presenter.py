@@ -232,8 +232,7 @@ def _reclaimScripts():
 
     apps = []
     
-    i = 0
-    while i < core.desktop.childCount:
+    for i in range(0, core.desktop.childCount):
         acc = core.desktop.getChildAtIndex(i)
         try:
             app = a11y.makeAccessible(acc)
@@ -241,7 +240,6 @@ def _reclaimScripts():
                 apps.insert(0, app)
         except:
             debug.printException(debug.LEVEL_SEVERE)
-        i += 1
 
     for app in _knownScripts.keys():
         if apps.count(app) == 0:
