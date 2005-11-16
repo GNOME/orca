@@ -103,7 +103,7 @@ class SpeechServer(speechserver.SpeechServer):
                   initial=config):
         """Launches speech engine."""
 
-        SpeechServer.__init__(self)
+        speechserver.SpeechServer.__init__(self)
         
         self._engine = engine
         e = __import__(_getcodes(engine), 
