@@ -268,7 +268,7 @@ class BrailleGenerator:
 
         self._debugGenerator("_getDefaultBrailleRegions", obj)
         
-        verbosity = settings.getSetting("brailleVerbosityLevel",
+        verbosity = settings.getSetting(settings.BRAILLE_VERBOSITY_LEVEL,
                                         settings.VERBOSITY_LEVEL_VERBOSE)
 
         text = obj.label
@@ -319,7 +319,7 @@ class BrailleGenerator:
     
         self._debugGenerator("_getBrailleRegionsForAnimation", obj)
     
-        verbosity = settings.getSetting("brailleVerbosityLevel",
+        verbosity = settings.getSetting(settings.BRAILLE_VERBOSITY_LEVEL,
                                         settings.VERBOSITY_LEVEL_VERBOSE)
 
         text = obj.label
@@ -373,7 +373,7 @@ class BrailleGenerator:
         
         self._debugGenerator("_getBrailleRegionsForCheckBox", obj)
     
-        verbosity = settings.getSetting("brailleVerbosityLevel",
+        verbosity = settings.getSetting(settings.BRAILLE_VERBOSITY_LEVEL,
                                         settings.VERBOSITY_LEVEL_VERBOSE)
 
         text = obj.label
@@ -408,7 +408,7 @@ class BrailleGenerator:
         
         self._debugGenerator("_getBrailleRegionsForCheckMenuItem", obj)
         
-        verbosity = settings.getSetting("brailleVerbosityLevel",
+        verbosity = settings.getSetting(settings.BRAILLE_VERBOSITY_LEVEL,
                                         settings.VERBOSITY_LEVEL_VERBOSE)
 
         text = obj.label
@@ -465,7 +465,7 @@ class BrailleGenerator:
         
         self._debugGenerator("_getBrailleRegionsForComboBox", obj)
     
-        verbosity = settings.getSetting("brailleVerbosityLevel",
+        verbosity = settings.getSetting(settings.BRAILLE_VERBOSITY_LEVEL,
                                         settings.VERBOSITY_LEVEL_VERBOSE)
 
         regions = []
@@ -624,7 +624,7 @@ class BrailleGenerator:
         
         self._debugGenerator("_getBrailleRegionsForIcon", obj)
     
-        verbosity = settings.getSetting("brailleVerbosityLevel",
+        verbosity = settings.getSetting(settings.BRAILLE_VERBOSITY_LEVEL,
                                         settings.VERBOSITY_LEVEL_VERBOSE)
 
         text = obj.label
@@ -709,7 +709,7 @@ class BrailleGenerator:
         
         self._debugGenerator("_getBrailleRegionsForMenu", obj)
 
-        verbosity = settings.getSetting("brailleVerbosityLevel",
+        verbosity = settings.getSetting(settings.BRAILLE_VERBOSITY_LEVEL,
                                         settings.VERBOSITY_LEVEL_VERBOSE)
 
         text = obj.label
@@ -761,7 +761,7 @@ class BrailleGenerator:
         
         self._debugGenerator("_getBrailleRegionsForMenuItem", obj)
 
-        verbosity = settings.getSetting("brailleVerbosityLevel",
+        verbosity = settings.getSetting(settings.BRAILLE_VERBOSITY_LEVEL,
                                         settings.VERBOSITY_LEVEL_VERBOSE)
 
         text = obj.label
@@ -842,7 +842,7 @@ class BrailleGenerator:
         
         self._debugGenerator("_getBrailleRegionsForPageTab", obj)
     
-        verbosity = settings.getSetting("brailleVerbosityLevel",
+        verbosity = settings.getSetting(settings.BRAILLE_VERBOSITY_LEVEL,
                                         settings.VERBOSITY_LEVEL_VERBOSE)
 
         text = obj.label
@@ -920,7 +920,7 @@ class BrailleGenerator:
         
         self._debugGenerator("_getBrailleRegionsForRadioButton", obj)
     
-        verbosity = settings.getSetting("brailleVerbosityLevel",
+        verbosity = settings.getSetting(settings.BRAILLE_VERBOSITY_LEVEL,
                                         settings.VERBOSITY_LEVEL_VERBOSE)
 
         text = obj.label
@@ -955,7 +955,7 @@ class BrailleGenerator:
         
         self._debugGenerator("_getBrailleRegionsForRadioMenuItem", obj)
 
-        verbosity = settings.getSetting("brailleVerbosityLevel",
+        verbosity = settings.getSetting(settings.BRAILLE_VERBOSITY_LEVEL,
                                         settings.VERBOSITY_LEVEL_VERBOSE)
     
         text = obj.label
@@ -1196,7 +1196,7 @@ class BrailleGenerator:
         
         self._debugGenerator("_getBrailleRegionsForTerminal", obj)
     
-        verbosity = settings.getSetting("brailleVerbosityLevel",
+        verbosity = settings.getSetting(settings.BRAILLE_VERBOSITY_LEVEL,
                                         settings.VERBOSITY_LEVEL_VERBOSE)
 
         label = None
@@ -1386,12 +1386,11 @@ class BrailleGenerator:
         Returns a list of Regions to display.
         """
 
-        verbosity = settings.getSetting(
-            "brailleVerbosityLevel",
-            settings.VERBOSITY_LEVEL_VERBOSE)
+        verbosity = settings.getSetting(settings.BRAILLE_VERBOSITY_LEVEL,
+                                        settings.VERBOSITY_LEVEL_VERBOSE)
 
         brailleRolenameStyle = settings.getSetting(
-            "brailleRolenameStyle",
+            settings.BRAILLE_ROLENAME_STYLE,
             settings.BRAILLE_ROLENAME_STYLE_LONG)
 
         regions = []

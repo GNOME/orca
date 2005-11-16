@@ -648,7 +648,7 @@ def getBrailleForRoleName(obj):
     """
     
     brailleRolenameStyle = settings.getSetting(
-        "brailleRolenameStyle",
+        settings.BRAILLE_ROLENAME_STYLE,
         settings.BRAILLE_ROLENAME_STYLE_LONG)
 
     if brailleRolenameStyle == settings.BRAILLE_ROLENAME_STYLE_SHORT:

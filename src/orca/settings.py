@@ -26,58 +26,127 @@ import re
 import sys
 import debug
 
-# Constants for categorizing verbosity levels (see
-# setBrailleVerbosityLevel and setSpeechVerbosityLevel).
-# These will have an impact on the various individual
-# verbosity levels for rolenames, accelerators, etc.
+#########################################################################
+#                                                                       #
+# String constants and default values for the common attributes.        #
+#                                                                       #
+#########################################################################
+
+# Verbosity levels (see setBrailleVerbosityLevel and
+# setSpeechVerbosityLevel).  These will have an impact on the various
+# individual verbosity levels for rolenames, accelerators, etc.
 #
+BRAILLE_VERBOSITY_LEVEL = "brailleVerbosityLevel"
+SPEECH_VERBOSITY_LEVEL  = "speechVerbosityLevel"
 VERBOSITY_LEVEL_BRIEF   = 0
 VERBOSITY_LEVEL_VERBOSE = 1
+speechVerbosityLevel    = VERBOSITY_LEVEL_VERBOSE
+brailleVerbosityLevel   = VERBOSITY_LEVEL_VERBOSE
 
-__speechVerbosityLevel  = VERBOSITY_LEVEL_VERBOSE
-__brailleVerbosityLevel = VERBOSITY_LEVEL_VERBOSE
-
-# Constants for determining braille rolename style.
-#
+BRAILLE_ROLENAME_STYLE  = "brailleRolenameStyle"
 BRAILLE_ROLENAME_STYLE_SHORT = 0 # three letter abbreviations
 BRAILLE_ROLENAME_STYLE_LONG  = 1 # full rolename
+brailleRolenameStyle    = BRAILLE_ROLENAME_STYLE_LONG
 
-brailleRolenameStyle = BRAILLE_ROLENAME_STYLE_LONG
+# The absolue amount to change the speech rate when
+# increasing or decreasing speech.  This is a numerical
+# value that represents an ACSS rate value.
+#
+SPEECH_RATE_DELTA       = "speechRateDelta"
+speechRateDelta         = 5
 
-speechFactoryModules = ["espeechfactory","gnomespeechfactory"]
+# If True, use speech.
+#
+USE_SPEECH              = "useSpeech"
+useSpeech               = True
 
-voices = {}
-keyEcho = False
-useSpeech = True
-useBraille = False
-learnModeEnabled = False
+# Settings that apply to the particular speech engine to
+# use as well details on the default voices to use.
+#
+SPEECH_FACTORY_MODULES  = "speechFactoryModules"
+speechFactoryModules    = ["espeechfactory","gnomespeechfactory"]
+
+SPEECH_SERVER_FACTORY   = "speechServerFactory"
+speechServerFactory     = "gnomespeechfactory"
+
+SPEECH_SERVER           = "speechServer"
+speechServer            = None # None means pick the first one.
+
+#DEFAULT_VOICE           = "default"
+#UPPERCASE_VOICE         = "uppercase"
+#HYPERLINK_VOICE         = "hyperlink"
+#
+#VOICES                  = "voices"
+#voices = {
+#    DEFAULT_VOICE   : ACSS({}),
+#    UPPERCASE_VOICE : ACSS({ACSS.AVERAGE_PITCH : 6}),
+#    HYPERLINK_VOICE : ACSS({ACSS.AVERAGE_PITCH : 4})
+#}
+
+
+# If True, use braille.
+#
+USE_BRAILLE             = "useBraille"
+useBraille              = False
+
+
+# If True, use magnification.
+#
+USE_MAGNIFIER           = "useMagnifier"
+useMagnifier            = False
+
+
+# If True, use key echo.
+#
+USE_KEY_ECHO            = "useKeyEcho"
+useKeyEcho              = False
+
+
+# Script developer feature.  If False, just the default script
+# will be used.  Helps determine difference between custom
+# scripts and the default script behavior.
+#
+USE_CUSTOM_SCRIPTS      = "speechVerbosityLevel"
+useCustomScripts        = True
+
+
+# Latent support to allow the user to override/define keybindings
+# and braille bindings.  Unsupported and undocumented for now.
+# Use at your own risk.
+#
+KEY_BINDINGS_MAP        = "keyBindingsMap"
+keyBindingsMap          = {}
+
+BRAILLE_BINDINGS_MAP    = "brailleBindingsMap"
+brailleBindingsMap      = {}
+
+
+
+# Which packages to search, and the order in which to search,
+# for custom scripts.  These packages are expected to be on
+# the PYTHONPATH and/or subpackages of the "orca" package.
+#
+SCRIPT_PACKAGES         = "scriptPackages"
+scriptPackages          = ["orca-scripts", "scripts"]
+
+
+# Script developer feature.  If False, no AT-SPI object values
+# will be cached locally.  Helps determine if there might be a
+# problem related to the cache being out of sync with the real
+# objects.
+#
+CACHE_VALUES            = "cacheValues"
+cacheValues             = False
+
+
+# Assists with learn mode (what you enter when you press Insert+F1
+# and exit when you press escape.
+#
+LEARN_MODE_ENABLED      = "learnModeEnabled"
+learnModeEnabled        = False
+
 
 _userSettings = None
-
-
-def setSpeechVerbosityLevel(verbosityLevel):
-    """Sets the verbosity level for speech output.
-
-    Arguments:
-    - verbosityLevel: one of VERBOSITY_LEVEL_BRIEF or VERBOSITY_LEVEL_VERBOSE
-    """
-    global __speechVerbosityLevel
-    __speechVerbosityLevel = verbosityLevel
-    debug.println(debug.LEVEL_CONFIGURATION,
-                  "Changed speech verbosity level to %d" % verbosityLevel)
-
-    
-def setBrailleVerbosityLevel(verbosityLevel):
-    """Sets the verbosity level for braille output.
-
-    Arguments:
-    - verbosityLevel: one of VERBOSITY_LEVEL_BRIEF or VERBOSITY_LEVEL_VERBOSE
-    """
-    global __brailleVerbosityLevel
-    __brailleVerbosityLevel = verbosityLevel
-    debug.println(debug.LEVEL_CONFIGURATION,
-                  "Changed braille verbosity level to %d" % verbosityLevel)
-
     
 def setLearnModeEnabled(enabled):
     """Turns learning mode on and off.  If learn mode is enabled, input event

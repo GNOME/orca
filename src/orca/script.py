@@ -160,7 +160,7 @@ class Script:
         #
         user_bindings = None
 
-        user_bindings_map = settings.getSetting("keybindings_map",{})
+        user_bindings_map = settings.getSetting(settings.KEY_BINDINGS_MAP, {})
         if user_bindings_map.has_key(self.name):
             user_bindings = user_bindings_map[self.name]
         elif user_bindings_map.has_key("default"):
@@ -210,7 +210,8 @@ class Script:
         user_bindings = None
         command = brailleEvent.event
         
-        user_bindings_map = settings.getSetting("braillebindings_map",{})
+        user_bindings_map = settings.getSetting(settings.BRAILLE_BINDINGS_MAP,
+                                                {})
         if user_bindings_map.has_key(self.name):
             user_bindings = user_bindings_map[self.name]
         elif user_bindings_map.has_key("default"):

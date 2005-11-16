@@ -319,7 +319,8 @@ def processBrailleEvent(command):
     except:
         debug.printException(debug.LEVEL_SEVERE)
 
-    if (not consumed) and settings.getSetting("learnModeEnabled", False):
+    if (not consumed) and settings.getSetting(settings.LEARN_MODE_ENABLED,
+                                              False):
         consumed = True
 
     return consumed
@@ -647,7 +648,7 @@ def init():
                                             1 << MODIFIER_ORCA,
                                             nextPresentationManagerHandler))
 
-    if settings.getSetting("useSpeech", True):
+    if settings.getSetting(settings.USE_SPEECH, True):
         try:
             speech.init()
             debug.println(debug.LEVEL_CONFIGURATION,
@@ -659,14 +660,14 @@ def init():
         debug.println(debug.LEVEL_CONFIGURATION,
                       "Speech module has NOT been initialized.")
         
-    if settings.getSetting("useBraille", False):
+    if settings.getSetting(settings.USE_BRAILLE, False):
         try:
             braille.init(processBrailleEvent, 7)
         except:
             debug.println(debug.LEVEL_SEVERE,
                           "Could not initialize connection to braille.")
 
-    if settings.getSetting("useMagnifier", False):
+    if settings.getSetting(settings.USE_MAGNIFIER, False):
         try:
             mag.init()
             debug.println(debug.LEVEL_CONFIGURATION,
@@ -741,11 +742,11 @@ def shutdown(inputEvent=None):
     #
     kbd.shutdown() # automatically unregisters processKeyboardEvent
     a11y.shutdown()
-    if settings.getSetting("useSpeech", True):
+    if settings.getSetting(settings.USE_SPEECH, True):
         speech.shutdown()
-    if settings.getSetting("useBraille", False):
+    if settings.getSetting(settings.USE_BRAILLE, False):
         braille.shutdown();
-    if settings.getSetting("useMagnifier", False):
+    if settings.getSetting(settings.USE_MAGNIFIER, False):
         mag.shutdown();
 
     core.bonobo.main_quit()
@@ -865,7 +866,7 @@ def _keyEcho(key):
     - key: a string representing the key name to echo.
     """
     
-    if not settings.getSetting("keyEcho", False):
+    if not settings.getSetting(settings.USE_KEY_ECHO, False):
         return
     if key.isupper():
         speech.speak(key, speech.voices["uppercase"])
@@ -955,7 +956,8 @@ def processKeyboardEvent(event):
         if (not consumed) and (_currentPresentationManager >= 0):
             consumed = _PRESENTATION_MANAGERS[_currentPresentationManager].\
                        processKeyboardEvent(keyboardEvent)
-        if (not consumed) and settings.getSetting("learnModeEnabled", False):
+        if (not consumed) and settings.getSetting(settings.LEARN_MODE_ENABLED,
+                                                  False):
             if event.type == core.Accessibility.KEY_PRESSED_EVENT:
                 braille.displayMessage(event_string)
                 speech.speak(event_string)

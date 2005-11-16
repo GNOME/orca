@@ -1,5 +1,9 @@
+2005-11-16  Willie Walker <william.walker@sun.com>
 
-2005-11-14  Rich Burridge <rich.burridge@sun.com>
+	* src/orca/*.py: use string constants to get settings (I got
+	bit by a mispelling when using raw strings).
+
+2005-11-15  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Makefile.am src/orca/scripts/Evolution.py
           src/orca/settings.py

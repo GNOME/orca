@@ -144,7 +144,7 @@ def _createScript(app):
 
     script = None
 
-    if settings.getSetting("useCustomScripts", True):
+    if settings.getSetting(settings.USE_CUSTOM_SCRIPTS, True):
         # Look for custom scripts first.  
         #
         # We'll use the LEVEL_FINEST level for debug output here as
@@ -153,7 +153,7 @@ def _createScript(app):
         # a syntax error in it, so we want to give script writers
         # a vehicle for debugging these types of things.
         #
-        scriptPackages = settings.getSetting("scriptPackages",
+        scriptPackages = settings.getSetting(settings.SCRIPT_PACKAGES,
                                              ["orca-scripts", "scripts"])
 
         moduleName = settings.getScriptModuleName(app)

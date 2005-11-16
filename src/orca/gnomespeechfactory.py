@@ -475,7 +475,8 @@ class SpeechServer(speechserver.SpeechServer):
 	acss = speech.voices["default"]
 	speaker = self.__getSpeaker(acss)
 
-        rateDelta = settings.getSetting("speechRateDelta", step)
+        rateDelta = settings.getSetting(settings.SPEECH_RATE_DELTA,
+                                        step)
 
 	try:
             rate = min(100, self.__getRate(speaker) + rateDelta)
@@ -504,7 +505,8 @@ class SpeechServer(speechserver.SpeechServer):
 	acss = speech.voices["default"]
 	speaker = self.__getSpeaker(acss)
 
-        rateDelta = settings.getSetting("speechRateDelta", step)
+        rateDelta = settings.getSetting(settings.SPEECH_RATE_DELTA,
+                                        step)
 
 	try:
             rate = max(1, self.__getRate(speaker) - rateDelta)

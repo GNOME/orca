@@ -442,7 +442,7 @@ class Script(script.Script):
     def whereAmI(self, inputEvent):
         self.updateBraille(orca.locusOfFocus)
 
-        verbosity = settings.getSetting("speechVerbosityLevel",
+        verbosity = settings.getSetting(settings.SPEECH_VERBOSITY_LEVEL,
                                         settings.VERBOSITY_LEVEL_VERBOSE)
     
         utterances = []
@@ -611,7 +611,7 @@ class Script(script.Script):
         if newLocusOfFocus:
             self.updateBraille(newLocusOfFocus)
 
-            verbosity = settings.getSetting("speechVerbosityLevel",
+            verbosity = settings.getSetting(settings.SPEECH_VERBOSITY_LEVEL,
                                             settings.VERBOSITY_LEVEL_VERBOSE)
     
             utterances = []
