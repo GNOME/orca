@@ -54,12 +54,12 @@ HREF="#AEN2078"
 ></DT
 ><DT
 ><A
-HREF="#AEN2446"
+HREF="#AEN2445"
 >Orca Testing Plan</A
 ></DT
 ><DT
 ><A
-HREF="#AEN2460"
+HREF="#AEN2459"
 >Orca User's Guide</A
 ></DT
 ></DL
@@ -8158,7 +8158,7 @@ HREF="#AEN2098"
 ></DT
 ><DT
 ><A
-HREF="#AEN2205"
+HREF="#AEN2204"
 >Script Contract</A
 ></DT
 ></DL
@@ -8172,24 +8172,24 @@ HREF="#CUSTOMIZATION"
 ><DL
 ><DT
 ><A
-HREF="#AEN2237"
+HREF="#AEN2236"
 >Defining Event Listeners</A
 ></DT
 ><DT
 ><A
-HREF="#AEN2261"
+HREF="#AEN2260"
 >Defining Keyboard Bindings</A
 ></DT
 ><DT
 ><A
-HREF="#AEN2264"
+HREF="#AEN2263"
 >Defining Braille Bindings</A
 ></DT
 ></DL
 ></DD
 ><DT
 ><A
-HREF="#AEN2267"
+HREF="#AEN2266"
 >Script Utilities</A
 ></DT
 ><DD
@@ -8201,14 +8201,14 @@ HREF="#DEBUG"
 ></DT
 ><DT
 ><A
-HREF="#AEN2336"
+HREF="#AEN2335"
 >Speech Synthesis</A
 ></DT
 ><DD
 ><DL
 ><DT
 ><A
-HREF="#AEN2346"
+HREF="#AEN2345"
 ><TT
 CLASS="LITERAL"
 >speech.py</TT
@@ -8216,7 +8216,7 @@ CLASS="LITERAL"
 ></DT
 ><DT
 ><A
-HREF="#AEN2356"
+HREF="#AEN2355"
 ><TT
 CLASS="LITERAL"
 >speechgenerator.py</TT
@@ -8226,14 +8226,14 @@ CLASS="LITERAL"
 ></DD
 ><DT
 ><A
-HREF="#AEN2385"
+HREF="#AEN2384"
 >Braille Output</A
 ></DT
 ><DD
 ><DL
 ><DT
 ><A
-HREF="#AEN2395"
+HREF="#AEN2394"
 ><TT
 CLASS="LITERAL"
 >braille.py</TT
@@ -8241,7 +8241,7 @@ CLASS="LITERAL"
 ></DT
 ><DT
 ><A
-HREF="#AEN2403"
+HREF="#AEN2402"
 ><TT
 CLASS="LITERAL"
 >braillegenerator.py</TT
@@ -8251,7 +8251,7 @@ CLASS="LITERAL"
 ></DD
 ><DT
 ><A
-HREF="#AEN2441"
+HREF="#AEN2440"
 >Braille and Key Input Bindings</A
 ></DT
 ></DL
@@ -8453,22 +8453,17 @@ CLASS="LITERAL"
 >Each script module is expected to provide a
             <TT
 CLASS="LITERAL"
->getScript</TT
-> method that takes the
-            accessible application object as an argument.  This method
-            is essentially a factory method that returns an instance
-            of a <TT
-CLASS="LITERAL"
 >Script</TT
-> (defined in
+> class that ultimately extends
+            the <TT
+CLASS="LITERAL"
+>orca.Script</TT
+> class defined 
             <TT
 CLASS="LITERAL"
 >script.py</TT
->) or <TT
-CLASS="LITERAL"
->Script</TT
->
-            subclass.</P
+>.  The constructor takes the
+            accessible application object as an argument.</P
 ><P
 >The constructor for the <TT
 CLASS="LITERAL"
@@ -8756,7 +8751,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN2205"
+NAME="AEN2204"
 >Script Contract</A
 ></H2
 ><P
@@ -8875,7 +8870,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN2237"
+NAME="AEN2236"
 >Defining Event Listeners</A
 ></H2
 ><P
@@ -8999,7 +8994,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN2261"
+NAME="AEN2260"
 >Defining Keyboard Bindings</A
 ></H2
 ><P
@@ -9010,7 +9005,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN2264"
+NAME="AEN2263"
 >Defining Braille Bindings</A
 ></H2
 ><P
@@ -9021,7 +9016,7 @@ NAME="AEN2264"
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN2267"
+NAME="AEN2266"
 ></A
 >Script Utilities</H1
 ><P
@@ -9321,7 +9316,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN2336"
+NAME="AEN2335"
 >Speech Synthesis</A
 ></H2
 ><P
@@ -9364,7 +9359,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN2346"
+NAME="AEN2345"
 ><TT
 CLASS="LITERAL"
 >speech.py</TT
@@ -9399,7 +9394,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN2356"
+NAME="AEN2355"
 ><TT
 CLASS="LITERAL"
 >speechgenerator.py</TT
@@ -9546,7 +9541,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN2385"
+NAME="AEN2384"
 >Braille Output</A
 ></H2
 ><P
@@ -9589,7 +9584,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN2395"
+NAME="AEN2394"
 ><TT
 CLASS="LITERAL"
 >braille.py</TT
@@ -9618,7 +9613,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN2403"
+NAME="AEN2402"
 ><TT
 CLASS="LITERAL"
 >braillegenerator.py</TT
@@ -9793,7 +9788,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN2441"
+NAME="AEN2440"
 >Braille and Key Input Bindings</A
 ></H2
 ><P
@@ -9842,14 +9837,14 @@ from orca.orca_i18n import _
 ><DIV
 CLASS="BOOK"
 ><A
-NAME="AEN2446"
+NAME="AEN2445"
 ></A
 ><DIV
 CLASS="TITLEPAGE"
 ><H1
 CLASS="TITLE"
 ><A
-NAME="AEN2446"
+NAME="AEN2445"
 >Orca Testing Plan</A
 ></H1
 ><DIV
@@ -9857,7 +9852,7 @@ CLASS="LEGALNOTICE"
 ><P
 ></P
 ><A
-NAME="AEN2449"
+NAME="AEN2448"
 ></A
 ><P
 >Copyright 2005, Sun Microsystems, Inc.</P
@@ -9874,12 +9869,12 @@ CLASS="TOC"
 ></DT
 ><DT
 ><A
-HREF="#AEN2451"
+HREF="#AEN2450"
 >Foreword</A
 ></DT
 ><DT
 ><A
-HREF="#AEN2457"
+HREF="#AEN2456"
 >Introduction</A
 ></DT
 ></DL
@@ -9888,7 +9883,7 @@ HREF="#AEN2457"
 CLASS="PREFACE"
 ><HR><H1
 ><A
-NAME="AEN2451"
+NAME="AEN2450"
 ></A
 >Foreword</H1
 ><P
@@ -9914,7 +9909,7 @@ CLASS="EMPHASIS"
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN2457"
+NAME="AEN2456"
 ></A
 >Introduction</H1
 ><P
@@ -9924,14 +9919,14 @@ NAME="AEN2457"
 ><DIV
 CLASS="BOOK"
 ><A
-NAME="AEN2460"
+NAME="AEN2459"
 ></A
 ><DIV
 CLASS="TITLEPAGE"
 ><H1
 CLASS="TITLE"
 ><A
-NAME="AEN2460"
+NAME="AEN2459"
 >Orca User's Guide</A
 ></H1
 ><DIV
@@ -9939,7 +9934,7 @@ CLASS="LEGALNOTICE"
 ><P
 ></P
 ><A
-NAME="AEN2463"
+NAME="AEN2462"
 ></A
 ><P
 >Copyright 2005, Sun Microsystems, Inc.</P
@@ -9956,12 +9951,12 @@ CLASS="TOC"
 ></DT
 ><DT
 ><A
-HREF="#AEN2465"
+HREF="#AEN2464"
 >Foreword</A
 ></DT
 ><DT
 ><A
-HREF="#AEN2471"
+HREF="#AEN2470"
 >Introduction</A
 ></DT
 ></DL
@@ -9970,7 +9965,7 @@ HREF="#AEN2471"
 CLASS="PREFACE"
 ><HR><H1
 ><A
-NAME="AEN2465"
+NAME="AEN2464"
 ></A
 >Foreword</H1
 ><P
@@ -9998,7 +9993,7 @@ CLASS="EMPHASIS"
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN2471"
+NAME="AEN2470"
 ></A
 >Introduction</H1
 ><P
