@@ -2,7 +2,11 @@
 
 	* src/orca/*.py: use string constants to get settings (I got
 	bit by a mispelling when using raw strings).
-
+	* configure.in, Makefile.am, docs/pydoc/Makefile.am: only build 
+	pydoc if the "--enable-pydoc" option is used, and force this
+	for distcheck.
+	* po/POTFILES.in: make sure distcheck works
+	
 2005-11-15  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Makefile.am src/orca/scripts/Evolution.py

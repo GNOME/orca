@@ -35,6 +35,9 @@ DOC_FILES = \
 	orca.scripts.gnome-terminal \
 	orca.scripts.metacity
 
+if ENABLE_PYDOC
 all:
 	for i in $(DOC_FILES); \
 	    do pydoc -w $$i; done
+endif
+
