@@ -75,7 +75,10 @@ def init():
     # then we look in the orca namespace.
     #
     moduleName = settings.getSetting(
-	"speechFactoryModules", "gnomespeechfactory")
+	"speechServerFactory", "gnomespeechfactory")
+
+    debug.println(debug.LEVEL_CONFIGURATION,
+                  "Using speech server factory: %s" % moduleName)
 
     factory = None
     try:

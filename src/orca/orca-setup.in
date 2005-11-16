@@ -55,6 +55,7 @@ settings.writelines ("#debug.setDebugLevel(debug.LEVEL_OFF)\n")
 settings.writelines ("debug.setDebugLevel(debug.LEVEL_SEVERE)\n")
 settings.writelines ("#debug.setDebugLevel(debug.LEVEL_WARNING)\n")
 settings.writelines ("#debug.setDebugLevel(debug.LEVEL_INFO)\n")
+settings.writelines ("#debug.setDebugLevel(debug.LEVEL_CONFIGURATION)\n")
 settings.writelines ("#debug.setDebugLevel(debug.LEVEL_FINE)\n")
 settings.writelines ("#debug.setDebugLevel(debug.LEVEL_FINER)\n")
 settings.writelines ("#debug.setDebugLevel(debug.LEVEL_FINEST)\n")
@@ -102,7 +103,6 @@ def sayAndPrint (text,
     else:
         print text        
 
-
 def setupSpeech ():
     """Sets up speech support.  If speech setup is successful and the
     user wants it, writes speech settings to the setting file and returns
@@ -118,25 +118,36 @@ def setupSpeech ():
     speech.init()
     speech.speak(_("Welcome to Orca setup."))
 
-    if len(factories) > 1:
+    workingFactories = []
+    for factory in factories:
+        try:
+	    infos = factory.SpeechServer.getSpeechServerInfos()
+	    workingFactories.append([factory, infos])
+	except:
+	    pass
+
+    if len(workingFactories) == 0:
+        print _("Speech is unavailable.")
+        return False
+    elif len(workingFactories) > 1:    
         speech.speak(_("Select desired speech system."))
-	i = 1
 	choices = {}
-        for factory in factories:
+	i = 1
+        for workingFactory in workingFactories:
+	    choices[i] = workingFactory
 	    sayAndPrint(_("%d. %s") 
-		% (i, factory.SpeechServer.getFactoryName()))
-	    choices[i] = factory
+		        % (i, workingFactory[0].SpeechServer.getFactoryName()))
 	    i += 1
 	choice = int(sayAndPrint(_("Enter choice: "), False, True))
         if (choice <= 0) or (choice >= i):	
             sayAndPrint(_("Speech will not be used.\n"))
             return False
-	factory = choices[choice]
+	[factory, infos] = choices[choice]
     else:
-	factory = factories[0]
+	[factory, infos] = workingFactories[0]
 
     servers = []
-    for info in factory.SpeechServer.getSpeechServerInfos():
+    for info in infos:
         try:
 	    server = factory.SpeechServer.getSpeechServer(info)
 	    if server:
@@ -145,7 +156,8 @@ def setupSpeech ():
             pass
 
     if len(servers) == 0:
-        print _("Speech is unavailable.")
+        sayAndPrint(_("No servers available.\n"))
+        sayAndPrint(_("Speech will not be used.\n"))
         return False
     if len(servers) > 1:
         speech.speak(_("Select desired speech server."))
@@ -165,7 +177,8 @@ def setupSpeech ():
 
     families = server.getVoiceFamilies()
     if len(families) == 0:
-        print _("Speech is unavailable.")
+        sayAndPrint(_("No voices available.\n"))
+        sayAndPrint(_("Speech will not be used.\n"))
         return False
     if len(families) > 1:
         speech.speak(_("Select desired voice."))
