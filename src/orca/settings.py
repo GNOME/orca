@@ -24,7 +24,9 @@ case of gdm) or doesn't have the specified attribute.
 
 import re
 import sys
+
 import debug
+from acss import ACSS
 
 #########################################################################
 #                                                                       #
@@ -69,19 +71,19 @@ speechFactoryModules    = ["espeechfactory","gnomespeechfactory"]
 SPEECH_SERVER_FACTORY   = "speechServerFactory"
 speechServerFactory     = "gnomespeechfactory"
 
-SPEECH_SERVER           = "speechServer"
-speechServer            = None # None means pick the first one.
+SPEECH_SERVER_INFO      = "speechServerInfo"
+speechServerInfo        = None # None means let the factory decide.
 
-#DEFAULT_VOICE           = "default"
-#UPPERCASE_VOICE         = "uppercase"
-#HYPERLINK_VOICE         = "hyperlink"
-#
-#VOICES                  = "voices"
-#voices = {
-#    DEFAULT_VOICE   : ACSS({}),
-#    UPPERCASE_VOICE : ACSS({ACSS.AVERAGE_PITCH : 6}),
-#    HYPERLINK_VOICE : ACSS({ACSS.AVERAGE_PITCH : 4})
-#}
+DEFAULT_VOICE           = "default"
+UPPERCASE_VOICE         = "uppercase"
+HYPERLINK_VOICE         = "hyperlink"
+
+VOICES                  = "voices"
+voices = {
+    DEFAULT_VOICE   : ACSS({}),
+    UPPERCASE_VOICE : ACSS({ACSS.AVERAGE_PITCH : 6}),
+    HYPERLINK_VOICE : ACSS({ACSS.AVERAGE_PITCH : 4})
+}
 
 
 # If True, use braille.

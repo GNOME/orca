@@ -20,6 +20,7 @@
 import orca.a11y as a11y
 import orca.default as default
 import orca.rolenames as rolenames
+import orca.settings as settings
 import orca.speech as speech
 
 from orca.orca_i18n import _
@@ -93,7 +94,7 @@ class Script(default.Script):
     def onLinkSelected(self, event):
         txt = event.source.text
         if txt is None:
-            speech.speak(_("link"), speech.voices["hyperlink"])
+            speech.speak(_("link"), self.voices[settings.HYPERLINK_VOICE)
         else:
             text = txt.getText(0, -1)
             speech.speak(text, speech.hyperlinkACSS)
@@ -204,7 +205,7 @@ def presentNextHypertext():
 
                 # Speak the text of the hyperlink using the hyperlink voice
 
-                speech.speak(text[start:end], speech.voices["hyperlink"])
+                speech.speak(text[start:end], self.voices[settings.HYPERLINK_VOICE])
                 position = end
                 i = i + 1
 

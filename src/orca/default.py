@@ -391,7 +391,8 @@ class Script(script.Script):
 
         self.brailleGenerator = self.getBrailleGenerator()
         self.speechGenerator = self.getSpeechGenerator()
-
+        self.voices = settings.getSetting(settings.VOICES, None)
+        
 
     def processObjectEvent(self, event):
         """Processes all object events of interest to this script.  Note
@@ -1030,7 +1031,7 @@ class Script(script.Script):
         text = event.any_data
         if (string == "BackSpace") or (string == "Delete"):
             if text.isupper():
-                speech.speak(text, speech.voices["uppercase"])
+                speech.speak(text, self.voices["uppercase"])
             else:
                 speech.speak(text)
 
@@ -1057,7 +1058,7 @@ class Script(script.Script):
         self.updateBraille(event.source)
         text = event.any_data
         if text.isupper():
-            speech.speak(text, speech.voices["uppercase"])
+            speech.speak(text, self.voices["uppercase"])
         else:
             speech.speak(text)
 
@@ -1676,7 +1677,7 @@ class Script(script.Script):
                 elif string.isspace():
                     speech.speak(_("white space"))
                 elif string.isupper():
-                    speech.speak(string, speech.voices["uppercase"])
+                    speech.speak(string, self.voices["uppercase"])
                 else:
                     speech.speak(string)
 
@@ -1753,7 +1754,7 @@ class Script(script.Script):
                 if lineString == "\n":
                     speech.speak(_("blank"))
                 elif string.isupper():
-                    speech.speak(string, speech.voices["uppercase"])
+                    speech.speak(string, self.voices["uppercase"])
                 else:
                     speech.speak(string)
             
@@ -1910,7 +1911,8 @@ def sayCharacter(obj):
     offset = text.caretOffset
     character = text.getText(offset, offset+1)
     if character.isupper():
-        speech.speak(character, speech.voices["uppercase"])
+        voices = settings.getSetting(settings.VOICES, None)
+        speech.speak(character, voices[settings.UPPERCASE_VOICE])
     else:
         speech.speak(character)
 

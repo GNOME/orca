@@ -1,5 +1,10 @@
 2005-11-16  Willie Walker <william.walker@sun.com>
 
+	* src/orca/{default.py, gnomespeechfactory.py, orca-setup.in,
+	orca.py, settings.py, speech.py}, src/orca/scripts/Gecko.py:
+	migrate voice defaults to setting.py.
+	NOTE: THIS REQUIRES YOU TO RERUN ORCA-SETUP.
+	
 	* src/orca/*.py: use string constants to get settings (I got
 	bit by a mispelling when using raw strings).
 	* configure.in, Makefile.am, docs/pydoc/Makefile.am: only build 

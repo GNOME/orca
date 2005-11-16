@@ -32,14 +32,6 @@ from orca_i18n import _           # for gettext support
 #
 __speechserver = None
 
-# Various ACSS settings
-#
-voices = {
-    "default"   : ACSS({}),
-    "uppercase" : ACSS({ACSS.AVERAGE_PITCH : 6}),
-    "hyperlink" : ACSS({ACSS.AVERAGE_PITCH : 4})
-}
-
 def getSpeechServerFactories():
     """Imports all known SpeechServer factory modules.  Returns a list
     of modules that implement the getSpeechServers method, which
@@ -48,7 +40,7 @@ def getSpeechServerFactories():
     
     factories = []
     
-    moduleNames = settings.getSetting("speechFactoryModules", [])
+    moduleNames = settings.getSetting(settings.SPEECH_FACTORY_MODULES, [])
 
     for moduleName in moduleNames:
         try:
@@ -65,7 +57,6 @@ def getSpeechServerFactories():
 def init():
     
     global __speechserver
-    global voices
 
     if __speechserver:
         return
@@ -77,8 +68,7 @@ def init():
     # thus we look first in the global name space, and
     # then we look in the orca namespace.
     #
-    moduleName = settings.getSetting(
-	"speechServerFactory", "gnomespeechfactory")
+    moduleName = settings.getSetting(settings.SPEECH_SERVER_FACTORY, None)
 
     debug.println(debug.LEVEL_CONFIGURATION,
                   "Using speech server factory: %s" % moduleName)
@@ -101,33 +91,19 @@ def init():
 
     # Now, get the speech server we care about.
     #
-    speechServerInfo = settings.getSetting("speechServer", None)
+    speechServerInfo = settings.getSetting(settings.SPEECH_SERVER_INFO, None)
     if speechServerInfo:
         __speechserver = factory.SpeechServer.getSpeechServer(speechServerInfo)
     else:
         __speechserver = factory.SpeechServer.getSpeechServer()
         
-    # Now, get the ACSS's we know we care about.
-    #
-    try:
-	for name in voices:
- 	    acssProps = settings.getSetting(name + "ACSS", None)
-	    if acssProps:
-	        # Sometimes the 'str' command outputs a list when we don't
-	        # want it to.
-	        #
-                if type(acssProps) == type([]):
-	            acssProps = acssProps[0]
-                acss = ACSS(acssProps)
-	        voices[name] = acss
-    except:
-	debug.printException(debug.LEVEL_OFF)
 
 def __resolveACSS(acss=None):
     if acss:
         return acss
     else:
-        return voices["default"]
+        voices = settings.getSetting(settings.VOICES, None)
+        return voices[settings.DEFAULT_VOICE]
 
 def speak(text, acss=None):
     if __speechserver:

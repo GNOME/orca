@@ -266,7 +266,8 @@ class SpeechServer(speechserver.SpeechServer):
 
     def __getSpeaker(self, acss=None):
 
-	defaultACSS = speech.voices["default"]
+        voices = settings.getSetting(settings.VOICES, None)
+	defaultACSS = voices[settings.DEFAULT_VOICE]
 
 	if acss is None:
 	    acss = defaultACSS
@@ -421,7 +422,8 @@ class SpeechServer(speechserver.SpeechServer):
 
         speaker = self.__getSpeaker(acss)
         if acss and not acss.has_key(ACSS.RATE):
-	    defaultACSS = speech.voices["default"]
+            voices = settings.getSetting(settings.VOICES, None)
+            defaultACSS = voices[settings.DEFAULT_VOICE]
 	    if defaultACSS.has_key(ACSS.RATE):
                 self.__setRate(speaker, defaultACSS[ACSS.RATE])
         
@@ -472,7 +474,8 @@ class SpeechServer(speechserver.SpeechServer):
         different engines provide different rate ranges.]]]
         """
 
-	acss = speech.voices["default"]
+        voices = settings.getSetting(settings.VOICES, None)
+        acss = voices[settings.DEFAULT_VOICE]
 	speaker = self.__getSpeaker(acss)
 
         rateDelta = settings.getSetting(settings.SPEECH_RATE_DELTA,
@@ -502,7 +505,8 @@ class SpeechServer(speechserver.SpeechServer):
         -acssName: the ACSS whose speech rate should be decreased
         """
 
-	acss = speech.voices["default"]
+        voices = settings.getSetting(settings.VOICES, None)
+	acss = voices[settings.DEFAULT_VOICE]
 	speaker = self.__getSpeaker(acss)
 
         rateDelta = settings.getSetting(settings.SPEECH_RATE_DELTA,
