@@ -21,6 +21,7 @@
 as its speech server, or it can feel free to create one of its own.
 """
 
+import pdb
 import debug
 import settings
 
@@ -69,6 +70,8 @@ def init():
     if __speechserver:
         return
 
+    pdb.set_trace()
+    
     # First, find the factory module to use.  We will 
     # allow the user to give their own factory module,
     # thus we look first in the global name space, and
@@ -98,12 +101,12 @@ def init():
 
     # Now, get the speech server we care about.
     #
-    speechServerInfo = settings.getSetting(
-	"speechServer", None)
-    
-    __speechserver = \
-	factory.SpeechServer.getSpeechServer(speechServerInfo)
-
+    speechServerInfo = settings.getSetting("speechServer", None)
+    if speechServerInfo:
+        __speechserver = factory.SpeechServer.getSpeechServer(speechServerInfo)
+    else:
+        __speechserver = factory.SpeechServer.getSpeechServer()
+        
     # Now, get the ACSS's we know we care about.
     #
     try:
