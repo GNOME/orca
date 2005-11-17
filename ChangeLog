@@ -1,3 +1,8 @@
+2005-11-17  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/a11y.py
+          Better debugging support in _get_app().
+
 2005-11-16  Willie Walker <william.walker@sun.com>
 
 	* src/orca/{default.py, input_event.py, keybindings.py, orca.py,

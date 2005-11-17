@@ -449,13 +449,18 @@ class Accessible:
 
         if (obj == obj.parent) \
                or (obj.role != rolenames.ROLE_APPLICATION):
+            debug.println(debug.LEVEL_SEVERE, "Could not find app  for %s" \
+                          % accessibleNameToString(self))
             return None
         else:
+            debug.println(debug.LEVEL_FINEST, "Accessible app for %s  is %s" \
+                          % (accessibleNameToString(self), \
+                             accessibleNameToString(obj)))
             if CACHE_VALUES:
                 self.app = obj
-            return obj
+            return obj 
 
-            
+
     def __get_extents(self, coordinateType = 0):
         """Returns the object's accessible extents as an
         Accessibility.BoundingBox object, or None if the object doesn't
