@@ -62,7 +62,7 @@ class KeyBinding:
         #
         if not self.keycode:
             self.keycode = kbd.XKeysymStringToKeycode(self.keysymstring)
-            
+
         if self.keycode == keycode:
             result = modifiers & self.modifier_mask
             return result == self.modifiers
@@ -94,7 +94,7 @@ class KeyBindings:
                 return keyBinding.handler
         return None
 
-    def consumeKeyboardEvent(self, keyboardEvent):
+    def consumeKeyboardEvent(self, script, keyboardEvent):
         """Attempts to consume the given keyboard event.  If these
         keybindings have a handler for the given keyboardEvent, it is
         assumed the event will always be consumed.
@@ -106,7 +106,7 @@ class KeyBindings:
             consumed = True
             if keyboardEvent.type == core.Accessibility.KEY_PRESSED_EVENT:
                 try:
-                    handler.processInputEvent(keyboardEvent)
+                    handler.processInputEvent(script, keyboardEvent)
                 except:
                     debug.printException(debug.LEVEL_SEVERE)
 

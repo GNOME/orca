@@ -126,7 +126,7 @@ class InputEventHandler:
         self._description = description
 
 
-    def processInputEvent(self, inputEvent):
+    def processInputEvent(self, script, inputEvent):
         """Processes an input event.  If settings.learnModeEnabled is True,
         this will merely report the description of the input event to braille
         and speech.  If settings.learnModeEnabled is False, this will call the
@@ -137,6 +137,7 @@ class InputEventHandler:
         event; otherwise it is expected to return False.
         
         Arguments:
+        - script:     the script (if any) associated with this event
         - inputEvent: the input event to pass to the function bound
                       to this InputEventHandler instance.
         """
@@ -150,7 +151,7 @@ class InputEventHandler:
                 consumed = True
         else:
             try:
-                consumed = self._function(inputEvent)
+                consumed = self._function(script, inputEvent)
             except:
                 debug.printException(debug.LEVEL_SEVERE)
 

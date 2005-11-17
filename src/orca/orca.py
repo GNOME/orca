@@ -99,7 +99,7 @@ def _switchToPresentationManager(index):
     _PRESENTATION_MANAGERS[_currentPresentationManager].activate()
 
 
-def _switchToNextPresentationManager(inputEvent=None):
+def _switchToNextPresentationManager(script=None, inputEvent=None):
     """Switches to the next presentation manager.
 
     Arguments:
@@ -332,7 +332,7 @@ def processBrailleEvent(command):
 #                                                                      #
 ########################################################################
     
-def printApps(inputEvent=None):
+def printApps(script=None, inputEvent=None):
     """Prints a list of all applications to stdout
 
     Arguments:
@@ -403,7 +403,7 @@ def printAccessiblePaintedTree(level, indent, root):
             printAccessiblePaintedTree(level, indent + "  ", child)
 
 
-def printActiveApp(inputEvent=None):
+def printActiveApp(script=None, inputEvent=None):
     """Prints the active application.
 
     Arguments:
@@ -451,7 +451,7 @@ def _closeKeystrokeWindowAndCancel(window):
     _recordingKeystrokes = False
 
 
-def toggleKeystrokeRecording(inputEvent=None):
+def toggleKeystrokeRecording(script=None, inputEvent=None):
     """Toggles the recording of keystrokes on and off.  When the
     user presses the magic key (Pause), Orca will pop up a window
     requesting a filename.  When the user presses the close button,
@@ -534,7 +534,7 @@ def toggleKeystrokeRecording(inputEvent=None):
 #                                                                      #
 ########################################################################
 
-def enterLearnMode(inputEvent=None):
+def enterLearnMode(script=None, inputEvent=None):
     """Turns learn mode on.  The user must press the escape key to exit
     learn mode.
 
@@ -549,7 +549,7 @@ def enterLearnMode(inputEvent=None):
     return True
 
 
-def exitLearnMode(inputEvent=None):
+def exitLearnMode(script=None, inputEvent=None):
     """Turns learn mode off.
 
     Returns True to indicate the input event has been consumed.
@@ -713,7 +713,7 @@ def start():
     core.bonobo.main()
 
 
-def shutdown(inputEvent=None):
+def shutdown(script=None, inputEvent=None):
     """Exits Orca.  Unregisters any event listeners and cleans up.  Also
     quits the bonobo main loop and resets the initialized state to False.
 
@@ -953,7 +953,7 @@ def processKeyboardEvent(event):
 
     consumed = False
     try:
-        consumed = _keybindings.consumeKeyboardEvent(keyboardEvent)
+        consumed = _keybindings.consumeKeyboardEvent(None, keyboardEvent)
         if (not consumed) and (_currentPresentationManager >= 0):
             consumed = _PRESENTATION_MANAGERS[_currentPresentationManager].\
                        processKeyboardEvent(keyboardEvent)
@@ -964,7 +964,7 @@ def processKeyboardEvent(event):
                 speech.speak(event_string)
             elif (event.type == core.Accessibility.KEY_RELEASED_EVENT) \
                  and (event_string == "Escape"):
-                exitLearnMode(keyboardEvent)
+                exitLearnMode(None, keyboardEvent)
             consumed = True
     except:
         debug.printException(debug.LEVEL_SEVERE)

@@ -73,7 +73,7 @@ class Script(script.Script):
         #        1 << orca.MODIFIER_ORCA, \
         #        1 << orca.MODIFIER_ORCA,
         #        input_eventInputEventHandler(\
-        #            sayAgain,
+        #            Script.sayAgain,
         #            _("Repeats last utterance sent to speech."))))
 
         self.keybindings.add(
@@ -82,7 +82,7 @@ class Script(script.Script):
                 0, \
                 0, \
                 input_event.InputEventHandler(\
-                    self.leftClickReviewItem,
+                    Script.leftClickReviewItem,
                     _("Performs left click on current flat review item."))))
 
         self.keybindings.add(
@@ -91,7 +91,7 @@ class Script(script.Script):
                 0, \
                 0, \
                 input_event.InputEventHandler(\
-                    self.rightClickReviewItem,
+                    Script.rightClickReviewItem,
                     _("Performs right click on current flat review item."))))
 
         #self.keybindings.add(
@@ -100,7 +100,7 @@ class Script(script.Script):
         #        0, \
         #        0, \
         #        input_event.InputEventHandler(\
-        #            sayAll,
+        #            Script.sayAll,
         #            _("Speaks entire document."))))
 
         self.keybindings.add(
@@ -109,7 +109,7 @@ class Script(script.Script):
                 0, \
                 0, \
                 input_event.InputEventHandler(\
-                    self.whereAmI,
+                    Script.whereAmI,
                     _("Performs the where am I operation."))))
 
         self.keybindings.add(
@@ -118,7 +118,7 @@ class Script(script.Script):
                 1 << orca.MODIFIER_ORCA, \
                 1 << orca.MODIFIER_ORCA, \
                 input_event.InputEventHandler(\
-                    self.showZones,
+                    Script.showZones,
                     _("Paints and prints the visible zones in the active window."))))
 
         self.keybindings.add(
@@ -127,12 +127,12 @@ class Script(script.Script):
                 0, \
                 0, \
                 input_event.InputEventHandler(\
-                    self.toggleFlatReviewMode,
+                    Script.toggleFlatReviewMode,
                     _("Enters and exits flat review mode."))))
 
         reviewPreviousLineHandler = \
             input_event.InputEventHandler(\
-                self.reviewPreviousLine,
+                Script.reviewPreviousLine,
                 _("Moves flat review to the beginning of the previous line."))
         
         self.keybindings.add(
@@ -143,7 +143,7 @@ class Script(script.Script):
                 reviewPreviousLineHandler))
 
         reviewHomeHandler = input_event.InputEventHandler(\
-            self.reviewHome,
+            Script.reviewHome,
             _("Moves flat review to the home position."))
         
         self.keybindings.add(
@@ -159,12 +159,12 @@ class Script(script.Script):
                 0, \
                 0, \
                 input_event.InputEventHandler(\
-                    self.reviewCurrentLine,
+                    Script.reviewCurrentLine,
                     _("Speaks the current flat review line."))))
 
         reviewNextLineHandler = \
             input_event.InputEventHandler(\
-                self.reviewNextLine,
+                Script.reviewNextLine,
                 _("Moves flat review to the beginning of the next line."))
 
         self.keybindings.add(
@@ -180,7 +180,7 @@ class Script(script.Script):
                 1 << orca.MODIFIER_ORCA, \
                 1 << orca.MODIFIER_ORCA, \
                 input_event.InputEventHandler(\
-                    self.reviewEnd,
+                    Script.reviewEnd,
                     _("Moves flat review to the end position."))))
 
         self.keybindings.add(
@@ -189,12 +189,12 @@ class Script(script.Script):
                 1 << orca.MODIFIER_ORCA, \
                 0, \
                 input_event.InputEventHandler(\
-                    self.reviewPreviousItem,
+                    Script.reviewPreviousItem,
                     _("Moves flat review to the previous item or word."))))
 
         reviewAboveHandler = \
             input_event.InputEventHandler(\
-                self.reviewAbove,
+                Script.reviewAbove,
                 _("Moves flat review to the word above the current word."))
 
         self.keybindings.add(
@@ -210,7 +210,7 @@ class Script(script.Script):
                 1 << orca.MODIFIER_ORCA, \
                 0, \
                 input_event.InputEventHandler(\
-                    self.reviewCurrentItem,
+                    Script.reviewCurrentItem,
                     _("Speaks the current flat review item or word."))))
 
         self.keybindings.add(
@@ -219,7 +219,7 @@ class Script(script.Script):
                 1 << orca.MODIFIER_ORCA, \
                 1 << orca.MODIFIER_ORCA, \
                 input_event.InputEventHandler(\
-                    self.reviewCurrentAccessible,
+                    Script.reviewCurrentAccessible,
                     _("Speaks the current flat review object."))))
 
         self.keybindings.add(
@@ -228,12 +228,12 @@ class Script(script.Script):
                 1 << orca.MODIFIER_ORCA, \
                 0, \
                 input_event.InputEventHandler(\
-                    self.reviewNextItem,
+                    Script.reviewNextItem,
                     _("Moves flat review to the next item or word."))))
 
         reviewBelowHandler = \
             input_event.InputEventHandler(\
-                self.reviewBelow,
+                Script.reviewBelow,
                 _("Moves flat review to the word below the current word."))
                            
         self.keybindings.add(
@@ -245,7 +245,7 @@ class Script(script.Script):
 
         reviewPreviousCharacterHandler = \
             input_event.InputEventHandler( \
-                self.reviewPreviousCharacter,
+                Script.reviewPreviousCharacter,
                 _("Moves flat review to the previous character."))
 
         self.keybindings.add(
@@ -261,7 +261,7 @@ class Script(script.Script):
                 1 << orca.MODIFIER_ORCA, \
                 1 << orca.MODIFIER_ORCA, \
                 input_event.InputEventHandler(\
-                    self.reviewEndOfLine,
+                    Script.reviewEndOfLine,
                     _("Moves flat review to the end of the line."))))
 
         self.keybindings.add(
@@ -270,12 +270,12 @@ class Script(script.Script):
                 0, \
                 0, \
                 input_event.InputEventHandler(\
-                    self.reviewCurrentCharacter,
+                    Script.reviewCurrentCharacter,
                     _("Speaks the current flat review character."))))
 
         reviewNextCharacterHandler = \
             input_event.InputEventHandler(\
-            self.reviewNextCharacter,
+            Script.reviewNextCharacter,
             _("Moves flat review to the next character."))
         
         self.keybindings.add(
@@ -292,22 +292,22 @@ class Script(script.Script):
         ################################################################
         self.braillebindings[braille.CMD_FWINLT] = \
             input_event.InputEventHandler(
-                self.panBrailleLeft,
+                Script.panBrailleLeft,
                 _("Pans the braille display to the left."))
 
         self.braillebindings[braille.CMD_FWINRT] = \
             input_event.InputEventHandler(
-                self.panBrailleRight,
+                Script.panBrailleRight,
                 _("Pans the braille display to the right."))
             
         #self.braillebindings[braille.CMD_CHRLT] = \
         #    input_event.InputEventHandler(
-        #        self.panBrailleLeftOneChar,
+        #        Script.panBrailleLeftOneChar,
         #        _("Pans the braille display to the left by one character."))
 
         #self.braillebindings[braille.CMD_CHRRT] = \
         #    input_event.InputEventHandler(
-        #        self.panBrailleRightOneChar,
+        #        Script.panBrailleRightOneChar,
         #        _("Pans the braille display to the right by one character."))
 
         self.braillebindings[braille.CMD_LNUP] = reviewAboveHandler
@@ -316,12 +316,12 @@ class Script(script.Script):
         self.braillebindings[braille.CMD_TOP_LEFT] = reviewHomeHandler
         self.braillebindings[braille.CMD_BOT_LEFT] = \
             input_event.InputEventHandler(
-                self.reviewBottomLeft,
+                Script.reviewBottomLeft,
                 _("Moves flat review to the bottom left."))
 
         self.braillebindings[braille.CMD_HOME] = \
             input_event.InputEventHandler(
-                self.goBrailleHome,
+                Script.goBrailleHome,
                 _("Returns to object with keyboard focus."))
 
         

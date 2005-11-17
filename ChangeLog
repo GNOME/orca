@@ -1,5 +1,11 @@
 2005-11-16  Willie Walker <william.walker@sun.com>
 
+	* src/orca/{default.py, input_event.py, keybindings.py, orca.py,
+	script.py, speech.py}: refactor ability to handle custom keybinding
+	maps from user-settings.py.
+	
+2005-11-16  Willie Walker <william.walker@sun.com>
+	
 	* src/orca/{default.py, gnomespeechfactory.py, orca-setup.in,
 	orca.py, settings.py, speech.py}, src/orca/scripts/Gecko.py:
 	migrate voice defaults to setting.py.

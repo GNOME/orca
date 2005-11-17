@@ -161,17 +161,18 @@ class Script:
         user_bindings = None
 
         user_bindings_map = settings.getSetting(settings.KEY_BINDINGS_MAP, {})
-        if user_bindings_map.has_key(self.name):
-            user_bindings = user_bindings_map[self.name]
+        if user_bindings_map.has_key(self.__module__):
+            user_bindings = user_bindings_map[self.__module__]
         elif user_bindings_map.has_key("default"):
             user_bindings = user_bindings_map["default"]
 
         consumed = False
         if user_bindings:
-            consumed = user_bindings.consumeKeyboardEvent(keyboardEvent)
+            consumed = user_bindings.consumeKeyboardEvent(self,
+                                                          keyboardEvent)
         if not consumed:
-            consumed = self.keybindings.consumeKeyboardEvent(keyboardEvent)
-
+            consumed = self.keybindings.consumeKeyboardEvent(self,
+                                                             keyboardEvent)
         return consumed
         
 
@@ -219,11 +220,11 @@ class Script:
 
         if user_bindings and user_bindings.has_key(command):
             handler = user_bindings[command]
-            consumed = handler.processInputEvent(brailleEvent)
+            consumed = handler.processInputEvent(self, brailleEvent)
                 
         if (not consumed) and self.braillebindings.has_key(command):
             handler = self.braillebindings[command]
-            consumed = handler.processInputEvent(brailleEvent)
+            consumed = handler.processInputEvent(self, brailleEvent)
 
         return consumed
 

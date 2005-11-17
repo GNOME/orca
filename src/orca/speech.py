@@ -117,12 +117,12 @@ def stop():
     if __speechserver:
         __speechserver.stop()
 
-def increaseSpeechRate(inputEvent=None):
+def increaseSpeechRate(script=None, inputEvent=None):
     if __speechserver:
         __speechserver.increaseSpeechRate()
     return True
 
-def decreaseSpeechRate(inputEvent=None):
+def decreaseSpeechRate(script=None, inputEvent=None):
     if __speechserver:
         __speechserver.decreaseSpeechRate()
     return True
