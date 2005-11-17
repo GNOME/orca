@@ -449,11 +449,11 @@ class Accessible:
 
         if (obj == obj.parent) \
                or (obj.role != rolenames.ROLE_APPLICATION):
-            debug.println(debug.LEVEL_SEVERE, "Could not find app  for %s" \
+            debug.println(debug.LEVEL_SEVERE, "Could not find app for %s" \
                           % accessibleNameToString(self))
             return None
         else:
-            debug.println(debug.LEVEL_FINEST, "Accessible app for %s  is %s" \
+            debug.println(debug.LEVEL_FINEST, "Accessible app for %s is %s" \
                           % (accessibleNameToString(self), \
                              accessibleNameToString(obj)))
             if CACHE_VALUES:
