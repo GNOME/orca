@@ -94,7 +94,7 @@ class Script(default.Script):
     def onLinkSelected(self, event):
         txt = event.source.text
         if txt is None:
-            speech.speak(_("link"), self.voices[settings.HYPERLINK_VOICE)
+            speech.speak(_("link"), self.voices[settings.HYPERLINK_VOICE])
         else:
             text = txt.getText(0, -1)
             speech.speak(text, speech.hyperlinkACSS)
