@@ -10,7 +10,7 @@ __id__ = "$Id$"
 __author__ = "$Author$"
 __version__ = "$Revision$"
 __date__ = "$Date$"
-__copyright__ = "Copyright (c) 2005 T. V. Raman"
+__copyright__ = "Copyright (c) 2005 Google Inc."
 __license__ = "LGPL"
 
 _defined_voices = {}
