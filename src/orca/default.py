@@ -809,6 +809,11 @@ class Script(script.Script):
         - extra: extra Region to add to the end
         """
 
+        if obj is None:
+            message = _("No focus")
+            braille.displayMessage(message)
+            return
+        
         braille.clear()
 
         line = braille.Line()
@@ -1224,6 +1229,8 @@ class Script(script.Script):
         if (not orca.locusOfFocus) or (orca.locusOfFocus.app != self.app):
             return []
 
+        # We want to stop at the window or frame or equivalent level.
+        #
         obj = orca.locusOfFocus
         while obj \
                   and obj.parent \
@@ -1231,9 +1238,7 @@ class Script(script.Script):
                   and (obj != obj.parent):
             obj = obj.parent
 
-        if obj \
-               and obj.parent \
-               and (obj.parent.role == rolenames.ROLE_APPLICATION):
+        if obj:
             return flat_review.getShowingZones(obj)
         else:
             return []

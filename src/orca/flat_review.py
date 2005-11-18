@@ -1372,10 +1372,13 @@ def clusterZonesByLine(zones):
             if inCluster:
                 # Add to cluster based on the x position.
                 #
-                for i in range(0, len(lineCluster)):
+                i = 0
+                while i < len(lineCluster):
                     zone = lineCluster[i]
                     if clusterCandidate.x < zone.x:
                         break
+                    else:
+                        i += 1
                 lineCluster.insert(i, clusterCandidate)
                 addedToCluster = True
                 break                
