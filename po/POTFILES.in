@@ -7,6 +7,7 @@ src/orca/espeechfactory.py
 src/orca/focus_tracking_presenter.py
 src/orca/gnomespeechfactory.py
 src/orca/hierarchical_presenter.py
+src/orca/keynames.py
 src/orca/orca-setup.in
 src/orca/orca.in
 src/orca/orca.py
