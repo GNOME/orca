@@ -418,47 +418,32 @@ class Accessible:
                       "Finding app for source.name=" \
 	              + accessibleNameToString(self))
         obj = self
-        while (obj.parent != None) and (obj != obj.parent):
+        while (obj.parent != None):
             obj = obj.parent
             debug.println(debug.LEVEL_FINEST,
                           "--> parent.name=" + accessibleNameToString(obj))
 
-        if (obj.parent != None):
-            debug.println(debug.LEVEL_FINEST,
-                          "--> obj.name=" + accessibleNameToString(obj)
-                          + " parent.name=" 
-			  + accessibleNameToString(obj.parent))
-
-            if (obj == obj.parent):
-                debug.println(debug.LEVEL_SEVERE,
-                              "ERROR: obj == obj.parent!")
-                debug.println(debug.LEVEL_SEVERE,
-                              self.toString("       self: ", False))
-                obj = self
-                while (obj.parent != None) and (obj != obj.parent):
-                    obj = obj.parent
-                    debug.println(debug.LEVEL_SEVERE,
-                                  obj.toString("       obj:  ", False))
-                obj.valid = False
-                #self.valid = False
-                raise Warning("obj == obj.parent")
-        else:
-            debug.println(debug.LEVEL_FINEST,
-                          "--> obj.name=" + accessibleNameToString(obj) 
-			  + " parent=None")
-
-        if (obj == obj.parent) \
-               or (obj.role != rolenames.ROLE_APPLICATION):
-            debug.println(debug.LEVEL_SEVERE, "Could not find app for %s" \
-                          % accessibleNameToString(self))
-            return None
-        else:
-            debug.println(debug.LEVEL_FINEST, "Accessible app for %s is %s" \
-                          % (accessibleNameToString(self), \
-                             accessibleNameToString(obj)))
-            if CACHE_VALUES:
-                self.app = obj
-            return obj 
+	if (obj == obj.parent):
+	    debug.println(debug.LEVEL_SEVERE,
+                          "ERROR in a11y.__get_app: obj == obj.parent!")
+	    return None
+	elif (obj.role != rolenames.ROLE_APPLICATION):
+	    debug.println(debug.LEVEL_SEVERE,
+			  "ERROR in a11y.__get_app: top most parent is "
+                          "of role %s" % obj.role)
+            # [[[TODO: We'll let this fall through for now.  It seems as
+            # though we don't always end up with an application, but we
+            # do end up with *something* that is uniquely identifiable as
+            # the app.
+            #
+            # return None
+            
+        debug.println(debug.LEVEL_FINEST, "Accessible app for %s is %s" \
+                      % (accessibleNameToString(self), \
+                         accessibleNameToString(obj)))
+        if CACHE_VALUES:
+            self.app = obj
+        return obj 
 
 
     def __get_extents(self, coordinateType = 0):
