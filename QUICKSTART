@@ -127,6 +127,27 @@ III. ORCA ON UBUNTU 5.10:
 
 5) GOTO SECTION: "ORCA ON LINUX DISTRIBUTION"
 
+NOTES: Some find it easier to boot their system up without the
+graphical X Window System desktop running.  To do this on Ubuntu, you
+can run the following command:
+
+   sudo update-rc.d -f gdm remove
+
+You can then reboot your system and it will come up in character cell
+mode.  When you login, you can start the X Window System server using
+the "xinit" command.  If you want the gnome desktop and Orca running,
+you should create a ~/.xinitrc file that looks similar to the
+following (note that Orca is run in the background and gnome-session
+is run in the foreground):
+
+   orca&
+   gnome-session
+
+NOTE also that you should set the GTK_MODULES=:gail:atk-bridge:
+property in your shell before starting xinit.  If you do not do this,
+some applications, such as gaim, will not use the accessibility
+infrastructure and will therefore n ot be accessible via Orca.
+
 
 IV. ORCA ON FEDORA CORE 4:
 -------------------------
@@ -144,6 +165,29 @@ IV. ORCA ON FEDORA CORE 4:
    sudo make install
    
 3) GOTO SECTION: "ORCA ON LINUX DISTRIBUTION"
+
+NOTES: Some find it easier to boot their system up without the
+graphical X Window System desktop running.  To do this on Fedora, you
+can modify your /etc/inittab file to tell Fedora to boot to run level
+3.  You do this by modifying the line where the initdefault property is
+set:
+
+   id:3:initdefault
+
+You can then reboot your system and it will come up in character cell
+mode.  When you login, you can start the X Window System server using
+the "xinit" command.  If you want the gnome desktop and Orca running,
+you should create a ~/.xinitrc file that looks similar to the
+following (note that Orca is run in the background and gnome-session
+is run in the foreground):
+
+   orca&
+   gnome-session
+
+NOTE also that you should set the GTK_MODULES=:gail:atk-bridge:
+property in your shell before starting xinit.  If you do not do this,
+some applications, such as gaim, will not use the accessibility
+infrastructure and will therefore n ot be accessible via Orca.
 
 
 V. ORCA ON LINUX DISTRIBUTION:
