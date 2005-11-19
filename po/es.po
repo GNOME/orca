@@ -1,5 +1,3 @@
-# translation of orcanuevo.HEAD.es.po to Spanish
-# translation of orca3.HEAD.es.po to Spanish
 # Traducción de Orca al Español
 # This file is distributed under the same license as the ORCA package.
 # Copyright (C) 2005 Gnome Foundation.
@@ -10,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orcanuevo.HEAD.es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-23 11:37+0200\n"
-"PO-Revision-Date: 2005-10-08 18:50+0200\n"
+"POT-Creation-Date: 2005-11-19 16:04+0100\n"
+"PO-Revision-Date: 2005-11-19 16:07+0100\n"
 "Last-Translator: Maria Majadas <maria.majadas@hispalinux.es>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,27 +18,19 @@ msgstr ""
 "X-Generator: KBabel 1.10\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
-#: ../src/orca/Gecko.py:61
-msgid "No page to read."
-msgstr "Ninguna página para leer."
-
-#: ../src/orca/Gecko.py:69
-msgid "Reading web page failed."
-msgstr "La lectura de la página web ha fallado."
-
 #: ../src/orca/braillegenerator.py:186 ../src/orca/speechgenerator.py:189
 msgid "grayed"
 msgstr "sombreado"
 
-#: ../src/orca/braillegenerator.py:1110 ../src/orca/speechgenerator.py:1234
+#: ../src/orca/braillegenerator.py:1124 ../src/orca/speechgenerator.py:1225
 msgid "expanded"
 msgstr "expandido"
 
-#: ../src/orca/braillegenerator.py:1112 ../src/orca/speechgenerator.py:1236
+#: ../src/orca/braillegenerator.py:1126 ../src/orca/speechgenerator.py:1227
 msgid "collapsed"
 msgstr "contraído"
 
-#: ../src/orca/braillegenerator.py:1116
+#: ../src/orca/braillegenerator.py:1130
 #, python-format
 msgid "TREE LEVEL %d"
 msgstr "NIVEL DEL ÁRBOL %d"
@@ -65,7 +55,7 @@ msgstr "número"
 msgid "dollar"
 msgstr "dólar"
 
-#: ../src/orca/chnames.py:32 ../src/orca/speechgenerator.py:925
+#: ../src/orca/chnames.py:32 ../src/orca/speechgenerator.py:913
 msgid "percent"
 msgstr "porcentaje"
 
@@ -161,263 +151,265 @@ msgstr "línea nueva"
 msgid "tab"
 msgstr "solapa"
 
-#: ../src/orca/default.py:102
-msgid "Repeats last utterance sent to speech."
-msgstr "Repite las últimas palabras mandadas al sintetizador."
-
-#: ../src/orca/default.py:111
+#: ../src/orca/default.py:86
 msgid "Performs left click on current flat review item."
-msgstr "Realiza una pulsación con el botón izquierdo en el actual objeto de revisión."
+msgstr ""
+"Realiza una pulsación con el botón izquierdo en el actual objeto de revisión."
 
-#: ../src/orca/default.py:120
+#: ../src/orca/default.py:95
 msgid "Performs right click on current flat review item."
-msgstr "Realiza una pulsación con el botón derecho en el actual objeto de revisión."
+msgstr ""
+"Realiza una pulsación con el botón derecho en el actual objeto de revisión."
 
-#: ../src/orca/default.py:129
-msgid "Speaks entire document."
-msgstr "Habla el documento entero"
-
-#: ../src/orca/default.py:138
+#: ../src/orca/default.py:113
 msgid "Performs the where am I operation."
 msgstr "Realizar la operación donde estoy"
 
-#: ../src/orca/default.py:147
+#: ../src/orca/default.py:122
 msgid "Paints and prints the visible zones in the active window."
 msgstr "Pinta e imprime las zonas visibles de la ventana activa."
 
-#: ../src/orca/default.py:156
+#: ../src/orca/default.py:131
 msgid "Enters and exits flat review mode."
 msgstr "Entrar y salir del modo de revisión."
 
-#: ../src/orca/default.py:161
+#: ../src/orca/default.py:136
 msgid "Moves flat review to the beginning of the previous line."
 msgstr "Mover revisión al comienzo de la línea anterior."
 
-#: ../src/orca/default.py:172
+#: ../src/orca/default.py:147
 msgid "Moves flat review to the home position."
 msgstr "Mover revisión a la posición original."
 
-#: ../src/orca/default.py:188
+#: ../src/orca/default.py:163
 msgid "Speaks the current flat review line."
 msgstr "Hablar la actual línea revisada."
 
-#: ../src/orca/default.py:193
+#: ../src/orca/default.py:168
 msgid "Moves flat review to the beginning of the next line."
 msgstr "Mover revisión al comienzo de la siguiente línea."
 
-#: ../src/orca/default.py:209
+#: ../src/orca/default.py:184
 msgid "Moves flat review to the end position."
 msgstr "Mover revisión a la posición final."
 
-#: ../src/orca/default.py:218
+#: ../src/orca/default.py:193
 msgid "Moves flat review to the previous item or word."
 msgstr "Mover revisión al anterior elemento o palabra."
 
-#: ../src/orca/default.py:223
+#: ../src/orca/default.py:198
 msgid "Moves flat review to the word above the current word."
 msgstr "Mover revisión a la palabra encima de la palabra actual."
 
-#: ../src/orca/default.py:239
+#: ../src/orca/default.py:214
 msgid "Speaks the current flat review item or word."
 msgstr "Hablar en el actual elemento o palabra revisado."
 
-#: ../src/orca/default.py:248
+#: ../src/orca/default.py:223
 msgid "Speaks the current flat review object."
 msgstr "Hable en el actual objeto de revisión"
 
-#: ../src/orca/default.py:257
+#: ../src/orca/default.py:232
 msgid "Moves flat review to the next item or word."
 msgstr "Mover revisión al siguiente elemento o palabra."
 
-#: ../src/orca/default.py:262
+#: ../src/orca/default.py:237
 msgid "Moves flat review to the word below the current word."
 msgstr "Mover revisión a la palabra de debajo de la palabra actual."
 
-#: ../src/orca/default.py:274
+#: ../src/orca/default.py:249
 msgid "Moves flat review to the previous character."
 msgstr "Mover revisión al anterior carácter."
 
-#: ../src/orca/default.py:290
+#: ../src/orca/default.py:265
 msgid "Moves flat review to the end of the line."
 msgstr "Mover revisión al final de la línea."
 
-#: ../src/orca/default.py:299
+#: ../src/orca/default.py:274
 msgid "Speaks the current flat review character."
 msgstr "Hablar en el actual carácter revisado."
 
-#: ../src/orca/default.py:304
+#: ../src/orca/default.py:279
 msgid "Moves flat review to the next character."
 msgstr "Mover revisión al siguiente carácter."
 
-#: ../src/orca/default.py:321
+#: ../src/orca/default.py:296
 msgid "Pans the braille display to the left."
 msgstr "Mover la visual de braille a la izquierda."
 
-#: ../src/orca/default.py:326
+#: ../src/orca/default.py:301
 msgid "Pans the braille display to the right."
 msgstr "Expandir eñ visor de braille a la derecha."
 
-#: ../src/orca/default.py:331
-msgid "Pans the braille display to the left by one character."
-msgstr "Expandir el visor braille a la izquierda un carácter."
-
-#: ../src/orca/default.py:336
-msgid "Pans the braille display to the right by one character."
-msgstr "Mover la visual de braille a la derecha por un carácter."
-
-#: ../src/orca/default.py:345
+#: ../src/orca/default.py:320
 msgid "Moves flat review to the bottom left."
 msgstr "Mover revisión arriba a la izquierda."
 
-#: ../src/orca/default.py:350
+#: ../src/orca/default.py:325
 msgid "Returns to object with keyboard focus."
 msgstr "Volver al objeto con el foco del teclado."
 
-#: ../src/orca/default.py:522 ../src/orca/default.py:703
+#: ../src/orca/default.py:498 ../src/orca/default.py:687
 #, python-format
 msgid "tree level %d"
 msgstr "nivel del árbol %d"
 
-#: ../src/orca/default.py:526 ../src/orca/default.py:707
-#: ../src/orca/default.py:772
-msgid "Nothing has focus"
-msgstr "Nada ha sido señalado"
+#: ../src/orca/default.py:502 ../src/orca/default.py:691
+#: ../src/orca/default.py:759 ../src/orca/default.py:813
+msgid "No focus"
+msgstr "Sin foco"
 
-#: ../src/orca/default.py:1467 ../src/orca/default.py:1543
-#: ../src/orca/default.py:1548 ../src/orca/default.py:1615
-#: ../src/orca/default.py:1620
+#: ../src/orca/default.py:1576 ../src/orca/default.py:1676
+#: ../src/orca/default.py:1681 ../src/orca/default.py:1755
+#: ../src/orca/default.py:1760
 msgid "blank"
 msgstr "blanco"
 
-#: ../src/orca/default.py:1469 ../src/orca/default.py:1550
+#: ../src/orca/default.py:1578 ../src/orca/default.py:1683
 msgid "white space"
 msgstr "espacio en blanco"
 
-#: ../src/orca/default.py:1822
-msgid "Not a document."
-msgstr "No es un documento."
+#: ../src/orca/espeechfactory.py:86
+msgid "Emacspeak Speech Services"
+msgstr "Servicios de voz Emacsspeak"
 
-#: ../src/orca/focus_tracking_presenter.py:402
+#: ../src/orca/focus_tracking_presenter.py:440
 msgid "Switching to focus tracking mode."
 msgstr "Cambiando al modo de seguimiento del foco."
 
-#: ../src/orca/gaim.py:96
-msgid " chat"
-msgstr " charla"
+#: ../src/orca/gnomespeechfactory.py:111
+msgid "GNOME Speech Services"
+msgstr "Servicios de voz de Gnome"
 
-#: ../src/orca/gaim.py:119
-msgid " instant message"
-msgstr " mensaje instantáneo"
+#: ../src/orca/gnomespeechfactory.py:445
+msgid " dot dot dot"
+msgstr "punto punto punto"
 
-#: ../src/orca/gaim.py:185
-msgid "Input"
-msgstr "Entrada"
+#: ../src/orca/gnomespeechfactory.py:491
+msgid "faster."
+msgstr "más rápido."
 
-#: ../src/orca/gaim.py:187
-msgid "Message Log"
-msgstr "Registro de mensajes"
+#: ../src/orca/gnomespeechfactory.py:522
+msgid "slower."
+msgstr "más lento."
 
-#: ../src/orca/hierarchical_presenter.py:502
+#: ../src/orca/hierarchical_presenter.py:492
 msgid "Switching to hierarchical navigation mode."
 msgstr "Cambiando a modo de navegación jerárquico."
 
-#: ../src/orca/metacity.py:114
-msgid "inaccessible"
-msgstr "sin acceso"
+#: ../src/orca/keynames.py:27
+msgid "left shift"
+msgstr "mayúsculas izquierda"
 
-#: ../src/orca/orca-setup.in:35
+#: ../src/orca/keynames.py:28
+msgid "left tab"
+msgstr "solapa izquierda"
+
+#: ../src/orca/keynames.py:29
+msgid "F 12"
+msgstr "F 12"
+
+#: ../src/orca/orca-setup.in:40
 msgid "Creating .orca directory."
 msgstr "Creando el directorio .orca."
 
-#: ../src/orca/orca-setup.in:103
-#, c-format
-msgid "Select %s voice: "
-msgstr "Seleccionar la voz %s:"
+#: ../src/orca/orca-setup.in:120 ../src/orca/orca-setup.in:135
+msgid "Speech is unavailable."
+msgstr "Habla no disponible."
 
-#: ../src/orca/orca-setup.in:107 ../src/orca/orca-setup.in:164
+#: ../src/orca/orca-setup.in:124
+msgid "Welcome to Orca setup."
+msgstr "Bienvenido a la configuración de Orca."
+
+#: ../src/orca/orca-setup.in:138
+msgid "Select desired speech system."
+msgstr "Seleccionar el sistema de habla deseado."
+
+#: ../src/orca/orca-setup.in:143 ../src/orca/orca-setup.in:172
+#: ../src/orca/orca-setup.in:195
 #, c-format
 msgid "%d. %s"
 msgstr "%d. %s"
 
-#: ../src/orca/orca-setup.in:109 ../src/orca/orca-setup.in:166
+#: ../src/orca/orca-setup.in:146 ../src/orca/orca-setup.in:175
+#: ../src/orca/orca-setup.in:198
 msgid "Enter choice: "
 msgstr "Introduzca una elección:"
 
-#: ../src/orca/orca-setup.in:148
-msgid "No working GNOME Speech drivers found."
-msgstr "No se han encontrado los controladores de voz de Gnome Speech funcionando."
-
-#: ../src/orca/orca-setup.in:161
-msgid "Welcome to Orca setup."
-msgstr "Bienvenido a la configuración de Orca."
-
-#: ../src/orca/orca-setup.in:162
-msgid "Select default speech synthesizer"
-msgstr "Seleccionar el sintetizador de voz predeterminado"
-
-#: ../src/orca/orca-setup.in:168
+#: ../src/orca/orca-setup.in:148 ../src/orca/orca-setup.in:165
+#: ../src/orca/orca-setup.in:177 ../src/orca/orca-setup.in:186
+#: ../src/orca/orca-setup.in:200
 msgid "Speech will not be used.\n"
 msgstr "La voz no se usará.\n"
 
-#: ../src/orca/orca-setup.in:192
-msgid "Create another voice?  Enter y or n: "
-msgstr "¿Crear otra voz?  Responda s o n: "
+#: ../src/orca/orca-setup.in:164
+msgid "No servers available.\n"
+msgstr "No hay servidores disponibles.\n"
 
-#: ../src/orca/orca-setup.in:200
-msgid "Enter voice name: "
-msgstr "Introduzca el nombre de la voz:"
+#: ../src/orca/orca-setup.in:168
+msgid "Select desired speech server."
+msgstr "Seleccionar el servidor de habla deseado."
 
-#: ../src/orca/orca-setup.in:205
+#: ../src/orca/orca-setup.in:185
+msgid "No voices available.\n"
+msgstr "No hay voces disponibles.\n"
+
+#: ../src/orca/orca-setup.in:189
+msgid "Select desired voice."
+msgstr "Seleccione la voz seseada."
+
+#: ../src/orca/orca-setup.in:226
 msgid "Use key echo?  Enter y or n: "
 msgstr "Usar la tecla de eco?  Responda s o n: "
 
-#: ../src/orca/orca-setup.in:233
+#: ../src/orca/orca-setup.in:252
 msgid "Braille support appears to work, use it?  Enter y or n. "
 msgstr "El soporte Braille parece funcionar, ¿desea usarlo? Responda s o n."
 
-#: ../src/orca/orca.py:283
+#: ../src/orca/orca.py:273
 msgid "User logged out - shutting down."
 msgstr "El usuario cerró la sesión - apagando."
 
-#: ../src/orca/orca.py:560
+#: ../src/orca/orca.py:545
 msgid "Entering learn mode.  Press any key to hear its function. "
-msgstr "Entrando en modo de aprendizaje.  Pulse cualquier tecla para oír su función."
+msgstr ""
+"Entrando en modo de aprendizaje.  Pulse cualquier tecla para oír su función."
 
-#: ../src/orca/orca.py:561
+#: ../src/orca/orca.py:546
 msgid "To exit learn mode, press the escape key."
 msgstr "Para salir del modo de aprendizaje, pulse la tecla de escape."
 
-#: ../src/orca/orca.py:562
+#: ../src/orca/orca.py:547
 msgid "Learn mode.  Press escape to exit."
 msgstr "Modo de aprendizaje.  Pulse escape para salir."
 
-#: ../src/orca/orca.py:573 ../src/orca/orca.py:574
+#: ../src/orca/orca.py:558 ../src/orca/orca.py:559
 msgid "Exiting learn mode."
 msgstr "Saliendo del modo de aprendizaje."
 
-#: ../src/orca/orca.py:603
+#: ../src/orca/orca.py:587
 msgid "Enters learn mode.  Press escape to exit learn mode."
 msgstr ""
 "Entra en modo de aprendizaje.  Pulse escape para salir del modo de "
 "aprendizaje"
 
-#: ../src/orca/orca.py:611
+#: ../src/orca/orca.py:595
 msgid "Decreases the speech rate."
 msgstr "Reducir la velocidad del diálogo"
 
-#: ../src/orca/orca.py:619
+#: ../src/orca/orca.py:603
 msgid "Increases the speech rate."
 msgstr "Aumentar la velocidad de diálogo"
 
-#: ../src/orca/orca.py:625
+#: ../src/orca/orca.py:609
 msgid "Quits Orca"
 msgstr "Sale de Orca"
 
-#: ../src/orca/orca.py:633
+#: ../src/orca/orca.py:621
 msgid "Toggles keystroke recording on and off."
 msgstr "Cambiar la grabación mediante teclas."
 
-#: ../src/orca/orca.py:641
+#: ../src/orca/orca.py:629
 msgid ""
 "Prints a debug listing of all known applications to the console where Orca "
 "is running."
@@ -425,7 +417,7 @@ msgstr ""
 "Imprime un listado de depuración de todas las aplicaciones conocidas a la "
 "consola donde está funcionando Orca"
 
-#: ../src/orca/orca.py:649
+#: ../src/orca/orca.py:637
 msgid ""
 "Prints debug information about the currently active application to the "
 "console where Orca is running."
@@ -433,7 +425,7 @@ msgstr ""
 "Imprime información de depuración acerca de la aplicación activa a la "
 "consola donde está funcionando Orca"
 
-#: ../src/orca/orca.py:657
+#: ../src/orca/orca.py:645
 msgid "Switches to the next presentation manager."
 msgstr "Cambiar al siguiente gestor de presentación."
 
@@ -441,895 +433,915 @@ msgstr "Cambiar al siguiente gestor de presentación."
 msgid "Welcome to Orca."
 msgstr "Bienvenido a Orca."
 
-#: ../src/orca/orca.py:730
+#: ../src/orca/orca.py:729
 msgid "goodbye."
 msgstr "adiós."
 
-#: ../src/orca/orca.py:731
+#: ../src/orca/orca.py:730
 msgid "Goodbye."
 msgstr "Adiós."
 
-#: ../src/orca/rolenames.py:143
+#: ../src/orca/rolenames.py:144
 msgid "???"
 msgstr "???"
 
-#: ../src/orca/rolenames.py:144
+#: ../src/orca/rolenames.py:145
 msgid "Invalid"
 msgstr "Inválido"
 
-#: ../src/orca/rolenames.py:145
+#: ../src/orca/rolenames.py:146
 msgid "invalid"
 msgstr "inválido"
 
-#: ../src/orca/rolenames.py:148
+#: ../src/orca/rolenames.py:149
 msgid "acc"
 msgstr "acc"
 
-#: ../src/orca/rolenames.py:149
+#: ../src/orca/rolenames.py:150
 msgid "Accelerator"
 msgstr "Acelerador"
 
-#: ../src/orca/rolenames.py:150
+#: ../src/orca/rolenames.py:151
 msgid "accelerator"
 msgstr "acelerador"
 
-#: ../src/orca/rolenames.py:153 ../src/orca/rolenames.py:155
+#: ../src/orca/rolenames.py:154 ../src/orca/rolenames.py:156
 msgid "alert"
 msgstr "alerta"
 
-#: ../src/orca/rolenames.py:154
+#: ../src/orca/rolenames.py:155
 msgid "Alert"
 msgstr "Alerta"
 
-#: ../src/orca/rolenames.py:158
+#: ../src/orca/rolenames.py:159
 msgid "Anim"
 msgstr "Anim"
 
-#: ../src/orca/rolenames.py:159
+#: ../src/orca/rolenames.py:160
 msgid "Animation"
 msgstr "Animación"
 
-#: ../src/orca/rolenames.py:160
+#: ../src/orca/rolenames.py:161
 msgid "animation"
 msgstr "animación"
 
-#: ../src/orca/rolenames.py:163 ../src/orca/rolenames.py:165
+#: ../src/orca/rolenames.py:164 ../src/orca/rolenames.py:166
 msgid "arrow"
 msgstr "flecha"
 
-#: ../src/orca/rolenames.py:164
+#: ../src/orca/rolenames.py:165
 msgid "Arrow"
 msgstr "Flecha"
 
-#: ../src/orca/rolenames.py:168
+#: ../src/orca/rolenames.py:169
 msgid "cal"
 msgstr "cal"
 
-#: ../src/orca/rolenames.py:169
+#: ../src/orca/rolenames.py:170
 msgid "Calendar"
 msgstr "Calendario"
 
-#: ../src/orca/rolenames.py:170
+#: ../src/orca/rolenames.py:171
 msgid "calendar"
 msgstr "calendario"
 
-#: ../src/orca/rolenames.py:173
+#: ../src/orca/rolenames.py:174
 msgid "cnv"
 msgstr "lcnv"
 
-#: ../src/orca/rolenames.py:174
+#: ../src/orca/rolenames.py:175
 msgid "Canvas"
 msgstr "Lienzo"
 
-#: ../src/orca/rolenames.py:175
+#: ../src/orca/rolenames.py:176
 msgid "canvas"
 msgstr "lienzo"
 
-#: ../src/orca/rolenames.py:178 ../src/orca/rolenames.py:183
+#: ../src/orca/rolenames.py:179 ../src/orca/rolenames.py:184
 msgid "chk"
 msgstr "chk"
 
-#: ../src/orca/rolenames.py:179
+#: ../src/orca/rolenames.py:180
 msgid "CheckBox"
 msgstr "Casilla"
 
-#: ../src/orca/rolenames.py:180
+#: ../src/orca/rolenames.py:181
 msgid "check box"
 msgstr "Casilla"
 
-#: ../src/orca/rolenames.py:184
+#: ../src/orca/rolenames.py:185
 msgid "CheckItem"
 msgstr "ElementoMarcable"
 
-#: ../src/orca/rolenames.py:185
+#: ../src/orca/rolenames.py:186
 msgid "check item"
 msgstr "elemento marcable"
 
-#: ../src/orca/rolenames.py:188
+#: ../src/orca/rolenames.py:189
 msgid "ckm"
 msgstr "ckm"
 
-#: ../src/orca/rolenames.py:189
+#: ../src/orca/rolenames.py:190
 msgid "CheckMenu"
 msgstr "MenúMarcable"
 
-#: ../src/orca/rolenames.py:190
+#: ../src/orca/rolenames.py:191
 msgid "check menu"
 msgstr "menú marcable"
 
-#: ../src/orca/rolenames.py:193
+#: ../src/orca/rolenames.py:194
 msgid "clrchsr"
 msgstr "clrchsr"
 
-#: ../src/orca/rolenames.py:194
+#: ../src/orca/rolenames.py:195
 msgid "ColorChooser"
 msgstr "Selector de Color"
 
-#: ../src/orca/rolenames.py:195
+#: ../src/orca/rolenames.py:196
 msgid "color chooser"
 msgstr "selector de color"
 
-#: ../src/orca/rolenames.py:198 ../src/orca/rolenames.py:433
+#: ../src/orca/rolenames.py:199 ../src/orca/rolenames.py:434
 msgid "colhdr"
 msgstr "colhdr"
 
-#: ../src/orca/rolenames.py:199 ../src/orca/rolenames.py:434
+#: ../src/orca/rolenames.py:200 ../src/orca/rolenames.py:435
 msgid "ColumnHeader"
 msgstr "Cabecera de Columna"
 
-#: ../src/orca/rolenames.py:200 ../src/orca/rolenames.py:435
+#: ../src/orca/rolenames.py:201 ../src/orca/rolenames.py:436
 msgid "column header"
 msgstr "cabecera de columna"
 
-#: ../src/orca/rolenames.py:203
+#: ../src/orca/rolenames.py:204
 msgid "cbo"
 msgstr "cbo"
 
-#: ../src/orca/rolenames.py:204
+#: ../src/orca/rolenames.py:205
 msgid "Combo"
 msgstr "Combo"
 
-#: ../src/orca/rolenames.py:205
+#: ../src/orca/rolenames.py:206
 msgid "combo box"
 msgstr "caja combo"
 
-#: ../src/orca/rolenames.py:208
+#: ../src/orca/rolenames.py:209
 msgid "dat"
 msgstr "dat"
 
-#: ../src/orca/rolenames.py:209
+#: ../src/orca/rolenames.py:210
 msgid "DateEditor"
 msgstr "Editor de fecha"
 
-#: ../src/orca/rolenames.py:210
+#: ../src/orca/rolenames.py:211
 msgid "date editor"
 msgstr "editor de fecha"
 
-#: ../src/orca/rolenames.py:213 ../src/orca/rolenames.py:273
-#: ../src/orca/rolenames.py:275
+#: ../src/orca/rolenames.py:214 ../src/orca/rolenames.py:274
+#: ../src/orca/rolenames.py:276
 msgid "icon"
 msgstr "icono"
 
-#: ../src/orca/rolenames.py:214
+#: ../src/orca/rolenames.py:215
 msgid "DesktopIcon"
 msgstr "Icono de Escritorio"
 
-#: ../src/orca/rolenames.py:215
+#: ../src/orca/rolenames.py:216
 msgid "desktop icon"
 msgstr "icono de escritorio"
 
-#: ../src/orca/rolenames.py:218 ../src/orca/rolenames.py:260
-#: ../src/orca/rolenames.py:283
+#: ../src/orca/rolenames.py:219 ../src/orca/rolenames.py:261
+#: ../src/orca/rolenames.py:284
 msgid "frame"
 msgstr "marco"
 
-#: ../src/orca/rolenames.py:219
+#: ../src/orca/rolenames.py:220
 msgid "DesktopFrame"
 msgstr "Marco de escritorio"
 
-#: ../src/orca/rolenames.py:220
+#: ../src/orca/rolenames.py:221
 msgid "desktop frame"
 msgstr "marco de escritorio"
 
-#: ../src/orca/rolenames.py:223 ../src/orca/rolenames.py:225
+#: ../src/orca/rolenames.py:224 ../src/orca/rolenames.py:226
 msgid "dial"
 msgstr "marcador telefónico"
 
-#: ../src/orca/rolenames.py:224
+#: ../src/orca/rolenames.py:225
 msgid "Dial"
 msgstr "Marcador Telefónico"
 
-#: ../src/orca/rolenames.py:228
+#: ../src/orca/rolenames.py:229
 msgid "dlg"
 msgstr "dlg"
 
-#: ../src/orca/rolenames.py:229
+#: ../src/orca/rolenames.py:230
 msgid "Dialog"
 msgstr "Diálogo"
 
-#: ../src/orca/rolenames.py:230
+#: ../src/orca/rolenames.py:231
 msgid "dialog"
 msgstr "diálogo"
 
-#: ../src/orca/rolenames.py:233
+#: ../src/orca/rolenames.py:234
 msgid "dip"
 msgstr "dip"
 
-#: ../src/orca/rolenames.py:234
+#: ../src/orca/rolenames.py:235
 msgid "DirectoryPane"
 msgstr "Panel del Directorio"
 
-#: ../src/orca/rolenames.py:235
+#: ../src/orca/rolenames.py:236
 msgid "directory pane"
 msgstr "Panel de directorio"
 
-#: ../src/orca/rolenames.py:238
+#: ../src/orca/rolenames.py:239
 msgid "draw"
 msgstr "dibujo"
 
-#: ../src/orca/rolenames.py:239
+#: ../src/orca/rolenames.py:240
 msgid "DrawingAarea"
 msgstr "Área de Dibujo"
 
-#: ../src/orca/rolenames.py:240
+#: ../src/orca/rolenames.py:241
 msgid "drawing area"
 msgstr "área de dibujo"
 
-#: ../src/orca/rolenames.py:243
+#: ../src/orca/rolenames.py:244
 msgid "fchsr"
 msgstr "fchsr"
 
-#: ../src/orca/rolenames.py:244
+#: ../src/orca/rolenames.py:245
 msgid "FileChooser"
 msgstr "Selector de archivos"
 
-#: ../src/orca/rolenames.py:245
+#: ../src/orca/rolenames.py:246
 msgid "file chooser"
 msgstr "selector de archivos"
 
-#: ../src/orca/rolenames.py:248
+#: ../src/orca/rolenames.py:249
 msgid "flr"
 msgstr "flr"
 
-#: ../src/orca/rolenames.py:249
+#: ../src/orca/rolenames.py:250
 msgid "Filler"
 msgstr "Rellenador"
 
-#: ../src/orca/rolenames.py:250
+#: ../src/orca/rolenames.py:251
 msgid "filler"
 msgstr "rellenador"
 
-#: ../src/orca/rolenames.py:253
+#: ../src/orca/rolenames.py:254
 msgid "fnt"
 msgstr "fnt"
 
-#: ../src/orca/rolenames.py:254
+#: ../src/orca/rolenames.py:255
 msgid "FontChooser"
 msgstr "Selector de tipografía"
 
-#: ../src/orca/rolenames.py:255
+#: ../src/orca/rolenames.py:256
 msgid "font chooser"
 msgstr "selector de tipografía"
 
-#: ../src/orca/rolenames.py:258
+#: ../src/orca/rolenames.py:259
 msgid "frm"
 msgstr "frm"
 
-#: ../src/orca/rolenames.py:259
+#: ../src/orca/rolenames.py:260
 msgid "Frame"
 msgstr "Marco"
 
-#: ../src/orca/rolenames.py:263
+#: ../src/orca/rolenames.py:264
 msgid "gpn"
 msgstr "gpn"
 
-#: ../src/orca/rolenames.py:264
+#: ../src/orca/rolenames.py:265
 msgid "GlassPane"
 msgstr "Panel Transparente"
 
-#: ../src/orca/rolenames.py:265
+#: ../src/orca/rolenames.py:266
 msgid "glass pane"
 msgstr "Panel transparente"
 
-#: ../src/orca/rolenames.py:268
+#: ../src/orca/rolenames.py:269
 msgid "html"
 msgstr "html"
 
-#: ../src/orca/rolenames.py:269
+#: ../src/orca/rolenames.py:270
 msgid "HtmlContainer"
 msgstr "Html contenedor"
 
-#: ../src/orca/rolenames.py:270
+#: ../src/orca/rolenames.py:271
 msgid "h t m l container"
 msgstr "contenedor h t m l"
 
-#: ../src/orca/rolenames.py:274
+#: ../src/orca/rolenames.py:275
 msgid "Icon"
 msgstr "Icono"
 
-#: ../src/orca/rolenames.py:278
+#: ../src/orca/rolenames.py:279
 msgid "img"
 msgstr "img"
 
-#: ../src/orca/rolenames.py:279
+#: ../src/orca/rolenames.py:280
 msgid "Image"
 msgstr "Imagen"
 
-#: ../src/orca/rolenames.py:280
+#: ../src/orca/rolenames.py:281
 msgid "image"
 msgstr "imagen"
 
-#: ../src/orca/rolenames.py:284
+#: ../src/orca/rolenames.py:285
 msgid "InternalFrame"
 msgstr "Marco Interno"
 
-#: ../src/orca/rolenames.py:285
+#: ../src/orca/rolenames.py:286
 msgid "internal frame"
 msgstr "marco interno"
 
-#: ../src/orca/rolenames.py:288
+#: ../src/orca/rolenames.py:289
 msgid "lbl"
 msgstr "lbl"
 
-#: ../src/orca/rolenames.py:289
+#: ../src/orca/rolenames.py:290
 msgid "Label"
 msgstr "Etiqueta"
 
-#: ../src/orca/rolenames.py:290
+#: ../src/orca/rolenames.py:291
 msgid "label"
 msgstr "etiqueta"
 
-#: ../src/orca/rolenames.py:293
+#: ../src/orca/rolenames.py:294
 msgid "lyrdpn"
 msgstr "lyrdpn"
 
-#: ../src/orca/rolenames.py:294
+#: ../src/orca/rolenames.py:295
 msgid "LayeredPane"
 msgstr "Panel Solapado"
 
-#: ../src/orca/rolenames.py:295
+#: ../src/orca/rolenames.py:296
 msgid "layered pane"
 msgstr "Panel solapado"
 
-#: ../src/orca/rolenames.py:298
+#: ../src/orca/rolenames.py:299
 msgid "lst"
 msgstr "lst"
 
-#: ../src/orca/rolenames.py:299
+#: ../src/orca/rolenames.py:300
 msgid "List"
 msgstr "Lista"
 
-#: ../src/orca/rolenames.py:300
+#: ../src/orca/rolenames.py:301
 msgid "list"
 msgstr "lista"
 
-#: ../src/orca/rolenames.py:303
+#: ../src/orca/rolenames.py:304
 msgid "lstitm"
 msgstr "lstitm"
 
-#: ../src/orca/rolenames.py:304
+#: ../src/orca/rolenames.py:305
 msgid "ListItem"
 msgstr "Elemento de Lista"
 
-#: ../src/orca/rolenames.py:305
+#: ../src/orca/rolenames.py:306
 msgid "list item"
 msgstr "Elemento de lista"
 
-#: ../src/orca/rolenames.py:308
+#: ../src/orca/rolenames.py:309
 msgid "mnu"
 msgstr "mnu"
 
-#: ../src/orca/rolenames.py:309
+#: ../src/orca/rolenames.py:310
 msgid "Menu"
 msgstr "Menú"
 
-#: ../src/orca/rolenames.py:310
+#: ../src/orca/rolenames.py:311
 msgid "menu"
 msgstr "menú"
 
-#: ../src/orca/rolenames.py:313
+#: ../src/orca/rolenames.py:314
 msgid "mnubr"
 msgstr "mnubr"
 
-#: ../src/orca/rolenames.py:314
+#: ../src/orca/rolenames.py:315
 msgid "MenuBar"
 msgstr "Barra de Menú"
 
-#: ../src/orca/rolenames.py:315
+#: ../src/orca/rolenames.py:316
 msgid "menu bar"
 msgstr "barra de menú"
 
-#: ../src/orca/rolenames.py:318
+#: ../src/orca/rolenames.py:319
 msgid "mnuitm"
 msgstr "mnuitm"
 
-#: ../src/orca/rolenames.py:319
+#: ../src/orca/rolenames.py:320
 msgid "MenuItem"
 msgstr "Elemento del Menú"
 
-#: ../src/orca/rolenames.py:320
+#: ../src/orca/rolenames.py:321
 msgid "menu item"
 msgstr "elemento del menú"
 
-#: ../src/orca/rolenames.py:323
+#: ../src/orca/rolenames.py:324
 msgid "optnpn"
 msgstr "optnpn"
 
-#: ../src/orca/rolenames.py:324
+#: ../src/orca/rolenames.py:325
 msgid "OptionPane"
 msgstr "Panel de Opciones"
 
-#: ../src/orca/rolenames.py:325
+#: ../src/orca/rolenames.py:326
 msgid "option pane"
 msgstr "panel de opciones"
 
-#: ../src/orca/rolenames.py:328 ../src/orca/rolenames.py:330
+#: ../src/orca/rolenames.py:329 ../src/orca/rolenames.py:331
 msgid "page"
 msgstr "página"
 
-#: ../src/orca/rolenames.py:329
+#: ../src/orca/rolenames.py:330
 msgid "Page"
 msgstr "Página"
 
-#: ../src/orca/rolenames.py:333
+#: ../src/orca/rolenames.py:334
 msgid "tblst"
 msgstr "tblst"
 
-#: ../src/orca/rolenames.py:334
+#: ../src/orca/rolenames.py:335
 msgid "TabList"
 msgstr "Lista de solapas"
 
-#: ../src/orca/rolenames.py:335
+#: ../src/orca/rolenames.py:336
 msgid "tab list"
 msgstr "lista de solapas "
 
-#: ../src/orca/rolenames.py:338
+#: ../src/orca/rolenames.py:339
 msgid "pnl"
 msgstr "pnl"
 
-#: ../src/orca/rolenames.py:339
+#: ../src/orca/rolenames.py:340
 msgid "Panel"
 msgstr "Panel"
 
-#: ../src/orca/rolenames.py:340
+#: ../src/orca/rolenames.py:341
 msgid "panel"
 msgstr "panel"
 
-#: ../src/orca/rolenames.py:343
+#: ../src/orca/rolenames.py:344
 msgid "pwd"
 msgstr "pwd"
 
-#: ../src/orca/rolenames.py:344
+#: ../src/orca/rolenames.py:345
 msgid "Password"
 msgstr "Contraseña"
 
-#: ../src/orca/rolenames.py:345
+#: ../src/orca/rolenames.py:346
 msgid "password"
 msgstr "contraseña"
 
-#: ../src/orca/rolenames.py:348
+#: ../src/orca/rolenames.py:349
 msgid "popmnu"
 msgstr "popmnu"
 
-#: ../src/orca/rolenames.py:349
+#: ../src/orca/rolenames.py:350
 msgid "PopupMenu"
 msgstr "Menú Emergente"
 
-#: ../src/orca/rolenames.py:350
+#: ../src/orca/rolenames.py:351
 msgid "popup menu"
 msgstr "menú emergente"
 
-#: ../src/orca/rolenames.py:353
+#: ../src/orca/rolenames.py:354
 msgid "pgbar"
 msgstr "pgbar"
 
-#: ../src/orca/rolenames.py:354
+#: ../src/orca/rolenames.py:355
 msgid "Progress"
 msgstr "Barra de Progreso"
 
-#: ../src/orca/rolenames.py:355
+#: ../src/orca/rolenames.py:356
 msgid "progress bar"
 msgstr "barra de progreso"
 
-#: ../src/orca/rolenames.py:358
+#: ../src/orca/rolenames.py:359
 msgid "btn"
 msgstr "btn"
 
-#: ../src/orca/rolenames.py:359
+#: ../src/orca/rolenames.py:360
 msgid "Button"
 msgstr "Botón "
 
-#: ../src/orca/rolenames.py:360
+#: ../src/orca/rolenames.py:361
 msgid "button"
 msgstr "botón "
 
-#: ../src/orca/rolenames.py:363
+#: ../src/orca/rolenames.py:364
 msgid "radio"
 msgstr "radio"
 
-#: ../src/orca/rolenames.py:364
+#: ../src/orca/rolenames.py:365
 msgid "RadioButton"
 msgstr "Botón de Radio"
 
-#: ../src/orca/rolenames.py:365
+#: ../src/orca/rolenames.py:366
 msgid "radio button"
 msgstr "botón de radio"
 
-#: ../src/orca/rolenames.py:368
+#: ../src/orca/rolenames.py:369
 msgid "rdmnuitm"
 msgstr "rdmnuitm"
 
-#: ../src/orca/rolenames.py:369
+#: ../src/orca/rolenames.py:370
 msgid "RadioMenuItem"
 msgstr "Menú de Elementos de Radio"
 
-#: ../src/orca/rolenames.py:370
+#: ../src/orca/rolenames.py:371
 msgid "radio menu item"
 msgstr "menú de elementos de radio"
 
-#: ../src/orca/rolenames.py:373
+#: ../src/orca/rolenames.py:374
 msgid "rdmnu"
 msgstr "rdmnu"
 
-#: ../src/orca/rolenames.py:374
+#: ../src/orca/rolenames.py:375
 msgid "RadioMenu"
 msgstr "Menú Radio"
 
-#: ../src/orca/rolenames.py:375
+#: ../src/orca/rolenames.py:376
 msgid "radio menu"
 msgstr "menú radio"
 
-#: ../src/orca/rolenames.py:378
+#: ../src/orca/rolenames.py:379
 msgid "rtpn"
 msgstr "rtpn"
 
-#: ../src/orca/rolenames.py:379
+#: ../src/orca/rolenames.py:380
 msgid "RootPane"
 msgstr "Panel Raíz"
 
-#: ../src/orca/rolenames.py:380
+#: ../src/orca/rolenames.py:381
 msgid "root pane"
 msgstr "panel raíz"
 
-#: ../src/orca/rolenames.py:383 ../src/orca/rolenames.py:438
+#: ../src/orca/rolenames.py:384 ../src/orca/rolenames.py:439
 msgid "rwhdr"
 msgstr "rwhdr"
 
-#: ../src/orca/rolenames.py:384 ../src/orca/rolenames.py:439
+#: ../src/orca/rolenames.py:385 ../src/orca/rolenames.py:440
 msgid "RowHeader"
 msgstr "Cabecera de la Fila"
 
-#: ../src/orca/rolenames.py:385 ../src/orca/rolenames.py:440
+#: ../src/orca/rolenames.py:386 ../src/orca/rolenames.py:441
 msgid "row header"
 msgstr "cabecera de la fila"
 
-#: ../src/orca/rolenames.py:388
+#: ../src/orca/rolenames.py:389
 msgid "scbr"
 msgstr "scbr"
 
-#: ../src/orca/rolenames.py:389
+#: ../src/orca/rolenames.py:390
 msgid "ScrollBar"
 msgstr "Barra Deslizante"
 
-#: ../src/orca/rolenames.py:390
+#: ../src/orca/rolenames.py:391
 msgid "scroll bar"
 msgstr "barra deslizante"
 
-#: ../src/orca/rolenames.py:393
+#: ../src/orca/rolenames.py:394
 msgid "scpn"
 msgstr "scpn"
 
-#: ../src/orca/rolenames.py:394
+#: ../src/orca/rolenames.py:395
 msgid "ScrollPane"
 msgstr "Panel Deslizante"
 
-#: ../src/orca/rolenames.py:395
+#: ../src/orca/rolenames.py:396
 msgid "scroll pane"
 msgstr "panel deslizante"
 
-#: ../src/orca/rolenames.py:398
+#: ../src/orca/rolenames.py:399
 msgid "seprtr"
 msgstr "seprtr"
 
-#: ../src/orca/rolenames.py:399
+#: ../src/orca/rolenames.py:400
 msgid "Separator"
 msgstr "Separador"
 
-#: ../src/orca/rolenames.py:400
+#: ../src/orca/rolenames.py:401
 msgid "separator"
 msgstr "separador"
 
-#: ../src/orca/rolenames.py:403
+#: ../src/orca/rolenames.py:404
 msgid "sldr"
 msgstr "sldr"
 
-#: ../src/orca/rolenames.py:404
+#: ../src/orca/rolenames.py:405
 msgid "Slider"
 msgstr "Deslizador"
 
-#: ../src/orca/rolenames.py:405
+#: ../src/orca/rolenames.py:406
 msgid "slider"
 msgstr "deslizador"
 
-#: ../src/orca/rolenames.py:408
+#: ../src/orca/rolenames.py:409
 msgid "spltpn"
 msgstr "spltpn"
 
-#: ../src/orca/rolenames.py:409
+#: ../src/orca/rolenames.py:410
 msgid "SplitPane"
 msgstr "Panel Dividido"
 
-#: ../src/orca/rolenames.py:410
+#: ../src/orca/rolenames.py:411
 msgid "split pane"
 msgstr "panel dividido"
 
-#: ../src/orca/rolenames.py:413
+#: ../src/orca/rolenames.py:414
 msgid "spin"
 msgstr "contador"
 
-#: ../src/orca/rolenames.py:414
+#: ../src/orca/rolenames.py:415
 msgid "SpinButton"
 msgstr "Botón Contador"
 
-#: ../src/orca/rolenames.py:415
+#: ../src/orca/rolenames.py:416
 msgid "spin button"
 msgstr "botón contador"
 
-#: ../src/orca/rolenames.py:418
+#: ../src/orca/rolenames.py:419
 msgid "statbr"
 msgstr "statbr"
 
-#: ../src/orca/rolenames.py:419
+#: ../src/orca/rolenames.py:420
 msgid "StatusBar"
 msgstr "Barra de e Estado"
 
-#: ../src/orca/rolenames.py:420
+#: ../src/orca/rolenames.py:421
 msgid "status bar"
 msgstr "barra de estado"
 
-#: ../src/orca/rolenames.py:423
+#: ../src/orca/rolenames.py:424
 msgid "tbl"
 msgstr "tbl"
 
-#: ../src/orca/rolenames.py:424
+#: ../src/orca/rolenames.py:425
 msgid "Table"
 msgstr "Tabla"
 
-#: ../src/orca/rolenames.py:425
+#: ../src/orca/rolenames.py:426
 msgid "table"
 msgstr "tabla"
 
-#: ../src/orca/rolenames.py:428 ../src/orca/rolenames.py:430
+#: ../src/orca/rolenames.py:429 ../src/orca/rolenames.py:431
 msgid "cell"
 msgstr "celda"
 
-#: ../src/orca/rolenames.py:429
+#: ../src/orca/rolenames.py:430
 msgid "Cell"
 msgstr "Celda"
 
-#: ../src/orca/rolenames.py:443
+#: ../src/orca/rolenames.py:444
 msgid "tomnuitm"
 msgstr "tomnuitm"
 
-#: ../src/orca/rolenames.py:444
+#: ../src/orca/rolenames.py:445
 msgid "TearOffMenuItem"
 msgstr "Elemento de Menú Desprendible"
 
-#: ../src/orca/rolenames.py:445 ../src/orca/speechgenerator.py:1300
+#: ../src/orca/rolenames.py:446 ../src/orca/speechgenerator.py:1291
 msgid "tear off menu item"
 msgstr "elemento de menú desprendible"
 
-#: ../src/orca/rolenames.py:448
+#: ../src/orca/rolenames.py:449
 msgid "term"
 msgstr "term"
 
-#: ../src/orca/rolenames.py:449
+#: ../src/orca/rolenames.py:450
 msgid "Terminal"
 msgstr "Terminal"
 
-#: ../src/orca/rolenames.py:450
+#: ../src/orca/rolenames.py:451
 msgid "terminal"
 msgstr "terminal"
 
-#: ../src/orca/rolenames.py:453
+#: ../src/orca/rolenames.py:454
 msgid "txt"
 msgstr "txt"
 
-#: ../src/orca/rolenames.py:454
+#: ../src/orca/rolenames.py:455
 msgid "Text"
 msgstr "Texto"
 
-#: ../src/orca/rolenames.py:455
+#: ../src/orca/rolenames.py:456
 msgid "text"
 msgstr "texto"
 
-#: ../src/orca/rolenames.py:458
+#: ../src/orca/rolenames.py:459
 msgid "tglbtn"
 msgstr "tglbtn"
 
-#: ../src/orca/rolenames.py:459
+#: ../src/orca/rolenames.py:460
 msgid "ToggleButton"
 msgstr "Botón Conmutable"
 
-#: ../src/orca/rolenames.py:460
+#: ../src/orca/rolenames.py:461
 msgid "toggle button"
 msgstr "botón conmutable"
 
-#: ../src/orca/rolenames.py:463
+#: ../src/orca/rolenames.py:464
 msgid "tbar"
 msgstr "tbar"
 
-#: ../src/orca/rolenames.py:464
+#: ../src/orca/rolenames.py:465
 msgid "ToolBar"
 msgstr "Barra de Herramientas"
 
-#: ../src/orca/rolenames.py:465
+#: ../src/orca/rolenames.py:466
 msgid "tool bar"
 msgstr "barra de herramientas"
 
-#: ../src/orca/rolenames.py:468
+#: ../src/orca/rolenames.py:469
 msgid "tip"
 msgstr "tip"
 
-#: ../src/orca/rolenames.py:469
+#: ../src/orca/rolenames.py:470
 msgid "ToolTip"
 msgstr "Consejo"
 
-#: ../src/orca/rolenames.py:470
+#: ../src/orca/rolenames.py:471
 msgid "tool tip"
 msgstr "consejo"
 
-#: ../src/orca/rolenames.py:473 ../src/orca/rolenames.py:475
+#: ../src/orca/rolenames.py:474 ../src/orca/rolenames.py:476
 msgid "tree"
 msgstr "árbol"
 
-#: ../src/orca/rolenames.py:474
+#: ../src/orca/rolenames.py:475
 msgid "Tree"
 msgstr "Árbol"
 
-#: ../src/orca/rolenames.py:478
+#: ../src/orca/rolenames.py:479
 msgid "trtbl"
 msgstr "trtbl"
 
-#: ../src/orca/rolenames.py:479
+#: ../src/orca/rolenames.py:480
 msgid "TreeTable"
 msgstr "Tabla de Árbol"
 
-#: ../src/orca/rolenames.py:480
+#: ../src/orca/rolenames.py:481
 msgid "tree table"
 msgstr "tabla de árbol"
 
-#: ../src/orca/rolenames.py:483
+#: ../src/orca/rolenames.py:484
 msgid "unk"
 msgstr "unk"
 
-#: ../src/orca/rolenames.py:484
+#: ../src/orca/rolenames.py:485
 msgid "Unknown"
 msgstr "Desconocido"
 
-#: ../src/orca/rolenames.py:485
+#: ../src/orca/rolenames.py:486
 msgid "unknown"
 msgstr "desconocido"
 
-#: ../src/orca/rolenames.py:488
+#: ../src/orca/rolenames.py:489
 msgid "vwprt"
 msgstr "vwprt"
 
-#: ../src/orca/rolenames.py:489
+#: ../src/orca/rolenames.py:490
 msgid "Viewport"
 msgstr "Puerto"
 
-#: ../src/orca/rolenames.py:490
+#: ../src/orca/rolenames.py:491
 msgid "viewport"
 msgstr "puerto"
 
-#: ../src/orca/rolenames.py:493
+#: ../src/orca/rolenames.py:494
 msgid "wnd"
 msgstr "wnd"
 
-#: ../src/orca/rolenames.py:494
+#: ../src/orca/rolenames.py:495
 msgid "Window"
 msgstr "Ventana"
 
-#: ../src/orca/rolenames.py:495
+#: ../src/orca/rolenames.py:496
 msgid "window"
 msgstr "ventana"
 
-#: ../src/orca/rolenames.py:498
+#: ../src/orca/rolenames.py:499
 msgid "hdr"
 msgstr "hdr"
 
-#: ../src/orca/rolenames.py:499
+#: ../src/orca/rolenames.py:500
 msgid "Header"
 msgstr "Cabecera"
 
-#: ../src/orca/rolenames.py:500
+#: ../src/orca/rolenames.py:501
 msgid "header"
 msgstr "cabecera"
 
-#: ../src/orca/rolenames.py:503
+#: ../src/orca/rolenames.py:504
 msgid "ftr"
 msgstr "ftr"
 
-#: ../src/orca/rolenames.py:504
+#: ../src/orca/rolenames.py:505
 msgid "Footer"
 msgstr "Pie de Página"
 
-#: ../src/orca/rolenames.py:505
+#: ../src/orca/rolenames.py:506
 msgid "footer"
 msgstr "pie de página"
 
-#: ../src/orca/rolenames.py:508
+#: ../src/orca/rolenames.py:509
 msgid "para"
 msgstr "para"
 
-#: ../src/orca/rolenames.py:509
+#: ../src/orca/rolenames.py:510
 msgid "Paragraph"
 msgstr "Párrafo"
 
-#: ../src/orca/rolenames.py:510
+#: ../src/orca/rolenames.py:511
 msgid "paragraph"
 msgstr "párrafo"
 
-#: ../src/orca/rolenames.py:513
+#: ../src/orca/rolenames.py:514
 msgid "app"
 msgstr "app"
 
-#: ../src/orca/rolenames.py:514
+#: ../src/orca/rolenames.py:515
 msgid "Application"
 msgstr "Aplicación"
 
-#: ../src/orca/rolenames.py:515
+#: ../src/orca/rolenames.py:516
 msgid "application"
 msgstr "aplicación"
 
-#: ../src/orca/rolenames.py:518
+#: ../src/orca/rolenames.py:519
 msgid "auto"
 msgstr "auto"
 
-#: ../src/orca/rolenames.py:519
+#: ../src/orca/rolenames.py:520
 msgid "AutoComplete"
 msgstr "Autocompletado"
 
-#: ../src/orca/rolenames.py:520
+#: ../src/orca/rolenames.py:521
 msgid "autocomplete"
 msgstr "autocompletado"
 
-#: ../src/orca/rolenames.py:523
+#: ../src/orca/rolenames.py:524
 msgid "edtbr"
 msgstr "edtbr"
 
-#: ../src/orca/rolenames.py:524
+#: ../src/orca/rolenames.py:525
 msgid "EditBar"
 msgstr "Barra de Edición"
 
-#: ../src/orca/rolenames.py:525
+#: ../src/orca/rolenames.py:526
 msgid "edit bar"
 msgstr "barra de edición"
 
-#: ../src/orca/rolenames.py:528
+#: ../src/orca/rolenames.py:529
 msgid "emb"
 msgstr "emb"
 
-#: ../src/orca/rolenames.py:529
+#: ../src/orca/rolenames.py:530
 msgid "EmbeddedComponent"
 msgstr "Componente Empotrado"
 
-#: ../src/orca/rolenames.py:530
+#: ../src/orca/rolenames.py:531
 msgid "embedded component"
 msgstr "componente empotrado"
 
-#: ../src/orca/speech.py:310
-msgid "The speech rate has been raised."
-msgstr "La velocidad del habla se ha subido."
+#: ../src/orca/scripts/Gecko.py:49
+msgid "No page to read."
+msgstr "Ninguna página para leer."
 
-#: ../src/orca/speech.py:350
-msgid "The speech rate has been lowered."
-msgstr "La velocidad del habla se ha bajado."
+#: ../src/orca/scripts/Gecko.py:57
+msgid "Reading web page failed."
+msgstr "La lectura de la página web ha fallado."
 
-#: ../src/orca/speech.py:391
-msgid " dot dot dot"
-msgstr "punto punto punto"
+#: ../src/orca/scripts/Gecko.py:97
+msgid "link"
+msgstr "enlace"
+
+#: ../src/orca/scripts/gaim.py:75
+msgid " chat"
+msgstr " charla"
+
+#: ../src/orca/scripts/gaim.py:98
+msgid " instant message"
+msgstr " mensaje instantáneo"
+
+#: ../src/orca/scripts/gaim.py:192
+msgid "Input"
+msgstr "Entrada"
+
+#: ../src/orca/scripts/gaim.py:194
+msgid "Message Log"
+msgstr "Registro de mensajes"
+
+#: ../src/orca/scripts/metacity.py:91
+msgid "inaccessible"
+msgstr "sin acceso"
 
 #: ../src/orca/speechgenerator.py:362 ../src/orca/speechgenerator.py:366
 msgid "checked"
@@ -1339,31 +1351,61 @@ msgstr "marcado"
 msgid "not checked"
 msgstr "no marcado"
 
-#: ../src/orca/speechgenerator.py:900
+#: ../src/orca/speechgenerator.py:889
 msgid "one tab"
 msgstr "una solapa"
 
-#: ../src/orca/speechgenerator.py:902
+#: ../src/orca/speechgenerator.py:891
 msgid "tabs"
 msgstr "solapas"
 
-#: ../src/orca/speechgenerator.py:979 ../src/orca/speechgenerator.py:983
+#: ../src/orca/speechgenerator.py:966 ../src/orca/speechgenerator.py:970
 msgid "selected"
 msgstr "seleccionado"
 
-#: ../src/orca/speechgenerator.py:987 ../src/orca/speechgenerator.py:991
+#: ../src/orca/speechgenerator.py:974 ../src/orca/speechgenerator.py:978
 msgid "not selected"
 msgstr "no seleccionado"
 
-#: ../src/orca/speechgenerator.py:1302
+#: ../src/orca/speechgenerator.py:1293
 msgid "tear off"
 msgstr "desprender"
 
-#: ../src/orca/speechgenerator.py:1363 ../src/orca/speechgenerator.py:1367
+#: ../src/orca/speechgenerator.py:1353 ../src/orca/speechgenerator.py:1357
 msgid "pressed"
 msgstr "pulsado"
 
-#: ../src/orca/speechgenerator.py:1371 ../src/orca/speechgenerator.py:1375
+#: ../src/orca/speechgenerator.py:1361 ../src/orca/speechgenerator.py:1365
 msgid "not pressed"
 msgstr "no pulsado"
 
+#~ msgid "Repeats last utterance sent to speech."
+#~ msgstr "Repite las últimas palabras mandadas al sintetizador."
+
+#~ msgid "Speaks entire document."
+#~ msgstr "Habla el documento entero"
+
+#~ msgid "Pans the braille display to the left by one character."
+#~ msgstr "Expandir el visor braille a la izquierda un carácter."
+
+#~ msgid "Pans the braille display to the right by one character."
+#~ msgstr "Mover la visual de braille a la derecha por un carácter."
+
+#~ msgid "Not a document."
+#~ msgstr "No es un documento."
+
+#~ msgid "No working GNOME Speech drivers found."
+#~ msgstr ""
+#~ "No se han encontrado los controladores de voz de Gnome Speech funcionando."
+
+#~ msgid "Create another voice?  Enter y or n: "
+#~ msgstr "¿Crear otra voz?  Responda s o n: "
+
+#~ msgid "Enter voice name: "
+#~ msgstr "Introduzca el nombre de la voz:"
+
+#~ msgid "The speech rate has been raised."
+#~ msgstr "La velocidad del habla se ha subido."
+
+#~ msgid "The speech rate has been lowered."
+#~ msgstr "La velocidad del habla se ha bajado."
