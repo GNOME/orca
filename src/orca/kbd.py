@@ -32,6 +32,7 @@ For the purposes of Orca, the main entry points to this module are:
     shutdown: unregisters all the listeners.
 """
 
+import gtk
 import time
 
 import core
@@ -150,7 +151,13 @@ def XKeysymStringToKeycode(keysym):
     """
 
     if not _keycodeCache.has_key(keysym):
-        _keycodeCache[keysym] = core.XKeysymStringToKeycode(keysym)
+        keymap = gtk.gdk.keymap_get_default()
+        entries = keymap.get_entries_for_keyval(
+            gtk.gdk.keyval_from_name(keysym))
+        if entries:
+            _keycodeCache[keysym] = entries[0][0]
+        else:
+            _keycodeCache[keysym] = 0
     return _keycodeCache[keysym]
 
 
