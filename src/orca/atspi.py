@@ -522,7 +522,6 @@ class Accessible:
         # new object away in the cache.
         #
         if self._acc:
-            self._acc.ref()
             self.__origAcc = acc
             self.valid = True
 
@@ -617,10 +616,6 @@ class Accessible:
         """
 
         if self._acc:
-            try:
-                self._acc.unref()
-            except:
-                pass
             try:
                 Accessible.deleteAccessible(self.__origAcc)
             except:
