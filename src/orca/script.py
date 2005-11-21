@@ -35,6 +35,7 @@ created in their own module.  The module defining the Script subclass
 is also required to have a 'getScript(app)' method that returns an
 instance of the Script subclass.  See default.py for an example."""
 
+import debug
 import keybindings
 import settings
 
@@ -89,7 +90,11 @@ class Script:
         self.listeners = {}
         self.braillebindings = {}
         self.keybindings = keybindings.KeyBindings()
+        debug.println(debug.LEVEL_FINE, "NEW SCRIPT: %s" % self.name)
 
+    def __del__(self):
+        debug.println(debug.LEVEL_FINE, "DELETE SCRIPT: %s" % self.name)
+        
     def processObjectEvent(self, event):
         """Processes all AT-SPI object events of interest to this
         script.  The interest in events is specified via the

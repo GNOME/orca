@@ -147,7 +147,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
 
             moduleName = settings.getScriptModuleName(app)
             module = None
-
+            
             for package in scriptPackages:
                 if len(package):
                     name = package + "." + moduleName
@@ -159,8 +159,6 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                                         globals(),
                                         locals(),
                                         [''])
-                    debug.println(debug.LEVEL_FINER,
-                                  "Using custom script module: %s" % name)
                     break
                 except:
                     debug.printException(debug.LEVEL_FINEST)
@@ -231,8 +229,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             if apps.count(app) == 0:
                 script = self._knownScripts[app]
                 self._deregisterEventListeners(script)
-                debug.println(debug.LEVEL_FINE, "DELETED SCRIPT: " + script.name)
                 del self._knownScripts[app]
+                break
 
     ########################################################################
     #                                                                      #
@@ -318,9 +316,16 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             event = atspi.Event(e)
             debug.printDetails(debug.LEVEL_FINEST, "    ", event.source)
         except CORBA.COMM_FAILURE:
-            debug.printException(debug.LEVEL_SEVERE)
-            debug.println(debug.LEVEL_SEVERE,
+            debug.printException(debug.LEVEL_FINEST)
+            debug.println(debug.LEVEL_FINEST,
                           "COMM_FAILURE above while processing event: " \
+                          + e.type)
+            atspi.Accessible.deleteAccessible(e.source)
+            return
+        except CORBA.OBJECT_NOT_EXIST:
+            debug.printException(debug.LEVEL_FINEST)
+            debug.println(debug.LEVEL_FINEST,
+                          "OBJECT_NOT_EXIST above while processing event: " \
                           + e.type)
             atspi.Accessible.deleteAccessible(e.source)
             return

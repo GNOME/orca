@@ -1028,7 +1028,7 @@ def visible(ax, ay, awidth, aheight,
         else:
             visible = leftMostRightEdge < rightMostLeftEdge
     elif (awidth == 0):
-        visible (lowestTop < highestBottom)
+        visible = (lowestTop < highestBottom)
 
     return visible
 

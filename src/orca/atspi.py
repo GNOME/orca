@@ -523,8 +523,12 @@ class Accessible:
         #
         if self._acc:
             self.__origAcc = acc
-            self.valid = True
-
+            try:
+                self._acc.ref()
+                self.valid = True
+            except:
+                self.valid = False
+                
     def getStateString(self):
         """Returns a space-delimited string composed of the given object's
         Accessible state attribute.  This is for debug purposes.
@@ -616,6 +620,10 @@ class Accessible:
         """
 
         if self._acc:
+            try:
+                self._acc.unref()
+            except:
+                pass
             try:
                 Accessible.deleteAccessible(self.__origAcc)
             except:
@@ -758,14 +766,17 @@ class Accessible:
 	    return None
 	elif (obj.role != rolenames.ROLE_APPLICATION):
 	    debug.println(debug.LEVEL_FINEST,
-			  "ERROR in Accessible.__get_app: top most parent is "
-                          "of role %s" % obj.role)
-            # [[[TODO: We'll let this fall through for now.  It seems as
-            # though we don't always end up with an application, but we
-            # do end up with *something* that is uniquely identifiable as
-            # the app.
+			  "ERROR in Accessible.__get_app: top most parent " \
+                          "(name='%s') is of role %s" % (obj.name, obj.role))
+
+            # [[[TODO: We'll let this fall through for some cases.  It
+            # seems as though we don't always end up with an
+            # application, but we do end up with *something* that is
+            # uniquely identifiable as the app.
             #
-            return None
+            if (obj.role != rolenames.ROLE_INVALID) \
+               and (obj.role != rolenames.ROLE_FRAME):
+                return None
 
         debug.println(debug.LEVEL_FINEST, "Accessible app for %s is %s" \
                       % (self.accessibleNameToString(), \
