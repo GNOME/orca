@@ -22,9 +22,8 @@ monitor both the IM input and IM output text areas at the same
 time.
 """
 
-import orca.a11y as a11y
+import orca.atspi as atspi
 import orca.braille as braille
-import orca.core as core
 import orca.default as default
 import orca.orca as orca
 import orca.rolenames as rolenames
@@ -65,7 +64,7 @@ class Script(default.Script):
         # message log, and the text entry field).  find them all - they're
         # always returned in the same order
         #
-        entries = a11y.findByRole(obj, rolenames.ROLE_TEXT)
+        entries = atspi.findByRole(obj, rolenames.ROLE_TEXT)
         self._output = entries[1]
         self._input = entries[2]
 
@@ -88,7 +87,7 @@ class Script(default.Script):
         # the text entry field).  They are always returned in the same
         # order.   
         #
-        entries = a11y.findByRole(obj, rolenames.ROLE_TEXT)
+        entries = atspi.findByRole(obj, rolenames.ROLE_TEXT)
         self._output = entries[0]
         self._input = entries[1]
 
@@ -120,7 +119,7 @@ class Script(default.Script):
         # now, but we need a more robust way of doing this sort of thing for
         # the general case
         #
-        entries = a11y.findByRole(event.source, rolenames.ROLE_TEXT)
+        entries = atspi.findByRole(event.source, rolenames.ROLE_TEXT)
     
         if len(entries) == 2:
             self._setIm(event.source)
@@ -154,7 +153,7 @@ class Script(default.Script):
         if (event.source.role != rolenames.ROLE_TEXT):
             return default.Script.onTextInserted(self, event)
 
-        if not event.source.state.count(core.Accessibility.STATE_FOCUSED):
+        if not event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
             # We always automatically go back to focus tracking mode when
             # someone sends us a message.
             #

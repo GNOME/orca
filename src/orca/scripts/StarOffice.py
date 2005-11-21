@@ -17,7 +17,7 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-import orca.core as core
+import orca.atspi as atspi
 import orca.default as default
 import orca.rolenames as rolenames
 import orca.orca as orca
@@ -103,7 +103,7 @@ class Script(default.Script):
         if event.type.endswith("armed"):
             role = event.source.role
 
-            if event.source.state.count(core.Accessibility.STATE_FOCUSED) \
+            if event.source.state.count(atspi.Accessibility.STATE_FOCUSED) \
                and ((role == rolenames.ROLE_MENU) or \
                     (role == rolenames.ROLE_MENU_ITEM) or \
                     (role == rolenames.ROLE_CHECK_MENU_ITEM) or \

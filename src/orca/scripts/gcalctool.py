@@ -17,11 +17,10 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-import orca.a11y as a11y
+import orca.atspi as atspi
 import orca.braille as braille
 import orca.default as default
 import orca.input_event as input_event
-import orca.kbd as kbd
 import orca.rolenames as rolenames
 import orca.speech as speech
 import orca.orca as orca
@@ -73,9 +72,9 @@ class Script(default.Script):
             # accessible object with a role of ROLE_EDITBAR.
             #
             #
-            d = a11y.findByRole(event.source, rolenames.ROLE_TEXT)
+            d = atspi.findByRole(event.source, rolenames.ROLE_TEXT)
             if len(d) == 0:
-                d = a11y.findByRole(event.source, rolenames.ROLE_EDITBAR)
+                d = atspi.findByRole(event.source, rolenames.ROLE_EDITBAR)
 
             # If d is an empty list at this point, we're unable to get the
             # gcalctool display. Inform the user.

@@ -29,7 +29,7 @@ technologies to just leave it alone or it will pull the trigger on the
 application.]]]
 """
 
-import orca.a11y as a11y
+import orca.atspi as atspi
 import orca.braille as braille
 import orca.default as default
 import orca.rolenames as rolenames

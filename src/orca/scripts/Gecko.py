@@ -17,7 +17,7 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-import orca.a11y as a11y
+import orca.atspi as atspi
 import orca.default as default
 import orca.rolenames as rolenames
 import orca.settings as settings
@@ -52,7 +52,7 @@ class Script(default.Script):
         # Get all the objects on the page
         #
         try:
-            sayAllObjects = a11y.getObjects(activePage)
+            sayAllObjects = atspi.getObjects(activePage)
         except:
             speech.speak(_("Reading web page failed."))
             return
