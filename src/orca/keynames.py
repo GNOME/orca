@@ -17,7 +17,7 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-"""Exposes a dictionary, keynames, that maps key events 
+"""Exposes a dictionary, keynames, that maps key events
 into localized words.
 """
 
@@ -26,4 +26,4 @@ from orca_i18n import _ # for gettext support
 keynames = {}
 keynames["Shift_L"]      = _("left shift")
 keynames["ISO_Left_Tab"] = _("left tab")
-keynames["SunF37"]       = _("F 12")  
+keynames["SunF37"]       = _("F 12")

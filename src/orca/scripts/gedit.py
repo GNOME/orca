@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004 Sun Microsystems Inc.
+# Copyright 2004-2005 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -19,7 +19,7 @@
 
 """Custom script for gedit.  [[[TODO: WDW - HACK because tickling gedit
 when it is starting can cause gedit to issue the following message:
-    
+
      (gedit:31434): GLib-GObject-WARNING **: invalid cast from `SpiAccessible' to `BonoboControlAccessible'
 
 It seems as though whenever this message is issued, gedit will hang when
@@ -49,16 +49,16 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
     """Overrides _getSpeechForFrame so as to avoid digging into the
     gedit hierarchy and tickling a bug in gedit.
     """
-    
+
     def _getSpeechForFrame(self, obj, already_focused):
         """Get the speech for a frame.  [[[TODO: WDW - This avoids
         digging into the component hierarchy so as to avoid tickling
         a bug in GEdit (see module comment above).]]]
-        
+
         Arguments:
         - obj: the frame
         - already_focused: if False, the obj just received focus
-    
+
         Returns a list of utterances to be spoken for the object.
         """
 
@@ -75,8 +75,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                              utterances)
 
         return utterances
-    
-    
+
 class Script(default.Script):
 
     def getSpeechGenerator(self):

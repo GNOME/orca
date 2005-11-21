@@ -29,7 +29,7 @@ class Script(default.Script):
 
     def __init__(self, app):
         """Creates a new script for the given application.
-        
+
         Arguments:
         - app: the application to create a script for.
         """

@@ -35,7 +35,7 @@ class Script(default.Script):
 
     def __init__(self, app):
         """Creates a new script for the given application.
-        
+
         Arguments:
         - app: the application to create a script for.
         """
@@ -43,10 +43,9 @@ class Script(default.Script):
         default.Script.__init__(self, app)
 
         self.listeners["object:property-change:accessible-name"] = \
-            self.onNameChanged 
+            self.onNameChanged
         self.listeners["object:state-changed:visible"] = \
             self.onVisibilityChanged
-
 
     def onNameChanged(self, event):
         """The status bar in metacity tells us what toplevel window will be
@@ -86,13 +85,12 @@ class Script(default.Script):
                 i = i + 1
 
         text = name
-        
+
         if not found:
             text += ". " + _("inaccessible")
 
         braille.displayMessage(text)
         speech.speak(text)
-        
 
     def onVisibilityChanged(self, event):
         """The status bar in metacity tells us what toplevel window will be
@@ -109,7 +107,6 @@ class Script(default.Script):
 
         orca.setLocusOfFocus(event, event.source)
 
-
     def onTextInserted(self, event):
         """Called whenever text is inserted into an object.
 
@@ -119,7 +116,6 @@ class Script(default.Script):
         if event.source.role != rolenames.ROLE_STATUSBAR:
             default.Script.onTextInserted(self, event)
 
-        
     def onTextDeleted(self, event):
         """Called whenever text is deleted from an object.
 
@@ -128,7 +124,6 @@ class Script(default.Script):
         """
         if event.source.role != rolenames.ROLE_STATUSBAR:
             default.Script.onTextDeleted(self, event)
-
 
     def onCaretMoved(self, event):
         """Called whenever the caret moves.

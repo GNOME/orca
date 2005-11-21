@@ -3,12 +3,11 @@ PYTHONPATH=$(top_srcdir)/src
 
 DOC_FILES = \
 	orca \
-	orca.a11y \
+	orca.atspi \
 	orca.braille \
 	orca.braillegenerator \
 	orca.brl \
 	orca.chnames \
-	orca.core \
 	orca.debug \
 	orca.default \
 	orca.eventsynthesizer \
@@ -21,6 +20,7 @@ DOC_FILES = \
 	orca.mag \
 	orca.orca \
 	orca.orca_i18n \
+	orca.presentation_manager \
 	orca.rolenames \
 	orca.script \
 	orca.settings \

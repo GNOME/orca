@@ -33,11 +33,11 @@ class Script(default.Script):
 
     def __init__(self, app):
         """Creates a new script for the given application.
-        
+
         Arguments:
         - app: the application to create a script for.
         """
-        
+
         default.Script.__init__(self, app)
 
         # [[[TODO: HACK to blank out keybindings because the
@@ -50,7 +50,6 @@ class Script(default.Script):
         self._display = None
         self._display_txt = None
 
-
     def onCaretMoved(self, event):
         """Called whenever the caret moves.
 
@@ -60,13 +59,12 @@ class Script(default.Script):
 
         # [[[TODO: richb - Need to investigate further.
         # If we subclass this method here, and simple call the same
-        # method in the parent class, then movement from one line in 
-        # a text document to the next, just results in the new line 
-        # being spoken once (compared with both the last line and the 
+        # method in the parent class, then movement from one line in
+        # a text document to the next, just results in the new line
+        # being spoken once (compared with both the last line and the
         # new line being spoken upto two times each).]]]
         #
         default.Script.onFocus(self, event)
-
 
     def onFocus(self, event):
         """Called whenever an object gets focus.
@@ -89,7 +87,6 @@ class Script(default.Script):
         else:
             default.Script.onFocus(self, event)
 
-
     def onStateChanged(self, event):
         """Called whenever an object's state changes.  Currently, the
         state changes for non-focused objects are ignored.
@@ -98,8 +95,8 @@ class Script(default.Script):
         - event: the Event
         """
 
-        # If this is an "armed" object-state-changed event for a menu 
-        # or one of the various types of menu item, and this object has 
+        # If this is an "armed" object-state-changed event for a menu
+        # or one of the various types of menu item, and this object has
         # the focus, then set the locus of focus. Otherwise pass the
         # event onto the parent class to be processed.
 

@@ -41,7 +41,7 @@ import settings
 class Script:
     """The specific focus tracking scripts for applications.
     """
-    
+
     def __init__(self, app):
         """Creates a script for the given application, if necessary.
         This method should not be called by anyone except the
@@ -50,7 +50,7 @@ class Script:
 
           1) Set the app field of the instance to the app object that
              was passed in.  It is OK to have a None app.
-             
+
           2) Set the name field of the instance to a meaningful name
              (e.g., the name of the app if app is not None).  This
              name field is useful primarily for debugging purposes.
@@ -72,25 +72,24 @@ class Script:
              keybindings.py).
 
         See default.py for an example.
-        
+
         Arguments:
         - app: the Python Accessible application to create a script for
         """
 
         self.app = app
-        
+
         if app:
             self.name = self.app.name
         else:
             self.name = "default"
 
         self.name += " (module=" + self.__module__ + ")"
-        
+
         self.listeners = {}
         self.braillebindings = {}
         self.keybindings = keybindings.KeyBindings()
-        
-        
+
     def processObjectEvent(self, event):
         """Processes all AT-SPI object events of interest to this
         script.  The interest in events is specified via the
@@ -123,7 +122,6 @@ class Script:
             if event.type.startswith(key):
                 self.listeners[key](event)
 
-            
     def processKeyboardEvent(self, keyboardEvent):
         """Processes the given keyboard event. This method is called
         synchronously from the AT-SPI registry and should be
@@ -137,10 +135,10 @@ class Script:
         NOTE: there is latent, but unsupported, logic for allowing
         the user's user-settings.py file to extend and/or override
         the keybindings for a script.
-        
+
         Arguments:
         - keyboardEvent: an instance of input_event.KeyboardEvent
-        
+
         Returns True if the event was consumed; otherwise False
         """
 
@@ -149,7 +147,7 @@ class Script:
         # instance if they wish.
         #
         keyboardEvent.script = self
-        
+
         # We'll let the user keybindings take precedence.  First, we'll
         # check to see if they have keybindings specific for the particular
         # application, then we'll check to see if they have any default
@@ -174,11 +172,10 @@ class Script:
             consumed = self.keybindings.consumeKeyboardEvent(self,
                                                              keyboardEvent)
         return consumed
-        
 
     def processBrailleEvent(self, brailleEvent):
         """Called whenever a key is pressed on the Braille display.
-    
+
         This method will primarily use the braillebindings field of
         this script instance see if this script has an interest in the
         event.
@@ -186,10 +183,10 @@ class Script:
         NOTE: there is latent, but unsupported, logic for allowing
         the user's user-settings.py file to extend and/or override
         the braillebindings for a script.
-        
+
         Arguments:
         - brailleEvent: an instance of input_event.BrailleEvent
-        
+
         Returns True if the event was consumed; otherwise False
         """
 
@@ -210,7 +207,7 @@ class Script:
         consumed = False
         user_bindings = None
         command = brailleEvent.event
-        
+
         user_bindings_map = settings.getSetting(settings.BRAILLE_BINDINGS_MAP,
                                                 {})
         if user_bindings_map.has_key(self.name):
@@ -221,23 +218,22 @@ class Script:
         if user_bindings and user_bindings.has_key(command):
             handler = user_bindings[command]
             consumed = handler.processInputEvent(self, brailleEvent)
-                
+
         if (not consumed) and self.braillebindings.has_key(command):
             handler = self.braillebindings[command]
             consumed = handler.processInputEvent(self, brailleEvent)
 
         return consumed
 
-
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
 
         The primary purpose of this method is to present locus of focus
         information to the user.
-        
+
         NOTE: scripts should not call this method directly.  Instead,
         a script should call orca.setLocusOfFocus, which will eventually
-        result in this method being called.  
+        result in this method being called.
 
         Arguments:
         - event: if not None, the Event that caused the change
@@ -245,7 +241,6 @@ class Script:
         - newLocusOfFocus: Accessible that is the new locus of focus
         """
         pass
-
 
     def visualAppearanceChanged(self, event, obj):
         """Called when the visual appearance of an object changes.
@@ -258,7 +253,7 @@ class Script:
 
         The primary purpose of this method is to present the changed
         information to the user.
-        
+
         NOTE: scripts should not call this method directly.  Instead,
         a script should call orca.visualAppearanceChanged, which will
         eventually result in this method being called.

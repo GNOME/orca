@@ -37,16 +37,16 @@ def getSpeechServerFactories():
     of modules that implement the getSpeechServers method, which
     returns a list of speechserver.SpeechServer instances.
     """
-    
+
     factories = []
-    
+
     moduleNames = settings.getSetting(settings.SPEECH_FACTORY_MODULES, [])
 
     for moduleName in moduleNames:
         try:
-            module =  __import__(moduleName, 
-                                 globals(), 
-                                 locals(), 
+            module =  __import__(moduleName,
+                                 globals(),
+                                 locals(),
                                  [''])
             factories.append(module)
         except:
@@ -55,15 +55,15 @@ def getSpeechServerFactories():
     return factories
 
 def init():
-    
+
     global __speechserver
 
     if __speechserver:
         return
 
     #pdb.set_trace()
-    
-    # First, find the factory module to use.  We will 
+
+    # First, find the factory module to use.  We will
     # allow the user to give their own factory module,
     # thus we look first in the global name space, and
     # then we look in the orca namespace.
@@ -75,16 +75,16 @@ def init():
 
     factory = None
     try:
-        factory =  __import__(moduleName, 
-                              globals(), 
-                              locals(), 
+        factory =  __import__(moduleName,
+                              globals(),
+                              locals(),
                               [''])
     except:
         try:
             moduleName = moduleName.replace("orca.","",1)
-            factory =  __import__(moduleName, 
-                                  globals(), 
-                                  locals(), 
+            factory =  __import__(moduleName,
+                                  globals(),
+                                  locals(),
                                   [''])
         except:
             debug.printException(debug.LEVEL_SEVERE)
@@ -96,7 +96,6 @@ def init():
         __speechserver = factory.SpeechServer.getSpeechServer(speechServerInfo)
     else:
         __speechserver = factory.SpeechServer.getSpeechServer()
-        
 
 def __resolveACSS(acss=None):
     if acss:
@@ -142,7 +141,7 @@ def testNoSettingsInit():
     speak("this is quiet",  ACSS({'gain' : 2}))
     speak("this is loud",   ACSS({'gain' : 10}))
     speak("this is normal")
-    
+
 def test():
     import speechserver
     factories = getSpeechServerFactories()

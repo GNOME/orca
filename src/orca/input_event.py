@@ -37,7 +37,7 @@ MOUSE_MOTION_EVENT = "mouse:motion"
 SPEECH_EVENT       = "speech"
 
 class InputEvent:
-    
+
     def __init__(self, type):
         """Creates a new input event of the given type.
 
@@ -48,7 +48,6 @@ class InputEvent:
 
         self.type = type
 
-
 class KeyboardEvent(InputEvent):
 
     def __init__(self, event):
@@ -57,7 +56,7 @@ class KeyboardEvent(InputEvent):
         Arguments:
         - event: the AT-SPI keyboard event
         """
-        
+
         InputEvent.__init__(self, KEYBOARD_EVENT)
         self.type = event.type
         self.hw_code = event.hw_code
@@ -65,7 +64,6 @@ class KeyboardEvent(InputEvent):
         self.event_string = event.event_string
         self.is_text = event.is_text
         self.time = time.time()
-
 
 class BrailleEvent(InputEvent):
 
@@ -78,7 +76,6 @@ class BrailleEvent(InputEvent):
         InputEvent.__init__(self, BRAILLE_EVENT)
         self.event = event
 
-        
 class MouseButtonEvent(InputEvent):
 
     def __init__(self, event):
@@ -87,7 +84,6 @@ class MouseButtonEvent(InputEvent):
         InputEvent.__init__(self, MOUSE_BUTTON_EVENT)
         self.event = event
 
-        
 class MouseMotionEvent(InputEvent):
 
     def __init__(self, event):
@@ -96,7 +92,6 @@ class MouseMotionEvent(InputEvent):
         InputEvent.__init__(self, MOUSE_MOTION_EVENT)
         self.event = event
 
-                
 class SpeechEvent(InputEvent):
 
     def __init__(self, event):
@@ -105,7 +100,6 @@ class SpeechEvent(InputEvent):
         InputEvent.__init__(self, SPEECH_EVENT)
         self.event = event
 
-        
 class InputEventHandler:
 
     def __init__(self, function, description):
@@ -121,10 +115,9 @@ class InputEventHandler:
         - description: a localized string describing what this InputEvent
                        does
         """
-        
+
         self._function = function
         self._description = description
-
 
     def processInputEvent(self, script, inputEvent):
         """Processes an input event.  If settings.learnModeEnabled is True,
@@ -135,15 +128,15 @@ class InputEventHandler:
 
         This function is expected to return True if it consumes the
         event; otherwise it is expected to return False.
-        
+
         Arguments:
         - script:     the script (if any) associated with this event
         - inputEvent: the input event to pass to the function bound
                       to this InputEventHandler instance.
         """
-        
+
         consumed = False
-        
+
         if settings.getSetting(settings.LEARN_MODE_ENABLED, False):
             if self._description:
                 braille.displayMessage(self._description)

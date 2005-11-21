@@ -140,7 +140,7 @@ class SpeechServer(speechserver.SpeechServer):
         cmd = '{ ' + self._server + '; } 2>&1'
         self._output = os.popen(cmd, "w", 1)
         self._settings ={}
-        if initial is not None:
+        if initial:
             self._settings.update(initial)
             self.configure(self._settings)
 
@@ -178,7 +178,7 @@ class SpeechServer(speechserver.SpeechServer):
     def queueText(self, text="", acss=None):
         """Queue text to be spoken.
         Output is produced by next call to say() or speak()."""
-        if acss is not None:
+        if acss:
             code =self.getvoice(acss)
             self._output.write("q {%s %s %s}\n" %(code[0], text,
         code[1]))
@@ -199,7 +199,7 @@ class SpeechServer(speechserver.SpeechServer):
 
     def speakUtterances(self, list, acss=None):
         """Speak list of utterances."""
-        if acss is not None:
+        if acss:
             code =self.getvoice(acss)
             for t in list:
                 self._output.write("q { %s %s %s }\n" %(code[0], str(t), code[1]))
@@ -210,7 +210,7 @@ class SpeechServer(speechserver.SpeechServer):
     
     def speak(self, text="", acss=None):
         """Speaks specified text. All queued text is spoken immediately."""
-        if acss is not None:
+        if acss:
             code =self.getvoice(acss)
             self._output.write("q {%s %s %s}\nd\n" %(code[0], text, code[1]))
         else:

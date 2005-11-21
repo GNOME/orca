@@ -68,14 +68,13 @@ class Script(default.Script):
         #
         speech.speak(activePage.name)
 
-        
     # This function is called whenever an object within Mozilla receives
     # focus
     def onFocus(self, event):
 
         if event.source.role != rolenames.ROLE_PANEL:
             return default.Script.onFocus(self, event)
-    
+
         # If it's not a panel, do the default
         #
         default.Script.onFocus(self, event)
@@ -87,7 +86,6 @@ class Script(default.Script):
 
         self.activePage = event.source
 
-
     # This function is called when a hyperlink is selected - This happens
     # when a link is navigated to using tab/shift-tab
     #
@@ -98,7 +96,6 @@ class Script(default.Script):
         else:
             text = txt.getText(0, -1)
             speech.speak(text, speech.hyperlinkACSS)
-
 
 # The Mozilla version of say all reads text from multiple objects
 
@@ -197,7 +194,7 @@ def presentNextHypertext():
                     break
                 start = start+position
                 end = start+len(name)
-    
+
                 # If there is text between where we are now and the beginning of the link, read it first
 
                 if start != position:
@@ -221,7 +218,6 @@ def presentNextHypertext():
         return False
     else:
         return True
-    
 
 # This function is called by say all mode when another chunk of text
 # is needed
@@ -238,5 +234,4 @@ def getChunk():
 
 def sayAllDone(position):
     pass
-
 

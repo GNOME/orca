@@ -187,7 +187,6 @@ _update_map(_table, ('female', 'pitch-range'),
 # and the quickness --a parameter that controls whether the final
 # frequency targets are completely achieved in the phonetic transitions.
 
-
 _male_stress =[
     (0, 0, 0, 0, 0),
     (1, 3, 6, 20, 3),
@@ -217,7 +216,6 @@ _man_stress = [
     (9, 100, 100, 100, 40)
     ]
 
-
 _update_map(_table, ('man', 'stress'),
             " hr %s sr %s qu %s bf %s ", _man_stress)
 
@@ -243,7 +241,6 @@ _update_map(_table, ('female', 'stress'),
 # Smoothness and richness vary inversely.
 # a  maximally smooth voice produces a quieter effect
 # a rich voice is "bright" in contrast.
-
 
 _male_richness = [
     (0, 0, 100),
@@ -301,7 +298,7 @@ def getvoice(acss):
     specified  ACSS setting.
     Synthesizer code is a tupple of the form (open,close)
     where open sets the voice, and close resets it."""
-    
+
     name=acss.name()
     if name in _defined_voices: return _defined_voices[name]
     _defined_voices[name] =acss2voice(acss)

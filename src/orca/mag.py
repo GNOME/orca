@@ -22,11 +22,12 @@ in development.  One might even say it is pre-prototype.  Magnification
 has also been disabled for now - logged as bugzilla bug 319643.]]]
 """
 
-import core
-from core import bonobo
+import atspi
 
+import bonobo
 import CORBA
 import GNOME
+
 import time
 
 # If True, this module has been initialized.
@@ -70,7 +71,6 @@ _zoomer = None
 #
 _lastMouseEventTime = time.time()
 
-
 def magnifyAccessible(acc):
     """Sets the region of interest to the upper left of the given
     accessible, if it implements the Component interface.  Otherwise,
@@ -84,7 +84,7 @@ def magnifyAccessible(acc):
         return
 
     extents = acc.extents
-    if extents is None:
+    if not extents:
         return
 
     # Avoid jerking the display around if the mouse is what ended up causing
@@ -95,7 +95,7 @@ def magnifyAccessible(acc):
     currentTime = time.time()
     if (currentTime - _lastMouseEventTime) < 0.2: # 200 milliseconds
         return
-    
+
     # Determine if the accessible is partially to the left, right,
     # above, or below the current region of interest (ROI).
     #
@@ -111,7 +111,7 @@ def magnifyAccessible(acc):
 
     if visibleX and visibleY:
         return
-    
+
     # The algorithm is devised to move the ROI as little as possible, yet
     # favor the top left side of the object [[[TODO: WDW - the left/right
     # top/bottom favoring should probably depend upon the locale.  Also,
@@ -124,10 +124,10 @@ def magnifyAccessible(acc):
     # the two.]]]
     #
     x1 = _roi.x1
-    x2 = _roi.x2 
+    x2 = _roi.x2
     y1 = _roi.y1
     y2 = _roi.y2
-    
+
     if left:
         x1 = extents.x
         x2 = x1 + _roiWidth
@@ -138,7 +138,7 @@ def magnifyAccessible(acc):
         else:
             x2 = extents.x + extents.width
             x1 = x2 - _roiWidth
-        
+
     if above:
         y1 = extents.y
         y2 = y1 + _roiHeight
@@ -149,10 +149,9 @@ def magnifyAccessible(acc):
         else:
             y2 = extents.y + extents.height
             y1 = y2 - _roiHeight
-        
+
     _setROI(GNOME.Magnifier.RectBounds(x1, y1, x2, y2))
 
-    
 def _setROICenter(x, y):
     """Centers the region of interest around the given point.
 
@@ -168,7 +167,7 @@ def _setROICenter(x, y):
         x = _minROIX
     elif x > _maxROIX:
         x = _maxROIX
-        
+
     if y < _minROIY:
         y = _minROIY
     elif y > _maxROIY:
@@ -182,21 +181,19 @@ def _setROICenter(x, y):
 
     _setROI(GNOME.Magnifier.RectBounds(x1, y1, x2, y2))
 
-
 def _setROI(rect):
     """Sets the region of interest.
 
     Arguments:
     - rect: A GNOME.Magnifier.RectBounds object.
     """
-    
+
     global _roi
 
     _roi = rect
     _zoomer.setROI(_roi)
     _zoomer.markDirty(_roi)  # [[[TODO: WDW - for some reason, this seems
                              # necessary.]]]
-
 
 # Used for tracking the pointer.
 #
@@ -205,21 +202,20 @@ def onMouseEvent(e):
     Arguments:
     - e: at-spi event from the at-api registry
     """
-    
+
     global _lastMouseEventTime
 
     _lastMouseEventTime = time.time()
     _setROICenter(e.detail1, e.detail2)
 
-    
 def init():
     """Initializes the magnifier, bringing the magnifier up on the
     display.
-    
+
     Returns True if the initialization procedure was run or False if this
     module has already been initialized.
     """
-    
+
     global _initialized
     global _magnifier
     global _zoomer
@@ -230,7 +226,7 @@ def init():
     global _minROIY
     global _maxROIX
     global _maxROIY
-    
+
     if _initialized:
         return False
 
@@ -254,7 +250,7 @@ def init():
 
     #print
     #print "ZOOMER PROPERTIES:"
-    #zoomers = _magnifier.getZoomRegions ()    
+    #zoomers = _magnifier.getZoomRegions ()
     #for zoomer in zoomers:
     #    print zoomer
     #    pbag = zoomer.getProperties ()
@@ -293,8 +289,8 @@ def init():
     #zoomer.moveResize(GNOME.Magnifier.RectBounds(256,256,600,600))
     #zoomer.setMagFactor(1.0, 1.0)
 
-    core.registerEventListener(onMouseEvent, "mouse:abs")
-    
+    atspi.Registry().registerEventListener(onMouseEvent, "mouse:abs")
+
     _initialized = True
 
     # Zoom to the upper left corner of the display for now.
@@ -303,13 +299,12 @@ def init():
 
     return True
 
-
 def shutdown():
     """Shuts down the magnifier module.
     Returns True if the shutdown procedure was run or False if this
     module has not been initialized.
     """
-    
+
     global _initialized
     global _magnifier
 
@@ -319,7 +314,7 @@ def shutdown():
     _magnifier.clearAllZoomRegions()
     _magnifier.dispose()
     _magnifier = None
-    
+
     _initialized = False
-    
+
     return True

@@ -34,22 +34,21 @@ class VoiceFamily(dict):
 
     MALE   = "male"
     FEMALE = "female"
-    
+
     settings = {
         NAME   : None,
         GENDER : None,
         LOCALE : None
     }
 
-    def __init__(self,props):
+    def __init__(self, props):
         """Create and initialize VoiceFamily."""
         self.update(VoiceFamily.settings)
-        if props is not None:
+        if props:
             self.update(props)
-            
 
 class SpeechServer:
-    
+
     """Provides speech server abstraction."""
 
     def getFactoryName():
@@ -61,7 +60,7 @@ class SpeechServer:
     def getSpeechServerInfos():
         """Enumerate available speech servers.
 
-        Returns a list of [name, id] values identifying the available 
+        Returns a list of [name, id] values identifying the available
         speech servers.  The name is a human consumable string and the
 	id is an object that can be used to create a speech server
 	via the getSpeechServer method.
@@ -89,18 +88,18 @@ class SpeechServer:
         """Returns a list of VoiceFamily instances representing all
         voice families known by the speech server."""
         pass
-    
+
     def queueText(self, text="", acss=None):
         """Adds the text to the queue.
 
         Arguments:
         - text: text to be spoken
-        - acss: acss.ACSS instance; if None, 
+        - acss: acss.ACSS instance; if None,
 		the default voice settings will be used.
 		Otherwise, the acss settings will be
 		used to augment/override the default
 		voice settings.
-                    
+
         Output is produced by the next call to speak.
         """
         pass
@@ -118,13 +117,13 @@ class SpeechServer:
         Output is produced by the next call to speak.
         """
         pass
-    
+
     def speakCharacter(self, character, acss=None):
         """Speaks a single character immediately.
 
         Arguments:
         - character: text to be spoken
-        - acss:      acss.ACSS instance; if None, 
+        - acss:      acss.ACSS instance; if None,
 		     the default voice settings will be used.
 		     Otherwise, the acss settings will be
 		     used to augment/override the default
@@ -137,21 +136,21 @@ class SpeechServer:
 
         Arguments:
         - list: list of strings to be spoken
-        - acss: acss.ACSS instance; if None, 
+        - acss: acss.ACSS instance; if None,
 		the default voice settings will be used.
 		Otherwise, the acss settings will be
 		used to augment/override the default
 		voice settings.
         """
         pass
-    
+
     def speak(self, text=None, acss=None):
         """Speaks all queued text immediately.  If text is not None,
         it is added to the queue before speaking.
 
         Arguments:
         - text: text to be spoken
-        - acss: acss.ACSS instance; if None, 
+        - acss: acss.ACSS instance; if None,
 		the default voice settings will be used.
 		Otherwise, the acss settings will be
 		used to augment/override the default
@@ -163,12 +162,12 @@ class SpeechServer:
         """Increases the speech rate.
         """
         pass
-    
+
     def decreaseSpeechRate(self, step=5):
         """Decreases the speech rate.
         """
         pass
-    
+
     def stop(self):
         """Stops ongoing speech and flushes the queue."""
         pass

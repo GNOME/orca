@@ -112,7 +112,6 @@ ROLE_AUTOCOMPLETE        = "autocomplete"
 ROLE_EDITBAR             = "edit bar"
 ROLE_EMBEDDED            = "embedded component"
 
-
 class Rolename:
     """Provides localized forms of rolenames for speech and Braille.
     """
@@ -131,7 +130,6 @@ class Rolename:
         self.brailleShort = brailleShort
         self.brailleLong = brailleLong
         self.speech = speech
-
 
 # [[[TODO: WDW - the AT-SPI also has getLocalizedRoleName, which might a
 # more appropriate thing to use, as it covers the situation where an app
@@ -530,7 +528,6 @@ rolenames[ROLE_EMBEDDED] = Rolename(ROLE_EMBEDDED,
                                     _("EmbeddedComponent"),
                                     _("embedded component"))
 
-
 # Extra stuff from Gnopernicus.
 #
 #rolenames[ROLE_EXTENDED] = Rolename(ROLE_EXTENDED,
@@ -573,19 +570,18 @@ rolenames[ROLE_EMBEDDED] = Rolename(ROLE_EMBEDDED,
 #                                     _("TREE ITEM"),
 #                                     _("tree item"))
 
-
 def getSpeechForRoleName(obj):
     """Returns the localized name of the given Accessible object; the name is
     suitable to be spoken.  If a localized name cannot be discovered, this
     will return the string as defined by the at-spi.
-    
+
     Arguments:
     - obj: an Accessible object
 
     Returns a string containing the localized name of the object suitable
     to be spoken.
     """
-    
+
     name = obj.role
     if rolenames.has_key(name):
         return rolenames[name].speech
@@ -593,19 +589,18 @@ def getSpeechForRoleName(obj):
         debug.println(debug.LEVEL_WARNING, "No rolename for %s" % name)
         return name
 
-
 def getShortBrailleForRoleName(obj):
     """Returns the localized name of the given Accessible object; the name is
     a short string suitable for a Braille display.  If a localized name cannot
     be discovered, this will return the string as defined by the at-spi.
-    
+
     Arguments:
     - obj: an Accessible object
 
     Returns a short string containing the localized name of the object
     suitable for a Braille display.
     """
-    
+
     name = obj.role
     if rolenames.has_key(name):
         return rolenames[name].brailleShort
@@ -613,19 +608,18 @@ def getShortBrailleForRoleName(obj):
         debug.println(debug.LEVEL_WARNING, "No rolename for %s" % name)
         return name
 
-
 def getLongBrailleForRoleName(obj):
     """Returns the localized name of the given Accessible object; the name is
     a long string suitable for a Braille display.  If a localized name cannot
     be discovered, this will return the string as defined by the at-spi.
-    
+
     Arguments:
     - obj: an Accessible object
 
     Returns a string containing the localized name of the object suitable for
     a Braille display.
     """
-    
+
     name = obj.role
     if rolenames.has_key(name):
         return rolenames[name].brailleLong
@@ -633,12 +627,11 @@ def getLongBrailleForRoleName(obj):
         debug.println(debug.LEVEL_WARNING, "No rolename for %s" % name)
         return name
 
-
 def getBrailleForRoleName(obj):
     """Returns the localized name of the given Accessible object; the name is
     a string suitable for a Braille display.  If a localized name cannot
     be discovered, this will return the string as defined by the at-spi.
-    
+
     Arguments:
     - obj: an Accessible object
 
@@ -646,7 +639,7 @@ def getBrailleForRoleName(obj):
     a Braille display.  The actual string will depend upon the value of
     the 'brailleRolenameStyle' setting.
     """
-    
+
     brailleRolenameStyle = settings.getSetting(
         settings.BRAILLE_ROLENAME_STYLE,
         settings.BRAILLE_ROLENAME_STYLE_LONG)
@@ -656,12 +649,11 @@ def getBrailleForRoleName(obj):
     else:
         return getLongBrailleForRoleName(obj)
 
-
 def getRoleName(obj):
     """Returns the localized name of the given Accessible object.
     If a localized name cannot be discovered, this will return
     the string as defined by the at-spi.
-    
+
     Arguments:
     - obj: an Accessible object
 

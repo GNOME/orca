@@ -20,13 +20,11 @@
 import gtk
 import os, signal, sys
 
-import a11y
+import atspi
 import braille
-import core
 import debug
 import focus_tracking_presenter
 import hierarchical_presenter
-import kbd
 import keynames
 import keybindings
 #import mag - [[[TODO: WDW - disable until I can figure out how to
@@ -41,13 +39,10 @@ from input_event import InputEventHandler
 
 from orca_i18n import _           # for gettext support
 
-# If True, this module has been initialized.
+# The InputEvent instance representing the last input event.  This is
+# set each time a keyboard or braille event is received.
 #
-_initialized = False
-
-# Keybindings that Orca itself cares about.
-#
-_keybindings = None
+lastInputEvent = None
 
 # A new modifier to use (currently bound to the "Insert" key) to represent
 # special Orca key sequences.
@@ -66,14 +61,13 @@ MODIFIER_ORCA = 8
 
 # The known presentation managers.
 #
-_PRESENTATION_MANAGERS = [focus_tracking_presenter,
-                          hierarchical_presenter]
+_PRESENTATION_MANAGERS = [focus_tracking_presenter.FocusTrackingPresenter(),
+                          hierarchical_presenter.HierarchicalPresenter()]
 
 # The current presentation manager, which is an index into the
 # _PRESENTATION_MANAGERS list.
 #
 _currentPresentationManager = -1
-
 
 def _switchToPresentationManager(index):
     """Switches to the given presentation manager.
@@ -83,7 +77,7 @@ def _switchToPresentationManager(index):
     """
 
     global _currentPresentationManager
-    
+
     if _currentPresentationManager >= 0:
         _PRESENTATION_MANAGERS[_currentPresentationManager].deactivate()
 
@@ -95,9 +89,8 @@ def _switchToPresentationManager(index):
         _currentPresentationManager = 0
     elif _currentPresentationManager < 0:
         _currentPresentationManager = len(_PRESENTATION_MANAGERS) - 1
-        
-    _PRESENTATION_MANAGERS[_currentPresentationManager].activate()
 
+    _PRESENTATION_MANAGERS[_currentPresentationManager].activate()
 
 def _switchToNextPresentationManager(script=None, inputEvent=None):
     """Switches to the next presentation manager.
@@ -111,7 +104,6 @@ def _switchToNextPresentationManager(script=None, inputEvent=None):
     _switchToPresentationManager(_currentPresentationManager + 1)
     return True
 
-    
 ########################################################################
 #                                                                      #
 # METHODS TO HANDLE APPLICATION LIST AND FOCUSED OBJECTS               #
@@ -126,31 +118,6 @@ apps = []
 # The Accessible that has visual focus.
 #
 locusOfFocus = None
-
-def _buildAppList():
-    """Retrieves the list of currently running apps for the desktop and
-    populates the apps list attribute with these apps.
-    """
-    
-    global apps
-
-    debug.println(debug.LEVEL_FINEST,
-                  "orca._buildAppList...")
-
-    apps = []
-
-    for i in range(0, core.desktop.childCount):
-        acc = core.desktop.getChildAtIndex(i)
-        try:
-            app = a11y.makeAccessible(acc)
-            if not app is None:
-                apps.insert(0, app)
-        except:
-            debug.printException(debug.LEVEL_SEVERE)
-
-    debug.println(debug.LEVEL_FINEST,
-                  "...orca._buildAppList")
-
 
 def setLocusOfFocus(event, obj, notifyPresentationManager=True):
     """Sets the locus of focus (i.e., the object with visual focus) and
@@ -177,7 +144,7 @@ def setLocusOfFocus(event, obj, notifyPresentationManager=True):
 
     if locusOfFocus:
         appname = ""
-        if locusOfFocus.app is None:
+        if not locusOfFocus.app:
             appname = "None"
         else:
             appname = "'" + locusOfFocus.app.name + "'"
@@ -185,7 +152,7 @@ def setLocusOfFocus(event, obj, notifyPresentationManager=True):
         debug.println(debug.LEVEL_FINE,
                       "LOCUS OF FOCUS: app=%s name='%s' role='%s'" \
                       % (appname, locusOfFocus.name, locusOfFocus.role))
-                          
+
         if event:
             debug.println(debug.LEVEL_FINE,
                           "                event='%s'" % event.type)
@@ -199,12 +166,10 @@ def setLocusOfFocus(event, obj, notifyPresentationManager=True):
         else:
             debug.println(debug.LEVEL_FINE,
                           "LOCUS OF FOCUS: None event=None")
-            
 
     if notifyPresentationManager and _currentPresentationManager >= 0:
         _PRESENTATION_MANAGERS[_currentPresentationManager].\
             locusOfFocusChanged(event, oldLocusOfFocus, locusOfFocus)
-
 
 def visualAppearanceChanged(event, obj):
     """Called (typically by scripts) when the visual appearance of an object
@@ -213,17 +178,16 @@ def visualAppearanceChanged(event, obj):
     solely because of focus -- setLocusOfFocus is used for that.  Instead, it
     is intended mostly for objects whose notional 'value' has changed, such as
     a checkbox changing state, a progress bar advancing, a slider moving, text
-    inserted, caret moved, etc.    
+    inserted, caret moved, etc.
 
     Arguments:
     - event: if not None, the Event that caused this to happen
     - obj: the Accessible whose visual appearance changed.
     """
-    
+
     if _currentPresentationManager >= 0:
         _PRESENTATION_MANAGERS[_currentPresentationManager].\
             visualAppearanceChanged(event, obj)
-
 
 def isInActiveApp(obj):
     """Returns True if the given object is from the same application that
@@ -238,7 +202,6 @@ def isInActiveApp(obj):
     else:
         return locusOfFocus and (locusOfFocus.app == obj.app)
 
-    
 def findActiveWindow():
     """Traverses the list of known apps looking for one who has an
     immediate child (i.e., a window) whose state includes the active state.
@@ -246,187 +209,69 @@ def findActiveWindow():
     Returns the Python Accessible of the window that's active or None if
     no windows are active.
     """
-    
+
+    window = None
     for app in apps:
         for i in range(0, app.childCount):
             state = app.child(i).state
-            if state.count(core.Accessibility.STATE_ACTIVE) > 0:
-                return app.child(i)
+            if state.count(atspi.Accessibility.STATE_ACTIVE) > 0:
+                window = app.child(i)
+		break
 
-    return None
+    return window
 
+def _buildAppList(registry):
+    """Retrieves the list of currently running apps for the desktop and
+    populates the apps list attribute with these apps.
+    """
 
-def onChildrenChanged(e):
+    global apps
+
+    debug.println(debug.LEVEL_FINEST,
+                  "orca._buildAppList...")
+
+    apps = []
+
+    for i in range(0, registry.desktop.childCount):
+        acc = registry.desktop.getChildAtIndex(i)
+        try:
+            app = atspi.Accessible.makeAccessible(acc)
+            if app:
+                apps.insert(0, app)
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
+
+    debug.println(debug.LEVEL_FINEST,
+                  "...orca._buildAppList")
+
+def _onChildrenChanged(e):
     """Tracks children-changed events on the desktop to determine when
     apps start and stop.
 
     Arguments:
     - e: at-spi event from the at-api registry
     """
-    
-    if e.source == core.desktop:
+
+    registry = atspi.Registry()
+    if e.source == registry.desktop:
 
         # If the desktop is empty, the user has logged out-- shutdown Orca
         #
         try:
-            if core.desktop.childCount == 0:
+            if registry.desktop.childCount == 0:
                 speech.speak(_("User logged out - shutting down."))
                 shutdown()
                 return
         except: # could be a CORBA.COMM_FAILURE
             debug.printException(debug.LEVEL_FINEST)
             shutdown()
-            return            
+            return
 
         # [[[TODO: WDW - Note the call to _buildAppList - that will update the
         # apps[] list.  If this logic is changed in the future, the apps list
         # will most likely needed to be updated here.]]]
         #
-        _buildAppList()
-
-
-########################################################################
-#                                                                      #
-# METHODS FOR PRE-PROCESSING AND MASSAGING BRAILLE EVENTS.             #
-#                                                                      #
-########################################################################
-    
-def processBrailleEvent(command):
-    """Called whenever a  key is pressed on the Braille display.
-    
-    Arguments:
-    - command: the BrlAPI command for the key that was pressed.
-
-    Returns True if the event was consumed; otherwise False
-    """
-
-    global lastInputEvent
-    
-    # [[[TODO: WDW - probably should add braille bindings to this module.]]]
-    
-    consumed = False
-
-    # Braille key presses always interrupt speech.
-    #
-    speech.stop()
-
-    event = BrailleEvent(command)
-    lastInputEvent = event
-    
-    try:
-        consumed = _PRESENTATION_MANAGERS[_currentPresentationManager].\
-                   processBrailleEvent(event)
-    except:
-        debug.printException(debug.LEVEL_SEVERE)
-
-    if (not consumed) and settings.getSetting(settings.LEARN_MODE_ENABLED,
-                                              False):
-        consumed = True
-
-    return consumed
-
-
-########################################################################
-#                                                                      #
-# DEBUG support.                                                       #
-#                                                                      #
-########################################################################
-    
-def printApps(script=None, inputEvent=None):
-    """Prints a list of all applications to stdout
-
-    Arguments:
-    - inputEvent: the InputEvent instance that caused this to be called.
-
-    Returns True indicating the event should be consumed.
-    """
-
-    level = debug.LEVEL_OFF
-    
-    debug.println(level, "There are %d Accessible applications" % len(apps))
-    for app in apps:
-        debug.printDetails(level, "  App: ", app, False)
-        for i in range(0, app.childCount):
-            child = app.child(i)
-            debug.printDetails(level, "    Window: ", child, False)
-            if child.parent != app:
-                debug.println(level,
-                              "      WARNING: child's parent is not app!!!")
-
-    return True
-
-
-def printAccessibleTree(level, indent, root):
-    debug.printDetails(level, indent, root, False)
-    for i in range(0, root.childCount):
-        child = root.child(i)
-        if child == root:
-            debug.println(level,
-                          indent + "  " + "WARNING CHILD == PARENT!!!")
-        elif child is None:
-            debug.println(level,
-                          indent + "  " + "WARNING CHILD IS NONE!!!")
-        elif child.parent != root:
-            debug.println(level,
-                          indent + "  " + "WARNING CHILD.PARENT != PARENT!!!")
-        else:
-            printAccessibleTree(level, indent + "  ", child)
-
-    
-def printAccessiblePaintedTree(level, indent, root):
-    debug.printDetails(level, indent, root, False)
-
-    extents = root.extents
-    if extents:
-        debug.println(level, \
-                      indent + " extents: (x=%d y=%d w=%d h=%d)" \
-                      % (extents.x, extents.y, extents.width, extents.height))
-        
-    #if root.text:
-    #    extents = root.text.getCharacterExtents(0,0)
-    #    debug.println(level, \
-    #                  indent + " text extents: (x=%d y=%d w=%d h=%d)" \
-    #                  % (extents[0], extents[1], extents[2], extents[3]))
-
-    for i in range(0, root.childCount):
-        child = root.child(i)
-        if child == root:
-            debug.println(level,
-                          indent + "  " + "WARNING CHILD == PARENT!!!")
-        elif child is None:
-            debug.println(level,
-                          indent + "  " + "WARNING CHILD IS NONE!!!")
-        elif child.parent != root:
-            debug.println(level,
-                          indent + "  " + "WARNING CHILD.PARENT != PARENT!!!")
-        elif child.state.count(core.Accessibility.STATE_SHOWING):    
-            printAccessiblePaintedTree(level, indent + "  ", child)
-
-
-def printActiveApp(script=None, inputEvent=None):
-    """Prints the active application.
-
-    Arguments:
-    - inputEvent: the key event (if any) which caused this to be called.
-
-    Returns True indicating the event should be consumed.
-    """
-    
-    level = debug.LEVEL_OFF
-    
-    window = findActiveWindow()
-    if window is None:
-        debug.println(level, "Active application: None")
-    else:
-        app = window.app
-        if app is None:
-            debug.println(level, "Active application: None")
-        else:
-            debug.println(level, "Active application: %s" % app.name)
-            printAccessibleTree(level, "  ", findActiveWindow())
-
-    return True
-
+        _buildAppList(registry)
 
 ########################################################################
 #                                                                      #
@@ -437,19 +282,16 @@ def printActiveApp(script=None, inputEvent=None):
 _recordingKeystrokes = False
 _keystrokesFile = None
 
-
 def _closeKeystrokeWindowAndRecord(entry, window):
     global _keystrokesFile
     window.destroy()
     entry_text = entry.get_text()
     _keystrokesFile = open(entry_text, 'w')
 
-
 def _closeKeystrokeWindowAndCancel(window):
     global _recordingKeystrokes
     window.destroy()
     _recordingKeystrokes = False
-
 
 def toggleKeystrokeRecording(script=None, inputEvent=None):
     """Toggles the recording of keystrokes on and off.  When the
@@ -462,16 +304,16 @@ def toggleKeystrokeRecording(script=None, inputEvent=None):
     information for regression testing purposes.  The keystrokes are
     recorded in such a way that they can be played back via the
     src/tools/play_keystrokes.py utility.
-    
+
     Arguments:
     - inputEvent: the key event (if any) which caused this to be called.
 
     Returns True indicating the event should be consumed.
     """
-    
+
     global _recordingKeystrokes
     global _keystrokesFile
-    
+
     if _recordingKeystrokes:
         # If the filename entry window is still up, we don't have a file
         # yet.
@@ -505,7 +347,7 @@ def toggleKeystrokeRecording(script=None, inputEvent=None):
         hbox = gtk.HBox(False, 0)
         vbox.add(hbox)
         hbox.show()
-                                  
+
         ok = gtk.Button(stock=gtk.STOCK_OK)
         ok.connect("clicked", lambda w: _closeKeystrokeWindowAndRecord(\
             entry, \
@@ -527,10 +369,107 @@ def toggleKeystrokeRecording(script=None, inputEvent=None):
         window.show()
     return True
 
+########################################################################
+#                                                                      #
+# DEBUG support.                                                       #
+#                                                                      #
+########################################################################
+
+def printApps(script=None, inputEvent=None):
+    """Prints a list of all applications to stdout
+
+    Arguments:
+    - inputEvent: the InputEvent instance that caused this to be called.
+
+    Returns True indicating the event should be consumed.
+    """
+
+    level = debug.LEVEL_OFF
+
+    debug.println(level, "There are %d Accessible applications" % len(apps))
+    for app in apps:
+        debug.printDetails(level, "  App: ", app, False)
+        for i in range(0, app.childCount):
+            child = app.child(i)
+            debug.printDetails(level, "    Window: ", child, False)
+            if child.parent != app:
+                debug.println(level,
+                              "      WARNING: child's parent is not app!!!")
+
+    return True
+
+def printAccessibleTree(level, indent, root):
+    debug.printDetails(level, indent, root, False)
+    for i in range(0, root.childCount):
+        child = root.child(i)
+        if child == root:
+            debug.println(level,
+                          indent + "  " + "WARNING CHILD == PARENT!!!")
+        elif not child:
+            debug.println(level,
+                          indent + "  " + "WARNING CHILD IS NONE!!!")
+        elif child.parent != root:
+            debug.println(level,
+                          indent + "  " + "WARNING CHILD.PARENT != PARENT!!!")
+        else:
+            printAccessibleTree(level, indent + "  ", child)
+
+def printAccessiblePaintedTree(level, indent, root):
+    debug.printDetails(level, indent, root, False)
+
+    extents = root.extents
+    if extents:
+        debug.println(level, \
+                      indent + " extents: (x=%d y=%d w=%d h=%d)" \
+                      % (extents.x, extents.y, extents.width, extents.height))
+
+    #if root.text:
+    #    extents = root.text.getCharacterExtents(0,0)
+    #    debug.println(level, \
+    #                  indent + " text extents: (x=%d y=%d w=%d h=%d)" \
+    #                  % (extents[0], extents[1], extents[2], extents[3]))
+
+    for i in range(0, root.childCount):
+        child = root.child(i)
+        if child == root:
+            debug.println(level,
+                          indent + "  " + "WARNING CHILD == PARENT!!!")
+        elif not child:
+            debug.println(level,
+                          indent + "  " + "WARNING CHILD IS NONE!!!")
+        elif child.parent != root:
+            debug.println(level,
+                          indent + "  " + "WARNING CHILD.PARENT != PARENT!!!")
+        elif child.state.count(atspi.Accessibility.STATE_SHOWING):
+            printAccessiblePaintedTree(level, indent + "  ", child)
+
+def printActiveApp(script=None, inputEvent=None):
+    """Prints the active application.
+
+    Arguments:
+    - inputEvent: the key event (if any) which caused this to be called.
+
+    Returns True indicating the event should be consumed.
+    """
+
+    level = debug.LEVEL_OFF
+
+    window = findActiveWindow()
+    if not window:
+        debug.println(level, "Active application: None")
+    else:
+        app = window.app
+        if not app:
+            debug.println(level, "Active application: None")
+        else:
+            debug.println(level, "Active application: %s" % app.name)
+            printAccessibleTree(level, "  ", findActiveWindow())
+
+    return True
 
 ########################################################################
 #                                                                      #
-# METHODS FOR HANDLING THE INITIALIZATION, SHUTDOWN, AND USE.          #
+# METHODS FOR HANDLING LEARN MODE.                                     #
 #                                                                      #
 ########################################################################
 
@@ -548,7 +487,6 @@ def enterLearnMode(script=None, inputEvent=None):
     settings.setLearnModeEnabled(True)
     return True
 
-
 def exitLearnMode(script=None, inputEvent=None):
     """Turns learn mode off.
 
@@ -560,28 +498,289 @@ def exitLearnMode(script=None, inputEvent=None):
     settings.setLearnModeEnabled(False)
     return True
 
+########################################################################
+#                                                                      #
+# METHODS FOR PRE-PROCESSING AND MASSAGING KEYBOARD EVENTS.            #
+#                                                                      #
+# All keyboard events are funnelled through here first.  Orca itself   #
+# might have global keybindings (e.g., to switch between presenters),  #
+# but it will typically pass the event onto the currently active       #
+# active presentation manager.                                         #
+#                                                                      #
+########################################################################
 
-def init():
-    """Initialize the orca module, which initializes a11y, kbd, speech,
-    and braille modules.  Also builds up the application list, registers
-    for at-spi events, and creates scripts for all known applications.
+# Keybindings that Orca itself cares about.
+#
+_keybindings = None
+
+# True if the insert key is currently pressed.  We will use the insert
+# key as a modifier for Orca, and it will be presented as the "insert"
+# modifier string.
+#
+_insertPressed = False
+
+def _keyEcho(key):
+    """If the keyEcho setting is enabled, echoes the key via speech.
+    Uppercase keys will be spoken using the "uppercase" voice style,
+    whereas lowercase keys will be spoken using the "default" voice style.
+
+    Arguments:
+    - key: a string representing the key name to echo.
+    """
+
+    if not settings.getSetting(settings.USE_KEY_ECHO, False):
+        return
+    if key.isupper():
+        voices = settings.getSetting(settings.VOICES, None)
+        speech.speak(key, voices[settings.UPPERCASE_VOICE])
+    else:
+        # Check to see if there are localized words to be spoken for
+        # this key event.
+        try:
+            key = keynames.keynames[key]
+        except:
+            debug.printException(debug.LEVEL_FINEST)
+            pass
+        speech.speak(key)
+
+def _processKeyboardEvent(event):
+    """The primary key event handler for Orca.  Keeps track of various
+    attributes, such as the lastInputEvent.  Also calls keyEcho as well
+    as any local keybindings before passing the event on to the active
+    presentation manager.  This method is called synchronously from the
+    AT-SPI registry and should be performant.  In addition, it
+    must return True if it has consumed the event (and False if not).
+
+    Arguments:
+    - event: an AT-SPI DeviceEvent
+
+    Returns True if the event should be consumed.
+    """
+
+    global lastInputEvent
+    global _insertPressed
+
+    event_string = event.event_string
+
+    # Log the keyboard event for future playback, if desired.
+    #
+    string = atspi.KeystrokeListener.keyEventToString(event)
+    if _recordingKeystrokes and _keystrokesFile \
+       and (event_string != "Pause"):
+        _keystrokesFile.write(string + "\n")
+    debug.printInputEvent(debug.LEVEL_FINE, string)
+
+    if event.type == atspi.Accessibility.KEY_PRESSED_EVENT:
+        # Key presses always interrupt speech.
+        #
+        speech.stop()
+
+        # The control characters come through as control characters,
+        # so we just turn them into their ASCII equivalent.  NOTE that
+        # the upper case ASCII characters will be used (e.g., ctrl+a
+        # will be turned into the string "A").  All these checks here
+        # are to just do some sanity checking before doing the
+        # conversion. [[[WDW - this is making assumptions about
+        # mapping ASCII control characters to to UTF-8.]]]
+        #
+        if (event.modifiers & (1 << atspi.Accessibility.MODIFIER_CONTROL)) \
+           and (not event.is_text) and (len(event.event_string) == 1):
+            value = ord(event.event_string[0])
+            if value < 32:
+                event_string = chr(value + 0x40)
+
+        _keyEcho(event_string)
+
+        # We treat the Insert key as a modifier - so just swallow it and
+        # set our internal state.
+        #
+        if event_string == "Insert":
+            _insertPressed = True
+            return True
+
+    elif event.type == atspi.Accessibility.KEY_RELEASED_EVENT \
+         and (event_string == "Insert"):
+        _insertPressed = False
+        return True
+
+    # Orca gets first stab at the event.  Then, the presenter gets
+    # a shot. [[[TODO: WDW - might want to let the presenter try first?
+    # The main reason this is staying as is is that we may not want
+    # scripts to override fundamental Orca key bindings.]]]
+    #
+    keyboardEvent = KeyboardEvent(event)
+    if _insertPressed:
+        keyboardEvent.modifiers |= (1 << MODIFIER_ORCA)
+
+    consumed = False
+    try:
+        consumed = _keybindings.consumeKeyboardEvent(None, keyboardEvent)
+        if (not consumed) and (_currentPresentationManager >= 0):
+            consumed = _PRESENTATION_MANAGERS[_currentPresentationManager].\
+                       processKeyboardEvent(keyboardEvent)
+        if (not consumed) and settings.getSetting(settings.LEARN_MODE_ENABLED,
+                                                  False):
+            if event.type == atspi.Accessibility.KEY_PRESSED_EVENT:
+                braille.displayMessage(event_string)
+                speech.speak(event_string)
+            elif (event.type == atspi.Accessibility.KEY_RELEASED_EVENT) \
+                 and (event_string == "Escape"):
+                exitLearnMode(None, keyboardEvent)
+            consumed = True
+    except:
+        debug.printException(debug.LEVEL_SEVERE)
+
+    lastInputEvent = keyboardEvent
+
+    return consumed
+
+########################################################################
+#                                                                      #
+# METHODS FOR PRE-PROCESSING AND MASSAGING BRAILLE EVENTS.             #
+#                                                                      #
+########################################################################
+
+def _processBrailleEvent(command):
+    """Called whenever a  key is pressed on the Braille display.
+
+    Arguments:
+    - command: the BrlAPI command for the key that was pressed.
+
+    Returns True if the event was consumed; otherwise False
+    """
+
+    global lastInputEvent
+
+    # [[[TODO: WDW - probably should add braille bindings to this module.]]]
+
+    consumed = False
+
+    # Braille key presses always interrupt speech.
+    #
+    speech.stop()
+
+    event = BrailleEvent(command)
+    lastInputEvent = event
+
+    try:
+        consumed = _PRESENTATION_MANAGERS[_currentPresentationManager].\
+                   processBrailleEvent(event)
+    except:
+        debug.printException(debug.LEVEL_SEVERE)
+
+    if (not consumed) and settings.getSetting(settings.LEARN_MODE_ENABLED,
+                                              False):
+        consumed = True
+
+    return consumed
+
+########################################################################
+#                                                                      #
+# METHODS FOR DRAWING RECTANGLES AROUND OBJECTS ON THE SCREEN          #
+#                                                                      #
+########################################################################
+
+_display = None
+_visibleRectangle = None
+
+def drawOutline(x, y, width, height, erasePrevious=True):
+    """Draws a rectangular outline around the accessible, erasing the
+    last drawn rectangle in the process."""
+
+    global _display
+    global _visibleRectangle
+
+    if not _display:
+        try:
+            _display = gtk.gdk.display_get_default()
+        except:
+            debug.printException(debug.LEVEL_FINEST)
+            _display = gtk.gdk.display(":0")
+
+        if not _display:
+            debug.println(debug.LEVEL_SEVERE,
+                          "orca.drawOutline could not open display.")
+            return
+
+    screen = _display.get_default_screen()
+    root_window = screen.get_root_window()
+    graphics_context = root_window.new_gc()
+    graphics_context.set_subwindow(gtk.gdk.INCLUDE_INFERIORS)
+    graphics_context.set_function(gtk.gdk.INVERT)
+    graphics_context.set_line_attributes(3,                  # width
+                                         gtk.gdk.LINE_SOLID, # style
+                                         gtk.gdk.CAP_BUTT,   # end style
+                                         gtk.gdk.JOIN_MITER) # join style
+
+    # Erase the old rectangle.
+    #
+    if _visibleRectangle and erasePrevious:
+        drawOutline(_visibleRectangle[0], _visibleRectangle[1],
+                    _visibleRectangle[2], _visibleRectangle[3], False)
+        _visibleRectangle = None
+
+    # We'll use an invalid x value to indicate nothing should be
+    # drawn.
+    #
+    if x < 0:
+        _visibleRectangle = None
+        return
+
+    # The +1 and -2 stuff here is an attempt to stay within the
+    # bounding box of the object.
+    #
+    root_window.draw_rectangle(graphics_context,
+                               False, # Fill
+                               x + 1,
+                               y + 1,
+                               max(1, width - 2),
+                               max(1, height - 2))
+
+    _visibleRectangle = [x, y, width, height]
+
+def outlineAccessible(accessible, erasePrevious=True):
+    """Draws a rectangular outline around the accessible, erasing the
+    last drawn rectangle in the process."""
+
+    if accessible:
+        component = accessible.component
+        if component:
+            visibleRectangle = component.getExtents(0) # coord type = screen
+            drawOutline(visibleRectangle.x, visibleRectangle.y,
+                        visibleRectangle.width, visibleRectangle.height,
+                        erasePrevious)
+    else:
+        drawOutline(-1, 0, 0, 0, erasePrevious)
+
+########################################################################
+#                                                                      #
+# METHODS FOR HANDLING INITIALIZATION, SHUTDOWN, AND USE.              #
+#                                                                      #
+########################################################################
+
+# If True, this module has been initialized.
+#
+_initialized = False
+
+def init(registry):
+    """Initialize the orca module, which initializes speech, braille,
+    and mag modules.  Also builds up the application list, registers
+    for AT-SPI events, and creates scripts for all known applications.
 
     Returns True if the initialization procedure has run, or False if this
     module has already been initialized.
     """
-    
+
     global _initialized
     global _keybindings
-    
+
     if _initialized:
         return False
 
-    a11y.init()
-    
-    kbd.init(processKeyboardEvent)
+    registry.registerKeystrokeListeners(_processKeyboardEvent)
 
     _keybindings = keybindings.KeyBindings()
-    
+
     enterLearnModeHandler = InputEventHandler(\
         enterLearnMode,
         _("Enters learn mode.  Press escape to exit learn mode."))
@@ -605,7 +804,7 @@ def init():
                                             1 << MODIFIER_ORCA, \
                                             1 << MODIFIER_ORCA,
                                             increaseSpeechRateHandler))
-    
+
     shutdownHandler = InputEventHandler(shutdown, _("Quits Orca"))
     _keybindings.add(keybindings.KeyBinding("F12", \
                                             0, \
@@ -659,10 +858,10 @@ def init():
     else:
         debug.println(debug.LEVEL_CONFIGURATION,
                       "Speech module has NOT been initialized.")
-        
+
     if settings.getSetting(settings.USE_BRAILLE, False):
         try:
-            braille.init(processBrailleEvent, 7)
+            braille.init(_processBrailleEvent, 7)
         except:
             debug.println(debug.LEVEL_SEVERE,
                           "Could not initialize connection to braille.")
@@ -681,37 +880,32 @@ def init():
 
     # Build list of accessible apps.
     #
-    _buildAppList()
+    _buildAppList(registry)
 
     # Create and load an app's script when it is added to the desktop
     #
-    core.registerEventListener(onChildrenChanged, "object:children-changed:")
+    registry.registerEventListener(_onChildrenChanged,
+				   "object:children-changed:")
 
     _initialized = True
     return True
 
-
-def start():
-    """Starts Orca and also the bonobo main loop.
-
-    Returns False only if this module has not been initialized.
+def start(registry):
+    """Starts Orca.
     """
 
-    global _initialized
-    
     if not _initialized:
-        return False
+        init(registry)
 
     try:
         speech.speak(_("Welcome to Orca."))
         braille.displayMessage(_("Welcome to Orca."))
     except:
         debug.printException(debug.LEVEL_SEVERE)
-    
+
     _switchToPresentationManager(0) # focus_tracking_presenter
 
-    core.bonobo.main()
-
+    registry.start()
 
 def shutdown(script=None, inputEvent=None):
     """Exits Orca.  Unregisters any event listeners and cleans up.  Also
@@ -720,7 +914,7 @@ def shutdown(script=None, inputEvent=None):
     Returns True if the shutdown procedure ran or False if this module
     was never initialized.
     """
-    
+
     global _initialized
 
     if not _initialized:
@@ -731,17 +925,15 @@ def shutdown(script=None, inputEvent=None):
 
     # Deregister our event listeners
     #
-    core.unregisterEventListener(onChildrenChanged,
-                                 "object:children-changed:")
+    registry = atspi.Registry()
+    registry.deregisterEventListener(_onChildrenChanged,
+            	                     "object:children-changed:")
 
     if _currentPresentationManager >= 0:
         _PRESENTATION_MANAGERS[_currentPresentationManager].deactivate()
 
-
     # Shutdown all the other support.
     #
-    kbd.shutdown() # automatically unregisters processKeyboardEvent
-    a11y.shutdown()
     if settings.getSetting(settings.USE_SPEECH, True):
         speech.shutdown()
     if settings.getSetting(settings.USE_BRAILLE, False):
@@ -749,230 +941,10 @@ def shutdown(script=None, inputEvent=None):
     if settings.getSetting(settings.USE_MAGNIFIER, False):
         mag.shutdown();
 
-    core.bonobo.main_quit()
+    registry.stop()
 
     _initialized = False
     return True
-
-
-########################################################################
-#                                                                      #
-# METHODS FOR DRAWING RECTANGLES AROUND OBJECTS ON THE SCREEN          #
-#                                                                      #
-########################################################################
-
-_display = None
-_visibleRectangle = None
-
-def drawOutline(x, y, width, height, erasePrevious=True):
-    """Draws a rectangular outline around the accessible, erasing the
-    last drawn rectangle in the process."""
-
-    global _display
-    global _visibleRectangle
-    
-    if _display is None:
-        try:
-            _display = gtk.gdk.display_get_default()
-        except:
-            debug.printException(debug.LEVEL_FINEST)
-            _display = gtk.gdk.display(":0")
-
-        if _display is None:
-            debug.println(debug.LEVEL_SEVERE,
-                          "orca.drawOutline could not open display.")
-            return
-    
-    screen = _display.get_default_screen()
-    root_window = screen.get_root_window()
-    graphics_context = root_window.new_gc()
-    graphics_context.set_subwindow(gtk.gdk.INCLUDE_INFERIORS)
-    graphics_context.set_function(gtk.gdk.INVERT)
-    graphics_context.set_line_attributes(3,                  # width
-                                         gtk.gdk.LINE_SOLID, # style
-                                         gtk.gdk.CAP_BUTT,   # end style
-                                         gtk.gdk.JOIN_MITER) # join style
-
-    # Erase the old rectangle.
-    #
-    if _visibleRectangle and erasePrevious:
-        drawOutline(_visibleRectangle[0], _visibleRectangle[1],
-                    _visibleRectangle[2], _visibleRectangle[3], False)
-        _visibleRectangle = None
-
-    # We'll use an invalid x value to indicate nothing should be
-    # drawn.
-    #
-    if x < 0:
-        _visibleRectangle = None
-        return
-    
-    # The +1 and -2 stuff here is an attempt to stay within the
-    # bounding box of the object.
-    #
-    root_window.draw_rectangle(graphics_context,
-                               False, # Fill
-                               x + 1,
-                               y + 1,
-                               max(1, width - 2),
-                               max(1, height - 2))
-
-    _visibleRectangle = [x, y, width, height]
-
-
-def outlineAccessible(accessible, erasePrevious=True):
-    """Draws a rectangular outline around the accessible, erasing the
-    last drawn rectangle in the process."""
-
-    if accessible:
-        component = accessible.component
-        if component:
-            visibleRectangle = component.getExtents(0) # coord type = screen
-            drawOutline(visibleRectangle.x, visibleRectangle.y,
-                        visibleRectangle.width, visibleRectangle.height,
-                        erasePrevious)
-    else:
-        drawOutline(-1, 0, 0, 0, erasePrevious)
-        
-
-########################################################################
-#                                                                      #
-# METHODS FOR PRE-PROCESSING AND MASSAGING KEYBOARD EVENTS.            #
-#                                                                      #
-# All keyboard events are funnelled through here first.  Orca itself   #
-# might have global keybindings (e.g., to switch between presenters),  #
-# but it will typically pass the event onto the currently active       #
-# active presentation manager.                                         #
-#                                                                      #
-########################################################################
-
-# The InputEvent instance representing the last input event.
-#
-lastInputEvent = None
-
-# True if the insert key is currently pressed.  We will use the insert
-# key as a modifier for Orca, and it will be presented as the "insert"
-# modifier string.
-#
-_insertPressed = False
-
-
-def _keyEcho(key):
-    """If the keyEcho setting is enabled, echoes the key via speech.
-    Uppercase keys will be spoken using the "uppercase" voice style,
-    whereas lowercase keys will be spoken using the "default" voice style.
-
-    Arguments:
-    - key: a string representing the key name to echo.
-    """
-    
-    if not settings.getSetting(settings.USE_KEY_ECHO, False):
-        return
-    if key.isupper():
-        voices = settings.getSetting(settings.VOICES, None)
-        speech.speak(key, voices[settings.UPPERCASE_VOICE])
-    else:
-        # Check to see if there are localized words to be spoken for
-        # this key event.
-        try:
-            key = keynames.keynames[key]
-        except:
-            debug.printException(debug.LEVEL_FINEST)
-            pass 
-        speech.speak(key)
-
-def processKeyboardEvent(event):
-    """The primary key event handler for Orca.  Keeps track of various
-    attributes, such as the lastInputEvent and insertPressed.  Also calls
-    keyEcho as well as any function that may exist in the _keybindings
-    dictionary for the key event.  This method is called synchronously
-    from the at-spi registry and should be performant.  In addition, it
-    must return True if it has consumed the event (and False if not).
-    
-    Arguments:
-    - event: an at-spi DeviceEvent
-
-    Returns True if the event should be consumed.
-    """
-    
-    global lastInputEvent
-    global _insertPressed
-    
-    event_string = event.event_string
-    
-    # Log the keyboard event for future playback, if desired.
-    #
-    string = kbd.keyEventToString(event)
-    if _recordingKeystrokes and _keystrokesFile \
-       and (event_string != "Pause"):
-        _keystrokesFile.write(string + "\n")
-    debug.printInputEvent(debug.LEVEL_FINE, string)
-
-    if event.type == core.Accessibility.KEY_PRESSED_EVENT:
-
-        # Key presses always interrupt speech.
-        #
-        speech.stop()
-
-        # The control characters come through as control characters,
-        # so we just turn them into their ASCII equivalent.  NOTE that
-        # the upper case ASCII characters will be used (e.g., ctrl+a
-        # will be turned into the string "A").  All these checks here
-        # are to just do some sanity checking before doing the
-        # conversion. [[[WDW - this is making assumptions about
-        # mapping ASCII control characters to to UTF-8.]]]
-        #
-        if (event.modifiers & (1 << core.Accessibility.MODIFIER_CONTROL)) \
-           and (not event.is_text) and (len(event.event_string) == 1):
-            value = ord(event.event_string[0])
-            if value < 32:
-                event_string = chr(value + 0x40)
-
-        _keyEcho(event_string)    
-    
-        # We treat the Insert key as a modifier - so just swallow it and
-        # set our internal state.
-        #
-        if event_string == "Insert":
-            _insertPressed = True
-            return True
-
-    elif event.type == core.Accessibility.KEY_RELEASED_EVENT \
-         and (event_string == "Insert"):
-        _insertPressed = False
-        return True
-        
-    # Orca gets first stab at the event.  Then, the presenter gets
-    # a shot. [[[TODO: WDW - might want to let the presenter try first?
-    # The main reason this is staying as is is that we may not want
-    # scripts to override fundamental Orca key bindings.]]]
-    #
-    keyboardEvent = KeyboardEvent(event)
-    if _insertPressed:
-        keyboardEvent.modifiers |= (1 << MODIFIER_ORCA)
-
-    consumed = False
-    try:
-        consumed = _keybindings.consumeKeyboardEvent(None, keyboardEvent)
-        if (not consumed) and (_currentPresentationManager >= 0):
-            consumed = _PRESENTATION_MANAGERS[_currentPresentationManager].\
-                       processKeyboardEvent(keyboardEvent)
-        if (not consumed) and settings.getSetting(settings.LEARN_MODE_ENABLED,
-                                                  False):
-            if event.type == core.Accessibility.KEY_PRESSED_EVENT:
-                braille.displayMessage(event_string)
-                speech.speak(event_string)
-            elif (event.type == core.Accessibility.KEY_RELEASED_EVENT) \
-                 and (event_string == "Escape"):
-                exitLearnMode(None, keyboardEvent)
-            consumed = True
-    except:
-        debug.printException(debug.LEVEL_SEVERE)
-        
-    lastInputEvent = keyboardEvent
-
-    return consumed
-
 
 def shutdownAndExit(signum, frame):
     print "Goodbye."
@@ -982,15 +954,14 @@ def shutdownAndExit(signum, frame):
         pass
     sys.exit()
 
-
 def main():
     userprefs = os.path.join (os.environ["HOME"], ".orca")
     sys.path.insert (0, userprefs)
     signal.signal(signal.SIGINT, shutdownAndExit)
     signal.signal(signal.SIGQUIT, shutdownAndExit)
-    init()
-    start()
-
+    registry = atspi.Registry()
+    init(registry)
+    start(registry)
 
 if __name__ == "__main__":
     main()

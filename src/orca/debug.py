@@ -24,7 +24,6 @@ debug level to determine if the content should be output."""
 
 import traceback
 
-
 # Used to turn off all debugging.
 #
 LEVEL_OFF = 10000
@@ -85,12 +84,10 @@ LEVEL_FINEST = 400
 #
 LEVEL_ALL = 0
 
-
 _debugLevel = LEVEL_SEVERE
 _eventDebugLevel = LEVEL_FINEST
 _eventDebugFilter = None  # see setEventDebugFilter
 _debugFile = None # see setDebugFile
-
 
 def setDebugLevel(newLevel):
     """Sets the debug level.  The various levels can be LEVEL_OFF,
@@ -102,25 +99,23 @@ def setDebugLevel(newLevel):
     """
 
     global _debugLevel
-    
+
     println(_debugLevel, "Changing debug level to %d" % newLevel)
     _debugLevel = newLevel
     println(_debugLevel, "Changed debug level to %d" % _debugLevel)
-    
 
 def setEventDebugLevel(newLevel):
     """Sets the event debug level.  This can be used to override the level
     value passed to printObjectEvent and printInputEvent.  That is, if
     eventDebugLevel has a higher value that the debug level passed into these
     methods, then the event debug level will be used as the level.
-    
+
     Arguments:
     - newLevel: the new debug level
     """
 
     global _eventDebugLevel
     _eventDebugLevel = newLevel
-    
 
 def setEventDebugFilter(regExpression):
     """Sets the event debug filter.  The debug filter should be either None
@@ -139,7 +134,6 @@ def setEventDebugFilter(regExpression):
     global _eventDebugFilter
     _eventDebugFilter = regExpression
 
-
 def setDebugFile(file):
     """Sets the debug file.  If this is not set, then all debug output
     is done via stdout.  If this is set, then all debug output is sent
@@ -153,7 +147,6 @@ def setDebugFile(file):
     global _debugFile
     _debugFile = file
 
-    
 def printException(level):
     """Prints out information regarding the current exception.
 
@@ -165,7 +158,6 @@ def printException(level):
         println(level)
         traceback.print_exc(100, _debugFile)
         println(level)
-
 
 def printStack(level):
     """Prints out the current stack.
@@ -179,10 +171,9 @@ def printStack(level):
         traceback.print_stack(None, 100, _debugFile)
         println(level)
 
-
 def println(level, text = ""):
     """Prints the text to stdout if debug is enabled.
-    
+
     Arguments:
     - level: the accepted debug level
     - text: the text to print (default is a blank line)
@@ -193,7 +184,6 @@ def println(level, text = ""):
             _debugFile.writelines([text,"\n"])
         else:
             print text
-
 
 def printObjectEvent(level, event, sourceInfo=None):
     """Prints out an Python Event object.  The given level may be overridden
@@ -208,20 +198,18 @@ def printObjectEvent(level, event, sourceInfo=None):
     """
 
     if _eventDebugFilter:
-        match = _eventDebugFilter.match(event.type)
-        if match is None:
+        if not _eventDebugFilter.match(event.type):
             return
-        
+
     level = max(level, _eventDebugLevel)
 
     text = "OBJECT EVENT: %-40s detail=(%d,%d)" \
            % (event.type, event.detail1, event.detail2)
     println(level, text)
-    
+
     if sourceInfo:
         println(level, "             " + sourceInfo)
 
-    
 def printInputEvent(level, string):
     """Prints out an input event.  The given level may be overridden
     if the eventDebugLevel (see setEventDebugLevel) is greater.
@@ -232,7 +220,6 @@ def printInputEvent(level, string):
     """
 
     println(max(level, _eventDebugLevel), string)
-
 
 def printDetails(level, indent, accessible, includeApp=True):
     """Lists the details of the given accessible with the given
@@ -247,5 +234,3 @@ def printDetails(level, indent, accessible, includeApp=True):
 
     if accessible:
         println(level, accessible.toString(indent, includeApp))
-        
-

@@ -23,10 +23,9 @@ both speech and Braille.
 This module also provides a number of presenter functions that display
 Accessible object information to the user based upon the object's role."""
 
-import a11y
+import atspi
 import braille
 import braillegenerator
-import core
 import debug
 import flat_review
 import input_event
@@ -42,7 +41,6 @@ import speechgenerator
 
 from orca_i18n import _                          # for gettext support
 
-
 ########################################################################
 #                                                                      #
 # The Default script class.                                            #
@@ -50,14 +48,14 @@ from orca_i18n import _                          # for gettext support
 ########################################################################
 
 class Script(script.Script):
-    
+
     def __init__(self, app):
         """Creates a new script for the given application.
-        
+
         Arguments:
         - app: the application to create a script for.
         """
-        
+
         script.Script.__init__(self, app)
 
         self.flatReviewContext = None
@@ -134,7 +132,7 @@ class Script(script.Script):
             input_event.InputEventHandler(\
                 Script.reviewPreviousLine,
                 _("Moves flat review to the beginning of the previous line."))
-        
+
         self.keybindings.add(
             keybindings.KeyBinding(
                 "KP_7", \
@@ -145,7 +143,7 @@ class Script(script.Script):
         reviewHomeHandler = input_event.InputEventHandler(\
             Script.reviewHome,
             _("Moves flat review to the home position."))
-        
+
         self.keybindings.add(
             keybindings.KeyBinding(
                 "KP_7", \
@@ -235,7 +233,7 @@ class Script(script.Script):
             input_event.InputEventHandler(\
                 Script.reviewBelow,
                 _("Moves flat review to the word below the current word."))
-                           
+
         self.keybindings.add(
             keybindings.KeyBinding(
                 "KP_6", \
@@ -254,7 +252,7 @@ class Script(script.Script):
                 1 << orca.MODIFIER_ORCA, \
                 0, \
                 reviewPreviousCharacterHandler))
-        
+
         self.keybindings.add(
             keybindings.KeyBinding(
                 "KP_1", \
@@ -277,7 +275,7 @@ class Script(script.Script):
             input_event.InputEventHandler(\
             Script.reviewNextCharacter,
             _("Moves flat review to the next character."))
-        
+
         self.keybindings.add(
             keybindings.KeyBinding(
                 "KP_3", \
@@ -299,7 +297,7 @@ class Script(script.Script):
             input_event.InputEventHandler(
                 Script.panBrailleRight,
                 _("Pans the braille display to the right."))
-            
+
         #self.braillebindings[braille.CMD_CHRLT] = \
         #    input_event.InputEventHandler(
         #        Script.panBrailleLeftOneChar,
@@ -324,7 +322,6 @@ class Script(script.Script):
                 Script.goBrailleHome,
                 _("Returns to object with keyboard focus."))
 
-        
         ################################################################
         #                                                              #
         # AT-SPI object event handlers                                 #
@@ -332,19 +329,19 @@ class Script(script.Script):
         ################################################################
         self.listeners["focus:"]                                 = \
             self.onFocus
-        
+
         #self.listeners["keyboard:modifiers"]                     = \
         #    self.noOp
-        
+
         self.listeners["object:property-change:accessible-name"] = \
-            self.onNameChanged 
+            self.onNameChanged
 
         self.listeners["object:text-caret-moved"]                = \
             self.onCaretMoved
         self.listeners["object:text-changed:delete"]             = \
             self.onTextDeleted
         self.listeners["object:text-changed:insert"]             = \
-            self.onTextInserted 
+            self.onTextInserted
         self.listeners["object:text-selection-changed"]          = \
             self.noOp
 
@@ -392,7 +389,6 @@ class Script(script.Script):
         self.brailleGenerator = self.getBrailleGenerator()
         self.speechGenerator = self.getSpeechGenerator()
         self.voices = settings.getSetting(settings.VOICES, None)
-        
 
     def processObjectEvent(self, event):
         """Processes all object events of interest to this script.  Note
@@ -420,34 +416,31 @@ class Script(script.Script):
         #   and (event.type.find("state-changed:selected") == -1) \
         #   and (event.type.find("object:selection-changed") == -1) \
         #   and (event.type.find("active-descendant") == -1) \
-        #   and event.source.state.count(core.Accessibility.STATE_FOCUSED):
+        #   and event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
         #    orca.setLocusOfFocus(event, event.source, False)
 
         script.Script.processObjectEvent(self, event)
 
-        
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.
         """
 
         return braillegenerator.BrailleGenerator()
 
-    
     def getSpeechGenerator(self):
         """Returns the speech generator for this script.
         """
 
         return speechgenerator.SpeechGenerator()
 
-
     def whereAmI(self, inputEvent):
         self.updateBraille(orca.locusOfFocus)
 
         verbosity = settings.getSetting(settings.SPEECH_VERBOSITY_LEVEL,
                                         settings.VERBOSITY_LEVEL_VERBOSE)
-    
+
         utterances = []
-            
+
         utterances.extend(
             self.speechGenerator.getSpeechContext(orca.locusOfFocus))
 
@@ -493,19 +486,18 @@ class Script(script.Script):
 
         # Now speak the tree node level.
         #
-        level = a11y.getNodeLevel(orca.locusOfFocus)
+        level = atspi.getNodeLevel(orca.locusOfFocus)
         if level >= 0:
             utterances.append(_("tree level %d") % (level + 1))
 
         if orca.locusOfFocus.state.count(\
-                    core.Accessibility.STATE_SENSITIVE) == 0:
+                    atspi.Accessibility.STATE_SENSITIVE) == 0:
             message = _("No focus")
             utterances.extend(message)
-            
+
         speech.speakUtterances(utterances)
 
         return True
-
 
     def findCommonAncestor(self, a, b):
         """Finds the common ancestor between Accessible a and Accessible b.
@@ -518,12 +510,12 @@ class Script(script.Script):
         debug.println(debug.LEVEL_FINEST,
                       "default.findCommonAncestor...")
 
-        if (a is None) or (b is None):
+        if (not a) or (not b):
             return None
 
         if a == b:
             return a
-        
+
         aParents = [a]
         try:
             parent = a.parent
@@ -534,7 +526,7 @@ class Script(script.Script):
         except:
             debug.printException(debug.LEVEL_FINEST)
             pass
-        
+
         bParents = [b]
         try:
             parent = b.parent
@@ -545,9 +537,9 @@ class Script(script.Script):
         except:
             debug.printException(debug.LEVEL_FINEST)
             pass
-        
+
         commonAncestor = None
-        
+
         maxSearch = min(len(aParents), len(bParents))
         i = 0
         while i < maxSearch:
@@ -561,7 +553,6 @@ class Script(script.Script):
                       "...default.findCommonAncestor")
 
         return commonAncestor
-
 
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
@@ -577,7 +568,7 @@ class Script(script.Script):
         #
         if self.flatReviewContext:
             self.toggleFlatReviewMode()
-        
+
         # [[[TODO: WDW - HACK because parents that manage their descendants
         # can give us a different object each time we ask for the same
         # exact child.  So...we do a check here to see if the old object
@@ -593,7 +584,7 @@ class Script(script.Script):
             oldParent = oldLocusOfFocus.parent
         else:
             oldParent = None
-            
+
         if newLocusOfFocus:
             newParent = newLocusOfFocus.parent
         else:
@@ -601,7 +592,7 @@ class Script(script.Script):
 
         if newParent and (oldParent == newParent):
             state = newParent.state
-            if state.count(core.Accessibility.STATE_MANAGES_DESCENDANTS) \
+            if state.count(atspi.Accessibility.STATE_MANAGES_DESCENDANTS) \
                 and (oldLocusOfFocus.index == newLocusOfFocus.index) \
                 and (oldLocusOfFocus.name == newLocusOfFocus.name):
                     return
@@ -614,9 +605,9 @@ class Script(script.Script):
 
             verbosity = settings.getSetting(settings.SPEECH_VERBOSITY_LEVEL,
                                             settings.VERBOSITY_LEVEL_VERBOSE)
-    
+
             utterances = []
-            
+
             # Now figure out how of the container context changed and
             # speech just what is different.
             #
@@ -672,8 +663,8 @@ class Script(script.Script):
                                         rolenames.ROLE_COLUMN_HEADER].speech
                             utterances.append(text)
 
-                oldNodeLevel = a11y.getNodeLevel(oldLocusOfFocus)
-                newNodeLevel = a11y.getNodeLevel(newLocusOfFocus)
+                oldNodeLevel = atspi.getNodeLevel(oldLocusOfFocus)
+                newNodeLevel = atspi.getNodeLevel(newLocusOfFocus)
 
             # Get the text for the object itself.
             #
@@ -691,7 +682,6 @@ class Script(script.Script):
             message = _("No focus")
             braille.displayMessage(message)
             speech.speak(message)
-
 
     def visualAppearanceChanged(self, event, obj):
         """Called when the visual appearance of an object changes.  This
@@ -732,14 +722,14 @@ class Script(script.Script):
                               "default.visualAppearanceChanged - " \
                               + "checking parent")
                 reallyShowing = parent.state.count(\
-                    core.Accessibility.STATE_SHOWING)
+                    atspi.Accessibility.STATE_SHOWING)
                 parent = parent.parent
 
             # Find all the unrelated labels in the dialog and speak them.
             #
             if reallyShowing:
                 utterances = []
-                labels = a11y.findUnrelatedLabels(obj)
+                labels = atspi.findUnrelatedLabels(obj)
                 for label in labels:
                     utterances.append(label.name)
 
@@ -755,14 +745,14 @@ class Script(script.Script):
                 #
                 if orca.locusOfFocus \
                    and (orca.locusOfFocus.state.count(\
-                    core.Accessibility.STATE_SENSITIVE) == 0):
+                    atspi.Accessibility.STATE_SENSITIVE) == 0):
                     message = _("No focus")
                     utterances.append(message)
                     self.updateBraille(orca.locusOfFocus.parent,
                                        braille.Region(" " + message))
-                    
+
                 speech.speakUtterances(utterances)
-                    
+
                 return
 
         if obj != orca.locusOfFocus:
@@ -781,7 +771,6 @@ class Script(script.Script):
         speech.speakUtterances(
             self.speechGenerator.getSpeech(event.source, True))
 
-            
     def getVisualParent(self, obj):
         """Returns the logical visual container for the given object or None
         if no such object exists.  The logical visual container differs from
@@ -797,10 +786,8 @@ class Script(script.Script):
             debug.println(debug.LEVEL_FINEST,
                           "default.getVisualParent - finding parent")
 
-
         return visualParent
-    
-        
+
     def updateBraille(self, obj, extraRegion=None):
         """Updates the braille display to show the give object.
 
@@ -809,11 +796,11 @@ class Script(script.Script):
         - extra: extra Region to add to the end
         """
 
-        if obj is None:
+        if not obj:
             message = _("No focus")
             braille.displayMessage(message)
             return
-        
+
         braille.clear()
 
         line = braille.Line()
@@ -827,26 +814,25 @@ class Script(script.Script):
             text = obj.text
             [string, startOffset, endOffset] = text.getTextAtOffset(
                 text.caretOffset,
-                core.Accessibility.TEXT_BOUNDARY_LINE_START)
+                atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
             if startOffset == 0:
                 line.addRegions(self.brailleGenerator.getBrailleContext(obj))
         else:
             line.addRegions(self.brailleGenerator.getBrailleContext(obj))
-        
+
         result = self.brailleGenerator.getBrailleRegions(obj)
         line.addRegions(result[0])
 
         if extraRegion:
             line.addRegion(extraRegion)
-            
+
         if extraRegion:
             braille.setFocus(extraRegion)
         else:
             braille.setFocus(result[1])
 
-        braille.refresh(True)    
-    
-        
+        braille.refresh(True)
+
     ########################################################################
     #                                                                      #
     # AT-SPI OBJECT EVENT HANDLERS                                         #
@@ -855,11 +841,11 @@ class Script(script.Script):
 
     def onFocus(self, event):
         """Called whenever an object gets focus.
-        
+
         Arguments:
         - event: the Event
         """
- 
+
         # [[[TODO: WDW - HACK to deal with quirky GTK+ menu behavior.
         # The problem is that when moving to submenus in a menu, the
         # menu gets focus first and then the submenu gets focus all
@@ -889,7 +875,7 @@ class Script(script.Script):
         # need to depend upon the model where focus really works.]]]
         #
         newFocus = event.source
-        
+
         if (event.source.role == rolenames.ROLE_LAYERED_PANE) \
             or (event.source.role == rolenames.ROLE_TABLE) \
             or (event.source.role == rolenames.ROLE_TREE_TABLE) \
@@ -899,10 +885,9 @@ class Script(script.Script):
                 if selection and selection.nSelectedChildren > 0:
                     child = selection.getSelectedChild(0)
                     if child:
-                        newFocus = a11y.makeAccessible(child)
-                        
+                        newFocus = atspi.Accessible.makeAccessible(child)
+
         orca.setLocusOfFocus(event, newFocus)
-        
 
     def onNameChanged(self, event):
         """Called whenever a property on an object changes.
@@ -910,7 +895,7 @@ class Script(script.Script):
         Arguments:
         - event: the Event
         """
-        
+
         # [[[TODO: WDW - HACK because gnome-terminal issues a name changed
         # event for the edit preferences dialog even though the name really
         # didn't change.  I'm guessing this is going to be a vagary in all
@@ -919,9 +904,8 @@ class Script(script.Script):
         if event.source and (event.source.role == rolenames.ROLE_DIALOG) \
            and (event.source == orca.locusOfFocus):
             return
-        
-        orca.visualAppearanceChanged(event, event.source)
 
+        orca.visualAppearanceChanged(event, event.source)
 
     def onCaretMoved(self, event):
         """Called whenever the caret moves.
@@ -943,7 +927,7 @@ class Script(script.Script):
         #
         if self.flatReviewContext:
             self.toggleFlatReviewMode()
-        
+
         # Magnify the object.  [[[TODO: WDW - this is a hack for now.]]]
         #
         #mag.magnifyAccessible(event.source)
@@ -964,7 +948,7 @@ class Script(script.Script):
         if brailleNeedsRepainting:
             self.updateBraille(event.source)
 
-        if (orca.lastInputEvent is None) \
+        if (not orca.lastInputEvent) \
             or \
             (not isinstance(orca.lastInputEvent, input_event.KeyboardEvent)):
             return
@@ -977,7 +961,7 @@ class Script(script.Script):
         #
         string = orca.lastInputEvent.event_string
         mods = orca.lastInputEvent.modifiers
-        controlMask = 1 << core.Accessibility.MODIFIER_CONTROL
+        controlMask = 1 << atspi.Accessibility.MODIFIER_CONTROL
 
         if (string == "Up") or (string == "Down"):
             sayLine(event.source)
@@ -999,14 +983,13 @@ class Script(script.Script):
             else:
                 sayCharacter(event.source)
 
-
     def onTextDeleted(self, event):
         """Called whenever text is deleted from an object.
 
         Arguments:
         - event: the Event
         """
-    
+
         # Ignore text deletions from non-focused objects, unless the
         # currently focused object is the parent of the object from which
         # text was deleted
@@ -1014,10 +997,6 @@ class Script(script.Script):
         if (event.source != orca.locusOfFocus) \
                and (event.source.parent != orca.locusOfFocus):
             return
-
-        text = event.source.text
-        #print "onTextDeleted, LENGTH=%d, text='%s'" % (text.characterCount, \
-        #                                               event.any_data)
 
         self.updateBraille(event.source)
 
@@ -1027,19 +1006,18 @@ class Script(script.Script):
         # about the ramifications of this when it comes to editors such
         # as vi or emacs.
         #
-        if (orca.lastInputEvent is None) \
+        if (not orca.lastInputEvent) \
             or \
             (not isinstance(orca.lastInputEvent, input_event.KeyboardEvent)):
             return
-            
+
         string = orca.lastInputEvent.event_string
-        text = event.any_data
+        text = event.any_data.value()
         if (string == "BackSpace") or (string == "Delete"):
             if text.isupper():
                 speech.speak(text, self.voices["uppercase"])
             else:
                 speech.speak(text)
-
 
     def onTextInserted(self, event):
         """Called whenever text is inserted into an object.
@@ -1056,37 +1034,32 @@ class Script(script.Script):
                and (event.source.parent != orca.locusOfFocus):
             return
 
-        text = event.source.text
-        #print "onTextInserted, LENGTH=%d, text='%s'" % (text.characterCount, \
-        #                                                event.any_data)
-        
         self.updateBraille(event.source)
-        text = event.any_data
+        text = event.any_data.value()
+
         if text.isupper():
             speech.speak(text, self.voices["uppercase"])
         else:
             speech.speak(text)
 
-
     def onActiveDescendantChanged(self, event):
         """Called when an object who manages its own descendants detects a
         change in one of its children.
-        
+
         Arguments:
         - event: the Event
         """
 
-        child = a11y.makeAccessible(event.any_data)
+        child = atspi.Accessible.makeAccessible(event.any_data.value())
 
         if child.childCount:
             orca.setLocusOfFocus(event, child.child(1))
         else:
             orca.setLocusOfFocus(event, child)
-            
 
     def onLinkSelected(self, event):
         """Called when a hyperlink is selected in a text area.
-        
+
         Arguments:
         - event: the Event
         """
@@ -1103,7 +1076,6 @@ class Script(script.Script):
         #   and (orca.locusOfFocus.app == event.source.app):
         #    orca.setLocusOfFocus(event, event.source)
         orca.setLocusOfFocus(event, event.source)
-            
 
     def onStateChanged(self, event):
         """Called whenever an object's state changes.  Currently, the
@@ -1112,7 +1084,7 @@ class Script(script.Script):
         Arguments:
         - event: the Event
         """
-    
+
         # Do we care?
         #
         if state_change_notifiers.has_key(event.source.role):
@@ -1137,8 +1109,7 @@ class Script(script.Script):
         #   and event.source == orca.locusOfFocus:
         #    print "FOO INSENSITIVE"
         #    #orca.setLocusOfFocus(event, None)
-           
-        
+
     def onSelectionChanged(self, event):
         """Called when an object's selection changes.
 
@@ -1149,7 +1120,7 @@ class Script(script.Script):
         # [[[TODO: WDW - HACK layered panes are nutty in that they
         # will change the selection and tell the selected child it is
         # focused, but the child will not issue a focus changed event.]]]
-        # 
+        #
         if event.source \
            and (event.source.role == rolenames.ROLE_LAYERED_PANE):
 #               or (event.source.role == rolenames.ROLE_TABLE) \
@@ -1161,8 +1132,7 @@ class Script(script.Script):
                     child = selection.getSelectedChild(0)
                     if child:
                         orca.setLocusOfFocus(event,
-                                             a11y.makeAccessible(child))
-
+                                             atspi.Accessible.makeAccessible(child))
 
     def onValueChanged(self, event):
         """Called whenever an object's value changes.  Currently, the
@@ -1171,29 +1141,26 @@ class Script(script.Script):
         Arguments:
         - event: the Event
         """
-    
+
         orca.visualAppearanceChanged(event, event.source)
-            
 
     def onWindowActivated(self, event):
         """Called whenever a toplevel window is activated.
-        
+
         Arguments:
         - event: the Event
         """
 
         orca.setLocusOfFocus(event, event.source)
-            
 
     def onWindowDeactivated(self, event):
         """Called whenever a toplevel window is deactivated.
-        
+
         Arguments:
         - event: the Event
         """
 
         orca.setLocusOfFocus(event, None)
-            
 
     def noOp(self, event):
         """Just here to capture events.
@@ -1202,7 +1169,6 @@ class Script(script.Script):
         - event: the Event
         """
         pass
-
 
     ########################################################################
     #                                                                      #
@@ -1218,7 +1184,7 @@ class Script(script.Script):
         element of the list is the Accessible object associated with a
         given region.  The term 'zone' here is inherited from OCR
         algorithms and techniques.
-    
+
         The objects are returned in no particular order.
 
         Arguments:
@@ -1243,7 +1209,6 @@ class Script(script.Script):
         else:
             return []
 
-
     def clusterZonesByLine(self, zones):
         """Given a list of interesting accessible objects (the zones),
         returns a list of lines in order from the top to bottom, where
@@ -1252,11 +1217,10 @@ class Script(script.Script):
 
         return flat_review.clusterZonesByLine(zones)
 
-    
     def getFlatReviewContext(self):
         """Returns the flat review context, creating one if necessary."""
-        
-        if self.flatReviewContext is None:
+
+        if not self.flatReviewContext:
             # The first thing we try to do is find which Zone has the
             # Accessible object with focus.
             #
@@ -1305,7 +1269,7 @@ class Script(script.Script):
                                         < (zone.startOffset + zone.length)):
                                 foundZoneWithCaret = True
                                 break
-                        zoneIndex += 1                            
+                        zoneIndex += 1
                     if foundZoneWithCaret:
                         currentLineIndex = lineIndex
                         currentZoneIndex = zoneIndex
@@ -1332,20 +1296,19 @@ class Script(script.Script):
                                                          currentCharIndex)
 
             self.justEnteredFlatReviewMode = True
-            
+
             # Also, we want to remember where the cursor currently was
             # when the user was in focus tracking mode.  We'll try to
             # keep the position the same as we move to characters above
             # and below us.
             #
             self.targetCursorCell = braille.cursorCell
-            
+
         return self.flatReviewContext
 
-    
     def toggleFlatReviewMode(self, inputEvent=None):
         """Toggles between flat review mode and focus tracking mode."""
-        
+
         if self.flatReviewContext:
             orca.drawOutline(-1, 0, 0, 0)
             self.flatReviewContext = None
@@ -1356,9 +1319,8 @@ class Script(script.Script):
                      context.getCurrent(flat_review.Context.WORD)
             orca.drawOutline(x, y, width, height)
             self.reviewCurrentItem(inputEvent, self.targetCursorCell)
-            
-        return True
 
+        return True
 
     def updateBrailleReview(self, targetCursorCell=0):
         """Obtains the braille regions for the current flat review line
@@ -1368,7 +1330,7 @@ class Script(script.Script):
         to show the review cursor."""
 
         context = self.getFlatReviewContext()
-        
+
         [regions, regionWithFocus] = context.getCurrentBrailleRegions()
 
         line = braille.Line()
@@ -1384,7 +1346,6 @@ class Script(script.Script):
         else:
             braille.refresh(True, targetCursorCell)
 
-        
     def _setFlatReviewContextToBeginningOfBrailleDisplay(self):
         """Sets the character of interest to be the first character showing
         at the beginning of the braille display."""
@@ -1415,7 +1376,6 @@ class Script(script.Script):
                         0) # character index
                 break
 
-
     def panBrailleLeft(self, inputEvent=None, panAmount=0):
         """Pans the braille display to the left.  If panAmount is non-zero,
         the display is panned by that many cells.  If it is 0, the display
@@ -1425,7 +1385,7 @@ class Script(script.Script):
         In focus tracking mode, the cursor stays at its logical position.
         In flat review mode, the review cursor moves to character
         associated with cell 0."""
-        
+
         if self.flatReviewContext:
             if braille.beginningIsShowing:
                 self.flatReviewContext.goBegin(flat_review.Context.LINE)
@@ -1436,7 +1396,7 @@ class Script(script.Script):
             # This will update our target cursor cell
             #
             self._setFlatReviewContextToBeginningOfBrailleDisplay()
-            
+
             [string, x, y, width, height] = \
                 self.flatReviewContext.getCurrent(flat_review.Context.CHAR)
             orca.drawOutline(x, y, width, height)
@@ -1456,36 +1416,34 @@ class Script(script.Script):
             text = orca.locusOfFocus.text
             [string, startOffset, endOffset] = text.getTextAtOffset(
                 text.caretOffset,
-                core.Accessibility.TEXT_BOUNDARY_LINE_START)
+                atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
             if startOffset > 0:
                 text.setCaretOffset(startOffset - 1)
         else:
             braille.panLeft(panAmount)
             braille.refresh(False)
-        
-        return True
 
+        return True
 
     def panBrailleLeftOneChar(self, inputEvent=None):
         """Nudges the braille display one character to the left.
-        
+
         In focus tracking mode, the cursor stays at its logical position.
         In flat review mode, the review cursor moves to character
         associated with cell 0."""
-        
-        self.panBrailleLeft(inputEvent, 1)
 
+        self.panBrailleLeft(inputEvent, 1)
 
     def panBrailleRight(self, inputEvent=None, panAmount=0):
         """Pans the braille display to the right.  If panAmount is non-zero,
         the display is panned by that many cells.  If it is 0, the display
         is panned one full display width.  In flat review mode, panning
         beyond the end will take you to the begininng of the next line.
-        
+
         In focus tracking mode, the cursor stays at its logical position.
         In flat review mode, the review cursor moves to character
         associated with cell 0."""
-        
+
         if self.flatReviewContext:
             if braille.endIsShowing:
                 self.flatReviewContext.goEnd(flat_review.Context.LINE)
@@ -1499,7 +1457,7 @@ class Script(script.Script):
 
             [string, x, y, width, height] = \
                 self.flatReviewContext.getCurrent(flat_review.Context.CHAR)
-            
+
             orca.drawOutline(x, y, width, height)
 
             self.targetCursorCell = 1
@@ -1516,52 +1474,47 @@ class Script(script.Script):
             text = orca.locusOfFocus.text
             [string, startOffset, endOffset] = text.getTextAtOffset(
                 text.caretOffset,
-                core.Accessibility.TEXT_BOUNDARY_LINE_START)
+                atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
             if endOffset < text.characterCount:
                 text.setCaretOffset(endOffset)
         else:
             braille.panRight(panAmount)
             braille.refresh(False)
-        
-        return True
 
+        return True
 
     def panBrailleRightOneChar(self, inputEvent=None):
         """Nudges the braille display one character to the right.
-        
+
         In focus tracking mode, the cursor stays at its logical position.
         In flat review mode, the review cursor moves to character
         associated with cell 0."""
 
         self.panBrailleRight(inputEvent, 1)
 
-
     def goBrailleHome(self, inputEvent=None):
         """Returns to the component with focus."""
-        
+
         if self.flatReviewContext:
             return self.toggleFlatReviewMode(inputEvent)
         else:
             return braille.returnToRegionWithFocus(inputEvent)
 
-    
     def leftClickReviewItem(self, inputEvent=None):
         """Performs a left mouse button click on the current item."""
-        
+
         self.getFlatReviewContext().clickCurrent(1)
         return True
-    
-    
+
     def rightClickReviewItem(self, inputEvent=None):
         """Performs a right mouse button click on the current item."""
-        
+
         self.getFlatReviewContext().clickCurrent(3)
         return True
-    
 
     def reviewCurrentLine(self, inputEvent):
         """Presents the current flat review line via braille and speech."""
-        
+
         context = self.getFlatReviewContext()
 
         [string, x, y, width, height] = \
@@ -1580,10 +1533,9 @@ class Script(script.Script):
                 speech.speak(string)
 
         self.updateBrailleReview()
-        
+
         return True
 
-            
     def reviewPreviousLine(self, inputEvent):
         """Moves the flat review context to the beginning of the
         previous line."""
@@ -1592,14 +1544,13 @@ class Script(script.Script):
 
         moved = context.goPrevious(flat_review.Context.LINE,
                                    flat_review.Context.WRAP_LINE)
-        
+
         if moved:
             self.reviewCurrentLine(inputEvent)
             self.targetCursorCell = braille.cursorCell
-                 
+
         return True
 
-            
     def reviewHome(self, inputEvent):
         """Moves the flat review context to the top left of the current
         window."""
@@ -1607,13 +1558,12 @@ class Script(script.Script):
         context = self.getFlatReviewContext()
 
         context.goBegin()
-        
+
         self.reviewCurrentLine(inputEvent)
         self.targetCursorCell = braille.cursorCell
-                 
+
         return True
 
-            
     def reviewNextLine(self, inputEvent):
         """Moves the flat review context to the beginning of the
         next line.  Places the flat review cursor at the beginning
@@ -1623,14 +1573,13 @@ class Script(script.Script):
 
         moved = context.goNext(flat_review.Context.LINE,
                                flat_review.Context.WRAP_LINE)
-        
+
         if moved:
             self.reviewCurrentLine(inputEvent)
             self.targetCursorCell = braille.cursorCell
-                 
+
         return True
 
-            
     def reviewBottomLeft(self, inputEvent):
         """Moves the flat review context to the beginning of the
         last line in the window.  Places the flat review cursor at
@@ -1642,10 +1591,9 @@ class Script(script.Script):
         context.goBegin(flat_review.Context.LINE)
         self.reviewCurrentLine(inputEvent)
         self.targetCursorCell = braille.cursorCell
-            
+
         return True
 
-            
     def reviewEnd(self, inputEvent):
         """Moves the flat review context to the end of the
         last line in the window.  Places the flat review cursor
@@ -1653,13 +1601,12 @@ class Script(script.Script):
 
         context = self.getFlatReviewContext()
         context.goEnd()
-        
+
         self.reviewCurrentLine(inputEvent)
         self.targetCursorCell = braille.cursorCell
-            
+
         return True
 
-            
     def reviewCurrentItem(self, inputEvent, targetCursorCell=0):
         """Presents the current item to the user."""
 
@@ -1686,17 +1633,16 @@ class Script(script.Script):
                 else:
                     speech.speak(string)
 
-        self.updateBrailleReview(targetCursorCell)        
+        self.updateBrailleReview(targetCursorCell)
 
         return True
-
 
     def reviewCurrentAccessible(self, inputEvent):
         context = self.getFlatReviewContext()
         [string, x, y, width, height] = \
                  context.getCurrent(flat_review.Context.ZONE)
         orca.drawOutline(x, y, width, height)
-        
+
         # Don't announce anything from speech if the user used
         # the Braille display as an input device.
         #
@@ -1704,25 +1650,23 @@ class Script(script.Script):
             speech.speakUtterances(
                 self.speechGenerator.getSpeech(
                     context.getCurrentAccessible(), False))
-            
-        return True
 
+        return True
 
     def reviewPreviousItem(self, inputEvent):
         """Moves the flat review context to the previous item.  Places
         the flat review cursor at the beginning of the item."""
-        
+
         context = self.getFlatReviewContext()
 
         moved = context.goPrevious(flat_review.Context.WORD,
                                    flat_review.Context.WRAP_LINE)
-        
+
         if moved:
             self.reviewCurrentItem(inputEvent)
             self.targetCursorCell = braille.cursorCell
-            
-        return True
 
+        return True
 
     def reviewNextItem(self, inputEvent):
         """Moves the flat review context to the next item.  Places
@@ -1732,14 +1676,13 @@ class Script(script.Script):
 
         moved = context.goNext(flat_review.Context.WORD,
                                flat_review.Context.WRAP_LINE)
-        
+
         if moved:
             self.reviewCurrentItem(inputEvent)
             self.targetCursorCell = braille.cursorCell
-            
+
         return True
 
-            
     def reviewCurrentCharacter(self, inputEvent):
         context = self.getFlatReviewContext()
 
@@ -1762,11 +1705,10 @@ class Script(script.Script):
                     speech.speak(string, self.voices["uppercase"])
                 else:
                     speech.speak(string)
-            
-        self.updateBrailleReview()
-        
-        return True
 
+        self.updateBrailleReview()
+
+        return True
 
     def reviewPreviousCharacter(self, inputEvent):
         """Moves the flat review context to the previous character.  Places
@@ -1776,27 +1718,25 @@ class Script(script.Script):
 
         moved = context.goPrevious(flat_review.Context.CHAR,
                                    flat_review.Context.WRAP_LINE)
-        
+
         if moved:
             self.reviewCurrentCharacter(inputEvent)
             self.targetCursorCell = braille.cursorCell
-            
+
         return True
 
-            
     def reviewEndOfLine(self, inputEvent):
         """Moves the flat review context to the end of the line.  Places
         the flat review cursor at the end of the line."""
 
         context = self.getFlatReviewContext()
         context.goEnd(flat_review.Context.LINE)
-        
+
         self.reviewCurrentCharacter(inputEvent)
-        self.targetCursorCell = braille.cursorCell            
-            
+        self.targetCursorCell = braille.cursorCell
+
         return True
 
-            
     def reviewNextCharacter(self, inputEvent):
         """Moves the flat review context to the next character.  Places
         the flat review cursor at character."""
@@ -1805,14 +1745,13 @@ class Script(script.Script):
 
         moved = context.goNext(flat_review.Context.CHAR,
                                flat_review.Context.WRAP_LINE)
-        
+
         if moved:
             self.reviewCurrentCharacter(inputEvent)
             self.targetCursorCell = braille.cursorCell
-            
+
         return True
 
-            
     def reviewAbove(self, inputEvent):
         """Moves the flat review context to the character most directly
         above the current flat review cursor.  Places the flat review
@@ -1822,13 +1761,12 @@ class Script(script.Script):
 
         moved = context.goAbove(flat_review.Context.CHAR,
                                 flat_review.Context.WRAP_LINE)
-        
+
         if moved:
             self.reviewCurrentItem(inputEvent, self.targetCursorCell)
-                 
+
         return True
 
-            
     def reviewBelow(self, inputEvent):
         """Moves the flat review context to the character most directly
         below the current flat review cursor.  Places the flat review
@@ -1838,13 +1776,12 @@ class Script(script.Script):
 
         moved = context.goBelow(flat_review.Context.CHAR,
                                 flat_review.Context.WRAP_LINE)
-        
+
         if moved:
             self.reviewCurrentItem(inputEvent, self.targetCursorCell)
-                 
+
         return True
 
-            
     def showZones(self, inputEvent):
         """Debug routine to paint rectangles around the discrete
         interesting (e.g., text)  zones in the active window for
@@ -1862,8 +1799,7 @@ class Script(script.Script):
                                  False)
             debug.println(debug.LEVEL_OFF, string)
         self.flatReviewContext = None
-        
-        
+
 ########################################################################
 #                                                                      #
 # ACCESSIBLE TEXT OUTPUT FUNCTIONS                                     #
@@ -1880,12 +1816,11 @@ def sayLine(obj):
     - obj: an Accessible object that implements the AccessibleText
            interface
     """
-    
+
     # Get the AccessibleText interface of the provided object
     #
-    result = a11y.getTextLineAtCaret(obj)
+    result = atspi.getTextLineAtCaret(obj)
     speech.speak(result[0])
-    
 
 def sayWord(obj):
     """Speaks the word at the caret.  [[[TODO: WDW - what if there is no
@@ -1895,13 +1830,12 @@ def sayWord(obj):
     - obj: an Accessible object that implements the AccessibleText
            interface
     """
-    
+
     text = obj.text
     offset = text.caretOffset
     word = text.getTextAtOffset(offset,
-                                core.Accessibility.TEXT_BOUNDARY_WORD_START)
+                                atspi.Accessibility.TEXT_BOUNDARY_WORD_START)
     speech.speak(word[0])
-    
 
 def sayCharacter(obj):
     """Speak the character under the caret.  [[[TODO: WDW - isn't the
@@ -1911,7 +1845,7 @@ def sayCharacter(obj):
     - obj: an Accessible object that implements the AccessibleText
            interface
     """
-    
+
     text = obj.text
     offset = text.caretOffset
     character = text.getText(offset, offset+1)

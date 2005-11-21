@@ -24,7 +24,7 @@ import orca.orca as orca
 
 ########################################################################
 #                                                                      #
-# The Evolution script class.                                         #
+# The Evolution script class.                                          #
 #                                                                      #
 ########################################################################
 
@@ -32,13 +32,12 @@ class Script(default.Script):
 
     def __init__(self, app):
         """Creates a new script for the given application.
-        
+
         Arguments:
         - app: the application to create a script for.
         """
-        
-        default.Script.__init__(self, app)
 
+        default.Script.__init__(self, app)
 
     def onFocus(self, event):
         """Called whenever an object gets focus.

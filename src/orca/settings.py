@@ -85,24 +85,20 @@ voices = {
     HYPERLINK_VOICE : ACSS({ACSS.AVERAGE_PITCH : 4})
 }
 
-
 # If True, use braille.
 #
 USE_BRAILLE             = "useBraille"
 useBraille              = False
-
 
 # If True, use magnification.
 #
 USE_MAGNIFIER           = "useMagnifier"
 useMagnifier            = False
 
-
 # If True, use key echo.
 #
 USE_KEY_ECHO            = "useKeyEcho"
 useKeyEcho              = False
-
 
 # Script developer feature.  If False, just the default script
 # will be used.  Helps determine difference between custom
@@ -110,7 +106,6 @@ useKeyEcho              = False
 #
 USE_CUSTOM_SCRIPTS      = "speechVerbosityLevel"
 useCustomScripts        = True
-
 
 # Latent support to allow the user to override/define keybindings
 # and braille bindings.  Unsupported and undocumented for now.
@@ -122,15 +117,12 @@ keyBindingsMap          = {}
 BRAILLE_BINDINGS_MAP    = "brailleBindingsMap"
 brailleBindingsMap      = {}
 
-
-
 # Which packages to search, and the order in which to search,
 # for custom scripts.  These packages are expected to be on
 # the PYTHONPATH and/or subpackages of the "orca" package.
 #
 SCRIPT_PACKAGES         = "scriptPackages"
 scriptPackages          = ["orca-scripts", "scripts"]
-
 
 # Script developer feature.  If False, no AT-SPI object values
 # will be cached locally.  Helps determine if there might be a
@@ -140,16 +132,14 @@ scriptPackages          = ["orca-scripts", "scripts"]
 CACHE_VALUES            = "cacheValues"
 cacheValues             = False
 
-
 # Assists with learn mode (what you enter when you press Insert+F1
 # and exit when you press escape.
 #
 LEARN_MODE_ENABLED      = "learnModeEnabled"
 learnModeEnabled        = False
 
-
 _userSettings = None
-    
+
 def setLearnModeEnabled(enabled):
     """Turns learning mode on and off.  If learn mode is enabled, input event
     handlers will merely report what they do rather than calling the function
@@ -158,10 +148,9 @@ def setLearnModeEnabled(enabled):
     Arguments:
     - enabled: boolean that, if True, will enable learn mode
     """
-    
+
     global learnModeEnabled
     learnModeEnabled = enabled
-
 
 def getSetting(name, default=None):
     """Obtain the value for the given named attribute, trying from the
@@ -194,7 +183,7 @@ def getSetting(name, default=None):
         except:
             debug.printException(debug.LEVEL_SEVERE)
             _userSettings = 0
-    
+
     thisModule = sys.modules[__name__]
     if _userSettings and hasattr(_userSettings, name):
         return getattr(_userSettings, name)
@@ -203,14 +192,11 @@ def getSetting(name, default=None):
     else:
         return default
 
-
-
 # A list of package names to search for script modules.  The
 # focus_tracking_presenter will search these in order when
-# looking for a script module.  
+# looking for a script module.
 #
 scriptPackages = ["orca-scripts", "scripts"]
-
 
 # A list that helps us map application names to script module
 # names.  The key is the name of an application, and the value is
@@ -219,7 +205,6 @@ scriptPackages = ["orca-scripts", "scripts"]
 # extend or override any mappings.
 #
 _scriptMappings = []
-
 
 def setScriptMapping(regExpression, moduleName):
     """Tells this module what script module to look for a given
@@ -236,7 +221,6 @@ def setScriptMapping(regExpression, moduleName):
 
     _scriptMappings.insert(0, [regExpression, moduleName])
 
-
 def getScriptModuleName(app):
     """Returns the module name of the script to use for a given
     application.  Any script mapping set via the setScriptMapping
@@ -246,7 +230,7 @@ def getScriptModuleName(app):
     Arguments:
     - app: the application to find a script module name for
     """
-    
+
     for mapping in _scriptMappings:
         regExpression = mapping[0]
         moduleName = mapping[1]
@@ -254,7 +238,6 @@ def getScriptModuleName(app):
             return moduleName
 
     return app.name
-
 
 setScriptMapping(re.compile('[\S\s]*StarOffice[\s\S]*'), "StarOffice")
 setScriptMapping(re.compile('[\E\e]*evolution[\e\E]*'), "Evolution")

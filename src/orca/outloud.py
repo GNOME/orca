@@ -41,7 +41,6 @@ def _update_map(table, key, format,  settings):
     for setting  in  settings:
         _table[key][setting[0]] = format % setting[1:]
 
-
 _table ={}
 #family codes:
 
@@ -121,12 +120,10 @@ _update_map(_table, ('female', 'average-pitch'),
 
 # pitch-range for male:
 
-
 #  Standard pitch range is 30 and is  mapped to
 # a setting of 5.
 # A value of 0 produces a flat monotone voice --maximum value of 100
 # produces a highly animated voice.
-
 
 _male_pr = [
     (0,0),
@@ -199,7 +196,7 @@ _update_map(_table, ('male', 'stress'),
 
 _update_map(_table, ('man', 'stress'),
             " `vr%s  ", _male_stress)
-  
+
 _update_map(_table, ('female', 'stress'),
             " `vr%s  ", _male_stress)
 
@@ -208,7 +205,6 @@ _update_map(_table, ('female', 'stress'),
 # Smoothness and richness vary inversely.
 # a  maximally smooth voice produces a quieter effect
 # a rich voice is "bright" in contrast.
-
 
 _male_richness = [
     (0, 0, 60),
@@ -222,7 +218,7 @@ _male_richness = [
     (8, 32, 97, ),
     (9, 36, 100)
     ]
-                  
+
 _update_map(_table, ('male', 'richness'),
             " `vy%s  `vv%s " ,_male_richness)
 
@@ -246,7 +242,7 @@ def getvoice(acss):
     specified  ACSS setting.
     Synthesizer code is a tupple of the form (open,close)
     where open sets the voice, and close resets it."""
-    
+
     name=acss.name()
     if name in _defined_voices: return _defined_voices[name]
     _defined_voices[name] =acss2voice(acss)

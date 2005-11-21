@@ -67,13 +67,6 @@ BONOBO_ACTIVATION_IDLDIR=`pkg-config --variable=idldir bonobo-activation-2.0`
 AT_SPI_IDLFLAGS="-I$BONOBO_IDLDIR -I$BONOBO_ACTIVATION_IDLDIR -I$AT_SPI_IDLDIR"
 AC_SUBST(AT_SPI_IDLFLAGS)
 
-# Setup build of core module
-
-PKG_CHECK_MODULES(core, \
-	gtk+-2.0 >= 2.4.0 libbonobo-2.0 >= 2.0.0 pyorbit-2 >= 2.0.0 \
-	pygtk-2.0 >= 2.4.0 gnome-python-2.0 >= 2.6.0)
-
-
 # Check for Python
 
 AM_PATH_PYTHON(2.0)
@@ -117,7 +110,6 @@ docs/pydoc/Makefile
 po/Makefile.in
 src/Makefile
 src/brl/Makefile
-src/core/Makefile
 src/orca/Makefile
 src/orca/scripts/Makefile
 src/orca/orca

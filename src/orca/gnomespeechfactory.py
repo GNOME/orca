@@ -20,6 +20,9 @@
 """Provides a SpeechServer factory for gnome-speech drivers.
 """
 
+import bonobo
+
+import atspi
 import debug
 import settings
 import speech
@@ -27,11 +30,10 @@ import speechserver
 
 from acss import ACSS
 from chnames import chnames
-from core import ORBit, bonobo
 
 from orca_i18n import _           # for gettext support
 
-ORBit.load_typelib('GNOME_Speech')
+atspi.ORBit.load_typelib('GNOME_Speech')
 import GNOME.Speech, GNOME__POA.Speech
 
 class SpeechCallback(GNOME__POA.Speech.SpeechCallback):
@@ -44,7 +46,7 @@ class SpeechCallback(GNOME__POA.Speech.SpeechCallback):
 
     Here's an idea of how to use this.  I'm just leaving this here to
     remind me what to do when callbacks are re-added...
-    
+
     # [[[TODO: WDW - the register succeeds on JDS/Suse but fails
     # on Fedora.  Dunno why, but we'll just limp along for now.
     # BTW, the error is on the freetts-synthesis-driver side:
@@ -57,7 +59,7 @@ class SpeechCallback(GNOME__POA.Speech.SpeechCallback):
     except:
         debug.printException(debug.LEVEL_SEVERE)
         debug.println(debug.LEVEL_CONFIGURATION,
-                      "Will not use speech callbacks.")    
+                      "Will not use speech callbacks.")
     """
 
     def __init__(self):
@@ -73,7 +75,7 @@ class SpeechCallback(GNOME__POA.Speech.SpeechCallback):
         - id:
         - offset:
         """
-        
+
         # Call our speech ended Python function if we have one
         #
         if type == GNOME.Speech.speech_callback_speech_ended:
@@ -87,7 +89,6 @@ class SpeechCallback(GNOME__POA.Speech.SpeechCallback):
         elif type == GNOME.Speech.speech_callback_speech_progress:
             self.position = offset
 
-
 class SpeechServer(speechserver.SpeechServer):
     """Provides SpeechServer implementation for gnome-speech."""
 
@@ -96,31 +97,30 @@ class SpeechServer(speechserver.SpeechServer):
                                                     0,
                                                     False)
         driver = driver._narrow(GNOME.Speech.SynthesisDriver)
-	isInitialized = driver.isInitialized()
-	if not isInitialized:
-	    isInitialized = driver.driverInit()
-	if isInitialized:
-	    return driver
-	else:
-	    return None
+        isInitialized = driver.isInitialized()
+        if not isInitialized:
+            isInitialized = driver.driverInit()
+        if not isInitialized:
+            driver = None
+	return driver
 
     __activateDriver = staticmethod(__activateDriver)
 
     def getFactoryName():
- 	"""Returns a localized name describing this factory."""
-	return _("GNOME Speech Services")
+        """Returns a localized name describing this factory."""
+        return _("GNOME Speech Services")
 
     getFactoryName = staticmethod(getFactoryName)
 
     def getSpeechServerInfos():
         """Enumerate available speech servers.
 
-        Returns a list of [name, id] values identifying the available 
+        Returns a list of [name, id] values identifying the available
         speech servers.  The name is a human consumable string and the
-	id is an object that can be used to create a speech server
-	via the getSpeechServer method.
-	"""
-     
+        id is an object that can be used to create a speech server
+        via the getSpeechServer method.
+        """
+
         # Get a list of all the drivers on the system and find out how many
         # of them work.
         #
@@ -132,8 +132,8 @@ class SpeechServer(speechserver.SpeechServer):
         for server in servers:
             try:
                 driver = SpeechServer.__activateDriver(server.iid)
-		if driver:
-		    speechServerInfos.append([driver.driverName, server.iid])
+                if driver:
+                    speechServerInfos.append([driver.driverName, server.iid])
             except:
                 debug.printException(debug.LEVEL_WARNING)
 
@@ -142,48 +142,49 @@ class SpeechServer(speechserver.SpeechServer):
     getSpeechServerInfos = staticmethod(getSpeechServerInfos)
 
     def getSpeechServer(info=None):
-	"""
         """
+        """
+	server = None
 
-        servers = bonobo.activation.query(
+        gservers = bonobo.activation.query(
             "repo_ids.has('IDL:GNOME/Speech/SynthesisDriver:0.3')")
 
-	if len(servers) == 0:
-	    return None
+        if len(gservers) == 0:
+            return None
 
-	server = None     
+        gserver = None
 
-	# All this logic is to attempt to fall back to a working
-	# driver if the desired one cannot be found or is not
-	# not working.
-	#
-	if info is None:
-	    server = servers[0]
+        # All this logic is to attempt to fall back to a working
+        # driver if the desired one cannot be found or is not
+        # not working.
+        #
+	if not info:
+	    gserver = gservers[0]
 	else:
-            for s in servers:
+            for s in gservers:
                 if s.iid == info[1]:
-		    server = s
+		    gserver = s
 		    break
 
-	if server is None:
-	    return None
+	if not gserver:
+	    return server
 
 	try:
-	    driver = SpeechServer.__activateDriver(server.iid)
-	    return SpeechServer(driver, server.iid)
+	    driver = SpeechServer.__activateDriver(gserver.iid)
+	    server = SpeechServer(driver, gserver.iid)
 	except:
 	    if info:
-		return None
-	    for s in servers:
+		return server
+	    for s in gservers:
 		try:
 		    driver = SpeechServer.__activateDriver(s.iid)
 	            if driver:
-		        return SpeechServer(driver, s.iid)
+		        server = SpeechServer(driver, s.iid)
 		except:
 		    debug.printException(debug.LEVEL_WARNING)
 		    pass
 
-	return None    
+	return server
 
     getSpeechServer = staticmethod(getSpeechServer)
 
@@ -269,7 +270,7 @@ class SpeechServer(speechserver.SpeechServer):
         voices = settings.getSetting(settings.VOICES, None)
 	defaultACSS = voices[settings.DEFAULT_VOICE]
 
-	if acss is None:
+	if not acss:
 	    acss = defaultACSS
 
         if self.__speakers.has_key(acss.name()):
@@ -284,7 +285,7 @@ class SpeechServer(speechserver.SpeechServer):
 	elif defaultACSS.has_key(ACSS.FAMILY):
 	    family = defaultACSS[ACSS.FAMILY]
             familyName = family[speechserver.VoiceFamily.NAME]
-            
+
         voices = self.__driver.getAllVoices()
         found = False
         for voice in voices:
@@ -352,12 +353,12 @@ class SpeechServer(speechserver.SpeechServer):
 
         Arguments:
         - text: text to be spoken
-        - acss: acss.ACSS instance; if None, 
+        - acss: acss.ACSS instance; if None,
 		the default voice settings will be used.
 		Otherwise, the acss settings will be
 		used to augment/override the default
 		voice settings.
-                    
+
         Output is produced by the next call to speak.
         """
         self.speak(text, acss)
@@ -381,20 +382,20 @@ class SpeechServer(speechserver.SpeechServer):
 
         Arguments:
         - character: text to be spoken
-        - acss:      acss.ACSS instance; if None, 
+        - acss:      acss.ACSS instance; if None,
 		     the default voice settings will be used.
 		     Otherwise, the acss settings will be
 		     used to augment/override the default
 		     voice settings.
         """
         self.speak(character, acss)
-        
+
     def speakUtterances(self, list, acss=None):
         """Speaks the given list of utterances immediately.
 
         Arguments:
         - list: list of strings to be spoken
-        - acss: acss.ACSS instance; if None, 
+        - acss: acss.ACSS instance; if None,
 		the default voice settings will be used.
 		Otherwise, the acss settings will be
 		used to augment/override the default
@@ -404,14 +405,14 @@ class SpeechServer(speechserver.SpeechServer):
         for text in list:
             self.speak(text, acss, i == 0)
             i += 1
-            
+
     def speak(self, text=None, acss=None, interrupt=True):
         """Speaks all queued text immediately.  If text is not None,
         it is added to the queue before speaking.
 
         Arguments:
         - text:      optional text to add to the queue before speaking
-        - acss:      acss.ACSS instance; if None, 
+        - acss:      acss.ACSS instance; if None,
 		     the default voice settings will be used.
 		     Otherwise, the acss settings will be
 		     used to augment/override the default
@@ -426,12 +427,12 @@ class SpeechServer(speechserver.SpeechServer):
             defaultACSS = voices[settings.DEFAULT_VOICE]
 	    if defaultACSS.has_key(ACSS.RATE):
                 self.__setRate(speaker, defaultACSS[ACSS.RATE])
-        
-        if text is None:
+
+        if not text:
             if interrupt:
                 speech.stop()
             return
-        
+
         # If the text to speak is a single character, see if we have a
         # customized character pronunciation
         #
@@ -443,7 +444,7 @@ class SpeechServer(speechserver.SpeechServer):
                 pass
         else:
             text = text.replace("...", _(" dot dot dot"), 1)
-        
+
         # Send the text to the GNOME Speech speaker
         #
         debug.println(debug.LEVEL_INFO, "SPEECH OUTPUT: '" + text + "'")
@@ -457,7 +458,7 @@ class SpeechServer(speechserver.SpeechServer):
             #if interrupt:
             #    speaker.stop()
             self.__lastText = [text, acss]
-            return speaker.say(text)
+            speaker.say(text)
         except:
             # On failure, remember what we said, reset our connection to the
             # speech synthesis driver, and try to say it again.
@@ -500,7 +501,7 @@ class SpeechServer(speechserver.SpeechServer):
         [[[TODO: WDW - this is a hack for now.  Need to take min/max
         values in account, plus also need to take into account that
         different engines provide different rate ranges.]]]
-    
+
         Arguments:
         -acssName: the ACSS whose speech rate should be decreased
         """
@@ -540,20 +541,20 @@ class SpeechServer(speechserver.SpeechServer):
             except:
                 pass
         self.__speakers = {}
-        
+
         try:
             self.__driver.unref()
         except:
             pass
 
         self.__driver = None
-    
+
     def __reset(self, text=None, acss=None):
         """Resets the speech engine."""
-        
+
         speakers = self.__speakers
         self.shutdown()
-        
+
         servers = bonobo.activation.query(
             "repo_ids.has('IDL:GNOME/Speech/SynthesisDriver:0.3')")
 

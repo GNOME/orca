@@ -52,7 +52,7 @@ class ACSS(dict):
         RATE :          50,
         GAIN :          5,
         AVERAGE_PITCH : 5,
-        PITCH_RANGE :   5, 
+        PITCH_RANGE :   5,
         STRESS :        5,
         RICHNESS :      5,
         PUNCTUATIONS :  'all'
@@ -73,7 +73,7 @@ class ACSS(dict):
         """Update name if we delete a key."""
         dict.__delitem__(self,key)
         self.updateName()
-    
+
     def updateName(self):
         """Update name based on settings."""
         _name='acss-'

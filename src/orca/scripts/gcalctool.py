@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004 Sun Microsystems Inc.
+# Copyright 2004-2005 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -38,17 +38,16 @@ class Script(default.Script):
         """Creates a new script for the given application.  Callers
         should use the getScript factory method instead of calling
         this constructor directly.
-        
+
         Arguments:
         - app: the application to create a script for.
         """
-        
+
         default.Script.__init__(self, app)
 
         self._display = None
         self._display_txt = None
 
-        
     def onWindowActivated(self, event):
         """Called whenever one of gcalctool's toplevel windows is activated.
 
@@ -65,12 +64,12 @@ class Script(default.Script):
             # The widget hierarchy for gcalctool differs depending upon the
             # version.
             #
-            # In GNOME 2.6 (gcalctool version 4.3.51 for example), the 
+            # In GNOME 2.6 (gcalctool version 4.3.51 for example), the
             # display area was a text_view widget. This can be found by
             # looking for an accessible object with a role of ROLE_TEXT.
             #
-            # For GNOME 2.10 and 2.12 there is a scrolled_window containing 
-            # the text_view display. This can be found by looking for an 
+            # For GNOME 2.10 and 2.12 there is a scrolled_window containing
+            # the text_view display. This can be found by looking for an
             # accessible object with a role of ROLE_EDITBAR.
             #
             #
@@ -94,7 +93,6 @@ class Script(default.Script):
             # Call the default onWindowActivated function
             #
             default.Script.onWindowActivated(self, event)
-
 
     def onTextInserted(self, event):
         """Called whenever text is inserted into gcalctool's text display.

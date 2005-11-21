@@ -1,1 +1,1 @@
-SUBDIRS = brl core orca
+SUBDIRS = brl orca

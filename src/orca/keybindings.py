@@ -21,9 +21,33 @@
 events.
 """
 
-import core
+import gtk
+
+import atspi
 import debug
-import kbd
+
+_keycodeCache = {}
+
+def _getKeycode(keysym):
+    """Converts an XKeysym string (e.g., 'KP_Enter') to a keycode that
+    should match the event.hw_code for key events.
+
+    Arguments:
+    - keysym: a string that is a valid representation of an XKeysym.
+
+    Returns an integer representing a key code that should match the
+    event.hw_code for key events.
+    """
+
+    if not _keycodeCache.has_key(keysym):
+        keymap = gtk.gdk.keymap_get_default()
+        entries = keymap.get_entries_for_keyval(
+            gtk.gdk.keyval_from_name(keysym))
+        if entries:
+            _keycodeCache[keysym] = entries[0][0]
+        else:
+            _keycodeCache[keysym] = 0
+    return _keycodeCache[keysym]
 
 class KeyBinding:
     """A single key binding, consisting of a keycode, a modifier mask,
@@ -38,10 +62,10 @@ class KeyBinding:
           from /usr/include/X11/keysymdef.h with the preceding 'XK_'
           removed (e.g., XK_KP_Enter becomes the string 'KP_Enter').
         - modifier_mask: bit mask where a set bit tells us what modifiers
-          we care about (see core.Accessibility.MODIFIER_*)
+          we care about (see atspi.Accessibility.MODIFIER_*)
         - modifiers: the state the modifiers we care about must be in for
           this key binding to match an input event (see also
-          core.Accessibility.MODIFIER_*)
+          atspi.Accessibility.MODIFIER_*)
         - handler: the InputEventHandler for this key binding
         """
 
@@ -57,11 +81,11 @@ class KeyBinding:
         """
 
         # We lazily bind the keycode.  The primary reason for doing this
-        # is so that core does not have to be initialized before setting
+        # is so that atspi does not have to be initialized before setting
         # keybindings in the user's preferences file.
         #
         if not self.keycode:
-            self.keycode = kbd.XKeysymStringToKeycode(self.keysymstring)
+            self.keycode = _getKeycode(self.keysymstring)
 
         if self.keycode == keycode:
             result = modifiers & self.modifier_mask
@@ -69,30 +93,30 @@ class KeyBinding:
         else:
             return False
 
-        
 class KeyBindings:
     """Structure that maintains a set of KeyBinding instances.
     """
-    
+
     def __init__(self):
         self.keyBindings = []
 
     def add(self, keyBinding):
         """Adds the given KeyBinding instance to this set of keybindings.
         """
-        
+
         self.keyBindings.append(keyBinding)
-        
+
     def getInputHandler(self, keyboardEvent):
         """Returns the input handler of the key binding that matches the
         given keycode and modifiers, or None if no match exists.
         """
-        
+	handler = None
         for keyBinding in self.keyBindings:
             if keyBinding.matches(keyboardEvent.hw_code, \
                                   keyboardEvent.modifiers):
-                return keyBinding.handler
-        return None
+                handler = keyBinding.handler
+		break
+        return handler
 
     def consumeKeyboardEvent(self, script, keyboardEvent):
         """Attempts to consume the given keyboard event.  If these
@@ -104,7 +128,7 @@ class KeyBindings:
         handler = self.getInputHandler(keyboardEvent)
         if handler:
             consumed = True
-            if keyboardEvent.type == core.Accessibility.KEY_PRESSED_EVENT:
+            if keyboardEvent.type == atspi.Accessibility.KEY_PRESSED_EVENT:
                 try:
                     handler.processInputEvent(script, keyboardEvent)
                 except:

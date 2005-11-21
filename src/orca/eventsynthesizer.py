@@ -20,14 +20,14 @@
 """Provides support for synthesizing keyboard and mouse events.
 """
 
+import atspi
 import debug
-import core
 
 def generateMouseEvent(x, y, eventName):
     """Synthesize a mouse event at a specific screen coordinate.
     Most AT clients should use the #AccessibleAction interface when
     tempted to generate mouse events, rather than this method.
-    
+
     Event names: b1p = button 1 press; b2r = button 2 release;
                  b3c = button 3 click; b2d = button 2 double-click;
                  abs = absolute motion; rel = relative motion.
@@ -41,10 +41,9 @@ def generateMouseEvent(x, y, eventName):
     debug.println(debug.LEVEL_FINER,
                   "SYNTHESIZING MOUSE EVENT: (%d, %d) %s"\
                   % (x, y, eventName))
-    
-    d = core.registry.getDeviceEventController()    
+
+    d = atspi.Registry().registry.getDeviceEventController()
     d.generateMouseEvent(x, y, eventName)
-    
 
 def clickObject(obj, button):
     """Performs a button click on the given Accessible.
@@ -59,7 +58,6 @@ def clickObject(obj, button):
     y = extents.y + extents.height/2
     generateMouseEvent(x, y, "b%dc" % button)
 
-
 def clickPoint(x, y, button):
     """Performs a button click on the given point.
 
@@ -70,7 +68,6 @@ def clickPoint(x, y, button):
     """
 
     generateMouseEvent(x, y, "b%dc" % button)
-
 
 def generateKeyboardEvent(keycode, keystring, type):
     """Generates a keyboard event.
@@ -85,9 +82,9 @@ def generateKeyboardEvent(keycode, keystring, type):
               as though a composing input method (such as XIM) were used.
     - type:   an AccessibleKeySynthType flag indicating whether keyval
               is to be interpreted as a keysym rather than a keycode
-              (core.Accessibility.KEY_SYM), or whether to synthesize KEY_PRESS,
-              KEY_RELEASE, or both (KEY_PRESSRELEASE).
+              (atspi.Accessibility.KEY_SYM), or whether to synthesize
+	      KEY_PRESS, KEY_RELEASE, or both (KEY_PRESSRELEASE).
     """
-    
-    d = core.registry.getDeviceEventController()
+
+    d = atspi.Registry().registry.getDeviceEventController()
     d.generateKeyboardEvent(keycode, keystring, type)

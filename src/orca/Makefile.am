@@ -8,8 +8,8 @@ orca_pathdir=$(pyexecdir)
 
 orca_python_PYTHON = \
 	__init__.py \
-	a11y.py \
 	acss.py \
+	atspi.py \
 	braille.py \
 	braillegenerator.py \
 	chnames.py \
@@ -23,13 +23,13 @@ orca_python_PYTHON = \
 	gnomespeechfactory.py \
 	hierarchical_presenter.py \
 	input_event.py \
-	kbd.py \
 	keybindings.py \
 	keynames.py \
 	mag.py \
 	outloud.py \
 	orca.py \
 	orca_i18n.py \
+	presentation_manager.py \
 	rolenames.py \
 	script.py \
 	settings.py \
