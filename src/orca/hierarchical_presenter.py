@@ -224,7 +224,7 @@ class HierarchicalPresenter(presentation_manager.PresentationManager):
             brltext = brltext + " " + action.getName(i)
             i = i + 1
 
-        debug.println(debug.LEVEL_INFO, brltext)
+        debug.println(debug.LEVEL_OFF, brltext)
 
         braille.displayMessage(brltext)
 
@@ -239,7 +239,7 @@ class HierarchicalPresenter(presentation_manager.PresentationManager):
         brltext = "Component: x=%d y=%d w=%d h=%d" \
                   % (extents.x, extents.y, extents.width, extents.height)
 
-        debug.println(debug.LEVEL_INFO, brltext)
+        debug.println(debug.LEVEL_OFF, brltext)
 
         braille.displayMessage(brltext)
 
@@ -251,7 +251,7 @@ class HierarchicalPresenter(presentation_manager.PresentationManager):
 
         brltext = "Hypertext: %d links" % hypertext.getNLinks()
 
-        debug.println(debug.LEVEL_INFO, brltext)
+        debug.println(debug.LEVEL_OFF, brltext)
 
         braille.displayMessage(brltext)
 
@@ -264,7 +264,7 @@ class HierarchicalPresenter(presentation_manager.PresentationManager):
         brltext = "Selection: %d selected children" \
 		  % selection.nSelectedChildren
 
-        debug.println(debug.LEVEL_INFO, brltext)
+        debug.println(debug.LEVEL_OFF, brltext)
 
         braille.displayMessage(brltext)
 
@@ -276,7 +276,7 @@ class HierarchicalPresenter(presentation_manager.PresentationManager):
 
         brltext = "Table: rows=%d cols=%d" % (table.nRows, table.nColumns)
 
-        debug.println(debug.LEVEL_INFO, brltext)
+        debug.println(debug.LEVEL_OFF, brltext)
 
         braille.displayMessage(brltext)
 
@@ -286,9 +286,10 @@ class HierarchicalPresenter(presentation_manager.PresentationManager):
         if not text:
             return
 
-        brltext = "Text: "
+        brltext = "Text (len=%d): %s" \
+                  % (text.characterCount, text.getText(0, -1))
 
-        debug.println(debug.LEVEL_INFO, brltext)
+        debug.println(debug.LEVEL_OFF, brltext)
 
         braille.displayMessage(brltext)
 
@@ -301,7 +302,7 @@ class HierarchicalPresenter(presentation_manager.PresentationManager):
         brltext = "Value: min=%f current=%f max=%f" \
                   % (value.minimumValue, value.currentValue, value.maximumValue)
 
-        debug.println(debug.LEVEL_INFO, brltext)
+        debug.println(debug.LEVEL_OFF, brltext)
 
         braille.displayMessage(brltext)
 
@@ -428,12 +429,16 @@ class HierarchicalPresenter(presentation_manager.PresentationManager):
 
         speech.speak(_("Switching to hierarchical navigation mode."))
 
+
         win = orca.findActiveWindow()
 
         if win:
             self._currentObject = win.app
             self._displayAccessible(self._currentObject)
-
+        else:
+            self._currentObject = orca.apps[0]
+            self._displayAccessible(self._currentObject)
+            
     def deactivate(self):
         """Called when this presentation manager is deactivated."""
         orca.outlineAccessible(None)
