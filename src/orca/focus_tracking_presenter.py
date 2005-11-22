@@ -246,88 +246,89 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         - e: an at-spi event.
         """
 
-	debug.println(debug.LEVEL_FINEST, "Queue event %s" % e.type)
-	self._eventQueue.put(e)
-	if not self._gidle_id:
-	    self._gidle_id = gobject.idle_add(self._dequeueObjectEvent)
-	
-    def _dequeueObjectEvent(self):
-        """Handles all events destined for scripts.  Called by the GTK
-	idle thread.
-        """
-
-	e = self._eventQueue.get()
-	debug.println(debug.LEVEL_FINEST, "Dequeue event %s" % e.type)
-	self._processObjectEvent(e)
-	if self._eventQueue.empty():
-	    self._gidle_id = 0
-	    return False
-	else:
-	    return True
-	
-    def _processObjectEvent(self, e):
-        """Handles all events destined for scripts.
-
-        Arguments:
-        - e: an at-spi event.
-        """
-
-        debug.printObjectEvent(debug.LEVEL_FINEST, e)
-
-        # Reclaim (delete) any scripts when desktop children go away.
-        # The idea here is that a desktop child is an app.  We also
-        # generally do not like object:children-changed:remove or
-        # object:property-change:accessible-parent events because they
-        # indicate something is now whacked with the hierarchy, so we
-        # just ignore them.
+        # Uncomment these lines if you want to see what it's like without
+        # the queue.
         #
-        if e.type == "object:children-changed:remove":
-            if e.source == self.registry.desktop:
-                self._reclaimScripts()
-            return
-        if e.type == "object:property-change:accessible-parent":
-            return
-
+        #self._processObjectEvent(atspi.Event(e))
+        #return
+    
         # We ignore defunct objects and let the atspi module take care of them
         # for us.
         #
         if (e.type == "object:state-changed:defunct"):
             return
 
-        # [[[TODO: WDW - HACK because tickling gedit when it is starting can
-        # cause gedit to issue the following message:
+        # We also generally do not like
+        # object:property-change:accessible-parent events because they
+        # indicate something is now whacked with the hierarchy, so we
+        # just ignore them and let the atspi module take care of it for
+        # us.
         #
-        # (gedit:31434): GLib-GObject-WARNING **: invalid cast from
-        # `SpiAccessible' to `BonoboControlAccessible'
-        #
-        # It seems as though whenever this message is issued, gedit will hang
-        # when you try to exit it.  Debugging has shown that the iconfied state
-        # in particular seems to indicate that an object is telling all
-        # assistive technologies to just leave it alone or it will pull the
-        # trigger on the application.]]]
-        #
-        if (e.type == "object:state-changed:iconified"):
+        if e.type == "object:property-change:accessible-parent":
             return
 
-        # Convert the AT-SPI event into a Python Event that we can annotate.
-        # Copy relevant details from the event.
+        # We create the event here because it will ref everything we
+        # want it to ref, thus allowing things to survive until they
+        # are processed on the gidle thread.
         #
+	debug.println(debug.LEVEL_FINEST, "Queueing event %s" % e.type)
         try:
-            event = atspi.Event(e)
+            self._eventQueue.put(atspi.Event(e))
+            if not self._gidle_id:
+                self._gidle_id = gobject.idle_add(self._dequeueObjectEvent)
+	except:
+            debug.printException(debug.LEVEL_SEVERE)
+            debug.println(debug.LEVEL_SEVERE,
+                          "Exception above while processing event: " + e.type)
+        
+    def _dequeueObjectEvent(self):
+        """Handles all events destined for scripts.  Called by the GTK
+	idle thread.
+        """
+
+	event = self._eventQueue.get()
+	debug.println(debug.LEVEL_FINEST, "Dequeued event %s" % event.type)
+	self._processObjectEvent(event)
+	if self._eventQueue.empty():
+	    self._gidle_id = 0
+	    return False
+	else:
+	    return True
+	
+    def _processObjectEvent(self, event):
+        """Handles all events destined for scripts.
+
+        Arguments:
+        - e: an at-spi event.
+        """
+
+        debug.printObjectEvent(debug.LEVEL_FINEST, event)
+
+        # Reclaim (delete) any scripts when desktop children go away.
+        # The idea here is that a desktop child is an app. We also
+        # generally do not like object:children-changed:remove events,
+        # either.
+        #
+        if event.type == "object:children-changed:remove":
+            if event.source == self.registry.desktop:
+                self._reclaimScripts()
+            return
+
+        try:
             debug.printDetails(debug.LEVEL_FINEST, "    ", event.source)
         except CORBA.COMM_FAILURE:
             debug.printException(debug.LEVEL_FINEST)
             debug.println(debug.LEVEL_FINEST,
                           "COMM_FAILURE above while processing event: " \
-                          + e.type)
-            atspi.Accessible.deleteAccessible(e.source)
+                          + event.type)
+            atspi.Accessible.deleteAccessible(event.source)
             return
         except CORBA.OBJECT_NOT_EXIST:
-            debug.printException(debug.LEVEL_FINEST)
-            debug.println(debug.LEVEL_FINEST,
+            debug.printException(debug.LEVEL_SEVERE)
+            debug.println(debug.LEVEL_SEVERE,
                           "OBJECT_NOT_EXIST above while processing event: " \
-                          + e.type)
-            atspi.Accessible.deleteAccessible(e.source)
+                          + event.type)
+            atspi.Accessible.deleteAccessible(event.source)
             return
         except:
             debug.printException(debug.LEVEL_SEVERE)

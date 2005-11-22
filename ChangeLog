@@ -1,3 +1,8 @@
+2005-11-22  Willie Walker <william.walker@sun.com>
+
+	* src/orca/focus_tracking_presenter.py: resolve problem with event
+	sources being GC'd while waiting on the idle thread.
+	
 2005-11-21  Willie Walker <william.walker@sun.com>
 
 	* Nearly everything: replace core module and a11y.py with atspi.py.
