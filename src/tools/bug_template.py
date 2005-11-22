@@ -30,7 +30,6 @@ To reproduce bug x, follow these steps:
 3)
 """
 
-import sys
 import time
 
 import bonobo
