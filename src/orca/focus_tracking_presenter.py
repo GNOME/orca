@@ -356,8 +356,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             debug.printException(debug.LEVEL_SEVERE)
             debug.println(debug.LEVEL_SEVERE,
                           "COMM_FAILURE above while processing event: " \
-                          + e.type)
-            atspi.Accessible.deleteAccessible(e.source)
+                          + event.type)
+            atspi.Accessible.deleteAccessible(event.source)
         except:
             debug.printException(debug.LEVEL_SEVERE)
 
