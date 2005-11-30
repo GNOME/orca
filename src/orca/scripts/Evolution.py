@@ -17,6 +17,7 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+import orca.debug as debug
 import orca.default as default
 import orca.rolenames as rolenames
 import orca.orca as orca
@@ -44,5 +45,9 @@ class Script(default.Script):
         Arguments:
         - event: the Event
         """
+
+        debug.printObjectEvent(debug.LEVEL_OFF,
+                               event,
+                               event.source.toString())
 
         default.Script.onFocus(self, event)

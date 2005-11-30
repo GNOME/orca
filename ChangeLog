@@ -1,3 +1,8 @@
+2005-11-30  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py
+          Added in the debug message from Will for the onFocus method.
+
 2005-11-22  Willie Walker <william.walker@sun.com>
 
 	* src/tools/bug_template.py: add "direct to AT-SPI via IDL only"
