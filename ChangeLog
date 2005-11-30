@@ -1,3 +1,9 @@
+2005-11-30  Willie Walker <william.walker@sun.com>
+
+	* src/orca/Makefile.am: install orca convenience shell into 
+	${bindir) instead of $(prefix)/bin
+	* src/orca/speech.py: remove import of pdb
+
 2005-11-30  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py

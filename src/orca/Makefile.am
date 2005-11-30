@@ -2,7 +2,7 @@ orca_SCRIPTS = \
 	orca \
 	orca-setup
 
-orcadir=$(prefix)/bin
+orcadir=$(bindir)
 
 orca_pathdir=$(pyexecdir)
 

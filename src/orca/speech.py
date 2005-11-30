@@ -21,7 +21,6 @@
 as its speech server, or it can feel free to create one of its own.
 """
 
-import pdb
 import debug
 import settings
 
@@ -60,8 +59,6 @@ def init():
 
     if __speechserver:
         return
-
-    #pdb.set_trace()
 
     # First, find the factory module to use.  We will
     # allow the user to give their own factory module,
