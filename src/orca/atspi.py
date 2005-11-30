@@ -434,6 +434,16 @@ class Accessible:
         if not acc:
             return obj
 
+        if isinstance(acc, Accessible):
+            debug.println(
+                debug.LEVEL_WARNING,
+                "WARNING: atspi.Accessible.makeAccessible:\n"
+                "         Parameter acc passed in is a\n" \
+                "         Python Accessible instead of an\n" \
+                "         AT-SPI Accessible.\n"
+                "         Returning Python Accessible.")
+            return acc
+            
 	# Comment these two lines out to eliminate any local caching 
 	# of Accessible objects.
 	#

@@ -1,5 +1,11 @@
 2005-11-30  Willie Walker <william.walker@sun.com>
 
+	* src/orca/atspi.py: Fix for bug 319673: Accessible.__init__ now
+	checks to make sure it is not passed a Python Accessible. If it is,
+	it issues a warning and just returns the Python Accessible.
+	
+2005-11-30  Willie Walker <william.walker@sun.com>
+
 	* src/orca/Makefile.am: install orca convenience shell into 
 	${bindir) instead of $(prefix)/bin
 	* src/orca/speech.py: remove import of pdb
