@@ -1,3 +1,10 @@
+2005-12-01  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py
+          Better handling of reading the details of the current message
+          header that has focus. See comments in the Evolution.py script 
+          for further details.
+
 2005-11-30  Willie Walker <william.walker@sun.com>
 
 	* src/orca/atspi.py: Fix for bug 319673: Accessible.__init__ now
