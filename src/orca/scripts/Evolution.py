@@ -68,7 +68,7 @@ class Script(default.Script):
 
         if event.source.role == rolenames.ROLE_TABLE_CELL:
             parent = event.source.parent
-            if parent.name == "Message List":
+            if parent.role == rolenames.ROLE_TREE_TABLE:
                 row = parent.table.getRowAtIndex(event.source.index)
                 for i in range(1, parent.table.nColumns):
                     obj = parent.table.getAccessibleAt(row, i)

@@ -1,6 +1,12 @@
 2005-12-01  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py
+          Slight adjustment to look for the message header list by role
+          rather than name, to avoid localisation problems.
+
+2005-12-01  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py
           Better handling of reading the details of the current message
           header that has focus. See comments in the Evolution.py script 
           for further details.
