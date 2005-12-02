@@ -23,8 +23,6 @@ import os, signal, sys
 import atspi
 import braille
 import debug
-import focus_tracking_presenter
-import hierarchical_presenter
 import keynames
 import keybindings
 #import mag - [[[TODO: WDW - disable until I can figure out how to
@@ -59,10 +57,9 @@ MODIFIER_ORCA = 8
 #                                                                      #
 ########################################################################
 
-# The known presentation managers.
+# The known presentation managers (set up in start())
 #
-_PRESENTATION_MANAGERS = [focus_tracking_presenter.FocusTrackingPresenter(),
-                          hierarchical_presenter.HierarchicalPresenter()]
+_PRESENTATION_MANAGERS = None
 
 # The current presentation manager, which is an index into the
 # _PRESENTATION_MANAGERS list.
@@ -894,6 +891,8 @@ def start(registry):
     """Starts Orca.
     """
 
+    global _PRESENTATION_MANAGERS
+    
     if not _initialized:
         init(registry)
 
@@ -903,6 +902,13 @@ def start(registry):
     except:
         debug.printException(debug.LEVEL_SEVERE)
 
+    if not _PRESENTATION_MANAGERS:
+        import focus_tracking_presenter
+        import hierarchical_presenter
+        _PRESENTATION_MANAGERS = \
+            [focus_tracking_presenter.FocusTrackingPresenter(),
+             hierarchical_presenter.HierarchicalPresenter()]
+    
     _switchToPresentationManager(0) # focus_tracking_presenter
 
     registry.start()

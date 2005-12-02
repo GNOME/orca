@@ -1,5 +1,7 @@
 2005-12-02  Willie Walker <william.walker@sun.com>
 
+	* src/orca/orca.py: fix circular import for presentation managers
+	to allow pydoc to work better.
 	* src/orca/braille.py, src/orca/atspi.py: pydoc improvements.
 	* src/orca/kbd.y: remove obsolete file
 	* src/orca/mag.py: I believe I finally have the import worked
