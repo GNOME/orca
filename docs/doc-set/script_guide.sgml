@@ -1,7 +1,7 @@
 <!-- Copyright 2005, Sun Microsystems, Inc. -->
 
 <book>
-  <title>Orca Script Writing Guide</title>
+  <title id="script_guide">Orca Script Writing Guide</title>
   <bookinfo>
     &legal;
   </bookinfo>
@@ -51,7 +51,10 @@
       provides a "default" script that provides a reasonable default
       behavior for Orca.  This will not only serve as the "fallback
       script" for Orca, but will also typically serve as the "jumping
-      off" point for writing custom scripts.</para>
+      off" point for writing custom scripts.  Furthermore, keep in
+      mind that the "default" script is intended to cover a large
+      variety of applications.  As such, you may find that it is
+      not necessary to write a custom script.</para>
   </chapter>
 
 
@@ -65,7 +68,7 @@
 
   <chapter><title>Overview</title>
 
-    <para>The primary operating mode of Orca is the "focus tracking
+    <para>The primary operating mode of Orca is "focus tracking
       mode," where Orca keeps track of the most relevant user
       interface object that has keyboard focus.  When Orca detects
       changes to this object, which Orca refers to as the "locus of
@@ -119,22 +122,23 @@
             contains characters that are awkward in file system names.
             To extend or override this table, one can call the
             <literal>setScriptMapping</literal> method of the
-            <literal>focus_tracking_presenter</literal>.</para>
+            <literal>settings</literal> module.</para>
 
           <para>&detail; it is possible to tell Orca to bypass all
             custom script creation by setting
             <literal>useCustomScripts=False</literal> in your
-            <literal>~/.orca/user-settings.py</literal>.  This can be
-            useful for debugging purposes.</para>
+            <literal>~/.orca/user-settings.py</literal> module.  This
+            can be useful for debugging purposes.</para>
 
         </listitem>
         <listitem>
 
           <para>Each script module is expected to provide a
             <literal>Script</literal> class that ultimately extends
-            the <literal>orca.Script</literal> class defined 
-            <literal>script.py</literal>.  The constructor takes the
-            accessible application object as an argument.</para>
+            the <literal>orca.Script</literal> class defined in the
+            <literal>script.py</literal> module.  The constructor
+            takes the accessible application object as an
+            argument.</para>
 
           <para>The constructor for the <literal>Script</literal>
             instance is expected to define any keystrokes, braille
@@ -148,7 +152,8 @@
           <para>Once it has created a script, the
             <literal>focus_tracking_presenter</literal> will register
             event listeners for all AT-SPI events associated with
-            script.  When the
+            script (i.e., the script should not register these events
+            itself).  When the
             <literal>focus_tracking_presenter</literal> receives the
             events, it will pass the event directly to the script
             associated with the event, regardless if the application
@@ -161,10 +166,17 @@
             necessary) the script associated with the event and passes
             the event onto the required
             <literal>processObjectEvent</literal> method of the script
-            for processing.  The event has the following
+            for processing.  Each <literal>Event</literal> (see the
+            <literal>atspi</literal> module) has the following
             fields:</para>
 
           <itemizedlist>
+            <listitem>
+              <para><literal>source</literal>: an
+                <literal>Accessible</literal> (see the
+                <literal>atspi</literal> module) instance representing
+                the object associated with the event</para>
+            </listitem>
             <listitem>
               <para><literal>type</literal>: a string describing the
                 event (e.g.,
@@ -178,11 +190,6 @@
             <listitem>
               <para><literal>any_data</literal>: something associated
                 with the event (see the AT-SPI documentation)</para>
-            </listitem>
-            <listitem>
-              <para><literal>source</literal>: the
-                <literal>Accessible</literal> object instance
-                associated with the event</para>
             </listitem>
           </itemizedlist>
         </listitem>
@@ -265,6 +272,11 @@
         determines an application has gone away by detecting a 
         <literal>object:children-changed:remove</literal> event on
         the desktop.</para>
+
+      <para>&todo; it needs to be verified that scripts are actually
+        being reclaimed.  I think something somewhere is hanging on
+        to a handle of the script, preventing it from being garbage
+        collected.</para>
     </section>
 
     <section><title>Script Contract</title>
@@ -294,9 +306,22 @@
   -->
 
   <chapter id="customization"><title>Customized Behavior</title>
-    <para>The mapping to all the customized behavior of a script is done
-      in its constructor.  In its constructor, each script is expected 
-      to extend/override the following fields:</para>
+    <para>The customized behavior of a script is set up in its
+      constructor.  In its constructor, each script is expected to
+      extend/override several fields as illustrated in the following
+      diagram and describe below:</para>
+
+    <figure>
+      <title>Orca Script Diagram</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="script.jpg" format="JPEG">
+          </imageobject>
+          <textobject>
+            <phrase>Orca Script Diagram</phrase>
+          </textobject>
+        </mediaobject>      
+    </figure>
 
     <itemizedlist>
       <listitem>
@@ -304,11 +329,15 @@
           keys are strings that match AT-SPI event types (e.g.,
           <literal>focus:</literal>,
           <literal>object:text-caret-moved</literal>, etc.), and the
-          values are functions to handle the event.</para>
+          values are functions to handle the event.  Each function
+          is passed an <literal>Event</literal> instance (see the
+          <literal>atspi.py</literal> module) as its sole
+          parameter and no return value is expected.</para>
       </listitem>
       <listitem>
         <para><literal>keybindings</literal>: an instance of 
-          <literal>keybindings.KeyBindings</literal> that defines
+          <literal>keybindings.KeyBindings</literal> (see
+          the <literal>keybindings.py</literal> module) that defines
           the keystrokes the script is interested in.</para>
       </listitem>
       <listitem>
@@ -321,11 +350,11 @@
 
     <para>The constructor for the <literal>Script</literal> class,
       which all scripts should ultimately extend (most will extend the
-      <literal>Default</literal> class, which extends
-      <literal>Script</literal>), sets up empty values for each of 
-      these fields.  As such, a subclass merely needs to extend/override
-      these fields.  Each of these fields is described in more detail
-      in the following sections.</para>
+      <literal>Default</literal> class, which in turn extends
+      <literal>Script</literal>), sets up empty values for each of
+      these fields.  As such, a subclass merely needs to
+      extend/override these fields.  Each of these fields is described
+      in more detail in the following sections.</para>
 
     <section><title>Defining Event Listeners</title> 
 
@@ -360,9 +389,11 @@ self.listeners["focus:"] = self.onFocus
         method.  Instead, it merely needs to populate the
         <literal>listeners</literal> dictionary as appropriate.</para>
 
-      <para>The function for an event listener merely takes an event
-        and does whatever it wants, and the return value is ignored.
-        For example, the function definition associated with the above
+      <para>The function for an event listener merely takes an
+        <literal>Event</literal> instance (see the
+        <literal>atspi.py</literal> module) and does whatever it
+        wants; the return value is ignored.  For example, the function
+        definition associated with the above
         <literal>listeners</literal> entry might look like the
         following, where the <literal>event</literal> is described
         above:</para>
@@ -381,11 +412,146 @@ def onFocus(self, event):
 </programlisting>
 
     </section>
-    <section><title>Defining Keyboard Bindings</title>
-      <para>foo</para>
+
+    <section><title>Input Event Handlers</title>
+
+      <para>Before describing how to set up keyboard and braille event
+        handlers, it is import to first understand the
+        <literal>InputEventHandler</literal>, which is defined in the
+        <literal>input_event.py</literal> module.
+        <literal>InputEventHandler</literal>s serve a purpose of
+        holding a function to call for a particular input event, and a
+        human consumable string that provides a short description of
+        the function's behavior.  The main purpose of the
+        <literal>InputEventHandler</literal> is to provide support for
+        the "learn mode" of Orca.  If learn mode is enabled, the input
+        event handler will consume the input event (i.e., return True)
+        and merely speak and braille the human consumable string. If
+        learn mode is not enabled, the input event handler will pass
+        the active script and the input event on to the function,
+        returning the boolean value of the function as indication of
+        whether the event should be consumed by Orca or passed on to
+        the application.</para>
+
+      <para>The best place to look for examples of
+        <literal>InputEventHandler</literal>s is in the
+        <literal>default.py</literal> module.  For example, this
+        module defines an input event handler for telling the flat
+        review context to move to the home position of a
+        window:</para>
+
+<programlisting>
+reviewHomeHandler = input_event.InputEventHandler(
+            Script.reviewHome,
+            _("Moves flat review to the home position."))
+</programlisting>
+
+      <para>In this definition, <literal>default.py</literal> is creating
+        an <literal>InputEventHandler</literal> instance whose function is
+        the Script's method, <literal>reviewHome</literal> and whose 
+        human consumable text describes what will happen.  The Script's
+        <literal>reviewHome</literal> method is defined as follows:</para>
+
+<programlisting>
+def reviewHome(self, inputEvent):
+    """Moves the flat review context to the top left of the current
+    window."""
+    context = self.getFlatReviewContext()
+    context.goBegin()
+    self.reviewCurrentLine(inputEvent)
+    self.targetCursorCell = braille.cursorCell
+    return True
+</programlisting>
+
+      <para>Note that the method returns <literal>True</literal> to
+        indicate the input event has been consumed.</para>
+
     </section>
+
+    <section><title>Defining Keyboard Bindings</title>
+
+      <para>The keyboard bindings for a script are held in the
+        <literal>keybindings</literal> field, which is a
+        <literal>KeyBindings</literal> instance.  This field maintains
+        a set of <literal>KeyBinding</literal> instances.</para>
+
+      <para>Keyboard bindings merely define the keystroke and modifier
+        circumstances needed to invoke an
+        <literal>InputEventHandler</literal> instance.  This definition
+        is held in a <literal>KeyBinding</literal> instance (see the
+        <literal>keybindings.py</literal> module):</para>
+
+<programlisting>
+self.keybindings.add(
+    keybindings.KeyBinding("KP_7",
+                           1 << orca.MODIFIER_ORCA,
+                           1 << orca.MODIFIER_ORCA,
+                           reviewHomeHandler))
+</programlisting>
+
+      <para>The first parameter of a <literal>KeyBinding</literal> is
+        a string that represents an X Window System KeySym string for
+        the key.  This is typically a string from
+        <literal>/usr/include/X11/keysymdef.h</literal> with the
+        preceding 'XK_' removed (e.g., XK_KP_Enter becomes the string
+        'KP_Enter'), and is used as a means to express the physical
+        key associated with the KeySym.</para>
+
+      <para>The second parameter is a bit mask that defines which
+        modifiers the keybinding cares about.  If it does not care
+        about any modifier state, then this mask can be set to 0.  In
+        the example above, the keybinding is being told to pay
+        attention to the <literal>MODIFIER_ORCA</literal> modifier,
+        which is a modifier Orca sets when the "Insert" key is
+        pressed.  Other examples of modifier bit positions include
+        those defined in the AT-SPI Accessibility specification:
+        MODIFIER_SHIFT, MODIFIER_SHIFTLOCK, MODIFIER_CONTROL,
+        MODIFIER_ALT, MODIFIER_META, MODIFIER_META2, MODIFIER_META3,
+        and MODIFIER_NUMLOCK.  These can be obtained via the
+        <literal>orca.atspi.Accessibility</literal> field.  For
+        example,
+        <literal>orca.atspi.Accessibility.MODIFIER_SHIFTLOCK</literal>.</para>
+
+      <para>The third parameter is a bit mask that defines what the
+        modifier settings must be.  If a bit is set, it means the
+        associated modifier must be set.  The only meaningful bits in
+        this mask are those that are defined by the second
+        parameter.  In the example above, the keybinding cares
+        about the <literal>MODIFIER_ORCA</literal> modifier, and
+        the third parameter says this modifier must be set.</para>
+
+      <para>The last parameter is the
+        <literal>InputEventHandler</literal> to us if the user types a
+        keystroke qualified by the previous
+        parameters. <literal>InputEventHandler</literal>s are
+        described in the previous section.</para>
+    </section>
+
     <section><title>Defining Braille Bindings</title>
-      <para>foo</para>
+
+      <para>Refreshable braille displays have buttons that the user
+        can press.  The BrlTTY system provides a means for
+        standardizing the types of input events one can generate using
+        these buttons, and a script can set up braille bindings to
+        handle these events.</para>
+
+      <para>The braille bindings for a script are held in the
+        <literal>braillebindings</literal> field, which is a
+        dictionary.  The keys for the dictionary are BrlTTY constants
+        representing braille input events (see
+        <literal>braille.py</literal> for a list), and the values are
+        <literal>InputEventHandler</literal> instances:</para>
+
+<programlisting>
+self.braillebindings[braille.CMD_TOP_LEFT] = reviewHomeHandler
+</programlisting>
+
+      <para>In the above example, the BrlTTY
+        <literal>braille.CMD_TOP_LEFT</literal> input event has been
+        set to be handled by the same
+        <literal>reviewHomeHandler</literal> instance described
+        previously.</para>
+
     </section>
   </chapter>
 
@@ -533,7 +699,7 @@ OBJECT EVENT: window:activate detail=(0,0)
         see the following output:</para>
 
       <programlisting>
-ACTIVE SCRIPT: gnome-terminal (class=GnomeTerminal)
+ACTIVE SCRIPT: gnome-terminal (module=orca.scripts.gnome-terminal)
       </programlisting>
 
       <para>Notice that the class of the script instance is included.
@@ -570,11 +736,13 @@ ACTIVE SCRIPT: gnome-terminal (class=GnomeTerminal)
  
         <para>For the purposes of script writing, the main entry
           points of the <literal>speech.py</literal> module are
-          <literal>say</literal> and <literal>stop</literal></para>
-  
-        <para>&todo; [[[WDW - I'm not satisfied with
-          <literal>speech.py</literal>.  It will change before Orca 1.0 
-          is released, so be aware of this.]]]</para>
+          <literal>speak</literal>,
+          <literal>speakUtterances</literal>, and
+          <literal>stop</literal></para>
+
+        <para>See the <literal>speech.py</literal> module for more
+          information.</para>
+
       </section>
 
       <section><title><literal>speechgenerator.py</literal></title>
@@ -633,7 +801,7 @@ ACTIVE SCRIPT: gnome-terminal (class=GnomeTerminal)
 # Obtain speech verbosity level.  If it has not been set,
 # default to the VERBOSITY_LEVEL_VERBOSE level.
 #
-verbosity = settings.getSetting("speechVerbosityLevel",
+verbosity = settings.getSetting(settings.SPEECH_VERBOSITY_LEVEL,
                                 settings.VERBOSITY_LEVEL_VERBOSE)
         </programlisting>
 
@@ -641,7 +809,7 @@ verbosity = settings.getSetting("speechVerbosityLevel",
           <literal>~/.orca/user-settings.py</literal> module:</para>
 
         <programlisting>
-settings.setSpeechVerbosityLevel(settings.VERBOSITY_LEVEL_BRIEF)
+speechVerbosityLevel = settings.VERBOSITY_LEVEL_BRIEF
         </programlisting>
 
       </section>
@@ -734,7 +902,7 @@ settings.setSpeechVerbosityLevel(settings.VERBOSITY_LEVEL_BRIEF)
 # Obtain braille verbosity level.  If it has not been set,
 # default to the VERBOSITY_LEVEL_VERBOSE level.
 #
-verbosity = settings.getSetting("brailleVerbosityLevel",
+verbosity = settings.getSetting(settings.BRAILLE_VERBOSITY_LEVEL,
                                 settings.VERBOSITY_LEVEL_VERBOSE)
         </programlisting>
 
@@ -742,42 +910,11 @@ verbosity = settings.getSetting("brailleVerbosityLevel",
           <literal>~/.orca/user-settings.py</literal> module:</para>
 
         <programlisting>
-settings.setBrailleVerbosityLevel(settings.VERBOSITY_LEVEL_BRIEF)
+brailleVerbosityLevel = settings.VERBOSITY_LEVEL_BRIEF
         </programlisting>
 
       </section>
 
-    </section>
-
-    <section><title>Braille and Key Input Bindings</title>
-      <para>&todo; [[[WDW - write up how to define bindings.]]]</para>
-
-      <programlisting>
-from orca.input_event import InputEventHandler
-from orca.orca_i18n import _
-
-...
-
-    def __init__(self, app):
-        ...
-        someInputEventHandler = InputEventHandler(\
-            self.myHandler,
-            _("A one line description of this handler."))
-
-
-        self.keybindings.add(
-            keybindings.KeyBinding(
-                "KP_6",                   # XKeySym
-                1 << orca.MODIFIER_ORCA,  # Modifiers we care about
-                1 << orca.MODIFIER_ORCA,  # State they must be in
-                someInputEventHandler))   # Handler to handle this
-
-        ...
-
-        self.braillebindings[braille.CMD_LNUP] = someInputEventHandler
-        ...
-      </programlisting>
-        
     </section>
 
   </chapter>

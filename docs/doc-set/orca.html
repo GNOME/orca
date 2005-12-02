@@ -49,17 +49,17 @@ HREF="#AEN1630"
 ></DT
 ><DT
 ><A
-HREF="#AEN2078"
+HREF="#AEN1982"
 >Orca Script Writing Guide</A
 ></DT
 ><DT
 ><A
-HREF="#AEN2445"
+HREF="#AEN2408"
 >Orca Testing Plan</A
 ></DT
 ><DT
 ><A
-HREF="#AEN2459"
+HREF="#AEN2422"
 >Orca User's Guide</A
 ></DT
 ></DL
@@ -6221,59 +6221,59 @@ HREF="#AEN1641"
 ></DT
 ><DT
 ><A
-HREF="#AEN1644"
+HREF="#AEN1647"
 >Prerequisites</A
 ></DT
 ><DD
 ><DL
 ><DT
 ><A
-HREF="#AEN1647"
+HREF="#AEN1650"
 >Python v2.4 or better</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1652"
+HREF="#AEN1653"
 >pyorbit v2.0.0 or better</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1655"
+HREF="#AEN1656"
 >libbonobo v2.0.0 or better</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1658"
+HREF="#AEN1659"
 >gnome-python-2.0 v2.6.0 or better</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1661"
+HREF="#AEN1662"
 >pygtk-2.0 v2.4.0 or better</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1664"
->AT-SPI v1.6.2 or better</A
+HREF="#AEN1665"
+>AT-SPI v1.6.6 or better</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1669"
->gnome-speech v0.3.4 or better</A
+HREF="#AEN1670"
+>gnome-speech v0.3.9 or better</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1674"
+HREF="#AEN1675"
 >BrlTTY v3.6.1 or better</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1679"
+HREF="#AEN1680"
 >gnome-mag v0.11.11 or better</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1684"
+HREF="#AEN1685"
 >Keyboard Navigation</A
 ></DT
 ></DL
@@ -6287,43 +6287,19 @@ HREF="#ARCHITECTURE"
 ><DL
 ><DT
 ><A
-HREF="#AEN1698"
+HREF="#AEN1699"
 >Desktop and AT-SPI</A
 ></DT
-><DD
-><DL
 ><DT
 ><A
-HREF="#AEN1718"
->core</A
-></DT
-><DT
-><A
-HREF="#AEN1748"
->kbd</A
-></DT
-><DT
-><A
-HREF="#AEN1770"
->a11y</A
-></DT
-></DL
-></DD
-><DT
-><A
-HREF="#AEN1781"
+HREF="#AEN1752"
 >Orca</A
 ></DT
 ><DD
 ><DL
 ><DT
 ><A
-HREF="#AEN1784"
->orca</A
-></DT
-><DT
-><A
-HREF="#AEN1804"
+HREF="#AEN1765"
 >settings</A
 ></DT
 ></DL
@@ -6333,41 +6309,26 @@ HREF="#AEN1804"
 HREF="#SCRIPT"
 >Orca Scripts</A
 ></DT
-><DD
-><DL
 ><DT
 ><A
-HREF="#INPUTEVENTHANDLER"
->InputEventHandlers and
-        Learn Mode</A
-></DT
-><DT
-><A
-HREF="#FOCUS"
->focus_tracking_presenter</A
-></DT
-></DL
-></DD
-><DT
-><A
-HREF="#AEN1907"
+HREF="#AEN1804"
 >System Services</A
 ></DT
 ><DD
 ><DL
 ><DT
 ><A
-HREF="#AEN1910"
+HREF="#AEN1807"
 >speech</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1935"
+HREF="#AEN1842"
 >braille</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1964"
+HREF="#AEN1850"
 >mag</A
 ></DT
 ></DL
@@ -6376,12 +6337,12 @@ HREF="#AEN1964"
 ></DD
 ><DT
 ><A
-HREF="#AEN1970"
+HREF="#AEN1858"
 >Internationalization (I18N) Support</A
 ></DT
 ><DT
 ><A
-HREF="#AEN1979"
+HREF="#AEN1867"
 >Bibliography</A
 ></DT
 ></DL
@@ -6409,10 +6370,9 @@ CLASS="EMPHASIS"
   continuous modification and are also in various states of
   completeness.</P
 ><P
->This book covers the architecture and functional specification 
-      of Orca.  The specification was driven primarily by the functional 
-      requirements, which, in turn, were driven by the Orca User Experience 
-      Design.
+>This book covers the architecture and functional
+      specification of Orca.  The specification was driven primarily
+      by the Orca User Experience Design.
     </P
 ></DIV
 ><DIV
@@ -6423,16 +6383,45 @@ NAME="AEN1641"
 ></A
 >Introduction</H1
 ><P
->To be written.  Want to include diagram.  Input model
-      (keyboard and braille event handling).  Output model (speech
-      synthesis, braille, magnification).  Presentation manager
-      description.  Script description.</P
+>The Orca architecture has been driven primarily by the Orca
+      User Experience Design.  There are two primary operating modes
+      of Orca: a focus tracking mode and a flat review mode.</P
+><P
+>The focus tracking mode generally relies upon applications
+      to provide reasonable keyboard navigation techniques to allow
+      the user to operate the application without requiring the mouse.
+      As the user uses traditional keyboard navigation techniques to
+      move from component to component in the application (e.g.,
+      pressing the Tab key to move from pushbutton to text area to
+      toggle button, etc.), Orca will present this to the user via
+      braille, speech, magnification, or a combination thereof.  In
+      the cases where more complex navigation is needed, such as
+      structural navigation of complex text documents, Orca also
+      provides a facility to define keyboard and braille input events
+      that it can intercept and handle appropriately.</P
+><P
+>The flat review mode provides the user with the ability to
+      spatially navigate a window, giving them the ability to explore
+      as well as discover and interact with components in the window.
+      Orca provides a default set of keybindings for flat review, and
+      these keybindings can be easily redefined by the user.</P
+><P
+>The various modes of Orca are handled by "scripts," which
+      are Python modules that can provide a custom interpretation of
+      an application's interaction model.  It is not intended that 
+      there will be a unique script for every application.  Instead,
+      it is expected that there will be a general purpose script that
+      covers a large number of applications.  In the event that more
+      compelling or custom behavior is desired for an application,
+      however, one can use a custom script for the application.
+      Furthermore, scripts can subclass other scripts, allowing
+      them to be quite simple.</P
 ></DIV
 ><DIV
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN1644"
+NAME="AEN1647"
 ></A
 >Prerequisites</H1
 ><P
@@ -6442,32 +6431,26 @@ NAME="AEN1644"
       needs to be able to interact with speech synthesis, braille,
       and screen magnification services, but it need not be the
       provider of such services.  Given this, Orca has the following
-      dependencies.</P
+      dependencies:</P
 ><DIV
 CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1647"
+NAME="AEN1650"
 >Python v2.4 or better</A
 ></H2
 ><P
->Orca is written in the Python programming language, and
-        will depend upon features found in Python versions 2.4 and
+>Orca is written in the Python programming language and
+        depends upon features found in Python versions 2.4 and
         greater.</P
-><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> Verify this.  We may be able to get by with
-        earlier versions.</P
 ></DIV
 ><DIV
 CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1652"
+NAME="AEN1653"
 >pyorbit v2.0.0 or better</A
 ></H2
 ><P
@@ -6479,7 +6462,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1655"
+NAME="AEN1656"
 >libbonobo v2.0.0 or better</A
 ></H2
 ><P
@@ -6491,7 +6474,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1658"
+NAME="AEN1659"
 >gnome-python-2.0 v2.6.0 or better</A
 ></H2
 ><P
@@ -6503,7 +6486,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1661"
+NAME="AEN1662"
 >pygtk-2.0 v2.4.0 or better</A
 ></H2
 ><P
@@ -6518,8 +6501,8 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1664"
->AT-SPI v1.6.2 or better</A
+NAME="AEN1665"
+>AT-SPI v1.6.6 or better</A
 ></H2
 ><P
 > Orca's means of gathering information about the desktop
@@ -6548,8 +6531,8 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1669"
->gnome-speech v0.3.4 or better</A
+NAME="AEN1670"
+>gnome-speech v0.3.9 or better</A
 ></H2
 ><P
 >GNOME-Speech [<SPAN
@@ -6569,7 +6552,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1674"
+NAME="AEN1675"
 >BrlTTY v3.6.1 or better</A
 ></H2
 ><P
@@ -6591,7 +6574,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1679"
+NAME="AEN1680"
 >gnome-mag v0.11.11 or better</A
 ></H2
 ><P
@@ -6612,7 +6595,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1684"
+NAME="AEN1685"
 >Keyboard Navigation</A
 ></H2
 ><P
@@ -6633,12 +6616,13 @@ NAME="ARCHITECTURE"
 ><P
 >As illustrated in the high level Orca architecture diagram,
       the main components of Orca are as follows: desktop applications
-      that support the AT-SPI, the AT-SPI, Orca itself, Orca Scripts,
-      and system services (e.g., speech, Braille, magnification).</P
+      that support the AT-SPI, the AT-SPI registry and infrastructure,
+      Orca itself, Orca Scripts, and system services (e.g., speech,
+      braille, magnification).</P
 ><DIV
 CLASS="FIGURE"
 ><A
-NAME="AEN1690"
+NAME="AEN1691"
 ></A
 ><DIV
 CLASS="MEDIAOBJECT"
@@ -6648,11 +6632,11 @@ SRC="architecture.jpg"></P
 ></DIV
 ><P
 ><B
->Figure 1. High Level Orca Architecture. The main components
-        of Orca are as follows: desktop applications that support the
-        AT-SPI, the AT-SPI, Orca itself, Orca Scripts, and system
-        services.  The key communication between the components is
-        depicted.</B
+>Figure 1. High Level Orca Architecture. The main components of Orca
+        are as follows: desktop  applications that support the AT-SPI,
+        the  AT-SPI  registry and  infrastructure,  Orca itself,  Orca
+        Scripts, and  system services.  The  key communication between
+        the components is depicted.</B
 ></P
 ></DIV
 ><P
@@ -6663,7 +6647,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1698"
+NAME="AEN1699"
 >Desktop and AT-SPI</A
 ></H2
 ><P
@@ -6703,33 +6687,29 @@ CLASS="EMPHASIS"
 >TODO:</I
 > get link), and the custom
         toolkits used by applications such as Mozilla and Open
-        Office. <I
-CLASS="EMPHASIS"
->TODO:</I
-> get links to Mozilla and OOffice bridges.</P
+        Office.</P
 ><P
 >Assistive Technologies interact with the AT-SPI via two
         primary means: the AT-SPI registry and accessible objects.
         The AT-SPI registry permits assistive technologies to discover
         existing applications on the desktop and to register for event
-        notification for all AT-SPI object events (e.g., window
-        creation, focus changes, object state changes, etc.) and
-        device events (e.g., keyboard input events).  Accessible
-        objects provide the assistive technology with information
-        about the application, and tend to mirror the actual GUI
-        component hierarchy.  Accessible objects can be obtained in
-        three ways: </P
+        notification for AT-SPI events (e.g., window creation, focus
+        changes, object state changes, etc.) and device events (e.g.,
+        keyboard input events).  Accessible objects provide the
+        assistive technology with information about the application,
+        and tend to mirror the actual GUI component hierarchy.
+        Accessible objects can be obtained in three ways: </P
 ><P
 ></P
 ><OL
 TYPE="1"
 ><LI
 ><P
->From the AT-SPI Registry via queries on the desktop</P
+>From the AT-SPI registry via queries on the desktop</P
 ></LI
 ><LI
 ><P
->From an AT-SPI Registry event</P
+>From an AT-SPI event</P
 ></LI
 ><LI
 ><P
@@ -6738,404 +6718,227 @@ TYPE="1"
 ></LI
 ></OL
 ><P
->Orca's interaction with the AT-SPI is managed through the
-        following Orca modules: core, kbd, and a11y.</P
-><DIV
-CLASS="SECTION"
-><HR><H3
-CLASS="SECTION"
-><A
-NAME="AEN1718"
->core</A
-></H3
+>Orca's interaction with the AT-SPI is managed through
+        Orca's <TT
+CLASS="LITERAL"
+>atspi.py</TT
+> module.  The
+        <TT
+CLASS="LITERAL"
+>atspi.py</TT
+> module communicates directly with
+        the AT-SPI via the AT-SPI IDL interfaces and also provides a
+        number of classes that help with AT-SPI interaction:
+        <TT
+CLASS="LITERAL"
+>Registry</TT
+>, <TT
+CLASS="LITERAL"
+>Accessible</TT
+>,
+        and <TT
+CLASS="LITERAL"
+>Event</TT
+>.  The full documentation for
+        each of these classes is available in the pydoc for Orca, 
+        and the following paragraphs provide a brief overview.</P
 ><P
->The <I
-CLASS="EMPHASIS"
->core</I
-> module is an
-          Orca library written in C that provides Orca's Python
-          interface to the system's AT-SPI Registry.  The core module
-          provides Orca with the ability to enumerate the various
-          workspaces and applications running on the display, as well
-          as determine the existence of various physical heads (e.g.,
-          dual headed system).  The core module also gives Orca the
-          ability to register/deregister listeners for AT-SPI object
-          (e.g., window activation, focus changed, etc.)  and device
-          (e.g., keyboard) events.  Finally, the core also provides
-          Orca's interface to the Bonobo main and main_quit methods,
-          allowing Orca to interact with the AT-SPI.</P
+>The <TT
+CLASS="LITERAL"
+>Registry</TT
+> class provides a singleton
+        (actually a "Borg") class instance to access to the AT-SPI
+        registry.  It provides convenience methods for registering
+        AT-SPI event listeners and device event listeners, and also
+        provides the mechanism for starting and stopping event
+        delivery from the AT-SPI registry.</P
+><P
+>The <TT
+CLASS="LITERAL"
+>Accessible</TT
+> class provides a wrapper
+        for communicating with CORBA objects that implement the AT-SPI
+        Accessible and Application interfaces. Using Python's ability
+        to add new properties to a class instance at run time, Orca
+        can also annotate Accessible class instances with additional
+        information.  The main purpose of an Accessible is to provide
+        a local cache for accessible objects, preventing the need for
+        numerous round trip calls to the AT-SPI registry and
+        application for information.</P
+><P
+>The <TT
+CLASS="LITERAL"
+>Event</TT
+> class provides a wrapper for
+        converting AT-SPI events into Python <TT
+CLASS="LITERAL"
+>Event</TT
+>
+        instances.  The main purpose is to convert the AT-SPI
+        accessible source of the event into a Python
+        <TT
+CLASS="LITERAL"
+>Accessible</TT
+> instance and to also provide an
+        <TT
+CLASS="LITERAL"
+>Event</TT
+> instance that can be annotated by
+        scripts (the AT-SPI event is read-only).</P
 ><P
 >As illustrated in the high level Orca architecture
-          diagram, the core module has been used to register event and
-          device listeners with the AT-SPI registry.  Each exemplary
-          desktop application (Firefox, NetBeans, GAIM, StarOffice)
-          emits AT-SPI events to the AT-SPI registry which then
-          delivers them to the core module.  The core module then
-          calls all appropriate listeners for the events it receives
-          from the AT-SPI registry.  In this case, the orca module
-          receives events to keep track of the window with focus and
-          other interesting information, the a11y module (described
-          below) receives events to keep its local cache of accessible
-          objects up to date.  Not depicted, each application script
-          also receives AT-SPI events for components associated with
-          that application, regardless of whether the application has
-          keyboard focus or not.</P
+        diagram, the <TT
+CLASS="LITERAL"
+>atspi</TT
+> module has been used to
+        register event and device listeners with the AT-SPI registry.
+        Each exemplary desktop application (Firefox, NetBeans, GAIM,
+        StarOffice) emits AT-SPI events to the AT-SPI registry which
+        then delivers them to the <TT
+CLASS="LITERAL"
+>atspi</TT
+> module.
+        The <TT
+CLASS="LITERAL"
+>atspi</TT
+> module then calls all appropriate
+        listeners for the events it receives from the AT-SPI
+        registry.</P
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> document what core exposes (e.g., "bonobo,"
-          "ORBit," "registry," "desktop," "Accessibility,"
-          "Accessibility__POA).</P
+>In this case, the <TT
+CLASS="LITERAL"
+>orca</TT
+> module receives
+        keyboard events, which it interprets and also sends on to the
+        <TT
+CLASS="LITERAL"
+>focus_tracking_presenter</TT
+> module.  Of more
+        interest, however, is that the
+        <TT
+CLASS="LITERAL"
+>focus_tracking_presenter</TT
+> module receives
+        AT-SPI events which it then passes on the script for the
+        application associated with the event.  If there is no script,
+        the <TT
+CLASS="LITERAL"
+>focus_tracking_presenter</TT
+> will create
+        one.  See the <A
+HREF="#AEN1982"
+>Orca Script Writing Guide</A
+> for more information.</P
 ><P
-><I
-CLASS="EMPHASIS"
->IMPLEMENTATION DETAIL:</I
-> As illustrated in the following diagram, to
-          reduce system traffic, the core module will only register a
-          maximum of one AT-SPI listener for any given AT-SPI event
-          type, and will multiplex the notification of AT-SPI events
-          to any listeners registered by Orca.</P
-><DIV
-CLASS="FIGURE"
-><A
-NAME="AEN1727"
-></A
-><DIV
-CLASS="MEDIAOBJECT"
-><P
-><IMG
-SRC="objectevent_registration.jpg"></P
-></DIV
-><P
-><B
->Figure 2. AT-SPI Event Registration. Only one listener of any given
-            type is registered with the AT-SPI registry; the core module
-            will multiplex event delivery to interested Orca listeners.</B
-></P
-></DIV
+>The <TT
+CLASS="LITERAL"
+>atspi</TT
+> module also registers its
+        own set of event listeners that it uses to keep its local
+        cache of accessible objects up to date.</P
 ><P
 ><I
 CLASS="EMPHASIS"
 >IMPLEMENTATION DETAIL:</I
 > Because processing AT-SPI object events can be
-          time consuming, and because the notification of AT-SPI
-          object events is relatively "bursty," the core maintains a
-          queue of AT-SPI object events.  As illustrated in the
-          following diagram, events are added to the queue when they
-          are received, and events on the queue are dispatched via the
-          GLib idle handler.  <I
-CLASS="EMPHASIS"
->TODO:</I
-> Need to understand relation
-          between the GLib idle handler and the Bonobo main
-          loop.</P
-><DIV
-CLASS="FIGURE"
-><A
-NAME="AEN1737"
-></A
-><DIV
-CLASS="MEDIAOBJECT"
-><P
-><IMG
-SRC="objectevent_handling.jpg"></P
-></DIV
-><P
-><B
->Figure 3. AT-SPI Event Delivery. The core module queues up AT-SPI
-            object events it receives from the AT-SPI registry and delivers
-            those events from a GLib idle hanlder.</B
-></P
-></DIV
+        time consuming, and because the notification of AT-SPI object
+        events is relatively "bursty," the
+        <TT
+CLASS="LITERAL"
+>focus_tracking_presenter</TT
+> maintains a queue
+        of AT-SPI object events. It adds the events to this queue when
+        it receives them and processes the events on the GLib idle
+        handling thread.  This permits Orca to survive a relatively
+        long burst of events and also allows it to handle the events
+        on a thread that is compatible with GLib.</P
 ><P
 ><I
 CLASS="EMPHASIS"
 >IMPLEMENTATION DETAIL:</I
-> Like the AT-SPI object events, the core module
-          only permits a maximum of one device event listener to be
-          registered with the AT-SPI for each keyboard event
-          type. Unlike AT-SPI object events, Orca must process
-          keyboard events immediately and quickly.  As such, the core
-          component will dispatch keyboard events directly to the
-          keyboard event listeners registered by Orca.</P
+> Unlike AT-SPI object events, Orca must process
+        keyboard events immediately and quickly because it needs to
+        determine if it should consume those events or not.  As such,
+        the <TT
+CLASS="LITERAL"
+>atspi</TT
+> component will dispatch keyboard
+        events directly to the keyboard event listeners registered by
+        Orca.</P
 ><P
 > <I
 CLASS="EMPHASIS"
 >TODO:</I
-> The system needs to be able to cope with
-          failure.  Right now, if Orca fails while handling a keyboard
-          event, the whole desktop can hang.  I'm curious if the
-          AT-SPI-enabled app can heal when the connection to Orca is
-          broken or if there is a timeout?  Conversations with Bill
-          Haneman lead me to believe there is no such thing as a
-          timeout for the synchronous form of device event
-          notification.</P
-></DIV
-><DIV
-CLASS="SECTION"
-><HR><H3
-CLASS="SECTION"
-><A
-NAME="AEN1748"
->kbd</A
-></H3
-><P
->The <I
-CLASS="EMPHASIS"
->kbd</I
-> module provides
-          Orca's interface to the keyboard events, permitting it to
-          trap and consume keyboard events before they reach an
-          application.  As illustrated in the following diagrams, the
-          orca module (described below) registers a single keyboard
-          device event listener with the AT-SPI registry for each
-          keyboard event type.  Upon receiving a keyboard event, the
-          kbd module immediately notifies the orca listener, which
-          then processes the event. The event listener returns True if
-          Orca has consumed the event (and thus the event should not
-          be sent to the application) or False if it has not.</P
-><DIV
-CLASS="FIGURE"
-><A
-NAME="AEN1752"
-></A
-><DIV
-CLASS="MEDIAOBJECT"
-><P
-><IMG
-SRC="keyevent_registration.jpg"></P
-></DIV
-><P
-><B
->Figure 4. Keyboard Event Registration. Keyboard events are only
-            registered once at kbd.init().</B
-></P
-></DIV
-><DIV
-CLASS="FIGURE"
-><A
-NAME="AEN1759"
-></A
-><DIV
-CLASS="MEDIAOBJECT"
-><P
-><IMG
-SRC="keyevent_handling_general.jpg"></P
-></DIV
-><P
-><B
->Figure 5. Keyboard Event Handling. Keyboard events are handled
-            synchronously by the processKeyEvent method of the orca
-            module.</B
-></P
-></DIV
-><P
-><I
-CLASS="EMPHASIS"
->IMPLEMENTATION DETAIL:</I
-> Because the event handling is synchronous
-          in this case (i.e., the event is not sent to the application 
-          until Orca is finished with it), the event handling must be
-          performant.</P
-><P
-><I
-CLASS="EMPHASIS"
->IMPLEMENTATION DETAIL:</I
-> For convenience, the kbd module keeps track of
-          the last keyboard event.  This permits scripts to garner
-          hints about why a particular AT-SPI object event may have
-          occurred.</P
-></DIV
-><DIV
-CLASS="SECTION"
-><HR><H3
-CLASS="SECTION"
-><A
-NAME="AEN1770"
->a11y</A
-></H3
-><P
->The <I
-CLASS="EMPHASIS"
->a11y</I
-> module
-          provides an Accessible class, written in Python, that serves
-          as a delegate to CORBA objects that implement the AT-SPI
-          Accessible and Application interfaces.</P
-><P
->The Accessible class permits Orca to obtain information
-          about Accessible objects as well as manipulate those objects
-          (e.g., activate actions, set cursor position, etc.).  Using
-          the ability to add new properties to a class instance at run
-          time, Orca can also annotate Accessible class instances with
-          additional information.</P
-><P
->The a11y module also provides a set of convenience
-          utilities for examining Accessible objects and their
-          component hierarchy.</P
-><P
->Depicted in the high level Orca architecture diagram is
-          the interaction of the currently active script, StarOffice,
-          with the a11y module.  Any of the other scripts can also
-          interact with the a11y module at any time, but their
-          interaction has not been drawn here so as to reduce clutter
-          in the diagram.</P
-><P
-><I
-CLASS="EMPHASIS"
->IMPLEMENTATION DETAIL:</I
-> For efficiency purposes, the a11y component
-          maintains a cache of Accessible objects, copying the values
-          of common Accessible object attributes (e.g., name,
-          description, role, state, etc.) to a local store.  As such,
-          no external entity should create an Accessible using the
-          class constructor.  Instead, all Accessible instances are
-          created using the a11y.makeAccessible function.  This lowers
-          the network traffic of Orca by reducing the need to make
-          repeated CORBA calls for common attributes.  As depicted in
-          the high level Orca architecture diagram, the a11y module
-          also registers for AT-SPI object events with the core module
-          for the purposes of keeping the cache consistent with the
-          AT-SPI object state.</P
-><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> miserable things happen when a CORBA failure
-          occurs related to an Accessible object.  Orca needs a way to
-          deal with this.  Because it is too easy to swallow CORBA
-          failures with try/except statements, one alternative might
-          be to have the main orca module register a failure listener
-          with the a11y module and restrict all CORBA calls for
-          accessible objects to the a11y module.  On failure, the a11y
-          module could call the orca failure listener and have it do
-          the "right thing."</P
-></DIV
+> The system needs to be able to cope with failure.
+        Right now, if Orca fails while handling a keyboard event, the
+        whole desktop can hang.  I'm curious if the AT-SPI-enabled app
+        can heal when the connection to Orca is broken or if there is
+        a timeout?  Conversations with Bill Haneman lead me to believe
+        there is no such thing as a timeout for the synchronous form
+        of device event notification.</P
 ></DIV
 ><DIV
 CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1781"
+NAME="AEN1752"
 >Orca</A
 ></H2
 ><P
->The main logic of Orca lives primarily in the orca module,
-        but support is broken into other modules as appropriate. The
-        following sections describe the orca module and its supporting
-        modules in more detail. </P
+>The <TT
+CLASS="LITERAL"
+>orca</TT
+> module is the "main entry
+        point" of Orca.  It initializes the components that Orca uses
+        (atspi, speech, braille, mag) and loads the user's settings.
+        It also is the first to receive all keyboard and braille input
+        events and delves them out to other Orca components
+        appropriately.</P
+><P
+>The <TT
+CLASS="LITERAL"
+>orca</TT
+> module maintains the current
+        known "locus of focus" in its <TT
+CLASS="LITERAL"
+>locusOfFocus</TT
+>
+        field that is set via the <TT
+CLASS="LITERAL"
+>setLocusOfFocus</TT
+>
+        method.  This locus of focus represents the current object
+        that effectively has keyboard focus.  That is, the object that
+        will change and or react to keyboard input events.  Orca
+        scripts call this method to inform Orca when the locus of
+        focus has changed.  In addition, in the event that there was
+        a visual appearance change to the object that has the locus
+        of focus, the <TT
+CLASS="LITERAL"
+>orca</TT
+> module provides a
+        <TT
+CLASS="LITERAL"
+>visualAppearanceChanged</TT
+> that scripts can
+        use to inform Orca of this event.</P
+><P
+>The <TT
+CLASS="LITERAL"
+>orca</TT
+> module also maintains a list
+        of all known applications.  This list is available as the
+        <TT
+CLASS="LITERAL"
+>apps</TT
+> field.</P
 ><DIV
 CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1784"
->orca</A
-></H3
-><P
-> The orca module is the "main entry point" of Orca.  It
-          initializes all the components that Orca uses (a11y, core,
-          kbd, speech, braille, mag) and loads the user's settings.
-          It also is the first to receive all keyboard and braille
-          input events and delves them out to other orca components
-          appropriately.</P
-><P
->The initialization of the orca module is done via a
-          separate trivial script that lives in /usr/bin/orca.  The
-          purpose of this script is to include the user's ~/.orca
-          directory in the search path for Python and to then
-          initialize and start the orca module.</P
-><P
->A UML-ish interaction diagram of the initialization
-          process is depicted in the following diagram:</P
-><DIV
-CLASS="FIGURE"
-><A
-NAME="AEN1789"
-></A
-><DIV
-CLASS="MEDIAOBJECT"
-><P
-><IMG
-SRC="init_id.jpg"></P
-></DIV
-><P
-><B
->Figure 6. Orca Initialization Interaction Diagram</B
-></P
-></DIV
-><P
->When the orca script imports the orca module, it
-          triggers a chain of events.  At this time, the core module
-          attempts to discover and resolve the shared libraries and
-          bindings it will need to interact with the AT-SPI.  This
-          includes establishing Python bindings for ORBit, bonobo,
-          CORBA, and AT-SPI Accessibility. <I
-CLASS="EMPHASIS"
->TODO:</I
-> failures can occur
-          at this time, and more informative messages need to be
-          issued.  The failures are typically due to prerequisites not
-          being found, which probably should also be handled by the
-          build/install scripts.</P
-><P
->After the orca script imports the orca module, it then
-          initializes it by calling the module's init method.  At this
-          time, the orca module initialized the a11y module which, in turn,
-          initializes the core module.</P
-><P
->Upon initialization, the core module discovers/activates
-          the AT-SPI registry and then establishes attributes for
-          the registry and desktop.  At this point, any Python object
-          can then obtain the registry and desktop attributes via
-          core.registry and core.desktop.</P
-><P
->Once it has initialized the core module, the a11y module
-          registers a number of event listeners that it will use to
-          help keep its internal cache of Accessible objects
-          synchronized with the actual AT-SPI accessible objects of
-          the applications.</P
-><P
->Once it has initialized the a11y module, the orca module
-          then initializes its interaction with the kbd module as well
-          as the supporting system services: speech, braille, and
-          magnification.  When it initialized the kbd and braille
-          modules, the orca module passes it input event listeners
-          (processKeyEvent and processBrailleEvent) that will be the
-          sole event listener for those modules (those listeners will
-          then multiplex events out to other orca components).</P
-><P
->As the last steps of initialization, the orca module
-          discovers all the applications on the desktop and then
-          registers AT-SPI object event listeners.  The event
-          listeners are for the events necessary to help it keep track
-          of all the desktop applications as well as the application
-          and object with focus.  These attributes are available to
-          other orca modules as the fields "apps," "focusedApp," and
-          "focusedObject."</P
-><P
->When the orca script has finished initializing the orca
-          module, it then calls the "start" method of the orca module.
-          The "start" method finds the active window on the display,
-          initializes focus tracking mode, and then calls the bonobo
-          main loop to begin continued interaction with the AT-SPI.
-          From this point on, the orca module is driven completely
-          by keyboard and braille events as well as AT-SPI registry
-          events.  All keyboard events are sent to the processKeyEvent
-          method of the orca module and all braille events are sent
-          to the processBrailleEvent method of the orca module.
-          AT-SPI object events are sent directly to the module 
-          that registers for them (e.g., orca, a11y, and the
-          focus tracking mechanism described below).</P
-></DIV
-><DIV
-CLASS="SECTION"
-><HR><H3
-CLASS="SECTION"
-><A
-NAME="AEN1804"
+NAME="AEN1765"
 >settings</A
 ></H3
 ><P
@@ -7146,7 +6949,7 @@ CLASS="EMPHASIS"
           (not depicted in the high level Orca architecture diagram)
           holds preferences set by the user during configuration.
           These settings include the following: use of speech and/or
-          Braille, voice styles, key echo, text echo, and command echo
+          braille, voice styles, key echo, text echo, and command echo
           (see the <A
 HREF="#USER_REQUIREMENTS"
 >user requirements</A
@@ -7154,32 +6957,93 @@ HREF="#USER_REQUIREMENTS"
           features).</P
 ><P
 >Any Orca module can request the value of a setting by
-          calling the getSetting method of the settings module.  When
-          first called, this module will import the user-settings
-          module from the ~/.orca directory, if it exists.  The
-          user-settings module is a Python script, allowing it to
-          contain functions, class definitions, etc.  Furthermore, the
-          import of the user-settings module will cause any executable
-          statements to be run, allowing the user-settings module to
+          calling the <TT
+CLASS="LITERAL"
+>getSetting</TT
+> method of the
+          <TT
+CLASS="LITERAL"
+>settings</TT
+> module.  When first called, this
+          module will import the <TT
+CLASS="LITERAL"
+>user-settings</TT
+>
+          module from the <TT
+CLASS="LITERAL"
+>~/.orca directory</TT
+>, if it
+          exists.  The <TT
+CLASS="LITERAL"
+>user-settings</TT
+> module is a
+          Python script, allowing it to contain functions, class
+          definitions, etc.  Furthermore, the import of the
+          <TT
+CLASS="LITERAL"
+>user-settings</TT
+> module will cause any
+          executable statements to be run, allowing the module to
           define/set fields in itself and call functions in other
-          modules.  For example, the user-settings module will
-          typically define the use of output mode (speech, braille,
-          mag) and may also call functions in other modules, such as
-          the setDebugLevel of the debug module.</P
+          modules.  For example, the module will typically define the
+          use of output mode (speech, braille, mag) and may also call
+          functions in other modules, such as the
+          <TT
+CLASS="LITERAL"
+>setDebugLevel</TT
+> method of the
+          <TT
+CLASS="LITERAL"
+>debug</TT
+> module.</P
 ><P
->The getSetting method of the settings module is intended
-          to discover field attribute values.  It will first look to
-          the user-settings module for the field, and then fall back
-          to the settings module.  The getSetting method also accepts
-          a default value in the event the field does not exist in
-          either the user-settings or settings module.</P
+>The <TT
+CLASS="LITERAL"
+>getSetting</TT
+> method of the
+           <TT
+CLASS="LITERAL"
+>settings</TT
+> module is intended to discover
+           field attribute values.  It will first look to the
+           <TT
+CLASS="LITERAL"
+>user-settings</TT
+> module for the field, and
+           then fall back to the <TT
+CLASS="LITERAL"
+>settings</TT
+> module.
+           The <TT
+CLASS="LITERAL"
+>getSetting</TT
+> method also accepts a
+           default value in the event the field does not exist in
+           either the <TT
+CLASS="LITERAL"
+>user-settings</TT
+> or
+           <TT
+CLASS="LITERAL"
+>settings</TT
+> module.</P
 ><P
 ><I
 CLASS="EMPHASIS"
 >IMPLEMENTATION DETAIL:</I
-> the init method of the orca module obtains settings.
-          As a result, the user-settings module is imported very early in
-          the orca life cycle.</P
+> the <TT
+CLASS="LITERAL"
+>init</TT
+> method of the
+           <TT
+CLASS="LITERAL"
+>orca</TT
+> module obtains settings.  As a
+           result, the <TT
+CLASS="LITERAL"
+>user-settings</TT
+> module is
+           imported very early in the Orca life cycle.</P
 ></DIV
 ></DIV
 ><DIV
@@ -7191,397 +7055,49 @@ NAME="SCRIPT"
 >Orca Scripts</A
 ></H2
 ><P
->The majority of presentation of information to the user is
-        done via "scripts," which are instances of the Script class
-        that is defined in the <I
-CLASS="EMPHASIS"
->script</I
+>Internally, the <TT
+CLASS="LITERAL"
+>orca</TT
+> module keeps track
+        of list of <TT
+CLASS="LITERAL"
+>PresentationManager</TT
+> instances
+        (see the pydoc for
+        <TT
+CLASS="LITERAL"
+>presentation_manager.py</TT
+>). The
+        <TT
+CLASS="LITERAL"
+>FocusTrackingPresenter</TT
+> (see
+        <TT
+CLASS="LITERAL"
+>focus_tracking_presenter</TT
+>) is of the most
+        interest, as it is the <TT
+CLASS="LITERAL"
+>PresentationManager</TT
 >
-        module. Depicted in the high level Orca architecture diagram
-        are four Script instances: FireFox, NetBeans, GAIM, and
-        StarOffice.  In that diagram, StarOffice has keyboard focus
-        and is thus the "active" script.</P
+        that manages scripts.</P
 ><P
->The following Orca script diagram illustrates the details 
-        of a Script instance:</P
-><DIV
-CLASS="FIGURE"
-><A
-NAME="AEN1818"
-></A
-><DIV
-CLASS="MEDIAOBJECT"
-><P
-><IMG
-SRC="script.jpg"></P
-></DIV
-><P
-><B
->Figure 7. Orca Script Diagram. Each script maintains three
-          dictionaries: "listeners" for handling AT-SPI object events,
-          "keybindings" for handling keyboard events, and
-          "braillebindings" for handling braille input events.  Each
-          script must also provide the methods "processObjectEvent,"
-          "processKeyEvent," and "processBrailleEvent" to handle the
-          various types of events it can receive.</B
-></P
-></DIV
-><P
-> As depicted in the script diagram, each Script instance
-        has the following entry points as part of its contract:</P
-><P
-></P
-><UL
-><LI
-><P
-><I
-CLASS="EMPHASIS"
->processObjectEvent</I
-> -
-            called when an AT-SPI object event occurs for any object
-            associated with the application for this script.</P
-></LI
-><LI
-><P
-><I
-CLASS="EMPHASIS"
->processKeyEvent</I
-> -
-            called with a keyboard input event when the application
-            for this script has GUI focus.</P
-></LI
-><LI
-><P
-><I
-CLASS="EMPHASIS"
->processBrailleEvent</I
-> -
-            called with a braille input event when the application for
-            this script has GUI focus.</P
-></LI
-></UL
-><P
->As also depicted in the script diagram, each script
-        instance keeps track of the following attributes: </P
-><P
-></P
-><UL
-><LI
-><P
-><I
-CLASS="EMPHASIS"
->listeners</I
-> - a table
-            that maps AT-SPI object event names (e.g.,
-            "window:activate", "object:state-changed",
-            "object:link-selected") to functions.  The
-            "processObjectEvent" method will look to the listeners
-            table to handle object events.  In addition, the
-            focus_tracking_presenter module (described below) will
-            look to the listeners table to determine which global
-            AT-SPI listeners it should register with the AT-SPI
-            registry.</P
-></LI
-><LI
-><P
-><I
-CLASS="EMPHASIS"
->keybindings</I
-> - a
-            table that maps keystroke events (e.g., "F12") to
-            InputEventHandler instances.  The "processKeyEvent" method
-            will look to the keybindings table to handle keyboard
-            events, and will call the processInputEvent method of the
-            handler for each event (if a handler exists).  The
-            processInputEvent method of the handler must return True
-            if it consumes the event, or False if not.</P
-></LI
-><LI
-><P
-><I
-CLASS="EMPHASIS"
->braillebindings</I
-> - a
-              table that maps BrlTTY input events (e.g., "CMD_FWINLT")
-              to InputEventHandler instances.  The
-              "processBrailleEvent" method will look to the
-              braillebindings table to handle BrlTTY input events, and
-              will call the processInputEvent method of the handler
-              for each event (if a handler exists).  The
-              processInputEvent method of the handler must return True
-              if it consumes the event, or False if not.</P
-></LI
-></UL
-><P
->Subclasses of Scripts are expected to extend and
-        override the listeners, keybindings, and braillebindings
-        fields in their __init__ methods.  Orca provides a Script
-        subclass, Default (default.py), as the base for all scripts
-        to provide customized behavior per application.  Default is
-        intended to adhere to the <A
-HREF="#STYLE_GUIDE"
->style guide</A
->.  As such, it
-        is expected that custom scripts will extend the Default
-        class rather than extending the Script class directly.</P
-><DIV
-CLASS="SECTION"
-><HR><H3
-CLASS="SECTION"
-><A
-NAME="INPUTEVENTHANDLER"
->InputEventHandlers and
-        Learn Mode</A
-></H3
-><P
->As illustrated in the following diagram,
-          InputEventHandlers serve a purpose of holding a function
-          to call on an input event, and a human consumable string
-          that provides a short description of the function's
-          behavior.  The main purpose for the InputEventHandler is
-          to provide support for the "learn mode" of Orca.</P
-><DIV
-CLASS="FIGURE"
-><A
-NAME="AEN1852"
-></A
-><DIV
-CLASS="MEDIAOBJECT"
-><P
-><IMG
-SRC="inputeventhandler_creation.jpg"></P
-></DIV
-><P
-><B
->Figure 8. InputEventHandler</B
-></P
-></DIV
-><P
->InputEventHandler instances can be created by
-          anything, but are typically created by Script instances
-          and the user-settings module. <I
-CLASS="EMPHASIS"
->TODO:</I
-> document how the
-          user-settings module is used to extend/override input
-          event handling - it can do so on a global and/or per
-          script level.</P
-><P
->The invocation of InputEventHandler instances is done
-          via its "processInputEvent" method, as illustrated in the
-          following diagram and described below:</P
-><DIV
-CLASS="FIGURE"
-><A
-NAME="AEN1862"
-></A
-><DIV
-CLASS="MEDIAOBJECT"
-><P
-><IMG
-SRC="inputeventhandler_calling.jpg"></P
-></DIV
-><P
-><B
->Figure 9. InputEventHandler Invocation</B
-></P
-></DIV
-><P
->When "learn mode" is disabled, the InputEventHandler
-          instance call its associated function and returns the
-          "consumed" return value of that function.</P
-><P
->When enabled, however, the "learn mode" will take over
-          the entire keyboard and braille display, consuming all
-          input events.  This allows the user to press any key
-          without having that key event be delivered to any
-          application. When the user presses a key, the
-          InputEventHandler instance will present the description of
-          t function associated with that key to the user via
-          speech and/or braille.  If the key has no
-          InputEventHandler associated with it, Orca will merely
-          speak the key.</P
-><P
->The enabling of learn mode is done via an
-          InputEventHandler instance, allowing for any key binding
-          to be used to turn learn mode on (the orca module provides
-          an "enterLearnMode" function as a convenience for this).
-          Because the learn mode takes over the entire keyboard and
-          braille display, however, the orca module has hardcoded
-          the "Escape" key to exit learn mode.</P
-></DIV
-><DIV
-CLASS="SECTION"
-><HR><H3
-CLASS="SECTION"
-><A
-NAME="FOCUS"
->focus_tracking_presenter</A
-></H3
-><P
->All script instances are managed by the
-          focus_tracking_presenter module.</P
-><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> the "presenter" concept is experimental for
-          now.  The notion of a presenter is that Orca can have
-          several types of mutually exclusive interaction methods,
-          such as focus tracking, flat review, and hierarchical
-          navigation.  Based on the user requirements, however, it
-          has been determined that the modes may not always need to
-          be mutually exclusive.  As such, this architectural aspect
-          of Orca may change.  At this point, however, two
-          presenters exist: the focus_tracking_presenter and the
-          hierarchical_presenter.  The focus_tracking_presenter is
-          described in this section, and the hierarchical_presenter
-          is mostly for debugging and AT-SPI object hierarchy
-          exploration purposes.</P
-><P
->The focus_tracking_presenter module provides four
-          methods as part of its contract with the orca module:</P
-><P
-></P
-><UL
-><LI
-><P
-> <I
-CLASS="EMPHASIS"
->activate</I
-> -
-              called when the orca module selects the
-              focus_tracking_presenter as the interaction
-              method.  This method registers core listeners to
-              determine when windows are created and removed.  In
-              addition, it finds the currently active object and
-              speaks information about it.</P
-></LI
-><LI
-><P
-> <I
-CLASS="EMPHASIS"
->processKeyEvent</I
-> -
-              handles all key events by passing the event directly
-              to the currently active script.</P
-></LI
-><LI
-><P
-> <I
-CLASS="EMPHASIS"
->processBrailleEvent</I
-> -
-              handles all braille input events by passing the event
-              directly to the currently active script.</P
-></LI
-><LI
-><P
-> <I
-CLASS="EMPHASIS"
->deactivate</I
-> -
-              called when the orca module selects a different
-              interaction method.  This method unregisters any
-              listeners that may have been registered as part 
-              of activation and the handling of scripts.</P
-></LI
-></UL
-><P
->The focus_tracking_presenter also defines a
-          processObjectEvent method that it registers with the core
-          module.  The core module will call this method with any
-          AT-SPI object events the focus_tracking_presenter has
-          registered.  One such event is window activation events.
-          When it receives a window activation event, the
-          focus_tracking_presenter will attempt to locate the Script
-          instance for the application associated with the event.
-          If it finds the script, it will make it the "active"
-          script.  If if cannot find the script, the
-          focus_tracking_presenter will create a new Script instance
-          for the application.  The mechanism for creating the
-          script is as follows:</P
-><P
-></P
-><OL
-TYPE="1"
-><LI
-><P
->In the case where the AT-SPI gives the
-              focus_tracking_presenter an event associated with no
-              application whatsoever, the focus_tracking_presenter
-              will use a singleton instance of the Default Script
-              subclass (defined in Default.py).</P
-></LI
-><LI
-><P
->Otherwise, the focus_tracking_presenter will
-              search for a module whose name matches the name of the
-              application (e.g., "gnome-terminal").  If this module
-              exists, the focus_tracking_presenter will use its
-              factory method, getScript, to obtain the Script
-              instance for this application. <I
-CLASS="EMPHASIS"
->TODO:</I
-> this is error
-              prone and probably should be formalized to something
-              better.</P
-></LI
-><LI
-><P
->If no such module exists, then the
-              focus_tracking_presenter will create unique instance
-              of the Default script (defined in default.py) for the
-              application.</P
-></LI
-></OL
-><P
->Whenever it creates a new script instance, the
-          focus_tracking_presenter will query the instance for its
-          "listeners" table and register core listeners any needed
-          AT-SPI object events.</P
-><P
-><I
-CLASS="EMPHASIS"
->IMPLEMENTATION DETAIL:</I
-> for debugging purposes, Orca also supports a
-          useCustomScripts setting.  If True (the default), then the
-          creation of script instances will follow the above
-          mechanism.  If useCustomScripts is False, however, the
-          focus_tracking_presenter will only instances of the Default
-          Script subclass.</P
-><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> the inconsistent delivery order and type of
-          events from the various toolkits that implement the AT-SPI
-          is quite troublesome.  Gnopernicus has dealt with this by
-          massaging "raw" AT-SPI events into events of its own design.
-          It may be desirable to roll this logic into
-          focus_tracking_presenter and have it deliver massaged events
-          to scripts rather than raw AT-SPI events.  Alternatively,
-          each script might provide some sort of "massageEvent"
-          function to do this, where the default massageEvent function
-          lives in focus_tracking_presenter.</P
-><P
-> <I
-CLASS="EMPHASIS"
->TODO:</I
-> Loading a script is a very efficient and fast
-          process in Python, especially for the expected size of
-          scripts intended for Orca's use.  As such, Orca may reload a
-          script each time the window for the script is activated.
-          Alternatively, Orca may provide a global keyboard "refresh"
-          gesture that will reload all scripts in use. </P
-></DIV
+>Details on the <TT
+CLASS="LITERAL"
+>FocusTrackingPresenter</TT
+>
+        and Orca scripts can be found in the
+        <A
+HREF="#AEN1982"
+>Orca Script Writing Guide</A
+>.</P
 ></DIV
 ><DIV
 CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN1907"
+NAME="AEN1804"
 >System Services</A
 ></H2
 ><P
@@ -7595,16 +7111,18 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1910"
+NAME="AEN1807"
 >speech</A
 ></H3
 ><P
-> The <I
+>The <I
 CLASS="EMPHASIS"
 >speech</I
 > module
-        provides Orca's Python interface to the system's gnome-speech
-        [<SPAN
+          provides Orca's Python interface to system speech services.
+          Each speech service is generated by a "speech server
+          factory."  There are currently two such factories: one for
+          [<SPAN
 CLASS="CITATION"
 ><A
 HREF="#GNOME-SPEECH"
@@ -7612,93 +7130,140 @@ HREF="#GNOME-SPEECH"
 >Gnome-Speech</I
 ></A
 >&#62;</SPAN
->] CORBA service(s).
-        The speech component is used for interacting with speech
-        synthesis engines during both the configuration and use of
-        Orca.  The speech component provides methods for the following
-        capabilities:
-        </P
+>] (see
+          <TT
+CLASS="LITERAL"
+>gnomespeechfactory.py</TT
+> and one for
+          [<SPAN
+CLASS="CITATION"
+><A
+HREF="#EMACSPEAK"
+><I
+>Emacspeak</I
+></A
+>&#62;</SPAN
+>] (see
+          <TT
+CLASS="LITERAL"
+>espeechfactory.py</TT
+>), though it is expected
+          that support for other factories can be added in the
+          future.</P
 ><P
-></P
-><UL
-><LI
+>Each speech factory offers up a list of
+          <TT
+CLASS="LITERAL"
+>SpeechServer</TT
+>s, where each
+          <TT
+CLASS="LITERAL"
+>SpeechServer</TT
+> is typically an interface to
+          a particular speech engine.  For example, the
+          <TT
+CLASS="LITERAL"
+>espeechfactory</TT
+> will offer up a
+          <TT
+CLASS="LITERAL"
+>SpeechServer</TT
+> that talks to the Fonix
+          DECtalk engine and a <TT
+CLASS="LITERAL"
+>SpeechServer</TT
+> that
+          talks to the IBMTTS engine.  Likewise, the
+          <TT
+CLASS="LITERAL"
+>gnomespeechfactory</TT
+> will offer up a
+          <TT
+CLASS="LITERAL"
+>SpeechServer</TT
+> that uses the
+          <TT
+CLASS="LITERAL"
+>gnome-speech</TT
+> interface to talk to the
+          Festival Speech Synthesis System, a separate
+          <TT
+CLASS="LITERAL"
+>SpeechServer</TT
+> that also uses the
+          <TT
+CLASS="LITERAL"
+>gnome-speech</TT
+> interface to talk to the
+          Fonix DECtalk engine, and so on.</P
 ><P
-> <I
-CLASS="EMPHASIS"
->list of available
-            drivers</I
-> - several speech drivers (engines) may
-            be available on the system.  The speech module permits
-            Orca to identify and interact with each of the drivers.
-            The list of drivers will be available in a human-readable
-            form.
-            </P
-></LI
-><LI
+>Each <TT
+CLASS="LITERAL"
+>SpeechServer</TT
+> instance then provides
+          a set of methods for actually speaking.  Each of the methods
+          accepts an <TT
+CLASS="LITERAL"
+>ACSS</TT
+> instance, which represents
+          an aural cascading style sheet ([<SPAN
+CLASS="CITATION"
+><A
+HREF="#ACSS"
+><I
+>ACSS</I
+></A
+>&#62;</SPAN
+>]) that defines the voice
+          and voice parameter settings to use.</P
 ><P
-> <I
-CLASS="EMPHASIS"
->list of available
-            voices</I
-> - permits Orca to enumerate the
-            available voices for each driver, along with the settable
-            parameters for each voice (e.g., pitch, rate, etc.).  The
-            list of voices is available in a human-readable form.
-            </P
-></LI
-><LI
-><P
-> <I
-CLASS="EMPHASIS"
->voice selection</I
-> -
-            permits Orca to select which voice is to be used for
-            speech synthesis, and also permits Orca to set the
-            parameters of the voices.
-            </P
-></LI
-><LI
-><P
-> <I
-CLASS="EMPHASIS"
->speak text</I
-> -
-            provides Orca with the ability to request that text be
-            spoken.  Repeated calls to speak text will interrupt and
-            cancel any prior speak operation in progress.  The speech
-            module will support Unicode strings.
-            </P
-></LI
-><LI
-><P
-> <I
-CLASS="EMPHASIS"
->cancel</I
-> - the
-            speech module permits Orca to cancel any speech operation
-            in progress.
-            </P
-></LI
-><LI
-><P
-> <I
-CLASS="EMPHASIS"
->event notification</I
+>As part of the <TT
+CLASS="LITERAL"
+>orca-setup</TT
+> process,
+          the user selects a particular speech factory,
+          <TT
+CLASS="LITERAL"
+>SpeechServer</TT
+>, and voice to use as their
+          default voice.  When Orca starts, the
+          <TT
+CLASS="LITERAL"
+>speech</TT
+> module looks for these settings
+          and connects to the appropriate speech factory and
+          <TT
+CLASS="LITERAL"
+>SpeechServer</TT
+>.  In the event the a
+          connection cannot be made, the <TT
+CLASS="LITERAL"
+>speech</TT
 >
-            - permits the registration for notification of speech
-            started and ended events for a a call to "speak," and will
-            also permit for the registration for notification of
-            speech progress events (e.g., word started).
-            </P
-></LI
-></UL
+          module attempts to find a working synthesis engine to use by
+          examining its list of speech factories.  The
+          <TT
+CLASS="LITERAL"
+>speech</TT
+> module then provides simple
+          methods that delegate to the <TT
+CLASS="LITERAL"
+>SpeechServer</TT
+>
+          instance.  This model allows scripts to use their own
+          <TT
+CLASS="LITERAL"
+>SpeechServer</TT
+> instances if they wish, but
+          to also just rely upon the user's default
+          preferences.</P
 ></DIV
 ><DIV
 CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1935"
+NAME="AEN1842"
 >braille</A
 ></H3
 ><P
@@ -7706,7 +7271,7 @@ NAME="AEN1935"
 CLASS="EMPHASIS"
 >braille</I
 > module
-          provides Orca's Python interface to the system's brltty
+          provides Orca's Python interface to the system's BrlTTY
           [<SPAN
 CLASS="CITATION"
 ><A
@@ -7715,73 +7280,22 @@ HREF="#BRLTTY"
 >BRLTTY</I
 ></A
 >&#62;</SPAN
->] daemon.  The brltty
-          daemon, in turn, provides the interface to Braille devices
-          for both displaying Braille and receiving input from the
+>] daemon.  The BrlTTY
+          daemon, in turn, provides the interface to braille devices
+          for both displaying braille and receiving input from the
           user.</P
 ><P
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
 > flesh this section out more.</P
-><DIV
-CLASS="FIGURE"
-><A
-NAME="AEN1943"
-></A
-><DIV
-CLASS="MEDIAOBJECT"
-><P
-><IMG
-SRC="brailleevent_registration.jpg"></P
-></DIV
-><P
-><B
->Figure 10. Braille Event Registration. Braille events are only
-            registered once at braille.init().</B
-></P
-></DIV
-><DIV
-CLASS="FIGURE"
-><A
-NAME="AEN1950"
-></A
-><DIV
-CLASS="MEDIAOBJECT"
-><P
-><IMG
-SRC="brailleevent_handling_general.jpg"></P
-></DIV
-><P
-><B
->Figure 11. Braille Event Handling. Keyboard events are handled
-            synchronously by the processBrailleEvent method of the orca
-            module.</B
-></P
-></DIV
-><DIV
-CLASS="FIGURE"
-><A
-NAME="AEN1957"
-></A
-><DIV
-CLASS="MEDIAOBJECT"
-><P
-><IMG
-SRC="braille_usage.jpg"></P
-></DIV
-><P
-><B
->Figure 12. Braille Interaction.</B
-></P
-></DIV
 ></DIV
 ><DIV
 CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN1964"
+NAME="AEN1850"
 >mag</A
 ></H3
 ><P
@@ -7801,8 +7315,12 @@ HREF="#GNOME-MAG"
 >] CORBA service(s).
           The magnification component provides methods that permit
           Orca discover screen magnification services and set their
-          desktop region of interest.
-        </P
+          desktop region of interest.</P
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> flesh this section out more.</P
 ></DIV
 ></DIV
 ></DIV
@@ -7810,7 +7328,7 @@ HREF="#GNOME-MAG"
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN1970"
+NAME="AEN1858"
 ></A
 >Internationalization (I18N) Support</H1
 ><P
@@ -7849,11 +7367,11 @@ CLASS="EMPHASIS"
       future.</P
 ></DIV
 ><A
-NAME="AEN1979"
+NAME="AEN1867"
 ></A
 ><HR><H1
 ><A
-NAME="AEN1979"
+NAME="AEN1867"
 ></A
 >Bibliography</H1
 ><DIV
@@ -7876,6 +7394,28 @@ CLASS="AUTHOR"
 HREF="http://directory.fsf.org/accessibility/at-spi.html"
 TARGET="_top"
 >        AT-SPI</A
+>
+    </I
+>.</P
+><DIV
+CLASS="BIBLIOENTRYBLOCK"
+STYLE="margin-left: 0.5in"
+></DIV
+></DIV
+><DIV
+CLASS="BIBLIOENTRY"
+><A
+NAME="ACSS"
+></A
+><P
+>[ACSS]&nbsp;<SPAN
+CLASS="AUTHOR"
+>T.V. Raman</SPAN
+>, <I
+><A
+HREF="http://www.w3.org/TR/1998/REC-CSS2-19980512/aural.html"
+TARGET="_top"
+>Aural Style Sheets</A
 >
     </I
 >.</P
@@ -7926,6 +7466,28 @@ CLASS="AUTHOR"
 HREF="http://directory.fsf.org/accessibility/brltty.html"
 TARGET="_top"
 >        BRLTTY</A
+>
+    </I
+>.</P
+><DIV
+CLASS="BIBLIOENTRYBLOCK"
+STYLE="margin-left: 0.5in"
+></DIV
+></DIV
+><DIV
+CLASS="BIBLIOENTRY"
+><A
+NAME="EMACSPEAK"
+></A
+><P
+>[Emacspeak]&nbsp;<SPAN
+CLASS="AUTHOR"
+>T.V. Raman</SPAN
+>, <I
+><A
+HREF="http://emacspeak.sourceforge.net/"
+TARGET="_top"
+>Emacspeak</A
 >
     </I
 >.</P
@@ -8104,14 +7666,14 @@ STYLE="margin-left: 0.5in"
 ><DIV
 CLASS="BOOK"
 ><A
-NAME="AEN2078"
+NAME="AEN1982"
 ></A
 ><DIV
 CLASS="TITLEPAGE"
 ><H1
 CLASS="TITLE"
 ><A
-NAME="AEN2078"
+NAME="AEN1982"
 >Orca Script Writing Guide</A
 ></H1
 ><DIV
@@ -8119,7 +7681,7 @@ CLASS="LEGALNOTICE"
 ><P
 ></P
 ><A
-NAME="AEN2081"
+NAME="AEN1985"
 ></A
 ><P
 >Copyright 2005, Sun Microsystems, Inc.</P
@@ -8136,29 +7698,29 @@ CLASS="TOC"
 ></DT
 ><DT
 ><A
-HREF="#AEN2083"
+HREF="#AEN1987"
 >Foreword</A
 ></DT
 ><DT
 ><A
-HREF="#AEN2089"
+HREF="#AEN1993"
 >Introduction</A
 ></DT
 ><DT
 ><A
-HREF="#AEN2094"
+HREF="#AEN1998"
 >Overview</A
 ></DT
 ><DD
 ><DL
 ><DT
 ><A
-HREF="#AEN2098"
+HREF="#AEN2002"
 >Script Life Cycle</A
 ></DT
 ><DT
 ><A
-HREF="#AEN2204"
+HREF="#AEN2113"
 >Script Contract</A
 ></DT
 ></DL
@@ -8172,24 +7734,29 @@ HREF="#CUSTOMIZATION"
 ><DL
 ><DT
 ><A
-HREF="#AEN2236"
+HREF="#AEN2155"
 >Defining Event Listeners</A
 ></DT
 ><DT
 ><A
-HREF="#AEN2260"
+HREF="#AEN2181"
+>Input Event Handlers</A
+></DT
+><DT
+><A
+HREF="#AEN2200"
 >Defining Keyboard Bindings</A
 ></DT
 ><DT
 ><A
-HREF="#AEN2263"
+HREF="#AEN2223"
 >Defining Braille Bindings</A
 ></DT
 ></DL
 ></DD
 ><DT
 ><A
-HREF="#AEN2266"
+HREF="#AEN2234"
 >Script Utilities</A
 ></DT
 ><DD
@@ -8201,14 +7768,14 @@ HREF="#DEBUG"
 ></DT
 ><DT
 ><A
-HREF="#AEN2335"
+HREF="#AEN2303"
 >Speech Synthesis</A
 ></DT
 ><DD
 ><DL
 ><DT
 ><A
-HREF="#AEN2345"
+HREF="#AEN2313"
 ><TT
 CLASS="LITERAL"
 >speech.py</TT
@@ -8216,7 +7783,7 @@ CLASS="LITERAL"
 ></DT
 ><DT
 ><A
-HREF="#AEN2355"
+HREF="#AEN2323"
 ><TT
 CLASS="LITERAL"
 >speechgenerator.py</TT
@@ -8226,14 +7793,14 @@ CLASS="LITERAL"
 ></DD
 ><DT
 ><A
-HREF="#AEN2384"
+HREF="#AEN2352"
 >Braille Output</A
 ></DT
 ><DD
 ><DL
 ><DT
 ><A
-HREF="#AEN2394"
+HREF="#AEN2362"
 ><TT
 CLASS="LITERAL"
 >braille.py</TT
@@ -8241,7 +7808,7 @@ CLASS="LITERAL"
 ></DT
 ><DT
 ><A
-HREF="#AEN2402"
+HREF="#AEN2370"
 ><TT
 CLASS="LITERAL"
 >braillegenerator.py</TT
@@ -8249,11 +7816,6 @@ CLASS="LITERAL"
 ></DT
 ></DL
 ></DD
-><DT
-><A
-HREF="#AEN2440"
->Braille and Key Input Bindings</A
-></DT
 ></DL
 ></DD
 ></DL
@@ -8262,7 +7824,7 @@ HREF="#AEN2440"
 CLASS="PREFACE"
 ><HR><H1
 ><A
-NAME="AEN2083"
+NAME="AEN1987"
 ></A
 >Foreword</H1
 ><P
@@ -8289,7 +7851,7 @@ CLASS="EMPHASIS"
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN2089"
+NAME="AEN1993"
 ></A
 >Introduction</H1
 ><P
@@ -8309,17 +7871,20 @@ NAME="AEN2089"
       provides a "default" script that provides a reasonable default
       behavior for Orca.  This will not only serve as the "fallback
       script" for Orca, but will also typically serve as the "jumping
-      off" point for writing custom scripts.</P
+      off" point for writing custom scripts.  Furthermore, keep in
+      mind that the "default" script is intended to cover a large
+      variety of applications.  As such, you may find that it is
+      not necessary to write a custom script.</P
 ></DIV
 ><DIV
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN2094"
+NAME="AEN1998"
 ></A
 >Overview</H1
 ><P
->The primary operating mode of Orca is the "focus tracking
+>The primary operating mode of Orca is "focus tracking
       mode," where Orca keeps track of the most relevant user
       interface object that has keyboard focus.  When Orca detects
       changes to this object, which Orca refers to as the "locus of
@@ -8337,7 +7902,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN2098"
+NAME="AEN2002"
 >Script Life Cycle</A
 ></H2
 ><P
@@ -8430,8 +7995,8 @@ CLASS="LITERAL"
 > method of the
             <TT
 CLASS="LITERAL"
->focus_tracking_presenter</TT
->.</P
+>settings</TT
+> module.</P
 ><P
 ><I
 CLASS="EMPHASIS"
@@ -8445,8 +8010,8 @@ CLASS="LITERAL"
             <TT
 CLASS="LITERAL"
 >~/.orca/user-settings.py</TT
->.  This can be
-            useful for debugging purposes.</P
+> module.  This
+            can be useful for debugging purposes.</P
 ></LI
 ><LI
 ><P
@@ -8458,12 +8023,13 @@ CLASS="LITERAL"
             the <TT
 CLASS="LITERAL"
 >orca.Script</TT
-> class defined 
+> class defined in the
             <TT
 CLASS="LITERAL"
 >script.py</TT
->.  The constructor takes the
-            accessible application object as an argument.</P
+> module.  The constructor
+            takes the accessible application object as an
+            argument.</P
 ><P
 >The constructor for the <TT
 CLASS="LITERAL"
@@ -8485,7 +8051,8 @@ CLASS="LITERAL"
 >focus_tracking_presenter</TT
 > will register
             event listeners for all AT-SPI events associated with
-            script.  When the
+            script (i.e., the script should not register these events
+            itself).  When the
             <TT
 CLASS="LITERAL"
 >focus_tracking_presenter</TT
@@ -8513,11 +8080,34 @@ CLASS="LITERAL"
 CLASS="LITERAL"
 >processObjectEvent</TT
 > method of the script
-            for processing.  The event has the following
+            for processing.  Each <TT
+CLASS="LITERAL"
+>Event</TT
+> (see the
+            <TT
+CLASS="LITERAL"
+>atspi</TT
+> module) has the following
             fields:</P
 ><P
 ></P
 ><UL
+><LI
+><P
+><TT
+CLASS="LITERAL"
+>source</TT
+>: an
+                <TT
+CLASS="LITERAL"
+>Accessible</TT
+> (see the
+                <TT
+CLASS="LITERAL"
+>atspi</TT
+> module) instance representing
+                the object associated with the event</P
+></LI
 ><LI
 ><P
 ><TT
@@ -8549,18 +8139,6 @@ CLASS="LITERAL"
 >any_data</TT
 >: something associated
                 with the event (see the AT-SPI documentation)</P
-></LI
-><LI
-><P
-><TT
-CLASS="LITERAL"
->source</TT
->: the
-                <TT
-CLASS="LITERAL"
->Accessible</TT
-> object instance
-                associated with the event</P
 ></LI
 ></UL
 ></LI
@@ -8745,13 +8323,21 @@ CLASS="LITERAL"
 >object:children-changed:remove</TT
 > event on
         the desktop.</P
+><P
+><I
+CLASS="EMPHASIS"
+>TODO:</I
+> it needs to be verified that scripts are actually
+        being reclaimed.  I think something somewhere is hanging on
+        to a handle of the script, preventing it from being garbage
+        collected.</P
 ></DIV
 ><DIV
 CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN2204"
+NAME="AEN2113"
 >Script Contract</A
 ></H2
 ><P
@@ -8793,9 +8379,26 @@ NAME="CUSTOMIZATION"
 ></A
 >Customized Behavior</H1
 ><P
->The mapping to all the customized behavior of a script is done
-      in its constructor.  In its constructor, each script is expected 
-      to extend/override the following fields:</P
+>The customized behavior of a script is set up in its
+      constructor.  In its constructor, each script is expected to
+      extend/override several fields as illustrated in the following
+      diagram and describe below:</P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="AEN2125"
+></A
+><DIV
+CLASS="MEDIAOBJECT"
+><P
+><IMG
+SRC="script.jpg"></P
+></DIV
+><P
+><B
+>Figure 1. Orca Script Diagram</B
+></P
+></DIV
 ><P
 ></P
 ><UL
@@ -8814,7 +8417,16 @@ CLASS="LITERAL"
 CLASS="LITERAL"
 >object:text-caret-moved</TT
 >, etc.), and the
-          values are functions to handle the event.</P
+          values are functions to handle the event.  Each function
+          is passed an <TT
+CLASS="LITERAL"
+>Event</TT
+> instance (see the
+          <TT
+CLASS="LITERAL"
+>atspi.py</TT
+> module) as its sole
+          parameter and no return value is expected.</P
 ></LI
 ><LI
 ><P
@@ -8825,7 +8437,11 @@ CLASS="LITERAL"
           <TT
 CLASS="LITERAL"
 >keybindings.KeyBindings</TT
-> that defines
+> (see
+          the <TT
+CLASS="LITERAL"
+>keybindings.py</TT
+> module) that defines
           the keystrokes the script is interested in.</P
 ></LI
 ><LI
@@ -8857,20 +8473,20 @@ CLASS="LITERAL"
       <TT
 CLASS="LITERAL"
 >Default</TT
-> class, which extends
+> class, which in turn extends
       <TT
 CLASS="LITERAL"
 >Script</TT
->), sets up empty values for each of 
-      these fields.  As such, a subclass merely needs to extend/override
-      these fields.  Each of these fields is described in more detail
-      in the following sections.</P
+>), sets up empty values for each of
+      these fields.  As such, a subclass merely needs to
+      extend/override these fields.  Each of these fields is described
+      in more detail in the following sections.</P
 ><DIV
 CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN2236"
+NAME="AEN2155"
 >Defining Event Listeners</A
 ></H2
 ><P
@@ -8955,9 +8571,17 @@ CLASS="LITERAL"
 >listeners</TT
 > dictionary as appropriate.</P
 ><P
->The function for an event listener merely takes an event
-        and does whatever it wants, and the return value is ignored.
-        For example, the function definition associated with the above
+>The function for an event listener merely takes an
+        <TT
+CLASS="LITERAL"
+>Event</TT
+> instance (see the
+        <TT
+CLASS="LITERAL"
+>atspi.py</TT
+> module) and does whatever it
+        wants; the return value is ignored.  For example, the function
+        definition associated with the above
         <TT
 CLASS="LITERAL"
 >listeners</TT
@@ -8994,29 +8618,286 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN2260"
->Defining Keyboard Bindings</A
+NAME="AEN2181"
+>Input Event Handlers</A
 ></H2
 ><P
->foo</P
+>Before describing how to set up keyboard and braille event
+        handlers, it is import to first understand the
+        <TT
+CLASS="LITERAL"
+>InputEventHandler</TT
+>, which is defined in the
+        <TT
+CLASS="LITERAL"
+>input_event.py</TT
+> module.
+        <TT
+CLASS="LITERAL"
+>InputEventHandler</TT
+>s serve a purpose of
+        holding a function to call for a particular input event, and a
+        human consumable string that provides a short description of
+        the function's behavior.  The main purpose of the
+        <TT
+CLASS="LITERAL"
+>InputEventHandler</TT
+> is to provide support for
+        the "learn mode" of Orca.  If learn mode is enabled, the input
+        event handler will consume the input event (i.e., return True)
+        and merely speak and braille the human consumable string. If
+        learn mode is not enabled, the input event handler will pass
+        the active script and the input event on to the function,
+        returning the boolean value of the function as indication of
+        whether the event should be consumed by Orca or passed on to
+        the application.</P
+><P
+>The best place to look for examples of
+        <TT
+CLASS="LITERAL"
+>InputEventHandler</TT
+>s is in the
+        <TT
+CLASS="LITERAL"
+>default.py</TT
+> module.  For example, this
+        module defines an input event handler for telling the flat
+        review context to move to the home position of a
+        window:</P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>reviewHomeHandler = input_event.InputEventHandler(
+            Script.reviewHome,
+            _("Moves flat review to the home position."))</PRE
+></TD
+></TR
+></TABLE
+><P
+>In this definition, <TT
+CLASS="LITERAL"
+>default.py</TT
+> is creating
+        an <TT
+CLASS="LITERAL"
+>InputEventHandler</TT
+> instance whose function is
+        the Script's method, <TT
+CLASS="LITERAL"
+>reviewHome</TT
+> and whose 
+        human consumable text describes what will happen.  The Script's
+        <TT
+CLASS="LITERAL"
+>reviewHome</TT
+> method is defined as follows:</P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>def reviewHome(self, inputEvent):
+    """Moves the flat review context to the top left of the current
+    window."""
+    context = self.getFlatReviewContext()
+    context.goBegin()
+    self.reviewCurrentLine(inputEvent)
+    self.targetCursorCell = braille.cursorCell
+    return True</PRE
+></TD
+></TR
+></TABLE
+><P
+>Note that the method returns <TT
+CLASS="LITERAL"
+>True</TT
+> to
+        indicate the input event has been consumed.</P
 ></DIV
 ><DIV
 CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN2263"
+NAME="AEN2200"
+>Defining Keyboard Bindings</A
+></H2
+><P
+>The keyboard bindings for a script are held in the
+        <TT
+CLASS="LITERAL"
+>keybindings</TT
+> field, which is a
+        <TT
+CLASS="LITERAL"
+>KeyBindings</TT
+> instance.  This field maintains
+        a set of <TT
+CLASS="LITERAL"
+>KeyBinding</TT
+> instances.</P
+><P
+>Keyboard bindings merely define the keystroke and modifier
+        circumstances needed to invoke an
+        <TT
+CLASS="LITERAL"
+>InputEventHandler</TT
+> instance.  This definition
+        is held in a <TT
+CLASS="LITERAL"
+>KeyBinding</TT
+> instance (see the
+        <TT
+CLASS="LITERAL"
+>keybindings.py</TT
+> module):</P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>self.keybindings.add(
+    keybindings.KeyBinding("KP_7",
+                           1 &#60;&#60; orca.MODIFIER_ORCA,
+                           1 &#60;&#60; orca.MODIFIER_ORCA,
+                           reviewHomeHandler))</PRE
+></TD
+></TR
+></TABLE
+><P
+>The first parameter of a <TT
+CLASS="LITERAL"
+>KeyBinding</TT
+> is
+        a string that represents an X Window System KeySym string for
+        the key.  This is typically a string from
+        <TT
+CLASS="LITERAL"
+>/usr/include/X11/keysymdef.h</TT
+> with the
+        preceding 'XK_' removed (e.g., XK_KP_Enter becomes the string
+        'KP_Enter'), and is used as a means to express the physical
+        key associated with the KeySym.</P
+><P
+>The second parameter is a bit mask that defines which
+        modifiers the keybinding cares about.  If it does not care
+        about any modifier state, then this mask can be set to 0.  In
+        the example above, the keybinding is being told to pay
+        attention to the <TT
+CLASS="LITERAL"
+>MODIFIER_ORCA</TT
+> modifier,
+        which is a modifier Orca sets when the "Insert" key is
+        pressed.  Other examples of modifier bit positions include
+        those defined in the AT-SPI Accessibility specification:
+        MODIFIER_SHIFT, MODIFIER_SHIFTLOCK, MODIFIER_CONTROL,
+        MODIFIER_ALT, MODIFIER_META, MODIFIER_META2, MODIFIER_META3,
+        and MODIFIER_NUMLOCK.  These can be obtained via the
+        <TT
+CLASS="LITERAL"
+>orca.atspi.Accessibility</TT
+> field.  For
+        example,
+        <TT
+CLASS="LITERAL"
+>orca.atspi.Accessibility.MODIFIER_SHIFTLOCK</TT
+>.</P
+><P
+>The third parameter is a bit mask that defines what the
+        modifier settings must be.  If a bit is set, it means the
+        associated modifier must be set.  The only meaningful bits in
+        this mask are those that are defined by the second
+        parameter.  In the example above, the keybinding cares
+        about the <TT
+CLASS="LITERAL"
+>MODIFIER_ORCA</TT
+> modifier, and
+        the third parameter says this modifier must be set.</P
+><P
+>The last parameter is the
+        <TT
+CLASS="LITERAL"
+>InputEventHandler</TT
+> to us if the user types a
+        keystroke qualified by the previous
+        parameters. <TT
+CLASS="LITERAL"
+>InputEventHandler</TT
+>s are
+        described in the previous section.</P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="AEN2223"
 >Defining Braille Bindings</A
 ></H2
 ><P
->foo</P
+>Refreshable braille displays have buttons that the user
+        can press.  The BrlTTY system provides a means for
+        standardizing the types of input events one can generate using
+        these buttons, and a script can set up braille bindings to
+        handle these events.</P
+><P
+>The braille bindings for a script are held in the
+        <TT
+CLASS="LITERAL"
+>braillebindings</TT
+> field, which is a
+        dictionary.  The keys for the dictionary are BrlTTY constants
+        representing braille input events (see
+        <TT
+CLASS="LITERAL"
+>braille.py</TT
+> for a list), and the values are
+        <TT
+CLASS="LITERAL"
+>InputEventHandler</TT
+> instances:</P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>self.braillebindings[braille.CMD_TOP_LEFT] = reviewHomeHandler</PRE
+></TD
+></TR
+></TABLE
+><P
+>In the above example, the BrlTTY
+        <TT
+CLASS="LITERAL"
+>braille.CMD_TOP_LEFT</TT
+> input event has been
+        set to be handled by the same
+        <TT
+CLASS="LITERAL"
+>reviewHomeHandler</TT
+> instance described
+        previously.</P
 ></DIV
 ></DIV
 ><DIV
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN2266"
+NAME="AEN2234"
 ></A
 >Script Utilities</H1
 ><P
@@ -9287,7 +9168,7 @@ WIDTH="100%"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
->ACTIVE SCRIPT: gnome-terminal (class=GnomeTerminal)
+>ACTIVE SCRIPT: gnome-terminal (module=orca.scripts.gnome-terminal)
       </PRE
 ></TD
 ></TR
@@ -9316,7 +9197,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN2335"
+NAME="AEN2303"
 >Speech Synthesis</A
 ></H2
 ><P
@@ -9359,7 +9240,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN2345"
+NAME="AEN2313"
 ><TT
 CLASS="LITERAL"
 >speech.py</TT
@@ -9373,28 +9254,29 @@ CLASS="LITERAL"
 > module are
           <TT
 CLASS="LITERAL"
->say</TT
-> and <TT
+>speak</TT
+>,
+          <TT
+CLASS="LITERAL"
+>speakUtterances</TT
+>, and
+          <TT
 CLASS="LITERAL"
 >stop</TT
 ></P
 ><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> [[[WDW - I'm not satisfied with
-          <TT
+>See the <TT
 CLASS="LITERAL"
 >speech.py</TT
->.  It will change before Orca 1.0 
-          is released, so be aware of this.]]]</P
+> module for more
+          information.</P
 ></DIV
 ><DIV
 CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN2355"
+NAME="AEN2323"
 ><TT
 CLASS="LITERAL"
 >speechgenerator.py</TT
@@ -9509,7 +9391,7 @@ CLASS="PROGRAMLISTING"
 ># Obtain speech verbosity level.  If it has not been set,
 # default to the VERBOSITY_LEVEL_VERBOSE level.
 #
-verbosity = settings.getSetting("speechVerbosityLevel",
+verbosity = settings.getSetting(settings.SPEECH_VERBOSITY_LEVEL,
                                 settings.VERBOSITY_LEVEL_VERBOSE)
         </PRE
 ></TD
@@ -9529,7 +9411,7 @@ WIDTH="100%"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
->settings.setSpeechVerbosityLevel(settings.VERBOSITY_LEVEL_BRIEF)
+>speechVerbosityLevel = settings.VERBOSITY_LEVEL_BRIEF
         </PRE
 ></TD
 ></TR
@@ -9541,7 +9423,7 @@ CLASS="SECTION"
 ><HR><H2
 CLASS="SECTION"
 ><A
-NAME="AEN2384"
+NAME="AEN2352"
 >Braille Output</A
 ></H2
 ><P
@@ -9584,7 +9466,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN2394"
+NAME="AEN2362"
 ><TT
 CLASS="LITERAL"
 >braille.py</TT
@@ -9613,7 +9495,7 @@ CLASS="SECTION"
 ><HR><H3
 CLASS="SECTION"
 ><A
-NAME="AEN2402"
+NAME="AEN2370"
 ><TT
 CLASS="LITERAL"
 >braillegenerator.py</TT
@@ -9756,7 +9638,7 @@ CLASS="PROGRAMLISTING"
 ># Obtain braille verbosity level.  If it has not been set,
 # default to the VERBOSITY_LEVEL_VERBOSE level.
 #
-verbosity = settings.getSetting("brailleVerbosityLevel",
+verbosity = settings.getSetting(settings.BRAILLE_VERBOSITY_LEVEL,
                                 settings.VERBOSITY_LEVEL_VERBOSE)
         </PRE
 ></TD
@@ -9776,75 +9658,26 @@ WIDTH="100%"
 ><TD
 ><PRE
 CLASS="PROGRAMLISTING"
->settings.setBrailleVerbosityLevel(settings.VERBOSITY_LEVEL_BRIEF)
+>brailleVerbosityLevel = settings.VERBOSITY_LEVEL_BRIEF
         </PRE
 ></TD
 ></TR
 ></TABLE
 ></DIV
 ></DIV
-><DIV
-CLASS="SECTION"
-><HR><H2
-CLASS="SECTION"
-><A
-NAME="AEN2440"
->Braille and Key Input Bindings</A
-></H2
-><P
-><I
-CLASS="EMPHASIS"
->TODO:</I
-> [[[WDW - write up how to define bindings.]]]</P
-><TABLE
-BORDER="0"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
-><PRE
-CLASS="PROGRAMLISTING"
->from orca.input_event import InputEventHandler
-from orca.orca_i18n import _
-
-...
-
-    def __init__(self, app):
-        ...
-        someInputEventHandler = InputEventHandler(\
-            self.myHandler,
-            _("A one line description of this handler."))
-
-
-        self.keybindings.add(
-            keybindings.KeyBinding(
-                "KP_6",                   # XKeySym
-                1 &#60;&#60; orca.MODIFIER_ORCA,  # Modifiers we care about
-                1 &#60;&#60; orca.MODIFIER_ORCA,  # State they must be in
-                someInputEventHandler))   # Handler to handle this
-
-        ...
-
-        self.braillebindings[braille.CMD_LNUP] = someInputEventHandler
-        ...
-      </PRE
-></TD
-></TR
-></TABLE
-></DIV
 ></DIV
 ></DIV
 ><DIV
 CLASS="BOOK"
 ><A
-NAME="AEN2445"
+NAME="AEN2408"
 ></A
 ><DIV
 CLASS="TITLEPAGE"
 ><H1
 CLASS="TITLE"
 ><A
-NAME="AEN2445"
+NAME="AEN2408"
 >Orca Testing Plan</A
 ></H1
 ><DIV
@@ -9852,7 +9685,7 @@ CLASS="LEGALNOTICE"
 ><P
 ></P
 ><A
-NAME="AEN2448"
+NAME="AEN2411"
 ></A
 ><P
 >Copyright 2005, Sun Microsystems, Inc.</P
@@ -9869,12 +9702,12 @@ CLASS="TOC"
 ></DT
 ><DT
 ><A
-HREF="#AEN2450"
+HREF="#AEN2413"
 >Foreword</A
 ></DT
 ><DT
 ><A
-HREF="#AEN2456"
+HREF="#AEN2419"
 >Introduction</A
 ></DT
 ></DL
@@ -9883,7 +9716,7 @@ HREF="#AEN2456"
 CLASS="PREFACE"
 ><HR><H1
 ><A
-NAME="AEN2450"
+NAME="AEN2413"
 ></A
 >Foreword</H1
 ><P
@@ -9909,7 +9742,7 @@ CLASS="EMPHASIS"
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN2456"
+NAME="AEN2419"
 ></A
 >Introduction</H1
 ><P
@@ -9919,14 +9752,14 @@ NAME="AEN2456"
 ><DIV
 CLASS="BOOK"
 ><A
-NAME="AEN2459"
+NAME="AEN2422"
 ></A
 ><DIV
 CLASS="TITLEPAGE"
 ><H1
 CLASS="TITLE"
 ><A
-NAME="AEN2459"
+NAME="AEN2422"
 >Orca User's Guide</A
 ></H1
 ><DIV
@@ -9934,7 +9767,7 @@ CLASS="LEGALNOTICE"
 ><P
 ></P
 ><A
-NAME="AEN2462"
+NAME="AEN2425"
 ></A
 ><P
 >Copyright 2005, Sun Microsystems, Inc.</P
@@ -9951,12 +9784,12 @@ CLASS="TOC"
 ></DT
 ><DT
 ><A
-HREF="#AEN2464"
+HREF="#AEN2427"
 >Foreword</A
 ></DT
 ><DT
 ><A
-HREF="#AEN2470"
+HREF="#AEN2433"
 >Introduction</A
 ></DT
 ></DL
@@ -9965,7 +9798,7 @@ HREF="#AEN2470"
 CLASS="PREFACE"
 ><HR><H1
 ><A
-NAME="AEN2464"
+NAME="AEN2427"
 ></A
 >Foreword</H1
 ><P
@@ -9993,7 +9826,7 @@ CLASS="EMPHASIS"
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="AEN2470"
+NAME="AEN2433"
 ></A
 >Introduction</H1
 ><P

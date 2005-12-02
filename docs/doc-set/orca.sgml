@@ -24,6 +24,7 @@
 <!ENTITY architecture SYSTEM "architecture.sgml">
 
 <!ENTITY script_guide SYSTEM "script_guide.sgml">
+  <!ENTITY script_guide_link '<link linkend="script_guide">Orca Script Writing Guide</link>'>
 
 <!ENTITY testing SYSTEM "testing.sgml">
 
