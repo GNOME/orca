@@ -37,54 +37,6 @@ Logged as bugzilla bug 319752.]]]
 As a means to keep things simple for now, regions can only exist on a single
 line.  That is, a region cannot cross line boundaries.
 
-The main entry points into this module are as follows:
-
-    o init/shutdown:  for initializing and shutting down this module
-
-    o Line:           a class whose instances maintain an ordered list
-                      of Regions
-
-    o Region:         a class whose instances represent an area of text;
-                      subclasses of Regions include Component, Text, etc.
-
-    o Component:      a Region that will present the label for an
-                      accessible component and also cause the component
-                      to be activated when the user presses a cursor
-                      routing key associated with the component.
-
-    o Text:           a Region that presents the text of an accessible
-                      text object and will also route the text caret
-                      appopriately when the user presses a cursor routing
-                      key.
-
-    o ReviewComponent: a special Component used for flat review; keeps
-                      track of the flat review Zone associated with the
-                      region.
-
-    o ReviewText:     a special Component used for flat review; keeps
-                      track of the Zone associated with the region and
-                      also keeps track of where the review cursor is.
-
-    o clear:          clears the logical structure, but keeps the Braille
-                      display as is (see refresh)
-
-    o refresh:        repaints the logical structure on the Braille display
-                      clipping content based upon the viewport setting
-
-    o addLine:        appends a Line instance to the logical structure
-
-    o setFocus:       utility routine to set the cursor to a region
-
-Fields include:
-
-    o endIsShowing:    if True, the last character of a Line is showing
-                       somewhere on the display.
-    o beginningIsShowing: if True, the first character of a Line is showing
-                       on the display.
-    o cursorCell:      a 1-based offset saying which cell on the display
-                       has the cursor.  cursorCell=1 is the leftmost
-                       cell.  cursorCell=0 means the cursor is not showing.
-
 After initialization, a typical use of this module would be as follows:
 
     braille.clear()

@@ -39,13 +39,14 @@ import rolenames
 CACHE_VALUES = True
 
 class Event:
-   """Dummy class for converting the source of an event to an
-   Accessible object.  We need this since the event object we
-   get from the atspi is read-only.  So, we create this dummy event
-   object to contain a copy of all the event members with the source
-   converted to an Accessible.  It is perfectly OK for event handlers
-   to annotate this object with their own attributes.
+   """Converts the source of an event to an Accessible object.  We
+   need this since the event object we get from the atspi is
+   read-only.  So, we create this dummy event object to contain a copy
+   of all the event members with the source converted to an
+   Accessible.  It is perfectly OK for event handlers to annotate this
+   object with their own attributes.
    """
+   
    def __init__(self, e=None):
        if e:
            self.source   = Accessible.makeAccessible(e.source)
@@ -105,15 +106,29 @@ class Registry:
         bonobo.main_quit()
 
     def registerEventListener(self, callback, eventType):
-	listener = EventListener(self.registry, callback, eventType)
+        """Registers the given eventType and callback with the Registry.
+
+        Arguments:
+        - callback: function to call with an AT-SPI event instance
+        - eventType: string representing the type of event
+        """
+       	listener = EventListener(self.registry, callback, eventType)
         self.__listeners.append(listener)
 
     def deregisterEventListener(self, callback, eventType):
+        """Unregisters the given eventType and callback with the Registry.
+
+        Arguments:
+        - callback: function to call with an AT-SPI event instance
+        - eventType: string representing the type of event
+        """
 	found = True
 	while len(self.__listeners) and found:
 	    for i in range(0, len(self.__listeners)):
 	        if (self.__listeners[i].callback == callback) \
 	           and (self.__listeners[i].eventType == eventType):
+                    # The __del__ method of the listener will unregister it.
+                    #
 	            self.__listeners.pop(i)
 		    found = True
 		    break
@@ -144,8 +159,8 @@ class Registry:
 class EventListener(Accessibility__POA.EventListener):
     """Registers a callback directly with the AT-SPI Registry for the
     given event type.  Most users of this module will not use this
-    class directly, but will instead use the addEventListener method.
-    """
+    class directly, but will instead use the registerEventListener method
+    of the Registry."""
 
     def __init__(self, registry, callback, eventType):
         self.registry  = registry
@@ -187,7 +202,7 @@ class KeystrokeListener(Accessibility__POA.DeviceEventListener):
     """Registers a callback directly with the AT-SPI Registry for the
     given keystroke.  Most users of this module will not use this
     class directly, but will instead use the registerKeystrokeListeners
-    method."""
+    method of the Registry."""
 
     def keyEventToString(event):
         return ("KEYEVENT: type=%d\n" % event.type) \
@@ -285,8 +300,12 @@ class Accessible:
     _cache = {}
 
     def init(registry):
-        # Register our various listeners.
-        #
+        """Registers various event listeners with the Registry to keep
+        the Accessible cache up to date.
+
+        Arguments:
+        - registry: an instance of Registry
+        """
         registry.registerEventListener(
             Accessible._onNameChanged,
             "object:property-change:accessible-name")
@@ -306,6 +325,12 @@ class Accessible:
     init = staticmethod(init)
 
     def shutdown(registry):
+        """Unregisters the event listeners that were registered in the
+        init method.
+
+        Arguments:
+        - registry: an instance of Registry
+        """
         registry.deregisterEventListener(
             Accessible._onNameChanged,
             "object:property-change:accessible-name")
