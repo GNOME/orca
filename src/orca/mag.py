@@ -24,9 +24,8 @@ has also been disabled for now - logged as bugzilla bug 319643.]]]
 
 import atspi
 
-import bonobo
-import CORBA
-import GNOME
+atspi.ORBit.load_typelib('GNOME_Magnifier')
+import GNOME.Magnifier
 
 import time
 
