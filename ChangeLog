@@ -1,5 +1,6 @@
 2005-12-02  Willie Walker <william.walker@sun.com>
 
+	* src/docs/pydoc/Makefile.am: update to include latest sources.
 	* src/orca/orca.py: fix circular import for presentation managers
 	to allow pydoc to work better.
 	* src/orca/braille.py, src/orca/atspi.py: pydoc improvements.
