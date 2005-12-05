@@ -1,3 +1,10 @@
+2005-12-01  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/speechgenerator.py
+          Adjusted the getSpeechContext() method to ignore speaking about
+          objects the have an unknown role. This was an annoyance in the 
+          message pane window in Evolution.
+
 2005-12-02  Willie Walker <william.walker@sun.com>
 
 	* src/docs/doc-set/*: update architecture and script guides.

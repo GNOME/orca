@@ -1463,7 +1463,8 @@ class SpeechGenerator:
             if parent == stopAncestor:
                 break
             if (parent.role != rolenames.ROLE_FILLER) \
-                and (parent.role != rolenames.ROLE_SPLIT_PANE):
+                and (parent.role != rolenames.ROLE_SPLIT_PANE) \
+                and (parent.role != rolenames.ROLE_UNKNOWN):
                 if len(parent.label) > 0:
                     utterances.append(parent.label + " " \
                                       + getSpeechForRoleName(parent))
