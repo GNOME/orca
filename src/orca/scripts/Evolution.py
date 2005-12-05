@@ -52,10 +52,34 @@ class Script(default.Script):
         #                       event,
         #                       event.source.toString())
 
+        # When the focus is in the pane containing the lines of an 
+        # actual mail message, then, for each of those lines, we 
+        # don't want to speak "text", the role of the component that 
+        # currently has focus.
+        #
+        # The situation is determine by checking the roles of the current
+        # component, plus its parent, plus its parent. We are looking for
+        # "text", "panel" and "unknown". If we find that, then (hopefully)
+        # it's a line in the mail message and we get the utterances to
+        # speak for that Text. We remove the first entry (the role) before
+        # actually speaking them.
+
+        if event.source.role == rolenames.ROLE_TEXT:
+            parent = event.source.parent
+            if parent and (parent.role == rolenames.ROLE_PANEL):
+                parent = parent.parent
+                if parent and (parent.role == rolenames.ROLE_UNKNOWN):
+                    result = atspi.getTextLineAtCaret(event.source)
+                    speech.speak(result[0])
+                    orca.setLocusOfFocus(event, event.source, False)
+                    return
+
+
         # Pass the focus event onto the parent class to be handled in the
         # default way.
 
         default.Script.onFocus(self, event)
+
 
         # If the focus is in the message header list, then we want to speak
         # the remainder of the tables cells in the current highlighted 

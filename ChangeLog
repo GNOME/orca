@@ -1,5 +1,15 @@
 2005-12-01  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/scripts/Evolution.py
+          Added code to the onFocus() method to handle the following case:
+            When the focus is in the pane containing the lines of an
+            actual mail message, then, for each of those lines, we
+            don't want to speak "text", the role of the component that
+            currently has focus.
+         See the comments in the Evolution.py script for further details.
+
+2005-12-01  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/speechgenerator.py
           Adjusted the getSpeechContext() method to ignore speaking about
           objects the have an unknown role. This was an annoyance in the 
