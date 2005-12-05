@@ -25,7 +25,7 @@ import signal
 import sys
 import time
 
-import orca.core
+import orca.atspi
 
 # Maximum time, in seconds, to sleep.  This allows us to compress the
 # playback some for users who took their sweet time entering key strokes.
@@ -41,9 +41,6 @@ SPEED_UP  = 1.0
 def exit(signum, frame):
     sys.exit()
 
-def init():
-    orca.core.init()
-
 def go():
     """Expects to find lines of the following form on stdin:
 
@@ -55,7 +52,7 @@ def go():
               time=111223442.987959
     """
 
-    d = orca.core.registry.getDeviceEventController()
+    d = orca.atspi.Registry().registry.getDeviceEventController()
 
     lastTime = None
     
@@ -88,7 +85,6 @@ def main():
     signal.signal(signal.SIGINT, exit)
     signal.signal(signal.SIGQUIT, exit)
 
-    init()
     try:
         go()
     except EOFError:

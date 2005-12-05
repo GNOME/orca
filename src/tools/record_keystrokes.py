@@ -26,8 +26,7 @@ import signal
 import sys
 import time
 
-import orca.core
-import orca.kbd
+import orca.atspi
 
 def processKeyEvent(event):
     """
@@ -40,12 +39,12 @@ def processKeyEvent(event):
     if event.event_string == "F12":
         exit(None, None)
         
-    print orca.kbd.keyEventToString(event)
+    print orca.atspi.KeystrokeListener.keyEventToString(event)
 
     return False
 
 def exit(signum, frame):
-    orca.core.bonobo.main_quit()
+    orca.atspi.Registry().stop()
     sys.exit()
 
 def init():
@@ -57,11 +56,10 @@ def init():
     print "# DATE=%s" % time.strftime('%X %x %Z')
     print "# SYSTEM=%s" % sysinfo[0]
     
-    orca.core.init()
-    orca.kbd.init(processKeyEvent)
+    orca.atspi.Registry().registerKeystrokeListeners(processKeyEvent)
 
 def go():
-    orca.core.bonobo.main()
+    orca.atspi.Registry().start()
 
 def main():
     signal.signal(signal.SIGINT, exit)
