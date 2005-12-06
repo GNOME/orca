@@ -1,4 +1,4 @@
-2005-12-01  Rich Burridge <rich.burridge@sun.com>
+2005-12-05  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py
           Added code to the onFocus() method to handle the following case:
@@ -8,7 +8,7 @@
             currently has focus.
          See the comments in the Evolution.py script for further details.
 
-2005-12-01  Rich Burridge <rich.burridge@sun.com>
+2005-12-05  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/speechgenerator.py
           Adjusted the getSpeechContext() method to ignore speaking about
