@@ -1,3 +1,12 @@
+2005-12-07  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py
+          Added code to the onFocus() method to handle the following case:
+            When the focus is in the From:, To:, Subject: or Date: headers
+            of a message in the message area, then we should read the whole
+            row.
+         See the comments in the Evolution.py script for further details.
+
 2005-12-05  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py
