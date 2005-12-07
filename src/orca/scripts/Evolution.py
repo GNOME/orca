@@ -22,6 +22,7 @@ import orca.default as default
 import orca.atspi as atspi
 import orca.rolenames as rolenames
 import orca.orca as orca
+import orca.braille as braille
 import orca.speech as speech
 
 ########################################################################
@@ -70,6 +71,7 @@ class Script(default.Script):
                 parent = parent.parent
                 if parent and (parent.role == rolenames.ROLE_UNKNOWN):
                     result = atspi.getTextLineAtCaret(event.source)
+                    braille.displayMessage(result[0])
                     speech.speak(result[0])
                     orca.setLocusOfFocus(event, event.source, False)
                     return
@@ -101,6 +103,7 @@ class Script(default.Script):
                     parent = obj.parent
                     if parent.role == rolenames.ROLE_TABLE:
                         row = parent.table.getRowAtIndex(obj.index)
+                        utterances = []
                         for i in range(0, parent.table.nColumns):
                             obj = parent.table.getAccessibleAt(row, i)
                             cell = atspi.Accessible.makeAccessible(obj)
@@ -110,8 +113,11 @@ class Script(default.Script):
 
                             if cell.role == rolenames.ROLE_TEXT:
                                 result = atspi.getTextLineAtCaret(cell)
-                                speech.speak(result[0])
+                                utterances.append(result[0])
 
+                        line = ''.join([''.join(item) for item in utterances])
+                        braille.displayMessage(line)
+                        speech.speak(line)
                         orca.setLocusOfFocus(event, event.source, False)
                         return
 
@@ -135,10 +141,13 @@ class Script(default.Script):
             parent = event.source.parent
             if parent.role == rolenames.ROLE_TREE_TABLE:
                 row = parent.table.getRowAtIndex(event.source.index)
+                utterances = []
                 for i in range(1, parent.table.nColumns):
                     obj = parent.table.getAccessibleAt(row, i)
                     cell = atspi.Accessible.makeAccessible(obj)
-                    utterances = self.speechGenerator._getSpeechForTableCell(cell, False)
-                    speech.speakUtterances(utterances)
+                    utterances.append(self.speechGenerator._getSpeechForTableCell(cell, False))
 
+                line = ' '.join([''.join(item) for item in utterances])
+                braille.displayMessage(line)
+                speech.speak(line)
                 orca.setLocusOfFocus(event, event.source, False)
