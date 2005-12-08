@@ -76,9 +76,9 @@ class Script(default.Script):
                     orca.setLocusOfFocus(event, event.source, False)
                     return
 
-        # When the focus is in the From:, To:, Subject: or Date: headers
-        # of a message in the message area, then we should read the whole
-        # row.
+        # Check if the focus is in the From:, To:, Subject: or Date: headers
+        # of a message in the message area, and that we want to speak all of 
+        # the tables cells for that current row.
         #
         # The situation is determine by checking the roles of the current
         # component, plus its parent, plus its parent. We are looking for
@@ -94,7 +94,8 @@ class Script(default.Script):
         # component and that the final component (with no children) is of 
         # role TEXT.
 
-        if event.source.role == rolenames.ROLE_TEXT:
+        if (self.readTableCellRow == True) \
+            and (event.source.role == rolenames.ROLE_TEXT):
             parent = event.source.parent
             if parent and (parent.role == rolenames.ROLE_PANEL):
                 parent = parent.parent
@@ -104,6 +105,7 @@ class Script(default.Script):
                     if parent.role == rolenames.ROLE_TABLE:
                         row = parent.table.getRowAtIndex(obj.index)
                         utterances = []
+                        regions = []
                         for i in range(0, parent.table.nColumns):
                             obj = parent.table.getAccessibleAt(row, i)
                             cell = atspi.Accessible.makeAccessible(obj)
@@ -112,42 +114,44 @@ class Script(default.Script):
                                 cell = cell.child(0)
 
                             if cell.role == rolenames.ROLE_TEXT:
+                                regions.append(braille.Text(cell))
                                 result = atspi.getTextLineAtCaret(cell)
                                 utterances.append(result[0])
 
-                        line = ''.join([''.join(item) for item in utterances])
-                        braille.displayMessage(line)
-                        speech.speak(line)
+                        braille.displayRegions(regions)
+                        speech.speakUtterances(utterances)
                         orca.setLocusOfFocus(event, event.source, False)
                         return
 
-
-        # Pass the focus event onto the parent class to be handled in the
-        # default way.
-
-        default.Script.onFocus(self, event)
-
-
-        # If the focus is in the message header list, then we want to speak
-        # the remainder of the tables cells in the current highlighted 
-        # message (the default.py onFocus() method will have handled the
-        # first one above).
+        # Check if the focus is in the message header list, and we want to 
+        # speak all of the tables cells in the current highlighted message.
         #
         # Note that the Evolution user can adjust which colums appear in 
         # the message list and the order in which they appear, so that 
         # Orca will just speak the ones that they are interested in.
 
-        if event.source.role == rolenames.ROLE_TABLE_CELL:
+        if (self.readTableCellRow == True) \
+            and (event.source.role == rolenames.ROLE_TABLE_CELL):
             parent = event.source.parent
             if parent.role == rolenames.ROLE_TREE_TABLE:
                 row = parent.table.getRowAtIndex(event.source.index)
-                utterances = []
-                for i in range(1, parent.table.nColumns):
+                brailleRegions = []
+                for i in range(0, parent.table.nColumns):
                     obj = parent.table.getAccessibleAt(row, i)
                     cell = atspi.Accessible.makeAccessible(obj)
-                    utterances.append(self.speechGenerator._getSpeechForTableCell(cell, False))
+                    utterances = self.speechGenerator.getSpeech(cell, False)
+                    [cellRegions, focusedRegion] = self.brailleGenerator.getBrailleRegions(cell)
+                    brailleRegions.extend(cellRegions)
+                    speech.speakUtterances(utterances)
 
-                line = ' '.join([''.join(item) for item in utterances])
-                braille.displayMessage(line)
-                speech.speak(line)
+                braille.displayRegions(brailleRegions)
                 orca.setLocusOfFocus(event, event.source, False)
+                return
+
+        # For everything else, pass the focus event onto the parent class 
+        # to be handled in the default way.
+        #
+        # Note that this includes table cells if we only want to read the
+        # current cell.
+
+        default.Script.onFocus(self, event)

@@ -26,4 +26,5 @@ from orca_i18n import _ # for gettext support
 keynames = {}
 keynames["Shift_L"]      = _("left shift")
 keynames["ISO_Left_Tab"] = _("left tab")
+keynames["SunF36"]       = _("F 11")
 keynames["SunF37"]       = _("F 12")

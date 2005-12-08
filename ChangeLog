@@ -1,4 +1,19 @@
 2005-12-08  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/braille.py
+          Added a new function displayRegions() that displays a list of 
+          regions on a single line, setting focus to the specified region.
+
+        * src/orca/keynames.py
+          Added a mapping of "SunF36" to "F 11"
+
+        * src/orca/scripts/Evolution.py
+          Adjusted the onFocus() method to use braille.displayRegions() to
+          generate a braille display of multiple regions when displaying a
+          message header or one of the four standard mail message pane
+          header lines (assuming the user wants to speak the complete row).
+
+2005-12-08  Rich Burridge <rich.burridge@sun.com>
         * src/orca/{default.py, settings.py}
           Slight tweak to the last change. The initial state for whether
           to read just the current table cell or the whole row, is
