@@ -1,3 +1,8 @@
+2005-12-08  Rich Burridge <rich.burridge@sun.com>
+        * src/orca/{default.py, settings.py}
+          Slight tweak to the last change. The initial state for whether
+          to read just the current table cell or the whole row, is
+          determined by a variable in settings.py that the user can override.
 
 2005-12-08  Rich Burridge <rich.burridge@sun.com>
 

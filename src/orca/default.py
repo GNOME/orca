@@ -59,7 +59,7 @@ class Script(script.Script):
         script.Script.__init__(self, app)
 
         self.flatReviewContext = None
-        self.readTableCellRow = False
+        self.readTableCellRow = settings.getSetting(settings.READ_TABLE_CELL_ROW, False)
 
         ################################################################
         #                                                              #

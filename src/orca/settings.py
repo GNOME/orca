@@ -100,6 +100,12 @@ useMagnifier            = False
 USE_KEY_ECHO            = "useKeyEcho"
 useKeyEcho              = False
 
+# If True, reads all the table cells in the current row rather than just
+# the current one.
+#
+READ_TABLE_CELL_ROW     = "readTableCellRow"
+readTableCellRow        = False
+
 # Script developer feature.  If False, just the default script
 # will be used.  Helps determine difference between custom
 # scripts and the default script behavior.
