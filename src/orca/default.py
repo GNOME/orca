@@ -59,6 +59,7 @@ class Script(script.Script):
         script.Script.__init__(self, app)
 
         self.flatReviewContext = None
+        self.readTableCellRow = False
 
         ################################################################
         #                                                              #
@@ -282,6 +283,15 @@ class Script(script.Script):
                 0, \
                 0, \
                 reviewNextCharacterHandler))
+
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "F11", \
+                1 << orca.MODIFIER_ORCA, \
+                1 << orca.MODIFIER_ORCA, \
+                input_event.InputEventHandler(\
+                    Script.toggleTableCellReadMode,
+                    _("Toggles whether to read just the current table cell or the whole row."))))
 
         ################################################################
         #                                                              #
@@ -1216,6 +1226,14 @@ class Script(script.Script):
         to right.  """
 
         return flat_review.clusterZonesByLine(zones)
+
+    def toggleTableCellReadMode(self, inputEvent=None):
+        """Toggles an indicator for whether we should just read the current 
+        table cell or read the whole row."""
+
+        self.readTableCellRow = not self.readTableCellRow
+
+        return True
 
     def getFlatReviewContext(self):
         """Returns the flat review context, creating one if necessary."""

@@ -1,4 +1,11 @@
 
+2005-12-08  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py
+          Added the ability to toggle whether we should speak/braille just
+          the current table cell or the whole row. This is currently
+          toggled with Insert+F11
+
 2005-12-07  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py
