@@ -24,6 +24,7 @@ import orca.rolenames as rolenames
 import orca.orca as orca
 import orca.braille as braille
 import orca.speech as speech
+import orca.settings as settings
 
 ########################################################################
 #                                                                      #
@@ -125,6 +126,8 @@ class Script(default.Script):
 
         # Check if the focus is in the message header list, and we want to 
         # speak all of the tables cells in the current highlighted message.
+        # The role is only brailled for the table cell that currently has
+        # focus.
         #
         # Note that the Evolution user can adjust which colums appear in 
         # the message list and the order in which they appear, so that 
@@ -135,17 +138,24 @@ class Script(default.Script):
             parent = event.source.parent
             if parent.role == rolenames.ROLE_TREE_TABLE:
                 row = parent.table.getRowAtIndex(event.source.index)
+                savedBrailleVerbosityLevel = \
+                    settings.getSetting(settings.BRAILLE_VERBOSITY_LEVEL)
                 brailleRegions = []
                 for i in range(0, parent.table.nColumns):
                     obj = parent.table.getAccessibleAt(row, i)
                     cell = atspi.Accessible.makeAccessible(obj)
                     utterances = self.speechGenerator.getSpeech(cell, False)
+                    if cell.index == event.source.index:
+                        settings.brailleVerbosityLevel = settings.VERBOSITY_LEVEL_VERBOSE
+                    else:
+                        settings.brailleVerbosityLevel = settings.VERBOSITY_LEVEL_BRIEF
                     [cellRegions, focusedRegion] = self.brailleGenerator.getBrailleRegions(cell)
                     brailleRegions.extend(cellRegions)
                     speech.speakUtterances(utterances)
 
                 braille.displayRegions(brailleRegions)
                 orca.setLocusOfFocus(event, event.source, False)
+                settings.brailleVerbosityLevel = savedBrailleVerbosityLevel
                 return
 
         # For everything else, pass the focus event onto the parent class 

@@ -1,3 +1,14 @@
+2005-12-09  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py
+
+          Adjusted the handling of the message header list code in the 
+          onFocus() method to only braille the role of the table cell 
+          that currently has focus. This is achieved by adjusting the
+          verbosity level of brailleRolenameStyle to VERBOSITY_LEVEL_BRIEF
+          for the other table cells, restoring it to its original value
+          at the end.
+
 2005-12-09  Willie Walker <william.walker@sun.com>
 
 	* bugs/bug_323633.py: standalone test case that demonstrates
