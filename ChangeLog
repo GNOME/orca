@@ -1,3 +1,10 @@
+2005-12-09  Willie Walker <william.walker@sun.com>
+
+	* bugs/bug_323633.py: standalone test case that demonstrates
+	the issue where metacity sends accessible label information
+	one window behind when using Alt+TAB to cycle between windows.
+	Logged as bugzilla bug #323633.
+	
 2005-12-08  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/braille.py
