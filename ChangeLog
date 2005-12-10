@@ -1,3 +1,8 @@
+2005-12-10  Willie Walker <william.walker@sun.com>
+
+	* bugs/bugs.html: create simple (let's try to keep it simple) 
+	table to help us keep track of bugs in our external dependencies
+	
 2005-12-09  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py

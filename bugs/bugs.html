@@ -1,0 +1,126 @@
+<html>
+<table border=1>
+
+  <tr>
+    <td><b>Component</b></td>
+    <td><b>Bug</b></td>
+    <td><b>Fixed by Them</b></td>
+    <td><b>Fix Verified by Us</b></td>
+    <td><b>Released In Version</b></td>
+    <td><b>Notes</b></td>
+  </tr>
+
+  <tr>
+    <td>Java-access-bridge 1.4.6</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=318615">318615</a>:
+      Keycodes delivered by Java access bridge are inconsistent with keycodes delivered by GTK</td>
+    <td>No</td>
+    <td>No</td>
+    <td>No</td>
+    <td>Discussions with BillH lead us to believe this may require an AT-SPI interface change.</td>
+  </tr>
+
+  <tr>
+    <td>gtk+ 2.8.x</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=323633">323633</a>:
+      Accessible name changes in metacity tab popup are one step behind</td>
+    <td>No</td>
+    <td>No</td>
+    <td>No</td>
+    <td>Causes metacity to speak previously selected item instead of current item.</td>
+  </tr>
+
+  <tr>
+    <td>Firefox 1.5</td>
+    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=317482">317482</a>:
+      AccessibleText getRangeExtents does not work</td>
+    <td>Patch Proposed</td>
+    <td>No</td>
+    <td>No</td>
+    <td>Prevents flat review from working in Firefox</td>
+  </tr>
+
+  <tr>
+    <td>Firefox 1.5</td>
+    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=312093">312093</a>:
+      Caret-moved events are not always reported</td>
+    <td>Proposed JavaScript Solution</td>
+    <td>No</td>
+    <td>No</td>
+    <td>Renders caret navigation useless</td>
+  </tr>
+
+
+  <tr>
+    <td>Firefox 1.5</td>
+    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=319752">319752</a>:
+      Menus show up twice in the a11y hierarchy</td>
+    <td>No</td>
+    <td>No</td>
+    <td>No</td>
+    <td>Causes menus to be spoken twice.</td>
+  </tr>
+
+  <tr>
+    <td>Firefox 1.5</td>
+    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=317475">317475</a>:
+      Top level window with focus should have "ACTIVE" state set</td>
+    <td>Patch Proposed</td>
+    <td>No</td>
+    <td>No</td>
+    <td>Makes it difficult to know if Firefox is the active app</td>
+  </tr>
+
+  <tr>
+    <td>Firefox 1.5</td>
+    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=317462">317462</a>:
+      Top level application object has incorrect accessible role</td>
+    <td>Patch Proposed</td>
+    <td>No</td>
+    <td>No</td>
+    <td>Wreaks havoc on Orca logic that finds the application for an event</td>
+  </tr>
+
+  <tr>
+    <td>Firefox 1.5</td>
+    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=312092">312092</a>:
+      Accessible hierarchy incomplete/incorrect</td>
+    <td>Yes</td>
+    <td>Yes</td>
+    <td>Not a bug</td>
+    <td>Unset GTK_MODULES prior to running</td>
+  </tr>
+
+  <tr>
+    <td>Evolution 2.4.x</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=322776">322776</a>:
+      Unable to keyboard navigate into message headers pane, if no message selected.</td>
+    <td>Yes</td>
+    <td>No</td>
+    <td>No</td>
+    <td>Workaround: press the "arrow down" button after having tabbed to the message list pane</td>
+  </tr>
+
+
+  <tr>
+    <td>atk/gail/libgail-gnome/at-spi</td>
+    <td><a href="http://bt2ws.central.sun.com/CrPrint?id=6313470">6313470</a>:
+      Tickling AT-SPI hierarachy can yield incorrect info and cause app corruption/hang/crash</td>
+    <td>Yes</td>
+    <td>Yes</td>
+    <td>atk-1.10.3, gail-1.8.8, libgail-gnome-1.1.2, at-spi-1.6.6</td>
+    <td></td>
+  </tr>
+ 
+  <tr>
+    <td>gnome-speech-0.3.8</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=319168">319168</a>:
+      Streaming audio player for FreeTTS cannot be selected</td>
+    <td>Yes</td>
+    <td>Yes</td>
+    <td>gnome-speech-0.3.9</td>
+    <td>This bug introduced severe latency on Solaris 11</td>
+  </tr>
+
+</table>
+</html>
