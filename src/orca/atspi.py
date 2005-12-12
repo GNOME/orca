@@ -1365,6 +1365,51 @@ def getTextLineAtCaret(obj):
 
     return [content, offset, line[1]]
 
+def textLines(text):
+    """Creates a generator that can be used to iterate over each line
+    of a text object, starting at the caret offset.  One can do something
+    like the following to access the lines:
+
+    for line in atspi.textLines(orca.locusOfFocus.text):
+        <<<do something with the line>>>
+
+    Arguments:
+    - text: an Accessible Text instance (e.g., obj.text)
+
+    Returns a tuple: [text, acss], where text is the string to be spoken
+    and acss is an ACSS instance for speaking the text.
+    """
+
+    length = text.characterCount
+    offset = text.caretOffset
+    
+    # Get the next line of text to read 	 
+    #
+    lastEndOffset = -1
+    while offset < length:
+        [string, startOffset, endOffset] = text.getTextAtOffset(
+            offset,
+            Accessibility.TEXT_BOUNDARY_LINE_START)
+
+        # [[[WDW - HACK: this is here because getTextAtOffset
+        # tends not to be implemented consistently across toolkits.
+        # Sometimes it behaves properly (i.e., giving us an endOffset
+        # that is the beginning of the next line), sometimes it
+        # doesn't (e.g., giving us an endOffset that is the end of
+        # the current line).  So...we hack.  The whole 'max' deal
+        # is to account for lines that might be a brazillion lines
+        # long.]]]
+        #
+        if endOffset == lastEndOffset:
+            offset = max(offset + 1, lastEndOffset + 1)
+            lastEndOffset = endOffset
+            continue
+
+        lastEndOffset = endOffset
+        offset = endOffset
+        
+        yield [string, None]
+
 def getNodeLevel(obj):
     """Determines the node level of this object if it is in a tree
     relation, with 0 being the top level node.  If this object is

@@ -158,6 +158,19 @@ class SpeechServer:
         """
         pass
 
+    def sayAll(self, utteranceIterator):
+        """Iterates through the given utteranceIterator, speaking
+        each utterance one at a time.  Subclasses may postpone
+        getting a new element until the current element has been
+        spoken.
+
+        Arguments:
+        - utteranceIterator: iterator/generator whose next() function
+                             returns a [string, acss] tuple to be spoken.
+        """
+        for [utterance, acss] in utteranceIterator:
+            self.speak(utterance, acss)
+            
     def increaseSpeechRate(self, step=5):
         """Increases the speech rate.
         """

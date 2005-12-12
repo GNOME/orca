@@ -36,58 +36,56 @@ from orca_i18n import _           # for gettext support
 atspi.ORBit.load_typelib('GNOME_Speech')
 import GNOME.Speech, GNOME__POA.Speech
 
-class SpeechCallback(GNOME__POA.Speech.SpeechCallback):
-    """Implements gnome-speech's SpeechCallback class.  The speech
-    module uses only one global callback object which is used for
-    tasks such as sayAll mode.
-
-    SpeechCallback objects contain a speech ended method, as well as the
-    current speaking position.
-
-    Here's an idea of how to use this.  I'm just leaving this here to
-    remind me what to do when callbacks are re-added...
-
-    # [[[TODO: WDW - the register succeeds on JDS/Suse but fails
-    # on Fedora.  Dunno why, but we'll just limp along for now.
-    # BTW, the error is on the freetts-synthesis-driver side:
-    # Jul 30, 2005 4:36:09 AM com.sun.corba.se.impl.ior.IORImpl getProfile
-    # WARNING: "IOP00511201: (INV_OBJREF) IOR must have at least one IIOP profile"
-    # org.omg.CORBA.INV_OBJREF:   vmcid: SUN  minor code: 1201  completed: No
-    #
-    try:
-        s.registerSpeechCallback(_cb._this())
-    except:
-        debug.printException(debug.LEVEL_SEVERE)
-        debug.println(debug.LEVEL_CONFIGURATION,
-                      "Will not use speech callbacks.")
+class _Speaker(GNOME__POA.Speech.SpeechCallback):
+    """Implements gnome-speech's SpeechCallback class.  The gnome-speech
+    server only allows one speech callback to be registered with a speaker
+    and there's no way to unregister it.  So...we need to handle stuff
+    like that on our own.  This class handles this for us and also delegates
+    all calls to the 'real' gnome speech speaker.
     """
 
-    def __init__(self):
-        self.onSpeechEnded = None
-        self.position = 0
+    def __init__(self, gnome_speaker):
+        self.gnome_speaker = gnome_speaker
+        gnome_speaker.registerSpeechCallback(self._this())
+        self.__callbacks = []
+        
+    def registerCallback(self, callback):
+        self.__callbacks.append(callback)
 
+    def deregisterCallback(self, callback):
+        self.__callbacks.remove(callback)
+        
     def notify(self, type, id, offset):
         """Called by GNOME Speech when the GNOME Speech driver generates
         a callback.
 
         Arguments:
-        - type:
-        - id:
-        - offset:
+        - type:   one of GNOME.Speech.speech_callback_speech_started,
+                         GNOME.Speech.speech_callback_speech_progress,
+                         GNOME.Speech.speech_callback_speech_ended
+        - id:     the id of the utterance (returned by say)
+        - offset: the character offset into the utterance (for progress)
         """
+        for callback in self.__callbacks:
+            callback.notify(type, id, offset)
 
-        # Call our speech ended Python function if we have one
-        #
-        if type == GNOME.Speech.speech_callback_speech_ended:
-            if self.onSpeechEnded:
-                self.onSpeechEnded()
+    def say(self, text):
+        return self.gnome_speaker.say(text)
 
-        # Update our speaking position if we get a speech progress
-        # notification.  [[[TODO: WDW - need to be able use this to
-        # update the magnifier's region of interest.]]]
-        #
-        elif type == GNOME.Speech.speech_callback_speech_progress:
-            self.position = offset
+    def stop(self):
+        self.gnome_speaker.stop()
+        
+    def getSupportedParameters(self):
+        return self.gnome_speaker.getSupportedParameters()
+    
+    def getParameterValue(self, name):
+        return self.gnome_speaker.getParameterValue(name)
+
+    def setParameterValue(self, name, value):
+        return self.gnome_speaker.setParameterValue(name, value)
+
+    def __del__(self):
+        self.gnome_speaker.unref()
 
 class SpeechServer(speechserver.SpeechServer):
     """Provides SpeechServer implementation for gnome-speech."""
@@ -197,7 +195,8 @@ class SpeechServer(speechserver.SpeechServer):
         self.__driver = driver
         self.__driverName = driver.driverName
 	self.__iid = iid
-
+        self.__sayAll = None
+        
     def __getRate(self, speaker):
         """Gets the voice-independent ACSS rate value of a voice."""
 
@@ -297,8 +296,9 @@ class SpeechServer(speechserver.SpeechServer):
             return None
 
         s = self.__driver.createSpeaker(voice)
-        speaker = s._narrow(GNOME.Speech.Speaker)
-
+        speaker = _Speaker(s._narrow(GNOME.Speech.Speaker))
+        speaker.registerCallback(self)
+        
 	parameters = speaker.getSupportedParameters()
 	for parameter in parameters:
 	    if parameter.name == "rate":
@@ -323,6 +323,28 @@ class SpeechServer(speechserver.SpeechServer):
         self.__speakers[acss.name()] = speaker
 
 	return speaker
+
+    def notify(self, type, id, offset):
+        """Called by GNOME Speech when the GNOME Speech driver generates
+        a callback.  This is for internal use only.
+
+        Arguments:
+        - type:   one of GNOME.Speech.speech_callback_speech_started,
+                         GNOME.Speech.speech_callback_speech_progress,
+                         GNOME.Speech.speech_callback_speech_ended
+        - id:     the id of the utterance (returned by say)
+        - offset: the character offset into the utterance (for progress)
+        """
+        if self.__sayAll:
+            [utteranceIterator, sayAllId] = self.__sayAll
+            if sayAllId == id:
+                if type == GNOME.Speech.speech_callback_speech_ended:
+                    try:
+                        [utterance, acss] = utteranceIterator.next()
+                        self.__sayAll = [utteranceIterator,
+                                         self.__speak(utterance, acss)]
+                    except StopIteration:
+                        self.__sayAll = None
 
     def getInfo(self):
         """Returns [driverName, serverId]
@@ -406,7 +428,7 @@ class SpeechServer(speechserver.SpeechServer):
             self.speak(text, acss, i == 0)
             i += 1
 
-    def speak(self, text=None, acss=None, interrupt=True):
+    def __speak(self, text=None, acss=None, interrupt=True):
         """Speaks all queued text immediately.  If text is not None,
         it is added to the queue before speaking.
 
@@ -419,6 +441,9 @@ class SpeechServer(speechserver.SpeechServer):
 		     voice settings.
         - interrupt: if True, stops any speech in progress before
                      speaking the text
+
+        Returns an id of the thing being spoken or -1 if nothing is to
+        be spoken.
         """
 
         speaker = self.__getSpeaker(acss)
@@ -431,7 +456,7 @@ class SpeechServer(speechserver.SpeechServer):
         if not text:
             if interrupt:
                 speech.stop()
-            return
+            return -1
 
         # If the text to speak is a single character, see if we have a
         # customized character pronunciation
@@ -458,7 +483,7 @@ class SpeechServer(speechserver.SpeechServer):
             #if interrupt:
             #    speaker.stop()
             self.__lastText = [text, acss]
-            speaker.say(text)
+            return speaker.say(text)
         except:
             # On failure, remember what we said, reset our connection to the
             # speech synthesis driver, and try to say it again.
@@ -466,7 +491,45 @@ class SpeechServer(speechserver.SpeechServer):
             debug.printException(debug.LEVEL_SEVERE)
             debug.println(debug.LEVEL_SEVERE, "Restarting speech...")
             self.__reset()
+            return -1
+        
+    def speak(self, text=None, acss=None, interrupt=True):
+        """Speaks all queued text immediately.  If text is not None,
+        it is added to the queue before speaking.
 
+        Arguments:
+        - text:      optional text to add to the queue before speaking
+        - acss:      acss.ACSS instance; if None,
+		     the default voice settings will be used.
+		     Otherwise, the acss settings will be
+		     used to augment/override the default
+		     voice settings.
+        - interrupt: if True, stops any speech in progress before
+                     speaking the text
+
+        Returns an id of the thing being spoken or -1 if nothing is to
+        be spoken.
+        """
+        if self.__sayAll:
+            self.__sayAll = None
+            self.stop()
+
+        self.__speak(text, acss, interrupt)
+
+    def sayAll(self, utteranceIterator):
+        """Iterates through the given utteranceIterator, speaking
+        each utterance one at a time.
+
+        Arguments:
+        - utteranceIterator: iterator/generator whose next() function
+                             returns a new string to be spoken
+        """
+        try:
+            [utterance, acss] = utteranceIterator.next()
+            self.__sayAll = [utteranceIterator, self.__speak(utterance, acss)]
+        except StopIteration:
+            pass
+            
     def increaseSpeechRate(self, step=5):
         """Increases the speech rate.
 
@@ -535,13 +598,7 @@ class SpeechServer(speechserver.SpeechServer):
     def shutdown(self):
         """Shuts down the speech engine."""
 
-        for name in self.__speakers.keys():
-            try:
-                self.__speakers[name].unref()
-            except:
-                pass
         self.__speakers = {}
-
         try:
             self.__driver.unref()
         except:

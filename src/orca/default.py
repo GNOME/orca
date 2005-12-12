@@ -93,14 +93,14 @@ class Script(script.Script):
                     Script.rightClickReviewItem,
                     _("Performs right click on current flat review item."))))
 
-        #self.keybindings.add(
-        #    keybindings.KeyBinding(
-        #        "KP_Add", \
-        #        0, \
-        #        0, \
-        #        input_event.InputEventHandler(\
-        #            Script.sayAll,
-        #            _("Speaks entire document."))))
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_Add", \
+                0, \
+                0, \
+                input_event.InputEventHandler(\
+                    Script.sayAll,
+                    _("Speaks entire document."))))
 
         self.keybindings.add(
             keybindings.KeyBinding(
@@ -443,6 +443,16 @@ class Script(script.Script):
 
         return speechgenerator.SpeechGenerator()
 
+    def sayAll(self, inputEvent):
+        if not orca.locusOfFocus:
+            pass
+        elif orca.locusOfFocus.text:
+            speech.sayAll(atspi.textLines(orca.locusOfFocus.text))
+        else:
+            speech.speakUtterances(
+                self.speechGenerator.getSpeech(orca.locusOfFocus, False))
+        return True
+    
     def whereAmI(self, inputEvent):
         self.updateBraille(orca.locusOfFocus)
 

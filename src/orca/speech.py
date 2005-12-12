@@ -101,6 +101,10 @@ def __resolveACSS(acss=None):
         voices = settings.getSetting(settings.VOICES, None)
         return voices[settings.DEFAULT_VOICE]
 
+def sayAll(utteranceIterator):
+    if __speechserver:
+        __speechserver.sayAll(utteranceIterator)
+    
 def speak(text, acss=None):
     if __speechserver:
         __speechserver.speak(text, __resolveACSS(acss))
