@@ -1,3 +1,16 @@
+2005-12-13  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py
+          Added it two new methods:
+          - walkComponentHierarchy() - a debug routine to print out 
+            the hierarchy of components for the given object.
+          - isDesiredFocusedItem() - called to determine if the given 
+            object and it's hierarchy of parent objects, each have the 
+            desired roles.
+
+          Adjusted the code in the onFocus() method to use the
+          isDesiredFocusedItem() method.
+
 2005-12-10  Willie Walker <william.walker@sun.com>
 
 	* bugs/bugs.html: create simple (let's try to keep it simple) 

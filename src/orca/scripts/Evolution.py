@@ -44,6 +44,47 @@ class Script(default.Script):
         default.Script.__init__(self, app)
 
 
+    def walkComponentHierarchy(self, obj):
+        """Debug routine to print out the hierarchy of components for the
+           given object.
+
+        Arguments:
+        - obj: the component to start from
+        """
+
+        print "<<<<---- Component Hierachy ---->>>>"
+        print "START: Obj:", obj.name, obj.role
+        parent = obj
+        while parent:
+            if parent != obj:
+                if not parent.parent:
+                    print "TOP: Parent:", parent.name, parent.role
+                else:
+                    print "Parent:", parent.name, parent.role
+            parent = parent.parent
+        print "<<<<============================>>>>"
+
+
+    def isDesiredFocusedItem(self, obj, rolesList):
+        """Called to determine if the given object and it's hierarchy of
+           parent objects, each have the desired roles.
+
+        Arguments:
+        - rolesList: the list of desired roles for the components and the
+          hierarchy of its parents.
+
+        Returns True if all roles match.
+        """
+
+        current = obj
+        for i in range(0, len(rolesList)):
+            if (current == None) or (current.role != rolesList[i]):
+                return False
+            current = current.parent
+
+        return True
+
+
     def onFocus(self, event):
         """Called whenever an object gets focus.
 
@@ -54,6 +95,8 @@ class Script(default.Script):
         # debug.printObjectEvent(debug.LEVEL_OFF,
         #                        event,
         #                        event.source.toString())
+
+        # self.walkComponentHierarchy(event.source)
 
         # When the focus is in the pane containing the lines of an 
         # actual mail message, then, for each of those lines, we 
@@ -66,16 +109,16 @@ class Script(default.Script):
         # it's a line in the mail message and we get the utterances to
         # speak for that Text.
 
-        if event.source.role == rolenames.ROLE_TEXT:
-            parent = event.source.parent
-            if parent and (parent.role == rolenames.ROLE_PANEL):
-                parent = parent.parent
-                if parent and (parent.role == rolenames.ROLE_UNKNOWN):
-                    result = atspi.getTextLineAtCaret(event.source)
-                    braille.displayMessage(result[0])
-                    speech.speak(result[0])
-                    orca.setLocusOfFocus(event, event.source, False)
-                    return
+        rolesList = [rolenames.ROLE_TEXT, \
+                     rolenames.ROLE_PANEL, \
+                     rolenames.ROLE_UNKNOWN]
+        if self.isDesiredFocusedItem(event.source, rolesList):
+            result = atspi.getTextLineAtCaret(event.source)
+            braille.displayMessage(result[0])
+            speech.speak(result[0])
+            orca.setLocusOfFocus(event, event.source, False)
+            return
+
 
         # Check if the focus is in the From:, To:, Subject: or Date: headers
         # of a message in the message area, and that we want to speak all of 
@@ -95,34 +138,34 @@ class Script(default.Script):
         # component and that the final component (with no children) is of 
         # role TEXT.
 
+        rolesList = [rolenames.ROLE_TEXT, \
+                     rolenames.ROLE_PANEL, \
+                     rolenames.ROLE_TABLE_CELL]
         if (self.readTableCellRow == True) \
-            and (event.source.role == rolenames.ROLE_TEXT):
-            parent = event.source.parent
-            if parent and (parent.role == rolenames.ROLE_PANEL):
-                parent = parent.parent
-                if parent and (parent.role == rolenames.ROLE_TABLE_CELL):
-                    obj = parent
-                    parent = obj.parent
-                    if parent.role == rolenames.ROLE_TABLE:
-                        row = parent.table.getRowAtIndex(obj.index)
-                        utterances = []
-                        regions = []
-                        for i in range(0, parent.table.nColumns):
-                            obj = parent.table.getAccessibleAt(row, i)
-                            cell = atspi.Accessible.makeAccessible(obj)
+            and (self.isDesiredFocusedItem(event.source, rolesList)):
+            obj = event.source.parent.parent
+            parent = obj.parent
+            if parent.role == rolenames.ROLE_TABLE:
+                row = parent.table.getRowAtIndex(obj.index)
+                utterances = []
+                regions = []
+                for i in range(0, parent.table.nColumns):
+                    obj = parent.table.getAccessibleAt(row, i)
+                    cell = atspi.Accessible.makeAccessible(obj)
 
-                            while cell.childCount:
-                                cell = cell.child(0)
+                    while cell.childCount:
+                        cell = cell.child(0)
 
-                            if cell.role == rolenames.ROLE_TEXT:
-                                regions.append(braille.Text(cell))
-                                result = atspi.getTextLineAtCaret(cell)
-                                utterances.append(result[0])
+                    if cell.role == rolenames.ROLE_TEXT:
+                        regions.append(braille.Text(cell))
+                        result = atspi.getTextLineAtCaret(cell)
+                        utterances.append(result[0])
 
-                        braille.displayRegions(regions)
-                        speech.speakUtterances(utterances)
-                        orca.setLocusOfFocus(event, event.source, False)
-                        return
+                braille.displayRegions(regions)
+                speech.speakUtterances(utterances)
+                orca.setLocusOfFocus(event, event.source, False)
+                return
+
 
         # Check if the focus is in the message header list, and we want to 
         # speak all of the tables cells in the current highlighted message.
@@ -133,30 +176,34 @@ class Script(default.Script):
         # the message list and the order in which they appear, so that 
         # Orca will just speak the ones that they are interested in.
 
+        rolesList = [rolenames.ROLE_TABLE_CELL, rolenames.ROLE_TREE_TABLE]
         if (self.readTableCellRow == True) \
-            and (event.source.role == rolenames.ROLE_TABLE_CELL):
+            and (self.isDesiredFocusedItem(event.source, rolesList)):
             parent = event.source.parent
-            if parent.role == rolenames.ROLE_TREE_TABLE:
-                row = parent.table.getRowAtIndex(event.source.index)
-                savedBrailleVerbosityLevel = \
-                    settings.getSetting(settings.BRAILLE_VERBOSITY_LEVEL)
-                brailleRegions = []
-                for i in range(0, parent.table.nColumns):
-                    obj = parent.table.getAccessibleAt(row, i)
-                    cell = atspi.Accessible.makeAccessible(obj)
-                    utterances = self.speechGenerator.getSpeech(cell, False)
-                    if cell.index == event.source.index:
-                        settings.brailleVerbosityLevel = settings.VERBOSITY_LEVEL_VERBOSE
-                    else:
-                        settings.brailleVerbosityLevel = settings.VERBOSITY_LEVEL_BRIEF
-                    [cellRegions, focusedRegion] = self.brailleGenerator.getBrailleRegions(cell)
-                    brailleRegions.extend(cellRegions)
-                    speech.speakUtterances(utterances)
+            row = parent.table.getRowAtIndex(event.source.index)
+            savedBrailleVerbosityLevel = \
+                settings.getSetting(settings.BRAILLE_VERBOSITY_LEVEL)
+            brailleRegions = []
+            for i in range(0, parent.table.nColumns):
+                obj = parent.table.getAccessibleAt(row, i)
+                cell = atspi.Accessible.makeAccessible(obj)
+                utterances = self.speechGenerator.getSpeech(cell, False)
+                if cell.index == event.source.index:
+                    settings.brailleVerbosityLevel = \
+                        settings.VERBOSITY_LEVEL_VERBOSE
+                else:
+                    settings.brailleVerbosityLevel = \
+                        settings.VERBOSITY_LEVEL_BRIEF
+                [cellRegions, focusedRegion] = \
+                    self.brailleGenerator.getBrailleRegions(cell)
+                brailleRegions.extend(cellRegions)
+                speech.speakUtterances(utterances)
 
-                braille.displayRegions(brailleRegions)
-                orca.setLocusOfFocus(event, event.source, False)
-                settings.brailleVerbosityLevel = savedBrailleVerbosityLevel
-                return
+            braille.displayRegions(brailleRegions)
+            orca.setLocusOfFocus(event, event.source, False)
+            settings.brailleVerbosityLevel = savedBrailleVerbosityLevel
+            return
+
 
         # For everything else, pass the focus event onto the parent class 
         # to be handled in the default way.
