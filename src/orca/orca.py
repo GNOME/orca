@@ -395,51 +395,6 @@ def printApps(script=None, inputEvent=None):
 
     return True
 
-def printAccessibleTree(level, indent, root):
-    debug.printDetails(level, indent, root, False)
-    for i in range(0, root.childCount):
-        child = root.child(i)
-        if child == root:
-            debug.println(level,
-                          indent + "  " + "WARNING CHILD == PARENT!!!")
-        elif not child:
-            debug.println(level,
-                          indent + "  " + "WARNING CHILD IS NONE!!!")
-        elif child.parent != root:
-            debug.println(level,
-                          indent + "  " + "WARNING CHILD.PARENT != PARENT!!!")
-        else:
-            printAccessibleTree(level, indent + "  ", child)
-
-def printAccessiblePaintedTree(level, indent, root):
-    debug.printDetails(level, indent, root, False)
-
-    extents = root.extents
-    if extents:
-        debug.println(level, \
-                      indent + " extents: (x=%d y=%d w=%d h=%d)" \
-                      % (extents.x, extents.y, extents.width, extents.height))
-
-    #if root.text:
-    #    extents = root.text.getCharacterExtents(0,0)
-    #    debug.println(level, \
-    #                  indent + " text extents: (x=%d y=%d w=%d h=%d)" \
-    #                  % (extents[0], extents[1], extents[2], extents[3]))
-
-    for i in range(0, root.childCount):
-        child = root.child(i)
-        if child == root:
-            debug.println(level,
-                          indent + "  " + "WARNING CHILD == PARENT!!!")
-        elif not child:
-            debug.println(level,
-                          indent + "  " + "WARNING CHILD IS NONE!!!")
-        elif child.parent != root:
-            debug.println(level,
-                          indent + "  " + "WARNING CHILD.PARENT != PARENT!!!")
-        elif child.state.count(atspi.Accessibility.STATE_SHOWING):
-            printAccessiblePaintedTree(level, indent + "  ", child)
-
 def printActiveApp(script=None, inputEvent=None):
     """Prints the active application.
 
@@ -462,6 +417,17 @@ def printActiveApp(script=None, inputEvent=None):
             debug.println(level, "Active application: %s" % app.name)
             printAccessibleTree(level, "  ", findActiveWindow())
 
+    return True
+
+def printAncestry(script=None, inputEvent=None):
+    """Prints the ancestry for the current locusOfFocus"""
+    atspi.printAncestry(locusOfFocus)
+    return True
+
+def printHierarchy(script=None, inputEvent=None):
+    """Prints the application for the current locusOfFocus"""
+    if locusOfFocus:
+        atspi.printHierarchy(locusOfFocus.app, locusOfFocus)
     return True
 
 ########################################################################
@@ -835,6 +801,25 @@ def init(registry):
                                             1 << MODIFIER_ORCA, \
                                             1 << MODIFIER_ORCA,
                                             printActiveAppHandler))
+
+    printAncestryHandler = InputEventHandler(\
+        printAncestry,
+        _("Prints debug information about the ancestry of the object with focus"))
+    _keybindings.add(keybindings.KeyBinding(
+        "F7",
+        (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL), 
+        1 << MODIFIER_ORCA,
+        printAncestryHandler))
+
+    printHierarchyHandler = InputEventHandler(\
+        printHierarchy,
+        _("Prints debug information about the application with focus"))
+    
+    _keybindings.add(keybindings.KeyBinding(
+        "F7",
+        (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL), 
+        (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL), 
+        printHierarchyHandler))
 
     nextPresentationManagerHandler = InputEventHandler(\
         _switchToNextPresentationManager,

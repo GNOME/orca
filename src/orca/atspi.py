@@ -1126,10 +1126,10 @@ class Accessible:
 
         if includeApp:
 	    if self.app:
-                string = indent + " app.name=%-20s " \
+                string = indent + "app.name=%-20s " \
                          % self.app.accessibleNameToString()
 	    else:
-                string = indent + " app=None"
+                string = indent + "app=None"
         else:
             string = indent
 
@@ -1492,6 +1492,75 @@ def getAcceleratorAndShortcut(obj):
 
     return [accelerator, fullShortcut]
 
+
+########################################################################
+#                                                                      #
+# Debug utilities                                                      #
+#                                                                      #
+########################################################################
+
+def printAncestry(child):
+   """Prints a hierarchical view of a child's ancestry."""
+   
+   if not child:
+       return
+   
+   objects = [child]
+   parent = child.parent
+   while parent and (parent.parent != parent):
+      objects.insert(0, parent)
+      parent = parent.parent
+
+   indent = ""
+   for object in objects:
+      print object.toString(indent + "+-", False)
+      indent += "  "
+
+def printHierarchy(root, ooi, indent="", onlyShowing=True, omitManaged=True):
+    """Prints the accessible hierarchy of all children
+
+    Arguments:
+    -indent:      Indentation string
+    -root:        Accessible where to start
+    -ooi:         Accessible object of interest
+    -onlyShowing: If True, only show children painted on the screen
+    -omitManaged: If True, omit children that are managed descendants
+    """
+
+    if not root:
+        return
+
+    if root == ooi:
+       print root.toString(indent + "(*)", False)
+    else:
+       print root.toString(indent + "+-", False)
+       
+    rootManagesDescendants = root.state.count(\
+        Accessibility.STATE_MANAGES_DESCENDANTS)
+    
+    for i in range(0, root.childCount):
+        child = root.child(i)
+        if child == root:
+            print indent + "  " + "WARNING CHILD == PARENT!!!"
+        elif not child:
+            print indent + "  " + "WARNING CHILD IS NONE!!!"
+        elif child.parent != root:
+            print indent + "  " + "WARNING CHILD.PARENT != PARENT!!!"
+        else:
+            paint = (not onlyShowing) \
+                    or (onlyShowing \
+                        and child.state.count(Accessibility.STATE_SHOWING))
+            paint = paint \
+                    and ((not omitManaged) \
+                         or (omitManaged and not rootManagesDescendants))
+
+            if paint:
+               printHierarchy(child,
+                              ooi,
+                              indent + "  ",
+                              onlyShowing,
+                              omitManaged)
+      
 ########################################################################
 #                                                                      #
 # Testing functions.                                                   #

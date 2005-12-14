@@ -9,6 +9,7 @@ orca_python_PYTHON = \
 	Gecko.py \
 	gnome-terminal.py \
 	metacity.py \
+	Mozilla.py \
 	StarOffice.py
 
 orca_pythondir=$(pythondir)/orca/scripts

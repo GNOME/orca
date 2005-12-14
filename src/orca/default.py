@@ -927,27 +927,7 @@ class Script(script.Script):
 
         orca.visualAppearanceChanged(event, event.source)
 
-    def onCaretMoved(self, event):
-        """Called whenever the caret moves.
-
-        Arguments:
-        - event: the Event
-        """
-
-        # Ignore text deletions from non-focused objects, unless the
-        # currently focused object is the parent of the object from which
-        # text was deleted
-        #
-        if (event.source != orca.locusOfFocus) \
-               and (event.source.parent != orca.locusOfFocus):
-            return
-
-        # We always automatically go back to focus tracking mode when
-        # the caret moves in the focused object.
-        #
-        if self.flatReviewContext:
-            self.toggleFlatReviewMode()
-
+    def _presentTextAtNewCaretPosition(self, event):
         # Magnify the object.  [[[TODO: WDW - this is a hack for now.]]]
         #
         #mag.magnifyAccessible(event.source)
@@ -1002,7 +982,30 @@ class Script(script.Script):
                 sayLine(event.source)
             else:
                 sayCharacter(event.source)
+        
+    def onCaretMoved(self, event):
+        """Called whenever the caret moves.
 
+        Arguments:
+        - event: the Event
+        """
+
+        # Ignore text deletions from non-focused objects, unless the
+        # currently focused object is the parent of the object from which
+        # text was deleted
+        #
+        if (event.source != orca.locusOfFocus) \
+               and (event.source.parent != orca.locusOfFocus):
+            return
+
+        # We always automatically go back to focus tracking mode when
+        # the caret moves in the focused object.
+        #
+        if self.flatReviewContext:
+            self.toggleFlatReviewMode()
+
+        self._presentTextAtNewCaretPosition(self, event)
+        
     def onTextDeleted(self, event):
         """Called whenever text is deleted from an object.
 
