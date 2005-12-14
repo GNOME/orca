@@ -26,11 +26,60 @@ import orca.speech as speech
 
 from orca.orca_i18n import _
 
-########################################################################
-#                                                                      #
-# The Mozilla script class for Firefox.                                #
-#                                                                      #
-########################################################################
+class SpeechGenerator(speechgenerator.SpeechGenerator):
+    """Overrides getSpeechContext to handle Mozilla's unique
+    hiearchical representation, such as menus duplicating themselves
+    in the hierarchy.
+    """
+
+    def getSpeechContext(self, obj, stopAncestor=None):
+        """Get the speech that describes the names and role of
+        the container hierarchy of the object, stopping at and
+        not including the stopAncestor.
+
+        Arguments:
+        - obj: the object
+        - stopAncestor: the anscestor to stop at and not include (None
+          means include all ancestors)
+
+        Returns a list of utterances to be spoken.
+        """
+
+        utterances = []
+
+        if not obj:
+            return utterances
+
+        if obj is stopAncestor:
+            return utterances
+
+        # We try to omit fillers and panels without names, and we
+        # also omit table cells and menus that duplicate themselves
+        # in the hierarchy.
+        #
+        parent = obj.parent
+        if parent \
+            and (obj.role == rolenames.ROLE_TABLE_CELL) \
+            and (parent.role == rolenames.ROLE_TABLE_CELL):
+            parent = parent.parent
+
+        while parent and (parent.parent != parent):
+            if parent == stopAncestor:
+                break
+            if (parent.role != rolenames.ROLE_FILLER) \
+                and (parent.role != rolenames.ROLE_SPLIT_PANE) \
+                and (parent.role != rolenames.ROLE_UNKNOWN):
+                if len(parent.label) > 0:
+                    utterances.append(parent.label + " " \
+                                      + getSpeechForRoleName(parent))
+                elif parent.role != rolenames.ROLE_PANEL:
+                    utterances.append(getSpeechForRoleName(parent))
+
+            parent = parent.parent
+
+        utterances.reverse()
+
+        return utterances
 
 class Script(default.Script):
     """The script for Firefox.
@@ -46,6 +95,11 @@ class Script(default.Script):
         self.__textComponentOfInterest = None
         self.__linkOfInterest = None
         
+    def getSpeechGenerator(self):
+        """Returns the speech generator for this script.
+        """
+        return SpeechGenerator()
+
     # This function is called whenever an object within Mozilla receives
     # focus
     #
@@ -94,6 +148,10 @@ class Script(default.Script):
         - oldLocusOfFocus: Accessible that is the old locus of focus
         - newLocusOfFocus: Accessible that is the new locus of focus
         """
+        # Don't bother speaking all the information about the HTML
+        # container - it's duplicated all over the place.  So, we
+        # just speak the role.
+        #
         if newLocusOfFocus \
            and newLocusOfFocus.role == rolenames.ROLE_HTML_CONTAINER:
             # We always automatically go back to focus tracking mode when
@@ -108,4 +166,3 @@ class Script(default.Script):
                                                event,
                                                oldLocusOfFocus,
                                                newLocusOfFocus)
-            

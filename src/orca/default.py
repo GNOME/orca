@@ -1004,7 +1004,7 @@ class Script(script.Script):
         if self.flatReviewContext:
             self.toggleFlatReviewMode()
 
-        self._presentTextAtNewCaretPosition(self, event)
+        self._presentTextAtNewCaretPosition(event)
         
     def onTextDeleted(self, event):
         """Called whenever text is deleted from an object.
