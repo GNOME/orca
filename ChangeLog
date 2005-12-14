@@ -1,5 +1,16 @@
 2005-12-14  Willie Walker <william.walker@sun.com>
 
+	* src/orca/atspi.py: use object.role instead of rolenames.getRoleName
+	for debug output.  It was too confusing the other way.
+	* src/orca/default.py: start taking hypertext into account when
+	speaking characters and words.
+	* src/orca/settings.py: try to make hyperlink voice stand out for now
+	* src/orca/scripts/Mozilla.py: lots of evaluation of accessible 
+	hyperlink support.  Many test cases to write and bugs to file against 
+	Firefox :-(.
+	
+2005-12-14  Willie Walker <william.walker@sun.com>
+
 	* src/orca/focus_tracking_presenter.py: with the exception of
 	ImportErrors, print the stack trace for all errors encountered
 	when importing a script at the SEVERE level.  This helps 
