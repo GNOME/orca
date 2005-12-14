@@ -1,3 +1,21 @@
+2005-12-14  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py
+          Added in the definitions for two new custom roles:
+          - CALENDAR_VIEW
+          - CALENDAR_EVENT
+          These get added to the rolenames list in the rolenames module.
+
+          Added in code to the onFocus() method to detect the following
+          cases:
+          - Calendar view: day view: tabbing to day with no appts.
+          - Calendar view: day view: tabbing to day with appts.
+          - Calendar view: day view: moving with arrow keys.
+          - Calendar view: month calendar
+
+          Code for these cases needs to be completed. At the moment it 
+          just prints out debug messages.
+
 2005-12-14  Willie Walker <william.walker@sun.com>
 
 	* src/orca/atspi.py: use object.role instead of rolenames.getRoleName

@@ -26,6 +26,8 @@ import orca.braille as braille
 import orca.speech as speech
 import orca.settings as settings
 
+from orca.orca_i18n import _ # for gettext support
+
 ########################################################################
 #                                                                      #
 # The Evolution script class.                                          #
@@ -42,6 +44,23 @@ class Script(default.Script):
         """
 
         default.Script.__init__(self, app)
+
+        # Evolution defines new custom roles. We need to make them known
+        # to Orca for Speech and Braille output.
+
+        rolenames.ROLE_CALENDAR_VIEW = "Calendar View"
+        rolenames.rolenames[rolenames.ROLE_CALENDAR_VIEW] = \
+            rolenames.Rolename(rolenames.ROLE_CALENDAR_VIEW,
+                               _("calv"),
+                               _("CalendarView"),
+                               _("calendar view"))
+
+        rolenames.ROLE_CALENDAR_EVENT = "Calendar Event"
+        rolenames.rolenames[rolenames.ROLE_CALENDAR_EVENT] = \
+            rolenames.Rolename(rolenames.ROLE_CALENDAR_EVENT,
+                               _("cale"),
+                               _("CalendarEvent"),
+                               _("calendar event"))
 
 
     def walkComponentHierarchy(self, obj):
@@ -85,6 +104,15 @@ class Script(default.Script):
         return True
 
 
+    # This method tries to detect and handle the following cases:
+    # 1) Mail view: current message pane: individual lines of text.
+    # 2) Mail view: current message pane: "standard" mail header lines.
+    # 3) Mail view: message header list
+    # 4) Calendar view: day view: tabbing to day with no appts.
+    # 5) Calendar view: day view: tabbing to day with appts.
+    # 6) Calendar view: day view: moving with arrow keys.
+    # 7) Calendar view: month calendar
+
     def onFocus(self, event):
         """Called whenever an object gets focus.
 
@@ -98,6 +126,8 @@ class Script(default.Script):
 
         # self.walkComponentHierarchy(event.source)
 
+        # 1) Mail view: current message pane: individual lines of text.
+        #
         # When the focus is in the pane containing the lines of an 
         # actual mail message, then, for each of those lines, we 
         # don't want to speak "text", the role of the component that 
@@ -120,6 +150,8 @@ class Script(default.Script):
             return
 
 
+        # 2) Mail view: current message pane: "standard" mail header lines.
+        #
         # Check if the focus is in the From:, To:, Subject: or Date: headers
         # of a message in the message area, and that we want to speak all of 
         # the tables cells for that current row.
@@ -167,6 +199,8 @@ class Script(default.Script):
                 return
 
 
+        # 3) Mail view: message header list
+        #
         # Check if the focus is in the message header list, and we want to 
         # speak all of the tables cells in the current highlighted message.
         # The role is only brailled for the table cell that currently has
@@ -203,6 +237,43 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, event.source, False)
             settings.brailleVerbosityLevel = savedBrailleVerbosityLevel
             return
+
+        # 4) Calendar view: day view: tabbing to day with no appts.
+        #
+
+        rolesList = [rolenames.ROLE_TABLE, \
+                     rolenames.ROLE_CALENDAR_VIEW, \
+                     rolenames.ROLE_FILLER]
+        if self.isDesiredFocusedItem(event.source, rolesList):
+            print ">>>> Calendar view: day view: tabbing to day with no appts <<<<"
+
+        # 5) Calendar view: day view: tabbing to day with appts.
+        #
+
+        rolesList = [rolenames.ROLE_CALENDAR_EVENT, \
+                     rolenames.ROLE_CALENDAR_VIEW]
+        if self.isDesiredFocusedItem(event.source, rolesList):
+            print ">>>> Calendar view: day view: tabbing to day with appts <<<<"
+
+
+        # 6) Calendar view: day view: moving with arrow keys.
+        #
+
+        rolesList = [rolenames.ROLE_UNKNOWN, \
+                     rolenames.ROLE_TABLE, \
+                     rolenames.ROLE_CALENDAR_VIEW]
+        if self.isDesiredFocusedItem(event.source, rolesList):
+            print ">>>> Calendar view: day view: moving with arrow keys <<<<"
+
+
+        # 7) Calendar view: month calendar
+        #
+
+        rolesList = [rolenames.ROLE_TABLE_CELL, \
+                     rolenames.ROLE_CALENDAR, \
+                     rolenames.ROLE_PANEL]
+        if self.isDesiredFocusedItem(event.source, rolesList):
+            print ">>>> Calendar view: month calendar <<<<"
 
 
         # For everything else, pass the focus event onto the parent class 
