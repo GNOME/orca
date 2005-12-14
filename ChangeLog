@@ -1,5 +1,10 @@
 2005-12-14  Rich Burridge <rich.burridge@sun.com>
 
+        * bugs/bugs.html
+          Added entries for Evolution bugs #324002, #324005 and #324104.
+
+2005-12-14  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/scripts/Evolution.py
           Added in the definitions for two new custom roles:
           - CALENDAR_VIEW
