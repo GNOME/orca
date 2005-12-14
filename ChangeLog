@@ -1,3 +1,24 @@
+2005-12-14  Willie Walker <william.walker@sun.com>
+
+	* src/orca/focus_tracking_presenter.py: with the exception of
+	ImportErrors, print the stack trace for all errors encountered
+	when importing a script at the SEVERE level.  This helps 
+	to better identify syntax errors and bugs in custom scripts.
+	* src/orca/scripts/Mozilla.py, src/orca/scripts/Makefile.am: 
+	initial pass at getting us going with evaluating Firefox's
+	AT-SPI implementation.  This does NOT provide any compelling
+	access to Firefox at this point.
+	* src/orca/default.py: permit presentation of caret moved
+	events even on objects that are not the locus of focus.
+	* src/orca/orca.py, src/orca/atspi.py: Rich's idea below 
+	looked so good that I added two new debug features: one to
+	print an indented ancestry of an object and one to print
+	the descendants of an object.  I bound these to a debug
+	keystroke in Orca: Insert+F7 prints the ancestry for the
+	locusOfFocus and Ctrl+Insert+F7 prints the application
+	hierarchy for the locus of focus, flagging the locus of
+	focus with the string "(*)".
+	
 2005-12-13  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py

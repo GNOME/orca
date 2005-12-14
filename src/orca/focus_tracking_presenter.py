@@ -160,9 +160,11 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                                         locals(),
                                         [''])
                     break
-                except:
+                except ImportError:
                     debug.printException(debug.LEVEL_FINEST)
-
+                except:
+                    debug.printException(debug.LEVEL_SEVERE)
+                    
             if module:
                 try:
                     script = module.Script(app)
