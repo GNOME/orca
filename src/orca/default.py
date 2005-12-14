@@ -1850,8 +1850,15 @@ def sayLine(obj):
 
     # Get the AccessibleText interface of the provided object
     #
-    result = atspi.getTextLineAtCaret(obj)
-    speech.speak(result[0])
+    [line, startOffset, endOffset] = atspi.getTextLineAtCaret(obj)
+
+    voices = settings.getSetting(settings.VOICES, None)
+    if line.isupper():
+        voice = voices[settings.UPPERCASE_VOICE]
+    else:
+        voice = voices[settings.DEFAULT_VOICE]
+
+    speech.speak(line, voice)
 
 def sayWord(obj):
     """Speaks the word at the caret.  [[[TODO: WDW - what if there is no
@@ -1864,9 +1871,20 @@ def sayWord(obj):
 
     text = obj.text
     offset = text.caretOffset
-    word = text.getTextAtOffset(offset,
-                                atspi.Accessibility.TEXT_BOUNDARY_WORD_START)
-    speech.speak(word[0])
+    [word, startOffset, endOffset] = \
+        text.getTextAtOffset(offset,
+                             atspi.Accessibility.TEXT_BOUNDARY_WORD_START)
+
+    voices = settings.getSetting(settings.VOICES, None)
+    hypertext = obj.hypertext
+    if hypertext and (hypertext.getLinkIndex(offset) >= 0):
+        voice =  voices[settings.HYPERLINK_VOICE]
+    elif word.isupper():
+        voice = voices[settings.UPPERCASE_VOICE]
+    else:
+        voice = voices[settings.DEFAULT_VOICE]
+
+    speech.speak(word, voice)
 
 def sayCharacter(obj):
     """Speak the character under the caret.  [[[TODO: WDW - isn't the
@@ -1880,11 +1898,17 @@ def sayCharacter(obj):
     text = obj.text
     offset = text.caretOffset
     character = text.getText(offset, offset+1)
-    if character.isupper():
-        voices = settings.getSetting(settings.VOICES, None)
-        speech.speak(character, voices[settings.UPPERCASE_VOICE])
+
+    voices = settings.getSetting(settings.VOICES, None)
+    hypertext = obj.hypertext
+    if hypertext and (hypertext.getLinkIndex(offset) >= 0):
+        voice = voices[settings.HYPERLINK_VOICE]
+    elif character.isupper():
+        voice = voices[settings.UPPERCASE_VOICE]
     else:
-        speech.speak(character)
+        voice = voices[settings.DEFAULT_VOICE]
+
+    speech.speak(character, voice)
 
 # Dictionary that defines the state changes we care about for various
 # objects.  The key represents the role and the value represents a list

@@ -23,6 +23,7 @@ import orca.default as default
 import orca.rolenames as rolenames
 import orca.settings as settings
 import orca.speech as speech
+import orca.speechgenerator as speechgenerator
 
 from orca.orca_i18n import _
 
@@ -53,27 +54,58 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         if obj is stopAncestor:
             return utterances
 
-        # We try to omit fillers and panels without names, and we
-        # also omit table cells and menus that duplicate themselves
-        # in the hierarchy.
-        #
         parent = obj.parent
+
+        # Just skip cells inside cells - it's kind of a nonsensical
+        # hierarchy.
+        #
         if parent \
             and (obj.role == rolenames.ROLE_TABLE_CELL) \
             and (parent.role == rolenames.ROLE_TABLE_CELL):
             parent = parent.parent
 
+        # We'll eliminate toolbars if we're in a menu.  The reason for
+        # this is that Mozilla puts its menu bar in a couple of nested
+        # toolbars.
+        #
+        inMenuBar = False
+        
         while parent and (parent.parent != parent):
             if parent == stopAncestor:
                 break
+
+            if parent.role == rolenames.ROLE_MENU_BAR:
+                inMenuBar = True
+                
+            # We try to omit things like fillers off the bat...
+            #
             if (parent.role != rolenames.ROLE_FILLER) \
                 and (parent.role != rolenames.ROLE_SPLIT_PANE) \
                 and (parent.role != rolenames.ROLE_UNKNOWN):
+
+                # If it has a label, we typically want to speak it, unless
+                # we're on a menu, but the menu is not FOCUSABLE (this
+                # is the way to identify the menu that's duplicated in the
+                # hierarchy)
+                #
                 if len(parent.label) > 0:
-                    utterances.append(parent.label + " " \
-                                      + getSpeechForRoleName(parent))
-                elif parent.role != rolenames.ROLE_PANEL:
-                    utterances.append(getSpeechForRoleName(parent))
+                    if (parent.role == rolenames.ROLE_MENU) \
+                       and not parent.state.count(\
+                                   atspi.Accessibility.STATE_FOCUSABLE):
+                        pass
+                    else:
+                        utterances.append(parent.label + " " \
+                                      + rolenames.getSpeechForRoleName(parent))
+                # Otherwise, we won't speak it if it is a panel with
+                # no name,
+                elif parent.role == rolenames.ROLE_PANEL:
+                    pass
+                # Or if we're in a menu and this is a toolbar,
+                #
+                elif inMenuBar and (parent.role == rolenames.ROLE_TOOL_BAR):
+                    pass
+                else:
+                    utterances.append(rolenames.getSpeechForRoleName(parent))
 
             parent = parent.parent
 
@@ -100,6 +132,18 @@ class Script(default.Script):
         """
         return SpeechGenerator()
 
+    def onNameChanged(self, event):
+        """Called whenever a property on an object changes.
+
+        Arguments:
+        - event: the Event
+        """
+
+        # We ignore these because Mozilla just happily keeps generating
+        # name changed events for objects whose name doesn't change.
+        #
+        return
+    
     # This function is called whenever an object within Mozilla receives
     # focus
     #
@@ -113,18 +157,42 @@ class Script(default.Script):
         self.__textComponentOfInterest = None
         if event.source.role == rolenames.ROLE_FRAME:
             return
+
+        # We're also going to ignore menus that are children of menu
+        # bars.  They never really get focus themselves - it's always
+        # a transient event and one of the menu items or submenus will
+        # get focus immediately after the menu gets focus.  So...we
+        # compress the events.
+        #
+        if (event.source.role == rolenames.ROLE_MENU) \
+           and event.source.parent \
+           and (event.source.parent.role == rolenames.ROLE_MENU_BAR):
+            return
+        
         default.Script.onFocus(self, event)
 
     # This function is called when a hyperlink is selected - This happens
     # when a link is navigated to using tab/shift-tab
     #
     def onLinkSelected(self, event):
-        print "Mozilla.onLinkSelected:"
+        print "Mozilla.onLinkSelected:", event.detail1, event.detail2
         debug.printObjectEvent(debug.LEVEL_OFF, event, event.source.toString())
 
         self.__textComponentOfInterest = event.source
-        
+
         txt = event.source.text
+
+        hypertext = event.source.hypertext
+        print "Here: caret=%d, nlinks=%d" % (txt.caretOffset, hypertext.getNLinks())
+        
+        for i in range(0, hypertext.getNLinks()):
+            link = hypertext.getLink(i)
+            print "  Link", i
+            print "    nAnchors", link.nAnchors
+            print "    startIndex", link.startIndex
+            print "    endIndex", link.endIndex
+            print "    isValid", link.isValid
+            
         if txt is None:
             speech.speak(_("link"), self.voices[settings.HYPERLINK_VOICE])
         else:

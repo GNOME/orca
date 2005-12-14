@@ -1135,7 +1135,7 @@ class Accessible:
 
         string += "name=%s role='%s' state='%s'" \
                   % (self.accessibleNameToString(),
-                     rolenames.getRoleName(self),
+                     self.role,
                      self.getStateString())
 
         return string
@@ -1571,7 +1571,7 @@ def __printTopObject(child):
     parent = child
     while parent:
 	if not parent.parent:
-            print "RAW TOP:", parent.name, parent.getRoleName()
+            print "RAW TOP:", parent.name, parent.role
         parent = parent.parent
     if (child.parent):
         accessible = Accessible.makeAccessible(child)
@@ -1588,7 +1588,7 @@ def __printDesktops():
         for j in range(0, desktop.childCount):
             app = desktop.getChildAtIndex(j)
             print "    App %d: name=%s role=%s" \
-		  % (j, app.name, app.getRoleName())
+		  % (j, app.name, app.role)
 
 def __notifyEvent(event):
         print event.type, event.source.name, \
@@ -1596,7 +1596,7 @@ def __notifyEvent(event):
               event.any_data
 	__printTopObject(event.source)
 	if not event.source.parent:
-	    print "NO PARENT:", event.source.name, event.source.getRoleName()
+	    print "NO PARENT:", event.source.name, event.source.role
 
 def __notifyKeystroke(event):
     print "keystroke type=%d hw_code=%d modifiers=%d event_string=(%s) " \

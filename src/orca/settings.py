@@ -82,7 +82,7 @@ VOICES                  = "voices"
 voices = {
     DEFAULT_VOICE   : ACSS({}),
     UPPERCASE_VOICE : ACSS({ACSS.AVERAGE_PITCH : 6}),
-    HYPERLINK_VOICE : ACSS({ACSS.AVERAGE_PITCH : 4})
+    HYPERLINK_VOICE : ACSS({ACSS.AVERAGE_PITCH : 8})
 }
 
 # If True, use braille.
