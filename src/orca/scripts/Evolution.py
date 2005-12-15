@@ -104,6 +104,34 @@ class Script(default.Script):
         return True
 
 
+    def getTimeForCalRow(self, row):
+        """Return a string equivalent to the time of the given row in
+           the calendar day view. Each calendar row is equivalent to
+           30 minutes, with time (row 0) starting at 12 am (midnight).
+
+        Arguments:
+        - row: the row number.
+
+        Returns the time as a string.
+        """
+
+        hrs = ['12', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']
+
+        if row % 2 == 0:
+            mins = ''
+        else:
+            mins = ' thirty'
+
+        if (row < 24):
+            hour = hrs[row / 2]
+            suffix = ' am'
+        else:
+            hour = hrs[(row - 24) / 2]
+            suffix = ' pm'
+
+        return hour + mins + suffix
+
+
     # This method tries to detect and handle the following cases:
     # 1) Mail view: current message pane: individual lines of text.
     # 2) Mail view: current message pane: "standard" mail header lines.
@@ -120,11 +148,11 @@ class Script(default.Script):
         - event: the Event
         """
 
-        # debug.printObjectEvent(debug.LEVEL_OFF,
-        #                        event,
-        #                        event.source.toString())
+        debug.printObjectEvent(debug.LEVEL_OFF,
+                               event,
+                               event.source.toString())
 
-        # self.walkComponentHierarchy(event.source)
+        self.walkComponentHierarchy(event.source)
 
         # 1) Mail view: current message pane: individual lines of text.
         #
@@ -240,34 +268,74 @@ class Script(default.Script):
 
         # 4) Calendar view: day view: tabbing to day with no appts.
         #
+        # XXX:richb - to be completed.
 
         rolesList = [rolenames.ROLE_TABLE, \
                      rolenames.ROLE_CALENDAR_VIEW, \
                      rolenames.ROLE_FILLER]
         if self.isDesiredFocusedItem(event.source, rolesList):
             print ">>>> Calendar view: day view: tabbing to day with no appts <<<<"
+            print "role is %s" % event.source.role
+            print "table rows: %d" % event.source.table.nRows
+            parent = event.source.parent
+            print "number of children in parent: %d" % parent.childCount
+            for i in range(0, parent.childCount):
+                child = parent.child(i)
+                print "parent child role is %s" % child.role
+
 
         # 5) Calendar view: day view: tabbing to day with appts.
         #
+        # XXX:richb - to be completed.
 
         rolesList = [rolenames.ROLE_CALENDAR_EVENT, \
                      rolenames.ROLE_CALENDAR_VIEW]
         if self.isDesiredFocusedItem(event.source, rolesList):
             print ">>>> Calendar view: day view: tabbing to day with appts <<<<"
+            parent = event.source.parent
+            apptExtents = event.source.component.getExtents(0)
+            print "cal event x: %d y: %d" % (apptExtents.x, apptExtents.y)
+
+            for i in range(0, parent.childCount):
+                child = parent.child(i)
+                if (child.role == rolenames.ROLE_TABLE):
+                    for j in range(0, child.table.nRows):
+                        row = child.table.getRowAtIndex(j)
+                        obj = child.table.getAccessibleAt(row, 0)
+                        cell = atspi.Accessible.makeAccessible(obj)
+                        extents = cell.component.getExtents(0)
+                        if (extents.x == apptExtents.x) \
+                            and (extents.y == apptExtents.y):
+                            print "FOUND: row: %d x: %d y: %d" % \
+                                (j, extents.x, extents.y)
+                            print "Appointment time: %s" % \
+                                self.getTimeForCalRow(j)
 
 
         # 6) Calendar view: day view: moving with arrow keys.
         #
+        # XXX:richb - to be completed.
 
         rolesList = [rolenames.ROLE_UNKNOWN, \
                      rolenames.ROLE_TABLE, \
                      rolenames.ROLE_CALENDAR_VIEW]
         if self.isDesiredFocusedItem(event.source, rolesList):
             print ">>>> Calendar view: day view: moving with arrow keys <<<<"
+            parent = event.source.parent
+            print "parent role is %s" % parent.role
+            print "table rows: %d" % parent.table.nRows
+            print "obj index: %d" % event.source.index
+            parent = parent.parent
+            print "number of children in cal view: %d" % parent.childCount
+            for i in range(0, parent.childCount):
+                child = parent.child(i)
+                print "parent child role is %s" % child.role
+
 
 
         # 7) Calendar view: month calendar
         #
+        # XXX:richb - to be completed.
 
         rolesList = [rolenames.ROLE_TABLE_CELL, \
                      rolenames.ROLE_CALENDAR, \

@@ -1,5 +1,19 @@
 2005-12-15  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/scripts/Evolution.py
+          Added in a new  method:
+          - getTimeForCalRow() which returns a string equivalent to the 
+            time of the given row in the calendar day view. Each calendar 
+            row is equivalent to 30 minutes, with time (row 0) starting 
+            at 12 am (midnight).
+
+          More work on calendar appointment day view. If you now Tab into
+          the day view and there are appointments for that day, then it's
+          possible to determine the start time of each appointment using
+          getTimeForCalRow().
+
+2005-12-15  Rich Burridge <rich.burridge@sun.com>
+
         * bugs/bugs.html
           Added an entry for Evolution bug #324193. Bug #324104 is not
           a bug.
