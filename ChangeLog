@@ -1,5 +1,9 @@
 2005-12-15  Willie Walker <william.walker@sun.com>
 
+	* src/orca/default.py: partial workaround for link selection
+	bug in Firefox.  Only works if the caret offset is accurate,
+	which it isn't (see the related Firefox bug at
+	https://bugzilla.mozilla.org/show_bug.cgi?id=320395).
 	* bugs/bugs.html, bugs/bug_{320383,320387,320388,320390,
 	320393,320395}: Firefox bugs.
 	
