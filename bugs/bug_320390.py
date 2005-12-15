@@ -17,17 +17,39 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-"""Bug reproducer for bug x.  This standalone module talks
+"""Bug reproducer for bug 320390.  This standalone module talks
 directly with the AT-SPI Registry via its IDL interfaces.  No Orca
 logic or code is stuck in the middle.
 
-To run this module, merely type 'python bug_x.py'.
+To run this module, merely type 'python bug_320390.py'.
 
 To reproduce bug x, follow these steps:
 
-1)
-2)
-3)
+1) Run this tool in an xterm
+2) Run Firefox
+3) Press Tab to give something focus
+4) Press Alt+F to bring up the file menu
+5) Press Esc to dismiss the file menu
+
+You will see the following output:
+
+focus: 0 0 <CORBA.any of type 'IDL:omg.org/CORBA/Null:1.0'>
+  name=None role='panel' state='ENABLED FOCUSABLE FOCUSED SENSITIVE SHOWING VISIBLE'
+keystroke type=%d hw_code=%d modifiers=%d event_string=(%s) is_text=%s
+keystroke type=%d hw_code=%d modifiers=%d event_string=(%s) is_text=%s
+focus: 0 0 <CORBA.any of type 'IDL:omg.org/CORBA/Null:1.0'>
+  name='File' role='menu' state='ENABLED FOCUSABLE FOCUSED SENSITIVE SHOWING VISIBLE'
+focus: 0 0 <CORBA.any of type 'IDL:omg.org/CORBA/Null:1.0'>
+  name='New Window' role='menu item' state='ENABLED FOCUSABLE FOCUSED SENSITIVE SHOWING VISIBLE'
+keystroke type=%d hw_code=%d modifiers=%d event_string=(%s) is_text=%s
+keystroke type=%d hw_code=%d modifiers=%d event_string=(%s) is_text=%s
+keystroke type=%d hw_code=%d modifiers=%d event_string=(%s) is_text=%s
+focus: 0 0 <CORBA.any of type 'IDL:omg.org/CORBA/Null:1.0'>
+  name='Google - Deer Park Alpha 2' role='frame' state='ACTIVE ENABLED FOCUSABLE FOCUSED SENSITIVE SHOWING VISIBLE'
+keystroke type=%d hw_code=%d modifiers=%d event_string=(%s) is_text=%s
+
+You'll see that the focus has ended up on the top level frame
+and not where it started prior to the Alt+F.
 """
 
 import time
@@ -486,14 +508,17 @@ eventTypes = [
 ]
 
 def notifyEvent(event):
-    print event.type, event.detail1, event.detail2, event.any_data
-    print "  " + getAccessibleString(event.source)
-
+    if event.type == "focus:":
+        print event.type, event.detail1, event.detail2, event.any_data
+        print "  " + getAccessibleString(event.source)
+        #printAncestry(event.source)
+        #printHierarchy(event.source.parent.parent.parent.parent.parent)
+        
 def notifyKeystroke(event):
     print "keystroke type=%d hw_code=%d modifiers=%d event_string=(%s) " \
           "is_text=%s" \
-          % (event.type, event.hw_code, event.modifiers, event.event_string,
-             event.is_text)
+    #      % (event.type, event.hw_code, event.modifiers, event.event_string,
+    #         event.is_text)
     if event.event_string == "F12":
         shutdownAndExit()
     elif event.event_string == "F11":
@@ -507,7 +532,7 @@ def shutdownAndExit(signum=None, frame=None):
 
 def test():
     print "Press F12 to Exit."
-    printDesktops()
+    #printDesktops()
     for eventType in eventTypes:
         registerEventListener(notifyEvent, eventType)
     registerKeystrokeListeners(notifyKeystroke)

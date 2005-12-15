@@ -1,3 +1,8 @@
+2005-12-15  Willie Walker <william.walker@sun.com>
+
+	* bugs/bugs.html, bugs/bug_{320383,320387,320388,320390,
+	320393,320395}: Firefox bugs.
+	
 2005-12-14  Rich Burridge <rich.burridge@sun.com>
 
         * bugs/bugs.html

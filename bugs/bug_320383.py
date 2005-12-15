@@ -21,13 +21,22 @@
 directly with the AT-SPI Registry via its IDL interfaces.  No Orca
 logic or code is stuck in the middle.
 
-To run this module, merely type 'python bug_x.py'.
+To run this module, merely type 'python bug_320383.py'.
 
-To reproduce bug x, follow these steps:
+To reproduce bug 320383, follow these steps:
 
-1)
-2)
-3)
+1) Run this tool in an xterm
+2) Run Firefox
+3) Tab to the history pane area on the left of the window
+
+You will see the following output:
+
+focus: 0 0 <CORBA.any of type 'IDL:omg.org/CORBA/Null:1.0'>
+  name='chrome://browser/content/history/history-panel.xul' role='html container' state='ENABLED FOCUSABLE FOCUSED SENSITIVE SHOWING VISIBLE'
+
+This is saying the accessible name of the history pane is
+some internal URL of really no interest to the user.  It
+would be nice to give this a more human consumable name.
 """
 
 import time
@@ -486,14 +495,16 @@ eventTypes = [
 ]
 
 def notifyEvent(event):
-    print event.type, event.detail1, event.detail2, event.any_data
-    print "  " + getAccessibleString(event.source)
+    if (event.type == "focus:")\
+       and (event.source.getRoleName() == "html container"):
+        print event.type, event.detail1, event.detail2, event.any_data
+        print "  " + getAccessibleString(event.source)
 
 def notifyKeystroke(event):
-    print "keystroke type=%d hw_code=%d modifiers=%d event_string=(%s) " \
-          "is_text=%s" \
-          % (event.type, event.hw_code, event.modifiers, event.event_string,
-             event.is_text)
+    #print "keystroke type=%d hw_code=%d modifiers=%d event_string=(%s) " \
+    #      "is_text=%s" \
+    #      % (event.type, event.hw_code, event.modifiers, event.event_string,
+    #         event.is_text)
     if event.event_string == "F12":
         shutdownAndExit()
     elif event.event_string == "F11":
@@ -507,7 +518,7 @@ def shutdownAndExit(signum=None, frame=None):
 
 def test():
     print "Press F12 to Exit."
-    printDesktops()
+    #printDesktops()
     for eventType in eventTypes:
         registerEventListener(notifyEvent, eventType)
     registerKeystrokeListeners(notifyKeystroke)

@@ -21,13 +21,30 @@
 directly with the AT-SPI Registry via its IDL interfaces.  No Orca
 logic or code is stuck in the middle.
 
-To run this module, merely type 'python bug_x.py'.
+To run this module, merely type 'python bug_320395.py'.
 
-To reproduce bug x, follow these steps:
+To reproduce bug 320395, follow these steps:
 
-1)
-2)
-3)
+1) Save the following html to foo.html (removing the extra quotes
+   around the hrefs that have been added to make Python happy:
+
+<html>
+<p>This is a <a href=""foo1"">test</a> and here is <a href=""foo2"">another test</a>.</p>
+</html>
+
+2) Run this tool in an xterm
+3) Run Firefox and point it to foo.html
+4) Tab and Shift+Tab between the two links in foo.html
+
+You will see the following output:
+
+object:link-selected -1 0 <CORBA.any of type 'IDL:omg.org/CORBA/Null:1.0'>
+  text.caretOffset 8
+object:link-selected -1 0 <CORBA.any of type 'IDL:omg.org/CORBA/Null:1.0'>
+  text.caretOffset 0
+
+The caret offset somehow jumps to 0 and stays there
+when it should reflect the actual caret offset.
 """
 
 import time
@@ -434,7 +451,7 @@ def findAllText(root):
         findAllText(root.getChildAtIndex(i))
 
 eventTypes = [
-    "focus:",
+##    "focus:",
 ##     "mouse:rel",
 ##     "mouse:button",
 ##     "mouse:abs",
@@ -459,7 +476,7 @@ eventTypes = [
 ##     "object:column-deleted",
 ##     "object:row-deleted",
 ##     "object:model-changed",
-##     "object:link-selected",
+     "object:link-selected",
 ##     "object:bounds-changed",
 ##     "window:minimize",
 ##     "window:maximize",
@@ -486,14 +503,20 @@ eventTypes = [
 ]
 
 def notifyEvent(event):
-    print event.type, event.detail1, event.detail2, event.any_data
-    print "  " + getAccessibleString(event.source)
-
+    if event.type == "object:link-selected":
+        print event.type, event.detail1, event.detail2, event.any_data
+        t = event.source.queryInterface("IDL:Accessibility/Text:1.0")
+        if t:
+            text = t._narrow(Accessibility.Text)
+            print "  text.caretOffset", text.caretOffset
+        #printAncestry(event.source)
+        #printHierarchy(event.source.parent.parent.parent.parent.parent)
+        
 def notifyKeystroke(event):
-    print "keystroke type=%d hw_code=%d modifiers=%d event_string=(%s) " \
-          "is_text=%s" \
-          % (event.type, event.hw_code, event.modifiers, event.event_string,
-             event.is_text)
+    #print "keystroke type=%d hw_code=%d modifiers=%d event_string=(%s) " \
+    #      "is_text=%s" \
+    #      % (event.type, event.hw_code, event.modifiers, event.event_string,
+    #         event.is_text)
     if event.event_string == "F12":
         shutdownAndExit()
     elif event.event_string == "F11":
@@ -507,7 +530,7 @@ def shutdownAndExit(signum=None, frame=None):
 
 def test():
     print "Press F12 to Exit."
-    printDesktops()
+    #printDesktops()
     for eventType in eventTypes:
         registerEventListener(notifyEvent, eventType)
     registerKeystrokeListeners(notifyKeystroke)

@@ -25,9 +25,17 @@ To run this module, merely type 'python bug_x.py'.
 
 To reproduce bug x, follow these steps:
 
-1)
-2)
-3)
+1) Run this tool in an xterm
+2) Give focus to an element in the history pane
+3) Observe the output in the xterm
+
+You will see the following output:
+
+focus: 0 0 <CORBA.any of type 'IDL:omg.org/CORBA/Null:1.0'>
+Nope.  It doesn't have the RELATION_NODE_CHILD_OF relation.
+
+The list items in the history pane should have the
+RELATION_NODE_CHILD_OF relation set properly.
 """
 
 import time
@@ -486,14 +494,24 @@ eventTypes = [
 ]
 
 def notifyEvent(event):
-    print event.type, event.detail1, event.detail2, event.any_data
-    print "  " + getAccessibleString(event.source)
-
+    if (event.type == "focus:") \
+       and (event.source.getRoleName() == "list item"):
+        print event.type, event.detail1, event.detail2, event.any_data
+        relationSet = event.source.getRelationSet()
+        for relation in relationSet:
+            if relation.getRelationType() \
+               == Accessibility.RELATION_NODE_CHILD_OF:
+                print "Phew.  It has the RELATION_NODE_CHILD_OF relation."
+                return
+        print "Nope.  It doesn't have the RELATION_NODE_CHILD_OF relation."
+        #printAncestry(event.source)
+        #printHierarchy(event.source.parent.parent.parent.parent.parent)
+        
 def notifyKeystroke(event):
-    print "keystroke type=%d hw_code=%d modifiers=%d event_string=(%s) " \
-          "is_text=%s" \
-          % (event.type, event.hw_code, event.modifiers, event.event_string,
-             event.is_text)
+    #print "keystroke type=%d hw_code=%d modifiers=%d event_string=(%s) " \
+    #      "is_text=%s" \
+    #      % (event.type, event.hw_code, event.modifiers, event.event_string,
+    #         event.is_text)
     if event.event_string == "F12":
         shutdownAndExit()
     elif event.event_string == "F11":
@@ -507,7 +525,7 @@ def shutdownAndExit(signum=None, frame=None):
 
 def test():
     print "Press F12 to Exit."
-    printDesktops()
+    #printDesktops()
     for eventType in eventTypes:
         registerEventListener(notifyEvent, eventType)
     registerKeystrokeListeners(notifyKeystroke)
