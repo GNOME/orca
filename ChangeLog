@@ -1,3 +1,9 @@
+2005-12-15  Rich Burridge <rich.burridge@sun.com>
+
+        * bugs/bugs.html
+          Added an entry for Evolution bug #324193. Bug #324104 is not
+          a bug.
+
 2005-12-15  Willie Walker <william.walker@sun.com>
 
 	* src/orca/default.py: partial workaround for link selection
