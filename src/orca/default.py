@@ -1839,6 +1839,36 @@ class Script(script.Script):
 #                                                                      #
 ########################################################################
 
+def getLinkIndex(obj, characterIndex):
+    """A brute force method to see if an offset is a link.  This
+    is provided because not all Accessible Hypertext implementations
+    properly support the getLinkIndex method.  Returns an index of
+    0 or greater of the characterIndex is on a hyperlink.
+
+    Arguments:
+    -obj: the Accessible object with the Accessible Hypertext specialization
+    -characterIndex: the text position to check
+    """
+    
+    if not obj:
+        return -1
+
+    text = obj.text
+    if not text:
+        return -1
+
+    hypertext = obj.hypertext
+    if not hypertext:
+        return -1
+
+    for i in range(0, hypertext.getNLinks()):
+        link = hypertext.getLink(i)
+        if (characterIndex >= link.startIndex) \
+           and (characterIndex <= link.endIndex):
+            return i
+
+    return -1
+    
 def sayLine(obj):
     """Speaks the line of an AccessibleText object that contains the
     caret. [[[TODO: WDW - what if the line is empty?]]]
@@ -1876,9 +1906,9 @@ def sayWord(obj):
                              atspi.Accessibility.TEXT_BOUNDARY_WORD_START)
 
     voices = settings.getSetting(settings.VOICES, None)
-    hypertext = obj.hypertext
-    if hypertext and (hypertext.getLinkIndex(offset) >= 0):
-        voice =  voices[settings.HYPERLINK_VOICE]
+    if getLinkIndex(obj, offset) >= 0:
+        print "HYPERLINK!"
+        voice = voices[settings.HYPERLINK_VOICE]
     elif word.isupper():
         voice = voices[settings.UPPERCASE_VOICE]
     else:
@@ -1900,8 +1930,8 @@ def sayCharacter(obj):
     character = text.getText(offset, offset+1)
 
     voices = settings.getSetting(settings.VOICES, None)
-    hypertext = obj.hypertext
-    if hypertext and (hypertext.getLinkIndex(offset) >= 0):
+    if getLinkIndex(obj, offset) >= 0:
+        print "HYPERLINK!"
         voice = voices[settings.HYPERLINK_VOICE]
     elif character.isupper():
         voice = voices[settings.UPPERCASE_VOICE]
