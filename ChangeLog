@@ -1,3 +1,27 @@
+
+2005-12-16  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py
+          Added in code to the onFocus() method to better handle calendar 
+          day view: tabbing to day with appts.
+
+          If the focus is in the Calendar Day View on an appointment, then
+          provide the user with userful feedback. First we get the current
+          date and appointment summary from the parent. This is then followed
+          by getting the information on the current appointment.
+
+          The start time for the appointment is determined by detecting the
+          equivalent child in the parent Calendar View's table has the same
+          y position on the screen.
+
+          The end time for the appointment is determined by using the height
+          of the current appointment component divided by the height of a
+          single child in the parent Calendar View's table
+
+          Both of these time values depend upon the value of a time increment
+          which is determined by the number of children in the parent Calendar
+          View's table.
+
 2005-12-16  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py

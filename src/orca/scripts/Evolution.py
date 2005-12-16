@@ -121,10 +121,10 @@ class Script(default.Script):
         totalMins = timeIncrements[noIncs] * row
 
         if totalMins < 720:
-            suffix = 'am'
+            suffix = 'ay em'
         else:
             totalMins -= 720
-            suffix = 'pm'
+            suffix = 'pee em'
 
         hrs = hours[totalMins / 60]
         mins = minutes[totalMins % 60]
@@ -148,11 +148,14 @@ class Script(default.Script):
         - event: the Event
         """
 
+        brailleGen = self.brailleGenerator
+        speechGen = self.speechGenerator
+
         debug.printObjectEvent(debug.LEVEL_OFF,
                                event,
                                event.source.toString())
 
-        self.walkComponentHierarchy(event.source)
+        # self.walkComponentHierarchy(event.source)
 
         # 1) Mail view: current message pane: individual lines of text.
         #
@@ -249,7 +252,7 @@ class Script(default.Script):
             for i in range(0, parent.table.nColumns):
                 obj = parent.table.getAccessibleAt(row, i)
                 cell = atspi.Accessible.makeAccessible(obj)
-                utterances = self.speechGenerator.getSpeech(cell, False)
+                utterances = speechGen.getSpeech(cell, False)
                 if cell.index == event.source.index:
                     settings.brailleVerbosityLevel = \
                         settings.VERBOSITY_LEVEL_VERBOSE
@@ -257,7 +260,7 @@ class Script(default.Script):
                     settings.brailleVerbosityLevel = \
                         settings.VERBOSITY_LEVEL_BRIEF
                 [cellRegions, focusedRegion] = \
-                    self.brailleGenerator.getBrailleRegions(cell)
+                    brailleGen.getBrailleRegions(cell)
                 brailleRegions.extend(cellRegions)
                 speech.speakUtterances(utterances)
 
@@ -275,41 +278,75 @@ class Script(default.Script):
                      rolenames.ROLE_FILLER]
         if self.isDesiredFocusedItem(event.source, rolesList):
             print ">>>> Calendar view: day view: tabbing to day with no appts <<<<"
-            print "role is %s" % event.source.role
-            print "table rows: %d" % event.source.table.nRows
-            parent = event.source.parent
-            print "number of children in parent: %d" % parent.childCount
-            for i in range(0, parent.childCount):
-                child = parent.child(i)
-                print "parent child role is %s" % child.role
+            # print "role is %s" % event.source.role
+            # print "table rows: %d" % event.source.table.nRows
+            # parent = event.source.parent
+            # print "number of children in parent: %d" % parent.childCount
+            # for i in range(0, parent.childCount):
+            #     child = parent.child(i)
+            #     print "parent child role is %s" % child.role
 
 
         # 5) Calendar view: day view: tabbing to day with appts.
         #
-        # XXX:richb - to be completed.
+        # If the focus is in the Calendar Day View on an appointment, then
+        # provide the user with userful feedback. First we get the current
+        # date and appointment summary from the parent. This is then followed
+        # by getting the information on the current appointment.
+        #
+        # The start time for the appointment is determined by detecting the 
+        # equivalent child in the parent Calendar View's table has the same 
+        # y position on the screen.
+        #
+        # The end time for the appointment is determined by using the height
+        # of the current appointment component divided by the height of a 
+        # single child in the parent Calendar View's table
+        #
+        # Both of these time values depend upon the value of a time increment
+        # which is determined by the number of children in the parent Calendar
+        # View's table.
 
         rolesList = [rolenames.ROLE_CALENDAR_EVENT, \
                      rolenames.ROLE_CALENDAR_VIEW]
         if self.isDesiredFocusedItem(event.source, rolesList):
-            print ">>>> Calendar view: day view: tabbing to day with appts <<<<"
+            brailleRegions = []
             parent = event.source.parent
+            utterances = speechGen.getSpeech(parent, False)
+            [cellRegions, focusedRegion] = \
+                    brailleGen.getBrailleRegions(parent)
+            brailleRegions.extend(cellRegions)
+            speech.speakUtterances(utterances)
+
             apptExtents = event.source.component.getExtents(0)
-            print "cal event x: %d y: %d" % (apptExtents.x, apptExtents.y)
 
             for i in range(0, parent.childCount):
                 child = parent.child(i)
                 if (child.role == rolenames.ROLE_TABLE):
-                    for j in range(0, child.table.nRows):
+                    noRows = child.table.nRows
+                    for j in range(0, noRows):
                         row = child.table.getRowAtIndex(j)
                         obj = child.table.getAccessibleAt(row, 0)
-                        cell = atspi.Accessible.makeAccessible(obj)
-                        extents = cell.component.getExtents(0)
-                        if (extents.x == apptExtents.x) \
-                            and (extents.y == apptExtents.y):
-                            print "FOUND: row: %d x: %d y: %d" % \
-                                (j, extents.x, extents.y)
-                            print "Appointment time: %s" % \
-                                  self.getTimeForCalRow(j, child.table.nRows)
+                        appt = atspi.Accessible.makeAccessible(obj)
+                        extents = appt.component.getExtents(0)
+                        if extents.y == apptExtents.y:
+                            utterances = speechGen.getSpeech(event.source, False)
+                            [apptRegions, focusedRegion] = \
+                                    brailleGen.getBrailleRegions(appt)
+                            brailleRegions.extend(apptRegions)
+                            speech.speakUtterances(utterances)
+
+                            startTime = 'Start time ' + \
+                                self.getTimeForCalRow(j, noRows)
+                            brailleRegions.append(braille.Region(startTime))
+                            speech.speak(startTime)
+
+                            apptLen = apptExtents.height / extents.height
+                            endTime = 'End time ' + \
+                                self.getTimeForCalRow(j + apptLen, noRows)
+                            brailleRegions.append(braille.Region(endTime))
+                            speech.speak(endTime)
+                            braille.displayRegions(brailleRegions)
+                            return
 
 
         # 6) Calendar view: day view: moving with arrow keys.
@@ -321,16 +358,16 @@ class Script(default.Script):
                      rolenames.ROLE_CALENDAR_VIEW]
         if self.isDesiredFocusedItem(event.source, rolesList):
             print ">>>> Calendar view: day view: moving with arrow keys <<<<"
-            parent = event.source.parent
-            print "parent role is %s" % parent.role
-            print "table rows: %d" % parent.table.nRows
-            print "obj index: %d" % event.source.index
-            parent = parent.parent
-            print "number of children in cal view: %d" % parent.childCount
-            for i in range(0, parent.childCount):
-                child = parent.child(i)
-                print "parent child role is %s" % child.role
 
+            # parent = event.source.parent
+            # print "parent role is %s" % parent.role
+            # print "table rows: %d" % parent.table.nRows
+            # print "obj index: %d" % event.source.index
+            # parent = parent.parent
+            # print "number of children in cal view: %d" % parent.childCount
+            # for i in range(0, parent.childCount):
+            #     child = parent.child(i)
+            #     print "parent child role is %s" % child.role
 
 
         # 7) Calendar view: month calendar
