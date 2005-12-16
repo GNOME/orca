@@ -104,32 +104,32 @@ class Script(default.Script):
         return True
 
 
-    def getTimeForCalRow(self, row):
+    def getTimeForCalRow(self, row, noIncs):
         """Return a string equivalent to the time of the given row in
            the calendar day view. Each calendar row is equivalent to
-           30 minutes, with time (row 0) starting at 12 am (midnight).
+           a certain time interval (from 5 minutes upto 1 hour), with 
+           time (row 0) starting at 12 am (midnight).
 
         Arguments:
         - row: the row number.
+        - noIncs: the number of equal increments that the 24 hour period 
+                  is divided into.
 
         Returns the time as a string.
         """
 
-        hrs = ['12', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']
+        totalMins = timeIncrements[noIncs] * row
 
-        if row % 2 == 0:
-            mins = ''
+        if totalMins < 720:
+            suffix = 'am'
         else:
-            mins = ' thirty'
+            totalMins -= 720
+            suffix = 'pm'
 
-        if (row < 24):
-            hour = hrs[row / 2]
-            suffix = ' am'
-        else:
-            hour = hrs[(row - 24) / 2]
-            suffix = ' pm'
+        hrs = hours[totalMins / 60]
+        mins = minutes[totalMins % 60]
 
-        return hour + mins + suffix
+        return hrs + ' ' + mins + ' ' + suffix
 
 
     # This method tries to detect and handle the following cases:
@@ -309,7 +309,7 @@ class Script(default.Script):
                             print "FOUND: row: %d x: %d y: %d" % \
                                 (j, extents.x, extents.y)
                             print "Appointment time: %s" % \
-                                self.getTimeForCalRow(j)
+                                  self.getTimeForCalRow(j, child.table.nRows)
 
 
         # 6) Calendar view: day view: moving with arrow keys.
@@ -351,3 +351,29 @@ class Script(default.Script):
         # current cell.
 
         default.Script.onFocus(self, event)
+
+
+# Values used to construct a time string for calendar appointments.
+#
+timeIncrements = {}
+timeIncrements[288] = 5
+timeIncrements[144] = 10
+timeIncrements[96] = 15
+timeIncrements[48] = 30
+timeIncrements[24] = 60
+
+minutes = {}
+minutes[0] = ''
+minutes[5] = '5'
+minutes[10] = '10'
+minutes[15] = '15'
+minutes[20] = '20'
+minutes[25] = '25'
+minutes[30] = '30'
+minutes[35] = '35'
+minutes[40] = '40'
+minutes[45] = '45'
+minutes[50] = '50'
+minutes[55] = '55'
+
+hours = ['12', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']
