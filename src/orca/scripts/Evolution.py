@@ -136,10 +136,7 @@ class Script(default.Script):
     # 1) Mail view: current message pane: individual lines of text.
     # 2) Mail view: current message pane: "standard" mail header lines.
     # 3) Mail view: message header list
-    # 4) Calendar view: day view: tabbing to day with no appts.
-    # 5) Calendar view: day view: tabbing to day with appts.
-    # 6) Calendar view: day view: moving with arrow keys.
-    # 7) Calendar view: month calendar
+    # 4) Calendar view: day view: tabbing to day with appts.
 
     def onFocus(self, event):
         """Called whenever an object gets focus.
@@ -174,6 +171,10 @@ class Script(default.Script):
                      rolenames.ROLE_PANEL, \
                      rolenames.ROLE_UNKNOWN]
         if self.isDesiredFocusedItem(event.source, rolesList):
+            debug.println(debug.LEVEL_FINEST,
+                      "evolution.onFocus - mail view: current message pane: " \
+                      + "individual lines of text.")
+
             result = atspi.getTextLineAtCaret(event.source)
             braille.displayMessage(result[0])
             speech.speak(result[0])
@@ -206,6 +207,10 @@ class Script(default.Script):
                      rolenames.ROLE_TABLE_CELL]
         if (self.readTableCellRow == True) \
             and (self.isDesiredFocusedItem(event.source, rolesList)):
+            debug.println(debug.LEVEL_FINEST,
+                      "evolution.onFocus - mail view: current message pane: " \
+                      + "standard mail header lines.")
+
             obj = event.source.parent.parent
             parent = obj.parent
             if parent.role == rolenames.ROLE_TABLE:
@@ -244,6 +249,9 @@ class Script(default.Script):
         rolesList = [rolenames.ROLE_TABLE_CELL, rolenames.ROLE_TREE_TABLE]
         if (self.readTableCellRow == True) \
             and (self.isDesiredFocusedItem(event.source, rolesList)):
+            debug.println(debug.LEVEL_FINEST,
+                      "evolution.onFocus - mail view: message header list.")
+
             parent = event.source.parent
             row = parent.table.getRowAtIndex(event.source.index)
             savedBrailleVerbosityLevel = \
@@ -269,25 +277,8 @@ class Script(default.Script):
             settings.brailleVerbosityLevel = savedBrailleVerbosityLevel
             return
 
-        # 4) Calendar view: day view: tabbing to day with no appts.
-        #
-        # XXX:richb - to be completed.
 
-        rolesList = [rolenames.ROLE_TABLE, \
-                     rolenames.ROLE_CALENDAR_VIEW, \
-                     rolenames.ROLE_FILLER]
-        if self.isDesiredFocusedItem(event.source, rolesList):
-            print ">>>> Calendar view: day view: tabbing to day with no appts <<<<"
-            # print "role is %s" % event.source.role
-            # print "table rows: %d" % event.source.table.nRows
-            # parent = event.source.parent
-            # print "number of children in parent: %d" % parent.childCount
-            # for i in range(0, parent.childCount):
-            #     child = parent.child(i)
-            #     print "parent child role is %s" % child.role
-
-
-        # 5) Calendar view: day view: tabbing to day with appts.
+        # 4) Calendar view: day view: tabbing to day with appts.
         #
         # If the focus is in the Calendar Day View on an appointment, then
         # provide the user with userful feedback. First we get the current
@@ -309,6 +300,10 @@ class Script(default.Script):
         rolesList = [rolenames.ROLE_CALENDAR_EVENT, \
                      rolenames.ROLE_CALENDAR_VIEW]
         if self.isDesiredFocusedItem(event.source, rolesList):
+            debug.println(debug.LEVEL_FINEST,
+                      "evolution.onFocus - calendar view: day view: " \
+                      + "tabbing to day with appts.")
+
             brailleRegions = []
             parent = event.source.parent
             utterances = speechGen.getSpeech(parent, False)
@@ -347,38 +342,6 @@ class Script(default.Script):
                             speech.speak(endTime)
                             braille.displayRegions(brailleRegions)
                             return
-
-
-        # 6) Calendar view: day view: moving with arrow keys.
-        #
-        # XXX:richb - to be completed.
-
-        rolesList = [rolenames.ROLE_UNKNOWN, \
-                     rolenames.ROLE_TABLE, \
-                     rolenames.ROLE_CALENDAR_VIEW]
-        if self.isDesiredFocusedItem(event.source, rolesList):
-            print ">>>> Calendar view: day view: moving with arrow keys <<<<"
-
-            # parent = event.source.parent
-            # print "parent role is %s" % parent.role
-            # print "table rows: %d" % parent.table.nRows
-            # print "obj index: %d" % event.source.index
-            # parent = parent.parent
-            # print "number of children in cal view: %d" % parent.childCount
-            # for i in range(0, parent.childCount):
-            #     child = parent.child(i)
-            #     print "parent child role is %s" % child.role
-
-
-        # 7) Calendar view: month calendar
-        #
-        # XXX:richb - to be completed.
-
-        rolesList = [rolenames.ROLE_TABLE_CELL, \
-                     rolenames.ROLE_CALENDAR, \
-                     rolenames.ROLE_PANEL]
-        if self.isDesiredFocusedItem(event.source, rolesList):
-            print ">>>> Calendar view: month calendar <<<<"
 
 
         # For everything else, pass the focus event onto the parent class 

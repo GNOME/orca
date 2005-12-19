@@ -1,4 +1,17 @@
 
+2005-12-19  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py
+          Removed the "placeholder" code in the onFocus() method for the 
+          following three scenerios:
+            * Calendar view: day view: tabbing to day with no appts.
+            * Calendar view: day view: moving with arrow keys.
+            * Calendar view: month calendar
+          The default utterances would appear to be sufficient.
+
+          Added in some calls to debug.println for the remaining four 
+          cases handled by the onFocus() method.
+
 2005-12-16  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py
