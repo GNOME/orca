@@ -137,6 +137,7 @@ class Script(default.Script):
     # 2) Mail view: current message pane: "standard" mail header lines.
     # 3) Mail view: message header list
     # 4) Calendar view: day view: tabbing to day with appts.
+    # 5) Calendar view: day view: moving with arrow keys.
 
     def onFocus(self, event):
         """Called whenever an object gets focus.
@@ -281,7 +282,7 @@ class Script(default.Script):
         # 4) Calendar view: day view: tabbing to day with appts.
         #
         # If the focus is in the Calendar Day View on an appointment, then
-        # provide the user with userful feedback. First we get the current
+        # provide the user with useful feedback. First we get the current
         # date and appointment summary from the parent. This is then followed
         # by getting the information on the current appointment.
         #
@@ -324,9 +325,10 @@ class Script(default.Script):
                         appt = atspi.Accessible.makeAccessible(obj)
                         extents = appt.component.getExtents(0)
                         if extents.y == apptExtents.y:
-                            utterances = speechGen.getSpeech(event.source, False)
+                            utterances = speechGen.getSpeech(event.source, \
+                                                             False)
                             [apptRegions, focusedRegion] = \
-                                    brailleGen.getBrailleRegions(appt)
+                                brailleGen.getBrailleRegions(event.source)
                             brailleRegions.extend(apptRegions)
                             speech.speakUtterances(utterances)
 
@@ -342,6 +344,80 @@ class Script(default.Script):
                             speech.speak(endTime)
                             braille.displayRegions(brailleRegions)
                             return
+
+
+        # 5) Calendar view: day view: moving with arrow keys.
+        #
+        # If the focus is in the Calendar Day View, check to see if there
+        # are any appointments starting at the current time. If there are, 
+        # then provide the user with useful feedback for that appointment,
+        # otherwise output the current time and state that there are no
+        # appointments.
+        #
+        # First get the y position of the current table entry. Then compare
+        # this will any Calendar Events in the parent Calendar View. If their
+        # y position is the same, then speak that information.
+        #
+        # The end time for the appointment is determined by using the height
+        # of the current appointment component divided by the height of a
+        # single child in the parent Calendar View's table
+        #
+        # Both of these time values depend upon the value of a time increment
+        # which is determined by the number of children in the parent Calendar
+        # View's table.
+
+        rolesList = [rolenames.ROLE_UNKNOWN, \
+                     rolenames.ROLE_TABLE, \
+                     rolenames.ROLE_CALENDAR_VIEW]
+        if self.isDesiredFocusedItem(event.source, rolesList):
+            debug.println(debug.LEVEL_FINEST,
+                      "evolution.onFocus - calendar view: day view: " \
+                      + "moving with arrow keys.")
+
+            brailleRegions = []
+            index = event.source.index
+            parent = event.source.parent
+            calendarView = event.source.parent.parent
+            extents = event.source.component.getExtents(0)
+            noRows = parent.table.nRows
+            found = False
+
+            for i in range(0, calendarView.childCount):
+                child = calendarView.child(i)
+                if (child.role == rolenames.ROLE_CALENDAR_EVENT):
+                    apptExtents = child.component.getExtents(0)
+
+                    if extents.y == apptExtents.y:
+                        utterances = speechGen.getSpeech(child, False)
+                        [apptRegions, focusedRegion] = \
+                            brailleGen.getBrailleRegions(child)
+                        brailleRegions.extend(apptRegions)
+                        speech.speakUtterances(utterances)
+
+                        startTime = 'Start time ' + \
+                            self.getTimeForCalRow(index, noRows)
+                        brailleRegions.append(braille.Region(startTime))
+                        speech.speak(startTime)
+
+                        apptLen = apptExtents.height / extents.height
+                        endTime = 'End time ' + \
+                            self.getTimeForCalRow(index + apptLen, noRows)
+                        brailleRegions.append(braille.Region(endTime))
+                        speech.speak(endTime)
+                        braille.displayRegions(brailleRegions)
+                        found = True
+
+            if found == False:
+                startTime = 'Start time ' + self.getTimeForCalRow(index, noRows)
+                brailleRegions.append(braille.Region(startTime))
+                speech.speak(startTime)
+
+                utterance = "No appointments."
+                speech.speak(utterance)
+                brailleRegions.append(braille.Region(utterance))
+                braille.displayRegions(brailleRegions)
+
+            return
 
 
         # For everything else, pass the focus event onto the parent class 

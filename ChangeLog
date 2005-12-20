@@ -1,6 +1,18 @@
 
 2005-12-20  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/scripts/Evolution.py
+          Added in code to the the onFocus() method to handle:
+            Calendar view: day view: moving with arrow keys.
+         
+          If the focus is in the Calendar Day View, check to see if there
+          are any appointments starting at the current time. If there are,
+          then provide the user with useful feedback for that appointment,
+          otherwise output the current time and state that there are no
+          appointments.
+
+2005-12-20  Rich Burridge <rich.burridge@sun.com>
+
         * bugs/bugs.html
           Added in a workaround for Evolution bug #324193.
 
