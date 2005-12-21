@@ -3,19 +3,20 @@
 # Copyright (C) 2005 Gnome Foundation.
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004.
 # Maria Majadas <maria.majadas@hispalinux.es>, 2005.
+# maria <maria.majadas@hispalinux.es>, 2005.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: orcanuevo.HEAD.es\n"
+"Project-Id-Version: orca.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-10 22:54+0100\n"
-"PO-Revision-Date: 2005-12-10 22:55+0100\n"
-"Last-Translator: Maria Majadas <maria.majadas@hispalinux.es>\n"
-"Language-Team: Spanish <traductores@es.gnome.org>\n"
+"POT-Creation-Date: 2005-12-20 20:17+0100\n"
+"PO-Revision-Date: 2005-12-21 13:21+0100\n"
+"Last-Translator: maria <maria.majadas@hispalinux.es>\n"
+"Language-Team: español <traductores@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.10\n"
+"X-Generator: KBabel 1.10.2\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../src/orca/braillegenerator.py:183 ../src/orca/speechgenerator.py:186
@@ -153,13 +154,15 @@ msgstr "solapa"
 
 #: ../src/orca/default.py:85
 msgid "Performs left click on current flat review item."
-msgstr ""
-"Realiza una pulsación con el botón izquierdo en el actual objeto de revisión."
+msgstr "Realiza una pulsación con el botón izquierdo en el actual objeto de revisión."
 
 #: ../src/orca/default.py:94
 msgid "Performs right click on current flat review item."
-msgstr ""
-"Realiza una pulsación con el botón derecho en el actual objeto de revisión."
+msgstr "Realiza una pulsación con el botón derecho en el actual objeto de revisión."
+
+#: ../src/orca/default.py:103
+msgid "Speaks entire document."
+msgstr "Habla el documento entero."
 
 #: ../src/orca/default.py:112
 msgid "Performs the where am I operation."
@@ -234,7 +237,7 @@ msgid "Moves flat review to the next character."
 msgstr "Mover revisión al siguiente carácter."
 
 #: ../src/orca/default.py:294
-msgid "Toggles whether to read just the current table cell or the whole row."
+msgid "Toggles whether to read just the current table cell or the whole row"
 msgstr "Cambia si se debe leer sólo la celda de la tabla o toda la fila."
 
 #: ../src/orca/default.py:304
@@ -253,23 +256,23 @@ msgstr "Mover revisión arriba a la izquierda."
 msgid "Returns to object with keyboard focus."
 msgstr "Volver al objeto con el foco del teclado."
 
-#: ../src/orca/default.py:501 ../src/orca/default.py:688
+#: ../src/orca/default.py:511 ../src/orca/default.py:698
 #, python-format
 msgid "tree level %d"
 msgstr "nivel del árbol %d"
 
-#: ../src/orca/default.py:505 ../src/orca/default.py:692
-#: ../src/orca/default.py:759 ../src/orca/default.py:810
+#: ../src/orca/default.py:515 ../src/orca/default.py:702
+#: ../src/orca/default.py:769 ../src/orca/default.py:820
 msgid "No focus"
 msgstr "Sin foco"
 
-#: ../src/orca/default.py:1547 ../src/orca/default.py:1641
-#: ../src/orca/default.py:1646 ../src/orca/default.py:1716
-#: ../src/orca/default.py:1721
+#: ../src/orca/default.py:1560 ../src/orca/default.py:1654
+#: ../src/orca/default.py:1659 ../src/orca/default.py:1729
+#: ../src/orca/default.py:1734
 msgid "blank"
 msgstr "blanco"
 
-#: ../src/orca/default.py:1549 ../src/orca/default.py:1648
+#: ../src/orca/default.py:1562 ../src/orca/default.py:1661
 msgid "white space"
 msgstr "espacio en blanco"
 
@@ -277,23 +280,23 @@ msgstr "espacio en blanco"
 msgid "Emacspeak Speech Services"
 msgstr "Servicios de voz Emacsspeak"
 
-#: ../src/orca/focus_tracking_presenter.py:429
+#: ../src/orca/focus_tracking_presenter.py:431
 msgid "Switching to focus tracking mode."
 msgstr "Cambiando al modo de seguimiento del foco."
 
-#: ../src/orca/gnomespeechfactory.py:111
+#: ../src/orca/gnomespeechfactory.py:109
 msgid "GNOME Speech Services"
 msgstr "Servicios de voz de Gnome"
 
-#: ../src/orca/gnomespeechfactory.py:446
+#: ../src/orca/gnomespeechfactory.py:471
 msgid " dot dot dot"
 msgstr "punto punto punto"
 
-#: ../src/orca/gnomespeechfactory.py:492
+#: ../src/orca/gnomespeechfactory.py:555
 msgid "faster."
 msgstr "más rápido."
 
-#: ../src/orca/gnomespeechfactory.py:523
+#: ../src/orca/gnomespeechfactory.py:586
 msgid "slower."
 msgstr "más lento."
 
@@ -378,46 +381,45 @@ msgstr "El soporte Braille parece funcionar, ¿desea usarlo? Responda s o n."
 msgid "User logged out - shutting down."
 msgstr "El usuario cerró la sesión - apagando."
 
-#: ../src/orca/orca.py:481
+#: ../src/orca/orca.py:447
 msgid "Entering learn mode.  Press any key to hear its function. "
-msgstr ""
-"Entrando en modo de aprendizaje.  Pulse cualquier tecla para oír su función."
+msgstr "Entrando en modo de aprendizaje.  Pulse cualquier tecla para oír su función."
 
-#: ../src/orca/orca.py:482
+#: ../src/orca/orca.py:448
 msgid "To exit learn mode, press the escape key."
 msgstr "Para salir del modo de aprendizaje, pulse la tecla de escape."
 
-#: ../src/orca/orca.py:483
+#: ../src/orca/orca.py:449
 msgid "Learn mode.  Press escape to exit."
 msgstr "Modo de aprendizaje.  Pulse escape para salir."
 
-#: ../src/orca/orca.py:493 ../src/orca/orca.py:494
+#: ../src/orca/orca.py:459 ../src/orca/orca.py:460
 msgid "Exiting learn mode."
 msgstr "Saliendo del modo de aprendizaje."
 
-#: ../src/orca/orca.py:783
+#: ../src/orca/orca.py:749
 msgid "Enters learn mode.  Press escape to exit learn mode."
 msgstr ""
 "Entra en modo de aprendizaje.  Pulse escape para salir del modo de "
 "aprendizaje"
 
-#: ../src/orca/orca.py:791
+#: ../src/orca/orca.py:757
 msgid "Decreases the speech rate."
 msgstr "Reducir la velocidad del diálogo"
 
-#: ../src/orca/orca.py:799
+#: ../src/orca/orca.py:765
 msgid "Increases the speech rate."
 msgstr "Aumentar la velocidad de diálogo"
 
-#: ../src/orca/orca.py:805
+#: ../src/orca/orca.py:771
 msgid "Quits Orca"
 msgstr "Sale de Orca"
 
-#: ../src/orca/orca.py:817
+#: ../src/orca/orca.py:783
 msgid "Toggles keystroke recording on and off."
 msgstr "Cambiar la grabación mediante teclas."
 
-#: ../src/orca/orca.py:825
+#: ../src/orca/orca.py:791
 msgid ""
 "Prints a debug listing of all known applications to the console where Orca "
 "is running."
@@ -425,7 +427,7 @@ msgstr ""
 "Imprime un listado de depuración de todas las aplicaciones conocidas a la "
 "consola donde está funcionando Orca"
 
-#: ../src/orca/orca.py:833
+#: ../src/orca/orca.py:799
 msgid ""
 "Prints debug information about the currently active application to the "
 "console where Orca is running."
@@ -433,19 +435,27 @@ msgstr ""
 "Imprime información de depuración acerca de la aplicación activa a la "
 "consola donde está funcionando Orca"
 
-#: ../src/orca/orca.py:841
+#: ../src/orca/orca.py:807
+msgid "Prints debug information about the ancestry of the object with focus"
+msgstr "Imprime información de depuración acerca del ancestro del objeto enfocado."
+
+#: ../src/orca/orca.py:816
+msgid "Prints debug information about the application with focus"
+msgstr "Imprime información de depuración acerca de la aplicación enfocada"
+
+#: ../src/orca/orca.py:826
 msgid "Switches to the next presentation manager."
 msgstr "Cambiar al siguiente gestor de presentación."
 
-#: ../src/orca/orca.py:900 ../src/orca/orca.py:901
+#: ../src/orca/orca.py:885 ../src/orca/orca.py:886
 msgid "Welcome to Orca."
 msgstr "Bienvenido a Orca."
 
-#: ../src/orca/orca.py:929
+#: ../src/orca/orca.py:914
 msgid "goodbye."
 msgstr "adiós."
 
-#: ../src/orca/orca.py:930
+#: ../src/orca/orca.py:915
 msgid "Goodbye."
 msgstr "Adiós."
 
@@ -1387,33 +1397,6 @@ msgstr "pulsado"
 msgid "not pressed"
 msgstr "no pulsado"
 
-#~ msgid "Repeats last utterance sent to speech."
-#~ msgstr "Repite las últimas palabras mandadas al sintetizador."
 
-#~ msgid "Speaks entire document."
-#~ msgstr "Habla el documento entero"
 
-#~ msgid "Pans the braille display to the left by one character."
-#~ msgstr "Expandir el visor braille a la izquierda un carácter."
 
-#~ msgid "Pans the braille display to the right by one character."
-#~ msgstr "Mover la visual de braille a la derecha por un carácter."
-
-#~ msgid "Not a document."
-#~ msgstr "No es un documento."
-
-#~ msgid "No working GNOME Speech drivers found."
-#~ msgstr ""
-#~ "No se han encontrado los controladores de voz de Gnome Speech funcionando."
-
-#~ msgid "Create another voice?  Enter y or n: "
-#~ msgstr "¿Crear otra voz?  Responda s o n: "
-
-#~ msgid "Enter voice name: "
-#~ msgstr "Introduzca el nombre de la voz:"
-
-#~ msgid "The speech rate has been raised."
-#~ msgstr "La velocidad del habla se ha subido."
-
-#~ msgid "The speech rate has been lowered."
-#~ msgstr "La velocidad del habla se ha bajado."
