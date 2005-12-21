@@ -1,4 +1,9 @@
 
+2005-12-21  Rich Burridge <rich.burridge@sun.com>
+
+        * bugs/bugs.html
+          Added in Evolution bug #324726.
+
 2005-12-20  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py
