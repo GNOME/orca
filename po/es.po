@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-20 20:17+0100\n"
-"PO-Revision-Date: 2005-12-21 13:21+0100\n"
+"POT-Creation-Date: 2005-12-31 13:26+0100\n"
+"PO-Revision-Date: 2005-12-31 13:27+0100\n"
 "Last-Translator: maria <maria.majadas@hispalinux.es>\n"
 "Language-Team: español <traductores@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -154,11 +154,13 @@ msgstr "solapa"
 
 #: ../src/orca/default.py:85
 msgid "Performs left click on current flat review item."
-msgstr "Realiza una pulsación con el botón izquierdo en el actual objeto de revisión."
+msgstr ""
+"Realiza una pulsación con el botón izquierdo en el actual objeto de revisión."
 
 #: ../src/orca/default.py:94
 msgid "Performs right click on current flat review item."
-msgstr "Realiza una pulsación con el botón derecho en el actual objeto de revisión."
+msgstr ""
+"Realiza una pulsación con el botón derecho en el actual objeto de revisión."
 
 #: ../src/orca/default.py:103
 msgid "Speaks entire document."
@@ -237,8 +239,8 @@ msgid "Moves flat review to the next character."
 msgstr "Mover revisión al siguiente carácter."
 
 #: ../src/orca/default.py:294
-msgid "Toggles whether to read just the current table cell or the whole row"
-msgstr "Cambia si se debe leer sólo la celda de la tabla o toda la fila."
+msgid "Toggles whether to read just the current table cell or the whole row."
+msgstr "Cambia si se debe leer sólo la celda actual de la tabla o toda la fila."
 
 #: ../src/orca/default.py:304
 msgid "Pans the braille display to the left."
@@ -383,7 +385,8 @@ msgstr "El usuario cerró la sesión - apagando."
 
 #: ../src/orca/orca.py:447
 msgid "Entering learn mode.  Press any key to hear its function. "
-msgstr "Entrando en modo de aprendizaje.  Pulse cualquier tecla para oír su función."
+msgstr ""
+"Entrando en modo de aprendizaje.  Pulse cualquier tecla para oír su función."
 
 #: ../src/orca/orca.py:448
 msgid "To exit learn mode, press the escape key."
@@ -437,7 +440,8 @@ msgstr ""
 
 #: ../src/orca/orca.py:807
 msgid "Prints debug information about the ancestry of the object with focus"
-msgstr "Imprime información de depuración acerca del ancestro del objeto enfocado."
+msgstr ""
+"Imprime información de depuración acerca del ancestro del objeto enfocado."
 
 #: ../src/orca/orca.py:816
 msgid "Prints debug information about the application with focus"
@@ -1329,6 +1333,30 @@ msgstr "Componente Empotrado"
 msgid "embedded component"
 msgstr "componente empotrado"
 
+#: ../src/orca/scripts/Evolution.py:54
+msgid "calv"
+msgstr "calv"
+
+#: ../src/orca/scripts/Evolution.py:55
+msgid "CalendarView"
+msgstr "Vista del calendario"
+
+#: ../src/orca/scripts/Evolution.py:56
+msgid "calendar view"
+msgstr "vista del calendario"
+
+#: ../src/orca/scripts/Evolution.py:61
+msgid "cale"
+msgstr "cale"
+
+#: ../src/orca/scripts/Evolution.py:62
+msgid "CalendarEvent"
+msgstr "Evento del calendario"
+
+#: ../src/orca/scripts/Evolution.py:63
+msgid "calendar event"
+msgstr "evento del calendario"
+
 #: ../src/orca/scripts/Gecko.py:49
 msgid "No page to read."
 msgstr "Ninguna página para leer."
@@ -1337,7 +1365,7 @@ msgstr "Ninguna página para leer."
 msgid "Reading web page failed."
 msgstr "La lectura de la página web ha fallado."
 
-#: ../src/orca/scripts/Gecko.py:95
+#: ../src/orca/scripts/Gecko.py:95 ../src/orca/scripts/Mozilla.py:197
 msgid "link"
 msgstr "enlace"
 
@@ -1396,7 +1424,3 @@ msgstr "pulsado"
 #: ../src/orca/speechgenerator.py:1315 ../src/orca/speechgenerator.py:1319
 msgid "not pressed"
 msgstr "no pulsado"
-
-
-
-
