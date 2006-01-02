@@ -47,6 +47,27 @@ class VoiceFamily(dict):
         if props:
             self.update(props)
 
+class SayAllContext:
+    def __init__(self, obj, utterance, startOffset=-1, endOffset=-1):
+        """Creates a new SayAllContext that will be passed to the
+        SayAll callback handler for progress updates on speech.
+        If the object does not have an accessible text specialization,
+        then startOffset and endOffset parameters are meaningless.
+        If the object does have an accessible text specialization,
+        then values >= 0 for startOffset and endOffset indicate
+        where in the text the utterance has come from.
+        
+        Arguments:
+        -obj:         the Accessible being spoken
+        -utterance:   the actual utterance being spoken
+        -startOffset: the start offset of the Accessible's text
+        -endOffset:   the end offset of the Accessible's text
+        """
+        self.obj         = obj
+        self.utterance   = utterance
+        self.startOffset = startOffset
+        self.endOffset   = endOffset
+
 class SpeechServer:
 
     """Provides speech server abstraction."""
@@ -158,7 +179,7 @@ class SpeechServer:
         """
         pass
 
-    def sayAll(self, utteranceIterator):
+    def sayAll(self, utteranceIterator, progressCallback):
         """Iterates through the given utteranceIterator, speaking
         each utterance one at a time.  Subclasses may postpone
         getting a new element until the current element has been
@@ -166,10 +187,11 @@ class SpeechServer:
 
         Arguments:
         - utteranceIterator: iterator/generator whose next() function
-                             returns a [string, acss] tuple to be spoken.
+                             returns a [SayAllContext, acss] tuple
+        - progressCallback:  called as speech progress is made
         """
-        for [utterance, acss] in utteranceIterator:
-            self.speak(utterance, acss)
+        for [context, acss] in utteranceIterator:
+            self.speak(context.utterance, acss)
             
     def increaseSpeechRate(self, step=5):
         """Increases the speech rate.

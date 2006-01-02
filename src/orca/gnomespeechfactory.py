@@ -36,6 +36,13 @@ from orca_i18n import _           # for gettext support
 atspi.ORBit.load_typelib('GNOME_Speech')
 import GNOME.Speech, GNOME__POA.Speech
 
+class _SayAll:
+    def __init__(self, iterator, context, id, progressCallback):
+        self.utteranceIterator   = iterator
+        self.currentContext      = context
+        self.idForCurrentContext = id
+        self.progressCallback    = progressCallback
+                 
 class _Speaker(GNOME__POA.Speech.SpeechCallback):
     """Implements gnome-speech's SpeechCallback class.  The gnome-speech
     server only allows one speech callback to be registered with a speaker
@@ -336,13 +343,17 @@ class SpeechServer(speechserver.SpeechServer):
         - offset: the character offset into the utterance (for progress)
         """
         if self.__sayAll:
-            [utteranceIterator, sayAllId] = self.__sayAll
-            if sayAllId == id:
+            if self.__sayAll.idForCurrentContext == id:
+                self.__sayAll.progressCallback(self.__sayAll.currentContext,
+                                               type,
+                                               offset)
                 if type == GNOME.Speech.speech_callback_speech_ended:
                     try:
-                        [utterance, acss] = utteranceIterator.next()
-                        self.__sayAll = [utteranceIterator,
-                                         self.__speak(utterance, acss)]
+                        [self.__sayAll.currentContext, acss] = \
+                            self.__sayAll.utteranceIterator.next()
+                        self.__sayAll.idForCurrentContext = self.__speak(
+                            self.__sayAll.currentContext.utterance,
+                            acss)
                     except StopIteration:
                         self.__sayAll = None
 
@@ -516,17 +527,21 @@ class SpeechServer(speechserver.SpeechServer):
 
         self.__speak(text, acss, interrupt)
 
-    def sayAll(self, utteranceIterator):
+    def sayAll(self, utteranceIterator, progressCallback):
         """Iterates through the given utteranceIterator, speaking
         each utterance one at a time.
 
         Arguments:
         - utteranceIterator: iterator/generator whose next() function
                              returns a new string to be spoken
+        - progressCallback:  called as progress is made
         """
         try:
-            [utterance, acss] = utteranceIterator.next()
-            self.__sayAll = [utteranceIterator, self.__speak(utterance, acss)]
+            [context, acss] = utteranceIterator.next()
+            self.__sayAll = _SayAll(utteranceIterator,
+                                    context,
+                                    self.__speak(context.utterance, acss),
+                                    progressCallback)
         except StopIteration:
             pass
             

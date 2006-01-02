@@ -38,6 +38,7 @@ import script
 import settings
 import speech
 import speechgenerator
+import speechserver
 
 from orca_i18n import _                          # for gettext support
 
@@ -443,11 +444,25 @@ class Script(script.Script):
 
         return speechgenerator.SpeechGenerator()
 
+    def __sayAllProgressCallback(self, context, type, offset):
+        # [[[TODO: WDW - this needs work.  Need to be able to manage
+        # the monitoring of progress and couple that with both updating
+        # the visual progress of what is being spoken as well as
+        # positioning the cursor when speech has stopped.]]]
+        #
+        if type == 0: # started
+            print "STARTED", context.utterance, offset
+        elif type == 1: # progress
+            print "PROGRESS", context.utterance, offset
+        else:
+            print "ENDED", context.utterance, offset
+    
     def sayAll(self, inputEvent):
         if not orca.locusOfFocus:
             pass
         elif orca.locusOfFocus.text:
-            speech.sayAll(atspi.textLines(orca.locusOfFocus.text))
+            speech.sayAll(textLines(orca.locusOfFocus),
+                          self.__sayAllProgressCallback)
         else:
             speech.speakUtterances(
                 self.speechGenerator.getSpeech(orca.locusOfFocus, False))
@@ -1838,6 +1853,63 @@ class Script(script.Script):
 # Functions for handling output of AccessibleText objects to speech.   #
 #                                                                      #
 ########################################################################
+        
+def textLines(obj):
+    """Creates a generator that can be used to iterate over each line
+    of a text object, starting at the caret offset.  One can do something
+    like the following to access the lines:
+
+    for line in atspi.textLines(orca.locusOfFocus.text):
+        <<<do something with the line>>>
+
+    Arguments:
+    - obj: an Accessible that has a text specialization
+
+    Returns a tuple: [SayAllContext, acss], where SayAllContext has the
+    text to be spoken and acss is an ACSS instance for speaking the text.
+    """
+    if not obj:
+        return
+
+    text = obj.text
+    if not text:
+        return
+
+    length = text.characterCount
+    offset = text.caretOffset
+    
+    # Get the next line of text to read 	 
+    #
+    lastEndOffset = -1
+    while offset < length:
+        [string, startOffset, endOffset] = text.getTextAtOffset(
+            offset,
+            atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+
+        # [[[WDW - HACK: this is here because getTextAtOffset
+        # tends not to be implemented consistently across toolkits.
+        # Sometimes it behaves properly (i.e., giving us an endOffset
+        # that is the beginning of the next line), sometimes it
+        # doesn't (e.g., giving us an endOffset that is the end of
+        # the current line).  So...we hack.  The whole 'max' deal
+        # is to account for lines that might be a brazillion lines
+        # long.]]]
+        #
+        if endOffset == lastEndOffset:
+            offset = max(offset + 1, lastEndOffset + 1)
+            lastEndOffset = endOffset
+            continue
+
+        lastEndOffset = endOffset
+        offset = endOffset
+
+        # Strip trailing new lines
+        #
+        #if string[-1:] == "\n":
+        #    string = string[0][:-1]
+
+        yield [speechserver.SayAllContext(obj, string, startOffset, endOffset),
+               None]
 
 def getLinkIndex(obj, characterIndex):
     """A brute force method to see if an offset is a link.  This
