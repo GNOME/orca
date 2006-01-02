@@ -344,10 +344,18 @@ class SpeechServer(speechserver.SpeechServer):
         """
         if self.__sayAll:
             if self.__sayAll.idForCurrentContext == id:
-                self.__sayAll.progressCallback(self.__sayAll.currentContext,
-                                               type,
-                                               offset)
-                if type == GNOME.Speech.speech_callback_speech_ended:
+                context = self.__sayAll.currentContext
+                if type == GNOME.Speech.speech_callback_speech_started:
+                    context.currentOffset = context.startOffset
+                    self.__sayAll.progressCallback(
+                        self.__sayAll.currentContext,
+                        speechserver.SayAllContext.PROGRESS)
+                elif type == GNOME.Speech.speech_callback_speech_progress:
+                    context.currentOffset = context.startOffset + offset
+                    self.__sayAll.progressCallback(
+                        self.__sayAll.currentContext,
+                        speechserver.SayAllContext.PROGRESS)
+                elif type == GNOME.Speech.speech_callback_speech_ended:
                     try:
                         [self.__sayAll.currentContext, acss] = \
                             self.__sayAll.utteranceIterator.next()
@@ -355,6 +363,10 @@ class SpeechServer(speechserver.SpeechServer):
                             self.__sayAll.currentContext.utterance,
                             acss)
                     except StopIteration:
+                        context.currentOffset = context.endOffset
+                        self.__sayAll.progressCallback(
+                            self.__sayAll.currentContext,
+                            speechserver.SayAllContext.COMPLETED)
                         self.__sayAll = None
 
     def getInfo(self):
@@ -522,7 +534,6 @@ class SpeechServer(speechserver.SpeechServer):
         be spoken.
         """
         if self.__sayAll:
-            self.__sayAll = None
             self.stop()
 
         self.__speak(text, acss, interrupt)
@@ -604,6 +615,11 @@ class SpeechServer(speechserver.SpeechServer):
 
     def stop(self):
         """Stops ongoing speech and flushes the queue."""
+        if self.__sayAll:
+            self.__sayAll.progressCallback(
+                self.__sayAll.currentContext,
+                speechserver.SayAllContext.INTERRUPTED)
+            self.__sayAll = None
         for name in self.__speakers.keys():
             try:
                 self.__speakers[name].stop()

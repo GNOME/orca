@@ -48,6 +48,11 @@ class VoiceFamily(dict):
             self.update(props)
 
 class SayAllContext:
+    
+    PROGRESS    = 0
+    INTERRUPTED = 1
+    COMPLETED   = 2
+    
     def __init__(self, obj, utterance, startOffset=-1, endOffset=-1):
         """Creates a new SayAllContext that will be passed to the
         SayAll callback handler for progress updates on speech.
@@ -63,10 +68,11 @@ class SayAllContext:
         -startOffset: the start offset of the Accessible's text
         -endOffset:   the end offset of the Accessible's text
         """
-        self.obj         = obj
-        self.utterance   = utterance
-        self.startOffset = startOffset
-        self.endOffset   = endOffset
+        self.obj           = obj
+        self.utterance     = utterance
+        self.startOffset   = startOffset
+        self.currentOffset = startOffset
+        self.endOffset     = endOffset
 
 class SpeechServer:
 
@@ -188,11 +194,14 @@ class SpeechServer:
         Arguments:
         - utteranceIterator: iterator/generator whose next() function
                              returns a [SayAllContext, acss] tuple
-        - progressCallback:  called as speech progress is made
+        - progressCallback:  called as speech progress is made - has a
+                             signature of (SayAllContext, type), where
+                             type is one of PROGRESS, INTERRUPTED, or
+                             COMPLETED.
         """
         for [context, acss] in utteranceIterator:
             self.speak(context.utterance, acss)
-            
+        
     def increaseSpeechRate(self, step=5):
         """Increases the speech rate.
         """

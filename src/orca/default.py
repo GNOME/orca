@@ -444,18 +444,26 @@ class Script(script.Script):
 
         return speechgenerator.SpeechGenerator()
 
-    def __sayAllProgressCallback(self, context, type, offset):
+    def __sayAllProgressCallback(self, context, type):
         # [[[TODO: WDW - this needs work.  Need to be able to manage
         # the monitoring of progress and couple that with both updating
         # the visual progress of what is being spoken as well as
         # positioning the cursor when speech has stopped.]]]
         #
-        if type == 0: # started
-            print "STARTED", context.utterance, offset
-        elif type == 1: # progress
-            print "PROGRESS", context.utterance, offset
-        else:
-            print "ENDED", context.utterance, offset
+        if type == speechserver.SayAllContext.PROGRESS:
+            #print "PROGRESS", context.utterance, context.currentOffset
+            #obj = context.obj
+            #[x, y, width, height] = obj.text.getCharacterExtents(
+            #    context.currentOffset, 0)
+            #print context.currentOffset, x, y, width, height
+            #orca.drawOutline(x, y, width, height)
+            pass
+        elif type == speechserver.SayAllContext.INTERRUPTED:
+            #print "INTERRUPTED", context.utterance, context.currentOffset
+            context.obj.text.setCaretOffset(context.currentOffset);
+        elif type == speechserver.SayAllContext.COMPLETED:
+            #print "COMPLETED", context.utterance, context.currentOffset
+            context.obj.text.setCaretOffset(context.currentOffset);
     
     def sayAll(self, inputEvent):
         if not orca.locusOfFocus:
