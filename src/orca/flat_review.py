@@ -24,6 +24,7 @@ import braille
 import debug
 import eventsynthesizer
 import rolenames
+import sys
 
 # [[[WDW - HACK Regular expression to split strings on whitespace
 # boundaries, which is what we'll use for word dividers instead of
@@ -1246,6 +1247,85 @@ def getZonesFromAccessible(accessible, cliprect):
 
     return zones
 
+def getShowingDescendants(parent):
+    """Given a parent that manages its descendants, return a list of
+    Accessible children that are actually showing.  This algorithm
+    was inspired a little by the srw_elements_from_accessible logic
+    in Gnopernicus, and makes the assumption that the children of
+    an object that manages its descendants are arranged in a row
+    and column format.
+    """
+
+    if (not parent) or (not parent.component):
+        return []
+
+    # A minimal chunk to jump around should we not really know where we
+    # are going.
+    #
+    GRID_SIZE = 7
+    
+    descendants = []
+
+    parentExtents = parent.component.getExtents(0)
+
+    # [[[TODO: WDW - HACK related to GAIL bug where table column headers
+    # seem to be ignored: http://bugzilla.gnome.org/show_bug.cgi?id=325809.
+    # The problem is that this causes getAccessibleAtPoint to return the
+    # cell effectively below the real cell at a given point, making a mess
+    # of everything.  So...we just manually add in showing headers for now.
+    # The remainder of the logic below accidentally accounts for this offset,
+    # yet it should also work when bug 325809 is fixed.]]]
+    #
+    table = parent.table
+    if table:
+        for i in range(0, table.nColumns):
+            obj = table.getColumnHeader(i)
+            if obj:
+                header = atspi.Accessible.makeAccessible(obj)
+                extents = header.extents
+                if header.state.count(atspi.Accessibility.STATE_SHOWING) \
+                   and (extents.x >= 0) and (extents.y >= 0) \
+                   and (extents.width > 0) and (extents.height > 0) \
+                   and visible(extents.x, extents.y, 
+                               extents.width, extents.height,
+                               parentExtents.x, parentExtents.y,
+                               parentExtents.width, parentExtents.height):
+                    descendants.append(header)
+                    
+    # This algorithm goes left to right, top to bottom while attempting
+    # to do *some* optimization over queries.  It could definitely be
+    # improved.
+    #
+    currentY = parentExtents.y
+    while currentY < (parentExtents.y + parentExtents.height):
+        currentX = parentExtents.x
+        minHeight = sys.maxint
+        while currentX < (parentExtents.x + parentExtents.width):
+            obj = parent.component.getAccessibleAtPoint(currentX,
+                                                        currentY,
+                                                        0)
+            if obj:
+                child = atspi.Accessible.makeAccessible(obj)
+                extents = child.extents
+                if extents.x >= 0 and extents.y >= 0:
+                    newX = extents.x + extents.width
+                    minHeight = min(minHeight, extents.height)
+                    if not descendants.count(child):
+                        descendants.append(child)
+                else:
+                    newX = currentX + GRID_SIZE
+            else:
+                newX = currentX + GRID_SIZE
+            if newX <= currentX:
+                currentX += GRID_SIZE
+            else:
+                currentX = newX
+        if minHeight == sys.maxint:
+            minHeight = GRID_SIZE
+        currentY += minHeight
+
+    return descendants
+
 def getShowingZones(root):
     """Returns a list of all interesting, non-intersecting, regions
     that are drawn on the screen.  Each element of the list is the
@@ -1292,25 +1372,27 @@ def getShowingZones(root):
     if root.role == rolenames.ROLE_PAGE_TAB:
         objlist.extend(getZonesFromAccessible(root, root.extents))
 
-    # [[[TODO: WDW - probably want to do something a little smarter
-    # for parents that manage gazillions of descendants.]]]
-    #
-    for i in range(0, root.childCount):
-        child = root.child(i)
-        if child == root:
-            debug.println(debug.LEVEL_WARNING,
-                          "flat_review.getShowingZones: " +
-                          "WARNING CHILD == PARENT!!!")
-        elif not child:
-            debug.println(debug.LEVEL_WARNING,
-                          "flat_review.getShowingZones: " +
-                          "WARNING CHILD IS NONE!!!")
-        elif child.parent != root:
-            debug.println(debug.LEVEL_WARNING,
-                          "flat_review.getShowingZones: " +
-                          "WARNING CHILD.PARENT != PARENT!!!")
-        elif child.state.count(atspi.Accessibility.STATE_SHOWING):
-            objlist.extend(getShowingZones(child))
+    if root.state.count(atspi.Accessibility.STATE_MANAGES_DESCENDANTS) \
+       and (root.childCount > 50):
+        for child in getShowingDescendants(root):
+            objlist.extend(getShowingZones(child))            
+    else:
+        for i in range(0, root.childCount):
+            child = root.child(i)
+            if child == root:
+                debug.println(debug.LEVEL_WARNING,
+                              "flat_review.getShowingZones: " +
+                              "WARNING CHILD == PARENT!!!")
+            elif not child:
+                debug.println(debug.LEVEL_WARNING,
+                              "flat_review.getShowingZones: " +
+                              "WARNING CHILD IS NONE!!!")
+            elif child.parent != root:
+                debug.println(debug.LEVEL_WARNING,
+                              "flat_review.getShowingZones: " +
+                              "WARNING CHILD.PARENT != PARENT!!!")
+            elif child.state.count(atspi.Accessibility.STATE_SHOWING):
+                objlist.extend(getShowingZones(child))
 
     return objlist
 

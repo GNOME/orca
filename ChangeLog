@@ -1,4 +1,14 @@
+2006-01-04  Willie Walker <william.walker@sun.com>
 
+	* src/orca/flat_review.py: implement a mechanism to better handle
+	the flat review of parents that manage a large number of descendants.
+	This makes synaptic, for example, work a bit better with flat review.
+	
+2006-01-04  Willie Walker <william.walker@sun.com>
+
+        * bugs/bugs.html, bugs/bug_325809.py: add bug for table column
+	headers not being taken into account for getAccessibleAtPoint
+	
 2005-12-21  Rich Burridge <rich.burridge@sun.com>
 
         * bugs/bugs.html
