@@ -1,3 +1,11 @@
+2006-01-06  Willie Walker <william.walker@sun.com>
+
+	* src/orca/gnomespeechfactory.py, src/orca/orca-setup.in:
+	fix problem where speech will hang when using gnome speech
+	and orca-setup.  The main cause was the introduction of
+	callbacks, which will not work properly when bonobo main
+	is not being used (which is the case with orca-setup).
+	
 2006-01-04  Willie Walker <william.walker@sun.com>
 
 	* src/orca/flat_review.py: implement a mechanism to better handle

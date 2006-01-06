@@ -53,7 +53,8 @@ class _Speaker(GNOME__POA.Speech.SpeechCallback):
 
     def __init__(self, gnome_speaker):
         self.gnome_speaker = gnome_speaker
-        gnome_speaker.registerSpeechCallback(self._this())
+        if settings.getSetting("enableSpeechCallbacks", True):
+            gnome_speaker.registerSpeechCallback(self._this())
         self.__callbacks = []
         
     def registerCallback(self, callback):
