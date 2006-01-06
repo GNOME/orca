@@ -1,5 +1,8 @@
 2006-01-06  Willie Walker <william.walker@sun.com>
 
+	* src/orca/scripts/Makefile.am: take care in installing on
+	64-bit platforms
+	
 	* src/orca/gnomespeechfactory.py, src/orca/orca-setup.in:
 	fix problem where speech will hang when using gnome speech
 	and orca-setup.  The main cause was the introduction of

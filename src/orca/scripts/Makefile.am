@@ -1,4 +1,4 @@
-orca_pathdir=$(pythondir)
+orca_pathdir=$(pyexecdir)
 
 orca_python_PYTHON = \
 	__init__.py \
@@ -12,5 +12,5 @@ orca_python_PYTHON = \
 	Mozilla.py \
 	StarOffice.py
 
-orca_pythondir=$(pythondir)/orca/scripts
+orca_pythondir=$(pyexecdir)/orca/scripts
 
