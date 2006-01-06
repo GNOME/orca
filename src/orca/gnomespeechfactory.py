@@ -91,9 +91,12 @@ class _Speaker(GNOME__POA.Speech.SpeechCallback):
     def setParameterValue(self, name, value):
         return self.gnome_speaker.setParameterValue(name, value)
 
-    def __del__(self):
-        self.gnome_speaker.unref()
-
+    def unref(self):
+        try:
+            self.gnome_speaker.unref()
+        except:
+            pass
+        
 class SpeechServer(speechserver.SpeechServer):
     """Provides SpeechServer implementation for gnome-speech."""
 
@@ -628,7 +631,8 @@ class SpeechServer(speechserver.SpeechServer):
 
     def shutdown(self):
         """Shuts down the speech engine."""
-
+        for speaker in self.__speakers.values():
+            speaker.unref()
         self.__speakers = {}
         try:
             self.__driver.unref()
