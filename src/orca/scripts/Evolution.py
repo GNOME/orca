@@ -104,6 +104,31 @@ class Script(default.Script):
         return True
 
 
+    def readPageTab(self, tab):
+        """Speak/Braille the given page tab. The speech verbosity is set
+           to VERBOSITY_LEVEL_BRIEF for this operation and then restored
+           to its previous value on completion.
+
+        Arguments:
+        - tab: the page tab to speak/braille.
+        """
+
+        brailleGen = self.brailleGenerator
+        speechGen = self.speechGenerator
+
+        savedSpeechVerbosityLevel = \
+            settings.getSetting(settings.SPEECH_VERBOSITY_LEVEL)
+        settings.speechVerbosityLevel = settings.VERBOSITY_LEVEL_BRIEF
+        utterances = speechGen.getSpeech(tab, False)
+        speech.speakUtterances(utterances)
+        settings.speechVerbosityLevel = savedSpeechVerbosityLevel
+
+        brailleRegions = []
+        [cellRegions, focusedRegion] = brailleGen.getBrailleRegions(tab)
+        brailleRegions.extend(cellRegions)
+        braille.displayRegions(brailleRegions)
+
+
     def getTimeForCalRow(self, row, noIncs):
         """Return a string equivalent to the time of the given row in
            the calendar day view. Each calendar row is equivalent to
@@ -138,6 +163,7 @@ class Script(default.Script):
     # 3) Mail view: message header list
     # 4) Calendar view: day view: tabbing to day with appts.
     # 5) Calendar view: day view: moving with arrow keys.
+    # 6) Preferences Dialog: options list.
 
     def onFocus(self, event):
         """Called whenever an object gets focus.
@@ -149,7 +175,7 @@ class Script(default.Script):
         brailleGen = self.brailleGenerator
         speechGen = self.speechGenerator
 
-        debug.printObjectEvent(debug.LEVEL_OFF,
+        debug.printObjectEvent(debug.LEVEL_FINEST,
                                event,
                                event.source.toString())
 
@@ -418,6 +444,49 @@ class Script(default.Script):
                 braille.displayRegions(brailleRegions)
 
             return
+
+        # 6) Preferences Dialog: options list.
+        #
+        # Check if the focus is in one of the various options on the left
+        # side of the Preferences dialog. If it is, then we just want to
+        # speak the name of the page we are currently on.
+        #
+        # Even though it looks like the focus is on one of the page tabs
+        # in this dialog, it's possible that it's actually on a table cell,
+        # within a table which is contained within a scroll pane. We check
+        # for this my looking for a component hierarchy of "table cell",
+        # "table", "unknown" and "scroll pane".
+        #
+        # If this is the case, then we get the parent of the scroll pane
+        # and look to see if one of its other children is a "page tab list".
+        # If that's true, then we get the Nth child, when N is the index of
+        # the initial table cell minus 1. We double check that this is a
+        # "page tab", then if so, speak and braille that component.
+        #
+        # NOTE: assumes there is only one "page tab list" in the "filler"
+        # component.
+
+        rolesList = [rolenames.ROLE_TABLE_CELL, \
+                     rolenames.ROLE_TABLE, \
+                     rolenames.ROLE_UNKNOWN, \
+                     rolenames.ROLE_SCROLL_PANE]
+        if self.isDesiredFocusedItem(event.source, rolesList):
+            debug.println(debug.LEVEL_FINEST,
+                      "evolution.onFocus - preferences dialog: " \
+                      + "table cell in options list.")
+
+            index = event.source.index
+            obj = event.source.parent.parent.parent
+            parent = obj.parent
+            if parent.role == rolenames.ROLE_FILLER:
+                for i in range(0, parent.childCount):
+                    child = parent.child(i)
+                    if (child.role == rolenames.ROLE_PAGE_TAB_LIST):
+                        list = child
+                        tab = list.child(index-1)
+                        if (tab.role == rolenames.ROLE_PAGE_TAB):
+                            self.readPageTab(tab)
+                            return
 
 
         # For everything else, pass the focus event onto the parent class 

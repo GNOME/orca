@@ -1,3 +1,32 @@
+
+2005-01-11  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py
+          Added in code to the the onFocus() method to handle:
+            Preferences Dialog: options list.
+
+        If the focus is in one of the various options on the left side of 
+        the Preferences dialog. then we just want to speak the name of the 
+        page we are currently on.
+        
+        Even though it looks like the focus is on one of the page tabs
+        in this dialog, it's possible that it's actually on a table cell,
+        within a table which is contained within a scroll pane. We check
+        for this my looking for a component hierarchy of "table cell",
+        "table", "unknown" and "scroll pane".
+        
+        If this is the case, then we get the parent of the scroll pane
+        and look to see if one of its other children is a "page tab list".
+        If that's true, then we get the Nth child, when N is the index of
+        the initial table cell minus 1. We double check that this is a
+        "page tab", then if so, speak and braille that component.
+        
+        NOTE: assumes there is only one "page tab list" in the "filler"
+        component.
+
+        This change improves the situation dramatically, but sometime we 
+        are still getting this component spoken twice.
+
 2006-01-06  Willie Walker <william.walker@sun.com>
 
 	* src/orca/scripts/Makefile.am: take care in installing on
