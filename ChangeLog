@@ -1,3 +1,11 @@
+2005-01-12  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py
+          Tightened up the code in case "3)" in the onFocus() method.
+          It was possible that some of the table cells in the current
+          row in the mail message header table were None. This is now 
+          specifically tested for, and if found, that table cell is skipped.
+
 2005-01-11  Rich Burridge <rich.burridge@sun.com>
 
         * bugs/bugs.html

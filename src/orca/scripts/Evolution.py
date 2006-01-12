@@ -286,20 +286,23 @@ class Script(default.Script):
             brailleRegions = []
             for i in range(0, parent.table.nColumns):
                 obj = parent.table.getAccessibleAt(row, i)
-                cell = atspi.Accessible.makeAccessible(obj)
-                utterances = speechGen.getSpeech(cell, False)
-                if cell.index == event.source.index:
-                    settings.brailleVerbosityLevel = \
-                        settings.VERBOSITY_LEVEL_VERBOSE
-                else:
-                    settings.brailleVerbosityLevel = \
-                        settings.VERBOSITY_LEVEL_BRIEF
-                [cellRegions, focusedRegion] = \
-                    brailleGen.getBrailleRegions(cell)
-                brailleRegions.extend(cellRegions)
-                speech.speakUtterances(utterances)
+                if obj:
+                    cell = atspi.Accessible.makeAccessible(obj)
+                    utterances = speechGen.getSpeech(cell, False)
+                    if cell.index == event.source.index:
+                        settings.brailleVerbosityLevel = \
+                            settings.VERBOSITY_LEVEL_VERBOSE
+                    else:
+                        settings.brailleVerbosityLevel = \
+                            settings.VERBOSITY_LEVEL_BRIEF
+                    [cellRegions, focusedRegion] = \
+                        brailleGen.getBrailleRegions(cell)
+                    brailleRegions.extend(cellRegions)
+                    speech.speakUtterances(utterances)
 
-            braille.displayRegions(brailleRegions)
+            if brailleRegions != []:
+                braille.displayRegions(brailleRegions)
+
             orca.setLocusOfFocus(event, event.source, False)
             settings.brailleVerbosityLevel = savedBrailleVerbosityLevel
             return
