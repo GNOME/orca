@@ -1,3 +1,12 @@
+2005-01-13  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca.py, src/orca/debug.py: Add Insert+Ctrl+F5 as
+	a means to cycle the debug level.  I originally started making
+	this a dialog box, but realized that interacting with it can 
+	cause a flurry of AT-SPI events.  So...I dumbed this down to 
+	a simple cycle (press Insert+Ctrl+F5 repeatedly to cycle through
+	the possible debug level values).
+	
 2005-01-12  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py

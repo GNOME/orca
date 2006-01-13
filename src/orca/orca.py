@@ -372,6 +372,62 @@ def toggleKeystrokeRecording(script=None, inputEvent=None):
 #                                                                      #
 ########################################################################
 
+def cycleDebugLevel(script=None, inputEvent=None):
+    """Cycles the debug level at run time.
+
+    Arguments:
+    - inputEvent: the InputEvent instance that caused this to be called.
+
+    Returns True indicating the event should be consumed.
+    """
+
+def cycleDebugLevel(script=None, inputEvent=None):
+    global _debugLevel
+
+    level = debug.getDebugLevel()
+    
+    if level == debug.LEVEL_ALL:
+        level = debug.LEVEL_FINEST
+    elif level == debug.LEVEL_FINEST:
+        level = debug.LEVEL_FINER
+    elif level == debug.LEVEL_FINER:
+        level = debug.LEVEL_FINE
+    elif level == debug.LEVEL_FINE:
+        level = debug.LEVEL_CONFIGURATION
+    elif level == debug.LEVEL_CONFIGURATION:
+        level = debug.LEVEL_INFO
+    elif level == debug.LEVEL_INFO:
+        level = debug.LEVEL_WARNING
+    elif level == debug.LEVEL_WARNING:
+        level = debug.LEVEL_SEVERE
+    elif level == debug.LEVEL_SEVERE:
+        level = debug.LEVEL_OFF
+    elif level == debug.LEVEL_OFF:
+        level = debug.LEVEL_ALL
+
+    debug.setDebugLevel(level)
+    
+    if level == debug.LEVEL_ALL:
+        speech.speak(_("Debug level all."))
+    elif level == debug.LEVEL_FINEST:
+        speech.speak(_("Debug level finest."))
+    elif level == debug.LEVEL_FINER:
+        speech.speak(_("Debug level finer."))
+    elif level == debug.LEVEL_FINE:
+        speech.speak(("Debug level fine."))
+    elif level == debug.LEVEL_CONFIGURATION:
+        speech.speak("Debug level configuration.")
+    elif level == debug.LEVEL_INFO:
+        speech.speak("Debug level info.")
+    elif level == debug.LEVEL_WARNING:
+        speech.speak("Debug level warning.")
+    elif level == debug.LEVEL_SEVERE:
+        speech.speak("Debug level severe.")
+    elif level == debug.LEVEL_OFF:
+        speech.speak("Debug level off.")
+
+    return True
+
 def printApps(script=None, inputEvent=None):
     """Prints a list of all applications to stdout
 
@@ -789,10 +845,20 @@ def init(registry):
     listAppsHandler = InputEventHandler(
         printApps,
         _("Prints a debug listing of all known applications to the console where Orca is running."))
-    _keybindings.add(keybindings.KeyBinding("F5", \
-                                            1 << MODIFIER_ORCA, \
-                                            1 << MODIFIER_ORCA,
-                                            listAppsHandler))
+    _keybindings.add(keybindings.KeyBinding(
+        "F5", 
+        (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL), 
+        1 << MODIFIER_ORCA,
+        listAppsHandler))
+
+    cycleDebugLevelHandler = InputEventHandler(
+        cycleDebugLevel,
+        _("Cycles the debug level at run time."))
+    _keybindings.add(keybindings.KeyBinding(
+        "F5", 
+        (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL), 
+        (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL), 
+        cycleDebugLevelHandler))
 
     printActiveAppHandler = InputEventHandler(\
         printActiveApp,

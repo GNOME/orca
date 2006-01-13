@@ -22,6 +22,7 @@ debug level, which is set by calling the setDebugLevel method.  All
 other methods take a debug level, which is compared to the current
 debug level to determine if the content should be output."""
 
+import gtk
 import traceback
 
 # Used to turn off all debugging.
@@ -103,6 +104,13 @@ def setDebugLevel(newLevel):
     println(_debugLevel, "Changing debug level to %d" % newLevel)
     _debugLevel = newLevel
     println(_debugLevel, "Changed debug level to %d" % _debugLevel)
+
+def getDebugLevel():
+    """Gets the debug level.  The various levels can be LEVEL_OFF,
+    LEVEL_SEVERE, LEVEL_WARNING, LEVEL_INFO, LEVEL_CONFIG, LEVEL_FINE,
+    LEVEL_FINER, LEVEL_FINEST, LEVEL_ALL.
+    """
+    return _debugLevel
 
 def setEventDebugLevel(newLevel):
     """Sets the event debug level.  This can be used to override the level
