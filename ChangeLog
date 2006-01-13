@@ -1,3 +1,13 @@
+2005-01-13  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py
+          Adjusted the onFocus() method to handle the following for the
+          mail message header list:
+
+          If the current locus of focus is not a table cell, then we
+          are entering the mail message header list (rather than moving
+          around inside it), so speak the number of mail messages total.
+
 2005-01-13  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca.py, src/orca/debug.py: Add Insert+Ctrl+F5 as

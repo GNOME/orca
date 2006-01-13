@@ -284,6 +284,17 @@ class Script(default.Script):
             savedBrailleVerbosityLevel = \
                 settings.getSetting(settings.BRAILLE_VERBOSITY_LEVEL)
             brailleRegions = []
+
+            # If the current locus of focus is not a table cell, then we
+            # are entering the mail message header list (rather than moving
+            # around inside it), so speak the number of mail messages total.
+
+            if orca.locusOfFocus.role != rolenames.ROLE_TABLE_CELL:
+                message = "There are %d messages in this mail folder" % \
+                    parent.table.nRows
+                brailleRegions.append(braille.Region(message))
+                speech.speak(message)
+
             for i in range(0, parent.table.nColumns):
                 obj = parent.table.getAccessibleAt(row, i)
                 if obj:
