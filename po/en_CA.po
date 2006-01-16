@@ -1,14 +1,14 @@
 # English/Canada translation of orca.
-# Copyright (C) 2004-2005 Adam Weinberger and the GNOME Foundation
+# Copyright (C) 2004-2006 Adam Weinberger and the GNOME Foundation
 # This file is distributed under the same licence as the orca package.
-# Adam Weinberger <adamw@gnome.org>, 2004, 2005.
+# Adam Weinberger <adamw@gnome.org>, 2004, 2005, 2006.
 # 
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-26 17:17-0500\n"
+"POT-Creation-Date: 2006-01-16 00:09-0500\n"
 "PO-Revision-Date: 2005-08-31 14:20-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -149,127 +149,127 @@ msgstr "newline"
 msgid "tab"
 msgstr "tab"
 
-#: ../src/orca/default.py:85
+#: ../src/orca/default.py:86
 msgid "Performs left click on current flat review item."
 msgstr "Performs left click on current flat review item."
 
-#: ../src/orca/default.py:94
+#: ../src/orca/default.py:95
 msgid "Performs right click on current flat review item."
 msgstr "Performs right click on current flat review item."
 
-#: ../src/orca/default.py:103
+#: ../src/orca/default.py:104
 msgid "Speaks entire document."
 msgstr "Speaks entire document."
 
-#: ../src/orca/default.py:112
+#: ../src/orca/default.py:113
 msgid "Performs the where am I operation."
 msgstr "Performs the \"Where Am I\" operation."
 
-#: ../src/orca/default.py:121
+#: ../src/orca/default.py:122
 msgid "Paints and prints the visible zones in the active window."
 msgstr "Paints and prints the visible zones in the active window."
 
-#: ../src/orca/default.py:130
+#: ../src/orca/default.py:131
 msgid "Enters and exits flat review mode."
 msgstr "Enters and exits flat review mode."
 
-#: ../src/orca/default.py:135
+#: ../src/orca/default.py:136
 msgid "Moves flat review to the beginning of the previous line."
 msgstr "Moves flat review to the beginning of the previous line."
 
-#: ../src/orca/default.py:146
+#: ../src/orca/default.py:147
 msgid "Moves flat review to the home position."
 msgstr "Moves flat review to the home position."
 
-#: ../src/orca/default.py:162
+#: ../src/orca/default.py:163
 msgid "Speaks the current flat review line."
 msgstr "Speaks the current flat review line."
 
-#: ../src/orca/default.py:167
+#: ../src/orca/default.py:168
 msgid "Moves flat review to the beginning of the next line."
 msgstr "Moves flat review to the beginning of the next line."
 
-#: ../src/orca/default.py:183
+#: ../src/orca/default.py:184
 msgid "Moves flat review to the end position."
 msgstr "Moves flat review to the end position."
 
-#: ../src/orca/default.py:192
+#: ../src/orca/default.py:193
 msgid "Moves flat review to the previous item or word."
 msgstr "Moves flat review to the previous item or word."
 
-#: ../src/orca/default.py:197
+#: ../src/orca/default.py:198
 msgid "Moves flat review to the word above the current word."
 msgstr "Moves flat review to the word above the current word."
 
-#: ../src/orca/default.py:213
+#: ../src/orca/default.py:214
 msgid "Speaks the current flat review item or word."
 msgstr "Speaks the current flat review item or word."
 
-#: ../src/orca/default.py:222
+#: ../src/orca/default.py:223
 msgid "Speaks the current flat review object."
 msgstr "Speaks the current flat review object."
 
-#: ../src/orca/default.py:231
+#: ../src/orca/default.py:232
 msgid "Moves flat review to the next item or word."
 msgstr "Moves flat review to the next item or word."
 
-#: ../src/orca/default.py:236
+#: ../src/orca/default.py:237
 msgid "Moves flat review to the word below the current word."
 msgstr "Moves flat review to the word below the current word."
 
-#: ../src/orca/default.py:248
+#: ../src/orca/default.py:249
 msgid "Moves flat review to the previous character."
 msgstr "Moves flat review to the previous character."
 
-#: ../src/orca/default.py:264
+#: ../src/orca/default.py:265
 msgid "Moves flat review to the end of the line."
 msgstr "Moves flat review to the end of the line."
 
-#: ../src/orca/default.py:273
+#: ../src/orca/default.py:274
 msgid "Speaks the current flat review character."
 msgstr "Speaks the current flat review character."
 
-#: ../src/orca/default.py:278
+#: ../src/orca/default.py:279
 msgid "Moves flat review to the next character."
 msgstr "Moves flat review to the next character."
 
-#: ../src/orca/default.py:294
+#: ../src/orca/default.py:295
 msgid "Toggles whether to read just the current table cell or the whole row."
 msgstr "Toggles whether to read just the current table cell or the whole row."
 
-#: ../src/orca/default.py:304
+#: ../src/orca/default.py:305
 msgid "Pans the braille display to the left."
 msgstr "Pans the braille display to the left."
 
-#: ../src/orca/default.py:309
+#: ../src/orca/default.py:310
 msgid "Pans the braille display to the right."
 msgstr "Pans the braille display to the right."
 
-#: ../src/orca/default.py:328
+#: ../src/orca/default.py:329
 msgid "Moves flat review to the bottom left."
 msgstr "Moves flat review to the bottom left."
 
-#: ../src/orca/default.py:333
+#: ../src/orca/default.py:334
 msgid "Returns to object with keyboard focus."
 msgstr "Returns to object with keyboard focus."
 
-#: ../src/orca/default.py:511 ../src/orca/default.py:698
+#: ../src/orca/default.py:534 ../src/orca/default.py:721
 #, python-format
 msgid "tree level %d"
 msgstr "tree level %d"
 
-#: ../src/orca/default.py:515 ../src/orca/default.py:702
-#: ../src/orca/default.py:769 ../src/orca/default.py:820
+#: ../src/orca/default.py:538 ../src/orca/default.py:725
+#: ../src/orca/default.py:792 ../src/orca/default.py:843
 msgid "No focus"
 msgstr "No focus"
 
-#: ../src/orca/default.py:1560 ../src/orca/default.py:1654
-#: ../src/orca/default.py:1659 ../src/orca/default.py:1729
-#: ../src/orca/default.py:1734
+#: ../src/orca/default.py:1583 ../src/orca/default.py:1677
+#: ../src/orca/default.py:1682 ../src/orca/default.py:1752
+#: ../src/orca/default.py:1757
 msgid "blank"
 msgstr "blank"
 
-#: ../src/orca/default.py:1562 ../src/orca/default.py:1661
+#: ../src/orca/default.py:1585 ../src/orca/default.py:1684
 msgid "white space"
 msgstr "white space"
 
@@ -281,19 +281,19 @@ msgstr "Emacspeak Speech Services"
 msgid "Switching to focus tracking mode."
 msgstr "Switching to focus tracking mode."
 
-#: ../src/orca/gnomespeechfactory.py:109
+#: ../src/orca/gnomespeechfactory.py:120
 msgid "GNOME Speech Services"
 msgstr "GNOME Speech Services"
 
-#: ../src/orca/gnomespeechfactory.py:471
+#: ../src/orca/gnomespeechfactory.py:498
 msgid " dot dot dot"
 msgstr " dot dot dot"
 
-#: ../src/orca/gnomespeechfactory.py:555
+#: ../src/orca/gnomespeechfactory.py:585
 msgid "faster."
 msgstr "faster."
 
-#: ../src/orca/gnomespeechfactory.py:586
+#: ../src/orca/gnomespeechfactory.py:616
 msgid "slower."
 msgstr "slower."
 
@@ -321,56 +321,56 @@ msgstr "F 12"
 msgid "Creating .orca directory."
 msgstr "Creating .orca directory."
 
-#: ../src/orca/orca-setup.in:120 ../src/orca/orca-setup.in:135
+#: ../src/orca/orca-setup.in:127 ../src/orca/orca-setup.in:142
 msgid "Speech is unavailable."
 msgstr "Speech is unavailable."
 
-#: ../src/orca/orca-setup.in:124
+#: ../src/orca/orca-setup.in:131
 msgid "Welcome to Orca setup."
 msgstr "Welcome to Orca setup."
 
-#: ../src/orca/orca-setup.in:138
+#: ../src/orca/orca-setup.in:145
 msgid "Select desired speech system."
 msgstr "Select desired speech system."
 
-#: ../src/orca/orca-setup.in:143 ../src/orca/orca-setup.in:172
-#: ../src/orca/orca-setup.in:195
+#: ../src/orca/orca-setup.in:150 ../src/orca/orca-setup.in:178
+#: ../src/orca/orca-setup.in:201
 #, c-format
 msgid "%d. %s"
 msgstr "%d. %s"
 
-#: ../src/orca/orca-setup.in:146 ../src/orca/orca-setup.in:175
-#: ../src/orca/orca-setup.in:198
+#: ../src/orca/orca-setup.in:153 ../src/orca/orca-setup.in:181
+#: ../src/orca/orca-setup.in:204
 msgid "Enter choice: "
 msgstr "Enter choice: "
 
-#: ../src/orca/orca-setup.in:148 ../src/orca/orca-setup.in:165
-#: ../src/orca/orca-setup.in:177 ../src/orca/orca-setup.in:186
-#: ../src/orca/orca-setup.in:200
+#: ../src/orca/orca-setup.in:155 ../src/orca/orca-setup.in:171
+#: ../src/orca/orca-setup.in:183 ../src/orca/orca-setup.in:192
+#: ../src/orca/orca-setup.in:206
 msgid "Speech will not be used.\n"
 msgstr "Speech will not be used.\n"
 
-#: ../src/orca/orca-setup.in:164
+#: ../src/orca/orca-setup.in:170
 msgid "No servers available.\n"
 msgstr "No servers available.\n"
 
-#: ../src/orca/orca-setup.in:168
+#: ../src/orca/orca-setup.in:174
 msgid "Select desired speech server."
 msgstr "Select desired speech server."
 
-#: ../src/orca/orca-setup.in:185
+#: ../src/orca/orca-setup.in:191
 msgid "No voices available.\n"
 msgstr "No voices available.\n"
 
-#: ../src/orca/orca-setup.in:189
+#: ../src/orca/orca-setup.in:195
 msgid "Select desired voice."
 msgstr "Select desired voice."
 
-#: ../src/orca/orca-setup.in:226
+#: ../src/orca/orca-setup.in:232
 msgid "Use key echo?  Enter y or n: "
 msgstr "Use key echo?  Enter y or n: "
 
-#: ../src/orca/orca-setup.in:252
+#: ../src/orca/orca-setup.in:257
 msgid "Braille support appears to work, use it?  Enter y or n. "
 msgstr "Braille support appears to work.  Use it?  Enter y or n. "
 
@@ -378,43 +378,55 @@ msgstr "Braille support appears to work.  Use it?  Enter y or n. "
 msgid "User logged out - shutting down."
 msgstr "User logged out - shutting down."
 
-#: ../src/orca/orca.py:447
+#: ../src/orca/orca.py:411
+msgid "Debug level all."
+msgstr "Debug level all."
+
+#: ../src/orca/orca.py:413
+msgid "Debug level finest."
+msgstr "Debug level finest."
+
+#: ../src/orca/orca.py:415
+msgid "Debug level finer."
+msgstr "Debug level finer."
+
+#: ../src/orca/orca.py:503
 msgid "Entering learn mode.  Press any key to hear its function. "
 msgstr "Entering learn mode.  Press any key to hear its function. "
 
-#: ../src/orca/orca.py:448
+#: ../src/orca/orca.py:504
 msgid "To exit learn mode, press the escape key."
 msgstr "To exit learn mode, press the escape key."
 
-#: ../src/orca/orca.py:449
+#: ../src/orca/orca.py:505
 msgid "Learn mode.  Press escape to exit."
 msgstr "Learn mode.  Press escape to exit."
 
-#: ../src/orca/orca.py:459 ../src/orca/orca.py:460
+#: ../src/orca/orca.py:515 ../src/orca/orca.py:516
 msgid "Exiting learn mode."
 msgstr "Exiting learn mode."
 
-#: ../src/orca/orca.py:749
+#: ../src/orca/orca.py:805
 msgid "Enters learn mode.  Press escape to exit learn mode."
 msgstr "Enters learn mode.  Press escape to exit learn mode."
 
-#: ../src/orca/orca.py:757
+#: ../src/orca/orca.py:813
 msgid "Decreases the speech rate."
 msgstr "Decreases the speech rate."
 
-#: ../src/orca/orca.py:765
+#: ../src/orca/orca.py:821
 msgid "Increases the speech rate."
 msgstr "Increases the speech rate."
 
-#: ../src/orca/orca.py:771
+#: ../src/orca/orca.py:827
 msgid "Quits Orca"
 msgstr "Quits Orca"
 
-#: ../src/orca/orca.py:783
+#: ../src/orca/orca.py:839
 msgid "Toggles keystroke recording on and off."
 msgstr "Toggles keystroke recording on and off."
 
-#: ../src/orca/orca.py:791
+#: ../src/orca/orca.py:847
 msgid ""
 "Prints a debug listing of all known applications to the console where Orca "
 "is running."
@@ -422,7 +434,11 @@ msgstr ""
 "Prints a debug listing of all known applications to the console where Orca "
 "is running."
 
-#: ../src/orca/orca.py:799
+#: ../src/orca/orca.py:856
+msgid "Cycles the debug level at run time."
+msgstr "Cycles the debug level at run time."
+
+#: ../src/orca/orca.py:865
 msgid ""
 "Prints debug information about the currently active application to the "
 "console where Orca is running."
@@ -430,27 +446,27 @@ msgstr ""
 "Prints debug information about the currently active application to the "
 "console where Orca is running."
 
-#: ../src/orca/orca.py:807
+#: ../src/orca/orca.py:873
 msgid "Prints debug information about the ancestry of the object with focus"
 msgstr "Prints debug information about the ancestry of the object with focus"
 
-#: ../src/orca/orca.py:816
+#: ../src/orca/orca.py:882
 msgid "Prints debug information about the application with focus"
 msgstr "Prints debug information about the application with focus"
 
-#: ../src/orca/orca.py:826
+#: ../src/orca/orca.py:892
 msgid "Switches to the next presentation manager."
 msgstr "Switches to the next presentation manager."
 
-#: ../src/orca/orca.py:885 ../src/orca/orca.py:886
+#: ../src/orca/orca.py:951 ../src/orca/orca.py:952
 msgid "Welcome to Orca."
 msgstr "Welcome to Orca."
 
-#: ../src/orca/orca.py:914
+#: ../src/orca/orca.py:980
 msgid "goodbye."
 msgstr "goodbye."
 
-#: ../src/orca/orca.py:915
+#: ../src/orca/orca.py:981
 msgid "Goodbye."
 msgstr "Goodbye."
 
