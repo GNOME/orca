@@ -24,6 +24,7 @@ time.
 
 import orca.atspi as atspi
 import orca.braille as braille
+import orca.debug as debug
 import orca.default as default
 import orca.orca as orca
 import orca.rolenames as rolenames
@@ -94,6 +95,9 @@ class Script(default.Script):
                 # "\n".  This is related to bug
                 # http://bugzilla.gnome.org/show_bug.cgi?id=325917]]]
                 #
+                debug.println(debug.LEVEL_WARNING,
+                              "WARNING in gaim.py: "
+                              + "the text area has not regained focus")
                 orca.setLocusOfFocus(event, event.source, False)
                 return default.Script.onTextInserted(self, event)
         else:
