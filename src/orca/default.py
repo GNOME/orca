@@ -347,6 +347,9 @@ class Script(script.Script):
         self.listeners["object:property-change:accessible-name"] = \
             self.onNameChanged
 
+        self.listeners["mouse:button"]                           = \
+            self.onMouseButton
+
         self.listeners["object:text-caret-moved"]                = \
             self.onCaretMoved
         self.listeners["object:text-changed:delete"]             = \
@@ -950,6 +953,14 @@ class Script(script.Script):
 
         orca.visualAppearanceChanged(event, event.source)
 
+    def onMouseButton(self, event):
+        """Called whenever a mouse button is pressed or released.
+
+        Arguments:
+        - event: the Event
+        """
+        orca.lastInputEvent = input_event.MouseButtonEvent(event)
+        
     def _presentTextAtNewCaretPosition(self, event):
         # Magnify the object.  [[[TODO: WDW - this is a hack for now.]]]
         #
@@ -971,17 +982,25 @@ class Script(script.Script):
         if brailleNeedsRepainting:
             self.updateBraille(event.source)
 
-        if (not orca.lastInputEvent) \
-            or \
-            (not isinstance(orca.lastInputEvent, input_event.KeyboardEvent)):
+        print orca.lastInputEvent
+        
+        if not orca.lastInputEvent:
             return
-
+        
+        if isinstance(orca.lastInputEvent, input_event.MouseButtonEvent):
+            if not orca.lastInputEvent.pressed:
+                sayLine(event.source)
+            return
+            
         # Guess why the caret moved and say something appropriate.
         # [[[TODO: WDW - this motion assumes traditional GUI
         # navigation gestures.  In an editor such as vi, line up and
         # down is done via other actions such as "i" or "j".  We may
         # need to think about this a little harder.]]]
-        #
+        #            
+        if not isinstance(orca.lastInputEvent, input_event.KeyboardEvent):
+            return
+        
         string = orca.lastInputEvent.event_string
         mods = orca.lastInputEvent.modifiers
         controlMask = 1 << atspi.Accessibility.MODIFIER_CONTROL

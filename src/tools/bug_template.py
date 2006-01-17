@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005 Sun Microsystems Inc.
+# Copyright 2005-2006 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -317,13 +317,13 @@ def printAncestry(child):
    objects = [child]
    parent = child.parent
    while parent and (parent.parent != parent):
-      objects.insert(0, parent)
-      parent = parent.parent
+       objects.insert(0, parent)
+       parent = parent.parent
 
    indent = ""
    for object in objects:
-      print indent + "+-" + getAccessibleString(object)
-      indent += "  "
+       print indent + "+-" + getAccessibleString(object)
+       indent += "  "
 
 def printHierarchy(root,
                    ooi=None,
@@ -344,9 +344,9 @@ def printHierarchy(root,
         return
 
     if root == ooi:
-       print indent + "(*)" + getAccessibleString(root)
+        print indent + "(*)" + getAccessibleString(root)
     else:
-       print indent + "+-" + getAccessibleString(root)
+        print indent + "+-" + getAccessibleString(root)
        
     s = root.getState()
     s = s._narrow(Accessibility.StateSet)

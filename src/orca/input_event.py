@@ -79,10 +79,14 @@ class BrailleEvent(InputEvent):
 class MouseButtonEvent(InputEvent):
 
     def __init__(self, event):
-        """[[[TODO: WDW - undefined at the moment.]]]
+        """Creates a new InputEvent of type MOUSE_BUTTON_EVENT.
         """
         InputEvent.__init__(self, MOUSE_BUTTON_EVENT)
-        self.event = event
+        self.x = event.detail1
+        self.y = event.detail2
+        self.pressed = event.type.endswith('p')
+        self.button = event.type[len("mouse:button:"):-1]
+        self.time = time.time()
 
 class MouseMotionEvent(InputEvent):
 
