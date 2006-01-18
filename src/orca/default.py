@@ -982,8 +982,6 @@ class Script(script.Script):
         if brailleNeedsRepainting:
             self.updateBraille(event.source)
 
-        print orca.lastInputEvent
-        
         if not orca.lastInputEvent:
             return
         
