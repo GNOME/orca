@@ -381,13 +381,13 @@ class SpeechGenerator:
         Returns a list of utterances to be spoken for the object.
         """
 
-        utterances = self._getSpeechForCheckBox(obj, False)
+        utterances = self._getSpeechForCheckBox(obj, already_focused)
 
         verbosity = settings.getSetting(settings.SPEECH_VERBOSITY_LEVEL,
                                         settings.VERBOSITY_LEVEL_VERBOSE)
 
-        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
-            utterances.extend(self._getSpeechForAvailability(obj))
+        if (verbosity == settings.VERBOSITY_LEVEL_VERBOSE) \
+           and not already_focused:
             utterances.extend(self._getSpeechForAccelerator(obj))
 
         self._debugGenerator("_getSpeechForCheckMenuItem",

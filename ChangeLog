@@ -1,5 +1,7 @@
-2005-01-17  Willie Walker <william.walker@sun.com>
+2005-01-18  Willie Walker <william.walker@sun.com>
 
+	* src/orca/default.py, src/orca/speechgenerator.py: fix for
+	bug 327568 - treat check menu items similar to check boxes.
 	* bugs/bug_322903.py, bugs/bug_322903.html, bugs/bugs.html,
 	src/orca/scripts/Mozilla.py: test case for showing how text can
 	get jumbled as user types in a text area.  The ultimate cause

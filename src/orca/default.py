@@ -2043,6 +2043,8 @@ def sayCharacter(obj):
 #
 state_change_notifiers = {}
 
+state_change_notifiers[rolenames.ROLE_CHECK_MENU_ITEM] = ("checked",
+                                                        None)
 state_change_notifiers[rolenames.ROLE_CHECK_BOX]     = ("checked",
                                                         None)
 state_change_notifiers[rolenames.ROLE_PANEL]         = ("showing",
