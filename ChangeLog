@@ -1,5 +1,13 @@
 2005-01-17  Willie Walker <william.walker@sun.com>
 
+	* bugs/bug_322903.py, bugs/bug_322903.html, bugs/bugs.html,
+	src/orca/scripts/Mozilla.py: test case for showing how text can
+	get jumbled as user types in a text area.  The ultimate cause
+	of this is that getTextAtOffset seems to position the caret at
+	the starting offset that is passed into the call to getTextAtOffset.
+	
+2005-01-17  Willie Walker <william.walker@sun.com>
+
 	* src/orca/scripts/gaim.py: alternative logic to address bug 325917.
 	I think the ultimate culprit may be the toolkit, but I think this 
 	workaround should hopefully work in the presence and/or absence of

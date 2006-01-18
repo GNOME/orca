@@ -204,6 +204,24 @@ class Script(default.Script):
         self.__textComponentOfInterest = event.source
         self._presentTextAtNewCaretPosition(event)
 
+    def onTextDeleted(self, event):
+        """Called whenever text is deleted from an object.
+
+        Arguments:
+        - event: the Event
+        """
+        print "Mozilla.onTextDeleted:", event.type, event.source.toString()
+        default.Script.onTextDeleted(self, event)
+
+    def onTextInserted(self, event):
+        """Called whenever text is inserted into an object.
+
+        Arguments:
+        - event: the Event
+        """
+        print "Mozilla.onTextInserted:", event.type, event.source.toString()
+        default.Script.onTextInserted(self, event)
+
     def onStateChanged(self, event):
         print "Mozilla.onStateChanged:", event.type, event.source.toString()
         default.Script.onStateChanged(self, event)
