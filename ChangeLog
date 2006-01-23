@@ -1,3 +1,8 @@
+2006-01-23  Rich Burridge <rich.burridge@sun.com>
+
+        * bugs/bugs.html
+          Updated entry for bug #326649. Fix is in CVS HEAD.
+
 2005-01-18  Willie Walker <william.walker@sun.com>
 
 	* src/orca/default.py, src/orca/speechgenerator.py: fix for
