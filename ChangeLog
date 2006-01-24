@@ -1,3 +1,10 @@
+2005-01-24  Willie Walker <william.walker@sun.com>
+
+	* src/orca/focus_tracking_presenter.py: be a bit more vocal
+	when importing a script with syntax errors
+	* src/orca/atspi.py: handle both AT-SPI 1.7.0+ and pre-1.7.0
+	event "any_data" handling.
+	
 2006-01-23  Rich Burridge <rich.burridge@sun.com>
 
         * bugs/bugs.html
