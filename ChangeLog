@@ -1,3 +1,9 @@
+2006-01-24  Rich Burridge <rich.burridge@sun.com>
+
+        * bugs/bugs.html
+          Added a new bug #328493
+          Broken component hierarchy in compose window message area.
+
 2005-01-24  Willie Walker <william.walker@sun.com>
 
 	* src/orca/focus_tracking_presenter.py: be a bit more vocal
