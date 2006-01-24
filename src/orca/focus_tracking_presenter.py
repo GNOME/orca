@@ -147,24 +147,25 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
 
             moduleName = settings.getScriptModuleName(app)
             module = None
-            
-            for package in scriptPackages:
-                if len(package):
-                    name = package + "." + moduleName
-                else:
-                    name = moduleName
 
-                try:
-                    module = __import__(name,
-                                        globals(),
-                                        locals(),
-                                        [''])
-                    break
-                except ImportError:
-                    debug.printException(debug.LEVEL_FINEST)
-                except:
-                    debug.printException(debug.LEVEL_SEVERE)
-                    
+            if moduleName and len(moduleName):
+                for package in scriptPackages:
+                    if len(package):
+                        name = package + "." + moduleName
+                    else:
+                        name = moduleName
+                    try:
+                        module = __import__(name,
+                                            globals(),
+                                            locals(),
+                                            [''])
+                        break
+                    except ImportError:
+                        debug.printException(debug.LEVEL_FINEST)
+                    except:
+                        debug.printException(debug.LEVEL_SEVERE)
+                        debug.println(debug.LEVEL_SEVERE,
+                                      "While attempting to import '%s'" % name)
             if module:
                 try:
                     script = module.Script(app)
