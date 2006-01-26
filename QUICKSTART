@@ -97,6 +97,25 @@ III. ORCA ON UBUNTU 5.10:
 
 3) Checkout/build/install ATK, GAIL, LIBGAIL-GNOME, AT-SPI
 
+   NOTE: The instructions below involve working from GNOME CVS HEAD.
+   This can be a very risky thing to do since GNOME CVS HEAD might
+   be unstable and can cause your system to become unstable.  If
+   you are willing to take the risk (it might require you to reinstall
+   your system), then feel free to be adventurous.  If you are not
+   excited about taking this risk, then you might be better off trying
+   to grab supported packages via: 
+
+      sudo apt-get install libatk* libgail* at-spi* libatspi*
+
+   The versions known to work with Orca on Ubuntu are:
+
+      atk		1.10.3
+      gail		1.8.5
+      libgail-gnome	1.1.1
+      at-spi		1.6.6
+
+   Here's how to get the latest from GNOME CVS HEAD:
+
    cd $HOME
    cvs -z3 -d:pserver:anonymous@anoncvs.gnome.org:/cvs/gnome co atk
    cd atk
@@ -341,6 +360,14 @@ A: The java-access-bridge provides the needed support for interacting
    More information on the java-access-bridge can be found here:
    http://cvs.gnome.org/viewcvs/*checkout*/java-access-bridge/INSTALL
 
+
+Q: Speech disappeared on me.  What's happening?
+
+A: There may be device contention between your speech synthesis system
+   and the sounds emitted by your base OS.  Unfortunately, we're not
+   sure how to get both working well right now (rumor has it that there
+   may be some fixes to the Linux sound architecture, ALSA, to fix this).
+   For now, you will need to disable system sounds.
 
 IX. REPORTING BUGS:
 -------------------

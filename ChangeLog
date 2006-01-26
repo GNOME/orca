@@ -1,3 +1,8 @@
+2005-01-26  Willie Walker <william.walker@sun.com>
+
+	* QUICKSTART: update Ubuntu notes for how to get older/supported
+	releases of AT-SPI infrastructure.
+	
 2006-01-26  Rich Burridge <rich.burridge@sun.com>
 
         * bugs/bugs.html
