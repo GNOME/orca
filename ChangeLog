@@ -1,3 +1,9 @@
+2006-01-26  Rich Burridge <rich.burridge@sun.com>
+
+        * bugs/bugs.html
+          Changed bug #324002 to now be an entry for bug #318973.
+          Updated the notes section for that bug.
+
 2006-01-25  Rich Burridge <rich.burridge@sun.com>
 
         * bugs/bugs.html bugs/bug_326725.py
