@@ -1,3 +1,8 @@
+2005-01-27  Willie Walker <william.walker@sun.com>
+
+	* src/orca/atspi.py: more work resulting from incompatible
+	event data structure change in AT-SPI 1.7.0.
+	
 2005-01-26  Willie Walker <william.walker@sun.com>
 
 	* QUICKSTART: update Ubuntu notes for how to get older/supported
