@@ -39,45 +39,52 @@ import rolenames
 CACHE_VALUES = True
 
 class Event:
-   """Converts the source of an event to an Accessible object.  We
-   need this since the event object we get from the atspi is
-   read-only.  So, we create this dummy event object to contain a copy
-   of all the event members with the source converted to an
-   Accessible.  It is perfectly OK for event handlers to annotate this
-   object with their own attributes.
-   """
-   
-   def __init__(self, e=None):
-       if e:
-           self.source   = Accessible.makeAccessible(e.source)
-           self.type     = e.type
-           self.detail1  = e.detail1
-           self.detail2  = e.detail2
+    """Converts the source of an event to an Accessible object.  We
+    need this since the event object we get from the atspi is
+    read-only.  So, we create this dummy event object to contain a copy
+    of all the event members with the source converted to an
+    Accessible.  It is perfectly OK for event handlers to annotate this
+    object with their own attributes.
+    """
 
-           # [[[TODO: WDW - HACK because AT-SPI 1.7.0 has introduced a
-           # binary incompatibility where the "any_data" of the event
-           # has changed from being a real "any_data" to an EventDetails
-           # structure that holds "any_data."  This check here helps us
-           # deal with the case where we might be talking to a pre-1.7.0
-           # implementation or a 1.7.0+ implementation.  What we're doing
-           # is just checking the CORBA typecode (as a string) to see
-           # if the type of the "any_data" field is this new structure.
-           # If it is, we pull the "any_data" field from it.  If it isn't,
-           # we get the "any_data" field as we normally would.]]]
-           #
-           if e.any_data:
-              if e.any_data.typecode().name == "EventDetails":
-                 self.any_data = e.any_data.value().any_data
-              else:
-                 self.any_data = e.any_data
-           else:
-              self.any_data = None        
-       else:
-           self.source   = None
-           self.type     = None
-           self.detail1  = None
-           self.detail2  = None
-           self.any_data = None
+    def getAnyData(e):
+        """Returns the any_data field, compensating for any
+        differences between pre-1.7.0 and post-1.7.0 implementations
+        of the AT-SPI."""
+        
+        # [[[TODO: WDW - HACK because AT-SPI 1.7.0 has
+        # introduced a binary incompatibility where the
+        # "any_data" of the event has changed from being a
+        # real "any_data" to an EventDetails structure that
+        # holds "any_data."  This check here helps us deal
+        # with the case where we might be talking to a
+        # pre-1.7.0 implementation or a 1.7.0+ implementation.
+        # What we're doing is just checking the CORBA typecode
+        # (as a string) to see if the type of the "any_data"
+        # field is this new structure.  If it is, we pull the
+        # "any_data" field from it.  If it isn't, we get the
+        # "any_data" field as we normally would.]]]
+        #
+        if e.any_data and (e.any_data.typecode().name) == "EventDetails":
+            return e.any_data.value().any_data
+        else:
+            return e.any_data
+       
+    getAnyData = staticmethod(getAnyData)
+
+    def __init__(self, e=None):
+        if e:
+            self.source   = Accessible.makeAccessible(e.source)
+            self.type     = e.type
+            self.detail1  = e.detail1
+            self.detail2  = e.detail2
+            self.any_data = self.getAnyData(e)
+        else:
+            self.source   = None
+            self.type     = None
+            self.detail1  = None
+            self.detail2  = None
+            self.any_data = None
 
 class Registry:
     """Delegates to the actual AT-SPI Regisitry.
@@ -378,7 +385,7 @@ class Accessible:
         if Accessible._cache.has_key(e.source):
             obj = Accessible._cache[e.source]
             if CACHE_VALUES:
-                obj.name = e.any_data.value()
+                obj.name = Event.getAnyData(e).value()
             try:
                 del obj.label
             except:
@@ -398,7 +405,7 @@ class Accessible:
         if Accessible._cache.has_key(e.source):
             obj = Accessible._cache[e.source]
             if CACHE_VALUES:
-                obj.description = e.any_data.value()
+                obj.description = Event.getAnyData(e).value()
             try:
                 del obj.label
             except:
