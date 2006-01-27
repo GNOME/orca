@@ -386,11 +386,8 @@ class Accessible:
             obj = Accessible._cache[e.source]
             if CACHE_VALUES:
                 obj.name = Event.getAnyData(e).value()
-            try:
+            if obj.__dict__.has_key("label"):
                 del obj.label
-            except:
-                debug.printException(debug.LEVEL_FINEST)
-                pass
 
     _onNameChanged = staticmethod(_onNameChanged)
 
@@ -406,11 +403,8 @@ class Accessible:
             obj = Accessible._cache[e.source]
             if CACHE_VALUES:
                 obj.description = Event.getAnyData(e).value()
-            try:
+            if obj.__dict__.has_key("label"):
                 del obj.label
-            except:
-                debug.printException(debug.LEVEL_FINEST)
-                pass
 
     _onDescriptionChanged = staticmethod(_onDescriptionChanged)
 
@@ -1154,7 +1148,7 @@ class Accessible:
                 string = indent + "app.name=%-20s " \
                          % self.app.accessibleNameToString()
 	    else:
-                string = indent + "app=None"
+                string = indent + "app=None "
         else:
             string = indent
 

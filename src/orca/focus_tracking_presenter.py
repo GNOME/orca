@@ -155,17 +155,22 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                     else:
                         name = moduleName
                     try:
+                        debug.println(debug.LEVEL_FINEST,
+                                      "Looking for script at %s.py..." % name)
                         module = __import__(name,
                                             globals(),
                                             locals(),
                                             [''])
+                        debug.println(debug.LEVEL_FINEST,
+                                      "...found %s.py" % name)
                         break
                     except ImportError:
-                        debug.printException(debug.LEVEL_FINEST)
+                        debug.println(debug.LEVEL_FINEST,
+                                      "...could not find %s.py" % name)
                     except:
                         debug.printException(debug.LEVEL_SEVERE)
                         debug.println(debug.LEVEL_SEVERE,
-                                      "While attempting to import '%s'" % name)
+                                      "While attempting to import %s" % name)
             if module:
                 try:
                     script = module.Script(app)

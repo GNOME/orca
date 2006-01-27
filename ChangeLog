@@ -2,6 +2,9 @@
 
 	* src/orca/atspi.py: more work resulting from incompatible
 	event data structure change in AT-SPI 1.7.0.
+	* src/orca/atspi.py, src/orca/focus_tracking_presenter.py: 
+	change some ominous looking Traceback messages to what they
+	really are: just information regarding normal behavior.
 	
 2005-01-26  Willie Walker <william.walker@sun.com>
 
