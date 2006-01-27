@@ -1,5 +1,7 @@
 2005-01-27  Willie Walker <william.walker@sun.com>
 
+	* src/orca/atspi.py: prevent infinite loop if obj.parent == parent.
+	(This case is an AT-SPI bug, but we need to watch for it).
 	* bugs/bugs.html: update to reflect bug entry information provided
 	to us by external development teams.
 	* src/orca/atspi.py: more work resulting from incompatible
