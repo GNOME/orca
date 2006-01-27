@@ -809,7 +809,7 @@ class Accessible:
                       "Finding app for source.name=" \
 	              + self.accessibleNameToString())
         obj = self
-        while obj.parent:
+        while obj.parent and (obj != obj.parent):
             obj = obj.parent
             debug.println(debug.LEVEL_FINEST,
                           "--> parent.name=" + obj.accessibleNameToString())
