@@ -1,8 +1,13 @@
 <html>
-<p>Enter a Firefox bug here: <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox">https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox</a> Make sure you add the browser-china-atf@sun.com alias to the CC list.  Add "access,sec508" as keywords, also make sure to set the severity to "Blocker" if it prevents us from doing work.</p>
 
-<p>Enter a GNOME bug here: <a href="http://bugzilla.gnome.org/enter_bug.cgi">http://bugzilla.gnome.org/enter_bug.cgi</a></p>
-<p>Enter an OpenOffice bug here: TBD.</p>
+<h1>Orca Bug Dependency List</h1>
+
+<p>This page contains a list of bugs filed against external components 
+and applications.  This allows us to better track which releases of
+external components that Orca will work with and also the behavior
+one might experience in the presence of the bug.</p>
+
+<h1>Bug List</h1>
 
 <table border=1>
 
@@ -288,4 +293,52 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
   </tr>
 
 </table>
+
+<h1>Filing Bugs</h1>
+
+<p>The following sections provide information on where to file bugs
+and any additional information, such as keywords and CC lists that you
+should add to the bug report.  If you do file a bug, please make sure 
+you update the table above.</p>
+
+<h2>Firefox:</h2>
+  <ul>
+      <li>URL: <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox">https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox</a></li>
+      <li>CC:  browser-china-atf@sun.com</li>
+      <li>Keywords: Always add "access", and add "sec508" if it
+      relates to any of the 12 items
+      in <a href="http://www.va.gov/accessible/va508eval/119421.html">Section
+      508</a> or if it prevents the application from being used at
+      all.</li>
+  </ul>
+</p>
+
+<h2>Evolution:</h2>
+  <ul>
+      <li>URL: <a href="http://bugzilla.gnome.org/enter_bug.cgi">http://bugzilla.gnome.org/enter_bug.cgi</a></li>
+      <li>CC: sceri-evolution-acc@Sun.COM, gnome-access-bugs@basso.sfbay.sun.com</li>
+      <li>Keywords: "accessibility"
+  </ul>
+
+<h2>GNOME/GTK+-2.0:</h2>
+  <ul>
+      <li>URL: <a href="http://bugzilla.gnome.org/enter_bug.cgi">http://bugzilla.gnome.org/enter_bug.cgi</a></li>
+      <li>CC: sceri-evolution-acc@Sun.COM, gnome-access-bugs@basso.sfbay.sun.com</li>
+      <li>Keywords: "accessibility"
+      <li>NOTE: ATK is the application side of things, GAIL provides
+      the ATK implementation for GTK, AT-SPI is the assistive
+      technology side of things and also provides the atk-bridge and
+      AT-SPI registry.  When entering a bug, give some thought into
+      where the bug might lie.</li>
+  </ul>
+</p>
+
+<h2>OpenOffice:</h2>
+  <ul>
+      <li>URL: <a href="http://bugzilla.gnome.org/enter_bug.cgi">http://bugzilla.gnome.org/enter_bug.cgi</a></li>
+      <li>CC: TBD.
+      <li>Keywords: "accessibility"
+  </ul>
+</p>
+
 </html>
