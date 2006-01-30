@@ -1,3 +1,8 @@
+2006-01-30  Rich Burridge <rich.burridge@sun.com>
+
+        * bugs/bugs.html
+          Added entries for Evolution bugs 329269 and 329270.
+
 2006-01-27  Willie Walker <william.walker@sun.com>
 
 	* src/orca/bugs/bugs.html: Add gail infinite recursion bug 329230.
