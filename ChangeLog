@@ -1,4 +1,9 @@
-2005-01-27  Willie Walker <william.walker@sun.com>
+2006-01-27  Willie Walker <william.walker@sun.com>
+
+	* src/orca/bugs/bugs.html: Add gail infinite recursion bug 329230.
+	* ChangeLog: fix 2006/2005 typos.  :-)
+	
+2006-01-27  Willie Walker <william.walker@sun.com>
 
 	* src/orca/atspi.py: prevent infinite loop if obj.parent == parent.
 	(This case is an AT-SPI bug, but we need to watch for it).
@@ -10,7 +15,7 @@
 	change some ominous looking Traceback messages to what they
 	really are: just information regarding normal behavior.
 	
-2005-01-26  Willie Walker <william.walker@sun.com>
+2006-01-26  Willie Walker <william.walker@sun.com>
 
 	* QUICKSTART: update Ubuntu notes for how to get older/supported
 	releases of AT-SPI infrastructure.
@@ -43,7 +48,7 @@
           Added a new bug #328493
           Broken component hierarchy in compose window message area.
 
-2005-01-24  Willie Walker <william.walker@sun.com>
+2006-01-24  Willie Walker <william.walker@sun.com>
 
 	* src/orca/focus_tracking_presenter.py: be a bit more vocal
 	when importing a script with syntax errors
@@ -55,7 +60,7 @@
         * bugs/bugs.html
           Updated entry for bug #326649. Fix is in CVS HEAD.
 
-2005-01-18  Willie Walker <william.walker@sun.com>
+2006-01-18  Willie Walker <william.walker@sun.com>
 
 	* src/orca/default.py, src/orca/speechgenerator.py: fix for
 	bug 327568 - treat check menu items similar to check boxes.
@@ -65,7 +70,7 @@
 	of this is that getTextAtOffset seems to position the caret at
 	the starting offset that is passed into the call to getTextAtOffset.
 	
-2005-01-17  Willie Walker <william.walker@sun.com>
+2006-01-17  Willie Walker <william.walker@sun.com>
 
 	* src/orca/scripts/gaim.py: alternative logic to address bug 325917.
 	I think the ultimate culprit may be the toolkit, but I think this 
@@ -79,7 +84,7 @@
 	* src/orca/settings.py: add another alias for Firefox ("Deer
 	Park") to manage unreleased versions of Firefox.
 	
-2005-01-13  Rich Burridge <rich.burridge@sun.com>
+2006-01-13  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py
           Adjusted the onFocus() method to handle the following for the
@@ -89,7 +94,7 @@
           are entering the mail message header list (rather than moving
           around inside it), so speak the number of mail messages total.
 
-2005-01-13  Willie Walker <william.walker@sun.com>
+2006-01-13  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca.py, src/orca/debug.py: Add Insert+Ctrl+F5 as
 	a means to cycle the debug level.  I originally started making
@@ -98,7 +103,7 @@
 	a simple cycle (press Insert+Ctrl+F5 repeatedly to cycle through
 	the possible debug level values).
 	
-2005-01-12  Rich Burridge <rich.burridge@sun.com>
+2006-01-12  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py
           Tightened up the code in case "3)" in the onFocus() method.
@@ -106,12 +111,12 @@
           row in the mail message header table were None. This is now 
           specifically tested for, and if found, that table cell is skipped.
 
-2005-01-11  Rich Burridge <rich.burridge@sun.com>
+2006-01-11  Rich Burridge <rich.burridge@sun.com>
 
         * bugs/bugs.html
           Added in Evolution bug #326649.
 
-2005-01-11  Rich Burridge <rich.burridge@sun.com>
+2006-01-11  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py
           Added in code to the the onFocus() method to handle:
