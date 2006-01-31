@@ -1,3 +1,11 @@
+2006-01-31  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py
+          Adjusted section 3) in the onFocus() method (reading mail message
+          header summary items). It now checks if the current table cell 
+          is a check box. If it is, then to reduce verbosity, it only speaks
+          and brailles it, if it's checked.
+
 2006-01-30  Rich Burridge <rich.burridge@sun.com>
 
         * bugs/bugs.html

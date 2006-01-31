@@ -129,6 +129,29 @@ class Script(default.Script):
         braille.displayRegions(brailleRegions)
 
 
+    def readTableCell(self, cell, speechGen, 
+                      brailleGen, brailleRegions, verbose):
+        """Speak/Braille the given message header list table cell.
+
+        Arguments:
+        - cell: the table cell to speak/braille.
+        - speechGen: the speech generator to use to speak this cell
+        - brailleGen: the braille generator to use to add the braille
+        - brailleRegions: list of braille regions to extend
+        - verbose: whether the braille display for this cell should be verbose
+        """
+
+        utterances = speechGen.getSpeech(cell, False)
+        if verbose:
+            settings.brailleVerbosityLevel = settings.VERBOSITY_LEVEL_VERBOSE
+        else:
+            settings.brailleVerbosityLevel = settings.VERBOSITY_LEVEL_BRIEF
+        [cellRegions, focusedRegion] = \
+            brailleGen.getBrailleRegions(cell)
+        brailleRegions.extend(cellRegions)
+        speech.speakUtterances(utterances)
+
+
     def getTimeForCalRow(self, row, noIncs):
         """Return a string equivalent to the time of the given row in
            the calendar day view. Each calendar row is equivalent to
@@ -266,8 +289,8 @@ class Script(default.Script):
         #
         # Check if the focus is in the message header list, and we want to 
         # speak all of the tables cells in the current highlighted message.
-        # The role is only brailled for the table cell that currently has
-        # focus.
+        # The role is only spoken/brailled for the table cell that currently 
+        # has focus.
         #
         # Note that the Evolution user can adjust which colums appear in 
         # the message list and the order in which they appear, so that 
@@ -299,17 +322,26 @@ class Script(default.Script):
                 obj = parent.table.getAccessibleAt(row, i)
                 if obj:
                     cell = atspi.Accessible.makeAccessible(obj)
-                    utterances = speechGen.getSpeech(cell, False)
-                    if cell.index == event.source.index:
-                        settings.brailleVerbosityLevel = \
-                            settings.VERBOSITY_LEVEL_VERBOSE
-                    else:
-                        settings.brailleVerbosityLevel = \
-                            settings.VERBOSITY_LEVEL_BRIEF
-                    [cellRegions, focusedRegion] = \
-                        brailleGen.getBrailleRegions(cell)
-                    brailleRegions.extend(cellRegions)
-                    speech.speakUtterances(utterances)
+                    verbose = (cell.index == event.source.index)
+
+                    # Check if the current table cell is a check box. If it
+                    # is, then to reduce verbosity, only speak and braille it,
+                    # if it's checked.
+
+                    toRead = True
+                    action = cell.action
+                    if action:
+                        for j in range(0, action.nActions):
+                            if action.getName(j) == "toggle":
+                                checked = cell.state.count( \
+                                    atspi.Accessibility.STATE_CHECKED)
+                                if not checked:
+                                    toRead = False
+                                break
+
+                    if toRead:
+                        self.readTableCell(cell, speechGen, brailleGen, 
+                                           brailleRegions, verbose)
 
             if brailleRegions != []:
                 braille.displayRegions(brailleRegions)
