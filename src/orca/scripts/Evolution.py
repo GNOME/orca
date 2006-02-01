@@ -192,6 +192,7 @@ class Script(default.Script):
     # 4) Calendar view: day view: tabbing to day with appts.
     # 5) Calendar view: day view: moving with arrow keys.
     # 6) Preferences Dialog: options list.
+    # 7) Mail view: insert attachment dialog: unlabelled arrow button.
 
     def onFocus(self, event):
         """Called whenever an object gets focus.
@@ -489,7 +490,7 @@ class Script(default.Script):
                 brailleRegions.append(braille.Region(startTime))
                 speech.speak(startTime)
 
-                utterance = "No appointments."
+                utterance = _("No appointments")
                 speech.speak(utterance)
                 brailleRegions.append(braille.Region(utterance))
                 braille.displayRegions(brailleRegions)
@@ -538,6 +539,36 @@ class Script(default.Script):
                         if (tab.role == rolenames.ROLE_PAGE_TAB):
                             self.readPageTab(tab)
                             return
+
+
+        # 7) Mail view: insert attachment dialog: unlabelled arrow button.
+        #
+        # Check if the focus is on the unlabelled arrow button near the
+        # top of the mail view Insert Attachment dialog. If it is, then
+        # rather than just speak/braille "button", output something a
+        # little more useful.
+
+        rolesList = [rolenames.ROLE_PUSH_BUTTON, \
+                     rolenames.ROLE_PANEL, \
+                     rolenames.ROLE_FILLER, \
+                     rolenames.ROLE_FILLER, \
+                     rolenames.ROLE_SPLIT_PANE, \
+                     rolenames.ROLE_FILLER, \
+                     rolenames.ROLE_FILLER, \
+                     rolenames.ROLE_FILLER, \
+                     rolenames.ROLE_FILLER, \
+                     rolenames.ROLE_DIALOG]
+        if self.isDesiredFocusedItem(event.source, rolesList):
+            debug.println(debug.LEVEL_FINEST,
+                      "evolution.onFocus - mail insert attachment dialog: " \
+                      + "unlabelled button.")
+
+            brailleRegions = []
+            utterance = _("Directories button")
+            speech.speak(utterance)
+            brailleRegions.append(braille.Region(utterance))
+            braille.displayRegions(brailleRegions)
+            return
 
 
         # For everything else, pass the focus event onto the parent class 

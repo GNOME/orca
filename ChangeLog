@@ -4,6 +4,17 @@
           Adjusted the default for Evolution, to read all table cells 
           (such as in the mail message header summary list).
 
+          Put a gettext wrapper around the "No appointments" string in the
+          onFocus() method (case 5).
+
+        * Added a case 7) to the onFocus() method:
+
+        * This is for Mail view: insert attachment dialog: unlabelled arrow
+          button. Check if the focus is on the unlabelled arrow button near 
+          the top of the mail view Insert Attachment dialog. If it is, then
+          rather than just speak/braille "button", output something a
+          little more useful.
+
 2006-01-31  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py
