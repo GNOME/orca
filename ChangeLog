@@ -1,3 +1,13 @@
+2006-02-01  Willie Walker <william.walker@sun.com>
+
+	* test/harness/*: add some initial attempt at a test harness.
+	runall.sh runs them all, runone.sh runs one.  There's still 
+	issues with a different set of events coming from running the
+	same test on the same system - it's most likely due to 
+	differences in timing when handling keystrokes.
+	* test/keystrokes/*: arrange keystroke files in directories,
+	with one directory per application.
+	
 2006-02-01  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/speechgenerator.py: _getSpeechForComboBox
