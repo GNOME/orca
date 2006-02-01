@@ -1,3 +1,9 @@
+2006-02-01  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py
+          Adjusted the default for Evolution, to read all table cells 
+          (such as in the mail message header summary list).
+
 2006-01-31  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py

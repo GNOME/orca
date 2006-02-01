@@ -45,6 +45,11 @@ class Script(default.Script):
 
         default.Script.__init__(self, app)
 
+        # The default for Evolution is to read all table cells (such as in
+        # the mail message header summary list).
+
+        self.readTableCellRow = True
+
         # Evolution defines new custom roles. We need to make them known
         # to Orca for Speech and Braille output.
 
@@ -198,11 +203,11 @@ class Script(default.Script):
         brailleGen = self.brailleGenerator
         speechGen = self.speechGenerator
 
-        debug.printObjectEvent(debug.LEVEL_FINEST,
+        debug.printObjectEvent(debug.LEVEL_OFF,
                                event,
                                event.source.toString())
 
-        # self.walkComponentHierarchy(event.source)
+        self.walkComponentHierarchy(event.source)
 
         # 1) Mail view: current message pane: individual lines of text.
         #
