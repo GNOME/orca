@@ -1,5 +1,12 @@
 2006-02-01  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/speechgenerator.py: _getSpeechForComboBox
+          src/orca/braillegenerator.py: _getBrailleRegionsForComboBox
+          If the label of the combo box is the same as the utterance for
+          the child object, then this utterance is only spoken/brailled once.
+
+2006-02-01  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/scripts/Evolution.py
           Adjusted the default for Evolution, to read all table cells 
           (such as in the mail message header summary list).

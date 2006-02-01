@@ -443,6 +443,9 @@ class SpeechGenerator:
         #
         # Preference is given to #1, if it exists.
         #
+        # If the label of the combo box is the same as the utterance for
+        # the child object, then this utterance is only spoken once.
+        #
         # [[[TODO: WDW - Combo boxes are complex beasts.  This algorithm
         # needs serious work.  Logged as bugzilla bug 319745.]]]
         #
@@ -458,7 +461,8 @@ class SpeechGenerator:
         if textObj:
             result = atspi.getTextLineAtCaret(textObj)
             line = result[0]
-            utterances.append(line)
+            if line != obj.label:
+                utterances.append(line)
         else:
             selectedItem = None
             comboSelection = obj.selection
@@ -466,12 +470,14 @@ class SpeechGenerator:
                 selectedItem = atspi.Accessible.makeAccessible(\
                     comboSelection.getSelectedChild(0))
             if selectedItem:
-                utterances.append(selectedItem.label)
+                if selectedItem.label != obj.label:
+                    utterances.append(selectedItem.label)
             else:
                 result = atspi.getTextLineAtCaret(obj)
                 selectedText = result[0]
                 if len(selectedText) > 0:
-                    utterances.append(selectedText)
+                    if selectedText != obj.label:
+                        utterances.append(selectedText)
                 else:
                     debug.println(
                         debug.LEVEL_SEVERE,

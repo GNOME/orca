@@ -467,6 +467,9 @@ class BrailleGenerator:
         #
         # Preference is given to #1, if it exists.
         #
+        # If the label of the combo box is the same as the utterance for
+        # the child object, then this utterance is only displayed once.
+        #
         # [[[TODO: WDW - Combo boxes are complex beasts.  This algorithm
         # needs serious work.  Logged as bugzilla bug 319745.]]]
         #
@@ -480,7 +483,10 @@ class BrailleGenerator:
                 textObj = child
 
         if textObj:
-            regions.append(braille.Text(textObj))
+            result = atspi.getTextLineAtCaret(textObj)
+            line = result[0]
+            if line != obj.label:
+                regions.append(braille.Text(textObj))
         else:
             selectedItem = None
             comboSelection = obj.selection
@@ -488,10 +494,14 @@ class BrailleGenerator:
                 selectedItem = atspi.Accessible.makeAccessible(\
                     comboSelection.getSelectedChild(0))
             if selectedItem:
-                regions.append(braille.Region(selectedItem.label))
+                if selectedItem.label != obj.label:
+                    regions.append(braille.Region(selectedItem.label))
             else:
                 if obj.text:
-                    regions.append(braille.Text(obj))
+                    result = atspi.getTextLineAtCaret(obj)
+                    selectedText = result[0]
+                    if selectedText != obj.label:
+                        regions.append(braille.Text(obj))
                 else:
                     debug.println(
                         debug.LEVEL_SEVERE,
