@@ -22,7 +22,6 @@ debug level, which is set by calling the setDebugLevel method.  All
 other methods take a debug level, which is compared to the current
 debug level to determine if the content should be output."""
 
-import gtk
 import traceback
 
 # Used to turn off all debugging.
