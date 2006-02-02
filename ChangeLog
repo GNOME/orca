@@ -1,5 +1,10 @@
 2006-02-02  Willie Walker <william.walker@sun.com>
 
+	* test/harness/runall.sh, test/harness/runone.sh: do not
+	override user's user-settings.py when running tests.  Also
+	sort the keystrokes files alphabetically before running.
+	Finally attempt to politely tell Orca and other test utils
+	(event_listener) to quit before running another test.
 	* src/orca/orca.py: add current working directory to the
 	beginning of sys.path - this is primarily for picking up
 	a user-settings.py from the local directory for the purposes
