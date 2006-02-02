@@ -78,7 +78,19 @@ class Event:
             self.type     = e.type
             self.detail1  = e.detail1
             self.detail2  = e.detail2
-            self.any_data = self.getAnyData(e)
+            
+            # If were talking to AT-SPI 1.7.0 or greater, we can get the
+            # application information right away because it is tucked in
+            # the EventDetails data new for 1.7.0.
+            #
+            if e.any_data and (e.any_data.typecode().name) == "EventDetails":
+                details = e.any_data.value()
+                self.any_data = details.any_data
+                if details.host_application:
+                    self.source.app = Accessible.makeAccessible(
+                        details.host_application)
+            else:
+                self.any_data = e.any_data
         else:
             self.source   = None
             self.type     = None
