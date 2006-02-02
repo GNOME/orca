@@ -1,3 +1,14 @@
+2006-02-02  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca.py: add current working directory to the
+	beginning of sys.path - this is primarily for picking up
+	a user-settings.py from the local directory for the purposes
+	of running tests
+	* src/orca/debug.py: remove gtk dependency
+	* src/orca/settings.py: add script mapping for soffice.bin
+	* src/orca/atspi.py: use EventDetails.host_application if
+	it is available (this was added for AT-SPI 1.7.0)
+	
 2006-02-01  Willie Walker <william.walker@sun.com>
 
 	* test/harness/*: add some initial attempt at a test harness.

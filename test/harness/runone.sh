@@ -7,9 +7,11 @@ export GTK_MODULES=:gail:atk-bridge:
 
 debugFile=`basename $1`
 
-# Set up our user settings file for the output format we want.
+# Set up our local user settings file for the output format we want.
+# (Orca will look in our local directory first for user-settings.py
+# before looking in ~/.orca)
 #
-sed "s^%debug%^$debugFile.orca^g" `dirname $0`/user-settings.py.in > ~/.orca/user-settings.py
+sed "s^%debug%^$debugFile.orca^g" `dirname $0`/user-settings.py.in > user-settings.py
 
 # Run the event listener...
 #
@@ -32,3 +34,5 @@ fi
 # Play the keystrokes.
 #
 python `dirname $0`/../../src/tools/play_keystrokes.py < $1
+
+rm user-settings.py*

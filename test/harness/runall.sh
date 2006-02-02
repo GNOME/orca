@@ -4,6 +4,11 @@ foo=`dirname $0`
 harnessDir=`cd $foo; pwd`
 keystrokesDir=$harnessDir/../keystrokes
 
+# Just a sanity check to tell anything out there to stop.
+#
+python $harnessDir/F12.py
+sleep 5
+
 # Look in the keystrokes directory for directories.
 # The name of each directory under the keystrokes directory
 # is expected to be the name of an application to run.  For
@@ -25,7 +30,7 @@ do
     then
       mkdir -p tmp/$application
       cd tmp/$application
-      for testFile in `find $testDir -maxdepth 1 -type f`
+      for testFile in `find $testDir -maxdepth 1 -type f | sort`
       do
 	$harnessDir/runone.sh $testFile `which $application`
 	python $harnessDir/F12.py
