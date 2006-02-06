@@ -1,3 +1,9 @@
+2006-02-06  Rich Burridge <rich.burridge@sun.com>
+
+        * bugs/bugs.html
+          Adjusted the entry for "bug #329269" to show that it's not a bug
+          and to give the required keynav sequence (Alt+Down Arrow).
+
 2006-02-02  Willie Walker <william.walker@sun.com>
 
 	* test/harness/runall.sh, test/harness/runone.sh: do not
