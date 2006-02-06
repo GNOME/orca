@@ -737,8 +737,12 @@ class Accessible:
         """
 
         childCount = self._acc.childCount
-        if CACHE_VALUES:
-            self.childCount = childCount
+
+        # We don't want to cache this value because it's possible that it
+        # will continually change.
+        # if CACHE_VALUES:
+        #     self.childCount = childCount
+
         return childCount
 
     def __get_index(self):
@@ -746,8 +750,12 @@ class Accessible:
         """
 
         index = self._acc.getIndexInParent()
-        if CACHE_VALUES:
-            self.index = index
+
+        # We don't want to cache this value because it's possible that it
+        # will continually change.
+        # if CACHE_VALUES:
+        #     self.index = index
+
         return index
 
     def __get_role(self):

@@ -1,5 +1,11 @@
 2006-02-06  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/atspi.py
+          Adjusted the __get_child_count() and __get_index() methods
+          to no longer cache their values, as they could potentially change.
+
+2006-02-06  Rich Burridge <rich.burridge@sun.com>
+
         * bugs/bugs.html
           Adjusted the entry for "bug #329269" to show that it's not a bug
           and to give the required keynav sequence (Alt+Down Arrow).
