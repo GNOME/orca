@@ -1015,7 +1015,6 @@ def main():
     userprefs = os.path.join(os.environ["HOME"], ".orca")
     sys.path.insert(0, userprefs)
     sys.path.insert(0, '') # current directory
-    print sys.path
     signal.signal(signal.SIGINT, shutdownAndExit)
     signal.signal(signal.SIGQUIT, shutdownAndExit)
     registry = atspi.Registry()
