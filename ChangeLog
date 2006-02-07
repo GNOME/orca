@@ -1,3 +1,26 @@
+2006-02-07  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py
+          Added in another couple of scenerios to the onFocus() method.
+
+          - Mail compose window: message area
+         
+            This works in conjunction with code in the next section. 
+            Check to see if focus is currently in the Mail compose window 
+            message area. If it is, then, if this is the first time, save 
+            a pointer to the HTML panel that will contain a variety of 
+            components that will, in turn, contain the message text.
+
+          - Spell Checking Dialog
+         
+            This works in conjunction with code in the previous section. 
+            Check to see if current focus is in the table of possible 
+            replacement words in the spell checking dialog. If it is, 
+            then we use a cached handle to the Mail compose window message 
+            area, to find out where the text caret currently is, and use 
+            this to speak a selection of the surrounding text, to give 
+            the user context for the current misspelt word.
+
 2006-02-06  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/atspi.py

@@ -50,6 +50,10 @@ class Script(default.Script):
 
         self.readTableCellRow = True
 
+        # This will be used to cache a handle to the message area in the
+        # Mail compose window.
+        self.message_panel = None
+
         # Evolution defines new custom roles. We need to make them known
         # to Orca for Speech and Braille output.
 
@@ -193,6 +197,8 @@ class Script(default.Script):
     # 5) Calendar view: day view: moving with arrow keys.
     # 6) Preferences Dialog: options list.
     # 7) Mail view: insert attachment dialog: unlabelled arrow button.
+    # 8) Mail compose window: message area
+    # 9) Spell Checking Dialog
 
     def onFocus(self, event):
         """Called whenever an object gets focus.
@@ -204,11 +210,11 @@ class Script(default.Script):
         brailleGen = self.brailleGenerator
         speechGen = self.speechGenerator
 
-        debug.printObjectEvent(debug.LEVEL_OFF,
+        debug.printObjectEvent(debug.LEVEL_FINEST,
                                event,
                                event.source.toString())
 
-        self.walkComponentHierarchy(event.source)
+        # self.walkComponentHierarchy(event.source)
 
         # 1) Mail view: current message pane: individual lines of text.
         #
@@ -569,6 +575,106 @@ class Script(default.Script):
             brailleRegions.append(braille.Region(utterance))
             braille.displayRegions(brailleRegions)
             return
+
+
+        # 8) Mail compose window: message area
+        #
+        # This works in conjunction with code in section 9). Check to see if
+        # focus is currently in the Mail compose window message area. If it
+        # is, then, if this is the first time, save a pointer to the HTML
+        # panel that will contain a variety of components that will, in turn,
+        # contain the message text.
+        #
+        # Note that this drops through to then use the default event
+        # processing in the parent class for this "focus:" event.
+
+        rolesList = [rolenames.ROLE_TEXT, \
+                     rolenames.ROLE_PANEL, \
+                     rolenames.ROLE_PANEL, \
+                     rolenames.ROLE_SCROLL_PANE]
+        if self.isDesiredFocusedItem(event.source, rolesList):
+            debug.println(debug.LEVEL_FINEST,
+                      "evolution.onFocus - mail compose window: " \
+                      + "message area.")
+
+            self.message_panel = event.source.parent.parent
+
+
+        # 9) Spell Checking Dialog
+        #
+        # This works in conjunction with code in section 8). Check to see if
+        # current focus is in the table of possible replacement words in the
+        # spell checking dialog. If it is, then we use a cached handle to
+        # the Mail compose window message area, to find out where the text
+        # caret currently is, and use this to speak a selection of the
+        # surrounding text, to give the user context for the current misspelt
+        # word.
+
+        rolesList = [rolenames.ROLE_TABLE, \
+                    rolenames.ROLE_SCROLL_PANE, \
+                    rolenames.ROLE_PANEL, \
+                    rolenames.ROLE_PANEL, \
+                    rolenames.ROLE_PANEL, \
+                    rolenames.ROLE_FILLER, \
+                    rolenames.ROLE_DIALOG]
+        if self.isDesiredFocusedItem(event.source, rolesList):
+            debug.println(debug.LEVEL_FINEST,
+                      "evolution.onFocus - spell checking dialog.")
+
+            # Speak/braille the default action for this component.
+            #
+            default.Script.onFocus(self, event)
+
+            # Look for the "Suggestions for 'xxxxx' label in the spell
+            # checker dialog panel. Extract out the xxxxx. This will be the
+            # misspelt word.
+            #
+            panel = event.source.parent.parent
+            allLabels = atspi.findByRole(panel, rolenames.ROLE_LABEL)
+            found = False
+            for i in range(0, len(allLabels)):
+                if not found:
+                    tokens = allLabels[i].label.split()
+                    for j in range(0, len(tokens)):
+                        if tokens[j].startswith("'"):
+                            badWord = tokens[j]
+                            badWord = badWord[1:len(badWord)-1]
+                            found = True
+                            break
+
+            # If we have a handle to the HTML message panel, then extract out
+            # all the text objects, and create a list of all the words found
+            # in them.
+            #
+            if self.message_panel != None:
+                allTokens = []
+                panel = self.message_panel
+                allText = atspi.findByRole(panel, rolenames.ROLE_TEXT)
+                for i in range(0, len(allText)):
+                    text = allText[i].text.getText(0, -1)
+                    tokens = text.split()
+                    allTokens += tokens
+
+                # Create an utterance to speak consisting of the misspelt
+                # word plus the context where it is used (upto five words 
+                # to either side of it).
+                #
+                for i in range(0, len(allTokens)):
+                    if allTokens[i] == badWord:
+                        min = i - 5
+                        if min < 0:
+                            min = 0
+                        max = i + 5
+                        if max > (len(allTokens) - 1):
+                            max = len(allTokens) - 1
+
+                        utterances = [_("Misspelled word is "), badWord, \
+                                  _(" Context is ")] + allTokens[min:max]
+                        text = ""
+                        for item in utterances:
+                            text += item + " "
+                        speech.speak(text)
+                        return
 
 
         # For everything else, pass the focus event onto the parent class 
