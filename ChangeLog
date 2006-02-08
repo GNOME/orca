@@ -16,6 +16,8 @@
 2006-02-08  Willie Walker <william.walker@sun.com>
 
 	* bugs/bugs.html: update with information from OOo.
+	* bugs/bug_330454.py, bugs/bugs.html: update with new FOCUSED
+	state oddess for Evolution.
 	
 2006-02-07  Rich Burridge <rich.burridge@sun.com>
 
