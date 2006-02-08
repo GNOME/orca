@@ -856,7 +856,8 @@ class Script(script.Script):
         # are on the very first line.  Otherwise, we show only the
         # line.
         #
-        if obj.role == rolenames.ROLE_TEXT:
+        if (obj.role == rolenames.ROLE_TEXT) \
+           or (obj.role == rolenames.ROLE_PARAGRAPH):
             text = obj.text
             [string, startOffset, endOffset] = text.getTextAtOffset(
                 text.caretOffset,
@@ -1490,7 +1491,8 @@ class Script(script.Script):
             self.targetCursorCell = 1
             self.updateBrailleReview(self.targetCursorCell)
         elif braille.beginningIsShowing and orca.locusOfFocus \
-             and (orca.locusOfFocus.role == rolenames.ROLE_TEXT):
+             and ((orca.locusOfFocus.role == rolenames.ROLE_TEXT) \
+                  or (orca.locusOfFocus.role == rolenames.ROLE_PARAGRAPH)):
             # If we're at the beginning of a line of a multiline text
             # area, then force it's caret to the end of the previous
             # line.  The assumption here is that we're currently
@@ -1549,7 +1551,8 @@ class Script(script.Script):
             self.targetCursorCell = 1
             self.updateBrailleReview(self.targetCursorCell)
         elif braille.endIsShowing and orca.locusOfFocus \
-             and (orca.locusOfFocus.role == rolenames.ROLE_TEXT):
+             and ((orca.locusOfFocus.role == rolenames.ROLE_TEXT) \
+                  or (orca.locusOfFocus.role == rolenames.ROLE_PARAGRAPH)):
             # If we're at the end of a line of a multiline text area, then
             # force it's caret to the beginning of the next line.  The
             # assumption here is that we're currently viewing the line that

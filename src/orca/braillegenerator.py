@@ -92,6 +92,8 @@ class BrailleGenerator:
              self._getBrailleRegionsForPageTab
         self.brailleGenerators[rolenames.ROLE_PAGE_TAB_LIST]       = \
              self._getBrailleRegionsForPageTabList
+        self.brailleGenerators[rolenames.ROLE_PARAGRAPH]           = \
+             self._getBrailleRegionsForText
         self.brailleGenerators[rolenames.ROLE_PASSWORD_TEXT]       = \
              self._getBrailleRegionsForText
         self.brailleGenerators[rolenames.ROLE_PROGRESS_BAR]        = \

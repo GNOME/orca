@@ -20,8 +20,13 @@
 	* bugs/bugs.html: update with information from OOo.
 	* bugs/bug_330454.py, bugs/bugs.html: update with new FOCUSED
 	state oddess for Evolution.
-	* src/orca/settings.py: internationlize regular expressions for
+	* src/orca/settings.py: internationalize regular expressions for
 	script mappings.
+	* src/orca/braillegenerator.py, src/orca/speechgenerator.py, 
+	src/orca/scripts/StarOffice.py: start treating PARAGRAPH objects
+	like TEXT objects.  Also rip out the earlier StarOffice script
+	logic now that the new UNO<->ATK bridge implementation is looking
+	better.
 	
 2006-02-07  Rich Burridge <rich.burridge@sun.com>
 

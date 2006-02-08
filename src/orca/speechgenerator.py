@@ -95,6 +95,8 @@ class SpeechGenerator:
              self._getSpeechForPageTab
         self.speechGenerators[rolenames.ROLE_PAGE_TAB_LIST]       = \
              self._getSpeechForPageTabList
+        self.speechGenerators[rolenames.ROLE_PARAGRAPH]           = \
+             self._getSpeechForText
         self.speechGenerators[rolenames.ROLE_PASSWORD_TEXT]       = \
              self._getSpeechForText
         self.speechGenerators[rolenames.ROLE_PROGRESS_BAR]        = \
