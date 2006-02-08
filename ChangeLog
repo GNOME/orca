@@ -27,6 +27,8 @@
 	like TEXT objects.  Also rip out the earlier StarOffice script
 	logic now that the new UNO<->ATK bridge implementation is looking
 	better.
+	* src/orca/gnomespeechfactory.py: remove traceback when a chname
+	cannot be found - it's really not a bad thing.
 	
 2006-02-07  Rich Burridge <rich.burridge@sun.com>
 
