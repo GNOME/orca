@@ -15,6 +15,8 @@
 
 2006-02-08  Willie Walker <william.walker@sun.com>
 
+	* src/orca/default.py: interim workaround for Orca not speaking
+	Contact Source Selector panel items properly in Evolution.
 	* bugs/bugs.html: update with information from OOo.
 	* bugs/bug_330454.py, bugs/bugs.html: update with new FOCUSED
 	state oddess for Evolution.
