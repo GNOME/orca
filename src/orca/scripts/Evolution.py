@@ -52,7 +52,12 @@ class Script(default.Script):
 
         # This will be used to cache a handle to the message area in the
         # Mail compose window.
+
         self.message_panel = None
+
+        # The last row we were on in the mail message header list.
+
+        self.lastMessageRow = -1
 
         # Evolution defines new custom roles. We need to make them known
         # to Orca for Speech and Braille output.
@@ -136,29 +141,6 @@ class Script(default.Script):
         [cellRegions, focusedRegion] = brailleGen.getBrailleRegions(tab)
         brailleRegions.extend(cellRegions)
         braille.displayRegions(brailleRegions)
-
-
-    def readTableCell(self, cell, speechGen, 
-                      brailleGen, brailleRegions, verbose):
-        """Speak/Braille the given message header list table cell.
-
-        Arguments:
-        - cell: the table cell to speak/braille.
-        - speechGen: the speech generator to use to speak this cell
-        - brailleGen: the braille generator to use to add the braille
-        - brailleRegions: list of braille regions to extend
-        - verbose: whether the braille display for this cell should be verbose
-        """
-
-        utterances = speechGen.getSpeech(cell, False)
-        if verbose:
-            settings.brailleVerbosityLevel = settings.VERBOSITY_LEVEL_VERBOSE
-        else:
-            settings.brailleVerbosityLevel = settings.VERBOSITY_LEVEL_BRIEF
-        [cellRegions, focusedRegion] = \
-            brailleGen.getBrailleRegions(cell)
-        brailleRegions.extend(cellRegions)
-        speech.speakUtterances(utterances)
 
 
     def getTimeForCalRow(self, row, noIncs):
@@ -299,16 +281,23 @@ class Script(default.Script):
 
         # 3) Mail view: message header list
         #
-        # Check if the focus is in the message header list, and we want to 
-        # speak all of the tables cells in the current highlighted message.
-        # The role is only spoken/brailled for the table cell that currently 
-        # has focus.
+        # Check if the focus is in the message header list. If this focus
+        # event is for a different row that the last time we got a similar
+        # focus event, we want to speak all of the tables cells in the 
+        # current highlighted message. (The role is only spoken/brailled 
+        # for the table cell that currently has focus).
+        #
+        # If this focus event is just for a different table cell on the same
+        # row as last time, then we just speak the current cell. 
+        #
+        # The braille cursor to set to point to the current cell.
         #
         # Note that the Evolution user can adjust which colums appear in 
         # the message list and the order in which they appear, so that 
         # Orca will just speak the ones that they are interested in.
 
-        rolesList = [rolenames.ROLE_TABLE_CELL, rolenames.ROLE_TREE_TABLE]
+        rolesList = [rolenames.ROLE_TABLE_CELL, \
+                     rolenames.ROLE_TREE_TABLE]
         if (self.readTableCellRow == True) \
             and (self.isDesiredFocusedItem(event.source, rolesList)):
             debug.println(debug.LEVEL_FINEST,
@@ -316,15 +305,32 @@ class Script(default.Script):
 
             parent = event.source.parent
             row = parent.table.getRowAtIndex(event.source.index)
+            column = parent.table.getColumnAtIndex(event.source.index)
+
+            # This is an indication of whether we should speak all the table
+            # cells (the user has moved focus up or down the list), or just
+            # the current one (focus has moved left or right in the same row).
+            #
+            speakAll = (self.lastMessageRow != row)
+
             savedBrailleVerbosityLevel = \
                 settings.getSetting(settings.BRAILLE_VERBOSITY_LEVEL)
             brailleRegions = []
 
             # If the current locus of focus is not a table cell, then we
             # are entering the mail message header list (rather than moving
-            # around inside it), so speak the number of mail messages total.
+            # around inside it), so speak/braille the number of mail messages 
+            # total.
+            #
+            # This code section handles one other bogusity. As Evolution is
+            # initially being rendered on the screen, the focus at some point
+            # is given to the highlighted row in the mail message header list.
+            # Because of this, self.lastMessageRow will be set to that row
+            # number, making the setting of the speakAll variable above, 
+            # incorrect. We fix that up here.
 
             if orca.locusOfFocus.role != rolenames.ROLE_TABLE_CELL:
+                speakAll = True
                 message = "There are %d messages in this mail folder" % \
                     parent.table.nRows
                 brailleRegions.append(braille.Region(message))
@@ -338,7 +344,8 @@ class Script(default.Script):
 
                     # Check if the current table cell is a check box. If it
                     # is, then to reduce verbosity, only speak and braille it,
-                    # if it's checked.
+                    # if it's checked or if we are moving the focus from to the
+                    # left or right on the same row.
 
                     toRead = True
                     action = cell.action
@@ -347,19 +354,32 @@ class Script(default.Script):
                             if action.getName(j) == "toggle":
                                 checked = cell.state.count( \
                                     atspi.Accessibility.STATE_CHECKED)
-                                if not checked:
+                                if not checked and speakAll == True:
                                     toRead = False
                                 break
 
                     if toRead:
-                        self.readTableCell(cell, speechGen, brailleGen, 
-                                           brailleRegions, verbose)
+                        utterances = speechGen.getSpeech(cell, False)
+                        if verbose:
+                            settings.brailleVerbosityLevel = \
+                                settings.VERBOSITY_LEVEL_VERBOSE
+                        else:
+                            settings.brailleVerbosityLevel = \
+                                settings.VERBOSITY_LEVEL_BRIEF
+                        [cellRegions, focusedRegion] = \
+                                           brailleGen.getBrailleRegions(cell)
+                        brailleRegions.extend(cellRegions)
+                        if column == i:
+                            braille.setFocus(focusedRegion)
+                        if speakAll or (column == i):
+                            speech.speakUtterances(utterances)
 
             if brailleRegions != []:
                 braille.displayRegions(brailleRegions)
 
             orca.setLocusOfFocus(event, event.source, False)
             settings.brailleVerbosityLevel = savedBrailleVerbosityLevel
+            self.lastMessageRow = row
             return
 
 
@@ -670,9 +690,9 @@ class Script(default.Script):
 
                         utterances = [_("Misspelled word is "), badWord, \
                                   _(" Context is ")] + allTokens[min:max]
-                        text = ""
-                        for item in utterances:
-                            text += item + " "
+
+                        # Turn the list of utterances into a string.
+                        text = " ".join(utterances)
                         speech.speak(text)
                         return
 

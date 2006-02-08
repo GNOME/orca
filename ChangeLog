@@ -1,3 +1,18 @@
+2006-02-08  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py
+          Adjusted the 3) "Mail view: message header list" clause in 
+          the onFocus() method:
+
+          - If this focus event is just for a different table cell on 
+            the same row as last time, then we just speak the current 
+            cell. 
+          - The braille cursor to set to point to the current cell.
+          - If a table check is a check box, and we've just moved the
+            focus to the left or right on the same row, then it's now
+            read (spoken/brailled) irrespective of whether it's checked 
+            or not.
+
 2006-02-08  Willie Walker <william.walker@sun.com>
 
 	* bugs/bugs.html: update with information from OOo.
