@@ -20,6 +20,8 @@
 	* bugs/bugs.html: update with information from OOo.
 	* bugs/bug_330454.py, bugs/bugs.html: update with new FOCUSED
 	state oddess for Evolution.
+	* src/orca/settings.py: internationlize regular expressions for
+	script mappings.
 	
 2006-02-07  Rich Burridge <rich.burridge@sun.com>
 

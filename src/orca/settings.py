@@ -27,6 +27,7 @@ import sys
 
 import debug
 from acss import ACSS
+from orca_i18n import _           # for gettext support
 
 #########################################################################
 #                                                                       #
@@ -241,11 +242,22 @@ def getScriptModuleName(app):
         regExpression = mapping[0]
         moduleName = mapping[1]
         if regExpression.match(app.name):
+            debug.println(
+                debug.LEVEL_FINEST,
+                "Script mapping for %s is %s" % (app.name, moduleName))
             return moduleName
 
     return app.name
 
-setScriptMapping(re.compile('[\S\s]*StarOffice[\s\S]*'), "StarOffice")
-setScriptMapping(re.compile('soffice.bin'), "StarOffice")
-setScriptMapping(re.compile('[Ee]volution'), "Evolution")
-setScriptMapping(re.compile('Deer Park'), "Mozilla")
+# Note to translators: the regular expression here represents a
+# string to match in the localized application name as seen by
+# at-poke.  For most cases, the application name is the name of
+# the binary used to start the application, but this is an
+# unreliable assumption.  The only reliable way to do the
+# translation is by running the application and then viewing its
+# name in the main window of at-poke.
+#
+setScriptMapping(re.compile(_('[\S\s]*StarOffice[\s\S]*')), "StarOffice")
+setScriptMapping(re.compile(_('soffice.bin')), "StarOffice")
+setScriptMapping(re.compile(_('[Ee]volution')), "Evolution")
+setScriptMapping(re.compile(_('Deer Park')), "Mozilla")
