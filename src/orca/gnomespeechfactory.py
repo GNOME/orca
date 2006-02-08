@@ -492,7 +492,6 @@ class SpeechServer(speechserver.SpeechServer):
             try:
                 text = chnames[text.lower()]
             except:
-                debug.printException(debug.LEVEL_FINEST)
                 pass
         else:
             text = text.replace("...", _(" dot dot dot"), 1)
