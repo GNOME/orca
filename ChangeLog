@@ -1,4 +1,8 @@
-2006-02-08  Rich Burridge <rich.burridge@sun.com>
+2006-02-09  Clytie Siddall <clytie@riverland.net.au>
+
+	* configure.in	Added vi in ALL_LINGUAS line.
+	
+	2006-02-08  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py
           Adjusted the 3) "Mail view: message header list" clause in 
