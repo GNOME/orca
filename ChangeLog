@@ -1,8 +1,26 @@
+2006-02-09  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py
+          Added a new 10) "Mail view: message area - attachments"
+          clause to the onFocus() method:
+
+          Check if the focus is on the "go forward" button or the
+          "attachment button" for an attachment in the mail message
+          attachment area. (There will be a pair of these buttons
+          for each attachment in the mail message).
+         
+          If it is, then get the text which describes the current
+          attachment and speak it after doing the default action
+          for the button.
+         
+          NOTE: it is assumed that the last table cell in the table
+          contains this information.
+
 2006-02-09  Clytie Siddall <clytie@riverland.net.au>
 
 	* configure.in	Added vi in ALL_LINGUAS line.
 	
-	2006-02-08  Rich Burridge <rich.burridge@sun.com>
+2006-02-08  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py
           Adjusted the 3) "Mail view: message header list" clause in 

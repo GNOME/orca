@@ -181,6 +181,7 @@ class Script(default.Script):
     # 7) Mail view: insert attachment dialog: unlabelled arrow button.
     # 8) Mail compose window: message area
     # 9) Spell Checking Dialog
+    # 10) Mail view: message area - attachments.
 
     def onFocus(self, event):
         """Called whenever an object gets focus.
@@ -695,6 +696,43 @@ class Script(default.Script):
                         text = " ".join(utterances)
                         speech.speak(text)
                         return
+
+
+        # 10) Mail view: message area - attachments.
+        #
+        # Check if the focus is on the "go forward" button or the
+        # "attachment button" for an attachment in the mail message 
+        # attachment area. (There will be a pair of these buttons
+        # for each attachment in the mail message).
+        #
+        # If it is, then get the text which describes the current
+        # attachment and speak it after doing the default action
+        # for the button.
+        #
+        # NOTE: it is assumed that the last table cell in the table
+        # contains this information.
+
+        rolesList = [rolenames.ROLE_PUSH_BUTTON, \
+                    rolenames.ROLE_FILLER, \
+                    rolenames.ROLE_PANEL, \
+                    rolenames.ROLE_PANEL, \
+                    rolenames.ROLE_TABLE_CELL, \
+                    rolenames.ROLE_TABLE, \
+                    rolenames.ROLE_PANEL]
+        if self.isDesiredFocusedItem(event.source, rolesList):
+            debug.println(debug.LEVEL_FINEST,
+                      "evolution.onFocus - mail message area attachments.")
+
+            # Speak/braille the default action for this component.
+            #
+            default.Script.onFocus(self, event)
+
+            table = event.source.parent.parent.parent.parent.parent
+            cell = table.child(table.childCount-1)
+            allText = atspi.findByRole(cell, rolenames.ROLE_TEXT)
+            utterance = "for " + allText[0].text.getText(0, -1)
+            speech.speak(utterance)
+            return
 
 
         # For everything else, pass the focus event onto the parent class 
