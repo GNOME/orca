@@ -1,3 +1,9 @@
+2006-02-10  Rich Burridge <rich.burridge@sun.com>
+
+        * bugs/bugs.html
+          Added a new entry for Evolution bug #330712
+          Accessible Name for TimeZone Button shouldn't contain its role.
+
 2006-02-09  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py
