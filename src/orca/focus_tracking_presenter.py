@@ -142,8 +142,9 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             # a syntax error in it, so we want to give script writers
             # a vehicle for debugging these types of things.
             #
-            scriptPackages = settings.getSetting(settings.SCRIPT_PACKAGES,
-                                                 ["orca-scripts", "scripts"])
+            scriptPackages = settings.getSetting(
+                settings.SCRIPT_PACKAGES,
+                ["", "orca-scripts", "scripts"])
 
             moduleName = settings.getScriptModuleName(app)
             module = None

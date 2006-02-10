@@ -124,13 +124,6 @@ keyBindingsMap          = {}
 BRAILLE_BINDINGS_MAP    = "brailleBindingsMap"
 brailleBindingsMap      = {}
 
-# Which packages to search, and the order in which to search,
-# for custom scripts.  These packages are expected to be on
-# the PYTHONPATH and/or subpackages of the "orca" package.
-#
-SCRIPT_PACKAGES         = "scriptPackages"
-scriptPackages          = ["orca-scripts", "scripts"]
-
 # Script developer feature.  If False, no AT-SPI object values
 # will be cached locally.  Helps determine if there might be a
 # problem related to the cache being out of sync with the real
@@ -199,11 +192,14 @@ def getSetting(name, default=None):
     else:
         return default
 
-# A list of package names to search for script modules.  The
-# focus_tracking_presenter will search these in order when
-# looking for a script module.
+# Which packages to search, and the order in which to search,
+# for custom scripts.  These packages are expected to be on
+# the PYTHONPATH and/or subpackages of the "orca" package.
+# REMEMBER: to make something a package, the directory has to
+# have a __init__.py file in it.
 #
-scriptPackages = ["orca-scripts", "scripts"]
+SCRIPT_PACKAGES         = "scriptPackages"
+scriptPackages          = ["", "orca-scripts", "scripts"]
 
 # A list that helps us map application names to script module
 # names.  The key is the name of an application, and the value is
