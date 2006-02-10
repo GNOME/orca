@@ -205,7 +205,8 @@ class SpeechGenerator:
         text = obj.label
 
         if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
-            text += " " + getSpeechForRoleName(obj)
+            if (obj.label == None) or (obj.role != rolenames.ROLE_UNKNOWN):
+                text += " " + getSpeechForRoleName(obj)
 
         return [text]
 

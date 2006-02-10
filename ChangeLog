@@ -1,3 +1,11 @@
+2006-02-10  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/speechgenerator.py: _getSpeechForLabelAndRole
+          src/orca/braillegenerator.py: _getDefaultBrailleRegions
+          If we are being verbose, don't speak/braille the rolename
+          if the role of the object is UNKNOWN (unless the obj has no
+          label).
+
 2006-02-10  Willie Walker <william.walker@sun.com>
 
 	* src/orca/focus_tracking_presenter.py, src/orca/settings.py:

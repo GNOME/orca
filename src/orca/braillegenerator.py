@@ -276,9 +276,10 @@ class BrailleGenerator:
             text += value
 
         if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
-            if len(text):
-                text += " "
-            text += getBrailleForRoleName(obj)
+            if (obj.label == None) or (obj.role != rolenames.ROLE_UNKNOWN):
+                if len(text):
+                    text += " "
+                text += getBrailleForRoleName(obj)
 
         regions = []
         componentRegion = braille.Component(obj, text)
