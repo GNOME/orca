@@ -1,3 +1,5 @@
+2006-02-14 Mike Pedersen <michael.pedersen@sun.com>
+	* src/orca/speechgenerator.py removed the auto-speaking of scrollpanes as they don't give any value-add to the speech user.
 2006-02-10  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/speechgenerator.py: _getSpeechForLabelAndRole
