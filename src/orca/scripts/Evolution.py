@@ -55,8 +55,9 @@ class Script(default.Script):
 
         self.message_panel = None
 
-        # The last row we were on in the mail message header list.
+        # The last row and column we were on in the mail message header list.
 
+        self.lastMessageColumn = -1
         self.lastMessageRow = -1
 
         # Evolution defines new custom roles. We need to make them known
@@ -311,8 +312,13 @@ class Script(default.Script):
             # This is an indication of whether we should speak all the table
             # cells (the user has moved focus up or down the list), or just
             # the current one (focus has moved left or right in the same row).
-            #
-            speakAll = (self.lastMessageRow != row)
+            # If we at the start or the end of the message header list and
+            # the row and column haven't changed, then speak all the table
+            # cells.
+
+            speakAll = (self.lastMessageRow != row) or \
+                       ((row == 0 or row == parent.table.nRows-1) and \
+                        self.lastMessageColumn == column)
 
             savedBrailleVerbosityLevel = \
                 settings.getSetting(settings.BRAILLE_VERBOSITY_LEVEL)
@@ -326,9 +332,10 @@ class Script(default.Script):
             # This code section handles one other bogusity. As Evolution is
             # initially being rendered on the screen, the focus at some point
             # is given to the highlighted row in the mail message header list.
-            # Because of this, self.lastMessageRow will be set to that row
-            # number, making the setting of the speakAll variable above, 
-            # incorrect. We fix that up here.
+            # Because of this, self.lastMessageRow and self.lastMessageColumn 
+            # will be set to that row number and column number, making the 
+            # setting of the speakAll variable above, incorrect. We fix that 
+            # up here.
 
             if orca.locusOfFocus.role != rolenames.ROLE_TABLE_CELL:
                 speakAll = True
@@ -380,6 +387,7 @@ class Script(default.Script):
 
             orca.setLocusOfFocus(event, event.source, False)
             settings.brailleVerbosityLevel = savedBrailleVerbosityLevel
+            self.lastMessageColumn = column
             self.lastMessageRow = row
             return
 

@@ -1,5 +1,19 @@
+2006-02-14  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py
+          Adjusted the 3) clause in the onFocus() method (Mail view: message 
+          header list). The last column (as well as the last row) in the 
+          message header list is now cached. Now, in order to speak the 
+          whole message header, the row must have changed or we are on the 
+          first or last message header in the list and the column number 
+          hasn't changed.
+
 2006-02-14 Mike Pedersen <michael.pedersen@sun.com>
-	* src/orca/speechgenerator.py removed the auto-speaking of scrollpanes as they don't give any value-add to the speech user.
+
+	* src/orca/speechgenerator.py 
+          Removed the auto-speaking of scrollpanes as they don't give 
+          any value-add to the speech user.
+
 2006-02-10  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/speechgenerator.py: _getSpeechForLabelAndRole
