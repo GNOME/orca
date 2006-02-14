@@ -6,8 +6,8 @@ msgid ""
 ""
 msgstr "Project-Id-Version: orca HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-06 12:49+0100\n"
-"PO-Revision-Date: 2006-02-09 15:02+1030\n"
+"POT-Creation-Date: 2006-02-14 03:45+0100\n"
+"PO-Revision-Date: 2006-02-14 23:02+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -16,19 +16,19 @@ msgstr "Project-Id-Version: orca HEAD\n"
 "Plural-Forms: nplurals=1; plural=0\n"
 "X-Generator: LocFactoryEditor 1.6b36\n"
 
-#:../src/orca/braillegenerator.py:183 ../src/orca/speechgenerator.py:186
+#:../src/orca/braillegenerator.py:185 ../src/orca/speechgenerator.py:188
 msgid "grayed"
 msgstr "xám"
 
-#:../src/orca/braillegenerator.py:1093 ../src/orca/speechgenerator.py:1190
+#:../src/orca/braillegenerator.py:1096 ../src/orca/speechgenerator.py:1193
 msgid "expanded"
 msgstr "đã bung"
 
-#:../src/orca/braillegenerator.py:1095 ../src/orca/speechgenerator.py:1192
+#:../src/orca/braillegenerator.py:1098 ../src/orca/speechgenerator.py:1195
 msgid "collapsed"
 msgstr "đã thu gọn"
 
-#:../src/orca/braillegenerator.py:1099
+#:../src/orca/braillegenerator.py:1102
 #,python-format
 msgid "TREE LEVEL %d"
 msgstr "CẤP CÂY %d"
@@ -53,7 +53,7 @@ msgstr "số"
 msgid "dollar"
 msgstr "dấu đô la"
 
-#:../src/orca/chnames.py:32 ../src/orca/speechgenerator.py:888
+#:../src/orca/chnames.py:32 ../src/orca/speechgenerator.py:891
 msgid "percent"
 msgstr "dấu phần trăm"
 
@@ -263,13 +263,13 @@ msgstr "cấp cây %d"
 msgid "No focus"
 msgstr "Không có tiêu điểm"
 
-#:../src/orca/default.py:1600 ../src/orca/default.py:1694
-#:../src/orca/default.py:1699 ../src/orca/default.py:1769
-#:../src/orca/default.py:1774
+#:../src/orca/default.py:1618 ../src/orca/default.py:1712
+#:../src/orca/default.py:1717 ../src/orca/default.py:1787
+#:../src/orca/default.py:1792
 msgid "blank"
 msgstr "trắng"
 
-#:../src/orca/default.py:1602 ../src/orca/default.py:1701
+#:../src/orca/default.py:1620 ../src/orca/default.py:1719
 msgid "white space"
 msgstr "khoảng trắng"
 
@@ -277,7 +277,7 @@ msgstr "khoảng trắng"
 msgid "Emacspeak Speech Services"
 msgstr "Dịch vụ Nói tiếng Emacspeak"
 
-#:../src/orca/focus_tracking_presenter.py:437
+#:../src/orca/focus_tracking_presenter.py:438
 msgid "Switching to focus tracking mode."
 msgstr "Đang chuyển đổi sang chế độ theo dõi tiêu điểm."
 
@@ -285,15 +285,15 @@ msgstr "Đang chuyển đổi sang chế độ theo dõi tiêu điểm."
 msgid "GNOME Speech Services"
 msgstr "Dịch vụ Nói tiếng Gnome"
 
-#:../src/orca/gnomespeechfactory.py:498
+#:../src/orca/gnomespeechfactory.py:497
 msgid " dot dot dot"
 msgstr " chấm chấm chấm"
 
-#:../src/orca/gnomespeechfactory.py:585
+#:../src/orca/gnomespeechfactory.py:584
 msgid "faster."
 msgstr "nhanh hơn."
 
-#:../src/orca/gnomespeechfactory.py:616
+#:../src/orca/gnomespeechfactory.py:615
 msgid "slower."
 msgstr "chậm hơn."
 
@@ -431,7 +431,8 @@ msgstr "Bật/tắt ghi động tác nhấn phím."
 msgid ""
 "Prints a debug listing of all known applications to the console where Orca "
 "is running."
-msgstr "In danh sách gỡ lỗi của mọi ứng dụng đã biết ra bàn giao tiếp nơi Orca đang chạy."
+msgstr "In danh sách gỡ lỗi của mọi ứng dụng đã biết ra bàn giao tiếp nơi Orca đang "
+"chạy."
 
 #:../src/orca/orca.py:856
 msgid "Cycles the debug level at run time."
@@ -441,7 +442,8 @@ msgstr "Xoay vòng chế độ gỡ lỗi vào lúc chạy."
 msgid ""
 "Prints debug information about the currently active application to the "
 "console where Orca is running."
-msgstr "In thông tin gỡ lỗi về ứng dụng hoạt động hiện thời ra bàn giao tiếp nơi Orca đang chạy."
+msgstr "In thông tin gỡ lỗi về ứng dụng hoạt động hiện thời ra bàn giao tiếp nơi "
+"Orca đang chạy."
 
 #:../src/orca/orca.py:873
 msgid "Prints debug information about the ancestry of the object with focus"
@@ -1133,7 +1135,7 @@ msgstr "rời"
 msgid "TearOffMenuItem"
 msgstr "Mục trình đơn tách rời"
 
-#:../src/orca/rolenames.py:444 ../src/orca/speechgenerator.py:1253
+#:../src/orca/rolenames.py:444 ../src/orca/speechgenerator.py:1256
 msgid "tear off menu item"
 msgstr "mục trình đơn tách rời"
 
@@ -1338,37 +1340,45 @@ msgstr "Thành phần nhúng"
 msgid "embedded component"
 msgstr "thành phần nhúng"
 
-#:../src/orca/scripts/Evolution.py:59
+#:../src/orca/scripts/Evolution.py:68
 msgid "calv"
 msgstr "klịch"
 
-#:../src/orca/scripts/Evolution.py:60
+#:../src/orca/scripts/Evolution.py:69
 msgid "CalendarView"
 msgstr "Khung xem lịch"
 
-#:../src/orca/scripts/Evolution.py:61
+#:../src/orca/scripts/Evolution.py:70
 msgid "calendar view"
 msgstr "khung xem lịch"
 
-#:../src/orca/scripts/Evolution.py:66
+#:../src/orca/scripts/Evolution.py:75
 msgid "cale"
 msgstr "kiện"
 
-#:../src/orca/scripts/Evolution.py:67
+#:../src/orca/scripts/Evolution.py:76
 msgid "CalendarEvent"
 msgstr "Sự kiện lịch"
 
-#:../src/orca/scripts/Evolution.py:68
+#:../src/orca/scripts/Evolution.py:77
 msgid "calendar event"
 msgstr "sự kiện lịch"
 
-#:../src/orca/scripts/Evolution.py:493
+#:../src/orca/scripts/Evolution.py:520
 msgid "No appointments"
 msgstr "Không có cuộc hẹn"
 
-#:../src/orca/scripts/Evolution.py:567
+#:../src/orca/scripts/Evolution.py:594
 msgid "Directories button"
 msgstr "Nút thư mục"
+
+#:../src/orca/scripts/Evolution.py:692
+msgid "Misspelled word is "
+msgstr "Từ sai chính tả :"
+
+#:../src/orca/scripts/Evolution.py:693
+msgid " Context is "
+msgstr "Ngữ cảnh :"
 
 #:../src/orca/scripts/Gecko.py:49
 msgid "No page to read."
@@ -1382,42 +1392,66 @@ msgstr "Việc đọc trang Mạng bị lỗi."
 msgid "link"
 msgstr "liên kết"
 
+#.Note to translators: the regular expression here represents a
+#.string to match in the localized application name as seen by
+#.at-poke.  For most cases, the application name is the name of
+#.the binary used to start the application, but this is an
+#.unreliable assumption.  The only reliable way to do the
+#.translation is by running the application and then viewing its
+#.name in the main window of at-poke.
+#.
+#:../src/orca/settings.py:256
+msgid "[\\S\\s]*StarOffice[\\s\\S]*"
+msgstr "[\\S\\s]*StarOffice[\\s\\S]*"
+
+#:../src/orca/settings.py:257
+msgid "soffice.bin"
+msgstr "soffice.bin"
+
+#:../src/orca/settings.py:258
+msgid "[Ee]volution"
+msgstr "[Ee]volution"
+
+#:../src/orca/settings.py:259
+msgid "Deer Park"
+msgstr "Deer Park"
+
 #:../src/orca/scripts/metacity.py:90
 msgid "inaccessible"
 msgstr "không tới được"
 
-#:../src/orca/speechgenerator.py:352 ../src/orca/speechgenerator.py:356
+#:../src/orca/speechgenerator.py:355 ../src/orca/speechgenerator.py:359
 msgid "checked"
 msgstr "đã kiểm tra"
 
-#:../src/orca/speechgenerator.py:360 ../src/orca/speechgenerator.py:364
+#:../src/orca/speechgenerator.py:363 ../src/orca/speechgenerator.py:367
 msgid "not checked"
 msgstr "chưa kiểm tra"
 
-#:../src/orca/speechgenerator.py:865
+#:../src/orca/speechgenerator.py:868
 msgid "one tab"
 msgstr "một tab"
 
-#:../src/orca/speechgenerator.py:867
+#:../src/orca/speechgenerator.py:870
 msgid "tabs"
 msgstr "nhiều tab"
 
-#:../src/orca/speechgenerator.py:939 ../src/orca/speechgenerator.py:943
+#:../src/orca/speechgenerator.py:942 ../src/orca/speechgenerator.py:946
 msgid "selected"
 msgstr "đã chọn"
 
-#:../src/orca/speechgenerator.py:947 ../src/orca/speechgenerator.py:951
+#:../src/orca/speechgenerator.py:950 ../src/orca/speechgenerator.py:954
 msgid "not selected"
 msgstr "chưa chọn"
 
-#:../src/orca/speechgenerator.py:1255
+#:../src/orca/speechgenerator.py:1258
 msgid "tear off"
 msgstr "tách rời"
 
-#:../src/orca/speechgenerator.py:1313 ../src/orca/speechgenerator.py:1317
+#:../src/orca/speechgenerator.py:1316 ../src/orca/speechgenerator.py:1320
 msgid "pressed"
 msgstr "đã bấm"
 
-#:../src/orca/speechgenerator.py:1321 ../src/orca/speechgenerator.py:1325
+#:../src/orca/speechgenerator.py:1324 ../src/orca/speechgenerator.py:1328
 msgid "not pressed"
 msgstr "chưa bấm"
