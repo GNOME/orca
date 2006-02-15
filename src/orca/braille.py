@@ -648,7 +648,7 @@ def displayRegionsWithFocus(regions, focusedRegion):
     for item in regions:
         line.addRegion(item)
     addLine(line)
-    setFocus(focusRegion)
+    setFocus(focusedRegion)
     refresh()
 
 def displayRegions(regions, indexOfFocusRegion=0):

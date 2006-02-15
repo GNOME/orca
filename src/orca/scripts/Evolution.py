@@ -194,11 +194,11 @@ class Script(default.Script):
         brailleGen = self.brailleGenerator
         speechGen = self.speechGenerator
 
-        debug.printObjectEvent(debug.LEVEL_FINEST,
+        debug.printObjectEvent(debug.LEVEL_OFF,
                                event,
                                event.source.toString())
 
-        # self.walkComponentHierarchy(event.source)
+        self.walkComponentHierarchy(event.source)
 
         # 1) Mail view: current message pane: individual lines of text.
         #
@@ -217,7 +217,7 @@ class Script(default.Script):
                      rolenames.ROLE_PANEL, \
                      rolenames.ROLE_UNKNOWN]
         if self.isDesiredFocusedItem(event.source, rolesList):
-            debug.println(debug.LEVEL_FINEST,
+            debug.println(debug.LEVEL_OFF,
                       "evolution.onFocus - mail view: current message pane: " \
                       + "individual lines of text.")
 
@@ -253,7 +253,7 @@ class Script(default.Script):
                      rolenames.ROLE_TABLE_CELL]
         if (self.readTableCellRow == True) \
             and (self.isDesiredFocusedItem(event.source, rolesList)):
-            debug.println(debug.LEVEL_FINEST,
+            debug.println(debug.LEVEL_OFF,
                       "evolution.onFocus - mail view: current message pane: " \
                       + "standard mail header lines.")
 
@@ -302,7 +302,7 @@ class Script(default.Script):
                      rolenames.ROLE_TREE_TABLE]
         if (self.readTableCellRow == True) \
             and (self.isDesiredFocusedItem(event.source, rolesList)):
-            debug.println(debug.LEVEL_FINEST,
+            debug.println(debug.LEVEL_OFF,
                       "evolution.onFocus - mail view: message header list.")
 
             parent = event.source.parent
@@ -377,13 +377,15 @@ class Script(default.Script):
                         [cellRegions, focusedRegion] = \
                                            brailleGen.getBrailleRegions(cell)
                         brailleRegions.extend(cellRegions)
+                        print ">>>>column: %d    i: %d" % (column, i)
                         if column == i:
-                            braille.setFocus(focusedRegion)
+                            print "Setting FOCUS."
+                            cellWithFocus = focusedRegion
                         if speakAll or (column == i):
                             speech.speakUtterances(utterances)
 
             if brailleRegions != []:
-                braille.displayRegions(brailleRegions)
+                braille.displayRegionsWithFocus(brailleRegions, cellWithFocus)
 
             orca.setLocusOfFocus(event, event.source, False)
             settings.brailleVerbosityLevel = savedBrailleVerbosityLevel
@@ -414,7 +416,7 @@ class Script(default.Script):
         rolesList = [rolenames.ROLE_CALENDAR_EVENT, \
                      rolenames.ROLE_CALENDAR_VIEW]
         if self.isDesiredFocusedItem(event.source, rolesList):
-            debug.println(debug.LEVEL_FINEST,
+            debug.println(debug.LEVEL_OFF,
                       "evolution.onFocus - calendar view: day view: " \
                       + "tabbing to day with appts.")
 
@@ -483,7 +485,7 @@ class Script(default.Script):
                      rolenames.ROLE_TABLE, \
                      rolenames.ROLE_CALENDAR_VIEW]
         if self.isDesiredFocusedItem(event.source, rolesList):
-            debug.println(debug.LEVEL_FINEST,
+            debug.println(debug.LEVEL_OFF,
                       "evolution.onFocus - calendar view: day view: " \
                       + "moving with arrow keys.")
 
@@ -558,7 +560,7 @@ class Script(default.Script):
                      rolenames.ROLE_UNKNOWN, \
                      rolenames.ROLE_SCROLL_PANE]
         if self.isDesiredFocusedItem(event.source, rolesList):
-            debug.println(debug.LEVEL_FINEST,
+            debug.println(debug.LEVEL_OFF,
                       "evolution.onFocus - preferences dialog: " \
                       + "table cell in options list.")
 
@@ -594,7 +596,7 @@ class Script(default.Script):
                      rolenames.ROLE_FILLER, \
                      rolenames.ROLE_DIALOG]
         if self.isDesiredFocusedItem(event.source, rolesList):
-            debug.println(debug.LEVEL_FINEST,
+            debug.println(debug.LEVEL_OFF,
                       "evolution.onFocus - mail insert attachment dialog: " \
                       + "unlabelled button.")
 
@@ -622,7 +624,7 @@ class Script(default.Script):
                      rolenames.ROLE_PANEL, \
                      rolenames.ROLE_SCROLL_PANE]
         if self.isDesiredFocusedItem(event.source, rolesList):
-            debug.println(debug.LEVEL_FINEST,
+            debug.println(debug.LEVEL_OFF,
                       "evolution.onFocus - mail compose window: " \
                       + "message area.")
 
@@ -647,7 +649,7 @@ class Script(default.Script):
                     rolenames.ROLE_FILLER, \
                     rolenames.ROLE_DIALOG]
         if self.isDesiredFocusedItem(event.source, rolesList):
-            debug.println(debug.LEVEL_FINEST,
+            debug.println(debug.LEVEL_OFF,
                       "evolution.onFocus - spell checking dialog.")
 
             # Speak/braille the default action for this component.
@@ -728,7 +730,7 @@ class Script(default.Script):
                     rolenames.ROLE_TABLE, \
                     rolenames.ROLE_PANEL]
         if self.isDesiredFocusedItem(event.source, rolesList):
-            debug.println(debug.LEVEL_FINEST,
+            debug.println(debug.LEVEL_OFF,
                       "evolution.onFocus - mail message area attachments.")
 
             # Speak/braille the default action for this component.
