@@ -11,7 +11,7 @@ VII.  KNOWN PROBLEMS
 VIII. FAQ
 IX.   REPORTING BUGS
 X.    CONTRIBUTING
-
+APPENDIX A: EVOLUTION NOTES
 
 NOTE: When using cvs, you may see warnings containing the following
 text:
@@ -111,8 +111,8 @@ III. ORCA ON UBUNTU 5.10:
 
       atk		1.11.0
       gail		1.8.8
-      libgail-gnome	1.1.2
       at-spi		1.6.6
+      libgail-gnome	1.1.2
 
    Here's how to get the latest from GNOME CVS HEAD:
 
@@ -131,15 +131,15 @@ III. ORCA ON UBUNTU 5.10:
    sudo make install
 
    cd $HOME
-   cvs -z3 -d:pserver:anonymous@anoncvs.gnome.org:/cvs/gnome co libgail-gnome
-   cd libgail-gnome
+   cvs -z3 -d:pserver:anonymous@anoncvs.gnome.org:/cvs/gnome co at-spi
+   cd at-spi
    ./autogen.sh --prefix=/usr
    make
    sudo make install
 
    cd $HOME
-   cvs -z3 -d:pserver:anonymous@anoncvs.gnome.org:/cvs/gnome co at-spi
-   cd at-spi
+   cvs -z3 -d:pserver:anonymous@anoncvs.gnome.org:/cvs/gnome co libgail-gnome
+   cd libgail-gnome
    ./autogen.sh --prefix=/usr
    make
    sudo make install
@@ -351,7 +351,7 @@ A: This is most likely an issue with gnome-speech configuration.  Here's
       described in the "KNOWN PROBLEMS" section of this document.
 
 
-Q: How do I enable the The Java platform support isn't working for me.
+Q: How do I enable the the Java platform support?
 
 A: The java-access-bridge provides the needed support for interacting
    with Java applications, including both applications and gnome-speech
@@ -368,6 +368,7 @@ A: There may be device contention between your speech synthesis system
    sure how to get both working well right now (rumor has it that there
    may be some fixes to the Linux sound architecture, ALSA, to fix this).
    For now, you will need to disable system sounds.
+
 
 IX. REPORTING BUGS:
 -------------------
@@ -389,3 +390,34 @@ http://bugzilla.gnome.org site.]]]
 TODO: Need to include the following somewhere:
 
   * Specific use instructions for specific desktop productivity apps.
+
+
+APPENDIX A: EVOLUTION NOTES:
+----------------------------
+
+We're working with the Evolution team to improve its AT-SPI
+implementation, and they are being fantastic in their responsiveness.
+While this means Evolution's accessibility is getting better and
+better, it also means you need to grab the latest stuff from GNOME CVS
+HEAD in order for it to work well with Orca.  In particular, you need
+the following modules: eel, evolution-data-server, evolution.
+
+To build these on Ubuntu, here's some notes:
+
+Evolution-data-server requires:
+
+  sudo apt-get install libsoup2.2-8 libsoup2.2-dev
+  sudo apt-get install firefox-dev
+  ./autogen.sh --prefix=/usr --with-nspr-includes=/usr/include/mozilla-firefox --with-nspr-libs=/usr/lib/mozilla-firefox
+
+Evolution requires:
+
+  sudo apt-get install libgtkhtml3.8-dev
+  ./autogen.sh --prefix=/usr
+
+Eel requires:
+
+  sudo apt-get install libgnome-menu-dev libgnome-desktop-dev
+  ./autogen.sh --prefix=/usr
+
+
