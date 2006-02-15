@@ -2,6 +2,17 @@
 
         * src/orca/scripts/Evolution.py
           Adjusted clause 3) in the onFocus() method (Mail view: message
+          header list). It now speaks/brailles (with VERBOSITY_BRIEF) the
+          column headers for each table cell that is read in the current 
+          row of the mail message header list. The focus in the braille
+          line is given to the region containing that column header 
+          information for the current cell now, rather then the actual
+          table cell.
+
+2006-02-15  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py
+          Adjusted clause 3) in the onFocus() method (Mail view: message
           header list). It now uses the new displayRegionsWithFocus()
           method to (hopefully) correctly set the correct region to set
           the focus to on the braille line.

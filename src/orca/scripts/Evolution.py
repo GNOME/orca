@@ -285,16 +285,17 @@ class Script(default.Script):
         #
         # Check if the focus is in the message header list. If this focus
         # event is for a different row that the last time we got a similar
-        # focus event, we want to speak all of the tables cells in the 
-        # current highlighted message. (The role is only spoken/brailled 
-        # for the table cell that currently has focus).
+        # focus event, we want to speak all of the tables cells (and their
+        # headers) in the current highlighted message. (The role is only 
+        # spoken/brailled for the table cell that currently has focus).
         #
         # If this focus event is just for a different table cell on the same
-        # row as last time, then we just speak the current cell. 
+        # row as last time, then we just speak the current cell (and its
+        # header). 
         #
         # The braille cursor to set to point to the current cell.
         #
-        # Note that the Evolution user can adjust which colums appear in 
+        # Note that the Evolution user can adjust which columns appear in 
         # the message list and the order in which they appear, so that 
         # Orca will just speak the ones that they are interested in.
 
@@ -322,6 +323,8 @@ class Script(default.Script):
 
             savedBrailleVerbosityLevel = \
                 settings.getSetting(settings.BRAILLE_VERBOSITY_LEVEL)
+            savedSpeechVerbosityLevel = \
+                settings.getSetting(settings.SPEECH_VERBOSITY_LEVEL)
             brailleRegions = []
 
             # If the current locus of focus is not a table cell, then we
@@ -367,18 +370,38 @@ class Script(default.Script):
                                 break
 
                     if toRead:
-                        utterances = speechGen.getSpeech(cell, False)
+                        # Speak/braille the column header for this table cell.
+                        #
+                        settings.brailleVerbosityLevel = \
+                            settings.VERBOSITY_LEVEL_BRIEF
+                        settings.speechVerbosityLevel = \
+                            settings.VERBOSITY_LEVEL_BRIEF
+
+                        obj = parent.table.getColumnHeader(i)
+                        header = atspi.Accessible.makeAccessible(obj)
+                        utterances = speechGen.getSpeech(header, False)
+                        [headerRegions, focusedRegion] = \
+                                         brailleGen.getBrailleRegions(header)
+                        brailleRegions.extend(headerRegions)
+                        if column == i:
+                            cellWithFocus = focusedRegion
+                        if speakAll or (column == i):
+                            speech.speakUtterances(utterances)
+
+                        # Speak/braille the table cell.
+                        #
                         if verbose:
                             settings.brailleVerbosityLevel = \
                                 settings.VERBOSITY_LEVEL_VERBOSE
                         else:
                             settings.brailleVerbosityLevel = \
                                 settings.VERBOSITY_LEVEL_BRIEF
+                        settings.speechVerbosityLevel = \
+                            savedSpeechVerbosityLevel
+                        utterances = speechGen.getSpeech(cell, False)
                         [cellRegions, focusedRegion] = \
                                            brailleGen.getBrailleRegions(cell)
                         brailleRegions.extend(cellRegions)
-                        if column == i:
-                            cellWithFocus = focusedRegion
                         if speakAll or (column == i):
                             speech.speakUtterances(utterances)
 
@@ -387,6 +410,7 @@ class Script(default.Script):
 
             orca.setLocusOfFocus(event, event.source, False)
             settings.brailleVerbosityLevel = savedBrailleVerbosityLevel
+            settings.speechVerbosityLevel = savedSpeechVerbosityLevel
             self.lastMessageColumn = column
             self.lastMessageRow = row
             return
