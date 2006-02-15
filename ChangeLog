@@ -1,3 +1,11 @@
+2006-02-15  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py
+          Adjusted clause 3) in the onFocus() method (Mail view: message
+          header list). It now uses the new displayRegionsWithFocus()
+          method to (hopefully) correctly set the correct region to set
+          the focus to on the braille line.
+
 2006-02-15  Willie Walker <william.walker@sun.com>
 
 	* src/orca/braille.py: refactor displayRegions to include a
