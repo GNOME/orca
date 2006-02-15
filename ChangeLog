@@ -1,3 +1,11 @@
+2006-02-15  Willie Walker <william.walker@sun.com>
+
+	* src/orca/braille.py: refactor displayRegions to include a
+	new method, displayRegionsWithFocus, which will set the cursor
+	to a given region with focus.  The new displayRegions method
+	merely calls this new method with the region as specified by
+	the indexOfFocusRegion parameter.
+	
 2006-02-14  Willie Walker <william.walker@sun.com>
 
 	* QUICKSTART: update to include Ubuntu notes on building eel,

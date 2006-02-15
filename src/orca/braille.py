@@ -634,6 +634,23 @@ def refresh(panToCursor=True, targetCursorCell=0):
     beginningIsShowing = startPos == 0
     endIsShowing = endPos >= len(string)
 
+def displayRegionsWithFocus(regions, focusedRegion):
+    """Displays a list of regions on a single line, setting focus to the 
+       specified region.
+
+    Arguments:
+    - regions: a list of regions to display
+    - focusedRegion: the focused region (must be in regions)
+    """
+
+    clear()
+    line = Line()
+    for item in regions:
+        line.addRegion(item)
+    addLine(line)
+    setFocus(focusRegion)
+    refresh()
+
 def displayRegions(regions, indexOfFocusRegion=0):
     """Displays a list of regions on a single line, setting focus to the 
        specified region.
@@ -643,14 +660,7 @@ def displayRegions(regions, indexOfFocusRegion=0):
     - indexOfFocusRegion: which region in the list should receive focus,
                           or the first one if this is not specified
     """
-
-    clear()
-    line = Line()
-    for item in regions:
-        line.addRegion(item)
-    addLine(line)
-    setFocus(regions[indexOfFocusRegion])
-    refresh()
+    displayRegionsWithFocus(region, regions[indexOfFocusRegion])
 
 def displayMessage(message, cursor=-1):
     """Displays a single line, setting the cursor to the given position,
