@@ -359,11 +359,13 @@ class Script(default.Script):
                     # if it's checked or if we are moving the focus from to the
                     # left or right on the same row.
 
+                    checkbox = False
                     toRead = True
                     action = cell.action
                     if action:
                         for j in range(0, action.nActions):
                             if action.getName(j) == "toggle":
+                                checkbox = True
                                 checked = cell.state.count( \
                                     atspi.Accessibility.STATE_CHECKED)
                                 if not checked and speakAll == True:
@@ -373,7 +375,7 @@ class Script(default.Script):
                     if toRead:
                         # Speak/braille the column header for this table cell
                         # (unless it's a checkbox).
-                        if not checked:
+                        if not checkbox:
                             settings.brailleVerbosityLevel = \
                                 settings.VERBOSITY_LEVEL_BRIEF
                             settings.speechVerbosityLevel = \
