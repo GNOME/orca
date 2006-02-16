@@ -58,7 +58,7 @@ class BrlMon(gtk.Window):
 	# This prevents it from getting focus.
 	#
 	self.set_property("accept-focus", False)
-	self.connect_after("realize", self.onRealize)
+	#self.connect_after("realize", self.onRealize)
 
     def onRealize(self, object):
 	"""Tell the window to be a dock, which I thinks means to
@@ -88,6 +88,16 @@ class BrlMon(gtk.Window):
 	# Fill out the cells from the string.
 	#
 	for i in range(0, len(string)):
+
+	    # Handle special chars so they are not interpreted by pango.
+	    #	    
+	    if string[i] == "<":
+		char = "&lt;"
+	    elif string[i] == "&":
+	        char = "&amp;"
+	    else:
+	        char = string[i]
+
 	    if i == (cursorCell - 1):
 	        if string[i] == " ":
 	  	    self.cellLabels[i].set_markup(
@@ -97,7 +107,7 @@ class BrlMon(gtk.Window):
 	                + " style='italic'"\
 	                + " size='xx-large'"\
 		        + ">%s</span>" \
-		        % string[i])
+		        % char)
 		else:
 	  	    self.cellLabels[i].set_markup(
 		        "<span"\
@@ -106,15 +116,12 @@ class BrlMon(gtk.Window):
 	                + " style='italic'"\
 	                + " size='xx-large'"\
 		        + ">%s</span>" \
-		        % string[i])
+		        % char)
 	 	self.cellFrames[i].set_shadow_type(
 		    gtk.SHADOW_IN)
 	    else:
 	  	self.cellLabels[i].set_markup(
-		    "<span"\
-	            + " size='xx-large'"\
-		    + ">%s</span>" \
-		    % string[i])
+		    "<span size='xx-large'>%s</span>" % char)
 	 	self.cellFrames[i].set_shadow_type(
 		    gtk.SHADOW_OUT)
 

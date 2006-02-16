@@ -1,3 +1,11 @@
+2006-02-16  Willie Walker <william.walker@sun.com>
+
+        * src/orca/brlmon.py: "improve" visibility of cell with cursor.
+	* src/orca/brlmon.py: substitute macros for < and & so they are
+	not interpreted by the pango interpreter.
+	* src/orca/orca.py: add SIGSEGV handler to (hopefully) prevent
+	core files.
+	
 2006-02-15  Rich Burridge <rich.burridge@sun.com>
         * bugs/bugs.html
           Added a new entry for Evolution bug #331447:
@@ -15,10 +23,6 @@
             now becomes the actual cell itself rather than the header.
           - Added spaces between each header and cell value.
 
-2006-02-15  Willie Walker <william.walker@sun.com>
-
-        * src/orca/brlmon.py: "improve" visibility of cell with cursor.
-	
 2006-02-15  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py

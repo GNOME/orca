@@ -1011,12 +1011,17 @@ def shutdownAndExit(signum, frame):
         pass
     sys.exit()
 
+def fastExit(signum, frame):
+    print "Goodbye."
+    sys.exit()
+
 def main():
     userprefs = os.path.join(os.environ["HOME"], ".orca")
     sys.path.insert(0, userprefs)
     sys.path.insert(0, '') # current directory
     signal.signal(signal.SIGINT, shutdownAndExit)
     signal.signal(signal.SIGQUIT, shutdownAndExit)
+    signal.signal(signal.SIGSEGV, fastExit)
     registry = atspi.Registry()
     init(registry)
     start(registry)
