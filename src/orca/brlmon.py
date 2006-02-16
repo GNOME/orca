@@ -48,6 +48,7 @@ class BrlMon(gtk.Window):
 	    frame = gtk.Frame()
 	    frame.set_shadow_type(gtk.SHADOW_OUT)
 	    label = gtk.Label(" ")
+	    label.set_use_markup(True)
 	    frame.add(label)
 	    hbox.add(frame)
 	    self.cellFrames.append(frame)
@@ -66,9 +67,17 @@ class BrlMon(gtk.Window):
 	# Fill out the cells from the string.
 	#
 	for i in range(0, len(string)):
-	    self.cellLabels[i].set_text(string[i])
- 	    self.cellFrames[i].set_shadow_type(
-		gtk.SHADOW_OUT)
+	    if i == (cursorCell - 1):
+  	        self.cellLabels[i].set_markup(
+		    "<span background='white' size='xx-large'>%s</span>" \
+		    % string[i])
+	 	self.cellFrames[i].set_shadow_type(
+		    gtk.SHADOW_IN)
+	    else:
+  	        self.cellLabels[i].set_markup(
+		    "<span size='xx-large'>%s</span>" % string[i])
+	 	self.cellFrames[i].set_shadow_type(
+		    gtk.SHADOW_OUT)
 
 	# Pad the rest
 	#
@@ -76,9 +85,3 @@ class BrlMon(gtk.Window):
 	    self.cellLabels[i].set_text(" ")
  	    self.cellFrames[i].set_shadow_type(
 		gtk.SHADOW_OUT)
-
-	# Highlight the cursor cell.
-	#
-	if cursorCell:
- 	    self.cellFrames[cursorCell - 1].set_shadow_type(
-		gtk.SHADOW_IN)
