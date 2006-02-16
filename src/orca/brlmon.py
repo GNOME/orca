@@ -89,14 +89,32 @@ class BrlMon(gtk.Window):
 	#
 	for i in range(0, len(string)):
 	    if i == (cursorCell - 1):
-  	        self.cellLabels[i].set_markup(
-		    "<span background='white' size='xx-large'>%s</span>" \
-		    % string[i])
+	        if string[i] == " ":
+	  	    self.cellLabels[i].set_markup(
+		        "<span"\
+		        + " background='black'" \
+		        + " weight='ultrabold'" \
+	                + " style='italic'"\
+	                + " size='xx-large'"\
+		        + ">%s</span>" \
+		        % string[i])
+		else:
+	  	    self.cellLabels[i].set_markup(
+		        "<span"\
+		        + " background='white'" \
+		        + " weight='ultrabold'" \
+	                + " style='italic'"\
+	                + " size='xx-large'"\
+		        + ">%s</span>" \
+		        % string[i])
 	 	self.cellFrames[i].set_shadow_type(
 		    gtk.SHADOW_IN)
 	    else:
-  	        self.cellLabels[i].set_markup(
-		    "<span size='xx-large'>%s</span>" % string[i])
+	  	self.cellLabels[i].set_markup(
+		    "<span"\
+	            + " size='xx-large'"\
+		    + ">%s</span>" \
+		    % string[i])
 	 	self.cellFrames[i].set_shadow_type(
 		    gtk.SHADOW_OUT)
 
