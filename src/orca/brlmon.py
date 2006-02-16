@@ -65,7 +65,15 @@ class BrlMon(gtk.Window):
 	attempt to glue it somewhere on the display.
 	"""
 
+	screen_width = gtk.gdk.screen_width()
+	[window_width, window_height] = self.window.get_size()
+	if window_width < screen_width:
+	    x = (screen_width - window_width) / 2
+	else:
+	    x = 0
+
 	self.window.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_DOCK)
+	self.move(x, 0)
 
     def writeText(self, cursorCell, string):
         """Display the given text and highlight the given
