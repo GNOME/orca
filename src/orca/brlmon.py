@@ -20,13 +20,14 @@
 import gtk
 
 class BrlMon(gtk.Window):
+
     """Displays a GUI braille monitor that mirrors what is being
     shown on the braille display.  This currently needs a lot of
-    work, but it is a start.  TODO's include removing decorations,
-    preventing this from getting focus, docking it at the top of
-    the display, doing better highlighting of the cursor cell,
-    allowing the font to be set, and perhaps allowing clicks to 
-    simulate cursor routing keys."""
+    work, but it is a start.  TODO's include doing a better job of
+    docking it at the top of the display (e.g., make all other
+    windows move out from underneath it), doing better highlighting of
+    the cursor cell, allowing the font to be set, and perhaps allowing
+    clicks to simulate cursor routing keys."""
 
     def __init__(self, numCells=32, cellWidth=25, cellHeight=50):
 	"""Create a new BrlMon.
@@ -53,6 +54,18 @@ class BrlMon(gtk.Window):
 	    hbox.add(frame)
 	    self.cellFrames.append(frame)
 	    self.cellLabels.append(label)
+
+	# This prevents it from getting focus.
+	#
+	self.set_property("accept-focus", False)
+	self.connect_after("realize", self.onRealize)
+
+    def onRealize(self, object):
+	"""Tell the window to be a dock, which I thinks means to
+	attempt to glue it somewhere on the display.
+	"""
+
+	self.window.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_DOCK)
 
     def writeText(self, cursorCell, string):
         """Display the given text and highlight the given
