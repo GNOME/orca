@@ -56,8 +56,10 @@ Braille display.
 
 import atspi
 import brl
+import brlmon
 import debug
 import eventsynthesizer
+import settings
 
 from orca_i18n import _                          # for gettext support
 from rolenames import getShortBrailleForRoleName # localized role names
@@ -66,6 +68,10 @@ from rolenames import getLongBrailleForRoleName  # localized role names
 # If True, this module has been initialized.
 #
 _initialized = False
+
+# The braille monitor
+#
+monitor = None
 
 # Each of these maps to BrlAPI's brldefs.h file.
 #
@@ -575,6 +581,7 @@ def refresh(panToCursor=True, targetCursorCell=0):
     global endIsShowing
     global beginningIsShowing
     global cursorCell
+    global monitor
 
     if len(_lines) == 0:
         brl.writeText(0, "")
@@ -628,8 +635,14 @@ def refresh(panToCursor=True, targetCursorCell=0):
 
     debug.println(debug.LEVEL_INFO, "     VISIBLE:  '%s', cursor=%d" \
                   % (string[startPos:endPos], cursorCell))
-
+  
     brl.writeText(cursorCell, string[startPos:endPos])
+
+    if settings.getSetting(settings.USE_BRAILLE_MONITOR, False):
+	if not monitor:	
+	    monitor = brlmon.BrlMon(_displaySize[0])
+	    monitor.show_all()
+        monitor.writeText(cursorCell, string[startPos:endPos])
 
     beginningIsShowing = startPos == 0
     endIsShowing = endPos >= len(string)

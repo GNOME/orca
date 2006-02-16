@@ -19,6 +19,10 @@
 
 2006-02-15  Willie Walker <william.walker@sun.com>
 
+	* src/orca/braille.py, src/orca/Makefile.am, src/orca/settings.py,
+	src/orca/brlmon.py: add beginnings of a braille monitor.  This is
+	currently turned off by default, but can be enabled by setting
+	useBrailleMonitor=True in ~/.orca/user-settings.py.	
 	* src/orca/braille.py: refactor displayRegions to include a
 	new method, displayRegionsWithFocus, which will set the cursor
 	to a given region with focus.  The new displayRegions method

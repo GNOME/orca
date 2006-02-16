@@ -12,6 +12,7 @@ orca_python_PYTHON = \
 	atspi.py \
 	braille.py \
 	braillegenerator.py \
+	brlmon.py \
 	chnames.py \
 	debug.py \
 	dectalk.py \

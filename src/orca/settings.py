@@ -91,6 +91,11 @@ voices = {
 USE_BRAILLE             = "useBraille"
 useBraille              = False
 
+# If True, use braille monitor.
+#
+USE_BRAILLE_MONITOR     = "useBrailleMonitor"
+useBrailleMonitor       = False
+
 # If True, use magnification.
 #
 USE_MAGNIFIER           = "useMagnifier"
