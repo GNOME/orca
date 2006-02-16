@@ -326,6 +326,7 @@ class Script(default.Script):
             savedSpeechVerbosityLevel = \
                 settings.getSetting(settings.SPEECH_VERBOSITY_LEVEL)
             brailleRegions = []
+            cellWithFocus = None
 
             # If the current locus of focus is not a table cell, then we
             # are entering the mail message header list (rather than moving
@@ -370,23 +371,26 @@ class Script(default.Script):
                                 break
 
                     if toRead:
-                        # Speak/braille the column header for this table cell.
-                        #
-                        settings.brailleVerbosityLevel = \
-                            settings.VERBOSITY_LEVEL_BRIEF
-                        settings.speechVerbosityLevel = \
-                            settings.VERBOSITY_LEVEL_BRIEF
+                        # Speak/braille the column header for this table cell
+                        # (unless it's a checkbox).
+                        if not checked:
+                            settings.brailleVerbosityLevel = \
+                                settings.VERBOSITY_LEVEL_BRIEF
+                            settings.speechVerbosityLevel = \
+                                settings.VERBOSITY_LEVEL_BRIEF
 
-                        obj = parent.table.getColumnHeader(i)
-                        header = atspi.Accessible.makeAccessible(obj)
-                        utterances = speechGen.getSpeech(header, False)
-                        [headerRegions, focusedRegion] = \
+                            obj = parent.table.getColumnHeader(i)
+                            header = atspi.Accessible.makeAccessible(obj)
+                            utterances = speechGen.getSpeech(header, False)
+                            [headerRegions, focusedRegion] = \
                                          brailleGen.getBrailleRegions(header)
-                        brailleRegions.extend(headerRegions)
-                        if column == i:
-                            cellWithFocus = focusedRegion
-                        if speakAll or (column == i):
-                            speech.speakUtterances(utterances)
+                            brailleRegions.extend(headerRegions)
+                            brailleRegions.append(braille.Region(" "))
+
+                            if column == i:
+                                cellWithFocus = focusedRegion
+                            if speakAll or (column == i):
+                                speech.speakUtterances(utterances)
 
                         # Speak/braille the table cell.
                         #
@@ -402,6 +406,15 @@ class Script(default.Script):
                         [cellRegions, focusedRegion] = \
                                            brailleGen.getBrailleRegions(cell)
                         brailleRegions.extend(cellRegions)
+                        brailleRegions.append(braille.Region(" "))
+
+                        # If the current focus is on a checkbox then we won't
+                        # have set braille line focus to its header above, so
+                        # set it to the cell instead.
+                        #
+                        if column == i and cellWithFocus == None:
+                            cellWithFocus = focusedRegion
+
                         if speakAll or (column == i):
                             speech.speakUtterances(utterances)
 

@@ -1,3 +1,14 @@
+2006-02-15  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py
+          A couple of tweaks to to clause 3) in the onFocus() method 
+          (Mail view: message header list). 
+          - It no longer speaks/brailles the headers for checkboxes. A side
+            effect of this is that if the current cell with focus was a 
+            checkbox, then the region on the braille line that's visible 
+            now becomes the actual cell itself rather than the header.
+          - Added spaces between each header and cell value.
+
 2006-02-15  Willie Walker <william.walker@sun.com>
 
         * src/orca/brlmon.py: "improve" visibility of cell with cursor.
