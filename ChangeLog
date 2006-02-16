@@ -1,4 +1,10 @@
 2006-02-15  Rich Burridge <rich.burridge@sun.com>
+        * bugs/bugs.html
+          Added a new entry for Evolution bug #331447:
+          The accessible name for Mail message header list "checkbox" table
+          cells is not useful.
+
+2006-02-15  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py
           A couple of tweaks to to clause 3) in the onFocus() method 
