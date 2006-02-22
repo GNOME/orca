@@ -1,3 +1,31 @@
+0.2.1
+* *Much* work on Evolution script - this far outshadows much of the 
+  other work done for this release (Rich Burridge and Mike Pedersen)
+* Various code cleanup (Willie Walker and Rich Burridge)
+* Introduction of prototype testing harness (Willie Walker)
+* Creation of bugs/* to keep track of external bug dependencies (team)
+* Additional debug features (Willie Walker):
+  > Insert+Ctrl+F5 - cycle through debug levels
+  > Insert+F7      - print ancestry for locus of focus
+  > Insert+Ctrl+F7 - print entire application hierarchy for app with locus
+                     of focus
+* Minor enhancement to flat review to attempt to better handle parents
+  that manage a very large number of descendants (Willie Walker)
+* Take better care when installing on 64-bit platforms (Willie Walker)
+* Fix gaim.py to better handle text areas (bug 325917) (Willie Walker)
+* Support ABI incompatible change made to AT-SPI 1.7.0 (Willie Walker)
+* Use EventDetails.host_application if it is available (Willie Walker)
+* Internationalize script mappings.
+* Some work with OOo and its new UNO<->ATK bridge (Willie Walker)
+* Allow scripts to be picked up from . directory where orca is run 
+  (Willie Walker).
+* Added braille monitor - add useBrailleMonitor=True to
+  ~/.orca/user-settings.py to enable it (Willie Walker)
+* Many localizations also performed by a number of very enthusiastic
+  folks: Francisco Javier F. Serrador, Adam Weinberger, Clytie Siddall
+
+==========
+
 0.2.0
 * Many many changes: new scripting architecture; better support for
 speech and braille; decent support for GTK applications; flat review
