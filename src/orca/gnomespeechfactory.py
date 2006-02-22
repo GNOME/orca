@@ -536,7 +536,6 @@ class SpeechServer(speechserver.SpeechServer):
         Returns an id of the thing being spoken or -1 if nothing is to
         be spoken.
         """
-        print "HERE",text
         if self.__sayAll:
             self.stop()
 
