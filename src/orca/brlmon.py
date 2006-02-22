@@ -58,7 +58,7 @@ class BrlMon(gtk.Window):
 	# This prevents it from getting focus.
 	#
 	self.set_property("accept-focus", False)
-	#self.connect_after("realize", self.onRealize)
+	self.connect_after("realize", self.onRealize)
 
     def onRealize(self, object):
 	"""Tell the window to be a dock, which I thinks means to
