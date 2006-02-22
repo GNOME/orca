@@ -516,7 +516,7 @@ class SpeechServer(speechserver.SpeechServer):
             #
             debug.printException(debug.LEVEL_SEVERE)
             debug.println(debug.LEVEL_SEVERE, "Restarting speech...")
-            self.__reset()
+            self.reset()
             return -1
         
     def speak(self, text=None, acss=None, interrupt=True):
@@ -536,6 +536,7 @@ class SpeechServer(speechserver.SpeechServer):
         Returns an id of the thing being spoken or -1 if nothing is to
         be spoken.
         """
+        print "HERE",text
         if self.__sayAll:
             self.stop()
 
@@ -641,7 +642,7 @@ class SpeechServer(speechserver.SpeechServer):
 
         self.__driver = None
 
-    def __reset(self, text=None, acss=None):
+    def reset(self, text=None, acss=None):
         """Resets the speech engine."""
 
         speakers = self.__speakers
@@ -652,15 +653,15 @@ class SpeechServer(speechserver.SpeechServer):
 
         for server in servers:
 	    if server.iid == self.__iid:
-                driver = bonobo.activation.activate_from_id(server.iid,
-                                                            0,
-                                                            False)
-                driver = driver._narrow(GNOME.Speech.SynthesisDriver)
-                if not driver.isInitialized():
-                    driver.driverInit()
-                self.__speakers = {}
-                for name in speakers.keys():
-                    self.__getSpeaker(speakers[name])
-                if text:
-                    self.speak(text, acss)
-                break
+                try:
+                    self.__driver = self.__activateDriver(self.__iid)
+                    self.__speakers = {}
+                    for name in speakers.keys():
+                        self.__getSpeaker(speakers[name])
+                    if text:
+                        self.speak(text, acss)
+                    break
+                except:
+                    debug.printException(debug.LEVEL_SEVERE)
+                    self.__driver = None
+                    pass

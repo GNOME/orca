@@ -219,3 +219,7 @@ class SpeechServer:
     def shutdown(self):
         """Shuts down the speech engine."""
         pass
+
+    def reset(self, text=None, acss=None):
+        """Resets the speech engine."""
+        pass

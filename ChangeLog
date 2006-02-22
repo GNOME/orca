@@ -1,6 +1,9 @@
 2006-02-22  Willie Walker <william.walker@sun.com>
 
 	* NEWS, configure.in, README: prep for 0.2.1.
+	* src/orca/gnomespeechfactory.py, src/orca/speech.py, src/orca/orca.py,
+	src/orca/speechserver.py: add keystroke to reset speech: Insert+s.
+	Interim workaround for bug 332253.
 	
 2006-02-16  Willie Walker <william.walker@sun.com>
 

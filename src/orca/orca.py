@@ -19,6 +19,7 @@
 
 import gtk
 import os, signal, sys
+import time
 
 import atspi
 import braille
@@ -613,12 +614,12 @@ def _processKeyboardEvent(event):
         # We treat the Insert key as a modifier - so just swallow it and
         # set our internal state.
         #
-        if event_string == "Insert":
+        if (event_string == "Insert") or (event_string == "KP_Insert"):
             _insertPressed = True
             return True
 
     elif event.type == atspi.Accessibility.KEY_RELEASED_EVENT \
-         and (event_string == "Insert"):
+         and ((event_string == "Insert") or (event_string == "KP_Insert")):
         _insertPressed = False
         return True
 
@@ -842,6 +843,14 @@ def init(registry):
                                             0,
                                             keystrokeRecordingHandler))
 
+    resetSpeechHandler = InputEventHandler(\
+        resetSpeech,
+        _("Forces a reset of the speech service."))
+    _keybindings.add(keybindings.KeyBinding("s", \
+                                            1 << MODIFIER_ORCA, \
+                                            1 << MODIFIER_ORCA, \
+                                            resetSpeechHandler))
+
     listAppsHandler = InputEventHandler(
         printApps,
         _("Prints a debug listing of all known applications to the console where Orca is running."))
@@ -936,6 +945,14 @@ def init(registry):
 				   "object:children-changed:")
 
     _initialized = True
+    return True
+
+def resetSpeech(script=None, inputEvent=None):
+    """Kicks the speech server in the pants and re-establishes a
+    connection to it."""
+    speech.reset()
+    time.sleep(1) # give the driver a chance to die.
+    speech.reset("Speech has been reset.")    
     return True
 
 def start(registry):

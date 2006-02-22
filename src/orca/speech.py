@@ -133,6 +133,11 @@ def shutdown():
         __speechserver.shutdown()
         __speechserver = None
 
+def reset(text=None, acss=None):
+    global __speechserver
+    if __speechserver:
+        __speechserver.reset(text, acss)
+
 def testNoSettingsInit():
     init()
     speak("testing")
