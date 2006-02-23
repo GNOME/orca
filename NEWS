@@ -23,6 +23,10 @@
   ~/.orca/user-settings.py to enable it (Willie Walker)
 * Many localizations also performed by a number of very enthusiastic
   folks: Francisco Javier F. Serrador, Adam Weinberger, Clytie Siddall
+* Add Insert+s option to manually tell speech to reset should something
+  go awry (Willie Walker)
+* Add KP_Insert as an equivalent of Insert for the Orca modifier. 
+  (Willie Walker)
 
 ==========
 
