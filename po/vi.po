@@ -6,8 +6,8 @@ msgid ""
 ""
 msgstr "Project-Id-Version: orca HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-14 03:45+0100\n"
-"PO-Revision-Date: 2006-02-14 23:02+1030\n"
+"POT-Creation-Date: 2006-02-24 05:59+0100\n"
+"PO-Revision-Date: 2006-02-24 23:07+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -375,97 +375,101 @@ msgstr "Vọng phím? Gõ y (có) hay n (không): "
 msgid "Braille support appears to work, use it?  Enter y or n. "
 msgstr "Hình như hỗ trợ Bray được: dùng nó không? Gõ y (có) hay n (không): "
 
-#:../src/orca/orca.py:259
+#:../src/orca/orca.py:260
 msgid "User logged out - shutting down."
 msgstr "Người dùng đã đăng xuất nên đang thoát."
 
-#:../src/orca/orca.py:411
+#:../src/orca/orca.py:412
 msgid "Debug level all."
 msgstr "Cấp gở lỗi: tất cả."
 
-#:../src/orca/orca.py:413
+#:../src/orca/orca.py:414
 msgid "Debug level finest."
 msgstr "Cấp gỡ lỗi: chính xác nhất."
 
-#:../src/orca/orca.py:415
+#:../src/orca/orca.py:416
 msgid "Debug level finer."
 msgstr "Cấp gỡ lỗi: chính xác hơn."
 
-#:../src/orca/orca.py:503
+#:../src/orca/orca.py:504
 msgid "Entering learn mode.  Press any key to hear its function. "
 msgstr "Đang vào chế độ học biết. Hãy bấm bất cứ phím nào để nghe chức năng của nó."
 
-#:../src/orca/orca.py:504
+#:../src/orca/orca.py:505
 msgid "To exit learn mode, press the escape key."
 msgstr "Để thoát khởi chế độ học biết, hãy bấm phím Escape."
 
-#:../src/orca/orca.py:505
+#:../src/orca/orca.py:506
 msgid "Learn mode.  Press escape to exit."
 msgstr "Chế độ học biết. Hãy bấm phim Escape để thoát."
 
-#:../src/orca/orca.py:515 ../src/orca/orca.py:516
+#:../src/orca/orca.py:516 ../src/orca/orca.py:517
 msgid "Exiting learn mode."
 msgstr "Đang thoát khỏi chế độ học biết."
 
-#:../src/orca/orca.py:805
+#:../src/orca/orca.py:806
 msgid "Enters learn mode.  Press escape to exit learn mode."
 msgstr "Vào chế độ học biết. Hãy bấm phím Escape để thoát khỏi chế độ học biết."
 
-#:../src/orca/orca.py:813
+#:../src/orca/orca.py:814
 msgid "Decreases the speech rate."
 msgstr "Giảm tốc độ nói tiếng."
 
-#:../src/orca/orca.py:821
+#:../src/orca/orca.py:822
 msgid "Increases the speech rate."
 msgstr "Tăng tốc độ nói tiếng."
 
-#:../src/orca/orca.py:827
+#:../src/orca/orca.py:828
 msgid "Quits Orca"
 msgstr "Thoát khỏi Orca"
 
-#:../src/orca/orca.py:839
+#:../src/orca/orca.py:840
 msgid "Toggles keystroke recording on and off."
 msgstr "Bật/tắt ghi động tác nhấn phím."
 
-#:../src/orca/orca.py:847
+#:../src/orca/orca.py:848
+msgid "Forces a reset of the speech service."
+msgstr "Ép buộc đặt lại dịch vụ nói tiếng."
+
+#:../src/orca/orca.py:856
 msgid ""
 "Prints a debug listing of all known applications to the console where Orca "
 "is running."
 msgstr "In danh sách gỡ lỗi của mọi ứng dụng đã biết ra bàn giao tiếp nơi Orca đang "
 "chạy."
 
-#:../src/orca/orca.py:856
+#:../src/orca/orca.py:865
 msgid "Cycles the debug level at run time."
 msgstr "Xoay vòng chế độ gỡ lỗi vào lúc chạy."
 
-#:../src/orca/orca.py:865
+#:../src/orca/orca.py:874
 msgid ""
 "Prints debug information about the currently active application to the "
 "console where Orca is running."
 msgstr "In thông tin gỡ lỗi về ứng dụng hoạt động hiện thời ra bàn giao tiếp nơi "
 "Orca đang chạy."
 
-#:../src/orca/orca.py:873
+#:../src/orca/orca.py:882
 msgid "Prints debug information about the ancestry of the object with focus"
 msgstr "In thông tin gỡ lỗi về các điều chứa đối tượng có tiêu điểm."
 
-#:../src/orca/orca.py:882
+#:../src/orca/orca.py:891
 msgid "Prints debug information about the application with focus"
 msgstr "In thông tin gỡ lỗi về ứng dụng có tiêu điểm."
 
-#:../src/orca/orca.py:892
+#:../src/orca/orca.py:901
 msgid "Switches to the next presentation manager."
 msgstr "Chuyển đổi sang bộ quản lý trình diễn kế tiếp."
 
-#:../src/orca/orca.py:951 ../src/orca/orca.py:952
+#:../src/orca/orca.py:968 ../src/orca/orca.py:969
 msgid "Welcome to Orca."
 msgstr "Chúc mừng bạn dùng Orca."
 
-#:../src/orca/orca.py:980
+#:../src/orca/orca.py:997
 msgid "goodbye."
 msgstr "tạm biệt nhé."
 
-#:../src/orca/orca.py:981
+#:../src/orca/orca.py:998
 msgid "Goodbye."
 msgstr "Tạm biệt nhé."
 
@@ -1340,45 +1344,45 @@ msgstr "Thành phần nhúng"
 msgid "embedded component"
 msgstr "thành phần nhúng"
 
-#:../src/orca/scripts/Evolution.py:68
+#:../src/orca/scripts/Evolution.py:69
 msgid "calv"
 msgstr "klịch"
 
-#:../src/orca/scripts/Evolution.py:69
+#:../src/orca/scripts/Evolution.py:70
 msgid "CalendarView"
 msgstr "Khung xem lịch"
 
-#:../src/orca/scripts/Evolution.py:70
+#:../src/orca/scripts/Evolution.py:71
 msgid "calendar view"
 msgstr "khung xem lịch"
 
-#:../src/orca/scripts/Evolution.py:75
+#:../src/orca/scripts/Evolution.py:76
 msgid "cale"
 msgstr "kiện"
 
-#:../src/orca/scripts/Evolution.py:76
+#:../src/orca/scripts/Evolution.py:77
 msgid "CalendarEvent"
 msgstr "Sự kiện lịch"
 
-#:../src/orca/scripts/Evolution.py:77
+#:../src/orca/scripts/Evolution.py:78
 msgid "calendar event"
 msgstr "sự kiện lịch"
 
-#:../src/orca/scripts/Evolution.py:520
+#:../src/orca/scripts/Evolution.py:567
 msgid "No appointments"
 msgstr "Không có cuộc hẹn"
 
-#:../src/orca/scripts/Evolution.py:594
+#:../src/orca/scripts/Evolution.py:641
 msgid "Directories button"
 msgstr "Nút thư mục"
 
-#:../src/orca/scripts/Evolution.py:692
+#:../src/orca/scripts/Evolution.py:739
 msgid "Misspelled word is "
-msgstr "Từ sai chính tả :"
+msgstr "Từ sai chính tả : "
 
-#:../src/orca/scripts/Evolution.py:693
+#:../src/orca/scripts/Evolution.py:740
 msgid " Context is "
-msgstr "Ngữ cảnh :"
+msgstr "Ngữ cảnh : "
 
 #:../src/orca/scripts/Gecko.py:49
 msgid "No page to read."
@@ -1400,19 +1404,19 @@ msgstr "liên kết"
 #.translation is by running the application and then viewing its
 #.name in the main window of at-poke.
 #.
-#:../src/orca/settings.py:256
+#:../src/orca/settings.py:261
 msgid "[\\S\\s]*StarOffice[\\s\\S]*"
 msgstr "[\\S\\s]*StarOffice[\\s\\S]*"
 
-#:../src/orca/settings.py:257
+#:../src/orca/settings.py:262
 msgid "soffice.bin"
 msgstr "soffice.bin"
 
-#:../src/orca/settings.py:258
+#:../src/orca/settings.py:263
 msgid "[Ee]volution"
 msgstr "[Ee]volution"
 
-#:../src/orca/settings.py:259
+#:../src/orca/settings.py:264
 msgid "Deer Park"
 msgstr "Deer Park"
 
