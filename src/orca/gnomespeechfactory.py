@@ -176,19 +176,18 @@ class SpeechServer(speechserver.SpeechServer):
 		    break
 
 	if not gserver:
-	    return server
+	    return None
 
 	try:
 	    driver = SpeechServer.__activateDriver(gserver.iid)
 	    server = SpeechServer(driver, gserver.iid)
 	except:
-	    if info:
-		return server
 	    for s in gservers:
 		try:
 		    driver = SpeechServer.__activateDriver(s.iid)
 	            if driver:
 		        server = SpeechServer(driver, s.iid)
+                        break
 		except:
 		    debug.printException(debug.LEVEL_WARNING)
 		    pass
