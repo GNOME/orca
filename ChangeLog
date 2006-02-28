@@ -1,5 +1,13 @@
 2006-02-28  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/util.py src/orca/Makefile.am
+          src/orca/scripts/Evolution.py src/orca/scripts/StarOffice.py
+          Created a new util.py file which will contain various utility
+          functions used by Orca. Moved the isDesiredFocusedItem() routine
+          there and adjusted Evolution.py and StarOffice.py accordingly.
+
+2006-02-28  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/scripts/StarOffice.py
           Added an onFocus() method and handled the following situation:
 

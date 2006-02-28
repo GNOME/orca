@@ -25,6 +25,7 @@ import orca.orca as orca
 import orca.braille as braille
 import orca.speech as speech
 import orca.keybindings as keybindings
+import orca.util as util
 
 ########################################################################
 #                                                                      #
@@ -65,26 +66,6 @@ class Script(default.Script):
         print "<<<<============================>>>>"
 
 
-    def isDesiredFocusedItem(self, obj, rolesList):
-        """Called to determine if the given object and it's hierarchy of
-           parent objects, each have the desired roles.
-
-        Arguments:
-        - rolesList: the list of desired roles for the components and the
-          hierarchy of its parents.
-
-        Returns True if all roles match.
-        """
-
-        current = obj
-        for i in range(0, len(rolesList)):
-            if (current == None) or (current.role != rolesList[i]):
-                return False
-            current = current.parent
-
-        return True
-
-
     # This method tries to detect and handle the following cases:
     # 1) Writer: text paragraph.
 
@@ -116,7 +97,7 @@ class Script(default.Script):
                      rolenames.ROLE_PANEL, \
                      rolenames.ROLE_ROOT_PANE, \
                      rolenames.ROLE_FRAME]
-        if self.isDesiredFocusedItem(event.source, rolesList):
+        if util.isDesiredFocusedItem(event.source, rolesList):
             debug.println(debug.LEVEL_FINEST,
                       "StarOffice.onFocus - Writer: text paragraph.")
 
