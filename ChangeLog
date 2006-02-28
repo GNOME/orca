@@ -1,3 +1,17 @@
+2006-02-28  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/StarOffice.py
+          Added an onFocus() method and handled the following situation:
+
+          When the focus is on a paragraph in the Document view of the Writer,
+          then just speak/braille the current line (rather than speaking a
+          bogus initial "paragraph" utterance as well).
+
+        * src/orca/braille.py
+          The initial parameter of the call to displayRegionsWithFocus()
+          within the displayRegions() method should have been "regions" not
+          "region".
+
 2006-02-27  Willie Walker <william.walker@sun.com>
 
 	* src/orca/gnomespeechfactory.py: handle fallback for broken

@@ -673,7 +673,7 @@ def displayRegions(regions, indexOfFocusRegion=0):
     - indexOfFocusRegion: which region in the list should receive focus,
                           or the first one if this is not specified
     """
-    displayRegionsWithFocus(region, regions[indexOfFocusRegion])
+    displayRegionsWithFocus(regions, regions[indexOfFocusRegion])
 
 def displayMessage(message, cursor=-1):
     """Displays a single line, setting the cursor to the given position,
