@@ -67,247 +67,337 @@ class Script(script.Script):
         # Keyboard bindings                                            #
         #                                                              #
         ################################################################
-        #self.keybindings.add(
-        #    keybindings.KeyBinding(
-        #        "F9", \
-        #        1 << orca.MODIFIER_ORCA, \
-        #        1 << orca.MODIFIER_ORCA,
-        #        input_eventInputEventHandler(\
-        #            Script.sayAgain,
-        #            _("Repeats last utterance sent to speech."))))
 
+        self.leftClickReviewItemHandler = input_event.InputEventHandler(
+            Script.leftClickReviewItem,
+            _("Performs left click on current flat review item."))
         self.keybindings.add(
             keybindings.KeyBinding(
-                "KP_Divide", \
-                0, \
-                0, \
-                input_event.InputEventHandler(\
-                    Script.leftClickReviewItem,
-                    _("Performs left click on current flat review item."))))
-
+                "KP_Divide",
+                0, 
+                0, 
+                self.leftClickReviewItemHandler))
+        
+        self.rightClickReviewItemHandler = input_event.InputEventHandler(
+            Script.rightClickReviewItem,
+            _("Performs right click on current flat review item."))
         self.keybindings.add(
             keybindings.KeyBinding(
-                "KP_Multiply", \
-                0, \
-                0, \
-                input_event.InputEventHandler(\
-                    Script.rightClickReviewItem,
-                    _("Performs right click on current flat review item."))))
+                "KP_Multiply", 
+                0, 
+                0, 
+                self.rightClickReviewItemHandler))
 
+        self.sayAllHandler = input_event.InputEventHandler(
+            Script.sayAll,
+            _("Speaks entire document."))
         self.keybindings.add(
             keybindings.KeyBinding(
-                "KP_Add", \
-                0, \
-                0, \
-                input_event.InputEventHandler(\
-                    Script.sayAll,
-                    _("Speaks entire document."))))
+                "KP_Add", 
+                0, 
+                0, 
+                self.sayAllHandler))
 
+        self.whereAmIHandler = input_event.InputEventHandler(
+            Script.whereAmI,
+            _("Performs the where am I operation."))
         self.keybindings.add(
             keybindings.KeyBinding(
-                "KP_Enter", \
-                0, \
-                0, \
-                input_event.InputEventHandler(\
-                    Script.whereAmI,
-                    _("Performs the where am I operation."))))
+                "KP_Enter",
+                0, 
+                0, 
+                self.whereAmIHandler))
 
+        self.showZonesHandler = input_event.InputEventHandler(
+            Script.showZones,
+            _("Paints and prints the visible zones in the active window."))
         self.keybindings.add(
             keybindings.KeyBinding(
-                "Num_Lock", \
-                1 << orca.MODIFIER_ORCA, \
-                1 << orca.MODIFIER_ORCA, \
-                input_event.InputEventHandler(\
-                    Script.showZones,
-                    _("Paints and prints the visible zones in the active window."))))
+                "Num_Lock", 
+                1 << orca.MODIFIER_ORCA, 
+                1 << orca.MODIFIER_ORCA, 
+                self.showZonesHandler))
 
+	self.toggleFlatReviewModeHandler = input_event.InputEventHandler(
+            Script.toggleFlatReviewMode,
+            _("Enters and exits flat review mode."))
         self.keybindings.add(
             keybindings.KeyBinding(
-                "KP_Subtract", \
-                0, \
-                0, \
-                input_event.InputEventHandler(\
-                    Script.toggleFlatReviewMode,
-                    _("Enters and exits flat review mode."))))
+                "KP_Subtract",
+                0,
+                0,
+                self.toggleFlatReviewModeHandler))
 
-        reviewPreviousLineHandler = \
-            input_event.InputEventHandler(\
-                Script.reviewPreviousLine,
-                _("Moves flat review to the beginning of the previous line."))
-
+        self.reviewPreviousLineHandler = input_event.InputEventHandler(
+            Script.reviewPreviousLine,
+            _("Moves flat review to the beginning of the previous line."))
         self.keybindings.add(
             keybindings.KeyBinding(
-                "KP_7", \
-                1 << orca.MODIFIER_ORCA, \
-                0, \
-                reviewPreviousLineHandler))
+                "KP_7", 
+                1 << orca.MODIFIER_ORCA, 
+                0, 
+                self.reviewPreviousLineHandler))
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_Home", 
+                1 << orca.MODIFIER_ORCA, 
+                0, 
+                self.reviewPreviousLineHandler))
 
-        reviewHomeHandler = input_event.InputEventHandler(\
+        self.reviewHomeHandler = input_event.InputEventHandler(
             Script.reviewHome,
             _("Moves flat review to the home position."))
-
         self.keybindings.add(
             keybindings.KeyBinding(
-                "KP_7", \
-                1 << orca.MODIFIER_ORCA, \
-                1 << orca.MODIFIER_ORCA, \
-                reviewHomeHandler))
-
+                "KP_7",
+                1 << orca.MODIFIER_ORCA,
+                1 << orca.MODIFIER_ORCA,
+                self.reviewHomeHandler))
         self.keybindings.add(
             keybindings.KeyBinding(
-                "KP_8", \
-                0, \
-                0, \
-                input_event.InputEventHandler(\
-                    Script.reviewCurrentLine,
-                    _("Speaks the current flat review line."))))
+                "KP_Home",
+                1 << orca.MODIFIER_ORCA,
+                1 << orca.MODIFIER_ORCA,
+                self.reviewHomeHandler))
 
-        reviewNextLineHandler = \
-            input_event.InputEventHandler(\
+	self.reviewCurrentLineHandler = input_event.InputEventHandler(
+            Script.reviewCurrentLine,
+            _("Speaks the current flat review line."))
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_8",
+                0,
+                0,
+		self.reviewCurrentLineHandler))
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_Up",
+                0,
+                0,
+		self.reviewCurrentLineHandler))
+
+        self.reviewNextLineHandler = input_event.InputEventHandler(
                 Script.reviewNextLine,
                 _("Moves flat review to the beginning of the next line."))
-
         self.keybindings.add(
             keybindings.KeyBinding(
-                "KP_9", \
-                1 << orca.MODIFIER_ORCA, \
-                0, \
-                reviewNextLineHandler))
-
+                "KP_9", 
+                1 << orca.MODIFIER_ORCA, 
+                0, 
+                self.reviewNextLineHandler))
         self.keybindings.add(
             keybindings.KeyBinding(
-                "KP_9", \
-                1 << orca.MODIFIER_ORCA, \
-                1 << orca.MODIFIER_ORCA, \
-                input_event.InputEventHandler(\
-                    Script.reviewEnd,
-                    _("Moves flat review to the end position."))))
+                "KP_Page_Up", 
+                1 << orca.MODIFIER_ORCA, 
+                0, 
+                self.reviewNextLineHandler))
 
+	self.reviewEndHandler = input_event.InputEventHandler(
+            Script.reviewEnd,
+            _("Moves flat review to the end position."))
         self.keybindings.add(
             keybindings.KeyBinding(
-                "KP_4", \
-                1 << orca.MODIFIER_ORCA, \
-                0, \
-                input_event.InputEventHandler(\
-                    Script.reviewPreviousItem,
-                    _("Moves flat review to the previous item or word."))))
-
-        reviewAboveHandler = \
-            input_event.InputEventHandler(\
-                Script.reviewAbove,
-                _("Moves flat review to the word above the current word."))
-
+                "KP_9",
+                1 << orca.MODIFIER_ORCA,
+                1 << orca.MODIFIER_ORCA,
+                self.reviewEndHandler))
         self.keybindings.add(
             keybindings.KeyBinding(
-                "KP_4", \
-                1 << orca.MODIFIER_ORCA, \
-                1 << orca.MODIFIER_ORCA, \
-                reviewAboveHandler))
+                "KP_Page_Up",
+                1 << orca.MODIFIER_ORCA,
+                1 << orca.MODIFIER_ORCA,
+                self.reviewEndHandler))
 
+        self.reviewPreviousItemHandler = input_event.InputEventHandler(
+            Script.reviewPreviousItem,
+            _("Moves flat review to the previous item or word."))
         self.keybindings.add(
             keybindings.KeyBinding(
-                "KP_5", \
-                1 << orca.MODIFIER_ORCA, \
-                0, \
-                input_event.InputEventHandler(\
-                    Script.reviewCurrentItem,
-                    _("Speaks the current flat review item or word."))))
-
+                "KP_4", 
+                1 << orca.MODIFIER_ORCA, 
+                0, 
+		self.reviewPreviousItemHandler))
         self.keybindings.add(
             keybindings.KeyBinding(
-                "KP_5", \
-                1 << orca.MODIFIER_ORCA, \
-                1 << orca.MODIFIER_ORCA, \
-                input_event.InputEventHandler(\
-                    Script.reviewCurrentAccessible,
-                    _("Speaks the current flat review object."))))
-
+                "KP_Left", 
+                1 << orca.MODIFIER_ORCA, 
+                0, 
+		self.reviewPreviousItemHandler))
+                
+        self.reviewAboveHandler = input_event.InputEventHandler(
+            Script.reviewAbove,
+            _("Moves flat review to the word above the current word."))
         self.keybindings.add(
             keybindings.KeyBinding(
-                "KP_6", \
-                1 << orca.MODIFIER_ORCA, \
-                0, \
-                input_event.InputEventHandler(\
-                    Script.reviewNextItem,
-                    _("Moves flat review to the next item or word."))))
-
-        reviewBelowHandler = \
-            input_event.InputEventHandler(\
-                Script.reviewBelow,
-                _("Moves flat review to the word below the current word."))
-
+                "KP_4",
+                1 << orca.MODIFIER_ORCA,
+                1 << orca.MODIFIER_ORCA,
+                self.reviewAboveHandler))
         self.keybindings.add(
             keybindings.KeyBinding(
-                "KP_6", \
-                1 << orca.MODIFIER_ORCA, \
-                1 << orca.MODIFIER_ORCA, \
-                reviewBelowHandler))
+                "KP_Left",
+                1 << orca.MODIFIER_ORCA,
+                1 << orca.MODIFIER_ORCA,
+                self.reviewAboveHandler))
 
-        reviewPreviousCharacterHandler = \
-            input_event.InputEventHandler( \
-                Script.reviewPreviousCharacter,
-                _("Moves flat review to the previous character."))
-
+	self.reviewCurrentItemHandler = input_event.InputEventHandler(
+            Script.reviewCurrentItem,
+            _("Speaks the current flat review item or word."))
         self.keybindings.add(
             keybindings.KeyBinding(
-                "KP_1", \
-                1 << orca.MODIFIER_ORCA, \
-                0, \
-                reviewPreviousCharacterHandler))
-
+                "KP_5",
+                1 << orca.MODIFIER_ORCA,
+                0,
+		self.reviewCurrentItemHandler))
         self.keybindings.add(
             keybindings.KeyBinding(
-                "KP_1", \
-                1 << orca.MODIFIER_ORCA, \
-                1 << orca.MODIFIER_ORCA, \
-                input_event.InputEventHandler(\
-                    Script.reviewEndOfLine,
-                    _("Moves flat review to the end of the line."))))
+                "KP_Begin",
+                1 << orca.MODIFIER_ORCA,
+                0,
+		self.reviewCurrentItemHandler))
 
+	self.reviewCurrentAccessibleHandler = input_event.InputEventHandler(
+            Script.reviewCurrentAccessible,
+            _("Speaks the current flat review object."))
         self.keybindings.add(
             keybindings.KeyBinding(
-                "KP_2", \
-                0, \
-                0, \
-                input_event.InputEventHandler(\
-                    Script.reviewCurrentCharacter,
-                    _("Speaks the current flat review character."))))
+                "KP_5",
+                1 << orca.MODIFIER_ORCA,
+                1 << orca.MODIFIER_ORCA,
+		self.reviewCurrentAccessibleHandler))
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_Begin",
+                1 << orca.MODIFIER_ORCA,
+                1 << orca.MODIFIER_ORCA,
+		self.reviewCurrentAccessibleHandler))                
 
-        reviewNextCharacterHandler = \
-            input_event.InputEventHandler(\
+	self.reviewNextItemHandler = input_event.InputEventHandler(
+            Script.reviewNextItem,
+            _("Moves flat review to the next item or word."))
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_6", 
+                1 << orca.MODIFIER_ORCA,
+                0,
+	        self.reviewNextItemHandler))
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_Right", 
+                1 << orca.MODIFIER_ORCA,
+                0,
+	        self.reviewNextItemHandler))
+
+        self.reviewBelowHandler = input_event.InputEventHandler(
+            Script.reviewBelow,
+            _("Moves flat review to the word below the current word."))
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_6", 
+                1 << orca.MODIFIER_ORCA,
+                1 << orca.MODIFIER_ORCA,
+                self.reviewBelowHandler))
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_Right", 
+                1 << orca.MODIFIER_ORCA,
+                1 << orca.MODIFIER_ORCA,
+                self.reviewBelowHandler))
+
+        self.reviewPreviousCharacterHandler = input_event.InputEventHandler(
+            Script.reviewPreviousCharacter,
+            _("Moves flat review to the previous character."))
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_1", 
+                1 << orca.MODIFIER_ORCA, 
+                0, 
+                self.reviewPreviousCharacterHandler))
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_End", 
+                1 << orca.MODIFIER_ORCA, 
+                0, 
+                self.reviewPreviousCharacterHandler))
+
+        self.reviewEndOfLineHandler = input_event.InputEventHandler(
+	    Script.reviewEndOfLine,
+            _("Moves flat review to the end of the line."))
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_1",
+                1 << orca.MODIFIER_ORCA,
+                1 << orca.MODIFIER_ORCA,
+                self.reviewEndOfLineHandler))
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_End",
+                1 << orca.MODIFIER_ORCA,
+                1 << orca.MODIFIER_ORCA,
+                self.reviewEndOfLineHandler))
+
+        self.reviewCurrentCharacterHandler = input_event.InputEventHandler(
+            Script.reviewCurrentCharacter,
+            _("Speaks the current flat review character."))
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_2",
+                0,
+                0,
+		self.reviewCurrentCharacterHandler))
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "KP_Down",
+                0,
+                0,
+		self.reviewCurrentCharacterHandler))
+
+        self.reviewNextCharacterHandler = input_event.InputEventHandler(
             Script.reviewNextCharacter,
             _("Moves flat review to the next character."))
-
         self.keybindings.add(
             keybindings.KeyBinding(
-                "KP_3", \
-                0, \
-                0, \
-                reviewNextCharacterHandler))
-
+                "KP_3",
+                0,
+                0,
+                self.reviewNextCharacterHandler))
         self.keybindings.add(
             keybindings.KeyBinding(
-                "F11", \
-                1 << orca.MODIFIER_ORCA, \
-                1 << orca.MODIFIER_ORCA, \
-                input_event.InputEventHandler(\
-                    Script.toggleTableCellReadMode,
-                    _("Toggles whether to read just the current table cell or the whole row."))))
+                "KP_Page_Down",
+                0,
+                0,
+                self.reviewNextCharacterHandler))
+
+	self.toggleTableCellReadModeHandler = input_event.InputEventHandler(
+            Script.toggleTableCellReadMode,
+            _("Toggles whether to read just the current table cell or the whole row."))
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "F11",
+                1 << orca.MODIFIER_ORCA,
+                1 << orca.MODIFIER_ORCA,
+		self.toggleTableCellReadModeHandler))
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "SunF36",
+                1 << orca.MODIFIER_ORCA,
+                1 << orca.MODIFIER_ORCA,
+		self.toggleTableCellReadModeHandler))
 
         ################################################################
         #                                                              #
         # Braille bindings                                             #
         #                                                              #
         ################################################################
-        self.braillebindings[braille.CMD_FWINLT] = \
-            input_event.InputEventHandler(
-                Script.panBrailleLeft,
-                _("Pans the braille display to the left."))
-
-        self.braillebindings[braille.CMD_FWINRT] = \
-            input_event.InputEventHandler(
-                Script.panBrailleRight,
-                _("Pans the braille display to the right."))
+        self.panBrailleLeftHandler = input_event.InputEventHandler(
+            Script.panBrailleLeft,
+            _("Pans the braille display to the left."))
+        self.braillebindings[braille.CMD_FWINLT] = self.panBrailleLeftHandler
+            
+        self.panBrailleRightHandler = input_event.InputEventHandler(
+            Script.panBrailleRight,
+            _("Pans the braille display to the right."))
+        self.braillebindings[braille.CMD_FWINRT] = self.panBrailleRightHandler
 
         #self.braillebindings[braille.CMD_CHRLT] = \
         #    input_event.InputEventHandler(
@@ -319,20 +409,23 @@ class Script(script.Script):
         #        Script.panBrailleRightOneChar,
         #        _("Pans the braille display to the right by one character."))
 
-        self.braillebindings[braille.CMD_LNUP] = reviewAboveHandler
-        self.braillebindings[braille.CMD_LNDN] = reviewBelowHandler
+        self.braillebindings[braille.CMD_LNUP] = self.reviewAboveHandler
+        
+        self.braillebindings[braille.CMD_LNDN] = self.reviewBelowHandler
 
-        self.braillebindings[braille.CMD_TOP_LEFT] = reviewHomeHandler
+        self.braillebindings[braille.CMD_TOP_LEFT] = self.reviewHomeHandler
+
+        self.reviewBottomLeftHandler = input_event.InputEventHandler(
+            Script.reviewBottomLeft,
+            _("Moves flat review to the bottom left."))
         self.braillebindings[braille.CMD_BOT_LEFT] = \
-            input_event.InputEventHandler(
-                Script.reviewBottomLeft,
-                _("Moves flat review to the bottom left."))
+            self.reviewBottomLeftHandler
 
-        self.braillebindings[braille.CMD_HOME] = \
-            input_event.InputEventHandler(
-                Script.goBrailleHome,
-                _("Returns to object with keyboard focus."))
-
+        self.goBrailleHomeHandler = input_event.InputEventHandler(
+            Script.goBrailleHome,
+            _("Returns to object with keyboard focus."))
+        self.braillebindings[braille.CMD_HOME] = self.goBrailleHomeHandler
+        
         ################################################################
         #                                                              #
         # AT-SPI object event handlers                                 #
