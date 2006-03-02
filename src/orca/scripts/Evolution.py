@@ -266,9 +266,10 @@ class Script(default.Script):
         #
         # Check if the focus is in the message header list. If this focus
         # event is for a different row that the last time we got a similar
-        # focus event, we want to speak all of the tables cells (and their
-        # headers) in the current highlighted message. (The role is only 
-        # spoken/brailled for the table cell that currently has focus).
+        # focus event, we want to speak all of the tables cells (and the
+        # header for the one that currently has focus) in the current 
+        # highlighted message. (The role is only spoken/brailled for the 
+        # table cell that currently has focus).
         #
         # If this focus event is just for a different table cell on the same
         # row as last time, then we just speak the current cell (and its
@@ -355,8 +356,8 @@ class Script(default.Script):
 
                     if toRead:
                         # Speak/braille the column header for this table cell
-                        # (unless it's a checkbox).
-                        if not checkbox:
+                        # if it has focus (unless it's a checkbox).
+                        if not checkbox and verbose:
                             settings.brailleVerbosityLevel = \
                                 settings.VERBOSITY_LEVEL_BRIEF
                             settings.speechVerbosityLevel = \

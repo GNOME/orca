@@ -1,5 +1,13 @@
 2006-03-02  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/scripts/Evolution.py
+          A tweak to clause 3) in the onFocus() method (Mail view: 
+          message header list). The column header is only spoken and
+          brailled when moving by row, if this is the table cell that
+          currently has focus.
+
+2006-03-02  Rich Burridge <rich.burridge@sun.com>
+
         * bugs/bugs.html
           Added an entry for the StarOffice/OpenOffice bug #62723.
           Open Dialog "read-only" checkbox has incorrect accessibility 
@@ -75,7 +83,7 @@
 2006-02-15  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py
-          A couple of tweaks to to clause 3) in the onFocus() method 
+          A couple of tweaks to clause 3) in the onFocus() method 
           (Mail view: message header list). 
           - It no longer speaks/brailles the headers for checkboxes. A side
             effect of this is that if the current cell with focus was a 
