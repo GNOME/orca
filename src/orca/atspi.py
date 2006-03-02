@@ -799,8 +799,11 @@ class Accessible:
         s = self._acc.getState()
         s = s._narrow(Accessibility.StateSet)
         state = s.getStates()
-        if CACHE_VALUES:
-            self.state = state
+	# [[[WDW - we don't seem to always get appropriate state changed
+	# information, so we will not cache state information.]]]
+	#
+        #if CACHE_VALUES:
+        #    self.state = state
         return state
 
     def __get_relations(self):

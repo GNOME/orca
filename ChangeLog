@@ -1,3 +1,15 @@
+2006-03-02  Willie Walker <william.walker@sun.com>
+
+	* src/orca/braillegenerator.py: add ARMED state as a means for
+	identifying selected items when considering which item to show
+	from a set of grouped items.  This is to work around the way
+	OpenOffice currently exposes selected menu items.  If/when they
+	fix this to match GTK's method, this code should still continue
+	to work and not cause side effects (I hope).
+	* src/orca/atspi.py: do not cache the accessible state because
+	I'm not sure we are getting the appropriate events to allow us
+	to keep our state cache in sync.
+	
 2006-03-01  Willie Walker <william.walker@sun.com>
 
 	* src/orca/default.py: fix for bug 332887 - added extra KeySyms
