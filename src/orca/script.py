@@ -92,8 +92,14 @@ class Script:
         self.keybindings = keybindings.KeyBindings()
         debug.println(debug.LEVEL_FINE, "NEW SCRIPT: %s" % self.name)
 
-    def __del__(self):
-        debug.println(debug.LEVEL_FINE, "DELETE SCRIPT: %s" % self.name)
+    # [[[WDW - There is a circular reference going on somewhere (see
+    # bug 333168).  In the presence of this reference, the existence
+    # of a __del__ method prevents the garbage collector from
+    # collecting this object. So, we will not define a __del__ method
+    # until we understand where the circular reference is coming from.
+    #
+    #def __del__(self):
+    #    debug.println(debug.LEVEL_FINE, "DELETE SCRIPT: %s" % self.name)
         
     def processObjectEvent(self, event):
         """Processes all AT-SPI object events of interest to this

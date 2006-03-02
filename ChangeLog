@@ -15,6 +15,10 @@
 
 2006-03-02  Willie Walker <william.walker@sun.com>
 
+	* src/orca/script.py, src/orca/focus_tracking_presenter.py:
+	patch for bug 333168: scripts were not being reclaimed.  This
+	is an acceptable workaround, but we should (not must) determine
+	circular references and why they exist.
 	* src/orca/braillegenerator.py: add ARMED state as a means for
 	identifying selected items when considering which item to show
 	from a set of grouped items.  This is to work around the way

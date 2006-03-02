@@ -239,7 +239,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                 script = self._knownScripts[app]
                 self._deregisterEventListeners(script)
                 del self._knownScripts[app]
-                break
+		del script
 
     ########################################################################
     #                                                                      #
@@ -319,8 +319,14 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         # either.
         #
         if event.type == "object:children-changed:remove":
-            if event.source == self.registry.desktop:
+            if event.source == atspi.Accessible.makeAccessible(
+			           self.registry.desktop):
                 self._reclaimScripts()
+		#import gc
+		#gc.collect()
+		#print "In process, garbage:", gc.garbage
+		#for obj in gc.garbage:
+		#    print "   referrers:", obj, gc.get_referrers(obj)
             return
 
         try:
