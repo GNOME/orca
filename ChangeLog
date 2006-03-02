@@ -1,5 +1,13 @@
 2006-03-02  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/speechgenerator.py
+          Adjusted the _getSpeechForTableCell() method to check to see
+          if the table cell implemented the accessible text interface,
+          and if so, to append that text to the list of spoken utterances
+          (if that text was different than the label of the table cell).
+
+2006-03-02  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/scripts/Evolution.py
           A tweak to clause 3) in the onFocus() method (Mail view: 
           message header list). The column header is only spoken and

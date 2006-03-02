@@ -1184,6 +1184,10 @@ class SpeechGenerator:
 
         if (len(utterances) == 0) and (not already_focused):
             utterances = [obj.label]
+            if obj.text:
+                text = obj.text.getText(0, -1)
+                if obj.label != text:
+                    utterances.append(text)
 
         # [[[TODO: WDW - HACK attempt to determine if this is a node;
         # if so, describe its state.]]]
