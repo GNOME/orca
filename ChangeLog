@@ -1,3 +1,21 @@
+2006-03-03  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/StarOffice.py
+          Added a new clause to the onFocus() method.
+
+          2) Writer: spell checking dialog.
+         
+          Check to see if the Spell Check dialog has just appeared and got
+          focus. If it has, then it contains a "paragraph" which shows the
+          context for the current spelling mistake. After speaking/brailling
+          the default action for this component, that a selection of the
+          surronding text from that paragraph with the misspelt word is also
+          spoken.
+         
+        * src/orca/scripts/Evolution.py
+          The number of words spoken in the surronding text for misspelt
+          words was one less than it should have been.
+
 2006-03-02  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/speechgenerator.py

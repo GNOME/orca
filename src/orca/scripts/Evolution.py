@@ -719,7 +719,7 @@ class Script(default.Script):
                             max = len(allTokens) - 1
 
                         utterances = [_("Misspelled word is "), badWord, \
-                                  _(" Context is ")] + allTokens[min:max]
+                                  _(" Context is ")] + allTokens[min:max+1]
 
                         # Turn the list of utterances into a string.
                         text = " ".join(utterances)
