@@ -5,6 +5,11 @@
 	connect to BrlTTY.
 	* src/orca/focus_tracking_presenter.py, src/orca/orca.py: handle 
 	COMM_FAILURE's better when looking at children of the destkop.
+	* src/orca/gnomespeechfactory.py: In speech, add a space after all
+	instances of "[" in a string as a means to prevent DECtalk from
+	interpreting these as commands.  This is an interim fix, and I'm 
+	not sure whether the real fix belongs in the dectalk driver for
+	gnome-speech or in Orca.
 	
 2006-03-03  Rich Burridge <rich.burridge@sun.com>
 
