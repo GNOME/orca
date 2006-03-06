@@ -3,7 +3,9 @@
 	* src/orca/orca.py, src/orca/settings.py, src/orca/orca-setup.in:
 	turn braille on by default; Orca will fail gracefully if it cannot
 	connect to BrlTTY.
-
+	* src/orca/focus_tracking_presenter.py, src/orca/orca.py: handle 
+	COMM_FAILURE's better when looking at children of the destkop.
+	
 2006-03-03  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py

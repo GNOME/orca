@@ -226,13 +226,13 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
 
         desktop = self.registry.desktop
         for i in range(0, desktop.childCount):
-            acc = desktop.getChildAtIndex(i)
             try:
+                acc = desktop.getChildAtIndex(i)
                 app = atspi.Accessible.makeAccessible(acc)
                 if app:
                     apps.insert(0, app)
             except:
-                debug.printException(debug.LEVEL_SEVERE)
+                debug.printException(debug.LEVEL_FINEST)
 
         for app in self._knownScripts.keys():
             if apps.count(app) == 0:
