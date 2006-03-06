@@ -243,7 +243,7 @@ def setupBraille():
     wants it, returns True.  If Braille is unavailable or the user
     doesn't want it, returns False.
     """
-    
+
     working = False
     try:
         import orca.braille as braille
@@ -283,12 +283,19 @@ useSpeech = setupSpeech()
 if useSpeech == False:
     settings.writelines(orca.settings.USE_SPEECH + " = False\n")
     settings.writelines(orca.settings.USE_KEY_ECHO + " = False\n")
+
+# We'll always enable braille for now.  Orca will recover gracefully
+# if it cannot connect to BrlTTY.
+#
+settings.writelines(orca.settings.USE_BRAILLE + " = True\n")
     
-useBraille = setupBraille()
-if useBraille:
-    settings.writelines(orca.settings.USE_BRAILLE + " = True\n")
-else:
-    settings.writelines(orca.settings.USE_BRAILLE + " = False\n")
+#useBraille = setupBraille()
+#if useBraille:
+#    settings.writelines(orca.settings.USE_BRAILLE + " = True\n")
+#else:
+#    settings.writelines(orca.settings.USE_BRAILLE + " = False\n")
+
+
 
 enableAccessibility()
 

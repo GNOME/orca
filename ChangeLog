@@ -1,3 +1,9 @@
+2006-03-06  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca.py, src/orca/settings.py, src/orca/orca-setup.in:
+	turn braille on by default; Orca will fail gracefully if it cannot
+	connect to BrlTTY.
+
 2006-03-03  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py

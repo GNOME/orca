@@ -231,13 +231,13 @@ def _buildAppList(registry):
     apps = []
 
     for i in range(0, registry.desktop.childCount):
-        acc = registry.desktop.getChildAtIndex(i)
         try:
+            acc = registry.desktop.getChildAtIndex(i)
             app = atspi.Accessible.makeAccessible(acc)
             if app:
                 apps.insert(0, app)
         except:
-            debug.printException(debug.LEVEL_SEVERE)
+            debug.printException(debug.LEVEL_FINEST)
 
     debug.println(debug.LEVEL_FINEST,
                   "...orca._buildAppList")
@@ -916,7 +916,7 @@ def init(registry):
         debug.println(debug.LEVEL_CONFIGURATION,
                       "Speech module has NOT been initialized.")
 
-    if settings.getSetting(settings.USE_BRAILLE, False):
+    if settings.getSetting(settings.USE_BRAILLE, True):
         try:
             braille.init(_processBrailleEvent, 7)
         except:
@@ -1033,6 +1033,14 @@ def fastExit(signum, frame):
     sys.exit()
 
 def main():
+    #import commands
+    #a11yEnabled = commands.getoutput(\
+    #    "gconftool-2 --get /desktop/gnome/interface/accessibility")
+    #if a11yEnabled != "true":
+    #    print _("Accessibility has not been enabled for this session.")
+    #    print _("Please run orca-setup and then logout and log back in.")
+    #    fastExit(None, None)
+        
     userprefs = os.path.join(os.environ["HOME"], ".orca")
     sys.path.insert(0, userprefs)
     sys.path.insert(0, '') # current directory

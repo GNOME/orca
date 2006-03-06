@@ -89,7 +89,7 @@ voices = {
 # If True, use braille.
 #
 USE_BRAILLE             = "useBraille"
-useBraille              = False
+useBraille              = True
 
 # If True, use braille monitor.
 #
