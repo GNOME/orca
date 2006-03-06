@@ -3,8 +3,8 @@
 <para>Orca is a flexible, extensible, and powerful assistive
   technology that provides end-user access to applications and
   toolkits that support the AT-SPI (e.g., the GNOME desktop).  With
-  early input and continued engagement from its end users, Orca has
-  been designed and implemented by the Sun Microsystems, Inc.,
+  early input from and continued engagement with its end users, Orca 
+  has been designed and implemented by the Sun Microsystems, Inc.,
   Accessibility Program Office.</para>
 
 <para>&note; Orca is currently a work in progress.  As a result, this
