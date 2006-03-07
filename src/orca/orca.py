@@ -1020,17 +1020,31 @@ def shutdown(script=None, inputEvent=None):
     _initialized = False
     return True
 
+exitCount = 0
 def shutdownAndExit(signum, frame):
-    print "Goodbye."
+    global exitCount
+    
+    print "Shutting down and exiting due to signal =", signum
+    
+    # Well...we'll try to exit nicely, but if we keep getting called,
+    # something bad is happening, so just quit.
+    #
+    if exitCount:
+        sys.exit(1)
+    else:
+        exitCount += 1
+
+    # Try to do a graceful shutdown if we can.
+    #
     try:
 	shutdown()
+        return
     except:
-        pass
-    sys.exit()
+        sys.exit(1)
 
 def fastExit(signum, frame):
-    print "Goodbye."
-    sys.exit()
+    print "Exiting due to signal =", signum
+    sys.exit(1)
 
 def main():
     #import commands
@@ -1044,12 +1058,17 @@ def main():
     userprefs = os.path.join(os.environ["HOME"], ".orca")
     sys.path.insert(0, userprefs)
     sys.path.insert(0, '') # current directory
+
+    signal.signal(signal.SIGHUP, shutdownAndExit)
     signal.signal(signal.SIGINT, shutdownAndExit)
+    signal.signal(signal.SIGTERM, shutdownAndExit)
     signal.signal(signal.SIGQUIT, shutdownAndExit)
     signal.signal(signal.SIGSEGV, fastExit)
+    
     registry = atspi.Registry()
     init(registry)
     start(registry)
+    return 0
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

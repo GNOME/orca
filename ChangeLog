@@ -1,3 +1,8 @@
+2006-03-07  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca.py: add more signal handling logic to attempt to
+	shutdown properly.
+		
 2006-03-06  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca.py, src/orca/settings.py, src/orca/orca-setup.in:
