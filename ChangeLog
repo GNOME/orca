@@ -1,5 +1,8 @@
 2006-03-07  Willie Walker <william.walker@sun.com>
 
+	* src/orca/gnomespeechfactory.py: unref speech engines that fail
+	to initialize.  This will give them a chance to exit.  Fixes 
+	bug 333792.
 	* src/orca/orca.py: add more signal handling logic to attempt to
 	shutdown gracefully under adverse conditions.  This helps address
 	bug 333765.

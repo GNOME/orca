@@ -110,6 +110,10 @@ class SpeechServer(speechserver.SpeechServer):
         if not isInitialized:
             isInitialized = driver.driverInit()
         if not isInitialized:
+            try:
+                driver.unref()
+            except:
+                pass
             driver = None
 	return driver
 
