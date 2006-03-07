@@ -269,7 +269,13 @@ def _onChildrenChanged(e):
         # apps[] list.  If this logic is changed in the future, the apps list
         # will most likely needed to be updated here.]]]
         #
-        _buildAppList(registry)
+        # [[[WDW - 03/07/2006 - comment this out until we can figure out
+        # why Orca sometimes hangs here.  The main hang seems to be when
+        # Orca calls getChildAtIndex on the registry.  The hierarchical
+        # presenter depends upon this list, though, so I've commented it
+        # out for now as well.]]]
+        #
+        #_buildAppList(registry)
 
 ########################################################################
 #                                                                      #
@@ -971,11 +977,19 @@ def start(registry):
         debug.printException(debug.LEVEL_SEVERE)
 
     if not _PRESENTATION_MANAGERS:
+        # [[[WDW - comment out hierarchical_presenter for now.  It relies
+        # on orca.apps, and we've disabled that due to a hang in a call
+        # to getChildAtIndex in _buildAppList.]]]
+        #
+        #import focus_tracking_presenter
+        #import hierarchical_presenter
+        #_PRESENTATION_MANAGERS = \
+        #    [focus_tracking_presenter.FocusTrackingPresenter(),
+        #     hierarchical_presenter.HierarchicalPresenter()]
+
         import focus_tracking_presenter
-        import hierarchical_presenter
         _PRESENTATION_MANAGERS = \
-            [focus_tracking_presenter.FocusTrackingPresenter(),
-             hierarchical_presenter.HierarchicalPresenter()]
+            [focus_tracking_presenter.FocusTrackingPresenter()]
     
     _switchToPresentationManager(0) # focus_tracking_presenter
 
