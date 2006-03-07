@@ -1,7 +1,8 @@
 2006-03-07  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca.py: add more signal handling logic to attempt to
-	shutdown properly.
+	shutdown gracefully under adverse conditions.  This helps address
+	bug 333765.
 		
 2006-03-06  Willie Walker <william.walker@sun.com>
 
