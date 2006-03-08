@@ -1,5 +1,8 @@
 2006-03-08  Willie Walker <william.walker@sun.com>
 
+	* src/orca/brlmon.py: Better adaptation (e.g. position on screen)
+	to changes in size when working with large fonts (e.g., enlarging
+	the fonts for presentation purposes).	
 	* src/orca/gnomespeechfactory.py, src/orca/braille.py: transform
 	unicode ellipses into "...".  Fixes bug 333915.
 	
