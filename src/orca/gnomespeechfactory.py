@@ -497,7 +497,10 @@ class SpeechServer(speechserver.SpeechServer):
             except:
                 pass
         else:
+            # Replace ellipses (both manual and unicode) with "dot dot dot"
+            #
             text = text.replace("...", _(" dot dot dot"), 1)
+            text = text.replace("\342\200\246",  _(" dot dot dot"), 1)
 
         # [[[TODO: HACK - We're going to add whitespace after "["
         # because DECtalk wants to interpret these as inline DECtalk

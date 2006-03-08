@@ -1,3 +1,8 @@
+2006-03-08  Willie Walker <william.walker@sun.com>
+
+	* src/orca/gnomespeechfactory.py, src/orca/braille.py: transform
+	unicode ellipses into "...".  Fixes bug 333915.
+	
 2006-03-07  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca.py: disable the automatic updating of the apps

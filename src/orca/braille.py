@@ -423,7 +423,12 @@ class Line:
         for region in self.regions:
             if region == _regionWithFocus:
                 focusOffset = len(string)
-            string += region.string
+            if region.string:
+                # [[[TODO: WDW - HACK: Replace unicode ellipses with "..."
+                # The ultimate solution is to get i18n support into
+                # BrlTTY.]]]
+                #
+                string += region.string.replace("\342\200\246", "...")
 
         return [string, focusOffset]
 
