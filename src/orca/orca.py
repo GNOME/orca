@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2005 Sun Microsystems Inc.
+# Copyright 2004-2006 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -31,6 +31,7 @@ import keybindings
 #             as bugzilla bug 319643.]]]
 import settings
 import speech
+import threading
 
 from input_event import BrailleEvent
 from input_event import KeyboardEvent
@@ -214,7 +215,7 @@ def findActiveWindow():
             state = app.child(i).state
             if state.count(atspi.Accessibility.STATE_ACTIVE) > 0:
                 window = app.child(i)
-		break
+                break
 
     return window
 
@@ -948,7 +949,7 @@ def init(registry):
     # Create and load an app's script when it is added to the desktop
     #
     registry.registerEventListener(_onChildrenChanged,
-				   "object:children-changed:")
+                                   "object:children-changed:")
 
     _initialized = True
     return True
@@ -995,6 +996,13 @@ def start(registry):
 
     registry.start()
 
+def abort():
+    sys.exit(1)
+
+def timeout():
+    print "TIMEOUT: Hung while trying to shutdown.  Aborting."
+    abort()
+    
 def shutdown(script=None, inputEvent=None):
     """Exits Orca.  Unregisters any event listeners and cleans up.  Also
     quits the bonobo main loop and resets the initialized state to False.
@@ -1008,6 +1016,13 @@ def shutdown(script=None, inputEvent=None):
     if not _initialized:
         return False
 
+    # [[[TODO: WDW - the timer stuff is an experiment to see if
+    # we can recover from hangs.  It's only experimental, so it's
+    # commented out for now.]]]
+    #
+    #timer = threading.Timer(5.0, timeout)
+    #timer.start()
+    
     speech.speak(_("goodbye."))
     braille.displayMessage(_("Goodbye."))
 
@@ -1015,7 +1030,7 @@ def shutdown(script=None, inputEvent=None):
     #
     registry = atspi.Registry()
     registry.deregisterEventListener(_onChildrenChanged,
-            	                     "object:children-changed:")
+                                     "object:children-changed:")
 
     if _currentPresentationManager >= 0:
         _PRESENTATION_MANAGERS[_currentPresentationManager].deactivate()
@@ -1031,11 +1046,14 @@ def shutdown(script=None, inputEvent=None):
 
     registry.stop()
 
+    #timer.cancel()
+    #del timer
+    
     _initialized = False
     return True
 
 exitCount = 0
-def shutdownAndExit(signum, frame):
+def shutdownOnSignal(signum, frame):
     global exitCount
     
     print "Shutting down and exiting due to signal =", signum
@@ -1044,21 +1062,21 @@ def shutdownAndExit(signum, frame):
     # something bad is happening, so just quit.
     #
     if exitCount:
-        sys.exit(1)
+        abort()
     else:
         exitCount += 1
 
     # Try to do a graceful shutdown if we can.
     #
     try:
-	shutdown()
+        shutdown()
         return
     except:
-        sys.exit(1)
+        abort()
 
-def fastExit(signum, frame):
-    print "Exiting due to signal =", signum
-    sys.exit(1)
+def abortOnSignal(signum, frame):
+    print "Aborting due to signal =", signum
+    abort()
 
 def main():
     #import commands
@@ -1067,17 +1085,17 @@ def main():
     #if a11yEnabled != "true":
     #    print _("Accessibility has not been enabled for this session.")
     #    print _("Please run orca-setup and then logout and log back in.")
-    #    fastExit(None, None)
+    #    abort()
         
     userprefs = os.path.join(os.environ["HOME"], ".orca")
     sys.path.insert(0, userprefs)
     sys.path.insert(0, '') # current directory
 
-    signal.signal(signal.SIGHUP, shutdownAndExit)
-    signal.signal(signal.SIGINT, shutdownAndExit)
-    signal.signal(signal.SIGTERM, shutdownAndExit)
-    signal.signal(signal.SIGQUIT, shutdownAndExit)
-    signal.signal(signal.SIGSEGV, fastExit)
+    signal.signal(signal.SIGHUP, shutdownOnSignal)
+    signal.signal(signal.SIGINT, shutdownOnSignal)
+    signal.signal(signal.SIGTERM, shutdownOnSignal)
+    signal.signal(signal.SIGQUIT, shutdownOnSignal)
+    signal.signal(signal.SIGSEGV, abortOnSignal)
     
     registry = atspi.Registry()
     init(registry)

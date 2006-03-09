@@ -29,6 +29,7 @@ import orca
 import presentation_manager
 import settings
 import speech
+import threading
 
 from orca_i18n import _ # for gettext support
 
@@ -51,14 +52,14 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         # FocusTrackingPresenter then eventually passes them to the
         # script.  Because both the FocusTrackingPresenter and scripts
         # are interested in object events, and the FocusTrackingPresenter
-	# is what delves them out, we keep at most one listener to avoid
+        # is what delves them out, we keep at most one listener to avoid
         # receiving the same event twice in a row.
         #
-	self.registry = atspi.Registry()
-	self._knownScripts = {}
-	self._eventQueue   = Queue.Queue(0)
-	self._gidle_id     = 0
-
+        self.registry      = atspi.Registry()
+        self._knownScripts = {}
+        self._eventQueue   = Queue.Queue(0)
+        self._gidle_id     = 0
+        
     ########################################################################
     #                                                                      #
     # METHODS FOR KEEPING TRACK OF LISTENERS REGISTERED WITH ATSPI         #
@@ -76,7 +77,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             self._listenerCounts[eventType] += 1
         else:
             self.registry.registerEventListener(self._enqueueObjectEvent,
-						eventType)
+                                                eventType)
             self._listenerCounts[eventType] = 1
 
     def _deregisterEventListener(self, eventType):
@@ -89,12 +90,12 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         self._listenerCounts[eventType] -= 1
         if self._listenerCounts[eventType] == 0:
             self.registry.deregisterEventListener(self._enqueueObjectEvent,
-						  eventType)
+                                                  eventType)
             del self._listenerCounts[eventType]
 
     def _registerEventListeners(self, script):
         """Tells the FocusTrackingPresenter to listen for all
-	the event types of interest to the script.
+        the event types of interest to the script.
 
         Arguments:
         - script: the script.
@@ -211,8 +212,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         elif self._knownScripts.has_key(app):
             script = self._knownScripts[app]
         else:
-    	    script = self._createScript(app)
-       	    self._knownScripts[app] = script
+            script = self._createScript(app)
+            self._knownScripts[app] = script
             self._registerEventListeners(script)
 
         return script
@@ -239,7 +240,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                 script = self._knownScripts[app]
                 self._deregisterEventListeners(script)
                 del self._knownScripts[app]
-		del script
+                del script
 
     ########################################################################
     #                                                                      #
@@ -280,30 +281,52 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         # want it to ref, thus allowing things to survive until they
         # are processed on the gidle thread.
         #
-	debug.println(debug.LEVEL_FINEST, "Queueing event %s" % e.type)
+        debug.println(debug.LEVEL_FINEST, "Queueing event %s" % e.type)
         try:
             self._eventQueue.put(atspi.Event(e))
             if not self._gidle_id:
                 self._gidle_id = gobject.idle_add(self._dequeueObjectEvent)
-	except:
+        except:
             debug.printException(debug.LEVEL_SEVERE)
             debug.println(debug.LEVEL_SEVERE,
                           "Exception above while processing event: " + e.type)
+
+    def _timeout(self):
+        """Timer that will be called if we time out while trying to perform
+        an operation."""
+        debug.println(debug.LEVEL_SEVERE,
+                      "TIMEOUT: Looks like something has hung. Quitting Orca.")
+        orca.shutdown()
         
     def _dequeueObjectEvent(self):
         """Handles all events destined for scripts.  Called by the GTK
-	idle thread.
+        idle thread.
         """
 
-	event = self._eventQueue.get()
-	debug.println(debug.LEVEL_FINEST, "Dequeued event %s" % event.type)
-	self._processObjectEvent(event)
-	if self._eventQueue.empty():
-	    self._gidle_id = 0
-	    return False
-	else:
-	    return True
-	
+        event = self._eventQueue.get()
+        debug.println(debug.LEVEL_FINEST, "Dequeued event %s" % event.type)
+
+        # [[[TODO: WDW - the timer stuff is an experiment to see if
+        # we can recover from hangs.  It's only experimental, so it's
+        # commented out for now.]]]
+        #
+        #timer = threading.Timer(5.0, self._timeout)
+        #timer.start()
+        
+        try:
+            self._processObjectEvent(event)
+        except:
+            pass
+        
+        #timer.cancel()
+        #del timer
+        
+        if self._eventQueue.empty():
+            self._gidle_id = 0
+            return False
+        else:
+            return True
+        
     def _processObjectEvent(self, event):
         """Handles all events destined for scripts.
 
@@ -320,13 +343,13 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         #
         if event.type == "object:children-changed:remove":
             if event.source == atspi.Accessible.makeAccessible(
-			           self.registry.desktop):
+                                   self.registry.desktop):
                 self._reclaimScripts()
-		#import gc
-		#gc.collect()
-		#print "In process, garbage:", gc.garbage
-		#for obj in gc.garbage:
-		#    print "   referrers:", obj, gc.get_referrers(obj)
+                #import gc
+                #gc.collect()
+                #print "In process, garbage:", gc.garbage
+                #for obj in gc.garbage:
+                #    print "   referrers:", obj, gc.get_referrers(obj)
             return
 
         try:
@@ -443,10 +466,10 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
 
         speech.speak(_("Switching to focus tracking mode."))
 
-    	self._listenerCounts = {}
-	self._knownScripts   = {}
+        self._listenerCounts = {}
+        self._knownScripts   = {}
         self._defaultScript  = None
-    	self._activeScript   = None
+        self._activeScript   = None
 
         self._registerEventListener("window:activate")
         self._registerEventListener("window:deactivate")
@@ -470,8 +493,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
 
         for eventType in self._listenerCounts.keys():
             self.registry.deregisterEventListener(self._enqueueObjectEvent,
-						  eventType)
-    	self._listenerCounts = {}
-	self._knownScripts   = {}
+                                                  eventType)
+        self._listenerCounts = {}
+        self._knownScripts   = {}
         self._defaultScript  = None
-    	self._activeScript   = None
+        self._activeScript   = None

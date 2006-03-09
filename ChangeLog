@@ -1,3 +1,9 @@
+2006-03-09  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca.py, src/orca/focus_tracking_presenter.py: stub in
+	some experimental timer code.  It's commented out for now, but the
+	goal is to try to detect hangs in AT-SPI calls.
+	
 2006-03-08  Willie Walker <william.walker@sun.com>
 
 	* src/orca/brlmon.py: Better adaptation (e.g. position on screen)
