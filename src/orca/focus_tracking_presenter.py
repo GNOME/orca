@@ -277,6 +277,13 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         if e.type == "object:property-change:accessible-parent":
             return
 
+        # At this point in time, we only care when objects are removed
+        # from the desktop.
+        #
+        if (e.type == "object:children-changed:remove") \
+           and (e.source != self.registry.desktop):
+            return
+           
         # We create the event here because it will ref everything we
         # want it to ref, thus allowing things to survive until they
         # are processed on the gidle thread.

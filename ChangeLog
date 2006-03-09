@@ -1,5 +1,8 @@
 2006-03-09  Willie Walker <william.walker@sun.com>
 
+	* src/orca/focus_tracking_presenter.py: toss out all children remove
+	events unless they are for the desktop.  This is an attempt to deal
+	with bursty event behavior for events we may not always care about.
 	* src/orca/orca.py, src/orca/focus_tracking_presenter.py: stub in
 	some experimental timer code.  It's commented out for now, but the
 	goal is to try to detect hangs in AT-SPI calls.
