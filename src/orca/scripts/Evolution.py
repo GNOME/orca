@@ -325,7 +325,7 @@ class Script(default.Script):
 
             if orca.locusOfFocus.role != rolenames.ROLE_TABLE_CELL:
                 speakAll = True
-                message = "There are %d messages in this mail folder" % \
+                message = "%d messages" % \
                     parent.table.nRows
                 brailleRegions.append(braille.Region(message))
                 speech.speak(message)
@@ -718,7 +718,7 @@ class Script(default.Script):
                         if max > (len(allTokens) - 1):
                             max = len(allTokens) - 1
 
-                        utterances = [_("Misspelled word is "), badWord, \
+                        utterances = [_("Misspelled word: "), badWord, \
                                   _(" Context is ")] + allTokens[min:max+1]
 
                         # Turn the list of utterances into a string.
