@@ -24,6 +24,7 @@ import orca.rolenames as rolenames
 import orca.orca as orca
 import orca.braille as braille
 import orca.speech as speech
+import orca.settings as settings
 import orca.keybindings as keybindings
 import orca.util as util
 
@@ -149,6 +150,64 @@ class Script(default.Script):
                 return
 
 
+    def endOfLink(self, obj, word, startOffset, endOffset):
+        """Return an indication of whether the given word contains the
+           end of a hypertext link.
+
+        Arguments:
+        - obj: an Accessible object that implements the AccessibleText
+               interface
+        - word: the word to check
+        - startOffset: the start offset for this word
+        - endOffset: the end offset for this word
+
+        Returns True if this word contains the end of a hypertext link.
+        """
+
+        nLinks = obj.hypertext.getNLinks()
+        links = []
+        for i in range(0, nLinks):
+            links.append(obj.hypertext.getLink(i))
+
+        for i in range(0, len(links)):
+            if links[i].endIndex > startOffset and \
+               links[i].endIndex <= endOffset:
+                return True
+
+        return False
+            
+
+    def sayWriterWord(self, obj, word, startOffset, endOffset):
+        """Speaks the given word in the appropriate voice. If this word is
+        a hypertext link and it is also at the end offset for one of the 
+        links, then the word "link" is also spoken.
+
+        Arguments:
+        - obj: an Accessible object that implements the AccessibleText
+               interface
+        - word: the word to speak
+        - startOffset: the start offset for this word
+        - endOffset: the end offset for this word
+        """
+
+        isHyperText = False
+        voices = settings.getSetting(settings.VOICES, None)
+
+        for i in range(startOffset, endOffset):
+            if default.getLinkIndex(obj, i) >= 0:
+                isHyperText = True
+                voice = voices[settings.HYPERLINK_VOICE]
+                break
+            elif word.isupper():
+                voice = voices[settings.UPPERCASE_VOICE]
+            else:
+                voice = voices[settings.DEFAULT_VOICE]
+
+        speech.speak(word, voice)
+        if self.endOfLink(obj, word, startOffset, endOffset):
+            speech.speak(_("link"))
+
+
     def walkComponentHierarchy(self, obj):
         """Debug routine to print out the hierarchy of components for the
            given object.
@@ -207,7 +266,37 @@ class Script(default.Script):
                       "StarOffice.onFocus - Writer: text paragraph.")
 
             result = atspi.getTextLineAtCaret(event.source)
-            speech.speak(result[0])
+
+            # Check to see if there are any hypertext links in this paragraph.
+            # If no, then just speak the whole line. Otherwise, split the
+            # line into words and call sayWriterWord() to speak that token
+            # in the appropriate voice.
+            #
+            hypertext = event.source.hypertext
+            if not hypertext or (hypertext.getNLinks() == 0):
+                speech.speak(result[0])
+            else:
+                started = False
+                startOffset = 0
+                for i in range(0, len(result[0])):
+                    if result[0][i] == ' ':
+                        if started:
+                            endOffset = i
+                            self.sayWriterWord(event.source, 
+                                result[0][startOffset:endOffset+1],
+                                startOffset, endOffset)
+                            startOffset = i
+                            started = False
+                    else:
+                        if not started:
+                            startOffset = i
+                            started = True
+                    
+                if started:
+                    endOffset = len(result[0])
+                    self.sayWriterWord(event.source, 
+                                       result[0][startOffset:endOffset], 
+                                       startOffset, endOffset)
 
             brailleRegions = []
             [cellRegions, focusedRegion] = \
@@ -267,7 +356,7 @@ class Script(default.Script):
                                event,
                                event.source.toString())
 
-        # self.walkComponentHierarchy(event.source)
+        self.walkComponentHierarchy(event.source)
 
         # 1) Writer: spell checking dialog.
         #

@@ -1,3 +1,12 @@
+
+2006-03-13  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/StarOffice.py
+          Adjustment to clause #1 of the onFocus() method to check to see
+          if the current paragraph contains one or more hypertext links.
+          If it does, then those words containing the links are spoken with
+          the HYPERTEXT voice and the word "link" is spoken after them.
+
 2006-03-13  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py
