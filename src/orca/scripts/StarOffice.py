@@ -46,6 +46,108 @@ class Script(default.Script):
 
         default.Script.__init__(self, app)
 
+        # The following variables will be used to try to determine if we've
+        # already handled this misspelt word (see readMisspeltWord() for
+        # more details.
+
+        self.lastTextLength = -1
+        self.lastBadWord = ''
+        self.lastStartOff = -1
+        self.lastEndOff = -1
+
+
+    def readMisspeltWord(self, event, pane):
+        """Speak/braille the current misspelt word plus its context.
+           The spell check dialog contains a "paragraph" which shows the
+           context for the current spelling mistake. After speaking/brailling
+           the default action for this component, that a selection of the
+           surronding text from that paragraph with the misspelt word is also
+           spoken.
+
+        Arguments:
+        - event: the event.
+        - pane: the option pane in the spell check dialog.
+        """
+
+        # Speak/braille the default action for this component.
+        #
+        default.Script.onFocus(self, event)
+
+        paragraph = atspi.findByRole(pane, rolenames.ROLE_PARAGRAPH)
+
+        # Determine which word is the misspelt word. This word will have
+        # non-default text attributes associated with it.
+
+        textLength = paragraph[0].text.characterCount
+        startFound = False
+        for i in range(0, textLength):
+            attributes = paragraph[0].text.getAttributes(i)
+            if len(attributes[0]) != 0:
+                if not startFound:
+                    startOff = i
+                    startFound = True
+            else:
+                if startFound:
+                    endOff = i
+                    break
+
+        badWord = paragraph[0].text.getText(startOff, endOff-1)
+
+        # Note that quite often get two or more of these property-changes
+        # events each time there is a new misspelt word. We extract the
+        # length of the line of text, the misspelt word, the start and end
+        # offsets for that word and compare them against the values saved
+        # from the last time this routine was called. If they are the same
+        # and this is a "object:property-change:accessible-name" event, 
+        # then we ignore it.
+
+        debug.println(debug.LEVEL_FINEST, \
+            "StarOffice.readMisspeltWord: type=%s  word=%s(%d,%d)  len=%d" % \
+            (event.type, badWord, startOff, endOff, textLength))
+
+        if (event.type == "object:property-change:accessible-name") and \
+           (textLength == self.lastTextLength) and \
+           (badWord == self.lastBadWord) and \
+           (startOff == self.lastStartOff) and \
+           (endOff == self.lastEndOff):
+            return
+
+        # Create a list of all the words found in the misspelt paragraph.
+        #
+        text = paragraph[0].text.getText(0, -1)
+        allTokens = text.split()
+
+        # Create an utterance to speak consisting of the misspelt
+        # word plus the context where it is used (upto five words
+        # to either side of it).
+        #
+        for i in range(0, len(allTokens)):
+            if allTokens[i] == badWord:
+                min = i - 5
+                if min < 0:
+                    min = 0
+                max = i + 5
+                if max > (len(allTokens) - 1):
+                    max = len(allTokens) - 1
+
+                utterances = [_("Misspelled word is "), badWord, \
+                          _(" Context is ")] + allTokens[min:max+1]
+
+                # Turn the list of utterances into a string.
+                #
+                text = " ".join(utterances)
+                speech.speak(text)
+
+                # Save misspelt word information for comparison purposes next
+                # time around.
+                #
+                self.lastTextLength = textLength
+                self.lastBadWord = badWord
+                self.lastStartOff = startOff
+                self.lastEndOff = endOff
+
+                return
+
 
     def walkComponentHierarchy(self, obj):
         """Debug routine to print out the hierarchy of components for the
@@ -120,11 +222,8 @@ class Script(default.Script):
         # 2) Writer: spell checking dialog.
         #
         # Check to see if the Spell Check dialog has just appeared and got
-        # focus. If it has, then it contains a "paragraph" which shows the
-        # context for the current spelling mistake. After speaking/brailling
-        # the default action for this component, that a selection of the
-        # surronding text from that paragraph with the misspelt word is also
-        # spoken.
+        # focus. If it has, then speak/braille the current misspelt word 
+        # plus its context.
         #
         # Note that in order to make sure that this focus event is for the 
         # spell check dialog, a check is made of the localized name of the 
@@ -132,69 +231,72 @@ class Script(default.Script):
         # their translation of this string matches what StarOffice uses in
         # that locale.
 
-        pane = event.source.parent
         rolesList = [rolenames.ROLE_PUSH_BUTTON, \
                      rolenames.ROLE_OPTION_PANE, \
                      rolenames.ROLE_DIALOG, \
                      rolenames.ROLE_APPLICATION]
-        if util.isDesiredFocusedItem(event.source, rolesList) and \
-           pane.name.startswith(_("Spellcheck:")):
-            debug.println(debug.LEVEL_FINEST,
-                      "StarOffice.onFocus - Writer: spell checking dialog.")
+        if util.isDesiredFocusedItem(event.source, rolesList):
+            pane = event.source.parent
+            if pane.name.startswith(_("Spellcheck:")):
+                debug.println(debug.LEVEL_FINEST,
+                      "StarOffice.onFocus - Writer: spell check dialog.")
 
-            # Speak/braille the default action for this component.
-            #
-            default.Script.onFocus(self, event)
+                self.readMisspeltWord(event, pane)
 
-            paragraph = atspi.findByRole(pane, rolenames.ROLE_PARAGRAPH)
+                # Fall-thru to process the event with the default handler.
 
-            # Determine which word is the misspelt word. This word will have
-            # non-default text attributes associated with it.
-
-            textLength = paragraph[0].text.characterCount
-            startFound = False
-            for i in range(0, textLength):
-                attributes = paragraph[0].text.getAttributes(i)
-                if len(attributes[0]) != 0:
-                    if not startFound:
-                        startOff = i
-                        startFound = True
-                else:
-                    if startFound:
-                        endOff = i
-                        break
-
-            badWord = paragraph[0].text.getText(startOff, endOff-1)
-
-            # Create a list of all the words found in the misspelt paragraph.
-            #
-            text = paragraph[0].text.getText(0, -1)
-            allTokens = text.split()
-
-            # Create an utterance to speak consisting of the misspelt
-            # word plus the context where it is used (upto five words
-            # to either side of it).
-            #
-            for i in range(0, len(allTokens)):
-                if allTokens[i] == badWord:
-                    min = i - 5
-                    if min < 0:
-                        min = 0
-                    max = i + 5
-                    if max > (len(allTokens) - 1):
-                        max = len(allTokens) - 1
-
-                    utterances = [_("Misspelled word is "), badWord, \
-                              _(" Context is ")] + allTokens[min:max+1]
-
-                    # Turn the list of utterances into a string.
-                    text = " ".join(utterances)
-                    speech.speak(text)
-                    return
-
-
-        # For everything else, pass the focus event onto the parent class
-        # to be handled in the default way.
+        # Pass the event onto the parent class to be handled in the default way.
 
         default.Script.onFocus(self, event)
+
+
+    # This method tries to detect and handle the following cases:
+    # 1) Writer: spell checking dialog.
+
+    def onNameChanged(self, event):
+        """Called whenever a property on an object changes.
+
+        Arguments:
+        - event: the Event
+        """
+
+        brailleGen = self.brailleGenerator
+        speechGen = self.speechGenerator
+
+        debug.printObjectEvent(debug.LEVEL_FINEST,
+                               event,
+                               event.source.toString())
+
+        # self.walkComponentHierarchy(event.source)
+
+        # 1) Writer: spell checking dialog.
+        #
+        # Check to see if if we've had a property-change event for the 
+        # accessible name for the option pane in the spell check dialog. 
+        # This (hopefully) means that the user has just corrected a 
+        # spelling mistake, in which case, speak/braille the current 
+        # misspelt word plus its context.
+        #
+        # Note that in order to make sure that this focus event is for the
+        # spell check dialog, a check is made of the localized name of the
+        # option pane. Translators for other locales will need to ensure that
+        # their translation of this string matches what StarOffice uses in
+        # that locale.
+
+        rolesList = [rolenames.ROLE_OPTION_PANE, \
+                     rolenames.ROLE_DIALOG, \
+                     rolenames.ROLE_APPLICATION]
+        if util.isDesiredFocusedItem(event.source, rolesList):
+            pane = event.source
+            if pane.name.startswith(_("Spellcheck:")):
+                debug.println(debug.LEVEL_FINEST,
+                      "StarOffice.onNameChanged - Writer: spell check dialog.")
+
+                self.readMisspeltWord(event, pane)
+
+                # Fall-thru to process the event with the default handler.
+
+        # Pass the event onto the parent class to be handled in the default way.
+
+        default.Script.onNameChanged(self, event)
 

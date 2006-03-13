@@ -1,3 +1,11 @@
+2006-03-13  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/StarOffice.py
+          Added in support for spell checking when there is more than one
+          misspelt word on the same line. Also handles the situation where we
+          are getting more than one "object:property-change:accessible-name"
+          event for the same misspelt word.
+
 2006-03-09  Willie Walker <william.walker@sun.com>
 
 	* src/orca/focus_tracking_presenter.py: toss out all children remove
