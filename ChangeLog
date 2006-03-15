@@ -1,3 +1,8 @@
+2006-03-14  Willie Walker <william.walker@sun.com>
+
+        * src/orca/scripts/Makefile.am, src/orca/scripts/gdmlogin.py:
+        simple script to speak the text area with focus when Orca is
+        started.
 
 2006-03-13  Rich Burridge <rich.burridge@sun.com>
 

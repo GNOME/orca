@@ -5,6 +5,7 @@ orca_python_PYTHON = \
 	Evolution.py \
 	gaim.py \
 	gcalctool.py \
+	gdmlogin.py \
 	gedit.py \
 	Gecko.py \
 	gnome-terminal.py \
