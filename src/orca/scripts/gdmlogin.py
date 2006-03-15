@@ -24,10 +24,11 @@ when Orca starts.
 import orca.atspi as atspi
 import orca.default as default
 import orca.orca as orca
+import orca.util as util
 
 ########################################################################
 #                                                                      #
-# The Gaim script class.                                               #
+# The gdmlogin script class.                                           #
 #                                                                      #
 ########################################################################
 
@@ -41,23 +42,15 @@ class Script(default.Script):
         """
         default.Script.__init__(self, app)
 
-    def findFocusedObject(self, obj):
-	for i in range(0, obj.childCount):
-	    try:
-		child = obj.child(i)
-		if child.state.count(atspi.Accessibility.STATE_FOCUSED):
-		    return child
-		else:
-		    candidate = self.findFocusedObject(child)
-		    if candidate:
-			return candidate
-	    except:
-		pass
-	return None		
-
     def onWindowActivated(self, event):
-	default.Script.onWindowActivated(self, event)
-	obj = self.findFocusedObject(self.app)
+        # Sets the context to the top level window first, so we can
+        # get information about it the window we just moved to.
+        #
+        orca.setLocusOfFocus(event, event.source)
+
+        # Now we find the focused object and set the locus of focus to it.
+        #
+	obj = util.findFocusedObject(self.app)
 	if obj:
 	    orca.setLocusOfFocus(event, obj)
         else:

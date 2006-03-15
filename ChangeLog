@@ -1,3 +1,10 @@
+2006-03-15  Willie Walker <william.walker@sun.com>
+
+	* src/orca/util.py: add findFocusedObject method to find the
+	focused object under a given root.
+	* src/orca/scripts/gdmlogin.py, src/orca/gnome-terminal.py: use
+	the util.findFocusedObject method on window activated events.
+	
 2006-03-14  Willie Walker <william.walker@sun.com>
 
         * src/orca/scripts/Makefile.am, src/orca/scripts/gdmlogin.py:

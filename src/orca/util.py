@@ -19,6 +19,38 @@
 
 """Provides various utility functions for Orca."""
 
+import atspi
+import debug
+
+def findFocusedObject(root):
+    """Returns the accessible that has focus under or including the 
+    given root. 
+
+    TODO: This will currently traverse all children, whether they are
+    visible or not and/or whether they are children of parents that
+    manage their descendants.  At some point, this method should be
+    optimized to take such things into account.
+    
+    Arguments:
+    - root: the root object where to start searching
+
+    Returns the object with the FOCUSED state or None if no object with
+    the FOCUSED state can be found.
+    """       
+
+    if root.state.count(atspi.Accessibility.STATE_FOCUSED):
+	return root
+
+    for i in range(0, root.childCount):
+        try:
+            candidate = findFocusedObject(root.child(i))
+            if candidate:
+                return candidate
+        except:
+            pass
+
+    return None             
+
 def isDesiredFocusedItem(obj, rolesList):
     """Called to determine if the given object and it's hierarchy of
        parent objects, each have the desired roles.
