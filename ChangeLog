@@ -1,3 +1,11 @@
+
+2006-03-16  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py
+          Slight tweak to the previous change. Always speak the text 
+          attributes for size and family-name. For the others, if the 
+          value is the default, then ignore it.
+
 2006-03-16  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py

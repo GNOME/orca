@@ -1480,14 +1480,33 @@ class Script(script.Script):
                 else:
                     allAttributes = charDict
 
+            # Create a dictionary of just the items we are interested in.
+            # Always include size and family-name. For the others, if the
+            # value is the default, then ignore it.
+            #
             attributes = {}
-            attributes['indent']        = allAttributes.get('indent')
-            attributes['underline']     = allAttributes.get('underline')
-            attributes['strikethrough'] = allAttributes.get('strikethrough')
-            attributes['size']          = allAttributes.get('size')
-            attributes['family-name']   = allAttributes.get('family-name')
-            attributes['justification'] = allAttributes.get('justification')
-            attributes['style']         = allAttributes.get('style')
+            attributes['size']        = allAttributes.get('size')
+            attributes['family-name'] = allAttributes.get('family-name')
+
+            attr = allAttributes.get('indent')
+            if attr != "0":
+                attributes['indent'] = attr
+
+            attr = allAttributes.get('underline')
+            if attr != "none":
+                attributes['underline'] = attr
+
+            attr = allAttributes.get('strikethrough')
+            if attr != "false":
+                attributes['strikethrough'] = attr
+
+            attr = allAttributes.get('justification')
+            if attr != "left":
+                attributes['justification'] = attr
+
+            attr = allAttributes.get('style')
+            if attr != "normal":
+                attributes['style'] = attr
 
             self.outputCharAttributes(attributes)
 
