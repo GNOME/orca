@@ -1,5 +1,8 @@
 2006-03-15  Willie Walker <william.walker@sun.com>
 
+	* src/orca/brlmon.py: use window manager struts property to
+	keep other windows from occluding the brlmon and to push
+	them out of the way if necessary.
 	* src/orca/util.py: add findFocusedObject method to find the
 	focused object under a given root.
 	* src/orca/scripts/gdmlogin.py, src/orca/gnome-terminal.py: use
