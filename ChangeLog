@@ -1,3 +1,21 @@
+2006-03-16  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py
+          Added in a new hotkey combination (Insert+f), that will speak
+          a set of text attributes (indent, underline, strikethrough, size,
+          family-name, justification and style) for the character at the 
+          text caret offset.
+
+          Three new methods created:
+
+              textAttrsToDictionary(str):
+              outputCharAttributes(attributes):
+              readCharAttributes(inputEvent=None):
+
+         Note that it looks like some applications like Evolution and Star
+         Office don't implement text.getDefaultAttributes(). This means
+         that we can't always determine the full set of text attributes. 
+
 2006-03-16  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca-setup.in: make hyperlink voice more

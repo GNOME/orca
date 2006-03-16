@@ -384,6 +384,16 @@ class Script(script.Script):
                 1 << orca.MODIFIER_ORCA,
 		self.toggleTableCellReadModeHandler))
 
+        self.readCharAttributesHandler = input_event.InputEventHandler(
+            Script.readCharAttributes,
+            _("Reads the attributes associated with the current text character."))
+        self.keybindings.add(
+            keybindings.KeyBinding(
+                "f",
+                1 << orca.MODIFIER_ORCA,
+                1 << orca.MODIFIER_ORCA,
+                self.readCharAttributesHandler))
+
         ################################################################
         #                                                              #
         # Braille bindings                                             #
@@ -1396,6 +1406,93 @@ class Script(script.Script):
         self.readTableCellRow = not self.readTableCellRow
 
         return True
+
+
+    def textAttrsToDictionary(self, str):
+        """Converts a string of text attribute tokens of the form 
+        <key>:<value>; into a dictionary of keys and values. 
+        Text before the colon is the key and text afterwards is the 
+        value. If there is a final semi-colon, then it's ignored.
+
+        Arguments:
+        - str: the string of tokens containing <key>:<value>; pairs.
+
+        Returns a dictionary of key/value items.
+        """
+
+        dict = {}
+        allTokens = str.split()
+        for i in range(0, len(allTokens)):
+            item = allTokens[i].split(":")
+            if item[1].endswith(";"):
+              item[1] = item[1][0:len(item[1])-1]
+            dict[item[0]] = item[1]
+
+        return dict
+
+
+    def outputCharAttributes(self, attributes):
+        """Speak each of the text attributes given dictionary.
+
+        Arguments:
+        - attributes: a dictionary of text attributes to speak.
+        """
+
+        for key in attributes.keys():
+            attribute = attributes[key]
+            if attribute:
+                line = key + " " + attribute
+                speech.speak(line)
+
+
+    def readCharAttributes(self, inputEvent=None):
+        """Reads the attributes associated with the current text character.
+        Calls outCharAttributes to speak a list of attributes. By default,
+        a certain set of attributes will be spoken. If this is not desired,
+        then individual application scripts should override this method to 
+        only speak the subset required.
+        """
+
+        if orca.locusOfFocus and orca.locusOfFocus.text:
+            caretOffset = orca.locusOfFocus.text.caretOffset
+            text = orca.locusOfFocus.text
+
+            # Creates dictionaries of the default attributes, plus the set
+            # of attributes specific to the character at the caret offset.
+            # Combine these two dictionaries and then extract just the
+            # entries we are interested in.
+            #
+            defAttributes = text.getDefaultAttributes()
+            defDict = self.textAttrsToDictionary(defAttributes)
+            allAttributes = defDict
+
+            charAttributes = text.getAttributes(caretOffset)
+            if charAttributes[0]:
+                charDict = self.textAttrsToDictionary(charAttributes[0])
+
+                # It looks like some applications like Evolution and Star 
+                # Office don't implement getDefaultAttributes(). In that 
+                # case, the best we can do is use the specific text 
+                # attributes for this character returned by getAttributes().
+                #
+                if allAttributes:
+                    allAttributes = allAttributes.update(charDict)
+                else:
+                    allAttributes = charDict
+
+            attributes = {}
+            attributes['indent']        = allAttributes.get('indent')
+            attributes['underline']     = allAttributes.get('underline')
+            attributes['strikethrough'] = allAttributes.get('strikethrough')
+            attributes['size']          = allAttributes.get('size')
+            attributes['family-name']   = allAttributes.get('family-name')
+            attributes['justification'] = allAttributes.get('justification')
+            attributes['style']         = allAttributes.get('style')
+
+            self.outputCharAttributes(attributes)
+
+        return True
+
 
     def getFlatReviewContext(self):
         """Returns the flat review context, creating one if necessary."""
