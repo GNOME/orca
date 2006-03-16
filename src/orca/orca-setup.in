@@ -2,7 +2,7 @@
 #
 # Orca
 #
-# Copyright 2004-2005 Sun Microsystems Inc.
+# Copyright 2004-2006 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -210,7 +210,7 @@ def setupSpeech():
         defaultACSS = ACSS({ACSS.FAMILY : families[0]})
 
     uppercaseACSS = ACSS({ACSS.AVERAGE_PITCH : 6})
-    hyperlinkACSS = ACSS({ACSS.AVERAGE_PITCH : 4})
+    hyperlinkACSS = ACSS({ACSS.AVERAGE_PITCH : 2})
 
     voices = {
 	orca.settings.DEFAULT_VOICE   : defaultACSS,

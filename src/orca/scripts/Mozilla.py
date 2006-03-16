@@ -20,6 +20,7 @@
 import orca.atspi as atspi
 import orca.debug as debug
 import orca.default as default
+import orca.orca as orca
 import orca.rolenames as rolenames
 import orca.settings as settings
 import orca.speech as speech
@@ -30,7 +31,7 @@ from orca.orca_i18n import _
 class SpeechGenerator(speechgenerator.SpeechGenerator):
     """Overrides getSpeechContext to handle Mozilla's unique
     hiearchical representation, such as menus duplicating themselves
-    in the hierarchy.
+    in the hierarchy and tables used for layout and indentation purposes.
     """
 
     def getSpeechContext(self, obj, stopAncestor=None):
@@ -59,11 +60,14 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         # Just skip cells inside cells - it's kind of a nonsensical
         # hierarchy.
         #
-        if parent \
-            and (obj.role == rolenames.ROLE_TABLE_CELL) \
-            and (parent.role == rolenames.ROLE_TABLE_CELL):
-            parent = parent.parent
-
+        while True:
+            if parent \
+                and (obj.role == rolenames.ROLE_TABLE_CELL) \
+                and (parent.role == rolenames.ROLE_TABLE_CELL):
+                parent = parent.parent
+            else:
+                break
+            
         # We'll eliminate toolbars if we're in a menu.  The reason for
         # this is that Mozilla puts its menu bar in a couple of nested
         # toolbars.
@@ -121,17 +125,33 @@ class Script(default.Script):
     """
     
     def __init__(self, app):
-        print "Mozilla.__init__"
+        #print "Mozilla.__init__"
         default.Script.__init__(self, app)
-        self.listeners["object:link-selected"] = self.onLinkSelected
-        self.__textComponentOfInterest = None
-        self.__linkOfInterest = None
         
     def getSpeechGenerator(self):
         """Returns the speech generator for this script.
         """
         return SpeechGenerator()
 
+    def onCaretMoved(self, event):
+        #print "Mozilla.onCaretMoved"
+        #print "  source        =", event.source
+        #print "  source.parent =", event.source.parent
+        #print "  lof           =", orca.locusOfFocus
+        
+        # We always automatically go back to focus tracking mode when
+        # the caret moves in the focused object.
+        #
+        if self.flatReviewContext:
+            self.toggleFlatReviewMode()
+
+        [string, startOffset, endOffset] = event.source.text.getTextAtOffset(
+            event.source.text.caretOffset,
+            atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+        #print "  text line at offset", string
+        
+        self._presentTextAtNewCaretPosition(event)
+        
     def onNameChanged(self, event):
         """Called whenever a property on an object changes.
 
@@ -148,13 +168,12 @@ class Script(default.Script):
     # focus
     #
     def onFocus(self, event):
-        print "Mozilla.onFocus:", event.type, event.source.toString()
+        #print "Mozilla.onFocus:", event.type, event.source.toString()
 
         # We're going to ignore focus events on the frame.  They
         # are often intermingled with menu activity, wreaking havoc
         # on the context.
         #
-        self.__textComponentOfInterest = None
         if event.source.role == rolenames.ROLE_FRAME:
             return
 
@@ -175,56 +194,26 @@ class Script(default.Script):
     # when a link is navigated to using tab/shift-tab
     #
     def onLinkSelected(self, event):
-        print "Mozilla.onLinkSelected:", event.detail1, event.detail2
-        debug.printObjectEvent(debug.LEVEL_OFF, event, event.source.toString())
-
-        self.__textComponentOfInterest = event.source
-
-        txt = event.source.text
-
+        text = event.source.text
         hypertext = event.source.hypertext
-        print "Here: caret=%d, nlinks=%d" % (txt.caretOffset, hypertext.getNLinks())
+        linkIndex = default.getLinkIndex(event.source, text.caretOffset)
         
-        for i in range(0, hypertext.getNLinks()):
-            link = hypertext.getLink(i)
-            print "  Link", i
-            print "    nAnchors", link.nAnchors
-            print "    startIndex", link.startIndex
-            print "    endIndex", link.endIndex
-            print "    isValid", link.isValid
-            
-        if txt is None:
-            speech.speak(_("link"), self.voices[settings.HYPERLINK_VOICE])
+        if linkIndex >= 0:
+            link = hypertext.getLink(linkIndex)
+            linkText = text.getText(link.startIndex, link.endIndex)
+            [string, startOffset, endOffset] = text.getTextAtOffset(
+                text.caretOffset,
+                atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+            #print "onLinkSelected", event.source.role, string,
+            #print "  caretOffset:     ", text.caretOffset
+            #print "  line startOffset:", startOffset
+            #print "  line endOffset:  ", startOffset
+            #print "  caret in line:   ", text.caretOffset - startOffset
+            speech.speak(linkText, self.voices[settings.HYPERLINK_VOICE])
         else:
-            text = txt.getText(0, -1)
-            speech.speak(text, self.voices[settings.HYPERLINK_VOICE])
-
-    def onCaretMoved(self, event):
-        print "Mozilla.onCaretMoved:", event.type, event.source.toString()
-        self.__textComponentOfInterest = event.source
-        self._presentTextAtNewCaretPosition(event)
-
-    def onTextDeleted(self, event):
-        """Called whenever text is deleted from an object.
-
-        Arguments:
-        - event: the Event
-        """
-        print "Mozilla.onTextDeleted:", event.type, event.source.toString()
-        default.Script.onTextDeleted(self, event)
-
-    def onTextInserted(self, event):
-        """Called whenever text is inserted into an object.
-
-        Arguments:
-        - event: the Event
-        """
-        print "Mozilla.onTextInserted:", event.type, event.source.toString()
-        default.Script.onTextInserted(self, event)
-
-    def onStateChanged(self, event):
-        print "Mozilla.onStateChanged:", event.type, event.source.toString()
-        default.Script.onStateChanged(self, event)
+            speech.speak(_("link"), self.voices[settings.HYPERLINK_VOICE])
+            
+        self.updateBraille(event.source)
 
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
