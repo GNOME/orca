@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-31 20:07+0100\n"
+"POT-Creation-Date: 2006-03-17 16:23-0500\n"
 "PO-Revision-Date: 2004-05-31 20:20+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
@@ -15,90 +15,24 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#. Orca
-#.
-#. Copyright 2004 Sun Microsystems Inc.
-#.
-#. This library is free software; you can redistribute it and/or
-#. modify it under the terms of the GNU Library General Public
-#. License as published by the Free Software Foundation; either
-#. version 2 of the License, or (at your option) any later version.
-#.
-#. This library is distributed in the hope that it will be useful,
-#. but WITHOUT ANY WARRANTY; without even the implied warranty of
-#. MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-#. Library General Public License for more details.
-#.
-#. You should have received a copy of the GNU Library General Public
-#. License along with this library; if not, write to the
-#. Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-#. Boston, MA 02111-1307, USA.
-#. Orca i18n
-#. The Mozilla version of say all reads text from multiple objects
-#. The current object being read
-#. The number of objects to speak
-#. The object representing the root of the currently active page
-#. Advance to the next hypertext object in the say all list and speak it
-#. Find the next object with text
-#. If it's an image, read the image's name using the image voice
-#. If we're getting the file name of the image, don't read it
-#. Stop looking for more objects, we're speaking one now
-#. Get the entire contents of this hypertext object
-#. Get the hypertext interface to this object
-#. Speak this hypertext object in chunks
-#. Split up the links
-#. We don't get proper start and end offsets, so hack
-#. hack hack
-#. Get the text of the hyperlink
-#. If there is text between where we are now and the beginning of the link, read it first
-#. Speak the text of the hyperlink using the hyperlink voice
-#. We're done speaking the hyperlinks - if there's text
-#. left, spaek it
-#. If we have no more objects to speak, end say all mode
-#. This function is called by say all mode when another chunk of text
-#. is needed
-#. This function is called when say all mode is finished - it currently
-#. does nothing
-#. this function starts say all for Mozilla
-#. If there is no active page, we can't do say all
-#: src/orca/Gecko.py:181
-msgid "No page to read."
-msgstr "Nenhuma página a ler."
+#: src/orca/braillegenerator.py:185 src/orca/speechgenerator.py:188
+#, fuzzy
+msgid "grayed"
+msgstr "maior do que"
 
-#. Get all the objects on the page
-#: src/orca/Gecko.py:189
-msgid "Reading web page failed."
-msgstr "Falha ao ler a página web."
+#: src/orca/braillegenerator.py:1096 src/orca/speechgenerator.py:1197
+msgid "expanded"
+msgstr ""
 
-#. Set up say all mode
-#. Speak the name of the page, then start say all mode.  When the
-#. active and the first chunk of the page will be read
-#. This function is called whenever an object within Mozilla receives
-#. focus
-#. If it's not a panel, do the default
-#. If the panel has no name, don't touch it
-#. This function is called when a hyperlink is selected - This happens
-#. when a link is navigated to using tab/shift-tab
-#. Orca
-#.
-#. Copyright 2004 Sun Microsystems Inc.
-#.
-#. This library is free software; you can redistribute it and/or
-#. modify it under the terms of the GNU Library General Public
-#. License as published by the Free Software Foundation; either
-#. version 2 of the License, or (at your option) any later version.
-#.
-#. This library is distributed in the hope that it will be useful,
-#. but WITHOUT ANY WARRANTY; without even the implied warranty of
-#. MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-#. Library General Public License for more details.
-#.
-#. You should have received a copy of the GNU Library General Public
-#. License along with this library; if not, write to the
-#. Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-#. Boston, MA 02111-1307, USA.
-#. Orca i18n
-#. Pronunciations for various characters
+#: src/orca/braillegenerator.py:1098 src/orca/speechgenerator.py:1199
+msgid "collapsed"
+msgstr ""
+
+#: src/orca/braillegenerator.py:1102
+#, python-format
+msgid "TREE LEVEL %d"
+msgstr ""
+
 #: src/orca/chnames.py:27
 msgid "space"
 msgstr "espaço"
@@ -119,7 +53,7 @@ msgstr "número"
 msgid "dollar"
 msgstr "dólar"
 
-#: src/orca/chnames.py:32
+#: src/orca/chnames.py:32 src/orca/speechgenerator.py:891
 msgid "percent"
 msgstr "percentagem"
 
@@ -132,12 +66,14 @@ msgid "tick"
 msgstr "apóstrofo"
 
 #: src/orca/chnames.py:35
-msgid "left"
-msgstr "esquerda"
+#, fuzzy
+msgid "left paren"
+msgstr "chaveta esquerda"
 
 #: src/orca/chnames.py:36
-msgid "right"
-msgstr "direita"
+#, fuzzy
+msgid "right paren"
+msgstr "chaveta direita"
 
 # ../lisp/menus.jl
 #: src/orca/chnames.py:37
@@ -169,7 +105,8 @@ msgid "question"
 msgstr "ponto de interrogação"
 
 #: src/orca/chnames.py:44
-msgid "collun"
+#, fuzzy
+msgid "colon"
 msgstr "dois pontos"
 
 #: src/orca/chnames.py:45
@@ -177,11 +114,13 @@ msgid "semi"
 msgstr "ponto e vírgula"
 
 #: src/orca/chnames.py:46
-msgid "less"
+#, fuzzy
+msgid "less than"
 msgstr "menor do que"
 
 #: src/orca/chnames.py:47
-msgid "greater"
+#, fuzzy
+msgid "greater than"
 msgstr "maior do que"
 
 #: src/orca/chnames.py:48
@@ -208,470 +147,1399 @@ msgstr "apagar"
 msgid "bar"
 msgstr "barra"
 
-#. Orca
-#.
-#. Copyright 2004 Sun Microsystems Inc.
-#.
-#. This library is free software; you can redistribute it and/or
-#. modify it under the terms of the GNU Library General Public
-#. License as published by the Free Software Foundation; either
-#. version 2 of the License, or (at your option) any later version.
-#.
-#. This library is distributed in the hope that it will be useful,
-#. but WITHOUT ANY WARRANTY; without even the implied warranty of
-#. MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-#. Library General Public License for more details.
-#.
-#. You should have received a copy of the GNU Library General Public
-#. License along with this library; if not, write to the
-#. Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-#. Boston, MA 02111-1307, USA.
-#. Customized role pronunciations
-#. User settings
-#. Keyboard hooks
-#. Speech support
-#. Braille support
-#. Orca i18n
-#. The following functions present various types of objects - all
-#. presentation functions handle both speech and Braille.  All
-#. functions take the object as the first parameter, and a boolean
-#. specifying whether the object had focus already or not
-#. Present menus - This function speaks the menu item which current is
-#. selected, an updates the Braille display to show all menu items with
-#. the cursor under the currently selected item.  The object passed as
-#. the first parameter is a menu item or a menu.
-#. Put the menu on the Braille display - Put each menu item in its
-#. own region on the Braille display
-#. Put the Braille cursor under the selected item
-#. Put the text on the Braille display
-#. Speak the selected menu item
-#. Present a page tab list - This function displays the page tab list
-#. on the Braille display and speaks the currently selected page tab,
-#. and puts the Braille cursor under the currently selected page tab.
-#. the object passed to this function as the first parameter is the
-#. currently selected page tab.
-#. Put each page tab in its own region on the Braille display
-#. Put the Braille cursor under the currently selected page tab
-#. Put the text on the display
-#. Speak the currently selected page tab
-#. this function displays an object containing text on the Braille
-#. display - It takes the Accessible object and retrieves the
-#. AccessibleText interface, since it may also need access to the
-#. object's label
-#. If this is the child of a combo box, use the combo boxe's label
-#. Get the the AccessibleText interrface
-#. Get the line containing the caret
-#. Line is actually a list of objects-- the first is the actual
-#. text of the line, the second is the start offset, and the third
-#. is the end offset
-#. Sometimes we get the trailing line-feed-- remove it
-#. The label and text each get their own region - The label region
-#. size is the length of the label's text + 1 or half the display
-#. length, whidhever is less
-#. Subtract the space that is left for us to use on the display
-#. Make the advance keys scroll the region containing the text
-#. Position the cursor at the caret position - Note that the region
-#. containing the text can be longer than the physical display, and
-#. tthat the cursor position is specified as an offset from the
-#. beginning of the text
-#. Post the text to the display
-#. Speak the line of an AccessibleText object which contains the caret
-#. Get the AccessibleText interface of the provided object
-#. Spaek the word containing the caret
-#. Speak the character under the caret
-#. Present a text object - This displays the line containing the caret
-#. on the Braille display, and speaks the line containing the caret
-#. with speech
-#. Update the Braille display
-#. Present a combo box in speech and Braille
-#. See if this combo box  has a text object in it
-#. Put the combo box's label, if any, in it's own region on the
-#. Braille display
-#. The region containing the label should be the length of the
-#. label's text +1 or half the display length, whichever is
-#. smaller
-#. If the bomxo box has a text object, display it in the combo
-#. box's content region of the Braille display
-#. Make the advance keys scroll the content region
-#. Otherwise, the combo box's name will contain it's value -
-#. display that in the combo box's content region on the Braille
-#. display
-#. Present a table object for speech and Braille - This function speaks
-#. and Brailles the name and role of the table, and then speaks and
-#. Brailles the selected items in the table
-#. Only speak the table's name if it didn't already have focus
-#. Get the accessible table interface of the object
-#. Get the selected rows of the table
-#. Add the text of all the selected cells together
-#. If the cell has children, get a list of them
-#. Otherwise, just make a list with the cell itelf as the
-#. only member
-#. Add the text of all the cells to the text string to be
-#. displayed/spoken
-#. Put each line of text in the cell in it's own
-#. region on the Braille display, so there is
-#. tactile separation between them
-#. Put the text on the Braille display
-#. Present a checkbox - This function displays ( ) and the object's
-#. name on the display.  An x between the ( and ) indicates that the
-#. checkbox is checked.  It also sppeaks the name of the object and
-#. whether it is checked or unchecked
-#. Get the state of the checkbox
-#. If the checkbox is checked, indicate this in speech and Braille
-#. If it's not already focused, say it's name
-#. Present a radio button - This function is essentially the same as
-#. the checkbox presenter, except that it attempts to find the
-#. radio button's group
-#. Find group
-#. Put the group name and the radio button's label each in their
-#. own region
-#. If the radio button's label is too long to fit in it's region,
-#. make the advance keys scroll that radio button name region
-#. Present a button - Displays the button name on the Braille display
-#. and speaks it
-#. Presenter which is used if we don't have a role specific one
-#. Speak and Braille the object's label and role
-#. Present a dialog box - This function displays the name of the dialog
-#. on the Braille display.  It speaks the title of the dialog.  It
-#. then searches the dialog for labels which are not associated
-#. with any other objects, and reads their contents
-#. Find all the labels in the dialog
-#. Add the names of only those labels which are not associated with
-#. other objects (I.E., do empty relation setss)
-#. This hash table maps role names to the above presenter functions
-#. This function gets called whenever an object gets focus
-#. Do we have a role specific presenter for this type of object
-#. Nope, use the default
-#. This function is called whenever a toplevel window is activated
-#. Do we have a role specific presenter for this type of object?
-#. This hash table defines which presenters should be used if an
-#. object's selection changes
-#. This function is called if an object's selection changes
-#. See if we have an object specific presente registered to be
-#. called when this type of object's selection changes
-#. Don't do anything if we don't have a role-specific presenter
-#. This hash table defines the presenters which should be called when
-#. various states change for various types of objects.  The only
-#. current example is that this table defines that the
-#. checkBoxPresenter function should be called when the CHECKED state
-#. changes on an object of role "checkbox"
-#. This function is called whenever an object's state changes - Note
-#. that currently, state changes for non-focused objects are ignored
-#. Don't notify for state changes for non-focussed objects
-#. Should we re-present the object?
-#. WE found a notifier - is the state that just changed in our
-#. list?
-#. We're supposed to notify the user about this state change - do
-#. we have a presenter for this type of object
-#. This function is called whenever the caret moves
-#. Update the Braille display
-#. If this move is in response to an up or down arrow, read the line
-#. Control-left and control-right arrows speak the word under the
-#. caret
-#. Right and left arrows speak the character under the cursor
-#. This function is called whenever text is inserted into an object
-#. Ignore text insertions to non-focused objects, unless the
-#. currently focused object is the parent of the object to which
-#. text was inserted
-#. This function is called whenever text is deleted from an object
-#. Ignore text deletions from non-focused objects, unless the
-#. currently focused object is the parent of the object from which
-#. text was deleted
-#. The any_data member of the event object has the deleted text in
-#. it - If the last key pressed was a backspace or delete key,
-#. speak the deleted text
-#. Quit the screen reader
-#. The following functions handle Braille key presses from the display
-#. - These functions receive an object to which the keypress was
-#. directed, the region number which generated the key press, and the
-#. offset of the key within the region
-#. Handle Braille key presses directed at menus
-#. Each menu item/menu displayed is in its own region - so the
-#. region_num will indicate which menu/menu item to select
-#. Get the AccessibleAction interface and do the first one
-#. This function is called when Braille keys are directed at page tabs
-#. Each page tab will be displayed in its own region of the Braille
-#. display - so the region number will indicate the page tab to
-#. select
-#. Select the clicked page tab
-#. This function is called when Braille keypresses are directed at text
-#. objects
-#. The line containing the caret is displayed on the display - so
-#. the content region of the Braille display that generated the
-#. keypress contains that line.  Therefore, the absolute offset to
-#. move the caret to can be derived by the offset of the key plus the
-#. offset of the beginning of the line containing the caret
-#. This hash table defines the Braille key handlers for the various types
-#. of objects
-#. This function is called whenever a cursor key is pressed on the
-#. Braille display
-#. Clear the Braille display memory (does not clear the physical
-#. disply)
-#. Do we have a Braille key handler for the role of the focused
-#. object?
-#. We don't have a specific handler - see if the focused object
-#. has an AccessibleAction interface, and if so, do the first
-#. action it lists
-#. The following functions related to the sayAll system - This system
-#. is designed to be pluggable such that sayAll commands could be
-#. implemented for various types of objects.  The current
-#. implementation only works for reading the text of single text
-#. objects.  This implementation will need to be extended to support
-#. reading of more complex documents such as web pages in Yelp/Mozilla,
-#. and documents within StarOffice
-#. sayAllText contains the AccessibleText object of the document
-#. currently being read
-#. sayAllPosition is the current position within sayAllText
-#. Get the next line of text to read
-#. If the line is empty (which only happens at the end of the
-#. document), quit.  Note that blank lines are returned as lines
-#. of length 1 character which is the newline character
-#. Speak the line
-#. Set the say all position to the beginning of the line being read
-#. Return true to continue reading
-#. This function is called when sayAll mode is interrupted - the only
-#. parameter is the position within the current chunk where speech
-#. was interrupted
-#. Move the caret to the position where speech was interrupted
-#. This function initiates say all mode
-#. If the focused object isn't text, we don't know how to read it
-#: src/orca/default.py:832
-msgid "Not a document."
-msgstr "Não é um documento."
+#: src/orca/chnames.py:54
+msgid "newline"
+msgstr ""
 
-#. Setup say all mode
-#. Start reading at the caret offset
-#. Start say all by speaking the current line - the end of speech
-#. marker which occurs when this call to say is finished will cause
-#. the say all process to continue
-#. Initiate say all mode with the speech subsystem - providing the
-#. sayAllGetChunk and sayAllStopped callbacks
-#. Orca
-#.
-#. Copyright 2004 Sun Microsystems Inc.
-#.
-#. This library is free software; you can redistribute it and/or
-#. modify it under the terms of the GNU Library General Public
-#. License as published by the Free Software Foundation; either
-#. version 2 of the License, or (at your option) any later version.
-#.
-#. This library is distributed in the hope that it will be useful,
-#. but WITHOUT ANY WARRANTY; without even the implied warranty of
-#. MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-#. Library General Public License for more details.
-#.
-#. You should have received a copy of the GNU Library General Public
-#. License along with this library; if not, write to the
-#. Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-#. Boston, MA 02111-1307, USA.
-#. Orca i18n
-#. If we've found a chat window, set a global reference to it and read
-#. it
-#. The chat window has threee text boxes in it (the chat topic, the
-#. message log, and the text entry field).  find them all - they're
-#. always returned in the same order
-#. The second entry is the output log - Due to current
-#. architectural limitations, the only way to refer to the current
-#. script object is through the script.active reference - global
-#. variables to this module may be shared across multiple scripts
-#. (although it's unlikely in this case) - the only practical case
-#. where module-level variables actually are shared across multiple
-#. applications is in the default script.  but since these scripts
-#. serve as example code, the technically proper way to store
-#. variables is in the script object, referenced by script.active
-#. Speak the title of the chat
-#: src/orca/gaim.py:59
-msgid " chat"
-msgstr " diálogo"
+#: src/orca/chnames.py:55
+msgid "tab"
+msgstr "tab"
 
-#. When we've found an instant mesage window, keep a reference to it
-#. There are two text boxes in each IM window (the message log, and
-#. the text entry field).  They are always returned in the same
-#. order
-#. The first entry is the output log
-#. Speak the title of the IM
-#: src/orca/gaim.py:82
-msgid " instant message"
-msgstr " mensagem instantânea"
+#: src/orca/default.py:73
+msgid "Performs left click on current flat review item."
+msgstr ""
 
-#. This function is called whenever one of Gaim's toplevel windows is
-#. activated
-#. If it's not a standard window, do the normal behavior since it
-#. won't have an IM or chat in it
-#. Frames with two text boxes are considered to be instant message
-#. dinwos, and those with three are considered chats.  This works for
-#. now, but we need a more robust way of doing this sort of thing for
-#. the general case
-#. This function is called whenever text is inserted into one of Gaim's
-#. text objects.  If the object is an instant message or chat, speak
-#. the text
-#. If we're not watching anything, do the default behavior
-#. this function is called when any object in Gaim gets the focus
-#. The text boxes in chat and IM windows have no names - so we give
-#. them some here
-#: src/orca/gaim.py:138
-msgid "Input"
-msgstr "Entrada"
+#: src/orca/default.py:83
+msgid "Performs right click on current flat review item."
+msgstr ""
 
-#: src/orca/gaim.py:140
-msgid "Message Log"
-msgstr "Mensagem de Registo"
+#: src/orca/default.py:93
+msgid "Speaks entire document."
+msgstr ""
 
-#: src/orca/orca-setup.in:39
+#: src/orca/default.py:103
+msgid "Performs the where am I operation."
+msgstr ""
+
+#: src/orca/default.py:113
+msgid "Paints and prints the visible zones in the active window."
+msgstr ""
+
+#: src/orca/default.py:123
+msgid "Enters and exits flat review mode."
+msgstr ""
+
+#: src/orca/default.py:133
+msgid "Moves flat review to the beginning of the previous line."
+msgstr ""
+
+#: src/orca/default.py:149
+msgid "Moves flat review to the home position."
+msgstr ""
+
+#: src/orca/default.py:165
+msgid "Speaks the current flat review line."
+msgstr ""
+
+#: src/orca/default.py:181
+msgid "Moves flat review to the beginning of the next line."
+msgstr ""
+
+#: src/orca/default.py:197
+msgid "Moves flat review to the end position."
+msgstr ""
+
+#: src/orca/default.py:213
+msgid "Moves flat review to the previous item or word."
+msgstr ""
+
+#: src/orca/default.py:229
+msgid "Moves flat review to the word above the current word."
+msgstr ""
+
+#: src/orca/default.py:245
+msgid "Speaks the current flat review item or word."
+msgstr ""
+
+#: src/orca/default.py:261
+msgid "Speaks the current flat review object."
+msgstr ""
+
+#: src/orca/default.py:277
+msgid "Moves flat review to the next item or word."
+msgstr ""
+
+#: src/orca/default.py:293
+msgid "Moves flat review to the word below the current word."
+msgstr ""
+
+#: src/orca/default.py:309
+msgid "Moves flat review to the previous character."
+msgstr ""
+
+#: src/orca/default.py:325
+msgid "Moves flat review to the end of the line."
+msgstr ""
+
+#: src/orca/default.py:341
+msgid "Speaks the current flat review character."
+msgstr ""
+
+#: src/orca/default.py:357
+msgid "Moves flat review to the next character."
+msgstr ""
+
+#: src/orca/default.py:373
+msgid "Toggles whether to read just the current table cell or the whole row."
+msgstr ""
+
+#: src/orca/default.py:389
+msgid "Reads the attributes associated with the current text character."
+msgstr ""
+
+#: src/orca/default.py:404
+msgid "Pans the braille display to the left."
+msgstr ""
+
+#: src/orca/default.py:409
+msgid "Pans the braille display to the right."
+msgstr ""
+
+#: src/orca/default.py:430
+msgid "Moves flat review to the bottom left."
+msgstr ""
+
+#: src/orca/default.py:436
+msgid "Returns to object with keyboard focus."
+msgstr ""
+
+#: src/orca/default.py:640 src/orca/default.py:827
+#, fuzzy, python-format
+msgid "tree level %d"
+msgstr "vista em árvore"
+
+#: src/orca/default.py:644 src/orca/default.py:831 src/orca/default.py:898
+#: src/orca/default.py:949
+msgid "No focus"
+msgstr ""
+
+#: src/orca/default.py:1827 src/orca/default.py:1921 src/orca/default.py:1926
+#: src/orca/default.py:1996 src/orca/default.py:2001
+#, fuzzy
+msgid "blank"
+msgstr "exclamação"
+
+#: src/orca/default.py:1829 src/orca/default.py:1928
+#, fuzzy
+msgid "white space"
+msgstr "espaço"
+
+#: src/orca/espeechfactory.py:86
+msgid "Emacspeak Speech Services"
+msgstr ""
+
+#: src/orca/focus_tracking_presenter.py:474
+msgid "Switching to focus tracking mode."
+msgstr ""
+
+#: src/orca/gnomespeechfactory.py:124
+msgid "GNOME Speech Services"
+msgstr ""
+
+#. Replace ellipses (both manual and unicode) with "dot dot dot"
+#.
+#: src/orca/gnomespeechfactory.py:502 src/orca/gnomespeechfactory.py:503
+msgid " dot dot dot"
+msgstr ""
+
+#: src/orca/gnomespeechfactory.py:596
+msgid "faster."
+msgstr ""
+
+#: src/orca/gnomespeechfactory.py:627
+msgid "slower."
+msgstr ""
+
+#: src/orca/hierarchical_presenter.py:430
+msgid "Switching to hierarchical navigation mode."
+msgstr ""
+
+#: src/orca/keynames.py:27
+msgid "left shift"
+msgstr ""
+
+#: src/orca/keynames.py:28
+#, fuzzy
+msgid "left tab"
+msgstr "esquerda"
+
+#: src/orca/keynames.py:29
+msgid "F 11"
+msgstr ""
+
+#: src/orca/keynames.py:30
+msgid "F 12"
+msgstr ""
+
+#: src/orca/orca-setup.in:40
 msgid "Creating .orca directory."
 msgstr "A criar um directório .orca."
 
-#: src/orca/orca-setup.in:66
-#, c-format
-msgid "Select %s voice: "
-msgstr "Seleccionar a voz %s: "
+#: src/orca/orca-setup.in:127 src/orca/orca-setup.in:142
+msgid "Speech is unavailable."
+msgstr ""
 
-#: src/orca/orca-setup.in:70 src/orca/orca-setup.in:112
+#: src/orca/orca-setup.in:131
+msgid "Welcome to Orca setup."
+msgstr "Bem vindo à configuração do Orca."
+
+#: src/orca/orca-setup.in:145
+#, fuzzy
+msgid "Select desired speech system."
+msgstr "Seleccione o sintetizador por omissão"
+
+#: src/orca/orca-setup.in:150 src/orca/orca-setup.in:178
+#: src/orca/orca-setup.in:201
 #, c-format
 msgid "%d. %s"
 msgstr "%d. %s"
 
-#: src/orca/orca-setup.in:73
-msgid "Enter choice."
-msgstr "Introduza a sua escolha."
-
-#: src/orca/orca-setup.in:74 src/orca/orca-setup.in:114
+#: src/orca/orca-setup.in:153 src/orca/orca-setup.in:181
+#: src/orca/orca-setup.in:204
 msgid "Enter choice: "
 msgstr "Introduza a sua escolha: "
 
-#: src/orca/orca-setup.in:96
-msgid "No working GNOME Speech drivers found."
-msgstr "Nenhum controlador de Locução GNOME encontrado."
-
-#: src/orca/orca-setup.in:99
-msgid "Select default synthesizer:"
-msgstr "Seleccione o sintetizador por omissão:"
-
-#: src/orca/orca-setup.in:109
-msgid "Welcome to Orca setup."
-msgstr "Bem vindo à configuração do Orca."
-
-#: src/orca/orca-setup.in:110
-msgid "Select default speech synthesizer"
-msgstr "Seleccione o sintetizador por omissão"
-
-#: src/orca/orca-setup.in:117
+#: src/orca/orca-setup.in:155 src/orca/orca-setup.in:171
+#: src/orca/orca-setup.in:183 src/orca/orca-setup.in:192
+#: src/orca/orca-setup.in:206
 msgid "Speech will not be used.\n"
 msgstr "A locução não será utilizada.\n"
 
-#: src/orca/orca-setup.in:139
-msgid "Create another voice?  Enter y or n: "
-msgstr "Criar outra voz?  Introduza y (sim) ou n (não): "
+#: src/orca/orca-setup.in:170
+msgid "No servers available.\n"
+msgstr ""
 
-#: src/orca/orca-setup.in:148
-msgid "Enter voice name: "
-msgstr "Introduza o nome da voz: "
+#: src/orca/orca-setup.in:174
+#, fuzzy
+msgid "Select desired speech server."
+msgstr "Seleccione o sintetizador por omissão"
 
-#: src/orca/orca-setup.in:156
+#: src/orca/orca-setup.in:191
+msgid "No voices available.\n"
+msgstr ""
+
+#: src/orca/orca-setup.in:195
+#, fuzzy
+msgid "Select desired voice."
+msgstr "Seleccionar a voz %s: "
+
+#: src/orca/orca-setup.in:232
 msgid "Use key echo?  Enter y or n: "
 msgstr "Utilizar eco de tecla?  Introduza y (sim) ou n (não): "
 
-#: src/orca/orca-setup.in:179
+#: src/orca/orca-setup.in:257
 msgid "Braille support appears to work, use it?  Enter y or n. "
 msgstr ""
-"Parece que o suporte para braille funciona, utilizá-lo?  "
-"Introduza y (sim) ou n (não). "
+"Parece que o suporte para braille funciona, utilizá-lo?  Introduza y (sim) "
+"ou n (não). "
 
-#: src/orca/orca.in:46
-msgid "Welcome to Orca."
-msgstr "Bem Vindo ao Orca."
-
-#. Orca
-#.
-#. Copyright 2004 Sun Microsystems Inc.
-#.
-#. This library is free software; you can redistribute it and/or
-#. modify it under the terms of the GNU Library General Public
-#. License as published by the Free Software Foundation; either
-#. version 2 of the License, or (at your option) any later version.
-#.
-#. This library is distributed in the hope that it will be useful,
-#. but WITHOUT ANY WARRANTY; without even the implied warranty of
-#. MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-#. Library General Public License for more details.
-#.
-#. You should have received a copy of the GNU Library General Public
-#. License along with this library; if not, write to the
-#. Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-#. Boston, MA 02111-1307, USA.
-#. Accessibility support
-#. Import user settings
-#. Speech support
-#. Braille support
-#. Script management
-#. Keyboard hooks
-#. Orca i18n
-#. List of running apps
-#. Build the list of currently runing apps
-#. Track children-changed events on the desktop to determine when apps
-#. start and stop
-#. If the desktop is empty, the user has logged out-- shutdown Orca
-#: src/orca/orca.py:81
+#: src/orca/orca.py:261
 msgid "User logged out - shutting down."
 msgstr "Utilizador terminou a sessão - a terminar."
 
-#. Activate scripts when their apps' toplevel windows are activated
-#. Clear the Braille display on Window Activations
-#. Orca initialized
-#. Initialize the core
-#. Initialize a11y support
-#. Initialize keyboard hooks
-#. Setup speakers
-#. Initialize Braille support
-#. Build list of accessible apps
-#. Load the default script
-#. Activate the default script
-#. Attempt to load scripts for all currently running apps
-#. Start Orca - This starts the Bonobo main loop
-#. Stop Orca - This cleans up resources and quits the Bonobo main loop
-#: src/orca/orca.py:183
+#: src/orca/orca.py:419
+msgid "Debug level all."
+msgstr ""
+
+#: src/orca/orca.py:421
+msgid "Debug level finest."
+msgstr ""
+
+#: src/orca/orca.py:423
+msgid "Debug level finer."
+msgstr ""
+
+#: src/orca/orca.py:511
+msgid "Entering learn mode.  Press any key to hear its function. "
+msgstr ""
+
+#: src/orca/orca.py:512
+msgid "To exit learn mode, press the escape key."
+msgstr ""
+
+#: src/orca/orca.py:513
+msgid "Learn mode.  Press escape to exit."
+msgstr ""
+
+#: src/orca/orca.py:523 src/orca/orca.py:524
+msgid "Exiting learn mode."
+msgstr ""
+
+#: src/orca/orca.py:813
+msgid "Enters learn mode.  Press escape to exit learn mode."
+msgstr ""
+
+#: src/orca/orca.py:821
+msgid "Decreases the speech rate."
+msgstr ""
+
+#: src/orca/orca.py:829
+msgid "Increases the speech rate."
+msgstr ""
+
+#: src/orca/orca.py:835
+msgid "Quits Orca"
+msgstr ""
+
+#: src/orca/orca.py:847
+msgid "Toggles keystroke recording on and off."
+msgstr ""
+
+#: src/orca/orca.py:855
+msgid "Forces a reset of the speech service."
+msgstr ""
+
+#: src/orca/orca.py:863
+msgid ""
+"Prints a debug listing of all known applications to the console where Orca "
+"is running."
+msgstr ""
+
+#: src/orca/orca.py:872
+msgid "Cycles the debug level at run time."
+msgstr ""
+
+#: src/orca/orca.py:881
+msgid ""
+"Prints debug information about the currently active application to the "
+"console where Orca is running."
+msgstr ""
+
+#: src/orca/orca.py:889
+msgid "Prints debug information about the ancestry of the object with focus"
+msgstr ""
+
+#: src/orca/orca.py:898
+msgid "Prints debug information about the application with focus"
+msgstr ""
+
+#: src/orca/orca.py:908
+msgid "Switches to the next presentation manager."
+msgstr ""
+
+#: src/orca/orca.py:975 src/orca/orca.py:976
+msgid "Welcome to Orca."
+msgstr "Bem Vindo ao Orca."
+
+#. [[[TODO: WDW - the timer stuff is an experiment to see if
+#. we can recover from hangs.  It's only experimental, so it's
+#. commented out for now.]]]
+#.
+#. timer = threading.Timer(5.0, timeout)
+#. timer.start()
+#: src/orca/orca.py:1026
 msgid "goodbye."
 msgstr "adeus."
 
-#. Deregister our event listeners
-#. Shutdown the keyboard support
-#. Shutdown accessibility utility functions
-#. Shutdown Braille support
-#. Shutdown speech support
-#. Shutdown Bonobo
-#. Shutdown the core
-#. Orca
-#.
-#. Copyright 2004 Sun Microsystems Inc.
-#.
-#. This library is free software; you can redistribute it and/or
-#. modify it under the terms of the GNU Library General Public
-#. License as published by the Free Software Foundation; either
-#. version 2 of the License, or (at your option) any later version.
-#.
-#. This library is distributed in the hope that it will be useful,
-#. but WITHOUT ANY WARRANTY; without even the implied warranty of
-#. MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-#. Library General Public License for more details.
-#.
-#. You should have received a copy of the GNU Library General Public
-#. License along with this library; if not, write to the
-#. Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-#. Boston, MA 02111-1307, USA.
-#. Orca i18n
-#. Role pronunciations
-#: src/orca/rolenames.py:28
+#: src/orca/orca.py:1027
+#, fuzzy
+msgid "Goodbye."
+msgstr "adeus."
+
+#: src/orca/rolenames.py:142
+msgid "???"
+msgstr ""
+
+#: src/orca/rolenames.py:143
+msgid "Invalid"
+msgstr ""
+
+#: src/orca/rolenames.py:144
+msgid "invalid"
+msgstr ""
+
+#: src/orca/rolenames.py:147
+msgid "acc"
+msgstr ""
+
+#: src/orca/rolenames.py:148
+msgid "Accelerator"
+msgstr ""
+
+#: src/orca/rolenames.py:149
+msgid "accelerator"
+msgstr ""
+
+#: src/orca/rolenames.py:152 src/orca/rolenames.py:154
+#, fuzzy
+msgid "alert"
+msgstr "esquerda"
+
+#: src/orca/rolenames.py:153
+#, fuzzy
+msgid "Alert"
+msgstr "esquerda"
+
+#: src/orca/rolenames.py:157
+msgid "Anim"
+msgstr ""
+
+#: src/orca/rolenames.py:158
+msgid "Animation"
+msgstr ""
+
+#: src/orca/rolenames.py:159
+msgid "animation"
+msgstr ""
+
+#: src/orca/rolenames.py:162 src/orca/rolenames.py:164
+msgid "arrow"
+msgstr ""
+
+#: src/orca/rolenames.py:163
+msgid "Arrow"
+msgstr ""
+
+#: src/orca/rolenames.py:167
+msgid "cal"
+msgstr ""
+
+#: src/orca/rolenames.py:168
+msgid "Calendar"
+msgstr ""
+
+#: src/orca/rolenames.py:169
+msgid "calendar"
+msgstr ""
+
+#: src/orca/rolenames.py:172
+msgid "cnv"
+msgstr ""
+
+#: src/orca/rolenames.py:173
+msgid "Canvas"
+msgstr ""
+
+#: src/orca/rolenames.py:174
+msgid "canvas"
+msgstr ""
+
+#: src/orca/rolenames.py:177 src/orca/rolenames.py:182
+msgid "chk"
+msgstr ""
+
+#: src/orca/rolenames.py:178
+msgid "CheckBox"
+msgstr ""
+
+#: src/orca/rolenames.py:179
+msgid "check box"
+msgstr ""
+
+#: src/orca/rolenames.py:183
+msgid "CheckItem"
+msgstr ""
+
+#: src/orca/rolenames.py:184
+msgid "check item"
+msgstr ""
+
+#: src/orca/rolenames.py:187
+msgid "ckm"
+msgstr ""
+
+#: src/orca/rolenames.py:188
+msgid "CheckMenu"
+msgstr ""
+
+#: src/orca/rolenames.py:189
+msgid "check menu"
+msgstr ""
+
+#: src/orca/rolenames.py:192
+msgid "clrchsr"
+msgstr ""
+
+#: src/orca/rolenames.py:193
+msgid "ColorChooser"
+msgstr ""
+
+#: src/orca/rolenames.py:194
+msgid "color chooser"
+msgstr ""
+
+#: src/orca/rolenames.py:197 src/orca/rolenames.py:432
+msgid "colhdr"
+msgstr ""
+
+#: src/orca/rolenames.py:198 src/orca/rolenames.py:433
+msgid "ColumnHeader"
+msgstr ""
+
+#: src/orca/rolenames.py:199 src/orca/rolenames.py:434
+msgid "column header"
+msgstr ""
+
+#: src/orca/rolenames.py:202
+msgid "cbo"
+msgstr ""
+
+#: src/orca/rolenames.py:203
+msgid "Combo"
+msgstr ""
+
+#: src/orca/rolenames.py:204
+msgid "combo box"
+msgstr ""
+
+#: src/orca/rolenames.py:207
+#, fuzzy
+msgid "dat"
+msgstr "ponto"
+
+#: src/orca/rolenames.py:208
+msgid "DateEditor"
+msgstr ""
+
+#: src/orca/rolenames.py:209
+msgid "date editor"
+msgstr ""
+
+#: src/orca/rolenames.py:212 src/orca/rolenames.py:272
+#: src/orca/rolenames.py:274
+msgid "icon"
+msgstr ""
+
+#: src/orca/rolenames.py:213
+msgid "DesktopIcon"
+msgstr ""
+
+#: src/orca/rolenames.py:214
+msgid "desktop icon"
+msgstr ""
+
+#: src/orca/rolenames.py:217 src/orca/rolenames.py:259
+#: src/orca/rolenames.py:282
+msgid "frame"
+msgstr ""
+
+#: src/orca/rolenames.py:218
+msgid "DesktopFrame"
+msgstr ""
+
+#: src/orca/rolenames.py:219
+msgid "desktop frame"
+msgstr ""
+
+#: src/orca/rolenames.py:222 src/orca/rolenames.py:224
+msgid "dial"
+msgstr ""
+
+#: src/orca/rolenames.py:223
+msgid "Dial"
+msgstr ""
+
+#: src/orca/rolenames.py:227
+msgid "dlg"
+msgstr ""
+
+#: src/orca/rolenames.py:228
+msgid "Dialog"
+msgstr ""
+
+#: src/orca/rolenames.py:229
+msgid "dialog"
+msgstr ""
+
+#: src/orca/rolenames.py:232
+msgid "dip"
+msgstr ""
+
+#: src/orca/rolenames.py:233
+msgid "DirectoryPane"
+msgstr ""
+
+#: src/orca/rolenames.py:234
+msgid "directory pane"
+msgstr ""
+
+#: src/orca/rolenames.py:237
+msgid "draw"
+msgstr ""
+
+#: src/orca/rolenames.py:238
+msgid "DrawingAarea"
+msgstr ""
+
+#: src/orca/rolenames.py:239
+msgid "drawing area"
+msgstr ""
+
+#: src/orca/rolenames.py:242
+msgid "fchsr"
+msgstr ""
+
+#: src/orca/rolenames.py:243
+msgid "FileChooser"
+msgstr ""
+
+#: src/orca/rolenames.py:244
+msgid "file chooser"
+msgstr ""
+
+#: src/orca/rolenames.py:247
+msgid "flr"
+msgstr ""
+
+#: src/orca/rolenames.py:248
+msgid "Filler"
+msgstr ""
+
+#: src/orca/rolenames.py:249
+msgid "filler"
+msgstr ""
+
+#: src/orca/rolenames.py:252
+msgid "fnt"
+msgstr ""
+
+#: src/orca/rolenames.py:253
+msgid "FontChooser"
+msgstr ""
+
+#: src/orca/rolenames.py:254
+msgid "font chooser"
+msgstr ""
+
+#: src/orca/rolenames.py:257
+msgid "frm"
+msgstr ""
+
+#: src/orca/rolenames.py:258
+msgid "Frame"
+msgstr ""
+
+#: src/orca/rolenames.py:262
+msgid "gpn"
+msgstr ""
+
+#: src/orca/rolenames.py:263
+msgid "GlassPane"
+msgstr ""
+
+#: src/orca/rolenames.py:264
+msgid "glass pane"
+msgstr ""
+
+#: src/orca/rolenames.py:267
+msgid "html"
+msgstr ""
+
+#: src/orca/rolenames.py:268
+msgid "HtmlContainer"
+msgstr ""
+
+#: src/orca/rolenames.py:269
+msgid "h t m l container"
+msgstr ""
+
+#: src/orca/rolenames.py:273
+msgid "Icon"
+msgstr ""
+
+#: src/orca/rolenames.py:277
+msgid "img"
+msgstr ""
+
+#: src/orca/rolenames.py:278
+msgid "Image"
+msgstr ""
+
+#: src/orca/rolenames.py:279
+msgid "image"
+msgstr ""
+
+#: src/orca/rolenames.py:283
+msgid "InternalFrame"
+msgstr ""
+
+#: src/orca/rolenames.py:284
+msgid "internal frame"
+msgstr ""
+
+#: src/orca/rolenames.py:287
+msgid "lbl"
+msgstr ""
+
+#: src/orca/rolenames.py:288
+msgid "Label"
+msgstr ""
+
+#: src/orca/rolenames.py:289
+msgid "label"
+msgstr ""
+
+#: src/orca/rolenames.py:292
+msgid "lyrdpn"
+msgstr ""
+
+#: src/orca/rolenames.py:293
+msgid "LayeredPane"
+msgstr ""
+
+#: src/orca/rolenames.py:294
+msgid "layered pane"
+msgstr ""
+
+#: src/orca/rolenames.py:297
+msgid "lst"
+msgstr ""
+
+#: src/orca/rolenames.py:298
+msgid "List"
+msgstr ""
+
+#: src/orca/rolenames.py:299
+#, fuzzy
+msgid "list"
+msgstr "vista em lista"
+
+#: src/orca/rolenames.py:302
+msgid "lstitm"
+msgstr ""
+
+#: src/orca/rolenames.py:303
+msgid "ListItem"
+msgstr ""
+
+#: src/orca/rolenames.py:304
+#, fuzzy
+msgid "list item"
+msgstr "vista em lista"
+
+#: src/orca/rolenames.py:307
+msgid "mnu"
+msgstr ""
+
+#: src/orca/rolenames.py:308
+msgid "Menu"
+msgstr ""
+
+#: src/orca/rolenames.py:309
+msgid "menu"
+msgstr ""
+
+#: src/orca/rolenames.py:312
+#, fuzzy
+msgid "mnubr"
+msgstr "número"
+
+#: src/orca/rolenames.py:313
+msgid "MenuBar"
+msgstr ""
+
+#: src/orca/rolenames.py:314
+msgid "menu bar"
+msgstr ""
+
+#: src/orca/rolenames.py:317
+msgid "mnuitm"
+msgstr ""
+
+#: src/orca/rolenames.py:318
+msgid "MenuItem"
+msgstr ""
+
+#: src/orca/rolenames.py:319
+msgid "menu item"
+msgstr ""
+
+#: src/orca/rolenames.py:322
+msgid "optnpn"
+msgstr ""
+
+#: src/orca/rolenames.py:323
+msgid "OptionPane"
+msgstr ""
+
+#: src/orca/rolenames.py:324
+msgid "option pane"
+msgstr ""
+
+#: src/orca/rolenames.py:327 src/orca/rolenames.py:329
+#, fuzzy
+msgid "page"
+msgstr "espaço"
+
+#: src/orca/rolenames.py:328
+msgid "Page"
+msgstr ""
+
+#: src/orca/rolenames.py:332
+msgid "tblst"
+msgstr ""
+
+#: src/orca/rolenames.py:333
+msgid "TabList"
+msgstr ""
+
+#: src/orca/rolenames.py:334
+msgid "tab list"
+msgstr ""
+
+#: src/orca/rolenames.py:337
+msgid "pnl"
+msgstr ""
+
+#: src/orca/rolenames.py:338
+msgid "Panel"
+msgstr ""
+
+#: src/orca/rolenames.py:339
+msgid "panel"
+msgstr ""
+
+#: src/orca/rolenames.py:342
+msgid "pwd"
+msgstr ""
+
+#: src/orca/rolenames.py:343
+msgid "Password"
+msgstr ""
+
+#: src/orca/rolenames.py:344
+msgid "password"
+msgstr ""
+
+#: src/orca/rolenames.py:347
+msgid "popmnu"
+msgstr ""
+
+#: src/orca/rolenames.py:348
+msgid "PopupMenu"
+msgstr ""
+
+#: src/orca/rolenames.py:349
+msgid "popup menu"
+msgstr ""
+
+#: src/orca/rolenames.py:352
+#, fuzzy
+msgid "pgbar"
+msgstr "barra"
+
+#: src/orca/rolenames.py:353
+msgid "Progress"
+msgstr ""
+
+#: src/orca/rolenames.py:354
+msgid "progress bar"
+msgstr ""
+
+#: src/orca/rolenames.py:357
+#, fuzzy
+msgid "btn"
+msgstr "botão"
+
+#: src/orca/rolenames.py:358
+#, fuzzy
+msgid "Button"
+msgstr "botão"
+
+#: src/orca/rolenames.py:359
 msgid "button"
 msgstr "botão"
 
-#: src/orca/rolenames.py:29
-msgid "list view"
-msgstr "vista em lista"
+#: src/orca/rolenames.py:362
+msgid "radio"
+msgstr ""
 
-#: src/orca/rolenames.py:30 src/orca/rolenames.py:31
-msgid "tree view"
+#: src/orca/rolenames.py:363
+msgid "RadioButton"
+msgstr ""
+
+#: src/orca/rolenames.py:364
+#, fuzzy
+msgid "radio button"
+msgstr "botão"
+
+#: src/orca/rolenames.py:367
+msgid "rdmnuitm"
+msgstr ""
+
+#: src/orca/rolenames.py:368
+msgid "RadioMenuItem"
+msgstr ""
+
+#: src/orca/rolenames.py:369
+msgid "radio menu item"
+msgstr ""
+
+#: src/orca/rolenames.py:372
+msgid "rdmnu"
+msgstr ""
+
+#: src/orca/rolenames.py:373
+msgid "RadioMenu"
+msgstr ""
+
+#: src/orca/rolenames.py:374
+msgid "radio menu"
+msgstr ""
+
+#: src/orca/rolenames.py:377
+msgid "rtpn"
+msgstr ""
+
+#: src/orca/rolenames.py:378
+msgid "RootPane"
+msgstr ""
+
+#: src/orca/rolenames.py:379
+msgid "root pane"
+msgstr ""
+
+#: src/orca/rolenames.py:382 src/orca/rolenames.py:437
+msgid "rwhdr"
+msgstr ""
+
+#: src/orca/rolenames.py:383 src/orca/rolenames.py:438
+msgid "RowHeader"
+msgstr ""
+
+#: src/orca/rolenames.py:384 src/orca/rolenames.py:439
+msgid "row header"
+msgstr ""
+
+#: src/orca/rolenames.py:387
+msgid "scbr"
+msgstr ""
+
+#: src/orca/rolenames.py:388
+#, fuzzy
+msgid "ScrollBar"
+msgstr "dólar"
+
+#: src/orca/rolenames.py:389
+#, fuzzy
+msgid "scroll bar"
+msgstr "dólar"
+
+#: src/orca/rolenames.py:392
+msgid "scpn"
+msgstr ""
+
+#: src/orca/rolenames.py:393
+#, fuzzy
+msgid "ScrollPane"
+msgstr "dois pontos"
+
+#: src/orca/rolenames.py:394
+msgid "scroll pane"
+msgstr ""
+
+#: src/orca/rolenames.py:397
+msgid "seprtr"
+msgstr ""
+
+#: src/orca/rolenames.py:398
+msgid "Separator"
+msgstr ""
+
+#: src/orca/rolenames.py:399
+msgid "separator"
+msgstr ""
+
+#: src/orca/rolenames.py:402
+msgid "sldr"
+msgstr ""
+
+#: src/orca/rolenames.py:403
+msgid "Slider"
+msgstr ""
+
+#: src/orca/rolenames.py:404
+msgid "slider"
+msgstr ""
+
+#: src/orca/rolenames.py:407
+msgid "spltpn"
+msgstr ""
+
+#: src/orca/rolenames.py:408
+msgid "SplitPane"
+msgstr ""
+
+#: src/orca/rolenames.py:409
+msgid "split pane"
+msgstr ""
+
+#: src/orca/rolenames.py:412
+msgid "spin"
+msgstr ""
+
+#: src/orca/rolenames.py:413
+#, fuzzy
+msgid "SpinButton"
+msgstr "botão"
+
+#: src/orca/rolenames.py:414
+#, fuzzy
+msgid "spin button"
+msgstr "botão"
+
+# ../lisp/menus.jl
+#: src/orca/rolenames.py:417
+#, fuzzy
+msgid "statbr"
+msgstr "asterísco"
+
+#: src/orca/rolenames.py:418
+msgid "StatusBar"
+msgstr ""
+
+#: src/orca/rolenames.py:419
+msgid "status bar"
+msgstr ""
+
+#: src/orca/rolenames.py:422
+#, fuzzy
+msgid "tbl"
+msgstr "tab"
+
+#: src/orca/rolenames.py:423
+msgid "Table"
+msgstr ""
+
+#: src/orca/rolenames.py:424
+#, fuzzy
+msgid "table"
+msgstr "tab"
+
+#: src/orca/rolenames.py:427 src/orca/rolenames.py:429
+msgid "cell"
+msgstr ""
+
+#: src/orca/rolenames.py:428
+msgid "Cell"
+msgstr ""
+
+#: src/orca/rolenames.py:442
+msgid "tomnuitm"
+msgstr ""
+
+#: src/orca/rolenames.py:443
+msgid "TearOffMenuItem"
+msgstr ""
+
+#: src/orca/rolenames.py:444 src/orca/speechgenerator.py:1260
+msgid "tear off menu item"
+msgstr ""
+
+#: src/orca/rolenames.py:447
+msgid "term"
+msgstr ""
+
+#: src/orca/rolenames.py:448
+msgid "Terminal"
+msgstr ""
+
+#: src/orca/rolenames.py:449
+msgid "terminal"
+msgstr ""
+
+#: src/orca/rolenames.py:452
+msgid "txt"
+msgstr ""
+
+#: src/orca/rolenames.py:453
+msgid "Text"
+msgstr ""
+
+#: src/orca/rolenames.py:454
+msgid "text"
+msgstr ""
+
+#: src/orca/rolenames.py:457
+msgid "tglbtn"
+msgstr ""
+
+#: src/orca/rolenames.py:458
+msgid "ToggleButton"
+msgstr ""
+
+#: src/orca/rolenames.py:459
+#, fuzzy
+msgid "toggle button"
+msgstr "botão"
+
+#: src/orca/rolenames.py:462
+#, fuzzy
+msgid "tbar"
+msgstr "barra"
+
+#: src/orca/rolenames.py:463
+#, fuzzy
+msgid "ToolBar"
+msgstr "dólar"
+
+#: src/orca/rolenames.py:464
+msgid "tool bar"
+msgstr ""
+
+#: src/orca/rolenames.py:467
+msgid "tip"
+msgstr ""
+
+#: src/orca/rolenames.py:468
+msgid "ToolTip"
+msgstr ""
+
+#: src/orca/rolenames.py:469
+msgid "tool tip"
+msgstr ""
+
+#: src/orca/rolenames.py:472 src/orca/rolenames.py:474
+#, fuzzy
+msgid "tree"
 msgstr "vista em árvore"
 
-#: src/orca/rolenames.py:33
-msgid "tab"
+#: src/orca/rolenames.py:473
+msgid "Tree"
+msgstr ""
+
+#: src/orca/rolenames.py:477
+msgid "trtbl"
+msgstr ""
+
+#: src/orca/rolenames.py:478
+msgid "TreeTable"
+msgstr ""
+
+#: src/orca/rolenames.py:479
+#, fuzzy
+msgid "tree table"
+msgstr "vista em árvore"
+
+#: src/orca/rolenames.py:482
+msgid "unk"
+msgstr ""
+
+#: src/orca/rolenames.py:483
+msgid "Unknown"
+msgstr ""
+
+#: src/orca/rolenames.py:484
+msgid "unknown"
+msgstr ""
+
+#: src/orca/rolenames.py:487
+msgid "vwprt"
+msgstr ""
+
+#: src/orca/rolenames.py:488
+msgid "Viewport"
+msgstr ""
+
+#: src/orca/rolenames.py:489
+msgid "viewport"
+msgstr ""
+
+#: src/orca/rolenames.py:492
+#, fuzzy
+msgid "wnd"
+msgstr "e"
+
+#: src/orca/rolenames.py:493
+msgid "Window"
+msgstr ""
+
+#: src/orca/rolenames.py:494
+msgid "window"
+msgstr ""
+
+#: src/orca/rolenames.py:497
+msgid "hdr"
+msgstr ""
+
+#: src/orca/rolenames.py:498
+#, fuzzy
+msgid "Header"
+msgstr "maior do que"
+
+#: src/orca/rolenames.py:499
+#, fuzzy
+msgid "header"
+msgstr "maior do que"
+
+#: src/orca/rolenames.py:502
+msgid "ftr"
+msgstr ""
+
+#: src/orca/rolenames.py:503
+msgid "Footer"
+msgstr ""
+
+#: src/orca/rolenames.py:504
+msgid "footer"
+msgstr ""
+
+#: src/orca/rolenames.py:507
+msgid "para"
+msgstr ""
+
+#: src/orca/rolenames.py:508
+msgid "Paragraph"
+msgstr ""
+
+#: src/orca/rolenames.py:509
+msgid "paragraph"
+msgstr ""
+
+#: src/orca/rolenames.py:512
+msgid "app"
+msgstr ""
+
+#: src/orca/rolenames.py:513
+msgid "Application"
+msgstr ""
+
+#: src/orca/rolenames.py:514
+msgid "application"
+msgstr ""
+
+#: src/orca/rolenames.py:517
+msgid "auto"
+msgstr ""
+
+#: src/orca/rolenames.py:518
+msgid "AutoComplete"
+msgstr ""
+
+#: src/orca/rolenames.py:519
+msgid "autocomplete"
+msgstr ""
+
+#: src/orca/rolenames.py:522
+msgid "edtbr"
+msgstr ""
+
+#: src/orca/rolenames.py:523
+msgid "EditBar"
+msgstr ""
+
+#: src/orca/rolenames.py:524
+msgid "edit bar"
+msgstr ""
+
+#: src/orca/rolenames.py:527
+msgid "emb"
+msgstr ""
+
+#: src/orca/rolenames.py:528
+msgid "EmbeddedComponent"
+msgstr ""
+
+#: src/orca/rolenames.py:529
+msgid "embedded component"
+msgstr ""
+
+#: src/orca/scripts/Evolution.py:70
+msgid "calv"
+msgstr ""
+
+#: src/orca/scripts/Evolution.py:71
+msgid "CalendarView"
+msgstr ""
+
+#: src/orca/scripts/Evolution.py:72
+msgid "calendar view"
+msgstr ""
+
+#: src/orca/scripts/Evolution.py:77
+msgid "cale"
+msgstr ""
+
+#: src/orca/scripts/Evolution.py:78
+msgid "CalendarEvent"
+msgstr ""
+
+#: src/orca/scripts/Evolution.py:79
+msgid "calendar event"
+msgstr ""
+
+#: src/orca/scripts/Evolution.py:549
+msgid "No appointments"
+msgstr ""
+
+#: src/orca/scripts/Evolution.py:623
+msgid "Directories button"
+msgstr ""
+
+#: src/orca/scripts/Evolution.py:721
+msgid "Misspelled word: "
+msgstr ""
+
+#: src/orca/scripts/Evolution.py:722
+msgid " Context is "
+msgstr ""
+
+#: src/orca/scripts/Gecko.py:49
+msgid "No page to read."
+msgstr "Nenhuma página a ler."
+
+#: src/orca/scripts/Gecko.py:57
+msgid "Reading web page failed."
+msgstr "Falha ao ler a página web."
+
+#: src/orca/scripts/Gecko.py:95 src/orca/scripts/Mozilla.py:214
+msgid "link"
+msgstr ""
+
+#. Note to translators: the regular expression here represents a
+#. string to match in the localized application name as seen by
+#. at-poke.  For most cases, the application name is the name of
+#. the binary used to start the application, but this is an
+#. unreliable assumption.  The only reliable way to do the
+#. translation is by running the application and then viewing its
+#. name in the main window of at-poke.
+#.
+#: src/orca/settings.py:261
+msgid "[\\S\\s]*StarOffice[\\s\\S]*"
+msgstr ""
+
+#: src/orca/settings.py:262
+msgid "soffice.bin"
+msgstr ""
+
+#: src/orca/settings.py:263
+msgid "[Ee]volution"
+msgstr ""
+
+#: src/orca/settings.py:264
+msgid "Deer Park"
+msgstr ""
+
+#: src/orca/scripts/metacity.py:90
+msgid "inaccessible"
+msgstr ""
+
+#: src/orca/speechgenerator.py:355 src/orca/speechgenerator.py:359
+msgid "checked"
+msgstr ""
+
+#: src/orca/speechgenerator.py:363 src/orca/speechgenerator.py:367
+msgid "not checked"
+msgstr ""
+
+#: src/orca/speechgenerator.py:868
+msgid "one tab"
+msgstr ""
+
+#: src/orca/speechgenerator.py:870
+#, fuzzy
+msgid "tabs"
 msgstr "tab"
+
+#: src/orca/speechgenerator.py:942 src/orca/speechgenerator.py:946
+msgid "selected"
+msgstr ""
+
+#: src/orca/speechgenerator.py:950 src/orca/speechgenerator.py:954
+msgid "not selected"
+msgstr ""
+
+#: src/orca/speechgenerator.py:1262
+msgid "tear off"
+msgstr ""
+
+#: src/orca/speechgenerator.py:1320 src/orca/speechgenerator.py:1324
+msgid "pressed"
+msgstr ""
+
+#: src/orca/speechgenerator.py:1328 src/orca/speechgenerator.py:1332
+msgid "not pressed"
+msgstr ""
+
+#~ msgid "right"
+#~ msgstr "direita"
+
+#~ msgid "Not a document."
+#~ msgstr "Não é um documento."
+
+#~ msgid " chat"
+#~ msgstr " diálogo"
+
+#~ msgid " instant message"
+#~ msgstr " mensagem instantânea"
+
+#~ msgid "Input"
+#~ msgstr "Entrada"
+
+#~ msgid "Message Log"
+#~ msgstr "Mensagem de Registo"
+
+#~ msgid "Enter choice."
+#~ msgstr "Introduza a sua escolha."
+
+#~ msgid "No working GNOME Speech drivers found."
+#~ msgstr "Nenhum controlador de Locução GNOME encontrado."
+
+#~ msgid "Select default synthesizer:"
+#~ msgstr "Seleccione o sintetizador por omissão:"
+
+#~ msgid "Create another voice?  Enter y or n: "
+#~ msgstr "Criar outra voz?  Introduza y (sim) ou n (não): "
+
+#~ msgid "Enter voice name: "
+#~ msgstr "Introduza o nome da voz: "

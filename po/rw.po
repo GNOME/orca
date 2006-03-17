@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-01 16:44-0700\n"
+"POT-Creation-Date: 2006-03-17 16:23-0500\n"
 "PO-Revision-Date: 2005-03-31 20:55-0700\n"
 "Last-Translator: Steve Murphy <murf@e-tools.com>\n"
 "Language-Team: Kinyarwanda <translation-team-rw@lists.sourceforge.net>\n"
@@ -24,15 +24,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "ULL NAME <EMAIL@ADDRESS>\n"
 
-#: src/orca/Gecko.py:180
+# sw/source\ui\ribbar\inputwin.src:MN_CALC_POPUP.MN_POP_OPS.MN_CALC_GRE.text
+#: src/orca/braillegenerator.py:185 src/orca/speechgenerator.py:188
 #, fuzzy
-msgid "No page to read."
-msgstr "Ipaji Kuri Gusoma"
+msgid "grayed"
+msgstr "Biruta"
 
-#: src/orca/Gecko.py:188
+# 2175
+#: src/orca/braillegenerator.py:1096 src/orca/speechgenerator.py:1197
 #, fuzzy
-msgid "Reading web page failed."
-msgstr "Urubuga Ipaji Byanze"
+msgid "expanded"
+msgstr "cya/ byagutse"
+
+#: src/orca/braillegenerator.py:1098 src/orca/speechgenerator.py:1199
+msgid "collapsed"
+msgstr ""
+
+#: src/orca/braillegenerator.py:1102
+#, python-format
+msgid "TREE LEVEL %d"
+msgstr ""
 
 # sc/source\ui\dbgui\asciiopt.src:RID_SCDLG_ASCII.CKB_SPACE.text
 #: src/orca/chnames.py:27
@@ -113,7 +124,7 @@ msgstr "umubare"
 msgid "dollar"
 msgstr "IDOLARI"
 
-#: src/orca/chnames.py:32
+#: src/orca/chnames.py:32 src/orca/speechgenerator.py:891
 msgid "percent"
 msgstr "ku ijana"
 
@@ -131,21 +142,15 @@ msgstr "na"
 msgid "tick"
 msgstr ""
 
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Office\DataAccess.xcs:....Column.Align..0.text
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Office\Math.xcs:....StandardFormat.HorizontalAlignment..0.text
 #: src/orca/chnames.py:35
-msgid "left"
-msgstr "ibumoso"
+#, fuzzy
+msgid "left paren"
+msgstr "Agasodeko Ibumoso"
 
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Office\DataAccess.xcs:....Column.Align..2.text
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Office\Math.xcs:....StandardFormat.HorizontalAlignment..2.text
 #: src/orca/chnames.py:36
-msgid "right"
-msgstr "iburyo"
+#, fuzzy
+msgid "right paren"
+msgstr "Agasodeko Iburyo"
 
 # officecfg/registry\schema\org\openoffice\Office\DataAccess.xcs:....DataSettings.CharacterEmphasis.text
 #: src/orca/chnames.py:37
@@ -186,9 +191,11 @@ msgstr "AKARONGOKABERAMYE"
 msgid "question"
 msgstr ""
 
+# sfx2/source\toolbox\tbxopdlg.src:TP_CONFIG_OBJECTBAR.STR_SYMBOL.text
 #: src/orca/chnames.py:44
-msgid "collun"
-msgstr ""
+#, fuzzy
+msgid "colon"
+msgstr "Agashushondanga"
 
 #: src/orca/chnames.py:45
 msgid "semi"
@@ -197,13 +204,13 @@ msgstr ""
 # sw/source\ui\ribbar\inputwin.src:MN_CALC_POPUP.MN_POP_OPS.MN_CALC_LES.text
 #: src/orca/chnames.py:46
 #, fuzzy
-msgid "less"
+msgid "less than"
 msgstr "Birutwa"
 
 # sw/source\ui\ribbar\inputwin.src:MN_CALC_POPUP.MN_POP_OPS.MN_CALC_GRE.text
 #: src/orca/chnames.py:47
 #, fuzzy
-msgid "greater"
+msgid "greater than"
 msgstr "Biruta"
 
 #: src/orca/chnames.py:48
@@ -235,478 +242,1774 @@ msgstr "Inyuma"
 msgid "bar"
 msgstr ""
 
-# setup2/source\ui\pages\pipath.src:RESID_PAGE_PAGEINSTPATH.STR_FREE.text
-#: src/orca/default.py:107
-#, fuzzy
-msgid "available"
-msgstr "Bihari"
-
-#: src/orca/default.py:109
-msgid "unavailable"
+#: src/orca/chnames.py:54
+msgid "newline"
 msgstr ""
+
+#: src/orca/chnames.py:55
+#, fuzzy
+msgid "tab"
+msgstr "Imbonerahamwe"
+
+#: src/orca/default.py:73
+msgid "Performs left click on current flat review item."
+msgstr ""
+
+#: src/orca/default.py:83
+msgid "Performs right click on current flat review item."
+msgstr ""
+
+#: src/orca/default.py:93
+msgid "Speaks entire document."
+msgstr ""
+
+#: src/orca/default.py:103
+msgid "Performs the where am I operation."
+msgstr ""
+
+#: src/orca/default.py:113
+msgid "Paints and prints the visible zones in the active window."
+msgstr ""
+
+#: src/orca/default.py:123
+msgid "Enters and exits flat review mode."
+msgstr ""
+
+#: src/orca/default.py:133
+msgid "Moves flat review to the beginning of the previous line."
+msgstr ""
+
+#: src/orca/default.py:149
+msgid "Moves flat review to the home position."
+msgstr ""
+
+#: src/orca/default.py:165
+msgid "Speaks the current flat review line."
+msgstr ""
+
+#: src/orca/default.py:181
+msgid "Moves flat review to the beginning of the next line."
+msgstr ""
+
+#: src/orca/default.py:197
+msgid "Moves flat review to the end position."
+msgstr ""
+
+#: src/orca/default.py:213
+msgid "Moves flat review to the previous item or word."
+msgstr ""
+
+#: src/orca/default.py:229
+msgid "Moves flat review to the word above the current word."
+msgstr ""
+
+#: src/orca/default.py:245
+msgid "Speaks the current flat review item or word."
+msgstr ""
+
+#: src/orca/default.py:261
+msgid "Speaks the current flat review object."
+msgstr ""
+
+#: src/orca/default.py:277
+msgid "Moves flat review to the next item or word."
+msgstr ""
+
+#: src/orca/default.py:293
+msgid "Moves flat review to the word below the current word."
+msgstr ""
+
+#: src/orca/default.py:309
+msgid "Moves flat review to the previous character."
+msgstr ""
+
+#: src/orca/default.py:325
+msgid "Moves flat review to the end of the line."
+msgstr ""
+
+#: src/orca/default.py:341
+msgid "Speaks the current flat review character."
+msgstr ""
+
+#: src/orca/default.py:357
+msgid "Moves flat review to the next character."
+msgstr ""
+
+#: src/orca/default.py:373
+msgid "Toggles whether to read just the current table cell or the whole row."
+msgstr ""
+
+#: src/orca/default.py:389
+msgid "Reads the attributes associated with the current text character."
+msgstr ""
+
+#: src/orca/default.py:404
+msgid "Pans the braille display to the left."
+msgstr ""
+
+#: src/orca/default.py:409
+msgid "Pans the braille display to the right."
+msgstr ""
+
+#: src/orca/default.py:430
+msgid "Moves flat review to the bottom left."
+msgstr ""
+
+#: src/orca/default.py:436
+msgid "Returns to object with keyboard focus."
+msgstr ""
+
+#: src/orca/default.py:640 src/orca/default.py:827
+#, fuzzy, python-format
+msgid "tree level %d"
+msgstr "imbonerahamwe#"
+
+#: src/orca/default.py:644 src/orca/default.py:831 src/orca/default.py:898
+#: src/orca/default.py:949
+msgid "No focus"
+msgstr ""
+
+#: src/orca/default.py:1827 src/orca/default.py:1921 src/orca/default.py:1926
+#: src/orca/default.py:1996 src/orca/default.py:2001
+#, fuzzy
+msgid "blank"
+msgstr "Inyuma"
+
+# sc/source\ui\dbgui\asciiopt.src:RID_SCDLG_ASCII.CKB_SPACE.text
+#: src/orca/default.py:1829 src/orca/default.py:1928
+#, fuzzy
+msgid "white space"
+msgstr "Umwanya"
+
+#: src/orca/espeechfactory.py:86
+msgid "Emacspeak Speech Services"
+msgstr ""
+
+#: src/orca/focus_tracking_presenter.py:474
+msgid "Switching to focus tracking mode."
+msgstr ""
+
+#: src/orca/gnomespeechfactory.py:124
+msgid "GNOME Speech Services"
+msgstr ""
+
+#. Replace ellipses (both manual and unicode) with "dot dot dot"
+#.
+#: src/orca/gnomespeechfactory.py:502 src/orca/gnomespeechfactory.py:503
+#, fuzzy
+msgid " dot dot dot"
+msgstr "Akadomo Akadomo Akadomo"
+
+#: src/orca/gnomespeechfactory.py:596
+msgid "faster."
+msgstr ""
+
+#: src/orca/gnomespeechfactory.py:627
+msgid "slower."
+msgstr ""
+
+#: src/orca/hierarchical_presenter.py:430
+msgid "Switching to hierarchical navigation mode."
+msgstr ""
+
+#: src/orca/keynames.py:27
+msgid "left shift"
+msgstr ""
+
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\DataAccess.xcs:....Column.Align..0.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Math.xcs:....StandardFormat.HorizontalAlignment..0.text
+#: src/orca/keynames.py:28
+#, fuzzy
+msgid "left tab"
+msgstr "ibumoso"
+
+#: src/orca/keynames.py:29
+msgid "F 11"
+msgstr ""
+
+#: src/orca/keynames.py:30
+msgid "F 12"
+msgstr ""
+
+#: src/orca/orca-setup.in:40
+#, fuzzy
+msgid "Creating .orca directory."
+msgstr "bushyinguro"
+
+#: src/orca/orca-setup.in:127 src/orca/orca-setup.in:142
+msgid "Speech is unavailable."
+msgstr ""
+
+#: src/orca/orca-setup.in:131
+#, fuzzy
+msgid "Welcome to Orca setup."
+msgstr "Kuri Imikorere"
+
+#: src/orca/orca-setup.in:145
+#, fuzzy
+msgid "Select desired speech system."
+msgstr "Mburabuzi"
+
+# desktop/source\app\ssodlg.src:DLG_SSOLOGIN.text
+#: src/orca/orca-setup.in:150 src/orca/orca-setup.in:178
+#: src/orca/orca-setup.in:201
+#, fuzzy, c-format
+msgid "%d. %s"
+msgstr "%d.%s"
+
+#: src/orca/orca-setup.in:153 src/orca/orca-setup.in:181
+#: src/orca/orca-setup.in:204
+msgid "Enter choice: "
+msgstr ""
+
+#: src/orca/orca-setup.in:155 src/orca/orca-setup.in:171
+#: src/orca/orca-setup.in:183 src/orca/orca-setup.in:192
+#: src/orca/orca-setup.in:206
+#, fuzzy
+msgid "Speech will not be used.\n"
+msgstr "OYA"
+
+#: src/orca/orca-setup.in:170
+msgid "No servers available.\n"
+msgstr ""
+
+#: src/orca/orca-setup.in:174
+#, fuzzy
+msgid "Select desired speech server."
+msgstr "Mburabuzi"
+
+#: src/orca/orca-setup.in:191
+msgid "No voices available.\n"
+msgstr ""
+
+#: src/orca/orca-setup.in:195
+#, fuzzy
+msgid "Select desired voice."
+msgstr "Ijwi"
+
+#: src/orca/orca-setup.in:232
+#, fuzzy
+msgid "Use key echo?  Enter y or n: "
+msgstr "Urufunguzo Y Cyangwa N"
+
+#: src/orca/orca-setup.in:257
+#, fuzzy
+msgid "Braille support appears to work, use it?  Enter y or n. "
+msgstr "Gushigikira Kuri Akazi Gukoresha Y Cyangwa N"
+
+#: src/orca/orca.py:261
+#, fuzzy
+msgid "User logged out - shutting down."
+msgstr "Inyuma Hasi"
+
+#: src/orca/orca.py:419
+msgid "Debug level all."
+msgstr ""
+
+#: src/orca/orca.py:421
+msgid "Debug level finest."
+msgstr ""
+
+#: src/orca/orca.py:423
+msgid "Debug level finer."
+msgstr ""
+
+#: src/orca/orca.py:511
+msgid "Entering learn mode.  Press any key to hear its function. "
+msgstr ""
+
+#: src/orca/orca.py:512
+msgid "To exit learn mode, press the escape key."
+msgstr ""
+
+#: src/orca/orca.py:513
+msgid "Learn mode.  Press escape to exit."
+msgstr ""
+
+#: src/orca/orca.py:523 src/orca/orca.py:524
+msgid "Exiting learn mode."
+msgstr ""
+
+#: src/orca/orca.py:813
+msgid "Enters learn mode.  Press escape to exit learn mode."
+msgstr ""
+
+#: src/orca/orca.py:821
+msgid "Decreases the speech rate."
+msgstr ""
+
+#: src/orca/orca.py:829
+msgid "Increases the speech rate."
+msgstr ""
+
+#: src/orca/orca.py:835
+msgid "Quits Orca"
+msgstr ""
+
+#: src/orca/orca.py:847
+msgid "Toggles keystroke recording on and off."
+msgstr ""
+
+#: src/orca/orca.py:855
+msgid "Forces a reset of the speech service."
+msgstr ""
+
+#: src/orca/orca.py:863
+msgid ""
+"Prints a debug listing of all known applications to the console where Orca "
+"is running."
+msgstr ""
+
+#: src/orca/orca.py:872
+msgid "Cycles the debug level at run time."
+msgstr ""
+
+#: src/orca/orca.py:881
+msgid ""
+"Prints debug information about the currently active application to the "
+"console where Orca is running."
+msgstr ""
+
+#: src/orca/orca.py:889
+msgid "Prints debug information about the ancestry of the object with focus"
+msgstr ""
+
+#: src/orca/orca.py:898
+msgid "Prints debug information about the application with focus"
+msgstr ""
+
+#: src/orca/orca.py:908
+msgid "Switches to the next presentation manager."
+msgstr ""
+
+#: src/orca/orca.py:975 src/orca/orca.py:976
+#, fuzzy
+msgid "Welcome to Orca."
+msgstr "Kuri"
+
+#. [[[TODO: WDW - the timer stuff is an experiment to see if
+#. we can recover from hangs.  It's only experimental, so it's
+#. commented out for now.]]]
+#.
+#. timer = threading.Timer(5.0, timeout)
+#. timer.start()
+#: src/orca/orca.py:1026
+msgid "goodbye."
+msgstr ""
+
+#: src/orca/orca.py:1027
+msgid "Goodbye."
+msgstr ""
+
+#: src/orca/rolenames.py:142
+msgid "???"
+msgstr ""
+
+# sc/source\ui\src\globstr.src:RID_GLOBSTR.STR_INVALID.text
+#: src/orca/rolenames.py:143
+#, fuzzy
+msgid "Invalid"
+msgstr "Sibyo"
+
+# sc/source\ui\src\globstr.src:RID_GLOBSTR.STR_INVALID.text
+#: src/orca/rolenames.py:144
+msgid "invalid"
+msgstr "Sibyo"
+
+#: src/orca/rolenames.py:147
+msgid "acc"
+msgstr ""
+
+#: src/orca/rolenames.py:148
+#, fuzzy
+msgid "Accelerator"
+msgstr "Akarango"
+
+#: src/orca/rolenames.py:149
+msgid "accelerator"
+msgstr ""
+
+#: src/orca/rolenames.py:152 src/orca/rolenames.py:154
+#, fuzzy
+msgid "alert"
+msgstr "Ikimenyetso"
+
+#: src/orca/rolenames.py:153
+#, fuzzy
+msgid "Alert"
+msgstr "Ikimenyetso"
+
+#: src/orca/rolenames.py:157
+msgid "Anim"
+msgstr ""
+
+#: src/orca/rolenames.py:158
+#, fuzzy
+msgid "Animation"
+msgstr "Iyega"
+
+#: src/orca/rolenames.py:159
+#, fuzzy
+msgid "animation"
+msgstr "Iyega"
+
+#: src/orca/rolenames.py:162 src/orca/rolenames.py:164
+#, fuzzy
+msgid "arrow"
+msgstr "Akambi"
+
+#: src/orca/rolenames.py:163
+#, fuzzy
+msgid "Arrow"
+msgstr "Akambi"
+
+#: src/orca/rolenames.py:167
+msgid "cal"
+msgstr ""
+
+# svtools/source\dialogs\addresstemplate.src:STR_FIELD_CALENDAR.text
+#: src/orca/rolenames.py:168
+#, fuzzy
+msgid "Calendar"
+msgstr "Kalindari"
+
+# svtools/source\dialogs\addresstemplate.src:STR_FIELD_CALENDAR.text
+#: src/orca/rolenames.py:169
+#, fuzzy
+msgid "calendar"
+msgstr "Kalindari"
+
+#: src/orca/rolenames.py:172
+msgid "cnv"
+msgstr ""
+
+#: src/orca/rolenames.py:173
+msgid "Canvas"
+msgstr ""
+
+#: src/orca/rolenames.py:174
+msgid "canvas"
+msgstr ""
+
+#: src/orca/rolenames.py:177 src/orca/rolenames.py:182
+msgid "chk"
+msgstr ""
+
+# basctl/source\basicide\tbxctl.src:RID_TOOLBOX.SID_INSERT_CHECKBOX.text
+#: src/orca/rolenames.py:178
+#, fuzzy
+msgid "CheckBox"
+msgstr "Akazu k'ihitamo"
+
+# basctl/source\basicide\tbxctl.src:RID_TOOLBOX.SID_INSERT_CHECKBOX.text
+#: src/orca/rolenames.py:179
+#, fuzzy
+msgid "check box"
+msgstr "Akazu k'ihitamo"
+
+#: src/orca/rolenames.py:183
+#, fuzzy
+msgid "CheckItem"
+msgstr "Ivivuwe"
+
+#: src/orca/rolenames.py:184
+#, fuzzy
+msgid "check item"
+msgstr "Kugenzura... Ikintu"
+
+#: src/orca/rolenames.py:187
+msgid "ckm"
+msgstr ""
+
+#: src/orca/rolenames.py:188
+#, fuzzy
+msgid "CheckMenu"
+msgstr "Kugenzura... Ikintu"
+
+#: src/orca/rolenames.py:189
+#, fuzzy
+msgid "check menu"
+msgstr "Kugenzura... Ikintu"
+
+#: src/orca/rolenames.py:192
+#, fuzzy
+msgid "clrchsr"
+msgstr "Ibara"
+
+#: src/orca/rolenames.py:193
+#, fuzzy
+msgid "ColorChooser"
+msgstr "Ibara"
+
+#: src/orca/rolenames.py:194
+#, fuzzy
+msgid "color chooser"
+msgstr "Ibara"
+
+#: src/orca/rolenames.py:197 src/orca/rolenames.py:432
+#, fuzzy
+msgid "colhdr"
+msgstr "Inkingi Umutwempangano"
+
+#: src/orca/rolenames.py:198 src/orca/rolenames.py:433
+#, fuzzy
+msgid "ColumnHeader"
+msgstr "Inkingi Umutwempangano"
+
+#: src/orca/rolenames.py:199 src/orca/rolenames.py:434
+#, fuzzy
+msgid "column header"
+msgstr "Inkingi Umutwempangano"
+
+#: src/orca/rolenames.py:202
+msgid "cbo"
+msgstr ""
+
+#: src/orca/rolenames.py:203
+msgid "Combo"
+msgstr ""
+
+# basctl/source\basicide\tbxctl.src:RID_TOOLBOX.SID_INSERT_COMBOBOX.text
+#: src/orca/rolenames.py:204
+#, fuzzy
+msgid "combo box"
+msgstr "Akazu k'ilisiti irambuka"
+
+# starmath/source\smres.src:RID_TOOLBOXWINDOW.6.RID_DOTX.text
+#: src/orca/rolenames.py:207
+#, fuzzy
+msgid "dat"
+msgstr "Akadomo"
+
+#: src/orca/rolenames.py:208
+#, fuzzy
+msgid "DateEditor"
+msgstr "Itariki Muhinduzi"
+
+#: src/orca/rolenames.py:209
+#, fuzzy
+msgid "date editor"
+msgstr "Itariki Muhinduzi"
+
+# sfx2/source\toolbox\tbxopdlg.src:TP_CONFIG_OBJECTBAR.STR_SYMBOL.text
+#: src/orca/rolenames.py:212 src/orca/rolenames.py:272
+#: src/orca/rolenames.py:274
+#, fuzzy
+msgid "icon"
+msgstr "Agashushondanga"
+
+#: src/orca/rolenames.py:213
+#, fuzzy
+msgid "DesktopIcon"
+msgstr "Ibiro Agashushondanga"
+
+#: src/orca/rolenames.py:214
+#, fuzzy
+msgid "desktop icon"
+msgstr "Ibiro Agashushondanga"
+
+#: src/orca/rolenames.py:217 src/orca/rolenames.py:259
+#: src/orca/rolenames.py:282
+msgid "frame"
+msgstr "ikadiri"
+
+#: src/orca/rolenames.py:218
+#, fuzzy
+msgid "DesktopFrame"
+msgstr "Ibiro Ikadiri"
+
+#: src/orca/rolenames.py:219
+#, fuzzy
+msgid "desktop frame"
+msgstr "Ibiro Ikadiri"
+
+#: src/orca/rolenames.py:222 src/orca/rolenames.py:224
+msgid "dial"
+msgstr ""
+
+#: src/orca/rolenames.py:223
+msgid "Dial"
+msgstr ""
+
+# basctl/source\basicide\basidesh.src:RID_STR_STDDIALOGNAME.text
+#: src/orca/rolenames.py:227
+#, fuzzy
+msgid "dlg"
+msgstr "Ikiganiro"
+
+# basctl/source\basicide\basidesh.src:RID_STR_STDDIALOGNAME.text
+#: src/orca/rolenames.py:228
+#, fuzzy
+msgid "Dialog"
+msgstr "Ikiganiro"
+
+# basctl/source\basicide\basidesh.src:RID_STR_STDDIALOGNAME.text
+#: src/orca/rolenames.py:229
+#, fuzzy
+msgid "dialog"
+msgstr "Ikiganiro"
+
+#: src/orca/rolenames.py:232
+msgid "dip"
+msgstr ""
+
+#: src/orca/rolenames.py:233
+#, fuzzy
+msgid "DirectoryPane"
+msgstr "bushyinguro"
+
+#: src/orca/rolenames.py:234
+#, fuzzy
+msgid "directory pane"
+msgstr "bushyinguro"
+
+#: src/orca/rolenames.py:237
+msgid "draw"
+msgstr ""
+
+#: src/orca/rolenames.py:238
+#, fuzzy
+msgid "DrawingAarea"
+msgstr "Igishushanyo Ubuso"
+
+#: src/orca/rolenames.py:239
+#, fuzzy
+msgid "drawing area"
+msgstr "Igishushanyo Ubuso"
+
+#: src/orca/rolenames.py:242
+msgid "fchsr"
+msgstr ""
+
+#: src/orca/rolenames.py:243
+#, fuzzy
+msgid "FileChooser"
+msgstr "IDOSIYE"
+
+#: src/orca/rolenames.py:244
+#, fuzzy
+msgid "file chooser"
+msgstr "IDOSIYE"
+
+#: src/orca/rolenames.py:247
+msgid "flr"
+msgstr ""
+
+#: src/orca/rolenames.py:248
+msgid "Filler"
+msgstr ""
+
+#: src/orca/rolenames.py:249
+msgid "filler"
+msgstr ""
+
+#: src/orca/rolenames.py:252
+msgid "fnt"
+msgstr ""
+
+#: src/orca/rolenames.py:253
+#, fuzzy
+msgid "FontChooser"
+msgstr "Intego- nyuguti"
+
+#: src/orca/rolenames.py:254
+#, fuzzy
+msgid "font chooser"
+msgstr "Intego- nyuguti"
+
+#: src/orca/rolenames.py:257
+#, fuzzy
+msgid "frm"
+msgstr "ikadiri"
+
+#: src/orca/rolenames.py:258
+#, fuzzy
+msgid "Frame"
+msgstr "ikadiri"
+
+#: src/orca/rolenames.py:262
+msgid "gpn"
+msgstr ""
+
+#: src/orca/rolenames.py:263
+msgid "GlassPane"
+msgstr ""
+
+#: src/orca/rolenames.py:264
+msgid "glass pane"
+msgstr ""
+
+#: src/orca/rolenames.py:267
+msgid "html"
+msgstr ""
+
+#: src/orca/rolenames.py:268
+msgid "HtmlContainer"
+msgstr ""
+
+#: src/orca/rolenames.py:269
+#, fuzzy
+msgid "h t m l container"
+msgstr "h"
+
+# sfx2/source\toolbox\tbxopdlg.src:TP_CONFIG_OBJECTBAR.STR_SYMBOL.text
+#: src/orca/rolenames.py:273
+#, fuzzy
+msgid "Icon"
+msgstr "Agashushondanga"
+
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Common.xcs:....Image.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Image.Enable.text
+#: src/orca/rolenames.py:277
+#, fuzzy
+msgid "img"
+msgstr "Ishusho"
+
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Common.xcs:....Image.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Image.Enable.text
+#: src/orca/rolenames.py:278
+#, fuzzy
+msgid "Image"
+msgstr "Ishusho"
+
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Common.xcs:....Image.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Image.Enable.text
+#: src/orca/rolenames.py:279
+#, fuzzy
+msgid "image"
+msgstr "Ishusho"
+
+#: src/orca/rolenames.py:283
+#, fuzzy
+msgid "InternalFrame"
+msgstr "By'imbere Ikadiri"
+
+#: src/orca/rolenames.py:284
+#, fuzzy
+msgid "internal frame"
+msgstr "By'imbere Ikadiri"
+
+#: src/orca/rolenames.py:287
+#, fuzzy
+msgid "lbl"
+msgstr "Akarango"
+
+#: src/orca/rolenames.py:288
+#, fuzzy
+msgid "Label"
+msgstr "Akarango"
+
+#: src/orca/rolenames.py:289
+#, fuzzy
+msgid "label"
+msgstr "Akarango"
+
+#: src/orca/rolenames.py:292
+msgid "lyrdpn"
+msgstr ""
+
+#: src/orca/rolenames.py:293
+msgid "LayeredPane"
+msgstr ""
+
+#: src/orca/rolenames.py:294
+msgid "layered pane"
+msgstr ""
+
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....DefaultFont.List.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....DefaultFontCJK.List.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....DefaultFontCTL.List.text
+#: src/orca/rolenames.py:297
+#, fuzzy
+msgid "lst"
+msgstr "Urutonde"
+
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....DefaultFont.List.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....DefaultFontCJK.List.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....DefaultFontCTL.List.text
+#: src/orca/rolenames.py:298
+#, fuzzy
+msgid "List"
+msgstr "Urutonde"
+
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....DefaultFont.List.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....DefaultFontCJK.List.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....DefaultFontCTL.List.text
+#: src/orca/rolenames.py:299
+#, fuzzy
+msgid "list"
+msgstr "Urutonde"
+
+#: src/orca/rolenames.py:302
+#, fuzzy
+msgid "lstitm"
+msgstr "Ibigize by'ilisiti"
+
+#: src/orca/rolenames.py:303
+#, fuzzy
+msgid "ListItem"
+msgstr "Ibigize by'ilisiti"
+
+#: src/orca/rolenames.py:304
+#, fuzzy
+msgid "list item"
+msgstr "Ibigize by'ilisiti"
+
+# #-#-#-#-#  sfx2.pot (PACKAGE VERSION)  #-#-#-#-#
+# sfx2/source\dialog\cfg.src:DLG_CONFIG.1.TP_CONFIG_MENU.text
+# #-#-#-#-#  sfx2.pot (PACKAGE VERSION)  #-#-#-#-#
+# sfx2/source\dialog\cfg.src:STR_MENU.text
+#: src/orca/rolenames.py:307
+#, fuzzy
+msgid "mnu"
+msgstr "Ibikubiyemo"
+
+# #-#-#-#-#  sfx2.pot (PACKAGE VERSION)  #-#-#-#-#
+# sfx2/source\dialog\cfg.src:DLG_CONFIG.1.TP_CONFIG_MENU.text
+# #-#-#-#-#  sfx2.pot (PACKAGE VERSION)  #-#-#-#-#
+# sfx2/source\dialog\cfg.src:STR_MENU.text
+#: src/orca/rolenames.py:308
+#, fuzzy
+msgid "Menu"
+msgstr "Ibikubiyemo"
+
+# #-#-#-#-#  sfx2.pot (PACKAGE VERSION)  #-#-#-#-#
+# sfx2/source\dialog\cfg.src:DLG_CONFIG.1.TP_CONFIG_MENU.text
+# #-#-#-#-#  sfx2.pot (PACKAGE VERSION)  #-#-#-#-#
+# sfx2/source\dialog\cfg.src:STR_MENU.text
+#: src/orca/rolenames.py:309
+#, fuzzy
+msgid "menu"
+msgstr "Ibikubiyemo"
+
+# LOCALIZATION NOTE END   : DO not localize the entities above; test case
+#: src/orca/rolenames.py:312
+#, fuzzy
+msgid "mnubr"
+msgstr "Umurongo w'ibikubiyemo"
+
+# LOCALIZATION NOTE END   : DO not localize the entities above; test case
+#: src/orca/rolenames.py:313
+#, fuzzy
+msgid "MenuBar"
+msgstr "Umurongo w'ibikubiyemo"
+
+# LOCALIZATION NOTE END   : DO not localize the entities above; test case
+#: src/orca/rolenames.py:314
+#, fuzzy
+msgid "menu bar"
+msgstr "Umurongo w'ibikubiyemo"
+
+#: src/orca/rolenames.py:317
+#, fuzzy
+msgid "mnuitm"
+msgstr "Ibikubiyemo Ikintu"
+
+#: src/orca/rolenames.py:318
+#, fuzzy
+msgid "MenuItem"
+msgstr "Ibikubiyemo Ikintu"
+
+#: src/orca/rolenames.py:319
+#, fuzzy
+msgid "menu item"
+msgstr "Ibikubiyemo Ikintu"
+
+#: src/orca/rolenames.py:322
+#, fuzzy
+msgid "optnpn"
+msgstr "Ihitamo"
+
+#: src/orca/rolenames.py:323
+#, fuzzy
+msgid "OptionPane"
+msgstr "Ihitamo"
+
+#: src/orca/rolenames.py:324
+#, fuzzy
+msgid "option pane"
+msgstr "Ihitamo"
+
+# sc/source\ui\dbgui\asciiopt.src:RID_SCDLG_ASCII.CKB_SPACE.text
+#: src/orca/rolenames.py:327 src/orca/rolenames.py:329
+#, fuzzy
+msgid "page"
+msgstr "Umwanya"
+
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Common.xcs:....Image.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Image.Enable.text
+#: src/orca/rolenames.py:328
+#, fuzzy
+msgid "Page"
+msgstr "Ishusho"
+
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....DefaultFont.List.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....DefaultFontCJK.List.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....DefaultFontCTL.List.text
+#: src/orca/rolenames.py:332
+#, fuzzy
+msgid "tblst"
+msgstr "Urutonde"
+
+#: src/orca/rolenames.py:333
+msgid "TabList"
+msgstr ""
+
+#: src/orca/rolenames.py:334
+#, fuzzy
+msgid "tab list"
+msgstr "Ipaji Isunika Urutonde"
+
+#: src/orca/rolenames.py:337
+msgid "pnl"
+msgstr ""
+
+#: src/orca/rolenames.py:338
+msgid "Panel"
+msgstr ""
+
+#: src/orca/rolenames.py:339
+msgid "panel"
+msgstr ""
+
+#: src/orca/rolenames.py:342
+msgid "pwd"
+msgstr ""
+
+#: src/orca/rolenames.py:343
+#, fuzzy
+msgid "Password"
+msgstr "Ijambobanga... Umwandiko"
+
+#: src/orca/rolenames.py:344
+#, fuzzy
+msgid "password"
+msgstr "Ijambobanga... Umwandiko"
+
+#: src/orca/rolenames.py:347
+#, fuzzy
+msgid "popmnu"
+msgstr "Ibikubiyemo"
+
+#: src/orca/rolenames.py:348
+#, fuzzy
+msgid "PopupMenu"
+msgstr "Ibikubiyemo"
+
+#: src/orca/rolenames.py:349
+#, fuzzy
+msgid "popup menu"
+msgstr "Ibikubiyemo"
+
+#: src/orca/rolenames.py:352
+msgid "pgbar"
+msgstr ""
+
+# basctl/source\basicide\tbxctl.src:RID_TOOLBOX.SID_INSERT_PROGRESSBAR.text
+#: src/orca/rolenames.py:353
+#, fuzzy
+msgid "Progress"
+msgstr "Umurongo w'aho bigeze"
+
+# basctl/source\basicide\tbxctl.src:RID_TOOLBOX.SID_INSERT_PROGRESSBAR.text
+#: src/orca/rolenames.py:354
+#, fuzzy
+msgid "progress bar"
+msgstr "Umurongo w'aho bigeze"
+
+#: src/orca/rolenames.py:357
+msgid "btn"
+msgstr ""
+
+#: src/orca/rolenames.py:358
+msgid "Button"
+msgstr ""
+
+# svx/sdi\svxslots.src:SID_FM_PUSHBUTTON.text
+#: src/orca/rolenames.py:359
+#, fuzzy
+msgid "button"
+msgstr "Kanda Buto"
+
+#: src/orca/rolenames.py:362
+msgid "radio"
+msgstr ""
+
+# svx/source\form\fmexpl.src:RID_FMSHELL_CONVERSIONMENU.SID_FM_CONVERTTO_RADIOBUTTON.text
+#: src/orca/rolenames.py:363
+#, fuzzy
+msgid "RadioButton"
+msgstr "Buto Radiyo"
+
+# svx/source\form\fmexpl.src:RID_FMSHELL_CONVERSIONMENU.SID_FM_CONVERTTO_RADIOBUTTON.text
+#: src/orca/rolenames.py:364
+#, fuzzy
+msgid "radio button"
+msgstr "Buto Radiyo"
+
+#: src/orca/rolenames.py:367
+#, fuzzy
+msgid "rdmnuitm"
+msgstr "Ibikubiyemo Ikintu"
+
+#: src/orca/rolenames.py:368
+#, fuzzy
+msgid "RadioMenuItem"
+msgstr "Ikintu"
+
+#: src/orca/rolenames.py:369
+#, fuzzy
+msgid "radio menu item"
+msgstr "Ikintu"
+
+# #-#-#-#-#  sfx2.pot (PACKAGE VERSION)  #-#-#-#-#
+# sfx2/source\dialog\cfg.src:DLG_CONFIG.1.TP_CONFIG_MENU.text
+# #-#-#-#-#  sfx2.pot (PACKAGE VERSION)  #-#-#-#-#
+# sfx2/source\dialog\cfg.src:STR_MENU.text
+#: src/orca/rolenames.py:372
+#, fuzzy
+msgid "rdmnu"
+msgstr "Ibikubiyemo"
+
+#: src/orca/rolenames.py:373
+#, fuzzy
+msgid "RadioMenu"
+msgstr "Ikintu"
+
+#: src/orca/rolenames.py:374
+#, fuzzy
+msgid "radio menu"
+msgstr "Ikintu"
+
+#: src/orca/rolenames.py:377
+#, fuzzy
+msgid "rtpn"
+msgstr "Imizi"
+
+#: src/orca/rolenames.py:378
+#, fuzzy
+msgid "RootPane"
+msgstr "Imizi"
+
+#: src/orca/rolenames.py:379
+#, fuzzy
+msgid "root pane"
+msgstr "Imizi"
+
+#: src/orca/rolenames.py:382 src/orca/rolenames.py:437
+#, fuzzy
+msgid "rwhdr"
+msgstr "Urubariro Umutwempangano"
+
+#: src/orca/rolenames.py:383 src/orca/rolenames.py:438
+#, fuzzy
+msgid "RowHeader"
+msgstr "Urubariro Umutwempangano"
+
+#: src/orca/rolenames.py:384 src/orca/rolenames.py:439
+#, fuzzy
+msgid "row header"
+msgstr "Urubariro Umutwempangano"
+
+#: src/orca/rolenames.py:387
+msgid "scbr"
+msgstr ""
+
+# sfx2/source\view\framedlg.src:TP_FRAMEPROPERTIES.GB_SCROLLING.text
+#: src/orca/rolenames.py:388
+#, fuzzy
+msgid "ScrollBar"
+msgstr "Agafashagenda"
+
+# sfx2/source\view\framedlg.src:TP_FRAMEPROPERTIES.GB_SCROLLING.text
+#: src/orca/rolenames.py:389
+#, fuzzy
+msgid "scroll bar"
+msgstr "Agafashagenda"
+
+#: src/orca/rolenames.py:392
+msgid "scpn"
+msgstr ""
+
+#: src/orca/rolenames.py:393
+msgid "ScrollPane"
+msgstr ""
+
+#: src/orca/rolenames.py:394
+msgid "scroll pane"
+msgstr ""
+
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.WriterObject.Table.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.WriterObject.Frame.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.WriterObject.Graphic.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Calc.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Draw.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Chart.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Image.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Formula.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Impress.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.OLEMisc.Settings.Delimiter.text
+#: src/orca/rolenames.py:397
+#, fuzzy
+msgid "seprtr"
+msgstr "Mutandukanya"
+
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.WriterObject.Table.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.WriterObject.Frame.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.WriterObject.Graphic.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Calc.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Draw.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Chart.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Image.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Formula.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Impress.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.OLEMisc.Settings.Delimiter.text
+#: src/orca/rolenames.py:398
+#, fuzzy
+msgid "Separator"
+msgstr "Mutandukanya"
+
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.WriterObject.Table.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.WriterObject.Frame.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.WriterObject.Graphic.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Calc.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Draw.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Chart.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Image.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Formula.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Impress.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.OLEMisc.Settings.Delimiter.text
+#: src/orca/rolenames.py:399
+#, fuzzy
+msgid "separator"
+msgstr "Mutandukanya"
+
+#: src/orca/rolenames.py:402
+msgid "sldr"
+msgstr ""
+
+#: src/orca/rolenames.py:403
+msgid "Slider"
+msgstr ""
+
+#: src/orca/rolenames.py:404
+msgid "slider"
+msgstr ""
+
+#: src/orca/rolenames.py:407
+#, fuzzy
+msgid "spltpn"
+msgstr "Gutandukanya"
+
+#: src/orca/rolenames.py:408
+#, fuzzy
+msgid "SplitPane"
+msgstr "Gutandukanya"
+
+#: src/orca/rolenames.py:409
+#, fuzzy
+msgid "split pane"
+msgstr "Gutandukanya"
+
+#: src/orca/rolenames.py:412
+msgid "spin"
+msgstr ""
+
+#: src/orca/rolenames.py:413
+#, fuzzy
+msgid "SpinButton"
+msgstr "Buto Nkaragwa"
+
+#: src/orca/rolenames.py:414
+#, fuzzy
+msgid "spin button"
+msgstr "Buto Nkaragwa"
+
+# officecfg/registry\schema\org\openoffice\Office\DataAccess.xcs:....DataSettings.CharacterEmphasis.text
+#: src/orca/rolenames.py:417
+#, fuzzy
+msgid "statbr"
+msgstr "star"
+
+# sfx2/source\dialog\cfg.src:TP_CONFIG_STATBAR.GRP_STATBAR.text
+#: src/orca/rolenames.py:418
+#, fuzzy
+msgid "StatusBar"
+msgstr "Akarongo k'imimerere"
+
+# sfx2/source\dialog\cfg.src:TP_CONFIG_STATBAR.GRP_STATBAR.text
+#: src/orca/rolenames.py:419
+#, fuzzy
+msgid "status bar"
+msgstr "Akarongo k'imimerere"
+
+#: src/orca/rolenames.py:422
+#, fuzzy
+msgid "tbl"
+msgstr "Imbonerahamwe"
+
+#: src/orca/rolenames.py:423
+#, fuzzy
+msgid "Table"
+msgstr "Imbonerahamwe"
+
+#: src/orca/rolenames.py:424
+#, fuzzy
+msgid "table"
+msgstr "Imbonerahamwe"
+
+#: src/orca/rolenames.py:427 src/orca/rolenames.py:429
+msgid "cell"
+msgstr ""
+
+#: src/orca/rolenames.py:428
+msgid "Cell"
+msgstr ""
+
+#: src/orca/rolenames.py:442
+#, fuzzy
+msgid "tomnuitm"
+msgstr "Ibikubiyemo Ikintu"
+
+#: src/orca/rolenames.py:443
+msgid "TearOffMenuItem"
+msgstr ""
+
+#: src/orca/rolenames.py:444 src/orca/speechgenerator.py:1260
+#, fuzzy
+msgid "tear off menu item"
+msgstr "Ibikubiyemo Ikintu"
+
+#: src/orca/rolenames.py:447
+msgid "term"
+msgstr ""
+
+#: src/orca/rolenames.py:448
+msgid "Terminal"
+msgstr ""
+
+#: src/orca/rolenames.py:449
+msgid "terminal"
+msgstr ""
+
+#: src/orca/rolenames.py:452
+msgid "txt"
+msgstr ""
+
+#: src/orca/rolenames.py:453
+msgid "Text"
+msgstr ""
+
+#: src/orca/rolenames.py:454
+msgid "text"
+msgstr ""
+
+#: src/orca/rolenames.py:457
+#, fuzzy
+msgid "tglbtn"
+msgstr "Mukomatanya Akabuto"
+
+#: src/orca/rolenames.py:458
+#, fuzzy
+msgid "ToggleButton"
+msgstr "Mukomatanya Akabuto"
+
+#: src/orca/rolenames.py:459
+#, fuzzy
+msgid "toggle button"
+msgstr "Mukomatanya Akabuto"
+
+# officecfg/registry\schema\org\openoffice\Office\DataAccess.xcs:....DataSettings.CharacterEmphasis.text
+#: src/orca/rolenames.py:462
+#, fuzzy
+msgid "tbar"
+msgstr "star"
+
+# sc/source\core\src\compiler.src:RID_SC_FUNCTION_NAMES.SC_OPCODE_CURRENCY.text
+#: src/orca/rolenames.py:463
+#, fuzzy
+msgid "ToolBar"
+msgstr "IDOLARI"
+
+#: src/orca/rolenames.py:464
+msgid "tool bar"
+msgstr ""
+
+#: src/orca/rolenames.py:467
+msgid "tip"
+msgstr ""
+
+#: src/orca/rolenames.py:468
+#, fuzzy
+msgid "ToolTip"
+msgstr "Inyobora:"
+
+#: src/orca/rolenames.py:469
+#, fuzzy
+msgid "tool tip"
+msgstr "Inyobora:"
+
+#: src/orca/rolenames.py:472 src/orca/rolenames.py:474
+msgid "tree"
+msgstr ""
+
+#: src/orca/rolenames.py:473
+msgid "Tree"
+msgstr ""
+
+#: src/orca/rolenames.py:477
+#, fuzzy
+msgid "trtbl"
+msgstr "imbonerahamwe#"
+
+#: src/orca/rolenames.py:478
+#, fuzzy
+msgid "TreeTable"
+msgstr "imbonerahamwe#"
+
+#: src/orca/rolenames.py:479
+#, fuzzy
+msgid "tree table"
+msgstr "imbonerahamwe#"
+
+#: src/orca/rolenames.py:482
+msgid "unk"
+msgstr ""
+
+# sfx2/source\dialog\dinfdlg.src:TP_DOCINFODOC.STR_UNKNOWNSIZE.text
+#: src/orca/rolenames.py:483
+#, fuzzy
+msgid "Unknown"
+msgstr "ntibizwi"
+
+# sfx2/source\dialog\dinfdlg.src:TP_DOCINFODOC.STR_UNKNOWNSIZE.text
+#: src/orca/rolenames.py:484
+msgid "unknown"
+msgstr "ntibizwi"
+
+#: src/orca/rolenames.py:487
+msgid "vwprt"
+msgstr ""
+
+#: src/orca/rolenames.py:488
+msgid "Viewport"
+msgstr ""
+
+#: src/orca/rolenames.py:489
+msgid "viewport"
+msgstr ""
+
+# #-#-#-#-#  sc.pot (PACKAGE VERSION)  #-#-#-#-#
+# sc/source\ui\src\condfrmt.src:RID_SCDLG_CONDFORMAT.FT_COND1_AND.text
+# #-#-#-#-#  sc.pot (PACKAGE VERSION)  #-#-#-#-#
+# sc/source\ui\src\condfrmt.src:RID_SCDLG_CONDFORMAT.FT_COND2_AND.text
+# #-#-#-#-#  sc.pot (PACKAGE VERSION)  #-#-#-#-#
+# sc/source\ui\src\condfrmt.src:RID_SCDLG_CONDFORMAT.FT_COND3_AND.text
+#: src/orca/rolenames.py:492
+#, fuzzy
+msgid "wnd"
+msgstr "na"
+
+# sc/source\ui\src\optdlg.src:RID_SCPAGE_CONTENT.GB_WINDOW.text
+#: src/orca/rolenames.py:493
+#, fuzzy
+msgid "Window"
+msgstr "Idirishya"
+
+# sc/source\ui\src\optdlg.src:RID_SCPAGE_CONTENT.GB_WINDOW.text
+#: src/orca/rolenames.py:494
+#, fuzzy
+msgid "window"
+msgstr "Idirishya"
+
+#: src/orca/rolenames.py:497
+msgid "hdr"
+msgstr ""
+
+#: src/orca/rolenames.py:498
+#, fuzzy
+msgid "Header"
+msgstr "Urubariro Umutwempangano"
+
+#: src/orca/rolenames.py:499
+#, fuzzy
+msgid "header"
+msgstr "Urubariro Umutwempangano"
+
+#: src/orca/rolenames.py:502
+msgid "ftr"
+msgstr ""
+
+#: src/orca/rolenames.py:503
+msgid "Footer"
+msgstr ""
+
+#: src/orca/rolenames.py:504
+msgid "footer"
+msgstr ""
+
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.WriterObject.Table.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.WriterObject.Frame.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.WriterObject.Graphic.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Calc.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Draw.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Chart.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Image.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Formula.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Impress.Settings.Delimiter.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.OLEMisc.Settings.Delimiter.text
+#: src/orca/rolenames.py:507
+#, fuzzy
+msgid "para"
+msgstr "Mutandukanya"
+
+#: src/orca/rolenames.py:508
+msgid "Paragraph"
+msgstr ""
+
+#: src/orca/rolenames.py:509
+msgid "paragraph"
+msgstr ""
+
+#: src/orca/rolenames.py:512
+msgid "app"
+msgstr ""
+
+#: src/orca/rolenames.py:513
+msgid "Application"
+msgstr ""
+
+#: src/orca/rolenames.py:514
+#, fuzzy
+msgid "application"
+msgstr "Iyega"
+
+#: src/orca/rolenames.py:517
+msgid "auto"
+msgstr ""
+
+#: src/orca/rolenames.py:518
+msgid "AutoComplete"
+msgstr ""
+
+#: src/orca/rolenames.py:519
+msgid "autocomplete"
+msgstr ""
+
+#: src/orca/rolenames.py:522
+#, fuzzy
+msgid "edtbr"
+msgstr "Guhindura"
+
+#: src/orca/rolenames.py:523
+#, fuzzy
+msgid "EditBar"
+msgstr "Guhindura"
+
+#: src/orca/rolenames.py:524
+#, fuzzy
+msgid "edit bar"
+msgstr "Guhindura"
+
+#: src/orca/rolenames.py:527
+msgid "emb"
+msgstr ""
+
+#: src/orca/rolenames.py:528
+msgid "EmbeddedComponent"
+msgstr ""
+
+#: src/orca/rolenames.py:529
+msgid "embedded component"
+msgstr ""
+
+#: src/orca/scripts/Evolution.py:70
+msgid "calv"
+msgstr ""
+
+# svtools/source\dialogs\addresstemplate.src:STR_FIELD_CALENDAR.text
+#: src/orca/scripts/Evolution.py:71
+#, fuzzy
+msgid "CalendarView"
+msgstr "Kalindari"
+
+# svtools/source\dialogs\addresstemplate.src:STR_FIELD_CALENDAR.text
+#: src/orca/scripts/Evolution.py:72
+#, fuzzy
+msgid "calendar view"
+msgstr "Kalindari"
+
+#: src/orca/scripts/Evolution.py:77
+#, fuzzy
+msgid "cale"
+msgstr "Ikimenyetso"
+
+# svtools/source\dialogs\addresstemplate.src:STR_FIELD_CALENDAR.text
+#: src/orca/scripts/Evolution.py:78
+#, fuzzy
+msgid "CalendarEvent"
+msgstr "Kalindari"
+
+# svtools/source\dialogs\addresstemplate.src:STR_FIELD_CALENDAR.text
+#: src/orca/scripts/Evolution.py:79
+#, fuzzy
+msgid "calendar event"
+msgstr "Kalindari"
+
+#: src/orca/scripts/Evolution.py:549
+msgid "No appointments"
+msgstr ""
+
+#: src/orca/scripts/Evolution.py:623
+#, fuzzy
+msgid "Directories button"
+msgstr "Mukomatanya Akabuto"
+
+#: src/orca/scripts/Evolution.py:721
+msgid "Misspelled word: "
+msgstr ""
+
+#: src/orca/scripts/Evolution.py:722
+msgid " Context is "
+msgstr ""
+
+#: src/orca/scripts/Gecko.py:49
+#, fuzzy
+msgid "No page to read."
+msgstr "Ipaji Kuri Gusoma"
+
+#: src/orca/scripts/Gecko.py:57
+#, fuzzy
+msgid "Reading web page failed."
+msgstr "Urubuga Ipaji Byanze"
+
+# offmgr/source\offapp\dialog\hyprlink.src:RID_SVXDLG_HYPERLINK.BTN_INSERT_BOOKMARK.text
+#: src/orca/scripts/Gecko.py:95 src/orca/scripts/Mozilla.py:214
+#, fuzzy
+msgid "link"
+msgstr "Ihuza"
+
+#. Note to translators: the regular expression here represents a
+#. string to match in the localized application name as seen by
+#. at-poke.  For most cases, the application name is the name of
+#. the binary used to start the application, but this is an
+#. unreliable assumption.  The only reliable way to do the
+#. translation is by running the application and then viewing its
+#. name in the main window of at-poke.
+#.
+#: src/orca/settings.py:261
+msgid "[\\S\\s]*StarOffice[\\s\\S]*"
+msgstr ""
+
+#: src/orca/settings.py:262
+msgid "soffice.bin"
+msgstr ""
+
+#: src/orca/settings.py:263
+msgid "[Ee]volution"
+msgstr ""
+
+#: src/orca/settings.py:264
+msgid "Deer Park"
+msgstr ""
+
+#: src/orca/scripts/metacity.py:90
+msgid "inaccessible"
+msgstr ""
+
+#: src/orca/speechgenerator.py:355 src/orca/speechgenerator.py:359
+#, fuzzy
+msgid "checked"
+msgstr "Ivivuwe"
+
+#: src/orca/speechgenerator.py:363 src/orca/speechgenerator.py:367
+#, fuzzy
+msgid "not checked"
+msgstr "OYA Ivivuwe"
+
+#: src/orca/speechgenerator.py:868
+#, fuzzy
+msgid "one tab"
+msgstr "Ikintu"
+
+#: src/orca/speechgenerator.py:870
+#, fuzzy
+msgid "tabs"
+msgstr "Imbonerahamwe"
+
+#: src/orca/speechgenerator.py:942 src/orca/speechgenerator.py:946
+msgid "selected"
+msgstr ""
+
+#: src/orca/speechgenerator.py:950 src/orca/speechgenerator.py:954
+#, fuzzy
+msgid "not selected"
+msgstr "OYA Ivivuwe"
+
+#: src/orca/speechgenerator.py:1262
+msgid "tear off"
+msgstr ""
+
+#: src/orca/speechgenerator.py:1320 src/orca/speechgenerator.py:1324
+msgid "pressed"
+msgstr ""
+
+#: src/orca/speechgenerator.py:1328 src/orca/speechgenerator.py:1332
+#, fuzzy
+msgid "not pressed"
+msgstr "OYA Ivivuwe"
+
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\DataAccess.xcs:....Column.Align..2.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Math.xcs:....StandardFormat.HorizontalAlignment..2.text
+#~ msgid "right"
+#~ msgstr "iburyo"
+
+# setup2/source\ui\pages\pipath.src:RESID_PAGE_PAGEINSTPATH.STR_FREE.text
+#, fuzzy
+#~ msgid "available"
+#~ msgstr "Bihari"
 
 # #-#-#-#-#  sw.pot (PACKAGE VERSION)  #-#-#-#-#
 # sw/source\ui\misc\glossary.src:DLG_GLOSSARY.FT_SHORTNAME.text
 # #-#-#-#-#  sw.pot (PACKAGE VERSION)  #-#-#-#-#
 # sw/source\ui\misc\glossary.src:DLG_RENAME_GLOS.FT_NS.text
-#: src/orca/default.py:143
 #, fuzzy
-msgid "shortcut"
-msgstr "Iy'ibusamo"
+#~ msgid "shortcut"
+#~ msgstr "Iy'ibusamo"
 
-#: src/orca/default.py:145
-msgid "accelerator"
-msgstr ""
-
-#: src/orca/default.py:202
 #, fuzzy
-msgid " dot dot dot"
-msgstr "Akadomo Akadomo Akadomo"
+#~ msgid "Not a document."
+#~ msgstr "a Inyandiko"
 
-#: src/orca/default.py:438
 #, fuzzy
-msgid "one item"
-msgstr "Ikintu"
-
-#: src/orca/default.py:440
-msgid "items"
-msgstr ""
-
-#: src/orca/default.py:641 src/orca/default.py:643
-#, fuzzy
-msgid "checked"
-msgstr "Ivivuwe"
-
-#: src/orca/default.py:648 src/orca/default.py:650
-#, fuzzy
-msgid "not checked"
-msgstr "OYA Ivivuwe"
-
-#: src/orca/default.py:1246
-#, fuzzy
-msgid "Not a document."
-msgstr "a Inyandiko"
-
-#: src/orca/gaim.py:55
-msgid " chat"
-msgstr ""
-
-#: src/orca/gaim.py:81
-#, fuzzy
-msgid " instant message"
-msgstr "Ubutumwa bugera ako kanya"
+#~ msgid " instant message"
+#~ msgstr "Ubutumwa bugera ako kanya"
 
 # sc/source\ui\src\globstr.src:RID_GLOBSTR.STR_UNDO_ENTERDATA.text
-#: src/orca/gaim.py:137
-msgid "Input"
-msgstr "Iyinjiza"
+#~ msgid "Input"
+#~ msgstr "Iyinjiza"
 
-#: src/orca/gaim.py:139
-msgid "Message Log"
-msgstr ""
-
-#: src/orca/metacity.py:40
-msgid "inaccessible"
-msgstr ""
-
-#: src/orca/orca-setup.in:35
 #, fuzzy
-msgid "Creating .orca directory."
-msgstr "bushyinguro"
+#~ msgid "No working GNOME Speech drivers found."
+#~ msgstr "Byabonetse"
 
-#: src/orca/orca-setup.in:91
-#, fuzzy, c-format
-msgid "Select %s voice: "
-msgstr "Ijwi"
-
-# desktop/source\app\ssodlg.src:DLG_SSOLOGIN.text
-#: src/orca/orca-setup.in:95 src/orca/orca-setup.in:152
-#, fuzzy, c-format
-msgid "%d. %s"
-msgstr "%d.%s"
-
-#: src/orca/orca-setup.in:97 src/orca/orca-setup.in:154
-msgid "Enter choice: "
-msgstr ""
-
-#: src/orca/orca-setup.in:136
 #, fuzzy
-msgid "No working GNOME Speech drivers found."
-msgstr "Byabonetse"
+#~ msgid "Create another voice?  Enter y or n: "
+#~ msgstr "Ijwi Y Cyangwa N"
 
-#: src/orca/orca-setup.in:149
 #, fuzzy
-msgid "Welcome to Orca setup."
-msgstr "Kuri Imikorere"
-
-#: src/orca/orca-setup.in:150
-#, fuzzy
-msgid "Select default speech synthesizer"
-msgstr "Mburabuzi"
-
-#: src/orca/orca-setup.in:156
-#, fuzzy
-msgid "Speech will not be used.\n"
-msgstr "OYA"
-
-#: src/orca/orca-setup.in:180
-#, fuzzy
-msgid "Create another voice?  Enter y or n: "
-msgstr "Ijwi Y Cyangwa N"
-
-#: src/orca/orca-setup.in:188
-#, fuzzy
-msgid "Enter voice name: "
-msgstr "Ijwi Izina:"
-
-#: src/orca/orca-setup.in:193
-#, fuzzy
-msgid "Use key echo?  Enter y or n: "
-msgstr "Urufunguzo Y Cyangwa N"
-
-#: src/orca/orca-setup.in:220
-#, fuzzy
-msgid "Braille support appears to work, use it?  Enter y or n. "
-msgstr "Gushigikira Kuri Akazi Gukoresha Y Cyangwa N"
-
-#: src/orca/orca.py:93
-#, fuzzy
-msgid "User logged out - shutting down."
-msgstr "Inyuma Hasi"
-
-#: src/orca/orca.py:296 src/orca/orca.py:300
-#, fuzzy
-msgid "Welcome to Orca."
-msgstr "Kuri"
-
-#: src/orca/orca.py:344
-msgid "goodbye."
-msgstr ""
-
-#: src/orca/orca.py:346
-msgid "Goodbye."
-msgstr ""
-
-#: src/orca/rolenames.py:59
-msgid "UNK"
-msgstr ""
+#~ msgid "Enter voice name: "
+#~ msgstr "Ijwi Izina:"
 
 # filter/source\xsltdialog\xmlfilterdialogstrings.src:STR_UNKNOWN_APPLICATION.text
-#: src/orca/rolenames.py:60
 #, fuzzy
-msgid "UNKNOWN"
-msgstr "Kitazwi"
-
-# sfx2/source\dialog\dinfdlg.src:TP_DOCINFODOC.STR_UNKNOWNSIZE.text
-#: src/orca/rolenames.py:61
-msgid "unknown"
-msgstr "ntibizwi"
-
-#: src/orca/rolenames.py:64
-msgid "???"
-msgstr ""
+#~ msgid "UNKNOWN"
+#~ msgstr "Kitazwi"
 
 # sc/source\ui\src\globstr.src:RID_GLOBSTR.STR_INVALID.text
-#: src/orca/rolenames.py:65
 #, fuzzy
-msgid "INVALID"
-msgstr "Sibyo"
+#~ msgid "INVALID"
+#~ msgstr "Sibyo"
 
-# sc/source\ui\src\globstr.src:RID_GLOBSTR.STR_INVALID.text
-#: src/orca/rolenames.py:66
-msgid "invalid"
-msgstr "Sibyo"
-
-#: src/orca/rolenames.py:69
-msgid "ALR"
-msgstr ""
-
-#: src/orca/rolenames.py:70
 #, fuzzy
-msgid "ALERT"
-msgstr "Ikimenyetso"
-
-#: src/orca/rolenames.py:71
-#, fuzzy
-msgid "alert"
-msgstr "Ikimenyetso"
-
-#: src/orca/rolenames.py:74
-msgid "CNV"
-msgstr ""
-
-#: src/orca/rolenames.py:75
-msgid "CANVAS"
-msgstr ""
-
-#: src/orca/rolenames.py:76
-msgid "canvas"
-msgstr ""
-
-#: src/orca/rolenames.py:79
-msgid "CHK"
-msgstr ""
-
-#: src/orca/rolenames.py:80
-msgid "CHECK_BOX"
-msgstr ""
-
-# basctl/source\basicide\tbxctl.src:RID_TOOLBOX.SID_INSERT_CHECKBOX.text
-#: src/orca/rolenames.py:81
-#, fuzzy
-msgid "check box"
-msgstr "Akazu k'ihitamo"
-
-#: src/orca/rolenames.py:84 src/orca/rolenames.py:199
-#: src/orca/rolenames.py:249
-msgid "MIT"
-msgstr ""
-
-#: src/orca/rolenames.py:85 src/orca/rolenames.py:200
-#: src/orca/rolenames.py:250
-msgid "MENU ITEM"
-msgstr ""
-
-#: src/orca/rolenames.py:86
-#, fuzzy
-msgid "check Menu item"
-msgstr "Kugenzura... Ikintu"
-
-#: src/orca/rolenames.py:89
-msgid "CCH"
-msgstr ""
-
-#: src/orca/rolenames.py:90
-msgid "COLOR CHOOSER"
-msgstr ""
-
-#: src/orca/rolenames.py:91
-#, fuzzy
-msgid "color chooser"
-msgstr "Ibara"
-
-#: src/orca/rolenames.py:94
-msgid "CHD"
-msgstr ""
-
-#: src/orca/rolenames.py:95
-msgid "COLUMN HEADER"
-msgstr ""
-
-#: src/orca/rolenames.py:96
-#, fuzzy
-msgid "column header"
-msgstr "Inkingi Umutwempangano"
-
-#: src/orca/rolenames.py:99
-msgid "CBO"
-msgstr ""
+#~ msgid "ALERT"
+#~ msgstr "Ikimenyetso"
 
 # basctl/source\basicide\tbxctl.src:RID_TOOLBOX.SID_INSERT_COMBOBOX.text
-#: src/orca/rolenames.py:100
 #, fuzzy
-msgid "COMBO BOX"
-msgstr "Akazu k'ilisiti irambuka"
-
-# basctl/source\basicide\tbxctl.src:RID_TOOLBOX.SID_INSERT_COMBOBOX.text
-#: src/orca/rolenames.py:101
-#, fuzzy
-msgid "combo box"
-msgstr "Akazu k'ilisiti irambuka"
-
-#: src/orca/rolenames.py:104
-msgid "DIC"
-msgstr ""
-
-#: src/orca/rolenames.py:105
-msgid "DESKTOP ICON"
-msgstr ""
-
-#: src/orca/rolenames.py:106
-#, fuzzy
-msgid "desktop icon"
-msgstr "Ibiro Agashushondanga"
-
-#: src/orca/rolenames.py:109
-msgid "DFR"
-msgstr ""
-
-#: src/orca/rolenames.py:110
-msgid "DESKTOP FRAME"
-msgstr ""
-
-#: src/orca/rolenames.py:111
-#, fuzzy
-msgid "desktop frame"
-msgstr "Ibiro Ikadiri"
-
-#: src/orca/rolenames.py:114
-msgid "DLG"
-msgstr ""
+#~ msgid "COMBO BOX"
+#~ msgstr "Akazu k'ilisiti irambuka"
 
 # basctl/source\basicide\basidesh.src:RID_STR_STDDIALOGNAME.text
-#: src/orca/rolenames.py:115
 #, fuzzy
-msgid "DIALOG"
-msgstr "Ikiganiro"
+#~ msgid "DIALOG"
+#~ msgstr "Ikiganiro"
 
-# basctl/source\basicide\basidesh.src:RID_STR_STDDIALOGNAME.text
-#: src/orca/rolenames.py:116
 #, fuzzy
-msgid "dialog"
-msgstr "Ikiganiro"
+#~ msgid "FRAME"
+#~ msgstr "Ikadiri"
 
-#: src/orca/rolenames.py:119
-msgid "DIP"
-msgstr ""
-
-#: src/orca/rolenames.py:120
-msgid "DIRECTORY PANE"
-msgstr ""
-
-#: src/orca/rolenames.py:121
 #, fuzzy
-msgid "directory pane"
-msgstr "bushyinguro"
-
-#: src/orca/rolenames.py:124
-msgid "FCH"
-msgstr ""
-
-#: src/orca/rolenames.py:125
-msgid "FILE CHOOSER"
-msgstr ""
-
-#: src/orca/rolenames.py:126
-#, fuzzy
-msgid "file chooser"
-msgstr "IDOSIYE"
-
-#: src/orca/rolenames.py:129
-msgid "FLR"
-msgstr ""
-
-#: src/orca/rolenames.py:130
-msgid "FILLER"
-msgstr ""
-
-#: src/orca/rolenames.py:131
-msgid "filler"
-msgstr ""
-
-#: src/orca/rolenames.py:134
-msgid "FRM"
-msgstr ""
-
-#: src/orca/rolenames.py:135
-#, fuzzy
-msgid "FRAME"
-msgstr "Ikadiri"
-
-#: src/orca/rolenames.py:136
-msgid "frame"
-msgstr "ikadiri"
-
-#: src/orca/rolenames.py:139
-msgid "GPN"
-msgstr ""
-
-#: src/orca/rolenames.py:140
-msgid "GLASS PANE"
-msgstr ""
-
-#: src/orca/rolenames.py:141
-msgid "glass pane"
-msgstr ""
-
-#: src/orca/rolenames.py:144
-#, fuzzy
-msgid "HTM"
-msgstr "htm"
-
-#: src/orca/rolenames.py:145
-msgid "HTML CONTAINER"
-msgstr ""
-
-#: src/orca/rolenames.py:146
-#, fuzzy
-msgid "h T M L container"
-msgstr "h"
-
-#: src/orca/rolenames.py:149 src/orca/rolenames.py:174
-msgid "LNK"
-msgstr ""
+#~ msgid "HTM"
+#~ msgstr "htm"
 
 # offmgr/source\offapp\dialog\hyprlink.src:RID_SVXDLG_HYPERLINK.BTN_INSERT_BOOKMARK.text
-#: src/orca/rolenames.py:150 src/orca/rolenames.py:175
 #, fuzzy
-msgid "LINK"
-msgstr "Ihuza"
-
-# offmgr/source\offapp\dialog\hyprlink.src:RID_SVXDLG_HYPERLINK.BTN_INSERT_BOOKMARK.text
-#: src/orca/rolenames.py:151 src/orca/rolenames.py:176
-#, fuzzy
-msgid "link"
-msgstr "Ihuza"
-
-#: src/orca/rolenames.py:154
-msgid "ICO"
-msgstr ""
+#~ msgid "LINK"
+#~ msgstr "Ihuza"
 
 # sfx2/source\toolbox\tbxopdlg.src:TP_CONFIG_OBJECTBAR.STR_SYMBOL.text
-#: src/orca/rolenames.py:155
 #, fuzzy
-msgid "ICON"
-msgstr "Agashushondanga"
+#~ msgid "ICON"
+#~ msgstr "Agashushondanga"
 
-# sfx2/source\toolbox\tbxopdlg.src:TP_CONFIG_OBJECTBAR.STR_SYMBOL.text
-#: src/orca/rolenames.py:156
 #, fuzzy
-msgid "icon"
-msgstr "Agashushondanga"
-
-#: src/orca/rolenames.py:159
-msgid "IFR"
-msgstr ""
-
-#: src/orca/rolenames.py:160
-msgid "INTERNAL FRAME"
-msgstr ""
-
-#: src/orca/rolenames.py:161
-#, fuzzy
-msgid "internal frame"
-msgstr "By'imbere Ikadiri"
-
-#: src/orca/rolenames.py:164
-msgid "LBL"
-msgstr ""
-
-#: src/orca/rolenames.py:165
-#, fuzzy
-msgid "LABEL"
-msgstr "Akarango"
-
-#: src/orca/rolenames.py:166
-#, fuzzy
-msgid "label"
-msgstr "Akarango"
-
-#: src/orca/rolenames.py:169
-msgid "LPN"
-msgstr ""
-
-#: src/orca/rolenames.py:170
-msgid "LAYERED PANE"
-msgstr ""
-
-#: src/orca/rolenames.py:171
-msgid "layered pane"
-msgstr ""
-
-#: src/orca/rolenames.py:179
-msgid "LST"
-msgstr ""
+#~ msgid "LABEL"
+#~ msgstr "Akarango"
 
 # #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
 # officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....DefaultFont.List.text
@@ -714,268 +2017,55 @@ msgstr ""
 # officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....DefaultFontCJK.List.text
 # #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
 # officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....DefaultFontCTL.List.text
-#: src/orca/rolenames.py:180
 #, fuzzy
-msgid "LIST"
-msgstr "Urutonde"
+#~ msgid "LIST"
+#~ msgstr "Urutonde"
 
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....DefaultFont.List.text
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....DefaultFontCJK.List.text
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....DefaultFontCTL.List.text
-#: src/orca/rolenames.py:181
 #, fuzzy
-msgid "list"
-msgstr "Urutonde"
-
-#: src/orca/rolenames.py:184
-msgid "LIT"
-msgstr ""
-
-#: src/orca/rolenames.py:185
-#, fuzzy
-msgid "LIST ITEM"
-msgstr "Ibigize by'ilisiti"
-
-#: src/orca/rolenames.py:186
-#, fuzzy
-msgid "list item"
-msgstr "Ibigize by'ilisiti"
-
-#: src/orca/rolenames.py:189
-msgid "MNU"
-msgstr ""
+#~ msgid "LIST ITEM"
+#~ msgstr "Ibigize by'ilisiti"
 
 # #-#-#-#-#  sfx2.pot (PACKAGE VERSION)  #-#-#-#-#
 # sfx2/source\dialog\cfg.src:DLG_CONFIG.1.TP_CONFIG_MENU.text
 # #-#-#-#-#  sfx2.pot (PACKAGE VERSION)  #-#-#-#-#
 # sfx2/source\dialog\cfg.src:STR_MENU.text
-#: src/orca/rolenames.py:190
 #, fuzzy
-msgid "MENU"
-msgstr "Ibikubiyemo"
-
-# #-#-#-#-#  sfx2.pot (PACKAGE VERSION)  #-#-#-#-#
-# sfx2/source\dialog\cfg.src:DLG_CONFIG.1.TP_CONFIG_MENU.text
-# #-#-#-#-#  sfx2.pot (PACKAGE VERSION)  #-#-#-#-#
-# sfx2/source\dialog\cfg.src:STR_MENU.text
-#: src/orca/rolenames.py:191
-#, fuzzy
-msgid "menu"
-msgstr "Ibikubiyemo"
-
-#: src/orca/rolenames.py:194
-msgid "MBR"
-msgstr ""
+#~ msgid "MENU"
+#~ msgstr "Ibikubiyemo"
 
 # LOCALIZATION NOTE END   : DO not localize the entities above; test case
-#: src/orca/rolenames.py:195
 #, fuzzy
-msgid "MENU BAR"
-msgstr "Umurongo w'ibikubiyemo"
+#~ msgid "MENU BAR"
+#~ msgstr "Umurongo w'ibikubiyemo"
 
-# LOCALIZATION NOTE END   : DO not localize the entities above; test case
-#: src/orca/rolenames.py:196
 #, fuzzy
-msgid "menu bar"
-msgstr "Umurongo w'ibikubiyemo"
-
-#: src/orca/rolenames.py:201
-#, fuzzy
-msgid "menu item"
-msgstr "Ibikubiyemo Ikintu"
-
-#: src/orca/rolenames.py:204
-msgid "OPN"
-msgstr ""
-
-#: src/orca/rolenames.py:205
-msgid "OPTION PANE"
-msgstr ""
-
-#: src/orca/rolenames.py:206
-#, fuzzy
-msgid "option pane"
-msgstr "Ihitamo"
-
-#: src/orca/rolenames.py:209
-msgid "PGT"
-msgstr ""
-
-#: src/orca/rolenames.py:210
-msgid "PAGE TAB"
-msgstr ""
-
-#: src/orca/rolenames.py:211
-#, fuzzy
-msgid "page tab"
-msgstr "Ipaji Isunika"
-
-#: src/orca/rolenames.py:214
-msgid "PTL"
-msgstr ""
-
-#: src/orca/rolenames.py:215
-msgid "PAGE TAB LIST"
-msgstr ""
-
-#: src/orca/rolenames.py:216
-#, fuzzy
-msgid "page tab list"
-msgstr "Ipaji Isunika Urutonde"
-
-#: src/orca/rolenames.py:219
-msgid "PNL"
-msgstr ""
-
-#: src/orca/rolenames.py:220
-msgid "PANEL"
-msgstr ""
-
-#: src/orca/rolenames.py:221
-msgid "panel"
-msgstr ""
-
-#: src/orca/rolenames.py:224
-msgid "PWD"
-msgstr ""
-
-#: src/orca/rolenames.py:225
-msgid "PASSWORD TEXT"
-msgstr ""
-
-#: src/orca/rolenames.py:226
-#, fuzzy
-msgid "password text"
-msgstr "Ijambobanga... Umwandiko"
-
-#: src/orca/rolenames.py:229
-msgid "PMN"
-msgstr ""
-
-#: src/orca/rolenames.py:230
-msgid "POPUP MENU"
-msgstr ""
-
-#: src/orca/rolenames.py:231
-#, fuzzy
-msgid "popup menu"
-msgstr "Ibikubiyemo"
-
-#: src/orca/rolenames.py:234
-msgid "PRG"
-msgstr ""
+#~ msgid "page tab"
+#~ msgstr "Ipaji Isunika"
 
 # basctl/source\basicide\tbxctl.src:RID_TOOLBOX.SID_INSERT_PROGRESSBAR.text
-#: src/orca/rolenames.py:235
 #, fuzzy
-msgid "PROGRESS BAR"
-msgstr "Umurongo w'aho bigeze"
-
-# basctl/source\basicide\tbxctl.src:RID_TOOLBOX.SID_INSERT_PROGRESSBAR.text
-#: src/orca/rolenames.py:236
-#, fuzzy
-msgid "progress bar"
-msgstr "Umurongo w'aho bigeze"
-
-#: src/orca/rolenames.py:239
-msgid "PBT"
-msgstr ""
+#~ msgid "PROGRESS BAR"
+#~ msgstr "Umurongo w'aho bigeze"
 
 # svx/sdi\svxslots.src:SID_FM_PUSHBUTTON.text
-#: src/orca/rolenames.py:240
 #, fuzzy
-msgid "PUSH BUTTON"
-msgstr "Kanda Buto"
-
-# svx/sdi\svxslots.src:SID_FM_PUSHBUTTON.text
-#: src/orca/rolenames.py:241
-#, fuzzy
-msgid "push button"
-msgstr "Kanda Buto"
-
-#: src/orca/rolenames.py:244
-msgid "RAD"
-msgstr ""
+#~ msgid "PUSH BUTTON"
+#~ msgstr "Kanda Buto"
 
 # svx/source\form\fmexpl.src:RID_FMSHELL_CONVERSIONMENU.SID_FM_CONVERTTO_RADIOBUTTON.text
-#: src/orca/rolenames.py:245
 #, fuzzy
-msgid "RADIO BUTTON"
-msgstr "Buto Radiyo"
-
-# svx/source\form\fmexpl.src:RID_FMSHELL_CONVERSIONMENU.SID_FM_CONVERTTO_RADIOBUTTON.text
-#: src/orca/rolenames.py:246
-#, fuzzy
-msgid "radio button"
-msgstr "Buto Radiyo"
-
-#: src/orca/rolenames.py:251
-#, fuzzy
-msgid "radio Menu item"
-msgstr "Ikintu"
-
-#: src/orca/rolenames.py:254
-msgid "RPN"
-msgstr ""
-
-#: src/orca/rolenames.py:255
-msgid "ROOT PANE"
-msgstr ""
-
-#: src/orca/rolenames.py:256
-#, fuzzy
-msgid "root pane"
-msgstr "Imizi"
-
-#: src/orca/rolenames.py:259
-msgid "RHD"
-msgstr ""
-
-#: src/orca/rolenames.py:260
-msgid "ROW HEADER"
-msgstr ""
-
-#: src/orca/rolenames.py:261
-#, fuzzy
-msgid "row header"
-msgstr "Urubariro Umutwempangano"
-
-#: src/orca/rolenames.py:264
-msgid "SCR"
-msgstr ""
+#~ msgid "RADIO BUTTON"
+#~ msgstr "Buto Radiyo"
 
 # sfx2/source\view\framedlg.src:TP_FRAMEPROPERTIES.GB_SCROLLING.text
-#: src/orca/rolenames.py:265
 #, fuzzy
-msgid "SCROLL BAR"
-msgstr "Agafashagenda"
-
-# sfx2/source\view\framedlg.src:TP_FRAMEPROPERTIES.GB_SCROLLING.text
-#: src/orca/rolenames.py:266
-#, fuzzy
-msgid "scroll bar"
-msgstr "Agafashagenda"
-
-#: src/orca/rolenames.py:269 src/orca/rolenames.py:409
-msgid "SPN"
-msgstr ""
-
-#: src/orca/rolenames.py:270
-msgid "SCROLL PANE"
-msgstr ""
-
-#: src/orca/rolenames.py:271
-msgid "scroll pane"
-msgstr ""
+#~ msgid "SCROLL BAR"
+#~ msgstr "Agafashagenda"
 
 # 5480
-#: src/orca/rolenames.py:274
 #, fuzzy
-msgid "SEP"
-msgstr "Itandukanya"
+#~ msgid "SEP"
+#~ msgstr "Itandukanya"
 
 # #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
 # officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.WriterObject.Table.Settings.Delimiter.text
@@ -997,479 +2087,109 @@ msgstr "Itandukanya"
 # officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Impress.Settings.Delimiter.text
 # #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
 # officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.OLEMisc.Settings.Delimiter.text
-#: src/orca/rolenames.py:275
 #, fuzzy
-msgid "SEPARATOR"
-msgstr "Mutandukanya"
-
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.WriterObject.Table.Settings.Delimiter.text
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.WriterObject.Frame.Settings.Delimiter.text
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.WriterObject.Graphic.Settings.Delimiter.text
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Calc.Settings.Delimiter.text
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Draw.Settings.Delimiter.text
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Chart.Settings.Delimiter.text
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Image.Settings.Delimiter.text
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Formula.Settings.Delimiter.text
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Impress.Settings.Delimiter.text
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.OLEMisc.Settings.Delimiter.text
-#: src/orca/rolenames.py:276
-#, fuzzy
-msgid "separator"
-msgstr "Mutandukanya"
-
-#: src/orca/rolenames.py:279
-msgid "SLD"
-msgstr ""
-
-#: src/orca/rolenames.py:280
-msgid "SLIDER"
-msgstr ""
-
-#: src/orca/rolenames.py:281
-msgid "slider"
-msgstr ""
-
-#: src/orca/rolenames.py:284
-msgid "SPP"
-msgstr ""
-
-#: src/orca/rolenames.py:285
-msgid "SPLIT PANE"
-msgstr ""
-
-#: src/orca/rolenames.py:286
-#, fuzzy
-msgid "split pane"
-msgstr "Gutandukanya"
-
-#: src/orca/rolenames.py:289
-msgid "STA"
-msgstr ""
+#~ msgid "SEPARATOR"
+#~ msgstr "Mutandukanya"
 
 # sfx2/source\dialog\cfg.src:TP_CONFIG_STATBAR.GRP_STATBAR.text
-#: src/orca/rolenames.py:290
 #, fuzzy
-msgid "STATUS BAR"
-msgstr "Akarongo k'imimerere"
-
-# sfx2/source\dialog\cfg.src:TP_CONFIG_STATBAR.GRP_STATBAR.text
-#: src/orca/rolenames.py:291
-#, fuzzy
-msgid "status bar"
-msgstr "Akarongo k'imimerere"
+#~ msgid "STATUS BAR"
+#~ msgstr "Akarongo k'imimerere"
 
 # sc/source\ui\dbgui\asciiopt.src:RID_SCDLG_ASCII.CKB_TAB.text
-#: src/orca/rolenames.py:294
 #, fuzzy
-msgid "TAB"
-msgstr "Isunika"
+#~ msgid "TAB"
+#~ msgstr "Isunika"
 
-#: src/orca/rolenames.py:295
 #, fuzzy
-msgid "TABLE"
-msgstr "Imbonerahamwe"
-
-#: src/orca/rolenames.py:296
-#, fuzzy
-msgid "table"
-msgstr "Imbonerahamwe"
-
-#: src/orca/rolenames.py:299
-msgid "CEL"
-msgstr ""
+#~ msgid "TABLE"
+#~ msgstr "Imbonerahamwe"
 
 # sw/source\ui\shells\shells.src:STR_SWBG_TABLE_CELL.text
-#: src/orca/rolenames.py:300
 #, fuzzy
-msgid "TABLE CELL"
-msgstr "Akazu k'imbonerahamwe"
+#~ msgid "TABLE CELL"
+#~ msgstr "Akazu k'imbonerahamwe"
 
 # sw/source\ui\shells\shells.src:STR_SWBG_TABLE_CELL.text
-#: src/orca/rolenames.py:301
 #, fuzzy
-msgid "table cell"
-msgstr "Akazu k'imbonerahamwe"
+#~ msgid "table cell"
+#~ msgstr "Akazu k'imbonerahamwe"
 
-#: src/orca/rolenames.py:304 src/orca/rolenames.py:429
-msgid "TCH"
-msgstr ""
-
-#: src/orca/rolenames.py:305
-msgid "TABLE COLUMN HEADER"
-msgstr ""
-
-#: src/orca/rolenames.py:306
 #, fuzzy
-msgid "table column header"
-msgstr "imbonerahamwe# Inkingi Umutwempangano"
+#~ msgid "table column header"
+#~ msgstr "imbonerahamwe# Inkingi Umutwempangano"
 
-#: src/orca/rolenames.py:309
-msgid "TRH"
-msgstr ""
-
-#: src/orca/rolenames.py:310
-msgid "TABLE ROW HEADER"
-msgstr ""
-
-#: src/orca/rolenames.py:311
 #, fuzzy
-msgid "table row header"
-msgstr "imbonerahamwe# Urubariro Umutwempangano"
+#~ msgid "table row header"
+#~ msgstr "imbonerahamwe# Urubariro Umutwempangano"
 
-#: src/orca/rolenames.py:314 src/orca/rolenames.py:319
 #, fuzzy
-msgid "TXT"
-msgstr "txt"
+#~ msgid "TXT"
+#~ msgstr "txt"
 
-#: src/orca/rolenames.py:315
-msgid "MULTI LINE TEXT"
-msgstr ""
-
-#: src/orca/rolenames.py:316
-msgid "multi Line Text"
-msgstr ""
-
-#: src/orca/rolenames.py:320
-msgid "SINGLE LINE TEXT"
-msgstr ""
-
-#: src/orca/rolenames.py:321
 #, fuzzy
-msgid "single Line Text"
-msgstr "UMWE"
-
-#: src/orca/rolenames.py:324
-msgid "TOG"
-msgstr ""
-
-#: src/orca/rolenames.py:325
-msgid "TOGGLE BUTTON"
-msgstr ""
-
-#: src/orca/rolenames.py:326
-#, fuzzy
-msgid "toggle button"
-msgstr "Mukomatanya Akabuto"
-
-#: src/orca/rolenames.py:329
-msgid "TOL"
-msgstr ""
-
-#: src/orca/rolenames.py:330
-msgid "TOOL BAR"
-msgstr ""
-
-#: src/orca/rolenames.py:331
-msgid "tool bar"
-msgstr ""
+#~ msgid "single Line Text"
+#~ msgstr "UMWE"
 
 # #-#-#-#-#  sw.pot (PACKAGE VERSION)  #-#-#-#-#
 # sw/source\ui\wizard\wizagdlg.src:DLG_WIZARD_AG.DLG_AG4_Text_TipNr1.text
 # #-#-#-#-#  sw.pot (PACKAGE VERSION)  #-#-#-#-#
 # sw/source\ui\wizard\wizltdlg.src:DLG_WIZARD_LT.DLG_LT9_Text_Tip.text
-#: src/orca/rolenames.py:334
 #, fuzzy
-msgid "TIP"
-msgstr "Inyobora:"
+#~ msgid "TIP"
+#~ msgstr "Inyobora:"
 
-#: src/orca/rolenames.py:335
-msgid "TOOL TIP"
-msgstr ""
-
-#: src/orca/rolenames.py:336
 #, fuzzy
-msgid "tool tip"
-msgstr "Inyobora:"
-
-#: src/orca/rolenames.py:339
-msgid "TRE"
-msgstr ""
-
-#: src/orca/rolenames.py:340
-msgid "TREE"
-msgstr ""
-
-#: src/orca/rolenames.py:341
-msgid "tree"
-msgstr ""
-
-#: src/orca/rolenames.py:344
-msgid "TRI"
-msgstr ""
-
-#: src/orca/rolenames.py:345
-msgid "TREE ITEM"
-msgstr ""
-
-#: src/orca/rolenames.py:346
-#, fuzzy
-msgid "tree item"
-msgstr "Ikintu"
-
-#: src/orca/rolenames.py:349
-msgid "TRT"
-msgstr ""
-
-#: src/orca/rolenames.py:350
-msgid "TREE TABLE"
-msgstr ""
-
-#: src/orca/rolenames.py:351
-#, fuzzy
-msgid "tree table"
-msgstr "imbonerahamwe#"
-
-#: src/orca/rolenames.py:354
-msgid "VWP"
-msgstr ""
-
-#: src/orca/rolenames.py:355
-msgid "VIEWPORT"
-msgstr ""
-
-#: src/orca/rolenames.py:356
-msgid "viewport"
-msgstr ""
-
-#: src/orca/rolenames.py:359
-msgid "WND"
-msgstr ""
+#~ msgid "tree item"
+#~ msgstr "Ikintu"
 
 # sc/source\ui\src\optdlg.src:RID_SCPAGE_CONTENT.GB_WINDOW.text
-#: src/orca/rolenames.py:360
 #, fuzzy
-msgid "WINDOW"
-msgstr "Idirishya"
+#~ msgid "WINDOW"
+#~ msgstr "Idirishya"
 
-# sc/source\ui\src\optdlg.src:RID_SCPAGE_CONTENT.GB_WINDOW.text
-#: src/orca/rolenames.py:361
 #, fuzzy
-msgid "window"
-msgstr "Idirishya"
+#~ msgid "ANIMATION"
+#~ msgstr "Iyega"
 
-#: src/orca/rolenames.py:364
-msgid "ACC"
-msgstr ""
-
-#: src/orca/rolenames.py:365
-msgid "ACCELERATOR LABEL"
-msgstr ""
-
-#: src/orca/rolenames.py:366
 #, fuzzy
-msgid "accelerator label"
-msgstr "Akarango"
-
-#: src/orca/rolenames.py:369
-msgid "ANI"
-msgstr ""
-
-#: src/orca/rolenames.py:370
-#, fuzzy
-msgid "ANIMATION"
-msgstr "Iyega"
-
-#: src/orca/rolenames.py:371
-#, fuzzy
-msgid "animation"
-msgstr "Iyega"
-
-#: src/orca/rolenames.py:374
-msgid "ARR"
-msgstr ""
-
-#: src/orca/rolenames.py:375
-#, fuzzy
-msgid "ARROW"
-msgstr "Akambi"
-
-#: src/orca/rolenames.py:376
-#, fuzzy
-msgid "arrow"
-msgstr "Akambi"
-
-#: src/orca/rolenames.py:379
-msgid "CAL"
-msgstr ""
+#~ msgid "ARROW"
+#~ msgstr "Akambi"
 
 # svtools/source\dialogs\addresstemplate.src:STR_FIELD_CALENDAR.text
-#: src/orca/rolenames.py:380
 #, fuzzy
-msgid "CALENDAR"
-msgstr "Kalindari"
-
-# svtools/source\dialogs\addresstemplate.src:STR_FIELD_CALENDAR.text
-#: src/orca/rolenames.py:381
-#, fuzzy
-msgid "calendar"
-msgstr "Kalindari"
-
-#: src/orca/rolenames.py:384
-msgid "DAT"
-msgstr ""
-
-#: src/orca/rolenames.py:385
-msgid "DATE EDITOR"
-msgstr ""
-
-#: src/orca/rolenames.py:386
-#, fuzzy
-msgid "date editor"
-msgstr "Itariki Muhinduzi"
-
-#: src/orca/rolenames.py:389
-msgid "DIL"
-msgstr ""
-
-#: src/orca/rolenames.py:390
-msgid "DIAL"
-msgstr ""
-
-#: src/orca/rolenames.py:391
-msgid "dial"
-msgstr ""
-
-#: src/orca/rolenames.py:394
-msgid "DRW"
-msgstr ""
-
-#: src/orca/rolenames.py:395
-msgid "DRAWING AREA"
-msgstr ""
-
-#: src/orca/rolenames.py:396
-#, fuzzy
-msgid "drawing area"
-msgstr "Igishushanyo Ubuso"
-
-#: src/orca/rolenames.py:399
-msgid "FNT"
-msgstr ""
-
-#: src/orca/rolenames.py:400
-msgid "FONT CHOOSER"
-msgstr ""
-
-#: src/orca/rolenames.py:401
-#, fuzzy
-msgid "font chooser"
-msgstr "Intego- nyuguti"
-
-#: src/orca/rolenames.py:404
-msgid "IMG"
-msgstr ""
+#~ msgid "CALENDAR"
+#~ msgstr "Kalindari"
 
 # #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
 # officecfg/registry\schema\org\openoffice\Office\Common.xcs:....Image.text
 # #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
 # officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Image.Enable.text
-#: src/orca/rolenames.py:405
 #, fuzzy
-msgid "IMAGE"
-msgstr "Ishusho"
+#~ msgid "IMAGE"
+#~ msgstr "Ishusho"
 
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Office\Common.xcs:....Image.text
-# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
-# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Image.Enable.text
-#: src/orca/rolenames.py:406
 #, fuzzy
-msgid "image"
-msgstr "Ishusho"
-
-#: src/orca/rolenames.py:410
-#, fuzzy
-msgid "SPIN BUTTON"
-msgstr "Buto Nkaragwa"
-
-#: src/orca/rolenames.py:411
-#, fuzzy
-msgid "spin button"
-msgstr "Buto Nkaragwa"
-
-#: src/orca/rolenames.py:414
-msgid "TRM"
-msgstr ""
-
-#: src/orca/rolenames.py:415
-msgid "TERMINAL"
-msgstr ""
-
-#: src/orca/rolenames.py:416
-msgid "terminal"
-msgstr ""
+#~ msgid "SPIN BUTTON"
+#~ msgstr "Buto Nkaragwa"
 
 # svx/source\stbctrls\stbctrls.src:RID_SVXSTR_SELMODE_ER.text
-#: src/orca/rolenames.py:419
-msgid "EXT"
-msgstr "EXT"
+#~ msgid "EXT"
+#~ msgstr "EXT"
 
 # 2175
-#: src/orca/rolenames.py:420
 #, fuzzy
-msgid "EXTENDED"
-msgstr "cya/ byagutse"
+#~ msgid "EXTENDED"
+#~ msgstr "cya/ byagutse"
 
-# 2175
-#: src/orca/rolenames.py:421
 #, fuzzy
-msgid "extended"
-msgstr "cya/ byagutse"
+#~ msgid "table line"
+#~ msgstr "imbonerahamwe# Umurongo"
 
-#: src/orca/rolenames.py:424
-msgid "TLI"
-msgstr ""
-
-#: src/orca/rolenames.py:425
-msgid "TABLE LINE"
-msgstr ""
-
-#: src/orca/rolenames.py:426
 #, fuzzy
-msgid "table line"
-msgstr "imbonerahamwe# Umurongo"
+#~ msgid "table columns header"
+#~ msgstr "imbonerahamwe# Inkingi Umutwempangano"
 
-#: src/orca/rolenames.py:430
-msgid "TABLE COLUMNS HEADER"
-msgstr ""
-
-#: src/orca/rolenames.py:431
 #, fuzzy
-msgid "table columns header"
-msgstr "imbonerahamwe# Inkingi Umutwempangano"
-
-#: src/orca/rolenames.py:434
-msgid "TIT"
-msgstr ""
-
-#: src/orca/rolenames.py:435
-msgid "TITLE BAR"
-msgstr ""
-
-#: src/orca/rolenames.py:436
-#, fuzzy
-msgid "title bar"
-msgstr "Umutwe"
-
-#: src/orca/rolenames.py:439
-msgid "EDB"
-msgstr ""
-
-#: src/orca/rolenames.py:440
-msgid "EDIT BAR"
-msgstr ""
-
-#: src/orca/rolenames.py:441
-#, fuzzy
-msgid "edit bar"
-msgstr "Guhindura"
+#~ msgid "title bar"
+#~ msgstr "Umutwe"

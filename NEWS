@@ -1,3 +1,27 @@
+0.2.2
+* CSUN release - the bits we plan to show at CSUN '06.
+* Add output of text attributes at caret - press Insert+f (Rich Burridge)
+* Pre-filter TTS strings to prevent them from being interpreted as commands
+  by DECtalk (Willie Walker)
+* Default to using BrlTTY if it is available (Willie Walker)
+* Fix for bug 333168: scripts were not being reclaimed (Willie Walker)
+* Add extra KeySyms to account for Solaris keyboard layouts (Willie Walker)
+* Beginning of util.py for common script utilities (Rich Burridge and
+  Willie Walker)
+* Fix for speechgenerator._getSpeechForTableCell (Rich Burridge)
+* More work on Evolution script (Rich Burridge)
+* Work on StarOffice script, including spell checking (Rich Burridge)
+* Fix for bug 333765 to allow Orca to better clean up when shutting 
+  down under adverse conditions (Willie Walker)
+* Fix for bug 333792 and also provide better fallback for broken
+  speech drivers (Willie Walker)
+* Fix for bug 333915 to transform unicode ellipses into "..." (Willie Walker)
+* Use window manager struts for braille monitor and also adapt better to
+  dynamic changes in size (e.g., themes using larger fonts)
+* Provide better support for accessible login via gdmlogin.
+* A little more work on the Firefox script, but Firefox/Orca are still
+  not ready for prime time (Willie Walker)
+
 0.2.1
 * *Much* work on Evolution script - this far outshadows much of the 
   other work done for this release (Rich Burridge and Mike Pedersen)
