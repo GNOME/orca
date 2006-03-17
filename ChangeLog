@@ -1,4 +1,7 @@
+2006-03-17  Willie Walker <william.walker@sun.com>
 
+	* bugs/bugs.html: triage/update based upon GNOME 2.14.
+	
 2006-03-16  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py

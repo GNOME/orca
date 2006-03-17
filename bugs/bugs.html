@@ -1,5 +1,7 @@
 <html>
 
+<hr>
+
 <h1>Orca Bug Dependency List</h1>
 
 <p>This page contains a list of bugs filed against external components 
@@ -7,7 +9,29 @@ and applications.  This allows us to better track which releases of
 external components that Orca will work with and also the behavior
 one might experience in the presence of the bug.</p>
 
-<h1>Bug List</h1>
+<ul>
+    <li><a href="#gnome">GNOME Bugs</a></li>
+    <li><a href="#evolution">Evolution Bugs</a></li>
+    <li><a href="#firefox">Firefox Bugs</a></li>
+    <li><a href="#openoffice">OpenOffice Bugs</a></li>
+</ul>
+
+<hr>
+
+<h1 id="gnome">GNOME Bug List</h1>
+
+<h2>Where to file GNOME bugs:</h2>
+  <ul>
+      <li>URL: <a href="http://bugzilla.gnome.org/enter_bug.cgi">http://bugzilla.gnome.org/enter_bug.cgi</a></li>
+      <li>CC: gnome-access-bugs@basso.sfbay.sun.com</li>
+      <li>Keywords: "accessibility"
+      <li>NOTE: ATK is the application side of things, GAIL provides
+      the ATK implementation for GTK, AT-SPI is the assistive
+      technology side of things and also provides the atk-bridge and
+      AT-SPI registry.  When entering a bug, give some thought into
+      where the bug might lie.</li>
+  </ul>
+</p>
 
 <table border=1>
 
@@ -19,15 +43,6 @@ one might experience in the presence of the bug.</p>
     <td><b>Notes</b></td>
   </tr>
 
-  <tr>
-    <td>gail</td>
-    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=329230">329230</a>:
-      Infinite recursion/loop when creating accessible context for combo boxes.
-    <td>01/30/2006: No</td>
-    <td>No</td>
-    <td></td>
-  </tr>
- 
   <tr>
     <td>atk/gail/libgail-gnome/at-spi</td>
     <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=325809">325809</a>:
@@ -41,146 +56,105 @@ one might experience in the presence of the bug.</p>
     <td>Java-access-bridge 1.4.6</td>
     <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=318615">318615</a>:
       Keycodes delivered by Java access bridge are inconsistent with keycodes delivered by GTK</td>
-    <td>01/04/2006: No</td>
+    <td>No</td>
     <td>No</td>
     <td>Discussions with BillH lead us to believe this may require an AT-SPI interface change.</td>
   </tr>
 
   <tr>
-    <td>gtk+ 2.8.x</td>
+    <td>gtk+</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=326362">326362</a>:
+      Crasher in panel.
+    <td>03/17/2006: Yes</td>
+    <td>03/17/2006: (GNOME 2.14) gtk+-2.8.16</td>
+    <td></td>
+  </tr>
+ 
+  <tr>
+    <td>gtk+</td>
     <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=323633">323633</a>:
       Accessible name changes in metacity tab popup are one step behind</td>
-    <td>01/04/2006: No</td>
-    <td>No</td>
+    <td>03/17/2006: Yes</td>
+    <td>03/17/2006: (GNOME 2.14) gtk+-2.8.16</td>
     <td>Causes metacity to speak previously selected item instead of current item.</td>
   </tr>
 
   <tr>
-    <td>Firefox 1.6</td>
-    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=324061">324061</a>:
-      Checkboxes in forms do not have accessible names</td>
-    <td>01/19/2006: No</td>
-    <td>No</td>
-    <td>Cannot read the text for checkboxes.</td>
+    <td>gail-1.8.10</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=326362">326362</a>:
+      Bad patch causes tree views to be inaccessible.
+    <td>03/17/2006: Yes</td>
+    <td>03/17/2006: (GNOME 2.14) gail-1.8.11</td>
+    <td></td>
+  </tr>
+ 
+  <tr>
+    <td>gail</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=329230">329230</a>:
+      Infinite recursion/loop when creating accessible context for combo boxes.
+    <td>03/17/2006: Yes</td>
+    <td>03/17/2006: (GNOME 2.14) gail-1.8.11</td>
+    <td></td>
+  </tr>
+ 
+  <tr>
+    <td>eel</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=330995">330995</a>:
+      Crasher due to lack of error check in eel a11y
+    <td>03/17/2006: Yes</td>
+    <td>03/17/2006: (GNOME 2.14) eel-2.14.0</td>
+    <td>Caused a lot of crashes in Evolution</td>
   </tr>
 
   <tr>
-    <td>Firefox 1.6</td>
-    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=322903">322903</a>:
-      AccessibleText getTextAtOffset should not cause html pane scrolls</td>
-    <td>01/18/2006: No</td>
-    <td>No</td>
-    <td>Prevents flat review from working well because the page scrolls all over the place as flat review queries the text on the screen. This will also cause text areas to become jumbled as you type in them.</td>
+    <td>atk/gail/libgail-gnome/at-spi</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=321814">321814</a>:
+      Tickling AT-SPI hierarachy can yield incorrect info and cause app corruption/hang/crash</td>
+    <td>03/17/2006: Yes</td>
+    <td>03/17/2006: (GNOME 2.14) atk-1.11.3, gail-1.8.11, at-spi-1.7.6</td>
+    <td></td>
+  </tr> 
+
+  <tr>
+    <td>gnome-speech-0.3.9</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=332247">332247</a>:
+      DECtalk driver can hang on exit.</td>
+    <td>03/17/2006: Yes</td>
+    <td>03/17/2006: (GNOME 2.14) gnome-speech-0.3.10</td>
+    <td></td>
   </tr>
 
   <tr>
-    <td>Firefox 1.6</td>
-    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=320395">320395</a>:
-Accessible text caret offset is unreliable when tabbing between links</td>
-    <td>01/11/2006: In internal build firefox-1.6a1.en-US.linux-i686.tar.bz2</td>
-    <td>01/11/2006: Yes, but still needs to be checked in to the community</td>
-    <td> </td>
+    <td>gnome-speech-0.3.8</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=319168">319168</a>:
+      Streaming audio player for FreeTTS cannot be selected</td>
+    <td>Yes</td>
+    <td>gnome-speech-0.3.9</td>
+    <td>This bug introduced severe latency on Solaris 11</td>
   </tr>
+</table>
+
+<hr>
+
+<h1 id="evolution">Evolution Bug List</h1>
+
+<h2>Where to file Evolution bugs:</h2>
+  <ul>
+      <li>URL: <a href="http://bugzilla.gnome.org/enter_bug.cgi">http://bugzilla.gnome.org/enter_bug.cgi</a></li>
+      <li>CC: sceri-evolution-acc@Sun.COM, gnome-access-bugs@basso.sfbay.sun.com</li>
+      <li>Keywords: "accessibility"
+  </ul>
+
+<table border=1>
 
   <tr>
-    <td>Firefox 1.6</td>
-    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=320393">320393</a>:
-Tree list items in the history pane should have accessible RELATION_NODE_OF relation</td>
-    <td>01/11/2006: In internal build firefox-1.6a1.en-US.linux-i686.tar.bz2</td>
-    <td>01/11/2006: Yes, but still needs to be checked in to the community</td>
-    <td> </td>
+    <td><b>Component</b></td>
+    <td><b>Bug</b></td>
+    <td><b>Fixed by Them</b></td>
+    <td><b>Verified In Version</b></td>
+    <td><b>Notes</b></td>
   </tr>
 
-  <tr>
-    <td>Firefox 1.6</td>
-    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=320390">320390</a>:
-      Pressing escape to close menu doesn't return focus properly</td>
-    <td>01/04/2006: No</td>
-    <td>No</td>
-    <td> </td>
-  </tr>
-
-  <tr>
-    <td>Firefox 1.6</td>
-    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=320388">320388</a>:
-      The accessible hypertext implementation doesn't appear to support getLinkIndex</td>
-    <td>01/11/2006: In internal build firefox-1.6a1.en-US.linux-i686.tar.bz2</td>
-    <td>01/11/2006: Yes, but still needs to be checked in to the community</td>
-    <td> </td>
-  </tr>
-
-  <tr>
-    <td>Firefox 1.6</td>
-    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=320387">320387</a>:
-      link-selected event provides incomplete information</td>
-    <td>01/11/2006: In internal build firefox-1.6a1.en-US.linux-i686.tar.bz2</td>
-    <td>01/11/2006: Yes, but still needs to be checked in to the community</td>
-    <td>Requires hack workaround to determine link.</td>
-  </tr>
-
-  <tr>
-    <td>Firefox 1.6</td>
-    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=320383">320383</a>:
-      History panel accessible name is not human consumable</td>
-    <td>01/04/2006: Yes</td>
-    <td>01/04/2006: Yes. Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9a1) Gecko/20060104 Firefox/1.6a1.  Accessible name is now None.</td>
-    <td>Provides nonsensical output to the user</td>
-  </tr>
-
-  <tr>
-    <td>Firefox 1.5</td>
-    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=317482">317482</a>:
-      AccessibleText getRangeExtents does not work</td>
-    <td>01/04/2006: Yes</td>
-    <td>01/04/2006: Yes. Checked version Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9a1) Gecko/20060104 Firefox/1.6a1.</td>
-    <td>Prevents flat review from working in Firefox</td>
-  </tr>
-
-  <tr>
-    <td>Firefox 1.5</td>
-    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=312093">312093</a>:
-      Caret-moved events are not always reported</td>
-    <td>01/04/2006: Proposed developing JavaScript Solution</td>
-    <td>01/04/2006: Solution not developed yet</td>
-    <td>Renders caret navigation useless</td>
-  </tr>
-
-
-  <tr>
-    <td>Firefox 1.5</td>
-    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=319752">319752</a>:
-      Menus show up twice in the a11y hierarchy</td>
-    <td>01/04/2006: Yes</td>
-    <td>01/04/2006: Yes. Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9a1) Gecko/20060104 Firefox/1.6a1</td>
-    <td>Causes menus to be spoken twice.</td>
-  </tr>
-
-  <tr>
-    <td>Firefox 1.5</td>
-    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=317475">317475</a>:
-      Top level window with focus should have "ACTIVE" state set</td>
-    <td>01/04/2006: Yes</td>
-    <td>01/04/2006: Yes. Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9a1) Gecko/20060104 Firefox/1.6a1</td>
-    <td>Makes it difficult to know if Firefox is the active app</td>
-  </tr>
-
-  <tr>
-    <td>Firefox 1.5</td>
-    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=317462">317462</a>:
-      Top level application object has incorrect accessible role</td>
-    <td>01/04/2006: Yes</td>
-    <td>01/04/2006: Yes. Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9a1) Gecko/20060104 Firefox/1.6a1</td>
-    <td>Wreaks havoc on Orca logic that finds the application for an event</td>
-  </tr>
-
-  <tr>
-    <td>Firefox 1.5</td>
-    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=312092">312092</a>:
-      Accessible hierarchy incomplete/incorrect</td>
-    <td>01/04/2006: Yes</td>
-    <td>01/04/2006: Yes. Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9a1) Gecko/20060104 Firefox/1.6a1</td>
-    <td>Workaround: Unset GTK_MODULES prior to running.  The verified version will unset GTK_MODUILES in run-mozilla.sh.</td>
-  </tr>
 
   <tr>
     <td>Evolution 2.6.x</td>
@@ -340,44 +314,13 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
     <td>No</td>
     <td>Workaround: None currently known.</td>
   </tr>
-
-  <tr>
-    <td>Open Office - Writer</td>
-    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=62723">62723</a>:
-      Open Dialog "read-only" checkbox has incorrect accessibility information.
-    <td>No</td>
-    <td>No</td>
-    <td>Workaround: None currently known.</td>
-  </tr>
-
-  <tr>
-    <td>atk/gail/libgail-gnome/at-spi</td>
-    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=321814">321814</a>:
-      Tickling AT-SPI hierarachy can yield incorrect info and cause app corruption/hang/crash</td>
-    <td>01/13/2006: No</td>
-    <td>atk-1.10.3, gail-1.8.8, libgail-gnome-1.1.2, at-spi-1.6.6</td>
-    <td>The current solution causes children in the hierarchy to be hidden in Evolution </td>
-  </tr>
- 
-  <tr>
-    <td>gnome-speech-0.3.8</td>
-    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=319168">319168</a>:
-      Streaming audio player for FreeTTS cannot be selected</td>
-    <td>Yes</td>
-    <td>gnome-speech-0.3.9</td>
-    <td>This bug introduced severe latency on Solaris 11</td>
-  </tr>
-
 </table>
 
-<h1>Filing Bugs</h1>
+<hr>
 
-<p>The following sections provide information on where to file bugs
-and any additional information, such as keywords and CC lists that you
-should add to the bug report.  If you do file a bug, please make sure 
-you update the table above.</p>
+<h1 id="firefox">Firefox Bug List</h1>
 
-<h2>Firefox:</h2>
+<h2>Where to file Firefox bugs:</h2>
   <ul>
       <li>URL: <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox">https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox</a></li>
       <li>CC:  browser-china-atf@sun.com</li>
@@ -389,32 +332,175 @@ you update the table above.</p>
   </ul>
 </p>
 
-<h2>Evolution:</h2>
-  <ul>
-      <li>URL: <a href="http://bugzilla.gnome.org/enter_bug.cgi">http://bugzilla.gnome.org/enter_bug.cgi</a></li>
-      <li>CC: sceri-evolution-acc@Sun.COM, gnome-access-bugs@basso.sfbay.sun.com</li>
-      <li>Keywords: "accessibility"
-  </ul>
+<table border=1>
 
-<h2>GNOME/GTK+-2.0:</h2>
-  <ul>
-      <li>URL: <a href="http://bugzilla.gnome.org/enter_bug.cgi">http://bugzilla.gnome.org/enter_bug.cgi</a></li>
-      <li>CC: gnome-access-bugs@basso.sfbay.sun.com</li>
-      <li>Keywords: "accessibility"
-      <li>NOTE: ATK is the application side of things, GAIL provides
-      the ATK implementation for GTK, AT-SPI is the assistive
-      technology side of things and also provides the atk-bridge and
-      AT-SPI registry.  When entering a bug, give some thought into
-      where the bug might lie.</li>
-  </ul>
-</p>
+  <tr>
+    <td><b>Component</b></td>
+    <td><b>Bug</b></td>
+    <td><b>Fixed by Them</b></td>
+    <td><b>Verified In Version</b></td>
+    <td><b>Notes</b></td>
+  </tr>
 
-<h2>OpenOffice:</h2>
+  <tr>
+    <td>Firefox 1.6</td>
+    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=324061">324061</a>:
+      Checkboxes in forms do not have accessible names</td>
+    <td>01/19/2006: No</td>
+    <td>No</td>
+    <td>Cannot read the text for checkboxes.</td>
+  </tr>
+
+  <tr>
+    <td>Firefox 1.6</td>
+    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=322903">322903</a>:
+      AccessibleText getTextAtOffset should not cause html pane scrolls</td>
+    <td>01/18/2006: No</td>
+    <td>No</td>
+    <td>Prevents flat review from working well because the page scrolls all over the place as flat review queries the text on the screen. This will also cause text areas to become jumbled as you type in them.</td>
+  </tr>
+
+  <tr>
+    <td>Firefox 1.6</td>
+    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=320395">320395</a>:
+Accessible text caret offset is unreliable when tabbing between links</td>
+    <td>01/11/2006: In internal build firefox-1.6a1.en-US.linux-i686.tar.bz2</td>
+    <td>01/11/2006: Yes, but still needs to be checked in to the community</td>
+    <td> </td>
+  </tr>
+
+  <tr>
+    <td>Firefox 1.6</td>
+    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=320393">320393</a>:
+Tree list items in the history pane should have accessible RELATION_NODE_OF relation</td>
+    <td>01/11/2006: In internal build firefox-1.6a1.en-US.linux-i686.tar.bz2</td>
+    <td>01/11/2006: Yes, but still needs to be checked in to the community</td>
+    <td> </td>
+  </tr>
+
+  <tr>
+    <td>Firefox 1.6</td>
+    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=320390">320390</a>:
+      Pressing escape to close menu doesn't return focus properly</td>
+    <td>01/04/2006: No</td>
+    <td>No</td>
+    <td> </td>
+  </tr>
+
+  <tr>
+    <td>Firefox 1.6</td>
+    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=320388">320388</a>:
+      The accessible hypertext implementation doesn't appear to support getLinkIndex</td>
+    <td>01/11/2006: In internal build firefox-1.6a1.en-US.linux-i686.tar.bz2</td>
+    <td>01/11/2006: Yes, but still needs to be checked in to the community</td>
+    <td> </td>
+  </tr>
+
+  <tr>
+    <td>Firefox 1.6</td>
+    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=320387">320387</a>:
+      link-selected event provides incomplete information</td>
+    <td>01/11/2006: In internal build firefox-1.6a1.en-US.linux-i686.tar.bz2</td>
+    <td>01/11/2006: Yes, but still needs to be checked in to the community</td>
+    <td>Requires hack workaround to determine link.</td>
+  </tr>
+
+  <tr>
+    <td>Firefox 1.6</td>
+    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=320383">320383</a>:
+      History panel accessible name is not human consumable</td>
+    <td>01/04/2006: Yes</td>
+    <td>01/04/2006: Yes. Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9a1) Gecko/20060104 Firefox/1.6a1.  Accessible name is now None.</td>
+    <td>Provides nonsensical output to the user</td>
+  </tr>
+
+  <tr>
+    <td>Firefox 1.5</td>
+    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=317482">317482</a>:
+      AccessibleText getRangeExtents does not work</td>
+    <td>01/04/2006: Yes</td>
+    <td>01/04/2006: Yes. Checked version Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9a1) Gecko/20060104 Firefox/1.6a1.</td>
+    <td>Prevents flat review from working in Firefox</td>
+  </tr>
+
+  <tr>
+    <td>Firefox 1.5</td>
+    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=312093">312093</a>:
+      Caret-moved events are not always reported</td>
+    <td>01/04/2006: Proposed developing JavaScript Solution</td>
+    <td>01/04/2006: Solution not developed yet</td>
+    <td>Renders caret navigation useless</td>
+  </tr>
+
+
+  <tr>
+    <td>Firefox 1.5</td>
+    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=319752">319752</a>:
+      Menus show up twice in the a11y hierarchy</td>
+    <td>01/04/2006: Yes</td>
+    <td>01/04/2006: Yes. Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9a1) Gecko/20060104 Firefox/1.6a1</td>
+    <td>Causes menus to be spoken twice.</td>
+  </tr>
+
+  <tr>
+    <td>Firefox 1.5</td>
+    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=317475">317475</a>:
+      Top level window with focus should have "ACTIVE" state set</td>
+    <td>01/04/2006: Yes</td>
+    <td>01/04/2006: Yes. Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9a1) Gecko/20060104 Firefox/1.6a1</td>
+    <td>Makes it difficult to know if Firefox is the active app</td>
+  </tr>
+
+  <tr>
+    <td>Firefox 1.5</td>
+    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=317462">317462</a>:
+      Top level application object has incorrect accessible role</td>
+    <td>01/04/2006: Yes</td>
+    <td>01/04/2006: Yes. Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9a1) Gecko/20060104 Firefox/1.6a1</td>
+    <td>Wreaks havoc on Orca logic that finds the application for an event</td>
+  </tr>
+
+  <tr>
+    <td>Firefox 1.5</td>
+    <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=312092">312092</a>:
+      Accessible hierarchy incomplete/incorrect</td>
+    <td>01/04/2006: Yes</td>
+    <td>01/04/2006: Yes. Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9a1) Gecko/20060104 Firefox/1.6a1</td>
+    <td>Workaround: Unset GTK_MODULES prior to running.  The verified version will unset GTK_MODUILES in run-mozilla.sh.</td>
+  </tr>
+</table>
+
+<hr>
+
+<h1 id="openoffice">Open Office Bug List</h1>
+
+<h2>Where to file OpenOffice bugs:</h2>
   <ul>
       <li>URL: <a href="http://qa.openoffice.org/issue_handling/submission_gateway.html">http://qa.openoffice.org/issue_handling/submission_gateway.html</a></li>
       <li>CC: allbugs@openoffice.org (see <a href="http://www.openoffice.org/mail_list.html">http://www.openoffice.org/mail_list.html</a>)</li>
       <li>Keywords: "accessibility"
   </ul>
 </p>
+
+<table border=1>
+
+  <tr>
+    <td><b>Component</b></td>
+    <td><b>Bug</b></td>
+    <td><b>Fixed by Them</b></td>
+    <td><b>Verified In Version</b></td>
+    <td><b>Notes</b></td>
+  </tr>
+
+
+  <tr>
+    <td>Open Office - Writer</td>
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=62723">62723</a>:
+      Open Dialog "read-only" checkbox has incorrect accessibility information.
+    <td>No</td>
+    <td>No</td>
+    <td>Workaround: None currently known.</td>
+  </tr>
+</table>
 
 </html>
