@@ -710,7 +710,7 @@ class Script(default.Script):
                 # to either side of it).
                 #
                 for i in range(0, len(allTokens)):
-                    if allTokens[i] == badWord:
+                    if allTokens[i].startswith(badWord):
                         min = i - 5
                         if min < 0:
                             min = 0

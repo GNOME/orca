@@ -1,3 +1,12 @@
+2006-03-17  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py
+          src/orca/scripts/StarOffice.py
+          Slight adjustment to the spell checking routines. Needed to
+          check if each word in the text area starts with the bad word 
+          rather than is exactly equal to it. The latter wasn't taken 
+          into consideration any possible punctuation symbols.
+
 2006-03-17  Willie Walker <william.walker@sun.com>
 
 	* bugs/bugs.html: triage/update based upon GNOME 2.14.
