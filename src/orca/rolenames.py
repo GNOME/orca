@@ -235,7 +235,7 @@ rolenames[ROLE_DIRECTORY_PANE] = Rolename(ROLE_DIRECTORY_PANE,
 
 rolenames[ROLE_DRAWING_AREA] = Rolename(ROLE_DRAWING_AREA,
                                         _("draw"),
-                                        _("DrawingAarea"),
+                                        _("DrawingArea"),
                                         _("drawing area"))
 
 rolenames[ROLE_FILE_CHOOSER] = Rolename(ROLE_FILE_CHOOSER,

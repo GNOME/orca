@@ -1,5 +1,12 @@
 2006-03-27  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/rolenames.py
+          Fixed bug #330487 (http://bugzilla.gnome.org/show_bug.cgi?id=330487)
+          Typo in one of the strings in the rolenames[ROLE_DRAWING_AREA]
+          rolename entry.
+
+2006-03-27  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/scripts/Evolution.py
           Adjusted the "A.M." and "P.M." suffix occurances in the
           getTimeForCalRow() routine to remove references to urine.
