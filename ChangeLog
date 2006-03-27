@@ -1,3 +1,9 @@
+2006-03-27  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py
+          Adjusted the "A.M." and "P.M." suffix occurances in the
+          getTimeForCalRow() routine to remove references to urine.
+
 2006-03-17  Willie Walker <william.walker@sun.com>
 
 	* NEWS, configure.in, README: prep for 0.2.2.

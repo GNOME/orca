@@ -142,10 +142,10 @@ class Script(default.Script):
         totalMins = timeIncrements[noIncs] * row
 
         if totalMins < 720:
-            suffix = 'ay em'
+            suffix = 'A.M.'
         else:
             totalMins -= 720
-            suffix = 'pee em'
+            suffix = 'P.M.'
 
         hrs = hours[totalMins / 60]
         mins = minutes[totalMins % 60]
