@@ -61,6 +61,7 @@ ANNOUNCE THE RELEASE to gnome-announce-list@gnome.org:
 
 Subject: orca-0.2.2
 
+==============
 * What is it ?
 ==============
 
@@ -71,6 +72,7 @@ folks with a sense of humor and hacker mentality will relish the
 opportunity to help with the future of Orca.
 
 
+==================
 * What's changed ?
 ==================
 
@@ -84,21 +86,12 @@ Code changes
 Bugfixes
         * Yadda yadda yadda (Joe) [#123456]
 
+======================
 * Where can I get it ?
 ======================
 
 Source code:
 http://ftp.gnome.org/pub/GNOME/sources/orca/0.2/orca-0.2.2.tar.gz
-
-Orca 0.2.2 requires GNOME 2.14 and:
-
-	* Python 2.4         - Python platform
-	* pyorbit 2.0.0      - Python bindings for ORBit2
-	* pygtk 2.4.0        - GTK+ Python bindings
-	* gnome-python 2.6.2 - Python bindings for various GNOME libraries
-	* BRLTTY 3.6.1       - Braille support (note that Orca builds fine
-	                       without BRLTTY installed, but Braille support 
-                               will work without it)
 
 Enjoy.
 
