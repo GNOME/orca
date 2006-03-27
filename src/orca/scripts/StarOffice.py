@@ -70,9 +70,10 @@ class Script(default.Script):
         - pane: the option pane in the spell check dialog.
         """
 
-        # Speak/braille the default action for this component.
+        # Braille the default action for this component.
         #
-        default.Script.onFocus(self, event)
+        orca.setLocusOfFocus(event, event.source, False)
+        self.updateBraille(orca.locusOfFocus)
 
         paragraph = atspi.findByRole(pane, rolenames.ROLE_PARAGRAPH)
 
@@ -81,6 +82,7 @@ class Script(default.Script):
 
         textLength = paragraph[0].text.characterCount
         startFound = False
+        endOff = textLength
         for i in range(0, textLength):
             attributes = paragraph[0].text.getAttributes(i)
             if len(attributes[0]) != 0:
@@ -94,20 +96,18 @@ class Script(default.Script):
 
         badWord = paragraph[0].text.getText(startOff, endOff-1)
 
-        # Note that quite often get two or more of these property-changes
+        # Note that we often get two or more of these focus or property-change
         # events each time there is a new misspelt word. We extract the
         # length of the line of text, the misspelt word, the start and end
         # offsets for that word and compare them against the values saved
         # from the last time this routine was called. If they are the same
-        # and this is a "object:property-change:accessible-name" event, 
         # then we ignore it.
 
         debug.println(debug.LEVEL_FINEST, \
             "StarOffice.readMisspeltWord: type=%s  word=%s(%d,%d)  len=%d" % \
             (event.type, badWord, startOff, endOff, textLength))
 
-        if (event.type == "object:property-change:accessible-name") and \
-           (textLength == self.lastTextLength) and \
+        if (textLength == self.lastTextLength) and \
            (badWord == self.lastBadWord) and \
            (startOff == self.lastStartOff) and \
            (endOff == self.lastEndOff):

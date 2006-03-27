@@ -1,5 +1,14 @@
 2006-03-27  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/scripts/StarOffice.py
+          Changes to the readMisspeltWord() routine to:
+          - Only braille (not speak) the default action for this component.
+          - Handle misspelt words at the end of the line.
+          - Don't respeak the mispelt word and context when tabbing around
+            inside the Spell Checker Dialog.
+
+2006-03-27  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/rolenames.py
           Fixed bug #330487 (http://bugzilla.gnome.org/show_bug.cgi?id=330487)
           Typo in one of the strings in the rolenames[ROLE_DRAWING_AREA]
