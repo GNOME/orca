@@ -1,5 +1,11 @@
 2006-03-27  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/scripts/Evolution.py
+          Change to the readMisspeltWord() routine to only braille (not 
+          speak) the default action for this component.
+
+2006-03-27  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/scripts/StarOffice.py
           Changes to the readMisspeltWord() routine to:
           - Only braille (not speak) the default action for this component.

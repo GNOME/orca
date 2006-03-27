@@ -671,9 +671,10 @@ class Script(default.Script):
             debug.println(debug.LEVEL_FINEST,
                       "evolution.onFocus - spell checking dialog.")
 
-            # Speak/braille the default action for this component.
+            # Braille the default action for this component.
             #
-            default.Script.onFocus(self, event)
+            orca.setLocusOfFocus(event, event.source, False)
+            self.updateBraille(orca.locusOfFocus)
 
             # Look for the "Suggestions for 'xxxxx' label in the spell
             # checker dialog panel. Extract out the xxxxx. This will be the
