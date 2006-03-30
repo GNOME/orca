@@ -1,5 +1,12 @@
 2006-03-30  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/orca-setup.in
+          Fixed bug #336648 (http://bugzilla.gnome.org/show_bug.cgi?id=336648)
+          The orca-setup script now successfully completed speaking 
+          "Orca setup finished" before the speech server is shutdown.
+
+2006-03-30  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/scripts/gedit.py
           Added in spell checking support. The misspelt word and its
           context are now spoken in a similar way to the StarOffice and

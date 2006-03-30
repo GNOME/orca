@@ -300,6 +300,7 @@ settings.writelines(orca.settings.USE_BRAILLE + " = True\n")
 enableAccessibility()
 
 sayAndPrint("Orca setup finished.\n", True)
+time.sleep(2)
 
 for server in servers:
     server.shutdown()
