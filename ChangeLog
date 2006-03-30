@@ -1,5 +1,15 @@
 2006-03-30  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/util.py
+          src/orca/scripts/gedit.py
+          src/orca/scripts/Evolution.py
+          src/orca/scripts/StarOffice.py
+          Created a speakMisspeltWord(allTokens, badWord) routine in
+          util.py that is now used by the spell checking code for the
+          gedit, Evolution and StarOffice scripts.
+
+2006-03-30  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/orca-setup.in
           Fixed bug #336648 (http://bugzilla.gnome.org/show_bug.cgi?id=336648)
           The orca-setup script now successfully completed speaking 

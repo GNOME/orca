@@ -118,36 +118,15 @@ class Script(default.Script):
         text = paragraph[0].text.getText(0, -1)
         allTokens = text.split()
 
-        # Create an utterance to speak consisting of the misspelt
-        # word plus the context where it is used (upto five words
-        # to either side of it).
+        util.speakMisspeltWord(allTokens, badWord)
+
+        # Save misspelt word information for comparison purposes next
+        # time around.
         #
-        for i in range(0, len(allTokens)):
-            if allTokens[i].startswith(badWord):
-                min = i - 5
-                if min < 0:
-                    min = 0
-                max = i + 5
-                if max > (len(allTokens) - 1):
-                    max = len(allTokens) - 1
-
-                utterances = [_("Misspelled word is "), badWord, \
-                          _(" Context is ")] + allTokens[min:max+1]
-
-                # Turn the list of utterances into a string.
-                #
-                text = " ".join(utterances)
-                speech.speak(text)
-
-                # Save misspelt word information for comparison purposes next
-                # time around.
-                #
-                self.lastTextLength = textLength
-                self.lastBadWord = badWord
-                self.lastStartOff = startOff
-                self.lastEndOff = endOff
-
-                return
+        self.lastTextLength = textLength
+        self.lastBadWord = badWord
+        self.lastStartOff = startOff
+        self.lastEndOff = endOff
 
 
     def endOfLink(self, obj, word, startOffset, endOffset):

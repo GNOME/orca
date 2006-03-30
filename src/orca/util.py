@@ -21,6 +21,9 @@
 
 import atspi
 import debug
+import speech
+
+from orca_i18n import _ # for gettext support
 
 def findFocusedObject(root):
     """Returns the accessible that has focus under or including the 
@@ -70,3 +73,33 @@ def isDesiredFocusedItem(obj, rolesList):
         current = current.parent
 
     return True
+
+def speakMisspeltWord(allTokens, badWord):
+    """Called by various spell checking routine to speak the misspelt word, 
+       plus the context that it is being used in.
+
+    Arguments:
+    - allTokens: a list of all the words.
+    - badWord: the misspelt word.
+    """
+
+    # Create an utterance to speak consisting of the misspelt
+    # word plus the context where it is used (upto five words
+    # to either side of it).
+    #
+    for i in range(0, len(allTokens)):
+        if allTokens[i].startswith(badWord):
+            min = i - 5
+            if min < 0:
+                min = 0
+            max = i + 5
+            if max > (len(allTokens) - 1):
+                max = len(allTokens) - 1
+
+            utterances = [_("Misspelled word: "), badWord, \
+                          _(" Context is ")] + allTokens[min:max+1]
+
+            # Turn the list of utterances into a string.
+            text = " ".join(utterances)
+            speech.speak(text)
+
