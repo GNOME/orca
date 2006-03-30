@@ -1,3 +1,9 @@
+2006-03-30  Rich Burridge <rich.burridge@sun.com>
+
+        * bugs/bugs.html
+          Added an entry for OpenOffice Writer bug #63818:
+          F10 key doesn't bring up the menu bar.
+
 2006-03-27  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py
