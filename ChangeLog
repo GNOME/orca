@@ -1,5 +1,17 @@
 2006-03-30  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/scripts/gedit.py
+          Added in spell checking support. The misspelt word and its
+          context are now spoken in a similar way to the StarOffice and
+          Evolution scripts.
+
+          NOTE: this will currently only work correctly if you turn:
+                CACHE_VALUES = False
+                in atspi.py. See Orca bug #334924 for more details
+                (http://bugzilla.gnome.org/show_bug.cgi?id=334924).
+
+2006-03-30  Rich Burridge <rich.burridge@sun.com>
+
         * bugs/bugs.html
           Added an entry for OpenOffice Writer bug #63818:
           F10 key doesn't bring up the menu bar.
