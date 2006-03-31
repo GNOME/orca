@@ -1,3 +1,14 @@
+2006-03-31  Rich Burridge <rich.burridge@sun.com>
+
+        * bugs/bugs.html
+          Added two new Open Office bugs:
+
+          http://www.openoffice.org/issues/show_bug.cgi?id=63870
+          Writer doesn't implement text.getDefaultAttributes.
+
+          http://www.openoffice.org/issues/show_bug.cgi?id=63871
+          Spreadsheet doesn't implement text.getDefaultAttributes.
+
 2006-03-30  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/util.py
