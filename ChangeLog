@@ -1,7 +1,7 @@
 2006-04-04  Rich Burridge <rich.burridge@sun.com>
 
         * bugs/bugs.html
-          Added the following new Open Office bugs:
+          Added the following new OpenOffice bugs:
 
           http://www.openoffice.org/issues/show_bug.cgi?id=63979
           The User Data options pane is confusing when read with 
@@ -26,6 +26,11 @@
           http://www.openoffice.org/issues/show_bug.cgi?id=63984
           The StarOffice->Security options pane doesn't provide useful 
           information for checkboxes when read with a screen reader.
+
+          http://www.openoffice.org/issues/show_bug.cgi?id=63985
+          The StarOffice->Accessibility options pane doesn't provide 
+          useful information for checkboxes when read with a screen 
+          reader.
 
 2006-04-02  Willie Walker <william.walker@sun.com>
 
