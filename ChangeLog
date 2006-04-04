@@ -19,6 +19,10 @@
           The StarOffice->Print options pane doesn't provide useful 
           information when read with a screen reader.
 
+          http://www.openoffice.org/issues/show_bug.cgi?id=63983
+          The StarOffice->Paths options pane table doesn't provide 
+          useful information when read with a screen reader.
+
 2006-04-02  Willie Walker <william.walker@sun.com>
 
 	* configure.in, orca.spec.in: begin updating dependencies
