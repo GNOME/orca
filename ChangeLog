@@ -7,6 +7,10 @@
           The User Data options pane is confusing when read with 
           a screen reader.
 
+          http://www.openoffice.org/issues/show_bug.cgi?id=63980
+          The StarOffice->General options pane doesn't provide useful 
+          labels when read by a screen reader.
+
 2006-04-02  Willie Walker <william.walker@sun.com>
 
 	* configure.in, orca.spec.in: begin updating dependencies
