@@ -1,5 +1,17 @@
 2006-04-05  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/atspi.py
+          Changes to the __get_label() method. The check to see if the
+          object has a name (and if so, return it), has been moved to
+          the beginning. The improves the readibility of checkboxes on 
+          various StarOffice options dialog panes.
+
+          The special case code for push buttons with children, has been 
+          adjusted to no longer first check to see if the push button has 
+          a name.
+
+2006-04-05  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/default.py
           Couple of changes to the visualAppearanceChanged() method.
 

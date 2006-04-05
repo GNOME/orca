@@ -898,10 +898,10 @@ class Accessible:
         """Returns an object's label as a string.  The label is determined
         using the following logic:
 
-        1. If the object has a LABELLED_BY relation, return the text of
-           the targets of this relation
+        1. If the object has a name, return the name
 
-        2. Else if the object has no LABELLED_BY relation, return the name
+        2. Else if the object has a LABELLED_BY relation, return the text of
+           the targets of this relation
 
         3. Else if the object has no name, return the description
 
@@ -910,49 +910,45 @@ class Accessible:
 
         label = ""
 
+        # If the object has a name, just return the name.
+        #
+        if self.name and (len(self.name) > 0):
+            label = self.name
+
         # Does the object have a relation set?
         #
-        relations = self.relations
-        for relation in relations:
-            if relation.getRelationType() \
-                   == Accessibility.RELATION_LABELLED_BY:
-                target = Accessible.makeAccessible(relation.getTarget(0))
-                label = target.name
-                break
+        if (len(label) == 0):
+            relations = self.relations
+            for relation in relations:
+                if relation.getRelationType() \
+                       == Accessibility.RELATION_LABELLED_BY:
+                    target = Accessible.makeAccessible(relation.getTarget(0))
+                    label = target.name
+                    break
 
         # [[[WDW - HACK because push buttons can have labels as
-        # their children.  But, they can also be labelled by something.
+        # their children.  An example of the is is the Font: button on
+        # the General tab in the Editing Profile dialog in gnome-terminal.
+        # But, they can also be labelled by something.
         # So...we'll make the label be a combination of the thing
         # labelling them (above) plus their name or the combination of
         # the names of their children if the children exist.]]]
         #
         if self.role == rolenames.ROLE_PUSH_BUTTON:
-            if self.name and (len(self.name) > 0):
-                if len(label) > 0:
-                    label += " " + self.name
-                else:
-                    label = self.name
-            else:
-                for i in range(0, self.childCount):
-                    debug.println(debug.LEVEL_FINEST,
-                                  "Accessible.__get_label looking at child %d" % i)
-                    child = self.child(i)
-                    if child.role == rolenames.ROLE_LABEL:
-                        if child.name and (len(child.name) > 0):
-                            if len(label) > 0:
-                                label += " " + child.name
-                            else:
-                                label = child.name
-
-        # If the object doesn't have a relation, but has a name, return
-        # the name.
-        #
-        if (len(label) == 0) and self.name and (len(self.name) > 0):
-            label = self.name
+            for i in range(0, self.childCount):
+                debug.println(debug.LEVEL_FINEST,
+                              "Accessible.__get_label looking at child %d" % i)
+                child = self.child(i)
+                if child.role == rolenames.ROLE_LABEL:
+                    if child.name and (len(child.name) > 0):
+                        if len(label) > 0:
+                            label += " " + child.name
+                        else:
+                            label = child.name
 
         # If the object has no name, but has a description, return that
         #
-        elif (len(label) == 0) and self.description \
+        if (len(label) == 0) and self.description \
                  and (len(self.description) > 0):
             # [[[TODO: HACK because yelp actually goes through the trouble
             # of setting the description of some of its text areas to
