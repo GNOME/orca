@@ -66,8 +66,8 @@
 
   </chapter>
 
-  &ue_personas;
-  &ue_requirements;
+  &uepersonas;
+  &uerequirements;
 
   <!--
   ************************************************************************
@@ -77,7 +77,7 @@
   ************************************************************************
   -->
 
-  <chapter id="style_guide"><title>Default Interaction Styles</title>
+  <chapter id="styleguide"><title>Default Interaction Styles</title>
 
     <para>Associated with the discussion of the personas was the
       notion of a need for consistent and efficient interaction
@@ -87,8 +87,8 @@
       following sections describe these default interaction styles in
       more detail.</para>
 
-    &ue_input_style;
-    &ue_output_style;
+    &ueinputstyle;
+    &ueoutputstyle;
 
   </chapter>
 

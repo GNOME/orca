@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
 <HTML
 ><HEAD
 ><TITLE
@@ -42,26 +42,467 @@ CLASS="TOC"
 HREF="#AEN10"
 >Orca User Experience Design</A
 ></DT
+><DD
+><DL
+><DT
+><A
+HREF="#AEN15"
+>Foreword</A
+></DT
+><DT
+>1. <A
+HREF="#AEN21"
+>Introduction</A
+></DT
+><DT
+>2. <A
+HREF="#PERSONAS"
+>Personas</A
+></DT
+><DD
+><DL
+><DT
+>2.1. <A
+HREF="#LEE"
+>Lee the Programmer</A
+></DT
+><DT
+>2.2. <A
+HREF="#PAT"
+>Pat the Manager</A
+></DT
+><DT
+>2.3. <A
+HREF="#KIM"
+>Kim the Admin</A
+></DT
+><DT
+>2.4. <A
+HREF="#SAM"
+>Sam the IT Guru</A
+></DT
+></DL
+></DD
+><DT
+>3. <A
+HREF="#USERREQUIREMENTS"
+>User Requirements</A
+></DT
+><DD
+><DL
+><DT
+>3.1. <A
+HREF="#AEN386"
+>Availability at All Times</A
+></DT
+><DT
+>3.2. <A
+HREF="#AEN391"
+>Failure Resiliency</A
+></DT
+><DT
+>3.3. <A
+HREF="#AEN394"
+>Seamless Interaction with Traditional Keyboard Navigation
+      Methods</A
+></DT
+><DT
+>3.4. <A
+HREF="#AEN397"
+>Seamless Interaction with Other Assistive
+      Technology</A
+></DT
+><DT
+>3.5. <A
+HREF="#AEN402"
+>Consistent Style</A
+></DT
+><DT
+>3.6. <A
+HREF="#AEN407"
+>Customizable Behavior Per Application 
+      ("Scripting")</A
+></DT
+><DT
+>3.7. <A
+HREF="#AEN411"
+>Configurable Presentation and Interaction</A
+></DT
+><DT
+>3.8. <A
+HREF="#AEN415"
+>Focus Tracking as the Default Mode</A
+></DT
+><DT
+>3.9. <A
+HREF="#AEN421"
+>Flat Review Mode</A
+></DT
+><DT
+>3.10. <A
+HREF="#AEN434"
+>Presentation of Text</A
+></DT
+><DT
+>3.11. <A
+HREF="#AEN454"
+>Learning Mode (Command Echo)</A
+></DT
+><DT
+>3.12. <A
+HREF="#AEN457"
+>Customizable Gestures</A
+></DT
+><DT
+>3.13. <A
+HREF="#AEN462"
+>"List All Applications" Command</A
+></DT
+><DT
+>3.14. <A
+HREF="#AEN467"
+>"Where Am I?" Command</A
+></DT
+><DT
+>3.15. <A
+HREF="#AEN471"
+>"Jump to Well Known Object" Commands</A
+></DT
+><DT
+>3.16. <A
+HREF="#AEN474"
+>"Find" Command</A
+></DT
+><DT
+>3.17. <A
+HREF="#AEN483"
+>Watched Objects</A
+></DT
+><DT
+>3.18. <A
+HREF="#AEN487"
+>Bookmarked Objects</A
+></DT
+><DT
+>3.19. <A
+HREF="#AEN491"
+>Document Reading</A
+></DT
+><DT
+>3.20. <A
+HREF="#AEN498"
+>Ability of Non-focused Windows to Present of
+      Information</A
+></DT
+><DT
+>3.21. <A
+HREF="#AEN501"
+>Speech Synthesis</A
+></DT
+><DT
+>3.22. <A
+HREF="#AEN528"
+>Key and Text Echo</A
+></DT
+><DT
+>3.23. <A
+HREF="#AEN531"
+>Refreshable Braille</A
+></DT
+><DT
+>3.24. <A
+HREF="#AEN562"
+>Synchronization with Screen Magnifiers</A
+></DT
+><DT
+>3.25. <A
+HREF="#AEN565"
+>Acceptable Response Time</A
+></DT
+><DT
+>3.26. <A
+HREF="#AEN581"
+>Documentation and Tutorials</A
+></DT
+></DL
+></DD
+><DT
+>4. <A
+HREF="#STYLEGUIDE"
+>Default Interaction Styles</A
+></DT
+><DD
+><DL
+><DT
+>4.1. <A
+HREF="#GESTURES"
+>Input Style: Keyboard Mappings</A
+></DT
+><DT
+>4.2. <A
+HREF="#AEN655"
+>Input Style: Braille Mappings</A
+></DT
+><DT
+>4.3. <A
+HREF="#AEN707"
+>Output Style: Speech Synthesis and Braille</A
+></DT
+></DL
+></DD
+><DT
+><A
+HREF="#AEN1601"
+>Bibliography</A
+></DT
+></DL
+></DD
 ><DT
 ><A
 HREF="#AEN1630"
 >Orca Architecture and Functional Specification</A
 ></DT
+><DD
+><DL
+><DT
+><A
+HREF="#AEN1635"
+>Foreword</A
+></DT
+><DT
+>1. <A
+HREF="#AEN1641"
+>Introduction</A
+></DT
+><DT
+>2. <A
+HREF="#AEN1647"
+>Prerequisites</A
+></DT
+><DD
+><DL
+><DT
+>2.1. <A
+HREF="#AEN1650"
+>Python v2.4 or better</A
+></DT
+><DT
+>2.2. <A
+HREF="#AEN1653"
+>pyorbit v2.0.0 or better</A
+></DT
+><DT
+>2.3. <A
+HREF="#AEN1656"
+>libbonobo v2.0.0 or better</A
+></DT
+><DT
+>2.4. <A
+HREF="#AEN1659"
+>gnome-python-2.0 v2.6.0 or better</A
+></DT
+><DT
+>2.5. <A
+HREF="#AEN1662"
+>pygtk-2.0 v2.4.0 or better</A
+></DT
+><DT
+>2.6. <A
+HREF="#AEN1665"
+>AT-SPI v1.6.6 or better</A
+></DT
+><DT
+>2.7. <A
+HREF="#AEN1670"
+>gnome-speech v0.3.9 or better</A
+></DT
+><DT
+>2.8. <A
+HREF="#AEN1675"
+>BrlTTY v3.6.1 or better</A
+></DT
+><DT
+>2.9. <A
+HREF="#AEN1680"
+>gnome-mag v0.11.11 or better</A
+></DT
+><DT
+>2.10. <A
+HREF="#AEN1685"
+>Keyboard Navigation</A
+></DT
+></DL
+></DD
+><DT
+>3. <A
+HREF="#ARCHITECTURE"
+>Architecture and Implementation</A
+></DT
+><DD
+><DL
+><DT
+>3.1. <A
+HREF="#AEN1699"
+>Desktop and AT-SPI</A
+></DT
+><DT
+>3.2. <A
+HREF="#AEN1752"
+>Orca</A
+></DT
+><DT
+>3.3. <A
+HREF="#SCRIPT"
+>Orca Scripts</A
+></DT
+><DT
+>3.4. <A
+HREF="#AEN1804"
+>System Services</A
+></DT
+></DL
+></DD
+><DT
+>4. <A
+HREF="#AEN1858"
+>Internationalization (I18N) Support</A
+></DT
+><DT
+><A
+HREF="#AEN1867"
+>Bibliography</A
+></DT
+></DL
+></DD
 ><DT
 ><A
 HREF="#AEN1982"
 >Orca Script Writing Guide</A
 ></DT
+><DD
+><DL
+><DT
+><A
+HREF="#AEN1987"
+>Foreword</A
+></DT
+><DT
+>1. <A
+HREF="#AEN1993"
+>Introduction</A
+></DT
+><DT
+>2. <A
+HREF="#AEN1998"
+>Overview</A
+></DT
+><DD
+><DL
+><DT
+>2.1. <A
+HREF="#AEN2002"
+>Script Life Cycle</A
+></DT
+><DT
+>2.2. <A
+HREF="#AEN2113"
+>Script Contract</A
+></DT
+></DL
+></DD
+><DT
+>3. <A
+HREF="#CUSTOMIZATION"
+>Customized Behavior</A
+></DT
+><DD
+><DL
+><DT
+>3.1. <A
+HREF="#AEN2155"
+>Defining Event Listeners</A
+></DT
+><DT
+>3.2. <A
+HREF="#AEN2181"
+>Input Event Handlers</A
+></DT
+><DT
+>3.3. <A
+HREF="#AEN2200"
+>Defining Keyboard Bindings</A
+></DT
+><DT
+>3.4. <A
+HREF="#AEN2223"
+>Defining Braille Bindings</A
+></DT
+></DL
+></DD
+><DT
+>4. <A
+HREF="#AEN2234"
+>Script Utilities</A
+></DT
+><DD
+><DL
+><DT
+>4.1. <A
+HREF="#DEBUG"
+>Debug Utilities</A
+></DT
+><DT
+>4.2. <A
+HREF="#AEN2303"
+>Speech Synthesis</A
+></DT
+><DT
+>4.3. <A
+HREF="#AEN2352"
+>Braille Output</A
+></DT
+></DL
+></DD
+></DL
+></DD
 ><DT
 ><A
 HREF="#AEN2408"
 >Orca Testing Plan</A
 ></DT
+><DD
+><DL
+><DT
+><A
+HREF="#AEN2413"
+>Foreword</A
+></DT
+><DT
+>1. <A
+HREF="#AEN2419"
+>Introduction</A
+></DT
+></DL
+></DD
 ><DT
 ><A
 HREF="#AEN2422"
 >Orca User's Guide</A
 ></DT
+><DD
+><DL
+><DT
+><A
+HREF="#AEN2427"
+>Foreword</A
+></DT
+><DT
+>1. <A
+HREF="#AEN2433"
+>Introduction</A
+></DT
+></DL
+></DD
 ></DL
 ></DIV
 ><DIV
@@ -103,153 +544,153 @@ HREF="#AEN15"
 >Foreword</A
 ></DT
 ><DT
-><A
+>1. <A
 HREF="#AEN21"
 >Introduction</A
 ></DT
 ><DT
-><A
+>2. <A
 HREF="#PERSONAS"
 >Personas</A
 ></DT
 ><DD
 ><DL
 ><DT
-><A
+>2.1. <A
 HREF="#LEE"
 >Lee the Programmer</A
 ></DT
 ><DD
 ><DL
 ><DT
-><A
+>2.1.1. <A
 HREF="#AEN57"
 >Write code in NetBeans</A
 ></DT
 ><DT
-><A
+>2.1.2. <A
 HREF="#AEN73"
 >Compile code in NetBeans</A
 ></DT
 ><DT
-><A
+>2.1.3. <A
 HREF="#AEN86"
 >Compose document in StarOffice</A
 ></DT
 ><DT
-><A
+>2.1.4. <A
 HREF="#AEN114"
 >Read and write e-mail with Evolution</A
 ></DT
 ><DT
-><A
+>2.1.5. <A
 HREF="#AEN127"
 >Use terminal windows</A
 ></DT
 ><DT
-><A
+>2.1.6. <A
 HREF="#AEN135"
 >Use the calendar tool</A
 ></DT
 ><DT
-><A
+>2.1.7. <A
 HREF="#AEN143"
 >Browses the web using Mozilla</A
 ></DT
 ></DL
 ></DD
 ><DT
-><A
+>2.2. <A
 HREF="#PAT"
 >Pat the Manager</A
 ></DT
 ><DD
 ><DL
 ><DT
-><A
+>2.2.1. <A
 HREF="#AEN166"
 >Browses the web using Mozilla</A
 ></DT
 ><DT
-><A
+>2.2.2. <A
 HREF="#AEN186"
 >Read and write e-mail with Evolution</A
 ></DT
 ><DT
-><A
+>2.2.3. <A
 HREF="#AEN208"
 >Compose presentation in StarOffice</A
 ></DT
 ><DT
-><A
+>2.2.4. <A
 HREF="#AEN236"
 >Read help documentation</A
 ></DT
 ><DT
-><A
+>2.2.5. <A
 HREF="#AEN244"
 >Compose text document in StarOffice</A
 ></DT
 ><DT
-><A
+>2.2.6. <A
 HREF="#AEN264"
 >Use address book</A
 ></DT
 ><DT
-><A
+>2.2.7. <A
 HREF="#AEN274"
 >Use the calendar tool</A
 ></DT
 ></DL
 ></DD
 ><DT
-><A
+>2.3. <A
 HREF="#KIM"
 >Kim the Admin</A
 ></DT
 ><DD
 ><DL
 ><DT
-><A
+>2.3.1. <A
 HREF="#AEN282"
 >Use the address book</A
 ></DT
 ><DT
-><A
+>2.3.2. <A
 HREF="#AEN296"
 >Use the calendar tool</A
 ></DT
 ><DT
-><A
+>2.3.3. <A
 HREF="#AEN310"
 >Browses the web using Mozilla</A
 ></DT
 ><DT
-><A
+>2.3.4. <A
 HREF="#AEN319"
 >Read and write e-mail with Evolution</A
 ></DT
 ><DT
-><A
+>2.3.5. <A
 HREF="#AEN333"
 >Creates spreadsheet in StarOffice</A
 ></DT
 ></DL
 ></DD
 ><DT
-><A
+>2.4. <A
 HREF="#SAM"
 >Sam the IT Guru</A
 ></DT
 ><DD
 ><DL
 ><DT
-><A
+>2.4.1. <A
 HREF="#AEN358"
 >Use terminal windows</A
 ></DT
 ><DT
-><A
+>2.4.2. <A
 HREF="#AEN364"
 >Use GUI-based administration tools</A
 ></DT
@@ -258,184 +699,184 @@ HREF="#AEN364"
 ></DL
 ></DD
 ><DT
-><A
-HREF="#USER_REQUIREMENTS"
+>3. <A
+HREF="#USERREQUIREMENTS"
 >User Requirements</A
 ></DT
 ><DD
 ><DL
 ><DT
-><A
+>3.1. <A
 HREF="#AEN386"
 >Availability at All Times</A
 ></DT
 ><DT
-><A
+>3.2. <A
 HREF="#AEN391"
 >Failure Resiliency</A
 ></DT
 ><DT
-><A
+>3.3. <A
 HREF="#AEN394"
 >Seamless Interaction with Traditional Keyboard Navigation
       Methods</A
 ></DT
 ><DT
-><A
+>3.4. <A
 HREF="#AEN397"
 >Seamless Interaction with Other Assistive
       Technology</A
 ></DT
 ><DT
-><A
+>3.5. <A
 HREF="#AEN402"
 >Consistent Style</A
 ></DT
 ><DT
-><A
+>3.6. <A
 HREF="#AEN407"
 >Customizable Behavior Per Application 
       ("Scripting")</A
 ></DT
 ><DT
-><A
+>3.7. <A
 HREF="#AEN411"
 >Configurable Presentation and Interaction</A
 ></DT
 ><DT
-><A
+>3.8. <A
 HREF="#AEN415"
 >Focus Tracking as the Default Mode</A
 ></DT
 ><DT
-><A
+>3.9. <A
 HREF="#AEN421"
 >Flat Review Mode</A
 ></DT
 ><DT
-><A
+>3.10. <A
 HREF="#AEN434"
 >Presentation of Text</A
 ></DT
 ><DT
-><A
+>3.11. <A
 HREF="#AEN454"
 >Learning Mode (Command Echo)</A
 ></DT
 ><DT
-><A
+>3.12. <A
 HREF="#AEN457"
 >Customizable Gestures</A
 ></DT
 ><DT
-><A
+>3.13. <A
 HREF="#AEN462"
 >"List All Applications" Command</A
 ></DT
 ><DT
-><A
+>3.14. <A
 HREF="#AEN467"
 >"Where Am I?" Command</A
 ></DT
 ><DT
-><A
+>3.15. <A
 HREF="#AEN471"
 >"Jump to Well Known Object" Commands</A
 ></DT
 ><DT
-><A
+>3.16. <A
 HREF="#AEN474"
 >"Find" Command</A
 ></DT
 ><DT
-><A
+>3.17. <A
 HREF="#AEN483"
 >Watched Objects</A
 ></DT
 ><DT
-><A
+>3.18. <A
 HREF="#AEN487"
 >Bookmarked Objects</A
 ></DT
 ><DT
-><A
+>3.19. <A
 HREF="#AEN491"
 >Document Reading</A
 ></DT
 ><DT
-><A
+>3.20. <A
 HREF="#AEN498"
 >Ability of Non-focused Windows to Present of
       Information</A
 ></DT
 ><DT
-><A
+>3.21. <A
 HREF="#AEN501"
 >Speech Synthesis</A
 ></DT
 ><DT
-><A
+>3.22. <A
 HREF="#AEN528"
 >Key and Text Echo</A
 ></DT
 ><DT
-><A
+>3.23. <A
 HREF="#AEN531"
 >Refreshable Braille</A
 ></DT
 ><DT
-><A
+>3.24. <A
 HREF="#AEN562"
 >Synchronization with Screen Magnifiers</A
 ></DT
 ><DT
-><A
+>3.25. <A
 HREF="#AEN565"
 >Acceptable Response Time</A
 ></DT
 ><DT
-><A
+>3.26. <A
 HREF="#AEN581"
 >Documentation and Tutorials</A
 ></DT
 ></DL
 ></DD
 ><DT
-><A
-HREF="#STYLE_GUIDE"
+>4. <A
+HREF="#STYLEGUIDE"
 >Default Interaction Styles</A
 ></DT
 ><DD
 ><DL
 ><DT
-><A
+>4.1. <A
 HREF="#GESTURES"
 >Input Style: Keyboard Mappings</A
 ></DT
 ><DT
-><A
+>4.2. <A
 HREF="#AEN655"
 >Input Style: Braille Mappings</A
 ></DT
 ><DT
-><A
+>4.3. <A
 HREF="#AEN707"
 >Output Style: Speech Synthesis and Braille</A
 ></DT
 ><DD
 ><DL
 ><DT
-><A
+>4.3.1. <A
 HREF="#AEN711"
 >General Braille Style</A
 ></DT
 ><DT
-><A
+>4.3.2. <A
 HREF="#AEN734"
 >General Speech Style</A
 ></DT
 ><DT
-><A
+>4.3.3. <A
 HREF="#AEN739"
 >Output Styles by Role</A
 ></DT
@@ -461,13 +902,16 @@ NAME="AEN15"
 >Orca is a flexible, extensible, and powerful assistive
   technology that provides end-user access to applications and
   toolkits that support the AT-SPI (e.g., the GNOME desktop).  With
-  early input and continued engagement from its end users, Orca has
-  been designed and implemented by the Sun Microsystems, Inc.,
+  early input from and continued engagement with its end users, Orca 
+  has been designed and implemented by the Sun Microsystems, Inc.,
   Accessibility Program Office.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >NOTE:</I
+></SPAN
 > Orca is currently a work in progress.  As a result, this
   and other books in the Orca Documentation Series are under
   continuous modification and are also in various states of
@@ -482,7 +926,7 @@ CLASS="CHAPTER"
 ><A
 NAME="AEN21"
 ></A
->Introduction</H1
+>Chapter 1. Introduction</H1
 ><P
 >The development of Orca focused primarily on the
       requirements of its end users.  Orca's users may require
@@ -534,11 +978,11 @@ CLASS="CHAPTER"
 ><A
 NAME="PERSONAS"
 ></A
->Personas</H1
+>Chapter 2. Personas</H1
 ><P
 >The Orca user personas are intended to be a tool that helps
       elicit use cases and <A
-HREF="#USER_REQUIREMENTS"
+HREF="#USERREQUIREMENTS"
 >user requirements</A
 >.  The approach
       is to think of "real" users with specific disabilities
@@ -589,7 +1033,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="LEE"
->Lee the Programmer</A
+>2.1. Lee the Programmer</A
 ></H2
 ><P
 >Lee is a programmer who is primarily a braille user and
@@ -601,7 +1045,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN57"
->Write code in NetBeans</A
+>2.1.1. Write code in NetBeans</A
 ></H3
 ><P
 >Lee edits a program module in NetBeans.  Over the course
@@ -679,7 +1123,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN73"
->Compile code in NetBeans</A
+>2.1.2. Compile code in NetBeans</A
 ></H3
 ><P
 >Lee compiles a program module and fixes errors in
@@ -736,7 +1180,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN86"
->Compose document in StarOffice</A
+>2.1.3. Compose document in StarOffice</A
 ></H3
 ><P
 >Lee writes rough draft of an architecture document in
@@ -769,9 +1213,12 @@ NAME="AEN86"
               well known command to toggle between grade one and grade two
               braille.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > Perhaps not a 1.0 requirement.</P
 ></LI
 ><LI
@@ -795,9 +1242,12 @@ CLASS="EMPHASIS"
               to toolbar navigation mode.  Another well known command
               (e.g., escape) gets you out of this mode.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >NOTE:</I
+></SPAN
 > this may also be workable via review mode,
               but the screen reader always attempts to provide Lee
               with the most efficient means for accomplishing any
@@ -844,7 +1294,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN114"
->Read and write e-mail with Evolution</A
+>2.1.4. Read and write e-mail with Evolution</A
 ></H3
 ><P
 >Lee reads and writes e-mail with Evolution to communicate
@@ -888,7 +1338,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN127"
->Use terminal windows</A
+>2.1.5. Use terminal windows</A
 ></H3
 ><P
 >Lee also interacts with terminal windows on a daily basis.
@@ -907,9 +1357,12 @@ NAME="AEN127"
               the navigation of fields in terminal apps (such as curses
               applications).</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > Handling curses applications may be a lower
               priority task at this point.</P
 ></LI
@@ -921,7 +1374,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN135"
->Use the calendar tool</A
+>2.1.6. Use the calendar tool</A
 ></H3
 ><P
 >Lee sets up appointment for team design discussion using a
@@ -955,7 +1408,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN143"
->Browses the web using Mozilla</A
+>2.1.7. Browses the web using Mozilla</A
 ></H3
 ><P
 >Lee uses Mozilla to read JDK JavaDoc, the latest Java Tips
@@ -971,9 +1424,12 @@ NAME="AEN143"
               and hit first letter (or perhaps enter key) to activate
               them.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > might need to be concerned about conflict
               with web forms with buttons such as "Submit All Changes"
               that will react to presses of the enter key.</P
@@ -1028,7 +1484,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="PAT"
->Pat the Manager</A
+>2.2. Pat the Manager</A
 ></H2
 ><P
 >Pat is a manager who is primarily a magnifier and speech
@@ -1040,7 +1496,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN166"
->Browses the web using Mozilla</A
+>2.2.1. Browses the web using Mozilla</A
 ></H3
 ><P
 >Each morning before going to work, Pat uses Mozilla to
@@ -1115,7 +1571,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN186"
->Read and write e-mail with Evolution</A
+>2.2.2. Read and write e-mail with Evolution</A
 ></H3
 ><P
 >Pat is also a heavy e-mail user, especially to communicate
@@ -1201,7 +1657,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN208"
->Compose presentation in StarOffice</A
+>2.2.3. Compose presentation in StarOffice</A
 ></H3
 ><P
 >Pat periodically needs to create an "All Hands"
@@ -1220,9 +1676,12 @@ NAME="AEN208"
 >Determine the position on the slide that typed text
               will appear.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > is this perhaps more for someone who doesn't
               use magnification?</P
 ></LI
@@ -1231,9 +1690,12 @@ CLASS="EMPHASIS"
 >Determine if the slide is full or if part of text or
               an object won't fit.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > is this perhaps more for someone who doesn't
               use magnification?</P
 ></LI
@@ -1241,9 +1703,12 @@ CLASS="EMPHASIS"
 ><P
 >Cut and paste objects and text from and to a slide.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > the application should provide this, but Pat will
               still need to be able to determine what is selected.  How
               will Pat do this?</P
@@ -1252,9 +1717,12 @@ CLASS="EMPHASIS"
 ><P
 >Move and size objects on a slide.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > is this perhaps more for someone who doesn't
               use magnification?</P
 ></LI
@@ -1262,9 +1730,12 @@ CLASS="EMPHASIS"
 ><P
 >Determine bullets and indentation levels for text.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > is this perhaps more for someone who doesn't
               use magnification?</P
 ></LI
@@ -1285,7 +1756,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN236"
->Read help documentation</A
+>2.2.4. Read help documentation</A
 ></H3
 ><P
 >Pat needs to be able to read the help documentation, and
@@ -1314,7 +1785,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN244"
->Compose text document in StarOffice</A
+>2.2.5. Compose text document in StarOffice</A
 ></H3
 ><P
 >Pat also writes performance reviews in StarOffice.  To do
@@ -1383,9 +1854,12 @@ NAME="AEN244"
               provides a well known command (e.g., "say selection") to read the
               currently selected text.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > what happens when there are multiple
               discontiguous regions selected?</P
 ></LI
@@ -1397,7 +1871,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN264"
->Use address book</A
+>2.2.6. Use address book</A
 ></H3
 ><P
 >Pat uses his address book often to locate contact
@@ -1432,15 +1906,18 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN274"
->Use the calendar tool</A
+>2.2.7. Use the calendar tool</A
 ></H3
 ><P
 >Pat sets up a staff meeting using a calendar tool.  See
           Lee's stuff above, but apply to speech and mag.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > need to flesh this out some more.</P
 ></DIV
 ></DIV
@@ -1450,7 +1927,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="KIM"
->Kim the Admin</A
+>2.3. Kim the Admin</A
 ></H2
 ><P
 >Kim is an administrative assistant who is primarily a speech
@@ -1462,7 +1939,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN282"
->Use the address book</A
+>2.3.1. Use the address book</A
 ></H3
 ><P
 >Kim often uses the address book to add and find contact
@@ -1512,7 +1989,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN296"
->Use the calendar tool</A
+>2.3.2. Use the calendar tool</A
 ></H3
 ><P
 >Kim often sets up calendar appointment for Pat and others.
@@ -1527,9 +2004,12 @@ NAME="AEN296"
                navigating, Kim hears, for example, the current time and if an
                appointment is currently set.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > Mike - write down your ideas for this!</P
 ></LI
 ><LI
@@ -1542,9 +2022,12 @@ CLASS="EMPHASIS"
 >Read the entire appointment.  Orca provides this via
               a well known command to read an entire dialog.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > this assumes the appointment information is 
               input via a dialog.</P
 ></LI
@@ -1556,14 +2039,17 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN310"
->Browses the web using Mozilla</A
+>2.3.3. Browses the web using Mozilla</A
 ></H3
 ><P
 >Kim often orders office supplies and books travel for
           others on line.  Kim does this in a manner similar to Pat, but
-          using only speech instead of speech and magnification.  [[[<I
+          using only speech instead of speech and magnification.  [[[<SPAN
+CLASS="emphasis"
+><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 >
           - probably need to flesh this out more.]]]  In addition, since
           Kim often fills out forms, Orca needs to allow for the
@@ -1590,7 +2076,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN319"
->Read and write e-mail with Evolution</A
+>2.3.4. Read and write e-mail with Evolution</A
 ></H3
 ><P
 >Kim often coordinates and organizes group meetings using
@@ -1644,7 +2130,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN333"
->Creates spreadsheet in StarOffice</A
+>2.3.5. Creates spreadsheet in StarOffice</A
 ></H3
 ><P
 >Kim sometimes views and updates the group budget, which is
@@ -1677,9 +2163,12 @@ NAME="AEN333"
 ><P
 >Determine and modify size of cell.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > this might require some emulation of mouse 
               behavior if StarOffice doesn't provide dialogs to do 
               this.</P
@@ -1715,7 +2204,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="SAM"
->Sam the IT Guru</A
+>2.4. Sam the IT Guru</A
 ></H2
 ><P
 >Sam is a member IT staff who is primarily a speech and
@@ -1727,7 +2216,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN358"
->Use terminal windows</A
+>2.4.1. Use terminal windows</A
 ></H3
 ><P
 >Sam regularly interacts with terminal windows.  While
@@ -1753,7 +2242,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN364"
->Use GUI-based administration tools</A
+>2.4.2. Use GUI-based administration tools</A
 ></H3
 ><P
 >Sam interacts with GUI-based tools such as update and
@@ -1798,9 +2287,12 @@ NAME="AEN364"
               CPU utilization" field and be notified when it
               changes.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > how does Sam specify what to watch and
               how does Orca notify Sam when the value changes?</P
 ></LI
@@ -1812,9 +2304,9 @@ CLASS="EMPHASIS"
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="USER_REQUIREMENTS"
+NAME="USERREQUIREMENTS"
 ></A
->User Requirements</H1
+>Chapter 3. User Requirements</H1
 ><P
 >Based upon discussions with end users as well as the tasks
       and ideas from the <A
@@ -1828,7 +2320,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN386"
->Availability at All Times</A
+>3.1. Availability at All Times</A
 ></H2
 ><P
 >Orca will often be the only vehicle by which many users
@@ -1849,7 +2341,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN391"
->Failure Resiliency</A
+>3.2. Failure Resiliency</A
 ></H2
 ><P
 >In the event that Orca fails or a component of the
@@ -1862,7 +2354,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN394"
->Seamless Interaction with Traditional Keyboard Navigation
+>3.3. Seamless Interaction with Traditional Keyboard Navigation
       Methods</A
 ></H2
 ><P
@@ -1878,7 +2370,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN397"
->Seamless Interaction with Other Assistive
+>3.4. Seamless Interaction with Other Assistive
       Technology</A
 ></H2
 ><P
@@ -1902,7 +2394,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN402"
->Consistent Style</A
+>3.5. Consistent Style</A
 ></H2
 ><P
 > It is expected that access to applications will be driven
@@ -1915,7 +2407,7 @@ NAME="AEN402"
         provide a users with a consistent style to access
         applications.  To help with this consistent style, Orca will
         provide a <A
-HREF="#STYLE_GUIDE"
+HREF="#STYLEGUIDE"
 >style guide</A
 >, a well-documented "default"
         script, and several application scripts that demonstrate and
@@ -1928,7 +2420,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN407"
->Customizable Behavior Per Application 
+>3.6. Customizable Behavior Per Application 
       ("Scripting")</A
 ></H2
 ><P
@@ -1953,7 +2445,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN411"
->Configurable Presentation and Interaction</A
+>3.7. Configurable Presentation and Interaction</A
 ></H2
 ><P
 >Different users have different capabilities (e.g., some
@@ -1974,7 +2466,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN415"
->Focus Tracking as the Default Mode</A
+>3.8. Focus Tracking as the Default Mode</A
 ></H2
 ><P
 >Known as "focus tracking," Orca must provide a mode
@@ -1986,7 +2478,7 @@ NAME="AEN415"
         interest, and must also provide a mechanism for the user to
         obtain more detailed information.  The presentation will
         follow the <A
-HREF="#STYLE_GUIDE"
+HREF="#STYLEGUIDE"
 >style guide</A
 >.</P
 ><P
@@ -2001,7 +2493,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN421"
->Flat Review Mode</A
+>3.9. Flat Review Mode</A
 ></H2
 ><P
 >Orca must provide the ability for a user to review the
@@ -2017,32 +2509,41 @@ NAME="AEN421"
         display.</P
 ><P
 >The review of the desktop will follow the <A
-HREF="#STYLE_GUIDE"
+HREF="#STYLEGUIDE"
 >style guide</A
 >,
         and will at least provide a short summary of the available
         applications.  While the review of an application will also
         follow the <A
-HREF="#STYLE_GUIDE"
+HREF="#STYLEGUIDE"
 >style guide</A
 >, the overall presentation depends
         largely upon the application being reviewed.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > Add notions of "hierarchical review," and "hybrid
         review (e.g., in/out of lists)".  Need to flesh out the
         primary purposes of each.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > Add ability to read a dialog/window.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > As with navigating text, should Orca have an option to
         play an audio cue when the "next" or "prev" object command takes
         user to a new line?</P
@@ -2053,7 +2554,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN434"
->Presentation of Text</A
+>3.10. Presentation of Text</A
 ></H2
 ><P
 >For any given piece of text, Orca must provide the ability
@@ -2070,41 +2571,56 @@ NAME="AEN434"
 ><UL
 ><LI
 ><P
-><I
+><SPAN
+CLASS="bold"
+><B
 CLASS="EMPHASIS"
->Attributes</I
+>Attributes</B
+></SPAN
 > - font size,
             face (bold, italic, etc.), underline, color, etc.</P
 ></LI
 ><LI
 ><P
-><I
+><SPAN
+CLASS="bold"
+><B
 CLASS="EMPHASIS"
->Capitalization</I
+>Capitalization</B
+></SPAN
 > - is it
             capital or lower case?</P
 ></LI
 ><LI
 ><P
-><I
+><SPAN
+CLASS="bold"
+><B
 CLASS="EMPHASIS"
->Selection</I
+>Selection</B
+></SPAN
 > - is the text
             selected or not?</P
 ></LI
 ><LI
 ><P
-><I
+><SPAN
+CLASS="bold"
+><B
 CLASS="EMPHASIS"
->Indentation</I
+>Indentation</B
+></SPAN
 > - what is the
             indentation level?</P
 ></LI
 ><LI
 ><P
-><I
+><SPAN
+CLASS="bold"
+><B
 CLASS="EMPHASIS"
->Bounds</I
+>Bounds</B
+></SPAN
 > - what is the
             bounding box of the text (where and size)?</P
 ></LI
@@ -2116,7 +2632,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN454"
->Learning Mode (Command Echo)</A
+>3.11. Learning Mode (Command Echo)</A
 ></H2
 ><P
 >Orca must provide a feature that optionally presents the
@@ -2133,7 +2649,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN457"
->Customizable Gestures</A
+>3.12. Customizable Gestures</A
 ></H2
 ><P
 >While Orca will provide a default set of well known 
@@ -2153,16 +2669,19 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN462"
->"List All Applications" Command</A
+>3.13. "List All Applications" Command</A
 ></H2
 ><P
 >Orca will provide a means for a user to determine all
         applications running on the desktop as well as all open
         windows on the desktop.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > the Alt+Tab functionality of the desktop may be
         sufficient to meet this requirement.</P
 ></DIV
@@ -2172,7 +2691,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN467"
->"Where Am I?" Command</A
+>3.14. "Where Am I?" Command</A
 ></H2
 ><P
 >Orca will provide a means for a user to determine information
@@ -2193,7 +2712,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN471"
->"Jump to Well Known Object" Commands</A
+>3.15. "Jump to Well Known Object" Commands</A
 ></H2
 ><P
 >There are common locations a user wants to jump to at any
@@ -2212,7 +2731,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN474"
->"Find" Command</A
+>3.16. "Find" Command</A
 ></H2
 ><P
 >Orca will allow users to enter a string to search for a
@@ -2242,9 +2761,12 @@ NAME="AEN474"
 	search will allow the user to search based solely on attribute
 	type, text string, or a combination of both.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >NOTE:</I
+></SPAN
 > this feature is for searching for visible text
 	only.  Traditional searching for text in documents will be
 	supported by application functionality (e.g., the "search"
@@ -2256,7 +2778,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN483"
->Watched Objects</A
+>3.17. Watched Objects</A
 ></H2
 ><P
 >Orca will allow users to indicate interest in an object.
@@ -2281,7 +2803,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN487"
->Bookmarked Objects</A
+>3.18. Bookmarked Objects</A
 ></H2
 ><P
 >Orca will allow users to define a gesture (keyboard or
@@ -2300,7 +2822,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN491"
->Document Reading</A
+>3.19. Document Reading</A
 ></H2
 ><P
 >Orca must provide the ability for a user to read the
@@ -2318,12 +2840,15 @@ NAME="AEN491"
 >Orca will also provide options to highlight the text
         being spoken.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >NOTE:</I
+></SPAN
 > while the reading of a document will follow the
         <A
-HREF="#STYLE_GUIDE"
+HREF="#STYLEGUIDE"
 >style guide</A
 >, the overall presentation depends largely upon
         the document being read (e.g., is it a text document,
@@ -2335,7 +2860,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN498"
->Ability of Non-focused Windows to Present of
+>3.20. Ability of Non-focused Windows to Present of
       Information</A
 ></H2
 ><P
@@ -2354,7 +2879,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN501"
->Speech Synthesis</A
+>3.21. Speech Synthesis</A
 ></H2
 ><P
 >One of the primary non-visual ways to present a graphical
@@ -2367,18 +2892,24 @@ NAME="AEN501"
 ><UL
 ><LI
 ><P
-><I
+><SPAN
+CLASS="bold"
+><B
 CLASS="EMPHASIS"
->General Synthesis</I
+>General Synthesis</B
+></SPAN
 > -
             Orca must be able to speak an utterance (e.g., a word, a
             label, a sentence, etc.) or set of utterances (e.g., a
             paragraph or entire document).  The utterance being spoken
             must be able to interrupted at any time.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >IMPLEMENTATION DETAIL:</I
+></SPAN
 > if at all possible, the synthesis engine
             should be able to tell Orca what has been spoken, allowing
             Orca to synchronize its internal data structures with what
@@ -2386,9 +2917,12 @@ CLASS="EMPHASIS"
 ></LI
 ><LI
 ><P
-><I
+><SPAN
+CLASS="bold"
+><B
 CLASS="EMPHASIS"
->Voice Styles</I
+>Voice Styles</B
+></SPAN
 > - Orca
             must be able to identify and allow the user to select
             between the voices available on the various synthesis
@@ -2407,10 +2941,13 @@ CLASS="EMPHASIS"
 ></LI
 ><LI
 ><P
-><I
+><SPAN
+CLASS="bold"
+><B
 CLASS="EMPHASIS"
 >Speaking Rate
-            Modification</I
+            Modification</B
+></SPAN
 > - While the speaking rate will
             generally remained fixed once configured, users may
             sometimes which to speed up or slow down the presentation
@@ -2424,9 +2961,12 @@ CLASS="EMPHASIS"
 ></LI
 ><LI
 ><P
-><I
+><SPAN
+CLASS="bold"
+><B
 CLASS="EMPHASIS"
->Multilingual Text</I
+>Multilingual Text</B
+></SPAN
 > -
             Orca should provide the ability to speak a single
             utterance that contains words or phrases from multiple
@@ -2436,9 +2976,12 @@ CLASS="EMPHASIS"
 ></LI
 ><LI
 ><P
-><I
+><SPAN
+CLASS="bold"
+><B
 CLASS="EMPHASIS"
->Spelling Mode</I
+>Spelling Mode</B
+></SPAN
 > - Orca
             must be able to optionally spell out words, either letter
             by letter or by military (e.g., alpha, bravo, charlie)
@@ -2446,19 +2989,25 @@ CLASS="EMPHASIS"
 ></LI
 ><LI
 ><P
-><I
+><SPAN
+CLASS="bold"
+><B
 CLASS="EMPHASIS"
 >Verbalized
-            Punctuation</I
+            Punctuation</B
+></SPAN
 > - Orca must be able to optionally
             verbalize punctuation.</P
 ></LI
 ><LI
 ><P
-><I
+><SPAN
+CLASS="bold"
+><B
 CLASS="EMPHASIS"
 >Repeated Character
-            Count</I
+            Count</B
+></SPAN
 > - Orca must be able to optionally
             compress the repetition of character by saying something
             such as "25 dashes" instead of "dash dash dash dash
@@ -2472,7 +3021,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN528"
->Key and Text Echo</A
+>3.22. Key and Text Echo</A
 ></H2
 ><P
 >Orca must provide a set of options to allow the user to
@@ -2487,7 +3036,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN531"
->Refreshable Braille</A
+>3.23. Refreshable Braille</A
 ></H2
 ><P
 >Braille is another primary non-visual presentation mode
@@ -2500,9 +3049,12 @@ NAME="AEN531"
 ><UL
 ><LI
 ><P
-><I
+><SPAN
+CLASS="bold"
+><B
 CLASS="EMPHASIS"
->Work with BrlTTY</I
+>Work with BrlTTY</B
+></SPAN
 > - it
             is not expected that users will abandon character cell
             access to their virtual consoles.  To preserve this access
@@ -2511,14 +3063,17 @@ CLASS="EMPHASIS"
 ></LI
 ><LI
 ><P
-><I
+><SPAN
+CLASS="bold"
+><B
 CLASS="EMPHASIS"
 >Effective use of
-            space</I
+            space</B
+></SPAN
 > - Orca should try to use the cells on the
             braille display as effectively as possible.  This will be
             driven primarily by the <A
-HREF="#STYLE_GUIDE"
+HREF="#STYLEGUIDE"
 >style guide</A
 >, and can also
             include the the option to effectively compress white
@@ -2526,10 +3081,13 @@ HREF="#STYLE_GUIDE"
 ></LI
 ><LI
 ><P
-><I
+><SPAN
+CLASS="bold"
+><B
 CLASS="EMPHASIS"
 >Effective use of input
-            buttons</I
+            buttons</B
+></SPAN
 > - Orca should use any input buttons on
             the display as effectively as possible, with the default
             behavior being the equivalent effect of the BrlTTY
@@ -2543,10 +3101,13 @@ CLASS="EMPHASIS"
 ></LI
 ><LI
 ><P
-><I
+><SPAN
+CLASS="bold"
+><B
 CLASS="EMPHASIS"
 >Effective use of cursor routing
-            keys</I
+            keys</B
+></SPAN
 > - Orca should enable the cursor routing
             keys to be used to click on objects, set slider values,
             etc.</P
@@ -2558,34 +3119,46 @@ CLASS="EMPHASIS"
 ></LI
 ><LI
 ><P
-><I
+><SPAN
+CLASS="bold"
+><B
 CLASS="EMPHASIS"
 >Effective use of input button
-            and cursor routing key combinations</I
+            and cursor routing key combinations</B
+></SPAN
 > - Orca
             should allow the user to use combinations of input buttons
             and/or cursor routing keys to perform operations such as
             selecting text, jumping to bookmarks, etc.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >NOTE:</I
+></SPAN
 > selection of text using combined keyboard and
             braille actions (e.g., holding the shift key while
             pressing a cursor routing key) may also be
             considered.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >NOTE:</I
+></SPAN
 > input of text using chording of braille keys
             might be considered, but is not a high priority.</P
 ></LI
 ><LI
 ><P
-><I
+><SPAN
+CLASS="bold"
+><B
 CLASS="EMPHASIS"
->Cursor options</I
+>Cursor options</B
+></SPAN
 > - Orca
             should provide the user with the ability to show the cursor
             or not.  If shown, the user should have the ability to make
@@ -2594,10 +3167,13 @@ CLASS="EMPHASIS"
 ></LI
 ><LI
 ><P
-><I
+><SPAN
+CLASS="bold"
+><B
 CLASS="EMPHASIS"
 >Ability to have multiple pan regions
-            on the display</I
+            on the display</B
+></SPAN
 > - watched objects may need to be able
             to remain on a static area of the display (e.g., the rightmost
             10 cells).  The braille support should enable this and should
@@ -2612,7 +3188,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN562"
->Synchronization with Screen Magnifiers</A
+>3.24. Synchronization with Screen Magnifiers</A
 ></H2
 ><P
 >In addition to co-existing with each other, a screen
@@ -2628,7 +3204,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN565"
->Acceptable Response Time</A
+>3.25. Acceptable Response Time</A
 ></H2
 ><P
 >Orca must not degrade the perceptible performance of the
@@ -2647,9 +3223,12 @@ NAME="AEN565"
 ><UL
 ><LI
 ><P
-><I
+><SPAN
+CLASS="bold"
+><B
 CLASS="EMPHASIS"
->Time to First Sound</I
+>Time to First Sound</B
+></SPAN
 > -
             The time between when a speech synthesizer gets a request
             to speak and when the synthesizer actually starts speaking
@@ -2657,9 +3236,12 @@ CLASS="EMPHASIS"
 ></LI
 ><LI
 ><P
-><I
+><SPAN
+CLASS="bold"
+><B
 CLASS="EMPHASIS"
->Time to Cancel</I
+>Time to Cancel</B
+></SPAN
 > - Orca
             must be able to cancel speech synthesis in progress, and
             the time to cancel must be minimal (e.g., less than 30ms).
@@ -2688,7 +3270,7 @@ WIDTH="25"
 ALIGN="CENTER"
 VALIGN="TOP"
 ><IMG
-SRC="./stylesheet-images/note.gif"
+SRC="../images/note.gif"
 HSPACE="5"
 ALT="Note"></TD
 ><TH
@@ -2722,7 +3304,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN581"
->Documentation and Tutorials</A
+>3.26. Documentation and Tutorials</A
 ></H2
 ><P
 > Although it is a reasonable goal that Orca should attempt
@@ -2739,9 +3321,9 @@ NAME="AEN581"
 CLASS="CHAPTER"
 ><HR><H1
 ><A
-NAME="STYLE_GUIDE"
+NAME="STYLEGUIDE"
 ></A
->Default Interaction Styles</H1
+>Chapter 4. Default Interaction Styles</H1
 ><P
 >Associated with the discussion of the personas was the
       notion of a need for consistent and efficient interaction
@@ -2756,7 +3338,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="GESTURES"
->Input Style: Keyboard Mappings</A
+>4.1. Input Style: Keyboard Mappings</A
 ></H2
 ><P
 >This section describes the default keyboard mappings for the
@@ -2780,9 +3362,12 @@ NAME="GESTURES"
         have the keyboard focus.</P
 ><P
 >Finally, when in flat review mode, Orca will optionally
-        allow the mouse to follow the object of interest.  <I
+        allow the mouse to follow the object of interest.  <SPAN
+CLASS="emphasis"
+><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > this
         probably should be moved to the user requirements instead of
         the key mappings.</P
@@ -2970,7 +3555,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN655"
->Input Style: Braille Mappings</A
+>4.2. Input Style: Braille Mappings</A
 ></H2
 ><P
 >This section describes the default braille mappings for the
@@ -2987,9 +3572,12 @@ NAME="AEN655"
 ><P
 >The braille key functionality includes the following:</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > need to map these to BrlTTY commands.</P
 ><P
 ></P
@@ -3100,13 +3688,16 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN707"
->Output Style: Speech Synthesis and Braille</A
+>4.3. Output Style: Speech Synthesis and Braille</A
 ></H2
 ><P
 >This section provides output styles for each relevant
-        Accessible role. <I
+        Accessible role. <SPAN
+CLASS="emphasis"
+><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > this is a work in progress and will
         be completed via an iterative prototype process that includes
         feedback from end users.</P
@@ -3116,7 +3707,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN711"
->General Braille Style</A
+>4.3.1. General Braille Style</A
 ></H3
 ><P
 >For braille, there are two verbosity levels.  The first
@@ -3163,9 +3754,12 @@ NAME="AEN711"
 ><P
 >context is information about the container with focus.
               Examples include "calculator window," "desktop," "save as
-              dialog," "low disk space alert," etc.  <I
+              dialog," "low disk space alert," etc.  <SPAN
+CLASS="emphasis"
+><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > context can
               be composed of nested contexts (e.g., a page tab in a dialog);
               we need to decide what the context is (e.g., logical visual
@@ -3182,7 +3776,7 @@ CLASS="EMPHASIS"
 ><LI
 ><P
 >[value] (optional) is the value of the object, and varies
-              depending upon the object type.  For example, "&#60;x&#62;" for a 
+              depending upon the object type.  For example, "&lt;x&#62;" for a 
               check box, "70%" for a slider, and "Mike Pedersen" for a text
               field.</P
 ></LI
@@ -3209,9 +3803,12 @@ CLASS="EMPHASIS"
           touch cursor associated with most objects will perform the
           default action for that object; the obvious exception is
           text areas, where the touch cursor will move the text caret
-          to that object.  <I
+          to that object.  <SPAN
+CLASS="emphasis"
+><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > define what happens in flat review -
           this might move keyboard focus to the object, perform a
           click, etc.</P
@@ -3222,7 +3819,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN734"
->General Speech Style</A
+>4.3.2. General Speech Style</A
 ></H3
 ><P
 >For speech, there are two verbosity levels.  The first is
@@ -3231,9 +3828,12 @@ NAME="AEN734"
          to hear more information.  The second, more brief mode, is
          for those who who are expert with the Gnome environment.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > discuss general style.</P
 ></DIV
 ><DIV
@@ -3242,15 +3842,15 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN739"
->Output Styles by Role</A
+>4.3.3. Output Styles by Role</A
 ></H3
 ><DIV
 CLASS="SECTION"
 ><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_ACCEL_LABEL"
->accelerator label (ROLE_ACCEL_LABEL)</A
+NAME="ROLEACCELLABEL"
+>4.3.3.1. accelerator label (ROLE_ACCEL_LABEL)</A
 ></H4
 ><P
 >An accelerator label is a short string that appears at
@@ -3258,15 +3858,21 @@ NAME="ROLE_ACCEL_LABEL"
             defines the keystrokes that will invoke the action associated
             with a menu item.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gnome-terminal: the "Paste" menu item in the "Edit"
 	    menu has an accelerator.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >KNOWN ISSUE:</I
+></SPAN
 > It would be nice to be able to get text bounds
 	    information for the accelerator text, but this doesn't appear
 	    to be possible with the existing implementations.</P
@@ -3276,7 +3882,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN748"
->Braille</A
+>4.3.3.1.1. Braille</A
 ></H5
 ><P
 >When presented, the accelerator will always be
@@ -3293,11 +3899,11 @@ NAME="AEN748"
 ><UL
 ><LI
 ><P
->Verbose Example: view menu show mumble &#60;x&#62;(CTRL+M) _ zoom in _ ...</P
+>Verbose Example: view menu show mumble &lt;x&#62;(CTRL+M) _ zoom in _ ...</P
 ></LI
 ><LI
 ><P
->Brief Example: view menu show mumble &#60;x&#62; _ zoom in _ ...</P
+>Brief Example: view menu show mumble &lt;x&#62; _ zoom in _ ...</P
 ></LI
 ></UL
 ></DIV
@@ -3307,7 +3913,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN756"
->Speech</A
+>4.3.3.1.2. Speech</A
 ></H5
 ><P
 ></P
@@ -3328,20 +3934,26 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_ALERT"
->alert (ROLE_ALERT)</A
+NAME="ROLEALERT"
+>4.3.3.2. alert (ROLE_ALERT)</A
 ></H4
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gtk-demo: "Dialog and Message Boxes"
 	    demo; click on the "Message Dialog" button.  The "Information"
 	    window that appears is an alert.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >KNOWN ISSUE:</I
+></SPAN
 > The AT-SPI makes a distinction between alerts and
             dialogs.  But, it appears as though the role "alert" is applied
             to just about any dialog.</P
@@ -3351,7 +3963,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN769"
->Braille</A
+>4.3.3.2.1. Braille</A
 ></H5
 ><P
 >Any window, regardless if it is an alert, dialog,
@@ -3384,7 +3996,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN778"
->Speech</A
+>4.3.3.2.2. Speech</A
 ></H5
 ><P
 >When a dialog pops up, its title will be spoken followed
@@ -3408,15 +4020,18 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_ANIMATION"
->animation (ROLE_ANIMATION)</A
+NAME="ROLEANIMATION"
+>4.3.3.3. animation (ROLE_ANIMATION)</A
 ></H4
 ><P
 >An animation contains a moving or dynamic image.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > Unknown.</P
 ><DIV
 CLASS="SECTION"
@@ -3424,12 +4039,15 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN791"
->Braille</A
+>4.3.3.3.1. Braille</A
 ></H5
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > should this follow a pattern of "label
               description role" to be more consistent with the
               generalized style?</P
@@ -3452,7 +4070,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN800"
->Speech</A
+>4.3.3.3.2. Speech</A
 ></H5
 ><P
 >Orca will say the roll followed by any descriptive information.</P
@@ -3475,26 +4093,35 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_ARROW"
->arrow (ROLE_ARROW)</A
+NAME="ROLEARROW"
+>4.3.3.4. arrow (ROLE_ARROW)</A
 ></H4
 ><P
 >An arrow is a 2D directional indicator.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > Unknown.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >KNOWN ISSUE:</I
+></SPAN
 > The AT-SPI does not appear to have a way to determine
             which way the arrow is pointing.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >KNOWN ISSUE:</I
+></SPAN
 > gail/gail/gailarrow.c sets the role to 
 	    ATK_ROLE_ICON.</P
 ><DIV
@@ -3503,14 +4130,17 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN817"
->Braille</A
+>4.3.3.4.1. Braille</A
 ></H5
 ><P
 >An arrow will be represented by the direction the arrow
               is pointing followed by "arrow."  Any touch cursor associated
-              with the text will click the arrow. <I
+              with the text will click the arrow. <SPAN
+CLASS="emphasis"
+><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > should the rolename
               "arrow" appear in brief mode?</P
 ><P
@@ -3532,7 +4162,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN826"
->Speech</A
+>4.3.3.4.2. Speech</A
 ></H5
 ><P
 >Orca will speak the direction followed by "arrow."</P
@@ -3555,27 +4185,36 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_CHECK_BOX"
->check box (ROLE_CHECK_BOX)</A
+NAME="ROLECHECKBOX"
+>4.3.3.5. check box (ROLE_CHECK_BOX)</A
 ></H4
 ><P
 >A check box represents a choice that can be checked or
             unchecked and provides an indicator for the current
             state.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gnome-terminal: "Edit" -&#62; "Current Profile..."; the
 	    "General" tab has a number of check boxes.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gtk-demo: "Tree Store" demo.  Most table cells are
-	    check boxes.  <I
+	    check boxes.  <SPAN
+CLASS="emphasis"
+><I
 CLASS="EMPHASIS"
 >KNOWN ISSUE:</I
+></SPAN
 > the AT-SPI tells us these are tables cells,
             not check boxes.</P
 ><DIV
@@ -3584,22 +4223,22 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN842"
->Braille</A
+>4.3.3.5.1. Braille</A
 ></H5
 ><P
->The state of a check box will be represented by "&#60; &#62;" if
-              it is unchecked and "&#60;x&#62;" if it is checked.  Any touch
+>The state of a check box will be represented by "&lt; &#62;" if
+              it is unchecked and "&lt;x&#62;" if it is checked.  Any touch
               cursor associated with the text will click the check box.</P
 ><P
 ></P
 ><UL
 ><LI
 ><P
->Verbose Example: save password: &#60; &#62; checkbox</P
+>Verbose Example: save password: &lt; &#62; checkbox</P
 ></LI
 ><LI
 ><P
->Brief Example: save password: &#60;x&#62;</P
+>Brief Example: save password: &lt;x&#62;</P
 ></LI
 ></UL
 ></DIV
@@ -3609,7 +4248,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN850"
->Speech</A
+>4.3.3.5.2. Speech</A
 ></H5
 ><P
 >Orca will sat the label followed by the word "checkbox" followed its state.</P
@@ -3632,23 +4271,29 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_CHECK_MENU_ITEM"
->check menu item (ROLE_CHECK_MENU_ITEM)</A
+NAME="ROLECHECKMENUITEM"
+>4.3.3.6. check menu item (ROLE_CHECK_MENU_ITEM)</A
 ></H4
 ><P
 >A check menu represents a menu item that can be
             checked or unchecked and provides an indicator for the
             current state.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gnome-terminal: the "View" menu contains check menu
 	    items.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >KNOWN ISSUE:</I
+></SPAN
 > It appears as though some toolkits allow menu items to
             have children (see the 'Menus' demo of the gtk-demo application -
             the radio menu items have sub menus).  This needs to be taken into
@@ -3659,13 +4304,13 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN865"
->Braille</A
+>4.3.3.6.1. Braille</A
 ></H5
 ><P
 >All menus items from a single menu will be shown at
               the same time (see ROLE_MENU). The state of a check menu
-              item will be represented by "&#60; &#62;" if it is unchecked
-              and "&#60;x&#62;" if it is checked. (See also
+              item will be represented by "&lt; &#62;" if it is unchecked
+              and "&lt;x&#62;" if it is checked. (See also
               ROLE_ACCEL_LABEL).  The touch cursors will result in
               activating the item.</P
 ><P
@@ -3673,11 +4318,11 @@ NAME="AEN865"
 ><UL
 ><LI
 ><P
->Verbose Example: show status bar &#60; &#62;(CTRL+B) checkmenu</P
+>Verbose Example: show status bar &lt; &#62;(CTRL+B) checkmenu</P
 ></LI
 ><LI
 ><P
->Brief Example: show status bar &#60;x&#62;</P
+>Brief Example: show status bar &lt;x&#62;</P
 ></LI
 ></UL
 ></DIV
@@ -3687,7 +4332,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN873"
->Speech</A
+>4.3.3.6.2. Speech</A
 ></H5
 ><P
 >Like a checkbox, Orca will say the item followed by the
@@ -3711,15 +4356,18 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_COLUMN_HEADER"
->column header, table column header (ROLE_COLUMN_HEADER, ROLE_TABLE_COLUMN_HEADER)</A
+NAME="ROLECOLUMNHEADER"
+>4.3.3.7. column header, table column header (ROLE_COLUMN_HEADER, ROLE_TABLE_COLUMN_HEADER)</A
 ></H4
 ><P
 >A column header is a header for a column of data.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gtk-demo: "List Store" demo.  The headers are table
             column headers.</P
 ><DIV
@@ -3728,7 +4376,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN886"
->Braille</A
+>4.3.3.7.1. Braille</A
 ></H5
 ><P
 >A column header will be treated like a button (column
@@ -3754,7 +4402,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN894"
->Speech</A
+>4.3.3.7.2. Speech</A
 ></H5
 ><P
 >A column header will be treated like a button (column
@@ -3780,30 +4428,39 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_COMBO_BOX"
->combo box (ROLE_COMBO_BOX)</A
+NAME="ROLECOMBOBOX"
+>4.3.3.8. combo box (ROLE_COMBO_BOX)</A
 ></H4
 ><P
 >A combo box is a single line item that contains a list of
             choices the user can select from, and it can also contain
             editable text.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gedit: "File" -&#62; "Open...".  Both combo boxes
 	    are simple menu combo boxes.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gnome-terminal: "Edit" -&#62; "Current Profile..." -&#62;
             "Effects".  The "Image file" combo box has a list in a scroll pane
             and a SINGLE_LINE EDITABLE text area as children.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gtk-demo: "Size Groups" demo.  This
 		creates a "GtkSizeGroup" dialog.  Each combo box
 		object in this dialog has a menu as its child.</P
@@ -3813,15 +4470,18 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN911"
->Braille</A
+>4.3.3.8.1. Braille</A
 ></H5
 ><P
 >The verbose and brief modes will show the label followed
               by the item followed by the word "combo."  If the item is
               selected, it will be completely underlined with dots 7 &#38; 8
-              to indicate selection.  <I
+              to indicate selection.  <SPAN
+CLASS="emphasis"
+><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > what do we do if the item is
               editable text?</P
 ><P
@@ -3843,15 +4503,18 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN920"
->Speech</A
+>4.3.3.8.2. Speech</A
 ></H5
 ><P
 >The verbose and brief modes will speak the label
               followed by the item followed by the word "combo."  If
               the item is selected, the word selected will be spoken.
-              <I
+              <SPAN
+CLASS="emphasis"
+><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > what do we do if the item is editable
               text?  When a combo box has focus and its selection 
               changes, just the new selection will be spoken.</P
@@ -3874,16 +4537,19 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_DESKTOP_ICON"
->desktop icon (ROLE_DESKTOP_ICON)</A
+NAME="ROLEDESKTOPICON"
+>4.3.3.9. desktop icon (ROLE_DESKTOP_ICON)</A
 ></H4
 ><P
 >A desktop icon is an iconified internal frame within a 
             desktop pane.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > Unknown.</P
 ><DIV
 CLASS="SECTION"
@@ -3891,7 +4557,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN934"
->Braille</A
+>4.3.3.9.1. Braille</A
 ></H5
 ><P
 ></P
@@ -3912,7 +4578,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN941"
->Speech</A
+>4.3.3.9.2. Speech</A
 ></H5
 ><P
 ></P
@@ -3933,15 +4599,18 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_DIAL"
->dial (ROLE_DIAL)</A
+NAME="ROLEDIAL"
+>4.3.3.10. dial (ROLE_DIAL)</A
 ></H4
 ><P
 >A dial is a rotatable valuator.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > Unknown.</P
 ><DIV
 CLASS="SECTION"
@@ -3949,7 +4618,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN953"
->Braille</A
+>4.3.3.10.1. Braille</A
 ></H5
 ><P
 ></P
@@ -3970,7 +4639,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN960"
->Speech</A
+>4.3.3.10.2. Speech</A
 ></H5
 ><P
 ></P
@@ -3991,28 +4660,37 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_DIALOG"
->dialog (ROLE_DIALOG)</A
+NAME="ROLEDIALOG"
+>4.3.3.11. dialog (ROLE_DIALOG)</A
 ></H4
 ><P
 >A dialog is a top level window with a title and border.
-            <I
+            <SPAN
+CLASS="emphasis"
+><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > the AT-SPI makes a distinction between alerts and
             dialogs.  But, it appears as though the role "alert" is applied
             to just about any dialog.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gtk-demo: "Dialog and Message Boxes" demo; click on
             the "Interactive Dialog" button.  The "Dialogs" window is a
             dialog.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gtk-demo: "Expander" demo; the "GtkExpander" window
 	    is a dialog.</P
 ><DIV
@@ -4021,7 +4699,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN975"
->Braille</A
+>4.3.3.11.1. Braille</A
 ></H5
 ><P
 >Any window, regardless if it is an alert, dialog,
@@ -4054,7 +4732,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN984"
->Speech</A
+>4.3.3.11.2. Speech</A
 ></H5
 ><P
 >When a dialog gets focus, Orca will say the title of
@@ -4079,16 +4757,19 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_DIRECTORY_PANE"
->directory pane (ROLE_DIRECTORY_PANE)</A
+NAME="ROLEDIRECTORYPANE"
+>4.3.3.12. directory pane (ROLE_DIRECTORY_PANE)</A
 ></H4
 ><P
 >A directory pane is a pane that allows the user to 
             navigate through and select the contents of a directory.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > Unknown.</P
 ><DIV
 CLASS="SECTION"
@@ -4096,7 +4777,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN997"
->Braille</A
+>4.3.3.12.1. Braille</A
 ></H5
 ><P
 >When in a directory pane, it will be treated like a 
@@ -4120,12 +4801,15 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1005"
->Speech</A
+>4.3.3.12.2. Speech</A
 ></H5
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > add speech</P
 ></DIV
 ></DIV
@@ -4134,40 +4818,52 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_ICON"
->icon (ROLE_ICON)</A
+NAME="ROLEICON"
+>4.3.3.13. icon (ROLE_ICON)</A
 ></H4
 ><P
 >An icon is a small fixed-sized picture typically used to
             decorate components.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > desktop: Press Ctrl+Alt+Tab to select the
 	    "Desktop."  This will give the icons on the desktop focus
 	    and you can move between them using the arrow keys.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gtk-demo: "Application Main Window" demo.  This
             creates an "Application Window" frame.  Click on File-&#62;New.
             This brings up an alert as a child of the gtk-demo application.
             The name of the alert is "Information."  Buried in the widget
             hierarchy is an icon named "dialog information."</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gtk-demo: "Dialog and Message Boxes" demo; click on
             the "Interactive Dialog" button.  This brings up a dialog as a
             child of the gtk-demo app.  There is a an icon named "dialog
             question" in the dialog's hierarchy.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gtk-demo: "Stock Item and Icon Browser".  This is a
             big table with four table column header objects and sets of table
             cell objects.  The "Selected Item" panel has the named icon in its
@@ -4179,7 +4875,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1020"
->Braille</A
+>4.3.3.13.1. Braille</A
 ></H5
 ><P
 >The label of the icon (or the component for the icon) will
@@ -4203,7 +4899,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1028"
->Speech</A
+>4.3.3.13.2. Speech</A
 ></H5
 ><P
 ></P
@@ -4224,15 +4920,18 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_IMAGE"
->image (ROLE_IMAGE)</A
+NAME="ROLEIMAGE"
+>4.3.3.14. image (ROLE_IMAGE)</A
 ></H4
 ><P
 >An image is a picture, typically static.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >KNOWN ISSUE:</I
+></SPAN
 > Most push buttons objects appear to implement the
 	    Image interface whether they show an image or not.  So...the
 	    consumer needs to be careful to determine if an image is 
@@ -4243,13 +4942,16 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1040"
->Braille</A
+>4.3.3.14.1. Braille</A
 ></H5
 ><P
 >The label of the icon (or the component for the icon) will
-              be displayed.  <I
+              be displayed.  <SPAN
+CLASS="emphasis"
+><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > perhaps show accessible name and/or
               description of the image?</P
 ><P
@@ -4271,7 +4973,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1049"
->Speech</A
+>4.3.3.14.2. Speech</A
 ></H5
 ><P
 ></P
@@ -4292,27 +4994,36 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_HTML_CONTAINER"
->html container (ROLE_HTML_CONTAINER)</A
+NAME="ROLEHTMLCONTAINER"
+>4.3.3.15. html container (ROLE_HTML_CONTAINER)</A
 ></H4
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > mozilla.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >KNOWN ISSUE:</I
+></SPAN
 > The HTML container is a hierarchy of test objects.
 	    Non-links do not get focus, but links do.  This presents some
 	    difficulties.  For example, the first time a container is
 	    displayed, focus might be given to a link that is off the
 	    screen.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > considerable thought needs to be done here.
             An idea for links, however, is that their text should
             be followed by the type of link: "[mailto,ftp,...] link."
@@ -4327,7 +5038,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1064"
->Braille</A
+>4.3.3.15.1. Braille</A
 ></H5
 ><P
 ></P
@@ -4348,12 +5059,15 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1071"
->Speech</A
+>4.3.3.15.2. Speech</A
 ></H5
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > add speech</P
 ></DIV
 ></DIV
@@ -4362,8 +5076,8 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_LABEL"
->label (ROLE_LABEL)</A
+NAME="ROLELABEL"
+>4.3.3.16. label (ROLE_LABEL)</A
 ></H4
 ><P
 >A label is a short string.  It typically labels another
@@ -4373,9 +5087,12 @@ NAME="ROLE_LABEL"
             where they are static text.  In these cases, the user will
             discover the text through review mode.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gtk-demo: Bring "Color Selector" demo.  This creates
 	    a "Color Selection" frame as a child of the gtk-demo app.  Click
 	    on "Change to above color".  This creates a "Changing color" color
@@ -4387,7 +5104,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1080"
->Braille</A
+>4.3.3.16.1. Braille</A
 ></H5
 ><P
 >Labels will be presented as "raw" text on the
@@ -4411,7 +5128,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1088"
->Speech</A
+>4.3.3.16.2. Speech</A
 ></H5
 ><P
 ></P
@@ -4432,16 +5149,19 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_LIST"
->list (ROLE_LIST)</A
+NAME="ROLELIST"
+>4.3.3.17. list (ROLE_LIST)</A
 ></H4
 ><P
 >A list is an object that presents a list of objects to the
             user and allows them to select one or more of them.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > mozilla: "Tools" -&#62; "Switch Profile..."</P
 ><DIV
 CLASS="SECTION"
@@ -4449,7 +5169,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1100"
->Braille</A
+>4.3.3.17.1. Braille</A
 ></H5
 ><P
 >Orca will display the label for the list followed by
@@ -4477,7 +5197,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1108"
->Speech</A
+>4.3.3.17.2. Speech</A
 ></H5
 ><P
 ></P
@@ -4498,8 +5218,8 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_MENU"
->menu (ROLE_MENU)</A
+NAME="ROLEMENU"
+>4.3.3.18. menu (ROLE_MENU)</A
 ></H4
 ><P
 >A menu contains menu items and lives in a menu bar.</P
@@ -4509,7 +5229,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1118"
->Braille</A
+>4.3.3.18.1. Braille</A
 ></H5
 ><P
 >Orca will show the menu name followed by the menu
@@ -4518,14 +5238,20 @@ NAME="AEN1118"
               braille cursor.  The touch cursors will activate the
               associated item.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > Menus abound everywhere.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >KNOWN ISSUE:</I
+></SPAN
 > A flurry of events seem to be delivered when going
 	       to/from a submenu item in the same menu.  One of these events
 	       appears to give focus to the containing menu, which causes a
@@ -4551,7 +5277,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1130"
->Speech</A
+>4.3.3.18.2. Speech</A
 ></H5
 ><P
 >When a menu is entered, its name will be spoken.  If
@@ -4576,15 +5302,18 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_MENU_BAR"
->menu (ROLE_MENU_BAR)</A
+NAME="ROLEMENUBAR"
+>4.3.3.19. menu (ROLE_MENU_BAR)</A
 ></H4
 ><P
 >A menu bar contains a set of menus.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > Menu bars abound.</P
 ><DIV
 CLASS="SECTION"
@@ -4592,7 +5321,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1143"
->Braille</A
+>4.3.3.19.1. Braille</A
 ></H5
 ><P
 >Orca will show the "menubar" followed by names of the
@@ -4618,7 +5347,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1151"
->Speech</A
+>4.3.3.19.2. Speech</A
 ></H5
 ><P
 >Will speak "menubar" followed by name of menu with
@@ -4642,20 +5371,26 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_MENU_ITEM"
->menu item (ROLE_MENU_ITEM)</A
+NAME="ROLEMENUITEM"
+>4.3.3.20. menu item (ROLE_MENU_ITEM)</A
 ></H4
 ><P
 >A menu item lives in a menu.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > Menu items abound.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >KNOWN ISSUE:</I
+></SPAN
 > It appears as though some toolkits allow menu items to
             have children (see the 'Menus' demo of the gtk-demo application -
             the radio menu items have sub menus).  This needs to be taken into
@@ -4666,7 +5401,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1166"
->Braille</A
+>4.3.3.20.1. Braille</A
 ></H5
 ><P
 >All menus items from a single menu will be shown at
@@ -4695,7 +5430,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1174"
->Speech</A
+>4.3.3.20.2. Speech</A
 ></H5
 ><P
 >Speak the item followed by any sub menu information followed
@@ -4719,16 +5454,19 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_OPTION_PANE"
->option pane (ROLE_OPTION_PANE)</A
+NAME="ROLEOPTIONPANE"
+>4.3.3.21. option pane (ROLE_OPTION_PANE)</A
 ></H4
 ><P
 >An option pane is a specialized pane whose primary used is
             inside a dialog.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > Unknown.</P
 ><DIV
 CLASS="SECTION"
@@ -4736,7 +5474,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1187"
->Braille</A
+>4.3.3.21.1. Braille</A
 ></H5
 ><P
 ></P
@@ -4757,7 +5495,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1194"
->Speech</A
+>4.3.3.21.2. Speech</A
 ></H5
 ><P
 ></P
@@ -4778,29 +5516,38 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_PAGE_TAB"
->page tab (ROLE_PAGE_TAB)</A
+NAME="ROLEPAGETAB"
+>4.3.3.22. page tab (ROLE_PAGE_TAB)</A
 ></H4
 ><P
 >A page tab is a child of a page tab list.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gtk-demo: The panel on the right hand side of the
             main window is a page tab list.  Selecting the children causes the
             associated page tab to appear.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 >: gnome-terminal: Each child of the gnome-terminal app
             is frame.  Each frame has a menu bar and a page tab list.  Each
             page tab list has a page tab.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gnome-terminal: "Edit" -&#62; "Current Profile..." is a
 	    dialog containing a page tab list.</P
 ><DIV
@@ -4809,7 +5556,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1210"
->Braille</A
+>4.3.3.22.1. Braille</A
 ></H5
 ><P
 >A page tab will be viewed as a form of context.  If
@@ -4839,7 +5586,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1218"
->Speech</A
+>4.3.3.22.2. Speech</A
 ></H5
 ><P
 ></P
@@ -4860,18 +5607,21 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_PAGE_TAB_LIST"
->page tab list (ROLE_PAGE_TAB_LIST)</A
+NAME="ROLEPAGETABLIST"
+>4.3.3.23. page tab list (ROLE_PAGE_TAB_LIST)</A
 ></H4
 ><P
 >A page tab is an object that presents a series of 
             panels (page tabs), one at a time.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > See <A
-HREF="#ROLE_PAGE_TAB"
+HREF="#ROLEPAGETAB"
 >ROLE_PAGE_TAB</A
 >.</P
 ><DIV
@@ -4880,7 +5630,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1231"
->Braille</A
+>4.3.3.23.1. Braille</A
 ></H5
 ><P
 >Orca will display "tab list" followed by the list of tabs
@@ -4906,7 +5656,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1239"
->Speech</A
+>4.3.3.23.2. Speech</A
 ></H5
 ><P
 >When the tab changes, just speak the new tab name.</P
@@ -4929,16 +5679,19 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_PASSWORD_TEXT"
->password text (ROLE_PASSWORD_TEXT)</A
+NAME="ROLEPASSWORDTEXT"
+>4.3.3.24. password text (ROLE_PASSWORD_TEXT)</A
 ></H4
 ><P
 >Password text objects are used for passwords or other 
             places where the visible text should not be visibly shown.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > "Launch" -&#62; "Preferences" -&#62; "System Preferences" -&#62;
             "Network Settings" -&#62; "NFS."  Brings up a "Query" alert requesting
             the root password.</P
@@ -4948,7 +5701,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1252"
->Braille</A
+>4.3.3.24.1. Braille</A
 ></H5
 ><P
 >Orca will treat the password text just like a text object,
@@ -4972,7 +5725,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1260"
->Speech</A
+>4.3.3.24.2. Speech</A
 ></H5
 ><P
 ></P
@@ -4993,16 +5746,19 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_PROGRESS_BAR"
->progress bar (ROLE_PROGRESS_BAR)</A
+NAME="ROLEPROGRESSBAR"
+>4.3.3.25. progress bar (ROLE_PROGRESS_BAR)</A
 ></H4
 ><P
 >A progress bar indicates how much of a task has been
             completed.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > Unknown.</P
 ><DIV
 CLASS="SECTION"
@@ -5010,7 +5766,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1272"
->Braille</A
+>4.3.3.25.1. Braille</A
 ></H5
 ><P
 >Orca will show the label followed by the value followed
@@ -5034,7 +5790,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1280"
->Speech</A
+>4.3.3.25.2. Speech</A
 ></H5
 ><P
 ></P
@@ -5055,29 +5811,38 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_PUSH_BUTTON"
->push button (ROLE_PUSH_BUTTON)</A
+NAME="ROLEPUSHBUTTON"
+>4.3.3.26. push button (ROLE_PUSH_BUTTON)</A
 ></H4
 ><P
 >An object the user can manipulate to tell the application
             to do something.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gtk-demo: "Button Boxes" demo.  Many pushbuttons
             here.  The buttons have images and accelerators.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gnome-terminal: "Edit" -&#62; "Current Profile..."  The
 	    "General" page tab has a push button labeled "Font."  The text of
 	    this push button is represented by two child labels.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >KNOWN ISSUE:</I
+></SPAN
 > It is important to remember that push buttons can
 	    optionally have children, which is the case when they have more
 	    than one label.</P
@@ -5087,7 +5852,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1296"
->Braille</A
+>4.3.3.26.1. Braille</A
 ></H5
 ><P
 >Orca will show the name of the button followed by the
@@ -5111,7 +5876,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1304"
->Speech</A
+>4.3.3.26.2. Speech</A
 ></H5
 ><P
 ></P
@@ -5132,30 +5897,39 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_RADIO_BUTTON"
->radio button (ROLE_RADIO_BUTTON)</A
+NAME="ROLERADIOBUTTON"
+>4.3.3.27. radio button (ROLE_RADIO_BUTTON)</A
 ></H4
 ><P
 >A specialized check box that will cause other radio buttons
             in the same group to become unchecked when it is checked.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gnome-terminal: "Edit" -&#62; "Current Profile..."
             "Effects" tab.  Radio buttons live here.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >KNOWN ISSUE:</I
+></SPAN
 > The accessible relation interface was design for
             things like radio buttons, but it appears to be ignored or
             sporadically supported.  As such, depending upon the relation 
 	    interface appears to be a poor choice.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >KNOWN ISSUE:</I
+></SPAN
 > In Swing, when a radio button gets focus, it is not
             automatically checked.  In GTK+, however, a radio button
             automatically is checked when it gets focus.</P
@@ -5165,11 +5939,11 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1320"
->Braille</A
+>4.3.3.27.1. Braille</A
 ></H5
 ><P
 >The state of a radio button will be represented by
-              "&#38; y" if it is unselected and "&#38;=y" if it is
+              "&amp; y" if it is unselected and "&amp;=y" if it is
               selected.  All buttons from the same radio group will be
               displayed at once, with the button with focus being the
               most meaningful information.  Any touch cursor associated
@@ -5181,11 +5955,11 @@ NAME="AEN1320"
 ><UL
 ><LI
 ><P
->Verbose Example: Color: Red &#38;=y _  Blue &#38; y _  Green &#38; y</P
+>Verbose Example: Color: Red &amp;=y _  Blue &amp; y _  Green &amp; y</P
 ></LI
 ><LI
 ><P
->Verbose Example: Color: Red &#38;=y _  Blue &#38; y _  Green &#38; y</P
+>Verbose Example: Color: Red &amp;=y _  Blue &amp; y _  Green &amp; y</P
 ></LI
 ></UL
 ></DIV
@@ -5195,7 +5969,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1328"
->Speech</A
+>4.3.3.27.2. Speech</A
 ></H5
 ><P
 >Will speak radio button group name upon entry into group,
@@ -5219,16 +5993,19 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_RADIO_MENU_ITEM"
->radio menu item (ROLE_RADIO_MENU_ITEM)</A
+NAME="ROLERADIOMENUITEM"
+>4.3.3.28. radio menu item (ROLE_RADIO_MENU_ITEM)</A
 ></H4
 ><P
 >A radio menu represents a menu item that behaves like
             a radio button.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gnome-terminal: The "Tabs" menu has radio menu
 	    items for each tab.</P
 ><DIV
@@ -5237,13 +6014,13 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1341"
->Braille</A
+>4.3.3.28.1. Braille</A
 ></H5
 ><P
 >All menus items from a single menu will be shown at
               the same time (see ROLE_MENU). The state of a radio menu
-              item will be represented by "&#38; y" if it is unchecked
-              and "&#38;=y" if it is checked. (See also
+              item will be represented by "&amp; y" if it is unchecked
+              and "&amp;=y" if it is checked. (See also
               ROLE_ACCEL_LABEL).  The touch cursors will result in
               activating the item.</P
 ><P
@@ -5251,11 +6028,11 @@ NAME="AEN1341"
 ><UL
 ><LI
 ><P
->Verbose Example: Red &#38; y(CTRL+R) radiomenu</P
+>Verbose Example: Red &amp; y(CTRL+R) radiomenu</P
 ></LI
 ><LI
 ><P
->Brief Example: Red &#38;=y</P
+>Brief Example: Red &amp;=y</P
 ></LI
 ></UL
 ></DIV
@@ -5265,7 +6042,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1349"
->Speech</A
+>4.3.3.28.2. Speech</A
 ></H5
 ><P
 ></P
@@ -5286,15 +6063,18 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_ROW_HEADER"
->row header, table row header (ROLE_ROW_HEADER, ROLE_TABLE_ROW_HEADER)</A
+NAME="ROLEROWHEADER"
+>4.3.3.29. row header, table row header (ROLE_ROW_HEADER, ROLE_TABLE_ROW_HEADER)</A
 ></H4
 ><P
 >A row header is a header for a row of data.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > Unknown.</P
 ><DIV
 CLASS="SECTION"
@@ -5302,7 +6082,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1361"
->Braille</A
+>4.3.3.29.1. Braille</A
 ></H5
 ><P
 >Like a column header, a row header will be treated
@@ -5327,7 +6107,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1369"
->Speech</A
+>4.3.3.29.2. Speech</A
 ></H5
 ><P
 ></P
@@ -5348,16 +6128,19 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_SCROLL_BAR"
->scroll bar (ROLE_SCROLL_BAR)</A
+NAME="ROLESCROLLBAR"
+>4.3.3.30. scroll bar (ROLE_SCROLL_BAR)</A
 ></H4
 ><P
 >A scroll bar allows a user to incrementally view a large
             amount of information.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gtk-demo: "Application Main Window" demo.  The text
             area is in a scroll pane.  Type enough and a scroll bar appears.
             One cannot seem to give it keyboard focus; instead normal keyboard
@@ -5368,7 +6151,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1381"
->Braille</A
+>4.3.3.30.1. Braille</A
 ></H5
 ><P
 >Orca will show the value (in %) followed by the
@@ -5395,7 +6178,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1389"
->Speech</A
+>4.3.3.30.2. Speech</A
 ></H5
 ><P
 ></P
@@ -5416,16 +6199,19 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_SLIDER"
->slider (ROLE_SLIDER)</A
+NAME="ROLESLIDER"
+>4.3.3.31. slider (ROLE_SLIDER)</A
 ></H4
 ><P
 >A slider allows a user to select a value from a bounded
             range.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gnome-terminal: "Edit" -&#62; "Current Profile..."  The
 	    "Shade transparent or image background" object is a slider.</P
 ><DIV
@@ -5434,7 +6220,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1401"
->Braille</A
+>4.3.3.31.1. Braille</A
 ></H5
 ><P
 >Orca will show the label, then the value (in %)
@@ -5458,7 +6244,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1409"
->Speech</A
+>4.3.3.31.2. Speech</A
 ></H5
 ><P
 ></P
@@ -5479,16 +6265,19 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_SPIN_BUTTON"
->spin button (ROLE_SPIN_BUTTON)</A
+NAME="ROLESPINBUTTON"
+>4.3.3.32. spin button (ROLE_SPIN_BUTTON)</A
 ></H4
 ><P
 >A spin button is a single line item that contains a list of
             choices the user can select from.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gtk-demo: "Color Selector" demo.  This creates a
             "Color Selection" frame as a child of the gtk-demo app.  Click on
             "Change the above color".  This creates a "Changing color" color
@@ -5504,7 +6293,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1421"
->Braille</A
+>4.3.3.32.1. Braille</A
 ></H5
 ><P
 >The verbose and brief modes will show the label followed
@@ -5528,7 +6317,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1429"
->Speech</A
+>4.3.3.32.2. Speech</A
 ></H5
 ><P
 ></P
@@ -5549,23 +6338,29 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_SPLIT_PANE"
->split pane (ROLE_SPLIT_PANE)</A
+NAME="ROLESPLITPANE"
+>4.3.3.33. split pane (ROLE_SPLIT_PANE)</A
 ></H4
 ><P
 >A split pane is a specialized panel that presents two panels
             at once.  It has a divider than can be dragged.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gtk-demo: "Paned Widgets" demo.  This brings up a
 	    "Panes" frame.  The top split pane is a child of the big split
 	    pane.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gedit: "File" -&#62; "Open" brings up a split
 	    pane.</P
 ><DIV
@@ -5574,7 +6369,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1443"
->Braille</A
+>4.3.3.33.1. Braille</A
 ></H5
 ><P
 >The words "split pane" will become part of the context and
@@ -5601,7 +6396,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1451"
->Speech</A
+>4.3.3.33.2. Speech</A
 ></H5
 ><P
 ></P
@@ -5622,8 +6417,8 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_TABLE"
->table, table cell (ROLE_TABLE, ROLE_TABLE_CELL)</A
+NAME="ROLETABLE"
+>4.3.3.34. table, table cell (ROLE_TABLE, ROLE_TABLE_CELL)</A
 ></H4
 ><P
 >Tables are a container of data organized in rows and
@@ -5631,9 +6426,12 @@ NAME="ROLE_TABLE"
             row/column headers, the contents of the various cells, and
             selection.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gtk-demo: "Editable Cells" demo brings up a 
 	    "Shopping list" frame that has a table with cells that have
 	    editable text (press the space key to initiate the edit).</P
@@ -5643,7 +6441,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1463"
->Braille</A
+>4.3.3.34.1. Braille</A
 ></H5
 ><P
 >A table will generally be viewed as a context, with
@@ -5674,7 +6472,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1471"
->Speech</A
+>4.3.3.34.2. Speech</A
 ></H5
 ><P
 ></P
@@ -5695,16 +6493,19 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_TEAR_OFF_MENU_ITEM"
->tear off menu item (ROLE_TEAR_OFF_MENU_ITEM)</A
+NAME="ROLETEAROFFMENUITEM"
+>4.3.3.35. tear off menu item (ROLE_TEAR_OFF_MENU_ITEM)</A
 ></H4
 ><P
 >A tear off menu item allows a menu to be removed from a menu
             bar and shown in its own window.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gtk-demo: "Menus" demo has many tear off menu items.
 	    Keyboard navigation skips the tear off menu item at first.  To get
 	    to it, you need to press the up arrow key after selecting the
@@ -5715,7 +6516,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1483"
->Braille</A
+>4.3.3.35.1. Braille</A
 ></H5
 ><P
 >All menus items from a single menu will be shown at
@@ -5743,12 +6544,15 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1491"
->Speech</A
+>4.3.3.35.2. Speech</A
 ></H5
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > maybe say "dash dash dash"?</P
 ><P
 ></P
@@ -5769,25 +6573,31 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_TEXT"
->text (ROLE_TEXT)</A
+NAME="ROLETEXT"
+>4.3.3.36. text (ROLE_TEXT)</A
 ></H4
 ><P
 >A text object presents text to the user such that the
             text typically has a caret position, can be single line or
             multiline, and can be editable.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gtk-demo: (MULTI_LINE) "Application Main Window"
             demo.  This creates an "Application Window" frame.  The text is a
             child of scroll pane which is a child of the panel of this frame.
             This text object implements the EditableText interface.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gtk-demo: (LABELED_BY and SINGLE_LINE) "Color
             Selector" demo.  This creates a "Color Selection" frame as a child
             of the gtk-demo app.  Click on "Change the above color".  This
@@ -5795,16 +6605,22 @@ CLASS="EMPHASIS"
             text area is a SINGLE_LINE text area that is LABELED_BY the "Color
             Name" label.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gtk-demo: (LABELED_BY and SINGLE_LINE) Bring up the
 	    "Dialog and Message Boxes" demo.  "Entry 1" and "Entry 2" are
 	    SINGLE_LINE text area that are LABELED_BY.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gtk-demo: the "Info" and "Source" tabs contain
             uneditable text.</P
 ><DIV
@@ -5813,7 +6629,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1511"
->Braille</A
+>4.3.3.36.1. Braille</A
 ></H5
 ><P
 >Document text will be displayed optionally with the
@@ -5845,12 +6661,15 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1520"
->Speech</A
+>4.3.3.36.2. Speech</A
 ></H5
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > add speech</P
 ></DIV
 ></DIV
@@ -5859,8 +6678,8 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_TOGGLE_BUTTON"
->toggle button (ROLE_TOGGLE_BUTTON)</A
+NAME="ROLETOGGLEBUTTON"
+>4.3.3.37. toggle button (ROLE_TOGGLE_BUTTON)</A
 ></H4
 ><P
 >A toggle button is a specialized push button that can
@@ -5868,9 +6687,12 @@ NAME="ROLE_TOGGLE_BUTTON"
             indicator for the current state.</P
 ><P
 >gtk-demo: "Expander" demo.  The "Details" object is a toggle
-             button.  <I
+             button.  <SPAN
+CLASS="emphasis"
+><I
 CLASS="EMPHASIS"
 >KNOWN ISSUE:</I
+></SPAN
 > in at-poke, clicking on "Details" doesn't seem
              to result in the new label appearing in at-poke's display.</P
 ><DIV
@@ -5879,22 +6701,22 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1529"
->Braille</A
+>4.3.3.37.1. Braille</A
 ></H5
 ><P
 >The state of a toggle button will be represented by
-              "&#38; y" if it is unselected and "&#38;=y" if it is
+              "&amp; y" if it is unselected and "&amp;=y" if it is
               selected.</P
 ><P
 ></P
 ><UL
 ><LI
 ><P
->Verbose Example: Run &#38;=y toggle</P
+>Verbose Example: Run &amp;=y toggle</P
 ></LI
 ><LI
 ><P
->Verbose Example: Run &#38; y</P
+>Verbose Example: Run &amp; y</P
 ></LI
 ></UL
 ></DIV
@@ -5904,7 +6726,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1537"
->Speech</A
+>4.3.3.37.2. Speech</A
 ></H5
 ><P
 >Only speaks new state if object has focus and state
@@ -5928,17 +6750,20 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_TOOL_BAR"
->tool bar (ROLE_TOOL_BAR)</A
+NAME="ROLETOOLBAR"
+>4.3.3.38. tool bar (ROLE_TOOL_BAR)</A
 ></H4
 ><P
 >A tool bar is a bar or palette usually composed of
             push buttons or toggle buttons, but may also contain other
             items such as editable text.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gtk-demo: "Application Main Window" demo.  This
              creates an "Application Window" frame.  The tool bar is a child
              of the panel, which, in turn, is a child of this frame.  This
@@ -5951,15 +6776,18 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1550"
->Braille</A
+>4.3.3.38.1. Braille</A
 ></H5
 ><P
 >Verbose mode should show the tool bar followed by
 	      "toolbar" Brief mode should simply show the tool bar.
 	      Each item will be separated with "_".  Same verbosity
-	      rules apply to each item. <I
+	      rules apply to each item. <SPAN
+CLASS="emphasis"
+><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > perhaps toolbar should
               be treated like a context?</P
 ><P
@@ -5982,7 +6810,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1559"
->Speech</A
+>4.3.3.38.2. Speech</A
 ></H5
 ><P
 ></P
@@ -6003,17 +6831,20 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_TREE"
->tree, tree table (ROLE_TREE, ROLE_TREE_TABLE)</A
+NAME="ROLETREE"
+>4.3.3.39. tree, tree table (ROLE_TREE, ROLE_TREE_TABLE)</A
 ></H4
 ><P
 >A tree presents hierarchical information to the user,
             allowing them to expand/collapse nodes to limit what it
             seen.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >EXAMPLE:</I
+></SPAN
 > gtk-demo: "Tree Store" demo brings up a tree
 	    table.</P
 ><DIV
@@ -6022,7 +6853,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1571"
->Braille</A
+>4.3.3.39.1. Braille</A
 ></H5
 ><P
 >Orca should show the label for the tree followed by
@@ -6047,7 +6878,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1579"
->Speech</A
+>4.3.3.39.2. Speech</A
 ></H5
 ><P
 ></P
@@ -6068,8 +6899,8 @@ CLASS="SECTION"
 ><HR><H4
 CLASS="SECTION"
 ><A
-NAME="ROLE_WINDOW"
->window (ROLE_WINDOW)</A
+NAME="ROLEWINDOW"
+>4.3.3.40. window (ROLE_WINDOW)</A
 ></H4
 ><P
 >A window is a top level window with no title or border.</P
@@ -6079,7 +6910,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1589"
->Braille</A
+>4.3.3.40.1. Braille</A
 ></H5
 ><P
 >On Alt+Tab, the task switcher will appear.  As it is
@@ -6107,12 +6938,15 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1597"
->Speech</A
+>4.3.3.40.2. Speech</A
 ></H5
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > add speech</P
 ></DIV
 ></DIV
@@ -6215,119 +7049,119 @@ HREF="#AEN1635"
 >Foreword</A
 ></DT
 ><DT
-><A
+>1. <A
 HREF="#AEN1641"
 >Introduction</A
 ></DT
 ><DT
-><A
+>2. <A
 HREF="#AEN1647"
 >Prerequisites</A
 ></DT
 ><DD
 ><DL
 ><DT
-><A
+>2.1. <A
 HREF="#AEN1650"
 >Python v2.4 or better</A
 ></DT
 ><DT
-><A
+>2.2. <A
 HREF="#AEN1653"
 >pyorbit v2.0.0 or better</A
 ></DT
 ><DT
-><A
+>2.3. <A
 HREF="#AEN1656"
 >libbonobo v2.0.0 or better</A
 ></DT
 ><DT
-><A
+>2.4. <A
 HREF="#AEN1659"
 >gnome-python-2.0 v2.6.0 or better</A
 ></DT
 ><DT
-><A
+>2.5. <A
 HREF="#AEN1662"
 >pygtk-2.0 v2.4.0 or better</A
 ></DT
 ><DT
-><A
+>2.6. <A
 HREF="#AEN1665"
 >AT-SPI v1.6.6 or better</A
 ></DT
 ><DT
-><A
+>2.7. <A
 HREF="#AEN1670"
 >gnome-speech v0.3.9 or better</A
 ></DT
 ><DT
-><A
+>2.8. <A
 HREF="#AEN1675"
 >BrlTTY v3.6.1 or better</A
 ></DT
 ><DT
-><A
+>2.9. <A
 HREF="#AEN1680"
 >gnome-mag v0.11.11 or better</A
 ></DT
 ><DT
-><A
+>2.10. <A
 HREF="#AEN1685"
 >Keyboard Navigation</A
 ></DT
 ></DL
 ></DD
 ><DT
-><A
+>3. <A
 HREF="#ARCHITECTURE"
 >Architecture and Implementation</A
 ></DT
 ><DD
 ><DL
 ><DT
-><A
+>3.1. <A
 HREF="#AEN1699"
 >Desktop and AT-SPI</A
 ></DT
 ><DT
-><A
+>3.2. <A
 HREF="#AEN1752"
 >Orca</A
 ></DT
 ><DD
 ><DL
 ><DT
-><A
+>3.2.1. <A
 HREF="#AEN1765"
 >settings</A
 ></DT
 ></DL
 ></DD
 ><DT
-><A
+>3.3. <A
 HREF="#SCRIPT"
 >Orca Scripts</A
 ></DT
 ><DT
-><A
+>3.4. <A
 HREF="#AEN1804"
 >System Services</A
 ></DT
 ><DD
 ><DL
 ><DT
-><A
+>3.4.1. <A
 HREF="#AEN1807"
 >speech</A
 ></DT
 ><DT
-><A
+>3.4.2. <A
 HREF="#AEN1842"
 >braille</A
 ></DT
 ><DT
-><A
+>3.4.3. <A
 HREF="#AEN1850"
 >mag</A
 ></DT
@@ -6336,7 +7170,7 @@ HREF="#AEN1850"
 ></DL
 ></DD
 ><DT
-><A
+>4. <A
 HREF="#AEN1858"
 >Internationalization (I18N) Support</A
 ></DT
@@ -6344,6 +7178,25 @@ HREF="#AEN1858"
 ><A
 HREF="#AEN1867"
 >Bibliography</A
+></DT
+></DL
+></DIV
+><DIV
+CLASS="LOT"
+><DL
+CLASS="LOT"
+><DT
+><B
+>List of Figures</B
+></DT
+><DT
+>3-1. <A
+HREF="#AEN1691"
+>High Level Orca Architecture. The main components of Orca
+        are as follows: desktop  applications that support the AT-SPI,
+        the  AT-SPI  registry and  infrastructure,  Orca itself,  Orca
+        Scripts, and  system services.  The  key communication between
+        the components is depicted.</A
 ></DT
 ></DL
 ></DIV
@@ -6358,13 +7211,16 @@ NAME="AEN1635"
 >Orca is a flexible, extensible, and powerful assistive
   technology that provides end-user access to applications and
   toolkits that support the AT-SPI (e.g., the GNOME desktop).  With
-  early input and continued engagement from its end users, Orca has
-  been designed and implemented by the Sun Microsystems, Inc.,
+  early input from and continued engagement with its end users, Orca 
+  has been designed and implemented by the Sun Microsystems, Inc.,
   Accessibility Program Office.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >NOTE:</I
+></SPAN
 > Orca is currently a work in progress.  As a result, this
   and other books in the Orca Documentation Series are under
   continuous modification and are also in various states of
@@ -6381,7 +7237,7 @@ CLASS="CHAPTER"
 ><A
 NAME="AEN1641"
 ></A
->Introduction</H1
+>Chapter 1. Introduction</H1
 ><P
 >The Orca architecture has been driven primarily by the Orca
       User Experience Design.  There are two primary operating modes
@@ -6423,7 +7279,7 @@ CLASS="CHAPTER"
 ><A
 NAME="AEN1647"
 ></A
->Prerequisites</H1
+>Chapter 2. Prerequisites</H1
 ><P
 >To help narrow the scope of the Orca development activity,
       Orca uses existing software where available.  For example, as
@@ -6438,7 +7294,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1650"
->Python v2.4 or better</A
+>2.1. Python v2.4 or better</A
 ></H2
 ><P
 >Orca is written in the Python programming language and
@@ -6451,7 +7307,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1653"
->pyorbit v2.0.0 or better</A
+>2.2. pyorbit v2.0.0 or better</A
 ></H2
 ><P
 >PyORBit provides the Python language bindings for ORBit,
@@ -6463,7 +7319,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1656"
->libbonobo v2.0.0 or better</A
+>2.3. libbonobo v2.0.0 or better</A
 ></H2
 ><P
 >libbonobo provides the Python language bindings for Bonobo,
@@ -6475,7 +7331,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1659"
->gnome-python-2.0 v2.6.0 or better</A
+>2.4. gnome-python-2.0 v2.6.0 or better</A
 ></H2
 ><P
 >GNOME-Python provides the Python language bindings for the
@@ -6487,7 +7343,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1662"
->pygtk-2.0 v2.4.0 or better</A
+>2.5. pygtk-2.0 v2.4.0 or better</A
 ></H2
 ><P
 >PyGTK provides a convenient wrapper for the GTK library
@@ -6502,7 +7358,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1665"
->AT-SPI v1.6.6 or better</A
+>2.6. AT-SPI v1.6.6 or better</A
 ></H2
 ><P
 > Orca's means of gathering information about the desktop
@@ -6532,7 +7388,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1670"
->gnome-speech v0.3.9 or better</A
+>2.7. gnome-speech v0.3.9 or better</A
 ></H2
 ><P
 >GNOME-Speech [<SPAN
@@ -6553,7 +7409,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1675"
->BrlTTY v3.6.1 or better</A
+>2.8. BrlTTY v3.6.1 or better</A
 ></H2
 ><P
 >BrlTTY [<SPAN
@@ -6575,7 +7431,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1680"
->gnome-mag v0.11.11 or better</A
+>2.9. gnome-mag v0.11.11 or better</A
 ></H2
 ><P
 >GNOME-mag [<SPAN
@@ -6596,7 +7452,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1685"
->Keyboard Navigation</A
+>2.10. Keyboard Navigation</A
 ></H2
 ><P
 >As much as possible, Orca relies upon the keyboard
@@ -6612,7 +7468,7 @@ CLASS="CHAPTER"
 ><A
 NAME="ARCHITECTURE"
 ></A
->Architecture and Implementation</H1
+>Chapter 3. Architecture and Implementation</H1
 ><P
 >As illustrated in the high level Orca architecture diagram,
       the main components of Orca are as follows: desktop applications
@@ -6624,20 +7480,20 @@ CLASS="FIGURE"
 ><A
 NAME="AEN1691"
 ></A
+><P
+><B
+>Figure 3-1. High Level Orca Architecture. The main components of Orca
+        are as follows: desktop  applications that support the AT-SPI,
+        the  AT-SPI  registry and  infrastructure,  Orca itself,  Orca
+        Scripts, and  system services.  The  key communication between
+        the components is depicted.</B
+></P
 ><DIV
 CLASS="MEDIAOBJECT"
 ><P
 ><IMG
 SRC="architecture.jpg"></P
 ></DIV
-><P
-><B
->Figure 1. High Level Orca Architecture. The main components of Orca
-        are as follows: desktop  applications that support the AT-SPI,
-        the  AT-SPI  registry and  infrastructure,  Orca itself,  Orca
-        Scripts, and  system services.  The  key communication between
-        the components is depicted.</B
-></P
 ></DIV
 ><P
 >The following sections describe the architecture in more
@@ -6648,7 +7504,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1699"
->Desktop and AT-SPI</A
+>3.1. Desktop and AT-SPI</A
 ></H2
 ><P
 >Orca's sole view of any application on the desktop is via
@@ -6682,9 +7538,12 @@ HREF="#GAIL"
 ></A
 >&#62;</SPAN
 >]), the Java platform (via
-        the Java access bridge <I
+        the Java access bridge <SPAN
+CLASS="emphasis"
+><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > get link), and the custom
         toolkits used by applications such as Mozilla and Open
         Office.</P
@@ -6837,9 +7696,12 @@ CLASS="LITERAL"
         own set of event listeners that it uses to keep its local
         cache of accessible objects up to date.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >IMPLEMENTATION DETAIL:</I
+></SPAN
 > Because processing AT-SPI object events can be
         time consuming, and because the notification of AT-SPI object
         events is relatively "bursty," the
@@ -6853,9 +7715,12 @@ CLASS="LITERAL"
         long burst of events and also allows it to handle the events
         on a thread that is compatible with GLib.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >IMPLEMENTATION DETAIL:</I
+></SPAN
 > Unlike AT-SPI object events, Orca must process
         keyboard events immediately and quickly because it needs to
         determine if it should consume those events or not.  As such,
@@ -6866,9 +7731,12 @@ CLASS="LITERAL"
         events directly to the keyboard event listeners registered by
         Orca.</P
 ><P
-> <I
+> <SPAN
+CLASS="emphasis"
+><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > The system needs to be able to cope with failure.
         Right now, if Orca fails while handling a keyboard event, the
         whole desktop can hang.  I'm curious if the AT-SPI-enabled app
@@ -6883,7 +7751,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1752"
->Orca</A
+>3.2. Orca</A
 ></H2
 ><P
 >The <TT
@@ -6939,19 +7807,22 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1765"
->settings</A
+>3.2.1. settings</A
 ></H3
 ><P
->The <I
+>The <SPAN
+CLASS="bold"
+><B
 CLASS="EMPHASIS"
->settings</I
+>settings</B
+></SPAN
 > module
           (not depicted in the high level Orca architecture diagram)
           holds preferences set by the user during configuration.
           These settings include the following: use of speech and/or
           braille, voice styles, key echo, text echo, and command echo
           (see the <A
-HREF="#USER_REQUIREMENTS"
+HREF="#USERREQUIREMENTS"
 >user requirements</A
 > for details on these
           features).</P
@@ -7028,9 +7899,12 @@ CLASS="LITERAL"
 >settings</TT
 > module.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >IMPLEMENTATION DETAIL:</I
+></SPAN
 > the <TT
 CLASS="LITERAL"
 >init</TT
@@ -7052,7 +7926,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="SCRIPT"
->Orca Scripts</A
+>3.3. Orca Scripts</A
 ></H2
 ><P
 >Internally, the <TT
@@ -7098,7 +7972,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1804"
->System Services</A
+>3.4. System Services</A
 ></H2
 ><P
 > Orca relies on existing system services to provide
@@ -7112,12 +7986,15 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1807"
->speech</A
+>3.4.1. speech</A
 ></H3
 ><P
->The <I
+>The <SPAN
+CLASS="bold"
+><B
 CLASS="EMPHASIS"
->speech</I
+>speech</B
+></SPAN
 > module
           provides Orca's Python interface to system speech services.
           Each speech service is generated by a "speech server
@@ -7264,12 +8141,15 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1842"
->braille</A
+>3.4.2. braille</A
 ></H3
 ><P
-> The <I
+> The <SPAN
+CLASS="bold"
+><B
 CLASS="EMPHASIS"
->braille</I
+>braille</B
+></SPAN
 > module
           provides Orca's Python interface to the system's BrlTTY
           [<SPAN
@@ -7285,9 +8165,12 @@ HREF="#BRLTTY"
           for both displaying braille and receiving input from the
           user.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > flesh this section out more.</P
 ></DIV
 ><DIV
@@ -7296,12 +8179,15 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN1850"
->mag</A
+>3.4.3. mag</A
 ></H3
 ><P
-> The <I
+> The <SPAN
+CLASS="bold"
+><B
 CLASS="EMPHASIS"
->mag</I
+>mag</B
+></SPAN
 > module
           provides Orca's Python interface to the system's gnome-mag
           [<SPAN
@@ -7317,9 +8203,12 @@ HREF="#GNOME-MAG"
           Orca discover screen magnification services and set their
           desktop region of interest.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > flesh this section out more.</P
 ></DIV
 ></DIV
@@ -7330,7 +8219,7 @@ CLASS="CHAPTER"
 ><A
 NAME="AEN1858"
 ></A
->Internationalization (I18N) Support</H1
+>Chapter 4. Internationalization (I18N) Support</H1
 ><P
 >All human-consumable text obtained from AT-SPI calls is
       expected to be in a localized form.  As such, Orca does not
@@ -7359,9 +8248,12 @@ HREF="#GETTEXT"
       underlying gnome-speech implementation.</P
 ><P
 >The generation of localized braille is to be determined.
-      <I
+      <SPAN
+CLASS="emphasis"
+><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > BrlTTY currently does not support this at the moment, but
       it is expected that the BrlTTY developers will add this in the
       future.</P
@@ -7702,79 +8594,79 @@ HREF="#AEN1987"
 >Foreword</A
 ></DT
 ><DT
-><A
+>1. <A
 HREF="#AEN1993"
 >Introduction</A
 ></DT
 ><DT
-><A
+>2. <A
 HREF="#AEN1998"
 >Overview</A
 ></DT
 ><DD
 ><DL
 ><DT
-><A
+>2.1. <A
 HREF="#AEN2002"
 >Script Life Cycle</A
 ></DT
 ><DT
-><A
+>2.2. <A
 HREF="#AEN2113"
 >Script Contract</A
 ></DT
 ></DL
 ></DD
 ><DT
-><A
+>3. <A
 HREF="#CUSTOMIZATION"
 >Customized Behavior</A
 ></DT
 ><DD
 ><DL
 ><DT
-><A
+>3.1. <A
 HREF="#AEN2155"
 >Defining Event Listeners</A
 ></DT
 ><DT
-><A
+>3.2. <A
 HREF="#AEN2181"
 >Input Event Handlers</A
 ></DT
 ><DT
-><A
+>3.3. <A
 HREF="#AEN2200"
 >Defining Keyboard Bindings</A
 ></DT
 ><DT
-><A
+>3.4. <A
 HREF="#AEN2223"
 >Defining Braille Bindings</A
 ></DT
 ></DL
 ></DD
 ><DT
-><A
+>4. <A
 HREF="#AEN2234"
 >Script Utilities</A
 ></DT
 ><DD
 ><DL
 ><DT
-><A
+>4.1. <A
 HREF="#DEBUG"
 >Debug Utilities</A
 ></DT
 ><DT
-><A
+>4.2. <A
 HREF="#AEN2303"
 >Speech Synthesis</A
 ></DT
 ><DD
 ><DL
 ><DT
-><A
+>4.2.1. <A
 HREF="#AEN2313"
 ><TT
 CLASS="LITERAL"
@@ -7782,7 +8674,7 @@ CLASS="LITERAL"
 ></A
 ></DT
 ><DT
-><A
+>4.2.2. <A
 HREF="#AEN2323"
 ><TT
 CLASS="LITERAL"
@@ -7792,14 +8684,14 @@ CLASS="LITERAL"
 ></DL
 ></DD
 ><DT
-><A
+>4.3. <A
 HREF="#AEN2352"
 >Braille Output</A
 ></DT
 ><DD
 ><DL
 ><DT
-><A
+>4.3.1. <A
 HREF="#AEN2362"
 ><TT
 CLASS="LITERAL"
@@ -7807,7 +8699,7 @@ CLASS="LITERAL"
 ></A
 ></DT
 ><DT
-><A
+>4.3.2. <A
 HREF="#AEN2370"
 ><TT
 CLASS="LITERAL"
@@ -7821,6 +8713,21 @@ CLASS="LITERAL"
 ></DL
 ></DIV
 ><DIV
+CLASS="LOT"
+><DL
+CLASS="LOT"
+><DT
+><B
+>List of Figures</B
+></DT
+><DT
+>3-1. <A
+HREF="#AEN2125"
+>Orca Script Diagram</A
+></DT
+></DL
+></DIV
+><DIV
 CLASS="PREFACE"
 ><HR><H1
 ><A
@@ -7831,13 +8738,16 @@ NAME="AEN1987"
 >Orca is a flexible, extensible, and powerful assistive
   technology that provides end-user access to applications and
   toolkits that support the AT-SPI (e.g., the GNOME desktop).  With
-  early input and continued engagement from its end users, Orca has
-  been designed and implemented by the Sun Microsystems, Inc.,
+  early input from and continued engagement with its end users, Orca 
+  has been designed and implemented by the Sun Microsystems, Inc.,
   Accessibility Program Office.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >NOTE:</I
+></SPAN
 > Orca is currently a work in progress.  As a result, this
   and other books in the Orca Documentation Series are under
   continuous modification and are also in various states of
@@ -7853,7 +8763,7 @@ CLASS="CHAPTER"
 ><A
 NAME="AEN1993"
 ></A
->Introduction</H1
+>Chapter 1. Introduction</H1
 ><P
 >In this document, you will learn how to create your own 
       custom scripts for Orca.</P
@@ -7882,7 +8792,7 @@ CLASS="CHAPTER"
 ><A
 NAME="AEN1998"
 ></A
->Overview</H1
+>Chapter 2. Overview</H1
 ><P
 >The primary operating mode of Orca is "focus tracking
       mode," where Orca keeps track of the most relevant user
@@ -7903,7 +8813,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN2002"
->Script Life Cycle</A
+>2.1. Script Life Cycle</A
 ></H2
 ><P
 >BIRTH: Orca's <TT
@@ -7977,9 +8887,12 @@ CLASS="LITERAL"
 > script in
             default.py.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >NOTE:</I
+></SPAN
 > the <TT
 CLASS="LITERAL"
 >focus_tracking_presenter</TT
@@ -7998,9 +8911,12 @@ CLASS="LITERAL"
 >settings</TT
 > module.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >IMPLEMENTATION DETAIL:</I
+></SPAN
 > it is possible to tell Orca to bypass all
             custom script creation by setting
             <TT
@@ -8061,9 +8977,12 @@ CLASS="LITERAL"
             associated with the event, regardless if the application
             associated with the script has focus or not.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >IMPLEMENTATION DETAIL:</I
+></SPAN
 > the
             <TT
 CLASS="LITERAL"
@@ -8153,9 +9072,12 @@ CLASS="LITERAL"
             will pass all keyboard and braille input events to the
             active script.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >IMPLEMENTATION DETAIL:</I
+></SPAN
 > the
             <TT
 CLASS="LITERAL"
@@ -8189,9 +9111,12 @@ CLASS="LITERAL"
 > methods of the
             active script.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >IMPLEMENTATION DETAIL:</I
+></SPAN
 > the
             <TT
 CLASS="LITERAL"
@@ -8222,9 +9147,12 @@ CLASS="LITERAL"
 > object instance that is the new
         locus of focus.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >IMPLEMENTATION DETAIL:</I
+></SPAN
 > The <TT
 CLASS="LITERAL"
 >orca</TT
@@ -8265,9 +9193,12 @@ CLASS="LITERAL"
 >orca.visualAppearanceChanged</TT
 >.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >IMPLEMENTATION DETAIL:</I
+></SPAN
 > Like the <TT
 CLASS="LITERAL"
 >locusOfFocusChanged</TT
@@ -8310,9 +9241,12 @@ CLASS="LITERAL"
         for that application and unregister any event listeners
         associated with that script.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >IMPLEMENTATION DETAIL:</I
+></SPAN
 > the <TT
 CLASS="LITERAL"
 >focus_tracking_presenter</TT
@@ -8324,9 +9258,12 @@ CLASS="LITERAL"
 > event on
         the desktop.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > it needs to be verified that scripts are actually
         being reclaimed.  I think something somewhere is hanging on
         to a handle of the script, preventing it from being garbage
@@ -8338,7 +9275,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN2113"
->Script Contract</A
+>2.2. Script Contract</A
 ></H2
 ><P
 >The contract for a script is documented in detail in the
@@ -8377,7 +9314,7 @@ CLASS="CHAPTER"
 ><A
 NAME="CUSTOMIZATION"
 ></A
->Customized Behavior</H1
+>Chapter 3. Customized Behavior</H1
 ><P
 >The customized behavior of a script is set up in its
       constructor.  In its constructor, each script is expected to
@@ -8388,16 +9325,16 @@ CLASS="FIGURE"
 ><A
 NAME="AEN2125"
 ></A
+><P
+><B
+>Figure 3-1. Orca Script Diagram</B
+></P
 ><DIV
 CLASS="MEDIAOBJECT"
 ><P
 ><IMG
 SRC="script.jpg"></P
 ></DIV
-><P
-><B
->Figure 1. Orca Script Diagram</B
-></P
 ></DIV
 ><P
 ></P
@@ -8487,7 +9424,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN2155"
->Defining Event Listeners</A
+>3.1. Defining Event Listeners</A
 ></H2
 ><P
 >As described above, the <TT
@@ -8506,18 +9443,9 @@ CLASS="LITERAL"
         values are functions to handle the event.  A script's
         constructor can modify/extend this dictionary by merely
         defining an entry:</P
-><TABLE
-BORDER="0"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
 ><PRE
 CLASS="PROGRAMLISTING"
 >self.listeners["focus:"] = self.onFocus</PRE
-></TD
-></TR
-></TABLE
 ><P
 >In the event there is already an entry in the
         <TT
@@ -8591,12 +9519,6 @@ CLASS="LITERAL"
 >event</TT
 > is described
         above:</P
-><TABLE
-BORDER="0"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
 ><PRE
 CLASS="PROGRAMLISTING"
 >def onFocus(self, event):
@@ -8609,9 +9531,6 @@ CLASS="PROGRAMLISTING"
     ...
     orca.setLocusOfFocus(event, event.source)
     ...</PRE
-></TD
-></TR
-></TABLE
 ></DIV
 ><DIV
 CLASS="SECTION"
@@ -8619,7 +9538,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN2181"
->Input Event Handlers</A
+>3.2. Input Event Handlers</A
 ></H2
 ><P
 >Before describing how to set up keyboard and braille event
@@ -8664,20 +9583,11 @@ CLASS="LITERAL"
         module defines an input event handler for telling the flat
         review context to move to the home position of a
         window:</P
-><TABLE
-BORDER="0"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
 ><PRE
 CLASS="PROGRAMLISTING"
 >reviewHomeHandler = input_event.InputEventHandler(
             Script.reviewHome,
             _("Moves flat review to the home position."))</PRE
-></TD
-></TR
-></TABLE
 ><P
 >In this definition, <TT
 CLASS="LITERAL"
@@ -8696,12 +9606,6 @@ CLASS="LITERAL"
 CLASS="LITERAL"
 >reviewHome</TT
 > method is defined as follows:</P
-><TABLE
-BORDER="0"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
 ><PRE
 CLASS="PROGRAMLISTING"
 >def reviewHome(self, inputEvent):
@@ -8712,9 +9616,6 @@ CLASS="PROGRAMLISTING"
     self.reviewCurrentLine(inputEvent)
     self.targetCursorCell = braille.cursorCell
     return True</PRE
-></TD
-></TR
-></TABLE
 ><P
 >Note that the method returns <TT
 CLASS="LITERAL"
@@ -8728,7 +9629,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN2200"
->Defining Keyboard Bindings</A
+>3.3. Defining Keyboard Bindings</A
 ></H2
 ><P
 >The keyboard bindings for a script are held in the
@@ -8759,12 +9660,6 @@ CLASS="LITERAL"
 CLASS="LITERAL"
 >keybindings.py</TT
 > module):</P
-><TABLE
-BORDER="0"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
 ><PRE
 CLASS="PROGRAMLISTING"
 >self.keybindings.add(
@@ -8772,9 +9667,6 @@ CLASS="PROGRAMLISTING"
                            1 &#60;&#60; orca.MODIFIER_ORCA,
                            1 &#60;&#60; orca.MODIFIER_ORCA,
                            reviewHomeHandler))</PRE
-></TD
-></TR
-></TABLE
 ><P
 >The first parameter of a <TT
 CLASS="LITERAL"
@@ -8843,7 +9735,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN2223"
->Defining Braille Bindings</A
+>3.4. Defining Braille Bindings</A
 ></H2
 ><P
 >Refreshable braille displays have buttons that the user
@@ -8867,18 +9759,9 @@ CLASS="LITERAL"
 CLASS="LITERAL"
 >InputEventHandler</TT
 > instances:</P
-><TABLE
-BORDER="0"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
 ><PRE
 CLASS="PROGRAMLISTING"
 >self.braillebindings[braille.CMD_TOP_LEFT] = reviewHomeHandler</PRE
-></TD
-></TR
-></TABLE
 ><P
 >In the above example, the BrlTTY
         <TT
@@ -8899,7 +9782,7 @@ CLASS="CHAPTER"
 ><A
 NAME="AEN2234"
 ></A
->Script Utilities</H1
+>Chapter 4. Script Utilities</H1
 ><P
 >There are many common things a script wants to do: generate
       speech, update braille, etc.  In addition, there are many common
@@ -8914,7 +9797,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="DEBUG"
->Debug Utilities</A
+>4.1. Debug Utilities</A
 ></H2
 ><P
 >The debug utilities (defined in the
@@ -8971,20 +9854,11 @@ CLASS="LITERAL"
 CLASS="LITERAL"
 >~/.orca/user-settings.py</TT
 >:</P
-><TABLE
-BORDER="0"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
 ><PRE
 CLASS="PROGRAMLISTING"
 >debug.setEventDebugFilter(re.compile('window:activate'))
 debug.setEventDebugLevel(debug.LEVEL_OFF)
       </PRE
-></TD
-></TR
-></TABLE
 ><P
 >Now, when you rerun Orca, it will output information
         whenever it receives a <TT
@@ -8993,21 +9867,12 @@ CLASS="LITERAL"
 >
         event from the AT-SPI registry.  For example, if you run Star
         Office, you should see output similar to the following:</P
-><TABLE
-BORDER="0"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
 ><PRE
 CLASS="PROGRAMLISTING"
 >OBJECT EVENT: window:activate detail=(0,0) 
               app='StarOffice' name='StarOffice' role='frame' 
               state='ENABLED FOCUSABLE RESIZABLE SENSITIVE SHOWING VISIBLE'
       </PRE
-></TD
-></TR
-></TABLE
 ><P
 >The string <TT
 CLASS="LITERAL"
@@ -9141,9 +10006,12 @@ CLASS="LITERAL"
 ></LI
 ></UL
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >NOTE:</I
+></SPAN
 > One debug level of interest is
         <TT
 CLASS="LITERAL"
@@ -9160,19 +10028,10 @@ CLASS="LITERAL"
 >focus_tracking_presenter</TT
 >, you will
         see the following output:</P
-><TABLE
-BORDER="0"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
 ><PRE
 CLASS="PROGRAMLISTING"
 >ACTIVE SCRIPT: gnome-terminal (module=orca.scripts.gnome-terminal)
       </PRE
-></TD
-></TR
-></TABLE
 ><P
 >Notice that the class of the script instance is included.
         If you determine that this class is not what you expect when
@@ -9198,7 +10057,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN2303"
->Speech Synthesis</A
+>4.2. Speech Synthesis</A
 ></H2
 ><P
 >Orca provides two main modules for speech output:
@@ -9241,7 +10100,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN2313"
-><TT
+>4.2.1. <TT
 CLASS="LITERAL"
 >speech.py</TT
 ></A
@@ -9277,7 +10136,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN2323"
-><TT
+>4.2.2. <TT
 CLASS="LITERAL"
 >speechgenerator.py</TT
 ></A
@@ -9341,9 +10200,12 @@ CLASS="LITERAL"
 ></LI
 ></UL
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >NOTE:</I
+></SPAN
 > Orca currently provides some level of support for
           verbosity via the <TT
 CLASS="LITERAL"
@@ -9380,12 +10242,6 @@ CLASS="LITERAL"
 CLASS="LITERAL"
 >settings.getSetting</TT
 >:</P
-><TABLE
-BORDER="0"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
 ><PRE
 CLASS="PROGRAMLISTING"
 ># Obtain speech verbosity level.  If it has not been set,
@@ -9394,28 +10250,16 @@ CLASS="PROGRAMLISTING"
 verbosity = settings.getSetting(settings.SPEECH_VERBOSITY_LEVEL,
                                 settings.VERBOSITY_LEVEL_VERBOSE)
         </PRE
-></TD
-></TR
-></TABLE
 ><P
 >One can currently set the verbosity level from their
           <TT
 CLASS="LITERAL"
 >~/.orca/user-settings.py</TT
 > module:</P
-><TABLE
-BORDER="0"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
 ><PRE
 CLASS="PROGRAMLISTING"
 >speechVerbosityLevel = settings.VERBOSITY_LEVEL_BRIEF
         </PRE
-></TD
-></TR
-></TABLE
 ></DIV
 ></DIV
 ><DIV
@@ -9424,7 +10268,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN2352"
->Braille Output</A
+>4.3. Braille Output</A
 ></H2
 ><P
 >Like speech, Orca provides two main modules for braille:
@@ -9467,22 +10311,28 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN2362"
-><TT
+>4.3.1. <TT
 CLASS="LITERAL"
 >braille.py</TT
 ></A
 ></H3
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > [[[WDW - much writing to be done here, especially
           regarding how regions will provide automatic support for
           cursor routing keys.]]]</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > [[[WDW - I'm not satisfied with
           <TT
 CLASS="LITERAL"
@@ -9496,7 +10346,7 @@ CLASS="SECTION"
 CLASS="SECTION"
 ><A
 NAME="AEN2370"
-><TT
+>4.3.2. <TT
 CLASS="LITERAL"
 >braillegenerator.py</TT
 ></A
@@ -9536,9 +10386,12 @@ CLASS="LITERAL"
               "focus" and should be represented by the braille cursor
               on the display.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >TODO:</I
+></SPAN
 > [[[WDW - describe grouping of children.]]]</P
 ></LI
 ><LI
@@ -9588,9 +10441,12 @@ CLASS="LITERAL"
           input events to allow the user to use braille display input
           buttons for scrolling to review the entire line.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >NOTE:</I
+></SPAN
 > Orca currently provides some level of support for
           verbosity via the <TT
 CLASS="LITERAL"
@@ -9627,12 +10483,6 @@ CLASS="LITERAL"
 CLASS="LITERAL"
 >settings.getSetting</TT
 >:</P
-><TABLE
-BORDER="0"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
 ><PRE
 CLASS="PROGRAMLISTING"
 ># Obtain braille verbosity level.  If it has not been set,
@@ -9641,28 +10491,16 @@ CLASS="PROGRAMLISTING"
 verbosity = settings.getSetting(settings.BRAILLE_VERBOSITY_LEVEL,
                                 settings.VERBOSITY_LEVEL_VERBOSE)
         </PRE
-></TD
-></TR
-></TABLE
 ><P
 >One can currently set the verbosity level from their
           <TT
 CLASS="LITERAL"
 >~/.orca/user-settings.py</TT
 > module:</P
-><TABLE
-BORDER="0"
-BGCOLOR="#E0E0E0"
-WIDTH="100%"
-><TR
-><TD
 ><PRE
 CLASS="PROGRAMLISTING"
 >brailleVerbosityLevel = settings.VERBOSITY_LEVEL_BRIEF
         </PRE
-></TD
-></TR
-></TABLE
 ></DIV
 ></DIV
 ></DIV
@@ -9706,7 +10544,7 @@ HREF="#AEN2413"
 >Foreword</A
 ></DT
 ><DT
-><A
+>1. <A
 HREF="#AEN2419"
 >Introduction</A
 ></DT
@@ -9723,13 +10561,16 @@ NAME="AEN2413"
 >Orca is a flexible, extensible, and powerful assistive
   technology that provides end-user access to applications and
   toolkits that support the AT-SPI (e.g., the GNOME desktop).  With
-  early input and continued engagement from its end users, Orca has
-  been designed and implemented by the Sun Microsystems, Inc.,
+  early input from and continued engagement with its end users, Orca 
+  has been designed and implemented by the Sun Microsystems, Inc.,
   Accessibility Program Office.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >NOTE:</I
+></SPAN
 > Orca is currently a work in progress.  As a result, this
   and other books in the Orca Documentation Series are under
   continuous modification and are also in various states of
@@ -9744,7 +10585,7 @@ CLASS="CHAPTER"
 ><A
 NAME="AEN2419"
 ></A
->Introduction</H1
+>Chapter 1. Introduction</H1
 ><P
 >To be written.</P
 ></DIV
@@ -9788,7 +10629,7 @@ HREF="#AEN2427"
 >Foreword</A
 ></DT
 ><DT
-><A
+>1. <A
 HREF="#AEN2433"
 >Introduction</A
 ></DT
@@ -9805,13 +10646,16 @@ NAME="AEN2427"
 >Orca is a flexible, extensible, and powerful assistive
   technology that provides end-user access to applications and
   toolkits that support the AT-SPI (e.g., the GNOME desktop).  With
-  early input and continued engagement from its end users, Orca has
-  been designed and implemented by the Sun Microsystems, Inc.,
+  early input from and continued engagement with its end users, Orca 
+  has been designed and implemented by the Sun Microsystems, Inc.,
   Accessibility Program Office.</P
 ><P
+><SPAN
+CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >NOTE:</I
+></SPAN
 > Orca is currently a work in progress.  As a result, this
   and other books in the Orca Documentation Series are under
   continuous modification and are also in various states of
@@ -9828,7 +10672,7 @@ CLASS="CHAPTER"
 ><A
 NAME="AEN2433"
 ></A
->Introduction</H1
+>Chapter 1. Introduction</H1
 ><P
 >To be written.</P
 ></DIV

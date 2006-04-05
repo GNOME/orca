@@ -292,7 +292,7 @@
         AT-SPI events which it then passes on the script for the
         application associated with the event.  If there is no script,
         the <literal>focus_tracking_presenter</literal> will create
-        one.  See the &script_guide_link; for more information.</para>
+        one.  See the &scriptguidelink; for more information.</para>
 
       <para>The <literal>atspi</literal> module also registers its
         own set of event listeners that it uses to keep its local
@@ -356,7 +356,7 @@
           holds preferences set by the user during configuration.
           These settings include the following: use of speech and/or
           braille, voice styles, key echo, text echo, and command echo
-          (see the &user_requirements_link; for details on these
+          (see the &userrequirementslink; for details on these
           features).</para>
 
         <para>Any Orca module can request the value of a setting by
@@ -407,7 +407,7 @@
 
       <para>Details on the <literal>FocusTrackingPresenter</literal>
         and Orca scripts can be found in the
-        &script_guide_link;.</para>
+        &scriptguidelink;.</para>
 
     </section>
 

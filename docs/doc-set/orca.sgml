@@ -11,24 +11,24 @@
 <!ENTITY issue '<emphasis>KNOWN ISSUE:</emphasis>'>
 <!ENTITY example '<emphasis>EXAMPLE:</emphasis>'>
 
-<!ENTITY user_experience SYSTEM "user_experience.sgml">
-  <!ENTITY personas_link '<link linkend="personas">personas</link>'>
-  <!ENTITY user_requirements_link '<link linkend="user_requirements">user requirements</link>'>
-  <!ENTITY style_guide_link '<link linkend="style_guide">style guide</link>'>
-  <!ENTITY gestures_link '<link linkend="gestures">input gestures</link>'>
-  <!ENTITY ue_personas SYSTEM "personas.sgml">
-  <!ENTITY ue_requirements SYSTEM "ue_requirements.sgml">
-  <!ENTITY ue_input_style SYSTEM "ue_input_style.sgml">
-  <!ENTITY ue_output_style SYSTEM "ue_output_style.sgml">
+<!ENTITY userexperience SYSTEM "user_experience.sgml">
+  <!ENTITY personaslink '<link linkend="personas">personas</link>'>
+  <!ENTITY userrequirementslink '<link linkend="userrequirements">user requirements</link>'>
+  <!ENTITY styleguidelink '<link linkend="styleguide">style guide</link>'>
+  <!ENTITY gestureslink '<link linkend="gestures">input gestures</link>'>
+  <!ENTITY uepersonas SYSTEM "personas.sgml">
+  <!ENTITY uerequirements SYSTEM "ue_requirements.sgml">
+  <!ENTITY ueinputstyle SYSTEM "ue_input_style.sgml">
+  <!ENTITY ueoutputstyle SYSTEM "ue_output_style.sgml">
 
 <!ENTITY architecture SYSTEM "architecture.sgml">
 
-<!ENTITY script_guide SYSTEM "script_guide.sgml">
-  <!ENTITY script_guide_link '<link linkend="script_guide">Orca Script Writing Guide</link>'>
+<!ENTITY scriptguide SYSTEM "script_guide.sgml">
+  <!ENTITY scriptguidelink '<link linkend="scriptguide">Orca Script Writing Guide</link>'>
 
 <!ENTITY testing SYSTEM "testing.sgml">
 
-<!ENTITY user_guide SYSTEM "user_guide.sgml">
+<!ENTITY userguide SYSTEM "user_guide.sgml">
 ]
 >
 
@@ -46,10 +46,10 @@
     </abstract>
   </setinfo>
 
-  &user_experience;
+  &userexperience;
   &architecture;
-  &script_guide;
+  &scriptguide;
   &testing;
-  &user_guide;
+  &userguide;
 
 </set>

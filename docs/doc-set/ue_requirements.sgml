@@ -8,10 +8,10 @@
   ************************************************************************
   -->
 
-  <chapter id="user_requirements"><title>User Requirements</title>
+  <chapter id="userrequirements"><title>User Requirements</title>
 
     <para>Based upon discussions with end users as well as the tasks
-      and ideas from the &personas_link;, Orca must supply at least the
+      and ideas from the &personaslink;, Orca must supply at least the
       following end-user features.</para>
 
     <section><title>Availability at All Times</title>
@@ -60,7 +60,7 @@
         access to an application, it is expected that scripts will
         provide a users with a consistent style to access
         applications.  To help with this consistent style, Orca will
-        provide a &style_guide_link;, a well-documented "default"
+        provide a &styleguidelink;, a well-documented "default"
         script, and several application scripts that demonstrate and
         promote this style.
       </para>
@@ -104,7 +104,7 @@
         changed, Orca must provide a short summary of the region of
         interest, and must also provide a mechanism for the user to
         obtain more detailed information.  The presentation will
-        follow the &style_guide_link;.</para>
+        follow the &styleguidelink;.</para>
       <para>When navigating text areas in a character-by-character or
         word-by-word fashion (or any linear fashion for that matter),
         Orca must provide an option to play an audio cue when the
@@ -122,10 +122,10 @@
       <para>Another option for review mode includes the ability to
         use a set of &wkc;s to quickly skim the contents of the
         display.</para>
-      <para>The review of the desktop will follow the &style_guide_link;,
+      <para>The review of the desktop will follow the &styleguidelink;,
         and will at least provide a short summary of the available
         applications.  While the review of an application will also
-        follow the &style_guide_link;, the overall presentation depends
+        follow the &styleguidelink;, the overall presentation depends
         largely upon the application being reviewed.</para>
       <para>&todo; Add notions of "hierarchical review," and "hybrid
         review (e.g., in/out of lists)".  Need to flesh out the
@@ -181,7 +181,7 @@
 
     <section><title>Customizable Gestures</title>
       <para>While Orca will provide a default set of well known 
-        keyboard and braille &gestures_link;, users must be able to
+        keyboard and braille &gestureslink;, users must be able to
         override these gestures and extend them with gestures of
         their own choosing.</para>
       <para>The user interface for defining these gestures must be
@@ -293,7 +293,7 @@
       <para>Orca will also provide options to highlight the text
         being spoken.</para>
       <para>&note; while the reading of a document will follow the
-        &style_guide_link;, the overall presentation depends largely upon
+        &styleguidelink;, the overall presentation depends largely upon
         the document being read (e.g., is it a text document,
         spreadsheet, web page, etc.?).</para>
     </section>
@@ -413,7 +413,7 @@
           <para><emphasis role="bold">Effective use of
             space</emphasis> - Orca should try to use the cells on the
             braille display as effectively as possible.  This will be
-            driven primarily by the &style_guide_link;, and can also
+            driven primarily by the &styleguidelink;, and can also
             include the the option to effectively compress white
             space.</para>
         </listitem>

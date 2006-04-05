@@ -1,3 +1,18 @@
+2006-04-05  Willie Walker <william.walker@sun.com>
+
+	* orca/src/focus_tracking_presenter.py, orca/src/settings.py: fix
+	for bug 337322 where the user was not being notified of window
+	title changes when the user uses Alt+TAB to tab between windows.
+	The primary culprit was name space pollution by GTK, but Orca
+	should sheild itself from this.  This fix provides that shield
+	somewhat, but the ramification is that scripts are no longer
+	picked up from the local directory (which was just a convenience
+	for script writers).	
+	* docs/doc-set/*.{sgml,html,pdf}: make this compile again.  For
+	some bizarre reason, docbook on my Ubuntu box no longer liked "_"
+	in entities or ids, and it was easier to get rid of them rather
+	than scour the web to see what was going wrong.
+	
 2006-04-05  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/atspi.py

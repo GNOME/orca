@@ -11,7 +11,7 @@
   <chapter id="personas"><title>Personas</title>
 
     <para>The Orca user personas are intended to be a tool that helps
-      elicit use cases and &user_requirements_link;.  The approach
+      elicit use cases and &userrequirementslink;.  The approach
       is to think of "real" users with specific disabilities
       performing specific actions.  These personas are meant to cover
       a range of typical users, both in the tasks they want to
