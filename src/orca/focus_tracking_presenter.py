@@ -144,8 +144,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             # a vehicle for debugging these types of things.
             #
             scriptPackages = settings.getSetting(
-                settings.SCRIPT_PACKAGES,
-                ["", "orca-scripts", "scripts"])
+                settings.SCRIPT_PACKAGES, ["orca-scripts", "scripts"])
 
             moduleName = settings.getScriptModuleName(app)
             module = None

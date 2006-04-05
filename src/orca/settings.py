@@ -204,7 +204,7 @@ def getSetting(name, default=None):
 # have a __init__.py file in it.
 #
 SCRIPT_PACKAGES         = "scriptPackages"
-scriptPackages          = ["", "orca-scripts", "scripts"]
+scriptPackages          = ["orca-scripts", "scripts"]
 
 # A list that helps us map application names to script module
 # names.  The key is the name of an application, and the value is
