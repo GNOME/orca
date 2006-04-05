@@ -1,5 +1,15 @@
 2006-04-05  Rich Burridge <rich.burridge@sun.com>
 
+        * bugs/bugs.html
+          Added in the following GNOME planner bug:
+
+          http://bugzilla.gnome.org/show_bug.cgi?id=337382
+          Toggle button in main window not accessible</td>
+
+          Also fixed up the table of OpenOffice bugs.
+
+2006-04-05  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/scripts/Makefile.am
           src/orca/scripts/planner.py    (new)
           Created a new planner.py script for the Planner application.
