@@ -1,5 +1,17 @@
 2006-04-05  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/default.py
+          Couple of changes to the visualAppearanceChanged() method.
+
+          1/ If this object is CONTROLLED_BY the object that currently
+             has focus, speak/braille this object.
+
+          2/ If this object is a label, and if it has a LABEL_FOR relation
+             to the focused object, then we should speak/braille the
+             focused object, as if it had just got focus.
+
+2006-04-05  Rich Burridge <rich.burridge@sun.com>
+
         * bugs/bugs.html
           Added in the following GNOME planner bug:
 

@@ -904,6 +904,37 @@ class Script(script.Script):
 
                 return
 
+        # If this object is CONTROLLED_BY the object that currently
+        # has focus, speak/braille this object.
+        #
+        relations = obj.relations
+        for relation in relations:
+            if relation.getRelationType() \
+                   == atspi.Accessibility.RELATION_CONTROLLED_BY:
+                target = atspi.Accessible.makeAccessible(relation.getTarget(0))
+                if target == orca.locusOfFocus:
+                    self.updateBraille(target)
+                    speech.speakUtterances(
+                        self.speechGenerator.getSpeech(target, True))
+                    return
+
+        # If this object is a label, and if it has a LABEL_FOR relation
+        # to the focused object, then we should speak/braille the
+        # focused object, as if it had just got focus.
+        #
+
+        if obj.role == rolenames.ROLE_LABEL:
+            for relation in relations:
+                if relation.getRelationType() \
+                       == atspi.Accessibility.RELATION_LABEL_FOR:
+                    target = \
+                        atspi.Accessible.makeAccessible(relation.getTarget(0))
+                    if target == orca.locusOfFocus:
+                        self.updateBraille(target)
+                        speech.speakUtterances(
+                            self.speechGenerator.getSpeech(target, True))
+                        return
+
         if obj != orca.locusOfFocus:
             return
 
