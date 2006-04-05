@@ -11,6 +11,7 @@ orca_python_PYTHON = \
 	gnome-terminal.py \
 	metacity.py \
 	Mozilla.py \
+	planner.py \
 	StarOffice.py
 
 orca_pythondir=$(pyexecdir)/orca/scripts

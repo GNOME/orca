@@ -1,3 +1,12 @@
+2006-04-05  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Makefile.am
+          src/orca/scripts/planner.py    (new)
+          Created a new planner.py script for the Planner application.
+          Currently it looks to see if the focus is on one of the four 
+          graphical toggle buttons on the left side of the main window 
+          and if so, speaks the label associated with it.
+
 2006-04-04  Rich Burridge <rich.burridge@sun.com>
 
         * bugs/bugs.html
