@@ -193,27 +193,6 @@ class Script(default.Script):
             self.lastEventType = event.type
 
 
-    def walkComponentHierarchy(self, obj):
-        """Debug routine to print out the hierarchy of components for the
-           given object.
-
-        Arguments:
-        - obj: the component to start from
-        """
-
-        print "<<<<---- Component Hierachy ---->>>>"
-        print "START: Obj:", obj.name, obj.role
-        parent = obj
-        while parent:
-            if parent != obj:
-                if not parent.parent:
-                    print "TOP: Parent:", parent.name, parent.role
-                else:
-                    print "Parent:", parent.name, parent.role
-            parent = parent.parent
-        print "<<<<============================>>>>"
-
-
     # This method tries to detect and handle the following cases:
     # 1) Text area (for caching handle for spell checking purposes).
     # 2) Check Spelling Dialog.
@@ -232,7 +211,7 @@ class Script(default.Script):
                                event,
                                event.source.toString())
 
-        # self.walkComponentHierarchy(event.source)
+        # atspi.printAncestry(event.source)
 
         # 1) Text area (for caching handle for spell checking purposes).
         #
@@ -308,7 +287,7 @@ class Script(default.Script):
                                event,
                                event.source.toString())
 
-        # self.walkComponentHierarchy(event.source)
+        # atspi.printAncestry(event.source)
 
         # 1) check spelling dialog.
         #

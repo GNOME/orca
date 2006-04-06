@@ -1,3 +1,15 @@
+2006-04-06  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/planner.py src/orca/scripts/Evolution.py
+          src/orca/scripts/planner.py src/orca/scripts/Evolution.py
+          Adjusted case #1 in the onFocus() method in the planner.py 
+          script, to fall through and also do the default action for
+          the focus event.
+
+          Removed the walkComponentHierarchy() from the planner,
+          Evolution, StarOffice and gedit scripts and used calls to
+          atspi.printAncestry(event.source) instead.
+
 2006-04-06  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca.py, src/orca/atspi.py,

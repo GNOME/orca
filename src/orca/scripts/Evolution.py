@@ -79,27 +79,6 @@ class Script(default.Script):
                                _("calendar event"))
 
 
-    def walkComponentHierarchy(self, obj):
-        """Debug routine to print out the hierarchy of components for the
-           given object.
-
-        Arguments:
-        - obj: the component to start from
-        """
-
-        print "<<<<---- Component Hierachy ---->>>>"
-        print "START: Obj:", obj.name, obj.role
-        parent = obj
-        while parent:
-            if parent != obj:
-                if not parent.parent:
-                    print "TOP: Parent:", parent.name, parent.role
-                else:
-                    print "Parent:", parent.name, parent.role
-            parent = parent.parent
-        print "<<<<============================>>>>"
-
-
     def readPageTab(self, tab):
         """Speak/Braille the given page tab. The speech verbosity is set
            to VERBOSITY_LEVEL_BRIEF for this operation and then restored
@@ -179,7 +158,7 @@ class Script(default.Script):
                                event,
                                event.source.toString())
 
-        # self.walkComponentHierarchy(event.source)
+        # atspi.printAncestry(event.source)
 
         # 1) Mail view: current message pane: individual lines of text.
         #

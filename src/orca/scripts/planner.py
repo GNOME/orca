@@ -47,27 +47,6 @@ class Script(default.Script):
         default.Script.__init__(self, app)
 
 
-    def walkComponentHierarchy(self, obj):
-        """Debug routine to print out the hierarchy of components for the
-           given object.
-
-        Arguments:
-        - obj: the component to start from
-        """
-
-        print "<<<<---- Component Hierachy ---->>>>"
-        print "START: Obj:", obj.name, obj.role
-        parent = obj
-        while parent:
-            if parent != obj:
-                if not parent.parent:
-                    print "TOP: Parent:", parent.name, parent.role
-                else:
-                    print "Parent:", parent.name, parent.role
-            parent = parent.parent
-        print "<<<<============================>>>>"
-
-
     # This method tries to detect and handle the following cases:
     # 1) Main window: one of the four graphic toggle buttons.
 
@@ -85,13 +64,14 @@ class Script(default.Script):
                                event,
                                event.source.toString())
 
-        # self.walkComponentHierarchy(event.source)
+        # atspi.printAncestry(event.source)
 
         # 1) Main window: one of the four graphic toggle buttons.
         #
         # If the focus is on one of the four graphic toggle buttons on
         # the left side of the main window, then get the label associated
-        # with it, and speak it.
+        # with it, and speak it. Then fall through to provide the default
+        # action for this focus event.
 
         rolesList = [rolenames.ROLE_TOGGLE_BUTTON, \
                      rolenames.ROLE_FILLER, \
@@ -106,7 +86,6 @@ class Script(default.Script):
             filler = event.source.parent
             allLabels = atspi.findByRole(filler, rolenames.ROLE_LABEL)
             speech.speak(allLabels[0].name)
-            return
 
 
         # For everything else, pass the focus event onto the parent class 
