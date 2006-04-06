@@ -507,29 +507,45 @@ _keybindings = None
 #
 _insertPressed = False
 
-def _keyEcho(key):
+def _keyEcho(event):
     """If the keyEcho setting is enabled, echoes the key via speech.
     Uppercase keys will be spoken using the "uppercase" voice style,
     whereas lowercase keys will be spoken using the "default" voice style.
 
     Arguments:
-    - key: a string representing the key name to echo.
+    - event: an AT-SPI DeviceEvent
     """
+
+    event_string = event.event_string
+
+    # The control characters come through as control characters,
+    # so we just turn them into their ASCII equivalent.  NOTE that
+    # the upper case ASCII characters will be used (e.g., ctrl+a
+    # will be turned into the string "A").  All these checks here
+    # are to just do some sanity checking before doing the
+    # conversion. [[[WDW - this is making assumptions about
+    # mapping ASCII control characters to to UTF-8.]]]
+    #
+    if (event.modifiers & (1 << atspi.Accessibility.MODIFIER_CONTROL)) \
+       and (not event.is_text) and (len(event.event_string) == 1):
+        value = ord(event.event_string[0])
+        if value < 32:
+            event_string = chr(value + 0x40)
 
     if not settings.getSetting(settings.USE_KEY_ECHO, False):
         return
-    if key.isupper():
+    if event_string.isupper():
         voices = settings.getSetting(settings.VOICES, None)
-        speech.speak(key, voices[settings.UPPERCASE_VOICE])
+        speech.speak(event_string, voices[settings.UPPERCASE_VOICE])
     else:
         # Check to see if there are localized words to be spoken for
         # this key event.
         try:
-            key = keynames.keynames[key]
+            event_string = keynames.keynames[event_string]
         except:
             debug.printException(debug.LEVEL_FINEST)
             pass
-        speech.speak(key)
+        speech.speak(event_string)
 
 def _processKeyboardEvent(event):
     """The primary key event handler for Orca.  Keeps track of various
@@ -563,21 +579,7 @@ def _processKeyboardEvent(event):
         #
         speech.stop()
 
-        # The control characters come through as control characters,
-        # so we just turn them into their ASCII equivalent.  NOTE that
-        # the upper case ASCII characters will be used (e.g., ctrl+a
-        # will be turned into the string "A").  All these checks here
-        # are to just do some sanity checking before doing the
-        # conversion. [[[WDW - this is making assumptions about
-        # mapping ASCII control characters to to UTF-8.]]]
-        #
-        if (event.modifiers & (1 << atspi.Accessibility.MODIFIER_CONTROL)) \
-           and (not event.is_text) and (len(event.event_string) == 1):
-            value = ord(event.event_string[0])
-            if value < 32:
-                event_string = chr(value + 0x40)
-
-        _keyEcho(event_string)
+        _keyEcho(event)
 
         # We treat the Insert key as a modifier - so just swallow it and
         # set our internal state.

@@ -1,5 +1,14 @@
 2006-04-06  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/orca.py
+          Slight refactoring to move some keyboard echo code out of
+          _processKeyboardEvent() and  into the _keyEcho() method.
+          _keyEcho() now takes an event (AT-SPI DeviceEvent) parameter
+          rather than an event_string so that at a later date, we can 
+          fully interrogate the keyboard event we've just received.
+
+2006-04-06  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/scripts/planner.py src/orca/scripts/Evolution.py
           src/orca/scripts/planner.py src/orca/scripts/Evolution.py
           Adjusted case #1 in the onFocus() method in the planner.py 
