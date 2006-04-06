@@ -29,6 +29,7 @@ import keybindings
 #import mag - [[[TODO: WDW - disable until I can figure out how to
 #             resolve the GNOME reference in mag.py.  This is logged
 #             as bugzilla bug 319643.]]]
+import rolenames
 import settings
 import speech
 import threading
@@ -507,6 +508,27 @@ _keybindings = None
 #
 _insertPressed = False
 
+# List of special keys. Used by _specialKey().
+#
+_specialKeys = [ 'Alt_L', 'Alt_R', 'Control_L', 'Control_R', \
+                 'Shift_L', 'Shift_R', 'Meta_L', 'Meta_R' ]
+
+def _specialKey(event):
+    """Return an indication of whether this is a special key. Special
+    keys include Control, Alt, Shift and Meta.
+
+    This is an area that is still in flux. Except tweaks to be made to 
+    the set of keys which are considered special.
+
+    Arguments:
+    - event: an AT-SPI DeviceEvent
+
+    Returns True if this is a special key.
+    """
+
+    return event.event_string in _specialKeys
+
+
 def _keyEcho(event):
     """If the keyEcho setting is enabled, echoes the key via speech.
     Uppercase keys will be spoken using the "uppercase" voice style,
@@ -534,17 +556,30 @@ def _keyEcho(event):
 
     if not settings.getSetting(settings.USE_KEY_ECHO, False):
         return
+
     if event_string.isupper():
         voices = settings.getSetting(settings.VOICES, None)
         speech.speak(event_string, voices[settings.UPPERCASE_VOICE])
     else:
-        # Check to see if there are localized words to be spoken for
-        # this key event.
-        try:
-            event_string = keynames.keynames[event_string]
-        except:
-            debug.printException(debug.LEVEL_FINEST)
-            pass
+        if not _specialKey(event):
+            # Check if the object that currently has focus is an editable
+            # text object or has a role of "terminal". If so, then the 
+            # echoing of the key event will occur via an 
+            # "object:text-changed:insert" event.
+            #
+            stateSet = locusOfFocus.state
+            if stateSet.count(atspi.Accessibility.STATE_EDITABLE) \
+               or locusOfFocus.role == rolenames.ROLE_TERMINAL:
+                return
+
+            # Check to see if there are localized words to be spoken for
+            # this key event.
+            try:
+                event_string = keynames.keynames[event_string]
+            except:
+                debug.printException(debug.LEVEL_FINEST)
+                pass
+
         speech.speak(event_string)
 
 def _processKeyboardEvent(event):

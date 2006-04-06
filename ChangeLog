@@ -1,6 +1,23 @@
 2006-04-06  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca.py
+          Added in two sections of code in _keyEcho():
+          - check to see if the key event is for a "special" key (via
+            the new _specialKey method) and if so, then handle its 
+            echoing in the _keyEcho method. Currently this is just testing
+            for Control, Alt, Shift and Meta. Over time, this routine
+            will be tweaked to handle the full set of special keys.
+
+          - check to see if the object that currently has focus is an 
+            editable text object or has a role of "terminal". If so, and
+            its not a special key, then the echoing of the key event will 
+            occur via an "object:text-changed:insert" event.
+
+          This improves the double echoing that was previously happening.
+
+2006-04-06  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca.py
           Slight refactoring to move some keyboard echo code out of
           _processKeyboardEvent() and  into the _keyEcho() method.
           _keyEcho() now takes an event (AT-SPI DeviceEvent) parameter
