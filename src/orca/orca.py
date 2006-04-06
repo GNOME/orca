@@ -567,10 +567,11 @@ def _keyEcho(event):
             # echoing of the key event will occur via an 
             # "object:text-changed:insert" event.
             #
-            stateSet = locusOfFocus.state
-            if stateSet.count(atspi.Accessibility.STATE_EDITABLE) \
-               or locusOfFocus.role == rolenames.ROLE_TERMINAL:
-                return
+            if locusOfFocus:
+                stateSet = locusOfFocus.state
+                if stateSet.count(atspi.Accessibility.STATE_EDITABLE) \
+                   or locusOfFocus.role == rolenames.ROLE_TERMINAL:
+                    return
 
             # Check to see if there are localized words to be spoken for
             # this key event.
