@@ -1,6 +1,13 @@
+2006-04-06  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca.py, src/orca/atspi.py,
+	src/orca/hierarchical_presenter.py, src/orca/scripts/metacity.py:
+	fix for bug 337489 where metacity script would inappropriately
+	think apps that started after Orca started were inaccessible.
+	
 2006-04-05  Willie Walker <william.walker@sun.com>
 
-	* orca/src/focus_tracking_presenter.py, orca/src/settings.py: fix
+	* src/orca/focus_tracking_presenter.py, orca/src/settings.py: fix
 	for bug 337322 where the user was not being notified of window
 	title changes when the user uses Alt+TAB to tab between windows.
 	The primary culprit was name space pollution by GTK, but Orca

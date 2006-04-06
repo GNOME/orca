@@ -109,11 +109,6 @@ def _switchToNextPresentationManager(script=None, inputEvent=None):
 #                                                                      #
 ########################################################################
 
-# List of all the running apps we know about.  Each element is a Python
-# Accessible instance.
-#
-apps = []
-
 # The Accessible that has visual focus.
 #
 locusOfFocus = None
@@ -210,6 +205,7 @@ def findActiveWindow():
     """
 
     window = None
+    apps = atspi.getKnownApplications()
     for app in apps:
         for i in range(0, app.childCount):
             state = app.child(i).state
@@ -218,30 +214,6 @@ def findActiveWindow():
                 break
 
     return window
-
-def _buildAppList(registry):
-    """Retrieves the list of currently running apps for the desktop and
-    populates the apps list attribute with these apps.
-    """
-
-    global apps
-
-    debug.println(debug.LEVEL_FINEST,
-                  "orca._buildAppList...")
-
-    apps = []
-
-    for i in range(0, registry.desktop.childCount):
-        try:
-            acc = registry.desktop.getChildAtIndex(i)
-            app = atspi.Accessible.makeAccessible(acc)
-            if app:
-                apps.insert(0, app)
-        except:
-            debug.printException(debug.LEVEL_FINEST)
-
-    debug.println(debug.LEVEL_FINEST,
-                  "...orca._buildAppList")
 
 def _onChildrenChanged(e):
     """Tracks children-changed events on the desktop to determine when
@@ -265,18 +237,6 @@ def _onChildrenChanged(e):
             debug.printException(debug.LEVEL_FINEST)
             shutdown()
             return
-
-        # [[[TODO: WDW - Note the call to _buildAppList - that will update the
-        # apps[] list.  If this logic is changed in the future, the apps list
-        # will most likely needed to be updated here.]]]
-        #
-        # [[[WDW - 03/07/2006 - comment this out until we can figure out
-        # why Orca sometimes hangs here.  The main hang seems to be when
-        # Orca calls getChildAtIndex on the registry.  The hierarchical
-        # presenter depends upon this list, though, so I've commented it
-        # out for now as well.]]]
-        #
-        #_buildAppList(registry)
 
 ########################################################################
 #                                                                      #
@@ -447,6 +407,7 @@ def printApps(script=None, inputEvent=None):
 
     level = debug.LEVEL_OFF
 
+    apps = atspi.getKnownApplications()
     debug.println(level, "There are %d Accessible applications" % len(apps))
     for app in apps:
         debug.printDetails(level, "  App: ", app, False)
@@ -942,10 +903,6 @@ def init(registry):
         debug.println(debug.LEVEL_CONFIGURATION,
                       "Magnification module has NOT been initialized.")
 
-    # Build list of accessible apps.
-    #
-    _buildAppList(registry)
-
     # Create and load an app's script when it is added to the desktop
     #
     registry.registerEventListener(_onChildrenChanged,
@@ -978,9 +935,11 @@ def start(registry):
         debug.printException(debug.LEVEL_SEVERE)
 
     if not _PRESENTATION_MANAGERS:
-        # [[[WDW - comment out hierarchical_presenter for now.  It relies
-        # on orca.apps, and we've disabled that due to a hang in a call
-        # to getChildAtIndex in _buildAppList.]]]
+
+        # [[[WDW - comment out hierarchical_presenter for now.  It
+        # relies on the list of known applications, and we've disabled
+        # that due to a hang in a call to getChildAtIndex in
+        # atspi.getKnownApplications.]]]
         #
         #import focus_tracking_presenter
         #import hierarchical_presenter

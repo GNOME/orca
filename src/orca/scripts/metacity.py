@@ -17,6 +17,7 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+import orca.atspi as atspi
 import orca.braille as braille
 import orca.default as default
 import orca.rolenames as rolenames
@@ -74,7 +75,7 @@ class Script(default.Script):
         # not.
         #
         found = False
-        for app in orca.apps:
+        for app in atspi.getKnownApplications():
             i = 0
             while i < app.childCount:
                 win = app.child(i)

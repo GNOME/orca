@@ -1485,6 +1485,29 @@ def getAcceleratorAndShortcut(obj):
 
     return [accelerator, fullShortcut]
 
+def getKnownApplications():
+    """Retrieves the list of currently running apps for the desktop
+    as a list of Accessible objects.
+    """
+
+    debug.println(debug.LEVEL_FINEST,
+                  "atspi.getKnownApplications...")
+
+    apps = []
+    registry = Registry()
+    for i in range(0, registry.desktop.childCount):
+        try:
+            acc = registry.desktop.getChildAtIndex(i)
+            app = Accessible.makeAccessible(acc)
+            if app:
+                apps.insert(0, app)
+        except:
+            debug.printException(debug.LEVEL_FINEST)
+
+    debug.println(debug.LEVEL_FINEST,
+                  "...orca._buildAppList")
+
+    return apps
 
 ########################################################################
 #                                                                      #
@@ -1498,15 +1521,15 @@ def printAncestry(child):
    if not child:
        return
    
-   objects = [child]
+   ancestorList = [child]
    parent = child.parent
    while parent and (parent.parent != parent):
-      objects.insert(0, parent)
+      ancestorList.insert(0, parent)
       parent = parent.parent
 
    indent = ""
-   for object in objects:
-      print object.toString(indent + "+-", False)
+   for ancestor in ancestorList:
+      print ancestor.toString(indent + "+-", False)
       indent += "  "
 
 def printHierarchy(root, ooi, indent="", onlyShowing=True, omitManaged=True):

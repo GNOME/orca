@@ -20,8 +20,6 @@
 """Provides an experimental hierarchical navigation presentation
 manager for Orca.  This is mostly for exploratory purposes."""
 
-import sys
-
 import atspi
 import braille
 import debug
@@ -102,8 +100,9 @@ class HierarchicalPresenter(presentation_manager.PresentationManager):
         accessible
         """
 
-	for i in range(0, len(orca.apps)):
-            if accessible.app == orca.apps[i]:
+        apps = atspi.getKnownApplications()
+	for i in range(0, len(apps)):
+            if accessible.app == apps[i]:
                 return i
 
 	return -1
@@ -149,11 +148,12 @@ class HierarchicalPresenter(presentation_manager.PresentationManager):
     def _navigateInterObject(self, keystring):
         """Navigates between objects in the component hierarchy."""
 
+        apps = atspi.getKnownApplications()
         if keystring == "Up":
             if self._currentObject == self._currentObject.app:
                 index = max(self._getApplicationIndex(self._currentObject) - 1,
                             0)
-                self._currentObject = orca.apps[index]
+                self._currentObject = apps[index]
                 self._displayAccessible(self._currentObject)
             else:
                 parent = self._currentObject.parent
@@ -163,8 +163,8 @@ class HierarchicalPresenter(presentation_manager.PresentationManager):
         elif keystring == "Down":
             if self._currentObject == self._currentObject.app:
                 index = min(self._getApplicationIndex(self._currentObject) + 1,
-                            len(orca.apps) - 1)
-                self._currentObject = orca.apps[index]
+                            len(apps) - 1)
+                self._currentObject = apps[index]
                 self._displayAccessible(self._currentObject)
             else:
                 parent = self._currentObject.parent
@@ -429,14 +429,15 @@ class HierarchicalPresenter(presentation_manager.PresentationManager):
 
         speech.speak(_("Switching to hierarchical navigation mode."))
 
-
+        apps = atspi.getKnownApplications()
+        
         win = orca.findActiveWindow()
 
         if win:
             self._currentObject = win.app
             self._displayAccessible(self._currentObject)
         else:
-            self._currentObject = orca.apps[0]
+            self._currentObject = apps[0]
             self._displayAccessible(self._currentObject)
             
     def deactivate(self):
