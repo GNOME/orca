@@ -1232,6 +1232,13 @@ class Script(script.Script):
                and (event.source.parent != orca.locusOfFocus):
             return
 
+        # If echoing by character and word are both off, then just return.
+        #
+        echoByWord = settings.getSetting(settings.USE_ECHO_BY_WORD, False)
+        echoByChar = settings.getSetting(settings.USE_ECHO_BY_CHAR, False)
+        if not echoByWord and not echoByChar:
+            return
+
         self.updateBraille(event.source)
         text = event.any_data.value()
 

@@ -1,5 +1,12 @@
 2006-04-07  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/default.py
+          Small change to the onTextInserted() method as part of the
+          key echo revamp. If echoing by character and word are both 
+          off, then just return and don't speak anything.
+
+2006-04-07  Rich Burridge <rich.burridge@sun.com>
+
         * bugs/bugs.html
           Added in the following GNOME planner bug:
 
