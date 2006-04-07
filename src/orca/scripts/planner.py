@@ -70,8 +70,8 @@ class Script(default.Script):
         #
         # If the focus is on one of the four graphic toggle buttons on
         # the left side of the main window, then get the label associated
-        # with it, and speak it. Then fall through to provide the default
-        # action for this focus event.
+        # with it, and speak it. We then do the default action for this 
+        # focus event, followed by added the label to the braille display.
 
         rolesList = [rolenames.ROLE_TOGGLE_BUTTON, \
                      rolenames.ROLE_FILLER, \
@@ -85,7 +85,15 @@ class Script(default.Script):
 
             filler = event.source.parent
             allLabels = atspi.findByRole(filler, rolenames.ROLE_LABEL)
-            speech.speak(allLabels[0].name)
+            utterance = allLabels[0].name
+            speech.speak(utterance)
+
+            default.Script.onFocus(self, event)
+            brailleRegions = brailleGen.getBrailleRegions(event.source)
+            brailleRegions[0] = brailleRegions[0][0]
+            brailleRegions.append(braille.Region(utterance))
+            braille.displayRegions(brailleRegions) 
+            return
 
 
         # For everything else, pass the focus event onto the parent class 

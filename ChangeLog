@@ -1,4 +1,10 @@
-2006-04-06  Rich Burridge <rich.burridge@sun.com>
+2006-04-07  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/planner.py
+          Adjustment to case #1 in the onFocus() method, to also add
+          the label for the toggle button to the braille display.
+
+2006-04-07  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.in
           Several changes to the orca-setup script:
