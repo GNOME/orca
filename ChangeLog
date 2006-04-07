@@ -1,5 +1,14 @@
 2006-04-07  Rich Burridge <rich.burridge@sun.com>
 
+        * bugs/bugs.html
+          Added in the following GNOME planner bug:
+
+          http://bugzilla.gnome.org/show_bug.cgi?id=337659
+          Planner Edit Task Properties dialog has broken accessible 
+          component hierarchy.
+
+2006-04-07  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/scripts/planner.py
           Adjustment to case #1 in the onFocus() method, to also add
           the label for the toggle button to the braille display.
