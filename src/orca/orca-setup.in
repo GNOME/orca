@@ -31,7 +31,7 @@ import orca.settings
 from orca.acss import ACSS
 from orca.orca_i18n import _  # for gettext support
 
-# Create the user's .orca directory
+# Create the user's .orca directory if it doesn't already exist.
 #
 orcadir = os.path.join(os.environ["HOME"], ".orca")
 try:
@@ -44,6 +44,37 @@ except:
         # [[[TODO: WDW - need to print a message and fail here.]]]
         #
         pass
+
+# Create the user's .orca/orca-scripts directory if it doesn't 
+# already exist.
+#
+orcaScriptDir = os.path.join(os.environ["HOME"], ".orca", "orca-scripts")
+try:
+    os.chdir(orcaScriptDir)
+except:
+    print _("Creating .orca script directory.")
+    try:
+        os.mkdir(orcaScriptDir)
+    except:
+        # [[[TODO: richb - need to print a message and fail here.]]]
+        #
+        pass
+
+# Create an empty __init__.py file in the user's script directory, if
+# it doesn't already exist.
+#
+initFile = os.path.join(os.environ["HOME"], ".orca", \
+                        "orca-scripts", "__init__.py")
+if not os.path.exists(initFile):
+    print _("Creating __init_.py in .orca script directory.")
+#    try:
+    print "initFile: ", initFile
+    os.close(os.open(initFile, os.O_CREAT, 0700))
+#    except:
+#        # [[[TODO: richb - need to print a message and fail here.]]]
+#        #
+#        pass
+
         
 # Create a new settings file
 #
@@ -229,13 +260,26 @@ def setupSpeech():
         settings.writelines(pprint.pformat(voices[voice]) + "),\n")
     settings.writelines("}\n\n")
 	
-    keyEcho = sayAndPrint(_("Use key echo?  Enter y or n: "), True, True)
-    if keyEcho[0:1] == 'Y' or keyEcho[0:1] == 'y':
-        settings.writelines(orca.settings.USE_KEY_ECHO + " = True\n")
+    # Ask the user if they want to echo by word, character, both or none.
+    # Set orca's settings appropriately. Note that an answer that
+    # isn't W/w, C/c, B/b or N/n will automatically defaults to echoing none.
+    #
+    echoType = sayAndPrint(_("Echo by word, character, both or none?  Enter w, c, b or n: "), True, True)
+    if echoType[0:1] == 'W' or echoType[0:1] == 'w':
+        settings.writelines(orca.settings.USE_ECHO_BY_WORD + " = True\n")
+        settings.writelines(orca.settings.USE_ECHO_BY_CHAR + " = False\n")
+    elif echoType[0:1] == 'C' or echoType[0:1] == 'c':
+        settings.writelines(orca.settings.USE_ECHO_BY_WORD + " = False\n")
+        settings.writelines(orca.settings.USE_ECHO_BY_CHAR + " = True\n")
+    elif echoType[0:1] == 'B' or echoType[0:1] == 'b':
+        settings.writelines(orca.settings.USE_ECHO_BY_WORD + " = True\n")
+        settings.writelines(orca.settings.USE_ECHO_BY_CHAR + " = True\n")
     else:
-        settings.writelines(orca.settings.USE_KEY_ECHO + " = False\n")
+        settings.writelines(orca.settings.USE_ECHO_BY_WORD + " = False\n")
+        settings.writelines(orca.settings.USE_ECHO_BY_CHAR + " = False\n")
 
     settings.writelines(orca.settings.USE_SPEECH + " = True\n")
+
     return True
 
 def setupBraille():
@@ -282,7 +326,8 @@ def enableAccessibility():
 useSpeech = setupSpeech()
 if useSpeech == False:
     settings.writelines(orca.settings.USE_SPEECH + " = False\n")
-    settings.writelines(orca.settings.USE_KEY_ECHO + " = False\n")
+    settings.writelines(orca.settings.USE_ECHO_BY_WORD + " = False\n")
+    settings.writelines(orca.settings.USE_ECHO_BY_CHAR + " = False\n")
 
 # We'll always enable braille for now.  Orca will recover gracefully
 # if it cannot connect to BrlTTY.
@@ -295,7 +340,16 @@ settings.writelines(orca.settings.USE_BRAILLE + " = True\n")
 #else:
 #    settings.writelines(orca.settings.USE_BRAILLE + " = False\n")
 
+useBrailleMonitor = sayAndPrint(_("Use Braille Monitor?  Enter y or n: "), True, True)
+if useBrailleMonitor[0:1] == 'Y' or useBrailleMonitor[0:1] == 'y':
+    settings.writelines(orca.settings.USE_BRAILLE_MONITOR + " = True\n")
+else:
+    settings.writelines(orca.settings.USE_BRAILLE_MONITOR + " = False\n")
 
+settings.writelines("try:\n")
+settings.writelines("    __import__(\"orca-customizations\")\n")
+settings.writelines("except ImportError:\n")
+settings.writelines("    pass\n")
 
 enableAccessibility()
 

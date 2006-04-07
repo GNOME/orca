@@ -554,7 +554,8 @@ def _keyEcho(event):
         if value < 32:
             event_string = chr(value + 0x40)
 
-    if not settings.getSetting(settings.USE_KEY_ECHO, False):
+    if not (settings.getSetting(settings.USE_ECHO_BY_WORD, False) \
+         or settings.getSetting(settings.USE_ECHO_BY_CHAR, False)):
         return
 
     if event_string.isupper():

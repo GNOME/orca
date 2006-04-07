@@ -1,5 +1,41 @@
 2006-04-06  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/orca-setup.in
+          Several changes to the orca-setup script:
+          - Removed the "Use key echo?" question and associated
+            orca.settings.USE_KEY_ECHO setting. 
+          - Replaced it with:
+            "Echo by word, character, both or none?  Enter w, c, b or n: "
+            which  will set two settings to True or False:
+              orca.settings.USE_ECHO_BY_WORD
+              orca.settings.USE_ECHO_BY_CHAR
+            depending upon the users answer.
+          - Added in another question: "Use Braille Monitor?  Enter y or n: ".
+            The Braille Monitor is a visual representation of what is being
+            brailled by Orca.
+          - Automatically create a "orca-scripts" directory under the
+            users .orca directory, if it doesn't already exist.
+          - Automatically create an empty __init__.py file in the 
+            orca-scripts directory, if it doesn't already exist. 
+            This will enable the user to put their own specific 
+            applications scripts in the orca-scripts directory, 
+            and Orca will pick them up.
+          - Added a section of code that will generate the following lines
+            at the end of the user's user-settings.py file:
+
+              try:
+                  __import__("orca-customizations")
+              except ImportError:
+                  pass
+
+            What this means is that Orca will now look for a file
+            called "orca-customizations.py" in the user's .orca directory.
+            This file should contain any custom Orca Python code that the
+            user wants. Having it in a separate file from user-settings.py
+            means it won't get blown away when you rerun orca-setup
+
+2006-04-06  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/orca.py
           Added in two sections of code in _keyEcho():
           - check to see if the key event is for a "special" key (via

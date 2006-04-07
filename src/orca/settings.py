@@ -101,10 +101,17 @@ useBrailleMonitor       = False
 USE_MAGNIFIER           = "useMagnifier"
 useMagnifier            = False
 
-# If True, use key echo.
+# if True, echo keys by word.
+# Note that it is allowable for both useEchoByWord and useEchoByChar to be True
 #
-USE_KEY_ECHO            = "useKeyEcho"
-useKeyEcho              = False
+USE_ECHO_BY_WORD        = "useEchoByWord"
+useEchoByWord           = False
+
+# if True, echo keys by character.
+# Note that it is allowable for both useEchoByWord and useEchoByChar to be True
+#
+USE_ECHO_BY_CHAR        = "useEchoByChar"
+useEchoByChar           = False
 
 # If True, reads all the table cells in the current row rather than just
 # the current one.
