@@ -5,6 +5,12 @@
           key echo revamp. If echoing by character and word are both 
           off, then just return and don't speak anything.
 
+          [Update: change removed for now as it has the side-effect
+           of no longer speaking any text that's inserted into the gedit or
+           gnome-terminal application. Need to find out how to determine
+           whether this "object:text-changed:insert" event was generated
+           as the result of a key being pressed.]
+
 2006-04-07  Rich Burridge <rich.burridge@sun.com>
 
         * bugs/bugs.html

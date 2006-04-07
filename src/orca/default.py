@@ -1236,8 +1236,14 @@ class Script(script.Script):
         #
         echoByWord = settings.getSetting(settings.USE_ECHO_BY_WORD, False)
         echoByChar = settings.getSetting(settings.USE_ECHO_BY_CHAR, False)
-        if not echoByWord and not echoByChar:
-            return
+        # [[[TODO: richb - commented out for now as it has the side-effect 
+        #    of no longer speaking any text that's inserted into the gedit or
+        #    gnome-terminal application. Need to find out how to determine
+        #    whether this "object:text-changed:insert" event was generated 
+        #    as the result of a key being pressed.]]]
+        #
+        # if not echoByWord and not echoByChar:
+        #   return
 
         self.updateBraille(event.source)
         text = event.any_data.value()
