@@ -652,15 +652,20 @@ def refresh(panToCursor=True, targetCursorCell=0):
     beginningIsShowing = startPos == 0
     endIsShowing = endPos >= len(string)
 
-def displayRegionsWithFocus(regions, focusedRegion):
+def displayRegions(regionInfo):
     """Displays a list of regions on a single line, setting focus to the 
-       specified region.
+       specified region.  The regionInfo parameter is something that is
+       typically returned by a call to braillegenerator.getBrailleRegions.
 
     Arguments:
-    - regions: a list of regions to display
-    - focusedRegion: the focused region (must be in regions)
+    - regionInfo: a list where the first element is a list of regions
+                  to display and the second element is the region
+                  with focus (must be in the list from element 0)
     """
 
+    regions = regionInfo[0]
+    focusedRegion = regionInfo[1]
+    
     clear()
     line = Line()
     for item in regions:
@@ -668,17 +673,6 @@ def displayRegionsWithFocus(regions, focusedRegion):
     addLine(line)
     setFocus(focusedRegion)
     refresh()
-
-def displayRegions(regions, indexOfFocusRegion=0):
-    """Displays a list of regions on a single line, setting focus to the 
-       specified region.
-
-    Arguments:
-    - regions: a list of regions to display
-    - indexOfFocusRegion: which region in the list should receive focus,
-                          or the first one if this is not specified
-    """
-    displayRegionsWithFocus(regions, regions[indexOfFocusRegion])
 
 def displayMessage(message, cursor=-1):
     """Displays a single line, setting the cursor to the given position,

@@ -256,11 +256,7 @@ class Script(default.Script):
                                        result[0][startOffset:endOffset], 
                                        startOffset, endOffset)
 
-            brailleRegions = []
-            [cellRegions, focusedRegion] = \
-                brailleGen.getBrailleRegions(event.source)
-            brailleRegions.extend(cellRegions)
-            braille.displayRegions(brailleRegions)
+            braille.displayRegions(brailleGen.getBrailleRegions(event.source))
 
             orca.setLocusOfFocus(event, event.source, False)
             return

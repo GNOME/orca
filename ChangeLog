@@ -1,3 +1,10 @@
+2006-04-08  Willie Walker <william.walker@sun.com>
+
+	* src/orca/braille.py, src/orca/scripts/Evolution.py
+	src/orca/scripts/StarOffice.py: fix for bug 337704 - add API
+	symmetry to braillegenerator.py:getBrailleRegions and
+	braille.py:displayRegions.
+	
 2006-04-07  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py

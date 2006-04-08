@@ -98,11 +98,7 @@ class Script(default.Script):
         speech.speakUtterances(utterances)
         settings.speechVerbosityLevel = savedSpeechVerbosityLevel
 
-        brailleRegions = []
-        [cellRegions, focusedRegion] = brailleGen.getBrailleRegions(tab)
-        brailleRegions.extend(cellRegions)
-        braille.displayRegions(brailleRegions)
-
+        braille.displayRegions(brailleGen.getBrailleRegions(tab))
 
     def getTimeForCalRow(self, row, noIncs):
         """Return a string equivalent to the time of the given row in
@@ -235,7 +231,7 @@ class Script(default.Script):
                         result = atspi.getTextLineAtCaret(cell)
                         utterances.append(result[0])
 
-                braille.displayRegions(regions)
+                braille.displayRegions([regions, regions[0]])
                 speech.speakUtterances(utterances)
                 orca.setLocusOfFocus(event, event.source, False)
                 return
@@ -382,7 +378,7 @@ class Script(default.Script):
                             speech.speakUtterances(utterances)
 
             if brailleRegions != []:
-                braille.displayRegionsWithFocus(brailleRegions, cellWithFocus)
+                braille.displayRegions([brailleRegions, cellWithFocus])
 
             orca.setLocusOfFocus(event, event.source, False)
             settings.brailleVerbosityLevel = savedBrailleVerbosityLevel
@@ -418,12 +414,10 @@ class Script(default.Script):
                       "evolution.onFocus - calendar view: day view: " \
                       + "tabbing to day with appts.")
 
-            brailleRegions = []
             parent = event.source.parent
             utterances = speechGen.getSpeech(parent, False)
-            [cellRegions, focusedRegion] = \
+            [brailleRegions, focusedRegion] = \
                     brailleGen.getBrailleRegions(parent)
-            brailleRegions.extend(cellRegions)
             speech.speakUtterances(utterances)
 
             apptExtents = event.source.component.getExtents(0)
@@ -455,7 +449,8 @@ class Script(default.Script):
                                 self.getTimeForCalRow(j + apptLen, noRows)
                             brailleRegions.append(braille.Region(endTime))
                             speech.speak(endTime)
-                            braille.displayRegions(brailleRegions)
+                            braille.displayRegions([brailleRegions,
+                                                    brailleRegions[0]])
                             return
 
 
@@ -517,7 +512,8 @@ class Script(default.Script):
                             self.getTimeForCalRow(index + apptLen, noRows)
                         brailleRegions.append(braille.Region(endTime))
                         speech.speak(endTime)
-                        braille.displayRegions(brailleRegions)
+                        braille.displayRegions([brailleRegions,
+                                                brailleRegions[0]])
                         found = True
 
             if found == False:
@@ -528,7 +524,8 @@ class Script(default.Script):
                 utterance = _("No appointments")
                 speech.speak(utterance)
                 brailleRegions.append(braille.Region(utterance))
-                braille.displayRegions(brailleRegions)
+                braille.displayRegions([brailleRegions,
+                                        brailleRegions[0]])
 
             return
 
@@ -602,7 +599,8 @@ class Script(default.Script):
             utterance = _("Directories button")
             speech.speak(utterance)
             brailleRegions.append(braille.Region(utterance))
-            braille.displayRegions(brailleRegions)
+            braille.displayRegions([brailleRegions,
+                                    brailleRegions[0]])
             return
 
 
