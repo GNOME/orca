@@ -240,6 +240,11 @@ def setupSpeech():
     else:
         defaultACSS = ACSS({ACSS.FAMILY : families[0]})
 
+    # Force the rate to 50 so it will be set to something
+    # and output to the user settings file.  50 is chosen
+    # here, BTW, since it is the default value.
+    #
+    defaultACSS["rate"] = 50
     uppercaseACSS = ACSS({ACSS.AVERAGE_PITCH : 6})
     hyperlinkACSS = ACSS({ACSS.AVERAGE_PITCH : 2})
 

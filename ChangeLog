@@ -4,6 +4,8 @@
 	src/orca/scripts/StarOffice.py: fix for bug 337704 - add API
 	symmetry to braillegenerator.py:getBrailleRegions and
 	braille.py:displayRegions.
+	* src/orca/orca-setup.in: fix for RFE (bug 337709) - force
+	speaking rate parameter to be added to ACSS for default force.
 	
 2006-04-07  Rich Burridge <rich.burridge@sun.com>
 
