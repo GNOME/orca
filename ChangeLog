@@ -1,3 +1,8 @@
+2006-04-09  Willie Walker <william.walker@sun.com>
+
+	* src/orca/scripts/planner.py: use new braille API to for 
+	displayRegions and also handle the label a little better.
+	
 2006-04-08  Willie Walker <william.walker@sun.com>
 
 	* src/orca/braille.py, src/orca/scripts/Evolution.py

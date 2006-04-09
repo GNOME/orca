@@ -70,9 +70,16 @@ class Script(default.Script):
         #
         # If the focus is on one of the four graphic toggle buttons on
         # the left side of the main window, then get the label associated
-        # with it, and speak it. We then do the default action for this 
-        # focus event, followed by added the label to the braille display.
-
+        # with it, and speak it.  The reason we do this hack is because
+        # planner has not bound the labels to the toggle buttons and we
+        # need to do the mapping ourselves.
+        #
+        # We then do the default action for this focus event, followed by
+        # added the label to the braille display.
+        #
+        # If planner is ever fixed to bind the labels to the toggle buttons,
+        # then this code should be removed.
+        #
         rolesList = [rolenames.ROLE_TOGGLE_BUTTON, \
                      rolenames.ROLE_FILLER, \
                      rolenames.ROLE_FILLER, \
@@ -89,10 +96,17 @@ class Script(default.Script):
             speech.speak(utterance)
 
             default.Script.onFocus(self, event)
-            brailleRegions = brailleGen.getBrailleRegions(event.source)
-            brailleRegions[0] = brailleRegions[0][0]
-            brailleRegions.append(braille.Region(utterance))
-            braille.displayRegions(brailleRegions) 
+
+            # The region with focus is going to be the toggle button.  We
+            # want the entire region to be sensitive to cursor routing keys,
+            # so we augment the string for the region with focus with the
+            # label we just discovered.
+            #
+            [brailleRegions, regionWithFocus] = \
+                brailleGen.getBrailleRegions(event.source)
+            regionWithFocus.string = utterance + " " \
+                                     + regionWithFocus.string
+            braille.displayRegions([brailleRegions, regionWithFocus]) 
             return
 
 

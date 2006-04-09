@@ -45,7 +45,7 @@ from orca_i18n import _           # for gettext support
 #
 lastInputEvent = None
 
-# A new modifier to use (currently bound to the "Insert" key) to represent
+# A new modifier to use (currently bound to the "Caps_Lock" key) to represent
 # special Orca key sequences.
 #
 MODIFIER_ORCA = 8
@@ -502,11 +502,9 @@ def exitLearnMode(script=None, inputEvent=None):
 #
 _keybindings = None
 
-# True if the insert key is currently pressed.  We will use the insert
-# key as a modifier for Orca, and it will be presented as the "insert"
-# modifier string.
+# True if the orca modifier key is currently pressed.
 #
-_insertPressed = False
+_orcaModifierPressed = False
 
 # List of special keys. Used by _specialKey().
 #
@@ -599,7 +597,7 @@ def _processKeyboardEvent(event):
     """
 
     global lastInputEvent
-    global _insertPressed
+    global _orcaModifierPressed
 
     event_string = event.event_string
 
@@ -618,16 +616,16 @@ def _processKeyboardEvent(event):
 
         _keyEcho(event)
 
-        # We treat the Insert key as a modifier - so just swallow it and
+        # We treat the Caps_Lock key as a modifier - so just swallow it and
         # set our internal state.
         #
-        if (event_string == "Insert") or (event_string == "KP_Insert"):
-            _insertPressed = True
+        if event_string == "Caps_Lock":
+            _orcaModifierPressed = True
             return True
 
-    elif event.type == atspi.Accessibility.KEY_RELEASED_EVENT \
-         and ((event_string == "Insert") or (event_string == "KP_Insert")):
-        _insertPressed = False
+    elif (event.type == atspi.Accessibility.KEY_RELEASED_EVENT) \
+         and (event_string == "Caps_Lock"):
+        _orcaModifierPressed = False
         return True
 
     # Orca gets first stab at the event.  Then, the presenter gets
@@ -636,7 +634,7 @@ def _processKeyboardEvent(event):
     # scripts to override fundamental Orca key bindings.]]]
     #
     keyboardEvent = KeyboardEvent(event)
-    if _insertPressed:
+    if _orcaModifierPressed:
         keyboardEvent.modifiers |= (1 << MODIFIER_ORCA)
 
     consumed = False
