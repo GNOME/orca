@@ -45,7 +45,7 @@ from orca_i18n import _           # for gettext support
 #
 lastInputEvent = None
 
-# A new modifier to use (currently bound to the "Caps_Lock" key) to represent
+# A new modifier to use (currently bound to the "Insert" key) to represent
 # special Orca key sequences.
 #
 MODIFIER_ORCA = 8
@@ -616,15 +616,15 @@ def _processKeyboardEvent(event):
 
         _keyEcho(event)
 
-        # We treat the Caps_Lock key as a modifier - so just swallow it and
+        # We treat the Insert key as a modifier - so just swallow it and
         # set our internal state.
         #
-        if event_string == "Caps_Lock":
+        if event_string == "Insert" or event_string == "KP_Insert":
             _orcaModifierPressed = True
             return True
 
     elif (event.type == atspi.Accessibility.KEY_RELEASED_EVENT) \
-         and (event_string == "Caps_Lock"):
+         and (event_string == "Insert" or event_string == "KP_Insert"):
         _orcaModifierPressed = False
         return True
 
