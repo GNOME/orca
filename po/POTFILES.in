@@ -16,8 +16,10 @@ src/orca/scripts/Evolution.py
 src/orca/scripts/Gecko.py
 src/orca/scripts/Mozilla.py
 src/orca/scripts/gaim.py
+src/orca/scripts/gedit.py
 src/orca/scripts/StarOffice.py
 src/orca/settings.py
 src/orca/scripts/metacity.py
 src/orca/speech.py
 src/orca/speechgenerator.py
+src/orca/util.py

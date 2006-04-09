@@ -5,6 +5,7 @@
 	* src/orca/orca.py, src/orca/settings.py: fix for bug 337857,
 	allow user to customize which key(s) can be used as the Orca
 	modifier key.
+	* po/POTFILES.in: add gedit and utils.
 	
 2006-04-08  Willie Walker <william.walker@sun.com>
 
