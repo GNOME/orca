@@ -441,7 +441,6 @@ def printActiveApp(script=None, inputEvent=None):
             debug.println(level, "Active application: None")
         else:
             debug.println(level, "Active application: %s" % app.name)
-            printAccessibleTree(level, "  ", findActiveWindow())
 
     return True
 
