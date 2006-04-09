@@ -35,6 +35,16 @@ from orca_i18n import _           # for gettext support
 #                                                                       #
 #########################################################################
 
+# A list of keys that can serve as the Orca modifier key.  The list is
+# so we can provide better cross platform support (e.g., Sun keyboard
+# vs. PC-104 keyboard layouts).  When any of these keys is pressed,
+# the orca.MODIFIER_ORCA bit will be set in the 'modifiers' field of
+# a KeyboardEvent input event.  The keys are currently compared to the
+# event_string of a keyboard input event from AT-SPI.
+#
+ORCA_MODIFIER_KEYS      = "orcaModifierKeys"
+orcaModifierKeys        = ["Insert", "KP_Insert"]
+
 # Verbosity levels (see setBrailleVerbosityLevel and
 # setSpeechVerbosityLevel).  These will have an impact on the various
 # individual verbosity levels for rolenames, accelerators, etc.

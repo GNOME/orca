@@ -45,8 +45,8 @@ from orca_i18n import _           # for gettext support
 #
 lastInputEvent = None
 
-# A new modifier to use (currently bound to the "Insert" key) to represent
-# special Orca key sequences.
+# A new modifier to use (set by the press of any key in the
+# settings.orcaModifierKeys list) to represent the Orca modifier.
 #
 MODIFIER_ORCA = 8
 
@@ -608,6 +608,8 @@ def _processKeyboardEvent(event):
         _keystrokesFile.write(string + "\n")
     debug.printInputEvent(debug.LEVEL_FINE, string)
 
+    orcaModifierKeys = settings.getSetting(settings.ORCA_MODIFIER_KEYS, [])
+
     if event.type == atspi.Accessibility.KEY_PRESSED_EVENT:
         # Key presses always interrupt speech.
         #
@@ -618,12 +620,12 @@ def _processKeyboardEvent(event):
         # We treat the Insert key as a modifier - so just swallow it and
         # set our internal state.
         #
-        if event_string == "Insert" or event_string == "KP_Insert":
+        if orcaModifierKeys.count(event_string):
             _orcaModifierPressed = True
             return True
 
     elif (event.type == atspi.Accessibility.KEY_RELEASED_EVENT) \
-         and (event_string == "Insert" or event_string == "KP_Insert"):
+         and orcaModifierKeys.count(event_string):
         _orcaModifierPressed = False
         return True
 

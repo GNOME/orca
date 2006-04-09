@@ -2,6 +2,9 @@
 
 	* src/orca/scripts/planner.py: use new braille API to for 
 	displayRegions and also handle the label a little better.
+	* src/orca/orca.py, src/orca/settings.py: fix for bug 337857,
+	allow user to customize which key(s) can be used as the Orca
+	modifier key.
 	
 2006-04-08  Willie Walker <william.walker@sun.com>
 
