@@ -63,7 +63,7 @@
 	      are currently handled with a restart of the connection
 	      to gnome-speech, including providing a fallback to
 	      working speech engines.  Hangs, however, are not
-	      detected, and can cause Orca to hang. &deliver;
+	      detected, and can cause Orca to hang. &mustdeliver;
 	      V1.0.</para></listitem>
 
 	    <listitem><para>Communication with at-spi: Failures are
@@ -73,7 +73,7 @@
 	      to be put in the at-spi registry itself [[[WDW - need
 	      pointer to at-spi RFE]]], but Orca still needs to detect
 	      and recover from hangs when calling at-spi
-	      functions.  &deliver; V1.0.</para></listitem>
+	      functions. &mustdeliver; V1.0.</para></listitem>
 
 	  </itemizedlist>
       </section>
@@ -126,7 +126,7 @@
           testing, however, with AccessX and with Gnopernicus to
           verify that we can use Gnopernicus as a magnification
           solution while we build out magnification support in
-          Orca. &deliver; V1.0.</para>
+          Orca. &mustdeliver; V1.0.</para>
 
       </section>
 
@@ -153,7 +153,7 @@
         <para>&incomplete; [OWNER: MMP] Orca currently provides a
 	  &styleguidelink; and a <literal>default.py</literal> script.
 	  However, we need to revisit both to make sure they are in
-	  line with each other and up-to-date. &deliver; V1.0.</para>
+	  line with each other and up-to-date. &mustdeliver; V1.0.</para>
 
       </section>
 
@@ -188,7 +188,7 @@
 	  as well as Firefox (i.e., the Mozilla toolkit).  This
 	  refactoring is being tracked in <ulink
 	  url="http://bugzilla.gnome.org/show_bug.cgi?id=319668">
-	  Bugzilla Bug 319668</ulink>.  &deliver; V1.0.  </para>
+	  Bugzilla Bug 319668</ulink>. &mustdeliver; V1.0.  </para>
 
       </section>
 
@@ -224,28 +224,28 @@
           </listitem>
           <listitem>
 	    <para>&incomplete; [OWNER: RNB] Keystroke to speak/braille application with 
-	      focus. &deliver; V1.0.</para>
+	      focus. &mustdeliver; V1.0.</para>
 	  </listitem>
           <listitem>
 	    <para>&incomplete; [OWNER: RNB] Keystroke to speak/braille
-	      the current script (and script class) in use. &deliver;
+	      the current script (and script class) in use. &mustdeliver;
 	      V1.0.</para>
 	  </listitem>
           <listitem>
 	    <para>&incomplete; [OWNER: RNB] Keystroke to dump
 	      all applications.  Currently bound to Insert+F5, needs to
-	      be rebound to something else. &deliver; V1.0.</para>
+	      be rebound to something else. &mustdeliver; V1.0.</para>
 	  </listitem>
           <listitem>
 	    <para>&incomplete; [OWNER: RNB] Keystroke to dump the ancestors
 	      of the object with focus.  Currently bound to Insert+F7,
-	      needs to be rebound to something else. &deliver; V1.0.</para>
+	      needs to be rebound to something else. &mustdeliver; V1.0.</para>
 	  </listitem>
           <listitem>
 	    <para>&incomplete; [OWNER: RNB] Keystroke to dump the
 	      widget hierarchy of the application with
 	      focus. Currently bound to Ctrl+Insert+F7, needs to be
-	      rebound to something else. &deliver; V1.0.</para>
+	      rebound to something else. &mustdeliver; V1.0.</para>
 	  </listitem>
         </itemizedlist>
       </section>
@@ -288,7 +288,8 @@
               <row>
                 <entry>Calendar</entry>
                 <entry>Evolution - GNOME 2.16</entry>
-                <entry>&incomplete; [OWNER: RNB] month view not done.  &deliver; V1.0.</entry>       
+                <entry>&incomplete; [OWNER: RNB] month view not
+                  done. &shoulddeliver; V1.0.</entry>
               </row>
               <row>
                 <entry>Contact Management</entry>
@@ -303,22 +304,23 @@
               <row>
                 <entry>Help</entry>
                 <entry>Yelp - GNOME 2.16</entry>
-                <entry>&incomplete; [OWNER: LMS] No script and untested. &deliver; V1.0</entry>
+                <entry>&incomplete; [OWNER: LMS] No script and
+                  untested. &mustdeliver; V1.0</entry>
               </row>
               <row>
                 <entry>Document Generation</entry>
                 <entry>StarOffice 8 PP3, OpenOffice 2.0.3 (initial); StarOffice 8 PP4, OpenOffice 2.0.4 (better)</entry>
-                <entry>&incomplete; [OWNER: RNB] Working with StarOffice team to fix AT-SPI issues; Script under development.  &deliver V1.0</entry>
+                <entry>&incomplete; [OWNER: RNB] Working with StarOffice team to fix AT-SPI issues; Script under development. &mustdeliver V1.0</entry>
               </row>
 	      <row>
 	        <entry>Spreadsheet</entry>
                 <entry>StarOffice 8 PP3, OpenOffice 2.0.3 (initial); StarOffice 8 PP4, OpenOffice 2.0.4 (better)</entry>
-                <entry>&incomplete; [OWNER: RNB] Working with StarOffice team to fix AT-SPI issues; Script under development. &deliver; V1.0</entry>
+                <entry>&incomplete; [OWNER: RNB] Working with StarOffice team to fix AT-SPI issues; Script under development. &mustdeliver; V1.0</entry>
 	      </row>
 	      <row>
 	        <entry>Presentation</entry>
                 <entry>StarOffice 8 PP3, OpenOffice 2.0.3 (initial); StarOffice 8 PP4, OpenOffice 2.0.4 (better)</entry>
-                <entry>&incomplete; [OWNER: RNB] &deliver; V1.0+.</entry>
+                <entry>&incomplete; [OWNER: RNB] &shoulddeliver; V1.1.</entry>
 	      </row>
 	      <row>
 	        <entry>Web Browsing</entry>
@@ -326,21 +328,23 @@
 		<entry>&incomplete; [OWNER: WDW] Working with Firefox team to fix issues with
 		  accessing the Firefox widget set (XUL) for 2.0 and
 		  also working on a structural caret navigation
-		  extension for FF2 - &deliver; V1.0.  Working with
+		  extension for FF2 - &mustdeliver; V1.0.  Working with
 		  IBM and Firefox team to provide better information
-		  via AT-SPI for FF3 - &deliver; V1.0+.</entry>
+		  via AT-SPI for FF3 - &mustdeliver; V1.1.</entry>
 	      </row>
 	      <row>
 	        <entry>Content Viewing</entry>
 		<entry>Adobe Reader</entry>
-		<entry>&incomplete; [OWNER: MMP] needs testing.  &deliver; V1.0</entry>
+		<entry>&incomplete; [OWNER: MMP] needs testing and
+		  possible work from Adobe. &shoulddeliver;
+		  V1.0</entry>
 	      </row>
 	      <row>
 	        <entry>Java platform</entry>
 		<entry>Swing toolkit</entry>
-		<entry>&incomplete; [OWNER: LMS] Minimal testing, <ulink
+		<entry>&incomplete; [OWNER: LMS] minimal testing, <ulink
 		  url="http://bugzilla.gnome.org/show_bug.cgi?id=319639">bug
-		  with keycodes</ulink> - &deliver; V1.0</entry>
+		  with keycodes</ulink> - &mustdeliver; V1.0</entry>
 	      </row>
   	    </tbody>
 	  </tgroup>
@@ -365,7 +369,7 @@
 	  functionality] [OWNER: RNB - implementation] 
 	  The &ugcustomizationlink; section of the &userguidelink;
 	  will provide details on the specific customization
-	  parameters for Orca. &deliver; V1.0.</para>
+	  parameters for Orca. &mustdeliver; V1.0.</para>
       </section>
 
     </section>
@@ -386,8 +390,8 @@
 
       <section><title>Functional Description and Status</title>
 
-        <para>&incomplete; does not provide audio cue when crossing linear
-	  boundaries.  &deliver; V1.0+.</para>
+        <para>&incomplete; does not provide audio cues when crossing linear
+	  boundaries. &shoulddeliver; V1.1.</para>
 
       </section>
 
@@ -423,14 +427,11 @@
         <para>&complete; V0.2.2.  General flat review is working well.</para>
 
         <para>&incomplete; [OWNER: WDW] no automatic reading of dialogs
-          from current position or from top left. SHOULD &deliver;
+          from current position or from top left. &shoulddeliver;
           V1.0.</para>
 
-        <para>&incomplete; the mouse doesn't follow the object of interest,
-	  nor is there an option to set this. &deliver; V1.0+.</para>
-
 	<para>&incomplete; no audio cues when navigating across line
-	  boundaries. &deliver; V1.0+.</para>
+	  boundaries. &shoulddeliver; V1.1.</para>
 
       </section>
 
@@ -475,7 +476,7 @@
       <section><title>Functional Description and Status</title>
         <para>&incomplete; [OWNER: MMP - further define requirements and
 	  functionality] [OWNER: RNB - implementation] need
-	  to define what to &deliver; V1.0.</para>
+	  to define what to deliver. &mustdeliver; V1.0.</para>
       </section>
 
     </section>
@@ -513,8 +514,8 @@
 
 	<para>&incomplete; the current way to define these is by
 	  manually editing the <literal>user-settings.py</literal> or
-	  <literal>orca-customizations.py</literal> file.  &deliver;
-	  V1.0+.</para>
+	  <literal>orca-customizations.py</literal> file.
+	  &shoulddeliver; V1.0, &mustdeliver; V1.1.</para>
 
       </section>
 
@@ -537,7 +538,7 @@
 	  currently provides top down "Where am I" functionality only.
 	  Should provide both bottom up and top down.  In addition,
 	  the user design for this needs to be better specified.
-	  &deliver; V1.0.</para>
+	  &mustdeliver; V1.0.</para>
       </section>
     </section>
 
@@ -554,7 +555,7 @@
 
       <section><title>Functional Description and Status</title>
 
-        <para>&incomplete; &deliver; V1.0+.</para>
+        <para>&incomplete; &shoulddeliver; V1.1.</para>
 
       </section>
 
@@ -590,7 +591,7 @@
 
       <section><title>Functional Description and Status</title>
 
-        <para>&incomplete; SHOULD &deliver; V1.0.</para>
+        <para>&incomplete; &shoulddeliver; V1.0.</para>
 
       </section>
 
@@ -616,7 +617,7 @@
 
       <section><title>Functional Description and Status</title>
 
-        <para>&incomplete; &deliver; V1.0+.</para>
+        <para>&incomplete; &shoulddeliver; V1.1.</para>
 
       </section>
 
@@ -637,7 +638,7 @@
 
       <section><title>Functional Description and Status</title>
 
-        <para>&incomplete; &deliver; V1.0+.</para>
+        <para>&incomplete; &shoulddeliver; V1.1.</para>
 
       </section>
 
@@ -672,12 +673,12 @@
 	  interrupted.  Does not work well at all in in Evolution,
 	  StarOffice, Firefox, etc.  The main issue is the it only
 	  speaks the current text object and probably should speak
-	  contiguous text objects in the same hierarchy.  MUST
-	  &deliver; V1.0.</para>
+	  contiguous text objects in the same hierarchy.
+	  &mustdeliver; V1.0.</para>
 	<para>&incomplete; text is not highlighted, nor is there an
-	  option to do so.  &deliver; V1.0+.</para>
+	  option to do so. &deliver; V1.1+.</para>
 	<para>&incomplete; audio cues not played when auto
-	  reading across line boundaries.  &deliver; V1.0+.</para>
+	  reading across line boundaries.  &shoulddeliver; V1.1.</para>
       </section>
     </section>
 
@@ -795,30 +796,31 @@
 
         <para>&complete; V0.2.2.  General synthesis.</para>
         <para>&complete; V0.2.2.  Voice styles done via ACSS.</para>
-        <para>&incomplete; Verbalized caps. &deliver; V1.0+.</para>
+        <para>&incomplete; Verbalized caps. &mustdeliver; V1.1.</para>
 
         <para>&incomplete; [OWNER: RNB and WDW] Verbalized
-        hyperlinks. MUST &deliver; V1.0.</para>
+          hyperlinks. &mustdeliver; V1.0.</para>
 
         <para>&complete; V0.2.2.  Speaking rate modification.
           Insert+{left,right}_arrow.</para>
-        <para>&incomplete; Multilingual text.  &deliver; V1.0+.</para>
+
+        <para>&incomplete; Multilingual text. &deliver; V1.1+.</para>
 
         <para>&incomplete; [OWNER: MMP - further define requirements and functionality]
 	  [OWNER: WDW - implementation] 
-	  Spelling mode (letters). MUST &deliver; V1.0.</para>
+	  Spelling mode (letters). &mustdeliver; V1.0.</para>
 
         <para>&incomplete; [OWNER: MMP - further define requirements and functionality]
 	  [OWNER: WDW - implementation] 
-          Spelling mode (military). MUST &deliver; V1.0.</para>
+          Spelling mode (military). &mustdeliver; V1.0.</para>
 
         <para>&incomplete; [OWNER: MMP - further define requirements and functionality]
 	  [OWNER: WDW - implementation] 
-          Verbalized punctuation. MUST &deliver; V1.0.</para>
+          Verbalized punctuation. &mustdeliver; V1.0.</para>
 
         <para>&incomplete; [OWNER: MMP - further define requirements and functionality]
 	  [OWNER: WDW - implementation] 
-          Repeated character count. SHOULD &deliver; V1.0.</para>
+          Repeated character count. &shoulddeliver; V1.0.</para>
 
       </section>
 
@@ -834,7 +836,7 @@
 
       <section><title>Functional Description and Status</title>
 
-        <para>&incomplete; [OWNER: RNB] MUST &deliver; V1.0.</para>
+        <para>&incomplete; [OWNER: RNB] &mustdeliver; V1.0.</para>
 
         <para>There will be two main options for selecting key and
           word echo: key and word.  These are not mutually
@@ -1014,25 +1016,25 @@
 
         <para>&incomplete; [OWNER: MMP - further define requirements and functionality]
 	  [OWNER: WDW - implementation] 
-          Effective use of space.  Not addressed at all. &deliver V1.0.</para>
+          Effective use of space.  Not addressed at all. &mustdeliver V1.0.</para>
 
         <para>&incomplete; Effective use of input buttons. Does OK for
           general panning and flat review control, but other
-          functionality not supported. &deliver remainder V1.0+.</para>
+          functionality not supported. &shoulddeliver remainder V1.1.</para>
 
 	<para>&incomplete; Effective use of cursor routing keys.
 	  Works well for activating components and moving the caret.
-	  Second row of cursor routing keys unexplored.  &deliver;
-	  V1.0+.</para>
+	  Second row of cursor routing keys unexplored. &shoulddeliver;
+	  V1.1+.</para>
 
 	<para>&incomplete; Key combinations.  Not investigated, can be
-	  done via traditional keyboard techniques.  &deliver;
-	  V1.0+.</para>
+	  done via traditional keyboard techniques.  &shoulddeliver;
+	  V1.1.</para>
 
 	<para>&incomplete; Cursor options. Rely upon BrlTTY.
 	  &deliver; BrlTTY.</para>
 
-	<para>&incomplete; Multiple pan regions. &deliver; V1.0+.</para>
+	<para>&incomplete; Multiple pan regions. &shoulddeliver; V1.1.</para>
 
       </section>
 
@@ -1048,8 +1050,9 @@
 
       <section><title>Functional Description and Status</title>
 
-        <para>&incomplete; [OWNER: COMMUNITY] &deliver V1.0 or V1.0+, depending upon
-          community contributions.</para>
+        <para>&incomplete; [OWNER: COMMUNITY] &shoulddeliver V1.0 or
+          &mustdeliver; V1.1, depending upon community
+          contributions.</para>
 
       </section>
 

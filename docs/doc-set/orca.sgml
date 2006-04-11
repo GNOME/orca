@@ -17,6 +17,8 @@
     <!ENTITY complete '<emphasis>COMPLETE:</emphasis>'>
     <!ENTITY incomplete '<emphasis>INCOMPLETE:</emphasis>'>
     <!ENTITY deliver '<emphasis>DELIVER FOR</emphasis>'>
+    <!ENTITY shoulddeliver '<emphasis>SHOULD DELIVER FOR</emphasis>'>
+    <!ENTITY mustdeliver '<emphasis>MUST DELIVER FOR</emphasis>'>
 
   <!ENTITY styleguidelink '<link linkend="styleguide">style guide</link>'>
   <!ENTITY gestureslink '<link linkend="gestures">input gestures</link>'>
