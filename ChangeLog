@@ -1,5 +1,13 @@
 2006-04-11  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/default.py
+          Added code to the onTextInserted() method to say the last word
+          when "echo by word" is enabled. Note that it's not speaking the
+          punctuation or whitespace after the word at the moment. That 
+          will require some changes to the sayWord() method.
+
+2006-04-11  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/settings.py  
           src/orca/orca.py
           src/orca/default.py

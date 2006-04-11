@@ -23,6 +23,8 @@ both speech and Braille.
 This module also provides a number of presenter functions that display
 Accessible object information to the user based upon the object's role."""
 
+import string
+
 import atspi
 import braille
 import braillegenerator
@@ -1234,14 +1236,18 @@ class Script(script.Script):
 
         self.updateBraille(event.source)
 
+        text = event.any_data.value()
         if settings.getSetting(settings.ENABLE_KEY_ECHO, False) and \
            settings.getSetting(settings.ENABLE_PRINTABLE_KEYS, False):
-            text = event.any_data.value()
 
             if text.isupper():
                 speech.speak(text, self.voices["uppercase"])
             else:
                 speech.speak(text)
+
+        if settings.getSetting(settings.ENABLE_ECHO_BY_WORD, False):
+            if text in string.whitespace or text in string.punctuation:
+                sayWord(event.source)
 
     def onActiveDescendantChanged(self, event):
         """Called when an object who manages its own descendants detects a
