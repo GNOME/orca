@@ -8,43 +8,50 @@
   ************************************************************************
   -->
 
-  <chapter id="userrequirements"><title>User Requirements and Functional Description</title>
+  <chapter id="userrequirements"><title>User Requirements and
+    Functional Description</title>
 
     <para>Based upon discussions with end users as well as the tasks
       and ideas from the &personaslink;, Orca must supply at least the
       following end-user features.</para>
 
     <section id="uravailable"><title>Availability at All Times</title>
+
       <para>Orca will often be the only vehicle by which many users
         will be able to access the system.  As such, it must be
         available at all times, including at system login and
         screen-saver screens.</para>
+
       <para>Orca must also be available after the system returns from
         "standby" or "sleep" mode.</para>
+
       <para>Finally, in the event the user's choice of speech synthesis
         engine becomes unavailable (e.g., expired license), Orca must
         attempt to find and use an alternative synthesis engine.</para>
 
       <section><title>Functional Description and Status</title>
 
-        <para>&complete; V0.2.2.  LOGIN: Orca will rely upon the accessible
+        <para>&complete; V0.2.2. LOGIN: Orca will rely upon the accessible
           login feature of gdm to enable access at login.  This
           feature has been tested and verified on Open Solaris with
           Orca V0.2.2.</para>
 
-        <para>&incomplete; SCREEN SAVER: screen saver access has not
-          been tested as of Orca V0.2.2. &deliver; V1.0.</para>
+        <para>&complete; V0.2.2. SCREEN SAVER: Orca will announce that
+	  the "AT Enabled Lock Dialog" is active and you can type your
+	  password.</para>
 
       </section>
     </section>
 
     <section id="urresilient"><title>Failure Resiliency</title>
+
       <para>In the event that Orca fails or a component of the
         system that Orca depends upon fails, the system should be able
         to heal (and perhaps restart) itself appropriately.</para>
+
       <section><title>Functional Description and Status</title>
 
-        <para>&incomplete; <ulink
+        <para>&incomplete; [OWNER: WDW] <ulink
           url="http://bugzilla.gnome.org/show_bug.cgi?id=319652">Bugzilla
           Bug 319652</ulink> is an outstanding Orca bug to track this.
           Much work has been done in this space, but Orca still needs
@@ -104,6 +111,7 @@
 
     <section id="urinteroperable"><title>Seamless Interaction with Other Assistive
       Technologies</title>
+
       <para>It is not uncommon for users to simultaneously use other
         assistive technologies, such as the AccessX features of XKB
         <citation><xref linkend="accessx"
@@ -113,21 +121,24 @@
 
       <section><title>Functional Description and Status</title>
 
-        <para>&incomplete; Orca has been simultaneously tested
-          with BrlTTY, GOK, and Dasher.  Orca still needs testing,
-          however, with Gnopernicus to verify that we can use
-          Gnopernicus as a magnification solution while we build out
-          magnification support in Orca. &deliver; V1.0.</para>
+        <para>&incomplete; [OWNER: WDW] Orca has been simultaneously
+          tested with BrlTTY, GOK, and Dasher.  Orca still needs
+          testing, however, with AccessX and with Gnopernicus to
+          verify that we can use Gnopernicus as a magnification
+          solution while we build out magnification support in
+          Orca. &deliver; V1.0.</para>
 
       </section>
 
     </section>
 
     <section id="urstyle"><title>Consistent Style</title>
+
       <para> It is expected that access to applications will be driven
         primarily via customized "scripts," with a fallback
         ("default") script to be used in the absence of a customized
         script.</para>
+
       <para>While each script can provide dramatically different
         access to an application, it is expected that scripts will
         provide a users with a consistent style to access
@@ -139,7 +150,7 @@
 
       <section><title>Functional Description and Status</title>
 
-        <para>&incomplete; Orca currently provides a
+        <para>&incomplete; [OWNER: MMP] Orca currently provides a
 	  &styleguidelink; and a <literal>default.py</literal> script.
 	  However, we need to revisit both to make sure they are in
 	  line with each other and up-to-date. &deliver; V1.0.</para>
@@ -166,18 +177,18 @@
 
       <section><title>Functional Description and Status</title>
 
-        <para>&incomplete; Orca currently provides the
+        <para>&incomplete; [OWNER: WDW] Orca currently provides the
 	  framework for customized scripts.  This framework is
 	  documented in the &scriptguidelink;.  Over time, however,
 	  the team has learned that different toolkits provide
 	  different interaction models via the AT-SPI and Orca needs
 	  the ability to have a default script per toolkit. This work
-	  needs to be done, and should be done in conjunction with
-	  the work on the Java platform script (i.e., the Swing toolkit)
-	  as well as Firefox (i.e., the Mozilla toolkit).  This refactoring
-	  is being tracked in <ulink url="http://bugzilla.gnome.org/show_bug.cgi?id=319668">
-	  Bugzilla Bug 319668</ulink>.  &deliver; V1.0.
-	</para>
+	  needs to be done, and should be done in conjunction with the
+	  work on the Java platform script (i.e., the Swing toolkit)
+	  as well as Firefox (i.e., the Mozilla toolkit).  This
+	  refactoring is being tracked in <ulink
+	  url="http://bugzilla.gnome.org/show_bug.cgi?id=319668">
+	  Bugzilla Bug 319668</ulink>.  &deliver; V1.0.  </para>
 
       </section>
 
@@ -191,9 +202,6 @@
         the script writer analyze the system in action.</para>
 
       <section><title>Functional Description and Status</title>
-
-        <para>&incomplete;  Orca currently has plans to
-	  provide support for the following:</para>
 
         <itemizedlist>
           <listitem>
@@ -215,33 +223,46 @@
 	      settings.</para>
           </listitem>
           <listitem>
-	    <para>&incomplete; Keystroke to speak/braille application with 
+	    <para>&incomplete; [OWNER: RNB] Keystroke to speak/braille application with 
 	      focus. &deliver; V1.0.</para>
 	  </listitem>
           <listitem>
-	    <para>&incomplete; Keystroke to speak/braille the current
-	      script (and script class) in use. &deliver; V1.0.</para>
+	    <para>&incomplete; [OWNER: RNB] Keystroke to speak/braille
+	      the current script (and script class) in use. &deliver;
+	      V1.0.</para>
 	  </listitem>
           <listitem>
-	    <para>&complete; V0.2.2. Keystroke to dump all applications.  Insert+F5.</para>
+	    <para>&incomplete; [OWNER: RNB] Keystroke to dump
+	      all applications.  Currently bound to Insert+F5, needs to
+	      be rebound to something else. &deliver; V1.0.</para>
 	  </listitem>
           <listitem>
-	    <para>&complete; V0.2.2. Keystroke to dump the ancestors of the object with focus.  Insert+F7.</para>
+	    <para>&incomplete; [OWNER: RNB] Keystroke to dump the ancestors
+	      of the object with focus.  Currently bound to Insert+F7,
+	      needs to be rebound to something else. &deliver; V1.0.</para>
 	  </listitem>
           <listitem>
-	    <para>&complete; V0.2.2. Keystroke to dump the widget hierarchy of the application with focus. Ctrl+Insert+F7.</para>
+	    <para>&incomplete; [OWNER: RNB] Keystroke to dump the
+	      widget hierarchy of the application with
+	      focus. Currently bound to Ctrl+Insert+F7, needs to be
+	      rebound to something else. &deliver; V1.0.</para>
 	  </listitem>
         </itemizedlist>
       </section>
     </section>
 
-    <section id="urofficeapps"><title>Usable Access to Key Office Productivity Applications</title>
-      <para>As needed, Orca will provide custom scripts for key office productivity applications: e-mail, simple text editing, calendaring, contact management, instant messaging, etc.</para>
+    <section id="urofficeapps"><title>Usable Access to Key Office
+      Productivity Applications</title>
+
+      <para>As needed, Orca will provide custom scripts for key office
+        productivity applications: e-mail, simple text editing,
+        calendaring, contact management, instant messaging,
+        etc.</para>
 
       <section><title>Functional Description and Status</title>
 
-        <para>&incomplete; V0.2.2.  Orca is targetting the following
-          office productivity applications:</para>
+        <para>Orca is targetting the following office productivity
+          applications:</para>
 
         <table><title>Office Productivity Applications</title>
   	  <tgroup cols='3'>
@@ -267,7 +288,7 @@
               <row>
                 <entry>Calendar</entry>
                 <entry>Evolution - GNOME 2.16</entry>
-                <entry>&complete; V0.2.2</entry>       
+                <entry>&incomplete; [OWNER: RNB] month view not done.  &deliver; V1.0.</entry>       
               </row>
               <row>
                 <entry>Contact Management</entry>
@@ -282,27 +303,27 @@
               <row>
                 <entry>Help</entry>
                 <entry>Yelp - GNOME 2.16</entry>
-                <entry>&incomplete; No script and untested. &deliver; V1.0</entry>
+                <entry>&incomplete; [OWNER: LMS] No script and untested. &deliver; V1.0</entry>
               </row>
               <row>
                 <entry>Document Generation</entry>
                 <entry>StarOffice 8 PP3, OpenOffice 2.0.3 (initial); StarOffice 8 PP4, OpenOffice 2.0.4 (better)</entry>
-                <entry>&incomplete; Working with StarOffice team to fix AT-SPI issues; Script under development.  &deliver V1.0</entry>
+                <entry>&incomplete; [OWNER: RNB] Working with StarOffice team to fix AT-SPI issues; Script under development.  &deliver V1.0</entry>
               </row>
 	      <row>
 	        <entry>Spreadsheet</entry>
                 <entry>StarOffice 8 PP3, OpenOffice 2.0.3 (initial); StarOffice 8 PP4, OpenOffice 2.0.4 (better)</entry>
-                <entry>&incomplete; Working with StarOffice team to fix AT-SPI issues; Script under development. &deliver; V1.0</entry>
+                <entry>&incomplete; [OWNER: RNB] Working with StarOffice team to fix AT-SPI issues; Script under development. &deliver; V1.0</entry>
 	      </row>
 	      <row>
 	        <entry>Presentation</entry>
                 <entry>StarOffice 8 PP3, OpenOffice 2.0.3 (initial); StarOffice 8 PP4, OpenOffice 2.0.4 (better)</entry>
-                <entry>&incomplete; &deliver; V1.0+.</entry>
+                <entry>&incomplete; [OWNER: RNB] &deliver; V1.0+.</entry>
 	      </row>
 	      <row>
 	        <entry>Web Browsing</entry>
 		<entry>Firefox 2.0 (minimal); Firefox 3.0 (better)</entry>
-		<entry>&incomplete; Working with Firefox team to fix issues with
+		<entry>&incomplete; [OWNER: WDW] Working with Firefox team to fix issues with
 		  accessing the Firefox widget set (XUL) for 2.0 and
 		  also working on a structural caret navigation
 		  extension for FF2 - &deliver; V1.0.  Working with
@@ -312,12 +333,12 @@
 	      <row>
 	        <entry>Content Viewing</entry>
 		<entry>Adobe Reader</entry>
-		<entry>&incomplete; &deliver; V1.0</entry>
+		<entry>&incomplete; [OWNER: MMP] needs testing.  &deliver; V1.0</entry>
 	      </row>
 	      <row>
 	        <entry>Java platform</entry>
 		<entry>Swing toolkit</entry>
-		<entry>&incomplete; Minimal testing, <ulink
+		<entry>&incomplete; [OWNER: LMS] Minimal testing, <ulink
 		  url="http://bugzilla.gnome.org/show_bug.cgi?id=319639">bug
 		  with keycodes</ulink> - &deliver; V1.0</entry>
 	      </row>
@@ -339,11 +360,12 @@
         while Orca is running, including the ability to turn
         presentation modes (i.e., speech, braille, magnification) on
         or off without the need to restart Orca.</para>
-
       <section><title>Functional Description and Status</title>
-        <para>&incomplete; The &ugcustomizationlink; section of
-	  the &userguidelink; will provide details on the specific
-	  customization parameters for Orca. &deliver; V1.0.</para>
+        <para>&incomplete; [OWNER: MMP - further define requirements and
+	  functionality] [OWNER: RNB - implementation] 
+	  The &ugcustomizationlink; section of the &userguidelink;
+	  will provide details on the specific customization
+	  parameters for Orca. &deliver; V1.0.</para>
       </section>
 
     </section>
@@ -365,7 +387,7 @@
       <section><title>Functional Description and Status</title>
 
         <para>&incomplete; does not provide audio cue when crossing linear
-	  boundaris.  &deliver; V1.0.</para>
+	  boundaries.  &deliver; V1.0+.</para>
 
       </section>
 
@@ -382,41 +404,39 @@
       <para>Another option for review mode includes the ability to
         use a set of &wkc;s to quickly skim the contents of the
         display.</para>
+      <para>Play audio cues across line boundaries.</para>
       <para>In addition, when in flat review mode, Orca will
-        optionally allow the mouse to follow the object of interest.
-        &todo; this probably should be moved to the user requirements
-        instead of the key mappings.</para>
+        optionally allow the mouse to follow the object of interest.</para>
       <para>The review of the desktop will follow the &styleguidelink;,
         and will at least provide a short summary of the available
         applications.  While the review of an application will also
         follow the &styleguidelink;, the overall presentation depends
         largely upon the application being reviewed.</para>
-      <para>&todo; Add notions of "hierarchical review," and "hybrid
-        review (e.g., in/out of lists)".  Need to flesh out the
-        primary purposes of each.</para>
-      <para>&todo; Add ability to read a dialog/window.</para>
-      <para>&todo; As with navigating text, should Orca have an option to
-        play an audio cue when the "next" or "prev" object command takes
-        user to a new line?</para>
+
+      <para>&todo; MOVE TO SCRIPT WRITING UTILITIES and do post V1.0.
+        Add notions of "hierarchical review," and "hybrid review
+        (e.g., in/out of lists)".  Need to flesh out the primary
+        purposes of each.</para>
 
       <section><title>Functional Description and Status</title>
 
         <para>&complete; V0.2.2.  General flat review is working well.</para>
 
-        <para>&incomplete; no automatic reading of dialogs from
-          current position or from top left. &deliver; V1.0.</para>
+        <para>&incomplete; [OWNER: WDW] no automatic reading of dialogs
+          from current position or from top left. SHOULD &deliver;
+          V1.0.</para>
 
         <para>&incomplete; the mouse doesn't follow the object of interest,
-	  nor is there an option to set this. &deliver; V1.0.</para>
+	  nor is there an option to set this. &deliver; V1.0+.</para>
 
 	<para>&incomplete; no audio cues when navigating across line
-	  boundaries. &deliver; V1.0.</para>
+	  boundaries. &deliver; V1.0+.</para>
 
       </section>
 
     </section>
 
-    <section id="urtextattributes"><title>Presentation of Text and Text Attributes</title>
+    <section id="urtextattributes"><title>Presentation of Text Attributes</title>
       <para>For any given piece of text, Orca must provide the ability
         to speak the current character, word, or line.  When speaking
         the current word, Orca must provide the ability to spell it
@@ -439,6 +459,10 @@
             selected or not?</para>
         </listitem>
         <listitem>
+          <para><emphasis role="bold">Justification</emphasis> - left,
+            fill, center, right</para>
+        </listitem>
+        <listitem>
           <para><emphasis role="bold">Indentation</emphasis> - what is the
             indentation level?</para>
         </listitem>
@@ -449,9 +473,9 @@
       </itemizedlist>
 
       <section><title>Functional Description and Status</title>
-
-        <para>&incomplete; need to define what to &deliver; V1.0.</para>
-
+        <para>&incomplete; [OWNER: MMP - further define requirements and
+	  functionality] [OWNER: RNB - implementation] need
+	  to define what to &deliver; V1.0.</para>
       </section>
 
     </section>
@@ -488,23 +512,9 @@
           for more information.</para>
 
 	<para>&incomplete; the current way to define these is by
-	  manually editing the <literal>user-settings.py</literal>
-	  file.  &deliver; V1.0+.</para>
-
-      </section>
-
-    </section>
-
-    <section id="urlistapps"><title>"List All Applications" Command</title>
-      <para>Orca will provide a means for a user to determine all
-        applications running on the desktop as well as all open
-        windows on the desktop.</para>
-
-      <section><title>Functional Description and Status</title>
-
-        <para>&complete; V0.2.2.  The <literal>Alt+Tab</literal> support
-	  provided by the metacity window manager gives us
-	  this.</para>
+	  manually editing the <literal>user-settings.py</literal> or
+	  <literal>orca-customizations.py</literal> file.  &deliver;
+	  V1.0+.</para>
 
       </section>
 
@@ -521,16 +531,14 @@
         focus.  In review mode, the object of interest is the object
         currently being visited, whether it has keyboard focus or
         not.</para>
-
       <section><title>Functional Description and Status</title>
-
-        <para>&incomplete; currently provides top down "Where am I"
-	  functionality only.  Should provide both bottom up and top
-	  down.  In addition, the user design for this needs to be
-	  better specified.  &deliver; V1.0.</para>
-
+        <para>&incomplete; [OWNER: MMP - further define requirements and
+	  functionality] [OWNER: WDW - implementation]
+	  currently provides top down "Where am I" functionality only.
+	  Should provide both bottom up and top down.  In addition,
+	  the user design for this needs to be better specified.
+	  &deliver; V1.0.</para>
       </section>
-
     </section>
 
     <section id="urjumpto"><title>"Jump to Well Known Object" Commands</title>
@@ -582,13 +590,14 @@
 
       <section><title>Functional Description and Status</title>
 
-        <para>&incomplete; MUST &deliver; V1.0.</para>
+        <para>&incomplete; SHOULD &deliver; V1.0.</para>
 
       </section>
 
     </section>
 
     <section id="urwatched"><title>Watched Objects</title>
+
       <para>Orca will allow users to indicate interest in an object.
 	Once interest has been given, Orca will notify the user of
 	changes to that object, whether it or its window has focus or
@@ -598,6 +607,7 @@
 	back to the object with focus, give the watched object focus
 	if possible, or perform the equivalent of a mouse click on the
 	watched object.</para>
+
       <para>In the event the user is a magnification user, the magnifier
         will moved to the found object.  Alternatively, the user may 
         have set up a separate "zoomer" to watch the object.  In this
@@ -657,25 +667,21 @@
         spreadsheet, web page, etc.?).</para>
 
       <section><title>Functional Description and Status</title>
-
-        <para>&incomplete; reading works well in GEdit, including
-	  setting the caret position when speech is interrupted.  Does
-	  not work well at all in in Evolution, StarOffice, Firefox,
-	  etc.  The main issue is the it only speaks the current text
-	  object and probably should speak contiguous text objects in
-	  the same hierarchy.  MUST &deliver; V1.0.</para>
-
+        <para>&incomplete; [OWNER: RNB] reading works well in GEdit,
+	  including setting the caret position when speech is
+	  interrupted.  Does not work well at all in in Evolution,
+	  StarOffice, Firefox, etc.  The main issue is the it only
+	  speaks the current text object and probably should speak
+	  contiguous text objects in the same hierarchy.  MUST
+	  &deliver; V1.0.</para>
 	<para>&incomplete; text is not highlighted, nor is there an
-	  option to do do.  &deliver; V1.0+.</para>
-
-	<para>&incomplete; should audio cues be played when auto
-	  reading across line boundaries?</para>
-
+	  option to do so.  &deliver; V1.0+.</para>
+	<para>&incomplete; audio cues not played when auto
+	  reading across line boundaries.  &deliver; V1.0+.</para>
       </section>
-
     </section>
 
-    <section id="urnonfocus"><title>Ability of Non-focused Windows to Present of
+    <section id="urnonfocus"><title>Ability of Non-focused Windows to Present
       Information</title>
       <para>Orca must allow for the presentation of information of
         objects that do not have keyboard focus.  While the
@@ -789,14 +795,30 @@
 
         <para>&complete; V0.2.2.  General synthesis.</para>
         <para>&complete; V0.2.2.  Voice styles done via ACSS.</para>
-        <para>&incomplete; Verbalized caps. MUST &deliver; V1.0.</para>
-        <para>&incomplete; Verbalized links. MUST &deliver; V1.0.</para>
+        <para>&incomplete; Verbalized caps. &deliver; V1.0+.</para>
+
+        <para>&incomplete; [OWNER: RNB and WDW] Verbalized
+        hyperlinks. MUST &deliver; V1.0.</para>
+
         <para>&complete; V0.2.2.  Speaking rate modification.
           Insert+{left,right}_arrow.</para>
         <para>&incomplete; Multilingual text.  &deliver; V1.0+.</para>
-        <para>&incomplete; Spelling mode. MUST &deliver; V1.0.</para>
-        <para>&incomplete; Verbalized punctuation. MUST &deliver; V1.0.</para>
-        <para>&incomplete; Repeated character count. MUST &deliver; V1.0.</para>
+
+        <para>&incomplete; [OWNER: MMP - further define requirements and functionality]
+	  [OWNER: WDW - implementation] 
+	  Spelling mode (letters). MUST &deliver; V1.0.</para>
+
+        <para>&incomplete; [OWNER: MMP - further define requirements and functionality]
+	  [OWNER: WDW - implementation] 
+          Spelling mode (military). MUST &deliver; V1.0.</para>
+
+        <para>&incomplete; [OWNER: MMP - further define requirements and functionality]
+	  [OWNER: WDW - implementation] 
+          Verbalized punctuation. MUST &deliver; V1.0.</para>
+
+        <para>&incomplete; [OWNER: MMP - further define requirements and functionality]
+	  [OWNER: WDW - implementation] 
+          Repeated character count. SHOULD &deliver; V1.0.</para>
 
       </section>
 
@@ -812,7 +834,7 @@
 
       <section><title>Functional Description and Status</title>
 
-        <para>&incomplete; MUST &deliver; V1.0.</para>
+        <para>&incomplete; [OWNER: RNB] MUST &deliver; V1.0.</para>
 
         <para>There will be two main options for selecting key and
           word echo: key and word.  These are not mutually
@@ -989,20 +1011,29 @@
       <section><title>Functional Description and Status</title>
 
         <para>&complete; V0.2.2.  Work with BrlTTY.</para>
-        <para>&incomplete; Effective use of space.  Not addressed at all. &deliver V1.0.</para>
+
+        <para>&incomplete; [OWNER: MMP - further define requirements and functionality]
+	  [OWNER: WDW - implementation] 
+          Effective use of space.  Not addressed at all. &deliver V1.0.</para>
+
         <para>&incomplete; Effective use of input buttons. Does OK for
           general panning and flat review control, but other
-          functionality not supported. &deliver V1.0.</para>
+          functionality not supported. &deliver remainder V1.0+.</para>
+
 	<para>&incomplete; Effective use of cursor routing keys.
 	  Works well for activating components and moving the caret.
 	  Second row of cursor routing keys unexplored.  &deliver;
 	  V1.0+.</para>
+
 	<para>&incomplete; Key combinations.  Not investigated, can be
 	  done via traditional keyboard techniques.  &deliver;
 	  V1.0+.</para>
+
 	<para>&incomplete; Cursor options. Rely upon BrlTTY.
 	  &deliver; BrlTTY.</para>
+
 	<para>&incomplete; Multiple pan regions. &deliver; V1.0+.</para>
+
       </section>
 
     </section>
@@ -1017,7 +1048,7 @@
 
       <section><title>Functional Description and Status</title>
 
-        <para>&incomplete; &deliver V1.0 or V1.0+, depending upon
+        <para>&incomplete; [OWNER: COMMUNITY] &deliver V1.0 or V1.0+, depending upon
           community contributions.</para>
 
       </section>
@@ -1085,8 +1116,9 @@
 
       <section><title>Functional Description and Status</title>
 
-        <para>&incomplete; documents will continually be updated, as
-	  will the Orca web site and WIKI.</para>
+        <para>&incomplete; [OWNER: WDW and COMMUNITY] documents will
+	  continually be updated, as will the Orca web site and
+	  WIKI.</para>
 
       </section>
 

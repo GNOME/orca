@@ -87,13 +87,19 @@
       provider of such services.  Given this, Orca has the following
       dependencies:</para>
 
+    <section><title>GNOME 2.14 or better</title> 
+      <para>The GNOME 2.14 desktop contains a number of bug fixes and
+        enhancements to the accessibility infrastructure.  These are
+	needed for Orca to run properly.</para>
+    </section>
+
     <section><title>Python v2.4 or better</title> 
       <para>Orca is written in the Python programming language and
         depends upon features found in Python versions 2.4 and
         greater.</para>
     </section>
 
-    <section><title>pyorbit v2.0.0 or better</title> 
+    <section><title>pyorbit v2.14.0 or better</title> 
       <para>PyORBit provides the Python language bindings for ORBit,
         which is Bonobo's CORBA ORB implementation.</para>
     </section>
@@ -139,7 +145,7 @@
       services.</para>
     </section>
 
-    <section><title>BrlTTY v3.6.1 or better</title>
+    <section><title>BrlTTY v3.7.2 or better</title>
       <para>BrlTTY <citation><xref linkend="brltty"
         endterm="brltty.abbrev"/></citation> provides access to a
         variety of Braille displays, and consists of a library and a
