@@ -14,6 +14,10 @@
 <!ENTITY userexperience SYSTEM "user_experience.sgml">
   <!ENTITY personaslink '<link linkend="personas">personas</link>'>
   <!ENTITY userrequirementslink '<link linkend="userrequirements">user requirements</link>'>
+    <!ENTITY complete '<emphasis>COMPLETE:</emphasis>'>
+    <!ENTITY incomplete '<emphasis>INCOMPLETE:</emphasis>'>
+    <!ENTITY deliver '<emphasis>DELIVER FOR</emphasis>'>
+
   <!ENTITY styleguidelink '<link linkend="styleguide">style guide</link>'>
   <!ENTITY gestureslink '<link linkend="gestures">input gestures</link>'>
   <!ENTITY uepersonas SYSTEM "personas.sgml">
@@ -29,6 +33,8 @@
 <!ENTITY testing SYSTEM "testing.sgml">
 
 <!ENTITY userguide SYSTEM "user_guide.sgml">
+  <!ENTITY userguidelink '<link linkend="userguide">Orca User Guide</link>'>
+  <!ENTITY ugcustomizationlink '<link linkend="ugcustomization">customization</link>'>
 ]
 >
 

@@ -30,11 +30,6 @@
         command is issued to review any part of the screen that does not
         have the keyboard focus.</para>
   
-      <para>Finally, when in flat review mode, Orca will optionally
-        allow the mouse to follow the object of interest.  &todo; this
-        probably should be moved to the user requirements instead of
-        the key mappings.</para>
-  
       <para>NOTE: Ideally, a screen reader should provide good access
         on a laptop, which typically means using the numeric keypad is
         an inconvenient access method.  As appropriate, Orca's default
@@ -63,18 +58,26 @@
       </itemizedlist>
   
       <para>In more detail, the keyboard mappings are as follows, and
-        use the "INSERT" key as a modifier (note that Orca will most
-        likely allow the user to define a different key to use instead
-        of "INSERT"):</para>
+        use the "Insert" key as a modifier (see the &ugcustomizationlink; 
+        section of the &userguidelink; for more information on how to
+	customize this):</para>
   
       <itemizedlist>
         <listitem>
           <para>"KEYPAD_/": performs a left mouse click on the current
-             object of interest</para>
+             object of interest.</para>
+	  <para>&detail; bound to
+             <literal>default.Script.leftClickReviewItem</literal>.
+             </para>
+	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_*":  performs a right mouse click on the current
-             object of interest</para>
+             object of interest.</para>
+	  <para>&detail; bound to 
+             <literal>default.Script.rightClickReviewItem</literal>.
+             </para>
+	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_-": when in flat review, returns to the object
@@ -82,6 +85,10 @@
              the screen or focus to change will also do this).  If the
              user is currently in focus tracking mode, pressing this key
              activates flat review mode.</para>
+	  <para>&detail; bound to
+             <literal>default.Script.toggleFlatReviewMode</literal>.
+             </para>
+	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_+": reads from current position to end of
@@ -90,25 +97,46 @@
              (e.g., the text caret will be placed on the last word
              spoken).  If the user is in a dialog box, pressing this key
              reads the dialog box in a logical order.</para>
+          <para>&detail; bound to
+             <literal>default.Script.sayAll</literal>.
+             </para>
+	  <para>&incomplete; the binding is in place, but sayAll
+              doesn't work as expected (see the requirement on <link
+              linkend="urdocread">Document Reading</link>).  &deliver;
+              V1.0.</para>
         </listitem>
         <listitem>
-          <para>"KEYPAD_ENTER": performs "where am I?"  If this key is
-            pressed twice selection information will be spoken ie all
-            the selected items or text.  </para>
+          <para>"KEYPAD_ENTER": performs "Where Am I?"  If this key is
+            pressed twice quickly, any relevant status bar information
+            will be spoken.</para>
+	  <para>&detail; bound to
+            <literal>default.Script.whereAmI</literal>.</para>
+	  <para>&incomplete; the binding is in place, but the "Where
+              Am I" functionality needs further specification (see the
+              requirement on <link linkend="urwhereami">Where Am
+              I?</link>).  In addition, the notion of a relevant 
+	      status bar is yet to be defined. &deliver; V1.0.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_.": performs a "screen find."  Pressing this key
             brings up a dialog where a user can enter a search string
             and decide where on the screen the search should begin IE
             from the top or current position.</para>
+	  <para>&incomplete; MUST &deliver; V1.0.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_7": moves the review position to the prior line,
-             landing on object closest to current object</para>
+             landing on object closest to current object.</para>
+	  <para>&detail; bound to
+            <literal>default.Script.reviewPreviousLine</literal>.</para>
+	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>"INSERT+KEYPAD_7": moves the review position to the
-          beginning of the current line</para>
+            home position.</para>
+	  <para>&detail; bound to
+            <literal>default.Script.reviewHome</literal>.</para>
+	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_8": speaks current line.  If flat review has been
@@ -117,68 +145,137 @@
              focus is spoken.  When this key is pressed twice quickly
              the line is read with formatting and capitalization
              details.</para>
+	  <para>&detail; bound to
+            <literal>default.Script.reviewCurrentLine</literal>.</para>
+	  <para>&incomplete; handles the single press, but not the double
+	    press.  &deliver; V1.0.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_9": moves the review position to the next
-            line</para>
+            line.</para>
+	  <para>&detail; bound to
+            <literal>default.Script.reviewNextLine</literal>.</para>
+	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
-          <para>"INSERT+KEYPAD_9": moves the review position to the top
+          <para>"INSERT+KEYPAD_9": moves the review position to the end
             of the review area.</para>
+	  <para>&detail; bound to
+            <literal>default.Script.reviewEnd</literal>.</para>
+	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_4": moves the review position to the prior word or
-            item</para>
+            item.</para>
+	  <para>&detail; bound to
+            <literal>default.Script.reviewPreviousItem</literal>.</para>
+	  <para>&complete; V0.2.2.</para>
+        </listitem>
+        <listitem>
+          <para>"INSERT+KEYPAD_4": moves the review position to the word
+            spatially above the current word.</para>
+	  <para>&detail; bound to
+            <literal>default.Script.reviewAbove</literal>.</para>
+	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_5": speaks the current word or item.  If this key
              is pressed twice quickly the word is spelled and any
              capitalization is be announced; three times results in
              phonetic spelling</para>
+	  <para>&detail; bound to
+            <literal>default.Script.reviewCurrentItem</literal>.</para>
+	  <para>&incomplete; handles the single press, but not the double
+	    press.  &deliver; V1.0.</para>
+        </listitem>
+        <listitem>
+          <para>"INSERT+KEYPAD_5": speaks the accessible containing
+	     the current review word.</para>
+	  <para>&detail; bound to
+            <literal>default.Script.reviewCurrentAccessible</literal>.</para>
+	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_6": moves the review position to the next word or
-            item</para>
+            item.</para>
+	  <para>&detail; bound to
+            <literal>default.Script.reviewNextItem</literal>.</para>
+	  <para>&complete; V0.2.2.</para>
+        </listitem>
+        <listitem>
+          <para>"INSERT+KEYPAD_6": moves the review position to the word
+            spatially below the current word.</para>
+	  <para>&detail; bound to
+            <literal>default.Script.reviewBelow</literal>.</para>
+	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_1": moves the review position to the prior
-            character</para>
+            character.</para>
+	  <para>&detail; bound to
+            <literal>default.Script.reviewPreviousCharacter</literal>.</para>
+	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>"INSERT+KEYPAD_1": moves the review position to the end
-            of the line</para>
+            of the line.</para>
+	  <para>&detail; bound to
+            <literal>default.Script.reviewEndOfLine</literal>.</para>
+	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_2": speaks the current character.  If this key is
              pressed twice quickly the character is pronounced
              phonetically (if it is a letter)</para>
+	  <para>&detail; bound to
+            <literal>default.Script.reviewCurrentCharacter</literal>.</para>
+	  <para>&incomplete; handles the single press, but not the double
+	    press.  &deliver; V1.0.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_3": moves the review position to the next
             character</para>
-        </listitem>
-        <listitem>
-          <para>"INSERT+KEYPAD_3": moves the review position to the
-            bottom of the review area</para>
+	  <para>&detail; bound to
+            <literal>default.Script.reviewNextCharacter</literal>.</para>
+	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>INSERT+s: speaks the status bar (if there is one)</para>
+	  <para>&incomplete; not done, and currently bound to 
+	    <literal>orca.resetSpeech</literal>.  &deliver; V1.0.</para>
         </listitem>
         <listitem>
-          <para>INSERT+t:  speaks the title of dialog or app</para>
+          <para>INSERT+t: speaks the title of dialog or app</para>
+	  <para>&incomplete; &deliver; V1.0.</para>
         </listitem>
         <listitem>
-          <para>INSERT+v: brings up a verbosity preference dialog.
+          <para>INSERT+v: brings up a "quick" verbosity preferences dialog.
              Example settings include whether or not to speak indenting
              when working with text, speaking capitalization, speak the
-             role of items, speak font information if it changes,
+             role of items, speak font information if it changes, speak
+	     an entire table line vs. individual cells, 
              etc.</para>
+	  <para>&incomplete; &deliver; V1.0.</para>
         </listitem>
         <listitem>
-          <para>INSERT+RIGHT_ARROW:  increases speech rate</para>
+          <para>INSERT+RIGHT_ARROW: increases speech rate</para>
+	  <para>&detail; bound to
+            <literal>speech.increaseSpeechRate</literal>.</para>
+	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>INSERT+LEFT_ARROW: decreases speech rate</para>
+	  <para>&detail; bound to
+            <literal>speech.decreaseSpeechRate</literal>.</para>
+	  <para>&complete; V0.2.2.</para>
+        </listitem>
+        <listitem>
+          <para>INSERT+SPACE: brings up configuration GUI</para>
+	  <para>&incomplete; &deliver; with configuration GUI.</para>
+        </listitem>
+        <listitem>
+          <para>TBS: toggles speech on and off</para>
+	  <para>&incomplete; &deliver; V1.0.</para>
         </listitem>
       </itemizedlist>
 
@@ -199,35 +296,57 @@
         their machine as well as the GUI display.</para>
 
       <para>The braille key functionality includes the following:</para>
-      <para>&todo; need to map these to BrlTTY commands.</para>
 
       <itemizedlist>
         <listitem>
           <para>Pan left: BRL_CMD_FWINLT</para>
+	  <para>&detail; bound to
+            <literal>default.Script.panBrailleLeft</literal>.</para>
+	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>Pan right: BRL_CMD_FWINRT</para>
+	  <para>&detail; bound to
+            <literal>default.Script.panBrailleRight</literal>.</para>
+	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>Line up: BRL_CMD_LNUP</para>
+	  <para>&detail; bound to
+            <literal>default.Script.reviewAbove</literal>.</para>
+	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>Line down: BRL_CMD_LNDN</para>
+	  <para>&detail; bound to
+            <literal>default.Script.reviewBelow</literal>.</para>
+	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>Beginning of line: BRL_CMD_LNBEG</para>
+	  <para>&incomplete; &deliver; V1.0.</para>
         </listitem>
         <listitem>
           <para>End of line: BRL_CMD_LNEND</para>
+	  <para>&incomplete; &deliver; V1.0.</para>
         </listitem>
         <listitem>
           <para>Top of window: BRL_CMD_TOP_LEFT</para>
+	  <para>&detail; bound to
+            <literal>default.Script.reviewHome</literal>.</para>
+	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>Bottom of window: BRL_CMD_BOT</para>
+	  <para>&detail; bound to
+            <literal>default.Script.reviewBottomLeft</literal>.</para>
+	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>Return to focus: BRL_CMD_HOME</para>
+	  <para>&detail; bound to
+            <literal>default.Script.goBrailleHome</literal>.</para>
+	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
           <para>Cursor routing/clicking</para>
@@ -237,18 +356,23 @@
             cursor at the beginning and end of the region that the
             user wishes to select in conjunction with another well
             known key on the display.</para>
+	  <para>&incomplete; &deliver; V1.0+.</para>
         </listitem>
         <listitem>
           <para>Set watched area:</para>
+	  <para>&incomplete; &deliver; V1.0+.</para>
         </listitem>
         <listitem>
           <para>Set Bookmarked area:</para>
+	  <para>&incomplete; &deliver; V1.0+.</para>
         </listitem>
         <listitem>
           <para>Go to bookmarked area:</para>
+	  <para>&incomplete; &deliver; V1.0+.</para>
         </listitem>
         <listitem>
           <para>Go to watched area:</para>
+	  <para>&incomplete; &deliver; V1.0+.</para>
         </listitem>
       </itemizedlist>
 
@@ -260,23 +384,29 @@
           <para>Toggle space compression: BRL_CMD_SLIDEWIN. Toggles
             whether or not spaces are compressed when navigating with
             the braille display</para>
+	  <para>&incomplete; &deliver; V1.0+.</para>
         </listitem>
         <listitem>
-	  <para>Toggle grade two on and off:</para>
+	  <para>Toggle grade two on and off.</para>
+	  <para>&incomplete; &deliver; V1.0+.</para>
         </listitem>
         <listitem>
-	  <para>Toggle what attributes if any are displayed:</para>
+	  <para>Toggle what attributes if any are displayed.</para>
+	  <para>&incomplete; &deliver; V1.0+.</para>
         </listitem>
         <listitem>
-	  <para>Enter verbosity mode: BRL_CMD_PREFMENU</para>
+	  <para>Enter verbosity mode: BRL_CMD_PREFMENU.</para>
+	  <para>&incomplete; &deliver; V1.0+.</para>
         </listitem>
         <listitem>
           <para>Toggle keyboard learn mode: BRL_CMD_LEARN</para>
+	  <para>&incomplete; &deliver; V1.0+.</para>
         </listitem>
         <listitem>
           <para>Toggle display style: toggles between the default
             view, which is the logical presentation of the focus and
             the contents of the current line [[[WDW - ???]]]</para>
+	  <para>&incomplete; &deliver; V1.0+.</para>
         </listitem>
       </itemizedlist>
 

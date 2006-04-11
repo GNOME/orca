@@ -1,7 +1,7 @@
 <!-- Copyright 2005, Sun Microsystems, Inc. -->
 
 <book>
-  <title>Orca User's Guide</title>
+  <title id="userguide">Orca User's Guide</title>
   <bookinfo>
     &legal;
   </bookinfo>
@@ -34,5 +34,133 @@
 
   <chapter><title>Introduction</title>
     <para>To be written.</para>
+  </chapter>
+
+  <chapter id="ugcustomization"><title>Customizing Orca</title>
+    <para>To be written.  Include verbosity, speech rate, braille,
+      braille monitor, orca modifier keys, voices, key/word echo, read
+      table line, etc.</para>
+
+    <section><title>brailleBindingsMap</title>
+      <para>To be written.</para>
+    </section>
+
+    <section><title>brailleRolenameStyle</title>
+      <para>To be written.</para>
+    </section>
+
+    <section><title>brailleVerbosity</title>
+      <para>To be written.</para>
+    </section>
+
+    <section><title>enableATSPICaching</title>
+      <para>To be written.</para>
+    </section>
+
+    <section><title>enableBraille</title>
+      <para>To be written.</para>
+    </section>
+
+    <section><title>enableBrailleMonitor</title>
+      <para>To be written.</para>
+    </section>
+
+    <section><title>enableSpeech</title>
+      <para>To be written.</para>
+    </section>
+
+    <section><title>keyBindingsMap - Define Custom Key Bindings</title>
+
+      <para>Orca allows users to override and extend key bindings.
+	  This is done by providing a customized keymap:</para>
+
+<programlisting>
+# Set up custom keybindings.
+#
+import orca.braille
+import orca.input_event
+import orca.keybindings
+import orca.orca
+import orca.settings
+import orca.speech
+
+from orca.orca_i18n import _
+
+def sayHello(script, inputEvent=None):
+
+    message = _("Hello World")
+    
+    # Say/braille something.
+    #
+    orca.speech.speak(message)
+    orca.braille.displayMessage(message)
+    
+    # Consume the event so it will not go to an application.
+    #
+    return True
+
+sayHelloHandler = orca.input_event.InputEventHandler(
+    sayHello,
+    _("Says hello to this fine world."))
+
+myKeyBindings = orca.keybindings.KeyBindings()
+myKeyBindings.add(orca.keybindings.KeyBinding(
+    "t",
+    1 << orca.orca.MODIFIER_ORCA, 
+    1 << orca.orca.MODIFIER_ORCA, 
+    sayHelloHandler))
+    
+orca.settings.keyBindingsMap = {}
+orca.settings.keyBindingsMap["default"] = myKeyBindings
+</programlisting>
+    </section>
+
+    <section><title>orcaModifierKeys - Override "Insert" as Orca Modifier Key</title>
+
+      <para>Orca defines keystrokes for the keypad and also makes
+        special used of the "Insert" key as the Orca modifier key.
+        Orca also provides an "orcaModifierKeys" customization setting
+        to allow the user to override "Insert" as the Orca modifier
+        key.  This setting contains a list of key strings that
+        represent the key to be used as the Orca modifier key.  For
+        example, the following example specifies that the keyboard
+        Insert key (typically near the Delete key) and the keypad
+        Insert key (typically the 0 key) are to both act as the Orca
+        modifier key:</para>
+
+<programlisting> 
+orcaModifierKeys = ["Insert", "KP_Insert"] 
+</programlisting>
+
+    </section>
+
+    <section><title>scriptMappings</title>
+      <para>To be written.</para>
+    </section>
+
+    <section><title>scriptPackages</title>
+      <para>To be written.</para>
+    </section>
+
+    <section><title>speechServerFactory</title>
+      <para>To be written.</para>
+    </section>
+
+    <section><title>speechServerInfo</title>
+      <para>To be written.</para>
+    </section>
+
+    <section><title>speechVerbosity</title>
+      <para>To be written.</para>
+    </section>
+
+    <section><title>enableCustomScripts</title>
+      <para>To be written.</para>
+    </section>
+
+    <section><title>voices</title>
+      <para>To be written.</para>
+    </section>
+
   </chapter>
 </book>

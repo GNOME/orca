@@ -1,3 +1,7 @@
+2006-04-10  Willie Walker <william.walker@sun.com>
+
+	* docs/doc-set/*: update requirements
+	
 2006-04-09  Willie Walker <william.walker@sun.com>
 
 	* src/orca/scripts/planner.py: use new braille API to for 
