@@ -31,6 +31,9 @@ import orca.settings
 from orca.acss import ACSS
 from orca.orca_i18n import _  # for gettext support
 
+trueStr  = " = True\n"
+falseStr = " = False\n"
+
 # Create the user's .orca directory if it doesn't already exist.
 #
 orcadir = os.path.join(os.environ["HOME"], ".orca")
@@ -264,26 +267,81 @@ def setupSpeech():
 	settings.writelines("     '%s' : ACSS(" % voice)
         settings.writelines(pprint.pformat(voices[voice]) + "),\n")
     settings.writelines("}\n\n")
-	
-    # Ask the user if they want to echo by word, character, both or none.
-    # Set orca's settings appropriately. Note that an answer that
-    # isn't W/w, C/c, B/b or N/n will automatically defaults to echoing none.
-    #
-    echoType = sayAndPrint(_("Echo by word, character, both or none?  Enter w, c, b or n: "), True, True)
-    if echoType[0:1] == 'W' or echoType[0:1] == 'w':
-        settings.writelines(orca.settings.USE_ECHO_BY_WORD + " = True\n")
-        settings.writelines(orca.settings.USE_ECHO_BY_CHAR + " = False\n")
-    elif echoType[0:1] == 'C' or echoType[0:1] == 'c':
-        settings.writelines(orca.settings.USE_ECHO_BY_WORD + " = False\n")
-        settings.writelines(orca.settings.USE_ECHO_BY_CHAR + " = True\n")
-    elif echoType[0:1] == 'B' or echoType[0:1] == 'b':
-        settings.writelines(orca.settings.USE_ECHO_BY_WORD + " = True\n")
-        settings.writelines(orca.settings.USE_ECHO_BY_CHAR + " = True\n")
-    else:
-        settings.writelines(orca.settings.USE_ECHO_BY_WORD + " = False\n")
-        settings.writelines(orca.settings.USE_ECHO_BY_CHAR + " = False\n")
 
-    settings.writelines(orca.settings.USE_SPEECH + " = True\n")
+    # Ask the user if they would like to enable echoing by word.
+    #
+    echoByWord = sayAndPrint(_("Enable echo by word?  Enter y or n: "), True, True)
+    if echoByWord[0:1] == 'Y' or echoByWord[0:1] == 'y':
+        state = trueStr
+    else:
+        state = falseStr
+    settings.writelines(orca.settings.ENABLE_ECHO_BY_WORD + state)
+
+    # Ask the user if they would like to enable key echo. If they say
+    # yes, then for each of the five different types of keys, ask the 
+    # user if they would like to enable them. 
+    #
+    # These key types are:
+    #
+    #   o Alphanumeric and punctuation keys
+    #
+    #   o Modifier keys: CTRL, ALT, Shift, Insert, and "Fn" on laptops.
+    #
+    #   o Locking keys: Caps Lock, Num Lock, Scroll Lock, etc.
+    #
+    #   o Function keys: The keys at the top of the keyboard.
+    #
+    #   o Action keys: space, enter, escape, tab, backspace, delete, arrow
+    #     keys, page up, page down, etc.
+    #
+    keyEcho = sayAndPrint(_("Enable key echo?  Enter y or n: "), True, True)
+    if keyEcho[0:1] == 'Y' or keyEcho[0:1] == 'y':
+        settings.writelines(orca.settings.ENABLE_KEY_ECHO + trueStr)
+
+        echoPrintableKeys = sayAndPrint(_("Enable alphanumeric and punctuation keys?  Enter y or n: "), True, True)
+        if echoPrintableKeys[0:1] == 'Y' or echoPrintableKeys[0:1] == 'y':
+            state = trueStr
+        else:
+            state = falseStr
+        settings.writelines(orca.settings.ENABLE_PRINTABLE_KEYS + state)
+
+        echoModifierKeys = sayAndPrint(_("Enable modifier keys?  Enter y or n: "), True, True)
+        if echoModifierKeys[0:1] == 'Y' or echoModifierKeys[0:1] == 'y':
+            state = trueStr
+        else:
+            state = falseStr
+        settings.writelines(orca.settings.ENABLE_MODIFIER_KEYS + state)
+
+        echoLockingKeys = sayAndPrint(_("Enable locking keys?  Enter y or n: "), True, True)
+        if echoLockingKeys[0:1] == 'Y' or echoLockingKeys[0:1] == 'y':
+            state = trueStr
+        else:
+            state = falseStr
+        settings.writelines(orca.settings.ENABLE_LOCKING_KEYS + state)
+
+        echoFunctionKeys = sayAndPrint(_("Enable function keys?  Enter y or n: "), True, True)
+        if echoFunctionKeys[0:1] == 'Y' or echoFunctionKeys[0:1] == 'y':
+            state = trueStr
+        else:
+            state = falseStr
+        settings.writelines(orca.settings.ENABLE_FUNCTION_KEYS + state)
+
+        echoActionKeys = sayAndPrint(_("Enable action keys?  Enter y or n: "), True, True)
+        if echoActionKeys[0:1] == 'Y' or echoActionKeys[0:1] == 'y':
+            state = trueStr
+        else:
+            state = falseStr
+        settings.writelines(orca.settings.ENABLE_ACTION_KEYS + state)
+
+    else:
+        settings.writelines(orca.settings.ENABLE_KEY_ECHO + falseStr)
+        settings.writelines(orca.settings.ENABLE_PRINTABLE_KEYS + falseStr)
+        settings.writelines(orca.settings.ENABLE_MODIFIER_KEYS + falseStr)
+        settings.writelines(orca.settings.ENABLE_LOCKING_KEYS + falseStr)
+        settings.writelines(orca.settings.ENABLE_FUNCTION_KEYS + falseStr)
+        settings.writelines(orca.settings.ENABLE_ACTION_KEYS + falseStr)
+
+    settings.writelines(orca.settings.ENABLE_SPEECH + trueStr)
 
     return True
 
@@ -302,12 +360,12 @@ def setupBraille():
         pass
 
     if working:
-        useBraille = sayAndPrint(
-            _("Braille support appears to work, use it?  Enter y or n. "),
+        enableBraille = sayAndPrint(
+            _("Braille support appears to work, enable it?  Enter y or n. "),
             False,
             True)
 
-        if useBraille[0:1] == 'Y' or useBraille[0:1] == 'y':
+        if enableBraille[0:1] == 'Y' or enableBraille[0:1] == 'y':
             return True
         else:
             return False
@@ -328,28 +386,28 @@ def enableAccessibility():
         sayAndPrint("You need to log out and log back in for the change "\
                     +"to take effect.")
 
-useSpeech = setupSpeech()
-if useSpeech == False:
-    settings.writelines(orca.settings.USE_SPEECH + " = False\n")
-    settings.writelines(orca.settings.USE_ECHO_BY_WORD + " = False\n")
-    settings.writelines(orca.settings.USE_ECHO_BY_CHAR + " = False\n")
+enableSpeech = setupSpeech()
+if enableSpeech == False:
+    settings.writelines(orca.settings.ENABLE_SPEECH + falseStr)
+    settings.writelines(orca.settings.ENABLE_ECHO_BY_WORD + falseStr)
+    settings.writelines(orca.settings.ENABLE_KEY_ECHO + falseStr)
 
 # We'll always enable braille for now.  Orca will recover gracefully
 # if it cannot connect to BrlTTY.
 #
-settings.writelines(orca.settings.USE_BRAILLE + " = True\n")
+settings.writelines(orca.settings.ENABLE_BRAILLE + trueStr)
     
-#useBraille = setupBraille()
-#if useBraille:
-#    settings.writelines(orca.settings.USE_BRAILLE + " = True\n")
+#enableBraille = setupBraille()
+#if enableBraille:
+#    settings.writelines(orca.settings.ENABLE_BRAILLE + trueStr)
 #else:
-#    settings.writelines(orca.settings.USE_BRAILLE + " = False\n")
+#    settings.writelines(orca.settings.ENABLE_BRAILLE + falseStr)
 
-useBrailleMonitor = sayAndPrint(_("Use Braille Monitor?  Enter y or n: "), True, True)
-if useBrailleMonitor[0:1] == 'Y' or useBrailleMonitor[0:1] == 'y':
-    settings.writelines(orca.settings.USE_BRAILLE_MONITOR + " = True\n")
+enableBrailleMonitor = sayAndPrint(_("Enable Braille Monitor?  Enter y or n: "), True, True)
+if enableBrailleMonitor[0:1] == 'Y' or enableBrailleMonitor[0:1] == 'y':
+    settings.writelines(orca.settings.ENABLE_BRAILLE_MONITOR + trueStr)
 else:
-    settings.writelines(orca.settings.USE_BRAILLE_MONITOR + " = False\n")
+    settings.writelines(orca.settings.ENABLE_BRAILLE_MONITOR + falseStr)
 
 settings.writelines("try:\n")
 settings.writelines("    __import__(\"orca-customizations\")\n")

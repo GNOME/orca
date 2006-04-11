@@ -68,10 +68,10 @@ brailleRolenameStyle    = BRAILLE_ROLENAME_STYLE_LONG
 SPEECH_RATE_DELTA       = "speechRateDelta"
 speechRateDelta         = 5
 
-# If True, use speech.
+# If True, enable speech.
 #
-USE_SPEECH              = "useSpeech"
-useSpeech               = True
+ENABLE_SPEECH           = "enableSpeech"
+enableSpeech            = True
 
 # Settings that apply to the particular speech engine to
 # use as well details on the default voices to use.
@@ -96,32 +96,60 @@ voices = {
     HYPERLINK_VOICE : ACSS({ACSS.AVERAGE_PITCH : 8})
 }
 
-# If True, use braille.
+# If True, enable braille.
 #
-USE_BRAILLE             = "useBraille"
-useBraille              = True
+ENABLE_BRAILLE          = "enableBraille"
+enableBraille           = True
 
-# If True, use braille monitor.
+# If True, enable braille monitor.
 #
-USE_BRAILLE_MONITOR     = "useBrailleMonitor"
-useBrailleMonitor       = False
+ENABLE_BRAILLE_MONITOR  = "enableBrailleMonitor"
+enableBrailleMonitor    = False
 
-# If True, use magnification.
+# If True, enable magnification.
 #
-USE_MAGNIFIER           = "useMagnifier"
-useMagnifier            = False
+ENABLE_MAGNIFIER        = "enableMagnifier"
+enableMagnifier         = False
 
-# if True, echo keys by word.
-# Note that it is allowable for both useEchoByWord and useEchoByChar to be True
+# if True, enable word echo.
+# Note that it is allowable for both enableEchoByWord and enableKeyEcho 
+# to be True
 #
-USE_ECHO_BY_WORD        = "useEchoByWord"
-useEchoByWord           = False
+ENABLE_ECHO_BY_WORD     = "enableEchoByWord"
+enableEchoByWord        = False
 
-# if True, echo keys by character.
-# Note that it is allowable for both useEchoByWord and useEchoByChar to be True
+# If True, enable key echo.
+# Note that it is allowable for both enableEchoByWord and enableKeyEcho 
+# to be True
 #
-USE_ECHO_BY_CHAR        = "useEchoByChar"
-useEchoByChar           = False
+ENABLE_KEY_ECHO         = "enableKeyEcho"
+enableKeyEcho           = False
+
+# If True and key echo is enabled, echo Alphanumeric and punctuation keys.
+#
+ENABLE_PRINTABLE_KEYS  = "enablePrintableKeys"
+enablePrintableKeys     = True
+
+# If True and key echo is enabled, echo Modifier keys.
+#
+ENABLE_MODIFIER_KEYS    = "enableModifierKeys"
+enableModifierKeys      = True
+
+# If True and key echo is enabled, echo Locking keys.
+#
+ENABLE_LOCKING_KEYS     = "enableLockingKeys"
+enableLockingKeys       = True
+
+# If True and key echo is enabled, echo Function keys.
+#
+ENABLE_FUNCTION_KEYS    = "enableFunctionKeys"
+enableFunctionKeys      = True
+
+# If True and key echo is enabled, echo Action keys.
+#
+ENABLE_ACTION_KEYS      = "enableActionKeys"
+enableActionKeys        = True
+
 
 # If True, reads all the table cells in the current row rather than just
 # the current one.
@@ -133,8 +161,8 @@ readTableCellRow        = False
 # will be used.  Helps determine difference between custom
 # scripts and the default script behavior.
 #
-USE_CUSTOM_SCRIPTS      = "speechVerbosityLevel"
-useCustomScripts        = True
+ENABLE_CUSTOM_SCRIPTS   = "enableCustomScripts"
+enableCustomScripts     = True
 
 # Latent support to allow the user to override/define keybindings
 # and braille bindings.  Unsupported and undocumented for now.

@@ -643,7 +643,7 @@ def refresh(panToCursor=True, targetCursorCell=0):
   
     brl.writeText(cursorCell, string[startPos:endPos])
 
-    if settings.getSetting(settings.USE_BRAILLE_MONITOR, False):
+    if settings.getSetting(settings.ENABLE_BRAILLE_MONITOR, False):
 	if not monitor:	
 	    monitor = brlmon.BrlMon(_displaySize[0])
 	    monitor.show_all()

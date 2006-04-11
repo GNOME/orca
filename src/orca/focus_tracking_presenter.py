@@ -134,7 +134,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
 
         script = None
 
-        if settings.getSetting(settings.USE_CUSTOM_SCRIPTS, True):
+        if settings.getSetting(settings.ENABLE_CUSTOM_SCRIPTS, True):
             # Look for custom scripts first.
             #
             # We'll use the LEVEL_FINEST level for debug output here as

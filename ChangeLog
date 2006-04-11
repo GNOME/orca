@@ -1,3 +1,49 @@
+2006-04-11  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/settings.py  
+          src/orca/orca.py
+          src/orca/default.py
+          src/orca/orca-setup.in
+          Changes to the way key echo work per the key and word echo
+          requirements spec.
+
+          Key echo applies to the entire keyboard and is for echoing 
+          keys as they are pressed. The keys are broken into the following 
+          groups that the user can optionally enable for echoing:
+
+          o Alphanumeric and punctuation keys
+
+          o Modifier keys: CTRL, ALT, Shift, Insert, and "Fn" on laptops.
+
+          o Locking keys: Caps Lock, Num Lock, Scroll Lock, etc.
+
+          o Function keys: The keys at the top of the keyboard.
+
+          o Action keys: space, enter, escape, tab, backspace, delete, arrow
+            keys, page up, page down, etc.
+
+          When a key from any enabled group is pressed, the key will 
+          be spoken.
+
+          The onTextInserted() method only speaks the text associated
+          with the "object:text-change:insert" event if key echoing and
+          echoing of printable characters are both enabled.
+
+          The orca-setup.in script has been adjusted to ask various questions
+          to allow the user to setup whether these types of keys will be
+          echoed or not.
+
+        * src/orca/settings.py
+          src/orca/braille.py
+          src/orca/focus_tracking_presenter.py
+          src/orca/orca.py
+          src/orca/orca-setup.in
+          Refactoring of use<name> to enable<name> for various settings to
+          be consistent in style with the names for the new keyboard 
+          enabling types.
+
+          The orca-setup.in script has been adjusted to use these new names.
+
 2006-04-10  Willie Walker <william.walker@sun.com>
 
 	* docs/doc-set/*: update requirements

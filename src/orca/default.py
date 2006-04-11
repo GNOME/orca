@@ -1232,26 +1232,16 @@ class Script(script.Script):
                and (event.source.parent != orca.locusOfFocus):
             return
 
-        # If echoing by character and word are both off, then just return.
-        #
-        echoByWord = settings.getSetting(settings.USE_ECHO_BY_WORD, False)
-        echoByChar = settings.getSetting(settings.USE_ECHO_BY_CHAR, False)
-        # [[[TODO: richb - commented out for now as it has the side-effect 
-        #    of no longer speaking any text that's inserted into the gedit or
-        #    gnome-terminal application. Need to find out how to determine
-        #    whether this "object:text-changed:insert" event was generated 
-        #    as the result of a key being pressed.]]]
-        #
-        # if not echoByWord and not echoByChar:
-        #   return
-
         self.updateBraille(event.source)
-        text = event.any_data.value()
 
-        if text.isupper():
-            speech.speak(text, self.voices["uppercase"])
-        else:
-            speech.speak(text)
+        if settings.getSetting(settings.ENABLE_KEY_ECHO, False) and \
+           settings.getSetting(settings.ENABLE_PRINTABLE_KEYS, False):
+            text = event.any_data.value()
+
+            if text.isupper():
+                speech.speak(text, self.voices["uppercase"])
+            else:
+                speech.speak(text)
 
     def onActiveDescendantChanged(self, event):
         """Called when an object who manages its own descendants detects a

@@ -19,6 +19,7 @@
 
 import gtk
 import os, signal, sys
+import string
 import time
 
 import atspi
@@ -505,29 +506,106 @@ _keybindings = None
 #
 _orcaModifierPressed = False
 
-# List of special keys. Used by _specialKey().
-#
-_specialKeys = [ 'Alt_L', 'Alt_R', 'Control_L', 'Control_R', \
-                 'Shift_L', 'Shift_R', 'Meta_L', 'Meta_R' ]
 
-def _specialKey(event):
-    """Return an indication of whether this is a special key. Special
-    keys include Control, Alt, Shift and Meta.
-
-    This is an area that is still in flux. Except tweaks to be made to 
-    the set of keys which are considered special.
+def _isPrintableKey(event_string):
+    """Return an indication of whether this is an alphanumeric or
+       punctuation key.
 
     Arguments:
-    - event: an AT-SPI DeviceEvent
+    - event: the event string
 
-    Returns True if this is a special key.
+    Returns True if this is an alphanumeric or punctuation key.
     """
 
-    return event.event_string in _specialKeys
+    reply = event_string in string.printable
+    debug.println(debug.LEVEL_FINEST,
+                  "orca._echoPrintableKey: returning: %s" % reply)
+    return reply
+
+
+def _isModifierKey(event_string):
+    """Return an indication of whether this is a modifier key.
+
+    Arguments:
+    - event: the event string
+
+    Returns True if this is a modifier key
+    """
+
+    # [[[TODO:richb - the Fn key on my laptop doesn't seem to generate an
+    #    event.]]]
+
+    modifierKeys = [ 'Alt_L', 'Alt_R', 'Control_L', 'Control_R', \
+                     'Shift_L', 'Shift_R', 'Meta_L', 'Meta_R', "Insert" ]
+
+    reply = event_string in modifierKeys
+    debug.println(debug.LEVEL_FINEST,
+                  "orca._echoModifierKey: returning: %s" % reply)
+    return reply
+
+
+def _isLockingKey(event_string):
+    """Return an indication of whether this is a locking key.
+
+    Arguments:
+    - event: the event string
+
+    Returns True if this is a locking key.
+    """
+
+    lockingKeys = [ "Caps_Lock", "Num_Lock", "Scroll_Lock" ]
+
+    reply = event_string in lockingKeys
+    debug.println(debug.LEVEL_FINEST,
+                  "orca._echoLockingKey: returning: %s" % reply)
+    return reply
+
+
+def _isFunctionKey(event_string):
+    """Return an indication of whether this is a function key.
+
+    Arguments:
+    - event: the event string
+
+    Returns True if this is a function key.
+    """
+
+    # [[[TODO:richb - what should be done about the function keys on the left
+    #    side of my Sun keyboard and the other keys (like Scroll Lock), which
+    #    generate "Fn" key events?]]]
+
+    functionKeys = [ "F1", "F2", "F3", "F4", "F5", "F6",
+                     "F7", "F8", "F9", "F10", "F11", "F12" ]
+
+    reply = event_string in functionKeys
+    debug.println(debug.LEVEL_FINEST,
+                  "orca._echoFunctionKey: returning: %s" % reply)
+    return reply
+
+
+def _isActionKey(event_string):
+    """Return an indication of whether this is an action key.
+
+    Arguments:
+    - event: the event string
+
+    Returns True if this is an action key.
+    """
+
+    actionKeys = [ "space", "Return", "Escape", "Tab", "BackSpace", "Delete",
+                   "Left", "Right", "Up", "Down", "Page_Up", "Page_Down" ]
+
+    reply = event_string in actionKeys
+    debug.println(debug.LEVEL_FINEST,
+                  "orca._echoActionKey: returning: %s" % reply)
+    return reply
 
 
 def _keyEcho(event):
-    """If the keyEcho setting is enabled, echoes the key via speech.
+    """If the keyEcho setting is enabled, check to see what type of key
+    event it is and echo it via speech, if the user wants that type of 
+    key echoed.
+
     Uppercase keys will be spoken using the "uppercase" voice style,
     whereas lowercase keys will be spoken using the "default" voice style.
 
@@ -536,50 +614,86 @@ def _keyEcho(event):
     """
 
     event_string = event.event_string
+    debug.println(debug.LEVEL_FINEST,
+                  "orca._keyEcho: string to echo: %s" % event_string)
 
-    # The control characters come through as control characters,
-    # so we just turn them into their ASCII equivalent.  NOTE that
-    # the upper case ASCII characters will be used (e.g., ctrl+a
-    # will be turned into the string "A").  All these checks here
-    # are to just do some sanity checking before doing the
-    # conversion. [[[WDW - this is making assumptions about
-    # mapping ASCII control characters to to UTF-8.]]]
+    voices = settings.getSetting(settings.VOICES, None)
+    voice = voices[settings.DEFAULT_VOICE]
+
+    # Check if the object that currently has focus is an editable
+    # text object or has a role of "terminal". 
     #
-    if (event.modifiers & (1 << atspi.Accessibility.MODIFIER_CONTROL)) \
-       and (not event.is_text) and (len(event.event_string) == 1):
-        value = ord(event.event_string[0])
-        if value < 32:
-            event_string = chr(value + 0x40)
+    specialComponent = False
+    if locusOfFocus:
+        stateSet = locusOfFocus.state
+        if stateSet.count(atspi.Accessibility.STATE_EDITABLE) \
+           or locusOfFocus.role == rolenames.ROLE_TERMINAL:
+            specialComponent = True
 
-    if not (settings.getSetting(settings.USE_ECHO_BY_WORD, False) \
-         or settings.getSetting(settings.USE_ECHO_BY_CHAR, False)):
-        return
+    # If key echo is enabled, then check to see what type of key event 
+    # it is and echo it via speech, if the user wants that type of key 
+    # echoed.
+    #
+    # If this is a special component and this is a printable key and
+    # echoing of printable keys is enabled, then just return. These
+    # keys will be echoes in the onTextInserted() method in default.py
 
-    if event_string.isupper():
-        voices = settings.getSetting(settings.VOICES, None)
-        speech.speak(event_string, voices[settings.UPPERCASE_VOICE])
-    else:
-        if not _specialKey(event):
-            # Check if the object that currently has focus is an editable
-            # text object or has a role of "terminal". If so, then the 
-            # echoing of the key event will occur via an 
-            # "object:text-changed:insert" event.
+    if settings.getSetting(settings.ENABLE_KEY_ECHO, False):
+        if _isPrintableKey(event_string):
+            if not settings.getSetting(settings.ENABLE_PRINTABLE_KEYS, False) \
+               or specialComponent:
+                return
+
+            if event_string.isupper():
+                voice = voices[settings.UPPERCASE_VOICE]
+
+        elif _isModifierKey(event_string):
+            if not settings.getSetting(settings.ENABLE_MODIFIER_KEYS,  False):
+                return
+
+            # The control characters come through as control characters,
+            # so we just turn them into their ASCII equivalent.  NOTE that
+            # the upper case ASCII characters will be used (e.g., ctrl+a
+            # will be turned into the string "A").  All these checks here
+            # are to just do some sanity checking before doing the
+            # conversion. [[[WDW - this is making assumptions about
+            # mapping ASCII control characters to to UTF-8.]]]
             #
-            if locusOfFocus:
-                stateSet = locusOfFocus.state
-                if stateSet.count(atspi.Accessibility.STATE_EDITABLE) \
-                   or locusOfFocus.role == rolenames.ROLE_TERMINAL:
-                    return
+            if (event.modifiers & (1 << atspi.Accessibility.MODIFIER_CONTROL)) \
+               and (not event.is_text) and (len(event_string) == 1):
+                value = ord(event.event_string[0])
+                if value < 32:
+                    event_string = chr(value + 0x40)
 
-            # Check to see if there are localized words to be spoken for
-            # this key event.
-            try:
-                event_string = keynames.keynames[event_string]
-            except:
-                debug.printException(debug.LEVEL_FINEST)
-                pass
+        elif _isLockingKey(event_string):
+            if not settings.getSetting(settings.ENABLE_LOCKING_KEYS, False):
+                return
 
-        speech.speak(event_string)
+        elif _isFunctionKey(event_string):
+            if not settings.getSetting(settings.ENABLE_FUNCTION_KEYS, False):
+                return
+
+        elif _isActionKey(event_string):
+            if not settings.getSetting(settings.ENABLE_ACTION_KEYS, False):
+                return
+
+        else:
+            debug.println(debug.LEVEL_FINEST,
+                  "orca._keyEcho: event string not handled: %s" % event_string)
+            return
+
+        # Check to see if there are localized words to be spoken for
+        # this key event.
+        try:
+            event_string = keynames.keynames[event_string]
+        except:
+            debug.printException(debug.LEVEL_FINEST)
+            pass
+
+        debug.println(debug.LEVEL_FINEST,
+                      "orca._keyEcho: speaking: %s" % event_string)
+        speech.speak(event_string, voice)
+
 
 def _processKeyboardEvent(event):
     """The primary key event handler for Orca.  Keeps track of various
@@ -910,7 +1024,7 @@ def init(registry):
                                             1 << MODIFIER_ORCA,
                                             nextPresentationManagerHandler))
 
-    if settings.getSetting(settings.USE_SPEECH, True):
+    if settings.getSetting(settings.ENABLE_SPEECH, True):
         try:
             speech.init()
             debug.println(debug.LEVEL_CONFIGURATION,
@@ -922,14 +1036,14 @@ def init(registry):
         debug.println(debug.LEVEL_CONFIGURATION,
                       "Speech module has NOT been initialized.")
 
-    if settings.getSetting(settings.USE_BRAILLE, True):
+    if settings.getSetting(settings.ENABLE_BRAILLE, True):
         try:
             braille.init(_processBrailleEvent, 7)
         except:
             debug.println(debug.LEVEL_SEVERE,
                           "Could not initialize connection to braille.")
 
-    if settings.getSetting(settings.USE_MAGNIFIER, False):
+    if settings.getSetting(settings.ENABLE_MAGNIFIER, False):
         try:
             mag.init()
             debug.println(debug.LEVEL_CONFIGURATION,
@@ -1034,11 +1148,11 @@ def shutdown(script=None, inputEvent=None):
 
     # Shutdown all the other support.
     #
-    if settings.getSetting(settings.USE_SPEECH, True):
+    if settings.getSetting(settings.ENABLE_SPEECH, True):
         speech.shutdown()
-    if settings.getSetting(settings.USE_BRAILLE, False):
+    if settings.getSetting(settings.ENABLE_BRAILLE, False):
         braille.shutdown();
-    if settings.getSetting(settings.USE_MAGNIFIER, False):
+    if settings.getSetting(settings.ENABLE_MAGNIFIER, False):
         mag.shutdown();
 
     registry.stop()
