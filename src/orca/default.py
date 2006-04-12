@@ -1237,13 +1237,25 @@ class Script(script.Script):
         self.updateBraille(event.source)
 
         text = event.any_data.value()
-        if settings.getSetting(settings.ENABLE_KEY_ECHO, False) and \
-           settings.getSetting(settings.ENABLE_PRINTABLE_KEYS, False):
 
-            if text.isupper():
-                speech.speak(text, self.voices["uppercase"])
+        # If the last input event was a keyboard event, check to see if 
+        # the text for this event matches what the user typed. If it does, 
+        # then don't speak it.
+        #
+        # Note that we have to special case the space character as it
+        # comes across as "space" in the keyboard event and " " in the
+        # text event.
+        #
+        if isinstance(orca.lastInputEvent, input_event.KeyboardEvent):
+            keyString = orca.lastInputEvent.event_string
+            if (text == " " and keyString == "space") or \
+               (text == keyString):
+                pass
             else:
-                speech.speak(text)
+                if text.isupper():
+                    speech.speak(text, self.voices["uppercase"])
+                else:
+                    speech.speak(text)
 
         if settings.getSetting(settings.ENABLE_ECHO_BY_WORD, False):
             if text in string.whitespace or text in string.punctuation:

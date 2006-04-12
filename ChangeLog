@@ -1,3 +1,20 @@
+2006-04-12  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py
+          src/orca/orca.py
+          In the _keyEcho() routine in orca.py, no longer do anything
+          special if this is a printable character and a "special" 
+          component ("special" is an editable component or a terminal).
+
+          In the onTextInserted() routine in default.py, check if the 
+          last input event was a keyboard event, check to see if the 
+          text for this event matches what the user typed. If it does,
+          then don't speak it.
+        
+           Note that we have to special case the space character as it 
+           comes across as "space" in the keyboard event and " " in the
+           text event.
+
 2006-04-11  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py

@@ -620,28 +620,13 @@ def _keyEcho(event):
     voices = settings.getSetting(settings.VOICES, None)
     voice = voices[settings.DEFAULT_VOICE]
 
-    # Check if the object that currently has focus is an editable
-    # text object or has a role of "terminal". 
-    #
-    specialComponent = False
-    if locusOfFocus:
-        stateSet = locusOfFocus.state
-        if stateSet.count(atspi.Accessibility.STATE_EDITABLE) \
-           or locusOfFocus.role == rolenames.ROLE_TERMINAL:
-            specialComponent = True
-
     # If key echo is enabled, then check to see what type of key event 
     # it is and echo it via speech, if the user wants that type of key 
     # echoed.
     #
-    # If this is a special component and this is a printable key and
-    # echoing of printable keys is enabled, then just return. These
-    # keys will be echoes in the onTextInserted() method in default.py
-
     if settings.getSetting(settings.ENABLE_KEY_ECHO, False):
         if _isPrintableKey(event_string):
-            if not settings.getSetting(settings.ENABLE_PRINTABLE_KEYS, False) \
-               or specialComponent:
+            if not settings.getSetting(settings.ENABLE_PRINTABLE_KEYS, False):
                 return
 
             if event_string.isupper():
