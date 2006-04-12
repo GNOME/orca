@@ -100,10 +100,10 @@
           <para>&detail; bound to
              <literal>default.Script.sayAll</literal>.
              </para>
-	  <para>&incomplete; the binding is in place, but sayAll
-              doesn't work as expected (see the requirement on <link
-              linkend="urdocread">Document Reading</link>).  &deliver;
-              V1.0.</para>
+	  <para>&incomplete; [OWNER: RNB] the binding is in place, but
+              sayAll doesn't work as expected (see the requirement on
+              <link linkend="urdocread">Document Reading</link>).
+              &mustdeliver; V1.0.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_ENTER": performs "Where Am I?"  If this key is
@@ -111,18 +111,19 @@
             will be spoken.</para>
 	  <para>&detail; bound to
             <literal>default.Script.whereAmI</literal>.</para>
-	  <para>&incomplete; the binding is in place, but the "Where
-              Am I" functionality needs further specification (see the
-              requirement on <link linkend="urwhereami">Where Am
-              I?</link>).  In addition, the notion of a relevant 
-	      status bar is yet to be defined. &deliver; V1.0.</para>
+	  <para>&incomplete; [OWNER: WDW] the binding is in place, but
+              the "Where Am I" functionality needs further
+              specification (see the requirement on <link
+              linkend="urwhereami">Where Am I?</link>).  In addition,
+              the notion of a relevant status bar is yet to be
+              defined. &mustdeliver; V1.0.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_.": performs a "screen find."  Pressing this key
             brings up a dialog where a user can enter a search string
             and decide where on the screen the search should begin IE
             from the top or current position.</para>
-	  <para>&incomplete; MUST &deliver; V1.0.</para>
+	  <para>&incomplete; [OWNER: WDW] &shoulddeliver; V1.0.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_7": moves the review position to the prior line,
@@ -147,8 +148,8 @@
              details.</para>
 	  <para>&detail; bound to
             <literal>default.Script.reviewCurrentLine</literal>.</para>
-	  <para>&incomplete; handles the single press, but not the double
-	    press.  &deliver; V1.0.</para>
+	  <para>&incomplete; [OWNER: RNB] handles the single press,
+	    but not the double press.  &shoulddeliver; V1.0.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_9": moves the review position to the next
@@ -185,8 +186,8 @@
              phonetic spelling</para>
 	  <para>&detail; bound to
             <literal>default.Script.reviewCurrentItem</literal>.</para>
-	  <para>&incomplete; handles the single press, but not the double
-	    press.  &deliver; V1.0.</para>
+	  <para>&incomplete; [OWNER: WDW] handles the single press,
+	    but not the double press.  &mustdeliver; V1.0.</para>
         </listitem>
         <listitem>
           <para>"INSERT+KEYPAD_5": speaks the accessible containing
@@ -229,8 +230,8 @@
              phonetically (if it is a letter)</para>
 	  <para>&detail; bound to
             <literal>default.Script.reviewCurrentCharacter</literal>.</para>
-	  <para>&incomplete; handles the single press, but not the double
-	    press.  &deliver; V1.0.</para>
+	  <para>&incomplete; [OWNER: WDW] handles the single press,
+	    but not the double press.  &mustdeliver; V1.0.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_3": moves the review position to the next
@@ -240,22 +241,27 @@
 	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
-          <para>INSERT+s: speaks the status bar (if there is one)</para>
-	  <para>&incomplete; not done, and currently bound to 
-	    <literal>orca.resetSpeech</literal>.  &deliver; V1.0.</para>
+          <para>INSERT+s: toggles speech on and off.</para>
+	  <para>&incomplete; [OWNER: WDW] not done, and currently
+	    bound to <literal>orca.resetSpeech</literal>.  &mustdeliver;
+	    V1.0.</para>
         </listitem>
         <listitem>
-          <para>INSERT+t: speaks the title of dialog or app</para>
-	  <para>&incomplete; &deliver; V1.0.</para>
+          <para>CONTROL+INSERT+s: resets connection to the speech 
+            engine.</para>
+	  <para>&incomplete; [OWNER: WDW] not done, and currently
+	    bound to INSERT+s.  &mustdeliver; V1.0.</para>
         </listitem>
         <listitem>
-          <para>INSERT+v: brings up a "quick" verbosity preferences dialog.
-             Example settings include whether or not to speak indenting
-             when working with text, speaking capitalization, speak the
-             role of items, speak font information if it changes, speak
-	     an entire table line vs. individual cells, 
-             etc.</para>
-	  <para>&incomplete; &deliver; V1.0.</para>
+          <para>INSERT+v: brings up a "quick" verbosity preferences
+	     dialog to set preferences that are temporary to the
+	     current session (i.e., they are not saved permanently
+	     like the Configuration GUI would do).  Example settings
+	     include whether or not to speak indenting when working
+	     with text, speaking capitalization, speak the role of
+	     items, speak font information if it changes, speak an
+	     entire table line vs. individual cells, etc.</para>
+	  <para>&incomplete; [OWNER: RNB] &mustdeliver; V1.0.</para>
         </listitem>
         <listitem>
           <para>INSERT+RIGHT_ARROW: increases speech rate</para>
@@ -271,11 +277,8 @@
         </listitem>
         <listitem>
           <para>INSERT+SPACE: brings up configuration GUI</para>
-	  <para>&incomplete; &deliver; with configuration GUI.</para>
-        </listitem>
-        <listitem>
-          <para>TBS: toggles speech on and off</para>
-	  <para>&incomplete; &deliver; V1.0.</para>
+	  <para>&incomplete; [OWNER: RNB] &shoulddeliver; V1.0 (along
+	    with configuration GUI).</para>
         </listitem>
       </itemizedlist>
 
@@ -324,11 +327,11 @@
         </listitem>
         <listitem>
           <para>Beginning of line: BRL_CMD_LNBEG</para>
-	  <para>&incomplete; &deliver; V1.0.</para>
+	  <para>&incomplete; [OWNER: WDW] &shoulddeliver; V1.0.</para>
         </listitem>
         <listitem>
           <para>End of line: BRL_CMD_LNEND</para>
-	  <para>&incomplete; &deliver; V1.0.</para>
+	  <para>&incomplete; [OWNER: WDW] &shoulddeliver; V1.0.</para>
         </listitem>
         <listitem>
           <para>Top of window: BRL_CMD_TOP_LEFT</para>
@@ -356,23 +359,23 @@
             cursor at the beginning and end of the region that the
             user wishes to select in conjunction with another well
             known key on the display.</para>
-	  <para>&incomplete; &deliver; V1.0+.</para>
+	  <para>&incomplete; &shoulddeliver; V1.1.</para>
         </listitem>
         <listitem>
           <para>Set watched area:</para>
-	  <para>&incomplete; &deliver; V1.0+.</para>
+	  <para>&incomplete; &shoulddeliver; V1.1.</para>
         </listitem>
         <listitem>
           <para>Set Bookmarked area:</para>
-	  <para>&incomplete; &deliver; V1.0+.</para>
+	  <para>&incomplete; &shoulddeliver; V1.1.</para>
         </listitem>
         <listitem>
           <para>Go to bookmarked area:</para>
-	  <para>&incomplete; &deliver; V1.0+.</para>
+	  <para>&incomplete; &shoulddeliver; V1.1.</para>
         </listitem>
         <listitem>
           <para>Go to watched area:</para>
-	  <para>&incomplete; &deliver; V1.0+.</para>
+	  <para>&incomplete; &shoulddeliver; V1.1.</para>
         </listitem>
       </itemizedlist>
 
@@ -384,29 +387,30 @@
           <para>Toggle space compression: BRL_CMD_SLIDEWIN. Toggles
             whether or not spaces are compressed when navigating with
             the braille display</para>
-	  <para>&incomplete; &deliver; V1.0+.</para>
+	  <para>&incomplete; [OWNER: WDW] &mustdeliver; V1.0.</para>
         </listitem>
         <listitem>
 	  <para>Toggle grade two on and off.</para>
-	  <para>&incomplete; &deliver; V1.0+.</para>
+	  <para>&incomplete; &shoulddeliver; V1.1.</para>
         </listitem>
         <listitem>
 	  <para>Toggle what attributes if any are displayed.</para>
-	  <para>&incomplete; &deliver; V1.0+.</para>
+	  <para>&incomplete; cannot reliably get dot info from BrlTTY.
+	    &shoulddeliver; V1.1.</para>
         </listitem>
         <listitem>
 	  <para>Enter verbosity mode: BRL_CMD_PREFMENU.</para>
-	  <para>&incomplete; &deliver; V1.0+.</para>
+	  <para>&incomplete; [OWNER: RNB] &mustdeliver; V1.0.</para>
         </listitem>
         <listitem>
           <para>Toggle keyboard learn mode: BRL_CMD_LEARN</para>
-	  <para>&incomplete; &deliver; V1.0+.</para>
+	  <para>&incomplete; [OWNER: WDW] &mustdeliver; V1.0.</para>
         </listitem>
         <listitem>
           <para>Toggle display style: toggles between the default
             view, which is the logical presentation of the focus and
-            the contents of the current line [[[WDW - ???]]]</para>
-	  <para>&incomplete; &deliver; V1.0+.</para>
+            the contents of the current line.</para>
+	  <para>&incomplete; &deliver; V1.1+.</para>
         </listitem>
       </itemizedlist>
 
