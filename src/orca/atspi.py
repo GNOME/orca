@@ -575,9 +575,17 @@ class Accessible:
         #
         try:
             self._acc = acc._narrow(Accessibility.Application)
+            try:
+                self.toolkitName = self._acc.toolkitName
+            except:
+                self.toolkitName = None
+            try:
+                self.version = self._acc.version
+            except:
+                self.version = None
         except:
             self._acc = acc._narrow(Accessibility.Accessible)
-
+            
         # [[[TODO: WDW - the AT-SPI appears to give us a different accessible
         # when we repeatedly ask for the same child of a parent that manages
         # its descendants.  So...we probably shouldn't cache those kind of
