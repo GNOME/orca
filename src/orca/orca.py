@@ -506,7 +506,6 @@ _keybindings = None
 #
 _orcaModifierPressed = False
 
-
 def _isPrintableKey(event_string):
     """Return an indication of whether this is an alphanumeric or
        punctuation key.
@@ -521,7 +520,6 @@ def _isPrintableKey(event_string):
     debug.println(debug.LEVEL_FINEST,
                   "orca._echoPrintableKey: returning: %s" % reply)
     return reply
-
 
 def _isModifierKey(event_string):
     """Return an indication of whether this is a modifier key.
@@ -543,7 +541,6 @@ def _isModifierKey(event_string):
                   "orca._echoModifierKey: returning: %s" % reply)
     return reply
 
-
 def _isLockingKey(event_string):
     """Return an indication of whether this is a locking key.
 
@@ -559,7 +556,6 @@ def _isLockingKey(event_string):
     debug.println(debug.LEVEL_FINEST,
                   "orca._echoLockingKey: returning: %s" % reply)
     return reply
-
 
 def _isFunctionKey(event_string):
     """Return an indication of whether this is a function key.
@@ -582,7 +578,6 @@ def _isFunctionKey(event_string):
                   "orca._echoFunctionKey: returning: %s" % reply)
     return reply
 
-
 def _isActionKey(event_string):
     """Return an indication of whether this is an action key.
 
@@ -599,7 +594,6 @@ def _isActionKey(event_string):
     debug.println(debug.LEVEL_FINEST,
                   "orca._echoActionKey: returning: %s" % reply)
     return reply
-
 
 def _keyEcho(event):
     """If the keyEcho setting is enabled, check to see what type of key
@@ -678,7 +672,6 @@ def _keyEcho(event):
         debug.println(debug.LEVEL_FINEST,
                       "orca._keyEcho: speaking: %s" % event_string)
         speech.speak(event_string, voice)
-
 
 def _processKeyboardEvent(event):
     """The primary key event handler for Orca.  Keeps track of various
