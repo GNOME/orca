@@ -62,7 +62,7 @@ class Script(script.Script):
         script.Script.__init__(self, app)
 
         self.flatReviewContext = None
-        self.readTableCellRow = settings.getSetting(settings.READ_TABLE_CELL_ROW, False)
+        self.readTableCellRow = settings.readTableCellRow
 
         ################################################################
         #                                                              #
@@ -120,7 +120,7 @@ class Script(script.Script):
                 1 << orca.MODIFIER_ORCA, 
                 self.showZonesHandler))
 
-	self.toggleFlatReviewModeHandler = input_event.InputEventHandler(
+        self.toggleFlatReviewModeHandler = input_event.InputEventHandler(
             Script.toggleFlatReviewMode,
             _("Enters and exits flat review mode."))
         self.keybindings.add(
@@ -162,7 +162,7 @@ class Script(script.Script):
                 1 << orca.MODIFIER_ORCA,
                 self.reviewHomeHandler))
 
-	self.reviewCurrentLineHandler = input_event.InputEventHandler(
+        self.reviewCurrentLineHandler = input_event.InputEventHandler(
             Script.reviewCurrentLine,
             _("Speaks the current flat review line."))
         self.keybindings.add(
@@ -170,13 +170,13 @@ class Script(script.Script):
                 "KP_8",
                 0,
                 0,
-		self.reviewCurrentLineHandler))
+                self.reviewCurrentLineHandler))
         self.keybindings.add(
             keybindings.KeyBinding(
                 "KP_Up",
                 0,
                 0,
-		self.reviewCurrentLineHandler))
+                self.reviewCurrentLineHandler))
 
         self.reviewNextLineHandler = input_event.InputEventHandler(
                 Script.reviewNextLine,
@@ -194,7 +194,7 @@ class Script(script.Script):
                 0, 
                 self.reviewNextLineHandler))
 
-	self.reviewEndHandler = input_event.InputEventHandler(
+        self.reviewEndHandler = input_event.InputEventHandler(
             Script.reviewEnd,
             _("Moves flat review to the end position."))
         self.keybindings.add(
@@ -218,13 +218,13 @@ class Script(script.Script):
                 "KP_4", 
                 1 << orca.MODIFIER_ORCA, 
                 0, 
-		self.reviewPreviousItemHandler))
+                self.reviewPreviousItemHandler))
         self.keybindings.add(
             keybindings.KeyBinding(
                 "KP_Left", 
                 1 << orca.MODIFIER_ORCA, 
                 0, 
-		self.reviewPreviousItemHandler))
+                self.reviewPreviousItemHandler))
                 
         self.reviewAboveHandler = input_event.InputEventHandler(
             Script.reviewAbove,
@@ -242,7 +242,7 @@ class Script(script.Script):
                 1 << orca.MODIFIER_ORCA,
                 self.reviewAboveHandler))
 
-	self.reviewCurrentItemHandler = input_event.InputEventHandler(
+        self.reviewCurrentItemHandler = input_event.InputEventHandler(
             Script.reviewCurrentItem,
             _("Speaks the current flat review item or word."))
         self.keybindings.add(
@@ -250,15 +250,15 @@ class Script(script.Script):
                 "KP_5",
                 1 << orca.MODIFIER_ORCA,
                 0,
-		self.reviewCurrentItemHandler))
+                self.reviewCurrentItemHandler))
         self.keybindings.add(
             keybindings.KeyBinding(
                 "KP_Begin",
                 1 << orca.MODIFIER_ORCA,
                 0,
-		self.reviewCurrentItemHandler))
+                self.reviewCurrentItemHandler))
 
-	self.reviewCurrentAccessibleHandler = input_event.InputEventHandler(
+        self.reviewCurrentAccessibleHandler = input_event.InputEventHandler(
             Script.reviewCurrentAccessible,
             _("Speaks the current flat review object."))
         self.keybindings.add(
@@ -266,15 +266,15 @@ class Script(script.Script):
                 "KP_5",
                 1 << orca.MODIFIER_ORCA,
                 1 << orca.MODIFIER_ORCA,
-		self.reviewCurrentAccessibleHandler))
+                self.reviewCurrentAccessibleHandler))
         self.keybindings.add(
             keybindings.KeyBinding(
                 "KP_Begin",
                 1 << orca.MODIFIER_ORCA,
                 1 << orca.MODIFIER_ORCA,
-		self.reviewCurrentAccessibleHandler))                
+                self.reviewCurrentAccessibleHandler))                
 
-	self.reviewNextItemHandler = input_event.InputEventHandler(
+        self.reviewNextItemHandler = input_event.InputEventHandler(
             Script.reviewNextItem,
             _("Moves flat review to the next item or word."))
         self.keybindings.add(
@@ -282,13 +282,13 @@ class Script(script.Script):
                 "KP_6", 
                 1 << orca.MODIFIER_ORCA,
                 0,
-	        self.reviewNextItemHandler))
+                self.reviewNextItemHandler))
         self.keybindings.add(
             keybindings.KeyBinding(
                 "KP_Right", 
                 1 << orca.MODIFIER_ORCA,
                 0,
-	        self.reviewNextItemHandler))
+                self.reviewNextItemHandler))
 
         self.reviewBelowHandler = input_event.InputEventHandler(
             Script.reviewBelow,
@@ -323,7 +323,7 @@ class Script(script.Script):
                 self.reviewPreviousCharacterHandler))
 
         self.reviewEndOfLineHandler = input_event.InputEventHandler(
-	    Script.reviewEndOfLine,
+            Script.reviewEndOfLine,
             _("Moves flat review to the end of the line."))
         self.keybindings.add(
             keybindings.KeyBinding(
@@ -346,13 +346,13 @@ class Script(script.Script):
                 "KP_2",
                 0,
                 0,
-		self.reviewCurrentCharacterHandler))
+                self.reviewCurrentCharacterHandler))
         self.keybindings.add(
             keybindings.KeyBinding(
                 "KP_Down",
                 0,
                 0,
-		self.reviewCurrentCharacterHandler))
+                self.reviewCurrentCharacterHandler))
 
         self.reviewNextCharacterHandler = input_event.InputEventHandler(
             Script.reviewNextCharacter,
@@ -370,7 +370,7 @@ class Script(script.Script):
                 0,
                 self.reviewNextCharacterHandler))
 
-	self.toggleTableCellReadModeHandler = input_event.InputEventHandler(
+        self.toggleTableCellReadModeHandler = input_event.InputEventHandler(
             Script.toggleTableCellReadMode,
             _("Toggles whether to read just the current table cell or the whole row."))
         self.keybindings.add(
@@ -378,13 +378,13 @@ class Script(script.Script):
                 "F11",
                 1 << orca.MODIFIER_ORCA,
                 1 << orca.MODIFIER_ORCA,
-		self.toggleTableCellReadModeHandler))
+                self.toggleTableCellReadModeHandler))
         self.keybindings.add(
             keybindings.KeyBinding(
                 "SunF36",
                 1 << orca.MODIFIER_ORCA,
                 1 << orca.MODIFIER_ORCA,
-		self.toggleTableCellReadModeHandler))
+                self.toggleTableCellReadModeHandler))
 
         self.readCharAttributesHandler = input_event.InputEventHandler(
             Script.readCharAttributes,
@@ -507,7 +507,7 @@ class Script(script.Script):
 
         self.brailleGenerator = self.getBrailleGenerator()
         self.speechGenerator = self.getSpeechGenerator()
-        self.voices = settings.getSetting(settings.VOICES, None)
+        self.voices = settings.voices
 
     def processObjectEvent(self, event):
         """Processes all object events of interest to this script.  Note
@@ -587,8 +587,7 @@ class Script(script.Script):
     def whereAmI(self, inputEvent):
         self.updateBraille(orca.locusOfFocus)
 
-        verbosity = settings.getSetting(settings.SPEECH_VERBOSITY_LEVEL,
-                                        settings.VERBOSITY_LEVEL_VERBOSE)
+        verbosity = settings.speechVerbosityLevel
 
         utterances = []
 
@@ -754,8 +753,7 @@ class Script(script.Script):
         if newLocusOfFocus:
             self.updateBraille(newLocusOfFocus)
 
-            verbosity = settings.getSetting(settings.SPEECH_VERBOSITY_LEVEL,
-                                            settings.VERBOSITY_LEVEL_VERBOSE)
+            verbosity = settings.speechVerbosityLevel
 
             utterances = []
 
@@ -1257,7 +1255,7 @@ class Script(script.Script):
                 else:
                     speech.speak(text)
 
-        if settings.getSetting(settings.ENABLE_ECHO_BY_WORD, False):
+        if settings.enableEchoByWord:
             if text in string.whitespace or text in string.punctuation:
                 sayWord(event.source)
 
@@ -1459,7 +1457,6 @@ class Script(script.Script):
 
         return True
 
-
     def textAttrsToDictionary(self, str):
         """Converts a string of text attribute tokens of the form 
         <key>:<value>; into a dictionary of keys and values. 
@@ -1472,16 +1469,15 @@ class Script(script.Script):
         Returns a dictionary of key/value items.
         """
 
-        dict = {}
+        dictionary = {}
         allTokens = str.split()
         for i in range(0, len(allTokens)):
             item = allTokens[i].split(":")
             if item[1].endswith(";"):
               item[1] = item[1][0:len(item[1])-1]
-            dict[item[0]] = item[1]
+            dictionary[item[0]] = item[1]
 
-        return dict
-
+        return dictionary
 
     def outputCharAttributes(self, attributes):
         """Speak each of the text attributes given dictionary.
@@ -1495,7 +1491,6 @@ class Script(script.Script):
             if attribute:
                 line = key + " " + attribute
                 speech.speak(line)
-
 
     def readCharAttributes(self, inputEvent=None):
         """Reads the attributes associated with the current text character.
@@ -1563,7 +1558,6 @@ class Script(script.Script):
             self.outputCharAttributes(attributes)
 
         return True
-
 
     def getFlatReviewContext(self):
         """Returns the flat review context, creating one if necessary."""
@@ -2182,7 +2176,7 @@ def textLines(obj):
     length = text.characterCount
     offset = text.caretOffset
     
-    # Get the next line of text to read 	 
+    # Get the next line of text to read          
     #
     lastEndOffset = -1
     while offset < length:
@@ -2258,7 +2252,7 @@ def sayLine(obj):
     #
     [line, startOffset, endOffset] = atspi.getTextLineAtCaret(obj)
 
-    voices = settings.getSetting(settings.VOICES, None)
+    voices = settings.voices
     if line.isupper():
         voice = voices[settings.UPPERCASE_VOICE]
     else:
@@ -2281,7 +2275,7 @@ def sayWord(obj):
         text.getTextAtOffset(offset,
                              atspi.Accessibility.TEXT_BOUNDARY_WORD_START)
 
-    voices = settings.getSetting(settings.VOICES, None)
+    voices = settings.voices
     if getLinkIndex(obj, offset) >= 0:
         print "HYPERLINK!"
         voice = voices[settings.HYPERLINK_VOICE]
@@ -2305,7 +2299,7 @@ def sayCharacter(obj):
     offset = text.caretOffset
     character = text.getText(offset, offset+1)
 
-    voices = settings.getSetting(settings.VOICES, None)
+    voices = settings.voices
     if getLinkIndex(obj, offset) >= 0:
         print "HYPERLINK!"
         voice = voices[settings.HYPERLINK_VOICE]
@@ -2335,4 +2329,3 @@ state_change_notifiers[rolenames.ROLE_TOGGLE_BUTTON] = ("checked",
 state_change_notifiers[rolenames.ROLE_TABLE_CELL]    = ("checked",
                                                         "expanded",
                                                         None)
-

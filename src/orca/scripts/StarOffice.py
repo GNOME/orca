@@ -170,7 +170,7 @@ class Script(default.Script):
         """
 
         isHyperText = False
-        voices = settings.getSetting(settings.VOICES, None)
+        voices = settings.voices
 
         for i in range(startOffset, endOffset):
             if default.getLinkIndex(obj, i) >= 0:

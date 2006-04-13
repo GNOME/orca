@@ -134,7 +134,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
 
         script = None
 
-        if settings.getSetting(settings.ENABLE_CUSTOM_SCRIPTS, True):
+        if settings.enableCustomScripts:
             # Look for custom scripts first.
             #
             # We'll use the LEVEL_FINEST level for debug output here as
@@ -143,8 +143,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             # a syntax error in it, so we want to give script writers
             # a vehicle for debugging these types of things.
             #
-            scriptPackages = settings.getSetting(
-                settings.SCRIPT_PACKAGES, ["orca-scripts", "scripts"])
+            scriptPackages = settings.scriptPackages
 
             moduleName = settings.getScriptModuleName(app)
             module = None

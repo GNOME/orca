@@ -199,8 +199,7 @@ class SpeechGenerator:
         Returns a list of utterances to be spoken for the label and role.
         """
 
-        verbosity = settings.getSetting(settings.SPEECH_VERBOSITY_LEVEL,
-                                        settings.VERBOSITY_LEVEL_VERBOSE)
+        verbosity = settings.speechVerbosityLevel
 
         text = obj.label
 
@@ -384,10 +383,9 @@ class SpeechGenerator:
         Returns a list of utterances to be spoken for the object.
         """
 
-        utterances = self._getSpeechForCheckBox(obj, already_focused)
+        verbosity = settings.speechVerbosityLevel
 
-        verbosity = settings.getSetting(settings.SPEECH_VERBOSITY_LEVEL,
-                                        settings.VERBOSITY_LEVEL_VERBOSE)
+        utterances = self._getSpeechForCheckBox(obj, already_focused)
 
         if (verbosity == settings.VERBOSITY_LEVEL_VERBOSE) \
            and not already_focused:
@@ -430,8 +428,7 @@ class SpeechGenerator:
         Returns a list of utterances to be spoken for the object.
         """
 
-        verbosity = settings.getSetting(settings.SPEECH_VERBOSITY_LEVEL,
-                                        settings.VERBOSITY_LEVEL_VERBOSE)
+        verbosity = settings.speechVerbosityLevel
 
         utterances = []
         if not already_focused:
@@ -631,8 +628,7 @@ class SpeechGenerator:
         # then a custom script for nautilus needs to be written to remove the
         # availability.]]]
         #
-        verbosity = settings.getSetting(settings.SPEECH_VERBOSITY_LEVEL,
-                                        settings.VERBOSITY_LEVEL_VERBOSE)
+        verbosity = settings.speechVerbosityLevel
 
         text = obj.label
 
@@ -725,10 +721,9 @@ class SpeechGenerator:
         Returns a list of utterances to be spoken for the object.
         """
 
-        utterances = self._getDefaultSpeech(obj, already_focused)
+        verbosity = settings.speechVerbosityLevel
 
-        verbosity = settings.getSetting(settings.SPEECH_VERBOSITY_LEVEL,
-                                        settings.VERBOSITY_LEVEL_VERBOSE)
+        utterances = self._getDefaultSpeech(obj, already_focused)
 
         if (obj == orca.locusOfFocus) \
                and (verbosity == settings.VERBOSITY_LEVEL_VERBOSE):
@@ -771,8 +766,7 @@ class SpeechGenerator:
         Returns a list of utterances to be spoken for the object.
         """
 
-        verbosity = settings.getSetting(settings.SPEECH_VERBOSITY_LEVEL,
-                                        settings.VERBOSITY_LEVEL_VERBOSE)
+        verbosity = settings.speechVerbosityLevel
 
         utterances = [obj.label]
 
@@ -971,10 +965,9 @@ class SpeechGenerator:
         Returns a list of utterances to be spoken for the object.
         """
 
-        utterances = self._getSpeechForRadioButton(obj, False)
+        verbosity = settings.speechVerbosityLevel
 
-        verbosity = settings.getSetting(settings.SPEECH_VERBOSITY_LEVEL,
-                                        settings.VERBOSITY_LEVEL_VERBOSE)
+        utterances = self._getSpeechForRadioButton(obj, False)
 
         if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
             utterances.extend(self._getSpeechForAvailability(obj))
@@ -1253,8 +1246,7 @@ class SpeechGenerator:
         Returns a list of utterances to be spoken for the object.
         """
 
-        verbosity = settings.getSetting(settings.SPEECH_VERBOSITY_LEVEL,
-                                        settings.VERBOSITY_LEVEL_VERBOSE)
+        verbosity = settings.speechVerbosityLevel
 
         if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
             utterances = [_("tear off menu item")]
@@ -1278,8 +1270,7 @@ class SpeechGenerator:
         Returns a list of utterances to be spoken for the object.
         """
 
-        verbosity = settings.getSetting(settings.SPEECH_VERBOSITY_LEVEL,
-                                        settings.VERBOSITY_LEVEL_VERBOSE)
+        verbosity = settings.speechVerbosityLevel
 
         label = None
         frame = atspi.getFrame(obj)

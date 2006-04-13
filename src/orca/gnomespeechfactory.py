@@ -53,7 +53,7 @@ class _Speaker(GNOME__POA.Speech.SpeechCallback):
 
     def __init__(self, gnome_speaker):
         self.gnome_speaker = gnome_speaker
-        if settings.getSetting("enableSpeechCallbacks", True):
+        if settings.enableSpeechCallbacks:
             gnome_speaker.registerSpeechCallback(self._this())
         self.__callbacks = []
         
@@ -280,7 +280,7 @@ class SpeechServer(speechserver.SpeechServer):
 
     def __getSpeaker(self, acss=None):
 
-        voices = settings.getSetting(settings.VOICES, None)
+        voices = settings.voices
 	defaultACSS = voices[settings.DEFAULT_VOICE]
 
 	if not acss:
@@ -478,7 +478,7 @@ class SpeechServer(speechserver.SpeechServer):
 
         speaker = self.__getSpeaker(acss)
         if acss and not acss.has_key(ACSS.RATE):
-            voices = settings.getSetting(settings.VOICES, None)
+            voices = settings.voices
             defaultACSS = voices[settings.DEFAULT_VOICE]
 	    if defaultACSS.has_key(ACSS.RATE):
                 self.__setRate(speaker, defaultACSS[ACSS.RATE])
@@ -579,12 +579,11 @@ class SpeechServer(speechserver.SpeechServer):
         different engines provide different rate ranges.]]]
         """
 
-        voices = settings.getSetting(settings.VOICES, None)
+        voices = settings.voices
         acss = voices[settings.DEFAULT_VOICE]
 	speaker = self.__getSpeaker(acss)
 
-        rateDelta = settings.getSetting(settings.SPEECH_RATE_DELTA,
-                                        step)
+        rateDelta = settings.speechRateDelta
 
 	try:
             rate = min(100, self.__getRate(speaker) + rateDelta)
@@ -610,12 +609,11 @@ class SpeechServer(speechserver.SpeechServer):
         -acssName: the ACSS whose speech rate should be decreased
         """
 
-        voices = settings.getSetting(settings.VOICES, None)
+        voices = settings.voices
 	acss = voices[settings.DEFAULT_VOICE]
 	speaker = self.__getSpeaker(acss)
 
-        rateDelta = settings.getSetting(settings.SPEECH_RATE_DELTA,
-                                        step)
+        rateDelta = settings.speechRateDelta
 
 	try:
             rate = max(1, self.__getRate(speaker) - rateDelta)

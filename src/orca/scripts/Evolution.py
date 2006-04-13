@@ -91,8 +91,7 @@ class Script(default.Script):
         brailleGen = self.brailleGenerator
         speechGen = self.speechGenerator
 
-        savedSpeechVerbosityLevel = \
-            settings.getSetting(settings.SPEECH_VERBOSITY_LEVEL)
+        savedSpeechVerbosityLevel = settings.speechVerbosityLevel
         settings.speechVerbosityLevel = settings.VERBOSITY_LEVEL_BRIEF
         utterances = speechGen.getSpeech(tab, False)
         speech.speakUtterances(utterances)
@@ -207,7 +206,7 @@ class Script(default.Script):
         rolesList = [rolenames.ROLE_TEXT, \
                      rolenames.ROLE_PANEL, \
                      rolenames.ROLE_TABLE_CELL]
-        if (self.readTableCellRow == True) \
+        if self.readTableCellRow \
             and (util.isDesiredFocusedItem(event.source, rolesList)):
             debug.println(debug.LEVEL_FINEST,
                       "evolution.onFocus - mail view: current message pane: " \
@@ -258,7 +257,7 @@ class Script(default.Script):
 
         rolesList = [rolenames.ROLE_TABLE_CELL, \
                      rolenames.ROLE_TREE_TABLE]
-        if (self.readTableCellRow == True) \
+        if self.readTableCellRow \
             and (util.isDesiredFocusedItem(event.source, rolesList)):
             debug.println(debug.LEVEL_FINEST,
                       "evolution.onFocus - mail view: message header list.")
@@ -278,10 +277,9 @@ class Script(default.Script):
                        ((row == 0 or row == parent.table.nRows-1) and \
                         self.lastMessageColumn == column)
 
-            savedBrailleVerbosityLevel = \
-                settings.getSetting(settings.BRAILLE_VERBOSITY_LEVEL)
-            savedSpeechVerbosityLevel = \
-                settings.getSetting(settings.SPEECH_VERBOSITY_LEVEL)
+            savedBrailleVerbosityLevel = settings.brailleVerbosityLevel
+            savedSpeechVerbosityLevel = settings.speechVerbosityLevel
+
             brailleRegions = []
             cellWithFocus = None
 
@@ -566,8 +564,8 @@ class Script(default.Script):
                 for i in range(0, parent.childCount):
                     child = parent.child(i)
                     if (child.role == rolenames.ROLE_PAGE_TAB_LIST):
-                        list = child
-                        tab = list.child(index-1)
+                        tabList = child
+                        tab = tabList.child(index-1)
                         if (tab.role == rolenames.ROLE_PAGE_TAB):
                             self.readPageTab(tab)
                             return

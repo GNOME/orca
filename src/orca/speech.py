@@ -39,8 +39,7 @@ def getSpeechServerFactories():
 
     factories = []
 
-    moduleNames = settings.getSetting(settings.SPEECH_FACTORY_MODULES, [])
-
+    moduleNames = settings.speechFactoryModules
     for moduleName in moduleNames:
         try:
             module =  __import__(moduleName,
@@ -65,7 +64,7 @@ def init():
     # thus we look first in the global name space, and
     # then we look in the orca namespace.
     #
-    moduleName = settings.getSetting(settings.SPEECH_SERVER_FACTORY, None)
+    moduleName = settings.speechServerFactory
 
     debug.println(debug.LEVEL_CONFIGURATION,
                   "Using speech server factory: %s" % moduleName)
@@ -88,7 +87,7 @@ def init():
 
     # Now, get the speech server we care about.
     #
-    speechServerInfo = settings.getSetting(settings.SPEECH_SERVER_INFO, None)
+    speechServerInfo = settings.speechServerInfo
     if speechServerInfo:
         __speechserver = factory.SpeechServer.getSpeechServer(speechServerInfo)
     else:
@@ -98,7 +97,7 @@ def __resolveACSS(acss=None):
     if acss:
         return acss
     else:
-        voices = settings.getSetting(settings.VOICES, None)
+        voices = settings.voices
         return voices[settings.DEFAULT_VOICE]
 
 def sayAll(utteranceIterator, progressCallback):

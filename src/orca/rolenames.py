@@ -640,11 +640,7 @@ def getBrailleForRoleName(obj):
     the 'brailleRolenameStyle' setting.
     """
 
-    brailleRolenameStyle = settings.getSetting(
-        settings.BRAILLE_ROLENAME_STYLE,
-        settings.BRAILLE_ROLENAME_STYLE_LONG)
-
-    if brailleRolenameStyle == settings.BRAILLE_ROLENAME_STYLE_SHORT:
+    if settings.brailleRolenameStyle == settings.BRAILLE_ROLENAME_STYLE_SHORT:
         return getShortBrailleForRoleName(obj)
     else:
         return getLongBrailleForRoleName(obj)

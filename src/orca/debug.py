@@ -72,11 +72,11 @@ LEVEL_FINER = 500
 
 # Used for maximum volume of detailed tracing information.
 #
-# For the purposes of Orca, this is for tracking all AT-SPI object events.
-# NOTE that one can up the debug level of AT-SPI object events by setting
-# the _eventDebugLevel via "setEventDebugLevel."  In addition, one can
-# filter events by creating a regular expression that matches event type
-# names and passing this to "setEventDebugFilter."
+# For the purposes of Orca, this is for tracking all AT-SPI object
+# events.  NOTE that one can up the debug level of AT-SPI object
+# events by setting the eventDebugLevel.  In addition, one can filter
+# events by setting eventDebugFilter to a regular expression that
+# matches event type names.
 #
 LEVEL_FINEST = 400
 
@@ -84,75 +84,26 @@ LEVEL_FINEST = 400
 #
 LEVEL_ALL = 0
 
-_debugLevel = LEVEL_SEVERE
-_eventDebugLevel = LEVEL_FINEST
-_eventDebugFilter = None  # see setEventDebugFilter
-_debugFile = None # see setDebugFile
+debugLevel = LEVEL_SEVERE
 
-def setDebugLevel(newLevel):
-    """Sets the debug level.  The various levels can be LEVEL_OFF,
-    LEVEL_SEVERE, LEVEL_WARNING, LEVEL_INFO, LEVEL_CONFIG, LEVEL_FINE,
-    LEVEL_FINER, LEVEL_FINEST, LEVEL_ALL.
+# The debug file.  If this is not set, then all debug output is done
+# via stdout.  If this is set, then all debug output is sent to the
+# file.  This can be useful for debugging because one can pass in a
+# non-buffered file to better track down hangs.
+#
+debugFile = None
 
-    Arguments:
-    - newLevel: the new debug level
-    """
-
-    global _debugLevel
-
-    println(_debugLevel, "Changing debug level to %d" % newLevel)
-    _debugLevel = newLevel
-    println(_debugLevel, "Changed debug level to %d" % _debugLevel)
-
-def getDebugLevel():
-    """Gets the debug level.  The various levels can be LEVEL_OFF,
-    LEVEL_SEVERE, LEVEL_WARNING, LEVEL_INFO, LEVEL_CONFIG, LEVEL_FINE,
-    LEVEL_FINER, LEVEL_FINEST, LEVEL_ALL.
-    """
-    return _debugLevel
-
-def setEventDebugLevel(newLevel):
-    """Sets the event debug level.  This can be used to override the level
-    value passed to printObjectEvent and printInputEvent.  That is, if
-    eventDebugLevel has a higher value that the debug level passed into these
-    methods, then the event debug level will be used as the level.
-
-    Arguments:
-    - newLevel: the new debug level
-    """
-
-    global _eventDebugLevel
-    _eventDebugLevel = newLevel
-
-def setEventDebugFilter(regExpression):
-    """Sets the event debug filter.  The debug filter should be either None
-    (which means to match all events) or a compiled regular expression from
-    the 're' module (see http://www.amk.ca/python/howto/regex/).  The regular
-    expression will be used as a matching function - if the event type creates
-    a match in the regular expression, then it will be considered for output.
-    A typical call to this method might look like:
-
-       debug.setEventDebugFilter(rc.compile('focus:|window:activate'))
-
-    Arguments:
-    - regExpression: a compiled regular expression from the re module
-    """
-
-    global _eventDebugFilter
-    _eventDebugFilter = regExpression
-
-def setDebugFile(file):
-    """Sets the debug file.  If this is not set, then all debug output
-    is done via stdout.  If this is set, then all debug output is sent
-    to the file.  This can be useful for debugging because one can pass
-    in a non-buffered file to better track down hangs.
-
-    Arguments:
-    - file: a file created using the built-in 'open' function.
-    """
-
-    global _debugFile
-    _debugFile = file
+# The debug filter should be either None (which means to match all
+# events) or a compiled regular expression from the 're' module (see
+# http://www.amk.ca/python/howto/regex/).  The regular expression will
+# be used as a matching function - if the event type creates a match
+# in the regular expression, then it will be considered for output.  A
+# typical call to this method might look like:
+#
+# debug.eventDebugFilter = rc.compile('focus:|window:activate')
+#
+eventDebugLevel  = LEVEL_FINEST
+eventDebugFilter = None
 
 def printException(level):
     """Prints out information regarding the current exception.
@@ -161,9 +112,9 @@ def printException(level):
     - level: the accepted debug level
     """
 
-    if level >= _debugLevel:
+    if level >= debugLevel:
         println(level)
-        traceback.print_exc(100, _debugFile)
+        traceback.print_exc(100, debugFile)
         println(level)
 
 def printStack(level):
@@ -173,9 +124,9 @@ def printStack(level):
     - level: the accepted debug level
     """
 
-    if level >= _debugLevel:
+    if level >= debugLevel:
         println(level)
-        traceback.print_stack(None, 100, _debugFile)
+        traceback.print_stack(None, 100, debugFile)
         println(level)
 
 def println(level, text = ""):
@@ -186,17 +137,17 @@ def println(level, text = ""):
     - text: the text to print (default is a blank line)
     """
 
-    if level >= _debugLevel:
-        if _debugFile:
-            _debugFile.writelines([text,"\n"])
+    if level >= debugLevel:
+        if debugFile:
+            debugFile.writelines([text,"\n"])
         else:
             print text
 
 def printObjectEvent(level, event, sourceInfo=None):
-    """Prints out an Python Event object.  The given level may be overridden
-    if the eventDebugLevel (see setEventDebugLevel) is greater.  Furthermore,
-    only events with event types matching the eventDebugFilter regular
-    expression will be printed (see setEventDebugFilter).
+    """Prints out an Python Event object.  The given level may be
+    overridden if the eventDebugLevel is greater.  Furthermore, only
+    events with event types matching the eventDebugFilter regular
+    expression will be printed.
 
     Arguments:
     - level: the accepted debug level
@@ -204,11 +155,10 @@ def printObjectEvent(level, event, sourceInfo=None):
     - sourceInfo: additional string to print out
     """
 
-    if _eventDebugFilter:
-        if not _eventDebugFilter.match(event.type):
-            return
+    if eventDebugFilter and not eventDebugFilter.match(event.type):
+        return
 
-    level = max(level, _eventDebugLevel)
+    level = max(level, eventDebugLevel)
 
     text = "OBJECT EVENT: %-40s detail=(%d,%d)" \
            % (event.type, event.detail1, event.detail2)
@@ -226,7 +176,7 @@ def printInputEvent(level, string):
     - string: the string representing the input event
     """
 
-    println(max(level, _eventDebugLevel), string)
+    println(max(level, eventDebugLevel), string)
 
 def printDetails(level, indent, accessible, includeApp=True):
     """Lists the details of the given accessible with the given

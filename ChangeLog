@@ -1,3 +1,21 @@
+2006-04-13  Willie Walker <william.walker@sun.com>
+
+	* src/orca/braille.py, src/orca/braillegenerator.py,
+	src/orca/debug.py, src/orca/default.py,
+	src/orca/focus_tracking_presenter.py,
+	src/orca/gnomespeechfactory.py, src/orca/input_event.py,
+	src/orca/orca-setup.in, src/orca/orca.py, src/orca/rolenames.py,
+	src/orca/script.py, src/orca/settings.py, src/orca/speech.py,
+	src/orca/speechgenerator.py, src/orca/scripts/Evolution.py,
+	src/orca/scripts/StarOffice.py: fix for bug 338240 to refactor the
+	way user-settings are managed.  This new method removes the
+	two-tier approach and has user-settings.py set values in
+	settings.py.  It also isolates the default values to settings.py
+	and removes a fair amount of complexity.  Furthermore, this
+	includes nascent support (Insert+Ctrl+s) to allow the user to
+	dynamically reload user-settings.py should they edit it while Orca
+	is running.  The reload will also restart speech and braille.
+	
 2006-04-12  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py

@@ -41,6 +41,13 @@ from input_event import InputEventHandler
 
 from orca_i18n import _           # for gettext support
 
+# The user-settings module (see _loadUserSettings).
+# 
+_userSettings = None
+
+# set each time a keyboard or braille event is received.
+#
+
 # The InputEvent instance representing the last input event.  This is
 # set each time a keyboard or braille event is received.
 #
@@ -354,7 +361,7 @@ def cycleDebugLevel(script=None, inputEvent=None):
 def cycleDebugLevel(script=None, inputEvent=None):
     global _debugLevel
 
-    level = debug.getDebugLevel()
+    level = debug.debugLevel
     
     if level == debug.LEVEL_ALL:
         level = debug.LEVEL_FINEST
@@ -375,7 +382,7 @@ def cycleDebugLevel(script=None, inputEvent=None):
     elif level == debug.LEVEL_OFF:
         level = debug.LEVEL_ALL
 
-    debug.setDebugLevel(level)
+    debug.debugLevel = level
     
     if level == debug.LEVEL_ALL:
         speech.speak(_("Debug level all."))
@@ -473,7 +480,7 @@ def enterLearnMode(script=None, inputEvent=None):
         _("Entering learn mode.  Press any key to hear its function. " \
           + "To exit learn mode, press the escape key."))
     braille.displayMessage(_("Learn mode.  Press escape to exit."))
-    settings.setLearnModeEnabled(True)
+    settings.learnModeEnabled = True
     return True
 
 def exitLearnMode(script=None, inputEvent=None):
@@ -484,7 +491,7 @@ def exitLearnMode(script=None, inputEvent=None):
 
     speech.speak(_("Exiting learn mode."))
     braille.displayMessage(_("Exiting learn mode."))
-    settings.setLearnModeEnabled(False)
+    settings.learnModeEnabled = False
     return True
 
 ########################################################################
@@ -611,23 +618,23 @@ def _keyEcho(event):
     debug.println(debug.LEVEL_FINEST,
                   "orca._keyEcho: string to echo: %s" % event_string)
 
-    voices = settings.getSetting(settings.VOICES, None)
+    voices = settings.voices
     voice = voices[settings.DEFAULT_VOICE]
 
     # If key echo is enabled, then check to see what type of key event 
     # it is and echo it via speech, if the user wants that type of key 
     # echoed.
     #
-    if settings.getSetting(settings.ENABLE_KEY_ECHO, False):
+    if settings.enableKeyEcho:
         if _isPrintableKey(event_string):
-            if not settings.getSetting(settings.ENABLE_PRINTABLE_KEYS, False):
+            if not settings.enablePrintableKeys:
                 return
 
             if event_string.isupper():
                 voice = voices[settings.UPPERCASE_VOICE]
 
         elif _isModifierKey(event_string):
-            if not settings.getSetting(settings.ENABLE_MODIFIER_KEYS,  False):
+            if not settings.enableModifierKeys:
                 return
 
             # The control characters come through as control characters,
@@ -645,15 +652,15 @@ def _keyEcho(event):
                     event_string = chr(value + 0x40)
 
         elif _isLockingKey(event_string):
-            if not settings.getSetting(settings.ENABLE_LOCKING_KEYS, False):
+            if not settings.enableLockingKeys:
                 return
 
         elif _isFunctionKey(event_string):
-            if not settings.getSetting(settings.ENABLE_FUNCTION_KEYS, False):
+            if not settings.enableFunctionKeys:
                 return
 
         elif _isActionKey(event_string):
-            if not settings.getSetting(settings.ENABLE_ACTION_KEYS, False):
+            if not settings.enableActionKeys:
                 return
 
         else:
@@ -700,7 +707,7 @@ def _processKeyboardEvent(event):
         _keystrokesFile.write(string + "\n")
     debug.printInputEvent(debug.LEVEL_FINE, string)
 
-    orcaModifierKeys = settings.getSetting(settings.ORCA_MODIFIER_KEYS, [])
+    orcaModifierKeys = settings.orcaModifierKeys
 
     if event.type == atspi.Accessibility.KEY_PRESSED_EVENT:
         # Key presses always interrupt speech.
@@ -736,8 +743,7 @@ def _processKeyboardEvent(event):
         if (not consumed) and (_currentPresentationManager >= 0):
             consumed = _PRESENTATION_MANAGERS[_currentPresentationManager].\
                        processKeyboardEvent(keyboardEvent)
-        if (not consumed) and settings.getSetting(settings.LEARN_MODE_ENABLED,
-                                                  False):
+        if (not consumed) and settings.learnModeEnabled:
             if event.type == atspi.Accessibility.KEY_PRESSED_EVENT:
                 braille.displayMessage(event_string)
                 speech.speak(event_string)
@@ -786,8 +792,7 @@ def _processBrailleEvent(command):
     except:
         debug.printException(debug.LEVEL_SEVERE)
 
-    if (not consumed) and settings.getSetting(settings.LEARN_MODE_ENABLED,
-                                              False):
+    if (not consumed) and settings.learnModeEnabled:
         consumed = True
 
     return consumed
@@ -876,6 +881,69 @@ def outlineAccessible(accessible, erasePrevious=True):
 #                                                                      #
 ########################################################################
 
+def _loadUserSettings(script=None, inputEvent=None):
+    """Loads (and reloads) the user settings module, reinitializing
+    things such as speech if necessary.
+
+    Returns True to indicate the input event has been consumed.
+    """
+    
+    global _userSettings
+
+    # Shutdown the output drivers and give them a chance to die.
+    speech.shutdown()
+    braille.shutdown()
+    # mag.shutdown()
+    time.sleep(1)
+
+    reloaded = False
+    if _userSettings:
+        try:
+            reload(_userSettings)
+            reloaded = True
+        except ImportError:
+            debug.printException(debug.LEVEL_SEVERE)
+    else:
+        try:
+            _userSettings = __import__("user-settings")
+        except ImportError:
+            debug.printException(debug.LEVEL_SEVERE)
+
+    if settings.enableSpeech:
+        try:
+            speech.init()
+            if reloaded:
+                speech.speak(_("Orca user settings reloaded."))
+            debug.println(debug.LEVEL_CONFIGURATION,
+                          "Speech module has been initialized.")
+        except:
+            debug.println(debug.LEVEL_SEVERE,
+                          "Could not initialize connection to speech.")
+    else:
+        debug.println(debug.LEVEL_CONFIGURATION,
+                      "Speech module has NOT been initialized.")
+
+    if settings.enableBraille:
+        try:
+            braille.init(_processBrailleEvent, 7)
+        except:
+            debug.println(debug.LEVEL_WARNING,
+                          "Could not initialize connection to braille.")
+
+    if settings.enableMagnifier:
+        try:
+            mag.init()
+            debug.println(debug.LEVEL_CONFIGURATION,
+                          "Magnification module has been initialized.")
+        except:
+            debug.println(debug.LEVEL_SEVERE,
+                          "Could not initialize connection to magnifier.")
+    else:
+        debug.println(debug.LEVEL_CONFIGURATION,
+                      "Magnification module has NOT been initialized.")
+
+    return True
+
 # If True, this module has been initialized.
 #
 _initialized = False
@@ -941,13 +1009,14 @@ def init(registry):
                                             0,
                                             keystrokeRecordingHandler))
 
-    resetSpeechHandler = InputEventHandler(\
-        resetSpeech,
-        _("Forces a reset of the speech service."))
-    _keybindings.add(keybindings.KeyBinding("s", \
-                                            1 << MODIFIER_ORCA, \
-                                            1 << MODIFIER_ORCA, \
-                                            resetSpeechHandler))
+    loadUserSettingsHandler = InputEventHandler(\
+        _loadUserSettings,
+        _("Reloads user settings and reinitializes services as necessary."))
+    _keybindings.add(keybindings.KeyBinding(
+        "s", \
+        (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL), 
+        (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL), 
+        loadUserSettingsHandler))
 
     listAppsHandler = InputEventHandler(
         printApps,
@@ -1002,51 +1071,14 @@ def init(registry):
                                             1 << MODIFIER_ORCA,
                                             nextPresentationManagerHandler))
 
-    if settings.getSetting(settings.ENABLE_SPEECH, True):
-        try:
-            speech.init()
-            debug.println(debug.LEVEL_CONFIGURATION,
-                          "Speech module has been initialized.")
-        except:
-            debug.println(debug.LEVEL_SEVERE,
-                          "Could not initialize connection to speech.")
-    else:
-        debug.println(debug.LEVEL_CONFIGURATION,
-                      "Speech module has NOT been initialized.")
-
-    if settings.getSetting(settings.ENABLE_BRAILLE, True):
-        try:
-            braille.init(_processBrailleEvent, 7)
-        except:
-            debug.println(debug.LEVEL_SEVERE,
-                          "Could not initialize connection to braille.")
-
-    if settings.getSetting(settings.ENABLE_MAGNIFIER, False):
-        try:
-            mag.init()
-            debug.println(debug.LEVEL_CONFIGURATION,
-                          "Magnification module has been initialized.")
-        except:
-            debug.println(debug.LEVEL_SEVERE,
-                          "Could not initialize connection to magnifier.")
-    else:
-        debug.println(debug.LEVEL_CONFIGURATION,
-                      "Magnification module has NOT been initialized.")
-
     # Create and load an app's script when it is added to the desktop
     #
     registry.registerEventListener(_onChildrenChanged,
                                    "object:children-changed:")
 
+    _loadUserSettings()
+    
     _initialized = True
-    return True
-
-def resetSpeech(script=None, inputEvent=None):
-    """Kicks the speech server in the pants and re-establishes a
-    connection to it."""
-    speech.reset()
-    time.sleep(1) # give the driver a chance to die.
-    speech.reset("Speech has been reset.")    
     return True
 
 def start(registry):
@@ -1126,11 +1158,11 @@ def shutdown(script=None, inputEvent=None):
 
     # Shutdown all the other support.
     #
-    if settings.getSetting(settings.ENABLE_SPEECH, True):
+    if settings.enableSpeech:
         speech.shutdown()
-    if settings.getSetting(settings.ENABLE_BRAILLE, False):
+    if settings.enableBraille:
         braille.shutdown();
-    if settings.getSetting(settings.ENABLE_MAGNIFIER, False):
+    if settings.enableMagnifier:
         mag.shutdown();
 
     registry.stop()

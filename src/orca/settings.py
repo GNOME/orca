@@ -42,21 +42,17 @@ from orca_i18n import _           # for gettext support
 # a KeyboardEvent input event.  The keys are currently compared to the
 # event_string of a keyboard input event from AT-SPI.
 #
-ORCA_MODIFIER_KEYS      = "orcaModifierKeys"
 orcaModifierKeys        = ["Insert", "KP_Insert"]
 
 # Verbosity levels (see setBrailleVerbosityLevel and
 # setSpeechVerbosityLevel).  These will have an impact on the various
 # individual verbosity levels for rolenames, accelerators, etc.
 #
-BRAILLE_VERBOSITY_LEVEL = "brailleVerbosityLevel"
-SPEECH_VERBOSITY_LEVEL  = "speechVerbosityLevel"
 VERBOSITY_LEVEL_BRIEF   = 0
 VERBOSITY_LEVEL_VERBOSE = 1
 speechVerbosityLevel    = VERBOSITY_LEVEL_VERBOSE
 brailleVerbosityLevel   = VERBOSITY_LEVEL_VERBOSE
 
-BRAILLE_ROLENAME_STYLE  = "brailleRolenameStyle"
 BRAILLE_ROLENAME_STYLE_SHORT = 0 # three letter abbreviations
 BRAILLE_ROLENAME_STYLE_LONG  = 1 # full rolename
 brailleRolenameStyle    = BRAILLE_ROLENAME_STYLE_LONG
@@ -65,31 +61,24 @@ brailleRolenameStyle    = BRAILLE_ROLENAME_STYLE_LONG
 # increasing or decreasing speech.  This is a numerical
 # value that represents an ACSS rate value.
 #
-SPEECH_RATE_DELTA       = "speechRateDelta"
 speechRateDelta         = 5
 
 # If True, enable speech.
 #
-ENABLE_SPEECH           = "enableSpeech"
 enableSpeech            = True
+enableSpeechCallbacks   = True
 
 # Settings that apply to the particular speech engine to
 # use as well details on the default voices to use.
 #
-SPEECH_FACTORY_MODULES  = "speechFactoryModules"
 speechFactoryModules    = ["espeechfactory","gnomespeechfactory"]
-
-SPEECH_SERVER_FACTORY   = "speechServerFactory"
 speechServerFactory     = "gnomespeechfactory"
-
-SPEECH_SERVER_INFO      = "speechServerInfo"
 speechServerInfo        = None # None means let the factory decide.
 
 DEFAULT_VOICE           = "default"
 UPPERCASE_VOICE         = "uppercase"
 HYPERLINK_VOICE         = "hyperlink"
 
-VOICES                  = "voices"
 voices = {
     DEFAULT_VOICE   : ACSS({}),
     UPPERCASE_VOICE : ACSS({ACSS.AVERAGE_PITCH : 6}),
@@ -98,80 +87,65 @@ voices = {
 
 # If True, enable braille.
 #
-ENABLE_BRAILLE          = "enableBraille"
 enableBraille           = True
 
 # If True, enable braille monitor.
 #
-ENABLE_BRAILLE_MONITOR  = "enableBrailleMonitor"
 enableBrailleMonitor    = False
 
 # If True, enable magnification.
 #
-ENABLE_MAGNIFIER        = "enableMagnifier"
 enableMagnifier         = False
 
 # if True, enable word echo.
 # Note that it is allowable for both enableEchoByWord and enableKeyEcho 
 # to be True
 #
-ENABLE_ECHO_BY_WORD     = "enableEchoByWord"
 enableEchoByWord        = False
 
 # If True, enable key echo.
 # Note that it is allowable for both enableEchoByWord and enableKeyEcho 
 # to be True
 #
-ENABLE_KEY_ECHO         = "enableKeyEcho"
 enableKeyEcho           = False
 
 # If True and key echo is enabled, echo Alphanumeric and punctuation keys.
 #
-ENABLE_PRINTABLE_KEYS  = "enablePrintableKeys"
 enablePrintableKeys     = True
 
 # If True and key echo is enabled, echo Modifier keys.
 #
-ENABLE_MODIFIER_KEYS    = "enableModifierKeys"
 enableModifierKeys      = True
 
 # If True and key echo is enabled, echo Locking keys.
 #
-ENABLE_LOCKING_KEYS     = "enableLockingKeys"
 enableLockingKeys       = True
 
 # If True and key echo is enabled, echo Function keys.
 #
-ENABLE_FUNCTION_KEYS    = "enableFunctionKeys"
 enableFunctionKeys      = True
 
 # If True and key echo is enabled, echo Action keys.
 #
-ENABLE_ACTION_KEYS      = "enableActionKeys"
 enableActionKeys        = True
 
 
 # If True, reads all the table cells in the current row rather than just
 # the current one.
 #
-READ_TABLE_CELL_ROW     = "readTableCellRow"
 readTableCellRow        = False
 
 # Script developer feature.  If False, just the default script
 # will be used.  Helps determine difference between custom
 # scripts and the default script behavior.
 #
-ENABLE_CUSTOM_SCRIPTS   = "enableCustomScripts"
 enableCustomScripts     = True
 
 # Latent support to allow the user to override/define keybindings
 # and braille bindings.  Unsupported and undocumented for now.
 # Use at your own risk.
 #
-KEY_BINDINGS_MAP        = "keyBindingsMap"
 keyBindingsMap          = {}
-
-BRAILLE_BINDINGS_MAP    = "brailleBindingsMap"
 brailleBindingsMap      = {}
 
 # Script developer feature.  If False, no AT-SPI object values
@@ -179,68 +153,12 @@ brailleBindingsMap      = {}
 # problem related to the cache being out of sync with the real
 # objects.
 #
-CACHE_VALUES            = "cacheValues"
 cacheValues             = False
 
 # Assists with learn mode (what you enter when you press Insert+F1
 # and exit when you press escape.
 #
-LEARN_MODE_ENABLED      = "learnModeEnabled"
 learnModeEnabled        = False
-
-_userSettings = None
-
-def setLearnModeEnabled(enabled):
-    """Turns learning mode on and off.  If learn mode is enabled, input event
-    handlers will merely report what they do rather than calling the function
-    bound to them.
-
-    Arguments:
-    - enabled: boolean that, if True, will enable learn mode
-    """
-
-    global learnModeEnabled
-    learnModeEnabled = enabled
-
-def getSetting(name, default=None):
-    """Obtain the value for the given named attribute, trying from the
-    user settings first.  If the named attribute doesn't exist, then the
-    default value is returned.
-
-    Arguments:
-    - name: the name of the attribute to obtain
-    - default: the default value if the named attribute doesn't exist in
-               either the user settings or here.
-    """
-
-    global _userSettings
-
-    # This little hack is for the following reason:
-    #
-    # We want to lazily delay the importing of user settings (that is,
-    # we do not want to import it when this module is loaded).
-    #
-    # We only want to try once.
-    #
-    # So...if _userSettings is None, we haven't tried loading it yet.
-    # If it is 0, we've tried and failed.
-    #
-    if _userSettings == None:
-        try:
-            _userSettings = __import__("user-settings")
-        except ImportError:
-            _userSettings = 0
-        except:
-            debug.printException(debug.LEVEL_SEVERE)
-            _userSettings = 0
-
-    thisModule = sys.modules[__name__]
-    if _userSettings and hasattr(_userSettings, name):
-        return getattr(_userSettings, name)
-    elif hasattr(thisModule, name):
-        return getattr(thisModule, name)
-    else:
-        return default
 
 # Which packages to search, and the order in which to search,
 # for custom scripts.  These packages are expected to be on
@@ -248,7 +166,6 @@ def getSetting(name, default=None):
 # REMEMBER: to make something a package, the directory has to
 # have a __init__.py file in it.
 #
-SCRIPT_PACKAGES         = "scriptPackages"
 scriptPackages          = ["orca-scripts", "scripts"]
 
 # A list that helps us map application names to script module
