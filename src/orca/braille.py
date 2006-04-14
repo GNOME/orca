@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005 Sun Microsystems Inc.
+# Copyright 2005-2006 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -640,22 +640,22 @@ def refresh(panToCursor=True, targetCursorCell=0):
 
     debug.println(debug.LEVEL_INFO, "     VISIBLE:  '%s', cursor=%d" \
                   % (string[startPos:endPos], cursorCell))
-  
+
     brl.writeText(cursorCell, string[startPos:endPos])
 
     if settings.enableBrailleMonitor:
-	if not monitor:	
-	    monitor = brlmon.BrlMon(_displaySize[0])
-	    monitor.show_all()
+        if not monitor:
+            monitor = brlmon.BrlMon(_displaySize[0])
+            monitor.show_all()
         monitor.writeText(cursorCell, string[startPos:endPos])
     elif monitor:
         monitor.destroy()
-        
+
     beginningIsShowing = startPos == 0
     endIsShowing = endPos >= len(string)
 
 def displayRegions(regionInfo):
-    """Displays a list of regions on a single line, setting focus to the 
+    """Displays a list of regions on a single line, setting focus to the
        specified region.  The regionInfo parameter is something that is
        typically returned by a call to braillegenerator.getBrailleRegions.
 
@@ -667,7 +667,7 @@ def displayRegions(regionInfo):
 
     regions = regionInfo[0]
     focusedRegion = regionInfo[1]
-    
+
     clear()
     line = Line()
     for item in regions:
@@ -806,7 +806,7 @@ def _processBrailleEvent(command):
             cursor = (command - 0x100) + _viewport[0]
             lineNum = _viewport[1]
             _lines[lineNum].processCursorKey(cursor)
-	    return True
+            return True
 
     return False
 

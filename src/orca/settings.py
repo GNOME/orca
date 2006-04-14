@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2005 Sun Microsystems Inc.
+# Copyright 2004-2006 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -98,13 +98,13 @@ enableBrailleMonitor    = False
 enableMagnifier         = False
 
 # if True, enable word echo.
-# Note that it is allowable for both enableEchoByWord and enableKeyEcho 
+# Note that it is allowable for both enableEchoByWord and enableKeyEcho
 # to be True
 #
 enableEchoByWord        = False
 
 # If True, enable key echo.
-# Note that it is allowable for both enableEchoByWord and enableKeyEcho 
+# Note that it is allowable for both enableEchoByWord and enableKeyEcho
 # to be True
 #
 enableKeyEcho           = False

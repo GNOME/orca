@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005 Sun Microsystems Inc.
+# Copyright 2005-2006 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -51,7 +51,7 @@ class Event:
         """Returns the any_data field, compensating for any
         differences between pre-1.7.0 and post-1.7.0 implementations
         of the AT-SPI."""
-        
+
         # [[[TODO: WDW - HACK because AT-SPI 1.7.0 has
         # introduced a binary incompatibility where the
         # "any_data" of the event has changed from being a
@@ -69,7 +69,7 @@ class Event:
             return e.any_data.value().any_data
         else:
             return e.any_data
-       
+
     getAnyData = staticmethod(getAnyData)
 
     def __init__(self, e=None):
@@ -78,7 +78,7 @@ class Event:
             self.type     = e.type
             self.detail1  = e.detail1
             self.detail2  = e.detail2
-            
+
             # If were talking to AT-SPI 1.7.0 or greater, we can get the
             # application information right away because it is tucked in
             # the EventDetails data new for 1.7.0.
@@ -114,22 +114,22 @@ class Registry:
     def __init__(self):
 
         # The "Borg" singleton model - ensures we're really
-	# only connecting to the registry once.
-	#
-	self.__dict__ = self.__sharedState
+        # only connecting to the registry once.
+        #
+        self.__dict__ = self.__sharedState
         self.__instanceCount += 1
-	if not self.__dict__.has_key("registry"):
-	    self.registry = bonobo.get_object(
-		"OAFIID:Accessibility_Registry:1.0",
-        	"Accessibility/Registry")
-	if not self.__dict__.has_key("desktop"):
-	    self.desktop = self.registry.getDesktop(0)
+        if not self.__dict__.has_key("registry"):
+            self.registry = bonobo.get_object(
+                "OAFIID:Accessibility_Registry:1.0",
+                "Accessibility/Registry")
+        if not self.__dict__.has_key("desktop"):
+            self.desktop = self.registry.getDesktop(0)
 
     def start(self):
         """Starts event notification with the AT-SPI Registry.  This method
         only returns after 'stop' has been called.
         """
-	Accessible.init(self)
+        Accessible.init(self)
         bonobo.main()
 
     def stop(self):
@@ -137,9 +137,9 @@ class Registry:
         the AT-SPI Registry and then stops event notification with the
         AT-SPI Registry.
         """
-	Accessible.shutdown(self)
-	for listener in (self.__listeners + self.__keystrokeListeners):
-	    listener.deregister()
+        Accessible.shutdown(self)
+        for listener in (self.__listeners + self.__keystrokeListeners):
+            listener.deregister()
         bonobo.main_quit()
 
     def registerEventListener(self, callback, eventType):
@@ -149,7 +149,7 @@ class Registry:
         - callback: function to call with an AT-SPI event instance
         - eventType: string representing the type of event
         """
-       	listener = EventListener(self.registry, callback, eventType)
+        listener = EventListener(self.registry, callback, eventType)
         self.__listeners.append(listener)
 
     def deregisterEventListener(self, callback, eventType):
@@ -159,18 +159,18 @@ class Registry:
         - callback: function to call with an AT-SPI event instance
         - eventType: string representing the type of event
         """
-	found = True
-	while len(self.__listeners) and found:
-	    for i in range(0, len(self.__listeners)):
-	        if (self.__listeners[i].callback == callback) \
-	           and (self.__listeners[i].eventType == eventType):
+        found = True
+        while len(self.__listeners) and found:
+            for i in range(0, len(self.__listeners)):
+                if (self.__listeners[i].callback == callback) \
+                   and (self.__listeners[i].eventType == eventType):
                     # The __del__ method of the listener will unregister it.
                     #
-	            self.__listeners.pop(i)
-		    found = True
-		    break
-		else:
-		    found = False
+                    self.__listeners.pop(i)
+                    found = True
+                    break
+                else:
+                    found = False
 
     def registerKeystrokeListeners(self, callback):
         """Registers a single callback for all possible keystrokes.
@@ -210,10 +210,10 @@ class EventListener(Accessibility__POA.EventListener):
     def unref(self): pass
 
     def queryInterface(self, repo_id):
-	thiz = None
+        thiz = None
         if repo_id == "IDL:Accessibility/EventListener:1.0":
             thiz = self._this()
-	return thiz
+        return thiz
 
     def register(self):
         self._default_POA().the_POAManager.activate()
@@ -271,10 +271,10 @@ class KeystrokeListener(Accessibility__POA.DeviceEventListener):
     def unref(self): pass
 
     def queryInterface(self, repo_id):
-	thiz = None
+        thiz = None
         if repo_id == "IDL:Accessibility/EventListener:1.0":
             thiz = self._this()
-	return thiz
+        return thiz
 
     def register(self):
         d = self.registry.getDeviceEventController()
@@ -484,7 +484,7 @@ class Accessible:
 
         Returns a Python Accessible.
         """
-        
+
         obj = None
 
         if not acc:
@@ -499,12 +499,12 @@ class Accessible:
                 "         AT-SPI Accessible.\n"
                 "         Returning Python Accessible.")
             return acc
-            
-	# Comment these two lines out to eliminate any local caching 
-	# of Accessible objects.
-	#
+
+        # Comment these two lines out to eliminate any local caching
+        # of Accessible objects.
+        #
         #obj = Accessible(acc)
-	#return obj
+        #return obj
 
         if Accessible._cache.has_key(acc):
             obj = Accessible._cache[acc]
@@ -515,9 +515,9 @@ class Accessible:
         if not obj:
             obj = Accessible(acc)
 
-	if obj.valid:
+        if obj.valid:
             Accessible._cache[acc] = obj
-	    
+
         return obj
 
     makeAccessible = staticmethod(makeAccessible)
@@ -585,7 +585,7 @@ class Accessible:
                 self.version = None
         except:
             self._acc = acc._narrow(Accessibility.Accessible)
-            
+
         # [[[TODO: WDW - the AT-SPI appears to give us a different accessible
         # when we repeatedly ask for the same child of a parent that manages
         # its descendants.  So...we probably shouldn't cache those kind of
@@ -602,7 +602,7 @@ class Accessible:
                 self.valid = True
             except:
                 self.valid = False
-                
+
     def getStateString(self):
         """Returns a space-delimited string composed of the given object's
         Accessible state attribute.  This is for debug purposes.
@@ -807,9 +807,9 @@ class Accessible:
         s = self._acc.getState()
         s = s._narrow(Accessibility.StateSet)
         state = s.getStates()
-	# [[[WDW - we don't seem to always get appropriate state changed
-	# information, so we will not cache state information.]]]
-	#
+        # [[[WDW - we don't seem to always get appropriate state changed
+        # information, so we will not cache state information.]]]
+        #
         #if CACHE_VALUES:
         #    self.state = state
         return state
@@ -838,20 +838,20 @@ class Accessible:
         #
         debug.println(debug.LEVEL_FINEST,
                       "Finding app for source.name=" \
-	              + self.accessibleNameToString())
+                      + self.accessibleNameToString())
         obj = self
         while obj.parent and (obj != obj.parent):
             obj = obj.parent
             debug.println(debug.LEVEL_FINEST,
                           "--> parent.name=" + obj.accessibleNameToString())
 
-	if (obj == obj.parent):
-	    debug.println(debug.LEVEL_SEVERE,
+        if (obj == obj.parent):
+            debug.println(debug.LEVEL_SEVERE,
                           "ERROR in Accessible.__get_app: obj == obj.parent!")
-	    return None
-	elif (obj.role != rolenames.ROLE_APPLICATION):
-	    debug.println(debug.LEVEL_FINEST,
-			  "ERROR in Accessible.__get_app: top most parent " \
+            return None
+        elif (obj.role != rolenames.ROLE_APPLICATION):
+            debug.println(debug.LEVEL_FINEST,
+                          "ERROR in Accessible.__get_app: top most parent " \
                           "(name='%s') is of role %s" % (obj.name, obj.role))
 
             # [[[TODO: We'll let this fall through for some cases.  It
@@ -1171,10 +1171,10 @@ class Accessible:
         """
 
         if includeApp:
-	    if self.app:
+            if self.app:
                 string = indent + "app.name=%-20s " \
                          % self.app.accessibleNameToString()
-	    else:
+            else:
                 string = indent + "app=None "
         else:
             string = indent
@@ -1362,19 +1362,19 @@ def getFrame(obj):
 
     debug.println(debug.LEVEL_FINEST,
                   "Finding frame for source.name="
-	          + obj.accessibleNameToString())
+                  + obj.accessibleNameToString())
 
     while obj \
           and (obj != obj.parent) \
           and (obj.role != rolenames.ROLE_FRAME):
         obj = obj.parent
         debug.println(debug.LEVEL_FINEST, "--> obj.name="
-		      + obj.accessibleNameToString())
+                      + obj.accessibleNameToString())
 
     if obj and (obj.role == rolenames.ROLE_FRAME):
-	pass
+        pass
     else:
-	obj = None
+        obj = None
 
     return obj
 
@@ -1525,10 +1525,10 @@ def getKnownApplications():
 
 def printAncestry(child):
    """Prints a hierarchical view of a child's ancestry."""
-   
+
    if not child:
        return
-   
+
    ancestorList = [child]
    parent = child.parent
    while parent and (parent.parent != parent):
@@ -1558,10 +1558,10 @@ def printHierarchy(root, ooi, indent="", onlyShowing=True, omitManaged=True):
        print root.toString(indent + "(*)", False)
     else:
        print root.toString(indent + "+-", False)
-       
+
     rootManagesDescendants = root.state.count(\
         Accessibility.STATE_MANAGES_DESCENDANTS)
-    
+
     for i in range(0, root.childCount):
         child = root.child(i)
         if child == root:
@@ -1584,7 +1584,7 @@ def printHierarchy(root, ooi, indent="", onlyShowing=True, omitManaged=True):
                               indent + "  ",
                               onlyShowing,
                               omitManaged)
-      
+
 ########################################################################
 #                                                                      #
 # Testing functions.                                                   #
@@ -1594,14 +1594,14 @@ def printHierarchy(root, ooi, indent="", onlyShowing=True, omitManaged=True):
 def __printTopObject(child):
     parent = child
     while parent:
-	if not parent.parent:
+        if not parent.parent:
             print "RAW TOP:", parent.name, parent.role
         parent = parent.parent
     if (child.parent):
         accessible = Accessible.makeAccessible(child)
         app = accessible.app
         print "ACC TOP:", app.name, app.role
-	
+
 def __printDesktops():
     registry = Registry().registry
     print "There are %d desktops" % registry.getDesktopCount()
@@ -1612,15 +1612,15 @@ def __printDesktops():
         for j in range(0, desktop.childCount):
             app = desktop.getChildAtIndex(j)
             print "    App %d: name=%s role=%s" \
-		  % (j, app.name, app.role)
+                  % (j, app.name, app.role)
 
 def __notifyEvent(event):
         print event.type, event.source.name, \
               event.detail1, event.detail2,  \
               event.any_data
-	__printTopObject(event.source)
-	if not event.source.parent:
-	    print "NO PARENT:", event.source.name, event.source.role
+        __printTopObject(event.source)
+        if not event.source.parent:
+            print "NO PARENT:", event.source.name, event.source.role
 
 def __notifyKeystroke(event):
     print "keystroke type=%d hw_code=%d modifiers=%d event_string=(%s) " \

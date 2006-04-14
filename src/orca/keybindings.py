@@ -110,12 +110,12 @@ class KeyBindings:
         """Returns the input handler of the key binding that matches the
         given keycode and modifiers, or None if no match exists.
         """
-	handler = None
+        handler = None
         for keyBinding in self.keyBindings:
             if keyBinding.matches(keyboardEvent.hw_code, \
                                   keyboardEvent.modifiers):
                 handler = keyBinding.handler
-		break
+                break
         return handler
 
     def consumeKeyboardEvent(self, script, keyboardEvent):

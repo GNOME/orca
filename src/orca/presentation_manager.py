@@ -42,7 +42,7 @@ class PresentationManager:
 
         Returns True if the command was consumed; otherwise False
         """
-	return False
+        return False
 
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
@@ -52,7 +52,7 @@ class PresentationManager:
         - oldLocusOfFocus: Accessible that is the old locus of focus
         - newLocusOfFocus: Accessible that is the new locus of focus
         """
-	pass
+        pass
 
     def visualAppearanceChanged(self, event, obj):
         """Called when the visual appearance of an object changes.
@@ -67,12 +67,12 @@ class PresentationManager:
         - event: if not None, the Event that caused this to happen
         - obj: the Accessible whose visual appearance changed.
         """
-    	pass
+        pass
 
     def activate(self):
         """Called when this presentation manager is activated."""
-	pass
+        pass
 
     def deactivate(self):
         """Called when this presentation manager is deactivated."""
-	pass
+        pass

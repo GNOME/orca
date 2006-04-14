@@ -48,11 +48,11 @@ class VoiceFamily(dict):
             self.update(props)
 
 class SayAllContext:
-    
+
     PROGRESS    = 0
     INTERRUPTED = 1
     COMPLETED   = 2
-    
+
     def __init__(self, obj, utterance, startOffset=-1, endOffset=-1):
         """Creates a new SayAllContext that will be passed to the
         SayAll callback handler for progress updates on speech.
@@ -61,7 +61,7 @@ class SayAllContext:
         If the object does have an accessible text specialization,
         then values >= 0 for startOffset and endOffset indicate
         where in the text the utterance has come from.
-        
+
         Arguments:
         -obj:         the Accessible being spoken
         -utterance:   the actual utterance being spoken
@@ -79,8 +79,8 @@ class SpeechServer:
     """Provides speech server abstraction."""
 
     def getFactoryName():
- 	"""Returns a localized name describing this factory."""
-	pass
+        """Returns a localized name describing this factory."""
+        pass
 
     getFactoryName = staticmethod(getFactoryName)
 
@@ -89,8 +89,8 @@ class SpeechServer:
 
         Returns a list of [name, id] values identifying the available
         speech servers.  The name is a human consumable string and the
-	id is an object that can be used to create a speech server
-	via the getSpeechServer method.
+        id is an object that can be used to create a speech server
+        via the getSpeechServer method.
         """
         pass
 
@@ -122,10 +122,10 @@ class SpeechServer:
         Arguments:
         - text: text to be spoken
         - acss: acss.ACSS instance; if None,
-		the default voice settings will be used.
-		Otherwise, the acss settings will be
-		used to augment/override the default
-		voice settings.
+                the default voice settings will be used.
+                Otherwise, the acss settings will be
+                used to augment/override the default
+                voice settings.
 
         Output is produced by the next call to speak.
         """
@@ -151,10 +151,10 @@ class SpeechServer:
         Arguments:
         - character: text to be spoken
         - acss:      acss.ACSS instance; if None,
-		     the default voice settings will be used.
-		     Otherwise, the acss settings will be
-		     used to augment/override the default
-		     voice settings.
+                     the default voice settings will be used.
+                     Otherwise, the acss settings will be
+                     used to augment/override the default
+                     voice settings.
         """
         pass
 
@@ -164,10 +164,10 @@ class SpeechServer:
         Arguments:
         - list: list of strings to be spoken
         - acss: acss.ACSS instance; if None,
-		the default voice settings will be used.
-		Otherwise, the acss settings will be
-		used to augment/override the default
-		voice settings.
+                the default voice settings will be used.
+                Otherwise, the acss settings will be
+                used to augment/override the default
+                voice settings.
         """
         pass
 
@@ -178,10 +178,10 @@ class SpeechServer:
         Arguments:
         - text: text to be spoken
         - acss: acss.ACSS instance; if None,
-		the default voice settings will be used.
-		Otherwise, the acss settings will be
-		used to augment/override the default
-		voice settings.
+                the default voice settings will be used.
+                Otherwise, the acss settings will be
+                used to augment/override the default
+                voice settings.
         """
         pass
 
@@ -201,7 +201,7 @@ class SpeechServer:
         """
         for [context, acss] in utteranceIterator:
             self.speak(context.utterance, acss)
-        
+
     def increaseSpeechRate(self, step=5):
         """Increases the speech rate.
         """

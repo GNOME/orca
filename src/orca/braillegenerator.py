@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005 Sun Microsystems Inc.
+# Copyright 2005-2006 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -1320,15 +1320,15 @@ class BrailleGenerator:
                     result = self.getBrailleRegions(child, False)
                     regions.extend(result[0])
 
-		    # This helps us determine which child is the selected
-		    # child.  Tracking the SELECTED state is not always
-		    # useful (it seems to be inconsistently handled by
-		    # toolkits), so we look at the parent's selection model.
-		    # In addition, we add a STATE_ARMED check here as a
-		    # workaround to the way OOo handles its menu items.
-		    #
+                    # This helps us determine which child is the selected
+                    # child.  Tracking the SELECTED state is not always
+                    # useful (it seems to be inconsistently handled by
+                    # toolkits), so we look at the parent's selection model.
+                    # In addition, we add a STATE_ARMED check here as a
+                    # workaround to the way OOo handles its menu items.
+                    #
                     if (selection and selection.isChildSelected(i)) \
-		       or child.state.count(atspi.Accessibility.STATE_ARMED):
+                       or child.state.count(atspi.Accessibility.STATE_ARMED):
                         selectedRegion = result[1]
 
         return [regions, selectedRegion]

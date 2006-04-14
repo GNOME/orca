@@ -26,23 +26,23 @@ import speech
 from orca_i18n import _ # for gettext support
 
 def findFocusedObject(root):
-    """Returns the accessible that has focus under or including the 
-    given root. 
+    """Returns the accessible that has focus under or including the
+    given root.
 
     TODO: This will currently traverse all children, whether they are
     visible or not and/or whether they are children of parents that
     manage their descendants.  At some point, this method should be
     optimized to take such things into account.
-    
+
     Arguments:
     - root: the root object where to start searching
 
     Returns the object with the FOCUSED state or None if no object with
     the FOCUSED state can be found.
-    """       
+    """
 
     if root.state.count(atspi.Accessibility.STATE_FOCUSED):
-	return root
+        return root
 
     for i in range(0, root.childCount):
         try:
@@ -52,7 +52,7 @@ def findFocusedObject(root):
         except:
             pass
 
-    return None             
+    return None
 
 def isDesiredFocusedItem(obj, rolesList):
     """Called to determine if the given object and it's hierarchy of
@@ -75,7 +75,7 @@ def isDesiredFocusedItem(obj, rolesList):
     return True
 
 def speakMisspeltWord(allTokens, badWord):
-    """Called by various spell checking routine to speak the misspelt word, 
+    """Called by various spell checking routine to speak the misspelt word,
        plus the context that it is being used in.
 
     Arguments:
@@ -102,4 +102,3 @@ def speakMisspeltWord(allTokens, badWord):
             # Turn the list of utterances into a string.
             text = " ".join(utterances)
             speech.speak(text)
-

@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2005 Sun Microsystems Inc.
+# Copyright 2004-2006 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -59,7 +59,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         self._knownScripts = {}
         self._eventQueue   = Queue.Queue(0)
         self._gidle_id     = 0
-        
+
     ########################################################################
     #                                                                      #
     # METHODS FOR KEEPING TRACK OF LISTENERS REGISTERED WITH ATSPI         #
@@ -291,7 +291,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         #
         #self._processObjectEvent(atspi.Event(e))
         #return
-    
+
         # We ignore defunct objects and let the atspi module take care of them
         # for us.
         #
@@ -313,7 +313,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         if (e.type == "object:children-changed:remove") \
            and (e.source != self.registry.desktop):
             return
-           
+
         # We create the event here because it will ref everything we
         # want it to ref, thus allowing things to survive until they
         # are processed on the gidle thread.
@@ -334,7 +334,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         debug.println(debug.LEVEL_SEVERE,
                       "TIMEOUT: Looks like something has hung. Quitting Orca.")
         orca.shutdown()
-        
+
     def _dequeueObjectEvent(self):
         """Handles all events destined for scripts.  Called by the GTK
         idle thread.
@@ -349,21 +349,21 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         #
         #timer = threading.Timer(5.0, self._timeout)
         #timer.start()
-        
+
         try:
             self._processObjectEvent(event)
         except:
             pass
-        
+
         #timer.cancel()
         #del timer
-        
+
         if self._eventQueue.empty():
             self._gidle_id = 0
             return False
         else:
             return True
-        
+
     def _processObjectEvent(self, event):
         """Handles all events destined for scripts.
 

@@ -1,5 +1,9 @@
 2006-04-14  Willie Walker <william.walker@sun.com>
 
+	* src/orca/*.py, src/orca/scripts/*.py: general pass at
+	removing trailing whitespace from source code, removing
+	tabs, and making sure copyrights are up to date.
+	
 	* src/orca/default.py, src/orca/orca.py, src/orca/script.py,
 	src/orca/scripts/Evolution.py, src/orca/scripts/Mozilla.py,
 	src/orca/scripts/StarOffice.py, src/orca/scripts/gcalctool.py,

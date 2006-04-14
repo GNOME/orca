@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2005 Sun Microsystems Inc.
+# Copyright 2004-2006 Sun Microsystems Inc.
 # Copyright 2001, 2002 BAUM Retec, A.G.
 #
 # This library is free software; you can redistribute it and/or

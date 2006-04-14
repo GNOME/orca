@@ -83,7 +83,7 @@ def generateKeyboardEvent(keycode, keystring, type):
     - type:   an AccessibleKeySynthType flag indicating whether keyval
               is to be interpreted as a keysym rather than a keycode
               (atspi.Accessibility.KEY_SYM), or whether to synthesize
-	      KEY_PRESS, KEY_RELEASE, or both (KEY_PRESSRELEASE).
+              KEY_PRESS, KEY_RELEASE, or both (KEY_PRESSRELEASE).
     """
 
     d = atspi.Registry().registry.getDeviceEventController()

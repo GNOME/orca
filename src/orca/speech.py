@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2005 Sun Microsystems Inc.
+# Copyright 2004-2006 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -103,7 +103,7 @@ def __resolveACSS(acss=None):
 def sayAll(utteranceIterator, progressCallback):
     if __speechserver:
         __speechserver.sayAll(utteranceIterator, progressCallback)
-    
+
 def speak(text, acss=None):
     if __speechserver:
         __speechserver.speak(text, __resolveACSS(acss))
@@ -155,7 +155,7 @@ def test():
         infos = factory.SpeechServer.getSpeechServerInfos()
         for info in infos:
             try:
-	        server = factory.SpeechServer.getSpeechServer(info)
+                server = factory.SpeechServer.getSpeechServer(info)
                 print "    ", server.getInfo()
                 for family in server.getVoiceFamilies():
                     name = family[speechserver.VoiceFamily.NAME]
@@ -164,6 +164,6 @@ def test():
                     server.speak(name, acss)
                     server.speak("testing")
                 server.shutdown()
-	    except:
-		debug.printException(debug.LEVEL_OFF)
-		pass
+            except:
+                debug.printException(debug.LEVEL_OFF)
+                pass

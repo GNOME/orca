@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2005 Sun Microsystems Inc.
+# Copyright 2004-2006 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -84,10 +84,10 @@ class HierarchicalPresenter(presentation_manager.PresentationManager):
     _SPECIALIZATION_LENGTH             = 11
 
     def __init__(self):
-    	self._navigationMode               = self._NAVIGATION_MODE_INTEROBJECT
-    	self._currentObject                = None
-    	self._currentObjectSpecializations = []
-    	self._currentSpecialization        = self._SPECIALIZATION_ACTION
+        self._navigationMode               = self._NAVIGATION_MODE_INTEROBJECT
+        self._currentObject                = None
+        self._currentObjectSpecializations = []
+        self._currentSpecialization        = self._SPECIALIZATION_ACTION
 
     ########################################################################
     #                                                                      #
@@ -101,11 +101,11 @@ class HierarchicalPresenter(presentation_manager.PresentationManager):
         """
 
         apps = atspi.getKnownApplications()
-	for i in range(0, len(apps)):
+        for i in range(0, len(apps)):
             if accessible.app == apps[i]:
                 return i
 
-	return -1
+        return -1
 
     def _getIndentText(self, accessible):
         """Creates a string of numbers where each number represents a child
@@ -169,7 +169,7 @@ class HierarchicalPresenter(presentation_manager.PresentationManager):
             else:
                 parent = self._currentObject.parent
                 index = min(self._currentObject.index + 1,
-			    parent.childCount - 1)
+                            parent.childCount - 1)
                 self._currentObject = parent.child(index)
                 self._displayAccessible(self._currentObject)
         elif keystring == "Left":
@@ -262,7 +262,7 @@ class HierarchicalPresenter(presentation_manager.PresentationManager):
             return
 
         brltext = "Selection: %d selected children" \
-		  % selection.nSelectedChildren
+                  % selection.nSelectedChildren
 
         debug.println(debug.LEVEL_OFF, brltext)
 
@@ -430,7 +430,7 @@ class HierarchicalPresenter(presentation_manager.PresentationManager):
         speech.speak(_("Switching to hierarchical navigation mode."))
 
         apps = atspi.getKnownApplications()
-        
+
         win = orca.findActiveWindow()
 
         if win:
@@ -439,7 +439,7 @@ class HierarchicalPresenter(presentation_manager.PresentationManager):
         else:
             self._currentObject = apps[0]
             self._displayAccessible(self._currentObject)
-            
+
     def deactivate(self):
         """Called when this presentation manager is deactivated."""
         orca.outlineAccessible(None)

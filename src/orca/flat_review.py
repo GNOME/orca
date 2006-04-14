@@ -1117,11 +1117,11 @@ def getZonesFromAccessible(accessible, cliprect):
                                 cliprect.x, cliprect.y,
                                 cliprect.width, cliprect.height)
 
-		# [[[TODO: WDW - HACK it would be nice to clip the
+                # [[[TODO: WDW - HACK it would be nice to clip the
                 # the text by what is really showing on the screen,
                 # but this seems to hang Orca and the client. Logged
                 # as bugzilla bug 319770.]]]
-		#
+                #
                 #ranges = text.getBoundedRanges(\
                 #    clipping[0],
                 #    clipping[1],
@@ -1263,7 +1263,7 @@ def getShowingDescendants(parent):
     # are going.
     #
     GRID_SIZE = 7
-    
+
     descendants = []
 
     parentExtents = parent.component.getExtents(0)
@@ -1286,12 +1286,12 @@ def getShowingDescendants(parent):
                 if header.state.count(atspi.Accessibility.STATE_SHOWING) \
                    and (extents.x >= 0) and (extents.y >= 0) \
                    and (extents.width > 0) and (extents.height > 0) \
-                   and visible(extents.x, extents.y, 
+                   and visible(extents.x, extents.y,
                                extents.width, extents.height,
                                parentExtents.x, parentExtents.y,
                                parentExtents.width, parentExtents.height):
                     descendants.append(header)
-                    
+
     # This algorithm goes left to right, top to bottom while attempting
     # to do *some* optimization over queries.  It could definitely be
     # improved.
@@ -1375,7 +1375,7 @@ def getShowingZones(root):
     if root.state.count(atspi.Accessibility.STATE_MANAGES_DESCENDANTS) \
        and (root.childCount > 50):
         for child in getShowingDescendants(root):
-            objlist.extend(getShowingZones(child))            
+            objlist.extend(getShowingZones(child))
     else:
         for i in range(0, root.childCount):
             child = root.child(i)
