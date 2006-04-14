@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2005 Sun Microsystems Inc.
+# Copyright 2004-2006 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -70,7 +70,6 @@ class Script(default.Script):
             # For GNOME 2.10 and 2.12 there is a scrolled_window containing
             # the text_view display. This can be found by looking for an
             # accessible object with a role of ROLE_EDITBAR.
-            #
             #
             d = atspi.findByRole(event.source, rolenames.ROLE_TEXT)
             if len(d) == 0:

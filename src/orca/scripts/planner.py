@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005 Sun Microsystems Inc.
+# Copyright 2006 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -45,7 +45,6 @@ class Script(default.Script):
         """
 
         default.Script.__init__(self, app)
-
 
     # This method tries to detect and handle the following cases:
     # 1) Main window: one of the four graphic toggle buttons.
@@ -106,11 +105,10 @@ class Script(default.Script):
                 brailleGen.getBrailleRegions(event.source)
             regionWithFocus.string = utterance + " " \
                                      + regionWithFocus.string
-            braille.displayRegions([brailleRegions, regionWithFocus]) 
+            braille.displayRegions([brailleRegions, regionWithFocus])
             return
 
-
-        # For everything else, pass the focus event onto the parent class 
+        # For everything else, pass the focus event onto the parent class
         # to be handled in the default way.
 
         default.Script.onFocus(self, event)

@@ -1,3 +1,24 @@
+2006-04-14  Willie Walker <william.walker@sun.com>
+
+	* src/orca/default.py, src/orca/orca.py, src/orca/script.py,
+	src/orca/scripts/Evolution.py, src/orca/scripts/Mozilla.py,
+	src/orca/scripts/StarOffice.py, src/orca/scripts/gcalctool.py,
+	src/orca/scripts/gdmlogin.py, src/orca/scripts/gedit.py,
+	src/orca/scripts/gnome-terminal.py, src/orca/scripts/metacity.py,
+	src/orca/scripts/planner.py: break HUGE default.py:__init__
+	method up and provide 4 new methods to script.py:
+
+        setupInputEventHandlers: sets up input event handlers for a script
+	getListeners: returns dictionary of AT-SPI event listeners 
+        getKeyBindings: returns keybindings that define which keystrokes
+	                call which input event handlers
+        getBrailleBindings: returns braillebindings that define which
+	                braille input events call which input event
+	                handlers
+
+	This change allows subclasses to more easily define and override
+	the various features.
+	
 2006-04-13  Willie Walker <william.walker@sun.com>
 
 	* src/orca/focus_tracking_presenter.py, src/orca/atspi.py: pass

@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2005 Sun Microsystems Inc.
+# Copyright 2004-2006 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -103,12 +103,10 @@ class Script(default.Script):
         self.lastBadWord = ''
         self.lastEventType = ''
 
-
     def getSpeechGenerator(self):
         """Returns the speech generator for this script.
         """
         return SpeechGenerator()
-
 
     def readMisspeltWord(self, event, panel):
         """Speak/braille the current misspelt word plus its context.
@@ -145,8 +143,8 @@ class Script(default.Script):
 
         # Note that we often get two or more of these focus or property-change
         # events each time there is a new misspelt word. We extract the
-        # current text caret position and the misspelt word and compare 
-        # them against the values saved from the last time this routine 
+        # current text caret position and the misspelt word and compare
+        # them against the values saved from the last time this routine
         # was called. If they are the same then we ignore it.
 
         if self.textArea != None:
@@ -154,8 +152,8 @@ class Script(default.Script):
             caretPosition = allText[0].text.caretOffset
 
             debug.println(debug.LEVEL_FINEST, \
-                "gedit.readMisspeltWord: type=%s  word=%s caret position=%d" % \
-                (event.type, badWord, caretPosition))
+                "gedit.readMisspeltWord: type=%s  word=%s caret position=%d" \
+                % (event.type, badWord, caretPosition))
 
             if (caretPosition == self.lastCaretPosition) and \
                (badWord == self.lastBadWord) and \
@@ -192,7 +190,6 @@ class Script(default.Script):
             self.lastBadWord = badWord
             self.lastEventType = event.type
 
-
     # This method tries to detect and handle the following cases:
     # 1) Text area (for caching handle for spell checking purposes).
     # 2) Check Spelling Dialog.
@@ -216,18 +213,18 @@ class Script(default.Script):
         # 1) Text area (for caching handle for spell checking purposes).
         #
         # This works in conjunction with code in section 2). Check to see if
-        # focus is currently in the gedit text area. If it is, then, if this 
+        # focus is currently in the gedit text area. If it is, then, if this
         # is the first time, save a pointer to the scroll pane which contains
         # the text being editted.
         #
         # Note that this drops through to then use the default event
         # processing in the parent class for this "focus:" event.
 
-        rolesList = [rolenames.ROLE_TEXT, \
-                     rolenames.ROLE_SCROLL_PANE, \
-                     rolenames.ROLE_FILLER, \
-                     rolenames.ROLE_PAGE_TAB, \
-                     rolenames.ROLE_PAGE_TAB_LIST, \
+        rolesList = [rolenames.ROLE_TEXT,
+                     rolenames.ROLE_SCROLL_PANE,
+                     rolenames.ROLE_FILLER,
+                     rolenames.ROLE_PAGE_TAB,
+                     rolenames.ROLE_PAGE_TAB_LIST,
                      rolenames.ROLE_SPLIT_PANE]
         if util.isDesiredFocusedItem(event.source, rolesList):
             debug.println(debug.LEVEL_FINEST,
@@ -235,7 +232,6 @@ class Script(default.Script):
 
             self.textArea = event.source.parent
             # Fall-thru to process the event with the default handler.
-
 
         # 2) check spelling dialog.
         #
@@ -249,10 +245,10 @@ class Script(default.Script):
         # their translation of this string matches what gedit uses in
         # that locale.
 
-        rolesList = [rolenames.ROLE_TEXT, \
-                     rolenames.ROLE_FILLER, \
-                     rolenames.ROLE_PANEL, \
-                     rolenames.ROLE_FILLER, \
+        rolesList = [rolenames.ROLE_TEXT,
+                     rolenames.ROLE_FILLER,
+                     rolenames.ROLE_PANEL,
+                     rolenames.ROLE_FILLER,
                      rolenames.ROLE_FRAME]
         if util.isDesiredFocusedItem(event.source, rolesList):
             frame = event.source.parent.parent.parent.parent
@@ -263,12 +259,10 @@ class Script(default.Script):
                 self.readMisspeltWord(event, event.source.parent.parent)
                 # Fall-thru to process the event with the default handler.
 
-
         # For everything else, pass the focus event onto the parent class
         # to be handled in the default way.
 
         default.Script.onFocus(self, event)
-
 
     # This method tries to detect and handle the following cases:
     # 1) check spelling dialog.
@@ -304,9 +298,9 @@ class Script(default.Script):
         # their translation of this string matches what gedit uses in
         # that locale.
 
-        rolesList = [rolenames.ROLE_LABEL, \
-                     rolenames.ROLE_PANEL, \
-                     rolenames.ROLE_FILLER, \
+        rolesList = [rolenames.ROLE_LABEL,
+                     rolenames.ROLE_PANEL,
+                     rolenames.ROLE_FILLER,
                      rolenames.ROLE_FRAME]
         if util.isDesiredFocusedItem(event.source, rolesList):
             frame = event.source.parent.parent.parent
@@ -319,4 +313,3 @@ class Script(default.Script):
 
         # Pass the event onto the parent class to be handled in the default way.
         default.Script.onNameChanged(self, event)
-

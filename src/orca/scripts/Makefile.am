@@ -7,7 +7,6 @@ orca_python_PYTHON = \
 	gcalctool.py \
 	gdmlogin.py \
 	gedit.py \
-	Gecko.py \
 	gnome-terminal.py \
 	metacity.py \
 	Mozilla.py \

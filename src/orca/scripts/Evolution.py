@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005 Sun Microsystems Inc.
+# Copyright 2005-2006 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -78,7 +78,6 @@ class Script(default.Script):
                                _("CalendarEvent"),
                                _("calendar event"))
 
-
     def readPageTab(self, tab):
         """Speak/Braille the given page tab. The speech verbosity is set
            to VERBOSITY_LEVEL_BRIEF for this operation and then restored
@@ -102,12 +101,12 @@ class Script(default.Script):
     def getTimeForCalRow(self, row, noIncs):
         """Return a string equivalent to the time of the given row in
            the calendar day view. Each calendar row is equivalent to
-           a certain time interval (from 5 minutes upto 1 hour), with 
+           a certain time interval (from 5 minutes upto 1 hour), with
            time (row 0) starting at 12 am (midnight).
 
         Arguments:
         - row: the row number.
-        - noIncs: the number of equal increments that the 24 hour period 
+        - noIncs: the number of equal increments that the 24 hour period
                   is divided into.
 
         Returns the time as a string.
@@ -125,7 +124,6 @@ class Script(default.Script):
         mins = minutes[totalMins % 60]
 
         return hrs + ' ' + mins + ' ' + suffix
-
 
     # This method tries to detect and handle the following cases:
     # 1) Mail view: current message pane: individual lines of text.
@@ -157,9 +155,9 @@ class Script(default.Script):
 
         # 1) Mail view: current message pane: individual lines of text.
         #
-        # When the focus is in the pane containing the lines of an 
-        # actual mail message, then, for each of those lines, we 
-        # don't want to speak "text", the role of the component that 
+        # When the focus is in the pane containing the lines of an
+        # actual mail message, then, for each of those lines, we
+        # don't want to speak "text", the role of the component that
         # currently has focus.
         #
         # The situation is determine by checking the roles of the current
@@ -182,11 +180,10 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, event.source, False)
             return
 
-
         # 2) Mail view: current message pane: "standard" mail header lines.
         #
         # Check if the focus is in the From:, To:, Subject: or Date: headers
-        # of a message in the message area, and that we want to speak all of 
+        # of a message in the message area, and that we want to speak all of
         # the tables cells for that current row.
         #
         # The situation is determine by checking the roles of the current
@@ -194,13 +191,13 @@ class Script(default.Script):
         # "text", "panel" and "table cell". If we find that, then (hopefully)
         # it's a header line in the mail message.
         #
-        # For each of the table cells in the current row in the table, we 
-        # have to work our way back down the component hierarchy until we 
-        # get a component with no children. We then use the role of that 
+        # For each of the table cells in the current row in the table, we
+        # have to work our way back down the component hierarchy until we
+        # get a component with no children. We then use the role of that
         # component to determine how to speak its contents.
         #
-        # NOTE: the code assumes that there is only one child within each 
-        # component and that the final component (with no children) is of 
+        # NOTE: the code assumes that there is only one child within each
+        # component and that the final component (with no children) is of
         # role TEXT.
 
         rolesList = [rolenames.ROLE_TEXT, \
@@ -235,24 +232,23 @@ class Script(default.Script):
                 orca.setLocusOfFocus(event, event.source, False)
                 return
 
-
         # 3) Mail view: message header list
         #
         # Check if the focus is in the message header list. If this focus
         # event is for a different row that the last time we got a similar
         # focus event, we want to speak all of the tables cells (and the
-        # header for the one that currently has focus) in the current 
-        # highlighted message. (The role is only spoken/brailled for the 
+        # header for the one that currently has focus) in the current
+        # highlighted message. (The role is only spoken/brailled for the
         # table cell that currently has focus).
         #
         # If this focus event is just for a different table cell on the same
         # row as last time, then we just speak the current cell (and its
-        # header). 
+        # header).
         #
         # The braille cursor to set to point to the current cell.
         #
-        # Note that the Evolution user can adjust which columns appear in 
-        # the message list and the order in which they appear, so that 
+        # Note that the Evolution user can adjust which columns appear in
+        # the message list and the order in which they appear, so that
         # Orca will just speak the ones that they are interested in.
 
         rolesList = [rolenames.ROLE_TABLE_CELL, \
@@ -285,15 +281,15 @@ class Script(default.Script):
 
             # If the current locus of focus is not a table cell, then we
             # are entering the mail message header list (rather than moving
-            # around inside it), so speak/braille the number of mail messages 
+            # around inside it), so speak/braille the number of mail messages
             # total.
             #
             # This code section handles one other bogusity. As Evolution is
             # initially being rendered on the screen, the focus at some point
             # is given to the highlighted row in the mail message header list.
-            # Because of this, self.lastMessageRow and self.lastMessageColumn 
-            # will be set to that row number and column number, making the 
-            # setting of the speakAll variable above, incorrect. We fix that 
+            # Because of this, self.lastMessageRow and self.lastMessageColumn
+            # will be set to that row number and column number, making the
+            # setting of the speakAll variable above, incorrect. We fix that
             # up here.
 
             if orca.locusOfFocus.role != rolenames.ROLE_TABLE_CELL:
@@ -385,7 +381,6 @@ class Script(default.Script):
             self.lastMessageRow = row
             return
 
-
         # 4) Calendar view: day view: tabbing to day with appts.
         #
         # If the focus is in the Calendar Day View on an appointment, then
@@ -393,12 +388,12 @@ class Script(default.Script):
         # date and appointment summary from the parent. This is then followed
         # by getting the information on the current appointment.
         #
-        # The start time for the appointment is determined by detecting the 
-        # equivalent child in the parent Calendar View's table has the same 
+        # The start time for the appointment is determined by detecting the
+        # equivalent child in the parent Calendar View's table has the same
         # y position on the screen.
         #
         # The end time for the appointment is determined by using the height
-        # of the current appointment component divided by the height of a 
+        # of the current appointment component divided by the height of a
         # single child in the parent Calendar View's table
         #
         # Both of these time values depend upon the value of a time increment
@@ -451,11 +446,10 @@ class Script(default.Script):
                                                     brailleRegions[0]])
                             return
 
-
         # 5) Calendar view: day view: moving with arrow keys.
         #
         # If the focus is in the Calendar Day View, check to see if there
-        # are any appointments starting at the current time. If there are, 
+        # are any appointments starting at the current time. If there are,
         # then provide the user with useful feedback for that appointment,
         # otherwise output the current time and state that there are no
         # appointments.
@@ -570,7 +564,6 @@ class Script(default.Script):
                             self.readPageTab(tab)
                             return
 
-
         # 7) Mail view: insert attachment dialog: unlabelled arrow button.
         #
         # Check if the focus is on the unlabelled arrow button near the
@@ -601,7 +594,6 @@ class Script(default.Script):
                                     brailleRegions[0]])
             return
 
-
         # 8) Mail compose window: message area
         #
         # This works in conjunction with code in section 9). Check to see if
@@ -623,7 +615,6 @@ class Script(default.Script):
                       + "message area.")
 
             self.message_panel = event.source.parent.parent
-
 
         # 9) Spell Checking Dialog
         #
@@ -684,11 +675,10 @@ class Script(default.Script):
                 util.speakMisspeltWord(allTokens, badWord)
                 return
 
-
         # 10) Mail view: message area - attachments.
         #
         # Check if the focus is on the "go forward" button or the
-        # "attachment button" for an attachment in the mail message 
+        # "attachment button" for an attachment in the mail message
         # attachment area. (There will be a pair of these buttons
         # for each attachment in the mail message).
         #
@@ -721,15 +711,13 @@ class Script(default.Script):
             speech.speak(utterance)
             return
 
-
-        # For everything else, pass the focus event onto the parent class 
+        # For everything else, pass the focus event onto the parent class
         # to be handled in the default way.
         #
         # Note that this includes table cells if we only want to read the
         # current cell.
 
         default.Script.onFocus(self, event)
-
 
 # Values used to construct a time string for calendar appointments.
 #

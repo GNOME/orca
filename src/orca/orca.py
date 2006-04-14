@@ -42,7 +42,7 @@ from input_event import InputEventHandler
 from orca_i18n import _           # for gettext support
 
 # The user-settings module (see _loadUserSettings).
-# 
+#
 _userSettings = None
 
 # set each time a keyboard or braille event is received.
@@ -362,7 +362,7 @@ def cycleDebugLevel(script=None, inputEvent=None):
     global _debugLevel
 
     level = debug.debugLevel
-    
+
     if level == debug.LEVEL_ALL:
         level = debug.LEVEL_FINEST
     elif level == debug.LEVEL_FINEST:
@@ -383,7 +383,7 @@ def cycleDebugLevel(script=None, inputEvent=None):
         level = debug.LEVEL_ALL
 
     debug.debugLevel = level
-    
+
     if level == debug.LEVEL_ALL:
         speech.speak(_("Debug level all."))
     elif level == debug.LEVEL_FINEST:
@@ -507,7 +507,7 @@ def exitLearnMode(script=None, inputEvent=None):
 
 # Keybindings that Orca itself cares about.
 #
-_keybindings = None
+_keyBindings = None
 
 # True if the orca modifier key is currently pressed.
 #
@@ -604,7 +604,7 @@ def _isActionKey(event_string):
 
 def _keyEcho(event):
     """If the keyEcho setting is enabled, check to see what type of key
-    event it is and echo it via speech, if the user wants that type of 
+    event it is and echo it via speech, if the user wants that type of
     key echoed.
 
     Uppercase keys will be spoken using the "uppercase" voice style,
@@ -621,8 +621,8 @@ def _keyEcho(event):
     voices = settings.voices
     voice = voices[settings.DEFAULT_VOICE]
 
-    # If key echo is enabled, then check to see what type of key event 
-    # it is and echo it via speech, if the user wants that type of key 
+    # If key echo is enabled, then check to see what type of key event
+    # it is and echo it via speech, if the user wants that type of key
     # echoed.
     #
     if settings.enableKeyEcho:
@@ -739,7 +739,7 @@ def _processKeyboardEvent(event):
 
     consumed = False
     try:
-        consumed = _keybindings.consumeKeyboardEvent(None, keyboardEvent)
+        consumed = _keyBindings.consumeKeyboardEvent(None, keyboardEvent)
         if (not consumed) and (_currentPresentationManager >= 0):
             consumed = _PRESENTATION_MANAGERS[_currentPresentationManager].\
                        processKeyboardEvent(keyboardEvent)
@@ -887,7 +887,7 @@ def _loadUserSettings(script=None, inputEvent=None):
 
     Returns True to indicate the input event has been consumed.
     """
-    
+
     global _userSettings
 
     # Shutdown the output drivers and give them a chance to die.
@@ -958,19 +958,19 @@ def init(registry):
     """
 
     global _initialized
-    global _keybindings
+    global _keyBindings
 
     if _initialized:
         return False
 
     registry.registerKeystrokeListeners(_processKeyboardEvent)
 
-    _keybindings = keybindings.KeyBindings()
+    _keyBindings = keybindings.KeyBindings()
 
     enterLearnModeHandler = InputEventHandler(\
         enterLearnMode,
         _("Enters learn mode.  Press escape to exit learn mode."))
-    _keybindings.add(keybindings.KeyBinding("F1", \
+    _keyBindings.add(keybindings.KeyBinding("F1", \
                                             1 << MODIFIER_ORCA, \
                                             1 << MODIFIER_ORCA, \
                                             enterLearnModeHandler))
@@ -978,7 +978,7 @@ def init(registry):
     decreaseSpeechRateHandler = InputEventHandler(\
         speech.decreaseSpeechRate,
         _("Decreases the speech rate."))
-    _keybindings.add(keybindings.KeyBinding("Left", \
+    _keyBindings.add(keybindings.KeyBinding("Left", \
                                             1 << MODIFIER_ORCA, \
                                             1 << MODIFIER_ORCA,
                                             decreaseSpeechRateHandler))
@@ -986,17 +986,17 @@ def init(registry):
     increaseSpeechRateHandler = InputEventHandler(\
         speech.increaseSpeechRate,
         _("Increases the speech rate."))
-    _keybindings.add(keybindings.KeyBinding("Right", \
+    _keyBindings.add(keybindings.KeyBinding("Right", \
                                             1 << MODIFIER_ORCA, \
                                             1 << MODIFIER_ORCA,
                                             increaseSpeechRateHandler))
 
     shutdownHandler = InputEventHandler(shutdown, _("Quits Orca"))
-    _keybindings.add(keybindings.KeyBinding("F12", \
+    _keyBindings.add(keybindings.KeyBinding("F12", \
                                             0, \
                                             0,
                                             shutdownHandler))
-    _keybindings.add(keybindings.KeyBinding("SunF37", \
+    _keyBindings.add(keybindings.KeyBinding("SunF37", \
                                             0, \
                                             0,
                                             shutdownHandler))
@@ -1004,7 +1004,7 @@ def init(registry):
     keystrokeRecordingHandler = InputEventHandler(\
         toggleKeystrokeRecording,
         _("Toggles keystroke recording on and off."))
-    _keybindings.add(keybindings.KeyBinding("Pause", \
+    _keyBindings.add(keybindings.KeyBinding("Pause", \
                                             0, \
                                             0,
                                             keystrokeRecordingHandler))
@@ -1012,34 +1012,34 @@ def init(registry):
     loadUserSettingsHandler = InputEventHandler(\
         _loadUserSettings,
         _("Reloads user settings and reinitializes services as necessary."))
-    _keybindings.add(keybindings.KeyBinding(
+    _keyBindings.add(keybindings.KeyBinding(
         "s", \
-        (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL), 
-        (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL), 
+        (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+        (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL),
         loadUserSettingsHandler))
 
     listAppsHandler = InputEventHandler(
         printApps,
         _("Prints a debug listing of all known applications to the console where Orca is running."))
-    _keybindings.add(keybindings.KeyBinding(
-        "F5", 
-        (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL), 
+    _keyBindings.add(keybindings.KeyBinding(
+        "F5",
+        (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL),
         1 << MODIFIER_ORCA,
         listAppsHandler))
 
     cycleDebugLevelHandler = InputEventHandler(
         cycleDebugLevel,
         _("Cycles the debug level at run time."))
-    _keybindings.add(keybindings.KeyBinding(
-        "F5", 
-        (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL), 
-        (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL), 
+    _keyBindings.add(keybindings.KeyBinding(
+        "F5",
+        (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+        (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL),
         cycleDebugLevelHandler))
 
     printActiveAppHandler = InputEventHandler(\
         printActiveApp,
         _("Prints debug information about the currently active application to the console where Orca is running."))
-    _keybindings.add(keybindings.KeyBinding("F6", \
+    _keyBindings.add(keybindings.KeyBinding("F6", \
                                             1 << MODIFIER_ORCA, \
                                             1 << MODIFIER_ORCA,
                                             printActiveAppHandler))
@@ -1047,26 +1047,26 @@ def init(registry):
     printAncestryHandler = InputEventHandler(\
         printAncestry,
         _("Prints debug information about the ancestry of the object with focus"))
-    _keybindings.add(keybindings.KeyBinding(
+    _keyBindings.add(keybindings.KeyBinding(
         "F7",
-        (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL), 
+        (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL),
         1 << MODIFIER_ORCA,
         printAncestryHandler))
 
     printHierarchyHandler = InputEventHandler(\
         printHierarchy,
         _("Prints debug information about the application with focus"))
-    
-    _keybindings.add(keybindings.KeyBinding(
+
+    _keyBindings.add(keybindings.KeyBinding(
         "F7",
-        (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL), 
-        (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL), 
+        (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+        (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL),
         printHierarchyHandler))
 
     nextPresentationManagerHandler = InputEventHandler(\
         _switchToNextPresentationManager,
         _("Switches to the next presentation manager."))
-    _keybindings.add(keybindings.KeyBinding("F8", \
+    _keyBindings.add(keybindings.KeyBinding("F8", \
                                             1 << MODIFIER_ORCA, \
                                             1 << MODIFIER_ORCA,
                                             nextPresentationManagerHandler))
@@ -1077,7 +1077,7 @@ def init(registry):
                                    "object:children-changed:")
 
     _loadUserSettings()
-    
+
     _initialized = True
     return True
 
@@ -1086,7 +1086,7 @@ def start(registry):
     """
 
     global _PRESENTATION_MANAGERS
-    
+
     if not _initialized:
         init(registry)
 
@@ -1112,7 +1112,7 @@ def start(registry):
         import focus_tracking_presenter
         _PRESENTATION_MANAGERS = \
             [focus_tracking_presenter.FocusTrackingPresenter()]
-    
+
     _switchToPresentationManager(0) # focus_tracking_presenter
 
     registry.start()
@@ -1123,7 +1123,7 @@ def abort():
 def timeout():
     print "TIMEOUT: Hung while trying to shutdown.  Aborting."
     abort()
-    
+
 def shutdown(script=None, inputEvent=None):
     """Exits Orca.  Unregisters any event listeners and cleans up.  Also
     quits the bonobo main loop and resets the initialized state to False.
@@ -1143,7 +1143,7 @@ def shutdown(script=None, inputEvent=None):
     #
     #timer = threading.Timer(5.0, timeout)
     #timer.start()
-    
+
     speech.speak(_("goodbye."))
     braille.displayMessage(_("Goodbye."))
 
@@ -1169,16 +1169,16 @@ def shutdown(script=None, inputEvent=None):
 
     #timer.cancel()
     #del timer
-    
+
     _initialized = False
     return True
 
 exitCount = 0
 def shutdownOnSignal(signum, frame):
     global exitCount
-    
+
     print "Shutting down and exiting due to signal =", signum
-    
+
     # Well...we'll try to exit nicely, but if we keep getting called,
     # something bad is happening, so just quit.
     #
@@ -1207,7 +1207,7 @@ def main():
     #    print _("Accessibility has not been enabled for this session.")
     #    print _("Please run orca-setup and then logout and log back in.")
     #    abort()
-        
+
     userprefs = os.path.join(os.environ["HOME"], ".orca")
     sys.path.insert(0, userprefs)
     sys.path.insert(0, '') # current directory
@@ -1217,7 +1217,7 @@ def main():
     signal.signal(signal.SIGTERM, shutdownOnSignal)
     signal.signal(signal.SIGQUIT, shutdownOnSignal)
     signal.signal(signal.SIGSEGV, abortOnSignal)
-    
+
     registry = atspi.Registry()
     init(registry)
     start(registry)

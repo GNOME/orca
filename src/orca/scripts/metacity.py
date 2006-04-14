@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005 Sun Microsystems Inc.
+# Copyright 2005-2006 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -40,14 +40,22 @@ class Script(default.Script):
         Arguments:
         - app: the application to create a script for.
         """
-
         default.Script.__init__(self, app)
 
-        self.listeners["object:property-change:accessible-name"] = \
+    def getListeners(self):
+        """Sets up the AT-SPI event listeners for this script.
+        """
+
+        listeners = default.Script.getListeners(self)
+        
+        listeners["object:property-change:accessible-name"] = \
             self.onNameChanged
-        self.listeners["object:state-changed:visible"] = \
+        
+        listeners["object:state-changed:visible"] = \
             self.onVisibilityChanged
 
+        return listeners
+    
     def onNameChanged(self, event):
         """The status bar in metacity tells us what toplevel window will be
         activated when tab is released.

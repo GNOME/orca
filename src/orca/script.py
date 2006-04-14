@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2005 Sun Microsystems Inc.
+# Copyright 2004-2006 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -35,9 +35,11 @@ created in their own module.  The module defining the Script subclass
 is also required to have a 'getScript(app)' method that returns an
 instance of the Script subclass.  See default.py for an example."""
 
+import braillegenerator
 import debug
 import keybindings
 import settings
+import speechgenerator
 
 class Script:
     """The specific focus tracking scripts for applications.
@@ -46,33 +48,7 @@ class Script:
     def __init__(self, app):
         """Creates a script for the given application, if necessary.
         This method should not be called by anyone except the
-        focus_tracking_presenter.  The main responsibilities of
-        this constructor are as follows:
-
-          1) Set the app field of the instance to the app object that
-             was passed in.  It is OK to have a None app.
-
-          2) Set the name field of the instance to a meaningful name
-             (e.g., the name of the app if app is not None).  This
-             name field is useful primarily for debugging purposes.
-
-          3) Set up with listeners field, which is a dictionary where
-             the keys are AT-SPI event type strings (e.g., 'focus:')
-             and the values are methods whose parameters are
-             (self,event).
-
-          4) Set up the braillebindings field, which is a dictionary
-             where the keys are BrlTTY commands (e.g.,
-             braille.CMD_FWINLT]) and the values are InputEventHandler
-             instances (see input_event.py).
-
-          5) Set up the keybindings field, which is an instance of
-             a KeyBindings class (see keybindings.py).  Scripts will
-             add keybindings to the keybindings field by using its
-             'add' method to add an instance of a KeyBinding (see also
-             keybindings.py).
-
-        See default.py for an example.
+        focus_tracking_presenter.
 
         Arguments:
         - app: the Python Accessible application to create a script for
@@ -87,10 +63,55 @@ class Script:
 
         self.name += " (module=" + self.__module__ + ")"
 
-        self.listeners = {}
-        self.braillebindings = {}
-        self.keybindings = keybindings.KeyBindings()
+        self.listeners = self.getListeners()
+
+        self.setupInputEventHandlers()
+        self.keyBindings = self.getKeyBindings()
+        self.brailleBindings = self.getBrailleBindings()
+
+        self.brailleGenerator = self.getBrailleGenerator()
+        self.speechGenerator = self.getSpeechGenerator()
+        self.voices = settings.voices
+
         debug.println(debug.LEVEL_FINE, "NEW SCRIPT: %s" % self.name)
+
+    def getListeners(self):
+        """Sets up the AT-SPI event listeners for this script.
+
+        Returns a dictionary where the keys are AT-SPI event names
+        and the values are script methods.
+        """
+        return {}
+
+    def setupInputEventHandlers(self):
+        """Defines InputEventHandler fields for this script that can be
+        called by the key and braille bindings."""
+        pass
+
+    def getKeyBindings(self):
+        """Defines the key bindings for this script.
+
+        Returns an instance of keybindings.KeyBindings.
+        """
+        return keybindings.KeyBindings()
+
+    def getBrailleBindings(self):
+        """Defines the braille bindings for this script.
+
+        Returns a dictionary where the keys are BrlTTY commands and the
+        values are InputEventHandler instances.
+        """
+        return {}
+
+    def getBrailleGenerator(self):
+        """Returns the braille generator for this script.
+        """
+        return braillegenerator.BrailleGenerator()
+
+    def getSpeechGenerator(self):
+        """Returns the speech generator for this script.
+        """
+        return speechgenerator.SpeechGenerator()
 
     # [[[WDW - There is a circular reference going on somewhere (see
     # bug 333168).  In the presence of this reference, the existence
@@ -100,7 +121,7 @@ class Script:
     #
     #def __del__(self):
     #    debug.println(debug.LEVEL_FINE, "DELETE SCRIPT: %s" % self.name)
-        
+
     def processObjectEvent(self, event):
         """Processes all AT-SPI object events of interest to this
         script.  The interest in events is specified via the
@@ -180,20 +201,20 @@ class Script:
             consumed = user_bindings.consumeKeyboardEvent(self,
                                                           keyboardEvent)
         if not consumed:
-            consumed = self.keybindings.consumeKeyboardEvent(self,
+            consumed = self.keyBindings.consumeKeyboardEvent(self,
                                                              keyboardEvent)
         return consumed
 
     def processBrailleEvent(self, brailleEvent):
         """Called whenever a key is pressed on the Braille display.
 
-        This method will primarily use the braillebindings field of
+        This method will primarily use the brailleBindings field of
         this script instance see if this script has an interest in the
         event.
 
         NOTE: there is latent, but unsupported, logic for allowing
         the user's user-settings.py file to extend and/or override
-        the braillebindings for a script.
+        the brailleBindings for a script.
 
         Arguments:
         - brailleEvent: an instance of input_event.BrailleEvent
@@ -229,8 +250,8 @@ class Script:
             handler = user_bindings[command]
             consumed = handler.processInputEvent(self, brailleEvent)
 
-        if (not consumed) and self.braillebindings.has_key(command):
-            handler = self.braillebindings[command]
+        if (not consumed) and self.brailleBindings.has_key(command):
+            handler = self.brailleBindings[command]
             consumed = handler.processInputEvent(self, brailleEvent)
 
         return consumed

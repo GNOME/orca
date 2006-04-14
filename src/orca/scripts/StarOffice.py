@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005 Sun Microsystems Inc.
+# Copyright 2005-2006 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -55,7 +55,6 @@ class Script(default.Script):
         self.lastBadWord = ''
         self.lastStartOff = -1
         self.lastEndOff = -1
-
 
     def readMisspeltWord(self, event, pane):
         """Speak/braille the current misspelt word plus its context.
@@ -128,7 +127,6 @@ class Script(default.Script):
         self.lastStartOff = startOff
         self.lastEndOff = endOff
 
-
     def endOfLink(self, obj, word, startOffset, endOffset):
         """Return an indication of whether the given word contains the
            end of a hypertext link.
@@ -154,11 +152,10 @@ class Script(default.Script):
                 return True
 
         return False
-            
 
     def sayWriterWord(self, obj, word, startOffset, endOffset):
         """Speaks the given word in the appropriate voice. If this word is
-        a hypertext link and it is also at the end offset for one of the 
+        a hypertext link and it is also at the end offset for one of the
         links, then the word "link" is also spoken.
 
         Arguments:
@@ -185,7 +182,6 @@ class Script(default.Script):
         speech.speak(word, voice)
         if self.endOfLink(obj, word, startOffset, endOffset):
             speech.speak(_("link"))
-
 
     # This method tries to detect and handle the following cases:
     # 1) Writer: text paragraph.
@@ -240,7 +236,7 @@ class Script(default.Script):
                     if result[0][i] == ' ':
                         if started:
                             endOffset = i
-                            self.sayWriterWord(event.source, 
+                            self.sayWriterWord(event.source,
                                 result[0][startOffset:endOffset+1],
                                 startOffset, endOffset)
                             startOffset = i
@@ -249,11 +245,11 @@ class Script(default.Script):
                         if not started:
                             startOffset = i
                             started = True
-                    
+
                 if started:
                     endOffset = len(result[0])
-                    self.sayWriterWord(event.source, 
-                                       result[0][startOffset:endOffset], 
+                    self.sayWriterWord(event.source,
+                                       result[0][startOffset:endOffset],
                                        startOffset, endOffset)
 
             braille.displayRegions(brailleGen.getBrailleRegions(event.source))
@@ -261,15 +257,14 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, event.source, False)
             return
 
-
         # 2) Writer: spell checking dialog.
         #
         # Check to see if the Spell Check dialog has just appeared and got
-        # focus. If it has, then speak/braille the current misspelt word 
+        # focus. If it has, then speak/braille the current misspelt word
         # plus its context.
         #
-        # Note that in order to make sure that this focus event is for the 
-        # spell check dialog, a check is made of the localized name of the 
+        # Note that in order to make sure that this focus event is for the
+        # spell check dialog, a check is made of the localized name of the
         # option pane. Translators for other locales will need to ensure that
         # their translation of this string matches what StarOffice uses in
         # that locale.
@@ -292,7 +287,6 @@ class Script(default.Script):
 
         default.Script.onFocus(self, event)
 
-
     # This method tries to detect and handle the following cases:
     # 1) Writer: spell checking dialog.
 
@@ -314,10 +308,10 @@ class Script(default.Script):
 
         # 1) Writer: spell checking dialog.
         #
-        # Check to see if if we've had a property-change event for the 
-        # accessible name for the option pane in the spell check dialog. 
-        # This (hopefully) means that the user has just corrected a 
-        # spelling mistake, in which case, speak/braille the current 
+        # Check to see if if we've had a property-change event for the
+        # accessible name for the option pane in the spell check dialog.
+        # This (hopefully) means that the user has just corrected a
+        # spelling mistake, in which case, speak/braille the current
         # misspelt word plus its context.
         #
         # Note that in order to make sure that this focus event is for the

@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005 Sun Microsystems Inc.
+# Copyright 2005-2006 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -46,8 +46,8 @@ class Script(default.Script):
 
         # Now we find the focused object and set the locus of focus to it.
         #
-	obj = util.findFocusedObject(self.app)
-	if obj:
-	    orca.setLocusOfFocus(event, obj)
+        obj = util.findFocusedObject(self.app)
+        if obj:
+            orca.setLocusOfFocus(event, obj)
         else:
-	    default.Script.onWindowActivated(self, event)
+            default.Script.onWindowActivated(self, event)

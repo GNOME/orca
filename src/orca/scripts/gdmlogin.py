@@ -36,10 +36,11 @@ class Script(default.Script):
 
     def __init__(self, app):
         """Creates a new script for the given application.
-        
+
         Arguments:
         - app: the application to create a script for.
         """
+
         default.Script.__init__(self, app)
 
     def onWindowActivated(self, event):
@@ -50,8 +51,8 @@ class Script(default.Script):
 
         # Now we find the focused object and set the locus of focus to it.
         #
-	obj = util.findFocusedObject(self.app)
-	if obj:
-	    orca.setLocusOfFocus(event, obj)
+        obj = util.findFocusedObject(self.app)
+        if obj:
+            orca.setLocusOfFocus(event, obj)
         else:
-	    default.Script.onWindowActivated(self, event)
+            default.Script.onWindowActivated(self, event)
