@@ -1,3 +1,13 @@
+2006-04-15  Willie Walker <william.walker@sun.com>
+
+	* src/orc/orca.py: delay registration of keyboard listeners until
+	after the user preferences have been loaded.  This prevents
+	exceptions from occurring if the user types on the keyboard in
+	between the time the user starts orca and the time orca is fully
+	initialized.
+	* src/orca/orca-setup.in: remove an errant ")" at the end of a
+	commented out debug line.
+ 	
 2006-04-14  Willie Walker <william.walker@sun.com>
 
 	* src/orca/*.py, src/orca/scripts/*.py: general pass at
