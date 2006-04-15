@@ -963,8 +963,6 @@ def init(registry):
     if _initialized:
         return False
 
-    registry.registerKeystrokeListeners(_processKeyboardEvent)
-
     _keyBindings = keybindings.KeyBindings()
 
     enterLearnModeHandler = InputEventHandler(\
@@ -1077,6 +1075,8 @@ def init(registry):
                                    "object:children-changed:")
 
     _loadUserSettings()
+
+    registry.registerKeystrokeListeners(_processKeyboardEvent)
 
     _initialized = True
     return True
