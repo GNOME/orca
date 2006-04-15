@@ -350,10 +350,16 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         #timer = threading.Timer(5.0, self._timeout)
         #timer.start()
 
+        debug.println(debug.eventDebugLevel,
+                      "\nvvvvv PROCESS OBJECT EVENT vvvvv")
+        
         try:
             self._processObjectEvent(event)
         except:
             pass
+        
+        debug.println(debug.eventDebugLevel,
+                      "^^^^^ PROCESS OBJECT EVENT ^^^^^\n")
 
         #timer.cancel()
         #del timer
