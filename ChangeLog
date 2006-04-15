@@ -1,6 +1,13 @@
 2006-04-15  Willie Walker <william.walker@sun.com>
 
-	* src/orc/orca.py: delay registration of keyboard listeners until
+	* src/orca/focus_tracking_presenter.py: provide some delimiter
+	output to make it easier to identify the various processing
+	steps that are done when an event is processed.
+	* src/orca/speechgenerator.py, src/orca/scripts/gnome-terminal.py:
+	remove some speech output.  This seems to eliminate hearing 
+	"terminal" 6 times, but it does not address the repetitive stuff
+	that's going on when you go through the profile editing tabs.
+	* src/orca/orca.py: delay registration of keyboard listeners until
 	after the user preferences have been loaded.  This prevents
 	exceptions from occurring if the user types on the keyboard in
 	between the time the user starts orca and the time orca is fully

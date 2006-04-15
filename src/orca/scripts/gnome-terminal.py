@@ -38,16 +38,16 @@ class Script(default.Script):
 
         default.Script.__init__(self, app)
 
-    def onWindowActivated(self, event):
-        # Sets the context to the top level window first, so we can
-        # get information about it the window we just moved to.
-        #
-        orca.setLocusOfFocus(event, event.source)
-
-        # Now we find the focused object and set the locus of focus to it.
-        #
-        obj = util.findFocusedObject(self.app)
-        if obj:
-            orca.setLocusOfFocus(event, obj)
-        else:
-            default.Script.onWindowActivated(self, event)
+    #def onWindowActivated(self, event):
+    #    # Sets the context to the top level window first, so we can
+    #    # get information about it the window we just moved to.
+    #    #
+    #    orca.setLocusOfFocus(event, event.source)
+    #
+    #    # Now we find the focused object and set the locus of focus to it.
+    #    #
+    #    obj = util.findFocusedObject(self.app)
+    #    if obj:
+    #        orca.setLocusOfFocus(event, obj)
+    #    else:
+    #        default.Script.onWindowActivated(self, event)

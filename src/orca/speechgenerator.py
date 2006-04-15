@@ -1281,8 +1281,8 @@ class SpeechGenerator:
 
         utterances = [label]
 
-        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
-            utterances.append(getSpeechForRoleName(obj))
+        #if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
+        #    utterances.append(getSpeechForRoleName(obj))
 
         self._debugGenerator("_getSpeechForTerminal",
                              obj,
