@@ -39,6 +39,7 @@ import script
 import settings
 import speech
 import speechserver
+import util
 
 from orca_i18n import _                          # for gettext support
 
@@ -590,13 +591,79 @@ class Script(script.Script):
         if not orca.locusOfFocus:
             pass
         elif orca.locusOfFocus.text:
-            speech.sayAll(textLines(orca.locusOfFocus),
+            speech.sayAll(util.textLines(orca.locusOfFocus),
                           self.__sayAllProgressCallback)
         else:
             speech.speakUtterances(
                 self.speechGenerator.getSpeech(orca.locusOfFocus, False))
         return True
 
+    def sayLine(self, obj):
+        """Speaks the line of an AccessibleText object that contains the
+        caret. [[[TODO: WDW - what if the line is empty?]]]
+
+        Arguments:
+        - obj: an Accessible object that implements the AccessibleText
+               interface
+        """
+
+        # Get the AccessibleText interface of the provided object
+        #
+        [line, startOffset, endOffset] = atspi.getTextLineAtCaret(obj)
+    
+        if line.isupper():
+            voice = self.voices[settings.UPPERCASE_VOICE]
+        else:
+            voice = self.voices[settings.DEFAULT_VOICE]
+    
+        speech.speak(line, voice)
+    
+    def sayWord(self, obj):
+        """Speaks the word at the caret.  [[[TODO: WDW - what if there is no
+        word at the caret?]]]
+    
+        Arguments:
+        - obj: an Accessible object that implements the AccessibleText
+               interface
+        """
+    
+        text = obj.text
+        offset = text.caretOffset
+        [word, startOffset, endOffset] = \
+            text.getTextAtOffset(offset,
+                                 atspi.Accessibility.TEXT_BOUNDARY_WORD_START)
+    
+        if util.getLinkIndex(obj, offset) >= 0:
+            voice = self.voices[settings.HYPERLINK_VOICE]
+        elif word.isupper():
+            voice = self.voices[settings.UPPERCASE_VOICE]
+        else:
+            voice = self.voices[settings.DEFAULT_VOICE]
+    
+        speech.speak(word, voice)
+    
+    def sayCharacter(self, obj):
+        """Speak the character under the caret.  [[[TODO: WDW - isn't the
+        caret between characters?]]]
+    
+        Arguments:
+        - obj: an Accessible object that implements the AccessibleText
+               interface
+        """
+    
+        text = obj.text
+        offset = text.caretOffset
+        character = text.getText(offset, offset+1)
+    
+        if util.getLinkIndex(obj, offset) >= 0:
+            voice = self.voices[settings.HYPERLINK_VOICE]
+        elif character.isupper():
+            voice = self.voices[settings.UPPERCASE_VOICE]
+        else:
+            voice = self.voices[settings.DEFAULT_VOICE]
+    
+        speech.speak(character, voice)
+    
     def whereAmI(self, inputEvent):
         self.updateBraille(orca.locusOfFocus)
 
@@ -1135,7 +1202,7 @@ class Script(script.Script):
 
         if isinstance(orca.lastInputEvent, input_event.MouseButtonEvent):
             if not orca.lastInputEvent.pressed:
-                sayLine(event.source)
+                self.sayLine(event.source)
             return
 
         # Guess why the caret moved and say something appropriate.
@@ -1152,24 +1219,24 @@ class Script(script.Script):
         controlMask = 1 << atspi.Accessibility.MODIFIER_CONTROL
 
         if (string == "Up") or (string == "Down"):
-            sayLine(event.source)
+            self.sayLine(event.source)
         elif (string == "Left") or (string == "Right"):
             if (mods & controlMask):
-                sayWord(event.source)
+                self.sayWord(event.source)
             else:
-                sayCharacter(event.source)
+                self.sayCharacter(event.source)
         elif string == "Page_Up":
             if (mods & controlMask):
-                sayCharacter(event.source)
+                self.sayCharacter(event.source)
             else:
-                sayLine(event.source)
+                self.sayLine(event.source)
         elif string == "Page_Down":
-            sayLine(event.source)
+            self.sayLine(event.source)
         elif (string == "Home") or (string == "End"):
             if (mods & controlMask):
-                sayLine(event.source)
+                self.sayLine(event.source)
             else:
-                sayCharacter(event.source)
+                self.sayCharacter(event.source)
 
     def onCaretMoved(self, event):
         """Called whenever the caret moves.
@@ -1226,7 +1293,7 @@ class Script(script.Script):
         text = event.any_data.value()
         if (string == "BackSpace") or (string == "Delete"):
             if text.isupper():
-                speech.speak(text, self.voices["uppercase"])
+                speech.speak(text, self.voices[settings.UPPERCASE_VOICE])
             else:
                 speech.speak(text)
 
@@ -1264,13 +1331,13 @@ class Script(script.Script):
                 pass
             else:
                 if text.isupper():
-                    speech.speak(text, self.voices["uppercase"])
+                    speech.speak(text, self.voices[settings.UPPERCASE_VOICE])
                 else:
                     speech.speak(text)
 
         if settings.enableEchoByWord:
             if text in string.whitespace or text in string.punctuation:
-                sayWord(event.source)
+                self.sayWord(event.source)
 
     def onActiveDescendantChanged(self, event):
         """Called when an object who manages its own descendants detects a
@@ -1986,7 +2053,7 @@ class Script(script.Script):
                 elif string.isspace():
                     speech.speak(_("white space"))
                 elif string.isupper():
-                    speech.speak(string, self.voices["uppercase"])
+                    speech.speak(string, self.voices[settings.UPPERCASE_VOICE])
                 else:
                     speech.speak(string)
 
@@ -2059,7 +2126,7 @@ class Script(script.Script):
                 if lineString == "\n":
                     speech.speak(_("blank"))
                 elif string.isupper():
-                    speech.speak(string, self.voices["uppercase"])
+                    speech.speak(string, self.voices[settings.UPPERCASE_VOICE])
                 else:
                     speech.speak(string)
 
@@ -2156,170 +2223,6 @@ class Script(script.Script):
                                  False)
             debug.println(debug.LEVEL_OFF, string)
         self.flatReviewContext = None
-
-########################################################################
-#                                                                      #
-# ACCESSIBLE TEXT OUTPUT FUNCTIONS                                     #
-#                                                                      #
-# Functions for handling output of AccessibleText objects to speech.   #
-#                                                                      #
-########################################################################
-
-def textLines(obj):
-    """Creates a generator that can be used to iterate over each line
-    of a text object, starting at the caret offset.  One can do something
-    like the following to access the lines:
-
-    for line in atspi.textLines(orca.locusOfFocus.text):
-        <<<do something with the line>>>
-
-    Arguments:
-    - obj: an Accessible that has a text specialization
-
-    Returns a tuple: [SayAllContext, acss], where SayAllContext has the
-    text to be spoken and acss is an ACSS instance for speaking the text.
-    """
-    if not obj:
-        return
-
-    text = obj.text
-    if not text:
-        return
-
-    length = text.characterCount
-    offset = text.caretOffset
-
-    # Get the next line of text to read
-    #
-    lastEndOffset = -1
-    while offset < length:
-        [string, startOffset, endOffset] = text.getTextAtOffset(
-            offset,
-            atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
-
-        # [[[WDW - HACK: this is here because getTextAtOffset
-        # tends not to be implemented consistently across toolkits.
-        # Sometimes it behaves properly (i.e., giving us an endOffset
-        # that is the beginning of the next line), sometimes it
-        # doesn't (e.g., giving us an endOffset that is the end of
-        # the current line).  So...we hack.  The whole 'max' deal
-        # is to account for lines that might be a brazillion lines
-        # long.]]]
-        #
-        if endOffset == lastEndOffset:
-            offset = max(offset + 1, lastEndOffset + 1)
-            lastEndOffset = endOffset
-            continue
-
-        lastEndOffset = endOffset
-        offset = endOffset
-
-        # Strip trailing new lines
-        #
-        #if string[-1:] == "\n":
-        #    string = string[0][:-1]
-
-        yield [speechserver.SayAllContext(obj, string, startOffset, endOffset),
-               None]
-
-def getLinkIndex(obj, characterIndex):
-    """A brute force method to see if an offset is a link.  This
-    is provided because not all Accessible Hypertext implementations
-    properly support the getLinkIndex method.  Returns an index of
-    0 or greater of the characterIndex is on a hyperlink.
-
-    Arguments:
-    -obj: the Accessible object with the Accessible Hypertext specialization
-    -characterIndex: the text position to check
-    """
-
-    if not obj:
-        return -1
-
-    text = obj.text
-    if not text:
-        return -1
-
-    hypertext = obj.hypertext
-    if not hypertext:
-        return -1
-
-    for i in range(0, hypertext.getNLinks()):
-        link = hypertext.getLink(i)
-        if (characterIndex >= link.startIndex) \
-           and (characterIndex <= link.endIndex):
-            return i
-
-    return -1
-
-def sayLine(obj):
-    """Speaks the line of an AccessibleText object that contains the
-    caret. [[[TODO: WDW - what if the line is empty?]]]
-
-    Arguments:
-    - obj: an Accessible object that implements the AccessibleText
-           interface
-    """
-
-    # Get the AccessibleText interface of the provided object
-    #
-    [line, startOffset, endOffset] = atspi.getTextLineAtCaret(obj)
-
-    voices = settings.voices
-    if line.isupper():
-        voice = voices[settings.UPPERCASE_VOICE]
-    else:
-        voice = voices[settings.DEFAULT_VOICE]
-
-    speech.speak(line, voice)
-
-def sayWord(obj):
-    """Speaks the word at the caret.  [[[TODO: WDW - what if there is no
-    word at the caret?]]]
-
-    Arguments:
-    - obj: an Accessible object that implements the AccessibleText
-           interface
-    """
-
-    text = obj.text
-    offset = text.caretOffset
-    [word, startOffset, endOffset] = \
-        text.getTextAtOffset(offset,
-                             atspi.Accessibility.TEXT_BOUNDARY_WORD_START)
-
-    voices = settings.voices
-    if getLinkIndex(obj, offset) >= 0:
-        voice = voices[settings.HYPERLINK_VOICE]
-    elif word.isupper():
-        voice = voices[settings.UPPERCASE_VOICE]
-    else:
-        voice = voices[settings.DEFAULT_VOICE]
-
-    speech.speak(word, voice)
-
-def sayCharacter(obj):
-    """Speak the character under the caret.  [[[TODO: WDW - isn't the
-    caret between characters?]]]
-
-    Arguments:
-    - obj: an Accessible object that implements the AccessibleText
-           interface
-    """
-
-    text = obj.text
-    offset = text.caretOffset
-    character = text.getText(offset, offset+1)
-
-    voices = settings.voices
-    if getLinkIndex(obj, offset) >= 0:
-        voice = voices[settings.HYPERLINK_VOICE]
-    elif character.isupper():
-        voice = voices[settings.UPPERCASE_VOICE]
-    else:
-        voice = voices[settings.DEFAULT_VOICE]
-
-    speech.speak(character, voice)
 
 # Dictionary that defines the state changes we care about for various
 # objects.  The key represents the role and the value represents a list

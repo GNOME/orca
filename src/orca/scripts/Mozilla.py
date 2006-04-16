@@ -25,6 +25,7 @@ import orca.rolenames as rolenames
 import orca.settings as settings
 import orca.speech as speech
 import orca.speechgenerator as speechgenerator
+import orca.util as util
 
 from orca.orca_i18n import _
 
@@ -196,7 +197,7 @@ class Script(default.Script):
     def onLinkSelected(self, event):
         text = event.source.text
         hypertext = event.source.hypertext
-        linkIndex = default.getLinkIndex(event.source, text.caretOffset)
+        linkIndex = util.getLinkIndex(event.source, text.caretOffset)
         
         if linkIndex >= 0:
             link = hypertext.getLink(linkIndex)

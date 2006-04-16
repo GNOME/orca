@@ -170,7 +170,7 @@ class Script(default.Script):
         voices = settings.voices
 
         for i in range(startOffset, endOffset):
-            if default.getLinkIndex(obj, i) >= 0:
+            if util.getLinkIndex(obj, i) >= 0:
                 isHyperText = True
                 voice = voices[settings.HYPERLINK_VOICE]
                 break

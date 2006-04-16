@@ -1,3 +1,13 @@
+2006-04-16  Willie Walker <william.walker@sun.com>
+
+	* src/orca/default.py, src/orca/util.py,
+	src/orca/scripts/Mozilla.py, src/orca/scripts/StarOffice.py: make
+	sayLine, sayWord, and sayCharacter be object methods as opposed to
+	top level module methods.  Also move textLines and getLinkIndex
+	methods from default.py to util.py. These changes merely reflect a
+	small cleanup of the object-oriented nature of the code and should
+	not have any impact on the end user experience.
+	
 2006-04-15  Willie Walker <william.walker@sun.com>
 
 	* src/orca/focus_tracking_presenter.py: provide some delimiter
