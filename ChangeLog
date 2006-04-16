@@ -1,5 +1,7 @@
 2006-04-16  Willie Walker <william.walker@sun.com>
 
+	* src/orca/orca_i18n.py.in: fix for bug 338690: orca_i18n was not
+	working as expected.	
 	* src/orca/default.py, src/orca/util.py,
 	src/orca/scripts/Mozilla.py, src/orca/scripts/StarOffice.py: make
 	sayLine, sayWord, and sayCharacter be object methods as opposed to
