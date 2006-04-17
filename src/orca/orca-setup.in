@@ -252,7 +252,7 @@ def setupSpeech():
     # range from 0-10 instead of 0-100.
     #
     defaultACSS[orca.acss.ACSS.RATE] = 50
-    defaultACSS[orca.acss.ACSS.GAIN] = 5
+    defaultACSS[orca.acss.ACSS.GAIN] = 9
     defaultACSS[orca.acss.ACSS.AVERAGE_PITCH] = 5
     uppercaseACSS = orca.acss.ACSS({orca.acss.ACSS.AVERAGE_PITCH : 6})
     hyperlinkACSS = orca.acss.ACSS({orca.acss.ACSS.AVERAGE_PITCH : 2})
