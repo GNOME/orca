@@ -31,8 +31,7 @@ import debug
 import flat_review
 import input_event
 import keybindings
-#import mag - [[[TODO: WDW - disable until I can figure out how to
-#             resolve the GNOME reference in mag.py.]]]
+import mag
 import orca
 import rolenames
 import script
@@ -793,6 +792,11 @@ class Script(script.Script):
         - newLocusOfFocus: Accessible that is the new locus of focus
         """
 
+        # Magnify the object.  [[[TODO: WDW - this is a hack for now.]]]
+        #
+        if newLocusOfFocus:
+            mag.magnifyAccessible(newLocusOfFocus)
+
         # We always automatically go back to focus tracking mode when
         # the focus changes.
         #
@@ -1177,9 +1181,10 @@ class Script(script.Script):
         orca.lastInputEvent = input_event.MouseButtonEvent(event)
 
     def _presentTextAtNewCaretPosition(self, event):
+        
         # Magnify the object.  [[[TODO: WDW - this is a hack for now.]]]
         #
-        #mag.magnifyAccessible(event.source)
+        mag.magnifyAccessible(event.source)
 
         # Update the Braille display - if we can just reposition
         # the cursor, then go for it.
