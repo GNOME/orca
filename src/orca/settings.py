@@ -153,7 +153,7 @@ brailleBindingsMap      = {}
 # problem related to the cache being out of sync with the real
 # objects.
 #
-cacheValues             = False
+cacheValues             = True
 
 # Assists with learn mode (what you enter when you press Insert+F1
 # and exit when you press escape.

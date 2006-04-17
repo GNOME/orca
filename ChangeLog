@@ -1,5 +1,9 @@
 2006-04-17  Willie Walker <william.walker@sun.com>
 
+	* src/orca/atspi.py, src/orca/settings.py: fix for bug 334924 to
+	keep the cache in better sync.  Also use settings.cacheValues 
+	setting instead of atspi.CACHE_VALUES to allow easier setting
+	and unsetting of whether to cache or not.
 	* src/orca/default.py: more work for bug 319643. Magnification is
 	working again, though it does indeed need a bit of work to make it
 	usable.  See also http://bugzilla.gnome.org/show_bug.cgi?id=323032.

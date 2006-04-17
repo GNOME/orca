@@ -32,11 +32,7 @@ import Accessibility__POA
 
 import debug
 import rolenames
-
-# If True, attempt to cache accessible object information locally.
-# If False, always use a CORBA call to get the object information.
-#
-CACHE_VALUES = True
+import settings
 
 class Event:
     """Converts the source of an event to an Accessible object.  We
@@ -396,8 +392,8 @@ class Accessible:
 
         if Accessible._cache.has_key(e.source):
             obj = Accessible._cache[e.source]
-            if CACHE_VALUES:
-                obj.name = Event.getAnyData(e).value()
+            if obj.__dict__.has_key("name"):
+                del obj.name
             if obj.__dict__.has_key("label"):
                 del obj.label
 
@@ -413,8 +409,8 @@ class Accessible:
 
         if Accessible._cache.has_key(e.source):
             obj = Accessible._cache[e.source]
-            if CACHE_VALUES:
-                obj.description = Event.getAnyData(e).value()
+            if obj.__dict__.has_key("description"):
+                del obj.description
             if obj.__dict__.has_key("label"):
                 del obj.label
 
@@ -708,7 +704,7 @@ class Accessible:
         """
 
         name = self._acc.name
-        if CACHE_VALUES:
+        if settings.cacheValues:
             self.name = name
         return name
 
@@ -717,7 +713,7 @@ class Accessible:
         """
 
         description = self._acc.description
-        if CACHE_VALUES:
+        if settings.cacheValues:
             self.description = self._acc.description
         return description
 
@@ -736,7 +732,7 @@ class Accessible:
             return None
         else:
             parent = Accessible.makeAccessible(obj);
-            if CACHE_VALUES:
+            if settings.cacheValues:
                 self.parent = parent
             return parent;
 
@@ -748,7 +744,7 @@ class Accessible:
 
         # We don't want to cache this value because it's possible that it
         # will continually change.
-        # if CACHE_VALUES:
+        # if settings.cacheValues:
         #     self.childCount = childCount
 
         return childCount
@@ -761,7 +757,7 @@ class Accessible:
 
         # We don't want to cache this value because it's possible that it
         # will continually change.
-        # if CACHE_VALUES:
+        # if settings.cacheValues:
         #     self.index = index
 
         return index
@@ -795,7 +791,7 @@ class Accessible:
             and (self.childCount > 0):
                 role = rolenames.ROLE_MENU
 
-        if CACHE_VALUES:
+        if settings.cacheValues:
             self.role = role
         return role
 
@@ -808,7 +804,7 @@ class Accessible:
 
         localizedRoleName = self._acc.getLocalizedRoleName()
 
-        if CACHE_VALUES:
+        if settings.cacheValues:
             self.localizedRoleName = localizedRoleName
         return localizedRoleName
 
@@ -823,7 +819,7 @@ class Accessible:
         # [[[WDW - we don't seem to always get appropriate state changed
         # information, so we will not cache state information.]]]
         #
-        #if CACHE_VALUES:
+        #if settings.cacheValues:
         #    self.state = state
         return state
 
@@ -835,7 +831,7 @@ class Accessible:
         relations = []
         for relation in relationSet:
             relations.append(relation._narrow(Accessibility.Relation))
-        if CACHE_VALUES:
+        if settings.cacheValues:
             self.relations = relations
         return relations
 
@@ -879,7 +875,7 @@ class Accessible:
         debug.println(debug.LEVEL_FINEST, "Accessible app for %s is %s" \
                       % (self.accessibleNameToString(), \
                          obj.accessibleNameToString()))
-        if CACHE_VALUES:
+        if settings.cacheValues:
             self.app = obj
         return obj
 
@@ -911,7 +907,7 @@ class Accessible:
             # bug 319678.]]]
             #
             extents = component.getExtents(coordinateType)
-            #if CACHE_VALUES:
+            #if settings.cacheValues:
             #    self.extents = extents
             return extents
 
@@ -978,7 +974,7 @@ class Accessible:
             if self.description != "no description":
                 label = self.description
 
-        if CACHE_VALUES:
+        if settings.cacheValues:
             self.label = label
         return label
 
@@ -991,7 +987,7 @@ class Accessible:
         action = self._acc.queryInterface("IDL:Accessibility/Action:1.0")
         if action:
             action = action._narrow(Accessibility.Action)
-        if CACHE_VALUES:
+        if settings.cacheValues:
             self.action = action
         return action
 
@@ -1005,7 +1001,7 @@ class Accessible:
             "IDL:Accessibility/Component:1.0")
         if component:
             component = component._narrow(Accessibility.Component)
-        if CACHE_VALUES:
+        if settings.cacheValues:
             self.component = component
         return component
 
@@ -1019,7 +1015,7 @@ class Accessible:
             "IDL:Accessibility/Hypertext:1.0")
         if hypertext:
             hypertext = hypertext._narrow(Accessibility.Hypertext)
-        if CACHE_VALUES:
+        if settings.cacheValues:
             self.hypertext = hypertext
         return hypertext
 
@@ -1033,7 +1029,7 @@ class Accessible:
             "IDL:Accessibility/Image:1.0")
         if image:
             image = image._narrow(Accessibility.Image)
-        if CACHE_VALUES:
+        if settings.cacheValues:
             self.image = image
         return image
 
@@ -1047,7 +1043,7 @@ class Accessible:
             "IDL:Accessibility/Selection:1.0")
         if selection:
             selection = selection._narrow(Accessibility.Selection)
-        if CACHE_VALUES:
+        if settings.cacheValues:
             self.selection = selection
         return selection
 
@@ -1060,7 +1056,7 @@ class Accessible:
         table = self._acc.queryInterface("IDL:Accessibility/Table:1.0")
         if table:
             table = table._narrow(Accessibility.Table)
-        if CACHE_VALUES:
+        if settings.cacheValues:
             self.table = table
         return table
 
@@ -1073,7 +1069,7 @@ class Accessible:
         text = self._acc.queryInterface("IDL:Accessibility/Text:1.0")
         if text:
             text = text._narrow(Accessibility.Text)
-        if CACHE_VALUES:
+        if settings.cacheValues:
             self.text = text
         return text
 
@@ -1086,7 +1082,7 @@ class Accessible:
         value = self._acc.queryInterface("IDL:Accessibility/Value:1.0")
         if value:
             value = value._narrow(Accessibility.Value)
-        if CACHE_VALUES:
+        if settings.cacheValues:
             self.value = value
         return value
 
