@@ -1,5 +1,7 @@
-2006-04-16  Willie Walker <william.walker@sun.com>
+2006-04-17  Willie Walker <william.walker@sun.com>
 
+	* src/orca/orca.py: fix for bug 319651 - issue a message and abort
+	orca if accessibility has not been enabled for the session.
 	* src/orca/debug.py: update documentation to reflect new way to
 	set debugLevel.
 	* test/harness/user-settings.py.in: update to reflect new settings

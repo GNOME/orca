@@ -1200,14 +1200,6 @@ def abortOnSignal(signum, frame):
     abort()
 
 def main():
-    #import commands
-    #a11yEnabled = commands.getoutput(\
-    #    "gconftool-2 --get /desktop/gnome/interface/accessibility")
-    #if a11yEnabled != "true":
-    #    print _("Accessibility has not been enabled for this session.")
-    #    print _("Please run orca-setup and then logout and log back in.")
-    #    abort()
-
     userprefs = os.path.join(os.environ["HOME"], ".orca")
     sys.path.insert(0, userprefs)
     sys.path.insert(0, '') # current directory
@@ -1220,6 +1212,22 @@ def main():
 
     registry = atspi.Registry()
     init(registry)
+
+    # Do not run Orca if accessibility has not been enabled.
+    #
+    import commands
+    a11yEnabled = commands.getoutput(\
+        "gconftool-2 --get /desktop/gnome/interface/accessibility")
+    if a11yEnabled != "true":
+        message = _("Accessibility has not been enabled for this session.")
+        print message
+        speech.speak(message)
+        message = _("Please run orca-setup and then logout and log back in.")
+        print message
+        speech.speak(message)
+        braille.displayMessage(message)
+        abort()
+
     start(registry)
     return 0
 
