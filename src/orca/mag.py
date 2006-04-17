@@ -22,10 +22,17 @@ in development.  One might even say it is pre-prototype.  Magnification
 has also been disabled for now - logged as bugzilla bug 319643.]]]
 """
 
+import bonobo
 import atspi
 
-atspi.ORBit.load_typelib('GNOME_Magnifier')
-import GNOME.Magnifier
+_magnifierAvailable = False
+
+try:
+    atspi.ORBit.load_typelib('GNOME_Magnifier')
+    import GNOME.Magnifier
+    _magnifierAvailable = True
+except:
+    pass
 
 import time
 
@@ -226,6 +233,9 @@ def init():
     global _maxROIX
     global _maxROIY
 
+    if not _magnifierAvailable:
+        return False
+    
     if _initialized:
         return False
 
@@ -307,6 +317,9 @@ def shutdown():
     global _initialized
     global _magnifier
 
+    if not _magnifierAvailable:
+        return False
+    
     if not _initialized:
         return False
 

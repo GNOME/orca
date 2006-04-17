@@ -27,9 +27,7 @@ import braille
 import debug
 import keynames
 import keybindings
-#import mag - [[[TODO: WDW - disable until I can figure out how to
-#             resolve the GNOME reference in mag.py.  This is logged
-#             as bugzilla bug 319643.]]]
+import mag
 import rolenames
 import settings
 import speech
@@ -893,7 +891,7 @@ def _loadUserSettings(script=None, inputEvent=None):
     # Shutdown the output drivers and give them a chance to die.
     speech.shutdown()
     braille.shutdown()
-    # mag.shutdown()
+    mag.shutdown()
     time.sleep(1)
 
     reloaded = False
@@ -936,6 +934,7 @@ def _loadUserSettings(script=None, inputEvent=None):
             debug.println(debug.LEVEL_CONFIGURATION,
                           "Magnification module has been initialized.")
         except:
+            debug.printException(debug.LEVEL_SEVERE)
             debug.println(debug.LEVEL_SEVERE,
                           "Could not initialize connection to magnifier.")
     else:
