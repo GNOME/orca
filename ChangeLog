@@ -1,5 +1,11 @@
 2006-04-17  Willie Walker <william.walker@sun.com>
 
+	* src/orca/default.py: fix for bug 338687 - no longer
+	automatically speaks unbound text in panels that suddenly appear.
+	NOTE that Orca will still automatically speak dialogs and such.
+	NOTE ALSO that this fix probably breaks wizard dialogs, but wizards
+	are so broken, anyway, that I think they need to be handled a little
+	differently.
 	* src/orca/atspi.py, src/orca/settings.py: fix for bug 334924 to
 	keep the cache in better sync.  Also use settings.cacheValues 
 	setting instead of atspi.CACHE_VALUES to allow easier setting

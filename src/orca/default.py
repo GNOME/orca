@@ -937,7 +937,18 @@ class Script(script.Script):
         # really want is to speak unbound labels that are suddenly
         # showing?  event.detail == 1 means object is showing.]]]
         #
-        if (obj.role == rolenames.ROLE_PANEL) \
+        # [[[TODO: WDW - I added the 'False' condition to prevent this
+        # condition from ever working.  I wanted to keep the code around,
+        # though, just in case we want to reuse it somewhere else.  The
+        # bug that spurred all of this on is:
+        #
+        #    http://bugzilla.gnome.org/show_bug.cgi?id=338687
+        #
+        # The main problem is that the profile editor in gnome-terminal
+        # ended up being very verbose and speaking lots of things it
+        # should not have been speaking.]]]
+        #
+        if False and (obj.role == rolenames.ROLE_PANEL) \
                and (event.detail1 == 1) \
                and orca.isInActiveApp(obj):
 
