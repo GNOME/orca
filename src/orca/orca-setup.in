@@ -247,9 +247,13 @@ def setupSpeech():
 
     # Force the rate to 50 so it will be set to something
     # and output to the user settings file.  50 is chosen
-    # here, BTW, since it is the default value.
+    # here, BTW, since it is the default value.  The same
+    # goes for gain (volume) and average-pitch, but they
+    # range from 0-10 instead of 0-100.
     #
-    defaultACSS["rate"] = 50
+    defaultACSS[orca.acss.ACSS.RATE] = 50
+    defaultACSS[orca.acss.ACSS.GAIN] = 5
+    defaultACSS[orca.acss.ACSS.AVERAGE_PITCH] = 5
     uppercaseACSS = orca.acss.ACSS({orca.acss.ACSS.AVERAGE_PITCH : 6})
     hyperlinkACSS = orca.acss.ACSS({orca.acss.ACSS.AVERAGE_PITCH : 2})
 

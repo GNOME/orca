@@ -1,5 +1,7 @@
 2006-04-17  Willie Walker <william.walker@sun.com>
 
+	* src/orca/orca-setup.in: fix for bug 330631 - put rate, gain,
+	and pitch in user-settings.py.
 	* src/orca/orca.py: fix for bug 319651 - issue a message and abort
 	orca if accessibility has not been enabled for the session.
 	* src/orca/debug.py: update documentation to reflect new way to
