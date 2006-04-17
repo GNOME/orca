@@ -1,5 +1,8 @@
 2006-04-17  Willie Walker <william.walker@sun.com>
 
+	* src/orca/rolenames.py, src/orca/atspi.py,
+	src/orca/scripts/gedit.py, src/orca/scripts/gaim.py: fix for bug
+	319789 - fallback to localized rolename if it exists.	
 	* src/orca/orca-setup.in: fix for bug 330631 - put rate, gain,
 	and pitch in user-settings.py.
 	* src/orca/orca.py: fix for bug 319651 - issue a message and abort

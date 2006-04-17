@@ -31,7 +31,6 @@ import orca.rolenames as rolenames
 import orca.speech as speech
 
 from orca.orca_i18n import _
-from orca.rolenames import getRoleName
 
 ########################################################################
 #                                                                      #

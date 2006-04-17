@@ -799,6 +799,19 @@ class Accessible:
             self.role = role
         return role
 
+    def __get_localized_rolename(self):
+        """Returns the Accessible role name of this object as a
+        localized string.  Most callers should use __get_role instead
+        since it returns a non-localized string that can be used for
+        comparison.
+        """
+
+        localizedRoleName = self._acc.getLocalizedRoleName()
+
+        if CACHE_VALUES:
+            self.localizedRoleName = localizedRoleName
+        return localizedRoleName
+
     def __get_state(self):
         """Returns the Accessible StateSeq of this object, which is a
         sequence of Accessible StateTypes.
@@ -1104,6 +1117,8 @@ class Accessible:
             return self.__get_index()
         elif attr == "role":
             return self.__get_role()
+        elif attr == "localizedRoleName":
+            return self.__get_localized_rolename()
         elif attr == "state":
             return self.__get_state()
         elif attr == "relations":

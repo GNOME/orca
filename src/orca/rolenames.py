@@ -18,8 +18,8 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-"""Provides a method, getRoleName, that converts the role name of an
-Accessible object into a localized string.
+"""Provides a methods that converts the role name of an Accessible
+object into localized strings for speech and braille.
 """
 
 import debug
@@ -587,7 +587,11 @@ def getSpeechForRoleName(obj):
         return rolenames[name].speech
     else:
         debug.println(debug.LEVEL_WARNING, "No rolename for %s" % name)
-        return name
+        localizedRoleName = obj.localizedRoleName
+        if localizedRoleName and len(localizedRoleName):
+            return localizedRoleName
+        else:
+            return name
 
 def getShortBrailleForRoleName(obj):
     """Returns the localized name of the given Accessible object; the name is
@@ -606,7 +610,11 @@ def getShortBrailleForRoleName(obj):
         return rolenames[name].brailleShort
     else:
         debug.println(debug.LEVEL_WARNING, "No rolename for %s" % name)
-        return name
+        localizedRoleName = obj.localizedRoleName
+        if localizedRoleName and len(localizedRoleName):
+            return localizedRoleName
+        else:
+            return name
 
 def getLongBrailleForRoleName(obj):
     """Returns the localized name of the given Accessible object; the name is
@@ -625,7 +633,11 @@ def getLongBrailleForRoleName(obj):
         return rolenames[name].brailleLong
     else:
         debug.println(debug.LEVEL_WARNING, "No rolename for %s" % name)
-        return name
+        localizedRoleName = obj.localizedRoleName
+        if localizedRoleName and len(localizedRoleName):
+            return localizedRoleName
+        else:
+            return name
 
 def getBrailleForRoleName(obj):
     """Returns the localized name of the given Accessible object; the name is
@@ -644,16 +656,3 @@ def getBrailleForRoleName(obj):
         return getShortBrailleForRoleName(obj)
     else:
         return getLongBrailleForRoleName(obj)
-
-def getRoleName(obj):
-    """Returns the localized name of the given Accessible object.
-    If a localized name cannot be discovered, this will return
-    the string as defined by the at-spi.
-
-    Arguments:
-    - obj: an Accessible object
-
-    Returns a string containing the localized name of the object.
-    """
-
-    return getSpeechForRoleName(obj)

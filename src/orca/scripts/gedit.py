@@ -40,7 +40,6 @@ import orca.speechgenerator as speechgenerator
 import orca.util as util
 
 from orca.orca_i18n import _
-from orca.rolenames import getRoleName
 
 ########################################################################
 #                                                                      #
