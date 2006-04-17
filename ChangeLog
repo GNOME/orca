@@ -1,6 +1,6 @@
 2006-04-17  Willie Walker <william.walker@sun.com>
 
-	* src/orca/orca.py, src/orca/mag.py: patch for bug 319648 - recover
+	* src/orca/orca.py, src/orca/mag.py: patch for bug 319643 - recover
 	gracefully from failures when attempting to load the magnifier.
 	This allows Orca to work if gnome-mag had not been installed.
 	* src/orca/rolenames.py, src/orca/atspi.py,
