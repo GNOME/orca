@@ -3,21 +3,29 @@
 
 import re
 
-import orca.debug as debug
-from orca.acss import ACSS
+import orca.debug
+import orca.settings
+import orca.acss
 
-debug.setDebugLevel(debug.LEVEL_INFO)
-f = open('%debug%', 'w', 0)
-debug.setDebugFile(f)
+orca.debug.debugLevel = orca.debug.LEVEL_INFO
+orca.debug.debugFile = open('%debug%', 'w', 0)
 
-speechServerFactory = 'orca.gnomespeechfactory'
-speechServerInfo = ['Fonix DECtalk GNOME Speech Driver', 'OAFIID:GNOME_Speech_SynthesisDriver_Dectalk:proto0.3']
-voices = {
-     'default' : ACSS({'family': {'locale': 'en_US', 'gender': None, 'name': 'Paul'}}),
-     'uppercase' : ACSS({'average-pitch': 6}),
-     'hyperlink' : ACSS({'average-pitch': 4}),
+orca.settings.speechServerFactory = 'orca.gnomespeechfactory'
+orca.settings.speechServerInfo = ['Fonix DECtalk GNOME Speech Driver', 'OAFIID:GNOME_Speech_SynthesisDriver_Dectalk:proto0.3']
+orca.settings.voices = {
+     'default' : orca.acss.ACSS({'rate': 50, 'family': {'locale': 'en_US', 'gender': None, 'name': 'Paul'}}),
+     'uppercase' : orca.acss.ACSS({'average-pitch': 6}),
+     'hyperlink' : orca.acss.ACSS({'average-pitch': 2}),
 }
 
-useKeyEcho = False
-useSpeech = True
-useBraille = True
+orca.settings.enableEchoByWord = False
+orca.settings.enableKeyEcho = False
+orca.settings.enablePrintableKeys = False
+orca.settings.enableModifierKeys = False
+orca.settings.enableLockingKeys = False
+orca.settings.enableFunctionKeys = False
+orca.settings.enableActionKeys = False
+
+orca.settings.enableSpeech = True
+orca.settings.enableBraille = True
+orca.settings.enableBrailleMonitor = False
