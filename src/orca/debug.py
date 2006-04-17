@@ -17,10 +17,10 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-"""Provides debug utilities for Orca.  Debugging is managed by a
-debug level, which is set by calling the setDebugLevel method.  All
-other methods take a debug level, which is compared to the current
-debug level to determine if the content should be output."""
+"""Provides debug utilities for Orca.  Debugging is managed by a debug
+level, which is held in the debugLevel field.  All other methods take
+a debug level, which is compared to the current debug level to
+determine if the content should be output."""
 
 import traceback
 
