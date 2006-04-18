@@ -1,4 +1,4 @@
-<!-- Copyright 2005, Sun Microsystems, Inc. -->
+<!-- Copyright 2005-2006, Sun Microsystems, Inc. -->
 
 <book>
   <title>Orca Testing Plan</title>
@@ -34,143 +34,143 @@
     <section id="interoperabilitytest"><title>Interaction with Other ATs</title>
       <section><title>Some Test</title>
         <para>&tgoal; Determine if Orca does something.</para>
-	<para>&tprocedure; perform this action.</para>
-	<para>&tresult; this should happen.</para>
+        <para>&tprocedure; perform this action.</para>
+        <para>&tresult; this should happen.</para>
       </section>
       <section><title>Some Other Test</title>
         <para>&tgoal; Determine if Orca does something else.</para>
-	<para>&tprocedure; perform this other action.</para>
-	<para>&tresult; this other thing should happen.</para>
+        <para>&tprocedure; perform this other action.</para>
+        <para>&tresult; this other thing should happen.</para>
       </section>
     </section>
 
     <section id="flatreviewtest"><title>Flat Review</title>
       <section><title>Some Test</title>
         <para>&tgoal; Determine if Orca does something.</para>
-	<para>&tprocedure; perform this action.</para>
-	<para>&tresult; this should happen.</para>
+        <para>&tprocedure; perform this action.</para>
+        <para>&tresult; this should happen.</para>
       </section>
       <section><title>Some Other Test</title>
         <para>&tgoal; Determine if Orca does something else.</para>
-	<para>&tprocedure; perform this other action.</para>
-	<para>&tresult; this other thing should happen.</para>
+        <para>&tprocedure; perform this other action.</para>
+        <para>&tresult; this other thing should happen.</para>
       </section>
     </section>
 
     <section id="learnmodetest"><title>Learn Mode</title>
       <section><title>Some Test</title>
         <para>&tgoal; Determine if Orca does something.</para>
-	<para>&tprocedure; perform this action.</para>
-	<para>&tresult; this should happen.</para>
+        <para>&tprocedure; perform this action.</para>
+        <para>&tresult; this should happen.</para>
       </section>
       <section><title>Some Other Test</title>
         <para>&tgoal; Determine if Orca does something else.</para>
-	<para>&tprocedure; perform this other action.</para>
-	<para>&tresult; this other thing should happen.</para>
+        <para>&tprocedure; perform this other action.</para>
+        <para>&tresult; this other thing should happen.</para>
       </section>
     </section>
 
     <section id="whereamitest"><title>Where Am I?</title>
       <section><title>Some Test</title>
         <para>&tgoal; Determine if Orca does something.</para>
-	<para>&tprocedure; perform this action.</para>
-	<para>&tresult; this should happen.</para>
+        <para>&tprocedure; perform this action.</para>
+        <para>&tresult; this should happen.</para>
       </section>
       <section><title>Some Other Test</title>
         <para>&tgoal; Determine if Orca does something else.</para>
-	<para>&tprocedure; perform this other action.</para>
-	<para>&tresult; this other thing should happen.</para>
+        <para>&tprocedure; perform this other action.</para>
+        <para>&tresult; this other thing should happen.</para>
       </section>
     </section>
 
     <section id="sayalltest"><title>Say All</title>
       <section><title>Some Test</title>
         <para>&tgoal; Determine if Orca does something.</para>
-	<para>&tprocedure; perform this action.</para>
-	<para>&tresult; this should happen.</para>
+        <para>&tprocedure; perform this action.</para>
+        <para>&tresult; this should happen.</para>
       </section>
       <section><title>Some Other Test</title>
         <para>&tgoal; Determine if Orca does something else.</para>
-	<para>&tprocedure; perform this other action.</para>
-	<para>&tresult; this other thing should happen.</para>
+        <para>&tprocedure; perform this other action.</para>
+        <para>&tresult; this other thing should happen.</para>
       </section>
     </section>
 
     <section id="verbalizedpunctest"><title>Verbalized Punctuation</title>
       <section><title>Some Test</title>
         <para>&tgoal; Determine if Orca does something.</para>
-	<para>&tprocedure; perform this action.</para>
-	<para>&tresult; this should happen.</para>
+        <para>&tprocedure; perform this action.</para>
+        <para>&tresult; this should happen.</para>
       </section>
       <section><title>Some Other Test</title>
         <para>&tgoal; Determine if Orca does something else.</para>
-	<para>&tprocedure; perform this other action.</para>
-	<para>&tresult; this other thing should happen.</para>
+        <para>&tprocedure; perform this other action.</para>
+        <para>&tresult; this other thing should happen.</para>
       </section>
     </section>
 
     <section id="verbalizedlinktest"><title>Verbalized Links</title>
       <section><title>Some Test</title>
         <para>&tgoal; Determine if Orca does something.</para>
-	<para>&tprocedure; perform this action.</para>
-	<para>&tresult; this should happen.</para>
+        <para>&tprocedure; perform this action.</para>
+        <para>&tresult; this should happen.</para>
       </section>
       <section><title>Some Other Test</title>
         <para>&tgoal; Determine if Orca does something else.</para>
-	<para>&tprocedure; perform this other action.</para>
-	<para>&tresult; this other thing should happen.</para>
+        <para>&tprocedure; perform this other action.</para>
+        <para>&tresult; this other thing should happen.</para>
       </section>
     </section>
 
     <section id="verbalizedcapstest"><title>Verbalized Caps</title>
       <section><title>Some Test</title>
         <para>&tgoal; Determine if Orca does something.</para>
-	<para>&tprocedure; perform this action.</para>
-	<para>&tresult; this should happen.</para>
+        <para>&tprocedure; perform this action.</para>
+        <para>&tresult; this should happen.</para>
       </section>
       <section><title>Some Other Test</title>
         <para>&tgoal; Determine if Orca does something else.</para>
-	<para>&tprocedure; perform this other action.</para>
-	<para>&tresult; this other thing should happen.</para>
+        <para>&tprocedure; perform this other action.</para>
+        <para>&tresult; this other thing should happen.</para>
       </section>
     </section>
 
     <section id="spellingmodetest"><title>Spelling Mode</title>
       <section><title>Some Test</title>
         <para>&tgoal; Determine if Orca does something.</para>
-	<para>&tprocedure; perform this action.</para>
-	<para>&tresult; this should happen.</para>
+        <para>&tprocedure; perform this action.</para>
+        <para>&tresult; this should happen.</para>
       </section>
       <section><title>Some Other Test</title>
         <para>&tgoal; Determine if Orca does something else.</para>
-	<para>&tprocedure; perform this other action.</para>
-	<para>&tresult; this other thing should happen.</para>
+        <para>&tprocedure; perform this other action.</para>
+        <para>&tresult; this other thing should happen.</para>
       </section>
     </section>
 
     <section id="keywordechotest"><title>Text Attributes</title>
       <section><title>Some Test</title>
         <para>&tgoal; Determine if Orca does something.</para>
-	<para>&tprocedure; perform this action.</para>
-	<para>&tresult; this should happen.</para>
+        <para>&tprocedure; perform this action.</para>
+        <para>&tresult; this should happen.</para>
       </section>
       <section><title>Some Other Test</title>
         <para>&tgoal; Determine if Orca does something else.</para>
-	<para>&tprocedure; perform this other action.</para>
-	<para>&tresult; this other thing should happen.</para>
+        <para>&tprocedure; perform this other action.</para>
+        <para>&tresult; this other thing should happen.</para>
       </section>
     </section>
 
     <section id="brailletest"><title>Braille</title>
       <section><title>Some Test</title>
         <para>&tgoal; Determine if Orca does something.</para>
-	<para>&tprocedure; perform this action.</para>
-	<para>&tresult; this should happen.</para>
+        <para>&tprocedure; perform this action.</para>
+        <para>&tresult; this should happen.</para>
       </section>
       <section><title>Some Other Test</title>
         <para>&tgoal; Determine if Orca does something else.</para>
-	<para>&tprocedure; perform this other action.</para>
-	<para>&tresult; this other thing should happen.</para>
+        <para>&tprocedure; perform this other action.</para>
+        <para>&tresult; this other thing should happen.</para>
       </section>
     </section>
   </chapter>
@@ -180,179 +180,179 @@
     <section id="desktoptest"><title>Desktop Test Plan</title>
       <section><title>Navigate Start Menu</title>
         <para>&tgoal; Determine if Orca reads the start menu.</para>
-	<para>&tprocedure; perform this action.</para>
-	<para>&tresult; this should happen.</para>
+        <para>&tprocedure; perform this action.</para>
+        <para>&tresult; this should happen.</para>
       </section>
       <section><title>Alt+Tab to Other Applications</title>
         <para>&tgoal; Determine if Orca reads metacity status window.</para>
-	<para>&tprocedure; perform this action.</para>
-	<para>&tresult; this should happen.</para>
+        <para>&tprocedure; perform this action.</para>
+        <para>&tresult; this should happen.</para>
       </section>
     </section>
 
     <section id="nautilustest"><title>Nautilus Test Plan</title>
       <section><title>Some Test</title>
         <para>&tgoal; Determine if Orca does something.</para>
-	<para>&tprocedure; perform this action.</para>
-	<para>&tresult; this should happen.</para>
+        <para>&tprocedure; perform this action.</para>
+        <para>&tresult; this should happen.</para>
       </section>
       <section><title>Some Other Test</title>
         <para>&tgoal; Determine if Orca does something else.</para>
-	<para>&tprocedure; perform this other action.</para>
-	<para>&tresult; this other thing should happen.</para>
+        <para>&tprocedure; perform this other action.</para>
+        <para>&tresult; this other thing should happen.</para>
       </section>
     </section>
 
     <section id="gedittest"><title>GEdit Test Plan</title>
       <section><title>Some Test</title>
         <para>&tgoal; Determine if Orca does something.</para>
-	<para>&tprocedure; perform this action.</para>
-	<para>&tresult; this should happen.</para>
+        <para>&tprocedure; perform this action.</para>
+        <para>&tresult; this should happen.</para>
       </section>
       <section><title>Some Other Test</title>
         <para>&tgoal; Determine if Orca does something else.</para>
-	<para>&tprocedure; perform this other action.</para>
-	<para>&tresult; this other thing should happen.</para>
+        <para>&tprocedure; perform this other action.</para>
+        <para>&tresult; this other thing should happen.</para>
       </section>
     </section>
 
     <section id="emailtest"><title>Evolution E-Mail Test Plan</title>
       <section><title>Some Test</title>
         <para>&tgoal; Determine if Orca does something.</para>
-	<para>&tprocedure; perform this action.</para>
-	<para>&tresult; this should happen.</para>
+        <para>&tprocedure; perform this action.</para>
+        <para>&tresult; this should happen.</para>
       </section>
       <section><title>Some Other Test</title>
         <para>&tgoal; Determine if Orca does something else.</para>
-	<para>&tprocedure; perform this other action.</para>
-	<para>&tresult; this other thing should happen.</para>
+        <para>&tprocedure; perform this other action.</para>
+        <para>&tresult; this other thing should happen.</para>
       </section>
     </section>
 
     <section id="ecaltest"><title>Evolution Calendar Test Plan</title>
       <section><title>Some Test</title>
         <para>&tgoal; Determine if Orca does something.</para>
-	<para>&tprocedure; perform this action.</para>
-	<para>&tresult; this should happen.</para>
+        <para>&tprocedure; perform this action.</para>
+        <para>&tresult; this should happen.</para>
       </section>
       <section><title>Some Other Test</title>
         <para>&tgoal; Determine if Orca does something else.</para>
-	<para>&tprocedure; perform this other action.</para>
-	<para>&tresult; this other thing should happen.</para>
+        <para>&tprocedure; perform this other action.</para>
+        <para>&tresult; this other thing should happen.</para>
       </section>
     </section>
 
     <section id="econtacttest"><title>Evolution Contact Manager Test Plan</title>
       <section><title>Some Test</title>
         <para>&tgoal; Determine if Orca does something.</para>
-	<para>&tprocedure; perform this action.</para>
-	<para>&tresult; this should happen.</para>
+        <para>&tprocedure; perform this action.</para>
+        <para>&tresult; this should happen.</para>
       </section>
       <section><title>Some Other Test</title>
         <para>&tgoal; Determine if Orca does something else.</para>
-	<para>&tprocedure; perform this other action.</para>
-	<para>&tresult; this other thing should happen.</para>
+        <para>&tprocedure; perform this other action.</para>
+        <para>&tresult; this other thing should happen.</para>
       </section>
     </section>
 
     <section id="gaimtest"><title>GAIM Test Plan</title>
       <section><title>Some Test</title>
         <para>&tgoal; Determine if Orca does something.</para>
-	<para>&tprocedure; perform this action.</para>
-	<para>&tresult; this should happen.</para>
+        <para>&tprocedure; perform this action.</para>
+        <para>&tresult; this should happen.</para>
       </section>
       <section><title>Some Other Test</title>
         <para>&tgoal; Determine if Orca does something else.</para>
-	<para>&tprocedure; perform this other action.</para>
-	<para>&tresult; this other thing should happen.</para>
+        <para>&tprocedure; perform this other action.</para>
+        <para>&tresult; this other thing should happen.</para>
       </section>
     </section>
 
     <section id="yelptest"><title>Yelp Test Plan</title>
       <section><title>Some Test</title>
         <para>&tgoal; Determine if Orca does something.</para>
-	<para>&tprocedure; perform this action.</para>
-	<para>&tresult; this should happen.</para>
+        <para>&tprocedure; perform this action.</para>
+        <para>&tresult; this should happen.</para>
       </section>
       <section><title>Some Other Test</title>
         <para>&tgoal; Determine if Orca does something else.</para>
-	<para>&tprocedure; perform this other action.</para>
-	<para>&tresult; this other thing should happen.</para>
+        <para>&tprocedure; perform this other action.</para>
+        <para>&tresult; this other thing should happen.</para>
       </section>
     </section>
 
     <section id="sowritertest"><title>StarOffice Writer Test Plan</title>
       <section><title>Some Test</title>
         <para>&tgoal; Determine if Orca does something.</para>
-	<para>&tprocedure; perform this action.</para>
-	<para>&tresult; this should happen.</para>
+        <para>&tprocedure; perform this action.</para>
+        <para>&tresult; this should happen.</para>
       </section>
       <section><title>Some Other Test</title>
         <para>&tgoal; Determine if Orca does something else.</para>
-	<para>&tprocedure; perform this other action.</para>
-	<para>&tresult; this other thing should happen.</para>
+        <para>&tprocedure; perform this other action.</para>
+        <para>&tresult; this other thing should happen.</para>
       </section>
     </section>
 
     <section id="socalctest"><title>StarOffice Calc Test Plan</title>
       <section><title>Some Test</title>
         <para>&tgoal; Determine if Orca does something.</para>
-	<para>&tprocedure; perform this action.</para>
-	<para>&tresult; this should happen.</para>
+        <para>&tprocedure; perform this action.</para>
+        <para>&tresult; this should happen.</para>
       </section>
       <section><title>Some Other Test</title>
         <para>&tgoal; Determine if Orca does something else.</para>
-	<para>&tprocedure; perform this other action.</para>
-	<para>&tresult; this other thing should happen.</para>
+        <para>&tprocedure; perform this other action.</para>
+        <para>&tresult; this other thing should happen.</para>
       </section>
     </section>
 
     <section id="soimpresstest"><title>StarOffice Impress Test Plan</title>
       <section><title>Some Test</title>
         <para>&tgoal; Determine if Orca does something.</para>
-	<para>&tprocedure; perform this action.</para>
-	<para>&tresult; this should happen.</para>
+        <para>&tprocedure; perform this action.</para>
+        <para>&tresult; this should happen.</para>
       </section>
       <section><title>Some Other Test</title>
         <para>&tgoal; Determine if Orca does something else.</para>
-	<para>&tprocedure; perform this other action.</para>
-	<para>&tresult; this other thing should happen.</para>
+        <para>&tprocedure; perform this other action.</para>
+        <para>&tresult; this other thing should happen.</para>
       </section>
     </section>
 
     <section id="ff2test"><title>Firefox 2 Test Plan</title>
       <orderedlist>
         <listitem>
-	  <para>&tprocedure; perform this action.</para>
-	  <para>&tresult; this should happen.</para>
-	</listitem>
+          <para>&tprocedure; perform this action.</para>
+          <para>&tresult; this should happen.</para>
+        </listitem>
       </orderedlist>
     </section>
 
     <section id="ff3test"><title>Firefox 3 Test Plan</title>
       <orderedlist>
         <listitem>
-	  <para>&tprocedure; perform this action.</para>
-	  <para>&tresult; this should happen.</para>
-	</listitem>
+          <para>&tprocedure; perform this action.</para>
+          <para>&tresult; this should happen.</para>
+        </listitem>
       </orderedlist>
     </section>
 
     <section id="acroreadtest"><title>Adobe Acrobat Reader Test Plan</title>
       <orderedlist>
         <listitem>
-	  <para>&tprocedure; perform this action.</para>
-	  <para>&tresult; this should happen.</para>
-	</listitem>
+          <para>&tprocedure; perform this action.</para>
+          <para>&tresult; this should happen.</para>
+        </listitem>
       </orderedlist>
     </section>
 
     <section id="javatest"><title>Java Platform Test Plan</title>
       <orderedlist>
         <listitem>
-	  <para>&tprocedure; perform this action.</para>
-	  <para>&tresult; this should happen.</para>
-	</listitem>
+          <para>&tprocedure; perform this action.</para>
+          <para>&tresult; this should happen.</para>
+        </listitem>
       </orderedlist>
     </section>
 
