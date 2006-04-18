@@ -265,62 +265,84 @@
           applications:</para>
 
         <table><title>Office Productivity Applications</title>
-  	  <tgroup cols='3'>
+  	  <tgroup cols='4'>
   	    <thead>
   	      <row>
   	        <entry>Application Class</entry>
   	        <entry>Target Application and Version</entry>
   	        <entry>Status</entry>
+  	        <entry>Test Plan</entry>
   	      </row>
             </thead>
   	  
             <tbody>
               <row>
+                <entry>Desktop</entry>
+                <entry>gnome-panel and metacity - GNOME 2.16</entry>
+                <entry>&incomplete; [OWNER WDW]. &shoulddeliver; V1.0.</entry>
+		<entry>&desktoptestlink;</entry>
+              </row>
+              <row>
+                <entry>File System Navigation</entry>
+                <entry>Nautilus - GNOME 2.16</entry>
+                <entry>No Script Needed</entry>
+		<entry>&nautilustestlink;</entry>
+              </row>
+              <row>
                 <entry>Simple Text Editing</entry>
                 <entry>GEdit - GNOME 2.16</entry>
                 <entry>&complete; V0.2.2</entry>
+		<entry>&gedittestlink;</entry>
               </row>
               <row>
                 <entry>E-mail</entry>
                 <entry>Evolution - GNOME 2.16</entry>
                 <entry>&complete; V0.2.2</entry>
+		<entry>&emailtestlink;</entry>
               </row>
               <row>
                 <entry>Calendar</entry>
                 <entry>Evolution - GNOME 2.16</entry>
                 <entry>&incomplete; [OWNER: RNB] month view not
                   done. &shoulddeliver; V1.0.</entry>
+		<entry>&ecaltestlink;</entry>
               </row>
               <row>
                 <entry>Contact Management</entry>
                 <entry>Evolution - GNOME 2.16</entry>
                 <entry>&complete; V0.2.2</entry>
+		<entry>&econtacttestlink;</entry>
               </row>
               <row>
                 <entry>Instant Messaging</entry>
                 <entry>GAIM - GNOME 2.16</entry>
                 <entry>&complete; V0.2.2</entry>
+		<entry>&gaimtestlink;</entry>
               </row>
               <row>
                 <entry>Help</entry>
                 <entry>Yelp - GNOME 2.16</entry>
                 <entry>&incomplete; [OWNER: LMS] No script and
                   untested. &mustdeliver; V1.0</entry>
+		<entry>&yelptestlink;</entry>
               </row>
               <row>
                 <entry>Document Generation</entry>
                 <entry>StarOffice 8 PP3, OpenOffice 2.0.3 (initial); StarOffice 8 PP4, OpenOffice 2.0.4 (better)</entry>
                 <entry>&incomplete; [OWNER: RNB] Working with StarOffice team to fix AT-SPI issues; Script under development. &mustdeliver V1.0</entry>
+		<entry>&sowritertestlink;</entry>
               </row>
 	      <row>
 	        <entry>Spreadsheet</entry>
                 <entry>StarOffice 8 PP3, OpenOffice 2.0.3 (initial); StarOffice 8 PP4, OpenOffice 2.0.4 (better)</entry>
                 <entry>&incomplete; [OWNER: RNB] Working with StarOffice team to fix AT-SPI issues; Script under development. &mustdeliver; V1.0</entry>
+		<entry>&socalctestlink;</entry>
 	      </row>
 	      <row>
 	        <entry>Presentation</entry>
                 <entry>StarOffice 8 PP3, OpenOffice 2.0.3 (initial); StarOffice 8 PP4, OpenOffice 2.0.4 (better)</entry>
                 <entry>&incomplete; [OWNER: RNB] &shoulddeliver; V1.1.</entry>
+		<entry>&soimpresstestlink;</entry>
 	      </row>
 	      <row>
 	        <entry>Web Browsing</entry>
@@ -331,6 +353,7 @@
 		  extension for FF2 - &mustdeliver; V1.0.  Working with
 		  IBM and Firefox team to provide better information
 		  via AT-SPI for FF3 - &mustdeliver; V1.1.</entry>
+		<entry>&ff2testlink;</entry>
 	      </row>
 	      <row>
 	        <entry>Content Viewing</entry>
@@ -338,6 +361,7 @@
 		<entry>&incomplete; [OWNER: MMP] needs testing and
 		  possible work from Adobe. &shoulddeliver;
 		  V1.0</entry>
+		<entry>&acroreadtestlink;</entry>
 	      </row>
 	      <row>
 	        <entry>Java platform</entry>
@@ -345,6 +369,7 @@
 		<entry>&incomplete; [OWNER: LMS] minimal testing, <ulink
 		  url="http://bugzilla.gnome.org/show_bug.cgi?id=319639">bug
 		  with keycodes</ulink> - &mustdeliver; V1.0</entry>
+		<entry>&javatestlink;</entry>
 	      </row>
   	    </tbody>
 	  </tgroup>
@@ -826,7 +851,7 @@
 
     </section>
 
-    <section id="urecho"><title>Key and Text Echo</title>
+    <section id="urecho"><title>Key and Word Echo</title>
 
       <para>Orca must provide a set of options to allow the user to
         enable the automatic speaking of keys as they are typed,
