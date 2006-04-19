@@ -149,15 +149,15 @@
     </section>
 
     <section id="keywordechotest"><title>Text Attributes</title>
-      <section><title>Some Test</title>
-        <para>&tgoal; Determine if Orca does something.</para>
-        <para>&tprocedure; perform this action.</para>
-        <para>&tresult; this should happen.</para>
+      <section><title>typing words test</title>
+        <para>&tgoal; Orca should speak words as they are typed.</para>
+        <para>&tprocedure; Type a line of 10 words each followed by spaces.</para>
+        <para>&tresult; When the space is typed after each word, the word should be spoken.</para>
       </section>
-      <section><title>Some Other Test</title>
-        <para>&tgoal; Determine if Orca does something else.</para>
-        <para>&tprocedure; perform this other action.</para>
-        <para>&tresult; this other thing should happen.</para>
+      <section><title>Words with punctuation test</title>
+        <para>&tgoal; Determine if orca speaks the word when a boundary is reached.</para>
+        <para>&tprocedure; type a line of 10 words, the first 5 followed by a period and the second 5 followed by a comma.</para>
+        <para>&tresult; When the period or comma is typed the word should be spoken.  When a space is typed after the punctuation mark the word should not be spoken again.</para>
       </section>
     </section>
 
