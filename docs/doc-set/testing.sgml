@@ -31,130 +31,106 @@
   -->
 
   <chapter id="generaltest"><title>General Orca Functionality</title>
+
+    <para>The tests in this section are meant to test general Orca
+      functionality that should be work regardless of the application
+      in use.</para>
+
     <section id="interoperabilitytest"><title>Interaction with Other ATs</title>
-      <section><title>Some Test</title>
-        <para>&tgoal; Determine if Orca does something.</para>
-        <para>&tprocedure; perform this action.</para>
-        <para>&tresult; this should happen.</para>
-      </section>
-      <section><title>Some Other Test</title>
-        <para>&tgoal; Determine if Orca does something else.</para>
-        <para>&tprocedure; perform this other action.</para>
-        <para>&tresult; this other thing should happen.</para>
-      </section>
+      <para>The tests in this section are to ensure that Orca does not
+        can adverse effects on other assistive technologies that may be
+	running, and that other assitive technologies do not adversely 
+	effect Orca.</para>
+
     </section>
 
     <section id="flatreviewtest"><title>Flat Review</title>
-      <section><title>Some Test</title>
-        <para>&tgoal; Determine if Orca does something.</para>
-        <para>&tprocedure; perform this action.</para>
-        <para>&tresult; this should happen.</para>
-      </section>
-      <section><title>Some Other Test</title>
-        <para>&tgoal; Determine if Orca does something else.</para>
-        <para>&tprocedure; perform this other action.</para>
-        <para>&tresult; this other thing should happen.</para>
-      </section>
+
+      <para>The tests in this section are to ensure that the Orca flat
+        review functionality is working as expected.  This includes
+	making sure the various keystrokes work and produce the
+	desired results.</para>
+
     </section>
 
     <section id="learnmodetest"><title>Learn Mode</title>
-      <section><title>Some Test</title>
-        <para>&tgoal; Determine if Orca does something.</para>
-        <para>&tprocedure; perform this action.</para>
-        <para>&tresult; this should happen.</para>
-      </section>
-      <section><title>Some Other Test</title>
-        <para>&tgoal; Determine if Orca does something else.</para>
-        <para>&tprocedure; perform this other action.</para>
-        <para>&tresult; this other thing should happen.</para>
-      </section>
+
+      <para>The tests in this section are to ensure that the Orca
+        Learn Mode functionality works as expected for both the
+        keyboard and braille, including entering and exiting Learn
+        Mode.</para>
+
     </section>
 
     <section id="whereamitest"><title>Where Am I?</title>
-      <section><title>Some Test</title>
-        <para>&tgoal; Determine if Orca does something.</para>
-        <para>&tprocedure; perform this action.</para>
-        <para>&tresult; this should happen.</para>
-      </section>
-      <section><title>Some Other Test</title>
-        <para>&tgoal; Determine if Orca does something else.</para>
-        <para>&tprocedure; perform this other action.</para>
-        <para>&tresult; this other thing should happen.</para>
-      </section>
+
+      <para>The tests in this section are to ensure that the Orca
+        Where Am I functionality produces the desired
+        information.</para>
+
     </section>
 
     <section id="sayalltest"><title>Say All</title>
-      <section><title>Some Test</title>
-        <para>&tgoal; Determine if Orca does something.</para>
-        <para>&tprocedure; perform this action.</para>
-        <para>&tresult; this should happen.</para>
-      </section>
-      <section><title>Some Other Test</title>
-        <para>&tgoal; Determine if Orca does something else.</para>
-        <para>&tprocedure; perform this other action.</para>
-        <para>&tresult; this other thing should happen.</para>
-      </section>
+
+      <para>The tests in this section are to ensure that the Orca Say
+        All functionality behaves appropriately for contiguous
+        document content, including GEdit, StarOffice, etc.  The Say
+        All tests for flat review of dialogs are in the Flat Review
+        section.</para>
+
     </section>
 
     <section id="verbalizedpunctest"><title>Verbalized Punctuation</title>
-      <section><title>Some Test</title>
-        <para>&tgoal; Determine if Orca does something.</para>
-        <para>&tprocedure; perform this action.</para>
-        <para>&tresult; this should happen.</para>
-      </section>
-      <section><title>Some Other Test</title>
-        <para>&tgoal; Determine if Orca does something else.</para>
-        <para>&tprocedure; perform this other action.</para>
-        <para>&tresult; this other thing should happen.</para>
-      </section>
+
+      <para>The tests in this section are to ensure that the Orca
+        Verbalized Punctuation functionality provides the desired 
+	output for the various verbalized punctuation settings.</para>
+
     </section>
 
     <section id="verbalizedlinktest"><title>Verbalized Links</title>
-      <section><title>Some Test</title>
-        <para>&tgoal; Determine if Orca does something.</para>
-        <para>&tprocedure; perform this action.</para>
-        <para>&tresult; this should happen.</para>
-      </section>
-      <section><title>Some Other Test</title>
-        <para>&tgoal; Determine if Orca does something else.</para>
-        <para>&tprocedure; perform this other action.</para>
-        <para>&tresult; this other thing should happen.</para>
-      </section>
+
+      <para>The tests in this section are to ensure that the Orca
+        Verbalized Link functionality provides the desired 
+	output for the various verbalized link settings.</para>
+
     </section>
 
     <section id="verbalizedcapstest"><title>Verbalized Caps</title>
-      <section><title>Some Test</title>
-        <para>&tgoal; Determine if Orca does something.</para>
-        <para>&tprocedure; perform this action.</para>
-        <para>&tresult; this should happen.</para>
-      </section>
-      <section><title>Some Other Test</title>
-        <para>&tgoal; Determine if Orca does something else.</para>
-        <para>&tprocedure; perform this other action.</para>
-        <para>&tresult; this other thing should happen.</para>
-      </section>
+
+      <para>The tests in this section are to ensure that the Orca
+        Verbalized Caps functionality provides the desired output for
+        the various verbalized capitalization settings.</para>
+
     </section>
 
     <section id="spellingmodetest"><title>Spelling Mode</title>
-      <section><title>Some Test</title>
-        <para>&tgoal; Determine if Orca does something.</para>
-        <para>&tprocedure; perform this action.</para>
-        <para>&tresult; this should happen.</para>
-      </section>
-      <section><title>Some Other Test</title>
-        <para>&tgoal; Determine if Orca does something else.</para>
-        <para>&tprocedure; perform this other action.</para>
-        <para>&tresult; this other thing should happen.</para>
-      </section>
+
+      <para>The tests in this section are to ensure that the Orca
+        Spelling Mode functionality provides the desired output for
+        the various spelling mode settings.</para>
+
     </section>
 
-    <section id="keywordechotest"><title>Text Attributes</title>
-      <section><title>typing words test</title>
+    <section id="textattributestest"><title>Text Attributes</title>
+
+      <para>The tests in this section are to ensure that Orca
+        accurately provides text attribute (e.g., font, bolding, etc.)
+        information when requested by the user.</para>
+
+    </section>
+
+    <section id="keywordechotest"><title>Key and Word Echo</title>
+
+      <para>The tests in this section are to ensure that Orca works
+        accurately with the various key and word echo settings.</para>
+
+      <section><title>Simple Typing of Words</title>
         <para>&tgoal; Orca should speak words as they are typed.</para>
         <para>&tprocedure; Type a line of 10 words each followed by spaces.</para>
         <para>&tresult; When the space is typed after each word, the word should be spoken.</para>
       </section>
-      <section><title>Words with punctuation test</title>
+      <section><title>Typing Words with Punctuation</title>
         <para>&tgoal; Determine if orca speaks the word when a boundary is reached.</para>
         <para>&tprocedure; type a line of 10 words, the first 5 followed by a period and the second 5 followed by a comma.</para>
         <para>&tresult; When the period or comma is typed the word should be spoken.  When a space is typed after the punctuation mark the word should not be spoken again.</para>
@@ -162,16 +138,12 @@
     </section>
 
     <section id="brailletest"><title>Braille</title>
-      <section><title>Some Test</title>
-        <para>&tgoal; Determine if Orca does something.</para>
-        <para>&tprocedure; perform this action.</para>
-        <para>&tresult; this should happen.</para>
-      </section>
-      <section><title>Some Other Test</title>
-        <para>&tgoal; Determine if Orca does something else.</para>
-        <para>&tprocedure; perform this other action.</para>
-        <para>&tresult; this other thing should happen.</para>
-      </section>
+
+      <para>The tests in this section are to make sure that Orca does
+        the right thing with respect to spaces and indentation on the
+	braille display and with respect to the various braille 
+	spacing and indentation settings.</para>
+
     </section>
   </chapter>
 
@@ -196,11 +168,6 @@
         <para>&tprocedure; perform this action.</para>
         <para>&tresult; this should happen.</para>
       </section>
-      <section><title>Some Other Test</title>
-        <para>&tgoal; Determine if Orca does something else.</para>
-        <para>&tprocedure; perform this other action.</para>
-        <para>&tresult; this other thing should happen.</para>
-      </section>
     </section>
 
     <section id="gedittest"><title>GEdit Test Plan</title>
@@ -208,11 +175,6 @@
         <para>&tgoal; Determine if Orca does something.</para>
         <para>&tprocedure; perform this action.</para>
         <para>&tresult; this should happen.</para>
-      </section>
-      <section><title>Some Other Test</title>
-        <para>&tgoal; Determine if Orca does something else.</para>
-        <para>&tprocedure; perform this other action.</para>
-        <para>&tresult; this other thing should happen.</para>
       </section>
     </section>
 
@@ -222,11 +184,6 @@
         <para>&tprocedure; perform this action.</para>
         <para>&tresult; this should happen.</para>
       </section>
-      <section><title>Some Other Test</title>
-        <para>&tgoal; Determine if Orca does something else.</para>
-        <para>&tprocedure; perform this other action.</para>
-        <para>&tresult; this other thing should happen.</para>
-      </section>
     </section>
 
     <section id="ecaltest"><title>Evolution Calendar Test Plan</title>
@@ -234,11 +191,6 @@
         <para>&tgoal; Determine if Orca does something.</para>
         <para>&tprocedure; perform this action.</para>
         <para>&tresult; this should happen.</para>
-      </section>
-      <section><title>Some Other Test</title>
-        <para>&tgoal; Determine if Orca does something else.</para>
-        <para>&tprocedure; perform this other action.</para>
-        <para>&tresult; this other thing should happen.</para>
       </section>
     </section>
 
@@ -248,11 +200,6 @@
         <para>&tprocedure; perform this action.</para>
         <para>&tresult; this should happen.</para>
       </section>
-      <section><title>Some Other Test</title>
-        <para>&tgoal; Determine if Orca does something else.</para>
-        <para>&tprocedure; perform this other action.</para>
-        <para>&tresult; this other thing should happen.</para>
-      </section>
     </section>
 
     <section id="gaimtest"><title>GAIM Test Plan</title>
@@ -260,11 +207,6 @@
         <para>&tgoal; Determine if Orca does something.</para>
         <para>&tprocedure; perform this action.</para>
         <para>&tresult; this should happen.</para>
-      </section>
-      <section><title>Some Other Test</title>
-        <para>&tgoal; Determine if Orca does something else.</para>
-        <para>&tprocedure; perform this other action.</para>
-        <para>&tresult; this other thing should happen.</para>
       </section>
     </section>
 
@@ -274,11 +216,6 @@
         <para>&tprocedure; perform this action.</para>
         <para>&tresult; this should happen.</para>
       </section>
-      <section><title>Some Other Test</title>
-        <para>&tgoal; Determine if Orca does something else.</para>
-        <para>&tprocedure; perform this other action.</para>
-        <para>&tresult; this other thing should happen.</para>
-      </section>
     </section>
 
     <section id="sowritertest"><title>StarOffice Writer Test Plan</title>
@@ -286,11 +223,6 @@
         <para>&tgoal; Determine if Orca does something.</para>
         <para>&tprocedure; perform this action.</para>
         <para>&tresult; this should happen.</para>
-      </section>
-      <section><title>Some Other Test</title>
-        <para>&tgoal; Determine if Orca does something else.</para>
-        <para>&tprocedure; perform this other action.</para>
-        <para>&tresult; this other thing should happen.</para>
       </section>
     </section>
 
@@ -300,11 +232,6 @@
         <para>&tprocedure; perform this action.</para>
         <para>&tresult; this should happen.</para>
       </section>
-      <section><title>Some Other Test</title>
-        <para>&tgoal; Determine if Orca does something else.</para>
-        <para>&tprocedure; perform this other action.</para>
-        <para>&tresult; this other thing should happen.</para>
-      </section>
     </section>
 
     <section id="soimpresstest"><title>StarOffice Impress Test Plan</title>
@@ -313,47 +240,38 @@
         <para>&tprocedure; perform this action.</para>
         <para>&tresult; this should happen.</para>
       </section>
-      <section><title>Some Other Test</title>
-        <para>&tgoal; Determine if Orca does something else.</para>
-        <para>&tprocedure; perform this other action.</para>
-        <para>&tresult; this other thing should happen.</para>
-      </section>
     </section>
 
     <section id="ff2test"><title>Firefox 2 Test Plan</title>
-      <orderedlist>
-        <listitem>
-          <para>&tprocedure; perform this action.</para>
-          <para>&tresult; this should happen.</para>
-        </listitem>
-      </orderedlist>
+      <section><title>Some Test</title>
+        <para>&tgoal; Determine if Orca does something.</para>
+        <para>&tprocedure; perform this action.</para>
+        <para>&tresult; this should happen.</para>
+      </section>
     </section>
 
     <section id="ff3test"><title>Firefox 3 Test Plan</title>
-      <orderedlist>
-        <listitem>
-          <para>&tprocedure; perform this action.</para>
-          <para>&tresult; this should happen.</para>
-        </listitem>
-      </orderedlist>
+      <section><title>Some Test</title>
+        <para>&tgoal; Determine if Orca does something.</para>
+        <para>&tprocedure; perform this action.</para>
+        <para>&tresult; this should happen.</para>
+      </section>
     </section>
 
     <section id="acroreadtest"><title>Adobe Acrobat Reader Test Plan</title>
-      <orderedlist>
-        <listitem>
-          <para>&tprocedure; perform this action.</para>
-          <para>&tresult; this should happen.</para>
-        </listitem>
-      </orderedlist>
+      <section><title>Some Test</title>
+        <para>&tgoal; Determine if Orca does something.</para>
+        <para>&tprocedure; perform this action.</para>
+        <para>&tresult; this should happen.</para>
+      </section>
     </section>
 
     <section id="javatest"><title>Java Platform Test Plan</title>
-      <orderedlist>
-        <listitem>
-          <para>&tprocedure; perform this action.</para>
-          <para>&tresult; this should happen.</para>
-        </listitem>
-      </orderedlist>
+      <section><title>Some Test</title>
+        <para>&tgoal; Determine if Orca does something.</para>
+        <para>&tprocedure; perform this action.</para>
+        <para>&tresult; this should happen.</para>
+      </section>
     </section>
 
   </chapter>
