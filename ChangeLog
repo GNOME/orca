@@ -1,3 +1,8 @@
+2006-04-20  Willie Walker <william.walker@sun.com>
+
+	* bugs/bugs.html, bugs/bug_312093.py (new): update based upon 
+	Firefox 2.0a1 nightly from 2006-04-20.
+	
 2006-04-17  Willie Walker <william.walker@sun.com>
 
 	* src/orca/default.py: fix for bug 338687 - no longer
