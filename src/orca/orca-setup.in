@@ -30,9 +30,6 @@
 #
 # * Add comments to each of the methods and routines.
 #
-# * Adjust the setupBraille() routine to no longer check whether we can do
-#   braille. It should just ask the question: Enable Braille Support? y or n.
-#
 # * Adjust the way that the nonGui side works, so that the changes aren't
 #   written to the user-settings.py file, until the user has answered all
 #   the questions.
@@ -842,34 +839,6 @@ def setupSpeech():
     return True
 
 
-def setupBraille():
-    """Sets up Braille support.  If Braille is available and the user
-    wants it, returns True.  If Braille is unavailable or the user
-    doesn't want it, returns False.
-    """
-
-    working = False
-    try:
-        import orca.braille as braille
-        working = braille.init()
-	braille.shutdown()
-    except:
-        pass
-
-    if working:
-        enableBraille = sayAndPrint(
-            _("Braille support appears to work, enable it?  Enter y or n. "),
-            False,
-            True)
-
-        if enableBraille[0:1] == 'Y' or enableBraille[0:1] == 'y':
-            return True
-        else:
-            return False
-    else:
-        return False
-
-
 def enableAccessibility():
     """Enables the GNOME accessibility flag.  Users need to log out and
     then back in for this to take effect."""
@@ -934,16 +903,11 @@ def doNonGui():
     else:
         settings.writelines("\norca.settings.enableSpeech" + trueStr)
 
-    # We'll always enable braille for now.  Orca will recover gracefully
-    # if it cannot connect to BrlTTY.
-    #
-    settings.writelines("orca.settings.enableBraille" + trueStr)
-    
-    #enableBraille = setupBraille()
-    #if enableBraille:
-    #    settings.writelines("orca.settings.enableBraille" + trueStr)
-    #else:
-    #    settings.writelines("orca.settings.enableBraille" + falseStr)
+    enableBraille= sayAndPrint(_("Enable Braille?  Enter y or n: "), True, True)
+    if enableBraille[0:1] == 'Y' or enableBraille[0:1] == 'y':
+        settings.writelines("orca.settings.enableBraille" + trueStr)
+    else:
+        settings.writelines("orca.settings.enableBraille" + falseStr)
 
     enableBrailleMonitor = sayAndPrint(_("Enable Braille Monitor?  Enter y or n: "), True, True)
     if enableBrailleMonitor[0:1] == 'Y' or enableBrailleMonitor[0:1] == 'y':

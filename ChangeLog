@@ -1,5 +1,12 @@
 2006-04-21  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/orca-setup.in
+          Adjusted the nonGui() side of orca-setup to ask the question:
+          "Enable Braille?  Enter y or n: ", rather than always set it
+          to True. Removed the now redundant seupBraille() routine.
+
+2006-04-21  Rich Burridge <rich.burridge@sun.com>
+
         * configure.in 
           src/orca/Makefile.am
           src/orca/orca-setup.glade
