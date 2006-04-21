@@ -1,5 +1,11 @@
 2006-04-21  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/orca-setup.glade
+          Removed three unwanted "label-for" relationships from the
+          orca-setup Glade file.
+
+2006-04-21  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/orca-setup.in
           Adjusted the nonGui() side of orca-setup to ask the question:
           "Enable Braille?  Enter y or n: ", rather than always set it
