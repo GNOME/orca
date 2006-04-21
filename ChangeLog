@@ -1,3 +1,21 @@
+2006-04-21  Rich Burridge <rich.burridge@sun.com>
+
+        * configure.in 
+          src/orca/Makefile.am
+          src/orca/orca-setup.glade
+          src/orca/orca-setup.in
+          Created an initial version of a GUI for Orca configuration.
+          At the moment, if you run "orca-setup", it will default to
+          the command line version and will ask you a series of questions.
+          If you start it with "orca-setup -gui", then it will bring up
+          a GUI equivalent. 
+
+          There is still work to do on this before it can be announced 
+          on the Orca mailing list. When it's ready, the plan is to swap 
+          the default behaviour (i.e. no command line options) to be the 
+          GUI version. The command line version would still be available 
+          via a "-nogui" command line option.
+
 2006-04-20  Willie Walker <william.walker@sun.com>
 
 	* bugs/bugs.html, bugs/bug_312093.py (new): update based upon 

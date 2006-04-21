@@ -19,107 +19,589 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+# TODO:
+#
+# * Need to initially highlight the item in each of the three tree views that
+#   is currently selected.
+#
+# * The systemsSelectionChanged() handler doesn't do the right thing. If 
+#   there is only one speech factory this isn't a problem, as the label 
+#   and list GUI items for the known factories will be insensitive.
+#
+# * Add comments to each of the methods and routines.
+#
+# * Adjust the setupBraille() routine to no longer check whether we can do
+#   braille. It should just ask the question: Enable Braille Support? y or n.
+#
+# * Adjust the way that the nonGui side works, so that the changes aren't
+#   written to the user-settings.py file, until the user has answered all
+#   the questions.
+#
+# * The code is rather ugly in parts. Try to refactor it to reduce duplicate 
+#   code and to make it cleaner.
+
+
 """Permits the user to set up preferences for orca using speech prompts
 and a command line interface.
 """
 
-import os, commands, sys, time
+import os
+import commands
+import sys
+import time
 import pprint
+import gettext
+import gtk
+import gtk.glade
+import locale
 
 import orca.acss
 import orca.settings
+import orca.speech as speech
+import orca.speechserver as speechserver
 
 from orca.orca_i18n import _  # for gettext support
+
+factory = None
+factoryChoices = None
+factoryInfos = None
+families = None
+orcadir = None
+server = None
+serverChoices = None
+settings = None
+voiceChoices = None
+
+speechSystemsModel = None
+speechServersModel = None
+voicesModel = None
+
+enableSpeech = False
+enableBraille = True
+enableBrailleMonitor = False
+
+enableEchoByWord = False
+enableKeyEcho = False
+enablePrintableKeys = False
+enableModifierKeys = False
+enableLockingKeys = False
+enableFunctionKeys = False
+enableActionKeys = False
+
+defaultACSS = None
+uppercaseACSS = None
+hyperlinkACSS = None
+
+servers = []
 
 trueStr  = " = True\n"
 falseStr = " = False\n"
 
-# Create the user's .orca directory if it doesn't already exist.
-#
-orcadir = os.path.join(os.environ["HOME"], ".orca")
-try:
-    os.chdir(orcadir)
-except:
-    print _("Creating .orca directory.")
-    try:
-        os.mkdir(orcadir)
-    except:
-        # [[[TODO: WDW - need to print a message and fail here.]]]
+
+class GladeWrapper:
+    """
+    Superclass for glade based applications. Just derive from this
+    and your subclass should create methods whose names correspond to
+    the signal handlers defined in the glade file. Any other attributes
+    in your class will be safely ignored.
+
+    This class will give you the ability to do:
+        subclass_instance.GtkWindow.method(...)
+        subclass_instance.widget_name...
+    """
+
+
+    def __init__(self, Filename, WindowName):
+        # Load glade file.
+        self.widgets = gtk.glade.XML(Filename, WindowName, gettext.textdomain())
+        self.GtkWindow = getattr(self, WindowName)
+
+        instance_attributes = {}
+        for attribute in dir(self.__class__):
+            instance_attributes[attribute] = getattr(self, attribute)
+        self.widgets.signal_autoconnect(instance_attributes)
+
+
+    def __getattr__(self, attribute):   # Called when no attribute in __dict__
+        widget = self.widgets.get_widget(attribute)
+        if widget is None:
+            raise AttributeError("Widget [" + attribute + "] not found")
+        self.__dict__[attribute] = widget   # Add reference to cache.
+
+        return widget
+
+
+class orcaSetupGUI(GladeWrapper):
+
+    def _init(self):
+        global defaultACSS, enableSpeech
+        global factory, factoryInfos, factoryChoices
+        global server, serverChoices, servers, settings
+        global speechSystemsModel, speechServersModel, voicesModel
+
+        speechSystemsModel = self.initList(self.speechSystems)
+        selection = self.speechSystems.get_selection()
+        selection.connect("changed", self.systemsSelectionChanged)
+
+        speechServersModel = self.initList(self.speechServers)
+        selection = self.speechServers.get_selection()
+        selection.connect("changed", self.serversSelectionChanged)
+
+        voicesModel = self.initList(self.voices)
+        selection = self.voices.get_selection()
+        selection.connect("changed", self.voicesSelectionChanged)
+
+        self.setKeyEchoItems()
+
+        # Use this because callbacks will often hang when not running
+        # with bonobo main in use.
         #
-        pass
+        orca.settings.enableSpeechCallbacks = False
 
-# Create the user's .orca/orca-scripts directory if it doesn't 
-# already exist.
-#
-orcaScriptDir = os.path.join(os.environ["HOME"], ".orca", "orca-scripts")
-try:
-    os.chdir(orcaScriptDir)
-except:
-    print _("Creating .orca script directory.")
-    try:
-        os.mkdir(orcaScriptDir)
-    except:
-        # [[[TODO: richb - need to print a message and fail here.]]]
+        factories = speech.getSpeechServerFactories()
+        if len(factories) == 0:
+            self.inactivateSpeechGUI()
+            return
+
+        speech.init()
+        speech.speak(_("Welcome to Orca setup."))
+
+        workingFactories = []
+        for factory in factories:
+            try:
+                factoryInfos = factory.SpeechServer.getSpeechServerInfos()
+                workingFactories.append([factory, factoryInfos])
+            except:
+                pass
+
+        factoryChoices = {}
+        if len(workingFactories) == 0:
+            say(_("Speech is unavailable.\n"))
+            self.inactivateSpeechGUI()
+            return
+        elif len(workingFactories) > 1:
+            i = 1
+            for workingFactory in workingFactories:
+                factoryChoices[i] = workingFactory
+                iter = speechSystemsModel.append()
+                speechSystemsModel.set(iter, 0, 
+                               workingFactory[0].SpeechServer.getFactoryName())
+                i += 1
+            [factory, factoryInfos] = factoryChoices[1]
+        else:
+            factoryChoices[1] = workingFactories[0]
+            iter = speechSystemsModel.append()
+            speechSystemsModel.set(iter, 0,
+                         workingFactories[0][0].SpeechServer.getFactoryName())
+            [factory, factoryInfos] = workingFactories[0]
+            self.speechSystemsLabel.set_sensitive(False)
+            self.speechSystems.set_sensitive(False)
+
+        self.setupServers(factory)
+        self.setupVoices(server)
+        enableSpeech = True
+
+
+    def setupServers(self, factory):
+        global factoryInfos, server, serverChoices, servers
+        global speechServersModel
+
+        servers = []
+        for info in factoryInfos:
+            try:
+                server = factory.SpeechServer.getSpeechServer(info)
+                if server:
+                    servers.append(server)
+            except:
+                pass
+
+        serverChoices = {}
+        if len(servers) == 0:
+            say(_("No servers available.\n"))
+            say(_("Speech will not be used.\n"))
+            self.inactivateSpeechGUI()
+            return
+        if len(servers) > 1:
+            i = 1
+            for server in servers:
+                serverChoices[i] = server
+                iter = speechServersModel.append()
+                speechServersModel.set(iter, 0, server.getInfo()[0])
+                i += 1
+            server = serverChoices[1]
+        else:
+            serverChoices[1] = servers[0]
+            iter = speechServersModel.append()
+            speechServersModel.set(iter, 0, servers[0].getInfo()[0])
+            server = servers[0]
+            self.speechServersLabel.set_sensitive(False)
+            self.speechServers.set_sensitive(False)
+
+
+    def setupVoices(self, server):
+        global defaultACSS, families, voiceChoices, voicesModel
+
+        families = server.getVoiceFamilies()
+
+        voiceChoices = {}
+        if len(families) == 0:
+            say(_("No voices available.\n"))
+            say(_("Speech will not be used.\n"))
+            self.inactivateSpeechGUI()
+            return
+        if len(families) > 1:
+            i = 1
+            for family in families:
+                name = family[speechserver.VoiceFamily.NAME]
+                acss = orca.acss.ACSS({orca.acss.ACSS.FAMILY : family})
+                voiceChoices[i] = acss
+                iter = voicesModel.append()
+                voicesModel.set(iter, 0, name)
+                i += 1
+            defaultACSS = voiceChoices[1]
+        else:
+            name = families[0][speechserver.VoiceFamily.NAME]
+            iter = voicesModel.append()
+            voicesModel.set(iter, 0, name)
+            defaultACSS = orca.acss.ACSS({orca.acss.ACSS.FAMILY : families[0]})
+            voiceChoices[1] = defaultACSS
+            self.voicesLabel.set_sensitive(False)
+            self.voices.set_sensitive(False)
+
+
+    def getSystemChoiceIndex(self, factoryChoices, result):
+        i = 1
+        for factory in factoryChoices.values():
+            name = factory[0].SpeechServer.getFactoryName()
+            if name == result:
+                return i
+            i += 1
+
+        return -1
+
+
+    def getServerChoiceIndex(self, serverChoices, result):
+        i = 1
+        for server in serverChoices.values():
+            name = server.getInfo()[0]
+            if name == result:
+                return i
+            i += 1
+
+        return -1
+
+
+    def getVoiceChoiceIndex(self, families, result):
+        i = 1
+        for family in families:
+            name = family[speechserver.VoiceFamily.NAME]
+            if name == result:
+                return i
+            i += 1
+
+        return -1
+
+
+    def initList(self, list):
+        model = gtk.ListStore(str)
+        list.set_model(model)
+        column = gtk.TreeViewColumn("", gtk.CellRendererText(), text=0)
+        list.append_column(column)
+
+        return model
+
+
+    def inactivateSpeechGUI(self):
+        global enableSpeech
+
+        enableSpeech = False
+
+        self.speechSystemsLabel.set_sensitive(False)
+        self.speechSystems.set_sensitive(False)
+        self.speechServersLabel.set_sensitive(False)
+        self.speechServers.set_sensitive(False)
+        self.voicesLabel.set_sensitive(False)
+        self.voices.set_sensitive(False)
+
+
+    def setKeyEchoItems(self):
+        if self.keyEchoCheckbutton.get_active():
+            enable = True
+        else:
+            enable = False
+        self.alphaPunctCheckbutton.set_sensitive(enable)
+        self.modifierCheckbutton.set_sensitive(enable)
+        self.lockingCheckbutton.set_sensitive(enable)
+        self.functionCheckbutton.set_sensitive(enable)
+        self.actionCheckbutton.set_sensitive(enable)
+
+
+    def systemsSelectionChanged(self, selection):
+        global factory, factoryChoices, server, servers, serverChoices
+
+        model, iter = selection.get_selected()
+        if iter:
+            results = model.get_value(iter, 0)
+            index = self.getSystemChoiceIndex(factoryChoices, results)
+
+            for server in servers:
+                server.shutdown()
+
+            factory = factoryChoices[index]
+            speechServersModel.clear()
+            self.setupServers(factory)
+
+            server = serverChoices[1]
+            self.setupVoices(server)
+
+
+    def serversSelectionChanged(self, selection):
+        global server, serverChoices
+
+        model, iter = selection.get_selected()
+        if iter:
+            results = model.get_value(iter, 0)
+            index = self.getServerChoiceIndex(serverChoices, results)
+
+            voicesModel.clear()
+            server = serverChoices[index]
+            self.setupVoices(server)
+
+
+    def voicesSelectionChanged(self, selection):
+        global defaultACSS, families, voiceChoices
+
+        model, iter = selection.get_selected()
+        if iter:
+            results = model.get_value(iter, 0)
+            index = self.getVoiceChoiceIndex(families, results)
+            defaultACSS = voiceChoices[index]
+
+
+    def brailleSupportChecked(self, widget):
+        global enableBraille
+        enableBraille = widget.get_active()
+
+
+    def brailleMonitorChecked(self, widget):
+        global enableBrailleMonitor
+        enableBrailleMonitor = widget.get_active()
+
+
+    def keyEchoChecked(self, widget):
+        global enableKeyEcho
+        enableKeyEcho = widget.get_active()
+        self.setKeyEchoItems()
+
+
+    def printableKeysChecked(self, widget):
+        global enablePrintableKeys
+        enablePrintableKeys = widget.get_active()
+
+
+    def modifierKeysChecked(self, widget):
+        global enableModifierKeys
+        enableModifierKeys = widget.get_active()
+
+
+    def lockingKeysChecked(self, widget):
+        global enableLockingKeys
+        enableLockingKeys = widget.get_active()
+
+
+    def functionKeysChecked(self, widget):
+        global enableFunctionKeys
+        enableFunctionKeys = widget.get_active()
+
+
+    def actionKeysChecked(self, widget):
+        global enableActionKeys
+        enableActionKeys = widget.get_active()
+
+
+    def echoByWordChecked(self, widget):
+        global enableEchoByWord
+        enableEchoByWord = widget.get_active()
+
+
+    def helpButtonClicked(self, widget):
+        say(_("Help not currently implemented."))
+
+
+    def cancelButtonClicked(self, widget):
+        self.quit()
+
+
+    def applyButtonClicked(self, widget):
+        global defaultACSS, uppercaseACSS, hyperlinkACSS
+        global factory, server, settings
+        global enableSpeech, enableBraille, enableBrailleMonitor
+        global enableEchoByWord, enableKeyEcho, enablePrintableKeys
+        global enableModifierKeys, enableLockingKeys, enableFunctionKeys
+        global enableActionKeys
+
+        createFiles()
+
+        writeSetting("orca.settings.enableSpeech", enableSpeech)
+
+        # Force the rate to 50 so it will be set to something
+        # and output to the user settings file.  50 is chosen
+        # here, BTW, since it is the default value.  The same
+        # goes for gain (volume) and average-pitch, but they
+        # range from 0-10 instead of 0-100.
         #
-        pass
+        defaultACSS[orca.acss.ACSS.RATE] = 50
+        defaultACSS[orca.acss.ACSS.GAIN] = 9
+        defaultACSS[orca.acss.ACSS.AVERAGE_PITCH] = 5
+        uppercaseACSS = orca.acss.ACSS({orca.acss.ACSS.AVERAGE_PITCH : 6})
+        hyperlinkACSS = orca.acss.ACSS({orca.acss.ACSS.AVERAGE_PITCH : 2})
 
-# Create an empty __init__.py file in the user's script directory, if
-# it doesn't already exist.
-#
-initFile = os.path.join(os.environ["HOME"], ".orca", \
-                        "orca-scripts", "__init__.py")
-if not os.path.exists(initFile):
-    print _("Creating __init_.py in .orca script directory.")
-#    try:
-    print "initFile: ", initFile
-    os.close(os.open(initFile, os.O_CREAT, 0700))
-#    except:
-#        # [[[TODO: richb - need to print a message and fail here.]]]
-#        #
-#        pass
+        voices = {
+            orca.settings.DEFAULT_VOICE   : defaultACSS,
+            orca.settings.UPPERCASE_VOICE : uppercaseACSS,
+            orca.settings.HYPERLINK_VOICE : hyperlinkACSS
+        }
 
-        
-# Create a new settings file
-#
-settingsFileName = os.path.join(orcadir, "user-settings.py")
-settings = open(settingsFileName, "w")
-settings.writelines("# user-settings.py - custom Orca settings\n")
-settings.writelines("# Generated by orca-setup.  DO NOT EDIT THIS FILE!!!\n")
-settings.writelines("# If you want permanent customizations that will not\n")
-settings.writelines("# be overwritten, edit orca-customizations.py.\n")
-settings.writelines("#\n")
-settings.writelines("import re\n")
-settings.writelines("\n")
-settings.writelines("import orca.debug\n")
-settings.writelines("import orca.settings\n")
-settings.writelines("import orca.acss\n")
-settings.writelines("\n")
-settings.writelines("#orca.debug.debugLevel = orca.debug.LEVEL_OFF\n")
-settings.writelines("orca.debug.debugLevel = orca.debug.LEVEL_SEVERE\n")
-settings.writelines("#orca.debug.debugLevel = orca.debug.LEVEL_WARNING\n")
-settings.writelines("#orca.debug.debugLevel = orca.debug.LEVEL_INFO\n")
-settings.writelines("#orca.debug.debugLevel = orca.debug.LEVEL_CONFIGURATION\n")
-settings.writelines("#orca.debug.debugLevel = orca.debug.LEVEL_FINE\n")
-settings.writelines("#orca.debug.debugLevel = orca.debug.LEVEL_FINER\n")
-settings.writelines("#orca.debug.debugLevel = orca.debug.LEVEL_FINEST\n")
-settings.writelines("#orca.debug.debugLevel = orca.debug.LEVEL_ALL\n")
-settings.writelines("\n")
-settings.writelines("#orca.debug.eventDebugLevel = orca.debug.LEVEL_OFF\n")
-settings.writelines("#orca.debug.eventDebugFilter =  None\n")
-settings.writelines("#orca.debug.eventDebugFilter = re.compile('[\S]*focus|[\S]*activ')\n")
-settings.writelines("#orca.debug.eventDebugFilter = re.compile('nomatch')\n")
-settings.writelines("#orca.debug.eventDebugFilter = re.compile('[\S]*:accessible-name')\n")
+        settings.writelines("orca.settings.speechServerFactory = '" \
+                            + factory.__name__ + "'\n")
+        settings.writelines("orca.settings.speechServerInfo = " \
+                            + repr(server.getInfo()) + "\n")
 
-settings.writelines("\n")
-settings.writelines("#orca.debug.debugFile = open('debug.out', 'w', 0)\n")
-settings.writelines("\n")
+        settings.writelines("orca.settings.voices = {\n")
+        for voice in voices:
+            settings.writelines("     '%s' : orca.acss.ACSS(" % voice)
+            settings.writelines(pprint.pformat(voices[voice]) + "),\n")
+        settings.writelines("}\n\n")
 
-# Speech setup
-#
-import orca.speech as speech
-import orca.speechserver as speechserver
+        writeSetting("orca.settings.enableBraille", enableBraille)
+        writeSetting("orca.settings.enableBrailleMonitor", enableBrailleMonitor)
 
-servers = []
+        if not enableSpeech:
+            settings.writelines("orca.settings.enableEchoByWord" + falseStr)
+            settings.writelines("orca.settings.enableKeyEcho" + falseStr)
+        else:
+            writeSetting("orca.settings.enableEchoByWord", enableEchoByWord)
+            writeSetting("orca.settings.enableKeyEcho", enableKeyEcho)
+            writeSetting("orca.settings.enablePrintableKeys", 
+                         enablePrintableKeys)
+            writeSetting("orca.settings.enableModifierKeys", enableModifierKeys)
+            writeSetting("orca.settings.enableLockingKeys", enableLockingKeys)
+            writeSetting("orca.settings.enableFunctionKeys", enableFunctionKeys)
+            writeSetting("orca.settings.enableActionKeys", enableActionKeys)
+
+        finishOrcaSetup()
+
+
+    def quit(self, *args):
+        global servers
+
+        say("Orca setup cancelled.\n", True)
+        time.sleep(2)
+
+        for server in servers:
+            server.shutdown()
+
+        speech.shutdown()
+        gtk.main_quit()
+
+
+    def windowDestroyed(self, widget):
+        self.quit()
+
+
+def writeSetting(setting, value):
+    global settings
+
+    if value:
+        settings.writelines(setting + trueStr)
+    else:
+        settings.writelines(setting + falseStr)
+
+
+def createOrcaDir():
+    global orcadir
+
+    # Create the user's .orca directory if it doesn't already exist.
+    #
+    orcadir = os.path.join(os.environ["HOME"], ".orca")
+    try:
+        os.chdir(orcadir)
+    except:
+        print _("Creating .orca directory.")
+        try:
+            os.mkdir(orcadir)
+        except:
+            # [[[TODO: WDW - need to print a message and fail here.]]]
+            #
+            pass
+
+
+def createOrcaScriptsDir():
+    # Create the user's .orca/orca-scripts directory if it doesn't 
+    # already exist.
+    #
+    orcaScriptDir = os.path.join(os.environ["HOME"], ".orca", "orca-scripts")
+    try:
+        os.chdir(orcaScriptDir)
+    except:
+        print _("Creating .orca script directory.")
+        try:
+            os.mkdir(orcaScriptDir)
+        except:
+            # [[[TODO: richb - need to print a message and fail here.]]]
+            #
+            pass
+
+
+def createOrcaInitFile():
+    # Create an empty __init__.py file in the user's script directory, if
+    # it doesn't already exist.
+    #
+    initFile = os.path.join(os.environ["HOME"], ".orca", \
+                            "orca-scripts", "__init__.py")
+    if not os.path.exists(initFile):
+        print _("Creating __init_.py in .orca script directory.")
+        os.close(os.open(initFile, os.O_CREAT, 0700))
+
+
+def createSettingsFile():
+    global orcadir, settings
+
+    # Create a new settings file and wrote out debug settings.
+    #
+    settingsFileName = os.path.join(orcadir, "user-settings.py")
+    settings = open(settingsFileName, "w")
+    settings.writelines("# user-settings.py - custom Orca settings\n")
+    settings.writelines("# Generated by orca-setup.  DO NOT EDIT THIS FILE!!!\n")
+    settings.writelines("# If you want permanent customizations that will not\n")
+    settings.writelines("# be overwritten, edit orca-customizations.py.\n")
+    settings.writelines("#\n")
+    settings.writelines("import re\n")
+    settings.writelines("\n")
+    settings.writelines("import orca.debug\n")
+    settings.writelines("import orca.settings\n")
+    settings.writelines("import orca.acss\n")
+    settings.writelines("\n")
+    settings.writelines("#orca.debug.debugLevel = orca.debug.LEVEL_OFF\n")
+    settings.writelines("orca.debug.debugLevel = orca.debug.LEVEL_SEVERE\n")
+    settings.writelines("#orca.debug.debugLevel = orca.debug.LEVEL_WARNING\n")
+    settings.writelines("#orca.debug.debugLevel = orca.debug.LEVEL_INFO\n")
+    settings.writelines("#orca.debug.debugLevel = orca.debug.LEVEL_CONFIGURATION\n")
+    settings.writelines("#orca.debug.debugLevel = orca.debug.LEVEL_FINE\n")
+    settings.writelines("#orca.debug.debugLevel = orca.debug.LEVEL_FINER\n")
+    settings.writelines("#orca.debug.debugLevel = orca.debug.LEVEL_FINEST\n")
+    settings.writelines("#orca.debug.debugLevel = orca.debug.LEVEL_ALL\n")
+    settings.writelines("\n")
+    settings.writelines("#orca.debug.eventDebugLevel = orca.debug.LEVEL_OFF\n")
+    settings.writelines("#orca.debug.eventDebugFilter =  None\n")
+    settings.writelines("#orca.debug.eventDebugFilter = re.compile('[\S]*focus|[\S]*activ')\n")
+    settings.writelines("#orca.debug.eventDebugFilter = re.compile('nomatch')\n")
+    settings.writelines("#orca.debug.eventDebugFilter = re.compile('[\S]*:accessible-name')\n")
+
+    settings.writelines("\n")
+    settings.writelines("#orca.debug.debugFile = open('debug.out', 'w', 0)\n")
+    settings.writelines("\n")
+
 
 def sayAndPrint(text, stop=False, getInput=False):
     """Prints the given text.  In addition, if the text field
@@ -144,6 +626,15 @@ def sayAndPrint(text, stop=False, getInput=False):
     else:
         print text        
 
+
+def say(text, stop=False):
+
+    if stop:
+        speech.stop()
+
+    speech.speak(text)
+
+
 def setupSpeech():
     """Sets up speech support.  If speech setup is successful and the
     user wants it, writes speech settings to the setting file and returns
@@ -151,7 +642,7 @@ def setupSpeech():
     returns False.
     """
     
-    global servers
+    global servers, settings
 
     # Use this because callbacks will often hang when not running
     # with bonobo main in use.
@@ -276,7 +767,8 @@ def setupSpeech():
 
     # Ask the user if they would like to enable echoing by word.
     #
-    echoByWord = sayAndPrint(_("Enable echo by word?  Enter y or n: "), True, True)
+    echoByWord = sayAndPrint(_("Enable echo by word?  Enter y or n: "), 
+                             True, True)
     if echoByWord[0:1] == 'Y' or echoByWord[0:1] == 'y':
         state = trueStr
     else:
@@ -349,6 +841,7 @@ def setupSpeech():
 
     return True
 
+
 def setupBraille():
     """Sets up Braille support.  If Braille is available and the user
     wants it, returns True.  If Braille is unavailable or the user
@@ -376,6 +869,7 @@ def setupBraille():
     else:
         return False
 
+
 def enableAccessibility():
     """Enables the GNOME accessibility flag.  Users need to log out and
     then back in for this to take effect."""
@@ -390,42 +884,83 @@ def enableAccessibility():
         sayAndPrint("You need to log out and log back in for the change "\
                     +"to take effect.")
 
-enableSpeech = setupSpeech()
-if enableSpeech == False:
-    settings.writelines("orca.settings.enableEchoByWord" + falseStr)
-    settings.writelines("orca.settings.enableKeyEcho" + falseStr)
-    settings.writelines("\norca.settings.enableSpeech" + falseStr)
-else:
-    settings.writelines("\norca.settings.enableSpeech" + trueStr)
 
-# We'll always enable braille for now.  Orca will recover gracefully
-# if it cannot connect to BrlTTY.
-#
-settings.writelines("orca.settings.enableBraille" + trueStr)
+def createFiles():
+    createOrcaDir()
+    createOrcaScriptsDir()
+    createOrcaInitFile()
+    createSettingsFile()
+
+
+def finishOrcaSetup():
+    settings.writelines("\ntry:\n")
+    settings.writelines("    __import__(\"orca-customizations\")\n")
+    settings.writelines("except ImportError:\n")
+    settings.writelines("    pass\n")
+
+    enableAccessibility()
+
+    sayAndPrint("Orca setup finished.\n", True)
+    time.sleep(2)
+
+    for server in servers:
+        server.shutdown()
+
+    speech.shutdown()
+    sys.exit(0)
+
+
+def doGui():
+    locale.setlocale(locale.LC_ALL, '')
+
+    gladeFile = "@ORCA_SETUP_GLADE_DIR@" + "/orca-setup.glade"
+    OS = orcaSetupGUI(gladeFile, "orcaSetupWindow")
+    OS._init()
+
+    gtk.main()
+    sys.exit(0)
+
+
+def doNonGui():
+    global settings
+
+    createFiles()
+
+    enableSpeech = setupSpeech()
+    if enableSpeech == False:
+        settings.writelines("orca.settings.enableEchoByWord" + falseStr)
+        settings.writelines("orca.settings.enableKeyEcho" + falseStr)
+        settings.writelines("\norca.settings.enableSpeech" + falseStr)
+    else:
+        settings.writelines("\norca.settings.enableSpeech" + trueStr)
+
+    # We'll always enable braille for now.  Orca will recover gracefully
+    # if it cannot connect to BrlTTY.
+    #
+    settings.writelines("orca.settings.enableBraille" + trueStr)
     
-#enableBraille = setupBraille()
-#if enableBraille:
-#    settings.writelines("orca.settings.enableBraille" + trueStr)
-#else:
-#    settings.writelines("orca.settings.enableBraille" + falseStr)
+    #enableBraille = setupBraille()
+    #if enableBraille:
+    #    settings.writelines("orca.settings.enableBraille" + trueStr)
+    #else:
+    #    settings.writelines("orca.settings.enableBraille" + falseStr)
 
-enableBrailleMonitor = sayAndPrint(_("Enable Braille Monitor?  Enter y or n: "), True, True)
-if enableBrailleMonitor[0:1] == 'Y' or enableBrailleMonitor[0:1] == 'y':
-    settings.writelines("orca.settings.enableBrailleMonitor" + trueStr)
-else:
-    settings.writelines("orca.settings.enableBrailleMonitor" + falseStr)
+    enableBrailleMonitor = sayAndPrint(_("Enable Braille Monitor?  Enter y or n: "), True, True)
+    if enableBrailleMonitor[0:1] == 'Y' or enableBrailleMonitor[0:1] == 'y':
+        settings.writelines("orca.settings.enableBrailleMonitor" + trueStr)
+    else:
+        settings.writelines("orca.settings.enableBrailleMonitor" + falseStr)
 
-settings.writelines("\ntry:\n")
-settings.writelines("    __import__(\"orca-customizations\")\n")
-settings.writelines("except ImportError:\n")
-settings.writelines("    pass\n")
+    finishOrcaSetup()
 
-enableAccessibility()
 
-sayAndPrint("Orca setup finished.\n", True)
-time.sleep(2)
+def main():
+    for arg in sys.argv:
+        if arg == _("-gui"):
+            doGui()
 
-for server in servers:
-    server.shutdown()
+    doNonGui()
 
-speech.shutdown()
+
+if __name__ == "__main__":
+    main()

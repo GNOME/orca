@@ -3,6 +3,7 @@ orca_SCRIPTS = \
 	orca-setup
 
 orcadir=$(bindir)
+gladedir=$(datadir)/orca/glade
 
 orca_pathdir=$(pyexecdir)
 
@@ -42,3 +43,9 @@ orca_python_PYTHON = \
 orca_pythondir=$(pyexecdir)/orca
 
 SUBDIRS = scripts
+
+glade_DATA = \
+	orca-setup.glade
+
+EXTRA_DIST = \
+	$(glade_DATA)
