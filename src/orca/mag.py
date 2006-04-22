@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005 Sun Microsystems Inc.
+# Copyright 2005-2006 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -93,6 +93,14 @@ def magnifyAccessible(acc):
     if not extents:
         return
 
+    [x, y, width, height] = [extents.x, extents.y, extents.width, extents.height]
+    
+    if acc.text:
+        offset = acc.text.caretOffset
+        if offset >= 0:
+            [x, y, width, height] = acc.text.getCharacterExtents(offset,
+                                                                 0) # coord type screen
+            
     # Avoid jerking the display around if the mouse is what ended up causing
     # this event.  We guess this by seeing if this request has come in within
     # a close period of time.  [[[TODO: WDW - this is a hack and really
@@ -105,10 +113,10 @@ def magnifyAccessible(acc):
     # Determine if the accessible is partially to the left, right,
     # above, or below the current region of interest (ROI).
     #
-    left = extents.x < _roi.x1
-    right = (extents.x + extents.width) > _roi.x2
-    above = extents.y < _roi.y1
-    below = (extents.y + extents.height) > _roi.y2
+    left = x < _roi.x1
+    right = (x + width) > _roi.x2
+    above = y < _roi.y1
+    below = (y + height) > _roi.y2
 
     # If it is already completely showing, do nothing.
     #
@@ -135,25 +143,25 @@ def magnifyAccessible(acc):
     y2 = _roi.y2
 
     if left:
-        x1 = extents.x
+        x1 = x
         x2 = x1 + _roiWidth
     elif right:
-        if extents.width > _roiWidth:
-            x1 = extents.x
+        if width > _roiWidth:
+            x1 = x
             x2 = x1 + _roiWidth
         else:
-            x2 = extents.x + extents.width
+            x2 = x + width
             x1 = x2 - _roiWidth
 
     if above:
-        y1 = extents.y
+        y1 = y
         y2 = y1 + _roiHeight
     elif below:
-        if extents.height > _roiHeight:
-            y1 = extents.y
+        if height > _roiHeight:
+            y1 = y
             y2 = y1 + _roiHeight
         else:
-            y2 = extents.y + extents.height
+            y2 = y + height
             y1 = y2 - _roiHeight
 
     _setROI(GNOME.Magnifier.RectBounds(x1, y1, x2, y2))

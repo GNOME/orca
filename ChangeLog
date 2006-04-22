@@ -1,3 +1,9 @@
+2006-04-22  Willie Walker <william.walker@sun.com>
+
+	* configure.in: get the ORCA_SETUP_GLADE_DIR working better.
+	* src/orca/mag.py: minor attempt to follow the caret when it
+	moves.
+
 2006-04-21  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade
