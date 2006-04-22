@@ -1,6 +1,7 @@
 2006-04-22  Willie Walker <william.walker@sun.com>
 
 	* NEWS, configure.in, README: prep for 0.2.3.
+	* po/POTFILES.in: remove Gecko.py.
 	* configure.in: get the ORCA_SETUP_GLADE_DIR working better.
 	* src/orca/mag.py: minor attempt to follow the caret when it
 	moves.
