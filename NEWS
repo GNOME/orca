@@ -1,3 +1,29 @@
+0.2.3
+* Many changes to the way settings are handled, including allowing them
+  to be dynamically reloaded at run time.
+* Nascent support for configuration GUI (still needs work).
+* First pass at key and word echo (still needs work).
+* Added support for ~/.orca/orca-customizations.py, a file that will
+  not be overwritten, but will also be loaded if it exists.
+* New settings.orcaModifierKeys setting to allow the user to specify
+  which key(s) are to be used as the Orca modifier key.
+* Refactor of script.py to include methods for getKeyBindings,
+  getBrailleBindings, getInputEventHandlers, and getListeners to make it
+  easier for subclasses to override these things.
+* Provide support to allow a script on a toolkit basis versus just being on
+  a per app basis.
+* Fixed the way localized files were being found and used.
+* Reduced repetitive verbosity.
+* Reincorporated nascent support for magnification (still needs work).
+* Updates to the requirements document.
+* Make metacity script recognize apps started after Orca was started.
+* New script for planner.
+* Better handling of spell checking in StarOffice, Evolution, and GEdit.
+* More reliable synchronization of local Accessible cache.
+* Fixes for bugs 338687, 334294, 319643, 319789, 330631, 319651,
+  339690, 334893, 338240, 337857, 337704, 337709, 337489, 337322,
+  336648, 330487.
+
 0.2.2
 * CSUN release - the bits we plan to show at CSUN '06.
 * Add output of text attributes at caret - press Insert+f (Rich Burridge)
