@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-17 16:23-0500\n"
+"POT-Creation-Date: 2006-04-22 16:47-0400\n"
 "PO-Revision-Date: 2005-01-18 12:50+0530\n"
 "Last-Translator: Amanpreet Singh Alam <aalam@redhat.com>\n"
 "Language-Team: Punjabi <fedora-trans-pa@redhat.com>\n"
@@ -22,15 +22,15 @@ msgstr ""
 msgid "grayed"
 msgstr "ਵੱਧ"
 
-#: src/orca/braillegenerator.py:1096 src/orca/speechgenerator.py:1197
+#: src/orca/braillegenerator.py:1085 src/orca/speechgenerator.py:1190
 msgid "expanded"
 msgstr ""
 
-#: src/orca/braillegenerator.py:1098 src/orca/speechgenerator.py:1199
+#: src/orca/braillegenerator.py:1087 src/orca/speechgenerator.py:1192
 msgid "collapsed"
 msgstr ""
 
-#: src/orca/braillegenerator.py:1102
+#: src/orca/braillegenerator.py:1091
 #, python-format
 msgid "TREE LEVEL %d"
 msgstr ""
@@ -55,7 +55,7 @@ msgstr "ਅੰਕ"
 msgid "dollar"
 msgstr "ਡਾਲਰ"
 
-#: src/orca/chnames.py:32 src/orca/speechgenerator.py:891
+#: src/orca/chnames.py:32 src/orca/speechgenerator.py:885
 msgid "percent"
 msgstr "ਪ੍ਰਤੀਸ਼ਤ"
 
@@ -156,131 +156,131 @@ msgstr ""
 msgid "tab"
 msgstr "ਟੈਬ"
 
-#: src/orca/default.py:73
+#: src/orca/default.py:71
 msgid "Performs left click on current flat review item."
 msgstr ""
 
-#: src/orca/default.py:83
+#: src/orca/default.py:75
 msgid "Performs right click on current flat review item."
 msgstr ""
 
-#: src/orca/default.py:93
+#: src/orca/default.py:79
 msgid "Speaks entire document."
 msgstr ""
 
-#: src/orca/default.py:103
+#: src/orca/default.py:83
 msgid "Performs the where am I operation."
 msgstr ""
 
-#: src/orca/default.py:113
+#: src/orca/default.py:87
 msgid "Paints and prints the visible zones in the active window."
 msgstr ""
 
-#: src/orca/default.py:123
+#: src/orca/default.py:91
 msgid "Enters and exits flat review mode."
 msgstr ""
 
-#: src/orca/default.py:133
+#: src/orca/default.py:95
 msgid "Moves flat review to the beginning of the previous line."
 msgstr ""
 
-#: src/orca/default.py:149
+#: src/orca/default.py:99
 msgid "Moves flat review to the home position."
 msgstr ""
 
-#: src/orca/default.py:165
+#: src/orca/default.py:103
 msgid "Speaks the current flat review line."
 msgstr ""
 
-#: src/orca/default.py:181
+#: src/orca/default.py:107
 msgid "Moves flat review to the beginning of the next line."
 msgstr ""
 
-#: src/orca/default.py:197
+#: src/orca/default.py:111
 msgid "Moves flat review to the end position."
 msgstr ""
 
-#: src/orca/default.py:213
+#: src/orca/default.py:115
 msgid "Moves flat review to the previous item or word."
 msgstr ""
 
-#: src/orca/default.py:229
+#: src/orca/default.py:119
 msgid "Moves flat review to the word above the current word."
 msgstr ""
 
-#: src/orca/default.py:245
+#: src/orca/default.py:123
 msgid "Speaks the current flat review item or word."
 msgstr ""
 
-#: src/orca/default.py:261
+#: src/orca/default.py:127
 msgid "Speaks the current flat review object."
 msgstr ""
 
-#: src/orca/default.py:277
+#: src/orca/default.py:131
 msgid "Moves flat review to the next item or word."
 msgstr ""
 
-#: src/orca/default.py:293
+#: src/orca/default.py:135
 msgid "Moves flat review to the word below the current word."
 msgstr ""
 
-#: src/orca/default.py:309
+#: src/orca/default.py:139
 msgid "Moves flat review to the previous character."
 msgstr ""
 
-#: src/orca/default.py:325
+#: src/orca/default.py:143
 msgid "Moves flat review to the end of the line."
 msgstr ""
 
-#: src/orca/default.py:341
+#: src/orca/default.py:147
 msgid "Speaks the current flat review character."
 msgstr ""
 
-#: src/orca/default.py:357
+#: src/orca/default.py:151
 msgid "Moves flat review to the next character."
 msgstr ""
 
-#: src/orca/default.py:373
+#: src/orca/default.py:155
 msgid "Toggles whether to read just the current table cell or the whole row."
 msgstr ""
 
-#: src/orca/default.py:389
+#: src/orca/default.py:159
 msgid "Reads the attributes associated with the current text character."
 msgstr ""
 
-#: src/orca/default.py:404
+#: src/orca/default.py:163
 msgid "Pans the braille display to the left."
 msgstr ""
 
-#: src/orca/default.py:409
+#: src/orca/default.py:167
 msgid "Pans the braille display to the right."
 msgstr ""
 
-#: src/orca/default.py:430
+#: src/orca/default.py:171
 msgid "Moves flat review to the bottom left."
 msgstr ""
 
-#: src/orca/default.py:436
+#: src/orca/default.py:175
 msgid "Returns to object with keyboard focus."
 msgstr ""
 
-#: src/orca/default.py:640 src/orca/default.py:827
+#: src/orca/default.py:720 src/orca/default.py:911
 #, fuzzy, python-format
 msgid "tree level %d"
 msgstr "ਲੜੀ ਦਰਿਸ਼"
 
-#: src/orca/default.py:644 src/orca/default.py:831 src/orca/default.py:898
-#: src/orca/default.py:949
+#: src/orca/default.py:724 src/orca/default.py:915 src/orca/default.py:993
+#: src/orca/default.py:1075
 msgid "No focus"
 msgstr ""
 
-#: src/orca/default.py:1827 src/orca/default.py:1921 src/orca/default.py:1926
-#: src/orca/default.py:1996 src/orca/default.py:2001
+#: src/orca/default.py:1969 src/orca/default.py:2063 src/orca/default.py:2068
+#: src/orca/default.py:2138 src/orca/default.py:2143
 #, fuzzy
 msgid "blank"
 msgstr "ਬੰਗ"
 
-#: src/orca/default.py:1829 src/orca/default.py:1928
+#: src/orca/default.py:1971 src/orca/default.py:2070
 #, fuzzy
 msgid "white space"
 msgstr "ਖਾਲੀ ਥਾਂ"
@@ -289,7 +289,7 @@ msgstr "ਖਾਲੀ ਥਾਂ"
 msgid "Emacspeak Speech Services"
 msgstr ""
 
-#: src/orca/focus_tracking_presenter.py:474
+#: src/orca/focus_tracking_presenter.py:510
 msgid "Switching to focus tracking mode."
 msgstr ""
 
@@ -303,11 +303,11 @@ msgstr ""
 msgid " dot dot dot"
 msgstr ""
 
-#: src/orca/gnomespeechfactory.py:596
+#: src/orca/gnomespeechfactory.py:595
 msgid "faster."
 msgstr ""
 
-#: src/orca/gnomespeechfactory.py:627
+#: src/orca/gnomespeechfactory.py:625
 msgid "slower."
 msgstr ""
 
@@ -332,151 +332,214 @@ msgstr ""
 msgid "F 12"
 msgstr ""
 
-#: src/orca/orca-setup.in:40
-msgid "Creating .orca directory."
-msgstr ".orca ਡਾਇਰੈਕਟਰੀ ਬਣਾਓ"
-
-#: src/orca/orca-setup.in:127 src/orca/orca-setup.in:142
-msgid "Speech is unavailable."
-msgstr ""
-
-#: src/orca/orca-setup.in:131
+#: src/orca/orca-setup.in:164 src/orca/orca-setup.in:655
 msgid "Welcome to Orca setup."
 msgstr "ਓਰਸਾ ਸੈੱਟਅੱਪ ਤੇ ਜੀ ਆਇਆਂ ਨੂੰ।"
 
-#: src/orca/orca-setup.in:145
+#: src/orca/orca-setup.in:176
+msgid "Speech is unavailable.\n"
+msgstr ""
+
+#: src/orca/orca-setup.in:217 src/orca/orca-setup.in:694
+msgid "No servers available.\n"
+msgstr ""
+
+#: src/orca/orca-setup.in:218 src/orca/orca-setup.in:246
+#: src/orca/orca-setup.in:679 src/orca/orca-setup.in:695
+#: src/orca/orca-setup.in:707 src/orca/orca-setup.in:716
+#: src/orca/orca-setup.in:730
+msgid "Speech will not be used.\n"
+msgstr "ਧੁਨੀ ਨਹੀਂ ਵਰਤੀ ਜਾਵੇਗੀ।\n"
+
+#: src/orca/orca-setup.in:245 src/orca/orca-setup.in:715
+msgid "No voices available.\n"
+msgstr ""
+
+#: src/orca/orca-setup.in:425
+msgid "Help not currently implemented."
+msgstr ""
+
+#: src/orca/orca-setup.in:527
+msgid "Creating .orca directory."
+msgstr ".orca ਡਾਇਰੈਕਟਰੀ ਬਣਾਓ"
+
+#: src/orca/orca-setup.in:544
+#, fuzzy
+msgid "Creating .orca script directory."
+msgstr ".orca ਡਾਇਰੈਕਟਰੀ ਬਣਾਓ"
+
+#: src/orca/orca-setup.in:560
+#, fuzzy
+msgid "Creating __init_.py in .orca script directory."
+msgstr ".orca ਡਾਇਰੈਕਟਰੀ ਬਣਾਓ"
+
+#: src/orca/orca-setup.in:651 src/orca/orca-setup.in:666
+msgid "Speech is unavailable."
+msgstr ""
+
+#: src/orca/orca-setup.in:669
 #, fuzzy
 msgid "Select desired speech system."
 msgstr "ਮੂਲ ਧੁਨੀ ਸੰਸਲੇਸ਼ਕ ਦੀ ਚੋਣ ਕਰੋ"
 
-#: src/orca/orca-setup.in:150 src/orca/orca-setup.in:178
-#: src/orca/orca-setup.in:201
+#: src/orca/orca-setup.in:674 src/orca/orca-setup.in:702
+#: src/orca/orca-setup.in:725
 #, c-format
 msgid "%d. %s"
 msgstr "%d. %s"
 
-#: src/orca/orca-setup.in:153 src/orca/orca-setup.in:181
-#: src/orca/orca-setup.in:204
+#: src/orca/orca-setup.in:677 src/orca/orca-setup.in:705
+#: src/orca/orca-setup.in:728
 msgid "Enter choice: "
 msgstr "ਚੋਣ ਦਿਓ: "
 
-#: src/orca/orca-setup.in:155 src/orca/orca-setup.in:171
-#: src/orca/orca-setup.in:183 src/orca/orca-setup.in:192
-#: src/orca/orca-setup.in:206
-msgid "Speech will not be used.\n"
-msgstr "ਧੁਨੀ ਨਹੀਂ ਵਰਤੀ ਜਾਵੇਗੀ।\n"
-
-#: src/orca/orca-setup.in:170
-msgid "No servers available.\n"
-msgstr ""
-
-#: src/orca/orca-setup.in:174
+#: src/orca/orca-setup.in:698
 #, fuzzy
 msgid "Select desired speech server."
 msgstr "ਮੂਲ ਧੁਨੀ ਸੰਸਲੇਸ਼ਕ ਦੀ ਚੋਣ ਕਰੋ"
 
-#: src/orca/orca-setup.in:191
-msgid "No voices available.\n"
-msgstr ""
-
-#: src/orca/orca-setup.in:195
+#: src/orca/orca-setup.in:719
 #, fuzzy
 msgid "Select desired voice."
 msgstr "%s ਆਵਾਜ਼ ਚੁਣੋ: "
 
-#: src/orca/orca-setup.in:232
-msgid "Use key echo?  Enter y or n: "
+#: src/orca/orca-setup.in:767
+#, fuzzy
+msgid "Enable echo by word?  Enter y or n: "
 msgstr "ਸਵਿੱਚ ਧੁਨੀ ਵਰਤੋਂ, y ਜਾਂ n ਭਰੋ: "
 
-#: src/orca/orca-setup.in:257
-msgid "Braille support appears to work, use it?  Enter y or n. "
-msgstr "ਬਰਾਇਲ ਸਹਿਯੋਗ ਕੰਮ ਕਰਦਾ ਜਾਪਦਾ ਹੈ, ਇਸ ਨੂੰ ਵਰਤਣਾ ਹੈ? y ਜਾਂ n ਭਰੋ।"
+#: src/orca/orca-setup.in:792
+#, fuzzy
+msgid "Enable key echo?  Enter y or n: "
+msgstr "ਸਵਿੱਚ ਧੁਨੀ ਵਰਤੋਂ, y ਜਾਂ n ਭਰੋ: "
 
-#: src/orca/orca.py:261
+#: src/orca/orca-setup.in:796
+msgid "Enable alphanumeric and punctuation keys?  Enter y or n: "
+msgstr ""
+
+#: src/orca/orca-setup.in:803
+#, fuzzy
+msgid "Enable modifier keys?  Enter y or n: "
+msgstr "ਹੋਰ ਧੁਨੀ ਬਣਾਉਣੀ ਹੈ? y ਜਾਂ n ਦਿਓ।"
+
+#: src/orca/orca-setup.in:810
+#, fuzzy
+msgid "Enable locking keys?  Enter y or n: "
+msgstr "ਸਵਿੱਚ ਧੁਨੀ ਵਰਤੋਂ, y ਜਾਂ n ਭਰੋ: "
+
+#: src/orca/orca-setup.in:817
+#, fuzzy
+msgid "Enable function keys?  Enter y or n: "
+msgstr "ਸਵਿੱਚ ਧੁਨੀ ਵਰਤੋਂ, y ਜਾਂ n ਭਰੋ: "
+
+#: src/orca/orca-setup.in:824
+#, fuzzy
+msgid "Enable action keys?  Enter y or n: "
+msgstr "ਸਵਿੱਚ ਧੁਨੀ ਵਰਤੋਂ, y ਜਾਂ n ਭਰੋ: "
+
+#: src/orca/orca-setup.in:906
+#, fuzzy
+msgid "Enable Braille?  Enter y or n: "
+msgstr "ਹੋਰ ਧੁਨੀ ਬਣਾਉਣੀ ਹੈ? y ਜਾਂ n ਦਿਓ।"
+
+#: src/orca/orca-setup.in:912
+#, fuzzy
+msgid "Enable Braille Monitor?  Enter y or n: "
+msgstr "ਹੋਰ ਧੁਨੀ ਬਣਾਉਣੀ ਹੈ? y ਜਾਂ n ਦਿਓ।"
+
+#: src/orca/orca-setup.in:923
+msgid "-gui"
+msgstr ""
+
+#: src/orca/orca.py:240
 msgid "User logged out - shutting down."
 msgstr "ਉਪਭੋਗਤਾ ਲਾੱਗ ਆਉਟ ਹੈ - ਬੰਦ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ।"
 
-#: src/orca/orca.py:419
+#: src/orca/orca.py:386
 msgid "Debug level all."
 msgstr ""
 
-#: src/orca/orca.py:421
+#: src/orca/orca.py:388
 msgid "Debug level finest."
 msgstr ""
 
-#: src/orca/orca.py:423
+#: src/orca/orca.py:390
 msgid "Debug level finer."
 msgstr ""
 
-#: src/orca/orca.py:511
+#: src/orca/orca.py:478
 msgid "Entering learn mode.  Press any key to hear its function. "
 msgstr ""
 
-#: src/orca/orca.py:512
+#: src/orca/orca.py:479
 msgid "To exit learn mode, press the escape key."
 msgstr ""
 
-#: src/orca/orca.py:513
+#: src/orca/orca.py:480
 msgid "Learn mode.  Press escape to exit."
 msgstr ""
 
-#: src/orca/orca.py:523 src/orca/orca.py:524
+#: src/orca/orca.py:490 src/orca/orca.py:491
 msgid "Exiting learn mode."
 msgstr ""
 
-#: src/orca/orca.py:813
+#: src/orca/orca.py:914
+msgid "Orca user settings reloaded."
+msgstr ""
+
+#: src/orca/orca.py:969
 msgid "Enters learn mode.  Press escape to exit learn mode."
 msgstr ""
 
-#: src/orca/orca.py:821
+#: src/orca/orca.py:977
 msgid "Decreases the speech rate."
 msgstr ""
 
-#: src/orca/orca.py:829
+#: src/orca/orca.py:985
 msgid "Increases the speech rate."
 msgstr ""
 
-#: src/orca/orca.py:835
+#: src/orca/orca.py:991
 msgid "Quits Orca"
 msgstr ""
 
-#: src/orca/orca.py:847
+#: src/orca/orca.py:1003
 msgid "Toggles keystroke recording on and off."
 msgstr ""
 
-#: src/orca/orca.py:855
-msgid "Forces a reset of the speech service."
+#: src/orca/orca.py:1011
+msgid "Reloads user settings and reinitializes services as necessary."
 msgstr ""
 
-#: src/orca/orca.py:863
+#: src/orca/orca.py:1020
 msgid ""
 "Prints a debug listing of all known applications to the console where Orca "
 "is running."
 msgstr ""
 
-#: src/orca/orca.py:872
+#: src/orca/orca.py:1029
 msgid "Cycles the debug level at run time."
 msgstr ""
 
-#: src/orca/orca.py:881
+#: src/orca/orca.py:1038
 msgid ""
 "Prints debug information about the currently active application to the "
 "console where Orca is running."
 msgstr ""
 
-#: src/orca/orca.py:889
+#: src/orca/orca.py:1046
 msgid "Prints debug information about the ancestry of the object with focus"
 msgstr ""
 
-#: src/orca/orca.py:898
+#: src/orca/orca.py:1055
 msgid "Prints debug information about the application with focus"
 msgstr ""
 
-#: src/orca/orca.py:908
+#: src/orca/orca.py:1065
 msgid "Switches to the next presentation manager."
 msgstr ""
 
-#: src/orca/orca.py:975 src/orca/orca.py:976
+#: src/orca/orca.py:1093 src/orca/orca.py:1094
 msgid "Welcome to Orca."
 msgstr "ਓਰਸਾ ਤੇ ਜੀ ਆਇਆਂ ਨੂੰ।"
 
@@ -486,14 +549,22 @@ msgstr "ਓਰਸਾ ਤੇ ਜੀ ਆਇਆਂ ਨੂੰ।"
 #.
 #. timer = threading.Timer(5.0, timeout)
 #. timer.start()
-#: src/orca/orca.py:1026
+#: src/orca/orca.py:1146
 msgid "goodbye."
 msgstr "ਚੰਗਾ ਬਈ!"
 
-#: src/orca/orca.py:1027
+#: src/orca/orca.py:1147
 #, fuzzy
 msgid "Goodbye."
 msgstr "ਚੰਗਾ ਬਈ!"
+
+#: src/orca/orca.py:1221
+msgid "Accessibility has not been enabled for this session."
+msgstr ""
+
+#: src/orca/orca.py:1224
+msgid "Please run orca-setup and then logout and log back in."
+msgstr ""
 
 #: src/orca/rolenames.py:142
 msgid "???"
@@ -717,7 +788,7 @@ msgid "draw"
 msgstr ""
 
 #: src/orca/rolenames.py:238
-msgid "DrawingAarea"
+msgid "DrawingArea"
 msgstr ""
 
 #: src/orca/rolenames.py:239
@@ -1180,7 +1251,7 @@ msgstr ""
 msgid "TearOffMenuItem"
 msgstr ""
 
-#: src/orca/rolenames.py:444 src/orca/speechgenerator.py:1260
+#: src/orca/rolenames.py:444 src/orca/speechgenerator.py:1252
 msgid "tear off menu item"
 msgstr ""
 
@@ -1416,32 +1487,47 @@ msgstr ""
 msgid "calendar event"
 msgstr ""
 
-#: src/orca/scripts/Evolution.py:549
+#: src/orca/scripts/Evolution.py:516
 msgid "No appointments"
 msgstr ""
 
-#: src/orca/scripts/Evolution.py:623
+#: src/orca/scripts/Evolution.py:590
 msgid "Directories button"
 msgstr ""
 
-#: src/orca/scripts/Evolution.py:721
-msgid "Misspelled word: "
-msgstr ""
-
-#: src/orca/scripts/Evolution.py:722
-msgid " Context is "
-msgstr ""
-
-#: src/orca/scripts/Gecko.py:49
-msgid "No page to read."
-msgstr "ਪੜਨ ਲਈ ਕੋਈ ਸਫਾ ਨਹੀਂ ਹੈ।"
-
-#: src/orca/scripts/Gecko.py:57
-msgid "Reading web page failed."
-msgstr "ਵੈੱਬ ਸਫੇ ਨੂੰ ਪੜਨ ਵਿੱਚ ਅਸਫਲ ਹੈ।"
-
-#: src/orca/scripts/Gecko.py:95 src/orca/scripts/Mozilla.py:214
+#: src/orca/scripts/Mozilla.py:215 src/orca/scripts/StarOffice.py:184
 msgid "link"
+msgstr ""
+
+#: src/orca/scripts/gedit.py:136
+msgid "Change to:"
+msgstr ""
+
+#: src/orca/scripts/gedit.py:137
+msgid "Misspelled word:"
+msgstr ""
+
+#. The indication that spell checking is complete is when the
+#. "misspelt" word is set to "Completed spell checking". Ugh!
+#. Try to detect this and let the user know.
+#: src/orca/scripts/gedit.py:166
+msgid "Completed spell checking"
+msgstr ""
+
+#: src/orca/scripts/gedit.py:167
+msgid "Spell checking is complete."
+msgstr ""
+
+#: src/orca/scripts/gedit.py:169
+msgid "Press Tab and Return to terminate."
+msgstr ""
+
+#: src/orca/scripts/gedit.py:254 src/orca/scripts/gedit.py:306
+msgid "Check Spelling"
+msgstr ""
+
+#: src/orca/scripts/StarOffice.py:278 src/orca/scripts/StarOffice.py:328
+msgid "Spellcheck:"
 msgstr ""
 
 #. Note to translators: the regular expression here represents a
@@ -1452,62 +1538,83 @@ msgstr ""
 #. translation is by running the application and then viewing its
 #. name in the main window of at-poke.
 #.
-#: src/orca/settings.py:261
+#: src/orca/settings.py:223
 msgid "[\\S\\s]*StarOffice[\\s\\S]*"
 msgstr ""
 
-#: src/orca/settings.py:262
+#: src/orca/settings.py:224
 msgid "soffice.bin"
 msgstr ""
 
-#: src/orca/settings.py:263
+#: src/orca/settings.py:225
 msgid "[Ee]volution"
 msgstr ""
 
-#: src/orca/settings.py:264
+#: src/orca/settings.py:226
 msgid "Deer Park"
 msgstr ""
 
-#: src/orca/scripts/metacity.py:90
+#: src/orca/settings.py:227
+msgid "Bon Echo"
+msgstr ""
+
+#: src/orca/scripts/metacity.py:99
 msgid "inaccessible"
 msgstr "ਨਾ-ਪਹੁੰਚਯੋਗ"
 
-#: src/orca/speechgenerator.py:355 src/orca/speechgenerator.py:359
+#: src/orca/speechgenerator.py:354 src/orca/speechgenerator.py:358
 msgid "checked"
 msgstr ""
 
-#: src/orca/speechgenerator.py:363 src/orca/speechgenerator.py:367
+#: src/orca/speechgenerator.py:362 src/orca/speechgenerator.py:366
 msgid "not checked"
 msgstr ""
 
-#: src/orca/speechgenerator.py:868
+#: src/orca/speechgenerator.py:862
 msgid "one tab"
 msgstr ""
 
-#: src/orca/speechgenerator.py:870
+#: src/orca/speechgenerator.py:864
 #, fuzzy
 msgid "tabs"
 msgstr "ਟੈਬ"
 
-#: src/orca/speechgenerator.py:942 src/orca/speechgenerator.py:946
+#: src/orca/speechgenerator.py:936 src/orca/speechgenerator.py:940
 msgid "selected"
 msgstr ""
 
-#: src/orca/speechgenerator.py:950 src/orca/speechgenerator.py:954
+#: src/orca/speechgenerator.py:944 src/orca/speechgenerator.py:948
 msgid "not selected"
 msgstr ""
 
-#: src/orca/speechgenerator.py:1262
+#: src/orca/speechgenerator.py:1254
 msgid "tear off"
 msgstr ""
 
-#: src/orca/speechgenerator.py:1320 src/orca/speechgenerator.py:1324
+#: src/orca/speechgenerator.py:1311 src/orca/speechgenerator.py:1315
 msgid "pressed"
 msgstr ""
 
-#: src/orca/speechgenerator.py:1328 src/orca/speechgenerator.py:1332
+#: src/orca/speechgenerator.py:1319 src/orca/speechgenerator.py:1323
 msgid "not pressed"
 msgstr ""
+
+#: src/orca/util.py:100
+msgid "Misspelled word: "
+msgstr ""
+
+#: src/orca/util.py:101
+msgid " Context is "
+msgstr ""
+
+#~ msgid "Braille support appears to work, use it?  Enter y or n. "
+#~ msgstr "ਬਰਾਇਲ ਸਹਿਯੋਗ ਕੰਮ ਕਰਦਾ ਜਾਪਦਾ ਹੈ, ਇਸ ਨੂੰ ਵਰਤਣਾ ਹੈ? y ਜਾਂ n ਭਰੋ।"
+
+#~ msgid "No page to read."
+#~ msgstr "ਪੜਨ ਲਈ ਕੋਈ ਸਫਾ ਨਹੀਂ ਹੈ।"
+
+#~ msgid "Reading web page failed."
+#~ msgstr "ਵੈੱਬ ਸਫੇ ਨੂੰ ਪੜਨ ਵਿੱਚ ਅਸਫਲ ਹੈ।"
 
 #~ msgid "right"
 #~ msgstr "ਸੱਜੇ"
@@ -1535,9 +1642,6 @@ msgstr ""
 
 #~ msgid "Select default synthesizer:"
 #~ msgstr "ਮੂਲ ਸੰਸਲੇਸ਼ਕ ਚੁਣੋ: "
-
-#~ msgid "Create another voice?  Enter y or n: "
-#~ msgstr "ਹੋਰ ਧੁਨੀ ਬਣਾਉਣੀ ਹੈ? y ਜਾਂ n ਦਿਓ।"
 
 #~ msgid "Enter voice name: "
 #~ msgstr "ਧੁਨੀ ਨਾਂ ਦਿਓ: "
