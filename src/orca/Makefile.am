@@ -31,6 +31,7 @@ orca_python_PYTHON = \
 	outloud.py \
 	orca.py \
 	orca_i18n.py \
+	platform.py \
 	presentation_manager.py \
 	rolenames.py \
 	script.py \

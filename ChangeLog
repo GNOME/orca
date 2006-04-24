@@ -1,3 +1,18 @@
+2006-04-24  Willie Walker <william.walker@sun.com>
+
+	* configure.in, src/orca/platform.py.in: create a new module 
+	to hold platform settings used when ./autogen.sh or ./configure
+	was run.  This will hold the prefix, datadirname, package name,
+	orca version, etc.  The goal here is to get rid of the various
+	*.py.in files and use this one as the single point of reference
+	for the various settings on the platform.
+
+	* src/orca/orca.py, src/orca/settings.py: support to load the
+	configUIModule and call showConfigUI if "--configure" is passed to
+	the orca command line and also do the same if the user presses
+	Insert+s.  This will only work once Rich checks in the
+	orca-config.py module, so don't bother trying it yet. :-)
+	
 2006-04-24  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade
