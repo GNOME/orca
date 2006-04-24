@@ -943,6 +943,22 @@ def _loadUserSettings(script=None, inputEvent=None):
 
     return True
 
+def _showConfigUI(script=None, inputEvent=None):
+    """Displays the user interace to configure Orca and set up
+    user preferences.
+    
+    Returns True to indicate the input event has been consumed.
+    """
+
+    try:
+        module = __import__(settings.configUIModule, globals(), locals(), [''])
+        module.showConfigUI()
+    except:
+        debug.printException(debug.LEVEL_SEVERE)
+        pass
+
+    return True
+    
 # If True, this module has been initialized.
 #
 _initialized = False
@@ -1005,6 +1021,15 @@ def init(registry):
                                             0, \
                                             0,
                                             keystrokeRecordingHandler))
+
+    configureSettingsHandler = InputEventHandler(\
+        _showConfigUI,
+        _("Displays the preferences configuration dialog."))
+    _keyBindings.add(keybindings.KeyBinding(
+        "s", \
+        (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+        1 << MODIFIER_ORCA,
+        configureSettingsHandler))
 
     loadUserSettingsHandler = InputEventHandler(\
         _loadUserSettings,
@@ -1199,6 +1224,10 @@ def abortOnSignal(signum, frame):
     abort()
 
 def main():
+    for arg in sys.argv:
+        if arg == _("--configure"):
+            _showConfigUI()            
+
     userprefs = os.path.join(os.environ["HOME"], ".orca")
     sys.path.insert(0, userprefs)
     sys.path.insert(0, '') # current directory

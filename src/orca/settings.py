@@ -29,11 +29,11 @@ import debug
 from acss import ACSS
 from orca_i18n import _           # for gettext support
 
-#########################################################################
-#                                                                       #
-# String constants and default values for the common attributes.        #
-#                                                                       #
-#########################################################################
+# The name of the module that holds the configuration user interface.
+# This module is expected to have the method, showConfigUI, which
+# will prompt the user for configuration settings.
+#
+configUIModule          = "orca-config"
 
 # A list of keys that can serve as the Orca modifier key.  The list is
 # so we can provide better cross platform support (e.g., Sun keyboard
