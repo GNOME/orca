@@ -161,7 +161,6 @@ class orcaSetupGUI(GladeWrapper):
             return
 
         speech.init()
-        speech.speak(_("Welcome to Orca setup."))
 
         workingFactories = []
         for factory in factories:
@@ -191,8 +190,6 @@ class orcaSetupGUI(GladeWrapper):
             speechSystemsModel.set(iter, 0,
                          workingFactories[0][0].SpeechServer.getFactoryName())
             [factory, factoryInfos] = workingFactories[0]
-            self.speechSystemsLabel.set_sensitive(False)
-            self.speechSystems.set_sensitive(False)
 
         self.setupServers(factory)
         self.setupVoices(server)
@@ -231,8 +228,6 @@ class orcaSetupGUI(GladeWrapper):
             iter = speechServersModel.append()
             speechServersModel.set(iter, 0, servers[0].getInfo()[0])
             server = servers[0]
-            self.speechServersLabel.set_sensitive(False)
-            self.speechServers.set_sensitive(False)
 
 
     def setupVoices(self, server):
@@ -262,8 +257,6 @@ class orcaSetupGUI(GladeWrapper):
             voicesModel.set(iter, 0, name)
             defaultACSS = orca.acss.ACSS({orca.acss.ACSS.FAMILY : families[0]})
             voiceChoices[1] = defaultACSS
-            self.voicesLabel.set_sensitive(False)
-            self.voices.set_sensitive(False)
 
 
     def getSystemChoiceIndex(self, factoryChoices, result):
@@ -335,6 +328,13 @@ class orcaSetupGUI(GladeWrapper):
 
     def systemsSelectionChanged(self, selection):
         global factory, factoryChoices, server, servers, serverChoices
+
+        # [[[TODO: richb - hack to handle the common situation until a 
+        #  real fix can be found that'll allow you to change/reinstall
+        #  a factory.]]]
+        #
+        if len(factoryChoices) == 1:
+            return
 
         model, iter = selection.get_selected()
         if iter:

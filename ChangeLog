@@ -1,5 +1,20 @@
 2006-04-24  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/orca-setup.in
+          Removed the line that says "Welcome to Orca setup."
+          This will automatically be spoken as one of the static labels
+          in the Orca configuration window.
+
+          Removed the lines of code that set the speech list panes 
+          insensitive if they only had one item in them.
+
+          Added in a check to the systemsSelectionChanged() method to see
+          if there was only one speech system. If so, then just return.
+          This is just a hack to make it useful for the common situation.
+          The real fix is to work out how to change/reinstall a factory.
+
+2006-04-24  Rich Burridge <rich.burridge@sun.com>
+
         * po/POTFILES.in
           Added src/orca/orca-setup.glade to the list of files that 
           should be checked for translatable strings.
