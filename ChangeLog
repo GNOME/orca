@@ -1,5 +1,11 @@
 2006-04-24  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/orca-setup.glade
+          Adjusted one of the labels on the Speech tab pane from 
+          "Selected..." to "Select ..."
+
+2006-04-24  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/orca-setup.in
           Hopefully the real fix to the systemsSelectionChanged() method.
           Was not passing in a proper gnome speech factory parameter to 
