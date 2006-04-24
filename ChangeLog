@@ -1,3 +1,9 @@
+2006-04-24  Rich Burridge <rich.burridge@sun.com>
+
+        * po/POTFILES.in
+          Added src/orca/orca-setup.glade to the list of files that 
+          should be checked for translatable strings.
+
 2006-04-22  Willie Walker <william.walker@sun.com>
 
 	* NEWS, configure.in, README: prep for 0.2.3.
