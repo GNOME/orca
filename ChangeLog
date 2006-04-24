@@ -1,6 +1,13 @@
 2006-04-24  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.in
+          Hopefully the real fix to the systemsSelectionChanged() method.
+          Was not passing in a proper gnome speech factory parameter to 
+          the setupServers() routine.
+
+2006-04-24  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca-setup.in
           Removed the line that says "Welcome to Orca setup."
           This will automatically be spoken as one of the static labels
           in the Orca configuration window.

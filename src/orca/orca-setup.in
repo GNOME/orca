@@ -24,10 +24,6 @@
 # * Need to initially highlight the item in each of the three tree views that
 #   is currently selected.
 #
-# * The systemsSelectionChanged() handler doesn't do the right thing. If 
-#   there is only one speech factory this isn't a problem, as the label 
-#   and list GUI items for the known factories will be insensitive.
-#
 # * Add comments to each of the methods and routines.
 #
 # * Adjust the way that the nonGui side works, so that the changes aren't
@@ -329,22 +325,12 @@ class orcaSetupGUI(GladeWrapper):
     def systemsSelectionChanged(self, selection):
         global factory, factoryChoices, server, servers, serverChoices
 
-        # [[[TODO: richb - hack to handle the common situation until a 
-        #  real fix can be found that'll allow you to change/reinstall
-        #  a factory.]]]
-        #
-        if len(factoryChoices) == 1:
-            return
-
         model, iter = selection.get_selected()
         if iter:
             results = model.get_value(iter, 0)
             index = self.getSystemChoiceIndex(factoryChoices, results)
 
-            for server in servers:
-                server.shutdown()
-
-            factory = factoryChoices[index]
+            factory = factoryChoices[index][0]
             speechServersModel.clear()
             self.setupServers(factory)
 
