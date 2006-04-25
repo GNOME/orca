@@ -1246,6 +1246,11 @@ def abortOnSignal(signum, frame):
     abort()
 
 def main():
+    signal.signal(signal.SIGHUP, shutdownOnSignal)
+    signal.signal(signal.SIGINT, shutdownOnSignal)
+    signal.signal(signal.SIGTERM, shutdownOnSignal)
+    signal.signal(signal.SIGQUIT, shutdownOnSignal)
+    signal.signal(signal.SIGSEGV, abortOnSignal)
 
     # See if the desktop is running.  If it is, the import of gtk will
     # succeed.  If it isn't, the import will fail.
@@ -1280,12 +1285,6 @@ def main():
     userprefs = os.path.join(os.environ["HOME"], ".orca")
     sys.path.insert(0, userprefs)
     sys.path.insert(0, '') # current directory
-
-    signal.signal(signal.SIGHUP, shutdownOnSignal)
-    signal.signal(signal.SIGINT, shutdownOnSignal)
-    signal.signal(signal.SIGTERM, shutdownOnSignal)
-    signal.signal(signal.SIGQUIT, shutdownOnSignal)
-    signal.signal(signal.SIGSEGV, abortOnSignal)
 
     registry = atspi.Registry()
     init(registry)

@@ -20,9 +20,7 @@
 """Displays a GUI for the user to set Orca preferences."""
 
 import os
-import commands
 import sys
-import time
 import gettext
 import gtk
 import gtk.glade
