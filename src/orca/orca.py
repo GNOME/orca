@@ -955,7 +955,7 @@ def _loadUserSettings(script=None, inputEvent=None):
 def _showPreferencesGUI(script=None, inputEvent=None):
     """Displays the user interace to configure Orca and set up
     user preferences using a GUI.
-    
+
     Returns True to indicate the input event has been consumed.
     """
 
@@ -970,11 +970,11 @@ def _showPreferencesGUI(script=None, inputEvent=None):
         pass
 
     return True
-    
+
 def _showPreferencesConsole(script=None, inputEvent=None):
     """Displays the user interace to configure Orca and set up
     user preferences via a command line interface.
-    
+
     Returns True to indicate the input event has been consumed.
     """
 
@@ -989,7 +989,7 @@ def _showPreferencesConsole(script=None, inputEvent=None):
         pass
 
     return True
-    
+
 # If True, this module has been initialized.
 #
 _initialized = False
@@ -1057,7 +1057,7 @@ def init(registry):
         _showPreferencesGUI,
         _("Displays the preferences configuration dialog."))
     _keyBindings.add(keybindings.KeyBinding(
-        "s", \
+        "space", \
         (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL),
         1 << MODIFIER_ORCA,
         preferencesSettingsHandler))
@@ -1066,7 +1066,7 @@ def init(registry):
         _loadUserSettings,
         _("Reloads user settings and reinitializes services as necessary."))
     _keyBindings.add(keybindings.KeyBinding(
-        "s", \
+        "space", \
         (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL),
         (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL),
         loadUserSettingsHandler))
@@ -1272,14 +1272,14 @@ def main():
         pass
 
     # Run the preferences setup if the user has specified
-    # "--gui-setup" or "--text-setup" on the command line.  If the
+    # "--setup" or "--text-setup" on the command line.  If the
     # desktop is not running, we will fallback to the console-based
     # method as appropriate.
     #
     for arg in sys.argv:
-        if arg == _("--gui-setup"):
+        if (arg == _("--gui-setup")) or (arg == _("--setup")):
             if desktopRunning:
-                _showPreferencesGUI()            
+                _showPreferencesGUI()
             else:
                 _showPreferencesConsole()
         elif arg == _("--text-setup"):
@@ -1290,7 +1290,7 @@ def main():
         print "to the Desktop.  Please make sure the DISPLAY"
         print "environment variable has been set."
         return 1
-    
+
     userprefs = os.path.join(os.environ["HOME"], ".orca")
     sys.path.insert(0, userprefs)
     sys.path.insert(0, '') # current directory

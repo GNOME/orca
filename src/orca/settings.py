@@ -29,6 +29,29 @@ import debug
 from acss import ACSS
 from orca_i18n import _           # for gettext support
 
+# These are the settings that Orca supports the user customizing.
+#
+userCustomizableSettings = [
+    "orcaModifierKeys",
+    "enableSpeech",
+    "speechServerFactory",
+    "speechServerInfo",
+    "voices",
+    "speechVerbosityLevel",
+    "enableEchoByWord",
+    "enableKeyEcho",
+    "enablePrintableKeys",
+    "enableModifierKeys",
+    "enableLockingKeys",
+    "enableFunctionKeys",
+    "enableActionKeys",
+    "enableBraille",
+    "brailleVerbosityLevel",
+    "brailleRolenameStyle",
+    "enableBrailleMonitor",
+    "enableMagnifier",
+]
+
 # The name of the modules that hold the user interface for setting
 # Orca preferences.  Each module is expected to have the method,
 # showPreferencesUI, which will prompt the user for preferences.

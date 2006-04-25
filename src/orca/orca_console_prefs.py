@@ -32,7 +32,7 @@ def sayAndPrint(text, stop=False, getInput=False):
     """Prints the given text.  In addition, if the text field
     is not None, speaks the given text, optionally interrupting
     anything currently being spoken.
-    
+
     Arguments:
     - text: the text to print and speak
     - stop: if True, interrupt any speech currently being spoken
@@ -40,16 +40,16 @@ def sayAndPrint(text, stop=False, getInput=False):
 
     Returns raw input from the user if getInput is True.
     """
-    
+
     if stop:
-	speech.stop()
+        speech.stop()
 
     speech.speak(text)
 
     if getInput:
         return raw_input(text)
     else:
-        print text        
+        print text
 
 def setupSpeech(prefsDict):
     """Sets up speech support.  If speech setup is successful and the
@@ -67,44 +67,44 @@ def setupSpeech(prefsDict):
     if len(factories) == 0:
         print _("Speech is unavailable.")
         return False
-    
+
     speech.init()
     speech.speak(_("Welcome to Orca setup."))
 
     workingFactories = []
     for factory in factories:
         try:
-	    infos = factory.SpeechServer.getSpeechServerInfos()
-	    workingFactories.append([factory, infos])
-	except:
-	    pass
+            infos = factory.SpeechServer.getSpeechServerInfos()
+            workingFactories.append([factory, infos])
+        except:
+            pass
 
     if len(workingFactories) == 0:
         print _("Speech is unavailable.")
         return False
-    elif len(workingFactories) > 1:    
+    elif len(workingFactories) > 1:
         speech.speak(_("Select desired speech system."))
-	choices = {}
-	i = 1
+        choices = {}
+        i = 1
         for workingFactory in workingFactories:
-	    choices[i] = workingFactory
-	    sayAndPrint(_("%d. %s") 
-		        % (i, workingFactory[0].SpeechServer.getFactoryName()))
-	    i += 1
-	choice = int(sayAndPrint(_("Enter choice: "), False, True))
-        if (choice <= 0) or (choice >= i):	
+            choices[i] = workingFactory
+            sayAndPrint(_("%d. %s")
+                        % (i, workingFactory[0].SpeechServer.getFactoryName()))
+            i += 1
+        choice = int(sayAndPrint(_("Enter choice: "), False, True))
+        if (choice <= 0) or (choice >= i):
             sayAndPrint(_("Speech will not be used.\n"))
             return False
-	[factory, infos] = choices[choice]
+        [factory, infos] = choices[choice]
     else:
-	[factory, infos] = workingFactories[0]
+        [factory, infos] = workingFactories[0]
 
-    servers = []    
+    servers = []
     for info in infos:
         try:
-	    server = factory.SpeechServer.getSpeechServer(info)
-	    if server:
-	        servers.append(server)
+            server = factory.SpeechServer.getSpeechServer(info)
+            if server:
+                servers.append(server)
         except:
             pass
 
@@ -115,19 +115,19 @@ def setupSpeech(prefsDict):
     if len(servers) > 1:
         speech.stop()
         speech.speak(_("Select desired speech server."))
-	i = 1
-	choices = {}
+        i = 1
+        choices = {}
         for server in servers:
-	    sayAndPrint(_("%d. %s") % (i, server.getInfo()[0]))
-	    choices[i] = server
-	    i += 1
-	choice = int(sayAndPrint(_("Enter choice: "), False, True))
-        if (choice <= 0) or (choice >= i):	
+            sayAndPrint(_("%d. %s") % (i, server.getInfo()[0]))
+            choices[i] = server
+            i += 1
+        choice = int(sayAndPrint(_("Enter choice: "), False, True))
+        if (choice <= 0) or (choice >= i):
             sayAndPrint(_("Speech will not be used.\n"))
             return False
-	server = choices[choice]
+        server = choices[choice]
     else:
-	server = servers[0]
+        server = servers[0]
 
     families = server.getVoiceFamilies()
     if len(families) == 0:
@@ -137,19 +137,19 @@ def setupSpeech(prefsDict):
     if len(families) > 1:
         speech.stop()
         speech.speak(_("Select desired voice."))
-	i = 1
-	choices = {}
+        i = 1
+        choices = {}
         for family in families:
             name = family[speechserver.VoiceFamily.NAME]
             voice = acss.ACSS({acss.ACSS.FAMILY : family})
             sayAndPrint(_("%d. %s") % (i, name))
-	    choices[i] = voice
-	    i += 1
-	choice = int(sayAndPrint(_("Enter choice: "), False, True))
-        if (choice <= 0) or (choice >= i):	
+            choices[i] = voice
+            i += 1
+        choice = int(sayAndPrint(_("Enter choice: "), False, True))
+        if (choice <= 0) or (choice >= i):
             sayAndPrint(_("Speech will not be used.\n"))
             return False
-	defaultACSS = choices[choice]
+        defaultACSS = choices[choice]
     else:
         defaultACSS = acss.ACSS({acss.ACSS.FAMILY : families[0]})
 
@@ -166,26 +166,26 @@ def setupSpeech(prefsDict):
     hyperlinkACSS = acss.ACSS({acss.ACSS.AVERAGE_PITCH : 2})
 
     voices = {
-	settings.DEFAULT_VOICE   : defaultACSS,
-	settings.UPPERCASE_VOICE : uppercaseACSS,
-	settings.HYPERLINK_VOICE : hyperlinkACSS
+        settings.DEFAULT_VOICE   : defaultACSS,
+        settings.UPPERCASE_VOICE : uppercaseACSS,
+        settings.HYPERLINK_VOICE : hyperlinkACSS
     }
-    
+
     prefsDict["enableSpeech"] = True
-    prefsDict["speechServerFactory"] = "'%s'" % factory.__name__
-    prefsDict["speechServerInfo"] = orca_prefs.getSpeechServerString(server)
-    prefsDict["voices"] = orca_prefs.getVoicesString(voices)
+    prefsDict["speechServerFactory"] = factory
+    prefsDict["speechServerInfo"] = server
+    prefsDict["voices"] = voices
 
     # Ask the user if they would like to enable echoing by word.
     #
-    answer = sayAndPrint(_("Enable echo by word?  Enter y or n: "), 
+    answer = sayAndPrint(_("Enable echo by word?  Enter y or n: "),
                          True, True)
     state = answer[0:1] == 'Y' or answer[0:1] == 'y'
     prefsDict["enableEchoByWord"] = state
 
     # Ask the user if they would like to enable key echo. If they say
-    # yes, then for each of the five different types of keys, ask the 
-    # user if they would like to enable them. 
+    # yes, then for each of the five different types of keys, ask the
+    # user if they would like to enable them.
     #
     # These key types are:
     #
@@ -240,7 +240,7 @@ def setupSpeech(prefsDict):
 
 def showPreferencesUI():
     """Uses the console to query the user for Orca preferences."""
-    
+
     prefsDict = {}
 
     if not setupSpeech(prefsDict):
@@ -257,11 +257,11 @@ def showPreferencesUI():
                          True, True)
     state = answer[0:1] == 'Y' or answer[0:1] == 'y'
     prefsDict["enableBrailleMonitor"] = state
-    
+
     if orca_prefs.writePreferences(prefsDict):
         sayAndPrint("Accessibility support for GNOME has just been enabled.")
         sayAndPrint("You need to log out and log back in for the change "\
-                    +"to take effect.")        
+                    +"to take effect.")
 
 def main():
     showPreferencesUI()

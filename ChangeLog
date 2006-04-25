@@ -1,5 +1,15 @@
 2006-04-25  Willie Walker <william.walker@sun.com>
 
+	* src/orca/orca.py: use Insert+space instead of Insert+s for 
+	settings.  Insert+s is reserved for the stop speaking functionality.
+	* src/orca/orca.py: add "--setup" as a synonym for "--gui-setup".
+	Note that this will fallback to "--text-setup" if the desktop is
+	not running.
+	* src/orca/orca_console_prefs.py, src/orca/orca_prefs.py: allow
+	writing of things besides strings.  Also add ability to preload
+	a preferences dictionary based upon the current settings.
+	* src/orca/settings.py: add "userCustomizableSettings" field to 
+	specify what is user customizable.
 	* orca.spec.in, configure.in, src/orca/.cvsignore,
 	src/orca/orca-setup.in (DELETE), src/orca/orca.py,
 	src/orca/orca_gui_prefs.py (GUI stuff from orca-setup.in),
