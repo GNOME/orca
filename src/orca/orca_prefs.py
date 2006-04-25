@@ -21,13 +21,7 @@
 
 import os
 import commands
-import sys
-import time
 import pprint
-import gettext
-import gtk
-import gtk.glade
-import locale
 
 from orca_i18n import _  # for gettext support
 

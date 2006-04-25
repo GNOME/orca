@@ -17,7 +17,16 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-import gtk
+try:
+    # This can fail due to gtk not being available.  We want to
+    # be able to recover from that if possible.  The main driver
+    # for this is to allow "orca --text-setup" to work even if
+    # the desktop is not running.
+    #
+    import gtk
+except:
+    pass
+
 import os, signal, sys
 import string
 import time

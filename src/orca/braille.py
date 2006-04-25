@@ -56,7 +56,15 @@ Braille display.
 
 import atspi
 import brl
-import brlmon
+try:
+    # This can fail due to gtk not being available.  We want to
+    # be able to recover from that if possible.  The main driver
+    # for this is to allow "orca --text-setup" to work even if
+    # the desktop is not running.
+    #
+    import brlmon
+except:
+    pass
 import debug
 import eventsynthesizer
 import settings
