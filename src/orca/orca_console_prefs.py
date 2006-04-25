@@ -60,11 +60,6 @@ def sayAndPrint(text, stop=False, getInput=False):
     else:
         print text        
 
-def say(text, stop=False):
-    if stop:
-        speech.stop()
-    speech.speak(text)
-
 def setupSpeech(prefsDict):
     """Sets up speech support.  If speech setup is successful and the
     user wants it, writes speech settings to the setting file and returns

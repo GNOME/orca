@@ -1253,7 +1253,7 @@ def main():
     desktopRunning = False
     try:
         import gtk
-        desktopRuning = True
+        desktopRunning = True
     except:
         pass
 
@@ -1264,14 +1264,14 @@ def main():
     #
     for arg in sys.argv:
         if arg == _("--gui-setup"):
-            if desktopRuning:
+            if desktopRunning:
                 _showPreferencesGUI()            
             else:
                 _showPreferencesConsole()
         elif arg == _("--text-setup"):
             _showPreferencesConsole()
 
-    if not desktopRuning:
+    if not desktopRunning:
         print "Cannot start Orca because it cannot connect"
         print "to the Desktop.  Please make sure the DISPLAY"
         print "environment variable has been set."
