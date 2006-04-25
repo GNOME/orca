@@ -39,7 +39,7 @@
     <section id="interoperabilitytest"><title>Interaction with Other ATs</title>
       <para>The tests in this section are to ensure that Orca does not
         can adverse effects on other assistive technologies that may be
-	running, and that other assitive technologies do not adversely 
+	running, and that other assitive technologies do not adversely
 	effect Orca.</para>
 
     </section>
@@ -59,6 +59,9 @@
         Learn Mode functionality works as expected for both the
         keyboard and braille, including entering and exiting Learn
         Mode.</para>
+        <para>&tgoal; Test the learn mode to assure that orca speaks useful information for each orca keystroke.</para>
+        <para>&tprocedure; Press insert+f1 to enable learn mode.  Press all keys on the numpad both with and without the orca modifier key (usually insert).  After testing all keys, press escape to exit learn mode.</para>
+        <para>&tresult; Listen to the speech output associated with each keypress.  Orca should give meaningful output describing what the key does.</para>
 
     </section>
 
@@ -77,13 +80,21 @@
         document content, including GEdit, StarOffice, etc.  The Say
         All tests for flat review of dialogs are in the Flat Review
         section.</para>
-
+        <para>&tgoal; Test say-all in gedit.</para>
+        <para>&tprocedure; Open a long document and position the cursor at the top.  Press numpad+plus to start reading the document.</para>
+        <para>&tresult; Orca should read the document from beginning to end honoring the current punctuation setting.  The document should also be read with a natural flow IE sentences should flow smoothly from one to the next.</para>
+        <para>&tgoal; Test say-all in Star Office Writer.</para>
+        <para>&tprocedure; Open the orca documentation HTML file and position the cursor at the top.  Press numpad+plus to start reading the document.</para>
+        <para>&tresult; Orca should read the document from beginning to end honoring the current punctuation setting.  The document should also be read with a natural flow IE sentences should flow smoothly from one to the next.</para>
+        <para>&tgoal; Test say-all in Firefox.</para>
+        <para>&tprocedure; Open live.gnome.org/Orca and position the cursor at the top of the page.  Press numpad+plus to start reading the document.</para>
+        <para>&tresult; Orca should read the page from beginning to end honoring the current punctuation setting.  The document should also be read with a natural flow IE sentences should flow smoothly from one to the next.  THe word link should also be spoken after each link.  </para>
     </section>
 
     <section id="verbalizedpunctest"><title>Verbalized Punctuation</title>
 
       <para>The tests in this section are to ensure that the Orca
-        Verbalized Punctuation functionality provides the desired 
+        Verbalized Punctuation functionality provides the desired
 	output for the various verbalized punctuation settings.</para>
 
     </section>
@@ -91,7 +102,7 @@
     <section id="verbalizedlinktest"><title>Verbalized Links</title>
 
       <para>The tests in this section are to ensure that the Orca
-        Verbalized Link functionality provides the desired 
+        Verbalized Link functionality provides the desired
 	output for the various verbalized link settings.</para>
 
     </section>
@@ -101,9 +112,14 @@
       <para>The tests in this section are to ensure that the Orca
         Verbalized Caps functionality provides the desired output for
         the various verbalized capitalization settings.</para>
+        <para>&tgoal; Test the pitch change option.</para>
+        <para>&tprocedure; Be sure that orca is set to change the pitch of a letter when the letter is encountered.  In Gedit, type the letters a through f as sets of each letter.  The first being in upercase and the second lower case.  For example: Aa Bb and so on.</para>
+        <para>&tresult; When arrowing through the letters, the first should be at a higher pitch than the second.</para>
 
-    </section>
-
+        <para>&tgoal; Test the speak caps option.</para>
+        <para>&tprocedure; Be sure that orca is set to speak caps when a character is capitalized when the letter is encountered.  In Gedit, type the letters a through f as sets of each letter.  The first being in upercase and the second lower case.  For example: Aa Bb and so on.</para>
+        <para>&tresult; When arrowing through the letters, the first should be preceded by "cap" and the second should not.</para>
+            </section>
     <section id="spellingmodetest"><title>Spelling Mode</title>
 
       <para>The tests in this section are to ensure that the Orca
@@ -117,7 +133,9 @@
       <para>The tests in this section are to ensure that Orca
         accurately provides text attribute (e.g., font, bolding, etc.)
         information when requested by the user.</para>
-
+        <para>&tgoal; Test the speak attributes hot key.</para>
+        <para>&tprocedure; Type 3 words in star office writer.  The first should be in the default size and style.  The second should have both the point size and font family changed.  The third should be bolded and underlined.</para>
+        <para>&tresult; When pressing insert+f at the beginning of the first word, you should hear, the default family and size.  At the beginning of the second word, you should hear the new family and size.  At the beginning of the third word you should hear, the default family and size followed by the words "bold underline".</para>
     </section>
 
     <section id="keywordechotest"><title>Key and Word Echo</title>
@@ -141,7 +159,7 @@
 
       <para>The tests in this section are to make sure that Orca does
         the right thing with respect to spaces and indentation on the
-	braille display and with respect to the various braille 
+	braille display and with respect to the various braille
 	spacing and indentation settings.</para>
 
     </section>
