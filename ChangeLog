@@ -1,3 +1,16 @@
+2006-04-25  Willie Walker <william.walker@sun.com>
+
+	* orca.spec.in, configure.in, src/orca/.cvsignore,
+	src/orca/orca-setup.in (DELETE), src/orca/orca.py,
+	src/orca/orca_gui_prefs.py (GUI stuff from orca-setup.in),
+	src/orca/orca_console_prefs.py (console stuff from orca-setup.in),
+	src/orca/orca_prefs.py (common stuff from orca-setup.in):
+	Refactor of preferences setting mechanisms.  These are now
+	invoked via command line options to the "orca" command.  
+	"--gui-setup" will run the GUI setup tool (also available via
+	Insert+s when Orca is running) and "--text-setup" will run the
+	console based tool.  orca-seutp.in no longer exists.
+	
 2006-04-24  Willie Walker <william.walker@sun.com>
 
 	* configure.in, src/orca/platform.py.in: create a new module 

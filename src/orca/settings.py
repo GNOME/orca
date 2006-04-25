@@ -29,11 +29,12 @@ import debug
 from acss import ACSS
 from orca_i18n import _           # for gettext support
 
-# The name of the module that holds the configuration user interface.
-# This module is expected to have the method, showConfigUI, which
-# will prompt the user for configuration settings.
+# The name of the modules that hold the user interface for setting
+# Orca preferences.  Each module is expected to have the method,
+# showPreferencesUI, which will prompt the user for preferences.
 #
-configUIModule          = "orca-config"
+guiPreferencesModule    = "orca_gui_prefs"
+consolePreferencesModule= "orca_console_prefs"
 
 # A list of keys that can serve as the Orca modifier key.  The list is
 # so we can provide better cross platform support (e.g., Sun keyboard

@@ -1,6 +1,5 @@
 orca_SCRIPTS = \
-	orca \
-	orca-setup
+	orca
 
 orcadir=$(bindir)
 gladedir=$(datadir)/orca/glade
@@ -30,7 +29,10 @@ orca_python_PYTHON = \
 	mag.py \
 	outloud.py \
 	orca.py \
+	orca_gui_prefs.py \
+	orca_console_prefs.py \
 	orca_i18n.py \
+	orca_prefs.py \
 	platform.py \
 	presentation_manager.py \
 	rolenames.py \

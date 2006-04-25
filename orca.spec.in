@@ -43,11 +43,12 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,-)
 %doc
-%{_bindir}/orca-setup
 %{_bindir}/orca
 %{_libdir}/python?.?/site-packages/orca
 %{_datadir}/locale/*/*
 
 %changelog
+* Tue Apr 25 2006 Willie Walker <william.walker@sun.com>
+- Update for new preferences settings mechanism (remove orca-setup.in)
 * Mon Oct 17 2005 Willie Walker <william.walker@sun.com>
 - Update for 0.2.0.

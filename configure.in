@@ -133,15 +133,6 @@ AC_DEFUN([PYDOC_CHECK],
 
 PYDOC_CHECK()
 
-# orca-setup Glade file location
-
-# Using datadir is more proper, but it seems to cause problems with
-# $prefix not getting expanded.
-#
-#ORCA_SETUP_GLADE_DIR="${datadir}/orca/glade"
-ORCA_SETUP_GLADE_DIR="$prefix/share/$PACKAGE/glade"
-AC_SUBST(ORCA_SETUP_GLADE_DIR)
-
 AC_OUTPUT([ 
 Makefile
 orca.spec
@@ -153,7 +144,6 @@ src/brl/Makefile
 src/orca/Makefile
 src/orca/scripts/Makefile
 src/orca/orca
-src/orca/orca-setup
 src/orca/orca_i18n.py
 src/orca/platform.py
 ])

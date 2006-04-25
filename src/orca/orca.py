@@ -943,16 +943,38 @@ def _loadUserSettings(script=None, inputEvent=None):
 
     return True
 
-def _showConfigUI(script=None, inputEvent=None):
+def _showPreferencesGUI(script=None, inputEvent=None):
     """Displays the user interace to configure Orca and set up
-    user preferences.
+    user preferences using a GUI.
     
     Returns True to indicate the input event has been consumed.
     """
 
     try:
-        module = __import__(settings.configUIModule, globals(), locals(), [''])
-        module.showConfigUI()
+        module = __import__(settings.guiPreferencesModule,
+                            globals(),
+                            locals(),
+                            [''])
+        module.showPreferencesUI()
+    except:
+        debug.printException(debug.LEVEL_SEVERE)
+        pass
+
+    return True
+    
+def _showPreferencesConsole(script=None, inputEvent=None):
+    """Displays the user interace to configure Orca and set up
+    user preferences via a command line interface.
+    
+    Returns True to indicate the input event has been consumed.
+    """
+
+    try:
+        module = __import__(settings.consolePreferencesModule,
+                            globals(),
+                            locals(),
+                            [''])
+        module.showPreferencesUI()
     except:
         debug.printException(debug.LEVEL_SEVERE)
         pass
@@ -1022,14 +1044,14 @@ def init(registry):
                                             0,
                                             keystrokeRecordingHandler))
 
-    configureSettingsHandler = InputEventHandler(\
-        _showConfigUI,
+    preferencesSettingsHandler = InputEventHandler(\
+        _showPreferencesGUI,
         _("Displays the preferences configuration dialog."))
     _keyBindings.add(keybindings.KeyBinding(
         "s", \
         (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL),
         1 << MODIFIER_ORCA,
-        configureSettingsHandler))
+        preferencesSettingsHandler))
 
     loadUserSettingsHandler = InputEventHandler(\
         _loadUserSettings,
@@ -1224,10 +1246,37 @@ def abortOnSignal(signum, frame):
     abort()
 
 def main():
-    for arg in sys.argv:
-        if arg == _("--configure"):
-            _showConfigUI()            
 
+    # See if the desktop is running.  If it is, the import of gtk will
+    # succeed.  If it isn't, the import will fail.
+    #
+    desktopRunning = False
+    try:
+        import gtk
+        desktopRuning = True
+    except:
+        pass
+
+    # Run the preferences setup if the user has specified
+    # "--gui-setup" or "--text-setup" on the command line.  If the
+    # desktop is not running, we will fallback to the console-based
+    # method as appropriate.
+    #
+    for arg in sys.argv:
+        if arg == _("--gui-setup"):
+            if desktopRuning:
+                _showPreferencesGUI()            
+            else:
+                _showPreferencesConsole()
+        elif arg == _("--text-setup"):
+            _showPreferencesConsole()
+
+    if not desktopRuning:
+        print "Cannot start Orca because it cannot connect"
+        print "to the Desktop.  Please make sure the DISPLAY"
+        print "environment variable has been set."
+        return 1
+    
     userprefs = os.path.join(os.environ["HOME"], ".orca")
     sys.path.insert(0, userprefs)
     sys.path.insert(0, '') # current directory
