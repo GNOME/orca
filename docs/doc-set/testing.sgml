@@ -50,6 +50,12 @@
         review functionality is working as expected.  This includes
 	making sure the various keystrokes work and produce the
 	desired results.</para>
+        <para>&tgoal; Test basic flat review navigation.</para>
+        <para>&tprocedure; Open gnome terminal and type "ls".  Use the number 7 on the numpad to move up by line until you reach the menubar.  At this point press numpad 6 repeatedly to move across the menubar.</para>
+        <para>&tresult; While moving up with 7 each line of the terminal window should be read.  While moving right across the menubar each word of each menu item should be read.</para>
+        <para>&tgoal; Test the performance of mouse clicks in flat review.</para>
+        <para>&tprocedure; Open gnome terminal and review to the top of the screen with numpad 7.  At this point, move to the right with  KP3 until you reach the e of the edit menu.  While on the "e" press KP/ to perform a left mouse click.</para>
+        <para>&tresult; While moving up the screen each line should be read.  While moving right with KP3 each letter should be read.  When you press KP/, the edit menu should open.</para>
 
     </section>
 
@@ -61,7 +67,7 @@
         Mode.</para>
         <para>&tgoal; Test the learn mode to assure that orca speaks useful information for each orca keystroke.</para>
         <para>&tprocedure; Press insert+f1 to enable learn mode.  Press all keys on the numpad both with and without the orca modifier key (usually insert).  After testing all keys, press escape to exit learn mode.</para>
-        <para>&tresult; Listen to the speech output associated with each keypress.  Orca should give meaningful output describing what the key does.</para>
+        <para>&tresult; Listen to the speech output associated with each keypress.  Orca should give meaningful output describing what the key does.  This information should also appear on the braille display.</para>
 
     </section>
 
@@ -125,7 +131,9 @@
       <para>The tests in this section are to ensure that the Orca
         Spelling Mode functionality provides the desired output for
         the various spelling mode settings.</para>
-
+        <para>&tgoal; Test the performance of orca's spell word functionality.</para>
+        <para>&tprocedure; Open gedit and type a sentence.  Move from one word to the next with CTRL+right arrow and double click KP5 very quickly.</para>
+        <para>&tresult; When doubleclicking KP5 on the first word the word should be spelled honoring the speak capitalization setting.  All Other words should just be spelled.  When the last word is reached, it should also be spelled not including the period.</para>
     </section>
 
     <section id="textattributestest"><title>Text Attributes</title>
