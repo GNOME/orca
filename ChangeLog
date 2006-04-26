@@ -1,6 +1,11 @@
 2006-04-26  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade
+          Adjusted the scale increment for the pitch scale from 1 to .1.
+
+2006-04-26  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca-setup.glade
           Added in the GUI for setting the rate, pitch and volume for
           the three types of voice (default, uppercase and hyperlink).
 

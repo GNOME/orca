@@ -443,10 +443,10 @@ Hyperlink</property>
 		      <property name="can_focus">True</property>
 		      <property name="draw_value">True</property>
 		      <property name="value_pos">GTK_POS_TOP</property>
-		      <property name="digits">0</property>
+		      <property name="digits">1</property>
 		      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 		      <property name="inverted">False</property>
-		      <property name="adjustment">5 0 9 1 0 0</property>
+		      <property name="adjustment">5 0 9 0.10000000149 0 0</property>
 		      <accessibility>
 			<atkrelation target="pitchLabel" type="labelled-by"/>
 		      </accessibility>
