@@ -20,7 +20,6 @@
 # TODO:
 #
 # - Implement the Help button callback.
-# - Remove some calls to say() and the say() routine.
 # - Need to setup the speech lists from the initial preferences.
 # - Need to add comments to each method.
 
@@ -28,6 +27,7 @@
 
 import os
 import sys
+import debug
 import gettext
 import gtk
 import gtk.glade
@@ -101,7 +101,7 @@ class orcaSetupGUI(GladeWrapper):
 
         factories = speech.getSpeechServerFactories()
         if len(factories) == 0:
-            self.inactivateSpeechGUI()
+            self.prefsDict["enableSpeech"] = False
             return
 
         speech.init()
@@ -117,8 +117,9 @@ class orcaSetupGUI(GladeWrapper):
 
         self.factoryChoices = {}
         if len(workingFactories) == 0:
-            self.say(_("Speech is unavailable.\n"))
-            self.inactivateSpeechGUI()
+            debug.println(debug.LEVEL_SEVERE, _("Speech not available."))
+            debug.printStack(debug.LEVEL_SEVERE)
+            self.prefsDict["enableSpeech"] = False
             return
         elif len(workingFactories) > 1:
             i = 1
@@ -167,9 +168,9 @@ class orcaSetupGUI(GladeWrapper):
 
         self.serverChoices = {}
         if len(self.servers) == 0:
-            self.say(_("No servers available.\n"))
-            self.say(_("Speech will not be used.\n"))
-            self.inactivateSpeechGUI()
+            debug.println(debug.LEVEL_SEVERE, _("Speech not available."))
+            debug.printStack(debug.LEVEL_SEVERE)
+            self.prefsDict["enableSpeech"] = False
             return
         if len(self.servers) > 1:
             i = 1
@@ -190,9 +191,9 @@ class orcaSetupGUI(GladeWrapper):
 
         self.voiceChoices = {}
         if len(self.families) == 0:
-            self.say(_("No voices available.\n"))
-            self.say(_("Speech will not be used.\n"))
-            self.inactivateSpeechGUI()
+            debug.println(debug.LEVEL_SEVERE, _("Speech not available."))
+            debug.printStack(debug.LEVEL_SEVERE)
+            self.prefsDict["enableSpeech"] = False
             return
         if len(self.families) > 1:
             i = 1
@@ -252,16 +253,6 @@ class orcaSetupGUI(GladeWrapper):
         list.append_column(column)
 
         return model
-
-    def inactivateSpeechGUI(self):
-        self.prefsDict["enableSpeech"] = False
-
-        self.speechSystemsLabel.set_sensitive(False)
-        self.speechSystems.set_sensitive(False)
-        self.speechServersLabel.set_sensitive(False)
-        self.speechServers.set_sensitive(False)
-        self.voicesLabel.set_sensitive(False)
-        self.voices.set_sensitive(False)
 
     def setKeyEchoItems(self):
         if self.keyEchoCheckbutton.get_active():
@@ -333,7 +324,7 @@ class orcaSetupGUI(GladeWrapper):
         self.prefsDict["enableEchoByWord"] = widget.get_active()
 
     def helpButtonClicked(self, widget):
-        self.say(_("Help not currently implemented."))
+        print "Help not currently implemented."
 
     def cancelButtonClicked(self, widget):
         self.orcaSetupWindow.hide()
@@ -364,9 +355,8 @@ class orcaSetupGUI(GladeWrapper):
         self.prefsDict["voices"] = self.voices
 
         if orca_prefs.writePreferences(self.prefsDict):
-            self.say("Accessibility support for GNOME has just been enabled.")
-            self.say("You need to log out and log back in for the change " \
-                        + "to take effect.")
+            self.say(_("Accessibility support for GNOME has just been enabled."))
+            self.say(_("You need to log out and log back in for the change to take effect."))
 
         self.orcaSetupWindow.hide()
 

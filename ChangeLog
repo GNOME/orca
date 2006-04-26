@@ -1,6 +1,17 @@
 2006-04-26  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade
+          Set Help button insensitive until callback has been implemented.
+
+        * src/orca/orca_gui_prefs.py
+          Replaced most uses of the say() routine with calls to debug
+          routines.
+
+          Added gettext wrappers around several strings.
+
+2006-04-26  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca-setup.glade
           Changed alphaPunctCheckButton to printableCheckButton for a
           consistent naming scheme with the variables in orca_gui_prefs.py
 

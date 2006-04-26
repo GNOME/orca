@@ -773,6 +773,7 @@
 		      <child>
 			<widget class="GtkImage" id="image3">
 			  <property name="visible">True</property>
+			  <property name="sensitive">False</property>
 			  <property name="stock">gtk-help</property>
 			  <property name="icon_size">4</property>
 			  <property name="xalign">0.5</property>
