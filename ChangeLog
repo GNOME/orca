@@ -1,5 +1,11 @@
 2006-04-26  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/orca-setup.glade
+          Changed "Select desired voice" to "Select desired voice family"
+          for the label of the third list in the Speech tab pane.
+
+2006-04-26  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/orca_gui_prefs.py
           Added in debug to the _init(), setupServers() and setupVoices()
           methods to help debug cases where the GUI speech lists aren't
