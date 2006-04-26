@@ -48,7 +48,7 @@ from input_event import InputEventHandler
 
 from orca_i18n import _           # for gettext support
 
-# The user-settings module (see _loadUserSettings).
+# The user-settings module (see loadUserSettings).
 #
 _userSettings = None
 
@@ -888,7 +888,7 @@ def outlineAccessible(accessible, erasePrevious=True):
 #                                                                      #
 ########################################################################
 
-def _loadUserSettings(script=None, inputEvent=None):
+def loadUserSettings(script=None, inputEvent=None):
     """Loads (and reloads) the user settings module, reinitializing
     things such as speech if necessary.
 
@@ -1063,7 +1063,7 @@ def init(registry):
         preferencesSettingsHandler))
 
     loadUserSettingsHandler = InputEventHandler(\
-        _loadUserSettings,
+        loadUserSettings,
         _("Reloads user settings and reinitializes services as necessary."))
     _keyBindings.add(keybindings.KeyBinding(
         "space", \
@@ -1129,7 +1129,7 @@ def init(registry):
     registry.registerEventListener(_onChildrenChanged,
                                    "object:children-changed:")
 
-    _loadUserSettings()
+    loadUserSettings()
 
     registry.registerKeystrokeListeners(_processKeyboardEvent)
 

@@ -34,6 +34,7 @@ import gtk.glade
 import locale
 
 import acss
+import orca
 import orca_prefs
 import platform
 import settings
@@ -358,6 +359,7 @@ class orcaSetupGUI(GladeWrapper):
             self.say(_("Accessibility support for GNOME has just been enabled."))
             self.say(_("You need to log out and log back in for the change to take effect."))
 
+        orca.loadUserSettings()
         self.orcaSetupWindow.hide()
 
     def windowDestroyed(self, widget):

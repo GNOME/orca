@@ -1,5 +1,15 @@
 2006-04-26  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/orca.py
+          Adjusted _loadUserSettings() to loadUserSettings() so that it
+          can be used in the Orca GUI configuration.
+
+        * src/orca/orca_gui_prefs.py
+          Call orca.loadUserSettings() to dynamically load the new user
+          settings when they click on the Apply button.
+
+2006-04-26  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/orca-setup.glade
           Set Help button insensitive until callback has been implemented.
 
