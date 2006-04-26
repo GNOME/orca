@@ -20,7 +20,6 @@
 # TODO:
 #
 # - Implement the Help button callback.
-# - Need to setup the speech lists from the initial preferences.
 # - Need to add comments to each method.
 
 """Displays a GUI for the user to set Orca preferences."""
@@ -79,7 +78,6 @@ class orcaSetupGUI(GladeWrapper):
 
     def _init(self):
         self.prefsDict = orca_prefs.readPreferences()
-        self.initGUIState()
 
         self.speechSystemsModel = self.initList(self.speechSystems)
         selection = self.speechSystems.get_selection()
@@ -141,9 +139,21 @@ class orcaSetupGUI(GladeWrapper):
         self.setupServers(self.factory)
         self.setupVoices(self.server)
         self.prefsDict["enableSpeech"] = True
+        self.initGUIState()
 
     def initGUIState(self):
         prefs = self.prefsDict
+
+        self.setSystemChoice(self.factoryChoices, prefs["speechServerFactory"])
+
+        serverPrefs = prefs["speechServerInfo"]
+        if serverPrefs:
+            self.setServerChoice(self.serverChoices, serverPrefs[0])
+
+        defaultVoice = prefs["voices"]["default"]
+        if defaultVoice.has_key("familiy"):
+            family = defaultVoice["family"]
+            self.setVoiceChoice(self.families, family["name"])
 
         self.brailleSupportCheckbutton.set_active(prefs["enableBraille"])
         self.brailleMonitorCheckbutton.set_active(prefs["enableBrailleMonitor"])
@@ -155,7 +165,6 @@ class orcaSetupGUI(GladeWrapper):
         self.functionCheckbutton.set_active(prefs["enableFunctionKeys"])
         self.actionCheckbutton.set_active(prefs["enableActionKeys"])
         self.echoByWordCheckbutton.set_active(prefs["enableEchoByWord"])
-
 
     def setupServers(self, factory):
         self.servers = []
@@ -224,6 +233,16 @@ class orcaSetupGUI(GladeWrapper):
 
         return -1
 
+    def setSystemChoice(self, factoryChoices, systemName):
+        model = self.speechSystemsModel
+        i = 1
+        for factory in factoryChoices.values():
+            name = factory[0].__name__
+            if name == systemName:
+                self.speechSystems.get_selection().select_iter(model[i-1].iter)
+                return
+            i += 1
+
     def getServerChoiceIndex(self, serverChoices, result):
         i = 1
         for server in serverChoices.values():
@@ -234,6 +253,16 @@ class orcaSetupGUI(GladeWrapper):
 
         return -1
 
+    def setServerChoice(self, serverChoices, serverName):
+        model = self.speechServersModel
+        i = 1
+        for server in serverChoices.values():
+            name = server.getInfo()[0]
+            if name == serverName:
+                self.speechServers.get_selection().select_iter(model[i-1].iter)
+                return
+            i += 1
+
     def getVoiceChoiceIndex(self, families, result):
         i = 1
         for family in families:
@@ -243,6 +272,16 @@ class orcaSetupGUI(GladeWrapper):
             i += 1
 
         return -1
+
+    def setVoiceChoice(self, families, voiceName):
+        model = self.voicesModel
+        i = 1
+        for family in families:
+            name = family[speechserver.VoiceFamily.NAME]
+            if name == voiceName:
+                self.voices.get_selection().select_iter(model[i-1].iter)
+                return
+            i += 1
 
     def showGUI(self):
         self.orcaSetupWindow.show()

@@ -1,5 +1,11 @@
 2006-04-26  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/orca_gui_prefs.py
+          The initial selections in the the three lists on the Speech
+          tab GUI are now correctly set.
+
+2006-04-26  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/orca.py
           Adjusted _loadUserSettings() to loadUserSettings() so that it
           can be used in the Orca GUI configuration.
