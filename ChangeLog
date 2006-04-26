@@ -1,5 +1,12 @@
 2006-04-26  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/orca_gui_prefs.py
+          Added in debug to the _init(), setupServers() and setupVoices()
+          methods to help debug cases where the GUI speech lists aren't
+          being setup correctly.
+
+2006-04-26  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/orca-setup.glade
           Added LABEL_FOR relationships (to the appropriate lists) for
           the three speech related labels in the Speech Tab pane.
