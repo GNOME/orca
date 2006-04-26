@@ -746,6 +746,7 @@
 	  <child>
 	    <widget class="GtkButton" id="helpButton">
 	      <property name="visible">True</property>
+	      <property name="sensitive">False</property>
 	      <property name="can_default">True</property>
 	      <property name="can_focus">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
@@ -773,7 +774,6 @@
 		      <child>
 			<widget class="GtkImage" id="image3">
 			  <property name="visible">True</property>
-			  <property name="sensitive">False</property>
 			  <property name="stock">gtk-help</property>
 			  <property name="icon_size">4</property>
 			  <property name="xalign">0.5</property>
