@@ -17,6 +17,13 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+# TODO:
+#
+# - Implement the Help button callback.
+# - Remove some calls to say() and the say() routine.
+# - Need to setup the speech lists from the initial preferences.
+# - Need to add comments to each method.
+
 """Displays a GUI for the user to set Orca preferences."""
 
 import os
@@ -26,13 +33,16 @@ import gtk
 import gtk.glade
 import locale
 
+import acss
+import orca_prefs
 import platform
+import settings
+import speech as speech
+import speechserver as speechserver
+
+from orca_i18n import _  # for gettext support
 
 OS = None
-
-speechSystemsModel = None
-speechServersModel = None
-voicesModel = None
 
 class GladeWrapper:
     """
@@ -67,21 +77,170 @@ class GladeWrapper:
 class orcaSetupGUI(GladeWrapper):
 
     def _init(self):
-        global speechSystemsModel, speechServersModel, voicesModel
+        self.prefsDict = orca_prefs.readPreferences()
+        self.initGUIState()
 
-        speechSystemsModel = self.initList(self.speechSystems)
+        self.speechSystemsModel = self.initList(self.speechSystems)
         selection = self.speechSystems.get_selection()
         selection.connect("changed", self.systemsSelectionChanged)
 
-        speechServersModel = self.initList(self.speechServers)
+        self.speechServersModel = self.initList(self.speechServers)
         selection = self.speechServers.get_selection()
         selection.connect("changed", self.serversSelectionChanged)
 
-        voicesModel = self.initList(self.voices)
+        self.voicesModel = self.initList(self.voices)
         selection = self.voices.get_selection()
         selection.connect("changed", self.voicesSelectionChanged)
 
         self.setKeyEchoItems()
+
+        # Use this because callbacks will often hang when not running
+        # with bonobo main in use.
+        #
+        settings.enableSpeechCallbacks = False
+
+        factories = speech.getSpeechServerFactories()
+        if len(factories) == 0:
+            self.inactivateSpeechGUI()
+            return
+
+        speech.init()
+
+        workingFactories = []
+        for self.factory in factories:
+            try:
+                self.factoryInfos = \
+                    self.factory.SpeechServer.getSpeechServerInfos()
+                workingFactories.append([self.factory, self.factoryInfos])
+            except:
+                pass
+
+        self.factoryChoices = {}
+        if len(workingFactories) == 0:
+            say(_("Speech is unavailable.\n"))
+            self.inactivateSpeechGUI()
+            return
+        elif len(workingFactories) > 1:
+            i = 1
+            for workingFactory in workingFactories:
+                self.factoryChoices[i] = workingFactory
+                iter = self.speechSystemsModel.append()
+                self.speechSystemsModel.set(iter, 0,
+                               workingFactory[0].SpeechServer.getFactoryName())
+                i += 1
+            [self.factory, self.factoryInfos] = self.factoryChoices[1]
+        else:
+            self.factoryChoices[1] = workingFactories[0]
+            iter = self.speechSystemsModel.append()
+            self.speechSystemsModel.set(iter, 0,
+                         workingFactories[0][0].SpeechServer.getFactoryName())
+            [self.factory, self.factoryInfos] = workingFactories[0]
+
+        self.setupServers(self.factory)
+        self.setupVoices(self.server)
+        self.prefsDict["enableSpeech"] = True
+
+    def initGUIState(self):
+        prefs = self.prefsDict
+
+        self.brailleSupportCheckbutton.set_active(prefs["enableBraille"])
+        self.brailleMonitorCheckbutton.set_active(prefs["enableBrailleMonitor"])
+
+        self.keyEchoCheckbutton.set_active(prefs["enableKeyEcho"])
+        self.printableCheckbutton.set_active(prefs["enablePrintableKeys"])
+        self.modifierCheckbutton.set_active(prefs["enableModifierKeys"])
+        self.lockingCheckbutton.set_active(prefs["enableLockingKeys"])
+        self.functionCheckbutton.set_active(prefs["enableFunctionKeys"])
+        self.actionCheckbutton.set_active(prefs["enableActionKeys"])
+        self.echoByWordCheckbutton.set_active(prefs["enableEchoByWord"])
+
+
+    def setupServers(self, factory):
+        self.servers = []
+        for info in self.factoryInfos:
+            try:
+                self.server = self.factory.SpeechServer.getSpeechServer(info)
+                if self.server:
+                    self.servers.append(self.server)
+            except:
+                pass
+
+        self.serverChoices = {}
+        if len(self.servers) == 0:
+            say(_("No servers available.\n"))
+            say(_("Speech will not be used.\n"))
+            self.inactivateSpeechGUI()
+            return
+        if len(self.servers) > 1:
+            i = 1
+            for self.server in self.servers:
+                self.serverChoices[i] = self.server
+                iter = self.speechServersModel.append()
+                self.speechServersModel.set(iter, 0, self.server.getInfo()[0])
+                i += 1
+            self.server = self.serverChoices[1]
+        else:
+            self.serverChoices[1] = self.servers[0]
+            iter = self.speechServersModel.append()
+            self.speechServersModel.set(iter, 0, self.servers[0].getInfo()[0])
+            self.server = self.servers[0]
+
+    def setupVoices(self, server):
+        self.families = server.getVoiceFamilies()
+
+        self.voiceChoices = {}
+        if len(self.families) == 0:
+            say(_("No voices available.\n"))
+            say(_("Speech will not be used.\n"))
+            self.inactivateSpeechGUI()
+            return
+        if len(self.families) > 1:
+            i = 1
+            for family in self.families:
+                name = family[speechserver.VoiceFamily.NAME]
+                self.acss = acss.ACSS({acss.ACSS.FAMILY : family})
+                self.voiceChoices[i] = self.acss
+                iter = self.voicesModel.append()
+                self.voicesModel.set(iter, 0, name)
+                i += 1
+            self.defaultACSS = self.voiceChoices[1]
+        else:
+            name = self.families[0][speechserver.VoiceFamily.NAME]
+            iter = self.voicesModel.append()
+            self.voicesModel.set(iter, 0, name)
+            self.defaultACSS = \
+                acss.ACSS({acss.ACSS.FAMILY : self.families[0]})
+            self.voiceChoices[1] = self.defaultACSS
+
+    def getSystemChoiceIndex(self, factoryChoices, result):
+        i = 1
+        for factory in factoryChoices.values():
+            name = factory[0].SpeechServer.getFactoryName()
+            if name == result:
+                return i
+            i += 1
+
+        return -1
+
+    def getServerChoiceIndex(self, serverChoices, result):
+        i = 1
+        for server in serverChoices.values():
+            name = server.getInfo()[0]
+            if name == result:
+                return i
+            i += 1
+
+        return -1
+
+    def getVoiceChoiceIndex(self, families, result):
+        i = 1
+        for family in families:
+            name = family[speechserver.VoiceFamily.NAME]
+            if name == result:
+                return i
+            i += 1
+
+        return -1
 
     def showGUI(self):
         self.orcaSetupWindow.show()
@@ -94,69 +253,132 @@ class orcaSetupGUI(GladeWrapper):
 
         return model
 
+    def inactivateSpeechGUI(self):
+        self.prefsDict["enableSpeech"] = False
+
+        self.speechSystemsLabel.set_sensitive(False)
+        self.speechSystems.set_sensitive(False)
+        self.speechServersLabel.set_sensitive(False)
+        self.speechServers.set_sensitive(False)
+        self.voicesLabel.set_sensitive(False)
+        self.voices.set_sensitive(False)
+
     def setKeyEchoItems(self):
         if self.keyEchoCheckbutton.get_active():
             enable = True
         else:
             enable = False
-        self.alphaPunctCheckbutton.set_sensitive(enable)
+        self.printableCheckbutton.set_sensitive(enable)
         self.modifierCheckbutton.set_sensitive(enable)
         self.lockingCheckbutton.set_sensitive(enable)
         self.functionCheckbutton.set_sensitive(enable)
         self.actionCheckbutton.set_sensitive(enable)
 
     def systemsSelectionChanged(self, selection):
-        print "systemsSelectionChanged called."
+        model, iter = selection.get_selected()
+        if iter:
+            results = model.get_value(iter, 0)
+            index = self.getSystemChoiceIndex(self.factoryChoices, results)
+
+            self.factory = self.factoryChoices[index][0]
+            self.speechServersModel.clear()
+            self.setupServers(self.factory)
+
+            self.server = self.serverChoices[1]
+            self.setupVoices(self.server)
 
     def serversSelectionChanged(self, selection):
-        print "serversSelectionChanged called."
+        model, iter = selection.get_selected()
+        if iter:
+            results = model.get_value(iter, 0)
+            index = self.getServerChoiceIndex(self.serverChoices, results)
+
+            self.voicesModel.clear()
+            self.server = self.serverChoices[index]
+            self.setupVoices(self.server)
 
     def voicesSelectionChanged(self, selection):
-        print "voicesSelectionChanged called."
+        model, iter = selection.get_selected()
+        if iter:
+            results = model.get_value(iter, 0)
+            index = self.getVoiceChoiceIndex(self.families, results)
+            self.defaultACSS = self.voiceChoices[index]
 
     def brailleSupportChecked(self, widget):
-        print "brailleSupportChecked called."
+        self.prefsDict["enableBraille"] = widget.get_active()
 
     def brailleMonitorChecked(self, widget):
-        print "brailleMonitorChecked called."
+        self.prefsDict["enableBrailleMonitor"] = widget.get_active()
 
     def keyEchoChecked(self, widget):
-        print "keyEchoChecked called."
+        self.prefsDict["enableKeyEcho"] = widget.get_active()
+        self.setKeyEchoItems()
 
     def printableKeysChecked(self, widget):
-        print "printableKeysChecked called."
+        self.prefsDict["enablePrintableKeys"] = widget.get_active()
 
     def modifierKeysChecked(self, widget):
-        print "modifierKeysChecked called."
+        self.prefsDict["enableModifierKeys"] = widget.get_active()
 
     def lockingKeysChecked(self, widget):
-        print "lockingKeysChecked called."
+        self.prefsDict["enableLockingKeys"] = widget.get_active()
 
     def functionKeysChecked(self, widget):
-        print "functionKeysChecked called."
+        self.prefsDict["enableFunctionKeys"] = widget.get_active()
 
     def actionKeysChecked(self, widget):
-        print "actionKeysChecked called."
+        self.prefsDict["enableActionKeys"] = widget.get_active()
 
     def echoByWordChecked(self, widget):
-        print "echoByWordChecked called."
+        self.prefsDict["enableEchoByWord"] = widget.get_active()
 
     def helpButtonClicked(self, widget):
-        print "helpButtonClicked called."
+        say(_("Help not currently implemented."))
 
     def cancelButtonClicked(self, widget):
-        print "cancelButtonClicked called."
         self.orcaSetupWindow.hide()
 
     def applyButtonClicked(self, widget):
-        print "applyButtonClicked called."
+
+        # Force the rate to 50 so it will be set to something
+        # and output to the user settings file.  50 is chosen
+        # here, BTW, since it is the default value.  The same
+        # goes for gain (volume) and average-pitch, but they
+        # range from 0-10 instead of 0-100.
+        #
+        self.defaultACSS[acss.ACSS.RATE] = 50
+        self.defaultACSS[acss.ACSS.GAIN] = 9
+        self.defaultACSS[acss.ACSS.AVERAGE_PITCH] = 5
+        self.uppercaseACSS = acss.ACSS({acss.ACSS.AVERAGE_PITCH : 6})
+        self.hyperlinkACSS = acss.ACSS({acss.ACSS.AVERAGE_PITCH : 2})
+
+        self.voices = {
+            settings.DEFAULT_VOICE   : self.defaultACSS,
+            settings.UPPERCASE_VOICE : self.uppercaseACSS,
+            settings.HYPERLINK_VOICE : self.hyperlinkACSS
+        }
+
+        self.prefsDict["enableSpeech"] = True
+        self.prefsDict["speechServerFactory"] = self.factory
+        self.prefsDict["speechServerInfo"] = self.server
+        self.prefsDict["voices"] = self.voices
+
+        if orca_prefs.writePreferences(self.prefsDict):
+            say("Accessibility support for GNOME has just been enabled.")
+            say("You need to log out and log back in for the change " \
+                        + "to take effect.")
+
         self.orcaSetupWindow.hide()
 
-    def quit(self, *args):
-        gtk.main_quit()
-
     def windowDestroyed(self, widget):
-        self.quit()
+        self.orcaSetupWindow.hide()
+
+    def say(text, stop=False):
+        if stop:
+            speech.stop()
+
+        speech.speak(text)
+
 
 def showPreferencesUI():
     global OS

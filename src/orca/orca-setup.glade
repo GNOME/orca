@@ -553,7 +553,7 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkCheckButton" id="alphaPunctCheckbutton">
+		    <widget class="GtkCheckButton" id="printableCheckbutton">
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
 		      <property name="label" translatable="yes">Enable alphanumeric and punctuation keys</property>

@@ -1,3 +1,15 @@
+2006-04-26  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca-setup.glade
+          Changed alphaPunctCheckButton to printableCheckButton for a
+          consistent naming scheme with the variables in orca_gui_prefs.py
+
+        * src/orca/orca_gui_prefs.py
+          Initial version of the GUI embedded in Orca, using the common
+          routines in orca_prefs.py. See the TODO comments at the start
+          of this file for a list of the things that still need to be 
+          completed.
+
 2006-04-25  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca.py: use Insert+space instead of Insert+s for 
