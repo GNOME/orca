@@ -1,6 +1,17 @@
 2006-04-26  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade
+          Added in the GUI for setting the rate, pitch and volume for
+          the three types of voice (default, uppercase and hyperlink).
+
+        * src/orca/orca_gui_prefs.py
+          Needed to adjust the recently added debug messages to _init(), 
+          setupServers() and setupVoices(), so that they are only output
+          if debugLevel is <= debug.LEVEL_FINEST not >= debug.LEVEL_FINEST.
+
+2006-04-26  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca-setup.glade
           Changed "Select desired voice" to "Select desired voice family"
           for the label of the third list in the Speech tab pane.
 

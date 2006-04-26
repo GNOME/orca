@@ -19,7 +19,10 @@
 
 # TODO:
 #
+# - Test with two speech systems installed.
 # - Implement the Help button callback.
+# - Implement rateValueChanged(), pitchValueChanged(), 
+#   volumeValueChanged() and: voiceTypeChanged().
 # - Need to add comments to each method.
 
 """Displays a GUI for the user to set Orca preferences."""
@@ -119,7 +122,7 @@ class orcaSetupGUI(GladeWrapper):
             except:
                 pass
 
-        if debug.debugLevel >= debug.LEVEL_FINEST:
+        if debug.debugLevel <= debug.LEVEL_FINEST:
             print "orca_gui_prefs._init: workingFactories: ", workingFactories
 
         self.factoryChoices = {}
@@ -144,7 +147,7 @@ class orcaSetupGUI(GladeWrapper):
                          workingFactories[0][0].SpeechServer.getFactoryName())
             [self.factory, self.factoryInfos] = workingFactories[0]
 
-        if debug.debugLevel >= debug.LEVEL_FINEST:
+        if debug.debugLevel <= debug.LEVEL_FINEST:
             print "orca_gui_prefs._init: factoryChoices: ", self.factoryChoices
             print "orca_gui_prefs._init: factoryInfos: ", self.factoryInfos
             print "orca_gui_prefs._init: factory: ", self.factory
@@ -209,7 +212,7 @@ class orcaSetupGUI(GladeWrapper):
             self.speechServersModel.set(iter, 0, self.servers[0].getInfo()[0])
             self.server = self.servers[0]
 
-        if debug.debugLevel >= debug.LEVEL_FINEST:
+        if debug.debugLevel <= debug.LEVEL_FINEST:
             print "orca_gui_prefs.setupServers: serverChoices: ", \
                    self.serverChoices
             print "orca_gui_prefs.setupServers: server: ", self.server
@@ -241,7 +244,7 @@ class orcaSetupGUI(GladeWrapper):
                 acss.ACSS({acss.ACSS.FAMILY : self.families[0]})
             self.voiceChoices[1] = self.defaultACSS
 
-        if debug.debugLevel >= debug.LEVEL_FINEST:
+        if debug.debugLevel <= debug.LEVEL_FINEST:
             print "orca_gui_prefs.setupVoices: voiceChoices: ", \
                    self.voiceChoices
 
@@ -384,6 +387,18 @@ class orcaSetupGUI(GladeWrapper):
 
     def echoByWordChecked(self, widget):
         self.prefsDict["enableEchoByWord"] = widget.get_active()
+
+    def voiceTypeChanged(self, widget):
+        print "voiceTypeChanged: not implemented yet."
+
+    def rateValueChanged(self, widget):
+        print "rateValueChanged: not implemented yet."
+
+    def pitchValueChanged(self, widget):
+        print "pitchValueChanged: not implemented yet."
+
+    def volumeValueChanged(self, widget):
+        print "volumeValueChanged: not implemented yet."
 
     def helpButtonClicked(self, widget):
         print "Help not currently implemented."
