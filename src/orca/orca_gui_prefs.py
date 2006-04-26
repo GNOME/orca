@@ -117,7 +117,7 @@ class orcaSetupGUI(GladeWrapper):
 
         self.factoryChoices = {}
         if len(workingFactories) == 0:
-            say(_("Speech is unavailable.\n"))
+            self.say(_("Speech is unavailable.\n"))
             self.inactivateSpeechGUI()
             return
         elif len(workingFactories) > 1:
@@ -167,8 +167,8 @@ class orcaSetupGUI(GladeWrapper):
 
         self.serverChoices = {}
         if len(self.servers) == 0:
-            say(_("No servers available.\n"))
-            say(_("Speech will not be used.\n"))
+            self.say(_("No servers available.\n"))
+            self.say(_("Speech will not be used.\n"))
             self.inactivateSpeechGUI()
             return
         if len(self.servers) > 1:
@@ -190,8 +190,8 @@ class orcaSetupGUI(GladeWrapper):
 
         self.voiceChoices = {}
         if len(self.families) == 0:
-            say(_("No voices available.\n"))
-            say(_("Speech will not be used.\n"))
+            self.say(_("No voices available.\n"))
+            self.say(_("Speech will not be used.\n"))
             self.inactivateSpeechGUI()
             return
         if len(self.families) > 1:
@@ -333,7 +333,7 @@ class orcaSetupGUI(GladeWrapper):
         self.prefsDict["enableEchoByWord"] = widget.get_active()
 
     def helpButtonClicked(self, widget):
-        say(_("Help not currently implemented."))
+        self.say(_("Help not currently implemented."))
 
     def cancelButtonClicked(self, widget):
         self.orcaSetupWindow.hide()
@@ -364,8 +364,8 @@ class orcaSetupGUI(GladeWrapper):
         self.prefsDict["voices"] = self.voices
 
         if orca_prefs.writePreferences(self.prefsDict):
-            say("Accessibility support for GNOME has just been enabled.")
-            say("You need to log out and log back in for the change " \
+            self.say("Accessibility support for GNOME has just been enabled.")
+            self.say("You need to log out and log back in for the change " \
                         + "to take effect.")
 
         self.orcaSetupWindow.hide()
