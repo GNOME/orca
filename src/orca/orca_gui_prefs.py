@@ -77,6 +77,11 @@ class GladeWrapper:
 class orcaSetupGUI(GladeWrapper):
 
     def _init(self):
+        """Initialize the Orca configuration GUI. Read the users current
+        set of preferences and set the GUI state to match. Setup speech
+        support and populate the lists on the Speech Tab pane accordingly.
+        """
+
         self.prefsDict = orca_prefs.readPreferences()
 
         self.speechSystemsModel = self.initList(self.speechSystems)
@@ -117,7 +122,7 @@ class orcaSetupGUI(GladeWrapper):
         self.factoryChoices = {}
         if len(workingFactories) == 0:
             debug.println(debug.LEVEL_SEVERE, _("Speech not available."))
-            debug.printStack(debug.LEVEL_SEVERE)
+            debug.printStack(debug.LEVEL_FINEST)
             self.prefsDict["enableSpeech"] = False
             return
         elif len(workingFactories) > 1:
@@ -179,7 +184,7 @@ class orcaSetupGUI(GladeWrapper):
         self.serverChoices = {}
         if len(self.servers) == 0:
             debug.println(debug.LEVEL_SEVERE, _("Speech not available."))
-            debug.printStack(debug.LEVEL_SEVERE)
+            debug.printStack(debug.LEVEL_FINEST)
             self.prefsDict["enableSpeech"] = False
             return
         if len(self.servers) > 1:
@@ -202,7 +207,7 @@ class orcaSetupGUI(GladeWrapper):
         self.voiceChoices = {}
         if len(self.families) == 0:
             debug.println(debug.LEVEL_SEVERE, _("Speech not available."))
-            debug.printStack(debug.LEVEL_SEVERE)
+            debug.printStack(debug.LEVEL_FINEST)
             self.prefsDict["enableSpeech"] = False
             return
         if len(self.families) > 1:

@@ -1,3 +1,15 @@
+2006-04-26  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca-setup.glade
+          Added LABEL_FOR relationships (to the appropriate lists) for
+          the three speech related labels in the Speech Tab pane.
+          Added mnemonics to the Help, Apply and Cancel buttons.
+          Made the Apply button the default.
+
+        * src/orca/orca_gui_prefs.py
+          The printing of the stack trace in the three places where 
+          speech is not available has been set to debug.LEVEL_FINEST.
+
 2006-04-26  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca_console_prefs.py: i18n-ize the message
