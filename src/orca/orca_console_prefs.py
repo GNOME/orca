@@ -259,9 +259,8 @@ def showPreferencesUI():
     prefsDict["enableBrailleMonitor"] = state
 
     if orca_prefs.writePreferences(prefsDict):
-        sayAndPrint("Accessibility support for GNOME has just been enabled.")
-        sayAndPrint("You need to log out and log back in for the change "\
-                    +"to take effect.")
+        sayAndPrint(_("Accessibility support for GNOME has just been enabled."))
+        sayAndPrint(_("You need to log out and log back in for the change to take effect."))
 
 def main():
     showPreferencesUI()
