@@ -164,8 +164,20 @@ class orcaSetupGUI(GladeWrapper):
             family = defaultVoice["family"]
             self.setVoiceChoice(self.families, family["name"])
 
+        if prefs["speechVerbosityLevel"] == _("Brief"):
+            self.speechBriefButton.set_active(True)
+        else:
+            self.speechVerboseButton.set_active(True)
+
         self.brailleSupportCheckbutton.set_active(prefs["enableBraille"])
         self.brailleMonitorCheckbutton.set_active(prefs["enableBrailleMonitor"])
+        state = prefs["brailleRolenameStyle"] == \
+                            settings.BRAILLE_ROLENAME_STYLE_SHORT
+        self.abbrevRolenames.set_active(state)
+        if prefs["brailleVerbosityLevel"] == _("Brief"):
+            self.brailleBriefButton.set_active(True)
+        else:
+            self.brailleVerboseButton.set_active(True)
 
         self.keyEchoCheckbutton.set_active(prefs["enableKeyEcho"])
         self.printableCheckbutton.set_active(prefs["enablePrintableKeys"])
@@ -362,13 +374,31 @@ class orcaSetupGUI(GladeWrapper):
         print "punctuationLevelChanged: not implemented yet."
 
     def speechVerbosityChanged(self, widget):
-        print "speechVerbosityChanged: not implemented yet."
+        if widget.get_active():
+            if widget.get_label() == _("Brief"):
+                self.prefsDict["speechVerbosityLevel"] = \
+                    settings.VERBOSITY_LEVEL_BRIEF
+            else:
+                self.prefsDict["speechVerbosityLevel"] = \
+                    settings.VERBOSITY_LEVEL_VERBOSE
+
 
     def abbrevRolenamesChecked(self, widget):
-        print "abbrevRolenamesChecked: not implemented yet."
+        if widget.get_active():
+            self.prefsDict["brailleRolenameStyle"] = \
+                settings.BRAILLE_ROLENAME_STYLE_SHORT
+        else:
+            self.prefsDict["brailleRolenameStyle"] = \
+                settings.BRAILLE_ROLENAME_STYLE_LONG
 
     def brailleVerbosityChanged(self, widget):
-        print "brailleVerbosityChanged: not implemented yet."
+        if widget.get_active():
+            if widget.get_label() == _("Brief"):
+                self.prefsDict["brailleVerbosityLevel"] = \
+                    settings.VERBOSITY_LEVEL_BRIEF
+            else:
+                self.prefsDict["brailleVerbosityLevel"] = \
+                    settings.VERBOSITY_LEVEL_VERBOSE
 
     def helpButtonClicked(self, widget):
         print "Help not currently implemented."

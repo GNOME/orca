@@ -1,3 +1,10 @@
+2006-04-27  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca_gui_prefs.py
+          Hooked up the callbacks for:
+          - Speech Verbosity Level
+          - Braille Abbreviated Rolenames
+          - Braille Verbosity Level
 
 2006-04-27  Rich Burridge <rich.burridge@sun.com>
 
