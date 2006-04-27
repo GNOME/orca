@@ -215,17 +215,18 @@ class SpeechServer(speechserver.SpeechServer):
         """Gets the voice-independent ACSS rate value of a voice."""
 
         if not self.__rateInfo.has_key(speaker):
-            return 50
+            return 50.0
 
         [minRate, averageRate, maxRate] = self.__rateInfo[speaker]
         rate = speaker.getParameterValue("rate")
         if rate < averageRate:
-            return int(((rate - minRate) / (averageRate - minRate)) * 50)
+            return int(((rate - minRate) / (averageRate - minRate)) * 50.0)
         elif rate > averageRate:
-            return 50 \
-                   + int(((rate - averageRate) / (maxRate - averageRate)) * 50)
+            return 50.0 \
+                   + int(((rate - averageRate) / (maxRate - averageRate)) \
+                         * 50.0)
         else:
-            return 50
+            return 50.0
 
     def __setRate(self, speaker, acssRate):
         """Determines the voice-specific rate setting for the
@@ -236,11 +237,11 @@ class SpeechServer(speechserver.SpeechServer):
             return
 
         [minRate, averageRate, maxRate] = self.__rateInfo[speaker]
-        if acssRate < 50:
-            rate = minRate + acssRate * (averageRate - minRate) / 50
-        elif acssRate > 50:
+        if acssRate < 50.0:
+            rate = minRate + acssRate * (averageRate - minRate) / 50.0
+        elif acssRate > 50.0:
             rate = averageRate \
-                   + (acssRate - 50) * (maxRate - averageRate) / 50
+                   + (acssRate - 50.0) * (maxRate - averageRate) / 50.0
         else:
             rate = averageRate
 
@@ -255,11 +256,11 @@ class SpeechServer(speechserver.SpeechServer):
             return
 
         [minPitch, averagePitch, maxPitch] = self.__pitchInfo[speaker]
-        if acssPitch < 5:
-            pitch = minPitch + acssPitch * (averagePitch - minPitch) / 5
-        elif acssPitch > 5:
+        if acssPitch < 5.0:
+            pitch = minPitch + acssPitch * (averagePitch - minPitch) / 5.0
+        elif acssPitch > 5.0:
             pitch = averagePitch \
-                    + (acssPitch - 5) * (maxPitch - averagePitch) / 5
+                    + (acssPitch - 5.0) * (maxPitch - averagePitch) / 5.0
         else:
             pitch = averagePitch
 
@@ -274,7 +275,7 @@ class SpeechServer(speechserver.SpeechServer):
             return
 
         [minVolume, averageVolume, maxVolume] = self.__volumeInfo[speaker]
-        volume = minVolume + acssGain * (maxVolume - minVolume) / 10
+        volume = minVolume + acssGain * (maxVolume - minVolume) / 10.0
 
         speaker.setParameterValue("volume", volume)
 

@@ -6,6 +6,9 @@
 
 2006-04-27  Willie Walker <william.walker@sun.com>
 
+	* src/orca/gnomespeechfactory.py: fix for bug 339927: force
+	floating point values on rate, gain, pitch, etc. to prevent
+	integer arithmetic from getting in the way.	
 	* src/orca/focus_tracking_presenter.py: print the ImportException
 	out at a debug level of ALL when attempting to find script
 	modules.  The reason for this is that the script module itself
