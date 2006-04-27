@@ -165,6 +165,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                                       "...found %s.py" % name)
                         break
                     except ImportError:
+                        debug.printException(debug.LEVEL_ALL)
                         debug.println(debug.LEVEL_FINEST,
                                       "...could not find %s.py" % name)
                     except:
@@ -204,6 +205,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                 debug.println(debug.LEVEL_FINE,
                               "...found %s.py" % name)
             except ImportError:
+                debug.printException(debug.LEVEL_ALL)
                 debug.println(
                     debug.LEVEL_FINE,
                     "...could not find %s.py" % app.toolkitName)
