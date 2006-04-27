@@ -405,6 +405,18 @@ class orcaSetupGUI(GladeWrapper):
     def volumeValueChanged(self, widget):
         print "volumeValueChanged: not implemented yet."
 
+    def punctuationLevelChanged(self, widget):
+        print "punctuationLevelChanged: not implemented yet."
+
+    def speechVerbosityChanged(self, widget):
+        print "speechVerbosityChanged: not implemented yet."
+
+    def abbrevRolenamesChecked(self, widget):
+        print "abbrevRolenamesChecked: not implemented yet."
+
+    def brailleVerbosityChanged(self, widget):
+        print "brailleVerbosityChanged: not implemented yet."
+
     def helpButtonClicked(self, widget):
         print "Help not currently implemented."
 

@@ -1,5 +1,24 @@
 2006-04-26  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/orca-setup.glade
+          Further changes to the Orca Configuration GUI.
+          - Step increment for volume scale is now .1
+          - Added in controls for:
+            > Speech Punctuation Level
+            > Speech Verbosity
+            > Braille Abbreviated Rolenames 
+            > Braille Verbosity Level.
+          - Added a scrollwindow for the Speech notebook pane and reduced
+            the initial height of the configuration window.
+          - Reduced padding from 5 to 3 pixels in most cases.
+          - Added some horizontal separators.
+          - Changed the window title to "Orca Preferences".
+
+        * src/orca/orca_gui_prefs.py
+          Added stub callbacks for the new controls in the Glade GUI.
+
+2006-04-26  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/orca_gui_prefs.py
           From Will: code in setupServers() to handle the situation where 
           there are two or more speech systems installed.
