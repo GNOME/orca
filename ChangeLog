@@ -1,4 +1,15 @@
-2006-04-26  Rich Burridge <rich.burridge@sun.com>
+
+2006-04-27  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca-setup.glade
+          Further changes to the Orca Configuration GUI.
+          - Three GtkTreeView lists removed.
+          - Scrolling window in the Speech Notebook pane has been removed.
+
+        * src/orca/orca_gui_prefs.py
+          Adjusted code to use GtkComboBox's instead of GtkTreeView lists.
+
+2006-04-27  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade
           Further changes to the Orca Configuration GUI.
@@ -17,7 +28,7 @@
         * src/orca/orca_gui_prefs.py
           Added stub callbacks for the new controls in the Glade GUI.
 
-2006-04-26  Rich Burridge <rich.burridge@sun.com>
+2006-04-27  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca_gui_prefs.py
           From Will: code in setupServers() to handle the situation where 
