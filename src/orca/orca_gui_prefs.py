@@ -153,6 +153,8 @@ class orcaSetupGUI(GladeWrapper):
     def initGUIState(self):
         prefs = self.prefsDict
 
+        # Speech pane.
+        #
         self.setSystemChoice(self.factoryChoices, prefs["speechServerFactory"])
 
         serverPrefs = prefs["speechServerInfo"]
@@ -164,11 +166,23 @@ class orcaSetupGUI(GladeWrapper):
             family = defaultVoice["family"]
             self.setVoiceChoice(self.families, family["name"])
 
+        self.voiceType.set_active(0)
+        rate = self.getRateForVoiceType(self.voiceType.get_active_text())
+        self.rateScale.set_value(rate)
+
+        pitch = self.getPitchForVoiceType(self.voiceType.get_active_text())
+        self.pitchScale.set_value(pitch)
+
+        volume = self.getVolumeForVoiceType(self.voiceType.get_active_text())
+        self.volumeScale.set_value(volume)
+
         if prefs["speechVerbosityLevel"] == _("Brief"):
             self.speechBriefButton.set_active(True)
         else:
             self.speechVerboseButton.set_active(True)
 
+        # Braille pane.
+        #
         self.brailleSupportCheckbutton.set_active(prefs["enableBraille"])
         self.brailleMonitorCheckbutton.set_active(prefs["enableBrailleMonitor"])
         state = prefs["brailleRolenameStyle"] == \
@@ -179,6 +193,8 @@ class orcaSetupGUI(GladeWrapper):
         else:
             self.brailleVerboseButton.set_active(True)
 
+        # Key Echo pane.
+        #
         self.keyEchoCheckbutton.set_active(prefs["enableKeyEcho"])
         self.printableCheckbutton.set_active(prefs["enablePrintableKeys"])
         self.modifierCheckbutton.set_active(prefs["enableModifierKeys"])
@@ -258,6 +274,18 @@ class orcaSetupGUI(GladeWrapper):
         if debug.debugLevel <= debug.LEVEL_FINEST:
             print "orca_gui_prefs.setupVoices: voiceChoices: ", \
                    self.voiceChoices
+
+    def getRateForVoiceType(self, voiceType):
+        print "getRateForVoiceType: not implemented yet."
+        return 50
+
+    def getPitchForVoiceType(self, voiceType):
+        print "getPitchForVoiceType: not implemented yet."
+        return 5.0
+
+    def getVolumeForVoiceType(self, voiceType):
+        print "getVolumeForVoiceType: not implemented yet."
+        return 5.0
 
     def setSystemChoice(self, factoryChoices, systemName):
         model = self.speechSystemsModel
@@ -359,16 +387,53 @@ class orcaSetupGUI(GladeWrapper):
         self.prefsDict["enableEchoByWord"] = widget.get_active()
 
     def voiceTypeChanged(self, widget):
-        print "voiceTypeChanged: not implemented yet."
+        family = self.voices.get_active_text()
+        voiceType = widget.get_active_text()
+        if voiceType == _("Default"):
+            self.defaultACSS[acss.ACSS.FAMILY] = family
+        elif voiceType == _("Uppercase"):
+            self.uppercaseACSS[acss.ACSS.FAMILY] = family
+        elif voiceType == _("Hyperlink"):
+            self.hyperlinkACSS[acss.ACSS.FAMILY] = family
+
+        rate = self.getRateForVoiceType(self.voiceType.get_active_text())
+        self.rateScale.set_value(rate)
+
+        pitch = self.getPitchForVoiceType(self.voiceType.get_active_text())
+        self.pitchScale.set_value(pitch)
+
+        volume = self.getVolumeForVoiceType(self.voiceType.get_active_text())
+        self.volumeScale.set_value(volume)
 
     def rateValueChanged(self, widget):
-        print "rateValueChanged: not implemented yet."
+        rate = widget.get_value()
+        voiceType = self.voiceType.get_active_text()
+        if voiceType == _("Default"):
+            self.defaultACSS[acss.ACSS.RATE] = rate
+        elif voiceType == _("Uppercase"):
+            self.uppercaseACSS[acss.ACSS.RATE] = rate
+        elif voiceType == _("Hyperlink"):
+            self.hyperlinkACSS[acss.ACSS.RATE] = rate
 
     def pitchValueChanged(self, widget):
-        print "pitchValueChanged: not implemented yet."
+        pitch = widget.get_value()
+        voiceType = self.voiceType.get_active_text()
+        if voiceType == _("Default"):
+            self.defaultACSS[acss.ACSS.AVERAGE_PITCH] = pitch
+        elif voiceType == _("Uppercase"):
+            self.uppercaseACSS[acss.ACSS.AVERAGE_PITCH] = pitch
+        elif voiceType == _("Hyperlink"):
+            self.hyperlinkACSS[acss.ACSS.AVERAGE_PITCH] = pitch
 
     def volumeValueChanged(self, widget):
-        print "volumeValueChanged: not implemented yet."
+        volume = widget.get_value()
+        voiceType = self.voiceType.get_active_text()
+        if voiceType == _("Default"):
+            self.defaultACSS[acss.ACSS.GAIN] = volume
+        elif voiceType == _("Uppercase"):
+            self.uppercaseACSS[acss.ACSS.GAIN] = volume
+        elif voiceType == _("Hyperlink"):
+            self.hyperlinkACSS[acss.ACSS.GAIN] = volume
 
     def punctuationLevelChanged(self, widget):
         print "punctuationLevelChanged: not implemented yet."

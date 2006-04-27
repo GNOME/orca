@@ -1,3 +1,13 @@
+
+2006-04-27  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca-setup.glade
+          Moved the voice family down into the Voice Settings area.
+
+        * src/orca/orca_gui_prefs.py
+          Implemented voiceTypeChanged(), rateValueChanged(),
+          pitchValueChanged() and volumeValueChanged()
+
 2006-04-27  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca_gui_prefs.py
