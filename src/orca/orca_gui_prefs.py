@@ -19,7 +19,7 @@
 
 # TODO:
 #
-# - Test with two speech systems installed.
+# - Improve reclaimation of "old" speech servers in setupServers().
 # - Implement the Help button callback.
 # - Implement rateValueChanged(), pitchValueChanged(), 
 #   volumeValueChanged() and: voiceTypeChanged().
@@ -152,6 +152,7 @@ class orcaSetupGUI(GladeWrapper):
             print "orca_gui_prefs._init: factoryInfos: ", self.factoryInfos
             print "orca_gui_prefs._init: factory: ", self.factory
 
+        self.serverChoices = None
         self.setupServers(self.factory)
         self.setupVoices(self.server)
         self.prefsDict["enableSpeech"] = True
@@ -183,6 +184,10 @@ class orcaSetupGUI(GladeWrapper):
         self.echoByWordCheckbutton.set_active(prefs["enableEchoByWord"])
 
     def setupServers(self, factory):
+
+        self.factoryInfos = \
+            factory.SpeechServer.getSpeechServerInfos()
+        
         self.servers = []
         for info in self.factoryInfos:
             try:
