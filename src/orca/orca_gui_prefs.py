@@ -19,6 +19,7 @@
 
 # TODO:
 #
+# - Adjust routines names to start with _ when only used in this module.
 # - Improve reclaimation of "old" speech servers in setupServers().
 # - Implement the Help button callback.
 # - Need to add comments to each method.
@@ -131,13 +132,13 @@ class orcaSetupGUI(GladeWrapper):
             for workingFactory in workingFactories:
                 self.factoryChoices[i] = workingFactory
                 name = workingFactory[0].SpeechServer.getFactoryName()
-                self.speechSystems.append_text(name)
+                self.speechSystemsModel.append((i, name))
                 i += 1
             [self.factory, self.factoryInfos] = self.factoryChoices[1]
         else:
             self.factoryChoices[1] = workingFactories[0]
             name = workingFactories[0][0].SpeechServer.getFactoryName()
-            self.speechSystems.append_text(name)
+            self.speechSystemsModel.append((1, name))
             [self.factory, self.factoryInfos] = workingFactories[0]
 
         if debug.debugLevel <= debug.LEVEL_FINEST:
@@ -242,13 +243,13 @@ class orcaSetupGUI(GladeWrapper):
             for self.server in self.servers:
                 self.serverChoices[i] = self.server
                 name = self.server.getInfo()[0]
-                self.speechServers.append_text(name)
+                self.speechServersModel.append((i, name))
                 i += 1
             self.server = self.serverChoices[1]
         else:
             self.serverChoices[1] = self.servers[0]
             name = self.servers[0].getInfo()[0]
-            self.speechServers.append_text(name)
+            self.speechServersModel.append((1, name))
             self.server = self.servers[0]
 
         self.speechServers.set_active(0)
@@ -273,12 +274,12 @@ class orcaSetupGUI(GladeWrapper):
                 name = family[speechserver.VoiceFamily.NAME]
                 self.acss = acss.ACSS({acss.ACSS.FAMILY : family})
                 self.voiceChoices[i] = self.acss
-                self.voices.append_text(name)
+                self.voicesModel.append((i, name))
                 i += 1
             self.defaultACSS = self.voiceChoices[1]
         else:
             name = self.families[0][speechserver.VoiceFamily.NAME]
-            self.voices.append_text(name)
+            self.voicesModel.append((1, name))
             self.defaultACSS = \
                 acss.ACSS({acss.ACSS.FAMILY : self.families[0]})
             self.voiceChoices[1] = self.defaultACSS
@@ -412,10 +413,11 @@ class orcaSetupGUI(GladeWrapper):
         self.orcaSetupWindow.show()
 
     def initComboBox(self, combobox):
-        model = gtk.ListStore(str)
+        cell = gtk.CellRendererText()
+        combobox.pack_start(cell, True)
+        combobox.add_attribute(cell, 'text', 1)
+        model = gtk.ListStore(int, str)
         combobox.set_model(model)
-        combobox.set_text_column(0)
-        combobox.child.set_property('editable', False)
 
         return model
 
@@ -430,23 +432,32 @@ class orcaSetupGUI(GladeWrapper):
         self.functionCheckbutton.set_sensitive(enable)
         self.actionCheckbutton.set_sensitive(enable)
 
-    def speechSystemChanged(self, widget, data = None):
-        index = widget.get_active()
-        self.factory = self.factoryChoices[index+1][0]
+    def speechSystemsChanged(self, widget):
+        iter = widget.get_active_iter()
+        model = widget.get_model()
+
+        index = model.get_value(iter, 0)
+        self.factory = self.factoryChoices[index][0]
         self.speechServersModel.clear()
         self.setupServers(self.factory)
 
         self.server = self.serverChoices[1]
         self.setupVoices(self.server)
 
-    def speechServerChanged(self, widget, data = None):
-        index = widget.get_active()
+    def speechServersChanged(self, widget):
+        iter = widget.get_active_iter()
+        model = widget.get_model()
+
+        index = model.get_value(iter, 0)
         self.voicesModel.clear()
-        self.server = self.serverChoices[index+1]
+        self.server = self.serverChoices[index]
         self.setupVoices(self.server)
 
-    def voiceFamilyChanged(self, widget, data = None):
-        name = widget.get_active_text()
+    def voiceFamilyChanged(self, widget):
+        iter = widget.get_active_iter()
+        model = widget.get_model()
+
+        name = model.get_value(iter, 1)
         voiceType = self.voiceType.get_active_text()
         self.setFamilyNameForVoiceType(voiceType, name)
 

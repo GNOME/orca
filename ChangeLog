@@ -1,6 +1,18 @@
 2006-04-28  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade
+          Changed all occurances of GtkComboBoxEntry for GtkComboBox.
+
+          Added LABEL_FOR and LABELLED relationships for the speech
+          punctuation level and speech verbosity label/radio buttons.
+
+        * src/orca/orca_gui_prefs.py
+          Adjusted the code handling the GtkComboEntry components to now
+          use GtkComboBoxes instead.
+
+2006-04-28  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca-setup.glade
           Added LABEL_FOR and LABELLED_BY relationships for the 
           label/scales for rate, pitch and volume.
 

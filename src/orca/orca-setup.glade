@@ -121,16 +121,14 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkComboBoxEntry" id="speechSystems">
-		  <property name="border_width">3</property>
+		<widget class="GtkComboBox" id="speechSystems">
 		  <property name="visible">True</property>
 		  <property name="add_tearoffs">False</property>
-		  <property name="has_frame">True</property>
 		  <property name="focus_on_click">True</property>
 		  <accessibility>
 		    <atkrelation target="speechSystemsLabel" type="labelled-by"/>
 		  </accessibility>
-		  <signal name="changed" handler="speechSystemChanged" last_modification_time="Thu, 27 Apr 2006 17:06:25 GMT"/>
+		  <signal name="changed" handler="speechSystemsChanged" last_modification_time="Fri, 28 Apr 2006 18:47:56 GMT"/>
 		</widget>
 		<packing>
 		  <property name="padding">3</property>
@@ -179,19 +177,17 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkComboBoxEntry" id="speechServers">
-		  <property name="border_width">3</property>
+		<widget class="GtkComboBox" id="speechServers">
 		  <property name="visible">True</property>
 		  <property name="add_tearoffs">False</property>
-		  <property name="has_frame">True</property>
 		  <property name="focus_on_click">True</property>
 		  <accessibility>
 		    <atkrelation target="speechServersLabel" type="labelled-by"/>
 		  </accessibility>
-		  <signal name="changed" handler="speechServerChanged" last_modification_time="Thu, 27 Apr 2006 17:06:47 GMT"/>
+		  <signal name="changed" handler="speechServersChanged" last_modification_time="Fri, 28 Apr 2006 18:50:26 GMT"/>
 		</widget>
 		<packing>
-		  <property name="padding">4</property>
+		  <property name="padding">3</property>
 		  <property name="expand">True</property>
 		  <property name="fill">True</property>
 		</packing>
@@ -237,19 +233,17 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkComboBoxEntry" id="voiceType">
-		  <property name="border_width">3</property>
+		<widget class="GtkComboBox" id="voiceType">
 		  <property name="visible">True</property>
 		  <property name="items" translatable="yes">Default
 Uppercase
 Hyperlink</property>
 		  <property name="add_tearoffs">False</property>
-		  <property name="has_frame">True</property>
 		  <property name="focus_on_click">True</property>
 		  <accessibility>
 		    <atkrelation target="voiceSettingsLabel" type="labelled-by"/>
 		  </accessibility>
-		  <signal name="changed" handler="voiceTypeChanged" last_modification_time="Wed, 26 Apr 2006 18:47:29 GMT"/>
+		  <signal name="changed" handler="voiceTypeChanged" last_modification_time="Fri, 28 Apr 2006 18:55:04 GMT"/>
 		</widget>
 		<packing>
 		  <property name="padding">3</property>
@@ -469,16 +463,14 @@ Hyperlink</property>
 		  </child>
 
 		  <child>
-		    <widget class="GtkComboBoxEntry" id="voices">
-		      <property name="border_width">3</property>
+		    <widget class="GtkComboBox" id="voices">
 		      <property name="visible">True</property>
 		      <property name="add_tearoffs">False</property>
-		      <property name="has_frame">True</property>
 		      <property name="focus_on_click">True</property>
 		      <accessibility>
 			<atkrelation target="familyLabel" type="labelled-by"/>
 		      </accessibility>
-		      <signal name="changed" handler="voiceFamilyChanged" last_modification_time="Thu, 27 Apr 2006 17:07:08 GMT"/>
+		      <signal name="changed" handler="voiceFamilyChanged" last_modification_time="Fri, 28 Apr 2006 18:55:50 GMT"/>
 		    </widget>
 		    <packing>
 		      <property name="left_attach">1</property>
@@ -535,6 +527,9 @@ Hyperlink</property>
 		      <property name="width_chars">-1</property>
 		      <property name="single_line_mode">False</property>
 		      <property name="angle">0</property>
+		      <accessibility>
+			<atkrelation target="noneButton" type="label-for"/>
+		      </accessibility>
 		    </widget>
 		    <packing>
 		      <property name="left_attach">0</property>
@@ -563,6 +558,9 @@ Hyperlink</property>
 		      <property name="width_chars">-1</property>
 		      <property name="single_line_mode">False</property>
 		      <property name="angle">0</property>
+		      <accessibility>
+			<atkrelation target="speechBriefButton" type="label-for"/>
+		      </accessibility>
 		    </widget>
 		    <packing>
 		      <property name="left_attach">0</property>
@@ -591,6 +589,9 @@ Hyperlink</property>
 			  <property name="active">False</property>
 			  <property name="inconsistent">False</property>
 			  <property name="draw_indicator">True</property>
+			  <accessibility>
+			    <atkrelation target="punctuationLabel" type="labelled-by"/>
+			  </accessibility>
 			  <signal name="toggled" handler="punctuationLevelChanged" last_modification_time="Thu, 27 Apr 2006 14:59:34 GMT"/>
 			</widget>
 			<packing>
@@ -612,6 +613,9 @@ Hyperlink</property>
 			  <property name="inconsistent">False</property>
 			  <property name="draw_indicator">True</property>
 			  <property name="group">noneButton</property>
+			  <accessibility>
+			    <atkrelation target="punctuationLabel" type="labelled-by"/>
+			  </accessibility>
 			  <signal name="toggled" handler="punctuationLevelChanged" last_modification_time="Thu, 27 Apr 2006 14:59:42 GMT"/>
 			</widget>
 			<packing>
@@ -633,6 +637,9 @@ Hyperlink</property>
 			  <property name="inconsistent">False</property>
 			  <property name="draw_indicator">True</property>
 			  <property name="group">noneButton</property>
+			  <accessibility>
+			    <atkrelation target="punctuationLabel" type="labelled-by"/>
+			  </accessibility>
 			  <signal name="toggled" handler="punctuationLevelChanged" last_modification_time="Thu, 27 Apr 2006 14:59:51 GMT"/>
 			</widget>
 			<packing>
@@ -668,6 +675,9 @@ Hyperlink</property>
 			  <property name="active">False</property>
 			  <property name="inconsistent">False</property>
 			  <property name="draw_indicator">True</property>
+			  <accessibility>
+			    <atkrelation target="speechVerbosityLabel" type="labelled-by"/>
+			  </accessibility>
 			  <signal name="toggled" handler="speechVerbosityChanged" last_modification_time="Thu, 27 Apr 2006 14:44:54 GMT"/>
 			</widget>
 			<packing>
@@ -689,6 +699,9 @@ Hyperlink</property>
 			  <property name="inconsistent">False</property>
 			  <property name="draw_indicator">True</property>
 			  <property name="group">speechBriefButton</property>
+			  <accessibility>
+			    <atkrelation target="speechVerbosityLabel" type="labelled-by"/>
+			  </accessibility>
 			  <signal name="toggled" handler="speechVerbosityChanged" last_modification_time="Thu, 27 Apr 2006 14:45:04 GMT"/>
 			</widget>
 			<packing>
