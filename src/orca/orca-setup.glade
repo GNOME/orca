@@ -315,6 +315,9 @@ Hyperlink</property>
 		      <property name="width_chars">-1</property>
 		      <property name="single_line_mode">False</property>
 		      <property name="angle">0</property>
+		      <accessibility>
+			<atkrelation target="volumeScale" type="label-for"/>
+		      </accessibility>
 		    </widget>
 		    <packing>
 		      <property name="left_attach">0</property>
@@ -336,6 +339,9 @@ Hyperlink</property>
 		      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 		      <property name="inverted">False</property>
 		      <property name="adjustment">9 0 9 0.10000000149 0 0</property>
+		      <accessibility>
+			<atkrelation target="volumeLabel" type="labelled-by"/>
+		      </accessibility>
 		      <signal name="value_changed" handler="volumeValueChanged" last_modification_time="Wed, 26 Apr 2006 18:48:39 GMT"/>
 		    </widget>
 		    <packing>
@@ -366,6 +372,9 @@ Hyperlink</property>
 		      <property name="width_chars">-1</property>
 		      <property name="single_line_mode">False</property>
 		      <property name="angle">0</property>
+		      <accessibility>
+			<atkrelation target="pitchScale" type="label-for"/>
+		      </accessibility>
 		    </widget>
 		    <packing>
 		      <property name="left_attach">0</property>
@@ -387,6 +396,9 @@ Hyperlink</property>
 		      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 		      <property name="inverted">False</property>
 		      <property name="adjustment">5 0 9 0.10000000149 0 0</property>
+		      <accessibility>
+			<atkrelation target="pitchLabel" type="labelled-by"/>
+		      </accessibility>
 		      <signal name="value_changed" handler="pitchValueChanged" last_modification_time="Wed, 26 Apr 2006 18:48:18 GMT"/>
 		    </widget>
 		    <packing>
@@ -417,6 +429,9 @@ Hyperlink</property>
 		      <property name="width_chars">-1</property>
 		      <property name="single_line_mode">False</property>
 		      <property name="angle">0</property>
+		      <accessibility>
+			<atkrelation target="rateScale" type="label-for"/>
+		      </accessibility>
 		    </widget>
 		    <packing>
 		      <property name="left_attach">0</property>
@@ -438,6 +453,9 @@ Hyperlink</property>
 		      <property name="update_policy">GTK_UPDATE_CONTINUOUS</property>
 		      <property name="inverted">False</property>
 		      <property name="adjustment">50 0 99 1 0 0</property>
+		      <accessibility>
+			<atkrelation target="rateLabel" type="labelled-by"/>
+		      </accessibility>
 		      <signal name="value_changed" handler="rateValueChanged" last_modification_time="Wed, 26 Apr 2006 18:48:00 GMT"/>
 		    </widget>
 		    <packing>

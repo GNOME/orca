@@ -1,5 +1,11 @@
 2006-04-28  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/orca-setup.glade
+          Added LABEL_FOR and LABELLED_BY relationships for the 
+          label/scales for rate, pitch and volume.
+
+2006-04-28  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/orca_gui_prefs.py
           If the user now dismisses the Orca configuration GUI via the
           Close "X" glyph on the window titlebar, the GUI will now be
