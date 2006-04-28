@@ -176,6 +176,15 @@ class orcaSetupGUI(GladeWrapper):
         volume = self.getVolumeForVoiceType(self.voiceType.get_active_text())
         self.volumeScale.set_value(volume)
 
+        if prefs["verbalizePunctuationStyle"] == \
+                               settings.PUNCTUATION_STYLE_NONE:
+            self.noneButton.set_active(True)
+        elif prefs["verbalizePunctuationStyle"] == \
+                               settings.PUNCTUATION_STYLE_SOME:
+            self.someButton.set_active(True)
+        else:
+            self.allButton.set_active(True)
+
         if prefs["speechVerbosityLevel"] == _("Brief"):
             self.speechBriefButton.set_active(True)
         else:
@@ -205,9 +214,7 @@ class orcaSetupGUI(GladeWrapper):
 
     def setupServers(self, factory):
 
-        self.factoryInfos = \
-            factory.SpeechServer.getSpeechServerInfos()
-        
+        self.factoryInfos = factory.SpeechServer.getSpeechServerInfos()
         self.servers = []
         for info in self.factoryInfos:
             try:
@@ -436,7 +443,16 @@ class orcaSetupGUI(GladeWrapper):
             self.hyperlinkACSS[acss.ACSS.GAIN] = volume
 
     def punctuationLevelChanged(self, widget):
-        print "punctuationLevelChanged: not implemented yet."
+        if widget.get_active():
+            if widget.get_label() == _("None"):
+                self.prefsDict["verbalizePunctuationStyle"] = \
+                    settings.PUNCTUATION_STYLE_NONE
+            elif widget.get_label() == _("Some"):
+                self.prefsDict["verbalizePunctuationStyle"] = \
+                    settings.PUNCTUATION_STYLE_SOME
+            else:
+                self.prefsDict["verbalizePunctuationStyle"] = \
+                    settings.PUNCTUATION_STYLE_ALL
 
     def speechVerbosityChanged(self, widget):
         if widget.get_active():

@@ -1,3 +1,24 @@
+2006-04-28  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/settings.py
+          Added in support for speech punctuation style.
+          Keyword is "verbalizePunctuationStyle". There are three
+          new definitions:
+            PUNCTUATION_STYLE_NONE = 0
+            PUNCTUATION_STYLE_SOME = 1
+            PUNCTUATION_STYLE_ALL  = 2
+
+         * src/orca/orca_prefs.py
+           Added in a new routine:
+             _getVerbalizePunctuationStyleString(punctuationStyle):
+           that returns a string that represents the punctuation 
+           style passed in. 
+
+           Adjusted the writePreferences() routine to use it.
+
+         * src/orca/orca_gui_prefs.py
+           Added in support for reading and writing the speech 
+           punctuation style preference.
 
 2006-04-27  Rich Burridge <rich.burridge@sun.com>
 

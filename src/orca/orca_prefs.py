@@ -155,6 +155,17 @@ def _getBrailleRolenameStyleString(rolenameStyle):
     else:
         return "orca.settings.BRAILLE_ROLENAME_STYLE_LONG"
 
+def _getVerbalizePunctuationStyleString(punctuationStyle):
+    """Returns a string that represents the punctuation style passed in."""
+    if punctuationStyle == settings.PUNCTUATION_STYLE_NONE:
+        return "orca.settings.PUNCTUATION_STYLE_NONE"
+    elif punctuationStyle == settings.PUNCTUATION_STYLE_SOME:
+        return "orca.settings.PUNCTUATION_STYLE_SOME"
+    elif punctuationStyle == settings.PUNCTUATION_STYLE_ALL:
+        return "orca.settings.PUNCTUATION_STYLE_ALL"
+    else:
+        return "orca.settings.PUNCTUATION_STYLE_ALL"
+
 def readPreferences():
     """Returns a dictionary containing the names and values of the
     customizable features of Orca."""
@@ -207,6 +218,8 @@ def writePreferences(prefsDict):
                 value = _getVerbosityString(prefsDict[key])
             elif key == "brailleRolenameStyle":
                 value = _getBrailleRolenameStyleString(prefsDict[key])
+            elif key == "verbalizePunctuationStyle":
+                value = _getVerbalizePunctuationStyleString(prefsDict[key])
             else:
                 value = prefsDict[key]
             prefs.writelines("orca.settings.%s = %s\n" % (key, value))

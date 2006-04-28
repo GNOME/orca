@@ -50,6 +50,7 @@ userCustomizableSettings = [
     "brailleRolenameStyle",
     "enableBrailleMonitor",
     "enableMagnifier",
+    "verbalizePunctuationStyle",
 ]
 
 # The name of the modules that hold the user interface for setting
@@ -80,6 +81,13 @@ brailleVerbosityLevel   = VERBOSITY_LEVEL_VERBOSE
 BRAILLE_ROLENAME_STYLE_SHORT = 0 # three letter abbreviations
 BRAILLE_ROLENAME_STYLE_LONG  = 1 # full rolename
 brailleRolenameStyle    = BRAILLE_ROLENAME_STYLE_LONG
+
+# Speech punctuation levels (see verbalizePunctuationStyle).
+#
+PUNCTUATION_STYLE_NONE = 0
+PUNCTUATION_STYLE_SOME = 1
+PUNCTUATION_STYLE_ALL  = 2
+verbalizePunctuationStyle = PUNCTUATION_STYLE_ALL
 
 # The absolue amount to change the speech rate when
 # increasing or decreasing speech.  This is a numerical
