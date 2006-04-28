@@ -21,8 +21,6 @@
 #
 # - Improve reclaimation of "old" speech servers in setupServers().
 # - Implement the Help button callback.
-# - Implement rateValueChanged(), pitchValueChanged(), 
-#   volumeValueChanged() and: voiceTypeChanged().
 # - Need to add comments to each method.
 # - Dismissing the configuration GUI via the X (close) icon doesn't work
 #   property (bogus GUI the next time it's shown).
@@ -84,10 +82,15 @@ class orcaSetupGUI(GladeWrapper):
     def _init(self):
         """Initialize the Orca configuration GUI. Read the users current
         set of preferences and set the GUI state to match. Setup speech
-        support and populate the lists on the Speech Tab pane accordingly.
+        support and populate the combo box lists on the Speech Tab pane 
+        accordingly.
         """
 
+        self.initializing = True
         self.prefsDict = orca_prefs.readPreferences()
+        self.defaultVoice   = self.prefsDict["voices"]["default"]
+        self.uppercaseVoice = self.prefsDict["voices"]["uppercase"]
+        self.hyperlinkVoice = self.prefsDict["voices"]["hyperlink"]
 
         self.speechSystemsModel = self.initComboBox(self.speechSystems)
         self.speechServersModel = self.initComboBox(self.speechServers)
@@ -149,6 +152,24 @@ class orcaSetupGUI(GladeWrapper):
         self.setupVoices(self.server)
         self.prefsDict["enableSpeech"] = True
         self.initGUIState()
+        self.initializing = False
+
+    def setVoiceSettingForVoiceType(self, voiceType):
+        familyName = self.getFamilyNameForVoiceType(voiceType)
+        if familyName:
+            self.setVoiceChoice(self.families, familyName)
+
+        rate = self.getRateForVoiceType(voiceType)
+        if rate:
+            self.rateScale.set_value(rate)
+
+        pitch = self.getPitchForVoiceType(voiceType)
+        if pitch:
+            self.pitchScale.set_value(pitch)
+
+        volume = self.getVolumeForVoiceType(voiceType)
+        if volume:
+            self.volumeScale.set_value(volume)
 
     def initGUIState(self):
         prefs = self.prefsDict
@@ -161,20 +182,9 @@ class orcaSetupGUI(GladeWrapper):
         if serverPrefs:
             self.setServerChoice(self.serverChoices, serverPrefs[0])
 
-        defaultVoice = prefs["voices"]["default"]
-        if defaultVoice.has_key("family"):
-            family = defaultVoice["family"]
-            self.setVoiceChoice(self.families, family["name"])
-
+        voiceType = self.voiceType.get_active_text()
         self.voiceType.set_active(0)
-        rate = self.getRateForVoiceType(self.voiceType.get_active_text())
-        self.rateScale.set_value(rate)
-
-        pitch = self.getPitchForVoiceType(self.voiceType.get_active_text())
-        self.pitchScale.set_value(pitch)
-
-        volume = self.getVolumeForVoiceType(self.voiceType.get_active_text())
-        self.volumeScale.set_value(volume)
+        self.setVoiceSettingForVoiceType(voiceType)
 
         if prefs["verbalizePunctuationStyle"] == \
                                settings.PUNCTUATION_STYLE_NONE:
@@ -213,7 +223,6 @@ class orcaSetupGUI(GladeWrapper):
         self.echoByWordCheckbutton.set_active(prefs["enableEchoByWord"])
 
     def setupServers(self, factory):
-
         self.factoryInfos = factory.SpeechServer.getSpeechServerInfos()
         self.servers = []
         for info in self.factoryInfos:
@@ -276,23 +285,100 @@ class orcaSetupGUI(GladeWrapper):
                 acss.ACSS({acss.ACSS.FAMILY : self.families[0]})
             self.voiceChoices[1] = self.defaultACSS
 
-        self.voices.set_active(0)
+        if not self.initializing:
+            self.voices.set_active(0)
 
         if debug.debugLevel <= debug.LEVEL_FINEST:
             print "orca_gui_prefs.setupVoices: voiceChoices: ", \
                    self.voiceChoices
 
+    def getVoiceForVoiceType(self, voiceType):
+        if voiceType == _("Default"):
+            voice = self.defaultVoice
+        elif voiceType == _("Uppercase"):
+            voice = self.uppercaseVoice
+        elif voiceType == _("Hyperlink"):
+            voice = self.hyperlinkVoice
+        else:
+            voice = self.defaultVoice
+
+        return voice
+
+    def getKeyForVoiceType(self, voiceType, key, useDefault=True):
+        """Look for the value of the given key, in the voice dictionary
+           for the given voice type.
+
+        Arguments:
+        - voiceType: the voice type (Default, Uppercase or Hyperlink).
+        - key: the key to look for in the voice dictionary.
+        - useDefault: if True, and the key isn't found for the given voice
+                      type, the look for it in the default voice dictionary 
+                      as well.
+
+        Returns the value of the given key.
+        """
+
+        if voiceType == _("Default"):
+            voice = self.defaultVoice
+        elif voiceType == _("Uppercase"):
+            voice = self.uppercaseVoice
+            if not voice.has_key(key):
+                if not useDefault:
+                    return None
+                voice = self.defaultVoice
+        elif voiceType == _("Hyperlink"):
+            voice = self.hyperlinkVoice
+            if not voice.has_key(key):
+                if not useDefault:
+                    return None
+                voice = self.defaultVoice
+        else:
+            voice = self.defaultVoice
+
+        if voice.has_key(key):
+            return voice[key]
+        else:
+            return None
+
+    def getFamilyNameForVoiceType(self, voiceType):
+        familyName = None
+        family = self.getKeyForVoiceType(voiceType, "family")
+
+        if family:
+            if family.has_key("name"):
+                familyName = family["name"]
+
+        return familyName
+
+    def setFamilyNameForVoiceType(self, voiceType, value):
+        family = self.getKeyForVoiceType(voiceType, "family", False)
+        if family:
+            family["name"] = value
+        else:
+            voice = self.getVoiceForVoiceType(voiceType)
+            voice["family"] = {}
+            voice["family"]["name"] = value
+
     def getRateForVoiceType(self, voiceType):
-        print "getRateForVoiceType: not implemented yet."
-        return 50
+        return self.getKeyForVoiceType(voiceType, "rate", True)
+
+    def setRateForVoiceType(self, voiceType, value):
+        voice = self.getVoiceForVoiceType(voiceType)
+        voice["rate"] = value
 
     def getPitchForVoiceType(self, voiceType):
-        print "getPitchForVoiceType: not implemented yet."
-        return 5.0
+        return self.getKeyForVoiceType(voiceType, "average-pitch", True)
+
+    def setPitchForVoiceType(self, voiceType, value):
+        voice = self.getVoiceForVoiceType(voiceType)
+        voice["average-pitch"] = value
 
     def getVolumeForVoiceType(self, voiceType):
-        print "getVolumeForVoiceType: not implemented yet."
-        return 5.0
+        return self.getKeyForVoiceType(voiceType, "gain", True)
+
+    def setVolumeForVoiceType(self, voiceType, value):
+        voice = self.getVoiceForVoiceType(voiceType)
+        voice["gain"] = value
 
     def setSystemChoice(self, factoryChoices, systemName):
         model = self.speechSystemsModel
@@ -362,8 +448,9 @@ class orcaSetupGUI(GladeWrapper):
         self.setupVoices(self.server)
 
     def voiceFamilyChanged(self, widget, data = None):
-        index = widget.get_active()
-        self.defaultACSS = self.voiceChoices[index+1]
+        name = widget.get_active_text()
+        voiceType = self.voiceType.get_active_text()
+        self.setFamilyNameForVoiceType(voiceType, name)
 
     def brailleSupportChecked(self, widget):
         self.prefsDict["enableBraille"] = widget.get_active()
@@ -394,53 +481,23 @@ class orcaSetupGUI(GladeWrapper):
         self.prefsDict["enableEchoByWord"] = widget.get_active()
 
     def voiceTypeChanged(self, widget):
-        family = self.voices.get_active_text()
         voiceType = widget.get_active_text()
-        if voiceType == _("Default"):
-            self.defaultACSS[acss.ACSS.FAMILY] = family
-        elif voiceType == _("Uppercase"):
-            self.uppercaseACSS[acss.ACSS.FAMILY] = family
-        elif voiceType == _("Hyperlink"):
-            self.hyperlinkACSS[acss.ACSS.FAMILY] = family
-
-        rate = self.getRateForVoiceType(self.voiceType.get_active_text())
-        self.rateScale.set_value(rate)
-
-        pitch = self.getPitchForVoiceType(self.voiceType.get_active_text())
-        self.pitchScale.set_value(pitch)
-
-        volume = self.getVolumeForVoiceType(self.voiceType.get_active_text())
-        self.volumeScale.set_value(volume)
+        self.setVoiceSettingForVoiceType(voiceType)
 
     def rateValueChanged(self, widget):
         rate = widget.get_value()
         voiceType = self.voiceType.get_active_text()
-        if voiceType == _("Default"):
-            self.defaultACSS[acss.ACSS.RATE] = rate
-        elif voiceType == _("Uppercase"):
-            self.uppercaseACSS[acss.ACSS.RATE] = rate
-        elif voiceType == _("Hyperlink"):
-            self.hyperlinkACSS[acss.ACSS.RATE] = rate
+        self.setRateForVoiceType(voiceType, rate)
 
     def pitchValueChanged(self, widget):
         pitch = widget.get_value()
         voiceType = self.voiceType.get_active_text()
-        if voiceType == _("Default"):
-            self.defaultACSS[acss.ACSS.AVERAGE_PITCH] = pitch
-        elif voiceType == _("Uppercase"):
-            self.uppercaseACSS[acss.ACSS.AVERAGE_PITCH] = pitch
-        elif voiceType == _("Hyperlink"):
-            self.hyperlinkACSS[acss.ACSS.AVERAGE_PITCH] = pitch
+        self.setPitchForVoiceType(voiceType, pitch)
 
     def volumeValueChanged(self, widget):
         volume = widget.get_value()
         voiceType = self.voiceType.get_active_text()
-        if voiceType == _("Default"):
-            self.defaultACSS[acss.ACSS.GAIN] = volume
-        elif voiceType == _("Uppercase"):
-            self.uppercaseACSS[acss.ACSS.GAIN] = volume
-        elif voiceType == _("Hyperlink"):
-            self.hyperlinkACSS[acss.ACSS.GAIN] = volume
+        self.setVolumeForVoiceType(voiceType, volume)
 
     def punctuationLevelChanged(self, widget):
         if widget.get_active():
@@ -489,22 +546,10 @@ class orcaSetupGUI(GladeWrapper):
 
     def applyButtonClicked(self, widget):
 
-        # Force the rate to 50 so it will be set to something
-        # and output to the user settings file.  50 is chosen
-        # here, BTW, since it is the default value.  The same
-        # goes for gain (volume) and average-pitch, but they
-        # range from 0-10 instead of 0-100.
-        #
-        self.defaultACSS[acss.ACSS.RATE] = 50
-        self.defaultACSS[acss.ACSS.GAIN] = 9
-        self.defaultACSS[acss.ACSS.AVERAGE_PITCH] = 5
-        self.uppercaseACSS = acss.ACSS({acss.ACSS.AVERAGE_PITCH : 6})
-        self.hyperlinkACSS = acss.ACSS({acss.ACSS.AVERAGE_PITCH : 2})
-
         self.voices = {
-            settings.DEFAULT_VOICE   : self.defaultACSS,
-            settings.UPPERCASE_VOICE : self.uppercaseACSS,
-            settings.HYPERLINK_VOICE : self.hyperlinkACSS
+            settings.DEFAULT_VOICE   : self.defaultVoice,
+            settings.UPPERCASE_VOICE : self.uppercaseVoice,
+            settings.HYPERLINK_VOICE : self.hyperlinkVoice
         }
 
         self.prefsDict["enableSpeech"] = True

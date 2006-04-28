@@ -1,5 +1,13 @@
 2006-04-28  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/orca_gui_prefs.py
+          Fixed up the setting of family, rate, pitch and volume for each
+          of the three voice types (default, uppercase, hyperlink). The
+          correct values are now read and written from the users 
+          ~/.orca/user-settings.py file.
+
+2006-04-28  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/settings.py
           Added in support for speech punctuation style.
           Keyword is "verbalizePunctuationStyle". There are three
