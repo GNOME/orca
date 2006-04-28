@@ -22,8 +22,6 @@
 # - Improve reclaimation of "old" speech servers in setupServers().
 # - Implement the Help button callback.
 # - Need to add comments to each method.
-# - Dismissing the configuration GUI via the X (close) icon doesn't work
-#   property (bogus GUI the next time it's shown).
 
 """Displays a GUI for the user to set Orca preferences."""
 
@@ -565,7 +563,9 @@ class orcaSetupGUI(GladeWrapper):
         self.orcaSetupWindow.hide()
 
     def windowDestroyed(self, widget):
-        self.orcaSetupWindow.hide()
+        global OS
+
+        OS = None
 
     def say(text, stop=False):
         if stop:

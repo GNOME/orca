@@ -1,6 +1,13 @@
 2006-04-28  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca_gui_prefs.py
+          If the user now dismisses the Orca configuration GUI via the
+          Close "X" glyph on the window titlebar, the GUI will now be
+          correctly redisplayed the next time they hit Insert-Space.
+
+2006-04-28  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca_gui_prefs.py
           Fixed up the setting of family, rate, pitch and volume for each
           of the three voice types (default, uppercase, hyperlink). The
           correct values are now read and written from the users 
