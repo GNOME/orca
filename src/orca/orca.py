@@ -1173,7 +1173,7 @@ def start(registry):
     registry.start()
 
 def abort():
-    sys.exit(1)
+    os._exit(1)
 
 def timeout():
     print "TIMEOUT: Hung while trying to shutdown.  Aborting."
@@ -1232,7 +1232,7 @@ exitCount = 0
 def shutdownOnSignal(signum, frame):
     global exitCount
 
-    print "Shutting down and exiting due to signal =", signum
+    #print "Shutting down and exiting due to signal =", signum
 
     # Well...we'll try to exit nicely, but if we keep getting called,
     # something bad is happening, so just quit.
@@ -1245,13 +1245,21 @@ def shutdownOnSignal(signum, frame):
     # Try to do a graceful shutdown if we can.
     #
     try:
-        shutdown()
-        return
+        if _initialized:
+            shutdown()
+            return
+        else:
+            # We always want to try to shutdown speech since the
+            # speech servers are very persistent about living.
+            #
+            speech.shutdown()
+            shutdown()
+            os._exit(0)
     except:
         abort()
 
 def abortOnSignal(signum, frame):
-    print "Aborting due to signal =", signum
+    #print "Aborting due to signal =", signum
     abort()
 
 def main():
@@ -1313,7 +1321,7 @@ def main():
         braille.displayMessage(message)
         abort()
 
-    start(registry)
+    start(registry) # waits until we stop the registry
     return 0
 
 if __name__ == "__main__":

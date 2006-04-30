@@ -84,24 +84,29 @@ class SpeechServer:
 
     getFactoryName = staticmethod(getFactoryName)
 
-    def getSpeechServerInfos():
-        """Enumerate available speech servers.
-
-        Returns a list of [name, id] values identifying the available
-        speech servers.  The name is a human consumable string and the
-        id is an object that can be used to create a speech server
-        via the getSpeechServer method.
+    def getSpeechServers():
+        """Gets available speech servers as a list.  The caller
+        is responsible for calling the shutdown() method of each
+        speech server returned.
         """
         pass
 
-    getSpeechServerInfos = staticmethod(getSpeechServerInfos)
+    getSpeechServers = staticmethod(getSpeechServers)
 
     def getSpeechServer(info):
         """Gets a given SpeechServer based upon the info.
+        See SpeechServer.getInfo() for more info.
         """
         pass
 
     getSpeechServer = staticmethod(getSpeechServer)
+
+    def shutdownActiveServers():
+        """Cleans up and shuts down this factory.
+        """
+        pass
+
+    shutdownActiveServers = staticmethod(shutdownActiveServers)
 
     def __init__(self):
         pass

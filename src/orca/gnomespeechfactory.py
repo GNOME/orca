@@ -101,6 +101,12 @@ class _Speaker(GNOME__POA.Speech.SpeechCallback):
 class SpeechServer(speechserver.SpeechServer):
     """Provides SpeechServer implementation for gnome-speech."""
 
+    # Dictionary of known running servers.  The key is the iid and the
+    # value is the SpeechServer instance.  We do this to enforce a
+    # singleton instance of any given server.
+    #
+    __activeServers = {}
+
     def __activateDriver(iid):
         driver = bonobo.activation.activate_from_id(iid,
                                                     0,
@@ -119,44 +125,58 @@ class SpeechServer(speechserver.SpeechServer):
 
     __activateDriver = staticmethod(__activateDriver)
 
+    def __createServer(iid):
+        server = None
+
+        if SpeechServer.__activeServers.has_key(iid):
+            server = SpeechServer.__activeServers[iid]
+        else:
+            driver = SpeechServer.__activateDriver(iid)
+            if driver:
+                server = SpeechServer(driver, iid)
+                SpeechServer.__activeServers[iid] = server
+
+        return server
+
+    __createServer = staticmethod(__createServer)
+
     def getFactoryName():
         """Returns a localized name describing this factory."""
         return _("GNOME Speech Services")
 
     getFactoryName = staticmethod(getFactoryName)
 
-    def getSpeechServerInfos():
-        """Enumerate available speech servers.
-
-        Returns a list of [name, id] values identifying the available
-        speech servers.  The name is a human consumable string and the
-        id is an object that can be used to create a speech server
-        via the getSpeechServer method.
+    def getSpeechServers():
+        """Gets available speech servers as a list.  The caller
+        is responsible for calling the shutdown() method of each
+        speech server returned.
         """
 
         # Get a list of all the drivers on the system and find out how many
         # of them work.
         #
-        servers = bonobo.activation.query(
+        knownServers = bonobo.activation.query(
             "repo_ids.has('IDL:GNOME/Speech/SynthesisDriver:0.3')")
 
-        speechServerInfos = []
+        for server in knownServers:
+            if not SpeechServer.__activeServers.has_key(server.iid):
+                try:
+                    SpeechServer.__createServer(server.iid)
+                except:
+                    debug.printException(debug.LEVEL_WARNING)
 
-        for server in servers:
-            try:
-                driver = SpeechServer.__activateDriver(server.iid)
-                if driver:
-                    speechServerInfos.append([driver.driverName, server.iid])
-            except:
-                debug.printException(debug.LEVEL_WARNING)
+        return SpeechServer.__activeServers.values()
 
-        return speechServerInfos
-
-    getSpeechServerInfos = staticmethod(getSpeechServerInfos)
+    getSpeechServers = staticmethod(getSpeechServers)
 
     def getSpeechServer(info=None):
+        """Gets a given SpeechServer based upon the info.
+        See SpeechServer.getInfo() for more info.
         """
-        """
+
+        if info and SpeechServer.__activeServers.has_key(info[1]):
+            return SpeechServer.__activeServers[info[1]]
+
         server = None
 
         gservers = bonobo.activation.query(
@@ -183,15 +203,11 @@ class SpeechServer(speechserver.SpeechServer):
             return None
 
         try:
-            driver = SpeechServer.__activateDriver(gserver.iid)
-            server = SpeechServer(driver, gserver.iid)
+            server = SpeechServer.__createServer(gserver.iid)
         except:
             for s in gservers:
                 try:
-                    driver = SpeechServer.__activateDriver(s.iid)
-                    if driver:
-                        server = SpeechServer(driver, s.iid)
-                        break
+                    server = SpeechServer.__createServer(s.iid)
                 except:
                     debug.printException(debug.LEVEL_WARNING)
                     pass
@@ -199,6 +215,15 @@ class SpeechServer(speechserver.SpeechServer):
         return server
 
     getSpeechServer = staticmethod(getSpeechServer)
+
+    def shutdownActiveServers():
+        """Cleans up and shuts down this factory.
+        """
+        for key in SpeechServer.__activeServers.keys():
+            server = SpeechServer.__activeServers[key]
+            server.shutdown()
+
+    shutdownActiveServers = staticmethod(shutdownActiveServers)
 
     def __init__(self, driver, iid):
         speechserver.SpeechServer.__init__(self)
@@ -642,15 +667,17 @@ class SpeechServer(speechserver.SpeechServer):
 
     def shutdown(self):
         """Shuts down the speech engine."""
-        for speaker in self.__speakers.values():
-            speaker.unref()
-        self.__speakers = {}
-        try:
-            self.__driver.unref()
-        except:
-            pass
-
-        self.__driver = None
+        if SpeechServer.__activeServers.has_key(self.__iid):
+            for speaker in self.__speakers.values():
+                speaker.stop()
+                speaker.unref()
+            self.__speakers = {}
+            try:
+                self.__driver.unref()
+            except:
+                pass
+            self.__driver = None
+            del SpeechServer.__activeServers[self.__iid]
 
     def reset(self, text=None, acss=None):
         """Resets the speech engine."""

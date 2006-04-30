@@ -107,7 +107,7 @@ def sayAll(utteranceIterator, progressCallback):
 def speak(text, acss=None):
     if __speechserver:
         __speechserver.speak(text, __resolveACSS(acss))
-
+            
 def speakUtterances(utterances, acss=None):
     if __speechserver:
         __speechserver.speakUtterances(utterances, __resolveACSS(acss))
@@ -129,7 +129,7 @@ def decreaseSpeechRate(script=None, inputEvent=None):
 def shutdown():
     global __speechserver
     if __speechserver:
-        __speechserver.shutdown()
+        __speechserver.shutdownActiveServers()
         __speechserver = None
 
 def reset(text=None, acss=None):
@@ -152,10 +152,9 @@ def test():
     factories = getSpeechServerFactories()
     for factory in factories:
         print factory.__name__
-        infos = factory.SpeechServer.getSpeechServerInfos()
-        for info in infos:
+        servers = factory.SpeechServer.getSpeechServers()
+        for server in servers:
             try:
-                server = factory.SpeechServer.getSpeechServer(info)
                 print "    ", server.getInfo()
                 for family in server.getVoiceFamilies():
                     name = family[speechserver.VoiceFamily.NAME]

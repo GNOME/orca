@@ -54,7 +54,7 @@ import speechserver
 from orca_i18n import _           # for gettext support
 
 class SpeechServer(speechserver.SpeechServer):
-    
+
     """Provides speech server abstraction.
 
     Class Variables:
@@ -63,7 +63,7 @@ class SpeechServer(speechserver.SpeechServer):
         speech servers are installed.
 
         config --  dictionary of default settings.
-    
+
     Speaker objects can be initialized with the following parameters:
 
         engine -- TTS server to instantiate. Default: outloud
@@ -81,40 +81,71 @@ class SpeechServer(speechserver.SpeechServer):
     'punctuations' : 'all'
     }
 
+    # Dictionary of known running servers.  The key is the name and
+    # the value is the SpeechServer instance.  We do this to enforce a
+    # singleton instance of any given server.
+    #
+    __activeServers = {}
+    __getSpeechServersCalled = False
+
     def getFactoryName():
- 	"""Returns a localized name describing this factory."""
-	return _("Emacspeak Speech Services")
+        """Returns a localized name describing this factory."""
+        return _("Emacspeak Speech Services")
 
     getFactoryName = staticmethod(getFactoryName)
 
-    def getSpeechServerInfos():
+    def getSpeechServers():
         """Enumerate available speech servers.
 
-        Returns a list of [name, id] values identifying the available 
+        Returns a list of [name, id] values identifying the available
         speech servers.  The name is a human consumable string and the
-	id is an object that can be used to create a speech server
-	via the getSpeechServer method.
+        id is an object that can be used to create a speech server
+        via the getSpeechServer method.
         """
 
+        if SpeechServer.__getSpeechServersCalled:
+            return SpeechServer.__activeServers.values()
+        else:
+            SpeechServer.__getSpeechServersCalled = True
+
         f = open(os.path.join(SpeechServer.location, '.servers'))
-        infos = []
         for line in f:
             if line[0] == '#' or line.strip() == '': continue
             name = line.strip()
-            infos.append([name, name])
+            if not SpeechServer.__activeServers.has_key(name):
+                try:
+                    SpeechServer.__activeServers[name] = SpeechServer(name)
+                except:
+                    pass
         f.close()
-        return infos
 
-    getSpeechServerInfos = staticmethod(getSpeechServerInfos)
+        return SpeechServer.__activeServers.values()
+
+    getSpeechServers = staticmethod(getSpeechServers)
 
     def getSpeechServer(info=['outloud','outloud']):
-	"""
+        """Gets a given SpeechServer based upon the info.
+        See SpeechServer.getInfo() for more info.
         """
-        if info not in SpeechServer.getSpeechServerInfos(): 
-	    raise Exception("No such engine %s" % info[0])
-	return SpeechServer(info[0])
-	        
+        if SpeechServer.__activeServers.has_key(info[0]):
+            return SpeechServer.__activeServers[info[0]]
+        else:
+            try:
+                return SpeechServer(info[0])
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+            return None
+
     getSpeechServer = staticmethod(getSpeechServer)
+
+    def shutdownActiveServers():
+        """Cleans up and shuts down this factory.
+        """
+        for key in SpeechServer.__activeServers.keys():
+            server = SpeechServer.__activeServers[key]
+            server.shutdown()
+
+    shutdownActiveServers = staticmethod(shutdownActiveServers)
 
     def __init__ (self,
                   engine='outloud',
@@ -123,22 +154,24 @@ class SpeechServer(speechserver.SpeechServer):
         """Launches speech engine."""
 
         speechserver.SpeechServer.__init__(self)
-        
+
         self._engine = engine
-        e = __import__(_getcodes(engine), 
-                       globals(), 
-                       locals(), 
+        e = __import__(_getcodes(engine),
+                       globals(),
+                       locals(),
                        [''])
         self.getvoice     = e.getvoice
         self.getrate      = e.getrate
-	self.getvoicelist = e.getvoicelist
+        self.getvoicelist = e.getvoicelist
         if host == 'localhost':
             self._server = os.path.join(SpeechServer.location, self._engine)
         else:
             self._server = os.path.join(SpeechServer.location,
                                          "ssh-%s" % self._engine)
         cmd = '{ ' + self._server + '; } 2>&1'
-        self._output = os.popen(cmd, "w", 1)
+        #print "Command = ", cmd
+        #self._output = os.popen(cmd, "w", 1)
+        [self._output, stdout, stderr] = os.popen3(cmd, "w", 1)
         self._settings ={}
         if initial:
             self._settings.update(initial)
@@ -151,7 +184,7 @@ class SpeechServer(speechserver.SpeechServer):
                 getattr(self,k)(settings[k])
 
     def settings(self): return self._settings
-    
+
     def getInfo(self):
         """Returns [driverName, serverId]
         """
@@ -162,7 +195,7 @@ class SpeechServer(speechserver.SpeechServer):
         representing all the voice families known by the speech server.
         """
 
-	families = []
+        families = []
         try:
             for voice in self.getvoicelist():
                 props = {
@@ -192,7 +225,7 @@ class SpeechServer(speechserver.SpeechServer):
     def queueSilence( self, duration=50):
         """Queue specified silence."""
         self._output.write("sh  %s" %  duration)
-    
+
     def speakCharacter(self, character, acss=None):
         """Speak single character."""
         self._output.write("l {%s}\n" % character)
@@ -207,7 +240,7 @@ class SpeechServer(speechserver.SpeechServer):
             for t in list:
                 self._output.write("q { %s }\n" % str(t))
         self._output.write("d\n")
-    
+
     def speak(self, text="", acss=None):
         """Speaks specified text. All queued text is spoken immediately."""
         if acss:
@@ -234,13 +267,14 @@ class SpeechServer(speechserver.SpeechServer):
 
     def shutdown(self):
         """Shutdown speech engine."""
-        self._output.close()
-        sys.stderr.write("shut down TTS\n")
-    
+        if SpeechServer.__activeServers.has_key(self._engine):
+            self._output.close()
+            del SpeechServer.__activeServers[self._engine]
+
     def reset(self):
         """Reset TTS engine."""
         self._output.write("tts_reset\n")
-    
+
     def version(self):
         """Speak TTS version info."""
         self._output.write("version\n")

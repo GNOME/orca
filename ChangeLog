@@ -1,3 +1,14 @@
+2006-04-30  Willie Walker <william.walker@sun.com>
+
+	* src/orca/dectalk.py, src/orca/espeechfactory.py, 
+	src/orca/gnomespeechfactory.py,src/orca/orca.py,
+	src/orca/orca_console_prefs.py, src/orca/orca_gui_prefs.py,
+	src/orca/speech.py, src/orca/speechserver.py: refactor
+	speech server factory to remove the "Infos" stuff and
+	give you back working servers insteaed.
+	* src/orca/orca.py: fix for bug 339932 to shutdown speech
+	better and also force exit (use os._exit instead of sys.exit).
+
 2006-04-28  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade

@@ -81,7 +81,7 @@ class orcaSetupGUI(GladeWrapper):
     def _init(self):
         """Initialize the Orca configuration GUI. Read the users current
         set of preferences and set the GUI state to match. Setup speech
-        support and populate the combo box lists on the Speech Tab pane 
+        support and populate the combo box lists on the Speech Tab pane
         accordingly.
         """
 
@@ -93,14 +93,9 @@ class orcaSetupGUI(GladeWrapper):
 
         self.speechSystemsModel = self.initComboBox(self.speechSystems)
         self.speechServersModel = self.initComboBox(self.speechServers)
-        self.voicesModel = self.initComboBox(self.voices)
+        self.voicesModel        = self.initComboBox(self.voices)
 
         self.setKeyEchoItems()
-
-        # Use this because callbacks will often hang when not running
-        # with bonobo main in use.
-        #
-        settings.enableSpeechCallbacks = False
 
         factories = speech.getSpeechServerFactories()
         if len(factories) == 0:
@@ -109,46 +104,48 @@ class orcaSetupGUI(GladeWrapper):
 
         speech.init()
 
-        workingFactories = []
-        for self.factory in factories:
+        self.workingFactories = []
+        for factory in factories:
             try:
-                self.factoryInfos = \
-                    self.factory.SpeechServer.getSpeechServerInfos()
-                workingFactories.append([self.factory, self.factoryInfos])
+                servers = factory.SpeechServer.getSpeechServers()
+                if len(servers):
+                    self.workingFactories.append(factory)
             except:
+                debug.printException(debug.LEVEL_FINEST)
                 pass
 
         if debug.debugLevel <= debug.LEVEL_FINEST:
-            print "orca_gui_prefs._init: workingFactories: ", workingFactories
+            print "orca_gui_prefs._init: workingFactories: ", \
+                  self.workingFactories
 
         self.factoryChoices = {}
-        if len(workingFactories) == 0:
+        if len(self.workingFactories) == 0:
             debug.println(debug.LEVEL_SEVERE, _("Speech not available."))
             debug.printStack(debug.LEVEL_FINEST)
             self.prefsDict["enableSpeech"] = False
             return
-        elif len(workingFactories) > 1:
+        elif len(self.workingFactories) > 1:
             i = 1
-            for workingFactory in workingFactories:
+            for workingFactory in self.workingFactories:
                 self.factoryChoices[i] = workingFactory
-                name = workingFactory[0].SpeechServer.getFactoryName()
+                name = workingFactory.SpeechServer.getFactoryName()
                 self.speechSystemsModel.append((i, name))
                 i += 1
-            [self.factory, self.factoryInfos] = self.factoryChoices[1]
+            self.factory = self.factoryChoices[1]
         else:
-            self.factoryChoices[1] = workingFactories[0]
-            name = workingFactories[0][0].SpeechServer.getFactoryName()
+            self.factoryChoices[1] = self.workingFactories[0]
+            name = self.workingFactories[0].SpeechServer.getFactoryName()
             self.speechSystemsModel.append((1, name))
-            [self.factory, self.factoryInfos] = workingFactories[0]
+            self.factory = self.workingFactories[0]
 
         if debug.debugLevel <= debug.LEVEL_FINEST:
             print "orca_gui_prefs._init: factoryChoices: ", self.factoryChoices
-            print "orca_gui_prefs._init: factoryInfos: ", self.factoryInfos
             print "orca_gui_prefs._init: factory: ", self.factory
+            print "orca_gui_prefs._init: servers: ", servers
 
         self.serverChoices = None
-        self.setupServers(self.factory)
-        self.setupVoices(self.server)
+        self.setupServers()
+        self.setupVoices()
         self.prefsDict["enableSpeech"] = True
         self.initGUIState()
         self.initializing = False
@@ -221,22 +218,14 @@ class orcaSetupGUI(GladeWrapper):
         self.actionCheckbutton.set_active(prefs["enableActionKeys"])
         self.echoByWordCheckbutton.set_active(prefs["enableEchoByWord"])
 
-    def setupServers(self, factory):
-        self.factoryInfos = factory.SpeechServer.getSpeechServerInfos()
-        self.servers = []
-        for info in self.factoryInfos:
-            try:
-                self.server = self.factory.SpeechServer.getSpeechServer(info)
-                if self.server:
-                    self.servers.append(self.server)
-            except:
-                pass
-
+    def setupServers(self):
+        self.servers = self.factory.SpeechServer.getSpeechServers()
         self.serverChoices = {}
         if len(self.servers) == 0:
             debug.println(debug.LEVEL_SEVERE, _("Speech not available."))
             debug.printStack(debug.LEVEL_FINEST)
             self.prefsDict["enableSpeech"] = False
+            self.server = None
             return
         if len(self.servers) > 1:
             i = 1
@@ -259,8 +248,8 @@ class orcaSetupGUI(GladeWrapper):
                    self.serverChoices
             print "orca_gui_prefs.setupServers: server: ", self.server
 
-    def setupVoices(self, server):
-        self.families = server.getVoiceFamilies()
+    def setupVoices(self):
+        self.families = self.server.getVoiceFamilies()
 
         self.voiceChoices = {}
         if len(self.families) == 0:
@@ -311,7 +300,7 @@ class orcaSetupGUI(GladeWrapper):
         - voiceType: the voice type (Default, Uppercase or Hyperlink).
         - key: the key to look for in the voice dictionary.
         - useDefault: if True, and the key isn't found for the given voice
-                      type, the look for it in the default voice dictionary 
+                      type, the look for it in the default voice dictionary
                       as well.
 
         Returns the value of the given key.
@@ -383,7 +372,7 @@ class orcaSetupGUI(GladeWrapper):
         model = self.speechSystemsModel
         i = 1
         for factory in factoryChoices.values():
-            name = factory[0].__name__
+            name = factory.__name__
             if name == systemName:
                 self.speechSystems.set_active(i-1)
                 return
@@ -437,12 +426,12 @@ class orcaSetupGUI(GladeWrapper):
         model = widget.get_model()
 
         index = model.get_value(iter, 0)
-        self.factory = self.factoryChoices[index][0]
+        self.factory = self.factoryChoices[index]
         self.speechServersModel.clear()
-        self.setupServers(self.factory)
+        self.setupServers()
 
         self.server = self.serverChoices[1]
-        self.setupVoices(self.server)
+        self.setupVoices()
 
     def speechServersChanged(self, widget):
         iter = widget.get_active_iter()
@@ -451,7 +440,7 @@ class orcaSetupGUI(GladeWrapper):
         index = model.get_value(iter, 0)
         self.voicesModel.clear()
         self.server = self.serverChoices[index]
-        self.setupVoices(self.server)
+        self.setupVoices()
 
     def voiceFamilyChanged(self, widget):
         iter = widget.get_active_iter()
@@ -529,7 +518,6 @@ class orcaSetupGUI(GladeWrapper):
                 self.prefsDict["speechVerbosityLevel"] = \
                     settings.VERBOSITY_LEVEL_VERBOSE
 
-
     def abbrevRolenamesChecked(self, widget):
         if widget.get_active():
             self.prefsDict["brailleRolenameStyle"] = \
@@ -555,21 +543,21 @@ class orcaSetupGUI(GladeWrapper):
 
     def applyButtonClicked(self, widget):
 
-        self.voices = {
+        self.prefsDict["enableSpeech"] = True
+        self.prefsDict["speechServerFactory"] = self.factory
+        self.prefsDict["speechServerInfo"] = self.server
+        self.prefsDict["voices"] = {
             settings.DEFAULT_VOICE   : self.defaultVoice,
             settings.UPPERCASE_VOICE : self.uppercaseVoice,
             settings.HYPERLINK_VOICE : self.hyperlinkVoice
         }
 
-        self.prefsDict["enableSpeech"] = True
-        self.prefsDict["speechServerFactory"] = self.factory
-        self.prefsDict["speechServerInfo"] = self.server
-        self.prefsDict["voices"] = self.voices
-
         if orca_prefs.writePreferences(self.prefsDict):
             self.say(_("Accessibility support for GNOME has just been enabled."))
             self.say(_("You need to log out and log back in for the change to take effect."))
 
+        for factory in self.workingFactories:
+            factory.SpeechServer.shutdownActiveServers()
         orca.loadUserSettings()
         self.orcaSetupWindow.hide()
 
@@ -583,7 +571,6 @@ class orcaSetupGUI(GladeWrapper):
             speech.stop()
 
         speech.speak(text)
-
 
 def showPreferencesUI():
     global OS

@@ -298,7 +298,6 @@ def getvoice(acss):
     specified  ACSS setting.
     Synthesizer code is a tupple of the form (open,close)
     where open sets the voice, and close resets it."""
-
     name=acss.name()
     if name in _defined_voices: return _defined_voices[name]
     _defined_voices[name] =acss2voice(acss)
@@ -310,14 +309,17 @@ def acss2voice(acss):
     familyName ='male'
     if 'family' in acss:
         familyName = acss['family']['name']
-        code += _table['family'][familyName]
+        if familyName in _table['family']:
+            code += _table['family'][familyName]
     if 'rate' in acss: code += " :ra %s" % getrate(acss['rate'])
     if 'punctuations' in acss: code += " :punc %s" %acss['punctuations']
     voice = ""
     dv = ""
     for d in ['average-pitch', 'pitch-range',
               'richness', 'stress']:
-        if d in acss:voice += _table[(familyName, d)][acss[d]]
+        if d in acss:
+            if _table.has_key((familyName, d)):
+                voice += _table[(familyName, d)][acss[d]]
     if voice: dv = " :dv %s" % voice
     if code or voice: code = "[%s  %s]" % (code, dv)
     return (code, " [:np] ")
