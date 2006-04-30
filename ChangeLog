@@ -1,5 +1,10 @@
 2006-04-30  Willie Walker <william.walker@sun.com>
 
+	* po/POTFILES.in: add orca_gui_prefs and orca_console_prefs.
+	* src/orca/orca.py, src/orca/gnomespeechfactory.py,
+	src/orca/settings.py, src/orca/speech.py,
+	src/orca/speechserver.py: Add "Insert+s" to temporarily disable
+	speech and "Insert+q" to re-enable speech.
 	* src/orca/dectalk.py, src/orca/espeechfactory.py, 
 	src/orca/gnomespeechfactory.py,src/orca/orca.py,
 	src/orca/orca_console_prefs.py, src/orca/orca_gui_prefs.py,

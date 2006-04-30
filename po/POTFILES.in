@@ -9,9 +9,10 @@ src/orca/gnomespeechfactory.py
 src/orca/hierarchical_presenter.py
 src/orca/keynames.py
 src/orca/orca-setup.glade
-src/orca/orca-setup.in
 src/orca/orca.in
 src/orca/orca.py
+src/orca/orca_console_prefs.py
+src/orca/orca_gui_prefs.py
 src/orca/rolenames.py
 src/orca/scripts/Evolution.py
 src/orca/scripts/Mozilla.py
