@@ -101,15 +101,25 @@ def __resolveACSS(acss=None):
         return voices[settings.DEFAULT_VOICE]
 
 def sayAll(utteranceIterator, progressCallback):
+    if settings.silenceSpeech:
+        return
     if __speechserver:
         __speechserver.sayAll(utteranceIterator, progressCallback)
 
 def speak(text, acss=None):
+    if settings.silenceSpeech:
+        return
     if __speechserver:
+        debug.println(debug.LEVEL_INFO, "SPEECH OUTPUT: '" + text + "'")
         __speechserver.speak(text, __resolveACSS(acss))
             
 def speakUtterances(utterances, acss=None):
+    if settings.silenceSpeech:
+        return
     if __speechserver:
+        for utterance in utterances:
+            debug.println(debug.LEVEL_INFO,
+                          "SPEECH OUTPUT: '" + utterance + "'")
         __speechserver.speakUtterances(utterances, __resolveACSS(acss))
 
 def stop():

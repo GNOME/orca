@@ -888,6 +888,25 @@ def outlineAccessible(accessible, erasePrevious=True):
 #                                                                      #
 ########################################################################
 
+def _silenceSpeech(script=None, inputEvent=None):
+    """Silences speech.
+
+    Returns True to indicate the input event has been consumed.
+    """
+    speech.stop()
+    speech.speak(_("Speech disabled."))
+    settings.silenceSpeech = True
+    return True
+
+def _unsilenceSpeech(script=None, inputEvent=None):
+    """Unsilences speech.
+
+    Returns True to indicate the input event has been consumed.
+    """
+    settings.silenceSpeech = False
+    speech.speak(_("Speech enabled."))
+    return True
+
 def loadUserSettings(script=None, inputEvent=None):
     """Loads (and reloads) the user settings module, reinitializing
     things such as speech if necessary.
@@ -1070,6 +1089,24 @@ def init(registry):
         (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL),
         (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL),
         loadUserSettingsHandler))
+
+    silenceSpeechHandler = InputEventHandler(\
+        _silenceSpeech,
+        _("Silences speech."))
+    _keyBindings.add(keybindings.KeyBinding(
+        "s", \
+        1 << MODIFIER_ORCA,
+        1 << MODIFIER_ORCA,
+        silenceSpeechHandler))
+
+    unsilenceSpeechHandler = InputEventHandler(\
+        _unsilenceSpeech,
+        _("Unsilences speech."))
+    _keyBindings.add(keybindings.KeyBinding(
+        "q", \
+        1 << MODIFIER_ORCA,
+        1 << MODIFIER_ORCA,
+        unsilenceSpeechHandler))
 
     listAppsHandler = InputEventHandler(
         printApps,

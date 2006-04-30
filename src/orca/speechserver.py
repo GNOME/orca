@@ -205,6 +205,8 @@ class SpeechServer:
                              COMPLETED.
         """
         for [context, acss] in utteranceIterator:
+            debug.println(debug.LEVEL_INFO,
+                          "SPEECH OUTPUT: '" + context.utterance + "'")
             self.speak(context.utterance, acss)
 
     def increaseSpeechRate(self, step=5):

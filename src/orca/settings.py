@@ -100,6 +100,10 @@ speechRateDelta         = 5
 enableSpeech            = True
 enableSpeechCallbacks   = True
 
+# If True, speech has been temporarily silenced.
+#
+silenceSpeech           = False
+
 # Settings that apply to the particular speech engine to
 # use as well details on the default voices to use.
 #

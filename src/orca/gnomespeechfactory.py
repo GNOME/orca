@@ -392,6 +392,10 @@ class SpeechServer(speechserver.SpeechServer):
                     try:
                         [self.__sayAll.currentContext, acss] = \
                             self.__sayAll.utteranceIterator.next()
+                        debug.println(debug.LEVEL_INFO,
+                                      "SPEECH OUTPUT: '" \
+                                      + self.__sayAll.currentContext.utterance\
+                                      + "'")
                         self.__sayAll.idForCurrentContext = self.__speak(
                             self.__sayAll.currentContext.utterance,
                             acss)
@@ -534,10 +538,6 @@ class SpeechServer(speechserver.SpeechServer):
         #
         text = text.replace("[", "[ ")
 
-        # Send the text to the GNOME Speech speaker
-        #
-        debug.println(debug.LEVEL_INFO, "SPEECH OUTPUT: '" + text + "'")
-
         try:
             # [[[TODO: WDW - back this stop out for now.  The problem is
             # that we end up clipping too much speech, especially in the
@@ -590,6 +590,8 @@ class SpeechServer(speechserver.SpeechServer):
         """
         try:
             [context, acss] = utteranceIterator.next()
+            debug.println(debug.LEVEL_INFO,
+                          "SPEECH OUTPUT: '" + context.utterance + "'")
             self.__sayAll = _SayAll(utteranceIterator,
                                     context,
                                     self.__speak(context.utterance, acss),
