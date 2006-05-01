@@ -28,10 +28,10 @@ import math
 import atspi
 import braille
 import debug
-
 import orca
 import rolenames
 import settings
+import util
 
 from orca_i18n import _                     # for gettext support
 from rolenames import getBrailleForRoleName # localized role names
@@ -454,56 +454,15 @@ class BrailleGenerator:
         verbosity = settings.brailleVerbosityLevel
 
         regions = []
-        regions.append(braille.Region(obj.label + " "))
 
-        # Find the text displayed in the combo box.  This is either:
-        #
-        # 1) The last text object that's a child of the combo box
-        # 2) The selected child of the combo box.
-        # 3) The contents of the text of the combo box itself when
-        #    treated as a text object.
-        #
-        # Preference is given to #1, if it exists.
-        #
-        # If the label of the combo box is the same as the utterance for
-        # the child object, then this utterance is only displayed once.
-        #
-        # [[[TODO: WDW - Combo boxes are complex beasts.  This algorithm
-        # needs serious work.  Logged as bugzilla bug 319745.]]]
-        #
-        textObj = None
-        for i in range(0, obj.childCount):
-            debug.println(debug.LEVEL_FINEST,
-                          "braillegenerator._getBrailleRegionsForComboBox " \
-                          + "looking at child %d" % i)
-            child = obj.child(i)
-            if child.role == rolenames.ROLE_TEXT:
-                textObj = child
+        focusedRegionIndex = 0
+        label = util.getLabel(obj)
+        if label and (len(label) > 0):
+            regions.append(braille.Region(label + " "))
+            focusedRegionIndex = 1
 
-        if textObj:
-            result = atspi.getTextLineAtCaret(textObj)
-            line = result[0]
-            if line != obj.label:
-                regions.append(braille.Text(textObj))
-        else:
-            selectedItem = None
-            comboSelection = obj.selection
-            if comboSelection and comboSelection.nSelectedChildren > 0:
-                selectedItem = atspi.Accessible.makeAccessible(\
-                    comboSelection.getSelectedChild(0))
-            if selectedItem:
-                if selectedItem.label != obj.label:
-                    regions.append(braille.Region(selectedItem.label))
-            else:
-                if obj.text:
-                    result = atspi.getTextLineAtCaret(obj)
-                    selectedText = result[0]
-                    if selectedText != obj.label:
-                        regions.append(braille.Text(obj))
-                else:
-                    debug.println(
-                        debug.LEVEL_SEVERE,
-                        "ERROR: Could not find selected item for combo box.")
+        displayedText = util.getDisplayedTextInComboBox(obj)
+        regions.append(braille.Region(displayedText))
 
         if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
             regions.append(braille.Region(" " + getBrailleForRoleName(obj)))
@@ -511,7 +470,7 @@ class BrailleGenerator:
         # [[[TODO: WDW - perhaps if a text area was created, we should
         # give focus to it.]]]
         #
-        return [regions, regions[0]]
+        return [regions, regions[focusedRegionIndex]]
 
     def _getBrailleRegionsForDesktopIcon(self, obj):
         """Get the braille for a desktop icon.

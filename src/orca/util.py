@@ -21,10 +21,90 @@
 
 import atspi
 import debug
+import rolenames
 import speech
 import speechserver
 
 from orca_i18n import _ # for gettext support
+
+def getLabel(object):
+    """If there is an object labelling the given object, return the
+    text being displayed for the object labelling this object.
+    Otherwise, return None.
+
+    Argument:
+    - object: the object in question
+
+    Returns the string of the object labelling this object, or None
+    if there is nothing of interest here.
+    """
+    label = None
+    relations = object.relations
+    for relation in relations:
+        if relation.getRelationType() \
+               == atspi.Accessibility.RELATION_LABELLED_BY:
+            target = atspi.Accessible.makeAccessible(relation.getTarget(0))
+            if target.text:
+                [label, startOffset, endOffset] = atspi.getTextLineAtCaret(
+                    target)
+            if (not label) or (len(label) == 0):
+                label = target.name
+            if label and (len(label) > 0):
+                break
+    return label
+
+def getDisplayedTextInComboBox(combo):
+    
+    """Returns the text being displayed in a combo box.  If nothing is
+    displayed, then an empty string is returned.
+
+    Arguments:
+    - combo: the combo box
+
+    Returns the text in the combo box or an empty string if nothing is
+    displayed.
+    """
+
+    displayedText = ""
+    
+    # Find the text displayed in the combo box.  This is either:
+    #
+    # 1) The last text object that's a child of the combo box
+    # 2) The selected child of the combo box.
+    # 3) The contents of the text of the combo box itself when
+    #    treated as a text object.
+    #
+    # Preference is given to #1, if it exists.
+    #
+    # If the label of the combo box is the same as the utterance for
+    # the child object, then this utterance is only displayed once.
+    #
+    # [[[TODO: WDW - Combo boxes are complex beasts.  This algorithm
+    # needs serious work.  Logged as bugzilla bug 319745.]]]
+    #
+    textObj = None
+    for i in range(0, combo.childCount):
+        child = combo.child(i)
+        if child.role == rolenames.ROLE_TEXT:
+            textObj = child
+
+    if textObj:
+        [displayedText, startOffset, endOffset] = \
+            atspi.getTextLineAtCaret(textObj)
+    else:
+        selectedItem = None
+        comboSelection = combo.selection
+        if comboSelection and comboSelection.nSelectedChildren > 0:
+            selectedItem = atspi.Accessible.makeAccessible(
+                comboSelection.getSelectedChild(0))
+        if selectedItem:
+            displayedText = selectedItem.label
+        else:
+            if combo.text:
+                [displayedText, startOffset, endOffset] = \
+                    atspi.getTextLineAtCaret(combo)
+
+    return displayedText
 
 def findFocusedObject(root):
     """Returns the accessible that has focus under or including the

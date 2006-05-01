@@ -1,3 +1,11 @@
+2006-05-01  Willie Walker <william.walker@sun.com>
+
+	* src/orca/braillegenerator.py, src/orca/speechgenerator.py,
+	src/orca/default.py, src/orca/util.py: partial fix for 340305.
+	Changes the way labels and displayed text for combo boxes are
+	obtained.  Also handles selection events to better react when
+	the selection in a combo box changes.
+	
 2006-05-01  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca_gui_prefs.py

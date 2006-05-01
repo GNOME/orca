@@ -27,10 +27,10 @@ import math
 
 import atspi
 import debug
-
 import orca
 import rolenames
 import settings
+import util
 
 from orca_i18n import _                          # for gettext support
 from rolenames import getSpeechForRoleName       # localized role names
@@ -431,57 +431,14 @@ class SpeechGenerator:
         verbosity = settings.speechVerbosityLevel
 
         utterances = []
+        label = None
         if not already_focused:
-            utterances.append(obj.label)
+            label = util.getLabel(obj)
+            if label and (len(label) > 0):
+                utterances.append(label)
 
-        # Find the text displayed in the combo box.  This is either:
-        #
-        # 1) The last text object that's a child of the combo box
-        # 2) The selected child of the combo box.
-        # 3) The contents of the text of the combo box itself when
-        #    treated as a text object.
-        #
-        # Preference is given to #1, if it exists.
-        #
-        # If the label of the combo box is the same as the utterance for
-        # the child object, then this utterance is only spoken once.
-        #
-        # [[[TODO: WDW - Combo boxes are complex beasts.  This algorithm
-        # needs serious work.  Logged as bugzilla bug 319745.]]]
-        #
-        textObj = None
-        for i in range(0, obj.childCount):
-            debug.println(debug.LEVEL_FINEST,
-                          "speechgenerator._getSpeechForComboBox " \
-                          + "looking at child %d" % i)
-            child = obj.child(i)
-            if child.role == rolenames.ROLE_TEXT:
-                textObj = child
-
-        if textObj:
-            result = atspi.getTextLineAtCaret(textObj)
-            line = result[0]
-            if line != obj.label:
-                utterances.append(line)
-        else:
-            selectedItem = None
-            comboSelection = obj.selection
-            if comboSelection and comboSelection.nSelectedChildren > 0:
-                selectedItem = atspi.Accessible.makeAccessible(\
-                    comboSelection.getSelectedChild(0))
-            if selectedItem:
-                if selectedItem.label != obj.label:
-                    utterances.append(selectedItem.label)
-            else:
-                result = atspi.getTextLineAtCaret(obj)
-                selectedText = result[0]
-                if len(selectedText) > 0:
-                    if selectedText != obj.label:
-                        utterances.append(selectedText)
-                else:
-                    debug.println(
-                        debug.LEVEL_SEVERE,
-                        "ERROR: Could not find selected item for combo box.")
+        displayedText = util.getDisplayedTextInComboBox(obj)
+        utterances.append(displayedText)
 
         if not already_focused:
             if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:

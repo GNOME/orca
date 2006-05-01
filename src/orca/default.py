@@ -1017,7 +1017,6 @@ class Script(script.Script):
         # to the focused object, then we should speak/braille the
         # focused object, as if it had just got focus.
         #
-
         if obj.role == rolenames.ROLE_LABEL:
             for relation in relations:
                 if relation.getRelationType() \
@@ -1445,23 +1444,25 @@ class Script(script.Script):
         - event: the Event
         """
 
+        if not event.source:
+            return
+        
         # [[[TODO: WDW - HACK layered panes are nutty in that they
         # will change the selection and tell the selected child it is
         # focused, but the child will not issue a focus changed event.]]]
         #
-        if event.source \
-           and (event.source.role == rolenames.ROLE_LAYERED_PANE):
-#               or (event.source.role == rolenames.ROLE_TABLE) \
-#               or (event.source.role == rolenames.ROLE_TREE_TABLE) \
-#               or (event.source.role == rolenames.ROLE_TREE)):
+        if event.source.role == rolenames.ROLE_LAYERED_PANE:
             if event.source.childCount:
                 selection = event.source.selection
                 if selection and selection.nSelectedChildren > 0:
                     child = selection.getSelectedChild(0)
                     if child:
-                        orca.setLocusOfFocus(event,
-                                             atspi.Accessible.makeAccessible(child))
-
+                        orca.setLocusOfFocus(
+                            event,
+                            atspi.Accessible.makeAccessible(child))
+        elif event.source.role == rolenames.ROLE_COMBO_BOX:
+            orca.visualAppearanceChanged(event, event.source)
+             
     def onValueChanged(self, event):
         """Called whenever an object's value changes.  Currently, the
         value changes for non-focused objects are ignored.
