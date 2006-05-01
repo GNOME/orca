@@ -20,7 +20,7 @@
 # TODO:
 #
 # - Adjust routines names to start with _ when only used in this module.
-# - Improve reclaimation of "old" speech servers in setupServers().
+# - Improve reclaimation of "old" speech servers in _setupServers().
 # - Implement the Help button callback.
 # - Need to add comments to each method.
 
@@ -91,11 +91,11 @@ class orcaSetupGUI(GladeWrapper):
         self.uppercaseVoice = self.prefsDict["voices"]["uppercase"]
         self.hyperlinkVoice = self.prefsDict["voices"]["hyperlink"]
 
-        self.speechSystemsModel = self.initComboBox(self.speechSystems)
-        self.speechServersModel = self.initComboBox(self.speechServers)
-        self.voicesModel        = self.initComboBox(self.voices)
+        self.speechSystemsModel = self._initComboBox(self.speechSystems)
+        self.speechServersModel = self._initComboBox(self.speechServers)
+        self.voicesModel        = self._initComboBox(self.voices)
 
-        self.setKeyEchoItems()
+        self._setKeyEchoItems()
 
         factories = speech.getSpeechServerFactories()
         if len(factories) == 0:
@@ -144,43 +144,43 @@ class orcaSetupGUI(GladeWrapper):
             print "orca_gui_prefs._init: servers: ", servers
 
         self.serverChoices = None
-        self.setupServers()
-        self.setupVoices()
+        self._setupServers()
+        self._setupVoices()
         self.prefsDict["enableSpeech"] = True
-        self.initGUIState()
+        self._initGUIState()
         self.initializing = False
 
-    def setVoiceSettingForVoiceType(self, voiceType):
-        familyName = self.getFamilyNameForVoiceType(voiceType)
+    def _setVoiceSettingForVoiceType(self, voiceType):
+        familyName = self._getFamilyNameForVoiceType(voiceType)
         if familyName:
-            self.setVoiceChoice(self.families, familyName)
+            self._setVoiceChoice(self.families, familyName)
 
-        rate = self.getRateForVoiceType(voiceType)
+        rate = self._getRateForVoiceType(voiceType)
         if rate:
             self.rateScale.set_value(rate)
 
-        pitch = self.getPitchForVoiceType(voiceType)
+        pitch = self._getPitchForVoiceType(voiceType)
         if pitch:
             self.pitchScale.set_value(pitch)
 
-        volume = self.getVolumeForVoiceType(voiceType)
+        volume = self._getVolumeForVoiceType(voiceType)
         if volume:
             self.volumeScale.set_value(volume)
 
-    def initGUIState(self):
+    def _initGUIState(self):
         prefs = self.prefsDict
 
         # Speech pane.
         #
-        self.setSystemChoice(self.factoryChoices, prefs["speechServerFactory"])
+        self._setSystemChoice(self.factoryChoices, prefs["speechServerFactory"])
 
         serverPrefs = prefs["speechServerInfo"]
         if serverPrefs:
-            self.setServerChoice(self.serverChoices, serverPrefs[0])
+            self._setServerChoice(self.serverChoices, serverPrefs[0])
 
         voiceType = self.voiceType.get_active_text()
         self.voiceType.set_active(0)
-        self.setVoiceSettingForVoiceType(voiceType)
+        self._setVoiceSettingForVoiceType(voiceType)
 
         if prefs["verbalizePunctuationStyle"] == \
                                settings.PUNCTUATION_STYLE_NONE:
@@ -218,7 +218,7 @@ class orcaSetupGUI(GladeWrapper):
         self.actionCheckbutton.set_active(prefs["enableActionKeys"])
         self.echoByWordCheckbutton.set_active(prefs["enableEchoByWord"])
 
-    def setupServers(self):
+    def _setupServers(self):
         self.servers = self.factory.SpeechServer.getSpeechServers()
         self.serverChoices = {}
         if len(self.servers) == 0:
@@ -244,11 +244,11 @@ class orcaSetupGUI(GladeWrapper):
         self.speechServers.set_active(0)
 
         if debug.debugLevel <= debug.LEVEL_FINEST:
-            print "orca_gui_prefs.setupServers: serverChoices: ", \
+            print "orca_gui_prefs._setupServers: serverChoices: ", \
                    self.serverChoices
-            print "orca_gui_prefs.setupServers: server: ", self.server
+            print "orca_gui_prefs._setupServers: server: ", self.server
 
-    def setupVoices(self):
+    def _setupVoices(self):
         self.families = self.server.getVoiceFamilies()
 
         self.voiceChoices = {}
@@ -277,10 +277,10 @@ class orcaSetupGUI(GladeWrapper):
             self.voices.set_active(0)
 
         if debug.debugLevel <= debug.LEVEL_FINEST:
-            print "orca_gui_prefs.setupVoices: voiceChoices: ", \
+            print "orca_gui_prefs._setupVoices: voiceChoices: ", \
                    self.voiceChoices
 
-    def getVoiceForVoiceType(self, voiceType):
+    def _getVoiceForVoiceType(self, voiceType):
         if voiceType == _("Default"):
             voice = self.defaultVoice
         elif voiceType == _("Uppercase"):
@@ -292,7 +292,7 @@ class orcaSetupGUI(GladeWrapper):
 
         return voice
 
-    def getKeyForVoiceType(self, voiceType, key, useDefault=True):
+    def _getKeyForVoiceType(self, voiceType, key, useDefault=True):
         """Look for the value of the given key, in the voice dictionary
            for the given voice type.
 
@@ -328,9 +328,9 @@ class orcaSetupGUI(GladeWrapper):
         else:
             return None
 
-    def getFamilyNameForVoiceType(self, voiceType):
+    def _getFamilyNameForVoiceType(self, voiceType):
         familyName = None
-        family = self.getKeyForVoiceType(voiceType, "family")
+        family = self._getKeyForVoiceType(voiceType, "family")
 
         if family:
             if family.has_key("name"):
@@ -338,37 +338,37 @@ class orcaSetupGUI(GladeWrapper):
 
         return familyName
 
-    def setFamilyNameForVoiceType(self, voiceType, value):
-        family = self.getKeyForVoiceType(voiceType, "family", False)
+    def _setFamilyNameForVoiceType(self, voiceType, value):
+        family = self._getKeyForVoiceType(voiceType, "family", False)
         if family:
             family["name"] = value
         else:
-            voice = self.getVoiceForVoiceType(voiceType)
+            voice = self._getVoiceForVoiceType(voiceType)
             voice["family"] = {}
             voice["family"]["name"] = value
 
-    def getRateForVoiceType(self, voiceType):
-        return self.getKeyForVoiceType(voiceType, "rate", True)
+    def _getRateForVoiceType(self, voiceType):
+        return self._getKeyForVoiceType(voiceType, "rate", True)
 
-    def setRateForVoiceType(self, voiceType, value):
-        voice = self.getVoiceForVoiceType(voiceType)
+    def _setRateForVoiceType(self, voiceType, value):
+        voice = self._getVoiceForVoiceType(voiceType)
         voice["rate"] = value
 
-    def getPitchForVoiceType(self, voiceType):
-        return self.getKeyForVoiceType(voiceType, "average-pitch", True)
+    def _getPitchForVoiceType(self, voiceType):
+        return self._getKeyForVoiceType(voiceType, "average-pitch", True)
 
-    def setPitchForVoiceType(self, voiceType, value):
-        voice = self.getVoiceForVoiceType(voiceType)
+    def _setPitchForVoiceType(self, voiceType, value):
+        voice = self._getVoiceForVoiceType(voiceType)
         voice["average-pitch"] = value
 
-    def getVolumeForVoiceType(self, voiceType):
-        return self.getKeyForVoiceType(voiceType, "gain", True)
+    def _getVolumeForVoiceType(self, voiceType):
+        return self._getKeyForVoiceType(voiceType, "gain", True)
 
-    def setVolumeForVoiceType(self, voiceType, value):
-        voice = self.getVoiceForVoiceType(voiceType)
+    def _setVolumeForVoiceType(self, voiceType, value):
+        voice = self._getVoiceForVoiceType(voiceType)
         voice["gain"] = value
 
-    def setSystemChoice(self, factoryChoices, systemName):
+    def _setSystemChoice(self, factoryChoices, systemName):
         model = self.speechSystemsModel
         i = 1
         for factory in factoryChoices.values():
@@ -378,7 +378,7 @@ class orcaSetupGUI(GladeWrapper):
                 return
             i += 1
 
-    def setServerChoice(self, serverChoices, serverName):
+    def _setServerChoice(self, serverChoices, serverName):
         model = self.speechServersModel
         i = 1
         for server in serverChoices.values():
@@ -388,7 +388,7 @@ class orcaSetupGUI(GladeWrapper):
                 return
             i += 1
 
-    def setVoiceChoice(self, families, voiceName):
+    def _setVoiceChoice(self, families, voiceName):
         model = self.voicesModel
         i = 1
         for family in families:
@@ -398,10 +398,10 @@ class orcaSetupGUI(GladeWrapper):
                 return
             i += 1
 
-    def showGUI(self):
+    def _showGUI(self):
         self.orcaSetupWindow.show()
 
-    def initComboBox(self, combobox):
+    def _initComboBox(self, combobox):
         cell = gtk.CellRendererText()
         combobox.pack_start(cell, True)
         combobox.add_attribute(cell, 'text', 1)
@@ -410,7 +410,7 @@ class orcaSetupGUI(GladeWrapper):
 
         return model
 
-    def setKeyEchoItems(self):
+    def _setKeyEchoItems(self):
         if self.keyEchoCheckbutton.get_active():
             enable = True
         else:
@@ -428,10 +428,10 @@ class orcaSetupGUI(GladeWrapper):
         index = model.get_value(iter, 0)
         self.factory = self.factoryChoices[index]
         self.speechServersModel.clear()
-        self.setupServers()
+        self._setupServers()
 
         self.server = self.serverChoices[1]
-        self.setupVoices()
+        self._setupVoices()
 
     def speechServersChanged(self, widget):
         iter = widget.get_active_iter()
@@ -440,7 +440,7 @@ class orcaSetupGUI(GladeWrapper):
         index = model.get_value(iter, 0)
         self.voicesModel.clear()
         self.server = self.serverChoices[index]
-        self.setupVoices()
+        self._setupVoices()
 
     def voiceFamilyChanged(self, widget):
         iter = widget.get_active_iter()
@@ -448,7 +448,7 @@ class orcaSetupGUI(GladeWrapper):
 
         name = model.get_value(iter, 1)
         voiceType = self.voiceType.get_active_text()
-        self.setFamilyNameForVoiceType(voiceType, name)
+        self._setFamilyNameForVoiceType(voiceType, name)
 
     def brailleSupportChecked(self, widget):
         self.prefsDict["enableBraille"] = widget.get_active()
@@ -458,7 +458,7 @@ class orcaSetupGUI(GladeWrapper):
 
     def keyEchoChecked(self, widget):
         self.prefsDict["enableKeyEcho"] = widget.get_active()
-        self.setKeyEchoItems()
+        self._setKeyEchoItems()
 
     def printableKeysChecked(self, widget):
         self.prefsDict["enablePrintableKeys"] = widget.get_active()
@@ -480,22 +480,22 @@ class orcaSetupGUI(GladeWrapper):
 
     def voiceTypeChanged(self, widget):
         voiceType = widget.get_active_text()
-        self.setVoiceSettingForVoiceType(voiceType)
+        self._setVoiceSettingForVoiceType(voiceType)
 
     def rateValueChanged(self, widget):
         rate = widget.get_value()
         voiceType = self.voiceType.get_active_text()
-        self.setRateForVoiceType(voiceType, rate)
+        self._setRateForVoiceType(voiceType, rate)
 
     def pitchValueChanged(self, widget):
         pitch = widget.get_value()
         voiceType = self.voiceType.get_active_text()
-        self.setPitchForVoiceType(voiceType, pitch)
+        self._setPitchForVoiceType(voiceType, pitch)
 
     def volumeValueChanged(self, widget):
         volume = widget.get_value()
         voiceType = self.voiceType.get_active_text()
-        self.setVolumeForVoiceType(voiceType, volume)
+        self._setVolumeForVoiceType(voiceType, volume)
 
     def punctuationLevelChanged(self, widget):
         if widget.get_active():
@@ -584,7 +584,7 @@ def showPreferencesUI():
         OS = orcaSetupGUI(gladeFile, "orcaSetupWindow")
         OS._init()
     else:
-        OS.showGUI()
+        OS._showGUI()
 
 def main():
     locale.setlocale(locale.LC_ALL, '')

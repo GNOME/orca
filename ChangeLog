@@ -1,3 +1,9 @@
+2006-05-01  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca_gui_prefs.py
+          All methods in orca_gui_prefs.py that are just used internally
+          have had an underscore prepended to their names.
+
 2006-04-30  Willie Walker <william.walker@sun.com>
 
 	* po/POTFILES.in: add orca_gui_prefs and orca_console_prefs.
