@@ -173,6 +173,17 @@
         <para>&tgoal; Determine if orca speaks characters as they are typed.</para>
         <para>&tprocedure; type a line of 10 characters containing letters, numbers, and punctuation marks.</para>
         <para>&tresult; When each character is typed, it should be spoken.</para>
+
+      </section>
+      <section><title>Typing Alphanumeric characters with modifiers</title>
+        <para>&tgoal; Determine if orca handles combinations of characters and modifiers correctly as they are typed.</para>
+        <para>&tprocedure; Open gedit and press CTRL+o.</para>
+        <para>&tresult; Orca should say "control o" before reading the file open dialog.</para>
+        <para>&tprocedure; Open gedit and press alt+f.</para>
+        <para>&tresult; Orca should say "alt f" before reading the file menu information.</para>
+        <para>&tprocedure; Press insert+space to bring up the orca configuration UI..</para>
+        <para>&tresult; Orca should say "insert space" before reading the dialog.</para>
+
       </section>
 
     </section>
