@@ -185,6 +185,20 @@
         <para>&tresult; Orca should say "insert space" before reading the dialog.</para>
 
       </section>
+      <section><title>function key echo test </title>
+        <para>&tgoal; Orca should speak function keys as they are pressed.</para>
+        <para>&tprocedure; Open gedit and press f10.</para>
+        <para>&tresult; Orca should say "f 10" before speaking the focus in the menubar.</para>
+                <para>&tgoal; Orca should speak function keys along with modifiers as they are pressed.</para>
+	        <para>&tprocedure; Open gedit and press shift+f10.</para>
+	        <para>&tresult; Orca should say "shift f 10" before speaking the focus in the menubar.</para>
+
+      </section>
+      <section><title>lock key echo test </title>
+        <para>&tgoal; Orca should speak lock keys as they are pressed as well as state.</para>
+        <para>&tprocedure; Press caps lock and num lock several times.</para>
+        <para>&tresult; Orca should say the key name followed by the state of that key.  For example, "caps lock on" or "num lock on"</para>
+      </section>
 
     </section>
 
