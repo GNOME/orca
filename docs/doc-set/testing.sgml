@@ -67,7 +67,7 @@
         Mode.</para>
         <para>&tgoal; Test the learn mode to assure that orca speaks useful information for each orca keystroke.</para>
         <para>&tprocedure; Press insert+f1 to enable learn mode.  Press all keys on the numpad both with and without the orca modifier key (usually insert).  After testing all keys, press escape to exit learn mode.</para>
-        <para>&tresult; Listen to the speech output associated with each keypress.  Orca should give meaningful output describing what the key does.  This information should also appear on the braille display.</para>
+        <para>&tresult; Listen to the speech output associated with each keypress.  Orca should give meaningful output describing what the key does.  This information should also appear on the braille display.  If information is un-clear a bug should be filed.</para>
 
     </section>
 
@@ -76,7 +76,15 @@
       <para>The tests in this section are to ensure that the Orca
         Where Am I functionality produces the desired
         information.</para>
+        <para>&tgoal; Orca should give a top down summary of the current multipage dialog.  </para>
+        <para>&tprocedure; Open up terminal, open the "edit current preferences dialog", tab once to the first control in the first page, and  press KP enter.  </para>
+        <para>&tresult;  Orca should speak the following information in the following order.  App name, dialog name, page name, control name with label. </para>
+        <para>&tgoal; Orca should give a top down summary of the current document with focus.  </para>
+        <para>&tprocedure; Open up gedit, open two documents and press KP enter.  </para>
+        <para>&tresult;  Orca should speak the following information in the following order.  App name, Document name, control name (ie edidt), statusbar information such as the current line in the document. </para>
 
+        <para>&tprocedure; Open up gedit, modify one of the documents, press CTRL+q to exit  and press KP enter.  </para>
+        <para>&tresult;  Orca should speak the following information in the following order.  App name, Dialog title, control name with lable . </para>
     </section>
 
     <section id="sayalltest"><title>Say All</title>
@@ -161,6 +169,12 @@
         <para>&tprocedure; type a line of 10 words, the first 5 followed by a period and the second 5 followed by a comma.</para>
         <para>&tresult; When the period or comma is typed the word should be spoken.  When a space is typed after the punctuation mark the word should not be spoken again.</para>
       </section>
+      <section><title>Typing Alphanumeric characters</title>
+        <para>&tgoal; Determine if orca speaks characters as they are typed.</para>
+        <para>&tprocedure; type a line of 10 characters containing letters, numbers, and punctuation marks.</para>
+        <para>&tresult; When each character is typed, it should be spoken.</para>
+      </section>
+
     </section>
 
     <section id="brailletest"><title>Braille</title>
