@@ -199,6 +199,18 @@
         <para>&tprocedure; Press caps lock and num lock several times.</para>
         <para>&tresult; Orca should say the key name followed by the state of that key.  For example, "caps lock on" or "num lock on"</para>
       </section>
+      <section><title>action key echo test </title>
+        <para>&tgoal; Orca should speak location information after delete is pressed.</para>
+        <para>&tprocedure; Open gedit and type a line of text.  Press home to return to the beginning of the line and press delete untul all characters have been deleted.</para>
+        <para>&tresult; When each character is deleted the next character on the line should be spoken.  </para>
+        <para>&tgoal; Orca should speak updated information after backspace is pressed.</para>
+        <para>&tprocedure; Open gedit and type a line of text.  Press backspace until all characters have been deleted.</para>
+        <para>&tresult; When each character is deleted the previous character on the line should be spoken.  </para>
+        <para>&tgoal; Orca should speak location information after home and end are pressed.</para>
+        <para>&tprocedure; Open gedit and type a line of text.  Press home to return to the beginning of the line and press end  to move to the end of the line.</para>
+        <para>&tresult; When these keys are pressed the character under the cursor should be spoken.  This includes spaces.</para>
+
+      </section>
 
     </section>
 
