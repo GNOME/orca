@@ -19,10 +19,8 @@
 
 # TODO:
 #
-# - Adjust routines names to start with _ when only used in this module.
 # - Improve reclaimation of "old" speech servers in _setupServers().
 # - Implement the Help button callback.
-# - Need to add comments to each method.
 
 """Displays a GUI for the user to set Orca preferences."""
 
@@ -151,6 +149,13 @@ class orcaSetupGUI(GladeWrapper):
         self.initializing = False
 
     def _setVoiceSettingForVoiceType(self, voiceType):
+        """Set the family, rate, pitch and volume GUI components based 
+        on the given voice type.
+
+        Arguments:
+        - voiceType: the voice type (Default, Uppercase or Hyperlink).
+        """
+
         familyName = self._getFamilyNameForVoiceType(voiceType)
         if familyName:
             self._setVoiceChoice(self.families, familyName)
@@ -168,6 +173,10 @@ class orcaSetupGUI(GladeWrapper):
             self.volumeScale.set_value(volume)
 
     def _initGUIState(self):
+        """Adjust the settings of the various components on the 
+        configuration GUI depending upon the users preferences.
+        """
+
         prefs = self.prefsDict
 
         # Speech pane.
@@ -219,6 +228,13 @@ class orcaSetupGUI(GladeWrapper):
         self.echoByWordCheckbutton.set_active(prefs["enableEchoByWord"])
 
     def _setupServers(self):
+        """Get the list of speech servers for the current speech factory.
+        If there aren't any servers, set the 'enableSpeech' to False and 
+        return, otherwise get the information associated with each speech 
+        server and add an entry for it to the speechServers GtkComboBox list.
+        Set the current choice to be the first item.
+        """
+
         self.servers = self.factory.SpeechServer.getSpeechServers()
         self.serverChoices = {}
         if len(self.servers) == 0:
@@ -249,6 +265,15 @@ class orcaSetupGUI(GladeWrapper):
             print "orca_gui_prefs._setupServers: server: ", self.server
 
     def _setupVoices(self):
+        """Get the list of voice families for the current speech server.
+        If there aren't any voices, set the 'enableSpeech' to False and 
+        return, otherwise get the information associated with each voice
+        family and add an entry for it to the voices GtkComboBox list.
+        If we are not doing graphics initialisation (i.e. the user has
+        deliberately changed the current value in the voices combo box),
+        then set the current choice to be the first item.
+        """
+
         self.families = self.server.getVoiceFamilies()
 
         self.voiceChoices = {}
@@ -281,6 +306,15 @@ class orcaSetupGUI(GladeWrapper):
                    self.voiceChoices
 
     def _getVoiceForVoiceType(self, voiceType):
+        """Return the dictionary of voice preferences for the given 
+        voice type.
+
+        Arguments:
+        - voiceType: the voice type (Default, Uppercase or Hyperlink).
+
+        Returns the voice dictionary for the given voice type.
+        """
+
         if voiceType == _("Default"):
             voice = self.defaultVoice
         elif voiceType == _("Uppercase"):
@@ -303,7 +337,7 @@ class orcaSetupGUI(GladeWrapper):
                       type, the look for it in the default voice dictionary
                       as well.
 
-        Returns the value of the given key.
+        Returns the value of the given key, or None if it's not set.
         """
 
         if voiceType == _("Default"):
@@ -329,6 +363,15 @@ class orcaSetupGUI(GladeWrapper):
             return None
 
     def _getFamilyNameForVoiceType(self, voiceType):
+        """Return the name of the voice family for the given voice type.
+
+        Arguments:
+        - voiceType: the voice type (Default, Uppercase or Hyperlink).
+
+        Returns the name of the voice family for the given voice type,
+        or None if not set.
+        """
+
         familyName = None
         family = self._getKeyForVoiceType(voiceType, "family")
 
@@ -339,6 +382,13 @@ class orcaSetupGUI(GladeWrapper):
         return familyName
 
     def _setFamilyNameForVoiceType(self, voiceType, value):
+        """Set the name of the voice family for the given voice type.
+
+        Arguments:
+        - voiceType: the voice type (Default, Uppercase or Hyperlink).
+        - value: the name of the voice family to set.
+        """
+
         family = self._getKeyForVoiceType(voiceType, "family", False)
         if family:
             family["name"] = value
@@ -348,27 +398,84 @@ class orcaSetupGUI(GladeWrapper):
             voice["family"]["name"] = value
 
     def _getRateForVoiceType(self, voiceType):
+        """Get the rate value for the given voice type.
+
+        Arguments:
+        - voiceType: the voice type (Default, Uppercase or Hyperlink).
+
+        Returns the rate value for the given voice type, or None if 
+        not set.
+        """
+
         return self._getKeyForVoiceType(voiceType, "rate", True)
 
     def _setRateForVoiceType(self, voiceType, value):
+        """Set the rate value for the given voice type.
+
+        Arguments:
+        - voiceType: the voice type (Default, Uppercase or Hyperlink).
+        - value: the rate value to set.
+        """
+
         voice = self._getVoiceForVoiceType(voiceType)
         voice["rate"] = value
 
     def _getPitchForVoiceType(self, voiceType):
+        """Get the pitch value for the given voice type.
+
+        Arguments:
+        - voiceType: the voice type (Default, Uppercase or Hyperlink).
+
+        Returns the pitch value for the given voice type, or None if
+        not set.
+        """
+
         return self._getKeyForVoiceType(voiceType, "average-pitch", True)
 
     def _setPitchForVoiceType(self, voiceType, value):
+        """Set the pitch value for the given voice type.
+
+        Arguments:
+        - voiceType: the voice type (Default, Uppercase or Hyperlink).
+        - value: the pitch value to set.
+        """
+
         voice = self._getVoiceForVoiceType(voiceType)
         voice["average-pitch"] = value
 
     def _getVolumeForVoiceType(self, voiceType):
+        """Get the volume (gain) value for the given voice type.
+
+        Arguments:
+        - voiceType: the voice type (Default, Uppercase or Hyperlink).
+
+        Returns the volume (gain) value for the given voice type, or 
+        None if not set.
+        """
+
         return self._getKeyForVoiceType(voiceType, "gain", True)
 
     def _setVolumeForVoiceType(self, voiceType, value):
+        """Set the volume (gain) value for the given voice type.
+
+        Arguments:
+        - voiceType: the voice type (Default, Uppercase or Hyperlink).
+        - value: the volume (gain) value to set.
+        """
+
         voice = self._getVoiceForVoiceType(voiceType)
         voice["gain"] = value
 
     def _setSystemChoice(self, factoryChoices, systemName):
+        """Set the active item in the speech systems combo box to the
+        given system name.
+
+        Arguments:
+        - factoryChoices: the list of available speech factories (systems).
+        - value: the speech system name to use to set the active combo 
+        box item.
+        """
+
         model = self.speechSystemsModel
         i = 1
         for factory in factoryChoices.values():
@@ -379,6 +486,15 @@ class orcaSetupGUI(GladeWrapper):
             i += 1
 
     def _setServerChoice(self, serverChoices, serverName):
+        """Set the active item in the speech servers combo box to the
+        given server name.
+
+        Arguments:
+        - serverChoices: the list of available speech servers.
+        - value: the speech server name to use to set the active combo
+        box item.
+        """
+
         model = self.speechServersModel
         i = 1
         for server in serverChoices.values():
@@ -389,6 +505,14 @@ class orcaSetupGUI(GladeWrapper):
             i += 1
 
     def _setVoiceChoice(self, families, voiceName):
+        """Set the active item in the voices combo box to the given 
+        voice name.
+
+        Arguments:
+        - families: the list of available voice families.
+        - value: the voice name to use to set the active combo box item.
+        """
+
         model = self.voicesModel
         i = 1
         for family in families:
@@ -399,9 +523,19 @@ class orcaSetupGUI(GladeWrapper):
             i += 1
 
     def _showGUI(self):
+        """Show the Orca configuration GUI window. This assumes that
+        the GUI has already been created.
+        """
+
         self.orcaSetupWindow.show()
 
     def _initComboBox(self, combobox):
+        """Initialize the given combo box to take a list of int/str pairs.
+
+        Arguments:
+        - combobox: the GtkComboBox to initialize.
+        """
+
         cell = gtk.CellRendererText()
         combobox.pack_start(cell, True)
         combobox.add_attribute(cell, 'text', 1)
@@ -411,6 +545,10 @@ class orcaSetupGUI(GladeWrapper):
         return model
 
     def _setKeyEchoItems(self):
+        """[In]sensitize the checkboxes for the various types of key echo, 
+        depending upon whether the value of the key echo check button is set.
+        """
+
         if self.keyEchoCheckbutton.get_active():
             enable = True
         else:
@@ -421,7 +559,31 @@ class orcaSetupGUI(GladeWrapper):
         self.functionCheckbutton.set_sensitive(enable)
         self.actionCheckbutton.set_sensitive(enable)
 
+    def _say(self, text, stop=False):
+        """If the text field is not None, speaks the given text, optionally 
+        interrupting anything currently being spoken.
+
+        Arguments:
+        - text: the text to print and speak
+        - stop: if True, interrupt any speech currently being spoken
+        """
+
+        if stop:
+            speech.stop()
+
+        speech.speak(text)
+
     def speechSystemsChanged(self, widget):
+        """Signal handler for the "changed" signal for the speechSystems
+           GtkComboBox widget. The user has selected a different speech
+           system. Clear the existing list of speech servers, and setup
+           a new list of speech servers based on the new choice. Setup a
+           new list of voices for the first speech server in the list.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
         iter = widget.get_active_iter()
         model = widget.get_model()
 
@@ -434,6 +596,15 @@ class orcaSetupGUI(GladeWrapper):
         self._setupVoices()
 
     def speechServersChanged(self, widget):
+        """Signal handler for the "changed" signal for the speechServers
+           GtkComboBox widget. The user has selected a different speech
+           server. Clear the existing list of voices, and setup a new 
+           list of voices based on the new choice.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
         iter = widget.get_active_iter()
         model = widget.get_model()
 
@@ -443,6 +614,14 @@ class orcaSetupGUI(GladeWrapper):
         self._setupVoices()
 
     def voiceFamilyChanged(self, widget):
+        """Signal handler for the "value_changed" signal for the voices
+           GtkComboBox widget. The user has selected a different voice
+           family. Save the new voice family name based on the new choice.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
         iter = widget.get_active_iter()
         model = widget.get_model()
 
@@ -451,53 +630,183 @@ class orcaSetupGUI(GladeWrapper):
         self._setFamilyNameForVoiceType(voiceType, name)
 
     def brailleSupportChecked(self, widget):
+        """Signal handler for the "toggled" signal for the 
+           brailleSupportCheckbutton GtkCheckButton widget. The user has
+           [un]checked the 'Enable Braille support" checkbox. Set the 
+           'enableBraille' preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
         self.prefsDict["enableBraille"] = widget.get_active()
 
     def brailleMonitorChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           brailleMonitorCheckbutton GtkCheckButton widget. The user has
+           [un]checked the 'Enable Braille monitor" checkbox. Set the
+           'enableBrailleMonitor' preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
         self.prefsDict["enableBrailleMonitor"] = widget.get_active()
 
     def keyEchoChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           keyEchoCheckbutton GtkCheckButton widget. The user has
+           [un]checked the 'Enable Key Echo" checkbox. Set the
+           'enableKeyEcho' preference to the new value. [In]sensitize 
+           the checkboxes for the various types of key echo, depending 
+           upon whether this value is checked or unchecked.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
         self.prefsDict["enableKeyEcho"] = widget.get_active()
         self._setKeyEchoItems()
 
     def printableKeysChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           printableCheckbutton GtkCheckButton widget. The user has
+           [un]checked the 'Enable alphanumeric and punctuation keys" 
+           checkbox. Set the 'enablePrintableKeys' preference to the 
+           new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
         self.prefsDict["enablePrintableKeys"] = widget.get_active()
 
     def modifierKeysChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           modifierCheckbutton GtkCheckButton widget. The user has
+           [un]checked the 'Enable modifier keys" checkbox. Set the 
+           'enableModifierKeys' preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
         self.prefsDict["enableModifierKeys"] = widget.get_active()
 
     def lockingKeysChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           lockingCheckbutton GtkCheckButton widget. The user has
+           [un]checked the 'Enable locking keys" checkbox. Set the
+           'enableLockingKeys' preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
         self.prefsDict["enableLockingKeys"] = widget.get_active()
 
     def functionKeysChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           functionCheckbutton GtkCheckButton widget. The user has
+           [un]checked the 'Enable locking keys" checkbox. Set the
+           'enableLockingKeys' preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
         self.prefsDict["enableFunctionKeys"] = widget.get_active()
 
     def actionKeysChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           actionCheckbutton GtkCheckButton widget. The user has
+           [un]checked the 'Enable action keys" checkbox. Set the
+           'enableActionKeys' preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
         self.prefsDict["enableActionKeys"] = widget.get_active()
 
     def echoByWordChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           echoByWordCheckbutton GtkCheckButton widget. The user has
+           [un]checked the 'Enable Echo by Word" checkbox. Set the
+           'enableEchoByWord' preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
         self.prefsDict["enableEchoByWord"] = widget.get_active()
 
     def voiceTypeChanged(self, widget):
+        """Signal handler for the "changed" signal for the voiceType
+           GtkComboBox widget. The user has selected a different voice
+           type. Setup the new family, rate, pitch and volume component
+           values based on the new choice.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
         voiceType = widget.get_active_text()
         self._setVoiceSettingForVoiceType(voiceType)
 
     def rateValueChanged(self, widget):
+        """Signal handler for the "value_changed" signal for the rateScale
+           GtkHScale widget. The user has changed the current rate value.
+           Save the new rate value based on the currently selected voice
+           type.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
         rate = widget.get_value()
         voiceType = self.voiceType.get_active_text()
         self._setRateForVoiceType(voiceType, rate)
 
     def pitchValueChanged(self, widget):
+        """Signal handler for the "value_changed" signal for the pitchScale
+           GtkHScale widget. The user has changed the current pitch value.
+           Save the new pitch value based on the currently selected voice
+           type.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
         pitch = widget.get_value()
         voiceType = self.voiceType.get_active_text()
         self._setPitchForVoiceType(voiceType, pitch)
 
     def volumeValueChanged(self, widget):
+        """Signal handler for the "value_changed" signal for the voiceScale
+           GtkHScale widget. The user has changed the current volume value.
+           Save the new volume value based on the currently selected voice 
+           type.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
         volume = widget.get_value()
         voiceType = self.voiceType.get_active_text()
         self._setVolumeForVoiceType(voiceType, volume)
 
     def punctuationLevelChanged(self, widget):
+        """Signal handler for the "toggled" signal for the noneButton,
+           someButton or allButton GtkRadioButton widgets. The user has
+           toggled the speech punctuation level value. If this signal 
+           was generated as the result of a radio button getting selected 
+           (as opposed to a radio button losing the selection), set the 
+           'verbalizePunctuationStyle' preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
         if widget.get_active():
             if widget.get_label() == _("None"):
                 self.prefsDict["verbalizePunctuationStyle"] = \
@@ -510,6 +819,17 @@ class orcaSetupGUI(GladeWrapper):
                     settings.PUNCTUATION_STYLE_ALL
 
     def speechVerbosityChanged(self, widget):
+        """Signal handler for the "toggled" signal for the speechBriefButton,
+           or speechVerboseButton GtkRadioButton widgets. The user has
+           toggled the speech verbosity level value. If this signal was 
+           generated as the result of a radio button getting selected 
+           (as opposed to a radio button losing the selection), set the 
+           'speechVerbosityLevel' preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
         if widget.get_active():
             if widget.get_label() == _("Brief"):
                 self.prefsDict["speechVerbosityLevel"] = \
@@ -519,6 +839,15 @@ class orcaSetupGUI(GladeWrapper):
                     settings.VERBOSITY_LEVEL_VERBOSE
 
     def abbrevRolenamesChecked(self, widget):
+        """Signal handler for the "toggled" signal for the abbrevRolenames 
+           GtkCheckButton widget. The user has [un]checked the 'Abbreviated
+           Rolenames" checkbox. Set the 'brailleRolenameStyle' preference 
+           to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
         if widget.get_active():
             self.prefsDict["brailleRolenameStyle"] = \
                 settings.BRAILLE_ROLENAME_STYLE_SHORT
@@ -527,6 +856,17 @@ class orcaSetupGUI(GladeWrapper):
                 settings.BRAILLE_ROLENAME_STYLE_LONG
 
     def brailleVerbosityChanged(self, widget):
+        """Signal handler for the "toggled" signal for the brailleBriefButton,
+           or brailleVerboseButton GtkRadioButton widgets. The user has
+           toggled the braille verbosity level value. If this signal was
+           generated as the result of a radio button getting selected
+           (as opposed to a radio button losing the selection), set the
+           'brailleVerbosityLevel' preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
         if widget.get_active():
             if widget.get_label() == _("Brief"):
                 self.prefsDict["brailleVerbosityLevel"] = \
@@ -536,12 +876,38 @@ class orcaSetupGUI(GladeWrapper):
                     settings.VERBOSITY_LEVEL_VERBOSE
 
     def helpButtonClicked(self, widget):
+        """Signal handler for the "clicked" signal for the helpButton 
+           GtkButton widget. The user has clicked the Help button.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
         print "Help not currently implemented."
 
     def cancelButtonClicked(self, widget):
+        """Signal handler for the "clicked" signal for the cancelButton
+           GtkButton widget. The user has clicked the Cancel button.
+           Don't write out the preferences. Hide the configuration window.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
         self.orcaSetupWindow.hide()
 
     def applyButtonClicked(self, widget):
+        """Signal handler for the "clicked" signal for the applyButton
+           GtkButton widget. The user has clicked the Apply button.
+           Write out the users preferences. If GNOME accessibility hadn't
+           previously been enabled, warn the user that they will need to
+           log out. Shut down any active speech servers that were started.
+           Reload the users preferences to get the new speech, braille and
+           key echo value to take effect. Hide the configuration window.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
 
         self.prefsDict["enableSpeech"] = True
         self.prefsDict["speechServerFactory"] = self.factory
@@ -553,8 +919,8 @@ class orcaSetupGUI(GladeWrapper):
         }
 
         if orca_prefs.writePreferences(self.prefsDict):
-            self.say(_("Accessibility support for GNOME has just been enabled."))
-            self.say(_("You need to log out and log back in for the change to take effect."))
+            self._say(_("Accessibility support for GNOME has just been enabled."))
+            self._say(_("You need to log out and log back in for the change to take effect."))
 
         for factory in self.workingFactories:
             factory.SpeechServer.shutdownActiveServers()
@@ -562,15 +928,18 @@ class orcaSetupGUI(GladeWrapper):
         self.orcaSetupWindow.hide()
 
     def windowDestroyed(self, widget):
+        """Signal handler for the "destroyed" signal for the orcaSetupWindow
+           GtkWindow widget. Reset OS to None, so that the GUI can be rebuilt
+           from the Glade file the next time the user wants to display the 
+           configuration GUI.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
         global OS
 
         OS = None
-
-    def say(text, stop=False):
-        if stop:
-            speech.stop()
-
-        speech.speak(text)
 
 def showPreferencesUI():
     global OS

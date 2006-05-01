@@ -1,6 +1,11 @@
 2006-05-01  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca_gui_prefs.py
+          Added comments to each method in the file.
+
+2006-05-01  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca_gui_prefs.py
           All methods in orca_gui_prefs.py that are just used internally
           have had an underscore prepended to their names.
 
