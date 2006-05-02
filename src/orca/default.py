@@ -1030,7 +1030,15 @@ class Script(script.Script):
                         return
 
         if obj != orca.locusOfFocus:
-            return
+            # [[[TODO: WDW - HACK because we seem to get different
+            # accessibles for the same combo box from time to time.
+            # This can be seen sometimes when using the test case in
+            # bug http://bugzilla.gnome.org/show_bug.cgi?id=340305]]]
+            #
+            if obj.state.count(atspi.Accessibility.STATE_FOCUSED):
+                orca.setLocusOfFocus(event, obj, False)
+            else:
+                return
 
         if event:
             debug.println(debug.LEVEL_FINE,
