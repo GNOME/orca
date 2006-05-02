@@ -97,6 +97,10 @@
         <para>&tgoal; Test say-all in gedit.</para>
         <para>&tprocedure; Open a long document and position the cursor at the top.  Press numpad+plus to start reading the document.</para>
         <para>&tresult; Orca should read the document from beginning to end honoring the current punctuation setting.  The document should also be read with a natural flow IE sentences should flow smoothly from one to the next.</para>
+        <para>&tgoal; Test say'all;s character positioning  in gedit.</para>
+        <para>&tprocedure; Open a long document and position the cursor at the beginning of the 4th line.  Press numpad+plus to start reading the document.  Press CTRL to stop reading about 3/4 the way through the document.</para>
+        <para>&tresult; Orca should read the document from beginning to end honoring the current punctuation setting.  The document should also be read with a natural flow IE sentences should flow smoothly from one to the next. When CTRL is pressed, the cursor should be placed at the beginning of the last word spoken.</para>
+
         <para>&tgoal; Test say-all in Star Office Writer.</para>
         <para>&tprocedure; Open the orca documentation HTML file and position the cursor at the top.  Press numpad+plus to start reading the document.</para>
         <para>&tresult; Orca should read the document from beginning to end honoring the current punctuation setting.  The document should also be read with a natural flow IE sentences should flow smoothly from one to the next.</para>
@@ -141,7 +145,7 @@
         the various spelling mode settings.</para>
         <para>&tgoal; Test the performance of orca's spell word functionality.</para>
         <para>&tprocedure; Open gedit and type a sentence.  Move from one word to the next with CTRL+right arrow and double click KP5 very quickly.</para>
-        <para>&tresult; When doubleclicking KP5 on the first word the word should be spelled honoring the speak capitalization setting.  All Other words should just be spelled.  When the last word is reached, it should also be spelled not including the period.</para>
+        <para>&tresult; When doubleclicking KP5 on the first word the word should be spelled honoring the speak capitalization setting.  All Other words should just be spelled.  When the last word is reached, it should also be spelled not including the period.  If the caret happens to be on a space orca should just say space.  </para>
     </section>
 
     <section id="textattributestest"><title>Text Attributes</title>
@@ -197,7 +201,7 @@
       <section><title>lock key echo test </title>
         <para>&tgoal; Orca should speak lock keys as they are pressed as well as state.</para>
         <para>&tprocedure; Press caps lock and num lock several times.</para>
-        <para>&tresult; Orca should say the key name followed by the state of that key.  For example, "caps lock on" or "num lock on"</para>
+        <para>&tresult; Orca should say the key name followed by the state of that key (on or off).  For example, "caps lock on" or "num lock on"</para>
       </section>
       <section><title>action key echo test </title>
         <para>&tgoal; Orca should speak location information after delete is pressed.</para>
@@ -208,7 +212,10 @@
         <para>&tresult; When each character is deleted the previous character on the line should be spoken.  </para>
         <para>&tgoal; Orca should speak location information after home and end are pressed.</para>
         <para>&tprocedure; Open gedit and type a line of text.  Press home to return to the beginning of the line and press end  to move to the end of the line.</para>
-        <para>&tresult; When these keys are pressed the character under the cursor should be spoken.  This includes spaces.</para>
+        <para>&tresult; When these keys are pressed the character under the cursor should be spoken preceeded by the key name.  This includes spaces.</para>
+        <para>&tgoal; Orca should speak location information after page up and page down are pressed.</para>
+        <para>&tprocedure; Open gedit and open a long document.  Press CTRL+home to return to the beginning of the line and press page down several times to move to the next pages of the document.</para>
+        <para>&tresult; When these keys are pressed the line under the cursor should be spoken preceeded by the key name.  This includes spaces.  When the end of the document is reached nothing should be spoken.  Repeat this test with page up expecting the same results.  </para>
 
       </section>
 
@@ -228,7 +235,16 @@
 
     <section id="desktoptest"><title>Desktop Test Plan</title>
       <section><title>Navigate Start Menu</title>
-        <para>&tgoal; Determine if Orca reads the start menu.</para>
+        <para>&tgoal; Determine if Orca reads the top level of the start menu.</para>
+        <para>&tprocedure; Open the start menu from the keyboard and arrow up and down through all the items.</para>
+        <para>&tresult; When first entering the menu orca should speak the name of the panel gaining focus.  Orca should speak the selected item  while arrowing.  If an item is a submenu, orca should fillow the item name with "menu".</para>
+                <para>&tgoal; Determine if Orca reads correctly when entering submenus.</para>
+        <para>&tprocedure; Open the start menu and navigate into each of the submenus..</para>
+        <para>&tresult; When moving into the submenu orca should speak the new item with focus.</para>
+        <para>&tgoal; Determine if Orca reads correctly when leaving submenus.</para>
+        <para>&tprocedure; Open the start menu and navigate into each of the submenus with right arrow and then return to the ptop level with left arrow.</para>
+        <para>&tresult; When moving out of the submmenu orca should speak the new item with focus.</para>
+<para>&tgoal; Determine if Orca reads the start menu.</para>
         <para>&tprocedure; perform this action.</para>
         <para>&tresult; this should happen.</para>
       </section>
