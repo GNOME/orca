@@ -888,23 +888,18 @@ def outlineAccessible(accessible, erasePrevious=True):
 #                                                                      #
 ########################################################################
 
-def _silenceSpeech(script=None, inputEvent=None):
-    """Silences speech.
+def _toggleSilenceSpeech(script=None, inputEvent=None):
+    """Toggle the silencing of speech.
 
     Returns True to indicate the input event has been consumed.
     """
     speech.stop()
-    speech.speak(_("Speech disabled."))
-    settings.silenceSpeech = True
-    return True
-
-def _unsilenceSpeech(script=None, inputEvent=None):
-    """Unsilences speech.
-
-    Returns True to indicate the input event has been consumed.
-    """
-    settings.silenceSpeech = False
-    speech.speak(_("Speech enabled."))
+    if settings.silenceSpeech:
+        settings.silenceSpeech = False
+        speech.speak(_("Speech enabled."))
+    else:
+        speech.speak(_("Speech disabled."))
+        settings.silenceSpeech = True
     return True
 
 def loadUserSettings(script=None, inputEvent=None):
@@ -1090,23 +1085,14 @@ def init(registry):
         (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL),
         loadUserSettingsHandler))
 
-    silenceSpeechHandler = InputEventHandler(\
-        _silenceSpeech,
-        _("Silences speech."))
+    toggleSilenceSpeechHandler = InputEventHandler(\
+        _toggleSilenceSpeech,
+        _("Toggles the silencing of speech."))
     _keyBindings.add(keybindings.KeyBinding(
         "s", \
         1 << MODIFIER_ORCA,
         1 << MODIFIER_ORCA,
-        silenceSpeechHandler))
-
-    unsilenceSpeechHandler = InputEventHandler(\
-        _unsilenceSpeech,
-        _("Unsilences speech."))
-    _keyBindings.add(keybindings.KeyBinding(
-        "q", \
-        1 << MODIFIER_ORCA,
-        1 << MODIFIER_ORCA,
-        unsilenceSpeechHandler))
+        toggleSilenceSpeechHandler))
 
     listAppsHandler = InputEventHandler(
         printApps,
