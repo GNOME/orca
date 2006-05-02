@@ -52,7 +52,7 @@
 	desired results.</para>
         <para>&tgoal; Test basic flat review navigation.</para>
         <para>&tprocedure; Open gnome terminal and type "ls".  Use the number 7 on the numpad to move up by line until you reach the menubar.  At this point press numpad 6 repeatedly to move across the menubar.</para>
-        <para>&tresult; While moving up with 7 each line of the terminal window should be read.  While moving right across the menubar each word of each menu item should be read.</para>
+        <para>&tresult; While moving up with 7 each line of the terminal window should be read.  While moving right across the menubar each word of each menu item should be read.  After finishing, reverse this process using KP4 and KP9 for word and line respectively.</para>
         <para>&tgoal; Test the performance of mouse clicks in flat review.</para>
         <para>&tprocedure; Open gnome terminal and review to the top of the screen with numpad 7.  At this point, move to the right with  KP3 until you reach the e of the edit menu.  While on the "e" press KP/ to perform a left mouse click.</para>
         <para>&tresult; While moving up the screen each line should be read.  While moving right with KP3 each letter should be read.  When you press KP/, the edit menu should open.</para>
@@ -107,6 +107,10 @@
         <para>&tgoal; Test say-all in Firefox.</para>
         <para>&tprocedure; Open live.gnome.org/Orca and position the cursor at the top of the page.  Press numpad+plus to start reading the document.</para>
         <para>&tresult; Orca should read the page from beginning to end honoring the current punctuation setting.  The document should also be read with a natural flow IE sentences should flow smoothly from one to the next.  THe word link should also be spoken after each link.  </para>
+        <para>&tgoal; Orca should read a dialog box from top to bottom.</para>
+        <para>&tprocedure; Open gedit and press CTRL=O to open the file open dialog.  When the dialog is open press SayAll (KP+).</para>
+        <para>&tresult; Orca should read the entire dialog from top to bottom.</para>
+
     </section>
 
     <section id="verbalizedpunctest"><title>Verbalized Punctuation</title>
@@ -250,8 +254,8 @@
       </section>
       <section><title>Alt+Tab to Other Applications</title>
         <para>&tgoal; Determine if Orca reads metacity status window.</para>
-        <para>&tprocedure; perform this action.</para>
-        <para>&tresult; this should happen.</para>
+        <para>&tprocedure; Open gedit, terminal, star office writer, and firefox.  With these apps opened, hold sown alt and press tab slowly several times.</para>
+        <para>&tresult; Whith each press of tab orca should speak the name of the application that will gain fucus if als is released.</para>
       </section>
     </section>
 
