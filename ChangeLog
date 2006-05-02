@@ -1,3 +1,7 @@
+2006-05-02  Willie Walker <william.walker@sun.com>
+
+	* src/orca/default.py: generalize fix for 340305.
+	
 2006-05-01  Willie Walker <william.walker@sun.com>
 
 	* src/orca/default.py: ultimate fix for 340305.  The underlying

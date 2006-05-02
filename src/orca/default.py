@@ -549,19 +549,12 @@ class Script(script.Script):
         # if one of its children has focus.  Since we're doing this, we'll
         # tell Orca to not propagate this event to us.]]]
         #
-        # [[[TODO: WDW - additional info - this really isn't necessary because
-        # we typically only run into this problem when Orca is started after
-        # the desktop applications are running.  In real life, this will
-        # most likely not be the case, and a simple "make the world right"
-        # user action can be to just Alt+Tab to force the apps to give us
-        # the events we care about.]]]
-        #
-        #if (event.type.find("focus") == -1) \
-        #   and (event.type.find("state-changed:selected") == -1) \
-        #   and (event.type.find("object:selection-changed") == -1) \
-        #   and (event.type.find("active-descendant") == -1) \
-        #   and event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
-        #    orca.setLocusOfFocus(event, event.source, False)
+        if event and event.source \
+            and (event.source != orca.locusOfFocus) \
+            and ((event.type.find("object:selection-changed") != -1) \
+                 or (event.type.find("object:text-changed") != -1)) \
+            and event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
+            orca.setLocusOfFocus(event, event.source, False)
 
         script.Script.processObjectEvent(self, event)
 
@@ -609,60 +602,60 @@ class Script(script.Script):
         # Get the AccessibleText interface of the provided object
         #
         [line, startOffset, endOffset] = atspi.getTextLineAtCaret(obj)
-    
+
         if line.isupper():
             voice = self.voices[settings.UPPERCASE_VOICE]
         else:
             voice = self.voices[settings.DEFAULT_VOICE]
-    
+
         speech.speak(line, voice)
-    
+
     def sayWord(self, obj):
         """Speaks the word at the caret.  [[[TODO: WDW - what if there is no
         word at the caret?]]]
-    
+
         Arguments:
         - obj: an Accessible object that implements the AccessibleText
                interface
         """
-    
+
         text = obj.text
         offset = text.caretOffset
         [word, startOffset, endOffset] = \
             text.getTextAtOffset(offset,
                                  atspi.Accessibility.TEXT_BOUNDARY_WORD_START)
-    
+
         if util.getLinkIndex(obj, offset) >= 0:
             voice = self.voices[settings.HYPERLINK_VOICE]
         elif word.isupper():
             voice = self.voices[settings.UPPERCASE_VOICE]
         else:
             voice = self.voices[settings.DEFAULT_VOICE]
-    
+
         speech.speak(word, voice)
-    
+
     def sayCharacter(self, obj):
         """Speak the character under the caret.  [[[TODO: WDW - isn't the
         caret between characters?]]]
-    
+
         Arguments:
         - obj: an Accessible object that implements the AccessibleText
                interface
         """
-    
+
         text = obj.text
         offset = text.caretOffset
         character = text.getText(offset, offset+1)
-    
+
         if util.getLinkIndex(obj, offset) >= 0:
             voice = self.voices[settings.HYPERLINK_VOICE]
         elif character.isupper():
             voice = self.voices[settings.UPPERCASE_VOICE]
         else:
             voice = self.voices[settings.DEFAULT_VOICE]
-    
+
         speech.speak(character, voice)
-    
+
     def whereAmI(self, inputEvent):
         self.updateBraille(orca.locusOfFocus)
 
@@ -1030,15 +1023,7 @@ class Script(script.Script):
                         return
 
         if obj != orca.locusOfFocus:
-            # [[[TODO: WDW - HACK because we seem to get different
-            # accessibles for the same combo box from time to time.
-            # This can be seen sometimes when using the test case in
-            # bug http://bugzilla.gnome.org/show_bug.cgi?id=340305]]]
-            #
-            if obj.state.count(atspi.Accessibility.STATE_FOCUSED):
-                orca.setLocusOfFocus(event, obj, False)
-            else:
-                return
+            return
 
         if event:
             debug.println(debug.LEVEL_FINE,
@@ -1199,7 +1184,7 @@ class Script(script.Script):
         orca.lastInputEvent = input_event.MouseButtonEvent(event)
 
     def _presentTextAtNewCaretPosition(self, event):
-        
+
         # Magnify the object.  [[[TODO: WDW - this is a hack for now.]]]
         #
         mag.magnifyAccessible(event.source)
@@ -1268,12 +1253,12 @@ class Script(script.Script):
         - event: the Event
         """
 
-        # Ignore text deletions from non-focused objects, unless the
-        # currently focused object is the parent of the object from which
-        # text was deleted
+        # Ignore caret movements from non-focused objects, unless the
+        # currently focused object is the parent of the object which
+        # has the caret.
         #
         if (event.source != orca.locusOfFocus) \
-               and (event.source.parent != orca.locusOfFocus):
+            and (event.source.parent != orca.locusOfFocus):
             return
 
         # We always automatically go back to focus tracking mode when
@@ -1296,7 +1281,7 @@ class Script(script.Script):
         # text was deleted
         #
         if (event.source != orca.locusOfFocus) \
-               and (event.source.parent != orca.locusOfFocus):
+            and (event.source.parent != orca.locusOfFocus):
             return
 
         self.updateBraille(event.source)
@@ -1327,12 +1312,12 @@ class Script(script.Script):
         - event: the Event
         """
 
-        # Ignore text deletions from non-focused objects, unless the
+        # Ignore text insertions from non-focused objects, unless the
         # currently focused object is the parent of the object from which
-        # text was deleted
+        # text was inserted.
         #
         if (event.source != orca.locusOfFocus) \
-               and (event.source.parent != orca.locusOfFocus):
+            and (event.source.parent != orca.locusOfFocus):
             return
 
         self.updateBraille(event.source)
@@ -1454,7 +1439,7 @@ class Script(script.Script):
 
         if not event.source:
             return
-        
+
         # [[[TODO: WDW - HACK layered panes are nutty in that they
         # will change the selection and tell the selected child it is
         # focused, but the child will not issue a focus changed event.]]]
@@ -1470,7 +1455,7 @@ class Script(script.Script):
                             atspi.Accessible.makeAccessible(child))
         elif event.source.role == rolenames.ROLE_COMBO_BOX:
             orca.visualAppearanceChanged(event, event.source)
-             
+
     def onValueChanged(self, event):
         """Called whenever an object's value changes.  Currently, the
         value changes for non-focused objects are ignored.
