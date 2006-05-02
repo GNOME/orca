@@ -1,3 +1,15 @@
+2006-05-02  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca.py
+          The showing of the Orca configuration GUI (if invoked at
+          startup time via --setup or --gui-setup), needed to happen
+          after the users current orca settings had been read.
+
+        * src/orca/orca_gui_prefs.py
+          In the speechSystemChanged() method, the existing entries 
+          in the voices combo box needed to be removed before 
+          _setupVoices() was called.
+
 2006-05-02  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca.py: per request of Mike, make Insert+s be a

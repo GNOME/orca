@@ -1307,10 +1307,11 @@ def main():
     # desktop is not running, we will fallback to the console-based
     # method as appropriate.
     #
+    showGUI = False
     for arg in sys.argv:
         if (arg == _("--gui-setup")) or (arg == _("--setup")):
             if desktopRunning:
-                _showPreferencesGUI()
+                showGUI = True
             else:
                 _showPreferencesConsole()
         elif arg == _("--text-setup"):
@@ -1328,6 +1329,13 @@ def main():
 
     registry = atspi.Registry()
     init(registry)
+
+    # Check to see if the user wants the configuration GUI. It's
+    # done here so that the users existing preferences can be used
+    # to set the initial GUI state.
+    #
+    if showGUI:
+        _showPreferencesGUI()
 
     # Do not run Orca if accessibility has not been enabled.
     #

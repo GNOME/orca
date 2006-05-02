@@ -593,6 +593,7 @@ class orcaSetupGUI(GladeWrapper):
         self._setupServers()
 
         self.server = self.serverChoices[1]
+        self.voicesModel.clear()
         self._setupVoices()
 
     def speechServersChanged(self, widget):
