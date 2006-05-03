@@ -1,5 +1,17 @@
 2006-05-03  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/orca_gui_prefs.py
+          Added in commented out code to _initGUIState() to set the
+          initial state of the various components on the Magnifier
+          notebook page. When the names of the various magnifier
+          preferences are known, then this code can be uncommented.
+
+          Added in a _getComboBoxIndex() method that will return the 
+          index of the first entry in a given combobox with a given label.
+          This will be needed by the new code in _initGUIState().
+
+2006-05-03  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/orca-setup.glade
           Added in the GUI for the Magnification notebook page in
           the configuration window.

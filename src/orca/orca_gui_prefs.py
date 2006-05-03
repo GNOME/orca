@@ -227,6 +227,158 @@ class orcaSetupGUI(GladeWrapper):
         self.actionCheckbutton.set_active(prefs["enableActionKeys"])
         self.echoByWordCheckbutton.set_active(prefs["enableEchoByWord"])
 
+        # Magnifier pane.
+        #
+        # [[[TODO: richb - once the preferences for the various magnification
+        # settings are known, the following will need to be adjusted
+        # accordingly.
+        #
+        # Still need to write _getComboBoxIndex(self, combobox, str)
+        # ]]]
+        #
+        # 1/ Get the 'Cursor on/off' preference and set the checkbox
+        # accordingly.
+        #
+        # value = prefs["XXX"]
+        # self.magCursorOnOffCheckButton.set_active(value)
+        #
+        # 2/ Get the 'Explicit cursor size' preference and set the checkbox
+        # accordingly. If the value is not checked, then the cursor size
+        # spin button and label need to be set insensitive.
+        #
+        # explicitSizeChecked = prefs["XXX"]
+        # self.magCursorSizeCheckButton.set_active(explicitSizeChecked)
+        # self.magCursorSizeSpinButton.set_sensitive(explicitSizeChecked)
+        # self.magCursorSizeLabel.set_sensitive(explicitSizeChecked)
+        #
+        # 3/ Get the cursor size preference and set the cursor size spin
+        # button value accordingly.
+        #
+        # cursorSize = prefs["XXX"]
+        # self.magCursorSizeSpinButton.set_value(cursorSize)
+        #
+        # 4/ Get the cursor color preference and set the cursor color button
+        # accordingly.
+        #
+        # cursorColor = prefs["XXX"]
+        # color = gtk.gdk.color_parse(cursorColor)
+        # self.magCursorColorButton.set_color(color)
+        #
+        # 5/ Get the 'Cross-hair on/off' preference and set the checkbox
+        # accordingly.
+        #
+        # value = prefs["XXX"]
+        # self.magCrossHairOnOffCheckButton.set_active(value)
+        #
+        # 6/ Get the 'Cross-hair clip on/off' preference and set the checkbox
+        # accordingly.
+        #
+        # value = prefs["XXX"]
+        # self.magCrossHairClipCheckButton.set_active(value)
+        #
+        # 7/ Get the cross-hair size preference and set the cross-hair size
+        # spin button value accordingly.
+        #
+        # crosshairSize = prefs["XXX"]
+        # self.magCrossHairSizeSpinButton.set_value(crosshairSize)
+        #
+        # 8/ Get the width and the height of the screen.
+        #
+        # self.screenWidth = gtk.gdk.screen_get_width()
+        # self.screenHeight = gtk.gdk.screen_get_height()
+        #
+        # 9/ Get the zoomer placement top preference and set the top spin
+        # button value accordingly. Set the top spin button "max size" to
+        # the height of the screen.
+        #
+        # topPosition = prefs["XXX"]
+        # self.magZoomerTopSpinButton.set_value(topPosition)
+        # self.magZoomerTopSpinButton.set_range(0, self.screenHeight)
+        #
+        # 10/ Get the zoomer placement left preference and set the left spin
+        # button value accordingly. Set the left spin button "max size" to
+        # the width of the screen.
+        #
+        # leftPosition = prefs["XXX"]
+        # self.magZoomerLeftSpinButton.set_value(leftPosition)
+        # self.magZoomerLeftSpinButton.set_range(0, self.screenWidth)
+        #
+        # 11/ Get the zoomer placement right preference and set the right spin
+        # button value accordingly. Set the right spin button "max size" to
+        # the width of the screen.
+        #
+        # rightPosition = prefs["XXX"]
+        # self.magZoomerRightSpinButton.set_value(rightPosition)
+        # self.magZoomerRightSpinButton.set_range(0, self.screenWidth)
+        #
+        # 12/ Get the zoomer placement bottom preference and set the bottom
+        # spin button value accordingly. Set the bottom spin button "max size"
+        # to the height of the screen.
+        #
+        # bottomPosition = prefs["XXX"]
+        # self.magZoomerBottomSpinButton.set_value(bottomPosition)
+        # self.magZoomerBottomSpinButton.set_range(0, self.screenHeight)
+        #
+        # 13/ Get the zoom factor preference and set the zoom factor spin
+        # button value accordingly.
+        #
+        # zoomFactor = prefs["XXX"]
+        # self.magZoomFactorSpinButton.set_value(zoomFactor)
+        #
+        # 14/ Get the smoothing preference and set the active value for the
+        # smoothing combobox accordingly.
+        #
+        # smoothingStyle = prefs["XXX"]
+        # index = _getComboBoxIndex(self.magSmoothingComboBox, smoothingStyle)
+        # self.magSmoothingComboBox.set_active(index)
+        #
+        # 15/ Get the mouse tracking preference and set the active value for 
+        # the mouse tracking combobox accordingly.
+        #
+        # mouseTrackingStyle = prefs["XXX"]
+        # index = _getComboBoxIndex(self.magMouseTrackingComboBox, 
+        #                           mouseTrackingStyle)
+        # self.magMouseTrackingComboBox.set_active(index)
+        #
+        # 16/ Get the focus tracking preference and set the active value for
+        # the focus tracking combobox accordingly.
+        #
+        # focusTrackingStyle = prefs["XXX"]
+        # index = _getComboBoxIndex(self.magFocusTrackingComboBox,
+        #                           focusTrackingStyle)
+        # self.magMouseTrackingComboBox.set_active(index)
+        #
+        # 17/ Get the 'Invert Colors' preference and set the checkbox
+        # accordingly.
+        #
+        # value = prefs["XXX"]
+        # self.magInvertColorsCheckBox.set_active(value)
+
+#   def _getComboBoxIndex(self, combobox, str):
+#       """ For each of the entries in the given combo box, look for str.
+#           Return the index of the entry if str is found.
+#
+#       Arguments:
+#       - combobox: the GtkComboBox to search.
+#       - str: the string to search for.
+#
+#       Returns the index of the first entry in combobox with str, on 
+#       None if not found.
+#       """
+#
+#       print "_getComboBoxIndex: looking for str: %s" % str
+#       model = combobox.get_model()
+#       iter = model.get_iter_first()
+#       for i in range(0, len(model)):
+#           name = get_value(iter, 0)
+#           print "_getComboBoxIndex: comparing with: %s" % name
+#           if name == str:
+#               print "_getComboBoxIndex: found. Returning %d" % i
+#               return i
+#           iter = model.iter_next(iter)
+#
+#       return None
+
     def _setupServers(self):
         """Get the list of speech servers for the current speech factory.
         If there aren't any servers, set the 'enableSpeech' to False and 
