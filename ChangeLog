@@ -1,3 +1,14 @@
+2006-05-03  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca-setup.glade
+          Added in the GUI for the Magnification notebook page in
+          the configuration window.
+
+        * src/orca/orca_gui_prefs.py
+          Added in stub signal handlers for all the values that 
+          can change in the components on the Magnification notebook 
+          page in the configuration GUI.
+
 2006-05-02  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca.py

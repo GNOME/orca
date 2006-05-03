@@ -876,6 +876,195 @@ class orcaSetupGUI(GladeWrapper):
                 self.prefsDict["brailleVerbosityLevel"] = \
                     settings.VERBOSITY_LEVEL_VERBOSE
 
+    def magCursorOnOffChecked(self, widget):
+        """Signal handler for the "toggled" signal for the 
+           magCursorOnOffCheckButton GtkCheckButton widget. 
+           The user has [un]checked the magnification cursor settings
+           'Cursor on/off' checkbox. 
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        print "magCursorOnOffChecked: not implemented yet."
+
+    def magCursorExplicitSizeChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           magCursorSizeCheckButton GtkCheckButton widget.
+           The user has [un]checked the magnification cursor settings
+           'Explicit cursor size' checkbox.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        print "magCursorExplicitSizeChecked: not implemented yet."
+
+    def magCursorSizeValueChanged(self, widget):
+        """Signal handler for the "value_changed" signal for the
+           magCursorSizeSpinButton GtkSpinButton widget.
+           The user has changed the value of the magnification 
+           cursor settings cursor size spin button.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        print "magCursorSizeValueChanged: not implemented yet."
+
+    def magCursorColorSet(self, widget):
+        """Signal handler for the "color_set" signal for the
+           magCursorColorButton GtkColorButton widget.
+           The user has changed the value of the magnification
+           cursor settings cursor color button.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        print "magCursorColorSet: not implemented yet."
+
+    def magCrossHairOnOffChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           magCrossHairOnOffCheckButton GtkCheckButton widget.
+           The user has [un]checked the magnification cross-hair settings
+           'Cross-hair on/off' checkbox.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        print "magCrossHairOnOffChecked: not implemented yet."
+
+    def magCrossHairClipOnOffChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           magCrossHairClipCheckButton GtkCheckButton widget.
+           The user has [un]checked the magnification cross-hair settings
+           'Cross-hair clip on/off' checkbox.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        print "magCrossHairClipOnOffChecked: not implemented yet."
+
+    def magCrossHairSizeValueChanged(self, widget):
+        """Signal handler for the "value_changed" signal for the
+           magCrossHairSizeSpinButton GtkSpinButton widget.
+           The user has changed the value of the magnification
+           cross-hair settings cross-hair size spin button.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        print "magCrossHairSizeValueChanged: not implemented yet."
+
+    def magZoomerTopValueChanged(self, widget):
+        """Signal handler for the "value_changed" signal for the
+           magZoomerTopSpinButton GtkSpinButton widget.
+           The user has changed the value of the magnification
+           zoomer placement top spin button.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        print "magZoomerTopValueChanged: not implemented yet."
+
+    def magZoomerBottomValueChanged(self, widget):
+        """Signal handler for the "value_changed" signal for the
+           magZoomerBottomSpinButton GtkSpinButton widget.
+           The user has changed the value of the magnification
+           zoomer placement bottom spin button.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        print "magZoomerBottomValueChanged: not implemented yet."
+
+    def magZoomerLeftValueChanged(self, widget):
+        """Signal handler for the "value_changed" signal for the
+           magZoomerLeftSpinButton GtkSpinButton widget.
+           The user has changed the value of the magnification
+           zoomer placement left spin button.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        print "magZoomerLeftValueChanged: not implemented yet."
+
+    def magZoomerRightValueChanged(self, widget):
+        """Signal handler for the "value_changed" signal for the
+           magZoomerRightSpinButton GtkSpinButton widget.
+           The user has changed the value of the magnification
+           zoomer placement right spin button.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        print "magZoomerRightValueChanged: not implemented yet."
+
+    def magZoomFactorValueChanged(self, widget):
+        """Signal handler for the "value_changed" signal for the
+           magZoomFactorSpinButton GtkSpinButton widget.
+           The user has changed the value of the magnification
+           zoom factor spin button.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        print "magZoomFactorValueChanged: not implemented yet."
+
+    def magSmoothingChanged(self, widget):
+        """Signal handler for the "changed" signal for the 
+           magSmoothingComboBox GtkComboBox widget. The user has 
+           selected a different magnification smoothing style.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        print "magSmoothingChanged: not implemented yet."
+
+    def magMouseTrackingChanged(self, widget):
+        """Signal handler for the "changed" signal for the
+           magMouseTrackingComboBox GtkComboBox widget. The user has
+           selected a different magnification mouse tracking style.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        print "magMouseTrackingChanged: not implemented yet."
+
+    def magFocusTrackingChanged(self, widget):
+        """Signal handler for the "changed" signal for the
+           magFocusTrackingComboBox GtkComboBox widget. The user has
+           selected a different magnification focus tracking style.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        print "magFocusTrackingChanged: not implemented yet."
+
+    def magInvertColorsChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           magCrossHairOnOffCheckButton GtkCheckButton widget.
+           The user has [un]checked the magnification 'Invert Colors'
+           checkbox.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        print "magInvertColorsChecked: not implemented yet."
+
     def helpButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the helpButton 
            GtkButton widget. The user has clicked the Help button.
