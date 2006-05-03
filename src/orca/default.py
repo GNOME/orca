@@ -1302,6 +1302,12 @@ class Script(script.Script):
             and (event.source.parent != orca.locusOfFocus):
             return
 
+        # We'll also ignore sliders because we get their output via
+        # their values changing.
+        #
+        if event.source.role == rolenames.ROLE_SLIDER:
+            return
+        
         self.updateBraille(event.source)
 
         # The any_data member of the event object has the deleted text in
@@ -1338,6 +1344,12 @@ class Script(script.Script):
             and (event.source.parent != orca.locusOfFocus):
             return
 
+        # We'll also ignore sliders because we get their output via
+        # their values changing.
+        #
+        if event.source.role == rolenames.ROLE_SLIDER:
+            return
+        
         self.updateBraille(event.source)
 
         text = event.any_data.value()

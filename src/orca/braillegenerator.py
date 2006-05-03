@@ -910,7 +910,20 @@ class BrailleGenerator:
 
         self._debugGenerator("_getBrailleRegionsForSlider", obj)
 
-        return self._getDefaultBrailleRegions(obj)
+        regions = []
+
+        text = ""
+        text = util.appendString(text, util.getDisplayedLabel(obj))
+        # Ignore the text on the slider.
+        #text = util.appendString(text, util.getDisplayedText(obj))
+        text = util.appendString(text, self._getTextForValue(obj))
+        text = util.appendString(text, self._getTextForRole(obj))
+        
+        regions = []
+        componentRegion = braille.Component(obj, text)
+        regions.append(componentRegion)
+
+        return [regions, componentRegion]
 
     def _getBrailleRegionsForSpinButton(self, obj):
         """Get the braille for a spin button.  If the object already has

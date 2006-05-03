@@ -1033,12 +1033,13 @@ class SpeechGenerator:
         else:
             utterances = []
             utterances.extend(self._getSpeechForObjectLabel(obj))
-            utterances.extend(self._getSpeechForObjectName(obj))
+            # Ignore the text on the slider.
+            #utterances.extend(self._getSpeechForObjectName(obj))
             utterances.extend(self._getSpeechForObjectRole(obj))
             utterances.append(valueString)
             utterances.extend(self._getSpeechForObjectAvailability(obj))
 
-        self._debugGenerator("_getSpeechForProgressBar",
+        self._debugGenerator("_getSpeechForSlider",
                              obj,
                              already_focused,
                              utterances)

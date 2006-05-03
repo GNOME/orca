@@ -1,5 +1,8 @@
 2006-05-03  Willie Walker <william.walker@sun.com>
 
+	* src/orca/braillegenerator.py, src/orca/speechgenerator.py,
+	src/orca/default.py: fix for bug 340559, handle sliders with
+	text values a little better.
 	* src/orca/atspi.py, src/orca/braillegenerator.py,
 	src/orca/default.py, src/orca/flat_review.py,
 	src/orca/focus_tracking_presenter.py, src/orca/mag.py,
