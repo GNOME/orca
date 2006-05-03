@@ -24,6 +24,7 @@ has also been disabled for now - logged as bugzilla bug 319643.]]]
 
 import bonobo
 import atspi
+import settings
 
 _magnifierAvailable = False
 
@@ -302,9 +303,13 @@ def init():
     _maxROIX = _sourceDisplayBounds.x2 - (_roiWidth / 2)
     _maxROIY = _sourceDisplayBounds.y2 - (_roiHeight / 2)
 
-    #pbag.setValue("viewport", CORBA.Any(CORBA.TypeCode(viewport.typecode().repo_id),GNOME.Magnifier.RectBounds(0,0,512,780)))
-    #zoomer.moveResize(GNOME.Magnifier.RectBounds(256,256,600,600))
-    #zoomer.setMagFactor(1.0, 1.0)
+    #pbag.setValue("viewport",
+    #              atspi.ORBit.CORBA.Any(
+    #                  atspi.ORBit.CORBA.TypeCode(
+    #                      viewport.__typecode__.repo_id),
+    #                          GNOME.Magnifier.RectBounds(0,0,256,256)))
+    #
+    _zoomer.setMagFactor(settings.magX, settings.magY)
 
     atspi.Registry().registerEventListener(onMouseEvent, "mouse:abs")
 

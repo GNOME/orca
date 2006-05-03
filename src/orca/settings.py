@@ -50,6 +50,8 @@ userCustomizableSettings = [
     "brailleRolenameStyle",
     "enableBrailleMonitor",
     "enableMagnifier",
+    "magX",
+    "magY",
     "verbalizePunctuationStyle",
 ]
 
@@ -132,6 +134,8 @@ enableBrailleMonitor    = False
 # If True, enable magnification.
 #
 enableMagnifier         = False
+magX                    = 1.5
+magY                    = 1.5
 
 # if True, enable word echo.
 # Note that it is allowable for both enableEchoByWord and enableKeyEcho
