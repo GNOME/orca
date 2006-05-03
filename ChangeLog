@@ -1,5 +1,7 @@
 2006-05-03  Willie Walker <william.walker@sun.com>
 
+	* src/bugs/bugs.html: Add GEdit bug 340577 regarding inability
+	to get to statusbar information from at-poke.
 	* src/orca/braillegenerator.py, src/orca/speechgenerator.py,
 	src/orca/default.py: fix for bug 340559, handle sliders with
 	text values a little better.
