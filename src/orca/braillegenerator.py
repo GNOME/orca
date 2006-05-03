@@ -34,7 +34,6 @@ import settings
 import util
 
 from orca_i18n import _                     # for gettext support
-from rolenames import getBrailleForRoleName # localized role names
 
 class BrailleGenerator:
     """Takes accessible objects and produces a list of braille Regions
@@ -141,7 +140,7 @@ class BrailleGenerator:
         self.brailleGenerators[rolenames.ROLE_WINDOW]              = \
              self._getBrailleRegionsForWindow
 
-    def _getBrailleTextForAccelerator(self, obj):
+    def _getTextForAccelerator(self, obj):
         """Returns a string to be displayed that describes the keyboard
         accelerator (and possibly shortcut) for the given object.
 
@@ -151,25 +150,28 @@ class BrailleGenerator:
         Returns a string to be displayed.
         """
 
-        text = ""
+        if settings.brailleVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
+            text = ""
+            
+            result = atspi.getAcceleratorAndShortcut(obj)
 
-        result = atspi.getAcceleratorAndShortcut(obj)
+            accelerator = result[0]
+            #shortcut = result[1]
 
-        accelerator = result[0]
-        #shortcut = result[1]
+            if len(accelerator) > 0:
+                text += "(" + accelerator + ")"
 
-        if len(accelerator) > 0:
-            text += "(" + accelerator + ")"
+            # [[[TODO: WDW - various stuff preserved while we work out the
+            # desired verbosity here.]]]
+            #
+            #if len(shortcut) > 0:
+            #    text += "(" + shortcut + ")"
 
-        # [[[TODO: WDW - various stuff preserved while we work out the
-        # desired verbosity here.]]]
-        #
-        #if len(shortcut) > 0:
-        #    text += "(" + shortcut + ")"
-
-        return text
-
-    def _getBrailleTextForAvailability(self, obj):
+            return text
+        else:
+            return None
+        
+    def _getTextForAvailability(self, obj):
         """Returns a string to be displayed that describes the availability
         of the given object.
 
@@ -179,12 +181,14 @@ class BrailleGenerator:
         Returns a string to be displayed.
         """
 
-        if obj.state.count(atspi.Accessibility.STATE_SENSITIVE):
-            return ""
-        else:
+        if (settings.brailleVerbosityLevel \
+            == settings.VERBOSITY_LEVEL_VERBOSE) \
+            and obj.state.count(atspi.Accessibility.STATE_SENSITIVE) == 0:
             return _("grayed")
-
-    def _getBrailleTextForValue(self, obj):
+        else:
+            return None
+        
+    def _getTextForValue(self, obj):
         """Returns the text to be displayed for the object's current value.
 
         Arguments:
@@ -232,6 +236,14 @@ class BrailleGenerator:
         #
         return valueString
 
+    def _getTextForRole(self, obj):
+        if (settings.brailleVerbosityLevel \
+            == settings.VERBOSITY_LEVEL_VERBOSE)\
+           and (obj.role != rolenames.ROLE_UNKNOWN):
+            return rolenames.getBrailleForRoleName(obj)
+        else:
+            return None
+
     def _debugGenerator(self, generatorName, obj):
         """Prints debug.LEVEL_FINER information regarding the braille
         generator.
@@ -264,22 +276,14 @@ class BrailleGenerator:
 
         self._debugGenerator("_getDefaultBrailleRegions", obj)
 
-        verbosity = settings.brailleVerbosityLevel
+        regions = []
 
-        text = obj.label
-
-        value = self._getBrailleTextForValue(obj)
-        if len(value) > 0:
-            if len(text):
-                text += " "
-            text += value
-
-        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
-            if (obj.label == None) or (obj.role != rolenames.ROLE_UNKNOWN):
-                if len(text):
-                    text += " "
-                text += getBrailleForRoleName(obj)
-
+        text = ""
+        text = util.appendString(text, util.getDisplayedLabel(obj))
+        text = util.appendString(text, util.getDisplayedText(obj))
+        text = util.appendString(text, self._getTextForValue(obj))
+        text = util.appendString(text, self._getTextForRole(obj))
+        
         regions = []
         componentRegion = braille.Component(obj, text)
         regions.append(componentRegion)
@@ -313,19 +317,11 @@ class BrailleGenerator:
 
         self._debugGenerator("_getBrailleRegionsForAnimation", obj)
 
-        verbosity = settings.brailleVerbosityLevel
-
-        text = obj.label
-
-        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
-            if len(text):
-                text += " "
-            text += getBrailleForRoleName(obj)
-
-        if obj.description:
-            if len(text):
-                text += ": "
-            text += obj.description
+        text = ""
+        text = util.appendString(text, util.getDisplayedLabel(obj))
+        text = util.appendString(text, util.getDisplayedText(obj))
+        text = util.appendString(text, self._getTextForRole(obj))
+        text = util.appendString(text, obj.description, ": ")
 
         regions = []
         componentRegion = braille.Component(obj, text)
@@ -364,19 +360,16 @@ class BrailleGenerator:
 
         self._debugGenerator("_getBrailleRegionsForCheckBox", obj)
 
-        verbosity = settings.brailleVerbosityLevel
-
-        text = obj.label
-        if len(text):
-            text += " "
+        text = ""
+        text = util.appendString(text, util.getDisplayedLabel(obj))
+        text = util.appendString(text, util.getDisplayedText(obj))
 
         if obj.state.count(atspi.Accessibility.STATE_CHECKED):
-            text += "<x>"
+            text = util.appendString(text, "<x>")
         else:
-            text += "< >"
+            text = util.appendString(text, "< >")
 
-        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
-            text += " " + getBrailleForRoleName(obj)
+        text = util.appendString(text, self._getTextForRole(obj))
 
         regions = []
         componentRegion = braille.Component(obj, text)
@@ -397,26 +390,21 @@ class BrailleGenerator:
 
         self._debugGenerator("_getBrailleRegionsForCheckMenuItem", obj)
 
-        verbosity = settings.brailleVerbosityLevel
-
-        text = obj.label
-        if len(text):
-            text += " "
+        text = ""
+        text = util.appendString(text, util.getDisplayedLabel(obj))
+        text = util.appendString(text, util.getDisplayedText(obj))
 
         if obj.state.count(atspi.Accessibility.STATE_CHECKED):
-            text += "<x>"
+            text = util.appendString(text, "<x>")
         else:
-            text += "< >"
+            text = util.appendString(text, "< >")
 
-        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
-            if obj == orca.locusOfFocus:
-                text += " " + getBrailleForRoleName(obj)
-                availability = self._getBrailleTextForAvailability(obj)
-                if len(availability) > 0:
-                    text += " " + availability + " "
-                accelerator = self._getBrailleTextForAccelerator(obj)
-                if len(accelerator) > 0:
-                    text += accelerator
+        if obj == orca.locusOfFocus:
+            text = util.appendString(text, self._getTextForRole(obj))
+            text = util.appendString(text, self._getTextForAvailability(obj))
+            text = util.appendString(text,
+                                      self._getTextForAccelerator(obj),
+                                      "")
 
         regions = []
         componentRegion = braille.Component(obj, text)
@@ -451,21 +439,21 @@ class BrailleGenerator:
 
         self._debugGenerator("_getBrailleRegionsForComboBox", obj)
 
-        verbosity = settings.brailleVerbosityLevel
-
         regions = []
 
         focusedRegionIndex = 0
-        label = util.getLabel(obj)
+        label = util.getDisplayedLabel(obj)
         if label and (len(label) > 0):
             regions.append(braille.Region(label + " "))
             focusedRegionIndex = 1
 
-        displayedText = util.getDisplayedTextInComboBox(obj)
-        regions.append(braille.Region(displayedText))
+        displayedText = util.getDisplayedText(obj)
+        if displayedText:
+            regions.append(braille.Region(displayedText))
 
-        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
-            regions.append(braille.Region(" " + getBrailleForRoleName(obj)))
+        if settings.brailleVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
+            regions.append(braille.Region(
+                " " + rolenames.getBrailleForRoleName(obj)))
 
         # [[[TODO: WDW - perhaps if a text area was created, we should
         # give focus to it.]]]
@@ -571,21 +559,16 @@ class BrailleGenerator:
 
         self._debugGenerator("_getBrailleRegionsForIcon", obj)
 
-        verbosity = settings.brailleVerbosityLevel
-
-        text = obj.label
+        text = ""
+        text = util.appendString(text, util.getDisplayedLabel(obj))
+        text = util.appendString(text, util.getDisplayedText(obj))
 
         if obj.image:
             description = obj.image.imageDescription
             if len(description):
-                if len(text):
-                    text += " "
-                text += description
+                text = util.appendString(text, description)
 
-        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
-            if len(text):
-                text += " "
-            text += getBrailleForRoleName(obj)
+        text = util.appendString(text, self._getTextForRole(obj))
 
         regions = []
         componentRegion = braille.Component(obj, text)
@@ -651,22 +634,16 @@ class BrailleGenerator:
 
         self._debugGenerator("_getBrailleRegionsForMenu", obj)
 
-        verbosity = settings.brailleVerbosityLevel
+        text = ""
+        text = util.appendString(text, util.getDisplayedLabel(obj))
+        text = util.appendString(text, util.getDisplayedText(obj))
+        text = util.appendString(text, rolenames.getBrailleForRoleName(obj))
 
-        text = obj.label
-
-        if len(text):
-            text += " "
-        text += getBrailleForRoleName(obj)
-
-        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
-            if obj == orca.locusOfFocus:
-                availability = self._getBrailleTextForAvailability(obj)
-                if len(availability) > 0:
-                    text += " " + availability + " "
-                accelerator = self._getBrailleTextForAccelerator(obj)
-                if len(accelerator) > 0:
-                    text += accelerator
+        if obj == orca.locusOfFocus:
+            text = util.appendString(text, self._getTextForAvailability(obj))
+            text = util.appendString(text,
+                                      self._getTextForAccelerator(obj),
+                                      "")
 
         regions = []
         componentRegion = braille.Component(obj, text)
@@ -700,22 +677,15 @@ class BrailleGenerator:
 
         self._debugGenerator("_getBrailleRegionsForMenuItem", obj)
 
-        verbosity = settings.brailleVerbosityLevel
+        text = ""
+        text = util.appendString(text, util.getDisplayedLabel(obj))
+        text = util.appendString(text, util.getDisplayedText(obj))
 
-        text = obj.label
-
-        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
-            if obj == orca.locusOfFocus:
-                # [[[TODO - WDW comment this out for now until we work
-                # out verbosity.]]]
-                #
-                #text += " " + getBrailleForRoleName(obj)
-                availability = self._getBrailleTextForAvailability(obj)
-                if len(availability) > 0:
-                    text += " " + availability + " "
-                accelerator = self._getBrailleTextForAccelerator(obj)
-                if len(accelerator) > 0:
-                    text += accelerator
+        if obj == orca.locusOfFocus:
+            text = util.appendString(text, self._getTextForAvailability(obj))
+            text = util.appendString(text,
+                                      self._getTextForAccelerator(obj),
+                                      "")
 
         regions = []
         componentRegion = braille.Component(obj, text)
@@ -737,17 +707,13 @@ class BrailleGenerator:
 
         regions = []
 
-        textRegion = braille.Text(obj, obj.label)
+        textRegion = braille.Text(obj, util.getDisplayedLabel(obj))
         regions.append(textRegion)
 
         eol = braille.Region(" $l")
         regions.append(eol)
 
         # We do not want the role at the end of text areas.
-        #
-        #if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
-        #    text = " " + getBrailleForRoleName(obj)
-        #regions.append(braille.Region(text))
 
         return [regions, textRegion]
 
@@ -777,16 +743,15 @@ class BrailleGenerator:
 
         self._debugGenerator("_getBrailleRegionsForPageTab", obj)
 
-        verbosity = settings.brailleVerbosityLevel
+        text = ""
+        text = util.appendString(text, util.getDisplayedLabel(obj))
+        text = util.appendString(text, util.getDisplayedText(obj))
 
-        text = obj.label
-
-        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
-            if obj == orca.locusOfFocus:
-                text += " " + getBrailleForRoleName(obj)
-                accelerator = self._getBrailleTextForAccelerator(obj)
-                if len(accelerator) > 0:
-                    text += accelerator
+        if obj == orca.locusOfFocus:
+            text = util.appendString(text, self._getTextForAvailability(obj))
+            text = util.appendString(text,
+                                      self._getTextForAccelerator(obj),
+                                      "")
 
         regions = []
         componentRegion = braille.Component(obj, text)
@@ -850,19 +815,16 @@ class BrailleGenerator:
 
         self._debugGenerator("_getBrailleRegionsForRadioButton", obj)
 
-        verbosity = settings.brailleVerbosityLevel
-
-        text = obj.label
-        if len(text):
-            text += " "
+        text = ""
+        text = util.appendString(text, util.getDisplayedLabel(obj))
+        text = util.appendString(text, util.getDisplayedText(obj))
 
         if obj.state.count(atspi.Accessibility.STATE_CHECKED):
-            text += "&=y"
+            text = util.appendString(text, "&=y")
         else:
-            text += "& y"
+            text = util.appendString(text, "& y")
 
-        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
-            text += " " + getBrailleForRoleName(obj)
+        text = util.appendString(text, self._getTextForRole(obj))
 
         regions = []
         componentRegion = braille.Component(obj, text)
@@ -883,26 +845,20 @@ class BrailleGenerator:
 
         self._debugGenerator("_getBrailleRegionsForRadioMenuItem", obj)
 
-        verbosity = settings.brailleVerbosityLevel
-
-        text = obj.label
-        if len(text):
-            text += " "
+        text = ""
+        text = util.appendString(text, util.getDisplayedLabel(obj))
+        text = util.appendString(text, util.getDisplayedText(obj))
 
         if obj.state.count(atspi.Accessibility.STATE_CHECKED):
-            text += "&=y"
+            text = util.appendString(text, "&=y")
         else:
-            text += "& y"
+            text = util.appendString(text, "& y")
 
-        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
-            if obj == orca.locusOfFocus:
-                text += " " + getBrailleForRoleName(obj)
-                availability = self._getBrailleTextForAvailability(obj)
-                if len(availability) > 0:
-                    text += " " + availability + " "
-                accelerator = self._getBrailleTextForAccelerator(obj)
-                if len(accelerator) > 0:
-                    text += accelerator
+        if obj == orca.locusOfFocus:
+            text = util.appendString(text, self._getTextForAvailability(obj))
+            text = util.appendString(text,
+                                      self._getTextForAccelerator(obj),
+                                      "")
 
         regions = []
         componentRegion = braille.Component(obj, text)
@@ -952,7 +908,7 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
 
-        self._debugGenerator("_getBrailleRegionsForProgressBar", obj)
+        self._debugGenerator("_getBrailleRegionsForSlider", obj)
 
         return self._getDefaultBrailleRegions(obj)
 
@@ -1029,9 +985,6 @@ class BrailleGenerator:
                     regions = self._getBrailleRegionsForCheckBox(obj)
                     obj.role = rolenames.ROLE_TABLE_CELL
                     break
-                #elif action.getName(i) == "edit":
-                #    text = self._getSpeechForText(obj, True)
-                #    break
 
         if len(regions) == 0:
             regions = self._getDefaultBrailleRegions(obj)
@@ -1092,13 +1045,10 @@ class BrailleGenerator:
 
         self._debugGenerator("_getBrailleRegionsForTearOffMenuItem", obj)
 
-        text = getBrailleForRoleName(obj)
-
-        regions = []
-        componentRegion = braille.Component(obj, text)
-        regions.append(componentRegion)
-
-        return [regions, componentRegion]
+        componentRegion = braille.Component(
+            obj,
+            rolenames.getBrailleForRoleName(obj))
+        return [[componentRegion], componentRegion]
 
     def _getBrailleRegionsForTerminal(self, obj):
         """Get the braille for a terminal
@@ -1112,21 +1062,16 @@ class BrailleGenerator:
 
         self._debugGenerator("_getBrailleRegionsForTerminal", obj)
 
-        verbosity = settings.brailleVerbosityLevel
-
-        label = None
+        title = None
         frame = atspi.getFrame(obj)
         if frame:
-            label = frame.name
-        if not label:
-            label = obj.label
-        text = label
+            title = frame.name
+        if not title:
+            title = util.getDisplayedLabel(obj)
 
-        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
-            if len(text):
-                text += " "
-            text += getBrailleForRoleName(obj)
-
+        text = title
+        text = util.appendString(text, rolenames.getBrailleForRoleName(obj))
+        
         regions = []
         regions.append(braille.Region(text))
 
@@ -1266,7 +1211,7 @@ class BrailleGenerator:
                 # Sometimes, for some unknown reason, the child is None.
                 # We now test for this, rather than cause a traceback.
                 #
-                if child and child.role != rolenames.ROLE_SEPARATOR:
+                if child and (child.role != rolenames.ROLE_SEPARATOR):
 
                 # the following line has been removed because insensitive
                 # menu items can get focus in StarOffice.
@@ -1302,8 +1247,6 @@ class BrailleGenerator:
         Returns a list of Regions to display.
         """
 
-        verbosity = settings.brailleVerbosityLevel
-
         brailleRolenameStyle = settings.brailleRolenameStyle
 
         regions = []
@@ -1321,7 +1264,12 @@ class BrailleGenerator:
             #
             if (parent.role != rolenames.ROLE_FILLER) \
                 and (parent.role != rolenames.ROLE_SPLIT_PANE):
-                if (len(parent.label) > 0) \
+
+                # Announce the label and text of the object in the hierarchy.
+                #
+                label = util.getDisplayedLabel(parent)
+                text = util.getDisplayedText(parent)
+                if ((label and len(label)) or (text and len(text))) \
                     or (parent.role != rolenames.ROLE_PANEL):
                     regions.append(braille.Region(" "))
                     result = self.getBrailleRegions(parent, False)
@@ -1342,14 +1290,15 @@ class BrailleGenerator:
             row = parent.table.getRowAtIndex(obj.index)
             desc = parent.table.getRowDescription(row)
             if desc and len(desc):
-                if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
+                if settings.brailleRolenameStyle \
+                       == settings.VERBOSITY_LEVEL_VERBOSE:
                     if brailleRolenameStyle \
                            == settings.BRAILLE_ROLENAME_STYLE_LONG:
                         text = desc + " " + rolenames.rolenames[\
-                            rolenames.ROLE_ROW_HEADER].brailleLong
+                            rolenames.ROLE_ROW_HEADER].brailleLong + " "
                     else:
                         text = desc + " " + rolenames.rolenames[\
-                            rolenames.ROLE_ROW_HEADER].brailleShort
+                            rolenames.ROLE_ROW_HEADER].brailleShort + " "
                 else:
                     text = desc
                 regions.append(braille.Region(text))
@@ -1357,14 +1306,15 @@ class BrailleGenerator:
             col = parent.table.getColumnAtIndex(obj.index)
             desc = parent.table.getColumnDescription(col)
             if desc and len(desc):
-                if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
+                if settings.brailleVerbosityLevel \
+                       == settings.VERBOSITY_LEVEL_VERBOSE:
                     if brailleRolenameStyle \
                            == settings.BRAILLE_ROLENAME_STYLE_LONG:
                         text = desc + " " + rolenames.rolenames[\
-                            rolenames.ROLE_COLUMN_HEADER].brailleLong
+                            rolenames.ROLE_COLUMN_HEADER].brailleLong + " "
                     else:
                         text = desc + " " + rolenames.rolenames[\
-                            rolenames.ROLE_COLUMN_HEADER].brailleShort
+                            rolenames.ROLE_COLUMN_HEADER].brailleShort + " "
                 else:
                     text = desc
                 regions.append(braille.Region(text))

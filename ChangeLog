@@ -1,3 +1,18 @@
+2006-05-03  Willie Walker <william.walker@sun.com>
+
+	* src/orca/atspi.py, src/orca/braillegenerator.py,
+	src/orca/default.py, src/orca/flat_review.py,
+	src/orca/focus_tracking_presenter.py, src/orca/mag.py,
+	src/orca/speechgenerator.py, src/orca/speechserver.py,
+	src/orca/util.py, src/orca/scripts/Evolution.py,
+	src/orca/scripts/Mozilla.py: move ".label" logic from atspi to
+	speech and braille generators to address bug 319732.  Fixed a few
+	other bugs in the process: bug 337371 (voluminous output of
+	sliders), 340481 (combo box in gaim), and bug 340556 (radio button
+	group names not being announced).
+	* src/orca/mag.py, src/orca/settings.py: some experimentation with
+	property bags as well as setting magnification scales.
+	
 2006-05-03  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca_gui_prefs.py
@@ -36,7 +51,7 @@
 2006-05-02  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca.py: per request of Mike, make Insert+s be a
-	toggle for disabling/enabling speech.
+	toggle for disabling/enabling speech.  Fixes bug 338839.
 	* src/orca/default.py: generalize fix for 340305.
 	
 2006-05-01  Willie Walker <william.walker@sun.com>

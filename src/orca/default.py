@@ -554,7 +554,12 @@ class Script(script.Script):
             and ((event.type.find("object:selection-changed") != -1) \
                  or (event.type.find("object:text-changed") != -1)) \
             and event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
-            orca.setLocusOfFocus(event, event.source, False)
+            # Avoid doing this with objects that manage their descendants
+            # because they'll issue a descendant changed event.
+            #
+            if event.source.state.count(
+                atspi.Accessibility.STATE_MANAGES_DESCENDANTS) == 0:
+                orca.setLocusOfFocus(event, event.source, False)
 
         script.Script.processObjectEvent(self, event)
 
@@ -830,8 +835,6 @@ class Script(script.Script):
         if newLocusOfFocus:
             self.updateBraille(newLocusOfFocus)
 
-            verbosity = settings.speechVerbosityLevel
-
             utterances = []
 
             # Now figure out how of the container context changed and
@@ -874,7 +877,8 @@ class Script(script.Script):
                         desc = newParent.table.getRowDescription(newRow)
                         if desc and len(desc):
                             text = desc
-                            if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
+                            if settings.speechVerbosityLevel \
+                                   == settings.VERBOSITY_LEVEL_VERBOSE:
                                 text += " " \
                                         + rolenames.rolenames[\
                                         rolenames.ROLE_ROW_HEADER].speech
@@ -883,7 +887,8 @@ class Script(script.Script):
                         desc = newParent.table.getColumnDescription(newCol)
                         if desc and len(desc):
                             text = desc
-                            if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
+                            if settings.speechVerbosityLevel \
+                                   == settings.VERBOSITY_LEVEL_VERBOSE:
                                 text += " " \
                                         + rolenames.rolenames[\
                                         rolenames.ROLE_COLUMN_HEADER].speech
@@ -892,6 +897,36 @@ class Script(script.Script):
                 oldNodeLevel = atspi.getNodeLevel(oldLocusOfFocus)
                 newNodeLevel = atspi.getNodeLevel(newLocusOfFocus)
 
+            # We'll also treat radio button groups as though they are
+            # in a context, with the label for the group being the
+            # name of the context.
+            #
+            if newLocusOfFocus.role == rolenames.ROLE_RADIO_BUTTON:
+                radioGroupLabel = None
+                inSameGroup = False
+                relations = newLocusOfFocus.relations
+                for relation in relations:
+                    if (not radioGroupLabel) \
+                        and (relation.getRelationType() \
+                             == atspi.Accessibility.RELATION_LABELLED_BY):
+                        radioGroupLabel = atspi.Accessible.makeAccessible(
+                            relation.getTarget(0))
+                    if (not inSameGroup) \
+                        and (relation.getRelationType() \
+                             == atspi.Accessibility.RELATION_MEMBER_OF):
+                        for i in range(0, relation.getNTargets()):
+                            target = atspi.Accessible.makeAccessible(
+                                relation.getTarget(i))
+                            if target == oldLocusOfFocus:
+                                inSameGroup = True
+                                break
+
+                # We'll only announce the radio button group when we
+                # switch groups.
+                #
+                if (not inSameGroup) and radioGroupLabel:
+                    utterances.append(util.getDisplayedText(radioGroupLabel))
+                    
             # Get the text for the object itself.
             #
             utterances.extend(
@@ -1037,23 +1072,6 @@ class Script(script.Script):
         self.updateBraille(obj)
         speech.speakUtterances(
             self.speechGenerator.getSpeech(event.source, True))
-
-    def getVisualParent(self, obj):
-        """Returns the logical visual container for the given object or None
-        if no such object exists.  The logical visual container differs from
-        the component hierarchy in that it eliminates non-visual layout
-        elements (e.g., panels without names or borders) from the hierarchy.
-        """
-
-        visualParent = None
-        while obj.parent:
-            if len(obj.parent.label) > 0:
-                visualParent = obj.parent
-            obj = obj.parent
-            debug.println(debug.LEVEL_FINEST,
-                          "default.getVisualParent - finding parent")
-
-        return visualParent
 
     def updateBraille(self, obj, extraRegion=None):
         """Updates the braille display to show the give object.
@@ -1463,9 +1481,23 @@ class Script(script.Script):
         Arguments:
         - event: the Event
         """
-
+        
+        # We'll let caret moved and text inserted events be used to
+        # manage spin buttons, since they basically are text areas.
+        #
+        if event.source.role == rolenames.ROLE_SPIN_BUTTON:
+            return
+        
+        # We'll also try to ignore those objects that keep telling
+        # us their value changed even though it hasn't.
+        #
+        if event.source.value and event.source.__dict__.has_key("oldValue") \
+           and (event.source.value.currentValue == event.source.oldValue):
+            return
+            
         orca.visualAppearanceChanged(event, event.source)
-
+        event.source.oldValue = event.source.value.currentValue
+            
     def onWindowActivated(self, event):
         """Called whenever a toplevel window is activated.
 

@@ -18,13 +18,14 @@
 # Boston, MA 02111-1307, USA.
 
 import re
+import sys
 
 import atspi
 import braille
 import debug
 import eventsynthesizer
 import rolenames
-import sys
+import util
 
 # [[[WDW - HACK Regular expression to split strings on whitespace
 # boundaries, which is what we'll use for word dividers instead of
@@ -1221,8 +1222,8 @@ def getZonesFromAccessible(accessible, cliprect):
         elif accessible.description and len(accessible.description):
             string = accessible.description
         else:
-            string = accessible.label
-
+            string = ""
+            
         if string == "":
             # [[[TODO: WDW - ooohhhh....this is going to be a headache.
             # We want to synthesize a string for objects that are there,

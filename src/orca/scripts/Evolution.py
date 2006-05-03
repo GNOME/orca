@@ -651,7 +651,11 @@ class Script(default.Script):
             found = False
             for i in range(0, len(allLabels)):
                 if not found:
-                    tokens = allLabels[i].label.split()
+                    text = util.getDisplayedText(allLabels[i])
+                    if text:
+                        tokens = text.split()
+                    else:
+                        tokens = []
                     for j in range(0, len(tokens)):
                         if tokens[j].startswith("'"):
                             badWord = tokens[j]

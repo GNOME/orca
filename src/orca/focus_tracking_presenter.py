@@ -353,7 +353,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         #timer.start()
 
         debug.println(debug.eventDebugLevel,
-                      "\nvvvvv PROCESS OBJECT EVENT vvvvv")
+                      "\nvvvvv PROCESS OBJECT EVENT %s vvvvv" % event.type)
         
         try:
             self._processObjectEvent(event)
@@ -361,7 +361,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             pass
         
         debug.println(debug.eventDebugLevel,
-                      "^^^^^ PROCESS OBJECT EVENT ^^^^^\n")
+                      "^^^^^ PROCESS OBJECT EVENT %s ^^^^^\n" % event.type)
 
         #timer.cancel()
         #del timer

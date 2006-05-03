@@ -393,9 +393,9 @@ class Accessible:
         if Accessible._cache.has_key(e.source):
             obj = Accessible._cache[e.source]
             if obj.__dict__.has_key("name"):
-                del obj.name
+                del obj.__dict__["name"]
             if obj.__dict__.has_key("label"):
-                del obj.label
+                del obj.__dict__["label"]
 
     _onNameChanged = staticmethod(_onNameChanged)
 
@@ -410,9 +410,9 @@ class Accessible:
         if Accessible._cache.has_key(e.source):
             obj = Accessible._cache[e.source]
             if obj.__dict__.has_key("description"):
-                del obj.description
+                del obj.__dict__["description"]
             if obj.__dict__.has_key("label"):
-                del obj.label
+                del obj.__dict__["label"]
 
     _onDescriptionChanged = staticmethod(_onDescriptionChanged)
 
@@ -704,7 +704,12 @@ class Accessible:
         """
 
         name = self._acc.name
-        if settings.cacheValues:
+        
+        # Combo boxes don't seem to issue accessible-name changed
+        # events, so we can't cache their names.  The main culprit
+        # here seems to be the combo box in gaim's "Join Chat" window.
+        #
+        if settings.cacheValues and (self.role != rolenames.ROLE_COMBO_BOX):
             self.name = name
         return name
 
@@ -911,73 +916,6 @@ class Accessible:
             #    self.extents = extents
             return extents
 
-    def __get_label(self):
-        """Returns an object's label as a string.  The label is determined
-        using the following logic:
-
-        1. If the object has a name, return the name
-
-        2. Else if the object has a LABELLED_BY relation, return the text of
-           the targets of this relation
-
-        3. Else if the object has no name, return the description
-
-        4. Else return an empty string
-        """
-
-        label = ""
-
-        # If the object has a name, just return the name.
-        #
-        if self.name and (len(self.name) > 0):
-            label = self.name
-
-        # Does the object have a relation set?
-        #
-        if (len(label) == 0):
-            relations = self.relations
-            for relation in relations:
-                if relation.getRelationType() \
-                       == Accessibility.RELATION_LABELLED_BY:
-                    target = Accessible.makeAccessible(relation.getTarget(0))
-                    label = target.name
-                    break
-
-        # [[[WDW - HACK because push buttons can have labels as
-        # their children.  An example of the is is the Font: button on
-        # the General tab in the Editing Profile dialog in gnome-terminal.
-        # But, they can also be labelled by something.
-        # So...we'll make the label be a combination of the thing
-        # labelling them (above) plus their name or the combination of
-        # the names of their children if the children exist.]]]
-        #
-        if self.role == rolenames.ROLE_PUSH_BUTTON:
-            for i in range(0, self.childCount):
-                debug.println(debug.LEVEL_FINEST,
-                              "Accessible.__get_label looking at child %d" % i)
-                child = self.child(i)
-                if child.role == rolenames.ROLE_LABEL:
-                    if child.name and (len(child.name) > 0):
-                        if len(label) > 0:
-                            label += " " + child.name
-                        else:
-                            label = child.name
-
-        # If the object has no name, but has a description, return that
-        #
-        if (len(label) == 0) and self.description \
-                 and (len(self.description) > 0):
-            # [[[TODO: HACK because yelp actually goes through the trouble
-            # of setting the description of some of its text areas to
-            # "no description".]]]
-            #
-            if self.description != "no description":
-                label = self.description
-
-        if settings.cacheValues:
-            self.label = label
-        return label
-
     def __get_action(self):
         """Returns an object that implements the Accessibility_Action
         interface for this object, or None if this object doesn't implement
@@ -1101,8 +1039,6 @@ class Accessible:
 
         if attr == "name":
             return self.__get_name()
-        elif attr == "label":
-            return self.__get_label()
         elif attr == "description":
             return self.__get_description()
         elif attr == "parent":

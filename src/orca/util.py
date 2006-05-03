@@ -27,7 +27,19 @@ import speechserver
 
 from orca_i18n import _ # for gettext support
 
-def getLabel(object):
+def appendString(text, newText, delimiter=" "):
+    """Appends the newText to the given text with the delimiter in between
+    and returns the new string.  Edge cases, such as no initial text or
+    no newText, are handled gracefully."""
+    
+    if (not newText) or (len(newText) == 0):
+        return text
+    elif text and len(text):
+        return text + delimiter + newText
+    else:
+        return newText
+        
+def getDisplayedLabel(object):
     """If there is an object labelling the given object, return the
     text being displayed for the object labelling this object.
     Otherwise, return None.
@@ -44,19 +56,15 @@ def getLabel(object):
         if relation.getRelationType() \
                == atspi.Accessibility.RELATION_LABELLED_BY:
             target = atspi.Accessible.makeAccessible(relation.getTarget(0))
-            if target.text:
-                [label, startOffset, endOffset] = atspi.getTextLineAtCaret(
-                    target)
-            if (not label) or (len(label) == 0):
-                label = target.name
+            label = getDisplayedText(target)
             if label and (len(label) > 0):
                 break
     return label
 
-def getDisplayedTextInComboBox(combo):
+def __getDisplayedTextInComboBox(combo):
     
     """Returns the text being displayed in a combo box.  If nothing is
-    displayed, then an empty string is returned.
+    displayed, then None is returned.
 
     Arguments:
     - combo: the combo box
@@ -65,7 +73,7 @@ def getDisplayedTextInComboBox(combo):
     displayed.
     """
 
-    displayedText = ""
+    displayedText = None
     
     # Find the text displayed in the combo box.  This is either:
     #
@@ -91,6 +99,7 @@ def getDisplayedTextInComboBox(combo):
     if textObj:
         [displayedText, startOffset, endOffset] = \
             atspi.getTextLineAtCaret(textObj)
+        #print "TEXTOBJ", displayedText
     else:
         selectedItem = None
         comboSelection = combo.selection
@@ -98,12 +107,60 @@ def getDisplayedTextInComboBox(combo):
             selectedItem = atspi.Accessible.makeAccessible(
                 comboSelection.getSelectedChild(0))
         if selectedItem:
-            displayedText = selectedItem.label
-        else:
-            if combo.text:
-                [displayedText, startOffset, endOffset] = \
-                    atspi.getTextLineAtCaret(combo)
+            displayedText = getDisplayedText(selectedItem)
+            #print "SELECTEDITEM", displayedText
+        elif combo.name and len(combo.name):
+            # We give preference to the name over the text because
+            # the text for combo boxes seems to never change in
+            # some cases.  The main one where we see this is in
+            # the gaim "Join Chat" window.
+            #
+            displayedText = combo.name
+            #print "NAME", displayedText
+        elif combo.text:
+            [displayedText, startOffset, endOffset] = \
+                atspi.getTextLineAtCaret(combo)
+            #print "TEXT", displayedText
 
+    return displayedText
+
+def getDisplayedText(obj):
+    """Returns the text being displayed for an object.
+
+    Arguments:
+    - obj: the object
+
+    Returns the text being displayed for an object or None if there isn't
+    any text being shown.
+    """
+
+    displayedText = None
+
+    if obj.role == rolenames.ROLE_COMBO_BOX:
+        return __getDisplayedTextInComboBox(obj)
+
+    # The accessible text of an object is used to represent what is
+    # drawn on the screen.
+    #
+    if obj.text:
+        displayedText = obj.text.getText(0, -1)
+
+    if (not displayedText) or (len(displayedText) == 0):
+        displayedText = obj.name
+
+    # [[[WDW - HACK because push buttons can have labels as their
+    # children.  An example of this is the Font: button on the General
+    # tab in the Editing Profile dialog in gnome-terminal.
+    #
+    if ((not displayedText) or (len(displayedText) == 0)) \
+       and obj.role == rolenames.ROLE_PUSH_BUTTON:
+        for i in range(0, obj.childCount):
+            child = obj.child(i)
+            if child.role == rolenames.ROLE_LABEL:
+                childText = getDisplayedText(child)
+                if childText and len(childText):
+                    displayedText = appendString(displayedText, childText)
+ 
     return displayedText
 
 def findFocusedObject(root):

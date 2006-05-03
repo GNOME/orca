@@ -93,13 +93,14 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 # is the way to identify the menu that's duplicated in the
                 # hierarchy)
                 #
-                if len(parent.label) > 0:
+                label = util.getLabel(parent)
+                if label and len(label):
                     if (parent.role == rolenames.ROLE_MENU) \
                        and not parent.state.count(\
                                    atspi.Accessibility.STATE_FOCUSABLE):
                         pass
                     else:
-                        utterances.append(parent.label + " " \
+                        utterances.append(label + " " \
                                       + rolenames.getSpeechForRoleName(parent))
                 # Otherwise, we won't speak it if it is a panel with
                 # no name,

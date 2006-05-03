@@ -25,6 +25,8 @@ voices (identified by name) which can be combined with various
 attributes to create aural style sheets.
 """
 
+import debug
+
 class VoiceFamily(dict):
     """Holds the family description for a voice."""
 
