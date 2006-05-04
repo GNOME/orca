@@ -325,34 +325,26 @@ class orcaSetupGUI(GladeWrapper):
         # zoomFactor = prefs["XXX"]
         # self.magZoomFactorSpinButton.set_value(zoomFactor)
         #
-        # 14/ Get the smoothing preference and set the active value for the
+        # 14/ Get the 'Invert Colors' preference and set the checkbox
+        # accordingly.
+        #
+        # value = prefs["XXX"]
+        # self.magInvertColorsCheckBox.set_active(value)
+        #
+        # 15/ Get the smoothing preference and set the active value for the
         # smoothing combobox accordingly.
         #
         # smoothingStyle = prefs["XXX"]
         # index = _getComboBoxIndex(self.magSmoothingComboBox, smoothingStyle)
         # self.magSmoothingComboBox.set_active(index)
         #
-        # 15/ Get the mouse tracking preference and set the active value for 
+        # 16/ Get the mouse tracking preference and set the active value for 
         # the mouse tracking combobox accordingly.
         #
         # mouseTrackingStyle = prefs["XXX"]
         # index = _getComboBoxIndex(self.magMouseTrackingComboBox, 
         #                           mouseTrackingStyle)
         # self.magMouseTrackingComboBox.set_active(index)
-        #
-        # 16/ Get the focus tracking preference and set the active value for
-        # the focus tracking combobox accordingly.
-        #
-        # focusTrackingStyle = prefs["XXX"]
-        # index = _getComboBoxIndex(self.magFocusTrackingComboBox,
-        #                           focusTrackingStyle)
-        # self.magMouseTrackingComboBox.set_active(index)
-        #
-        # 17/ Get the 'Invert Colors' preference and set the checkbox
-        # accordingly.
-        #
-        # value = prefs["XXX"]
-        # self.magInvertColorsCheckBox.set_active(value)
 
 #   def _getComboBoxIndex(self, combobox, str):
 #       """ For each of the entries in the given combo box, look for str.
@@ -1193,17 +1185,6 @@ class orcaSetupGUI(GladeWrapper):
         """
 
         print "magMouseTrackingChanged: not implemented yet."
-
-    def magFocusTrackingChanged(self, widget):
-        """Signal handler for the "changed" signal for the
-           magFocusTrackingComboBox GtkComboBox widget. The user has
-           selected a different magnification focus tracking style.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        print "magFocusTrackingChanged: not implemented yet."
 
     def magInvertColorsChecked(self, widget):
         """Signal handler for the "toggled" signal for the

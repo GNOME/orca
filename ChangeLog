@@ -1,3 +1,14 @@
+2006-05-03  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca-setup.glade
+          Removed the Focus tracking mode setting. Moved the "Invert
+          Colors" checkbox up near the Zoom factor setting, and created
+          a "Zoomer settings:" area.
+
+        * src/orca/orca_gui_prefs.py
+          Removed the signal handler that handled the value being changed 
+          in the focus tracking mode combo box.
+
 2006-05-03  Willie Walker <william.walker@sun.com>
 
 	* src/bugs/bugs.html: Add GEdit bug 340577 regarding inability
