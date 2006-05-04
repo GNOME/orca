@@ -1,3 +1,15 @@
+2006-05-04  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/mag.py src/orca/settings.py
+          Changed settings magX and magY to magXScaleFactor and 
+          magYScaleFactor to clarify meaning and avoid name confusion 
+          with zoomer placement.
+
+        * src/orca/settings.py
+          Added in settings (plus default values) for all the items 
+          that can be configured via the Magnification notebook pane 
+          in the Preferences GUI.
+
 2006-05-04  Willie Walker <william.walker@sun.com>
 
 	* src/orca/default.py: fix for bug 340635.  Cache the active
@@ -6,7 +18,7 @@
 	its descendants gets focus (i.e., the real locus of focus is the
 	active descendant and not the parent).
 	
-2006-05-03  Rich Burridge <rich.burridge@sun.com>
+2006-05-04  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade
           Removed the Focus tracking mode setting. Moved the "Invert

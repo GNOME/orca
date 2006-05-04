@@ -24,6 +24,7 @@ case of gdm) or doesn't have the specified attribute.
 
 import re
 import sys
+import gtk.gdk
 
 import debug
 from acss import ACSS
@@ -50,8 +51,21 @@ userCustomizableSettings = [
     "brailleRolenameStyle",
     "enableBrailleMonitor",
     "enableMagnifier",
-    "magX",
-    "magY",
+    "enableMagCursor",
+    "enableMagCursorExplicitSize",
+    "magCursorSize",
+    "enableMagCrossHair",
+    "enableMagCrossHairClip",
+    "magCrossHairSize",
+    "magZoomerLeft",
+    "magZoomerRight",
+    "magZoomerTop",
+    "magZoomerBottom",
+    "magXScaleFactor",
+    "magYScaleFactor",
+    "enableMagZoomerColorInversion",
+    "magSmoothingModee",
+    "magMouseTrackingMode",
     "verbalizePunctuationStyle",
 ]
 
@@ -133,9 +147,59 @@ enableBrailleMonitor    = False
 
 # If True, enable magnification.
 #
-enableMagnifier         = False
-magX                    = 1.5
-magY                    = 1.5
+enableMagnifier                  = False
+
+# If True, show the magnification cursor.
+#
+enableMagCursor                  = True
+
+# If True, allow an explicit size for the magnification cursor.
+#
+enableMagCursorExplicitSize      = False
+
+# Size of the magnification cursor (in pixels).
+#
+magCursorSize                    = 32
+
+# If True, show the magnification cross-hairs.
+#
+enableMagCrossHair               = True
+
+# If True, enable magnification cross-hair clipping.
+#
+enableMagCrossHairClip           = False
+
+# Size of the magnification cross-hairs (in pixels).
+#
+magCrossHairSize                 = 16
+
+# Magnification zoomer region placement.
+#
+magZoomerLeft                    = (gtk.gdk.screen_get_default().get_width() / 2)
+magZoomerRight                   = gtk.gdk.screen_get_default().get_width()
+magZoomerTop                     = 0
+magZoomerBottom                  = gtk.gdk.screen_get_default().get_height()
+
+# Magnification zoom scale factor.
+#
+magXScaleFactor                  = 4.0
+magYScaleFactor                  = 4.0
+
+# If True, invert the magnification zoomer colors.
+#
+enableMagZoomerColorInversion    = False
+
+# Magnification smoothing mode (see magSmoothingMode).
+#
+MAG_SMOOTHING_MODE_BILINEAR      = 0
+MAG_SMOOTHING_MODE_NONE          = 1
+magSmoothingMode                 = MAG_SMOOTHING_MODE_BILINEAR
+
+# Magnification mouse tracking mode (see magMouseTrackingMode).
+#
+MAG_MOUSE_TRACKING_MODE_CENTERED = 0
+MAG_MOUSE_TRACKING_MODE_PUSH     = 1
+magMouseTrackingMode             = MAG_MOUSE_TRACKING_MODE_CENTERED
 
 # if True, enable word echo.
 # Note that it is allowable for both enableEchoByWord and enableKeyEcho
