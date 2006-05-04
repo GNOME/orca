@@ -1,5 +1,11 @@
 2006-05-04  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/orca-setup.glade
+          Changed "Speech server:" to "Speech synthesizer:"
+          Changed "Family:" to "Person:"
+
+2006-05-04  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/orca_gui_prefs.py
           Implemented:
             magCursorColorSet(self, widget):
