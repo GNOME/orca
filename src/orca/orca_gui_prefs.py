@@ -181,6 +181,9 @@ class orcaSetupGUI(GladeWrapper):
 
         # Speech pane.
         #
+        enable = self.speechSupportCheckbutton.get_active()
+        self.speechTable.set_sensitive(enable)
+
         self._setSystemChoice(self.factoryChoices, prefs["speechServerFactory"])
 
         serverPrefs = prefs["speechServerInfo"]
@@ -229,147 +232,156 @@ class orcaSetupGUI(GladeWrapper):
 
         # Magnifier pane.
         #
-        # [[[TODO: richb - once the preferences for the various magnification
-        # settings are known, the following will need to be adjusted
-        # accordingly.
+        # Set the sensitivity of the items on the magnifier pane, depending
+        # upon whether the "Enable Magnifier" checkbox is checked.
         #
-        # Still need to write _getComboBoxIndex(self, combobox, str)
-        # ]]]
+        enable = self.magnifierSupportCheckbutton.get_active()
+        self.magnifierTable.set_sensitive(enable)
+
+        # Get the 'Cursor on/off' preference and set the checkbox accordingly.
         #
-        # 1/ Get the 'Cursor on/off' preference and set the checkbox
-        # accordingly.
-        #
-        # value = prefs["XXX"]
-        # self.magCursorOnOffCheckButton.set_active(value)
-        #
-        # 2/ Get the 'Explicit cursor size' preference and set the checkbox
+        value = prefs["enableMagCursor"]
+        self.magCursorOnOffCheckButton.set_active(value)
+
+        # Get the 'Explicit cursor size' preference and set the checkbox
         # accordingly. If the value is not checked, then the cursor size
         # spin button and label need to be set insensitive.
         #
-        # explicitSizeChecked = prefs["XXX"]
-        # self.magCursorSizeCheckButton.set_active(explicitSizeChecked)
-        # self.magCursorSizeSpinButton.set_sensitive(explicitSizeChecked)
-        # self.magCursorSizeLabel.set_sensitive(explicitSizeChecked)
-        #
-        # 3/ Get the cursor size preference and set the cursor size spin
+        explicitSizeChecked = prefs["enableMagCursorExplicitSize"]
+        self.magCursorSizeCheckButton.set_active(explicitSizeChecked)
+        self.magCursorSizeSpinButton.set_sensitive(explicitSizeChecked)
+        self.magCursorSizeLabel.set_sensitive(explicitSizeChecked)
+
+        # Get the cursor size preference and set the cursor size spin
         # button value accordingly.
         #
-        # cursorSize = prefs["XXX"]
-        # self.magCursorSizeSpinButton.set_value(cursorSize)
-        #
-        # 4/ Get the cursor color preference and set the cursor color button
+        cursorSize = prefs["magCursorSize"]
+        self.magCursorSizeSpinButton.set_value(cursorSize)
+
+        # Get the cursor color preference and set the cursor color button
         # accordingly.
         #
-        # cursorColor = prefs["XXX"]
+        cursorColor = prefs["magCursorColor"]
         # color = gtk.gdk.color_parse(cursorColor)
         # self.magCursorColorButton.set_color(color)
-        #
-        # 5/ Get the 'Cross-hair on/off' preference and set the checkbox
+
+        # Get the 'Cross-hair on/off' preference and set the checkbox
         # accordingly.
         #
-        # value = prefs["XXX"]
-        # self.magCrossHairOnOffCheckButton.set_active(value)
-        #
-        # 6/ Get the 'Cross-hair clip on/off' preference and set the checkbox
+        value = prefs["enableMagCrossHair"]
+        self.magCrossHairOnOffCheckButton.set_active(value)
+
+        # Get the 'Cross-hair clip on/off' preference and set the checkbox
         # accordingly.
         #
-        # value = prefs["XXX"]
-        # self.magCrossHairClipCheckButton.set_active(value)
-        #
-        # 7/ Get the cross-hair size preference and set the cross-hair size
+        value = prefs["enableMagCrossHairClip"]
+        self.magCrossHairClipCheckButton.set_active(value)
+
+        # Get the cross-hair size preference and set the cross-hair size
         # spin button value accordingly.
         #
-        # crosshairSize = prefs["XXX"]
-        # self.magCrossHairSizeSpinButton.set_value(crosshairSize)
+        crosshairSize = prefs["magCrossHairSize"]
+        self.magCrossHairSizeSpinButton.set_value(crosshairSize)
+
+        # Get the width and the height of the screen.
         #
-        # 8/ Get the width and the height of the screen.
-        #
-        # self.screenWidth = gtk.gdk.screen_get_width()
-        # self.screenHeight = gtk.gdk.screen_get_height()
-        #
-        # 9/ Get the zoomer placement top preference and set the top spin
+        self.screenWidth = gtk.gdk.screen_get_default().get_width()
+        self.screenHeight = gtk.gdk.screen_get_default().get_height()
+
+        # Get the zoomer placement top preference and set the top spin
         # button value accordingly. Set the top spin button "max size" to
         # the height of the screen.
         #
-        # topPosition = prefs["XXX"]
-        # self.magZoomerTopSpinButton.set_value(topPosition)
-        # self.magZoomerTopSpinButton.set_range(0, self.screenHeight)
-        #
-        # 10/ Get the zoomer placement left preference and set the left spin
+        topPosition = prefs["magZoomerTop"]
+        self.magZoomerTopSpinButton.set_value(topPosition)
+        self.magZoomerTopSpinButton.set_range(0, self.screenHeight)
+
+        # Get the zoomer placement left preference and set the left spin
         # button value accordingly. Set the left spin button "max size" to
         # the width of the screen.
         #
-        # leftPosition = prefs["XXX"]
-        # self.magZoomerLeftSpinButton.set_value(leftPosition)
-        # self.magZoomerLeftSpinButton.set_range(0, self.screenWidth)
-        #
-        # 11/ Get the zoomer placement right preference and set the right spin
+        leftPosition = prefs["magZoomerLeft"]
+        self.magZoomerLeftSpinButton.set_value(leftPosition)
+        self.magZoomerLeftSpinButton.set_range(0, self.screenWidth)
+
+        # Get the zoomer placement right preference and set the right spin
         # button value accordingly. Set the right spin button "max size" to
         # the width of the screen.
         #
-        # rightPosition = prefs["XXX"]
-        # self.magZoomerRightSpinButton.set_value(rightPosition)
-        # self.magZoomerRightSpinButton.set_range(0, self.screenWidth)
-        #
-        # 12/ Get the zoomer placement bottom preference and set the bottom
+        rightPosition = prefs["magZoomerRight"]
+        self.magZoomerRightSpinButton.set_value(rightPosition)
+        self.magZoomerRightSpinButton.set_range(0, self.screenWidth)
+
+        # Get the zoomer placement bottom preference and set the bottom
         # spin button value accordingly. Set the bottom spin button "max size"
         # to the height of the screen.
         #
-        # bottomPosition = prefs["XXX"]
-        # self.magZoomerBottomSpinButton.set_value(bottomPosition)
-        # self.magZoomerBottomSpinButton.set_range(0, self.screenHeight)
-        #
-        # 13/ Get the zoom factor preference and set the zoom factor spin
+        bottomPosition = prefs["magZoomerBottom"]
+        self.magZoomerBottomSpinButton.set_value(bottomPosition)
+        self.magZoomerBottomSpinButton.set_range(0, self.screenHeight)
+
+        # Get the zoom factor preference and set the zoom factor spin
         # button value accordingly.
         #
-        # zoomFactor = prefs["XXX"]
-        # self.magZoomFactorSpinButton.set_value(zoomFactor)
+        # [[[TODO:richb - there are two zoom factor settings; both X and Y
+        # which one should be set into the GUI? Punting on the X one for
+        # now.]]]
         #
-        # 14/ Get the 'Invert Colors' preference and set the checkbox
-        # accordingly.
+        zoomFactor = prefs["magXScaleFactor"]
+        self.magZoomFactorSpinButton.set_value(zoomFactor)
+
+        # Get the 'Invert Colors' preference and set the checkbox accordingly.
         #
-        # value = prefs["XXX"]
-        # self.magInvertColorsCheckBox.set_active(value)
-        #
-        # 15/ Get the smoothing preference and set the active value for the
+        value = prefs["enableMagZoomerColorInversion"]
+        self.magInvertColorsCheckBox.set_active(value)
+
+        # Get the smoothing preference and set the active value for the
         # smoothing combobox accordingly.
         #
-        # smoothingStyle = prefs["XXX"]
-        # index = _getComboBoxIndex(self.magSmoothingComboBox, smoothingStyle)
-        # self.magSmoothingComboBox.set_active(index)
-        #
-        # 16/ Get the mouse tracking preference and set the active value for 
+        smoothingMode = prefs["magSmoothingMode"]
+        if smoothingMode == settings.MAG_MOUSE_TRACKING_MODE_CENTERED:
+            mode = _("Bilinear")
+        elif smoothingMode == settings.MAG_MOUSE_TRACKING_MODE_CENTERED:
+            mode = _("None")
+        else:
+            mode = _("Bilinear")
+        index = self._getComboBoxIndex(self.magSmoothingComboBox, mode)
+        self.magSmoothingComboBox.set_active(index)
+
+        # Get the mouse tracking preference and set the active value for 
         # the mouse tracking combobox accordingly.
         #
-        # mouseTrackingStyle = prefs["XXX"]
-        # index = _getComboBoxIndex(self.magMouseTrackingComboBox, 
-        #                           mouseTrackingStyle)
-        # self.magMouseTrackingComboBox.set_active(index)
+        mouseTrackingMode = prefs["magMouseTrackingMode"]
+        if mouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_CENTERED:
+            mode = _("Centered")
+        elif mouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_CENTERED:
+            mode = _("Push")
+        else:
+            mode = _("Centered")
+        index = self._getComboBoxIndex(self.magMouseTrackingComboBox, mode)
+        self.magMouseTrackingComboBox.set_active(index)
 
-#   def _getComboBoxIndex(self, combobox, str):
-#       """ For each of the entries in the given combo box, look for str.
-#           Return the index of the entry if str is found.
-#
-#       Arguments:
-#       - combobox: the GtkComboBox to search.
-#       - str: the string to search for.
-#
-#       Returns the index of the first entry in combobox with str, on 
-#       None if not found.
-#       """
-#
-#       print "_getComboBoxIndex: looking for str: %s" % str
-#       model = combobox.get_model()
-#       iter = model.get_iter_first()
-#       for i in range(0, len(model)):
-#           name = get_value(iter, 0)
-#           print "_getComboBoxIndex: comparing with: %s" % name
-#           if name == str:
-#               print "_getComboBoxIndex: found. Returning %d" % i
-#               return i
-#           iter = model.iter_next(iter)
-#
-#       return None
+    def _getComboBoxIndex(self, combobox, str):
+        """ For each of the entries in the given combo box, look for str.
+            Return the index of the entry if str is found.
+ 
+        Arguments:
+        - combobox: the GtkComboBox to search.
+        - str: the string to search for.
+ 
+        Returns the index of the first entry in combobox with str, on 
+        None if not found.
+        """
+ 
+        model = combobox.get_model()
+        iter = model.get_iter_first()
+        for i in range(0, len(model)):
+            name = model.get_value(iter, 0)
+            if name == str:
+                return i
+            iter = model.iter_next(iter)
+ 
+        return None
 
     def _setupServers(self):
         """Get the list of speech servers for the current speech factory.
@@ -693,15 +705,8 @@ class orcaSetupGUI(GladeWrapper):
         depending upon whether the value of the key echo check button is set.
         """
 
-        if self.keyEchoCheckbutton.get_active():
-            enable = True
-        else:
-            enable = False
-        self.printableCheckbutton.set_sensitive(enable)
-        self.modifierCheckbutton.set_sensitive(enable)
-        self.lockingCheckbutton.set_sensitive(enable)
-        self.functionCheckbutton.set_sensitive(enable)
-        self.actionCheckbutton.set_sensitive(enable)
+        enable = self.keyEchoCheckbutton.get_active()
+        self.keyEchoTable.set_sensitive(enable)
 
     def _say(self, text, stop=False):
         """If the text field is not None, speaks the given text, optionally 
@@ -716,6 +721,21 @@ class orcaSetupGUI(GladeWrapper):
             speech.stop()
 
         speech.speak(text)
+
+    def speechSupportChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           speechSupportCheckbutton GtkCheckButton widget. The user has
+           [un]checked the 'Enable Speech" checkbox. Set the 'enableSpeech'
+           preference to the new value. Set the rest of the speech pane items
+           [in]sensensitive depending upon whether this checkbox is checked.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        enable = widget.get_active()
+        self.prefsDict["enableSpeech"] = enable
+        self.speechTable.set_sensitive(enable)
 
     def speechSystemsChanged(self, widget):
         """Signal handler for the "changed" signal for the speechSystems
@@ -1019,6 +1039,22 @@ class orcaSetupGUI(GladeWrapper):
             else:
                 self.prefsDict["brailleVerbosityLevel"] = \
                     settings.VERBOSITY_LEVEL_VERBOSE
+
+    def magnifierSupportChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           magnifierSupportCheckbutton GtkCheckButton widget. 
+           The user has [un]checked the 'Enable Magnification" checkbox. 
+           Set the 'enableMagnifier' preference to the new value.
+           Set the rest of the magnifier pane items [in]sensensitive 
+           depending upon whether this checkbox is checked.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        enable = widget.get_active()
+        self.prefsDict["enableMagnifier"] = enable
+        self.magnifierTable.set_sensitive(enable)
 
     def magCursorOnOffChecked(self, widget):
         """Signal handler for the "toggled" signal for the 

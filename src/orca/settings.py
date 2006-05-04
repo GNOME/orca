@@ -54,6 +54,7 @@ userCustomizableSettings = [
     "enableMagCursor",
     "enableMagCursorExplicitSize",
     "magCursorSize",
+    "magCursorColor",
     "enableMagCrossHair",
     "enableMagCrossHairClip",
     "magCrossHairSize",
@@ -64,7 +65,7 @@ userCustomizableSettings = [
     "magXScaleFactor",
     "magYScaleFactor",
     "enableMagZoomerColorInversion",
-    "magSmoothingModee",
+    "magSmoothingMode",
     "magMouseTrackingMode",
     "verbalizePunctuationStyle",
 ]
@@ -160,6 +161,10 @@ enableMagCursorExplicitSize      = False
 # Size of the magnification cursor (in pixels).
 #
 magCursorSize                    = 32
+
+# Magnification cursor color value (hex color spec).
+#
+magCursorColor                   = 0xFFFFFF
 
 # If True, show the magnification cross-hairs.
 #

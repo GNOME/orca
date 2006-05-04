@@ -1,5 +1,36 @@
 2006-05-04  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/orca-setup.glade
+          Added in an "Enable Speech" checkbox at the top of the speech
+          notebook pane.
+          Added in an "Enable Magnification" checkbox at the top of the
+          magnification notebook pane.
+          Refactor of the speech and magnifier panes to make it easier
+          to [un]sensitize the various components depending upon whether 
+          the user has speech and/or magnification enabled.
+
+        * src/orca/orca_gui_prefs.py
+          Added in a speechSupportChecked signal handler for the "Enable
+          Speech" checkbox. The sensitivity of all the rest of the items 
+          on the speech pane is dependent upon this setting.
+
+          Added in a magnificationSupportChecked signal handler for the 
+          "Enable Magnification" checkbox. The sensitivity of all the rest 
+          of the items on the magnification pane is dependent upon this 
+          setting.
+
+          [Un]sensitize speech and magnification components depending
+          upon whether speech and/or magnification is enabled.
+
+          Setup the initial state of the magnifier pane from the users
+          magnification settings.
+
+        * src/orca/setting.py
+          Changed "magSmoothingModee" to "magSmoothingMode".
+          Added in a setting for "magCursorColor".
+
+2006-05-04  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/mag.py src/orca/settings.py
           Changed settings magX and magY to magXScaleFactor and 
           magYScaleFactor to clarify meaning and avoid name confusion 
