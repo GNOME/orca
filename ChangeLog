@@ -1,6 +1,19 @@
 2006-05-04  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca_gui_prefs.py
+          Implemented:
+            magSmoothingChanged(self, widget):
+            magMouseTrackingChanged(self, widget):
+
+          Fixed up the the reading of the "enableSpeech" and 
+          "enableMagnifier" preferences in _initGUIState().
+
+          Fixed up the setting of the initial values for the smoothing 
+          mode and mouse tracking mode combo boxes in _initGUIState().
+
+2006-05-04  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca_gui_prefs.py
           Adjusted the magCursorExplicitSizeChecked() method so that
           it [un]sensitizes the cursor size spin button and label 
           depending upon whether the explicit cursor size checkbox 

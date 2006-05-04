@@ -181,7 +181,8 @@ class orcaSetupGUI(GladeWrapper):
 
         # Speech pane.
         #
-        enable = self.speechSupportCheckbutton.get_active()
+        enable = prefs["enableSpeech"]
+        self.speechSupportCheckbutton.set_active(enable)
         self.speechTable.set_sensitive(enable)
 
         self._setSystemChoice(self.factoryChoices, prefs["speechServerFactory"])
@@ -235,7 +236,8 @@ class orcaSetupGUI(GladeWrapper):
         # Set the sensitivity of the items on the magnifier pane, depending
         # upon whether the "Enable Magnifier" checkbox is checked.
         #
-        enable = self.magnifierSupportCheckbutton.get_active()
+        enable = prefs["enableMagnifier"]
+        self.magnifierSupportCheckbutton.set_active(enable)
         self.magnifierTable.set_sensitive(enable)
 
         # Get the 'Cursor on/off' preference and set the checkbox accordingly.
@@ -335,9 +337,9 @@ class orcaSetupGUI(GladeWrapper):
         # smoothing combobox accordingly.
         #
         smoothingMode = prefs["magSmoothingMode"]
-        if smoothingMode == settings.MAG_MOUSE_TRACKING_MODE_CENTERED:
+        if smoothingMode == settings.MAG_SMOOTHING_MODE_BILINEAR:
             mode = _("Bilinear")
-        elif smoothingMode == settings.MAG_MOUSE_TRACKING_MODE_CENTERED:
+        elif smoothingMode == settings.MAG_SMOOTHING_MODE_NONE:
             mode = _("None")
         else:
             mode = _("Bilinear")
@@ -350,7 +352,7 @@ class orcaSetupGUI(GladeWrapper):
         mouseTrackingMode = prefs["magMouseTrackingMode"]
         if mouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_CENTERED:
             mode = _("Centered")
-        elif mouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_CENTERED:
+        elif mouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_PUSH:
             mode = _("Push")
         else:
             mode = _("Centered")
@@ -1215,24 +1217,40 @@ class orcaSetupGUI(GladeWrapper):
     def magSmoothingChanged(self, widget):
         """Signal handler for the "changed" signal for the 
            magSmoothingComboBox GtkComboBox widget. The user has 
-           selected a different magnification smoothing style.
+           selected a different magnification smoothing style. 
+           Set the 'magSmoothingMode' preference to the new value.
 
         Arguments:
         - widget: the component that generated the signal.
         """
 
-        print "magSmoothingChanged: not implemented yet."
+        smoothingMode = widget.get_active_text()
+        if smoothingMode ==  _("Bilinear"):
+            mode = settings.MAG_SMOOTHING_MODE_BILINEAR
+        elif smoothingMode == _("None"):
+            mode = settings.MAG_SMOOTHING_MODE_NONE
+        else:
+            mode = settings.MAG_SMOOTHING_MODE_BILINEAR
+        self.prefsDict["magSmoothingMode"] = mode
 
     def magMouseTrackingChanged(self, widget):
         """Signal handler for the "changed" signal for the
            magMouseTrackingComboBox GtkComboBox widget. The user has
            selected a different magnification mouse tracking style.
+           Set the 'magMouseTrackingMode' preference to the new value.
 
         Arguments:
         - widget: the component that generated the signal.
         """
 
-        print "magMouseTrackingChanged: not implemented yet."
+        mouseTrackingMode = widget.get_active_text()
+        if mouseTrackingMode ==  _("Centered"):
+            mode = settings.MAG_MOUSE_TRACKING_MODE_CENTERED
+        elif mouseTrackingMode == _("Push"):
+            mode = settings.MAG_MOUSE_TRACKING_MODE_PUSH
+        else:
+            mode = settings.MAG_MOUSE_TRACKING_MODE_CENTERED
+        self.prefsDict["magMouseTrackingMode"] = mode
 
     def magInvertColorsChecked(self, widget):
         """Signal handler for the "toggled" signal for the
