@@ -93,7 +93,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 # is the way to identify the menu that's duplicated in the
                 # hierarchy)
                 #
-                label = util.getLabel(parent)
+                label = util.getDisplayedLabel(parent)
                 if label and len(label):
                     if (parent.role == rolenames.ROLE_MENU) \
                        and not parent.state.count(\
