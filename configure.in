@@ -41,37 +41,26 @@ dnl Initialize libtool
 AM_DISABLE_STATIC
 AM_PROG_LIBTOOL
 
-# Check for various modules.  We want at least:
+# Check for various modules.  We want at least the ones
+# listed, plus:
 #
-# python 2.4
 # pyorbit 2.14.0
 # pygtk 2.8.4
 # gnome-python 2.6.2
-# gtk+-2.0 2.8.16
-# atk 1.11.3
-# gail 1.8.11
 # libgail-gnome 1.1.3
-# eel 2.14.0
-# at-spi 1.7.6
-# gnome-speech 0.3.10
+# gnome-mag-1.0 0.12.3 (optional)
 #
 PKG_CHECK_MODULES(orca, \
-	atk >= 1.11.3)
-
-PKG_CHECK_MODULES(orca, \
-	gail >= 1.8.11)
-
-PKG_CHECK_MODULES(orca, \
-	eel >= 2.14.0)
-
-PKG_CHECK_MODULES(orca, \
-	cspi >= 1.7.6)
-
-PKG_CHECK_MODULES(orca, \
-	gnome-speech >= 0.3.10)
-
-PKG_CHECK_MODULES(orca, \
-	gtk+-2.0 >= 2.8.16)
+	glib-2.0 >= 2.10.0 \
+	gtk+-2.0 >= 2.8.16 \
+	libbonobo-2.0 >= 2.14.0 \
+	atk >= 1.11.3 \
+	gail >= 1.8.11 \
+	eel-2.0 >= 2.14.0 \
+	libspi-1.0 >= 1.7.6 \
+	cspi-1.0 >= 1.7.6 \
+	gnome-speech-1.0 >= 0.3.10 \
+)
 
 # Setup brl module build
 #
@@ -101,11 +90,11 @@ AC_SUBST(AT_SPI_IDLFLAGS)
 
 # Check for Python
 
-AM_PATH_PYTHON(2.0)
+AM_PATH_PYTHON(2.4)
 
 # Find the headers needed to build extensions
 
-AM_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(Could not find Python yeaders needed to build Python extensions)])
+AM_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(Could not find Python headers needed to build Python extensions)])
 
 AC_SUBST(orca_LIBS)
 AC_SUBST(orca_CFLAGS)
