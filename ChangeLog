@@ -1,5 +1,13 @@
 2006-05-04  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/orca_gui_prefs.py
+          Adjusted the magCursorExplicitSizeChecked() method so that
+          it [un]sensitizes the cursor size spin button and label 
+          depending upon whether the explicit cursor size checkbox 
+          is checked.
+
+2006-05-04  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/settings.py
           Fixed bug #340662 (http://bugzilla.gnome.org/show_bug.cgi?id=340662)
           Added a try/except clause arround the "import gtk.gdk", so that

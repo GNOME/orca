@@ -1071,12 +1071,17 @@ class orcaSetupGUI(GladeWrapper):
            The user has [un]checked the magnification cursor settings
            'Explicit cursor size' checkbox. Set the 
            'enableMagCursorExplicitSize' preference to the new value.
+           [Un]sensitize the cursor size spin button and label depending
+           upon whether this checkbox is checked.
 
         Arguments:
         - widget: the component that generated the signal.
         """
 
-        self.prefsDict["enableMagCursorExplicitSize"] = widget.get_active()
+        enable = widget.get_active()
+        self.prefsDict["enableMagCursorExplicitSize"] = enable
+        self.magCursorSizeSpinButton.set_sensitive(enable)
+        self.magCursorSizeLabel.set_sensitive(enable)
 
     def magCursorSizeValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the
