@@ -17,7 +17,7 @@
 	fixing for bug 340625.  Move the notion of handling the "real"
 	active descendant to the speech and braille generators.  This
 	allows us to better handle expanded and collapsed states of cells.
-
+	
 	* src/orca/default.py: fix for bug 340635.  Cache the active
 	descendant of an object.  Also keep track of the "real" active
 	descendant and use this in the case where a parent that manages
@@ -39,9 +39,11 @@
 
 	* src/bugs/bugs.html: Add GEdit bug 340577 regarding inability
 	to get to statusbar information from at-poke.
+
 	* src/orca/braillegenerator.py, src/orca/speechgenerator.py,
 	src/orca/default.py: fix for bug 340559, handle sliders with
 	text values a little better.
+
 	* src/orca/atspi.py, src/orca/braillegenerator.py,
 	src/orca/default.py, src/orca/flat_review.py,
 	src/orca/focus_tracking_presenter.py, src/orca/mag.py,
@@ -52,6 +54,7 @@
 	other bugs in the process: bug 337371 (voluminous output of
 	sliders), 340481 (combo box in gaim), and bug 340556 (radio button
 	group names not being announced).
+
 	* src/orca/mag.py, src/orca/settings.py: some experimentation with
 	property bags as well as setting magnification scales.
 	
@@ -94,6 +97,7 @@
 
 	* src/orca/orca.py: per request of Mike, make Insert+s be a
 	toggle for disabling/enabling speech.  Fixes bug 338839.
+
 	* src/orca/default.py: generalize fix for 340305.
 	
 2006-05-01  Willie Walker <william.walker@sun.com>
@@ -107,6 +111,7 @@
 	adds an additional check in visualAppearanceChanged to see if
 	the given object is the locusOfFocus *or* if it has the FOCUSED
 	state set.
+
 	* src/orca/braillegenerator.py, src/orca/speechgenerator.py,
 	src/orca/default.py, src/orca/util.py: partial fix for 340305.
 	Changes the way labels and displayed text for combo boxes are
@@ -127,16 +132,19 @@
 2006-04-30  Willie Walker <william.walker@sun.com>
 
 	* po/POTFILES.in: add orca_gui_prefs and orca_console_prefs.
+
 	* src/orca/orca.py, src/orca/gnomespeechfactory.py,
 	src/orca/settings.py, src/orca/speech.py,
 	src/orca/speechserver.py: Add "Insert+s" to temporarily disable
 	speech and "Insert+q" to re-enable speech.
+
 	* src/orca/dectalk.py, src/orca/espeechfactory.py, 
 	src/orca/gnomespeechfactory.py,src/orca/orca.py,
 	src/orca/orca_console_prefs.py, src/orca/orca_gui_prefs.py,
 	src/orca/speech.py, src/orca/speechserver.py: refactor
 	speech server factory to remove the "Infos" stuff and
 	give you back working servers insteaed.
+
 	* src/orca/orca.py: fix for bug 339932 to shutdown speech
 	better and also force exit (use os._exit instead of sys.exit).
 
@@ -252,6 +260,7 @@
 	* src/orca/gnomespeechfactory.py: fix for bug 339927: force
 	floating point values on rate, gain, pitch, etc. to prevent
 	integer arithmetic from getting in the way.	
+
 	* src/orca/focus_tracking_presenter.py: print the ImportException
 	out at a debug level of ALL when attempting to find script
 	modules.  The reason for this is that the script module itself
@@ -347,15 +356,19 @@
 
 	* src/orca/orca.py: use Insert+space instead of Insert+s for 
 	settings.  Insert+s is reserved for the stop speaking functionality.
+
 	* src/orca/orca.py: add "--setup" as a synonym for "--gui-setup".
 	Note that this will fallback to "--text-setup" if the desktop is
 	not running.  Also do Insert+control+space for doing a forced
 	reloading of the settings.
+
 	* src/orca/orca_console_prefs.py, src/orca/orca_prefs.py: allow
 	writing of things besides strings.  Also add ability to preload
 	a preferences dictionary based upon the current settings.
+
 	* src/orca/settings.py: add "userCustomizableSettings" field to 
 	specify what is user customizable.
+
 	* orca.spec.in, configure.in, src/orca/.cvsignore,
 	src/orca/orca-setup.in (DELETE), src/orca/orca.py,
 	src/orca/orca_gui_prefs.py (GUI stuff from orca-setup.in),
@@ -419,8 +432,11 @@
 2006-04-22  Willie Walker <william.walker@sun.com>
 
 	* NEWS, configure.in, README: prep for 0.2.3.
+
 	* po/POTFILES.in: remove Gecko.py.
+
 	* configure.in: get the ORCA_SETUP_GLADE_DIR working better.
+
 	* src/orca/mag.py: minor attempt to follow the caret when it
 	moves.
 
@@ -468,25 +484,33 @@
 	NOTE ALSO that this fix probably breaks wizard dialogs, but wizards
 	are so broken, anyway, that I think they need to be handled a little
 	differently.
+
 	* src/orca/atspi.py, src/orca/settings.py: fix for bug 334924 to
 	keep the cache in better sync.  Also use settings.cacheValues 
 	setting instead of atspi.CACHE_VALUES to allow easier setting
 	and unsetting of whether to cache or not.
+
 	* src/orca/default.py: more work for bug 319643. Magnification is
 	working again, though it does indeed need a bit of work to make it
 	usable.  See also http://bugzilla.gnome.org/show_bug.cgi?id=323032.
+
 	* src/orca/orca.py, src/orca/mag.py: patch for bug 319643 - recover
 	gracefully from failures when attempting to load the magnifier.
 	This allows Orca to work if gnome-mag had not been installed.
+
 	* src/orca/rolenames.py, src/orca/atspi.py,
 	src/orca/scripts/gedit.py, src/orca/scripts/gaim.py: fix for bug
 	319789 - fallback to localized rolename if it exists.	
+
 	* src/orca/orca-setup.in: fix for bug 330631 - put rate, gain,
 	and pitch in user-settings.py.
+
 	* src/orca/orca.py: fix for bug 319651 - issue a message and abort
 	orca if accessibility has not been enabled for the session.
+
 	* src/orca/debug.py: update documentation to reflect new way to
 	set debugLevel.
+
 	* test/harness/user-settings.py.in: update to reflect new settings
 	and new method for setting settings.
 	
@@ -494,6 +518,7 @@
 
 	* src/orca/orca_i18n.py.in: fix for bug 338690: orca_i18n was not
 	working as expected.	
+
 	* src/orca/default.py, src/orca/util.py,
 	src/orca/scripts/Mozilla.py, src/orca/scripts/StarOffice.py: make
 	sayLine, sayWord, and sayCharacter be object methods as opposed to
@@ -507,15 +532,18 @@
 	* src/orca/focus_tracking_presenter.py: provide some delimiter
 	output to make it easier to identify the various processing
 	steps that are done when an event is processed.
+
 	* src/orca/speechgenerator.py, src/orca/scripts/gnome-terminal.py:
 	remove some speech output.  This seems to eliminate hearing 
 	"terminal" 6 times, but it does not address the repetitive stuff
 	that's going on when you go through the profile editing tabs.
+
 	* src/orca/orca.py: delay registration of keyboard listeners until
 	after the user preferences have been loaded.  This prevents
 	exceptions from occurring if the user types on the keyboard in
 	between the time the user starts orca and the time orca is fully
 	initialized.
+
 	* src/orca/orca-setup.in: remove an errant ")" at the end of a
 	commented out debug line.
  	
@@ -657,9 +685,11 @@
 
 	* src/orca/scripts/planner.py: use new braille API to for 
 	displayRegions and also handle the label a little better.
+
 	* src/orca/orca.py, src/orca/settings.py: fix for bug 337857,
 	allow user to customize which key(s) can be used as the Orca
 	modifier key.
+
 	* po/POTFILES.in: add gedit and utils.
 	
 2006-04-08  Willie Walker <william.walker@sun.com>
@@ -668,6 +698,7 @@
 	src/orca/scripts/StarOffice.py: fix for bug 337704 - add API
 	symmetry to braillegenerator.py:getBrailleRegions and
 	braille.py:displayRegions.
+
 	* src/orca/orca-setup.in: fix for RFE (bug 337709) - force
 	speaking rate parameter to be added to ACSS for default force.
 	
@@ -790,6 +821,7 @@
 	somewhat, but the ramification is that scripts are no longer
 	picked up from the local directory (which was just a convenience
 	for script writers).	
+
 	* docs/doc-set/*.{sgml,html,pdf}: make this compile again.  For
 	some bizarre reason, docbook on my Ubuntu box no longer liked "_"
 	in entities or ids, and it was easier to get rid of them rather
@@ -996,6 +1028,7 @@
 
 	* src/orca/orca-setup.in: make hyperlink voice more
 	distinguishable from the normal speaking voice
+
 	* src/orca/scripts/Mozilla.py: do a bit of work with better
 	handling of hyperlinks
 	
@@ -1004,8 +1037,10 @@
 	* src/orca/brlmon.py: use window manager struts property to
 	keep other windows from occluding the brlmon and to push
 	them out of the way if necessary.
+
 	* src/orca/util.py: add findFocusedObject method to find the
 	focused object under a given root.
+
 	* src/orca/scripts/gdmlogin.py, src/orca/gnome-terminal.py: use
 	the util.findFocusedObject method on window activated events.
 	
@@ -1036,6 +1071,7 @@
 	* src/orca/focus_tracking_presenter.py: toss out all children remove
 	events unless they are for the desktop.  This is an attempt to deal
 	with bursty event behavior for events we may not always care about.
+
 	* src/orca/orca.py, src/orca/focus_tracking_presenter.py: stub in
 	some experimental timer code.  It's commented out for now, but the
 	goal is to try to detect hangs in AT-SPI calls.
@@ -1045,6 +1081,7 @@
 	* src/orca/brlmon.py: Better adaptation (e.g. position on screen)
 	to changes in size when working with large fonts (e.g., enlarging
 	the fonts for presentation purposes).	
+
 	* src/orca/gnomespeechfactory.py, src/orca/braille.py: transform
 	unicode ellipses into "...".  Fixes bug 333915.
 	
@@ -1057,9 +1094,11 @@
 	avoid some hangs, but it also required the disabling of the
 	hierarchical presentation manager, which is rarely, if ever,
 	used.
+
 	* src/orca/gnomespeechfactory.py: unref speech engines that fail
 	to initialize.  This will give them a chance to exit.  Fixes 
 	bug 333792.
+
 	* src/orca/orca.py: add more signal handling logic to attempt to
 	shutdown gracefully under adverse conditions.  This helps address
 	bug 333765.
@@ -1069,8 +1108,10 @@
 	* src/orca/orca.py, src/orca/settings.py, src/orca/orca-setup.in:
 	turn braille on by default; Orca will fail gracefully if it cannot
 	connect to BrlTTY.
+
 	* src/orca/focus_tracking_presenter.py, src/orca/orca.py: handle 
-	COMM_FAILURE's better when looking at children of the destkop.
+	COMM_FAILURE's better when looking at children of the desktop.
+
 	* src/orca/gnomespeechfactory.py: In speech, add a space after all
 	instances of "[" in a string as a means to prevent DECtalk from
 	interpreting these as commands.  This is an interim fix, and I'm 
@@ -1124,12 +1165,14 @@
 	patch for bug 333168: scripts were not being reclaimed.  This
 	is an acceptable workaround, but we should (not must) determine
 	circular references and why they exist.
+
 	* src/orca/braillegenerator.py: add ARMED state as a means for
 	identifying selected items when considering which item to show
 	from a set of grouped items.  This is to work around the way
 	OpenOffice currently exposes selected menu items.  If/when they
 	fix this to match GTK's method, this code should still continue
 	to work and not cause side effects (I hope).
+
 	* src/orca/atspi.py: do not cache the accessible state because
 	I'm not sure we are getting the appropriate events to allow us
 	to keep our state cache in sync.
@@ -1137,7 +1180,7 @@
 2006-03-01  Willie Walker <william.walker@sun.com>
 
 	* src/orca/default.py: fix for bug 332887 - added extra KeySyms
-	to accomodate different keypad layouts on Solaris systems.
+	to accommodate different keypad layouts on Solaris systems.
 	
 2006-02-28  Rich Burridge <rich.burridge@sun.com>
 
@@ -1171,6 +1214,7 @@
 2006-02-22  Willie Walker <william.walker@sun.com>
 
 	* NEWS, configure.in, README: prep for 0.2.1.
+
 	* src/orca/gnomespeechfactory.py, src/orca/speech.py, src/orca/orca.py,
 	src/orca/speechserver.py: add keystroke to reset speech: Insert+s.
 	Interim workaround for bug 332253.
@@ -1178,8 +1222,10 @@
 2006-02-16  Willie Walker <william.walker@sun.com>
 
         * src/orca/brlmon.py: "improve" visibility of cell with cursor.
+
 	* src/orca/brlmon.py: substitute macros for < and & so they are
 	not interpreted by the pango interpreter.
+
 	* src/orca/orca.py: add SIGSEGV handler to (hopefully) prevent
 	core files.
 	
@@ -1225,6 +1271,7 @@
 	src/orca/brlmon.py: add beginnings of a braille monitor.  This is
 	currently turned off by default, but can be enabled by setting
 	useBrailleMonitor=True in ~/.orca/user-settings.py.	
+
 	* src/orca/braille.py: refactor displayRegions to include a
 	new method, displayRegionsWithFocus, which will set the cursor
 	to a given region with focus.  The new displayRegions method
@@ -1320,16 +1367,21 @@
 
 	* src/orca/default.py: interim workaround for Orca not speaking
 	Contact Source Selector panel items properly in Evolution.
+
 	* bugs/bugs.html: update with information from OOo.
+
 	* bugs/bug_330454.py, bugs/bugs.html: update with new FOCUSED
 	state oddess for Evolution.
+
 	* src/orca/settings.py: internationalize regular expressions for
 	script mappings.
+
 	* src/orca/braillegenerator.py, src/orca/speechgenerator.py, 
 	src/orca/scripts/StarOffice.py: start treating PARAGRAPH objects
 	like TEXT objects.  Also rip out the earlier StarOffice script
 	logic now that the new UNO<->ATK bridge implementation is looking
 	better.
+
 	* src/orca/gnomespeechfactory.py: remove traceback when a chname
 	cannot be found - it's really not a bad thing.
 	
@@ -1375,12 +1427,16 @@
 	sort the keystrokes files alphabetically before running.
 	Finally attempt to politely tell Orca and other test utils
 	(event_listener) to quit before running another test.
+
 	* src/orca/orca.py: add current working directory to the
 	beginning of sys.path - this is primarily for picking up
 	a user-settings.py from the local directory for the purposes
 	of running tests
+
 	* src/orca/debug.py: remove gtk dependency
+
 	* src/orca/settings.py: add script mapping for soffice.bin
+
 	* src/orca/atspi.py: use EventDetails.host_application if
 	it is available (this was added for AT-SPI 1.7.0)
 	
@@ -1391,6 +1447,7 @@
 	issues with a different set of events coming from running the
 	same test on the same system - it's most likely due to 
 	differences in timing when handling keystrokes.
+
 	* test/keystrokes/*: arrange keystroke files in directories,
 	with one directory per application.
 	
@@ -1434,16 +1491,20 @@
 2006-01-27  Willie Walker <william.walker@sun.com>
 
 	* src/orca/bugs/bugs.html: Add gail infinite recursion bug 329230.
+
 	* ChangeLog: fix 2006/2005 typos.  :-)
 	
 2006-01-27  Willie Walker <william.walker@sun.com>
 
 	* src/orca/atspi.py: prevent infinite loop if obj.parent == parent.
 	(This case is an AT-SPI bug, but we need to watch for it).
+
 	* bugs/bugs.html: update to reflect bug entry information provided
 	to us by external development teams.
+
 	* src/orca/atspi.py: more work resulting from incompatible
 	event data structure change in AT-SPI 1.7.0.
+
 	* src/orca/atspi.py, src/orca/focus_tracking_presenter.py: 
 	change some ominous looking Traceback messages to what they
 	really are: just information regarding normal behavior.
@@ -1485,6 +1546,7 @@
 
 	* src/orca/focus_tracking_presenter.py: be a bit more vocal
 	when importing a script with syntax errors
+
 	* src/orca/atspi.py: handle both AT-SPI 1.7.0+ and pre-1.7.0
 	event "any_data" handling.
 	
@@ -1497,6 +1559,7 @@
 
 	* src/orca/default.py, src/orca/speechgenerator.py: fix for
 	bug 327568 - treat check menu items similar to check boxes.
+
 	* bugs/bug_322903.py, bugs/bug_322903.html, bugs/bugs.html,
 	src/orca/scripts/Mozilla.py: test case for showing how text can
 	get jumbled as user types in a text area.  The ultimate cause
@@ -1509,11 +1572,14 @@
 	I think the ultimate culprit may be the toolkit, but I think this 
 	workaround should hopefully work in the presence and/or absence of
 	the possible toolkit bug.
+
 	* src/orca/orca.py, src/orca/default.py, src/orca/input_event.py:
 	keep track of mouse button events as another means for watching
 	caret moved events.
+
 	* src/tools/bug_template.py: adjust for bad indentation caused by
 	emacs somehow messing up the indentation parameters.
+
 	* src/orca/settings.py: add another alias for Firefox ("Deer
 	Park") to manage unreleased versions of Firefox.
 	
@@ -1690,6 +1756,7 @@
 	bug in Firefox.  Only works if the caret offset is accurate,
 	which it isn't (see the related Firefox bug at
 	https://bugzilla.mozilla.org/show_bug.cgi?id=320395).
+
 	* bugs/bugs.html, bugs/bug_{320383,320387,320388,320390,
 	320393,320395}: Firefox bugs.
 	
@@ -1720,9 +1787,12 @@
 
 	* src/orca/atspi.py: use object.role instead of rolenames.getRoleName
 	for debug output.  It was too confusing the other way.
+
 	* src/orca/default.py: start taking hypertext into account when
 	speaking characters and words.
+
 	* src/orca/settings.py: try to make hyperlink voice stand out for now
+
 	* src/orca/scripts/Mozilla.py: lots of evaluation of accessible 
 	hyperlink support.  Many test cases to write and bugs to file against 
 	Firefox :-(.
@@ -1733,12 +1803,15 @@
 	ImportErrors, print the stack trace for all errors encountered
 	when importing a script at the SEVERE level.  This helps 
 	to better identify syntax errors and bugs in custom scripts.
+
 	* src/orca/scripts/Mozilla.py, src/orca/scripts/Makefile.am: 
 	initial pass at getting us going with evaluating Firefox's
 	AT-SPI implementation.  This does NOT provide any compelling
 	access to Firefox at this point.
+
 	* src/orca/default.py: permit presentation of caret moved
 	events even on objects that are not the locus of focus.
+
 	* src/orca/orca.py, src/orca/atspi.py: Rich's idea below 
 	looked so good that I added two new debug features: one to
 	print an indented ancestry of an object and one to print
@@ -1847,11 +1920,16 @@
 2005-12-02  Willie Walker <william.walker@sun.com>
 
 	* src/docs/doc-set/*: update architecture and script guides.
+
 	* src/docs/pydoc/Makefile.am: update to include latest sources.
+
 	* src/orca/orca.py: fix circular import for presentation managers
 	to allow pydoc to work better.
+
 	* src/orca/braille.py, src/orca/atspi.py: pydoc improvements.
+
 	* src/orca/kbd.y: remove obsolete file
+
 	* src/orca/mag.py: I believe I finally have the import worked
 	out on this correctly, and the primary cause (I think) was
 	due to gnome-mag not building/installing the ORBit modules.
@@ -1881,6 +1959,7 @@
 
 	* src/orca/Makefile.am: install orca convenience shell into 
 	${bindir) instead of $(prefix)/bin
+
 	* src/orca/speech.py: remove import of pdb
 
 2005-11-30  Rich Burridge <rich.burridge@sun.com>
@@ -1898,6 +1977,7 @@
 	standalone module to help provide a template for filing bugs.  One
 	may start with this file to create reproducable test cases for 
 	registering bugs against AT-SPI implementations.
+
 	* src/orca/focus_tracking_presenter.py: resolve problem with event
 	sources being GC'd while waiting on the idle thread.
 	
@@ -1925,9 +2005,11 @@
 	
 	* src/orca/*.py: use string constants to get settings (I got
 	bit by a mispelling when using raw strings).
+
 	* configure.in, Makefile.am, docs/pydoc/Makefile.am: only build 
 	pydoc if the "--enable-pydoc" option is used, and force this
 	for distcheck.
+
 	* po/POTFILES.in: make sure distcheck works
 	
 2005-11-15  Rich Burridge <rich.burridge@sun.com>
@@ -2071,9 +2153,11 @@
 	file (via debug.setDebugFile).  This should allow us to pass
 	in a non-buffered file from user-settings.py, hopefully 
 	allowing us to better track where orca is hanging.
+
 	* src/orca/*.py, src/orca/scripts/*.py: make the voicename
         for speaking be an optional parameter with a default value
         of "default".
+
 	* src/orca/a11y.py, src/orca/focus_tracking_presenter.py,
 	src/orca/settings.py: fix for bug 32063 - provide a more
 	flexible, general-purpose, and user-settable script discovery
@@ -2083,6 +2167,7 @@
 
 	* QUICKSTART: add libgail-gnome to Ubuntu section as well as
 	more apt-get stuff needed to build libgail-gnome.
+
 	* src/orca/orca.py: fail a bit more gracefully if braille,
 	speech, or mag are not available at run time.
 	
@@ -2103,6 +2188,7 @@
 	* src/orca/orca.in, src/orca/orca.py: move all logic out of
 	orca.in and move it into a new orca.py:main to help with 
 	debugging.
+
 	* src/orca/*.py: do not silently pass on any exceptions - at
 	least print an exception at debug.LEVEL_FINEST.  Also attempt
 	to provide some debug output inside while loops that could
@@ -2112,6 +2198,7 @@
 
 	* src/orca/Makefile.am: take care in packaging on 64-bit
 	platforms
+
 	* src/orca/kbd.py: fix problem with not registering enough
 	handlers to cover all possible modifier mask combinations;
 	refactor a little bit to help enable testing with XEVIE.
@@ -2132,18 +2219,22 @@
 2005-10-22  Willie Walker <william.walker@sun.com>
 
 	* QUICKSTART: create and update.
-	* src/brl/brlmodule.c: throw exceptions instead of printing
-	  errors when attempting to initialize/connect to BrlTTY.
+
+	* src/brl/brlmodule.c: throw exceptions instead of printing errors
+	when attempting to initialize/connect to BrlTTY.
+
 	* src/orca/braille.py: set default braille display size to 32
-	  (this is for testing purposes and the default matches the
-	  actual display size of our primary tester)
-	* src/orca/orca-setup.in: only enable accessibility if it has
-	  not already been enabled, thus avoiding a confusing message
+	(this is for testing purposes and the default matches the actual
+	display size of our primary tester)
+
+	* src/orca/orca-setup.in: only enable accessibility if it has not
+	already been enabled, thus avoiding a confusing message
 	
 2005-10-20  Willie Walker <william.walker@sun.com>
 
 	* src/orca/focus_tracking_presenter.py: add ability to provide
 	a mapping between application name and script module name
+
         * src/orca/scripts/*: refactor scripts into their own package
 	
 2005-10-19  Willie Walker <william.walker@sun.com>
@@ -2166,14 +2257,16 @@
 	* src/orca/flat_review.py: eliminate a major source of hangs
 	for flat review: getTextAtOffset is typically implemented 
 	incorrectly across (and possibly within) toolkits.
-        * src/orca/gaim.py: improved braille and speech experience (at
+       
+	* src/orca/gaim.py: improved braille and speech experience (at
 	least for AIM)
 
 2005-10-06  Willie Walker <william.walker@sun.com>
         
         * src/orca/flat_review.py: handle text objects that have
         children by ignoring the children
-        * src/orca/gaim.py: hacking to get chat working again
+       
+	* src/orca/gaim.py: hacking to get chat working again
         (at least for AIM)
 
 2005-10-05  Willie Walker <william.walker@sun.com>
@@ -2191,8 +2284,10 @@
 	* src/orca/braille.py, src/orca/default.py, src/orca/flat_review.py:
 	hopefully a little better at flat review navigation using the 
 	buttons on the braille display
-        * src/orca/braille.py: provide additional methods to find our way
+       
+	* src/orca/braille.py: provide additional methods to find our way
 	around and also provide more control over panning around.
+
 	* src/orca/flat_review.py: provide ability to explicitly set the
 	character of interest as well as ability to pass a character offset
 	to a zone and find the word associated with it.
@@ -2201,8 +2296,10 @@
 
 	* src/orca/speechgenerator.py, src/orca/braillegenerator.py: used
 	rolenames constants instead of hard coded strings.
+
 	* src/orca/default.py: use "above" and "below" semantics instead
 	of "previous line" and "next line" for BrlTTY LNUP and LNDN.
+
 	* src/orca/flat_review.py: in flat review mode, automatically pan
 	to begin/end of previous/next lines when panning in braille.
 	
@@ -2210,8 +2307,10 @@
 
 	* src/orca/default.py: don't speak flat review info if the user
 	navigated via input from the braille display.
+
 	* src/orca/braille.py: strip trailing "\n" from lines for flat
 	review mode.
+
 	* src/orca/flat_review.py: do not add zero-sized zones to flat 
 	review context.
 	
@@ -2230,7 +2329,9 @@
 2005-08-29  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca.py: Add cancel button to record keystrokes dialog.
+
 	* src/orca/orca-setup.in: fix typo in orcadir name (it was gorcadir).
+
 	* src/tools/sanity_checker.py: tool to do a rough sanity check on
 	keystroke files recorded by Orca or record_keystrokes.py
 	
@@ -2239,8 +2340,10 @@
 	* src/orca/braille.py, src/orca/default.py: better scrolling
 	of braille display when the caret moves (e.g., by pressing a
 	touch cursor or doing some keyboard navigation action).
+
 	* src/orca/default.py: implement simple line clustering 
 	algorithm inspired by a number of seminal OCR publications.
+
 	* src/orca/braille.py: implement suggestion from Dave Mielke
 	to handle spurious keyboard repeats from various display
 	drivers (e.g., the Alva).
@@ -2249,6 +2352,7 @@
 
 	* src/orca/orca.py, src/orca/a11y.py, src/orca/default.py: begin
 	implementing spatial analysis techniques.	
+
 	* src/orca/a11y.py: clear the cache properly when the parent
 	changes.
 	
@@ -2271,6 +2375,7 @@
 	* src/orca/orca.py, src/orca/focus_tracking_presenter.py: add
 	ability to record keystrokes to a file - press the "Pause" key
 	to start/stop recording.
+
 	* src/orca/braille.py, src/orca/speech.py: change LEVEL_INFO
 	output to be more test friendly.
 	
@@ -2282,13 +2387,17 @@
 2005-08-16  Willie Walker <william.walker@sun.com>
 
 	* src/orca/braillegenerator.py: reduce verbosity for page tabs.
+
 	* src/orca/a11y.py, src/orca/speechgenerator.py,
 	src/orca/braillegenerator.py: include accessible image description
 	for icons if it exists.
+
 	* src/orca/eventsynthesizer.py, src/orca/Makefile.am: create to
 	allow mouse and keyboard events to be synthesized by Orca
+
 	* src/orca/braille.py: use eventsynthesizer to generate mb1 clicks
 	for those objects that don't have actions (e.g., page tabs).	
+
 	* src/orca/a11y.py: do not cache extents because they can get out
 	of date if the object is moved and we currently do not have a way
 	to determine if this has happened.
@@ -2297,6 +2406,7 @@
 
 	* src/orca/braille.py, src/orca/braillegenerator.py: show 
 	text lines with their labels.
+
 	* src/orca/rolenames.py: minor consistency tweaking on rolenames.
 	
 2005-08-11  Willie Walker <william.walker@sun.com>
@@ -2305,6 +2415,7 @@
 	application behavior exhibited by Evolution's account setup
 	wizard: it will end up in situations where the active dialog
 	doesn't have any components with focus.
+
 	* src/orca/orca.py, src/orca/default.py, src/orca/a11y.py,
 	src/orca/speechgenerator.py: first pass at automatically speaking
 	panels when they are realized on the screen.
@@ -2313,9 +2424,11 @@
 
 	* src/orca/braillegenerator.py, src/orca/speechgenerator.py:
 	remove extraneous "region" field from constructor.
+
 	* src/orca/default.py: add factory methods to get braille and
 	speech generator objects so as to allow subclasses to more
 	easily override the generators.	
+
 	* src/orca/focus_tracking_presenter.py: ignore the
 	"object:state-changed:iconified" event for now to help avoid
 	tickling a nasty bug with gedit.  Tickling gedit when it is
@@ -2324,12 +2437,15 @@
 	`SpiAccessible' to `BonoboControlAccessible'.  It seems as though
 	whenever this message is issued, gedit will hang when you try to
 	exit it.	
+
 	* src/orca/gedit.py, src/orca/Makefile.am: new script to override
 	the _getSpeechForFrame method so as to avoid tickling the same bug
 	described above.
+
 	* src/orca/a11y.py: add ability to turn local caching of object
 	values on or off via the a11y.CACHE_VALUES field.  The default
 	value is True, which means to do caching.	
+
 	* src/orca/a11y.py, src/orca/orca.py: start keeping better
 	tracking of CORBA COMM FAILURES; throw a11y.InvalidObjectError
 	exceptions and set the "valid" field of the Accessible to False
@@ -2342,6 +2458,7 @@
 2005-08-04  Willie Walker <william.walker@sun.com>
 
 	* src/orca/braillegenerator.py: work on verbosity
+
 	* src/orca/speechgenerator.py, src/orca/speech.py,
 	src/orca/default.py: work on verbosity.  Move speechgenerator to 
 	a list of utterances rather than a single string containing
@@ -2351,10 +2468,13 @@
 2005-08-02  Willie Walker <william.walker@sun.com>
 
 	* src/orca/a11y.py: uncache label on name or description change
+
 	* src/orca/a11y.py, src/orca/speechgenerator.py,
 	src/orca/braillegenerator.py: add ability to speak tree node level
+
 	* src/orca/braille.py: add return to home functionality for when
 	the user presses CMD_HOME.
+
 	* src/orca/default.py, src/orca/speechgenerator.py,
 	src/orca/braillegenerator.py: do some work on speech and braille
 	for tables.
@@ -2362,19 +2482,25 @@
 2005-08-01  Willie Walker <william.walker@sun.com>
 
 	* src/orca/speechgenerator.py: try not to speak fillers.
+
 	* src/orca/default.py: handle issue where parents that manage 
 	descendants will potentially give a unique accessible instance
 	for the same child each time getChildAtIndex is called.
+
 	* src/orca/default.py: use selection changed events on specific
 	roles to update the locus of focus.
+
 	* src/orca/speechgenerator.py: remove the speaking of unavailable
 	if the object is an icon.  
+
 	* src/orca/speechgenerator.py._getSpeechForAlert: when presenting
 	a dialog, do not grab "free" labels that are children of a push
 	button.
+
 	* src/orca/a11y.py.__get_label: obtain the names of push buttons
 	a little better; push buttons can have labels as children and
 	can also be labelled by something.
+
 	* src/orca/default.py.onNameChanged: ignore name changes
 	on dialogs that have focus for now; the motivator for this is that
 	gnome-terminal appears to issue name change events on the
@@ -2396,6 +2522,7 @@
 	* src/orca/speech.py, src/orca/orca.py: add speech rate
 	increase/decrease functionality (still needs work to make
 	sure it doesn't go out of parameter bounds).
+
 	* src/orca/braillegenerator.py: style guide work for menus.
 	
 2005-07-26  Willie Walker <william.walker@sun.com>
@@ -2409,6 +2536,7 @@
 
 	* src/orca/orca.py: add ability to treat the insert key as a
 	modifier.  Use insert+F1 to enter learn mode.
+
 	* src/orca/speech.py, src/orca/default.py,
 	src/orca/speechgenerator.py: fix some speech generator issues with
 	toggle buttons as well as verbosity (accidentally told the
@@ -2442,6 +2570,7 @@
 	* src/orca/default.py, src/orca/orca.py, src/orca/settings.py,
 	src/orca/script.py: rough pass at allowing user defined
 	keybindings to override key bindings in scripts.
+
 	* TODO: update to include issues with autogen.
 	
 2005-06-23  Willie Walker <william.walker@sun.com>
@@ -2470,10 +2599,13 @@
 
 	* src/orca/debug.py,src/orca/default.py,src/orca/orca/py: begin
 	bringing Braille input back to life.
+
 	* src/orca/*.py: try to follow the public/private naming
 	convention (i.e., use "_" prefix for private fields) more.
+
 	* src/orca/script.py: renamed "mod"-related fields to "custom"
 	because I kept getting confused.
+
 	* src/orca/focus_tracking_presenter.py,src/orca/orca.py,
 	src/orca/script.py,src/orca/gaim.py: only reload a script
 	when a window is activated (the current implementation was
@@ -2483,9 +2615,12 @@
 
 	* src/orca/a11y.py: don't set object's parent attribute if it has
 	not been defined yet; instead just return None from __getattr__.
+
 	* src/orca/focus_tracking_presenter.py: get rid of 
 	"ERROR: app not found" message.
+
 	* src/orca/debug.py: reformatting of event output.
+
 	* src/orca/orca.py,hierarchical_presenter.py: add simple code to
 	draw outlines around an accessible.  This has the impact of now
 	requiring the DISPLAY to be set before running Orca.
@@ -2501,6 +2636,7 @@
 	output based on a regular expression.  This is for debug purposes
 	only.  The next step is to enable a keystroke in Orca to allow
 	the filter to be set/reset to allow for specific event tracking.
+
 	* src/orca/*.py: add notion of a "presentation manager" to allow
 	for presentation managers such as "focus tracking", "flat review"
 	and "hierarchical".  Split the current presentation code out from
@@ -2523,6 +2659,7 @@
 	were handled (list with one item was being exploded into
 	individual characters, which is not what we want), improve page
 	tab presenter, update text presenter.
+
 	* src/orca/gnome-terminal.py: remove the text event handlers
 	because they were identical to default.py.
 	
@@ -2533,6 +2670,7 @@
 	way to use it now is to "import debug" in settings.py (or anywhere
 	else) and then do "debug.setDebugLevel(debug.LEVEL_CONFIGURATION)"
 	somewhere else.
+
 	* src/orca/speech.py: more gracefully recover from failures
 	if/when the speech service dies.  Right now, on any failure, the
 	speech module will reset and reconnect to the speech server 
@@ -2541,11 +2679,15 @@
 2005-04-15  Willie Walker <william.walker@sun.com>
 
 	* src/orca/a11y.py: add an attempt at getting the group
+
 	* src/orca/rolenames.py: sync up with ATK rolenames
+
 	* src/orca/speech.py: capture CORBA failures for now
+
 	* src/orca/default.py: passes at defaultPresenter,
 	pushButtonPresenter, toggleButtonPresenter, radioButtonPresenter,
 	menuBarPresenter, menuPresenter, and sliderPresenter.
+
 	* docs/programmers-guide/programmers-guide.{sgml,pdf}: some 
 	level of introduction to style.  Still much work to do when it
 	comes to notions of levels of verbosity and speaker style.
@@ -2572,43 +2714,55 @@
 
 	* default-keybindings.ppy, default.py, speech.py: add sayAgain
 	support to repeat last utterance spoken
+
 	* default.py: more work to be in line with gnopernicus
+
 	* rolenames.py: import text for speech and Braille from gnopernicus
+
 	* speech.py: interrupt speech when given something new to say
+
 	* mag.py: a little better (but far from perfect) way to move ROI
 	to match object with focus; also add support for tracking mouse events
 	
 2005-03-31  Willie Walker <william.walker@sun.com>
 
 	* gnome-terminal.py:  call default.brlUpdateText
+
 	* a11y.py: add capability to get component extents from 
 	an accessible
+
 	* orca.py, default.py: add beginnings of magnification support
+
 	* mag.py: early magnification support
 	
 2005-03-25  Willie Walker <william.walker@sun.com>
 
 	* Upgrade to brltty-3.6.1 (TODO: perhaps add backwards
 	compatibility in if people complain.).
+
 	* Add *.pyc (compiled *.py files) to src/orca/.cvsignore.
+
 	* Use try/except blocks more sparingly to allow for easier
 	debugging.  Also add more debugging features to debug.py.
 	A quite note on debugging: add "debug = True" to 
 	~/.orca/settings.py to turn debugging on.
+
 	* Fix presentation of radio and checkbox menu items.
+
 	* Make menus speak like Gnopernicus for now.
+
 	* Backout a11y.py workaround for Nautilus shortcomings; it turns
 	out this workaround was hurting the overall logic.
 	
 2005-02-15  Willie Walker <william.walker@sun.com>
 
 	* Remove src/orca/dispatcher.py as it was obsoleted by the
-	  dispathcher table in a11y.py.
+	dispatcher table in a11y.py.
 
 2005-02-15  Willie Walker <william.walker@sun.com>
 
 	* Nearly every source file: added much documentation and many
-	  TODO comments.
+	TODO comments.
 
 2005-02-10  Willie Walker <william.walker@sun.com>
 
@@ -2678,7 +2832,7 @@
 	accessible wrapper.
 	(onFocus): Fixed to use new accessible wrapper.
 
-	* src/orca/orca.in: Don't speak "selcome to Orca" here-- now
+	* src/orca/orca.in: Don't speak "Welcome to Orca" here-- now
 	spoken in orca.py in start.
 
 2004-06-28  Christophe Merlet  <redfox@redfoxcenter.org>
@@ -2710,9 +2864,9 @@
 	events through one function which decides which script should
 	receive each event.
 
-	* src/orca/default.py: UPdated to use new accesible wrappers.
+	* src/orca/default.py: UPdated to use new accessible wrappers.
 
-	* src/orca/a11y.py: Added an accessible wrapper in pythohn. MOved
+	* src/orca/a11y.py: Added an accessible wrapper in python. MOved
 	all the listeners which update the object caches to a11y.py.
 
 	* src/core/eventlistener.c: Don't include pyaccessible.h.
@@ -2727,7 +2881,7 @@
 	the event handlers which refresh the cache.
 
 	* Removed src/core/pyaccessible.c and src/core/pyaccessible.h --
-	the accessible wrappers are now written in PYthon in
+	the accessible wrappers are now written in Python in
 	src/orca/a11y.py.
 
 2004-06-10  Marc Mulcahy  <marc.mulcahy@sun.com>
