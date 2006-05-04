@@ -1102,13 +1102,16 @@ class orcaSetupGUI(GladeWrapper):
         """Signal handler for the "color_set" signal for the
            magCursorColorButton GtkColorButton widget.
            The user has changed the value of the magnification
-           cursor settings cursor color button.
+           cursor settings cursor color button. Set the 'magCursorColor' 
+           preference to the new value.
 
         Arguments:
         - widget: the component that generated the signal.
         """
 
-        print "magCursorColorSet: not implemented yet."
+        color = widget.get_color()
+        cursorColor = "#%4X%4X%4X" % (color.red, color.green, color.blue)
+        self.prefsDict["magCursorColor"] = cursorColor
 
     def magCrossHairOnOffChecked(self, widget):
         """Signal handler for the "toggled" signal for the
