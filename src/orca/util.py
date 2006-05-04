@@ -163,6 +163,36 @@ def getDisplayedText(obj):
  
     return displayedText
 
+def getRealActiveDescendant(obj):
+    """Given an object that should be a child of an object that
+    manages its descendants, return the child that is the real
+    active descendant carrying useful information.
+
+    Arguments:
+    - obj: an object that should be a child of an object that
+    manages its descendants.
+    """
+
+    # [[[TODO: WDW - this is an odd hacky thing I've somewhat drawn
+    # from Gnopernicus.  The notion here is that we get an active
+    # descendant changed event, but that object tends to have children
+    # itself and we need to decide what to do.  Well...the idea here
+    # is that the last child (Gnopernicus chooses child(1)), tends to
+    # be the child with information.  The previous children tend to
+    # be non-text or just there for spacing or something.  You will
+    # see this in the various table demos of gtk-demo and you will
+    # also see this in the Contact Source Selector in Evolution.
+    #
+    # Just note that this is most likely not a really good solution
+    # for the general case.  That needs more thought.  But, this
+    # comment is here to remind us this is being done in poor taste
+    # and we need to eventually clean up our act.]]]
+    #
+    if obj and obj.childCount:
+        return obj.child(obj.childCount - 1)
+    else:
+        return obj
+
 def findFocusedObject(root):
     """Returns the accessible that has focus under or including the
     given root.

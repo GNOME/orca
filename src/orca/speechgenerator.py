@@ -1138,7 +1138,8 @@ class SpeechGenerator:
                     break
 
         if (len(utterances) == 0) and (not already_focused):
-            utterances.append(util.getDisplayedText(obj))
+            utterances.append(util.getDisplayedText(\
+                util.getRealActiveDescendant(obj)))
 
         # [[[TODO: WDW - HACK attempt to determine if this is a node;
         # if so, describe its state.]]]
@@ -1370,7 +1371,7 @@ class SpeechGenerator:
 
         Returns a list of utterances to be spoken.
         """
-
+        
         if self.speechGenerators.has_key(obj.role):
             generator = self.speechGenerators[obj.role]
         else:

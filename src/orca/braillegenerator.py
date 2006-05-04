@@ -1000,7 +1000,8 @@ class BrailleGenerator:
                     break
 
         if len(regions) == 0:
-            regions = self._getDefaultBrailleRegions(obj)
+            regions = self._getDefaultBrailleRegions(
+                util.getRealActiveDescendant(obj))
 
         # [[[TODO: WDW - HACK attempt to determine if this is a node;
         # if so, describe its state.]]]
