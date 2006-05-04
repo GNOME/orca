@@ -672,6 +672,7 @@ Hyperlink</property>
 			  <property name="active">False</property>
 			  <property name="inconsistent">False</property>
 			  <property name="draw_indicator">True</property>
+			  <property name="group">noneButton</property>
 			  <accessibility>
 			    <atkrelation target="punctuationLabel" type="labelled-by"/>
 			  </accessibility>
@@ -695,6 +696,7 @@ Hyperlink</property>
 			  <property name="active">False</property>
 			  <property name="inconsistent">False</property>
 			  <property name="draw_indicator">True</property>
+			  <property name="group">noneButton</property>
 			  <accessibility>
 			    <atkrelation target="punctuationLabel" type="labelled-by"/>
 			  </accessibility>
@@ -788,6 +790,7 @@ Hyperlink</property>
 			  <property name="active">False</property>
 			  <property name="inconsistent">False</property>
 			  <property name="draw_indicator">True</property>
+			  <property name="group">speechBriefButton</property>
 			  <accessibility>
 			    <atkrelation target="speechVerbosityLabel" type="labelled-by"/>
 			  </accessibility>

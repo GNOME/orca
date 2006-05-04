@@ -1,5 +1,11 @@
 2006-05-04  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/orca-setup.glade
+          Re-enabled grouping of the two sets of radio buttons on the
+          speech notebook pane.
+
+2006-05-04  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/orca_gui_prefs.py
           Implemented:
             magSmoothingChanged(self, widget):
