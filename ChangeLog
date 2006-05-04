@@ -1,5 +1,13 @@
 2006-05-04  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/settings.py
+          Fixed bug #340662 (http://bugzilla.gnome.org/show_bug.cgi?id=340662)
+          Added a try/except clause arround the "import gtk.gdk", so that
+          if it fails, we are still able to set screenWidth and screenHeight 
+          to something sensible.
+
+2006-05-04  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/mag.py
           src/orca/settings.py
           src/orca/orca_gui_prefs.py

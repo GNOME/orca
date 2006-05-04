@@ -24,7 +24,20 @@ case of gdm) or doesn't have the specified attribute.
 
 import re
 import sys
-import gtk.gdk
+try:
+    # This can fail due to gtk not being available.  We want to
+    # be able to recover from that if possible.  The main driver
+    # for this is to allow "orca --text-setup" to work even if
+    # the desktop is not running.
+    #
+    import gtk.gdk
+    screenWidth = gtk.gdk.screen_get_default().get_width()
+    screenHeight = gtk.gdk.screen_get_default().get_height()
+except:
+    # Just default to something that hopefully everybody has.
+    #
+    screenWidth = 640
+    screenWidth = 480
 
 import debug
 from acss import ACSS
@@ -179,10 +192,10 @@ magCrossHairSize                 = 16
 
 # Magnification zoomer region placement.
 #
-magZoomerLeft                    = (gtk.gdk.screen_get_default().get_width() / 2)
-magZoomerRight                   = gtk.gdk.screen_get_default().get_width()
+magZoomerLeft                    = screenWidth / 2
+magZoomerRight                   = screenWidth
 magZoomerTop                     = 0
-magZoomerBottom                  = gtk.gdk.screen_get_default().get_height()
+magZoomerBottom                  = screenHeight
 
 # Magnification zoom factor.
 #
