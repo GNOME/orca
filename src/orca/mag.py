@@ -309,7 +309,7 @@ def init():
     #                      viewport.__typecode__.repo_id),
     #                          GNOME.Magnifier.RectBounds(0,0,256,256)))
     #
-    _zoomer.setMagFactor(settings.magXScaleFactor, settings.magYScaleFactor)
+    _zoomer.setMagFactor(settings.magScaleFactor, settings.magScaleFactor)
 
     atspi.Registry().registerEventListener(onMouseEvent, "mouse:abs")
 

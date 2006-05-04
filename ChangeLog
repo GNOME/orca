@@ -1,5 +1,27 @@
 2006-05-04  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/mag.py 
+          src/orca/orca_gui_prefs.py
+          src/orca/settings.py
+          Changed magXScaleFactor and magYScaleFactor to a single 
+          magScaleFactor. This means that you currently can't magnify 
+          different amounts for X and Y.  If this functionality is 
+          needed, we can implement it in a future release.
+
+        * src/orca/orca_prefs.py
+          Added _getMagCursorColorString(), _getMagSmoothingModeString() 
+          and _getMagMouseTrackingModeString() that return strings 
+          representing the magnification cursor color, the magnification 
+          smoothing mode and the magnification mouse tracking mode 
+          respectively, and adjusted the writePreferences() method to 
+          use them.
+
+        * src/orca/settings.py
+          Changed magCursorColor from 0xFFFFFF to '#000000' (white to black
+          and in the correct format for gtk.gdk.color_parse().
+
+2006-05-04  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/orca-setup.glade
           Added in an "Enable Speech" checkbox at the top of the speech
           notebook pane.

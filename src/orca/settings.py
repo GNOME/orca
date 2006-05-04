@@ -62,8 +62,7 @@ userCustomizableSettings = [
     "magZoomerRight",
     "magZoomerTop",
     "magZoomerBottom",
-    "magXScaleFactor",
-    "magYScaleFactor",
+    "magScaleFactor",
     "enableMagZoomerColorInversion",
     "magSmoothingMode",
     "magMouseTrackingMode",
@@ -164,7 +163,7 @@ magCursorSize                    = 32
 
 # Magnification cursor color value (hex color spec).
 #
-magCursorColor                   = 0xFFFFFF
+magCursorColor                   = '#000000'
 
 # If True, show the magnification cross-hairs.
 #
@@ -187,8 +186,7 @@ magZoomerBottom                  = gtk.gdk.screen_get_default().get_height()
 
 # Magnification zoom scale factor.
 #
-magXScaleFactor                  = 4.0
-magYScaleFactor                  = 4.0
+magScaleFactor                   = 4.0
 
 # If True, invert the magnification zoomer colors.
 #

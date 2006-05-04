@@ -262,8 +262,8 @@ class orcaSetupGUI(GladeWrapper):
         # accordingly.
         #
         cursorColor = prefs["magCursorColor"]
-        # color = gtk.gdk.color_parse(cursorColor)
-        # self.magCursorColorButton.set_color(color)
+        color = gtk.gdk.color_parse(cursorColor)
+        self.magCursorColorButton.set_color(color)
 
         # Get the 'Cross-hair on/off' preference and set the checkbox
         # accordingly.
@@ -323,11 +323,7 @@ class orcaSetupGUI(GladeWrapper):
         # Get the zoom factor preference and set the zoom factor spin
         # button value accordingly.
         #
-        # [[[TODO:richb - there are two zoom factor settings; both X and Y
-        # which one should be set into the GUI? Punting on the X one for
-        # now.]]]
-        #
-        zoomFactor = prefs["magXScaleFactor"]
+        zoomFactor = prefs["magScaleFactor"]
         self.magZoomFactorSpinButton.set_value(zoomFactor)
 
         # Get the 'Invert Colors' preference and set the checkbox accordingly.

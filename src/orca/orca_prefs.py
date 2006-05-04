@@ -166,6 +166,54 @@ def _getVerbalizePunctuationStyleString(punctuationStyle):
     else:
         return "orca.settings.PUNCTUATION_STYLE_ALL"
 
+def _getMagCursorColorString(cursorColor):
+    """Returns a string that represents the magnification cursor color
+    passed in.
+
+    Arguments:
+    - cursorColor: magnification cursor color
+
+    Returns a string suitable for the preferences file.
+    """
+
+    cursorColorStr = "'%s'" % cursorColor
+
+    return cursorColorStr
+
+def _getMagSmoothingModeString(smoothingMode):
+    """Returns a string that represents the magnification smoothing mode 
+    passed in.
+
+    Arguments:
+    - smoothingMode: magnification smoothing mode.
+
+    Returns a string suitable for the preferences file.
+    """
+
+    if smoothingMode == settings.MAG_SMOOTHING_MODE_BILINEAR:
+        return "orca.settings.MAG_SMOOTHING_MODE_BILINEAR"
+    elif smoothingMode == settings.MAG_SMOOTHING_MODE_NONE:
+        return "orca.settings.MAG_SMOOTHING_MODE_NONE"
+    else:
+        return "orca.settings.MAG_SMOOTHING_MODE_BILINEAR"
+
+def _getMagMouseTrackingModeString(mouseTrackingMode):
+    """Returns a string that represents the magnification mouse tracking
+    mode passed in.
+
+    Arguments:
+    - mouseTrackingMode: magnification mouse tracking mode.
+
+    Returns a string suitable for the preferences file.
+    """
+
+    if mouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_CENTERED:
+        return "orca.settings.MAG_MOUSE_TRACKING_MODE_CENTERED"
+    elif mouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_PUSH:
+        return "orca.settings.MAG_MOUSE_TRACKING_MODE_PUSH"
+    else:
+        return "orca.settings.MAG_MOUSE_TRACKING_MODE_CENTERED"
+
 def readPreferences():
     """Returns a dictionary containing the names and values of the
     customizable features of Orca."""
@@ -220,6 +268,12 @@ def writePreferences(prefsDict):
                 value = _getBrailleRolenameStyleString(prefsDict[key])
             elif key == "verbalizePunctuationStyle":
                 value = _getVerbalizePunctuationStyleString(prefsDict[key])
+            elif key == "magCursorColor":
+                value = _getMagCursorColorString(prefsDict[key])
+            elif key == "magSmoothingMode":
+                value = _getMagSmoothingModeString(prefsDict[key])
+            elif key == "magMouseTrackingMode":
+                value = _getMagMouseTrackingModeString(prefsDict[key])
             else:
                 value = prefsDict[key]
             prefs.writelines("orca.settings.%s = %s\n" % (key, value))
