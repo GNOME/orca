@@ -323,7 +323,7 @@ class orcaSetupGUI(GladeWrapper):
         # Get the zoom factor preference and set the zoom factor spin
         # button value accordingly.
         #
-        zoomFactor = prefs["magScaleFactor"]
+        zoomFactor = prefs["magZoomFactor"]
         self.magZoomFactorSpinButton.set_value(zoomFactor)
 
         # Get the 'Invert Colors' preference and set the checkbox accordingly.
@@ -1056,37 +1056,40 @@ class orcaSetupGUI(GladeWrapper):
         """Signal handler for the "toggled" signal for the 
            magCursorOnOffCheckButton GtkCheckButton widget. 
            The user has [un]checked the magnification cursor settings
-           'Cursor on/off' checkbox. 
+           'Cursor on/off' checkbox. Set the 'enableMagCursor' preference
+           to the new value.
 
         Arguments:
         - widget: the component that generated the signal.
         """
 
-        print "magCursorOnOffChecked: not implemented yet."
+        self.prefsDict["enableMagCursor"] = widget.get_active()
 
     def magCursorExplicitSizeChecked(self, widget):
         """Signal handler for the "toggled" signal for the
            magCursorSizeCheckButton GtkCheckButton widget.
            The user has [un]checked the magnification cursor settings
-           'Explicit cursor size' checkbox.
+           'Explicit cursor size' checkbox. Set the 
+           'enableMagCursorExplicitSize' preference to the new value.
 
         Arguments:
         - widget: the component that generated the signal.
         """
 
-        print "magCursorExplicitSizeChecked: not implemented yet."
+        self.prefsDict["enableMagCursorExplicitSize"] = widget.get_active()
 
     def magCursorSizeValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the
            magCursorSizeSpinButton GtkSpinButton widget.
            The user has changed the value of the magnification 
-           cursor settings cursor size spin button.
+           cursor settings cursor size spin button. Set the
+           'magCursorSize' preference to the new integer value.
 
         Arguments:
         - widget: the component that generated the signal.
         """
 
-        print "magCursorSizeValueChanged: not implemented yet."
+        self.prefsDict["magCursorSize"] = widget.get_value_as_int()
 
     def magCursorColorSet(self, widget):
         """Signal handler for the "color_set" signal for the
@@ -1104,97 +1107,105 @@ class orcaSetupGUI(GladeWrapper):
         """Signal handler for the "toggled" signal for the
            magCrossHairOnOffCheckButton GtkCheckButton widget.
            The user has [un]checked the magnification cross-hair settings
-           'Cross-hair on/off' checkbox.
+           'Cross-hair on/off' checkbox. Set the 'enableMagCrossHair' 
+           preference to the new value.
 
         Arguments:
         - widget: the component that generated the signal.
         """
 
-        print "magCrossHairOnOffChecked: not implemented yet."
+        self.prefsDict["enableMagCrossHair"] = widget.get_active()
 
     def magCrossHairClipOnOffChecked(self, widget):
         """Signal handler for the "toggled" signal for the
            magCrossHairClipCheckButton GtkCheckButton widget.
            The user has [un]checked the magnification cross-hair settings
-           'Cross-hair clip on/off' checkbox.
+           'Cross-hair clip on/off' checkbox. Set the 'enableMagCrossHairClip'
+           preference to the new value.
 
         Arguments:
         - widget: the component that generated the signal.
         """
 
-        print "magCrossHairClipOnOffChecked: not implemented yet."
+        self.prefsDict["enableMagCrossHairClip"] = widget.get_active()
 
     def magCrossHairSizeValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the
            magCrossHairSizeSpinButton GtkSpinButton widget.
            The user has changed the value of the magnification
-           cross-hair settings cross-hair size spin button.
+           cross-hair settings cross-hair size spin button. Set the
+           'magCrossHairSize' preference to the new integer value.
 
         Arguments:
         - widget: the component that generated the signal.
         """
 
-        print "magCrossHairSizeValueChanged: not implemented yet."
+        self.prefsDict["magCrossHairSize"] = widget.get_value_as_int()
 
     def magZoomerTopValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the
            magZoomerTopSpinButton GtkSpinButton widget.
            The user has changed the value of the magnification
-           zoomer placement top spin button.
+           zoomer placement top spin button. Set the 'magZoomerTop' 
+           preference to the new integer value.
 
         Arguments:
         - widget: the component that generated the signal.
         """
 
-        print "magZoomerTopValueChanged: not implemented yet."
+        self.prefsDict["magZoomerTop"] = widget.get_value_as_int()
 
     def magZoomerBottomValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the
            magZoomerBottomSpinButton GtkSpinButton widget.
            The user has changed the value of the magnification
-           zoomer placement bottom spin button.
+           zoomer placement bottom spin button. Set the 'magZoomerBottom'
+           preference to the new integer value.
 
         Arguments:
         - widget: the component that generated the signal.
         """
 
-        print "magZoomerBottomValueChanged: not implemented yet."
+        self.prefsDict["magZoomerBottom"] = widget.get_value_as_int()
 
     def magZoomerLeftValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the
            magZoomerLeftSpinButton GtkSpinButton widget.
            The user has changed the value of the magnification
-           zoomer placement left spin button.
+           zoomer placement left spin button. Set the 'magZoomerLeft'
+           preference to the new integer value.
 
         Arguments:
         - widget: the component that generated the signal.
         """
 
-        print "magZoomerLeftValueChanged: not implemented yet."
+        self.prefsDict["magZoomerLeft"] = widget.get_value_as_int()
 
     def magZoomerRightValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the
            magZoomerRightSpinButton GtkSpinButton widget.
            The user has changed the value of the magnification
-           zoomer placement right spin button.
+           zoomer placement right spin button. Set the 'magZoomerRight'
+           preference to the new integer value.
 
         Arguments:
         - widget: the component that generated the signal.
         """
 
-        print "magZoomerRightValueChanged: not implemented yet."
+        self.prefsDict["magZoomerRight"] = widget.get_value_as_int()
 
     def magZoomFactorValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the
            magZoomFactorSpinButton GtkSpinButton widget.
            The user has changed the value of the magnification
-           zoom factor spin button.
+           zoom factor spin button. Set the 'magZoomFactor'
+           preference to the new value.
 
         Arguments:
         - widget: the component that generated the signal.
         """
 
-        print "magZoomFactorValueChanged: not implemented yet."
+        self.prefsDict["magZoomFactor"] = widget.get_value_as_int()
 
     def magSmoothingChanged(self, widget):
         """Signal handler for the "changed" signal for the 
@@ -1222,13 +1233,14 @@ class orcaSetupGUI(GladeWrapper):
         """Signal handler for the "toggled" signal for the
            magCrossHairOnOffCheckButton GtkCheckButton widget.
            The user has [un]checked the magnification 'Invert Colors'
-           checkbox.
+           checkbox. Set the 'enableMagZoomerColorInversion' preference 
+           to the new value.
 
         Arguments:
         - widget: the component that generated the signal.
         """
 
-        print "magInvertColorsChecked: not implemented yet."
+        self.prefsDict["enableMagZoomerColorInversion"] = widget.get_active()
 
     def helpButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the helpButton 

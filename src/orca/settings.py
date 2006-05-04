@@ -62,7 +62,7 @@ userCustomizableSettings = [
     "magZoomerRight",
     "magZoomerTop",
     "magZoomerBottom",
-    "magScaleFactor",
+    "magZoomFactor",
     "enableMagZoomerColorInversion",
     "magSmoothingMode",
     "magMouseTrackingMode",
@@ -184,9 +184,9 @@ magZoomerRight                   = gtk.gdk.screen_get_default().get_width()
 magZoomerTop                     = 0
 magZoomerBottom                  = gtk.gdk.screen_get_default().get_height()
 
-# Magnification zoom scale factor.
+# Magnification zoom factor.
 #
-magScaleFactor                   = 4.0
+magZoomFactor                    = 4.0
 
 # If True, invert the magnification zoomer colors.
 #

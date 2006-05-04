@@ -1,5 +1,27 @@
 2006-05-04  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/mag.py
+          src/orca/settings.py
+          src/orca/orca_gui_prefs.py
+          Changed occurances of "magScaleFactor" to "magZoomFactor"
+
+        * src/orca/orca_gui_prefs.py
+          Implemented:
+            magCursorOnOffChecked(self, widget):
+            magCursorExplicitSizeChecked(self, widget):
+            magCursorSizeValueChanged(self, widget):
+            magCrossHairOnOffChecked(self, widget):
+            magCrossHairClipOnOffChecked(self, widget):
+            magCrossHairSizeValueChanged(self, widget):
+            magZoomerTopValueChanged(self, widget):
+            magZoomerBottomValueChanged(self, widget):
+            magZoomerLeftValueChanged(self, widget):
+            magZoomerRightValueChanged(self, widget):
+            magZoomFactorValueChanged(self, widget):
+            magInvertColorsChecked(self, widget):
+
+2006-05-04  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/mag.py 
           src/orca/orca_gui_prefs.py
           src/orca/settings.py
