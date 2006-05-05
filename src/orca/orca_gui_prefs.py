@@ -1259,6 +1259,10 @@ class orcaSetupGUI(GladeWrapper):
             mode = settings.MAG_MOUSE_TRACKING_MODE_CENTERED
         elif mouseTrackingMode == _("Push"):
             mode = settings.MAG_MOUSE_TRACKING_MODE_PUSH
+        elif mouseTrackingMode == _("Proportional"):
+            mode = settings.MAG_MOUSE_TRACKING_MODE_PROPORTIONAL
+        elif mouseTrackingMode == _("None"):
+            mode = settings.MAG_MOUSE_TRACKING_MODE_NONE
         else:
             mode = settings.MAG_MOUSE_TRACKING_MODE_CENTERED
         self.prefsDict["magMouseTrackingMode"] = mode
