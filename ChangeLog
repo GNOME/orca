@@ -1,3 +1,20 @@
+2006-05-05  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca-setup.glade:
+          Incorporate GUI rework from Calum Benson, which makes it
+          more HIG compliant.
+
+        * src/orca/orca_gui_prefs.py:
+          Adjustments to match the new Glade file layout.
+          Changed the print specification in magCursorColorSet() to
+          print leading zeroes instead of spaces.
+
+        * src/orca/settings.py:
+          src/orca/orca_prefs.py:
+          src/orca/orca_gui_prefs.py:
+          src/orca/orca-setup.glade:
+          Added in two new mouse tracking modes: None and Proportional.
+
 2006-05-05  Willie Walker <william.walker@sun.com>
 
 	* src/orca/mag.py: add push mouse tracking mode.

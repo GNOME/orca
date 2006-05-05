@@ -209,6 +209,10 @@ def _getMagMouseTrackingModeString(mouseTrackingMode):
 
     if mouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_CENTERED:
         return "orca.settings.MAG_MOUSE_TRACKING_MODE_CENTERED"
+    elif mouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_NONE:
+        return "orca.settings.MAG_MOUSE_TRACKING_MODE_NONE"
+    elif mouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_PROPORTIONAL:
+        return "orca.settings.MAG_MOUSE_TRACKING_MODE_PROPORTIONAL"
     elif mouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_PUSH:
         return "orca.settings.MAG_MOUSE_TRACKING_MODE_PUSH"
     else:

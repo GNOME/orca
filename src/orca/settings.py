@@ -213,9 +213,11 @@ magSmoothingMode                 = MAG_SMOOTHING_MODE_BILINEAR
 
 # Magnification mouse tracking mode (see magMouseTrackingMode).
 #
-MAG_MOUSE_TRACKING_MODE_CENTERED = 0
-MAG_MOUSE_TRACKING_MODE_PUSH     = 1
-magMouseTrackingMode             = MAG_MOUSE_TRACKING_MODE_CENTERED
+MAG_MOUSE_TRACKING_MODE_CENTERED     = 0
+MAG_MOUSE_TRACKING_MODE_NONE         = 1
+MAG_MOUSE_TRACKING_MODE_PROPORTIONAL = 2
+MAG_MOUSE_TRACKING_MODE_PUSH         = 3
+magMouseTrackingMode                 = MAG_MOUSE_TRACKING_MODE_CENTERED
 
 # if True, enable word echo.
 # Note that it is allowable for both enableEchoByWord and enableKeyEcho

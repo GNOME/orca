@@ -352,6 +352,10 @@ class orcaSetupGUI(GladeWrapper):
         mouseTrackingMode = prefs["magMouseTrackingMode"]
         if mouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_CENTERED:
             mode = _("Centered")
+        elif mouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_NONE:
+            mode = _("None")
+        elif mouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_PROPORTIONAL:
+            mode = _("Proportional")
         elif mouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_PUSH:
             mode = _("Push")
         else:
@@ -704,7 +708,11 @@ class orcaSetupGUI(GladeWrapper):
         """
 
         enable = self.keyEchoCheckbutton.get_active()
-        self.keyEchoTable.set_sensitive(enable)
+        self.printableCheckbutton.set_sensitive(enable)
+        self.modifierCheckbutton.set_sensitive(enable)
+        self.lockingCheckbutton.set_sensitive(enable)
+        self.functionCheckbutton.set_sensitive(enable)
+        self.actionCheckbutton.set_sensitive(enable)
 
     def _say(self, text, stop=False):
         """If the text field is not None, speaks the given text, optionally 
@@ -1110,7 +1118,7 @@ class orcaSetupGUI(GladeWrapper):
         """
 
         color = widget.get_color()
-        cursorColor = "#%4X%4X%4X" % (color.red, color.green, color.blue)
+        cursorColor = "#%04X%04X%04X" % (color.red, color.green, color.blue)
         self.prefsDict["magCursorColor"] = cursorColor
 
     def magCrossHairOnOffChecked(self, widget):
@@ -1289,9 +1297,9 @@ class orcaSetupGUI(GladeWrapper):
 
         self.orcaSetupWindow.hide()
 
-    def applyButtonClicked(self, widget):
-        """Signal handler for the "clicked" signal for the applyButton
-           GtkButton widget. The user has clicked the Apply button.
+    def okButtonClicked(self, widget):
+        """Signal handler for the "clicked" signal for the okButton
+           GtkButton widget. The user has clicked the OK button.
            Write out the users preferences. If GNOME accessibility hadn't
            previously been enabled, warn the user that they will need to
            log out. Shut down any active speech servers that were started.
