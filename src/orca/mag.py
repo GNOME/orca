@@ -48,11 +48,6 @@ _initialized = False
 #
 _magnifier = None
 
-# The GNOME.Magnifier.RectBounds, in unzoomed system coordinates, of the
-# display that is being magnified.
-#
-_sourceDisplayBounds = None
-
 # The width and height, in unzoomed system coordinates of the rectangle that,
 # when magnified, will fill the viewport of the magnifier - this needs to be
 # sync'd with the magnification factors of the zoom area.
@@ -216,7 +211,7 @@ def __setROI(rect):
     
 # Used for tracking the pointer.
 #
-def onMouseEvent(e):
+def __onMouseEvent(e):
     """
     Arguments:
     - e: at-spi event from the at-api registry
@@ -247,7 +242,6 @@ def __dumpPropertyBag(obj):
     slots = pbag.getKeys("")
     print "  Available slots: ", pbag.getKeys("")
     for slot in slots:
-        print
         print "    About '%s':" % slot
         print "    Doc Title:", pbag.getDocTitle(slot)
         print "    Type:", pbag.getType(slot)
@@ -260,6 +254,7 @@ def __dumpPropertyBag(obj):
 def applySettings():
     """Looks at the user settings and applies them to the magnifier."""
 
+    global _zoomer
     global _roiWidth
     global _roiHeight
     global _minROIX
@@ -267,48 +262,37 @@ def applySettings():
     global _maxROIX
     global _maxROIY
 
-    #bonobo.pbclient_set_string
-    #bonobo.pbclient_set_short
-    #bonobo.pbclient_set_ushort
-    #bonobo.pbclient_set_long
-    #bonobo.pbclient_set_ulong
-    #bonobo.pbclient_set_float
-    #bonobo.pbclient_set_double
-    #bonobo.pbclient_set_boolean
-    #bonobo.pbclient_set_char
-    #bonobo.pbclient_set_value
+    ########################################################################
+    #                                                                      #
+    # First set up the magnifier properties.                               #
+    #                                                                      #
+    ########################################################################
+    
+    _magnifier.clearAllZoomRegions()
     
     magnifierPBag = _magnifier.getProperties()
-    zoomerPBag = _zoomer.getProperties()
 
-    #try:
-    #    tdb = magnifierPBag.getValue("target-display-bounds").value()
-    #    magnifierPBag.setValue(
-    #        "target-display-bounds",
-    #        atspi.ORBit.CORBA.Any(
-    #            atspi.ORBit.CORBA.TypeCode(
-    #                tdb.__typecode__.repo_id),
-    #            GNOME.Magnifier.RectBounds(0, 0, 512, 768)))
-    #
-    #     sdb = magnifier.getValue("source-display-bounds").value()
-    #    magnifier.setValue(
-    #        "source-display-bounds",
-    #        atspi.ORBit.CORBA.Any(
-    #            atspi.ORBit.CORBA.TypeCode(
-    #                sdb.__typecode__.repo_id),
-    #            GNOME.Magnifier.RectBounds(512,0,1024,768)))
-    #
-    #    viewport = zoomerPBag.getValue("viewport").value()
-    #    zoomerPBag.setValue(
-    #        "viewport",
-    #        atspi.ORBit.CORBA.Any(
-    #            atspi.ORBit.CORBA.TypeCode(
-    #                viewport.__typecode__.repo_id),
-    #            GNOME.Magnifier.RectBounds(0, 0, 512, 768)))
-    #except:
-    #    debug.printException(debug.LEVEL_OFF)
-    #
+    try:
+        tdb = magnifierPBag.getValue("target-display-bounds").value()
+        magnifierPBag.setValue(
+            "target-display-bounds",
+            atspi.ORBit.CORBA.Any(
+                atspi.ORBit.CORBA.TypeCode(
+                    tdb.__typecode__.repo_id),
+                GNOME.Magnifier.RectBounds(settings.magZoomerLeft,
+                                           settings.magZoomerTop,
+                                           settings.magZoomerRight,
+                                           settings.magZoomerBottom)))
+    except:
+        debug.printException(debug.LEVEL_OFF)
 
+    if settings.enableMagCursor:
+        bonobo.pbclient_set_float(
+            magnifierPBag, "cursor-scale-factor", 1.0 * settings.magZoomFactor)
+    else:
+        bonobo.pbclient_set_float(
+            magnifierPBag, "cursor-scale-factor", 0.0)
+        
     if settings.enableMagCursorExplicitSize:
         bonobo.pbclient_set_long(
             magnifierPBag, "cursor-size", settings.magCursorSize)
@@ -317,12 +301,13 @@ def applySettings():
             magnifierPBag, "cursor-size", 0)
 
     color = magnifierPBag.getValue("cursor-color")
-
+    colorString = settings.magCursorColor.replace("#","0x",1)
+    
     magnifierPBag.setValue(
         "cursor-color",
         atspi.ORBit.CORBA.Any(
             color.typecode(),
-            long(settings.magCursorColor.replace("#", "0x", 1), 0)))
+            long(colorString, 0)))
 
     if settings.enableMagCrossHair:
         bonobo.pbclient_set_long(
@@ -334,14 +319,39 @@ def applySettings():
     bonobo.pbclient_set_boolean(
         magnifierPBag, "crosswire-clip", settings.enableMagCrossHairClip)
 
+    ########################################################################
+    #                                                                      #
+    # Now set up the zoomer properties.                                    #
+    #                                                                      #
+    ########################################################################
+
+    sourceDisplayBounds = magnifierPBag.getValue(
+        "source-display-bounds").value()
+
+    targetDisplayBounds = magnifierPBag.getValue(
+        "target-display-bounds").value()
+
+    _zoomer = _magnifier.createZoomRegion(
+        settings.magZoomFactor, settings.magZoomFactor,
+        GNOME.Magnifier.RectBounds(0,
+                                   0,
+                                   -1,
+                                   -1),
+        GNOME.Magnifier.RectBounds(0,
+                                   0,
+                                   targetDisplayBounds.x2 \
+                                   - targetDisplayBounds.x1,
+                                   targetDisplayBounds.y2 \
+                                   - targetDisplayBounds.y1))
+
+    zoomerPBag = _zoomer.getProperties()
+    bonobo.pbclient_set_boolean(zoomerPBag, "is-managed", True)
+
     _zoomer.setMagFactor(settings.magZoomFactor, settings.magZoomFactor)
     
     bonobo.pbclient_set_boolean(
         zoomerPBag, "inverse-video", settings.enableMagZoomerColorInversion)
 
-    # "smoothing-type"
-
-    bonobo.pbclient_set_boolean(zoomerPBag, "is-managed", True)
     viewport = zoomerPBag.getValue("viewport").value()
     
     magx = zoomerPBag.getValue("mag-factor-x").value()
@@ -350,11 +360,16 @@ def applySettings():
     _roiWidth = (viewport.x2 - viewport.x1) / magx
     _roiHeight = (viewport.y2 - viewport.y1) / magy
 
-    _minROIX = _sourceDisplayBounds.x1 + (_roiWidth / 2)
-    _minROIY = _sourceDisplayBounds.y1 + (_roiHeight / 2)
+    _minROIX = sourceDisplayBounds.x1 + (_roiWidth / 2)
+    _minROIY = sourceDisplayBounds.y1 + (_roiHeight / 2)
 
-    _maxROIX = _sourceDisplayBounds.x2 - (_roiWidth / 2)
-    _maxROIY = _sourceDisplayBounds.y2 - (_roiHeight / 2)
+    _maxROIX = sourceDisplayBounds.x2 - (_roiWidth / 2)
+    _maxROIY = sourceDisplayBounds.y2 - (_roiHeight / 2)
+
+    #print "MAGNIFIER PROPERTIES:", _magnifier
+    #__dumpPropertyBag(_magnifier)
+    #print "ZOOMER PROPERTIES:", _zoomer
+    #__dumpPropertyBag(_zoomer)
 
 def init():
     """Initializes the magnifier, bringing the magnifier up on the
@@ -366,8 +381,6 @@ def init():
 
     global _initialized
     global _magnifier
-    global _sourceDisplayBounds
-    global _zoomer
 
     if not _magnifierAvailable:
         return False
@@ -378,40 +391,12 @@ def init():
     _magnifier = bonobo.get_object("OAFIID:GNOME_Magnifier_Magnifier:0.9",
                                    "GNOME/Magnifier/Magnifier")
 
-    magnifierPBag = _magnifier.getProperties()
-    _sourceDisplayBounds = magnifierPBag.getValue(
-        "source-display-bounds").value()
-    _targetDisplayBounds = magnifierPBag.getValue(
-        "source-display-bounds").value()
-    _magnifier.clearAllZoomRegions()
-    _zoomer = _magnifier.createZoomRegion(
-        settings.magZoomFactor, settings.magZoomFactor,
-        GNOME.Magnifier.RectBounds(0,                              # x1
-                                   0,                              # y1
-                                   -1,                             # x2
-                                   -1),                            # y2
-        #GNOME.Magnifier.RectBounds(0,                             # x1
-        #                           0,                             # y1
-        #                           _sourceDisplayBounds.x2,       # x2
-        #                           _sourceDisplayBounds.y2))      # y2
-        GNOME.Magnifier.RectBounds(0,
-                                   0,
-                                   _targetDisplayBounds.x2 \
-                                   - _targetDisplayBounds.x1,
-                                   _targetDisplayBounds.y2 \
-                                   - _targetDisplayBounds.y1))
-
-    #print "MAGNIFIER PROPERTIES:", _magnifier
-    #__dumpPropertyBag(_magnifier)
-    #print "ZOOMER PROPERTIES:", _zoomer
-    #__dumpPropertyBag(_zoomer)
-
     try:
         applySettings()
     except:
         debug.printException(debug.LEVEL_SEVERE)
         
-    atspi.Registry().registerEventListener(onMouseEvent, "mouse:abs")
+    atspi.Registry().registerEventListener(__onMouseEvent, "mouse:abs")
     
     _initialized = True
 
@@ -436,7 +421,7 @@ def shutdown():
     if not _initialized:
         return False
 
-    atspi.Registry().deregisterEventListener(onMouseEvent,"mouse:abs")
+    atspi.Registry().deregisterEventListener(__onMouseEvent,"mouse:abs")
     
     _magnifier.clearAllZoomRegions()
     _magnifier.dispose()

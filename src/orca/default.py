@@ -790,8 +790,6 @@ class Script(script.Script):
         - newLocusOfFocus: Accessible that is the new locus of focus
         """
 
-        # Magnify the object.  [[[TODO: WDW - this is a hack for now.]]]
-        #
         if newLocusOfFocus:
             mag.magnifyAccessible(event, newLocusOfFocus)
 
@@ -1069,6 +1067,7 @@ class Script(script.Script):
                           "VISUAL CHANGE: '%s' '%s' (event=None)" \
                           % (obj.name, obj.role))
 
+        mag.magnifyAccessible(event, obj)
         self.updateBraille(obj)
         speech.speakUtterances(
             self.speechGenerator.getSpeech(event.source, True))
@@ -1212,9 +1211,8 @@ class Script(script.Script):
 
     def _presentTextAtNewCaretPosition(self, event):
 
-        # Magnify the object.  [[[TODO: WDW - this is a hack for now.]]]
-        #
-        mag.magnifyAccessible(event, event.source)
+        if event.source:
+            mag.magnifyAccessible(event, event.source)
 
         # Update the Braille display - if we can just reposition
         # the cursor, then go for it.
