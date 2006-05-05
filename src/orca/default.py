@@ -793,7 +793,7 @@ class Script(script.Script):
         # Magnify the object.  [[[TODO: WDW - this is a hack for now.]]]
         #
         if newLocusOfFocus:
-            mag.magnifyAccessible(newLocusOfFocus)
+            mag.magnifyAccessible(event, newLocusOfFocus)
 
         # We always automatically go back to focus tracking mode when
         # the focus changes.
@@ -1214,7 +1214,7 @@ class Script(script.Script):
 
         # Magnify the object.  [[[TODO: WDW - this is a hack for now.]]]
         #
-        mag.magnifyAccessible(event.source)
+        mag.magnifyAccessible(event, event.source)
 
         # Update the Braille display - if we can just reposition
         # the cursor, then go for it.
