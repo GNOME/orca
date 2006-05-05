@@ -352,6 +352,13 @@ def applySettings():
     bonobo.pbclient_set_boolean(
         zoomerPBag, "inverse-video", settings.enableMagZoomerColorInversion)
 
+    if settings.magSmoothingMode == settings.MAG_SMOOTHING_MODE_BILINEAR:
+        try:
+            bonobo.pbclient_set_string(
+                zoomerPBag, "smoothing-type", "bilinear")
+        except:
+            pass
+        
     viewport = zoomerPBag.getValue("viewport").value()
     
     magx = zoomerPBag.getValue("mag-factor-x").value()
