@@ -17,13 +17,13 @@
 
 2006-05-05  Willie Walker <william.walker@sun.com>
 
+	* src/orca/mag.py: support the color preferences string better
+
+	* src/orca/mag.py: add proportional mouse tracking mode.
+
 	* src/orca/mag.py: add push mouse tracking mode.
 
-2006-05-05  Willie Walker <william.walker@sun.com>
-
 	* src/orca/mag.py: add smoothing type.
-
-2006-05-05  Willie Walker <william.walker@sun.com>
 
 	* src/orca/mag.py, src/orca/default.py: add zoomer placement
 	support to magnification and also repaint dirty regions when
@@ -44,6 +44,7 @@
 	   - magZoomer{Left,Right,Top,Bottom} (only uses default)
 	   - magSmoothingMode (only uses default)
 	   - magMouseTrackingMode (only supports center)
+	
 	* docs/doc-set/orca.sgml, docs/doc-set/ue_requirements.sgml,
 	docs/doc-set/orca.html, docs/doc-set/orca.pdf: Add links from
 	requirements to tests.
