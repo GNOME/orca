@@ -195,6 +195,36 @@ def __setROICenter(x, y):
 
     __setROI(GNOME.Magnifier.RectBounds(x1, y1, x2, y2))
 
+def __setROIPush(x, y):
+    """Nudges the ROI if the pointer bumps into the edge of it.  The point
+    given is assumed to be the point where the mouse pointer is.
+
+    Arguments:
+    - x: integer in unzoomed system coordinates representing x component
+    - y: integer in unzoomed system coordinates representing y component
+    """
+    
+    needNewROI = False
+    newROI = GNOME.Magnifier.RectBounds(_roi.x1, _roi.y1, _roi.x2, _roi.y2)
+    if x < _roi.x1:
+        needNewROI = True
+        newROI.x1 = x
+        newROI.x2 = x + _roiWidth
+    elif x > _roi.x2:
+        needNewROI = True
+        newROI.x2 = x
+        newROI.x1 = x - _roiWidth
+    if y < _roi.y1:
+        needNewROI = True
+        newROI.y1 = y
+        newROI.y2 = y + _roiHeight
+    elif y > _roi.y2:
+        needNewROI = True
+        newROI.y2 = y
+        newROI.y1 = y - _roiHeight
+    if True:
+        __setROI(newROI)
+    
 def __setROI(rect):
     """Sets the region of interest.
 
@@ -220,8 +250,13 @@ def __onMouseEvent(e):
     global _lastMouseEventTime
 
     _lastMouseEventTime = time.time()
-    __setROICenter(e.detail1, e.detail2)
-
+    [x, y] = [e.detail1, e.detail2]
+    
+    if settings.magMouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_PUSH:
+        __setROIPush(x, y)
+    else:
+        __setROICenter(x, y)
+        
 def __getValueText(slot, value):
     valueText = ""
     if slot == "cursor-hotspot":
