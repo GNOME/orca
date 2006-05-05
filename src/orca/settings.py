@@ -37,7 +37,7 @@ except:
     # Just default to something that hopefully everybody has.
     #
     screenWidth = 640
-    screenWidth = 480
+    screenHeight = 480
 
 import debug
 from acss import ACSS

@@ -1,3 +1,10 @@
+2006-05-05  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/settings.py:
+          Adjusted the bogus "screenWidth = 480" to "screenHeight = 480"
+          in the except: clause of the import for gtk.gdk. This now
+          allows "orca --text-setup" to work from the console (again).
+
 2006-05-05  Willie Walker <william.walker@sun.com>
 
 	* docs/doc-set/orca.sgml, docs/doc-set/ue_requirements.sgml,
