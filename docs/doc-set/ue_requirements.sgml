@@ -449,6 +449,8 @@
 
       <section><title>Functional Description and Status</title>
 
+        <para>&flatreviewtestlink;</para>
+
         <para>&complete; V0.2.2.  General flat review is working well.</para>
 
         <para>&incomplete; [OWNER: WDW] no automatic reading of dialogs
@@ -499,6 +501,9 @@
       </itemizedlist>
 
       <section><title>Functional Description and Status</title>
+
+        <para>&textattributestestlink;</para>
+
         <para>&incomplete; [OWNER: MMP - further define requirements and
 	  functionality] [OWNER: RNB - implementation] need
 	  to define what to deliver. &mustdeliver; V1.0.</para>
@@ -506,7 +511,7 @@
 
     </section>
     
-    <section id="urlearningmode"><title>Learning Mode (Command Echo)</title>
+    <section id="urlearnmode"><title>Learn Mode (Command Echo)</title>
       <para>Orca must provide a feature that optionally presents the
         command to be invoked when the user presses a key on the
         keyboard or braille display.  All key events in this mode will
@@ -516,6 +521,8 @@
         time.</para>
 
       <section><title>Functional Description and Status</title>
+
+        <para>&learnmodetestlink;</para>
 
         <para>&complete; V0.2.2.</para>
 
@@ -558,6 +565,7 @@
         currently being visited, whether it has keyboard focus or
         not.</para>
       <section><title>Functional Description and Status</title>
+        <para>&whereamitestlink;</para>
         <para>&incomplete; [OWNER: MMP - further define requirements and
 	  functionality] [OWNER: WDW - implementation]
 	  currently provides top down "Where am I" functionality only.
@@ -693,6 +701,7 @@
         spreadsheet, web page, etc.?).</para>
 
       <section><title>Functional Description and Status</title>
+        <para>&sayalltestlink;</para>
         <para>&incomplete; [OWNER: RNB] reading works well in GEdit,
 	  including setting the caret position when speech is
 	  interrupted.  Does not work well at all in in Evolution,
@@ -819,6 +828,11 @@
 
       <section><title>Functional Description and Status</title>
 
+        <para>&verbalizedpunctestlink;</para>
+        <para>&verbalizedlinktestlink;</para>
+        <para>&verbalizedcapstestlink;</para>
+        <para>&spellingmodetestlink;</para>
+
         <para>&complete; V0.2.2.  General synthesis.</para>
         <para>&complete; V0.2.2.  Voice styles done via ACSS.</para>
         <para>&incomplete; Verbalized caps. &mustdeliver; V1.1.</para>
@@ -860,6 +874,8 @@
         time.</para>
 
       <section><title>Functional Description and Status</title>
+
+        <para>&keywordechotestlink;</para>
 
         <para>&incomplete; [OWNER: RNB] &mustdeliver; V1.0.</para>
 
@@ -1036,6 +1052,8 @@
       </itemizedlist>
 
       <section><title>Functional Description and Status</title>
+
+        <para>&brailletestlink;</para>
 
         <para>&complete; V0.2.2.  Work with BrlTTY.</para>
 

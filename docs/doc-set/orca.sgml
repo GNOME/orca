@@ -38,6 +38,20 @@
   <!ENTITY tresult '<emphasis>EXPECTED RESULT:</emphasis>'>
 
   <!ENTITY desktoptestlink '<link linkend="desktoptest">Desktop Test Plan</link>'>
+  <!ENTITY flatreviewtestlink '<link linkend="flatreviewtest">Flat Review Test Plan</link>'>
+  <!ENTITY learnmodetestlink '<link linkend="learnmodetest">Learn Mode Test Plan</link>'>
+  <!ENTITY whereamitestlink '<link linkend="whereamitest">Where Am I Test Plan</link>'>
+  <!ENTITY sayalltestlink '<link linkend="sayalltest">Say All Test Plan</link>'>
+  <!ENTITY whereamitestlink '<link linkend="whereamitest">Where Am I Test Plan</link>'>
+  <!ENTITY verbalizedpunctestlink '<link linkend="verbalizedpunctest">Verbalized Punctuation Test Plan</link>'>
+  <!ENTITY verbalizedlinktestlink '<link linkend="verbalizedlinktest">Verbalized Link Test Plan</link>'>
+  <!ENTITY verbalizedcapstestlink '<link linkend="verbalizedcapstest">Verbalized Caps Test Plan</link>'>
+  <!ENTITY spellingmodetestlink '<link linkend="spellingmodetest">Spelling Mode Test Plan</link>'>
+  <!ENTITY textattributestestlink '<link linkend="textattributestest">Text Attributes Test Plan</link>'>
+  <!ENTITY keywordechotestlink '<link linkend="keywordechotest">Key and Word Echo Test Plan</link>'>
+  <!ENTITY brailletestlink '<link linkend="brailletest">Braille Test Plan</link>'>
+
+  <!ENTITY desktoptestlink '<link linkend="desktoptest">Desktop Navigation Test Plan</link>'>
   <!ENTITY nautilustestlink '<link linkend="nautilustest">Nautilus Test Plan</link>'>
   <!ENTITY gedittestlink '<link linkend="gedittest">GEdit Test Plan</link>'>
   <!ENTITY emailtestlink '<link linkend="emailtest">Evolution E-Mail Test Plan</link>'>
