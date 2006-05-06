@@ -333,8 +333,11 @@ class SpeechServer(speechserver.SpeechServer):
                 break
 
         if not found:
-            return None
-
+            if len(voices) == 0:
+                return None
+            else:
+                voice = voices[0]
+                
         s = self.__driver.createSpeaker(voice)
         speaker = _Speaker(s._narrow(GNOME.Speech.Speaker))
         speaker.registerCallback(self)

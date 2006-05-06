@@ -1,5 +1,9 @@
 2006-05-06  Willie Walker <william.walker@sun.com>
 
+	* src/orca/gnomespeechfactory.py: provide fallbacks in
+	the event of starting up with no speech parameters set
+	(e.g., first time run).
+	
 	* src/orca/mag.py: add try/except around import of gtk
 	so orca can be setup without requiring the DISPLAY to
 	be set.
