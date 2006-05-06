@@ -23,11 +23,19 @@ has also been disabled for now - logged as bugzilla bug 319643.]]]
 """
 
 import bonobo
+try:
+    # This can fail due to gtk not being available.  We want to
+    # be able to recover from that if possible.  The main driver
+    # for this is to allow "orca --text-setup" to work even if
+    # the desktop is not running.
+    #
+    import gtk
+except:
+    pass
 import time
 
 import atspi
 import debug
-import gtk
 import settings
 
 _magnifierAvailable = False

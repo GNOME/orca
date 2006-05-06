@@ -1,5 +1,14 @@
 2006-05-06  Willie Walker <william.walker@sun.com>
 
+	* src/orca/mag.py: add try/except around import of gtk
+	so orca can be setup without requiring the DISPLAY to
+	be set.
+
+	* src/orca/orca.py: automatically run setup if user
+	settings are not available.  Also allow automatic setup
+	to be overridden via the "--no-setup" option to allow
+	for things such as accessible login to work.
+	
 	* src/orca/orca.py: reduce debug level of import error
 	message that's issued if user-settings cannot be found.
 	It's OK for this file to not exist - Orca is designed

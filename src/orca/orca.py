@@ -1309,16 +1309,22 @@ def main():
     # desktop is not running, we will fallback to the console-based
     # method as appropriate.
     #
-    showGUI = False
+    bypassSetup     = False
+    setupRequested  = False
+    showGUI         = False
     for arg in sys.argv:
         if (arg == _("--gui-setup")) or (arg == _("--setup")):
-            if desktopRunning:
-                showGUI = True
-            else:
-                _showPreferencesConsole()
+            setupRequested = True
+            showGUI = desktopRunning
         elif arg == _("--text-setup"):
-            _showPreferencesConsole()
+            setupRequested = True
+            showGUI = False
+        elif arg == _("--no-setup"):
+            bypassSetup = True
 
+    if setupRequested and (not bypassSetup) and (not showGUI):
+        _showPreferencesConsole()
+            
     if not desktopRunning:
         print "Cannot start Orca because it cannot connect"
         print "to the Desktop.  Please make sure the DISPLAY"
@@ -1333,12 +1339,19 @@ def main():
     init(registry)
 
     # Check to see if the user wants the configuration GUI. It's
-    # done here so that the users existing preferences can be used
-    # to set the initial GUI state.
+    # done here so that the user's existing preferences can be used
+    # to set the initial GUI state.  We'll also force the set to
+    # be run if the preferences file doesn't exist, unless the
+    # user has bypassed any setup via the --no-setup switch.
     #
-    if showGUI:
+    if setupRequested and (not bypassSetup) and showGUI:
         _showPreferencesGUI()
-
+    elif (not _userSettings) and (not bypassSetup):
+        if desktopRunning:
+            _showPreferencesGUI()
+        else:
+            _showPreferencesConsole()
+        
     # Do not run Orca if accessibility has not been enabled.
     #
     import commands
