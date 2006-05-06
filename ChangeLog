@@ -1,3 +1,10 @@
+2006-05-06  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca.py: reduce debug level of import error
+	message that's issued if user-settings cannot be found.
+	It's OK for this file to not exist - Orca is designed
+	to run without it, but the message was confusing users.
+	
 2006-05-05  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade:

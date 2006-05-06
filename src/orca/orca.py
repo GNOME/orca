@@ -923,12 +923,12 @@ def loadUserSettings(script=None, inputEvent=None):
             reload(_userSettings)
             reloaded = True
         except ImportError:
-            debug.printException(debug.LEVEL_SEVERE)
+            debug.printException(debug.LEVEL_FINEST)
     else:
         try:
             _userSettings = __import__("user-settings")
         except ImportError:
-            debug.printException(debug.LEVEL_SEVERE)
+            debug.printException(debug.LEVEL_FINEST)
 
     if settings.enableSpeech:
         try:
@@ -938,6 +938,7 @@ def loadUserSettings(script=None, inputEvent=None):
             debug.println(debug.LEVEL_CONFIGURATION,
                           "Speech module has been initialized.")
         except:
+            debug.printException(debug.LEVEL_SEVERE)
             debug.println(debug.LEVEL_SEVERE,
                           "Could not initialize connection to speech.")
     else:
@@ -948,6 +949,7 @@ def loadUserSettings(script=None, inputEvent=None):
         try:
             braille.init(_processBrailleEvent, 7)
         except:
+            debug.printException(debug.LEVEL_WARNING)
             debug.println(debug.LEVEL_WARNING,
                           "Could not initialize connection to braille.")
 
