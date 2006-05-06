@@ -148,8 +148,8 @@
         Spelling Mode functionality provides the desired output for
         the various spelling mode settings.</para>
         <para>&tgoal; Test the performance of orca's spell word functionality.</para>
-        <para>&tprocedure; Open gedit and type a sentence.  Move from one word to the next with CTRL+right arrow and double click KP5 very quickly.</para>
-        <para>&tresult; When doubleclicking KP5 on the first word the word should be spelled honoring the speak capitalization setting.  All Other words should just be spelled.  When the last word is reached, it should also be spelled not including the period.  If the caret happens to be on a space orca should just say space.  </para>
+        <para>&tprocedure; Open gedit and type a sentence.  Move from one word to the next with CTRL+right arrow and double click KP5 very quickly.  Wait a few seconds after the double press of KP5 and Press KP5 again quickly 3 times.</para>
+        <para>&tresult; When doubleclicking KP5 on the first word the word should be spelled honoring the speak capitalization setting.  All Other words should just be spelled.  When the last word is reached, it should also be spelled not including the period.  If the caret happens to be on a space orca should just say space.  When triple clicking KP5 the word should be spelled using military spelling.</para>
     </section>
 
     <section id="textattributestest"><title>Text Attributes</title>
@@ -157,10 +157,13 @@
       <para>The tests in this section are to ensure that Orca
         accurately provides text attribute (e.g., font, bolding, etc.)
         information when requested by the user.</para>
-        <para>&tgoal; Test the speak attributes hot key.</para>
+        <para>&tgoal; Test the speak attributes hot key in star office writer.</para>
         <para>&tprocedure; Type 3 words in star office writer.  The first should be in the default size and style.  The second should have both the point size and font family changed.  The third should be bolded and underlined.</para>
         <para>&tresult; When pressing insert+f at the beginning of the first word, you should hear, the default family and size.  At the beginning of the second word, you should hear the new family and size.  At the beginning of the third word you should hear, the default family and size followed by the words "bold underline".</para>
-    </section>
+            <para>&tgoal; Test the speak attributes hot key in gedit.</para>
+        <para>&tprocedure; Type 3 words in gedit.  The first should be in the default size and style.  The second should have both the point size and font family changed.  The third should be bolded and underlined.</para>
+        <para>&tresult; When pressing insert+f at the beginning of the first word, you should hear, the default family and size.  At the beginning of the second word, you should hear the new family and size.  At the beginning of the third word you should hear, the default family and size followed by the words "bold underline".</para>
+</section>
 
     <section id="keywordechotest"><title>Key and Word Echo</title>
 
@@ -248,9 +251,9 @@
         <para>&tgoal; Determine if Orca reads correctly when leaving submenus.</para>
         <para>&tprocedure; Open the start menu and navigate into each of the submenus with right arrow and then return to the ptop level with left arrow.</para>
         <para>&tresult; When moving out of the submmenu orca should speak the new item with focus.</para>
-<para>&tgoal; Determine if Orca reads the start menu.</para>
-        <para>&tprocedure; perform this action.</para>
-        <para>&tresult; this should happen.</para>
+<para>&tgoal; Determine if Orca reads and navigates the top and bottom panels.</para>
+        <para>&tprocedure; Press CTRL+ALT+tab to get to the desktop.  Press this combination again to get to the top panel with the varius status bottons.  Press space on each button.</para>
+        <para>&tresult; When arrowing to each pannel applet orca should read it and it's status.  When activating it orca should read any changes the user makes in the dialog.</para>
       </section>
       <section><title>Alt+Tab to Other Applications</title>
         <para>&tgoal; Determine if Orca reads metacity status window.</para>
@@ -260,10 +263,19 @@
     </section>
 
     <section id="nautilustest"><title>Nautilus Test Plan</title>
-      <section><title>Some Test</title>
-        <para>&tgoal; Determine if Orca does something.</para>
-        <para>&tprocedure; perform this action.</para>
-        <para>&tresult; this should happen.</para>
+      <section><title>File list navigation</title>
+        <para>&tgoal; Determine if orca reads the file names and the folder names..</para>
+        <para>&tprocedure; Go to the places menu and open your home folder.  Down arrow to each item in the list.  At the end of the list reverse direction back to the top.</para>
+        <para>&tresult; As each item is selected its name should be spoken.  If the item is a folder the expanded or collapsed state should also be spoken.</para>
+        <para>&tgoal; Determine if Orca reads column changes.</para>
+        <para>&tprocedure; Open the home folder.  Down arrow to several items.  On each item right and left arrow across the various columns.</para>
+        <para>&tresult; Orca should read the column header as well as the value of the current cell.</para>
+        <para>&tgoal; Determine if Orca reads the opening of new folders.</para>
+        <para>&tprocedure; Open the home folder.  Down arrow to a folder and press enter.</para>
+        <para>&tresult; Orca should read the value of the newly selected cell.</para>
+        <para>&tgoal; Determine if Orca reads the toolbar buttons.</para>
+        <para>&tprocedure; Open the home folder.  Tab to the toolbar and arrow to all the buttons.</para>
+        <para>&tresult; Orca should read the label for each button.</para>
       </section>
     </section>
 
