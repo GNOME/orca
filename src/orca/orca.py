@@ -1358,10 +1358,13 @@ def main():
     a11yEnabled = commands.getoutput(\
         "gconftool-2 --get /desktop/gnome/interface/accessibility")
     if a11yEnabled != "true":
-        message = _("Accessibility has not been enabled for this session.")
+        os.system("gconftool-2 --type bool --set " \
+                  + "/desktop/gnome/interface/accessibility true")
+        message = _("Accessibility has just been enabled for this session.")
         print message
         speech.speak(message)
-        message = _("Please run orca-setup and then logout and log back in.")
+        braille.displayMessage(message)
+        message = _("Please logout and log back in and rerun orca.")
         print message
         speech.speak(message)
         braille.displayMessage(message)

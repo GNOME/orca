@@ -1,5 +1,9 @@
 2006-05-06  Willie Walker <william.walker@sun.com>
 
+	* src/orca/orca.py: enable accessibility if it has not
+	been enabled and issue a message.  Partially addresses 
+	bug 340849, but I need some help from Rich on this.  :-)
+	
 	* src/orca/gnomespeechfactory.py: provide fallbacks in
 	the event of starting up with no speech parameters set
 	(e.g., first time run).
