@@ -1,3 +1,11 @@
+2006-05-07  Willie Walker <william.walker@sun.com>
+
+	* src/orca/default.py, src/orca/gnomespeechfactory.py,
+	src/orca/espeechfactory.py, src/orca/speechserver.py,
+	src/orca/speech.py: fix for bug 340773.  When autoreading the
+	labels in a newly appeared dialog box, do not let an immediate
+	focus event interrupt the labels being spoken.
+	
 2006-05-06  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca.py: enable accessibility if it has not

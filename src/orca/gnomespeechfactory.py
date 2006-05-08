@@ -245,11 +245,10 @@ class SpeechServer(speechserver.SpeechServer):
         [minRate, averageRate, maxRate] = self.__rateInfo[speaker]
         rate = speaker.getParameterValue("rate")
         if rate < averageRate:
-            return int(((rate - minRate) / (averageRate - minRate)) * 50.0)
+            return 50.0 * (rate - minRate) / (averageRate - minRate)
         elif rate > averageRate:
             return 50.0 \
-                   + int(((rate - averageRate) / (maxRate - averageRate)) \
-                         * 50.0)
+                   + (50.0 * (rate - averageRate) / (maxRate - averageRate))
         else:
             return 50.0
 
@@ -337,7 +336,7 @@ class SpeechServer(speechserver.SpeechServer):
                 return None
             else:
                 voice = voices[0]
-                
+
         s = self.__driver.createSpeaker(voice)
         speaker = _Speaker(s._narrow(GNOME.Speech.Speaker))
         speaker.registerCallback(self)
@@ -475,20 +474,21 @@ class SpeechServer(speechserver.SpeechServer):
         """
         self.speak(character, acss)
 
-    def speakUtterances(self, list, acss=None):
+    def speakUtterances(self, list, acss=None, interrupt=True):
         """Speaks the given list of utterances immediately.
 
         Arguments:
-        - list: list of strings to be spoken
-        - acss: acss.ACSS instance; if None,
-                the default voice settings will be used.
-                Otherwise, the acss settings will be
-                used to augment/override the default
-                voice settings.
+        - list:      list of strings to be spoken
+        - acss:      acss.ACSS instance; if None,
+                     the default voice settings will be used.
+                     Otherwise, the acss settings will be
+                     used to augment/override the default
+                     voice settings.
+        - interrupt: if True, stop any speech currently in progress.
         """
         i = 0
         for text in list:
-            self.speak(text, acss, i == 0)
+            self.speak(text, acss, interrupt and (i == 0))
             i += 1
 
     def __speak(self, text=None, acss=None, interrupt=True):
@@ -573,9 +573,6 @@ class SpeechServer(speechserver.SpeechServer):
                      voice settings.
         - interrupt: if True, stops any speech in progress before
                      speaking the text
-
-        Returns an id of the thing being spoken or -1 if nothing is to
-        be spoken.
         """
         if self.__sayAll:
             self.stop()

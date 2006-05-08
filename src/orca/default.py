@@ -24,6 +24,7 @@ This module also provides a number of presenter functions that display
 Accessible object information to the user based upon the object's role."""
 
 import string
+import time
 
 import atspi
 import braille
@@ -59,8 +60,9 @@ class Script(script.Script):
 
         script.Script.__init__(self, app)
 
-        self.flatReviewContext = None
-        self.readTableCellRow  = settings.readTableCellRow
+        self.flatReviewContext  = None
+        self.readTableCellRow   = settings.readTableCellRow
+        self.windowActivateTime = None
 
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
@@ -924,7 +926,7 @@ class Script(script.Script):
                 #
                 if (not inSameGroup) and radioGroupLabel:
                     utterances.append(util.getDisplayedText(radioGroupLabel))
-                    
+
             # Get the text for the object itself.
             #
             utterances.extend(
@@ -936,7 +938,16 @@ class Script(script.Script):
                and (newNodeLevel >= 0):
                 utterances.append(_("tree level %d") % (newNodeLevel + 1))
 
-            speech.speakUtterances(utterances)
+            # We might be automatically speaking the unbound labels
+            # in a dialog box as the result of the dialog box suddenly
+            # appearing.  If so, don't interrupt this because of a
+            # focus event that occurs when something like the "OK"
+            # button gets focus shortly after the window appears.
+            #
+            shouldNotInterrupt = (event.type == "focus:") \
+                and self.windowActivateTime \
+                and ((time.time() - self.windowActivateTime) < 1.0)
+            speech.speakUtterances(utterances, None, not shouldNotInterrupt)
         else:
             message = _("No focus")
             braille.displayMessage(message)
@@ -1180,7 +1191,7 @@ class Script(script.Script):
                 elif event.source.__dict__.has_key("activeDescendantInfo"):
                     [parent, index] = event.source.activeDescendantInfo
                     newFocus = parent.child(index)
-                
+
         orca.setLocusOfFocus(event, newFocus)
 
     def onNameChanged(self, event):
@@ -1314,7 +1325,7 @@ class Script(script.Script):
         #
         if event.source.role == rolenames.ROLE_SLIDER:
             return
-        
+
         self.updateBraille(event.source)
 
         # The any_data member of the event object has the deleted text in
@@ -1356,7 +1367,7 @@ class Script(script.Script):
         #
         if event.source.role == rolenames.ROLE_SLIDER:
             return
-        
+
         self.updateBraille(event.source)
 
         text = event.any_data.value()
@@ -1491,23 +1502,23 @@ class Script(script.Script):
         Arguments:
         - event: the Event
         """
-        
+
         # We'll let caret moved and text inserted events be used to
         # manage spin buttons, since they basically are text areas.
         #
         if event.source.role == rolenames.ROLE_SPIN_BUTTON:
             return
-        
+
         # We'll also try to ignore those objects that keep telling
         # us their value changed even though it hasn't.
         #
         if event.source.value and event.source.__dict__.has_key("oldValue") \
            and (event.source.value.currentValue == event.source.oldValue):
             return
-            
+
         orca.visualAppearanceChanged(event, event.source)
         event.source.oldValue = event.source.value.currentValue
-            
+
     def onWindowActivated(self, event):
         """Called whenever a toplevel window is activated.
 
@@ -1515,6 +1526,7 @@ class Script(script.Script):
         - event: the Event
         """
 
+        self.windowActivateTime = time.time()
         orca.setLocusOfFocus(event, event.source)
 
     def onWindowDeactivated(self, event):

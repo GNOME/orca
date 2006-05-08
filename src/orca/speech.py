@@ -106,21 +106,47 @@ def sayAll(utteranceIterator, progressCallback):
     if __speechserver:
         __speechserver.sayAll(utteranceIterator, progressCallback)
 
-def speak(text, acss=None):
+def speak(text, acss=None, interrupt=True):
+    """Speaks all queued text immediately.  If text is not None,
+    it is added to the queue before speaking.
+
+    Arguments:
+    - text:      optional text to add to the queue before speaking
+    - acss:      acss.ACSS instance; if None,
+                 the default voice settings will be used.
+                 Otherwise, the acss settings will be
+                 used to augment/override the default
+                 voice settings.
+    - interrupt: if True, stops any speech in progress before
+                 speaking the text
+    """
     if settings.silenceSpeech:
         return
     if __speechserver:
         debug.println(debug.LEVEL_INFO, "SPEECH OUTPUT: '" + text + "'")
-        __speechserver.speak(text, __resolveACSS(acss))
-            
-def speakUtterances(utterances, acss=None):
+        __speechserver.speak(text, __resolveACSS(acss), interrupt)
+
+def speakUtterances(utterances, acss=None, interrupt=True):
+    """Speaks the given list of utterances immediately.
+
+    Arguments:
+    - list:      list of strings to be spoken
+    - acss:      acss.ACSS instance; if None,
+                 the default voice settings will be used.
+                 Otherwise, the acss settings will be
+                 used to augment/override the default
+                 voice settings.
+    - interrupt: if True, stop any speech currently in progress.
+    """
     if settings.silenceSpeech:
         return
     if __speechserver:
         for utterance in utterances:
             debug.println(debug.LEVEL_INFO,
                           "SPEECH OUTPUT: '" + utterance + "'")
-        __speechserver.speakUtterances(utterances, __resolveACSS(acss))
+        __speechserver.speakUtterances(utterances,
+                                       __resolveACSS(acss),
+                                       interrupt)
 
 def stop():
     if __speechserver:

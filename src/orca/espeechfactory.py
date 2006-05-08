@@ -230,7 +230,7 @@ class SpeechServer(speechserver.SpeechServer):
         """Speak single character."""
         self._output.write("l {%s}\n" % character)
 
-    def speakUtterances(self, list, acss=None):
+    def speakUtterances(self, list, acss=None, interrupt=True):
         """Speak list of utterances."""
         if acss:
             code =self.getvoice(acss)
@@ -241,7 +241,7 @@ class SpeechServer(speechserver.SpeechServer):
                 self._output.write("q { %s }\n" % str(t))
         self._output.write("d\n")
 
-    def speak(self, text="", acss=None):
+    def speak(self, text="", acss=None, interrupt=True):
         """Speaks specified text. All queued text is spoken immediately."""
         if acss:
             code =self.getvoice(acss)
@@ -271,7 +271,7 @@ class SpeechServer(speechserver.SpeechServer):
             self._output.close()
             del SpeechServer.__activeServers[self._engine]
 
-    def reset(self):
+    def reset(self, text=None, acss=None):
         """Reset TTS engine."""
         self._output.write("tts_reset\n")
 

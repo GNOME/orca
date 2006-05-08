@@ -165,30 +165,33 @@ class SpeechServer:
         """
         pass
 
-    def speakUtterances(self, list, acss=None):
+    def speakUtterances(self, list, acss=None, interrupt=True):
         """Speaks the given list of utterances immediately.
 
         Arguments:
-        - list: list of strings to be spoken
-        - acss: acss.ACSS instance; if None,
-                the default voice settings will be used.
-                Otherwise, the acss settings will be
-                used to augment/override the default
-                voice settings.
+        - list:      list of strings to be spoken
+        - acss:      acss.ACSS instance; if None,
+                     the default voice settings will be used.
+                     Otherwise, the acss settings will be
+                     used to augment/override the default
+                     voice settings.
+        - interrupt: if True, stop any speech currently in progress.
         """
         pass
 
-    def speak(self, text=None, acss=None):
+    def speak(self, text=None, acss=None, interrupt=True):
         """Speaks all queued text immediately.  If text is not None,
         it is added to the queue before speaking.
 
         Arguments:
-        - text: text to be spoken
-        - acss: acss.ACSS instance; if None,
-                the default voice settings will be used.
-                Otherwise, the acss settings will be
-                used to augment/override the default
-                voice settings.
+        - text:      optional text to add to the queue before speaking
+        - acss:      acss.ACSS instance; if None,
+                     the default voice settings will be used.
+                     Otherwise, the acss settings will be
+                     used to augment/override the default
+                     voice settings.
+        - interrupt: if True, stops any speech in progress before
+                     speaking the text
         """
         pass
 
