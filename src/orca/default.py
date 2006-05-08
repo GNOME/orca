@@ -1340,12 +1340,30 @@ class Script(script.Script):
             return
 
         string = orca.lastInputEvent.event_string
-        text = event.any_data.value()
-        if (string == "BackSpace") or (string == "Delete"):
-            if text.isupper():
-                speech.speak(text, self.voices[settings.UPPERCASE_VOICE])
+        text = event.source.text
+        if settings.enableKeyEcho:
+            if string == "BackSpace":
+                # Speak the character to the left of the caret
+                # (i.e. the character being deleted).
+                #
+                offset = text.caretOffset-1
+
+            elif string == "Delete":
+                # Speak the character to the right of the caret after
+                # the current right character has been deleted.
+                #
+                offset = text.caretOffset+1
+
+            character = event.source.text.getText(offset, offset+1)
+
+            if util.getLinkIndex(event.source, offset) >= 0:
+                voice = self.voices[settings.HYPERLINK_VOICE]
+            elif character.isupper():
+                voice = self.voices[settings.UPPERCASE_VOICE]
             else:
-                speech.speak(text)
+                voice = self.voices[settings.DEFAULT_VOICE]
+
+            speech.speak(character, voice)
 
     def onTextInserted(self, event):
         """Called whenever text is inserted into an object.

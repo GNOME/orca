@@ -1,5 +1,17 @@
 2006-05-08  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/default.py
+          Changes to the onTextDeleted() method to make Delete and
+          Backspace do the correct thing in gedit w.r.t. the new 
+          key echo requirements. 
+
+          Note that Terminal and Star Office Writer still need to 
+          be fixed up. This might have to be done by over-ridding 
+          the onTextDeleted() methods in the scripts for those 
+          applications.
+
+2006-05-08  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/orca-setup.glade:
         Adjusted several duplicate mnemonics to try to generate
         uniqueless. There is only one control (the "Color:" label for
