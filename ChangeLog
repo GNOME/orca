@@ -1,6 +1,14 @@
 2006-05-08  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade:
+        Adjusted several duplicate mnemonics to try to generate
+        uniqueless. There is only one control (the "Color:" label for
+        the color button on the magnifier pane) which does not have a
+        mnemonic, because there are no unique letters available.
+
+2006-05-08  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca-setup.glade:
         Adjusted the magnifier pane to use GtkFrames to enclose four
         areas: Cursor Settings, Cross-hair Settings, Zoomer Settings
         and Zoomer Position.

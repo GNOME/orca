@@ -489,7 +489,7 @@
 			  <child>
 			    <widget class="GtkLabel" id="volumeLabel">
 			      <property name="visible">True</property>
-			      <property name="label" translatable="yes">V_olume:</property>
+			      <property name="label" translatable="yes">Vo_lume:</property>
 			      <property name="use_underline">True</property>
 			      <property name="use_markup">False</property>
 			      <property name="justify">GTK_JUSTIFY_RIGHT</property>
@@ -1220,7 +1220,7 @@ Hyperlink</property>
 			<widget class="GtkCheckButton" id="lockingCheckbutton">
 			  <property name="visible">True</property>
 			  <property name="can_focus">True</property>
-			  <property name="label" translatable="yes">Enable loc_king keys</property>
+			  <property name="label" translatable="yes">Enable lockin_g keys</property>
 			  <property name="use_underline">True</property>
 			  <property name="relief">GTK_RELIEF_NORMAL</property>
 			  <property name="focus_on_click">True</property>
@@ -1288,7 +1288,7 @@ Hyperlink</property>
 			<widget class="GtkCheckButton" id="actionCheckbutton">
 			  <property name="visible">True</property>
 			  <property name="can_focus">True</property>
-			  <property name="label" translatable="yes">Enable a_ction keys</property>
+			  <property name="label" translatable="yes">Enable ac_tion keys</property>
 			  <property name="use_underline">True</property>
 			  <property name="relief">GTK_RELIEF_NORMAL</property>
 			  <property name="focus_on_click">True</property>
@@ -1461,7 +1461,7 @@ Hyperlink</property>
 					    <widget class="GtkCheckButton" id="magCursorOnOffCheckButton">
 					      <property name="visible">True</property>
 					      <property name="can_focus">True</property>
-					      <property name="label" translatable="yes">Enable _cursor</property>
+					      <property name="label" translatable="yes">Enable c_ursor</property>
 					      <property name="use_underline">True</property>
 					      <property name="relief">GTK_RELIEF_NORMAL</property>
 					      <property name="focus_on_click">True</property>
@@ -1496,7 +1496,7 @@ Hyperlink</property>
 					    <widget class="GtkCheckButton" id="magCursorSizeCheckButton">
 					      <property name="visible">True</property>
 					      <property name="can_focus">True</property>
-					      <property name="label" translatable="yes">Cu_stom size</property>
+					      <property name="label" translatable="yes">Custom siz_e</property>
 					      <property name="use_underline">True</property>
 					      <property name="relief">GTK_RELIEF_NORMAL</property>
 					      <property name="focus_on_click">True</property>
@@ -1528,7 +1528,7 @@ Hyperlink</property>
 					  <child>
 					    <widget class="GtkLabel" id="magCursorColorLabel">
 					      <property name="visible">True</property>
-					      <property name="label" translatable="yes">C_olor:</property>
+					      <property name="label" translatable="yes">Color:</property>
 					      <property name="use_underline">True</property>
 					      <property name="use_markup">False</property>
 					      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -1791,7 +1791,7 @@ Hyperlink</property>
 					    <widget class="GtkCheckButton" id="magCrossHairOnOffCheckButton">
 					      <property name="visible">True</property>
 					      <property name="can_focus">True</property>
-					      <property name="label" translatable="yes">Enable cross-_hair</property>
+					      <property name="label" translatable="yes">Enable cross-h_air</property>
 					      <property name="use_underline">True</property>
 					      <property name="relief">GTK_RELIEF_NORMAL</property>
 					      <property name="focus_on_click">True</property>
