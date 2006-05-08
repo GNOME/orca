@@ -1,3 +1,7 @@
+2006-05-08  Willie Walker <william.walker@sun.com>
+
+	* src/orca/mag.py: set crosshair color with cursor color.
+	
 2006-05-08  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py
@@ -32,7 +36,7 @@
         areas: Cursor Settings, Cross-hair Settings, Zoomer Settings
         and Zoomer Position.
 
-2006-05-07  Willie Walker <william.walker@sun.com>
+2006-05-08  Willie Walker <william.walker@sun.com>
 
 	* src/orca/default.py, src/orca/gnomespeechfactory.py,
 	src/orca/espeechfactory.py, src/orca/speechserver.py,

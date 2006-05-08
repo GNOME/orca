@@ -293,6 +293,8 @@ def applySettings():
         bonobo.pbclient_set_long(
             magnifierPBag, "cursor-size", 0)
 
+    bonobo.pbclient_set_string(magnifierPBag, "cursor-set", "default")
+    
     # Convert the colorPreference string to something we can use.
     # The main issue here is that the color preferences are saved
     # as 4 byte values per color.  We only need 2 bytes, so we
@@ -310,6 +312,13 @@ def applySettings():
     color = magnifierPBag.getValue("cursor-color")
     magnifierPBag.setValue(
         "cursor-color",
+        atspi.ORBit.CORBA.Any(
+            color.typecode(),
+            long(colorString, 0)))
+
+    color = magnifierPBag.getValue("crosswire-color")
+    magnifierPBag.setValue(
+        "crosswire-color",
         atspi.ORBit.CORBA.Any(
             color.typecode(),
             long(colorString, 0)))
