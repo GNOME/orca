@@ -1353,6 +1353,8 @@ class Script(script.Script):
                 # the current right character has been deleted.
                 #
                 offset = text.caretOffset+1
+            else:
+                offset = 0
 
             character = event.source.text.getText(offset, offset+1)
 

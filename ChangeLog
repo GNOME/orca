@@ -1,6 +1,13 @@
 2006-05-08  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py
+          Added in an else: clause to handle calls to onTextDeleted()
+          which weren't triggered by typing Delete or Backspace, so that
+          the offset variable can be correctly set.
+
+2006-05-08  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py
           Changes to the onTextDeleted() method to make Delete and
           Backspace do the correct thing in gedit w.r.t. the new 
           key echo requirements. 
