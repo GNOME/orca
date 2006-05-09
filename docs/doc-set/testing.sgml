@@ -210,7 +210,22 @@
         <para>&tprocedure; Press caps lock and num lock several times.</para>
         <para>&tresult; Orca should say the key name followed by the state of that key (on or off).  For example, "caps lock on" or "num lock on"</para>
       </section>
-      <section><title>action key echo test </title>
+      <section><title>action key echo test when action key echo is selected</title>
+        <para>&tgoal; Orca should speak location information after speaking delete after delete is pressed.</para>
+        <para>&tprocedure; Open gedit and type a line of text.  Press home to return to the beginning of the line and press delete untul all characters have been deleted.</para>
+        <para>&tresult; When each character is deleted the next character on the line should be spoken after saying "delete".  </para>
+        <para>&tgoal; when pressing backspace orca should speak the word "back" folowed by the updated information after backspace is pressed.</para>
+        <para>&tprocedure; Open gedit and type a line of text.  Press backspace until all characters have been deleted.</para>
+        <para>&tresult; When each character is deleted orca should say "back" then say the previous character on the line should be spoken.  </para>
+        <para>&tgoal; Orca should speak location information after home and end are pressed.</para>
+        <para>&tprocedure; Open gedit and type a line of text.  Press home to return to the beginning of the line and press end  to move to the end of the line.</para>
+        <para>&tresult; When these keys are pressed the character under the cursor should be spoken preceeded by the key name.  This includes spaces.</para>
+        <para>&tgoal; Orca should speak location information after page up and page down are pressed.</para>
+        <para>&tprocedure; Open gedit and open a long document.  Press CTRL+home to return to the beginning of the line and press page down several times to move to the next pages of the document.</para>
+        <para>&tresult; When these keys are pressed the line under the cursor should be spoken preceeded by the key name.  This includes spaces.  When the end of the document is reached nothing should be spoken.  Repeat this test with page up expecting the same results.  </para>
+
+      </section>
+      <section><title>action keys with no echo test </title>
         <para>&tgoal; Orca should speak location information after delete is pressed.</para>
         <para>&tprocedure; Open gedit and type a line of text.  Press home to return to the beginning of the line and press delete untul all characters have been deleted.</para>
         <para>&tresult; When each character is deleted the next character on the line should be spoken.  </para>
@@ -219,10 +234,10 @@
         <para>&tresult; When each character is deleted the previous character on the line should be spoken.  </para>
         <para>&tgoal; Orca should speak location information after home and end are pressed.</para>
         <para>&tprocedure; Open gedit and type a line of text.  Press home to return to the beginning of the line and press end  to move to the end of the line.</para>
-        <para>&tresult; When these keys are pressed the character under the cursor should be spoken preceeded by the key name.  This includes spaces.</para>
+        <para>&tresult; When these keys are pressed the character under the cursor should be spoken.  This includes spaces.</para>
         <para>&tgoal; Orca should speak location information after page up and page down are pressed.</para>
         <para>&tprocedure; Open gedit and open a long document.  Press CTRL+home to return to the beginning of the line and press page down several times to move to the next pages of the document.</para>
-        <para>&tresult; When these keys are pressed the line under the cursor should be spoken preceeded by the key name.  This includes spaces.  When the end of the document is reached nothing should be spoken.  Repeat this test with page up expecting the same results.  </para>
+        <para>&tresult; When these keys are pressed the line under the cursor should be spoken.  This includes spaces.  When the end of the document is reached nothing should be spoken.  Repeat this test with page up expecting the same results.  </para>
 
       </section>
 
