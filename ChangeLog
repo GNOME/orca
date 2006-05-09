@@ -1,3 +1,9 @@
+2006-05-09  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py
+          Slight adjustment to the onTextDeleted() method. The offset
+          value (for both the "Delete" and "Backspace" cases) was off by one.
+
 2006-05-09  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca.py: work for bug 338890.  Introduces use

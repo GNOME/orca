@@ -1343,8 +1343,8 @@ class Script(script.Script):
         text = event.source.text
         if settings.enableKeyEcho:
             if string == "BackSpace":
-                # Speak the character to the left of the caret
-                # (i.e. the character being deleted).
+                # Speak the character to the left of the caret after
+                # the current left character has been deleted.
                 #
                 offset = text.caretOffset-1
 
@@ -1352,11 +1352,13 @@ class Script(script.Script):
                 # Speak the character to the right of the caret after
                 # the current right character has been deleted.
                 #
-                offset = text.caretOffset+1
+                offset = text.caretOffset
             else:
                 offset = 0
 
-            character = event.source.text.getText(offset, offset+1)
+            [character, startOffset, endOffset] = \
+                event.source.text.getTextAtOffset(offset, 
+                                       atspi.Accessibility.TEXT_BOUNDARY_CHAR)
 
             if util.getLinkIndex(event.source, offset) >= 0:
                 voice = self.voices[settings.HYPERLINK_VOICE]
