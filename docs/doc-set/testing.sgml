@@ -280,12 +280,31 @@
     </section>
 
     <section id="gedittest"><title>GEdit Test Plan</title>
-      <section><title>Some Test</title>
-        <para>&tgoal; Determine if Orca does something.</para>
-        <para>&tprocedure; perform this action.</para>
-        <para>&tresult; this should happen.</para>
+      <section><title>Toolbar and menubar test</title>
+        <para>&tgoal; Determine if orca reads the menubar and the sub menus.</para>
+        <para>&tprocedure; Press F10 and right arrow across the menubar.  When reaching the help menu left arrow back to the file menu.  On the file menu down arrow to all the choices.</para>
+        <para>&tresult; On the menubar orca should read each item followed by "menu".  When navigating the file menu orca should read each item followed by "..." if that item contains more options.</para>
+        <para>&tgoal; Determine if orca properly navigates the toolbar in flat review.</para>
+        <para>&tprocedure; Use KP7 to move up to the toolbar.  Press KP6 to move to each toolbar item.  On each button press KP/ to activate the button.</para>
+        <para>&tresult; Orca should read each button and when clicked with KP/ the appropriate action should be taken.</para>
       </section>
-    </section>
+      <section><title>Dialog box test</title>
+        <para>&tgoal; Determine if Orca correctly reads the "file open" dialog.</para>
+        <para>&tprocedure; Open gedit and only using the arrows and enter navigate to the Change.log under your orca sub directory.</para>
+        <para>&tresult; When traversing the directory structure orca should read each item telling the user if it is a file or folder.</para>
+        <para>&tgoal; Determine if Orca reads the find dialog.</para>
+        <para>&tprocedure; Press CTRL+f to bring up the find dialog.  Type "Mike" and press enter.</para>
+        <para>&tresult; When the find dialog comes up it should be read.  When enter is pressed on Mike orca should speak that the word has been found.</para>
+        <para>&tgoal; Determine if Orca reads the "quit without saving dialog.</para>
+        <para>&tprocedure; Delete the word Mike found in the last test and press CTRL+q.</para>
+        <para>&tresult; Orca should speak the dialog warning the user that the changes will be lost.</para>
+      </section>
+            <section><title> spell check test</title>
+              <para>&tgoal; Determine if Orca correctly reads the spell check test.</para>
+              <para>&tprocedure; Open the orca change log in gedit and press F7 to open the spell checker.  Spell check several words.</para>
+              <para>&tresult; When each word is flagged it should be spoken followed by the surrounding context.</para>
+      </section>
+      </section>
 
     <section id="emailtest"><title>Evolution E-Mail Test Plan</title>
       <section><title>Some Test</title>
