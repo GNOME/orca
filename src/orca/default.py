@@ -1356,18 +1356,24 @@ class Script(script.Script):
             else:
                 offset = 0
 
-            [character, startOffset, endOffset] = \
-                event.source.text.getTextAtOffset(offset, 
-                                       atspi.Accessibility.TEXT_BOUNDARY_CHAR)
+            if offset >= 0:
+                [character, startOffset, endOffset] = \
+                    event.source.text.getTextAtOffset(
+                        offset, 
+                        atspi.Accessibility.TEXT_BOUNDARY_CHAR)
 
-            if util.getLinkIndex(event.source, offset) >= 0:
-                voice = self.voices[settings.HYPERLINK_VOICE]
-            elif character.isupper():
-                voice = self.voices[settings.UPPERCASE_VOICE]
-            else:
-                voice = self.voices[settings.DEFAULT_VOICE]
+                if util.getLinkIndex(event.source, offset) >= 0:
+                    voice = self.voices[settings.HYPERLINK_VOICE]
+                elif character.isupper():
+                    voice = self.voices[settings.UPPERCASE_VOICE]
+                else:
+                    voice = self.voices[settings.DEFAULT_VOICE]
 
-            speech.speak(character, voice)
+                # We won't interrupt what else might be being spoken
+                # right now because it is typically something else
+                # related to this event.
+                #
+                speech.speak(character, voice, False)
 
     def onTextInserted(self, event):
         """Called whenever text is inserted into an object.
