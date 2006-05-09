@@ -606,7 +606,8 @@ def _isActionKey(event_string):
     """
 
     actionKeys = [ "space", "Return", "Escape", "Tab", "BackSpace", "Delete",
-                   "Left", "Right", "Up", "Down", "Page_Up", "Page_Down" ]
+                   "Left", "Right", "Up", "Down", "Page_Up", "Page_Down",
+                   "Home", "End" ]
 
     reply = event_string in actionKeys
     debug.println(debug.LEVEL_FINEST,

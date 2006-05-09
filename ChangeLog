@@ -1,3 +1,9 @@
+2006-05-09  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca.py
+          Added "Home" and "End" to the list of action keys recognized by
+          Orca in the _isActionKey() method.
+
 2006-05-09  Willie Walker <william.walker@sun.com>
 
 	* src/orca/default.py: a little more work with the keyecho stuff. 
