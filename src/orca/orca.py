@@ -27,8 +27,11 @@ try:
 except:
     pass
 
-import os, signal, sys
+import getopt
+import os
+import signal
 import string
+import sys
 import time
 
 import atspi
@@ -37,6 +40,7 @@ import debug
 import keynames
 import keybindings
 import mag
+import platform
 import rolenames
 import settings
 import speech
@@ -1287,6 +1291,21 @@ def abortOnSignal(signum, frame):
     #print "Aborting due to signal =", signum
     abort()
 
+def usage():
+    """Prints out usage information."""
+    print _("Usage: orca [OPTION...]")
+    print
+    print _("-?, --help                   Show this help message")
+    print _("-v, --version                %s") % platform.version
+    print _("-s, --setup, --gui-setup     Set up user preferences")
+    print _("-t, --text-setup             Set up user preferences (text version)")
+    print _("-n, --no-setup               Skip set up of user preferences")
+    print
+    print _("If Orca has not been previously set up by the user, Orca\nwill automatically launch the preferences set up unless\nthe -n or --no-setup option is used.")
+    print
+    print _("Report bugs to orca-list@gnome.org.")
+    pass
+
 def main():
     signal.signal(signal.SIGHUP, shutdownOnSignal)
     signal.signal(signal.SIGINT, shutdownOnSignal)
@@ -1304,6 +1323,8 @@ def main():
     except:
         pass
 
+    # Parse the command line options.
+    #
     # Run the preferences setup if the user has specified
     # "--setup" or "--text-setup" on the command line.  If the
     # desktop is not running, we will fallback to the console-based
@@ -1312,16 +1333,42 @@ def main():
     bypassSetup     = False
     setupRequested  = False
     showGUI         = False
-    for arg in sys.argv:
-        if (arg == _("--gui-setup")) or (arg == _("--setup")):
-            setupRequested = True
-            showGUI = desktopRunning
-        elif arg == _("--text-setup"):
-            setupRequested = True
-            showGUI = False
-        elif arg == _("--no-setup"):
-            bypassSetup = True
-
+    try:
+        # Note to translators: ? is for help
+        #                      h is for help
+        #                      s is for setup
+        #                      n is for no setup
+        #                      t is for text setup
+        #                      v is for version
+        #
+        opts, args = getopt.getopt(
+            sys.argv[1:],
+            _("?stnv"),
+            [_("help"),
+             _("setup"),
+             _("gui-setup"),
+             _("text-setup"),
+             _("no-setup"),
+             _("version")])
+        for opt, val in opts:
+            if opt in (_("-s"), _("--gui-setup"), _("--setup")):
+                setupRequested = True
+                showGUI = desktopRunning
+            if opt in (_("-t"), _("--text-setup")):
+                setupRequested = True
+                showGUI = False
+            if opt in (_("-n"), _("--no-setup")):
+                bypassSetup = True
+            if opt in (_("-?"), _("--help")):
+                usage()
+                os._exit(0)
+            if opt in (_("-v"), _("--version")):
+                print "Orca %s" % platform.version
+                os._exit(0)
+    except:
+        usage()
+        os._exit(2)
+        
     if setupRequested and (not bypassSetup) and (not showGUI):
         _showPreferencesConsole()
             

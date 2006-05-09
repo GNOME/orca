@@ -1,3 +1,10 @@
+2006-05-09  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca.py: work for bug 338890.  Introduces use
+	of getopt to parse options, introduces a "usage" option,
+	and adds command line options to get help and version 
+	information.
+	
 2006-05-08  Willie Walker <william.walker@sun.com>
 
 	* src/orca/mag.py: set crosshair color with cursor color.
