@@ -700,11 +700,8 @@ def _keyEcho(event):
 
         # Check to see if there are localized words to be spoken for
         # this key event.
-        try:
+        if event_string in keynames.keynames:
             event_string = keynames.keynames[event_string]
-        except:
-            debug.printException(debug.LEVEL_FINEST)
-            pass
 
         debug.println(debug.LEVEL_FINEST,
                       "orca._keyEcho: speaking: %s" % event_string)
@@ -1387,10 +1384,10 @@ def main():
     except:
         usage()
         os._exit(2)
-        
+
     if setupRequested and (not bypassSetup) and (not showGUI):
         _showPreferencesConsole()
-            
+
     if not desktopRunning:
         print "Cannot start Orca because it cannot connect"
         print "to the Desktop.  Please make sure the DISPLAY"
@@ -1417,7 +1414,7 @@ def main():
             _showPreferencesGUI()
         else:
             _showPreferencesConsole()
-        
+
     # Do not run Orca if accessibility has not been enabled.
     #
     import commands

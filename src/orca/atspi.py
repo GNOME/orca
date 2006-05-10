@@ -226,7 +226,10 @@ class EventListener(Accessibility__POA.EventListener):
         self.__registered = False
 
     def notifyEvent(self, event):
-        self.callback(event)
+        try:
+            self.callback(event)
+        except:
+            debug.printException(debug.LEVEL_WARNING)
 
     def __del__(self):
         self.deregister()
@@ -302,7 +305,11 @@ class KeystrokeListener(Accessibility__POA.DeviceEventListener):
 
         Returns True if the event has been consumed.
         """
-        return self.callback(event)
+        try:
+            return self.callback(event)
+        except:
+            debug.printException(debug.LEVEL_WARNING)
+            return False
 
     def __del__(self):
         self.deregister()
@@ -513,6 +520,8 @@ class Accessible:
 
         if obj.valid:
             Accessible._cache[acc] = obj
+        else:
+            obj = None
 
         return obj
 
@@ -550,7 +559,6 @@ class Accessible:
         # object or not.
         #
         self._acc = None
-        self.__origAcc = None
 
         # We'll also keep track of whether this object is any good to
         # us or not.  This object will be deleted when a defunct event
@@ -566,38 +574,50 @@ class Accessible:
         assert (not Accessible._cache.has_key(acc)), \
                "Attempt to create an Accessible that's already been made."
 
-        # The acc reference might be an Accessibility_Accessible or an
-        # Accessibility_Application, so try both.
+        # See if we have an application. Via bridges such as the Java
+        # access bridge, we might be getting a CORBA::Object, which is
+        # of little use to us.  We need to narrow it down to something
+        # we can use.  The first attempt is to see if we can get an
+        # application out of it.  Then we go for an accessible.
         #
+        self.accessible = None
         try:
-            self._acc = acc._narrow(Accessibility.Application)
+            self.accessible = acc._narrow(Accessibility.Application)
             try:
-                self.toolkitName = self._acc.toolkitName
+                self.toolkitName = application.toolkitName
             except:
                 self.toolkitName = None
             try:
-                self.version = self._acc.version
+                self.version = application.version
             except:
                 self.version = None
         except:
-            self._acc = acc._narrow(Accessibility.Accessible)
-
-        # [[[TODO: WDW - the AT-SPI appears to give us a different accessible
-        # when we repeatedly ask for the same child of a parent that manages
-        # its descendants.  So...we probably shouldn't cache those kind of
-        # children because we're likely to cause a memory leak. Logged as
-        # bugzilla bug 319675.]]]
-        #
-        # Save a reference to the AT-SPI object, and also save this
-        # new object away in the cache.
-        #
-        if self._acc:
-            self.__origAcc = acc
             try:
-                self._acc.ref()
+                self.accessible = acc._narrow(Accessibility.Accessible)
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+                debug.println(debug.LEVEL_SEVERE,
+                              "atspi.py:Accessible.__init__" \
+                              + " NOT GIVEN AN ACCESSIBLE!")
+                self.accessible = None
+
+        if self.accessible:
+            # [[[TODO: WDW - the AT-SPI appears to give us a
+            # different accessible when we repeatedly ask for the
+            # same child of a parent that manages its descendants.
+            # So...we probably shouldn't cache those kind of
+            # children because we're likely to cause a memory
+            # leak. Logged as bugzilla bug 319675.]]]
+            #
+            # Save a reference to the AT-SPI object, and also save this
+            # new object away in the cache.
+            #
+            try:
+                self.accessible.ref()
+                self._acc = acc
                 self.valid = True
             except:
-                self.valid = False
+                debug.printException(debug.LEVEL_SEVERE)
 
     def getStateString(self):
         """Returns a space-delimited string composed of the given object's
@@ -689,37 +709,43 @@ class Accessible:
         """Unrefs the AT-SPI Accessible associated with this object.
         """
 
-        if self._acc:
+        if self.accessible:
             try:
-                self._acc.unref()
+                self.accessible.unref()
             except:
                 pass
             try:
-                Accessible.deleteAccessible(self.__origAcc)
+                Accessible.deleteAccessible(self._acc)
+                self.accessible = None
+                self._acc = None
             except:
-                print(dir(self))
+                pass
 
     def __get_name(self):
         """Returns the object's accessible name as a string.
         """
 
-        name = self._acc.name
-        
         # Combo boxes don't seem to issue accessible-name changed
         # events, so we can't cache their names.  The main culprit
         # here seems to be the combo box in gaim's "Join Chat" window.
         #
-        if settings.cacheValues and (self.role != rolenames.ROLE_COMBO_BOX):
+        name = self.accessible.name
+
+        if name and settings.cacheValues \
+            and (self.role != rolenames.ROLE_COMBO_BOX):
             self.name = name
+
         return name
 
     def __get_description(self):
         """Returns the object's accessible description as a string.
         """
 
-        description = self._acc.description
-        if settings.cacheValues:
-            self.description = self._acc.description
+        description = self.accessible.description
+
+        if description and settings.cacheValues:
+            self.description = description
+
         return description
 
     def __get_parent(self):
@@ -732,20 +758,23 @@ class Accessible:
         # get events for objects without a parent, but then the object ends
         # up getting a parent later on.
         #
-        obj = self._acc.parent
-        if not obj:
+        accParent = self.accessible.parent
+
+        if not accParent:
             return None
         else:
-            parent = Accessible.makeAccessible(obj);
+            parent = Accessible.makeAccessible(accParent);
+
             if settings.cacheValues:
                 self.parent = parent
+
             return parent;
 
     def __get_child_count(self):
         """Returns the number of children for this object.
         """
 
-        childCount = self._acc.childCount
+        childCount = self.accessible.childCount
 
         # We don't want to cache this value because it's possible that it
         # will continually change.
@@ -758,7 +787,7 @@ class Accessible:
         """Returns the index of this object in its parent's child list.
         """
 
-        index = self._acc.getIndexInParent()
+        index = self.accessible.getIndexInParent()
 
         # We don't want to cache this value because it's possible that it
         # will continually change.
@@ -777,7 +806,7 @@ class Accessible:
         has an example of this in its menus demo.
         """
 
-        role = self._acc.getRoleName()
+        role = self.accessible.getRoleName()
 
         # [[[WDW - HACK to coalesce menu items with children into
         # menus.  The menu demo in gtk-demo does this, and one
@@ -796,8 +825,9 @@ class Accessible:
             and (self.childCount > 0):
                 role = rolenames.ROLE_MENU
 
-        if settings.cacheValues:
+        if role and settings.cacheValues:
             self.role = role
+
         return role
 
     def __get_localized_rolename(self):
@@ -807,10 +837,11 @@ class Accessible:
         comparison.
         """
 
-        localizedRoleName = self._acc.getLocalizedRoleName()
+        localizedRoleName = self.accessible.getLocalizedRoleName()
 
-        if settings.cacheValues:
+        if localizedRoleName and settings.cacheValues:
             self.localizedRoleName = localizedRoleName
+
         return localizedRoleName
 
     def __get_state(self):
@@ -818,26 +849,34 @@ class Accessible:
         sequence of Accessible StateTypes.
         """
 
-        s = self._acc.getState()
-        s = s._narrow(Accessibility.StateSet)
-        state = s.getStates()
+        stateSet = self.accessible.getState()
+        if stateSet:
+            state = stateSet._narrow(Accessibility.StateSet).getStates()
+        else:
+            state = []
+
         # [[[WDW - we don't seem to always get appropriate state changed
         # information, so we will not cache state information.]]]
         #
-        #if settings.cacheValues:
+        #if state and settings.cacheValues:
         #    self.state = state
+
         return state
 
     def __get_relations(self):
         """Returns the Accessible RelationSet of this object as a list.
         """
 
-        relationSet = self._acc.getRelationSet()
         relations = []
+
+        relationSet = self.accessible.getRelationSet()
+
         for relation in relationSet:
             relations.append(relation._narrow(Accessibility.Relation))
+
         if settings.cacheValues:
             self.relations = relations
+
         return relations
 
     def __get_app(self):
@@ -880,8 +919,10 @@ class Accessible:
         debug.println(debug.LEVEL_FINEST, "Accessible app for %s is %s" \
                       % (self.accessibleNameToString(), \
                          obj.accessibleNameToString()))
+
         if settings.cacheValues:
             self.app = obj
+
         return obj
 
     def __get_extents(self, coordinateType = 0):
@@ -900,21 +941,24 @@ class Accessible:
         """
 
         component = self.component
+
         if not component:
             return None
-        else:
-            # [[[TODO: WDW - caching the extents is dangerous because
-            # the object may move, resulting in the current extents
-            # becoming way out of date.  Perhaps need to cache just
-            # the component interface and suffer the hit for getting
-            # the extents if we cannot figure out how to determine if
-            # the cached extents is out of date. Logged as bugzilla
-            # bug 319678.]]]
-            #
-            extents = component.getExtents(coordinateType)
-            #if settings.cacheValues:
-            #    self.extents = extents
-            return extents
+
+        extents = component.getExtents(coordinateType)
+
+        # [[[TODO: WDW - caching the extents is dangerous because
+        # the object may move, resulting in the current extents
+        # becoming way out of date.  Perhaps need to cache just
+        # the component interface and suffer the hit for getting
+        # the extents if we cannot figure out how to determine if
+        # the cached extents is out of date. Logged as bugzilla
+        # bug 319678.]]]
+        #
+        #if settings.cacheValues:
+        #    self.extents = extents
+
+        return extents
 
     def __get_action(self):
         """Returns an object that implements the Accessibility_Action
@@ -922,11 +966,14 @@ class Accessible:
         the Accessibility_Action interface.
         """
 
-        action = self._acc.queryInterface("IDL:Accessibility/Action:1.0")
+        action = self.accessible.queryInterface("IDL:Accessibility/Action:1.0")
+
         if action:
             action = action._narrow(Accessibility.Action)
-        if settings.cacheValues:
+
+        if action and settings.cacheValues:
             self.action = action
+
         return action
 
     def __get_component(self):
@@ -935,12 +982,15 @@ class Accessible:
         the Accessibility_Component interface.
         """
 
-        component = self._acc.queryInterface(\
+        component = self.accessible.queryInterface(\
             "IDL:Accessibility/Component:1.0")
+
         if component:
             component = component._narrow(Accessibility.Component)
-        if settings.cacheValues:
+
+        if component and settings.cacheValues:
             self.component = component
+
         return component
 
     def __get_hypertext(self):
@@ -949,12 +999,15 @@ class Accessible:
         the Accessibility_Hypertext interface.
         """
 
-        hypertext = self._acc.queryInterface(\
+        hypertext = self.accessible.queryInterface(\
             "IDL:Accessibility/Hypertext:1.0")
+
         if hypertext:
             hypertext = hypertext._narrow(Accessibility.Hypertext)
-        if settings.cacheValues:
+
+        if hypertext and settings.cacheValues:
             self.hypertext = hypertext
+
         return hypertext
 
     def __get_image(self):
@@ -963,12 +1016,15 @@ class Accessible:
         the Accessibility_Image interface.
         """
 
-        image = self._acc.queryInterface(\
+        image = self.accessible.queryInterface(\
             "IDL:Accessibility/Image:1.0")
+
         if image:
             image = image._narrow(Accessibility.Image)
-        if settings.cacheValues:
+
+        if image and settings.cacheValues:
             self.image = image
+
         return image
 
     def __get_selection(self):
@@ -977,12 +1033,15 @@ class Accessible:
         the Accessibility_Selection interface.
         """
 
-        selection = self._acc.queryInterface(\
+        selection = self.accessible.queryInterface(\
             "IDL:Accessibility/Selection:1.0")
+
         if selection:
             selection = selection._narrow(Accessibility.Selection)
-        if settings.cacheValues:
+
+        if selection and settings.cacheValues:
             self.selection = selection
+
         return selection
 
     def __get_table(self):
@@ -991,11 +1050,14 @@ class Accessible:
         the Accessibility_Table interface.
         """
 
-        table = self._acc.queryInterface("IDL:Accessibility/Table:1.0")
+        table = self.accessible.queryInterface("IDL:Accessibility/Table:1.0")
+
         if table:
             table = table._narrow(Accessibility.Table)
-        if settings.cacheValues:
+
+        if table and settings.cacheValues:
             self.table = table
+
         return table
 
     def __get_text(self):
@@ -1004,11 +1066,14 @@ class Accessible:
         the Accessibility_Text interface.
         """
 
-        text = self._acc.queryInterface("IDL:Accessibility/Text:1.0")
+        text = self.accessible.queryInterface("IDL:Accessibility/Text:1.0")
+
         if text:
             text = text._narrow(Accessibility.Text)
-        if settings.cacheValues:
+
+        if text and settings.cacheValues:
             self.text = text
+
         return text
 
     def __get_value(self):
@@ -1017,11 +1082,14 @@ class Accessible:
         the Accessibility_Value interface.
         """
 
-        value = self._acc.queryInterface("IDL:Accessibility/Value:1.0")
+        value = self.accessible.queryInterface("IDL:Accessibility/Value:1.0")
+
         if value:
             value = value._narrow(Accessibility.Value)
-        if settings.cacheValues:
+
+        if value and settings.cacheValues:
             self.value = value
+
         return value
 
     def __getattr__(self, attr):
@@ -1097,13 +1165,13 @@ class Accessible:
         #
         # Save away details we now know about this child
         #
-        acc = self._acc.getChildAtIndex(index)
-        if not acc:
-            return None
-        newChild = Accessible.makeAccessible(acc)
-        newChild.index = index
-        newChild.parent = self
-        newChild.app = self.app
+        newChild = None
+        accChild = self.accessible.getChildAtIndex(index)
+        if accChild:
+            newChild = Accessible.makeAccessible(accChild)
+            newChild.index = index
+            newChild.parent = self
+            newChild.app = self.app
         return newChild
 
     def toString(self, indent="", includeApp=True):
@@ -1145,10 +1213,6 @@ def getObjects(root):
     tree traversal, ignoring the children of objects which report the
     MANAGES_DESCENDANTS state is active.
 
-    NOTE: this will throw an InvalidObjectError exception if the
-    AT-SPI Accessibility_Accessible can no longer be reached via
-    CORBA.
-
     Arguments:
     - root: the Accessible object to traverse
 
@@ -1185,10 +1249,6 @@ def findByRole(root, role):
     getObjects and then deletes objects from the list that aren't of
     the specified role.  Logged as bugzilla bug 319740.]]]
 
-    NOTE: this will throw an InvalidObjectError exception if the
-    AT-SPI Accessibility_Accessible can no longer be reached via
-    CORBA.
-
     Arguments:
     - root the Accessible object to traverse
     - role the string describing the Accessible role of the object
@@ -1210,10 +1270,6 @@ def findByName(root, name):
     don't have the specified name.  Instead it uses the traversal from
     getObjects and then deletes objects from the list that don't have
     the specified name. Logged as bugzilla bug 319740.]]]
-
-    NOTE: this will throw an InvalidObjectError exception if the
-    AT-SPI Accessibility_Accessible can no longer be reached via
-    CORBA.
 
     Arguments:
     - root the Accessible object to traverse
@@ -1299,10 +1355,6 @@ def getFrame(obj):
     """Returns the frame containing this object, or None if this object
     is not inside a frame.
 
-    NOTE: this will throw an InvalidObjectError exception if the
-    AT-SPI Accessibility_Accessible can no longer be reached via
-    CORBA.
-
     Arguments:
     - obj: the Accessible object
     """
@@ -1363,10 +1415,6 @@ def getNodeLevel(obj):
     relation, with 0 being the top level node.  If this object is
     not in a tree relation, then -1 will be returned.
 
-    NOTE: this will throw an InvalidObjectError exception if the
-    AT-SPI Accessibility_Accessible can no longer be reached via
-    CORBA.
-
     Arguments:
     -obj: the Accessible object
     """
@@ -1394,10 +1442,6 @@ def getNodeLevel(obj):
 def getAcceleratorAndShortcut(obj):
     """Gets the accelerator string (and possibly shortcut) for the given
     object.
-
-    NOTE: this will throw an InvalidObjectError exception if the
-    AT-SPI Accessibility_Accessible can no longer be reached via
-    CORBA.
 
     Arguments:
     - obj: the Accessible object

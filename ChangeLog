@@ -1,3 +1,18 @@
+2006-05-10  Willie Walker <william.walker@sun.com>
+
+	* src/orca/atspi.py, src/orca/orca.py,
+	src/orca/focus_tracking_presenter.py, src/orca/settings.py:
+	refactor the way we communicate with Orca.  The Java platform's
+	CORBA implementation seems to do two things we don't like:
+	1) Give us CORBA::Object's instead of Bonobo::Unknown's or better.
+	We solve this by making sure we _narrow all objects to types that
+	we expect.  This is a rather pervasive change.
+	2) Glitch out often in communication, causing COMM_FAILURE's.
+	We solve this problem by retrying the same thing a few times 
+	before we give up.  More often than not, the COMM_FAILURE was
+	a temporary glitch and communication is re-established by the
+	2nd or 3rd try.
+	
 2006-05-10  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py

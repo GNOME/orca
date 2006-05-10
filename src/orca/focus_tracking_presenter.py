@@ -21,6 +21,7 @@
 
 import gobject
 import Queue
+import time
 
 import atspi
 import default
@@ -354,12 +355,12 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
 
         debug.println(debug.eventDebugLevel,
                       "\nvvvvv PROCESS OBJECT EVENT %s vvvvv" % event.type)
-        
+
         try:
             self._processObjectEvent(event)
         except:
             pass
-        
+
         debug.println(debug.eventDebugLevel,
                       "^^^^^ PROCESS OBJECT EVENT %s ^^^^^\n" % event.type)
 
@@ -400,49 +401,74 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         try:
             debug.printDetails(debug.LEVEL_FINEST, "    ", event.source)
         except CORBA.COMM_FAILURE:
-            debug.printException(debug.LEVEL_FINEST)
+            debug.printException(debug.LEVEL_WARNING)
             debug.println(debug.LEVEL_FINEST,
                           "COMM_FAILURE above while processing event: " \
                           + event.type)
-            atspi.Accessible.deleteAccessible(event.source)
-            return
         except CORBA.OBJECT_NOT_EXIST:
-            debug.printException(debug.LEVEL_SEVERE)
-            debug.println(debug.LEVEL_SEVERE,
+            debug.printException(debug.LEVEL_WARNING)
+            debug.println(debug.LEVEL_WARNING,
                           "OBJECT_NOT_EXIST above while processing event: " \
                           + event.type)
             atspi.Accessible.deleteAccessible(event.source)
             return
         except:
-            debug.printException(debug.LEVEL_SEVERE)
+            debug.printException(debug.LEVEL_WARNING)
             return
 
         if not event.source:
-            debug.println(debug.LEVEL_SEVERE,
+            debug.println(debug.LEVEL_WARNING,
                           "ERROR: received an event with no source.")
             return
 
+        # We can sometimes get COMM_FAILURES even if the object has not
+        # gone away.  This happens a lot with the Java access bridge.
+        # So...we will try a few times before giving up.
+        #
         # [[[TODO: WDW - might want to consider re-introducing the reload
         # feature of scripts somewhere around here.  I pulled it out as
         # part of the big refactor to make scripts object-oriented. Logged
         # as bugzilla bug 319777.]]]
         #
-        try:
-            if event.type == "window:activate":
-                speech.stop()
-                self._activeScript = self._getScript(event.source.app)
-                debug.println(debug.LEVEL_FINE, "ACTIVE SCRIPT: " \
-                              + self._activeScript.name)
-            s = self._getScript(event.source.app)
-            s.processObjectEvent(event)
-        except CORBA.COMM_FAILURE:
-            debug.printException(debug.LEVEL_SEVERE)
-            debug.println(debug.LEVEL_SEVERE,
-                          "COMM_FAILURE above while processing event: " \
-                          + event.type)
-            atspi.Accessible.deleteAccessible(event.source)
-        except:
-            debug.printException(debug.LEVEL_SEVERE)
+        retryCount = 0
+        oldLocusOfFocus = orca.locusOfFocus
+        while retryCount <= settings.commFailureAttemptLimit:
+            try:
+                if event.type == "window:activate":
+                    speech.stop()
+                    self._activeScript = self._getScript(event.source.app)
+                    debug.println(debug.LEVEL_FINE, "ACTIVE SCRIPT: " \
+                                  + self._activeScript.name)
+                s = self._getScript(event.source.app)
+                s.processObjectEvent(event)
+                if retryCount:
+                    debug.println(debug.LEVEL_WARNING,
+                                  "  SUCCEEDED AFTER %d TRIES" % retryCount)
+                break
+            except CORBA.COMM_FAILURE:
+                debug.printException(debug.LEVEL_WARNING)
+                debug.println(debug.LEVEL_WARNING,
+                              "COMM_FAILURE above while processing: " \
+                              + event.type)
+                retryCount += 1
+                if retryCount <= settings.commFailureAttemptLimit:
+                    # We want the old locus of focus to be reset so
+                    # the proper stuff will be spoken if the locus
+                    # of focus changed during our last attempt at
+                    # handling this event.
+                    #
+                    orca.locusOfFocus = oldLocusOfFocus
+                    debug.println(debug.LEVEL_WARNING,
+                                  "  TRYING AGAIN (%d)" % retryCount)
+                    time.sleep(settings.commFailureWaitTime)
+                else:
+                    debug.println(debug.LEVEL_WARNING,
+                                  "  GIVING UP AFTER %d TRIES" \
+                                  % retryCount - 1)
+                    atspi.Accessible.deleteAccessible(event.source)
+            except:
+                break
+                debug.printException(debug.LEVEL_WARNING)
 
     def processKeyboardEvent(self, keyboardEvent):
         """Processes the given keyboard event based on the keybinding from the

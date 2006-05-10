@@ -282,6 +282,14 @@ cacheValues             = True
 #
 learnModeEnabled        = False
 
+# Assists with dealing with CORBA COMM_FAILURES.  A failure doesn't
+# always mean an object disappeared - there just might be a network
+# glitch.  So, on COMM_FAILURES, we might retry a few times before
+# giving up on an object.
+#
+commFailureWaitTime     = 0.1
+commFailureAttemptLimit = 5
+
 # Which packages to search, and the order in which to search,
 # for custom scripts.  These packages are expected to be on
 # the PYTHONPATH and/or subpackages of the "orca" package.
@@ -325,7 +333,7 @@ def getScriptModuleName(app):
 
     if not app.name:
         return None
-    
+
     for mapping in _scriptMappings:
         regExpression = mapping[0]
         moduleName = mapping[1]
