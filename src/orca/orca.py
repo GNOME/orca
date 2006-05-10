@@ -667,6 +667,24 @@ def _keyEcho(event):
             if not settings.enableLockingKeys:
                 return
 
+            modifiers = event.modifiers
+            if event_string == _("Caps_Lock"):
+                if modifiers & (1 << atspi.Accessibility.MODIFIER_SHIFTLOCK):
+                    event_string += " Off"
+                else:
+                    event_string += " On"
+            elif event_string == _("Num_Lock"):
+                # [[[TODO: richb - we are not getting a correct modifier
+                # state value returned when Num Lock is turned off.
+                # Commenting out the speaking of the bogus on/off state
+                # until this can be fixed.]]]
+                #
+                #if modifiers & (1 << atspi.Accessibility.MODIFIER_NUMLOCK):
+                #    event_string += " Off"
+                #else:
+                #    event_string += " On"
+                pass
+
         elif _isFunctionKey(event_string):
             if not settings.enableFunctionKeys:
                 return
