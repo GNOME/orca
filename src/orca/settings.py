@@ -323,6 +323,9 @@ def getScriptModuleName(app):
     - app: the application to find a script module name for
     """
 
+    if not app.name:
+        return None
+    
     for mapping in _scriptMappings:
         regExpression = mapping[0]
         moduleName = mapping[1]

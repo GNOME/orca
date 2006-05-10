@@ -1,5 +1,8 @@
 2006-05-10  Willie Walker <william.walker@sun.com>
 
+	* src/orca/settings.py: fix bug where a None app name would
+	cause problems with getScriptModuleName.
+	
 	* src/orca/scripts/planner.py: apply patch to fix bug 338097.
 	Supplied by community member Javier (thanks!)
 	
