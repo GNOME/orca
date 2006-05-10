@@ -1,4 +1,12 @@
-2006-05-09  Rich Burridge <rich.burridge@sun.com>
+2006-05-10  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py
+          Adjusted the sayLine() routine to ignore zero length lines.
+          This has the side-effect of not interrupting speaking of
+          the "Page Down" key when the last line in the document is 
+          empty.
+
+2006-05-10  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca.py
           Added code to _keyEcho() to try to detect the state (on or off)

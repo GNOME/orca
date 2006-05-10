@@ -599,7 +599,7 @@ class Script(script.Script):
 
     def sayLine(self, obj):
         """Speaks the line of an AccessibleText object that contains the
-        caret. [[[TODO: WDW - what if the line is empty?]]]
+        caret, unless the line is empty in which case it's ignored.
 
         Arguments:
         - obj: an Accessible object that implements the AccessibleText
@@ -610,12 +610,13 @@ class Script(script.Script):
         #
         [line, startOffset, endOffset] = atspi.getTextLineAtCaret(obj)
 
-        if line.isupper():
-            voice = self.voices[settings.UPPERCASE_VOICE]
-        else:
-            voice = self.voices[settings.DEFAULT_VOICE]
+        if len(line) != 0:
+            if line.isupper():
+                voice = self.voices[settings.UPPERCASE_VOICE]
+            else:
+                voice = self.voices[settings.DEFAULT_VOICE]
 
-        speech.speak(line, voice)
+            speech.speak(line, voice)
 
     def sayWord(self, obj):
         """Speaks the word at the caret.  [[[TODO: WDW - what if there is no
