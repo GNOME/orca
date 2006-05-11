@@ -534,7 +534,10 @@ def _isPrintableKey(event_string):
     Returns True if this is an alphanumeric or punctuation key.
     """
 
-    reply = event_string in string.printable
+    if event_string == "space":
+        reply = True
+    else:
+        reply = event_string in string.printable
     debug.println(debug.LEVEL_FINEST,
                   "orca._echoPrintableKey: returning: %s" % reply)
     return reply
