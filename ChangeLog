@@ -1,10 +1,21 @@
 2006-05-11  Willie Walker <william.walker@sun.com>
 
+	* src/orca/default.py: work on preventing echo "bleed through"
+	when typing quickly and echo is not turned on.  The main problem
+	causing this was the toolkit apparently doing compression of 
+	multiple keystrokes, causing us to get a longer string in a 
+	single text inserted event instead of individual inserted events
+	for each keystroke.  I'm wondering if there might be a better
+	way to skin this cat, such as handling input events immediately
+	for controlling orca, but then adding them to the queue for 
+	post-processing of stuff like key echo.  I'm not sure...
+	
 	* src/orca/focus_tracking_presenter.py: remove errant speech.stop
 	that gets called when a window is activated.  The resulting calls
 	to speech.speak from the associated script for the window should
 	do the appropriate stop as needed.  This helps with not interrupting
 	a key echo in progress when a new window appears.
+	
 	* src/orca/orca.py, src/orca/speech.py: do not interrupt a key
 	echo in progress.
 	

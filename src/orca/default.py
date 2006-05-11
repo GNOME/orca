@@ -1478,22 +1478,35 @@ class Script(script.Script):
         # the text for this event matches what the user typed. If it does,
         # then don't speak it.
         #
+        # Note that the text widgets sometimes compress their events,
+        # thus we might get a longer string from a single text inserted
+        # event, while we also get individual keyboard events for the
+        # characters used to type the string.  This is ugly.  We attempt
+        # to handle it here by only echoing text if we think it was the
+        # result of a command (e.g., a paste operation).
+        #
         # Note that we have to special case the space character as it
         # comes across as "space" in the keyboard event and " " in the
         # text event.
         #
         if isinstance(orca.lastInputEvent, input_event.KeyboardEvent):
             keyString = orca.lastInputEvent.event_string
-            if (text == " " and keyString == "space") or \
-               (text == keyString):
+            wasCommand = orca.lastInputEvent.modifiers \
+                         & (atspi.Accessibility.MODIFIER_CONTROL \
+                            | atspi.Accessibility.MODIFIER_ALT \
+                            | atspi.Accessibility.MODIFIER_META \
+                            | atspi.Accessibility.MODIFIER_META2 \
+                            | atspi.Accessibility.MODIFIER_META3)
+            if (text == " " and keyString == "space") \
+                or (text == keyString):
                 pass
-            else:
+            elif wasCommand:
                 if text.isupper():
                     speech.speak(text, self.voices[settings.UPPERCASE_VOICE])
                 else:
                     speech.speak(text)
-
-        if settings.enableEchoByWord and util.isWordDelimiter(text):
+                
+        if settings.enableEchoByWord and util.isWordDelimiter(text[-1:]):
             self.echoPreviousWord(event.source)
 
     def onActiveDescendantChanged(self, event):
