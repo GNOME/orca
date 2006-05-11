@@ -613,9 +613,6 @@ Hyperlink</property>
 						  <property name="active">False</property>
 						  <property name="inconsistent">False</property>
 						  <property name="draw_indicator">True</property>
-						  <accessibility>
-						    <atkrelation target="punctuationLabel" type="labelled-by"/>
-						  </accessibility>
 						  <signal name="toggled" handler="punctuationLevelChanged" last_modification_time="Thu, 27 Apr 2006 14:59:34 GMT"/>
 						</widget>
 						<packing>
@@ -637,9 +634,6 @@ Hyperlink</property>
 						  <property name="inconsistent">False</property>
 						  <property name="draw_indicator">True</property>
 						  <property name="group">noneButton</property>
-						  <accessibility>
-						    <atkrelation target="punctuationLabel" type="labelled-by"/>
-						  </accessibility>
 						  <signal name="toggled" handler="punctuationLevelChanged" last_modification_time="Thu, 27 Apr 2006 14:59:42 GMT"/>
 						</widget>
 						<packing>
@@ -661,9 +655,6 @@ Hyperlink</property>
 						  <property name="inconsistent">False</property>
 						  <property name="draw_indicator">True</property>
 						  <property name="group">noneButton</property>
-						  <accessibility>
-						    <atkrelation target="punctuationLabel" type="labelled-by"/>
-						  </accessibility>
 						  <signal name="toggled" handler="punctuationLevelChanged" last_modification_time="Thu, 27 Apr 2006 14:59:51 GMT"/>
 						</widget>
 						<packing>
@@ -761,9 +752,6 @@ Hyperlink</property>
 						  <property name="active">False</property>
 						  <property name="inconsistent">False</property>
 						  <property name="draw_indicator">True</property>
-						  <accessibility>
-						    <atkrelation target="speechVerbosityLabel" type="labelled-by"/>
-						  </accessibility>
 						  <signal name="toggled" handler="speechVerbosityChanged" last_modification_time="Thu, 27 Apr 2006 14:44:54 GMT"/>
 						</widget>
 						<packing>
@@ -785,9 +773,6 @@ Hyperlink</property>
 						  <property name="inconsistent">False</property>
 						  <property name="draw_indicator">True</property>
 						  <property name="group">speechBriefButton</property>
-						  <accessibility>
-						    <atkrelation target="speechVerbosityLabel" type="labelled-by"/>
-						  </accessibility>
 						  <signal name="toggled" handler="speechVerbosityChanged" last_modification_time="Thu, 27 Apr 2006 14:45:04 GMT"/>
 						</widget>
 						<packing>
@@ -1005,9 +990,6 @@ Hyperlink</property>
 				      <property name="active">False</property>
 				      <property name="inconsistent">False</property>
 				      <property name="draw_indicator">True</property>
-				      <accessibility>
-					<atkrelation target="brailleVerbosityLabel" type="labelled-by"/>
-				      </accessibility>
 				      <signal name="toggled" handler="brailleVerbosityChanged" last_modification_time="Thu, 27 Apr 2006 14:44:24 GMT"/>
 				    </widget>
 				    <packing>
@@ -1029,9 +1011,6 @@ Hyperlink</property>
 				      <property name="inconsistent">False</property>
 				      <property name="draw_indicator">True</property>
 				      <property name="group">brailleBriefButton</property>
-				      <accessibility>
-					<atkrelation target="brailleVerbosityLabel" type="labelled-by"/>
-				      </accessibility>
 				      <signal name="toggled" handler="brailleVerbosityChanged" last_modification_time="Thu, 27 Apr 2006 14:44:41 GMT"/>
 				    </widget>
 				    <packing>
@@ -2666,7 +2645,7 @@ Push</property>
   </child>
 </widget>
 
-<widget class="GtkDialog" id="dialog1">
+<widget class="GtkDialog" id="logoutDialog">
   <property name="visible">True</property>
   <property name="title" translatable="yes">Question</property>
   <property name="type">GTK_WINDOW_POPUP</property>

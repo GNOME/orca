@@ -1,5 +1,13 @@
 2006-05-11  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/orca-setup.glade:
+          Removed the LABELLED_BY relationships for the radio buttons 
+          on the speech and braille panes. These are no longer needed 
+          as these radio button groups are inside GtkFrame widgets which 
+          have that label as their title.
+
+2006-05-11  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/orca.py
           Removed "space", "Left", "Right", "Up" and "Down" from the 
           list of action keys.
