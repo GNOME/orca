@@ -640,6 +640,21 @@ def _keyEcho(event):
     # echoed.
     #
     if settings.enableKeyEcho:
+
+        # The control characters come through as control characters,
+        # so we just turn them into their ASCII equivalent.  NOTE that
+        # the upper case ASCII characters will be used (e.g., ctrl+a
+        # will be turned into the string "A").  All these checks here
+        # are to just do some sanity checking before doing the
+        # conversion. [[[WDW - this is making assumptions about
+        # mapping ASCII control characters to to UTF-8.]]]
+        #
+        if (event.modifiers & (1 << atspi.Accessibility.MODIFIER_CONTROL)) \
+           and (not event.is_text) and (len(event_string) == 1):
+            value = ord(event.event_string[0])
+            if value < 32:
+                event_string = chr(value + 0x40)
+
         if _isPrintableKey(event_string):
             if not settings.enablePrintableKeys:
                 return
@@ -650,20 +665,6 @@ def _keyEcho(event):
         elif _isModifierKey(event_string):
             if not settings.enableModifierKeys:
                 return
-
-            # The control characters come through as control characters,
-            # so we just turn them into their ASCII equivalent.  NOTE that
-            # the upper case ASCII characters will be used (e.g., ctrl+a
-            # will be turned into the string "A").  All these checks here
-            # are to just do some sanity checking before doing the
-            # conversion. [[[WDW - this is making assumptions about
-            # mapping ASCII control characters to to UTF-8.]]]
-            #
-            if (event.modifiers & (1 << atspi.Accessibility.MODIFIER_CONTROL)) \
-               and (not event.is_text) and (len(event_string) == 1):
-                value = ord(event.event_string[0])
-                if value < 32:
-                    event_string = chr(value + 0x40)
 
         elif _isLockingKey(event_string):
             if not settings.enableLockingKeys:

@@ -1,6 +1,12 @@
 2006-05-11  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca.py
+          In _keyEcho(), moved the control key logic to the top, so that
+          it works correctly with sequences such as "Control-O' in gedit.
+
+2006-05-11  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca.py
           In _isPrintableKey(), had to explicitly look for an event_string
           of "space" and return True if found.
 
