@@ -19,6 +19,8 @@
 
 """Provides various utility functions for Orca."""
 
+import string
+
 import atspi
 import debug
 import rolenames
@@ -357,3 +359,15 @@ def getLinkIndex(obj, characterIndex):
             return i
 
     return -1
+
+def isWordDelimiter(character):
+    """Returns True if the given character is a word delimiter.
+
+    Arguments:
+    - character: the character in question
+
+    Returns True if the given character is a word delimiter.
+    """
+
+    return (character in string.whitespace) \
+           or (character in string.punctuation)

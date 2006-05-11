@@ -642,6 +642,80 @@ class Script(script.Script):
 
         speech.speak(word, voice)
 
+    def echoPreviousWord(self, obj):
+        """Speaks the word prior to the caret, as long as there is
+        a word prior to the caret and there is no intervening word
+        delimiter between the caret and the end of the word.
+
+        The entry condition for this method is that the character
+        prior to the current caret position is a word delimiter,
+        and it's what caused this method to be called in the first
+        place.
+
+        Arguments:
+        - obj: an Accessible object that implements the AccessibleText
+               interface.
+        """
+
+        text = obj.text
+
+        # Check for a bunch of preconditions we care about
+        #
+        if not text:
+            return
+
+        offset = text.caretOffset - 1
+        if (offset < 0):
+            return
+        
+        [char, startOffset, endOffset] = \
+            text.getTextAtOffset( \
+                offset,
+                atspi.Accessibility.TEXT_BOUNDARY_CHAR)
+        if not util.isWordDelimiter(char):
+            return
+        
+        # OK - we seem to be cool so far.  So...starting with what
+        # should be the last character in the word (caretOffset - 2),
+        # work our way to the beginning of the word, stopping when
+        # we hit another word delimiter.
+        #
+        wordEndOffset = text.caretOffset - 2
+        wordStartOffset = wordEndOffset
+        
+        while wordStartOffset >= 0:
+            [char, startOffset, endOffset] = \
+                text.getTextAtOffset( \
+                    wordStartOffset,
+                    atspi.Accessibility.TEXT_BOUNDARY_CHAR)            
+            if util.isWordDelimiter(char):
+                break
+            else:
+                wordStartOffset -= 1
+
+        # If we came across a word delimiter before hitting any
+        # text, we really don't have a previous word.
+        #
+        # Otherwise, get the word.  Remember we stopped when we
+        # hit a word delimiter, so the word really starts at
+        # wordStartOffset + 1.  getText also does not include
+        # the character at wordEndOffset, so we need to adjust
+        # for that, too.
+        #
+        if wordStartOffset == wordEndOffset:
+            return
+        else:
+            word = text.getText(wordStartOffset + 1, wordEndOffset + 1)
+            
+        if util.getLinkIndex(obj, wordStartOffset + 1) >= 0:
+            voice = self.voices[settings.HYPERLINK_VOICE]
+        elif word.isupper():
+            voice = self.voices[settings.UPPERCASE_VOICE]
+        else:
+            voice = self.voices[settings.DEFAULT_VOICE]
+
+        speech.speak(word, voice)
+
     def sayCharacter(self, obj):
         """Speak the character under the caret.  [[[TODO: WDW - isn't the
         caret between characters?]]]
@@ -1419,9 +1493,8 @@ class Script(script.Script):
                 else:
                     speech.speak(text)
 
-        if settings.enableEchoByWord:
-            if text in string.whitespace or text in string.punctuation:
-                self.sayWord(event.source)
+        if settings.enableEchoByWord and util.isWordDelimiter(text):
+            self.echoPreviousWord(event.source)
 
     def onActiveDescendantChanged(self, event):
         """Called when an object who manages its own descendants detects a
