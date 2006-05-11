@@ -1,5 +1,8 @@
 2006-05-11  Willie Walker <william.walker@sun.com>
 
+	* src/orca/orca_gui_prefs.py: figure out how to use debug.println
+	to output debug info.
+	
 	* src/orca/default.py: work on preventing echo "bleed through"
 	when typing quickly and echo is not turned on.  The main problem
 	causing this was the toolkit apparently doing compression of 

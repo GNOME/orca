@@ -112,9 +112,9 @@ class orcaSetupGUI(GladeWrapper):
                 debug.printException(debug.LEVEL_FINEST)
                 pass
 
-        if debug.debugLevel <= debug.LEVEL_FINEST:
-            print "orca_gui_prefs._init: workingFactories: ", \
-                  self.workingFactories
+        debug.println(debug.LEVEL_FINEST, 
+                      "orca_gui_prefs._init: workingFactories: %s" \
+                      % self.workingFactories)
 
         self.factoryChoices = {}
         if len(self.workingFactories) == 0:
@@ -136,10 +136,15 @@ class orcaSetupGUI(GladeWrapper):
             self.speechSystemsModel.append((1, name))
             self.factory = self.workingFactories[0]
 
-        if debug.debugLevel <= debug.LEVEL_FINEST:
-            print "orca_gui_prefs._init: factoryChoices: ", self.factoryChoices
-            print "orca_gui_prefs._init: factory: ", self.factory
-            print "orca_gui_prefs._init: servers: ", servers
+        debug.println(debug.LEVEL_FINEST, 
+                      "orca_gui_prefs._init: factoryChoices: %s" \
+                      % self.factoryChoices)
+        debug.println(debug.LEVEL_FINEST, 
+                      "orca_gui_prefs._init: factory: %s" \
+                      % self.factory)
+        debug.println(debug.LEVEL_FINEST, 
+                      "orca_gui_prefs._init: servers: %s" \
+                      % servers)
 
         self.serverChoices = None
         self._setupServers()
@@ -417,10 +422,12 @@ class orcaSetupGUI(GladeWrapper):
 
         self.speechServers.set_active(0)
 
-        if debug.debugLevel <= debug.LEVEL_FINEST:
-            print "orca_gui_prefs._setupServers: serverChoices: ", \
-                   self.serverChoices
-            print "orca_gui_prefs._setupServers: server: ", self.server
+        debug.println(debug.LEVEL_FINEST, 
+                      "orca_gui_prefs._init: serverChoices: %s" \
+                      % self.serverChoices)
+        debug.println(debug.LEVEL_FINEST, 
+                      "orca_gui_prefs._init: server: %s" \
+                      % self.server)
 
     def _setupVoices(self):
         """Get the list of voice families for the current speech server.
@@ -459,9 +466,9 @@ class orcaSetupGUI(GladeWrapper):
         if not self.initializing:
             self.voices.set_active(0)
 
-        if debug.debugLevel <= debug.LEVEL_FINEST:
-            print "orca_gui_prefs._setupVoices: voiceChoices: ", \
-                   self.voiceChoices
+        debug.println(debug.LEVEL_FINEST, 
+                      "orca_gui_prefs._init: voiceChoices: %s" \
+                      % self.voiceChoices)
 
     def _getVoiceForVoiceType(self, voiceType):
         """Return the dictionary of voice preferences for the given 
