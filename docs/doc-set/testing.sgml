@@ -168,7 +168,7 @@
     <section id="keywordechotest"><title>Key and Word Echo</title>
 
       <para>The tests in this section are to ensure that Orca works
-        accurately with the various key and word echo settings.</para>
+        accurately with the various key and word echo settings.  Unless otherwise specified set all key echo options to yes.</para>
 
       <section><title>Simple Typing of Words</title>
         <para>&tgoal; Orca should speak words as they are typed.</para>
@@ -223,6 +223,9 @@
         <para>&tgoal; Orca should speak location information after page up and page down are pressed.</para>
         <para>&tprocedure; Open gedit and open a long document.  Press CTRL+home to return to the beginning of the line and press page down several times to move to the next pages of the document.</para>
         <para>&tresult; When these keys are pressed the line under the cursor should be spoken preceeded by the key name.  This includes spaces.  When the end of the document is reached nothing should be spoken.  Repeat this test with page up expecting the same results.  </para>
+        <para>&tgoal; Orca should speak tab and shift+tab when navigating a dialog.</para>
+        <para>&tprocedure; Open gedit and press CTRL+o to bring up the file open dialog.  Tab through the controls in the dialog box.</para>
+        <para>&tresult; The Word "tab" should be heard before the control with focus.</para>
 
       </section>
       <section><title>action keys with no echo test </title>
