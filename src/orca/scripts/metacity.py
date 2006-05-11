@@ -95,7 +95,13 @@ class Script(default.Script):
 
         text = name
 
-        if not found:
+        # Note to translators:  the "Workspace " string is the
+        # prefix of what metacity shows when you press Ctrl+Alt
+        # and the left or right arrow keys to switch between
+        # workspaces.  The goal here is to find a match with
+        # that prefix.
+        #
+        if (not found) and (not text.startswith(_("Workspace "))):
             text += ". " + _("inaccessible")
 
         braille.displayMessage(text)

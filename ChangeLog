@@ -1,3 +1,9 @@
+2006-05-11  Willie Walker <william.walker@sun.com>
+
+	* src/orca/scripts/metacity.py: don't call workspaces
+	"inaccessible" when using Ctrl+Alt+arrow to move between
+	workspaces.
+	
 2006-05-10  Willie Walker <william.walker@sun.com>
 
 	* src/orca/atspi.py, src/orca/orca.py,
