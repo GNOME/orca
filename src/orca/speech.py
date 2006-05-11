@@ -21,7 +21,10 @@
 as its speech server, or it can feel free to create one of its own.
 """
 
+import time
+
 import debug
+import orca
 import settings
 
 from acss import ACSS
@@ -120,6 +123,13 @@ def speak(text, acss=None, interrupt=True):
     - interrupt: if True, stops any speech in progress before
                  speaking the text
     """
+
+    # We will not interrupt a key echo in progress.
+    #
+    if orca.lastKeyEchoTime:
+        interrupt = interrupt \
+            and ((time.time() - orca.lastKeyEchoTime) > 0.5)
+        
     if settings.silenceSpeech:
         return
     if __speechserver:
@@ -138,6 +148,13 @@ def speakUtterances(utterances, acss=None, interrupt=True):
                  voice settings.
     - interrupt: if True, stop any speech currently in progress.
     """
+    
+    # We will not interrupt a key echo in progress.
+    #
+    if orca.lastKeyEchoTime:
+        interrupt = interrupt \
+            and ((time.time() - orca.lastKeyEchoTime) > 0.5)
+
     if settings.silenceSpeech:
         return
     if __speechserver:

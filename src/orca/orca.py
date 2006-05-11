@@ -616,6 +616,10 @@ def _isActionKey(event_string):
                   "orca._echoActionKey: returning: %s" % reply)
     return reply
 
+# Records the last time a key was echoed.
+#
+lastKeyEchoTime = None
+
 def _keyEcho(event):
     """If the keyEcho setting is enabled, check to see what type of key
     event it is and echo it via speech, if the user wants that type of
@@ -628,6 +632,8 @@ def _keyEcho(event):
     - event: an AT-SPI DeviceEvent
     """
 
+    global lastKeyEchoTime
+    
     event_string = event.event_string
     debug.println(debug.LEVEL_FINEST,
                   "orca._keyEcho: string to echo: %s" % event_string)
@@ -708,6 +714,9 @@ def _keyEcho(event):
 
         debug.println(debug.LEVEL_FINEST,
                       "orca._keyEcho: speaking: %s" % event_string)
+
+        lastKeyEchoTime = time.time()
+        
         speech.speak(event_string, voice)
 
 def _processKeyboardEvent(event):
