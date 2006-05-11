@@ -1342,39 +1342,38 @@ class Script(script.Script):
 
         string = orca.lastInputEvent.event_string
         text = event.source.text
-        if settings.enableKeyEcho:
-            if string == "BackSpace":
-                # Speak the character to the left of the caret after
-                # the current left character has been deleted.
-                #
-                offset = text.caretOffset-1
+        if string == "BackSpace":
+            # Speak the character to the left of the caret after
+            # the current left character has been deleted.
+            #
+            offset = text.caretOffset-1
 
-            elif string == "Delete":
-                # Speak the character to the right of the caret after
-                # the current right character has been deleted.
-                #
-                offset = text.caretOffset
+        elif string == "Delete":
+            # Speak the character to the right of the caret after
+            # the current right character has been deleted.
+            #
+            offset = text.caretOffset
+        else:
+            offset = 0
+
+        if offset >= 0:
+            [character, startOffset, endOffset] = \
+                event.source.text.getTextAtOffset(
+                    offset, 
+                    atspi.Accessibility.TEXT_BOUNDARY_CHAR)
+
+            if util.getLinkIndex(event.source, offset) >= 0:
+                voice = self.voices[settings.HYPERLINK_VOICE]
+            elif character.isupper():
+                voice = self.voices[settings.UPPERCASE_VOICE]
             else:
-                offset = 0
+                voice = self.voices[settings.DEFAULT_VOICE]
 
-            if offset >= 0:
-                [character, startOffset, endOffset] = \
-                    event.source.text.getTextAtOffset(
-                        offset, 
-                        atspi.Accessibility.TEXT_BOUNDARY_CHAR)
-
-                if util.getLinkIndex(event.source, offset) >= 0:
-                    voice = self.voices[settings.HYPERLINK_VOICE]
-                elif character.isupper():
-                    voice = self.voices[settings.UPPERCASE_VOICE]
-                else:
-                    voice = self.voices[settings.DEFAULT_VOICE]
-
-                # We won't interrupt what else might be being spoken
-                # right now because it is typically something else
-                # related to this event.
-                #
-                speech.speak(character, voice, False)
+            # We won't interrupt what else might be being spoken
+            # right now because it is typically something else
+            # related to this event.
+            #
+            speech.speak(character, voice, False)
 
     def onTextInserted(self, event):
         """Called whenever text is inserted into an object.
