@@ -1,5 +1,11 @@
 2006-05-11  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/orca.py
+          Removed "space", "Left", "Right", "Up" and "Down" from the 
+          list of action keys.
+
+2006-05-11  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/default.py
           Adjusted the onTextDeleted() method so that the previous/next 
           character is always spoken when the user presses Backspace/Delete, 
