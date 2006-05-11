@@ -1,5 +1,10 @@
 2006-05-11  Willie Walker <william.walker@sun.com>
 
+	* src/orca/focus_tracking_presenter.py: remove errant speech.stop
+	that gets called when a window is activated.  The resulting calls
+	to speech.speak from the associated script for the window should
+	do the appropriate stop as needed.  This helps with not interrupting
+	a key echo in progress when a new window appears.
 	* src/orca/orca.py, src/orca/speech.py: do not interrupt a key
 	echo in progress.
 	

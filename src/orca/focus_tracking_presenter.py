@@ -435,7 +435,9 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         while retryCount <= settings.commFailureAttemptLimit:
             try:
                 if event.type == "window:activate":
-                    speech.stop()
+                    # We'll let someone else decide if it's important
+                    # to stop speech or not.
+                    #speech.stop()
                     self._activeScript = self._getScript(event.source.app)
                     debug.println(debug.LEVEL_FINE, "ACTIVE SCRIPT: " \
                                   + self._activeScript.name)
