@@ -1417,25 +1417,29 @@ class Script(script.Script):
         string = orca.lastInputEvent.event_string
         text = event.source.text
         if string == "BackSpace":
-            # Speak the character to the left of the caret after
-            # the current left character has been deleted.
+            # Speak the character that has just been deleted.
             #
             offset = text.caretOffset-1
+            character = event.any_data.value()
 
         elif string == "Delete":
             # Speak the character to the right of the caret after
             # the current right character has been deleted.
             #
             offset = text.caretOffset
-        else:
-            offset = 0
-
-        if offset >= 0:
             [character, startOffset, endOffset] = \
                 event.source.text.getTextAtOffset(
-                    offset, 
+                    offset,
                     atspi.Accessibility.TEXT_BOUNDARY_CHAR)
 
+        else:
+            offset = 0
+            [character, startOffset, endOffset] = \
+                event.source.text.getTextAtOffset(
+                    offset,
+                    atspi.Accessibility.TEXT_BOUNDARY_CHAR)
+
+        if offset >= 0:
             if util.getLinkIndex(event.source, offset) >= 0:
                 voice = self.voices[settings.HYPERLINK_VOICE]
             elif character.isupper():
