@@ -1433,11 +1433,7 @@ class Script(script.Script):
                     atspi.Accessibility.TEXT_BOUNDARY_CHAR)
 
         else:
-            offset = 0
-            [character, startOffset, endOffset] = \
-                event.source.text.getTextAtOffset(
-                    offset,
-                    atspi.Accessibility.TEXT_BOUNDARY_CHAR)
+            return
 
         if offset >= 0:
             if util.getLinkIndex(event.source, offset) >= 0:

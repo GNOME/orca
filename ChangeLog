@@ -1,9 +1,10 @@
 2006-05-12  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
-          Adjustment to the onTextDeleted method to speak the deleted
-          character when the user presses Backspace as opposed to the 
-          previous remaining character.
+          Adjustments to the onTextDeleted method:
+          - to speak the deleted character when the user presses Backspace 
+            as opposed to the previous remaining character.
+          - if it's not a Backspace or Delete character, then just return.
 
 2006-05-12  Rich Burridge <rich.burridge@sun.com>
 
