@@ -20,6 +20,9 @@
 
 2006-05-12  Willie Walker <william.walker@sun.com>
 
+	* src/orca/scripts/gnome-terminal.py: add onTextInserted to 
+	handle terminal-ish behavior.
+	
 	* src/orca/orca.py, src/orca/orca_prefs.py,
 	src/orca/orca_console_prefs.py: do not let user run Orca if a11y
 	has been enabled.  Instead, dump them into the text setup and then
