@@ -6,6 +6,11 @@
 
 2006-05-12  Willie Walker <william.walker@sun.com>
 
+	* configure.in, acinclude.m4: add configure-time dependency 
+	checking for needed libraries and python modules.
+
+	* orca.spec.in: yet another try to get these right.
+	
 	* src/orca/orca.py: if learn mode is enabled, let it do key
 	echo.
 	

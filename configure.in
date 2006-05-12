@@ -50,17 +50,17 @@ AM_PROG_LIBTOOL
 # libgail-gnome 1.1.3
 # gnome-mag-1.0 0.12.3 (optional)
 #
-PKG_CHECK_MODULES(orca, \
-	glib-2.0 >= 2.10.0 \
-	gtk+-2.0 >= 2.8.16 \
-	libbonobo-2.0 >= 2.14.0 \
-	atk >= 1.11.3 \
-	gail >= 1.8.11 \
-	eel-2.0 >= 2.14.0 \
-	libspi-1.0 >= 1.7.6 \
-	cspi-1.0 >= 1.7.6 \
-	gnome-speech-1.0 >= 0.3.10 \
-)
+#PKG_CHECK_MODULES(orca, \
+#	glib-2.0 >= 2.10.0 \
+#	gtk+-2.0 >= 2.8.16 \
+#	libbonobo-2.0 >= 2.14.0 \
+#	atk >= 1.11.3 \
+#	gail >= 1.8.11 \
+#	eel-2.0 >= 2.14.0 \
+#	libspi-1.0 >= 1.7.6 \
+#	cspi-1.0 >= 1.7.6 \
+#	gnome-speech-1.0 >= 0.3.10 \
+#)
 
 # Setup brl module build
 #
@@ -94,31 +94,25 @@ AM_PATH_PYTHON(2.4)
 
 # Find the headers needed to build extensions
 
-AM_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(Could not find Python headers needed to build Python extensions)])
+AM_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(Could not find python headers needed to build Python extensions)])
+
+# Find the modules used by Orca
+
+AM_CHECK_PYMOD(gettext,,,[AC_MSG_ERROR(Could not find python module gettext)])
+AM_CHECK_PYMOD(getopt,,,[AC_MSG_ERROR(Could not find python module getopt)])
+AM_CHECK_PYMOD(bonobo,,,[AC_MSG_ERROR(Could not find python module bonobo)])
+AM_CHECK_PYMOD(ORBit,,,[AC_MSG_ERROR(Could not find python module ORBit - make sure you have pyorbit installed)])
+AM_CHECK_PYMOD(ORBit,CORBA,,[AC_MSG_ERROR(Could not find python module ORBit.CORBA - make sure you have pyorbit installed)])
+AM_CHECK_PYMOD(gtk,,,[AC_MSG_ERROR(Could not find python module gtk - make sure you have pygtk installed)])
+AM_CHECK_PYMOD(gtk,gdk,,[AC_MSG_ERROR(Could not find python module gtk.gdk - make sure you have pygtk installed)])
+AM_CHECK_PYMOD(gtk,glade,,[AC_MSG_ERROR(Could not find python module gtk.glade - make sure you have pygtk installed)])
+AM_CHECK_PYORBIT_MOD(Accessibility,,[AC_MSG_ERROR(Could not find python ORBit module Accessibility - make sure you have atspi installed)])
+AM_CHECK_PYORBIT_MOD(GNOME_Speech,,[AC_MSG_WARN(Could not find python ORBit module Speech - you need gnome-speech installed to use speech)])
+AM_CHECK_PYORBIT_MOD(GNOME_Magnifier,,[AC_MSG_WARN(Could not find python ORBit module GNOME_Magnifier - you need gnome-mag installed to use magnification)])
+AC_CHECK_LIB(brlapi, brlapi_initializeConnection,, [AC_MSG_WARN(Could not find libbrlapi.so - you need BrlTTY/BrlAPI installed to use braille)])
 
 AC_SUBST(orca_LIBS)
 AC_SUBST(orca_CFLAGS)
-
-
-dnl   PYDOC_CHECK()
-AC_DEFUN([PYDOC_CHECK],
-[
-  dnl enable/disable documentation building
-  AC_ARG_ENABLE(pydoc,
-    AC_HELP_STRING([--enable-pydoc],
-                   [use pydoc to build documentation [default=no]]),,
-    enable_pydoc=no)
-
-  have_pydoc=no
-  if test x$enable_pydoc = xyes; then
-    AC_CHECK_FILE("$prefix/bin/pydoc", PYDOC="$prefix/bin/pydoc")
-  fi
-
-  if test -z "$PYDOC"; then
-    enable_pydoc=no
-  fi
-  AM_CONDITIONAL(ENABLE_PYDOC, test x$enable_pydoc = xyes)
-])
 
 PYDOC_CHECK()
 

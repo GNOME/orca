@@ -6,26 +6,39 @@ License: LGPL
 Group: Desktop/Accessibility
 URL: http://www.gnome.org/
 Source0: orca-%{version}.tar.gz
+
+%define python_version 2.4
+%define pyborit_version 2.0.1
+%define pygtk2_version 2.6.2
+%define gnome_python_version 2.6.2
+%define brltty_version 3.7.2
+%define atk_version 1.11.3
+%define gail_version 1.8.11
+%define gnome_speech_version 0.3.10
+%define eel_version 2.14.0
+%define libspi_version 1.7.6
+%define cspi_version 1.7.6
+
 BuildRoot: %{_tmppath}/orca-%{version}-%{release}-buildroot
 BuildRequires:	gnome-common >= 2.12.0
-BuildRequires:	glib-2.0 >= 2.10.0
-BuildRequires:	gtk+-2.0 >= 2.8.16
-BuildRequires:	libbonobo-2.0 >= 2.14.0
-BuildRequires:	atk >= 1.11.3
-BuildRequires:	gail >= 1.8.11
-BuildRequires:	eel-2.0 > 2.14.0
-BuildRequires:	libspi-1.0 >= 1.7.6
-BuildRequires:	cspi-1.0 >= 1.7.6
-BuildRequires:	gnome-speech-1.0 >= 0.3.10
-Requires:	glib-2.0 >= 2.10.0
-Requires:	gtk+-2.0 >= 2.8.16
-Requires:	libbonobo-2.0 >= 2.14.0
-Requires:	atk >= 1.11.3
-Requires:	gail >= 1.8.11
-Requires:	eel-2.0 > 2.14.0
-Requires:	libspi-1.0 >= 1.7.6
-Requires:	cspi-1.0 >= 1.7.6
-Requires:	gnome-speech-1.0 >= 0.3.10
+BuildRequires:  python >= %{python_version}
+BuildRequires:  pygtk2 >= %{pygtk2_version}
+BuildRequires:  pyorbit >= %{pyorbit_version}
+BuildRequires:	atk >= %{atk_version}
+BuildRequires:	gail >= %{gail_version}
+BuildRequires:	eel-2.0 >= %{eel_version}
+BuildRequires:	libspi-1.0 >= %{libspi_version}
+BuildRequires:	cspi-1.0 >= %{cspi_version}
+BuildRequires:	gnome-speech-1.0 >= ${gnome_speech_version}
+Requires:       python >= %{python_version}
+Requires:       pygtk2 >= %{pygtk2_version}
+Requires:       pyorbit >= %{pyorbit_version}
+Requires:	atk >=  %{atk_version}
+Requires:	gail >=  %{gail_version}
+Requires:	eel-2.0 >= %{eel_version}
+Requires:	libspi-1.0 >= %{libspi_version}
+Requires:	cspi-1.0 >= %{cspi_version}
+Requires:	gnome-speech-1.0 >= ${gnome_speech_version}
 
 %description
 A flexible, scriptable, extensible screen reader for the GNOME platform
@@ -53,6 +66,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/locale/*/*
 
 %changelog
+* Fri May 12 2006 Willie Walker <william.walker@sun.com>
+- Well, try again.  Third time is a charm?
 * Thu May 04 2006 Willie Walker <william.walker@sun.com>
 - One more attempt at getting the dependencies right.
 * Tue Apr 25 2006 Willie Walker <william.walker@sun.com>
