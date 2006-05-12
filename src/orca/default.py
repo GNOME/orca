@@ -1498,7 +1498,8 @@ class Script(script.Script):
             if (text == " " and keyString == "space") \
                 or (text == keyString):
                 pass
-            elif wasCommand:
+            elif wasCommand or \
+                   (event.source.role == rolenames.ROLE_PASSWORD_TEXT):
                 if text.isupper():
                     speech.speak(text, self.voices[settings.UPPERCASE_VOICE])
                 else:

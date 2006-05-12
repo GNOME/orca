@@ -1,5 +1,13 @@
 2006-05-12  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/default.py:
+          Adjusted to the onTextInserted() routine to check to see if
+          the event.role is rolenames.ROLE_PASSWORD_TEXT (i.e. a 
+          password field), in which case the text is spoken (which will 
+          be the stars used to hide the users real password input).
+
+2006-05-12  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/orca.py
           Added a check at the top of the _keyEcho() method to see if 
           this is a keyboard event for a component with a role name of
