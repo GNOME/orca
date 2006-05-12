@@ -103,9 +103,14 @@ AM_CHECK_PYMOD(getopt,,,[AC_MSG_ERROR(Could not find python module getopt)])
 AM_CHECK_PYMOD(bonobo,,,[AC_MSG_ERROR(Could not find python module bonobo)])
 AM_CHECK_PYMOD(ORBit,,,[AC_MSG_ERROR(Could not find python module ORBit - make sure you have pyorbit installed)])
 AM_CHECK_PYMOD(ORBit,CORBA,,[AC_MSG_ERROR(Could not find python module ORBit.CORBA - make sure you have pyorbit installed)])
-AM_CHECK_PYMOD(gtk,,,[AC_MSG_ERROR(Could not find python module gtk - make sure you have pygtk installed)])
-AM_CHECK_PYMOD(gtk,gdk,,[AC_MSG_ERROR(Could not find python module gtk.gdk - make sure you have pygtk installed)])
-AM_CHECK_PYMOD(gtk,glade,,[AC_MSG_ERROR(Could not find python module gtk.glade - make sure you have pygtk installed)])
+
+# Don't require the DISPLAY to be set - the gtk checking will fail 
+# if DISPLAY is set, and we don't like that.
+#
+#AM_CHECK_PYMOD(gtk,,,[AC_MSG_ERROR(Could not find python module gtk - make sure you have pygtk installed)])
+#AM_CHECK_PYMOD(gtk,gdk,,[AC_MSG_ERROR(Could not find python module gtk.gdk - make sure you have pygtk installed)])
+#AM_CHECK_PYMOD(gtk,glade,,[AC_MSG_ERROR(Could not find python module gtk.glade - make sure you have pygtk installed)])
+
 AM_CHECK_PYORBIT_MOD(Accessibility,,[AC_MSG_ERROR(Could not find python ORBit module Accessibility - make sure you have atspi installed)])
 AM_CHECK_PYORBIT_MOD(GNOME_Speech,,[AC_MSG_WARN(Could not find python ORBit module Speech - you need gnome-speech installed to use speech)])
 AM_CHECK_PYORBIT_MOD(GNOME_Magnifier,,[AC_MSG_WARN(Could not find python ORBit module GNOME_Magnifier - you need gnome-mag installed to use magnification)])
