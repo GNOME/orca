@@ -634,6 +634,14 @@ def _keyEcho(event):
 
     global lastKeyEchoTime
 
+    # If this keyboard event was for an object like a password text
+    # field, then don't echo it.
+    #
+    print "locusOfFocus.role: ", locusOfFocus.role
+    if locusOfFocus and locusOfFocus.role == rolenames.ROLE_PASSWORD_TEXT:
+        print "ITS A PASSWORD FIELD."
+        return
+
     event_string = event.event_string
     debug.println(debug.LEVEL_FINEST,
                   "orca._keyEcho: string to echo: %s" % event_string)

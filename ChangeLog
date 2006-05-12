@@ -1,5 +1,13 @@
 2006-05-12  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/orca.py
+          Added a check at the top of the _keyEcho() method to see if 
+          this is a keyboard event for a component with a role name of
+          rolenames.ROLE_PASSWORD_TEXT (such as a password field). 
+          If it is, then the key is not echoed.
+
+2006-05-12  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/default.py:
           Adjustments to the onTextDeleted method:
           - to speak the deleted character when the user presses Backspace 
