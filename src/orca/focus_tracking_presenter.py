@@ -231,11 +231,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         Returns an instance of a Script.
         """
 
-        # We might not know what the app is.  In this case, just defer to the
-        # default script for support.  Note the hack to check for Orca - this
-        # will occur if Orca pops up its own windows.  We work to make Orca
-        # windows work well with the default script so it will not need a
-        # custom script.
+        # We might not know what the app is.  In this case, just defer
+        # to the default script for support.
         #
         if not app:
             if not self._defaultScript:
@@ -542,7 +539,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         self._listenerCounts = {}
         self._knownScripts   = {}
         self._defaultScript  = None
-        self._activeScript   = None
+        self._activeScript   = self._getScript(None)
 
         self._registerEventListener("window:activate")
         self._registerEventListener("window:deactivate")

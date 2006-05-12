@@ -1,3 +1,11 @@
+2006-05-12  Willie Walker <william.walker@sun.com>
+
+	* src/orca/focus_tracking_presenter.py: create the fallback
+	default script on initialization.  This will register the
+	appropriate events so we can detect metacity activity in
+	the case where orca starts up and no accessible apps have
+	any active windows.  Hopefully a fix for bug 341415.
+	
 2006-05-11  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca_gui_prefs.py: figure out how to use debug.println
