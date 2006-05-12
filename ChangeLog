@@ -1,3 +1,9 @@
+2006-05-12  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py
+          Adjustment so that a single line change will "fire off" all
+          the debug messages in the Evolution script.
+
 2006-05-12  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca.py: if learn mode is enabled, let it do key

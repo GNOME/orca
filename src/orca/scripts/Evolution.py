@@ -46,6 +46,10 @@ class Script(default.Script):
 
         default.Script.__init__(self, app)
 
+        # Set the debug level for all the methods in this script.
+        #
+        self.debugLevel = debug.LEVEL_FINEST
+
         # The default for Evolution is to read all table cells (such as in
         # the mail message header summary list).
 
@@ -147,7 +151,7 @@ class Script(default.Script):
         brailleGen = self.brailleGenerator
         speechGen = self.speechGenerator
 
-        debug.printObjectEvent(debug.LEVEL_FINEST,
+        debug.printObjectEvent(self.debugLevel,
                                event,
                                event.source.toString())
 
@@ -170,7 +174,7 @@ class Script(default.Script):
                      rolenames.ROLE_PANEL, \
                      rolenames.ROLE_UNKNOWN]
         if util.isDesiredFocusedItem(event.source, rolesList):
-            debug.println(debug.LEVEL_FINEST,
+            debug.println(self.debugLevel,
                       "evolution.onFocus - mail view: current message pane: " \
                       + "individual lines of text.")
 
@@ -205,7 +209,7 @@ class Script(default.Script):
                      rolenames.ROLE_TABLE_CELL]
         if self.readTableCellRow \
             and (util.isDesiredFocusedItem(event.source, rolesList)):
-            debug.println(debug.LEVEL_FINEST,
+            debug.println(self.debugLevel,
                       "evolution.onFocus - mail view: current message pane: " \
                       + "standard mail header lines.")
 
@@ -255,7 +259,7 @@ class Script(default.Script):
                      rolenames.ROLE_TREE_TABLE]
         if self.readTableCellRow \
             and (util.isDesiredFocusedItem(event.source, rolesList)):
-            debug.println(debug.LEVEL_FINEST,
+            debug.println(self.debugLevel,
                       "evolution.onFocus - mail view: message header list.")
 
             parent = event.source.parent
@@ -403,7 +407,7 @@ class Script(default.Script):
         rolesList = [rolenames.ROLE_CALENDAR_EVENT, \
                      rolenames.ROLE_CALENDAR_VIEW]
         if util.isDesiredFocusedItem(event.source, rolesList):
-            debug.println(debug.LEVEL_FINEST,
+            debug.println(self.debugLevel,
                       "evolution.onFocus - calendar view: day view: " \
                       + "tabbing to day with appts.")
 
@@ -470,7 +474,7 @@ class Script(default.Script):
                      rolenames.ROLE_TABLE, \
                      rolenames.ROLE_CALENDAR_VIEW]
         if util.isDesiredFocusedItem(event.source, rolesList):
-            debug.println(debug.LEVEL_FINEST,
+            debug.println(self.debugLevel,
                       "evolution.onFocus - calendar view: day view: " \
                       + "moving with arrow keys.")
 
@@ -547,7 +551,7 @@ class Script(default.Script):
                      rolenames.ROLE_UNKNOWN, \
                      rolenames.ROLE_SCROLL_PANE]
         if util.isDesiredFocusedItem(event.source, rolesList):
-            debug.println(debug.LEVEL_FINEST,
+            debug.println(self.debugLevel,
                       "evolution.onFocus - preferences dialog: " \
                       + "table cell in options list.")
 
@@ -582,7 +586,7 @@ class Script(default.Script):
                      rolenames.ROLE_FILLER, \
                      rolenames.ROLE_DIALOG]
         if util.isDesiredFocusedItem(event.source, rolesList):
-            debug.println(debug.LEVEL_FINEST,
+            debug.println(self.debugLevel,
                       "evolution.onFocus - mail insert attachment dialog: " \
                       + "unlabelled button.")
 
@@ -610,7 +614,7 @@ class Script(default.Script):
                      rolenames.ROLE_PANEL, \
                      rolenames.ROLE_SCROLL_PANE]
         if util.isDesiredFocusedItem(event.source, rolesList):
-            debug.println(debug.LEVEL_FINEST,
+            debug.println(self.debugLevel,
                       "evolution.onFocus - mail compose window: " \
                       + "message area.")
 
@@ -634,7 +638,7 @@ class Script(default.Script):
                     rolenames.ROLE_FILLER, \
                     rolenames.ROLE_DIALOG]
         if util.isDesiredFocusedItem(event.source, rolesList):
-            debug.println(debug.LEVEL_FINEST,
+            debug.println(self.debugLevel,
                       "evolution.onFocus - spell checking dialog.")
 
             # Braille the default action for this component.
@@ -701,7 +705,7 @@ class Script(default.Script):
                     rolenames.ROLE_TABLE, \
                     rolenames.ROLE_PANEL]
         if util.isDesiredFocusedItem(event.source, rolesList):
-            debug.println(debug.LEVEL_FINEST,
+            debug.println(self.debugLevel,
                       "evolution.onFocus - mail message area attachments.")
 
             # Speak/braille the default action for this component.
