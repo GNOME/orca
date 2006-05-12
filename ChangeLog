@@ -1,5 +1,11 @@
 2006-05-12  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/atspi.py:
+          Added some bullet-proofing to the __init__ method to check
+          that self.source is not None.
+
+2006-05-12  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/scripts/Evolution.py
           Adjustment so that a single line change will "fire off" all
           the debug messages in the Evolution script.

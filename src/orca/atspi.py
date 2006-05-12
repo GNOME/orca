@@ -82,7 +82,7 @@ class Event:
             if e.any_data and (e.any_data.typecode().name) == "EventDetails":
                 details = e.any_data.value()
                 self.any_data = details.any_data
-                if details.host_application:
+                if self.source and details.host_application:
                     self.source.app = Accessible.makeAccessible(
                         details.host_application)
             else:
