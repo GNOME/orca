@@ -753,7 +753,10 @@ def _processKeyboardEvent(event):
         #
         speech.stop()
 
-        _keyEcho(event)
+        # If learn mode is enabled, it will echo the keys.
+        #
+        if not settings.learnModeEnabled:
+            _keyEcho(event)
 
         # We treat the Insert key as a modifier - so just swallow it and
         # set our internal state.
@@ -784,7 +787,12 @@ def _processKeyboardEvent(event):
                        processKeyboardEvent(keyboardEvent)
         if (not consumed) and settings.learnModeEnabled:
             if event.type == atspi.Accessibility.KEY_PRESSED_EVENT:
+                # Check to see if there are localized words to be
+                # spoken for this key event.
+                #
                 braille.displayMessage(event_string)
+                if event_string in keynames.keynames:
+                    event_string = keynames.keynames[event_string]
                 speech.speak(event_string)
             elif (event.type == atspi.Accessibility.KEY_RELEASED_EVENT) \
                  and (event_string == "Escape"):

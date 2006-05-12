@@ -1,5 +1,8 @@
 2006-05-12  Willie Walker <william.walker@sun.com>
 
+	* src/orca/orca.py: if learn mode is enabled, let it do key
+	echo.
+	
 	* src/orca/focus_tracking_presenter.py: create the fallback
 	default script on initialization.  This will register the
 	appropriate events so we can detect metacity activity in
