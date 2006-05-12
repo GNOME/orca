@@ -5,6 +5,7 @@
           - to speak the deleted character when the user presses Backspace 
             as opposed to the previous remaining character.
           - if it's not a Backspace or Delete character, then just return.
+          - now do voice check on text.caretOffset.
 
 2006-05-12  Rich Burridge <rich.burridge@sun.com>
 

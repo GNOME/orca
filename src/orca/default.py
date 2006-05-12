@@ -1419,7 +1419,6 @@ class Script(script.Script):
         if string == "BackSpace":
             # Speak the character that has just been deleted.
             #
-            offset = text.caretOffset-1
             character = event.any_data.value()
 
         elif string == "Delete":
@@ -1435,19 +1434,18 @@ class Script(script.Script):
         else:
             return
 
-        if offset >= 0:
-            if util.getLinkIndex(event.source, offset) >= 0:
-                voice = self.voices[settings.HYPERLINK_VOICE]
-            elif character.isupper():
-                voice = self.voices[settings.UPPERCASE_VOICE]
-            else:
-                voice = self.voices[settings.DEFAULT_VOICE]
+        if util.getLinkIndex(event.source, text.caretOffset) >= 0:
+            voice = self.voices[settings.HYPERLINK_VOICE]
+        elif character.isupper():
+            voice = self.voices[settings.UPPERCASE_VOICE]
+        else:
+            voice = self.voices[settings.DEFAULT_VOICE]
 
-            # We won't interrupt what else might be being spoken
-            # right now because it is typically something else
-            # related to this event.
-            #
-            speech.speak(character, voice, False)
+        # We won't interrupt what else might be being spoken
+        # right now because it is typically something else
+        # related to this event.
+        #
+        speech.speak(character, voice, False)
 
     def onTextInserted(self, event):
         """Called whenever text is inserted into an object.
