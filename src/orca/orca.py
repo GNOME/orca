@@ -633,7 +633,7 @@ def _keyEcho(event):
     """
 
     global lastKeyEchoTime
-    
+
     event_string = event.event_string
     debug.println(debug.LEVEL_FINEST,
                   "orca._keyEcho: string to echo: %s" % event_string)
@@ -716,7 +716,7 @@ def _keyEcho(event):
                       "orca._keyEcho: speaking: %s" % event_string)
 
         lastKeyEchoTime = time.time()
-        
+
         speech.speak(event_string, voice)
 
 def _processKeyboardEvent(event):
@@ -1359,6 +1359,15 @@ def main():
     except:
         pass
 
+    # Do not run Orca if accessibility has not been enabled.
+    #
+    import commands
+    a11yEnabled = commands.getoutput(\
+        "gconftool-2 --get /desktop/gnome/interface/accessibility")
+    if a11yEnabled != "true":
+        _showPreferencesConsole()
+        abort()
+
     # Parse the command line options.
     #
     # Run the preferences setup if the user has specified
@@ -1434,24 +1443,6 @@ def main():
             _showPreferencesGUI()
         else:
             _showPreferencesConsole()
-
-    # Do not run Orca if accessibility has not been enabled.
-    #
-    import commands
-    a11yEnabled = commands.getoutput(\
-        "gconftool-2 --get /desktop/gnome/interface/accessibility")
-    if a11yEnabled != "true":
-        os.system("gconftool-2 --type bool --set " \
-                  + "/desktop/gnome/interface/accessibility true")
-        message = _("Accessibility has just been enabled for this session.")
-        print message
-        speech.speak(message)
-        braille.displayMessage(message)
-        message = _("Please logout and log back in and rerun orca.")
-        print message
-        speech.speak(message)
-        braille.displayMessage(message)
-        abort()
 
     start(registry) # waits until we stop the registry
     return 0

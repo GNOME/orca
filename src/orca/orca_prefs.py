@@ -89,7 +89,7 @@ def _enableAccessibility():
         os.system("gconftool-2 --type bool --set " \
                   + "/desktop/gnome/interface/accessibility true")
 
-    return not alreadyEnabled
+    return alreadyEnabled != "true"
 
 def _getSpeechServerFactoryString(factory):
     """Returns a string that represents the speech server factory passed in.
@@ -181,7 +181,7 @@ def _getMagCursorColorString(cursorColor):
     return cursorColorStr
 
 def _getMagSmoothingModeString(smoothingMode):
-    """Returns a string that represents the magnification smoothing mode 
+    """Returns a string that represents the magnification smoothing mode
     passed in.
 
     Arguments:

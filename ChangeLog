@@ -6,6 +6,11 @@
 
 2006-05-12  Willie Walker <william.walker@sun.com>
 
+	* src/orca/orca.py, src/orca/orca_prefs.py,
+	src/orca/orca_console_prefs.py: do not let user run Orca if a11y
+	has been enabled.  Instead, dump them into the text setup and then
+	tell them to log out and log back in.
+	
 	* configure.in, acinclude.m4: add configure-time dependency 
 	checking for needed libraries and python modules.
 
