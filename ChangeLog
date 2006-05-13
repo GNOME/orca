@@ -3,7 +3,20 @@
 	* src/orca/scripts/gnome-terminal.py: add an onTextDeleted
 	method to handle the bizarro behavior we get when we backspace
 	in a terminal and there is still text to the right.
+
+	NOTE TO ALL: terminal is screwy.  When you press "BackSpace", it
+	pads out the rest of the line to the right with spaces.  Then,
+	whenever you press space, it will no longer issue text inserted
+	events for the space if you are typing at what looks like the end
+	of the line.  Instead, it only issues caret moved events.  To top
+	that off, if you've done a backspace and have then arrowed in a
+	little bit from the end of what looks like the end of the line,
+	you get a text inserted event for the remainder of the line.  We
+	end up speaking this.  So, hey, type perfectly in terminal, never
+	hit backspace, and things will work fine. :-P
 	
+2006-05-13  Willie Walker <william.walker@sun.com>
+
 	* src/orca/default.py: fix bug where modifier bit positions 
 	were being used as bits (i.e., didn't do a '1 <<' prior to
 	using the bit position).
