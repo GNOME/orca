@@ -23,7 +23,7 @@ MouseButtonEvent, MouseMotionEvent, and SpeechEvent), and also provides a
 InputEventHandler class.  It is intended that instances of InputEventHandler
 will be used which should be used to handle all input events.
 """
-
+import atspi
 import braille
 import debug
 import settings
@@ -57,11 +57,26 @@ class KeyboardEvent(InputEvent):
         - event: the AT-SPI keyboard event
         """
 
+        # Control characters come through as control characters, so we
+        # just turn them into their ASCII equivalent.  NOTE that the
+        # upper case ASCII characters will be used (e.g., ctrl+a will
+        # be turned into the string "A").  All these checks here are
+        # to just do some sanity checking before doing the
+        # conversion. [[[WDW - this is making assumptions about
+        # mapping ASCII control characters to to UTF-8.]]]
+        #
+        event_string = event.event_string
+        if (event.modifiers & (1 << atspi.Accessibility.MODIFIER_CONTROL)) \
+            and (not event.is_text) and (len(event_string) == 1):
+            value = ord(event.event_string[0])
+            if value < 32:
+                event_string = chr(value + 0x40)
+
         InputEvent.__init__(self, KEYBOARD_EVENT)
         self.type = event.type
         self.hw_code = event.hw_code
         self.modifiers = event.modifiers
-        self.event_string = event.event_string
+        self.event_string = event_string
         self.is_text = event.is_text
         self.time = time.time()
 

@@ -653,20 +653,6 @@ def _keyEcho(event):
     #
     if settings.enableKeyEcho:
 
-        # The control characters come through as control characters,
-        # so we just turn them into their ASCII equivalent.  NOTE that
-        # the upper case ASCII characters will be used (e.g., ctrl+a
-        # will be turned into the string "A").  All these checks here
-        # are to just do some sanity checking before doing the
-        # conversion. [[[WDW - this is making assumptions about
-        # mapping ASCII control characters to to UTF-8.]]]
-        #
-        if (event.modifiers & (1 << atspi.Accessibility.MODIFIER_CONTROL)) \
-           and (not event.is_text) and (len(event_string) == 1):
-            value = ord(event.event_string[0])
-            if value < 32:
-                event_string = chr(value + 0x40)
-
         if _isPrintableKey(event_string):
             if not settings.enablePrintableKeys:
                 return
@@ -721,6 +707,9 @@ def _keyEcho(event):
         debug.println(debug.LEVEL_FINEST,
                       "orca._keyEcho: speaking: %s" % event_string)
 
+        # We keep track of the time as means to let others know that
+        # we are probably echoing a key and should not be interrupted.
+        #
         lastKeyEchoTime = time.time()
 
         speech.speak(event_string, voice)
@@ -742,9 +731,11 @@ def _processKeyboardEvent(event):
     global lastInputEvent
     global _orcaModifierPressed
 
-    event_string = event.event_string
-
     # Log the keyboard event for future playback, if desired.
+    # Note here that the key event_string being output is
+    # exactly what we received.  The KeyboardEvent object,
+    # however, will translate the event_string for control
+    # characters to their upper case ASCII equivalent.
     #
     string = atspi.KeystrokeListener.keyEventToString(event)
     if _recordingKeystrokes and _keystrokesFile \
@@ -752,7 +743,12 @@ def _processKeyboardEvent(event):
         _keystrokesFile.write(string + "\n")
     debug.printInputEvent(debug.LEVEL_FINE, string)
 
+    keyboardEvent = KeyboardEvent(event)
+
+    # See if this is one of our special Orca modifiers (e.g., "Insert")
+    #
     orcaModifierKeys = settings.orcaModifierKeys
+    isOrcaModifier = orcaModifierKeys.count(keyboardEvent.event_string) > 0
 
     if event.type == atspi.Accessibility.KEY_PRESSED_EVENT:
         # Key presses always interrupt speech.
@@ -762,29 +758,26 @@ def _processKeyboardEvent(event):
         # If learn mode is enabled, it will echo the keys.
         #
         if not settings.learnModeEnabled:
-            _keyEcho(event)
+            _keyEcho(keyboardEvent)
 
         # We treat the Insert key as a modifier - so just swallow it and
         # set our internal state.
         #
-        if orcaModifierKeys.count(event_string):
+        if isOrcaModifier:
             _orcaModifierPressed = True
-            return True
 
-    elif (event.type == atspi.Accessibility.KEY_RELEASED_EVENT) \
-         and orcaModifierKeys.count(event_string):
+    elif isOrcaModifier \
+        and (keyboardEvent.type == atspi.Accessibility.KEY_RELEASED_EVENT):
         _orcaModifierPressed = False
-        return True
+
+    if _orcaModifierPressed:
+        keyboardEvent.modifiers |= (1 << MODIFIER_ORCA)
 
     # Orca gets first stab at the event.  Then, the presenter gets
     # a shot. [[[TODO: WDW - might want to let the presenter try first?
     # The main reason this is staying as is is that we may not want
     # scripts to override fundamental Orca key bindings.]]]
     #
-    keyboardEvent = KeyboardEvent(event)
-    if _orcaModifierPressed:
-        keyboardEvent.modifiers |= (1 << MODIFIER_ORCA)
-
     consumed = False
     try:
         consumed = _keyBindings.consumeKeyboardEvent(None, keyboardEvent)
@@ -792,16 +785,19 @@ def _processKeyboardEvent(event):
             consumed = _PRESENTATION_MANAGERS[_currentPresentationManager].\
                        processKeyboardEvent(keyboardEvent)
         if (not consumed) and settings.learnModeEnabled:
-            if event.type == atspi.Accessibility.KEY_PRESSED_EVENT:
+            if keyboardEvent.type \
+                == atspi.Accessibility.KEY_PRESSED_EVENT:
                 # Check to see if there are localized words to be
                 # spoken for this key event.
                 #
-                braille.displayMessage(event_string)
+                braille.displayMessage(keyboardEvent.event_string)
+                event_string = keyboardEvent.event_string
                 if event_string in keynames.keynames:
                     event_string = keynames.keynames[event_string]
                 speech.speak(event_string)
-            elif (event.type == atspi.Accessibility.KEY_RELEASED_EVENT) \
-                 and (event_string == "Escape"):
+            elif (keyboardEvent.type \
+                  == atspi.Accessibility.KEY_RELEASED_EVENT) \
+                 and (keyboardEvent.event_string == "Escape"):
                 exitLearnMode(None, keyboardEvent)
             consumed = True
     except:
@@ -809,7 +805,7 @@ def _processKeyboardEvent(event):
 
     lastInputEvent = keyboardEvent
 
-    return consumed
+    return consumed or isOrcaModifier
 
 ########################################################################
 #                                                                      #

@@ -1,3 +1,27 @@
+2006-05-13  Willie Walker <william.walker@sun.com>
+
+	* src/orca/default.py: fix bug where modifier bit positions 
+	were being used as bits (i.e., didn't do a '1 <<' prior to
+	using the bit position).
+
+	* src/orca/orca.py, src/orca/input_event.py: refactor the way
+	event_string's containing control characters are converted.  
+	This moves the logic to input_event.py:KeyboardEvent.
+
+	* src/orca/scripts/gnome-terminal.py: try to better handle
+	what to do in the case of command line completion ("Tab") 
+	as well as Delete and ctrl+d.
+
+	NOTE TO ALL: it looks as though there's a bug somewhere in the way
+	gtk/gail/atk handles text deletion events.  Instead of the event
+	containing the text that's been deleted, it contains the text at
+	the current caret position.  This will be apparent when you
+	BackSpace in a GTK text widget - if the caret is at the end of the
+	text, you will hear nothing; if the caret is in the middle of the
+	text, you will hear the character at the caret.  Note that GEdit
+	and the mail composer widget (but not the to/cc/subject lines) of
+	Evolution seem to get it right.
+	
 2006-05-12  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:

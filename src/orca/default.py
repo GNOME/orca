@@ -667,14 +667,14 @@ class Script(script.Script):
         offset = text.caretOffset - 1
         if (offset < 0):
             return
-        
+
         [char, startOffset, endOffset] = \
             text.getTextAtOffset( \
                 offset,
                 atspi.Accessibility.TEXT_BOUNDARY_CHAR)
         if not util.isWordDelimiter(char):
             return
-        
+
         # OK - we seem to be cool so far.  So...starting with what
         # should be the last character in the word (caretOffset - 2),
         # work our way to the beginning of the word, stopping when
@@ -682,12 +682,12 @@ class Script(script.Script):
         #
         wordEndOffset = text.caretOffset - 2
         wordStartOffset = wordEndOffset
-        
+
         while wordStartOffset >= 0:
             [char, startOffset, endOffset] = \
                 text.getTextAtOffset( \
                     wordStartOffset,
-                    atspi.Accessibility.TEXT_BOUNDARY_CHAR)            
+                    atspi.Accessibility.TEXT_BOUNDARY_CHAR)
             if util.isWordDelimiter(char):
                 break
             else:
@@ -706,7 +706,7 @@ class Script(script.Script):
             return
         else:
             word = text.getText(wordStartOffset + 1, wordEndOffset + 1)
-            
+
         if util.getLinkIndex(obj, wordStartOffset + 1) >= 0:
             voice = self.voices[settings.HYPERLINK_VOICE]
         elif word.isupper():
@@ -1420,7 +1420,7 @@ class Script(script.Script):
             # Speak the character that has just been deleted.
             #
             character = event.any_data.value()
-
+            
         elif string == "Delete":
             # Speak the character to the right of the caret after
             # the current right character has been deleted.
@@ -1490,11 +1490,11 @@ class Script(script.Script):
         if isinstance(orca.lastInputEvent, input_event.KeyboardEvent):
             keyString = orca.lastInputEvent.event_string
             wasCommand = orca.lastInputEvent.modifiers \
-                         & (atspi.Accessibility.MODIFIER_CONTROL \
-                            | atspi.Accessibility.MODIFIER_ALT \
-                            | atspi.Accessibility.MODIFIER_META \
-                            | atspi.Accessibility.MODIFIER_META2 \
-                            | atspi.Accessibility.MODIFIER_META3)
+                         & (1 << atspi.Accessibility.MODIFIER_CONTROL \
+                            | 1 << atspi.Accessibility.MODIFIER_ALT \
+                            | 1 << atspi.Accessibility.MODIFIER_META \
+                            | 1 << atspi.Accessibility.MODIFIER_META2 \
+                            | 1 << atspi.Accessibility.MODIFIER_META3)
             if (text == " " and keyString == "space") \
                 or (text == keyString):
                 pass
@@ -1504,7 +1504,7 @@ class Script(script.Script):
                     speech.speak(text, self.voices[settings.UPPERCASE_VOICE])
                 else:
                     speech.speak(text)
-                
+
         if settings.enableEchoByWord and util.isWordDelimiter(text[-1:]):
             self.echoPreviousWord(event.source)
 

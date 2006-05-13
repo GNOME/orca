@@ -17,6 +17,10 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+"""The gnome-terminal script mainly handles the unique interaction model
+of manipulating text - both the user and the system put text into the
+system and we try to determine which was which and why."""
+
 import orca.atspi as atspi
 import orca.debug as debug
 import orca.default as default
@@ -65,6 +69,12 @@ class Script(default.Script):
         - event: the Event
         """
 
+        # We only do special things for terminals.
+        #
+        if event.source.role != rolenames.ROLE_TERMINAL:
+            default.Script.onTextInserted(self, event)
+            return
+        
         # Ignore text insertions from non-focused objects, unless the
         # currently focused object is the parent of the object from which
         # text was inserted.
@@ -73,18 +83,28 @@ class Script(default.Script):
             and (event.source.parent != orca.locusOfFocus):
             return
 
-        # We'll also ignore sliders because we get their output via
-        # their values changing.
-        #
-        if event.source.role == rolenames.ROLE_SLIDER:
-            return
-
         self.updateBraille(event.source)
 
         text = event.any_data.value()
 
-        debug.println(debug.eventDebugLevel, "text='%s'" % text)
+        # When one does a delete in a terminal, the remainder of the
+        # line is "inserted" instead of being shifted left.  We will
+        # detect this by seeing if the keystring was a delete action.
+        # If we run into this case, we don't really want to speak the
+        # rest of the line.
+        #
+        # We'll let our super class handle "Delete".  We'll handle Ctrl+D.
+        #
+        keyString = orca.lastInputEvent.event_string
+        
+        controlPressed = orca.lastInputEvent.modifiers \
+                         & (1 << atspi.Accessibility.MODIFIER_CONTROL)
 
+        if (keyString == "Delete"):
+            return
+        elif (keyString == "D") and controlPressed:
+            text = text[0]
+        
         # If the last input event was a keyboard event, check to see if
         # the text for this event matches what the user typed. If it does,
         # then don't speak it.
@@ -100,26 +120,33 @@ class Script(default.Script):
         # comes across as "space" in the keyboard event and " " in the
         # text event.
         #
+        # For terminal, Return usually ends up in more text from the
+        # system, which we want to hear.  Tab is also often used for
+        # command line completion, so we want to hear that, too.
+        #
+        # Finally, if we missed some command and the system is giving
+        # us a string typically longer than what the length of a
+        # compressed string is (we choose 5 here), then output that.
+        #
         if isinstance(orca.lastInputEvent, input_event.KeyboardEvent):
-            keyString = orca.lastInputEvent.event_string
             wasCommand = orca.lastInputEvent.modifiers \
-                         & (atspi.Accessibility.MODIFIER_CONTROL \
-                            | atspi.Accessibility.MODIFIER_ALT \
-                            | atspi.Accessibility.MODIFIER_META \
-                            | atspi.Accessibility.MODIFIER_META2 \
-                            | atspi.Accessibility.MODIFIER_META3)
-            wasCommand = wasCommand or (keyString == "Return")
+                         & (1 << atspi.Accessibility.MODIFIER_CONTROL \
+                            | 1 << atspi.Accessibility.MODIFIER_ALT \
+                            | 1 << atspi.Accessibility.MODIFIER_META \
+                            | 1 << atspi.Accessibility.MODIFIER_META2 \
+                            | 1 << atspi.Accessibility.MODIFIER_META3)
+            wasCommand = wasCommand \
+                         or (keyString == "Return") \
+                         or (keyString == "Tab")
             if (text == " " and keyString == "space") \
                 or (text == keyString):
                 pass
-            elif wasCommand:
+            elif wasCommand or (len(text) > 5):
                 if text.isupper():
                     speech.speak(text, self.voices[settings.UPPERCASE_VOICE])
                 else:
                     speech.speak(text)
 
-        if settings.enableEchoByWord \
-               and ((keyString == "Return") \
-                    or util.isWordDelimiter(text[-1:])):
+        if settings.enableEchoByWord and util.isWordDelimiter(text[-1:]):
             self.echoPreviousWord(event.source)
 
