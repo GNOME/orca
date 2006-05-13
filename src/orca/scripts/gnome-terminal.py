@@ -62,6 +62,44 @@ class Script(default.Script):
     #    else:
     #        default.Script.onWindowActivated(self, event)
 
+    def onTextDeleted(self, event):
+        """Called whenever text is deleted from an object.
+
+        Arguments:
+        - event: the Event
+        """
+
+        if orca.lastInputEvent:
+            event_string = orca.lastInputEvent.event_string
+        else:
+            event_string = None
+
+        # We only do special things when people press backspace
+        # in terminals.
+        #
+        if (event.source.role != rolenames.ROLE_TERMINAL) \
+            or (event_string != "BackSpace"):
+            default.Script.onTextDeleted(self, event)
+            return
+
+        # Ignore text deletions from non-focused objects, unless the
+        # currently focused object is the parent of the object from which
+        # text was deleted.
+        #
+        if (event.source != orca.locusOfFocus) \
+            and (event.source.parent != orca.locusOfFocus):
+            return
+
+        self.updateBraille(event.source)
+
+        # Speak the character that has just been deleted.
+        #
+        character = event.any_data.value()[0]
+        if character.isupper():
+            speech.speak(character, self.voices[settings.UPPERCASE_VOICE])
+        else:
+            speech.speak(character)
+
     def onTextInserted(self, event):
         """Called whenever text is inserted into an object.
 
@@ -74,7 +112,7 @@ class Script(default.Script):
         if event.source.role != rolenames.ROLE_TERMINAL:
             default.Script.onTextInserted(self, event)
             return
-        
+
         # Ignore text insertions from non-focused objects, unless the
         # currently focused object is the parent of the object from which
         # text was inserted.
@@ -96,15 +134,15 @@ class Script(default.Script):
         # We'll let our super class handle "Delete".  We'll handle Ctrl+D.
         #
         keyString = orca.lastInputEvent.event_string
-        
+
         controlPressed = orca.lastInputEvent.modifiers \
                          & (1 << atspi.Accessibility.MODIFIER_CONTROL)
 
-        if (keyString == "Delete"):
+        if (keyString == "Delete") or (keyString == "BackSpace"):
             return
         elif (keyString == "D") and controlPressed:
             text = text[0]
-        
+
         # If the last input event was a keyboard event, check to see if
         # the text for this event matches what the user typed. If it does,
         # then don't speak it.
@@ -149,4 +187,3 @@ class Script(default.Script):
 
         if settings.enableEchoByWord and util.isWordDelimiter(text[-1:]):
             self.echoPreviousWord(event.source)
-

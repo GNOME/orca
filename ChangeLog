@@ -1,5 +1,9 @@
 2006-05-13  Willie Walker <william.walker@sun.com>
 
+	* src/orca/scripts/gnome-terminal.py: add an onTextDeleted
+	method to handle the bizarro behavior we get when we backspace
+	in a terminal and there is still text to the right.
+	
 	* src/orca/default.py: fix bug where modifier bit positions 
 	were being used as bits (i.e., didn't do a '1 <<' prior to
 	using the bit position).
