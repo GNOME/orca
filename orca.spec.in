@@ -17,7 +17,6 @@ Source0: orca-%{version}.tar.gz
 %define gnome_speech_version 0.3.10
 %define eel_version 2.14.0
 %define libspi_version 1.7.6
-%define cspi_version 1.7.6
 
 BuildRoot: %{_tmppath}/orca-%{version}-%{release}-buildroot
 BuildRequires:	gnome-common >= 2.12.0
@@ -28,7 +27,6 @@ BuildRequires:	atk >= %{atk_version}
 BuildRequires:	gail >= %{gail_version}
 BuildRequires:	eel-2.0 >= %{eel_version}
 BuildRequires:	libspi-1.0 >= %{libspi_version}
-BuildRequires:	cspi-1.0 >= %{cspi_version}
 BuildRequires:	gnome-speech-1.0 >= ${gnome_speech_version}
 Requires:       python >= %{python_version}
 Requires:       pygtk2 >= %{pygtk2_version}
@@ -37,7 +35,6 @@ Requires:	atk >=  %{atk_version}
 Requires:	gail >=  %{gail_version}
 Requires:	eel-2.0 >= %{eel_version}
 Requires:	libspi-1.0 >= %{libspi_version}
-Requires:	cspi-1.0 >= %{cspi_version}
 Requires:	gnome-speech-1.0 >= ${gnome_speech_version}
 
 %description
@@ -66,6 +63,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/locale/*/*
 
 %changelog
+* Mon May 15 2006 Willie Walker <william.walker@sun.com>
+- More tweaking.
 * Fri May 12 2006 Willie Walker <william.walker@sun.com>
 - Well, try again.  Third time is a charm?
 * Thu May 04 2006 Willie Walker <william.walker@sun.com>
