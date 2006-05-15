@@ -15,7 +15,7 @@ Modify these lines in ./configure.in:
 
   ORCA_MAJOR_VERSION=0
   ORCA_MINOR_VERSION=2
-  ORCA_MICRO_VERSION=2
+  ORCA_MICRO_VERSION=4
 
 Modify ./README to make sure is has the right Orca version.
 
@@ -32,12 +32,11 @@ TEST THE CANDIDATE:
 ------------------
 
 cd /tmp
-gunzip -c orca-0.2.2.tar.gz | tar xvf -
-cd orca-0.2.2
+unzip -c orca-0.2.4.tar.gz | tar xvf -
+cd orca-0.2.4
 ./configure --prefix=/usr
 make
 sudo make install
-orca-setup
 orca
 
 
@@ -45,7 +44,7 @@ TAG THE RELEASE:
 ---------------
 
 cvs commit
-cvs tag ORCA_0_2_2
+cvs tag ORCA_0_2_4
 
 
 UPLOAD THE RELEASE:
@@ -59,7 +58,7 @@ install-module orca-0.2.2.tar.gz
 ANNOUNCE THE RELEASE to gnome-announce-list@gnome.org:
 -----------------------------------------------------
 
-Subject: orca-0.2.2
+Subject: orca-0.2.4
 
 ==============
 * What is it ?
@@ -67,7 +66,7 @@ Subject: orca-0.2.2
 
 Orca is a scriptable screen reader for the GNOME desktop for people
 with visual impairments.  It is currently in "pre-alpha" form.  Most
-people will *not* want to try orca-0.2.2, but some strong-hearted 
+people will *not* want to try orca-0.2.4, but some strong-hearted 
 folks with a sense of humor and hacker mentality will relish the 
 opportunity to help with the future of Orca.
 
@@ -77,7 +76,7 @@ opportunity to help with the future of Orca.
 ==================
 
 ==========
-Orca 0.2.2
+Orca 0.2.4
 ==========
 
 Code changes
@@ -91,7 +90,7 @@ Bugfixes
 ======================
 
 Source code:
-http://ftp.gnome.org/pub/GNOME/sources/orca/0.2/orca-0.2.2.tar.gz
+http://ftp.gnome.org/pub/GNOME/sources/orca/0.2/orca-0.2.4.tar.gz
 
 Enjoy.
 

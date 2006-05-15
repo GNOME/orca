@@ -1,3 +1,8 @@
+2006-05-15  Willie Walker <william.walker@sun.com>
+
+	* README, NEWS: Prep for 0.4.0 release.
+	* configure.in, orca.spec.in: more dependency tweaking
+	
 2006-05-13  Willie Walker <william.walker@sun.com>
 
 	* src/orca/scripts/gnome-terminal.py: add an onTextDeleted
@@ -167,7 +172,7 @@
         * src/orca/orca-setup.glade
           Added in a dialog that will be used via GUI configuration,
           to ask the question on whether the user wants to logout now. 
-          See bug #340849 for more details.
+          See bug 340849 for more details.
 
 2006-05-11  Willie Walker <william.walker@sun.com>
 
@@ -406,7 +411,7 @@
 2006-05-04  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/settings.py
-          Fixed bug #340662 (http://bugzilla.gnome.org/show_bug.cgi?id=340662)
+          Fixed bug 340662 (http://bugzilla.gnome.org/show_bug.cgi?id=340662)
           Added a try/except clause arround the "import gtk.gdk", so that
           if it fails, we are still able to set screenWidth and screenHeight 
           to something sensible.
@@ -504,7 +509,7 @@
 	
 	* src/orca/util.py, src/orca/default.py,
 	src/orca/braillegenerator.py, src/orca/speechgenerator.py: more
-	fixing for bug 340625.  Move the notion of handling the "real"
+	fixing for bug 340635.  Move the notion of handling the "real"
 	active descendant to the speech and braille generators.  This
 	allows us to better handle expanded and collapsed states of cells.
 	

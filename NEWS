@@ -1,3 +1,60 @@
+0.2.4 
+* Addition of text and GUI preferences configuration tools.  
+  NOTE: 0.2.4 eliminates orca-setup and replaces it with the 
+  "--setup" (GUI or text, depending upon your environment),
+  "--gui-setup" (GUI), "--text-setup" (text), "--no-setup" 
+  (bypass any automatic setup mechanism - useful for running
+  with gdm accessible login) command line options to the 
+  "orca" command.  You can also bring up the GUI while orca 
+  is running by pressing Insert+space. 
+  WARNING: 0.2.4 also introduces an incompatible change to 
+  the configuration file and requires you to "rm -rf ~/.orca" 
+  and rerun orca setup.
+* Fix for bug 340662 - do not require the desktop to be running
+  to set up orca preferences.
+* Addition of support for magnification similar to that in
+  Gnopernicus.
+* Fix for bug 331512 - addition of key and word echo.  We need
+  community feedback on this.
+* Work on specifying the external dependencies for building 
+  and running Orca.
+* Fix for bug where metacity workspaces (accessed via 
+  Ctrl+Alt+Arrow) were being announced as inaccessible.
+* Work on dealing with the Java platform giving us 
+  CORBA::Unknown objects instead of Bonobo::Unknown objects.  
+  Java platform support, however, still has a long way to go.
+* Work on coping with CORBA COMM_FAILURES a little better.
+* Fix for bug 338097 - better support for the "planner" 
+  application.
+* Work for bug 338890 - add ""--version" option to orca to 
+  output the version.  Orca also now uses the getopt facility
+  to get command line options.
+* Fix for bug 340773 - focus events were interrupting the 
+  automatic reading of dialog boxes.
+* Fix for bug 340625 - better handling of table cells.
+* Fix for bugs 340559, 337371 - reduce repetitive output of 
+  slider values.
+* Fix for bug 319732 - move .label logic from atspi.spi to 
+  something that can be more easily overridden by scripts.
+* Fix for bug 340481 - combo box updates were not being 
+  handled correctly.
+* Fix for bug 340305 - combo box labels were not being presented.
+* Fix for bug 340556 - radio button group names were not being 
+  presented.
+* Fix for bug 338839 - allow speech to be enabled/disabled using 
+  Insert+s.
+* Fix for bug 339932 - shutdown orca better on Ctrl+C from 
+  the command line.
+* Fix for bug 339927 - use floating point values for speech 
+  rate, gain, and pitch to provide finer granularity of settings.
+* Fix for bug 341415 - attempt to listen for AT-SPI events and 
+  present accessible information even if no accessible windows 
+  are active when orca starts.
+* Work on bug 340849 - automatically enable desktop accessibility
+  if needed and remind the user to log out and log back in for 
+  this to take effect.
+* Additions to and development of the test plan.
+
 0.2.3
 * Many changes to the way settings are handled, including allowing them
   to be dynamically reloaded at run time.

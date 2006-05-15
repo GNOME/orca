@@ -1,4 +1,4 @@
-Orca 0.2.3 - The "What we learned from CSUN '06" Release
+Orca 0.2.4 - The "What we learned from CSUN '06" Release
 
 Introduction
 ========================================================================
@@ -15,10 +15,15 @@ Build Requirements
 Orca currently depends upon GNOME 2.14.  Building Orca also requires
 the following to be installed:
 
-	* Python 2.4          - Python platform
-	* pyorbit 2.0.0       - Python bindings for ORBit2
-	* pygtk 2.4.0         - GTK+ Python bindings
-	* gnome-python 2.6.2  - Python bindings for various GNOME libraries
+* Python >= 2.4              - Python platform
+* pyorbit >= 2.14.0          - Python bindings for ORBit2
+* pygtk >= 2.8.4             - GTK+ Python bindings
+* gnome-python >= 2.6.2      - Python bindings for various GNOME libraries
+* libspi-1.0 >= 1.7.6        - Python bindings for AT-SPI
+* gnome-speech-1.0 >= 0.3.10 - Python bindings for gnome-speech
+* gnome-mag-1.0 >= 0.12.5    - Python bindings for gnome-mag (optional) 
+* BrlTTY >= 3.7.2            - BrlTTY support for braille (optional)
+* BrlAPI >= 0.4.1            - BrlAPI support for braille (optional)
 
 Overview
 ========================================================================
