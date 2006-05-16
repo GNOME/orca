@@ -4,6 +4,11 @@
           Adjustment so that a single line change will "fire off" all
           the debug messages in the StarOffice script.
 
+          Adjusted the readMisspeltWord() routine to no longer call
+          orca.setLocusOfFocus. This now means that when you Tab around
+          the various components on the Spell Checking dialogs, they are
+          properly spoken.
+
 2006-05-15  Willie Walker <william.walker@sun.com>
 
 	* README, NEWS: Prep for 0.4.0 release.

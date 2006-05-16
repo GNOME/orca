@@ -73,11 +73,6 @@ class Script(default.Script):
         - pane: the option pane in the spell check dialog.
         """
 
-        # Braille the default action for this component.
-        #
-        orca.setLocusOfFocus(event, event.source, False)
-        self.updateBraille(orca.locusOfFocus)
-
         paragraph = atspi.findByRole(pane, rolenames.ROLE_PARAGRAPH)
 
         # Determine which word is the misspelt word. This word will have
