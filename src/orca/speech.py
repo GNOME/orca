@@ -21,7 +21,9 @@
 as its speech server, or it can feel free to create one of its own.
 """
 
+import threading
 import time
+import SocketServer
 
 import debug
 import orca
@@ -29,6 +31,48 @@ import settings
 
 from acss import ACSS
 from orca_i18n import _           # for gettext support
+
+class _SpeakRequestHandler(SocketServer.BaseRequestHandler):
+    """Provides support for communicating with speech via a socket.
+    This is to support self-voicing applications that want to use
+    Orca as a speech service.
+
+    The protocol is simple: 'stop' or 'speak:text'
+    
+    Each command is a single line (no intermingling new lines are allowed).
+    """
+    
+    def handle(self):
+        debug.println(debug.LEVEL_FINEST,
+                      "speech._SpeakRequestHandler connected from %s %d" \
+                      % (self.client_address[0], self.client_address[1]))
+        while True:
+            receivedData = self.request.recv(8192)
+            debug.println(debug.LEVEL_FINEST,
+                          "speech._SpeakRequestHandler received '%s'" \
+                          % receivedData)
+            if not receivedData:
+                break
+            try:
+                if receivedData.startswith("speak:"):
+                    speak(receivedData[6:])
+                elif receivedData == "stop":
+                    stop()
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+        self.request.close()
+        debug.println(debug.LEVEL_FINEST,
+                      "speech._SpeakRequestHandler connected from %s %d" \
+                      % (self.client_address[0], self.client_address[1]))
+
+class _SpeakRequestThread(threading.Thread):
+    """Runs a _SpeakRequestHandler in a separate thread."""
+    
+    def run(self):
+        srv = SocketServer.ThreadingTCPServer(('',
+                                               settings.speechServerPort),
+                                              _SpeakRequestHandler)
+        srv.serve_forever()
 
 # The speech server to use for all speech operations.
 #
@@ -96,6 +140,18 @@ def init():
     else:
         __speechserver = factory.SpeechServer.getSpeechServer()
 
+    # If we want to listen for speak commands from a separate port,
+    # do so.  We make it a daemon so it will die automatically when
+    # orca dies.
+    #
+    if settings.speechServerPort:
+        try:
+            speakRequestThread = _SpeakRequestThread()
+            speakRequestThread.setDaemon(True)
+            speakRequestThread.start()
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
+            
 def __resolveACSS(acss=None):
     if acss:
         return acss

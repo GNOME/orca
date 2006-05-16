@@ -1,3 +1,13 @@
+2006-05-16  Willie Walker <william.walker@sun.com>
+
+	* src/orca/speech.py, src/orca/settings.py: first pass at allowing
+	Orca to act as a speech server for self-voicing applications.
+	Orca will listen on the port defined by settings.speechServerPort
+	and will respond to simple single line "speak:text" and "stop"
+	commands.  The motivation for this is to allow FestVox to use Orca
+	as its speech service, and to have the user's default voice for
+	Orca to be used for speaking.
+	
 2006-05-16  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py

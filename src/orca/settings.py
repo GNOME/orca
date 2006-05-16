@@ -124,6 +124,11 @@ verbalizePunctuationStyle = PUNCTUATION_STYLE_ALL
 #
 speechRateDelta         = 5
 
+# The port to listen on if orca is to act as a speech server for self
+# voicing applications.
+#
+speechServerPort        = 20433
+
 # If True, enable speech.
 #
 enableSpeech            = True
