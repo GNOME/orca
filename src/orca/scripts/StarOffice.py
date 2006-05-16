@@ -47,6 +47,10 @@ class Script(default.Script):
 
         default.Script.__init__(self, app)
 
+        # Set the debug level for all the methods in this script.
+        #
+        self.debugLevel = debug.LEVEL_FINEST
+
         # The following variables will be used to try to determine if we've
         # already handled this misspelt word (see readMisspeltWord() for
         # more details.
@@ -102,7 +106,7 @@ class Script(default.Script):
         # from the last time this routine was called. If they are the same
         # then we ignore it.
 
-        debug.println(debug.LEVEL_FINEST, \
+        debug.println(self.debugLevel, \
             "StarOffice.readMisspeltWord: type=%s  word=%s(%d,%d)  len=%d" % \
             (event.type, badWord, startOff, endOff, textLength))
 
@@ -197,7 +201,7 @@ class Script(default.Script):
         brailleGen = self.brailleGenerator
         speechGen = self.speechGenerator
 
-        debug.printObjectEvent(debug.LEVEL_FINEST,
+        debug.printObjectEvent(self.debugLevel,
                                event,
                                event.source.toString())
 
@@ -216,7 +220,7 @@ class Script(default.Script):
                      rolenames.ROLE_ROOT_PANE, \
                      rolenames.ROLE_FRAME]
         if util.isDesiredFocusedItem(event.source, rolesList):
-            debug.println(debug.LEVEL_FINEST,
+            debug.println(self.debugLevel,
                       "StarOffice.onFocus - Writer: text paragraph.")
 
             result = atspi.getTextLineAtCaret(event.source)
@@ -276,7 +280,7 @@ class Script(default.Script):
         if util.isDesiredFocusedItem(event.source, rolesList):
             pane = event.source.parent
             if pane.name.startswith(_("Spellcheck:")):
-                debug.println(debug.LEVEL_FINEST,
+                debug.println(self.debugLevel,
                       "StarOffice.onFocus - Writer: spell check dialog.")
 
                 self.readMisspeltWord(event, pane)
@@ -300,7 +304,7 @@ class Script(default.Script):
         brailleGen = self.brailleGenerator
         speechGen = self.speechGenerator
 
-        debug.printObjectEvent(debug.LEVEL_FINEST,
+        debug.printObjectEvent(self.debugLevel,
                                event,
                                event.source.toString())
 
@@ -326,7 +330,7 @@ class Script(default.Script):
         if util.isDesiredFocusedItem(event.source, rolesList):
             pane = event.source
             if pane.name.startswith(_("Spellcheck:")):
-                debug.println(debug.LEVEL_FINEST,
+                debug.println(self.debugLevel,
                       "StarOffice.onNameChanged - Writer: spell check dialog.")
 
                 self.readMisspeltWord(event, pane)
