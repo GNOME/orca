@@ -1,5 +1,8 @@
 2006-05-17  Willie Walker <william.walker@sun.com>
 
+	* bugs/bugs.html, bugs/bug_338233.py, bugs/bug_338234.py,
+	bugs/bug_338272.py: add Firefox bugs.
+	
 	* src/orca/speech.py: change speech server support to an HTTP
 	server looking for POST data of "speak:text" or "stop" commands.
 	
