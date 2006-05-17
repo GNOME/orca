@@ -1,5 +1,8 @@
 2006-05-17  Willie Walker <william.walker@sun.com>
 
+	* src/orca/gnomespeechfactory.py: remove text.replace("[", "[ ")
+	now that gnome-speech-0.4.0 tells DECtalk to do a [:phon off].
+
 	* bugs/bugs.html, bugs/bug_338233.py, bugs/bug_338234.py,
 	bugs/bug_338272.py: add Firefox bugs.
 	

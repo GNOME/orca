@@ -539,7 +539,10 @@ class SpeechServer(speechserver.SpeechServer):
         # because DECtalk wants to interpret these as inline DECtalk
         # commands.]]]
         #
-        text = text.replace("[", "[ ")
+        # [[[UPDATE: commented this out because gnome-speech-0.4.0 now
+        # tells DECtalk to do a [:phon off], reducing this problem.]]]
+        #
+        #text = text.replace("[", "[ ")
 
         try:
             # [[[TODO: WDW - back this stop out for now.  The problem is
