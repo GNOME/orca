@@ -23,7 +23,7 @@ as its speech server, or it can feel free to create one of its own.
 
 import threading
 import time
-import SocketServer
+import BaseHTTPServer
 
 import debug
 import orca
@@ -32,47 +32,45 @@ import settings
 from acss import ACSS
 from orca_i18n import _           # for gettext support
 
-class _SpeakRequestHandler(SocketServer.BaseRequestHandler):
-    """Provides support for communicating with speech via a socket.
+class _SpeakRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+    """Provides support for communicating with speech via a HTTP.
     This is to support self-voicing applications that want to use
     Orca as a speech service.
 
-    The protocol is simple: 'stop' or 'speak:text'
-    
-    Each command is a single line (no intermingling new lines are allowed).
+    The protocol is simple: POST content is 'stop' or 'speak:text'
+
+    To test this, run:
+
+      wget --post-data='speak:hello world' localhost:20433
+      
     """
     
-    def handle(self):
-        debug.println(debug.LEVEL_FINEST,
-                      "speech._SpeakRequestHandler connected from %s %d" \
-                      % (self.client_address[0], self.client_address[1]))
-        while True:
-            receivedData = self.request.recv(8192)
+    def do_POST(self):
+        contentLength = self.headers.getheader('content-length')
+        if contentLength:
+            contentLength = int(contentLength)
+            inputBody = self.rfile.read(contentLength)
             debug.println(debug.LEVEL_FINEST,
-                          "speech._SpeakRequestHandler received '%s'" \
-                          % receivedData)
-            if not receivedData:
-                break
-            try:
-                if receivedData.startswith("speak:"):
-                    speak(receivedData[6:])
-                elif receivedData == "stop":
-                    stop()
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
-        self.request.close()
-        debug.println(debug.LEVEL_FINEST,
-                      "speech._SpeakRequestHandler connected from %s %d" \
-                      % (self.client_address[0], self.client_address[1]))
+                          "speech._SpeakRequestHandler received %s" \
+                          % inputBody)
+            if inputBody.startswith("speak:"):
+                speak(inputBody[6:])
+            elif inputBody == "stop":
+                stop()
+        else:
+            debug.println(debug.LEVEL_FINEST,
+                          "speech._SpeakRequestHandler received no data")
+            
+        self.send_response(200, 'OK')
 
 class _SpeakRequestThread(threading.Thread):
     """Runs a _SpeakRequestHandler in a separate thread."""
     
     def run(self):
-        srv = SocketServer.ThreadingTCPServer(('',
-                                               settings.speechServerPort),
-                                              _SpeakRequestHandler)
-        srv.serve_forever()
+        httpd = BaseHTTPServer.HTTPServer(('',
+                                           settings.speechServerPort),
+                                          _SpeakRequestHandler)
+        httpd.serve_forever()
 
 # The speech server to use for all speech operations.
 #
