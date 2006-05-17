@@ -1,3 +1,11 @@
+2006-05-17  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/StarOffice.py
+          Adjusted the call to speech.speak() in scenerio #1 in the
+          onFocus() method so that it doesn't interrupt speech. This
+          means that when Star Office Writer is first coming up, it
+          speaks the details about the document that it is displaying.
+
 2006-05-17  Willie Walker <william.walker@sun.com>
 
 	* src/orca/gnomespeechfactory.py: remove text.replace("[", "[ ")

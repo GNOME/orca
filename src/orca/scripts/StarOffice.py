@@ -227,7 +227,7 @@ class Script(default.Script):
             #
             hypertext = event.source.hypertext
             if not hypertext or (hypertext.getNLinks() == 0):
-                speech.speak(result[0])
+                speech.speak(result[0], None, False)
             else:
                 started = False
                 startOffset = 0
