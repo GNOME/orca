@@ -11,6 +11,7 @@ orca_python_PYTHON = \
 	metacity.py \
 	Mozilla.py \
 	planner.py \
+	self_voicing.py \
 	StarOffice.py
 
 orca_pythondir=$(pyexecdir)/orca/scripts
