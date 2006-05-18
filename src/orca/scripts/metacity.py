@@ -42,40 +42,40 @@ class Script(default.Script):
         """
         default.Script.__init__(self, app)
 
-    def getListeners(self):
-        """Sets up the AT-SPI event listeners for this script.
-        """
-
-        listeners = default.Script.getListeners(self)
-        
-        listeners["object:property-change:accessible-name"] = \
-            self.onNameChanged
-        
-        listeners["object:state-changed:visible"] = \
-            self.onVisibilityChanged
-
-        return listeners
-    
     def onNameChanged(self, event):
         """The status bar in metacity tells us what toplevel window will be
-        activated when tab is released.
+        activated when tab is released.  We will key off the name changed
+        event to determine when to say something, as it seems to be the
+        more reliable event.
 
         Arguments:
         - event: the name changed Event
         """
 
-        # If it's not the statusbar's name changing, ignore it
+        # Do the default thing if this is not the status bar.
         #
         if event.source.role != rolenames.ROLE_STATUSBAR:
             default.Script.onNameChanged(self, event)
             return
 
+        # Let's make sure the name really changed.  Metacity seems
+        # to like to give us multiple name changed events.
+        #
+        if event.source.__dict__.has_key("oldName"):
+            oldName = event.source.oldName
+        else:
+            oldName = None
+
+        name = event.source.name
+        if name == oldName:
+            return
+        else:
+            event.source.oldName = name
+
         # We have to stop speech, as Metacity has a key grab and we're not
         # getting keys
         #
         speech.stop()
-
-        name = event.source.name
 
         # Do we know about this window?  Traverse through our list of apps
         # and go through the toplevel windows in each to see if we know
@@ -107,20 +107,18 @@ class Script(default.Script):
         braille.displayMessage(text)
         speech.speak(text)
 
-    def onVisibilityChanged(self, event):
+    def onStateChanged(self, event):
         """The status bar in metacity tells us what toplevel window will be
         activated when tab is released.
 
         Arguments:
-        - event: the object:state-changed:visible Event
+        - event: the object:state-changed: Event
         """
 
-        # If it's not the statusbar's name changing, ignore it
+        # Ignore changes on the status bar.  We handle them in onNameChanged.
         #
         if event.source.role != rolenames.ROLE_STATUSBAR:
-            return
-
-        orca.setLocusOfFocus(event, event.source)
+            default.onStateChanged(self, event, event.source)
 
     def onTextInserted(self, event):
         """Called whenever text is inserted into an object.
@@ -128,6 +126,9 @@ class Script(default.Script):
         Arguments:
         - event: the Event
         """
+
+        # Ignore changes on the status bar.  We handle them in onNameChanged.
+        #
         if event.source.role != rolenames.ROLE_STATUSBAR:
             default.Script.onTextInserted(self, event)
 
@@ -137,6 +138,9 @@ class Script(default.Script):
         Arguments:
         - event: the Event
         """
+
+        # Ignore changes on the status bar.  We handle them in onNameChanged.
+        #
         if event.source.role != rolenames.ROLE_STATUSBAR:
             default.Script.onTextDeleted(self, event)
 
@@ -146,5 +150,8 @@ class Script(default.Script):
         Arguments:
         - event: the Event
         """
+
+        # Ignore changes on the status bar.  We handle them in onNameChanged.
+        #
         if event.source.role != rolenames.ROLE_STATUSBAR:
             default.Script.onCaretMoved(self, event)

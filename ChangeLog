@@ -1,5 +1,9 @@
 2006-05-18  Willie Walker <william.walker@sun.com>
 
+	* src/orca/scripts/metacity.py: fix bug 341415 - eliminate 
+	redundant output of Workspace and also make sure new Workspaces
+	are announced.
+	
 	* src/orca/scripts/Makefile.am, src/orca/scripts/self_voicing.py:
 	add a script that does nothing.  One can map an application to 
 	this script (self_voicing) via orca.settings.setScriptMapping,
