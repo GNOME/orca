@@ -1,3 +1,15 @@
+2006-05-18  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/braillegenerator.py
+          Adjusted the _getBrailleRegionsForPushButton() method to no
+          longer call self._getDefaultBrailleRegions(obj), but instead to
+          do everything that's in that rourine except:
+
+            text = util.appendString(text, self._getTextForValue(obj))
+
+          This gets rid of the spurious "0.00" value from Star Office 
+          buttons, that was showing up in the braille display.
+
 2006-05-18  Willie Walker <william.walker@sun.com>
 
 	* src/orca/scripts/Makefile.am,

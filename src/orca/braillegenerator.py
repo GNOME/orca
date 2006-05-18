@@ -800,7 +800,18 @@ class BrailleGenerator:
 
         self._debugGenerator("_getBrailleRegionsForPushButton", obj)
 
-        return self._getDefaultBrailleRegions(obj)
+        regions = []
+
+        text = ""
+        text = util.appendString(text, util.getDisplayedLabel(obj))
+        text = util.appendString(text, util.getDisplayedText(obj))
+        text = util.appendString(text, self._getTextForRole(obj))
+
+        regions = []
+        componentRegion = braille.Component(obj, text)
+        regions.append(componentRegion)
+
+        return [regions, componentRegion]
 
     def _getBrailleRegionsForRadioButton(self, obj):
         """Get the braille for a radio button.  If the button already had
