@@ -8,6 +8,7 @@ orca_python_PYTHON = \
 	gdmlogin.py \
 	gedit.py \
 	gnome-terminal.py \
+	gnome-window-properties.py \
 	metacity.py \
 	Mozilla.py \
 	planner.py \

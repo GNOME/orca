@@ -1,5 +1,12 @@
 2006-05-18  Willie Walker <william.walker@sun.com>
 
+	* src/orca/scripts/Makefile.am,
+	src/orca/scripts/gnome-window-properties.py: fix for bug 342133 -
+	do not automatically read labels in the dialog window when it
+	appears.  Also need to refile this bug against
+	gnome-window-properties so they do the appropriate bindings for
+	labels.
+	
 	* src/orca/scripts/metacity.py: fix bug 341415 - eliminate 
 	redundant output of Workspace and also make sure new Workspaces
 	are announced.
