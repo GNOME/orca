@@ -1,3 +1,9 @@
+2006-05-18  Rich Burridge <rich.burridge@sun.com>
+
+        * bugs/bugs.html
+          Added in four StarOffice bugs (plus SO bug filing information).
+          Updated the status of the OpenOffice bugs.
+
 2006-05-17  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py
