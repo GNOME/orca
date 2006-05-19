@@ -1,5 +1,10 @@
 2006-05-19  Rich Burridge <rich.burridge@sun.com>
 
+        * .cvsignore:
+          docs/.cvsignore:
+          docs/pydoc/.cvsignore:
+          Added several more files that should be ignored.
+
         * src/orca/atspi.py:
           In the getAcceleratorAndShortcut() method, if the accelerator 
           string includes a Space, make sure we speak it.
