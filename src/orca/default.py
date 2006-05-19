@@ -160,6 +160,10 @@ class Script(script.Script):
             Script.readCharAttributes,
             _("Reads the attributes associated with the current text character."))
 
+        self.reportScriptInfoHandler = input_event.InputEventHandler(
+            Script.reportScriptInfo,
+            _("Reports information on current script."))
+
         self.panBrailleLeftHandler = input_event.InputEventHandler(
             Script.panBrailleLeft,
             _("Pans the braille display to the left."))
@@ -514,6 +518,13 @@ class Script(script.Script):
                 1 << orca.MODIFIER_ORCA,
                 1 << orca.MODIFIER_ORCA,
                 self.readCharAttributesHandler))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "i",
+                1 << orca.MODIFIER_ORCA,
+                1 << orca.MODIFIER_ORCA,
+                self.reportScriptInfoHandler))
 
         return keyBindings
 
@@ -1410,7 +1421,7 @@ class Script(script.Script):
             # Speak the character that has just been deleted.
             #
             character = event.any_data.value()
-            
+
         elif string == "Delete":
             # Speak the character to the right of the caret after
             # the current right character has been deleted.
@@ -1803,6 +1814,24 @@ class Script(script.Script):
                 attributes['style'] = attr
 
             self.outputCharAttributes(attributes)
+
+        return True
+
+    def reportScriptInfo(self, inputEvent=None):
+        """Output useful information on the current script via speech 
+        and braille.  This information will be helpful to script writers.
+        """
+
+        string = "Script name: %s\n" % self.name
+        if orca.locusOfFocus and orca.locusOfFocus.app:
+            string += "Application name: %s\n" % orca.locusOfFocus.app.name
+            string += "Toolkit name: %s\n" % orca.locusOfFocus.app.toolkitName
+            string += "Version: %s\n" % orca.locusOfFocus.app.version
+
+            debug.println(debug.LEVEL_INFO, string)
+            speech.speak(string)
+            string.replace("\n", " ")
+            braille.displayMessage(string)
 
         return True
 

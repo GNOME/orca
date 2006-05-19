@@ -20,7 +20,13 @@
           In the __init__ method, self.toolkitName and self.version are
           now correctly initialized.
 
-        * bugs/bugs.html
+        * src/orca/default.py:
+          Added a new reportScriptInfo() method that is called when the
+          user types Insert-i. It provides useful information on the
+          script for the application that currently has focus; output 
+          being in speech, braille and debug println formats.
+
+          * bugs/bugs.html
           Added in new Star Office bug #136117.
 
 2006-05-19  Willie Walker <william.walker@sun.com>
