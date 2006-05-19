@@ -12,6 +12,9 @@
           In the __init__ method, self.toolkitName and self.version are
           now correctly initialized.
 
+        * bugs/bugs.html
+          Added in new Star Office bug #136117.
+
 2006-05-18  Willie Walker <william.walker@sun.com>
 
 	* src/orca/util.py: fix for bug 342122 - use all labels when
