@@ -3,6 +3,7 @@ Makefile
 Makefile.in
 aclocal.m4
 autom4te.cache
+compile
 config.h
 config.h.in
 config.guess
@@ -19,5 +20,6 @@ missing
 mkinstalldirs
 omf.make
 orca.spec
+py-compile
 stamp-h1
 xmldocs.make
