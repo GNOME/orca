@@ -212,6 +212,13 @@ class Script(default.Script):
             #print "  line endOffset:  ", startOffset
             #print "  caret in line:   ", text.caretOffset - startOffset
             speech.speak(linkText, self.voices[settings.HYPERLINK_VOICE])
+        elif text:
+            # We'll just assume the whole thing is a link.  This happens
+            # in yelp when we navigate the table of contents of something
+            # like the Desktop Accessibility Guide.
+            #
+            linkText = text.getText(0, -1)
+            speech.speak(linkText, self.voices[settings.HYPERLINK_VOICE])
         else:
             speech.speak(_("link"), self.voices[settings.HYPERLINK_VOICE])
             
