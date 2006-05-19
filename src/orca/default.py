@@ -186,8 +186,6 @@ class Script(script.Script):
         #    self.noOp
         listeners["object:property-change:accessible-name"] = \
             self.onNameChanged
-        listeners["mouse:button"]                           = \
-            self.onMouseButton
         listeners["object:text-caret-moved"]                = \
             self.onCaretMoved
         listeners["object:text-changed:delete"]             = \
@@ -1286,14 +1284,6 @@ class Script(script.Script):
             return
 
         orca.visualAppearanceChanged(event, event.source)
-
-    def onMouseButton(self, event):
-        """Called whenever a mouse button is pressed or released.
-
-        Arguments:
-        - event: the Event
-        """
-        orca.lastInputEvent = input_event.MouseButtonEvent(event)
 
     def _presentTextAtNewCaretPosition(self, event):
 

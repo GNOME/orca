@@ -48,6 +48,7 @@ import threading
 
 from input_event import BrailleEvent
 from input_event import KeyboardEvent
+from input_event import MouseButtonEvent
 from input_event import InputEventHandler
 
 from orca_i18n import _           # for gettext support
@@ -258,6 +259,23 @@ def _onChildrenChanged(e):
             shutdown()
             return
 
+def _onMouseButton(e):
+    """Tracks mouse button events, stopping any speech in progress.
+
+    Arguments:
+    - e: at-spi event from the at-api registry
+    """
+    event = atspi.Event(e)
+    lastInputEvent = MouseButtonEvent(event)
+
+    # A mouse button event looks like: mouse:button:1p, where the
+    # number is the button number and the 'p' is either 'p' or 'r',
+    # meaning pressed or released.  We only want to stop speech on
+    # button presses.
+    #
+    if event.type.endswith("p"):
+        speech.stop()
+    
 ########################################################################
 #                                                                      #
 # Keyboard Event Recording Support                                     #
@@ -1196,6 +1214,11 @@ def init(registry):
     registry.registerEventListener(_onChildrenChanged,
                                    "object:children-changed:")
 
+    # We also want to stop speech when a mouse button is pressed.
+    #
+    registry.registerEventListener(_onMouseButton,
+                                   "mouse:button")
+
     loadUserSettings()
 
     registry.registerKeystrokeListeners(_processKeyboardEvent)
@@ -1274,6 +1297,8 @@ def shutdown(script=None, inputEvent=None):
     registry = atspi.Registry()
     registry.deregisterEventListener(_onChildrenChanged,
                                      "object:children-changed:")
+    registry.deregisterEventListener(_onMouseButton,
+                                     "mouse:button")
 
     if _currentPresentationManager >= 0:
         _PRESENTATION_MANAGERS[_currentPresentationManager].deactivate()

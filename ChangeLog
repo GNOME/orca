@@ -1,3 +1,11 @@
+2006-05-19  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca.py, src/orca/default.py: fix for bug 342303 - stop
+	speech when the user presses the mouse button.  This also moved the
+	handling of the lastInputEvent for the mouse from default.py to 
+	orca.py, which is in line with where it is being set for keyboard
+	and braille events.
+	
 2006-05-19  Rich Burridge <rich.burridge@sun.com>
 
         * .cvsignore:
@@ -15,7 +23,7 @@
         * bugs/bugs.html
           Added in new Star Office bug #136117.
 
-2006-05-18  Willie Walker <william.walker@sun.com>
+2006-05-19  Willie Walker <william.walker@sun.com>
 
 	* src/orca/util.py: fix for bug 342122 - use all labels when
 	presenting an object.
