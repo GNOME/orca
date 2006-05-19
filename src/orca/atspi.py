@@ -584,11 +584,11 @@ class Accessible:
         try:
             self.accessible = acc._narrow(Accessibility.Application)
             try:
-                self.toolkitName = application.toolkitName
+                self.toolkitName = self.accessible.toolkitName
             except:
                 self.toolkitName = None
             try:
-                self.version = application.version
+                self.version = self.accessible.version
             except:
                 self.version = None
         except:
