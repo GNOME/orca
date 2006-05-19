@@ -54,13 +54,28 @@ def getDisplayedLabel(object):
     """
     label = None
     relations = object.relations
+    
+    # For some reason, some objects are labelled by the same thing
+    # more than once.  Go figure, but we need to check for this.
+    #
+    allTargets = []
+    
     for relation in relations:
         if relation.getRelationType() \
                == atspi.Accessibility.RELATION_LABELLED_BY:
-            target = atspi.Accessible.makeAccessible(relation.getTarget(0))
-            label = getDisplayedText(target)
-            if label and (len(label) > 0):
-                break
+            
+            # The object can be labelled by more than one thing, so we just
+            # get all the labels (from unique objects) and append them
+            # together.  An example of such objects live in the "Basic"
+            # page of the gnome-accessibility-keyboard-properties app.
+            # The "Delay" and "Speed" objects are labelled both by
+            # their names and units.
+            #
+            for i in range(0, relation.getNTargets()):
+                target = atspi.Accessible.makeAccessible(relation.getTarget(i))
+                if not target in allTargets:
+                    allTargets.append(target)
+                    label = appendString(label, getDisplayedText(target))
     return label
 
 def __getDisplayedTextInComboBox(combo):

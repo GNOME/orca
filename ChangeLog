@@ -1,5 +1,8 @@
 2006-05-18  Willie Walker <william.walker@sun.com>
 
+	* src/orca/util.py: fix for bug 342122 - use all labels when
+	presenting an object.
+	
 	* src/orca/scripts/Mozilla.py: fix for bug 342132 - make YELP
 	speak the text for an object when a link is selected.
 	
