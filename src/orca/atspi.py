@@ -1479,6 +1479,10 @@ def getAcceleratorAndShortcut(obj):
     fullShortcut = fullShortcut.replace(">"," ")
     fullShortcut = fullShortcut.replace(":"," ")
 
+    # If the accelerator string includes a Space, make sure we speak it.
+    #
+    if accelerator.endswith(" "):
+        accelerator += "space"
     accelerator  = accelerator.replace("<","")
     accelerator  = accelerator.replace(">"," ")
 

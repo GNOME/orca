@@ -1,3 +1,9 @@
+2006-05-19  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/atspi.py:
+          In the getAcceleratorAndShortcut() method, if the accelerator 
+          string includes a Space, make sure we speak it.
+
 2006-05-18  Willie Walker <william.walker@sun.com>
 
 	* src/orca/util.py: fix for bug 342122 - use all labels when
