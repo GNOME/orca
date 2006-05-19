@@ -26,7 +26,11 @@
           script for the application that currently has focus; output 
           being in speech, braille and debug println formats.
 
-          * bugs/bugs.html
+        * src/orca/scripts/StarOffice.py:
+          Changed occurances of onFocus to locusOfFocusChanged and now
+          no longer call orca.setLocusOfFocus().
+
+        * bugs/bugs.html:
           Added in new Star Office bug #136117.
 
 2006-05-19  Willie Walker <william.walker@sun.com>

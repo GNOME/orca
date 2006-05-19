@@ -186,11 +186,13 @@ class Script(default.Script):
     # 1) Writer: text paragraph.
     # 2) Writer: spell checking dialog.
 
-    def onFocus(self, event):
-        """Called whenever an object gets focus.
+    def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
+        """Called when the visual object with focus changes.
 
         Arguments:
-        - event: the Event
+        - event: if not None, the Event that caused the change
+        - oldLocusOfFocus: Accessible that is the old locus of focus
+        - newLocusOfFocus: Accessible that is the new locus of focus
         """
 
         brailleGen = self.brailleGenerator
@@ -216,7 +218,7 @@ class Script(default.Script):
                      rolenames.ROLE_FRAME]
         if util.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel,
-                      "StarOffice.onFocus - Writer: text paragraph.")
+                  "StarOffice.locusOfFocusChanged - Writer: text paragraph.")
 
             result = atspi.getTextLineAtCaret(event.source)
 
@@ -253,7 +255,6 @@ class Script(default.Script):
 
             braille.displayRegions(brailleGen.getBrailleRegions(event.source))
 
-            orca.setLocusOfFocus(event, event.source, False)
             return
 
         # 2) Writer: spell checking dialog.
@@ -276,7 +277,7 @@ class Script(default.Script):
             pane = event.source.parent
             if pane.name.startswith(_("Spellcheck:")):
                 debug.println(self.debugLevel,
-                      "StarOffice.onFocus - Writer: spell check dialog.")
+                    "StarOffice.locusOfFocusChanged - Writer: spell check dialog.")
 
                 self.readMisspeltWord(event, pane)
 
@@ -284,7 +285,8 @@ class Script(default.Script):
 
         # Pass the event onto the parent class to be handled in the default way.
 
-        default.Script.onFocus(self, event)
+        default.Script.locusOfFocusChanged(self, event,
+                                           oldLocusOfFocus, newLocusOfFocus)
 
     # This method tries to detect and handle the following cases:
     # 1) Writer: spell checking dialog.
