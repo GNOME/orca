@@ -1818,19 +1818,19 @@ class Script(script.Script):
         return True
 
     def reportScriptInfo(self, inputEvent=None):
-        """Output useful information on the current script via speech 
+        """Output useful information on the current script via speech
         and braille.  This information will be helpful to script writers.
         """
 
-        string = "Script name: %s\n" % self.name
+        string = "SCRIPT INFO: Script name='%s'" % self.name
         if orca.locusOfFocus and orca.locusOfFocus.app:
-            string += "Application name: %s\n" % orca.locusOfFocus.app.name
-            string += "Toolkit name: %s\n" % orca.locusOfFocus.app.toolkitName
-            string += "Version: %s\n" % orca.locusOfFocus.app.version
-
-            debug.println(debug.LEVEL_INFO, string)
+            string += \
+                " Application name='%s' Toolkit name='%s' Version='%s'" \
+                % (orca.locusOfFocus.app.name,
+                   orca.locusOfFocus.app.toolkitName,
+                   orca.locusOfFocus.app.version)
+            debug.println(debug.LEVEL_CONFIGURATION, string)
             speech.speak(string)
-            string.replace("\n", " ")
             braille.displayMessage(string)
 
         return True

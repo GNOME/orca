@@ -6,6 +6,8 @@
 	out at some point if we want to dynamically change the speech
 	server port at run time.  For now, if that is what people really
 	want to do, they can just stop and restart orca.
+
+	* src/orca/default.py: minor tweaking to script info output.
 	
 2006-05-19  Willie Walker <william.walker@sun.com>
 
