@@ -1829,7 +1829,7 @@ class Script(script.Script):
                 % (orca.locusOfFocus.app.name,
                    orca.locusOfFocus.app.toolkitName,
                    orca.locusOfFocus.app.version)
-            debug.println(debug.LEVEL_CONFIGURATION, string)
+            debug.println(debug.LEVEL_INFO, string)
             speech.speak(string)
             braille.displayMessage(string)
 
