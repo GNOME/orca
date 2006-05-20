@@ -1,3 +1,12 @@
+2006-05-20  Willie Walker <william.walker@sun.com>
+
+	* src/orca/speech.py: do not attempt to restart the http speech
+	server when settings are reloaded.  I'm not quite sure how to 
+	kill the server once it starts, but we may need to figure this
+	out at some point if we want to dynamically change the speech
+	server port at run time.  For now, if that is what people really
+	want to do, they can just stop and restart orca.
+	
 2006-05-19  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca.py, src/orca/default.py: fix for bug 342303 - stop

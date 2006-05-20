@@ -42,9 +42,9 @@ class _SpeakRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     To test this, run:
 
       wget --post-data='speak:hello world' localhost:20433
-      
+
     """
-    
+
     def do_POST(self):
         contentLength = self.headers.getheader('content-length')
         if contentLength:
@@ -60,12 +60,12 @@ class _SpeakRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         else:
             debug.println(debug.LEVEL_FINEST,
                           "speech._SpeakRequestHandler received no data")
-            
+
         self.send_response(200, 'OK')
 
 class _SpeakRequestThread(threading.Thread):
     """Runs a _SpeakRequestHandler in a separate thread."""
-    
+
     def run(self):
         httpd = BaseHTTPServer.HTTPServer(('',
                                            settings.speechServerPort),
@@ -96,6 +96,8 @@ def getSpeechServerFactories():
             debug.printException(debug.LEVEL_OFF)
 
     return factories
+
+_speakRequestThread = None
 
 def init():
 
@@ -142,14 +144,15 @@ def init():
     # do so.  We make it a daemon so it will die automatically when
     # orca dies.
     #
-    if settings.speechServerPort:
+    global _speakRequestThread
+    if settings.speechServerPort and (not _speakRequestThread):
         try:
-            speakRequestThread = _SpeakRequestThread()
-            speakRequestThread.setDaemon(True)
-            speakRequestThread.start()
+            _speakRequestThread = _SpeakRequestThread()
+            _speakRequestThread.setDaemon(True)
+            _speakRequestThread.start()
         except:
             debug.printException(debug.LEVEL_SEVERE)
-            
+
 def __resolveACSS(acss=None):
     if acss:
         return acss
@@ -183,7 +186,7 @@ def speak(text, acss=None, interrupt=True):
     if orca.lastKeyEchoTime:
         interrupt = interrupt \
             and ((time.time() - orca.lastKeyEchoTime) > 0.5)
-        
+
     if settings.silenceSpeech:
         return
     if __speechserver:
@@ -202,7 +205,7 @@ def speakUtterances(utterances, acss=None, interrupt=True):
                  voice settings.
     - interrupt: if True, stop any speech currently in progress.
     """
-    
+
     # We will not interrupt a key echo in progress.
     #
     if orca.lastKeyEchoTime:
