@@ -285,13 +285,25 @@ Right arrow key.  Press Down arrow key.  Close the volume control by left-clicki
 context menu with either Shift+F10 or by right-clicking on it.  Remove it by selecting 'Remove From Panel' menu item.        </para>
 <para>&tresult;
  The volume indication increases twice.  The volume indication decreases twice.  Orca should speak each change.</para>
-
+<para>&tgoal; Ability to set preferred text editor to JEdit </para>
+<para>&tprocedure; Launch 'Preferences'->'Advanced'->'Preferred Applications'.  Navigate to the 'Text Editor' tab.  Navigate to 'Custom Editor' checkbox.
+ Enter desired name into 'Name' text entry box.  Enter path to desired editor application in 'Command' text entry box.  Focus 'OK' confirmation button
+and action it.  Focus 'Close' confirmation button and action it.  Launch text-editor and verify the action worked. </para>
+<para>&tresult; 'Preferred
+Applications' window pops up.  User can choose an application for default text editor.  Chosen application successfully loads as default text editor.</para>
 <para>&tgoal; Ability to view credits and select links in 'About GNOME' </para>
 <para>&tprocedure; Use Ctrl-Alt>Tab to focus the bottom panel. Press Ctrl-F10> to pop up the panel's context menu.  Choose 'About GNOME' from the menu.
 View the credits as they cycle.  Forward the credits by actioning the scrolling area with left-mouse click or Return key.  Focus and select each of the
 links at the top of the window.  Wait for the desired link to appear in a browser.  Click 'Close' button or press Alt-F4> to close Gnome-About. </para>
 
 <para>&tresult; The GNOME 'About' window pops up.   The credits are displayed and spoken by orca and can be forwarded manually.  The associated links can be visited successfully.</para>
+<para>&tgoal; Ability to create 'foo' filetype and re-edit it </para>
+<para>&tprocedure; Launch 'Preferences'->'Advanced'->'File Associations'.  Navigate to 'Add File Type' button and action it.  Enter 'Description', 'MIME
+Type' and 'Category' values in the text entry fields.  Navigate to 'Choose' button and action it. Select 'Category'  Enter file extension into 'Add' text
+entry field.  Navigate to 'Browse' button and action it. Navigate 'Folders' and 'Files' panes and select desired application  Focus 'OK' confirmation button
+and action it. Focus 'Edit' button and action it.  Verify values can be changed.  Focus 'Close' button and action it. </para>
+<para>&tresult; The 'File
+Associations' window pops up.  User can add a new file type and re-edit it's values afterwards.</para>
 		<para>&tgoal; Ability   to choose different Desktop font family and size </para>
 		<para>&tprocedure; Start up nautilus file manager by selecting  'Preferences'->'Display'->'Font'.  Navigate to 'Desktop font' button with Tab.  Activate
 		this button's dialog with Space or press Alt-D>.  Choose a different font family.  Choose a bold-italic font style.  Choose a size +10 greater.  Action
@@ -313,17 +325,50 @@ on the printer manager icon.  Activate it's context menu with either Shift+F10 o
 menu item.  Alt-Tab> to the Print Manager app and close it.        </para>
 <para>&tresult; Printer launcher icon available in bottom panel.  An instance
 of the nautilus Print Manager launched.  "altered; text was changed" icon removed from the bottom panel.</para>
+<para>&tgoal; Ability to change from 'direct' to 'manual' and edit the 'manual' setting        </para>
+<para>&tprocedure; Launch 'Preferences'->'Internet'.  Navigate to 'Direct Internet connection' and back to 'Manual proxy configuration'. Navigate to text
+entry fields in 'Manual' and change some values.  Focus 'Close' button and action it.  Relaunch the 'Internet' dialog to verify settings change.  Close
+the window. </para>
+<para>&tresult; The 'Internet' window pops up.  User can select 'direct internet connection' or 'manual proxy configuration'.  User
+can edit 'manual' settings.  Changes take effect.</para>
+
+<para>&tgoal; Ability to start sound server and play sound file </para>
+<para>&tprocedure; Launch 'Preferences'->'Sound'.  Check the 'Enable sound server startup' checkbox.  Navigate to 'Sound Events' tab.  Navigate to 'Sounds'
+list and highlight 'Select checkbox'.  Focus 'Browse' button and action it.  Navigate 'Folders' and 'Files' and then select 'gtk-events/activate.wav' sound
+file. Focus 'Play' button and action it.  Verify desired sound played successfully.  Focus 'Close' button and action it.  Check a checkbox outside of the
+window. </para>
+<para>&tresult; 'Sound preferences' window pops up.  Sound server enabled and a sound file for the 'checkbox' event.  Window closes successfully.
+ Desired sound file plays successfully for the given event.</para>
 <para>&tgoal; Ability to lock and unlock the desktop session </para>
 <para>&tprocedure; From the launch menu choose 'Lock Screen'.  Click a mouse button, move the mouse, or press a key to post the password dialog.  Input an
 Incorrect password and press Return. Click a mouse button, move the mouse, or press a key to post the password dialog.  Input a correct password and
 press Return. </para>
 <para>&tresult; The screen locks.  The password dialog is displayed and dismisses.  The password dialog is displayed and the
 session is unlocked.</para>
+      <para>&tgoal; Ability  to view system log via command line </para>
+	  <para>&tprocedure; Start up terminal by selecting  'Applications'->'System Tools'->'Terminal'.  Type in "/sbin/yast".  Press Return button.  Navigate to
+	  the 'Misc'  category in yast.  Navigate to the 'View system log' option with RightDown.  Press Return to select it.  Exit the log with Alt-O>, or
+	  Tab to 'OK' and pressing Return.  Quit out of yast with Alt-Q>.  Close the gnome terminal with 'File'->'Close Window'. </para>
+	  <para>&tresult; A
+gnome terminal appears on the desktop.  The messages log is displayed through yast.  Yast is closed and the terminal exited.</para>
+<para>&tgoal; Ability to successfully logout </para>
+<para>&tprocedure; Open a number of applications such as calculator, find files, terminal, and nautilus.  From the launch menu choose 'Log Out user'.
+The logout dialog appears in the center of the screen.  Click the OK button or press Alt-O>. </para>
+<para>&tresult;  All running applications close.
+ The gnome session ends.  The GDM login screen appears.</para>
+
+<para>&tgoal; Ability to browse to remote login selection </para>
+<para>&tprocedure; In GDM, activate the 'Actions' with Alt-A> or the mouse button. Choose 'Run XDMCP chooser ' with Alt-X>Alt-O>. Press Alt-S> to focus
+the list of available remote hosts.  Press the Down arrow key to highlight a system.  Click the 'Refresh button or press Alt-R> to refresh the list
+of systems.  Click the 'Cancel' button or press Alt-C> to return to GDM. </para>
+<para>&tresult;  XDMCP chooser appears.  The system list is refreshed.
+ The GDM login screen reappears.</para>
+
       </section>
       <section><title>Alt+Tab to Other Applications</title>
         <para>&tgoal; Determine if Orca reads metacity status window.</para>
         <para>&tprocedure; Open gedit, terminal, star office writer, and firefox.  With these apps opened, hold sown alt and press tab slowly several times.</para>
-        <para>&tresult; Whith each press of tab orca should speak the name of the application that will gain focus if als is released.</para>
+        <para>&tresult; Whith each press of tab orca should speak the name of the application that will gain focus if alt is released.</para>
       </section>
     </section>
 
@@ -463,6 +508,17 @@ signs off and the Instant Messenger is exited.</para>
 
     <section id="yelptest"><title>Yelp Test Plan</title>
       <section><title>Some Test</title>
+<para>&tgoal; Ability to browse to help chapter and return home in GNOME Help </para>
+
+<para>&tprocedure; From the launch menu choose 'Help'. Tab to the "Desktop" hyperlink and Space to jump to it.  Navigate down to "Accessibility Guide"
+and Space to proceed.  From the left-side pane, focus "Using the Keyboard to Navigate the Desktop".  Press <-> (the minus key) on the numpad to collapse
+this topic tree.  Focus to the content pane via F6 key.  Tab to the "Section 3.9" URL and action it via the left mouse button or Return.  Press F8
+to focus the splitterbar and arrow keys to resize the panes.  Press F8 or Space or Return to confirm.  Focus the toolbar and click 'Home'.  From
+the toolbar click 'Back'.  Select 'File'->'Close Window' in the menubar to exit. </para>
+<para>&tresult; The 'GNOME Help' yelp browser pops up.   Each
+hyperlink is followed and displayed in the main/right pane and spoken and brailled by orca.  The splitterbar is focused and the panes resized.  The home page is redisplayed, and the previous
+page is revisited.</para>
+
         <para>&tgoal; Determine if Orca does something.</para>
         <para>&tprocedure; perform this action.</para>
         <para>&tresult; this should happen.</para>

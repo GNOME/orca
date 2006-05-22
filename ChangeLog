@@ -1,3 +1,5 @@
+2006-05-21
+      *  /docs/doc-set/testing.sgml: added more tests	
 2006-05-20  Willie Walker <william.walker@sun.com>
 
 	* src/orca/speech.py: do not attempt to restart the http speech
