@@ -313,6 +313,12 @@ on the printer manager icon.  Activate it's context menu with either Shift+F10 o
 menu item.  Alt-Tab> to the Print Manager app and close it.        </para>
 <para>&tresult; Printer launcher icon available in bottom panel.  An instance
 of the nautilus Print Manager launched.  "altered; text was changed" icon removed from the bottom panel.</para>
+<para>&tgoal; Ability to lock and unlock the desktop session </para>
+<para>&tprocedure; From the launch menu choose 'Lock Screen'.  Click a mouse button, move the mouse, or press a key to post the password dialog.  Input an
+Incorrect password and press Return. Click a mouse button, move the mouse, or press a key to post the password dialog.  Input a correct password and
+press Return. </para>
+<para>&tresult; The screen locks.  The password dialog is displayed and dismisses.  The password dialog is displayed and the
+session is unlocked.</para>
       </section>
       <section><title>Alt+Tab to Other Applications</title>
         <para>&tgoal; Determine if Orca reads metacity status window.</para>
@@ -350,7 +356,15 @@ folder.  Right-click the file and select 'Copy File' to mark folder for copying.
 pressing CTRL+v.  Close Nautilus windows.        </para>
 <para>&tresult; A copy of the folder appears in Nautilus' right-side
 content pane.  A copy of the file appears in Nautilus; right-side content pane.</para>
-
+<para>&tgoal; Ability   to  modify the permissions for a file / folder </para>
+<para>&tprocedure; Start up nautilus file manager by selecting 'Recent Documents'->'Open Documents Folder'.  Select a folder icon from within the Documents
+folder.  Open the properties with either Ctrl-I> or Shft-F10P. Select the 'Permissions' tab. Change permissions by checking the appropriate 'Owner',
+'Group', and 'Others' checkboxes.   Click the 'Close' button to confirm.  Select a file icon from the 'Texts' folder.  Open the properties with either
+Ctrl-I> or Shft-F10P. Select the 'Permissions' tab. Change permissions by checking the appropriate 'Owner', 'Group', and 'Others' checkboxes.   Click
+the 'Close' button to confirm.  Refocus the changed folder.  Open it's properties and select the 'Permissions' tab.  Refocus the changed file.  Open the
+file's properties and select the 'Permissions' tab.  Close Nautilus windows.        </para>
+<para>&tresult; The folder's permission changes.  The file's
+permission changes.  Reviewing the folder properties shows the changes remain.  Reviewing the file properties shows the changes remain.</para>
 <para>&tgoal; Ability   to rename a file / folder using the Edit menu </para>
 <para>&tprocedure; Selecting  'This Computer' from the launch menu. From the menubar choose 'Places'->'Documents' , or press Alt-Home>.  Select the 'Texts'
 folder icon.  Change the folder's name by pressing either F2 or choosing 'Edit'->'Rename...'.  Type "this is a changed folder name" and press Return.
@@ -359,6 +373,15 @@ folder icon.  Change the folder's name by pressing either F2 or choosing 'Edit'-
  <para>&tresult; The folder's name is reflected as "this is a changed folder name".  The file's name is reflected
 as "this is a changed file name".</para>
 </section>
+    </section>
+<section id="Gcalctest"><title>gnome Calc Test Plan</title>
+      <section><title>calc Test</title>
+<para>&tgoal; Ability   to  find out the square root of a selected number </para>
+<para>&tprocedure; Start the calculator by choosing 'Applications'->'Accessories'->'Calculator'. Input the number 144 . navigate to the 'SQRT' button. Select
+'Calculator'->'Quit' to exit. </para>
+<para>&tresult; The result returned to the user is '12'.</para>
+
+      </section>
     </section>
 
     <section id="gedittest"><title>GEdit Test Plan</title>
