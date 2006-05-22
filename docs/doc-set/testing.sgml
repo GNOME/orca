@@ -269,14 +269,55 @@
         <para>&tgoal; Determine if Orca reads correctly when leaving submenus.</para>
         <para>&tprocedure; Open the start menu and navigate into each of the submenus with right arrow and then return to the ptop level with left arrow.</para>
         <para>&tresult; When moving out of the submmenu orca should speak the new item with focus.</para>
+<para>&tgoal; Ability   to delete files from the desktop.</para>
+<para>&tprocedure; Copy some file / folders onto the desktop. Move the files / folders over the Wastebasket icon and release. Double click on the Wastebasket
+icon. Delete by right clicking on the icon and selecting 'Empty Wastebasket' . Click on the 'Empty' button in the confirmation dialog. Click on the 'View'->'Reload'
+from the menubar of the Wastebasket window.  Close the Wastebasket by choosing 'File'->'Close' or pressing Ctrl-W>.        </para>
+<para>&tresult; The
+files / folders are moved from the desktop into the wastebasket.  The files / folders are permanently removed from the nautilus Wastebasket window.</para>
 <para>&tgoal; Determine if Orca reads and navigates the top and bottom panels.</para>
         <para>&tprocedure; Press CTRL+ALT+tab to get to the desktop.  Press this combination again to get to the top panel with the varius status bottons.  Press space on each button.</para>
         <para>&tresult; When arrowing to each pannel applet orca should read it and it's status.  When activating it orca should read any changes the user makes in the dialog.</para>
+<para>&tgoal; Ability to  change volume using arrow keys </para>
+<para>&tprocedure;  Focus the top panel.  Pop-up it's context menu with either Ctrl-F10> or by right-clicking on the panel.  Select 'Add to Panel'->'Multimedia'->'Volume
+Control'.  Focus the newly created volume control applet icon.  Click the volume control applet.  Press Left arrow key.  Press Up arrow key.  Press
+Right arrow key.  Press Down arrow key.  Close the volume control by left-clicking, pressing Return, or pressing Space.  Activate the applet's
+context menu with either Shift+F10 or by right-clicking on it.  Remove it by selecting 'Remove From Panel' menu item.        </para>
+<para>&tresult;
+ The volume indication increases twice.  The volume indication decreases twice.  Orca should speak each change.</para>
+
+<para>&tgoal; Ability to view credits and select links in 'About GNOME' </para>
+<para>&tprocedure; Use Ctrl-Alt>Tab to focus the bottom panel. Press Ctrl-F10> to pop up the panel's context menu.  Choose 'About GNOME' from the menu.
+View the credits as they cycle.  Forward the credits by actioning the scrolling area with left-mouse click or Return key.  Focus and select each of the
+links at the top of the window.  Wait for the desired link to appear in a browser.  Click 'Close' button or press Alt-F4> to close Gnome-About. </para>
+
+<para>&tresult; The GNOME 'About' window pops up.   The credits are displayed and spoken by orca and can be forwarded manually.  The associated links can be visited successfully.</para>
+		<para>&tgoal; Ability   to choose different Desktop font family and size </para>
+		<para>&tprocedure; Start up nautilus file manager by selecting  'Preferences'->'Display'->'Font'.  Navigate to 'Desktop font' button with Tab.  Activate
+		this button's dialog with Space or press Alt-D>.  Choose a different font family.  Choose a bold-italic font style.  Choose a size +10 greater.  Action
+		the 'OK' button to confirm these changes.  Reset the 'Desktop font' settings back.  Close the 'Font Preferences' dialog. </para>
+		<para>&tresult; Font
+		Preferences dialog appears.  Desktop font changes (icon text on desktop changes).  Desktop font reverts.</para>
+<para>&tgoal; Ability to change resolution and refresh rate </para>
+<para>&tprocedure; Launch 'Preferences'->'Display'->'Screen Resolution'.  Navigate to 'Resolution' combo-box and action it.  Select a different resolution.
+ Navigate to 'Refresh rate' combo-box and action it.  Select a different refresh rate.  Navigate to 'Apply' confirmation button and action it.  Relaunch
+Screen Resolution utility and verify settings were successfully changed.  Close Screen Resolution. </para>
+<para>&tresult; The 'Screen Resolution Preferences'
+window pops up.  The user can choose a different resolution and refresh rate.  The changes are applied and verified successfully.</para>
+<para>&tgoal; Ability to add print manager as a launcher in the panel </para>
+<para>&tprocedure;  From the Launch menu highlight 'Preferences'->'Printers'.  Right-click or Shift+F10 to open this menu item's context menu.  Select
+'Add this launcher to panel'.  Focus the bottom panel and Shift+F10 on the 'Manager Printers' icon.  Select 'Properties' from the context menu.  Focus
+the 'Name:' text field.  Change the text to "altered;".  Focus the 'Comment:' text field.  Change the text to "text was changed".  Focus the Close button
+and action it.  Focus the launcher icon in the bottom panel.  Activate the icon with either left-mouse click or Space.  Focus the bottom panel and Shift+F10
+on the printer manager icon.  Activate it's context menu with either Shift+F10 or by right-clicking on it.  Remove it by selecting 'Remove From Panel'
+menu item.  Alt-Tab> to the Print Manager app and close it.        </para>
+<para>&tresult; Printer launcher icon available in bottom panel.  An instance
+of the nautilus Print Manager launched.  "altered; text was changed" icon removed from the bottom panel.</para>
       </section>
       <section><title>Alt+Tab to Other Applications</title>
         <para>&tgoal; Determine if Orca reads metacity status window.</para>
         <para>&tprocedure; Open gedit, terminal, star office writer, and firefox.  With these apps opened, hold sown alt and press tab slowly several times.</para>
-        <para>&tresult; Whith each press of tab orca should speak the name of the application that will gain fucus if als is released.</para>
+        <para>&tresult; Whith each press of tab orca should speak the name of the application that will gain focus if als is released.</para>
       </section>
     </section>
 
@@ -294,7 +335,30 @@
         <para>&tgoal; Determine if Orca reads the toolbar buttons.</para>
         <para>&tprocedure; Open the home folder.  Tab to the toolbar and arrow to all the buttons.</para>
         <para>&tresult; Orca should read the label for each button.</para>
-      </section>
+<para>&tgoal; Ability to find a specified file in a user's home directory </para>
+<para>&tprocedure; From the launch menu select 'Find Files...'.  Focus the 'Name contains:' text entry field.  Enter the name of a known file.  Focus and
+action the 'Browse...' button with Alt-B>.  Navigate to the right-hand pane.  Select a user's home folder.  Focus the 'OK' confirmation button and action
+it.  Focus the 'Find' button and action it.  Wait for the displayed result of requested filename.  Close the dialog. </para>
+<para>&tresult; The 'Search
+for Files' dialog pops up.   The search initiates and completes.  The user views details of the file requested. </para>
+<para>&tgoal; Ability   to  copy and paste using the right click menu options </para>
+
+<para>&tprocedure; On the desktop focus the 'Documents' icon and action it.  Open the 'Texts' folder's context menu with Shift+F10.  Select 'Browse Folder'
+from the menu.  Select a folder icon from within the 'Texts' folder.  Right-click the file and select 'Copy File' to mark folder for copying. Change the
+current directory in Nautilus.  Paste the folder by pressing Ctrl+v.  Select a file icon from within the 'Texts'
+folder.  Right-click the file and select 'Copy File' to mark folder for copying. Change the current directory in Nautilus.  Paste the file by choosing
+pressing CTRL+v.  Close Nautilus windows.        </para>
+<para>&tresult; A copy of the folder appears in Nautilus' right-side
+content pane.  A copy of the file appears in Nautilus; right-side content pane.</para>
+
+<para>&tgoal; Ability   to rename a file / folder using the Edit menu </para>
+<para>&tprocedure; Selecting  'This Computer' from the launch menu. From the menubar choose 'Places'->'Documents' , or press Alt-Home>.  Select the 'Texts'
+folder icon.  Change the folder's name by pressing either F2 or choosing 'Edit'->'Rename...'.  Type "this is a changed folder name" and press Return.
+ Select a file icon.  Change the file's name by pressing either F2 or choosing 'Edit'->'Rename...'.  Type "this is a changed file name" and press Return.
+ Close the Nautilus windows. </para>
+ <para>&tresult; The folder's name is reflected as "this is a changed folder name".  The file's name is reflected
+as "this is a changed file name".</para>
+</section>
     </section>
 
     <section id="gedittest"><title>GEdit Test Plan</title>
@@ -316,6 +380,15 @@
         <para>&tgoal; Determine if Orca reads the "quit without saving dialog.</para>
         <para>&tprocedure; Delete the word Mike found in the last test and press CTRL+q.</para>
         <para>&tresult; Orca should speak the dialog warning the user that the changes will be lost.</para>
+
+	  <para>&tgoal; Ability to  create and save a new document in Geditor </para>
+	  <para>&tprocedure; Start up gedit by selecting  'Applications'->'Accessories'->'Text Editor'. Make some changes to the newly opened document.  Select the
+	  option 'File'->'Save As' from the menubar. Enter a filename in the 'Save as..' dialog window.  Click on the 'OK' button.  Select the option 'File'->'Close'
+	  from the menubar. Select the option 'File'->'Open' from the menubar. Specify the name of the document in the 'Open File..' dialog window.  Click on the
+	  'OK' button.   Close gedit with either 'File'->'Quit' or by pressing Ctrl-Q>. </para>
+	  <para>&tresult; A new text file is created.  The file is closed
+	  from gedit.  The same text file is reopened is gedit.</para>
+
       </section>
             <section><title> spell check test</title>
               <para>&tgoal; Determine if Orca correctly reads the spell check test.</para>
@@ -350,6 +423,15 @@
 
     <section id="gaimtest"><title>GAIM Test Plan</title>
       <section><title>Some Test</title>
+        <para>&tgoal; Ability to configure IM, and connect to IRC chat server </para>
+		<para>&tprocedure; Launch 'Applications'->'Internet'->'Instant Messenger'.  navigate to the 'Accounts' button on the main window of GAIM .  navigate to the 'Add' button
+		in the Accounts dialog.  Select 'IRC' from the options in the 'Protocol:' combo box. Type "a11ytest" for the 'Screenname:' text field.  Navigate to the
+		'Show more options' expander and action it with Space.  From the 'Proxy type' combo box, choose 'SOCKS 5'.  Type "gmpea-socks.sun.com" for the 'Host:'
+		text field.  Type "1080" for the 'Port:' text field.  Press Alt-S> to save these configuration settings.  From the Accounts dialog, highlight the 'Online'
+		tickbox for the account.  Press Space to tick it. Wait for the Signon dialog to complete and for the session to connect.  From the Buddy List window,
+		choose 'Buddies'->'Signoff'.  Press Ctrl-Q> to quit. </para>
+		<para>&tresult; A new IRC account is setup in GAIM.  The IRC session connects.  The session
+signs off and the Instant Messenger is exited.</para>
         <para>&tgoal; Determine if Orca does something.</para>
         <para>&tprocedure; perform this action.</para>
         <para>&tresult; this should happen.</para>
