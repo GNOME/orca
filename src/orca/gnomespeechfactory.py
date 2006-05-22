@@ -488,7 +488,8 @@ class SpeechServer(speechserver.SpeechServer):
         """
         i = 0
         for text in list:
-            self.speak(text, acss, interrupt and (i == 0))
+            if len(text) != 0:
+                self.speak(text, acss, interrupt and (i == 0))
             i += 1
 
     def __speak(self, text=None, acss=None, interrupt=True):

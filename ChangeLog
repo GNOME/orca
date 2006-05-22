@@ -1,3 +1,10 @@
+2006-05-22  Rich Burridge <rich.burridge@sun.com>
+
+      * src/orca/gnome/speechfactory.py:
+        Adjusted the speakUtterances() method to not speak zero length
+        lines of text. This has hopefully improved some speech interruption
+        problems.
+
 2006-05-21
       *  /docs/doc-set/testing.sgml: added more tests	
 2006-05-20  Willie Walker <william.walker@sun.com>
