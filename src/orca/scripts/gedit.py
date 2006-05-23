@@ -89,6 +89,10 @@ class Script(default.Script):
 
         default.Script.__init__(self, app)
 
+        # Set the debug level for all the methods in this script.
+        #
+        self.debugLevel = debug.LEVEL_FINEST
+
         # This will be used to cache a handle to the gedit text area for
         # spell checking purposes.
 
@@ -121,11 +125,6 @@ class Script(default.Script):
                  with the misspelt word.
         """
 
-        # Braille the default action for this component.
-        #
-        orca.setLocusOfFocus(event, event.source, False)
-        self.updateBraille(orca.locusOfFocus)
-
         # Look for the label containing the misspelled word.
         # There will be three labels in the top panel in the Check
         # Spelling dialog. Look for the one that isn't a label to
@@ -150,7 +149,7 @@ class Script(default.Script):
             allText = atspi.findByRole(self.textArea, rolenames.ROLE_TEXT)
             caretPosition = allText[0].text.caretOffset
 
-            debug.println(debug.LEVEL_FINEST, \
+            debug.println(self.debugLevel, \
                 "gedit.readMisspeltWord: type=%s  word=%s caret position=%d" \
                 % (event.type, badWord, caretPosition))
 
@@ -193,17 +192,19 @@ class Script(default.Script):
     # 1) Text area (for caching handle for spell checking purposes).
     # 2) Check Spelling Dialog.
 
-    def onFocus(self, event):
-        """Called whenever an object gets focus.
+    def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
+        """Called when the visual object with focus changes.
 
         Arguments:
-        - event: the Event
+        - event: if not None, the Event that caused the change
+        - oldLocusOfFocus: Accessible that is the old locus of focus
+        - newLocusOfFocus: Accessible that is the new locus of focus
         """
 
         brailleGen = self.brailleGenerator
         speechGen = self.speechGenerator
 
-        debug.printObjectEvent(debug.LEVEL_FINEST,
+        debug.printObjectEvent(self.debugLevel,
                                event,
                                event.source.toString())
 
@@ -226,8 +227,8 @@ class Script(default.Script):
                      rolenames.ROLE_PAGE_TAB_LIST,
                      rolenames.ROLE_SPLIT_PANE]
         if util.isDesiredFocusedItem(event.source, rolesList):
-            debug.println(debug.LEVEL_FINEST,
-                      "gedit.onFocus - text area.")
+            debug.println(self.debugLevel,
+                          "gedit.locusOfFocusChanged - text area.")
 
             self.textArea = event.source.parent
             # Fall-thru to process the event with the default handler.
@@ -252,8 +253,8 @@ class Script(default.Script):
         if util.isDesiredFocusedItem(event.source, rolesList):
             frame = event.source.parent.parent.parent.parent
             if frame.name.startswith(_("Check Spelling")):
-                debug.println(debug.LEVEL_FINEST,
-                      "gedit.onFocus - check spelling dialog.")
+                debug.println(self.debugLevel,
+                        "gedit.locusOfFocusChanged - check spelling dialog.")
 
                 self.readMisspeltWord(event, event.source.parent.parent)
                 # Fall-thru to process the event with the default handler.
@@ -261,7 +262,8 @@ class Script(default.Script):
         # For everything else, pass the focus event onto the parent class
         # to be handled in the default way.
 
-        default.Script.onFocus(self, event)
+        default.Script.locusOfFocusChanged(self, event,
+                                           oldLocusOfFocus, newLocusOfFocus)
 
     # This method tries to detect and handle the following cases:
     # 1) check spelling dialog.
@@ -276,7 +278,7 @@ class Script(default.Script):
         brailleGen = self.brailleGenerator
         speechGen = self.speechGenerator
 
-        debug.printObjectEvent(debug.LEVEL_FINEST,
+        debug.printObjectEvent(self.debugLevel,
                                event,
                                event.source.toString())
 
@@ -304,7 +306,7 @@ class Script(default.Script):
         if util.isDesiredFocusedItem(event.source, rolesList):
             frame = event.source.parent.parent.parent
             if frame.name.startswith(_("Check Spelling")):
-                debug.println(debug.LEVEL_FINEST,
+                debug.println(self.debugLevel,
                       "gedit.onNameChanged - check spelling dialog.")
 
                 self.readMisspeltWord(event, event.source.parent)
