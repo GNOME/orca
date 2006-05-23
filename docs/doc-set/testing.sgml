@@ -490,7 +490,7 @@ as "this is a changed file name".</para>
     </section>
 
     <section id="gaimtest"><title>GAIM Test Plan</title>
-      <section><title>Some Test</title>
+      <section><title>instant messenger test. </title>
         <para>&tgoal; Ability to configure IM, and connect to IRC chat server </para>
 		<para>&tprocedure; Launch 'Applications'->'Internet'->'Instant Messenger'.  navigate to the 'Accounts' button on the main window of GAIM .  navigate to the 'Add' button
 		in the Accounts dialog.  Select 'IRC' from the options in the 'Protocol:' combo box. Type "a11ytest" for the 'Screenname:' text field.  Navigate to the
@@ -500,9 +500,9 @@ as "this is a changed file name".</para>
 		choose 'Buddies'->'Signoff'.  Press Ctrl-Q> to quit. </para>
 		<para>&tresult; A new IRC account is setup in GAIM.  The IRC session connects.  The session
 signs off and the Instant Messenger is exited.</para>
-        <para>&tgoal; Determine if Orca does something.</para>
-        <para>&tprocedure; perform this action.</para>
-        <para>&tresult; this should happen.</para>
+        <para>&tgoal; Determine if Orca reads buddy list information.</para>
+        <para>&tprocedure; Open gaim, create ant AOL instant messenger account and add some buddies.  After the buddies are added arrow through the list of buddies</para>
+        <para>&tresult; When creating the account, orca should read each field navigated to as well as alert text.  When navigating the buddy list, orca should speak the buddy as well as the buddy's status.  </para>
       </section>
     </section>
 
