@@ -1,14 +1,18 @@
 2006-05-23  Rich Burridge <rich.burridge@sun.com>
 
-      * src/orca/scripts/gedit.py
+      * src/orca/scripts/gedit.py:
         - Changed all occurances of onFocus() to locusOfFocusChanged().
         - Adjustment so that a single line change will "fire off" all
           the debug messages in the gedit script.
         - Removed the call to orca.setLocusOfFocus() in readMisspeltWord().
 
-      * src/orca/scripts/Evolution.py
+      * src/orca/scripts/Evolution.py:
         - Changed all occurances of onFocus() to locusOfFocusChanged().
         - Removed various calls to orca.setLocusOfFocus()
+
+      * src/orca/util.py:
+        Adjusted the textLines() routine to look for FLOWS_TO relationships
+        and follow them to get further potential text objects to speak.
 
 2006-05-22  Rich Burridge <rich.burridge@sun.com>
 
