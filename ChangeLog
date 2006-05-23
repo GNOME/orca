@@ -1,3 +1,8 @@
+2006-05-23  Willie Walker <william.walker@sun.com>
+
+	* src/orca/speech.py: add GET support to HTTP server as a means
+	to check Orca version number.
+
 2006-05-23  Rich Burridge <rich.burridge@sun.com>
 
       * src/orca/scripts/gedit.py:

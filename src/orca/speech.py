@@ -27,6 +27,7 @@ import BaseHTTPServer
 
 import debug
 import orca
+import platform
 import settings
 
 from acss import ACSS
@@ -44,6 +45,13 @@ class _SpeakRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
       wget --post-data='speak:hello world' localhost:20433
 
     """
+
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header("Content-type", "text/html")
+        self.end_headers()
+        self.wfile.write("<html><body><p>Orca %s</p></body></html>" \
+                         % platform.version)
 
     def do_POST(self):
         contentLength = self.headers.getheader('content-length')
