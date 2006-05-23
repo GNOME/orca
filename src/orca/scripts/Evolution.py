@@ -48,7 +48,7 @@ class Script(default.Script):
 
         # Set the debug level for all the methods in this script.
         #
-        self.debugLevel = debug.LEVEL_FINEST
+        self.debugLevel = debug.LEVEL_OFF
 
         # The default for Evolution is to read all table cells (such as in
         # the mail message header summary list).
@@ -141,11 +141,13 @@ class Script(default.Script):
     # 9) Spell Checking Dialog
     # 10) Mail view: message area - attachments.
 
-    def onFocus(self, event):
-        """Called whenever an object gets focus.
+    def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
+        """Called when the visual object with focus changes.
 
         Arguments:
-        - event: the Event
+        - event: if not None, the Event that caused the change
+        - oldLocusOfFocus: Accessible that is the old locus of focus
+        - newLocusOfFocus: Accessible that is the new locus of focus
         """
 
         brailleGen = self.brailleGenerator
@@ -175,13 +177,13 @@ class Script(default.Script):
                      rolenames.ROLE_UNKNOWN]
         if util.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel,
-                      "evolution.onFocus - mail view: current message pane: " \
-                      + "individual lines of text.")
+                          "evolution.locusOfFocusChanged - mail view: " \
+                          + "current message pane: " \
+                          + "individual lines of text.")
 
             result = atspi.getTextLineAtCaret(event.source)
             braille.displayMessage(result[0])
             speech.speak(result[0])
-            orca.setLocusOfFocus(event, event.source, False)
             return
 
         # 2) Mail view: current message pane: "standard" mail header lines.
@@ -210,8 +212,9 @@ class Script(default.Script):
         if self.readTableCellRow \
             and (util.isDesiredFocusedItem(event.source, rolesList)):
             debug.println(self.debugLevel,
-                      "evolution.onFocus - mail view: current message pane: " \
-                      + "standard mail header lines.")
+                          "evolution.locusOfFocusChanged - mail view: " \
+                          + "current message pane: " \
+                          + "standard mail header lines.")
 
             obj = event.source.parent.parent
             parent = obj.parent
@@ -233,7 +236,6 @@ class Script(default.Script):
 
                 braille.displayRegions([regions, regions[0]])
                 speech.speakUtterances(utterances)
-                orca.setLocusOfFocus(event, event.source, False)
                 return
 
         # 3) Mail view: message header list
@@ -260,7 +262,8 @@ class Script(default.Script):
         if self.readTableCellRow \
             and (util.isDesiredFocusedItem(event.source, rolesList)):
             debug.println(self.debugLevel,
-                      "evolution.onFocus - mail view: message header list.")
+                          "evolution.locusOfFocusChanged - mail view: " \
+                          + "message header list.")
 
             parent = event.source.parent
             row = parent.table.getRowAtIndex(event.source.index)
@@ -378,7 +381,6 @@ class Script(default.Script):
             if brailleRegions != []:
                 braille.displayRegions([brailleRegions, cellWithFocus])
 
-            orca.setLocusOfFocus(event, event.source, False)
             settings.brailleVerbosityLevel = savedBrailleVerbosityLevel
             settings.speechVerbosityLevel = savedSpeechVerbosityLevel
             self.lastMessageColumn = column
@@ -408,8 +410,8 @@ class Script(default.Script):
                      rolenames.ROLE_CALENDAR_VIEW]
         if util.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel,
-                      "evolution.onFocus - calendar view: day view: " \
-                      + "tabbing to day with appts.")
+                          "evolution.locusOfFocusChanged - calendar view: " \
+                          + "day view: tabbing to day with appts.")
 
             parent = event.source.parent
             utterances = speechGen.getSpeech(parent, False)
@@ -475,8 +477,8 @@ class Script(default.Script):
                      rolenames.ROLE_CALENDAR_VIEW]
         if util.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel,
-                      "evolution.onFocus - calendar view: day view: " \
-                      + "moving with arrow keys.")
+                      "evolution.locusOfFocusChanged - calendar view: " \
+                      + "day view: moving with arrow keys.")
 
             brailleRegions = []
             index = event.source.index
@@ -552,7 +554,7 @@ class Script(default.Script):
                      rolenames.ROLE_SCROLL_PANE]
         if util.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel,
-                      "evolution.onFocus - preferences dialog: " \
+                      "evolution.locusOfFocusChanged - preferences dialog: " \
                       + "table cell in options list.")
 
             index = event.source.index
@@ -587,8 +589,8 @@ class Script(default.Script):
                      rolenames.ROLE_DIALOG]
         if util.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel,
-                      "evolution.onFocus - mail insert attachment dialog: " \
-                      + "unlabelled button.")
+                          "evolution.locusOfFocusChanged - mail insert " \
+                          + "attachment dialog: unlabelled button.")
 
             brailleRegions = []
             utterance = _("Directories button")
@@ -615,8 +617,8 @@ class Script(default.Script):
                      rolenames.ROLE_SCROLL_PANE]
         if util.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel,
-                      "evolution.onFocus - mail compose window: " \
-                      + "message area.")
+                          "evolution.locusOfFocusChanged - mail " \
+                          + "compose window: message area.")
 
             self.message_panel = event.source.parent.parent
 
@@ -639,11 +641,10 @@ class Script(default.Script):
                     rolenames.ROLE_DIALOG]
         if util.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel,
-                      "evolution.onFocus - spell checking dialog.")
+                      "evolution.locusOfFocusChanged - spell checking dialog.")
 
             # Braille the default action for this component.
             #
-            orca.setLocusOfFocus(event, event.source, False)
             self.updateBraille(orca.locusOfFocus)
 
             # Look for the "Suggestions for 'xxxxx' label in the spell
@@ -706,11 +707,13 @@ class Script(default.Script):
                     rolenames.ROLE_PANEL]
         if util.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel,
-                      "evolution.onFocus - mail message area attachments.")
+                          "evolution.locusOfFocusChanged - " \
+                          + "mail message area attachments.")
 
             # Speak/braille the default action for this component.
             #
-            default.Script.onFocus(self, event)
+            default.Script.locusOfFocusChanged(self, event,
+                                           oldLocusOfFocus, newLocusOfFocus)
 
             table = event.source.parent.parent.parent.parent.parent
             cell = table.child(table.childCount-1)
@@ -725,7 +728,8 @@ class Script(default.Script):
         # Note that this includes table cells if we only want to read the
         # current cell.
 
-        default.Script.onFocus(self, event)
+        default.Script.locusOfFocusChanged(self, event,
+                                           oldLocusOfFocus, newLocusOfFocus)
 
 # Values used to construct a time string for calendar appointments.
 #

@@ -6,6 +6,10 @@
           the debug messages in the gedit script.
         - Removed the call to orca.setLocusOfFocus() in readMisspeltWord().
 
+      * src/orca/scripts/Evolution.py
+        - Changed all occurances of onFocus() to locusOfFocusChanged().
+        - Removed various calls to orca.setLocusOfFocus()
+
 2006-05-22  Rich Burridge <rich.burridge@sun.com>
 
       * src/orca/gnome/speechfactory.py:

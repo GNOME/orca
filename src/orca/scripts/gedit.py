@@ -125,6 +125,10 @@ class Script(default.Script):
                  with the misspelt word.
         """
 
+        # Braille the default action for this component.
+        #
+        self.updateBraille(orca.locusOfFocus)
+
         # Look for the label containing the misspelled word.
         # There will be three labels in the top panel in the Check
         # Spelling dialog. Look for the one that isn't a label to
