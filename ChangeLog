@@ -1,3 +1,15 @@
+2006-05-24  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py
+          Added in a specific sayAll() method for Evolution. We have to
+          do this because Evolution does now implement the FLOWS_TO 
+          relationship and all the text are in an HTML panel which 
+          contains multiple panels, each containing a single text object.
+
+          Needed to subclass the setupInputEventHandlers() method so that
+          we could add in an input event handler that pointed at our sayAll()
+          method.
+
 2006-05-23  Willie Walker <william.walker@sun.com>
 
 	* src/orca/atspi.py: pass "orbit-io-thread" to initialize the ORB

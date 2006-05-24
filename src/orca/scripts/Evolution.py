@@ -20,6 +20,7 @@
 import orca.debug as debug
 import orca.default as default
 import orca.atspi as atspi
+import orca.input_event as input_event
 import orca.rolenames as rolenames
 import orca.orca as orca
 import orca.braille as braille
@@ -48,7 +49,7 @@ class Script(default.Script):
 
         # Set the debug level for all the methods in this script.
         #
-        self.debugLevel = debug.LEVEL_OFF
+        self.debugLevel = debug.LEVEL_FINEST
 
         # The default for Evolution is to read all table cells (such as in
         # the mail message header summary list).
@@ -81,6 +82,18 @@ class Script(default.Script):
                                _("cale"),
                                _("CalendarEvent"),
                                _("calendar event"))
+
+    def setupInputEventHandlers(self):
+        """Defines InputEventHandler fields for this script that can be
+        called by the key and braille bindings. In this particular case,
+        we just want to be able to define our own sayAll() method.
+        """
+
+        default.Script.setupInputEventHandlers(self)
+
+        self.sayAllHandler = input_event.InputEventHandler(
+            Script.sayAll,
+            _("Speaks entire document."))
 
     def readPageTab(self, tab):
         """Speak/Braille the given page tab. The speech verbosity is set
@@ -128,6 +141,40 @@ class Script(default.Script):
         mins = minutes[totalMins % 60]
 
         return hrs + ' ' + mins + ' ' + suffix
+
+    def sayAll(self, inputEvent):
+        """Speak all the text associated with the text object that has
+           focus. We have to define our own method here because Evolution
+           does now implement the FLOWS_TO relationship and all the text
+           are in an HTML panel which contains multiple panels, each
+           containing a single text object.
+
+        Arguments:
+        - inputEvent: if not None, the input event that caused this action.
+        """
+
+        debug.println(self.debugLevel, "evolution.sayAll.")
+        if orca.locusOfFocus and orca.locusOfFocus.text:
+
+            # Get the HTML panel containing all the other panels (each
+            # of which contains a text object). Starting at the current
+            # one, get a handle to each text object in turn, and speak it.
+            #
+            panel = orca.locusOfFocus.parent
+            htmlPanel = orca.locusOfFocus.parent.parent
+            startIndex = panel.index
+            for i in range(startIndex, htmlPanel.childCount):
+                accPanel = htmlPanel.accessible.getChildAtIndex(i)
+                panel = atspi.Accessible.makeAccessible(accPanel)
+                accTextObj = panel.accessible.getChildAtIndex(0)
+                textObj = atspi.Accessible.makeAccessible(accTextObj)
+
+                speech.sayAll(util.textLines(textObj),
+                              self.__sayAllProgressCallback)
+        else:
+            default.Script.sayAll(self, inputEvent)
+
+        return True
 
     # This method tries to detect and handle the following cases:
     # 1) Mail view: current message pane: individual lines of text.
