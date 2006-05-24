@@ -1,5 +1,15 @@
 2006-05-23  Willie Walker <william.walker@sun.com>
 
+	* src/orca/atspi.py: pass "orbit-io-thread" to initialize the ORB
+	in threaded mode.  This should hopefully help address bug 319652:
+
+	http://bugzilla.gnome.org/show_bug.cgi?id=319652
+
+	See also:
+
+	http://bugzilla.gnome.org/show_bug.cgi?id=342614 
+	http://mail.gnome.org/archives/orbit-list/2005-December/msg00001.html
+
 	* src/orca/speech.py: add GET support to HTTP server as a means
 	to check Orca version number.
 

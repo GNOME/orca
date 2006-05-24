@@ -25,7 +25,18 @@ import bonobo
 import ORBit
 
 ORBit.load_typelib("Accessibility")
-ORBit.CORBA.ORB_init()
+
+# We will pass "orbit-io-thread" to initialize the ORB in threaded mode.
+# This should hopefully help address bug 319652:
+#
+#   http://bugzilla.gnome.org/show_bug.cgi?id=319652
+#
+# See also:
+#
+#   http://bugzilla.gnome.org/show_bug.cgi?id=342614
+#   http://mail.gnome.org/archives/orbit-list/2005-December/msg00001.html
+#
+ORBit.CORBA.ORB_init(orb_id="orbit-io-thread")
 
 import Accessibility
 import Accessibility__POA
