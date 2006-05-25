@@ -21,6 +21,9 @@
 
 import time
 
+import gobject
+gobject.threads_init()
+
 import bonobo
 import ORBit
 
