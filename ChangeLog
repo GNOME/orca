@@ -1,3 +1,10 @@
+2006-05-25  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/StarOffice.py:
+          Added in BrailleGenerator:_getBrailleRegionsForTableCell and
+          SpeechGenerator:_getSpeechForTableCell in order to better
+          braille/speak the contents of a spread sheet table cell.
+
 2006-05-24  Willie Walker <william.walker@sun.com>
 
 	* src/orca/atspi.py: call gobject.threads_init() in an attempt to

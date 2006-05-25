@@ -23,12 +23,108 @@ import orca.default as default
 import orca.rolenames as rolenames
 import orca.orca as orca
 import orca.braille as braille
+import orca.braillegenerator as braillegenerator
 import orca.speech as speech
+import orca.speechgenerator as speechgenerator
 import orca.settings as settings
 import orca.keybindings as keybindings
 import orca.util as util
 
 from orca.orca_i18n import _ # for gettext support
+
+class BrailleGenerator(braillegenerator.BrailleGenerator):
+    """Overrides _getBrailleRegionsForTableCell so that, when we are in 
+    a spread sheet, we can braille the location of the table cell as well 
+    as the contents.
+    """
+
+    def _getBrailleRegionsForTableCell(self, obj):
+        """Get the braille for a table cell. If this isn't inside a
+        spread sheet, just return the regions returned by the default
+        table cell braille handler.
+
+        Arguments:
+        - obj: the table cell
+
+        Returns a list where the first element is a list of Regions to display
+        and the second element is the Region which should get focus.
+        """
+
+        rolesList = [rolenames.ROLE_TABLE_CELL, \
+                     rolenames.ROLE_TABLE, \
+                     rolenames.ROLE_UNKNOWN, \
+                     rolenames.ROLE_SCROLL_PANE, \
+                     rolenames.ROLE_PANEL, \
+                     rolenames.ROLE_ROOT_PANE, \
+                     rolenames.ROLE_FRAME, \
+                     rolenames.ROLE_APPLICATION]
+        if util.isDesiredFocusedItem(obj, rolesList):
+            text = util.getDisplayedText(obj)
+            regions = []
+            componentRegion = braille.Component(obj, text)
+            regions.append(componentRegion)
+
+            # If the spread sheet table cell has something in it, then we
+            # want to append the name of the cell (which will be its location).
+            # Note that if the cell was empty, then util.getDisplayedText will
+            # have already done this for us.
+            #
+            if obj.text:
+                objectText = obj.text.getText(0, -1)
+                if objectText and len(objectText) != 0:
+                    regions.append(braille.Region(" " + obj.name))
+
+            return [regions, componentRegion]
+
+        else:
+            brailleGen = braillegenerator.BrailleGenerator
+            regions = brailleGen._getBrailleRegionsForTableCell(self, obj)
+
+            return regions
+
+class SpeechGenerator(speechgenerator.SpeechGenerator):
+    """Overrides _getSpeechForTableCell so that, when we are in a spread
+    sheet, we can speak the location of the table cell as well as the 
+    contents.
+    """
+
+    def _getSpeechForTableCell(self, obj, already_focused):
+        """Get the speech for a table cell. If this isn't inside a
+        spread sheet, just return the utterances returned by the default
+        table cell speech handler.
+
+        Arguments:
+        - obj: the table cell
+        - already_focused: False if object just received focus
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        speechGen = speechgenerator.SpeechGenerator
+        utterances = speechGen._getSpeechForTableCell(self, obj, 
+                                                      already_focused)
+
+        rolesList = [rolenames.ROLE_TABLE_CELL, \
+                     rolenames.ROLE_TABLE, \
+                     rolenames.ROLE_UNKNOWN, \
+                     rolenames.ROLE_SCROLL_PANE, \
+                     rolenames.ROLE_PANEL, \
+                     rolenames.ROLE_ROOT_PANE, \
+                     rolenames.ROLE_FRAME, \
+                     rolenames.ROLE_APPLICATION]
+        if util.isDesiredFocusedItem(obj, rolesList):
+
+            # If the spread sheet table cell has something in it, then we
+            # want to append the name of the cell (which will be its location).
+            # Note that if the cell was empty, then util.getDisplayedText will
+            # have already done this for us.
+            #
+            if obj.text:
+                objectText = obj.text.getText(0, -1)
+                if objectText and len(objectText) != 0:
+                    utterances.append(" " + obj.name)
+
+        return utterances
 
 ########################################################################
 #                                                                      #
@@ -59,6 +155,18 @@ class Script(default.Script):
         self.lastBadWord = ''
         self.lastStartOff = -1
         self.lastEndOff = -1
+
+    def getBrailleGenerator(self):
+        """Returns the braille generator for this script.
+        """
+
+        return BrailleGenerator()
+
+    def getSpeechGenerator(self):
+        """Returns the speech generator for this script.
+        """
+
+        return SpeechGenerator()
 
     def readMisspeltWord(self, event, pane):
         """Speak/braille the current misspelt word plus its context.
