@@ -3,11 +3,11 @@
 # Clytie Siddall <clytie@riverland.net.au>, 2006.
 # 
 msgid ""
-msgstr ""
-"Project-Id-Version: orca HEAD\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-15 09:12-0400\n"
-"PO-Revision-Date: 2006-04-10 23:02+0930\n"
+""
+msgstr "Project-Id-Version: orca HEAD\n"
+"Report-Msgid-Bugs-To: orca-list@gnome.org\n"
+"POT-Creation-Date: 2006-05-26 04:26+0200\n"
+"PO-Revision-Date: 2006-05-26 20:50+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -16,2071 +16,2069 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0\n"
 "X-Generator: LocFactoryEditor 1.6b36\n"
 
-#: src/orca/braillegenerator.py:187 src/orca/speechgenerator.py:185
+#: ../src/orca/braillegenerator.py:187
+#: ../src/orca/speechgenerator.py:185
 msgid "grayed"
 msgstr "xám"
 
-#: src/orca/braillegenerator.py:1011 src/orca/speechgenerator.py:1149
+#: ../src/orca/braillegenerator.py:1022
+#: ../src/orca/speechgenerator.py:1149
 msgid "expanded"
 msgstr "đã bung"
 
-#: src/orca/braillegenerator.py:1013 src/orca/speechgenerator.py:1151
+#: ../src/orca/braillegenerator.py:1024
+#: ../src/orca/speechgenerator.py:1151
 msgid "collapsed"
 msgstr "đã thu gọn"
 
-#: src/orca/braillegenerator.py:1017
+#: ../src/orca/braillegenerator.py:1028
 #, python-format
 msgid "TREE LEVEL %d"
 msgstr "CẤP CÂY %d"
 
-#: src/orca/chnames.py:27
+#: ../src/orca/chnames.py:27
 msgid "space"
 msgstr "dấu cách"
 
-#: src/orca/chnames.py:28
+#: ../src/orca/chnames.py:28
 msgid "bang"
 msgstr "dấu cảm"
 
-#: src/orca/chnames.py:29
+#: ../src/orca/chnames.py:29
 msgid "quote"
 msgstr "dấu trích dẫn"
 
-#: src/orca/chnames.py:30
+#: ../src/orca/chnames.py:30
 msgid "number"
 msgstr "số"
 
-#: src/orca/chnames.py:31
+#: ../src/orca/chnames.py:31
 msgid "dollar"
 msgstr "dấu đô la"
 
-#: src/orca/chnames.py:32 src/orca/speechgenerator.py:841
+#: ../src/orca/chnames.py:32
+#: ../src/orca/speechgenerator.py:841
 msgid "percent"
 msgstr "dấu phần trăm"
 
-#: src/orca/chnames.py:33
+#: ../src/orca/chnames.py:33
 msgid "and"
 msgstr "dấu và"
 
-#: src/orca/chnames.py:34
+#: ../src/orca/chnames.py:34
 msgid "tick"
 msgstr "dấu kiểm"
 
-#: src/orca/chnames.py:35
+#: ../src/orca/chnames.py:35
 msgid "left paren"
 msgstr "dấu ngoặc đơn trái"
 
-#: src/orca/chnames.py:36
+#: ../src/orca/chnames.py:36
 msgid "right paren"
 msgstr "dấu ngoặc đơn phải"
 
-#: src/orca/chnames.py:37
+#: ../src/orca/chnames.py:37
 msgid "star"
 msgstr "dấu sao"
 
-#: src/orca/chnames.py:38
+#: ../src/orca/chnames.py:38
 msgid "plus"
 msgstr "dấu cộng"
 
-#: src/orca/chnames.py:39
+#: ../src/orca/chnames.py:39
 msgid "comma"
 msgstr "dấu phẩy"
 
-#: src/orca/chnames.py:40
+#: ../src/orca/chnames.py:40
 msgid "dash"
 msgstr "dấu gạch"
 
-#: src/orca/chnames.py:41
+#: ../src/orca/chnames.py:41
 msgid "dot"
 msgstr "dấu chấm"
 
-#: src/orca/chnames.py:42
+#: ../src/orca/chnames.py:42
 msgid "slash"
 msgstr "dấu xuyệc"
 
-#: src/orca/chnames.py:43
+#: ../src/orca/chnames.py:43
 msgid "question"
 msgstr "dấu hỏi"
 
-#: src/orca/chnames.py:44
+#: ../src/orca/chnames.py:44
 msgid "colon"
 msgstr "dấu hai chấm"
 
-#: src/orca/chnames.py:45
+#: ../src/orca/chnames.py:45
 msgid "semi"
 msgstr "dấu chấm phẩy"
 
-#: src/orca/chnames.py:46
+#: ../src/orca/chnames.py:46
 msgid "less than"
 msgstr "dấu nhỏ hơn"
 
-#: src/orca/chnames.py:47
+#: ../src/orca/chnames.py:47
 msgid "greater than"
 msgstr "dấu lớn hơn"
 
-#: src/orca/chnames.py:48
+#: ../src/orca/chnames.py:48
 msgid "left bracket"
 msgstr "dấu ngoặc trái"
 
-#: src/orca/chnames.py:49
+#: ../src/orca/chnames.py:49
 msgid "right bracket"
 msgstr "dấu ngoặc phải"
 
-#: src/orca/chnames.py:50
+#: ../src/orca/chnames.py:50
 msgid "left brace"
 msgstr "dấu ngoặc móc trái"
 
-#: src/orca/chnames.py:51
+#: ../src/orca/chnames.py:51
 msgid "right brace"
 msgstr "dấu ngoặc móc phải"
 
-#: src/orca/chnames.py:52
+#: ../src/orca/chnames.py:52
 msgid "back"
 msgstr "lùi"
 
-#: src/orca/chnames.py:53
+#: ../src/orca/chnames.py:53
 msgid "bar"
 msgstr "dấu ống dấn"
 
-#: src/orca/chnames.py:54
+#: ../src/orca/chnames.py:54
 msgid "newline"
 msgstr "dòng mới"
 
-#: src/orca/chnames.py:55
+#: ../src/orca/chnames.py:55
 msgid "tab"
 msgstr "tab"
 
-#: src/orca/default.py:73
+#: ../src/orca/default.py:73
 msgid "Performs left click on current flat review item."
 msgstr "Thực hiện nhắp trái trên mục xem lại phẳng hiện có."
 
-#: src/orca/default.py:77
+#: ../src/orca/default.py:77
 msgid "Performs right click on current flat review item."
 msgstr "Thực hiện nhắp trái trên mục xem lại phẳng hiện có."
 
-#: src/orca/default.py:81
+#: ../src/orca/default.py:81
+#: ../src/orca/scripts/Evolution.py:96
 msgid "Speaks entire document."
 msgstr "Nói toàn tài liệu."
 
-#: src/orca/default.py:85
+#: ../src/orca/default.py:85
 msgid "Performs the where am I operation."
 msgstr "Thực hiện thao tác Tôi ở đâu?"
 
-#: src/orca/default.py:89
+#: ../src/orca/default.py:89
 msgid "Paints and prints the visible zones in the active window."
 msgstr "Sơn và in ra các vùng hiển thị trong cửa sổ hoạt động."
 
-#: src/orca/default.py:93
+#: ../src/orca/default.py:93
 msgid "Enters and exits flat review mode."
 msgstr "Vào và rời chế độ xem lại phẳng."
 
-#: src/orca/default.py:97
+#: ../src/orca/default.py:97
 msgid "Moves flat review to the beginning of the previous line."
 msgstr "Chuyển điểm xem lại phẳng về đầu dòng trước."
 
-#: src/orca/default.py:101
+#: ../src/orca/default.py:101
 msgid "Moves flat review to the home position."
 msgstr "Chuyển điểm xem lại phẳng về."
 
-#: src/orca/default.py:105
+#: ../src/orca/default.py:105
 msgid "Speaks the current flat review line."
 msgstr "Nói dòng xem lại phẳng hiện có."
 
-#: src/orca/default.py:109
+#: ../src/orca/default.py:109
 msgid "Moves flat review to the beginning of the next line."
 msgstr "Chuyển điểm xem lại phẳng tới đầu dòng kế tiếp."
 
-#: src/orca/default.py:113
+#: ../src/orca/default.py:113
 msgid "Moves flat review to the end position."
 msgstr "Chuyển điểm xem lại phẳng tới vị trí cuối."
 
-#: src/orca/default.py:117
+#: ../src/orca/default.py:117
 msgid "Moves flat review to the previous item or word."
 msgstr "Chuyển điểm xem lại phẳng về mục hay từ trước đó."
 
-#: src/orca/default.py:121
+#: ../src/orca/default.py:121
 msgid "Moves flat review to the word above the current word."
 msgstr "Chuyển điểm xem lại phẳng lên từ trên từ hiện có."
 
-#: src/orca/default.py:125
+#: ../src/orca/default.py:125
 msgid "Speaks the current flat review item or word."
 msgstr "Nói mục hay từ xem lại phẳng hiện có."
 
-#: src/orca/default.py:129
+#: ../src/orca/default.py:129
 msgid "Speaks the current flat review object."
 msgstr "Nói đối tượng xem lại phẳng hiện có."
 
-#: src/orca/default.py:133
+#: ../src/orca/default.py:133
 msgid "Moves flat review to the next item or word."
 msgstr "Chuyển điểm xem lại phẳng tới mục hay từ kế tiếp."
 
-#: src/orca/default.py:137
+#: ../src/orca/default.py:137
 msgid "Moves flat review to the word below the current word."
 msgstr "Chuyển điểm xem lại phẳng xuống từ dưới từ hiện có."
 
-#: src/orca/default.py:141
+#: ../src/orca/default.py:141
 msgid "Moves flat review to the previous character."
 msgstr "Chuyển điểm xem lại phẳng về ký tự trước đó."
 
-#: src/orca/default.py:145
+#: ../src/orca/default.py:145
 msgid "Moves flat review to the end of the line."
 msgstr "Chuyển điểm xem lại phẳng tới cuối dòng."
 
-#: src/orca/default.py:149
+#: ../src/orca/default.py:149
 msgid "Speaks the current flat review character."
 msgstr "Nói ký tự xem lại phẳng hiện có."
 
-#: src/orca/default.py:153
+#: ../src/orca/default.py:153
 msgid "Moves flat review to the next character."
 msgstr "Chuyển điểm xem lại phẳng tới ký tự kế tiếp."
 
-#: src/orca/default.py:157
+#: ../src/orca/default.py:157
 msgid "Toggles whether to read just the current table cell or the whole row."
 msgstr "Bật/tắt có nên đọc chỉ ô bảng hiện thời, hoặc toàn bộ hàng."
 
-#: src/orca/default.py:161
+#: ../src/orca/default.py:161
 msgid "Reads the attributes associated with the current text character."
 msgstr "Đọc các thuộc tính liên quan đến ký tự chữ hiện có."
 
-#: src/orca/default.py:165
+#: ../src/orca/default.py:165
+msgid "Reports information on current script."
+msgstr "Thông báo thông tin về tập lệnh hiện có."
+
+#: ../src/orca/default.py:169
 msgid "Pans the braille display to the left."
 msgstr "Kéo ngang vùng hiển thị Bray qua trái."
 
-#: src/orca/default.py:169
+#: ../src/orca/default.py:173
 msgid "Pans the braille display to the right."
 msgstr "Kéo ngang vùng hiển thị Bray qua phải."
 
-#: src/orca/default.py:173
+#: ../src/orca/default.py:177
 msgid "Moves flat review to the bottom left."
 msgstr "Chuyển điểm xem lại phẳng qua trái, góc dưới."
 
-#: src/orca/default.py:177
+#: ../src/orca/default.py:181
 msgid "Returns to object with keyboard focus."
 msgstr "Trở về đối tượng có tiêu điểm bàn phím."
 
-#: src/orca/default.py:795 src/orca/default.py:1014
+#: ../src/orca/default.py:804
+#: ../src/orca/default.py:1023
 #, python-format
 msgid "tree level %d"
 msgstr "cấp cây %d"
 
-#: src/orca/default.py:799 src/orca/default.py:1027 src/orca/default.py:1105
-#: src/orca/default.py:1170
+#: ../src/orca/default.py:808
+#: ../src/orca/default.py:1036
+#: ../src/orca/default.py:1114
+#: ../src/orca/default.py:1179
 msgid "No focus"
 msgstr "Không có tiêu điểm"
 
-#: src/orca/default.py:2130 src/orca/default.py:2224 src/orca/default.py:2229
-#: src/orca/default.py:2299 src/orca/default.py:2304
+#: ../src/orca/default.py:2149
+#: ../src/orca/default.py:2243
+#: ../src/orca/default.py:2248
+#: ../src/orca/default.py:2318
+#: ../src/orca/default.py:2323
 msgid "blank"
 msgstr "trắng"
 
-#: src/orca/default.py:2132 src/orca/default.py:2231
+#: ../src/orca/default.py:2151
+#: ../src/orca/default.py:2250
 msgid "white space"
 msgstr "khoảng trắng"
 
-#: src/orca/espeechfactory.py:93
+#: ../src/orca/espeechfactory.py:93
 msgid "Emacspeak Speech Services"
 msgstr "Dịch vụ Nói tiếng Emacspeak"
 
-#: src/orca/focus_tracking_presenter.py:537
+#: ../src/orca/focus_tracking_presenter.py:537
 msgid "Switching to focus tracking mode."
 msgstr "Đang chuyển đổi sang chế độ theo dõi tiêu điểm."
 
-#: src/orca/gnomespeechfactory.py:145
+#: ../src/orca/gnomespeechfactory.py:145
 msgid "GNOME Speech Services"
 msgstr "Dịch vụ Nói tiếng Gnome"
 
-#. Replace ellipses (both manual and unicode) with "dot dot dot"
+#.Replace ellipses (both manual and unicode) with "dot dot dot"
 #.
-#: src/orca/gnomespeechfactory.py:535 src/orca/gnomespeechfactory.py:536
+#: ../src/orca/gnomespeechfactory.py:536
+#: ../src/orca/gnomespeechfactory.py:537
 msgid " dot dot dot"
 msgstr " chấm chấm chấm"
 
-#: src/orca/gnomespeechfactory.py:623
+#: ../src/orca/gnomespeechfactory.py:627
 msgid "faster."
 msgstr "nhanh hơn."
 
-#: src/orca/gnomespeechfactory.py:653
+#: ../src/orca/gnomespeechfactory.py:657
 msgid "slower."
 msgstr "chậm hơn."
 
-#: src/orca/hierarchical_presenter.py:430
+#: ../src/orca/hierarchical_presenter.py:430
 msgid "Switching to hierarchical navigation mode."
 msgstr "Đang chuyển đổi sang chế độ di chuyển theo hệ đẳng cấp."
 
-#: src/orca/keynames.py:27 src/orca/keynames.py:30
+#: ../src/orca/keynames.py:27
+#: ../src/orca/keynames.py:30
 msgid "left shift"
 msgstr "Shift trái"
 
-#: src/orca/keynames.py:28
-#, fuzzy
+#: ../src/orca/keynames.py:28
 msgid "left alt"
-msgstr "Tab trái"
+msgstr "alt trái"
 
-#: src/orca/keynames.py:29
-#, fuzzy
+#: ../src/orca/keynames.py:29
 msgid "left control"
-msgstr "Tab trái"
+msgstr "ctrl trái"
 
-#: src/orca/keynames.py:31
-#, fuzzy
+#: ../src/orca/keynames.py:31
 msgid "right alt"
-msgstr "dấu ngoặc phải"
+msgstr "alt phải"
 
-#: src/orca/keynames.py:32
-#, fuzzy
+#: ../src/orca/keynames.py:32
 msgid "right control"
-msgstr "dấu ngoặc phải"
+msgstr "ctrl phải"
 
-#: src/orca/keynames.py:33
+#: ../src/orca/keynames.py:33
 msgid "left tab"
 msgstr "Tab trái"
 
-#: src/orca/keynames.py:34
+#: ../src/orca/keynames.py:34
 msgid "F 11"
 msgstr "F 11"
 
-#: src/orca/keynames.py:35
+#: ../src/orca/keynames.py:35
 msgid "F 12"
 msgstr "F 12"
 
-#: src/orca/orca-setup.glade:8
-msgid "Orca Preferences"
-msgstr ""
-
-#: src/orca/orca-setup.glade:124
-msgid "_Enable speech"
-msgstr ""
-
-#: src/orca/orca-setup.glade:161
-msgid "Speech _system:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:213
-msgid "Speech synthesi_zer:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:244
-msgid "_Voice settings:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:275
-msgid "_Rate:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:332
-msgid "Pi_tch:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:423
-msgid "_Person:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:492
-msgid "Vo_lume:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:542
-msgid ""
-"Default\n"
-"Uppercase\n"
-"Hyperlink"
-msgstr ""
-
-#: src/orca/orca-setup.glade:609
-msgid "_None"
-msgstr ""
-
-#: src/orca/orca-setup.glade:629
-msgid "So_me"
-msgstr ""
-
-#: src/orca/orca-setup.glade:650
-msgid "_All"
-msgstr ""
-
-#: src/orca/orca-setup.glade:674
-msgid "<b>Punctuation Level</b>"
-msgstr ""
-
-#: src/orca/orca-setup.glade:748 src/orca/orca-setup.glade:986
-msgid "Brie_f"
-msgstr ""
-
-#: src/orca/orca-setup.glade:768 src/orca/orca-setup.glade:1006
-msgid "Ver_bose"
-msgstr ""
-
-#: src/orca/orca-setup.glade:792 src/orca/orca-setup.glade:1030
-msgid "<b>Verbosity</b>"
-msgstr ""
-
-#: src/orca/orca-setup.glade:857
-msgid "Speech"
-msgstr ""
-
-#: src/orca/orca-setup.glade:888
-#, fuzzy
-msgid "Enable Braille _support"
-msgstr "Dùng Braille Monitor (màn hình chữ Bray)? Gõ y (có) hay n (không): "
-
-#: src/orca/orca-setup.glade:908
-#, fuzzy
-msgid "Enable Braille _monitor"
-msgstr "Dùng Braille Monitor (màn hình chữ Bray)? Gõ y (có) hay n (không): "
-
-#: src/orca/orca-setup.glade:928
-msgid "_Abbreviated role names"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1071
-#, fuzzy
-msgid "Braille"
-msgstr "Bộ tô đầy"
-
-#: src/orca/orca-setup.glade:1102
-#, fuzzy
-msgid "Enable _key echo"
-msgstr "Dùng Braille Monitor (màn hình chữ Bray)? Gõ y (có) hay n (không): "
-
-#: src/orca/orca-setup.glade:1134
-msgid "Enable _alphanumeric and punctuation keys"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1168
-#, fuzzy
-msgid "Enable _modifier keys"
-msgstr "Dùng Braille Monitor (màn hình chữ Bray)? Gõ y (có) hay n (không): "
-
-#: src/orca/orca-setup.glade:1202
-#, fuzzy
-msgid "Enable lockin_g keys"
-msgstr "Dùng Braille Monitor (màn hình chữ Bray)? Gõ y (có) hay n (không): "
-
-#: src/orca/orca-setup.glade:1236
-#, fuzzy
-msgid "Enable _function keys"
-msgstr "Dùng Braille Monitor (màn hình chữ Bray)? Gõ y (có) hay n (không): "
-
-#: src/orca/orca-setup.glade:1270
-#, fuzzy
-msgid "Enable ac_tion keys"
-msgstr "Dùng Braille Monitor (màn hình chữ Bray)? Gõ y (có) hay n (không): "
-
-#: src/orca/orca-setup.glade:1292
-#, fuzzy
-msgid "Enable echo by _word"
-msgstr "Dùng Braille Monitor (màn hình chữ Bray)? Gõ y (có) hay n (không): "
-
-#: src/orca/orca-setup.glade:1317
-#, fuzzy
-msgid "Key Echo"
-msgstr "bộ chọn phông chữ"
-
-#: src/orca/orca-setup.glade:1359
-msgid "Enable _magnifier"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1443
-msgid "Enable c_ursor"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1478
-msgid "Custom siz_e"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1510
-msgid "Color:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1557
-msgid "_Width:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1586 src/orca/orca-setup.glade:1860
-#, fuzzy
-msgid "pixels"
-msgstr "dấu cộng"
-
-#: src/orca/orca-setup.glade:1650
-msgid "<b>Cursor Settings</b>"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1737
-msgid "Enable cross-hair cli_p"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1773
-msgid "Enable cross-h_air"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1814
-msgid "Si_ze:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1901
+#: ../src/orca/orca-setup.glade.h:1
 msgid "<b>Cross-hair Settings</b>"
-msgstr ""
+msgstr "<b>Thiết lập chữ thập</b>"
 
-#: src/orca/orca-setup.glade:1987
-msgid "Scale _factor:"
-msgstr ""
+#: ../src/orca/orca-setup.glade.h:2
+msgid "<b>Cursor Settings</b>"
+msgstr "<b>Thiết lập con chạy</b>"
 
-#: src/orca/orca-setup.glade:2039
-msgid "In_vert colors"
-msgstr ""
+#: ../src/orca/orca-setup.glade.h:3
+msgid "<b>Punctuation Level</b>"
+msgstr "<b>Cấp chấm câu</b>"
 
-#: src/orca/orca-setup.glade:2067
-msgid "<b>Zoomer Settings</b>"
-msgstr ""
+#: ../src/orca/orca-setup.glade.h:4
+msgid "<b>Verbosity</b>"
+msgstr "<b>Độ chi tiết</b>"
 
-#: src/orca/orca-setup.glade:2160
-msgid "_Top:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:2227
-msgid "_Bottom:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:2294
-msgid "_Left:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:2360
-msgid "_Right:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:2427
+#: ../src/orca/orca-setup.glade.h:5
 msgid "<b>Zoomer Position</b>"
-msgstr ""
+msgstr "<b>Vị trí bộ thu phóng</b>"
 
-#: src/orca/orca-setup.glade:2474
-msgid "_Smoothing:"
-msgstr ""
+#: ../src/orca/orca-setup.glade.h:6
+msgid "<b>Zoomer Settings</b>"
+msgstr "<b>Thiết lập bộ thu phóng</b>"
 
-#: src/orca/orca-setup.glade:2507
-#, fuzzy
-msgid "Mouse trac_king mode:"
-msgstr "Đang chuyển đổi sang chế độ theo dõi tiêu điểm."
+#: ../src/orca/orca-setup.glade.h:7
+msgid "Braille"
+msgstr "Chữ Bray"
 
-#: src/orca/orca-setup.glade:2550
-#, fuzzy
-msgid ""
-"None\n"
-"Bilinear"
-msgstr "dòng mới"
+#: ../src/orca/orca-setup.glade.h:8
+msgid "Brie_f"
+msgstr "_Ngắn"
 
-#: src/orca/orca-setup.glade:2574
+#: ../src/orca/orca-setup.glade.h:9
 msgid ""
 "Centered\n"
 "None\n"
 "Proportional\n"
 "Push"
-msgstr ""
+msgstr "Giữa lại\n"
+"Không có\n"
+"Co giãn\n"
+"Đẩy"
 
-#: src/orca/orca-setup.glade:2611
+#: ../src/orca/orca-setup.glade.h:13
+msgid "Color:"
+msgstr "Màu :"
+
+#: ../src/orca/orca-setup.glade.h:14
+msgid "Custom siz_e"
+msgstr "Cỡ ri_êng"
+
+#: ../src/orca/orca-setup.glade.h:15
+msgid ""
+"Default\n"
+"Uppercase\n"
+"Hyperlink"
+msgstr "Mặc định\n"
+"Chữ hoa\n"
+"Siêu liên kết"
+
+#: ../src/orca/orca-setup.glade.h:18
+msgid "Enable Braille _monitor"
+msgstr "Dùng bộ t_rình bày chữ Bray"
+
+#: ../src/orca/orca-setup.glade.h:19
+msgid "Enable Braille _support"
+msgstr "Bật khả năng _hỗ trợ chữ Bray"
+
+#: ../src/orca/orca-setup.glade.h:20
+msgid "Enable _alphanumeric and punctuation keys"
+msgstr "Bật phím _abc và chấm câu"
+
+#: ../src/orca/orca-setup.glade.h:21
+msgid "Enable _function keys"
+msgstr "Bật phím chức _năng"
+
+#: ../src/orca/orca-setup.glade.h:22
+msgid "Enable _key echo"
+msgstr "Bật _phản hồi phím"
+
+#: ../src/orca/orca-setup.glade.h:23
+msgid "Enable _magnifier"
+msgstr "Bật _kính lúp"
+
+#: ../src/orca/orca-setup.glade.h:24
+msgid "Enable _modifier keys"
+msgstr "Bật phím _sửa đổi"
+
+#: ../src/orca/orca-setup.glade.h:25
+msgid "Enable ac_tion keys"
+msgstr "Bậ_t phím hành động"
+
+#: ../src/orca/orca-setup.glade.h:26
+msgid "Enable c_ursor"
+msgstr "Bật con chạ_y"
+
+#: ../src/orca/orca-setup.glade.h:27
+msgid "Enable cross-h_air"
+msgstr "Bật chữ th_ập"
+
+#: ../src/orca/orca-setup.glade.h:28
+msgid "Enable cross-hair cli_p"
+msgstr "Bật trích chữ thậ_p"
+
+#: ../src/orca/orca-setup.glade.h:29
+msgid "Enable echo by _word"
+msgstr "Bật phản hồi th_eo từ"
+
+#: ../src/orca/orca-setup.glade.h:30
+msgid "Enable lockin_g keys"
+msgstr "Bật _khoá phím"
+
+#: ../src/orca/orca-setup.glade.h:31
+msgid "In_vert colors"
+msgstr "_Đảo màu"
+
+#: ../src/orca/orca-setup.glade.h:32
+msgid "Key Echo"
+msgstr "Phản hồi phím"
+
+#: ../src/orca/orca-setup.glade.h:33
 msgid "Magnifier"
-msgstr ""
+msgstr "Kính lúp"
 
-#: src/orca/orca-setup.glade:2650
-#, fuzzy
+#: ../src/orca/orca-setup.glade.h:34
+msgid "Mouse trac_king mode:"
+msgstr "Chế độ theo _dõi chuột:"
+
+#: ../src/orca/orca-setup.glade.h:35
+msgid ""
+"None\n"
+"Bilinear"
+msgstr "Không có\n"
+"Tuyến kép"
+
+#: ../src/orca/orca-setup.glade.h:37
+msgid "Orca Preferences"
+msgstr "Tùy thích Orca"
+
+#: ../src/orca/orca-setup.glade.h:38
+msgid "Pi_tch:"
+msgstr "_Cao :"
+
+#: ../src/orca/orca-setup.glade.h:39
 msgid "Question"
-msgstr "dấu hỏi"
+msgstr "Hỏi"
 
-#: src/orca/orca-setup.glade:2737
+#: ../src/orca/orca-setup.glade.h:40
+msgid "Scale _factor:"
+msgstr "_Hệ số co dãn:"
+
+#: ../src/orca/orca-setup.glade.h:41
+msgid "Si_ze:"
+msgstr "_Cỡ :"
+
+#: ../src/orca/orca-setup.glade.h:42
+msgid "So_me"
+msgstr "Một _số"
+
+#: ../src/orca/orca-setup.glade.h:43
+msgid "Speech"
+msgstr "Giọng nói"
+
+#: ../src/orca/orca-setup.glade.h:44
+msgid "Speech _system:"
+msgstr "Hệ thống _nói:"
+
+#: ../src/orca/orca-setup.glade.h:45
+msgid "Speech synthesi_zer:"
+msgstr "Bộ tổng hợp _giọng nói:"
+
+#: ../src/orca/orca-setup.glade.h:46
+msgid "Ver_bose"
+msgstr "Ch_i tiết"
+
+#: ../src/orca/orca-setup.glade.h:47
+msgid "Vo_lume:"
+msgstr "Âm _lượng:"
+
+#: ../src/orca/orca-setup.glade.h:48
 msgid ""
 "You will have to log out for the change to take effect.\n"
 "Do you want to log out now? "
-msgstr ""
+msgstr "Bạn sẽ cần phải đăng xuất để thay đổi có tác động.\n"
+"Bạn có muốn đăng xuất ngay bây giờ không?"
 
-#: src/orca/orca.py:253
+#: ../src/orca/orca-setup.glade.h:50
+msgid "_Abbreviated role names"
+msgstr "Tên v_ai viết tắt"
+
+#: ../src/orca/orca-setup.glade.h:51
+msgid "_All"
+msgstr "Tất c_ả"
+
+#: ../src/orca/orca-setup.glade.h:52
+msgid "_Bottom:"
+msgstr "_Dưới:"
+
+#: ../src/orca/orca-setup.glade.h:53
+msgid "_Enable speech"
+msgstr "Bật _nói"
+
+#: ../src/orca/orca-setup.glade.h:54
+msgid "_Left:"
+msgstr "T_rái:"
+
+#: ../src/orca/orca-setup.glade.h:55
+msgid "_None"
+msgstr "Khô_ng có"
+
+#: ../src/orca/orca-setup.glade.h:56
+msgid "_Person:"
+msgstr "N_gười:"
+
+#: ../src/orca/orca-setup.glade.h:57
+msgid "_Rate:"
+msgstr "T_ỷ lệ:"
+
+#: ../src/orca/orca-setup.glade.h:58
+msgid "_Right:"
+msgstr "_Phải:"
+
+#: ../src/orca/orca-setup.glade.h:59
+msgid "_Smoothing:"
+msgstr "Làm _mịn:"
+
+#: ../src/orca/orca-setup.glade.h:60
+msgid "_Top:"
+msgstr "_Trên:"
+
+#: ../src/orca/orca-setup.glade.h:61
+msgid "_Voice settings:"
+msgstr "Thiết lập giọng _nói:"
+
+#: ../src/orca/orca-setup.glade.h:62
+msgid "_Width:"
+msgstr "_Rộng:"
+
+#: ../src/orca/orca-setup.glade.h:63
+msgid "pixels"
+msgstr "điểm ảnh"
+
+#: ../src/orca/orca.py:254
 msgid "User logged out - shutting down."
 msgstr "Người dùng đã đăng xuất nên đang thoát."
 
-#: src/orca/orca.py:399
+#: ../src/orca/orca.py:417
 msgid "Debug level all."
 msgstr "Cấp gở lỗi: tất cả."
 
-#: src/orca/orca.py:401
+#: ../src/orca/orca.py:419
 msgid "Debug level finest."
 msgstr "Cấp gỡ lỗi: chính xác nhất."
 
-#: src/orca/orca.py:403
+#: ../src/orca/orca.py:421
 msgid "Debug level finer."
 msgstr "Cấp gỡ lỗi: chính xác hơn."
 
-#: src/orca/orca.py:491
+#: ../src/orca/orca.py:509
 msgid "Entering learn mode.  Press any key to hear its function. "
-msgstr ""
-"Đang vào chế độ học biết. Hãy bấm bất cứ phím nào để nghe chức năng của nó."
+msgstr "Đang vào chế độ học biết. Hãy bấm bất cứ phím nào để nghe chức năng của nó. "
 
-#: src/orca/orca.py:492
+#: ../src/orca/orca.py:510
 msgid "To exit learn mode, press the escape key."
 msgstr "Để thoát khởi chế độ học biết, hãy bấm phím Escape."
 
-#: src/orca/orca.py:493
+#: ../src/orca/orca.py:511
 msgid "Learn mode.  Press escape to exit."
 msgstr "Chế độ học biết. Hãy bấm phim Escape để thoát."
 
-#: src/orca/orca.py:503 src/orca/orca.py:504
+#: ../src/orca/orca.py:521
+#: ../src/orca/orca.py:522
 msgid "Exiting learn mode."
 msgstr "Đang thoát khỏi chế độ học biết."
 
-#: src/orca/orca.py:672
+#: ../src/orca/orca.py:690
 msgid "Caps_Lock"
-msgstr ""
+msgstr "Caps_Lock"
 
-#: src/orca/orca.py:677
+#: ../src/orca/orca.py:695
 msgid "Num_Lock"
-msgstr ""
+msgstr "Num_Lock"
 
-#: src/orca/orca.py:941
-#, fuzzy
+#: ../src/orca/orca.py:959
 msgid "Speech enabled."
-msgstr "Tiếng nói không sẵn sàng."
+msgstr "Giọng nói đã được hiệu lực."
 
-#: src/orca/orca.py:943
-#, fuzzy
+#: ../src/orca/orca.py:961
 msgid "Speech disabled."
-msgstr "Tiếng nói không sẵn sàng."
+msgstr "Giọng nói đã bị vô hiệu hoá."
 
-#: src/orca/orca.py:979
+#: ../src/orca/orca.py:997
 msgid "Orca user settings reloaded."
-msgstr ""
+msgstr "Thiết lập người dùng Orca đã được tải lại."
 
-#: src/orca/orca.py:1074
+#: ../src/orca/orca.py:1092
 msgid "Enters learn mode.  Press escape to exit learn mode."
-msgstr ""
-"Vào chế độ học biết. Hãy bấm phím Escape để thoát khỏi chế độ học biết."
+msgstr "Vào chế độ học biết. Hãy bấm phím Escape để thoát khỏi chế độ học biết."
 
-#: src/orca/orca.py:1082
+#: ../src/orca/orca.py:1100
 msgid "Decreases the speech rate."
 msgstr "Giảm tốc độ nói tiếng."
 
-#: src/orca/orca.py:1090
+#: ../src/orca/orca.py:1108
 msgid "Increases the speech rate."
 msgstr "Tăng tốc độ nói tiếng."
 
-#: src/orca/orca.py:1096
+#: ../src/orca/orca.py:1114
 msgid "Quits Orca"
 msgstr "Thoát khỏi Orca"
 
-#: src/orca/orca.py:1108
+#: ../src/orca/orca.py:1126
 msgid "Toggles keystroke recording on and off."
 msgstr "Bật/tắt ghi động tác nhấn phím."
 
-#: src/orca/orca.py:1116
+#: ../src/orca/orca.py:1134
 msgid "Displays the preferences configuration dialog."
-msgstr ""
+msgstr "Hiển thị hộp thoại cấu hình tùy thích."
 
-#: src/orca/orca.py:1125
+#: ../src/orca/orca.py:1143
 msgid "Reloads user settings and reinitializes services as necessary."
-msgstr ""
+msgstr "Tải lại thiết lập người dùng và sở khởi dịch vụ khi cần thiết."
 
-#: src/orca/orca.py:1134
+#: ../src/orca/orca.py:1152
 msgid "Toggles the silencing of speech."
-msgstr ""
+msgstr "Bật/tắt câm giọng nói."
 
-#: src/orca/orca.py:1143
+#: ../src/orca/orca.py:1161
 msgid ""
 "Prints a debug listing of all known applications to the console where Orca "
 "is running."
-msgstr ""
-"In danh sách gỡ lỗi của mọi ứng dụng đã biết ra bàn giao tiếp nơi Orca đang "
+msgstr "In danh sách gỡ lỗi của mọi ứng dụng đã biết ra bàn giao tiếp nơi Orca đang "
 "chạy."
 
-#: src/orca/orca.py:1152
+#: ../src/orca/orca.py:1170
 msgid "Cycles the debug level at run time."
 msgstr "Xoay vòng chế độ gỡ lỗi vào lúc chạy."
 
-#: src/orca/orca.py:1161
+#: ../src/orca/orca.py:1179
 msgid ""
 "Prints debug information about the currently active application to the "
 "console where Orca is running."
-msgstr ""
-"In thông tin gỡ lỗi về ứng dụng hoạt động hiện thời ra bàn giao tiếp nơi "
+msgstr "In thông tin gỡ lỗi về ứng dụng hoạt động hiện thời ra bàn giao tiếp nơi "
 "Orca đang chạy."
 
-#: src/orca/orca.py:1169
+#: ../src/orca/orca.py:1187
 msgid "Prints debug information about the ancestry of the object with focus"
 msgstr "In thông tin gỡ lỗi về các điều chứa đối tượng có tiêu điểm."
 
-#: src/orca/orca.py:1178
+#: ../src/orca/orca.py:1196
 msgid "Prints debug information about the application with focus"
 msgstr "In thông tin gỡ lỗi về ứng dụng có tiêu điểm."
 
-#: src/orca/orca.py:1188
+#: ../src/orca/orca.py:1206
 msgid "Switches to the next presentation manager."
 msgstr "Chuyển đổi sang bộ quản lý trình diễn kế tiếp."
 
-#: src/orca/orca.py:1216 src/orca/orca.py:1217
+#: ../src/orca/orca.py:1239
+#: ../src/orca/orca.py:1240
 msgid "Welcome to Orca."
 msgstr "Chúc mừng bạn dùng Orca."
 
-#. [[[TODO: WDW - the timer stuff is an experiment to see if
-#. we can recover from hangs.  It's only experimental, so it's
-#. commented out for now.]]]
+#.[[[TODO: WDW - the timer stuff is an experiment to see if
+#.we can recover from hangs.  It's only experimental, so it's
+#.commented out for now.]]]
 #.
-#. timer = threading.Timer(5.0, timeout)
-#. timer.start()
-#: src/orca/orca.py:1269
+#.timer = threading.Timer(5.0, timeout)
+#.timer.start()
+#: ../src/orca/orca.py:1292
 msgid "goodbye."
 msgstr "tạm biệt nhé."
 
-#: src/orca/orca.py:1270
+#: ../src/orca/orca.py:1293
 msgid "Goodbye."
 msgstr "Tạm biệt nhé."
 
-#: src/orca/orca.py:1334
+#: ../src/orca/orca.py:1359
 msgid "Usage: orca [OPTION...]"
-msgstr ""
+msgstr "Cách sử dụng: orca [TÙY_CHỌN...]"
 
-#: src/orca/orca.py:1336
+#: ../src/orca/orca.py:1361
 msgid "-?, --help                   Show this help message"
-msgstr ""
+msgstr "-?, --help                   Hiển thị _trợ giúp_ này"
 
-#: src/orca/orca.py:1337
+#: ../src/orca/orca.py:1362
 #, python-format
 msgid "-v, --version                %s"
-msgstr ""
+msgstr "-v, --version                (phiên bản) %s"
 
-#: src/orca/orca.py:1338
+#: ../src/orca/orca.py:1363
 msgid "-s, --setup, --gui-setup     Set up user preferences"
-msgstr ""
+msgstr "-s, --setup, --gui-setup     _Thiết lập_ tùy thích người dùng"
 
-#: src/orca/orca.py:1339
+#: ../src/orca/orca.py:1364
 msgid "-t, --text-setup             Set up user preferences (text version)"
-msgstr ""
+msgstr "-t, --text-setup            _Thiết lập_ tùy thích người dùng (kiểu _chữ_)"
 
-#: src/orca/orca.py:1340
+#: ../src/orca/orca.py:1365
 msgid "-n, --no-setup               Skip set up of user preferences"
-msgstr ""
+msgstr "-n, --no-setup               Bỏ qua việc thiết lập tùy thích người dùng\n"
+"						(_không thiết lập_)"
 
-#: src/orca/orca.py:1342
+#: ../src/orca/orca.py:1367
 msgid ""
 "If Orca has not been previously set up by the user, Orca\n"
 "will automatically launch the preferences set up unless\n"
 "the -n or --no-setup option is used."
-msgstr ""
+msgstr "Nếu Orca chưa được thiết lập bởi người dùng, Orca sẽ khởi chạy tự động hộp thoại thiết lập tùy thích, nếu tùy chọn « -n » hay « --no-setup » không được dùng."
 
-#: src/orca/orca.py:1344
+#: ../src/orca/orca.py:1369
 msgid "Report bugs to orca-list@gnome.org."
-msgstr ""
+msgstr "Hãy thông báo lỗi nào cho <orca-list@gnome.org>."
 
-#: src/orca/orca.py:1393
+#: ../src/orca/orca.py:1418
 msgid "?stnv"
-msgstr ""
+msgstr "?stnv"
 
-#: src/orca/orca.py:1394
+#: ../src/orca/orca.py:1419
 msgid "help"
-msgstr ""
+msgstr "trợ giúp"
 
-#: src/orca/orca.py:1395
+#: ../src/orca/orca.py:1420
 msgid "setup"
-msgstr ""
+msgstr "thiết lập"
 
-#: src/orca/orca.py:1396
+#: ../src/orca/orca.py:1421
 msgid "gui-setup"
-msgstr ""
+msgstr "thiết lập đồ họa"
 
-#: src/orca/orca.py:1397
+#: ../src/orca/orca.py:1422
 msgid "text-setup"
-msgstr ""
+msgstr "thiết lập chữ"
 
-#: src/orca/orca.py:1398
+#: ../src/orca/orca.py:1423
 msgid "no-setup"
-msgstr ""
+msgstr "không thiết lập"
 
-#: src/orca/orca.py:1399
-#, fuzzy
+#: ../src/orca/orca.py:1424
 msgid "version"
-msgstr "dấu hỏi"
+msgstr "phiên bản"
 
-#: src/orca/orca.py:1401
+#: ../src/orca/orca.py:1426
 msgid "-s"
-msgstr ""
+msgstr "-s"
 
-#: src/orca/orca.py:1401
+#: ../src/orca/orca.py:1426
 msgid "--gui-setup"
-msgstr ""
+msgstr "--gui-setup"
 
-#: src/orca/orca.py:1401
+#: ../src/orca/orca.py:1426
 msgid "--setup"
-msgstr ""
+msgstr "--setup"
 
-#: src/orca/orca.py:1404
+#: ../src/orca/orca.py:1429
 msgid "-t"
-msgstr ""
+msgstr "-t"
 
-#: src/orca/orca.py:1404
+#: ../src/orca/orca.py:1429
 msgid "--text-setup"
-msgstr ""
+msgstr "--text-setup"
 
-#: src/orca/orca.py:1407
+#: ../src/orca/orca.py:1432
 msgid "-n"
-msgstr ""
+msgstr "-n"
 
-#: src/orca/orca.py:1407
+#: ../src/orca/orca.py:1432
 msgid "--no-setup"
-msgstr ""
+msgstr "--no-setup"
 
-#: src/orca/orca.py:1409
+#: ../src/orca/orca.py:1434
 msgid "-?"
-msgstr ""
+msgstr "-?"
 
-#: src/orca/orca.py:1409
+#: ../src/orca/orca.py:1434
 msgid "--help"
-msgstr ""
+msgstr "--help"
 
-#: src/orca/orca.py:1412
+#: ../src/orca/orca.py:1437
 msgid "-v"
-msgstr ""
+msgstr "-v"
 
-#: src/orca/orca.py:1412
+#: ../src/orca/orca.py:1437
 msgid "--version"
-msgstr ""
+msgstr "--version"
 
-#: src/orca/orca_console_prefs.py:90 src/orca/orca_console_prefs.py:106
+#: ../src/orca/orca_console_prefs.py:90
+#: ../src/orca/orca_console_prefs.py:106
 msgid "Speech is unavailable."
 msgstr "Tiếng nói không sẵn sàng."
 
-#: src/orca/orca_console_prefs.py:94
+#: ../src/orca/orca_console_prefs.py:94
 msgid "Welcome to Orca setup."
 msgstr "Chúc mừng bạn thiết lập Orca."
 
-#: src/orca/orca_console_prefs.py:109
-#, fuzzy
+#: ../src/orca/orca_console_prefs.py:109
 msgid "Select desired speech system:"
-msgstr "Chọn hệ thống nói tiếng đã muốn."
+msgstr "Chọn hệ thống giọng nói đã muốn:"
 
 # Variable: do not translate/ biến: đừng dịch
-#: src/orca/orca_console_prefs.py:114 src/orca/orca_console_prefs.py:135
-#: src/orca/orca_console_prefs.py:161
+#: ../src/orca/orca_console_prefs.py:114
+#: ../src/orca/orca_console_prefs.py:135
+#: ../src/orca/orca_console_prefs.py:161
 #, python-format
 msgid "%d. %s"
 msgstr "%d. %s"
 
-#: src/orca/orca_console_prefs.py:117 src/orca/orca_console_prefs.py:138
-#: src/orca/orca_console_prefs.py:168
+#: ../src/orca/orca_console_prefs.py:117
+#: ../src/orca/orca_console_prefs.py:138
+#: ../src/orca/orca_console_prefs.py:168
 msgid "Enter choice: "
 msgstr "Gõ điều chọn: "
 
-#: src/orca/orca_console_prefs.py:119 src/orca/orca_console_prefs.py:127
-#: src/orca/orca_console_prefs.py:140 src/orca/orca_console_prefs.py:149
-#: src/orca/orca_console_prefs.py:173
+#: ../src/orca/orca_console_prefs.py:119
+#: ../src/orca/orca_console_prefs.py:127
+#: ../src/orca/orca_console_prefs.py:140
+#: ../src/orca/orca_console_prefs.py:149
+#: ../src/orca/orca_console_prefs.py:173
 msgid "Speech will not be used.\n"
 msgstr "Sẽ không nói gì.\n"
 
-#: src/orca/orca_console_prefs.py:126
+#: ../src/orca/orca_console_prefs.py:126
 msgid "No servers available.\n"
 msgstr "Không có máy phục vụ sẵn sàng.\n"
 
-#: src/orca/orca_console_prefs.py:130
+#: ../src/orca/orca_console_prefs.py:130
 msgid "Select desired speech server."
 msgstr "Hãy chọn máy phục vụ nói tiếng đã muốn."
 
-#: src/orca/orca_console_prefs.py:148
+#: ../src/orca/orca_console_prefs.py:148
 msgid "No voices available.\n"
 msgstr "Không có giọng nói nào sẵn sàng.\n"
 
-#: src/orca/orca_console_prefs.py:152
-#, fuzzy
+#: ../src/orca/orca_console_prefs.py:152
 msgid "Select desired voice:"
-msgstr "Chọn giọng nói đã muốn."
+msgstr "Chọn giọng nói đã muốn:"
 
-#. Ask the user if they would like to enable echoing by word.
+#.Ask the user if they would like to enable echoing by word.
 #.
-#: src/orca/orca_console_prefs.py:206
-#, fuzzy
+#: ../src/orca/orca_console_prefs.py:206
 msgid "Enable echo by word?  Enter y or n: "
-msgstr "Dùng Braille Monitor (màn hình chữ Bray)? Gõ y (có) hay n (không): "
+msgstr "Bật phản hồi theo từ không? Nhập y (có) hay n (không): "
 
-#. Ask the user if they would like to enable key echo. If they say
-#. yes, then for each of the five different types of keys, ask the
-#. user if they would like to enable them.
+#.Ask the user if they would like to enable key echo. If they say
+#.yes, then for each of the five different types of keys, ask the
+#.user if they would like to enable them.
 #.
-#. These key types are:
+#.These key types are:
 #.
-#. o Alphanumeric and punctuation keys
+#.o Alphanumeric and punctuation keys
 #.
-#. o Modifier keys: CTRL, ALT, Shift, Insert, and "Fn" on laptops.
+#.o Modifier keys: CTRL, ALT, Shift, Insert, and "Fn" on laptops.
 #.
-#. o Locking keys: Caps Lock, Num Lock, Scroll Lock, etc.
+#.o Locking keys: Caps Lock, Num Lock, Scroll Lock, etc.
 #.
-#. o Function keys: The keys at the top of the keyboard.
+#.o Function keys: The keys at the top of the keyboard.
 #.
-#. o Action keys: space, enter, escape, tab, backspace, delete, arrow
-#. keys, page up, page down, etc.
+#.o Action keys: space, enter, escape, tab, backspace, delete, arrow
+#.keys, page up, page down, etc.
 #.
-#: src/orca/orca_console_prefs.py:231
-#, fuzzy
+#: ../src/orca/orca_console_prefs.py:231
 msgid "Enable key echo?  Enter y or n: "
-msgstr "Dùng Braille Monitor (màn hình chữ Bray)? Gõ y (có) hay n (không): "
+msgstr "Bật phản hồi phím không? Nhập y (có) hay n (không): "
 
-#: src/orca/orca_console_prefs.py:238
+#: ../src/orca/orca_console_prefs.py:238
 msgid "Enable alphanumeric and punctuation keys?  Enter y or n: "
-msgstr ""
+msgstr "Bật các phím abc và chấm câu không? Nhập y (có) hay n (không): "
 
-#: src/orca/orca_console_prefs.py:246
-#, fuzzy
+#: ../src/orca/orca_console_prefs.py:246
 msgid "Enable modifier keys?  Enter y or n: "
-msgstr "Dùng Braille Monitor (màn hình chữ Bray)? Gõ y (có) hay n (không): "
+msgstr "Bật các phím sửa đổi không? Nhập y (có) hay n (không): "
 
-#: src/orca/orca_console_prefs.py:254
-#, fuzzy
+#: ../src/orca/orca_console_prefs.py:254
 msgid "Enable locking keys?  Enter y or n: "
-msgstr "Dùng Braille Monitor (màn hình chữ Bray)? Gõ y (có) hay n (không): "
+msgstr "Bật các phím khoá không? Nhập y (có) hay n (không): "
 
-#: src/orca/orca_console_prefs.py:262
-#, fuzzy
+#: ../src/orca/orca_console_prefs.py:262
 msgid "Enable function keys?  Enter y or n: "
-msgstr "Dùng Braille Monitor (màn hình chữ Bray)? Gõ y (có) hay n (không): "
+msgstr "Bật các phím chức năng không? Nhập y (có) hay n (không): "
 
-#: src/orca/orca_console_prefs.py:270
-#, fuzzy
+#: ../src/orca/orca_console_prefs.py:270
 msgid "Enable action keys?  Enter y or n: "
-msgstr "Dùng Braille Monitor (màn hình chữ Bray)? Gõ y (có) hay n (không): "
+msgstr "Bật các phím hành động không? Nhập y (có) hay n (không): "
 
-#: src/orca/orca_console_prefs.py:298
-#, fuzzy
+#: ../src/orca/orca_console_prefs.py:298
 msgid "Enable Braille?  Enter y or n: "
-msgstr "Dùng Braille Monitor (màn hình chữ Bray)? Gõ y (có) hay n (không): "
+msgstr "Bật chữ Bray không? Nhập y (có) hay n (không): "
 
-#: src/orca/orca_console_prefs.py:306
-#, fuzzy
+#: ../src/orca/orca_console_prefs.py:306
 msgid "Enable Braille Monitor?  Enter y or n: "
-msgstr "Dùng Braille Monitor (màn hình chữ Bray)? Gõ y (có) hay n (không): "
+msgstr "Bật bộ trình bày chữ Bray không? Nhập y (có) hay n (không): "
 
-#: src/orca/orca_console_prefs.py:316
+#: ../src/orca/orca_console_prefs.py:316
 msgid "Accessibility support for GNOME has just been enabled. "
-msgstr ""
+msgstr "Mới hiệu lực hỗ trợ khả năng truy cập GNOME. "
 
-#: src/orca/orca_console_prefs.py:321
+#: ../src/orca/orca_console_prefs.py:321
 msgid "You need to log out and log back in for the change to take effect. "
-msgstr ""
+msgstr "Bạn cần phải đăng xuất rồi đăng nhập lại để thay đổi có tác động. "
 
-#: src/orca/orca_console_prefs.py:327
+#: ../src/orca/orca_console_prefs.py:327
 msgid "Setup complete.  Press Return to continue."
-msgstr ""
+msgstr "Thiết lập xong. Hãy bấm phím Return để tiếp tục."
 
-#: src/orca/orca_gui_prefs.py:121 src/orca/orca_gui_prefs.py:404
-#: src/orca/orca_gui_prefs.py:446
-#, fuzzy
+#: ../src/orca/orca_gui_prefs.py:121
+#: ../src/orca/orca_gui_prefs.py:404
+#: ../src/orca/orca_gui_prefs.py:446
 msgid "Speech not available."
-msgstr "Tiếng nói không sẵn sàng."
+msgstr "Giọng nói không sẵn sàng."
 
-#: src/orca/orca_gui_prefs.py:212 src/orca/orca_gui_prefs.py:224
-#: src/orca/orca_gui_prefs.py:1012 src/orca/orca_gui_prefs.py:1049
+#: ../src/orca/orca_gui_prefs.py:212
+#: ../src/orca/orca_gui_prefs.py:224
+#: ../src/orca/orca_gui_prefs.py:1012
+#: ../src/orca/orca_gui_prefs.py:1049
 msgid "Brief"
-msgstr ""
+msgstr "Ngắn"
 
-#: src/orca/orca_gui_prefs.py:346 src/orca/orca_gui_prefs.py:350
-#: src/orca/orca_gui_prefs.py:1246
+#: ../src/orca/orca_gui_prefs.py:346
+#: ../src/orca/orca_gui_prefs.py:350
+#: ../src/orca/orca_gui_prefs.py:1246
 msgid "Bilinear"
-msgstr ""
+msgstr "Tuyến kép"
 
-#: src/orca/orca_gui_prefs.py:348 src/orca/orca_gui_prefs.py:361
-#: src/orca/orca_gui_prefs.py:989 src/orca/orca_gui_prefs.py:1248
-#: src/orca/orca_gui_prefs.py:1271
+#: ../src/orca/orca_gui_prefs.py:348
+#: ../src/orca/orca_gui_prefs.py:361
+#: ../src/orca/orca_gui_prefs.py:989
+#: ../src/orca/orca_gui_prefs.py:1248
+#: ../src/orca/orca_gui_prefs.py:1271
 msgid "None"
-msgstr ""
+msgstr "Không có"
 
-#: src/orca/orca_gui_prefs.py:359 src/orca/orca_gui_prefs.py:367
-#: src/orca/orca_gui_prefs.py:1265
+#: ../src/orca/orca_gui_prefs.py:359
+#: ../src/orca/orca_gui_prefs.py:367
+#: ../src/orca/orca_gui_prefs.py:1265
 msgid "Centered"
-msgstr ""
+msgstr "Giữa lại"
 
-#: src/orca/orca_gui_prefs.py:363 src/orca/orca_gui_prefs.py:1269
-#, fuzzy
+#: ../src/orca/orca_gui_prefs.py:363
+#: ../src/orca/orca_gui_prefs.py:1269
 msgid "Proportional"
-msgstr "ô tùy chọn"
+msgstr "Co giãn"
 
-#: src/orca/orca_gui_prefs.py:365 src/orca/orca_gui_prefs.py:1267
+#: ../src/orca/orca_gui_prefs.py:365
+#: ../src/orca/orca_gui_prefs.py:1267
 msgid "Push"
-msgstr ""
+msgstr "Đẩy"
 
-#: src/orca/orca_gui_prefs.py:483 src/orca/orca_gui_prefs.py:508
+#: ../src/orca/orca_gui_prefs.py:483
+#: ../src/orca/orca_gui_prefs.py:508
 msgid "Default"
-msgstr ""
+msgstr "Mặc định"
 
-#: src/orca/orca_gui_prefs.py:485 src/orca/orca_gui_prefs.py:510
-#, fuzzy
+#: ../src/orca/orca_gui_prefs.py:485
+#: ../src/orca/orca_gui_prefs.py:510
 msgid "Uppercase"
-msgstr "dấu phần trăm"
+msgstr "Chữ hoa"
 
-#: src/orca/orca_gui_prefs.py:487 src/orca/orca_gui_prefs.py:516
-#, fuzzy
+#: ../src/orca/orca_gui_prefs.py:487
+#: ../src/orca/orca_gui_prefs.py:516
 msgid "Hyperlink"
-msgstr "liên kết"
+msgstr "Siêu liên kết"
 
-#: src/orca/orca_gui_prefs.py:992
+#: ../src/orca/orca_gui_prefs.py:992
 msgid "Some"
-msgstr ""
+msgstr "Một số"
 
-#: src/orca/orca_gui_prefs.py:1334
+#: ../src/orca/orca_gui_prefs.py:1334
 msgid "Accessibility support for GNOME has just been enabled."
-msgstr ""
+msgstr "Mới hiệu lực hỗ trợ khả năng truy cập GNOME."
 
-#: src/orca/orca_gui_prefs.py:1335
+#: ../src/orca/orca_gui_prefs.py:1335
 msgid "You need to log out and log back in for the change to take effect."
-msgstr ""
+msgstr "Bạn cần phải đăng xuất rồi đăng nhập lại để thay đổi có tác động."
 
-#: src/orca/rolenames.py:142
+#: ../src/orca/rolenames.py:142
 msgid "???"
 msgstr "???"
 
-#: src/orca/rolenames.py:143
+#: ../src/orca/rolenames.py:143
 msgid "Invalid"
 msgstr "Không hợp lệ"
 
-#: src/orca/rolenames.py:144
+#: ../src/orca/rolenames.py:144
 msgid "invalid"
 msgstr "không hợp lệ"
 
-#: src/orca/rolenames.py:147
+#: ../src/orca/rolenames.py:147
 msgid "acc"
 msgstr "p.tắt"
 
-#: src/orca/rolenames.py:148
+#: ../src/orca/rolenames.py:148
 msgid "Accelerator"
 msgstr "Phím tắt"
 
-#: src/orca/rolenames.py:149
+#: ../src/orca/rolenames.py:149
 msgid "accelerator"
 msgstr "phím tắt"
 
-#: src/orca/rolenames.py:152 src/orca/rolenames.py:154
+#: ../src/orca/rolenames.py:152
+#: ../src/orca/rolenames.py:154
 msgid "alert"
 msgstr "báo động"
 
-#: src/orca/rolenames.py:153
+#: ../src/orca/rolenames.py:153
 msgid "Alert"
 msgstr "Báo động"
 
-#: src/orca/rolenames.py:157
+#: ../src/orca/rolenames.py:157
 msgid "Anim"
 msgstr "H.ảnh"
 
-#: src/orca/rolenames.py:158
+#: ../src/orca/rolenames.py:158
 msgid "Animation"
 msgstr "Hoạt ảnh"
 
-#: src/orca/rolenames.py:159
+#: ../src/orca/rolenames.py:159
 msgid "animation"
 msgstr "hoạt ảnh"
 
-#: src/orca/rolenames.py:162 src/orca/rolenames.py:164
+#: ../src/orca/rolenames.py:162
+#: ../src/orca/rolenames.py:164
 msgid "arrow"
 msgstr "mũi tên"
 
-#: src/orca/rolenames.py:163
+#: ../src/orca/rolenames.py:163
 msgid "Arrow"
 msgstr "Mũi tên"
 
-#: src/orca/rolenames.py:167
+#: ../src/orca/rolenames.py:167
 msgid "cal"
 msgstr "lịch"
 
-#: src/orca/rolenames.py:168
+#: ../src/orca/rolenames.py:168
 msgid "Calendar"
 msgstr "Lịch"
 
-#: src/orca/rolenames.py:169
+#: ../src/orca/rolenames.py:169
 msgid "calendar"
 msgstr "lịch"
 
-#: src/orca/rolenames.py:172
+#: ../src/orca/rolenames.py:172
 msgid "cnv"
 msgstr "vvẽ"
 
-#: src/orca/rolenames.py:173
+#: ../src/orca/rolenames.py:173
 msgid "Canvas"
 msgstr "Vùng vẽ"
 
-#: src/orca/rolenames.py:174
+#: ../src/orca/rolenames.py:174
 msgid "canvas"
 msgstr "vùng vẽ"
 
-#: src/orca/rolenames.py:177 src/orca/rolenames.py:182
+#: ../src/orca/rolenames.py:177
+#: ../src/orca/rolenames.py:182
 msgid "chk"
 msgstr "hộp"
 
-#: src/orca/rolenames.py:178
+#: ../src/orca/rolenames.py:178
 msgid "CheckBox"
 msgstr "Hộp kiểm tra"
 
-#: src/orca/rolenames.py:179
+#: ../src/orca/rolenames.py:179
 msgid "check box"
 msgstr "hộp kiểm tra"
 
-#: src/orca/rolenames.py:183
+#: ../src/orca/rolenames.py:183
 msgid "CheckItem"
 msgstr "Mục kiểm tra"
 
-#: src/orca/rolenames.py:184
+#: ../src/orca/rolenames.py:184
 msgid "check item"
 msgstr "mục kiểm tra"
 
-#: src/orca/rolenames.py:187
+#: ../src/orca/rolenames.py:187
 msgid "ckm"
 msgstr "tđn"
 
-#: src/orca/rolenames.py:188
+#: ../src/orca/rolenames.py:188
 msgid "CheckMenu"
 msgstr "Trình đơn kiểm tra"
 
-#: src/orca/rolenames.py:189
+#: ../src/orca/rolenames.py:189
 msgid "check menu"
 msgstr "trình đơn kiểm tra"
 
-#: src/orca/rolenames.py:192
+#: ../src/orca/rolenames.py:192
 msgid "clrchsr"
 msgstr "cmàu"
 
-#: src/orca/rolenames.py:193
+#: ../src/orca/rolenames.py:193
 msgid "ColorChooser"
 msgstr "Bộ chọn màu"
 
-#: src/orca/rolenames.py:194
+#: ../src/orca/rolenames.py:194
 msgid "color chooser"
 msgstr "bộ chọn màu"
 
-#: src/orca/rolenames.py:197 src/orca/rolenames.py:432
+#: ../src/orca/rolenames.py:197
+#: ../src/orca/rolenames.py:432
 msgid "colhdr"
 msgstr "đcột"
 
-#: src/orca/rolenames.py:198 src/orca/rolenames.py:433
+#: ../src/orca/rolenames.py:198
+#: ../src/orca/rolenames.py:433
 msgid "ColumnHeader"
 msgstr "Đầu cột"
 
-#: src/orca/rolenames.py:199 src/orca/rolenames.py:434
+#: ../src/orca/rolenames.py:199
+#: ../src/orca/rolenames.py:434
 msgid "column header"
 msgstr "đầu cột"
 
-#: src/orca/rolenames.py:202
+#: ../src/orca/rolenames.py:202
 msgid "cbo"
 msgstr "hợp"
 
-#: src/orca/rolenames.py:203
+#: ../src/orca/rolenames.py:203
 msgid "Combo"
 msgstr "Tổ hợp"
 
-#: src/orca/rolenames.py:204
+#: ../src/orca/rolenames.py:204
 msgid "combo box"
 msgstr "hộp tổ hợp"
 
-#: src/orca/rolenames.py:207
+#: ../src/orca/rolenames.py:207
 msgid "dat"
 msgstr "ngày"
 
-#: src/orca/rolenames.py:208
+#: ../src/orca/rolenames.py:208
 msgid "DateEditor"
 msgstr "Bộ hiệu chỉnh ngày"
 
-#: src/orca/rolenames.py:209
+#: ../src/orca/rolenames.py:209
 msgid "date editor"
 msgstr "bộ hiệu chỉnh ngày"
 
-#: src/orca/rolenames.py:212 src/orca/rolenames.py:272
-#: src/orca/rolenames.py:274
+#: ../src/orca/rolenames.py:212
+#: ../src/orca/rolenames.py:272
+#: ../src/orca/rolenames.py:274
 msgid "icon"
 msgstr "hình"
 
-#: src/orca/rolenames.py:213
+#: ../src/orca/rolenames.py:213
 msgid "DesktopIcon"
 msgstr "Biểu tượng môi trường"
 
-#: src/orca/rolenames.py:214
+#: ../src/orca/rolenames.py:214
 msgid "desktop icon"
 msgstr "biểu tượng môi trường"
 
-#: src/orca/rolenames.py:217 src/orca/rolenames.py:259
-#: src/orca/rolenames.py:282
+#: ../src/orca/rolenames.py:217
+#: ../src/orca/rolenames.py:259
+#: ../src/orca/rolenames.py:282
 msgid "frame"
 msgstr "khung"
 
-#: src/orca/rolenames.py:218
+#: ../src/orca/rolenames.py:218
 msgid "DesktopFrame"
 msgstr "Khung môi trường"
 
-#: src/orca/rolenames.py:219
+#: ../src/orca/rolenames.py:219
 msgid "desktop frame"
 msgstr "khung môi trường"
 
-#: src/orca/rolenames.py:222 src/orca/rolenames.py:224
+#: ../src/orca/rolenames.py:222
+#: ../src/orca/rolenames.py:224
 msgid "dial"
 msgstr "thoại"
 
-#: src/orca/rolenames.py:223
+#: ../src/orca/rolenames.py:223
 msgid "Dial"
 msgstr "Thoại"
 
-#: src/orca/rolenames.py:227
+#: ../src/orca/rolenames.py:227
 msgid "dlg"
 msgstr "tho"
 
-#: src/orca/rolenames.py:228
+#: ../src/orca/rolenames.py:228
 msgid "Dialog"
 msgstr "Hộp thoại"
 
-#: src/orca/rolenames.py:229
+#: ../src/orca/rolenames.py:229
 msgid "dialog"
 msgstr "hộp thoại"
 
-#: src/orca/rolenames.py:232
+#: ../src/orca/rolenames.py:232
 msgid "dip"
 msgstr "ôtm"
 
-#: src/orca/rolenames.py:233
+#: ../src/orca/rolenames.py:233
 msgid "DirectoryPane"
 msgstr "Ô thư mục"
 
-#: src/orca/rolenames.py:234
+#: ../src/orca/rolenames.py:234
 msgid "directory pane"
 msgstr "ô thư mục"
 
-#: src/orca/rolenames.py:237
+#: ../src/orca/rolenames.py:237
 msgid "draw"
 msgstr "vẽ"
 
-#: src/orca/rolenames.py:238
+#: ../src/orca/rolenames.py:238
 msgid "DrawingArea"
 msgstr "Vùng vẽ"
 
-#: src/orca/rolenames.py:239
+#: ../src/orca/rolenames.py:239
 msgid "drawing area"
 msgstr "vùng vẽ"
 
-#: src/orca/rolenames.py:242
+#: ../src/orca/rolenames.py:242
 msgid "fchsr"
 msgstr "tập"
 
-#: src/orca/rolenames.py:243
+#: ../src/orca/rolenames.py:243
 msgid "FileChooser"
 msgstr "Bộ chọn tập tin"
 
-#: src/orca/rolenames.py:244
+#: ../src/orca/rolenames.py:244
 msgid "file chooser"
 msgstr "bộ chọn tập tin"
 
-#: src/orca/rolenames.py:247
+#: ../src/orca/rolenames.py:247
 msgid "flr"
 msgstr "đầy"
 
-#: src/orca/rolenames.py:248
+#: ../src/orca/rolenames.py:248
 msgid "Filler"
 msgstr "Bộ tô đầy"
 
-#: src/orca/rolenames.py:249
+#: ../src/orca/rolenames.py:249
 msgid "filler"
 msgstr "bộ tô đầy"
 
-#: src/orca/rolenames.py:252
+#: ../src/orca/rolenames.py:252
 msgid "fnt"
 msgstr "phg"
 
-#: src/orca/rolenames.py:253
+#: ../src/orca/rolenames.py:253
 msgid "FontChooser"
 msgstr "Bộ chọn phông chữ"
 
-#: src/orca/rolenames.py:254
+#: ../src/orca/rolenames.py:254
 msgid "font chooser"
 msgstr "bộ chọn phông chữ"
 
-#: src/orca/rolenames.py:257
+#: ../src/orca/rolenames.py:257
 msgid "frm"
 msgstr "khg"
 
-#: src/orca/rolenames.py:258
+#: ../src/orca/rolenames.py:258
 msgid "Frame"
 msgstr "Khung"
 
-#: src/orca/rolenames.py:262
+#: ../src/orca/rolenames.py:262
 msgid "gpn"
 msgstr "ôtỷ"
 
-#: src/orca/rolenames.py:263
+#: ../src/orca/rolenames.py:263
 msgid "GlassPane"
 msgstr "Ô thuỷ tinh"
 
-#: src/orca/rolenames.py:264
+#: ../src/orca/rolenames.py:264
 msgid "glass pane"
 msgstr "ô thuỷ tinh"
 
-#: src/orca/rolenames.py:267
+#: ../src/orca/rolenames.py:267
 msgid "html"
 msgstr "html"
 
-#: src/orca/rolenames.py:268
+#: ../src/orca/rolenames.py:268
 msgid "HtmlContainer"
 msgstr "Đồ chứa HTML"
 
-#: src/orca/rolenames.py:269
+#: ../src/orca/rolenames.py:269
 msgid "h t m l container"
 msgstr "đồ chứa h t m l"
 
-#: src/orca/rolenames.py:273
+#: ../src/orca/rolenames.py:273
 msgid "Icon"
 msgstr "Biểu tượng"
 
-#: src/orca/rolenames.py:277
+#: ../src/orca/rolenames.py:277
 msgid "img"
 msgstr "ảnh"
 
-#: src/orca/rolenames.py:278
+#: ../src/orca/rolenames.py:278
 msgid "Image"
 msgstr "Ảnh"
 
-#: src/orca/rolenames.py:279
+#: ../src/orca/rolenames.py:279
 msgid "image"
 msgstr "ảnh"
 
-#: src/orca/rolenames.py:283
+#: ../src/orca/rolenames.py:283
 msgid "InternalFrame"
 msgstr "Khung nội bộ"
 
-#: src/orca/rolenames.py:284
+#: ../src/orca/rolenames.py:284
 msgid "internal frame"
 msgstr "khung nội bộ"
 
-#: src/orca/rolenames.py:287
+#: ../src/orca/rolenames.py:287
 msgid "lbl"
 msgstr "nhãn"
 
-#: src/orca/rolenames.py:288
+#: ../src/orca/rolenames.py:288
 msgid "Label"
 msgstr "Nhãn"
 
-#: src/orca/rolenames.py:289
+#: ../src/orca/rolenames.py:289
 msgid "label"
 msgstr "nhãn"
 
-#: src/orca/rolenames.py:292
+#: ../src/orca/rolenames.py:292
 msgid "lyrdpn"
 msgstr "ôtầng"
 
-#: src/orca/rolenames.py:293
+#: ../src/orca/rolenames.py:293
 msgid "LayeredPane"
 msgstr "Ô sắp từng tầng"
 
-#: src/orca/rolenames.py:294
+#: ../src/orca/rolenames.py:294
 msgid "layered pane"
 msgstr "ô sắp từng tầng"
 
-#: src/orca/rolenames.py:297
+#: ../src/orca/rolenames.py:297
 msgid "lst"
 msgstr "danh"
 
-#: src/orca/rolenames.py:298
+#: ../src/orca/rolenames.py:298
 msgid "List"
 msgstr "Danh sách"
 
-#: src/orca/rolenames.py:299
+#: ../src/orca/rolenames.py:299
 msgid "list"
 msgstr "danh sách"
 
-#: src/orca/rolenames.py:302
+#: ../src/orca/rolenames.py:302
 msgid "lstitm"
 msgstr "mụcds"
 
-#: src/orca/rolenames.py:303
+#: ../src/orca/rolenames.py:303
 msgid "ListItem"
 msgstr "Mục danh sách"
 
-#: src/orca/rolenames.py:304
+#: ../src/orca/rolenames.py:304
 msgid "list item"
 msgstr "mục danh sách"
 
-#: src/orca/rolenames.py:307
+#: ../src/orca/rolenames.py:307
 msgid "mnu"
 msgstr "tđơn"
 
-#: src/orca/rolenames.py:308
+#: ../src/orca/rolenames.py:308
 msgid "Menu"
 msgstr "Trình đơn"
 
-#: src/orca/rolenames.py:309
+#: ../src/orca/rolenames.py:309
 msgid "menu"
 msgstr "trình đơn"
 
-#: src/orca/rolenames.py:312
+#: ../src/orca/rolenames.py:312
 msgid "mnubr"
 msgstr "thanh"
 
-#: src/orca/rolenames.py:313
+#: ../src/orca/rolenames.py:313
 msgid "MenuBar"
 msgstr "Thanh trình đơn"
 
-#: src/orca/rolenames.py:314
+#: ../src/orca/rolenames.py:314
 msgid "menu bar"
 msgstr "thanh trình đơn"
 
-#: src/orca/rolenames.py:317
+#: ../src/orca/rolenames.py:317
 msgid "mnuitm"
 msgstr "mụctđ"
 
-#: src/orca/rolenames.py:318
+#: ../src/orca/rolenames.py:318
 msgid "MenuItem"
 msgstr "Mục trình đơn"
 
-#: src/orca/rolenames.py:319
+#: ../src/orca/rolenames.py:319
 msgid "menu item"
 msgstr "mục trình đơn"
 
-#: src/orca/rolenames.py:322
+#: ../src/orca/rolenames.py:322
 msgid "optnpn"
 msgstr "ôtùy"
 
-#: src/orca/rolenames.py:323
+#: ../src/orca/rolenames.py:323
 msgid "OptionPane"
 msgstr "Ô tùy chọn"
 
-#: src/orca/rolenames.py:324
+#: ../src/orca/rolenames.py:324
 msgid "option pane"
 msgstr "ô tùy chọn"
 
-#: src/orca/rolenames.py:327 src/orca/rolenames.py:329
+#: ../src/orca/rolenames.py:327
+#: ../src/orca/rolenames.py:329
 msgid "page"
 msgstr "trang"
 
-#: src/orca/rolenames.py:328
+#: ../src/orca/rolenames.py:328
 msgid "Page"
 msgstr "Trang"
 
-#: src/orca/rolenames.py:332
+#: ../src/orca/rolenames.py:332
 msgid "tblst"
 msgstr "dtab"
 
-#: src/orca/rolenames.py:333
+#: ../src/orca/rolenames.py:333
 msgid "TabList"
 msgstr "Danh sách Tab"
 
-#: src/orca/rolenames.py:334
+#: ../src/orca/rolenames.py:334
 msgid "tab list"
 msgstr "danh sách tab"
 
-#: src/orca/rolenames.py:337
+#: ../src/orca/rolenames.py:337
 msgid "pnl"
 msgstr "bđk"
 
-#: src/orca/rolenames.py:338
+#: ../src/orca/rolenames.py:338
 msgid "Panel"
 msgstr "Bảng điều khiển"
 
-#: src/orca/rolenames.py:339
+#: ../src/orca/rolenames.py:339
 msgid "panel"
 msgstr "bảng điều khiển"
 
-#: src/orca/rolenames.py:342
+#: ../src/orca/rolenames.py:342
 msgid "pwd"
 msgstr "mật"
 
-#: src/orca/rolenames.py:343
+#: ../src/orca/rolenames.py:343
 msgid "Password"
 msgstr "Mật khẩu"
 
-#: src/orca/rolenames.py:344
+#: ../src/orca/rolenames.py:344
 msgid "password"
 msgstr "mật khẩu"
 
-#: src/orca/rolenames.py:347
+#: ../src/orca/rolenames.py:347
 msgid "popmnu"
 msgstr "bậtlên"
 
-#: src/orca/rolenames.py:348
+#: ../src/orca/rolenames.py:348
 msgid "PopupMenu"
 msgstr "Trình đơn bật lên"
 
-#: src/orca/rolenames.py:349
+#: ../src/orca/rolenames.py:349
 msgid "popup menu"
 msgstr "trình đơn bật lên"
 
-#: src/orca/rolenames.py:352
+#: ../src/orca/rolenames.py:352
 msgid "pgbar"
 msgstr "tiến"
 
-#: src/orca/rolenames.py:353
+#: ../src/orca/rolenames.py:353
 msgid "Progress"
 msgstr "Tiến hành"
 
-#: src/orca/rolenames.py:354
+#: ../src/orca/rolenames.py:354
 msgid "progress bar"
 msgstr "thanh tiến trình"
 
-#: src/orca/rolenames.py:357
+#: ../src/orca/rolenames.py:357
 msgid "btn"
 msgstr "nút"
 
-#: src/orca/rolenames.py:358
+#: ../src/orca/rolenames.py:358
 msgid "Button"
 msgstr "Nút"
 
-#: src/orca/rolenames.py:359
+#: ../src/orca/rolenames.py:359
 msgid "button"
 msgstr "nút"
 
-#: src/orca/rolenames.py:362
+#: ../src/orca/rolenames.py:362
 msgid "radio"
 msgstr "cmột"
 
-#: src/orca/rolenames.py:363
+#: ../src/orca/rolenames.py:363
 msgid "RadioButton"
 msgstr "Nút chọn một"
 
-#: src/orca/rolenames.py:364
+#: ../src/orca/rolenames.py:364
 msgid "radio button"
 msgstr "nút chọn một"
 
-#: src/orca/rolenames.py:367
+#: ../src/orca/rolenames.py:367
 msgid "rdmnuitm"
 msgstr "mụctdmột"
 
-#: src/orca/rolenames.py:368
+#: ../src/orca/rolenames.py:368
 msgid "RadioMenuItem"
 msgstr "Mục trình đơn chọn một"
 
-#: src/orca/rolenames.py:369
+#: ../src/orca/rolenames.py:369
 msgid "radio menu item"
 msgstr "mục trình đơn chọn một"
 
-#: src/orca/rolenames.py:372
+#: ../src/orca/rolenames.py:372
 msgid "rdmnu"
 msgstr "tđmột"
 
-#: src/orca/rolenames.py:373
+#: ../src/orca/rolenames.py:373
 msgid "RadioMenu"
 msgstr "Trình đơn chọn một"
 
-#: src/orca/rolenames.py:374
+#: ../src/orca/rolenames.py:374
 msgid "radio menu"
 msgstr "trình đơn chọn một"
 
-#: src/orca/rolenames.py:377
+#: ../src/orca/rolenames.py:377
 msgid "rtpn"
 msgstr "gốc"
 
-#: src/orca/rolenames.py:378
+#: ../src/orca/rolenames.py:378
 msgid "RootPane"
 msgstr "Ô gốc"
 
-#: src/orca/rolenames.py:379
+#: ../src/orca/rolenames.py:379
 msgid "root pane"
 msgstr "ô gốc"
 
-#: src/orca/rolenames.py:382 src/orca/rolenames.py:437
+#: ../src/orca/rolenames.py:382
+#: ../src/orca/rolenames.py:437
 msgid "rwhdr"
 msgstr "đhàng"
 
-#: src/orca/rolenames.py:383 src/orca/rolenames.py:438
+#: ../src/orca/rolenames.py:383
+#: ../src/orca/rolenames.py:438
 msgid "RowHeader"
 msgstr "Đầu hàng"
 
-#: src/orca/rolenames.py:384 src/orca/rolenames.py:439
+#: ../src/orca/rolenames.py:384
+#: ../src/orca/rolenames.py:439
 msgid "row header"
 msgstr "đầu hàng"
 
-#: src/orca/rolenames.py:387
+#: ../src/orca/rolenames.py:387
 msgid "scbr"
 msgstr "cuộn"
 
-#: src/orca/rolenames.py:388
+#: ../src/orca/rolenames.py:388
 msgid "ScrollBar"
 msgstr "Thanh cuộn"
 
-#: src/orca/rolenames.py:389
+#: ../src/orca/rolenames.py:389
 msgid "scroll bar"
 msgstr "thanh cuộn"
 
-#: src/orca/rolenames.py:392
+#: ../src/orca/rolenames.py:392
 msgid "scpn"
 msgstr "ôcuộn"
 
-#: src/orca/rolenames.py:393
+#: ../src/orca/rolenames.py:393
 msgid "ScrollPane"
 msgstr "Ô cuộn"
 
-#: src/orca/rolenames.py:394
+#: ../src/orca/rolenames.py:394
 msgid "scroll pane"
 msgstr "ô cuộn"
 
-#: src/orca/rolenames.py:397
+#: ../src/orca/rolenames.py:397
 msgid "seprtr"
 msgstr "pcách"
 
-#: src/orca/rolenames.py:398
+#: ../src/orca/rolenames.py:398
 msgid "Separator"
 msgstr "Bộ phân cách"
 
-#: src/orca/rolenames.py:399
+#: ../src/orca/rolenames.py:399
 msgid "separator"
 msgstr "bộ phân cách"
 
-#: src/orca/rolenames.py:402
+#: ../src/orca/rolenames.py:402
 msgid "sldr"
 msgstr "trượt"
 
-#: src/orca/rolenames.py:403
+#: ../src/orca/rolenames.py:403
 msgid "Slider"
 msgstr "Con trượt"
 
-#: src/orca/rolenames.py:404
+#: ../src/orca/rolenames.py:404
 msgid "slider"
 msgstr "con trượt"
 
-#: src/orca/rolenames.py:407
+#: ../src/orca/rolenames.py:407
 msgid "spltpn"
 msgstr "ôtách"
 
-#: src/orca/rolenames.py:408
+#: ../src/orca/rolenames.py:408
 msgid "SplitPane"
 msgstr "Ô tách"
 
-#: src/orca/rolenames.py:409
+#: ../src/orca/rolenames.py:409
 msgid "split pane"
 msgstr "ô tách"
 
-#: src/orca/rolenames.py:412
+#: ../src/orca/rolenames.py:412
 msgid "spin"
 msgstr "xoay"
 
-#: src/orca/rolenames.py:413
+#: ../src/orca/rolenames.py:413
 msgid "SpinButton"
 msgstr "Nút xoay"
 
-#: src/orca/rolenames.py:414
+#: ../src/orca/rolenames.py:414
 msgid "spin button"
 msgstr "nút xoay"
 
-#: src/orca/rolenames.py:417
+#: ../src/orca/rolenames.py:417
 msgid "statbr"
 msgstr "ttt"
 
-#: src/orca/rolenames.py:418
+#: ../src/orca/rolenames.py:418
 msgid "StatusBar"
 msgstr "Thanh trạng thái"
 
-#: src/orca/rolenames.py:419
+#: ../src/orca/rolenames.py:419
 msgid "status bar"
 msgstr "thanh trạng thái"
 
-#: src/orca/rolenames.py:422
+#: ../src/orca/rolenames.py:422
 msgid "tbl"
 msgstr "bảng"
 
-#: src/orca/rolenames.py:423
+#: ../src/orca/rolenames.py:423
 msgid "Table"
 msgstr "Bảng"
 
-#: src/orca/rolenames.py:424
+#: ../src/orca/rolenames.py:424
 msgid "table"
 msgstr "bảng"
 
-#: src/orca/rolenames.py:427 src/orca/rolenames.py:429
+#: ../src/orca/rolenames.py:427
+#: ../src/orca/rolenames.py:429
 msgid "cell"
 msgstr "ô"
 
-#: src/orca/rolenames.py:428
+#: ../src/orca/rolenames.py:428
 msgid "Cell"
 msgstr "Ô"
 
-#: src/orca/rolenames.py:442
+#: ../src/orca/rolenames.py:442
 msgid "tomnuitm"
 msgstr "rời"
 
-#: src/orca/rolenames.py:443
+#: ../src/orca/rolenames.py:443
 msgid "TearOffMenuItem"
 msgstr "Mục trình đơn tách rời"
 
-#: src/orca/rolenames.py:444 src/orca/speechgenerator.py:1209
+#: ../src/orca/rolenames.py:444
+#: ../src/orca/speechgenerator.py:1209
 msgid "tear off menu item"
 msgstr "mục trình đơn tách rời"
 
-#: src/orca/rolenames.py:447
+#: ../src/orca/rolenames.py:447
 msgid "term"
 msgstr "cuối"
 
-#: src/orca/rolenames.py:448
+#: ../src/orca/rolenames.py:448
 msgid "Terminal"
 msgstr "Thiết bị cuối"
 
-#: src/orca/rolenames.py:449
+#: ../src/orca/rolenames.py:449
 msgid "terminal"
 msgstr "thiết bị cuối"
 
-#: src/orca/rolenames.py:452
+#: ../src/orca/rolenames.py:452
 msgid "txt"
 msgstr "chữ"
 
-#: src/orca/rolenames.py:453
+#: ../src/orca/rolenames.py:453
 msgid "Text"
 msgstr "Chữ"
 
-#: src/orca/rolenames.py:454
+#: ../src/orca/rolenames.py:454
 msgid "text"
 msgstr "chữ"
 
-#: src/orca/rolenames.py:457
+#: ../src/orca/rolenames.py:457
 msgid "tglbtn"
 msgstr "bậttắt"
 
-#: src/orca/rolenames.py:458
+#: ../src/orca/rolenames.py:458
 msgid "ToggleButton"
 msgstr "Nút bật/tắt"
 
-#: src/orca/rolenames.py:459
+#: ../src/orca/rolenames.py:459
 msgid "toggle button"
 msgstr "nút bật/tắt"
 
-#: src/orca/rolenames.py:462
+#: ../src/orca/rolenames.py:462
 msgid "tbar"
 msgstr "ccụ"
 
-#: src/orca/rolenames.py:463
+#: ../src/orca/rolenames.py:463
 msgid "ToolBar"
 msgstr "Thanh công cụ"
 
-#: src/orca/rolenames.py:464
+#: ../src/orca/rolenames.py:464
 msgid "tool bar"
 msgstr "thanh công cụ"
 
-#: src/orca/rolenames.py:467
+#: ../src/orca/rolenames.py:467
 msgid "tip"
 msgstr "mẹo"
 
-#: src/orca/rolenames.py:468
+#: ../src/orca/rolenames.py:468
 msgid "ToolTip"
 msgstr "Mẹo công cụ"
 
-#: src/orca/rolenames.py:469
+#: ../src/orca/rolenames.py:469
 msgid "tool tip"
 msgstr "mẹo công cụ"
 
-#: src/orca/rolenames.py:472 src/orca/rolenames.py:474
+#: ../src/orca/rolenames.py:472
+#: ../src/orca/rolenames.py:474
 msgid "tree"
 msgstr "cây"
 
-#: src/orca/rolenames.py:473
+#: ../src/orca/rolenames.py:473
 msgid "Tree"
 msgstr "Cây"
 
-#: src/orca/rolenames.py:477
+#: ../src/orca/rolenames.py:477
 msgid "trtbl"
 msgstr "bcây"
 
-#: src/orca/rolenames.py:478
+#: ../src/orca/rolenames.py:478
 msgid "TreeTable"
 msgstr "Bảng cây"
 
-#: src/orca/rolenames.py:479
+#: ../src/orca/rolenames.py:479
 msgid "tree table"
 msgstr "bảng cây"
 
-#: src/orca/rolenames.py:482
+#: ../src/orca/rolenames.py:482
 msgid "unk"
 msgstr "krõ"
 
-#: src/orca/rolenames.py:483
+#: ../src/orca/rolenames.py:483
 msgid "Unknown"
 msgstr "Không rõ"
 
-#: src/orca/rolenames.py:484
+#: ../src/orca/rolenames.py:484
 msgid "unknown"
 msgstr "không rõ"
 
-#: src/orca/rolenames.py:487
+#: ../src/orca/rolenames.py:487
 msgid "vwprt"
 msgstr "cxem"
 
-#: src/orca/rolenames.py:488
+#: ../src/orca/rolenames.py:488
 msgid "Viewport"
 msgstr "Cổng xem"
 
-#: src/orca/rolenames.py:489
+#: ../src/orca/rolenames.py:489
 msgid "viewport"
 msgstr "cổng xem"
 
-#: src/orca/rolenames.py:492
+#: ../src/orca/rolenames.py:492
 msgid "wnd"
 msgstr "csổ"
 
-#: src/orca/rolenames.py:493
+#: ../src/orca/rolenames.py:493
 msgid "Window"
 msgstr "Cửa sổ"
 
-#: src/orca/rolenames.py:494
+#: ../src/orca/rolenames.py:494
 msgid "window"
 msgstr "cửa sổ"
 
-#: src/orca/rolenames.py:497
+#: ../src/orca/rolenames.py:497
 msgid "hdr"
 msgstr "đầu"
 
-#: src/orca/rolenames.py:498
+#: ../src/orca/rolenames.py:498
 msgid "Header"
 msgstr "Đầu trang"
 
-#: src/orca/rolenames.py:499
+#: ../src/orca/rolenames.py:499
 msgid "header"
 msgstr "đầu trang"
 
-#: src/orca/rolenames.py:502
+#: ../src/orca/rolenames.py:502
 msgid "ftr"
 msgstr "chân"
 
-#: src/orca/rolenames.py:503
+#: ../src/orca/rolenames.py:503
 msgid "Footer"
 msgstr "Chân trang"
 
-#: src/orca/rolenames.py:504
+#: ../src/orca/rolenames.py:504
 msgid "footer"
 msgstr "chân trang"
 
-#: src/orca/rolenames.py:507
+#: ../src/orca/rolenames.py:507
 msgid "para"
 msgstr "đoạn"
 
-#: src/orca/rolenames.py:508
+#: ../src/orca/rolenames.py:508
 msgid "Paragraph"
 msgstr "Đoạn văn"
 
-#: src/orca/rolenames.py:509
+#: ../src/orca/rolenames.py:509
 msgid "paragraph"
 msgstr "đoạn văn"
 
 # Name: do not translate/ tên: đừng dịch
-#: src/orca/rolenames.py:512
+#: ../src/orca/rolenames.py:512
 msgid "app"
 msgstr "ứng"
 
-#: src/orca/rolenames.py:513
+#: ../src/orca/rolenames.py:513
 msgid "Application"
 msgstr "Ứng dụng"
 
-#: src/orca/rolenames.py:514
+#: ../src/orca/rolenames.py:514
 msgid "application"
 msgstr "ứng dụng"
 
-#: src/orca/rolenames.py:517
+#: ../src/orca/rolenames.py:517
 msgid "auto"
 msgstr "tđộng"
 
-#: src/orca/rolenames.py:518
+#: ../src/orca/rolenames.py:518
 msgid "AutoComplete"
 msgstr "Tự động hoàn thành"
 
-#: src/orca/rolenames.py:519
+#: ../src/orca/rolenames.py:519
 msgid "autocomplete"
 msgstr "tự động hoàn thành"
 
-#: src/orca/rolenames.py:522
+#: ../src/orca/rolenames.py:522
 msgid "edtbr"
 msgstr "chỉnh"
 
-#: src/orca/rolenames.py:523
+#: ../src/orca/rolenames.py:523
 msgid "EditBar"
 msgstr "Thanh hIệu chỉnh"
 
-#: src/orca/rolenames.py:524
+#: ../src/orca/rolenames.py:524
 msgid "edit bar"
 msgstr "thanh hiệu chỉnh"
 
-#: src/orca/rolenames.py:527
+#: ../src/orca/rolenames.py:527
 msgid "emb"
 msgstr "nhúng"
 
-#: src/orca/rolenames.py:528
+#: ../src/orca/rolenames.py:528
 msgid "EmbeddedComponent"
 msgstr "Thành phần nhúng"
 
-#: src/orca/rolenames.py:529
+#: ../src/orca/rolenames.py:529
 msgid "embedded component"
 msgstr "thành phần nhúng"
 
-#: src/orca/scripts/Evolution.py:74
+#: ../src/orca/scripts/Evolution.py:75
 msgid "calv"
 msgstr "klịch"
 
-#: src/orca/scripts/Evolution.py:75
+#: ../src/orca/scripts/Evolution.py:76
 msgid "CalendarView"
 msgstr "Khung xem lịch"
 
-#: src/orca/scripts/Evolution.py:76
+#: ../src/orca/scripts/Evolution.py:77
 msgid "calendar view"
 msgstr "khung xem lịch"
 
-#: src/orca/scripts/Evolution.py:81
+#: ../src/orca/scripts/Evolution.py:82
 msgid "cale"
 msgstr "kiện"
 
-#: src/orca/scripts/Evolution.py:82
+#: ../src/orca/scripts/Evolution.py:83
 msgid "CalendarEvent"
 msgstr "Sự kiện lịch"
 
-#: src/orca/scripts/Evolution.py:83
+#: ../src/orca/scripts/Evolution.py:84
 msgid "calendar event"
 msgstr "sự kiện lịch"
 
-#: src/orca/scripts/Evolution.py:520
+#: ../src/orca/scripts/Evolution.py:569
 msgid "No appointments"
 msgstr "Không có cuộc hẹn"
 
-#: src/orca/scripts/Evolution.py:594
+#: ../src/orca/scripts/Evolution.py:643
 msgid "Directories button"
 msgstr "Nút thư mục"
 
-#: src/orca/scripts/Mozilla.py:216 src/orca/scripts/StarOffice.py:184
+#: ../src/orca/scripts/Mozilla.py:223
+#: ../src/orca/scripts/StarOffice.py:291
 msgid "link"
 msgstr "liên kết"
 
-#: src/orca/scripts/gedit.py:136
+#: ../src/orca/scripts/gedit.py:139
 msgid "Change to:"
 msgstr "Đổi sang:"
 
-#: src/orca/scripts/gedit.py:137
+#: ../src/orca/scripts/gedit.py:140
 msgid "Misspelled word:"
-msgstr "Từ sai chính tả : "
+msgstr "Từ sai chính tả :"
 
-#. The indication that spell checking is complete is when the
-#. "misspelt" word is set to "Completed spell checking". Ugh!
-#. Try to detect this and let the user know.
-#: src/orca/scripts/gedit.py:166
+#.The indication that spell checking is complete is when the
+#."misspelt" word is set to "Completed spell checking". Ugh!
+#.Try to detect this and let the user know.
+#: ../src/orca/scripts/gedit.py:169
 msgid "Completed spell checking"
 msgstr "Mới kiểm tra xong chính tả"
 
-#: src/orca/scripts/gedit.py:167
+#: ../src/orca/scripts/gedit.py:170
 msgid "Spell checking is complete."
 msgstr "Việc kiểm tra chính tả là hoàn tất."
 
-#: src/orca/scripts/gedit.py:169
+#: ../src/orca/scripts/gedit.py:172
 msgid "Press Tab and Return to terminate."
 msgstr "Hãy bấm phím Tab và Return để kết thúc."
 
-#: src/orca/scripts/gedit.py:254 src/orca/scripts/gedit.py:306
+#: ../src/orca/scripts/gedit.py:259
+#: ../src/orca/scripts/gedit.py:312
 msgid "Check Spelling"
 msgstr "Kiểm tra chính tả"
 
-#: src/orca/scripts/StarOffice.py:278 src/orca/scripts/StarOffice.py:328
+#: ../src/orca/scripts/StarOffice.py:386
+#: ../src/orca/scripts/StarOffice.py:437
 msgid "Spellcheck:"
 msgstr "Bắt lỗi chính tả :"
 
-#. Note to translators: the regular expression here represents a
-#. string to match in the localized application name as seen by
-#. at-poke.  For most cases, the application name is the name of
-#. the binary used to start the application, but this is an
-#. unreliable assumption.  The only reliable way to do the
-#. translation is by running the application and then viewing its
-#. name in the main window of at-poke.
+#.Note to translators: the regular expression here represents a
+#.string to match in the localized application name as seen by
+#.at-poke.  For most cases, the application name is the name of
+#.the binary used to start the application, but this is an
+#.unreliable assumption.  The only reliable way to do the
+#.translation is by running the application and then viewing its
+#.name in the main window of at-poke.
 #.
-#: src/orca/settings.py:356
+#: ../src/orca/settings.py:361
 msgid "[\\S\\s]*StarOffice[\\s\\S]*"
 msgstr "[\\S\\s]*StarOffice[\\s\\S]*"
 
-#: src/orca/settings.py:357
+#: ../src/orca/settings.py:362
 msgid "soffice.bin"
 msgstr "soffice.bin"
 
-#: src/orca/settings.py:358
+#: ../src/orca/settings.py:363
 msgid "[Ee]volution"
 msgstr "[Ee]volution"
 
-#: src/orca/settings.py:359
+#: ../src/orca/settings.py:364
 msgid "Deer Park"
 msgstr "Deer Park"
 
-#: src/orca/settings.py:360
-#, fuzzy
+#: ../src/orca/settings.py:365
 msgid "Bon Echo"
-msgstr "bộ chọn phông chữ"
+msgstr "Phản hồi Bon"
 
-#. Note to translators:  the "Workspace " string is the
-#. prefix of what metacity shows when you press Ctrl+Alt
-#. and the left or right arrow keys to switch between
-#. workspaces.  The goal here is to find a match with
-#. that prefix.
+#.Note to translators:  the "Workspace " string is the
+#.prefix of what metacity shows when you press Ctrl+Alt
+#.and the left or right arrow keys to switch between
+#.workspaces.  The goal here is to find a match with
+#.that prefix.
 #.
-#: src/orca/scripts/metacity.py:104
-#, fuzzy
+#: ../src/orca/scripts/metacity.py:104
 msgid "Workspace "
-msgstr "dấu cách"
+msgstr "Vùng làm việc "
 
-#: src/orca/scripts/metacity.py:105
+#: ../src/orca/scripts/metacity.py:105
 msgid "inaccessible"
 msgstr "không tới được"
 
-#: src/orca/scripts/planner.py:69 src/orca/scripts/planner.py:127
+#: ../src/orca/scripts/planner.py:69
+#: ../src/orca/scripts/planner.py:127
 msgid "Display more options"
-msgstr ""
+msgstr "Hiển thị tùy chọn thêm"
 
-#: src/orca/scripts/planner.py:131 src/orca/scripts/planner.py:139
-#: src/orca/scripts/planner.py:164 src/orca/scripts/planner.py:172
-#: src/orca/speechgenerator.py:1265 src/orca/speechgenerator.py:1268
+#: ../src/orca/scripts/planner.py:131
+#: ../src/orca/scripts/planner.py:139
+#: ../src/orca/scripts/planner.py:164
+#: ../src/orca/scripts/planner.py:172
+#: ../src/orca/speechgenerator.py:1265
+#: ../src/orca/speechgenerator.py:1268
 msgid "pressed"
 msgstr "đã bấm"
 
-#: src/orca/scripts/planner.py:133 src/orca/scripts/planner.py:141
-#: src/orca/scripts/planner.py:166 src/orca/scripts/planner.py:174
-#: src/orca/speechgenerator.py:1274 src/orca/speechgenerator.py:1277
+#: ../src/orca/scripts/planner.py:133
+#: ../src/orca/scripts/planner.py:141
+#: ../src/orca/scripts/planner.py:166
+#: ../src/orca/scripts/planner.py:174
+#: ../src/orca/speechgenerator.py:1274
+#: ../src/orca/speechgenerator.py:1277
 msgid "not pressed"
 msgstr "chưa bấm"
 
-#: src/orca/speechgenerator.py:362 src/orca/speechgenerator.py:365
+#: ../src/orca/speechgenerator.py:362
+#: ../src/orca/speechgenerator.py:365
 msgid "checked"
 msgstr "đã kiểm tra"
 
-#: src/orca/speechgenerator.py:371 src/orca/speechgenerator.py:374
+#: ../src/orca/speechgenerator.py:371
+#: ../src/orca/speechgenerator.py:374
 msgid "not checked"
 msgstr "chưa kiểm tra"
 
-#: src/orca/speechgenerator.py:899 src/orca/speechgenerator.py:902
+#: ../src/orca/speechgenerator.py:899
+#: ../src/orca/speechgenerator.py:902
 msgid "selected"
 msgstr "đã chọn"
 
-#: src/orca/speechgenerator.py:910 src/orca/speechgenerator.py:913
+#: ../src/orca/speechgenerator.py:910
+#: ../src/orca/speechgenerator.py:913
 msgid "not selected"
 msgstr "chưa chọn"
 
-#: src/orca/speechgenerator.py:1211
+#: ../src/orca/speechgenerator.py:1211
 msgid "tear off"
 msgstr "tách rời"
 
-#: src/orca/util.py:269
+#: ../src/orca/util.py:284
 msgid "Misspelled word: "
 msgstr "Từ sai chính tả : "
 
-#: src/orca/util.py:270
+#: ../src/orca/util.py:285
 msgid " Context is "
 msgstr " Ngữ cảnh là "
-
-#, fuzzy
-#~ msgid "Speech is unavailable.\n"
-#~ msgstr "Tiếng nói không sẵn sàng."
-
-#~ msgid "Creating .orca directory."
-#~ msgstr "Đang tạo thư mục <.orca>."
-
-#~ msgid "Creating .orca script directory."
-#~ msgstr "Đang tạo thư mục tập lệnh <.orca>..."
-
-#~ msgid "Creating __init_.py in .orca script directory."
-#~ msgstr "Đang tạo <__init_.py> trong thư mục tập lệnh <.orca>..."
-
-#~ msgid "one tab"
-#~ msgstr "một tab"
-
-#~ msgid "tabs"
-#~ msgstr "nhiều tab"
-
-#~ msgid "Echo by word, character, both or none?  Enter w, c, b or n: "
-#~ msgstr ""
-#~ "Vọng theo từ (w), ký tự (c), cả hai (b) hay không gì (n)? Nhập w, c, b "
-#~ "hay n:"
-
-#~ msgid "Braille support appears to work, use it?  Enter y or n. "
-#~ msgstr "Hình như hỗ trợ Bray được: dùng nó không? Gõ y (có) hay n (không): "
-
-#~ msgid "Forces a reset of the speech service."
-#~ msgstr "Ép buộc đặt lại dịch vụ nói tiếng."
-
-#~ msgid "No page to read."
-#~ msgstr "Không có trang cần đọc."
-
-#~ msgid "Reading web page failed."
-#~ msgstr "Việc đọc trang Mạng bị lỗi."
