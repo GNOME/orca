@@ -11,6 +11,9 @@
           for the spread sheet did not match what is being displayed in
           the table cell.
 
+        * bugs/bugs.html
+          Added Evolution bug #343035 to the list of bugs to track.
+
 2006-05-25  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:
