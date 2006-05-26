@@ -178,7 +178,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
                 # If the contents of the spread sheet input line field is
                 # not the same as what is displayed in the table cell, then
-                # append "has formula" to the end of the braille line.
+                # append "has formula" to the end of the utterances.
                 #
                 if inputLineForCell.text:
                     inputLine = inputLineForCell.text.getText(0,-1)
