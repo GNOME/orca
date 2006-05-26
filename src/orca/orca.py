@@ -1406,35 +1406,35 @@ def main():
     setupRequested  = False
     showGUI         = False
     try:
-        # Note to translators: ? is for help
-        #                      h is for help
-        #                      s is for setup
-        #                      n is for no setup
-        #                      t is for text setup
-        #                      v is for version
+        # ? is for help
+        # h is for help
+        # s is for setup
+        # n is for no setup
+        # t is for text setup
+        # v is for version
         #
         opts, args = getopt.getopt(
             sys.argv[1:],
-            _("?stnv"),
-            [_("help"),
-             _("setup"),
-             _("gui-setup"),
-             _("text-setup"),
-             _("no-setup"),
-             _("version")])
+            "?stnv",
+            ["help",
+             "setup",
+             "gui-setup",
+             "text-setup",
+             "no-setup",
+             "version"])
         for opt, val in opts:
-            if opt in (_("-s"), _("--gui-setup"), _("--setup")):
+            if opt in ("-s", "--gui-setup", "--setup"):
                 setupRequested = True
                 showGUI = desktopRunning
-            if opt in (_("-t"), _("--text-setup")):
+            if opt in ("-t", "--text-setup"):
                 setupRequested = True
                 showGUI = False
-            if opt in (_("-n"), _("--no-setup")):
+            if opt in ("-n", "--no-setup"):
                 bypassSetup = True
-            if opt in (_("-?"), _("--help")):
+            if opt in ("-?", "--help"):
                 usage()
                 os._exit(0)
-            if opt in (_("-v"), _("--version")):
+            if opt in ("-v", "--version"):
                 print "Orca %s" % platform.version
                 os._exit(0)
     except:

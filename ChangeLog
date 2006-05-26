@@ -1,3 +1,10 @@
+2006-05-26  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca.py:
+          Fix for bug #343013.
+          http://bugzilla.gnome.org/show_bug.cgi?id=343013
+          The command line option strings should not be translatable.
+
 2006-05-25  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:
