@@ -5,6 +5,12 @@
           http://bugzilla.gnome.org/show_bug.cgi?id=343013
           The command line option strings should not be translatable.
 
+        * src/orca/scripts/StarOffice.py:
+          Adjusted the braille/speech out for StarOffice spread sheet
+          table cells to append "has formula" if the input line contents
+          for the spread sheet did not match what is being displayed in
+          the table cell.
+
 2006-05-25  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:

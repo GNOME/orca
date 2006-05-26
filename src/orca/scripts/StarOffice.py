@@ -32,6 +32,37 @@ import orca.util as util
 
 from orca.orca_i18n import _ # for gettext support
 
+inputLineForCell = None
+
+def locateInputLine(obj):
+    """Return the spread sheet input line. This only needs to be found
+    the very first time a spread sheet table cell gets focus. We use the
+    table cell to work back up the component hierarchy until we have found
+    the common panel that both it and the input line reside in. We then
+    use that as the base component to search for a component which has a
+    paragraph role. This will be the input line.
+
+    Arguments:
+    - obj: the spread sheet table cell that has just got focus.
+
+    Returns the spread sheet input line component.
+    """
+
+    inputLine = None
+    panel = obj.parent.parent.parent.parent
+    if panel and panel.role == rolenames.ROLE_PANEL:
+        allParagraphs = atspi.findByRole(panel, rolenames.ROLE_PARAGRAPH)
+        if len(allParagraphs) == 1:
+            inputLine = allParagraphs[0]
+        else:
+            debug.println(debug.LEVEL_SEVERE,
+                  "StarOffice: locateInputLine: incorrect paragraph count.")
+    else:
+        debug.println(debug.LEVEL_SEVERE,
+                  "StarOffice: locateInputLine: couldn't find common panel.")
+
+    return inputLine
+
 class BrailleGenerator(braillegenerator.BrailleGenerator):
     """Overrides _getBrailleRegionsForTableCell so that, when we are in 
     a spread sheet, we can braille the location of the table cell as well 
@@ -50,6 +81,8 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         and the second element is the Region which should get focus.
         """
 
+        global inputLineForCell, locateInputLine
+
         rolesList = [rolenames.ROLE_TABLE_CELL, \
                      rolenames.ROLE_TABLE, \
                      rolenames.ROLE_UNKNOWN, \
@@ -59,6 +92,9 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                      rolenames.ROLE_FRAME, \
                      rolenames.ROLE_APPLICATION]
         if util.isDesiredFocusedItem(obj, rolesList):
+            if inputLineForCell == None:
+                inputLineForCell = locateInputLine(obj)
+
             text = util.getDisplayedText(obj)
             regions = []
             componentRegion = braille.Component(obj, text)
@@ -73,6 +109,17 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                 objectText = obj.text.getText(0, -1)
                 if objectText and len(objectText) != 0:
                     regions.append(braille.Region(" " + obj.name))
+
+                # If the contents of the spread sheet input line field is
+                # not the same as what is displayed in the table cell, then
+                # append "has formula" to the end of the braille line.
+                #
+                if inputLineForCell.text:
+                    inputLine = inputLineForCell.text.getText(0,-1)
+                    if inputLine and len(inputLine) != 0:
+                        #print "braille: input line: ", inputLine
+                        if inputLine != objectText:
+                            regions.append(braille.Region(_(" has formula")))
 
             return [regions, componentRegion]
 
@@ -104,6 +151,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         utterances = speechGen._getSpeechForTableCell(self, obj, 
                                                       already_focused)
 
+        global inputLineForCell, locateInputLine
+
         rolesList = [rolenames.ROLE_TABLE_CELL, \
                      rolenames.ROLE_TABLE, \
                      rolenames.ROLE_UNKNOWN, \
@@ -114,6 +163,9 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                      rolenames.ROLE_APPLICATION]
         if util.isDesiredFocusedItem(obj, rolesList):
 
+            if inputLineForCell == None:
+                inputLineForCell = locateInputLine(obj)
+
             # If the spread sheet table cell has something in it, then we
             # want to append the name of the cell (which will be its location).
             # Note that if the cell was empty, then util.getDisplayedText will
@@ -123,6 +175,17 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 objectText = obj.text.getText(0, -1)
                 if objectText and len(objectText) != 0:
                     utterances.append(" " + obj.name)
+
+                # If the contents of the spread sheet input line field is
+                # not the same as what is displayed in the table cell, then
+                # append "has formula" to the end of the braille line.
+                #
+                if inputLineForCell.text:
+                    inputLine = inputLineForCell.text.getText(0,-1)
+                    if inputLine and len(inputLine) != 0:
+                        #print "speech: input line: ", inputLine
+                        if inputLine != objectText:
+                            utterances.append(_(" has formula"))
 
         return utterances
 
