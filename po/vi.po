@@ -5,9 +5,9 @@
 msgid ""
 ""
 msgstr "Project-Id-Version: orca HEAD\n"
-"Report-Msgid-Bugs-To: orca-list@gnome.org\n"
-"POT-Creation-Date: 2006-05-26 04:26+0200\n"
-"PO-Revision-Date: 2006-05-26 20:50+0930\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-05-27 04:25+0200\n"
+"PO-Revision-Date: 2006-05-27 21:15+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -756,90 +756,20 @@ msgstr "-t, --text-setup            _Thiết lập_ tùy thích người dùng (
 #: ../src/orca/orca.py:1365
 msgid "-n, --no-setup               Skip set up of user preferences"
 msgstr "-n, --no-setup               Bỏ qua việc thiết lập tùy thích người dùng\n"
-"						(_không thiết lập_)"
+"\t\t\t\t\t\t(_không thiết lập_)"
 
 #: ../src/orca/orca.py:1367
 msgid ""
 "If Orca has not been previously set up by the user, Orca\n"
 "will automatically launch the preferences set up unless\n"
 "the -n or --no-setup option is used."
-msgstr "Nếu Orca chưa được thiết lập bởi người dùng, Orca sẽ khởi chạy tự động hộp thoại thiết lập tùy thích, nếu tùy chọn « -n » hay « --no-setup » không được dùng."
+msgstr "Nếu Orca chưa được thiết lập bởi người dùng, Orca sẽ khởi chạy tự động hộp "
+"thoại thiết lập tùy thích, nếu tùy chọn « -n » hay « --no-setup » không được "
+"dùng."
 
 #: ../src/orca/orca.py:1369
 msgid "Report bugs to orca-list@gnome.org."
 msgstr "Hãy thông báo lỗi nào cho <orca-list@gnome.org>."
-
-#: ../src/orca/orca.py:1418
-msgid "?stnv"
-msgstr "?stnv"
-
-#: ../src/orca/orca.py:1419
-msgid "help"
-msgstr "trợ giúp"
-
-#: ../src/orca/orca.py:1420
-msgid "setup"
-msgstr "thiết lập"
-
-#: ../src/orca/orca.py:1421
-msgid "gui-setup"
-msgstr "thiết lập đồ họa"
-
-#: ../src/orca/orca.py:1422
-msgid "text-setup"
-msgstr "thiết lập chữ"
-
-#: ../src/orca/orca.py:1423
-msgid "no-setup"
-msgstr "không thiết lập"
-
-#: ../src/orca/orca.py:1424
-msgid "version"
-msgstr "phiên bản"
-
-#: ../src/orca/orca.py:1426
-msgid "-s"
-msgstr "-s"
-
-#: ../src/orca/orca.py:1426
-msgid "--gui-setup"
-msgstr "--gui-setup"
-
-#: ../src/orca/orca.py:1426
-msgid "--setup"
-msgstr "--setup"
-
-#: ../src/orca/orca.py:1429
-msgid "-t"
-msgstr "-t"
-
-#: ../src/orca/orca.py:1429
-msgid "--text-setup"
-msgstr "--text-setup"
-
-#: ../src/orca/orca.py:1432
-msgid "-n"
-msgstr "-n"
-
-#: ../src/orca/orca.py:1432
-msgid "--no-setup"
-msgstr "--no-setup"
-
-#: ../src/orca/orca.py:1434
-msgid "-?"
-msgstr "-?"
-
-#: ../src/orca/orca.py:1434
-msgid "--help"
-msgstr "--help"
-
-#: ../src/orca/orca.py:1437
-msgid "-v"
-msgstr "-v"
-
-#: ../src/orca/orca.py:1437
-msgid "--version"
-msgstr "--version"
 
 #: ../src/orca/orca_console_prefs.py:90
 #: ../src/orca/orca_console_prefs.py:106
@@ -1949,7 +1879,7 @@ msgid "Directories button"
 msgstr "Nút thư mục"
 
 #: ../src/orca/scripts/Mozilla.py:223
-#: ../src/orca/scripts/StarOffice.py:291
+#: ../src/orca/scripts/StarOffice.py:354
 msgid "link"
 msgstr "liên kết"
 
@@ -1981,8 +1911,13 @@ msgstr "Hãy bấm phím Tab và Return để kết thúc."
 msgid "Check Spelling"
 msgstr "Kiểm tra chính tả"
 
-#: ../src/orca/scripts/StarOffice.py:386
-#: ../src/orca/scripts/StarOffice.py:437
+#: ../src/orca/scripts/StarOffice.py:122
+#: ../src/orca/scripts/StarOffice.py:188
+msgid " has formula"
+msgstr " có công thức"
+
+#: ../src/orca/scripts/StarOffice.py:449
+#: ../src/orca/scripts/StarOffice.py:500
 msgid "Spellcheck:"
 msgstr "Bắt lỗi chính tả :"
 
