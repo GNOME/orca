@@ -1,5 +1,15 @@
 2006-05-26  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/scripts/StarOffice.py:
+          Added in a speakInputLine handler (triggered by typing Insert-a),
+          that will speak the contents of the spread sheet input line,
+          assuming the current locus of focus is a table cell.
+
+          Created a global isSpreadSheetCell() routine, that is used (in 
+          three places) to determine if the given object is a table cell.
+
+2006-05-26  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/orca.py:
           Fix for bug #343013.
           http://bugzilla.gnome.org/show_bug.cgi?id=343013

@@ -20,6 +20,7 @@
 import orca.debug as debug
 import orca.atspi as atspi
 import orca.default as default
+import orca.input_event as input_event
 import orca.rolenames as rolenames
 import orca.orca as orca
 import orca.braille as braille
@@ -63,6 +64,26 @@ def locateInputLine(obj):
 
     return inputLine
 
+def isSpreadSheetCell(obj):
+    """Return an indication of whether the given obj is a spread sheet
+    table cell.
+
+    Arguments:
+    - obj: the object to check.
+
+    Returns True if this is a table cell, False otherwise.
+    """
+
+    rolesList = [rolenames.ROLE_TABLE_CELL, \
+                 rolenames.ROLE_TABLE, \
+                 rolenames.ROLE_UNKNOWN, \
+                 rolenames.ROLE_SCROLL_PANE, \
+                 rolenames.ROLE_PANEL, \
+                 rolenames.ROLE_ROOT_PANE, \
+                 rolenames.ROLE_FRAME, \
+                 rolenames.ROLE_APPLICATION]
+    return util.isDesiredFocusedItem(obj, rolesList)
+
 class BrailleGenerator(braillegenerator.BrailleGenerator):
     """Overrides _getBrailleRegionsForTableCell so that, when we are in 
     a spread sheet, we can braille the location of the table cell as well 
@@ -81,17 +102,9 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         and the second element is the Region which should get focus.
         """
 
-        global inputLineForCell, locateInputLine
+        global inputLineForCell, isSpreadSheetCell, locateInputLine
 
-        rolesList = [rolenames.ROLE_TABLE_CELL, \
-                     rolenames.ROLE_TABLE, \
-                     rolenames.ROLE_UNKNOWN, \
-                     rolenames.ROLE_SCROLL_PANE, \
-                     rolenames.ROLE_PANEL, \
-                     rolenames.ROLE_ROOT_PANE, \
-                     rolenames.ROLE_FRAME, \
-                     rolenames.ROLE_APPLICATION]
-        if util.isDesiredFocusedItem(obj, rolesList):
+        if isSpreadSheetCell(obj):
             if inputLineForCell == None:
                 inputLineForCell = locateInputLine(obj)
 
@@ -151,17 +164,9 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         utterances = speechGen._getSpeechForTableCell(self, obj, 
                                                       already_focused)
 
-        global inputLineForCell, locateInputLine
+        global inputLineForCell, isSpreadSheetCell, locateInputLine
 
-        rolesList = [rolenames.ROLE_TABLE_CELL, \
-                     rolenames.ROLE_TABLE, \
-                     rolenames.ROLE_UNKNOWN, \
-                     rolenames.ROLE_SCROLL_PANE, \
-                     rolenames.ROLE_PANEL, \
-                     rolenames.ROLE_ROOT_PANE, \
-                     rolenames.ROLE_FRAME, \
-                     rolenames.ROLE_APPLICATION]
-        if util.isDesiredFocusedItem(obj, rolesList):
+        if isSpreadSheetCell(obj):
 
             if inputLineForCell == None:
                 inputLineForCell = locateInputLine(obj)
@@ -230,6 +235,62 @@ class Script(default.Script):
         """
 
         return SpeechGenerator()
+
+    def setupInputEventHandlers(self):
+        """Defines InputEventHandler fields for this script that can be
+        called by the key and braille bindings. In this particular case,
+        we just want to be able to add a handler to return the contents of
+        the input line.
+        """
+
+        default.Script.setupInputEventHandlers(self)
+
+        self.speakInputLineHandler = input_event.InputEventHandler(
+            Script.speakInputLine,
+            _("Speaks the contents of the input line."))
+
+    def getKeyBindings(self):
+        """Defines the key bindings for this script. Setup the default
+        key bindings, then add one in for reading the input line.
+
+        Returns an instance of keybindings.KeyBindings.
+        """
+
+        keyBindings = default.Script.getKeyBindings(self)
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "a",
+                1 << orca.MODIFIER_ORCA,
+                1 << orca.MODIFIER_ORCA,
+                self.speakInputLineHandler))
+
+        return keyBindings
+
+    def speakInputLine(self, inputEvent):
+        """Speak the contents of the spread sheet input line (assuming we 
+        have a handle to it - generated when we first focus on a spread 
+        sheet table cell.
+
+        This will be either the contents of the table cell that has focus
+        or the formula associated with it.
+
+        Arguments:
+        - inputEvent: if not None, the input event that caused this action.
+        """
+
+        debug.println(self.debugLevel, "StarOffice.speakInputLine.")
+
+        # Check to see if the current focus is a table cell.
+        #
+        if isSpreadSheetCell(orca.locusOfFocus):
+            if inputLineForCell and inputLineForCell.text:
+                inputLine = inputLineForCell.text.getText(0,-1)
+                if not inputLine:
+                    inputLine = _("empty")
+                debug.println(self.debugLevel,
+                        "StarOffice.speakInputLine: contents: %s" % inputLine)
+                speech.speak(inputLine)
 
     def readMisspeltWord(self, event, pane):
         """Speak/braille the current misspelt word plus its context.
