@@ -1,3 +1,11 @@
+2006-05-30  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/StarOffice.py:
+          Better handling of the "has formula" situation for spread sheet
+          table cells. Because the updating of the input line might not
+          have happened when the table cell gets focus, this is now done
+          in the onTextInserted method.
+
 2006-05-26  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:

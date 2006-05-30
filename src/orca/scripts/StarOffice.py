@@ -123,17 +123,6 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                 if objectText and len(objectText) != 0:
                     regions.append(braille.Region(" " + obj.name))
 
-                # If the contents of the spread sheet input line field is
-                # not the same as what is displayed in the table cell, then
-                # append "has formula" to the end of the braille line.
-                #
-                if inputLineForCell.text:
-                    inputLine = inputLineForCell.text.getText(0,-1)
-                    if inputLine and len(inputLine) != 0:
-                        #print "braille: input line: ", inputLine
-                        if inputLine != objectText:
-                            regions.append(braille.Region(_(" has formula")))
-
             return [regions, componentRegion]
 
         else:
@@ -180,17 +169,6 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 objectText = obj.text.getText(0, -1)
                 if objectText and len(objectText) != 0:
                     utterances.append(" " + obj.name)
-
-                # If the contents of the spread sheet input line field is
-                # not the same as what is displayed in the table cell, then
-                # append "has formula" to the end of the utterances.
-                #
-                if inputLineForCell.text:
-                    inputLine = inputLineForCell.text.getText(0,-1)
-                    if inputLine and len(inputLine) != 0:
-                        #print "speech: input line: ", inputLine
-                        if inputLine != objectText:
-                            utterances.append(_(" has formula"))
 
         return utterances
 
@@ -570,3 +548,49 @@ class Script(default.Script):
 
         default.Script.onNameChanged(self, event)
 
+    # This method tries to detect and handle the following cases:
+    # 1) Calc: spread sheet input line.
+
+    def onTextInserted(self, event):
+        """Called whenever text is inserted into an object.
+
+        Arguments:
+        - event: the Event
+        """
+
+        debug.printObjectEvent(self.debugLevel,
+                               event,
+                               event.source.toString())
+
+        # atspi.printAncestry(event.source)
+
+        # 1) Calc: spread sheet input line.
+        #
+        # If this "object:text-changed:insert" is for the spread sheet input
+        # line, then check to see if the current locus of focus is a spread
+        # sheet cell. If it is, and the contents of the input line are
+        # different from what is displayed in that cell, then speak "has
+        # formula" and append it to the braille line.
+        #
+        if inputLineForCell and inputLineForCell == event.source:
+            if orca.locusOfFocus.role == rolenames.ROLE_TABLE_CELL:
+                cell = orca.locusOfFocus
+
+                if cell.text:
+                    cellText = cell.text.getText(0, -1)
+                    if cellText and len(cellText) != 0:
+                        if inputLineForCell.text:
+                            inputLine = inputLineForCell.text.getText(0,-1)
+                            if inputLine and len(inputLine) != 0:
+                                if inputLine != cellText:
+                                    hf = _(" has formula")
+                                    speech.speak(hf, None, False)
+
+                                    line = braille.getShowingLine()
+                                    line.addRegion(braille.Region(hf))
+                                    braille.refresh()
+                                    #
+                                    # Fall-thru to process the event with 
+                                    # the default handler.
+
+        default.Script.onTextInserted(self, event)
