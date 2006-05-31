@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005 Sun Microsystems Inc.
+# Copyright 2005-2006 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -1087,6 +1087,14 @@ def getZonesFromAccessible(accessible, cliprect):
                 offset,
                 atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
 
+            # [[[WDW - HACK: well...gnome-terminal sometimes wants to
+            # give us outrageous values back from getTextAtOffset
+            # (see http://bugzilla.gnome.org/show_bug.cgi?id=343133),
+            # so we try to handle it.]]]
+            #
+            if startOffset < 0:
+                break
+
             # [[[WDW - HACK: this is here because getTextAtOffset
             # tends not to be implemented consistently across toolkits.
             # Sometimes it behaves properly (i.e., giving us an endOffset
@@ -1223,7 +1231,7 @@ def getZonesFromAccessible(accessible, cliprect):
             string = accessible.description
         else:
             string = ""
-            
+
         if string == "":
             # [[[TODO: WDW - ooohhhh....this is going to be a headache.
             # We want to synthesize a string for objects that are there,

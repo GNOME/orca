@@ -322,6 +322,14 @@ def textLines(obj):
                 offset,
                 atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
 
+            # [[[WDW - HACK: well...gnome-terminal sometimes wants to
+            # give us outrageous values back from getTextAtOffset
+            # (see http://bugzilla.gnome.org/show_bug.cgi?id=343133),
+            # so we try to handle it.]]]
+            #
+            if startOffset < 0:
+                break
+
             # [[[WDW - HACK: this is here because getTextAtOffset
             # tends not to be implemented consistently across toolkits.
             # Sometimes it behaves properly (i.e., giving us an endOffset
