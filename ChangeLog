@@ -1,5 +1,11 @@
 2006-05-31  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/speechgenerator.py:
+          Readjusted _getSpeechForFrame() to just get the default speech 
+          instead of treating the frame like an alert and speaking all 
+          unrelated labels. We'll need to see if this has any adverse 
+          effects and adjust accordingly.
+
         * src/orca/scripts/StarOffice.py:
           Even better handling of the "has formula" situation for spread sheet
           table cells. This is now done in the onSelectionChanged() method

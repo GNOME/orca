@@ -542,8 +542,13 @@ class SpeechGenerator:
         Returns a list of utterances to be spoken for the object.
         """
 
-        #utterances = self._getDefaultSpeech(obj, already_focused)
-        utterances = self._getSpeechForAlert(obj, already_focused)
+        # [[[TODO: richb - readjusted to just get the default speech instead
+        # of treating the frame like an alert and speaking all unrelated
+        # labels. We'll need to see if this has any adverse effects and
+        # adjust accordingly.]]]
+        # 
+        utterances = self._getDefaultSpeech(obj, already_focused)
+        #utterances = self._getSpeechForAlert(obj, already_focused)
 
         self._debugGenerator("_getSpeechForFrame",
                              obj,
