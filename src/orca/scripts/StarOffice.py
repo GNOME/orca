@@ -193,6 +193,10 @@ class Script(default.Script):
         #
         self.debugLevel = debug.LEVEL_FINEST
 
+        # A handle to the last spread sheet cell encountered.
+        #
+        self.lastCell = None
+
         # The following variables will be used to try to determine if we've
         # already handled this misspelt word (see readMisspeltWord() for
         # more details.
@@ -549,10 +553,10 @@ class Script(default.Script):
         default.Script.onNameChanged(self, event)
 
     # This method tries to detect and handle the following cases:
-    # 1) Calc: spread sheet input line.
+    # 1) Calc: spread sheet Name Box line.
 
-    def onTextInserted(self, event):
-        """Called whenever text is inserted into an object.
+    def onSelectionChanged(self, event):
+        """Called when an object's selection changes.
 
         Arguments:
         - event: the Event
@@ -566,31 +570,47 @@ class Script(default.Script):
 
         # 1) Calc: spread sheet input line.
         #
-        # If this "object:text-changed:insert" is for the spread sheet input
-        # line, then check to see if the current locus of focus is a spread
+        # If this "object:selection-changed" is for the spread sheet Name
+        # Box, then check to see if the current locus of focus is a spread
         # sheet cell. If it is, and the contents of the input line are
         # different from what is displayed in that cell, then speak "has
         # formula" and append it to the braille line.
         #
-        if inputLineForCell and inputLineForCell == event.source:
+        rolesList = [rolenames.ROLE_LIST, \
+                     rolenames.ROLE_COMBO_BOX, \
+                     rolenames.ROLE_TOOL_BAR, \
+                     rolenames.ROLE_PANEL, \
+                     rolenames.ROLE_ROOT_PANE, \
+                     rolenames.ROLE_FRAME, \
+                     rolenames.ROLE_APPLICATION]
+        if util.isDesiredFocusedItem(event.source, rolesList):
             if orca.locusOfFocus.role == rolenames.ROLE_TABLE_CELL:
                 cell = orca.locusOfFocus
 
-                if cell.text:
-                    cellText = cell.text.getText(0, -1)
-                    if cellText and len(cellText) != 0:
-                        if inputLineForCell.text:
-                            inputLine = inputLineForCell.text.getText(0,-1)
-                            if inputLine and len(inputLine) != 0:
-                                if inputLine != cellText:
-                                    hf = _(" has formula")
-                                    speech.speak(hf, None, False)
+                # We are getting two "object:selection-changed" events 
+                # for each spread sheet cell move, so in order to prevent 
+                # appending "has formula" twice, we only do it if the last 
+                # cell is different from this one.
+                #
+                if cell != self.lastCell:
+                    self.lastCell = cell
 
-                                    line = braille.getShowingLine()
-                                    line.addRegion(braille.Region(hf))
-                                    braille.refresh()
-                                    #
-                                    # Fall-thru to process the event with 
-                                    # the default handler.
+                    if cell.text:
+                        cellText = cell.text.getText(0, -1)
+                        if cellText and len(cellText) != 0:
+                            if inputLineForCell and inputLineForCell.text:
+                                inputLine = inputLineForCell.text.getText(0,-1)
+                                if inputLine and len(inputLine) != 0:
+                                    if inputLine != cellText:
+                                        hf = _(" has formula")
+                                        speech.speak(hf, None, False)
 
-        default.Script.onTextInserted(self, event)
+                                        line = braille.getShowingLine()
+                                        line.addRegion(braille.Region(hf))
+                                        braille.refresh()
+                                        #
+                                        # Fall-thru to process the event with
+                                        # the default handler.
+
+        default.Script.onSelectionChanged(self, event)
+
