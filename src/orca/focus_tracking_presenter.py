@@ -253,24 +253,30 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         deleting any scripts as necessary.
         """
 
-        apps = []
-
-        desktop = self.registry.desktop
-        for i in range(0, desktop.childCount):
-            try:
+        # Sometimes the desktop can become unavailable.  This happens
+        # often when synaptic is used to load new modules (see the bug
+        # report http://bugzilla.gnome.org/show_bug.cgi?id=342022).
+        # So...if this happens, we'll just move along.  The next
+        # successful call to _reclaimScripts will reclaim anything we
+        # didn't reclaim this time.
+        #
+        try:
+            apps = []
+            desktop = self.registry.desktop
+            for i in range(0, desktop.childCount):
                 acc = desktop.getChildAtIndex(i)
                 app = atspi.Accessible.makeAccessible(acc)
                 if app:
                     apps.insert(0, app)
-            except:
-                debug.printException(debug.LEVEL_FINEST)
 
-        for app in self._knownScripts.keys():
-            if apps.count(app) == 0:
-                script = self._knownScripts[app]
-                self._deregisterEventListeners(script)
-                del self._knownScripts[app]
-                del script
+            for app in self._knownScripts.keys():
+                if apps.count(app) == 0:
+                    script = self._knownScripts[app]
+                    self._deregisterEventListeners(script)
+                    del self._knownScripts[app]
+                    del script
+        except:
+            debug.printException(debug.LEVEL_FINEST)
 
     ########################################################################
     #                                                                      #

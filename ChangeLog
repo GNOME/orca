@@ -14,6 +14,13 @@
 
 2006-05-31  Willie Walker <william.walker@sun.com>
 
+        * src/orca/focus_tracking_presenter.py: possible fix for bug
+	342022.  It appears as though the desktop would get a little flaky
+	as synaptic was popping up windows and then destroying them as it
+	was showing progress.  This provides yet another defensive
+	mechanism to handle this.  Note that synaptic in general needs a
+	bit of scripting to make it truly usable.
+	
 	* src/orca/flat_review.py: fix for bug 343133 where Orca would
 	reliably hang when attempting to do a flat review of gnome-terminal
 	when the user was viewing a man page.  This seems to be caused by
