@@ -46,7 +46,7 @@ __copyright__ = "Copyright (c) 2005 Google Inc."
 __license__ = "LGPL"
 __all__=['Speaker']
 
-import os, sys
+import os
 
 import debug
 import speechserver

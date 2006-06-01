@@ -52,7 +52,7 @@ def locateInputLine(obj):
     inputLine = None
     panel = obj.parent.parent.parent.parent
     if panel and panel.role == rolenames.ROLE_PANEL:
-        allParagraphs = atspi.findByRole(panel, rolenames.ROLE_PARAGRAPH)
+        allParagraphs = util.findByRole(panel, rolenames.ROLE_PARAGRAPH)
         if len(allParagraphs) == 1:
             inputLine = allParagraphs[0]
         else:
@@ -287,7 +287,7 @@ class Script(default.Script):
         - pane: the option pane in the spell check dialog.
         """
 
-        paragraph = atspi.findByRole(pane, rolenames.ROLE_PARAGRAPH)
+        paragraph = util.findByRole(pane, rolenames.ROLE_PARAGRAPH)
 
         # Determine which word is the misspelt word. This word will have
         # non-default text attributes associated with it.
@@ -416,7 +416,7 @@ class Script(default.Script):
                                event,
                                event.source.toString())
 
-        # atspi.printAncestry(event.source)
+        # util.printAncestry(event.source)
 
         # 1) Writer: text paragraph.
         #
@@ -434,7 +434,7 @@ class Script(default.Script):
             debug.println(self.debugLevel,
                   "StarOffice.locusOfFocusChanged - Writer: text paragraph.")
 
-            result = atspi.getTextLineAtCaret(event.source)
+            result = util.getTextLineAtCaret(event.source)
 
             # Check to see if there are any hypertext links in this paragraph.
             # If no, then just speak the whole line. Otherwise, split the
@@ -519,7 +519,7 @@ class Script(default.Script):
                                event,
                                event.source.toString())
 
-        # atspi.printAncestry(event.source)
+        # util.printAncestry(event.source)
 
         # 1) Writer: spell checking dialog.
         #
@@ -566,7 +566,7 @@ class Script(default.Script):
                                event,
                                event.source.toString())
 
-        # atspi.printAncestry(event.source)
+        # util.printAncestry(event.source)
 
         # 1) Calc: spread sheet input line.
         #

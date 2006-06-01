@@ -23,7 +23,6 @@ both speech and Braille.
 This module also provides a number of presenter functions that display
 Accessible object information to the user based upon the object's role."""
 
-import string
 import time
 
 import atspi
@@ -586,7 +585,7 @@ class Script(script.Script):
             #[x, y, width, height] = obj.text.getCharacterExtents(
             #    context.currentOffset, 0)
             #print context.currentOffset, x, y, width, height
-            #orca.drawOutline(x, y, width, height)
+            #util.drawOutline(x, y, width, height)
             pass
         elif type == speechserver.SayAllContext.INTERRUPTED:
             #print "INTERRUPTED", context.utterance, context.currentOffset
@@ -617,7 +616,7 @@ class Script(script.Script):
 
         # Get the AccessibleText interface of the provided object
         #
-        [line, startOffset, endOffset] = atspi.getTextLineAtCaret(obj)
+        [line, startOffset, endOffset] = util.getTextLineAtCaret(obj)
 
         if len(line) != 0:
             if line.isupper():
@@ -799,7 +798,7 @@ class Script(script.Script):
 
         # Now speak the tree node level.
         #
-        level = atspi.getNodeLevel(orca.locusOfFocus)
+        level = util.getNodeLevel(orca.locusOfFocus)
         if level >= 0:
             utterances.append(_("tree level %d") % (level + 1))
 
@@ -978,8 +977,8 @@ class Script(script.Script):
                                         rolenames.ROLE_COLUMN_HEADER].speech
                             utterances.append(text)
 
-                oldNodeLevel = atspi.getNodeLevel(oldLocusOfFocus)
-                newNodeLevel = atspi.getNodeLevel(newLocusOfFocus)
+                oldNodeLevel = util.getNodeLevel(oldLocusOfFocus)
+                newNodeLevel = util.getNodeLevel(newLocusOfFocus)
 
             # We'll also treat radio button groups as though they are
             # in a context, with the label for the group being the
@@ -1071,7 +1070,7 @@ class Script(script.Script):
         #
         if False and (obj.role == rolenames.ROLE_PANEL) \
                and (event.detail1 == 1) \
-               and orca.isInActiveApp(obj):
+               and util.isInActiveApp(obj):
 
             # It's only showing if its parent is showing. [[[TODO: WDW -
             # HACK we stop at the application level because applications
@@ -1094,7 +1093,7 @@ class Script(script.Script):
             #
             if reallyShowing:
                 utterances = []
-                labels = atspi.findUnrelatedLabels(obj)
+                labels = util.findUnrelatedLabels(obj)
                 for label in labels:
                     utterances.append(label.name)
 
@@ -1928,14 +1927,14 @@ class Script(script.Script):
         """Toggles between flat review mode and focus tracking mode."""
 
         if self.flatReviewContext:
-            orca.drawOutline(-1, 0, 0, 0)
+            util.drawOutline(-1, 0, 0, 0)
             self.flatReviewContext = None
             self.updateBraille(orca.locusOfFocus)
         else:
             context = self.getFlatReviewContext()
             [string, x, y, width, height] = \
                      context.getCurrent(flat_review.Context.WORD)
-            orca.drawOutline(x, y, width, height)
+            util.drawOutline(x, y, width, height)
             self.reviewCurrentItem(inputEvent, self.targetCursorCell)
 
         return True
@@ -2017,7 +2016,7 @@ class Script(script.Script):
 
             [string, x, y, width, height] = \
                 self.flatReviewContext.getCurrent(flat_review.Context.CHAR)
-            orca.drawOutline(x, y, width, height)
+            util.drawOutline(x, y, width, height)
 
             self.targetCursorCell = 1
             self.updateBrailleReview(self.targetCursorCell)
@@ -2077,7 +2076,7 @@ class Script(script.Script):
             [string, x, y, width, height] = \
                 self.flatReviewContext.getCurrent(flat_review.Context.CHAR)
 
-            orca.drawOutline(x, y, width, height)
+            util.drawOutline(x, y, width, height)
 
             self.targetCursorCell = 1
             self.updateBrailleReview(self.targetCursorCell)
@@ -2139,7 +2138,7 @@ class Script(script.Script):
 
         [string, x, y, width, height] = \
                  context.getCurrent(flat_review.Context.LINE)
-        orca.drawOutline(x, y, width, height)
+        util.drawOutline(x, y, width, height)
 
         # Don't announce anything from speech if the user used
         # the Braille display as an input device.
@@ -2233,7 +2232,7 @@ class Script(script.Script):
         context = self.getFlatReviewContext()
         [string, x, y, width, height] = \
                  context.getCurrent(flat_review.Context.WORD)
-        orca.drawOutline(x, y, width, height)
+        util.drawOutline(x, y, width, height)
 
         # Don't announce anything from speech if the user used
         # the Braille display as an input device.
@@ -2261,7 +2260,7 @@ class Script(script.Script):
         context = self.getFlatReviewContext()
         [string, x, y, width, height] = \
                  context.getCurrent(flat_review.Context.ZONE)
-        orca.drawOutline(x, y, width, height)
+        util.drawOutline(x, y, width, height)
 
         # Don't announce anything from speech if the user used
         # the Braille display as an input device.
@@ -2308,7 +2307,7 @@ class Script(script.Script):
 
         [string, x, y, width, height] = \
                  context.getCurrent(flat_review.Context.CHAR)
-        orca.drawOutline(x, y, width, height)
+        util.drawOutline(x, y, width, height)
 
         # Don't announce anything from speech if the user used
         # the Braille display as an input device.
@@ -2415,7 +2414,7 @@ class Script(script.Script):
             string = ""
             for zone in line.zones:
                 string += " '%s' [%s]" % (zone.string, zone.accessible.role)
-                orca.drawOutline(zone.x, zone.y, zone.width, zone.height,
+                util.drawOutline(zone.x, zone.y, zone.width, zone.height,
                                  False)
             debug.println(debug.LEVEL_OFF, string)
         self.flatReviewContext = None

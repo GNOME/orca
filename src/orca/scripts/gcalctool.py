@@ -71,9 +71,9 @@ class Script(default.Script):
             # the text_view display. This can be found by looking for an
             # accessible object with a role of ROLE_EDITBAR.
             #
-            d = atspi.findByRole(event.source, rolenames.ROLE_TEXT)
+            d = util.findByRole(event.source, rolenames.ROLE_TEXT)
             if len(d) == 0:
-                d = atspi.findByRole(event.source, rolenames.ROLE_EDITBAR)
+                d = util.findByRole(event.source, rolenames.ROLE_EDITBAR)
 
             # If d is an empty list at this point, we're unable to get the
             # gcalctool display. Inform the user.

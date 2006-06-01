@@ -45,6 +45,7 @@ import rolenames
 import settings
 import speech
 import threading
+import util
 
 from input_event import BrailleEvent
 from input_event import KeyboardEvent
@@ -204,38 +205,6 @@ def visualAppearanceChanged(event, obj):
         _PRESENTATION_MANAGERS[_currentPresentationManager].\
             visualAppearanceChanged(event, obj)
 
-def isInActiveApp(obj):
-    """Returns True if the given object is from the same application that
-    currently has keyboard focus.
-
-    Arguments:
-    - obj: an Accessible object
-    """
-
-    if not obj:
-        return False
-    else:
-        return locusOfFocus and (locusOfFocus.app == obj.app)
-
-def findActiveWindow():
-    """Traverses the list of known apps looking for one who has an
-    immediate child (i.e., a window) whose state includes the active state.
-
-    Returns the Python Accessible of the window that's active or None if
-    no windows are active.
-    """
-
-    window = None
-    apps = atspi.getKnownApplications()
-    for app in apps:
-        for i in range(0, app.childCount):
-            state = app.child(i).state
-            if state.count(atspi.Accessibility.STATE_ACTIVE) > 0:
-                window = app.child(i)
-                break
-
-    return window
-
 def _onChildrenChanged(e):
     """Tracks children-changed events on the desktop to determine when
     apps start and stop.
@@ -265,6 +234,8 @@ def _onMouseButton(e):
     Arguments:
     - e: at-spi event from the at-api registry
     """
+    global lastInputEvent
+
     event = atspi.Event(e)
     lastInputEvent = MouseButtonEvent(event)
 
@@ -435,61 +406,24 @@ def cycleDebugLevel(script=None, inputEvent=None):
     return True
 
 def printApps(script=None, inputEvent=None):
-    """Prints a list of all applications to stdout
-
-    Arguments:
-    - inputEvent: the InputEvent instance that caused this to be called.
-
-    Returns True indicating the event should be consumed.
-    """
-
-    level = debug.LEVEL_OFF
-
-    apps = atspi.getKnownApplications()
-    debug.println(level, "There are %d Accessible applications" % len(apps))
-    for app in apps:
-        debug.printDetails(level, "  App: ", app, False)
-        for i in range(0, app.childCount):
-            child = app.child(i)
-            debug.printDetails(level, "    Window: ", child, False)
-            if child.parent != app:
-                debug.println(level,
-                              "      WARNING: child's parent is not app!!!")
-
+    """Prints a list of all applications to stdout."""
+    util.printApps()
     return True
 
 def printActiveApp(script=None, inputEvent=None):
-    """Prints the active application.
-
-    Arguments:
-    - inputEvent: the key event (if any) which caused this to be called.
-
-    Returns True indicating the event should be consumed.
-    """
-
-    level = debug.LEVEL_OFF
-
-    window = findActiveWindow()
-    if not window:
-        debug.println(level, "Active application: None")
-    else:
-        app = window.app
-        if not app:
-            debug.println(level, "Active application: None")
-        else:
-            debug.println(level, "Active application: %s" % app.name)
-
+    """Prints the currently active application."""
+    util.printActiveApp()
     return True
 
 def printAncestry(script=None, inputEvent=None):
     """Prints the ancestry for the current locusOfFocus"""
-    atspi.printAncestry(locusOfFocus)
+    util.printAncestry(locusOfFocus)
     return True
 
 def printHierarchy(script=None, inputEvent=None):
     """Prints the application for the current locusOfFocus"""
     if locusOfFocus:
-        atspi.printHierarchy(locusOfFocus.app, locusOfFocus)
+        util.printHierarchy(locusOfFocus.app, locusOfFocus)
     return True
 
 ########################################################################
@@ -745,7 +679,6 @@ def _processKeyboardEvent(event):
 
     Returns True if the event should be consumed.
     """
-
     global lastInputEvent
     global _orcaModifierPressed
 
@@ -839,7 +772,6 @@ def _processBrailleEvent(command):
 
     Returns True if the event was consumed; otherwise False
     """
-
     global lastInputEvent
 
     # [[[TODO: WDW - probably should add braille bindings to this module.]]]
@@ -863,84 +795,6 @@ def _processBrailleEvent(command):
         consumed = True
 
     return consumed
-
-########################################################################
-#                                                                      #
-# METHODS FOR DRAWING RECTANGLES AROUND OBJECTS ON THE SCREEN          #
-#                                                                      #
-########################################################################
-
-_display = None
-_visibleRectangle = None
-
-def drawOutline(x, y, width, height, erasePrevious=True):
-    """Draws a rectangular outline around the accessible, erasing the
-    last drawn rectangle in the process."""
-
-    global _display
-    global _visibleRectangle
-
-    if not _display:
-        try:
-            _display = gtk.gdk.display_get_default()
-        except:
-            debug.printException(debug.LEVEL_FINEST)
-            _display = gtk.gdk.display(":0")
-
-        if not _display:
-            debug.println(debug.LEVEL_SEVERE,
-                          "orca.drawOutline could not open display.")
-            return
-
-    screen = _display.get_default_screen()
-    root_window = screen.get_root_window()
-    graphics_context = root_window.new_gc()
-    graphics_context.set_subwindow(gtk.gdk.INCLUDE_INFERIORS)
-    graphics_context.set_function(gtk.gdk.INVERT)
-    graphics_context.set_line_attributes(3,                  # width
-                                         gtk.gdk.LINE_SOLID, # style
-                                         gtk.gdk.CAP_BUTT,   # end style
-                                         gtk.gdk.JOIN_MITER) # join style
-
-    # Erase the old rectangle.
-    #
-    if _visibleRectangle and erasePrevious:
-        drawOutline(_visibleRectangle[0], _visibleRectangle[1],
-                    _visibleRectangle[2], _visibleRectangle[3], False)
-        _visibleRectangle = None
-
-    # We'll use an invalid x value to indicate nothing should be
-    # drawn.
-    #
-    if x < 0:
-        _visibleRectangle = None
-        return
-
-    # The +1 and -2 stuff here is an attempt to stay within the
-    # bounding box of the object.
-    #
-    root_window.draw_rectangle(graphics_context,
-                               False, # Fill
-                               x + 1,
-                               y + 1,
-                               max(1, width - 2),
-                               max(1, height - 2))
-
-    _visibleRectangle = [x, y, width, height]
-
-def outlineAccessible(accessible, erasePrevious=True):
-    """Draws a rectangular outline around the accessible, erasing the
-    last drawn rectangle in the process."""
-
-    if accessible:
-        component = accessible.component
-        if component:
-            visibleRectangle = component.getExtents(0) # coord type = screen
-            drawOutline(visibleRectangle.x, visibleRectangle.y,
-                        visibleRectangle.width, visibleRectangle.height,
-                        erasePrevious)
-    else:
-        drawOutline(-1, 0, 0, 0, erasePrevious)
 
 ########################################################################
 #                                                                      #
@@ -1246,7 +1100,7 @@ def start(registry):
         # [[[WDW - comment out hierarchical_presenter for now.  It
         # relies on the list of known applications, and we've disabled
         # that due to a hang in a call to getChildAtIndex in
-        # atspi.getKnownApplications.]]]
+        # util.getKnownApplications.]]]
         #
         #import focus_tracking_presenter
         #import hierarchical_presenter

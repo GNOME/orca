@@ -19,10 +19,21 @@
 
 """Provides various utility functions for Orca."""
 
+try:
+    # This can fail due to gtk not being available.  We want to
+    # be able to recover from that if possible.  The main driver
+    # for this is to allow "orca --text-setup" to work even if
+    # the desktop is not running.
+    #
+    import gtk
+except:
+    pass
+
 import string
 
 import atspi
 import debug
+import orca
 import rolenames
 import speech
 import speechserver
@@ -114,8 +125,7 @@ def __getDisplayedTextInComboBox(combo):
             textObj = child
 
     if textObj:
-        [displayedText, startOffset, endOffset] = \
-            atspi.getTextLineAtCaret(textObj)
+        [displayedText, startOffset, endOffset] = getTextLineAtCaret(textObj)
         #print "TEXTOBJ", displayedText
     else:
         selectedItem = None
@@ -135,8 +145,7 @@ def __getDisplayedTextInComboBox(combo):
             displayedText = combo.name
             #print "NAME", displayedText
         elif combo.text:
-            [displayedText, startOffset, endOffset] = \
-                atspi.getTextLineAtCaret(combo)
+            [displayedText, startOffset, endOffset] = getTextLineAtCaret(combo)
             #print "TEXT", displayedText
 
     return displayedText
@@ -290,17 +299,14 @@ def speakMisspeltWord(allTokens, badWord):
 
 def textLines(obj):
     """Creates a generator that can be used to iterate over each line
-    of a text object, starting at the caret offset.  One can do something
-    like the following to access the lines:
-
-    for line in atspi.textLines(orca.locusOfFocus.text):
-        <<<do something with the line>>>
+    of a text object, starting at the caret offset.
 
     Arguments:
     - obj: an Accessible that has a text specialization
 
-    Returns a tuple: [SayAllContext, acss], where SayAllContext has the
-    text to be spoken and acss is an ACSS instance for speaking the text.
+    Returns an iterator that produces elements of the form:
+    [SayAllContext, acss], where SayAllContext has the text to be
+    spoken and acss is an ACSS instance for speaking the text.
     """
     if not obj:
         return
@@ -415,3 +421,492 @@ def isWordDelimiter(character):
 
     return (character in string.whitespace) \
            or (character in string.punctuation)
+
+def getFrame(obj):
+    """Returns the frame containing this object, or None if this object
+    is not inside a frame.
+
+    Arguments:
+    - obj: the Accessible object
+    """
+
+    debug.println(debug.LEVEL_FINEST,
+                  "Finding frame for source.name="
+                  + obj.accessibleNameToString())
+
+    while obj \
+          and (obj != obj.parent) \
+          and (obj.role != rolenames.ROLE_FRAME):
+        obj = obj.parent
+        debug.println(debug.LEVEL_FINEST, "--> obj.name="
+                      + obj.accessibleNameToString())
+
+    if obj and (obj.role == rolenames.ROLE_FRAME):
+        pass
+    else:
+        obj = None
+
+    return obj
+
+def getTextLineAtCaret(obj):
+    """Gets the line of text where the caret is.
+
+    Argument:
+    - obj: an Accessible object that implements the AccessibleText
+           interface
+
+    Returns the line of text where the caret is.
+    """
+
+    # Get the the AccessibleText interrface
+    #
+    text = obj.text
+    if not text:
+        return ["", 0, 0]
+
+    # Get the line containing the caret
+    #
+    offset = text.caretOffset
+    line = text.getTextAtOffset(offset,
+                                atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+
+    # Line is actually a list of objects-- the first is the actual
+    # text of the line, the second is the start offset, and the third
+    # is the end offset.  Sometimes we get the trailing line-feed-- remove it
+    #
+    if line[0][-1:] == "\n":
+        content = line[0][:-1]
+    else:
+        content = line[0]
+
+    return [content, offset, line[1]]
+
+def getNodeLevel(obj):
+    """Determines the node level of this object if it is in a tree
+    relation, with 0 being the top level node.  If this object is
+    not in a tree relation, then -1 will be returned.
+
+    Arguments:
+    -obj: the Accessible object
+    """
+
+    if not obj:
+        return -1
+
+    level = -1
+    node = obj
+    done = False
+    while not done:
+        relations = node.relations
+        node = None
+        for relation in relations:
+            if relation.getRelationType() \
+                   == atspi.Accessibility.RELATION_NODE_CHILD_OF:
+                level += 1
+                node = atspi.Accessible.makeAccessible(relation.getTarget(0))
+                break
+        done = not node
+        debug.println(debug.LEVEL_FINEST, "util.getNodeLevel %d" % level)
+
+    return level
+
+def getAcceleratorAndShortcut(obj):
+    """Gets the accelerator string (and possibly shortcut) for the given
+    object.
+
+    Arguments:
+    - obj: the Accessible object
+
+    A list containing the accelerator and shortcut for the given object,
+    where the first element is the accelerator and the second element is
+    the shortcut.
+    """
+
+    action = obj.action
+
+    if not action:
+        return ["", ""]
+
+    # [[[TODO: WDW - assumes the first keybinding is all that we care about.
+    # Logged as bugzilla bug 319741.]]]
+    #
+    bindingStrings = action.getKeyBinding(0).split(';')
+
+    # [[[TODO: WDW - assumes menu items have three bindings.  Logged as
+    # bugzilla bug 319741.]]]
+    #
+    if len(bindingStrings) == 3:
+        #mnemonic       = bindingStrings[0]
+        fullShortcut   = bindingStrings[1]
+        accelerator    = bindingStrings[2]
+    elif len(bindingStrings) > 0:
+        fullShortcut   = bindingStrings[0]
+        accelerator    = ""
+    else:
+        fullShortcut   = ""
+        accelerator    = ""
+
+    fullShortcut = fullShortcut.replace("<","")
+    fullShortcut = fullShortcut.replace(">"," ")
+    fullShortcut = fullShortcut.replace(":"," ")
+
+    # If the accelerator string includes a Space, make sure we speak it.
+    #
+    if accelerator.endswith(" "):
+        accelerator += "space"
+    accelerator  = accelerator.replace("<","")
+    accelerator  = accelerator.replace(">"," ")
+
+    return [accelerator, fullShortcut]
+
+def getKnownApplications():
+    """Retrieves the list of currently running apps for the desktop
+    as a list of Accessible objects.
+    """
+
+    debug.println(debug.LEVEL_FINEST,
+                  "util.getKnownApplications...")
+
+    apps = []
+    registry = atspi.Registry()
+    for i in range(0, registry.desktop.childCount):
+        try:
+            acc = registry.desktop.getChildAtIndex(i)
+            app = atspi.Accessible.makeAccessible(acc)
+            if app:
+                apps.insert(0, app)
+        except:
+            debug.printException(debug.LEVEL_FINEST)
+
+    debug.println(debug.LEVEL_FINEST,
+                  "...orca._buildAppList")
+
+    return apps
+
+def getObjects(root, onlyShowing=True):
+    """Returns a list of all objects under the given root.  Objects
+    are returned in no particular order - this function does a simple
+    tree traversal, ignoring the children of objects which report the
+    MANAGES_DESCENDANTS state.
+
+    Arguments:
+    - root:        the Accessible object to traverse
+    - onlyShowing: examine only those objects that are SHOWING
+    
+    Returns: a list of all objects under the specified object
+    """
+
+    # The list of object we'll return
+    #
+    objlist = []
+
+    # Start at the first child of the given object
+    #
+    if root.childCount <= 0:
+        return objlist
+
+    for i in range(0, root.childCount):
+        debug.println(debug.LEVEL_FINEST,
+                      "util.getObjects looking at child %d" % i)
+        child = root.child(i)
+        if child \
+           and ((not onlyShowing) \
+                or (onlyShowing \
+                    and (child.state.count(atspi.Accessibility.STATE_SHOWING)))):
+            objlist.append(child)
+            if (child.state.count(atspi.Accessibility.STATE_MANAGES_DESCENDANTS) \
+                == 0) \
+                and (child.childCount > 0):
+                objlist.extend(getObjects(child))
+
+    return objlist
+
+def findByRole(root, role, onlyShowing=True):
+    """Returns a list of all objects of a specific role beneath the
+    given root.  [[[TODO: MM - This is very inefficient - this should
+    do it's own traversal and not add objects to the list that aren't
+    of the specified role.  Instead it uses the traversal from
+    getObjects and then deletes objects from the list that aren't of
+    the specified role.  Logged as bugzilla bug 319740.]]]
+
+    Arguments:
+    - root the Accessible object to traverse
+    - role the string describing the Accessible role of the object
+    - onlyShowing: examine only those objects that are SHOWING
+
+    Returns a list of descendants of the root that are of the given role.
+    """
+
+    objlist = []
+    allobjs = getObjects(root, onlyShowing)
+    for o in allobjs:
+        if o.role == role:
+            objlist.append(o)
+    return objlist
+
+def findUnrelatedLabels(root):
+    """Returns a list containing all the unrelated (i.e., have no
+    relations to anything and are not a fundamental element of a
+    more atomic component like a combo box) labels under the given
+    root.  Note that the labels must also be showing on the display.
+
+    Arguments:
+    - root the Accessible object to traverse
+
+    Returns a list of unrelated labels under the given root.
+    """
+
+    # Find all the labels in the dialog
+    #
+    allLabels = findByRole(root, rolenames.ROLE_LABEL)
+
+    # add the names of only those labels which are not associated with
+    # other objects (i.e., empty relation sets).
+    #
+    # [[[WDW - HACK: In addition, do not grab free labels whose
+    # parents are push buttons because push buttons can have labels as
+    # children.]]]
+    #
+    # [[[WDW - HACK: panels with labelled borders will have a child
+    # label that does not have its relation set.  So...we check to see
+    # if the panel's name is the same as the label's name.  If so, we
+    # ignore the label.]]]
+    #
+    unrelatedLabels = []
+
+    for label in allLabels:
+        relations = label.relations
+        if len(relations) == 0:
+            parent = label.parent
+            if parent and (parent.role == rolenames.ROLE_PUSH_BUTTON):
+                pass
+            elif parent and (parent.role == rolenames.ROLE_PANEL) \
+               and (parent.name == label.name):
+                pass
+            elif label.state.count(atspi.Accessibility.STATE_SHOWING):
+                unrelatedLabels.append(label)
+
+    # Now sort the labels based on their geographic position, top to
+    # bottom, left to right.  This is a very inefficient sort, but the
+    # assumption here is that there will not be a lot of labels to
+    # worry about.
+    #
+    sortedLabels = []
+    for label in unrelatedLabels:
+        index = 0
+        for sortedLabel in sortedLabels:
+            if (label.extents.y > sortedLabel.extents.y) \
+               or ((label.extents.y == sortedLabel.extents.y) \
+                   and (label.extents.x > sortedLabel.extents.x)):
+                index += 1
+            else:
+                break
+        sortedLabels.insert(index, label)
+
+    return sortedLabels
+
+def printAncestry(child):
+   """Prints a hierarchical view of a child's ancestry."""
+
+   if not child:
+       return
+
+   ancestorList = [child]
+   parent = child.parent
+   while parent and (parent.parent != parent):
+      ancestorList.insert(0, parent)
+      parent = parent.parent
+
+   indent = ""
+   for ancestor in ancestorList:
+      print ancestor.toString(indent + "+-", False)
+      indent += "  "
+
+def printHierarchy(root, ooi, indent="", onlyShowing=True, omitManaged=True):
+    """Prints the accessible hierarchy of all children
+
+    Arguments:
+    -indent:      Indentation string
+    -root:        Accessible where to start
+    -ooi:         Accessible object of interest
+    -onlyShowing: If True, only show children painted on the screen
+    -omitManaged: If True, omit children that are managed descendants
+    """
+
+    if not root:
+        return
+
+    if root == ooi:
+       print root.toString(indent + "(*)", False)
+    else:
+       print root.toString(indent + "+-", False)
+
+    rootManagesDescendants = root.state.count(\
+        atspi.Accessibility.STATE_MANAGES_DESCENDANTS)
+
+    for i in range(0, root.childCount):
+        child = root.child(i)
+        if child == root:
+            print indent + "  " + "WARNING CHILD == PARENT!!!"
+        elif not child:
+            print indent + "  " + "WARNING CHILD IS NONE!!!"
+        elif child.parent != root:
+            print indent + "  " + "WARNING CHILD.PARENT != PARENT!!!"
+        else:
+            paint = (not onlyShowing) \
+                    or \
+                    (onlyShowing \
+                     and child.state.count(atspi.Accessibility.STATE_SHOWING))
+            paint = paint \
+                    and ((not omitManaged) \
+                         or (omitManaged and not rootManagesDescendants))
+
+            if paint:
+               printHierarchy(child,
+                              ooi,
+                              indent + "  ",
+                              onlyShowing,
+                              omitManaged)
+
+def printApps():
+    """Prints a list of all applications to stdout."""
+
+    level = debug.LEVEL_OFF
+
+    apps = getKnownApplications()
+    debug.println(level, "There are %d Accessible applications" % len(apps))
+    for app in apps:
+        debug.printDetails(level, "  App: ", app, False)
+        for i in range(0, app.childCount):
+            child = app.child(i)
+            debug.printDetails(level, "    Window: ", child, False)
+            if child.parent != app:
+                debug.println(level,
+                              "      WARNING: child's parent is not app!!!")
+
+    return True
+
+def printActiveApp():
+    """Prints the active application."""
+
+    level = debug.LEVEL_OFF
+
+    window = findActiveWindow()
+    if not window:
+        debug.println(level, "Active application: None")
+    else:
+        app = window.app
+        if not app:
+            debug.println(level, "Active application: None")
+        else:
+            debug.println(level, "Active application: %s" % app.name)
+
+def isInActiveApp(obj):
+    """Returns True if the given object is from the same application that
+    currently has keyboard focus.
+
+    Arguments:
+    - obj: an Accessible object
+    """
+
+    if not obj:
+        return False
+    else:
+        return orca.locusOfFocus and (orca.locusOfFocus.app == obj.app)
+
+def findActiveWindow():
+    """Traverses the list of known apps looking for one who has an
+    immediate child (i.e., a window) whose state includes the active state.
+
+    Returns the Python Accessible of the window that's active or None if
+    no windows are active.
+    """
+
+    window = None
+    apps = getKnownApplications()
+    for app in apps:
+        for i in range(0, app.childCount):
+            state = app.child(i).state
+            if state.count(atspi.Accessibility.STATE_ACTIVE) > 0:
+                window = app.child(i)
+                break
+
+    return window
+
+########################################################################
+#                                                                      #
+# METHODS FOR DRAWING RECTANGLES AROUND OBJECTS ON THE SCREEN          #
+#                                                                      #
+########################################################################
+
+_display = None
+_visibleRectangle = None
+
+def drawOutline(x, y, width, height, erasePrevious=True):
+    """Draws a rectangular outline around the accessible, erasing the
+    last drawn rectangle in the process."""
+
+    global _display
+    global _visibleRectangle
+
+    if not _display:
+        try:
+            _display = gtk.gdk.display_get_default()
+        except:
+            debug.printException(debug.LEVEL_FINEST)
+            _display = gtk.gdk.display(":0")
+
+        if not _display:
+            debug.println(debug.LEVEL_SEVERE,
+                          "orca.drawOutline could not open display.")
+            return
+
+    screen = _display.get_default_screen()
+    root_window = screen.get_root_window()
+    graphics_context = root_window.new_gc()
+    graphics_context.set_subwindow(gtk.gdk.INCLUDE_INFERIORS)
+    graphics_context.set_function(gtk.gdk.INVERT)
+    graphics_context.set_line_attributes(3,                  # width
+                                         gtk.gdk.LINE_SOLID, # style
+                                         gtk.gdk.CAP_BUTT,   # end style
+                                         gtk.gdk.JOIN_MITER) # join style
+
+    # Erase the old rectangle.
+    #
+    if _visibleRectangle and erasePrevious:
+        drawOutline(_visibleRectangle[0], _visibleRectangle[1],
+                    _visibleRectangle[2], _visibleRectangle[3], False)
+        _visibleRectangle = None
+
+    # We'll use an invalid x value to indicate nothing should be
+    # drawn.
+    #
+    if x < 0:
+        _visibleRectangle = None
+        return
+
+    # The +1 and -2 stuff here is an attempt to stay within the
+    # bounding box of the object.
+    #
+    root_window.draw_rectangle(graphics_context,
+                               False, # Fill
+                               x + 1,
+                               y + 1,
+                               max(1, width - 2),
+                               max(1, height - 2))
+
+    _visibleRectangle = [x, y, width, height]
+
+def outlineAccessible(accessible, erasePrevious=True):
+    """Draws a rectangular outline around the accessible, erasing the
+    last drawn rectangle in the process."""
+
+    if accessible:
+        component = accessible.component
+        if component:
+            visibleRectangle = component.getExtents(0) # coord type = screen
+            drawOutline(visibleRectangle.x, visibleRectangle.y,
+                        visibleRectangle.width, visibleRectangle.height,
+                        erasePrevious)
+    else:
+        drawOutline(-1, 0, 0, 0, erasePrevious)

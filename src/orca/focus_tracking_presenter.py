@@ -21,6 +21,7 @@
 
 import gobject
 import Queue
+#import threading
 import time
 
 import atspi
@@ -30,7 +31,7 @@ import orca
 import presentation_manager
 import settings
 import speech
-import threading
+import util
 
 from orca_i18n import _ # for gettext support
 
@@ -551,7 +552,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         self._registerEventListener("window:deactivate")
         self._registerEventListener("object:children-changed:remove")
 
-        win = orca.findActiveWindow()
+        win = util.findActiveWindow()
         if win:
             # Generate a fake window activation event so the application
             # can tell the user about itself.

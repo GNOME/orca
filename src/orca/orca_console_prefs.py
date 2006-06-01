@@ -20,9 +20,6 @@
 """Uses speech prompts and a command line interface to set Orca
 user preferences."""
 
-import sys
-import time
-
 import acss
 import settings
 import speech

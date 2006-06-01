@@ -153,7 +153,7 @@ class SpeechGenerator:
         Returns a list of utterances to be spoken.
         """
 
-        result = atspi.getAcceleratorAndShortcut(obj)
+        result = util.getAcceleratorAndShortcut(obj)
 
         accelerator = result[0]
         #shortcut = result[1]
@@ -284,7 +284,7 @@ class SpeechGenerator:
 
         # Find all the unrelated labels in the dialog and speak them.
         #
-        labels = atspi.findUnrelatedLabels(obj)
+        labels = util.findUnrelatedLabels(obj)
         for label in labels:
             utterances.append(label.name)
 
@@ -759,7 +759,7 @@ class SpeechGenerator:
                 utterances.append(obj.name)
         utterances.extend(self._getSpeechForObjectRole(obj))
 
-        [text, startOffset, endOffset] = atspi.getTextLineAtCaret(obj)
+        [text, startOffset, endOffset] = util.getTextLineAtCaret(obj)
         utterances.append(text)
 
         self._debugGenerator("_getSpeechForText",
@@ -1233,7 +1233,7 @@ class SpeechGenerator:
         """
 
         title = None
-        frame = atspi.getFrame(obj)
+        frame = util.getFrame(obj)
         if frame:
             title = frame.name
         if not title:

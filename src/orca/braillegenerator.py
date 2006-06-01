@@ -153,7 +153,7 @@ class BrailleGenerator:
         if settings.brailleVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
             text = ""
             
-            result = atspi.getAcceleratorAndShortcut(obj)
+            result = util.getAcceleratorAndShortcut(obj)
 
             accelerator = result[0]
             #shortcut = result[1]
@@ -1023,7 +1023,7 @@ class BrailleGenerator:
             else:
                 regions[0].append(braille.Region(" " + _("collapsed")))
 
-        level = atspi.getNodeLevel(obj)
+        level = util.getNodeLevel(obj)
         if level >= 0:
             regions[0].append(braille.Region(" " + _("TREE LEVEL %d") \
                                              % (level + 1)))
@@ -1088,7 +1088,7 @@ class BrailleGenerator:
         self._debugGenerator("_getBrailleRegionsForTerminal", obj)
 
         title = None
-        frame = atspi.getFrame(obj)
+        frame = util.getFrame(obj)
         if frame:
             title = frame.name
         if not title:

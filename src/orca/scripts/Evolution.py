@@ -204,7 +204,7 @@ class Script(default.Script):
                                event,
                                event.source.toString())
 
-        # atspi.printAncestry(event.source)
+        # util.printAncestry(event.source)
 
         # 1) Mail view: current message pane: individual lines of text.
         #
@@ -228,7 +228,7 @@ class Script(default.Script):
                           + "current message pane: " \
                           + "individual lines of text.")
 
-            result = atspi.getTextLineAtCaret(event.source)
+            result = util.getTextLineAtCaret(event.source)
             braille.displayMessage(result[0])
             speech.speak(result[0])
             return
@@ -278,7 +278,7 @@ class Script(default.Script):
 
                     if cell.role == rolenames.ROLE_TEXT:
                         regions.append(braille.Text(cell))
-                        result = atspi.getTextLineAtCaret(cell)
+                        result = util.getTextLineAtCaret(cell)
                         utterances.append(result[0])
 
                 braille.displayRegions([regions, regions[0]])
@@ -699,7 +699,7 @@ class Script(default.Script):
             # misspelt word.
             #
             panel = event.source.parent.parent
-            allLabels = atspi.findByRole(panel, rolenames.ROLE_LABEL)
+            allLabels = util.findByRole(panel, rolenames.ROLE_LABEL)
             found = False
             for i in range(0, len(allLabels)):
                 if not found:
@@ -722,7 +722,7 @@ class Script(default.Script):
             if self.message_panel != None:
                 allTokens = []
                 panel = self.message_panel
-                allText = atspi.findByRole(panel, rolenames.ROLE_TEXT)
+                allText = util.findByRole(panel, rolenames.ROLE_TEXT)
                 for i in range(0, len(allText)):
                     text = allText[i].text.getText(0, -1)
                     tokens = text.split()
@@ -764,7 +764,7 @@ class Script(default.Script):
 
             table = event.source.parent.parent.parent.parent.parent
             cell = table.child(table.childCount-1)
-            allText = atspi.findByRole(cell, rolenames.ROLE_TEXT)
+            allText = util.findByRole(cell, rolenames.ROLE_TEXT)
             utterance = "for " + allText[0].text.getText(0, -1)
             speech.speak(utterance)
             return

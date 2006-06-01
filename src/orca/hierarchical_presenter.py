@@ -24,7 +24,7 @@ import atspi
 import braille
 import debug
 import speech
-import orca
+import util
 import presentation_manager
 
 from orca_i18n import _                          # for gettext support
@@ -100,7 +100,7 @@ class HierarchicalPresenter(presentation_manager.PresentationManager):
         accessible
         """
 
-        apps = atspi.getKnownApplications()
+        apps = util.getKnownApplications()
         for i in range(0, len(apps)):
             if accessible.app == apps[i]:
                 return i
@@ -143,12 +143,12 @@ class HierarchicalPresenter(presentation_manager.PresentationManager):
 
         debug.println(debug.LEVEL_OFF, brltext)
         braille.displayMessage(brltext)
-        orca.outlineAccessible(accessible)
+        util.outlineAccessible(accessible)
 
     def _navigateInterObject(self, keystring):
         """Navigates between objects in the component hierarchy."""
 
-        apps = atspi.getKnownApplications()
+        apps = util.getKnownApplications()
         if keystring == "Up":
             if self._currentObject == self._currentObject.app:
                 index = max(self._getApplicationIndex(self._currentObject) - 1,
@@ -429,9 +429,9 @@ class HierarchicalPresenter(presentation_manager.PresentationManager):
 
         speech.speak(_("Switching to hierarchical navigation mode."))
 
-        apps = atspi.getKnownApplications()
+        apps = util.getKnownApplications()
 
-        win = orca.findActiveWindow()
+        win = util.findActiveWindow()
 
         if win:
             self._currentObject = win.app
@@ -442,5 +442,5 @@ class HierarchicalPresenter(presentation_manager.PresentationManager):
 
     def deactivate(self):
         """Called when this presentation manager is deactivated."""
-        orca.outlineAccessible(None)
+        util.outlineAccessible(None)
 

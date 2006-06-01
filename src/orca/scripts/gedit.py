@@ -1,4 +1,4 @@
-# Orca
+ Orca
 #
 # Copyright 2004-2006 Sun Microsystems Inc.
 #
@@ -134,7 +134,7 @@ class Script(default.Script):
         # Spelling dialog. Look for the one that isn't a label to
         # another component.
         #
-        allLabels = atspi.findByRole(panel, rolenames.ROLE_LABEL)
+        allLabels = util.findByRole(panel, rolenames.ROLE_LABEL)
         for i in range(0, len(allLabels)):
             if allLabels[i].name.startswith(_("Change to:")) or \
                allLabels[i].name.startswith(_("Misspelled word:")):
@@ -150,7 +150,7 @@ class Script(default.Script):
         # was called. If they are the same then we ignore it.
 
         if self.textArea != None:
-            allText = atspi.findByRole(self.textArea, rolenames.ROLE_TEXT)
+            allText = util.findByRole(self.textArea, rolenames.ROLE_TEXT)
             caretPosition = allText[0].text.caretOffset
 
             debug.println(self.debugLevel, \
@@ -212,7 +212,7 @@ class Script(default.Script):
                                event,
                                event.source.toString())
 
-        # atspi.printAncestry(event.source)
+        # util.printAncestry(event.source)
 
         # 1) Text area (for caching handle for spell checking purposes).
         #
@@ -286,7 +286,7 @@ class Script(default.Script):
                                event,
                                event.source.toString())
 
-        # atspi.printAncestry(event.source)
+        # util.printAncestry(event.source)
 
         # 1) check spelling dialog.
         #

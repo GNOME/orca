@@ -68,6 +68,7 @@ except:
 import debug
 import eventsynthesizer
 import settings
+import util
 
 from orca_i18n import _                          # for gettext support
 from rolenames import getShortBrailleForRoleName # localized role names
@@ -301,7 +302,7 @@ class Text(Region):
         """
 
         self.accessible = accessible
-        result = atspi.getTextLineAtCaret(self.accessible)
+        result = util.getTextLineAtCaret(self.accessible)
         self.caretOffset = result[1]
         self.lineOffset = result[2]
         cursorOffset = self.caretOffset - self.lineOffset
@@ -322,7 +323,7 @@ class Text(Region):
         True.  Otherwise, return False.
         """
 
-        result = atspi.getTextLineAtCaret(self.accessible)
+        result = util.getTextLineAtCaret(self.accessible)
         caretOffset = result[1]
         lineOffset = result[2]
         cursorOffset = caretOffset - lineOffset
