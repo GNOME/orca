@@ -965,6 +965,22 @@ def init(registry):
                                             1 << MODIFIER_ORCA,
                                             increaseSpeechRateHandler))
 
+    decreaseSpeechPitchHandler = InputEventHandler(\
+        speech.decreaseSpeechPitch,
+        _("Decreases the speech pitch."))
+    _keyBindings.add(keybindings.KeyBinding("Down", \
+                                            1 << MODIFIER_ORCA, \
+                                            1 << MODIFIER_ORCA,
+                                            decreaseSpeechPitchHandler))
+
+    increaseSpeechPitchHandler = InputEventHandler(\
+        speech.increaseSpeechPitch,
+        _("Increases the speech pitch."))
+    _keyBindings.add(keybindings.KeyBinding("Up", \
+                                            1 << MODIFIER_ORCA, \
+                                            1 << MODIFIER_ORCA,
+                                            increaseSpeechPitchHandler))
+
     shutdownHandler = InputEventHandler(shutdown, _("Quits Orca"))
     _keyBindings.add(keybindings.KeyBinding("q", \
                                             1 << MODIFIER_ORCA, \

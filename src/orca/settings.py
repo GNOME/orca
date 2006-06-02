@@ -124,6 +124,12 @@ verbalizePunctuationStyle = PUNCTUATION_STYLE_ALL
 #
 speechRateDelta         = 5
 
+# The absolue amount to change the speech pitch when
+# increasing or decreasing pitch.  This is a numerical
+# value that represents an ACSS pitch value.
+#
+speechPitchDelta        = 0.5
+
 # The port to listen on if orca is to act as a speech server for self
 # voicing applications.
 #

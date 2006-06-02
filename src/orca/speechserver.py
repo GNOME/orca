@@ -224,6 +224,16 @@ class SpeechServer:
         """
         pass
 
+    def increaseSpeechPitch(self, step=0.5):
+        """Increases the speech pitch.
+        """
+        pass
+
+    def decreaseSpeechPitch(self, step=0.5):
+        """Decreases the speech pitch.
+        """
+        pass
+
     def stop(self):
         """Stops ongoing speech and flushes the queue."""
         pass

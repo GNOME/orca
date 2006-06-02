@@ -249,6 +249,14 @@ class SpeechServer(speechserver.SpeechServer):
         else:
             self._output.write("q {%s}\nd\n" %text)
 
+    def increaseSpeechPitch(self, step=0.5):
+        """Increase speech pitch."""
+        self._settings['average-pitch'] += step
+
+    def decreaseSpeechPitch(self, step=0.5):
+        """Decrease speech pitch."""
+        self._settings['average-pitch'] -= step
+
     def increaseSpeechRate(self, step=5):
         """Set speech rate."""
         self._settings['rate'] += step

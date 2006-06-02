@@ -271,6 +271,26 @@ class SpeechServer(speechserver.SpeechServer):
 
         speaker.setParameterValue("rate", rate)
 
+    def __getPitch(self, speaker):
+        """Gets the voice-specific pitch setting for the
+           voice-independent ACSS pitch value.
+
+        Returns the voice-specific pitch setting.
+        """
+
+        if not self.__pitchInfo.has_key(speaker):
+            return 5.0
+
+        [minPitch, averagePitch, maxPitch] = self.__pitchInfo[speaker]
+        pitch = speaker.getParameterValue("pitch")
+        if pitch < averagePitch:
+            return 5.0 * (pitch - minPitch) / (averagePitch - minPitch)
+        elif pitch > averagePitch:
+            return 5.0 \
+                   + (5.0 * (pitch - averagePitch) / (maxPitch - averagePitch))
+        else:
+            return 5.0
+
     def __setPitch(self, speaker, acssPitch):
         """Determines the voice-specific pitch setting for the
         voice-independent ACSS pitch value.
@@ -602,6 +622,62 @@ class SpeechServer(speechserver.SpeechServer):
                                     progressCallback)
         except StopIteration:
             pass
+
+    def increaseSpeechPitch(self, step=0.5):
+        """Increases the speech pitch for the default voice.
+
+        Arguments:
+        - step: the pitch step increment.
+        """
+
+        # [[[TODO: richb - this is a hack for now.  Need to take min/max
+        # values in account, plus also need to take into account that
+        # different engines provide different pitch ranges.]]]
+
+        voices = settings.voices
+        acss = voices[settings.DEFAULT_VOICE]
+        speaker = self.__getSpeaker(acss)
+
+        pitchDelta = settings.speechPitchDelta
+
+        try:
+            pitch = min(10, self.__getPitch(speaker) + pitchDelta)
+            acss[ACSS.AVERAGE_PITCH] = pitch
+            self.__setPitch(speaker, pitch)
+            debug.println(debug.LEVEL_CONFIGURATION,
+                          "speech.increaseSpeechPitch: pitch is now " \
+                          " %d" % pitch)
+            self.speak(_("higher."))
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
+
+    def decreaseSpeechPitch(self, step=0.5):
+        """Decreases the speech pitch for the default voice.
+
+        Arguments:
+        - step: the pitch step decrement.
+        """
+
+        # [[[TODO: WDW - this is a hack for now.  Need to take min/max
+        # values in account, plus also need to take into account that
+        # different engines provide different rate ranges.]]]
+
+        voices = settings.voices
+        acss = voices[settings.DEFAULT_VOICE]
+        speaker = self.__getSpeaker(acss)
+
+        pitchDelta = settings.speechPitchDelta
+
+        try:
+            pitch = max(1, self.__getPitch(speaker) - pitchDelta)
+            acss[ACSS.AVERAGE_PITCH] = pitch
+            self.__setPitch(speaker, pitch)
+            debug.println(debug.LEVEL_CONFIGURATION,
+                          "speech.decreaseSpeechPitch: pitch is now " \
+                          " %d" % pitch)
+            self.speak(_("lower."))
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
 
     def increaseSpeechRate(self, step=5):
         """Increases the speech rate.

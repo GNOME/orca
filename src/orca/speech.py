@@ -244,6 +244,16 @@ def decreaseSpeechRate(script=None, inputEvent=None):
         __speechserver.decreaseSpeechRate()
     return True
 
+def increaseSpeechPitch(script=None, inputEvent=None):
+    if __speechserver:
+        __speechserver.increaseSpeechPitch()
+    return True
+
+def decreaseSpeechPitch(script=None, inputEvent=None):
+    if __speechserver:
+        __speechserver.decreaseSpeechPitch()
+    return True
+
 def shutdown():
     global __speechserver
     if __speechserver:

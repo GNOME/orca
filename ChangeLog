@@ -1,5 +1,17 @@
 2006-06-02  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/espeechfactory.py:
+          src/orca/gnomespeechfactory.py:
+          src/orca/orca.py:
+          src/orca/settings.py:
+          src/orca/speech.py:
+          src/orca/speechserver.py:
+          Added in keyboard bindings for:
+          Insert-Up     (Increate speech pitch).
+          Insert-Down   (Decrease speech pitch).
+
+2006-06-02  Rich Burridge <rich.burridge@sun.com>
+
         * docs/pydoc/.cvsignore
           Added in all the generated HTML files.
 
