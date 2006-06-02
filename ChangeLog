@@ -1,3 +1,24 @@
+2006-06-02  Rich Burridge <rich.burridge@sun.com>
+
+        * docs/pydoc/.cvsignore
+          Added in all the generated HTML files.
+
+        * src/orca/scripts/gedit.py:
+          Reinserted missing "#" character at the beginning of line 1
+          that was causing a SyntaxError: invalid syntax when running gedit.
+
+        * src/orca/orca.py:
+          Various changes to keyboard bindings:
+          F12 or SunF37 ==> Insert-q         (Quits Orca).
+          Control-Insert-F5 ==> Insert-F4    (Cycles debug level).
+          Control-Insert-F7 ==> Insert-F8    (Prints debug information about 
+                                              the application with focus).
+          Insert-F8 ==> Insert-F10           (Switches to the next 
+                                              presentation manager.
+
+        * src/orca/default.py:
+          Insert-i ==> Insert-F3   (Reports information on current script).
+
 2006-06-01  Willie Walker <william.walker@sun.com>
 
 	* src/orca/atspi.py, src/orca/braille.py,

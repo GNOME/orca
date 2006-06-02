@@ -966,13 +966,9 @@ def init(registry):
                                             increaseSpeechRateHandler))
 
     shutdownHandler = InputEventHandler(shutdown, _("Quits Orca"))
-    _keyBindings.add(keybindings.KeyBinding("F12", \
-                                            0, \
-                                            0,
-                                            shutdownHandler))
-    _keyBindings.add(keybindings.KeyBinding("SunF37", \
-                                            0, \
-                                            0,
+    _keyBindings.add(keybindings.KeyBinding("q", \
+                                            1 << MODIFIER_ORCA, \
+                                            1 << MODIFIER_ORCA,
                                             shutdownHandler))
 
     keystrokeRecordingHandler = InputEventHandler(\
@@ -1022,11 +1018,10 @@ def init(registry):
     cycleDebugLevelHandler = InputEventHandler(
         cycleDebugLevel,
         _("Cycles the debug level at run time."))
-    _keyBindings.add(keybindings.KeyBinding(
-        "F5",
-        (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-        (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-        cycleDebugLevelHandler))
+    _keyBindings.add(keybindings.KeyBinding("F4", \
+                                            1 << MODIFIER_ORCA,
+                                            1 << MODIFIER_ORCA,
+                                            cycleDebugLevelHandler))
 
     printActiveAppHandler = InputEventHandler(\
         printActiveApp,
@@ -1049,16 +1044,15 @@ def init(registry):
         printHierarchy,
         _("Prints debug information about the application with focus"))
 
-    _keyBindings.add(keybindings.KeyBinding(
-        "F7",
-        (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-        (1 << MODIFIER_ORCA | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-        printHierarchyHandler))
+    _keyBindings.add(keybindings.KeyBinding("F8", \
+                                            1 << MODIFIER_ORCA, \
+                                            1 << MODIFIER_ORCA,
+                                            printHierarchyHandler))
 
     nextPresentationManagerHandler = InputEventHandler(\
         _switchToNextPresentationManager,
         _("Switches to the next presentation manager."))
-    _keyBindings.add(keybindings.KeyBinding("F8", \
+    _keyBindings.add(keybindings.KeyBinding("F10", \
                                             1 << MODIFIER_ORCA, \
                                             1 << MODIFIER_ORCA,
                                             nextPresentationManagerHandler))

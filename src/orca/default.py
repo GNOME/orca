@@ -520,7 +520,7 @@ class Script(script.Script):
 
         keyBindings.add(
             keybindings.KeyBinding(
-                "i",
+                "F3",
                 1 << orca.MODIFIER_ORCA,
                 1 << orca.MODIFIER_ORCA,
                 self.reportScriptInfoHandler))
