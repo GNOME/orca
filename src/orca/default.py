@@ -1710,7 +1710,14 @@ class Script(script.Script):
         """Toggles an indicator for whether we should just read the current
         table cell or read the whole row."""
 
+        line = _("Speak ")
         self.readTableCellRow = not self.readTableCellRow
+        if self.readTableCellRow:
+            line += _("row")
+        else:
+            line += _("cell")
+
+        speech.speak(line)
 
         return True
 

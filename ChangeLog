@@ -19,6 +19,10 @@
         * src/orca/default.py:
           Insert-i ==> Insert-F3   (Reports information on current script).
 
+          Speak either "Speak row" or "Speak cell" in 
+          toggleTableCellReadMode() depending upon the new setting of 
+          self.readTableCellRow.
+
 2006-06-01  Willie Walker <william.walker@sun.com>
 
 	* src/orca/atspi.py, src/orca/braille.py,
