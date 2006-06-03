@@ -1,3 +1,8 @@
+2006-06-03  Willie Walker <william.walker@sun.com>
+
+	* src/brl/brlmodule.c: fix for bug 343666: use PyGILState calls to
+	call into Python to prevent thread deadlock.
+	
 2006-06-02  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/espeechfactory.py:
