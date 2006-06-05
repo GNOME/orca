@@ -1,3 +1,15 @@
+2006-06-05  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/util.py:
+          Added a new isTextSelected() routine that returns True if the 
+          text caret associated with the given Accessible object, is 
+          located within a selected region of text.
+
+        * src/orca/default.py:
+          Updates to the sayCharacter(), sayWord() and sayLine() routines
+          to speak "selected", if the user navigated around holding the
+          Shift key down.
+
 2006-06-03  Willie Walker <william.walker@sun.com>
 
 	* src/brl/brlmodule.c: fix for bug 343666: use PyGILState calls to

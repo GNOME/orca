@@ -626,6 +626,9 @@ class Script(script.Script):
 
             speech.speak(line, voice)
 
+            if util.isTextSelected(obj):
+                speech.speak(_("selected"), None, False)
+
     def sayWord(self, obj):
         """Speaks the word at the caret.  [[[TODO: WDW - what if there is no
         word at the caret?]]]
@@ -649,6 +652,9 @@ class Script(script.Script):
             voice = self.voices[settings.DEFAULT_VOICE]
 
         speech.speak(word, voice)
+
+        if util.isTextSelected(obj):
+            speech.speak(_("selected"), None, False)
 
     def echoPreviousWord(self, obj):
         """Speaks the word prior to the caret, as long as there is
@@ -735,7 +741,16 @@ class Script(script.Script):
 
         text = obj.text
         offset = text.caretOffset
-        character = text.getText(offset, offset+1)
+
+        # If we have selected text and the last event was a move to the
+        # right, then speak the character to the left of where the text
+        # caret is (i.e. the selected character).
+        #
+        if util.isTextSelected(obj) and \
+           orca.lastInputEvent.event_string == "Right":
+            character = text.getText(offset-1, offset)
+        else:
+            character = text.getText(offset, offset+1)
 
         if util.getLinkIndex(obj, offset) >= 0:
             voice = self.voices[settings.HYPERLINK_VOICE]
@@ -745,6 +760,9 @@ class Script(script.Script):
             voice = self.voices[settings.DEFAULT_VOICE]
 
         speech.speak(character, voice)
+
+        if util.isTextSelected(obj):
+            speech.speak(_("selected"), None, False)
 
     def whereAmI(self, inputEvent):
         self.updateBraille(orca.locusOfFocus)

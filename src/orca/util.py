@@ -910,3 +910,30 @@ def outlineAccessible(accessible, erasePrevious=True):
                         erasePrevious)
     else:
         drawOutline(-1, 0, 0, 0, erasePrevious)
+
+def isTextSelected(obj):
+    """Returns True if the text caret associated with the given 
+       Accessible object, is located within a selected region of text.
+
+    Arguments:
+    - obj: the Accessible object.
+
+    Returns an indication of whether the text is selected.
+    """
+
+    if not obj:
+        return False
+
+    if not obj.text:
+        return False
+
+    text = obj.text
+    textOffset = text.caretOffset
+
+    for i in range(0, text.getNSelections()):
+        [startSelOffset, endSelOffset] = text.getSelection(i)
+        if (textOffset >= startSelOffset) \
+           and (textOffset <= endSelOffset):
+            return True
+
+    return False
