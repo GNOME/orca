@@ -195,6 +195,10 @@ class SpeechServer:
         """
         pass
 
+    def isSpeaking(self):
+	""""Returns True if the system is currently speaking."""
+	return False
+
     def sayAll(self, utteranceIterator, progressCallback):
         """Iterates through the given utteranceIterator, speaking
         each utterance one at a time.  Subclasses may postpone

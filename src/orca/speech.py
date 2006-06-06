@@ -63,13 +63,19 @@ class _SpeakRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                           % inputBody)
             if inputBody.startswith("speak:"):
                 speak(inputBody[6:])
+                self.send_response(200, 'OK')
             elif inputBody == "stop":
                 stop()
+                self.send_response(200, 'OK')
+            elif inputBody == "isSpeaking":
+                self.send_response(200, 'OK')
+                self.send_header("Content-type", "text/html")
+                self.end_headers()
+                self.wfile.write("%s" % isSpeaking())
         else:
             debug.println(debug.LEVEL_FINEST,
                           "speech._SpeakRequestHandler received no data")
 
-        self.send_response(200, 'OK')
 
 class _SpeakRequestThread(threading.Thread):
     """Runs a _SpeakRequestHandler in a separate thread."""
@@ -200,6 +206,13 @@ def speak(text, acss=None, interrupt=True):
     if __speechserver:
         debug.println(debug.LEVEL_INFO, "SPEECH OUTPUT: '" + text + "'")
         __speechserver.speak(text, __resolveACSS(acss), interrupt)
+
+def isSpeaking():
+    """"Returns True if the system is currently speaking."""
+    if __speechserver:
+        return __speechserver.isSpeaking()
+    else:
+        return False
 
 def speakUtterances(utterances, acss=None, interrupt=True):
     """Speaks the given list of utterances immediately.

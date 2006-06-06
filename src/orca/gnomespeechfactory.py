@@ -235,6 +235,7 @@ class SpeechServer(speechserver.SpeechServer):
         self.__driverName = driver.driverName
         self.__iid = iid
         self.__sayAll = None
+        self.__isSpeaking = False
 
     def __getRate(self, speaker):
         """Gets the voice-independent ACSS rate value of a voice."""
@@ -401,11 +402,13 @@ class SpeechServer(speechserver.SpeechServer):
             if self.__sayAll.idForCurrentContext == id:
                 context = self.__sayAll.currentContext
                 if type == GNOME.Speech.speech_callback_speech_started:
+                    self.__isSpeaking = True
                     context.currentOffset = context.startOffset
                     self.__sayAll.progressCallback(
                         self.__sayAll.currentContext,
                         speechserver.SayAllContext.PROGRESS)
                 elif type == GNOME.Speech.speech_callback_speech_progress:
+                    self.__isSpeaking = True
                     context.currentOffset = context.startOffset + offset
                     self.__sayAll.progressCallback(
                         self.__sayAll.currentContext,
@@ -422,11 +425,18 @@ class SpeechServer(speechserver.SpeechServer):
                             self.__sayAll.currentContext.utterance,
                             acss)
                     except StopIteration:
+                        self.__isSpeaking = False
                         context.currentOffset = context.endOffset
                         self.__sayAll.progressCallback(
                             self.__sayAll.currentContext,
                             speechserver.SayAllContext.COMPLETED)
                         self.__sayAll = None
+        elif type == GNOME.Speech.speech_callback_speech_started:
+            self.__isSpeaking = True
+        elif type == GNOME.Speech.speech_callback_speech_progress:
+            self.__isSpeaking = True
+        elif type == GNOME.Speech.speech_callback_speech_ended:
+            self.__isSpeaking = False
 
     def getInfo(self):
         """Returns [driverName, serverId]
@@ -574,6 +584,7 @@ class SpeechServer(speechserver.SpeechServer):
             #if interrupt:
             #    speaker.stop()
             self.__lastText = [text, acss]
+            self.__isSpeaking = True
             return speaker.say(text)
         except:
             # On failure, remember what we said, reset our connection to the
@@ -602,6 +613,10 @@ class SpeechServer(speechserver.SpeechServer):
             self.stop()
 
         self.__speak(text, acss, interrupt)
+
+    def isSpeaking(self):
+        """"Returns True if the system is currently speaking."""
+        return self.__isSpeaking
 
     def sayAll(self, utteranceIterator, progressCallback):
         """Iterates through the given utteranceIterator, speaking
@@ -746,6 +761,7 @@ class SpeechServer(speechserver.SpeechServer):
                 self.__speakers[name].stop()
             except:
                 pass
+        self.__isSpeaking = False
 
     def shutdown(self):
         """Shuts down the speech engine."""

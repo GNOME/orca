@@ -1,3 +1,10 @@
+2006-06-06  Willie Walker <william.walker@sun.com>
+
+	* src/orca/speech.py, src/orca/speechserver.py,
+	src/orca/gnomespeechfactory.py: add support for isSpeaking and
+	allow this to also be something that can be queried via the HTTP
+	support.
+	
 2006-06-05  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/util.py:
