@@ -625,9 +625,7 @@ class Script(script.Script):
                 voice = self.voices[settings.DEFAULT_VOICE]
 
             speech.speak(line, voice)
-
-            if util.isTextSelected(obj):
-                speech.speak(_("selected"), None, False)
+            util.speakTextSelectionState(obj, startOffset, endOffset)
 
     def sayWord(self, obj):
         """Speaks the word at the caret.  [[[TODO: WDW - what if there is no
@@ -652,9 +650,7 @@ class Script(script.Script):
             voice = self.voices[settings.DEFAULT_VOICE]
 
         speech.speak(word, voice)
-
-        if util.isTextSelected(obj):
-            speech.speak(_("selected"), None, False)
+        util.speakTextSelectionState(obj, startOffset, endOffset)
 
     def echoPreviousWord(self, obj):
         """Speaks the word prior to the caret, as long as there is
@@ -746,11 +742,15 @@ class Script(script.Script):
         # right, then speak the character to the left of where the text
         # caret is (i.e. the selected character).
         #
-        if util.isTextSelected(obj) and \
-           orca.lastInputEvent.event_string == "Right":
-            character = text.getText(offset-1, offset)
+        mods = orca.lastInputEvent.modifiers
+        shiftMask = 1 << atspi.Accessibility.MODIFIER_SHIFT
+        if (mods & shiftMask) and orca.lastInputEvent.event_string == "Right":
+            startOffset = offset-1
+            endOffset = offset
         else:
-            character = text.getText(offset, offset+1)
+            startOffset = offset
+            endOffset = offset+1
+        character = text.getText(startOffset, endOffset)
 
         if util.getLinkIndex(obj, offset) >= 0:
             voice = self.voices[settings.HYPERLINK_VOICE]
@@ -760,9 +760,7 @@ class Script(script.Script):
             voice = self.voices[settings.DEFAULT_VOICE]
 
         speech.speak(character, voice)
-
-        if util.isTextSelected(obj):
-            speech.speak(_("selected"), None, False)
+        util.speakTextSelectionState(obj, startOffset, endOffset)
 
     def whereAmI(self, inputEvent):
         self.updateBraille(orca.locusOfFocus)

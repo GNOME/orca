@@ -1,3 +1,17 @@
+2006-06-06  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/util.py:
+          Added a new speakTextSelectionState() that will speak "selected" 
+          if the text was just selected, "unselected" if it was just 
+          unselected.
+
+          Slight adjustments to the isTextSelected() routine to pass in a
+          start and end offset for the text.
+
+        * src/orca/default.py:
+          Adjustments to the sayCharacter(), sayWord() and sayLine() routines
+          to call speakTextSelectionState()
+
 2006-06-06  Willie Walker <william.walker@sun.com>
 
 	* src/orca/speech.py, src/orca/speechserver.py,

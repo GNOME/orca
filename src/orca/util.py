@@ -911,29 +911,55 @@ def outlineAccessible(accessible, erasePrevious=True):
     else:
         drawOutline(-1, 0, 0, 0, erasePrevious)
 
-def isTextSelected(obj):
-    """Returns True if the text caret associated with the given 
-       Accessible object, is located within a selected region of text.
+def isTextSelected(obj, startOffset, endOffset):
+    """Returns an indication of whether the text is selected by
+    comparing the text offset with the various selected regions of 
+    text for this accessible object.
 
     Arguments:
     - obj: the Accessible object.
+    - startOffset: text start offset.
+    - endOffset: text end offset.
 
     Returns an indication of whether the text is selected.
     """
 
-    if not obj:
-        return False
-
-    if not obj.text:
+    if not obj or not obj.text:
         return False
 
     text = obj.text
-    textOffset = text.caretOffset
-
     for i in range(0, text.getNSelections()):
         [startSelOffset, endSelOffset] = text.getSelection(i)
-        if (textOffset >= startSelOffset) \
-           and (textOffset <= endSelOffset):
+        if (startOffset >= startSelOffset) \
+           and (endOffset <= endSelOffset):
             return True
 
     return False
+
+def speakTextSelectionState(obj, startOffset, endOffset):
+    """Speak "selected" if the text was just selected, "unselected" if
+    it was just unselected.
+
+    Arguments:
+    - obj: the Accessible object.
+    - startOffset: text start offset.
+    - endOffset: text end offset.
+    """
+
+    if isTextSelected(obj, startOffset, endOffset):
+        speech.speak(_("selected"), None, False)
+    else:
+        if obj.__dict__.has_key("lastSelections"):
+            for i in range(0, len(obj.lastSelections)):
+                startSelOffset = obj.lastSelections[0][0]
+                endSelOffset = obj.lastSelections[0][1]
+                if (startOffset >= startSelOffset) \
+                    and (endOffset <= endSelOffset):
+                    speech.speak(_("unselected"), None, False)
+                    break
+
+    # Save away the current list of text selections for next time.
+    #
+    obj.lastSelections = []
+    for i in range(0, obj.text.getNSelections()):
+        obj.lastSelections.append(obj.text.getSelection(i))
