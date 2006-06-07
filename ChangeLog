@@ -1,3 +1,11 @@
+2006-06-07  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/util.py:
+          Adjustments to the speakTextSelectionState() routine to handle
+          [un]selecting by word (Control-Shift-[Left, Right]). 
+
+          Still need to handle Control-Shift-[Up, Down, Home, End].
+
 2006-06-06  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/util.py:

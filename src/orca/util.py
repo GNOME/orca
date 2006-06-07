@@ -946,6 +946,38 @@ def speakTextSelectionState(obj, startOffset, endOffset):
     - endOffset: text end offset.
     """
 
+    if not obj or not obj.text:
+        return
+
+    try:
+        # If we are selecting by word, then there possibly will be whitespace
+        # characters on either end of the text. We adjust the startOffset and
+        # endOffset to exclude them.
+        #
+        str = obj.text.getText(startOffset, endOffset)
+        n = len(str)
+
+        # Don't strip whitespace if string length is one (might be a space).
+        #
+        if n > 1:
+            while endOffset > startOffset:
+                if str[n-1] in string.whitespace or \
+                   str[n-1] in string.punctuation:
+                    n -= 1
+                    endOffset -= 1
+                else:
+                    break
+            n = 0
+            while startOffset < endOffset:
+                if str[n] in string.whitespace or \
+                   str[n] in string.punctuation:
+                    n += 1
+                    startOffset += 1
+                else:
+                    break
+    except:
+        debug.printException(debug.LEVEL_FINEST)
+
     if isTextSelected(obj, startOffset, endOffset):
         speech.speak(_("selected"), None, False)
     else:
