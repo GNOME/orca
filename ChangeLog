@@ -1,3 +1,13 @@
+2006-06-07  Willie Walker <william.walker@sun.com>
+
+	* src/orca/atspi.py: fix for bug 344218 - handle the case where
+	the gnome-terminal terminal's role changes from unknown to
+	terminal.  We do this by not caching roles that are ROLE_UNKNOWN.
+	The main problem here appears to be that the terminal issues
+	events prior to its role being set up properly, and the atk
+	(atkobject.c:927) has specific code to prevent notification for
+	when the role changes from ROLE_UNKNOWN to seomthing else.
+
 2006-06-07  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/util.py:

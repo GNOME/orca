@@ -839,7 +839,15 @@ class Accessible:
             and (self.childCount > 0):
                 role = rolenames.ROLE_MENU
 
-        if role and settings.cacheValues:
+        # [[[WDW - HACK - we sometimes get an object with an unknown
+        # role but it's role changes later on and we are not notified.
+        # An example of this is gnome-terminal.  So...to help with
+        # this, we will not cache the role if it is unknown.  See
+        # http://bugzilla.gnome.org/show_bug.cgi?id=344218 for more
+        # info.]]]
+        #
+        if role and settings.cacheValues \
+            and (role != rolenames.ROLE_UNKNOWN):
             self.role = role
 
         return role
