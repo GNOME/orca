@@ -4,7 +4,38 @@
           Adjustments to the speakTextSelectionState() routine to handle
           [un]selecting by word (Control-Shift-[Left, Right]). 
 
-          Still need to handle Control-Shift-[Up, Down, Home, End].
+          Still need to handle [Control]-Shift-[Up, Down, Home, End,
+          Page-Up, Page-Down].
+
+          This is how we are proposing to handle these twelve cases:
+
+          Shift-Up:
+          Shift-Down:
+          Shift-Home:
+          Shift-End:
+          Control-Shift-Page-Down:
+          Control-Shift-Page-Up:
+          Speak the text that's been selected (followed by "selected").
+          If there was text selected it should speak that previously
+          selected text, followed by "unselected".
+
+          Shift-Page-Down:
+          Control-Shift-Down:
+          Speak the last selected line then say "page selected from
+          cursor position".
+
+          Shift-Page-Up:
+          Control-Shift-Up:
+          Speak the first selected line then say "page selected to 
+          cursor position".
+
+          Control-Shift-Home:
+          Speak the first selected line then say "document selected to 
+          cursor position".
+
+          Control-Shift-End:
+          Speak the last selected line then say "document selected from
+          cursor position".
 
 2006-06-06  Rich Burridge <rich.burridge@sun.com>
 
