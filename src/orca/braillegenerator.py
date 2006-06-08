@@ -152,7 +152,7 @@ class BrailleGenerator:
 
         if settings.brailleVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
             text = ""
-            
+
             result = util.getAcceleratorAndShortcut(obj)
 
             accelerator = result[0]
@@ -170,7 +170,7 @@ class BrailleGenerator:
             return text
         else:
             return None
-        
+
     def _getTextForAvailability(self, obj):
         """Returns a string to be displayed that describes the availability
         of the given object.
@@ -187,7 +187,7 @@ class BrailleGenerator:
             return _("grayed")
         else:
             return None
-        
+
     def _getTextForValue(self, obj):
         """Returns the text to be displayed for the object's current value.
 
@@ -283,7 +283,7 @@ class BrailleGenerator:
         text = util.appendString(text, util.getDisplayedText(obj))
         text = util.appendString(text, self._getTextForValue(obj))
         text = util.appendString(text, self._getTextForRole(obj))
-        
+
         regions = []
         componentRegion = braille.Component(obj, text)
         regions.append(componentRegion)
@@ -929,7 +929,7 @@ class BrailleGenerator:
         #text = util.appendString(text, util.getDisplayedText(obj))
         text = util.appendString(text, self._getTextForValue(obj))
         text = util.appendString(text, self._getTextForRole(obj))
-        
+
         regions = []
         componentRegion = braille.Component(obj, text)
         regions.append(componentRegion)
@@ -1096,7 +1096,7 @@ class BrailleGenerator:
 
         text = title
         text = util.appendString(text, rolenames.getBrailleForRoleName(obj))
-        
+
         regions = []
         regions.append(braille.Region(text))
 
@@ -1187,11 +1187,14 @@ class BrailleGenerator:
         - groupChildren: if True, children of an object should be displayed
                          together with their parent, where each child is
                          separated by _ and the selected child is the Region
-                         that should get focus.
+                         that should get focus.  The default here is True,
+                         but this also is used in conjunction with
+                         settings.enableBrailleGrouping.
 
         Returns a list where the first element is a list of Regions to
         display and the second element is the Region which should get
-        focus.  """
+        focus.
+        """
 
         # If we want to group the children, first see if obj is a child of
         # something we like to group.  If so, then reset the obj to the obj's
@@ -1199,7 +1202,7 @@ class BrailleGenerator:
         # to group.  If all fails, we don't try grouping.
         #
         reallyGroupChildren = False
-        if groupChildren:
+        if settings.enableBrailleGrouping and groupChildren:
             parent = obj.parent
             isChild = parent \
                       and ((parent.role == rolenames.ROLE_MENU) \

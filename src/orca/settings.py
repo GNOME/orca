@@ -60,6 +60,7 @@ userCustomizableSettings = [
     "enableFunctionKeys",
     "enableActionKeys",
     "enableBraille",
+    "enableBrailleGrouping",
     "brailleVerbosityLevel",
     "brailleRolenameStyle",
     "enableBrailleMonitor",
@@ -164,6 +165,12 @@ voices = {
 # If True, enable braille.
 #
 enableBraille           = True
+
+# If True, enable the grouping of children on the braille display.
+# This is for things like displaying all items of a menu, tab list,
+# menu bar, etc., on a single line of the braille display.
+#
+enableBrailleGrouping   = False
 
 # If True, enable braille monitor.
 #

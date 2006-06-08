@@ -1,5 +1,15 @@
 2006-06-08  Willie Walker <william.walker@sun.com>
 
+	* src/orca/braillegenerator.py, src/orca/settings.py: fix bug
+	344307 - add new setting, enableBrailleGrouping, to determine
+	whether items such as menu items and page tabs should be grouped
+	with their siblings on the braille display.  Disable this by
+	default to provide better runtime performance.  NOTE: this
+	represents a change in the UI for Orca - the behavior to date has
+	been to always group menu items.  The user responsiveness was bad
+	for large menus, however, so we decided to make this an optional
+	feature.
+	
 	* bugs/bugs.html: update to include various bugs we need to track
 	
 2006-06-07  Willie Walker <william.walker@sun.com>
