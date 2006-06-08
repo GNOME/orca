@@ -1,3 +1,7 @@
+2006-06-08  Willie Walker <william.walker@sun.com>
+
+	* bugs/bugs.html: update to include various bugs we need to track
+	
 2006-06-07  Willie Walker <william.walker@sun.com>
 
 	* src/orca/atspi.py: fix for bug 344218 - handle the case where
