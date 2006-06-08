@@ -1373,8 +1373,8 @@ class Script(script.Script):
 
         string = orca.lastInputEvent.event_string
         mods = orca.lastInputEvent.modifiers
-        controlMask = 1 << atspi.Accessibility.MODIFIER_CONTROL
-        shiftMask = 1 << atspi.Accessibility.MODIFIER_SHIFT
+        isControlKey = mods & (1 << atspi.Accessibility.MODIFIER_CONTROL)
+        isShiftKey = mods & (1 << atspi.Accessibility.MODIFIER_SHIFT)
         hasLastPos = event.source.__dict__.has_key("lastCursorPosition")
 
         if (string == "Up") or (string == "Down"):
@@ -1383,14 +1383,14 @@ class Script(script.Script):
             # otherwise we speak the new line where the text cursor is
             # currently positioned.
             #
-            if hasLastPos and (mods & shiftMask) and not (mods & controlMask):
+            if hasLastPos and isShiftKey and not isControlKey:
                 self.sayPhrase(event.source, event.source.lastCursorPosition,
                                event.source.text.caretOffset)
             else:
                 self.sayLine(event.source)
 
         elif (string == "Left") or (string == "Right"):
-            if (mods & controlMask):
+            if isControlKey:
                 self.sayWord(event.source)
             else:
                 self.sayCharacter(event.source)
@@ -1402,10 +1402,10 @@ class Script(script.Script):
             # speak the character to the right of the current text cursor 
             # position otherwise we speak the current line.
             #
-            if hasLastPos and (mods & shiftMask) and (mods & controlMask):
+            if hasLastPos and isShiftKey and isControlKey:
                 self.sayPhrase(event.source, event.source.lastCursorPosition,
                                event.source.text.caretOffset)
-            elif (mods & controlMask):
+            elif isControlKey:
                 self.sayCharacter(event.source)
             else:
                 self.sayLine(event.source)
@@ -1416,7 +1416,7 @@ class Script(script.Script):
             # otherwise if the user has just typed Page_Down, then we speak 
             # the current line.
             #
-            if hasLastPos and (mods & shiftMask) and (mods & controlMask):
+            if hasLastPos and isShiftKey and isControlKey:
                 self.sayPhrase(event.source, event.source.lastCursorPosition,
                                event.source.text.caretOffset)
             else:
@@ -1429,13 +1429,25 @@ class Script(script.Script):
             # then we speak the current line otherwise we speak the character
             # to the right of the current text cursor position.
             #
-            if hasLastPos and (mods & shiftMask) and not (mods & controlMask):
+            if hasLastPos and isShiftKey and not isControlKey:
                 self.sayPhrase(event.source, event.source.lastCursorPosition,
                                event.source.text.caretOffset)
-            elif (mods & controlMask):
+            elif isControlKey:
                 self.sayLine(event.source)
             else:
                 self.sayCharacter(event.source)
+
+        elif (string == "A") and isControlKey:
+            # The user has typed Control-A. Check to see if the entire 
+            # document has been selected, and if so, let the user know.
+            #
+            text = event.source.text
+            charCount = text.characterCount
+            for i in range(0, text.getNSelections()):
+                [startSelOffset, endSelOffset] = text.getSelection(i)
+                if text.caretOffset == 0 and \
+                   startSelOffset == 0 and endSelOffset == charCount:
+                    speech.speak(_("entire document selected"))
 
     def onCaretMoved(self, event):
         """Called whenever the caret moves.

@@ -15,9 +15,6 @@
             Control-Shift-Home: speak "document selected to cursor position".
             Control-Shift-End:  speak "document selected from cursor position".
 
-          [There still seems to be problems with Shift-Page_Down and
-           Control-Shift-End - investigating...]
-
         * src/orca/default.py:
           Now handles the following cases:
             Shift-Up:
@@ -29,6 +26,8 @@
           We speak the text that's been selected (followed by "selected").
           If there was text selected it speaks that previously selected 
           text, followed by "unselected".
+
+          Added in a section to handle Control-A (entire document selected).
 
 2006-06-08  Willie Walker <william.walker@sun.com>
 
