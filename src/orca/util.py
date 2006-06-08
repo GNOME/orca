@@ -949,6 +949,51 @@ def speakTextSelectionState(obj, startOffset, endOffset):
     if not obj or not obj.text:
         return
 
+    # Handle special cases.
+    #
+    # Shift-Page-Down:    speak "page selected from cursor position".
+    # Shift-Page-Up:      speak "page selected to cursor position".
+    #
+    # Control-Shift-Down: speak "line selected down from cursor position".
+    # Control-Shift-Up:   speak "line selected up from cursor position".
+    #
+    # Control-Shift-Home: speak "document selected to cursor position".
+    # Control-Shift-End:  speak "document selected from cursor position".
+    #
+    eventStr = orca.lastInputEvent.event_string
+    mods = orca.lastInputEvent.modifiers
+    isControlKey = mods & (1 << atspi.Accessibility.MODIFIER_CONTROL)
+    isShiftKey = mods & (1 << atspi.Accessibility.MODIFIER_SHIFT)
+
+    specialCaseFound = False
+    if (eventStr == "Page_Down") and isShiftKey and not isControlKey:
+        specialCaseFound = True
+        line = _("page selected from cursor position")
+
+    elif (eventStr == "Page_Up") and isShiftKey and not isControlKey:
+        specialCaseFound = True
+        line = _("page selected to cursor position")
+
+    elif (eventStr == "Down") and isShiftKey and isControlKey:
+        specialCaseFound = True
+        line = _("line selected down from cursor position")
+
+    elif (eventStr == "Up") and isShiftKey and isControlKey:
+        specialCaseFound = True
+        line = _("line selected up from cursor position")
+
+    elif (eventStr == "Home") and isShiftKey and isControlKey:
+        specialCaseFound = True
+        line = _("document selected to cursor position")
+
+    elif (eventStr == "End") and isShiftKey and isControlKey:
+        specialCaseFound = True
+        line = _("document selected from cursor position")
+
+    if specialCaseFound:
+        speech.speak(line, None, False)
+        return
+
     try:
         # If we are selecting by word, then there possibly will be whitespace
         # characters on either end of the text. We adjust the startOffset and

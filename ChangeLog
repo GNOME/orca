@@ -5,6 +5,19 @@
           to save away the last text cursor position. This will be used
           in the _presentTextAtNewCaretPosition() routine in default.py.
 
+          Further adjustments to the speakTextSelectionState() routine
+          to handle special cases:
+
+            Shift-Page-Down:    speak "page selected from cursor position".
+            Shift-Page-Up:      speak "page selected to cursor position".
+            Control-Shift-Down: speak "line selected down from cursor position".
+            Control-Shift-Up:   speak "line selected up from cursor position".
+            Control-Shift-Home: speak "document selected to cursor position".
+            Control-Shift-End:  speak "document selected from cursor position".
+
+          [There still seems to be problems with Shift-Page_Down and
+           Control-Shift-End - investigating...]
+
         * src/orca/default.py:
           Now handles the following cases:
             Shift-Up:
