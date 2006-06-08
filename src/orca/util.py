@@ -990,8 +990,10 @@ def speakTextSelectionState(obj, startOffset, endOffset):
                     speech.speak(_("unselected"), None, False)
                     break
 
-    # Save away the current list of text selections for next time.
+    # Save away the current text cursor position and list of text 
+    # selections for next time.
     #
+    obj.lastCursorPosition = obj.text.caretOffset
     obj.lastSelections = []
     for i in range(0, obj.text.getNSelections()):
         obj.lastSelections.append(obj.text.getSelection(i))

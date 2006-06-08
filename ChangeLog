@@ -1,3 +1,22 @@
+2006-06-08  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/util.py:
+          Slight adjustment to the speakTextSelectionState() routine 
+          to save away the last text cursor position. This will be used
+          in the _presentTextAtNewCaretPosition() routine in default.py.
+
+        * src/orca/default.py:
+          Now handles the following cases:
+            Shift-Up:
+            Shift-Down:
+            Shift-Home:
+            Shift-End:
+            Control-Shift-Page-Down:
+            Control-Shift-Page-Up:
+          We speak the text that's been selected (followed by "selected").
+          If there was text selected it speaks that previously selected 
+          text, followed by "unselected".
+
 2006-06-08  Willie Walker <william.walker@sun.com>
 
 	* src/orca/braillegenerator.py, src/orca/settings.py: fix bug

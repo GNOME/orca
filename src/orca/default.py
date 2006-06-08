@@ -605,6 +605,28 @@ class Script(script.Script):
                 self.speechGenerator.getSpeech(orca.locusOfFocus, False))
         return True
 
+    def sayPhrase(self, obj, startOffset, endOffset):
+        """Speaks the text of an Accessible object between the start and
+        end offsets, unless the phrase is empty in which case it's ignored.
+
+        Arguments:
+        - obj: an Accessible object that implements the AccessibleText
+               interface
+        - startOffset: the start text offset.
+        - endOffset: the end text offset.
+        """
+
+        phrase = obj.text.getText(startOffset, endOffset)
+
+        if len(phrase) != 0:
+            if phrase.isupper():
+                voice = self.voices[settings.UPPERCASE_VOICE]
+            else:
+                voice = self.voices[settings.DEFAULT_VOICE]
+
+            speech.speak(phrase, voice)
+            util.speakTextSelectionState(obj, startOffset, endOffset)
+
     def sayLine(self, obj):
         """Speaks the line of an AccessibleText object that contains the
         caret, unless the line is empty in which case it's ignored.
@@ -1352,23 +1374,65 @@ class Script(script.Script):
         string = orca.lastInputEvent.event_string
         mods = orca.lastInputEvent.modifiers
         controlMask = 1 << atspi.Accessibility.MODIFIER_CONTROL
+        shiftMask = 1 << atspi.Accessibility.MODIFIER_SHIFT
+        hasLastPos = event.source.__dict__.has_key("lastCursorPosition")
 
         if (string == "Up") or (string == "Down"):
-            self.sayLine(event.source)
+            # If the user has typed Shift-Up or Shift-Down, then we want
+            # to speak the text that has just been selected or unselected,
+            # otherwise we speak the new line where the text cursor is
+            # currently positioned.
+            #
+            if hasLastPos and (mods & shiftMask) and not (mods & controlMask):
+                self.sayPhrase(event.source, event.source.lastCursorPosition,
+                               event.source.text.caretOffset)
+            else:
+                self.sayLine(event.source)
+
         elif (string == "Left") or (string == "Right"):
             if (mods & controlMask):
                 self.sayWord(event.source)
             else:
                 self.sayCharacter(event.source)
+
         elif string == "Page_Up":
-            if (mods & controlMask):
+            # If the user has typed Control-Shift-Page_Up, then we want
+            # to speak the text that has just been selected or unselected,
+            # otherwise if the user has typed Control-Page_Up, then we 
+            # speak the character to the right of the current text cursor 
+            # position otherwise we speak the current line.
+            #
+            if hasLastPos and (mods & shiftMask) and (mods & controlMask):
+                self.sayPhrase(event.source, event.source.lastCursorPosition,
+                               event.source.text.caretOffset)
+            elif (mods & controlMask):
                 self.sayCharacter(event.source)
             else:
                 self.sayLine(event.source)
+
         elif string == "Page_Down":
-            self.sayLine(event.source)
+            # If the user has typed Control-Shift-Page_Down, then we want
+            # to speak the text that has just been selected or unselected,
+            # otherwise if the user has just typed Page_Down, then we speak 
+            # the current line.
+            #
+            if hasLastPos and (mods & shiftMask) and (mods & controlMask):
+                self.sayPhrase(event.source, event.source.lastCursorPosition,
+                               event.source.text.caretOffset)
+            else:
+                self.sayLine(event.source)
+
         elif (string == "Home") or (string == "End"):
-            if (mods & controlMask):
+            # If the user has typed Shift-Home or Shift-End, then we want
+            # to speak the text that has just been selected or unselected,
+            # otherwise if the user has typed Control-Home or Control-End,
+            # then we speak the current line otherwise we speak the character
+            # to the right of the current text cursor position.
+            #
+            if hasLastPos and (mods & shiftMask) and not (mods & controlMask):
+                self.sayPhrase(event.source, event.source.lastCursorPosition,
+                               event.source.text.caretOffset)
+            elif (mods & controlMask):
                 self.sayLine(event.source)
             else:
                 self.sayCharacter(event.source)
