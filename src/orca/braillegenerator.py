@@ -1011,8 +1011,34 @@ class BrailleGenerator:
                     break
 
         if len(regions) == 0:
-            regions = self._getDefaultBrailleRegions(
-                util.getRealActiveDescendant(obj))
+            if settings.readTableCellRow:
+              try:
+                rowRegions = []
+                savedBrailleVerbosityLevel = settings.brailleVerbosityLevel
+                settings.brailleVerbosityLevel = \
+                                             settings.VERBOSITY_LEVEL_BRIEF
+
+                parent = obj.parent
+                row = parent.table.getRowAtIndex(obj.index)
+                column = parent.table.getColumnAtIndex(obj.index)
+                focusRowRegion = None
+                for i in range(0, parent.table.nColumns):
+                    accRow = parent.table.getAccessibleAt(row, i)
+                    cell = atspi.Accessible.makeAccessible(accRow)
+                    [cellRegions, focusRegion] = \
+                        self._getDefaultBrailleRegions(util.getRealActiveDescendant(cell))
+                    if len(rowRegions):
+                        rowRegions.append(braille.Region(" "))
+                    rowRegions.append(cellRegions[0])
+                    if i == column:
+                        focusRowRegion = cellRegions[0]
+                regions = [rowRegions, focusRowRegion]
+                settings.brailleVerbosityLevel = savedBrailleVerbosityLevel
+              except:
+                debug.printException(debug.LEVEL_OFF)
+            else:
+                regions = self._getDefaultBrailleRegions(
+                    util.getRealActiveDescendant(obj))
 
         # [[[TODO: WDW - HACK attempt to determine if this is a node;
         # if so, describe its state.]]]
@@ -1028,6 +1054,7 @@ class BrailleGenerator:
             regions[0].append(braille.Region(" " + _("TREE LEVEL %d") \
                                              % (level + 1)))
 
+        print "Returning regions: ", regions
         return regions
 
     def _getBrailleRegionsForTableColumnHeader(self, obj):

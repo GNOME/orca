@@ -12,7 +12,9 @@
 
         * src/orca/speechgenerator.py:
           Support for speech for generic readTableCellRow (Insert+F11).
-          Still need to do braille equivalent.
+
+        * src/orca/braillegenerator.py
+          Support for speech for generic readTableCellRow (Insert+F11).
 
 2006-06-09  Willie Walker <william.walker@sun.com>
 

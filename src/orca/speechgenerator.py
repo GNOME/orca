@@ -1144,16 +1144,13 @@ class SpeechGenerator:
 
         if (len(utterances) == 0) and (not already_focused):
             if settings.readTableCellRow:
-                try:
-                    parent = obj.parent
-                    row = parent.table.getRowAtIndex(obj.index)
-                    for i in range(0, parent.table.nColumns):
-                        accRow = parent.table.getAccessibleAt(row, i)
-                        cell = atspi.Accessible.makeAccessible(accRow)
-                        utterances.append(util.getDisplayedText(\
-                            util.getRealActiveDescendant(cell)))
-                except:
-                    debug.printException(debug.LEVEL_OFF)
+                parent = obj.parent
+                row = parent.table.getRowAtIndex(obj.index)
+                for i in range(0, parent.table.nColumns):
+                    accRow = parent.table.getAccessibleAt(row, i)
+                    cell = atspi.Accessible.makeAccessible(accRow)
+                    utterances.append(util.getDisplayedText(\
+                        util.getRealActiveDescendant(cell)))
             else:
                 utterances.append(util.getDisplayedText(\
                     util.getRealActiveDescendant(obj)))
