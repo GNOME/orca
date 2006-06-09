@@ -470,7 +470,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                 else:
                     debug.println(debug.LEVEL_WARNING,
                                   "  GIVING UP AFTER %d TRIES" \
-                                  % retryCount - 1)
+                                  % (retryCount - 1))
                     atspi.Accessible.deleteAccessible(event.source)
             except:
                 debug.printException(debug.LEVEL_WARNING)
