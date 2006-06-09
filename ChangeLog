@@ -1,3 +1,7 @@
+2006-06-09  Willie Walker <william.walker@sun.com>
+
+	* NEWS, configure.in, README: prep for 0.2.5.
+
 2006-06-09  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
@@ -480,7 +484,7 @@
 
 2006-05-15  Willie Walker <william.walker@sun.com>
 
-	* README, NEWS: Prep for 0.4.0 release.
+	* README, NEWS: Prep for 0.2.4 release.
 	* configure.in, orca.spec.in: more dependency tweaking
 	
 2006-05-13  Willie Walker <william.walker@sun.com>

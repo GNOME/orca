@@ -1,3 +1,57 @@
+0.2.5
+* Re-map keyboard bindings and add additional keyboard bindings.
+  See http://live.gnome.org/Orca/KeyboardCommands for the list.
+* Improvements to StarOffice support to provide better access to text
+  documents and spreadsheets.  Also get rid of spurious "0.00" text
+  that was showing up in braille for StarOffice buttons.
+* Addition of announcing text selection as it is selected and unselected.
+* Generalize the "read table cell row" functionality.  If you press
+  Insert+F11, it will toggle the feature to read the entire row of
+  a table or just the selected table cell when you move from row to row.
+* Improved support for SayAll of text objects (SayAll for flat review
+  is still on the to do list).
+* Addition of self-voicing module to tell Orca to be quiet when a
+  self-voicing application is present.
+* Addition of ability to turn Orca into a speech server that can
+  accessed via simple HTTP commands (default port is 20433, but this
+  is customizable via orca.settings.speechServerPort).  This will
+  allow self-voicing appliations to use Orca for their speech, thus
+  letting them get the user's speech settings preferences.
+* Addition of orca.settings.enableBrailleGrouping (default=False).
+  NOTE: this represents a change in the UI for Orca - the behavior to
+  date has been to always group menu items on the braille display.
+  The system responsiveness was bad for large menus, however, so we
+  decided to make this an optional feature turned off by default.
+* Addition of utility to report information on the currently active
+  script.  This is primarily for helping script writers do debugging
+  and is accessed by pressing Insert+F3.  
+* Addition of orca.settings.cacheAccessibles (default=True) as a
+  means to turn the local caching of accessible objects on or off.
+  This is primarily an orca developer debugging feature.
+* Fix for bug 344218 - gnome-terminal would not be presented properly
+  if it was started after Orca.
+* Fix for bug 343666: pressing buttons on braille displays could cause
+  a hang.
+* Partial fix for bug 342022 - provide some defensive mechanisms to help
+  prevent some hangs.
+* Fix for bug 343133 - do not hang when doing a flat-review of a man
+  page in gnome-terminal.
+* Fix for bug #343013 - the command line option strings should not be
+  translatable.
+* Partial fix for bug 319652 - become a better Python thread citizen 
+  to help reduce hangs.
+* Fix for bug 342303 - stop speech when the user presses the mouse button.
+* Fix for bug 342122 - use all labels for an objecty when presenting
+  an object.
+* Fix for bug 342133 - do not read all labels in gnome-window-properties
+  application when it appears.
+* Fix for bug 341415 - when moving between workspaces with metacity,
+  eliminate redundant output and alsomake sure workspace names are
+  announced.
+* Refactor of various modules to move script writing utilities into
+  util.py.
+* More fleshing out of the test plan.
+
 0.2.4 
 * Addition of text and GUI preferences configuration tools.  
   NOTE: 0.2.4 eliminates orca-setup and replaces it with the 
