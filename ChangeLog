@@ -12,6 +12,8 @@
 
 2006-06-09  Willie Walker <william.walker@sun.com>
 
+	* bugs/bugs.html: add Thunderbird broken table bug 340978.
+	
 	* src/orca/settings.py, src/orca/atspi.py: provide a setting
 	(settings.cacheAccessibles) to determine whether to cache
 	accessibles locally or not.
