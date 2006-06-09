@@ -690,7 +690,7 @@ def _processKeyboardEvent(event):
     #
     string = atspi.KeystrokeListener.keyEventToString(event)
     if _recordingKeystrokes and _keystrokesFile \
-       and (event_string != "Pause"):
+       and (event.event_string != "Pause"):
         _keystrokesFile.write(string + "\n")
     debug.printInputEvent(debug.LEVEL_FINE, string)
 
