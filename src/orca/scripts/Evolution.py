@@ -54,7 +54,7 @@ class Script(default.Script):
         # The default for Evolution is to read all table cells (such as in
         # the mail message header summary list).
 
-        self.readTableCellRow = True
+        settings.readTableCellRow = True
 
         # This will be used to cache a handle to the message area in the
         # Mail compose window.
@@ -256,7 +256,7 @@ class Script(default.Script):
         rolesList = [rolenames.ROLE_TEXT, \
                      rolenames.ROLE_PANEL, \
                      rolenames.ROLE_TABLE_CELL]
-        if self.readTableCellRow \
+        if settings.readTableCellRow \
             and (util.isDesiredFocusedItem(event.source, rolesList)):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - mail view: " \
@@ -306,7 +306,7 @@ class Script(default.Script):
 
         rolesList = [rolenames.ROLE_TABLE_CELL, \
                      rolenames.ROLE_TREE_TABLE]
-        if self.readTableCellRow \
+        if settings.readTableCellRow \
             and (util.isDesiredFocusedItem(event.source, rolesList)):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - mail view: " \

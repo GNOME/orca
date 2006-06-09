@@ -60,7 +60,6 @@ class Script(script.Script):
         script.Script.__init__(self, app)
 
         self.flatReviewContext  = None
-        self.readTableCellRow   = settings.readTableCellRow
         self.windowActivateTime = None
 
     def setupInputEventHandlers(self):
@@ -1390,7 +1389,16 @@ class Script(script.Script):
                 self.sayLine(event.source)
 
         elif (string == "Left") or (string == "Right"):
-            if isControlKey:
+            # If the user has typed Control-Shift-Up or Control-Shift-Dowm,
+            # then we want to speak the text that has just been selected 
+            # or unselected, otherwise if the user has typed Control-Left 
+            # or Control-Right, we speak the current word otherwise we speak
+            # the character at the text cursor position.
+            #
+            if hasLastPos and isShiftKey and isControlKey:
+                self.sayPhrase(event.source, event.source.lastCursorPosition,
+                               event.source.text.caretOffset)
+            elif isControlKey:
                 self.sayWord(event.source)
             else:
                 self.sayCharacter(event.source)
@@ -1803,8 +1811,8 @@ class Script(script.Script):
         table cell or read the whole row."""
 
         line = _("Speak ")
-        self.readTableCellRow = not self.readTableCellRow
-        if self.readTableCellRow:
+        settings.readTableCellRow = not settings.readTableCellRow
+        if settings.readTableCellRow:
             line += _("row")
         else:
             line += _("cell")

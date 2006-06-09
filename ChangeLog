@@ -1,3 +1,15 @@
+2006-06-09  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          src/orca/scripts/Evolution.py:
+          Adjust so that we use settings.readTableCellRow now, rather than
+          Script.readTableCellRow.
+
+        * src/orca/default.py:
+          Better handle the situation where the user types Control-Shift-Left
+          or Control-Shift-Right and the text cursor position was in the 
+          middle of a word.
+
 2006-06-09  Willie Walker <william.walker@sun.com>
 
 	* src/orca/settings.py, src/orca/atspi.py: provide a setting
