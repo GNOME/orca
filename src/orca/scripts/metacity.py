@@ -118,7 +118,7 @@ class Script(default.Script):
         # Ignore changes on the status bar.  We handle them in onNameChanged.
         #
         if event.source.role != rolenames.ROLE_STATUSBAR:
-            default.onStateChanged(self, event, event.source)
+            default.Script.onStateChanged(self, event)
 
     def onTextInserted(self, event):
         """Called whenever text is inserted into an object.
