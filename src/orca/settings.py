@@ -295,6 +295,13 @@ brailleBindingsMap      = {}
 #
 cacheValues             = True
 
+# Script developer feature.  If False, no AT-SPI objects
+# will be cached locally.  Helps determine if there might be a
+# problem related to the cache being out of sync with the real
+# objects.
+#
+cacheAccessibles        = True
+
 # Assists with learn mode (what you enter when you press Insert+F1
 # and exit when you press escape.
 #

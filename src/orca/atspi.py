@@ -517,11 +517,15 @@ class Accessible:
                 "         Returning Python Accessible.")
             return acc
 
-        # Comment these two lines out to eliminate any local caching
-        # of Accessible objects.
+        # [[[TODO: WDW - the AT-SPI appears to give us a different
+        # accessible when we repeatedly ask for the same child of a
+        # parent that manages its descendants.  So...we probably
+        # shouldn't cache those kind of children because we're likely
+        # to cause a memory leak. Logged as bugzilla bug 319675.]]]
         #
-        #obj = Accessible(acc)
-        #return obj
+        if not settings.cacheAccessibles:
+            obj = Accessible(acc)
+            return obj
 
         if Accessible._cache.has_key(acc):
             obj = Accessible._cache[acc]
@@ -615,17 +619,9 @@ class Accessible:
                               + " NOT GIVEN AN ACCESSIBLE!")
                 self.accessible = None
 
+        # Save a reference to the AT-SPI object.
+        #
         if self.accessible:
-            # [[[TODO: WDW - the AT-SPI appears to give us a
-            # different accessible when we repeatedly ask for the
-            # same child of a parent that manages its descendants.
-            # So...we probably shouldn't cache those kind of
-            # children because we're likely to cause a memory
-            # leak. Logged as bugzilla bug 319675.]]]
-            #
-            # Save a reference to the AT-SPI object, and also save this
-            # new object away in the cache.
-            #
             try:
                 self.accessible.ref()
                 self._acc = acc
