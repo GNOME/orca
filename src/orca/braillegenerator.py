@@ -1054,7 +1054,6 @@ class BrailleGenerator:
             regions[0].append(braille.Region(" " + _("TREE LEVEL %d") \
                                              % (level + 1)))
 
-        print "Returning regions: ", regions
         return regions
 
     def _getBrailleRegionsForTableColumnHeader(self, obj):
