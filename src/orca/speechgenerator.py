@@ -1143,8 +1143,20 @@ class SpeechGenerator:
                     break
 
         if (len(utterances) == 0) and (not already_focused):
-            utterances.append(util.getDisplayedText(\
-                util.getRealActiveDescendant(obj)))
+            if settings.readTableCellRow:
+                try:
+                    parent = obj.parent
+                    row = parent.table.getRowAtIndex(obj.index)
+                    for i in range(0, parent.table.nColumns):
+                        accRow = parent.table.getAccessibleAt(row, i)
+                        cell = atspi.Accessible.makeAccessible(accRow)
+                        utterances.append(util.getDisplayedText(\
+                            util.getRealActiveDescendant(cell)))
+                except:
+                    debug.printException(debug.LEVEL_OFF)
+            else:
+                utterances.append(util.getDisplayedText(\
+                    util.getRealActiveDescendant(obj)))
 
         # [[[TODO: WDW - HACK attempt to determine if this is a node;
         # if so, describe its state.]]]

@@ -10,6 +10,10 @@
           or Control-Shift-Right and the text cursor position was in the 
           middle of a word.
 
+        * src/orca/speechgenerator.py:
+          Support for speech for generic readTableCellRow (Insert+F11).
+          Still need to do braille equivalent.
+
 2006-06-09  Willie Walker <william.walker@sun.com>
 
 	* bugs/bugs.html: add Thunderbird broken table bug 340978.
