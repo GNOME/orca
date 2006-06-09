@@ -24,9 +24,13 @@
 	(settings.cacheAccessibles) to determine whether to cache
 	accessibles locally or not.
 	
-	* src/orca/focus_tracking_presenter.py: do not silently swallow exceptions
-	when processing object events.
+	* src/orca/scripts/metacity.py: fix exception that was being
+	silently swallowed by focus_tracking_presenter.py.
 	
+	* src/orca/focus_tracking_presenter.py: do not silently swallow
+	exceptions when processing object events.  Needed to catch this
+	in a couple spots.
+
 2006-06-08  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/util.py:

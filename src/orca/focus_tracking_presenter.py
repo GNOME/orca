@@ -473,8 +473,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                                   % retryCount - 1)
                     atspi.Accessible.deleteAccessible(event.source)
             except:
-                break
                 debug.printException(debug.LEVEL_WARNING)
+                break
 
     def processKeyboardEvent(self, keyboardEvent):
         """Processes the given keyboard event based on the keybinding from the
