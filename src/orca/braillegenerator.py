@@ -1012,7 +1012,6 @@ class BrailleGenerator:
 
         if len(regions) == 0:
             if settings.readTableCellRow:
-              try:
                 rowRegions = []
                 savedBrailleVerbosityLevel = settings.brailleVerbosityLevel
                 settings.brailleVerbosityLevel = \
@@ -1034,8 +1033,6 @@ class BrailleGenerator:
                         focusRowRegion = cellRegions[0]
                 regions = [rowRegions, focusRowRegion]
                 settings.brailleVerbosityLevel = savedBrailleVerbosityLevel
-              except:
-                debug.printException(debug.LEVEL_OFF)
             else:
                 regions = self._getDefaultBrailleRegions(
                     util.getRealActiveDescendant(obj))
