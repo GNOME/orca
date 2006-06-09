@@ -363,7 +363,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         try:
             self._processObjectEvent(event)
         except:
-            pass
+            debug.printException(debug.LEVEL_SEVERE)
 
         debug.println(debug.eventDebugLevel,
                       "^^^^^ PROCESS OBJECT EVENT %s ^^^^^\n" % event.type)
