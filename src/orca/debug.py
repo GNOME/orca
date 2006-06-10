@@ -22,6 +22,12 @@ level, which is held in the debugLevel field.  All other methods take
 a debug level, which is compared to the current debug level to
 determine if the content should be output."""
 
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
+__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__license__   = "LGPL"
+
 import traceback
 
 # Used to turn off all debugging.

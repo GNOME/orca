@@ -17,17 +17,13 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-"""Custom script for gedit.  [[[TODO: WDW - HACK because tickling gedit
-when it is starting can cause gedit to issue the following message:
+"""Custom script for gedit."""
 
-     (gedit:31434): GLib-GObject-WARNING **: invalid cast from `SpiAccessible' to `BonoboControlAccessible'
-
-It seems as though whenever this message is issued, gedit will hang when
-you try to exit it.  Debugging has shown that the iconfied state in
-particular seems to indicate that an object is telling all assistive
-technologies to just leave it alone or it will pull the trigger on the
-application.]]]
-"""
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
+__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__license__   = "LGPL"
 
 import orca.debug as debug
 import orca.atspi as atspi

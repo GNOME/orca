@@ -17,11 +17,16 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-"""The Default Script for presenting information to the user using
-both speech and Braille.
+"""The default Script for presenting information to the user using
+both speech and Braille.  This is based primarily on the de-facto
+standard implementation of the AT-SPI, which is the GAIL support
+for GTK."""
 
-This module also provides a number of presenter functions that display
-Accessible object information to the user based upon the object's role."""
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
+__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__license__   = "LGPL"
 
 import time
 

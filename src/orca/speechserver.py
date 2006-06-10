@@ -22,8 +22,13 @@
 A speech server (class SpeechServer) provides the ability to tell the
 machine to speak.  Each speech server provides a set of known
 voices (identified by name) which can be combined with various
-attributes to create aural style sheets.
-"""
+attributes to create aural style sheets."""
+
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
+__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__license__   = "LGPL"
 
 import debug
 

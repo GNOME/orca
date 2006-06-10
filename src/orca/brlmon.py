@@ -17,6 +17,15 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+"""Provides a graphical braille display at the top of the screen.
+This is mainly for debugging and for demonstrations."""
+
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
+__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__license__   = "LGPL"
+
 import gtk
 
 class BrlMon(gtk.Window):

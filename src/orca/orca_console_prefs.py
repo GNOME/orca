@@ -20,6 +20,12 @@
 """Uses speech prompts and a command line interface to set Orca
 user preferences."""
 
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
+__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__license__   = "LGPL"
+
 import acss
 import settings
 import speech

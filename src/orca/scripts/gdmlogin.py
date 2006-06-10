@@ -18,8 +18,13 @@
 # Boston, MA 02111-1307, USA.
 
 """Custom script for gdmlogin - this makes sure the focused item is spoken
-when Orca starts.
-"""
+when Orca starts."""
+
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
+__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__license__   = "LGPL"
 
 import orca.atspi as atspi
 import orca.default as default

@@ -21,6 +21,12 @@
 of manipulating text - both the user and the system put text into the
 system and we try to determine which was which and why."""
 
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
+__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__license__   = "LGPL"
+
 import orca.atspi as atspi
 import orca.debug as debug
 import orca.default as default

@@ -18,8 +18,13 @@
 # Boston, MA 02111-1307, USA.
 
 """Manages the default speech server for orca.  A script can use this
-as its speech server, or it can feel free to create one of its own.
-"""
+as its speech server, or it can feel free to create one of its own."""
+
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
+__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__license__   = "LGPL"
 
 import threading
 import time

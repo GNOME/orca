@@ -17,9 +17,14 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-"""Exposes a dictionary, chnames, that maps punctuation characters
-into localized words.
-"""
+"""Exposes a dictionary, chnames, that maps punctuation marks and
+other individual characters into localized words."""
+
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
+__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__license__   = "LGPL"
 
 from orca_i18n import _ # for gettext support
 

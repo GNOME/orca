@@ -23,36 +23,13 @@ each region can potentially backed by an Accessible object.  Depending upon
 the Accessible object, the cursor routing keys can be used to perform
 operations on the Accessible object, such as invoking default actions or
 moving the text caret.
-
-The logical structure maintained by this module is a potentially a very large
-2 dimensional text area.  For each line, the text for each region is merely
-concatenated together, possibly creating a line that is longer than the
-physical display.  In addition, there may be any number of lines.  This module
-uses the physical display as a viewport into this large area, and provides
-support for the user to press BrlTTY command keys to scroll this viewport to
-view all the content.  [[[TODO: WDW - the goal is to support multi-line
-displays, but I've only really built in support for a single line display.
-Logged as bugzilla bug 319752.]]]
-
-As a means to keep things simple for now, regions can only exist on a single
-line.  That is, a region cannot cross line boundaries.
-
-After initialization, a typical use of this module would be as follows:
-
-    braille.clear()
-    line = braille.Line()
-    line.addRegion(braille.Region(...))
-    line.addRegion(braille.Component(...))
-    textRegion = braille.Text(...)
-    line.addRegion(textRegion)
-    braille.addLine(line)
-    braille.setFocus(textRegion)
-    braille.refresh()
-
-NOTE: for the most part, this module will happily do as requested if it isn't
-initialized.  The only impact will be that nothing will be displayed on the
-Braille display.
 """
+
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
+__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__license__   = "LGPL"
 
 import atspi
 import brl

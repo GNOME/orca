@@ -35,6 +35,12 @@ created in their own module.  The module defining the Script subclass
 is also required to have a 'getScript(app)' method that returns an
 instance of the Script subclass.  See default.py for an example."""
 
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
+__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__license__   = "LGPL"
+
 import braillegenerator
 import debug
 import keybindings

@@ -18,8 +18,13 @@
 # Boston, MA 02111-1307, USA.
 
 """Exposes a dictionary, keynames, that maps key events
-into localized words.
-"""
+into localized words."""
+
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
+__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__license__   = "LGPL"
 
 from orca_i18n import _ # for gettext support
 

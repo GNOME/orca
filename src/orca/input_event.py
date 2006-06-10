@@ -21,8 +21,14 @@
 to define input events (InputEvent, KeyboardEvent, BrailleEvent,
 MouseButtonEvent, MouseMotionEvent, and SpeechEvent), and also provides a
 InputEventHandler class.  It is intended that instances of InputEventHandler
-will be used which should be used to handle all input events.
-"""
+will be used which should be used to handle all input events."""
+
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
+__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__license__   = "LGPL"
+
 import atspi
 import braille
 import debug

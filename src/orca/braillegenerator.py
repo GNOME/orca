@@ -18,10 +18,16 @@
 # Boston, MA 02111-1307, USA.
 
 """Utilities for obtaining braille strings for objects.  In general,
-there probably should be a singleton instance of the BrailleUtil
+there probably should be a singleton instance of the BrailleGenerator
 class.  For those wishing to override the braille generators, however,
 one can create a new instance and replace/extend the braille
 generators as they see fit."""
+
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
+__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__license__   = "LGPL"
 
 import math
 

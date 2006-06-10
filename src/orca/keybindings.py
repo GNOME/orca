@@ -18,8 +18,13 @@
 # Boston, MA 02111-1307, USA.
 
 """Provides support for defining keybindings and matching them to input
-events.
-"""
+events."""
+
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
+__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__license__   = "LGPL"
 
 try:
     # This can fail due to gtk not being available.  We want to

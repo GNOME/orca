@@ -19,8 +19,13 @@
 
 """Manages the settings for Orca.  This will defer to user settings first, but
 fallback to local settings if the user settings doesn't exist (e.g., in the
-case of gdm) or doesn't have the specified attribute.
-"""
+case of gdm) or doesn't have the specified attribute."""
+
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
+__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__license__   = "LGPL"
 
 import re
 import sys

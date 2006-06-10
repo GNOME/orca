@@ -19,8 +19,13 @@
 # Boston, MA 02111-1307, USA.
 
 """Provides a methods that converts the role name of an Accessible
-object into localized strings for speech and braille.
-"""
+object into localized strings for speech and braille."""
+
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
+__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__license__   = "LGPL"
 
 import debug
 import settings

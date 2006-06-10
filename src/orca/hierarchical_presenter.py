@@ -20,6 +20,12 @@
 """Provides an experimental hierarchical navigation presentation
 manager for Orca.  This is mostly for exploratory purposes."""
 
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
+__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__license__   = "LGPL"
+
 import atspi
 import braille
 import debug

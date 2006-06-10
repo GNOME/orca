@@ -24,6 +24,12 @@
 
 """Displays a GUI for the user to set Orca preferences."""
 
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
+__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__license__   = "LGPL"
+
 import os
 import sys
 import debug

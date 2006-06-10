@@ -17,10 +17,14 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-"""Manages the magnifier for orca.  [[[TODO: WDW - this is very very early
-in development.  One might even say it is pre-prototype.  Magnification
-has also been disabled for now - logged as bugzilla bug 319643.]]]
-"""
+"""Manages the magnifier for orca.  [[[TODO: WDW - this is very very
+early in development.  One might even say it is pre-prototype.]]]"""
+
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
+__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__license__   = "LGPL"
 
 import bonobo
 try:

@@ -19,6 +19,12 @@
 
 """A script to do nothing.  This is for self-voicing apps."""
 
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
+__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__license__   = "LGPL"
+
 import orca.script
 
 class Script(orca.script.Script):

@@ -18,10 +18,16 @@
 # Boston, MA 02111-1307, USA.
 
 """Utilities for obtaining speech utterances for objects.  In general,
-there probably should be a singleton instance of the SpeechUtil class.
-For those wishing to override the speech generators, however, one can
-create a new instance and replace/extend the speech generators as
-they see fit."""
+there probably should be a singleton instance of the SpeechGenerator
+class.  For those wishing to override the speech generators, however,
+one can create a new instance and replace/extend the speech generators
+as they see fit."""
+
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
+__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__license__   = "LGPL"
 
 import math
 

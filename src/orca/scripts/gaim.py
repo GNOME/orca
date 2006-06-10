@@ -19,8 +19,13 @@
 
 """Custom script for gaim.  This provides the ability for Orca to
 monitor both the IM input and IM output text areas at the same
-time.
-"""
+time."""
+
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
+__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__license__   = "LGPL"
 
 import orca.atspi as atspi
 import orca.braille as braille
