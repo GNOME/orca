@@ -5,9 +5,10 @@ DOC_FILES = \
 	orca \
 	orca.acss \
 	orca.atspi \
-	orca.braille \
 	orca.braillegenerator \
+	orca.braille \
 	orca.brl \
+	orca.brlmon \
 	orca.chnames \
 	orca.debug \
 	orca.dectalk \
@@ -22,25 +23,34 @@ DOC_FILES = \
 	orca.keybindings \
 	orca.keynames \
 	orca.mag \
-	orca.orca \
+	orca.orca_console_prefs \
+	orca.orca_gui_prefs \
 	orca.orca_i18n \
+	orca.orca_prefs \
+	orca.orca \
 	orca.outloud \
+	orca.platform \
 	orca.presentation_manager \
 	orca.rolenames \
 	orca.script \
 	orca.settings \
-	orca.speech \
 	orca.speechgenerator \
 	orca.speechserver \
+	orca.speech \
+	orca.util \
 	orca.scripts \
 	orca.scripts.Evolution \
-	orca.scripts.Gecko \
-	orca.scripts.StarOffice \
 	orca.scripts.gaim \
 	orca.scripts.gcalctool \
+	orca.scripts.gdmlogin \
 	orca.scripts.gedit \
 	orca.scripts.gnome-terminal \
-	orca.scripts.metacity
+	orca.scripts.gnome-window-properties \
+	orca.scripts.metacity \
+	orca.scripts.Mozilla \
+	orca.scripts.planner \
+	orca.scripts.self_voicing \
+	orca.scripts.StarOffice
 
 if ENABLE_PYDOC
 all:
