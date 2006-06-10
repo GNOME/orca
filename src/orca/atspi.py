@@ -19,10 +19,11 @@
 
 """Provides the interface to the AT-SPI Registry."""
 
-__version__ = "$Revision$"
-__date__ = "$Date$"
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
-__license__ = "LGPL"
+__license__   = "LGPL"
 
 import time
 
