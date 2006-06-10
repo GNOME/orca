@@ -2,6 +2,10 @@
 
 	* NEWS, configure.in, README: prep for 0.2.5.
 
+	* src/orca/*.py, src/orca/scripts/*.py: add pydocs and other
+	information (CVS version, date, id, copyright, etc.) to each
+	python module.
+	
 2006-06-09  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
