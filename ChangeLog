@@ -1,3 +1,7 @@
+2006-06-11  Willie Walker <william.walker@sun.com>
+
+	* MAINTAINERS, RELEASE_HOWTO: final prep for 0.2.5
+	
 2006-06-09  Willie Walker <william.walker@sun.com>
 
 	* NEWS, configure.in, README: prep for 0.2.5.

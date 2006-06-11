@@ -15,7 +15,7 @@ Modify these lines in ./configure.in:
 
   ORCA_MAJOR_VERSION=0
   ORCA_MINOR_VERSION=2
-  ORCA_MICRO_VERSION=4
+  ORCA_MICRO_VERSION=5
 
 Modify ./README to make sure is has the right Orca version.
 
@@ -32,8 +32,8 @@ TEST THE CANDIDATE:
 ------------------
 
 cd /tmp
-unzip -c orca-0.2.4.tar.gz | tar xvf -
-cd orca-0.2.4
+unzip -c orca-0.2.5.tar.gz | tar xvf -
+cd orca-0.2.5
 ./configure --prefix=/usr
 make
 sudo make install
@@ -44,31 +44,39 @@ TAG THE RELEASE:
 ---------------
 
 cvs commit
-cvs tag ORCA_0_2_4
+cvs tag ORCA_0_2_5
 
 
 UPLOAD THE RELEASE:
 ------------------
 
-scp orca-0.2.2.tar.gz wwalker@master.gnome.org:
+scp orca-0.2.5.tar.gz wwalker@master.gnome.org:
 ssh master.gnome.org
-install-module orca-0.2.2.tar.gz
+install-module orca-0.2.5.tar.gz
+
+You should also:
+
+cd docs/pydoc
+<edit end of Makefile to uncomment the all: target>
+make
+<copy resulting *.html to 
+ ~/gnome-head/gnomeweb-wml/www.gnome.org/projects/orca/pydoc/
+ and check these in.  Also update the associated index.html
+ files and such to have latest version and such.  Should also
+ do the same thing on http://live.gnome.org/Orca/>
 
 
 ANNOUNCE THE RELEASE to gnome-announce-list@gnome.org:
 -----------------------------------------------------
 
-Subject: orca-0.2.4
+Subject: orca-0.2.5
 
 ==============
 * What is it ?
 ==============
 
 Orca is a scriptable screen reader for the GNOME desktop for people
-with visual impairments.  It is currently in "pre-alpha" form.  Most
-people will *not* want to try orca-0.2.4, but some strong-hearted 
-folks with a sense of humor and hacker mentality will relish the 
-opportunity to help with the future of Orca.
+with visual impairments.
 
 
 ==================
@@ -76,7 +84,7 @@ opportunity to help with the future of Orca.
 ==================
 
 ==========
-Orca 0.2.4
+Orca 0.2.5
 ==========
 
 Code changes
@@ -90,11 +98,11 @@ Bugfixes
 ======================
 
 Source code:
-http://ftp.gnome.org/pub/GNOME/sources/orca/0.2/orca-0.2.4.tar.gz
+http://ftp.gnome.org/pub/GNOME/sources/orca/0.2/orca-0.2.5.tar.gz
 
 Enjoy.
 
-Will, Mike, Rich, and the Orca community
+Will, Mike, Rich, Lynn, and the Orca community
 
 
 MAKE AN RPM (IF YOU WANT TO)
