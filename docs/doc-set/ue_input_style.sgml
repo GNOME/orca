@@ -100,10 +100,7 @@
           <para>&detail; bound to
              <literal>default.Script.sayAll</literal>.
              </para>
-	  <para>&incomplete; [OWNER: RNB] the binding is in place, but
-              sayAll doesn't work as expected (see the requirement on
-              <link linkend="urdocread">Document Reading</link>).
-              &mustdeliver; V1.0.</para>
+	  <para>&incomplete; [OWNER: RNB] As of 0.2.5. this is now implemented for focus tracking mode but not yet for flat review.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_ENTER": performs "Where Am I?"  If this key is
@@ -111,12 +108,7 @@
             will be spoken.</para>
 	  <para>&detail; bound to
             <literal>default.Script.whereAmI</literal>.</para>
-	  <para>&incomplete; [OWNER: WDW] the binding is in place, but
-              the "Where Am I" functionality needs further
-              specification (see the requirement on <link
-              linkend="urwhereami">Where Am I?</link>).  In addition,
-              the notion of a relevant status bar is yet to be
-              defined. &mustdeliver; V1.0.</para>
+	  <para>&incomplete; [OWNER: WDW] The "where am I" is implemented in V0.2.5. however pressing twice does not yet give statusbar information.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_.": performs a "screen find."  Pressing this key
@@ -242,15 +234,12 @@
         </listitem>
         <listitem>
           <para>INSERT+s: toggles speech on and off.</para>
-	  <para>&incomplete; [OWNER: WDW] not done, and currently
-	    bound to <literal>orca.resetSpeech</literal>.  &mustdeliver;
-	    V1.0.</para>
+	  <para>&complete; [OWNER: WDW] Complete as of 0.2.5..</para>
         </listitem>
         <listitem>
           <para>CONTROL+INSERT+s: resets connection to the speech 
             engine.</para>
-	  <para>&incomplete; [OWNER: WDW] not done, and currently
-	    bound to INSERT+s.  &mustdeliver; V1.0.</para>
+	  <para>&complete; [OWNER: WDW] Complete as of 0.2.5..</para>
         </listitem>
         <listitem>
           <para>INSERT+v: brings up a "quick" verbosity preferences
@@ -277,8 +266,7 @@
         </listitem>
         <listitem>
           <para>INSERT+SPACE: brings up configuration GUI</para>
-	  <para>&incomplete; [OWNER: RNB] &shoulddeliver; V1.0 (along
-	    with configuration GUI).</para>
+	  <para>&incomplete; [OWNER: RNB] Completed as of 0.2.5 along with the config UI.</para>
         </listitem>
       </itemizedlist>
 
