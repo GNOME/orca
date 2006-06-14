@@ -1258,15 +1258,6 @@ def main():
     except:
         pass
 
-    # Do not run Orca if accessibility has not been enabled.
-    #
-    import commands
-    a11yEnabled = commands.getoutput(\
-        "gconftool-2 --get /desktop/gnome/interface/accessibility")
-    if a11yEnabled != "true":
-        _showPreferencesConsole()
-        abort()
-
     # Parse the command line options.
     #
     # Run the preferences setup if the user has specified
@@ -1312,6 +1303,15 @@ def main():
     except:
         usage()
         os._exit(2)
+
+    # Do not run Orca if accessibility has not been enabled.
+    #
+    import commands
+    a11yEnabled = commands.getoutput(\
+        "gconftool-2 --get /desktop/gnome/interface/accessibility")
+    if a11yEnabled != "true":
+        _showPreferencesConsole()
+        abort()
 
     if setupRequested and (not bypassSetup) and (not showGUI):
         _showPreferencesConsole()

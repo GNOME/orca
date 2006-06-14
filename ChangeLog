@@ -1,4 +1,10 @@
+2006-06-14  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca.py: fix bug 344880 - process command line
+	arguments even if a11y is not enabled.
+	
 2006-06-12  Mike Pedersen <michael.pedersen@sun.com>
+
 	* added updates to style guide.
 	
 2006-06-11  Willie Walker <william.walker@sun.com>
