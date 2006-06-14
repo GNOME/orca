@@ -45,6 +45,7 @@ import time
 import atspi
 import braille
 import debug
+import httpserver
 import keynames
 import keybindings
 import mag
@@ -834,6 +835,8 @@ def loadUserSettings(script=None, inputEvent=None):
     global _userSettings
 
     # Shutdown the output drivers and give them a chance to die.
+    #
+    httpserver.shutdown()
     speech.shutdown()
     braille.shutdown()
     mag.shutdown()
@@ -888,6 +891,8 @@ def loadUserSettings(script=None, inputEvent=None):
         debug.println(debug.LEVEL_CONFIGURATION,
                       "Magnification module has NOT been initialized.")
 
+    httpserver.init()
+    
     return True
 
 def _showPreferencesGUI(script=None, inputEvent=None):

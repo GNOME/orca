@@ -23,6 +23,7 @@ orca_python_PYTHON = \
 	focus_tracking_presenter.py \
 	gnomespeechfactory.py \
 	hierarchical_presenter.py \
+	httpserver.py \
 	input_event.py \
 	keybindings.py \
 	keynames.py \

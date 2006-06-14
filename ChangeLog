@@ -1,5 +1,15 @@
 2006-06-14  Willie Walker <william.walker@sun.com>
 
+	* src/orca/Makefile.am, src/orca/orca.py, src/orca/settings.py,
+	src/orca/speech.py, src/orca/httpserver.py: make the HTTP server a
+	separate module.  This reduces complexity in the speech module and
+	also gives us room to extend the command set that Orca can handle.
+
+	NOTE: this represents a change in settings - speechServerPort is
+	now defunct and has been replace by httpServerPort.
+	
+2006-06-14  Willie Walker <william.walker@sun.com>
+
 	* src/orca/orca.py: fix bug 344880 - process command line
 	arguments even if a11y is not enabled.
 	

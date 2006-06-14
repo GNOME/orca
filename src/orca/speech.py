@@ -26,9 +26,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import threading
 import time
-import BaseHTTPServer
 
 import debug
 import orca
@@ -37,59 +35,6 @@ import settings
 
 from acss import ACSS
 from orca_i18n import _           # for gettext support
-
-class _SpeakRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
-    """Provides support for communicating with speech via a HTTP.
-    This is to support self-voicing applications that want to use
-    Orca as a speech service.
-
-    The protocol is simple: POST content is 'stop' or 'speak:text'
-
-    To test this, run:
-
-      wget --post-data='speak:hello world' localhost:20433
-
-    """
-
-    def do_GET(self):
-        self.send_response(200)
-        self.send_header("Content-type", "text/html")
-        self.end_headers()
-        self.wfile.write("<html><body><p>Orca %s</p></body></html>" \
-                         % platform.version)
-
-    def do_POST(self):
-        contentLength = self.headers.getheader('content-length')
-        if contentLength:
-            contentLength = int(contentLength)
-            inputBody = self.rfile.read(contentLength)
-            debug.println(debug.LEVEL_FINEST,
-                          "speech._SpeakRequestHandler received %s" \
-                          % inputBody)
-            if inputBody.startswith("speak:"):
-                speak(inputBody[6:])
-                self.send_response(200, 'OK')
-            elif inputBody == "stop":
-                stop()
-                self.send_response(200, 'OK')
-            elif inputBody == "isSpeaking":
-                self.send_response(200, 'OK')
-                self.send_header("Content-type", "text/html")
-                self.end_headers()
-                self.wfile.write("%s" % isSpeaking())
-        else:
-            debug.println(debug.LEVEL_FINEST,
-                          "speech._SpeakRequestHandler received no data")
-
-
-class _SpeakRequestThread(threading.Thread):
-    """Runs a _SpeakRequestHandler in a separate thread."""
-
-    def run(self):
-        httpd = BaseHTTPServer.HTTPServer(('',
-                                           settings.speechServerPort),
-                                          _SpeakRequestHandler)
-        httpd.serve_forever()
 
 # The speech server to use for all speech operations.
 #
@@ -115,8 +60,6 @@ def getSpeechServerFactories():
             debug.printException(debug.LEVEL_OFF)
 
     return factories
-
-_speakRequestThread = None
 
 def init():
 
@@ -158,19 +101,6 @@ def init():
         __speechserver = factory.SpeechServer.getSpeechServer(speechServerInfo)
     else:
         __speechserver = factory.SpeechServer.getSpeechServer()
-
-    # If we want to listen for speak commands from a separate port,
-    # do so.  We make it a daemon so it will die automatically when
-    # orca dies.
-    #
-    global _speakRequestThread
-    if settings.speechServerPort and (not _speakRequestThread):
-        try:
-            _speakRequestThread = _SpeakRequestThread()
-            _speakRequestThread.setDaemon(True)
-            _speakRequestThread.start()
-        except:
-            debug.printException(debug.LEVEL_SEVERE)
 
 def __resolveACSS(acss=None):
     if acss:

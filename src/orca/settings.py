@@ -136,10 +136,10 @@ speechRateDelta         = 5
 #
 speechPitchDelta        = 0.5
 
-# The port to listen on if orca is to act as a speech server for self
-# voicing applications.
+# The port to listen on if orca is to act as an HTTP server
+# (mainly as a speech server for self-voicing applications).
 #
-speechServerPort        = 20433
+httpServerPort          = 20433
 
 # If True, enable speech.
 #
