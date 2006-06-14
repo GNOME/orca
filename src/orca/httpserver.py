@@ -99,7 +99,7 @@ def init():
 
     if settings.httpServerPort and (not _httpRequestThread):
         try:
-            _httpRequestThread = _httpRequestThread()
+            _httpRequestThread = _HTTPRequestThread()
             _httpRequestThread.setDaemon(True)
             _httpRequestThread.start()
         except:
