@@ -86,7 +86,7 @@ class _HTTPRequestThread(threading.Thread):
 
     def run(self):
         httpd = BaseHTTPServer.HTTPServer(('',
-                                           settings.speechServerPort),
+                                           settings.httpServerPort),
                                           _HTTPRequestHandler)
         httpd.serve_forever()
 
@@ -94,9 +94,9 @@ def init():
     """Creates an HTTP server that listens for speak commands from a
     separate port defined by settings.httpServerPort.  We run this
     as a daemon so it will die automatically when orca dies."""
-    
+
     global _httpRequestThread
-    
+
     if settings.httpServerPort and (not _httpRequestThread):
         try:
             _httpRequestThread = _httpRequestThread()
