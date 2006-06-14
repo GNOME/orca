@@ -1,758 +1,746 @@
+# translation of orca.HEAD.gu.po to Gujarati
 # translation of orca.HEAD.po to Gujarati
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 # Ankit Patel <ankit@redhat.com>, 2004.
+# Ankit Patel <ankit644@yahoo.com>, 2006.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: orca.HEAD\n"
+"Project-Id-Version: orca.HEAD.gu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-11 19:06-0400\n"
-"PO-Revision-Date: 2004-09-09 13:56+0530\n"
-"Last-Translator: Ankit Patel <ankit@redhat.com>\n"
-"Language-Team: Gujarati\n"
+"POT-Creation-Date: 2006-06-14 07:28+0200\n"
+"PO-Revision-Date: 2006-06-14 18:07+0530\n"
+"Last-Translator: Ankit Patel <ankit644@yahoo.com>\n"
+"Language-Team: Gujarati <indianoss-gujarati@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.3.1\n"
-"Plural-Forms: Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"X-Generator: KBabel 1.9.1\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n\n"
 "\n"
 
-#: src/orca/braillegenerator.py:193 src/orca/speechgenerator.py:191
-#, fuzzy
+#: ../src/orca/braillegenerator.py:193 ../src/orca/speechgenerator.py:191
 msgid "grayed"
-msgstr "મોટુ"
+msgstr "રાખોડી"
 
-#: src/orca/braillegenerator.py:1051 src/orca/speechgenerator.py:1169
+#: ../src/orca/braillegenerator.py:1051 ../src/orca/speechgenerator.py:1169
 msgid "expanded"
-msgstr ""
+msgstr "વિસ્તૃત"
 
-#: src/orca/braillegenerator.py:1053 src/orca/speechgenerator.py:1171
+#: ../src/orca/braillegenerator.py:1053 ../src/orca/speechgenerator.py:1171
 msgid "collapsed"
-msgstr ""
+msgstr "સંકુચિત"
 
-#: src/orca/braillegenerator.py:1057
+#: ../src/orca/braillegenerator.py:1057
 #, python-format
 msgid "TREE LEVEL %d"
-msgstr ""
+msgstr "TREE LEVEL %d"
 
-#: src/orca/chnames.py:32
+#: ../src/orca/chnames.py:32
 msgid "space"
 msgstr "જગ્યા"
 
-#: src/orca/chnames.py:33
+#: ../src/orca/chnames.py:33
 msgid "bang"
 msgstr "બેંગ"
 
-#: src/orca/chnames.py:34
+#: ../src/orca/chnames.py:34
 msgid "quote"
 msgstr "ક્વોટ"
 
-#: src/orca/chnames.py:35
+#: ../src/orca/chnames.py:35
 msgid "number"
 msgstr "નંબર"
 
-#: src/orca/chnames.py:36
+#: ../src/orca/chnames.py:36
 msgid "dollar"
 msgstr "ડોલર"
 
-#: src/orca/chnames.py:37 src/orca/speechgenerator.py:852
+#: ../src/orca/chnames.py:37 ../src/orca/speechgenerator.py:852
 msgid "percent"
 msgstr "ટકા"
 
-#: src/orca/chnames.py:38
+#: ../src/orca/chnames.py:38
 msgid "and"
 msgstr "અને"
 
-#: src/orca/chnames.py:39
+#: ../src/orca/chnames.py:39
 msgid "tick"
 msgstr "ટીક"
 
-#: src/orca/chnames.py:40
-#, fuzzy
+#: ../src/orca/chnames.py:40
 msgid "left paren"
 msgstr "ડાબો કૌંસ"
 
-#: src/orca/chnames.py:41
-#, fuzzy
+#: ../src/orca/chnames.py:41
 msgid "right paren"
 msgstr "જમણો કૌંસ"
 
-#: src/orca/chnames.py:42
+#: ../src/orca/chnames.py:42
 msgid "star"
 msgstr "તારો"
 
-#: src/orca/chnames.py:43
+#: ../src/orca/chnames.py:43
 msgid "plus"
 msgstr "વત્તા"
 
-#: src/orca/chnames.py:44
+#: ../src/orca/chnames.py:44
 msgid "comma"
 msgstr "અલ્પવિરામ"
 
-#: src/orca/chnames.py:45
+#: ../src/orca/chnames.py:45
 msgid "dash"
 msgstr "ડેશ"
 
-#: src/orca/chnames.py:46
+#: ../src/orca/chnames.py:46
 msgid "dot"
 msgstr "ટપકુ"
 
-#: src/orca/chnames.py:47
+#: ../src/orca/chnames.py:47
 msgid "slash"
 msgstr "સ્લેશ"
 
-#: src/orca/chnames.py:48
+#: ../src/orca/chnames.py:48
 msgid "question"
 msgstr "પ્રશ્ન"
 
-#: src/orca/chnames.py:49
-#, fuzzy
+#: ../src/orca/chnames.py:49
 msgid "colon"
 msgstr "કોલન"
 
-#: src/orca/chnames.py:50
+#: ../src/orca/chnames.py:50
 msgid "semi"
 msgstr "અર્ધવિરામ"
 
-#: src/orca/chnames.py:51
-#, fuzzy
+#: ../src/orca/chnames.py:51
 msgid "less than"
-msgstr "ઓછુ"
+msgstr "કરતાં ઓછુ"
 
-#: src/orca/chnames.py:52
-#, fuzzy
+#: ../src/orca/chnames.py:52
 msgid "greater than"
-msgstr "મોટુ"
+msgstr "કરતાં મોટું"
 
-#: src/orca/chnames.py:53
+#: ../src/orca/chnames.py:53
 msgid "left bracket"
 msgstr "ડાબો કૌંસ"
 
-#: src/orca/chnames.py:54
+#: ../src/orca/chnames.py:54
 msgid "right bracket"
 msgstr "જમણો કૌંસ"
 
-#: src/orca/chnames.py:55
+#: ../src/orca/chnames.py:55
 msgid "left brace"
 msgstr "ડાબો કૌંસ"
 
-#: src/orca/chnames.py:56
+#: ../src/orca/chnames.py:56
 msgid "right brace"
 msgstr "જમણો કૌંસ"
 
-#: src/orca/chnames.py:57
+#: ../src/orca/chnames.py:57
 msgid "back"
 msgstr "પાછા"
 
-#: src/orca/chnames.py:58
+#: ../src/orca/chnames.py:58
 msgid "bar"
 msgstr "પટ્ટી"
 
-#: src/orca/chnames.py:59
+#: ../src/orca/chnames.py:59
 msgid "newline"
-msgstr ""
+msgstr "નવીલીટી"
 
-#: src/orca/chnames.py:60
+#: ../src/orca/chnames.py:60
 msgid "tab"
 msgstr "ટેબ"
 
-#: src/orca/default.py:76
+#: ../src/orca/default.py:76
 msgid "Performs left click on current flat review item."
-msgstr ""
+msgstr "વર્તમાન સપાટ રીવ્યુ વસ્તુ પર ડાબું ક્લિક કરે છે."
 
-#: src/orca/default.py:80
+#: ../src/orca/default.py:80
 msgid "Performs right click on current flat review item."
-msgstr ""
+msgstr "વર્તમાન સપાટ રીવ્યુ વસ્તુ પર જમણું ક્લિક કરે છે."
 
-#: src/orca/default.py:84 src/orca/scripts/Evolution.py:104
+#: ../src/orca/default.py:84 ../src/orca/scripts/Evolution.py:104
 msgid "Speaks entire document."
-msgstr ""
+msgstr "વર્તમાન દસ્તાવેજ બોલે છે."
 
-#: src/orca/default.py:88
+#: ../src/orca/default.py:88
 msgid "Performs the where am I operation."
-msgstr ""
+msgstr "હું ક્યાં છું પ્રક્રિયા કરે છે."
 
-#: src/orca/default.py:92
+#: ../src/orca/default.py:92
 msgid "Paints and prints the visible zones in the active window."
-msgstr ""
+msgstr "સક્રિય વિન્ડોમાં દેખીતા ઝોનને રંગે છે અને છાપે છે."
 
-#: src/orca/default.py:96
+#: ../src/orca/default.py:96
 msgid "Enters and exits flat review mode."
-msgstr ""
+msgstr "સપાટ રીવ્યુ સ્થિતિમાં દાખલ થાય અને બહાર નીકળે."
 
-#: src/orca/default.py:100
+#: ../src/orca/default.py:100
 msgid "Moves flat review to the beginning of the previous line."
-msgstr ""
+msgstr "સપાટ રીવ્યુને પહેલાંની લીટીની શરૂઆતમાં ખસેડે છે."
 
-#: src/orca/default.py:104
+#: ../src/orca/default.py:104
 msgid "Moves flat review to the home position."
-msgstr ""
+msgstr "સપાટ રીવ્યુને ઘર સ્થિતિએ ખસેડે છે."
 
-#: src/orca/default.py:108
+#: ../src/orca/default.py:108
 msgid "Speaks the current flat review line."
-msgstr ""
+msgstr "વર્તમાન સપાટ રીવ્યુ લીટી બોલે છે."
 
-#: src/orca/default.py:112
+#: ../src/orca/default.py:112
 msgid "Moves flat review to the beginning of the next line."
-msgstr ""
+msgstr "સપાટ રીવ્યુને આગળની લીટીની શરૂઆતમાં ખસેડે છે."
 
-#: src/orca/default.py:116
+#: ../src/orca/default.py:116
 msgid "Moves flat review to the end position."
-msgstr ""
+msgstr "સપાટ રીવ્યુને અંતિમ સ્થાને ખસેડે છે."
 
-#: src/orca/default.py:120
+#: ../src/orca/default.py:120
 msgid "Moves flat review to the previous item or word."
-msgstr ""
+msgstr "સપાટ રીવ્યુને પહેલાંની વસ્તુ અથવા શબ્દ પર ખસેડે છે."
 
-#: src/orca/default.py:124
+#: ../src/orca/default.py:124
 msgid "Moves flat review to the word above the current word."
-msgstr ""
+msgstr "સપાટ રીવ્યુને વર્તમાન શબ્દની ઉપરના શબ્દ પર ખસેડે છે."
 
-#: src/orca/default.py:128
+#: ../src/orca/default.py:128
 msgid "Speaks the current flat review item or word."
-msgstr ""
+msgstr "વર્તમાન સપાટ રીવ્યુ વસ્તુ અથવા શબ્દ બોલે છે."
 
-#: src/orca/default.py:132
+#: ../src/orca/default.py:132
 msgid "Speaks the current flat review object."
-msgstr ""
+msgstr "વર્તમાન સપાટ રીવ્યુ ઓબ્જેક્ટ બોલે છે."
 
-#: src/orca/default.py:136
+#: ../src/orca/default.py:136
 msgid "Moves flat review to the next item or word."
-msgstr ""
+msgstr "સપાટ રીવ્યુને આગળની વસ્તુ અથવા શબ્દ પર ખસેડે છે."
 
-#: src/orca/default.py:140
+#: ../src/orca/default.py:140
 msgid "Moves flat review to the word below the current word."
-msgstr ""
+msgstr "સપાટ રીવ્યુને વર્તમાન શબ્દની નીચેના શબ્દે ખસેડે છે."
 
-#: src/orca/default.py:144
+#: ../src/orca/default.py:144
 msgid "Moves flat review to the previous character."
-msgstr ""
+msgstr "સપાટ રીવ્યુને પહેલાંના અક્ષર પર ખસેડે છે."
 
-#: src/orca/default.py:148
+#: ../src/orca/default.py:148
 msgid "Moves flat review to the end of the line."
-msgstr ""
+msgstr "સપાટ રીવ્યુને લીટીના અંતે ખસેડે છે."
 
-#: src/orca/default.py:152
+#: ../src/orca/default.py:152
 msgid "Speaks the current flat review character."
-msgstr ""
+msgstr "વર્તમાન સપાટ રીવ્યુ અક્ષર બોલે છે."
 
-#: src/orca/default.py:156
+#: ../src/orca/default.py:156
 msgid "Moves flat review to the next character."
-msgstr ""
+msgstr "સપાટ રીવ્યુને આગળના અક્ષરે ખસેડે છે."
 
-#: src/orca/default.py:160
+#: ../src/orca/default.py:160
 msgid "Toggles whether to read just the current table cell or the whole row."
-msgstr ""
+msgstr "શું ખાલી વર્તમાન કોષ્ટક ખાનું અથવા આખી હરોળ વાંચવી તે બદલે છે."
 
-#: src/orca/default.py:164
+#: ../src/orca/default.py:164
 msgid "Reads the attributes associated with the current text character."
-msgstr ""
+msgstr "વર્તમાન લખાણ અક્ષર સાથે સંકળાયેલ લક્ષણને વાંચે છે."
 
-#: src/orca/default.py:168
+#: ../src/orca/default.py:168
 msgid "Reports information on current script."
-msgstr ""
+msgstr "વર્તમાન સ્ક્રિપ્ટ પરની જાણકારીનો અહેવાલ આપે છે."
 
-#: src/orca/default.py:172
+#: ../src/orca/default.py:172
 msgid "Pans the braille display to the left."
-msgstr ""
+msgstr "ડાબી બાજુએ બ્રેઈલી ડિસ્પ્લે ગોઠવે છે."
 
-#: src/orca/default.py:176
+#: ../src/orca/default.py:176
 msgid "Pans the braille display to the right."
-msgstr ""
+msgstr "જમણી બાજુએ બ્રેઈલી ડિસ્પ્લે ગોઠવે છે."
 
-#: src/orca/default.py:180
+#: ../src/orca/default.py:180
 msgid "Moves flat review to the bottom left."
-msgstr ""
+msgstr "સપાટ રીવ્યુને તળિયે ડાબે ખસેડે છે."
 
-#: src/orca/default.py:184
+#: ../src/orca/default.py:184
 msgid "Returns to object with keyboard focus."
-msgstr ""
+msgstr "કીબોર્ડ ફોકસ સાથે ઓબ્જેક્ટ આપે છે."
 
-#: src/orca/default.py:845 src/orca/default.py:1064
-#, fuzzy, python-format
+#: ../src/orca/default.py:845 ../src/orca/default.py:1064
+#, python-format
 msgid "tree level %d"
-msgstr "ટ્રી દેખાવ"
+msgstr "ટ્રી સ્તર %d"
 
-#: src/orca/default.py:849 src/orca/default.py:1077 src/orca/default.py:1155
-#: src/orca/default.py:1220
+#: ../src/orca/default.py:849 ../src/orca/default.py:1077
+#: ../src/orca/default.py:1155 ../src/orca/default.py:1220
 msgid "No focus"
-msgstr ""
+msgstr "કોઈ ફોકસ નથી"
 
-#: src/orca/default.py:1463
+#: ../src/orca/default.py:1463
 msgid "entire document selected"
-msgstr ""
+msgstr "વર્તમાન દસ્તાવેજ પસંદ થયેલ છે"
 
-#: src/orca/default.py:1818
+#: ../src/orca/default.py:1818
 msgid "Speak "
-msgstr ""
+msgstr "બોલો "
 
-#: src/orca/default.py:1821
+#: ../src/orca/default.py:1821
 msgid "row"
-msgstr ""
+msgstr "હરોળ"
 
-#: src/orca/default.py:1823 src/orca/rolenames.py:432
-#: src/orca/rolenames.py:434
+#: ../src/orca/default.py:1823 ../src/orca/rolenames.py:432
+#: ../src/orca/rolenames.py:434
 msgid "cell"
-msgstr ""
+msgstr "ખાનું"
 
-#: src/orca/default.py:2260 src/orca/default.py:2354 src/orca/default.py:2359
-#: src/orca/default.py:2429 src/orca/default.py:2434
-#, fuzzy
+#: ../src/orca/default.py:2260 ../src/orca/default.py:2354
+#: ../src/orca/default.py:2359 ../src/orca/default.py:2429
+#: ../src/orca/default.py:2434
 msgid "blank"
-msgstr "બેંગ"
+msgstr "કોરું"
 
-#: src/orca/default.py:2262 src/orca/default.py:2361
-#, fuzzy
+#: ../src/orca/default.py:2262 ../src/orca/default.py:2361
 msgid "white space"
-msgstr "જગ્યા"
+msgstr "સફેદ જગ્યા"
 
-#: src/orca/espeechfactory.py:93
+#: ../src/orca/espeechfactory.py:93
 msgid "Emacspeak Speech Services"
-msgstr ""
+msgstr "Emacspeak બોલી સેવાઓ"
 
-#: src/orca/focus_tracking_presenter.py:550
+#: ../src/orca/focus_tracking_presenter.py:550
 msgid "Switching to focus tracking mode."
-msgstr ""
+msgstr "ટ્રેકીંગ સ્થિતિ ફોક્સ પર બદલાઈ રહ્યા છીએ."
 
-#: src/orca/gnomespeechfactory.py:150
+#: ../src/orca/gnomespeechfactory.py:150
 msgid "GNOME Speech Services"
-msgstr ""
+msgstr "જીનોમ બોલી સેવાઓ"
 
 #. Replace ellipses (both manual and unicode) with "dot dot dot"
 #.
-#: src/orca/gnomespeechfactory.py:571 src/orca/gnomespeechfactory.py:572
+#: ../src/orca/gnomespeechfactory.py:571 ../src/orca/gnomespeechfactory.py:572
 msgid " dot dot dot"
-msgstr ""
+msgstr " ટપકું ટપકું ટપકું"
 
-#: src/orca/gnomespeechfactory.py:670
+#: ../src/orca/gnomespeechfactory.py:670
 msgid "higher."
-msgstr ""
+msgstr "ઊંચુ."
 
-#: src/orca/gnomespeechfactory.py:698
+#: ../src/orca/gnomespeechfactory.py:698
 msgid "lower."
-msgstr ""
+msgstr "નીચું."
 
-#: src/orca/gnomespeechfactory.py:723
+#: ../src/orca/gnomespeechfactory.py:723
 msgid "faster."
-msgstr ""
+msgstr "ઝડપી."
 
-#: src/orca/gnomespeechfactory.py:753
+#: ../src/orca/gnomespeechfactory.py:753
 msgid "slower."
-msgstr ""
+msgstr "ધીમું."
 
-#: src/orca/hierarchical_presenter.py:436
+#: ../src/orca/hierarchical_presenter.py:436
 msgid "Switching to hierarchical navigation mode."
-msgstr ""
+msgstr "વંશવેલાવાળી શોધખોળ સ્થિતિમાં બદલાઈ રહ્યા છીએ."
 
-#: src/orca/keynames.py:32 src/orca/keynames.py:35
+#: ../src/orca/keynames.py:32 ../src/orca/keynames.py:35
 msgid "left shift"
-msgstr ""
+msgstr "ડાબું shift"
 
-#: src/orca/keynames.py:33
-#, fuzzy
+#: ../src/orca/keynames.py:33
 msgid "left alt"
-msgstr "ડાબુ"
+msgstr "ડાબું alt"
 
-#: src/orca/keynames.py:34
-#, fuzzy
+#: ../src/orca/keynames.py:34
 msgid "left control"
-msgstr "ડાબુ"
+msgstr "ડાબું control"
 
-#: src/orca/keynames.py:36
-#, fuzzy
+#: ../src/orca/keynames.py:36
 msgid "right alt"
-msgstr "જમણો કૌંસ"
+msgstr "જમણું alt"
 
-#: src/orca/keynames.py:37
-#, fuzzy
+#: ../src/orca/keynames.py:37
 msgid "right control"
-msgstr "જમણો કૌંસ"
+msgstr "જમણું control"
 
-#: src/orca/keynames.py:38
-#, fuzzy
+#: ../src/orca/keynames.py:38
 msgid "left tab"
-msgstr "ડાબુ"
+msgstr "ડાબી tab"
 
-#: src/orca/keynames.py:39
+#: ../src/orca/keynames.py:39
 msgid "F 11"
-msgstr ""
+msgstr "F 11"
 
-#: src/orca/keynames.py:40
+#: ../src/orca/keynames.py:40
 msgid "F 12"
-msgstr ""
+msgstr "F 12"
 
-#: src/orca/orca-setup.glade:8
-msgid "Orca Preferences"
-msgstr ""
-
-#: src/orca/orca-setup.glade:124
-msgid "_Enable speech"
-msgstr ""
-
-#: src/orca/orca-setup.glade:161
-msgid "Speech _system:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:213
-#, fuzzy
-msgid "Speech synthesi_zer:"
-msgstr "મૂળભુત સીન્થેસાઈઝર પસંદ કરો:"
-
-#: src/orca/orca-setup.glade:244
-msgid "_Voice settings:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:275
-msgid "_Rate:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:332
-msgid "Pi_tch:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:423
-msgid "_Person:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:492
-msgid "Vo_lume:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:542
-msgid ""
-"Default\n"
-"Uppercase\n"
-"Hyperlink"
-msgstr ""
-
-#: src/orca/orca-setup.glade:609
-msgid "_None"
-msgstr ""
-
-#: src/orca/orca-setup.glade:629
-msgid "So_me"
-msgstr ""
-
-#: src/orca/orca-setup.glade:650
-msgid "_All"
-msgstr ""
-
-#: src/orca/orca-setup.glade:674
-msgid "<b>Punctuation Level</b>"
-msgstr ""
-
-#: src/orca/orca-setup.glade:748 src/orca/orca-setup.glade:986
-msgid "Brie_f"
-msgstr ""
-
-#: src/orca/orca-setup.glade:768 src/orca/orca-setup.glade:1006
-msgid "Ver_bose"
-msgstr ""
-
-#: src/orca/orca-setup.glade:792 src/orca/orca-setup.glade:1030
-msgid "<b>Verbosity</b>"
-msgstr ""
-
-#: src/orca/orca-setup.glade:857
-msgid "Speech"
-msgstr ""
-
-#: src/orca/orca-setup.glade:888
-#, fuzzy
-msgid "Enable Braille _support"
-msgstr "બીજો અવાજ બનાવવો છે? હ અથવા ન દાખલ કરો."
-
-#: src/orca/orca-setup.glade:908
-#, fuzzy
-msgid "Enable Braille _monitor"
-msgstr "બીજો અવાજ બનાવવો છે? હ અથવા ન દાખલ કરો."
-
-#: src/orca/orca-setup.glade:928
-msgid "_Abbreviated role names"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1071
-msgid "Braille"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1102
-#, fuzzy
-msgid "Enable _key echo"
-msgstr "કી ઈકો વાપરો, હ અથવા ન દાખલ કરો: "
-
-#: src/orca/orca-setup.glade:1134
-msgid "Enable _alphanumeric and punctuation keys"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1168
-#, fuzzy
-msgid "Enable _modifier keys"
-msgstr "બીજો અવાજ બનાવવો છે? હ અથવા ન દાખલ કરો."
-
-#: src/orca/orca-setup.glade:1202
-#, fuzzy
-msgid "Enable lockin_g keys"
-msgstr "કી ઈકો વાપરો, હ અથવા ન દાખલ કરો: "
-
-#: src/orca/orca-setup.glade:1236
-#, fuzzy
-msgid "Enable _function keys"
-msgstr "કી ઈકો વાપરો, હ અથવા ન દાખલ કરો: "
-
-#: src/orca/orca-setup.glade:1270
-#, fuzzy
-msgid "Enable ac_tion keys"
-msgstr "કી ઈકો વાપરો, હ અથવા ન દાખલ કરો: "
-
-#: src/orca/orca-setup.glade:1292
-#, fuzzy
-msgid "Enable echo by _word"
-msgstr "કી ઈકો વાપરો, હ અથવા ન દાખલ કરો: "
-
-#: src/orca/orca-setup.glade:1317
-msgid "Key Echo"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1359
-msgid "Enable _magnifier"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1443
-msgid "Enable c_ursor"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1478
-msgid "Custom siz_e"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1510
-msgid "Color:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1557
-msgid "_Width:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1586 src/orca/orca-setup.glade:1860
-#, fuzzy
-msgid "pixels"
-msgstr "વત્તા"
-
-#: src/orca/orca-setup.glade:1650
-msgid "<b>Cursor Settings</b>"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1737
-msgid "Enable cross-hair cli_p"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1773
-msgid "Enable cross-h_air"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1814
-msgid "Si_ze:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1901
+#: ../src/orca/orca-setup.glade.h:1
 msgid "<b>Cross-hair Settings</b>"
-msgstr ""
+msgstr "<b>ક્રોસ-હેર સુયોજનો</b>"
 
-#: src/orca/orca-setup.glade:1987
-msgid "Scale _factor:"
-msgstr ""
+#: ../src/orca/orca-setup.glade.h:2
+msgid "<b>Cursor Settings</b>"
+msgstr "<b>કર્સર સુયોજનો</b>"
 
-#: src/orca/orca-setup.glade:2039
-msgid "In_vert colors"
-msgstr ""
+#: ../src/orca/orca-setup.glade.h:3
+msgid "<b>Punctuation Level</b>"
+msgstr "<b>વિરામ સ્તર</b>"
 
-#: src/orca/orca-setup.glade:2067
-msgid "<b>Zoomer Settings</b>"
-msgstr ""
+#: ../src/orca/orca-setup.glade.h:4
+msgid "<b>Verbosity</b>"
+msgstr "<b>વર્બોઝીટી</b>"
 
-#: src/orca/orca-setup.glade:2160
-msgid "_Top:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:2227
-msgid "_Bottom:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:2294
-msgid "_Left:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:2360
-#, fuzzy
-msgid "_Right:"
-msgstr "જમણુ"
-
-#: src/orca/orca-setup.glade:2427
+#: ../src/orca/orca-setup.glade.h:5
 msgid "<b>Zoomer Position</b>"
-msgstr ""
+msgstr "<b>ઝુમર સ્થાન</b>"
 
-#: src/orca/orca-setup.glade:2474
-msgid "_Smoothing:"
-msgstr ""
+#: ../src/orca/orca-setup.glade.h:6
+msgid "<b>Zoomer Settings</b>"
+msgstr "<b>ઝુમર સુયોજનો</b>"
 
-#: src/orca/orca-setup.glade:2507
-msgid "Mouse trac_king mode:"
-msgstr ""
+#: ../src/orca/orca-setup.glade.h:7
+msgid "Braille"
+msgstr "બ્રેઈલી"
 
-#: src/orca/orca-setup.glade:2550
-msgid ""
-"None\n"
-"Bilinear"
-msgstr ""
+#: ../src/orca/orca-setup.glade.h:8
+msgid "Brie_f"
+msgstr "સંક્ષિપ્ત (_f)"
 
-#: src/orca/orca-setup.glade:2574
+#: ../src/orca/orca-setup.glade.h:9
 msgid ""
 "Centered\n"
 "None\n"
 "Proportional\n"
 "Push"
 msgstr ""
+"કેનદ્રિય\n"
+"કંઈનહિં\n"
+"સમપ્રમાણ\n"
+"ધકેલો"
 
-#: src/orca/orca-setup.glade:2611
-msgid "Magnifier"
+#: ../src/orca/orca-setup.glade.h:13
+msgid "Color:"
+msgstr "રંગ:"
+
+#: ../src/orca/orca-setup.glade.h:14
+msgid "Custom siz_e"
+msgstr "વૈવિધ્યપૂર્ણ માપ (_e)"
+
+#: ../src/orca/orca-setup.glade.h:15
+msgid ""
+"Default\n"
+"Uppercase\n"
+"Hyperlink"
 msgstr ""
+"મૂળભૂત\n"
+"ઉપલો કિસ્સો\n"
+"હાયપરલીંક"
 
-#: src/orca/orca-setup.glade:2650
-#, fuzzy
+#: ../src/orca/orca-setup.glade.h:18
+msgid "Enable Braille _monitor"
+msgstr "બ્રેઈલી મોનીટર સક્રિય કરો (_m)"
+
+#: ../src/orca/orca-setup.glade.h:19
+msgid "Enable Braille _support"
+msgstr "બ્રેઈલી આધાર સક્રિય કરો (_s)"
+
+#: ../src/orca/orca-setup.glade.h:20
+msgid "Enable _alphanumeric and punctuation keys"
+msgstr "આલ્ફાન્યૂમેરિક અને વિરામ કીઓ સક્રિય કરો (_a)"
+
+#: ../src/orca/orca-setup.glade.h:21
+msgid "Enable _function keys"
+msgstr "વિધેય કીઓ સક્રિય કરો (_f)"
+
+#: ../src/orca/orca-setup.glade.h:22
+msgid "Enable _key echo"
+msgstr "કી ઈકો સક્રિય કરો (_k)"
+
+#: ../src/orca/orca-setup.glade.h:23
+msgid "Enable _magnifier"
+msgstr "વિસ્તારક સક્રિય કરો (_m)"
+
+#: ../src/orca/orca-setup.glade.h:24
+msgid "Enable _modifier keys"
+msgstr "સુધારક કીઓ સક્રિય કરો (_m)"
+
+#: ../src/orca/orca-setup.glade.h:25
+msgid "Enable ac_tion keys"
+msgstr "ક્રિયા કીઓ સક્રિય કરો (_t)"
+
+#: ../src/orca/orca-setup.glade.h:26
+msgid "Enable c_ursor"
+msgstr "કર્સર સક્રિય કરો (_u)"
+
+#: ../src/orca/orca-setup.glade.h:27
+msgid "Enable cross-h_air"
+msgstr "ક્રોસ-હેર સક્રિય કરો (_a)"
+
+#: ../src/orca/orca-setup.glade.h:28
+msgid "Enable cross-hair cli_p"
+msgstr "ક્રોસ-હેર ક્લિપ સક્રિય કરો (_p)"
+
+#: ../src/orca/orca-setup.glade.h:29
+msgid "Enable echo by _word"
+msgstr "શબ્દ અનુસાર ઈકો સક્રિય કરો (_w)"
+
+#: ../src/orca/orca-setup.glade.h:30
+msgid "Enable lockin_g keys"
+msgstr "લોકીંગ કીઓ સક્રિય કરો (_g)"
+
+#: ../src/orca/orca-setup.glade.h:31
+msgid "In_vert colors"
+msgstr "રંગો ઉલટાવો (_v)"
+
+#: ../src/orca/orca-setup.glade.h:32
+msgid "Key Echo"
+msgstr "કી ઈકો"
+
+#: ../src/orca/orca-setup.glade.h:33
+msgid "Magnifier"
+msgstr "વિસ્તારક"
+
+#: ../src/orca/orca-setup.glade.h:34
+msgid "Mouse trac_king mode:"
+msgstr "માઉસ ટ્રેકિંગ સ્થિતિ (_k):"
+
+#: ../src/orca/orca-setup.glade.h:35
+msgid ""
+"None\n"
+"Bilinear"
+msgstr ""
+"કંઈ નહિં\n"
+"દ્વિરેખીય"
+
+#: ../src/orca/orca-setup.glade.h:37
+msgid "Orca Preferences"
+msgstr "Orca પસંદગીઓ"
+
+#: ../src/orca/orca-setup.glade.h:38
+msgid "Pi_tch:"
+msgstr "પીચ (_t):"
+
+#: ../src/orca/orca-setup.glade.h:39
 msgid "Question"
 msgstr "પ્રશ્ન"
 
-#: src/orca/orca-setup.glade:2737
+#: ../src/orca/orca-setup.glade.h:40
+msgid "Scale _factor:"
+msgstr "માપદંડ અવયવ (_f):"
+
+#: ../src/orca/orca-setup.glade.h:41
+msgid "Si_ze:"
+msgstr "માપ (_z):"
+
+#: ../src/orca/orca-setup.glade.h:42
+msgid "So_me"
+msgstr "અમુક (_m)"
+
+#: ../src/orca/orca-setup.glade.h:43
+msgid "Speech"
+msgstr "બોલી"
+
+#: ../src/orca/orca-setup.glade.h:44
+msgid "Speech _system:"
+msgstr "બોલી સિસ્ટમ (_s):"
+
+#: ../src/orca/orca-setup.glade.h:45
+msgid "Speech synthesi_zer:"
+msgstr "બોલી સિન્થેસાઈઝર (_z):"
+
+#: ../src/orca/orca-setup.glade.h:46
+msgid "Ver_bose"
+msgstr "વર્બોઝ (_b)"
+
+#: ../src/orca/orca-setup.glade.h:47
+msgid "Vo_lume:"
+msgstr "અવાજ (_l):"
+
+#: ../src/orca/orca-setup.glade.h:48
 msgid ""
 "You will have to log out for the change to take effect.\n"
 "Do you want to log out now? "
 msgstr ""
+"ફેરફારોની અસર જોવા માટે તમારે પ્રવેશ બહાર નીકળવું પડશે.\n"
+"શું તમે હમણાં પ્રવેશ બહાર નીકળવા માંગો છો? "
 
-#: src/orca/orca.py:231
+#: ../src/orca/orca-setup.glade.h:50
+msgid "_Abbreviated role names"
+msgstr "ટૂંકાવેલ ભૂમિકા નામો (_A)"
+
+#: ../src/orca/orca-setup.glade.h:51
+msgid "_All"
+msgstr "બધા (_A)"
+
+#: ../src/orca/orca-setup.glade.h:52
+msgid "_Bottom:"
+msgstr "તળિયું (_B):"
+
+#: ../src/orca/orca-setup.glade.h:53
+msgid "_Enable speech"
+msgstr "બોલી સક્રિય કરો (_E)"
+
+#: ../src/orca/orca-setup.glade.h:54
+msgid "_Left:"
+msgstr "ડાબું (_L):"
+
+#: ../src/orca/orca-setup.glade.h:55
+msgid "_None"
+msgstr "કંઈ નહિં (_N)"
+
+#: ../src/orca/orca-setup.glade.h:56
+msgid "_Person:"
+msgstr "વ્યક્તિ (_P):"
+
+#: ../src/orca/orca-setup.glade.h:57
+msgid "_Rate:"
+msgstr "દર (_R):"
+
+#: ../src/orca/orca-setup.glade.h:58
+msgid "_Right:"
+msgstr "જમણું (_R):"
+
+#: ../src/orca/orca-setup.glade.h:59
+msgid "_Smoothing:"
+msgstr "લીસું કરવાનું (_S):"
+
+#: ../src/orca/orca-setup.glade.h:60
+msgid "_Top:"
+msgstr "ટોચ (_T):"
+
+#: ../src/orca/orca-setup.glade.h:61
+msgid "_Voice settings:"
+msgstr "અવાજ સુયોજનો (_V):"
+
+#: ../src/orca/orca-setup.glade.h:62
+msgid "_Width:"
+msgstr "પહોળાઈ (_W):"
+
+#: ../src/orca/orca-setup.glade.h:63
+msgid "pixels"
+msgstr "પિક્સેલો"
+
+#: ../src/orca/orca.py:231
 msgid "User logged out - shutting down."
 msgstr "વપરાશકર્તા બહાર નીકળી ગયો - બંધ કરી રહ્યા છીએ."
 
-#: src/orca/orca.py:396
+#: ../src/orca/orca.py:396
 msgid "Debug level all."
-msgstr ""
+msgstr "ડિબગ સ્તર બધું."
 
-#: src/orca/orca.py:398
+#: ../src/orca/orca.py:398
 msgid "Debug level finest."
-msgstr ""
+msgstr "ડિબગ સ્તર સરસમાં સરસ."
 
-#: src/orca/orca.py:400
+#: ../src/orca/orca.py:400
 msgid "Debug level finer."
-msgstr ""
+msgstr "ડિબગ સ્તર સરસ."
 
-#: src/orca/orca.py:451
+#: ../src/orca/orca.py:451
 msgid "Entering learn mode.  Press any key to hear its function. "
-msgstr ""
+msgstr "શીખવાની સ્થિતિમાં દાખલ થઈ રહ્યા છીએ.  તેનું વિધેય સાંભળવા માટે કોઈપણ કી દબાવો. "
 
-#: src/orca/orca.py:452
+#: ../src/orca/orca.py:452
 msgid "To exit learn mode, press the escape key."
-msgstr ""
+msgstr "શીખવાની સ્થિતિમાંથી બહાર નીકળવા માટે, એસ્કેપ કી દબાવો."
 
-#: src/orca/orca.py:453
+#: ../src/orca/orca.py:453
 msgid "Learn mode.  Press escape to exit."
-msgstr ""
+msgstr "શીખવાની સ્થિતિ.  બહાર નીકળવા માટે એસ્કેપ દબાવો."
 
-#: src/orca/orca.py:463 src/orca/orca.py:464
+#: ../src/orca/orca.py:463 ../src/orca/orca.py:464
 msgid "Exiting learn mode."
-msgstr ""
+msgstr "શીખવાની સ્થિતિમાંથી બહાર નીકળી રહ્યા છીએ."
 
-#: src/orca/orca.py:632
+#: ../src/orca/orca.py:632
 msgid "Caps_Lock"
-msgstr ""
+msgstr "Caps_Lock"
 
-#: src/orca/orca.py:637
+#: ../src/orca/orca.py:637
 msgid "Num_Lock"
-msgstr ""
+msgstr "Num_Lock"
 
-#: src/orca/orca.py:821
-#, fuzzy
+#: ../src/orca/orca.py:821
 msgid "Speech enabled."
-msgstr "બોલી વપરાશે નહિં.\n"
+msgstr "બોલી સક્રિય કરાયેલ."
 
-#: src/orca/orca.py:823
+#: ../src/orca/orca.py:823
 msgid "Speech disabled."
-msgstr ""
+msgstr "બોલી નિષ્ક્રિય કરાયેલ."
 
-#: src/orca/orca.py:859
+#: ../src/orca/orca.py:859
 msgid "Orca user settings reloaded."
-msgstr ""
+msgstr "Orca વપરાશકર્તા સુયોજનો પુનઃલવાયેલ."
 
-#: src/orca/orca.py:954
+#: ../src/orca/orca.py:954
 msgid "Enters learn mode.  Press escape to exit learn mode."
-msgstr ""
+msgstr "શીખવાની સ્થિતિમાં દાખલ થાય છે.  શીખવાની સ્થિતિમાંથી બહાર નીકળવા માટે એસ્કેપ દબાવો."
 
-#: src/orca/orca.py:962
+#: ../src/orca/orca.py:962
 msgid "Decreases the speech rate."
-msgstr ""
+msgstr "બોલી દર ઘટાડે છે."
 
-#: src/orca/orca.py:970
+#: ../src/orca/orca.py:970
 msgid "Increases the speech rate."
-msgstr ""
+msgstr "બોલી દર વધારે છે."
 
-#: src/orca/orca.py:978
+#: ../src/orca/orca.py:978
 msgid "Decreases the speech pitch."
-msgstr ""
+msgstr "બોલી પીચ ઘટાડે છે."
 
-#: src/orca/orca.py:986
+#: ../src/orca/orca.py:986
 msgid "Increases the speech pitch."
-msgstr ""
+msgstr "બોલી પીચ વધારે છે."
 
-#: src/orca/orca.py:992
+#: ../src/orca/orca.py:992
 msgid "Quits Orca"
-msgstr ""
+msgstr "Orca બંધ કરે છે"
 
-#: src/orca/orca.py:1000
+#: ../src/orca/orca.py:1000
 msgid "Toggles keystroke recording on and off."
-msgstr ""
+msgstr "કીસ્ટ્રોક રેકોર્ડીંગ ચાલુ અને બંધ બદલે છે."
 
-#: src/orca/orca.py:1008
+#: ../src/orca/orca.py:1008
 msgid "Displays the preferences configuration dialog."
-msgstr ""
+msgstr "પસંદગીઓ રૂપરેખાંકન સંવાદન દર્શાવે છે."
 
-#: src/orca/orca.py:1017
+#: ../src/orca/orca.py:1017
 msgid "Reloads user settings and reinitializes services as necessary."
-msgstr ""
+msgstr "વપરાશકર્તા સુયોજનો પુનઃલાવે છે અને સેવાઓ જરૂરીયાત પ્રમાણે પુનઃઆરંભિત કરે છે."
 
-#: src/orca/orca.py:1026
+#: ../src/orca/orca.py:1026
 msgid "Toggles the silencing of speech."
-msgstr ""
+msgstr "બોલીને શાંત કરવાનું બદલે છે."
 
-#: src/orca/orca.py:1035
+#: ../src/orca/orca.py:1035
 msgid ""
 "Prints a debug listing of all known applications to the console where Orca "
 "is running."
-msgstr ""
+msgstr "બધા જાણીતા કાર્યક્રમોની ડિબગ યાદીને કન્સોલ પર છાપે છે કે જ્યાં Orca ચાલી રહ્યું હોય."
 
-#: src/orca/orca.py:1044
+#: ../src/orca/orca.py:1044
 msgid "Cycles the debug level at run time."
-msgstr ""
+msgstr "ડિબગ સ્તરને રન ટાઈમે ફેરવે છે."
 
-#: src/orca/orca.py:1052
+#: ../src/orca/orca.py:1052
 msgid ""
 "Prints debug information about the currently active application to the "
 "console where Orca is running."
-msgstr ""
+msgstr "વર્તમાનમાં સક્રિય કાર્યક્રમ વિશે ડિબગ જાણકારીને કન્સોલ પર છાપે છે કે જ્યાં Orca ચાલી રહ્યું હોય."
 
-#: src/orca/orca.py:1060
+#: ../src/orca/orca.py:1060
 msgid "Prints debug information about the ancestry of the object with focus"
-msgstr ""
+msgstr "ઓબ્જેક્ટોની જરૂરીયાત વિશે ડિબગ જાણકારીને ફોકસ સાથે છાપે છે"
 
-#: src/orca/orca.py:1069
+#: ../src/orca/orca.py:1069
 msgid "Prints debug information about the application with focus"
-msgstr ""
+msgstr "કાર્યક્રમ વિશે ડિબગ જાણકારી ફોકસ સાથે છાપે છે"
 
-#: src/orca/orca.py:1078
+#: ../src/orca/orca.py:1078
 msgid "Switches to the next presentation manager."
-msgstr ""
+msgstr "આગળના રજૂઆતક વ્યવસ્થાપક પર ફેરવે છે."
 
-#: src/orca/orca.py:1111 src/orca/orca.py:1112
+#: ../src/orca/orca.py:1111 ../src/orca/orca.py:1112
 msgid "Welcome to Orca."
-msgstr "ઓર્કામાં તમારું સ્વાગત છે."
+msgstr "Orca માં તમારું સ્વાગત છે."
 
 #. [[[TODO: WDW - the timer stuff is an experiment to see if
 #. we can recover from hangs.  It's only experimental, so it's
@@ -760,105 +748,103 @@ msgstr "ઓર્કામાં તમારું સ્વાગત છે."
 #.
 #. timer = threading.Timer(5.0, timeout)
 #. timer.start()
-#: src/orca/orca.py:1164
+#: ../src/orca/orca.py:1164
 msgid "goodbye."
 msgstr "આવજો."
 
-#: src/orca/orca.py:1165
-#, fuzzy
+#: ../src/orca/orca.py:1165
 msgid "Goodbye."
 msgstr "આવજો."
 
-#: src/orca/orca.py:1231
+#: ../src/orca/orca.py:1231
 msgid "Usage: orca [OPTION...]"
-msgstr ""
+msgstr "વપરાશ: orca [OPTION...]"
 
-#: src/orca/orca.py:1233
+#: ../src/orca/orca.py:1233
 msgid "-?, --help                   Show this help message"
-msgstr ""
+msgstr "-?, --help                   આ મદદ સંદેશો બતાવે છે"
 
-#: src/orca/orca.py:1234
+#: ../src/orca/orca.py:1234
 #, python-format
 msgid "-v, --version                %s"
-msgstr ""
+msgstr "-v, --version                %s"
 
-#: src/orca/orca.py:1235
+#: ../src/orca/orca.py:1235
 msgid "-s, --setup, --gui-setup     Set up user preferences"
-msgstr ""
+msgstr "-s, --setup, --gui-setup     વપરાશકર્તા પસંદગીઓ સુયોજિત કરે છે"
 
-#: src/orca/orca.py:1236
+#: ../src/orca/orca.py:1236
 msgid "-t, --text-setup             Set up user preferences (text version)"
-msgstr ""
+msgstr "-t, --text-setup             વપરાશકર્તા પસંદગીઓ સુયોજિત કરે છે (લખાણ આવૃત્તિ)"
 
-#: src/orca/orca.py:1237
+#: ../src/orca/orca.py:1237
 msgid "-n, --no-setup               Skip set up of user preferences"
-msgstr ""
+msgstr "-n, --no-setup               વપરાશકર્તા પસંદગીઓનું સુયોજન અવગણે છે"
 
-#: src/orca/orca.py:1239
+#: ../src/orca/orca.py:1239
 msgid ""
 "If Orca has not been previously set up by the user, Orca\n"
 "will automatically launch the preferences set up unless\n"
 "the -n or --no-setup option is used."
 msgstr ""
+"જો Orca પહેલાં કોઈ વપરાશકર્તા દ્વારા સુયોજિત નહિં થયેલ હોય, તો Orca\n"
+"આપોઆપ પસંદગીઓ સુયોજન લોન્ચ કરશે જ્યાં સુધી\n"
+"-n અથવા --no-setup વિકલ્પ વાપરવામાં નહિં આવે."
 
-#: src/orca/orca.py:1241
+#: ../src/orca/orca.py:1241
 msgid "Report bugs to orca-list@gnome.org."
-msgstr ""
+msgstr "orca-list@gnome.org ને ભૂલોનો અહેવાલ આપો."
 
-#: src/orca/orca_console_prefs.py:93 src/orca/orca_console_prefs.py:109
+#: ../src/orca/orca_console_prefs.py:93 ../src/orca/orca_console_prefs.py:109
 msgid "Speech is unavailable."
-msgstr ""
+msgstr "બોલી ઉપલબ્ધ નથી."
 
-#: src/orca/orca_console_prefs.py:97
+#: ../src/orca/orca_console_prefs.py:97
 msgid "Welcome to Orca setup."
 msgstr "ઓર્કા સુયોજનમાં તમારું સ્વાગત છે."
 
-#: src/orca/orca_console_prefs.py:112
-#, fuzzy
+#: ../src/orca/orca_console_prefs.py:112
 msgid "Select desired speech system:"
-msgstr "મૂળભુત બોલી સિન્થેસાઈઝર પસંદ કરો"
+msgstr "જરૂરી બોલી સિસ્ટમ પસંદ કરો:"
 
-#: src/orca/orca_console_prefs.py:117 src/orca/orca_console_prefs.py:138
-#: src/orca/orca_console_prefs.py:164
+#: ../src/orca/orca_console_prefs.py:117 ../src/orca/orca_console_prefs.py:138
+#: ../src/orca/orca_console_prefs.py:164
 #, python-format
 msgid "%d. %s"
 msgstr "%d. %s"
 
-#: src/orca/orca_console_prefs.py:120 src/orca/orca_console_prefs.py:141
-#: src/orca/orca_console_prefs.py:171
+#: ../src/orca/orca_console_prefs.py:120 ../src/orca/orca_console_prefs.py:141
+#: ../src/orca/orca_console_prefs.py:171
 msgid "Enter choice: "
 msgstr "પસંદ દાખલ કરો: "
 
-#: src/orca/orca_console_prefs.py:122 src/orca/orca_console_prefs.py:130
-#: src/orca/orca_console_prefs.py:143 src/orca/orca_console_prefs.py:152
-#: src/orca/orca_console_prefs.py:176
+#: ../src/orca/orca_console_prefs.py:122 ../src/orca/orca_console_prefs.py:130
+#: ../src/orca/orca_console_prefs.py:143 ../src/orca/orca_console_prefs.py:152
+#: ../src/orca/orca_console_prefs.py:176
 msgid "Speech will not be used.\n"
 msgstr "બોલી વપરાશે નહિં.\n"
 
-#: src/orca/orca_console_prefs.py:129
+#: ../src/orca/orca_console_prefs.py:129
 msgid "No servers available.\n"
-msgstr ""
+msgstr "કોઈ સર્વરો ઉપલબ્ધ નથી.\n"
 
-#: src/orca/orca_console_prefs.py:133
-#, fuzzy
+#: ../src/orca/orca_console_prefs.py:133
 msgid "Select desired speech server."
-msgstr "મૂળભુત બોલી સિન્થેસાઈઝર પસંદ કરો"
+msgstr "જરૂરી બોલી સર્વર પસંદ કરો."
 
-#: src/orca/orca_console_prefs.py:151
+#: ../src/orca/orca_console_prefs.py:151
 msgid "No voices available.\n"
-msgstr ""
+msgstr "કોઈ અવાજો ઉપલબ્ધ નથી.\n"
 
-#: src/orca/orca_console_prefs.py:155
-#, fuzzy
+#: ../src/orca/orca_console_prefs.py:155
 msgid "Select desired voice:"
-msgstr "%s અવાજ પસંદ કરો: "
+msgstr "જરૂરી અવાજ પસંદ કરો:"
 
 #. Ask the user if they would like to enable echoing by word.
 #.
-#: src/orca/orca_console_prefs.py:209
-#, fuzzy
+#: ../src/orca/orca_console_prefs.py:209
 msgid "Enable echo by word?  Enter y or n: "
-msgstr "કી ઈકો વાપરો, હ અથવા ન દાખલ કરો: "
+msgstr "શું શબ્દ અનુસાર ઈકો સક્રિય કરવું છે?  y અથવા n દાખલ કરો: "
 
 #. Ask the user if they would like to enable key echo. If they say
 #. yes, then for each of the five different types of keys, ask the
@@ -877,1088 +863,1052 @@ msgstr "કી ઈકો વાપરો, હ અથવા ન દાખલ ક�
 #. o Action keys: space, enter, escape, tab, backspace, delete, arrow
 #. keys, page up, page down, etc.
 #.
-#: src/orca/orca_console_prefs.py:234
-#, fuzzy
+#: ../src/orca/orca_console_prefs.py:234
 msgid "Enable key echo?  Enter y or n: "
-msgstr "કી ઈકો વાપરો, હ અથવા ન દાખલ કરો: "
+msgstr "શું ઈકો કી સક્રિય કરવી છે?  y અથવા n દાખલ કરો: "
 
-#: src/orca/orca_console_prefs.py:241
+#: ../src/orca/orca_console_prefs.py:241
 msgid "Enable alphanumeric and punctuation keys?  Enter y or n: "
-msgstr ""
+msgstr "શું આલ્ફાન્યૂમેરિક અને વિરામ કીઓ સક્રિય કરવી છે?  y અથવા n દાખલ કરો: "
 
-#: src/orca/orca_console_prefs.py:249
-#, fuzzy
+#: ../src/orca/orca_console_prefs.py:249
 msgid "Enable modifier keys?  Enter y or n: "
-msgstr "બીજો અવાજ બનાવવો છે? હ અથવા ન દાખલ કરો."
+msgstr "શું સુધારક કીઓ સક્રિય કરવી છે?  y અથવા n દાખલ કરો: "
 
-#: src/orca/orca_console_prefs.py:257
-#, fuzzy
+#: ../src/orca/orca_console_prefs.py:257
 msgid "Enable locking keys?  Enter y or n: "
-msgstr "કી ઈકો વાપરો, હ અથવા ન દાખલ કરો: "
+msgstr "શું લોકીંગ કીઓ સક્રિય કરવી છે?  y અથવા n દાખલ કરો: "
 
-#: src/orca/orca_console_prefs.py:265
-#, fuzzy
+#: ../src/orca/orca_console_prefs.py:265
 msgid "Enable function keys?  Enter y or n: "
-msgstr "કી ઈકો વાપરો, હ અથવા ન દાખલ કરો: "
+msgstr "શું વિધેય કીઓ સક્રિય કરવી છે?  y અથવા n દાખલ કરો: "
 
-#: src/orca/orca_console_prefs.py:273
-#, fuzzy
+#: ../src/orca/orca_console_prefs.py:273
 msgid "Enable action keys?  Enter y or n: "
-msgstr "કી ઈકો વાપરો, હ અથવા ન દાખલ કરો: "
+msgstr "શું ક્રિયા કીઓ સક્રિય કરવી છે?  y અથવા n દાખલ કરો: "
 
-#: src/orca/orca_console_prefs.py:301
-#, fuzzy
+#: ../src/orca/orca_console_prefs.py:301
 msgid "Enable Braille?  Enter y or n: "
-msgstr "બીજો અવાજ બનાવવો છે? હ અથવા ન દાખલ કરો."
+msgstr "શું બ્રેઈલી સક્રિય કરવું છે?  y અથવા n દાખલ કરો: "
 
-#: src/orca/orca_console_prefs.py:309
-#, fuzzy
+#: ../src/orca/orca_console_prefs.py:309
 msgid "Enable Braille Monitor?  Enter y or n: "
-msgstr "બીજો અવાજ બનાવવો છે? હ અથવા ન દાખલ કરો."
+msgstr "શું બ્રેઈલી મોનીટર સક્રિય કરવું છે?  y અથવા n દાખલ કરો: "
 
-#: src/orca/orca_console_prefs.py:319
+#: ../src/orca/orca_console_prefs.py:319
 msgid "Accessibility support for GNOME has just been enabled. "
-msgstr ""
+msgstr "જીનોમ માટેનું સુલભતા આધાર હજુ હમણાં જ સક્રિય કરાયેલ છે. "
 
-#: src/orca/orca_console_prefs.py:324
+#: ../src/orca/orca_console_prefs.py:324
 msgid "You need to log out and log back in for the change to take effect. "
-msgstr ""
+msgstr "ફેરફારોની અસર જોવા માટે તમારે પ્રવેશ બહાર નીકળીને ફરીથી પ્રવેશ કરવાની જરૂર છે. "
 
-#: src/orca/orca_console_prefs.py:330
+#: ../src/orca/orca_console_prefs.py:330
 msgid "Setup complete.  Press Return to continue."
-msgstr ""
+msgstr "સુયોજન પૂર્ણ.  ચાલુ રાખવા માટે Return દબાવો."
 
-#: src/orca/orca_gui_prefs.py:127 src/orca/orca_gui_prefs.py:410
-#: src/orca/orca_gui_prefs.py:452
-#, fuzzy
+#: ../src/orca/orca_gui_prefs.py:127 ../src/orca/orca_gui_prefs.py:410
+#: ../src/orca/orca_gui_prefs.py:452
 msgid "Speech not available."
-msgstr "બોલી વપરાશે નહિં.\n"
+msgstr "બોલી ઉપલબ્ધ નથી."
 
-#: src/orca/orca_gui_prefs.py:218 src/orca/orca_gui_prefs.py:230
-#: src/orca/orca_gui_prefs.py:1018 src/orca/orca_gui_prefs.py:1055
+#: ../src/orca/orca_gui_prefs.py:218 ../src/orca/orca_gui_prefs.py:230
+#: ../src/orca/orca_gui_prefs.py:1018 ../src/orca/orca_gui_prefs.py:1055
 msgid "Brief"
-msgstr ""
+msgstr "સંક્ષિપ્ત"
 
-#: src/orca/orca_gui_prefs.py:352 src/orca/orca_gui_prefs.py:356
-#: src/orca/orca_gui_prefs.py:1252
+#: ../src/orca/orca_gui_prefs.py:352 ../src/orca/orca_gui_prefs.py:356
+#: ../src/orca/orca_gui_prefs.py:1252
 msgid "Bilinear"
-msgstr ""
+msgstr "દ્વિરેખીય"
 
-#: src/orca/orca_gui_prefs.py:354 src/orca/orca_gui_prefs.py:367
-#: src/orca/orca_gui_prefs.py:995 src/orca/orca_gui_prefs.py:1254
-#: src/orca/orca_gui_prefs.py:1277
+#: ../src/orca/orca_gui_prefs.py:354 ../src/orca/orca_gui_prefs.py:367
+#: ../src/orca/orca_gui_prefs.py:995 ../src/orca/orca_gui_prefs.py:1254
+#: ../src/orca/orca_gui_prefs.py:1277
 msgid "None"
-msgstr ""
+msgstr "કંઈ નહિં"
 
-#: src/orca/orca_gui_prefs.py:365 src/orca/orca_gui_prefs.py:373
-#: src/orca/orca_gui_prefs.py:1271
+#: ../src/orca/orca_gui_prefs.py:365 ../src/orca/orca_gui_prefs.py:373
+#: ../src/orca/orca_gui_prefs.py:1271
 msgid "Centered"
-msgstr ""
+msgstr "કેન્દ્રિય"
 
-#: src/orca/orca_gui_prefs.py:369 src/orca/orca_gui_prefs.py:1275
+#: ../src/orca/orca_gui_prefs.py:369 ../src/orca/orca_gui_prefs.py:1275
 msgid "Proportional"
-msgstr ""
+msgstr "સમપ્રમાણ"
 
-#: src/orca/orca_gui_prefs.py:371 src/orca/orca_gui_prefs.py:1273
+#: ../src/orca/orca_gui_prefs.py:371 ../src/orca/orca_gui_prefs.py:1273
 msgid "Push"
-msgstr ""
+msgstr "ધકેલો"
 
-#: src/orca/orca_gui_prefs.py:489 src/orca/orca_gui_prefs.py:514
+#: ../src/orca/orca_gui_prefs.py:489 ../src/orca/orca_gui_prefs.py:514
 msgid "Default"
-msgstr ""
+msgstr "મૂળભૂત"
 
-#: src/orca/orca_gui_prefs.py:491 src/orca/orca_gui_prefs.py:516
-#, fuzzy
+#: ../src/orca/orca_gui_prefs.py:491 ../src/orca/orca_gui_prefs.py:516
 msgid "Uppercase"
-msgstr "ટકા"
+msgstr "ઉપરનો કિસ્સો"
 
-#: src/orca/orca_gui_prefs.py:493 src/orca/orca_gui_prefs.py:522
+#: ../src/orca/orca_gui_prefs.py:493 ../src/orca/orca_gui_prefs.py:522
 msgid "Hyperlink"
-msgstr ""
+msgstr "હાયપરલીંક"
 
-#: src/orca/orca_gui_prefs.py:998
+#: ../src/orca/orca_gui_prefs.py:998
 msgid "Some"
-msgstr ""
+msgstr "અમુક"
 
-#: src/orca/orca_gui_prefs.py:1340
+#: ../src/orca/orca_gui_prefs.py:1340
 msgid "Accessibility support for GNOME has just been enabled."
-msgstr ""
+msgstr "જીનોમ માટે સુલભતા આધાર હમણાં જ સક્રિય કરવામાં આવેલ છે."
 
-#: src/orca/orca_gui_prefs.py:1341
+#: ../src/orca/orca_gui_prefs.py:1341
 msgid "You need to log out and log back in for the change to take effect."
-msgstr ""
+msgstr "ફેરફારોની અસર જોવા માટે તમારે પ્રવેશ બહાર નીકળવાની અને ફરીથી પ્રવેશ કરવાની જરૂર છે."
 
-#: src/orca/rolenames.py:147
+#: ../src/orca/rolenames.py:147
 msgid "???"
-msgstr ""
+msgstr "???"
 
-#: src/orca/rolenames.py:148
+#: ../src/orca/rolenames.py:148
 msgid "Invalid"
-msgstr ""
+msgstr "અયોગ્ય"
 
-#: src/orca/rolenames.py:149
+#: ../src/orca/rolenames.py:149
 msgid "invalid"
-msgstr ""
+msgstr "અયોગ્ય"
 
-#: src/orca/rolenames.py:152
+#: ../src/orca/rolenames.py:152
 msgid "acc"
-msgstr ""
+msgstr "acc"
 
-#: src/orca/rolenames.py:153
+#: ../src/orca/rolenames.py:153
 msgid "Accelerator"
-msgstr ""
+msgstr "પ્રવેગક"
 
-#: src/orca/rolenames.py:154
+#: ../src/orca/rolenames.py:154
 msgid "accelerator"
-msgstr ""
+msgstr "પ્રવેગક"
 
-#: src/orca/rolenames.py:157 src/orca/rolenames.py:159
-#, fuzzy
+#: ../src/orca/rolenames.py:157 ../src/orca/rolenames.py:159
 msgid "alert"
-msgstr "ડાબુ"
+msgstr "ચેતવણી"
 
-#: src/orca/rolenames.py:158
-#, fuzzy
+#: ../src/orca/rolenames.py:158
 msgid "Alert"
-msgstr "ડાબુ"
+msgstr "ચેતવણી"
 
-#: src/orca/rolenames.py:162
+#: ../src/orca/rolenames.py:162
 msgid "Anim"
-msgstr ""
+msgstr "Anim"
 
-#: src/orca/rolenames.py:163
+#: ../src/orca/rolenames.py:163
 msgid "Animation"
-msgstr ""
+msgstr "એનીમેશન"
 
-#: src/orca/rolenames.py:164
+#: ../src/orca/rolenames.py:164
 msgid "animation"
-msgstr ""
+msgstr "એનીમેશન"
 
-#: src/orca/rolenames.py:167 src/orca/rolenames.py:169
+#: ../src/orca/rolenames.py:167 ../src/orca/rolenames.py:169
 msgid "arrow"
-msgstr ""
+msgstr "તીર"
 
-#: src/orca/rolenames.py:168
+#: ../src/orca/rolenames.py:168
 msgid "Arrow"
-msgstr ""
+msgstr "તીર"
 
-#: src/orca/rolenames.py:172
+#: ../src/orca/rolenames.py:172
 msgid "cal"
-msgstr ""
+msgstr "cal"
 
-#: src/orca/rolenames.py:173
+#: ../src/orca/rolenames.py:173
 msgid "Calendar"
-msgstr ""
+msgstr "કેલેન્ડર"
 
-#: src/orca/rolenames.py:174
+#: ../src/orca/rolenames.py:174
 msgid "calendar"
-msgstr ""
+msgstr "કેલેન્ડર"
 
-#: src/orca/rolenames.py:177
+#: ../src/orca/rolenames.py:177
 msgid "cnv"
-msgstr ""
+msgstr "cnv"
 
-#: src/orca/rolenames.py:178
+#: ../src/orca/rolenames.py:178
 msgid "Canvas"
-msgstr ""
+msgstr "Canvas"
 
-#: src/orca/rolenames.py:179
+#: ../src/orca/rolenames.py:179
 msgid "canvas"
-msgstr ""
+msgstr "કેન્વાસ"
 
-#: src/orca/rolenames.py:182 src/orca/rolenames.py:187
+#: ../src/orca/rolenames.py:182 ../src/orca/rolenames.py:187
 msgid "chk"
-msgstr ""
+msgstr "chk"
 
-#: src/orca/rolenames.py:183
+#: ../src/orca/rolenames.py:183
 msgid "CheckBox"
-msgstr ""
+msgstr "CheckBox"
 
-#: src/orca/rolenames.py:184
+#: ../src/orca/rolenames.py:184
 msgid "check box"
-msgstr ""
+msgstr "ચકાસણી બોક્સ"
 
-#: src/orca/rolenames.py:188
+#: ../src/orca/rolenames.py:188
 msgid "CheckItem"
-msgstr ""
+msgstr "CheckItem"
 
-#: src/orca/rolenames.py:189
+#: ../src/orca/rolenames.py:189
 msgid "check item"
-msgstr ""
+msgstr "ચકાસણી વસ્તુ"
 
-#: src/orca/rolenames.py:192
+#: ../src/orca/rolenames.py:192
 msgid "ckm"
-msgstr ""
+msgstr "ckm"
 
-#: src/orca/rolenames.py:193
+#: ../src/orca/rolenames.py:193
 msgid "CheckMenu"
-msgstr ""
+msgstr "CheckMenu"
 
-#: src/orca/rolenames.py:194
+#: ../src/orca/rolenames.py:194
 msgid "check menu"
-msgstr ""
+msgstr "ચેકમેનુ"
 
-#: src/orca/rolenames.py:197
+#: ../src/orca/rolenames.py:197
 msgid "clrchsr"
-msgstr ""
+msgstr "clrchsr"
 
-#: src/orca/rolenames.py:198
+#: ../src/orca/rolenames.py:198
 msgid "ColorChooser"
-msgstr ""
+msgstr "ColorChooser"
 
-#: src/orca/rolenames.py:199
+#: ../src/orca/rolenames.py:199
 msgid "color chooser"
-msgstr ""
+msgstr "રંગ પસંદ કરનાર"
 
-#: src/orca/rolenames.py:202 src/orca/rolenames.py:437
+#: ../src/orca/rolenames.py:202 ../src/orca/rolenames.py:437
 msgid "colhdr"
-msgstr ""
+msgstr "colhdr"
 
-#: src/orca/rolenames.py:203 src/orca/rolenames.py:438
+#: ../src/orca/rolenames.py:203 ../src/orca/rolenames.py:438
 msgid "ColumnHeader"
-msgstr ""
+msgstr "ColumnHeader"
 
-#: src/orca/rolenames.py:204 src/orca/rolenames.py:439
+#: ../src/orca/rolenames.py:204 ../src/orca/rolenames.py:439
 msgid "column header"
-msgstr ""
+msgstr "સ્તંભ હેડર"
 
-#: src/orca/rolenames.py:207
+#: ../src/orca/rolenames.py:207
 msgid "cbo"
-msgstr ""
+msgstr "cbo"
 
-#: src/orca/rolenames.py:208
+#: ../src/orca/rolenames.py:208
 msgid "Combo"
-msgstr ""
+msgstr "કમ્બો"
 
-#: src/orca/rolenames.py:209
+#: ../src/orca/rolenames.py:209
 msgid "combo box"
-msgstr ""
+msgstr "કમ્બો બોક્સ"
 
-#: src/orca/rolenames.py:212
-#, fuzzy
+#: ../src/orca/rolenames.py:212
 msgid "dat"
-msgstr "ટપકુ"
+msgstr "dat"
 
-#: src/orca/rolenames.py:213
+#: ../src/orca/rolenames.py:213
 msgid "DateEditor"
-msgstr ""
+msgstr "DateEditor"
 
-#: src/orca/rolenames.py:214
+#: ../src/orca/rolenames.py:214
 msgid "date editor"
-msgstr ""
+msgstr "તારીખ સંપાદક"
 
-#: src/orca/rolenames.py:217 src/orca/rolenames.py:277
-#: src/orca/rolenames.py:279
+#: ../src/orca/rolenames.py:217 ../src/orca/rolenames.py:277
+#: ../src/orca/rolenames.py:279
 msgid "icon"
-msgstr ""
+msgstr "ચિહ્ન"
 
-#: src/orca/rolenames.py:218
+#: ../src/orca/rolenames.py:218
 msgid "DesktopIcon"
-msgstr ""
+msgstr "DesktopIcon"
 
-#: src/orca/rolenames.py:219
+#: ../src/orca/rolenames.py:219
 msgid "desktop icon"
-msgstr ""
+msgstr "ડેસ્કટોપ ચિહ્ન"
 
-#: src/orca/rolenames.py:222 src/orca/rolenames.py:264
-#: src/orca/rolenames.py:287
+#: ../src/orca/rolenames.py:222 ../src/orca/rolenames.py:264
+#: ../src/orca/rolenames.py:287
 msgid "frame"
-msgstr ""
+msgstr "ચોકઠું"
 
-#: src/orca/rolenames.py:223
+#: ../src/orca/rolenames.py:223
 msgid "DesktopFrame"
-msgstr ""
+msgstr "DesktopFrame"
 
-#: src/orca/rolenames.py:224
+#: ../src/orca/rolenames.py:224
 msgid "desktop frame"
-msgstr ""
+msgstr "ડેસ્કટોપ ચોકઠું"
 
-#: src/orca/rolenames.py:227 src/orca/rolenames.py:229
+#: ../src/orca/rolenames.py:227 ../src/orca/rolenames.py:229
 msgid "dial"
-msgstr ""
+msgstr "ડાયલ"
 
-#: src/orca/rolenames.py:228
+#: ../src/orca/rolenames.py:228
 msgid "Dial"
-msgstr ""
+msgstr "ડાયલ"
 
-#: src/orca/rolenames.py:232
+#: ../src/orca/rolenames.py:232
 msgid "dlg"
-msgstr ""
+msgstr "dlg"
 
-#: src/orca/rolenames.py:233
+#: ../src/orca/rolenames.py:233
 msgid "Dialog"
-msgstr ""
+msgstr "સંવાદ"
 
-#: src/orca/rolenames.py:234
+#: ../src/orca/rolenames.py:234
 msgid "dialog"
-msgstr ""
+msgstr "સંવાદ"
 
-#: src/orca/rolenames.py:237
+#: ../src/orca/rolenames.py:237
 msgid "dip"
-msgstr ""
+msgstr "dip"
 
-#: src/orca/rolenames.py:238
+#: ../src/orca/rolenames.py:238
 msgid "DirectoryPane"
-msgstr ""
+msgstr "DirectoryPane"
 
-#: src/orca/rolenames.py:239
+#: ../src/orca/rolenames.py:239
 msgid "directory pane"
-msgstr ""
+msgstr "ડિરેક્ટરી તકતી"
 
-#: src/orca/rolenames.py:242
+#: ../src/orca/rolenames.py:242
 msgid "draw"
-msgstr ""
+msgstr "દોરો"
 
-#: src/orca/rolenames.py:243
+#: ../src/orca/rolenames.py:243
 msgid "DrawingArea"
-msgstr ""
+msgstr "DrawingArea"
 
-#: src/orca/rolenames.py:244
+#: ../src/orca/rolenames.py:244
 msgid "drawing area"
-msgstr ""
+msgstr "દોરવાનો વિસ્તાર"
 
-#: src/orca/rolenames.py:247
+#: ../src/orca/rolenames.py:247
 msgid "fchsr"
-msgstr ""
+msgstr "fchsr"
 
-#: src/orca/rolenames.py:248
+#: ../src/orca/rolenames.py:248
 msgid "FileChooser"
-msgstr ""
+msgstr "FileChooser"
 
-#: src/orca/rolenames.py:249
+#: ../src/orca/rolenames.py:249
 msgid "file chooser"
-msgstr ""
+msgstr "ફાઈલ પસંદ કરનાર"
 
-#: src/orca/rolenames.py:252
+#: ../src/orca/rolenames.py:252
 msgid "flr"
-msgstr ""
+msgstr "flr"
 
-#: src/orca/rolenames.py:253
+#: ../src/orca/rolenames.py:253
 msgid "Filler"
-msgstr ""
+msgstr "ભરનાર"
 
-#: src/orca/rolenames.py:254
+#: ../src/orca/rolenames.py:254
 msgid "filler"
-msgstr ""
+msgstr "ભરનાર"
 
-#: src/orca/rolenames.py:257
+#: ../src/orca/rolenames.py:257
 msgid "fnt"
-msgstr ""
+msgstr "fnt"
 
-#: src/orca/rolenames.py:258
+#: ../src/orca/rolenames.py:258
 msgid "FontChooser"
-msgstr ""
+msgstr "FontChooser"
 
-#: src/orca/rolenames.py:259
+#: ../src/orca/rolenames.py:259
 msgid "font chooser"
-msgstr ""
+msgstr "ફોન્ટ પસંદ કરનાર"
 
-#: src/orca/rolenames.py:262
+#: ../src/orca/rolenames.py:262
 msgid "frm"
-msgstr ""
+msgstr "frm"
 
-#: src/orca/rolenames.py:263
+#: ../src/orca/rolenames.py:263
 msgid "Frame"
-msgstr ""
+msgstr "ચોકઠું"
 
-#: src/orca/rolenames.py:267
+#: ../src/orca/rolenames.py:267
 msgid "gpn"
-msgstr ""
+msgstr "gpn"
 
-#: src/orca/rolenames.py:268
+#: ../src/orca/rolenames.py:268
 msgid "GlassPane"
-msgstr ""
+msgstr "GlassPane"
 
-#: src/orca/rolenames.py:269
+#: ../src/orca/rolenames.py:269
 msgid "glass pane"
-msgstr ""
+msgstr "કાચ તકતી"
 
-#: src/orca/rolenames.py:272
+#: ../src/orca/rolenames.py:272
 msgid "html"
-msgstr ""
+msgstr "html"
 
-#: src/orca/rolenames.py:273
+#: ../src/orca/rolenames.py:273
 msgid "HtmlContainer"
-msgstr ""
+msgstr "HtmlContainer"
 
-#: src/orca/rolenames.py:274
+#: ../src/orca/rolenames.py:274
 msgid "h t m l container"
-msgstr ""
+msgstr "h t m l સમાવનાર"
 
-#: src/orca/rolenames.py:278
+#: ../src/orca/rolenames.py:278
 msgid "Icon"
-msgstr ""
+msgstr "ચિહ્ન"
 
-#: src/orca/rolenames.py:282
+#: ../src/orca/rolenames.py:282
 msgid "img"
-msgstr ""
+msgstr "img"
 
-#: src/orca/rolenames.py:283
+#: ../src/orca/rolenames.py:283
 msgid "Image"
-msgstr ""
+msgstr "ચિત્ર"
 
-#: src/orca/rolenames.py:284
+#: ../src/orca/rolenames.py:284
 msgid "image"
-msgstr ""
+msgstr "ચિત્ર"
 
-#: src/orca/rolenames.py:288
+#: ../src/orca/rolenames.py:288
 msgid "InternalFrame"
-msgstr ""
+msgstr "InternalFrame"
 
-#: src/orca/rolenames.py:289
+#: ../src/orca/rolenames.py:289
 msgid "internal frame"
-msgstr ""
+msgstr "આંતરિક ચોકઠું"
 
-#: src/orca/rolenames.py:292
+#: ../src/orca/rolenames.py:292
 msgid "lbl"
-msgstr ""
+msgstr "lbl"
 
-#: src/orca/rolenames.py:293
+#: ../src/orca/rolenames.py:293
 msgid "Label"
-msgstr ""
+msgstr "લેબલ"
 
-#: src/orca/rolenames.py:294
+#: ../src/orca/rolenames.py:294
 msgid "label"
-msgstr ""
+msgstr "લેબલ"
 
-#: src/orca/rolenames.py:297
+#: ../src/orca/rolenames.py:297
 msgid "lyrdpn"
-msgstr ""
+msgstr "lyrdpn"
 
-#: src/orca/rolenames.py:298
+#: ../src/orca/rolenames.py:298
 msgid "LayeredPane"
-msgstr ""
+msgstr "LayeredPane"
 
-#: src/orca/rolenames.py:299
+#: ../src/orca/rolenames.py:299
 msgid "layered pane"
-msgstr ""
+msgstr "સ્તરવાળી તકતી"
 
-#: src/orca/rolenames.py:302
+#: ../src/orca/rolenames.py:302
 msgid "lst"
-msgstr ""
+msgstr "lst"
 
-#: src/orca/rolenames.py:303
+#: ../src/orca/rolenames.py:303
 msgid "List"
-msgstr ""
+msgstr "યાદી"
 
-#: src/orca/rolenames.py:304
-#, fuzzy
+#: ../src/orca/rolenames.py:304
 msgid "list"
-msgstr "યાદી દેખાવ"
+msgstr "યાદી"
 
-#: src/orca/rolenames.py:307
+#: ../src/orca/rolenames.py:307
 msgid "lstitm"
-msgstr ""
+msgstr "lstitm"
 
-#: src/orca/rolenames.py:308
+#: ../src/orca/rolenames.py:308
 msgid "ListItem"
-msgstr ""
+msgstr "ListItem"
 
-#: src/orca/rolenames.py:309
-#, fuzzy
+#: ../src/orca/rolenames.py:309
 msgid "list item"
-msgstr "યાદી દેખાવ"
+msgstr "યાદી વસ્તુ"
 
-#: src/orca/rolenames.py:312
+#: ../src/orca/rolenames.py:312
 msgid "mnu"
-msgstr ""
+msgstr "mnu"
 
-#: src/orca/rolenames.py:313
+#: ../src/orca/rolenames.py:313
 msgid "Menu"
-msgstr ""
+msgstr "મેનુ"
 
-#: src/orca/rolenames.py:314
+#: ../src/orca/rolenames.py:314
 msgid "menu"
-msgstr ""
+msgstr "મેનુ"
 
-#: src/orca/rolenames.py:317
-#, fuzzy
+#: ../src/orca/rolenames.py:317
 msgid "mnubr"
-msgstr "નંબર"
+msgstr "mnubr"
 
-#: src/orca/rolenames.py:318
+#: ../src/orca/rolenames.py:318
 msgid "MenuBar"
-msgstr ""
+msgstr "MenuBar"
 
-#: src/orca/rolenames.py:319
+#: ../src/orca/rolenames.py:319
 msgid "menu bar"
-msgstr ""
+msgstr "મેનુ પટ્ટી"
 
-#: src/orca/rolenames.py:322
+#: ../src/orca/rolenames.py:322
 msgid "mnuitm"
-msgstr ""
+msgstr "mnuitm"
 
-#: src/orca/rolenames.py:323
+#: ../src/orca/rolenames.py:323
 msgid "MenuItem"
-msgstr ""
+msgstr "MenuItem"
 
-#: src/orca/rolenames.py:324
+#: ../src/orca/rolenames.py:324
 msgid "menu item"
-msgstr ""
+msgstr "મેનુ વસ્તુ"
 
-#: src/orca/rolenames.py:327
+#: ../src/orca/rolenames.py:327
 msgid "optnpn"
-msgstr ""
+msgstr "optnpn"
 
-#: src/orca/rolenames.py:328
+#: ../src/orca/rolenames.py:328
 msgid "OptionPane"
-msgstr ""
+msgstr "OptionPane"
 
-#: src/orca/rolenames.py:329
+#: ../src/orca/rolenames.py:329
 msgid "option pane"
-msgstr ""
+msgstr "વિકલ્પ તકતી"
 
-#: src/orca/rolenames.py:332 src/orca/rolenames.py:334
-#, fuzzy
+#: ../src/orca/rolenames.py:332 ../src/orca/rolenames.py:334
 msgid "page"
-msgstr "જગ્યા"
+msgstr "પાનું"
 
-#: src/orca/rolenames.py:333
+#: ../src/orca/rolenames.py:333
 msgid "Page"
-msgstr ""
+msgstr "પાનું"
 
-#: src/orca/rolenames.py:337
+#: ../src/orca/rolenames.py:337
 msgid "tblst"
-msgstr ""
+msgstr "tblst"
 
-#: src/orca/rolenames.py:338
+#: ../src/orca/rolenames.py:338
 msgid "TabList"
-msgstr ""
+msgstr "TabList"
 
-#: src/orca/rolenames.py:339
+#: ../src/orca/rolenames.py:339
 msgid "tab list"
-msgstr ""
+msgstr "ટેબ યાદી"
 
-#: src/orca/rolenames.py:342
+#: ../src/orca/rolenames.py:342
 msgid "pnl"
-msgstr ""
+msgstr "pnl"
 
-#: src/orca/rolenames.py:343
+#: ../src/orca/rolenames.py:343
 msgid "Panel"
-msgstr ""
+msgstr "પેનલ"
 
-#: src/orca/rolenames.py:344
+#: ../src/orca/rolenames.py:344
 msgid "panel"
-msgstr ""
+msgstr "પેનલ"
 
-#: src/orca/rolenames.py:347
+#: ../src/orca/rolenames.py:347
 msgid "pwd"
-msgstr ""
+msgstr "pwd"
 
-#: src/orca/rolenames.py:348
+#: ../src/orca/rolenames.py:348
 msgid "Password"
-msgstr ""
+msgstr "પાસવર્ડ"
 
-#: src/orca/rolenames.py:349
+#: ../src/orca/rolenames.py:349
 msgid "password"
-msgstr ""
+msgstr "પાસવર્ડ"
 
-#: src/orca/rolenames.py:352
+#: ../src/orca/rolenames.py:352
 msgid "popmnu"
-msgstr ""
+msgstr "popmnu"
 
-#: src/orca/rolenames.py:353
+#: ../src/orca/rolenames.py:353
 msgid "PopupMenu"
-msgstr ""
+msgstr "PopupMenu"
 
-#: src/orca/rolenames.py:354
+#: ../src/orca/rolenames.py:354
 msgid "popup menu"
-msgstr ""
+msgstr "પોપઅપ મેનુ"
 
-#: src/orca/rolenames.py:357
-#, fuzzy
+#: ../src/orca/rolenames.py:357
 msgid "pgbar"
-msgstr "પટ્ટી"
+msgstr "pgbar"
 
-#: src/orca/rolenames.py:358
+#: ../src/orca/rolenames.py:358
 msgid "Progress"
-msgstr ""
+msgstr "પ્રગતિ"
 
-#: src/orca/rolenames.py:359
+#: ../src/orca/rolenames.py:359
 msgid "progress bar"
-msgstr ""
+msgstr "પ્રગતિદર્શક પટ્ટી"
 
-#: src/orca/rolenames.py:362
-#, fuzzy
+#: ../src/orca/rolenames.py:362
 msgid "btn"
-msgstr "બટન"
+msgstr "btn"
 
-#: src/orca/rolenames.py:363
-#, fuzzy
+#: ../src/orca/rolenames.py:363
 msgid "Button"
 msgstr "બટન"
 
-#: src/orca/rolenames.py:364
+#: ../src/orca/rolenames.py:364
 msgid "button"
 msgstr "બટન"
 
-#: src/orca/rolenames.py:367
+#: ../src/orca/rolenames.py:367
 msgid "radio"
-msgstr ""
+msgstr "રેડિયો"
 
-#: src/orca/rolenames.py:368
+#: ../src/orca/rolenames.py:368
 msgid "RadioButton"
-msgstr ""
+msgstr "RadioButton"
 
-#: src/orca/rolenames.py:369
-#, fuzzy
+#: ../src/orca/rolenames.py:369
 msgid "radio button"
-msgstr "બટન"
+msgstr "રેડિયો બટન"
 
-#: src/orca/rolenames.py:372
+#: ../src/orca/rolenames.py:372
 msgid "rdmnuitm"
-msgstr ""
+msgstr "rdmnuitm"
 
-#: src/orca/rolenames.py:373
+#: ../src/orca/rolenames.py:373
 msgid "RadioMenuItem"
-msgstr ""
+msgstr "RadioMenuItem"
 
-#: src/orca/rolenames.py:374
+#: ../src/orca/rolenames.py:374
 msgid "radio menu item"
-msgstr ""
+msgstr "રેડિયો મેનુ વસ્તુ"
 
-#: src/orca/rolenames.py:377
+#: ../src/orca/rolenames.py:377
 msgid "rdmnu"
-msgstr ""
+msgstr "rdmnu"
 
-#: src/orca/rolenames.py:378
+#: ../src/orca/rolenames.py:378
 msgid "RadioMenu"
-msgstr ""
+msgstr "RadioMenu"
 
-#: src/orca/rolenames.py:379
+#: ../src/orca/rolenames.py:379
 msgid "radio menu"
-msgstr ""
+msgstr "રેડિયો મેનુ"
 
-#: src/orca/rolenames.py:382
+#: ../src/orca/rolenames.py:382
 msgid "rtpn"
-msgstr ""
+msgstr "rtpn"
 
-#: src/orca/rolenames.py:383
+#: ../src/orca/rolenames.py:383
 msgid "RootPane"
-msgstr ""
+msgstr "RootPane"
 
-#: src/orca/rolenames.py:384
+#: ../src/orca/rolenames.py:384
 msgid "root pane"
-msgstr ""
+msgstr "રુટ તકતી"
 
-#: src/orca/rolenames.py:387 src/orca/rolenames.py:442
+#: ../src/orca/rolenames.py:387 ../src/orca/rolenames.py:442
 msgid "rwhdr"
-msgstr ""
+msgstr "rwhdr"
 
-#: src/orca/rolenames.py:388 src/orca/rolenames.py:443
+#: ../src/orca/rolenames.py:388 ../src/orca/rolenames.py:443
 msgid "RowHeader"
-msgstr ""
+msgstr "RowHeader"
 
-#: src/orca/rolenames.py:389 src/orca/rolenames.py:444
+#: ../src/orca/rolenames.py:389 ../src/orca/rolenames.py:444
 msgid "row header"
-msgstr ""
+msgstr "હરોળ હેડર"
 
-#: src/orca/rolenames.py:392
+#: ../src/orca/rolenames.py:392
 msgid "scbr"
-msgstr ""
+msgstr "scbr"
 
-#: src/orca/rolenames.py:393
-#, fuzzy
+#: ../src/orca/rolenames.py:393
 msgid "ScrollBar"
-msgstr "ડોલર"
+msgstr "ScrollBar"
 
-#: src/orca/rolenames.py:394
-#, fuzzy
+#: ../src/orca/rolenames.py:394
 msgid "scroll bar"
-msgstr "ડોલર"
+msgstr "સરક પટ્ટી"
 
-#: src/orca/rolenames.py:397
+#: ../src/orca/rolenames.py:397
 msgid "scpn"
-msgstr ""
+msgstr "scpn"
 
-#: src/orca/rolenames.py:398
-#, fuzzy
+#: ../src/orca/rolenames.py:398
 msgid "ScrollPane"
-msgstr "કોલન"
+msgstr "ScrollPane"
 
-#: src/orca/rolenames.py:399
+#: ../src/orca/rolenames.py:399
 msgid "scroll pane"
-msgstr ""
+msgstr "સરક તકતી"
 
-#: src/orca/rolenames.py:402
+#: ../src/orca/rolenames.py:402
 msgid "seprtr"
-msgstr ""
+msgstr "seprtr"
 
-#: src/orca/rolenames.py:403
+#: ../src/orca/rolenames.py:403
 msgid "Separator"
-msgstr ""
+msgstr "વિભાજક"
 
-#: src/orca/rolenames.py:404
+#: ../src/orca/rolenames.py:404
 msgid "separator"
-msgstr ""
+msgstr "વિભાજક"
 
-#: src/orca/rolenames.py:407
+#: ../src/orca/rolenames.py:407
 msgid "sldr"
-msgstr ""
+msgstr "sldr"
 
-#: src/orca/rolenames.py:408
+#: ../src/orca/rolenames.py:408
 msgid "Slider"
-msgstr ""
+msgstr "સરકપટ્ટી"
 
-#: src/orca/rolenames.py:409
+#: ../src/orca/rolenames.py:409
 msgid "slider"
-msgstr ""
+msgstr "સરકપટ્ટી"
 
-#: src/orca/rolenames.py:412
+#: ../src/orca/rolenames.py:412
 msgid "spltpn"
-msgstr ""
+msgstr "spltpn"
 
-#: src/orca/rolenames.py:413
+#: ../src/orca/rolenames.py:413
 msgid "SplitPane"
-msgstr ""
+msgstr "SplitPane"
 
-#: src/orca/rolenames.py:414
+#: ../src/orca/rolenames.py:414
 msgid "split pane"
-msgstr ""
+msgstr "તકતી વિભાજો"
 
-#: src/orca/rolenames.py:417
+#: ../src/orca/rolenames.py:417
 msgid "spin"
-msgstr ""
+msgstr "ફેરવો"
 
-#: src/orca/rolenames.py:418
-#, fuzzy
+#: ../src/orca/rolenames.py:418
 msgid "SpinButton"
-msgstr "બટન"
+msgstr "SpinButton"
 
-#: src/orca/rolenames.py:419
-#, fuzzy
+#: ../src/orca/rolenames.py:419
 msgid "spin button"
-msgstr "બટન"
+msgstr "ફેરવો બટન"
 
-#: src/orca/rolenames.py:422
-#, fuzzy
+#: ../src/orca/rolenames.py:422
 msgid "statbr"
-msgstr "તારો"
+msgstr "statbr"
 
-#: src/orca/rolenames.py:423
+#: ../src/orca/rolenames.py:423
 msgid "StatusBar"
-msgstr ""
+msgstr "StatusBar"
 
-#: src/orca/rolenames.py:424
+#: ../src/orca/rolenames.py:424
 msgid "status bar"
-msgstr ""
+msgstr "પરિસ્થિતિ પટ્ટી"
 
-#: src/orca/rolenames.py:427
-#, fuzzy
+#: ../src/orca/rolenames.py:427
 msgid "tbl"
-msgstr "ટેબ"
+msgstr "tbl"
 
-#: src/orca/rolenames.py:428
+#: ../src/orca/rolenames.py:428
 msgid "Table"
-msgstr ""
+msgstr "કોષ્ટક"
 
-#: src/orca/rolenames.py:429
-#, fuzzy
+#: ../src/orca/rolenames.py:429
 msgid "table"
-msgstr "ટેબ"
+msgstr "કોષ્ટક"
 
-#: src/orca/rolenames.py:433
+#: ../src/orca/rolenames.py:433
 msgid "Cell"
-msgstr ""
+msgstr "ખાનું"
 
-#: src/orca/rolenames.py:447
+#: ../src/orca/rolenames.py:447
 msgid "tomnuitm"
-msgstr ""
+msgstr "tomnuitm"
 
-#: src/orca/rolenames.py:448
+#: ../src/orca/rolenames.py:448
 msgid "TearOffMenuItem"
-msgstr ""
+msgstr "TearOffMenuItem"
 
-#: src/orca/rolenames.py:449 src/orca/speechgenerator.py:1229
+#: ../src/orca/rolenames.py:449 ../src/orca/speechgenerator.py:1229
 msgid "tear off menu item"
-msgstr ""
+msgstr "ટીયર ઓફ મેનુ વસ્તુ"
 
-#: src/orca/rolenames.py:452
+#: ../src/orca/rolenames.py:452
 msgid "term"
-msgstr ""
+msgstr "term"
 
-#: src/orca/rolenames.py:453
+#: ../src/orca/rolenames.py:453
 msgid "Terminal"
-msgstr ""
+msgstr "ટર્મિનલ"
 
-#: src/orca/rolenames.py:454
+#: ../src/orca/rolenames.py:454
 msgid "terminal"
-msgstr ""
+msgstr "ટર્મિનલ"
 
-#: src/orca/rolenames.py:457
+#: ../src/orca/rolenames.py:457
 msgid "txt"
-msgstr ""
+msgstr "txt"
 
-#: src/orca/rolenames.py:458
+#: ../src/orca/rolenames.py:458
 msgid "Text"
-msgstr ""
+msgstr "લખાણ"
 
-#: src/orca/rolenames.py:459
+#: ../src/orca/rolenames.py:459
 msgid "text"
-msgstr ""
+msgstr "લખાણ"
 
-#: src/orca/rolenames.py:462
+#: ../src/orca/rolenames.py:462
 msgid "tglbtn"
-msgstr ""
+msgstr "tglbtn"
 
-#: src/orca/rolenames.py:463
+#: ../src/orca/rolenames.py:463
 msgid "ToggleButton"
-msgstr ""
+msgstr "ToggleButton"
 
-#: src/orca/rolenames.py:464
-#, fuzzy
+#: ../src/orca/rolenames.py:464
 msgid "toggle button"
-msgstr "બટન"
+msgstr "ટોગલ બટન"
 
-#: src/orca/rolenames.py:467
-#, fuzzy
+#: ../src/orca/rolenames.py:467
 msgid "tbar"
-msgstr "પટ્ટી"
+msgstr "tbar"
 
-#: src/orca/rolenames.py:468
-#, fuzzy
+#: ../src/orca/rolenames.py:468
 msgid "ToolBar"
-msgstr "ડોલર"
+msgstr "ToolBar"
 
-#: src/orca/rolenames.py:469
+#: ../src/orca/rolenames.py:469
 msgid "tool bar"
-msgstr ""
+msgstr "સાધન પટ્ટી"
 
-#: src/orca/rolenames.py:472
+#: ../src/orca/rolenames.py:472
 msgid "tip"
-msgstr ""
+msgstr "tip"
 
-#: src/orca/rolenames.py:473
+#: ../src/orca/rolenames.py:473
 msgid "ToolTip"
-msgstr ""
+msgstr "ToolTip"
 
-#: src/orca/rolenames.py:474
+#: ../src/orca/rolenames.py:474
 msgid "tool tip"
-msgstr ""
+msgstr "સાધન મદદ"
 
-#: src/orca/rolenames.py:477 src/orca/rolenames.py:479
-#, fuzzy
+#: ../src/orca/rolenames.py:477 ../src/orca/rolenames.py:479
 msgid "tree"
-msgstr "ટ્રી દેખાવ"
+msgstr "ટ્રી"
 
-#: src/orca/rolenames.py:478
+#: ../src/orca/rolenames.py:478
 msgid "Tree"
-msgstr ""
+msgstr "ટ્રી"
 
-#: src/orca/rolenames.py:482
+#: ../src/orca/rolenames.py:482
 msgid "trtbl"
-msgstr ""
+msgstr "trtbl"
 
-#: src/orca/rolenames.py:483
+#: ../src/orca/rolenames.py:483
 msgid "TreeTable"
-msgstr ""
+msgstr "TreeTable"
 
-#: src/orca/rolenames.py:484
-#, fuzzy
+#: ../src/orca/rolenames.py:484
 msgid "tree table"
-msgstr "ટ્રી દેખાવ"
+msgstr "ટ્રી કોષ્ટક"
 
-#: src/orca/rolenames.py:487
+#: ../src/orca/rolenames.py:487
 msgid "unk"
-msgstr ""
+msgstr "unk"
 
-#: src/orca/rolenames.py:488
+#: ../src/orca/rolenames.py:488
 msgid "Unknown"
-msgstr ""
+msgstr "અજ્ઞાત"
 
-#: src/orca/rolenames.py:489
+#: ../src/orca/rolenames.py:489
 msgid "unknown"
-msgstr ""
+msgstr "અજ્ઞાત"
 
-#: src/orca/rolenames.py:492
+#: ../src/orca/rolenames.py:492
 msgid "vwprt"
-msgstr ""
+msgstr "vwprt"
 
-#: src/orca/rolenames.py:493
+#: ../src/orca/rolenames.py:493
 msgid "Viewport"
-msgstr ""
+msgstr "Viewport"
 
-#: src/orca/rolenames.py:494
+#: ../src/orca/rolenames.py:494
 msgid "viewport"
-msgstr ""
+msgstr "viewport"
 
-#: src/orca/rolenames.py:497
-#, fuzzy
+#: ../src/orca/rolenames.py:497
 msgid "wnd"
-msgstr "અને"
+msgstr "wnd"
 
-#: src/orca/rolenames.py:498
+#: ../src/orca/rolenames.py:498
 msgid "Window"
-msgstr ""
+msgstr "વિન્ડો"
 
-#: src/orca/rolenames.py:499
+#: ../src/orca/rolenames.py:499
 msgid "window"
-msgstr ""
+msgstr "વિન્ડો"
 
-#: src/orca/rolenames.py:502
+#: ../src/orca/rolenames.py:502
 msgid "hdr"
-msgstr ""
+msgstr "hdr"
 
-#: src/orca/rolenames.py:503
-#, fuzzy
+#: ../src/orca/rolenames.py:503
 msgid "Header"
-msgstr "મોટુ"
+msgstr "હેડર"
 
-#: src/orca/rolenames.py:504
-#, fuzzy
+#: ../src/orca/rolenames.py:504
 msgid "header"
-msgstr "મોટુ"
+msgstr "હેડર"
 
-#: src/orca/rolenames.py:507
+#: ../src/orca/rolenames.py:507
 msgid "ftr"
-msgstr ""
+msgstr "ftr"
 
-#: src/orca/rolenames.py:508
+#: ../src/orca/rolenames.py:508
 msgid "Footer"
-msgstr ""
+msgstr "ફુટર"
 
-#: src/orca/rolenames.py:509
+#: ../src/orca/rolenames.py:509
 msgid "footer"
-msgstr ""
+msgstr "ફુટર"
 
-#: src/orca/rolenames.py:512
+#: ../src/orca/rolenames.py:512
 msgid "para"
-msgstr ""
+msgstr "para"
 
-#: src/orca/rolenames.py:513
+#: ../src/orca/rolenames.py:513
 msgid "Paragraph"
-msgstr ""
+msgstr "ફકરો"
 
-#: src/orca/rolenames.py:514
+#: ../src/orca/rolenames.py:514
 msgid "paragraph"
-msgstr ""
+msgstr "ફકરો"
 
-#: src/orca/rolenames.py:517
+#: ../src/orca/rolenames.py:517
 msgid "app"
-msgstr ""
+msgstr "app"
 
-#: src/orca/rolenames.py:518
+#: ../src/orca/rolenames.py:518
 msgid "Application"
-msgstr ""
+msgstr "કાર્યક્રમ"
 
-#: src/orca/rolenames.py:519
+#: ../src/orca/rolenames.py:519
 msgid "application"
-msgstr ""
+msgstr "કાર્યક્રમ"
 
-#: src/orca/rolenames.py:522
+#: ../src/orca/rolenames.py:522
 msgid "auto"
-msgstr ""
+msgstr "auto"
 
-#: src/orca/rolenames.py:523
+#: ../src/orca/rolenames.py:523
 msgid "AutoComplete"
-msgstr ""
+msgstr "AutoComplete"
 
-#: src/orca/rolenames.py:524
+#: ../src/orca/rolenames.py:524
 msgid "autocomplete"
-msgstr ""
+msgstr "આપોઆપ પૂર્ણ"
 
-#: src/orca/rolenames.py:527
+#: ../src/orca/rolenames.py:527
 msgid "edtbr"
-msgstr ""
+msgstr "edtbr"
 
-#: src/orca/rolenames.py:528
+#: ../src/orca/rolenames.py:528
 msgid "EditBar"
-msgstr ""
+msgstr "EditBar"
 
-#: src/orca/rolenames.py:529
+#: ../src/orca/rolenames.py:529
 msgid "edit bar"
-msgstr ""
+msgstr "સંપાદન પટ્ટી"
 
-#: src/orca/rolenames.py:532
+#: ../src/orca/rolenames.py:532
 msgid "emb"
-msgstr ""
+msgstr "emb"
 
-#: src/orca/rolenames.py:533
+#: ../src/orca/rolenames.py:533
 msgid "EmbeddedComponent"
-msgstr ""
+msgstr "EmbeddedComponent"
 
-#: src/orca/rolenames.py:534
+#: ../src/orca/rolenames.py:534
 msgid "embedded component"
-msgstr ""
+msgstr "જડિત ઘટક"
 
-#: src/orca/scripts/Evolution.py:83
+#: ../src/orca/scripts/Evolution.py:83
 msgid "calv"
-msgstr ""
+msgstr "calv"
 
-#: src/orca/scripts/Evolution.py:84
+#: ../src/orca/scripts/Evolution.py:84
 msgid "CalendarView"
-msgstr ""
+msgstr "CalendarView"
 
-#: src/orca/scripts/Evolution.py:85
+#: ../src/orca/scripts/Evolution.py:85
 msgid "calendar view"
-msgstr ""
+msgstr "કેલેન્ડર દેખાવ"
 
-#: src/orca/scripts/Evolution.py:90
+#: ../src/orca/scripts/Evolution.py:90
 msgid "cale"
-msgstr ""
+msgstr "cale"
 
-#: src/orca/scripts/Evolution.py:91
+#: ../src/orca/scripts/Evolution.py:91
 msgid "CalendarEvent"
-msgstr ""
+msgstr "CalendarEvent"
 
-#: src/orca/scripts/Evolution.py:92
+#: ../src/orca/scripts/Evolution.py:92
 msgid "calendar event"
-msgstr ""
+msgstr "કેલેન્ડર ઘટના"
 
-#: src/orca/scripts/Evolution.py:577
+#: ../src/orca/scripts/Evolution.py:577
 msgid "No appointments"
-msgstr ""
+msgstr "કોઈ મુલાકાતો નથી"
 
-#: src/orca/scripts/Evolution.py:651
+#: ../src/orca/scripts/Evolution.py:651
 msgid "Directories button"
-msgstr ""
+msgstr "ડિરેક્ટરીઓ બટન"
 
-#: src/orca/scripts/Mozilla.py:231 src/orca/scripts/StarOffice.py:405
+#: ../src/orca/scripts/Mozilla.py:231 ../src/orca/scripts/StarOffice.py:405
 msgid "link"
-msgstr ""
+msgstr "કડી"
 
-#: src/orca/scripts/gedit.py:135
+#: ../src/orca/scripts/gedit.py:135
 msgid "Change to:"
-msgstr ""
+msgstr "માં બદલો:"
 
-#: src/orca/scripts/gedit.py:136
+#: ../src/orca/scripts/gedit.py:136
 msgid "Misspelled word:"
-msgstr ""
+msgstr "ખોટી જોડણીવાળો શબ્દ:"
 
 #. The indication that spell checking is complete is when the
 #. "misspelt" word is set to "Completed spell checking". Ugh!
 #. Try to detect this and let the user know.
-#: src/orca/scripts/gedit.py:165
+#: ../src/orca/scripts/gedit.py:165
 msgid "Completed spell checking"
-msgstr ""
+msgstr "જોડણી ચકાસવાનું પૂર્ણ થયું"
 
-#: src/orca/scripts/gedit.py:166
+#: ../src/orca/scripts/gedit.py:166
 msgid "Spell checking is complete."
-msgstr ""
+msgstr "જોડણી ચકાસણી સમાપ્ત."
 
-#: src/orca/scripts/gedit.py:168
+#: ../src/orca/scripts/gedit.py:168
 msgid "Press Tab and Return to terminate."
-msgstr ""
+msgstr "બંધ કરવા માટે ટેબ અને Return દબાવો."
 
-#: src/orca/scripts/gedit.py:255 src/orca/scripts/gedit.py:308
+#: ../src/orca/scripts/gedit.py:255 ../src/orca/scripts/gedit.py:308
 msgid "Check Spelling"
-msgstr ""
+msgstr "જોડણી ચકાસો"
 
-#: src/orca/scripts/StarOffice.py:240
+#: ../src/orca/scripts/StarOffice.py:240
 msgid "Speaks the contents of the input line."
-msgstr ""
+msgstr "ઈનપુટ વાક્યના સમાવિષ્ટો બોલે છે."
 
-#: src/orca/scripts/StarOffice.py:280
+#: ../src/orca/scripts/StarOffice.py:280
 msgid "empty"
-msgstr ""
+msgstr "ખાલી"
 
-#: src/orca/scripts/StarOffice.py:500 src/orca/scripts/StarOffice.py:551
+#: ../src/orca/scripts/StarOffice.py:500 ../src/orca/scripts/StarOffice.py:551
 msgid "Spellcheck:"
-msgstr ""
+msgstr "જોડણી ચકાસણી:"
 
-#: src/orca/scripts/StarOffice.py:613
+#: ../src/orca/scripts/StarOffice.py:613
 msgid " has formula"
-msgstr ""
+msgstr " ને સૂત્ર છે"
 
 #. Note to translators: the regular expression here represents a
 #. string to match in the localized application name as seen by
@@ -1968,25 +1918,25 @@ msgstr ""
 #. translation is by running the application and then viewing its
 #. name in the main window of at-poke.
 #.
-#: src/orca/settings.py:386
+#: ../src/orca/settings.py:386
 msgid "[\\S\\s]*StarOffice[\\s\\S]*"
-msgstr ""
+msgstr "[\\S\\s]*StarOffice[\\s\\S]*"
 
-#: src/orca/settings.py:387
+#: ../src/orca/settings.py:387
 msgid "soffice.bin"
-msgstr ""
+msgstr "soffice.bin"
 
-#: src/orca/settings.py:388
+#: ../src/orca/settings.py:388
 msgid "[Ee]volution"
-msgstr ""
+msgstr "[Ee]volution"
 
-#: src/orca/settings.py:389
+#: ../src/orca/settings.py:389
 msgid "Deer Park"
-msgstr ""
+msgstr "ડિયર પાર્ક"
 
-#: src/orca/settings.py:390
+#: ../src/orca/settings.py:390
 msgid "Bon Echo"
-msgstr ""
+msgstr "બોન ઈકો"
 
 #. Note to translators:  the "Workspace " string is the
 #. prefix of what metacity shows when you press Ctrl+Alt
@@ -1994,139 +1944,84 @@ msgstr ""
 #. workspaces.  The goal here is to find a match with
 #. that prefix.
 #.
-#: src/orca/scripts/metacity.py:112
-#, fuzzy
+#: ../src/orca/scripts/metacity.py:112
 msgid "Workspace "
-msgstr "જગ્યા"
+msgstr "કામ કરવાની જગ્યા "
 
-#: src/orca/scripts/metacity.py:113
+#: ../src/orca/scripts/metacity.py:113
 msgid "inaccessible"
-msgstr ""
+msgstr "અસુલભ"
 
-#: src/orca/scripts/planner.py:77 src/orca/scripts/planner.py:135
+#: ../src/orca/scripts/planner.py:77 ../src/orca/scripts/planner.py:135
 msgid "Display more options"
-msgstr ""
+msgstr "વધુ વિકલ્પો દર્શાવો"
 
-#: src/orca/scripts/planner.py:139 src/orca/scripts/planner.py:147
-#: src/orca/scripts/planner.py:172 src/orca/scripts/planner.py:180
-#: src/orca/speechgenerator.py:1285 src/orca/speechgenerator.py:1288
+#: ../src/orca/scripts/planner.py:139 ../src/orca/scripts/planner.py:147
+#: ../src/orca/scripts/planner.py:172 ../src/orca/scripts/planner.py:180
+#: ../src/orca/speechgenerator.py:1285 ../src/orca/speechgenerator.py:1288
 msgid "pressed"
-msgstr ""
+msgstr "દબાયેલ"
 
-#: src/orca/scripts/planner.py:141 src/orca/scripts/planner.py:149
-#: src/orca/scripts/planner.py:174 src/orca/scripts/planner.py:182
-#: src/orca/speechgenerator.py:1294 src/orca/speechgenerator.py:1297
+#: ../src/orca/scripts/planner.py:141 ../src/orca/scripts/planner.py:149
+#: ../src/orca/scripts/planner.py:174 ../src/orca/scripts/planner.py:182
+#: ../src/orca/speechgenerator.py:1294 ../src/orca/speechgenerator.py:1297
 msgid "not pressed"
-msgstr ""
+msgstr "દબાયેલ નથી"
 
-#: src/orca/speechgenerator.py:368 src/orca/speechgenerator.py:371
+#: ../src/orca/speechgenerator.py:368 ../src/orca/speechgenerator.py:371
 msgid "checked"
-msgstr ""
+msgstr "ચકાસાયેલ"
 
-#: src/orca/speechgenerator.py:377 src/orca/speechgenerator.py:380
+#: ../src/orca/speechgenerator.py:377 ../src/orca/speechgenerator.py:380
 msgid "not checked"
-msgstr ""
+msgstr "ચકાસાયેલ નથી"
 
-#: src/orca/speechgenerator.py:910 src/orca/speechgenerator.py:913
-#: src/orca/util.py:1033
+#: ../src/orca/speechgenerator.py:910 ../src/orca/speechgenerator.py:913
+#: ../src/orca/util.py:1033
 msgid "selected"
-msgstr ""
+msgstr "પસંદ કરાયેલ"
 
-#: src/orca/speechgenerator.py:921 src/orca/speechgenerator.py:924
+#: ../src/orca/speechgenerator.py:921 ../src/orca/speechgenerator.py:924
 msgid "not selected"
-msgstr ""
+msgstr "પસંદ કરાયેલ નથી"
 
-#: src/orca/speechgenerator.py:1231
+#: ../src/orca/speechgenerator.py:1231
 msgid "tear off"
-msgstr ""
+msgstr "ટીયર ઓફ"
 
-#: src/orca/util.py:299
+#: ../src/orca/util.py:299
 msgid "Misspelled word: "
-msgstr ""
+msgstr "ખોટી જોડણીવાળા શબ્દો: "
 
-#: src/orca/util.py:300
+#: ../src/orca/util.py:300
 msgid " Context is "
-msgstr ""
+msgstr " સંદર્ભ આ છે "
 
-#: src/orca/util.py:977
+#: ../src/orca/util.py:977
 msgid "page selected from cursor position"
-msgstr ""
+msgstr "કર્સર સ્થાનમાંથી પસંદ થયેલ પાનું"
 
-#: src/orca/util.py:981
+#: ../src/orca/util.py:981
 msgid "page selected to cursor position"
-msgstr ""
+msgstr "કર્સર સ્થાને પસંદ થયેલ પાનું"
 
-#: src/orca/util.py:985
+#: ../src/orca/util.py:985
 msgid "line selected down from cursor position"
-msgstr ""
+msgstr "કર્સર સ્થાન નીચે પસંદ કરાયેલ વાક્ય"
 
-#: src/orca/util.py:989
+#: ../src/orca/util.py:989
 msgid "line selected up from cursor position"
-msgstr ""
+msgstr "કર્સર સ્થાન ઉપર પસંદ કરાયેલ વાક્ય"
 
-#: src/orca/util.py:993
+#: ../src/orca/util.py:993
 msgid "document selected to cursor position"
-msgstr ""
+msgstr "કર્સર સ્થાને પસંદ કરાયેલ દસ્તાવેજ"
 
-#: src/orca/util.py:997
+#: ../src/orca/util.py:997
 msgid "document selected from cursor position"
-msgstr ""
+msgstr "કર્સર સ્થાનમાંથી પસંદ કરાયેલ દસ્તાવેજ"
 
-#: src/orca/util.py:1041
+#: ../src/orca/util.py:1041
 msgid "unselected"
-msgstr ""
+msgstr "પસંદ નહિં થયેલ"
 
-#, fuzzy
-#~ msgid "version"
-#~ msgstr "પ્રશ્ન"
-
-#~ msgid "Creating .orca directory."
-#~ msgstr ".orca ડિરેક્ટરી બનાવી રહ્યા છીએ."
-
-#, fuzzy
-#~ msgid "Creating .orca script directory."
-#~ msgstr ".orca ડિરેક્ટરી બનાવી રહ્યા છીએ."
-
-#, fuzzy
-#~ msgid "Creating __init_.py in .orca script directory."
-#~ msgstr ".orca ડિરેક્ટરી બનાવી રહ્યા છીએ."
-
-#, fuzzy
-#~ msgid "tabs"
-#~ msgstr "ટેબ"
-
-#~ msgid "Braille support appears to work, use it?  Enter y or n. "
-#~ msgstr "બ્રેઈલ આધાર કમા આપશે એવું લાગે છે, શું એને વાપરવું છે?  હ અથવા ન દાખલ કરો. "
-
-#~ msgid "No page to read."
-#~ msgstr "વાંચવા માટે કોઈ પાનું નથી."
-
-#~ msgid "Reading web page failed."
-#~ msgstr "વેબ પાનું પાછું લાવવામાં નિષ્ફળ."
-
-#~ msgid "Not a document."
-#~ msgstr "દસ્તાવેજ નથી."
-
-#~ msgid " chat"
-#~ msgstr " સંવાદ"
-
-#~ msgid " instant message"
-#~ msgstr " તુરંત સંદેશો"
-
-#~ msgid "Input"
-#~ msgstr "ઈનપુટ"
-
-#~ msgid "Message Log"
-#~ msgstr "સંદેશા લોગ"
-
-#~ msgid "Enter choice."
-#~ msgstr "પસંદ દાખલ કરો."
-
-#~ msgid "No working GNOME Speech drivers found."
-#~ msgstr "જીનોમ માટે કોઈ કમા કરતા બોલી ડ્રાઈવરો મળ્યા નથી."
-
-#~ msgid "Enter voice name: "
-#~ msgstr "અવાજ નામ દાખલ કરો: "
-
-#~ msgid "The Orca core could not be initialized."
-#~ msgstr "ઓર્કા કોરનો પ્રારંભ કરી શક્યા નહિં."
