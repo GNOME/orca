@@ -69,6 +69,14 @@ class Script(default.Script):
 
         self.message_panel = None
 
+        # Dictionary of Setup Assistant panels already handled.
+        #
+        self.setupPanels = {}
+
+        # Dictionary of Setup Assistant labels already handled.
+        #
+        self.setupLabels = {}
+
         # The last row and column we were on in the mail message header list.
 
         self.lastMessageColumn = -1
@@ -102,6 +110,74 @@ class Script(default.Script):
         self.sayAllHandler = input_event.InputEventHandler(
             Script.sayAll,
             _("Speaks entire document."))
+
+    def speakSetupAssistantLabel(self, label):
+        """Perform a variety of tests on this Setup Assistant label to see
+        if we want to speak it.
+
+        Arguments:
+        - label: the Setup Assistant Label.
+        """
+
+        if label.state.count(atspi.Accessibility.STATE_SHOWING):
+            # We are only interested in a label if all the panels in the
+            # component hierarchy have states of ENABLED, SHOWING and VISIBLE.
+            # If this is not the case, thewn just return.
+            #
+            obj = label.parent
+            while obj and obj.role != rolenames.ROLE_APPLICATION:
+                if obj.role == rolenames.ROLE_PANEL:
+                    state = obj.state
+                    if not state.count(atspi.Accessibility.STATE_ENABLED) or \
+                       not state.count(atspi.Accessibility.STATE_SHOWING) or \
+                       not state.count(atspi.Accessibility.STATE_VISIBLE):
+                        return
+                obj = obj.parent
+
+            # Each Setup Assistant screen has one label in the top left
+            # corner that describes what this screen is for. It has a text
+            # weight attribute of 800. We always speak those labels with 
+            # " screen" appended.
+            #
+            if label.text:
+                charAttributes = label.text.getAttributes(0)
+                if charAttributes[0]:
+                    charDict = self.textAttrsToDictionary(charAttributes[0])
+                    weight = charDict.get('weight')
+                    if weight and weight == '800':
+                        text = util.getDisplayedText(label)
+                        if text:
+                            speech.speak(text + _(" screen"))
+
+            # It's possible to get multiple "object:state-changed:showing"
+            # events for the same label. If we've already handled this
+            # label, then just ignore it.
+            #
+            text = util.getDisplayedText(label)
+            if text and not self.setupLabels.has_key(label):
+                # Most of the Setup Assistant screens have a useful piece
+                # of text starting with the word "Please". We want to speak
+                # these. For the first screen, the useful piece of text
+                # starts with "Welcome". For the last screen, it starts
+                # with "Done". Speak those too.
+                #
+                if text.startswith(_("Please")) or \
+                    text.startswith(_("Welcome")) or \
+                    text.startswith(_("Congratulations")):
+                    speech.speak(text)
+                    self.setupLabels[label] = True
+
+    def handleSetupAssistantPanel(self, panel):
+        """Find all the labels in this Setup Assistant panel and see if 
+        we want to speak them.
+
+        Arguments:
+        - panel: the Setup Assistant panel.
+        """
+
+        allLabels = util.findByRole(panel, rolenames.ROLE_LABEL)
+        for i in range(0, len(allLabels)):
+            self.speakSetupAssistantLabel(allLabels[i])
 
     def readPageTab(self, tab):
         """Speak/Braille the given page tab. The speech verbosity is set
@@ -195,6 +271,7 @@ class Script(default.Script):
     # 8) Mail compose window: message area
     # 9) Spell Checking Dialog
     # 10) Mail view: message area - attachments.
+    # 11) Setup Assistant
 
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
@@ -777,6 +854,25 @@ class Script(default.Script):
             speech.speak(utterance)
             return
 
+        # 11) Setup Assistant.
+        #
+        # If the name of the frame of the object that currently has focus is
+        # "Evolution Setup Assistant", then empty out the two dictionaries
+        # containing which setup assistant panels and labels we've already
+        # seen.
+ 
+        obj = event.source.parent
+        while obj and obj.role != rolenames.ROLE_APPLICATION:
+            if obj.role == rolenames.ROLE_FRAME and \
+                obj.name == _("Evolution Setup Assistant"):
+                debug.println(self.debugLevel,
+                              "evolution.locusOfFocusChanged - " \
+                              + "setup assistant.")
+                self.setupPanels = {}
+                self.setupLabels = {}
+                break
+            obj = obj.parent
+
         # For everything else, pass the focus event onto the parent class
         # to be handled in the default way.
         #
@@ -785,6 +881,51 @@ class Script(default.Script):
 
         default.Script.locusOfFocusChanged(self, event,
                                            oldLocusOfFocus, newLocusOfFocus)
+
+    def onStateChanged(self, event):
+        """Called whenever an object's state changes.  We are only
+        interested in "object:state-changed:showing" events for any 
+        object in the Setup Assistant.
+
+        Arguments:
+        - event: the Event
+        """
+
+        if event.type.endswith("showing"):
+            # Check to see if this "object:state-changed:showing" event is
+            # for an object in the Setup Assistant by walking back up the
+            # object hierarchy until we get to the frame object and check
+            # to see if it has a name of "Evolution Setup Assistant".
+            #
+            obj = event.source.parent
+            while obj and obj.role != rolenames.ROLE_APPLICATION:
+                if obj.role == rolenames.ROLE_FRAME and \
+                    obj.name == _("Evolution Setup Assistant"):
+                    debug.println(self.debugLevel,
+                                  "evolution.onStateChanged - " \
+                                  + "setup assistant.")
+
+                    # If the event is for a label see if we want to speak it.
+                    #
+                    if event.source.role == rolenames.ROLE_LABEL:
+                        self.speakSetupAssistantLabel(event.source)
+                        break
+
+                    # If the event is for a panel and we haven't already 
+                    # seen this panel, then handle it.
+                    #
+                    elif event.source.role == rolenames.ROLE_PANEL and \
+                        not self.setupPanels.has_key(event.source):
+                        self.handleSetupAssistantPanel(event.source)
+                        self.setupPanels[event.source] = True
+                        break
+                obj = obj.parent
+
+        # For everything else, pass the event onto the parent class
+        # to be handled in the default way.
+        #
+        default.Script.onStateChanged(self, event)
+
 
 # Values used to construct a time string for calendar appointments.
 #

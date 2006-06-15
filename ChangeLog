@@ -1,3 +1,10 @@
+2006-06-15  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py:
+          Changed to provide useful feedback for the Evolution Setup 
+          Assistant screens. See the comments in the Evolution script 
+          for more details.
+
 2006-06-14  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Makefile.am, src/orca/orca.py, src/orca/settings.py,
