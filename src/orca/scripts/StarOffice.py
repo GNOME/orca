@@ -608,8 +608,9 @@ class Script(default.Script):
                         if cellText and len(cellText) != 0:
                             if inputLineForCell and inputLineForCell.text:
                                 inputLine = inputLineForCell.text.getText(0,-1)
-                                if inputLine and len(inputLine) != 0:
-                                    if inputLine != cellText:
+                                if inputLine and \
+                                    (len(inputLine) > 1) and \
+                                    (inputLine[0] == "="):
                                         hf = _(" has formula")
                                         speech.speak(hf, None, False)
 

@@ -5,6 +5,11 @@
           Assistant screens. See the comments in the Evolution script 
           for more details.
 
+        * src/orca/scripts/StarOffice.py:
+          Fixup for the "has formula" check for spread sheet cells.
+          This should only be spoken if the input line starts with "="
+          (thanks Will!)
+
 2006-06-14  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Makefile.am, src/orca/orca.py, src/orca/settings.py,
