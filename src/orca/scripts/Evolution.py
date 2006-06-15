@@ -122,7 +122,7 @@ class Script(default.Script):
         if label.state.count(atspi.Accessibility.STATE_SHOWING):
             # We are only interested in a label if all the panels in the
             # component hierarchy have states of ENABLED, SHOWING and VISIBLE.
-            # If this is not the case, thewn just return.
+            # If this is not the case, then just return.
             #
             obj = label.parent
             while obj and obj.role != rolenames.ROLE_APPLICATION:
