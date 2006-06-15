@@ -16,6 +16,17 @@
           speak the whole row again, if the user just moved left or
           right (rather than up or down).
 
+        * src/orca/braillegenerator.py:
+          src/orca/default.py:
+          src/orca/speechgenerator.py:
+          src/orca/settings.py:
+          src/orca/scripts/Evolution.py:
+          Changed all occurances of readTableCellRow to readTreeTableCellRow.
+          Changed the default values of readTreeTableCellRow to True.
+          Adjusted the speaking and brailling of table cells to only
+          potentially speak the whole role if the parent is a tree table
+          rather than just a table.
+
 2006-06-14  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Makefile.am, src/orca/orca.py, src/orca/settings.py,

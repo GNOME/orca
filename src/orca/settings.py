@@ -275,10 +275,10 @@ enableFunctionKeys      = True
 enableActionKeys        = True
 
 
-# If True, reads all the table cells in the current row rather than just
+# If True, reads all the tree table cells in the current row rather than just
 # the current one.
 #
-readTableCellRow        = False
+readTreeTableCellRow    = True
 
 # Script developer feature.  If False, just the default script
 # will be used.  Helps determine difference between custom
