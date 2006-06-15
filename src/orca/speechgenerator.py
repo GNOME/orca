@@ -1152,11 +1152,32 @@ class SpeechGenerator:
             if settings.readTableCellRow:
                 parent = obj.parent
                 row = parent.table.getRowAtIndex(obj.index)
-                for i in range(0, parent.table.nColumns):
-                    accRow = parent.table.getAccessibleAt(row, i)
-                    cell = atspi.Accessible.makeAccessible(accRow)
+                column = parent.table.getColumnAtIndex(obj.index)
+
+                # This is an indication of whether we should speak all the 
+                # table cells (the user has moved focus up or down a row),
+                # or just the current one (focus has moved left or right in 
+                # the same row).
+                #
+                speakAll = True
+                if parent.__dict__.has_key("lastRow") and \
+                    parent.__dict__.has_key("lastColumn"):
+                    speakAll = (parent.lastRow != row) or \
+                           ((row == 0 or row == parent.table.nRows-1) and \
+                            parent.lastColumn == column)
+
+                if speakAll == True:
+                    for i in range(0, parent.table.nColumns):
+                        accRow = parent.table.getAccessibleAt(row, i)
+                        cell = atspi.Accessible.makeAccessible(accRow)
+                        utterances.append(util.getDisplayedText(\
+                            util.getRealActiveDescendant(cell)))
+                else:
                     utterances.append(util.getDisplayedText(\
-                        util.getRealActiveDescendant(cell)))
+                    util.getRealActiveDescendant(obj)))
+
+                parent.lastColumn = column
+                parent.lastRow = row
             else:
                 utterances.append(util.getDisplayedText(\
                     util.getRealActiveDescendant(obj)))
