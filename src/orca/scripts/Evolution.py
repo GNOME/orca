@@ -159,7 +159,7 @@ class Script(default.Script):
                 # of text starting with the word "Please". We want to speak
                 # these. For the first screen, the useful piece of text
                 # starts with "Welcome". For the last screen, it starts
-                # with "Done". Speak those too.
+                # with "Congratulations". Speak those too.
                 #
                 if text.startswith(_("Please")) or \
                     text.startswith(_("Welcome")) or \
