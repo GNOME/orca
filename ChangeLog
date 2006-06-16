@@ -1,3 +1,14 @@
+2006-06-16  Willie Walker <william.walker@sun.com>
+
+	* src/orca/scripts/Evolution.py: check for windows that end with
+	the name "Assistant" when handling the setup wizards.  The reason
+	for this is that both the initial setup and the new account
+	wizards need this special scripting, and we're lucky that they end
+	in the name Assistant.  A risk here is that the l10n of the window
+	names might put Assistant somewhere else in the title (e.g.,
+	Assistante de Setup).  If we run into this, we should do a check
+	on the exact names.
+	
 2006-06-16  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py:

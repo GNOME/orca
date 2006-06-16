@@ -868,7 +868,7 @@ class Script(default.Script):
         obj = event.source.parent
         while obj and obj.role != rolenames.ROLE_APPLICATION:
             if obj.role == rolenames.ROLE_FRAME and \
-                obj.name == _("Evolution Setup Assistant"):
+                obj.name.endswith(_("Assistant")):
                 debug.println(self.debugLevel,
                               "evolution.locusOfFocusChanged - " \
                               + "setup assistant.")
@@ -899,12 +899,14 @@ class Script(default.Script):
             # Check to see if this "object:state-changed:showing" event is
             # for an object in the Setup Assistant by walking back up the
             # object hierarchy until we get to the frame object and check
-            # to see if it has a name of "Evolution Setup Assistant".
+            # to see if it has a name that ends with "Assistant", which is
+            # what we see when we configure Evolution for the first time
+            # and when we add new accounts.
             #
             obj = event.source.parent
             while obj and obj.role != rolenames.ROLE_APPLICATION:
                 if obj.role == rolenames.ROLE_FRAME and \
-                    obj.name == _("Evolution Setup Assistant"):
+                    obj.name.endswith(_("Assistant")):
                     debug.println(self.debugLevel,
                                   "evolution.onStateChanged - " \
                                   + "setup assistant.")
