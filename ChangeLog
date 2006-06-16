@@ -1,3 +1,10 @@
+2006-06-16  Willie Walker <william.walker@sun.com>
+
+	* src/orca/focus_tracking_presenter.py, src/orca/script.py:
+	more work on bug 319652.  Move much of the processing of
+	input events to the gidle thread handler in an effort to 
+	reduce hangs.
+
 2006-06-15  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py:
