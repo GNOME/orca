@@ -404,9 +404,57 @@ class Script(default.Script):
         if self.endOfLink(obj, word, startOffset, endOffset):
             speech.speak(_("link"))
 
+    def isSetupDialog(self, obj):
+        """ Check to see if this object is in the Setup dialog by walking 
+        back up the object hierarchy until we get to the dialog object and 
+        checking to see if it has a name that starts with "Welcome to 
+        StarOffice".
+
+        Arguments:
+        - obj: an Accessible object that implements the AccessibleText
+               interface
+
+        Returns an indication of whether this object is in the Setup dialog.
+        """
+
+        found = False
+        while obj and obj.role != rolenames.ROLE_APPLICATION:
+            if obj.role == rolenames.ROLE_DIALOG and \
+                (obj.name and obj.name.startswith(_("Welcome to StarOffice"))):
+                debug.println(self.debugLevel, 
+                              "StarOffice.isSetupDialog: True.")
+                found = True
+
+            obj = obj.parent
+
+        return found
+
+    def speakSetupLabel(self, label):
+        """Speak this Setup dialog label.
+
+        Arguments:
+        - label: the Setup dialog Label.
+        """
+
+        text = util.getDisplayedText(label)
+        if text:
+            speech.speak(text)
+
+    def handleSetupPanel(self, panel):
+        """Find all the labels in this Setup panel and speak them.
+
+        Arguments:
+        - panel: the Setup panel.
+        """
+
+        allLabels = util.findByRole(panel, rolenames.ROLE_LABEL)
+        for i in range(0, len(allLabels)):
+            self.speakSetupLabel(allLabels[i])
+
     # This method tries to detect and handle the following cases:
     # 1) Writer: text paragraph.
     # 2) Writer: spell checking dialog.
+    # 3) Welcome to StarOffice dialog.
 
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
@@ -499,16 +547,147 @@ class Script(default.Script):
             pane = event.source.parent
             if pane.name.startswith(_("Spellcheck:")):
                 debug.println(self.debugLevel,
-                    "StarOffice.locusOfFocusChanged - Writer: spell check dialog.")
+                    "StarOffice.locusOfFocusChanged - " \
+                    + "Writer: spell check dialog.")
 
                 self.readMisspeltWord(event, pane)
 
                 # Fall-thru to process the event with the default handler.
 
+        # 3) Welcome to StarOffice dialog.
+        #
+        # Check to see if the object that just got focus is in the Setup
+        # dialog. If it is, then check for a variety of scenerios.
+
+        if self.isSetupDialog(event.source):
+
+            # Check for 2. License Agreement: Scroll Down button.
+            #
+            rolesList = [rolenames.ROLE_PUSH_BUTTON, \
+                         rolenames.ROLE_PANEL, \
+                         rolenames.ROLE_OPTION_PANE, \
+                         rolenames.ROLE_DIALOG, \
+                         rolenames.ROLE_APPLICATION]
+            if util.isDesiredFocusedItem(event.source, rolesList):
+                debug.println(self.debugLevel,
+                    "StarOffice.locusOfFocusChanged - Setup dialog: " \
+                    + "License Agreement screen: Scroll Down button.")
+                self.handleSetupPanel(event.source.parent)
+                speech.speak(_("Note that the Scroll Down button has to be pressed numerous times."))
+
+            # Check for 2. License Agreement: Accept button.
+            #
+            rolesList = [rolenames.ROLE_UNKNOWN, \
+                         rolenames.ROLE_SCROLL_PANE, \
+                         rolenames.ROLE_PANEL, \
+                         rolenames.ROLE_OPTION_PANE, \
+                         rolenames.ROLE_DIALOG, \
+                         rolenames.ROLE_APPLICATION]
+            if util.isDesiredFocusedItem(event.source, rolesList):
+                debug.println(self.debugLevel,
+                    "StarOffice.locusOfFocusChanged - Setup dialog: " \
+                    + "License Agreement screen: accept button.")
+                speech.speak(_("License Agreement Accept button now has focus."))
+
+            # Check for 3. Personal Data: Transfer Personal Data check box.
+            #
+            rolesList = [rolenames.ROLE_CHECK_BOX, \
+                         rolenames.ROLE_PANEL, \
+                         rolenames.ROLE_OPTION_PANE, \
+                         rolenames.ROLE_DIALOG, \
+                         rolenames.ROLE_APPLICATION]
+            if util.isDesiredFocusedItem(event.source, rolesList):
+                debug.println(self.debugLevel,
+                    "StarOffice.locusOfFocusChanged - Setup dialog: " \
+                    + "Personal Data: Transfer Personal Data check box.")
+                self.handleSetupPanel(event.source.parent)
+
+            # Check for 4. User name: First Name text field.
+            #
+            rolesList = [rolenames.ROLE_TEXT, \
+                        rolenames.ROLE_PANEL, \
+                        rolenames.ROLE_OPTION_PANE, \
+                        rolenames.ROLE_DIALOG, \
+                        rolenames.ROLE_APPLICATION]
+            if util.isDesiredFocusedItem(event.source, rolesList) and \
+               event.source.name == _("First name"):
+                debug.println(self.debugLevel,
+                    "StarOffice.locusOfFocusChanged - Setup dialog: " \
+                    + "User name: First Name text field.")
+
+                # Just speak the informative labels at the top of the panel
+                # (and not the ones that have LABEL_FOR relationships).
+                #
+                panel = event.source.parent
+                allLabels = util.findByRole(panel, rolenames.ROLE_LABEL)
+                for i in range(0, len(allLabels)):
+                    relations = allLabels[i].relations
+                    hasLabelFor = False
+                    for relation in relations:
+                        if relation.getRelationType() \
+                               == atspi.Accessibility.RELATION_LABEL_FOR:
+                            hasLabelFor = True
+                    if not hasLabelFor:
+                        self.speakSetupLabel(allLabels[i])
+
+            # Check for 5. Registration: Register Now radio button.
+            #
+            rolesList = [rolenames.ROLE_RADIO_BUTTON, \
+                        rolenames.ROLE_PANEL, \
+                        rolenames.ROLE_OPTION_PANE, \
+                        rolenames.ROLE_DIALOG, \
+                        rolenames.ROLE_APPLICATION]
+            if util.isDesiredFocusedItem(event.source, rolesList):
+                debug.println(self.debugLevel,
+                    "StarOffice.locusOfFocusChanged - Setup dialog: " \
+                    + "Registration: Register Now radio button.")
+                self.handleSetupPanel(event.source.parent)
+
         # Pass the event onto the parent class to be handled in the default way.
 
         default.Script.locusOfFocusChanged(self, event,
                                            oldLocusOfFocus, newLocusOfFocus)
+
+    # This method tries to detect and handle the following cases:
+    # 1) Setup dialog.
+
+    def onWindowActivated(self, event):
+        """Called whenever a property on an object changes.
+
+        Arguments:
+        - event: the Event
+        """
+
+        debug.printObjectEvent(self.debugLevel,
+                               event,
+                               event.source.toString())
+
+        # util.printAncestry(event.source)
+
+        # 1) Setup dialog.
+        #
+        # Check to see if the Setup dialog window has just been activated.
+        # If it has, then find the panel within it that has no name and
+        # speak all the labels within that panel.
+        #
+        if self.isSetupDialog(event.source):
+            debug.println(self.debugLevel,
+                "StarOffice.onWindowActivated - Setup dialog: Welcome screen.")
+
+            allPanels = util.findByRole(event.source.parent,
+                                        rolenames.ROLE_PANEL)
+            for i in range(0, len(allPanels)):
+                if not allPanels[i].name:
+                    allLabels = util.findByRole(allPanels[i], 
+                                                rolenames.ROLE_LABEL)
+                    for i in range(0, len(allLabels)):
+                        self.speakSetupLabel(allLabels[i])
+        else:
+            # Pass the event onto the parent class to be handled in the 
+            # default way.
+            #
+            default.Script.onWindowActivated(self, event)
+
 
     # This method tries to detect and handle the following cases:
     # 1) Writer: spell checking dialog.

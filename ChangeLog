@@ -19,6 +19,11 @@
           to False for the duration of this code section, then resetting 
           it to True at the end.
 
+        * src/orca/scripts/StarOffice.py:
+          Changed to provide useful feedback for the StarOffice Setup
+          wizard screens. See the comments in the StarOffice script
+          for more details.
+
 2006-06-16  Willie Walker <william.walker@sun.com>
 
 	* src/orca/focus_tracking_presenter.py, src/orca/script.py:
