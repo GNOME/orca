@@ -25,9 +25,7 @@ InputEventHandler.  The listeners field is a dictionary where the keys
 are AT-SPI event names and the values are function pointers.
 
 Instances of scripts are intended to be created solely by the
-focus_tracking_presenter, which will call the main entry points of a
-script instance: processObjectEvent, processKeyboardEvent, and
-processBrailleEvent, locusOfFocusChanged, and visualAppearanceChanged.
+focus_tracking_presenter.
 
 This Script class is not intended to be instantiated directly.
 Instead, it is expected that subclasses of the Script class will be
@@ -160,11 +158,30 @@ class Script:
             if event.type.startswith(key):
                 self.listeners[key](event)
 
+    def consumesKeyboardEvent(self, keyboardEvent):
+        """Called when a key is pressed on the keyboard.
+
+        Arguments:
+        - keyboardEvent: an instance of input_event.KeyboardEvent
+
+        Returns True if the event is of interest.
+        """
+        user_bindings = None
+        user_bindings_map = settings.keyBindingsMap
+        if user_bindings_map.has_key(self.__module__):
+            user_bindings = user_bindings_map[self.__module__]
+        elif user_bindings_map.has_key("default"):
+            user_bindings = user_bindings_map["default"]
+
+        consumes = False
+        if user_bindings:
+            consumes = user_bindings.getInputHandler(keyboardEvent) != None
+        if not consumes:
+            consumes = self.keyBindings.getInputHandler(keyboardEvent) != None
+        return consumes
+
     def processKeyboardEvent(self, keyboardEvent):
-        """Processes the given keyboard event. This method is called
-        synchronously from the AT-SPI registry and should be
-        performant.  In addition, it must return True if it has
-        consumed the event (and False if not).
+        """Processes the given keyboard event.
 
         This method will primarily use the keybindings field of this
         script instance see if this script has an interest in the
@@ -176,8 +193,6 @@ class Script:
 
         Arguments:
         - keyboardEvent: an instance of input_event.KeyboardEvent
-
-        Returns True if the event was consumed; otherwise False
         """
 
         # We'll annotate the event with a reference to this script.
@@ -211,6 +226,29 @@ class Script:
                                                              keyboardEvent)
         return consumed
 
+    def consumesBrailleEvent(self, brailleEvent):
+        """Called when a key is pressed on the braille display.
+
+        Arguments:
+        - brailleEvent: an instance of input_event.KeyboardEvent
+
+        Returns True if the event is of interest.
+        """
+        user_bindings = None
+        user_bindings_map = settings.brailleBindingsMap
+        if user_bindings_map.has_key(self.__module__):
+            user_bindings = user_bindings_map[self.__module__]
+        elif user_bindings_map.has_key("default"):
+            user_bindings = user_bindings_map["default"]
+
+        command = brailleEvent.event
+        consumes = False
+        if user_bindings:
+            consumes = user_bindings.has_key(command)
+        if not consumes:
+            consumes = self.brailleBindings.has_key(command)
+        return consumes
+
     def processBrailleEvent(self, brailleEvent):
         """Called whenever a key is pressed on the Braille display.
 
@@ -224,8 +262,6 @@ class Script:
 
         Arguments:
         - brailleEvent: an instance of input_event.BrailleEvent
-
-        Returns True if the event was consumed; otherwise False
         """
 
         # We'll annotate the event with a reference to this script.

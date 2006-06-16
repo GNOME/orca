@@ -33,6 +33,7 @@ import time
 import atspi
 import default
 import debug
+import input_event
 import orca
 import presentation_manager
 import settings
@@ -84,7 +85,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         if self._listenerCounts.has_key(eventType):
             self._listenerCounts[eventType] += 1
         else:
-            self.registry.registerEventListener(self._enqueueObjectEvent,
+            self.registry.registerEventListener(self._enqueueEvent,
                                                 eventType)
             self._listenerCounts[eventType] = 1
 
@@ -97,7 +98,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
 
         self._listenerCounts[eventType] -= 1
         if self._listenerCounts[eventType] == 0:
-            self.registry.deregisterEventListener(self._enqueueObjectEvent,
+            self.registry.deregisterEventListener(self._enqueueEvent,
                                                   eventType)
             del self._listenerCounts[eventType]
 
@@ -292,96 +293,32 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
     #                                                                      #
     ########################################################################
 
-    def _enqueueObjectEvent(self, e):
-        """Handles all events destined for scripts.
+    def _processKeyboardEvent(self, keyboardEvent):
+        """Processes the given keyboard event based on the keybinding from the
+        currently active script.
 
         Arguments:
-        - e: an at-spi event.
+        - keyboardEvent: an instance of input_event.KeyboardEvent
         """
+        if self._activeScript:
+            try:
+                self._activeScript.processKeyboardEvent(keyboardEvent)
+            except:
+                debug.printException(debug.LEVEL_WARNING)
+                debug.printStack(debug.LEVEL_WARNING)
 
-        # Uncomment these lines if you want to see what it's like without
-        # the queue.
-        #
-        #self._processObjectEvent(atspi.Event(e))
-        #return
+    def _processBrailleEvent(self, brailleEvent):
+        """Called whenever a cursor key is pressed on the Braille display.
 
-        # We ignore defunct objects and let the atspi module take care of them
-        # for us.
-        #
-        if (e.type == "object:state-changed:defunct"):
-            return
-
-        # We also generally do not like
-        # object:property-change:accessible-parent events because they
-        # indicate something is now whacked with the hierarchy, so we
-        # just ignore them and let the atspi module take care of it for
-        # us.
-        #
-        if e.type == "object:property-change:accessible-parent":
-            return
-
-        # At this point in time, we only care when objects are removed
-        # from the desktop.
-        #
-        if (e.type == "object:children-changed:remove") \
-           and (e.source != self.registry.desktop):
-            return
-
-        # We create the event here because it will ref everything we
-        # want it to ref, thus allowing things to survive until they
-        # are processed on the gidle thread.
-        #
-        debug.println(debug.LEVEL_FINEST, "Queueing event %s" % e.type)
-        try:
-            self._eventQueue.put(atspi.Event(e))
-            if not self._gidle_id:
-                self._gidle_id = gobject.idle_add(self._dequeueObjectEvent)
-        except:
-            debug.printException(debug.LEVEL_SEVERE)
-            debug.println(debug.LEVEL_SEVERE,
-                          "Exception above while processing event: " + e.type)
-
-    def _timeout(self):
-        """Timer that will be called if we time out while trying to perform
-        an operation."""
-        debug.println(debug.LEVEL_SEVERE,
-                      "TIMEOUT: Looks like something has hung. Quitting Orca.")
-        orca.shutdown()
-
-    def _dequeueObjectEvent(self):
-        """Handles all events destined for scripts.  Called by the GTK
-        idle thread.
+        Arguments:
+        - brailleEvent: an instance of input_event.BrailleEvent
         """
-
-        event = self._eventQueue.get()
-        debug.println(debug.LEVEL_FINEST, "Dequeued event %s" % event.type)
-
-        # [[[TODO: WDW - the timer stuff is an experiment to see if
-        # we can recover from hangs.  It's only experimental, so it's
-        # commented out for now.]]]
-        #
-        #timer = threading.Timer(5.0, self._timeout)
-        #timer.start()
-
-        debug.println(debug.eventDebugLevel,
-                      "\nvvvvv PROCESS OBJECT EVENT %s vvvvv" % event.type)
-
-        try:
-            self._processObjectEvent(event)
-        except:
-            debug.printException(debug.LEVEL_SEVERE)
-
-        debug.println(debug.eventDebugLevel,
-                      "^^^^^ PROCESS OBJECT EVENT %s ^^^^^\n" % event.type)
-
-        #timer.cancel()
-        #del timer
-
-        if self._eventQueue.empty():
-            self._gidle_id = 0
-            return False
-        else:
-            return True
+        if self._activeScript:
+            try:
+                self._activeScript.processBrailleEvent(brailleEvent)
+            except:
+                debug.printException(debug.LEVEL_WARNING)
+                debug.printStack(debug.LEVEL_WARNING)
 
     def _processObjectEvent(self, event):
         """Handles all events destined for scripts.
@@ -482,6 +419,146 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                 debug.printException(debug.LEVEL_WARNING)
                 break
 
+    def _enqueueEvent(self, e):
+        """Handles all events destined for scripts.
+
+        Arguments:
+        - e: an at-spi event.
+        """
+
+        # Uncomment these lines if you want to see what it's like without
+        # the queue.
+        #
+        #if isinstance(e, input_event.KeyboardEvent):
+        #    self._processKeyboardEvent(e)
+        #elif isinstance(e, input_event.BrailleEvent):
+        #    self._processBrailleEvent(e)
+        #else:
+        #    self._processObjectEvent(atspi.Event(e))
+        #return
+
+        event = None
+        if isinstance(e, input_event.KeyboardEvent):
+            if e.type == atspi.Accessibility.KEY_PRESSED_EVENT:
+                debug.println(debug.LEVEL_FINEST,
+                              "----------> QUEUEING KEYPRESS '%s' (%d)"
+                              % (e.event_string, e.hw_code))
+            elif e.type == atspi.Accessibility.KEY_RELEASED_EVENT:
+                debug.println(debug.LEVEL_FINEST,
+                              "----------> QUEUEING KEYRELEASE '%s' (%d)"
+                              % (e.event_string, e.hw_code))
+            event = e
+        elif isinstance(e, input_event.BrailleEvent):
+            debug.println(debug.LEVEL_FINEST,
+                          "----------> QUEUEING BRAILLE COMMAND %d" % e.event)
+            event = e
+        else:
+            # We ignore defunct objects and let the atspi module take
+            # care of them for us.
+            #
+            if (e.type == "object:state-changed:defunct"):
+                return
+
+            # We also generally do not like
+            # object:property-change:accessible-parent events because
+            # they indicate something is now whacked with the
+            # hierarchy, so we just ignore them and let the atspi
+            # module take care of it for us.
+            #
+            if e.type == "object:property-change:accessible-parent":
+                return
+
+            # At this point in time, we only care when objects are
+            # removed from the desktop.
+            #
+            if (e.type == "object:children-changed:remove") \
+                and (e.source != self.registry.desktop):
+                return
+
+            # We create the event here because it will ref everything
+            # we want it to ref, thus allowing things to survive until
+            # they are processed on the gidle thread.
+            #
+            debug.println(debug.LEVEL_FINEST,
+                          "---------> QUEUEING EVENT %s" % e.type)
+            event = atspi.Event(e)
+
+        if event:
+            self._eventQueue.put(event)
+            if not self._gidle_id:
+                self._gidle_id = gobject.idle_add(self._dequeueEvent)
+
+    def _timeout(self):
+        """Timer that will be called if we time out while trying to perform
+        an operation."""
+        debug.println(debug.LEVEL_SEVERE,
+                      "TIMEOUT: Looks like something has hung. Quitting Orca.")
+        orca.shutdown()
+
+    def _dequeueEvent(self):
+        """Handles all events destined for scripts.  Called by the GTK
+        idle thread.
+        """
+
+        event = self._eventQueue.get()
+
+        if isinstance(event, input_event.KeyboardEvent):
+            if event.type == atspi.Accessibility.KEY_PRESSED_EVENT:
+                debug.println(debug.LEVEL_FINEST,
+                              "DEQUEUED KEYPRESS '%s' (%d) <----------" \
+                              % (event.event_string, event.hw_code))
+                pressRelease = "PRESS"
+            elif event.type == atspi.Accessibility.KEY_RELEASED_EVENT:
+                debug.println(debug.LEVEL_FINEST,
+                              "DEQUEUED KEYRELEASE '%s' (%d) <----------" \
+                              % (event.event_string, event.hw_code))
+                pressRelease = "RELEASE"
+            debug.println(debug.eventDebugLevel,
+                          "\nvvvvv PROCESS KEY %s EVENT %s vvvvv"\
+                          % (pressRelease, event.event_string))
+            self._processKeyboardEvent(event)
+            debug.println(debug.eventDebugLevel,
+                          "\n^^^^^ PROCESS KEY %s EVENT %s ^^^^^"\
+                          % (pressRelease, event.event_string))
+        elif isinstance(event, input_event.BrailleEvent):
+            debug.println(debug.LEVEL_FINEST,
+                          "DEQUEUED BRAILLE COMMAND %d <----------" \
+                          % event.event)
+            debug.println(debug.eventDebugLevel,
+                          "\nvvvvv PROCESS BRAILLE EVENT %d vvvvv"\
+                          % event.event)
+            self._processBrailleEvent(event)
+            debug.println(debug.eventDebugLevel,
+                          "\n^^^^^ PROCESS BRAILLE EVENT %d ^^^^^"\
+                          % event.event)
+        else:
+            debug.println(debug.LEVEL_FINEST, "DEQUEUED EVENT %s <----------" \
+                          % event.type)
+
+            # [[[TODO: WDW - the timer stuff is an experiment to see if
+            # we can recover from hangs.  It's only experimental, so it's
+            # commented out for now.]]]
+            #
+            #timer = threading.Timer(5.0, self._timeout)
+            #timer.start()
+
+            debug.println(debug.eventDebugLevel,
+                          "\nvvvvv PROCESS OBJECT EVENT %s vvvvv" \
+                          % event.type)
+            self._processObjectEvent(event)
+            debug.println(debug.eventDebugLevel,
+                          "^^^^^ PROCESS OBJECT EVENT %s ^^^^^\n" \
+                          % event.type)
+
+            #timer.cancel()
+            #del timer
+
+        if self._eventQueue.empty():
+            self._gidle_id = 0
+            return False # destroy and don't call again
+        else:
+            return True  # call again at next idle
+
     def processKeyboardEvent(self, keyboardEvent):
         """Processes the given keyboard event based on the keybinding from the
         currently active script. This method is called synchronously from the
@@ -494,8 +571,10 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         Returns True if the event should be consumed.
         """
 
-        if self._activeScript:
-            return self._activeScript.processKeyboardEvent(keyboardEvent)
+        if self._activeScript \
+           and self._activeScript.consumesKeyboardEvent(keyboardEvent):
+            self._enqueueEvent(keyboardEvent)
+            return True
         else:
             return False
 
@@ -508,8 +587,10 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         Returns True if the command was consumed; otherwise False
         """
 
-        if self._activeScript:
-            return self._activeScript.processBrailleEvent(brailleEvent)
+        if self._activeScript \
+           and self._activeScript.consumesBrailleEvent(brailleEvent):
+            self._enqueueEvent(brailleEvent)
+            return True
         else:
             return False
 
@@ -569,13 +650,13 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             e.detail1  = 0
             e.detail2  = 0
             e.any_data = None
-            self._enqueueObjectEvent(e)
+            self._enqueueEvent(e)
 
     def deactivate(self):
         """Called when this presentation manager is deactivated."""
 
         for eventType in self._listenerCounts.keys():
-            self.registry.deregisterEventListener(self._enqueueObjectEvent,
+            self.registry.deregisterEventListener(self._enqueueEvent,
                                                   eventType)
         self._listenerCounts = {}
         self._knownScripts   = {}
