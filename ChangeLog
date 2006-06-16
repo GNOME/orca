@@ -1,3 +1,13 @@
+2006-06-16  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py:
+          Adjusted section #3 in the locusOfFocusChanged() method.
+          Unfortunately the default read table cell row handling won't
+          just work with Evolution (see bogusity comment later in the 
+          script). We quickly solve this by setting readTreeTableCellRow 
+          to False for the duration of this code section, then resetting 
+          it to True at the end.
+
 2006-06-16  Willie Walker <william.walker@sun.com>
 
 	* src/orca/focus_tracking_presenter.py, src/orca/script.py:

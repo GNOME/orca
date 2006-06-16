@@ -392,6 +392,14 @@ class Script(default.Script):
                           "evolution.locusOfFocusChanged - mail view: " \
                           + "message header list.")
 
+            # Unfortunately the default read table cell row handling won't
+            # just work with Evolution (see bogusity comment below). We
+            # quickly solve this by setting readTreeTableCellRow to False
+            # for the duration of this code section, then resetting it to
+            # True at the end.
+            #
+            settings.readTreeTableCellRow = False
+
             parent = event.source.parent
             row = parent.table.getRowAtIndex(event.source.index)
             column = parent.table.getColumnAtIndex(event.source.index)
@@ -512,6 +520,7 @@ class Script(default.Script):
             settings.speechVerbosityLevel = savedSpeechVerbosityLevel
             self.lastMessageColumn = column
             self.lastMessageRow = row
+            settings.readTreeTableCellRow = True
             return
 
         # 4) Calendar view: day view: tabbing to day with appts.
