@@ -57,6 +57,7 @@ userCustomizableSettings = [
     "speechServerInfo",
     "voices",
     "speechVerbosityLevel",
+    "enableSpeechIndentation",
     "enableEchoByWord",
     "enableKeyEcho",
     "enablePrintableKeys",
@@ -166,6 +167,10 @@ voices = {
     UPPERCASE_VOICE : ACSS({ACSS.AVERAGE_PITCH : 6}),
     HYPERLINK_VOICE : ACSS({ACSS.AVERAGE_PITCH : 8})
 }
+
+# If True, enable speaking of speech indentation and justification.
+#
+enableSpeechIndentation = False
 
 # If True, enable braille.
 #

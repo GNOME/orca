@@ -13,6 +13,9 @@
           Added a speechIndentationChecked() signal handler for speaking
           indentation.
 
+        * src/orca/settings.py:
+          Added in support for the new 'enableSpeechIndentation" setting.
+
 2006-06-16  Willie Walker <william.walker@sun.com>
 
 	* src/orca/scripts/Evolution.py: check for windows that end with
