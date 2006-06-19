@@ -220,6 +220,9 @@ class orcaSetupGUI(GladeWrapper):
         else:
             self.speechVerboseButton.set_active(True)
 
+        self.speechIndentationCheckbutton.set_active(\
+            prefs["enableSpeechIndentation"])
+
         # Braille pane.
         #
         self.brailleSupportCheckbutton.set_active(prefs["enableBraille"])
