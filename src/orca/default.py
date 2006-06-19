@@ -658,7 +658,7 @@ class Script(script.Script):
                 voice = self.voices[settings.DEFAULT_VOICE]
 
             if settings.enableSpeechIndentation:
-                util.speakTextIndentation(line)
+                self.speakTextIndentation(obj, line)
             speech.speak(line, voice)
             util.speakTextSelectionState(obj, startOffset, endOffset)
 
@@ -686,6 +686,39 @@ class Script(script.Script):
 
         speech.speak(word, voice)
         util.speakTextSelectionState(obj, startOffset, endOffset)
+
+    def speakTextIndentation(self, obj, line):
+        """Speaks a summary of the number of spaces and/or tabs at the 
+        beginning of the given line.
+
+        Arguments:
+        - obj: the text object.
+        - line: the string to check for spaces and tabs.
+        """
+
+        spaceCount = 0
+        tabCount = 0
+        for offset in range(0, len(line)):
+            if line[offset] == ' ':
+                spaceCount += 1
+            elif line[offset] == '\t':
+                tabCount += 1
+            else:
+                break
+        utterance = ''
+        if spaceCount:
+            if spaceCount == 1:
+                utterance += "1 space "
+            else:
+                utterance += ("%d spaces " % spaceCount)
+        if tabCount:
+            if tabCount == 1:
+                utterance += "1 tab "
+            else:
+                utterance += ("%d tabs " % tabCount)
+        if len(utterance):
+            utterance += "indented"
+            speech.speak(utterance)
 
     def echoPreviousWord(self, obj):
         """Speaks the word prior to the caret, as long as there is

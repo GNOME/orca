@@ -257,6 +257,31 @@ class Script(default.Script):
 
         return keyBindings
 
+    def speakTextIndentation(self, obj, line):
+        """Speak an indication of the percentage of whitespace (spaces and
+        tabs at the beginning of the line.
+
+        Arguments:
+        - obj: the text object.
+        - line: the string to check for spaces and tabs.
+        """
+
+        spaceCount = 0
+        tabCount = 0
+        for offset in range(0, len(line)):
+            if line[offset] == ' ':
+                spaceCount += 1
+            elif line[offset] == '\t':
+                tabCount += 1
+            else:
+                break
+
+        boundingBox = obj.extents
+        [x, y, width, height] = obj.text.getCharacterExtents(offset, 0)
+        percentage = (x - boundingBox.x) * 100 / boundingBox.width
+        utterance = "%d %% indented" % percentage
+        speech.speak(utterance)
+
     def speakInputLine(self, inputEvent):
         """Speak the contents of the spread sheet input line (assuming we 
         have a handle to it - generated when we first focus on a spread 
@@ -499,6 +524,8 @@ class Script(default.Script):
             #
             hypertext = event.source.hypertext
             if not hypertext or (hypertext.getNLinks() == 0):
+                if settings.enableSpeechIndentation:
+                    self.speakTextIndentation(event.source, result[0])
                 speech.speak(result[0], None, False)
             else:
                 started = False

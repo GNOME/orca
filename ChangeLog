@@ -7,6 +7,22 @@
 2006-06-19  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/util.py:
+          src/orca/default.py:
+          Moved the speakTextIndentation() routines into default.py so
+          that it can be subclassed.
+
+        * src/orca/scripts/StarOffice.py:
+          Subclassed the speakTextIndentation() routine and adjusted it to
+          speak an indication of the percentage of whitespace (spaces and
+          tabs at the beginning of the line.
+
+          NOTE: This percentage value seems to be incorrect when there are
+                no spaces or tabs at the beginning of the line. Still 
+                investigating this.
+
+2006-06-19  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/util.py:
           Added in a speakTextIndentation() routine that will speak a 
           summary of the number of spaces and/or tabs at the beginning
           of the given line.
