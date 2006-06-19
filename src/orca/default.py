@@ -717,7 +717,6 @@ class Script(script.Script):
             else:
                 utterance += ("%d tabs " % tabCount)
         if len(utterance):
-            utterance += "indented"
             speech.speak(utterance)
 
     def echoPreviousWord(self, obj):

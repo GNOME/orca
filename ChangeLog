@@ -11,6 +11,9 @@
           Moved the speakTextIndentation() routines into default.py so
           that it can be subclassed.
 
+          On Mike's advice, removed the word "indented" from the text 
+          spoken for text indentation (too verbose).
+
         * src/orca/scripts/StarOffice.py:
           Subclassed the speakTextIndentation() routine and adjusted it to
           speak an indication of the percentage of whitespace (spaces and
