@@ -917,6 +917,37 @@ def outlineAccessible(accessible, erasePrevious=True):
     else:
         drawOutline(-1, 0, 0, 0, erasePrevious)
 
+def speakTextIndentation(line):
+    """Speaks a summary of the number of spaces and/or tabs at the beginning
+    of the given line.
+
+    Arguments:
+    - line: the string to check for spaces and tabs.
+    """
+    spaceCount = 0
+    tabCount = 0
+    for i in range(0, len(line)):
+        if line[i] == ' ':
+            spaceCount += 1
+        elif line[i] == '\t':
+            tabCount += 1
+        else:
+            break
+    utterance = ''
+    if spaceCount:
+        if spaceCount == 1:
+            utterance += "1 space "
+        else:
+            utterance += ("%d spaces " % spaceCount)
+    if tabCount:
+        if tabCount == 1:
+            utterance += "1 tab "
+        else:
+            utterance += ("%d tabs " % tabCount)
+    if len(utterance):
+        utterance += "indented"
+        speech.speak(utterance)
+
 def isTextSelected(obj, startOffset, endOffset):
     """Returns an indication of whether the text is selected by
     comparing the text offset with the various selected regions of 

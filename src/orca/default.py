@@ -657,6 +657,8 @@ class Script(script.Script):
             else:
                 voice = self.voices[settings.DEFAULT_VOICE]
 
+            if settings.enableSpeechIndentation:
+                util.speakTextIndentation(line)
             speech.speak(line, voice)
             util.speakTextSelectionState(obj, startOffset, endOffset)
 

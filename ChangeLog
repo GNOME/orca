@@ -1,9 +1,17 @@
 2006-06-19  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/util.py:
+          Added in a speakTextIndentation() routine that will speak a 
+          summary of the number of spaces and/or tabs at the beginning
+          of the given line.
+
         * src/orca/default.py:
           Added a chunk of code to the start of the sayPhrase() routine,
           to swap the startOffset and endOffset values if they are in the
           wrong order. StarOffice can't cope with them otherwise.
+
+          Adjusted the sayLine() routine to call util.speakTextIndentation()
+          if we have speech indentation enabled.
 
         * src/orca/orca-setup.glade
           Added in a checkbox to the Speech page of the Configuration GUI,
