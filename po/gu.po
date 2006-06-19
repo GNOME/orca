@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.HEAD.gu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-15 23:37+0200\n"
-"PO-Revision-Date: 2006-06-16 10:43+0530\n"
+"POT-Creation-Date: 2006-06-18 23:26+0200\n"
+"PO-Revision-Date: 2006-06-19 11:33+0530\n"
 "Last-Translator: Ankit Patel <ankit644@yahoo.com>\n"
 "Language-Team: Gujarati <indianoss-gujarati@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -18,6 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n\n"
+"\n"
 "\n"
 "\n"
 
@@ -307,7 +308,7 @@ msgstr "સફેદ જગ્યા"
 msgid "Emacspeak Speech Services"
 msgstr "Emacspeak બોલી સેવાઓ"
 
-#: ../src/orca/focus_tracking_presenter.py:550
+#: ../src/orca/focus_tracking_presenter.py:631
 msgid "Switching to focus tracking mode."
 msgstr "ટ્રેકીંગ સ્થિતિ ફોક્સ પર બદલાઈ રહ્યા છીએ."
 
@@ -1880,17 +1881,17 @@ msgstr "સ્વાગત"
 msgid "Congratulations"
 msgstr "અભિનંદન"
 
-#: ../src/orca/scripts/Evolution.py:649
+#: ../src/orca/scripts/Evolution.py:658
 msgid "No appointments"
 msgstr "કોઈ મુલાકાતો નથી"
 
-#: ../src/orca/scripts/Evolution.py:723
+#: ../src/orca/scripts/Evolution.py:732
 msgid "Directories button"
 msgstr "ડિરેક્ટરીઓ બટન"
 
-#: ../src/orca/scripts/Evolution.py:862 ../src/orca/scripts/Evolution.py:898
-msgid "Evolution Setup Assistant"
-msgstr "ઈવોલ્યુશન સુયોજન સહાયક"
+#: ../src/orca/scripts/Evolution.py:871 ../src/orca/scripts/Evolution.py:909
+msgid "Assistant"
+msgstr "મદદનીશ"
 
 #: ../src/orca/scripts/Mozilla.py:231 ../src/orca/scripts/StarOffice.py:405
 msgid "link"
@@ -1931,11 +1932,27 @@ msgstr "ઈનપુટ વાક્યના સમાવિષ્ટો બો
 msgid "empty"
 msgstr "ખાલી"
 
-#: ../src/orca/scripts/StarOffice.py:500 ../src/orca/scripts/StarOffice.py:551
+#: ../src/orca/scripts/StarOffice.py:423
+msgid "Welcome to StarOffice"
+msgstr "StarOffice માં તમારું સ્વાગત છે"
+
+#: ../src/orca/scripts/StarOffice.py:548 ../src/orca/scripts/StarOffice.py:730
 msgid "Spellcheck:"
 msgstr "જોડણી ચકાસણી:"
 
-#: ../src/orca/scripts/StarOffice.py:614
+#: ../src/orca/scripts/StarOffice.py:576
+msgid "Note that the Scroll Down button has to be pressed numerous times."
+msgstr "નોંધ કરો કે નીચે સરકાવો બટન ઘણી વાર દબાવું જોઈએ."
+
+#: ../src/orca/scripts/StarOffice.py:590
+msgid "License Agreement Accept button now has focus."
+msgstr "લાઈસન્સ મંજૂરી સ્વીકારો બટનને હવે ફોકસ છે."
+
+#: ../src/orca/scripts/StarOffice.py:613
+msgid "First name"
+msgstr "પ્રથમ નામ"
+
+#: ../src/orca/scripts/StarOffice.py:793
 msgid " has formula"
 msgstr " ને સૂત્ર છે"
 
