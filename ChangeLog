@@ -1,3 +1,18 @@
+2006-06-19  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          Added a chunk of code to the start of the sayPhrase() routine,
+          to swap the startOffset and endOffset values if they are in the
+          wrong order. StarOffice can't cope with them otherwise.
+
+        * src/orca/orca-setup.glade
+          Added in a checkbox to the Speech page of the Configuration GUI,
+          for speech indentation and justification (default is unchecked).
+
+        * src/orca/orca_gui_prefs.py:
+          Added a speechIndentationChecked() signal handler for speaking
+          indentation.
+
 2006-06-16  Willie Walker <william.walker@sun.com>
 
 	* src/orca/scripts/Evolution.py: check for windows that end with

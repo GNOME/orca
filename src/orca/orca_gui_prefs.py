@@ -813,6 +813,19 @@ class orcaSetupGUI(GladeWrapper):
         voiceType = self.voiceType.get_active_text()
         self._setFamilyNameForVoiceType(voiceType, name)
 
+    def speechIndentationChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           speechIndentationCheckbutton GtkCheckButton widget. The user has
+           [un]checked the 'Speak indentation and justification' checkbox. 
+           Set the 'enableSpeechIndentation' preference to the new value. 
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        enable = widget.get_active()
+        self.prefsDict["enableSpeechIndentation"] = enable
+
     def brailleSupportChecked(self, widget):
         """Signal handler for the "toggled" signal for the 
            brailleSupportCheckbutton GtkCheckButton widget. The user has

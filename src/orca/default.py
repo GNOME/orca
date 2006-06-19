@@ -620,6 +620,13 @@ class Script(script.Script):
         - endOffset: the end text offset.
         """
 
+        # Swap values if in wrong order (StarOffice is fussy about that).
+        #
+        if startOffset > endOffset:
+            temp = endOffset
+            endOffset = startOffset
+            startOffset = temp
+
         phrase = obj.text.getText(startOffset, endOffset)
 
         if len(phrase) != 0:
