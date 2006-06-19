@@ -1944,11 +1944,21 @@ class Script(script.Script):
 
         string = "SCRIPT INFO: Script name='%s'" % self.name
         if orca.locusOfFocus and orca.locusOfFocus.app:
-            string += \
-                " Application name='%s' Toolkit name='%s' Version='%s'" \
-                % (orca.locusOfFocus.app.name,
-                   orca.locusOfFocus.app.toolkitName,
-                   orca.locusOfFocus.app.version)
+
+            string += " Application name='%s'" % orca.locusOfFocus.app.name
+
+            try:
+                string += " Toolkit name='%s'" \
+                          % orca.locusOfFocus.app.toolkitName
+            except:
+                string += " Toolkit unknown"
+
+            try:
+                string += " Version='%s'" \
+                          % orca.locusOfFocus.app.version
+            except:
+                string += " Version unknown"
+
             debug.println(debug.LEVEL_INFO, string)
             speech.speak(string)
             braille.displayMessage(string)
