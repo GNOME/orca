@@ -261,6 +261,10 @@ class Script(default.Script):
         """Speak an indication of the percentage of whitespace (spaces and
         tabs at the beginning of the line.
 
+        StarOffice Writer documents typically have a margin around the
+        actual text. This margin width is removed (both the left and right 
+        margins), before the percentage calculation is performed.
+
         Arguments:
         - obj: the text object.
         - line: the string to check for spaces and tabs.
@@ -276,9 +280,18 @@ class Script(default.Script):
             else:
                 break
 
+        # util.outlineAccessible(obj)
+
+        # Get the X location of the first character. Use this to get the
+        # width of the left margin. Double this to include the width of the
+        # right margin ([[[TODO: richb - assumes equal margins]]]).
+        #
         boundingBox = obj.extents
+        [mX, mY, mWidth, mHeight] = obj.text.getCharacterExtents(0, 0)
+        textAreaWidth = boundingBox.width - ((mX - boundingBox.x) * 2)
+
         [x, y, width, height] = obj.text.getCharacterExtents(offset, 0)
-        percentage = (x - boundingBox.x) * 100 / boundingBox.width
+        percentage = (x - mX) * 100 / textAreaWidth
         utterance = "%d %% indented" % percentage
         speech.speak(utterance)
 

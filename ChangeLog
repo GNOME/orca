@@ -1,3 +1,11 @@
+2006-06-20  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/StarOffice.py:
+          Change to the speakTextIndentation() routine:
+          StarOffice Writer documents typically have a margin around the
+          actual text. This margin width is removed (both the left and right
+          margins), before the percentage calculation is performed.
+
 2006-06-19  Willie Walker <william.walker@sun.com>
 
 	* src/orca/default.py: handle issue where toolkit name and version
