@@ -31,6 +31,7 @@ import orca.default as default
 import orca.input_event as input_event
 import orca.rolenames as rolenames
 import orca.speech as speech
+import orca.util as util
 import orca.orca as orca
 
 ########################################################################
