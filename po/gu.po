@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.HEAD.gu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-18 23:26+0200\n"
-"PO-Revision-Date: 2006-06-19 11:33+0530\n"
+"POT-Creation-Date: 2006-06-19 23:39+0200\n"
+"PO-Revision-Date: 2006-06-20 10:53+0530\n"
 "Last-Translator: Ankit Patel <ankit644@yahoo.com>\n"
 "Language-Team: Gujarati <indianoss-gujarati@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -18,6 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n\n"
+"\n"
 "\n"
 "\n"
 "\n"
@@ -267,40 +268,40 @@ msgstr "સપાટ રીવ્યુને તળિયે ડાબે ખ�
 msgid "Returns to object with keyboard focus."
 msgstr "કીબોર્ડ ફોકસ સાથે ઓબ્જેક્ટ આપે છે."
 
-#: ../src/orca/default.py:845 ../src/orca/default.py:1064
+#: ../src/orca/default.py:886 ../src/orca/default.py:1105
 #, python-format
 msgid "tree level %d"
 msgstr "ટ્રી સ્તર %d"
 
-#: ../src/orca/default.py:849 ../src/orca/default.py:1077
-#: ../src/orca/default.py:1155 ../src/orca/default.py:1220
+#: ../src/orca/default.py:890 ../src/orca/default.py:1118
+#: ../src/orca/default.py:1196 ../src/orca/default.py:1261
 msgid "No focus"
 msgstr "કોઈ ફોકસ નથી"
 
-#: ../src/orca/default.py:1463
+#: ../src/orca/default.py:1504
 msgid "entire document selected"
 msgstr "વર્તમાન દસ્તાવેજ પસંદ થયેલ છે"
 
-#: ../src/orca/default.py:1818
+#: ../src/orca/default.py:1859
 msgid "Speak "
 msgstr "બોલો "
 
-#: ../src/orca/default.py:1821
+#: ../src/orca/default.py:1862
 msgid "row"
 msgstr "હરોળ"
 
-#: ../src/orca/default.py:1823 ../src/orca/rolenames.py:432
+#: ../src/orca/default.py:1864 ../src/orca/rolenames.py:432
 #: ../src/orca/rolenames.py:434
 msgid "cell"
 msgstr "ખાનું"
 
-#: ../src/orca/default.py:2260 ../src/orca/default.py:2354
-#: ../src/orca/default.py:2359 ../src/orca/default.py:2429
-#: ../src/orca/default.py:2434
+#: ../src/orca/default.py:2311 ../src/orca/default.py:2405
+#: ../src/orca/default.py:2410 ../src/orca/default.py:2480
+#: ../src/orca/default.py:2485
 msgid "blank"
 msgstr "કોરું"
 
-#: ../src/orca/default.py:2262 ../src/orca/default.py:2361
+#: ../src/orca/default.py:2313 ../src/orca/default.py:2412
 msgid "white space"
 msgstr "સફેદ જગ્યા"
 
@@ -537,26 +538,30 @@ msgid "So_me"
 msgstr "અમુક (_m)"
 
 #: ../src/orca/orca-setup.glade.h:43
+msgid "Speak _indentation and justification"
+msgstr "હાંસિયાથી અંતર અને ગોઠવણી બોલો (_i)"
+
+#: ../src/orca/orca-setup.glade.h:44
 msgid "Speech"
 msgstr "બોલી"
 
-#: ../src/orca/orca-setup.glade.h:44
+#: ../src/orca/orca-setup.glade.h:45
 msgid "Speech _system:"
 msgstr "બોલી સિસ્ટમ (_s):"
 
-#: ../src/orca/orca-setup.glade.h:45
+#: ../src/orca/orca-setup.glade.h:46
 msgid "Speech synthesi_zer:"
 msgstr "બોલી સિન્થેસાઈઝર (_z):"
 
-#: ../src/orca/orca-setup.glade.h:46
+#: ../src/orca/orca-setup.glade.h:47
 msgid "Ver_bose"
 msgstr "વર્બોઝ (_b)"
 
-#: ../src/orca/orca-setup.glade.h:47
+#: ../src/orca/orca-setup.glade.h:48
 msgid "Vo_lume:"
 msgstr "અવાજ (_l):"
 
-#: ../src/orca/orca-setup.glade.h:48
+#: ../src/orca/orca-setup.glade.h:49
 msgid ""
 "You will have to log out for the change to take effect.\n"
 "Do you want to log out now? "
@@ -564,59 +569,59 @@ msgstr ""
 "ફેરફારોની અસર જોવા માટે તમારે પ્રવેશ બહાર નીકળવું પડશે.\n"
 "શું તમે હમણાં પ્રવેશ બહાર નીકળવા માંગો છો? "
 
-#: ../src/orca/orca-setup.glade.h:50
+#: ../src/orca/orca-setup.glade.h:51
 msgid "_Abbreviated role names"
 msgstr "ટૂંકાવેલ ભૂમિકા નામો (_A)"
 
-#: ../src/orca/orca-setup.glade.h:51
+#: ../src/orca/orca-setup.glade.h:52
 msgid "_All"
 msgstr "બધા (_A)"
 
-#: ../src/orca/orca-setup.glade.h:52
+#: ../src/orca/orca-setup.glade.h:53
 msgid "_Bottom:"
 msgstr "તળિયું (_B):"
 
-#: ../src/orca/orca-setup.glade.h:53
+#: ../src/orca/orca-setup.glade.h:54
 msgid "_Enable speech"
 msgstr "બોલી સક્રિય કરો (_E)"
 
-#: ../src/orca/orca-setup.glade.h:54
+#: ../src/orca/orca-setup.glade.h:55
 msgid "_Left:"
 msgstr "ડાબું (_L):"
 
-#: ../src/orca/orca-setup.glade.h:55
+#: ../src/orca/orca-setup.glade.h:56
 msgid "_None"
 msgstr "કંઈ નહિં (_N)"
 
-#: ../src/orca/orca-setup.glade.h:56
+#: ../src/orca/orca-setup.glade.h:57
 msgid "_Person:"
 msgstr "વ્યક્તિ (_P):"
 
-#: ../src/orca/orca-setup.glade.h:57
+#: ../src/orca/orca-setup.glade.h:58
 msgid "_Rate:"
 msgstr "દર (_R):"
 
-#: ../src/orca/orca-setup.glade.h:58
+#: ../src/orca/orca-setup.glade.h:59
 msgid "_Right:"
 msgstr "જમણું (_R):"
 
-#: ../src/orca/orca-setup.glade.h:59
+#: ../src/orca/orca-setup.glade.h:60
 msgid "_Smoothing:"
 msgstr "લીસું કરવાનું (_S):"
 
-#: ../src/orca/orca-setup.glade.h:60
+#: ../src/orca/orca-setup.glade.h:61
 msgid "_Top:"
 msgstr "ટોચ (_T):"
 
-#: ../src/orca/orca-setup.glade.h:61
+#: ../src/orca/orca-setup.glade.h:62
 msgid "_Voice settings:"
 msgstr "અવાજ સુયોજનો (_V):"
 
-#: ../src/orca/orca-setup.glade.h:62
+#: ../src/orca/orca-setup.glade.h:63
 msgid "_Width:"
 msgstr "પહોળાઈ (_W):"
 
-#: ../src/orca/orca-setup.glade.h:63
+#: ../src/orca/orca-setup.glade.h:64
 msgid "pixels"
 msgstr "પિક્સેલો"
 
@@ -911,61 +916,61 @@ msgstr "ફેરફારોની અસર જોવા માટે તમ�
 msgid "Setup complete.  Press Return to continue."
 msgstr "સુયોજન પૂર્ણ.  ચાલુ રાખવા માટે Return દબાવો."
 
-#: ../src/orca/orca_gui_prefs.py:127 ../src/orca/orca_gui_prefs.py:410
-#: ../src/orca/orca_gui_prefs.py:452
+#: ../src/orca/orca_gui_prefs.py:127 ../src/orca/orca_gui_prefs.py:413
+#: ../src/orca/orca_gui_prefs.py:455
 msgid "Speech not available."
 msgstr "બોલી ઉપલબ્ધ નથી."
 
-#: ../src/orca/orca_gui_prefs.py:218 ../src/orca/orca_gui_prefs.py:230
-#: ../src/orca/orca_gui_prefs.py:1018 ../src/orca/orca_gui_prefs.py:1055
+#: ../src/orca/orca_gui_prefs.py:218 ../src/orca/orca_gui_prefs.py:233
+#: ../src/orca/orca_gui_prefs.py:1034 ../src/orca/orca_gui_prefs.py:1071
 msgid "Brief"
 msgstr "સંક્ષિપ્ત"
 
-#: ../src/orca/orca_gui_prefs.py:352 ../src/orca/orca_gui_prefs.py:356
-#: ../src/orca/orca_gui_prefs.py:1252
+#: ../src/orca/orca_gui_prefs.py:355 ../src/orca/orca_gui_prefs.py:359
+#: ../src/orca/orca_gui_prefs.py:1268
 msgid "Bilinear"
 msgstr "દ્વિરેખીય"
 
-#: ../src/orca/orca_gui_prefs.py:354 ../src/orca/orca_gui_prefs.py:367
-#: ../src/orca/orca_gui_prefs.py:995 ../src/orca/orca_gui_prefs.py:1254
-#: ../src/orca/orca_gui_prefs.py:1277
+#: ../src/orca/orca_gui_prefs.py:357 ../src/orca/orca_gui_prefs.py:370
+#: ../src/orca/orca_gui_prefs.py:1011 ../src/orca/orca_gui_prefs.py:1270
+#: ../src/orca/orca_gui_prefs.py:1293
 msgid "None"
 msgstr "કંઈ નહિં"
 
-#: ../src/orca/orca_gui_prefs.py:365 ../src/orca/orca_gui_prefs.py:373
-#: ../src/orca/orca_gui_prefs.py:1271
+#: ../src/orca/orca_gui_prefs.py:368 ../src/orca/orca_gui_prefs.py:376
+#: ../src/orca/orca_gui_prefs.py:1287
 msgid "Centered"
 msgstr "કેન્દ્રિય"
 
-#: ../src/orca/orca_gui_prefs.py:369 ../src/orca/orca_gui_prefs.py:1275
+#: ../src/orca/orca_gui_prefs.py:372 ../src/orca/orca_gui_prefs.py:1291
 msgid "Proportional"
 msgstr "સમપ્રમાણ"
 
-#: ../src/orca/orca_gui_prefs.py:371 ../src/orca/orca_gui_prefs.py:1273
+#: ../src/orca/orca_gui_prefs.py:374 ../src/orca/orca_gui_prefs.py:1289
 msgid "Push"
 msgstr "ધકેલો"
 
-#: ../src/orca/orca_gui_prefs.py:489 ../src/orca/orca_gui_prefs.py:514
+#: ../src/orca/orca_gui_prefs.py:492 ../src/orca/orca_gui_prefs.py:517
 msgid "Default"
 msgstr "મૂળભૂત"
 
-#: ../src/orca/orca_gui_prefs.py:491 ../src/orca/orca_gui_prefs.py:516
+#: ../src/orca/orca_gui_prefs.py:494 ../src/orca/orca_gui_prefs.py:519
 msgid "Uppercase"
 msgstr "ઉપરનો કિસ્સો"
 
-#: ../src/orca/orca_gui_prefs.py:493 ../src/orca/orca_gui_prefs.py:522
+#: ../src/orca/orca_gui_prefs.py:496 ../src/orca/orca_gui_prefs.py:525
 msgid "Hyperlink"
 msgstr "હાયપરલીંક"
 
-#: ../src/orca/orca_gui_prefs.py:998
+#: ../src/orca/orca_gui_prefs.py:1014
 msgid "Some"
 msgstr "અમુક"
 
-#: ../src/orca/orca_gui_prefs.py:1340
+#: ../src/orca/orca_gui_prefs.py:1356
 msgid "Accessibility support for GNOME has just been enabled."
 msgstr "જીનોમ માટે સુલભતા આધાર હમણાં જ સક્રિય કરવામાં આવેલ છે."
 
-#: ../src/orca/orca_gui_prefs.py:1341
+#: ../src/orca/orca_gui_prefs.py:1357
 msgid "You need to log out and log back in for the change to take effect."
 msgstr "ફેરફારોની અસર જોવા માટે તમારે પ્રવેશ બહાર નીકળવાની અને ફરીથી પ્રવેશ કરવાની જરૂર છે."
 
@@ -1893,7 +1898,7 @@ msgstr "ડિરેક્ટરીઓ બટન"
 msgid "Assistant"
 msgstr "મદદનીશ"
 
-#: ../src/orca/scripts/Mozilla.py:231 ../src/orca/scripts/StarOffice.py:405
+#: ../src/orca/scripts/Mozilla.py:231 ../src/orca/scripts/StarOffice.py:430
 msgid "link"
 msgstr "કડી"
 
@@ -1928,31 +1933,31 @@ msgstr "જોડણી ચકાસો"
 msgid "Speaks the contents of the input line."
 msgstr "ઈનપુટ વાક્યના સમાવિષ્ટો બોલે છે."
 
-#: ../src/orca/scripts/StarOffice.py:280
+#: ../src/orca/scripts/StarOffice.py:305
 msgid "empty"
 msgstr "ખાલી"
 
-#: ../src/orca/scripts/StarOffice.py:423
+#: ../src/orca/scripts/StarOffice.py:448
 msgid "Welcome to StarOffice"
 msgstr "StarOffice માં તમારું સ્વાગત છે"
 
-#: ../src/orca/scripts/StarOffice.py:548 ../src/orca/scripts/StarOffice.py:730
+#: ../src/orca/scripts/StarOffice.py:575 ../src/orca/scripts/StarOffice.py:757
 msgid "Spellcheck:"
 msgstr "જોડણી ચકાસણી:"
 
-#: ../src/orca/scripts/StarOffice.py:576
+#: ../src/orca/scripts/StarOffice.py:603
 msgid "Note that the Scroll Down button has to be pressed numerous times."
 msgstr "નોંધ કરો કે નીચે સરકાવો બટન ઘણી વાર દબાવું જોઈએ."
 
-#: ../src/orca/scripts/StarOffice.py:590
+#: ../src/orca/scripts/StarOffice.py:617
 msgid "License Agreement Accept button now has focus."
 msgstr "લાઈસન્સ મંજૂરી સ્વીકારો બટનને હવે ફોકસ છે."
 
-#: ../src/orca/scripts/StarOffice.py:613
+#: ../src/orca/scripts/StarOffice.py:640
 msgid "First name"
 msgstr "પ્રથમ નામ"
 
-#: ../src/orca/scripts/StarOffice.py:793
+#: ../src/orca/scripts/StarOffice.py:820
 msgid " has formula"
 msgstr " ને સૂત્ર છે"
 
@@ -1964,23 +1969,23 @@ msgstr " ને સૂત્ર છે"
 #. translation is by running the application and then viewing its
 #. name in the main window of at-poke.
 #.
-#: ../src/orca/settings.py:386
+#: ../src/orca/settings.py:391
 msgid "[\\S\\s]*StarOffice[\\s\\S]*"
 msgstr "[\\S\\s]*StarOffice[\\s\\S]*"
 
-#: ../src/orca/settings.py:387
+#: ../src/orca/settings.py:392
 msgid "soffice.bin"
 msgstr "soffice.bin"
 
-#: ../src/orca/settings.py:388
+#: ../src/orca/settings.py:393
 msgid "[Ee]volution"
 msgstr "[Ee]volution"
 
-#: ../src/orca/settings.py:389
+#: ../src/orca/settings.py:394
 msgid "Deer Park"
 msgstr "ડિયર પાર્ક"
 
-#: ../src/orca/settings.py:390
+#: ../src/orca/settings.py:395
 msgid "Bon Echo"
 msgstr "બોન ઈકો"
 
