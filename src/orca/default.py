@@ -622,7 +622,8 @@ class Script(script.Script):
 
         # Swap values if in wrong order (StarOffice is fussy about that).
         #
-        if startOffset > endOffset:
+        if ((startOffset > endOffset) and (endOffset != -1)) or \
+           (startOffset == -1):
             temp = endOffset
             endOffset = startOffset
             startOffset = temp

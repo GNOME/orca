@@ -5,6 +5,22 @@
 	
 2006-06-20  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/default.py:
+          Changes to the sayPhrase() routine to better handle StarOffice
+          Writer cases where there is a start or end offset of -1.
+
+        * src/orca/scripts/StarOffice.py:
+          Further change to the StarOffice text indentation handling.
+          Removed the percentage routine and just called the "default"
+          speakTextIndentation() routine. This seems to work okay for
+          lines indented by tabs and spaces. 
+
+          NOTE: Lines indented via the "Increase line indentation" in 
+                the StarOffice Writer toolbar are not handled. There 
+                doesn't seem to be a way to get at this information.
+
+2006-06-20  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/scripts/StarOffice.py:
           Change to the speakTextIndentation() routine:
           StarOffice Writer documents typically have a margin around the
