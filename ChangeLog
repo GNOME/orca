@@ -1,6 +1,21 @@
 2006-06-21  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/braillegenerator.py:
+          src/orca/default.py:
+          src/orca/settings.py:
+          src/orca/speechgenerator.py
+          src/orca/scripts/Evolution.py:
+          Changed all occurances of readTreeTableCellRow to
+          readTableCellRow, as we now handle both tables and 
+          tree tables.
+
+        * src/orca/scripts/StarOffice.py:
+          Adjusted the handling of speaking a row of a Calc spread sheet.
+          It will only braille/speak each cell if that cell is showing.
+
+2006-06-21  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/braillegenerator.py:
           src/orca/speechgenerator.py:
           Adjusted the _getBrailleRegionsForTableCell and
           _getSpeechForTableCell() routines so that Insert-F11 works
