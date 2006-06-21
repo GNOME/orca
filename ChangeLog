@@ -1,5 +1,13 @@
 2006-06-21  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/scripts/StarOffice.py:
+          Further adjustment of the handling of speaking a row of a Calc 
+          spread sheet. Only speak the row if the user has moved focus up 
+          or down a row, not when the focus has just moved left or right in
+          the same row (unless this is on the first or last row of the table).
+
+2006-06-21  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/braillegenerator.py:
           src/orca/default.py:
           src/orca/settings.py:

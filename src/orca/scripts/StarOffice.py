@@ -671,35 +671,50 @@ class Script(default.Script):
             row = table.getRowAtIndex(newLocusOfFocus.index)
             column = table.getColumnAtIndex(newLocusOfFocus.index)
 
-            utterances = []
-            regions = []
-
-            # [[[TODO: richb - one speedup improvement we can do here is 
-            # to look left and look right along the row from the current 
-            # column, to just get the range of cells to show.]]]
+            # This is an indication of whether we should speak all the
+            # table cells (the user has moved focus up or down a row),
+            # or just the current one (focus has moved left or right in
+            # the same row).
             #
-            for i in range(0, table.nColumns):
-                obj = table.getAccessibleAt(row, i)
-                cell = atspi.Accessible.makeAccessible(obj)
+            speakAll = True
+            if event.source.__dict__.has_key("lastRow") and \
+                event.source.__dict__.has_key("lastColumn"):
+                speakAll = (event.source.lastRow != row) or \
+                       ((row == 0 or row == event.source.table.nRows-1) and \
+                        event.source.lastColumn == column)
 
-                showing = cell.state.count(atspi.Accessibility.STATE_SHOWING)
-                while cell.childCount:
-                    cell = cell.child(0)
+            if speakAll == True:
+                utterances = []
+                regions = []
 
-                if showing:
-                    [cellRegions, focusedRegion] = \
-                        brailleGen.getBrailleRegions(cell)
-                    regions.extend(cellRegions)
-                    regions.append(braille.Region(" "))
-                    if column == i:
-                        cellWithFocus = focusedRegion
+                # [[[TODO: richb - one speedup improvement we can do here is 
+                # to look left and look right along the row from the current 
+                # column, to just get the range of cells to show.]]]
+                #
+                for i in range(0, table.nColumns):
+                    obj = table.getAccessibleAt(row, i)
+                    cell = atspi.Accessible.makeAccessible(obj)
 
-                    result = speechGen.getSpeech(cell, True)
-                    utterances.append(result[0])
+                    showing = cell.state.count(atspi.Accessibility.STATE_SHOWING)
+                    while cell.childCount:
+                        cell = cell.child(0)
 
-            braille.displayRegions([regions, cellWithFocus])
-            speech.speakUtterances(utterances)
-            return
+                    if showing:
+                        [cellRegions, focusedRegion] = \
+                            brailleGen.getBrailleRegions(cell)
+                        regions.extend(cellRegions)
+                        regions.append(braille.Region(" "))
+                        if column == i:
+                            cellWithFocus = focusedRegion
+
+                        result = speechGen.getSpeech(cell, True)
+                        utterances.append(result[0])
+
+                braille.displayRegions([regions, cellWithFocus])
+                speech.speakUtterances(utterances)
+                event.source.lastColumn = column
+                event.source.lastRow = row
+                return
 
         # Pass the event onto the parent class to be handled in the default way.
 
