@@ -1041,25 +1041,31 @@ class Script(script.Script):
                     newCol = table.getColumnAtIndex(newLocusOfFocus.index)
 
                     if newRow != oldRow:
-                        desc = newParent.table.getRowDescription(newRow)
-                        if desc and len(desc):
-                            text = desc
-                            if settings.speechVerbosityLevel \
-                                   == settings.VERBOSITY_LEVEL_VERBOSE:
-                                text += " " \
-                                        + rolenames.rolenames[\
-                                        rolenames.ROLE_ROW_HEADER].speech
-                            utterances.append(text)
+                        rowHeader = newParent.table.getRowHeader(newRow)
+                        accRowHeader = atspi.Accessible.makeAccessible(rowHeader)
+                        if accRowHeader:
+                            desc = util.getDisplayedText(accRowHeader)
+                            if desc and len(desc):
+                                text = desc
+                                if settings.speechVerbosityLevel \
+                                       == settings.VERBOSITY_LEVEL_VERBOSE:
+                                    text += " " \
+                                            + rolenames.rolenames[\
+                                            rolenames.ROLE_ROW_HEADER].speech
+                                utterances.append(text)
                     if newCol != oldCol:
-                        desc = newParent.table.getColumnDescription(newCol)
-                        if desc and len(desc):
-                            text = desc
-                            if settings.speechVerbosityLevel \
-                                   == settings.VERBOSITY_LEVEL_VERBOSE:
-                                text += " " \
-                                        + rolenames.rolenames[\
-                                        rolenames.ROLE_COLUMN_HEADER].speech
-                            utterances.append(text)
+                        colHeader = newParent.table.getColumnHeader(newCol)
+                        accColHeader = atspi.Accessible.makeAccessible(colHeader)
+                        if accColHeader:
+                            desc = util.getDisplayedText(accColHeader)
+                            if desc and len(desc):
+                                text = desc
+                                if settings.speechVerbosityLevel \
+                                       == settings.VERBOSITY_LEVEL_VERBOSE:
+                                    text += " " \
+                                            + rolenames.rolenames[\
+                                            rolenames.ROLE_COLUMN_HEADER].speech
+                                utterances.append(text)
 
                 oldNodeLevel = util.getNodeLevel(oldLocusOfFocus)
                 newNodeLevel = util.getNodeLevel(newLocusOfFocus)
@@ -1115,6 +1121,19 @@ class Script(script.Script):
                 and self.windowActivateTime \
                 and ((time.time() - self.windowActivateTime) < 1.0)
             speech.speakUtterances(utterances, None, not shouldNotInterrupt)
+
+            # If this is a table cell, save the current row and column
+            # information in the table cell's table, so that we can use 
+            # it the next time.
+            #
+            if newLocusOfFocus.role == rolenames.ROLE_TABLE_CELL:
+                if newParent and newParent.table:
+                    table = newParent.table
+                    column = table.getColumnAtIndex(newLocusOfFocus.index)
+                    newParent.lastColumn = column
+                    row = table.getRowAtIndex(newLocusOfFocus.index)
+                    newParent.lastRow = row
+
         else:
             message = _("No focus")
             braille.displayMessage(message)

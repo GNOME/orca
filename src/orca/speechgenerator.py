@@ -1149,8 +1149,7 @@ class SpeechGenerator:
                     break
 
         if (len(utterances) == 0) and (not already_focused):
-            if settings.readTreeTableCellRow and \
-                obj.parent.role == rolenames.ROLE_TREE_TABLE:
+            if settings.readTreeTableCellRow:
                 parent = obj.parent
                 row = parent.table.getRowAtIndex(obj.index)
                 column = parent.table.getColumnAtIndex(obj.index)
@@ -1176,9 +1175,6 @@ class SpeechGenerator:
                 else:
                     utterances.append(util.getDisplayedText(\
                     util.getRealActiveDescendant(obj)))
-
-                parent.lastColumn = column
-                parent.lastRow = row
             else:
                 utterances.append(util.getDisplayedText(\
                     util.getRealActiveDescendant(obj)))

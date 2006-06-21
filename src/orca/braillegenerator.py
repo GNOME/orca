@@ -1017,8 +1017,7 @@ class BrailleGenerator:
                     break
 
         if len(regions) == 0:
-            if settings.readTreeTableCellRow and \
-                obj.parent.role == rolenames.ROLE_TREE_TABLE:
+            if settings.readTreeTableCellRow:
                 rowRegions = []
                 savedBrailleVerbosityLevel = settings.brailleVerbosityLevel
                 settings.brailleVerbosityLevel = \
@@ -1058,9 +1057,6 @@ class BrailleGenerator:
                 else:
                     regions = self._getDefaultBrailleRegions(
                         util.getRealActiveDescendant(obj))
-
-                parent.lastColumn = column
-                parent.lastRow = row
             else:
                 regions = self._getDefaultBrailleRegions(
                     util.getRealActiveDescendant(obj))

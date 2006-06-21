@@ -1,3 +1,26 @@
+2006-06-21  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/braillegenerator.py:
+          src/orca/speechgenerator.py:
+          Adjusted the _getBrailleRegionsForTableCell and
+          _getSpeechForTableCell() routines so that Insert-F11 works
+          with table cells inside both tables and tree tables.
+
+          Don't set the last table row and column in these routines
+          This is now done in locusOfFocusChanged (see entry for 
+          default.py below).
+
+        * src/orca/default.py:
+          In locusOfFocusChanged(), if this focus change is for a table
+          cell, save the table row and column in the table (as lastRow and
+          lastColumn), so that they can be used by the speech and braille
+          table cell generators.
+
+          In locusOfFocusChanged(), replaced calls to getRowDescription()
+          and getColumnDescription() with calls to getRowHeader() and
+          getColumnHeader() and then called getDisplayedText on their
+          accessible objects.
+
 2006-06-20  Rich Burridge <rich.burridge@sun.com>
 
         * bugs/bugs.html
