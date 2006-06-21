@@ -7,6 +7,11 @@
           the speech pane, that can be used to set "Table Row Speech" to
           either: "Speak current cell" or "Speak current row".
 
+        * bugs/bugs.html:
+          Added in another StarOffice Writer bug:
+          137437: [A11y] Incorrect char in any_data.value() field of 
+          event when text is deleted.
+
 2006-06-21  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:
