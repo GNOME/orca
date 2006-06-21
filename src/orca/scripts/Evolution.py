@@ -336,7 +336,7 @@ class Script(default.Script):
         rolesList = [rolenames.ROLE_TEXT, \
                      rolenames.ROLE_PANEL, \
                      rolenames.ROLE_TABLE_CELL]
-        if settings.readTreeTableCellRow \
+        if settings.readTableCellRow \
             and (util.isDesiredFocusedItem(event.source, rolesList)):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - mail view: " \
@@ -386,7 +386,7 @@ class Script(default.Script):
 
         rolesList = [rolenames.ROLE_TABLE_CELL, \
                      rolenames.ROLE_TREE_TABLE]
-        if settings.readTreeTableCellRow \
+        if settings.readTableCellRow \
             and (util.isDesiredFocusedItem(event.source, rolesList)):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - mail view: " \
@@ -394,11 +394,11 @@ class Script(default.Script):
 
             # Unfortunately the default read table cell row handling won't
             # just work with Evolution (see bogusity comment below). We
-            # quickly solve this by setting readTreeTableCellRow to False
+            # quickly solve this by setting readTableCellRow to False
             # for the duration of this code section, then resetting it to
             # True at the end.
             #
-            settings.readTreeTableCellRow = False
+            settings.readTableCellRow = False
 
             parent = event.source.parent
             row = parent.table.getRowAtIndex(event.source.index)
@@ -520,7 +520,7 @@ class Script(default.Script):
             settings.speechVerbosityLevel = savedSpeechVerbosityLevel
             self.lastMessageColumn = column
             self.lastMessageRow = row
-            settings.readTreeTableCellRow = True
+            settings.readTableCellRow = True
             return
 
         # 4) Calendar view: day view: tabbing to day with appts.

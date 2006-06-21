@@ -1017,7 +1017,7 @@ class BrailleGenerator:
                     break
 
         if len(regions) == 0:
-            if settings.readTreeTableCellRow:
+            if settings.readTableCellRow:
                 rowRegions = []
                 savedBrailleVerbosityLevel = settings.brailleVerbosityLevel
                 settings.brailleVerbosityLevel = \

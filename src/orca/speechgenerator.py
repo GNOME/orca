@@ -1149,7 +1149,7 @@ class SpeechGenerator:
                     break
 
         if (len(utterances) == 0) and (not already_focused):
-            if settings.readTreeTableCellRow:
+            if settings.readTableCellRow:
                 parent = obj.parent
                 row = parent.table.getRowAtIndex(obj.index)
                 column = parent.table.getColumnAtIndex(obj.index)

@@ -1877,8 +1877,8 @@ class Script(script.Script):
         table cell or read the whole row."""
 
         line = _("Speak ")
-        settings.readTreeTableCellRow = not settings.readTreeTableCellRow
-        if settings.readTreeTableCellRow:
+        settings.readTableCellRow = not settings.readTableCellRow
+        if settings.readTableCellRow:
             line += _("row")
         else:
             line += _("cell")
