@@ -25,6 +25,7 @@ orca_python_PYTHON = \
 	hierarchical_presenter.py \
 	httpserver.py \
 	input_event.py \
+	J2SE-access-bridge.py \
 	keybindings.py \
 	keynames.py \
 	mag.py \

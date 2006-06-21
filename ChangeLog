@@ -1,3 +1,10 @@
+2006-06-21  Willie Walker <william.walker@sun.com>
+
+	* src/orca/Makefile.am, src/orca/J2SE-access-bridge.py: check in
+	initial Java toolkit script from Lynn Monsanto.  He's still
+	waiting for a GNOME account, but I want to get this stuff in prior
+	to going to GUADEC.
+	
 2006-06-21  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade:
