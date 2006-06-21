@@ -1,6 +1,12 @@
 2006-06-21  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:
+          Adjustment to the onSelectionChanged() routine to get "has
+          formula" working again.
+
+2006-06-21  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/StarOffice.py:
           Further adjustment of the handling of speaking a row of a Calc 
           spread sheet. Only speak the row if the user has moved focus up 
           or down a row, not when the focus has just moved left or right in

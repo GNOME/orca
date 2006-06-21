@@ -838,6 +838,7 @@ class Script(default.Script):
         #
         rolesList = [rolenames.ROLE_LIST, \
                      rolenames.ROLE_COMBO_BOX, \
+                     rolenames.ROLE_PANEL, \
                      rolenames.ROLE_TOOL_BAR, \
                      rolenames.ROLE_PANEL, \
                      rolenames.ROLE_ROOT_PANE, \
