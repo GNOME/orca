@@ -1,0 +1,2065 @@
+# translation of orca.HEAD.po to Tamil
+# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+# Felix <ifelix@redhat.com>, 2006.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: orca.HEAD\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-06-20 07:24+0200\n"
+"PO-Revision-Date: 2006-06-21 14:23+0530\n"
+"Last-Translator: Felix <ifelix@redhat.com>\n"
+"Language-Team: Tamil <ta@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.9.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n\n"
+
+#: ../src/orca/braillegenerator.py:193 ../src/orca/speechgenerator.py:191
+msgid "grayed"
+msgstr "சாம்பல் நிறமிடப்பட்டது"
+
+#: ../src/orca/braillegenerator.py:1073 ../src/orca/speechgenerator.py:1191
+msgid "expanded"
+msgstr "விரிவாக்கப்பட்டது"
+
+#: ../src/orca/braillegenerator.py:1075 ../src/orca/speechgenerator.py:1193
+msgid "collapsed"
+msgstr "குறுக்கப்பட்டது"
+
+#: ../src/orca/braillegenerator.py:1079
+#, python-format
+msgid "TREE LEVEL %d"
+msgstr "TREE LEVEL %d"
+
+#: ../src/orca/chnames.py:32
+msgid "space"
+msgstr "இடைவெளி"
+
+#: ../src/orca/chnames.py:33
+msgid "bang"
+msgstr "bang"
+
+#: ../src/orca/chnames.py:34
+msgid "quote"
+msgstr "குறி"
+
+#: ../src/orca/chnames.py:35
+msgid "number"
+msgstr "எண்"
+
+#: ../src/orca/chnames.py:36
+msgid "dollar"
+msgstr "டாலர்"
+
+#: ../src/orca/chnames.py:37 ../src/orca/speechgenerator.py:852
+msgid "percent"
+msgstr "சதவீதம்"
+
+#: ../src/orca/chnames.py:38
+msgid "and"
+msgstr "மற்றும்"
+
+#: ../src/orca/chnames.py:39
+msgid "tick"
+msgstr "டிக்"
+
+#: ../src/orca/chnames.py:40
+msgid "left paren"
+msgstr "left paren"
+
+#: ../src/orca/chnames.py:41
+msgid "right paren"
+msgstr "right paren"
+
+#: ../src/orca/chnames.py:42
+msgid "star"
+msgstr "நட்சத்திரம்"
+
+#: ../src/orca/chnames.py:43
+msgid "plus"
+msgstr "கூட்டல்"
+
+#: ../src/orca/chnames.py:44
+msgid "comma"
+msgstr "காற்புள்ளி"
+
+#: ../src/orca/chnames.py:45
+msgid "dash"
+msgstr "கோடு"
+
+#: ../src/orca/chnames.py:46
+msgid "dot"
+msgstr "புள்ளி"
+
+#: ../src/orca/chnames.py:47
+msgid "slash"
+msgstr "வகு"
+
+#: ../src/orca/chnames.py:48
+msgid "question"
+msgstr "வினா"
+
+#: ../src/orca/chnames.py:49
+msgid "colon"
+msgstr "அரைப்புள்ளி"
+
+#: ../src/orca/chnames.py:50
+msgid "semi"
+msgstr "அரை"
+
+#: ../src/orca/chnames.py:51
+msgid "less than"
+msgstr "குறைவு"
+
+#: ../src/orca/chnames.py:52
+msgid "greater than"
+msgstr "அதிகமான"
+
+#: ../src/orca/chnames.py:53
+msgid "left bracket"
+msgstr "இடது அடைப்புக்குறி"
+
+#: ../src/orca/chnames.py:54
+msgid "right bracket"
+msgstr "வலது அடைப்புக்குறி"
+
+#: ../src/orca/chnames.py:55
+msgid "left brace"
+msgstr "இடது அடைப்புக்குறி"
+
+#: ../src/orca/chnames.py:56
+msgid "right brace"
+msgstr "வலது அடைப்புக்குறி"
+
+#: ../src/orca/chnames.py:57
+msgid "back"
+msgstr "பின்னோக்கு"
+
+#: ../src/orca/chnames.py:58
+msgid "bar"
+msgstr "பட்டை"
+
+#: ../src/orca/chnames.py:59
+msgid "newline"
+msgstr "புதிய வரி"
+
+#: ../src/orca/chnames.py:60
+msgid "tab"
+msgstr "தத்தல்"
+
+#: ../src/orca/default.py:76
+msgid "Performs left click on current flat review item."
+msgstr ""
+
+#: ../src/orca/default.py:80
+msgid "Performs right click on current flat review item."
+msgstr ""
+
+#: ../src/orca/default.py:84 ../src/orca/scripts/Evolution.py:107
+msgid "Speaks entire document."
+msgstr "முழு ஆவணத்திற்கும் பேசுகிறது."
+
+#: ../src/orca/default.py:88
+msgid "Performs the where am I operation."
+msgstr ""
+
+#: ../src/orca/default.py:92
+msgid "Paints and prints the visible zones in the active window."
+msgstr ""
+
+#: ../src/orca/default.py:96
+msgid "Enters and exits flat review mode."
+msgstr ""
+
+#: ../src/orca/default.py:100
+msgid "Moves flat review to the beginning of the previous line."
+msgstr ""
+
+#: ../src/orca/default.py:104
+msgid "Moves flat review to the home position."
+msgstr ""
+
+#: ../src/orca/default.py:108
+msgid "Speaks the current flat review line."
+msgstr ""
+
+#: ../src/orca/default.py:112
+msgid "Moves flat review to the beginning of the next line."
+msgstr ""
+
+#: ../src/orca/default.py:116
+msgid "Moves flat review to the end position."
+msgstr ""
+
+#: ../src/orca/default.py:120
+msgid "Moves flat review to the previous item or word."
+msgstr ""
+
+#: ../src/orca/default.py:124
+msgid "Moves flat review to the word above the current word."
+msgstr ""
+
+#: ../src/orca/default.py:128
+msgid "Speaks the current flat review item or word."
+msgstr ""
+
+#: ../src/orca/default.py:132
+msgid "Speaks the current flat review object."
+msgstr ""
+
+#: ../src/orca/default.py:136
+msgid "Moves flat review to the next item or word."
+msgstr ""
+
+#: ../src/orca/default.py:140
+msgid "Moves flat review to the word below the current word."
+msgstr ""
+
+#: ../src/orca/default.py:144
+msgid "Moves flat review to the previous character."
+msgstr ""
+
+#: ../src/orca/default.py:148
+msgid "Moves flat review to the end of the line."
+msgstr ""
+
+#: ../src/orca/default.py:152
+msgid "Speaks the current flat review character."
+msgstr ""
+
+#: ../src/orca/default.py:156
+msgid "Moves flat review to the next character."
+msgstr ""
+
+#: ../src/orca/default.py:160
+msgid "Toggles whether to read just the current table cell or the whole row."
+msgstr ""
+
+#: ../src/orca/default.py:164
+msgid "Reads the attributes associated with the current text character."
+msgstr ""
+
+#: ../src/orca/default.py:168
+msgid "Reports information on current script."
+msgstr ""
+
+#: ../src/orca/default.py:172
+msgid "Pans the braille display to the left."
+msgstr ""
+
+#: ../src/orca/default.py:176
+msgid "Pans the braille display to the right."
+msgstr ""
+
+#: ../src/orca/default.py:180
+msgid "Moves flat review to the bottom left."
+msgstr ""
+
+#: ../src/orca/default.py:184
+msgid "Returns to object with keyboard focus."
+msgstr ""
+
+#: ../src/orca/default.py:886 ../src/orca/default.py:1105
+#, python-format
+msgid "tree level %d"
+msgstr "கிளை நிலை %d"
+
+#: ../src/orca/default.py:890 ../src/orca/default.py:1118
+#: ../src/orca/default.py:1196 ../src/orca/default.py:1261
+msgid "No focus"
+msgstr ""
+
+#: ../src/orca/default.py:1504
+msgid "entire document selected"
+msgstr "முழு ஆவணம் தேர்ந்தெடுக்கப்பட்டது"
+
+#: ../src/orca/default.py:1859
+msgid "Speak "
+msgstr "பேசு"
+
+#: ../src/orca/default.py:1862
+msgid "row"
+msgstr "நிரை"
+
+#: ../src/orca/default.py:1864 ../src/orca/rolenames.py:432
+#: ../src/orca/rolenames.py:434
+msgid "cell"
+msgstr "அறை"
+
+#: ../src/orca/default.py:2311 ../src/orca/default.py:2405
+#: ../src/orca/default.py:2410 ../src/orca/default.py:2480
+#: ../src/orca/default.py:2485
+msgid "blank"
+msgstr "வெற்று"
+
+#: ../src/orca/default.py:2313 ../src/orca/default.py:2412
+msgid "white space"
+msgstr "வெற்று இடைவெளி"
+
+#: ../src/orca/espeechfactory.py:93
+msgid "Emacspeak Speech Services"
+msgstr "Emacspeak குரல் சேவைகள்"
+
+#: ../src/orca/focus_tracking_presenter.py:631
+msgid "Switching to focus tracking mode."
+msgstr ""
+
+#: ../src/orca/gnomespeechfactory.py:150
+msgid "GNOME Speech Services"
+msgstr "GNOME குரல் சேவைகள்"
+
+#. Replace ellipses (both manual and unicode) with "dot dot dot"
+#.
+#: ../src/orca/gnomespeechfactory.py:571 ../src/orca/gnomespeechfactory.py:572
+msgid " dot dot dot"
+msgstr " dot dot dot"
+
+#: ../src/orca/gnomespeechfactory.py:670
+msgid "higher."
+msgstr "உயர்ந்த."
+
+#: ../src/orca/gnomespeechfactory.py:698
+msgid "lower."
+msgstr "குறைந்த."
+
+#: ../src/orca/gnomespeechfactory.py:723
+msgid "faster."
+msgstr "வேகமாக."
+
+#: ../src/orca/gnomespeechfactory.py:753
+msgid "slower."
+msgstr "மெதுவாக."
+
+#: ../src/orca/hierarchical_presenter.py:436
+msgid "Switching to hierarchical navigation mode."
+msgstr ""
+
+#: ../src/orca/keynames.py:32 ../src/orca/keynames.py:35
+msgid "left shift"
+msgstr "left shift"
+
+#: ../src/orca/keynames.py:33
+msgid "left alt"
+msgstr "left alt"
+
+#: ../src/orca/keynames.py:34
+msgid "left control"
+msgstr "left control"
+
+#: ../src/orca/keynames.py:36
+msgid "right alt"
+msgstr "right alt"
+
+#: ../src/orca/keynames.py:37
+msgid "right control"
+msgstr "right control"
+
+#: ../src/orca/keynames.py:38
+msgid "left tab"
+msgstr "left tab"
+
+#: ../src/orca/keynames.py:39
+msgid "F 11"
+msgstr "F 11"
+
+#: ../src/orca/keynames.py:40
+msgid "F 12"
+msgstr "F 12"
+
+#: ../src/orca/orca-setup.glade.h:1
+msgid "<b>Cross-hair Settings</b>"
+msgstr "<b>Cross-hair அமைவுகள்</b>"
+
+#: ../src/orca/orca-setup.glade.h:2
+msgid "<b>Cursor Settings</b>"
+msgstr "<b>நிலைகாட்டி அமைவுகள்</b>"
+
+#: ../src/orca/orca-setup.glade.h:3
+msgid "<b>Punctuation Level</b>"
+msgstr "<b>நிறுத்தற்குறி நிலை</b>"
+
+#: ../src/orca/orca-setup.glade.h:4
+msgid "<b>Verbosity</b>"
+msgstr "<b>விரிவான விளக்கம்</b>"
+
+#: ../src/orca/orca-setup.glade.h:5
+msgid "<b>Zoomer Position</b>"
+msgstr "<b>அளவாக்கும் நிலை</b>"
+
+#: ../src/orca/orca-setup.glade.h:6
+msgid "<b>Zoomer Settings</b>"
+msgstr "<b>அளவாக்கும் அமைவுகள்</b>"
+
+#: ../src/orca/orca-setup.glade.h:7
+msgid "Braille"
+msgstr "குருடர் எழுத்து முறை"
+
+#: ../src/orca/orca-setup.glade.h:8
+msgid "Brie_f"
+msgstr "சுருக்கம் (_f)"
+
+#: ../src/orca/orca-setup.glade.h:9
+msgid ""
+"Centered\n"
+"None\n"
+"Proportional\n"
+"Push"
+msgstr ""
+"மையப்படுத்தப்பட்டது\n"
+"ஒன்றுமில்லை\n"
+"சரி விகிதம்\n"
+"தள்ளு"
+
+#: ../src/orca/orca-setup.glade.h:13
+msgid "Color:"
+msgstr "நிறம்:"
+
+#: ../src/orca/orca-setup.glade.h:14
+msgid "Custom siz_e"
+msgstr "தனிபயன் அளவு (_e)"
+
+#: ../src/orca/orca-setup.glade.h:15
+msgid ""
+"Default\n"
+"Uppercase\n"
+"Hyperlink"
+msgstr ""
+"முன்னிருப்பு\n"
+"தலைப்பெழுத்து\n"
+"மீஇணைப்பு"
+
+#: ../src/orca/orca-setup.glade.h:18
+msgid "Enable Braille _monitor"
+msgstr "குருடர் எழுத்து முறை திரையகத்தை செயல்படுத்து"
+
+#: ../src/orca/orca-setup.glade.h:19
+msgid "Enable Braille _support"
+msgstr "குருடர் எழுத்து முறை துணையை செயல்படுத்து (_s)"
+
+#: ../src/orca/orca-setup.glade.h:20
+msgid "Enable _alphanumeric and punctuation keys"
+msgstr "எண் எழுத்து மற்றும் நிறுத்தற்குறி விசைகளை செயல்படுத்து (_a)"
+
+#: ../src/orca/orca-setup.glade.h:21
+msgid "Enable _function keys"
+msgstr "செயல்பாட்டு விசைகளை செயல்படுத்து (_f) "
+
+#: ../src/orca/orca-setup.glade.h:22
+msgid "Enable _key echo"
+msgstr "விசை எதிரொலிப்பை செயல்படுத்து (_k)"
+
+#: ../src/orca/orca-setup.glade.h:23
+msgid "Enable _magnifier"
+msgstr "அளவாக்கியை செயல்படுத்து (_m)"
+
+#: ../src/orca/orca-setup.glade.h:24
+msgid "Enable _modifier keys"
+msgstr "மாற்றி விசைகளை செயல்படுத்து (_m)"
+
+#: ../src/orca/orca-setup.glade.h:25
+msgid "Enable ac_tion keys"
+msgstr "செயல் விசைகளை செயல்படுத்து (_t)"
+
+#: ../src/orca/orca-setup.glade.h:26
+msgid "Enable c_ursor"
+msgstr "நிலைகாட்டியை செயல்படுத்து (_u)"
+
+#: ../src/orca/orca-setup.glade.h:27
+msgid "Enable cross-h_air"
+msgstr "cross-h_airஐ செயல்படுத்து"
+
+#: ../src/orca/orca-setup.glade.h:28
+msgid "Enable cross-hair cli_p"
+msgstr "cross-hair cli_p ஐ செயல்படுத்து"
+
+#: ../src/orca/orca-setup.glade.h:29
+msgid "Enable echo by _word"
+msgstr "சொல்லால் எதிரொலிப்பை செயல்படுத்து (_w)"
+
+#: ../src/orca/orca-setup.glade.h:30
+msgid "Enable lockin_g keys"
+msgstr "பூட்டும் விசைகளை செயல்படுத்து"
+
+#: ../src/orca/orca-setup.glade.h:31
+msgid "In_vert colors"
+msgstr "தலைகீழ் நிறங்கள் (_v)"
+
+#: ../src/orca/orca-setup.glade.h:32
+msgid "Key Echo"
+msgstr "விசை எதிரொலிப்பு"
+
+#: ../src/orca/orca-setup.glade.h:33
+msgid "Magnifier"
+msgstr "அளவாக்கி"
+
+#: ../src/orca/orca-setup.glade.h:34
+msgid "Mouse trac_king mode:"
+msgstr "சுட்டி இழுப்பு முறை: (_k)"
+
+#: ../src/orca/orca-setup.glade.h:35
+msgid ""
+"None\n"
+"Bilinear"
+msgstr ""
+"ஒன்றுமில்லை\n"
+"Bilinear"
+
+#: ../src/orca/orca-setup.glade.h:37
+msgid "Orca Preferences"
+msgstr "Orca விருப்பங்கள்"
+
+#: ../src/orca/orca-setup.glade.h:38
+msgid "Pi_tch:"
+msgstr ""
+
+#: ../src/orca/orca-setup.glade.h:39
+msgid "Question"
+msgstr "வினா"
+
+#: ../src/orca/orca-setup.glade.h:40
+msgid "Scale _factor:"
+msgstr "அளவு காரணி: (_f)"
+
+#: ../src/orca/orca-setup.glade.h:41
+msgid "Si_ze:"
+msgstr "அளவு: (_z)"
+
+#: ../src/orca/orca-setup.glade.h:42
+msgid "So_me"
+msgstr "சில (_m)"
+
+#: ../src/orca/orca-setup.glade.h:43
+msgid "Speak _indentation and justification"
+msgstr "உள்ளடக்கம் மற்றும் நிரப்பலை பேசு (_i)"
+
+#: ../src/orca/orca-setup.glade.h:44
+msgid "Speech"
+msgstr "குரல்"
+
+#: ../src/orca/orca-setup.glade.h:45
+msgid "Speech _system:"
+msgstr "குரல் அமைப்பு: (_s)"
+
+#: ../src/orca/orca-setup.glade.h:46
+msgid "Speech synthesi_zer:"
+msgstr "குரல் தொகுப்பி: (_z)"
+
+#: ../src/orca/orca-setup.glade.h:47
+msgid "Ver_bose"
+msgstr "விரிவான விளக்கம்"
+
+#: ../src/orca/orca-setup.glade.h:48
+msgid "Vo_lume:"
+msgstr "தொகுதி: (_l)"
+
+#: ../src/orca/orca-setup.glade.h:49
+msgid ""
+"You will have to log out for the change to take effect.\n"
+"Do you want to log out now? "
+msgstr ""
+
+#: ../src/orca/orca-setup.glade.h:51
+msgid "_Abbreviated role names"
+msgstr "சுருக்கப்பட்ட பங்கு பெயர்கள் (_A)"
+
+#: ../src/orca/orca-setup.glade.h:52
+msgid "_All"
+msgstr "அனைத்தும் (_A)"
+
+#: ../src/orca/orca-setup.glade.h:53
+msgid "_Bottom:"
+msgstr "கீழ்: (_B)"
+
+#: ../src/orca/orca-setup.glade.h:54
+msgid "_Enable speech"
+msgstr "குரலை செயல்படுத்து (_E)"
+
+#: ../src/orca/orca-setup.glade.h:55
+msgid "_Left:"
+msgstr "இடது: (_L)"
+
+#: ../src/orca/orca-setup.glade.h:56
+msgid "_None"
+msgstr "ஒன்றுமில்லை (_N)"
+
+#: ../src/orca/orca-setup.glade.h:57
+msgid "_Person:"
+msgstr "நபர்: (_P)"
+
+#: ../src/orca/orca-setup.glade.h:58
+msgid "_Rate:"
+msgstr "விகிதம்: (_R)"
+
+#: ../src/orca/orca-setup.glade.h:59
+msgid "_Right:"
+msgstr "வலது: (_R)"
+
+#: ../src/orca/orca-setup.glade.h:60
+msgid "_Smoothing:"
+msgstr "மென்மையாக்குகிறது: (_S)"
+
+#: ../src/orca/orca-setup.glade.h:61
+msgid "_Top:"
+msgstr "மேல்: (_T)"
+
+#: ../src/orca/orca-setup.glade.h:62
+msgid "_Voice settings:"
+msgstr "குரல் அமைவுகள்: (_V)"
+
+#: ../src/orca/orca-setup.glade.h:63
+msgid "_Width:"
+msgstr "அகலம்: (_W)"
+
+#: ../src/orca/orca-setup.glade.h:64
+msgid "pixels"
+msgstr "பிக்ஸல்கள்"
+
+#: ../src/orca/orca.py:232
+msgid "User logged out - shutting down."
+msgstr "பயனர் வெளியேறி - பணி நிறுத்தம் செய்கிறார்."
+
+#: ../src/orca/orca.py:397
+msgid "Debug level all."
+msgstr "அனைத்து நிலையிலும் பிழைத்திருத்தம்."
+
+#: ../src/orca/orca.py:399
+msgid "Debug level finest."
+msgstr "மிக நல்ல நிலையில் பிழைத்திருத்தம்."
+
+#: ../src/orca/orca.py:401
+msgid "Debug level finer."
+msgstr "நல்ல நிலையில் பிழைத்திருத்தம்."
+
+#: ../src/orca/orca.py:452
+msgid "Entering learn mode.  Press any key to hear its function. "
+msgstr ""
+
+#: ../src/orca/orca.py:453
+msgid "To exit learn mode, press the escape key."
+msgstr "கற்கும் முறையிலிருந்து வெளியேற, விடுபடு விசையை அழுத்தவும்."
+
+#: ../src/orca/orca.py:454
+msgid "Learn mode.  Press escape to exit."
+msgstr "கற்கும் முறை.  வெளியேற விடுபடு விசையை அழுத்தவும்."
+
+#: ../src/orca/orca.py:464 ../src/orca/orca.py:465
+msgid "Exiting learn mode."
+msgstr "கற்கும் முறையிலிருந்து வெளியேறுகிறது."
+
+#: ../src/orca/orca.py:633
+msgid "Caps_Lock"
+msgstr "தலைப்பெழுத்து பூட்டு (_L)"
+
+#: ../src/orca/orca.py:638
+msgid "Num_Lock"
+msgstr "எண் பூட்டு (_L)"
+
+#: ../src/orca/orca.py:822
+msgid "Speech enabled."
+msgstr "குரலை செயல்படுத்து."
+
+#: ../src/orca/orca.py:824
+msgid "Speech disabled."
+msgstr "குரலை செயல்நீக்கு"
+
+#: ../src/orca/orca.py:862
+msgid "Orca user settings reloaded."
+msgstr "Orca பயனர் அமைவுகள் மீண்டும் ஏற்றப்பட்டது."
+
+#: ../src/orca/orca.py:959
+msgid "Enters learn mode.  Press escape to exit learn mode."
+msgstr "கற்கும் முறைக்கு நுழைகிறது.  கற்கும் முறையிலிருந்து வெளியேற விடுபடு விசையை அழுத்தவும்."
+
+#: ../src/orca/orca.py:967
+msgid "Decreases the speech rate."
+msgstr "குரல் விகிதத்தைக் குறைக்கிறது."
+
+#: ../src/orca/orca.py:975
+msgid "Increases the speech rate."
+msgstr "குரல் விகிதத்தை அதிகரிக்கிறது."
+
+#: ../src/orca/orca.py:983
+msgid "Decreases the speech pitch."
+msgstr "குரல் தொனியை குறைக்கிறது."
+
+#: ../src/orca/orca.py:991
+msgid "Increases the speech pitch."
+msgstr "குரல் தொனியை அதிகரிக்கிறது."
+
+#: ../src/orca/orca.py:997
+msgid "Quits Orca"
+msgstr "Orca விட்டு வெளியேறு"
+
+#: ../src/orca/orca.py:1005
+msgid "Toggles keystroke recording on and off."
+msgstr "பதிவினை தொடர்வது மற்றும் நிறுத்தும் விசை அழுத்தம் மாற்றுகிறது"
+
+#: ../src/orca/orca.py:1013
+msgid "Displays the preferences configuration dialog."
+msgstr "முன்னுரிமை கட்டமைப்பு உரையாடலை காட்டுகிறது."
+
+#: ../src/orca/orca.py:1022
+msgid "Reloads user settings and reinitializes services as necessary."
+msgstr ""
+
+#: ../src/orca/orca.py:1031
+msgid "Toggles the silencing of speech."
+msgstr "குரலை குறைப்பதற்கு மாற்றுகிறது."
+
+#: ../src/orca/orca.py:1040
+msgid ""
+"Prints a debug listing of all known applications to the console where Orca "
+"is running."
+msgstr ""
+
+#: ../src/orca/orca.py:1049
+msgid "Cycles the debug level at run time."
+msgstr ""
+
+#: ../src/orca/orca.py:1057
+msgid ""
+"Prints debug information about the currently active application to the "
+"console where Orca is running."
+msgstr ""
+
+#: ../src/orca/orca.py:1065
+msgid "Prints debug information about the ancestry of the object with focus"
+msgstr ""
+
+#: ../src/orca/orca.py:1074
+msgid "Prints debug information about the application with focus"
+msgstr ""
+
+#: ../src/orca/orca.py:1083
+msgid "Switches to the next presentation manager."
+msgstr ""
+
+#: ../src/orca/orca.py:1116 ../src/orca/orca.py:1117
+msgid "Welcome to Orca."
+msgstr "Orca உங்களை வரவேற்கிறது."
+
+#. [[[TODO: WDW - the timer stuff is an experiment to see if
+#. we can recover from hangs.  It's only experimental, so it's
+#. commented out for now.]]]
+#.
+#. timer = threading.Timer(5.0, timeout)
+#. timer.start()
+#: ../src/orca/orca.py:1169
+msgid "goodbye."
+msgstr "நன்றி."
+
+#: ../src/orca/orca.py:1170
+msgid "Goodbye."
+msgstr "நன்றி."
+
+#: ../src/orca/orca.py:1236
+msgid "Usage: orca [OPTION...]"
+msgstr "Usage: orca [OPTION...]"
+
+#: ../src/orca/orca.py:1238
+msgid "-?, --help                   Show this help message"
+msgstr "-?, --help                   இந்த உதவி செய்தியை காட்டு"
+
+#: ../src/orca/orca.py:1239
+#, python-format
+msgid "-v, --version                %s"
+msgstr "-v, --version                %s"
+
+#: ../src/orca/orca.py:1240
+msgid "-s, --setup, --gui-setup     Set up user preferences"
+msgstr "-s, --setup, --gui-setup     பயனர் முன்னுரிமைகளை அமை"
+
+#: ../src/orca/orca.py:1241
+msgid "-t, --text-setup             Set up user preferences (text version)"
+msgstr "-t, --text-setup             பயனர் முன்னுரிமைகளை அமை (உரை பதிப்பு)"
+
+#: ../src/orca/orca.py:1242
+msgid "-n, --no-setup               Skip set up of user preferences"
+msgstr "-n, --no-setup               பயனர் முன்னுரிமை அமைவினை தவிர்"
+
+#: ../src/orca/orca.py:1244
+msgid ""
+"If Orca has not been previously set up by the user, Orca\n"
+"will automatically launch the preferences set up unless\n"
+"the -n or --no-setup option is used."
+msgstr ""
+
+#: ../src/orca/orca.py:1246
+msgid "Report bugs to orca-list@gnome.org."
+msgstr "பிழைகளை orca-list@gnome.orgல் அறிக்கையிடவும்."
+
+#: ../src/orca/orca_console_prefs.py:93 ../src/orca/orca_console_prefs.py:109
+msgid "Speech is unavailable."
+msgstr "குரல் இல்லை"
+
+#: ../src/orca/orca_console_prefs.py:97
+msgid "Welcome to Orca setup."
+msgstr "Orca நிறுவல் வரவேற்கிறது."
+
+#: ../src/orca/orca_console_prefs.py:112
+msgid "Select desired speech system:"
+msgstr "வேண்டிய குரல் அமைப்பினை தேர்ந்தெடு:"
+
+#: ../src/orca/orca_console_prefs.py:117 ../src/orca/orca_console_prefs.py:138
+#: ../src/orca/orca_console_prefs.py:164
+#, python-format
+msgid "%d. %s"
+msgstr "%d. %s"
+
+#: ../src/orca/orca_console_prefs.py:120 ../src/orca/orca_console_prefs.py:141
+#: ../src/orca/orca_console_prefs.py:171
+msgid "Enter choice: "
+msgstr "விருப்பத்தை உள்ளீடு:"
+
+#: ../src/orca/orca_console_prefs.py:122 ../src/orca/orca_console_prefs.py:130
+#: ../src/orca/orca_console_prefs.py:143 ../src/orca/orca_console_prefs.py:152
+#: ../src/orca/orca_console_prefs.py:176
+msgid "Speech will not be used.\n"
+msgstr "குரலை பயன்படுத்த முடியாது.\n"
+
+#: ../src/orca/orca_console_prefs.py:129
+msgid "No servers available.\n"
+msgstr "சேவையங்கள் எதுவும் இல்லை.\n"
+
+#: ../src/orca/orca_console_prefs.py:133
+msgid "Select desired speech server."
+msgstr "வேண்டிய குரல் சேவையகத்தை தேர்ந்தெடு."
+
+#: ../src/orca/orca_console_prefs.py:151
+msgid "No voices available.\n"
+msgstr "குரல்கள் எதுவும் இல்லை.\n"
+
+#: ../src/orca/orca_console_prefs.py:155
+msgid "Select desired voice:"
+msgstr "வேண்டிய குரலை தேர்ந்தெடு:"
+
+#. Ask the user if they would like to enable echoing by word.
+#.
+#: ../src/orca/orca_console_prefs.py:209
+msgid "Enable echo by word?  Enter y or n: "
+msgstr "சொல்லாக எதிரொலிப்பினை செயல்படுத்த வேண்டுமா? ஆம் அல்லது இல்லை என உள்ளிடு:"
+
+#. Ask the user if they would like to enable key echo. If they say
+#. yes, then for each of the five different types of keys, ask the
+#. user if they would like to enable them.
+#.
+#. These key types are:
+#.
+#. o Alphanumeric and punctuation keys
+#.
+#. o Modifier keys: CTRL, ALT, Shift, Insert, and "Fn" on laptops.
+#.
+#. o Locking keys: Caps Lock, Num Lock, Scroll Lock, etc.
+#.
+#. o Function keys: The keys at the top of the keyboard.
+#.
+#. o Action keys: space, enter, escape, tab, backspace, delete, arrow
+#. keys, page up, page down, etc.
+#.
+#: ../src/orca/orca_console_prefs.py:234
+msgid "Enable key echo?  Enter y or n: "
+msgstr "விசை எதிரொலிப்பினை செயல்படுத்த வேண்டுமா? ஆம் அல்லது இல்லை என உள்ளிடு:"
+
+#: ../src/orca/orca_console_prefs.py:241
+msgid "Enable alphanumeric and punctuation keys?  Enter y or n: "
+msgstr "எண் எழுத்து மற்றும் நிறுத்தற்குறி விசைகளை செயல்படுத்த வேண்டுமா? ஆம் அல்லது இல்லை என உள்ளிடு:"
+
+#: ../src/orca/orca_console_prefs.py:249
+msgid "Enable modifier keys?  Enter y or n: "
+msgstr "மாற்றி விசைகளை செயல்படுத்த வேண்டுமா? ஆம் அல்லது இல்லை என உள்ளிடு:"
+
+#: ../src/orca/orca_console_prefs.py:257
+msgid "Enable locking keys?  Enter y or n: "
+msgstr "பூட்டும் விசைகளை செயல்படுத்த வேண்டுமா? ஆம் அல்லது இல்லை என உள்ளிடு:"
+
+#: ../src/orca/orca_console_prefs.py:265
+msgid "Enable function keys?  Enter y or n: "
+msgstr "செயல்பாடு விசைகளை செயல்படுத்த வேண்டுமா? ஆம் அல்லது இல்லை என உள்ளிடு:"
+
+#: ../src/orca/orca_console_prefs.py:273
+msgid "Enable action keys?  Enter y or n: "
+msgstr "செயல் விசைகளை செயல்படுத்த வேண்டுமா? ஆம் அல்லது இல்லை என உள்ளிடு:"
+
+#: ../src/orca/orca_console_prefs.py:301
+msgid "Enable Braille?  Enter y or n: "
+msgstr "குருடர் எழுத்து முறை செயல்படுத்த வேண்டுமா? ஆம் அல்லது இல்லை என உள்ளிடு:"
+
+#: ../src/orca/orca_console_prefs.py:309
+msgid "Enable Braille Monitor?  Enter y or n: "
+msgstr "குருடர் எழுத்து முறை திரையகத்தை செயல்படுத்த வேண்டுமா? ஆம் அல்லது இல்லை என உள்ளிடு:"
+
+#: ../src/orca/orca_console_prefs.py:319
+msgid "Accessibility support for GNOME has just been enabled. "
+msgstr ""
+
+#: ../src/orca/orca_console_prefs.py:324
+msgid "You need to log out and log back in for the change to take effect. "
+msgstr ""
+
+#: ../src/orca/orca_console_prefs.py:330
+msgid "Setup complete.  Press Return to continue."
+msgstr "நிறுவல் முடிந்தது.  எண்டர் விசையை அழுத்தி தொடரவும்"
+
+#: ../src/orca/orca_gui_prefs.py:127 ../src/orca/orca_gui_prefs.py:413
+#: ../src/orca/orca_gui_prefs.py:455
+msgid "Speech not available."
+msgstr "பேச்சு இல்லை."
+
+#: ../src/orca/orca_gui_prefs.py:218 ../src/orca/orca_gui_prefs.py:233
+#: ../src/orca/orca_gui_prefs.py:1034 ../src/orca/orca_gui_prefs.py:1071
+msgid "Brief"
+msgstr "சுருக்கம்"
+
+#: ../src/orca/orca_gui_prefs.py:355 ../src/orca/orca_gui_prefs.py:359
+#: ../src/orca/orca_gui_prefs.py:1268
+msgid "Bilinear"
+msgstr "Bilinear"
+
+#: ../src/orca/orca_gui_prefs.py:357 ../src/orca/orca_gui_prefs.py:370
+#: ../src/orca/orca_gui_prefs.py:1011 ../src/orca/orca_gui_prefs.py:1270
+#: ../src/orca/orca_gui_prefs.py:1293
+msgid "None"
+msgstr "ஒன்றுமில்லை"
+
+#: ../src/orca/orca_gui_prefs.py:368 ../src/orca/orca_gui_prefs.py:376
+#: ../src/orca/orca_gui_prefs.py:1287
+msgid "Centered"
+msgstr "மையப்படுத்தப்பட்டது"
+
+#: ../src/orca/orca_gui_prefs.py:372 ../src/orca/orca_gui_prefs.py:1291
+msgid "Proportional"
+msgstr "சரி விகிதம்"
+
+#: ../src/orca/orca_gui_prefs.py:374 ../src/orca/orca_gui_prefs.py:1289
+msgid "Push"
+msgstr "தள்ளு"
+
+#: ../src/orca/orca_gui_prefs.py:492 ../src/orca/orca_gui_prefs.py:517
+msgid "Default"
+msgstr "முன்னிருப்பு"
+
+#: ../src/orca/orca_gui_prefs.py:494 ../src/orca/orca_gui_prefs.py:519
+msgid "Uppercase"
+msgstr "தலைப்பெழுத்து"
+
+#: ../src/orca/orca_gui_prefs.py:496 ../src/orca/orca_gui_prefs.py:525
+msgid "Hyperlink"
+msgstr "மீஇணைப்பு"
+
+#: ../src/orca/orca_gui_prefs.py:1014
+msgid "Some"
+msgstr "சில"
+
+#: ../src/orca/orca_gui_prefs.py:1356
+msgid "Accessibility support for GNOME has just been enabled."
+msgstr ""
+
+#: ../src/orca/orca_gui_prefs.py:1357
+msgid "You need to log out and log back in for the change to take effect."
+msgstr ""
+
+#: ../src/orca/rolenames.py:147
+msgid "???"
+msgstr "???"
+
+#: ../src/orca/rolenames.py:148
+msgid "Invalid"
+msgstr "தவறான"
+
+#: ../src/orca/rolenames.py:149
+msgid "invalid"
+msgstr "தவறான"
+
+#: ../src/orca/rolenames.py:152
+msgid "acc"
+msgstr "acc"
+
+#: ../src/orca/rolenames.py:153
+msgid "Accelerator"
+msgstr "மாற்றி"
+
+#: ../src/orca/rolenames.py:154
+msgid "accelerator"
+msgstr "மாற்றி"
+
+#: ../src/orca/rolenames.py:157 ../src/orca/rolenames.py:159
+msgid "alert"
+msgstr "எச்சரி"
+
+#: ../src/orca/rolenames.py:158
+msgid "Alert"
+msgstr "எச்சரி"
+
+#: ../src/orca/rolenames.py:162
+msgid "Anim"
+msgstr "Anim"
+
+#: ../src/orca/rolenames.py:163
+msgid "Animation"
+msgstr "அசைவூட்டம்"
+
+#: ../src/orca/rolenames.py:164
+msgid "animation"
+msgstr "அசைவூட்டம்"
+
+#: ../src/orca/rolenames.py:167 ../src/orca/rolenames.py:169
+msgid "arrow"
+msgstr "அம்புக்குறி"
+
+#: ../src/orca/rolenames.py:168
+msgid "Arrow"
+msgstr "அம்புக்குறி"
+
+#: ../src/orca/rolenames.py:172
+msgid "cal"
+msgstr "cal"
+
+#: ../src/orca/rolenames.py:173
+msgid "Calendar"
+msgstr "நாள்காட்டி"
+
+#: ../src/orca/rolenames.py:174
+msgid "calendar"
+msgstr "நாள்காட்டி"
+
+#: ../src/orca/rolenames.py:177
+msgid "cnv"
+msgstr "cnv"
+
+#: ../src/orca/rolenames.py:178
+msgid "Canvas"
+msgstr "கான்வாஸ்"
+
+#: ../src/orca/rolenames.py:179
+msgid "canvas"
+msgstr "கான்வாஸ்"
+
+#: ../src/orca/rolenames.py:182 ../src/orca/rolenames.py:187
+msgid "chk"
+msgstr "chk"
+
+#: ../src/orca/rolenames.py:183
+msgid "CheckBox"
+msgstr "சரிபார் பெட்டி"
+
+#: ../src/orca/rolenames.py:184
+msgid "check box"
+msgstr "சரிபார் பெட்டி"
+
+#: ../src/orca/rolenames.py:188
+msgid "CheckItem"
+msgstr "உருப்படியை சரிபார்"
+
+#: ../src/orca/rolenames.py:189
+msgid "check item"
+msgstr "உருப்படியை சரிபார்"
+
+#: ../src/orca/rolenames.py:192
+msgid "ckm"
+msgstr "ckm"
+
+#: ../src/orca/rolenames.py:193
+msgid "CheckMenu"
+msgstr "சரிபார்ப்பு பட்டி"
+
+#: ../src/orca/rolenames.py:194
+msgid "check menu"
+msgstr "சரிபார்ப்பு பட்டி"
+
+#: ../src/orca/rolenames.py:197
+msgid "clrchsr"
+msgstr "clrchsr"
+
+#: ../src/orca/rolenames.py:198
+msgid "ColorChooser"
+msgstr "நிற தேர்வாளர்"
+
+#: ../src/orca/rolenames.py:199
+msgid "color chooser"
+msgstr "நிற தேர்வாளர்"
+
+#: ../src/orca/rolenames.py:202 ../src/orca/rolenames.py:437
+msgid "colhdr"
+msgstr "colhdr"
+
+#: ../src/orca/rolenames.py:203 ../src/orca/rolenames.py:438
+msgid "ColumnHeader"
+msgstr "நிரல் தலைப்பு"
+
+#: ../src/orca/rolenames.py:204 ../src/orca/rolenames.py:439
+msgid "column header"
+msgstr "நிரல் தலைப்பு"
+
+#: ../src/orca/rolenames.py:207
+msgid "cbo"
+msgstr "cbo"
+
+#: ../src/orca/rolenames.py:208
+msgid "Combo"
+msgstr "சேர்க்கை பெட்டி"
+
+#: ../src/orca/rolenames.py:209
+msgid "combo box"
+msgstr "சேர்க்கை பெட்டி"
+
+#: ../src/orca/rolenames.py:212
+msgid "dat"
+msgstr "dat"
+
+#: ../src/orca/rolenames.py:213
+msgid "DateEditor"
+msgstr "தேதி தொகுப்பி"
+
+#: ../src/orca/rolenames.py:214
+msgid "date editor"
+msgstr "தேதி தொகுப்பி"
+
+#: ../src/orca/rolenames.py:217 ../src/orca/rolenames.py:277
+#: ../src/orca/rolenames.py:279
+msgid "icon"
+msgstr "சின்னம்"
+
+#: ../src/orca/rolenames.py:218
+msgid "DesktopIcon"
+msgstr "பணிமேடை சின்னம்"
+
+#: ../src/orca/rolenames.py:219
+msgid "desktop icon"
+msgstr "பணிமேடை சின்னம்"
+
+#: ../src/orca/rolenames.py:222 ../src/orca/rolenames.py:264
+#: ../src/orca/rolenames.py:287
+msgid "frame"
+msgstr "சட்டம்"
+
+#: ../src/orca/rolenames.py:223
+msgid "DesktopFrame"
+msgstr "பணிமேடை சட்டம்"
+
+#: ../src/orca/rolenames.py:224
+msgid "desktop frame"
+msgstr "பணிமேடை சட்டம்"
+
+#: ../src/orca/rolenames.py:227 ../src/orca/rolenames.py:229
+msgid "dial"
+msgstr "அழை"
+
+#: ../src/orca/rolenames.py:228
+msgid "Dial"
+msgstr "அழை"
+
+#: ../src/orca/rolenames.py:232
+msgid "dlg"
+msgstr "dlg"
+
+#: ../src/orca/rolenames.py:233
+msgid "Dialog"
+msgstr "உரையாடல்"
+
+#: ../src/orca/rolenames.py:234
+msgid "dialog"
+msgstr "உரையாடல்"
+
+#: ../src/orca/rolenames.py:237
+msgid "dip"
+msgstr "dip"
+
+#: ../src/orca/rolenames.py:238
+msgid "DirectoryPane"
+msgstr "அடைவு பலகம்"
+
+#: ../src/orca/rolenames.py:239
+msgid "directory pane"
+msgstr "அடைவு பலகம்"
+
+#: ../src/orca/rolenames.py:242
+msgid "draw"
+msgstr "draw"
+
+#: ../src/orca/rolenames.py:243
+msgid "DrawingArea"
+msgstr "வரையும் பகுதி"
+
+#: ../src/orca/rolenames.py:244
+msgid "drawing area"
+msgstr "வரையும் பகுதி"
+
+#: ../src/orca/rolenames.py:247
+msgid "fchsr"
+msgstr "fchsr"
+
+#: ../src/orca/rolenames.py:248
+msgid "FileChooser"
+msgstr "கோப்பு தேர்வாளர்"
+
+#: ../src/orca/rolenames.py:249
+msgid "file chooser"
+msgstr "கோப்பு தேர்வாளர்"
+
+#: ../src/orca/rolenames.py:252
+msgid "flr"
+msgstr "flr"
+
+#: ../src/orca/rolenames.py:253
+msgid "Filler"
+msgstr "நிரப்பி"
+
+#: ../src/orca/rolenames.py:254
+msgid "filler"
+msgstr "நிரப்பி"
+
+#: ../src/orca/rolenames.py:257
+msgid "fnt"
+msgstr "fnt"
+
+#: ../src/orca/rolenames.py:258
+msgid "FontChooser"
+msgstr "எழுத்துரு தேர்வாளர்"
+
+#: ../src/orca/rolenames.py:259
+msgid "font chooser"
+msgstr "எழுத்துரு தேர்வாளர்"
+
+#: ../src/orca/rolenames.py:262
+msgid "frm"
+msgstr "frm"
+
+#: ../src/orca/rolenames.py:263
+msgid "Frame"
+msgstr "சட்டம்"
+
+#: ../src/orca/rolenames.py:267
+msgid "gpn"
+msgstr "gpn"
+
+#: ../src/orca/rolenames.py:268
+msgid "GlassPane"
+msgstr "கண்ணாடி பலகம்"
+
+#: ../src/orca/rolenames.py:269
+msgid "glass pane"
+msgstr "கண்ணாடி பலகம்"
+
+#: ../src/orca/rolenames.py:272
+msgid "html"
+msgstr "html"
+
+#: ../src/orca/rolenames.py:273
+msgid "HtmlContainer"
+msgstr "Htmlகொண்டவர்"
+
+#: ../src/orca/rolenames.py:274
+msgid "h t m l container"
+msgstr "h t m l கொண்டவர்"
+
+#: ../src/orca/rolenames.py:278
+msgid "Icon"
+msgstr "சின்னம்"
+
+#: ../src/orca/rolenames.py:282
+msgid "img"
+msgstr "img"
+
+#: ../src/orca/rolenames.py:283
+msgid "Image"
+msgstr "படம்"
+
+#: ../src/orca/rolenames.py:284
+msgid "image"
+msgstr "படம்"
+
+#: ../src/orca/rolenames.py:288
+msgid "InternalFrame"
+msgstr "உள்ளார்ந்த சட்டம்"
+
+#: ../src/orca/rolenames.py:289
+msgid "internal frame"
+msgstr "உள்ளார்ந்த சட்டம்"
+
+#: ../src/orca/rolenames.py:292
+msgid "lbl"
+msgstr "lbl"
+
+#: ../src/orca/rolenames.py:293
+msgid "Label"
+msgstr "பெயர்"
+
+#: ../src/orca/rolenames.py:294
+msgid "label"
+msgstr "பெயர்"
+
+#: ../src/orca/rolenames.py:297
+msgid "lyrdpn"
+msgstr "lyrdpn"
+
+#: ../src/orca/rolenames.py:298
+msgid "LayeredPane"
+msgstr "அடுக்கிடப்பட்ட பலகம்"
+
+#: ../src/orca/rolenames.py:299
+msgid "layered pane"
+msgstr "அடுக்கிடப்பட்ட பலகம்"
+
+#: ../src/orca/rolenames.py:302
+msgid "lst"
+msgstr "lst"
+
+#: ../src/orca/rolenames.py:303
+msgid "List"
+msgstr "பட்டியல்"
+
+#: ../src/orca/rolenames.py:304
+msgid "list"
+msgstr "பட்டியல்"
+
+#: ../src/orca/rolenames.py:307
+msgid "lstitm"
+msgstr "lstitm"
+
+#: ../src/orca/rolenames.py:308
+msgid "ListItem"
+msgstr "பட்டியல் உருப்படி"
+
+#: ../src/orca/rolenames.py:309
+msgid "list item"
+msgstr "பட்டியல் உருப்படி"
+
+#: ../src/orca/rolenames.py:312
+msgid "mnu"
+msgstr "mnu"
+
+#: ../src/orca/rolenames.py:313
+msgid "Menu"
+msgstr "பட்டி"
+
+#: ../src/orca/rolenames.py:314
+msgid "menu"
+msgstr "பட்டி"
+
+#: ../src/orca/rolenames.py:317
+msgid "mnubr"
+msgstr "mnubr"
+
+#: ../src/orca/rolenames.py:318
+msgid "MenuBar"
+msgstr "பட்டி பட்டை"
+
+#: ../src/orca/rolenames.py:319
+msgid "menu bar"
+msgstr "பட்டி பட்டை"
+
+#: ../src/orca/rolenames.py:322
+msgid "mnuitm"
+msgstr "mnuitm"
+
+#: ../src/orca/rolenames.py:323
+msgid "MenuItem"
+msgstr "பட்டி உருப்படி"
+
+#: ../src/orca/rolenames.py:324
+msgid "menu item"
+msgstr "பட்டி உருப்படி"
+
+#: ../src/orca/rolenames.py:327
+msgid "optnpn"
+msgstr "optnpn"
+
+#: ../src/orca/rolenames.py:328
+msgid "OptionPane"
+msgstr "விருப்ப பலகம்"
+
+#: ../src/orca/rolenames.py:329
+msgid "option pane"
+msgstr "விருப்ப பலகம்"
+
+#: ../src/orca/rolenames.py:332 ../src/orca/rolenames.py:334
+msgid "page"
+msgstr "பக்கம்"
+
+#: ../src/orca/rolenames.py:333
+msgid "Page"
+msgstr "பக்கம்"
+
+#: ../src/orca/rolenames.py:337
+msgid "tblst"
+msgstr "tblst"
+
+#: ../src/orca/rolenames.py:338
+msgid "TabList"
+msgstr "தத்தல் பட்டியல்"
+
+#: ../src/orca/rolenames.py:339
+msgid "tab list"
+msgstr "தத்தல் பட்டியல்"
+
+#: ../src/orca/rolenames.py:342
+msgid "pnl"
+msgstr "pnl"
+
+#: ../src/orca/rolenames.py:343
+msgid "Panel"
+msgstr "பலகம்"
+
+#: ../src/orca/rolenames.py:344
+msgid "panel"
+msgstr "பலகம்"
+
+#: ../src/orca/rolenames.py:347
+msgid "pwd"
+msgstr "pwd"
+
+#: ../src/orca/rolenames.py:348
+msgid "Password"
+msgstr "கடவுச்சொல்"
+
+#: ../src/orca/rolenames.py:349
+msgid "password"
+msgstr "கடவுச்சொல்"
+
+#: ../src/orca/rolenames.py:352
+msgid "popmnu"
+msgstr "popmnu"
+
+#: ../src/orca/rolenames.py:353
+msgid "PopupMenu"
+msgstr "மேல்மீட்பு பட்டி"
+
+#: ../src/orca/rolenames.py:354
+msgid "popup menu"
+msgstr "மேல்மீட்பு பட்டி"
+
+#: ../src/orca/rolenames.py:357
+msgid "pgbar"
+msgstr "pgbar"
+
+#: ../src/orca/rolenames.py:358
+msgid "Progress"
+msgstr "முன்னேற்றம்"
+
+#: ../src/orca/rolenames.py:359
+msgid "progress bar"
+msgstr "முன்னேற்ற பட்டை"
+
+#: ../src/orca/rolenames.py:362
+msgid "btn"
+msgstr "btn"
+
+#: ../src/orca/rolenames.py:363
+msgid "Button"
+msgstr "பொத்தான்"
+
+#: ../src/orca/rolenames.py:364
+msgid "button"
+msgstr "பொத்தான்"
+
+#: ../src/orca/rolenames.py:367
+msgid "radio"
+msgstr "radio"
+
+#: ../src/orca/rolenames.py:368
+msgid "RadioButton"
+msgstr "தேர்வு பொத்தான்"
+
+#: ../src/orca/rolenames.py:369
+msgid "radio button"
+msgstr "தேர்வு பொத்தான்"
+
+#: ../src/orca/rolenames.py:372
+msgid "rdmnuitm"
+msgstr "rdmnuitm"
+
+#: ../src/orca/rolenames.py:373
+msgid "RadioMenuItem"
+msgstr "தேர்வு பட்டி உருப்படி"
+
+#: ../src/orca/rolenames.py:374
+msgid "radio menu item"
+msgstr "தேர்வு பட்டி உருப்படி"
+
+#: ../src/orca/rolenames.py:377
+msgid "rdmnu"
+msgstr "rdmnu"
+
+#: ../src/orca/rolenames.py:378
+msgid "RadioMenu"
+msgstr "தேர்வு பட்டி"
+
+#: ../src/orca/rolenames.py:379
+msgid "radio menu"
+msgstr "தேர்வு பட்டி"
+
+#: ../src/orca/rolenames.py:382
+msgid "rtpn"
+msgstr "rtpn"
+
+#: ../src/orca/rolenames.py:383
+msgid "RootPane"
+msgstr "மூல பலகம்"
+
+#: ../src/orca/rolenames.py:384
+msgid "root pane"
+msgstr "மூல பலகம்"
+
+#: ../src/orca/rolenames.py:387 ../src/orca/rolenames.py:442
+msgid "rwhdr"
+msgstr "rwhdr"
+
+#: ../src/orca/rolenames.py:388 ../src/orca/rolenames.py:443
+msgid "RowHeader"
+msgstr "நிரை தலைப்பு"
+
+#: ../src/orca/rolenames.py:389 ../src/orca/rolenames.py:444
+msgid "row header"
+msgstr "நிரை தலைப்பு"
+
+#: ../src/orca/rolenames.py:392
+msgid "scbr"
+msgstr "scbr"
+
+#: ../src/orca/rolenames.py:393
+msgid "ScrollBar"
+msgstr "சுருள் பட்டை"
+
+#: ../src/orca/rolenames.py:394
+msgid "scroll bar"
+msgstr "சுருள் பட்டை"
+
+#: ../src/orca/rolenames.py:397
+msgid "scpn"
+msgstr "scpn"
+
+#: ../src/orca/rolenames.py:398
+msgid "ScrollPane"
+msgstr "சுருள் பலகம்"
+
+#: ../src/orca/rolenames.py:399
+msgid "scroll pane"
+msgstr "சுருள் பலகம்"
+
+#: ../src/orca/rolenames.py:402
+msgid "seprtr"
+msgstr "seprtr"
+
+#: ../src/orca/rolenames.py:403
+msgid "Separator"
+msgstr "பிரிப்பி"
+
+#: ../src/orca/rolenames.py:404
+msgid "separator"
+msgstr "பிரிப்பி"
+
+#: ../src/orca/rolenames.py:407
+msgid "sldr"
+msgstr "sldr"
+
+#: ../src/orca/rolenames.py:408
+msgid "Slider"
+msgstr "நகர்த்தி"
+
+#: ../src/orca/rolenames.py:409
+msgid "slider"
+msgstr "நகர்த்தி"
+
+#: ../src/orca/rolenames.py:412
+msgid "spltpn"
+msgstr "spltpn"
+
+#: ../src/orca/rolenames.py:413
+msgid "SplitPane"
+msgstr "பலகத்தைப் பிரி"
+
+#: ../src/orca/rolenames.py:414
+msgid "split pane"
+msgstr "பலகத்தைப் பிரி"
+
+#: ../src/orca/rolenames.py:417
+msgid "spin"
+msgstr "spin"
+
+#: ../src/orca/rolenames.py:418
+msgid "SpinButton"
+msgstr "சுழல் பொத்தான்"
+
+#: ../src/orca/rolenames.py:419
+msgid "spin button"
+msgstr "சுழல் பொத்தான்"
+
+#: ../src/orca/rolenames.py:422
+msgid "statbr"
+msgstr "statbr"
+
+#: ../src/orca/rolenames.py:423
+msgid "StatusBar"
+msgstr "நிலைப்பட்டை"
+
+#: ../src/orca/rolenames.py:424
+msgid "status bar"
+msgstr "நிலைப்பட்டை"
+
+#: ../src/orca/rolenames.py:427
+msgid "tbl"
+msgstr "tbl"
+
+#: ../src/orca/rolenames.py:428
+msgid "Table"
+msgstr "அட்டவணை"
+
+#: ../src/orca/rolenames.py:429
+msgid "table"
+msgstr "அட்டவணை"
+
+#: ../src/orca/rolenames.py:433
+msgid "Cell"
+msgstr "அறை"
+
+#: ../src/orca/rolenames.py:447
+msgid "tomnuitm"
+msgstr "tomnuitm"
+
+#: ../src/orca/rolenames.py:448
+msgid "TearOffMenuItem"
+msgstr "கிழித்து வெளியேறும் பட்டி உருப்படி"
+
+#: ../src/orca/rolenames.py:449 ../src/orca/speechgenerator.py:1251
+msgid "tear off menu item"
+msgstr "கிழித்து வெளியேறும் பட்டி உருப்படி"
+
+#: ../src/orca/rolenames.py:452
+msgid "term"
+msgstr "term"
+
+#: ../src/orca/rolenames.py:453
+msgid "Terminal"
+msgstr "முனையம்"
+
+#: ../src/orca/rolenames.py:454
+msgid "terminal"
+msgstr "முனையம்"
+
+#: ../src/orca/rolenames.py:457
+msgid "txt"
+msgstr "txt"
+
+#: ../src/orca/rolenames.py:458
+msgid "Text"
+msgstr "உரை"
+
+#: ../src/orca/rolenames.py:459
+msgid "text"
+msgstr "உரை"
+
+#: ../src/orca/rolenames.py:462
+msgid "tglbtn"
+msgstr "tglbtn"
+
+#: ../src/orca/rolenames.py:463
+msgid "ToggleButton"
+msgstr "மாற்றி பொத்தான்"
+
+#: ../src/orca/rolenames.py:464
+msgid "toggle button"
+msgstr "மாற்றி பொத்தான்"
+
+#: ../src/orca/rolenames.py:467
+msgid "tbar"
+msgstr "tbar"
+
+#: ../src/orca/rolenames.py:468
+msgid "ToolBar"
+msgstr "கருவிப்பட்டை"
+
+#: ../src/orca/rolenames.py:469
+msgid "tool bar"
+msgstr "கருவிப்பட்டை"
+
+#: ../src/orca/rolenames.py:472
+msgid "tip"
+msgstr "tip"
+
+#: ../src/orca/rolenames.py:473
+msgid "ToolTip"
+msgstr "கருவிக்குறிப்பு"
+
+#: ../src/orca/rolenames.py:474
+msgid "tool tip"
+msgstr "கருவிக்குறிப்பு"
+
+#: ../src/orca/rolenames.py:477 ../src/orca/rolenames.py:479
+msgid "tree"
+msgstr "கிளை"
+
+#: ../src/orca/rolenames.py:478
+msgid "Tree"
+msgstr "கிளை"
+
+#: ../src/orca/rolenames.py:482
+msgid "trtbl"
+msgstr "trtbl"
+
+#: ../src/orca/rolenames.py:483
+msgid "TreeTable"
+msgstr "கிளை அட்டவணை"
+
+#: ../src/orca/rolenames.py:484
+msgid "tree table"
+msgstr "கிளை அட்டவணை"
+
+#: ../src/orca/rolenames.py:487
+msgid "unk"
+msgstr "unk"
+
+#: ../src/orca/rolenames.py:488
+msgid "Unknown"
+msgstr "தெரியாத"
+
+#: ../src/orca/rolenames.py:489
+msgid "unknown"
+msgstr "தெரியாத"
+
+#: ../src/orca/rolenames.py:492
+msgid "vwprt"
+msgstr "vwprt"
+
+#: ../src/orca/rolenames.py:493
+msgid "Viewport"
+msgstr "துறைக்காட்டி"
+
+#: ../src/orca/rolenames.py:494
+msgid "viewport"
+msgstr "துறைக்காட்டி"
+
+#: ../src/orca/rolenames.py:497
+msgid "wnd"
+msgstr "wnd"
+
+#: ../src/orca/rolenames.py:498
+msgid "Window"
+msgstr "சாளரம்"
+
+#: ../src/orca/rolenames.py:499
+msgid "window"
+msgstr "சாளரம்"
+
+#: ../src/orca/rolenames.py:502
+msgid "hdr"
+msgstr "hdr"
+
+#: ../src/orca/rolenames.py:503
+msgid "Header"
+msgstr "தலைப்பு"
+
+#: ../src/orca/rolenames.py:504
+msgid "header"
+msgstr "தலைப்பு"
+
+#: ../src/orca/rolenames.py:507
+msgid "ftr"
+msgstr "ftr"
+
+#: ../src/orca/rolenames.py:508
+msgid "Footer"
+msgstr "அடிக்குறிப்பு"
+
+#: ../src/orca/rolenames.py:509
+msgid "footer"
+msgstr "அடிக்குறிப்பு"
+
+#: ../src/orca/rolenames.py:512
+msgid "para"
+msgstr "para"
+
+#: ../src/orca/rolenames.py:513
+msgid "Paragraph"
+msgstr "பத்தி"
+
+#: ../src/orca/rolenames.py:514
+msgid "paragraph"
+msgstr "பத்தி"
+
+#: ../src/orca/rolenames.py:517
+msgid "app"
+msgstr "app"
+
+#: ../src/orca/rolenames.py:518
+msgid "Application"
+msgstr "பயன்பாடு"
+
+#: ../src/orca/rolenames.py:519
+msgid "application"
+msgstr "பயன்பாடு"
+
+#: ../src/orca/rolenames.py:522
+msgid "auto"
+msgstr "தானாக"
+
+#: ../src/orca/rolenames.py:523
+msgid "AutoComplete"
+msgstr "தானாக முடித்தல்"
+
+#: ../src/orca/rolenames.py:524
+msgid "autocomplete"
+msgstr "தானாக முடித்தல்"
+
+#: ../src/orca/rolenames.py:527
+msgid "edtbr"
+msgstr "edtbr"
+
+#: ../src/orca/rolenames.py:528
+msgid "EditBar"
+msgstr "பட்டை தொகு"
+
+#: ../src/orca/rolenames.py:529
+msgid "edit bar"
+msgstr "பட்டையை தொகு"
+
+#: ../src/orca/rolenames.py:532
+msgid "emb"
+msgstr "emb"
+
+#: ../src/orca/rolenames.py:533
+msgid "EmbeddedComponent"
+msgstr "உட்பொதியப்பட்ட கூறு"
+
+#: ../src/orca/rolenames.py:534
+msgid "embedded component"
+msgstr "உட்பொதியப்பட்ட கூறு"
+
+#: ../src/orca/scripts/Evolution.py:86
+msgid "calv"
+msgstr "calv"
+
+#: ../src/orca/scripts/Evolution.py:87
+msgid "CalendarView"
+msgstr "நாள்காட்டி பார்வை"
+
+#: ../src/orca/scripts/Evolution.py:88
+msgid "calendar view"
+msgstr "நாள்காட்டி பார்வை"
+
+#: ../src/orca/scripts/Evolution.py:93
+msgid "cale"
+msgstr "cale"
+
+#: ../src/orca/scripts/Evolution.py:94
+msgid "CalendarEvent"
+msgstr "நாள்காட்டி நிகழ்வு"
+
+#: ../src/orca/scripts/Evolution.py:95
+msgid "calendar event"
+msgstr "நாள்காட்டி நிகழ்வு"
+
+#: ../src/orca/scripts/Evolution.py:145
+msgid " screen"
+msgstr " திரை"
+
+#. Most of the Setup Assistant screens have a useful piece
+#. of text starting with the word "Please". We want to speak
+#. these. For the first screen, the useful piece of text
+#. starts with "Welcome". For the last screen, it starts
+#. with "Congratulations". Speak those too.
+#.
+#: ../src/orca/scripts/Evolution.py:159
+msgid "Please"
+msgstr "தயவு செய்து"
+
+#: ../src/orca/scripts/Evolution.py:160
+msgid "Welcome"
+msgstr "வரவேற்கிறோம்"
+
+#: ../src/orca/scripts/Evolution.py:161
+msgid "Congratulations"
+msgstr "வாழ்த்துக்கள்"
+
+#: ../src/orca/scripts/Evolution.py:658
+msgid "No appointments"
+msgstr "சந்திப்புகள் இல்லை"
+
+#: ../src/orca/scripts/Evolution.py:732
+msgid "Directories button"
+msgstr "அடைவு பொத்தான்"
+
+#: ../src/orca/scripts/Evolution.py:871 ../src/orca/scripts/Evolution.py:909
+msgid "Assistant"
+msgstr "உதவியாளர்"
+
+#: ../src/orca/scripts/Mozilla.py:231 ../src/orca/scripts/StarOffice.py:430
+msgid "link"
+msgstr "இணைப்பு"
+
+#: ../src/orca/scripts/gedit.py:135
+msgid "Change to:"
+msgstr "மாற்று:"
+
+#: ../src/orca/scripts/gedit.py:136
+msgid "Misspelled word:"
+msgstr "தவறான சொல்:"
+
+#. The indication that spell checking is complete is when the
+#. "misspelt" word is set to "Completed spell checking". Ugh!
+#. Try to detect this and let the user know.
+#: ../src/orca/scripts/gedit.py:165
+msgid "Completed spell checking"
+msgstr "சொல் திருத்தம் முடிக்கப்பட்டது"
+
+#: ../src/orca/scripts/gedit.py:166
+msgid "Spell checking is complete."
+msgstr "சொல்திருத்தம் முடிந்தது"
+
+#: ../src/orca/scripts/gedit.py:168
+msgid "Press Tab and Return to terminate."
+msgstr "தத்தல் அல்லது ரிட்டன் விசையை அழுத்தி முடிக்கவும்."
+
+#: ../src/orca/scripts/gedit.py:255 ../src/orca/scripts/gedit.py:308
+msgid "Check Spelling"
+msgstr "சொல்திருத்தம் செய்கிறது"
+
+#: ../src/orca/scripts/StarOffice.py:240
+msgid "Speaks the contents of the input line."
+msgstr "உள்ளீடு வரியின் உள்ளடக்கங்களை பேசுகிறது."
+
+#: ../src/orca/scripts/StarOffice.py:305
+msgid "empty"
+msgstr "வெற்று"
+
+#: ../src/orca/scripts/StarOffice.py:448
+msgid "Welcome to StarOffice"
+msgstr "StarOffice உங்களை வரவேற்கிறது"
+
+#: ../src/orca/scripts/StarOffice.py:575 ../src/orca/scripts/StarOffice.py:757
+msgid "Spellcheck:"
+msgstr "சொல்திருத்தம்:"
+
+#: ../src/orca/scripts/StarOffice.py:603
+msgid "Note that the Scroll Down button has to be pressed numerous times."
+msgstr ""
+
+#: ../src/orca/scripts/StarOffice.py:617
+msgid "License Agreement Accept button now has focus."
+msgstr "அங்கீகார ஒப்பந்தம் ஏற்பு பொத்தான் இப்போது முன்னிலைப்படுத்தப்படுகிறது."
+
+#: ../src/orca/scripts/StarOffice.py:640
+msgid "First name"
+msgstr "முதல் பெயர்"
+
+#: ../src/orca/scripts/StarOffice.py:820
+msgid " has formula"
+msgstr "சூத்திரத்தை கொண்டுள்ளது"
+
+#. Note to translators: the regular expression here represents a
+#. string to match in the localized application name as seen by
+#. at-poke.  For most cases, the application name is the name of
+#. the binary used to start the application, but this is an
+#. unreliable assumption.  The only reliable way to do the
+#. translation is by running the application and then viewing its
+#. name in the main window of at-poke.
+#.
+#: ../src/orca/settings.py:391
+msgid "[\\S\\s]*StarOffice[\\s\\S]*"
+msgstr "[\\S\\s]*StarOffice[\\s\\S]*"
+
+#: ../src/orca/settings.py:392
+msgid "soffice.bin"
+msgstr "soffice.bin"
+
+#: ../src/orca/settings.py:393
+msgid "[Ee]volution"
+msgstr "[Ee]volution"
+
+#: ../src/orca/settings.py:394
+msgid "Deer Park"
+msgstr "Deer Park"
+
+#: ../src/orca/settings.py:395
+msgid "Bon Echo"
+msgstr "Bon Echo"
+
+#. Note to translators:  the "Workspace " string is the
+#. prefix of what metacity shows when you press Ctrl+Alt
+#. and the left or right arrow keys to switch between
+#. workspaces.  The goal here is to find a match with
+#. that prefix.
+#.
+#: ../src/orca/scripts/metacity.py:112
+msgid "Workspace "
+msgstr "பணி இடம்"
+
+#: ../src/orca/scripts/metacity.py:113
+msgid "inaccessible"
+msgstr "அணுக முடியவில்லை"
+
+#: ../src/orca/scripts/planner.py:77 ../src/orca/scripts/planner.py:135
+msgid "Display more options"
+msgstr "கூடுதல் விருப்பங்களை காட்டு"
+
+#: ../src/orca/scripts/planner.py:139 ../src/orca/scripts/planner.py:147
+#: ../src/orca/scripts/planner.py:172 ../src/orca/scripts/planner.py:180
+#: ../src/orca/speechgenerator.py:1307 ../src/orca/speechgenerator.py:1310
+msgid "pressed"
+msgstr "அழுத்தியது"
+
+#: ../src/orca/scripts/planner.py:141 ../src/orca/scripts/planner.py:149
+#: ../src/orca/scripts/planner.py:174 ../src/orca/scripts/planner.py:182
+#: ../src/orca/speechgenerator.py:1316 ../src/orca/speechgenerator.py:1319
+msgid "not pressed"
+msgstr "அழுத்தாதது"
+
+#: ../src/orca/speechgenerator.py:368 ../src/orca/speechgenerator.py:371
+msgid "checked"
+msgstr "சோதிக்கப்பட்டது"
+
+#: ../src/orca/speechgenerator.py:377 ../src/orca/speechgenerator.py:380
+msgid "not checked"
+msgstr "சோதிக்காதது"
+
+#: ../src/orca/speechgenerator.py:910 ../src/orca/speechgenerator.py:913
+#: ../src/orca/util.py:1033
+msgid "selected"
+msgstr "தேர்ந்தெடுக்கப்பட்டது"
+
+#: ../src/orca/speechgenerator.py:921 ../src/orca/speechgenerator.py:924
+msgid "not selected"
+msgstr "தேர்ந்தெடுக்கப்படவில்லை"
+
+#: ../src/orca/speechgenerator.py:1253
+msgid "tear off"
+msgstr "கிழித்து இழுத்தல்"
+
+#: ../src/orca/util.py:299
+msgid "Misspelled word: "
+msgstr "தவறான சொல்:"
+
+#: ../src/orca/util.py:300
+msgid " Context is "
+msgstr "சூழல்"
+
+#: ../src/orca/util.py:977
+msgid "page selected from cursor position"
+msgstr "நிலைகாட்டி இடத்திலிருந்து தேர்ந்தெடுக்கப்பட்ட பக்கம்"
+
+#: ../src/orca/util.py:981
+msgid "page selected to cursor position"
+msgstr "நிலைகாட்டி இடத்திற்கு தேர்ந்தெடுக்கப்பட்ட பக்கம்"
+
+#: ../src/orca/util.py:985
+msgid "line selected down from cursor position"
+msgstr "நிலைகாட்டி இடத்திலிருந்து கீழே தேர்ந்தெடுக்கப்பட்ட வரி"
+
+#: ../src/orca/util.py:989
+msgid "line selected up from cursor position"
+msgstr "நிலைகாட்டி இடத்திலிருந்து மேலே தேர்ந்தெடுக்கப்பட்ட வரி"
+
+#: ../src/orca/util.py:993
+msgid "document selected to cursor position"
+msgstr "நிலைகாட்டி இடத்திற்கு தேர்ந்தெடுக்கப்பட்ட ஆவணம்"
+
+#: ../src/orca/util.py:997
+msgid "document selected from cursor position"
+msgstr "நிலைகாட்டி இடத்திலிருந்து தேர்ந்தெடுக்கப்பட்ட ஆவணம்"
+
+#: ../src/orca/util.py:1041
+msgid "unselected"
+msgstr "தேர்ந்தெடுக்காத"
+
