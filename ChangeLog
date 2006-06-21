@@ -7,6 +7,9 @@
 
 2006-06-20  Willie Walker <william.walker@sun.com>
 
+	* src/orca/scripts/gnome-terminal.py: fix bug 345472 - don't
+	assume the last input event was a KeyboardEvent.
+	
 	* src/orca/scripts/gcalctool.py: fix bug caused by my refactor
 	of moving things to util.py (forgot to import orca.util).
 	

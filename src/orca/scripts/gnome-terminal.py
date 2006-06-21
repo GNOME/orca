@@ -75,7 +75,8 @@ class Script(default.Script):
         - event: the Event
         """
 
-        if orca.lastInputEvent:
+        if orca.lastInputEvent \
+               and isinstance(orca.lastInputEvent, input_event.KeyboardEvent):
             event_string = orca.lastInputEvent.event_string
         else:
             event_string = None
