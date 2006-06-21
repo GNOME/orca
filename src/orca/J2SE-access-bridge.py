@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2006 Sun Microsystems Inc.
+# Copyright 2006 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -17,6 +17,12 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
+__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__license__   = "LGPL"
+
 import atspi
 import default
 import debug
@@ -27,7 +33,6 @@ import speech
 import util
 
 from orca_i18n import _ # for gettext support
-
 
 ########################################################################
 #                                                                      #
