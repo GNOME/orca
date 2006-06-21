@@ -220,6 +220,11 @@ class orcaSetupGUI(GladeWrapper):
         else:
             self.speechVerboseButton.set_active(True)
 
+        if prefs["readTableCellRow"] == True:
+            self.rowSpeechButton.set_active(True)
+        else:
+            self.cellSpeechButton.set_active(True)
+
         self.speechIndentationCheckbutton.set_active(\
             prefs["enableSpeechIndentation"])
 
@@ -1037,6 +1042,24 @@ class orcaSetupGUI(GladeWrapper):
             else:
                 self.prefsDict["speechVerbosityLevel"] = \
                     settings.VERBOSITY_LEVEL_VERBOSE
+
+    def tableSpeechChanged(self, widget):
+        """Signal handler for the "toggled" signal for the cellSpeechButton,
+           or rowSpeechButton GtkRadioButton widgets. The user has
+           toggled the table row speech type value. If this signal was
+           generated as the result of a radio button getting selected
+           (as opposed to a radio button losing the selection), set the
+           'readTableCellRow' preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        if widget.get_active():
+            if widget.get_label().endswith(_("cell")):
+                self.prefsDict["readTableCellRow"] = False
+            else:
+                self.prefsDict["readTableCellRow"] = True
 
     def abbrevRolenamesChecked(self, widget):
         """Signal handler for the "toggled" signal for the abbrevRolenames 

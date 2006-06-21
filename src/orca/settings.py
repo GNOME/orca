@@ -57,6 +57,7 @@ userCustomizableSettings = [
     "speechServerInfo",
     "voices",
     "speechVerbosityLevel",
+    "readTableCellRow",
     "enableSpeechIndentation",
     "enableEchoByWord",
     "enableKeyEcho",

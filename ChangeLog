@@ -1,5 +1,14 @@
 2006-06-21  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/orca-setup.glade:
+          src/orca/orca_gui_prefs.py:
+          src/orca/settings.py:
+          Added in a new radio button group to the configuration GUI on
+          the speech pane, that can be used to set "Table Row Speech" to
+          either: "Speak current cell" or "Speak current row".
+
+2006-06-21  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/scripts/StarOffice.py:
           Adjustment to the onSelectionChanged() routine to get "has
           formula" working again.
