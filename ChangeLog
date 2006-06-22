@@ -22,6 +22,8 @@
           Added in verbalized punctuation support. See comments at the
           beginning of punctuation_settings.py for more details.
 
+          NOTE: This is only currently implemented in gnomespeechfactory.py
+
 2006-06-22  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade:
