@@ -29,12 +29,14 @@ import bonobo
 
 import atspi
 import debug
+import punctuation_settings
 import settings
 import speech
 import speechserver
 
 from acss import ACSS
 from chnames import chnames
+from punctuation_settings import punctuation
 
 from orca_i18n import _           # for gettext support
 
@@ -527,6 +529,50 @@ class SpeechServer(speechserver.SpeechServer):
                 self.speak(text, acss, interrupt and (i == 0))
             i += 1
 
+    def __addVerbalizedPunctuation(self, oldText):
+        """Depending upon the users verbalized punctuation setting, 
+        adjust punctuation symbols in the given text to their pronounced 
+        equivalents. The pronounced text will either replace the 
+        punctuation symbol or be inserted before it. In the latter case, 
+        this is to retain spoken prosity.
+
+        Arguments:
+        - oldText:      text to be parsed for punctuation.
+
+        Returns a text string with the punctuation symbols adjusted accordingly.
+        """
+
+        ## Replace ellipses (both manual and unicode) with "dot dot dot"
+        ##
+        #oldText = oldText.replace("...", _(" dot dot dot"), 1)
+        #oldText = oldText.replace("\342\200\246",  _(" dot dot dot"), 1)
+
+        # [[[TODO: HACK - We're going to add whitespace after "["
+        # because DECtalk wants to interpret these as inline DECtalk
+        # commands.]]]
+        #
+        # [[[UPDATE: commented this out because gnome-speech-0.4.0 now
+        # tells DECtalk to do a [:phon off], reducing this problem.]]]
+        #
+        #text = text.replace("[", "[ ")
+
+        newText = ''
+        for i in range(0, len(oldText)):
+            try:
+                style = settings.verbalizePunctuationStyle
+                level, action = punctuation[oldText[i]]
+                if style != settings.PUNCTUATION_STYLE_NONE and \
+                    level <= settings.verbalizePunctuationStyle:
+                    newText += " " + chnames[oldText[i]]
+                    if action == punctuation_settings.PUNCTUATION_INSERT:
+                        newText += oldText[i]
+                else:
+                    newText += oldText[i]
+            except:
+                newText += oldText[i]
+
+        return newText
+
     def __speak(self, text=None, acss=None, interrupt=True):
         """Speaks all queued text immediately.  If text is not None,
         it is added to the queue before speaking.
@@ -557,28 +603,7 @@ class SpeechServer(speechserver.SpeechServer):
                 speech.stop()
             return -1
 
-        # If the text to speak is a single character, see if we have a
-        # customized character pronunciation
-        #
-        if len(text) == 1:
-            try:
-                text = chnames[text.lower()]
-            except:
-                pass
-        else:
-            # Replace ellipses (both manual and unicode) with "dot dot dot"
-            #
-            text = text.replace("...", _(" dot dot dot"), 1)
-            text = text.replace("\342\200\246",  _(" dot dot dot"), 1)
-
-        # [[[TODO: HACK - We're going to add whitespace after "["
-        # because DECtalk wants to interpret these as inline DECtalk
-        # commands.]]]
-        #
-        # [[[UPDATE: commented this out because gnome-speech-0.4.0 now
-        # tells DECtalk to do a [:phon off], reducing this problem.]]]
-        #
-        #text = text.replace("[", "[ ")
+        text = self.__addVerbalizedPunctuation(text)
 
         try:
             # [[[TODO: WDW - back this stop out for now.  The problem is

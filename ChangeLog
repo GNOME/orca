@@ -1,5 +1,15 @@
 2006-06-22  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/Makefile.am:
+          src/orca/chnames.py:
+          src/orca/gnomespeechfactory.py:
+          src/orca/punctuation_settings.py:
+          src/orca/settings.py:
+          Added in verbalized punctuation support. See comments at the
+          beginning of punctuation_settings.py for more details.
+
+2006-06-22  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/orca-setup.glade:
           src/orca/orca_gui_prefs.py:
           src/orca/orca_prefs.py
