@@ -1,5 +1,19 @@
 2006-06-22  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/settings.py:
+          Default setting for verbalized punctuation is now
+          settings.PUNCTUATION_STYLE_MOST.
+
+        * src/orca/gnomespeechfactory.py:
+          In __addVerbalizedPunctuation(), if the user has style
+          settings.PUNCTUATION_STYLE_NONE, just return the old text.
+
+          In __addVerbalizedPunctuation(), add a space after the spoken
+          equivalent of the punctuation, so that DECtalk doesn't speak 
+          it twice.
+
+2006-06-22  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/Makefile.am:
           src/orca/chnames.py:
           src/orca/gnomespeechfactory.py:

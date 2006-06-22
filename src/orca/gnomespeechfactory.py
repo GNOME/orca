@@ -547,16 +547,19 @@ class SpeechServer(speechserver.SpeechServer):
         oldText = oldText.replace("...", _(" dot dot dot"), 1)
         oldText = oldText.replace("\342\200\246",  _(" dot dot dot"), 1)
 
+        style = settings.verbalizePunctuationStyle
+        if style == settings.PUNCTUATION_STYLE_NONE:
+            return oldText
+
         newText = ''
         for i in range(0, len(oldText)):
             try:
-                style = settings.verbalizePunctuationStyle
                 level, action = punctuation[oldText[i]]
                 if style != settings.PUNCTUATION_STYLE_NONE and \
                     style <= level:
                     newText += " " + chnames[oldText[i]]
                     if action == punctuation_settings.PUNCTUATION_INSERT:
-                        newText += oldText[i]
+                        newText += oldText[i] + " "
                 else:
                     newText += oldText[i]
             except:

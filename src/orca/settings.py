@@ -125,7 +125,7 @@ PUNCTUATION_STYLE_NONE = 3
 PUNCTUATION_STYLE_SOME = 2
 PUNCTUATION_STYLE_MOST = 1
 PUNCTUATION_STYLE_ALL  = 0
-verbalizePunctuationStyle = PUNCTUATION_STYLE_ALL
+verbalizePunctuationStyle = PUNCTUATION_STYLE_MOST
 
 # The absolue amount to change the speech rate when
 # increasing or decreasing speech.  This is a numerical
