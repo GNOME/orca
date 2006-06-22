@@ -555,8 +555,7 @@ class SpeechServer(speechserver.SpeechServer):
         for i in range(0, len(oldText)):
             try:
                 level, action = punctuation[oldText[i]]
-                if style != settings.PUNCTUATION_STYLE_NONE and \
-                    style <= level:
+                if style <= level:
                     newText += " " + chnames[oldText[i]]
                     if action == punctuation_settings.PUNCTUATION_INSERT:
                         newText += oldText[i] + " "
