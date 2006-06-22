@@ -544,17 +544,8 @@ class SpeechServer(speechserver.SpeechServer):
 
         ## Replace ellipses (both manual and unicode) with "dot dot dot"
         ##
-        #oldText = oldText.replace("...", _(" dot dot dot"), 1)
-        #oldText = oldText.replace("\342\200\246",  _(" dot dot dot"), 1)
-
-        # [[[TODO: HACK - We're going to add whitespace after "["
-        # because DECtalk wants to interpret these as inline DECtalk
-        # commands.]]]
-        #
-        # [[[UPDATE: commented this out because gnome-speech-0.4.0 now
-        # tells DECtalk to do a [:phon off], reducing this problem.]]]
-        #
-        #text = text.replace("[", "[ ")
+        oldText = oldText.replace("...", _(" dot dot dot"), 1)
+        oldText = oldText.replace("\342\200\246",  _(" dot dot dot"), 1)
 
         newText = ''
         for i in range(0, len(oldText)):
@@ -562,7 +553,7 @@ class SpeechServer(speechserver.SpeechServer):
                 style = settings.verbalizePunctuationStyle
                 level, action = punctuation[oldText[i]]
                 if style != settings.PUNCTUATION_STYLE_NONE and \
-                    level <= settings.verbalizePunctuationStyle:
+                    style <= level:
                     newText += " " + chnames[oldText[i]]
                     if action == punctuation_settings.PUNCTUATION_INSERT:
                         newText += oldText[i]
