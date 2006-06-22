@@ -212,6 +212,9 @@ class orcaSetupGUI(GladeWrapper):
         elif prefs["verbalizePunctuationStyle"] == \
                                settings.PUNCTUATION_STYLE_SOME:
             self.someButton.set_active(True)
+        elif prefs["verbalizePunctuationStyle"] == \
+                               settings.PUNCTUATION_STYLE_MOST:
+            self.mostButton.set_active(True)
         else:
             self.allButton.set_active(True)
 
@@ -1013,12 +1016,15 @@ class orcaSetupGUI(GladeWrapper):
         """
 
         if widget.get_active():
-            if widget.get_label() == _("None"):
+            if widget.get_label() == _("_None"):
                 self.prefsDict["verbalizePunctuationStyle"] = \
                     settings.PUNCTUATION_STYLE_NONE
-            elif widget.get_label() == _("Some"):
+            elif widget.get_label() == _("So_me"):
                 self.prefsDict["verbalizePunctuationStyle"] = \
                     settings.PUNCTUATION_STYLE_SOME
+            elif widget.get_label() == _("M_ost"):
+                self.prefsDict["verbalizePunctuationStyle"] = \
+                    settings.PUNCTUATION_STYLE_MOST
             else:
                 self.prefsDict["verbalizePunctuationStyle"] = \
                     settings.PUNCTUATION_STYLE_ALL
@@ -1036,7 +1042,7 @@ class orcaSetupGUI(GladeWrapper):
         """
 
         if widget.get_active():
-            if widget.get_label() == _("Brief"):
+            if widget.get_label() == _("Brie_f"):
                 self.prefsDict["speechVerbosityLevel"] = \
                     settings.VERBOSITY_LEVEL_BRIEF
             else:
@@ -1056,7 +1062,7 @@ class orcaSetupGUI(GladeWrapper):
         """
 
         if widget.get_active():
-            if widget.get_label().endswith(_("cell")):
+            if widget.get_label() == _("_cell"):
                 self.prefsDict["readTableCellRow"] = False
             else:
                 self.prefsDict["readTableCellRow"] = True
@@ -1091,7 +1097,7 @@ class orcaSetupGUI(GladeWrapper):
         """
 
         if widget.get_active():
-            if widget.get_label() == _("Brief"):
+            if widget.get_label() == _("Brie_f"):
                 self.prefsDict["brailleVerbosityLevel"] = \
                     settings.VERBOSITY_LEVEL_BRIEF
             else:

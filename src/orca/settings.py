@@ -123,7 +123,8 @@ brailleRolenameStyle    = BRAILLE_ROLENAME_STYLE_LONG
 #
 PUNCTUATION_STYLE_NONE = 0
 PUNCTUATION_STYLE_SOME = 1
-PUNCTUATION_STYLE_ALL  = 2
+PUNCTUATION_STYLE_MOST = 2
+PUNCTUATION_STYLE_ALL  = 3
 verbalizePunctuationStyle = PUNCTUATION_STYLE_ALL
 
 # The absolue amount to change the speech rate when

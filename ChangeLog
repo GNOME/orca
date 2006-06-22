@@ -1,3 +1,18 @@
+2006-06-22  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca-setup.glade:
+          src/orca/orca_gui_prefs.py:
+          src/orca/orca_prefs.py
+          src/orca/settings.py:
+          Added in a new radio button "Most" to the punctuation verbosity
+          group on the speech pane in the configuration GUI. Adjusted the
+          callback and initialisation routines to handle this properly.
+
+        * src/orca/orca_gui_prefs.py:
+          The checks against various widget labels on the configuration GUI
+          was not taking into consideration the underline characters used
+          as accelerators.
+
 2006-06-21  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Makefile.am, src/orca/J2SE-access-bridge.py: check in

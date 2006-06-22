@@ -167,6 +167,8 @@ def _getVerbalizePunctuationStyleString(punctuationStyle):
         return "orca.settings.PUNCTUATION_STYLE_NONE"
     elif punctuationStyle == settings.PUNCTUATION_STYLE_SOME:
         return "orca.settings.PUNCTUATION_STYLE_SOME"
+    elif punctuationStyle == settings.PUNCTUATION_STYLE_MOST:
+        return "orca.settings.PUNCTUATION_STYLE_MOST"
     elif punctuationStyle == settings.PUNCTUATION_STYLE_ALL:
         return "orca.settings.PUNCTUATION_STYLE_ALL"
     else:
