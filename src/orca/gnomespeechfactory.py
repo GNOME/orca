@@ -536,6 +536,10 @@ class SpeechServer(speechserver.SpeechServer):
         punctuation symbol or be inserted before it. In the latter case, 
         this is to retain spoken prosity.
 
+        If we are moving around by single characters, then always speak 
+        the punctuation. We try to detect this by looking for just a 
+        single character being spoken.
+
         Arguments:
         - oldText:      text to be parsed for punctuation.
 
@@ -547,15 +551,16 @@ class SpeechServer(speechserver.SpeechServer):
         oldText = oldText.replace("...", _(" dot dot dot"), 1)
         oldText = oldText.replace("\342\200\246",  _(" dot dot dot"), 1)
 
+        print "Length of old text: ", len(oldText)
         style = settings.verbalizePunctuationStyle
-        if style == settings.PUNCTUATION_STYLE_NONE:
+        if len(oldText) != 1 and style == settings.PUNCTUATION_STYLE_NONE:
             return oldText
 
         newText = ''
         for i in range(0, len(oldText)):
             try:
                 level, action = punctuation[oldText[i]]
-                if style <= level:
+                if len(oldText) == 1 or style <= level:
                     newText += " " + chnames[oldText[i]]
                     if action == punctuation_settings.PUNCTUATION_INSERT:
                         newText += oldText[i] + " "
