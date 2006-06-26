@@ -17,6 +17,9 @@
           If this is a period and there is a non-space character on either 
           side of it, then always speak it.
 
+          Added a " " after each verbalized punctuation word to prevent
+          word concatenation.
+
         * bugs/bugs.html:
           Added in an entry for a new Evolution bug #345923:
           "[A11y] Unable to keyboard navigate to month view "day" 

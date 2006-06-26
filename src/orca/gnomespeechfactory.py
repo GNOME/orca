@@ -575,7 +575,7 @@ class SpeechServer(speechserver.SpeechServer):
                         print debug.printException(debug.LEVEL_OFF)
 
                 if len(oldText) == 1 or isSpecial or style <= level:
-                    newText += " " + chnames[oldText[i]]
+                    newText += " " + chnames[oldText[i]] + " "
                     if action == punctuation_settings.PUNCTUATION_INSERT:
                         newText += oldText[i]
                         if not isSpecial:
