@@ -1,9 +1,16 @@
 2006-06-26  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/gnomespeechfactory.py:
+          Slight change to the __addVerbalizedPunctuation() routine:
           If we are moving around by single characters, then always speak
           the punctuation. We try to detect this by looking for just a
           single character being spoken.
+
+          Another slight change to the __addVerbalizedPunctuation( ) routine:
+          For each of the characters in the text to be spoken, if it's
+          not a punctuation character, we still want to see if that
+          character is in the chnames dictionary, and if so, speak that
+          entry instead.
 
         * bugs/bugs.html:
           Added in an entry for a new Evolution bug #345923:

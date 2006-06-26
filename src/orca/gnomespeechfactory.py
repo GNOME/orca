@@ -551,7 +551,6 @@ class SpeechServer(speechserver.SpeechServer):
         oldText = oldText.replace("...", _(" dot dot dot"), 1)
         oldText = oldText.replace("\342\200\246",  _(" dot dot dot"), 1)
 
-        print "Length of old text: ", len(oldText)
         style = settings.verbalizePunctuationStyle
         if len(oldText) != 1 and style == settings.PUNCTUATION_STYLE_NONE:
             return oldText
@@ -567,7 +566,10 @@ class SpeechServer(speechserver.SpeechServer):
                 else:
                     newText += oldText[i]
             except:
-                newText += oldText[i]
+                try:
+                    newText += chnames[oldText[i].lower()]
+                except:
+                    newText += oldText[i]
 
         return newText
 
