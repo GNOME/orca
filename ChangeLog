@@ -1,3 +1,10 @@
+2006-06-26  Rich Burridge <rich.burridge@sun.com>
+
+        * bugs/bugs.html:
+          Added in an entry for a new Evolution bug #345923:
+          "[A11y] Unable to keyboard navigate to month view "day" 
+          entries, when no initial events."
+
 2006-06-22  Rhys Jones  <rhys@sucs.org>
 
 	* configure.in: Added "cy" (Welsh) to ALL_LINGUAS.
