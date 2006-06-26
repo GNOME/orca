@@ -36,7 +36,7 @@ chnames["\t"] = _("tab")
 chnames["!"] = _("exclaim")
 chnames["'"] = _("apostrophe")
 chnames[","] = _("comma")
-chnames["."] = _("period")
+chnames["."] = _("dot")
 chnames["?"] = _("question")
 
 chnames["\""] = _("quote")
