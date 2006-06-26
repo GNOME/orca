@@ -5,6 +5,10 @@
           "[A11y] Unable to keyboard navigate to month view "day" 
           entries, when no initial events."
 
+          Added in an entry for a new Evolution bug #345969:
+          "[A11y] Evolution crashes when trying to creat a calendar event
+          when Orca screen reader is running."
+
 2006-06-22  Rhys Jones  <rhys@sucs.org>
 
 	* configure.in: Added "cy" (Welsh) to ALL_LINGUAS.
