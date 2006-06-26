@@ -12,6 +12,11 @@
           character is in the chnames dictionary, and if so, speak that
           entry instead.
 
+          Another slight change to the __addVerbalizedPunctuation( ) routine:
+          Special case for periods in text like filenames or URL's:
+          If this is a period and there is a non-space character on either 
+          side of it, then always speak it.
+
         * bugs/bugs.html:
           Added in an entry for a new Evolution bug #345923:
           "[A11y] Unable to keyboard navigate to month view "day" 

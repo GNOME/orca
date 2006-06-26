@@ -25,6 +25,8 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import string
+
 import bonobo
 
 import atspi
@@ -552,23 +554,38 @@ class SpeechServer(speechserver.SpeechServer):
         oldText = oldText.replace("\342\200\246",  _(" dot dot dot"), 1)
 
         style = settings.verbalizePunctuationStyle
-        if len(oldText) != 1 and style == settings.PUNCTUATION_STYLE_NONE:
-            return oldText
-
         newText = ''
         for i in range(0, len(oldText)):
             try:
                 level, action = punctuation[oldText[i]]
-                if len(oldText) == 1 or style <= level:
+
+                # Special case for periods in text like filenames or URL's:
+                # If this is a period and there is a non-space character
+                # on either side of it, then always speak it.
+                #
+                isPrev = isNext = isSpecial = False
+                if oldText[i] == "." and len(oldText) != 1:
+                    try:
+                        if i > 0:
+                            isPrev = not (oldText[i-1] in string.whitespace)
+                        if i < len(oldText)-1:
+                            isNext = not (oldText[i+1] in string.whitespace)
+                        isSpecial = isPrev and isNext
+                    except:
+                        print debug.printException(debug.LEVEL_OFF)
+
+                if len(oldText) == 1 or isSpecial or style <= level:
                     newText += " " + chnames[oldText[i]]
                     if action == punctuation_settings.PUNCTUATION_INSERT:
-                        newText += oldText[i] + " "
+                        newText += oldText[i]
+                        if not isSpecial:
+                            newText += " "
                 else:
                     newText += oldText[i]
             except:
-                try:
+                if len(oldText) == 1 and chnames.has_key(oldText[i]):
                     newText += chnames[oldText[i].lower()]
-                except:
+                else:
                     newText += oldText[i]
 
         return newText
