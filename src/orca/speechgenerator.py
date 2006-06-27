@@ -212,8 +212,6 @@ class SpeechGenerator:
         if (obj.role != rolenames.ROLE_UNKNOWN):
             return [rolenames.getSpeechForRoleName(obj)]
 
-
-        
     def _debugGenerator(self, generatorName, obj, already_focused, utterances):
         """Prints debug.LEVEL_FINER information regarding the speech generator.
 
