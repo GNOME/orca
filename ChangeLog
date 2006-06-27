@@ -1,3 +1,6 @@
+2006-06-27  Runa Bhattacharjee <runa@bengalinux.org>
+	* configure.in: Added Bengali (bn) to ALL_LINGUAS.
+
 2006-06-26  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/gnomespeechfactory.py:
