@@ -209,11 +209,10 @@ class SpeechGenerator:
             return []
 
     def _getSpeechForObjectRole(self, obj):
-        if (settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE)\
-           and (obj.role != rolenames.ROLE_UNKNOWN):
+        if (obj.role != rolenames.ROLE_UNKNOWN):
             return [rolenames.getSpeechForRoleName(obj)]
-        else:
-            return []
+
+
         
     def _debugGenerator(self, generatorName, obj, already_focused, utterances):
         """Prints debug.LEVEL_FINER information regarding the speech generator.

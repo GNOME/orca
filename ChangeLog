@@ -1,3 +1,8 @@
+2006-06-27  Mike Pedersen <michael.pedersen@sun.com> 
+
+        *  src/orca/speechgenerator.py
+          Slight change to brief verbosity to speak buttons and combo boxes.
+
 2006-06-27  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py:
