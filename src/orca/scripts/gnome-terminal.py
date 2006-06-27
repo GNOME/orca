@@ -140,6 +140,11 @@ class Script(default.Script):
         #
         # We'll let our super class handle "Delete".  We'll handle Ctrl+D.
         #
+
+        if not orca.lastInputEvent or \
+            not isinstance(orca.lastInputEvent, input_event.KeyboardEvent):
+            return
+
         keyString = orca.lastInputEvent.event_string
 
         controlPressed = orca.lastInputEvent.modifiers \

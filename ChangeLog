@@ -4,6 +4,11 @@
           Added in support for speech indentation in the mail message
           areas. See also bug #346031, for a current limitation.
 
+        * src/orca/scripts/gnome-terminal.py:
+          Adjusted the onTextInserted() method to just return if
+          orca.lastInputEvent was None or if this wasn't a keyboard
+          event.
+
 2006-06-27  Willie Walker <william.walker@sun.com>
 
 	* src/orca/braille.py, src/orca/flat_review.py: more fixing for
