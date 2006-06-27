@@ -1102,6 +1102,8 @@ def getZonesFromAccessible(accessible, cliprect):
             #
             if startOffset < 0:
                 break
+            if endOffset < offset:
+                break
 
             # [[[WDW - HACK: this is here because getTextAtOffset
             # tends not to be implemented consistently across toolkits.

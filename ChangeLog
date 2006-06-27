@@ -1,4 +1,14 @@
+2006-06-27  Willie Walker <william.walker@sun.com>
+
+	* src/orca/braille.py, src/orca/flat_review.py: more fixing for
+	bug 343133 where Orca would hang when going into flat review of a
+	man page in gnome-terminal.  The problem is that the AT-SPI
+	implementation of text in gnome-terminal appears to produce
+	inaccurate and wild results.  We need to handle this defensively.
+	
+
 2006-06-27  Runa Bhattacharjee <runa@bengalinux.org>
+
 	* configure.in: Added Bengali (bn) to ALL_LINGUAS.
 
 2006-06-26  Rich Burridge <rich.burridge@sun.com>

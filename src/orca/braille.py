@@ -279,17 +279,29 @@ class Text(Region):
         """
 
         self.accessible = accessible
-        result = util.getTextLineAtCaret(self.accessible)
-        self.caretOffset = result[1]
-        self.lineOffset = result[2]
+        [string, self.caretOffset, self.lineOffset] = \
+                 util.getTextLineAtCaret(self.accessible)
+
+        # Sometimes, gnome-terminal will give us very odd values when
+        # the user is editing using 'vi' and has positioned the caret
+        # at the first character of the first line.  In this case, we
+        # end up getting a very large negative number for the line offset.
+        # So, we just assume the user is at the first character.
+        #
+        if self.lineOffset < 0:
+            self.caretOffset = 0
+            self.lineOffset = 0
+            [string, startOffset, endOffset] = \
+                self.accessible.text.getTextAtOffset(
+                    0,
+                    atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+
         cursorOffset = self.caretOffset - self.lineOffset
 
         self.label = label
         if self.label:
-            string = self.label + " " + result[0]
+            string = self.label + " " + string
             cursorOffset += len(self.label) + 1
-        else:
-            string = result[0]
 
         Region.__init__(self, string, cursorOffset)
 
