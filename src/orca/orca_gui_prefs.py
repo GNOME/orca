@@ -32,6 +32,7 @@ __license__   = "LGPL"
 
 import os
 import sys
+import time
 import debug
 import gettext
 import gtk
@@ -708,6 +709,16 @@ class orcaSetupGUI(GladeWrapper):
         """Show the Orca configuration GUI window. This assumes that
         the GUI has already been created.
         """
+
+        # Set the current time on the Configuration GUI window so that it'll
+        # get focus. set_user_time is a new call in pygtk 2.9.2 or later.
+        # It's surronded by a try/except block here so that if it's not found,
+        # then we can fail gracefully.
+        #
+        try:
+            self.orcaSetupWindow.window.set_user_time(int(time.time()))
+        except:
+            debug.printException(debug.LEVEL_FINEST)
 
         self.orcaSetupWindow.show()
 
@@ -1415,8 +1426,8 @@ def showPreferencesUI():
                                  "orca-setup.glade")
         OS = orcaSetupGUI(gladeFile, "orcaSetupWindow")
         OS._init()
-    else:
-        OS._showGUI()
+
+    OS._showGUI()
 
 def main():
     locale.setlocale(locale.LC_ALL, '')
