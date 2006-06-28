@@ -32,7 +32,6 @@ __license__   = "LGPL"
 
 import os
 import sys
-import time
 import debug
 import gettext
 import gtk
@@ -716,9 +715,9 @@ class orcaSetupGUI(GladeWrapper):
         # then we can fail gracefully.
         #
         try:
-            self.orcaSetupWindow.window.set_user_time(int(time.time()))
-        except:
-            debug.printException(debug.LEVEL_FINEST)
+            self.orcaSetupWindow.window.set_user_time(0)
+        except AttributeError:
+            debug.printException(debug.LEVEL_OFF)
 
         self.orcaSetupWindow.show()
 

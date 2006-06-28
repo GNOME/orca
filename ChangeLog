@@ -6,6 +6,9 @@
           in pygtk 2.9.2 or later. It's surronded by a try/except block 
           here so that if it's not found, then we can fail gracefully.
 
+          Couple of refinements suggested by Gustavo. See bug #343897
+          for more details.
+
         * src/orca/default.py:
           Fixed bug #341388. Small change in the processObjectEvent() 
           routine. If we receive a "window:deactivate" event for the 
