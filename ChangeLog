@@ -1,3 +1,12 @@
+2006-06-28  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          Fixed bug #341388. Small change in the processObjectEvent() 
+          routine. If we receive a "window:deactivate" event for the 
+          object that currently has focus, then stop the current speech 
+          output. This is very useful for terminating long speech output 
+          from commands running in gnome-terminal.
+
 2006-06-27  Mike Pedersen <michael.pedersen@sun.com> 
 
         *  src/orca/speechgenerator.py

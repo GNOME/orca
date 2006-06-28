@@ -557,6 +557,15 @@ class Script(script.Script):
         - event: the Event
         """
 
+        # If we receive a "window:deactivate" event for the object that 
+        # currently has focus, then stop the current speech output. 
+        # This is very useful for terminating long speech output from 
+        # commands running in gnome-terminal.
+        #
+        if event.type.find("window:deactivate") != -1:
+            if orca.locusOfFocus and (orca.locusOfFocus.app == event.source.app):
+                speech.stop()
+
         # [[[TODO: WDW - HACK to set Orca's locusOfFocus if we've somehow
         # gotten out of whack.  This typically happens when going into an
         # application and we only get a window activated event for it, even
