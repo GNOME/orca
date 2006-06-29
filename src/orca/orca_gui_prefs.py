@@ -715,7 +715,7 @@ class orcaSetupGUI(GladeWrapper):
         # then we can fail gracefully.
         #
         try:
-            self.orcaSetupWindow.window.set_user_time(0)
+            self.orcaSetupWindow.window.set_user_time(orca.lastTimestamp)
         except AttributeError:
             debug.printException(debug.LEVEL_OFF)
 

@@ -1,3 +1,10 @@
+2006-06-29  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca_gui_prefs.py:
+          Refinement to the fix for bug #343897. I now use the timestamp 
+          from the last AT-SPI device event as the parameter to 
+          set_user_time().
+
 2006-06-28  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca_gui_prefs.py:

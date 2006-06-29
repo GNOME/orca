@@ -75,6 +75,11 @@ _userSettings = None
 #
 lastInputEvent = None
 
+# The last timestamp from a device event. Used to set focus for the Orca
+# configuration GUI.
+#
+lastTimestamp = None
+
 # A new modifier to use (set by the press of any key in the
 # settings.orcaModifierKeys list) to represent the Orca modifier.
 #
@@ -689,7 +694,10 @@ def _processKeyboardEvent(event):
     Returns True if the event should be consumed.
     """
     global lastInputEvent
+    global lastTimestamp
     global _orcaModifierPressed
+
+    lastTimestamp = event.timestamp
 
     # Log the keyboard event for future playback, if desired.
     # Note here that the key event_string being output is
