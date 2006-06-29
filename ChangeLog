@@ -1,3 +1,7 @@
+2006-06-29  Guntupalli Karunakar  <karunakar@indlinux.org>
+
+	* configure.in: Added 'dz' (Dzongkha) to ALL_LINGUAS.
+
 2006-06-29  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca_gui_prefs.py:
