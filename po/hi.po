@@ -1,3 +1,4 @@
+# translation of hi.po to Hindi
 # translation of orca.HEAD.po to Hindi
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
@@ -5,10 +6,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: orca.HEAD\n"
+"Project-Id-Version: hi\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-06-29 07:59+0200\n"
-"PO-Revision-Date: 2006-06-29 11:35+0530\n"
+"PO-Revision-Date: 2006-06-29 16:55+0530\n"
 "Last-Translator: Rajesh Ranjan <rranjan@redhat.com>\n"
 "Language-Team: Hindi <fedora-trans-hi@redhat.com>\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +20,7 @@ msgstr ""
 
 #: ../src/orca/braillegenerator.py:193 ../src/orca/speechgenerator.py:191
 msgid "grayed"
-msgstr ""
+msgstr " ग्रे किया"
 
 #: ../src/orca/braillegenerator.py:1069 ../src/orca/speechgenerator.py:1184
 msgid "expanded"
@@ -32,7 +33,7 @@ msgstr "गिर गया"
 #: ../src/orca/braillegenerator.py:1075
 #, python-format
 msgid "TREE LEVEL %d"
-msgstr ""
+msgstr "ट्री स्तर %d"
 
 #: ../src/orca/chnames.py:32
 msgid "space"
@@ -40,7 +41,7 @@ msgstr "स्थान"
 
 #: ../src/orca/chnames.py:33
 msgid "newline"
-msgstr ""
+msgstr "न्यूलाइन"
 
 #: ../src/orca/chnames.py:34
 msgid "tab"
@@ -48,7 +49,7 @@ msgstr "टैब"
 
 #: ../src/orca/chnames.py:36
 msgid "exclaim"
-msgstr ""
+msgstr "विस्मयादिबोधक"
 
 #: ../src/orca/chnames.py:37
 msgid "apostrophe"
@@ -60,23 +61,23 @@ msgstr "विराम चिह्न"
 
 #: ../src/orca/chnames.py:39
 msgid "dot"
-msgstr ""
+msgstr "डॉट"
 
 #: ../src/orca/chnames.py:40
 msgid "question"
-msgstr ""
+msgstr "प्रश्न"
 
 #: ../src/orca/chnames.py:42
 msgid "quote"
-msgstr ""
+msgstr "उद्धरण"
 
 #: ../src/orca/chnames.py:43
 msgid "left paren"
-msgstr ""
+msgstr "बायाँ पैरन"
 
 #: ../src/orca/chnames.py:44
 msgid "right paren"
-msgstr ""
+msgstr "दायाँ पैरन"
 
 #: ../src/orca/chnames.py:45
 msgid "dash"
@@ -84,11 +85,11 @@ msgstr "टूटी-रेखा"
 
 #: ../src/orca/chnames.py:46
 msgid "underscore"
-msgstr ""
+msgstr "अंडरस्कोर"
 
 #: ../src/orca/chnames.py:47
 msgid "colon"
-msgstr ""
+msgstr "कॉलन"
 
 #: ../src/orca/chnames.py:48
 msgid "semicolon"
@@ -96,19 +97,19 @@ msgstr "अर्द्ध विराम"
 
 #: ../src/orca/chnames.py:49
 msgid "less than"
-msgstr ""
+msgstr "इससे कम"
 
 #: ../src/orca/chnames.py:50
 msgid "greater than"
-msgstr ""
+msgstr "इससे अधिक"
 
 #: ../src/orca/chnames.py:51
 msgid "left bracket"
-msgstr ""
+msgstr "बायाँ कोष्ठ"
 
 #: ../src/orca/chnames.py:52
 msgid "right bracket"
-msgstr ""
+msgstr "दायाँ कोष्ठ"
 
 #: ../src/orca/chnames.py:53
 msgid "backslash"
@@ -116,35 +117,35 @@ msgstr "बैकस्लैश"
 
 #: ../src/orca/chnames.py:54
 msgid "vertical line"
-msgstr ""
+msgstr "लंबवत पंक्ति"
 
 #: ../src/orca/chnames.py:55
 msgid "grave accent"
-msgstr ""
+msgstr "संगीन बोली"
 
 #: ../src/orca/chnames.py:56
 msgid "tilde"
-msgstr ""
+msgstr "टिल्डे"
 
 #: ../src/orca/chnames.py:57
 msgid "left brace"
-msgstr ""
+msgstr "बायाँ ब्रेस"
 
 #: ../src/orca/chnames.py:58
 msgid "right brace"
-msgstr ""
+msgstr "दायाँ ब्रेस"
 
 #: ../src/orca/chnames.py:60
 msgid "pound"
-msgstr ""
+msgstr "पॉउंड"
 
 #: ../src/orca/chnames.py:61
 msgid "dollar"
-msgstr ""
+msgstr "डॉलर"
 
 #: ../src/orca/chnames.py:62 ../src/orca/speechgenerator.py:849
 msgid "percent"
-msgstr ""
+msgstr "प्रतिशत"
 
 #: ../src/orca/chnames.py:63
 msgid "and"
@@ -152,11 +153,11 @@ msgstr "और"
 
 #: ../src/orca/chnames.py:64
 msgid "star"
-msgstr ""
+msgstr "तारा"
 
 #: ../src/orca/chnames.py:65
 msgid "plus"
-msgstr ""
+msgstr "जोड़"
 
 #: ../src/orca/chnames.py:66
 msgid "slash"
@@ -164,79 +165,91 @@ msgstr "स्लैश"
 
 #: ../src/orca/chnames.py:67
 msgid "equals"
-msgstr ""
+msgstr "बराबर"
 
 #: ../src/orca/chnames.py:68
 msgid "at"
-msgstr ""
+msgstr "एट"
 
 #: ../src/orca/chnames.py:69
 msgid "caret"
-msgstr ""
+msgstr "हंसपद"
 
 #: ../src/orca/default.py:76
+#, fuzzy
 msgid "Performs left click on current flat review item."
-msgstr ""
+msgstr "बायाँ क्लिक पर मद."
 
 #: ../src/orca/default.py:80
+#, fuzzy
 msgid "Performs right click on current flat review item."
-msgstr ""
+msgstr "दायाँ क्लिक पर मद."
 
 #: ../src/orca/default.py:84 ../src/orca/scripts/Evolution.py:107
 msgid "Speaks entire document."
-msgstr ""
+msgstr "पूर्ण दस्तावेज के बारे में बतायें"
 
 #: ../src/orca/default.py:88
+#, fuzzy
 msgid "Performs the where am I operation."
-msgstr ""
+msgstr "पूर्वाह्न Iैं."
 
 #: ../src/orca/default.py:92
+#, fuzzy
 msgid "Paints and prints the visible zones in the active window."
-msgstr ""
+msgstr "और दृष्टिगोच़र इं सक्रिय विंडो."
 
 #: ../src/orca/default.py:96
+#, fuzzy
 msgid "Enters and exits flat review mode."
-msgstr ""
+msgstr "और मोड."
 
 #: ../src/orca/default.py:100
+#, fuzzy
 msgid "Moves flat review to the beginning of the previous line."
-msgstr ""
+msgstr "का."
 
 #: ../src/orca/default.py:104
+#, fuzzy
 msgid "Moves flat review to the home position."
-msgstr ""
+msgstr "घर."
 
 #: ../src/orca/default.py:108
 msgid "Speaks the current flat review line."
 msgstr ""
 
 #: ../src/orca/default.py:112
+#, fuzzy
 msgid "Moves flat review to the beginning of the next line."
-msgstr ""
+msgstr "का."
 
 #: ../src/orca/default.py:116
+#, fuzzy
 msgid "Moves flat review to the end position."
-msgstr ""
+msgstr "अंत."
 
 #: ../src/orca/default.py:120
+#, fuzzy
 msgid "Moves flat review to the previous item or word."
-msgstr ""
+msgstr "मद."
 
 #: ../src/orca/default.py:124
 msgid "Moves flat review to the word above the current word."
 msgstr ""
 
 #: ../src/orca/default.py:128
+#, fuzzy
 msgid "Speaks the current flat review item or word."
-msgstr ""
+msgstr "मद."
 
 #: ../src/orca/default.py:132
 msgid "Speaks the current flat review object."
 msgstr ""
 
 #: ../src/orca/default.py:136
+#, fuzzy
 msgid "Moves flat review to the next item or word."
-msgstr ""
+msgstr "मद."
 
 #: ../src/orca/default.py:140
 msgid "Moves flat review to the word below the current word."
@@ -247,8 +260,9 @@ msgid "Moves flat review to the previous character."
 msgstr ""
 
 #: ../src/orca/default.py:148
+#, fuzzy
 msgid "Moves flat review to the end of the line."
-msgstr ""
+msgstr "अंत का."
 
 #: ../src/orca/default.py:152
 msgid "Speaks the current flat review character."
@@ -259,37 +273,44 @@ msgid "Moves flat review to the next character."
 msgstr ""
 
 #: ../src/orca/default.py:160
+#, fuzzy
 msgid "Toggles whether to read just the current table cell or the whole row."
-msgstr ""
+msgstr "पढ़ें तालिका."
 
 #: ../src/orca/default.py:164
+#, fuzzy
 msgid "Reads the attributes associated with the current text character."
-msgstr ""
+msgstr "के साथ पाठ."
 
 #: ../src/orca/default.py:168
+#, fuzzy
 msgid "Reports information on current script."
-msgstr ""
+msgstr "पर."
 
 #: ../src/orca/default.py:172
+#, fuzzy
 msgid "Pans the braille display to the left."
-msgstr ""
+msgstr "ब्रेल बायाँ."
 
 #: ../src/orca/default.py:176
+#, fuzzy
 msgid "Pans the braille display to the right."
-msgstr ""
+msgstr "ब्रेल दायाँ."
 
 #: ../src/orca/default.py:180
+#, fuzzy
 msgid "Moves flat review to the bottom left."
-msgstr ""
+msgstr "नीचे बायाँ."
 
 #: ../src/orca/default.py:184
+#, fuzzy
 msgid "Returns to object with keyboard focus."
-msgstr ""
+msgstr "के साथ कुंजीपटल."
 
 #: ../src/orca/default.py:896 ../src/orca/default.py:1121
 #, python-format
 msgid "tree level %d"
-msgstr ""
+msgstr "ट्री स्तर %d"
 
 #: ../src/orca/default.py:900 ../src/orca/default.py:1147
 #: ../src/orca/default.py:1225 ../src/orca/default.py:1290
@@ -298,20 +319,20 @@ msgstr "कोई फ़ोकस नहीं"
 
 #: ../src/orca/default.py:1533
 msgid "entire document selected"
-msgstr ""
+msgstr "पूर्ण दस्तावेज चयनित"
 
 #: ../src/orca/default.py:1888
 msgid "Speak "
-msgstr ""
+msgstr "बोलें"
 
 #: ../src/orca/default.py:1891
 msgid "row"
-msgstr ""
+msgstr "पंक्ति"
 
 #: ../src/orca/default.py:1893 ../src/orca/rolenames.py:432
 #: ../src/orca/rolenames.py:434
 msgid "cell"
-msgstr ""
+msgstr "सेल"
 
 #: ../src/orca/default.py:2340 ../src/orca/default.py:2434
 #: ../src/orca/default.py:2439 ../src/orca/default.py:2509
@@ -321,105 +342,109 @@ msgstr "खाली"
 
 #: ../src/orca/default.py:2342 ../src/orca/default.py:2441
 msgid "white space"
-msgstr ""
+msgstr "खाली स्थान"
 
 #: ../src/orca/espeechfactory.py:93
+#, fuzzy
 msgid "Emacspeak Speech Services"
-msgstr ""
+msgstr "भाषण सेवाएँ"
 
 #: ../src/orca/focus_tracking_presenter.py:631
+#, fuzzy
 msgid "Switching to focus tracking mode."
-msgstr ""
+msgstr "मोड."
 
 #: ../src/orca/gnomespeechfactory.py:154
 msgid "GNOME Speech Services"
-msgstr ""
+msgstr "गनोम भाषण सेवाएँ"
 
 #. # Replace ellipses (both manual and unicode) with "dot dot dot"
 #. #
 #: ../src/orca/gnomespeechfactory.py:553 ../src/orca/gnomespeechfactory.py:554
 msgid " dot dot dot"
-msgstr ""
+msgstr " dot dot dot"
 
 #: ../src/orca/gnomespeechfactory.py:712
 msgid "higher."
-msgstr ""
+msgstr "उच्चतर."
 
 #: ../src/orca/gnomespeechfactory.py:740
 msgid "lower."
-msgstr ""
+msgstr "निचला."
 
 #: ../src/orca/gnomespeechfactory.py:765
 msgid "faster."
-msgstr ""
+msgstr "तेज."
 
 #: ../src/orca/gnomespeechfactory.py:795
 msgid "slower."
-msgstr ""
+msgstr "धीमा."
 
 #: ../src/orca/hierarchical_presenter.py:436
+#, fuzzy
 msgid "Switching to hierarchical navigation mode."
-msgstr ""
+msgstr "मोड."
 
 #: ../src/orca/keynames.py:32 ../src/orca/keynames.py:35
 msgid "left shift"
-msgstr ""
+msgstr "बायाँ शिफ्ट"
 
 #: ../src/orca/keynames.py:33
 msgid "left alt"
-msgstr ""
+msgstr "बायाँ आल्ट"
 
 #: ../src/orca/keynames.py:34
 msgid "left control"
-msgstr ""
+msgstr "बायाँ कंट्रोल"
 
 #: ../src/orca/keynames.py:36
 msgid "right alt"
-msgstr ""
+msgstr "दायाँ आल्ट"
 
 #: ../src/orca/keynames.py:37
 msgid "right control"
-msgstr ""
+msgstr "दायाँ कंट्रोल"
 
 #: ../src/orca/keynames.py:38
 msgid "left tab"
-msgstr ""
+msgstr "बायाँ टैब"
 
 #: ../src/orca/keynames.py:39
 msgid "F 11"
-msgstr ""
+msgstr "F 11"
 
 #: ../src/orca/keynames.py:40
 msgid "F 12"
-msgstr ""
+msgstr "F 12"
 
 #: ../src/orca/orca-setup.glade.h:1
+#, fuzzy
 msgid "<b>Cross-hair Settings</b>"
-msgstr ""
+msgstr "<b> जमावट</b>"
 
 #: ../src/orca/orca-setup.glade.h:2
 msgid "<b>Cursor Settings</b>"
-msgstr ""
+msgstr "<b> कर्सर जमावट</b>"
 
 #: ../src/orca/orca-setup.glade.h:3
 msgid "<b>Punctuation Level</b>"
-msgstr ""
+msgstr "<b>विराम स्तर</b>"
 
 #: ../src/orca/orca-setup.glade.h:4
 msgid "<b>Table Row Speech</b>"
-msgstr ""
+msgstr "<b> सारणी पंक्ति भाषण</b>"
 
 #: ../src/orca/orca-setup.glade.h:5
 msgid "<b>Verbosity</b>"
-msgstr ""
+msgstr "<b>बर्बोसिटी</b>"
 
 #: ../src/orca/orca-setup.glade.h:6
 msgid "<b>Zoomer Position</b>"
-msgstr ""
+msgstr "<b> जूमर स्थिति</b>"
 
 #: ../src/orca/orca-setup.glade.h:7
 msgid "<b>Zoomer Settings</b>"
-msgstr ""
+msgstr "<b> जूमर जमावट</b>"
 
 #: ../src/orca/orca-setup.glade.h:8
 msgid "Braille"
@@ -428,112 +453,125 @@ msgstr "ब्रेल"
 #: ../src/orca/orca-setup.glade.h:9 ../src/orca/orca_gui_prefs.py:1055
 #: ../src/orca/orca_gui_prefs.py:1110
 msgid "Brie_f"
-msgstr ""
+msgstr "संक्षिप्त (_f)"
 
 #: ../src/orca/orca-setup.glade.h:10
+#, fuzzy
 msgid ""
 "Centered\n"
 "None\n"
 "Proportional\n"
 "Push"
-msgstr ""
+msgstr "केंद्रित"
 
 #: ../src/orca/orca-setup.glade.h:14
 msgid "Color:"
-msgstr ""
+msgstr "रंग:"
 
 #: ../src/orca/orca-setup.glade.h:15
 msgid "Custom siz_e"
-msgstr ""
+msgstr "अनुकूलित आकार (_e)"
 
 #: ../src/orca/orca-setup.glade.h:16
+#, fuzzy
 msgid ""
 "Default\n"
 "Uppercase\n"
 "Hyperlink"
-msgstr ""
+msgstr "डिफ़ॉल्ट"
 
 #: ../src/orca/orca-setup.glade.h:19
 msgid "Enable Braille _monitor"
-msgstr ""
+msgstr "ब्रेल मॉनिटर सक्षम करें (_m)"
 
 #: ../src/orca/orca-setup.glade.h:20
 msgid "Enable Braille _support"
-msgstr ""
+msgstr "ब्रेल मॉनिटर सक्षम करें (_s)"
 
 #: ../src/orca/orca-setup.glade.h:21
 msgid "Enable _alphanumeric and punctuation keys"
-msgstr ""
+msgstr "अक्षरसांख्यिक व विराम कुंजी सक्रिय करें (_a)"
 
 #: ../src/orca/orca-setup.glade.h:22
 msgid "Enable _function keys"
-msgstr ""
+msgstr "फंक्शन कुंजी सक्रिय करें (_f)"
 
 #: ../src/orca/orca-setup.glade.h:23
 msgid "Enable _key echo"
-msgstr ""
+msgstr "कुंजी इको सक्षम करें (_k)"
 
 #: ../src/orca/orca-setup.glade.h:24
 msgid "Enable _magnifier"
-msgstr ""
+msgstr "सक्षम आवर्धक (_m)"
 
 #: ../src/orca/orca-setup.glade.h:25
 msgid "Enable _modifier keys"
-msgstr ""
+msgstr "रूपांतरक कुंजी सक्रिय करें (_m)"
 
 #: ../src/orca/orca-setup.glade.h:26
 msgid "Enable ac_tion keys"
 msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:27
+#, fuzzy
 msgid "Enable c_ursor"
-msgstr ""
+msgstr "सक्षम c"
 
 #: ../src/orca/orca-setup.glade.h:28
+#, fuzzy
 msgid "Enable cross-h_air"
-msgstr ""
+msgstr "सक्षम"
 
 #: ../src/orca/orca-setup.glade.h:29
+#, fuzzy
 msgid "Enable cross-hair cli_p"
-msgstr ""
+msgstr "सक्षम"
 
 #: ../src/orca/orca-setup.glade.h:30
+#, fuzzy
 msgid "Enable echo by _word"
-msgstr ""
+msgstr "सक्षम"
 
 #: ../src/orca/orca-setup.glade.h:31
+#, fuzzy
 msgid "Enable lockin_g keys"
-msgstr ""
+msgstr "सक्षम"
 
 #: ../src/orca/orca-setup.glade.h:32
+#, fuzzy
 msgid "In_vert colors"
-msgstr ""
+msgstr "अन्दर"
 
 #: ../src/orca/orca-setup.glade.h:33
+#, fuzzy
 msgid "Key Echo"
-msgstr ""
+msgstr "कुंजी"
 
 #: ../src/orca/orca-setup.glade.h:34 ../src/orca/orca_gui_prefs.py:1035
+#, fuzzy
 msgid "M_ost"
-msgstr ""
+msgstr "एम"
 
 #: ../src/orca/orca-setup.glade.h:35
 msgid "Magnifier"
 msgstr "आवर्धक"
 
 #: ../src/orca/orca-setup.glade.h:36
+#, fuzzy
 msgid "Mouse trac_king mode:"
-msgstr ""
+msgstr "माउस बादशाह मोड:"
 
 #: ../src/orca/orca-setup.glade.h:37
+#, fuzzy
 msgid ""
 "None\n"
 "Bilinear"
-msgstr ""
+msgstr "कुछ नहीं"
 
 #: ../src/orca/orca-setup.glade.h:39
+#, fuzzy
 msgid "Orca Preferences"
-msgstr ""
+msgstr "वरीयताएँ"
 
 #: ../src/orca/orca-setup.glade.h:40
 msgid "Pi_tch:"
@@ -544,8 +582,9 @@ msgid "Question"
 msgstr "प्रश्न"
 
 #: ../src/orca/orca-setup.glade.h:42
+#, fuzzy
 msgid "Scale _factor:"
-msgstr ""
+msgstr "पैमाना:"
 
 #: ../src/orca/orca-setup.glade.h:43
 msgid "Si_ze:"
@@ -556,8 +595,9 @@ msgid "So_me"
 msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:45
+#, fuzzy
 msgid "Speak _indentation and justification"
-msgstr ""
+msgstr "और"
 
 #: ../src/orca/orca-setup.glade.h:46
 msgid "Speak current _cell"
@@ -572,12 +612,14 @@ msgid "Speech"
 msgstr "भाषण"
 
 #: ../src/orca/orca-setup.glade.h:49
+#, fuzzy
 msgid "Speech _system:"
-msgstr ""
+msgstr "भाषण:"
 
 #: ../src/orca/orca-setup.glade.h:50
+#, fuzzy
 msgid "Speech synthesi_zer:"
-msgstr ""
+msgstr "भाषण:"
 
 #: ../src/orca/orca-setup.glade.h:51
 msgid "Ver_bose"
@@ -608,8 +650,9 @@ msgid "_Bottom:"
 msgstr "नीचे: (_B)"
 
 #: ../src/orca/orca-setup.glade.h:58
+#, fuzzy
 msgid "_Enable speech"
-msgstr ""
+msgstr "सक्षम वाणी"
 
 #: ../src/orca/orca-setup.glade.h:59
 msgid "_Left:"
@@ -640,8 +683,9 @@ msgid "_Top:"
 msgstr "ऊपर: (_T)"
 
 #: ../src/orca/orca-setup.glade.h:66
+#, fuzzy
 msgid "_Voice settings:"
-msgstr ""
+msgstr "आवाज़:"
 
 #: ../src/orca/orca-setup.glade.h:67
 msgid "_Width:"
@@ -652,128 +696,156 @@ msgid "pixels"
 msgstr "पिक्सेल्स"
 
 #: ../src/orca/orca.py:232
+#, fuzzy
 msgid "User logged out - shutting down."
-msgstr ""
+msgstr "उपयोक्ता नीचे."
 
 #: ../src/orca/orca.py:397
+#, fuzzy
 msgid "Debug level all."
-msgstr ""
+msgstr "डिबग स्तर सभी."
 
 #: ../src/orca/orca.py:399
+#, fuzzy
 msgid "Debug level finest."
-msgstr ""
+msgstr "डिबग स्तर."
 
 #: ../src/orca/orca.py:401
+#, fuzzy
 msgid "Debug level finer."
-msgstr ""
+msgstr "डिबग स्तर."
 
 #: ../src/orca/orca.py:452
+#, fuzzy
 msgid "Entering learn mode.  Press any key to hear its function. "
-msgstr ""
+msgstr "मोड दबाएँ "
 
 #: ../src/orca/orca.py:453
+#, fuzzy
 msgid "To exit learn mode, press the escape key."
-msgstr ""
+msgstr "प्रति मोड एस्केप."
 
 #: ../src/orca/orca.py:454
+#, fuzzy
 msgid "Learn mode.  Press escape to exit."
-msgstr ""
+msgstr "मोड दबाएँ एस्केप."
 
 #: ../src/orca/orca.py:464 ../src/orca/orca.py:465
+#, fuzzy
 msgid "Exiting learn mode."
-msgstr ""
+msgstr "मोड."
 
 #: ../src/orca/orca.py:633
+#, fuzzy
 msgid "Caps_Lock"
-msgstr ""
+msgstr "कैप्स बंद करें"
 
 #: ../src/orca/orca.py:638
+#, fuzzy
 msgid "Num_Lock"
-msgstr ""
+msgstr "Num बंद करें"
 
 #: ../src/orca/orca.py:822
+#, fuzzy
 msgid "Speech enabled."
-msgstr ""
+msgstr "भाषण."
 
 #: ../src/orca/orca.py:824
+#, fuzzy
 msgid "Speech disabled."
-msgstr ""
+msgstr "भाषण."
 
 #: ../src/orca/orca.py:862
 msgid "Orca user settings reloaded."
 msgstr ""
 
 #: ../src/orca/orca.py:959
+#, fuzzy
 msgid "Enters learn mode.  Press escape to exit learn mode."
-msgstr ""
+msgstr "मोड दबाएँ एस्केप मोड."
 
 #: ../src/orca/orca.py:967
+#, fuzzy
 msgid "Decreases the speech rate."
-msgstr ""
+msgstr "वाणी."
 
 #: ../src/orca/orca.py:975
+#, fuzzy
 msgid "Increases the speech rate."
-msgstr ""
+msgstr "वाणी."
 
 #: ../src/orca/orca.py:983
+#, fuzzy
 msgid "Decreases the speech pitch."
-msgstr ""
+msgstr "वाणी."
 
 #: ../src/orca/orca.py:991
+#, fuzzy
 msgid "Increases the speech pitch."
-msgstr ""
+msgstr "वाणी."
 
 #: ../src/orca/orca.py:997
 msgid "Quits Orca"
 msgstr ""
 
 #: ../src/orca/orca.py:1005
+#, fuzzy
 msgid "Toggles keystroke recording on and off."
-msgstr ""
+msgstr "पर और."
 
 #: ../src/orca/orca.py:1013
+#, fuzzy
 msgid "Displays the preferences configuration dialog."
-msgstr ""
+msgstr "वरीयताएँ संवाद."
 
 #: ../src/orca/orca.py:1022
+#, fuzzy
 msgid "Reloads user settings and reinitializes services as necessary."
-msgstr ""
+msgstr "और."
 
 #: ../src/orca/orca.py:1031
+#, fuzzy
 msgid "Toggles the silencing of speech."
-msgstr ""
+msgstr "का वाणी."
 
 #: ../src/orca/orca.py:1040
+#, fuzzy
 msgid ""
 "Prints a debug listing of all known applications to the console where Orca "
 "is running."
-msgstr ""
+msgstr "ए का सभी है."
 
 #: ../src/orca/orca.py:1049
+#, fuzzy
 msgid "Cycles the debug level at run time."
-msgstr ""
+msgstr "स्तर."
 
 #: ../src/orca/orca.py:1057
+#, fuzzy
 msgid ""
 "Prints debug information about the currently active application to the "
 "console where Orca is running."
-msgstr ""
+msgstr "के बारे में सक्रिय अनुप्रयोग है."
 
 #: ../src/orca/orca.py:1065
+#, fuzzy
 msgid "Prints debug information about the ancestry of the object with focus"
-msgstr ""
+msgstr "के बारे में का के साथ"
 
 #: ../src/orca/orca.py:1074
+#, fuzzy
 msgid "Prints debug information about the application with focus"
-msgstr ""
+msgstr "के बारे में अनुप्रयोग के साथ"
 
 #: ../src/orca/orca.py:1083
+#, fuzzy
 msgid "Switches to the next presentation manager."
-msgstr ""
+msgstr "स्विचेस प्रस्तुतीकरण."
 
 #: ../src/orca/orca.py:1116 ../src/orca/orca.py:1117
+#, fuzzy
 msgid "Welcome to Orca."
-msgstr ""
+msgstr "स्वागतम."
 
 #. [[[TODO: WDW - the timer stuff is an experiment to see if
 #. we can recover from hangs.  It's only experimental, so it's
@@ -794,8 +866,9 @@ msgid "Usage: orca [OPTION...]"
 msgstr ""
 
 #: ../src/orca/orca.py:1238
+#, fuzzy
 msgid "-?, --help                   Show this help message"
-msgstr ""
+msgstr "मदद दिखाएँ मदद संदेश"
 
 #: ../src/orca/orca.py:1239
 #, python-format
@@ -803,78 +876,92 @@ msgid "-v, --version                %s"
 msgstr ""
 
 #: ../src/orca/orca.py:1240
+#, fuzzy
 msgid "-s, --setup, --gui-setup     Set up user preferences"
-msgstr ""
+msgstr "ऊपर वरीयताएँ"
 
 #: ../src/orca/orca.py:1241
+#, fuzzy
 msgid "-t, --text-setup             Set up user preferences (text version)"
-msgstr ""
+msgstr "पाठ ऊपर वरीयताएँ पाठ"
 
 #: ../src/orca/orca.py:1242
+#, fuzzy
 msgid "-n, --no-setup               Skip set up of user preferences"
-msgstr ""
+msgstr "नहीं नहीं छोडें ऊपर का वरीयताएँ"
 
 #: ../src/orca/orca.py:1244
+#, fuzzy
 msgid ""
 "If Orca has not been previously set up by the user, Orca\n"
 "will automatically launch the preferences set up unless\n"
 "the -n or --no-setup option is used."
-msgstr ""
+msgstr "नहीं ऊपर वरीयताएँ ऊपर नहीं नहीं है."
 
 #: ../src/orca/orca.py:1246
 msgid "Report bugs to orca-list@gnome.org."
 msgstr ""
 
 #: ../src/orca/orca_console_prefs.py:93 ../src/orca/orca_console_prefs.py:109
+#, fuzzy
 msgid "Speech is unavailable."
-msgstr ""
+msgstr "भाषण है अनुपलब्ध."
 
 #: ../src/orca/orca_console_prefs.py:97
+#, fuzzy
 msgid "Welcome to Orca setup."
-msgstr ""
+msgstr "स्वागतम."
 
 #: ../src/orca/orca_console_prefs.py:112
+#, fuzzy
 msgid "Select desired speech system:"
-msgstr ""
+msgstr "चुनें वाणी:"
 
 #: ../src/orca/orca_console_prefs.py:117 ../src/orca/orca_console_prefs.py:138
 #: ../src/orca/orca_console_prefs.py:164
 #, python-format
 msgid "%d. %s"
-msgstr ""
+msgstr "%d. %s"
 
 #: ../src/orca/orca_console_prefs.py:120 ../src/orca/orca_console_prefs.py:141
 #: ../src/orca/orca_console_prefs.py:171
+#, fuzzy
 msgid "Enter choice: "
-msgstr ""
+msgstr "एंटर कुंजी "
 
 #: ../src/orca/orca_console_prefs.py:122 ../src/orca/orca_console_prefs.py:130
 #: ../src/orca/orca_console_prefs.py:143 ../src/orca/orca_console_prefs.py:152
 #: ../src/orca/orca_console_prefs.py:176
+#, fuzzy
 msgid "Speech will not be used.\n"
-msgstr ""
+msgstr "भाषण नहीं नहीं"
 
 #: ../src/orca/orca_console_prefs.py:129
+#, fuzzy
 msgid "No servers available.\n"
-msgstr ""
+msgstr "नहीं उपलब्ध नहीं"
 
 #: ../src/orca/orca_console_prefs.py:133
+#, fuzzy
 msgid "Select desired speech server."
-msgstr ""
+msgstr "चुनें वाणी."
 
 #: ../src/orca/orca_console_prefs.py:151
+#, fuzzy
 msgid "No voices available.\n"
-msgstr ""
+msgstr "नहीं उपलब्ध नहीं"
 
 #: ../src/orca/orca_console_prefs.py:155
+#, fuzzy
 msgid "Select desired voice:"
-msgstr ""
+msgstr "चुनें:"
 
 #. Ask the user if they would like to enable echoing by word.
 #.
 #: ../src/orca/orca_console_prefs.py:209
+#, fuzzy
 msgid "Enable echo by word?  Enter y or n: "
-msgstr ""
+msgstr "सक्षम एंटर कुंजी हाँ नहीं "
 
 #. Ask the user if they would like to enable key echo. If they say
 #. yes, then for each of the five different types of keys, ask the
@@ -894,53 +981,65 @@ msgstr ""
 #. keys, page up, page down, etc.
 #.
 #: ../src/orca/orca_console_prefs.py:234
+#, fuzzy
 msgid "Enable key echo?  Enter y or n: "
-msgstr ""
+msgstr "सक्षम एंटर कुंजी हाँ नहीं "
 
 #: ../src/orca/orca_console_prefs.py:241
+#, fuzzy
 msgid "Enable alphanumeric and punctuation keys?  Enter y or n: "
-msgstr ""
+msgstr "सक्षम और एंटर कुंजी हाँ नहीं "
 
 #: ../src/orca/orca_console_prefs.py:249
+#, fuzzy
 msgid "Enable modifier keys?  Enter y or n: "
-msgstr ""
+msgstr "सक्षम एंटर कुंजी हाँ नहीं "
 
 #: ../src/orca/orca_console_prefs.py:257
+#, fuzzy
 msgid "Enable locking keys?  Enter y or n: "
-msgstr ""
+msgstr "सक्षम एंटर कुंजी हाँ नहीं "
 
 #: ../src/orca/orca_console_prefs.py:265
+#, fuzzy
 msgid "Enable function keys?  Enter y or n: "
-msgstr ""
+msgstr "सक्षम एंटर कुंजी हाँ नहीं "
 
 #: ../src/orca/orca_console_prefs.py:273
+#, fuzzy
 msgid "Enable action keys?  Enter y or n: "
-msgstr ""
+msgstr "सक्षम एंटर कुंजी हाँ नहीं "
 
 #: ../src/orca/orca_console_prefs.py:301
+#, fuzzy
 msgid "Enable Braille?  Enter y or n: "
-msgstr ""
+msgstr "सक्षम ब्रेल एंटर कुंजी हाँ नहीं "
 
 #: ../src/orca/orca_console_prefs.py:309
+#, fuzzy
 msgid "Enable Braille Monitor?  Enter y or n: "
-msgstr ""
+msgstr "सक्षम ब्रेल एंटर कुंजी हाँ नहीं "
 
 #: ../src/orca/orca_console_prefs.py:319
+#, fuzzy
 msgid "Accessibility support for GNOME has just been enabled. "
-msgstr ""
+msgstr "अभिगम्यता के लिये गनोम "
 
 #: ../src/orca/orca_console_prefs.py:324
+#, fuzzy
 msgid "You need to log out and log back in for the change to take effect. "
-msgstr ""
+msgstr "और पीछे इं के लिये "
 
 #: ../src/orca/orca_console_prefs.py:330
+#, fuzzy
 msgid "Setup complete.  Press Return to continue."
-msgstr ""
+msgstr " सेटअप दबाएँ."
 
 #: ../src/orca/orca_gui_prefs.py:127 ../src/orca/orca_gui_prefs.py:421
 #: ../src/orca/orca_gui_prefs.py:463
+#, fuzzy
 msgid "Speech not available."
-msgstr ""
+msgstr "भाषण नहीं उपलब्ध."
 
 #: ../src/orca/orca_gui_prefs.py:221 ../src/orca/orca_gui_prefs.py:241
 msgid "Brief"
@@ -986,12 +1085,14 @@ msgid "_cell"
 msgstr ""
 
 #: ../src/orca/orca_gui_prefs.py:1395
+#, fuzzy
 msgid "Accessibility support for GNOME has just been enabled."
-msgstr ""
+msgstr "अभिगम्यता के लिये गनोम."
 
 #: ../src/orca/orca_gui_prefs.py:1396
+#, fuzzy
 msgid "You need to log out and log back in for the change to take effect."
-msgstr ""
+msgstr "और पीछे इं के लिये."
 
 #: ../src/orca/rolenames.py:147
 msgid "???"
@@ -1086,8 +1187,9 @@ msgid "CheckItem"
 msgstr ""
 
 #: ../src/orca/rolenames.py:189
+#, fuzzy
 msgid "check item"
-msgstr ""
+msgstr "मद"
 
 #: ../src/orca/rolenames.py:192
 msgid "ckm"
@@ -1098,8 +1200,9 @@ msgid "CheckMenu"
 msgstr ""
 
 #: ../src/orca/rolenames.py:194
+#, fuzzy
 msgid "check menu"
-msgstr ""
+msgstr "मेनू"
 
 #: ../src/orca/rolenames.py:197
 msgid "clrchsr"
@@ -1425,7 +1528,7 @@ msgstr ""
 
 #: ../src/orca/rolenames.py:339
 msgid "tab list"
-msgstr ""
+msgstr "टैब सूची"
 
 #: ../src/orca/rolenames.py:342
 msgid "pnl"
@@ -1520,8 +1623,9 @@ msgid "RadioMenu"
 msgstr ""
 
 #: ../src/orca/rolenames.py:379
+#, fuzzy
 msgid "radio menu"
-msgstr ""
+msgstr "मेनू"
 
 #: ../src/orca/rolenames.py:382
 msgid "rtpn"
@@ -1868,8 +1972,9 @@ msgid "CalendarView"
 msgstr ""
 
 #: ../src/orca/scripts/Evolution.py:88
+#, fuzzy
 msgid "calendar view"
-msgstr ""
+msgstr "कैलेंडर"
 
 #: ../src/orca/scripts/Evolution.py:93
 msgid "cale"
@@ -1880,8 +1985,9 @@ msgid "CalendarEvent"
 msgstr ""
 
 #: ../src/orca/scripts/Evolution.py:95
+#, fuzzy
 msgid "calendar event"
-msgstr ""
+msgstr "कैलेंडर"
 
 #: ../src/orca/scripts/Evolution.py:145
 msgid " screen"
@@ -1906,8 +2012,9 @@ msgid "Congratulations"
 msgstr ""
 
 #: ../src/orca/scripts/Evolution.py:660
+#, fuzzy
 msgid "No appointments"
-msgstr ""
+msgstr "नहीं"
 
 #: ../src/orca/scripts/Evolution.py:734
 msgid "Directories button"
@@ -1937,40 +2044,46 @@ msgid "Completed spell checking"
 msgstr "वर्तनी जाँच सम्पन्न"
 
 #: ../src/orca/scripts/gedit.py:166
+#, fuzzy
 msgid "Spell checking is complete."
-msgstr ""
+msgstr "है."
 
 #: ../src/orca/scripts/gedit.py:168
+#, fuzzy
 msgid "Press Tab and Return to terminate."
-msgstr ""
+msgstr "दबाएँ टैब और."
 
 #: ../src/orca/scripts/gedit.py:255 ../src/orca/scripts/gedit.py:308
 msgid "Check Spelling"
 msgstr "मात्राएँ जाँचें"
 
 #: ../src/orca/scripts/StarOffice.py:243
+#, fuzzy
 msgid "Speaks the contents of the input line."
-msgstr ""
+msgstr "का."
 
 #: ../src/orca/scripts/StarOffice.py:283
 msgid "empty"
 msgstr ""
 
 #: ../src/orca/scripts/StarOffice.py:426
+#, fuzzy
 msgid "Welcome to StarOffice"
-msgstr ""
+msgstr "स्वागतम"
 
 #: ../src/orca/scripts/StarOffice.py:554 ../src/orca/scripts/StarOffice.py:803
 msgid "Spellcheck:"
-msgstr ""
+msgstr "वर्तनी जांच:"
 
 #: ../src/orca/scripts/StarOffice.py:582
+#, fuzzy
 msgid "Note that the Scroll Down button has to be pressed numerous times."
-msgstr ""
+msgstr "नोट नीचे दबाया गया."
 
 #: ../src/orca/scripts/StarOffice.py:596
+#, fuzzy
 msgid "License Agreement Accept button now has focus."
-msgstr ""
+msgstr "लाइसेंस स्वीकारें अब."
 
 #: ../src/orca/scripts/StarOffice.py:619
 msgid "First name"
@@ -1990,7 +2103,7 @@ msgstr ""
 #.
 #: ../src/orca/settings.py:393
 msgid "[\\S\\s]*StarOffice[\\s\\S]*"
-msgstr ""
+msgstr "[\\S\\s]*StarOffice[\\s\\S]*"
 
 #: ../src/orca/settings.py:394
 msgid "soffice.bin"
@@ -2023,8 +2136,9 @@ msgid "inaccessible"
 msgstr ""
 
 #: ../src/orca/scripts/planner.py:77 ../src/orca/scripts/planner.py:135
+#, fuzzy
 msgid "Display more options"
-msgstr ""
+msgstr "प्रदर्शक"
 
 #: ../src/orca/scripts/planner.py:139 ../src/orca/scripts/planner.py:147
 #: ../src/orca/scripts/planner.py:172 ../src/orca/scripts/planner.py:180
@@ -2036,7 +2150,7 @@ msgstr "दबाया गया"
 #: ../src/orca/scripts/planner.py:174 ../src/orca/scripts/planner.py:182
 #: ../src/orca/speechgenerator.py:1309 ../src/orca/speechgenerator.py:1312
 msgid "not pressed"
-msgstr ""
+msgstr "नहीं दबाया गया"
 
 #: ../src/orca/speechgenerator.py:365 ../src/orca/speechgenerator.py:368
 msgid "checked"
@@ -2044,7 +2158,7 @@ msgstr "जांचा गया"
 
 #: ../src/orca/speechgenerator.py:374 ../src/orca/speechgenerator.py:377
 msgid "not checked"
-msgstr ""
+msgstr "नहीं जांचा गया"
 
 #: ../src/orca/speechgenerator.py:907 ../src/orca/speechgenerator.py:910
 #: ../src/orca/util.py:1033
@@ -2052,8 +2166,9 @@ msgid "selected"
 msgstr "चयनित"
 
 #: ../src/orca/speechgenerator.py:918 ../src/orca/speechgenerator.py:921
+#, fuzzy
 msgid "not selected"
-msgstr ""
+msgstr "नहीं चयनित"
 
 #: ../src/orca/speechgenerator.py:1246
 msgid "tear off"
@@ -2064,32 +2179,39 @@ msgid "Misspelled word: "
 msgstr ""
 
 #: ../src/orca/util.py:300
+#, fuzzy
 msgid " Context is "
-msgstr ""
+msgstr "संदर्भ है "
 
 #: ../src/orca/util.py:977
+#, fuzzy
 msgid "page selected from cursor position"
-msgstr ""
+msgstr "पृष्ठ चयनित"
 
 #: ../src/orca/util.py:981
+#, fuzzy
 msgid "page selected to cursor position"
-msgstr ""
+msgstr "पृष्ठ चयनित"
 
 #: ../src/orca/util.py:985
+#, fuzzy
 msgid "line selected down from cursor position"
-msgstr ""
+msgstr "चयनित नीचे"
 
 #: ../src/orca/util.py:989
+#, fuzzy
 msgid "line selected up from cursor position"
-msgstr ""
+msgstr "चयनित ऊपर"
 
 #: ../src/orca/util.py:993
+#, fuzzy
 msgid "document selected to cursor position"
-msgstr ""
+msgstr "चयनित"
 
 #: ../src/orca/util.py:997
+#, fuzzy
 msgid "document selected from cursor position"
-msgstr ""
+msgstr "चयनित"
 
 #: ../src/orca/util.py:1041
 msgid "unselected"
