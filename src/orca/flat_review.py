@@ -1066,6 +1066,9 @@ def getZonesFromAccessible(accessible, cliprect):
     - cliprect: the extents that the Zones must fit inside.
     """
 
+    if not accessible.component:
+        return []
+
     # Get the component extents in screen coordinates.
     #
     extents = accessible.component.getExtents(0)
