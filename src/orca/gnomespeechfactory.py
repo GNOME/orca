@@ -369,6 +369,16 @@ class SpeechServer(speechserver.SpeechServer):
 
         s = self.__driver.createSpeaker(voice)
         speaker = _Speaker(s._narrow(GNOME.Speech.Speaker))
+
+        # Turn off punctuation if the speaker allows us to do so.  We
+        # do this because we want to handle spoken punctuation on our
+        # own.
+        #
+        try:
+            speaker.setParameterValue("punctuation mode", 0.0)
+        except:
+            pass
+
         speaker.registerCallback(self)
 
         parameters = speaker.getSupportedParameters()
@@ -532,14 +542,14 @@ class SpeechServer(speechserver.SpeechServer):
             i += 1
 
     def __addVerbalizedPunctuation(self, oldText):
-        """Depending upon the users verbalized punctuation setting, 
-        adjust punctuation symbols in the given text to their pronounced 
-        equivalents. The pronounced text will either replace the 
-        punctuation symbol or be inserted before it. In the latter case, 
+        """Depending upon the users verbalized punctuation setting,
+        adjust punctuation symbols in the given text to their pronounced
+        equivalents. The pronounced text will either replace the
+        punctuation symbol or be inserted before it. In the latter case,
         this is to retain spoken prosity.
 
-        If we are moving around by single characters, then always speak 
-        the punctuation. We try to detect this by looking for just a 
+        If we are moving around by single characters, then always speak
+        the punctuation. We try to detect this by looking for just a
         single character being spoken.
 
         Arguments:

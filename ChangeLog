@@ -1,3 +1,10 @@
+2006-07-02  Willie Walker  <william.walker@sun.com>
+
+	* src/orca/gnomespeechfactory.py: set "punctuation mode" parameter
+	to none (0.0) for any speaker that has been created.  This allows
+	Orca to handle the speaking of punctuation rather than rely upon
+	the relatively inconsistent way it is spoken across various engines.
+	
 2006-07-02  Ilkka Tuohela  <hile@iki.fi>
 
 	* configure.in: Added 'fi' to ALL_LINGUAS.
