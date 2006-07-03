@@ -1,3 +1,7 @@
+2006-07-03  Runa Bhattacharjee <runabh@gmail.com>
+
+	* configure.in: Added Bengali India (bn_IN) to ALL_LINGUAS.
+
 2006-07-02  Willie Walker  <william.walker@sun.com>
 
 	* src/orca/gnomespeechfactory.py: set "punctuation mode" parameter
