@@ -1824,7 +1824,7 @@ msgstr "chỉnh"
 
 #: src/orca/rolenames.py:528
 msgid "EditBar"
-msgstr "Thanh hIệu chỉnh"
+msgstr "Thanh hiệu chỉnh"
 
 #: src/orca/rolenames.py:529
 msgid "edit bar"
