@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-02 21:32+0300\n"
-"PO-Revision-Date: 2006-07-02 22:21+0300\n"
+"POT-Creation-Date: 2006-07-07 09:40+0300\n"
+"PO-Revision-Date: 2006-07-07 09:46+0300\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -17,11 +17,11 @@ msgstr ""
 
 #: ../src/orca/braillegenerator.py:193 ../src/orca/speechgenerator.py:191
 msgid "grayed"
-msgstr ""
+msgstr "harmaa"
 
 #: ../src/orca/braillegenerator.py:1069 ../src/orca/speechgenerator.py:1184
 msgid "expanded"
-msgstr ""
+msgstr "laajennettu"
 
 #: ../src/orca/braillegenerator.py:1071 ../src/orca/speechgenerator.py:1186
 msgid "collapsed"
@@ -30,11 +30,11 @@ msgstr ""
 #: ../src/orca/braillegenerator.py:1075
 #, python-format
 msgid "TREE LEVEL %d"
-msgstr ""
+msgstr "PUUN TASO %d"
 
 #: ../src/orca/chnames.py:32
 msgid "space"
-msgstr ""
+msgstr "välilyönti"
 
 #: ../src/orca/chnames.py:33
 msgid "newline"
@@ -46,11 +46,11 @@ msgstr "sarkain"
 
 #: ../src/orca/chnames.py:36
 msgid "exclaim"
-msgstr ""
+msgstr "huutomerkki"
 
 #: ../src/orca/chnames.py:37
 msgid "apostrophe"
-msgstr ""
+msgstr "heittomerkki"
 
 #: ../src/orca/chnames.py:38
 msgid "comma"
@@ -66,7 +66,7 @@ msgstr "kysymysmerkki"
 
 #: ../src/orca/chnames.py:42
 msgid "quote"
-msgstr ""
+msgstr "lainausmerkki"
 
 #: ../src/orca/chnames.py:43
 msgid "left paren"
@@ -78,20 +78,19 @@ msgstr "oikea sulku"
 
 #: ../src/orca/chnames.py:45
 msgid "dash"
-msgstr ""
+msgstr "viiva"
 
 #: ../src/orca/chnames.py:46
 msgid "underscore"
-msgstr ""
+msgstr "alaviiva"
 
 #: ../src/orca/chnames.py:47
 msgid "colon"
-msgstr ""
+msgstr "piste"
 
 #: ../src/orca/chnames.py:48
-#, fuzzy
 msgid "semicolon"
-msgstr "kuvake"
+msgstr "puolipiste"
 
 #: ../src/orca/chnames.py:49
 msgid "less than"
@@ -110,9 +109,8 @@ msgid "right bracket"
 msgstr "oikea kaarisulku"
 
 #: ../src/orca/chnames.py:53
-#, fuzzy
 msgid "backslash"
-msgstr "takaisin"
+msgstr "kenoviiva"
 
 #: ../src/orca/chnames.py:54
 msgid "vertical line"
@@ -184,11 +182,11 @@ msgstr ""
 
 #: ../src/orca/default.py:84 ../src/orca/scripts/Evolution.py:107
 msgid "Speaks entire document."
-msgstr ""
+msgstr "Puhuu koko asiakirjan."
 
 #: ../src/orca/default.py:88
 msgid "Performs the where am I operation."
-msgstr ""
+msgstr "Suorittaa \"Missä olen\" -toiminnon."
 
 #: ../src/orca/default.py:92
 msgid "Paints and prints the visible zones in the active window."
@@ -289,12 +287,12 @@ msgstr ""
 #: ../src/orca/default.py:896 ../src/orca/default.py:1121
 #, python-format
 msgid "tree level %d"
-msgstr ""
+msgstr "puun taso %d"
 
 #: ../src/orca/default.py:900 ../src/orca/default.py:1147
 #: ../src/orca/default.py:1225 ../src/orca/default.py:1290
 msgid "No focus"
-msgstr ""
+msgstr "Ei kohdistusta"
 
 #: ../src/orca/default.py:1533
 msgid "entire document selected"
@@ -302,7 +300,7 @@ msgstr "koko asiakirja valittu"
 
 #: ../src/orca/default.py:1888
 msgid "Speak "
-msgstr ""
+msgstr "Puhu "
 
 #: ../src/orca/default.py:1891
 msgid "row"
@@ -317,11 +315,11 @@ msgstr "solu"
 #: ../src/orca/default.py:2439 ../src/orca/default.py:2509
 #: ../src/orca/default.py:2514
 msgid "blank"
-msgstr ""
+msgstr "tyhjä"
 
 #: ../src/orca/default.py:2342 ../src/orca/default.py:2441
 msgid "white space"
-msgstr ""
+msgstr "tyhjä tila"
 
 #: ../src/orca/espeechfactory.py:93
 msgid "Emacspeak Speech Services"
@@ -337,24 +335,23 @@ msgstr "Gnomen puhepalvelut"
 
 #. # Replace ellipses (both manual and unicode) with "dot dot dot"
 #. #
-#: ../src/orca/gnomespeechfactory.py:553 ../src/orca/gnomespeechfactory.py:554
+#: ../src/orca/gnomespeechfactory.py:563 ../src/orca/gnomespeechfactory.py:564
 msgid " dot dot dot"
 msgstr " piste piste piste"
 
-#: ../src/orca/gnomespeechfactory.py:712
+#: ../src/orca/gnomespeechfactory.py:722
 msgid "higher."
 msgstr "korkeampi."
 
-#: ../src/orca/gnomespeechfactory.py:740
-#, fuzzy
+#: ../src/orca/gnomespeechfactory.py:750
 msgid "lower."
-msgstr "hitaammin."
+msgstr "matalampi."
 
-#: ../src/orca/gnomespeechfactory.py:765
+#: ../src/orca/gnomespeechfactory.py:775
 msgid "faster."
 msgstr "nopeammin."
 
-#: ../src/orca/gnomespeechfactory.py:795
+#: ../src/orca/gnomespeechfactory.py:805
 msgid "slower."
 msgstr "hitaammin."
 
@@ -534,11 +531,10 @@ msgid "Mouse trac_king mode:"
 msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:37
-#, fuzzy
 msgid ""
 "None\n"
 "Bilinear"
-msgstr "rivinvaihto"
+msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:39
 msgid "Orca Preferences"
@@ -589,9 +585,8 @@ msgid "Speech synthesi_zer:"
 msgstr "Puhe_syntetisaattori:"
 
 #: ../src/orca/orca-setup.glade.h:51
-#, fuzzy
 msgid "Ver_bose"
-msgstr "Suulas"
+msgstr "_Suulas"
 
 #: ../src/orca/orca-setup.glade.h:52
 msgid "Vo_lume:"
@@ -659,127 +654,128 @@ msgstr "_Leveys:"
 msgid "pixels"
 msgstr "pikseliä"
 
-#: ../src/orca/orca.py:232
+#: ../src/orca/orca.py:237
 msgid "User logged out - shutting down."
 msgstr "Käyttäjä kirjautui ulos, sammutetaan"
 
-#: ../src/orca/orca.py:397
+#: ../src/orca/orca.py:402
 msgid "Debug level all."
 msgstr "Vianetsintätasona kaikki."
 
-#: ../src/orca/orca.py:399
+#: ../src/orca/orca.py:404
 msgid "Debug level finest."
 msgstr "Vianetsintätasona hienoin."
 
-#: ../src/orca/orca.py:401
+#: ../src/orca/orca.py:406
 msgid "Debug level finer."
 msgstr "Vianetsintätasona hieno."
 
-#: ../src/orca/orca.py:452
+#: ../src/orca/orca.py:457
 msgid "Entering learn mode.  Press any key to hear its function. "
 msgstr "Siirrytään oppimistilaan. Paina näppäintä kuullaksesi sen toiminto."
 
-#: ../src/orca/orca.py:453
+#: ../src/orca/orca.py:458
 msgid "To exit learn mode, press the escape key."
 msgstr "Sulje oppimistila painamalla Escape-näppäintä."
 
-#: ../src/orca/orca.py:454
+#: ../src/orca/orca.py:459
 msgid "Learn mode.  Press escape to exit."
 msgstr "Oppimistila. Sulje painamalla Escape-näppäintä."
 
-#: ../src/orca/orca.py:464 ../src/orca/orca.py:465
+#: ../src/orca/orca.py:469 ../src/orca/orca.py:470
 msgid "Exiting learn mode."
 msgstr "Suljetaan oppimistila."
 
-#: ../src/orca/orca.py:633
+#: ../src/orca/orca.py:638
 msgid "Caps_Lock"
 msgstr "Caps_Lock"
 
-#: ../src/orca/orca.py:638
+#: ../src/orca/orca.py:643
 msgid "Num_Lock"
 msgstr "Num_Lock"
 
-#: ../src/orca/orca.py:822
+#: ../src/orca/orca.py:830
 msgid "Speech enabled."
 msgstr "Puhe käytössä."
 
-#: ../src/orca/orca.py:824
+#: ../src/orca/orca.py:832
 msgid "Speech disabled."
 msgstr "Puhe pois käytöstä."
 
-#: ../src/orca/orca.py:862
+#: ../src/orca/orca.py:870
 msgid "Orca user settings reloaded."
 msgstr "Orcan käyttäjän asetukset ladattu uudestaan."
 
-#: ../src/orca/orca.py:959
-msgid "Enters learn mode.  Press escape to exit learn mode."
-msgstr "Siirrytään oppimistilaan. Sulje oppimistila painamalla Escape-näppäintä."
-
 #: ../src/orca/orca.py:967
+msgid "Enters learn mode.  Press escape to exit learn mode."
+msgstr ""
+"Siirrytään oppimistilaan. Sulje oppimistila painamalla Escape-näppäintä."
+
+#: ../src/orca/orca.py:975
 msgid "Decreases the speech rate."
 msgstr "Hidastaa puhetta."
 
-#: ../src/orca/orca.py:975
+#: ../src/orca/orca.py:983
 msgid "Increases the speech rate."
 msgstr "Nopeuttaa puhetta."
 
-#: ../src/orca/orca.py:983
+#: ../src/orca/orca.py:991
 msgid "Decreases the speech pitch."
 msgstr "Madaltaa puheen korkeutta."
 
-#: ../src/orca/orca.py:991
+#: ../src/orca/orca.py:999
 msgid "Increases the speech pitch."
 msgstr "Nostaa puheen korkeutta."
 
-#: ../src/orca/orca.py:997
+#: ../src/orca/orca.py:1005
 msgid "Quits Orca"
 msgstr "Sulkee Orcan"
 
-#: ../src/orca/orca.py:1005
+#: ../src/orca/orca.py:1013
 msgid "Toggles keystroke recording on and off."
 msgstr ""
 
-#: ../src/orca/orca.py:1013
+#: ../src/orca/orca.py:1021
 msgid "Displays the preferences configuration dialog."
 msgstr ""
 
-#: ../src/orca/orca.py:1022
+#: ../src/orca/orca.py:1030
 msgid "Reloads user settings and reinitializes services as necessary."
 msgstr ""
 
-#: ../src/orca/orca.py:1031
+#: ../src/orca/orca.py:1039
 msgid "Toggles the silencing of speech."
 msgstr ""
 
-#: ../src/orca/orca.py:1040
+#: ../src/orca/orca.py:1048
 msgid ""
 "Prints a debug listing of all known applications to the console where Orca "
 "is running."
 msgstr ""
 
-#: ../src/orca/orca.py:1049
+#: ../src/orca/orca.py:1057
 msgid "Cycles the debug level at run time."
 msgstr ""
 
-#: ../src/orca/orca.py:1057
+#: ../src/orca/orca.py:1065
 msgid ""
 "Prints debug information about the currently active application to the "
 "console where Orca is running."
 msgstr ""
 
-#: ../src/orca/orca.py:1065
+#: ../src/orca/orca.py:1073
 msgid "Prints debug information about the ancestry of the object with focus"
 msgstr ""
 
-#: ../src/orca/orca.py:1074
+#: ../src/orca/orca.py:1082
 msgid "Prints debug information about the application with focus"
 msgstr ""
 
-#: ../src/orca/orca.py:1083
+#: ../src/orca/orca.py:1091
 msgid "Switches to the next presentation manager."
 msgstr ""
 
-#: ../src/orca/orca.py:1116 ../src/orca/orca.py:1117
+#: ../src/orca/orca.py:1124 ../src/orca/orca.py:1125
 msgid "Welcome to Orca."
 msgstr "Tervetuloa Orcaan."
 
@@ -789,47 +785,48 @@ msgstr "Tervetuloa Orcaan."
 #.
 #. timer = threading.Timer(5.0, timeout)
 #. timer.start()
-#: ../src/orca/orca.py:1169
+#: ../src/orca/orca.py:1177
 msgid "goodbye."
 msgstr ""
 
-#: ../src/orca/orca.py:1170
+#: ../src/orca/orca.py:1178
 msgid "Goodbye."
 msgstr ""
 
-#: ../src/orca/orca.py:1236
+#: ../src/orca/orca.py:1244
 msgid "Usage: orca [OPTION...]"
 msgstr "Käyttö: orca [VALITSI...]"
 
-#: ../src/orca/orca.py:1238
+#: ../src/orca/orca.py:1246
 msgid "-?, --help                   Show this help message"
 msgstr "-?, --help                   Näytä tämä ohjeviesti"
 
-#: ../src/orca/orca.py:1239
+#: ../src/orca/orca.py:1247
 #, python-format
 msgid "-v, --version                %s"
 msgstr "-v, --version                %s"
 
-#: ../src/orca/orca.py:1240
+#: ../src/orca/orca.py:1248
 msgid "-s, --setup, --gui-setup     Set up user preferences"
 msgstr "-s, --setup, --gui-setup     Määrittele käyttäjän asetukset"
 
-#: ../src/orca/orca.py:1241
+#: ../src/orca/orca.py:1249
 msgid "-t, --text-setup             Set up user preferences (text version)"
-msgstr "-t, --text-setup             Määrittele käyttäjän asetukset (tekstiversio)"
+msgstr ""
+"-t, --text-setup             Määrittele käyttäjän asetukset (tekstiversio)"
 
-#: ../src/orca/orca.py:1242
+#: ../src/orca/orca.py:1250
 msgid "-n, --no-setup               Skip set up of user preferences"
 msgstr "-n, --no-setup               Ohita käyttäjien asetusten määrittely"
 
-#: ../src/orca/orca.py:1244
+#: ../src/orca/orca.py:1252
 msgid ""
 "If Orca has not been previously set up by the user, Orca\n"
 "will automatically launch the preferences set up unless\n"
 "the -n or --no-setup option is used."
 msgstr ""
 
-#: ../src/orca/orca.py:1246
+#: ../src/orca/orca.py:1254
 msgid "Report bugs to orca-list@gnome.org."
 msgstr "Kerro vioista osoitteeseen orca-list@gnome.org."
 
