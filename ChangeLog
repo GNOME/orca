@@ -1,3 +1,8 @@
+2006-07-09  Willie Walker  <william.walker@sun.com>
+
+	* src/orca/orca_gui_prefs.py: fix for bug 347054 - allow
+	readTableCellRow to be set.
+	
 2006-07-09  Alexander Shopov  <ash@contact.bg>
 
 	* configure.in: Added "bg" (Bulgarian) to ALL_LINGUAS

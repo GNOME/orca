@@ -118,7 +118,7 @@ class orcaSetupGUI(GladeWrapper):
                 debug.printException(debug.LEVEL_FINEST)
                 pass
 
-        debug.println(debug.LEVEL_FINEST, 
+        debug.println(debug.LEVEL_FINEST,
                       "orca_gui_prefs._init: workingFactories: %s" \
                       % self.workingFactories)
 
@@ -142,13 +142,13 @@ class orcaSetupGUI(GladeWrapper):
             self.speechSystemsModel.append((1, name))
             self.factory = self.workingFactories[0]
 
-        debug.println(debug.LEVEL_FINEST, 
+        debug.println(debug.LEVEL_FINEST,
                       "orca_gui_prefs._init: factoryChoices: %s" \
                       % self.factoryChoices)
-        debug.println(debug.LEVEL_FINEST, 
+        debug.println(debug.LEVEL_FINEST,
                       "orca_gui_prefs._init: factory: %s" \
                       % self.factory)
-        debug.println(debug.LEVEL_FINEST, 
+        debug.println(debug.LEVEL_FINEST,
                       "orca_gui_prefs._init: servers: %s" \
                       % servers)
 
@@ -160,7 +160,7 @@ class orcaSetupGUI(GladeWrapper):
         self.initializing = False
 
     def _setVoiceSettingForVoiceType(self, voiceType):
-        """Set the family, rate, pitch and volume GUI components based 
+        """Set the family, rate, pitch and volume GUI components based
         on the given voice type.
 
         Arguments:
@@ -184,7 +184,7 @@ class orcaSetupGUI(GladeWrapper):
             self.volumeScale.set_value(volume)
 
     def _initGUIState(self):
-        """Adjust the settings of the various components on the 
+        """Adjust the settings of the various components on the
         configuration GUI depending upon the users preferences.
         """
 
@@ -368,7 +368,7 @@ class orcaSetupGUI(GladeWrapper):
         index = self._getComboBoxIndex(self.magSmoothingComboBox, mode)
         self.magSmoothingComboBox.set_active(index)
 
-        # Get the mouse tracking preference and set the active value for 
+        # Get the mouse tracking preference and set the active value for
         # the mouse tracking combobox accordingly.
         #
         mouseTrackingMode = prefs["magMouseTrackingMode"]
@@ -388,15 +388,15 @@ class orcaSetupGUI(GladeWrapper):
     def _getComboBoxIndex(self, combobox, str):
         """ For each of the entries in the given combo box, look for str.
             Return the index of the entry if str is found.
- 
+
         Arguments:
         - combobox: the GtkComboBox to search.
         - str: the string to search for.
- 
-        Returns the index of the first entry in combobox with str, on 
+
+        Returns the index of the first entry in combobox with str, on
         None if not found.
         """
- 
+
         model = combobox.get_model()
         iter = model.get_iter_first()
         for i in range(0, len(model)):
@@ -404,13 +404,13 @@ class orcaSetupGUI(GladeWrapper):
             if name == str:
                 return i
             iter = model.iter_next(iter)
- 
+
         return None
 
     def _setupServers(self):
         """Get the list of speech servers for the current speech factory.
-        If there aren't any servers, set the 'enableSpeech' to False and 
-        return, otherwise get the information associated with each speech 
+        If there aren't any servers, set the 'enableSpeech' to False and
+        return, otherwise get the information associated with each speech
         server and add an entry for it to the speechServers GtkComboBox list.
         Set the current choice to be the first item.
         """
@@ -439,16 +439,16 @@ class orcaSetupGUI(GladeWrapper):
 
         self.speechServers.set_active(0)
 
-        debug.println(debug.LEVEL_FINEST, 
+        debug.println(debug.LEVEL_FINEST,
                       "orca_gui_prefs._init: serverChoices: %s" \
                       % self.serverChoices)
-        debug.println(debug.LEVEL_FINEST, 
+        debug.println(debug.LEVEL_FINEST,
                       "orca_gui_prefs._init: server: %s" \
                       % self.server)
 
     def _setupVoices(self):
         """Get the list of voice families for the current speech server.
-        If there aren't any voices, set the 'enableSpeech' to False and 
+        If there aren't any voices, set the 'enableSpeech' to False and
         return, otherwise get the information associated with each voice
         family and add an entry for it to the voices GtkComboBox list.
         If we are not doing graphics initialisation (i.e. the user has
@@ -483,12 +483,12 @@ class orcaSetupGUI(GladeWrapper):
         if not self.initializing:
             self.voices.set_active(0)
 
-        debug.println(debug.LEVEL_FINEST, 
+        debug.println(debug.LEVEL_FINEST,
                       "orca_gui_prefs._init: voiceChoices: %s" \
                       % self.voiceChoices)
 
     def _getVoiceForVoiceType(self, voiceType):
-        """Return the dictionary of voice preferences for the given 
+        """Return the dictionary of voice preferences for the given
         voice type.
 
         Arguments:
@@ -585,7 +585,7 @@ class orcaSetupGUI(GladeWrapper):
         Arguments:
         - voiceType: the voice type (Default, Uppercase or Hyperlink).
 
-        Returns the rate value for the given voice type, or None if 
+        Returns the rate value for the given voice type, or None if
         not set.
         """
 
@@ -631,7 +631,7 @@ class orcaSetupGUI(GladeWrapper):
         Arguments:
         - voiceType: the voice type (Default, Uppercase or Hyperlink).
 
-        Returns the volume (gain) value for the given voice type, or 
+        Returns the volume (gain) value for the given voice type, or
         None if not set.
         """
 
@@ -654,7 +654,7 @@ class orcaSetupGUI(GladeWrapper):
 
         Arguments:
         - factoryChoices: the list of available speech factories (systems).
-        - value: the speech system name to use to set the active combo 
+        - value: the speech system name to use to set the active combo
         box item.
         """
 
@@ -687,7 +687,7 @@ class orcaSetupGUI(GladeWrapper):
             i += 1
 
     def _setVoiceChoice(self, families, voiceName):
-        """Set the active item in the voices combo box to the given 
+        """Set the active item in the voices combo box to the given
         voice name.
 
         Arguments:
@@ -737,7 +737,7 @@ class orcaSetupGUI(GladeWrapper):
         return model
 
     def _setKeyEchoItems(self):
-        """[In]sensitize the checkboxes for the various types of key echo, 
+        """[In]sensitize the checkboxes for the various types of key echo,
         depending upon whether the value of the key echo check button is set.
         """
 
@@ -749,7 +749,7 @@ class orcaSetupGUI(GladeWrapper):
         self.actionCheckbutton.set_sensitive(enable)
 
     def _say(self, text, stop=False):
-        """If the text field is not None, speaks the given text, optionally 
+        """If the text field is not None, speaks the given text, optionally
         interrupting anything currently being spoken.
 
         Arguments:
@@ -803,7 +803,7 @@ class orcaSetupGUI(GladeWrapper):
     def speechServersChanged(self, widget):
         """Signal handler for the "changed" signal for the speechServers
            GtkComboBox widget. The user has selected a different speech
-           server. Clear the existing list of voices, and setup a new 
+           server. Clear the existing list of voices, and setup a new
            list of voices based on the new choice.
 
         Arguments:
@@ -837,8 +837,8 @@ class orcaSetupGUI(GladeWrapper):
     def speechIndentationChecked(self, widget):
         """Signal handler for the "toggled" signal for the
            speechIndentationCheckbutton GtkCheckButton widget. The user has
-           [un]checked the 'Speak indentation and justification' checkbox. 
-           Set the 'enableSpeechIndentation' preference to the new value. 
+           [un]checked the 'Speak indentation and justification' checkbox.
+           Set the 'enableSpeechIndentation' preference to the new value.
 
         Arguments:
         - widget: the component that generated the signal.
@@ -848,9 +848,9 @@ class orcaSetupGUI(GladeWrapper):
         self.prefsDict["enableSpeechIndentation"] = enable
 
     def brailleSupportChecked(self, widget):
-        """Signal handler for the "toggled" signal for the 
+        """Signal handler for the "toggled" signal for the
            brailleSupportCheckbutton GtkCheckButton widget. The user has
-           [un]checked the 'Enable Braille support" checkbox. Set the 
+           [un]checked the 'Enable Braille support" checkbox. Set the
            'enableBraille' preference to the new value.
 
         Arguments:
@@ -875,8 +875,8 @@ class orcaSetupGUI(GladeWrapper):
         """Signal handler for the "toggled" signal for the
            keyEchoCheckbutton GtkCheckButton widget. The user has
            [un]checked the 'Enable Key Echo" checkbox. Set the
-           'enableKeyEcho' preference to the new value. [In]sensitize 
-           the checkboxes for the various types of key echo, depending 
+           'enableKeyEcho' preference to the new value. [In]sensitize
+           the checkboxes for the various types of key echo, depending
            upon whether this value is checked or unchecked.
 
         Arguments:
@@ -889,8 +889,8 @@ class orcaSetupGUI(GladeWrapper):
     def printableKeysChecked(self, widget):
         """Signal handler for the "toggled" signal for the
            printableCheckbutton GtkCheckButton widget. The user has
-           [un]checked the 'Enable alphanumeric and punctuation keys" 
-           checkbox. Set the 'enablePrintableKeys' preference to the 
+           [un]checked the 'Enable alphanumeric and punctuation keys"
+           checkbox. Set the 'enablePrintableKeys' preference to the
            new value.
 
         Arguments:
@@ -902,7 +902,7 @@ class orcaSetupGUI(GladeWrapper):
     def modifierKeysChecked(self, widget):
         """Signal handler for the "toggled" signal for the
            modifierCheckbutton GtkCheckButton widget. The user has
-           [un]checked the 'Enable modifier keys" checkbox. Set the 
+           [un]checked the 'Enable modifier keys" checkbox. Set the
            'enableModifierKeys' preference to the new value.
 
         Arguments:
@@ -1002,7 +1002,7 @@ class orcaSetupGUI(GladeWrapper):
     def volumeValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the voiceScale
            GtkHScale widget. The user has changed the current volume value.
-           Save the new volume value based on the currently selected voice 
+           Save the new volume value based on the currently selected voice
            type.
 
         Arguments:
@@ -1016,9 +1016,9 @@ class orcaSetupGUI(GladeWrapper):
     def punctuationLevelChanged(self, widget):
         """Signal handler for the "toggled" signal for the noneButton,
            someButton or allButton GtkRadioButton widgets. The user has
-           toggled the speech punctuation level value. If this signal 
-           was generated as the result of a radio button getting selected 
-           (as opposed to a radio button losing the selection), set the 
+           toggled the speech punctuation level value. If this signal
+           was generated as the result of a radio button getting selected
+           (as opposed to a radio button losing the selection), set the
            'verbalizePunctuationStyle' preference to the new value.
 
         Arguments:
@@ -1042,9 +1042,9 @@ class orcaSetupGUI(GladeWrapper):
     def speechVerbosityChanged(self, widget):
         """Signal handler for the "toggled" signal for the speechBriefButton,
            or speechVerboseButton GtkRadioButton widgets. The user has
-           toggled the speech verbosity level value. If this signal was 
-           generated as the result of a radio button getting selected 
-           (as opposed to a radio button losing the selection), set the 
+           toggled the speech verbosity level value. If this signal was
+           generated as the result of a radio button getting selected
+           (as opposed to a radio button losing the selection), set the
            'speechVerbosityLevel' preference to the new value.
 
         Arguments:
@@ -1072,15 +1072,15 @@ class orcaSetupGUI(GladeWrapper):
         """
 
         if widget.get_active():
-            if widget.get_label() == _("_cell"):
+            if widget.get_label() == _("Speak current _cell"):
                 self.prefsDict["readTableCellRow"] = False
             else:
                 self.prefsDict["readTableCellRow"] = True
 
     def abbrevRolenamesChecked(self, widget):
-        """Signal handler for the "toggled" signal for the abbrevRolenames 
+        """Signal handler for the "toggled" signal for the abbrevRolenames
            GtkCheckButton widget. The user has [un]checked the 'Abbreviated
-           Rolenames" checkbox. Set the 'brailleRolenameStyle' preference 
+           Rolenames" checkbox. Set the 'brailleRolenameStyle' preference
            to the new value.
 
         Arguments:
@@ -1116,10 +1116,10 @@ class orcaSetupGUI(GladeWrapper):
 
     def magnifierSupportChecked(self, widget):
         """Signal handler for the "toggled" signal for the
-           magnifierSupportCheckbutton GtkCheckButton widget. 
-           The user has [un]checked the 'Enable Magnification" checkbox. 
+           magnifierSupportCheckbutton GtkCheckButton widget.
+           The user has [un]checked the 'Enable Magnification" checkbox.
            Set the 'enableMagnifier' preference to the new value.
-           Set the rest of the magnifier pane items [in]sensensitive 
+           Set the rest of the magnifier pane items [in]sensensitive
            depending upon whether this checkbox is checked.
 
         Arguments:
@@ -1131,8 +1131,8 @@ class orcaSetupGUI(GladeWrapper):
         self.magnifierTable.set_sensitive(enable)
 
     def magCursorOnOffChecked(self, widget):
-        """Signal handler for the "toggled" signal for the 
-           magCursorOnOffCheckButton GtkCheckButton widget. 
+        """Signal handler for the "toggled" signal for the
+           magCursorOnOffCheckButton GtkCheckButton widget.
            The user has [un]checked the magnification cursor settings
            'Cursor on/off' checkbox. Set the 'enableMagCursor' preference
            to the new value.
@@ -1147,7 +1147,7 @@ class orcaSetupGUI(GladeWrapper):
         """Signal handler for the "toggled" signal for the
            magCursorSizeCheckButton GtkCheckButton widget.
            The user has [un]checked the magnification cursor settings
-           'Explicit cursor size' checkbox. Set the 
+           'Explicit cursor size' checkbox. Set the
            'enableMagCursorExplicitSize' preference to the new value.
            [Un]sensitize the cursor size spin button and label depending
            upon whether this checkbox is checked.
@@ -1164,7 +1164,7 @@ class orcaSetupGUI(GladeWrapper):
     def magCursorSizeValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the
            magCursorSizeSpinButton GtkSpinButton widget.
-           The user has changed the value of the magnification 
+           The user has changed the value of the magnification
            cursor settings cursor size spin button. Set the
            'magCursorSize' preference to the new integer value.
 
@@ -1178,7 +1178,7 @@ class orcaSetupGUI(GladeWrapper):
         """Signal handler for the "color_set" signal for the
            magCursorColorButton GtkColorButton widget.
            The user has changed the value of the magnification
-           cursor settings cursor color button. Set the 'magCursorColor' 
+           cursor settings cursor color button. Set the 'magCursorColor'
            preference to the new value.
 
         Arguments:
@@ -1193,7 +1193,7 @@ class orcaSetupGUI(GladeWrapper):
         """Signal handler for the "toggled" signal for the
            magCrossHairOnOffCheckButton GtkCheckButton widget.
            The user has [un]checked the magnification cross-hair settings
-           'Cross-hair on/off' checkbox. Set the 'enableMagCrossHair' 
+           'Cross-hair on/off' checkbox. Set the 'enableMagCrossHair'
            preference to the new value.
 
         Arguments:
@@ -1232,7 +1232,7 @@ class orcaSetupGUI(GladeWrapper):
         """Signal handler for the "value_changed" signal for the
            magZoomerTopSpinButton GtkSpinButton widget.
            The user has changed the value of the magnification
-           zoomer placement top spin button. Set the 'magZoomerTop' 
+           zoomer placement top spin button. Set the 'magZoomerTop'
            preference to the new integer value.
 
         Arguments:
@@ -1294,9 +1294,9 @@ class orcaSetupGUI(GladeWrapper):
         self.prefsDict["magZoomFactor"] = widget.get_value_as_int()
 
     def magSmoothingChanged(self, widget):
-        """Signal handler for the "changed" signal for the 
-           magSmoothingComboBox GtkComboBox widget. The user has 
-           selected a different magnification smoothing style. 
+        """Signal handler for the "changed" signal for the
+           magSmoothingComboBox GtkComboBox widget. The user has
+           selected a different magnification smoothing style.
            Set the 'magSmoothingMode' preference to the new value.
 
         Arguments:
@@ -1339,7 +1339,7 @@ class orcaSetupGUI(GladeWrapper):
         """Signal handler for the "toggled" signal for the
            magCrossHairOnOffCheckButton GtkCheckButton widget.
            The user has [un]checked the magnification 'Invert Colors'
-           checkbox. Set the 'enableMagZoomerColorInversion' preference 
+           checkbox. Set the 'enableMagZoomerColorInversion' preference
            to the new value.
 
         Arguments:
@@ -1349,7 +1349,7 @@ class orcaSetupGUI(GladeWrapper):
         self.prefsDict["enableMagZoomerColorInversion"] = widget.get_active()
 
     def helpButtonClicked(self, widget):
-        """Signal handler for the "clicked" signal for the helpButton 
+        """Signal handler for the "clicked" signal for the helpButton
            GtkButton widget. The user has clicked the Help button.
 
         Arguments:
@@ -1403,7 +1403,7 @@ class orcaSetupGUI(GladeWrapper):
     def windowDestroyed(self, widget):
         """Signal handler for the "destroyed" signal for the orcaSetupWindow
            GtkWindow widget. Reset OS to None, so that the GUI can be rebuilt
-           from the Glade file the next time the user wants to display the 
+           from the Glade file the next time the user wants to display the
            configuration GUI.
 
         Arguments:
