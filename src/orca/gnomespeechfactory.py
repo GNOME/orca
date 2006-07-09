@@ -569,31 +569,32 @@ class SpeechServer(speechserver.SpeechServer):
             try:
                 level, action = punctuation[oldText[i]]
 
-                # Special case for periods in text like filenames or URL's:
+                # Special case for punctuation in text like filenames or URL's:
+                #
+                isPrev = isNext = isSpecial = False
+                if i > 0:
+                    isPrev = not (oldText[i - 1] in string.whitespace)
+                if i < (len(oldText) - 1):
+                    isNext = not (oldText[i + 1] in string.whitespace)
+
                 # If this is a period and there is a non-space character
                 # on either side of it, then always speak it.
                 #
-                isPrev = isNext = isSpecial = False
-                if oldText[i] == "." and len(oldText) != 1:
-                    try:
-                        if i > 0:
-                            isPrev = not (oldText[i-1] in string.whitespace)
-                        if i < len(oldText)-1:
-                            isNext = not (oldText[i+1] in string.whitespace)
-                        isSpecial = isPrev and isNext
-                    except:
-                        print debug.printException(debug.LEVEL_OFF)
+                isSpecial = isPrev and isNext and (oldText[i] == ".")
 
-                if len(oldText) == 1 or isSpecial or style <= level:
-                    newText += " " + chnames[oldText[i]] + " "
-                    if action == punctuation_settings.PUNCTUATION_INSERT:
+                if (len(oldText) == 1) or isSpecial or (style <= level):
+                    if isPrev:
+                        newText += " "
+                    newText += chnames[oldText[i]]
+                    if (action == punctuation_settings.PUNCTUATION_INSERT) \
+                        and not isNext:
                         newText += oldText[i]
-                        if not isSpecial:
-                            newText += " "
+                    if isNext:
+                        newText += " "
                 else:
                     newText += oldText[i]
             except:
-                if len(oldText) == 1 and chnames.has_key(oldText[i]):
+                if (len(oldText) == 1) and chnames.has_key(oldText[i]):
                     newText += chnames[oldText[i].lower()]
                 else:
                     newText += oldText[i]

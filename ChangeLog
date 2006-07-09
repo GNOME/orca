@@ -1,5 +1,23 @@
 2006-07-09  Willie Walker  <william.walker@sun.com>
 
+	* src/orca/gnomespeechfactory.py: handle verbalized punctuation a
+	little differently to provide better behavior for both DECtalk and
+	festival.  The main thing was to determine when/where to add
+	spaces and when to replace a punctuation mark even if the action
+	was insert.  In general, spaces are added before the verbalization
+	if there is no whitespace before the punctuation mark and added
+	after the verbalization if there is no whitespace after the
+	puncutation mark.  
+
+	In addition, if there is no whitespace after a puncutation mark,
+	we replace it even if the action is insert.  The rational for this
+	is that we do the insert for special puncutation marks to preserve
+	some sense of prosody (e.g., pauses created by periods,
+	semi-colons, etc.).  If the punctuation mark is embedded in text,
+	it's generally there for semantic purposes other than prosody, so
+	we just replace it with its verbalized form (if the verbalized
+	puncutation level is appropriate, of course).
+	
 	* src/orca/orca_gui_prefs.py: fix for bug 347054 - allow
 	readTableCellRow to be set.
 	
