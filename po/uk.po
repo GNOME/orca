@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-11 19:06-0400\n"
+"POT-Creation-Date: 2006-07-09 18:51-0400\n"
 "PO-Revision-Date: 2005-08-08 11:46+0300\n"
 "Last-Translator: Maxim Dziumanenko <mvd@mylinux.com.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -20,15 +20,15 @@ msgstr ""
 msgid "grayed"
 msgstr "більше"
 
-#: src/orca/braillegenerator.py:1051 src/orca/speechgenerator.py:1169
+#: src/orca/braillegenerator.py:1069 src/orca/speechgenerator.py:1184
 msgid "expanded"
 msgstr "розгорнуто"
 
-#: src/orca/braillegenerator.py:1053 src/orca/speechgenerator.py:1171
+#: src/orca/braillegenerator.py:1071 src/orca/speechgenerator.py:1186
 msgid "collapsed"
 msgstr "згорнуто"
 
-#: src/orca/braillegenerator.py:1057
+#: src/orca/braillegenerator.py:1075
 #, python-format
 msgid "TREE LEVEL %d"
 msgstr "РІВЕНЬ ДЕРЕВА %d"
@@ -38,122 +38,151 @@ msgid "space"
 msgstr "пробіл"
 
 #: src/orca/chnames.py:33
-msgid "bang"
-msgstr "удар"
+msgid "newline"
+msgstr ""
 
 #: src/orca/chnames.py:34
+#, fuzzy
+msgid "tab"
+msgstr "вкладки"
+
+#: src/orca/chnames.py:36
+msgid "exclaim"
+msgstr ""
+
+#: src/orca/chnames.py:37
+msgid "apostrophe"
+msgstr ""
+
+#: src/orca/chnames.py:38
+msgid "comma"
+msgstr "кома"
+
+#: src/orca/chnames.py:39
+msgid "dot"
+msgstr "крапка"
+
+#: src/orca/chnames.py:40
+msgid "question"
+msgstr "запитання"
+
+#: src/orca/chnames.py:42
 msgid "quote"
 msgstr "дужка"
 
-#: src/orca/chnames.py:35
-msgid "number"
-msgstr "число"
-
-#: src/orca/chnames.py:36
-msgid "dollar"
-msgstr "долар"
-
-#: src/orca/chnames.py:37 src/orca/speechgenerator.py:852
-msgid "percent"
-msgstr "процент"
-
-#: src/orca/chnames.py:38
-msgid "and"
-msgstr "та"
-
-#: src/orca/chnames.py:39
-msgid "tick"
-msgstr "цокання"
-
-#: src/orca/chnames.py:40
+#: src/orca/chnames.py:43
 #, fuzzy
 msgid "left paren"
 msgstr "ліва фігурна скобка"
 
-#: src/orca/chnames.py:41
+#: src/orca/chnames.py:44
 #, fuzzy
 msgid "right paren"
 msgstr "права фігурна скобка"
-
-#: src/orca/chnames.py:42
-msgid "star"
-msgstr "зірочка"
-
-#: src/orca/chnames.py:43
-msgid "plus"
-msgstr "плюс"
-
-#: src/orca/chnames.py:44
-msgid "comma"
-msgstr "кома"
 
 #: src/orca/chnames.py:45
 msgid "dash"
 msgstr "дефіс"
 
 #: src/orca/chnames.py:46
-msgid "dot"
-msgstr "крапка"
+msgid "underscore"
+msgstr ""
 
 #: src/orca/chnames.py:47
-msgid "slash"
-msgstr "слеш"
-
-#: src/orca/chnames.py:48
-msgid "question"
-msgstr "запитання"
-
-#: src/orca/chnames.py:49
 #, fuzzy
 msgid "colon"
 msgstr "collun"
 
-#: src/orca/chnames.py:50
-msgid "semi"
-msgstr "напів"
+#: src/orca/chnames.py:48
+#, fuzzy
+msgid "semicolon"
+msgstr "collun"
 
-#: src/orca/chnames.py:51
+#: src/orca/chnames.py:49
 #, fuzzy
 msgid "less than"
 msgstr "прозора область"
 
-#: src/orca/chnames.py:52
+#: src/orca/chnames.py:50
 #, fuzzy
 msgid "greater than"
 msgstr "більше"
 
-#: src/orca/chnames.py:53
+#: src/orca/chnames.py:51
 msgid "left bracket"
 msgstr "ліва дужка"
 
-#: src/orca/chnames.py:54
+#: src/orca/chnames.py:52
 msgid "right bracket"
 msgstr "права дужка"
 
+#: src/orca/chnames.py:53
+#, fuzzy
+msgid "backslash"
+msgstr "слеш"
+
+#: src/orca/chnames.py:54
+msgid "vertical line"
+msgstr ""
+
 #: src/orca/chnames.py:55
+msgid "grave accent"
+msgstr ""
+
+#: src/orca/chnames.py:56
+#, fuzzy
+msgid "tilde"
+msgstr "таблиця"
+
+#: src/orca/chnames.py:57
 msgid "left brace"
 msgstr "ліва фігурна скобка"
 
-#: src/orca/chnames.py:56
+#: src/orca/chnames.py:58
 msgid "right brace"
 msgstr "права фігурна скобка"
 
-#: src/orca/chnames.py:57
-msgid "back"
-msgstr "назад"
-
-#: src/orca/chnames.py:58
-msgid "bar"
-msgstr "стовпчик"
-
-#: src/orca/chnames.py:59
-msgid "newline"
+#: src/orca/chnames.py:60
+msgid "pound"
 msgstr ""
 
-#: src/orca/chnames.py:60
+#: src/orca/chnames.py:61
+msgid "dollar"
+msgstr "долар"
+
+#: src/orca/chnames.py:62 src/orca/speechgenerator.py:849
+msgid "percent"
+msgstr "процент"
+
+#: src/orca/chnames.py:63
+msgid "and"
+msgstr "та"
+
+#: src/orca/chnames.py:64
+msgid "star"
+msgstr "зірочка"
+
+#: src/orca/chnames.py:65
+msgid "plus"
+msgstr "плюс"
+
+#: src/orca/chnames.py:66
+msgid "slash"
+msgstr "слеш"
+
+#: src/orca/chnames.py:67
+msgid "equals"
+msgstr ""
+
+#: src/orca/chnames.py:68
 #, fuzzy
-msgid "tab"
-msgstr "вкладки"
+msgid "at"
+msgstr "крапка"
+
+#: src/orca/chnames.py:69
+#, fuzzy
+msgid "caret"
+msgstr "тривога"
 
 #: src/orca/default.py:76
 msgid "Performs left click on current flat review item."
@@ -163,7 +192,7 @@ msgstr ""
 msgid "Performs right click on current flat review item."
 msgstr ""
 
-#: src/orca/default.py:84 src/orca/scripts/Evolution.py:104
+#: src/orca/default.py:84 src/orca/scripts/Evolution.py:107
 msgid "Speaks entire document."
 msgstr "Промовляє цілий документ."
 
@@ -268,42 +297,42 @@ msgstr ""
 msgid "Returns to object with keyboard focus."
 msgstr ""
 
-#: src/orca/default.py:845 src/orca/default.py:1064
+#: src/orca/default.py:896 src/orca/default.py:1121
 #, python-format
 msgid "tree level %d"
 msgstr "рівень дерева %d"
 
-#: src/orca/default.py:849 src/orca/default.py:1077 src/orca/default.py:1155
-#: src/orca/default.py:1220
+#: src/orca/default.py:900 src/orca/default.py:1147 src/orca/default.py:1225
+#: src/orca/default.py:1290
 msgid "No focus"
 msgstr ""
 
-#: src/orca/default.py:1463
+#: src/orca/default.py:1533
 #, fuzzy
 msgid "entire document selected"
 msgstr "не виділено"
 
-#: src/orca/default.py:1818
+#: src/orca/default.py:1888
 msgid "Speak "
 msgstr ""
 
-#: src/orca/default.py:1821
+#: src/orca/default.py:1891
 #, fuzzy
 msgid "row"
 msgstr "стрілка"
 
-#: src/orca/default.py:1823 src/orca/rolenames.py:432
+#: src/orca/default.py:1893 src/orca/rolenames.py:432
 #: src/orca/rolenames.py:434
 msgid "cell"
 msgstr "комірка"
 
-#: src/orca/default.py:2260 src/orca/default.py:2354 src/orca/default.py:2359
-#: src/orca/default.py:2429 src/orca/default.py:2434
+#: src/orca/default.py:2340 src/orca/default.py:2434 src/orca/default.py:2439
+#: src/orca/default.py:2509 src/orca/default.py:2514
 #, fuzzy
 msgid "blank"
 msgstr "удар"
 
-#: src/orca/default.py:2262 src/orca/default.py:2361
+#: src/orca/default.py:2342 src/orca/default.py:2441
 #, fuzzy
 msgid "white space"
 msgstr "пробіл"
@@ -312,35 +341,35 @@ msgstr "пробіл"
 msgid "Emacspeak Speech Services"
 msgstr ""
 
-#: src/orca/focus_tracking_presenter.py:550
+#: src/orca/focus_tracking_presenter.py:631
 msgid "Switching to focus tracking mode."
 msgstr "Перемикання у режим відстеження фокусу."
 
-#: src/orca/gnomespeechfactory.py:150
+#: src/orca/gnomespeechfactory.py:154
 msgid "GNOME Speech Services"
 msgstr ""
 
-#. Replace ellipses (both manual and unicode) with "dot dot dot"
-#.
-#: src/orca/gnomespeechfactory.py:571 src/orca/gnomespeechfactory.py:572
+#. # Replace ellipses (both manual and unicode) with "dot dot dot"
+#. #
+#: src/orca/gnomespeechfactory.py:563 src/orca/gnomespeechfactory.py:564
 msgid " dot dot dot"
 msgstr " три крапки "
 
-#: src/orca/gnomespeechfactory.py:670
+#: src/orca/gnomespeechfactory.py:723
 msgid "higher."
 msgstr ""
 
-#: src/orca/gnomespeechfactory.py:698
+#: src/orca/gnomespeechfactory.py:751
 #, fuzzy
 msgid "lower."
 msgstr "повзунок"
 
-#: src/orca/gnomespeechfactory.py:723
+#: src/orca/gnomespeechfactory.py:776
 #, fuzzy
 msgid "faster."
 msgstr "НИЖНІЙ КОЛОНТИТУЛ"
 
-#: src/orca/gnomespeechfactory.py:753
+#: src/orca/gnomespeechfactory.py:806
 #, fuzzy
 msgid "slower."
 msgstr "повзунок"
@@ -429,190 +458,212 @@ msgid ""
 "Hyperlink"
 msgstr ""
 
-#: src/orca/orca-setup.glade:609
+#: src/orca/orca-setup.glade:609 src/orca/orca_gui_prefs.py:1029
 msgid "_None"
 msgstr ""
 
-#: src/orca/orca-setup.glade:629
+#: src/orca/orca-setup.glade:629 src/orca/orca_gui_prefs.py:1032
 msgid "So_me"
 msgstr ""
 
-#: src/orca/orca-setup.glade:650
+#: src/orca/orca-setup.glade:650 src/orca/orca_gui_prefs.py:1035
+msgid "M_ost"
+msgstr ""
+
+#: src/orca/orca-setup.glade:671
 msgid "_All"
 msgstr ""
 
-#: src/orca/orca-setup.glade:674
+#: src/orca/orca-setup.glade:695
 msgid "<b>Punctuation Level</b>"
 msgstr ""
 
-#: src/orca/orca-setup.glade:748 src/orca/orca-setup.glade:986
+#: src/orca/orca-setup.glade:769 src/orca/orca-setup.glade:1156
+#: src/orca/orca_gui_prefs.py:221 src/orca/orca_gui_prefs.py:1055
+#: src/orca/orca_gui_prefs.py:1110
 msgid "Brie_f"
 msgstr ""
 
-#: src/orca/orca-setup.glade:768 src/orca/orca-setup.glade:1006
+#: src/orca/orca-setup.glade:789 src/orca/orca-setup.glade:1176
 msgid "Ver_bose"
 msgstr ""
 
-#: src/orca/orca-setup.glade:792 src/orca/orca-setup.glade:1030
+#: src/orca/orca-setup.glade:813 src/orca/orca-setup.glade:1200
 msgid "<b>Verbosity</b>"
 msgstr ""
 
-#: src/orca/orca-setup.glade:857
+#: src/orca/orca-setup.glade:887 src/orca/orca_gui_prefs.py:1075
+msgid "Speak current _cell"
+msgstr ""
+
+#: src/orca/orca-setup.glade:907
+msgid "Speak current ro_w"
+msgstr ""
+
+#: src/orca/orca-setup.glade:931
+msgid "<b>Table Row Speech</b>"
+msgstr ""
+
+#: src/orca/orca-setup.glade:1000
+msgid "Speak _indentation and justification"
+msgstr ""
+
+#: src/orca/orca-setup.glade:1027
 msgid "Speech"
 msgstr ""
 
-#: src/orca/orca-setup.glade:888
+#: src/orca/orca-setup.glade:1058
 #, fuzzy
 msgid "Enable Braille _support"
 msgstr "Створити інший голос? Введіть y чи n: "
 
-#: src/orca/orca-setup.glade:908
+#: src/orca/orca-setup.glade:1078
 #, fuzzy
 msgid "Enable Braille _monitor"
 msgstr "Створити інший голос? Введіть y чи n: "
 
-#: src/orca/orca-setup.glade:928
+#: src/orca/orca-setup.glade:1098
 msgid "_Abbreviated role names"
 msgstr ""
 
-#: src/orca/orca-setup.glade:1071
+#: src/orca/orca-setup.glade:1241
 #, fuzzy
 msgid "Braille"
 msgstr "наповнювач"
 
-#: src/orca/orca-setup.glade:1102
+#: src/orca/orca-setup.glade:1272
 #, fuzzy
 msgid "Enable _key echo"
 msgstr "Виводити ключі? Введіть y чи n: "
 
-#: src/orca/orca-setup.glade:1134
+#: src/orca/orca-setup.glade:1304
 msgid "Enable _alphanumeric and punctuation keys"
 msgstr ""
 
-#: src/orca/orca-setup.glade:1168
+#: src/orca/orca-setup.glade:1338
 #, fuzzy
 msgid "Enable _modifier keys"
 msgstr "Створити інший голос? Введіть y чи n: "
 
-#: src/orca/orca-setup.glade:1202
+#: src/orca/orca-setup.glade:1372
 #, fuzzy
 msgid "Enable lockin_g keys"
 msgstr "Виводити ключі? Введіть y чи n: "
 
-#: src/orca/orca-setup.glade:1236
+#: src/orca/orca-setup.glade:1406
 #, fuzzy
 msgid "Enable _function keys"
 msgstr "Виводити ключі? Введіть y чи n: "
 
-#: src/orca/orca-setup.glade:1270
+#: src/orca/orca-setup.glade:1440
 #, fuzzy
 msgid "Enable ac_tion keys"
 msgstr "Виводити ключі? Введіть y чи n: "
 
-#: src/orca/orca-setup.glade:1292
+#: src/orca/orca-setup.glade:1462
 #, fuzzy
 msgid "Enable echo by _word"
 msgstr "Виводити ключі? Введіть y чи n: "
 
-#: src/orca/orca-setup.glade:1317
+#: src/orca/orca-setup.glade:1487
 #, fuzzy
 msgid "Key Echo"
 msgstr "вибір шрифту"
 
-#: src/orca/orca-setup.glade:1359
+#: src/orca/orca-setup.glade:1529
 msgid "Enable _magnifier"
 msgstr ""
 
-#: src/orca/orca-setup.glade:1443
+#: src/orca/orca-setup.glade:1613
 msgid "Enable c_ursor"
 msgstr ""
 
-#: src/orca/orca-setup.glade:1478
+#: src/orca/orca-setup.glade:1648
 msgid "Custom siz_e"
 msgstr ""
 
-#: src/orca/orca-setup.glade:1510
+#: src/orca/orca-setup.glade:1680
 msgid "Color:"
 msgstr ""
 
-#: src/orca/orca-setup.glade:1557
+#: src/orca/orca-setup.glade:1727
 msgid "_Width:"
 msgstr ""
 
-#: src/orca/orca-setup.glade:1586 src/orca/orca-setup.glade:1860
+#: src/orca/orca-setup.glade:1756 src/orca/orca-setup.glade:2030
 #, fuzzy
 msgid "pixels"
 msgstr "плюс"
 
-#: src/orca/orca-setup.glade:1650
+#: src/orca/orca-setup.glade:1820
 msgid "<b>Cursor Settings</b>"
 msgstr ""
 
-#: src/orca/orca-setup.glade:1737
+#: src/orca/orca-setup.glade:1907
 msgid "Enable cross-hair cli_p"
 msgstr ""
 
-#: src/orca/orca-setup.glade:1773
+#: src/orca/orca-setup.glade:1943
 msgid "Enable cross-h_air"
 msgstr ""
 
-#: src/orca/orca-setup.glade:1814
+#: src/orca/orca-setup.glade:1984
 msgid "Si_ze:"
 msgstr ""
 
-#: src/orca/orca-setup.glade:1901
+#: src/orca/orca-setup.glade:2071
 msgid "<b>Cross-hair Settings</b>"
 msgstr ""
 
-#: src/orca/orca-setup.glade:1987
+#: src/orca/orca-setup.glade:2157
 msgid "Scale _factor:"
 msgstr ""
 
-#: src/orca/orca-setup.glade:2039
+#: src/orca/orca-setup.glade:2209
 msgid "In_vert colors"
 msgstr ""
 
-#: src/orca/orca-setup.glade:2067
+#: src/orca/orca-setup.glade:2237
 msgid "<b>Zoomer Settings</b>"
 msgstr ""
 
-#: src/orca/orca-setup.glade:2160
+#: src/orca/orca-setup.glade:2330
 msgid "_Top:"
 msgstr ""
 
-#: src/orca/orca-setup.glade:2227
+#: src/orca/orca-setup.glade:2397
 msgid "_Bottom:"
 msgstr ""
 
-#: src/orca/orca-setup.glade:2294
+#: src/orca/orca-setup.glade:2464
 msgid "_Left:"
 msgstr ""
 
-#: src/orca/orca-setup.glade:2360
+#: src/orca/orca-setup.glade:2530
 #, fuzzy
 msgid "_Right:"
 msgstr "справа"
 
-#: src/orca/orca-setup.glade:2427
+#: src/orca/orca-setup.glade:2597
 msgid "<b>Zoomer Position</b>"
 msgstr ""
 
-#: src/orca/orca-setup.glade:2474
+#: src/orca/orca-setup.glade:2644
 msgid "_Smoothing:"
 msgstr ""
 
-#: src/orca/orca-setup.glade:2507
+#: src/orca/orca-setup.glade:2677
 #, fuzzy
 msgid "Mouse trac_king mode:"
 msgstr "Перемикання у режим відстеження фокусу."
 
-#: src/orca/orca-setup.glade:2550
+#: src/orca/orca-setup.glade:2720
 msgid ""
 "None\n"
 "Bilinear"
 msgstr ""
 
-#: src/orca/orca-setup.glade:2574
+#: src/orca/orca-setup.glade:2744
 msgid ""
 "Centered\n"
 "None\n"
@@ -620,119 +671,119 @@ msgid ""
 "Push"
 msgstr ""
 
-#: src/orca/orca-setup.glade:2611
+#: src/orca/orca-setup.glade:2781
 msgid "Magnifier"
 msgstr ""
 
-#: src/orca/orca-setup.glade:2650
+#: src/orca/orca-setup.glade:2820
 #, fuzzy
 msgid "Question"
 msgstr "запитання"
 
-#: src/orca/orca-setup.glade:2737
+#: src/orca/orca-setup.glade:2907
 msgid ""
 "You will have to log out for the change to take effect.\n"
 "Do you want to log out now? "
 msgstr ""
 
-#: src/orca/orca.py:231
+#: src/orca/orca.py:237
 msgid "User logged out - shutting down."
 msgstr "Користувач завершив сеанс - завершення роботи."
 
-#: src/orca/orca.py:396
+#: src/orca/orca.py:402
 msgid "Debug level all."
 msgstr ""
 
-#: src/orca/orca.py:398
+#: src/orca/orca.py:404
 msgid "Debug level finest."
 msgstr ""
 
-#: src/orca/orca.py:400
+#: src/orca/orca.py:406
 msgid "Debug level finer."
 msgstr ""
 
-#: src/orca/orca.py:451
+#: src/orca/orca.py:457
 msgid "Entering learn mode.  Press any key to hear its function. "
 msgstr ""
 "Вхід у режим навчання. Натисніть будь-яку клавішу, щоб почути її функцію."
 
-#: src/orca/orca.py:452
+#: src/orca/orca.py:458
 msgid "To exit learn mode, press the escape key."
 msgstr "Для виходу з режиму навчання натисніть клавішу Esc."
 
-#: src/orca/orca.py:453
+#: src/orca/orca.py:459
 msgid "Learn mode.  Press escape to exit."
 msgstr "Режим навчання. Для виходу натисніть Esc."
 
-#: src/orca/orca.py:463 src/orca/orca.py:464
+#: src/orca/orca.py:469 src/orca/orca.py:470
 msgid "Exiting learn mode."
 msgstr "Вихід з режиму навчання."
 
-#: src/orca/orca.py:632
+#: src/orca/orca.py:638
 msgid "Caps_Lock"
 msgstr ""
 
-#: src/orca/orca.py:637
+#: src/orca/orca.py:643
 msgid "Num_Lock"
 msgstr ""
 
-#: src/orca/orca.py:821
+#: src/orca/orca.py:830
 #, fuzzy
 msgid "Speech enabled."
 msgstr "недоступно"
 
-#: src/orca/orca.py:823
+#: src/orca/orca.py:832
 #, fuzzy
 msgid "Speech disabled."
 msgstr "недоступно"
 
-#: src/orca/orca.py:859
+#: src/orca/orca.py:870
 msgid "Orca user settings reloaded."
 msgstr ""
 
-#: src/orca/orca.py:954
+#: src/orca/orca.py:967
 msgid "Enters learn mode.  Press escape to exit learn mode."
 msgstr "Вхід у режим навчання. Для виходу з режиму навчання натисніть Esc."
 
-#: src/orca/orca.py:962
+#: src/orca/orca.py:975
 msgid "Decreases the speech rate."
 msgstr "Зменшує швидкість промови."
 
-#: src/orca/orca.py:970
+#: src/orca/orca.py:983
 msgid "Increases the speech rate."
 msgstr "Збільшує швидкість промови."
 
-#: src/orca/orca.py:978
+#: src/orca/orca.py:991
 #, fuzzy
 msgid "Decreases the speech pitch."
 msgstr "Зменшує швидкість промови."
 
-#: src/orca/orca.py:986
+#: src/orca/orca.py:999
 #, fuzzy
 msgid "Increases the speech pitch."
 msgstr "Збільшує швидкість промови."
 
-#: src/orca/orca.py:992
+#: src/orca/orca.py:1005
 msgid "Quits Orca"
 msgstr "Виходить з Orca"
 
-#: src/orca/orca.py:1000
+#: src/orca/orca.py:1013
 msgid "Toggles keystroke recording on and off."
 msgstr ""
 
-#: src/orca/orca.py:1008
+#: src/orca/orca.py:1021
 msgid "Displays the preferences configuration dialog."
 msgstr ""
 
-#: src/orca/orca.py:1017
+#: src/orca/orca.py:1030
 msgid "Reloads user settings and reinitializes services as necessary."
 msgstr ""
 
-#: src/orca/orca.py:1026
+#: src/orca/orca.py:1039
 msgid "Toggles the silencing of speech."
 msgstr ""
 
-#: src/orca/orca.py:1035
+#: src/orca/orca.py:1048
 msgid ""
 "Prints a debug listing of all known applications to the console where Orca "
 "is running."
@@ -740,11 +791,11 @@ msgstr ""
 "Виводить на консоль де працює Orca налагоджувальну інформацію про усі відомі "
 "програми."
 
-#: src/orca/orca.py:1044
+#: src/orca/orca.py:1057
 msgid "Cycles the debug level at run time."
 msgstr ""
 
-#: src/orca/orca.py:1052
+#: src/orca/orca.py:1065
 msgid ""
 "Prints debug information about the currently active application to the "
 "console where Orca is running."
@@ -752,25 +803,25 @@ msgstr ""
 "Виводить на консоль де працює Orca налагоджувальну інформацію про активні "
 "програми."
 
-#: src/orca/orca.py:1060
+#: src/orca/orca.py:1073
 #, fuzzy
 msgid "Prints debug information about the ancestry of the object with focus"
 msgstr ""
 "Виводить на консоль де працює Orca налагоджувальну інформацію про активні "
 "програми."
 
-#: src/orca/orca.py:1069
+#: src/orca/orca.py:1082
 #, fuzzy
 msgid "Prints debug information about the application with focus"
 msgstr ""
 "Виводить на консоль де працює Orca налагоджувальну інформацію про активні "
 "програми."
 
-#: src/orca/orca.py:1078
+#: src/orca/orca.py:1091
 msgid "Switches to the next presentation manager."
 msgstr "Перемикає на наступний менеджер презентацій."
 
-#: src/orca/orca.py:1111 src/orca/orca.py:1112
+#: src/orca/orca.py:1124 src/orca/orca.py:1125
 msgid "Welcome to Orca."
 msgstr "Ласкаво просимо до Orca."
 
@@ -780,47 +831,47 @@ msgstr "Ласкаво просимо до Orca."
 #.
 #. timer = threading.Timer(5.0, timeout)
 #. timer.start()
-#: src/orca/orca.py:1164
+#: src/orca/orca.py:1177
 msgid "goodbye."
 msgstr "до зустрічі."
 
-#: src/orca/orca.py:1165
+#: src/orca/orca.py:1178
 msgid "Goodbye."
 msgstr "До зустрічі."
 
-#: src/orca/orca.py:1231
+#: src/orca/orca.py:1244
 msgid "Usage: orca [OPTION...]"
 msgstr ""
 
-#: src/orca/orca.py:1233
+#: src/orca/orca.py:1246
 msgid "-?, --help                   Show this help message"
 msgstr ""
 
-#: src/orca/orca.py:1234
+#: src/orca/orca.py:1247
 #, python-format
 msgid "-v, --version                %s"
 msgstr ""
 
-#: src/orca/orca.py:1235
+#: src/orca/orca.py:1248
 msgid "-s, --setup, --gui-setup     Set up user preferences"
 msgstr ""
 
-#: src/orca/orca.py:1236
+#: src/orca/orca.py:1249
 msgid "-t, --text-setup             Set up user preferences (text version)"
 msgstr ""
 
-#: src/orca/orca.py:1237
+#: src/orca/orca.py:1250
 msgid "-n, --no-setup               Skip set up of user preferences"
 msgstr ""
 
-#: src/orca/orca.py:1239
+#: src/orca/orca.py:1252
 msgid ""
 "If Orca has not been previously set up by the user, Orca\n"
 "will automatically launch the preferences set up unless\n"
 "the -n or --no-setup option is used."
 msgstr ""
 
-#: src/orca/orca.py:1241
+#: src/orca/orca.py:1254
 msgid "Report bugs to orca-list@gnome.org."
 msgstr ""
 
@@ -948,64 +999,58 @@ msgstr ""
 msgid "Setup complete.  Press Return to continue."
 msgstr ""
 
-#: src/orca/orca_gui_prefs.py:127 src/orca/orca_gui_prefs.py:410
-#: src/orca/orca_gui_prefs.py:452
+#: src/orca/orca_gui_prefs.py:127 src/orca/orca_gui_prefs.py:421
+#: src/orca/orca_gui_prefs.py:463
 #, fuzzy
 msgid "Speech not available."
 msgstr "недоступно"
 
-#: src/orca/orca_gui_prefs.py:218 src/orca/orca_gui_prefs.py:230
-#: src/orca/orca_gui_prefs.py:1018 src/orca/orca_gui_prefs.py:1055
+#: src/orca/orca_gui_prefs.py:241
 msgid "Brief"
 msgstr ""
 
-#: src/orca/orca_gui_prefs.py:352 src/orca/orca_gui_prefs.py:356
-#: src/orca/orca_gui_prefs.py:1252
+#: src/orca/orca_gui_prefs.py:363 src/orca/orca_gui_prefs.py:367
+#: src/orca/orca_gui_prefs.py:1307
 msgid "Bilinear"
 msgstr ""
 
-#: src/orca/orca_gui_prefs.py:354 src/orca/orca_gui_prefs.py:367
-#: src/orca/orca_gui_prefs.py:995 src/orca/orca_gui_prefs.py:1254
-#: src/orca/orca_gui_prefs.py:1277
+#: src/orca/orca_gui_prefs.py:365 src/orca/orca_gui_prefs.py:378
+#: src/orca/orca_gui_prefs.py:1309 src/orca/orca_gui_prefs.py:1332
 msgid "None"
 msgstr ""
 
-#: src/orca/orca_gui_prefs.py:365 src/orca/orca_gui_prefs.py:373
-#: src/orca/orca_gui_prefs.py:1271
+#: src/orca/orca_gui_prefs.py:376 src/orca/orca_gui_prefs.py:384
+#: src/orca/orca_gui_prefs.py:1326
 msgid "Centered"
 msgstr ""
 
-#: src/orca/orca_gui_prefs.py:369 src/orca/orca_gui_prefs.py:1275
+#: src/orca/orca_gui_prefs.py:380 src/orca/orca_gui_prefs.py:1330
 #, fuzzy
 msgid "Proportional"
 msgstr "панель з вибором"
 
-#: src/orca/orca_gui_prefs.py:371 src/orca/orca_gui_prefs.py:1273
+#: src/orca/orca_gui_prefs.py:382 src/orca/orca_gui_prefs.py:1328
 msgid "Push"
 msgstr ""
 
-#: src/orca/orca_gui_prefs.py:489 src/orca/orca_gui_prefs.py:514
+#: src/orca/orca_gui_prefs.py:500 src/orca/orca_gui_prefs.py:525
 msgid "Default"
 msgstr ""
 
-#: src/orca/orca_gui_prefs.py:491 src/orca/orca_gui_prefs.py:516
+#: src/orca/orca_gui_prefs.py:502 src/orca/orca_gui_prefs.py:527
 #, fuzzy
 msgid "Uppercase"
 msgstr "процент"
 
-#: src/orca/orca_gui_prefs.py:493 src/orca/orca_gui_prefs.py:522
+#: src/orca/orca_gui_prefs.py:504 src/orca/orca_gui_prefs.py:533
 msgid "Hyperlink"
 msgstr ""
 
-#: src/orca/orca_gui_prefs.py:998
-msgid "Some"
-msgstr ""
-
-#: src/orca/orca_gui_prefs.py:1340
+#: src/orca/orca_gui_prefs.py:1395
 msgid "Accessibility support for GNOME has just been enabled."
 msgstr ""
 
-#: src/orca/orca_gui_prefs.py:1341
+#: src/orca/orca_gui_prefs.py:1396
 msgid "You need to log out and log back in for the change to take effect."
 msgstr ""
 
@@ -1763,7 +1808,7 @@ msgstr "пункт меню"
 msgid "TearOffMenuItem"
 msgstr "пункт відривного меню"
 
-#: src/orca/rolenames.py:449 src/orca/speechgenerator.py:1229
+#: src/orca/rolenames.py:449 src/orca/speechgenerator.py:1244
 msgid "tear off menu item"
 msgstr "пункт відривного меню"
 
@@ -1995,45 +2040,73 @@ msgstr "вбудований компонент"
 msgid "embedded component"
 msgstr "вбудований компонент"
 
-#: src/orca/scripts/Evolution.py:83
+#: src/orca/scripts/Evolution.py:86
 msgid "calv"
 msgstr ""
 
-#: src/orca/scripts/Evolution.py:84
+#: src/orca/scripts/Evolution.py:87
 #, fuzzy
 msgid "CalendarView"
 msgstr "календар"
 
-#: src/orca/scripts/Evolution.py:85
+#: src/orca/scripts/Evolution.py:88
 #, fuzzy
 msgid "calendar view"
 msgstr "календар"
 
-#: src/orca/scripts/Evolution.py:90
+#: src/orca/scripts/Evolution.py:93
 #, fuzzy
 msgid "cale"
 msgstr "тривога"
 
-#: src/orca/scripts/Evolution.py:91
+#: src/orca/scripts/Evolution.py:94
 #, fuzzy
 msgid "CalendarEvent"
 msgstr "календар"
 
-#: src/orca/scripts/Evolution.py:92
+#: src/orca/scripts/Evolution.py:95
 #, fuzzy
 msgid "calendar event"
 msgstr "календар"
 
-#: src/orca/scripts/Evolution.py:577
+#: src/orca/scripts/Evolution.py:145
+msgid " screen"
+msgstr ""
+
+#. Most of the Setup Assistant screens have a useful piece
+#. of text starting with the word "Please". We want to speak
+#. these. For the first screen, the useful piece of text
+#. starts with "Welcome". For the last screen, it starts
+#. with "Congratulations". Speak those too.
+#.
+#: src/orca/scripts/Evolution.py:159
+#, fuzzy
+msgid "Please"
+msgstr "менше"
+
+#: src/orca/scripts/Evolution.py:160
+#, fuzzy
+msgid "Welcome"
+msgstr "Ласкаво просимо до Orca."
+
+#: src/orca/scripts/Evolution.py:161
+msgid "Congratulations"
+msgstr ""
+
+#: src/orca/scripts/Evolution.py:660
 msgid "No appointments"
 msgstr ""
 
-#: src/orca/scripts/Evolution.py:651
+#: src/orca/scripts/Evolution.py:734
 #, fuzzy
 msgid "Directories button"
 msgstr "кнопка з перемиканням"
 
-#: src/orca/scripts/Mozilla.py:231 src/orca/scripts/StarOffice.py:405
+#: src/orca/scripts/Evolution.py:873 src/orca/scripts/Evolution.py:911
+msgid "Assistant"
+msgstr ""
+
+#: src/orca/scripts/Mozilla.py:231 src/orca/scripts/StarOffice.py:408
 msgid "link"
 msgstr ""
 
@@ -2065,19 +2138,37 @@ msgstr ""
 msgid "Check Spelling"
 msgstr "меню з відміткою"
 
-#: src/orca/scripts/StarOffice.py:240
+#: src/orca/scripts/StarOffice.py:243
 msgid "Speaks the contents of the input line."
 msgstr ""
 
-#: src/orca/scripts/StarOffice.py:280
+#: src/orca/scripts/StarOffice.py:283
 msgid "empty"
 msgstr ""
 
-#: src/orca/scripts/StarOffice.py:500 src/orca/scripts/StarOffice.py:551
+#: src/orca/scripts/StarOffice.py:426
+#, fuzzy
+msgid "Welcome to StarOffice"
+msgstr "Ласкаво просимо до Orca."
+
+#: src/orca/scripts/StarOffice.py:554 src/orca/scripts/StarOffice.py:803
 msgid "Spellcheck:"
 msgstr ""
 
-#: src/orca/scripts/StarOffice.py:613
+#: src/orca/scripts/StarOffice.py:582
+msgid "Note that the Scroll Down button has to be pressed numerous times."
+msgstr ""
+
+#: src/orca/scripts/StarOffice.py:596
+msgid "License Agreement Accept button now has focus."
+msgstr ""
+
+#: src/orca/scripts/StarOffice.py:619
+#, fuzzy
+msgid "First name"
+msgstr "кадр"
+
+#: src/orca/scripts/StarOffice.py:867
 msgid " has formula"
 msgstr ""
 
@@ -2089,23 +2180,23 @@ msgstr ""
 #. translation is by running the application and then viewing its
 #. name in the main window of at-poke.
 #.
-#: src/orca/settings.py:386
+#: src/orca/settings.py:393
 msgid "[\\S\\s]*StarOffice[\\s\\S]*"
 msgstr ""
 
-#: src/orca/settings.py:387
+#: src/orca/settings.py:394
 msgid "soffice.bin"
 msgstr ""
 
-#: src/orca/settings.py:388
+#: src/orca/settings.py:395
 msgid "[Ee]volution"
 msgstr ""
 
-#: src/orca/settings.py:389
+#: src/orca/settings.py:396
 msgid "Deer Park"
 msgstr ""
 
-#: src/orca/settings.py:390
+#: src/orca/settings.py:397
 #, fuzzy
 msgid "Bon Echo"
 msgstr "вибір шрифту"
@@ -2131,34 +2222,34 @@ msgstr ""
 
 #: src/orca/scripts/planner.py:139 src/orca/scripts/planner.py:147
 #: src/orca/scripts/planner.py:172 src/orca/scripts/planner.py:180
-#: src/orca/speechgenerator.py:1285 src/orca/speechgenerator.py:1288
+#: src/orca/speechgenerator.py:1300 src/orca/speechgenerator.py:1303
 msgid "pressed"
 msgstr "натиснуто"
 
 #: src/orca/scripts/planner.py:141 src/orca/scripts/planner.py:149
 #: src/orca/scripts/planner.py:174 src/orca/scripts/planner.py:182
-#: src/orca/speechgenerator.py:1294 src/orca/speechgenerator.py:1297
+#: src/orca/speechgenerator.py:1309 src/orca/speechgenerator.py:1312
 msgid "not pressed"
 msgstr "не натиснуто"
 
-#: src/orca/speechgenerator.py:368 src/orca/speechgenerator.py:371
+#: src/orca/speechgenerator.py:365 src/orca/speechgenerator.py:368
 msgid "checked"
 msgstr "відмічено"
 
-#: src/orca/speechgenerator.py:377 src/orca/speechgenerator.py:380
+#: src/orca/speechgenerator.py:374 src/orca/speechgenerator.py:377
 msgid "not checked"
 msgstr "не відмічено"
 
-#: src/orca/speechgenerator.py:910 src/orca/speechgenerator.py:913
+#: src/orca/speechgenerator.py:907 src/orca/speechgenerator.py:910
 #: src/orca/util.py:1033
 msgid "selected"
 msgstr "виділено"
 
-#: src/orca/speechgenerator.py:921 src/orca/speechgenerator.py:924
+#: src/orca/speechgenerator.py:918 src/orca/speechgenerator.py:921
 msgid "not selected"
 msgstr "не виділено"
 
-#: src/orca/speechgenerator.py:1231
+#: src/orca/speechgenerator.py:1246
 msgid "tear off"
 msgstr "відірвано"
 
@@ -2199,6 +2290,24 @@ msgstr ""
 msgid "unselected"
 msgstr "виділено"
 
+#~ msgid "bang"
+#~ msgstr "удар"
+
+#~ msgid "number"
+#~ msgstr "число"
+
+#~ msgid "tick"
+#~ msgstr "цокання"
+
+#~ msgid "semi"
+#~ msgstr "напів"
+
+#~ msgid "back"
+#~ msgstr "назад"
+
+#~ msgid "bar"
+#~ msgstr "стовпчик"
+
 #, fuzzy
 #~ msgid "version"
 #~ msgstr "запитання"
@@ -2236,9 +2345,6 @@ msgstr "виділено"
 
 #~ msgid "Reading web page failed."
 #~ msgstr "Помилка читання веб-сторінки."
-
-#~ msgid "less"
-#~ msgstr "менше"
 
 #~ msgid "Repeats last utterance sent to speech."
 #~ msgstr "Повторює останній вираз надісланий до системи мовлення."
