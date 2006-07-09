@@ -218,7 +218,7 @@ class orcaSetupGUI(GladeWrapper):
         else:
             self.allButton.set_active(True)
 
-        if prefs["speechVerbosityLevel"] == _("Brief"):
+        if prefs["speechVerbosityLevel"] == _("Brie_f"):
             self.speechBriefButton.set_active(True)
         else:
             self.speechVerboseButton.set_active(True)

@@ -19,7 +19,7 @@
 	puncutation level is appropriate, of course).
 	
 	* src/orca/orca_gui_prefs.py: fix for bug 347054 - allow
-	readTableCellRow to be set.
+	readTableCellRow and speechVerbosityLevel to be set.
 	
 2006-07-09  Alexander Shopov  <ash@contact.bg>
 
