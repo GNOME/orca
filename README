@@ -1,4 +1,4 @@
-Orca 0.2.5
+Orca 0.2.6
 
 Introduction
 ========================================================================
@@ -6,7 +6,8 @@ Introduction
 Orca a scriptable screen reader that is currently under development.
 As such it is highly unstable and undergoes frequent changes.  To
 read more about Orca, please refer to the Orca documentation series
-available in the ./docs/doc-set directory.
+available in the ./docs/doc-set directory and also the Orca WIKI at
+http://live.gnome.org/Orca.
 
 
 Build Requirements
@@ -45,25 +46,22 @@ script-based architecture would be suited to solve:
 * Cause the Braille display to show status information retrieved from
   status bars or other objects in the application
 
-Orca is written in Python and C.  Orca's low-level connection to the
-at-spi is a Python module written in C, and the upper-level logic is
-entirely written in Python.  Orca defines a set of default behaviors
-(reactions to application events) and key bindings (reaction to user
-key presses).  These default behaviors and key bindings can be
+Orca is written in primarily in Python.  Orca defines a set of default
+behaviors (reactions to application events) and key bindings (reaction
+to user key presses).  These default behaviors and key bindings can be
 overwritten on a per-application basis.  Orca creates a script object
 for each running application, which merges both the default behaviors
-and key bindings, and the application specific ones.  Orca provides
-the infrastructure to activate and deactivate scripts, as well as a
+and key bindings with the application-specific ones.  Orca provides
+the infrastructure to activate and deactivate scripts as well as a
 host of services accessible from within the scripts.  Some of these
 services include:
 
-* A speech module which provides named voices which are definable by
-  the user
+* A speech module which provides named voices definable by the user
 
-* A braille module which uses BrlTTY to provide high-level braille services to
-  scripts - these services include braille keyboard callback support,
-  software-based virtual regions for the braille display, and
-  scrolling management
+* A braille module which uses BrlTTY to provide high-level
+  braille services to scripts - these services include braille
+  keyboard callback support, software-based virtual regions for the
+  braille display, and scrolling management
 
 * Convenience functions for finding the labels of objects, getting all the
   objects within a given object, etc.
@@ -72,7 +70,15 @@ services include:
 Initial Setup
 ========================================================================
 
-Before running orca, you should run orca-setup.  Orca-setup creates a
+The first time you run orca using the "orca" command, it will
+automatically launch the setup utility.  The setup utility creates a
 .orca directory in your home directory.  This directory stores your
-user settings, as well as any scripts which you use that are not part
-of the default Orca installation.
+user settings as well as any scripts you want use that are not part of
+the default Orca installation.  If you wish to rerun the setup
+utility, you ccan run orca with the "--setup" or "--text-setup"
+options, and you can also press "Insert+Space" when Orca is running to
+bring up the GUI setup utility.
+
+You can also bypass the setup utility by running orca with the
+"--no-setup" option.  This is useful for running from environments
+such as the login screen.

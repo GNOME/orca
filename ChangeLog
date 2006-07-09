@@ -1,3 +1,7 @@
+2006-07-09  Willie Walker <william.walker@sun.com>
+
+	* NEWS, configure.in, README: prep for 0.2.6.
+
 2006-07-09  Willie Walker  <william.walker@sun.com>
 
 	* src/orca/gnomespeechfactory.py: handle verbalized punctuation a

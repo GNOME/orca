@@ -1,3 +1,59 @@
+0.2.6
+* Addition of verbalized punctuation settings.
+* Addition of spoken indentation information for lines.
+* Adjustments to brief verbosity settings for speech.
+* Additional work on automatic reading of the entire row for a table cell,
+  which is controlled by the orca.settings.readTableCellRow property.
+* Additional work on the StarOffice script to better support
+  configuration wizards.
+* Additional work on Evolution to better support configuration wizards.
+* Very preliminary support for the Java platform.
+* Moved a number of utilities from various places to util.py.
+* Moved http server support into its own module.  Note that
+  orca.settings.speechServerPort is now defunct and has been replaced
+  by orca.settings.httpServerPort.
+* Fixes for reading table row and column headers.
+* Fix for bug 347054 to allow readTableCellRow and speechVerbosityLevel
+  settings to be set properly from the configuration GUI.
+* Fix for bug 343897 to allow configuration GUI to pop to top when it
+  is shown.  This requires a more recent version of PyGTK (2.9.3) to work.
+* Fix for bug 341388 to stop speech for an object when its window loses focus.
+* Fixes for bug 343133 to do defensive programming in flat review to
+  help prevent hangs.
+* Fix for bug 345472 to not assume the last input event was a keyboard event.
+* More work on bug 319652 to reduce even more hangs.
+* Fix for bug 344880 - process command line arguments even if a11y is not
+  enabled.
+* Updates to the style guide.
+* Translations to date (many thanks!): 
+    Bengali:     Runa Bhattacharjee
+    British:     David Lodge and Gareth Owen
+    Bulgarian:   Alexander Shopov
+    Canadian:    Adam Weinberger
+    Chinese:     (Simplified) Funda Wang
+    Czech:	 Miloslav Trmac
+    Dutch:	 Tino Meinen, Taco Witte, Elros Cyriatan, 
+                 and Vincent van Adrighem
+    Dzongkha:    Guntupalli Karunakar	
+    Finnish:	 Ilkka Tuohela
+    French:      Christophe Merlet
+    German:      Hendrik Brandt
+    Gujarati:    Ankit Patel
+    Hindi:       Rajesh Ranjan
+    Italian:     Alessio Frusciante
+    Kinyarwanda: Steve Murphy
+    Macedonian:  Jovan Naumovski
+    Nepali:      Pawan Chitrakar
+    Portuguese:  (Brazilian) Raphael Higino, Gustavo Noronha Silva,
+		 and Estêvão Samuel Procópio
+    Serbian:	 Danilo Šegan
+    Spanish:     Francisco Javier F. Serrador
+    Swedish:     Christian Rose
+    Tamil:       I. Felix
+    Ukrainian:   Maxim Dziumanenko
+    Vietnamese:  Clytie Siddall
+    Welsh:       Rhys Jones
+
 0.2.5
 * Re-map keyboard bindings and add additional keyboard bindings.
   See http://live.gnome.org/Orca/KeyboardCommands for the list.
