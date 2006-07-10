@@ -1,3 +1,10 @@
+2006-07-10  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca_gui_prefs.py: make sure that the GUI correctly
+	reflects the current state of the verbosity level for braille
+	and speech (it was saving it correctly, but reading it back in
+	incorrectly).
+	
 2006-06-29  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:

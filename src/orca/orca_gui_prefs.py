@@ -218,7 +218,7 @@ class orcaSetupGUI(GladeWrapper):
         else:
             self.allButton.set_active(True)
 
-        if prefs["speechVerbosityLevel"] == _("Brie_f"):
+        if prefs["speechVerbosityLevel"] == settings.VERBOSITY_LEVEL_BRIEF:
             self.speechBriefButton.set_active(True)
         else:
             self.speechVerboseButton.set_active(True)
@@ -238,7 +238,7 @@ class orcaSetupGUI(GladeWrapper):
         state = prefs["brailleRolenameStyle"] == \
                             settings.BRAILLE_ROLENAME_STYLE_SHORT
         self.abbrevRolenames.set_active(state)
-        if prefs["brailleVerbosityLevel"] == _("Brief"):
+        if prefs["brailleVerbosityLevel"] == settings.VERBOSITY_LEVEL_BRIEF:
             self.brailleBriefButton.set_active(True)
         else:
             self.brailleVerboseButton.set_active(True)
