@@ -39,6 +39,7 @@ import string
 
 import atspi
 import debug
+import input_event
 import orca
 import rolenames
 import speech
@@ -253,6 +254,28 @@ def findFocusedObject(root):
             pass
 
     return None
+
+def isDoubleClick(lastInputEvent, inputEvent):
+    """Return an indication of whether the user has double-clicked a
+    one of the keys on the keyboard.
+
+    Arguments:
+    - lastInputEvent: the last input event.
+    - inputEvent: the current input event.
+    """
+
+    if not isinstance(lastInputEvent, input_event.KeyboardEvent) or \
+       not isinstance(inputEvent, input_event.KeyboardEvent):
+        return False
+
+    if (lastInputEvent.hw_code != inputEvent.hw_code) or \
+       (lastInputEvent.modifiers != inputEvent.modifiers):
+        return False
+
+    if (inputEvent.time - lastInputEvent.time) < 0.5:
+        return True
+    else:
+        return False
 
 def isDesiredFocusedItem(obj, rolesList):
     """Called to determine if the given object and it's hierarchy of

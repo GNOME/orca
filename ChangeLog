@@ -1,3 +1,10 @@
+2006-07-10  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          src/orca/util.py:
+          Added in support for numeric keypad 5 double-clicking, which
+          spells the current flat review item.
+
 2006-07-10  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca_gui_prefs.py: make sure that the GUI correctly
@@ -5,7 +12,7 @@
 	and speech (it was saving it correctly, but reading it back in
 	incorrectly).
 	
-2006-06-29  Rich Burridge <rich.burridge@sun.com>
+2006-07-10  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
           Fixed bug #346031. For the purpose of speaking the text 
