@@ -1,3 +1,8 @@
+2006-07-09  Mike Pedersen <michael.pedersen@sun.com> 
+
+        *  src/orca/keynames.py
+          Corrected the speech output for the right shift key.  
+
 2006-07-09  Willie Walker <william.walker@sun.com>
 
 	* docs/pydoc/Makefile.am: add missing files.
