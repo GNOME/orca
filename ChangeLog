@@ -1,3 +1,10 @@
+2006-06-29  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          Fixed bug #346031. For the purpose of speaking the text 
+          indentation, replace occurances of '\302\240' (non breaking 
+          space) with spaces.
+
 2006-07-09  Mike Pedersen <michael.pedersen@sun.com> 
 
         *  src/orca/keynames.py

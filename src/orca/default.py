@@ -706,6 +706,11 @@ class Script(script.Script):
         - line: the string to check for spaces and tabs.
         """
 
+        # For the purpose of speaking the text indentation, replace 
+        # occurances of '\302\240' (non breaking space) with spaces.
+        #
+        line = line.replace("\302\240",  " ")
+
         spaceCount = 0
         tabCount = 0
         for offset in range(0, len(line)):
@@ -715,6 +720,7 @@ class Script(script.Script):
                 tabCount += 1
             else:
                 break
+
         utterance = ''
         if spaceCount:
             if spaceCount == 1:
