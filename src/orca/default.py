@@ -66,7 +66,7 @@ class Script(script.Script):
 
         self.flatReviewContext  = None
         self.windowActivateTime = None
-        self.lastReviewCurrentWordEvent = None
+        self.lastReviewCurrentEvent = None
 
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
@@ -124,8 +124,8 @@ class Script(script.Script):
             Script.reviewAbove,
             _("Moves flat review to the word above the current word."))
 
-        self.reviewCurrentWordHandler = input_event.InputEventHandler(
-            Script.reviewCurrentWord,
+        self.reviewCurrentItemHandler = input_event.InputEventHandler(
+            Script.reviewCurrentItem,
             _("Speaks or spells the current flat review item or word."))
 
         self.reviewCurrentAccessibleHandler = input_event.InputEventHandler(
@@ -395,14 +395,14 @@ class Script(script.Script):
                 "KP_5",
                 1 << orca.MODIFIER_ORCA,
                 0,
-                self.reviewCurrentWordHandler))
+                self.reviewCurrentItemHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Begin",
                 1 << orca.MODIFIER_ORCA,
                 0,
-                self.reviewCurrentWordHandler))
+                self.reviewCurrentItemHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
@@ -2134,7 +2134,7 @@ class Script(script.Script):
             [string, x, y, width, height] = \
                      context.getCurrent(flat_review.Context.WORD)
             util.drawOutline(x, y, width, height)
-            self.reviewCurrentItem(inputEvent, self.targetCursorCell)
+            self._reviewCurrentItem(inputEvent, self.targetCursorCell)
 
         return True
 
@@ -2333,6 +2333,21 @@ class Script(script.Script):
     def reviewCurrentLine(self, inputEvent):
         """Presents the current flat review line via braille and speech."""
 
+        spellWord = util.isDoubleClick(self.lastReviewCurrentEvent,
+                                       inputEvent)
+        self._reviewCurrentLine(inputEvent, spellWord)
+        self.lastReviewCurrentEvent = inputEvent
+
+        return True
+
+    def _reviewCurrentLine(self, inputEvent, spellWord=False):
+        """Presents the current flat review line via braille and speech.
+
+        Arguments:
+        - inputEvent - the current input event.
+        - spellWord - if True, spell the current line, otherwise speak it.
+        """
+
         context = self.getFlatReviewContext()
 
         [string, x, y, width, height] = \
@@ -2347,8 +2362,10 @@ class Script(script.Script):
                 speech.speak(_("blank"))
             elif string.isspace():
                 speech.speak(_("white space"))
-            else:
+            elif not spellWord:
                 speech.speak(string)
+            else:
+                self.spellCurrentItem(string)
 
         self.updateBrailleReview()
 
@@ -2364,7 +2381,7 @@ class Script(script.Script):
                                    flat_review.Context.WRAP_LINE)
 
         if moved:
-            self.reviewCurrentLine(inputEvent)
+            self._reviewCurrentLine(inputEvent)
             self.targetCursorCell = braille.cursorCell
 
         return True
@@ -2377,7 +2394,7 @@ class Script(script.Script):
 
         context.goBegin()
 
-        self.reviewCurrentLine(inputEvent)
+        self._reviewCurrentLine(inputEvent)
         self.targetCursorCell = braille.cursorCell
 
         return True
@@ -2393,7 +2410,7 @@ class Script(script.Script):
                                flat_review.Context.WRAP_LINE)
 
         if moved:
-            self.reviewCurrentLine(inputEvent)
+            self._reviewCurrentLine(inputEvent)
             self.targetCursorCell = braille.cursorCell
 
         return True
@@ -2407,7 +2424,7 @@ class Script(script.Script):
 
         context.goEnd(flat_review.Context.WINDOW)
         context.goBegin(flat_review.Context.LINE)
-        self.reviewCurrentLine(inputEvent)
+        self._reviewCurrentLine(inputEvent)
         self.targetCursorCell = braille.cursorCell
 
         return True
@@ -2420,25 +2437,25 @@ class Script(script.Script):
         context = self.getFlatReviewContext()
         context.goEnd()
 
-        self.reviewCurrentLine(inputEvent)
+        self._reviewCurrentLine(inputEvent)
         self.targetCursorCell = braille.cursorCell
 
         return True
 
-    def reviewCurrentWord(self, inputEvent, targetCursorCell=0):
+    def reviewCurrentItem(self, inputEvent, targetCursorCell=0):
         """Speak/Braille the current item to the user. A "double-click"
         of this key will cause the word to be spelt.
         """
 
-        spellWord = util.isDoubleClick(self.lastReviewCurrentWordEvent,
+        spellWord = util.isDoubleClick(self.lastReviewCurrentEvent,
                                        inputEvent)
         self._reviewCurrentItem(inputEvent, targetCursorCell, spellWord)
-        self.lastReviewCurrentWordEvent = inputEvent
+        self.lastReviewCurrentEvent = inputEvent
 
         return True
 
-    def spellCurrentWord(self, string):
-        """Spell the current flat review word.
+    def spellCurrentItem(self, string):
+        """Spell the current flat review word or line.
 
         Arguments:
         - string: the string to spell.
@@ -2450,15 +2467,9 @@ class Script(script.Script):
             else:
                 speech.speak(character)
 
-    def reviewCurrentItem(self, inputEvent, targetCursorCell=0):
-        """Presents the current item to the user."""
-
-        self._reviewCurrentItem(inputEvent, targetCursorCell, False)
-
     def _reviewCurrentItem(self, inputEvent, targetCursorCell=0, 
                            spellWord=False):
-        """Presents the current item to the user. Called by
-           reviewCurrentWord and reviewCurrentItem.
+        """Presents the current item to the user.
 
         Arguments:
         - inputEvent - the current input event.
@@ -2489,7 +2500,7 @@ class Script(script.Script):
                 elif not spellWord:
                     speech.speak(string)
                 else:
-                    self.spellCurrentWord(string)
+                    self.spellCurrentItem(string)
 
         self.updateBrailleReview(targetCursorCell)
 
@@ -2521,7 +2532,7 @@ class Script(script.Script):
                                    flat_review.Context.WRAP_LINE)
 
         if moved:
-            self.reviewCurrentItem(inputEvent)
+            self._reviewCurrentItem(inputEvent)
             self.targetCursorCell = braille.cursorCell
 
         return True
@@ -2536,7 +2547,7 @@ class Script(script.Script):
                                flat_review.Context.WRAP_LINE)
 
         if moved:
-            self.reviewCurrentItem(inputEvent)
+            self._reviewCurrentItem(inputEvent)
             self.targetCursorCell = braille.cursorCell
 
         return True
@@ -2621,7 +2632,7 @@ class Script(script.Script):
                                 flat_review.Context.WRAP_LINE)
 
         if moved:
-            self.reviewCurrentItem(inputEvent, self.targetCursorCell)
+            self._reviewCurrentItem(inputEvent, self.targetCursorCell)
 
         return True
 
@@ -2636,7 +2647,7 @@ class Script(script.Script):
                                 flat_review.Context.WRAP_LINE)
 
         if moved:
-            self.reviewCurrentItem(inputEvent, self.targetCursorCell)
+            self._reviewCurrentItem(inputEvent, self.targetCursorCell)
 
         return True
 
