@@ -8,7 +8,7 @@ URL: http://www.gnome.org/
 Source0: orca-%{version}.tar.gz
 
 %define python_version 2.4
-%define pyborit_version 2.0.1
+%define pyorbit_version 2.0.1
 %define pygtk2_version 2.6.2
 %define gnome_python_version 2.6.2
 %define brltty_version 3.7.2
@@ -63,6 +63,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/locale/*/*
 
 %changelog
+* Tue Jul 11 2006 Willie Walker <william.walker@sun.com>
+- Fix "pyborit" typo.
 * Mon May 15 2006 Willie Walker <william.walker@sun.com>
 - More tweaking.
 * Fri May 12 2006 Willie Walker <william.walker@sun.com>
