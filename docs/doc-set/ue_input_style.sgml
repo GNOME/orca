@@ -140,8 +140,8 @@
              details.</para>
 	  <para>&detail; bound to
             <literal>default.Script.reviewCurrentLine</literal>.</para>
-	  <para>&incomplete; [OWNER: RNB] handles the single press,
-	    but not the double press.  &shoulddeliver; V1.0.</para>
+	  <para>&complete; [OWNER: RNB] handles the single press,
+	    and the double press.  &shoulddeliver; V1.0.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_9": moves the review position to the next
@@ -178,8 +178,8 @@
              phonetic spelling</para>
 	  <para>&detail; bound to
             <literal>default.Script.reviewCurrentItem</literal>.</para>
-	  <para>&incomplete; [OWNER: WDW] handles the single press,
-	    but not the double press.  &mustdeliver; V1.0.</para>
+	  <para>&complete; [OWNER: WDW] handles the single press,
+	    and  the double press.  &mustdeliver; V1.0.</para>
         </listitem>
         <listitem>
           <para>"INSERT+KEYPAD_5": speaks the accessible containing
@@ -223,7 +223,7 @@
 	  <para>&detail; bound to
             <literal>default.Script.reviewCurrentCharacter</literal>.</para>
 	  <para>&incomplete; [OWNER: WDW] handles the single press,
-	    but not the double press.  &mustdeliver; V1.0.</para>
+	    but not the double press.  &mustdeliver; V1.1.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_3": moves the review position to the next
@@ -250,7 +250,7 @@
 	     with text, speaking capitalization, speak the role of
 	     items, speak font information if it changes, speak an
 	     entire table line vs. individual cells, etc.</para>
-	  <para>&incomplete; [OWNER: RNB] &mustdeliver; V1.0.</para>
+	  <para>&incomplete; [OWNER: RNB] &mustdeliver; V1.1.</para>
         </listitem>
         <listitem>
           <para>INSERT+RIGHT_ARROW: increases speech rate</para>
@@ -375,7 +375,7 @@
           <para>Toggle space compression: BRL_CMD_SLIDEWIN. Toggles
             whether or not spaces are compressed when navigating with
             the braille display</para>
-	  <para>&incomplete; [OWNER: WDW] &mustdeliver; V1.0.</para>
+	  <para>&incomplete; [OWNER: WDW] &mustdeliver; V1.1.</para>
         </listitem>
         <listitem>
 	  <para>Toggle grade two on and off.</para>
@@ -388,7 +388,7 @@
         </listitem>
         <listitem>
 	  <para>Enter verbosity mode: BRL_CMD_PREFMENU.</para>
-	  <para>&incomplete; [OWNER: RNB] &mustdeliver; V1.0.</para>
+	  <para>&incomplete; [OWNER: RNB] &mustdeliver; V1.1.</para>
         </listitem>
         <listitem>
           <para>Toggle keyboard learn mode: BRL_CMD_LEARN</para>

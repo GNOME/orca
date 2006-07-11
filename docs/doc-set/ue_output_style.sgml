@@ -28,11 +28,7 @@
           a text editor.</para>
         <para>A general style for displaying braille is as follows:
           the line will be built up of several regions and an attempt
-          will be made to start the most meaningful region at a given
-          "homing position."  The idea behind the homing position is
-          that it will be the braille cell of the user's choice (e.g.,
-          the first cell of the display, the middle of the display,
-          etc.) that the user can navigate to quickly.  In the event
+          will be made to start the most meaningful region at the beginning of the display.  In the event
           that the line is too long for the physical display, the
           homing position will will apply and the line will be clipped
           to the left and/or right as appropriate; the user can use
@@ -199,7 +195,7 @@
           <section><title>Braille</title>
             <para>&todo; should this follow a pattern of "label
               description role" to be more consistent with the
-              generalized style?</para>
+              generalized style?  Yes this would be a good idea.</para>
             <itemizedlist>
               <listitem>
                 <para>Verbose Example: animation: Will riding his bike.</para>
