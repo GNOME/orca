@@ -126,7 +126,7 @@ class Script(script.Script):
 
         self.reviewCurrentWordHandler = input_event.InputEventHandler(
             Script.reviewCurrentWord,
-            _("Speaks or spell the current flat review item or word."))
+            _("Speaks or spells the current flat review item or word."))
 
         self.reviewCurrentAccessibleHandler = input_event.InputEventHandler(
             Script.reviewCurrentAccessible,
@@ -2444,11 +2444,11 @@ class Script(script.Script):
         - string: the string to spell.
         """
 
-        for i in range(0, len(string)):
-            if string[i].isupper():
-                speech.speak(string[i], self.voices[settings.UPPERCASE_VOICE])
+        for (index, character) in enumerate(string):
+            if character.isupper():
+                speech.speak(character, self.voices[settings.UPPERCASE_VOICE])
             else:
-                speech.speak(string[i])
+                speech.speak(character)
 
     def reviewCurrentItem(self, inputEvent, targetCursorCell=0):
         """Presents the current item to the user."""

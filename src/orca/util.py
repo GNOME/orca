@@ -42,6 +42,7 @@ import debug
 import input_event
 import orca
 import rolenames
+import settings
 import speech
 import speechserver
 
@@ -272,7 +273,7 @@ def isDoubleClick(lastInputEvent, inputEvent):
        (lastInputEvent.modifiers != inputEvent.modifiers):
         return False
 
-    if (inputEvent.time - lastInputEvent.time) < 0.5:
+    if (inputEvent.time - lastInputEvent.time) < settings.doubleClickTimeout:
         return True
     else:
         return False
