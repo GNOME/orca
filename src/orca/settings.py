@@ -327,6 +327,13 @@ learnModeEnabled        = False
 commFailureWaitTime     = 0.1
 commFailureAttemptLimit = 5
 
+# Keyboard double-click period. If the same key is pressed within
+# this time period, it's considered to be a double-click and might
+# provide different functionality (for example, Numpad 5 double-click 
+# spells the current word rather than speaks it).
+#
+doubleClickTimeout = 0.5
+
 # Which packages to search, and the order in which to search,
 # for custom scripts.  These packages are expected to be on
 # the PYTHONPATH and/or subpackages of the "orca" package.
