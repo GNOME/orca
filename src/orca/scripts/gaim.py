@@ -34,6 +34,7 @@ import orca.default as default
 import orca.orca as orca
 import orca.rolenames as rolenames
 import orca.speech as speech
+import orca.util as util
 
 from orca.orca_i18n import _
 
@@ -54,6 +55,25 @@ class Script(default.Script):
 
         default.Script.__init__(self, app)
 
+    def getChatRoomName(self, obj):
+        """Walk up the hierarchy until we've found the page tab for this
+        chat room, and return the label of that object.
+
+        Arguments:
+        - obj: the accessible component to start from.
+
+        Returns the label of the page tab component (the name of the 
+        chat room).
+        """
+
+        while True:
+            if obj and (obj.role != rolenames.ROLE_PAGE_TAB):
+                obj = obj.parent
+            else:
+                return obj.name
+
+        return None
+
     def onTextInserted(self, event):
         """Called whenever text is inserted into one of Gaim's text
         objects.  If the object is an instant message or chat, speak
@@ -64,46 +84,56 @@ class Script(default.Script):
         - event: the text inserted Event
         """
 
-        # Do the default action for everything except the display that
-        # is showing the chat.
-        #
-        if (event.source.role != rolenames.ROLE_TEXT):
-            return default.Script.onTextInserted(self, event)
+        # util.printAncestry(event.source)
 
-        if not event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
+        # Check to see if something has changed in a chat room. If it has,
+        # then we get the previous contents of the chat room message area
+        # and speak/braille anything new that has arrived.
+        #
+        rolesList = [rolenames.ROLE_TEXT, \
+                     rolenames.ROLE_SCROLL_PANE, \
+                     rolenames.ROLE_FILLER, \
+                     rolenames.ROLE_PANEL]
+        if util.isDesiredFocusedItem(event.source, rolesList):
+            debug.println(debug.LEVEL_FINEST,
+                          "gaim.onTextInserted - chat room text.")
+
             # We always automatically go back to focus tracking mode when
             # someone sends us a message.
             #
             if self.flatReviewContext:
                 self.toggleFlatReviewMode()
 
-            txt = event.source.text
-            text = txt.getText(event.detail1, event.detail1 + event.detail2)
-            
-            # A new message inserts a carriage return at the end of the
-            # previous line rather than adding to the end of the current
-            # line (I think).  So...remove the darn thing.
+            #[[[TODO: richb - commenting out the speaking of the chat room
+            # name. Mike says this is too verbose. Maybe able to reinstate
+            # it via script specific hot key.]]]
             #
-            if text[0] == "\n":
-                text = text[1:]
-                braille.displayMessage(text)
-                speech.speak(text)
-                return
-            else:
-                # [[[TODO: WDW - HACK to handle the case where the
-                # area where the user types loses focus and never
-                # regains it with respect to the AT-SPI regardless if
-                # it really gets it with respect to the toolkit.  The
-                # way we are guessing we are really in the area where
-                # you type is because the text does not end in a
-                # "\n".  This is related to bug
-                # http://bugzilla.gnome.org/show_bug.cgi?id=325917]]]
-                #
-                debug.println(debug.LEVEL_WARNING,
-                              "WARNING in gaim.py: "
-                              + "the text area has not regained focus")
-                orca.setLocusOfFocus(event, event.source, False)
-                return default.Script.onTextInserted(self, event)
-        else:
+            # chatRoomName = self.getChatRoomName(event.source)
+            # text = "Message from chat room " + chatRoomName
+
+            text = event.source.text.getText(event.detail1, 
+                                             event.detail1 + event.detail2)
+
+            braille.displayMessage(text)
+            speech.speak(text)
+            return
+
+        if not event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
+            # [[[TODO: WDW - HACK to handle the case where the
+            # area where the user types loses focus and never
+            # regains it with respect to the AT-SPI regardless if
+            # it really gets it with respect to the toolkit.  The
+            # way we are guessing we are really in the area where
+            # you type is because the text does not end in a
+            # "\n".  This is related to bug
+            # http://bugzilla.gnome.org/show_bug.cgi?id=325917]]]
+            #
+            debug.println(debug.LEVEL_WARNING,
+                          "WARNING in gaim.py: "
+                          + "the text area has not regained focus")
             orca.setLocusOfFocus(event, event.source, False)
-            return default.Script.onTextInserted(self, event)
+
+        # Pass the event onto the parent class to be handled in the 
+        # default way.
+        #
+        default.Script.onTextInserted(self, event)

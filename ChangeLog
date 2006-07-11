@@ -10,6 +10,10 @@
 
 2006-07-11  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/scripts/gaim.py:
+          Fixed bug #347163. Adjustment to the gaim script to hopefully
+          speak/braille all incoming messages to chat rooms.
+
         * src/orca/default.py:
           Fixed bug #347165. Added in support for numeric keypad 8 
           double-clicking, which spells the current line.
