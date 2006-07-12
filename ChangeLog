@@ -5,6 +5,14 @@
 
 2006-07-12  Rich Burridge <rich.burridge@sun.com>
 
+        * bugs/bugs.html:
+          Filed Evolution bug #347347, that we need to track, that 
+          prevents the text selection state ("selected/unselected") 
+          being properly reported by Orca.
+
+          [a11y] Moving the caret around in the message arrow doesn't 
+          generate "object:text-caret-moved" events.
+
         * src/orca/focus_tracking_presenter.py:
           Slight tweak to only braille/speak "No focus" if the braille/speech 
           verbosity level is set to settings.VERBOSITY_LEVEL_VERBOSE.
