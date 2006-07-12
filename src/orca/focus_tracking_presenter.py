@@ -31,6 +31,7 @@ import Queue
 import time
 
 import atspi
+import braille
 import default
 import debug
 import input_event
@@ -68,6 +69,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         self._knownScripts = {}
         self._eventQueue   = Queue.Queue(0)
         self._gidle_id     = 0
+        self.lastNoFocusTime = 0.0
 
     ########################################################################
     #                                                                      #
@@ -558,6 +560,16 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             #del timer
 
         if self._eventQueue.empty():
+            if not orca.locusOfFocus \
+                or (orca.locusOfFocus.state.count(\
+                    atspi.Accessibility.STATE_SENSITIVE) == 0):
+                delta = time.time() - self.lastNoFocusTime
+                if delta > settings.noFocusWaitTime:
+                    message = _("No focus")
+                    braille.displayMessage(message)
+                    speech.speak(message)
+                    self.lastNoFocusTime = time.time()
+
             self._gidle_id = 0
             return False # destroy and don't call again
         else:

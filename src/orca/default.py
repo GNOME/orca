@@ -1150,11 +1150,6 @@ class Script(script.Script):
                     row = table.getRowAtIndex(newLocusOfFocus.index)
                     newParent.lastRow = row
 
-        else:
-            message = _("No focus")
-            braille.displayMessage(message)
-            speech.speak(message)
-
     def visualAppearanceChanged(self, event, obj):
         """Called when the visual appearance of an object changes.  This
         method should not be called for objects whose visual appearance
@@ -1216,24 +1211,6 @@ class Script(script.Script):
                 for label in labels:
                     utterances.append(label.name)
 
-                # [[[TODO: WDW - HACK to account for the way applications
-                # such as Evolution handle their wizards.  They will set
-                # the "Forward" and "Back" buttons insensitive as appropriate,
-                # which has the side effect of nothing having focus.  So,
-                # we let users know this via speech and braille.  For now,
-                # this awful hack is isolated to when a panel starts showing
-                # in the active application, which is the situation where
-                # these types of poor application behavior has been found
-                # to exist.]]]
-                #
-                if orca.locusOfFocus \
-                   and (orca.locusOfFocus.state.count(\
-                    atspi.Accessibility.STATE_SENSITIVE) == 0):
-                    message = _("No focus")
-                    utterances.append(message)
-                    self.updateBraille(orca.locusOfFocus.parent,
-                                       braille.Region(" " + message))
-
                 speech.speakUtterances(utterances)
 
                 return
@@ -1294,8 +1271,6 @@ class Script(script.Script):
         """
 
         if not obj:
-            message = _("No focus")
-            braille.displayMessage(message)
             return
 
         braille.clear()
