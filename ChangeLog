@@ -1,4 +1,4 @@
-2006-07-09  Mike Pedersen <michael.pedersen@sun.com> 
+2006-07-11  Mike Pedersen <michael.pedersen@sun.com> 
 
         *  docs/doc-set/ue_input_style.sgml
         *  docs/doc-set/ue_output_style.sgml
@@ -6,6 +6,10 @@
 
 2006-07-11  Willie Walker <william.walker@sun.com>
 
+	* src/orca/focus_tracking_presenter.py: do not print out 
+	"PROCESS OBJECT EVENT" debug lines if the event debug is
+	to be filtered by the debug.eventDebugFilter.
+	
 	* orca.spec.in: fix "pyborit" typo.
 
 2006-07-11  Rich Burridge <rich.burridge@sun.com>

@@ -542,13 +542,17 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             #timer = threading.Timer(5.0, self._timeout)
             #timer.start()
 
-            debug.println(debug.eventDebugLevel,
-                          "\nvvvvv PROCESS OBJECT EVENT %s vvvvv" \
-                          % event.type)
+            if debug.eventDebugFilter \
+                and debug.eventDebugFilter.match(event.type):
+                debug.println(debug.eventDebugLevel,
+                              "\nvvvvv PROCESS OBJECT EVENT %s vvvvv" \
+                              % event.type)
             self._processObjectEvent(event)
-            debug.println(debug.eventDebugLevel,
-                          "^^^^^ PROCESS OBJECT EVENT %s ^^^^^\n" \
-                          % event.type)
+            if debug.eventDebugFilter \
+                and debug.eventDebugFilter.match(event.type):
+                debug.println(debug.eventDebugLevel,
+                              "^^^^^ PROCESS OBJECT EVENT %s ^^^^^\n" \
+                              % event.type)
 
             #timer.cancel()
             #del timer
