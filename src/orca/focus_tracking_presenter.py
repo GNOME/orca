@@ -566,8 +566,12 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                 delta = time.time() - self.lastNoFocusTime
                 if delta > settings.noFocusWaitTime:
                     message = _("No focus")
-                    braille.displayMessage(message)
-                    speech.speak(message)
+                    if settings.brailleVerbosityLevel == \
+                        settings.VERBOSITY_LEVEL_VERBOSE:
+                        braille.displayMessage(message)
+                    if settings.speechVerbosityLevel == \
+                        settings.VERBOSITY_LEVEL_VERBOSE:
+                        speech.speak(message)
                     self.lastNoFocusTime = time.time()
 
             self._gidle_id = 0

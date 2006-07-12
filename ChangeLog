@@ -1,3 +1,21 @@
+2006-07-12  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/focus_tracking_presenter.py:
+          Slight tweak to only braille/speak "No focus" if the braille/speech 
+          verbosity level is set to settings.VERBOSITY_LEVEL_VERBOSE.
+
+2006-07-12  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          src/orca/focus_tracking_presenter.py:
+          src/orca/settings.py:
+          Fixed bug #334892. Reduced the number of times that Orca
+          brailles/speaks "No Focus" by moving this logic to the GTK
+          idle thread handler and also remembering when "No Focus"
+          was last uttered, and not uttering it again if it's within
+          a certain time period (settings.noFocusWaitTime - default is
+          4 seconds).
+
 2006-07-11  Mike Pedersen <michael.pedersen@sun.com> 
 
         *  docs/doc-set/ue_input_style.sgml
