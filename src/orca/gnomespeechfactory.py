@@ -25,6 +25,8 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import gobject
+import Queue
 import string
 
 import bonobo
@@ -240,12 +242,14 @@ class SpeechServer(speechserver.SpeechServer):
         self.__pitchInfo  = {}
         self.__rateInfo   = {}
         self.__volumeInfo = {}
-        self.__driver = driver
+        self.__driver     = driver
         self.__driverName = driver.driverName
-        self.__iid = iid
-        self.__sayAll = None
+        self.__iid        = iid
+        self.__sayAll     = None
         self.__isSpeaking = False
-
+        self.__eventQueue = Queue.Queue(0)
+        self.__gidle_id   = 0
+        
     def __getRate(self, speaker):
         """Gets the voice-independent ACSS rate value of a voice."""
 
@@ -406,28 +410,28 @@ class SpeechServer(speechserver.SpeechServer):
 
         return speaker
 
-    def notify(self, type, id, offset):
-        """Called by GNOME Speech when the GNOME Speech driver generates
-        a callback.  This is for internal use only.
+    def __idleHandler(self):
+        """Called by the gidle thread when there is something to do.
+        The goal is to try to do all AT-SPI interactions on the gidle
+        thread as a means to help prevent hangs."""
 
-        Arguments:
-        - type:   one of GNOME.Speech.speech_callback_speech_started,
-                         GNOME.Speech.speech_callback_speech_progress,
-                         GNOME.Speech.speech_callback_speech_ended
-        - id:     the id of the utterance (returned by say)
-        - offset: the character offset into the utterance (for progress)
-        """
+        # Added in the notify method below.
+        #
+        # id     = the id of the utterance we sent to gnome-speech
+        # type   = the type of progress we're getting
+        # offset = character offset into the utterance
+        #
+        (id, type, offset) = self.__eventQueue.get()
+        
         if self.__sayAll:
             if self.__sayAll.idForCurrentContext == id:
                 context = self.__sayAll.currentContext
                 if type == GNOME.Speech.speech_callback_speech_started:
-                    self.__isSpeaking = True
                     context.currentOffset = context.startOffset
                     self.__sayAll.progressCallback(
                         self.__sayAll.currentContext,
                         speechserver.SayAllContext.PROGRESS)
                 elif type == GNOME.Speech.speech_callback_speech_progress:
-                    self.__isSpeaking = True
                     context.currentOffset = context.startOffset + offset
                     self.__sayAll.progressCallback(
                         self.__sayAll.currentContext,
@@ -450,12 +454,37 @@ class SpeechServer(speechserver.SpeechServer):
                             self.__sayAll.currentContext,
                             speechserver.SayAllContext.COMPLETED)
                         self.__sayAll = None
-        elif type == GNOME.Speech.speech_callback_speech_started:
+
+        if self.__eventQueue.empty():
+            self.__gidle_id = 0
+            return False # destroy and don't call again
+        else:
+            return True  # call again at next idle
+        
+    def notify(self, type, id, offset):
+        """Called by GNOME Speech when the GNOME Speech driver generates
+        a callback.  This is for internal use only.
+
+        Arguments:
+        - type:   one of GNOME.Speech.speech_callback_speech_started,
+                         GNOME.Speech.speech_callback_speech_progress,
+                         GNOME.Speech.speech_callback_speech_ended
+        - id:     the id of the utterance (returned by say)
+        - offset: the character offset into the utterance (for progress)
+        """
+        
+        if type == GNOME.Speech.speech_callback_speech_started:
             self.__isSpeaking = True
         elif type == GNOME.Speech.speech_callback_speech_progress:
             self.__isSpeaking = True
-        elif type == GNOME.Speech.speech_callback_speech_ended:
+        elif (type == GNOME.Speech.speech_callback_speech_ended) \
+            and (not self.__sayAll):
             self.__isSpeaking = False
+
+        if self.__sayAll:
+            self.__eventQueue.put((id, type, offset))
+            if not self.__gidle_id:
+                self.__gidle_id = gobject.idle_add(self.__idleHandler)
 
     def getInfo(self):
         """Returns [driverName, serverId]
