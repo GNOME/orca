@@ -370,7 +370,7 @@ rolenames[ROLE_RADIO_BUTTON] = Rolename(ROLE_RADIO_BUTTON,
 
 rolenames[ROLE_RADIO_MENU_ITEM] = Rolename(ROLE_RADIO_MENU_ITEM,
                                            _("rdmnuitm"),
-                                           _("RadioMenuItem"),
+                                           _("RadioItem"),
                                            _("radio menu item"))
 
 rolenames[ROLE_RADIO_MENU] = Rolename(ROLE_RADIO_MENU,
