@@ -27,7 +27,7 @@ __license__   = "LGPL"
 
 import gobject
 import Queue
-#import threading
+import threading
 import time
 
 import atspi
@@ -65,10 +65,11 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         # is what delves them out, we keep at most one listener to avoid
         # receiving the same event twice in a row.
         #
-        self.registry      = atspi.Registry()
-        self._knownScripts = {}
-        self._eventQueue   = Queue.Queue(0)
-        self._gidle_id     = 0
+        self.registry        = atspi.Registry()
+        self._knownScripts   = {}
+        self._eventQueue     = Queue.Queue(0)
+        self._gidleId        = 0
+        self._gidleLock      = threading.Lock()
         self.lastNoFocusTime = 0.0
 
     ########################################################################
@@ -486,9 +487,11 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             event = atspi.Event(e)
 
         if event:
+            self._gidleLock.acquire()
             self._eventQueue.put(event)
-            if not self._gidle_id:
-                self._gidle_id = gobject.idle_add(self._dequeueEvent)
+            if not self._gidleId:
+                self._gidleId = gobject.idle_add(self._dequeueEvent)
+            self._gidleLock.release()
 
     def _timeout(self):
         """Timer that will be called if we time out while trying to perform
@@ -559,10 +562,20 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             #timer.cancel()
             #del timer
 
+        rerun = True
+
+        # [[[TODO: HACK - it would seem logical to only do this if we
+        # discover the queue is empty, but this inroduces a hang for
+        # some reason if done inside an acquire/release block for a
+        # lock.  So...we do it here.]]]
+        #
+        noFocus = not orca.locusOfFocus \
+                      or (orca.locusOfFocus.state.count(\
+                        atspi.Accessibility.STATE_SENSITIVE) == 0)
+
+        self._gidleLock.acquire()
         if self._eventQueue.empty():
-            if not orca.locusOfFocus \
-                or (orca.locusOfFocus.state.count(\
-                    atspi.Accessibility.STATE_SENSITIVE) == 0):
+            if noFocus:
                 delta = time.time() - self.lastNoFocusTime
                 if delta > settings.noFocusWaitTime:
                     message = _("No focus")
@@ -573,11 +586,11 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                         settings.VERBOSITY_LEVEL_VERBOSE:
                         speech.speak(message)
                     self.lastNoFocusTime = time.time()
+            self._gidleId = 0
+            rerun = False # destroy and don't call again
+        self._gidleLock.release()
 
-            self._gidle_id = 0
-            return False # destroy and don't call again
-        else:
-            return True  # call again at next idle
+        return rerun
 
     def processKeyboardEvent(self, keyboardEvent):
         """Processes the given keyboard event based on the keybinding from the

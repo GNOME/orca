@@ -1,5 +1,12 @@
 2006-07-13  Willie Walker <william.walker@sun.com>
 
+	* src/orca/focus_tracking_presenter.py,
+	src/orca/gnomespeechfactory.py: use locks when mucking around with
+	the gidle handling.  We were running into race conditions where we
+	were killing the gidle handler when we shouldn't have been doing
+	so.  The impact of this was that Orca would sometimes not present
+	changes to the display until another event was received.
+	
 	* src/orca/braillegenerator.py: apply similar FILLER logic 
 	provided Oana Serb at Baum (thanks!) to braille.
 	

@@ -28,6 +28,7 @@ __license__   = "LGPL"
 import gobject
 import Queue
 import string
+import threading
 
 import bonobo
 
@@ -248,8 +249,9 @@ class SpeechServer(speechserver.SpeechServer):
         self.__sayAll     = None
         self.__isSpeaking = False
         self.__eventQueue = Queue.Queue(0)
-        self.__gidle_id   = 0
-        
+        self.__gidleId    = 0
+        self.__gidleLock  = threading.Lock()
+
     def __getRate(self, speaker):
         """Gets the voice-independent ACSS rate value of a voice."""
 
@@ -422,7 +424,7 @@ class SpeechServer(speechserver.SpeechServer):
         # offset = character offset into the utterance
         #
         (id, type, offset) = self.__eventQueue.get()
-        
+
         if self.__sayAll:
             if self.__sayAll.idForCurrentContext == id:
                 context = self.__sayAll.currentContext
@@ -455,12 +457,16 @@ class SpeechServer(speechserver.SpeechServer):
                             speechserver.SayAllContext.COMPLETED)
                         self.__sayAll = None
 
+        rerun = True
+
+        self.__gidleLock.acquire()
         if self.__eventQueue.empty():
-            self.__gidle_id = 0
-            return False # destroy and don't call again
-        else:
-            return True  # call again at next idle
-        
+            self.__gidleId = 0
+            rerun = False # destroy and don't call again
+        self.__gidleLock.release()
+
+        return rerun
+
     def notify(self, type, id, offset):
         """Called by GNOME Speech when the GNOME Speech driver generates
         a callback.  This is for internal use only.
@@ -472,7 +478,7 @@ class SpeechServer(speechserver.SpeechServer):
         - id:     the id of the utterance (returned by say)
         - offset: the character offset into the utterance (for progress)
         """
-        
+
         if type == GNOME.Speech.speech_callback_speech_started:
             self.__isSpeaking = True
         elif type == GNOME.Speech.speech_callback_speech_progress:
@@ -482,9 +488,11 @@ class SpeechServer(speechserver.SpeechServer):
             self.__isSpeaking = False
 
         if self.__sayAll:
+            self.__gidleLock.acquire()
             self.__eventQueue.put((id, type, offset))
-            if not self.__gidle_id:
-                self.__gidle_id = gobject.idle_add(self.__idleHandler)
+            if not self.__gidleId:
+                self.__gidleId = gobject.idle_add(self.__idleHandler)
+            self.__gidleLock.release()
 
     def getInfo(self):
         """Returns [driverName, serverId]
