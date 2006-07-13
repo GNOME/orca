@@ -31,6 +31,8 @@ import orca.atspi as atspi
 import orca.braille as braille
 import orca.debug as debug
 import orca.default as default
+import orca.input_event as input_event
+import orca.keybindings as keybindings
 import orca.orca as orca
 import orca.rolenames as rolenames
 import orca.speech as speech
@@ -53,7 +55,68 @@ class Script(default.Script):
         - app: the application to create a script for.
         """
 
+        # Set the debug level for all the methods in this script.
+        #
+        self.debugLevel = debug.LEVEL_FINEST
+
+        # Whether we prefix chat room messages with the name of the chat room.
+        #
+        self.prefixChatMessage = False
+
         default.Script.__init__(self, app)
+
+    def setupInputEventHandlers(self):
+        """Defines InputEventHandler fields for this script that can be
+        called by the key and braille bindings. In this particular case,
+        we just want to be able to add a handler to toggle whether we
+        prefix chat room messages with the name of the chat room.
+        """
+
+        debug.println(self.debugLevel, "gaim.setupInputEventHandlers.")
+
+        default.Script.setupInputEventHandlers(self)
+        self.togglePrefixHandler = input_event.InputEventHandler(
+            Script.togglePrefix,
+            _("Toggle whether we prefix chat room messages with the name of the chat room."))
+
+    def getKeyBindings(self):
+        """Defines the key bindings for this script. Setup the default
+        key bindings, then add one in for toggling whether we prefix 
+        chat room messages with the name of the chat room.
+
+        Returns an instance of keybindings.KeyBindings.
+        """
+
+        debug.println(self.debugLevel, "gaim.getKeyBindings.")
+
+        keyBindings = default.Script.getKeyBindings(self)
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "h",
+                1 << orca.MODIFIER_ORCA,
+                1 << orca.MODIFIER_ORCA,
+                self.togglePrefixHandler))
+
+        return keyBindings
+
+    def togglePrefix(self, inputEvent):
+        """ Toggle whether we prefix chat room messages with the name of 
+        the chat room.
+
+        Arguments:
+        - inputEvent: if not None, the input event that caused this action.
+        """
+
+        debug.println(self.debugLevel, "gaim.togglePrefix.")
+
+        line = _("speak chat room name.")
+        self.prefixChatMessage = not self.prefixChatMessage
+        if not self.prefixChatMessage:
+            line = _("Don't ") + line
+
+        speech.speak(line)
+
+        return True
 
     def getChatRoomName(self, obj):
         """Walk up the hierarchy until we've found the page tab for this
@@ -95,7 +158,7 @@ class Script(default.Script):
                      rolenames.ROLE_FILLER, \
                      rolenames.ROLE_PANEL]
         if util.isDesiredFocusedItem(event.source, rolesList):
-            debug.println(debug.LEVEL_FINEST,
+            debug.println(self.debugLevel,
                           "gaim.onTextInserted - chat room text.")
 
             # We always automatically go back to focus tracking mode when
@@ -104,15 +167,12 @@ class Script(default.Script):
             if self.flatReviewContext:
                 self.toggleFlatReviewMode()
 
-            #[[[TODO: richb - commenting out the speaking of the chat room
-            # name. Mike says this is too verbose. Maybe able to reinstate
-            # it via script specific hot key.]]]
-            #
-            # chatRoomName = self.getChatRoomName(event.source)
-            # text = "Message from chat room " + chatRoomName
-
-            text = event.source.text.getText(event.detail1, 
-                                             event.detail1 + event.detail2)
+            text = ""
+            if self.prefixChatMessage:
+                chatRoomName = self.getChatRoomName(event.source)
+                text += _("Message from chat room ") + chatRoomName
+            text += event.source.text.getText(event.detail1, 
+                                              event.detail1 + event.detail2)
 
             braille.displayMessage(text)
             speech.speak(text)
