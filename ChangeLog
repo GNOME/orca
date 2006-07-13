@@ -1,5 +1,7 @@
 2006-07-13  Oana Serb <os@baum.ro>
 
+	* src/orca/braillegenerator.py: add rolename for radio menu items.
+	
 	* src/orca/atspi.py: turn radio buttons and check boxes in
 	menu items into their associated menu-like roles (e.g.,
 	radio button menu item and check menu item) to better handle

@@ -872,6 +872,7 @@ class BrailleGenerator:
             text = util.appendString(text, "& y")
 
         if obj == orca.locusOfFocus:
+            text = util.appendString(text, self._getTextForRole(obj))
             text = util.appendString(text, self._getTextForAvailability(obj))
             text = util.appendString(text,
                                       self._getTextForAccelerator(obj),
