@@ -198,14 +198,14 @@ class SpeechGenerator:
             return [label]
         else:
             return []
-        
+
     def _getSpeechForObjectName(self, obj):
         name = util.getDisplayedText(obj)
         if name:
             return [name]
         elif obj.description:
             return [obj.description]
-        else:            
+        else:
             return []
 
     def _getSpeechForObjectRole(self, obj):
@@ -259,9 +259,9 @@ class SpeechGenerator:
             utterances.extend(self._getSpeechForObjectLabel(obj))
             utterances.extend(self._getSpeechForObjectName(obj))
             utterances.extend(self._getSpeechForObjectRole(obj))
-            
+
         utterances.extend(self._getSpeechForObjectAvailability(obj))
-        
+
         self._debugGenerator("_getDefaultSpeech",
                              obj,
                              already_focused,
@@ -446,9 +446,9 @@ class SpeechGenerator:
 
         if not already_focused:
             utterances.extend(self._getSpeechForObjectRole(obj))
-            
+
         utterances.extend(self._getSpeechForObjectAvailability(obj))
-        
+
         self._debugGenerator("_getSpeechForComboBox",
                              obj,
                              already_focused,
@@ -549,7 +549,7 @@ class SpeechGenerator:
         # of treating the frame like an alert and speaking all unrelated
         # labels. We'll need to see if this has any adverse effects and
         # adjust accordingly.]]]
-        # 
+        #
         utterances = self._getDefaultSpeech(obj, already_focused)
         #utterances = self._getSpeechForAlert(obj, already_focused)
 
@@ -854,7 +854,7 @@ class SpeechGenerator:
             utterances.extend(self._getSpeechForObjectLabel(obj))
             utterances.extend(self._getSpeechForObjectName(obj))
             utterances.extend(self._getSpeechForObjectRole(obj))
-            
+
         utterances.append(percentage)
 
         self._debugGenerator("_getSpeechForProgressBar",
@@ -1151,9 +1151,9 @@ class SpeechGenerator:
                 row = parent.table.getRowAtIndex(obj.index)
                 column = parent.table.getColumnAtIndex(obj.index)
 
-                # This is an indication of whether we should speak all the 
+                # This is an indication of whether we should speak all the
                 # table cells (the user has moved focus up or down a row),
-                # or just the current one (focus has moved left or right in 
+                # or just the current one (focus has moved left or right in
                 # the same row).
                 #
                 speakAll = True
@@ -1406,7 +1406,7 @@ class SpeechGenerator:
 
         Returns a list of utterances to be spoken.
         """
-        
+
         if self.speechGenerators.has_key(obj.role):
             generator = self.speechGenerators[obj.role]
         else:
@@ -1478,7 +1478,20 @@ class SpeechGenerator:
                     utterances.append(text)
                 if label and len(label):
                     utterances.append(label)
-                    
+
+            # [[[TODO: HACK - we've discovered oddness in hierarchies
+            # such as the gedit Edit->Preferences dialog.  In this
+            # dialog, we have labeled groupings of objects.  The
+            # grouping is done via a FILLER with two children - one
+            # child is the overall label, and the other is the
+            # container for the grouped objects.  When we detect this,
+            # we add the label to the overall context.]]]
+            #
+            if parent.role == rolenames.ROLE_FILLER:
+                label = util.getDisplayedLabel(parent)
+                if label and len (label):
+                    utterances.append(label)
+
             parent = parent.parent
 
         utterances.reverse()

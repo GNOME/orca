@@ -1,5 +1,10 @@
 2006-07-13  Oana Serb <os@baum.ro>
 
+	* src/orca/speechgenerator.py, src/orca/util.py: handle case
+	where a FILLER object is actually a labeled container that 
+	groups a set of children.  An example of this is the GEdit
+	preferences dialog.
+	
 	* src/orca/rolenames.py: make braille string for radio menu item
 	consistent with what is being displayed for check menu item.
 	

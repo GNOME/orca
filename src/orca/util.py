@@ -52,14 +52,14 @@ def appendString(text, newText, delimiter=" "):
     """Appends the newText to the given text with the delimiter in between
     and returns the new string.  Edge cases, such as no initial text or
     no newText, are handled gracefully."""
-    
+
     if (not newText) or (len(newText) == 0):
         return text
     elif text and len(text):
         return text + delimiter + newText
     else:
         return newText
-        
+
 def getDisplayedLabel(object):
     """If there is an object labelling the given object, return the
     text being displayed for the object labelling this object.
@@ -73,16 +73,16 @@ def getDisplayedLabel(object):
     """
     label = None
     relations = object.relations
-    
+
     # For some reason, some objects are labelled by the same thing
     # more than once.  Go figure, but we need to check for this.
     #
     allTargets = []
-    
+
     for relation in relations:
         if relation.getRelationType() \
                == atspi.Accessibility.RELATION_LABELLED_BY:
-            
+
             # The object can be labelled by more than one thing, so we just
             # get all the labels (from unique objects) and append them
             # together.  An example of such objects live in the "Basic"
@@ -95,10 +95,25 @@ def getDisplayedLabel(object):
                 if not target in allTargets:
                     allTargets.append(target)
                     label = appendString(label, getDisplayedText(target))
+
+    # [[[TODO: HACK - we've discovered oddness in hierarchies such as
+    # the gedit Edit->Preferences dialog.  In this dialog, we have
+    # labeled groupings of objects.  The grouping is done via a FILLER
+    # with two children - one child is the overall label, and the
+    # other is the container for the grouped objects.  When we detect
+    # this, we add the label to the overall context.]]]
+    #
+    if (not label) and (object.role == rolenames.ROLE_FILLER) \
+        and (object.childCount == 2):
+        child1 = object.child (0)
+        child2 = object.child (1)
+        if child1 and child2 and child1.role == rolenames.ROLE_LABEL:
+            label = child1.name
+
     return label
 
 def __getDisplayedTextInComboBox(combo):
-    
+
     """Returns the text being displayed in a combo box.  If nothing is
     displayed, then None is returned.
 
@@ -110,7 +125,7 @@ def __getDisplayedTextInComboBox(combo):
     """
 
     displayedText = None
-    
+
     # Find the text displayed in the combo box.  This is either:
     #
     # 1) The last text object that's a child of the combo box
@@ -194,7 +209,7 @@ def getDisplayedText(obj):
                 childText = getDisplayedText(child)
                 if childText and len(childText):
                     displayedText = appendString(displayedText, childText)
- 
+
     return displayedText
 
 def getRealActiveDescendant(obj):
@@ -388,7 +403,7 @@ def textLines(obj):
             #if string[-1:] == "\n":
             #    string = string[0][:-1]
 
-            yield [speechserver.SayAllContext(obj, string, 
+            yield [speechserver.SayAllContext(obj, string,
                                               startOffset, endOffset),
                    None]
 
@@ -622,7 +637,7 @@ def getObjects(root, onlyShowing=True):
     Arguments:
     - root:        the Accessible object to traverse
     - onlyShowing: examine only those objects that are SHOWING
-    
+
     Returns: a list of all objects under the specified object
     """
 
@@ -943,7 +958,7 @@ def outlineAccessible(accessible, erasePrevious=True):
 
 def isTextSelected(obj, startOffset, endOffset):
     """Returns an indication of whether the text is selected by
-    comparing the text offset with the various selected regions of 
+    comparing the text offset with the various selected regions of
     text for this accessible object.
 
     Arguments:
@@ -1065,7 +1080,7 @@ def speakTextSelectionState(obj, startOffset, endOffset):
                     speech.speak(_("unselected"), None, False)
                     break
 
-    # Save away the current text cursor position and list of text 
+    # Save away the current text cursor position and list of text
     # selections for next time.
     #
     obj.lastCursorPosition = obj.text.caretOffset
