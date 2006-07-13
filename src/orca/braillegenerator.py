@@ -1351,6 +1351,21 @@ class BrailleGenerator:
                     result = self.getBrailleRegions(parent, False)
                     regions.extend(result[0])
 
+            # [[[TODO: HACK - we've discovered oddness in hierarchies
+            # such as the gedit Edit->Preferences dialog.  In this
+            # dialog, we have labeled groupings of objects.  The
+            # grouping is done via a FILLER with two children - one
+            # child is the overall label, and the other is the
+            # container for the grouped objects.  When we detect this,
+            # we add the label to the overall context.]]]
+            #
+            if parent.role == rolenames.ROLE_FILLER:
+                label = util.getDisplayedLabel(parent)
+                if label and len(label) and not label.isspace():
+                    regions.append(braille.Region(" "))
+                    result = self.getBrailleRegions(parent, False)
+                    regions.extend(result[0])
+
             parent = parent.parent
 
         regions.reverse()

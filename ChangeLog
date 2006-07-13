@@ -1,3 +1,8 @@
+2006-07-13  Willie Walker <william.walker@sun.com>
+
+	* src/orca/braillegenerator.py: apply similar FILLER logic 
+	provided Oana Serb at Baum (thanks!) to braille.
+	
 2006-07-13  Oana Serb <os@baum.ro>
 
 	* src/orca/speechgenerator.py, src/orca/util.py: handle case
