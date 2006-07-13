@@ -18,8 +18,14 @@
 # Boston, MA 02111-1307, USA.
 
 """Custom script for gaim.  This provides the ability for Orca to
-monitor both the IM input and IM output text areas at the same
-time."""
+monitor both the IM input and IM output text areas at the same time.
+
+The following script specific key sequences are supported:
+
+  Insert-h      -  Toggle whether we prefix chat room messages with 
+                   the name of the chat room.
+  Insert-[1-9]  -  Speak and braille a previous chat room message.
+"""
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
@@ -39,6 +45,48 @@ import orca.speech as speech
 import orca.util as util
 
 from orca.orca_i18n import _
+
+########################################################################
+#                                                                      #
+# Ring List. A fixed size circular list by Flavio Catalani             #
+# http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/435902       #
+#                                                                      #
+########################################################################
+
+class RingList:
+    def __init__(self, length):
+        self.__data__ = []
+        self.__full__ = 0
+        self.__max__ = length
+        self.__cur__ = 0
+
+    def append(self, x):
+        if self.__full__ == 1:
+            for i in range (0, self.__cur__ - 1):
+                self.__data__[i] = self.__data__[i + 1]
+            self.__data__[self.__cur__ - 1] = x
+        else:
+            self.__data__.append(x)
+            self.__cur__ += 1
+            if self.__cur__ == self.__max__:
+                self.__full__ = 1
+
+    def get(self):
+        return self.__data__
+
+    def remove(self):
+        if (self.__cur__ > 0):
+            del self.__data__[self.__cur__ - 1]
+            self.__cur__ -= 1
+
+    def size(self):
+        return self.__cur__
+
+    def maxsize(self):
+        return self.__max__
+
+    def __str__(self):
+        return ''.join(self.__data__)
 
 ########################################################################
 #                                                                      #
@@ -63,6 +111,21 @@ class Script(default.Script):
         #
         self.prefixChatMessage = False
 
+        # Create two cyclic lists; one that will contain the previous 
+        # chat room messages and the other that will contain the names 
+        # of the associated chat rooms.
+        #
+        self.MESSAGE_LIST_LENGTH = 9
+        self.previousMessages = RingList(self.MESSAGE_LIST_LENGTH)
+        self.previousChatRoomNames = RingList(self.MESSAGE_LIST_LENGTH)
+
+        # Initially populate the cyclic lists with empty strings.
+        #
+        for i in range(0, self.previousMessages.maxsize()):
+            self.previousMessages.append("")
+        for i in range(0, self.previousChatRoomNames.maxsize()):
+            self.previousChatRoomNames.append("")
+
         default.Script.__init__(self, app)
 
     def setupInputEventHandlers(self):
@@ -78,6 +141,10 @@ class Script(default.Script):
         self.togglePrefixHandler = input_event.InputEventHandler(
             Script.togglePrefix,
             _("Toggle whether we prefix chat room messages with the name of the chat room."))
+
+        self.readPreviousMessageHandler = input_event.InputEventHandler(
+            Script.readPreviousMessage,
+            _("Speak and braille a previous chat room message."))
 
     def getKeyBindings(self):
         """Defines the key bindings for this script. Setup the default
@@ -96,6 +163,15 @@ class Script(default.Script):
                 1 << orca.MODIFIER_ORCA,
                 1 << orca.MODIFIER_ORCA,
                 self.togglePrefixHandler))
+
+        messageKeys = [ "1", "2", "3", "4", "5", "6", "7", "8", "9" ]
+        for i in range(0, len(messageKeys)):
+            keyBindings.add(
+                keybindings.KeyBinding(
+                    messageKeys[i],
+                    1 << orca.MODIFIER_ORCA,
+                    1 << orca.MODIFIER_ORCA,
+                    self.readPreviousMessageHandler))
 
         return keyBindings
 
@@ -117,6 +193,47 @@ class Script(default.Script):
         speech.speak(line)
 
         return True
+
+    def utterMessage(self, chatRoomName, message):
+        """ Speak/braille a chat room message.
+        messages are kept.
+
+        Arguments:
+        - chatRoomName: name of the chat room this message came from.
+        - message: the chat room message.
+        """
+
+        text = ""
+        if self.prefixChatMessage:
+            if chatRoomName and chatRoomName != "":
+                text += _("Message from chat room ") + chatRoomName + " "
+        if message and message != "":
+            text += message
+
+        if text != "":
+            braille.displayMessage(text)
+            speech.speak(text)
+
+    def readPreviousMessage(self, inputEvent):
+        """ Speak/braille a previous chat room message. Upto nine previous
+        messages are kept.
+
+        Arguments:
+        - inputEvent: if not None, the input event that caused this action.
+        """
+
+        debug.println(self.debugLevel, "gaim.readPreviousMessage.")
+
+        i = int(inputEvent.event_string)
+        messageNo = self.MESSAGE_LIST_LENGTH-i
+
+        chatRoomNames = self.previousChatRoomNames.get()
+        chatRoomName = chatRoomNames[messageNo]
+
+        messages = self.previousMessages.get()
+        message = messages[messageNo]
+
+        self.utterMessage(chatRoomName, message)
 
     def getChatRoomName(self, obj):
         """Walk up the hierarchy until we've found the page tab for this
@@ -147,7 +264,7 @@ class Script(default.Script):
         - event: the text inserted Event
         """
 
-        # util.printAncestry(event.source)
+        util.printAncestry(event.source)
 
         # Check to see if something has changed in a chat room. If it has,
         # then we get the previous contents of the chat room message area
@@ -156,7 +273,9 @@ class Script(default.Script):
         rolesList = [rolenames.ROLE_TEXT, \
                      rolenames.ROLE_SCROLL_PANE, \
                      rolenames.ROLE_FILLER, \
-                     rolenames.ROLE_PANEL]
+                     rolenames.ROLE_PANEL, \
+                     rolenames.ROLE_SPLIT_PANE, \
+                     rolenames.ROLE_FILLER]
         if util.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel,
                           "gaim.onTextInserted - chat room text.")
@@ -167,15 +286,18 @@ class Script(default.Script):
             if self.flatReviewContext:
                 self.toggleFlatReviewMode()
 
-            text = ""
-            if self.prefixChatMessage:
-                chatRoomName = self.getChatRoomName(event.source)
-                text += _("Message from chat room ") + chatRoomName
-            text += event.source.text.getText(event.detail1, 
-                                              event.detail1 + event.detail2)
+            chatRoomName = self.getChatRoomName(event.source)
+            message = event.source.text.getText(event.detail1, 
+                                                event.detail1 + event.detail2)
 
-            braille.displayMessage(text)
-            speech.speak(text)
+            self.utterMessage(chatRoomName, message)
+
+            # Add the latest message to the list of saved ones. For each
+            # one added, the oldest one automatically gets dropped off.
+            #
+            self.previousMessages.append(message)
+            self.previousChatRoomNames.append(chatRoomName)
+
             return
 
         if not event.source.state.count(atspi.Accessibility.STATE_FOCUSED):

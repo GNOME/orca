@@ -5,6 +5,10 @@
           toggles whether we prefix chat room messages with the name 
           of the chat room (default is not to).
 
+        * src/orca/scripts/gaim.py:
+          Added in gaim script specific support for Insert-[<n>] where
+          <n> is 1-9, which will speak/braille the previous <n>th message.
+
 2006-07-13  Willie Walker <william.walker@sun.com>
 
 	* src/orca/focus_tracking_presenter.py,
