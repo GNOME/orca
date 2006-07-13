@@ -1,3 +1,10 @@
+2006-07-13  Oana Serb <os@baum.ro>
+
+	* src/orca/atspi.py: turn radio buttons and check boxes in
+	menu items into their associated menu-like roles (e.g.,
+	radio button menu item and check menu item) to better handle
+	what we're getting from the Java access bridge.
+
 2006-07-12  Willie Walker <william.walker@sun.com>
 	
 	* src/orca/gnomespeechfactory.py: move processing of speech 

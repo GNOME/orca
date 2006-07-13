@@ -824,7 +824,7 @@ class Accessible:
 
         role = self.accessible.getRoleName()
 
-        # [[[WDW - HACK to coalesce menu items with children into
+        # [[[TODO: HACK to coalesce menu items with children into
         # menus.  The menu demo in gtk-demo does this, and one
         # might view that as an edge case.  But, in
         # gnome-terminal, "Terminal" -> "Set Character Encoding"
@@ -841,12 +841,23 @@ class Accessible:
             and (self.childCount > 0):
                 role = rolenames.ROLE_MENU
 
-        # [[[WDW - HACK - we sometimes get an object with an unknown
-        # role but it's role changes later on and we are not notified.
-        # An example of this is gnome-terminal.  So...to help with
-        # this, we will not cache the role if it is unknown.  See
-        # http://bugzilla.gnome.org/show_bug.cgi?id=344218 for more
-        # info.]]]
+        # [[[TODO: HACK because Java gives us radio button role and
+        # check box role for menu item objects, instead of giving us
+        # radio menu item role and check menu item role (see SwingSet
+        # menus).]]]
+        #
+        if (self.parent) and (self.parent.role == rolenames.ROLE_MENU):
+            if (role == rolenames.ROLE_RADIO_BUTTON):
+                role = rolenames.ROLE_RADIO_MENU_ITEM
+            elif (role == rolenames.ROLE_CHECK_BOX):
+                role = rolenames.ROLE_CHECK_MENU_ITEM
+
+        # [[[TODO: HACK because we sometimes get an object with an
+        # unknown role but it's role changes later on and we are not
+        # notified.  An example of this is gnome-terminal.  So...to
+        # help with this, we will not cache the role if it is unknown.
+        # See http://bugzilla.gnome.org/show_bug.cgi?id=344218 for
+        # more info.]]]
         #
         if role and settings.cacheValues \
             and (role != rolenames.ROLE_UNKNOWN):
