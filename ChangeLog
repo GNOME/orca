@@ -9,6 +9,10 @@
           Added in gaim script specific support for Insert-[<n>] where
           <n> is 1-9, which will speak/braille the previous <n>th message.
 
+        * src/orca/scripts/gaim.py:
+          Refinements on how we detect we have received a new message in
+          the chat room message areas.
+
 2006-07-13  Willie Walker <william.walker@sun.com>
 
 	* src/orca/focus_tracking_presenter.py,

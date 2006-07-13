@@ -246,11 +246,17 @@ class Script(default.Script):
         chat room).
         """
 
-        while True:
-            if obj and (obj.role != rolenames.ROLE_PAGE_TAB):
-                obj = obj.parent
-            else:
-                return obj.name
+        if obj:
+            while True:
+                if obj:
+                    if obj.role == rolenames.ROLE_APPLICATION:
+                        break
+                    elif obj.role == rolenames.ROLE_PAGE_TAB:
+                        return obj.name
+                    else:
+                        obj = obj.parent
+                else:
+                    break
 
         return None
 
@@ -264,41 +270,61 @@ class Script(default.Script):
         - event: the text inserted Event
         """
 
-        util.printAncestry(event.source)
+        # util.printAncestry(event.source)
 
         # Check to see if something has changed in a chat room. If it has,
         # then we get the previous contents of the chat room message area
         # and speak/braille anything new that has arrived.
         #
-        rolesList = [rolenames.ROLE_TEXT, \
-                     rolenames.ROLE_SCROLL_PANE, \
-                     rolenames.ROLE_FILLER, \
-                     rolenames.ROLE_PANEL, \
-                     rolenames.ROLE_SPLIT_PANE, \
-                     rolenames.ROLE_FILLER]
-        if util.isDesiredFocusedItem(event.source, rolesList):
-            debug.println(self.debugLevel,
-                          "gaim.onTextInserted - chat room text.")
+        #rolesList = [rolenames.ROLE_TEXT, \
+        #             rolenames.ROLE_SCROLL_PANE, \
+        #             rolenames.ROLE_FILLER, \
+        #             rolenames.ROLE_PANEL, \
+        #             rolenames.ROLE_SPLIT_PANE, \
+        #             rolenames.ROLE_FILLER]
+        #if util.isDesiredFocusedItem(event.source, rolesList):
 
-            # We always automatically go back to focus tracking mode when
-            # someone sends us a message.
-            #
-            if self.flatReviewContext:
-                self.toggleFlatReviewMode()
+        chatRoomName = self.getChatRoomName(event.source)
+        if chatRoomName:
+            allTextFields = util.findByRole(event.source.app, 
+                                            rolenames.ROLE_TEXT)
+            if len(allTextFields) == 3:
+                index = 1
+            elif len(allTextFields) == 2:
+                index = 0
+            else:
+                # We've got an unexpected number of text fields below the 
+                # page tab. Try to handle it by just getting the penultimate
+                # one.
+                #
+                debug.println(self.debugLevel, 
+                    "gaim.onTextInserted - unexpected number of text fields.")
+                index = len(allTextFields-2)
 
-            chatRoomName = self.getChatRoomName(event.source)
-            message = event.source.text.getText(event.detail1, 
+            if index >= 0 and event.source == allTextFields[index]:
+                debug.println(self.debugLevel,
+                              "gaim.onTextInserted - chat room text.")
+
+                # We always automatically go back to focus tracking mode when
+                # someone sends us a message.
+                #
+                if self.flatReviewContext:
+                    self.toggleFlatReviewMode()
+
+                message = event.source.text.getText(event.detail1, 
                                                 event.detail1 + event.detail2)
+                if message[0] == "\n":
+                    message = message[1:]
 
-            self.utterMessage(chatRoomName, message)
+                self.utterMessage(chatRoomName, message)
 
-            # Add the latest message to the list of saved ones. For each
-            # one added, the oldest one automatically gets dropped off.
-            #
-            self.previousMessages.append(message)
-            self.previousChatRoomNames.append(chatRoomName)
+                # Add the latest message to the list of saved ones. For each
+                # one added, the oldest one automatically gets dropped off.
+                #
+                self.previousMessages.append(message)
+                self.previousChatRoomNames.append(chatRoomName)
 
-            return
+                return
 
         if not event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
             # [[[TODO: WDW - HACK to handle the case where the
