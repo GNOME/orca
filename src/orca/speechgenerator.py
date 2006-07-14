@@ -1048,7 +1048,12 @@ class SpeechGenerator:
             # Unicode left-to-right character as part of the text,
             # even though that is not painted on the screen.
             #
-            #utterances.extend(self._getSpeechForObjectName(obj))
+            # In Java, however, there are sliders without a label. In
+            # this case, we'll add to presentation the slider name if
+            # it exists and we haven't found anything yet.
+            #
+            if not utterances:
+                utterances.extend(self._getSpeechForObjectName(obj))
 
             utterances.extend(self._getSpeechForObjectRole(obj))
             utterances.append(valueString)

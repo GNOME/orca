@@ -813,6 +813,13 @@ class BrailleGenerator:
         text = util.appendString(text, util.getDisplayedText(obj))
         text = util.appendString(text, self._getTextForRole(obj))
 
+        # In Java, some push buttons don't have label and text.
+        # In this case, we'll add to presentation the object description,
+        # if exists.
+        #
+        if (not text) and (obj.description):
+            text = util.appendString(text, obj.description)
+
         regions = []
         componentRegion = braille.Component(obj, text)
         regions.append(componentRegion)
@@ -835,6 +842,13 @@ class BrailleGenerator:
         text = ""
         text = util.appendString(text, util.getDisplayedLabel(obj))
         text = util.appendString(text, util.getDisplayedText(obj))
+
+        # In Java, some toggle buttons don't have label and text.
+        # In this case, we'll add to presentation the object description,
+        # if exists.
+        #
+        if (not text) and (obj.description):
+            text = util.appendString(text, obj.description)
 
         if obj.state.count(atspi.Accessibility.STATE_CHECKED):
             text = util.appendString(text, "&=y")
