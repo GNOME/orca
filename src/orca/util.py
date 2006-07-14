@@ -108,7 +108,19 @@ def getDisplayedLabel(object):
         child1 = object.child (0)
         child2 = object.child (1)
         if child1 and child2 and child1.role == rolenames.ROLE_LABEL:
-            label = child1.name
+            # If the label is labeling something, we will ignore it
+            # because we're likely to pick it up via some other means.
+            # An example here is the "Shade transparent or image background:"
+            # label in gnome-terminal's "Effects" customization tab.
+            #
+            useLabel = True
+            for relation in child1.relations:
+                if relation.getRelationType() \
+                   == atspi.Accessibility.RELATION_LABEL_FOR:
+                    useLabel = False
+                    break
+            if useLabel:
+                label = child1.name
 
     return label
 
