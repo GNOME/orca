@@ -1,3 +1,14 @@
+2006-07-14  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/gaim.py:
+          Adjust the "Don't" string to be a complete string in its own
+          right ("Do not speak chat room name.") rather than something
+          that gets prepended onto another string. Reduces translation
+          problems.
+
+          Simplified getting the text field index to just one occurance of:
+          index = len(allTextFields-2)
+
 2006-07-13  Oana Serb <os@baum.ro>
 
 	* src/orca/J2SE-access-bridge.py: work on menus and tree nodes.

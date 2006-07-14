@@ -188,7 +188,7 @@ class Script(default.Script):
         line = _("speak chat room name.")
         self.prefixChatMessage = not self.prefixChatMessage
         if not self.prefixChatMessage:
-            line = _("Don't ") + line
+            line = _("Do not speak chat room name.")
 
         speech.speak(line)
 
@@ -276,19 +276,7 @@ class Script(default.Script):
         if chatRoomName:
             allTextFields = util.findByRole(event.source.app, 
                                             rolenames.ROLE_TEXT)
-            if len(allTextFields) == 3:
-                index = 1
-            elif len(allTextFields) == 2:
-                index = 0
-            else:
-                # We've got an unexpected number of text fields below the 
-                # page tab. Try to handle it by just getting the penultimate
-                # one.
-                #
-                debug.println(self.debugLevel, 
-                    "gaim.onTextInserted - unexpected number of text fields.")
-                index = len(allTextFields-2)
-
+            index = len(allTextFields-2)
             if index >= 0 and event.source == allTextFields[index]:
                 debug.println(self.debugLevel,
                               "gaim.onTextInserted - chat room text.")
