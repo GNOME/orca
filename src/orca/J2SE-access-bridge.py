@@ -31,6 +31,7 @@ import keybindings
 import settings
 import speech
 import util
+import rolenames
 
 from orca_i18n import _ # for gettext support
 
@@ -48,8 +49,6 @@ class Script(default.Script):
         Arguments:
         - app: the application to create a script for.
         """
-
-        debug.println(debug.LEVEL_FINEST, "J2SE-access-bridge.__init__")
         default.Script.__init__(self, app)
 
     def consumesKeyboardEvent(self, keyboardEvent):
@@ -60,12 +59,24 @@ class Script(default.Script):
 
         Returns True if the event is of interest.
         """
-        debug.println(debug.LEVEL_FINEST,
-                      "J2SE-access-bridge.consumesKeyboardEvent")
-
         keysym = keyboardEvent.event_string
         keyboardEvent.hw_code = keybindings._getKeycode(keysym)
         return default.Script.consumesKeyboardEvent(self, keyboardEvent)
+
+    def onFocus(self, event):
+        """Called whenever an object gets focus.
+
+        Arguments:
+        - event: the Event
+        """
+
+        # A JMenu has always selection.nSelectedChildren > 0
+        #
+        role = event.source.role
+        if (role == rolenames.ROLE_MENU):
+            orca.setLocusOfFocus(event, event.source)
+        else:
+            default.Script.onFocus(self, event)
 
     def onStateChanged(self, event):
         """Called whenever an object's state changes.
@@ -73,28 +84,12 @@ class Script(default.Script):
         Arguments:
         - event: the Event
         """
-        debug.println(debug.LEVEL_FINEST, "J2SE-access-bridge.onStateChanged")
-        debug.println(debug.LEVEL_FINEST, "  type=%s" % event.type)
-        debug.println(debug.LEVEL_FINEST, "  role=%s" % event.source.role)
 
-        """ A JMenu changes state to 'selected' when it gets focus.
-        Set the locus of focus to the JMenu.
-        """
-        if ((event.detail1 == 1) and \
-            (event.source.role == "menu") and \
-            (event.type == "object:state-changed:selected")) :
-
-            orca.setLocusOfFocus(event, event.source)
-
+        # Hand state changes when JTree labels become expanded
+        # or collapsed.
+        #
+        if ((event.source.role == "label") and \
+            (event.type == "object:state-changed:expanded")):
+            orca.visualAppearanceChanged(event, event.source)
         else:
-            """ Hand state changes when JTree labels become expanded
-            or collapsed.
-            """
-            if ((event.source.role == "label") and \
-                (event.type == "object:state-changed:expanded")) :
-
-                debug.println(debug.LEVEL_FINEST, "*** tree node expanded ***")
-                orca.visualAppearanceChanged(event, event.source)
-
-            else:
-                default.Script.onStateChanged(self, event)
+            default.Script.onStateChanged(self, event)

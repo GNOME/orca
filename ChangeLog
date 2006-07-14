@@ -1,3 +1,7 @@
+2006-07-13  Oana Serb <os@baum.ro>
+
+	* src/orca/J2SE-access-bridge.py: work on menus and tree nodes.
+	
 2006-07-13  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/gaim.py:
