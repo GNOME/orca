@@ -569,9 +569,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         # some reason if done inside an acquire/release block for a
         # lock.  So...we do it here.]]]
         #
-        noFocus = not orca.locusOfFocus \
-                      or (orca.locusOfFocus.state.count(\
-                        atspi.Accessibility.STATE_SENSITIVE) == 0)
+        noFocus = not self._activeScript or not orca.locusOfFocus
 
         self._gidleLock.acquire()
         if self._eventQueue.empty():

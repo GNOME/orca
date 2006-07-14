@@ -9,6 +9,11 @@
           Simplified getting the text field index to just one occurance of:
           index = len(allTextFields-2)
 
+        * src/orca/focus_tracking_presenter.py:
+          Adjusted the way that noFocus is set in the _dequeueEvent()
+          routine. It no longer checks whether the component that has
+          focus is not sensitive.
+
 2006-07-13  Oana Serb <os@baum.ro>
 
 	* src/orca/J2SE-access-bridge.py: work on menus and tree nodes.
