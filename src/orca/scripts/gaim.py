@@ -272,18 +272,6 @@ class Script(default.Script):
 
         # util.printAncestry(event.source)
 
-        # Check to see if something has changed in a chat room. If it has,
-        # then we get the previous contents of the chat room message area
-        # and speak/braille anything new that has arrived.
-        #
-        #rolesList = [rolenames.ROLE_TEXT, \
-        #             rolenames.ROLE_SCROLL_PANE, \
-        #             rolenames.ROLE_FILLER, \
-        #             rolenames.ROLE_PANEL, \
-        #             rolenames.ROLE_SPLIT_PANE, \
-        #             rolenames.ROLE_FILLER]
-        #if util.isDesiredFocusedItem(event.source, rolesList):
-
         chatRoomName = self.getChatRoomName(event.source)
         if chatRoomName:
             allTextFields = util.findByRole(event.source.app, 
