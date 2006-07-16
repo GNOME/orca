@@ -1,3 +1,18 @@
+
+2006-07-16  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py:
+          Couple of changes to the speakSetupAssistantLabel() routine:
+          - Only speak the screen label if we haven't already done so.
+          - If the locus of focus is a push button that's insensitive,
+            speak/braille about it. (The Identity screen has such a
+            component).
+
+          Adjusted occurances of speech.speak() when used in
+          speakSetupAssistantLabel() to supply a second parameter of
+          None and a third parameter of False so that they won't interrupt
+          previous utterances.
+
 2006-07-14  Oana Serb <os@baum.ro>
 
 	* src/orca/braillegenerator.py, src/orca/speechgenerator.py:

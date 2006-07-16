@@ -141,8 +141,27 @@ class Script(default.Script):
                     weight = charDict.get('weight')
                     if weight and weight == '800':
                         text = util.getDisplayedText(label)
-                        if text:
-                            speech.speak(text + _(" screen"))
+
+                        # Only speak the screen label if we haven't already
+                        # done so.
+                        #
+                        if text and not self.setupLabels.has_key(label):
+                            speech.speak(text + _(" screen"), None, False)
+                            self.setupLabels[label] = True
+
+                            # If the locus of focus is a push button that's 
+                            # insensitive, speak/braille about it. (The 
+                            # Identity screen has such a component).
+                            #
+                            if orca.locusOfFocus and \
+                               orca.locusOfFocus.role == \
+                                   rolenames.ROLE_PUSH_BUTTON and \
+                               (orca.locusOfFocus.state.count( \
+                                   atspi.Accessibility.STATE_SENSITIVE) == 0):
+                                self.updateBraille(orca.locusOfFocus)
+                                speech.speakUtterances(
+                                    self.speechGenerator.getSpeech( \
+                                        orca.locusOfFocus, False))
 
             # It's possible to get multiple "object:state-changed:showing"
             # events for the same label. If we've already handled this
@@ -159,7 +178,7 @@ class Script(default.Script):
                 if text.startswith(_("Please")) or \
                     text.startswith(_("Welcome")) or \
                     text.startswith(_("Congratulations")):
-                    speech.speak(text)
+                    speech.speak(text, None, False)
                     self.setupLabels[label] = True
 
     def handleSetupAssistantPanel(self, panel):
@@ -927,6 +946,7 @@ class Script(default.Script):
                         self.handleSetupAssistantPanel(event.source)
                         self.setupPanels[event.source] = True
                         break
+
                 obj = obj.parent
 
         # For everything else, pass the event onto the parent class
