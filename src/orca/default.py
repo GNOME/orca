@@ -1133,7 +1133,7 @@ class Script(script.Script):
             # focus event that occurs when something like the "OK"
             # button gets focus shortly after the window appears.
             #
-            shouldNotInterrupt = (event.type == "focus:") \
+            shouldNotInterrupt = (event and event.type == "focus:") \
                 and self.windowActivateTime \
                 and ((time.time() - self.windowActivateTime) < 1.0)
             speech.speakUtterances(utterances, None, not shouldNotInterrupt)

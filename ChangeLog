@@ -4,6 +4,10 @@
           Adjusted the setting of the text field index in onTextInserted()
           that points to the current chat room.
 
+        * src/orca/default.py:
+          Adjusted use of the event parameter in locusOfFocusChanged(), 
+          to allow it to work correct if event=None.
+
 2006-07-16  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py:
