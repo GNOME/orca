@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-14 08:12+0300\n"
-"PO-Revision-Date: 2006-07-14 08:24+0300\n"
+"POT-Creation-Date: 2006-07-17 09:12+0300\n"
+"PO-Revision-Date: 2006-07-17 09:22+0300\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -19,15 +19,15 @@ msgstr ""
 msgid "grayed"
 msgstr "harmaa"
 
-#: ../src/orca/braillegenerator.py:1070 ../src/orca/speechgenerator.py:1184
+#: ../src/orca/braillegenerator.py:1084 ../src/orca/speechgenerator.py:1196
 msgid "expanded"
 msgstr "laajennettu"
 
-#: ../src/orca/braillegenerator.py:1072 ../src/orca/speechgenerator.py:1186
+#: ../src/orca/braillegenerator.py:1086 ../src/orca/speechgenerator.py:1198
 msgid "collapsed"
 msgstr "supistettu"
 
-#: ../src/orca/braillegenerator.py:1076
+#: ../src/orca/braillegenerator.py:1090
 #, python-format
 msgid "TREE LEVEL %d"
 msgstr "PUUN TASO %d"
@@ -190,7 +190,7 @@ msgstr "Suorittaa \"Missä olen\" -toiminnon."
 
 #: ../src/orca/default.py:93
 msgid "Paints and prints the visible zones in the active window."
-msgstr ""
+msgstr "Piirtää ja näyttää näkyvät alueet aktiivisessa ikkunassa."
 
 #: ../src/orca/default.py:97
 msgid "Enters and exits flat review mode."
@@ -258,23 +258,23 @@ msgstr ""
 
 #: ../src/orca/default.py:161
 msgid "Toggles whether to read just the current table cell or the whole row."
-msgstr ""
+msgstr "Luetaanko vain nykyinen taulun solu vai koko rivi."
 
 #: ../src/orca/default.py:165
 msgid "Reads the attributes associated with the current text character."
-msgstr ""
+msgstr "Lukee tämänhetkiseen tekstin merkkiin liittyvät ominaisuudet."
 
 #: ../src/orca/default.py:169
 msgid "Reports information on current script."
-msgstr ""
+msgstr "Kertoo tietoja nykyisestä skriptistä."
 
 #: ../src/orca/default.py:173
 msgid "Pans the braille display to the left."
-msgstr ""
+msgstr "Siirtää braille-näyttöä vasemmalle."
 
 #: ../src/orca/default.py:177
 msgid "Pans the braille display to the right."
-msgstr ""
+msgstr "Siirtää braille-näyttöä oikealle."
 
 #: ../src/orca/default.py:181
 msgid "Moves flat review to the bottom left."
@@ -282,14 +282,14 @@ msgstr ""
 
 #: ../src/orca/default.py:185
 msgid "Returns to object with keyboard focus."
-msgstr ""
+msgstr "Siirtyy olioon, jolla on näppäimistön kohdistus."
 
 #: ../src/orca/default.py:903 ../src/orca/default.py:1128
 #, python-format
 msgid "tree level %d"
 msgstr "puun taso %d"
 
-#: ../src/orca/default.py:907 ../src/orca/focus_tracking_presenter.py:581
+#: ../src/orca/default.py:907 ../src/orca/focus_tracking_presenter.py:579
 msgid "No focus"
 msgstr "Ei kohdistusta"
 
@@ -322,11 +322,11 @@ msgstr "tyhjä tila"
 
 #: ../src/orca/espeechfactory.py:93
 msgid "Emacspeak Speech Services"
-msgstr ""
+msgstr "Emacspeak-puhelpalvelut"
 
-#: ../src/orca/focus_tracking_presenter.py:664
+#: ../src/orca/focus_tracking_presenter.py:662
 msgid "Switching to focus tracking mode."
-msgstr ""
+msgstr "Siirrytään kohdistuksen seurantatilaan."
 
 #: ../src/orca/gnomespeechfactory.py:157
 msgid "GNOME Speech Services"
@@ -396,7 +396,7 @@ msgstr "F 12"
 
 #: ../src/orca/orca-setup.glade.h:1
 msgid "<b>Cross-hair Settings</b>"
-msgstr ""
+msgstr "<b>Ristikon asetukset</b>"
 
 #: ../src/orca/orca-setup.glade.h:2
 msgid "<b>Cursor Settings</b>"
@@ -408,19 +408,19 @@ msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:4
 msgid "<b>Table Row Speech</b>"
-msgstr ""
+msgstr "<b>Taulun rivin puhuminen</b>"
 
 #: ../src/orca/orca-setup.glade.h:5
 msgid "<b>Verbosity</b>"
-msgstr ""
+msgstr "<b>Suulaus</b>"
 
 #: ../src/orca/orca-setup.glade.h:6
 msgid "<b>Zoomer Position</b>"
-msgstr ""
+msgstr "<b>Lähentimen sijainti</b>"
 
 #: ../src/orca/orca-setup.glade.h:7
 msgid "<b>Zoomer Settings</b>"
-msgstr ""
+msgstr "<b>Lähentimen asetukset</b>"
 
 #: ../src/orca/orca-setup.glade.h:8
 msgid "Braille"
@@ -449,7 +449,7 @@ msgstr "Väri:"
 
 #: ../src/orca/orca-setup.glade.h:15
 msgid "Custom siz_e"
-msgstr ""
+msgstr "Oma _koko"
 
 #: ../src/orca/orca-setup.glade.h:16
 msgid ""
@@ -471,7 +471,7 @@ msgstr "Ota Braille-_tuki käyttöön"
 
 #: ../src/orca/orca-setup.glade.h:21
 msgid "Enable _alphanumeric and punctuation keys"
-msgstr ""
+msgstr "Käytä _alfanumeerisia merkkejä ja välimerkkejä"
 
 #: ../src/orca/orca-setup.glade.h:22
 msgid "Enable _function keys"
@@ -903,11 +903,11 @@ msgstr ""
 #.
 #: ../src/orca/orca_console_prefs.py:234
 msgid "Enable key echo?  Enter y or n: "
-msgstr ""
+msgstr "Otetaanko käyttöön näppäinten kaiutus? Vastaa k tai e: "
 
 #: ../src/orca/orca_console_prefs.py:241
 msgid "Enable alphanumeric and punctuation keys?  Enter y or n: "
-msgstr ""
+msgstr "Kaiutetanko alfanumeeriset merkit ja välimerkit? Vastaa k tai e: "
 
 #: ../src/orca/orca_console_prefs.py:249
 msgid "Enable modifier keys?  Enter y or n: "
@@ -915,23 +915,23 @@ msgstr ""
 
 #: ../src/orca/orca_console_prefs.py:257
 msgid "Enable locking keys?  Enter y or n: "
-msgstr ""
+msgstr "Kaiutetaanko lukittuvat näppäimet? Vastaa k tai e: "
 
 #: ../src/orca/orca_console_prefs.py:265
 msgid "Enable function keys?  Enter y or n: "
-msgstr ""
+msgstr "Kaiutetaanko funktionäppäimet? Vastaa k tai e: "
 
 #: ../src/orca/orca_console_prefs.py:273
 msgid "Enable action keys?  Enter y or n: "
-msgstr ""
+msgstr "Kaiutetaanko toimintonäppäimet? Vastaa k tai e: "
 
 #: ../src/orca/orca_console_prefs.py:301
 msgid "Enable Braille?  Enter y or n: "
-msgstr ""
+msgstr "Otetanko braille käyttöön? Vasta k tai e:"
 
 #: ../src/orca/orca_console_prefs.py:309
 msgid "Enable Braille Monitor?  Enter y or n: "
-msgstr ""
+msgstr "Otetanko braille-monitori käyttöön? Vasta k tai e:"
 
 #: ../src/orca/orca_console_prefs.py:319
 msgid "Accessibility support for GNOME has just been enabled. "
@@ -1655,7 +1655,7 @@ msgstr "irrvalkht"
 msgid "TearOffMenuItem"
 msgstr "IrrotettavaValikonKohta"
 
-#: ../src/orca/rolenames.py:449 ../src/orca/speechgenerator.py:1244
+#: ../src/orca/rolenames.py:449 ../src/orca/speechgenerator.py:1256
 msgid "tear off menu item"
 msgstr "irrotettava valikon kohta"
 
@@ -1883,7 +1883,7 @@ msgstr "Kalenteritapahtuma"
 msgid "calendar event"
 msgstr "kalenteritapahtuma"
 
-#: ../src/orca/scripts/Evolution.py:145
+#: ../src/orca/scripts/Evolution.py:149
 msgid " screen"
 msgstr "näyttö"
 
@@ -1893,27 +1893,27 @@ msgstr "näyttö"
 #. starts with "Welcome". For the last screen, it starts
 #. with "Congratulations". Speak those too.
 #.
-#: ../src/orca/scripts/Evolution.py:159
+#: ../src/orca/scripts/Evolution.py:178
 msgid "Please"
 msgstr "Ole hyvä"
 
-#: ../src/orca/scripts/Evolution.py:160
+#: ../src/orca/scripts/Evolution.py:179
 msgid "Welcome"
 msgstr "Tervetuloa"
 
-#: ../src/orca/scripts/Evolution.py:161
+#: ../src/orca/scripts/Evolution.py:180
 msgid "Congratulations"
 msgstr "Onneksi olkoon"
 
-#: ../src/orca/scripts/Evolution.py:660
+#: ../src/orca/scripts/Evolution.py:679
 msgid "No appointments"
 msgstr "Ei tapaamisia"
 
-#: ../src/orca/scripts/Evolution.py:734
+#: ../src/orca/scripts/Evolution.py:753
 msgid "Directories button"
 msgstr "Kansiot-painike"
 
-#: ../src/orca/scripts/Evolution.py:873 ../src/orca/scripts/Evolution.py:911
+#: ../src/orca/scripts/Evolution.py:892 ../src/orca/scripts/Evolution.py:930
 msgid "Assistant"
 msgstr "Apulainen"
 
@@ -1924,8 +1924,7 @@ msgstr "linkki"
 #: ../src/orca/scripts/gaim.py:143
 msgid ""
 "Toggle whether we prefix chat room messages with the name of the chat room."
-msgstr ""
-"Liitetäänkö keskusteluhuoneen viestien alkuun huoneen nimi vai ei."
+msgstr "Liitetäänkö keskusteluhuoneen viestien alkuun huoneen nimi vai ei."
 
 #: ../src/orca/scripts/gaim.py:147
 msgid "Speak and braille a previous chat room message."
@@ -1936,8 +1935,8 @@ msgid "speak chat room name."
 msgstr "lausu keskusteluhuoneen nimi. "
 
 #: ../src/orca/scripts/gaim.py:191
-msgid "Don't "
-msgstr "Älä "
+msgid "Do not speak chat room name."
+msgstr "Älä lausu keskusteluhuoneen nimiä. "
 
 #: ../src/orca/scripts/gaim.py:209
 msgid "Message from chat room "
@@ -1988,7 +1987,7 @@ msgstr "Oikeinkirjoitus:"
 
 #: ../src/orca/scripts/StarOffice.py:582
 msgid "Note that the Scroll Down button has to be pressed numerous times."
-msgstr ""
+msgstr "Huomaa, että alasvierityksen painiketta täytyy painaa useita kertoja."
 
 #: ../src/orca/scripts/StarOffice.py:596
 msgid "License Agreement Accept button now has focus."
@@ -2050,13 +2049,13 @@ msgstr "Näytä lisää valintoja"
 
 #: ../src/orca/scripts/planner.py:139 ../src/orca/scripts/planner.py:147
 #: ../src/orca/scripts/planner.py:172 ../src/orca/scripts/planner.py:180
-#: ../src/orca/speechgenerator.py:1300 ../src/orca/speechgenerator.py:1303
+#: ../src/orca/speechgenerator.py:1312 ../src/orca/speechgenerator.py:1315
 msgid "pressed"
 msgstr "painettu"
 
 #: ../src/orca/scripts/planner.py:141 ../src/orca/scripts/planner.py:149
 #: ../src/orca/scripts/planner.py:174 ../src/orca/scripts/planner.py:182
-#: ../src/orca/speechgenerator.py:1309 ../src/orca/speechgenerator.py:1312
+#: ../src/orca/speechgenerator.py:1321 ../src/orca/speechgenerator.py:1324
 msgid "not pressed"
 msgstr "ei painettu"
 
@@ -2069,7 +2068,7 @@ msgid "not checked"
 msgstr "ei merkitty"
 
 #: ../src/orca/speechgenerator.py:907 ../src/orca/speechgenerator.py:910
-#: ../src/orca/util.py:1072
+#: ../src/orca/util.py:1084
 msgid "selected"
 msgstr "valittu"
 
@@ -2077,45 +2076,48 @@ msgstr "valittu"
 msgid "not selected"
 msgstr "ei valittu"
 
-#: ../src/orca/speechgenerator.py:1246
+#: ../src/orca/speechgenerator.py:1258
 msgid "tear off"
 msgstr "irrota"
 
-#: ../src/orca/util.py:338
+#: ../src/orca/util.py:350
 msgid "Misspelled word: "
 msgstr "Väärinkirjoitettu sana: "
 
-#: ../src/orca/util.py:339
+#: ../src/orca/util.py:351
 msgid " Context is "
 msgstr " Konteksti on "
 
-#: ../src/orca/util.py:1016
+#: ../src/orca/util.py:1028
 msgid "page selected from cursor position"
 msgstr "sivu valittu kohdistimen sijainnista saakka"
 
-#: ../src/orca/util.py:1020
+#: ../src/orca/util.py:1032
 msgid "page selected to cursor position"
 msgstr "sivu valittu kohdistimen sijaintiin saakka"
 
-#: ../src/orca/util.py:1024
+#: ../src/orca/util.py:1036
 msgid "line selected down from cursor position"
 msgstr "rivi valittu kohdistimen sijannista alkaen"
 
-#: ../src/orca/util.py:1028
+#: ../src/orca/util.py:1040
 msgid "line selected up from cursor position"
 msgstr "rivi valittu kohdistimen sijaintiin saakka"
 
-#: ../src/orca/util.py:1032
+#: ../src/orca/util.py:1044
 msgid "document selected to cursor position"
 msgstr "asiakirja valittu kohdistimen sijaintiin saakka"
 
-#: ../src/orca/util.py:1036
+#: ../src/orca/util.py:1048
 msgid "document selected from cursor position"
 msgstr "asiakirja avattu kohdistimen sijainnista alkaen"
 
-#: ../src/orca/util.py:1080
+#: ../src/orca/util.py:1092
 msgid "unselected"
 msgstr "ei valittu"
+
+#~ msgid "Don't "
+#~ msgstr "Älä "
 
 #~ msgid "_cell"
 #~ msgstr "_solu"
