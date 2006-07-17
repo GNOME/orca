@@ -491,6 +491,7 @@ class SpeechServer(speechserver.SpeechServer):
             self.__gidleLock.acquire()
             self.__eventQueue.put((id, type, offset))
             if not self.__gidleId:
+                time.sleep(0.0001) # Attempt to sidestep GIL
                 self.__gidleId = gobject.idle_add(self.__idleHandler)
             self.__gidleLock.release()
 

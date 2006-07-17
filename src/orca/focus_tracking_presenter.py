@@ -490,6 +490,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             self._gidleLock.acquire()
             self._eventQueue.put(event)
             if not self._gidleId:
+                time.sleep(0.0001) # Attempt to sidestep GIL
                 self._gidleId = gobject.idle_add(self._dequeueEvent)
             self._gidleLock.release()
 
@@ -574,6 +575,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         self._gidleLock.acquire()
         if self._eventQueue.empty():
             if noFocus:
+                time.sleep(0.0001) # Attempt to sidestep GIL
                 delta = time.time() - self.lastNoFocusTime
                 if delta > settings.noFocusWaitTime:
                     message = _("No focus")
