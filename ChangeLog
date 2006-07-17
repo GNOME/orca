@@ -1,3 +1,14 @@
+2006-07-17  Willie Walker <william.walker@sun.com>
+
+	* src/orca/atspi.py: use calls to time.sleep as a means to
+	sidestep the global interpreter lock (GIL).  This hopefully
+	eliminates a large number of hangs. See the following URLs for
+	more information:
+
+        http://mail.python.org/pipermail/python-list/2002-October/126632.html
+        http://twistedmatrix.com/pipermail/twisted-python/2005-July/011052.html
+        http://www.pyzine.com/Issue001/Section_Articles/article_ThreadingGlobalInterpreter.html"""
+        	
 2006-07-17  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/gaim.py:

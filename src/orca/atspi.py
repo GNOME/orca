@@ -141,11 +141,24 @@ class Registry:
         if not self.__dict__.has_key("desktop"):
             self.desktop = self.registry.getDesktop(0)
 
+    def __blockPreventor(self):
+        """[[[TODO: HACK to attempt to prevent deadlocks.  We call time.sleep
+        here as a means to sidestep the global interpreter lock (GIL).  Take
+        a look at the following URLs for more information:
+
+        http://mail.python.org/pipermail/python-list/2002-October/126632.html
+        http://twistedmatrix.com/pipermail/twisted-python/2005-July/011052.html
+        http://www.pyzine.com/Issue001/Section_Articles/article_ThreadingGlobalInterpreter.html"""
+        
+        time.sleep(0.001)
+        return True
+    
     def start(self):
         """Starts event notification with the AT-SPI Registry.  This method
         only returns after 'stop' has been called.
         """
         Accessible.init(self)
+        gobject.idle_add(self.__blockPreventor)
         bonobo.main()
 
     def stop(self):
