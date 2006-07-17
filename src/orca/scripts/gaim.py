@@ -276,7 +276,16 @@ class Script(default.Script):
         if chatRoomName:
             allTextFields = util.findByRole(event.source.app, 
                                             rolenames.ROLE_TEXT)
-            index = len(allTextFields-2)
+
+            # Different message types (AIM, IRC ...) have a different
+            # component hierarchy for their chat rooms. By testing
+            # with AIM and IRC, we've found that the messages area for
+            # those two type of chat, has an index that is the penultimate
+            # text field. Hopefully this is true for other types of chat 
+            # as well, but is currently untested.
+            #
+            index = len(allTextFields)-2
+
             if index >= 0 and event.source == allTextFields[index]:
                 debug.println(self.debugLevel,
                               "gaim.onTextInserted - chat room text.")
