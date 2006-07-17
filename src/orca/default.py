@@ -1753,15 +1753,26 @@ class Script(script.Script):
         # will change the selection and tell the selected child it is
         # focused, but the child will not issue a focus changed event.]]]
         #
-        if event.source.role == rolenames.ROLE_LAYERED_PANE:
+        if event.source.role == rolenames.ROLE_LAYERED_PANE or \
+           event.source.role == rolenames.ROLE_TABLE:
             if event.source.childCount:
                 selection = event.source.selection
                 if selection and selection.nSelectedChildren > 0:
                     child = selection.getSelectedChild(0)
                     if child:
-                        orca.setLocusOfFocus(
-                            event,
-                            atspi.Accessible.makeAccessible(child))
+                        accChild = atspi.Accessible.makeAccessible(child)
+
+                        # Forcing orca.locusOfFocus to None will guarentee 
+                        # that this locus of focus will be set.
+                        # See bug #319675. Also see other similar comment
+                        # in setLocusOfFocusChanged().
+                        #
+                        if event.source.role == rolenames.ROLE_TABLE:
+                            if accChild != orca.locusOfFocus:
+                                orca.locusOfFocus = None
+                                orca.setLocusOfFocus(event, accChild)
+                        else:
+                            orca.setLocusOfFocus(event, accChild)
         elif event.source.role == rolenames.ROLE_COMBO_BOX:
             orca.visualAppearanceChanged(event, event.source)
 

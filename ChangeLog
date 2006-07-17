@@ -19,6 +19,10 @@
           Adjusted use of the event parameter in locusOfFocusChanged(), 
           to allow it to work correct if event=None.
 
+          Fixed bug #341371 and bug #347691. Orca will now report the 
+          file name in file picker when there is only one file existing 
+          in current folder.
+
 2006-07-16  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py:
