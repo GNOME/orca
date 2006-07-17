@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-14 12:26+0200\n"
-"PO-Revision-Date: 2006-07-14 12:33+0200\n"
+"POT-Creation-Date: 2006-07-18 00:47+0200\n"
+"PO-Revision-Date: 2006-07-18 00:48+0200\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -24,15 +24,15 @@ msgstr ""
 msgid "grayed"
 msgstr "sombreado"
 
-#: ../src/orca/braillegenerator.py:1070 ../src/orca/speechgenerator.py:1184
+#: ../src/orca/braillegenerator.py:1084 ../src/orca/speechgenerator.py:1196
 msgid "expanded"
 msgstr "expandido"
 
-#: ../src/orca/braillegenerator.py:1072 ../src/orca/speechgenerator.py:1186
+#: ../src/orca/braillegenerator.py:1086 ../src/orca/speechgenerator.py:1198
 msgid "collapsed"
 msgstr "contraído"
 
-#: ../src/orca/braillegenerator.py:1076
+#: ../src/orca/braillegenerator.py:1090
 #, python-format
 msgid "TREE LEVEL %d"
 msgstr "NIVEL DE ÁRBOL %d"
@@ -302,26 +302,26 @@ msgstr "Sin foco"
 msgid "entire document selected"
 msgstr "documento entero seleccionado"
 
-#: ../src/orca/default.py:1870
+#: ../src/orca/default.py:1881
 msgid "Speak "
 msgstr "Hablar"
 
-#: ../src/orca/default.py:1873
+#: ../src/orca/default.py:1884
 msgid "row"
 msgstr "fila"
 
-#: ../src/orca/default.py:1875 ../src/orca/rolenames.py:432
+#: ../src/orca/default.py:1886 ../src/orca/rolenames.py:432
 #: ../src/orca/rolenames.py:434
 msgid "cell"
 msgstr "celda"
 
-#: ../src/orca/default.py:2337 ../src/orca/default.py:2465
-#: ../src/orca/default.py:2470 ../src/orca/default.py:2542
-#: ../src/orca/default.py:2547
+#: ../src/orca/default.py:2348 ../src/orca/default.py:2476
+#: ../src/orca/default.py:2481 ../src/orca/default.py:2553
+#: ../src/orca/default.py:2558
 msgid "blank"
 msgstr "en blanco"
 
-#: ../src/orca/default.py:2339 ../src/orca/default.py:2472
+#: ../src/orca/default.py:2350 ../src/orca/default.py:2483
 msgid "white space"
 msgstr "espacio en blanco"
 
@@ -339,23 +339,23 @@ msgstr "Servicios de voz de Gnome"
 
 #. # Replace ellipses (both manual and unicode) with "dot dot dot"
 #. #
-#: ../src/orca/gnomespeechfactory.py:600 ../src/orca/gnomespeechfactory.py:601
+#: ../src/orca/gnomespeechfactory.py:601 ../src/orca/gnomespeechfactory.py:602
 msgid " dot dot dot"
 msgstr "punto punto punto"
 
-#: ../src/orca/gnomespeechfactory.py:760
+#: ../src/orca/gnomespeechfactory.py:761
 msgid "higher."
 msgstr "más alto."
 
-#: ../src/orca/gnomespeechfactory.py:788
+#: ../src/orca/gnomespeechfactory.py:789
 msgid "lower."
 msgstr "más bajo."
 
-#: ../src/orca/gnomespeechfactory.py:813
+#: ../src/orca/gnomespeechfactory.py:814
 msgid "faster."
 msgstr "más rápido."
 
-#: ../src/orca/gnomespeechfactory.py:843
+#: ../src/orca/gnomespeechfactory.py:844
 msgid "slower."
 msgstr "más lento."
 
@@ -413,7 +413,7 @@ msgstr "<b>Nivel de puntuación</b>"
 
 #: ../src/orca/orca-setup.glade.h:4
 msgid "<b>Table Row Speech</b>"
-msgstr ""
+msgstr "<b>Lctura de la fila de la tabla</b>"
 
 #: ../src/orca/orca-setup.glade.h:5
 msgid "<b>Verbosity</b>"
@@ -1676,7 +1676,7 @@ msgstr "tomnuitm"
 msgid "TearOffMenuItem"
 msgstr "Elemento de Menú Desprendible"
 
-#: ../src/orca/rolenames.py:449 ../src/orca/speechgenerator.py:1244
+#: ../src/orca/rolenames.py:449 ../src/orca/speechgenerator.py:1256
 msgid "tear off menu item"
 msgstr "elemento de menú desprendible"
 
@@ -1904,7 +1904,7 @@ msgstr "Evento del calendario"
 msgid "calendar event"
 msgstr "evento del calendario"
 
-#: ../src/orca/scripts/Evolution.py:145
+#: ../src/orca/scripts/Evolution.py:149
 msgid " screen"
 msgstr " pantalla"
 
@@ -1914,27 +1914,27 @@ msgstr " pantalla"
 #. starts with "Welcome". For the last screen, it starts
 #. with "Congratulations". Speak those too.
 #.
-#: ../src/orca/scripts/Evolution.py:159
+#: ../src/orca/scripts/Evolution.py:178
 msgid "Please"
 msgstr "Por favor"
 
-#: ../src/orca/scripts/Evolution.py:160
+#: ../src/orca/scripts/Evolution.py:179
 msgid "Welcome"
 msgstr "Bienvenido"
 
-#: ../src/orca/scripts/Evolution.py:161
+#: ../src/orca/scripts/Evolution.py:180
 msgid "Congratulations"
 msgstr "Enhorabuena"
 
-#: ../src/orca/scripts/Evolution.py:660
+#: ../src/orca/scripts/Evolution.py:679
 msgid "No appointments"
 msgstr "Sin citas"
 
-#: ../src/orca/scripts/Evolution.py:734
+#: ../src/orca/scripts/Evolution.py:753
 msgid "Directories button"
 msgstr "Botón de directorios"
 
-#: ../src/orca/scripts/Evolution.py:873 ../src/orca/scripts/Evolution.py:911
+#: ../src/orca/scripts/Evolution.py:892 ../src/orca/scripts/Evolution.py:930
 msgid "Assistant"
 msgstr "Asistente"
 
@@ -1945,7 +1945,7 @@ msgstr "enlace"
 #: ../src/orca/scripts/gaim.py:143
 msgid ""
 "Toggle whether we prefix chat room messages with the name of the chat room."
-msgstr ""
+msgstr "conmutar si se prefijan los mensajes de la sala de charla con el nombre de la sala de charla."
 
 #: ../src/orca/scripts/gaim.py:147
 msgid "Speak and braille a previous chat room message."
@@ -1956,8 +1956,8 @@ msgid "speak chat room name."
 msgstr "leer el nombre de la sala de chat."
 
 #: ../src/orca/scripts/gaim.py:191
-msgid "Don't "
-msgstr "No"
+msgid "Do not speak chat room name."
+msgstr "No leer el nombre de la sala de chat."
 
 #: ../src/orca/scripts/gaim.py:209
 msgid "Message from chat room "
@@ -2072,13 +2072,13 @@ msgstr "Mostrar más opciones"
 
 #: ../src/orca/scripts/planner.py:139 ../src/orca/scripts/planner.py:147
 #: ../src/orca/scripts/planner.py:172 ../src/orca/scripts/planner.py:180
-#: ../src/orca/speechgenerator.py:1300 ../src/orca/speechgenerator.py:1303
+#: ../src/orca/speechgenerator.py:1312 ../src/orca/speechgenerator.py:1315
 msgid "pressed"
 msgstr "pulsado"
 
 #: ../src/orca/scripts/planner.py:141 ../src/orca/scripts/planner.py:149
 #: ../src/orca/scripts/planner.py:174 ../src/orca/scripts/planner.py:182
-#: ../src/orca/speechgenerator.py:1309 ../src/orca/speechgenerator.py:1312
+#: ../src/orca/speechgenerator.py:1321 ../src/orca/speechgenerator.py:1324
 msgid "not pressed"
 msgstr "no pulsado"
 
@@ -2091,7 +2091,7 @@ msgid "not checked"
 msgstr "no marcado"
 
 #: ../src/orca/speechgenerator.py:907 ../src/orca/speechgenerator.py:910
-#: ../src/orca/util.py:1072
+#: ../src/orca/util.py:1084
 msgid "selected"
 msgstr "seleccionado"
 
@@ -2099,45 +2099,48 @@ msgstr "seleccionado"
 msgid "not selected"
 msgstr "no seleccionado"
 
-#: ../src/orca/speechgenerator.py:1246
+#: ../src/orca/speechgenerator.py:1258
 msgid "tear off"
 msgstr "desprender"
 
-#: ../src/orca/util.py:338
+#: ../src/orca/util.py:350
 msgid "Misspelled word: "
 msgstr "Palabra mal escrita: "
 
-#: ../src/orca/util.py:339
+#: ../src/orca/util.py:351
 msgid " Context is "
 msgstr " El contexto es "
 
-#: ../src/orca/util.py:1016
+#: ../src/orca/util.py:1028
 msgid "page selected from cursor position"
 msgstr "página seleccionada desde la posición del cursor"
 
-#: ../src/orca/util.py:1020
+#: ../src/orca/util.py:1032
 msgid "page selected to cursor position"
 msgstr "página seleccionada hasta la posición del cursor"
 
-#: ../src/orca/util.py:1024
+#: ../src/orca/util.py:1036
 msgid "line selected down from cursor position"
 msgstr "línea seleccionada desde la posición del cursor"
 
-#: ../src/orca/util.py:1028
+#: ../src/orca/util.py:1040
 msgid "line selected up from cursor position"
 msgstr "línea seleccionada desde la posición del cursor"
 
-#: ../src/orca/util.py:1032
+#: ../src/orca/util.py:1044
 msgid "document selected to cursor position"
 msgstr "documento seleccionado hasta la posición del cursor"
 
-#: ../src/orca/util.py:1036
+#: ../src/orca/util.py:1048
 msgid "document selected from cursor position"
 msgstr "documento seleccionado desde la posición del cursor"
 
-#: ../src/orca/util.py:1080
+#: ../src/orca/util.py:1092
 msgid "unselected"
 msgstr "no seleccionado"
+
+#~ msgid "Don't "
+#~ msgstr "No"
 
 #~ msgid "Brief"
 #~ msgstr "Breve"
