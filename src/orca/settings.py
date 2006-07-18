@@ -324,6 +324,12 @@ learnModeEnabled        = False
 #
 useBonoboMain           = True
 
+# If True, we output debug information for the event queue.  We
+# use this in addition to log level to prevent debug logic from
+# bogging down event handling.
+#
+debugEventQueue         = False
+
 # Assists with dealing with CORBA COMM_FAILURES.  A failure doesn't
 # always mean an object disappeared - there just might be a network
 # glitch.  So, on COMM_FAILURES, we might retry a few times before

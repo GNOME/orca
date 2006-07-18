@@ -487,12 +487,34 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             event = atspi.Event(e)
 
         if event:
+            if settings.debugEventQueue:
+                debug.println(debug.LEVEL_ALL,
+                              "           acquiring lock...")
             self._gidleLock.acquire()
+            if settings.debugEventQueue:
+                debug.println(debug.LEVEL_ALL,
+                              "           ...acquired")
+            if settings.debugEventQueue:
+                debug.println(debug.LEVEL_ALL,
+                              "           calling queue.put...")
+            if settings.debugEventQueue:
+                debug.println(debug.LEVEL_ALL,
+                              "           (full=%s)" % self._eventQueue.full())
             self._eventQueue.put(event)
+            if settings.debugEventQueue:
+                debug.println(debug.LEVEL_ALL,
+                              "           ...put complete")
             if not self._gidleId:
                 time.sleep(0.0001) # Attempt to sidestep GIL
                 self._gidleId = gobject.idle_add(self._dequeueEvent)
+
+            if settings.debugEventQueue:
+                debug.println(debug.LEVEL_ALL,
+                              "           releasing lock...")
             self._gidleLock.release()
+            if settings.debugEventQueue:
+                debug.println(debug.LEVEL_ALL,
+                              "           ...released")
 
     def _timeout(self):
         """Timer that will be called if we time out while trying to perform
@@ -506,7 +528,13 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         idle thread.
         """
 
-        event = self._eventQueue.get()
+        try:
+            event = self._eventQueue.get_nowait()
+        except Queue.Empty:
+            debug.println(debug.LEVEL_SEVERE,
+                          "focus_tracking_presenter:_dequeueEvent: " \
+                          + " the event queue is empty!")
+            return True
 
         if isinstance(event, input_event.KeyboardEvent):
             if event.type == atspi.Accessibility.KEY_PRESSED_EVENT:
