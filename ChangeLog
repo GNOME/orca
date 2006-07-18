@@ -1,5 +1,11 @@
 2006-07-18  Willie Walker <william.walker@sun.com>
 
+	* src/orca/atspi.py, src/orca/settings.py: add experimental "home
+	grown" main loop that attempts to side step the GIL some more.  It
+	is only enabled if you set settings.useBonoboMain to False (the
+	default value is True, which means to use the real bonobo main
+	loop).
+	
 	* src/orca/focus_tracking_presenter.py: add more logic to allow
 	"PROCESS OBJECT EVENT" lines to be output if there is not a 
 	filter in place.

@@ -149,17 +149,32 @@ class Registry:
         http://mail.python.org/pipermail/python-list/2002-October/126632.html
         http://twistedmatrix.com/pipermail/twisted-python/2005-July/011052.html
         http://www.pyzine.com/Issue001/Section_Articles/article_ThreadingGlobalInterpreter.html"""
-        
-        time.sleep(0.001)
+
+        time.sleep(0.0001) # Attempt to sidestep GIL
         return True
-    
+
     def start(self):
         """Starts event notification with the AT-SPI Registry.  This method
         only returns after 'stop' has been called.
         """
         Accessible.init(self)
         gobject.idle_add(self.__blockPreventor)
-        bonobo.main()
+
+        # We'll try our own main loop to help debug things.  Code borrowed
+        # "The Whole PyGtk FAQ": http://www.async.com.br/faq/pygtk/
+        #
+        if settings.useBonoboMain:
+            debug.println(debug.LEVEL_CONFIGURATION,
+                          "atspi.start: using bonobo.main")
+            bonobo.main()
+        else:
+            debug.println(debug.LEVEL_CONFIGURATION,
+                          "atspi.start: using our custom main loop")
+            self.running = True
+            context = gobject.MainLoop().get_context()
+            while self.running:
+                time.sleep(0.0001) # Attempt to sidestep GIL
+                dispatched = context.iteration(False)
 
     def stop(self):
         """Unregisters any event or keystroke listeners registered with
@@ -169,7 +184,10 @@ class Registry:
         Accessible.shutdown(self)
         for listener in (self.__listeners + self.__keystrokeListeners):
             listener.deregister()
-        bonobo.main_quit()
+        if settings.useBonoboMain:
+            bonobo.main_quit()
+        else:
+            self.running = False
 
     def registerEventListener(self, callback, eventType):
         """Registers the given eventType and callback with the Registry.

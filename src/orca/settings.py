@@ -319,6 +319,11 @@ cacheAccessibles        = True
 #
 learnModeEnabled        = False
 
+# If True, we use the bonobo main loop provided by bonobo to handle
+# all events in atspi.py.  If False, we create our own loop.
+#
+useBonoboMain           = False
+
 # Assists with dealing with CORBA COMM_FAILURES.  A failure doesn't
 # always mean an object disappeared - there just might be a network
 # glitch.  So, on COMM_FAILURES, we might retry a few times before
@@ -329,7 +334,7 @@ commFailureAttemptLimit = 5
 
 # Keyboard double-click period. If the same key is pressed within
 # this time period, it's considered to be a double-click and might
-# provide different functionality (for example, Numpad 5 double-click 
+# provide different functionality (for example, Numpad 5 double-click
 # spells the current word rather than speaks it).
 #
 doubleClickTimeout = 0.5
