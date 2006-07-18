@@ -1157,7 +1157,11 @@ class SpeechGenerator:
                     obj.role = rolenames.ROLE_TABLE_CELL
                     break
 
-        if (len(utterances) == 0) and (not already_focused):
+        # We previously also tested "not already_focused" here but this was
+        # preventing information about this table cell from being spoken.
+        # See bug #347228.
+        #
+        if (len(utterances) == 0):
             if settings.readTableCellRow:
                 parent = obj.parent
                 row = parent.table.getRowAtIndex(obj.index)
