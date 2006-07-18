@@ -29,6 +29,7 @@ import gobject
 import Queue
 import string
 import threading
+import time
 
 import bonobo
 

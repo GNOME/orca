@@ -158,7 +158,6 @@ class Registry:
         only returns after 'stop' has been called.
         """
         Accessible.init(self)
-        gobject.idle_add(self.__blockPreventor)
 
         # We'll try our own main loop to help debug things.  Code borrowed
         # "The Whole PyGtk FAQ": http://www.async.com.br/faq/pygtk/
@@ -166,6 +165,7 @@ class Registry:
         if settings.useBonoboMain:
             debug.println(debug.LEVEL_CONFIGURATION,
                           "atspi.start: using bonobo.main")
+            gobject.idle_add(self.__blockPreventor)
             bonobo.main()
         else:
             debug.println(debug.LEVEL_CONFIGURATION,

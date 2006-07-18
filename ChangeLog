@@ -1,5 +1,8 @@
 2006-07-18  Willie Walker <william.walker@sun.com>
 
+	* src/orca/gnomespeechfactory.py: oops - import 'time' so SayAll
+	will work again.
+	
 	* src/orca/atspi.py, src/orca/settings.py: add experimental "home
 	grown" main loop that attempts to side step the GIL some more.  It
 	is only enabled if you set settings.useBonoboMain to False (the
