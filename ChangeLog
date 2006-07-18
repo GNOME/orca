@@ -1,3 +1,9 @@
+2006-07-18  Willie Walker <william.walker@sun.com>
+
+	* src/orca/focus_tracking_presenter.py: add more logic to allow
+	"PROCESS OBJECT EVENT" lines to be output if there is not a 
+	filter in place.
+	
 2006-07-17  Willie Walker <william.walker@sun.com>
 
 	* src/orca/atspi.py, src/orca/focus_tracking_presenter.py,
