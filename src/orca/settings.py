@@ -322,7 +322,7 @@ learnModeEnabled        = False
 # If True, we use the bonobo main loop provided by bonobo to handle
 # all events in atspi.py.  If False, we create our own loop.
 #
-useBonoboMain           = False
+useBonoboMain           = True
 
 # Assists with dealing with CORBA COMM_FAILURES.  A failure doesn't
 # always mean an object disappeared - there just might be a network
