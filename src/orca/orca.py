@@ -80,6 +80,10 @@ lastInputEvent = None
 #
 lastTimestamp = None
 
+# The time that the last "No focus" event occured.
+#
+noFocusTimeStamp = 0.0
+
 # A new modifier to use (set by the press of any key in the
 # settings.orcaModifierKeys list) to represent the Orca modifier.
 #

@@ -70,7 +70,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         self._eventQueue     = Queue.Queue(0)
         self._gidleId        = 0
         self._gidleLock      = threading.Lock()
-        self.lastNoFocusTime = 0.0
+        self.noFocusTimestamp = 0.0
 
         if settings.debugEventQueue:
             self._enqueueEventCount = 0
@@ -621,22 +621,21 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             # some reason if done inside an acquire/release block for a
             # lock.  So...we do it here.]]]
             #
-            noFocus = not self._activeScript or not orca.locusOfFocus
+            noFocus = (not self._activeScript) or ((not orca.locusOfFocus) \
+                      and (self.noFocusTimestamp != orca.noFocusTimeStamp))
 
             self._gidleLock.acquire()
             if self._eventQueue.empty():
                 if noFocus:
                     time.sleep(0.0001) # Attempt to sidestep GIL
-                    delta = time.time() - self.lastNoFocusTime
-                    if delta > settings.noFocusWaitTime:
-                        message = _("No focus")
-                        if settings.brailleVerbosityLevel == \
-                            settings.VERBOSITY_LEVEL_VERBOSE:
-                            braille.displayMessage(message)
-                        if settings.speechVerbosityLevel == \
-                            settings.VERBOSITY_LEVEL_VERBOSE:
-                            speech.speak(message)
-                        self.lastNoFocusTime = time.time()
+                    message = _("No focus")
+                    if settings.brailleVerbosityLevel == \
+                        settings.VERBOSITY_LEVEL_VERBOSE:
+                        braille.displayMessage(message)
+                    if settings.speechVerbosityLevel == \
+                        settings.VERBOSITY_LEVEL_VERBOSE:
+                        speech.speak(message)
+                    self.noFocusTimestamp = orca.noFocusTimeStamp
                 self._gidleId = 0
                 rerun = False # destroy and don't call again
             self._gidleLock.release()

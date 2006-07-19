@@ -1330,6 +1330,8 @@ class Script(script.Script):
                     newParent.lastColumn = column
                     row = table.getRowAtIndex(newLocusOfFocus.index)
                     newParent.lastRow = row
+        else:
+            orca.noFocusTimeStamp = time.time()
 
     def visualAppearanceChanged(self, event, obj):
         """Called when the visual appearance of an object changes.  This

@@ -10,6 +10,13 @@
           retained there, just in case we wish to reinstate those (or
           other) Orca specific key bindings in the future.
 
+        * src/orca/default.py:
+          src/orca/focus_tracking_presenter.py:
+          src/orca/orca.py:
+          src/orca/settings.py:
+          Reworked how Orca handles "No focus", based on a suggested
+          approach from Will (thanks).
+
 2006-07-19  Willie Walker <william.walker@sun.com>
 
 	* src/orca/focus_tracking_presenter.py: more debug output

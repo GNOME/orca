@@ -345,10 +345,6 @@ commFailureAttemptLimit = 5
 #
 doubleClickTimeout = 0.5
 
-# Time period between brailling/speaking "No focus" utterances.
-#
-noFocusWaitTime = 4.0
-
 # Which packages to search, and the order in which to search,
 # for custom scripts.  These packages are expected to be on
 # the PYTHONPATH and/or subpackages of the "orca" package.
