@@ -260,7 +260,7 @@ def _onMouseButton(e):
     #
     if event.type.endswith("p"):
         speech.stop()
-    
+
 ########################################################################
 #                                                                      #
 # Keyboard Event Recording Support                                     #
@@ -613,6 +613,8 @@ def _keyEcho(event):
     voices = settings.voices
     voice = voices[settings.DEFAULT_VOICE]
 
+    state = None
+
     # If key echo is enabled, then check to see what type of key event
     # it is and echo it via speech, if the user wants that type of key
     # echoed.
@@ -637,9 +639,10 @@ def _keyEcho(event):
             modifiers = event.modifiers
             if event_string == _("Caps_Lock"):
                 if modifiers & (1 << atspi.Accessibility.MODIFIER_SHIFTLOCK):
-                    event_string += " Off"
+                    state = _(" off")
                 else:
-                    event_string += " On"
+                    state = _(" on")
+
             elif event_string == _("Num_Lock"):
                 # [[[TODO: richb - we are not getting a correct modifier
                 # state value returned when Num Lock is turned off.
@@ -647,9 +650,9 @@ def _keyEcho(event):
                 # until this can be fixed.]]]
                 #
                 #if modifiers & (1 << atspi.Accessibility.MODIFIER_NUMLOCK):
-                #    event_string += " Off"
+                #    event_string += _(" off")
                 #else:
-                #    event_string += " On"
+                #    event_string += _(" on")
                 pass
 
         elif _isFunctionKey(event_string):
@@ -669,6 +672,9 @@ def _keyEcho(event):
         # this key event.
         if event_string in keynames.keynames:
             event_string = keynames.keynames[event_string]
+
+        if state:
+            event_string += state
 
         debug.println(debug.LEVEL_FINEST,
                       "orca._keyEcho: speaking: %s" % event_string)
@@ -900,7 +906,7 @@ def loadUserSettings(script=None, inputEvent=None):
                       "Magnification module has NOT been initialized.")
 
     httpserver.init()
-    
+
     return True
 
 def _showPreferencesGUI(script=None, inputEvent=None):

@@ -1,3 +1,18 @@
+2006-07-19  Oana Serb <os@baum.ro>
+
+	* src/orca/keynames.py: add new keynames:
+	  keynames["Meta_L"]      = _("left meta")
+	  keynames["Meta_R"]      = _("right meta")
+	  keynames["Num_Lock"]    = _("num lock")
+	  keynames["Caps_Lock"]   = _("caps lock")
+	  keynames["Scroll_Lock"] = _("scroll lock")
+	  keynames["Page_Up"]     = _("page up")
+	  keynames["Page_Down"]   = _("page down")
+
+	* src/orca/orca.py: delay appending " on" and " off" to key echo
+	until after we've looked up the keyname.  Also make " on" and
+	" off" internationalized strings.
+	
 2006-07-18  Willie Walker <william.walker@sun.com>
 
 	* src/orca/focus_tracking_presenter.py, src/orca/settings.py:
