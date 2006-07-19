@@ -1,3 +1,8 @@
+2006-07-19  Willie Walker <william.walker@sun.com>
+
+	* src/orca/focus_tracking_presenter.py: more debug output
+	when settings.debugEventQueue is enabled.
+	
 2006-07-19  Oana Serb <os@baum.ro>
 
 	* src/orca/keynames.py: add new keynames:

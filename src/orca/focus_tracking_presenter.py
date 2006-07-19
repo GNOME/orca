@@ -72,6 +72,10 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         self._gidleLock      = threading.Lock()
         self.lastNoFocusTime = 0.0
 
+        if settings.debugEventQueue:
+            self._enqueueEventCount = 0
+            self._dequeueEventCount = 0
+
     ########################################################################
     #                                                                      #
     # METHODS FOR KEEPING TRACK OF LISTENERS REGISTERED WITH ATSPI         #
@@ -440,6 +444,14 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         #    self._processObjectEvent(atspi.Event(e))
         #return
 
+        if settings.debugEventQueue:
+            if self._enqueueEventCount:
+                debug.println(debug.LEVEL_ALL,
+                              "focus_tracking_presenter._enqueueEvent has " \
+                              "been entered before exiting (count = %d)" \
+                              % self._enqueueEventCount)
+            self._enqueueEventCount += 1
+
         event = None
         if isinstance(e, input_event.KeyboardEvent):
             if e.type == atspi.Accessibility.KEY_PRESSED_EVENT:
@@ -460,6 +472,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             # care of them for us.
             #
             if (e.type == "object:state-changed:defunct"):
+                if settings.debugEventQueue:
+                    self._enqueueEventCount -= 1
                 return
 
             # We also generally do not like
@@ -469,6 +483,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             # module take care of it for us.
             #
             if e.type == "object:property-change:accessible-parent":
+                if settings.debugEventQueue:
+                    self._enqueueEventCount -= 1
                 return
 
             # At this point in time, we only care when objects are
@@ -476,6 +492,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             #
             if (e.type == "object:children-changed:remove") \
                 and (e.source != self.registry.desktop):
+                if settings.debugEventQueue:
+                    self._enqueueEventCount -= 1
                 return
 
             # We create the event here because it will ref everything
@@ -515,6 +533,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             if settings.debugEventQueue:
                 debug.println(debug.LEVEL_ALL,
                               "           ...released")
+        if settings.debugEventQueue:
+            self._enqueueEventCount -= 1
 
     def _timeout(self):
         """Timer that will be called if we time out while trying to perform
@@ -528,97 +548,110 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         idle thread.
         """
 
+        rerun = True
+
+        if settings.debugEventQueue:
+            debug.println(debug.LEVEL_ALL,
+                          "Entering focus_tracking_presenter._dequeueEvent" \
+                          + " %d" % self._dequeueEventCount)
+            self._dequeueEventCount += 1
+
         try:
             event = self._eventQueue.get_nowait()
+
+            if isinstance(event, input_event.KeyboardEvent):
+                if event.type == atspi.Accessibility.KEY_PRESSED_EVENT:
+                    debug.println(debug.LEVEL_FINEST,
+                                  "DEQUEUED KEYPRESS '%s' (%d) <----------" \
+                                  % (event.event_string, event.hw_code))
+                    pressRelease = "PRESS"
+                elif event.type == atspi.Accessibility.KEY_RELEASED_EVENT:
+                    debug.println(debug.LEVEL_FINEST,
+                                  "DEQUEUED KEYRELEASE '%s' (%d) <----------" \
+                                  % (event.event_string, event.hw_code))
+                    pressRelease = "RELEASE"
+                debug.println(debug.eventDebugLevel,
+                              "\nvvvvv PROCESS KEY %s EVENT %s vvvvv"\
+                              % (pressRelease, event.event_string))
+                self._processKeyboardEvent(event)
+                debug.println(debug.eventDebugLevel,
+                              "\n^^^^^ PROCESS KEY %s EVENT %s ^^^^^"\
+                              % (pressRelease, event.event_string))
+            elif isinstance(event, input_event.BrailleEvent):
+                debug.println(debug.LEVEL_FINEST,
+                              "DEQUEUED BRAILLE COMMAND %d <----------" \
+                              % event.event)
+                debug.println(debug.eventDebugLevel,
+                              "\nvvvvv PROCESS BRAILLE EVENT %d vvvvv"\
+                              % event.event)
+                self._processBrailleEvent(event)
+                debug.println(debug.eventDebugLevel,
+                              "\n^^^^^ PROCESS BRAILLE EVENT %d ^^^^^"\
+                              % event.event)
+            else:
+                debug.println(debug.LEVEL_FINEST, "DEQUEUED EVENT %s <----------" \
+                              % event.type)
+
+                # [[[TODO: WDW - the timer stuff is an experiment to see if
+                # we can recover from hangs.  It's only experimental, so it's
+                # commented out for now.]]]
+                #
+                #timer = threading.Timer(5.0, self._timeout)
+                #timer.start()
+
+                if (not debug.eventDebugFilter) \
+                    or (debug.eventDebugFilter \
+                        and debug.eventDebugFilter.match(event.type)):
+                    debug.println(debug.eventDebugLevel,
+                                  "\nvvvvv PROCESS OBJECT EVENT %s vvvvv" \
+                                  % event.type)
+                self._processObjectEvent(event)
+                if (not debug.eventDebugFilter) \
+                    or (debug.eventDebugFilter \
+                        and debug.eventDebugFilter.match(event.type)):
+                    debug.println(debug.eventDebugLevel,
+                                  "^^^^^ PROCESS OBJECT EVENT %s ^^^^^\n" \
+                                  % event.type)
+
+                #timer.cancel()
+                #del timer
+
+            # [[[TODO: HACK - it would seem logical to only do this if we
+            # discover the queue is empty, but this inroduces a hang for
+            # some reason if done inside an acquire/release block for a
+            # lock.  So...we do it here.]]]
+            #
+            noFocus = not self._activeScript or not orca.locusOfFocus
+
+            self._gidleLock.acquire()
+            if self._eventQueue.empty():
+                if noFocus:
+                    time.sleep(0.0001) # Attempt to sidestep GIL
+                    delta = time.time() - self.lastNoFocusTime
+                    if delta > settings.noFocusWaitTime:
+                        message = _("No focus")
+                        if settings.brailleVerbosityLevel == \
+                            settings.VERBOSITY_LEVEL_VERBOSE:
+                            braille.displayMessage(message)
+                        if settings.speechVerbosityLevel == \
+                            settings.VERBOSITY_LEVEL_VERBOSE:
+                            speech.speak(message)
+                        self.lastNoFocusTime = time.time()
+                self._gidleId = 0
+                rerun = False # destroy and don't call again
+            self._gidleLock.release()
         except Queue.Empty:
             debug.println(debug.LEVEL_SEVERE,
                           "focus_tracking_presenter:_dequeueEvent: " \
                           + " the event queue is empty!")
-            return True
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
 
-        if isinstance(event, input_event.KeyboardEvent):
-            if event.type == atspi.Accessibility.KEY_PRESSED_EVENT:
-                debug.println(debug.LEVEL_FINEST,
-                              "DEQUEUED KEYPRESS '%s' (%d) <----------" \
-                              % (event.event_string, event.hw_code))
-                pressRelease = "PRESS"
-            elif event.type == atspi.Accessibility.KEY_RELEASED_EVENT:
-                debug.println(debug.LEVEL_FINEST,
-                              "DEQUEUED KEYRELEASE '%s' (%d) <----------" \
-                              % (event.event_string, event.hw_code))
-                pressRelease = "RELEASE"
-            debug.println(debug.eventDebugLevel,
-                          "\nvvvvv PROCESS KEY %s EVENT %s vvvvv"\
-                          % (pressRelease, event.event_string))
-            self._processKeyboardEvent(event)
-            debug.println(debug.eventDebugLevel,
-                          "\n^^^^^ PROCESS KEY %s EVENT %s ^^^^^"\
-                          % (pressRelease, event.event_string))
-        elif isinstance(event, input_event.BrailleEvent):
-            debug.println(debug.LEVEL_FINEST,
-                          "DEQUEUED BRAILLE COMMAND %d <----------" \
-                          % event.event)
-            debug.println(debug.eventDebugLevel,
-                          "\nvvvvv PROCESS BRAILLE EVENT %d vvvvv"\
-                          % event.event)
-            self._processBrailleEvent(event)
-            debug.println(debug.eventDebugLevel,
-                          "\n^^^^^ PROCESS BRAILLE EVENT %d ^^^^^"\
-                          % event.event)
-        else:
-            debug.println(debug.LEVEL_FINEST, "DEQUEUED EVENT %s <----------" \
-                          % event.type)
-
-            # [[[TODO: WDW - the timer stuff is an experiment to see if
-            # we can recover from hangs.  It's only experimental, so it's
-            # commented out for now.]]]
-            #
-            #timer = threading.Timer(5.0, self._timeout)
-            #timer.start()
-
-            if (not debug.eventDebugFilter) \
-                or (debug.eventDebugFilter \
-                    and debug.eventDebugFilter.match(event.type)):
-                debug.println(debug.eventDebugLevel,
-                              "\nvvvvv PROCESS OBJECT EVENT %s vvvvv" \
-                              % event.type)
-            self._processObjectEvent(event)
-            if (not debug.eventDebugFilter) \
-                or (debug.eventDebugFilter \
-                    and debug.eventDebugFilter.match(event.type)):
-                debug.println(debug.eventDebugLevel,
-                              "^^^^^ PROCESS OBJECT EVENT %s ^^^^^\n" \
-                              % event.type)
-
-            #timer.cancel()
-            #del timer
-
-        rerun = True
-
-        # [[[TODO: HACK - it would seem logical to only do this if we
-        # discover the queue is empty, but this inroduces a hang for
-        # some reason if done inside an acquire/release block for a
-        # lock.  So...we do it here.]]]
-        #
-        noFocus = not self._activeScript or not orca.locusOfFocus
-
-        self._gidleLock.acquire()
-        if self._eventQueue.empty():
-            if noFocus:
-                time.sleep(0.0001) # Attempt to sidestep GIL
-                delta = time.time() - self.lastNoFocusTime
-                if delta > settings.noFocusWaitTime:
-                    message = _("No focus")
-                    if settings.brailleVerbosityLevel == \
-                        settings.VERBOSITY_LEVEL_VERBOSE:
-                        braille.displayMessage(message)
-                    if settings.speechVerbosityLevel == \
-                        settings.VERBOSITY_LEVEL_VERBOSE:
-                        speech.speak(message)
-                    self.lastNoFocusTime = time.time()
-            self._gidleId = 0
-            rerun = False # destroy and don't call again
-        self._gidleLock.release()
+        if settings.debugEventQueue:
+            self._dequeueEventCount -= 1
+            debug.println(debug.LEVEL_ALL,
+                          "Leaving focus_tracking_presenter._dequeueEvent" \
+                          + " %d" % self._dequeueEventCount)
 
         return rerun
 
