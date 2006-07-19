@@ -1,3 +1,15 @@
+2006-07-19  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          src/orca/orca.py:
+          Moved the Orca specific keybindings out of the init() routine in
+          orca.py, over to the setupInputEventHandlers and getKeyBindings() 
+          routines in default.py. 
+
+          _keyBindings in orca.py is currently empty, but the logic is 
+          retained there, just in case we wish to reinstate those (or
+          other) Orca specific key bindings in the future.
+
 2006-07-19  Willie Walker <william.walker@sun.com>
 
 	* src/orca/focus_tracking_presenter.py: more debug output

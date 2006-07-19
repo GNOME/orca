@@ -184,6 +184,70 @@ class Script(script.Script):
             Script.goBrailleHome,
             _("Returns to object with keyboard focus."))
 
+        self.enterLearnModeHandler = input_event.InputEventHandler(
+            orca.enterLearnMode,
+            _("Enters learn mode.  Press escape to exit learn mode."))
+
+        self.decreaseSpeechRateHandler = input_event.InputEventHandler(
+            speech.decreaseSpeechRate,
+            _("Decreases the speech rate."))
+
+        self.increaseSpeechRateHandler = input_event.InputEventHandler(
+            speech.increaseSpeechRate,
+            _("Increases the speech rate."))
+
+        self.decreaseSpeechPitchHandler = input_event.InputEventHandler(
+            speech.decreaseSpeechPitch,
+            _("Decreases the speech pitch."))
+
+        self.increaseSpeechPitchHandler = input_event.InputEventHandler(
+            speech.increaseSpeechPitch,
+            _("Increases the speech pitch."))
+
+        self.shutdownHandler = input_event.InputEventHandler(
+            orca.shutdown, 
+            _("Quits Orca"))
+
+        self.keystrokeRecordingHandler = input_event.InputEventHandler(
+            orca.toggleKeystrokeRecording,
+            _("Toggles keystroke recording on and off."))
+
+        self.preferencesSettingsHandler = input_event.InputEventHandler(
+            orca._showPreferencesGUI,
+            _("Displays the preferences configuration dialog."))
+
+        self.loadUserSettingsHandler = input_event.InputEventHandler(
+            orca.loadUserSettings,
+            _("Reloads user settings and reinitializes services as necessary."))
+
+        self.toggleSilenceSpeechHandler = input_event.InputEventHandler(
+            orca._toggleSilenceSpeech,
+            _("Toggles the silencing of speech."))
+
+        self.listAppsHandler = input_event.InputEventHandler(
+            orca.printApps,
+            _("Prints a debug listing of all known applications to the console where Orca is running."))
+
+        self.cycleDebugLevelHandler = input_event.InputEventHandler(
+            orca.cycleDebugLevel,
+            _("Cycles the debug level at run time."))
+
+        self.printActiveAppHandler = input_event.InputEventHandler(
+            orca.printActiveApp,
+            _("Prints debug information about the currently active application to the console where Orca is running."))
+
+        self.printAncestryHandler = input_event.InputEventHandler(
+            orca.printAncestry,
+            _("Prints debug information about the ancestry of the object with focus"))
+
+        self.printHierarchyHandler = input_event.InputEventHandler(
+            orca.printHierarchy,
+            _("Prints debug information about the application with focus"))
+
+        self.nextPresentationManagerHandler = input_event.InputEventHandler(
+            orca._switchToNextPresentationManager,
+            _("Switches to the next presentation manager."))
+
     def getListeners(self):
         """Sets up the AT-SPI event listeners for this script.
         """
@@ -529,6 +593,123 @@ class Script(script.Script):
                 1 << orca.MODIFIER_ORCA,
                 1 << orca.MODIFIER_ORCA,
                 self.reportScriptInfoHandler))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "F1",
+                1 << orca.MODIFIER_ORCA,
+                1 << orca.MODIFIER_ORCA,
+                self.enterLearnModeHandler))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "Left",
+                1 << orca.MODIFIER_ORCA,
+                1 << orca.MODIFIER_ORCA,
+                self.decreaseSpeechRateHandler))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "Right",
+                1 << orca.MODIFIER_ORCA,
+                1 << orca.MODIFIER_ORCA,
+                self.increaseSpeechRateHandler))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "Down",
+                1 << orca.MODIFIER_ORCA,
+                1 << orca.MODIFIER_ORCA,
+                self.decreaseSpeechPitchHandler))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "Up",
+                1 << orca.MODIFIER_ORCA,
+                1 << orca.MODIFIER_ORCA,
+                self.increaseSpeechPitchHandler))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "q",
+                1 << orca.MODIFIER_ORCA,
+                1 << orca.MODIFIER_ORCA,
+                self.shutdownHandler))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "Pause",
+                0,
+                0,
+                self.keystrokeRecordingHandler))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "space",
+                (1 << orca.MODIFIER_ORCA | \
+                     1 << atspi.Accessibility.MODIFIER_CONTROL),
+                1 << orca.MODIFIER_ORCA,
+                self.preferencesSettingsHandler))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "space",
+                (1 << orca.MODIFIER_ORCA | \
+                     1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << orca.MODIFIER_ORCA | \
+                     1 << atspi.Accessibility.MODIFIER_CONTROL),
+                self.loadUserSettingsHandler))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "s",
+                1 << orca.MODIFIER_ORCA,
+                1 << orca.MODIFIER_ORCA,
+                self.toggleSilenceSpeechHandler))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "F5",
+                (1 << orca.MODIFIER_ORCA | \
+                     1 << atspi.Accessibility.MODIFIER_CONTROL),
+                1 << orca.MODIFIER_ORCA,
+                self.listAppsHandler))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "F4",
+                1 << orca.MODIFIER_ORCA,
+                1 << orca.MODIFIER_ORCA,
+                self.cycleDebugLevelHandler))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "F6",
+                1 << orca.MODIFIER_ORCA,
+                1 << orca.MODIFIER_ORCA,
+                self.printActiveAppHandler))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "F7",
+                (1 << orca.MODIFIER_ORCA | \
+                     1 << atspi.Accessibility.MODIFIER_CONTROL),
+                1 << orca.MODIFIER_ORCA,
+                self.printAncestryHandler))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "F8",
+                1 << orca.MODIFIER_ORCA,
+                1 << orca.MODIFIER_ORCA,
+                self.printHierarchyHandler))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "F10",
+                1 << orca.MODIFIER_ORCA, \
+                1 << orca.MODIFIER_ORCA,
+                self.nextPresentationManagerHandler))
 
         return keyBindings
 
