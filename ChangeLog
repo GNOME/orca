@@ -17,6 +17,12 @@
           Reworked how Orca handles "No focus", based on a suggested
           approach from Will (thanks).
 
+        * src/orca/speechgenerator.py:
+          Reinstating the "and (not already_focused)" test in
+          _getSpeechForTableCell(). This is needed to prevent the
+          name being repeated when it's the same table that has focus.
+          There are still problems will table cells though (see bug #347228).
+
 2006-07-19  Willie Walker <william.walker@sun.com>
 
 	* src/orca/focus_tracking_presenter.py: more debug output
