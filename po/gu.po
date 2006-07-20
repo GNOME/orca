@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.HEAD.gu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-17 00:16+0200\n"
-"PO-Revision-Date: 2006-07-17 10:02+0530\n"
+"POT-Creation-Date: 2006-07-20 08:43+0200\n"
+"PO-Revision-Date: 2006-07-20 15:21+0530\n"
 "Last-Translator: Ankit Patel <ankit644@yahoo.com>\n"
 "Language-Team: Gujarati <indianoss-gujarati@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -18,6 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n\n"
+"\n"
 "\n"
 "\n"
 "\n"
@@ -296,39 +297,110 @@ msgstr "સપાટ રીવ્યુને તળિયે ડાબે ખ�
 msgid "Returns to object with keyboard focus."
 msgstr "કીબોર્ડ ફોકસ સાથે ઓબ્જેક્ટ આપે છે."
 
-#: ../src/orca/default.py:903 ../src/orca/default.py:1128
+#: ../src/orca/default.py:189
+msgid "Enters learn mode.  Press escape to exit learn mode."
+msgstr "શીખવાની સ્થિતિમાં દાખલ થાય છે.  શીખવાની સ્થિતિમાંથી બહાર નીકળવા માટે એસ્કેપ દબાવો."
+
+#: ../src/orca/default.py:193
+msgid "Decreases the speech rate."
+msgstr "બોલી દર ઘટાડે છે."
+
+#: ../src/orca/default.py:197
+msgid "Increases the speech rate."
+msgstr "બોલી દર વધારે છે."
+
+#: ../src/orca/default.py:201
+msgid "Decreases the speech pitch."
+msgstr "બોલી પીચ ઘટાડે છે."
+
+#: ../src/orca/default.py:205
+msgid "Increases the speech pitch."
+msgstr "બોલી પીચ વધારે છે."
+
+#: ../src/orca/default.py:209
+msgid "Quits Orca"
+msgstr "Orca બંધ કરે છે"
+
+#: ../src/orca/default.py:213
+msgid "Toggles keystroke recording on and off."
+msgstr "કીસ્ટ્રોક રેકોર્ડીંગ ચાલુ અને બંધ બદલે છે."
+
+#: ../src/orca/default.py:217
+msgid "Displays the preferences configuration dialog."
+msgstr "પસંદગીઓ રૂપરેખાંકન સંવાદન દર્શાવે છે."
+
+#: ../src/orca/default.py:221
+msgid "Reloads user settings and reinitializes services as necessary."
+msgstr "વપરાશકર્તા સુયોજનો પુનઃલાવે છે અને સેવાઓ જરૂરીયાત પ્રમાણે પુનઃઆરંભિત કરે છે."
+
+#: ../src/orca/default.py:225
+msgid "Toggles the silencing of speech."
+msgstr "બોલીને શાંત કરવાનું બદલે છે."
+
+#: ../src/orca/default.py:229
+msgid ""
+"Prints a debug listing of all known applications to the console where Orca "
+"is running."
+msgstr "બધા જાણીતા કાર્યક્રમોની ડિબગ યાદીને કન્સોલ પર છાપે છે કે જ્યાં Orca ચાલી રહ્યું હોય."
+
+#: ../src/orca/default.py:233
+msgid "Cycles the debug level at run time."
+msgstr "ડિબગ સ્તરને રન ટાઈમે ફેરવે છે."
+
+#: ../src/orca/default.py:237
+msgid ""
+"Prints debug information about the currently active application to the "
+"console where Orca is running."
+msgstr ""
+"વર્તમાનમાં સક્રિય કાર્યક્રમ વિશે ડિબગ જાણકારીને કન્સોલ પર છાપે છે કે જ્યાં Orca ચાલી રહ્યું "
+"હોય."
+
+#: ../src/orca/default.py:241
+msgid "Prints debug information about the ancestry of the object with focus"
+msgstr "ઓબ્જેક્ટોની જરૂરીયાત વિશે ડિબગ જાણકારીને ફોકસ સાથે છાપે છે"
+
+#: ../src/orca/default.py:245
+msgid "Prints debug information about the application with focus"
+msgstr "કાર્યક્રમ વિશે ડિબગ જાણકારી ફોકસ સાથે છાપે છે"
+
+#: ../src/orca/default.py:249
+msgid "Switches to the next presentation manager."
+msgstr "આગળના રજૂઆતક વ્યવસ્થાપક પર ફેરવે છે."
+
+#: ../src/orca/default.py:1084 ../src/orca/default.py:1309
 #, python-format
 msgid "tree level %d"
 msgstr "ટ્રી સ્તર %d"
 
-#: ../src/orca/default.py:907 ../src/orca/focus_tracking_presenter.py:579
+#. Attempt to sidestep GIL
+#: ../src/orca/default.py:1088 ../src/orca/focus_tracking_presenter.py:631
 msgid "No focus"
 msgstr "કોઈ ફોકસ નથી"
 
-#: ../src/orca/default.py:1515
+#: ../src/orca/default.py:1698
 msgid "entire document selected"
 msgstr "વર્તમાન દસ્તાવેજ પસંદ થયેલ છે"
 
-#: ../src/orca/default.py:1870
+#: ../src/orca/default.py:2064
 msgid "Speak "
 msgstr "બોલો "
 
-#: ../src/orca/default.py:1873
+#: ../src/orca/default.py:2067
 msgid "row"
 msgstr "હરોળ"
 
-#: ../src/orca/default.py:1875 ../src/orca/rolenames.py:432
+#: ../src/orca/default.py:2069 ../src/orca/rolenames.py:432
 #: ../src/orca/rolenames.py:434
 msgid "cell"
 msgstr "ખાનું"
 
-#: ../src/orca/default.py:2337 ../src/orca/default.py:2465
-#: ../src/orca/default.py:2470 ../src/orca/default.py:2542
-#: ../src/orca/default.py:2547
+#: ../src/orca/default.py:2531 ../src/orca/default.py:2659
+#: ../src/orca/default.py:2664 ../src/orca/default.py:2736
+#: ../src/orca/default.py:2741
 msgid "blank"
 msgstr "કોરું"
 
-#: ../src/orca/default.py:2339 ../src/orca/default.py:2472
+#: ../src/orca/default.py:2533 ../src/orca/default.py:2666
 msgid "white space"
 msgstr "સફેદ જગ્યા"
 
@@ -336,33 +408,33 @@ msgstr "સફેદ જગ્યા"
 msgid "Emacspeak Speech Services"
 msgstr "Emacspeak બોલી સેવાઓ"
 
-#: ../src/orca/focus_tracking_presenter.py:662
+#: ../src/orca/focus_tracking_presenter.py:726
 msgid "Switching to focus tracking mode."
 msgstr "ટ્રેકીંગ સ્થિતિ ફોક્સ પર બદલાઈ રહ્યા છીએ."
 
-#: ../src/orca/gnomespeechfactory.py:157
+#: ../src/orca/gnomespeechfactory.py:158
 msgid "GNOME Speech Services"
 msgstr "જીનોમ બોલી સેવાઓ"
 
 #. # Replace ellipses (both manual and unicode) with "dot dot dot"
 #. #
-#: ../src/orca/gnomespeechfactory.py:600 ../src/orca/gnomespeechfactory.py:601
+#: ../src/orca/gnomespeechfactory.py:602 ../src/orca/gnomespeechfactory.py:603
 msgid " dot dot dot"
 msgstr " ટપકું ટપકું ટપકું"
 
-#: ../src/orca/gnomespeechfactory.py:760
+#: ../src/orca/gnomespeechfactory.py:762
 msgid "higher."
 msgstr "ઊંચુ."
 
-#: ../src/orca/gnomespeechfactory.py:788
+#: ../src/orca/gnomespeechfactory.py:790
 msgid "lower."
 msgstr "નીચું."
 
-#: ../src/orca/gnomespeechfactory.py:813
+#: ../src/orca/gnomespeechfactory.py:815
 msgid "faster."
 msgstr "ઝડપી."
 
-#: ../src/orca/gnomespeechfactory.py:843
+#: ../src/orca/gnomespeechfactory.py:845
 msgid "slower."
 msgstr "ધીમું."
 
@@ -395,14 +467,42 @@ msgid "right control"
 msgstr "જમણું control"
 
 #: ../src/orca/keynames.py:39
+msgid "left meta"
+msgstr "ડાબી મેટા"
+
+#: ../src/orca/keynames.py:40
+msgid "right meta"
+msgstr "જમણી મેટા"
+
+#: ../src/orca/keynames.py:41
+msgid "num lock"
+msgstr "નંબર તાળું"
+
+#: ../src/orca/keynames.py:42
+msgid "caps lock"
+msgstr "કેપીટલ તાળું"
+
+#: ../src/orca/keynames.py:43
+msgid "scroll lock"
+msgstr "સરકાવવાને તાળું"
+
+#: ../src/orca/keynames.py:44
+msgid "page up"
+msgstr "પાનું ઉપર"
+
+#: ../src/orca/keynames.py:45
+msgid "page down"
+msgstr "પાનું નીચે"
+
+#: ../src/orca/keynames.py:46
 msgid "left tab"
 msgstr "ડાબી tab"
 
-#: ../src/orca/keynames.py:40
+#: ../src/orca/keynames.py:47
 msgid "F 11"
 msgstr "F 11"
 
-#: ../src/orca/keynames.py:41
+#: ../src/orca/keynames.py:48
 msgid "F 12"
 msgstr "F 12"
 
@@ -673,129 +773,67 @@ msgstr "પહોળાઈ (_W):"
 msgid "pixels"
 msgstr "પિક્સેલો"
 
-#: ../src/orca/orca.py:237
+#: ../src/orca/orca.py:241
 msgid "User logged out - shutting down."
 msgstr "વપરાશકર્તા બહાર નીકળી ગયો - બંધ કરી રહ્યા છીએ."
 
-#: ../src/orca/orca.py:402
+#: ../src/orca/orca.py:406
 msgid "Debug level all."
 msgstr "ડિબગ સ્તર બધું."
 
-#: ../src/orca/orca.py:404
+#: ../src/orca/orca.py:408
 msgid "Debug level finest."
 msgstr "ડિબગ સ્તર સરસમાં સરસ."
 
-#: ../src/orca/orca.py:406
+#: ../src/orca/orca.py:410
 msgid "Debug level finer."
 msgstr "ડિબગ સ્તર સરસ."
 
-#: ../src/orca/orca.py:457
+#: ../src/orca/orca.py:461
 msgid "Entering learn mode.  Press any key to hear its function. "
 msgstr "શીખવાની સ્થિતિમાં દાખલ થઈ રહ્યા છીએ.  તેનું વિધેય સાંભળવા માટે કોઈપણ કી દબાવો. "
 
-#: ../src/orca/orca.py:458
+#: ../src/orca/orca.py:462
 msgid "To exit learn mode, press the escape key."
 msgstr "શીખવાની સ્થિતિમાંથી બહાર નીકળવા માટે, એસ્કેપ કી દબાવો."
 
-#: ../src/orca/orca.py:459
+#: ../src/orca/orca.py:463
 msgid "Learn mode.  Press escape to exit."
 msgstr "શીખવાની સ્થિતિ.  બહાર નીકળવા માટે એસ્કેપ દબાવો."
 
-#: ../src/orca/orca.py:469 ../src/orca/orca.py:470
+#: ../src/orca/orca.py:473 ../src/orca/orca.py:474
 msgid "Exiting learn mode."
 msgstr "શીખવાની સ્થિતિમાંથી બહાર નીકળી રહ્યા છીએ."
 
-#: ../src/orca/orca.py:638
+#: ../src/orca/orca.py:644
 msgid "Caps_Lock"
 msgstr "Caps_Lock"
 
-#: ../src/orca/orca.py:643
+#: ../src/orca/orca.py:646
+msgid " off"
+msgstr " બંધ"
+
+#: ../src/orca/orca.py:648
+msgid " on"
+msgstr " ચાલુ"
+
+#: ../src/orca/orca.py:650
 msgid "Num_Lock"
 msgstr "Num_Lock"
 
-#: ../src/orca/orca.py:830
+#: ../src/orca/orca.py:840
 msgid "Speech enabled."
 msgstr "બોલી સક્રિય કરાયેલ."
 
-#: ../src/orca/orca.py:832
+#: ../src/orca/orca.py:842
 msgid "Speech disabled."
 msgstr "બોલી નિષ્ક્રિય કરાયેલ."
 
-#: ../src/orca/orca.py:870
+#: ../src/orca/orca.py:880
 msgid "Orca user settings reloaded."
 msgstr "Orca વપરાશકર્તા સુયોજનો પુનઃલવાયેલ."
 
-#: ../src/orca/orca.py:967
-msgid "Enters learn mode.  Press escape to exit learn mode."
-msgstr "શીખવાની સ્થિતિમાં દાખલ થાય છે.  શીખવાની સ્થિતિમાંથી બહાર નીકળવા માટે એસ્કેપ દબાવો."
-
-#: ../src/orca/orca.py:975
-msgid "Decreases the speech rate."
-msgstr "બોલી દર ઘટાડે છે."
-
-#: ../src/orca/orca.py:983
-msgid "Increases the speech rate."
-msgstr "બોલી દર વધારે છે."
-
-#: ../src/orca/orca.py:991
-msgid "Decreases the speech pitch."
-msgstr "બોલી પીચ ઘટાડે છે."
-
-#: ../src/orca/orca.py:999
-msgid "Increases the speech pitch."
-msgstr "બોલી પીચ વધારે છે."
-
-#: ../src/orca/orca.py:1005
-msgid "Quits Orca"
-msgstr "Orca બંધ કરે છે"
-
-#: ../src/orca/orca.py:1013
-msgid "Toggles keystroke recording on and off."
-msgstr "કીસ્ટ્રોક રેકોર્ડીંગ ચાલુ અને બંધ બદલે છે."
-
-#: ../src/orca/orca.py:1021
-msgid "Displays the preferences configuration dialog."
-msgstr "પસંદગીઓ રૂપરેખાંકન સંવાદન દર્શાવે છે."
-
-#: ../src/orca/orca.py:1030
-msgid "Reloads user settings and reinitializes services as necessary."
-msgstr "વપરાશકર્તા સુયોજનો પુનઃલાવે છે અને સેવાઓ જરૂરીયાત પ્રમાણે પુનઃઆરંભિત કરે છે."
-
-#: ../src/orca/orca.py:1039
-msgid "Toggles the silencing of speech."
-msgstr "બોલીને શાંત કરવાનું બદલે છે."
-
-#: ../src/orca/orca.py:1048
-msgid ""
-"Prints a debug listing of all known applications to the console where Orca "
-"is running."
-msgstr "બધા જાણીતા કાર્યક્રમોની ડિબગ યાદીને કન્સોલ પર છાપે છે કે જ્યાં Orca ચાલી રહ્યું હોય."
-
-#: ../src/orca/orca.py:1057
-msgid "Cycles the debug level at run time."
-msgstr "ડિબગ સ્તરને રન ટાઈમે ફેરવે છે."
-
-#: ../src/orca/orca.py:1065
-msgid ""
-"Prints debug information about the currently active application to the "
-"console where Orca is running."
-msgstr ""
-"વર્તમાનમાં સક્રિય કાર્યક્રમ વિશે ડિબગ જાણકારીને કન્સોલ પર છાપે છે કે જ્યાં Orca ચાલી રહ્યું "
-"હોય."
-
-#: ../src/orca/orca.py:1073
-msgid "Prints debug information about the ancestry of the object with focus"
-msgstr "ઓબ્જેક્ટોની જરૂરીયાત વિશે ડિબગ જાણકારીને ફોકસ સાથે છાપે છે"
-
-#: ../src/orca/orca.py:1082
-msgid "Prints debug information about the application with focus"
-msgstr "કાર્યક્રમ વિશે ડિબગ જાણકારી ફોકસ સાથે છાપે છે"
-
-#: ../src/orca/orca.py:1091
-msgid "Switches to the next presentation manager."
-msgstr "આગળના રજૂઆતક વ્યવસ્થાપક પર ફેરવે છે."
-
-#: ../src/orca/orca.py:1124 ../src/orca/orca.py:1125
+#: ../src/orca/orca.py:1006 ../src/orca/orca.py:1007
 msgid "Welcome to Orca."
 msgstr "Orca માં તમારું સ્વાગત છે."
 
@@ -805,40 +843,40 @@ msgstr "Orca માં તમારું સ્વાગત છે."
 #.
 #. timer = threading.Timer(5.0, timeout)
 #. timer.start()
-#: ../src/orca/orca.py:1177
+#: ../src/orca/orca.py:1059
 msgid "goodbye."
 msgstr "આવજો."
 
-#: ../src/orca/orca.py:1178
+#: ../src/orca/orca.py:1060
 msgid "Goodbye."
 msgstr "આવજો."
 
-#: ../src/orca/orca.py:1244
+#: ../src/orca/orca.py:1126
 msgid "Usage: orca [OPTION...]"
 msgstr "વપરાશ: orca [OPTION...]"
 
-#: ../src/orca/orca.py:1246
+#: ../src/orca/orca.py:1128
 msgid "-?, --help                   Show this help message"
 msgstr "-?, --help                   આ મદદ સંદેશો બતાવે છે"
 
-#: ../src/orca/orca.py:1247
+#: ../src/orca/orca.py:1129
 #, python-format
 msgid "-v, --version                %s"
 msgstr "-v, --version                %s"
 
-#: ../src/orca/orca.py:1248
+#: ../src/orca/orca.py:1130
 msgid "-s, --setup, --gui-setup     Set up user preferences"
 msgstr "-s, --setup, --gui-setup     વપરાશકર્તા પસંદગીઓ સુયોજિત કરે છે"
 
-#: ../src/orca/orca.py:1249
+#: ../src/orca/orca.py:1131
 msgid "-t, --text-setup             Set up user preferences (text version)"
 msgstr "-t, --text-setup             વપરાશકર્તા પસંદગીઓ સુયોજિત કરે છે (લખાણ આવૃત્તિ)"
 
-#: ../src/orca/orca.py:1250
+#: ../src/orca/orca.py:1132
 msgid "-n, --no-setup               Skip set up of user preferences"
 msgstr "-n, --no-setup               વપરાશકર્તા પસંદગીઓનું સુયોજન અવગણે છે"
 
-#: ../src/orca/orca.py:1252
+#: ../src/orca/orca.py:1134
 msgid ""
 "If Orca has not been previously set up by the user, Orca\n"
 "will automatically launch the preferences set up unless\n"
@@ -848,7 +886,7 @@ msgstr ""
 "આપોઆપ પસંદગીઓ સુયોજન લોન્ચ કરશે જ્યાં સુધી\n"
 "-n અથવા --no-setup વિકલ્પ વાપરવામાં નહિં આવે."
 
-#: ../src/orca/orca.py:1254
+#: ../src/orca/orca.py:1136
 msgid "Report bugs to orca-list@gnome.org."
 msgstr "orca-list@gnome.org ને ભૂલોનો અહેવાલ આપો."
 
@@ -2027,23 +2065,23 @@ msgstr " ને સૂત્ર છે"
 #. translation is by running the application and then viewing its
 #. name in the main window of at-poke.
 #.
-#: ../src/orca/settings.py:404
+#: ../src/orca/settings.py:411
 msgid "[\\S\\s]*StarOffice[\\s\\S]*"
 msgstr "[\\S\\s]*StarOffice[\\s\\S]*"
 
-#: ../src/orca/settings.py:405
+#: ../src/orca/settings.py:412
 msgid "soffice.bin"
 msgstr "soffice.bin"
 
-#: ../src/orca/settings.py:406
+#: ../src/orca/settings.py:413
 msgid "[Ee]volution"
 msgstr "[Ee]volution"
 
-#: ../src/orca/settings.py:407
+#: ../src/orca/settings.py:414
 msgid "Deer Park"
 msgstr "ડિયર પાર્ક"
 
-#: ../src/orca/settings.py:408
+#: ../src/orca/settings.py:415
 msgid "Bon Echo"
 msgstr "બોન ઈકો"
 
