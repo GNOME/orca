@@ -131,7 +131,7 @@ class Script(default.Script):
 
             # Each Setup Assistant screen has one label in the top left
             # corner that describes what this screen is for. It has a text
-            # weight attribute of 800. We always speak those labels with 
+            # weight attribute of 800. We always speak those labels with
             # " screen" appended.
             #
             if label.text:
@@ -149,8 +149,8 @@ class Script(default.Script):
                             speech.speak(text + _(" screen"), None, False)
                             self.setupLabels[label] = True
 
-                            # If the locus of focus is a push button that's 
-                            # insensitive, speak/braille about it. (The 
+                            # If the locus of focus is a push button that's
+                            # insensitive, speak/braille about it. (The
                             # Identity screen has such a component).
                             #
                             if orca.locusOfFocus and \
@@ -182,7 +182,7 @@ class Script(default.Script):
                     self.setupLabels[label] = True
 
     def handleSetupAssistantPanel(self, panel):
-        """Find all the labels in this Setup Assistant panel and see if 
+        """Find all the labels in this Setup Assistant panel and see if
         we want to speak them.
 
         Arguments:
@@ -240,10 +240,30 @@ class Script(default.Script):
 
         return hrs + ' ' + mins + ' ' + suffix
 
+    def textLines(self):
+        """This an iterator that produces elements of the form:
+        [SayAllContext, acss], where SayAllContext has the text to be
+        spoken and acss is an ACSS instance for speaking the text.  We
+        do this because of the way Evolution lays out its messages:
+        each paragraph tends to be in its own panel, each of which is
+        in a higher level panel.  So, we just traverse through the
+        children.
+        """
+        panel = orca.locusOfFocus.parent
+        htmlPanel = orca.locusOfFocus.parent.parent
+        startIndex = panel.index
+        for i in range(startIndex, htmlPanel.childCount):
+            accPanel = htmlPanel.accessible.getChildAtIndex(i)
+            panel = atspi.Accessible.makeAccessible(accPanel)
+            accTextObj = panel.accessible.getChildAtIndex(0)
+            textObj = atspi.Accessible.makeAccessible(accTextObj)
+            for [context, acss] in util.textLines(textObj):
+                yield [context, acss]
+
     def sayAll(self, inputEvent):
         """Speak all the text associated with the text object that has
            focus. We have to define our own method here because Evolution
-           does now implement the FLOWS_TO relationship and all the text
+           does not implement the FLOWS_TO relationship and all the text
            are in an HTML panel which contains multiple panels, each
            containing a single text object.
 
@@ -253,22 +273,10 @@ class Script(default.Script):
 
         debug.println(self.debugLevel, "evolution.sayAll.")
         if orca.locusOfFocus and orca.locusOfFocus.text:
-
-            # Get the HTML panel containing all the other panels (each
-            # of which contains a text object). Starting at the current
-            # one, get a handle to each text object in turn, and speak it.
-            #
-            panel = orca.locusOfFocus.parent
-            htmlPanel = orca.locusOfFocus.parent.parent
-            startIndex = panel.index
-            for i in range(startIndex, htmlPanel.childCount):
-                accPanel = htmlPanel.accessible.getChildAtIndex(i)
-                panel = atspi.Accessible.makeAccessible(accPanel)
-                accTextObj = panel.accessible.getChildAtIndex(0)
-                textObj = atspi.Accessible.makeAccessible(accTextObj)
-
-                speech.sayAll(util.textLines(textObj),
-                              self.__sayAllProgressCallback)
+            #for [context, acss] in self.textLines():
+            #    print context.utterance
+            speech.sayAll(self.textLines(),
+                          self.__sayAllProgressCallback)
         else:
             default.Script.sayAll(self, inputEvent)
 
@@ -885,7 +893,7 @@ class Script(default.Script):
         # "Evolution Setup Assistant", then empty out the two dictionaries
         # containing which setup assistant panels and labels we've already
         # seen.
- 
+
         obj = event.source.parent
         while obj and obj.role != rolenames.ROLE_APPLICATION:
             if obj.role == rolenames.ROLE_FRAME and \
@@ -909,7 +917,7 @@ class Script(default.Script):
 
     def onStateChanged(self, event):
         """Called whenever an object's state changes.  We are only
-        interested in "object:state-changed:showing" events for any 
+        interested in "object:state-changed:showing" events for any
         object in the Setup Assistant.
 
         Arguments:
@@ -938,7 +946,7 @@ class Script(default.Script):
                         self.speakSetupAssistantLabel(event.source)
                         break
 
-                    # If the event is for a panel and we haven't already 
+                    # If the event is for a panel and we haven't already
                     # seen this panel, then handle it.
                     #
                     elif event.source.role == rolenames.ROLE_PANEL and \

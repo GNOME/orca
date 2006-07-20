@@ -1,3 +1,11 @@
+2006-07-20  Willie Walker <william.walker@sun.com>
+
+	* src/orca/scripts/Evolution.py: fix bug 348131 - make SayAll
+	perform properly in Evolution.  The main fix is to call
+	speech.sayAll once with a custom textLines context generator that
+	wraps util.textLines rather than calling it repeatedly with the
+	util.textLines generator.
+	
 2006-07-19  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
