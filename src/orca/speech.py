@@ -75,8 +75,13 @@ def init():
     #
     moduleName = settings.speechServerFactory
 
-    debug.println(debug.LEVEL_CONFIGURATION,
-                  "Using speech server factory: %s" % moduleName)
+    if moduleName:
+        debug.println(debug.LEVEL_CONFIGURATION,
+                      "Using speech server factory: %s" % moduleName)
+    else:
+        debug.println(debug.LEVEL_CONFIGURATION,
+                      "Speech not available.")
+        return
 
     factory = None
     try:

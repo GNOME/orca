@@ -127,6 +127,8 @@ class orcaSetupGUI(GladeWrapper):
             debug.println(debug.LEVEL_SEVERE, _("Speech not available."))
             debug.printStack(debug.LEVEL_FINEST)
             self.prefsDict["enableSpeech"] = False
+            self.factory = None
+            self.server = None
             return
         elif len(self.workingFactories) > 1:
             i = 1
