@@ -1,5 +1,10 @@
 2006-07-21  Rich Burridge <rich.burridge@sun.com>
 
+        * bugs/bugs.html:
+          Added an entry for Evolution bug #347964:
+          "[a11y] When deleting messages in Evolution, Orca initially speaks
+          the wrong tree item".
+
         * src/orca/gaim.py:
           Applied a suggestion from Will (thanks). In the onTextInserted()
           routine, look to see if the text field is editable or not, and only
