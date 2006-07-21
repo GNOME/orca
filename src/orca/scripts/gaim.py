@@ -273,7 +273,9 @@ class Script(default.Script):
         # util.printAncestry(event.source)
 
         chatRoomName = self.getChatRoomName(event.source)
-        if chatRoomName:
+        editable = event.source.state.count(atspi.Accessibility.STATE_EDITABLE)
+
+        if chatRoomName and not editable:
             allTextFields = util.findByRole(event.source.app, 
                                             rolenames.ROLE_TEXT)
 

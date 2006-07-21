@@ -1,3 +1,12 @@
+2006-07-21  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/gaim.py:
+          Applied a suggestion from Will (thanks). In the onTextInserted()
+          routine, look to see if the text field is editable or not, and only
+          do the chat room message check if the text field is not editable.
+          This is a performance improvement as it will no longer do bogus
+          chat room checking as the user is typing in text.
+
 2006-07-21  Willie Walker <william.walker@sun.com>
 
 	* src/orca/util.py: fix LABELED_BY/LABELLED_BY typo.  :-(
