@@ -1,6 +1,9 @@
 2006-07-21  Willie Walker <william.walker@sun.com>
 
 	* src/orca/util.py: fix LABELED_BY/LABELLED_BY typo.  :-(
+
+	* src/orca/speechgenerator.py: make sure _getSpeechForObjectRole 
+	returns a list even if the role of an object is unknown.
 	
 2006-07-20  Oana Serb <os@baum.ro>
 
