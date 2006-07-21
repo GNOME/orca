@@ -132,11 +132,12 @@ def getDisplayedLabel(object):
                 if relation.getRelationType() \
                     == atspi.Accessibility.RELATION_LABEL_FOR:
 
-                    # If potentialLabel is labeling labeledObject, we check
-                    # to see if the labeledObject has the LABELED_BY relation.
-                    # If the labeledObject doensn't have a LABELED_BY relation,
-                    # then the potentialLabel is likely not to be picked up
-                    # via other means, so we use this as a label for the
+                    # If potentialLabel is labeling labeledObject, we
+                    # check to see if the labeledObject has the
+                    # LABELLED_BY relation.  If the labeledObject
+                    # doensn't have a LABELLED_BY relation, then the
+                    # potentialLabel is likely not to be picked up via
+                    # other means, so we use this as a label for the
                     # FILLER or PANEL.
                     #
                     useLabel = False
@@ -147,7 +148,7 @@ def getDisplayedLabel(object):
                             useLabel = True
                             for rel in labeledObject.relations:
                                 if rel.getRelationType() \
-                                   == atspi.Accessibility.RELATION_LABELED_BY:
+                                   == atspi.Accessibility.RELATION_LABELLED_BY:
                                     useLabel = False
                                     break
                         break
