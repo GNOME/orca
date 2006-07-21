@@ -7,6 +7,11 @@
           This is a performance improvement as it will no longer do bogus
           chat room checking as the user is typing in text.
 
+        * src/orca/default.py:
+          Backed out the fix to bug #341371 in onSelectionChanged(). It
+          has side-effects on other things. Reopened bug #341371 and bug
+          #347691.
+
 2006-07-21  Willie Walker <william.walker@sun.com>
 
 	* src/orca/util.py: fix LABELED_BY/LABELLED_BY typo.  :-(
