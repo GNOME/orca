@@ -71,12 +71,12 @@ def getDisplayedLabel(object):
     Returns the string of the object labelling this object, or None
     if there is nothing of interest here.
     """
-    label = None
-    relations = object.relations
 
     # For some reason, some objects are labelled by the same thing
     # more than once.  Go figure, but we need to check for this.
     #
+    label = None
+    relations = object.relations
     allTargets = []
 
     for relation in relations:
@@ -101,26 +101,59 @@ def getDisplayedLabel(object):
     # labeled groupings of objects.  The grouping is done via a FILLER
     # with two children - one child is the overall label, and the
     # other is the container for the grouped objects.  When we detect
-    # this, we add the label to the overall context.]]]
+    # this, we add the label to the overall context.
     #
-    if (not label) and (object.role == rolenames.ROLE_FILLER) \
+    # We are also looking for PANELs with two children, because we
+    # discovered similer cases for PANELS in java applications.  The
+    # java application that includes this behavior is FileChooserDemo.
+    # Choose Show FileChooser button, a new dialog appears. In this
+    # dialog, the issue presented is for "Files of Type" combo
+    # box. Moving to this combo, Orca speaks only the selected item
+    # from combo, "Files of Type" label is not spoken.]]]
+    #
+    if (not label) \
+        and ((object.role == rolenames.ROLE_FILLER) \
+             or (object.role == rolenames.ROLE_PANEL)) \
         and (object.childCount == 2):
-        child1 = object.child (0)
-        child2 = object.child (1)
-        if child1 and child2 and child1.role == rolenames.ROLE_LABEL:
+
+        potentialLabel = object.child(0)
+        labeledObject = object.child(1)
+
+        if potentialLabel and labeledObject \
+            and (potentialLabel.role == rolenames.ROLE_LABEL):
+
             # If the label is labeling something, we will ignore it
             # because we're likely to pick it up via some other means.
             # An example here is the "Shade transparent or image background:"
             # label in gnome-terminal's "Effects" customization tab.
             #
             useLabel = True
-            for relation in child1.relations:
+            for relation in potentialLabel.relations:
                 if relation.getRelationType() \
-                   == atspi.Accessibility.RELATION_LABEL_FOR:
+                    == atspi.Accessibility.RELATION_LABEL_FOR:
+
+                    # If potentialLabel is labeling labeledObject, we check
+                    # to see if the labeledObject has the LABELED_BY relation.
+                    # If the labeledObject doensn't have a LABELED_BY relation,
+                    # then the potentialLabel is likely not to be picked up
+                    # via other means, so we use this as a label for the
+                    # FILLER or PANEL.
+                    #
                     useLabel = False
+                    for i in range(0, relation.getNTargets()):
+                        target = atspi.Accessible.makeAccessible(
+                            relation.getTarget(i))
+                        if target == labeledObject:
+                            useLabel = True
+                            for rel in labeledObject.relations:
+                                if rel.getRelationType() \
+                                   == atspi.Accessibility.RELATION_LABELED_BY:
+                                    useLabel = False
+                                    break
+                        break
                     break
             if useLabel:
-                label = child1.name
+                label = potentialLabel.name
 
     return label
 

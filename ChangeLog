@@ -1,3 +1,10 @@
+2006-07-20  Oana Serb <os@baum.ro>
+
+	* src/orca/util.py: More handling of situations where the
+	the label for a FILLER or PANEL is done by placing an
+	unbound label as the first child of the FILLER/PANEL and
+	the content of the FILLER/PANEL is the second child.
+	
 2006-07-20  Willie Walker <william.walker@sun.com>
 
 	* src/orca/scripts/Evolution.py: fix bug 348131 - make SayAll
