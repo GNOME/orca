@@ -18,6 +18,8 @@
 
 	* src/orca/speechgenerator.py: make sure _getSpeechForObjectRole 
 	returns a list even if the role of an object is unknown.
+
+	* bugs/bugs.html: reconcile with latest releases of external projects.
 	
 2006-07-20  Oana Serb <os@baum.ro>
 
