@@ -1,3 +1,10 @@
+2006-07-21  Willie Walker <william.walker@sun.com>
+
+        * src/orca/gaim.py: I think we finally skinned this cat.  The
+	problem seems to be that the chat area would not send events
+	to us unless we tickled it by examining the hierarchy.  So,
+	we tickle away, but try to be efficient about it as well.
+	
 2006-07-21  Rich Burridge <rich.burridge@sun.com>
 
         * bugs/bugs.html:

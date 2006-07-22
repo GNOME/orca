@@ -22,7 +22,7 @@ monitor both the IM input and IM output text areas at the same time.
 
 The following script specific key sequences are supported:
 
-  Insert-h      -  Toggle whether we prefix chat room messages with 
+  Insert-h      -  Toggle whether we prefix chat room messages with
                    the name of the chat room.
   Insert-[1-9]  -  Speak and braille a previous chat room message.
 """
@@ -98,7 +98,7 @@ class Script(default.Script):
 
     def __init__(self, app):
         """Creates a new script for the given application.
-        
+
         Arguments:
         - app: the application to create a script for.
         """
@@ -111,8 +111,8 @@ class Script(default.Script):
         #
         self.prefixChatMessage = False
 
-        # Create two cyclic lists; one that will contain the previous 
-        # chat room messages and the other that will contain the names 
+        # Create two cyclic lists; one that will contain the previous
+        # chat room messages and the other that will contain the names
         # of the associated chat rooms.
         #
         self.MESSAGE_LIST_LENGTH = 9
@@ -125,6 +125,12 @@ class Script(default.Script):
             self.previousMessages.append("")
         for i in range(0, self.previousChatRoomNames.maxsize()):
             self.previousChatRoomNames.append("")
+
+        # Keep track of the various text areas for chatting.
+        # The key is the tab and the value is the text area where
+        # the chat occurs.
+        #
+        self.chatAreas = {}
 
         default.Script.__init__(self, app)
 
@@ -148,7 +154,7 @@ class Script(default.Script):
 
     def getKeyBindings(self):
         """Defines the key bindings for this script. Setup the default
-        key bindings, then add one in for toggling whether we prefix 
+        key bindings, then add one in for toggling whether we prefix
         chat room messages with the name of the chat room.
 
         Returns an instance of keybindings.KeyBindings.
@@ -176,7 +182,7 @@ class Script(default.Script):
         return keyBindings
 
     def togglePrefix(self, inputEvent):
-        """ Toggle whether we prefix chat room messages with the name of 
+        """ Toggle whether we prefix chat room messages with the name of
         the chat room.
 
         Arguments:
@@ -215,8 +221,8 @@ class Script(default.Script):
             speech.speak(text)
 
     def readPreviousMessage(self, inputEvent):
-        """ Speak/braille a previous chat room message. Upto nine previous
-        messages are kept.
+        """ Speak/braille a previous chat room message. Up to nine
+        previous messages are kept.
 
         Arguments:
         - inputEvent: if not None, the input event that caused this action.
@@ -235,15 +241,14 @@ class Script(default.Script):
 
         self.utterMessage(chatRoomName, message)
 
-    def getChatRoomName(self, obj):
+    def getChatRoomTab(self, obj):
         """Walk up the hierarchy until we've found the page tab for this
-        chat room, and return the label of that object.
+        chat room, and return that object.
 
         Arguments:
         - obj: the accessible component to start from.
 
-        Returns the label of the page tab component (the name of the 
-        chat room).
+        Returns the page tab component for the chat room.
         """
 
         if obj:
@@ -252,7 +257,7 @@ class Script(default.Script):
                     if obj.role == rolenames.ROLE_APPLICATION:
                         break
                     elif obj.role == rolenames.ROLE_PAGE_TAB:
-                        return obj.name
+                        return obj
                     else:
                         obj = obj.parent
                 else:
@@ -270,65 +275,65 @@ class Script(default.Script):
         - event: the text inserted Event
         """
 
-        # util.printAncestry(event.source)
+        chatRoomTab = self.getChatRoomTab(event.source)
+        if not chatRoomTab:
+            default.Script.onTextInserted(self, event)
+            return
 
-        chatRoomName = self.getChatRoomName(event.source)
-        editable = event.source.state.count(atspi.Accessibility.STATE_EDITABLE)
-
-        if chatRoomName and not editable:
-            allTextFields = util.findByRole(event.source.app, 
-                                            rolenames.ROLE_TEXT)
-
+        # [[[TODO: HACK - it looks as though the GAIM chat area may
+        # not start emitting text inserted events until we tickle it
+        # by looking at it in the hierarchy.  The simple workaround of
+        # entering flat review and exiting does this.  So, we tickle
+        # the hierarchy here.  We probably should be trying somewhere
+        # else since we may miss the first message in a chat area.  In
+        # addition, this is a source of a very small memory leak since
+        # we do not free up the entries when the tab goes away.  One
+        # would have to engage in hundreds of chats with hundreds of
+        # different people from the same instance of gaim for that
+        # memory leak to have an issue here.  One thing we could do if
+        # that is deemed a severe enough problem is to check for
+        # children-changed events and clean up in that.]]]
+        #
+        chatArea = None
+        if not self.chatAreas.has_key(chatRoomTab):
             # Different message types (AIM, IRC ...) have a different
             # component hierarchy for their chat rooms. By testing
             # with AIM and IRC, we've found that the messages area for
-            # those two type of chat, has an index that is the penultimate
-            # text field. Hopefully this is true for other types of chat 
+            # those two type of chats has an index that is the penultimate
+            # text field. Hopefully this is true for other types of chat
             # as well, but is currently untested.
             #
-            index = len(allTextFields)-2
+            allTextFields = util.findByRole(chatRoomTab,
+                                            rolenames.ROLE_TEXT)
+            index = len(allTextFields) - 2
+            if index >= 0:
+                self.chatAreas[chatRoomTab] = allTextFields[index]
+                chatArea = self.chatAreas[chatRoomTab]
+        else:
+            chatArea = self.chatAreas[chatRoomTab]
 
-            if index >= 0 and event.source == allTextFields[index]:
-                debug.println(self.debugLevel,
-                              "gaim.onTextInserted - chat room text.")
-
-                # We always automatically go back to focus tracking mode when
-                # someone sends us a message.
-                #
-                if self.flatReviewContext:
-                    self.toggleFlatReviewMode()
-
-                message = event.source.text.getText(event.detail1, 
-                                                event.detail1 + event.detail2)
-                if message[0] == "\n":
-                    message = message[1:]
-
-                self.utterMessage(chatRoomName, message)
-
-                # Add the latest message to the list of saved ones. For each
-                # one added, the oldest one automatically gets dropped off.
-                #
-                self.previousMessages.append(message)
-                self.previousChatRoomNames.append(chatRoomName)
-
-                return
-
-        if not event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
-            # [[[TODO: WDW - HACK to handle the case where the
-            # area where the user types loses focus and never
-            # regains it with respect to the AT-SPI regardless if
-            # it really gets it with respect to the toolkit.  The
-            # way we are guessing we are really in the area where
-            # you type is because the text does not end in a
-            # "\n".  This is related to bug
-            # http://bugzilla.gnome.org/show_bug.cgi?id=325917]]]
+        if event.source and (event.source == chatArea):
+            # We always automatically go back to focus tracking mode when
+            # someone sends us a message.
             #
-            debug.println(debug.LEVEL_WARNING,
-                          "WARNING in gaim.py: "
-                          + "the text area has not regained focus")
-            orca.setLocusOfFocus(event, event.source, False)
+            if self.flatReviewContext:
+                self.toggleFlatReviewMode()
 
-        # Pass the event onto the parent class to be handled in the 
-        # default way.
-        #
-        default.Script.onTextInserted(self, event)
+            message = event.source.text.getText(event.detail1,
+                                                event.detail1 + event.detail2)
+            if message[0] == "\n":
+                message = message[1:]
+
+            chatRoomName = util.getDisplayedText(chatRoomTab)
+            self.utterMessage(chatRoomName, message)
+
+            # Add the latest message to the list of saved ones. For each
+            # one added, the oldest one automatically gets dropped off.
+            #
+            self.previousMessages.append(message)
+            self.previousChatRoomNames.append(chatRoomName)
+        else:
+            # Pass the event onto the parent class to be handled in the
+            # default way.
+            #
+            default.Script.onTextInserted(self, event)
