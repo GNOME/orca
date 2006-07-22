@@ -1238,31 +1238,25 @@ class Script(script.Script):
                     newCol = table.getColumnAtIndex(newLocusOfFocus.index)
 
                     if newRow != oldRow:
-                        rowHeader = newParent.table.getRowHeader(newRow)
-                        accRowHeader = atspi.Accessible.makeAccessible(rowHeader)
-                        if accRowHeader:
-                            desc = util.getDisplayedText(accRowHeader)
-                            if desc and len(desc):
-                                text = desc
-                                if settings.speechVerbosityLevel \
-                                       == settings.VERBOSITY_LEVEL_VERBOSE:
-                                    text += " " \
-                                            + rolenames.rolenames[\
-                                            rolenames.ROLE_ROW_HEADER].speech
-                                utterances.append(text)
+                        desc = newParent.table.getRowDescription(newRow)
+                        if desc and len(desc):
+                            text = desc
+                            if settings.speechVerbosityLevel \
+                                   == settings.VERBOSITY_LEVEL_VERBOSE:
+                                text += " " \
+                                        + rolenames.rolenames[\
+                                        rolenames.ROLE_ROW_HEADER].speech
+                            utterances.append(text)
                     if newCol != oldCol:
-                        colHeader = newParent.table.getColumnHeader(newCol)
-                        accColHeader = atspi.Accessible.makeAccessible(colHeader)
-                        if accColHeader:
-                            desc = util.getDisplayedText(accColHeader)
-                            if desc and len(desc):
-                                text = desc
-                                if settings.speechVerbosityLevel \
-                                       == settings.VERBOSITY_LEVEL_VERBOSE:
-                                    text += " " \
-                                            + rolenames.rolenames[\
-                                            rolenames.ROLE_COLUMN_HEADER].speech
-                                utterances.append(text)
+                        desc = newParent.table.getColumnDescription(newCol)
+                        if desc and len(desc):
+                            text = desc
+                            if settings.speechVerbosityLevel \
+                                   == settings.VERBOSITY_LEVEL_VERBOSE:
+                                text += " " \
+                                        + rolenames.rolenames[\
+                                        rolenames.ROLE_COLUMN_HEADER].speech
+                            utterances.append(text)
 
                 oldNodeLevel = util.getNodeLevel(oldLocusOfFocus)
                 newNodeLevel = util.getNodeLevel(newLocusOfFocus)

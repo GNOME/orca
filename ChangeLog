@@ -17,6 +17,10 @@
           has side-effects on other things. Reopened bug #341371 and bug
           #347691.
 
+        * src/orca/default.py:
+          Per Wills request, backed out getRowHeader() and getColumnHeader()
+          changes in locusOfFocusChanged().
+
 2006-07-21  Willie Walker <william.walker@sun.com>
 
 	* src/orca/util.py: fix LABELED_BY/LABELLED_BY typo.  :-(
