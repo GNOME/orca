@@ -353,7 +353,18 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             return
 
         try:
+            # We don't want to touch a defunct object.  It's useless and it
+            # can cause hangs.
+            #
+            if event.source \
+               and event.source.state.count(atspi.Accessibility.STATE_DEFUNCT):
+                debug.println(debug.LEVEL_FINEST,
+                              "IGNORING DEFUNCT OBJECT")
+                atspi.Accessible.deleteAccessible(event.source)
+                return
+
             debug.printDetails(debug.LEVEL_FINEST, "    ", event.source)
+
         except CORBA.COMM_FAILURE:
             debug.printException(debug.LEVEL_WARNING)
             debug.println(debug.LEVEL_FINEST,
@@ -535,6 +546,17 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                               "           ...released")
         if settings.debugEventQueue:
             self._enqueueEventCount -= 1
+
+        # [[[TODO: HACK - on some hangs, we see the event queue growing,
+        # but the thread to take the events off is hung.  We might be
+        # able to 'recover' by quitting when we see this happen.]]]
+        #
+        #if self._eventQueue.qsize() > 500:
+        #    print "Looks like something has hung.  Here's the threads:"
+        #    for someThread in threading.enumerate():
+        #        print someThread.getName(), someThread.isAlive()
+        #    print "Quitting Orca."
+        #    orca.shutdown()
 
     def _timeout(self):
         """Timer that will be called if we time out while trying to perform

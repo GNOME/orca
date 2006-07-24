@@ -1,3 +1,22 @@
+2006-07-23  Willie Walker <william.walker@sun.com>
+
+	* src/orca/focus_tracking_presenter.py: ignore defunct objects
+	when processing object events.  They seem to be a source of 
+	hangs.  Many thanks to Joanmarie Diggs for coming up with a 
+	test case to help find this.  The test case is to repeatedly
+	show/hide a message in Evolution using Enter in the message
+	list to show it and Escape on the message window to hide it.
+
+	NOTE: I'm still not confident that this is the final fix.  The
+	problem is that an object can go defunct at any time, including
+	the entire time we are processing an object event.  So...we might
+	try doing some magic in atspi.py to check for the defunct state
+	each time any field of an accessible is referenced and throw an
+	exception if we see a COMM_FAILURE or a defunct state.  The rest
+	of our code should handle the exception.  If this seems like the
+	right thing to do, we can brush up on our Python chops and figure
+	out how to do it.
+	
 2006-07-21  Willie Walker <william.walker@sun.com>
 
         * src/orca/gaim.py: I think we finally skinned this cat.  The
