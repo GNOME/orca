@@ -1,3 +1,40 @@
+0.2.7 
+* Much work on hangs.  It's better, but we still have work to do.
+* Vastly improved work with GAIM.  Also added Insert+{1,2,3,...} to
+  allow you to read the last n messages.
+* Fix bug 348084 - fail gracefully if speech is not available.
+* Handle situations where the label the label for a FILLER or PANEL is
+  done by placing an unbound label as the first child of the
+  FILLER/PANEL and the content of the FILLER/PANEL is the second
+  child.
+* Fix bug 348131 - make SayAll perform properly in Evolution.
+* Moved the Orca specific keybindings out of the init() routine in
+  orca.py over to the setupInputEventHandlers and getKeyBindings()
+  routines in default.py. 
+* Reworked how Orca handles "no focus."  It is much better now.
+* Added new keynames for various keys.
+* Fixed bug #347228 - correctly identify state of top level item in
+  some tree tables.
+* Improved access to Evolution and StarOffice set up wizards.
+* Additional work on access to the Java platform.
+* Added in support for numeric keypad 8 double-clicking, which spells
+  the current line, and numeric keypad 5 double clicking, which spells
+  the current word.
+* Translations: 
+    Latvian:     Raivis Dejus
+    Spanish:     Francisco Javier F. Serrador
+    Gujarati:    Ankit Patel
+    Norwegian:   Kjartan Maraas
+    Dzongkha:    Guntupalli Karunakar
+    Finnish:     Ilkka Tuohela
+    Bulgarian:   Alexander Shopov
+    Bengali:     Runa Bhattacharjee
+    Macedonian:  Jovan Naumovski
+    Hindi:       Rajesh Ranjan
+    Tino Meinen: Vincent van Adrighem
+    Welsh:	 Rhys Jone
+    Tamil:
+
 0.2.6
 * Addition of verbalized punctuation settings.
 * Addition of spoken indentation information for lines.
