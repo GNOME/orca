@@ -97,6 +97,11 @@ _zoomer = None
 #
 _lastMouseEventTime = time.time()
 
+# If True, we're using gnome-mag >= 0.13.1 that allows us to control
+# where to draw the cursor and crosswires.
+#
+_pollMouseDisabled = False
+
 def __setROI(rect):
     """Sets the region of interest.
 
@@ -210,6 +215,12 @@ def __onMouseEvent(e):
 
     [x, y] = [e.detail1, e.detail2]
 
+    # If True, we're using gnome-mag >= 0.13.1 that allows us to
+    # control where to draw the cursor and crosswires.
+    #
+    if _pollMouseDisabled:
+        _zoomer.setPointerPos(x, y)
+
     if settings.magMouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_PUSH:
         __setROIPush(x, y)
     elif settings.magMouseTrackingMode == settings.MAG_MOUSE_TRACKING_MODE_PROPORTIONAL:
@@ -258,6 +269,7 @@ def applySettings():
     global _minROIY
     global _maxROIX
     global _maxROIY
+    global _pollMouseDisabled
 
     ########################################################################
     #                                                                      #
@@ -365,6 +377,15 @@ def applySettings():
     zoomerPBag = _zoomer.getProperties()
     bonobo.pbclient_set_boolean(zoomerPBag, "is-managed", True)
 
+    # Try to use gnome-mag >= 0.13.1 to allow us to control where to
+    # draw the cursor and crosswires.
+    #
+    try:
+        bonobo.pbclient_set_boolean(zoomerPBag, "poll-mouse", False)
+        _pollMouseDisabled = True
+    except:
+        _pollMouseDisabled = False
+        
     _zoomer.setMagFactor(settings.magZoomFactor, settings.magZoomFactor)
 
     bonobo.pbclient_set_boolean(
@@ -444,7 +465,6 @@ def magnifyAccessible(event, obj):
 
     if visibleX and visibleY:
         _zoomer.markDirty(_roi)
-        return
 
     # The algorithm is devised to move the ROI as little as possible, yet
     # favor the top left side of the object [[[TODO: WDW - the left/right
