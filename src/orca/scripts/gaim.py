@@ -321,7 +321,7 @@ class Script(default.Script):
 
             message = event.source.text.getText(event.detail1,
                                                 event.detail1 + event.detail2)
-            if message[0] == "\n":
+            if message and message[0] == "\n":
                 message = message[1:]
 
             chatRoomName = util.getDisplayedText(chatRoomTab)

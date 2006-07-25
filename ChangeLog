@@ -5,6 +5,13 @@
           [a11y] When in the 'subject' and 'to' lines of evolution, 
           backspaced characters are not announced.
 
+        * src/orca/scripts/gaim.py:
+          After doing a Conversation->Clear Scrollback in a chat room, 
+          it was possible that we would receive a zero length message. 
+          Added some bullet-proofing to prevent a tracback when looking 
+          for a newline in the first character position of the 
+          onTextInserted() message.
+
 2006-07-25  Willie Walker <william.walker@sun.com>
 
 	* src/orca/focus_tracking_presenter.py: remove ominmous looking
