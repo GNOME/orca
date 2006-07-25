@@ -1,5 +1,16 @@
 2006-07-25  Willie Walker <william.walker@sun.com>
 
+	* src/orca/focus_tracking_presenter.py: remove ominmous looking
+	Traceback on ImportError for a script.  The specs at
+	http://pydoc.org/2.4.1/exceptions.html#ImportError say it is
+	issued when a module cannot be found. We don't consider this an
+	error since we fallback to default.  In addition, we have an
+	additional except clause to catch other errors
+	(e.g., syntax and such) on import, and that clause will output a
+	stack trace.  The net effect of this is that it makes debug logs
+	easier to search for Tracebacks that are "real" issues we care
+	about.
+	
 	* src/orca/mag.py: provide better handling of the crosswires 
 	and cursor in the magnifier when tracking the mouse.
 	
