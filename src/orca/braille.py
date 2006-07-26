@@ -31,6 +31,8 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import threading
+
 import atspi
 import brl
 try:
@@ -790,14 +792,27 @@ def _processBrailleEvent(command):
         return True
 
     if _callback:
+        if settings.timeoutCallback and (settings.timeoutTime > 0):
+            timer = threading.Timer(settings.timeoutTime,
+                                    settings.timeoutCallback)
+            timer.start()
+        else:
+            timer = None
+
         try:
             # Like key event handlers, a return value of True means
             # the command was consumed.
             #
-            if _callback(command):
-                return True
+            consumed = _callback(command)
         except:
-            debug.printException(debug.LEVEL_SEVERE)
+            debug.printException(debug.LEVEL_WARNING)
+            consumed = False
+
+        if timer:
+            timer.cancel()
+            del timer
+
+        return consumed
 
     if (command >= 0x100) and (command < (0x100 + _displaySize[0])):
         if len(_lines) > 0:

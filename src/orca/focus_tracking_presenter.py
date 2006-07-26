@@ -556,13 +556,6 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         #    print "Quitting Orca."
         #    orca.shutdown()
 
-    def _timeout(self):
-        """Timer that will be called if we time out while trying to perform
-        an operation."""
-        debug.println(debug.LEVEL_SEVERE,
-                      "TIMEOUT: Looks like something has hung. Quitting Orca.")
-        orca.shutdown()
-
     def _dequeueEvent(self):
         """Handles all events destined for scripts.  Called by the GTK
         idle thread.
@@ -612,13 +605,6 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                 debug.println(debug.LEVEL_FINEST, "DEQUEUED EVENT %s <----------" \
                               % event.type)
 
-                # [[[TODO: WDW - the timer stuff is an experiment to see if
-                # we can recover from hangs.  It's only experimental, so it's
-                # commented out for now.]]]
-                #
-                #timer = threading.Timer(5.0, self._timeout)
-                #timer.start()
-
                 if (not debug.eventDebugFilter) \
                     or (debug.eventDebugFilter \
                         and debug.eventDebugFilter.match(event.type)):
@@ -632,9 +618,6 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                     debug.println(debug.eventDebugLevel,
                                   "^^^^^ PROCESS OBJECT EVENT %s ^^^^^\n" \
                                   % event.type)
-
-                #timer.cancel()
-                #del timer
 
             # [[[TODO: HACK - it would seem logical to only do this if we
             # discover the queue is empty, but this inroduces a hang for

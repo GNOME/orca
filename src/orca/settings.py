@@ -330,6 +330,15 @@ useBonoboMain           = True
 #
 debugEventQueue         = False
 
+# The timeout value (in seconds) and callback used to determine if
+# Orca has hung or not.  The only setting one should muck with here is
+# the timeoutTime unless you want to create a custom callback handler
+# for the timeout.  See braille.py, atspi.py, and orca.py:init for how
+# these are used.
+#
+timeoutTime             = 10.0 # a value of 0 means don't do hang checking
+timeoutCallback         = None # Set by orca.py:init to orca.timeout
+
 # Assists with dealing with CORBA COMM_FAILURES.  A failure doesn't
 # always mean an object disappeared - there just might be a network
 # glitch.  So, on COMM_FAILURES, we might retry a few times before

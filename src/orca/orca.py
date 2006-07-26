@@ -970,6 +970,15 @@ def init(registry):
     if _initialized:
         return False
 
+    # Do not hang on initialization if we can help it.
+    #
+    if settings.timeoutCallback and (settings.timeoutTime > 0):
+        timer = threading.Timer(settings.timeoutTime,
+                                settings.timeoutCallback)
+        timer.start()
+    else:
+        timer = None
+
     # Note that we have moved the Orca specific keybindings to the default
     # script, so _keyBindings is currently empty. The logic is retained
     # here, just in case we wish to reinstate them in the future.
@@ -990,6 +999,10 @@ def init(registry):
 
     registry.registerKeystrokeListeners(_processKeyboardEvent)
 
+    if timer:
+        timer.cancel()
+        del timer
+
     _initialized = True
     return True
 
@@ -1001,6 +1014,15 @@ def start(registry):
 
     if not _initialized:
         init(registry)
+
+    # Do not hang on startup if we can help it.
+    #
+    if settings.timeoutCallback and (settings.timeoutTime > 0):
+        timer = threading.Timer(settings.timeoutTime,
+                                settings.timeoutCallback)
+        timer.start()
+    else:
+        timer = None
 
     try:
         speech.speak(_("Welcome to Orca."))
@@ -1027,13 +1049,18 @@ def start(registry):
 
     _switchToPresentationManager(0) # focus_tracking_presenter
 
+    if timer:
+        timer.cancel()
+        del timer
+
     registry.start()
 
 def abort():
     os._exit(1)
 
 def timeout():
-    print "TIMEOUT: Hung while trying to shutdown.  Aborting."
+    debug.println(debug.LEVEL_SEVERE,
+                  "TIMEOUT: something has hung.  Aborting.")
     abort()
 
 def shutdown(script=None, inputEvent=None):
@@ -1049,12 +1076,14 @@ def shutdown(script=None, inputEvent=None):
     if not _initialized:
         return False
 
-    # [[[TODO: WDW - the timer stuff is an experiment to see if
-    # we can recover from hangs.  It's only experimental, so it's
-    # commented out for now.]]]
+    # Try to say goodbye, but be defensive if something has hung.
     #
-    #timer = threading.Timer(5.0, timeout)
-    #timer.start()
+    if settings.timeoutCallback and (settings.timeoutTime > 0):
+        timer = threading.Timer(settings.timeoutTime,
+                                settings.timeoutCallback)
+        timer.start()
+    else:
+        timer = None
 
     speech.speak(_("goodbye."))
     braille.displayMessage(_("Goodbye."))
@@ -1081,8 +1110,9 @@ def shutdown(script=None, inputEvent=None):
 
     registry.stop()
 
-    #timer.cancel()
-    #del timer
+    if timer:
+        timer.cancel()
+        del timer
 
     _initialized = False
     return True
@@ -1097,7 +1127,7 @@ def shutdownOnSignal(signum, frame):
 
     debug.println(debug.LEVEL_ALL, "Current stack is:")
     debug.printStack(debug.LEVEL_ALL)
-    
+
     # Well...we'll try to exit nicely, but if we keep getting called,
     # something bad is happening, so just quit.
     #
@@ -1126,10 +1156,6 @@ def abortOnSignal(signum, frame):
     debug.println(debug.LEVEL_ALL,
                   "Aborting due to signal = %d" \
                   % signum)
-
-    debug.println(debug.LEVEL_ALL, "Current stack is:")
-    debug.printStack(debug.LEVEL_ALL)
-    
     abort()
 
 def usage():
@@ -1148,6 +1174,12 @@ def usage():
     pass
 
 def main():
+    # Method to call when we think something might be hung.
+    #
+    settings.timeoutCallback = timeout
+
+    # Various signal handlers we want to listen for.
+    #
     signal.signal(signal.SIGHUP, shutdownOnSignal)
     signal.signal(signal.SIGINT, shutdownOnSignal)
     signal.signal(signal.SIGTERM, shutdownOnSignal)

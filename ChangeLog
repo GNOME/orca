@@ -1,5 +1,17 @@
 2006-07-25  Willie Walker <william.walker@sun.com>
 
+	* src/orca/settings.py, src/orca/focus_tracking_presenter.py,
+	src/orca/braille.py, src/orca/atspi.py, src/orca/orca.py: add hang
+	detection handlers.  These are managed via the
+	settings.timeoutTime and settings.timeoutCallback properties.
+	Before doing an operation that might hang, Orca will put a timer
+	in place.  This timer will call settings.timeoutCallback if the
+	timer expires after settings.timeoutTime seconds.  The current
+	timeout callback merely aborts Orca, and the timeout is currently
+	set to a pretty long time period (10 seconds).  The next step here
+	is to create a script that will detect these aborts and restart
+	Orca if appropriate.
+	
         * src/orca/orca.py: add a debug.LEVEL_ALL stack dump on the
 	signal handling routines to help us better understand where
 	Orca is when we send it signals.

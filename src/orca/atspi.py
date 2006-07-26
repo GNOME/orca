@@ -25,6 +25,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import threading
 import time
 
 import gobject
@@ -277,10 +278,21 @@ class EventListener(Accessibility__POA.EventListener):
         self.__registered = False
 
     def notifyEvent(self, event):
+        if settings.timeoutCallback and (settings.timeoutTime > 0):
+            timer = threading.Timer(settings.timeoutTime,
+                                    settings.timeoutCallback)
+            timer.start()
+        else:
+            timer = None
+
         try:
             self.callback(event)
         except:
             debug.printException(debug.LEVEL_WARNING)
+
+        if timer:
+            timer.cancel()
+            del timer
 
     def __del__(self):
         self.deregister()
@@ -356,11 +368,24 @@ class KeystrokeListener(Accessibility__POA.DeviceEventListener):
 
         Returns True if the event has been consumed.
         """
+        if settings.timeoutCallback and (settings.timeoutTime > 0):
+            timer = threading.Timer(settings.timeoutTime,
+                                    settings.timeoutCallback)
+            timer.start()
+        else:
+            timer = None
+
         try:
-            return self.callback(event)
+            consumed = self.callback(event)
         except:
             debug.printException(debug.LEVEL_WARNING)
-            return False
+            consumed = False
+
+        if timer:
+            timer.cancel()
+            del timer
+
+        return consumed
 
     def __del__(self):
         self.deregister()
