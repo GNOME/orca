@@ -16,6 +16,9 @@
           "[a11y]: Rename file in nautilus not spoken properly by 
            screen reader."
 
+          Added an entry for gconf-editor bug #342420
+          "[a11y]: Orca not correctly reporting key values in gconf-editor."
+
 2006-07-25  Willie Walker <william.walker@sun.com>
 
 	* src/orca/settings.py, src/orca/focus_tracking_presenter.py,
