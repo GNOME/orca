@@ -1,3 +1,8 @@
+2006-07-26  Rich Burridge <rich.burridge@sun.com>
+
+        * bugs/bugs.html:
+          Moved the entry for bug #348466 to gail (from Evolution).
+
 2006-07-25  Willie Walker <william.walker@sun.com>
 
 	* src/orca/settings.py, src/orca/focus_tracking_presenter.py,
