@@ -12,6 +12,10 @@
           "[a11y] Orca - In the "Add to Panel" window the items in 
            the table are not read."
 
+          Added an entry for Nautilus bug #338353 
+          "[a11y]: Rename file in nautilus not spoken properly by 
+           screen reader."
+
 2006-07-25  Willie Walker <william.walker@sun.com>
 
 	* src/orca/settings.py, src/orca/focus_tracking_presenter.py,
