@@ -1091,8 +1091,13 @@ exitCount = 0
 def shutdownOnSignal(signum, frame):
     global exitCount
 
-    #print "Shutting down and exiting due to signal =", signum
+    debug.println(debug.LEVEL_ALL,
+                  "Shutting down and exiting due to signal = %d" \
+                  % signum)
 
+    debug.println(debug.LEVEL_ALL, "Current stack is:")
+    debug.printStack(debug.LEVEL_ALL)
+    
     # Well...we'll try to exit nicely, but if we keep getting called,
     # something bad is happening, so just quit.
     #
@@ -1118,7 +1123,13 @@ def shutdownOnSignal(signum, frame):
         abort()
 
 def abortOnSignal(signum, frame):
-    #print "Aborting due to signal =", signum
+    debug.println(debug.LEVEL_ALL,
+                  "Aborting due to signal = %d" \
+                  % signum)
+
+    debug.println(debug.LEVEL_ALL, "Current stack is:")
+    debug.printStack(debug.LEVEL_ALL)
+    
     abort()
 
 def usage():

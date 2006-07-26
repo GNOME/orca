@@ -1,3 +1,9 @@
+2006-07-25  Willie Walker <william.walker@sun.com>
+
+        * src/orca/orca.py: add a debug.LEVEL_ALL stack dump on the
+	signal handling routines to help us better understand where
+	Orca is when we send it signals.
+	
 2006-07-25  Rich Burridge <rich.burridge@sun.com>
 
         * bugs/bugs.html:
