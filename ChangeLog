@@ -3,6 +3,10 @@
         * bugs/bugs.html:
           Moved the entry for bug #348466 to gail (from Evolution).
 
+          Added an entry for gnome-panel bug #341409:
+          "[a11y] Orca - In the "Add to Panel" window the items in 
+           the table are not read."
+
 2006-07-25  Willie Walker <william.walker@sun.com>
 
 	* src/orca/settings.py, src/orca/focus_tracking_presenter.py,
