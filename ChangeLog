@@ -1,5 +1,32 @@
 2006-07-27  Willie Walker <william.walker@sun.com>
 
+	* src/orca/orca.in: a new script for starting Orca.  This script
+	is still early in development and is currently configured to just
+	clean up stray processes and then run Orca once.  However, if you
+	comment out the line that sets RUNONCE (note that you need to
+	comment it out - setting the value to something else will not work),
+	the script will attempt to do this:
+
+	    1) Clean up stray processes before starting Orca
+
+	    2) Put a watchdog process in the background to monitor the 
+	       state of Orca.  The watchdog will cleanup stray processes 
+	       (including orca itself) if it detects something has gone
+	       awry.
+	
+	    3) Keep rerunning Orca on a non-zero exit status from Orca.
+
+	Regardless of the RUNONCE configuration, the script also sets/uses 
+	PYTHONPATH to tell python where to find the Orca modules.  This
+	is helpful for people who have installed Orca in a non-standard
+	location by running autogen/configure with a prefix other than
+	/usr.
+
+	I need help from people on this script.  For example, I cannot
+	figure out how to make the watchdog die when I Ctrl+C the script -
+	the watchdog seems to be running in nohup mode.  In addition, we
+	need to work more on the exit values from Orca.
+	
 	* src/orca/orca.py, src/orca/atspi.py, src/orca/braille.py,
 	src/orca/settings.py: use SIGALRM instead of timeouts - we get
 	better stack traces from signals.
