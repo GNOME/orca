@@ -193,10 +193,14 @@ class Script(default.Script):
         # get focus immediately after the menu gets focus.  So...we
         # compress the events.
         #
-        if (event.source.role == rolenames.ROLE_MENU) \
-           and event.source.parent \
-           and (event.source.parent.role == rolenames.ROLE_MENU_BAR):
-            return
+        # [[[WDW - commented this out on 27-Jul-2006 based upon feedback
+        # from Lynn Monsanto that it was getting in the way for Firefox
+        # and Yelp.]]]
+        #
+        #if (event.source.role == rolenames.ROLE_MENU) \
+        #   and event.source.parent \
+        #   and (event.source.parent.role == rolenames.ROLE_MENU_BAR):
+        #    return
         
         default.Script.onFocus(self, event)
 
