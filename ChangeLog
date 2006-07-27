@@ -1,3 +1,8 @@
+2006-07-27  Remus Draica <rd@baum.ro>
+
+	* src/orca/orca.py, src/orca/default.py: handle case where we can
+	get window activated/deactivated events out of order.
+	
 2006-07-27  Willie Walker <william.walker@sun.com>
 
 	* src/orca/atspi.py: defensive programming to verify we can actually

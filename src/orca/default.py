@@ -205,7 +205,7 @@ class Script(script.Script):
             _("Increases the speech pitch."))
 
         self.shutdownHandler = input_event.InputEventHandler(
-            orca.shutdown, 
+            orca.shutdown,
             _("Quits Orca"))
 
         self.keystrokeRecordingHandler = input_event.InputEventHandler(
@@ -739,9 +739,9 @@ class Script(script.Script):
         - event: the Event
         """
 
-        # If we receive a "window:deactivate" event for the object that 
-        # currently has focus, then stop the current speech output. 
-        # This is very useful for terminating long speech output from 
+        # If we receive a "window:deactivate" event for the object that
+        # currently has focus, then stop the current speech output.
+        # This is very useful for terminating long speech output from
         # commands running in gnome-terminal.
         #
         if event.type.find("window:deactivate") != -1:
@@ -880,7 +880,7 @@ class Script(script.Script):
         util.speakTextSelectionState(obj, startOffset, endOffset)
 
     def speakTextIndentation(self, obj, line):
-        """Speaks a summary of the number of spaces and/or tabs at the 
+        """Speaks a summary of the number of spaces and/or tabs at the
         beginning of the given line.
 
         Arguments:
@@ -888,7 +888,7 @@ class Script(script.Script):
         - line: the string to check for spaces and tabs.
         """
 
-        # For the purpose of speaking the text indentation, replace 
+        # For the purpose of speaking the text indentation, replace
         # occurances of '\302\240' (non breaking space) with spaces.
         #
         line = line.replace("\302\240",  " ")
@@ -1314,7 +1314,7 @@ class Script(script.Script):
             speech.speakUtterances(utterances, None, not shouldNotInterrupt)
 
             # If this is a table cell, save the current row and column
-            # information in the table cell's table, so that we can use 
+            # information in the table cell's table, so that we can use
             # it the next time.
             #
             if newLocusOfFocus.role == rolenames.ROLE_TABLE_CELL:
@@ -1624,8 +1624,8 @@ class Script(script.Script):
 
         elif (string == "Left") or (string == "Right"):
             # If the user has typed Control-Shift-Up or Control-Shift-Dowm,
-            # then we want to speak the text that has just been selected 
-            # or unselected, otherwise if the user has typed Control-Left 
+            # then we want to speak the text that has just been selected
+            # or unselected, otherwise if the user has typed Control-Left
             # or Control-Right, we speak the current word otherwise we speak
             # the character at the text cursor position.
             #
@@ -1640,8 +1640,8 @@ class Script(script.Script):
         elif string == "Page_Up":
             # If the user has typed Control-Shift-Page_Up, then we want
             # to speak the text that has just been selected or unselected,
-            # otherwise if the user has typed Control-Page_Up, then we 
-            # speak the character to the right of the current text cursor 
+            # otherwise if the user has typed Control-Page_Up, then we
+            # speak the character to the right of the current text cursor
             # position otherwise we speak the current line.
             #
             if hasLastPos and isShiftKey and isControlKey:
@@ -1655,7 +1655,7 @@ class Script(script.Script):
         elif string == "Page_Down":
             # If the user has typed Control-Shift-Page_Down, then we want
             # to speak the text that has just been selected or unselected,
-            # otherwise if the user has just typed Page_Down, then we speak 
+            # otherwise if the user has just typed Page_Down, then we speak
             # the current line.
             #
             if hasLastPos and isShiftKey and isControlKey:
@@ -1680,7 +1680,7 @@ class Script(script.Script):
                 self.sayCharacter(event.source)
 
         elif (string == "A") and isControlKey:
-            # The user has typed Control-A. Check to see if the entire 
+            # The user has typed Control-A. Check to see if the entire
             # document has been selected, and if so, let the user know.
             #
             text = event.source.text
@@ -1937,7 +1937,7 @@ class Script(script.Script):
                     child = selection.getSelectedChild(0)
                     if child:
                         orca.setLocusOfFocus(
-                           event, 	 
+                           event,
                            atspi.Accessible.makeAccessible(child))
         elif event.source.role == rolenames.ROLE_COMBO_BOX:
             orca.visualAppearanceChanged(event, event.source)
@@ -1976,6 +1976,24 @@ class Script(script.Script):
         self.windowActivateTime = time.time()
         orca.setLocusOfFocus(event, event.source)
 
+        # We keep track of the active window to handle situations where
+        # we get window activated and window deactivated events out of
+        # order (see onWindowDeactivated).
+        #
+        # For example, events can be:
+        #
+        #    window:activate   (w1)
+        #    window:activate   (w2)
+        #    window:deactivate (w1)
+        #
+        # as well as:
+        #
+        #    window:activate   (w1)
+        #    window:deactivate (w1)
+        #    window:activate   (w2)
+        #
+        orca.setActiveWindow(event.source)
+
     def onWindowDeactivated(self, event):
         """Called whenever a toplevel window is deactivated.
 
@@ -1983,7 +2001,15 @@ class Script(script.Script):
         - event: the Event
         """
 
-        orca.setLocusOfFocus(event, None)
+        # Because window activated and deactivated events may be
+        # received in any order when switching from one application to
+        # another, locusOfFocus and activeWindow, we really only change
+        # the locusOfFocus and activeWindow when we are dealing with
+        # an event from the current activeWindow.
+        #
+        if event.source == orca.activeWindow:
+            orca.setLocusOfFocus(event, None)
+            orca.setActiveWindow(None)
 
     def noOp(self, event):
         """Just here to capture events.
@@ -2619,7 +2645,7 @@ class Script(script.Script):
             else:
                 speech.speak(character)
 
-    def _reviewCurrentItem(self, inputEvent, targetCursorCell=0, 
+    def _reviewCurrentItem(self, inputEvent, targetCursorCell=0,
                            spellWord=False):
         """Presents the current item to the user.
 

@@ -152,6 +152,18 @@ def _switchToNextPresentationManager(script=None, inputEvent=None):
 # The Accessible that has visual focus.
 #
 locusOfFocus = None
+activeWindow = None
+
+def setActiveWindow(obj):
+    """Sets the active window.
+
+    Arguments:
+    - obj: the Accessible with the new active window.
+    """
+
+    global activeWindow
+
+    activeWindow = obj
 
 def setLocusOfFocus(event, obj, notifyPresentationManager=True):
     """Sets the locus of focus (i.e., the object with visual focus) and
