@@ -1,7 +1,8 @@
 2006-07-26  Mike Pedersen <michael.pedersen@sun.com> 
 
         *  test/keystrokes/gedit/gedit-test.keys
-          added new gedit test.
+        *  test/keystrokes/gnome-terminal/gnome-terminal.keys
+          added new gedit test and gnome terminal test.
 
 2006-07-26  Willie Walker <william.walker@sun.com>
 
