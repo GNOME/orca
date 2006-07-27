@@ -935,7 +935,10 @@ class Accessible:
 
         stateSet = self.accessible.getState()
         if stateSet:
-            state = stateSet._narrow(Accessibility.StateSet).getStates()
+            try:
+                state = stateSet._narrow(Accessibility.StateSet).getStates()
+            except:
+                state = []
         else:
             state = []
 
@@ -956,7 +959,10 @@ class Accessible:
         relationSet = self.accessible.getRelationSet()
 
         for relation in relationSet:
-            relations.append(relation._narrow(Accessibility.Relation))
+            try:
+                relations.append(relation._narrow(Accessibility.Relation))
+            except:
+                pass
 
         if settings.cacheValues:
             self.relations = relations
@@ -1053,7 +1059,10 @@ class Accessible:
         action = self.accessible.queryInterface("IDL:Accessibility/Action:1.0")
 
         if action:
-            action = action._narrow(Accessibility.Action)
+            try:
+                action = action._narrow(Accessibility.Action)
+            except:
+                action = None
 
         if action and settings.cacheValues:
             self.action = action
@@ -1070,7 +1079,10 @@ class Accessible:
             "IDL:Accessibility/Component:1.0")
 
         if component:
-            component = component._narrow(Accessibility.Component)
+            try:
+                component = component._narrow(Accessibility.Component)
+            except:
+                component = None
 
         if component and settings.cacheValues:
             self.component = component
@@ -1087,7 +1099,10 @@ class Accessible:
             "IDL:Accessibility/Hypertext:1.0")
 
         if hypertext:
-            hypertext = hypertext._narrow(Accessibility.Hypertext)
+            try:
+                hypertext = hypertext._narrow(Accessibility.Hypertext)
+            except:
+                hypertext = None
 
         if hypertext and settings.cacheValues:
             self.hypertext = hypertext
@@ -1104,7 +1119,10 @@ class Accessible:
             "IDL:Accessibility/Image:1.0")
 
         if image:
-            image = image._narrow(Accessibility.Image)
+            try:
+                image = image._narrow(Accessibility.Image)
+            except:
+                image = None
 
         if image and settings.cacheValues:
             self.image = image
@@ -1121,7 +1139,10 @@ class Accessible:
             "IDL:Accessibility/Selection:1.0")
 
         if selection:
-            selection = selection._narrow(Accessibility.Selection)
+            try:
+                selection = selection._narrow(Accessibility.Selection)
+            except:
+                selection = None
 
         if selection and settings.cacheValues:
             self.selection = selection
@@ -1137,7 +1158,10 @@ class Accessible:
         table = self.accessible.queryInterface("IDL:Accessibility/Table:1.0")
 
         if table:
-            table = table._narrow(Accessibility.Table)
+            try:
+                table = table._narrow(Accessibility.Table)
+            except:
+                table = None
 
         if table and settings.cacheValues:
             self.table = table
@@ -1153,7 +1177,10 @@ class Accessible:
         text = self.accessible.queryInterface("IDL:Accessibility/Text:1.0")
 
         if text:
-            text = text._narrow(Accessibility.Text)
+            try:
+                text = text._narrow(Accessibility.Text)
+            except:
+                text = None
 
         if text and settings.cacheValues:
             self.text = text
@@ -1169,7 +1196,10 @@ class Accessible:
         value = self.accessible.queryInterface("IDL:Accessibility/Value:1.0")
 
         if value:
-            value = value._narrow(Accessibility.Value)
+            try:
+                value = value._narrow(Accessibility.Value)
+            except:
+                value = None
 
         if value and settings.cacheValues:
             self.value = value

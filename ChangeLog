@@ -1,5 +1,9 @@
 2006-07-27  Willie Walker <william.walker@sun.com>
 
+	* src/orca/atspi.py: defensive programming to verify we can actually
+	get to the various specializations of an object (added try/except
+	statements around calls to _narrow).
+	
 	* src/orca/scripts/Mozilla.py: do not perform special menu handling
 	logic in onFocus - it has been deemed to getting in the way by 
 	Lynn Monsanto (thanks Lynn!).
