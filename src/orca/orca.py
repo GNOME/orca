@@ -973,11 +973,8 @@ def init(registry):
     # Do not hang on initialization if we can help it.
     #
     if settings.timeoutCallback and (settings.timeoutTime > 0):
-        timer = threading.Timer(settings.timeoutTime,
-                                settings.timeoutCallback)
-        timer.start()
-    else:
-        timer = None
+        signal.signal(signal.SIGALRM, settings.timeoutCallback)
+        signal.alarm(settings.timeoutTime)
 
     # Note that we have moved the Orca specific keybindings to the default
     # script, so _keyBindings is currently empty. The logic is retained
@@ -999,9 +996,8 @@ def init(registry):
 
     registry.registerKeystrokeListeners(_processKeyboardEvent)
 
-    if timer:
-        timer.cancel()
-        del timer
+    if settings.timeoutCallback and (settings.timeoutTime > 0):
+        signal.alarm(0)
 
     _initialized = True
     return True
@@ -1018,11 +1014,8 @@ def start(registry):
     # Do not hang on startup if we can help it.
     #
     if settings.timeoutCallback and (settings.timeoutTime > 0):
-        timer = threading.Timer(settings.timeoutTime,
-                                settings.timeoutCallback)
-        timer.start()
-    else:
-        timer = None
+        signal.signal(signal.SIGALRM, settings.timeoutCallback)
+        signal.alarm(settings.timeoutTime)
 
     try:
         speech.speak(_("Welcome to Orca."))
@@ -1049,19 +1042,19 @@ def start(registry):
 
     _switchToPresentationManager(0) # focus_tracking_presenter
 
-    if timer:
-        timer.cancel()
-        del timer
+    if settings.timeoutCallback and (settings.timeoutTime > 0):
+        signal.alarm(0)
 
     registry.start()
 
-def abort():
-    os._exit(1)
+def abort(exitCode=1):
+    os._exit(exitCode)
 
-def timeout():
+def timeout(signum=None, frame=None):
     debug.println(debug.LEVEL_SEVERE,
                   "TIMEOUT: something has hung.  Aborting.")
-    abort()
+    debug.printStack(debug.LEVEL_ALL)
+    abort(50)
 
 def shutdown(script=None, inputEvent=None):
     """Exits Orca.  Unregisters any event listeners and cleans up.  Also
@@ -1079,11 +1072,8 @@ def shutdown(script=None, inputEvent=None):
     # Try to say goodbye, but be defensive if something has hung.
     #
     if settings.timeoutCallback and (settings.timeoutTime > 0):
-        timer = threading.Timer(settings.timeoutTime,
-                                settings.timeoutCallback)
-        timer.start()
-    else:
-        timer = None
+        signal.signal(signal.SIGALRM, settings.timeoutCallback)
+        signal.alarm(settings.timeoutTime)
 
     speech.speak(_("goodbye."))
     braille.displayMessage(_("Goodbye."))
@@ -1110,9 +1100,8 @@ def shutdown(script=None, inputEvent=None):
 
     registry.stop()
 
-    if timer:
-        timer.cancel()
-        del timer
+    if settings.timeoutCallback and (settings.timeoutTime > 0):
+        signal.alarm(0)
 
     _initialized = False
     return True
@@ -1132,31 +1121,38 @@ def shutdownOnSignal(signum, frame):
     # something bad is happening, so just quit.
     #
     if exitCount:
-        abort()
+        abort(signum)
     else:
         exitCount += 1
 
     # Try to do a graceful shutdown if we can.
     #
+    if settings.timeoutCallback and (settings.timeoutTime > 0):
+        signal.signal(signal.SIGALRM, settings.timeoutCallback)
+        signal.alarm(settings.timeoutTime)
+
     try:
         if _initialized:
             shutdown()
-            return
         else:
             # We always want to try to shutdown speech since the
             # speech servers are very persistent about living.
             #
             speech.shutdown()
             shutdown()
-            os._exit(0)
     except:
-        abort()
+        pass
+
+    if settings.timeoutCallback and (settings.timeoutTime > 0):
+        signal.alarm(0)
+
+    abort(signum)
 
 def abortOnSignal(signum, frame):
     debug.println(debug.LEVEL_ALL,
                   "Aborting due to signal = %d" \
                   % signum)
-    abort()
+    abort(signum)
 
 def usage():
     """Prints out usage information."""
@@ -1174,6 +1170,12 @@ def usage():
     pass
 
 def main():
+    """The main entry point for Orca.  The exit codes for Orca will
+    loosely be based on signals, where the exit code will be the
+    signal used to terminate Orca (if a signal was used).  Otherwise,
+    an exit code of 0 means normal completion and an exit code of 50
+    means Orca exited because of a hang."""
+
     # Method to call when we think something might be hung.
     #
     settings.timeoutCallback = timeout

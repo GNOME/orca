@@ -31,6 +31,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import signal
 import threading
 
 import atspi
@@ -793,11 +794,8 @@ def _processBrailleEvent(command):
 
     if _callback:
         if settings.timeoutCallback and (settings.timeoutTime > 0):
-            timer = threading.Timer(settings.timeoutTime,
-                                    settings.timeoutCallback)
-            timer.start()
-        else:
-            timer = None
+            signal.signal(signal.SIGALRM, settings.timeoutCallback)
+            signal.alarm(settings.timeoutTime)
 
         try:
             # Like key event handlers, a return value of True means
@@ -808,9 +806,8 @@ def _processBrailleEvent(command):
             debug.printException(debug.LEVEL_WARNING)
             consumed = False
 
-        if timer:
-            timer.cancel()
-            del timer
+        if settings.timeoutCallback and (settings.timeoutTime > 0):
+            signal.alarm(0)
 
         return consumed
 

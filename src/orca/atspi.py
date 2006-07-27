@@ -25,6 +25,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import signal
 import threading
 import time
 
@@ -279,20 +280,16 @@ class EventListener(Accessibility__POA.EventListener):
 
     def notifyEvent(self, event):
         if settings.timeoutCallback and (settings.timeoutTime > 0):
-            timer = threading.Timer(settings.timeoutTime,
-                                    settings.timeoutCallback)
-            timer.start()
-        else:
-            timer = None
+            signal.signal(signal.SIGALRM, settings.timeoutCallback)
+            signal.alarm(settings.timeoutTime)
 
         try:
             self.callback(event)
         except:
             debug.printException(debug.LEVEL_WARNING)
 
-        if timer:
-            timer.cancel()
-            del timer
+        if settings.timeoutCallback and (settings.timeoutTime > 0):
+            signal.alarm(0)
 
     def __del__(self):
         self.deregister()
@@ -369,11 +366,8 @@ class KeystrokeListener(Accessibility__POA.DeviceEventListener):
         Returns True if the event has been consumed.
         """
         if settings.timeoutCallback and (settings.timeoutTime > 0):
-            timer = threading.Timer(settings.timeoutTime,
-                                    settings.timeoutCallback)
-            timer.start()
-        else:
-            timer = None
+            signal.signal(signal.SIGALRM, settings.timeoutCallback)
+            signal.alarm(settings.timeoutTime)
 
         try:
             consumed = self.callback(event)
@@ -381,9 +375,8 @@ class KeystrokeListener(Accessibility__POA.DeviceEventListener):
             debug.printException(debug.LEVEL_WARNING)
             consumed = False
 
-        if timer:
-            timer.cancel()
-            del timer
+        if settings.timeoutCallback and (settings.timeoutTime > 0):
+            signal.alarm(0)
 
         return consumed
 
