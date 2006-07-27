@@ -30,13 +30,13 @@
 
 sleep 5 # give you a chance to put focus on a particular window
 
-export RUN=1
+RUN=1
 while [ "$RUN" -gt 0 ]
 do
     USERID=`id | cut -f2 -d= | cut -f1 -d\(`
     ORCAPID=`ps -eo pid,ruid,args | grep $USERID | egrep "orca[.]orca" | grep -v grep | awk '{ print $1 }'`
 
-    if test "x$ORCAPID" == "x" 
+    if [ "x$ORCAPID" = "x" ]
     then
 	echo "Orca not running.  Quitting."
 	RUN=0
