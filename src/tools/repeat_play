@@ -1,0 +1,46 @@
+#!/bin/sh
+#
+# Orca
+#
+# Copyright 2006 Sun Microsystems Inc.
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General Public
+# License along with this library; if not, write to the
+# Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+# Boston, MA 02111-1307, USA.
+
+# This script is meant to repeatedly play a keystrokes file to provide
+# a hands-off method for exercising Orca.  It is used primarily to
+# stress Orca and help flush out stability/reliability problems.
+#
+#
+# The keystrokes file is passed in as the sole argument to this
+# script, and this script will continue to play the keystrokes until
+# it detects that Orca is no longer running.
+
+sleep 5 # give you a chance to put focus on a particular window
+
+export RUN=1
+while [ "$RUN" -gt 0 ]
+do
+    USERID=`id | cut -f2 -d= | cut -f1 -d\(`
+    ORCAPID=`ps -eo pid,ruid,args | grep $USERID | egrep "orca[.]orca" | grep -v grep | awk '{ print $1 }'`
+
+    if test "x$ORCAPID" == "x" 
+    then
+	echo "Orca not running.  Quitting."
+	RUN=0
+    else
+	python play_keystrokes.py < $1
+    fi
+done

@@ -1,7 +1,13 @@
+2006-07-27  Willie Walker <william.walker@sun.com>
+
+	* src/tools/repeat_play: add script to repeatedly play a 
+	keystrokes file while Orca is running.  This helps stress
+	test Orca.
+	
 2006-07-26  Mike Pedersen <michael.pedersen@sun.com> 
 
-        *  test/keystrokes/gedit/gedit-test.keys
-        *  test/keystrokes/gnome-terminal/gnome-terminal.keys
+        * test/keystrokes/gedit/gedit-test.keys
+        * test/keystrokes/gnome-terminal/gnome-terminal.keys
           added new gedit test and gnome terminal test.
 
 2006-07-26  Willie Walker <william.walker@sun.com>
