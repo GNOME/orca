@@ -336,7 +336,7 @@ debugEventQueue         = False
 # for the timeout.  See braille.py, atspi.py, and orca.py:init for how
 # these are used.
 #
-timeoutTime             = 10.0 # a value of 0 means don't do hang checking
+timeoutTime             = 10   # a value of 0 means don't do hang checking
 timeoutCallback         = None # Set by orca.py:init to orca.timeout
 
 # Assists with dealing with CORBA COMM_FAILURES.  A failure doesn't

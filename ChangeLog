@@ -1,8 +1,8 @@
 2006-07-27  Willie Walker <william.walker@sun.com>
 
-	* src/orca/orca.py, src/orca/atspi.py, src/orca/braille.py:
-	use SIGALRM instead of timeouts - we get better stack traces
-	from signals.
+	* src/orca/orca.py, src/orca/atspi.py, src/orca/braille.py,
+	src/orca/settings.py: use SIGALRM instead of timeouts - we get
+	better stack traces from signals.
 	
 	* src/tools/repeat_play: add script to repeatedly play a 
 	keystrokes file while Orca is running.  This helps stress
