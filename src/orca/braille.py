@@ -792,11 +792,13 @@ def _processBrailleEvent(command):
     elif command & BRL_FLG_REPEAT_DELAY:
         return True
 
-    if _callback:
-        if settings.timeoutCallback and (settings.timeoutTime > 0):
-            signal.signal(signal.SIGALRM, settings.timeoutCallback)
-            signal.alarm(settings.timeoutTime)
+    consumed = False
 
+    if settings.timeoutCallback and (settings.timeoutTime > 0):
+        signal.signal(signal.SIGALRM, settings.timeoutCallback)
+        signal.alarm(settings.timeoutTime)
+
+    if _callback:
         try:
             # Like key event handlers, a return value of True means
             # the command was consumed.
@@ -806,19 +808,17 @@ def _processBrailleEvent(command):
             debug.printException(debug.LEVEL_WARNING)
             consumed = False
 
-        if settings.timeoutCallback and (settings.timeoutTime > 0):
-            signal.alarm(0)
-
-        return consumed
-
     if (command >= 0x100) and (command < (0x100 + _displaySize[0])):
         if len(_lines) > 0:
             cursor = (command - 0x100) + _viewport[0]
             lineNum = _viewport[1]
             _lines[lineNum].processCursorKey(cursor)
-            return True
+            consumed = True
 
-    return False
+    if settings.timeoutCallback and (settings.timeoutTime > 0):
+        signal.alarm(0)
+
+    return consumed
 
 def init(callback=None, tty=7):
     """Initializes the braille module, connecting to the BrlTTY driver.

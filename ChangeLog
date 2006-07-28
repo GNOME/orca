@@ -1,3 +1,8 @@
+2006-07-28  Willie Walker <william.walker@sun.com>
+
+	* src/orca/braille.py: fix bug 348980 - get braille cursor routing
+	keys working again.
+	
 2006-07-27  Remus Draica <rd@baum.ro>
 
 	* src/orca/orca.py, src/orca/default.py: handle case where we can
