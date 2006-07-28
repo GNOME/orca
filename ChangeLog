@@ -1,3 +1,8 @@
+2006-07-28  Remus Draica <rd@baum.ro>
+
+	* src/orca/default.py: only update braille using the text specialization
+	if we're sure the text specialization exists.
+	
 2006-07-28  Willie Walker <william.walker@sun.com>
 
 	* src/orca/gnomespeechfactory.py: abort if two speech resets are

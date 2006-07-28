@@ -1459,8 +1459,9 @@ class Script(script.Script):
         # are on the very first line.  Otherwise, we show only the
         # line.
         #
-        if (obj.role == rolenames.ROLE_TEXT) \
-           or (obj.role == rolenames.ROLE_PARAGRAPH):
+        if obj.text \
+            and ((obj.role == rolenames.ROLE_TEXT) \
+                or (obj.role == rolenames.ROLE_PARAGRAPH)):
             text = obj.text
             [string, startOffset, endOffset] = text.getTextAtOffset(
                 text.caretOffset,
