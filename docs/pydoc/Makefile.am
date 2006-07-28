@@ -1,5 +1,5 @@
 
-PYTHONPATH=$(top_srcdir)/src
+PYTHONPATH=@pyexecdir@
 
 DOC_FILES = \
 	orca \
