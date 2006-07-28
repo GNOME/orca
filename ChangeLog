@@ -1,5 +1,7 @@
 2006-07-28  Willie Walker <william.walker@sun.com>
 
+	* src/orca/util.py: add traceit utility to help with debugging.
+	
 	* src/orca/settings.py, src/orca/atspi.py, 
 	src/orca/gnomespeechfactory.py, src/orca/focus_tracking_presenter.py:
 	add gilSleepTime setting to allow one to customize whether we use
