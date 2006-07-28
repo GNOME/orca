@@ -40,7 +40,7 @@ import string
 import atspi
 import debug
 import input_event
-import orca
+import orca_state
 import rolenames
 import settings
 import speech
@@ -903,7 +903,8 @@ def isInActiveApp(obj):
     if not obj:
         return False
     else:
-        return orca.locusOfFocus and (orca.locusOfFocus.app == obj.app)
+        return orca_state.locusOfFocus \
+               and (orca_state.locusOfFocus.app == obj.app)
 
 def findActiveWindow():
     """Traverses the list of known apps looking for one who has an
@@ -949,7 +950,7 @@ def drawOutline(x, y, width, height, erasePrevious=True):
 
         if not _display:
             debug.println(debug.LEVEL_SEVERE,
-                          "orca.drawOutline could not open display.")
+                          "util.drawOutline could not open display.")
             return
 
     screen = _display.get_default_screen()
@@ -1051,8 +1052,8 @@ def speakTextSelectionState(obj, startOffset, endOffset):
     # Control-Shift-Home: speak "document selected to cursor position".
     # Control-Shift-End:  speak "document selected from cursor position".
     #
-    eventStr = orca.lastInputEvent.event_string
-    mods = orca.lastInputEvent.modifiers
+    eventStr = orca_state.lastInputEvent.event_string
+    mods = orca_state.lastInputEvent.modifiers
     isControlKey = mods & (1 << atspi.Accessibility.MODIFIER_CONTROL)
     isShiftKey = mods & (1 << atspi.Accessibility.MODIFIER_SHIFT)
 

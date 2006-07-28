@@ -35,7 +35,7 @@ import braille
 import default
 import debug
 import input_event
-import orca
+import orca_state
 import presentation_manager
 import settings
 import speech
@@ -394,7 +394,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         # as bugzilla bug 319777.]]]
         #
         retryCount = 0
-        oldLocusOfFocus = orca.locusOfFocus
+        oldLocusOfFocus = orca_state.locusOfFocus
         while retryCount <= settings.commFailureAttemptLimit:
             try:
                 if event.type == "window:activate":
@@ -422,7 +422,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                     # of focus changed during our last attempt at
                     # handling this event.
                     #
-                    orca.locusOfFocus = oldLocusOfFocus
+                    orca_state.locusOfFocus = oldLocusOfFocus
                     debug.println(debug.LEVEL_WARNING,
                                   "  TRYING AGAIN (%d)" % retryCount)
                     time.sleep(settings.commFailureWaitTime)
@@ -624,8 +624,10 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             # some reason if done inside an acquire/release block for a
             # lock.  So...we do it here.]]]
             #
-            noFocus = (not self._activeScript) or ((not orca.locusOfFocus) \
-                      and (self.noFocusTimestamp != orca.noFocusTimeStamp))
+            noFocus = (not self._activeScript) \
+                      or ((not orca_state.locusOfFocus) \
+                          and (self.noFocusTimestamp \
+                               != orca_state.noFocusTimestamp))
 
             self._gidleLock.acquire()
             if self._eventQueue.empty():
@@ -638,7 +640,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                     if settings.speechVerbosityLevel == \
                         settings.VERBOSITY_LEVEL_VERBOSE:
                         speech.speak(message)
-                    self.noFocusTimestamp = orca.noFocusTimeStamp
+                    self.noFocusTimestamp = orca_state.noFocusTimestamp
                 self._gidleId = 0
                 rerun = False # destroy and don't call again
             self._gidleLock.release()

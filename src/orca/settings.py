@@ -106,6 +106,11 @@ consolePreferencesModule= "orca_console_prefs"
 #
 orcaModifierKeys        = ["Insert", "KP_Insert"]
 
+# A new modifier to use (set by the press of any key in the
+# orcaModifierKeys list) to represent the Orca modifier.
+#
+MODIFIER_ORCA = 8
+
 # Verbosity levels (see setBrailleVerbosityLevel and
 # setSpeechVerbosityLevel).  These will have an impact on the various
 # individual verbosity levels for rolenames, accelerators, etc.

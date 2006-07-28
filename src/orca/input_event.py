@@ -30,10 +30,8 @@ __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import atspi
-import braille
 import debug
 import settings
-import speech
 import time
 
 KEYBOARD_EVENT     = "keyboard"
@@ -164,6 +162,10 @@ class InputEventHandler:
 
         if settings.learnModeEnabled:
             if self._description:
+                # These imports are here to eliminate circular imports.
+                #
+                import braille
+                import speech
                 braille.displayMessage(self._description)
                 speech.speak(self._description)
                 consumed = True

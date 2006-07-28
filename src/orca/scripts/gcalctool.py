@@ -29,10 +29,10 @@ import orca.atspi as atspi
 import orca.braille as braille
 import orca.default as default
 import orca.input_event as input_event
+import orca.orca_state as orca_state
 import orca.rolenames as rolenames
 import orca.speech as speech
 import orca.util as util
-import orca.orca as orca
 
 ########################################################################
 #                                                                      #
@@ -121,12 +121,12 @@ class Script(default.Script):
             contents = self._display_txt.getText(0, -1)
             braille.displayMessage(contents)
 
-            if (orca.lastInputEvent is None) \
+            if (orca_state.lastInputEvent is None) \
                    or \
-                   (not isinstance(orca.lastInputEvent,
+                   (not isinstance(orca_state.lastInputEvent,
                                    input_event.KeyboardEvent)):
                 return
 
-            if (orca.lastInputEvent.event_string == "Return") \
-                   or (orca.lastInputEvent.event_string == "="):
+            if (orca_state.lastInputEvent.event_string == "Return") \
+                   or (orca_state.lastInputEvent.event_string == "="):
                 speech.speak(contents)

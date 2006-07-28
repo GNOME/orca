@@ -26,7 +26,6 @@ __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import signal
-import threading
 import time
 
 import gobject
@@ -176,7 +175,7 @@ class Registry:
             context = gobject.MainLoop().get_context()
             while self.running:
                 time.sleep(0.0001) # Attempt to sidestep GIL
-                dispatched = context.iteration(False)
+                context.iteration(False)
 
     def stop(self):
         """Unregisters any event or keystroke listeners registered with
@@ -1427,7 +1426,6 @@ def __test():
     registry.start()
 
 if __name__ == "__main__":
-    import signal
     signal.signal(signal.SIGINT, __shutdownAndExit)
     signal.signal(signal.SIGQUIT, __shutdownAndExit)
     __test()

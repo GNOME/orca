@@ -30,8 +30,8 @@ import orca.default as default
 import orca.atspi as atspi
 import orca.input_event as input_event
 import orca.rolenames as rolenames
-import orca.orca as orca
 import orca.braille as braille
+import orca.orca_state as orca_state
 import orca.speech as speech
 import orca.settings as settings
 import orca.util as util
@@ -153,15 +153,15 @@ class Script(default.Script):
                             # insensitive, speak/braille about it. (The
                             # Identity screen has such a component).
                             #
-                            if orca.locusOfFocus and \
-                               orca.locusOfFocus.role == \
+                            if orca_state.locusOfFocus and \
+                               orca_state.locusOfFocus.role == \
                                    rolenames.ROLE_PUSH_BUTTON and \
-                               (orca.locusOfFocus.state.count( \
+                               (orca_state.locusOfFocus.state.count( \
                                    atspi.Accessibility.STATE_SENSITIVE) == 0):
-                                self.updateBraille(orca.locusOfFocus)
+                                self.updateBraille(orca_state.locusOfFocus)
                                 speech.speakUtterances(
                                     self.speechGenerator.getSpeech( \
-                                        orca.locusOfFocus, False))
+                                        orca_state.locusOfFocus, False))
 
             # It's possible to get multiple "object:state-changed:showing"
             # events for the same label. If we've already handled this
@@ -249,8 +249,8 @@ class Script(default.Script):
         in a higher level panel.  So, we just traverse through the
         children.
         """
-        panel = orca.locusOfFocus.parent
-        htmlPanel = orca.locusOfFocus.parent.parent
+        panel = orca_state.locusOfFocus.parent
+        htmlPanel = orca_state.locusOfFocus.parent.parent
         startIndex = panel.index
         for i in range(startIndex, htmlPanel.childCount):
             accPanel = htmlPanel.accessible.getChildAtIndex(i)
@@ -272,7 +272,7 @@ class Script(default.Script):
         """
 
         debug.println(self.debugLevel, "evolution.sayAll.")
-        if orca.locusOfFocus and orca.locusOfFocus.text:
+        if orca_state.locusOfFocus and orca_state.locusOfFocus.text:
             #for [context, acss] in self.textLines():
             #    print context.utterance
             speech.sayAll(self.textLines(),
@@ -463,7 +463,7 @@ class Script(default.Script):
             # setting of the speakAll variable above, incorrect. We fix that
             # up here.
 
-            if orca.locusOfFocus.role != rolenames.ROLE_TABLE_CELL:
+            if orca_state.locusOfFocus.role != rolenames.ROLE_TABLE_CELL:
                 speakAll = True
                 message = "%d messages" % \
                     parent.table.nRows
@@ -490,7 +490,7 @@ class Script(default.Script):
                                 checkbox = True
                                 checked = cell.state.count( \
                                     atspi.Accessibility.STATE_CHECKED)
-                                if not checked and speakAll == True:
+                                if not checked and speakAll:
                                     toRead = False
                                 break
 
@@ -679,7 +679,7 @@ class Script(default.Script):
                                                 brailleRegions[0]])
                         found = True
 
-            if found == False:
+            if not found:
                 startTime = 'Start time ' + self.getTimeForCalRow(index, noRows)
                 brailleRegions.append(braille.Region(startTime))
                 speech.speak(startTime)
@@ -810,7 +810,7 @@ class Script(default.Script):
 
             # Braille the default action for this component.
             #
-            self.updateBraille(orca.locusOfFocus)
+            self.updateBraille(orca_state.locusOfFocus)
 
             # Look for the "Suggestions for 'xxxxx' label in the spell
             # checker dialog panel. Extract out the xxxxx. This will be the

@@ -28,7 +28,6 @@ __license__   = "LGPL"
 import orca.atspi as atspi
 import orca.debug as debug
 import orca.default as default
-import orca.orca as orca
 import orca.rolenames as rolenames
 import orca.settings as settings
 import orca.speech as speech
@@ -147,7 +146,7 @@ class Script(default.Script):
         #print "Mozilla.onCaretMoved"
         #print "  source        =", event.source
         #print "  source.parent =", event.source.parent
-        #print "  lof           =", orca.locusOfFocus
+        #print "  lof           =", state.locusOfFocus
         
         # We always automatically go back to focus tracking mode when
         # the caret moves in the focused object.

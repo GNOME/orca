@@ -32,7 +32,7 @@ import orca.debug as debug
 import orca.default as default
 import orca.input_event as input_event
 import orca.util as util
-import orca.orca as orca
+import orca.orca_state as orca_state
 import orca.rolenames as rolenames
 import orca.settings as settings
 import orca.speech as speech
@@ -75,9 +75,10 @@ class Script(default.Script):
         - event: the Event
         """
 
-        if orca.lastInputEvent \
-               and isinstance(orca.lastInputEvent, input_event.KeyboardEvent):
-            event_string = orca.lastInputEvent.event_string
+        if orca_state.lastInputEvent \
+               and isinstance(orca_state.lastInputEvent,
+                              input_event.KeyboardEvent):
+            event_string = orca_state.lastInputEvent.event_string
         else:
             event_string = None
 
@@ -93,8 +94,8 @@ class Script(default.Script):
         # currently focused object is the parent of the object from which
         # text was deleted.
         #
-        if (event.source != orca.locusOfFocus) \
-            and (event.source.parent != orca.locusOfFocus):
+        if (event.source != orca_state.locusOfFocus) \
+            and (event.source.parent != orca_state.locusOfFocus):
             return
 
         self.updateBraille(event.source)
@@ -124,8 +125,8 @@ class Script(default.Script):
         # currently focused object is the parent of the object from which
         # text was inserted.
         #
-        if (event.source != orca.locusOfFocus) \
-            and (event.source.parent != orca.locusOfFocus):
+        if (event.source != orca_state.locusOfFocus) \
+            and (event.source.parent != orca_state.locusOfFocus):
             return
 
         self.updateBraille(event.source)
@@ -141,13 +142,14 @@ class Script(default.Script):
         # We'll let our super class handle "Delete".  We'll handle Ctrl+D.
         #
 
-        if not orca.lastInputEvent or \
-            not isinstance(orca.lastInputEvent, input_event.KeyboardEvent):
+        if not orca_state.lastInputEvent or \
+            not isinstance(orca_state.lastInputEvent,
+                           input_event.KeyboardEvent):
             return
 
-        keyString = orca.lastInputEvent.event_string
+        keyString = orca_state.lastInputEvent.event_string
 
-        controlPressed = orca.lastInputEvent.modifiers \
+        controlPressed = orca_state.lastInputEvent.modifiers \
                          & (1 << atspi.Accessibility.MODIFIER_CONTROL)
 
         if (keyString == "Delete") or (keyString == "BackSpace"):
@@ -178,8 +180,8 @@ class Script(default.Script):
         # us a string typically longer than what the length of a
         # compressed string is (we choose 5 here), then output that.
         #
-        if isinstance(orca.lastInputEvent, input_event.KeyboardEvent):
-            wasCommand = orca.lastInputEvent.modifiers \
+        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
+            wasCommand = orca_state.lastInputEvent.modifiers \
                          & (1 << atspi.Accessibility.MODIFIER_CONTROL \
                             | 1 << atspi.Accessibility.MODIFIER_ALT \
                             | 1 << atspi.Accessibility.MODIFIER_META \

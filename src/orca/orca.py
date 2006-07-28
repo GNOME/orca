@@ -49,10 +49,12 @@ import httpserver
 import keynames
 import keybindings
 import mag
+import orca_state
 import platform
 import rolenames
 import settings
 import speech
+    
 import threading
 import util
 
@@ -66,28 +68,6 @@ from orca_i18n import _           # for gettext support
 # The user-settings module (see loadUserSettings).
 #
 _userSettings = None
-
-# set each time a keyboard or braille event is received.
-#
-
-# The InputEvent instance representing the last input event.  This is
-# set each time a keyboard or braille event is received.
-#
-lastInputEvent = None
-
-# The last timestamp from a device event. Used to set focus for the Orca
-# configuration GUI.
-#
-lastTimestamp = None
-
-# The time that the last "No focus" event occured.
-#
-noFocusTimeStamp = 0.0
-
-# A new modifier to use (set by the press of any key in the
-# settings.orcaModifierKeys list) to represent the Orca modifier.
-#
-MODIFIER_ORCA = 8
 
 ########################################################################
 #                                                                      #
@@ -149,22 +129,6 @@ def _switchToNextPresentationManager(script=None, inputEvent=None):
 #                                                                      #
 ########################################################################
 
-# The Accessible that has visual focus.
-#
-locusOfFocus = None
-activeWindow = None
-
-def setActiveWindow(obj):
-    """Sets the active window.
-
-    Arguments:
-    - obj: the Accessible with the new active window.
-    """
-
-    global activeWindow
-
-    activeWindow = obj
-
 def setLocusOfFocus(event, obj, notifyPresentationManager=True):
     """Sets the locus of focus (i.e., the object with visual focus) and
     notifies the current presentation manager of the change.
@@ -175,29 +139,29 @@ def setLocusOfFocus(event, obj, notifyPresentationManager=True):
     - notifyPresentationManager: if True, propagate this event
     """
 
-    global locusOfFocus
-
-    if obj == locusOfFocus:
+    if obj == orca_state.locusOfFocus:
         return
 
-    oldLocusOfFocus = locusOfFocus
+    oldLocusOfFocus = orca_state.locusOfFocus
     if oldLocusOfFocus and not oldLocusOfFocus.valid:
         oldLocusOfFocus = None
 
-    locusOfFocus = obj
-    if locusOfFocus and not locusOfFocus.valid:
-        locusOfFocus = None
+    orca_state.locusOfFocus = obj
+    if orca_state.locusOfFocus and not orca_state.locusOfFocus.valid:
+        orca_state.locusOfFocus = None
 
-    if locusOfFocus:
+    if orca_state.locusOfFocus:
         appname = ""
-        if not locusOfFocus.app:
+        if not orca_state.locusOfFocus.app:
             appname = "None"
         else:
-            appname = "'" + locusOfFocus.app.name + "'"
+            appname = "'" + orca_state.locusOfFocus.app.name + "'"
 
         debug.println(debug.LEVEL_FINE,
                       "LOCUS OF FOCUS: app=%s name='%s' role='%s'" \
-                      % (appname, locusOfFocus.name, locusOfFocus.role))
+                      % (appname,
+                         orca_state.locusOfFocus.name,
+                         orca_state.locusOfFocus.role))
 
         if event:
             debug.println(debug.LEVEL_FINE,
@@ -215,7 +179,9 @@ def setLocusOfFocus(event, obj, notifyPresentationManager=True):
 
     if notifyPresentationManager and _currentPresentationManager >= 0:
         _PRESENTATION_MANAGERS[_currentPresentationManager].\
-            locusOfFocusChanged(event, oldLocusOfFocus, locusOfFocus)
+            locusOfFocusChanged(event,
+                                oldLocusOfFocus,
+                                orca_state.locusOfFocus)
 
 def visualAppearanceChanged(event, obj):
     """Called (typically by scripts) when the visual appearance of an object
@@ -264,10 +230,9 @@ def _onMouseButton(e):
     Arguments:
     - e: at-spi event from the at-api registry
     """
-    global lastInputEvent
 
     event = atspi.Event(e)
-    lastInputEvent = MouseButtonEvent(event)
+    orca_state.lastInputEvent = MouseButtonEvent(event)
 
     # A mouse button event looks like: mouse:button:1p, where the
     # number is the button number and the 'p' is either 'p' or 'r',
@@ -447,13 +412,14 @@ def printActiveApp(script=None, inputEvent=None):
 
 def printAncestry(script=None, inputEvent=None):
     """Prints the ancestry for the current locusOfFocus"""
-    util.printAncestry(locusOfFocus)
+    util.printAncestry(orca_state.locusOfFocus)
     return True
 
 def printHierarchy(script=None, inputEvent=None):
     """Prints the application for the current locusOfFocus"""
-    if locusOfFocus:
-        util.printHierarchy(locusOfFocus.app, locusOfFocus)
+    if orca_state.locusOfFocus:
+        util.printHierarchy(orca_state.locusOfFocus.app,
+                            orca_state.locusOfFocus)
     return True
 
 ########################################################################
@@ -598,10 +564,6 @@ def _isActionKey(event_string):
                   "orca._echoActionKey: returning: %s" % reply)
     return reply
 
-# Records the last time a key was echoed.
-#
-lastKeyEchoTime = None
-
 def _keyEcho(event):
     """If the keyEcho setting is enabled, check to see what type of key
     event it is and echo it via speech, if the user wants that type of
@@ -614,12 +576,11 @@ def _keyEcho(event):
     - event: an AT-SPI DeviceEvent
     """
 
-    global lastKeyEchoTime
-
     # If this keyboard event was for an object like a password text
     # field, then don't echo it.
     #
-    if locusOfFocus and locusOfFocus.role == rolenames.ROLE_PASSWORD_TEXT:
+    if orca_state.locusOfFocus \
+        and (orca_state.locusOfFocus.role == rolenames.ROLE_PASSWORD_TEXT):
         return
 
     event_string = event.event_string
@@ -629,7 +590,7 @@ def _keyEcho(event):
     voices = settings.voices
     voice = voices[settings.DEFAULT_VOICE]
 
-    state = None
+    lockState = None
 
     # If key echo is enabled, then check to see what type of key event
     # it is and echo it via speech, if the user wants that type of key
@@ -655,9 +616,9 @@ def _keyEcho(event):
             modifiers = event.modifiers
             if event_string == _("Caps_Lock"):
                 if modifiers & (1 << atspi.Accessibility.MODIFIER_SHIFTLOCK):
-                    state = _(" off")
+                    lockState = _(" off")
                 else:
-                    state = _(" on")
+                    lockState = _(" on")
 
             elif event_string == _("Num_Lock"):
                 # [[[TODO: richb - we are not getting a correct modifier
@@ -689,8 +650,8 @@ def _keyEcho(event):
         if event_string in keynames.keynames:
             event_string = keynames.keynames[event_string]
 
-        if state:
-            event_string += state
+        if lockState:
+            event_string += lockState
 
         debug.println(debug.LEVEL_FINEST,
                       "orca._keyEcho: speaking: %s" % event_string)
@@ -698,7 +659,7 @@ def _keyEcho(event):
         # We keep track of the time as means to let others know that
         # we are probably echoing a key and should not be interrupted.
         #
-        lastKeyEchoTime = time.time()
+        orca_state.lastKeyEchoTime = time.time()
 
         speech.speak(event_string, voice)
 
@@ -715,11 +676,9 @@ def _processKeyboardEvent(event):
 
     Returns True if the event should be consumed.
     """
-    global lastInputEvent
-    global lastTimestamp
     global _orcaModifierPressed
 
-    lastTimestamp = event.timestamp
+    orca_state.lastInputEvent = event.timestamp
 
     # Log the keyboard event for future playback, if desired.
     # Note here that the key event_string being output is
@@ -761,7 +720,7 @@ def _processKeyboardEvent(event):
         _orcaModifierPressed = False
 
     if _orcaModifierPressed:
-        keyboardEvent.modifiers |= (1 << MODIFIER_ORCA)
+        keyboardEvent.modifiers |= (1 << settings.MODIFIER_ORCA)
 
     # Orca gets first stab at the event.  Then, the presenter gets
     # a shot. [[[TODO: WDW - might want to let the presenter try first?
@@ -793,7 +752,7 @@ def _processKeyboardEvent(event):
     except:
         debug.printException(debug.LEVEL_SEVERE)
 
-    lastInputEvent = keyboardEvent
+    orca_state.lastInputEvent = keyboardEvent
 
     return consumed or isOrcaModifier
 
@@ -811,7 +770,6 @@ def _processBrailleEvent(command):
 
     Returns True if the event was consumed; otherwise False
     """
-    global lastInputEvent
 
     # [[[TODO: WDW - probably should add braille bindings to this module.]]]
 
@@ -822,7 +780,7 @@ def _processBrailleEvent(command):
     speech.stop()
 
     event = BrailleEvent(command)
-    lastInputEvent = event
+    orca_state.lastInputEvent = event
 
     try:
         consumed = _PRESENTATION_MANAGERS[_currentPresentationManager].\

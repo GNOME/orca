@@ -38,6 +38,7 @@ import input_event
 import keybindings
 import mag
 import orca
+import orca_state
 import rolenames
 import script
 import settings
@@ -345,8 +346,8 @@ class Script(script.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "Num_Lock",
-                1 << orca.MODIFIER_ORCA,
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 self.showZonesHandler))
 
         keyBindings.add(
@@ -359,29 +360,29 @@ class Script(script.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_7",
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 0,
                 self.reviewPreviousLineHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Home",
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 0,
                 self.reviewPreviousLineHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_7",
-                1 << orca.MODIFIER_ORCA,
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 self.reviewHomeHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Home",
-                1 << orca.MODIFIER_ORCA,
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 self.reviewHomeHandler))
 
         keyBindings.add(
@@ -401,141 +402,141 @@ class Script(script.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_9",
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 0,
                 self.reviewNextLineHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Page_Up",
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 0,
                 self.reviewNextLineHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_9",
-                1 << orca.MODIFIER_ORCA,
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 self.reviewEndHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Page_Up",
-                1 << orca.MODIFIER_ORCA,
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 self.reviewEndHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_4",
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 0,
                 self.reviewPreviousItemHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Left",
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 0,
                 self.reviewPreviousItemHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_4",
-                1 << orca.MODIFIER_ORCA,
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 self.reviewAboveHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Left",
-                1 << orca.MODIFIER_ORCA,
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 self.reviewAboveHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_5",
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 0,
                 self.reviewCurrentItemHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Begin",
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 0,
                 self.reviewCurrentItemHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_5",
-                1 << orca.MODIFIER_ORCA,
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 self.reviewCurrentAccessibleHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Begin",
-                1 << orca.MODIFIER_ORCA,
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 self.reviewCurrentAccessibleHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_6",
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 0,
                 self.reviewNextItemHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Right",
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 0,
                 self.reviewNextItemHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_6",
-                1 << orca.MODIFIER_ORCA,
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 self.reviewBelowHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Right",
-                1 << orca.MODIFIER_ORCA,
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 self.reviewBelowHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_1",
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 0,
                 self.reviewPreviousCharacterHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_End",
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 0,
                 self.reviewPreviousCharacterHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_1",
-                1 << orca.MODIFIER_ORCA,
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 self.reviewEndOfLineHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_End",
-                1 << orca.MODIFIER_ORCA,
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 self.reviewEndOfLineHandler))
 
         keyBindings.add(
@@ -569,71 +570,71 @@ class Script(script.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "F11",
-                1 << orca.MODIFIER_ORCA,
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 self.toggleTableCellReadModeHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "SunF36",
-                1 << orca.MODIFIER_ORCA,
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 self.toggleTableCellReadModeHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "f",
-                1 << orca.MODIFIER_ORCA,
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 self.readCharAttributesHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "F3",
-                1 << orca.MODIFIER_ORCA,
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 self.reportScriptInfoHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "F1",
-                1 << orca.MODIFIER_ORCA,
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 self.enterLearnModeHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Left",
-                1 << orca.MODIFIER_ORCA,
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 self.decreaseSpeechRateHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Right",
-                1 << orca.MODIFIER_ORCA,
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 self.increaseSpeechRateHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Down",
-                1 << orca.MODIFIER_ORCA,
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 self.decreaseSpeechPitchHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Up",
-                1 << orca.MODIFIER_ORCA,
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 self.increaseSpeechPitchHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "q",
-                1 << orca.MODIFIER_ORCA,
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 self.shutdownHandler))
 
         keyBindings.add(
@@ -646,69 +647,69 @@ class Script(script.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "space",
-                (1 << orca.MODIFIER_ORCA | \
+                (1 << settings.MODIFIER_ORCA | \
                      1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 self.preferencesSettingsHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "space",
-                (1 << orca.MODIFIER_ORCA | \
+                (1 << settings.MODIFIER_ORCA | \
                      1 << atspi.Accessibility.MODIFIER_CONTROL),
-                (1 << orca.MODIFIER_ORCA | \
+                (1 << settings.MODIFIER_ORCA | \
                      1 << atspi.Accessibility.MODIFIER_CONTROL),
                 self.loadUserSettingsHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "s",
-                1 << orca.MODIFIER_ORCA,
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 self.toggleSilenceSpeechHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "F5",
-                (1 << orca.MODIFIER_ORCA | \
+                (1 << settings.MODIFIER_ORCA | \
                      1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 self.listAppsHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "F4",
-                1 << orca.MODIFIER_ORCA,
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 self.cycleDebugLevelHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "F6",
-                1 << orca.MODIFIER_ORCA,
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 self.printActiveAppHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "F7",
-                (1 << orca.MODIFIER_ORCA | \
+                (1 << settings.MODIFIER_ORCA | \
                      1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 self.printAncestryHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "F8",
-                1 << orca.MODIFIER_ORCA,
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 self.printHierarchyHandler))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "F10",
-                1 << orca.MODIFIER_ORCA, \
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA, \
+                1 << settings.MODIFIER_ORCA,
                 self.nextPresentationManagerHandler))
 
         return keyBindings
@@ -745,7 +746,8 @@ class Script(script.Script):
         # commands running in gnome-terminal.
         #
         if event.type.find("window:deactivate") != -1:
-            if orca.locusOfFocus and (orca.locusOfFocus.app == event.source.app):
+            if orca_state.locusOfFocus \
+                and (orca_state.locusOfFocus.app == event.source.app):
                 speech.stop()
 
         # [[[TODO: WDW - HACK to set Orca's locusOfFocus if we've somehow
@@ -755,7 +757,7 @@ class Script(script.Script):
         # tell Orca to not propagate this event to us.]]]
         #
         if event and event.source \
-            and (event.source != orca.locusOfFocus) \
+            and (event.source != orca_state.locusOfFocus) \
             and ((event.type.find("object:selection-changed") != -1) \
                  or (event.type.find("object:text-changed") != -1)) \
             and event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
@@ -790,14 +792,14 @@ class Script(script.Script):
             context.obj.text.setCaretOffset(context.currentOffset);
 
     def sayAll(self, inputEvent):
-        if not orca.locusOfFocus:
+        if not orca_state.locusOfFocus:
             pass
-        elif orca.locusOfFocus.text:
-            speech.sayAll(util.textLines(orca.locusOfFocus),
+        elif orca_state.locusOfFocus.text:
+            speech.sayAll(util.textLines(orca_state.locusOfFocus),
                           self.__sayAllProgressCallback)
         else:
             speech.speakUtterances(
-                self.speechGenerator.getSpeech(orca.locusOfFocus, False))
+                self.speechGenerator.getSpeech(orca_state.locusOfFocus, False))
         return True
 
     def sayPhrase(self, obj, startOffset, endOffset):
@@ -1007,9 +1009,10 @@ class Script(script.Script):
         # right, then speak the character to the left of where the text
         # caret is (i.e. the selected character).
         #
-        mods = orca.lastInputEvent.modifiers
+        mods = orca_state.lastInputEvent.modifiers
         shiftMask = 1 << atspi.Accessibility.MODIFIER_SHIFT
-        if (mods & shiftMask) and orca.lastInputEvent.event_string == "Right":
+        if (mods & shiftMask) \
+            and orca_state.lastInputEvent.event_string == "Right":
             startOffset = offset-1
             endOffset = offset
         else:
@@ -1028,14 +1031,14 @@ class Script(script.Script):
         util.speakTextSelectionState(obj, startOffset, endOffset)
 
     def whereAmI(self, inputEvent):
-        self.updateBraille(orca.locusOfFocus)
+        self.updateBraille(orca_state.locusOfFocus)
 
         verbosity = settings.speechVerbosityLevel
 
         utterances = []
 
         utterances.extend(
-            self.speechGenerator.getSpeechContext(orca.locusOfFocus))
+            self.speechGenerator.getSpeechContext(orca_state.locusOfFocus))
 
         # Now, we'll treat table row and column headers as context
         # as well.  This requires special handling because we're
@@ -1047,12 +1050,12 @@ class Script(script.Script):
         # We also keep track of tree level depth and only announce
         # that if it changes.
         #
-        if orca.locusOfFocus.role == rolenames.ROLE_TABLE_CELL:
-            parent = orca.locusOfFocus.parent
+        if orca_state.locusOfFocus.role == rolenames.ROLE_TABLE_CELL:
+            parent = orca_state.locusOfFocus.parent
             if parent and parent.table:
                 table = parent.table
-                row = table.getRowAtIndex(orca.locusOfFocus.index)
-                col = table.getColumnAtIndex(orca.locusOfFocus.index)
+                row = table.getRowAtIndex(orca_state.locusOfFocus.index)
+                col = table.getColumnAtIndex(orca_state.locusOfFocus.index)
 
                 desc = parent.table.getRowDescription(row)
                 if desc and len(desc):
@@ -1075,15 +1078,15 @@ class Script(script.Script):
         # Get the text for the object itself.
         #
         utterances.extend(
-            self.speechGenerator.getSpeech(orca.locusOfFocus, False))
+            self.speechGenerator.getSpeech(orca_state.locusOfFocus, False))
 
         # Now speak the tree node level.
         #
-        level = util.getNodeLevel(orca.locusOfFocus)
+        level = util.getNodeLevel(orca_state.locusOfFocus)
         if level >= 0:
             utterances.append(_("tree level %d") % (level + 1))
 
-        if orca.locusOfFocus.state.count(\
+        if orca_state.locusOfFocus.state.count(\
                     atspi.Accessibility.STATE_SENSITIVE) == 0:
             message = _("No focus")
             utterances.extend(message)
@@ -1325,7 +1328,7 @@ class Script(script.Script):
                     row = table.getRowAtIndex(newLocusOfFocus.index)
                     newParent.lastRow = row
         else:
-            orca.noFocusTimeStamp = time.time()
+            orca_state.noFocusTimeStamp = time.time()
 
     def visualAppearanceChanged(self, event, obj):
         """Called when the visual appearance of an object changes.  This
@@ -1400,7 +1403,7 @@ class Script(script.Script):
             if relation.getRelationType() \
                    == atspi.Accessibility.RELATION_CONTROLLED_BY:
                 target = atspi.Accessible.makeAccessible(relation.getTarget(0))
-                if target == orca.locusOfFocus:
+                if target == orca_state.locusOfFocus:
                     self.updateBraille(target)
                     speech.speakUtterances(
                         self.speechGenerator.getSpeech(target, True))
@@ -1416,13 +1419,13 @@ class Script(script.Script):
                        == atspi.Accessibility.RELATION_LABEL_FOR:
                     target = \
                         atspi.Accessible.makeAccessible(relation.getTarget(0))
-                    if target == orca.locusOfFocus:
+                    if target == orca_state.locusOfFocus:
                         self.updateBraille(target)
                         speech.speakUtterances(
                             self.speechGenerator.getSpeech(target, True))
                         return
 
-        if obj != orca.locusOfFocus:
+        if obj != orca_state.locusOfFocus:
             return
 
         if event:
@@ -1562,7 +1565,7 @@ class Script(script.Script):
         # of GTK+.]]]
         #
         if event.source and (event.source.role == rolenames.ROLE_DIALOG) \
-           and (event.source == orca.locusOfFocus):
+           and (event.source == orca_state.locusOfFocus):
             return
 
         orca.visualAppearanceChanged(event, event.source)
@@ -1588,11 +1591,11 @@ class Script(script.Script):
         if brailleNeedsRepainting:
             self.updateBraille(event.source)
 
-        if not orca.lastInputEvent:
+        if not orca_state.lastInputEvent:
             return
 
-        if isinstance(orca.lastInputEvent, input_event.MouseButtonEvent):
-            if not orca.lastInputEvent.pressed:
+        if isinstance(orca_state.lastInputEvent, input_event.MouseButtonEvent):
+            if not orca_state.lastInputEvent.pressed:
                 self.sayLine(event.source)
             return
 
@@ -1602,11 +1605,12 @@ class Script(script.Script):
         # down is done via other actions such as "i" or "j".  We may
         # need to think about this a little harder.]]]
         #
-        if not isinstance(orca.lastInputEvent, input_event.KeyboardEvent):
+        if not isinstance(orca_state.lastInputEvent,
+                          input_event.KeyboardEvent):
             return
 
-        string = orca.lastInputEvent.event_string
-        mods = orca.lastInputEvent.modifiers
+        string = orca_state.lastInputEvent.event_string
+        mods = orca_state.lastInputEvent.modifiers
         isControlKey = mods & (1 << atspi.Accessibility.MODIFIER_CONTROL)
         isShiftKey = mods & (1 << atspi.Accessibility.MODIFIER_SHIFT)
         hasLastPos = event.source.__dict__.has_key("lastCursorPosition")
@@ -1703,8 +1707,8 @@ class Script(script.Script):
         # currently focused object is the parent of the object which
         # has the caret.
         #
-        if (event.source != orca.locusOfFocus) \
-            and (event.source.parent != orca.locusOfFocus):
+        if (event.source != orca_state.locusOfFocus) \
+            and (event.source.parent != orca_state.locusOfFocus):
             return
 
         # We always automatically go back to focus tracking mode when
@@ -1726,8 +1730,8 @@ class Script(script.Script):
         # currently focused object is the parent of the object from which
         # text was deleted
         #
-        if (event.source != orca.locusOfFocus) \
-            and (event.source.parent != orca.locusOfFocus):
+        if (event.source != orca_state.locusOfFocus) \
+            and (event.source.parent != orca_state.locusOfFocus):
             return
 
         # We'll also ignore sliders because we get their output via
@@ -1744,12 +1748,13 @@ class Script(script.Script):
         # about the ramifications of this when it comes to editors such
         # as vi or emacs.
         #
-        if (not orca.lastInputEvent) \
+        if (not orca_state.lastInputEvent) \
             or \
-            (not isinstance(orca.lastInputEvent, input_event.KeyboardEvent)):
+            (not isinstance(orca_state.lastInputEvent,
+                            input_event.KeyboardEvent)):
             return
 
-        string = orca.lastInputEvent.event_string
+        string = orca_state.lastInputEvent.event_string
         text = event.source.text
         if string == "BackSpace":
             # Speak the character that has just been deleted.
@@ -1793,8 +1798,8 @@ class Script(script.Script):
         # currently focused object is the parent of the object from which
         # text was inserted.
         #
-        if (event.source != orca.locusOfFocus) \
-            and (event.source.parent != orca.locusOfFocus):
+        if (event.source != orca_state.locusOfFocus) \
+            and (event.source.parent != orca_state.locusOfFocus):
             return
 
         # We'll also ignore sliders because we get their output via
@@ -1822,9 +1827,9 @@ class Script(script.Script):
         # comes across as "space" in the keyboard event and " " in the
         # text event.
         #
-        if isinstance(orca.lastInputEvent, input_event.KeyboardEvent):
-            keyString = orca.lastInputEvent.event_string
-            wasCommand = orca.lastInputEvent.modifiers \
+        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
+            keyString = orca_state.lastInputEvent.event_string
+            wasCommand = orca_state.lastInputEvent.modifiers \
                          & (1 << atspi.Accessibility.MODIFIER_CONTROL \
                             | 1 << atspi.Accessibility.MODIFIER_ALT \
                             | 1 << atspi.Accessibility.MODIFIER_META \
@@ -1858,9 +1863,10 @@ class Script(script.Script):
         # reference since the AT-SPI gives us little help in finding
         # this.
         #
-        if orca.locusOfFocus:
+        if orca_state.locusOfFocus:
             event.source.activeDescendantInfo = \
-                [orca.locusOfFocus.parent, orca.locusOfFocus.index]
+                [orca_state.locusOfFocus.parent,
+                 orca_state.locusOfFocus.index]
         elif event.source.__dict__.has_key("activeDescendantInfo"):
             del event.source.__dict__["activeDescendantInfo"]
 
@@ -1879,8 +1885,8 @@ class Script(script.Script):
         # just assume that link-selected events always come from the
         # application with focus.]]]
         #
-        #if orca.locusOfFocus \
-        #   and (orca.locusOfFocus.app == event.source.app):
+        #if orca_state.locusOfFocus \
+        #   and (orca_state.locusOfFocus.app == event.source.app):
         #    orca.setLocusOfFocus(event, event.source)
         orca.setLocusOfFocus(event, event.source)
 
@@ -1913,7 +1919,7 @@ class Script(script.Script):
         #
         #if event.type.endswith("sensitive") \
         #   and (event.detail1 == 0) \
-        #   and event.source == orca.locusOfFocus:
+        #   and event.source == orca_state.locusOfFocus:
         #    print "FOO INSENSITIVE"
         #    #orca.setLocusOfFocus(event, None)
 
@@ -1993,7 +1999,7 @@ class Script(script.Script):
         #    window:deactivate (w1)
         #    window:activate   (w2)
         #
-        orca.setActiveWindow(event.source)
+        orca_state.activeWindow = event.source
 
     def onWindowDeactivated(self, event):
         """Called whenever a toplevel window is deactivated.
@@ -2008,9 +2014,9 @@ class Script(script.Script):
         # the locusOfFocus and activeWindow when we are dealing with
         # an event from the current activeWindow.
         #
-        if event.source == orca.activeWindow:
+        if event.source == orca_state.activeWindow:
             orca.setLocusOfFocus(event, None)
-            orca.setActiveWindow(None)
+            orca_state.activeWindow = None
 
     def noOp(self, event):
         """Just here to capture events.
@@ -2042,12 +2048,13 @@ class Script(script.Script):
 
         Returns: a list of all objects under the specified object
         """
-        if (not orca.locusOfFocus) or (orca.locusOfFocus.app != self.app):
+        if (not orca_state.locusOfFocus) \
+            or (orca_state.locusOfFocus.app != self.app):
             return []
 
         # We want to stop at the window or frame or equivalent level.
         #
-        obj = orca.locusOfFocus
+        obj = orca_state.locusOfFocus
         while obj \
                   and obj.parent \
                   and (obj.parent.role != rolenames.ROLE_APPLICATION) \
@@ -2125,9 +2132,9 @@ class Script(script.Script):
         only speak the subset required.
         """
 
-        if orca.locusOfFocus and orca.locusOfFocus.text:
-            caretOffset = orca.locusOfFocus.text.caretOffset
-            text = orca.locusOfFocus.text
+        if orca_state.locusOfFocus and orca_state.locusOfFocus.text:
+            caretOffset = orca_state.locusOfFocus.text.caretOffset
+            text = orca_state.locusOfFocus.text
 
             # Creates dictionaries of the default attributes, plus the set
             # of attributes specific to the character at the caret offset.
@@ -2190,19 +2197,20 @@ class Script(script.Script):
         """
 
         string = "SCRIPT INFO: Script name='%s'" % self.name
-        if orca.locusOfFocus and orca.locusOfFocus.app:
+        if orca_state.locusOfFocus and orca_state.locusOfFocus.app:
 
-            string += " Application name='%s'" % orca.locusOfFocus.app.name
+            string += " Application name='%s'" \
+                      % orca_state.locusOfFocus.app.name
 
             try:
                 string += " Toolkit name='%s'" \
-                          % orca.locusOfFocus.app.toolkitName
+                          % orca_state.locusOfFocus.app.toolkitName
             except:
                 string += " Toolkit unknown"
 
             try:
                 string += " Version='%s'" \
-                          % orca.locusOfFocus.app.version
+                          % orca_state.locusOfFocus.app.version
             except:
                 string += " Version unknown"
 
@@ -2230,7 +2238,7 @@ class Script(script.Script):
                 currentZoneIndex = 0
                 while currentZoneIndex < len(line.zones):
                     zone = line.zones[currentZoneIndex]
-                    if zone.accessible == orca.locusOfFocus:
+                    if zone.accessible == orca_state.locusOfFocus:
                         foundZoneWithFocus = True
                         break
                     else:
@@ -2307,7 +2315,7 @@ class Script(script.Script):
         if self.flatReviewContext:
             util.drawOutline(-1, 0, 0, 0)
             self.flatReviewContext = None
-            self.updateBraille(orca.locusOfFocus)
+            self.updateBraille(orca_state.locusOfFocus)
         else:
             context = self.getFlatReviewContext()
             [string, x, y, width, height] = \
@@ -2398,9 +2406,9 @@ class Script(script.Script):
 
             self.targetCursorCell = 1
             self.updateBrailleReview(self.targetCursorCell)
-        elif braille.beginningIsShowing and orca.locusOfFocus \
-             and ((orca.locusOfFocus.role == rolenames.ROLE_TEXT) \
-                  or (orca.locusOfFocus.role == rolenames.ROLE_PARAGRAPH)):
+        elif braille.beginningIsShowing and orca_state.locusOfFocus \
+             and ((orca_state.locusOfFocus.role == rolenames.ROLE_TEXT) \
+                  or (orca_state.locusOfFocus.role == rolenames.ROLE_PARAGRAPH)):
             # If we're at the beginning of a line of a multiline text
             # area, then force it's caret to the end of the previous
             # line.  The assumption here is that we're currently
@@ -2409,7 +2417,7 @@ class Script(script.Script):
             # caret position, we will get a caret event, which will
             # then update the braille.
             #
-            text = orca.locusOfFocus.text
+            text = orca_state.locusOfFocus.text
             [string, startOffset, endOffset] = text.getTextAtOffset(
                 text.caretOffset,
                 atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
@@ -2458,9 +2466,9 @@ class Script(script.Script):
 
             self.targetCursorCell = 1
             self.updateBrailleReview(self.targetCursorCell)
-        elif braille.endIsShowing and orca.locusOfFocus \
-             and ((orca.locusOfFocus.role == rolenames.ROLE_TEXT) \
-                  or (orca.locusOfFocus.role == rolenames.ROLE_PARAGRAPH)):
+        elif braille.endIsShowing and orca_state.locusOfFocus \
+             and ((orca_state.locusOfFocus.role == rolenames.ROLE_TEXT) \
+                  or (orca_state.locusOfFocus.role == rolenames.ROLE_PARAGRAPH)):
             # If we're at the end of a line of a multiline text area, then
             # force it's caret to the beginning of the next line.  The
             # assumption here is that we're currently viewing the line that
@@ -2468,7 +2476,7 @@ class Script(script.Script):
             # tacking mode.  When we set the caret position, we will get a
             # caret event, which will then update the braille.
             #
-            text = orca.locusOfFocus.text
+            text = orca_state.locusOfFocus.text
             [string, startOffset, endOffset] = text.getTextAtOffset(
                 text.caretOffset,
                 atspi.Accessibility.TEXT_BOUNDARY_LINE_START)

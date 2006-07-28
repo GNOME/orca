@@ -33,7 +33,7 @@ import math
 
 import atspi
 import debug
-import orca
+import orca_state
 import rolenames
 import settings
 import util
@@ -688,7 +688,7 @@ class SpeechGenerator:
 
         utterances = self._getDefaultSpeech(obj, already_focused)
 
-        if (obj == orca.locusOfFocus) \
+        if (obj == orca_state.locusOfFocus) \
                and (settings.speechVerbosityLevel \
                     == settings.VERBOSITY_LEVEL_VERBOSE):
             utterances.extend(self._getSpeechForObjectAccelerator(obj))
@@ -1177,7 +1177,7 @@ class SpeechGenerator:
                            ((row == 0 or row == parent.table.nRows-1) and \
                             parent.lastColumn == column)
 
-                if speakAll == True:
+                if speakAll:
                     for i in range(0, parent.table.nColumns):
                         accRow = parent.table.getAccessibleAt(row, i)
                         cell = atspi.Accessible.makeAccessible(accRow)

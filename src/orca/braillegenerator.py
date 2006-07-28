@@ -34,7 +34,7 @@ import math
 import atspi
 import braille
 import debug
-import orca
+import orca_state
 import rolenames
 import settings
 import util
@@ -405,7 +405,7 @@ class BrailleGenerator:
         else:
             text = util.appendString(text, "< >")
 
-        if obj == orca.locusOfFocus:
+        if obj == orca_state.locusOfFocus:
             text = util.appendString(text, self._getTextForRole(obj))
             text = util.appendString(text, self._getTextForAvailability(obj))
             text = util.appendString(text,
@@ -645,7 +645,7 @@ class BrailleGenerator:
         text = util.appendString(text, util.getDisplayedText(obj))
         text = util.appendString(text, rolenames.getBrailleForRoleName(obj))
 
-        if obj == orca.locusOfFocus:
+        if obj == orca_state.locusOfFocus:
             text = util.appendString(text, self._getTextForAvailability(obj))
             text = util.appendString(text,
                                       self._getTextForAccelerator(obj),
@@ -687,7 +687,7 @@ class BrailleGenerator:
         text = util.appendString(text, util.getDisplayedLabel(obj))
         text = util.appendString(text, util.getDisplayedText(obj))
 
-        if obj == orca.locusOfFocus:
+        if obj == orca_state.locusOfFocus:
             text = util.appendString(text, self._getTextForAvailability(obj))
             text = util.appendString(text,
                                       self._getTextForAccelerator(obj),
@@ -753,7 +753,7 @@ class BrailleGenerator:
         text = util.appendString(text, util.getDisplayedLabel(obj))
         text = util.appendString(text, util.getDisplayedText(obj))
 
-        if obj == orca.locusOfFocus:
+        if obj == orca_state.locusOfFocus:
             text = util.appendString(text, self._getTextForAvailability(obj))
             text = util.appendString(text,
                                       self._getTextForAccelerator(obj),
@@ -885,7 +885,7 @@ class BrailleGenerator:
         else:
             text = util.appendString(text, "& y")
 
-        if obj == orca.locusOfFocus:
+        if obj == orca_state.locusOfFocus:
             text = util.appendString(text, self._getTextForRole(obj))
             text = util.appendString(text, self._getTextForAvailability(obj))
             text = util.appendString(text,
@@ -1054,7 +1054,7 @@ class BrailleGenerator:
                            ((row == 0 or row == parent.table.nRows-1) and \
                             parent.lastColumn == column)
 
-                if speakAll == True:
+                if speakAll:
                     focusRowRegion = None
                     for i in range(0, parent.table.nColumns):
                         accRow = parent.table.getAccessibleAt(row, i)

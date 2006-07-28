@@ -29,7 +29,7 @@ import orca.debug as debug
 import orca.atspi as atspi
 import orca.braille as braille
 import orca.default as default
-import orca.orca as orca
+import orca.orca_state as orca_state
 import orca.rolenames as rolenames
 import orca.speech as speech
 import orca.speechgenerator as speechgenerator
@@ -123,7 +123,7 @@ class Script(default.Script):
 
         # Braille the default action for this component.
         #
-        self.updateBraille(orca.locusOfFocus)
+        self.updateBraille(orca_state.locusOfFocus)
 
         # Look for the label containing the misspelled word.
         # There will be three labels in the top panel in the Check

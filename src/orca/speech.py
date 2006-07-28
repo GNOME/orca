@@ -29,7 +29,7 @@ __license__   = "LGPL"
 import time
 
 import debug
-import orca
+import orca_state
 import platform
 import settings
 
@@ -137,9 +137,9 @@ def speak(text, acss=None, interrupt=True):
 
     # We will not interrupt a key echo in progress.
     #
-    if orca.lastKeyEchoTime:
+    if orca_state.lastKeyEchoTime:
         interrupt = interrupt \
-            and ((time.time() - orca.lastKeyEchoTime) > 0.5)
+            and ((time.time() - orca_state.lastKeyEchoTime) > 0.5)
 
     if settings.silenceSpeech:
         return
@@ -169,9 +169,9 @@ def speakUtterances(utterances, acss=None, interrupt=True):
 
     # We will not interrupt a key echo in progress.
     #
-    if orca.lastKeyEchoTime:
+    if orca_state.lastKeyEchoTime:
         interrupt = interrupt \
-            and ((time.time() - orca.lastKeyEchoTime) > 0.5)
+            and ((time.time() - orca_state.lastKeyEchoTime) > 0.5)
 
     if settings.silenceSpeech:
         return

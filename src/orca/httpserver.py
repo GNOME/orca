@@ -51,7 +51,7 @@ class _HTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
     """
 
-    def log_request(code=None, size=None):
+    def log_request(self, code=None, size=None):
         """Override to avoid getting a log message on stdout for
         each GET, POST, etc. request"""
         pass

@@ -39,8 +39,8 @@ import orca.debug as debug
 import orca.default as default
 import orca.input_event as input_event
 import orca.keybindings as keybindings
-import orca.orca as orca
 import orca.rolenames as rolenames
+import orca.settings as settings
 import orca.speech as speech
 import orca.util as util
 
@@ -166,8 +166,8 @@ class Script(default.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "h",
-                1 << orca.MODIFIER_ORCA,
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 self.togglePrefixHandler))
 
         messageKeys = [ "1", "2", "3", "4", "5", "6", "7", "8", "9" ]
@@ -175,8 +175,8 @@ class Script(default.Script):
             keyBindings.add(
                 keybindings.KeyBinding(
                     messageKeys[i],
-                    1 << orca.MODIFIER_ORCA,
-                    1 << orca.MODIFIER_ORCA,
+                    1 << settings.MODIFIER_ORCA,
+                    1 << settings.MODIFIER_ORCA,
                     self.readPreviousMessageHandler))
 
         return keyBindings

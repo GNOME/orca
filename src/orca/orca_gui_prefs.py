@@ -41,6 +41,7 @@ import locale
 import acss
 import orca
 import orca_prefs
+import orca_state
 import platform
 import settings
 import speech as speech
@@ -717,7 +718,8 @@ class orcaSetupGUI(GladeWrapper):
         # then we can fail gracefully.
         #
         try:
-            self.orcaSetupWindow.window.set_user_time(orca.lastTimestamp)
+            self.orcaSetupWindow.window.set_user_time(\
+                orca_state.lastInputEventTimestamp)
         except AttributeError:
             debug.printException(debug.LEVEL_FINEST)
 

@@ -30,6 +30,7 @@ DOC_FILES = \
 	orca.orca_i18n \
 	orca.orca_prefs \
 	orca.orca \
+	orca.orca_state \
 	orca.outloud \
 	orca.platform \
 	orca.presentation_manager \

@@ -44,7 +44,6 @@ import speechserver
 
 from acss import ACSS
 from chnames import chnames
-from punctuation_settings import punctuation
 
 from orca_i18n import _           # for gettext support
 
@@ -609,7 +608,7 @@ class SpeechServer(speechserver.SpeechServer):
         newText = ''
         for i in range(0, len(oldText)):
             try:
-                level, action = punctuation[oldText[i]]
+                level, action = punctuation_settings.punctuation[oldText[i]]
 
                 # Special case for punctuation in text like filenames or URL's:
                 #

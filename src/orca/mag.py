@@ -171,6 +171,11 @@ def __setROIPush(x, y):
         needNewROI = True
         newROI.y2 = y
         newROI.y1 = y - _roiHeight
+
+    # Well...we'll always update the ROI so the new gnome-mag API
+    # will redraw the crosswires for us.
+    #
+    #if needNewROI:
     if True:
         __setROI(newROI)
 

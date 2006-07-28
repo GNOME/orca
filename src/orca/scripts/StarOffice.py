@@ -30,9 +30,9 @@ import orca.atspi as atspi
 import orca.default as default
 import orca.input_event as input_event
 import orca.rolenames as rolenames
-import orca.orca as orca
 import orca.braille as braille
 import orca.braillegenerator as braillegenerator
+import orca.orca_state as orca_state
 import orca.speech as speech
 import orca.speechgenerator as speechgenerator
 import orca.settings as settings
@@ -254,8 +254,8 @@ class Script(default.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "a",
-                1 << orca.MODIFIER_ORCA,
-                1 << orca.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
                 self.speakInputLineHandler))
 
         return keyBindings
@@ -276,7 +276,7 @@ class Script(default.Script):
 
         # Check to see if the current focus is a table cell.
         #
-        if isSpreadSheetCell(orca.locusOfFocus):
+        if isSpreadSheetCell(orca_state.locusOfFocus):
             if inputLineForCell and inputLineForCell.text:
                 inputLine = inputLineForCell.text.getText(0,-1)
                 if not inputLine:
@@ -390,12 +390,10 @@ class Script(default.Script):
         - endOffset: the end offset for this word
         """
 
-        isHyperText = False
         voices = settings.voices
 
         for i in range(startOffset, endOffset):
             if util.getLinkIndex(obj, i) >= 0:
-                isHyperText = True
                 voice = voices[settings.HYPERLINK_VOICE]
                 break
             elif word.isupper():
@@ -683,7 +681,7 @@ class Script(default.Script):
                        ((row == 0 or row == event.source.table.nRows-1) and \
                         event.source.lastColumn == column)
 
-            if speakAll == True:
+            if speakAll:
                 utterances = []
                 regions = []
 
@@ -845,8 +843,8 @@ class Script(default.Script):
                      rolenames.ROLE_FRAME, \
                      rolenames.ROLE_APPLICATION]
         if util.isDesiredFocusedItem(event.source, rolesList):
-            if orca.locusOfFocus.role == rolenames.ROLE_TABLE_CELL:
-                cell = orca.locusOfFocus
+            if orca_state.locusOfFocus.role == rolenames.ROLE_TABLE_CELL:
+                cell = orca_state.locusOfFocus
 
                 # We are getting two "object:selection-changed" events 
                 # for each spread sheet cell move, so in order to prevent 
