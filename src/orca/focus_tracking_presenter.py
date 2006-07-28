@@ -532,7 +532,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                 debug.println(debug.LEVEL_ALL,
                               "           ...put complete")
             if not self._gidleId:
-                time.sleep(0.0001) # Attempt to sidestep GIL
+                if settings.gilSleepTime:
+                    time.sleep(settings.gilSleepTime)
                 self._gidleId = gobject.idle_add(self._dequeueEvent)
 
             if settings.debugEventQueue:
@@ -632,7 +633,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             self._gidleLock.acquire()
             if self._eventQueue.empty():
                 if noFocus:
-                    time.sleep(0.0001) # Attempt to sidestep GIL
+                    if settings.gilSleepTime:
+                        time.sleep(settings.gilSleepTime)
                     message = _("No focus")
                     if settings.brailleVerbosityLevel == \
                         settings.VERBOSITY_LEVEL_VERBOSE:

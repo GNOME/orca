@@ -144,14 +144,10 @@ class Registry:
 
     def __blockPreventor(self):
         """[[[TODO: HACK to attempt to prevent deadlocks.  We call time.sleep
-        here as a means to sidestep the global interpreter lock (GIL).  Take
-        a look at the following URLs for more information:
-
-        http://mail.python.org/pipermail/python-list/2002-October/126632.html
-        http://twistedmatrix.com/pipermail/twisted-python/2005-July/011052.html
-        http://www.pyzine.com/Issue001/Section_Articles/article_ThreadingGlobalInterpreter.html"""
-
-        time.sleep(0.0001) # Attempt to sidestep GIL
+        here as a means to sidestep the global interpreter lock (GIL).]]]
+        """
+        if settings.gilSleepTime:
+            time.sleep(settings.gilSleepTime)
         return True
 
     def start(self):
@@ -165,16 +161,20 @@ class Registry:
         #
         if settings.useBonoboMain:
             debug.println(debug.LEVEL_CONFIGURATION,
-                          "atspi.start: using bonobo.main")
-            gobject.idle_add(self.__blockPreventor)
+                          "atspi.start: using bonobo.main; "
+                          + "gilSleepTime=%d" % settings.gilSleepTime)
+            if settings.gilSleepTime:
+                gobject.idle_add(self.__blockPreventor)
             bonobo.main()
         else:
             debug.println(debug.LEVEL_CONFIGURATION,
-                          "atspi.start: using our custom main loop")
+                          "atspi.start: using our custom main loop; "
+                          + "gilSleepTime=%d" % settings.gilSleepTime)
             self.running = True
             context = gobject.MainLoop().get_context()
             while self.running:
-                time.sleep(0.0001) # Attempt to sidestep GIL
+                if settings.gilSleepTime:
+                    time.sleep(settings.gilSleepTime)
                 context.iteration(False)
 
     def stop(self):

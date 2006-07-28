@@ -324,6 +324,16 @@ cacheAccessibles        = True
 #
 learnModeEnabled        = False
 
+# If non-zero, we use time.sleep() in various places to attempt to
+# free up the global interpreter lock.  Take a look at the following
+# URLs for more information:
+#
+# http://mail.python.org/pipermail/python-list/2002-October/126632.html
+# http://twistedmatrix.com/pipermail/twisted-python/2005-July/011052.html
+# http://www.pyzine.com/Issue001/Section_Articles/article_ThreadingGlobalInterpreter.html
+#
+gilSleepTime            = 0.00001
+
 # If True, we use the bonobo main loop provided by bonobo to handle
 # all events in atspi.py.  If False, we create our own loop.
 #
