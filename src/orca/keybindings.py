@@ -119,6 +119,14 @@ class KeyBindings:
 
         self.keyBindings.append(keyBinding)
 
+    def remove(self, keyBinding):
+        """Removes the given KeyBinding instance from this set of keybindings.
+        """
+
+        for i in range(0, len(self.keyBindings)):
+            if keyBinding == self.keyBindings[i]:
+                del self.keyBindings[i]
+
     def getInputHandler(self, keyboardEvent):
         """Returns the input handler of the key binding that matches the
         given keycode and modifiers, or None if no match exists.

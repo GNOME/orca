@@ -186,8 +186,12 @@ class Script(script.Script):
             _("Returns to object with keyboard focus."))
 
         self.enterLearnModeHandler = input_event.InputEventHandler(
-            orca.enterLearnMode,
+            Script.enterLearnMode,
             _("Enters learn mode.  Press escape to exit learn mode."))
+
+        self.exitLearnModeHandler = input_event.InputEventHandler(
+            Script.exitLearnMode,
+            _("Exits learn mode."))
 
         self.decreaseSpeechRateHandler = input_event.InputEventHandler(
             speech.decreaseSpeechRate,
@@ -769,6 +773,21 @@ class Script(script.Script):
                 orca.setLocusOfFocus(event, event.source, False)
 
         script.Script.processObjectEvent(self, event)
+
+    def processKeyboardEvent(self, keyboardEvent):
+        """Processes the given keyboard event. It uses the super
+        class equivalent to do most of the work. The only thing done here
+        is to detect when the user is trying to get out of learn mode.
+
+        Arguments:
+        - keyboardEvent: an instance of input_event.KeyboardEvent
+        """
+
+        if (keyboardEvent.type == atspi.Accessibility.KEY_PRESSED_EVENT) and \
+           (keyboardEvent.event_string == "Escape"):
+            settings.learnModeEnabled = False
+
+        return script.Script.processKeyboardEvent(self, keyboardEvent)
 
     def __sayAllProgressCallback(self, context, type):
         # [[[TODO: WDW - this needs work.  Need to be able to manage
@@ -2218,6 +2237,43 @@ class Script(script.Script):
             speech.speak(string)
             braille.displayMessage(string)
 
+        return True
+
+    def enterLearnMode(self, inputEvent=None):
+        """Turns learn mode on.  The user must press the escape key to exit
+        learn mode.
+
+        Returns True to indicate the input event has been consumed.
+        """
+
+        if settings.learnModeEnabled:
+            return True
+
+        self.exitLearnModeKeyBinding = keybindings.KeyBinding(
+            "Escape",
+            0,
+            0,
+            self.exitLearnModeHandler)
+        self.keyBindings.add(self.exitLearnModeKeyBinding)
+
+        speech.speak(
+            _("Entering learn mode.  Press any key to hear its function. " \
+              + "To exit learn mode, press the escape key."))
+        braille.displayMessage(_("Learn mode.  Press escape to exit."))
+        settings.learnModeEnabled = True
+        return True
+
+    def exitLearnMode(self, inputEvent=None):
+        """Turns learn mode off.
+
+        Returns True to indicate the input event has been consumed.
+        """
+
+        self.keyBindings.remove(self.exitLearnModeKeyBinding)
+
+        speech.speak(_("Exiting learn mode."))
+        braille.displayMessage(_("Exiting learn mode."))
+        self.whereAmI(None)
         return True
 
     def getFlatReviewContext(self):

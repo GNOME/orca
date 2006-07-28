@@ -1,3 +1,11 @@
+2006-07-28  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          src/orca/keybinding.py:
+          src/orca/orca.py:
+          Fixed bug #319660 - exiting learn mode should display current 
+          locus of focus.
+
 2006-07-28  Willie Walker <william.walker@sun.com>
 
 	* docs/pydoc/Makefile.am, src/orca/Makefile.am, src/orca/atspi.py,

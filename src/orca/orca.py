@@ -424,37 +424,6 @@ def printHierarchy(script=None, inputEvent=None):
 
 ########################################################################
 #                                                                      #
-# METHODS FOR HANDLING LEARN MODE.                                     #
-#                                                                      #
-########################################################################
-
-def enterLearnMode(script=None, inputEvent=None):
-    """Turns learn mode on.  The user must press the escape key to exit
-    learn mode.
-
-    Returns True to indicate the input event has been consumed.
-    """
-
-    speech.speak(
-        _("Entering learn mode.  Press any key to hear its function. " \
-          + "To exit learn mode, press the escape key."))
-    braille.displayMessage(_("Learn mode.  Press escape to exit."))
-    settings.learnModeEnabled = True
-    return True
-
-def exitLearnMode(script=None, inputEvent=None):
-    """Turns learn mode off.
-
-    Returns True to indicate the input event has been consumed.
-    """
-
-    speech.speak(_("Exiting learn mode."))
-    braille.displayMessage(_("Exiting learn mode."))
-    settings.learnModeEnabled = False
-    return True
-
-########################################################################
-#                                                                      #
 # METHODS FOR PRE-PROCESSING AND MASSAGING KEYBOARD EVENTS.            #
 #                                                                      #
 # All keyboard events are funnelled through here first.  Orca itself   #
@@ -744,10 +713,6 @@ def _processKeyboardEvent(event):
                 if event_string in keynames.keynames:
                     event_string = keynames.keynames[event_string]
                 speech.speak(event_string)
-            elif (keyboardEvent.type \
-                  == atspi.Accessibility.KEY_RELEASED_EVENT) \
-                 and (keyboardEvent.event_string == "Escape"):
-                exitLearnMode(None, keyboardEvent)
             consumed = True
     except:
         debug.printException(debug.LEVEL_SEVERE)
