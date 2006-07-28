@@ -1167,6 +1167,7 @@ def traceit(frame, event, arg):
            or name == "UserDict":
             return traceit
         line = linecache.getline(filename, lineno)
-        print "%s:%s: %s" % (name, lineno, line.rstrip())
+        debug.println(debug.LEVEL_ALL,
+                      "TRACE %s:%s: %s" % (name, lineno, line.rstrip()))
     return traceit
 

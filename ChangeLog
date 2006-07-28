@@ -1,5 +1,8 @@
 2006-07-28  Willie Walker <william.walker@sun.com>
 
+	* src/orca/util.py: send traceit output to debug log file using
+	debug.LEVEL_ALL.
+	
 	* src/orca/util.py: add traceit utility to help with debugging.
 	
 	* src/orca/settings.py, src/orca/atspi.py, 
