@@ -25,6 +25,8 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import os
+
 import gobject
 import Queue
 import string
@@ -240,18 +242,19 @@ class SpeechServer(speechserver.SpeechServer):
 
     def __init__(self, driver, iid):
         speechserver.SpeechServer.__init__(self)
-        self.__speakers   = {}
-        self.__pitchInfo  = {}
-        self.__rateInfo   = {}
-        self.__volumeInfo = {}
-        self.__driver     = driver
-        self.__driverName = driver.driverName
-        self.__iid        = iid
-        self.__sayAll     = None
-        self.__isSpeaking = False
-        self.__eventQueue = Queue.Queue(0)
-        self.__gidleId    = 0
-        self.__gidleLock  = threading.Lock()
+        self.__speakers      = {}
+        self.__pitchInfo     = {}
+        self.__rateInfo      = {}
+        self.__volumeInfo    = {}
+        self.__driver        = driver
+        self.__driverName    = driver.driverName
+        self.__iid           = iid
+        self.__sayAll        = None
+        self.__isSpeaking    = False
+        self.__eventQueue    = Queue.Queue(0)
+        self.__gidleId       = 0
+        self.__gidleLock     = threading.Lock()
+        self.__lastResetTime = 0
 
     def __getRate(self, speaker):
         """Gets the voice-independent ACSS rate value of a voice."""
@@ -876,6 +879,17 @@ class SpeechServer(speechserver.SpeechServer):
 
     def reset(self, text=None, acss=None):
         """Resets the speech engine."""
+
+        # We might get into a vicious loop of resetting speech, so
+        # we will abort if we see this happening.
+        #
+        if (time.time() - self.__lastResetTime) < 20:
+            debug.println(debug.LEVEL_SEVERE,
+                          "Something looks wrong with speech.  Aborting.")
+            debug.printStack(debug.LEVEL_ALL)
+            os._exit(50)
+        else:
+            self.__lastResetTime = time.time()
 
         speakers = self.__speakers
         self.shutdown()

@@ -1,5 +1,9 @@
 2006-07-28  Willie Walker <william.walker@sun.com>
 
+	* src/orca/gnomespeechfactory.py: abort if two speech resets are
+	detected in a short period of time.  This helps prevent an infinite
+	loop of speech resets, which results in hangs.
+	
 	* src/orca/braille.py: fix bug 348980 - get braille cursor routing
 	keys working again.
 	
