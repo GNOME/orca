@@ -670,7 +670,7 @@ def getKnownApplications():
             debug.printException(debug.LEVEL_FINEST)
 
     debug.println(debug.LEVEL_FINEST,
-                  "...orca._buildAppList")
+                  "...util.getKnownApplications")
 
     return apps
 
@@ -918,10 +918,13 @@ def findActiveWindow():
     apps = getKnownApplications()
     for app in apps:
         for i in range(0, app.childCount):
-            state = app.child(i).state
-            if state.count(atspi.Accessibility.STATE_ACTIVE) > 0:
-                window = app.child(i)
-                break
+            try:
+                state = app.child(i).state
+                if state.count(atspi.Accessibility.STATE_ACTIVE) > 0:
+                    window = app.child(i)
+                    break
+            except:
+                debug.printException(debug.LEVEL_FINEST)
 
     return window
 
