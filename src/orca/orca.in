@@ -22,12 +22,18 @@
 # This script performs some clean up and will run Orca.  It will also
 # rerun Orca if it detects that Orca died an unnatural death.
 
+# __id__        = "$Id$"
+# __version__   = "$Revision$"
+# __date__      = "$Date$"
+# __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+# __license__   = "LGPL"
+
 # [[[TODO: WDW - this is experimental and disabled by default.  If you
 # want to try the full blown functionality, comment out the RUNONCE
 # line below.  Beware that it NEEDS A LOT OF WORK AND REALLY ISN'T
 # WORKING YET.  If you leave RUNONCE as it is, then this will just
 # run Orca once and quit.]]]
-# 
+#
 RUNONCE="true"
 
 # A value of 1 means to run Orca.  A value of 0 means quit.
@@ -39,14 +45,14 @@ RUN=1
 # The watchdog logic requires 'wget', so we won't do it if we can't
 # find wget in the path.  Note also that you can force WATCHDOG=0 if you
 # do not want a background process that periodically pings Orca to see
-# if it is responding.  
+# if it is responding.
 #
 WGETCMD=`which wget`
-if test "x$WGETCMD" != "x"
+if [ "x$WGETCMD" = "x" ]
 then
-    WATCHDOG=1
-else
     WATCHDOG=0
+else
+    WATCHDOG=1
 fi
 
 # Cleans up any orca-related processes that might be running,
@@ -59,7 +65,7 @@ cleanup()
     USERID=`id | cut -f2 -d= | cut -f1 -d\(`
     PIDS=`ps -eo pid,ruid,args | grep $USERID | egrep "orca[.]orca|synthesis-driver|festival [-][-]server" | grep -v grep | awk '{ print $1 }'`
 
-    if test "x$PIDS" != "x"
+    if [ "x$PIDS" != "x" ]
     then
         kill -9 $PIDS > /dev/null
     fi
@@ -77,7 +83,7 @@ runOrca()
 }
 
 # Runs a watchdog process in the background.  It merely attempts to
-# get to Orca via some other means than the AT-SPI.  Here we use 
+# get to Orca via some other means than the AT-SPI.  Here we use
 # Orca's http server at port 20433.  If it doesn't respond, then
 # we assume Orca is dead.
 #
@@ -90,16 +96,21 @@ runOrca()
 watchdog()
 {
     (
-	sleep 30 # Give orca a chance to start.
-        while [ "$WATCHDOG" -gt 0 -a "$RUN" -gt 0 ]
+        sleep 30 # Give orca a chance to start.
+        while [ "$WATCHDOG" -gt 0 ]
         do
-	    sleep 5
-            if test "$RUN" -gt 0
-	    then
-		if ! $WGETCMD -q -t 0 -O /dev/null -w 2 localhost:20433
-		then
-		    echo Orca watchdog detected something bad.  Cleaning up.
-		    cleanup
+            sleep 5
+            USERID=`id | cut -f2 -d= | cut -f1 -d\(`
+            PID=`ps -eo pid,ruid,args | grep $USERID | egrep "orca[.]orca" | grep -v grep | awk '{ print $1 }'`
+
+            if [ "x$PID" = "x" ]
+            then
+                exit
+            else
+                if ! $WGETCMD -q -t 0 -O /dev/null -w 2 localhost:20433
+                then
+                    echo Orca watchdog detected something bad.  Cleaning up.
+                    cleanup
                 fi
             fi
         done
@@ -108,17 +119,20 @@ watchdog()
 
 main()
 {
-    watchdog
+    if [ "$WATCHDOG" -gt 0 ]
+    then
+        watchdog
+    fi
     while [ "$RUN" -gt 0 ]
     do
         runOrca
-	RUN=$?  # quit on a normal exit status from Orca
+        RUN=$?  # quit on a normal exit status from Orca
     done
 }
 
-if test "x$RUNONCE" != "x"
+if [ "x$RUNONCE" = "x" ]
 then
-    runOrca
-else
     main
+else
+    runOrca "$*"
 fi
