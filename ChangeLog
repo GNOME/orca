@@ -1,3 +1,10 @@
+2006-07-31  Rich Burridge <rich.burridge@sun.com>
+
+        * bugs/bugs.html:
+          Added an entry for gnome-panel bug #337059:
+          "[a11y] "Volume Control" embedded component in gnome-panel 
+          doesn't set it's accessible name."
+
 2006-07-31  Willie Walker <william.walker@sun.com>
 
 	* src/orca/dectalk.py, src/orca/outloud.c: convert floating point
