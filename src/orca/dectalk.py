@@ -289,7 +289,7 @@ _female_richness = [
 
 _update_map(_table, ('female', 'richness'),
             " ri %s sm %s ", _female_richness)
-def getrate(r):    return 180 + 4*r
+def getrate(r):    return int(180 + 4*r)
 
 def getvoicelist(): return _table['family'].keys()
 
@@ -319,7 +319,7 @@ def acss2voice(acss):
               'richness', 'stress']:
         if d in acss:
             if _table.has_key((familyName, d)):
-                voice += _table[(familyName, d)][acss[d]]
+                voice += _table[(familyName, d)][int(acss[d])]
     if voice: dv = " :dv %s" % voice
     if code or voice: code = "[%s  %s]" % (code, dv)
     return (code, " [:np] ")

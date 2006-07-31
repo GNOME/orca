@@ -255,10 +255,10 @@ def acss2voice(acss):
     if 'family' in acss:
         familyName = acss['family']['name']
         code += _table['family'][familyName]
-    if 'rate' in acss: code += " `vs%s" % acss['rate']
+    if 'rate' in acss: code += " `vs%s" % int(acss['rate'])
     voice = ""
     for d in ['average-pitch', 'pitch-range',
               'richness', 'stress']:
-        if d in acss:voice += _table[(familyName, d)][acss[d]]
+        if d in acss:voice += _table[(familyName, d)][int(acss[d])]
     if code or voice: code = "%s %s" % (code, voice)
     return (code, " `v1 ")

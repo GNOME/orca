@@ -1,3 +1,10 @@
+2006-07-31  Willie Walker <william.walker@sun.com>
+
+	* src/orca/dectalk.py, src/orca/outloud.c: convert floating point
+	ACSS values to integer values to better comply with what is
+	expected by the emacspeak support
+	(thanks Joanmarie Diggs!).
+	
 2006-07-30  Willie Walker <william.walker@sun.com>
 
 	* src/orca/util.py: defensive programming in the case of a
