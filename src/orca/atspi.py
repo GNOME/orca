@@ -1267,8 +1267,8 @@ class Accessible:
         Arguments:
         - index: an integer specifying which child to obtain
 
-        Returns the child at the given index.  [[[TODO: WDW - what to do
-        when an index out of bounds occurs?  Logged as bugzilla bug 319738.]]]
+        Returns the child at the given index or raise an exception if the
+        index is out of bounds or the child is invalid.
         """
 
         # [[[TODO: WDW - the AT-SPI appears to give us a different accessible
@@ -1279,12 +1279,17 @@ class Accessible:
         # Save away details we now know about this child
         #
         newChild = None
-        accChild = self.accessible.getChildAtIndex(index)
-        if accChild:
-            newChild = Accessible.makeAccessible(accChild)
-            newChild.index = index
-            newChild.parent = self
-            newChild.app = self.app
+        if index >= 0 and index < self.accessible.childCount:
+            accChild = self.accessible.getChildAtIndex(index)
+            if accChild:
+                newChild = Accessible.makeAccessible(accChild)
+                newChild.index = index
+                newChild.parent = self
+                newChild.app = self.app
+
+        if not newChild:
+            raise Exception("Invalid child at index: %d" % index)
+
         return newChild
 
     def toString(self, indent="", includeApp=True):

@@ -4,6 +4,10 @@
           Added an entry for balsa bug #326305:
           "[a11y] balsa crashes when opening Inbox when orca is running."
 
+        * src/orca/atspi.py:
+          Fixed bug #319738. The child routine() needs to be more careful 
+          about indices out of bounds.
+
 2006-08-01  Oana Serb <os@baum.ro>
 
 	* src/orca/braillegenerator.py: adjust where the role is displayed
