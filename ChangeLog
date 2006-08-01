@@ -1,3 +1,9 @@
+2006-08-01  Rich Burridge <rich.burridge@sun.com>
+
+        * bugs/bugs.html:
+          Added an entry for balsa bug #326305:
+          "[a11y] balsa crashes when opening Inbox when orca is running."
+
 2006-08-01  Oana Serb <os@baum.ro>
 
 	* src/orca/braillegenerator.py: adjust where the role is displayed
@@ -9,6 +15,9 @@
           Added an entry for gnome-panel bug #337059:
           "[a11y] "Volume Control" embedded component in gnome-panel 
           doesn't set it's accessible name."
+
+          Added an entry for rhythmbox bug #331042: 
+          "[a11y] Rhythmbox crashes when entering flat review mode in Orca"
 
 2006-07-31  Willie Walker <william.walker@sun.com>
 
