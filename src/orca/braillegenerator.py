@@ -811,7 +811,6 @@ class BrailleGenerator:
         text = ""
         text = util.appendString(text, util.getDisplayedLabel(obj))
         text = util.appendString(text, util.getDisplayedText(obj))
-        text = util.appendString(text, self._getTextForRole(obj))
 
         # In Java, some push buttons don't have label and text.
         # In this case, we'll add to presentation the object description,
@@ -819,6 +818,8 @@ class BrailleGenerator:
         #
         if (not text) and (obj.description):
             text = util.appendString(text, obj.description)
+
+        text = util.appendString(text, self._getTextForRole(obj))
 
         regions = []
         componentRegion = braille.Component(obj, text)
