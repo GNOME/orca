@@ -1,5 +1,9 @@
 2006-08-02  Willie Walker <william.walker@sun.com>
 
+	* src/orca/orca_prefs.py: add lines to ~/.orca/user-settings.py
+	that make it more convenient to turn on/off various debugging and
+	testing utilities.
+	
 	* src/orca/atspi.py: use '%f' instead of '%d' to output
 	configuration information for gilSleepTime.
 	

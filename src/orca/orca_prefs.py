@@ -49,6 +49,7 @@ def _writePreferencesPreamble(prefs):
     prefs.writelines("# be overwritten, edit orca-customizations.py.\n")
     prefs.writelines("#\n")
     prefs.writelines("import re\n")
+    prefs.writelines("import time\n")
     prefs.writelines("\n")
     prefs.writelines("import orca.debug\n")
     prefs.writelines("import orca.settings\n")
@@ -71,7 +72,21 @@ def _writePreferencesPreamble(prefs):
     prefs.writelines("#orca.debug.eventDebugFilter = re.compile('[\S]*:accessible-name')\n")
 
     prefs.writelines("\n")
+
+    prefs.writelines("#orca.debug.debugFile = open(time.strftime('debug-%Y-%m-%d-%H:%M:%S.out'), 'w', 0)\n")
     prefs.writelines("#orca.debug.debugFile = open('debug.out', 'w', 0)\n")
+    prefs.writelines("\n")
+
+    prefs.writelines("#orca.settings.useBonoboMain=False\n")
+    prefs.writelines("#orca.settings.debugEventQueue=True\n")
+    prefs.writelines("#orca.settings.gilSleepTime=0\n")
+    prefs.writelines("\n")
+
+    prefs.writelines("if False:\n")
+    prefs.writelines("    import sys\n")
+    prefs.writelines("    import orca.util\n")
+    prefs.writelines("    sys.settrace(orca.util.traceit)\n")
+    prefs.writelines("    orca.debug.debugLevel = orca.debug.LEVEL_ALL\n")
     prefs.writelines("\n")
 
 def _writePreferencesPostamble(prefs):
