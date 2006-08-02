@@ -1876,6 +1876,18 @@ class Script(script.Script):
         """
 
         child = atspi.Accessible.makeAccessible(event.any_data.value())
+
+        # Fix for bug #341371 (and similar bugs). If we just called
+        # orca.setLocusOfFocus() without first setting 
+        # orca_state.locusOfFocus to None, then code inside
+        # locusOfFocusChanged() would cause that routine to just return
+        # without speaking or brailling anything, because the old parent
+        # is the same as the new parent and their child indices and names
+        # are the same.
+        #
+        if orca_state.locusOfFocus.parent == event.source:
+            orca_state.locusOfFocus = None
+
         orca.setLocusOfFocus(event, child)
 
         # We'll tuck away the activeDescendant information for future

@@ -1,3 +1,11 @@
+2006-08-02  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          Fix for bug #341371. Adjusted the onActiveDescendantChanged()
+          routine to set orca_state.locusOfFocus to None before calling
+          orca.setLocusOfFocus(), if the event.source was the same as the
+          parent of orca_state.locusOfFocus.
+
 2006-08-01  Rich Burridge <rich.burridge@sun.com>
 
         * bugs/bugs.html:
