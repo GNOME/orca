@@ -61,8 +61,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/orca
 %{_libdir}/python?.?/site-packages/orca
 %{_datadir}/locale/*/*
+%{_datadir}/applications/orca.desktop
+%{_datadir}/icons/hicolor/48x48/apps/orca.png
 
 %changelog
+* Thu Aug 03 2006 Willie Walker <william.walker@sun.com>
+- Add orca.png and orca.desktop files.
 * Tue Jul 11 2006 Willie Walker <william.walker@sun.com>
 - Fix "pyborit" typo.
 * Mon May 15 2006 Willie Walker <william.walker@sun.com>

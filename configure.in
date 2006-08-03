@@ -5,6 +5,7 @@ ORCA_MINOR_VERSION=2
 ORCA_MICRO_VERSION=7
 ORCA_VERSION="$ORCA_MAJOR_VERSION.$ORCA_MINOR_VERSION.$ORCA_MICRO_VERSION"
 AM_INIT_AUTOMAKE(orca, $ORCA_VERSION)
+AC_CONFIG_MACRO_DIR([m4])
 AC_SUBST(ORCA_VERSION)
 
 # libtool versioning
@@ -29,9 +30,10 @@ dnl Gettext stuff
 GETTEXT_PACKAGE=orca
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [Gettext package])
-ALL_LINGUAS="bg bn bn_IN cs cy de dz en_CA en_GB es fi fr gu it lv mk ne 
-nl pa pt pt_BR rw sr sr@Latn sv uk vi zh_CN"
+ALL_LINGUAS="bg bn bn_IN cs cy de dz en_CA en_GB es fi fr gu it lv mk ne nl pa pt pt_BR rw sr sr@Latn sv uk vi zh_CN"
 AM_GLIB_GNU_GETTEXT
+
+IT_PROG_INTLTOOL([0.35.0])
 
 dnl Checks for programs
 AC_PROG_CC
