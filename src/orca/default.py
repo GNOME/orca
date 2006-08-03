@@ -765,10 +765,20 @@ class Script(script.Script):
             and ((event.type.find("object:selection-changed") != -1) \
                  or (event.type.find("object:text-changed") != -1)) \
             and event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
+
+            # Fix for bug #345462. If we are in a menu, and we are focused
+            # and there are no selected children, the set the locus of focus
+            # and notify the presentation manager of the change.
+            #
+            if event.source.role == rolenames.ROLE_MENU and \
+               event.source.selection and \
+               not event.source.selection.nSelectedChildren:
+                orca.setLocusOfFocus(event, event.source, True)
+
             # Avoid doing this with objects that manage their descendants
             # because they'll issue a descendant changed event.
             #
-            if event.source.state.count(
+            elif event.source.state.count(
                 atspi.Accessibility.STATE_MANAGES_DESCENDANTS) == 0:
                 orca.setLocusOfFocus(event, event.source, False)
 
