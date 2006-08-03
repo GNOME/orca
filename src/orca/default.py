@@ -1896,7 +1896,7 @@ class Script(script.Script):
         # are the same.
         #
         if orca_state.locusOfFocus.parent == event.source:
-            orca_state.locusOfFocus = None
+            orca.setLocusOfFocus(event, None, False)
 
         orca.setLocusOfFocus(event, child)
 

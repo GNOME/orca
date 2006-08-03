@@ -14,6 +14,12 @@
           the set the locus of focus and notify the presentation manager 
           of the change.
 
+        * src/orca/default.py:
+          Slight adjustment in onActiveDescendantChanged() for the fix
+          for bug #341371, to call orca.setLocusOfFocus() to set the
+          focus to None, rather that set it via orca_state.locusOfFocus
+          directly.
+
 2006-08-02  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca_prefs.py: add lines to ~/.orca/user-settings.py
