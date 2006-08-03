@@ -1,5 +1,8 @@
 2006-08-03  Willie Walker <william.walker@sun.com>
 
+	* configure.in, po/LINGUAS: work to meet GNOME GOAL #2.0: LINGUAS
+	(http://live.gnome.org/GnomeGoals/PoLinguas)
+	
 	* configure.in, Makefile.am, .cvsignore, m4, m4/.cvsignore,
 	orca.desktop.in, orca.png, orca.spec.in: add orca.desktop.
 	
