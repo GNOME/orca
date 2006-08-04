@@ -14,6 +14,11 @@
 
           This is a relatively big change. It needs to be fully tested.
 
+        * bugs/bugs.html:
+          Added an entry for Evolution bug #347228:
+          [a11y] Evolution not always firing "object:state-changed:expanded" 
+          events when tree table entries are collapsed/expanded.
+
 2006-08-03  Willie Walker <william.walker@sun.com>
 
 	* configure.in, po/LINGUAS: work to meet GNOME GOAL #2.0: LINGUAS
