@@ -735,55 +735,6 @@ class Script(script.Script):
 
         return brailleBindings
 
-    def processObjectEvent(self, event):
-        """Processes all object events of interest to this script.  Note
-        that this script may be passed events it doesn't care about, so
-        it needs to react accordingly.
-
-        Arguments:
-        - event: the Event
-        """
-
-        # If we receive a "window:deactivate" event for the object that
-        # currently has focus, then stop the current speech output.
-        # This is very useful for terminating long speech output from
-        # commands running in gnome-terminal.
-        #
-        if event.type.find("window:deactivate") != -1:
-            if orca_state.locusOfFocus \
-                and (orca_state.locusOfFocus.app == event.source.app):
-                speech.stop()
-
-        # [[[TODO: WDW - HACK to set Orca's locusOfFocus if we've somehow
-        # gotten out of whack.  This typically happens when going into an
-        # application and we only get a window activated event for it, even
-        # if one of its children has focus.  Since we're doing this, we'll
-        # tell Orca to not propagate this event to us.]]]
-        #
-        if event and event.source \
-            and (event.source != orca_state.locusOfFocus) \
-            and ((event.type.find("object:selection-changed") != -1) \
-                 or (event.type.find("object:text-changed") != -1)) \
-            and event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
-
-            # Fix for bug #345462. If we are in a menu, and we are focused
-            # and there are no selected children, the set the locus of focus
-            # and notify the presentation manager of the change.
-            #
-            if event.source.role == rolenames.ROLE_MENU and \
-               event.source.selection and \
-               not event.source.selection.nSelectedChildren:
-                orca.setLocusOfFocus(event, event.source, True)
-
-            # Avoid doing this with objects that manage their descendants
-            # because they'll issue a descendant changed event.
-            #
-            elif event.source.state.count(
-                atspi.Accessibility.STATE_MANAGES_DESCENDANTS) == 0:
-                orca.setLocusOfFocus(event, event.source, False)
-
-        script.Script.processObjectEvent(self, event)
-
     def processKeyboardEvent(self, keyboardEvent):
         """Processes the given keyboard event. It uses the super
         class equivalent to do most of the work. The only thing done here
@@ -1755,6 +1706,15 @@ class Script(script.Script):
         - event: the Event
         """
 
+        # We don't always get focus: events for text areas, so if we
+        # see deleted text events for a focused text area, we silently
+        # set them to be the locus of focus..
+        #
+        if event and event.source and \
+           (event.source != orca_state.locusOfFocus) and \
+            event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
+            orca.setLocusOfFocus(event, event.source, False)
+
         # Ignore text deletions from non-focused objects, unless the
         # currently focused object is the parent of the object from which
         # text was deleted
@@ -1823,6 +1783,15 @@ class Script(script.Script):
         - event: the Event
         """
 
+        # We don't always get focus: events for text areas, so if we 
+        # see inserted text events for a focused text area, we silently 
+        # set them to be the locus of focus..
+        #
+        if event and event.source and \
+           (event.source != orca_state.locusOfFocus) and \
+            event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
+            orca.setLocusOfFocus(event, event.source, False)
+
         # Ignore text insertions from non-focused objects, unless the
         # currently focused object is the parent of the object from which
         # text was inserted.
@@ -1886,18 +1855,6 @@ class Script(script.Script):
         """
 
         child = atspi.Accessible.makeAccessible(event.any_data.value())
-
-        # Fix for bug #341371 (and similar bugs). If we just called
-        # orca.setLocusOfFocus() without first setting 
-        # orca_state.locusOfFocus to None, then code inside
-        # locusOfFocusChanged() would cause that routine to just return
-        # without speaking or brailling anything, because the old parent
-        # is the same as the new parent and their child indices and names
-        # are the same.
-        #
-        if orca_state.locusOfFocus.parent == event.source:
-            orca.setLocusOfFocus(event, None, False)
-
         orca.setLocusOfFocus(event, child)
 
         # We'll tuck away the activeDescendant information for future
@@ -1971,24 +1928,28 @@ class Script(script.Script):
         - event: the Event
         """
 
-        if not event.source:
+        if not event or not event.source:
             return
 
-        # [[[TODO: WDW - HACK layered panes are nutty in that they
-        # will change the selection and tell the selected child it is
-        # focused, but the child will not issue a focus changed event.]]]
+        if event.source.role == rolenames.ROLE_COMBO_BOX:
+            orca.visualAppearanceChanged(event, event.source)
+
+        # We treat selected children as the locus of focus. When the 
+        # selection changed we want to update the locus of focus. If 
+        # there is no selection, we default the locus of focus to the 
+        # containing object.
         #
-        if event.source.role == rolenames.ROLE_LAYERED_PANE:
+        elif (event.source != orca_state.locusOfFocus) and \
+            event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
+            newFocus = event.source
             if event.source.childCount:
                 selection = event.source.selection
                 if selection and selection.nSelectedChildren > 0:
                     child = selection.getSelectedChild(0)
                     if child:
-                        orca.setLocusOfFocus(
-                           event,
-                           atspi.Accessible.makeAccessible(child))
-        elif event.source.role == rolenames.ROLE_COMBO_BOX:
-            orca.visualAppearanceChanged(event, event.source)
+                        newFocus = atspi.Accessible.makeAccessible(child)
+
+            orca.setLocusOfFocus(event, newFocus)
 
     def onValueChanged(self, event):
         """Called whenever an object's value changes.  Currently, the
@@ -2048,6 +2009,15 @@ class Script(script.Script):
         Arguments:
         - event: the Event
         """
+
+        # If we receive a "window:deactivate" event for the object that
+        # currently has focus, then stop the current speech output.
+        # This is very useful for terminating long speech output from
+        # commands running in gnome-terminal.
+        #
+        if orca_state.locusOfFocus and \
+          (orca_state.locusOfFocus.app == event.source.app):
+            speech.stop()
 
         # Because window activated and deactivated events may be
         # received in any order when switching from one application to

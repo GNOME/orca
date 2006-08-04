@@ -1,3 +1,13 @@
+2006-08-04  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          With much guidance from Will (thanks!), we've reworked the 
+          way that "object:selection-changed events are handled. This 
+          fixes bug #347691. The rework also fixes bug #345462 and 
+          bug #341371 in a much cleaner manner.
+
+          This is a relatively big change. It needs to be fully tested.
+
 2006-08-03  Willie Walker <william.walker@sun.com>
 
 	* configure.in, po/LINGUAS: work to meet GNOME GOAL #2.0: LINGUAS
