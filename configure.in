@@ -125,7 +125,6 @@ PYDOC_CHECK()
 
 AC_OUTPUT([ 
 Makefile
-orca.desktop
 orca.spec
 docs/Makefile
 docs/pydoc/Makefile
