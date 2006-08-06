@@ -31,7 +31,7 @@ desktop_DATA     = $(desktop_in_files:.desktop.in=.desktop)
 EXTRA_DIST =                \
 	orca.spec           \
 	orca.spec.in        \
-	$(desktop_DATA)     \
+	$(desktop_in_files) \
 	$(icon_DATA)        \
 	ChangeLog           \
 	MAINTAINERS         \

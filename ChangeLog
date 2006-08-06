@@ -2,6 +2,8 @@
 
 	* po/POTFILES.in: add orca.desktop.in.
 	
+	* Makefile.am: put orca.desktop.in, not orca.desktop in EXTRA_DIST.
+
 2006-08-04  Joanmarie Diggs <via william.walker@sun.com>
 
 	* src/orca/dectalk.py: better ACSS support for DECtalk through
