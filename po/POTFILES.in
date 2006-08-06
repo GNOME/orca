@@ -1,5 +1,6 @@
 # List of source files containing translatable strings.
 # Please keep this file sorted alphabetically.
+orca.desktop.in
 src/orca/braillegenerator.py
 src/orca/chnames.py
 src/orca/default.py
