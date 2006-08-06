@@ -1,11 +1,10 @@
-Orca 0.2.7
+Orca 0.2.8
 
 Introduction
 ========================================================================
 
-Orca a scriptable screen reader that is currently under development.
-As such it is highly unstable and undergoes frequent changes.  To
-read more about Orca, please refer to the Orca documentation series
+Orca a scriptable screen reader for people with visual impairments.
+To read more about Orca, please refer to the Orca documentation series
 available in the ./docs/doc-set directory and also the Orca WIKI at
 http://live.gnome.org/Orca.
 
@@ -13,8 +12,8 @@ http://live.gnome.org/Orca.
 Build Requirements
 ========================================================================
 
-Orca currently depends upon GNOME 2.14.  Building Orca also requires
-the following to be installed:
+Orca depends upon GNOME 2.14 or better.  Building Orca also requires
+the development modules for the following to be installed:
 
 * Python >= 2.4              - Python platform
 * pyorbit >= 2.14.0          - Python bindings for ORBit2

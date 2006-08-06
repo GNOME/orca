@@ -1,3 +1,65 @@
+0.2.8 
+* Orca has been approved for inclusion into GNOME 2.16!!!  YEAH!
+  Thanks everyone for your support.
+* Many thanks also to the team from Baum for their contributions in
+  improving the support for the Java platform.
+* Much improvement in the reliability and availability department.
+  Thanks very much to community members for helping test Orca and
+  provide us with constructive feedback and informative bug reports.
+  These community members include: Joanmarie Diggs, Al Puzzuoli,
+  Fco. Javier Dorado Martínez, and Cody Hurst.  
+* Improvements to Yelp access.
+* Improvements to Firefox 2 chrome.  NOTE: we are targeting Firefox 3 
+  as the means for providing compelling access to web content.
+* The main 'orca' executable is now a shell script that launches the
+  Python process for orca.  It includes some utilities to clean up
+  stray processes and latent support to automatically detect failures
+  in Orca and restart it if necessary.  We will be improving this
+  script prior to the GNOME 2.16 release.  Your testing and feedback
+  will be helpful!
+* Improved support for the emacspeak speech service, including better
+  ACSS support for DECtalk and overall support for rate/pitch
+  parameters.  Many thanks to Joanmarie Diggs for her contributions to
+  this space.  The community model works!
+* Fix for bug 347691: In standard print dialog, printer table items
+  not always spoken/displayed.
+* Fix for bug 345462: Orca should speak changes when moving up a level
+  in menus.
+* Fix for bug 341371: Orca will not report the file name in file
+  picker when there is only one file existing in current folder.
+* Fix for bug 319738: The child routine() needs to be more careful
+  about indices out of bounds.
+* Fix for bug 319660: Exiting learn mode should display current locus
+  of focus.
+* Fix for bug 348980: Get braille cursor routing keys working again.
+* Fix for bug where window activated and deactivated events can arrive
+  out of order.  Thanks to Baum for this fix!
+* Defensive programming in the event that expected object specializations
+  (e.g., text, component, selection, etc.) don't exist.  Thanks to Baum
+  for this fix!
+* Created orca.desktop to add orca to menu items.
+* Migrated to LINGUAS model (http://live.gnome.org/GnomeGoals/PoLinguas).
+* Added additional testing and debugging utilities.  Also added
+  additional helper lines to ~/.orca/user-settings.py that make
+  it more convenient to turn on/off various debugging and testing
+  utilities.  
+* Pychecker fixes and also eliminated circular imports in the python
+  modules.
+* Additional keystrokes files for testing.  We're ramping up our regression
+  tests and hope to have a more complete set by the GNOME 2.16
+  release.
+* Provide smoother handling of the crosswires and cursor in the
+  magnifier when tracking the mouse.
+* New/Updated Translations (Thanks!): 
+    Latvian:     Raivis Dejus
+    Macedonian:  Jovan Naumovski
+    Tino Meinen: Vincent van Adrighem
+    Gujarati:    Ankit Patel
+    Spanish:     Francisco Javier F. Serrador
+    Greek:       Nikos Charonitakis (NEW)
+
+==========
+
 0.2.7 
 * Much work on hangs.  It's better, but we still have work to do.
 * Vastly improved work with GAIM.  Also added Insert+{1,2,3,...} to
@@ -34,6 +96,8 @@
     Tino Meinen: Vincent van Adrighem
     Welsh:	 Rhys Jone
     Tamil:
+
+==========
 
 0.2.6
 * Addition of verbalized punctuation settings.
@@ -91,6 +155,8 @@
     Vietnamese:  Clytie Siddall
     Welsh:       Rhys Jones
 
+==========
+
 0.2.5
 * Re-map keyboard bindings and add additional keyboard bindings.
   See http://live.gnome.org/Orca/KeyboardCommands for the list.
@@ -108,7 +174,7 @@
 * Addition of ability to turn Orca into a speech server that can
   accessed via simple HTTP commands (default port is 20433, but this
   is customizable via orca.settings.speechServerPort).  This will
-  allow self-voicing appliations to use Orca for their speech, thus
+  allow self-voicing applications to use Orca for their speech, thus
   letting them get the user's speech settings preferences.
 * Addition of orca.settings.enableBrailleGrouping (default=False).
   NOTE: this represents a change in the UI for Orca - the behavior to
@@ -134,16 +200,18 @@
 * Partial fix for bug 319652 - become a better Python thread citizen 
   to help reduce hangs.
 * Fix for bug 342303 - stop speech when the user presses the mouse button.
-* Fix for bug 342122 - use all labels for an objecty when presenting
+* Fix for bug 342122 - use all labels for an object when presenting
   an object.
 * Fix for bug 342133 - do not read all labels in gnome-window-properties
   application when it appears.
 * Fix for bug 341415 - when moving between workspaces with metacity,
-  eliminate redundant output and alsomake sure workspace names are
+  eliminate redundant output and also make sure workspace names are
   announced.
 * Refactor of various modules to move script writing utilities into
   util.py.
 * More fleshing out of the test plan.
+
+==========
 
 0.2.4 
 * Addition of text and GUI preferences configuration tools.  
@@ -202,6 +270,8 @@
   this to take effect.
 * Additions to and development of the test plan.
 
+==========
+
 0.2.3
 * Many changes to the way settings are handled, including allowing them
   to be dynamically reloaded at run time.
@@ -228,6 +298,8 @@
   339690, 334893, 338240, 337857, 337704, 337709, 337489, 337322,
   336648, 330487.
 
+==========
+
 0.2.2
 * CSUN release - the bits we plan to show at CSUN '06.
 * Add output of text attributes at caret - press Insert+f (Rich Burridge)
@@ -251,6 +323,8 @@
 * Provide better support for accessible login via gdmlogin.
 * A little more work on the Firefox script, but Firefox/Orca are still
   not ready for prime time (Willie Walker)
+
+==========
 
 0.2.1
 * *Much* work on Evolution script - this far outshadows much of the 
@@ -300,7 +374,7 @@ Silva, Funda Wang, Gareth Owen, and Duarte Loreto.
 
 0.1.0
 * Changed scripting model -- scripts are now always all loaded at once
-and the Orca event proesor decides which script should receive which
+and the Orca event processor decides which script should receive which
 events
 
 ==========
