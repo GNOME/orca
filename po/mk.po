@@ -7,14 +7,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.HEAD.mk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-02 08:12+0200\n"
-"PO-Revision-Date: 2006-08-02 14:27+0200\n"
+"POT-Creation-Date: 2006-08-06 16:28+0200\n"
+"PO-Revision-Date: 2006-08-06 16:50+0200\n"
 "Last-Translator: Jovan Naumovski <jovan@lugola.net>\n"
 "Language-Team: Macedonian <ossm-members@hedona.on.net.mk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.2\n"
+
+#: ../orca.desktop.in.h:1
+msgid "Assistive Technologies for Blind and Visually Impaired People"
+msgstr "Помошни технологии за слепи и луѓе со нарушен вид"
+
+#: ../orca.desktop.in.h:2
+msgid "Orca Screen Reader and Magnifier"
+msgstr "Орка читач и зголемувач на екранот"
 
 #: ../src/orca/braillegenerator.py:193 ../src/orca/speechgenerator.py:191
 msgid "grayed"
@@ -365,57 +373,57 @@ msgstr "Испишува информации за дебагирање за а�
 msgid "Switches to the next presentation manager."
 msgstr "Преминува на следниот менаџер на презентации."
 
-#: ../src/orca/default.py:1106 ../src/orca/default.py:1325
+#: ../src/orca/default.py:1067 ../src/orca/default.py:1286
 #, python-format
 msgid "tree level %d"
 msgstr "ниво на дрвото %d"
 
-#: ../src/orca/default.py:1110 ../src/orca/focus_tracking_presenter.py:638
+#: ../src/orca/default.py:1071 ../src/orca/focus_tracking_presenter.py:638
 msgid "No focus"
 msgstr "Нема фокус"
 
-#: ../src/orca/default.py:1716
+#: ../src/orca/default.py:1677
 msgid "entire document selected"
 msgstr "целиот документ е избран"
 
-#: ../src/orca/default.py:2100
+#: ../src/orca/default.py:2092
 msgid "Speak "
 msgstr "Зборува"
 
-#: ../src/orca/default.py:2103
+#: ../src/orca/default.py:2095
 msgid "row"
 msgstr "ред"
 
-#: ../src/orca/default.py:2105 ../src/orca/rolenames.py:432
+#: ../src/orca/default.py:2097 ../src/orca/rolenames.py:432
 #: ../src/orca/rolenames.py:434
 msgid "cell"
 msgstr "ќелија"
 
-#: ../src/orca/default.py:2260
+#: ../src/orca/default.py:2252
 msgid "Entering learn mode.  Press any key to hear its function. "
 msgstr ""
 "Влегувам во режимот за учење.  Притиснете го било кое копче за да ја "
 "слушните неговата функција. "
 
-#: ../src/orca/default.py:2261
+#: ../src/orca/default.py:2253
 msgid "To exit learn mode, press the escape key."
 msgstr "За излез од режимот на учење, притиснете го копчето escape."
 
-#: ../src/orca/default.py:2262
+#: ../src/orca/default.py:2254
 msgid "Learn mode.  Press escape to exit."
 msgstr "Режим на учење.  Притиснете escape за излез."
 
-#: ../src/orca/default.py:2274 ../src/orca/default.py:2275
+#: ../src/orca/default.py:2266 ../src/orca/default.py:2267
 msgid "Exiting learn mode."
 msgstr "Излегувам од режимот на учење."
 
-#: ../src/orca/default.py:2605 ../src/orca/default.py:2733
-#: ../src/orca/default.py:2738 ../src/orca/default.py:2810
-#: ../src/orca/default.py:2815
+#: ../src/orca/default.py:2597 ../src/orca/default.py:2725
+#: ../src/orca/default.py:2730 ../src/orca/default.py:2802
+#: ../src/orca/default.py:2807
 msgid "blank"
 msgstr "празно"
 
-#: ../src/orca/default.py:2607 ../src/orca/default.py:2740
+#: ../src/orca/default.py:2599 ../src/orca/default.py:2732
 msgid "white space"
 msgstr "празен простор"
 
@@ -1977,11 +1985,15 @@ msgstr "врска"
 
 #: ../src/orca/scripts/gaim.py:149
 msgid "Toggle whether we prefix chat room messages with the name of the chat room."
-msgstr "Смени дали името на собата се става како префикс на пораките од собата за разговор."
+msgstr ""
+"Смени дали името на собата се става како префикс на пораките од собата за "
+"разговор."
 
 #: ../src/orca/scripts/gaim.py:153
 msgid "Speak and braille a previous chat room message."
-msgstr "Изговори ја и прикажи ја на брајов монитор претходната порака од собата за разговор."
+msgstr ""
+"Изговори ја и прикажи ја на брајов монитор претходната порака од собата за "
+"разговор."
 
 #: ../src/orca/scripts/gaim.py:194
 msgid "speak chat room name."
