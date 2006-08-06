@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-29 19:08+0200\n"
-"PO-Revision-Date: 2006-07-29 19:08+0200\n"
+"POT-Creation-Date: 2006-08-06 20:12+0200\n"
+"PO-Revision-Date: 2006-08-06 20:14+0200\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,19 +20,27 @@ msgstr ""
 "X-Generator: KBabel 1.11.1\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
+#: ../orca.desktop.in.h:1
+msgid "Assistive Technologies for Blind and Visually Impaired People"
+msgstr "Tecnologías de asistencia para gente invidente o con visión limitada"
+
+#: ../orca.desktop.in.h:2
+msgid "Orca Screen Reader and Magnifier"
+msgstr "Lector de pantalla y lupa Orca"
+
 #: ../src/orca/braillegenerator.py:193 ../src/orca/speechgenerator.py:191
 msgid "grayed"
 msgstr "sombreado"
 
-#: ../src/orca/braillegenerator.py:1084 ../src/orca/speechgenerator.py:1198
+#: ../src/orca/braillegenerator.py:1085 ../src/orca/speechgenerator.py:1198
 msgid "expanded"
 msgstr "expandido"
 
-#: ../src/orca/braillegenerator.py:1086 ../src/orca/speechgenerator.py:1200
+#: ../src/orca/braillegenerator.py:1087 ../src/orca/speechgenerator.py:1200
 msgid "collapsed"
 msgstr "contraído"
 
-#: ../src/orca/braillegenerator.py:1090
+#: ../src/orca/braillegenerator.py:1091
 #, python-format
 msgid "TREE LEVEL %d"
 msgstr "NIVEL DE ÁRBOL %d"
@@ -370,56 +378,56 @@ msgstr "Imprime información de depuración acerca de la aplicación enfocada"
 msgid "Switches to the next presentation manager."
 msgstr "Cambiar al siguiente gestor de presentación."
 
-#: ../src/orca/default.py:1106 ../src/orca/default.py:1325
+#: ../src/orca/default.py:1067 ../src/orca/default.py:1286
 #, python-format
 msgid "tree level %d"
 msgstr "nivel de árbol %d"
 
-#: ../src/orca/default.py:1110 ../src/orca/focus_tracking_presenter.py:638
+#: ../src/orca/default.py:1071 ../src/orca/focus_tracking_presenter.py:638
 msgid "No focus"
 msgstr "Sin foco"
 
-#: ../src/orca/default.py:1716
+#: ../src/orca/default.py:1677
 msgid "entire document selected"
 msgstr "documento entero seleccionado"
 
-#: ../src/orca/default.py:2100
+#: ../src/orca/default.py:2092
 msgid "Speak "
 msgstr "Hablar"
 
-#: ../src/orca/default.py:2103
+#: ../src/orca/default.py:2095
 msgid "row"
 msgstr "fila"
 
-#: ../src/orca/default.py:2105 ../src/orca/rolenames.py:432
+#: ../src/orca/default.py:2097 ../src/orca/rolenames.py:432
 #: ../src/orca/rolenames.py:434
 msgid "cell"
 msgstr "celda"
 
-#: ../src/orca/default.py:2260
+#: ../src/orca/default.py:2252
 msgid "Entering learn mode.  Press any key to hear its function. "
 msgstr ""
 "Entrando en modo de aprendizaje.  Pulse cualquier tecla para oír su función."
 
-#: ../src/orca/default.py:2261
+#: ../src/orca/default.py:2253
 msgid "To exit learn mode, press the escape key."
 msgstr "Para salir del modo de aprendizaje, pulse la tecla de escape."
 
-#: ../src/orca/default.py:2262
+#: ../src/orca/default.py:2254
 msgid "Learn mode.  Press escape to exit."
 msgstr "Modo de aprendizaje.  Pulse escape para salir."
 
-#: ../src/orca/default.py:2274 ../src/orca/default.py:2275
+#: ../src/orca/default.py:2266 ../src/orca/default.py:2267
 msgid "Exiting learn mode."
 msgstr "Saliendo del modo de aprendizaje."
 
-#: ../src/orca/default.py:2605 ../src/orca/default.py:2733
-#: ../src/orca/default.py:2738 ../src/orca/default.py:2810
-#: ../src/orca/default.py:2815
+#: ../src/orca/default.py:2597 ../src/orca/default.py:2725
+#: ../src/orca/default.py:2730 ../src/orca/default.py:2802
+#: ../src/orca/default.py:2807
 msgid "blank"
 msgstr "en blanco"
 
-#: ../src/orca/default.py:2607 ../src/orca/default.py:2740
+#: ../src/orca/default.py:2599 ../src/orca/default.py:2732
 msgid "white space"
 msgstr "espacio en blanco"
 
@@ -2127,7 +2135,7 @@ msgid "not checked"
 msgstr "no marcado"
 
 #: ../src/orca/speechgenerator.py:909 ../src/orca/speechgenerator.py:912
-#: ../src/orca/util.py:1119
+#: ../src/orca/util.py:1122
 msgid "selected"
 msgstr "seleccionado"
 
@@ -2147,30 +2155,30 @@ msgstr "Palabra mal escrita: "
 msgid " Context is "
 msgstr " El contexto es "
 
-#: ../src/orca/util.py:1063
+#: ../src/orca/util.py:1066
 msgid "page selected from cursor position"
 msgstr "página seleccionada desde la posición del cursor"
 
-#: ../src/orca/util.py:1067
+#: ../src/orca/util.py:1070
 msgid "page selected to cursor position"
 msgstr "página seleccionada hasta la posición del cursor"
 
-#: ../src/orca/util.py:1071
+#: ../src/orca/util.py:1074
 msgid "line selected down from cursor position"
 msgstr "línea seleccionada desde la posición del cursor"
 
-#: ../src/orca/util.py:1075
+#: ../src/orca/util.py:1078
 msgid "line selected up from cursor position"
 msgstr "línea seleccionada desde la posición del cursor"
 
-#: ../src/orca/util.py:1079
+#: ../src/orca/util.py:1082
 msgid "document selected to cursor position"
 msgstr "documento seleccionado hasta la posición del cursor"
 
-#: ../src/orca/util.py:1083
+#: ../src/orca/util.py:1086
 msgid "document selected from cursor position"
 msgstr "documento seleccionado desde la posición del cursor"
 
-#: ../src/orca/util.py:1127
+#: ../src/orca/util.py:1130
 msgid "unselected"
 msgstr "no seleccionado"
