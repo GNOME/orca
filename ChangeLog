@@ -2,6 +2,8 @@
 
 	* po/POTFILES.in: add orca.desktop.in.
 
+	* configure.in: add orca.desktop.in.
+	
 2006-08-04  Joanmarie Diggs <via william.walker@sun.com>
 
 	* src/orca/dectalk.py: better ACSS support for DECtalk through
