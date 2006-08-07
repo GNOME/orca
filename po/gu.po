@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.HEAD.gu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-31 03:17+0200\n"
-"PO-Revision-Date: 2006-07-31 13:42+0530\n"
+"POT-Creation-Date: 2006-08-07 00:20+0200\n"
+"PO-Revision-Date: 2006-08-07 10:11+0530\n"
 "Last-Translator: Ankit Patel <ankit644@yahoo.com>\n"
 "Language-Team: Gujarati <indianoss-gujarati@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -28,20 +28,29 @@ msgstr ""
 "\n"
 "\n"
 "\n"
+"\n"
+
+#: ../orca.desktop.in.h:1
+msgid "Assistive Technologies for Blind and Visually Impaired People"
+msgstr "અંધ અને દેખીતી રીતે ખામીઓવાળા લોકો માટેની સહાયક ટેક્નોલોજીઓ"
+
+#: ../orca.desktop.in.h:2
+msgid "Orca Screen Reader and Magnifier"
+msgstr "Orca સ્ક્રીન વાંચક અને વિસ્તૃતકારક"
 
 #: ../src/orca/braillegenerator.py:193 ../src/orca/speechgenerator.py:191
 msgid "grayed"
 msgstr "રાખોડી"
 
-#: ../src/orca/braillegenerator.py:1084 ../src/orca/speechgenerator.py:1198
+#: ../src/orca/braillegenerator.py:1085 ../src/orca/speechgenerator.py:1198
 msgid "expanded"
 msgstr "વિસ્તૃત"
 
-#: ../src/orca/braillegenerator.py:1086 ../src/orca/speechgenerator.py:1200
+#: ../src/orca/braillegenerator.py:1087 ../src/orca/speechgenerator.py:1200
 msgid "collapsed"
 msgstr "સંકુચિત"
 
-#: ../src/orca/braillegenerator.py:1090
+#: ../src/orca/braillegenerator.py:1091
 #, python-format
 msgid "TREE LEVEL %d"
 msgstr "TREE LEVEL %d"
@@ -372,55 +381,55 @@ msgstr "કાર્યક્રમ વિશે ડિબગ જાણકાર
 msgid "Switches to the next presentation manager."
 msgstr "આગળના રજૂઆતક વ્યવસ્થાપક પર ફેરવે છે."
 
-#: ../src/orca/default.py:1106 ../src/orca/default.py:1325
+#: ../src/orca/default.py:1067 ../src/orca/default.py:1286
 #, python-format
 msgid "tree level %d"
 msgstr "ટ્રી સ્તર %d"
 
-#: ../src/orca/default.py:1110 ../src/orca/focus_tracking_presenter.py:638
+#: ../src/orca/default.py:1071 ../src/orca/focus_tracking_presenter.py:638
 msgid "No focus"
 msgstr "કોઈ ફોકસ નથી"
 
-#: ../src/orca/default.py:1716
+#: ../src/orca/default.py:1677
 msgid "entire document selected"
 msgstr "વર્તમાન દસ્તાવેજ પસંદ થયેલ છે"
 
-#: ../src/orca/default.py:2100
+#: ../src/orca/default.py:2092
 msgid "Speak "
 msgstr "બોલો "
 
-#: ../src/orca/default.py:2103
+#: ../src/orca/default.py:2095
 msgid "row"
 msgstr "હરોળ"
 
-#: ../src/orca/default.py:2105 ../src/orca/rolenames.py:432
+#: ../src/orca/default.py:2097 ../src/orca/rolenames.py:432
 #: ../src/orca/rolenames.py:434
 msgid "cell"
 msgstr "ખાનું"
 
-#: ../src/orca/default.py:2260
+#: ../src/orca/default.py:2252
 msgid "Entering learn mode.  Press any key to hear its function. "
 msgstr "શીખવાની સ્થિતિમાં દાખલ થઈ રહ્યા છીએ.  તેનું વિધેય સાંભળવા માટે કોઈપણ કી દબાવો. "
 
-#: ../src/orca/default.py:2261
+#: ../src/orca/default.py:2253
 msgid "To exit learn mode, press the escape key."
 msgstr "શીખવાની સ્થિતિમાંથી બહાર નીકળવા માટે, એસ્કેપ કી દબાવો."
 
-#: ../src/orca/default.py:2262
+#: ../src/orca/default.py:2254
 msgid "Learn mode.  Press escape to exit."
 msgstr "શીખવાની સ્થિતિ.  બહાર નીકળવા માટે એસ્કેપ દબાવો."
 
-#: ../src/orca/default.py:2274 ../src/orca/default.py:2275
+#: ../src/orca/default.py:2266 ../src/orca/default.py:2267
 msgid "Exiting learn mode."
 msgstr "શીખવાની સ્થિતિમાંથી બહાર નીકળી રહ્યા છીએ."
 
-#: ../src/orca/default.py:2605 ../src/orca/default.py:2733
-#: ../src/orca/default.py:2738 ../src/orca/default.py:2810
-#: ../src/orca/default.py:2815
+#: ../src/orca/default.py:2597 ../src/orca/default.py:2725
+#: ../src/orca/default.py:2730 ../src/orca/default.py:2802
+#: ../src/orca/default.py:2807
 msgid "blank"
 msgstr "કોરું"
 
-#: ../src/orca/default.py:2607 ../src/orca/default.py:2740
+#: ../src/orca/default.py:2599 ../src/orca/default.py:2732
 msgid "white space"
 msgstr "સફેદ જગ્યા"
 
