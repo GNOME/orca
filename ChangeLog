@@ -1,3 +1,9 @@
+2006-08-07  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca.py: fix typo made during the orca_state.py
+	refactor: instead of orca_state.lastInputEvent, make it
+	orca_state.lastInputEventTimestamp.  Thanks, Rich.
+	
 2006-08-07  Mike Pedersen <michael.pedersen@sun.com> 
 
         * test/keystrokes/gtk-demo/buttonboxes.keys
@@ -7,6 +13,8 @@
           added new gtk-demo  tests.
 
 2006-08-06  Willie Walker <william.walker@sun.com>
+
+	* NEWS, configure.in, README: prep for 0.2.8.
 
 	* po/POTFILES.in: add orca.desktop.in.
 	

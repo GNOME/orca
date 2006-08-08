@@ -647,7 +647,7 @@ def _processKeyboardEvent(event):
     """
     global _orcaModifierPressed
 
-    orca_state.lastInputEvent = event.timestamp
+    orca_state.lastInputEventTimestamp = event.timestamp
 
     # Log the keyboard event for future playback, if desired.
     # Note here that the key event_string being output is
