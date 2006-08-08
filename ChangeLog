@@ -5,6 +5,9 @@
           Fixed bug #350294. _initGUIState in GUI prefs can issue a 
           TypeError (orca).
 
+        * src/orca/default.py:
+          Fixed bug #350212. Spin Buttons only announce one change.
+
 2006-08-07  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca.py: fix typo made during the orca_state.py

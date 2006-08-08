@@ -1810,6 +1810,12 @@ class Script(script.Script):
 
         text = event.any_data.value()
 
+        # If this is a spin button, then speak the text and return.
+        #
+        if event.source.role == rolenames.ROLE_SPIN_BUTTON:
+            speech.speak(text)
+            return
+
         # If the last input event was a keyboard event, check to see if
         # the text for this event matches what the user typed. If it does,
         # then don't speak it.
