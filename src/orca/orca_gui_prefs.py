@@ -396,8 +396,8 @@ class orcaSetupGUI(GladeWrapper):
         - combobox: the GtkComboBox to search.
         - str: the string to search for.
 
-        Returns the index of the first entry in combobox with str, on
-        None if not found.
+        Returns the index of the first entry in combobox with str, or
+        0 if not found.
         """
 
         model = combobox.get_model()
@@ -408,7 +408,7 @@ class orcaSetupGUI(GladeWrapper):
                 return i
             iter = model.iter_next(iter)
 
-        return None
+        return 0
 
     def _setupServers(self):
         """Get the list of speech servers for the current speech factory.

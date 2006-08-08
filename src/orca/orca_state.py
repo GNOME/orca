@@ -46,7 +46,7 @@ lastInputEvent = None
 # The last timestamp from a device event. Used to set focus for the Orca
 # configuration GUI.
 #
-lastInputEventTimestamp = None
+lastInputEventTimestamp = 0
 
 # Records the last time a key was echoed.
 #

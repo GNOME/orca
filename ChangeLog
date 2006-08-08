@@ -1,3 +1,10 @@
+2006-08-08  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca_gui_prefs.py:
+          src/orca/orca_state.py:
+          Fixed bug #350294. _initGUIState in GUI prefs can issue a 
+          TypeError (orca).
+
 2006-08-07  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca.py: fix typo made during the orca_state.py
