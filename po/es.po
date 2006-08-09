@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-06 20:12+0200\n"
-"PO-Revision-Date: 2006-08-06 20:14+0200\n"
+"POT-Creation-Date: 2006-08-10 00:13+0200\n"
+"PO-Revision-Date: 2006-08-10 00:14+0200\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -21,12 +21,13 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../orca.desktop.in.h:1
-msgid "Assistive Technologies for Blind and Visually Impaired People"
-msgstr "Tecnologías de asistencia para gente invidente o con visión limitada"
-
-#: ../orca.desktop.in.h:2
 msgid "Orca Screen Reader and Magnifier"
 msgstr "Lector de pantalla y lupa Orca"
+
+#: ../orca.desktop.in.h:2
+msgid ""
+"Present on-screen information as speech or braille, or magnify the screen"
+msgstr "Presenta información sobre lo que hay en la pantalla por medio de voz, braille o ampliando ésta."
 
 #: ../src/orca/braillegenerator.py:193 ../src/orca/speechgenerator.py:191
 msgid "grayed"
@@ -391,43 +392,43 @@ msgstr "Sin foco"
 msgid "entire document selected"
 msgstr "documento entero seleccionado"
 
-#: ../src/orca/default.py:2092
+#: ../src/orca/default.py:2098
 msgid "Speak "
 msgstr "Hablar"
 
-#: ../src/orca/default.py:2095
+#: ../src/orca/default.py:2101
 msgid "row"
 msgstr "fila"
 
-#: ../src/orca/default.py:2097 ../src/orca/rolenames.py:432
+#: ../src/orca/default.py:2103 ../src/orca/rolenames.py:432
 #: ../src/orca/rolenames.py:434
 msgid "cell"
 msgstr "celda"
 
-#: ../src/orca/default.py:2252
+#: ../src/orca/default.py:2258
 msgid "Entering learn mode.  Press any key to hear its function. "
 msgstr ""
 "Entrando en modo de aprendizaje.  Pulse cualquier tecla para oír su función."
 
-#: ../src/orca/default.py:2253
+#: ../src/orca/default.py:2259
 msgid "To exit learn mode, press the escape key."
 msgstr "Para salir del modo de aprendizaje, pulse la tecla de escape."
 
-#: ../src/orca/default.py:2254
+#: ../src/orca/default.py:2260
 msgid "Learn mode.  Press escape to exit."
 msgstr "Modo de aprendizaje.  Pulse escape para salir."
 
-#: ../src/orca/default.py:2266 ../src/orca/default.py:2267
+#: ../src/orca/default.py:2272 ../src/orca/default.py:2273
 msgid "Exiting learn mode."
 msgstr "Saliendo del modo de aprendizaje."
 
-#: ../src/orca/default.py:2597 ../src/orca/default.py:2725
-#: ../src/orca/default.py:2730 ../src/orca/default.py:2802
-#: ../src/orca/default.py:2807
+#: ../src/orca/default.py:2603 ../src/orca/default.py:2731
+#: ../src/orca/default.py:2736 ../src/orca/default.py:2808
+#: ../src/orca/default.py:2813
 msgid "blank"
 msgstr "en blanco"
 
-#: ../src/orca/default.py:2599 ../src/orca/default.py:2732
+#: ../src/orca/default.py:2605 ../src/orca/default.py:2738
 msgid "white space"
 msgstr "espacio en blanco"
 
@@ -2182,3 +2183,7 @@ msgstr "documento seleccionado desde la posición del cursor"
 #: ../src/orca/util.py:1130
 msgid "unselected"
 msgstr "no seleccionado"
+
+#~ msgid "Assistive Technologies for Blind and Visually Impaired People"
+#~ msgstr ""
+#~ "Tecnologías de asistencia para gente invidente o con visión limitada"
