@@ -1,5 +1,11 @@
 2006-08-09  Willie Walker <william.walker@sun.com>
 
+	* bugs/bugs.html, bugs/bug_350623.py: gnome-terminal 2.15.4 
+	regression that breaks getTextAtOffset.
+
+	* bugs/bugs.html, bugs/bug_350624.py: metacity 2.15.13 regression
+	that causes status bar to no longer emit name change events.
+	
 	* orca.desktop.in: gnome-i81n and gnome-doc-list suggested and
 	approved string change: "_Comment=Present on-screen information as
 	speech or braille, or magnify the screen"
