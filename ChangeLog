@@ -1,3 +1,9 @@
+2006-08-09  Willie Walker <william.walker@sun.com>
+
+	* orca.desktop.in: gnome-i81n and gnome-doc-list suggested and
+	approved string change: "_Comment=Present on-screen information as
+	speech or braille, or magnify the screen"
+	
 2006-08-08  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca_gui_prefs.py:
