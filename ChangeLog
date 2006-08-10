@@ -1,3 +1,8 @@
+2006-08-10  Oana Serb <os@baum.ro>
+
+	* src/orca/util.py: Fix bug 350724 - improve handling of
+	LABEL_FOR and LABELLED_BY objects.
+
 2006-08-10  Willie Walker <william.walker@sun.com>
 
 	* src/orca/focus_tracking_presenter.py: initialize
