@@ -67,6 +67,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         #
         self.registry        = atspi.Registry()
         self._knownScripts   = {}
+        self._activeScript   = None
         self._eventQueue     = Queue.Queue(0)
         self._gidleId        = 0
         self._gidleLock      = threading.Lock()

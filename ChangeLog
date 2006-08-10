@@ -1,3 +1,9 @@
+2006-08-10  Willie Walker <william.walker@sun.com>
+
+	* src/orca/focus_tracking_presenter.py: initialize
+	self._activeScript to None in __init__ to make sure the
+	field is defined before being used.
+	
 2006-08-09  Willie Walker <william.walker@sun.com>
 
 	* bugs/bugs.html, bugs/bug_350623.py: gnome-terminal 2.15.4 
