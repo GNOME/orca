@@ -11,6 +11,11 @@
           Fixed bug #350218. GtkDemo Editable cells tree demo seems to 
           be speaking both cells in a row
 
+        * bugs/bugs.html:
+          Added an entry for gtk+ bug #350215:
+          [a11y] GtkDemo expander button - cannot navigate or flat review
+          to stuff that has been expanded.
+
 2006-08-10  Oana Serb <os@baum.ro>
 
 	* src/orca/util.py: Fix bug 350724 - improve handling of
