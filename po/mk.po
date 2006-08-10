@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.HEAD.mk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-06 16:28+0200\n"
-"PO-Revision-Date: 2006-08-06 16:50+0200\n"
+"POT-Creation-Date: 2006-08-10 16:47+0200\n"
+"PO-Revision-Date: 2006-08-10 17:50+0200\n"
 "Last-Translator: Jovan Naumovski <jovan@lugola.net>\n"
 "Language-Team: Macedonian <ossm-members@hedona.on.net.mk>\n"
 "MIME-Version: 1.0\n"
@@ -17,12 +17,12 @@ msgstr ""
 "X-Generator: KBabel 1.11.2\n"
 
 #: ../orca.desktop.in.h:1
-msgid "Assistive Technologies for Blind and Visually Impaired People"
-msgstr "Помошни технологии за слепи и луѓе со нарушен вид"
-
-#: ../orca.desktop.in.h:2
 msgid "Orca Screen Reader and Magnifier"
 msgstr "Орка читач и зголемувач на екранот"
+
+#: ../orca.desktop.in.h:2
+msgid "Present on-screen information as speech or braille, or magnify the screen"
+msgstr "Претстави ги информациите на екранот како говор, преку брајов уред или зголеми го екранот"
 
 #: ../src/orca/braillegenerator.py:193 ../src/orca/speechgenerator.py:191
 msgid "grayed"
@@ -378,7 +378,7 @@ msgstr "Преминува на следниот менаџер на презе�
 msgid "tree level %d"
 msgstr "ниво на дрвото %d"
 
-#: ../src/orca/default.py:1071 ../src/orca/focus_tracking_presenter.py:638
+#: ../src/orca/default.py:1071 ../src/orca/focus_tracking_presenter.py:639
 msgid "No focus"
 msgstr "Нема фокус"
 
@@ -386,44 +386,44 @@ msgstr "Нема фокус"
 msgid "entire document selected"
 msgstr "целиот документ е избран"
 
-#: ../src/orca/default.py:2092
+#: ../src/orca/default.py:2098
 msgid "Speak "
 msgstr "Зборува"
 
-#: ../src/orca/default.py:2095
+#: ../src/orca/default.py:2101
 msgid "row"
 msgstr "ред"
 
-#: ../src/orca/default.py:2097 ../src/orca/rolenames.py:432
+#: ../src/orca/default.py:2103 ../src/orca/rolenames.py:432
 #: ../src/orca/rolenames.py:434
 msgid "cell"
 msgstr "ќелија"
 
-#: ../src/orca/default.py:2252
+#: ../src/orca/default.py:2258
 msgid "Entering learn mode.  Press any key to hear its function. "
 msgstr ""
 "Влегувам во режимот за учење.  Притиснете го било кое копче за да ја "
 "слушните неговата функција. "
 
-#: ../src/orca/default.py:2253
+#: ../src/orca/default.py:2259
 msgid "To exit learn mode, press the escape key."
 msgstr "За излез од режимот на учење, притиснете го копчето escape."
 
-#: ../src/orca/default.py:2254
+#: ../src/orca/default.py:2260
 msgid "Learn mode.  Press escape to exit."
 msgstr "Режим на учење.  Притиснете escape за излез."
 
-#: ../src/orca/default.py:2266 ../src/orca/default.py:2267
+#: ../src/orca/default.py:2272 ../src/orca/default.py:2273
 msgid "Exiting learn mode."
 msgstr "Излегувам од режимот на учење."
 
-#: ../src/orca/default.py:2597 ../src/orca/default.py:2725
-#: ../src/orca/default.py:2730 ../src/orca/default.py:2802
-#: ../src/orca/default.py:2807
+#: ../src/orca/default.py:2603 ../src/orca/default.py:2731
+#: ../src/orca/default.py:2736 ../src/orca/default.py:2808
+#: ../src/orca/default.py:2813
 msgid "blank"
 msgstr "празно"
 
-#: ../src/orca/default.py:2599 ../src/orca/default.py:2732
+#: ../src/orca/default.py:2605 ../src/orca/default.py:2738
 msgid "white space"
 msgstr "празен простор"
 
@@ -431,7 +431,7 @@ msgstr "празен простор"
 msgid "Emacspeak Speech Services"
 msgstr "Emacspeak сервиси за говор"
 
-#: ../src/orca/focus_tracking_presenter.py:733
+#: ../src/orca/focus_tracking_presenter.py:734
 msgid "Switching to focus tracking mode."
 msgstr "Преминувам на режим за пратење на фокус."
 
