@@ -1937,6 +1937,13 @@ class Script(script.Script):
         if not event or not event.source:
             return
 
+        # Avoid doing this with objects that manage their descendants
+        # because they'll issue a descendant changed event.
+        #
+        if event.source.state.count(
+                 atspi.Accessibility.STATE_MANAGES_DESCENDANTS):
+            return
+
         if event.source.role == rolenames.ROLE_COMBO_BOX:
             orca.visualAppearanceChanged(event, event.source)
 

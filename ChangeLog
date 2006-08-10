@@ -1,3 +1,9 @@
+2006-08-10  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          Fixed bug #350218. GtkDemo Editable cells tree demo seems to 
+          be speaking both cells in a row
+
 2006-08-10  Oana Serb <os@baum.ro>
 
 	* src/orca/util.py: Fix bug 350724 - improve handling of
