@@ -77,7 +77,7 @@ msgstr "pregunta"
 
 #: ../src/orca/chnames.py:42
 msgid "quote"
-msgstr "cita"
+msgstr "cometes"
 
 #: ../src/orca/chnames.py:43
 msgid "left paren"
