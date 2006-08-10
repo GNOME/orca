@@ -705,7 +705,7 @@ msgstr "Algu_ns"
 
 #: ../src/orca/orca-setup.glade.h:45
 msgid "Speak _indentation and justification"
-msgstr "Pronuncia la _identació i la justificació"
+msgstr "Pronunc_ia el sagnat i la justificació"
 
 #: ../src/orca/orca-setup.glade.h:46 ../src/orca/orca_gui_prefs.py:1079
 msgid "Speak current _cell"
@@ -727,6 +727,7 @@ msgstr "_Sistema de pronunciació:"
 msgid "Speech synthesi_zer:"
 msgstr "Sintetit_zador de pronunciació:"
 
+# "Verbós" ? (josep)
 #: ../src/orca/orca-setup.glade.h:51
 msgid "Ver_bose"
 msgstr "Escriu més in_formació"
@@ -1018,7 +1019,7 @@ msgstr "La pronunciació no està disponible."
 #: ../src/orca/orca_gui_prefs.py:366 ../src/orca/orca_gui_prefs.py:370
 #: ../src/orca/orca_gui_prefs.py:1311
 msgid "Bilinear"
-msgstr "Bilinial"
+msgstr "Bilineal"
 
 #: ../src/orca/orca_gui_prefs.py:368 ../src/orca/orca_gui_prefs.py:381
 #: ../src/orca/orca_gui_prefs.py:1313 ../src/orca/orca_gui_prefs.py:1336
@@ -2055,7 +2056,7 @@ msgstr "Comprovació de l'escriptura:"
 #: ../src/orca/scripts/StarOffice.py:580
 msgid "Note that the Scroll Down button has to be pressed numerous times."
 msgstr ""
-"Tingueu en compte que el botó de baixar s'ha d'apretar diverses vegades."
+"Tingueu en compte que el botó de baixar s'ha de prémer diverses vegades."
 
 #: ../src/orca/scripts/StarOffice.py:594
 msgid "License Agreement Accept button now has focus."
@@ -2067,7 +2068,7 @@ msgstr "Nom"
 
 #: ../src/orca/scripts/StarOffice.py:865
 msgid " has formula"
-msgstr " conté una fòrmula"
+msgstr " conté una fórmula"
 
 #. Note to translators: the regular expression here represents a
 #. string to match in the localized application name as seen by
