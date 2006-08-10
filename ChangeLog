@@ -1,3 +1,10 @@
+2006-08-10  Willie Walker <william.walker@sun.com>
+
+	* src/orca/flat_review.py: fix for bug 349465 - take some
+	defensive actions in the event that the AT-SPI implementation
+	has implemented getTextAtOffset incorrectly (i.e., it gives
+	back garbage for offsets).
+	
 2006-08-10  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:

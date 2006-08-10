@@ -1081,12 +1081,19 @@ def getZonesFromAccessible(accessible, cliprect):
 
     zones = []
 
+    debug.println(
+        debug.LEVEL_FINEST,
+        "flat_review.getZonesFromAccessible (name=%s role=%s)" \
+        % (accessible.name, accessible.role))
+
     # Now see if there is any accessible text.  If so, find new zones,
     # where each zone represents a line of this text object.  When
     # creating the zone, only keep track of the text that is actually
     # showing on the screen.
     #
     if accessible.text:
+        debug.println(debug.LEVEL_FINEST, "  looking at text:")
+
         text = accessible.text
         length = text.characterCount
 
@@ -1098,14 +1105,28 @@ def getZonesFromAccessible(accessible, cliprect):
                 offset,
                 atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
 
+            debug.println(debug.LEVEL_FINEST,
+                          "    line at %d is (start=%d end=%d): '%s'" \
+                          % (offset, startOffset, endOffset, string))
+
             # [[[WDW - HACK: well...gnome-terminal sometimes wants to
             # give us outrageous values back from getTextAtOffset
             # (see http://bugzilla.gnome.org/show_bug.cgi?id=343133),
-            # so we try to handle it.]]]
+            # so we try to handle it.  Evolution does similar things.]]]
             #
-            if startOffset < 0:
-                break
-            if endOffset < offset:
+            if (startOffset < 0) \
+               or (endOffset < 0) \
+               or (startOffset > offset) \
+               or (endOffset < offset) \
+               or (startOffset > endOffset) \
+               or (abs(endOffset - startOffset) > 666e3):
+                debug.println(debug.LEVEL_WARNING,
+                              "flat_review:getZonesFromAccessible detected "\
+                              "garbage from getTextAtOffset for accessible "\
+                              "name='%s' role'='%s': offset used=%d, "\
+                              "start/end offset returned=(%d,%d), string='%s'"\
+                              % (accessible.name, accessible.role,
+                                 offset, startOffset, endOffset, string))
                 break
 
             # [[[WDW - HACK: this is here because getTextAtOffset
