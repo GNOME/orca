@@ -1,3 +1,9 @@
+2006-08-11  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/bugs.html:
+          Added an entry for gnome-screensaver bug #350716:
+          [a11y] Gnome Screen saver password dialog not accessible.
+
 2006-08-11  Willie Walker <william.walker@sun.com>
 
 	* src/orca/speech.py: OOPS!  Fix loop logic mistake I made
