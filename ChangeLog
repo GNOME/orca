@@ -1,3 +1,9 @@
+2006-08-11  Willie Walker <william.walker@sun.com>
+
+	* src/orca/speech.py: for regression testing purposes, allow us to
+	get what would have been spoken even if settings.speechServerFactory 
+	is None.
+	
 2006-08-10  Willie Walker <william.walker@sun.com>
 
 	* src/orca/flat_review.py: fix for bug 349465 - take some
