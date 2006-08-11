@@ -145,6 +145,7 @@ def speak(text, acss=None, interrupt=True):
         return
 
     debug.println(debug.LEVEL_INFO, "SPEECH OUTPUT: '" + text + "'")
+
     if __speechserver:
         __speechserver.speak(text, __resolveACSS(acss), interrupt)
 
@@ -176,13 +177,15 @@ def speakUtterances(utterances, acss=None, interrupt=True):
 
     if settings.silenceSpeech:
         return
+
     for utterance in utterances:
         debug.println(debug.LEVEL_INFO,
                       "SPEECH OUTPUT: '" + utterance + "'")
-        if __speechserver:
-            __speechserver.speakUtterances(utterances,
-                                           __resolveACSS(acss),
-                                           interrupt)
+
+    if __speechserver:
+        __speechserver.speakUtterances(utterances,
+                                       __resolveACSS(acss),
+                                       interrupt)
 
 def stop():
     if __speechserver:

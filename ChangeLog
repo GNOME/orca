@@ -1,3 +1,10 @@
+2006-08-11  Willie Walker <william.walker@sun.com>
+
+	* src/orca/speech.py: OOPS!  Fix loop logic mistake I made
+	when making the change to allow us to see what would be output
+	even if speechServerFactory is None.  This had the bad effect
+	of making the output of many things be repeated many times.
+	
 2006-08-11  Oana Serb <os@baum.ro>
 
 	* src/orca/util.py, src/orca/J2SE-access-bridge.py,
