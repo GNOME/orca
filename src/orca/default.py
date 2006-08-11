@@ -1683,6 +1683,15 @@ class Script(script.Script):
         - event: the Event
         """
 
+        # We don't always get focus: events for text areas, so if we
+        # see caret moved events for a focused text area, we silently
+        # set them to be the locus of focus.
+        #
+        if event and event.source and \
+           (event.source != orca_state.locusOfFocus) and \
+            event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
+            orca.setLocusOfFocus(event, event.source, False)
+
         # Ignore caret movements from non-focused objects, unless the
         # currently focused object is the parent of the object which
         # has the caret.
@@ -1783,8 +1792,8 @@ class Script(script.Script):
         - event: the Event
         """
 
-        # We don't always get focus: events for text areas, so if we 
-        # see inserted text events for a focused text area, we silently 
+        # We don't always get focus: events for text areas, so if we
+        # see inserted text events for a focused text area, we silently
         # set them to be the locus of focus..
         #
         if event and event.source and \
@@ -1895,12 +1904,22 @@ class Script(script.Script):
         orca.setLocusOfFocus(event, event.source)
 
     def onStateChanged(self, event):
-        """Called whenever an object's state changes.  Currently, the
-        state changes for non-focused objects are ignored.
+        """Called whenever an object's state changes.
 
         Arguments:
         - event: the Event
         """
+
+        # Sometimes an object will tell us it is focused this
+        # way versus issuing a focus event.  GEdit's edit area,
+        # for example, will do this: when you use metacity's
+        # window menu to do things like maximize or unmaximize
+        # a window, you will only get a state-changed event
+        # from the text area when it regains focus.
+        #
+        if (event.type == "object:state-changed:focused") \
+           and (event.detail1):
+            orca.setLocusOfFocus(event, event.source)
 
         # Do we care?
         #
@@ -1947,9 +1966,9 @@ class Script(script.Script):
         if event.source.role == rolenames.ROLE_COMBO_BOX:
             orca.visualAppearanceChanged(event, event.source)
 
-        # We treat selected children as the locus of focus. When the 
-        # selection changed we want to update the locus of focus. If 
-        # there is no selection, we default the locus of focus to the 
+        # We treat selected children as the locus of focus. When the
+        # selection changed we want to update the locus of focus. If
+        # there is no selection, we default the locus of focus to the
         # containing object.
         #
         elif (event.source != orca_state.locusOfFocus) and \
