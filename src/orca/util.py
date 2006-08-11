@@ -48,6 +48,21 @@ import speechserver
 
 from orca_i18n import _ # for gettext support
 
+def isSameObject(obj1, obj2):
+    if (obj1 == obj2):
+        return True
+    elif (not obj1) or (not obj2):
+        return False
+
+    try:
+        return (obj1.parent == obj2.parent) \
+               and (obj1.name == obj2.name) \
+               and (obj1.index == obj2.index)
+    except:
+        pass
+
+    return False
+
 def appendString(text, newText, delimiter=" "):
     """Appends the newText to the given text with the delimiter in between
     and returns the new string.  Edge cases, such as no initial text or
@@ -62,28 +77,28 @@ def appendString(text, newText, delimiter=" "):
 
 def __hasLabelForRelation(label):
     """Check if label has a LABEL_FOR relation
-        
+
     Arguments:
     - label: the label in question
 
     Returns TRUE if label has a LABEL_FOR relation.
     """
     if (not label) or (label.role != rolenames.ROLE_LABEL):
-	return False
+        return False
 
     relations = label.relations
 
     for relation in relations:
         if relation.getRelationType() \
                == atspi.Accessibility.RELATION_LABEL_FOR:
-	    return True
+            return True
 
     return False
 
 
 def __isLabeling(label, object):
     """Check if label is connected via  LABEL_FOR relation with object
-        
+
     Arguments:
     - object: the object in question
     - labeled: the label in question
@@ -94,20 +109,20 @@ def __isLabeling(label, object):
     if (not object) \
        or (not label) \
        or (label.role != rolenames.ROLE_LABEL):
-	return False
+        return False
 
     relations = label.relations
     if not relations:
-	return False
+        return False
 
     for relation in relations:
         if relation.getRelationType() \
                == atspi.Accessibility.RELATION_LABEL_FOR:
 
-    	    for i in range(0, relation.getNTargets()):
+            for i in range(0, relation.getNTargets()):
                 target = atspi.Accessible.makeAccessible(relation.getTarget(i))
                 if target == object:
-		    return True
+                    return True
 
     return False
 
@@ -154,38 +169,38 @@ def getDisplayedLabel(object):
     # other is the container for the grouped objects.  When we detect
     # this, we add the label to the overall context.
     #
-    # We are also looking for objects which have a PANEL or a FILLER as 
+    # We are also looking for objects which have a PANEL or a FILLER as
     # parent, and its parent has more children. Through these children,
     # a potential label with LABEL_FOR relation may exists. We want to
     # present this label.
-    # This case can be seen in FileChooserDemo application, in Open dialog 
-    # window, the line with "Look In" label, a combobox and some presentation 
+    # This case can be seen in FileChooserDemo application, in Open dialog
+    # window, the line with "Look In" label, a combobox and some presentation
     # buttons.]]]
     #
     if not label:
-    
-	potentialLabel = None
-	useLabel = False
-	if ((object.role == rolenames.ROLE_FILLER) \
+
+        potentialLabel = None
+        useLabel = False
+        if ((object.role == rolenames.ROLE_FILLER) \
                 or (object.role == rolenames.ROLE_PANEL)) \
-    	    and (object.childCount == 2):
-	    
-	    potentialLabel = object.child(0)
-	    secondChild = object.child(1)
-	    useLabel = potentialLabel.role == rolenames.ROLE_LABEL \
-		    and ((secondChild.role == rolenames.ROLE_FILLER) \
-            		    or (secondChild.role == rolenames.ROLE_PANEL)) \
-		    and not __hasLabelForRelation(potentialLabel)
-	else:
-	    parent = object.parent
-	    if parent and \
-		((parent.role == rolenames.ROLE_FILLER) \
-            		or (parent.role == rolenames.ROLE_PANEL)):
-		for i in range (0, parent.childCount):
-		    potentialLabel = parent.child(i)
-		    useLabel = __isLabeling(potentialLabel, object)
-		    if useLabel:
-			break
+            and (object.childCount == 2):
+
+            potentialLabel = object.child(0)
+            secondChild = object.child(1)
+            useLabel = potentialLabel.role == rolenames.ROLE_LABEL \
+                    and ((secondChild.role == rolenames.ROLE_FILLER) \
+                            or (secondChild.role == rolenames.ROLE_PANEL)) \
+                    and not __hasLabelForRelation(potentialLabel)
+        else:
+            parent = object.parent
+            if parent and \
+                ((parent.role == rolenames.ROLE_FILLER) \
+                        or (parent.role == rolenames.ROLE_PANEL)):
+                for i in range (0, parent.childCount):
+                    potentialLabel = parent.child(i)
+                    useLabel = __isLabeling(potentialLabel, object)
+                    if useLabel:
+                        break
 
         if useLabel and potentialLabel:
             label = potentialLabel.name
@@ -1176,7 +1191,6 @@ def speakTextSelectionState(obj, startOffset, endOffset):
 #
 # http://www.dalkescientific.com/writings/diary/archive/2005/04/20/tracing_python_code.html
 #
-import sys
 import linecache
 
 def traceit(frame, event, arg):
@@ -1207,4 +1221,3 @@ def traceit(frame, event, arg):
         debug.println(debug.LEVEL_ALL,
                       "TRACE %s:%s: %s" % (name, lineno, line.rstrip()))
     return traceit
-

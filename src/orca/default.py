@@ -1159,6 +1159,12 @@ class Script(script.Script):
         # the objects really could be different even though they seem the
         # same.  Logged as bug 319675.]]]
         #
+        if util.isSameObject(oldLocusOfFocus, newLocusOfFocus):
+            return
+
+        # Well...now that we got that behind us, let's do what we're supposed
+        # to do.
+        #
         if oldLocusOfFocus:
             oldParent = oldLocusOfFocus.parent
         else:
@@ -1169,16 +1175,6 @@ class Script(script.Script):
         else:
             newParent = None
 
-        if newParent and (oldParent == newParent):
-            state = newParent.state
-            if state.count(atspi.Accessibility.STATE_MANAGES_DESCENDANTS) \
-                and (oldLocusOfFocus.index == newLocusOfFocus.index) \
-                and (oldLocusOfFocus.name == newLocusOfFocus.name):
-                    return
-
-        # Well...now that we got that behind us, let's do what we're supposed
-        # to do.
-        #
         if newLocusOfFocus:
             self.updateBraille(newLocusOfFocus)
 
@@ -1868,6 +1864,9 @@ class Script(script.Script):
         Arguments:
         - event: the Event
         """
+
+        if not event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
+            return
 
         child = atspi.Accessible.makeAccessible(event.any_data.value())
         orca.setLocusOfFocus(event, child)

@@ -1,3 +1,11 @@
+2006-08-11  Oana Serb <os@baum.ro>
+
+	* src/orca/util.py, src/orca/J2SE-access-bridge.py,
+	src/orca/default.py: fix for bug 350739 to improve list navigation
+	for the Java platform.  This also adds the isSameObject method to
+	util.py to check for accessible object equivalence and uses it in
+	default.py.
+	
 2006-08-11  Willie Walker <william.walker@sun.com>
 
 	* src/orca/default.py: fix for bug 350854 - handle

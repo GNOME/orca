@@ -27,11 +27,14 @@ import atspi
 import default
 import debug
 import orca
+import orca_state
 import keybindings
 import settings
 import speech
 import util
 import rolenames
+import Accessibility
+import speechgenerator
 
 from orca_i18n import _ # for gettext support
 
@@ -40,6 +43,38 @@ from orca_i18n import _ # for gettext support
 # The Java script class.                                               #
 #                                                                      #
 ########################################################################
+
+class SpeechGenerator(speechgenerator.SpeechGenerator):
+    """Overrides _getSpeechForLabel
+    """
+    def _getSpeechForLabel(self, obj, already_focused):
+        """Get the speech for a label.
+
+        Arguments:
+        - obj: the label
+        - already_focused: False if object just received focus
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        utterances=[]
+        if (not already_focused):
+            utterances = self._getDefaultSpeech(obj, already_focused)
+
+        obj.was_selected = False
+        if obj.state.count(Accessibility.STATE_SELECTED) != 0:
+            utterances.append(_("selected"))
+            obj.was_selected = True
+        elif obj.state.count(Accessibility.STATE_SELECTED) == 0 and \
+                obj.state.count(Accessibility.STATE_SELECTABLE) != 0:
+            utterances.append(_("unselected"))
+
+        self._debugGenerator("_getSpeechForLabel",
+                             obj,
+                             already_focused,
+                             utterances)
+
+        return utterances
 
 class Script(default.Script):
 
@@ -50,6 +85,11 @@ class Script(default.Script):
         - app: the application to create a script for.
         """
         default.Script.__init__(self, app)
+
+    def getSpeechGenerator(self):
+        """Returns the speech generator for this script.
+        """
+        return SpeechGenerator()
 
     def consumesKeyboardEvent(self, keyboardEvent):
         """Called when a key is pressed on the keyboard.
@@ -88,8 +128,74 @@ class Script(default.Script):
         # Hand state changes when JTree labels become expanded
         # or collapsed.
         #
-        if ((event.source.role == "label") and \
+        if ((event.source.role == rolenames.ROLE_LABEL) and \
             (event.type == "object:state-changed:expanded")):
             orca.visualAppearanceChanged(event, event.source)
         else:
             default.Script.onStateChanged(self, event)
+
+    def onSelectionChanged(self, event):
+        """Called when an object's selection changes.
+
+        Arguments:
+        - event: the Event
+        """
+
+        if event.source.role == rolenames.ROLE_TABLE:
+            return
+
+        if event.source.role == rolenames.ROLE_LIST:
+            selection = event.source.selection
+            if selection.nSelectedChildren <= 0:
+                if event.source.childCount > 0:
+                    child = event.source.child(0)
+                    if child.state.count (atspi.Accessibility.STATE_ACTIVE):
+                        return
+                else:
+                    orca.setLocusOfFocus(event, event.source)
+                    return
+            else:
+                selectedItem = atspi.Accessible.makeAccessible(
+                                        selection.getSelectedChild(0))
+
+                # If the selected list item is the same with the last focused object,
+                # present it only if the item was not selected and has SELECTED state
+                # or if the item doesn't have SELECTED state, but SELECTABLE and
+                # it was selected.
+                #
+                if util.isSameObject (selectedItem, orca_state.locusOfFocus):
+                    if (orca_state.locusOfFocus.state.count(Accessibility.STATE_SELECTED) != 0 \
+                                and not orca_state.locusOfFocus.was_selected)   \
+                        or (orca_state.locusOfFocus.state.count(Accessibility.STATE_SELECTED) == 0 \
+                                and orca_state.locusOfFocus.state.count(Accessibility.STATE_SELECTABLE) != 0 \
+                                and orca_state.locusOfFocus.was_selected):
+                        orca.visualAppearanceChanged(event, selectedItem)
+                    return
+
+        default.Script.onSelectionChanged(self, event)
+
+    def visualAppearanceChanged(self, event, obj):
+        """Called when the visual appearance of an object changes.  This
+        method should not be called for objects whose visual appearance
+        changes solely because of focus -- setLocusOfFocus is used for that.
+        Instead, it is intended mostly for objects whose notional 'value' has
+        changed, such as a checkbox changing state, a progress bar advancing,
+        a slider moving, text inserted, caret moved, etc.
+
+        Arguments:
+        - event: if not None, the Event that caused this to happen
+        - obj: the Accessible whose visual appearance changed.
+        """
+
+        # Present to Braille and Speech an object that is the same
+        # with the last focused object, only if it is a label.
+        # This case is for LISTs which contain labels as items
+        # (see Open dialog lists).
+        #
+        if util.isSameObject (obj, orca_state.locusOfFocus):
+            if obj.role == rolenames.ROLE_LABEL:
+                self.updateBraille(orca_state.locusOfFocus)
+                speech.speakUtterances(self.speechGenerator.getSpeech(orca_state.locusOfFocus, True))
+                return
+
+        default.Script.visualAppearanceChanged(self, event, obj)
