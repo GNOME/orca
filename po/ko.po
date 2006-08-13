@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-06 00:42+0900\n"
-"PO-Revision-Date: 2006-08-07 03:22+0900\n"
+"POT-Creation-Date: 2006-08-13 16:10+0900\n"
+"PO-Revision-Date: 2006-08-13 16:11+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: GNOME Korea <gnome-kr-hackers@lists.kldp.net>\n"
 "MIME-Version: 1.0\n"
@@ -14,9 +14,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+#: ../orca.desktop.in.h:1
+msgid "Orca Screen Reader and Magnifier"
+msgstr "오르카 스크린 읽기 및 돋보기"
+
+#: ../orca.desktop.in.h:2
+msgid ""
+"Present on-screen information as speech or braille, or magnify the screen"
+msgstr "스크린 위의 정보를 음성으로 말하거나 점자로 나타내고, 화면을 확대해서 보여줍니다"
+
 #: ../src/orca/braillegenerator.py:193 ../src/orca/speechgenerator.py:191
 msgid "grayed"
-msgstr ""
+msgstr "비활성화"
 
 #: ../src/orca/braillegenerator.py:1085 ../src/orca/speechgenerator.py:1198
 msgid "expanded"
@@ -29,7 +38,7 @@ msgstr "접힘"
 #: ../src/orca/braillegenerator.py:1091
 #, python-format
 msgid "TREE LEVEL %d"
-msgstr ""
+msgstr "트리 단계 %d"
 
 #: ../src/orca/chnames.py:32
 msgid "space"
@@ -93,11 +102,11 @@ msgstr "세미콜론"
 
 #: ../src/orca/chnames.py:49
 msgid "less than"
-msgstr ""
+msgstr "더 작음"
 
 #: ../src/orca/chnames.py:50
 msgid "greater than"
-msgstr ""
+msgstr "더 큼"
 
 #: ../src/orca/chnames.py:51
 msgid "left bracket"
@@ -117,7 +126,7 @@ msgstr "세로줄"
 
 #: ../src/orca/chnames.py:55
 msgid "grave accent"
-msgstr ""
+msgstr "그레이브 엑센트"
 
 #: ../src/orca/chnames.py:56
 msgid "tilde"
@@ -173,143 +182,139 @@ msgstr "캐럿"
 
 #: ../src/orca/default.py:78
 msgid "Performs left click on current flat review item."
-msgstr ""
+msgstr "현재 플랫 리뷰 항목에 왼쪽 마우스 단추를 누르십시오."
 
 #: ../src/orca/default.py:82
 msgid "Performs right click on current flat review item."
-msgstr ""
+msgstr "현재 플랫 리뷰 항목에 오른쪽 마우스 단추를 누르십시오."
 
 #: ../src/orca/default.py:86 ../src/orca/scripts/Evolution.py:107
 msgid "Speaks entire document."
-msgstr ""
+msgstr "전체 문서를 음성으로 말합니다."
 
 #: ../src/orca/default.py:90
 msgid "Performs the where am I operation."
-msgstr ""
+msgstr "현재 위치 동작을 수행합니다."
 
 #: ../src/orca/default.py:94
 msgid "Paints and prints the visible zones in the active window."
-msgstr ""
+msgstr "활성화된 창의 보이는 부분을 그리고 인쇄합니다."
 
 #: ../src/orca/default.py:98
 msgid "Enters and exits flat review mode."
-msgstr ""
+msgstr "플랫 리뷰 모드를 들어가고 나갑니다."
 
 #: ../src/orca/default.py:102
 msgid "Moves flat review to the beginning of the previous line."
-msgstr ""
+msgstr "플랫 리뷰를 이전 줄의 처음으로 옮깁니다."
 
 #: ../src/orca/default.py:106
 msgid "Moves flat review to the home position."
-msgstr ""
+msgstr "플랫 리뷰를 홈 위치로 옮깁니다."
 
 #: ../src/orca/default.py:110
 msgid "Speaks the current flat review line."
-msgstr ""
+msgstr "현재 플랫 리뷰 줄을 말합니다."
 
 #: ../src/orca/default.py:114
 msgid "Moves flat review to the beginning of the next line."
-msgstr ""
+msgstr "플랫 리뷰를 다음 줄의 처음으로 옮깁니다."
 
 #: ../src/orca/default.py:118
 msgid "Moves flat review to the end position."
-msgstr ""
+msgstr "플랫 리뷰를 끝 위치로 옮깁니다."
 
 #: ../src/orca/default.py:122
 msgid "Moves flat review to the previous item or word."
-msgstr ""
+msgstr "플랫 리뷰를 이전 항목 혹은 이전 단어로 옮깁니다."
 
 #: ../src/orca/default.py:126
 msgid "Moves flat review to the word above the current word."
-msgstr ""
+msgstr "플랫 리뷰를 현재 단어의 위에 있는 단어로 옮깁니다."
 
 #: ../src/orca/default.py:130
 msgid "Speaks or spells the current flat review item or word."
-msgstr ""
+msgstr "현재의 플랫 리뷰 항목 혹은 단어를 말하거나 철자를 말합니다."
 
 #: ../src/orca/default.py:134
 msgid "Speaks the current flat review object."
-msgstr ""
+msgstr "현재의 플랫 리뷰 오브젝트를 말합니다."
 
 #: ../src/orca/default.py:138
 msgid "Moves flat review to the next item or word."
-msgstr ""
+msgstr "플랫 리뷰를 다음 항목 혹은 단어로 옮깁니다."
 
 #: ../src/orca/default.py:142
 msgid "Moves flat review to the word below the current word."
-msgstr ""
+msgstr "플랫 리뷰를 현재 단어의 아래에 있는 단어로 옮깁니다."
 
 #: ../src/orca/default.py:146
 msgid "Moves flat review to the previous character."
-msgstr ""
+msgstr "플랫 리뷰를 이전 글자로 옮깁니다."
 
 #: ../src/orca/default.py:150
 msgid "Moves flat review to the end of the line."
-msgstr ""
+msgstr "플랫 리뷰를 줄의 끝으로 옮깁니다."
 
 #: ../src/orca/default.py:154
 msgid "Speaks the current flat review character."
-msgstr ""
+msgstr "현재 플랫 리뷰 문자를 말합니다."
 
 #: ../src/orca/default.py:158
 msgid "Moves flat review to the next character."
-msgstr ""
+msgstr "플랫 리뷰를 다음 문자로 옮깁니다."
 
 #: ../src/orca/default.py:162
 msgid "Toggles whether to read just the current table cell or the whole row."
-msgstr ""
+msgstr "현재 테이블 셀 혹은 전체 행을 읽을 지 여부를 토글합니다."
 
 #: ../src/orca/default.py:166
 msgid "Reads the attributes associated with the current text character."
-msgstr ""
+msgstr "현재 텍스트 문자와 관련된 속성을 읽습니다."
 
 #: ../src/orca/default.py:170
 msgid "Reports information on current script."
-msgstr ""
+msgstr "현재 스크립트에 대한 정보를 알려 줍니다."
 
 #: ../src/orca/default.py:174
 msgid "Pans the braille display to the left."
-msgstr ""
+msgstr "점자 표시를 왼쪽으로 옮깁니다."
 
 #: ../src/orca/default.py:178
 msgid "Pans the braille display to the right."
-msgstr ""
+msgstr "점자 표시를 오른쪽으로 옮깁니다."
 
 #: ../src/orca/default.py:182
 msgid "Moves flat review to the bottom left."
-msgstr ""
+msgstr "플랫 리뷰를 아래 왼쪽으로 옮깁니다."
 
 #: ../src/orca/default.py:186
 msgid "Returns to object with keyboard focus."
-msgstr ""
+msgstr "키보드 포커스가 있는 오브젝트로 돌아갑니다."
 
 #: ../src/orca/default.py:190
 msgid "Enters learn mode.  Press escape to exit learn mode."
-msgstr ""
+msgstr "학습 모드를 끝냅니다.  Esc를 누르면 학습 모드를 끝냅니다."
 
 #: ../src/orca/default.py:194
 msgid "Exits learn mode."
-msgstr ""
+msgstr "학습 모드를 끝냅니다."
 
 #: ../src/orca/default.py:198
-#, fuzzy
 msgid "Decreases the speech rate."
-msgstr "속도 낮추기"
+msgstr "음성 속도를 낮춥니다."
 
 #: ../src/orca/default.py:202
-#, fuzzy
 msgid "Increases the speech rate."
-msgstr "속도 높이기"
+msgstr "음성 속도를 높입니다."
 
 #: ../src/orca/default.py:206
-#, fuzzy
 msgid "Decreases the speech pitch."
-msgstr "음 높이 낮추기"
+msgstr "음성 높이를 낮춥니다."
 
 #: ../src/orca/default.py:210
-#, fuzzy
 msgid "Increases the speech pitch."
-msgstr "음 높이 높이기"
+msgstr "음성 높이를 높입니다."
 
 #: ../src/orca/default.py:214
 msgid "Quits Orca"
@@ -317,138 +322,140 @@ msgstr "오르카 끝내기"
 
 #: ../src/orca/default.py:218
 msgid "Toggles keystroke recording on and off."
-msgstr ""
+msgstr "키 누르기 기록을 켜고 끕니다."
 
 #: ../src/orca/default.py:222
 msgid "Displays the preferences configuration dialog."
-msgstr ""
+msgstr "기본 설정 대화 상자를 표시합니다."
 
 #: ../src/orca/default.py:226
 msgid "Reloads user settings and reinitializes services as necessary."
-msgstr ""
+msgstr "사용자 설정을 다시 읽어들이고 서비스를 다시 초기화합니다."
 
 #: ../src/orca/default.py:230
 msgid "Toggles the silencing of speech."
-msgstr ""
+msgstr "음성 묵음을 토글합니다."
 
 #: ../src/orca/default.py:234
 msgid ""
 "Prints a debug listing of all known applications to the console where Orca "
 "is running."
 msgstr ""
+"오르카를 실행하는 콘솔에 알려진 모든 프로그램의 디버깅용 목록을 표시합니다."
 
 #: ../src/orca/default.py:238
 msgid "Cycles the debug level at run time."
-msgstr ""
+msgstr "실행 중에 디버깅 단계를 차례대로 조절합니다."
 
 #: ../src/orca/default.py:242
 msgid ""
 "Prints debug information about the currently active application to the "
 "console where Orca is running."
 msgstr ""
+"오르카를 실행하는 콘솔에 현재 활성화된 프로그램의 디버깅 정보를 표시합니다."
 
 #: ../src/orca/default.py:246
 msgid "Prints debug information about the ancestry of the object with focus"
-msgstr ""
+msgstr "포커스가 있는 오브젝트의 계통 디버깅 정보를 표시합니다."
 
 #: ../src/orca/default.py:250
 msgid "Prints debug information about the application with focus"
-msgstr ""
+msgstr "포커스가 있는 프로그램에 대한 디버깅 정보를 표시합니다."
 
 #: ../src/orca/default.py:254
 msgid "Switches to the next presentation manager."
-msgstr ""
+msgstr "다음 표시 관리자로 전환합니다."
 
-#: ../src/orca/default.py:1067 ../src/orca/default.py:1286
+#: ../src/orca/default.py:1067 ../src/orca/default.py:1282
 #, python-format
 msgid "tree level %d"
-msgstr ""
+msgstr "트리 단계 %d"
 
-#: ../src/orca/default.py:1071 ../src/orca/focus_tracking_presenter.py:638
+#: ../src/orca/default.py:1071 ../src/orca/focus_tracking_presenter.py:639
 msgid "No focus"
 msgstr "포커스 없음"
 
-#: ../src/orca/default.py:1677
+#: ../src/orca/default.py:1673
 msgid "entire document selected"
-msgstr ""
+msgstr "전체 문서 선택"
 
-#: ../src/orca/default.py:2092
+#: ../src/orca/default.py:2123
 msgid "Speak "
-msgstr ""
+msgstr "말하기: "
 
-#: ../src/orca/default.py:2095
+#: ../src/orca/default.py:2126
 msgid "row"
 msgstr "행"
 
-#: ../src/orca/default.py:2097 ../src/orca/rolenames.py:432
+#: ../src/orca/default.py:2128 ../src/orca/rolenames.py:432
 #: ../src/orca/rolenames.py:434
 msgid "cell"
 msgstr "셀"
 
-#: ../src/orca/default.py:2252
+#: ../src/orca/default.py:2283
 msgid "Entering learn mode.  Press any key to hear its function. "
 msgstr ""
+"학습 모드로 들어갑니다.  그 기능에 대해 들으려면 아무 키나 입력하십시오. "
 
-#: ../src/orca/default.py:2253
+#: ../src/orca/default.py:2284
 msgid "To exit learn mode, press the escape key."
-msgstr ""
+msgstr "학습 모드를 끝내려면, Esc 키를 누르십시오."
 
-#: ../src/orca/default.py:2254
+#: ../src/orca/default.py:2285
 msgid "Learn mode.  Press escape to exit."
-msgstr ""
+msgstr "학습 모드.  끝내려면 Esc 키를 누르십시오."
 
-#: ../src/orca/default.py:2266 ../src/orca/default.py:2267
+#: ../src/orca/default.py:2297 ../src/orca/default.py:2298
 msgid "Exiting learn mode."
-msgstr ""
+msgstr "학습 모드를 끝냅니다."
 
-#: ../src/orca/default.py:2597 ../src/orca/default.py:2725
-#: ../src/orca/default.py:2730 ../src/orca/default.py:2802
-#: ../src/orca/default.py:2807
+#: ../src/orca/default.py:2628 ../src/orca/default.py:2756
+#: ../src/orca/default.py:2761 ../src/orca/default.py:2833
+#: ../src/orca/default.py:2838
 msgid "blank"
-msgstr ""
+msgstr "빈칸"
 
-#: ../src/orca/default.py:2599 ../src/orca/default.py:2732
+#: ../src/orca/default.py:2630 ../src/orca/default.py:2763
 msgid "white space"
 msgstr "공백"
 
 #: ../src/orca/espeechfactory.py:93
 msgid "Emacspeak Speech Services"
-msgstr ""
+msgstr "emacspeak 음성 서비스"
 
-#: ../src/orca/focus_tracking_presenter.py:733
-#, fuzzy
+#: ../src/orca/focus_tracking_presenter.py:734
 msgid "Switching to focus tracking mode."
-msgstr "포커스 추적 모드"
+msgstr "포커스 추적 모드로 바꿉니다."
 
 #: ../src/orca/gnomespeechfactory.py:159
 msgid "GNOME Speech Services"
-msgstr ""
+msgstr "그놈 음성 서비스"
 
 #. # Replace ellipses (both manual and unicode) with "dot dot dot"
 #. #
 #: ../src/orca/gnomespeechfactory.py:605 ../src/orca/gnomespeechfactory.py:606
 msgid " dot dot dot"
-msgstr ""
+msgstr " 점 점 점"
 
 #: ../src/orca/gnomespeechfactory.py:765
 msgid "higher."
-msgstr ""
+msgstr "더 높게."
 
 #: ../src/orca/gnomespeechfactory.py:793
 msgid "lower."
-msgstr ""
+msgstr "더 낮게."
 
 #: ../src/orca/gnomespeechfactory.py:818
 msgid "faster."
-msgstr ""
+msgstr "더 빨리."
 
 #: ../src/orca/gnomespeechfactory.py:848
 msgid "slower."
-msgstr ""
+msgstr "더 느리게."
 
 #: ../src/orca/hierarchical_presenter.py:436
 msgid "Switching to hierarchical navigation mode."
-msgstr ""
+msgstr "계층 구조 찾아보기 모드로 전환합니다."
 
 #: ../src/orca/keynames.py:32 ../src/orca/keynames.py:35
 msgid "left shift"
@@ -523,39 +530,33 @@ msgid "<b>Cursor Settings</b>"
 msgstr "<b>커서 설정</b>"
 
 #: ../src/orca/orca-setup.glade.h:3
-#, fuzzy
 msgid "<b>Punctuation Level</b>"
-msgstr "<b>구두점</b>"
+msgstr "<b>문장 부호 단계</b>"
 
 #: ../src/orca/orca-setup.glade.h:4
-#, fuzzy
 msgid "<b>Table Row Speech</b>"
-msgstr "<b>텍스트 에코</b>"
+msgstr "<b>테이블 열 음성</b>"
 
 #: ../src/orca/orca-setup.glade.h:5
-#, fuzzy
 msgid "<b>Verbosity</b>"
-msgstr "<b>목소리</b>"
+msgstr "<b>자세히 말하기</b>"
 
 #: ../src/orca/orca-setup.glade.h:6
-#, fuzzy
 msgid "<b>Zoomer Position</b>"
-msgstr "<b>위치</b>"
+msgstr "<b>돋보기 위치</b>"
 
 #: ../src/orca/orca-setup.glade.h:7
-#, fuzzy
 msgid "<b>Zoomer Settings</b>"
-msgstr "<b>테두리 설정</b>"
+msgstr "<b>돋보기 설정</b>"
 
 #: ../src/orca/orca-setup.glade.h:8
-#, fuzzy
 msgid "Braille"
 msgstr "점자"
 
 #: ../src/orca/orca-setup.glade.h:9 ../src/orca/orca_gui_prefs.py:1059
 #: ../src/orca/orca_gui_prefs.py:1114
 msgid "Brie_f"
-msgstr ""
+msgstr "간단히(_F)"
 
 #: ../src/orca/orca-setup.glade.h:10
 msgid ""
@@ -564,6 +565,10 @@ msgid ""
 "Proportional\n"
 "Push"
 msgstr ""
+"가운데\n"
+"없음\n"
+"비례\n"
+"푸시"
 
 #: ../src/orca/orca-setup.glade.h:14
 msgid "Color:"
@@ -579,83 +584,73 @@ msgid ""
 "Uppercase\n"
 "Hyperlink"
 msgstr ""
+"기본값\n"
+"대문자\n"
+"바로가기"
 
 #: ../src/orca/orca-setup.glade.h:19
-#, fuzzy
 msgid "Enable Braille _monitor"
-msgstr "점자 모니터"
+msgstr "점자 상태 정보 사용(_M)"
 
 #: ../src/orca/orca-setup.glade.h:20
-#, fuzzy
 msgid "Enable Braille _support"
-msgstr "지원하기(_E)"
+msgstr "점자 지원(_S)"
 
 #: ../src/orca/orca-setup.glade.h:21
 msgid "Enable _alphanumeric and punctuation keys"
-msgstr ""
+msgstr "알파벳, 숫자, 문장 부호 키 사용(_A)"
 
 #: ../src/orca/orca-setup.glade.h:22
-#, fuzzy
 msgid "Enable _function keys"
-msgstr "표시 키에 대한 맵 기능"
+msgstr "펑션 키 사용(_F)"
 
 #: ../src/orca/orca-setup.glade.h:23
 msgid "Enable _key echo"
-msgstr ""
+msgstr "키 반향음 사용(_K)"
 
 #: ../src/orca/orca-setup.glade.h:24
-#, fuzzy
 msgid "Enable _magnifier"
-msgstr "돋보기"
+msgstr "돋보기 사용(_M)"
 
 #: ../src/orca/orca-setup.glade.h:25
-#, fuzzy
 msgid "Enable _modifier keys"
-msgstr "조합 키(_M):"
+msgstr "조합 키 사용(_M)"
 
 #: ../src/orca/orca-setup.glade.h:26
-#, fuzzy
 msgid "Enable ac_tion keys"
-msgstr "모든 네비게이션 키 말하기"
+msgstr "동작 키 사용(_T)"
 
 #: ../src/orca/orca-setup.glade.h:27
-#, fuzzy
 msgid "Enable c_ursor"
-msgstr "지원하기(_E)"
+msgstr "커서 사용(_U)"
 
 #: ../src/orca/orca-setup.glade.h:28
-#, fuzzy
 msgid "Enable cross-h_air"
-msgstr "십자선 크기 늘이기"
+msgstr "십자선 사용(_A)"
 
 #: ../src/orca/orca-setup.glade.h:29
-#, fuzzy
 msgid "Enable cross-hair cli_p"
-msgstr "십자선 클립 켜기"
+msgstr "십자선 클립 사용(_P)"
 
 #: ../src/orca/orca-setup.glade.h:30
 msgid "Enable echo by _word"
-msgstr ""
+msgstr "단어 단위로 반향음(_W)"
 
 #: ../src/orca/orca-setup.glade.h:31
-#, fuzzy
 msgid "Enable lockin_g keys"
-msgstr "테이블 줄"
+msgstr "상태 키 사용(_G)"
 
 #: ../src/orca/orca-setup.glade.h:32
-#, fuzzy
 msgid "In_vert colors"
-msgstr "반전 켜기/끄기"
+msgstr "색 반전(_V)"
 
 #: ../src/orca/orca-setup.glade.h:33
-#, fuzzy
 msgid "Key Echo"
-msgstr "Echo"
+msgstr "키 반향"
 
 #: ../src/orca/orca-setup.glade.h:34 ../src/orca/orca_gui_prefs.py:1039
-#, fuzzy
 msgid "M_ost"
-msgstr "대부분(_M)"
+msgstr "대부분(_O)"
 
 #: ../src/orca/orca-setup.glade.h:35
 msgid "Magnifier"
@@ -666,11 +661,12 @@ msgid "Mouse trac_king mode:"
 msgstr "마우스 추적 모드(_K):"
 
 #: ../src/orca/orca-setup.glade.h:37
-#, fuzzy
 msgid ""
 "None\n"
 "Bilinear"
-msgstr "쌍일차"
+msgstr ""
+"없음\n"
+"쌍일차"
 
 #: ../src/orca/orca-setup.glade.h:39
 msgid "Orca Preferences"
@@ -686,7 +682,7 @@ msgstr "물음"
 
 #: ../src/orca/orca-setup.glade.h:42
 msgid "Scale _factor:"
-msgstr ""
+msgstr "크기 조절 비율(_F):"
 
 #: ../src/orca/orca-setup.glade.h:43
 msgid "Si_ze:"
@@ -698,15 +694,15 @@ msgstr "일부(_M)"
 
 #: ../src/orca/orca-setup.glade.h:45
 msgid "Speak _indentation and justification"
-msgstr ""
+msgstr "들여쓰기 및 맞춤을 말하기(_I)"
 
 #: ../src/orca/orca-setup.glade.h:46 ../src/orca/orca_gui_prefs.py:1079
 msgid "Speak current _cell"
-msgstr ""
+msgstr "현재 셀 말하기(_C)"
 
 #: ../src/orca/orca-setup.glade.h:47
 msgid "Speak current ro_w"
-msgstr ""
+msgstr "현재 행 말하기(_W)"
 
 #: ../src/orca/orca-setup.glade.h:48
 msgid "Speech"
@@ -714,21 +710,19 @@ msgstr "음성"
 
 #: ../src/orca/orca-setup.glade.h:49
 msgid "Speech _system:"
-msgstr ""
+msgstr "음성 시스템(_S):"
 
 #: ../src/orca/orca-setup.glade.h:50
 msgid "Speech synthesi_zer:"
-msgstr ""
+msgstr "음성 합성기(_Z):"
 
 #: ../src/orca/orca-setup.glade.h:51
-#, fuzzy
 msgid "Ver_bose"
-msgstr "말 많이"
+msgstr "자세히 말하기(_B)"
 
 #: ../src/orca/orca-setup.glade.h:52
-#, fuzzy
 msgid "Vo_lume:"
-msgstr "볼륨(_V):"
+msgstr "볼륨(_L):"
 
 #: ../src/orca/orca-setup.glade.h:53
 msgid ""
@@ -740,7 +734,7 @@ msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:55
 msgid "_Abbreviated role names"
-msgstr ""
+msgstr "역할 이름 줄임말(_A)"
 
 #: ../src/orca/orca-setup.glade.h:56
 msgid "_All"
@@ -751,9 +745,8 @@ msgid "_Bottom:"
 msgstr "아래(_B):"
 
 #: ../src/orca/orca-setup.glade.h:58
-#, fuzzy
 msgid "_Enable speech"
-msgstr "지원하기(_E)"
+msgstr "음성 사용(_E)"
 
 #: ../src/orca/orca-setup.glade.h:59
 msgid "_Left:"
@@ -765,7 +758,7 @@ msgstr "없음(_N)"
 
 #: ../src/orca/orca-setup.glade.h:61
 msgid "_Person:"
-msgstr ""
+msgstr "사람(_P):"
 
 #: ../src/orca/orca-setup.glade.h:62
 msgid "_Rate:"
@@ -776,18 +769,16 @@ msgid "_Right:"
 msgstr "오른쪽(_R):"
 
 #: ../src/orca/orca-setup.glade.h:64
-#, fuzzy
 msgid "_Smoothing:"
-msgstr "부드러움 종류"
+msgstr "부드러움(_S):"
 
 #: ../src/orca/orca-setup.glade.h:65
 msgid "_Top:"
 msgstr "위(_T):"
 
 #: ../src/orca/orca-setup.glade.h:66
-#, fuzzy
 msgid "_Voice settings:"
-msgstr "돋보기 설정"
+msgstr "음성 설정(_V):"
 
 #: ../src/orca/orca-setup.glade.h:67
 msgid "_Width:"
@@ -795,23 +786,23 @@ msgstr "너비(_W):"
 
 #: ../src/orca/orca-setup.glade.h:68
 msgid "pixels"
-msgstr ""
+msgstr "픽셀"
 
 #: ../src/orca/orca.py:219
 msgid "User logged out - shutting down."
-msgstr ""
+msgstr "사용자 로그아웃 - 컴퓨터 끄기."
 
 #: ../src/orca/orca.py:383
 msgid "Debug level all."
-msgstr ""
+msgstr "디버깅 단계 전부."
 
 #: ../src/orca/orca.py:385
 msgid "Debug level finest."
-msgstr ""
+msgstr "디버깅 단계 가장 자세히."
 
 #: ../src/orca/orca.py:387
 msgid "Debug level finer."
-msgstr ""
+msgstr "디버깅 단계 더 자세히."
 
 #: ../src/orca/orca.py:586
 msgid "Caps_Lock"
@@ -819,44 +810,39 @@ msgstr "캡스락"
 
 #: ../src/orca/orca.py:588
 msgid " off"
-msgstr ""
+msgstr " 끔 "
 
 #: ../src/orca/orca.py:590
-#, fuzzy
 msgid " on"
-msgstr "다음에서"
+msgstr " 켬 "
 
 #: ../src/orca/orca.py:592
 msgid "Num_Lock"
 msgstr "넘버락"
 
 #: ../src/orca/orca.py:775
-#, fuzzy
 msgid "Speech enabled."
-msgstr "음성 (사용할 수 없음)(_S)"
+msgstr "음성 사용."
 
 #: ../src/orca/orca.py:777
-#, fuzzy
 msgid "Speech disabled."
-msgstr "음성 (사용할 수 없음)(_S)"
+msgstr "음성 사용하지 않음."
 
 #: ../src/orca/orca.py:815
-#, fuzzy
 msgid "Orca user settings reloaded."
-msgstr "모든 설정 기본값을 읽어들였습니다."
+msgstr "오르카 사용자 설정을 다시 읽어들였습니다."
 
 #: ../src/orca/orca.py:956 ../src/orca/orca.py:957
-#, fuzzy
 msgid "Welcome to Orca."
-msgstr "오르카에 오신 것을 환영합니다"
+msgstr "오르카입니다."
 
 #: ../src/orca/orca.py:1013
 msgid "goodbye."
-msgstr ""
+msgstr "안녕히."
 
 #: ../src/orca/orca.py:1014
 msgid "Goodbye."
-msgstr ""
+msgstr "안녕히."
 
 #: ../src/orca/orca.py:1094
 msgid "Usage: orca [OPTION...]"
@@ -864,7 +850,7 @@ msgstr "사용법: orca [옵션...]"
 
 #: ../src/orca/orca.py:1096
 msgid "-?, --help                   Show this help message"
-msgstr ""
+msgstr "-?, --help                   이 도움말을 표시합니다"
 
 #: ../src/orca/orca.py:1097
 #, python-format
@@ -873,15 +859,16 @@ msgstr "-v, --version                %s"
 
 #: ../src/orca/orca.py:1098
 msgid "-s, --setup, --gui-setup     Set up user preferences"
-msgstr ""
+msgstr "-s, --setup, --gui-setup     사용자 기본 설정을 설정합니다"
 
 #: ../src/orca/orca.py:1099
 msgid "-t, --text-setup             Set up user preferences (text version)"
 msgstr ""
+"-t, --text-setup             사용자 기본 설정을 설정합니다 (텍스트 버전)"
 
 #: ../src/orca/orca.py:1100
 msgid "-n, --no-setup               Skip set up of user preferences"
-msgstr ""
+msgstr "-n, --no-setup               사용자 기본 설정을 무시합니다"
 
 #: ../src/orca/orca.py:1102
 msgid ""
@@ -889,66 +876,64 @@ msgid ""
 "will automatically launch the preferences set up unless\n"
 "the -n or --no-setup option is used."
 msgstr ""
+"오르카를 예전에 설정했으면, 자동으로 설정한 기본 설정\n"
+"내용을 가지고 오르카가 동작합니다. 단 -n이나 -no-setup\n"
+"옵션을 사용하면 설정을 무시합니다."
 
 #: ../src/orca/orca.py:1104
 msgid "Report bugs to orca-list@gnome.org."
-msgstr ""
+msgstr "문제점을 orca-list@gnome.org로 알려주십시오."
 
 #: ../src/orca/orca_console_prefs.py:93 ../src/orca/orca_console_prefs.py:109
-#, fuzzy
 msgid "Speech is unavailable."
-msgstr "음성 (사용할 수 없음)(_S)"
+msgstr "음성을 사용할 수 없습니다."
 
 #: ../src/orca/orca_console_prefs.py:97
-#, fuzzy
 msgid "Welcome to Orca setup."
-msgstr "Gnopernicus에 오신 것을 환영합니다"
+msgstr "오르카 설정에 오셨습니다."
 
 #: ../src/orca/orca_console_prefs.py:112
 msgid "Select desired speech system:"
-msgstr ""
+msgstr "사용할 음성 시스템 선택:"
 
 #: ../src/orca/orca_console_prefs.py:117 ../src/orca/orca_console_prefs.py:138
 #: ../src/orca/orca_console_prefs.py:164
 #, python-format
 msgid "%d. %s"
-msgstr ""
+msgstr "%d. %s"
 
 #: ../src/orca/orca_console_prefs.py:120 ../src/orca/orca_console_prefs.py:141
 #: ../src/orca/orca_console_prefs.py:171
 msgid "Enter choice: "
-msgstr ""
+msgstr "선택 입력: "
 
 #: ../src/orca/orca_console_prefs.py:122 ../src/orca/orca_console_prefs.py:130
 #: ../src/orca/orca_console_prefs.py:143 ../src/orca/orca_console_prefs.py:152
 #: ../src/orca/orca_console_prefs.py:176
 msgid "Speech will not be used.\n"
-msgstr ""
+msgstr "음성을 사용하지 않습니다.\n"
 
 #: ../src/orca/orca_console_prefs.py:129
-#, fuzzy
 msgid "No servers available.\n"
-msgstr "역할을 사용할 수 없습니다"
+msgstr "서버가 없습니다.\n"
 
 #: ../src/orca/orca_console_prefs.py:133
 msgid "Select desired speech server."
-msgstr ""
+msgstr "사용할 음성 서버를 선택합니다."
 
 #: ../src/orca/orca_console_prefs.py:151
-#, fuzzy
 msgid "No voices available.\n"
-msgstr "역할을 사용할 수 없습니다"
+msgstr "음성이 없습니다.\n"
 
 #: ../src/orca/orca_console_prefs.py:155
-#, fuzzy
 msgid "Select desired voice:"
-msgstr "점자 장치 선택"
+msgstr "사용할 음성 선택:"
 
 #. Ask the user if they would like to enable echoing by word.
 #.
 #: ../src/orca/orca_console_prefs.py:209
 msgid "Enable echo by word?  Enter y or n: "
-msgstr ""
+msgstr "단어 단위로 반향음을 낼까요?  y 혹은 n을 입력하십시오: "
 
 #. Ask the user if they would like to enable key echo. If they say
 #. yes, then for each of the five different types of keys, ask the
@@ -969,108 +954,95 @@ msgstr ""
 #.
 #: ../src/orca/orca_console_prefs.py:234
 msgid "Enable key echo?  Enter y or n: "
-msgstr ""
+msgstr "키 반향음을 사용할까요?  y 혹은 n을 입력하십시오: "
 
 #: ../src/orca/orca_console_prefs.py:241
 msgid "Enable alphanumeric and punctuation keys?  Enter y or n: "
-msgstr ""
+msgstr "알파벳, 숫자, 문장 부호 키를 사용할까요?  y 혹은 n을 입력하십시오: "
 
 #: ../src/orca/orca_console_prefs.py:249
 msgid "Enable modifier keys?  Enter y or n: "
-msgstr ""
+msgstr "조합 키를 사용할까요?  y 혹은 n을 입력하십시오: "
 
 #: ../src/orca/orca_console_prefs.py:257
 msgid "Enable locking keys?  Enter y or n: "
-msgstr ""
+msgstr "상태 키를 사용할까요?  y 혹은 n을 입력하십시오: "
 
 #: ../src/orca/orca_console_prefs.py:265
 msgid "Enable function keys?  Enter y or n: "
-msgstr ""
+msgstr "펑션 키를 사용할까요?  y 혹은 n을 입력하십시오: "
 
 #: ../src/orca/orca_console_prefs.py:273
 msgid "Enable action keys?  Enter y or n: "
-msgstr ""
+msgstr "동작 키를 사용할까요?  y 혹은 n을 입력하십시오: "
 
 #: ../src/orca/orca_console_prefs.py:301
 msgid "Enable Braille?  Enter y or n: "
-msgstr ""
+msgstr "점자를 사용할까요?  y 혹은 n을 입력하십시오: "
 
 #: ../src/orca/orca_console_prefs.py:309
 msgid "Enable Braille Monitor?  Enter y or n: "
-msgstr ""
+msgstr "점자 상태 정보를 사용할까요?  y 혹은 n을 입력하십시오: "
 
 #: ../src/orca/orca_console_prefs.py:319
 msgid "Accessibility support for GNOME has just been enabled. "
-msgstr ""
+msgstr "그놈 접근성 지원 기능을 사용합니다. "
 
 #: ../src/orca/orca_console_prefs.py:324
-#, fuzzy
 msgid "You need to log out and log back in for the change to take effect. "
-msgstr ""
-"바뀐 점을 적용하려면 로그아웃해야 합니다.\n"
-"지금 로그아웃하시겠습니까? "
+msgstr "바뀐 점을 적용하려면 로그아웃하고 다시 로그인해야 합니다. "
 
 #: ../src/orca/orca_console_prefs.py:330
 msgid "Setup complete.  Press Return to continue."
-msgstr ""
+msgstr "설정이 끝났습니다.  계속하려면 리턴을 누르십시오."
 
 #: ../src/orca/orca_gui_prefs.py:128 ../src/orca/orca_gui_prefs.py:424
 #: ../src/orca/orca_gui_prefs.py:466
-#, fuzzy
 msgid "Speech not available."
-msgstr "음성 (사용할 수 없음)(_S)"
+msgstr "음성을 사용할 수 없습니다."
 
 #: ../src/orca/orca_gui_prefs.py:366 ../src/orca/orca_gui_prefs.py:370
 #: ../src/orca/orca_gui_prefs.py:1311
-#, fuzzy
 msgid "Bilinear"
 msgstr "쌍일차"
 
 #: ../src/orca/orca_gui_prefs.py:368 ../src/orca/orca_gui_prefs.py:381
 #: ../src/orca/orca_gui_prefs.py:1313 ../src/orca/orca_gui_prefs.py:1336
-#, fuzzy
 msgid "None"
-msgstr "없음(_N)"
+msgstr "없음"
 
 #: ../src/orca/orca_gui_prefs.py:379 ../src/orca/orca_gui_prefs.py:387
 #: ../src/orca/orca_gui_prefs.py:1330
-#, fuzzy
 msgid "Centered"
-msgstr "가운데(_E)"
+msgstr "가운데"
 
 #: ../src/orca/orca_gui_prefs.py:383 ../src/orca/orca_gui_prefs.py:1334
-#, fuzzy
 msgid "Proportional"
 msgstr "비례"
 
 #: ../src/orca/orca_gui_prefs.py:385 ../src/orca/orca_gui_prefs.py:1332
-#, fuzzy
 msgid "Push"
 msgstr "푸시"
 
 #: ../src/orca/orca_gui_prefs.py:503 ../src/orca/orca_gui_prefs.py:528
 msgid "Default"
-msgstr ""
+msgstr "기본값"
 
 #: ../src/orca/orca_gui_prefs.py:505 ../src/orca/orca_gui_prefs.py:530
 msgid "Uppercase"
-msgstr ""
+msgstr "대문자"
 
 #: ../src/orca/orca_gui_prefs.py:507 ../src/orca/orca_gui_prefs.py:536
-#, fuzzy
 msgid "Hyperlink"
 msgstr "바로가기"
 
 #: ../src/orca/orca_gui_prefs.py:1399
 msgid "Accessibility support for GNOME has just been enabled."
-msgstr ""
+msgstr "그놈 접근성 지원 기능을 사용합니다."
 
 #: ../src/orca/orca_gui_prefs.py:1400
-#, fuzzy
 msgid "You need to log out and log back in for the change to take effect."
-msgstr ""
-"바뀐 점을 적용하려면 로그아웃해야 합니다.\n"
-"지금 로그아웃하시겠습니까? "
+msgstr "바뀐 점을 적용하려면 로그아웃하고 다시 로그인해야 합니다."
 
 #: ../src/orca/rolenames.py:147
 msgid "???"
@@ -1078,19 +1050,17 @@ msgstr "???"
 
 #: ../src/orca/rolenames.py:148
 msgid "Invalid"
-msgstr "잘못되었습니다"
+msgstr "잘못됨"
 
 #: ../src/orca/rolenames.py:149
-#, fuzzy
 msgid "invalid"
-msgstr "잘못되었습니다"
+msgstr "잘못됨"
 
 #: ../src/orca/rolenames.py:152
 msgid "acc"
-msgstr ""
+msgstr "바로가기"
 
 #: ../src/orca/rolenames.py:153
-#, fuzzy
 msgid "Accelerator"
 msgstr "바로가기"
 
@@ -1151,43 +1121,36 @@ msgid "canvas"
 msgstr "캔버스"
 
 #: ../src/orca/rolenames.py:182 ../src/orca/rolenames.py:187
-#, fuzzy
 msgid "chk"
-msgstr "표시됨"
+msgstr "체크"
 
 #: ../src/orca/rolenames.py:183
-#, fuzzy
 msgid "CheckBox"
 msgstr "체크 상자"
 
 #: ../src/orca/rolenames.py:184
-#, fuzzy
 msgid "check box"
 msgstr "체크 상자"
 
 #: ../src/orca/rolenames.py:188
-#, fuzzy
 msgid "CheckItem"
-msgstr "체크 메뉴 항목"
+msgstr "체크 항목"
 
 #: ../src/orca/rolenames.py:189
-#, fuzzy
 msgid "check item"
-msgstr "체크 메뉴 항목"
+msgstr "체크 항목"
 
 #: ../src/orca/rolenames.py:192
 msgid "ckm"
-msgstr ""
+msgstr "체크 메뉴"
 
 #: ../src/orca/rolenames.py:193
-#, fuzzy
 msgid "CheckMenu"
-msgstr "체크 메뉴 항목"
+msgstr "체크 메뉴"
 
 #: ../src/orca/rolenames.py:194
-#, fuzzy
 msgid "check menu"
-msgstr "표시됨"
+msgstr "체크 메뉴"
 
 #: ../src/orca/rolenames.py:197
 msgid "clrchsr"
@@ -1285,29 +1248,25 @@ msgstr "대화 상자"
 
 #: ../src/orca/rolenames.py:237
 msgid "dip"
-msgstr ""
+msgstr "디렉토리 창"
 
 #: ../src/orca/rolenames.py:238
-#, fuzzy
 msgid "DirectoryPane"
-msgstr "디렉토리 부분"
+msgstr "디렉토리 창"
 
 #: ../src/orca/rolenames.py:239
-#, fuzzy
 msgid "directory pane"
-msgstr "디렉토리 부분"
+msgstr "디렉토리 창"
 
 #: ../src/orca/rolenames.py:242
 msgid "draw"
-msgstr ""
+msgstr "그리기 영역"
 
 #: ../src/orca/rolenames.py:243
-#, fuzzy
 msgid "DrawingArea"
 msgstr "그리기 영역"
 
 #: ../src/orca/rolenames.py:244
-#, fuzzy
 msgid "drawing area"
 msgstr "그리기 영역"
 
@@ -1357,17 +1316,15 @@ msgstr "프레임"
 
 #: ../src/orca/rolenames.py:267
 msgid "gpn"
-msgstr ""
+msgstr "글래스 창"
 
 #: ../src/orca/rolenames.py:268
-#, fuzzy
 msgid "GlassPane"
-msgstr "글래스 부분"
+msgstr "글래스 창"
 
 #: ../src/orca/rolenames.py:269
-#, fuzzy
 msgid "glass pane"
-msgstr "글래스 부분"
+msgstr "글래스 창"
 
 #: ../src/orca/rolenames.py:272
 msgid "html"
@@ -1419,17 +1376,15 @@ msgstr "레이블"
 
 #: ../src/orca/rolenames.py:297
 msgid "lyrdpn"
-msgstr ""
+msgstr "레이어 창"
 
 #: ../src/orca/rolenames.py:298
-#, fuzzy
 msgid "LayeredPane"
-msgstr "레이어 부분"
+msgstr "레이어 창"
 
 #: ../src/orca/rolenames.py:299
-#, fuzzy
 msgid "layered pane"
-msgstr "레이어 부분"
+msgstr "레이어 창"
 
 #: ../src/orca/rolenames.py:302
 msgid "lst"
@@ -1493,17 +1448,15 @@ msgstr "메뉴 항목"
 
 #: ../src/orca/rolenames.py:327
 msgid "optnpn"
-msgstr ""
+msgstr "옵션 창"
 
 #: ../src/orca/rolenames.py:328
-#, fuzzy
 msgid "OptionPane"
-msgstr "옵션 부분"
+msgstr "옵션 창"
 
 #: ../src/orca/rolenames.py:329
-#, fuzzy
 msgid "option pane"
-msgstr "옵션 부분"
+msgstr "옵션 창"
 
 #: ../src/orca/rolenames.py:332 ../src/orca/rolenames.py:334
 msgid "page"
@@ -1623,17 +1576,15 @@ msgstr "라디오 메뉴"
 
 #: ../src/orca/rolenames.py:382
 msgid "rtpn"
-msgstr ""
+msgstr "최상위 창"
 
 #: ../src/orca/rolenames.py:383
-#, fuzzy
 msgid "RootPane"
-msgstr "최상위 부분"
+msgstr "최상위 창"
 
 #: ../src/orca/rolenames.py:384
-#, fuzzy
 msgid "root pane"
-msgstr "최상위 부분"
+msgstr "최상위 창"
 
 #: ../src/orca/rolenames.py:387 ../src/orca/rolenames.py:442
 msgid "rwhdr"
@@ -1660,19 +1611,16 @@ msgid "scroll bar"
 msgstr "스크롤 막대"
 
 #: ../src/orca/rolenames.py:397
-#, fuzzy
 msgid "scpn"
-msgstr "이스케이프"
+msgstr "스크롤 창"
 
 #: ../src/orca/rolenames.py:398
-#, fuzzy
 msgid "ScrollPane"
-msgstr "스크롤 부분"
+msgstr "스크롤 창"
 
 #: ../src/orca/rolenames.py:399
-#, fuzzy
 msgid "scroll pane"
-msgstr "스크롤 부분"
+msgstr "스크롤 창"
 
 #: ../src/orca/rolenames.py:402
 msgid "seprtr"
@@ -1699,19 +1647,16 @@ msgid "slider"
 msgstr "슬라이더"
 
 #: ../src/orca/rolenames.py:412
-#, fuzzy
 msgid "spltpn"
-msgstr "나누기 부분"
+msgstr "나누기 창"
 
 #: ../src/orca/rolenames.py:413
-#, fuzzy
 msgid "SplitPane"
-msgstr "나누기 부분"
+msgstr "나누기 창"
 
 #: ../src/orca/rolenames.py:414
-#, fuzzy
 msgid "split pane"
-msgstr "나누기 부분"
+msgstr "나누기 창"
 
 #: ../src/orca/rolenames.py:417
 msgid "spin"
@@ -1751,20 +1696,19 @@ msgstr "테이블"
 
 #: ../src/orca/rolenames.py:433
 msgid "Cell"
-msgstr ""
+msgstr "셀"
 
 #: ../src/orca/rolenames.py:447
 msgid "tomnuitm"
-msgstr ""
+msgstr "떼어내기 메뉴 항목"
 
 #: ../src/orca/rolenames.py:448
 msgid "TearOffMenuItem"
-msgstr ""
+msgstr "떼어내기 메뉴 항목"
 
 #: ../src/orca/rolenames.py:449 ../src/orca/speechgenerator.py:1258
-#, fuzzy
 msgid "tear off menu item"
-msgstr "라디오 메뉴 항목"
+msgstr "떼어내기 메뉴 항목"
 
 #: ../src/orca/rolenames.py:452
 msgid "term"
@@ -1827,7 +1771,6 @@ msgid "tool tip"
 msgstr "풍선 도움말"
 
 #: ../src/orca/rolenames.py:477 ../src/orca/rolenames.py:479
-#, fuzzy
 msgid "tree"
 msgstr "트리"
 
@@ -1860,7 +1803,6 @@ msgid "unknown"
 msgstr "알 수 없음"
 
 #: ../src/orca/rolenames.py:492
-#, fuzzy
 msgid "vwprt"
 msgstr "뷰포트"
 
@@ -1869,7 +1811,6 @@ msgid "Viewport"
 msgstr "뷰포트"
 
 #: ../src/orca/rolenames.py:494
-#, fuzzy
 msgid "viewport"
 msgstr "뷰포트"
 
@@ -1899,17 +1840,15 @@ msgstr "헤더"
 
 #: ../src/orca/rolenames.py:507
 msgid "ftr"
-msgstr ""
+msgstr "꼬리말"
 
 #: ../src/orca/rolenames.py:508
-#, fuzzy
 msgid "Footer"
-msgstr "돋보기"
+msgstr "꼬리말"
 
 #: ../src/orca/rolenames.py:509
-#, fuzzy
 msgid "footer"
-msgstr "돋보기"
+msgstr "꼬리말"
 
 #: ../src/orca/rolenames.py:512
 msgid "para"
@@ -1941,11 +1880,11 @@ msgstr "자동"
 
 #: ../src/orca/rolenames.py:523
 msgid "AutoComplete"
-msgstr ""
+msgstr "자동 완성"
 
 #: ../src/orca/rolenames.py:524
 msgid "autocomplete"
-msgstr ""
+msgstr "자동 완성"
 
 #: ../src/orca/rolenames.py:527
 msgid "edtbr"
@@ -1961,51 +1900,43 @@ msgstr "편집 막대"
 
 #: ../src/orca/rolenames.py:532
 msgid "emb"
-msgstr ""
+msgstr "내장"
 
 #: ../src/orca/rolenames.py:533
-#, fuzzy
 msgid "EmbeddedComponent"
-msgstr "포함(_M)"
+msgstr "내장 컴포넌트"
 
 #: ../src/orca/rolenames.py:534
-#, fuzzy
 msgid "embedded component"
-msgstr "포함된 빈 줄 더하기"
+msgstr "내장 컴포넌트"
 
 #: ../src/orca/scripts/Evolution.py:86
 msgid "calv"
-msgstr ""
+msgstr "달력 보기"
 
 #: ../src/orca/scripts/Evolution.py:87
-#, fuzzy
 msgid "CalendarView"
-msgstr "달력"
+msgstr "달력 보기"
 
 #: ../src/orca/scripts/Evolution.py:88
-#, fuzzy
 msgid "calendar view"
-msgstr "달력"
+msgstr "달력 보기"
 
 #: ../src/orca/scripts/Evolution.py:93
-#, fuzzy
 msgid "cale"
-msgstr "테이블"
+msgstr "달력 행사"
 
 #: ../src/orca/scripts/Evolution.py:94
-#, fuzzy
 msgid "CalendarEvent"
-msgstr "달력"
+msgstr "달력 행사"
 
 #: ../src/orca/scripts/Evolution.py:95
-#, fuzzy
 msgid "calendar event"
-msgstr "달력"
+msgstr "달력 행사"
 
 #: ../src/orca/scripts/Evolution.py:149
-#, fuzzy
 msgid " screen"
-msgstr "화면에서 찾기"
+msgstr " 화면"
 
 #. Most of the Setup Assistant screens have a useful piece
 #. of text starting with the word "Please". We want to speak
@@ -2015,28 +1946,27 @@ msgstr "화면에서 찾기"
 #.
 #: ../src/orca/scripts/Evolution.py:178
 msgid "Please"
-msgstr ""
+msgstr "자,"
 
 #: ../src/orca/scripts/Evolution.py:179
 msgid "Welcome"
-msgstr ""
+msgstr "환영합니다"
 
 #: ../src/orca/scripts/Evolution.py:180
 msgid "Congratulations"
-msgstr ""
+msgstr "잘 하셨습니다"
 
 #: ../src/orca/scripts/Evolution.py:687
 msgid "No appointments"
-msgstr ""
+msgstr "약속 없음"
 
 #: ../src/orca/scripts/Evolution.py:761
-#, fuzzy
 msgid "Directories button"
-msgstr "디렉토리 부분"
+msgstr "디렉토리 단추"
 
 #: ../src/orca/scripts/Evolution.py:900 ../src/orca/scripts/Evolution.py:938
 msgid "Assistant"
-msgstr ""
+msgstr "도우미"
 
 #: ../src/orca/scripts/Mozilla.py:234 ../src/orca/scripts/StarOffice.py:406
 msgid "link"
@@ -2045,87 +1975,82 @@ msgstr "바로가기"
 #: ../src/orca/scripts/gaim.py:149
 msgid ""
 "Toggle whether we prefix chat room messages with the name of the chat room."
-msgstr ""
+msgstr "채팅 방 메세지 앞에 채팅 방 이름을 붙일 지 토글합니다."
 
 #: ../src/orca/scripts/gaim.py:153
 msgid "Speak and braille a previous chat room message."
-msgstr ""
+msgstr "이전의 채팅 방 메세지를 말하고 점자로 표현."
 
 #: ../src/orca/scripts/gaim.py:194
 msgid "speak chat room name."
-msgstr ""
+msgstr "채팅 방 이름 말하기."
 
 #: ../src/orca/scripts/gaim.py:197
-#, fuzzy
 msgid "Do not speak chat room name."
-msgstr "텍스트 말하지 않기"
+msgstr "채팅 방 이름 말하지 않기."
 
 #: ../src/orca/scripts/gaim.py:215
 msgid "Message from chat room "
-msgstr ""
+msgstr "다음 채팅 방에서 메세지: "
 
 #: ../src/orca/scripts/gedit.py:135
-#, fuzzy
 msgid "Change to:"
-msgstr "바뀐 점을 저장하는 데 오류."
+msgstr "다음으로 바꾸기:"
 
 #: ../src/orca/scripts/gedit.py:136
 msgid "Misspelled word:"
-msgstr ""
+msgstr "철자가 틀린 단어:"
 
 #. The indication that spell checking is complete is when the
 #. "misspelt" word is set to "Completed spell checking". Ugh!
 #. Try to detect this and let the user know.
 #: ../src/orca/scripts/gedit.py:165
 msgid "Completed spell checking"
-msgstr ""
+msgstr "맞춤법 검사 마침"
 
 #: ../src/orca/scripts/gedit.py:166
 msgid "Spell checking is complete."
-msgstr ""
+msgstr "맞춤법 검사를 마쳤습니다."
 
 #: ../src/orca/scripts/gedit.py:168
 msgid "Press Tab and Return to terminate."
-msgstr ""
+msgstr "끝내려면 Tab과 리턴을 누르십시오."
 
 #: ../src/orca/scripts/gedit.py:255 ../src/orca/scripts/gedit.py:308
 msgid "Check Spelling"
-msgstr ""
+msgstr "맞춤법 검사"
 
 #: ../src/orca/scripts/StarOffice.py:243
 msgid "Speaks the contents of the input line."
-msgstr ""
+msgstr "입력하는 줄의 내용을 말합니다."
 
 #: ../src/orca/scripts/StarOffice.py:283
-#, fuzzy
 msgid "empty"
-msgstr "빈 줄"
+msgstr "비었음"
 
 #: ../src/orca/scripts/StarOffice.py:424
-#, fuzzy
 msgid "Welcome to StarOffice"
-msgstr "Gnopernicus에 오신 것을 환영합니다"
+msgstr "스타오피스입니다"
 
 #: ../src/orca/scripts/StarOffice.py:552 ../src/orca/scripts/StarOffice.py:801
 msgid "Spellcheck:"
-msgstr ""
+msgstr "맞춤법 검사:"
 
 #: ../src/orca/scripts/StarOffice.py:580
 msgid "Note that the Scroll Down button has to be pressed numerous times."
-msgstr ""
+msgstr "아래로 스크롤 단추를 여러번 눌렀습니다."
 
 #: ../src/orca/scripts/StarOffice.py:594
 msgid "License Agreement Accept button now has focus."
-msgstr ""
+msgstr "사용 계약 동의 단추에 포커스가 있습니다."
 
 #: ../src/orca/scripts/StarOffice.py:617
-#, fuzzy
 msgid "First name"
-msgstr "글꼴 이름"
+msgstr "이름"
 
 #: ../src/orca/scripts/StarOffice.py:865
 msgid " has formula"
-msgstr ""
+msgstr " 수식이 있습니다 "
 
 #. Note to translators: the regular expression here represents a
 #. string to match in the localized application name as seen by
@@ -2149,12 +2074,11 @@ msgstr "[Ee]volution"
 
 #: ../src/orca/settings.py:438
 msgid "Deer Park"
-msgstr ""
+msgstr "디어 파크"
 
 #: ../src/orca/settings.py:439
-#, fuzzy
 msgid "Bon Echo"
-msgstr "Echo"
+msgstr "밴 에코"
 
 #. Note to translators:  the "Workspace " string is the
 #. prefix of what metacity shows when you press Ctrl+Alt
@@ -2168,12 +2092,11 @@ msgstr "작업 공간"
 
 #: ../src/orca/scripts/metacity.py:113
 msgid "inaccessible"
-msgstr ""
+msgstr "접근할 수 없음"
 
 #: ../src/orca/scripts/planner.py:77 ../src/orca/scripts/planner.py:135
-#, fuzzy
 msgid "Display more options"
-msgstr "모든 글꼴을 이용해 보여주기"
+msgstr "옵션 더 자세히 표시"
 
 #: ../src/orca/scripts/planner.py:139 ../src/orca/scripts/planner.py:147
 #: ../src/orca/scripts/planner.py:172 ../src/orca/scripts/planner.py:180
@@ -2184,65 +2107,62 @@ msgstr "누름"
 #: ../src/orca/scripts/planner.py:141 ../src/orca/scripts/planner.py:149
 #: ../src/orca/scripts/planner.py:174 ../src/orca/scripts/planner.py:182
 #: ../src/orca/speechgenerator.py:1323 ../src/orca/speechgenerator.py:1326
-#, fuzzy
 msgid "not pressed"
-msgstr "안 눌림"
+msgstr "안 누름"
 
 #: ../src/orca/speechgenerator.py:367 ../src/orca/speechgenerator.py:370
 msgid "checked"
 msgstr "표시됨"
 
 #: ../src/orca/speechgenerator.py:376 ../src/orca/speechgenerator.py:379
-#, fuzzy
 msgid "not checked"
-msgstr "표시 안 됨"
+msgstr "표시 안 함"
 
 #: ../src/orca/speechgenerator.py:909 ../src/orca/speechgenerator.py:912
-#: ../src/orca/util.py:1122
-#, fuzzy
+#: ../src/orca/util.py:1171
 msgid "selected"
-msgstr "선택됨(_E)"
+msgstr "선택함"
 
 #: ../src/orca/speechgenerator.py:920 ../src/orca/speechgenerator.py:923
 msgid "not selected"
-msgstr ""
+msgstr "선택 안 함"
 
 #: ../src/orca/speechgenerator.py:1260
 msgid "tear off"
-msgstr ""
+msgstr "떼어내기"
 
-#: ../src/orca/util.py:384
+#: ../src/orca/util.py:433
 msgid "Misspelled word: "
-msgstr ""
+msgstr "철자가 틀린 단어: "
 
-#: ../src/orca/util.py:385
+#: ../src/orca/util.py:434
 msgid " Context is "
-msgstr ""
+msgstr " 문맥은 "
 
-#: ../src/orca/util.py:1066
+#: ../src/orca/util.py:1115
 msgid "page selected from cursor position"
-msgstr ""
+msgstr "선택한 페이지에서 커서 위치"
 
-#: ../src/orca/util.py:1070
+#: ../src/orca/util.py:1119
 msgid "page selected to cursor position"
-msgstr ""
+msgstr "커서 위치에서 페이지 선택한"
 
-#: ../src/orca/util.py:1074
+#: ../src/orca/util.py:1123
 msgid "line selected down from cursor position"
-msgstr ""
+msgstr "선택한 줄에서 커서 위치"
 
-#: ../src/orca/util.py:1078
+#: ../src/orca/util.py:1127
 msgid "line selected up from cursor position"
-msgstr ""
+msgstr "커서 위치에서 줄 선택"
 
-#: ../src/orca/util.py:1082
+#: ../src/orca/util.py:1131
 msgid "document selected to cursor position"
-msgstr ""
+msgstr "선택한 문서에서 커서 위치"
 
-#: ../src/orca/util.py:1086
+#: ../src/orca/util.py:1135
 msgid "document selected from cursor position"
-msgstr ""
+msgstr "커서 위치에서 문서 선택"
 
-#: ../src/orca/util.py:1130
+#: ../src/orca/util.py:1179
 msgid "unselected"
-msgstr ""
+msgstr "선택 해제함"
