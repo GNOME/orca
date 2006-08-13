@@ -1,0 +1,2179 @@
+# Translation of orca to Russian
+# Nickolay V. Shmyrev <nshmyrev@yandex.ru>, 2006
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: orca HEAD\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-08-13 23:12+0400\n"
+"PO-Revision-Date: 2006-02-27 15:03+0200\n"
+"Last-Translator: Nickolay V. Shmyrev <nshmyrev@yandex.ru>\n"
+"Language-Team: Russian <gnome-cyr@gnome.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: ../orca.desktop.in.h:1
+msgid "Orca Screen Reader and Magnifier"
+msgstr "Чтение с экрана и увеличитель Orca"
+
+#: ../orca.desktop.in.h:2
+msgid ""
+"Present on-screen information as speech or braille, or magnify the screen"
+msgstr ""
+"Прочитать информацию с экрана, представить с помощью алфавита Брайля, "
+"просмотреть под увеличением"
+
+#: ../src/orca/braillegenerator.py:193 ../src/orca/speechgenerator.py:191
+msgid "grayed"
+msgstr "сглажено"
+
+#: ../src/orca/braillegenerator.py:1085 ../src/orca/speechgenerator.py:1198
+msgid "expanded"
+msgstr "расширено"
+
+#: ../src/orca/braillegenerator.py:1087 ../src/orca/speechgenerator.py:1200
+msgid "collapsed"
+msgstr "свернуто"
+
+#: ../src/orca/braillegenerator.py:1091
+#, python-format
+msgid "TREE LEVEL %d"
+msgstr "УРОВЕНЬ ДЕРЕВА %d"
+
+#: ../src/orca/chnames.py:32
+msgid "space"
+msgstr "пробел"
+
+#: ../src/orca/chnames.py:33
+msgid "newline"
+msgstr "новая строка"
+
+#: ../src/orca/chnames.py:34
+msgid "tab"
+msgstr "табуляция"
+
+#: ../src/orca/chnames.py:36
+msgid "exclaim"
+msgstr "восклицательный знак"
+
+#: ../src/orca/chnames.py:37
+msgid "apostrophe"
+msgstr "апостроф"
+
+#: ../src/orca/chnames.py:38
+msgid "comma"
+msgstr "запятая"
+
+#: ../src/orca/chnames.py:39
+msgid "dot"
+msgstr "точка"
+
+#: ../src/orca/chnames.py:40
+msgid "question"
+msgstr "вопрос"
+
+#: ../src/orca/chnames.py:42
+msgid "quote"
+msgstr "кавычка"
+
+#: ../src/orca/chnames.py:43
+msgid "left paren"
+msgstr "левая скобка"
+
+#: ../src/orca/chnames.py:44
+msgid "right paren"
+msgstr "правая скобка"
+
+#: ../src/orca/chnames.py:45
+msgid "dash"
+msgstr "дефис"
+
+#: ../src/orca/chnames.py:46
+msgid "underscore"
+msgstr "подчеркивание"
+
+#: ../src/orca/chnames.py:47
+msgid "colon"
+msgstr "двоеточие"
+
+#: ../src/orca/chnames.py:48
+msgid "semicolon"
+msgstr "точка с запятой"
+
+#: ../src/orca/chnames.py:49
+msgid "less than"
+msgstr "меньше чем"
+
+#: ../src/orca/chnames.py:50
+msgid "greater than"
+msgstr "больше чем"
+
+#: ../src/orca/chnames.py:51
+msgid "left bracket"
+msgstr "левая квадратная скобка"
+
+#: ../src/orca/chnames.py:52
+msgid "right bracket"
+msgstr "правая квадратная скобка"
+
+#: ../src/orca/chnames.py:53
+msgid "backslash"
+msgstr "забой"
+
+#: ../src/orca/chnames.py:54
+msgid "vertical line"
+msgstr "вертикальная линия"
+
+#: ../src/orca/chnames.py:55
+msgid "grave accent"
+msgstr "гравис"
+
+#: ../src/orca/chnames.py:56
+msgid "tilde"
+msgstr "тильда"
+
+#: ../src/orca/chnames.py:57
+msgid "left brace"
+msgstr "левая фигурная скобка"
+
+#: ../src/orca/chnames.py:58
+msgid "right brace"
+msgstr "правая фигурная скобка"
+
+#: ../src/orca/chnames.py:60
+msgid "pound"
+msgstr "фунт"
+
+#: ../src/orca/chnames.py:61
+msgid "dollar"
+msgstr "доллар"
+
+#: ../src/orca/chnames.py:62 ../src/orca/speechgenerator.py:851
+msgid "percent"
+msgstr "процент"
+
+#: ../src/orca/chnames.py:63
+msgid "and"
+msgstr "амперсанд"
+
+#: ../src/orca/chnames.py:64
+msgid "star"
+msgstr "звезда"
+
+#: ../src/orca/chnames.py:65
+msgid "plus"
+msgstr "плюс"
+
+#: ../src/orca/chnames.py:66
+msgid "slash"
+msgstr "косая черта"
+
+#: ../src/orca/chnames.py:67
+msgid "equals"
+msgstr "равно"
+
+#: ../src/orca/chnames.py:68
+msgid "at"
+msgstr "собака"
+
+#: ../src/orca/chnames.py:69
+msgid "caret"
+msgstr "перевод каретки"
+
+#: ../src/orca/default.py:78
+msgid "Performs left click on current flat review item."
+msgstr "Щёлкнуть левой кнопкой мыши по текущему элементу в простом режиме."
+
+#: ../src/orca/default.py:82
+msgid "Performs right click on current flat review item."
+msgstr "Щёлкнуть правой кнопкой мыши по текущему элементу в простом режиме."
+
+#: ../src/orca/default.py:86 ../src/orca/scripts/Evolution.py:107
+msgid "Speaks entire document."
+msgstr "Произнести весь документ."
+
+#: ../src/orca/default.py:90
+msgid "Performs the where am I operation."
+msgstr "Ещё раз огласить текущее положение."
+
+#: ../src/orca/default.py:94
+msgid "Paints and prints the visible zones in the active window."
+msgstr "Нарисовать и напечатать видимые области активного окна."
+
+#: ../src/orca/default.py:98
+msgid "Enters and exits flat review mode."
+msgstr "Войти и выйти из режима обозрения."
+
+#: ../src/orca/default.py:102
+msgid "Moves flat review to the beginning of the previous line."
+msgstr "Переместить область просмотра к началу предыдущей линии."
+
+#: ../src/orca/default.py:106
+msgid "Moves flat review to the home position."
+msgstr "Переместить область просмотра в начало."
+
+#: ../src/orca/default.py:110
+msgid "Speaks the current flat review line."
+msgstr "Произнести текущую линию в простом режиме."
+
+#: ../src/orca/default.py:114
+msgid "Moves flat review to the beginning of the next line."
+msgstr "Переместить область просмотра в начало следующей линии."
+
+#: ../src/orca/default.py:118
+msgid "Moves flat review to the end position."
+msgstr "Переместить область просмотра в конец."
+
+#: ../src/orca/default.py:122
+msgid "Moves flat review to the previous item or word."
+msgstr "Переместить область просмотра к предыдущему элементу или слову."
+
+#: ../src/orca/default.py:126
+msgid "Moves flat review to the word above the current word."
+msgstr "Переместить область просмотра к слову над текущим словом."
+
+#: ../src/orca/default.py:130
+msgid "Speaks or spells the current flat review item or word."
+msgstr "Произнести или проговорить текущий элемент или слово."
+
+#: ../src/orca/default.py:134
+msgid "Speaks the current flat review object."
+msgstr "Произносит текущий в простом режиме объект."
+
+#: ../src/orca/default.py:138
+msgid "Moves flat review to the next item or word."
+msgstr "Переместить область просмотра к следующему элементу или слову."
+
+#: ../src/orca/default.py:142
+msgid "Moves flat review to the word below the current word."
+msgstr "Переместить элемент просмотра к слову под текущим словом."
+
+#: ../src/orca/default.py:146
+msgid "Moves flat review to the previous character."
+msgstr "Переместить область просмотра к предыдущему символу."
+
+#: ../src/orca/default.py:150
+msgid "Moves flat review to the end of the line."
+msgstr "Переместить область просмотра на конец строки."
+
+#: ../src/orca/default.py:154
+msgid "Speaks the current flat review character."
+msgstr "Произносит текущий символ в простой области просмотра."
+
+#: ../src/orca/default.py:158
+msgid "Moves flat review to the next character."
+msgstr "Переместить область просмотра к следующему символу."
+
+#: ../src/orca/default.py:162
+msgid "Toggles whether to read just the current table cell or the whole row."
+msgstr "Читать ли только текущую ячейку таблицы или всё строку."
+
+#: ../src/orca/default.py:166
+msgid "Reads the attributes associated with the current text character."
+msgstr "Произносит аттрибуты, связанные с текущим символом в тексте."
+
+#: ../src/orca/default.py:170
+msgid "Reports information on current script."
+msgstr "Сообщить информацию о текущем сценарии."
+
+#: ../src/orca/default.py:174
+msgid "Pans the braille display to the left."
+msgstr "Присоединить дисплей Брайля слева."
+
+#: ../src/orca/default.py:178
+msgid "Pans the braille display to the right."
+msgstr "Присоединить дисплей Брайля справа."
+
+#: ../src/orca/default.py:182
+msgid "Moves flat review to the bottom left."
+msgstr "Переместить область простого просмотра в левый нижний угол."
+
+#: ../src/orca/default.py:186
+msgid "Returns to object with keyboard focus."
+msgstr "Вернуться к объекту с фокусом ввода."
+
+#: ../src/orca/default.py:190
+msgid "Enters learn mode.  Press escape to exit learn mode."
+msgstr "Войти в режим обучения. Нажмите escape для выхода из режима обучения."
+
+#: ../src/orca/default.py:194
+msgid "Exits learn mode."
+msgstr "Выйти из режима обучения."
+
+#: ../src/orca/default.py:198
+msgid "Decreases the speech rate."
+msgstr "Уменьшить скорость речи."
+
+#: ../src/orca/default.py:202
+msgid "Increases the speech rate."
+msgstr "Увеличить скорость речи."
+
+#: ../src/orca/default.py:206
+msgid "Decreases the speech pitch."
+msgstr "Уменьшить тон речи."
+
+#: ../src/orca/default.py:210
+msgid "Increases the speech pitch."
+msgstr "Увеличить тон речи."
+
+#: ../src/orca/default.py:214
+msgid "Quits Orca"
+msgstr "Выйти из Orca"
+
+#: ../src/orca/default.py:218
+msgid "Toggles keystroke recording on and off."
+msgstr "Выключить или включить запись нажатых клавиш."
+
+#: ../src/orca/default.py:222
+msgid "Displays the preferences configuration dialog."
+msgstr "Показать диалог настройки параметров."
+
+#: ../src/orca/default.py:226
+msgid "Reloads user settings and reinitializes services as necessary."
+msgstr ""
+"Перезагрузить настройки пользователя и заново запустить сервисы, если это "
+"необходимо."
+
+#: ../src/orca/default.py:230
+msgid "Toggles the silencing of speech."
+msgstr "Включить промежутки тишины в речи."
+
+#: ../src/orca/default.py:234
+msgid ""
+"Prints a debug listing of all known applications to the console where Orca "
+"is running."
+msgstr ""
+"Печатать отладочную информацию о всех известных приложения на консоль, с "
+"которой приложение Orca запущено."
+
+#: ../src/orca/default.py:238
+msgid "Cycles the debug level at run time."
+msgstr "Переключить уровни подробности отладки во время выполнения."
+
+#: ../src/orca/default.py:242
+msgid ""
+"Prints debug information about the currently active application to the "
+"console where Orca is running."
+msgstr ""
+"Печатать отладочную информацию о текущем приложении на консоль, с которой "
+"приложение Orca запущено."
+
+#: ../src/orca/default.py:246
+msgid "Prints debug information about the ancestry of the object with focus"
+msgstr "Печатать отладочную информацию о предшественнике объекта с фокусом"
+
+#: ../src/orca/default.py:250
+msgid "Prints debug information about the application with focus"
+msgstr "Печатать отладочную информацию о приложении с фокусом"
+
+#: ../src/orca/default.py:254
+msgid "Switches to the next presentation manager."
+msgstr "Переключить к следующему менеджеру презентаций."
+
+#: ../src/orca/default.py:1067 ../src/orca/default.py:1282
+#, python-format
+msgid "tree level %d"
+msgstr "уровень дерева %d"
+
+#: ../src/orca/default.py:1071 ../src/orca/focus_tracking_presenter.py:639
+msgid "No focus"
+msgstr "Нет фокуса"
+
+#: ../src/orca/default.py:1673
+msgid "entire document selected"
+msgstr "выделен весь документ"
+
+#: ../src/orca/default.py:2123
+msgid "Speak "
+msgstr "Произнести "
+
+#: ../src/orca/default.py:2126
+msgid "row"
+msgstr "строка"
+
+#: ../src/orca/default.py:2128 ../src/orca/rolenames.py:432
+#: ../src/orca/rolenames.py:434
+msgid "cell"
+msgstr "ячейка"
+
+#: ../src/orca/default.py:2283
+msgid "Entering learn mode.  Press any key to hear its function. "
+msgstr "Вход в режим обучения. Нажмите клавишу для прослушайте её назначения."
+
+#: ../src/orca/default.py:2284
+msgid "To exit learn mode, press the escape key."
+msgstr "Для выхода из режима обучения нажмите клавишу escape."
+
+#: ../src/orca/default.py:2285
+msgid "Learn mode.  Press escape to exit."
+msgstr "Режим обучения. Нажмите escape для выхода."
+
+#: ../src/orca/default.py:2297 ../src/orca/default.py:2298
+msgid "Exiting learn mode."
+msgstr "Выход из режима обучения."
+
+#: ../src/orca/default.py:2628 ../src/orca/default.py:2756
+#: ../src/orca/default.py:2761 ../src/orca/default.py:2833
+#: ../src/orca/default.py:2838
+msgid "blank"
+msgstr "пустое"
+
+#: ../src/orca/default.py:2630 ../src/orca/default.py:2763
+msgid "white space"
+msgstr "пробел"
+
+#: ../src/orca/espeechfactory.py:93
+msgid "Emacspeak Speech Services"
+msgstr "Речевые сервисы Emacsspeek"
+
+#: ../src/orca/focus_tracking_presenter.py:734
+msgid "Switching to focus tracking mode."
+msgstr "Переключение в режим слежения за фокусом"
+
+#: ../src/orca/gnomespeechfactory.py:159
+msgid "GNOME Speech Services"
+msgstr "Речевые сервисы GNOME"
+
+#. # Replace ellipses (both manual and unicode) with "dot dot dot"
+#. #
+#: ../src/orca/gnomespeechfactory.py:605 ../src/orca/gnomespeechfactory.py:606
+msgid " dot dot dot"
+msgstr "троеточие"
+
+#: ../src/orca/gnomespeechfactory.py:765
+msgid "higher."
+msgstr "выше."
+
+#: ../src/orca/gnomespeechfactory.py:793
+msgid "lower."
+msgstr "ниже."
+
+#: ../src/orca/gnomespeechfactory.py:818
+msgid "faster."
+msgstr "быстрее."
+
+#: ../src/orca/gnomespeechfactory.py:848
+msgid "slower."
+msgstr "медленнее."
+
+#: ../src/orca/hierarchical_presenter.py:436
+msgid "Switching to hierarchical navigation mode."
+msgstr "Переключиться в режим иерархической навигации."
+
+#: ../src/orca/keynames.py:32 ../src/orca/keynames.py:35
+msgid "left shift"
+msgstr "левый shift"
+
+#: ../src/orca/keynames.py:33
+msgid "left alt"
+msgstr "левый alt"
+
+#: ../src/orca/keynames.py:34
+msgid "left control"
+msgstr "левый control"
+
+#: ../src/orca/keynames.py:36
+msgid "right shift"
+msgstr "правый shift"
+
+#: ../src/orca/keynames.py:37
+msgid "right alt"
+msgstr "правый alt"
+
+#: ../src/orca/keynames.py:38
+msgid "right control"
+msgstr "правый control"
+
+#: ../src/orca/keynames.py:39
+msgid "left meta"
+msgstr "левая meta"
+
+#: ../src/orca/keynames.py:40
+msgid "right meta"
+msgstr "правая meta"
+
+#: ../src/orca/keynames.py:41
+msgid "num lock"
+msgstr "num lock"
+
+#: ../src/orca/keynames.py:42
+msgid "caps lock"
+msgstr "регистр"
+
+#: ../src/orca/keynames.py:43
+msgid "scroll lock"
+msgstr "scroll lock"
+
+#: ../src/orca/keynames.py:44
+msgid "page up"
+msgstr "страница вверх"
+
+#: ../src/orca/keynames.py:45
+msgid "page down"
+msgstr "страница вниз"
+
+#: ../src/orca/keynames.py:46
+msgid "left tab"
+msgstr "левый tab"
+
+#: ../src/orca/keynames.py:47
+msgid "F 11"
+msgstr "F 11"
+
+#: ../src/orca/keynames.py:48
+msgid "F 12"
+msgstr "F 12"
+
+#: ../src/orca/orca-setup.glade.h:1
+msgid "<b>Cross-hair Settings</b>"
+msgstr "<b>Перекрестье</b>"
+
+#: ../src/orca/orca-setup.glade.h:2
+msgid "<b>Cursor Settings</b>"
+msgstr "<b>Параметры курсора</b>"
+
+#: ../src/orca/orca-setup.glade.h:3
+msgid "<b>Punctuation Level</b>"
+msgstr "<b>Пунктуация</b>"
+
+#: ../src/orca/orca-setup.glade.h:4
+msgid "<b>Table Row Speech</b>"
+msgstr "<b>Чтение строк таблицы</b>"
+
+#: ../src/orca/orca-setup.glade.h:5
+msgid "<b>Verbosity</b>"
+msgstr "<b>Подробность</b>"
+
+#: ../src/orca/orca-setup.glade.h:6
+msgid "<b>Zoomer Position</b>"
+msgstr "<b>Позиция увеличителя</b>"
+
+#: ../src/orca/orca-setup.glade.h:7
+msgid "<b>Zoomer Settings</b>"
+msgstr "<b>Параметры увеличителя</b>"
+
+#: ../src/orca/orca-setup.glade.h:8
+msgid "Braille"
+msgstr "Брайль"
+
+#: ../src/orca/orca-setup.glade.h:9 ../src/orca/orca_gui_prefs.py:1059
+#: ../src/orca/orca_gui_prefs.py:1114
+msgid "Brie_f"
+msgstr "_Кратко"
+
+#: ../src/orca/orca-setup.glade.h:10
+msgid ""
+"Centered\n"
+"None\n"
+"Proportional\n"
+"Push"
+msgstr ""
+"По центру\n"
+"Нет\n"
+"Пропорционально\n"
+"Нажать"
+
+#: ../src/orca/orca-setup.glade.h:14
+msgid "Color:"
+msgstr "Цвет:"
+
+#: ../src/orca/orca-setup.glade.h:15
+msgid "Custom siz_e"
+msgstr "Настроить _размер"
+
+#: ../src/orca/orca-setup.glade.h:16
+msgid ""
+"Default\n"
+"Uppercase\n"
+"Hyperlink"
+msgstr ""
+"По умолчанию\n"
+"Верхний регистр\n"
+"Гиперссылки"
+
+#: ../src/orca/orca-setup.glade.h:19
+msgid "Enable Braille _monitor"
+msgstr "Вклчить _монитор Брайля"
+
+#: ../src/orca/orca-setup.glade.h:20
+msgid "Enable Braille _support"
+msgstr "Включить _поддержку Брайля"
+
+#: ../src/orca/orca-setup.glade.h:21
+msgid "Enable _alphanumeric and punctuation keys"
+msgstr "Включить _алфавитно-цифровые клавиши и клавиши пунктуации"
+
+#: ../src/orca/orca-setup.glade.h:22
+msgid "Enable _function keys"
+msgstr "Включить _функциональные клавиши"
+
+#: ../src/orca/orca-setup.glade.h:23
+msgid "Enable _key echo"
+msgstr "Включить _повтор клавиш"
+
+#: ../src/orca/orca-setup.glade.h:24
+msgid "Enable _magnifier"
+msgstr "Включить _увеличитель"
+
+#: ../src/orca/orca-setup.glade.h:25
+msgid "Enable _modifier keys"
+msgstr "Включить клавиши _модификаторы"
+
+#: ../src/orca/orca-setup.glade.h:26
+msgid "Enable ac_tion keys"
+msgstr "Включить клавиши _действий"
+
+#: ../src/orca/orca-setup.glade.h:27
+msgid "Enable c_ursor"
+msgstr "Включить _курсор"
+
+#: ../src/orca/orca-setup.glade.h:28
+msgid "Enable cross-h_air"
+msgstr "Включить _перекрестье"
+
+#: ../src/orca/orca-setup.glade.h:29
+msgid "Enable cross-hair cli_p"
+msgstr "Включить выбор перекр_естья"
+
+#: ../src/orca/orca-setup.glade.h:30
+msgid "Enable echo by _word"
+msgstr "Включить повтор по _словам"
+
+#: ../src/orca/orca-setup.glade.h:31
+msgid "Enable lockin_g keys"
+msgstr "Включить _блокировку клавиш"
+
+#: ../src/orca/orca-setup.glade.h:32
+msgid "In_vert colors"
+msgstr "Ин_версия цветов"
+
+#: ../src/orca/orca-setup.glade.h:33
+msgid "Key Echo"
+msgstr "Повтор клавиш"
+
+#: ../src/orca/orca-setup.glade.h:34 ../src/orca/orca_gui_prefs.py:1039
+msgid "M_ost"
+msgstr "_Большинство"
+
+#: ../src/orca/orca-setup.glade.h:35
+msgid "Magnifier"
+msgstr "Увеличитель"
+
+#: ../src/orca/orca-setup.glade.h:36
+msgid "Mouse trac_king mode:"
+msgstr "Режим слежения за мышью:"
+
+#: ../src/orca/orca-setup.glade.h:37
+msgid ""
+"None\n"
+"Bilinear"
+msgstr ""
+"Нет\n"
+"Билинейный"
+
+#: ../src/orca/orca-setup.glade.h:39
+msgid "Orca Preferences"
+msgstr "Параметры Orca"
+
+#: ../src/orca/orca-setup.glade.h:40
+msgid "Pi_tch:"
+msgstr "_Тон:"
+
+#: ../src/orca/orca-setup.glade.h:41
+msgid "Question"
+msgstr "Вопрос"
+
+#: ../src/orca/orca-setup.glade.h:42
+msgid "Scale _factor:"
+msgstr "_Масштаб:"
+
+#: ../src/orca/orca-setup.glade.h:43
+msgid "Si_ze:"
+msgstr "_Размер:"
+
+#: ../src/orca/orca-setup.glade.h:44 ../src/orca/orca_gui_prefs.py:1036
+msgid "So_me"
+msgstr "_Некоторые"
+
+#: ../src/orca/orca-setup.glade.h:45
+msgid "Speak _indentation and justification"
+msgstr "Произность средства _выравнивания"
+
+#: ../src/orca/orca-setup.glade.h:46 ../src/orca/orca_gui_prefs.py:1079
+msgid "Speak current _cell"
+msgstr "Произносить текущую _ячейку"
+
+#: ../src/orca/orca-setup.glade.h:47
+msgid "Speak current ro_w"
+msgstr "Произносить текущую _строку"
+
+#: ../src/orca/orca-setup.glade.h:48
+msgid "Speech"
+msgstr "Речь"
+
+#: ../src/orca/orca-setup.glade.h:49
+msgid "Speech _system:"
+msgstr "Система _обработки речи:"
+
+#: ../src/orca/orca-setup.glade.h:50
+msgid "Speech synthesi_zer:"
+msgstr "_Синтезатор речи:"
+
+#: ../src/orca/orca-setup.glade.h:51
+msgid "Ver_bose"
+msgstr "_Подробно"
+
+#: ../src/orca/orca-setup.glade.h:52
+msgid "Vo_lume:"
+msgstr "Г_ромкость:"
+
+#: ../src/orca/orca-setup.glade.h:53
+msgid ""
+"You will have to log out for the change to take effect.\n"
+"Do you want to log out now? "
+msgstr ""
+"Необходимо выйти из системы и войти в систему снова для вступления\n"
+"изменений в силу. Хотите ли вы разрегистрироваться прямо сейчас?"
+
+#: ../src/orca/orca-setup.glade.h:55
+msgid "_Abbreviated role names"
+msgstr "Сокращённое _назначение"
+
+#: ../src/orca/orca-setup.glade.h:56
+msgid "_All"
+msgstr "_Всё"
+
+#: ../src/orca/orca-setup.glade.h:57
+msgid "_Bottom:"
+msgstr "Вни_зу:"
+
+#: ../src/orca/orca-setup.glade.h:58
+msgid "_Enable speech"
+msgstr "_Включить речь"
+
+#: ../src/orca/orca-setup.glade.h:59
+msgid "_Left:"
+msgstr "С_лева:"
+
+#: ../src/orca/orca-setup.glade.h:60 ../src/orca/orca_gui_prefs.py:1033
+msgid "_None"
+msgstr "_Нет"
+
+#: ../src/orca/orca-setup.glade.h:61
+msgid "_Person:"
+msgstr "_Человек:"
+
+#: ../src/orca/orca-setup.glade.h:62
+msgid "_Rate:"
+msgstr "_Частота:"
+
+#: ../src/orca/orca-setup.glade.h:63
+msgid "_Right:"
+msgstr "С_права:"
+
+#: ../src/orca/orca-setup.glade.h:64
+msgid "_Smoothing:"
+msgstr "_Сглаживание:"
+
+#: ../src/orca/orca-setup.glade.h:65
+msgid "_Top:"
+msgstr "_Вверху:"
+
+#: ../src/orca/orca-setup.glade.h:66
+msgid "_Voice settings:"
+msgstr "Параметры _голоса:"
+
+#: ../src/orca/orca-setup.glade.h:67
+msgid "_Width:"
+msgstr "_Ширина:"
+
+#: ../src/orca/orca-setup.glade.h:68
+msgid "pixels"
+msgstr "пиксели"
+
+#: ../src/orca/orca.py:219
+msgid "User logged out - shutting down."
+msgstr "Пользователь вышел из системы - завершение."
+
+#: ../src/orca/orca.py:383
+msgid "Debug level all."
+msgstr "Уровень отладки: полный"
+
+#: ../src/orca/orca.py:385
+msgid "Debug level finest."
+msgstr "Уровень отладки: тонкий"
+
+#: ../src/orca/orca.py:387
+msgid "Debug level finer."
+msgstr "Уровень отладки: тоньше"
+
+#: ../src/orca/orca.py:586
+msgid "Caps_Lock"
+msgstr "_Регистр"
+
+#: ../src/orca/orca.py:588
+msgid " off"
+msgstr " отключено"
+
+#: ../src/orca/orca.py:590
+msgid " on"
+msgstr " включено"
+
+#: ../src/orca/orca.py:592
+msgid "Num_Lock"
+msgstr "_Цифры"
+
+#: ../src/orca/orca.py:775
+msgid "Speech enabled."
+msgstr "Речь включена."
+
+#: ../src/orca/orca.py:777
+msgid "Speech disabled."
+msgstr "Речь выключена."
+
+#: ../src/orca/orca.py:815
+msgid "Orca user settings reloaded."
+msgstr "Настройки пользователя Orca перезагружены."
+
+#: ../src/orca/orca.py:956 ../src/orca/orca.py:957
+msgid "Welcome to Orca."
+msgstr "Добро пожаловать в Orca."
+
+#: ../src/orca/orca.py:1013
+msgid "goodbye."
+msgstr "до свидания."
+
+#: ../src/orca/orca.py:1014
+msgid "Goodbye."
+msgstr "До свидания."
+
+#: ../src/orca/orca.py:1094
+msgid "Usage: orca [OPTION...]"
+msgstr "Использование: orca [ПАРАМЕТРЫ...]"
+
+#: ../src/orca/orca.py:1096
+msgid "-?, --help                   Show this help message"
+msgstr "-?, --help                  Показать эту справку"
+
+#: ../src/orca/orca.py:1097
+#, python-format
+msgid "-v, --version                %s"
+msgstr "-v, --version               %s"
+
+#: ../src/orca/orca.py:1098
+msgid "-s, --setup, --gui-setup     Set up user preferences"
+msgstr "-s, --setup, --gui-setup    Настроить параметры пользователя"
+
+#: ../src/orca/orca.py:1099
+msgid "-t, --text-setup             Set up user preferences (text version)"
+msgstr "-t, --text-setup            Настроить параметры пользователя (текст)"
+
+#: ../src/orca/orca.py:1100
+msgid "-n, --no-setup               Skip set up of user preferences"
+msgstr "-n, --no-setup              Пропустить этап настройки параметров"
+
+#: ../src/orca/orca.py:1102
+msgid ""
+"If Orca has not been previously set up by the user, Orca\n"
+"will automatically launch the preferences set up unless\n"
+"the -n or --no-setup option is used."
+msgstr ""
+"Если Orca не была настроена пользователем, по умолчанию\n"
+"запуститься процесс настройки параметров. Для того, чтобы пропуститьэтот "
+"этап, используйте -n or --no-setup."
+
+#: ../src/orca/orca.py:1104
+msgid "Report bugs to orca-list@gnome.org."
+msgstr "Сообщайте об ошибках в списке рассылки orca-list@gnome.org"
+
+#: ../src/orca/orca_console_prefs.py:93 ../src/orca/orca_console_prefs.py:109
+msgid "Speech is unavailable."
+msgstr "Речь недоступна."
+
+#: ../src/orca/orca_console_prefs.py:97
+msgid "Welcome to Orca setup."
+msgstr "Настройка параметров Orca."
+
+#: ../src/orca/orca_console_prefs.py:112
+msgid "Select desired speech system:"
+msgstr "Выберите систему обработки речи:"
+
+#: ../src/orca/orca_console_prefs.py:117 ../src/orca/orca_console_prefs.py:138
+#: ../src/orca/orca_console_prefs.py:164
+#, python-format
+msgid "%d. %s"
+msgstr "%d. %s"
+
+#: ../src/orca/orca_console_prefs.py:120 ../src/orca/orca_console_prefs.py:141
+#: ../src/orca/orca_console_prefs.py:171
+msgid "Enter choice: "
+msgstr "Выбор: "
+
+#: ../src/orca/orca_console_prefs.py:122 ../src/orca/orca_console_prefs.py:130
+#: ../src/orca/orca_console_prefs.py:143 ../src/orca/orca_console_prefs.py:152
+#: ../src/orca/orca_console_prefs.py:176
+msgid "Speech will not be used.\n"
+msgstr "Речь не будет использоваться.\n"
+
+#: ../src/orca/orca_console_prefs.py:129
+msgid "No servers available.\n"
+msgstr "Нет доступных сервисов.\n"
+
+#: ../src/orca/orca_console_prefs.py:133
+msgid "Select desired speech server."
+msgstr "Выберите сервис синтеза речи."
+
+#: ../src/orca/orca_console_prefs.py:151
+msgid "No voices available.\n"
+msgstr "Нет доступных голосов синтеза.\n"
+
+#: ../src/orca/orca_console_prefs.py:155
+msgid "Select desired voice:"
+msgstr "Выберите голос:"
+
+#. Ask the user if they would like to enable echoing by word.
+#.
+#: ../src/orca/orca_console_prefs.py:209
+msgid "Enable echo by word?  Enter y or n: "
+msgstr "Включить повтор по словам? Введите y или n: "
+
+#. Ask the user if they would like to enable key echo. If they say
+#. yes, then for each of the five different types of keys, ask the
+#. user if they would like to enable them.
+#.
+#. These key types are:
+#.
+#. o Alphanumeric and punctuation keys
+#.
+#. o Modifier keys: CTRL, ALT, Shift, Insert, and "Fn" on laptops.
+#.
+#. o Locking keys: Caps Lock, Num Lock, Scroll Lock, etc.
+#.
+#. o Function keys: The keys at the top of the keyboard.
+#.
+#. o Action keys: space, enter, escape, tab, backspace, delete, arrow
+#. keys, page up, page down, etc.
+#.
+#: ../src/orca/orca_console_prefs.py:234
+msgid "Enable key echo?  Enter y or n: "
+msgstr "Включить повтор клавиш? Введите y или n: "
+
+#: ../src/orca/orca_console_prefs.py:241
+msgid "Enable alphanumeric and punctuation keys?  Enter y or n: "
+msgstr ""
+"Включить алфавитно-цифровые клавиши и клавиши пунктуации? Введите y или n: "
+
+#: ../src/orca/orca_console_prefs.py:249
+msgid "Enable modifier keys?  Enter y or n: "
+msgstr "Включить модификаторы? Введите y или n: "
+
+#: ../src/orca/orca_console_prefs.py:257
+msgid "Enable locking keys?  Enter y or n: "
+msgstr "Включить клавиши переключения режима? Введите y или n: "
+
+#: ../src/orca/orca_console_prefs.py:265
+msgid "Enable function keys?  Enter y or n: "
+msgstr "Включить функциональные клавиши? Введите y или n: "
+
+#: ../src/orca/orca_console_prefs.py:273
+msgid "Enable action keys?  Enter y or n: "
+msgstr "Включить клавиши действий? Введите y или n: "
+
+#: ../src/orca/orca_console_prefs.py:301
+msgid "Enable Braille?  Enter y or n: "
+msgstr "Включить поддержку Брайля? Введите y или n: "
+
+#: ../src/orca/orca_console_prefs.py:309
+msgid "Enable Braille Monitor?  Enter y or n: "
+msgstr "Включить монитор Брайля? Введите y или n: "
+
+#: ../src/orca/orca_console_prefs.py:319
+msgid "Accessibility support for GNOME has just been enabled. "
+msgstr "Поддержка вспомогательных технологий в GNOME включена. "
+
+#: ../src/orca/orca_console_prefs.py:324
+msgid "You need to log out and log back in for the change to take effect. "
+msgstr ""
+"Вы должны выйти из системы и войти в систему снова для вступления изменений "
+"в силу."
+
+#: ../src/orca/orca_console_prefs.py:330
+msgid "Setup complete.  Press Return to continue."
+msgstr "Настройка завершена. Нажмите Return для продолжения."
+
+#: ../src/orca/orca_gui_prefs.py:128 ../src/orca/orca_gui_prefs.py:424
+#: ../src/orca/orca_gui_prefs.py:466
+msgid "Speech not available."
+msgstr "Реч недоступна."
+
+#: ../src/orca/orca_gui_prefs.py:366 ../src/orca/orca_gui_prefs.py:370
+#: ../src/orca/orca_gui_prefs.py:1311
+msgid "Bilinear"
+msgstr "Билинейный"
+
+#: ../src/orca/orca_gui_prefs.py:368 ../src/orca/orca_gui_prefs.py:381
+#: ../src/orca/orca_gui_prefs.py:1313 ../src/orca/orca_gui_prefs.py:1336
+msgid "None"
+msgstr "Нет"
+
+#: ../src/orca/orca_gui_prefs.py:379 ../src/orca/orca_gui_prefs.py:387
+#: ../src/orca/orca_gui_prefs.py:1330
+msgid "Centered"
+msgstr "По центру"
+
+#: ../src/orca/orca_gui_prefs.py:383 ../src/orca/orca_gui_prefs.py:1334
+msgid "Proportional"
+msgstr "Пропроционально"
+
+#: ../src/orca/orca_gui_prefs.py:385 ../src/orca/orca_gui_prefs.py:1332
+msgid "Push"
+msgstr "Нажать"
+
+#: ../src/orca/orca_gui_prefs.py:503 ../src/orca/orca_gui_prefs.py:528
+msgid "Default"
+msgstr "По умолчанию"
+
+#: ../src/orca/orca_gui_prefs.py:505 ../src/orca/orca_gui_prefs.py:530
+msgid "Uppercase"
+msgstr "Верхний регистр"
+
+#: ../src/orca/orca_gui_prefs.py:507 ../src/orca/orca_gui_prefs.py:536
+msgid "Hyperlink"
+msgstr "Ссылка"
+
+#: ../src/orca/orca_gui_prefs.py:1399
+msgid "Accessibility support for GNOME has just been enabled."
+msgstr "Поддержка вспомогательных технологий GNOME была включена."
+
+#: ../src/orca/orca_gui_prefs.py:1400
+msgid "You need to log out and log back in for the change to take effect."
+msgstr ""
+"Вы должны выйти из системы и войти в систему снова для вступления\n"
+"изменений в силу."
+
+#: ../src/orca/rolenames.py:147
+msgid "???"
+msgstr "???"
+
+#: ../src/orca/rolenames.py:148
+msgid "Invalid"
+msgstr "Некорректно"
+
+#: ../src/orca/rolenames.py:149
+msgid "invalid"
+msgstr "некорректно"
+
+#: ../src/orca/rolenames.py:152
+msgid "acc"
+msgstr "уск"
+
+#: ../src/orca/rolenames.py:153
+msgid "Accelerator"
+msgstr "Ускоритель"
+
+#: ../src/orca/rolenames.py:154
+msgid "accelerator"
+msgstr "ускоритель"
+
+#: ../src/orca/rolenames.py:157 ../src/orca/rolenames.py:159
+msgid "alert"
+msgstr "вним"
+
+#: ../src/orca/rolenames.py:158
+msgid "Alert"
+msgstr "Внимание"
+
+#: ../src/orca/rolenames.py:162
+msgid "Anim"
+msgstr "Мульт"
+
+#: ../src/orca/rolenames.py:163
+msgid "Animation"
+msgstr "Мультипликация"
+
+#: ../src/orca/rolenames.py:164
+msgid "animation"
+msgstr "мультипликация"
+
+#: ../src/orca/rolenames.py:167 ../src/orca/rolenames.py:169
+msgid "arrow"
+msgstr "Стрелка"
+
+#: ../src/orca/rolenames.py:168
+msgid "Arrow"
+msgstr "Стрелка"
+
+#: ../src/orca/rolenames.py:172
+msgid "cal"
+msgstr "кал"
+
+#: ../src/orca/rolenames.py:173
+msgid "Calendar"
+msgstr "Календарь"
+
+#: ../src/orca/rolenames.py:174
+msgid "calendar"
+msgstr "календарь"
+
+#: ../src/orca/rolenames.py:177
+msgid "cnv"
+msgstr "Рисов"
+
+#: ../src/orca/rolenames.py:178
+msgid "Canvas"
+msgstr "Поле рисования"
+
+#: ../src/orca/rolenames.py:179
+msgid "canvas"
+msgstr "поле рисования"
+
+#: ../src/orca/rolenames.py:182 ../src/orca/rolenames.py:187
+msgid "chk"
+msgstr "отм"
+
+#: ../src/orca/rolenames.py:183
+msgid "CheckBox"
+msgstr "Отметка"
+
+#: ../src/orca/rolenames.py:184
+msgid "check box"
+msgstr "отметка"
+
+#: ../src/orca/rolenames.py:188
+msgid "CheckItem"
+msgstr "Галочка"
+
+#: ../src/orca/rolenames.py:189
+msgid "check item"
+msgstr "элемент меню с галочкой"
+
+#: ../src/orca/rolenames.py:192
+msgid "ckm"
+msgstr "Гал меню"
+
+#: ../src/orca/rolenames.py:193
+msgid "CheckMenu"
+msgstr "Элемент меню с галочкой"
+
+#: ../src/orca/rolenames.py:194
+msgid "check menu"
+msgstr "элемент меню с галочкой"
+
+#: ../src/orca/rolenames.py:197
+msgid "clrchsr"
+msgstr "выбцв"
+
+#: ../src/orca/rolenames.py:198
+msgid "ColorChooser"
+msgstr "Диалог выбора цвета"
+
+#: ../src/orca/rolenames.py:199
+msgid "color chooser"
+msgstr "диалог выбора цвета"
+
+#: ../src/orca/rolenames.py:202 ../src/orca/rolenames.py:437
+msgid "colhdr"
+msgstr "загст"
+
+#: ../src/orca/rolenames.py:203 ../src/orca/rolenames.py:438
+msgid "ColumnHeader"
+msgstr "Заголовк столбца"
+
+#: ../src/orca/rolenames.py:204 ../src/orca/rolenames.py:439
+msgid "column header"
+msgstr "заголовок столбца"
+
+#: ../src/orca/rolenames.py:207
+msgid "cbo"
+msgstr "выпсп"
+
+#: ../src/orca/rolenames.py:208
+msgid "Combo"
+msgstr "Выпадающий список"
+
+#: ../src/orca/rolenames.py:209
+msgid "combo box"
+msgstr "выпадающий список"
+
+#: ../src/orca/rolenames.py:212
+msgid "dat"
+msgstr "дат"
+
+#: ../src/orca/rolenames.py:213
+msgid "DateEditor"
+msgstr "Правка даты"
+
+#: ../src/orca/rolenames.py:214
+msgid "date editor"
+msgstr "правка даты"
+
+#: ../src/orca/rolenames.py:217 ../src/orca/rolenames.py:277
+#: ../src/orca/rolenames.py:279
+msgid "icon"
+msgstr "Знч"
+
+#: ../src/orca/rolenames.py:218
+msgid "DesktopIcon"
+msgstr "Значёк рабочего стола"
+
+#: ../src/orca/rolenames.py:219
+msgid "desktop icon"
+msgstr "значёк рабочего стола"
+
+#: ../src/orca/rolenames.py:222 ../src/orca/rolenames.py:264
+#: ../src/orca/rolenames.py:287
+msgid "frame"
+msgstr "область"
+
+#: ../src/orca/rolenames.py:223
+msgid "DesktopFrame"
+msgstr "Область рабочего стола"
+
+#: ../src/orca/rolenames.py:224
+msgid "desktop frame"
+msgstr "область рабочего стола"
+
+#: ../src/orca/rolenames.py:227 ../src/orca/rolenames.py:229
+msgid "dial"
+msgstr "Набор"
+
+#: ../src/orca/rolenames.py:228
+msgid "Dial"
+msgstr "Набор номера"
+
+#: ../src/orca/rolenames.py:232
+msgid "dlg"
+msgstr "длг"
+
+#: ../src/orca/rolenames.py:233
+msgid "Dialog"
+msgstr "Диалог"
+
+#: ../src/orca/rolenames.py:234
+msgid "dialog"
+msgstr "диалог"
+
+#: ../src/orca/rolenames.py:237
+msgid "dip"
+msgstr "папк"
+
+#: ../src/orca/rolenames.py:238
+msgid "DirectoryPane"
+msgstr "Папка"
+
+#: ../src/orca/rolenames.py:239
+msgid "directory pane"
+msgstr "папка"
+
+#: ../src/orca/rolenames.py:242
+msgid "draw"
+msgstr "рисов"
+
+#: ../src/orca/rolenames.py:243
+msgid "DrawingArea"
+msgstr "Область рисования"
+
+#: ../src/orca/rolenames.py:244
+msgid "drawing area"
+msgstr "область рисования"
+
+#: ../src/orca/rolenames.py:247
+msgid "fchsr"
+msgstr "Файл"
+
+#: ../src/orca/rolenames.py:248
+msgid "FileChooser"
+msgstr "Выбор файла"
+
+#: ../src/orca/rolenames.py:249
+msgid "file chooser"
+msgstr "выбор файла"
+
+#: ../src/orca/rolenames.py:252
+msgid "flr"
+msgstr "зпл"
+
+#: ../src/orca/rolenames.py:253
+msgid "Filler"
+msgstr "Заполнитель"
+
+#: ../src/orca/rolenames.py:254
+msgid "filler"
+msgstr "заполнитель"
+
+#: ../src/orca/rolenames.py:257
+msgid "fnt"
+msgstr "шрифт"
+
+#: ../src/orca/rolenames.py:258
+msgid "FontChooser"
+msgstr "Выбор шрифта"
+
+#: ../src/orca/rolenames.py:259
+msgid "font chooser"
+msgstr "выбор шрифта"
+
+#: ../src/orca/rolenames.py:262
+msgid "frm"
+msgstr "обл"
+
+#: ../src/orca/rolenames.py:263
+msgid "Frame"
+msgstr "Область"
+
+#: ../src/orca/rolenames.py:267
+msgid "gpn"
+msgstr "стекл"
+
+#: ../src/orca/rolenames.py:268
+msgid "GlassPane"
+msgstr "Стеклянная область"
+
+#: ../src/orca/rolenames.py:269
+msgid "glass pane"
+msgstr "стеклянная область"
+
+#: ../src/orca/rolenames.py:272
+msgid "html"
+msgstr "гипер"
+
+#: ../src/orca/rolenames.py:273
+msgid "HtmlContainer"
+msgstr "Носитель гипертекста"
+
+#: ../src/orca/rolenames.py:274
+msgid "h t m l container"
+msgstr "носитель гипертекста"
+
+#: ../src/orca/rolenames.py:278
+msgid "Icon"
+msgstr "Значёк"
+
+#: ../src/orca/rolenames.py:282
+msgid "img"
+msgstr "изоб"
+
+#: ../src/orca/rolenames.py:283
+msgid "Image"
+msgstr "Изображение"
+
+#: ../src/orca/rolenames.py:284
+msgid "image"
+msgstr "изображение"
+
+#: ../src/orca/rolenames.py:288
+msgid "InternalFrame"
+msgstr "Внутренняя область"
+
+#: ../src/orca/rolenames.py:289
+msgid "internal frame"
+msgstr "внутренняя область"
+
+#: ../src/orca/rolenames.py:292
+msgid "lbl"
+msgstr "метк"
+
+#: ../src/orca/rolenames.py:293
+msgid "Label"
+msgstr "Метка"
+
+#: ../src/orca/rolenames.py:294
+msgid "label"
+msgstr "метка"
+
+#: ../src/orca/rolenames.py:297
+msgid "lyrdpn"
+msgstr "разоб"
+
+#: ../src/orca/rolenames.py:298
+msgid "LayeredPane"
+msgstr "Размеченная область"
+
+#: ../src/orca/rolenames.py:299
+msgid "layered pane"
+msgstr "размеченная область"
+
+#: ../src/orca/rolenames.py:302
+msgid "lst"
+msgstr "спис"
+
+#: ../src/orca/rolenames.py:303
+msgid "List"
+msgstr "Список"
+
+#: ../src/orca/rolenames.py:304
+msgid "list"
+msgstr "список"
+
+#: ../src/orca/rolenames.py:307
+msgid "lstitm"
+msgstr "элспис"
+
+#: ../src/orca/rolenames.py:308
+msgid "ListItem"
+msgstr "Элемент списка"
+
+#: ../src/orca/rolenames.py:309
+msgid "list item"
+msgstr "элемент списка"
+
+#: ../src/orca/rolenames.py:312
+msgid "mnu"
+msgstr "мен"
+
+#: ../src/orca/rolenames.py:313
+msgid "Menu"
+msgstr "Меню"
+
+#: ../src/orca/rolenames.py:314
+msgid "menu"
+msgstr "меню"
+
+#: ../src/orca/rolenames.py:317
+msgid "mnubr"
+msgstr "панмен"
+
+#: ../src/orca/rolenames.py:318
+msgid "MenuBar"
+msgstr "Панель меню"
+
+#: ../src/orca/rolenames.py:319
+msgid "menu bar"
+msgstr "Панель меню"
+
+#: ../src/orca/rolenames.py:322
+msgid "mnuitm"
+msgstr "элмен"
+
+#: ../src/orca/rolenames.py:323
+msgid "MenuItem"
+msgstr "Элемент меню"
+
+#: ../src/orca/rolenames.py:324
+msgid "menu item"
+msgstr "элемент меню"
+
+#: ../src/orca/rolenames.py:327
+msgid "optnpn"
+msgstr "парам"
+
+#: ../src/orca/rolenames.py:328
+msgid "OptionPane"
+msgstr "Область параметров"
+
+#: ../src/orca/rolenames.py:329
+msgid "option pane"
+msgstr "область параметров"
+
+#: ../src/orca/rolenames.py:332 ../src/orca/rolenames.py:334
+msgid "page"
+msgstr "стран"
+
+#: ../src/orca/rolenames.py:333
+msgid "Page"
+msgstr "Страница"
+
+#: ../src/orca/rolenames.py:337
+msgid "tblst"
+msgstr "спвкл"
+
+#: ../src/orca/rolenames.py:338
+msgid "TabList"
+msgstr "Список вкладок"
+
+#: ../src/orca/rolenames.py:339
+msgid "tab list"
+msgstr "список вкладок"
+
+#: ../src/orca/rolenames.py:342
+msgid "pnl"
+msgstr "пан"
+
+#: ../src/orca/rolenames.py:343
+msgid "Panel"
+msgstr "Панель"
+
+#: ../src/orca/rolenames.py:344
+msgid "panel"
+msgstr "панель"
+
+#: ../src/orca/rolenames.py:347
+msgid "pwd"
+msgstr "пар"
+
+#: ../src/orca/rolenames.py:348
+msgid "Password"
+msgstr "Текст пароля"
+
+#: ../src/orca/rolenames.py:349
+msgid "password"
+msgstr "текст пароля"
+
+#: ../src/orca/rolenames.py:352
+msgid "popmnu"
+msgstr "всплмен"
+
+#: ../src/orca/rolenames.py:353
+msgid "PopupMenu"
+msgstr "Всплывающее меню"
+
+#: ../src/orca/rolenames.py:354
+msgid "popup menu"
+msgstr "всплывающее меню"
+
+#: ../src/orca/rolenames.py:357
+msgid "pgbar"
+msgstr "прогр"
+
+#: ../src/orca/rolenames.py:358
+msgid "Progress"
+msgstr "Прогресс"
+
+#: ../src/orca/rolenames.py:359
+msgid "progress bar"
+msgstr "прогресс"
+
+#: ../src/orca/rolenames.py:362
+msgid "btn"
+msgstr "кнп"
+
+#: ../src/orca/rolenames.py:363
+msgid "Button"
+msgstr "Кнопка"
+
+#: ../src/orca/rolenames.py:364
+msgid "button"
+msgstr "кнопка"
+
+#: ../src/orca/rolenames.py:367
+msgid "radio"
+msgstr "кнопвыб"
+
+#: ../src/orca/rolenames.py:368
+msgid "RadioButton"
+msgstr "Кнопка выбора"
+
+#: ../src/orca/rolenames.py:369
+msgid "radio button"
+msgstr "кнопка выбора"
+
+#: ../src/orca/rolenames.py:372
+msgid "rdmnuitm"
+msgstr "выбменю"
+
+#: ../src/orca/rolenames.py:373
+msgid "RadioItem"
+msgstr "Элемет выбора в меню"
+
+#: ../src/orca/rolenames.py:374
+msgid "radio menu item"
+msgstr "элемент выбора в меню"
+
+#: ../src/orca/rolenames.py:377
+msgid "rdmnu"
+msgstr "вбмен"
+
+#: ../src/orca/rolenames.py:378
+msgid "RadioMenu"
+msgstr "Элемент выбора в меню"
+
+#: ../src/orca/rolenames.py:379
+msgid "radio menu"
+msgstr "Элемент выбора в меню"
+
+#: ../src/orca/rolenames.py:382
+msgid "rtpn"
+msgstr "главоб"
+
+#: ../src/orca/rolenames.py:383
+msgid "RootPane"
+msgstr "Главная область"
+
+#: ../src/orca/rolenames.py:384
+msgid "root pane"
+msgstr "главная область"
+
+#: ../src/orca/rolenames.py:387 ../src/orca/rolenames.py:442
+msgid "rwhdr"
+msgstr "згстр"
+
+#: ../src/orca/rolenames.py:388 ../src/orca/rolenames.py:443
+msgid "RowHeader"
+msgstr "Заголовок строки"
+
+#: ../src/orca/rolenames.py:389 ../src/orca/rolenames.py:444
+msgid "row header"
+msgstr "заголовок строки"
+
+#: ../src/orca/rolenames.py:392
+msgid "scbr"
+msgstr "прок"
+
+#: ../src/orca/rolenames.py:393
+msgid "ScrollBar"
+msgstr "Полоса прокрутки"
+
+#: ../src/orca/rolenames.py:394
+msgid "scroll bar"
+msgstr "полоса прокрутки"
+
+#: ../src/orca/rolenames.py:397
+msgid "scpn"
+msgstr "облпрок"
+
+#: ../src/orca/rolenames.py:398
+msgid "ScrollPane"
+msgstr "Область прокрутки"
+
+#: ../src/orca/rolenames.py:399
+msgid "scroll pane"
+msgstr "область прокрутки"
+
+#: ../src/orca/rolenames.py:402
+msgid "seprtr"
+msgstr "разд"
+
+#: ../src/orca/rolenames.py:403
+msgid "Separator"
+msgstr "Разделитель"
+
+#: ../src/orca/rolenames.py:404
+msgid "separator"
+msgstr "разделитель"
+
+#: ../src/orca/rolenames.py:407
+msgid "sldr"
+msgstr "Бег"
+
+#: ../src/orca/rolenames.py:408
+msgid "Slider"
+msgstr "Бегунок"
+
+#: ../src/orca/rolenames.py:409
+msgid "slider"
+msgstr "бегунок"
+
+#: ../src/orca/rolenames.py:412
+msgid "spltpn"
+msgstr "панразд"
+
+#: ../src/orca/rolenames.py:413
+msgid "SplitPane"
+msgstr "Панель разделения"
+
+#: ../src/orca/rolenames.py:414
+msgid "split pane"
+msgstr "панель разделения"
+
+#: ../src/orca/rolenames.py:417
+msgid "spin"
+msgstr "прокр"
+
+#: ../src/orca/rolenames.py:418
+msgid "SpinButton"
+msgstr "Кнопка прокрутки"
+
+#: ../src/orca/rolenames.py:419
+msgid "spin button"
+msgstr "кнопка прокрутки"
+
+#: ../src/orca/rolenames.py:422
+msgid "statbr"
+msgstr "статус"
+
+#: ../src/orca/rolenames.py:423
+msgid "StatusBar"
+msgstr "Строка состояния"
+
+#: ../src/orca/rolenames.py:424
+msgid "status bar"
+msgstr "строка состояния"
+
+#: ../src/orca/rolenames.py:427
+msgid "tbl"
+msgstr "табл"
+
+#: ../src/orca/rolenames.py:428
+msgid "Table"
+msgstr "Таблица"
+
+#: ../src/orca/rolenames.py:429
+msgid "table"
+msgstr "таблица"
+
+#: ../src/orca/rolenames.py:433
+msgid "Cell"
+msgstr "Ячейка"
+
+#: ../src/orca/rolenames.py:447
+msgid "tomnuitm"
+msgstr "элемотмен"
+
+#: ../src/orca/rolenames.py:448
+msgid "TearOffMenuItem"
+msgstr "Элемент отсоединённого меню"
+
+#: ../src/orca/rolenames.py:449 ../src/orca/speechgenerator.py:1258
+msgid "tear off menu item"
+msgstr "элемет выпадающего меню"
+
+#: ../src/orca/rolenames.py:452
+msgid "term"
+msgstr "терм"
+
+#: ../src/orca/rolenames.py:453
+msgid "Terminal"
+msgstr "Терминал"
+
+#: ../src/orca/rolenames.py:454
+msgid "terminal"
+msgstr "терминал"
+
+#: ../src/orca/rolenames.py:457
+msgid "txt"
+msgstr "текст"
+
+#: ../src/orca/rolenames.py:458
+msgid "Text"
+msgstr "Текст"
+
+#: ../src/orca/rolenames.py:459
+msgid "text"
+msgstr "текст"
+
+#: ../src/orca/rolenames.py:462
+msgid "tglbtn"
+msgstr "перкноп"
+
+#: ../src/orca/rolenames.py:463
+msgid "ToggleButton"
+msgstr "Кнопка переключения"
+
+#: ../src/orca/rolenames.py:464
+msgid "toggle button"
+msgstr "кнопка переключения"
+
+#: ../src/orca/rolenames.py:467
+msgid "tbar"
+msgstr "Панинс"
+
+#: ../src/orca/rolenames.py:468
+msgid "ToolBar"
+msgstr "Панель инструментов"
+
+#: ../src/orca/rolenames.py:469
+msgid "tool bar"
+msgstr "панель инструментов"
+
+#: ../src/orca/rolenames.py:472
+msgid "tip"
+msgstr "подск"
+
+#: ../src/orca/rolenames.py:473
+msgid "ToolTip"
+msgstr "Подсказка"
+
+#: ../src/orca/rolenames.py:474
+msgid "tool tip"
+msgstr "подсказка"
+
+#: ../src/orca/rolenames.py:477 ../src/orca/rolenames.py:479
+msgid "tree"
+msgstr "дер"
+
+#: ../src/orca/rolenames.py:478
+msgid "Tree"
+msgstr "Дерево"
+
+#: ../src/orca/rolenames.py:482
+msgid "trtbl"
+msgstr "дертаб"
+
+#: ../src/orca/rolenames.py:483
+msgid "TreeTable"
+msgstr "Дерево таблица"
+
+#: ../src/orca/rolenames.py:484
+msgid "tree table"
+msgstr "дерево таблица"
+
+#: ../src/orca/rolenames.py:487
+msgid "unk"
+msgstr "неиз"
+
+#: ../src/orca/rolenames.py:488
+msgid "Unknown"
+msgstr "Неизвестно"
+
+#: ../src/orca/rolenames.py:489
+msgid "unknown"
+msgstr "неизвестно"
+
+#: ../src/orca/rolenames.py:492
+msgid "vwprt"
+msgstr "прсмтр"
+
+#: ../src/orca/rolenames.py:493
+msgid "Viewport"
+msgstr "Просмотр"
+
+#: ../src/orca/rolenames.py:494
+msgid "viewport"
+msgstr "просмотр"
+
+#: ../src/orca/rolenames.py:497
+msgid "wnd"
+msgstr "окн"
+
+#: ../src/orca/rolenames.py:498
+msgid "Window"
+msgstr "Окно"
+
+#: ../src/orca/rolenames.py:499
+msgid "window"
+msgstr "окно"
+
+#: ../src/orca/rolenames.py:502
+msgid "hdr"
+msgstr "заг"
+
+#: ../src/orca/rolenames.py:503
+msgid "Header"
+msgstr "Заголовок"
+
+#: ../src/orca/rolenames.py:504
+msgid "header"
+msgstr "заголовок"
+
+#: ../src/orca/rolenames.py:507
+msgid "ftr"
+msgstr "подп"
+
+#: ../src/orca/rolenames.py:508
+msgid "Footer"
+msgstr "Подпись"
+
+#: ../src/orca/rolenames.py:509
+msgid "footer"
+msgstr "подпись"
+
+#: ../src/orca/rolenames.py:512
+msgid "para"
+msgstr "абз"
+
+#: ../src/orca/rolenames.py:513
+msgid "Paragraph"
+msgstr "Абзац"
+
+#: ../src/orca/rolenames.py:514
+msgid "paragraph"
+msgstr "абзац"
+
+#: ../src/orca/rolenames.py:517
+msgid "app"
+msgstr "прил"
+
+#: ../src/orca/rolenames.py:518
+msgid "Application"
+msgstr "Приложение"
+
+#: ../src/orca/rolenames.py:519
+msgid "application"
+msgstr "приложение"
+
+#: ../src/orca/rolenames.py:522
+msgid "auto"
+msgstr "авто"
+
+#: ../src/orca/rolenames.py:523
+msgid "AutoComplete"
+msgstr "Автодополнение"
+
+#: ../src/orca/rolenames.py:524
+msgid "autocomplete"
+msgstr "автодополнение"
+
+#: ../src/orca/rolenames.py:527
+msgid "edtbr"
+msgstr "облпр"
+
+#: ../src/orca/rolenames.py:528
+msgid "EditBar"
+msgstr "Область правки"
+
+#: ../src/orca/rolenames.py:529
+msgid "edit bar"
+msgstr "область правки"
+
+#: ../src/orca/rolenames.py:532
+msgid "emb"
+msgstr "вст"
+
+#: ../src/orca/rolenames.py:533
+msgid "EmbeddedComponent"
+msgstr "Встроенный компонент"
+
+#: ../src/orca/rolenames.py:534
+msgid "embedded component"
+msgstr "встроенный компонент"
+
+#: ../src/orca/scripts/Evolution.py:86
+msgid "calv"
+msgstr "кал"
+
+#: ../src/orca/scripts/Evolution.py:87
+msgid "CalendarView"
+msgstr "Календарь"
+
+#: ../src/orca/scripts/Evolution.py:88
+msgid "calendar view"
+msgstr "календарь"
+
+#: ../src/orca/scripts/Evolution.py:93
+msgid "cale"
+msgstr "собкал"
+
+#: ../src/orca/scripts/Evolution.py:94
+msgid "CalendarEvent"
+msgstr "Событие календаря"
+
+#: ../src/orca/scripts/Evolution.py:95
+msgid "calendar event"
+msgstr "событие календаря"
+
+#: ../src/orca/scripts/Evolution.py:149
+msgid " screen"
+msgstr " экран"
+
+#. Most of the Setup Assistant screens have a useful piece
+#. of text starting with the word "Please". We want to speak
+#. these. For the first screen, the useful piece of text
+#. starts with "Welcome". For the last screen, it starts
+#. with "Congratulations". Speak those too.
+#.
+#: ../src/orca/scripts/Evolution.py:178
+msgid "Please"
+msgstr "Пожалуйста"
+
+#: ../src/orca/scripts/Evolution.py:179
+msgid "Welcome"
+msgstr "Добро пожаловать"
+
+#: ../src/orca/scripts/Evolution.py:180
+msgid "Congratulations"
+msgstr "Поздравления"
+
+#: ../src/orca/scripts/Evolution.py:687
+msgid "No appointments"
+msgstr "Нет встреч"
+
+#: ../src/orca/scripts/Evolution.py:761
+msgid "Directories button"
+msgstr "Кнопка каталогов"
+
+#: ../src/orca/scripts/Evolution.py:900 ../src/orca/scripts/Evolution.py:938
+msgid "Assistant"
+msgstr "Помощник"
+
+#: ../src/orca/scripts/Mozilla.py:234 ../src/orca/scripts/StarOffice.py:406
+msgid "link"
+msgstr "ссылка"
+
+#: ../src/orca/scripts/gaim.py:149
+msgid ""
+"Toggle whether we prefix chat room messages with the name of the chat room."
+msgstr ""
+"Произносить ли название беседы перед новым сообщением беседы."
+
+#: ../src/orca/scripts/gaim.py:153
+msgid "Speak and braille a previous chat room message."
+msgstr "Произнести и отобразить в Брайле предыдущее сообщение беседы."
+
+#: ../src/orca/scripts/gaim.py:194
+msgid "speak chat room name."
+msgstr "произнести название беседы."
+
+#: ../src/orca/scripts/gaim.py:197
+msgid "Do not speak chat room name."
+msgstr "Не произносить название беседы."
+
+#: ../src/orca/scripts/gaim.py:215
+msgid "Message from chat room "
+msgstr "Сообщение из беседы "
+
+#: ../src/orca/scripts/gedit.py:135
+msgid "Change to:"
+msgstr "Изменить на:"
+
+#: ../src/orca/scripts/gedit.py:136
+msgid "Misspelled word:"
+msgstr "Неправильно написанное слово:"
+
+#. The indication that spell checking is complete is when the
+#. "misspelt" word is set to "Completed spell checking". Ugh!
+#. Try to detect this and let the user know.
+#: ../src/orca/scripts/gedit.py:165
+msgid "Completed spell checking"
+msgstr "Проверка орфографиии закончена"
+
+#: ../src/orca/scripts/gedit.py:166
+msgid "Spell checking is complete."
+msgstr "Проверка орфографии закончена."
+
+#: ../src/orca/scripts/gedit.py:168
+msgid "Press Tab and Return to terminate."
+msgstr "Нажмите Tab или Return для остановки."
+
+#: ../src/orca/scripts/gedit.py:255 ../src/orca/scripts/gedit.py:308
+msgid "Check Spelling"
+msgstr "Проверка орфографии"
+
+#: ../src/orca/scripts/StarOffice.py:243
+msgid "Speaks the contents of the input line."
+msgstr "Произносит содержимое строки ввода."
+
+#: ../src/orca/scripts/StarOffice.py:283
+msgid "empty"
+msgstr "пустая строка"
+
+#: ../src/orca/scripts/StarOffice.py:424
+msgid "Welcome to StarOffice"
+msgstr "Добро пожаловать в StarOffice"
+
+#: ../src/orca/scripts/StarOffice.py:552 ../src/orca/scripts/StarOffice.py:801
+msgid "Spellcheck:"
+msgstr "Проверка орфографии:"
+
+#: ../src/orca/scripts/StarOffice.py:580
+msgid "Note that the Scroll Down button has to be pressed numerous times."
+msgstr "Заметьте что кнопку прокрутки вниз нужно нажать несколько раз."
+
+#: ../src/orca/scripts/StarOffice.py:594
+msgid "License Agreement Accept button now has focus."
+msgstr "Кнопка подтверждения условий лицензии в данный момент активна."
+
+#: ../src/orca/scripts/StarOffice.py:617
+msgid "First name"
+msgstr "Имя"
+
+#: ../src/orca/scripts/StarOffice.py:865
+msgid " has formula"
+msgstr " содержит формулу"
+
+#. Note to translators: the regular expression here represents a
+#. string to match in the localized application name as seen by
+#. at-poke.  For most cases, the application name is the name of
+#. the binary used to start the application, but this is an
+#. unreliable assumption.  The only reliable way to do the
+#. translation is by running the application and then viewing its
+#. name in the main window of at-poke.
+#.
+#: ../src/orca/settings.py:435
+msgid "[\\S\\s]*StarOffice[\\s\\S]*"
+msgstr "[\\S\\s]*StarOffice[\\s\\S]*"
+
+#: ../src/orca/settings.py:436
+msgid "soffice.bin"
+msgstr "soffice.bin"
+
+#: ../src/orca/settings.py:437
+msgid "[Ee]volution"
+msgstr "[Ee]volution"
+
+#: ../src/orca/settings.py:438
+msgid "Deer Park"
+msgstr "Deer Park"
+
+#: ../src/orca/settings.py:439
+msgid "Bon Echo"
+msgstr "Bon Echo"
+
+#. Note to translators:  the "Workspace " string is the
+#. prefix of what metacity shows when you press Ctrl+Alt
+#. and the left or right arrow keys to switch between
+#. workspaces.  The goal here is to find a match with
+#. that prefix.
+#.
+#: ../src/orca/scripts/metacity.py:112
+msgid "Workspace "
+msgstr "Рабочее место "
+
+#: ../src/orca/scripts/metacity.py:113
+msgid "inaccessible"
+msgstr "недоступно"
+
+#: ../src/orca/scripts/planner.py:77 ../src/orca/scripts/planner.py:135
+msgid "Display more options"
+msgstr "Показать больше параметров"
+
+#: ../src/orca/scripts/planner.py:139 ../src/orca/scripts/planner.py:147
+#: ../src/orca/scripts/planner.py:172 ../src/orca/scripts/planner.py:180
+#: ../src/orca/speechgenerator.py:1314 ../src/orca/speechgenerator.py:1317
+msgid "pressed"
+msgstr "нажато"
+
+#: ../src/orca/scripts/planner.py:141 ../src/orca/scripts/planner.py:149
+#: ../src/orca/scripts/planner.py:174 ../src/orca/scripts/planner.py:182
+#: ../src/orca/speechgenerator.py:1323 ../src/orca/speechgenerator.py:1326
+msgid "not pressed"
+msgstr "не нажато"
+
+#: ../src/orca/speechgenerator.py:367 ../src/orca/speechgenerator.py:370
+msgid "checked"
+msgstr "помечено"
+
+#: ../src/orca/speechgenerator.py:376 ../src/orca/speechgenerator.py:379
+msgid "not checked"
+msgstr "не помечено"
+
+#: ../src/orca/speechgenerator.py:909 ../src/orca/speechgenerator.py:912
+#: ../src/orca/util.py:1171
+msgid "selected"
+msgstr "выделено"
+
+#: ../src/orca/speechgenerator.py:920 ../src/orca/speechgenerator.py:923
+msgid "not selected"
+msgstr "не выделено"
+
+#: ../src/orca/speechgenerator.py:1260
+msgid "tear off"
+msgstr "отсоединено"
+
+#: ../src/orca/util.py:433
+msgid "Misspelled word: "
+msgstr "Слово с ошибкой: "
+
+#: ../src/orca/util.py:434
+msgid " Context is "
+msgstr " В контексте "
+
+#: ../src/orca/util.py:1115
+msgid "page selected from cursor position"
+msgstr "выделена страница от позиции курсора"
+
+#: ../src/orca/util.py:1119
+msgid "page selected to cursor position"
+msgstr "выделена страница до позиции курсора"
+
+#: ../src/orca/util.py:1123
+msgid "line selected down from cursor position"
+msgstr "выделена строка вниз от позиции курсора"
+
+#: ../src/orca/util.py:1127
+msgid "line selected up from cursor position"
+msgstr "выделена строка вверх от позиции курсора"
+
+#: ../src/orca/util.py:1131
+msgid "document selected to cursor position"
+msgstr "выделено содержимое документа до позиции курсора"
+
+#: ../src/orca/util.py:1135
+msgid "document selected from cursor position"
+msgstr "выделено содержимое документа от позиции курсора"
+
+#: ../src/orca/util.py:1179
+msgid "unselected"
+msgstr "не выделено"
