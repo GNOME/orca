@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.HEAD.gu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-07 00:20+0200\n"
-"PO-Revision-Date: 2006-08-07 10:11+0530\n"
+"POT-Creation-Date: 2006-08-14 08:30+0200\n"
+"PO-Revision-Date: 2006-08-14 13:18+0530\n"
 "Last-Translator: Ankit Patel <ankit644@yahoo.com>\n"
 "Language-Team: Gujarati <indianoss-gujarati@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -29,14 +29,15 @@ msgstr ""
 "\n"
 "\n"
 "\n"
+"\n"
 
 #: ../orca.desktop.in.h:1
-msgid "Assistive Technologies for Blind and Visually Impaired People"
-msgstr "અંધ અને દેખીતી રીતે ખામીઓવાળા લોકો માટેની સહાયક ટેક્નોલોજીઓ"
-
-#: ../orca.desktop.in.h:2
 msgid "Orca Screen Reader and Magnifier"
 msgstr "Orca સ્ક્રીન વાંચક અને વિસ્તૃતકારક"
+
+#: ../orca.desktop.in.h:2
+msgid "Present on-screen information as speech or braille, or magnify the screen"
+msgstr "સ્ક્રીન-પરની જાણકારી બોલી અથવા બ્રેઈલી તરીકે રજૂ કરો, અથવા સ્ક્રીન વિસ્તૃત કરો"
 
 #: ../src/orca/braillegenerator.py:193 ../src/orca/speechgenerator.py:191
 msgid "grayed"
@@ -381,55 +382,55 @@ msgstr "કાર્યક્રમ વિશે ડિબગ જાણકાર
 msgid "Switches to the next presentation manager."
 msgstr "આગળના રજૂઆતક વ્યવસ્થાપક પર ફેરવે છે."
 
-#: ../src/orca/default.py:1067 ../src/orca/default.py:1286
+#: ../src/orca/default.py:1067 ../src/orca/default.py:1282
 #, python-format
 msgid "tree level %d"
 msgstr "ટ્રી સ્તર %d"
 
-#: ../src/orca/default.py:1071 ../src/orca/focus_tracking_presenter.py:638
+#: ../src/orca/default.py:1071 ../src/orca/focus_tracking_presenter.py:639
 msgid "No focus"
 msgstr "કોઈ ફોકસ નથી"
 
-#: ../src/orca/default.py:1677
+#: ../src/orca/default.py:1673
 msgid "entire document selected"
 msgstr "વર્તમાન દસ્તાવેજ પસંદ થયેલ છે"
 
-#: ../src/orca/default.py:2092
+#: ../src/orca/default.py:2123
 msgid "Speak "
 msgstr "બોલો "
 
-#: ../src/orca/default.py:2095
+#: ../src/orca/default.py:2126
 msgid "row"
 msgstr "હરોળ"
 
-#: ../src/orca/default.py:2097 ../src/orca/rolenames.py:432
+#: ../src/orca/default.py:2128 ../src/orca/rolenames.py:432
 #: ../src/orca/rolenames.py:434
 msgid "cell"
 msgstr "ખાનું"
 
-#: ../src/orca/default.py:2252
+#: ../src/orca/default.py:2283
 msgid "Entering learn mode.  Press any key to hear its function. "
 msgstr "શીખવાની સ્થિતિમાં દાખલ થઈ રહ્યા છીએ.  તેનું વિધેય સાંભળવા માટે કોઈપણ કી દબાવો. "
 
-#: ../src/orca/default.py:2253
+#: ../src/orca/default.py:2284
 msgid "To exit learn mode, press the escape key."
 msgstr "શીખવાની સ્થિતિમાંથી બહાર નીકળવા માટે, એસ્કેપ કી દબાવો."
 
-#: ../src/orca/default.py:2254
+#: ../src/orca/default.py:2285
 msgid "Learn mode.  Press escape to exit."
 msgstr "શીખવાની સ્થિતિ.  બહાર નીકળવા માટે એસ્કેપ દબાવો."
 
-#: ../src/orca/default.py:2266 ../src/orca/default.py:2267
+#: ../src/orca/default.py:2297 ../src/orca/default.py:2298
 msgid "Exiting learn mode."
 msgstr "શીખવાની સ્થિતિમાંથી બહાર નીકળી રહ્યા છીએ."
 
-#: ../src/orca/default.py:2597 ../src/orca/default.py:2725
-#: ../src/orca/default.py:2730 ../src/orca/default.py:2802
-#: ../src/orca/default.py:2807
+#: ../src/orca/default.py:2628 ../src/orca/default.py:2756
+#: ../src/orca/default.py:2761 ../src/orca/default.py:2833
+#: ../src/orca/default.py:2838
 msgid "blank"
 msgstr "કોરું"
 
-#: ../src/orca/default.py:2599 ../src/orca/default.py:2732
+#: ../src/orca/default.py:2630 ../src/orca/default.py:2763
 msgid "white space"
 msgstr "સફેદ જગ્યા"
 
@@ -437,7 +438,7 @@ msgstr "સફેદ જગ્યા"
 msgid "Emacspeak Speech Services"
 msgstr "Emacspeak બોલી સેવાઓ"
 
-#: ../src/orca/focus_tracking_presenter.py:733
+#: ../src/orca/focus_tracking_presenter.py:734
 msgid "Switching to focus tracking mode."
 msgstr "ટ્રેકીંગ સ્થિતિ ફોક્સ પર બદલાઈ રહ્યા છીએ."
 
@@ -2131,7 +2132,7 @@ msgid "not checked"
 msgstr "ચકાસાયેલ નથી"
 
 #: ../src/orca/speechgenerator.py:909 ../src/orca/speechgenerator.py:912
-#: ../src/orca/util.py:1122
+#: ../src/orca/util.py:1171
 msgid "selected"
 msgstr "પસંદ કરાયેલ"
 
@@ -2143,39 +2144,39 @@ msgstr "પસંદ કરાયેલ નથી"
 msgid "tear off"
 msgstr "ટીયર ઓફ"
 
-#: ../src/orca/util.py:384
+#: ../src/orca/util.py:433
 msgid "Misspelled word: "
 msgstr "ખોટી જોડણીવાળા શબ્દો: "
 
-#: ../src/orca/util.py:385
+#: ../src/orca/util.py:434
 msgid " Context is "
 msgstr " સંદર્ભ આ છે "
 
-#: ../src/orca/util.py:1066
+#: ../src/orca/util.py:1115
 msgid "page selected from cursor position"
 msgstr "કર્સર સ્થાનમાંથી પસંદ થયેલ પાનું"
 
-#: ../src/orca/util.py:1070
+#: ../src/orca/util.py:1119
 msgid "page selected to cursor position"
 msgstr "કર્સર સ્થાને પસંદ થયેલ પાનું"
 
-#: ../src/orca/util.py:1074
+#: ../src/orca/util.py:1123
 msgid "line selected down from cursor position"
 msgstr "કર્સર સ્થાન નીચે પસંદ કરાયેલ વાક્ય"
 
-#: ../src/orca/util.py:1078
+#: ../src/orca/util.py:1127
 msgid "line selected up from cursor position"
 msgstr "કર્સર સ્થાન ઉપર પસંદ કરાયેલ વાક્ય"
 
-#: ../src/orca/util.py:1082
+#: ../src/orca/util.py:1131
 msgid "document selected to cursor position"
 msgstr "કર્સર સ્થાને પસંદ કરાયેલ દસ્તાવેજ"
 
-#: ../src/orca/util.py:1086
+#: ../src/orca/util.py:1135
 msgid "document selected from cursor position"
 msgstr "કર્સર સ્થાનમાંથી પસંદ કરાયેલ દસ્તાવેજ"
 
-#: ../src/orca/util.py:1130
+#: ../src/orca/util.py:1179
 msgid "unselected"
 msgstr "પસંદ નહિં થયેલ"
 
