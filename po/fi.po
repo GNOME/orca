@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-09 16:14+0300\n"
-"PO-Revision-Date: 2006-08-09 16:22+0300\n"
+"POT-Creation-Date: 2006-08-14 09:52+0300\n"
+"PO-Revision-Date: 2006-08-14 10:23+0300\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -16,12 +16,14 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../orca.desktop.in.h:1
-msgid "Assistive Technologies for Blind and Visually Impaired People"
-msgstr "Esteettömyystekniikat sokeille ja huononäköisille"
-
-#: ../orca.desktop.in.h:2
 msgid "Orca Screen Reader and Magnifier"
 msgstr "Orca - näytönlukija ja suurennuslasi"
+
+#: ../orca.desktop.in.h:2
+msgid ""
+"Present on-screen information as speech or braille, or magnify the screen"
+msgstr ""
+"Esitä näytöllä olevat tiedot puheena tai braillena ja käytä suurennuslasia"
 
 #: ../src/orca/braillegenerator.py:193 ../src/orca/speechgenerator.py:191
 msgid "grayed"
@@ -335,85 +337,89 @@ msgstr "Lataa käyttäjän asetukset uudestaan ja alustaa palvelut tarvittaessa.
 
 #: ../src/orca/default.py:230
 msgid "Toggles the silencing of speech."
-msgstr ""
+msgstr "Vaihtelee puheen vaimennusta."
 
 #: ../src/orca/default.py:234
 msgid ""
 "Prints a debug listing of all known applications to the console where Orca "
 "is running."
 msgstr ""
+"Tulostaa vianetsintälistauksen kaikista sovelluksista päätteeseen, jolla "
+"Orcaa suoritetaan."
 
 #: ../src/orca/default.py:238
 msgid "Cycles the debug level at run time."
-msgstr ""
+msgstr "Vaihtaa ajonaikaista vianetsinnän seurantatasoa."
 
 #: ../src/orca/default.py:242
 msgid ""
 "Prints debug information about the currently active application to the "
 "console where Orca is running."
 msgstr ""
+"Tulostaa vianetsintätietoja tällä hetkellä aktiivisesta sovellusesta "
+"päätteeseen, jolla Orcaa suoritetaan."
 
 #: ../src/orca/default.py:246
 msgid "Prints debug information about the ancestry of the object with focus"
-msgstr ""
+msgstr "Tulostaa vianetsintätietoja sovelluksesta, joka on kohdistettu"
 
 #: ../src/orca/default.py:250
 msgid "Prints debug information about the application with focus"
-msgstr ""
+msgstr "Tulostaa vianetsintätietoja sovelluksesta, jota ei ole kohdistettu"
 
 #: ../src/orca/default.py:254
 msgid "Switches to the next presentation manager."
-msgstr ""
+msgstr "Siirtyy seuraavaan esityksenhallintaohjelmaan."
 
-#: ../src/orca/default.py:1067 ../src/orca/default.py:1286
+#: ../src/orca/default.py:1067 ../src/orca/default.py:1282
 #, python-format
 msgid "tree level %d"
 msgstr "puun taso %d"
 
-#: ../src/orca/default.py:1071 ../src/orca/focus_tracking_presenter.py:638
+#: ../src/orca/default.py:1071 ../src/orca/focus_tracking_presenter.py:639
 msgid "No focus"
 msgstr "Ei kohdistusta"
 
-#: ../src/orca/default.py:1677
+#: ../src/orca/default.py:1673
 msgid "entire document selected"
 msgstr "koko asiakirja valittu"
 
-#: ../src/orca/default.py:2092
+#: ../src/orca/default.py:2123
 msgid "Speak "
 msgstr "Puhu "
 
-#: ../src/orca/default.py:2095
+#: ../src/orca/default.py:2126
 msgid "row"
 msgstr "rivi"
 
-#: ../src/orca/default.py:2097 ../src/orca/rolenames.py:432
+#: ../src/orca/default.py:2128 ../src/orca/rolenames.py:432
 #: ../src/orca/rolenames.py:434
 msgid "cell"
 msgstr "solu"
 
-#: ../src/orca/default.py:2252
+#: ../src/orca/default.py:2283
 msgid "Entering learn mode.  Press any key to hear its function. "
 msgstr "Siirrytään oppimistilaan. Paina näppäintä kuullaksesi sen toiminto."
 
-#: ../src/orca/default.py:2253
+#: ../src/orca/default.py:2284
 msgid "To exit learn mode, press the escape key."
 msgstr "Sulje oppimistila painamalla Escape-näppäintä."
 
-#: ../src/orca/default.py:2254
+#: ../src/orca/default.py:2285
 msgid "Learn mode.  Press escape to exit."
 msgstr "Oppimistila. Sulje painamalla Escape-näppäintä."
 
-#: ../src/orca/default.py:2266 ../src/orca/default.py:2267
+#: ../src/orca/default.py:2297 ../src/orca/default.py:2298
 msgid "Exiting learn mode."
 msgstr "Suljetaan oppimistila."
 
-#: ../src/orca/default.py:2597 ../src/orca/default.py:2725
-#: ../src/orca/default.py:2730 ../src/orca/default.py:2802
-#: ../src/orca/default.py:2807
+#: ../src/orca/default.py:2628 ../src/orca/default.py:2756
+#: ../src/orca/default.py:2761 ../src/orca/default.py:2833
+#: ../src/orca/default.py:2838
 msgid "blank"
 msgstr "tyhjä"
 
-#: ../src/orca/default.py:2599 ../src/orca/default.py:2732
+#: ../src/orca/default.py:2630 ../src/orca/default.py:2763
 msgid "white space"
 msgstr "tyhjä tila"
 
@@ -421,7 +427,7 @@ msgstr "tyhjä tila"
 msgid "Emacspeak Speech Services"
 msgstr "Emacspeak-puhelpalvelut"
 
-#: ../src/orca/focus_tracking_presenter.py:733
+#: ../src/orca/focus_tracking_presenter.py:734
 msgid "Switching to focus tracking mode."
 msgstr "Siirrytään kohdistuksen seurantatilaan."
 
@@ -457,7 +463,7 @@ msgstr "Siirrytään hiearkiseen navigointitilaan."
 
 #: ../src/orca/keynames.py:32 ../src/orca/keynames.py:35
 msgid "left shift"
-msgstr ""
+msgstr "vasen vaihto"
 
 #: ../src/orca/keynames.py:33
 msgid "left alt"
@@ -469,7 +475,7 @@ msgstr "vasen control"
 
 #: ../src/orca/keynames.py:36
 msgid "right shift"
-msgstr ""
+msgstr "oikea vaihto"
 
 #: ../src/orca/keynames.py:37
 msgid "right alt"
@@ -529,7 +535,7 @@ msgstr "<b>Kohdistimen asetukset</b>"
 
 #: ../src/orca/orca-setup.glade.h:3
 msgid "<b>Punctuation Level</b>"
-msgstr ""
+msgstr "<b>Välimerkkien taso</b>"
 
 #: ../src/orca/orca-setup.glade.h:4
 msgid "<b>Table Row Speech</b>"
@@ -554,7 +560,7 @@ msgstr "Braille"
 #: ../src/orca/orca-setup.glade.h:9 ../src/orca/orca_gui_prefs.py:1059
 #: ../src/orca/orca_gui_prefs.py:1114
 msgid "Brie_f"
-msgstr ""
+msgstr "Su_ppea"
 
 #: ../src/orca/orca-setup.glade.h:10
 msgid ""
@@ -612,7 +618,7 @@ msgstr "Ota _suurennuslasi käyttöön"
 
 #: ../src/orca/orca-setup.glade.h:25
 msgid "Enable _modifier keys"
-msgstr ""
+msgstr "Ota _muokkainnäppäimet käyttöön"
 
 #: ../src/orca/orca-setup.glade.h:26
 msgid "Enable ac_tion keys"
@@ -636,7 +642,7 @@ msgstr "Ota _sanojen kaiutus käyttöön"
 
 #: ../src/orca/orca-setup.glade.h:31
 msgid "Enable lockin_g keys"
-msgstr ""
+msgstr "Ota _lukittuvat näppäimet käyttöön"
 
 #: ../src/orca/orca-setup.glade.h:32
 msgid "In_vert colors"
@@ -656,7 +662,7 @@ msgstr "Suurennuslasi"
 
 #: ../src/orca/orca-setup.glade.h:36
 msgid "Mouse trac_king mode:"
-msgstr ""
+msgstr "Hiiren _seurantatila:"
 
 #: ../src/orca/orca-setup.glade.h:37
 msgid ""
@@ -678,7 +684,7 @@ msgstr "Kysymys"
 
 #: ../src/orca/orca-setup.glade.h:42
 msgid "Scale _factor:"
-msgstr ""
+msgstr "Skaalaus_kerroin:"
 
 #: ../src/orca/orca-setup.glade.h:43
 msgid "Si_ze:"
@@ -690,7 +696,7 @@ msgstr "_Osittain"
 
 #: ../src/orca/orca-setup.glade.h:45
 msgid "Speak _indentation and justification"
-msgstr ""
+msgstr "Puhu _sisennykset ja tasaukset"
 
 #: ../src/orca/orca-setup.glade.h:46 ../src/orca/orca_gui_prefs.py:1079
 msgid "Speak current _cell"
@@ -725,10 +731,12 @@ msgid ""
 "You will have to log out for the change to take effect.\n"
 "Do you want to log out now? "
 msgstr ""
+"Sinun täytyy kirjautua ulos, jotta muutokset tulevat voimaan.\n"
+"Haluatko kirjautua ylös heti?"
 
 #: ../src/orca/orca-setup.glade.h:55
 msgid "_Abbreviated role names"
-msgstr ""
+msgstr "_Lyhennetyt roolien nimet"
 
 #: ../src/orca/orca-setup.glade.h:56
 msgid "_All"
@@ -832,11 +840,11 @@ msgstr "Tervetuloa Orcaan."
 
 #: ../src/orca/orca.py:1013
 msgid "goodbye."
-msgstr ""
+msgstr "näkemiin."
 
 #: ../src/orca/orca.py:1014
 msgid "Goodbye."
-msgstr ""
+msgstr "Näkemiin."
 
 #: ../src/orca/orca.py:1094
 msgid "Usage: orca [OPTION...]"
@@ -2113,7 +2121,7 @@ msgid "not checked"
 msgstr "ei merkitty"
 
 #: ../src/orca/speechgenerator.py:909 ../src/orca/speechgenerator.py:912
-#: ../src/orca/util.py:1122
+#: ../src/orca/util.py:1171
 msgid "selected"
 msgstr "valittu"
 
@@ -2125,41 +2133,44 @@ msgstr "ei valittu"
 msgid "tear off"
 msgstr "irrota"
 
-#: ../src/orca/util.py:384
+#: ../src/orca/util.py:433
 msgid "Misspelled word: "
 msgstr "Väärinkirjoitettu sana: "
 
-#: ../src/orca/util.py:385
+#: ../src/orca/util.py:434
 msgid " Context is "
 msgstr " Konteksti on "
 
-#: ../src/orca/util.py:1066
+#: ../src/orca/util.py:1115
 msgid "page selected from cursor position"
 msgstr "sivu valittu kohdistimen sijainnista saakka"
 
-#: ../src/orca/util.py:1070
+#: ../src/orca/util.py:1119
 msgid "page selected to cursor position"
 msgstr "sivu valittu kohdistimen sijaintiin saakka"
 
-#: ../src/orca/util.py:1074
+#: ../src/orca/util.py:1123
 msgid "line selected down from cursor position"
 msgstr "rivi valittu kohdistimen sijannista alkaen"
 
-#: ../src/orca/util.py:1078
+#: ../src/orca/util.py:1127
 msgid "line selected up from cursor position"
 msgstr "rivi valittu kohdistimen sijaintiin saakka"
 
-#: ../src/orca/util.py:1082
+#: ../src/orca/util.py:1131
 msgid "document selected to cursor position"
 msgstr "asiakirja valittu kohdistimen sijaintiin saakka"
 
-#: ../src/orca/util.py:1086
+#: ../src/orca/util.py:1135
 msgid "document selected from cursor position"
 msgstr "asiakirja avattu kohdistimen sijainnista alkaen"
 
-#: ../src/orca/util.py:1130
+#: ../src/orca/util.py:1179
 msgid "unselected"
 msgstr "ei valittu"
+
+#~ msgid "Assistive Technologies for Blind and Visually Impaired People"
+#~ msgstr "Esteettömyystekniikat sokeille ja huononäköisille"
 
 #~ msgid "Don't "
 #~ msgstr "Älä "
