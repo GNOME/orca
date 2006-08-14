@@ -1,3 +1,10 @@
+2006-08-14  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/bugs.html:
+          Added an entry for Evolution bug #351358:
+          [a11y] Evolution crashes after trying to navigate new message 
+          after deleting an old one.
+
 2006-08-11  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/bugs.html:
