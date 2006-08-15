@@ -1,3 +1,10 @@
+2006-08-15  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/bugs.html:
+          Added an entry for Evolution bug #351516:
+          [a11y] Evolution does not issue "focus:" events when the last 
+          message in the message header summary list is deleted.
+
 2006-08-14  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/bugs.html:
