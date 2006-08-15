@@ -461,6 +461,13 @@ class BrailleGenerator:
             regions.append(braille.Region(
                 " " + rolenames.getBrailleForRoleName(obj)))
 
+        # Things may not have gone as expected above, so we'll do some
+        # defensive programming to make sure we don't get an index out
+        # of bounds.
+        #
+        if focusedRegionIndex >= len(regions):
+            focusedRegionIndex = 0
+
         # [[[TODO: WDW - perhaps if a text area was created, we should
         # give focus to it.]]]
         #
