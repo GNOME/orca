@@ -1040,7 +1040,11 @@ class BrailleGenerator:
                     break
 
         if len(regions) == 0:
-            if settings.readTableCellRow:
+            # Adding in a check here to make sure that the parent is a
+            # valid table. It's possible that the parent could be a
+            # table cell too (see bug #351501).
+            #
+            if settings.readTableCellRow and parent.table:
                 rowRegions = []
                 savedBrailleVerbosityLevel = settings.brailleVerbosityLevel
                 settings.brailleVerbosityLevel = \

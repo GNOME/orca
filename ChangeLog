@@ -10,6 +10,10 @@
           [a11y] Evolution does not issue "focus:" events when the last 
           message in the message header summary list is deleted.
 
+        * src/orca/braillegenerator.py:
+          Fixed bug #351501. Orca generates a traceback when trying to 
+          braille Evolution message folder tree.
+
 2006-08-14  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/bugs.html:
