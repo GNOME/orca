@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-08-14 09:52+0300\n"
-"PO-Revision-Date: 2006-08-14 10:23+0300\n"
+"PO-Revision-Date: 2006-08-16 06:34+0300\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -128,7 +128,7 @@ msgstr "vaakaviiva"
 
 #: ../src/orca/chnames.py:55
 msgid "grave accent"
-msgstr ""
+msgstr "takahipsu"
 
 #: ../src/orca/chnames.py:56
 msgid "tilde"
@@ -180,15 +180,15 @@ msgstr "at"
 
 #: ../src/orca/chnames.py:69
 msgid "caret"
-msgstr ""
+msgstr "kohdistin"
 
 #: ../src/orca/default.py:78
 msgid "Performs left click on current flat review item."
-msgstr ""
+msgstr "Suorittaa vasemman napsautuksen nykyiselle tasatun tarkastelun kohdalle."
 
 #: ../src/orca/default.py:82
 msgid "Performs right click on current flat review item."
-msgstr ""
+msgstr "Suorittaa oikean napsautuksen nykyiselle tasatun tarkastelun kohdalle."
 
 #: ../src/orca/default.py:86 ../src/orca/scripts/Evolution.py:107
 msgid "Speaks entire document."
@@ -204,67 +204,67 @@ msgstr "Piirtää ja näyttää näkyvät alueet aktiivisessa ikkunassa."
 
 #: ../src/orca/default.py:98
 msgid "Enters and exits flat review mode."
-msgstr ""
+msgstr "Ottaa käyttöön tai käytöstä tasatun tarkastelun tilan."
 
 #: ../src/orca/default.py:102
 msgid "Moves flat review to the beginning of the previous line."
-msgstr ""
+msgstr "Siirtää tasatun tarkastelun edellisen rivin alkuun."
 
 #: ../src/orca/default.py:106
 msgid "Moves flat review to the home position."
-msgstr ""
+msgstr "Siirtää tasatun tarkastelun kotisijaintiin."
 
 #: ../src/orca/default.py:110
 msgid "Speaks the current flat review line."
-msgstr ""
+msgstr "Puhuu nykyisen tasatun tarkastelun rivin."
 
 #: ../src/orca/default.py:114
 msgid "Moves flat review to the beginning of the next line."
-msgstr ""
+msgstr "Siirtää tasatun tarkastelun seuraavan rivin alkuun."
 
 #: ../src/orca/default.py:118
 msgid "Moves flat review to the end position."
-msgstr ""
+msgstr "Siirtää tasatun tarkastelun loppusijaintiin."
 
 #: ../src/orca/default.py:122
 msgid "Moves flat review to the previous item or word."
-msgstr ""
+msgstr "Siirtää tasatun tarkastelun edelliseen kohtaan tai sanaan."
 
 #: ../src/orca/default.py:126
 msgid "Moves flat review to the word above the current word."
-msgstr ""
+msgstr "Siirtää tasatun tarkastelun nykyisen sanan yllä olevaan sanaan."
 
 #: ../src/orca/default.py:130
 msgid "Speaks or spells the current flat review item or word."
-msgstr ""
+msgstr "Puhuu tai ääntää nykyisen tasatun tarkastelun kohdan tai sanan."
 
 #: ../src/orca/default.py:134
 msgid "Speaks the current flat review object."
-msgstr ""
+msgstr "Puhuu nykyisen tasatun tarkastelun kohteen."
 
 #: ../src/orca/default.py:138
 msgid "Moves flat review to the next item or word."
-msgstr ""
+msgstr "Siirtää tasatun tarkastelun seuraavaan kohtaan tai sanaan."
 
 #: ../src/orca/default.py:142
 msgid "Moves flat review to the word below the current word."
-msgstr ""
+msgstr "Siirtää tasatun tarkastelun nykyisen sanan alla olevaan sanaan."
 
 #: ../src/orca/default.py:146
 msgid "Moves flat review to the previous character."
-msgstr ""
+msgstr "Siirtää tasatun tarkastelun edelliseen merkkiin."
 
 #: ../src/orca/default.py:150
 msgid "Moves flat review to the end of the line."
-msgstr ""
+msgstr "Siirtää tasatun tarkastelun rivin loppuun."
 
 #: ../src/orca/default.py:154
 msgid "Speaks the current flat review character."
-msgstr ""
+msgstr "Puhuu valitun tasatun tarkastelun merkin."
 
 #: ../src/orca/default.py:158
 msgid "Moves flat review to the next character."
-msgstr ""
+msgstr "Siirtää tasatun tarkastelun seuraavaan merkkiin."
 
 #: ../src/orca/default.py:162
 msgid "Toggles whether to read just the current table cell or the whole row."
@@ -288,7 +288,7 @@ msgstr "Siirtää braille-näyttöä oikealle."
 
 #: ../src/orca/default.py:182
 msgid "Moves flat review to the bottom left."
-msgstr ""
+msgstr "Siirtää tasatun tarkastelun vasemmalle alas."
 
 #: ../src/orca/default.py:186
 msgid "Returns to object with keyboard focus."
@@ -669,6 +669,8 @@ msgid ""
 "None\n"
 "Bilinear"
 msgstr ""
+"Ei mitään\n"
+"Bilineaarinen"
 
 #: ../src/orca/orca-setup.glade.h:39
 msgid "Orca Preferences"
@@ -1006,7 +1008,7 @@ msgstr "Puhe ei ole käytettävissä."
 #: ../src/orca/orca_gui_prefs.py:366 ../src/orca/orca_gui_prefs.py:370
 #: ../src/orca/orca_gui_prefs.py:1311
 msgid "Bilinear"
-msgstr ""
+msgstr "Bilineaarinen"
 
 #: ../src/orca/orca_gui_prefs.py:368 ../src/orca/orca_gui_prefs.py:381
 #: ../src/orca/orca_gui_prefs.py:1313 ../src/orca/orca_gui_prefs.py:1336
@@ -1124,35 +1126,35 @@ msgstr "kangas"
 
 #: ../src/orca/rolenames.py:182 ../src/orca/rolenames.py:187
 msgid "chk"
-msgstr ""
+msgstr "rst"
 
 #: ../src/orca/rolenames.py:183
 msgid "CheckBox"
-msgstr ""
+msgstr "Rastilaatikko"
 
 #: ../src/orca/rolenames.py:184
 msgid "check box"
-msgstr ""
+msgstr "rastilaatikko"
 
 #: ../src/orca/rolenames.py:188
 msgid "CheckItem"
-msgstr ""
+msgstr "Rastivalinta"
 
 #: ../src/orca/rolenames.py:189
 msgid "check item"
-msgstr ""
+msgstr "rastivalinta"
 
 #: ../src/orca/rolenames.py:192
 msgid "ckm"
-msgstr ""
+msgstr "rsv"
 
 #: ../src/orca/rolenames.py:193
 msgid "CheckMenu"
-msgstr ""
+msgstr "Rastivalikko"
 
 #: ../src/orca/rolenames.py:194
 msgid "check menu"
-msgstr ""
+msgstr "rastivalikko"
 
 #: ../src/orca/rolenames.py:197
 msgid "clrchsr"
@@ -1180,15 +1182,15 @@ msgstr "sarakkeen otsikko"
 
 #: ../src/orca/rolenames.py:207
 msgid "cbo"
-msgstr ""
+msgstr "mnvlt"
 
 #: ../src/orca/rolenames.py:208
 msgid "Combo"
-msgstr ""
+msgstr "Monivalinta"
 
 #: ../src/orca/rolenames.py:209
 msgid "combo box"
-msgstr ""
+msgstr "monivalintalaatikko"
 
 #: ../src/orca/rolenames.py:212
 msgid "dat"
@@ -1230,11 +1232,11 @@ msgstr "työpöydän reunus"
 
 #: ../src/orca/rolenames.py:227 ../src/orca/rolenames.py:229
 msgid "dial"
-msgstr ""
+msgstr "nmrlv"
 
 #: ../src/orca/rolenames.py:228
 msgid "Dial"
-msgstr ""
+msgstr "Numerolevy"
 
 #: ../src/orca/rolenames.py:232
 msgid "dlg"
@@ -1250,15 +1252,15 @@ msgstr "valintaikkuna"
 
 #: ../src/orca/rolenames.py:237
 msgid "dip"
-msgstr ""
+msgstr "hkmpn"
 
 #: ../src/orca/rolenames.py:238
 msgid "DirectoryPane"
-msgstr ""
+msgstr "Hakemistopaneeli"
 
 #: ../src/orca/rolenames.py:239
 msgid "directory pane"
-msgstr ""
+msgstr "hakemistopaneeli"
 
 #: ../src/orca/rolenames.py:242
 msgid "draw"
@@ -1318,15 +1320,15 @@ msgstr "Raami"
 
 #: ../src/orca/rolenames.py:267
 msgid "gpn"
-msgstr ""
+msgstr "lspn"
 
 #: ../src/orca/rolenames.py:268
 msgid "GlassPane"
-msgstr ""
+msgstr "Lasipaneeli"
 
 #: ../src/orca/rolenames.py:269
 msgid "glass pane"
-msgstr ""
+msgstr "lasipaneeli"
 
 #: ../src/orca/rolenames.py:272
 msgid "html"
@@ -1334,11 +1336,11 @@ msgstr "html"
 
 #: ../src/orca/rolenames.py:273
 msgid "HtmlContainer"
-msgstr ""
+msgstr "HTMLsäilö"
 
 #: ../src/orca/rolenames.py:274
 msgid "h t m l container"
-msgstr ""
+msgstr "h t m l säilö"
 
 #: ../src/orca/rolenames.py:278
 msgid "Icon"
@@ -1346,7 +1348,7 @@ msgstr "Kuvake"
 
 #: ../src/orca/rolenames.py:282
 msgid "img"
-msgstr ""
+msgstr "kv"
 
 #: ../src/orca/rolenames.py:283
 msgid "Image"
@@ -1378,15 +1380,15 @@ msgstr "nimiö"
 
 #: ../src/orca/rolenames.py:297
 msgid "lyrdpn"
-msgstr ""
+msgstr "krpn"
 
 #: ../src/orca/rolenames.py:298
 msgid "LayeredPane"
-msgstr ""
+msgstr "Kerrostettupaneeli"
 
 #: ../src/orca/rolenames.py:299
 msgid "layered pane"
-msgstr ""
+msgstr "kerrostettu paneeli"
 
 #: ../src/orca/rolenames.py:302
 msgid "lst"
@@ -1450,15 +1452,15 @@ msgstr "valikon kohta"
 
 #: ../src/orca/rolenames.py:327
 msgid "optnpn"
-msgstr ""
+msgstr "valpn"
 
 #: ../src/orca/rolenames.py:328
 msgid "OptionPane"
-msgstr ""
+msgstr "Valitisinpaneeli"
 
 #: ../src/orca/rolenames.py:329
 msgid "option pane"
-msgstr ""
+msgstr "valitsinpaneeli"
 
 #: ../src/orca/rolenames.py:332 ../src/orca/rolenames.py:334
 msgid "page"
@@ -1542,51 +1544,51 @@ msgstr "painike"
 
 #: ../src/orca/rolenames.py:367
 msgid "radio"
-msgstr ""
+msgstr "vpk"
 
 #: ../src/orca/rolenames.py:368
 msgid "RadioButton"
-msgstr ""
+msgstr "Vaihtoehtopainike"
 
 #: ../src/orca/rolenames.py:369
 msgid "radio button"
-msgstr ""
+msgstr "vaihtoehtopainike"
 
 #: ../src/orca/rolenames.py:372
 msgid "rdmnuitm"
-msgstr ""
+msgstr "vevk"
 
 #: ../src/orca/rolenames.py:373
 msgid "RadioItem"
-msgstr ""
+msgstr "VaihtoehtovalikonKohta"
 
 #: ../src/orca/rolenames.py:374
 msgid "radio menu item"
-msgstr ""
+msgstr "vaihtoehtovalikon kohta"
 
 #: ../src/orca/rolenames.py:377
 msgid "rdmnu"
-msgstr ""
+msgstr "vev"
 
 #: ../src/orca/rolenames.py:378
 msgid "RadioMenu"
-msgstr ""
+msgstr "Vaihtoehtovalikko"
 
 #: ../src/orca/rolenames.py:379
 msgid "radio menu"
-msgstr ""
+msgstr "vaihtoehtovalikko"
 
 #: ../src/orca/rolenames.py:382
 msgid "rtpn"
-msgstr ""
+msgstr "jrpn"
 
 #: ../src/orca/rolenames.py:383
 msgid "RootPane"
-msgstr ""
+msgstr "Juuripaneeli"
 
 #: ../src/orca/rolenames.py:384
 msgid "root pane"
-msgstr ""
+msgstr "juuripaneeli"
 
 #: ../src/orca/rolenames.py:387 ../src/orca/rolenames.py:442
 msgid "rwhdr"
@@ -1614,15 +1616,15 @@ msgstr "vierityspalkki"
 
 #: ../src/orca/rolenames.py:397
 msgid "scpn"
-msgstr ""
+msgstr "vrp"
 
 #: ../src/orca/rolenames.py:398
 msgid "ScrollPane"
-msgstr ""
+msgstr "Vierityspaneeli"
 
 #: ../src/orca/rolenames.py:399
 msgid "scroll pane"
-msgstr ""
+msgstr "vierityspaneeli"
 
 #: ../src/orca/rolenames.py:402
 msgid "seprtr"
@@ -1650,27 +1652,27 @@ msgstr "liukusäädin"
 
 #: ../src/orca/rolenames.py:412
 msgid "spltpn"
-msgstr ""
+msgstr "jpn"
 
 #: ../src/orca/rolenames.py:413
 msgid "SplitPane"
-msgstr ""
+msgstr "JaettuPaneeli"
 
 #: ../src/orca/rolenames.py:414
 msgid "split pane"
-msgstr ""
+msgstr "jaettu paneeli"
 
 #: ../src/orca/rolenames.py:417
 msgid "spin"
-msgstr ""
+msgstr "krt"
 
 #: ../src/orca/rolenames.py:418
 msgid "SpinButton"
-msgstr ""
+msgstr "Kiertopainike"
 
 #: ../src/orca/rolenames.py:419
 msgid "spin button"
-msgstr ""
+msgstr "kiertopainike"
 
 #: ../src/orca/rolenames.py:422
 msgid "statbr"
@@ -1738,15 +1740,15 @@ msgstr "teksti"
 
 #: ../src/orca/rolenames.py:462
 msgid "tglbtn"
-msgstr ""
+msgstr "vpnk"
 
 #: ../src/orca/rolenames.py:463
 msgid "ToggleButton"
-msgstr ""
+msgstr "Vipupainike"
 
 #: ../src/orca/rolenames.py:464
 msgid "toggle button"
-msgstr ""
+msgstr "vipupainike"
 
 #: ../src/orca/rolenames.py:467
 msgid "tbar"
