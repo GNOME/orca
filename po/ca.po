@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-10 02:43+0200\n"
-"PO-Revision-Date: 2006-08-10 02:58+0200\n"
+"POT-Creation-Date: 2006-08-16 02:14+0200\n"
+"PO-Revision-Date: 2006-08-11 15:28+0100\n"
 "Last-Translator: Gil Forcada <gilforcada@guifi.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 #: ../orca.desktop.in.h:1
 msgid "Orca Screen Reader and Magnifier"
-msgstr "Lector de pantalla i magnificador Orca"
+msgstr "Lector de pantalla i ampliador Orca"
 
 #: ../orca.desktop.in.h:2
 msgid ""
@@ -30,15 +30,15 @@ msgstr ""
 msgid "grayed"
 msgstr "ombrejat"
 
-#: ../src/orca/braillegenerator.py:1085 ../src/orca/speechgenerator.py:1198
+#: ../src/orca/braillegenerator.py:1096 ../src/orca/speechgenerator.py:1198
 msgid "expanded"
 msgstr "expandit"
 
-#: ../src/orca/braillegenerator.py:1087 ../src/orca/speechgenerator.py:1200
+#: ../src/orca/braillegenerator.py:1098 ../src/orca/speechgenerator.py:1200
 msgid "collapsed"
 msgstr "col·lapsat"
 
-#: ../src/orca/braillegenerator.py:1091
+#: ../src/orca/braillegenerator.py:1102
 #, python-format
 msgid "TREE LEVEL %d"
 msgstr "NIVELL DE L'ARBRE %d"
@@ -376,57 +376,57 @@ msgstr "Mostra informació de depuració sobre l'aplicació amb focus"
 msgid "Switches to the next presentation manager."
 msgstr "Canvia al següent gestor de presentació."
 
-#: ../src/orca/default.py:1067 ../src/orca/default.py:1286
+#: ../src/orca/default.py:1067 ../src/orca/default.py:1282
 #, python-format
 msgid "tree level %d"
 msgstr "nivell de l'arbre %d"
 
-#: ../src/orca/default.py:1071 ../src/orca/focus_tracking_presenter.py:638
+#: ../src/orca/default.py:1071 ../src/orca/focus_tracking_presenter.py:639
 msgid "No focus"
 msgstr "Sense focus"
 
-#: ../src/orca/default.py:1677
+#: ../src/orca/default.py:1673
 msgid "entire document selected"
 msgstr "seleccionat tot el document"
 
-#: ../src/orca/default.py:2098
+#: ../src/orca/default.py:2123
 msgid "Speak "
 msgstr "Pronuncia"
 
-#: ../src/orca/default.py:2101
+#: ../src/orca/default.py:2126
 msgid "row"
 msgstr "fila"
 
-#: ../src/orca/default.py:2103 ../src/orca/rolenames.py:432
+#: ../src/orca/default.py:2128 ../src/orca/rolenames.py:432
 #: ../src/orca/rolenames.py:434
 msgid "cell"
 msgstr "cel·la"
 
-#: ../src/orca/default.py:2258
+#: ../src/orca/default.py:2283
 msgid "Entering learn mode.  Press any key to hear its function. "
 msgstr ""
 "S'està entrant al mode d'aprenentatge. Premeu qualsevol tecla per sentir la "
 "seva funcionalitat."
 
-#: ../src/orca/default.py:2259
+#: ../src/orca/default.py:2284
 msgid "To exit learn mode, press the escape key."
 msgstr "Per sortir del mode d'aprenentatge, premeu la tecla Esc."
 
-#: ../src/orca/default.py:2260
+#: ../src/orca/default.py:2285
 msgid "Learn mode.  Press escape to exit."
 msgstr "Mode d'aprenentatge. Premeu la tecla Esc per sortir."
 
-#: ../src/orca/default.py:2272 ../src/orca/default.py:2273
+#: ../src/orca/default.py:2297 ../src/orca/default.py:2298
 msgid "Exiting learn mode."
 msgstr "S'està sortint del mode d'aprenentatge."
 
-#: ../src/orca/default.py:2603 ../src/orca/default.py:2731
-#: ../src/orca/default.py:2736 ../src/orca/default.py:2808
-#: ../src/orca/default.py:2813
+#: ../src/orca/default.py:2628 ../src/orca/default.py:2756
+#: ../src/orca/default.py:2761 ../src/orca/default.py:2833
+#: ../src/orca/default.py:2838
 msgid "blank"
 msgstr "negre"
 
-#: ../src/orca/default.py:2605 ../src/orca/default.py:2738
+#: ../src/orca/default.py:2630 ../src/orca/default.py:2763
 msgid "white space"
 msgstr "espai en blanc"
 
@@ -434,7 +434,7 @@ msgstr "espai en blanc"
 msgid "Emacspeak Speech Services"
 msgstr "Servei de pronunciació Emacspeak"
 
-#: ../src/orca/focus_tracking_presenter.py:733
+#: ../src/orca/focus_tracking_presenter.py:734
 msgid "Switching to focus tracking mode."
 msgstr "S'està canviant al mode de seguiment."
 
@@ -621,7 +621,7 @@ msgstr "Habilita l'eco de les _tecles"
 
 #: ../src/orca/orca-setup.glade.h:24
 msgid "Enable _magnifier"
-msgstr "Habilita el _magnificador"
+msgstr "Habilita l'_ampliador"
 
 #: ../src/orca/orca-setup.glade.h:25
 msgid "Enable _modifier keys"
@@ -665,7 +665,7 @@ msgstr "M_olts"
 
 #: ../src/orca/orca-setup.glade.h:35
 msgid "Magnifier"
-msgstr "Magnificador"
+msgstr "Ampliador"
 
 #: ../src/orca/orca-setup.glade.h:36
 msgid "Mouse trac_king mode:"
@@ -2137,7 +2137,7 @@ msgid "not checked"
 msgstr "no verificat"
 
 #: ../src/orca/speechgenerator.py:909 ../src/orca/speechgenerator.py:912
-#: ../src/orca/util.py:1122
+#: ../src/orca/util.py:1171
 msgid "selected"
 msgstr "seleccionat"
 
@@ -2149,39 +2149,39 @@ msgstr "no seleccionat"
 msgid "tear off"
 msgstr "estripa"
 
-#: ../src/orca/util.py:384
+#: ../src/orca/util.py:433
 msgid "Misspelled word: "
 msgstr "Paraula mal escrita:"
 
-#: ../src/orca/util.py:385
+#: ../src/orca/util.py:434
 msgid " Context is "
 msgstr " El context és "
 
-#: ../src/orca/util.py:1066
+#: ../src/orca/util.py:1115
 msgid "page selected from cursor position"
 msgstr "pàgina seleccionada des de la posició del cursor"
 
-#: ../src/orca/util.py:1070
+#: ../src/orca/util.py:1119
 msgid "page selected to cursor position"
 msgstr "pàgina seleccionada fins la posició del cursor"
 
-#: ../src/orca/util.py:1074
+#: ../src/orca/util.py:1123
 msgid "line selected down from cursor position"
 msgstr "seleccionada la línia per sota de la posició del cursor"
 
-#: ../src/orca/util.py:1078
+#: ../src/orca/util.py:1127
 msgid "line selected up from cursor position"
 msgstr "seleccionada la línia per sobre de la posició del cursor"
 
-#: ../src/orca/util.py:1082
+#: ../src/orca/util.py:1131
 msgid "document selected to cursor position"
 msgstr "document seleccionat fins la posició del cursor"
 
-#: ../src/orca/util.py:1086
+#: ../src/orca/util.py:1135
 msgid "document selected from cursor position"
 msgstr "document seleccionat des de la posició del cursor"
 
-#: ../src/orca/util.py:1130
+#: ../src/orca/util.py:1179
 msgid "unselected"
 msgstr "no seleccionat"
 
