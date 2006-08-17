@@ -28,17 +28,17 @@
 # __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 # __license__   = "LGPL"
 
-# [[[TODO: WDW - this is experimental and disabled by default.  If you
-# want to try the full blown functionality, comment out the RUNONCE
-# line below.  Beware that it NEEDS A LOT OF WORK AND REALLY ISN'T
-# WORKING YET.  If you leave RUNONCE as it is, then this will just
-# run Orca once and quit.]]]
+# If you set RUNONCE to "true", then this will just run Orca once and quit.
 #
-RUNONCE="true"
+RUNONCE="false"
 
 # A value of 1 means to run Orca.  A value of 0 means quit.
 #
 RUN=1
+
+# Initially there will be no watchdog process id.
+#
+watchdog_pid=0
 
 # The watchdog will periodically ping Orca to see if it is responding.
 # If orca isn't responding, the watchdog will kill the Orca process.
@@ -47,13 +47,16 @@ RUN=1
 # do not want a background process that periodically pings Orca to see
 # if it is responding.
 #
-WGETCMD=`which wget`
-if [ "x$WGETCMD" = "x" ]
-then
-    WATCHDOG=0
-else
-    WATCHDOG=1
-fi
+IFS=:
+WGETCMD=
+WATCHDOG=0
+for dir in $PATH:/usr/sfw/bin:/usr/local/bin; do
+    test -x "$dir/wget" && {
+        WGETCMD="$dir/wget"
+        WATCHDOG=1
+        break
+    }
+done
 
 # Cleans up any orca-related processes that might be running,
 # restricting it to those processes owned by the user. These include
@@ -64,6 +67,10 @@ cleanup()
 {
     USERID=`id | cut -f2 -d= | cut -f1 -d\(`
     PIDS=`ps -eo pid,ruid,args | grep $USERID | egrep "orca[.]orca|synthesis-driver|festival [-][-]server" | grep -v grep | awk '{ print $1 }'`
+
+    IFS='
+    '
+    PIDS=`echo $PIDS`
 
     if [ "x$PIDS" != "x" ]
     then
@@ -79,19 +86,15 @@ runOrca()
     exec_prefix=@prefix@
     PYTHONPATH=@pyexecdir@
     export PYTHONPATH
-    @PYTHON@ -c "import orca.orca; orca.orca.main()" "$*"
+    @PYTHON@ -c "import orca.orca; orca.orca.main()" "$*" &
+    orca_pid=$!
+    wait $orca_pid
 }
 
 # Runs a watchdog process in the background.  It merely attempts to
 # get to Orca via some other means than the AT-SPI.  Here we use
 # Orca's http server at port 20433.  If it doesn't respond, then
 # we assume Orca is dead.
-#
-# [[[TODO: Don't know how to make this die when the script is killed.
-# It seems to want to run as a nohup process.  There's also a possible
-# race condition here where the main loop might have just called runOrca
-# and this watchdog might come back from its sleep and catch things at
-# such a time where Orca isn't responding yet.]]]
 #
 watchdog()
 {
@@ -107,14 +110,28 @@ watchdog()
             then
                 exit
             else
-                if ! $WGETCMD -q -t 0 -O /dev/null -w 2 localhost:20433
-                then
+                $WGETCMD -q -t 0 -O /dev/null -w 2 "http://localhost:20433" || {
                     echo Orca watchdog detected something bad.  Cleaning up.
                     cleanup
-                fi
+                }
             fi
         done
     ) &
+}
+
+kill_orca()
+{
+    cleanup
+    if [ "x$watchdog_pid" != x0 ]
+    then
+        kill -9 $watchdog_pid > /dev/null
+    fi
+    exit
+}
+
+hup_orca()
+{
+    cleanup
 }
 
 main()
@@ -122,15 +139,20 @@ main()
     if [ "$WATCHDOG" -gt 0 ]
     then
         watchdog
+        watchdog_pid=$!
     fi
     while [ "$RUN" -gt 0 ]
     do
         runOrca
         RUN=$?  # quit on a normal exit status from Orca
     done
+    kill_orca
 }
 
-if [ "x$RUNONCE" = "x" ]
+trap kill_orca QUIT TERM INT ABRT
+trap hup_orca HUP
+
+if [ "x$RUNONCE" = "xfalse" ]
 then
     main
 else

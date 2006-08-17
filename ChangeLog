@@ -3,6 +3,16 @@
         * src/orca/braillegenerator.py:
           Fixed the fix for bug #351501. Was generating a traceback.
 
+        * src/orca/orca.in
+          With help from Laca and Will, we've reworked the main Orca
+          shell script so that:
+          > the wget command now works on Solaris.
+          > Control-C will kill it and its subprocesses.
+          > "kill -QUIT <orca shell script pid>" will do the same.
+          > "kill -HUP <orca shell script pid>" will restart Orca
+            (at least on Linux. Bug #351826 has been filed for the
+             problem of this not working on Solaris).
+
 2006-08-15  Willie Walker <william.walker@sun.com>
 
 	* src/orca/braillegenerator.py: fix for bug 350213 - defensive
