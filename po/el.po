@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: el 1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-24 19:31+0200\n"
-"PO-Revision-Date: 2006-07-25 00:49+0300\n"
+"POT-Creation-Date: 2006-08-17 22:21+0300\n"
+"PO-Revision-Date: 2006-08-17 22:31+0300\n"
 "Last-Translator: nikos <nikosx@gmail.com>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
 "MIME-Version: 1.0\n"
@@ -17,19 +17,28 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);"
 
+#: ../orca.desktop.in.h:1
+msgid "Orca Screen Reader and Magnifier"
+msgstr ""
+
+#: ../orca.desktop.in.h:2
+msgid ""
+"Present on-screen information as speech or braille, or magnify the screen"
+msgstr ""
+
 #: ../src/orca/braillegenerator.py:193 ../src/orca/speechgenerator.py:191
 msgid "grayed"
 msgstr "γκρι"
 
-#: ../src/orca/braillegenerator.py:1084 ../src/orca/speechgenerator.py:1198
+#: ../src/orca/braillegenerator.py:1096 ../src/orca/speechgenerator.py:1198
 msgid "expanded"
 msgstr "αναπτυγμένο"
 
-#: ../src/orca/braillegenerator.py:1086 ../src/orca/speechgenerator.py:1200
+#: ../src/orca/braillegenerator.py:1098 ../src/orca/speechgenerator.py:1200
 msgid "collapsed"
 msgstr "συμπτυγμένο"
 
-#: ../src/orca/braillegenerator.py:1090
+#: ../src/orca/braillegenerator.py:1102
 #, fuzzy, python-format
 msgid "TREE LEVEL %d"
 msgstr "ΠΊΝΑΚΑΣ ΔΈΝΔΡΟΥ"
@@ -61,9 +70,8 @@ msgid "comma"
 msgstr "κόμμα"
 
 #: ../src/orca/chnames.py:39
-#, fuzzy
 msgid "dot"
-msgstr "Τελεία"
+msgstr "τελεία"
 
 # #-#-#-#-#  libgnomeui.HEAD.el.po (el)  #-#-#-#-#
 # #-#-#-#-#  gnome-libs-el.po (gnome-libs 1.2.12)  #-#-#-#-#
@@ -73,9 +81,8 @@ msgstr "Τελεία"
 # #-#-#-#-#  toutdoux-el.po (toutdoux 1.0)  #-#-#-#-#
 #
 #: ../src/orca/chnames.py:40
-#, fuzzy
 msgid "question"
-msgstr "Ερώτηση"
+msgstr "ερώτηση"
 
 #: ../src/orca/chnames.py:42
 #, fuzzy
@@ -115,14 +122,12 @@ msgid "semicolon"
 msgstr "άνω τελεία"
 
 #: ../src/orca/chnames.py:49
-#, fuzzy
 msgid "less than"
-msgstr "είναι μικρότερο από"
+msgstr "μικρότερο από"
 
 #: ../src/orca/chnames.py:50
-#, fuzzy
 msgid "greater than"
-msgstr "είναι μεγαλύτερο από"
+msgstr "μεγαλύτερο από"
 
 #: ../src/orca/chnames.py:51
 #, fuzzy
@@ -139,9 +144,8 @@ msgid "backslash"
 msgstr "πισωκάθετος"
 
 #: ../src/orca/chnames.py:54
-#, fuzzy
 msgid "vertical line"
-msgstr "Κάθετη στοίχιση"
+msgstr "κάθετη γραμμή"
 
 #: ../src/orca/chnames.py:55
 #, fuzzy
@@ -173,14 +177,12 @@ msgid "pound"
 msgstr "Ήχος"
 
 #: ../src/orca/chnames.py:61
-#, fuzzy
 msgid "dollar"
-msgstr "Δολλάριο"
+msgstr "δολλάριο"
 
 #: ../src/orca/chnames.py:62 ../src/orca/speechgenerator.py:851
-#, fuzzy
 msgid "percent"
-msgstr "Ποσοστό"
+msgstr "ποσοστό"
 
 #: ../src/orca/chnames.py:63
 msgid "and"
@@ -215,246 +217,264 @@ msgstr "atm"
 msgid "caret"
 msgstr "γράφημα"
 
-#: ../src/orca/default.py:77
+#: ../src/orca/default.py:78
 msgid "Performs left click on current flat review item."
 msgstr ""
 
-#: ../src/orca/default.py:81
+#: ../src/orca/default.py:82
 msgid "Performs right click on current flat review item."
 msgstr ""
 
-#: ../src/orca/default.py:85 ../src/orca/scripts/Evolution.py:107
+#: ../src/orca/default.py:86 ../src/orca/scripts/Evolution.py:107
 #, fuzzy
 msgid "Speaks entire document."
 msgstr "Εμφάνιση ολόκληρου του εγγράφου"
 
-#: ../src/orca/default.py:89
+#: ../src/orca/default.py:90
 #, fuzzy
 msgid "Performs the where am I operation."
 msgstr "Αδυναμία εκτέλεσης της λειτουργίας."
 
-#: ../src/orca/default.py:93
+#: ../src/orca/default.py:94
 msgid "Paints and prints the visible zones in the active window."
 msgstr ""
 
-#: ../src/orca/default.py:97
+#: ../src/orca/default.py:98
 #, fuzzy
 msgid "Enters and exits flat review mode."
 msgstr "λειτουργία επίπεδης επισκόπησης"
 
-#: ../src/orca/default.py:101
+#: ../src/orca/default.py:102
 msgid "Moves flat review to the beginning of the previous line."
 msgstr ""
 
-#: ../src/orca/default.py:105
+#: ../src/orca/default.py:106
 #, fuzzy
 msgid "Moves flat review to the home position."
 msgstr "Μετακινήστε ένα χαρτί στη βάση"
 
-#: ../src/orca/default.py:109
+#: ../src/orca/default.py:110
 #, fuzzy
 msgid "Speaks the current flat review line."
 msgstr "Αποθηκεύει την τρέχουσα προβαλλόμενη καρτέλα"
 
-#: ../src/orca/default.py:113
+#: ../src/orca/default.py:114
 msgid "Moves flat review to the beginning of the next line."
 msgstr ""
 
-#: ../src/orca/default.py:117
+#: ../src/orca/default.py:118
 #, fuzzy
 msgid "Moves flat review to the end position."
 msgstr "Μετακινήστε ένα χαρτί στη βάση"
 
-#: ../src/orca/default.py:121
+#: ../src/orca/default.py:122
 msgid "Moves flat review to the previous item or word."
 msgstr ""
 
-#: ../src/orca/default.py:125
+#: ../src/orca/default.py:126
 msgid "Moves flat review to the word above the current word."
 msgstr ""
 
-#: ../src/orca/default.py:129
+#: ../src/orca/default.py:130
 msgid "Speaks or spells the current flat review item or word."
 msgstr ""
 
-#: ../src/orca/default.py:133
+#: ../src/orca/default.py:134
 #, fuzzy
 msgid "Speaks the current flat review object."
 msgstr "Αποθηκεύει την τρέχουσα προβαλλόμενη καρτέλα"
 
-#: ../src/orca/default.py:137
+#: ../src/orca/default.py:138
 msgid "Moves flat review to the next item or word."
 msgstr ""
 
-#: ../src/orca/default.py:141
+#: ../src/orca/default.py:142
 msgid "Moves flat review to the word below the current word."
 msgstr ""
 
-#: ../src/orca/default.py:145
+#: ../src/orca/default.py:146
 #, fuzzy
 msgid "Moves flat review to the previous character."
 msgstr "Μεταπήδηση στο προηγούμενο κομμάτι"
 
-#: ../src/orca/default.py:149
+#: ../src/orca/default.py:150
 #, fuzzy
 msgid "Moves flat review to the end of the line."
 msgstr "%s στο τέλος του ραντεβού"
 
-#: ../src/orca/default.py:153
+#: ../src/orca/default.py:154
 #, fuzzy
 msgid "Speaks the current flat review character."
 msgstr "Αποθηκεύει την τρέχουσα προβαλλόμενη καρτέλα"
 
-#: ../src/orca/default.py:157
+#: ../src/orca/default.py:158
 msgid "Moves flat review to the next character."
 msgstr ""
 
-#: ../src/orca/default.py:161
+#: ../src/orca/default.py:162
 msgid "Toggles whether to read just the current table cell or the whole row."
 msgstr ""
 
-#: ../src/orca/default.py:165
+#: ../src/orca/default.py:166
 #, fuzzy
 msgid "Reads the attributes associated with the current text character."
 msgstr "Το στυλ που σχετίζεται με την source tag"
 
-#: ../src/orca/default.py:169
+#: ../src/orca/default.py:170
 #, fuzzy
 msgid "Reports information on current script."
 msgstr "Εμφάνιση πληροφοριών για το τρέχον αρχείο"
 
-#: ../src/orca/default.py:173
+#: ../src/orca/default.py:174
 #, fuzzy
 msgid "Pans the braille display to the left."
 msgstr "Το όνομα αρχείου για εμφάνιση στην αλληλογραφία."
 
-#: ../src/orca/default.py:177
+#: ../src/orca/default.py:178
 #, fuzzy
 msgid "Pans the braille display to the right."
 msgstr "Αν θα εμφανίζεται το δεξί περιθώριο"
 
-#: ../src/orca/default.py:181
+#: ../src/orca/default.py:182
 msgid "Moves flat review to the bottom left."
 msgstr ""
 
-#: ../src/orca/default.py:185
+#: ../src/orca/default.py:186
 msgid "Returns to object with keyboard focus."
 msgstr ""
 
-#: ../src/orca/default.py:189
+#: ../src/orca/default.py:190
 msgid "Enters learn mode.  Press escape to exit learn mode."
 msgstr ""
 
-#: ../src/orca/default.py:193
+#: ../src/orca/default.py:194
+#, fuzzy
+msgid "Exits learn mode."
+msgstr "Εξαγωγή σε ασύγχρονη κατάσταση"
+
+#: ../src/orca/default.py:198
 #, fuzzy
 msgid "Decreases the speech rate."
 msgstr "Μείωση ρυθμού"
 
-#: ../src/orca/default.py:197
+#: ../src/orca/default.py:202
 #, fuzzy
 msgid "Increases the speech rate."
 msgstr "Αύξηση ρυθμού"
 
-#: ../src/orca/default.py:201
+#: ../src/orca/default.py:206
 #, fuzzy
 msgid "Decreases the speech pitch."
 msgstr "Μείωση βήματος"
 
-#: ../src/orca/default.py:205
+#: ../src/orca/default.py:210
 #, fuzzy
 msgid "Increases the speech pitch."
 msgstr "Αύξηση βήματος"
 
-#: ../src/orca/default.py:209
-#, fuzzy
+#: ../src/orca/default.py:214
 msgid "Quits Orca"
-msgstr "Έξοδος από το GOK"
+msgstr "Έξοδος από το Orca"
 
-#: ../src/orca/default.py:213
+#: ../src/orca/default.py:218
 #, fuzzy
 msgid "Toggles keystroke recording on and off."
 msgstr "Εναλλαγή της σύνδεσης στο δίκτυο."
 
-#: ../src/orca/default.py:217
+#: ../src/orca/default.py:222
 #, fuzzy
 msgid "Displays the preferences configuration dialog."
 msgstr "Εμφάνιση διαλόγου ένδειξης προόδου"
 
-#: ../src/orca/default.py:221
+#: ../src/orca/default.py:226
 msgid "Reloads user settings and reinitializes services as necessary."
 msgstr ""
 
-#: ../src/orca/default.py:225
+#: ../src/orca/default.py:230
 msgid "Toggles the silencing of speech."
 msgstr ""
 
-#: ../src/orca/default.py:229
+#: ../src/orca/default.py:234
 msgid ""
 "Prints a debug listing of all known applications to the console where Orca "
 "is running."
 msgstr ""
 
-#: ../src/orca/default.py:233
+#: ../src/orca/default.py:238
 msgid "Cycles the debug level at run time."
 msgstr ""
 
-#: ../src/orca/default.py:237
+#: ../src/orca/default.py:242
 msgid ""
 "Prints debug information about the currently active application to the "
 "console where Orca is running."
 msgstr ""
 
-#: ../src/orca/default.py:241
+#: ../src/orca/default.py:246
 #, fuzzy
 msgid "Prints debug information about the ancestry of the object with focus"
 msgstr "Λήψη πληροφοριών για τη λίστα στην οποία ανήκει αυτό το μήνυμα"
 
-#: ../src/orca/default.py:245
+#: ../src/orca/default.py:250
 msgid "Prints debug information about the application with focus"
 msgstr ""
 
-#: ../src/orca/default.py:249
+#: ../src/orca/default.py:254
 msgid "Switches to the next presentation manager."
 msgstr ""
 
-#: ../src/orca/default.py:1084 ../src/orca/default.py:1303
+#: ../src/orca/default.py:1067 ../src/orca/default.py:1282
 #, fuzzy, python-format
 msgid "tree level %d"
 msgstr "δένδρο πίνακα"
 
-#. Attempt to sidestep GIL
-#: ../src/orca/default.py:1088 ../src/orca/focus_tracking_presenter.py:653
+#: ../src/orca/default.py:1071 ../src/orca/focus_tracking_presenter.py:639
 msgid "No focus"
 msgstr "Δεν υπάρχει εστίαση"
 
-#: ../src/orca/default.py:1692
+#: ../src/orca/default.py:1673
 #, fuzzy
 msgid "entire document selected"
 msgstr "Η τρέχουσα επιλεγμένη ώρα"
 
-#: ../src/orca/default.py:2047
+#: ../src/orca/default.py:2123
 #, fuzzy
 msgid "Speak "
 msgstr "Ομιλία"
 
-#: ../src/orca/default.py:2050
-#, fuzzy
+#: ../src/orca/default.py:2126
 msgid "row"
-msgstr "γραμμές"
+msgstr "γραμμή"
 
-#: ../src/orca/default.py:2052 ../src/orca/rolenames.py:432
+#: ../src/orca/default.py:2128 ../src/orca/rolenames.py:432
 #: ../src/orca/rolenames.py:434
-#, fuzzy
 msgid "cell"
-msgstr "Κελί"
+msgstr "κελί"
 
-#: ../src/orca/default.py:2514 ../src/orca/default.py:2642
-#: ../src/orca/default.py:2647 ../src/orca/default.py:2719
-#: ../src/orca/default.py:2724
+#: ../src/orca/default.py:2283
+msgid "Entering learn mode.  Press any key to hear its function. "
+msgstr ""
+
+#: ../src/orca/default.py:2284
+msgid "To exit learn mode, press the escape key."
+msgstr ""
+
+#: ../src/orca/default.py:2285
+msgid "Learn mode.  Press escape to exit."
+msgstr ""
+
+#: ../src/orca/default.py:2297 ../src/orca/default.py:2298
+#, fuzzy
+msgid "Exiting learn mode."
+msgstr "Εξαγωγή σε ασύγχρονη κατάσταση"
+
+#: ../src/orca/default.py:2628 ../src/orca/default.py:2756
+#: ../src/orca/default.py:2761 ../src/orca/default.py:2833
+#: ../src/orca/default.py:2838
 msgid "blank"
 msgstr "κενό"
 
-#: ../src/orca/default.py:2516 ../src/orca/default.py:2649
+#: ../src/orca/default.py:2630 ../src/orca/default.py:2763
 #, fuzzy
 msgid "white space"
 msgstr "Ελεύθερος χώρος:"
@@ -463,28 +483,28 @@ msgstr "Ελεύθερος χώρος:"
 msgid "Emacspeak Speech Services"
 msgstr ""
 
-#: ../src/orca/focus_tracking_presenter.py:748
+#: ../src/orca/focus_tracking_presenter.py:734
 #, fuzzy
 msgid "Switching to focus tracking mode."
 msgstr "Λειτουργία χάραξης πορείας με εστίαση"
 
-#: ../src/orca/gnomespeechfactory.py:158
+#: ../src/orca/gnomespeechfactory.py:159
 #, fuzzy
 msgid "GNOME Speech Services"
 msgstr "Εξυπηρετητής παιχνιδιών GNOME"
 
 #. # Replace ellipses (both manual and unicode) with "dot dot dot"
 #. #
-#: ../src/orca/gnomespeechfactory.py:602 ../src/orca/gnomespeechfactory.py:603
+#: ../src/orca/gnomespeechfactory.py:605 ../src/orca/gnomespeechfactory.py:606
 msgid " dot dot dot"
 msgstr ""
 
-#: ../src/orca/gnomespeechfactory.py:762
+#: ../src/orca/gnomespeechfactory.py:765
 #, fuzzy
 msgid "higher."
 msgstr "Υψηλά"
 
-#: ../src/orca/gnomespeechfactory.py:790
+#: ../src/orca/gnomespeechfactory.py:793
 #, fuzzy
 msgid "lower."
 msgstr ""
@@ -493,12 +513,12 @@ msgstr ""
 "#-#-#-#-#  gtk+-properties.HEAD.el.po (el)  #-#-#-#-#\n"
 "Κατώτερο"
 
-#: ../src/orca/gnomespeechfactory.py:815
+#: ../src/orca/gnomespeechfactory.py:818
 #, fuzzy
 msgid "faster."
 msgstr "aterm"
 
-#: ../src/orca/gnomespeechfactory.py:845
+#: ../src/orca/gnomespeechfactory.py:848
 #, fuzzy
 msgid "slower."
 msgstr ""
@@ -513,14 +533,12 @@ msgid "Switching to hierarchical navigation mode."
 msgstr "αλλαγή λειτουργίας πλοήγησης"
 
 #: ../src/orca/keynames.py:32 ../src/orca/keynames.py:35
-#, fuzzy
 msgid "left shift"
-msgstr "shift"
+msgstr "αριστερό shift"
 
 #: ../src/orca/keynames.py:33
-#, fuzzy
 msgid "left alt"
-msgstr "Αριστερή στοίχιση"
+msgstr "αριστερό alt"
 
 #: ../src/orca/keynames.py:34
 #, fuzzy
@@ -528,9 +546,8 @@ msgid "left control"
 msgstr "control"
 
 #: ../src/orca/keynames.py:36
-#, fuzzy
 msgid "right shift"
-msgstr "Wrightstown"
+msgstr "δεξιό shift"
 
 #: ../src/orca/keynames.py:37
 #, fuzzy
@@ -561,9 +578,8 @@ msgid "caps lock"
 msgstr "caps lock"
 
 #: ../src/orca/keynames.py:43
-#, fuzzy
 msgid "scroll lock"
-msgstr "γραμμή κύλισης"
+msgstr "scroll lock"
 
 #: ../src/orca/keynames.py:44
 msgid "page up"
@@ -583,14 +599,12 @@ msgstr ""
 "Κλείσιμο Καρτέλας"
 
 #: ../src/orca/keynames.py:47
-#, fuzzy
 msgid "F 11"
-msgstr "F11"
+msgstr "F 11"
 
 #: ../src/orca/keynames.py:48
-#, fuzzy
 msgid "F 12"
-msgstr "F12"
+msgstr "F 12"
 
 #: ../src/orca/orca-setup.glade.h:1
 #, fuzzy
@@ -598,9 +612,8 @@ msgid "<b>Cross-hair Settings</b>"
 msgstr "<b>Ρυθμίσεις συστημάτων</b>"
 
 #: ../src/orca/orca-setup.glade.h:2
-#, fuzzy
 msgid "<b>Cursor Settings</b>"
-msgstr "<b>Ρύθμιση δρομέα</b>"
+msgstr "<b>Ρυθμίσεις δρομέα</b>"
 
 #: ../src/orca/orca-setup.glade.h:3
 #, fuzzy
@@ -631,8 +644,8 @@ msgstr "<b>Ρυθμίσεις Οθόνης</b>"
 msgid "Braille"
 msgstr "Μπράιγ"
 
-#: ../src/orca/orca-setup.glade.h:9 ../src/orca/orca_gui_prefs.py:1057
-#: ../src/orca/orca_gui_prefs.py:1112
+#: ../src/orca/orca-setup.glade.h:9 ../src/orca/orca_gui_prefs.py:1059
+#: ../src/orca/orca_gui_prefs.py:1114
 #, fuzzy
 msgid "Brie_f"
 msgstr "Barrie"
@@ -648,20 +661,12 @@ msgstr ""
 # #-#-#-#-#  gtkhtml.HEAD.el.po (el)  #-#-#-#-#
 #
 #: ../src/orca/orca-setup.glade.h:14
-#, fuzzy
 msgid "Color:"
-msgstr ""
-"#-#-#-#-#  evolution.HEAD.el.po (el)  #-#-#-#-#\n"
-"Χ_ρώμα:\n"
-"#-#-#-#-#  evolution-webcal.HEAD.el.po (el)  #-#-#-#-#\n"
-"Χ_ρώμα:\n"
-"#-#-#-#-#  gtkhtml.HEAD.el.po (el)  #-#-#-#-#\n"
-"_Χρώμα:"
+msgstr "Χρώμα:"
 
 #: ../src/orca/orca-setup.glade.h:15
-#, fuzzy
 msgid "Custom siz_e"
-msgstr "Προσαρμοσμένο μέγεθος"
+msgstr "Προσαρμοσμένο μέγε_θος"
 
 #: ../src/orca/orca-setup.glade.h:16
 msgid ""
@@ -745,7 +750,7 @@ msgstr "_Χρώμα κειμένου:"
 msgid "Key Echo"
 msgstr "Kericho"
 
-#: ../src/orca/orca-setup.glade.h:34 ../src/orca/orca_gui_prefs.py:1037
+#: ../src/orca/orca-setup.glade.h:34 ../src/orca/orca_gui_prefs.py:1039
 #, fuzzy
 msgid "M_ost"
 msgstr "_Περισσότερα"
@@ -767,9 +772,8 @@ msgid ""
 msgstr "διγραμμικό"
 
 #: ../src/orca/orca-setup.glade.h:39
-#, fuzzy
 msgid "Orca Preferences"
-msgstr "Προτιμήσεις GOK"
+msgstr "Προτιμήσεις Orca"
 
 #: ../src/orca/orca-setup.glade.h:40
 #, fuzzy
@@ -796,17 +800,10 @@ msgstr "εργοστάσιο CORBA"
 # #-#-#-#-#  gtkhtml.HEAD.el.po (el)  #-#-#-#-#
 #
 #: ../src/orca/orca-setup.glade.h:43
-#, fuzzy
 msgid "Si_ze:"
-msgstr ""
-"#-#-#-#-#  gnome-terminal.HEAD.el.po (el)  #-#-#-#-#\n"
-"_Μέγεθος:\n"
-"#-#-#-#-#  gtk+.HEAD.el.po (el)  #-#-#-#-#\n"
-"Μέ_γεθος:\n"
-"#-#-#-#-#  gtkhtml.HEAD.el.po (el)  #-#-#-#-#\n"
-"Μέ_γεθος:"
+msgstr "_Μέγεθος:"
 
-#: ../src/orca/orca-setup.glade.h:44 ../src/orca/orca_gui_prefs.py:1034
+#: ../src/orca/orca-setup.glade.h:44 ../src/orca/orca_gui_prefs.py:1036
 #, fuzzy
 msgid "So_me"
 msgstr "_Κάποια"
@@ -815,7 +812,7 @@ msgstr "_Κάποια"
 msgid "Speak _indentation and justification"
 msgstr ""
 
-#: ../src/orca/orca-setup.glade.h:46 ../src/orca/orca_gui_prefs.py:1077
+#: ../src/orca/orca-setup.glade.h:46 ../src/orca/orca_gui_prefs.py:1079
 #, fuzzy
 msgid "Speak current _cell"
 msgstr "Το τρέχον χρώμα"
@@ -826,13 +823,8 @@ msgid "Speak current ro_w"
 msgstr "Διακοπή τρέχουσας διεργασίας"
 
 #: ../src/orca/orca-setup.glade.h:48
-#, fuzzy
 msgid "Speech"
-msgstr ""
-"#-#-#-#-#  gnome-media.HEAD.el.po (el)  #-#-#-#-#\n"
-"Speech\n"
-"#-#-#-#-#  gok.HEAD.el.po (el)  #-#-#-#-#\n"
-"Ομιλία"
+msgstr "Ομιλία"
 
 #: ../src/orca/orca-setup.glade.h:49
 #, fuzzy
@@ -868,13 +860,9 @@ msgid "_Abbreviated role names"
 msgstr "Abbreviated form"
 
 #: ../src/orca/orca-setup.glade.h:56
-#, fuzzy
 msgid "_All"
-msgstr ""
-"#-#-#-#-#  gtk+.HEAD.el.po (el)  #-#-#-#-#\n"
-"_Όλα\n"
-"#-#-#-#-#  libgnomeprintui.HEAD.el.po (el)  #-#-#-#-#\n"
-"Ό_λα"
+msgstr "_Όλα"
+""
 
 #: ../src/orca/orca-setup.glade.h:57
 msgid "_Bottom:"
@@ -889,16 +877,10 @@ msgstr "Ενεργοποίηση Αναζήτησης"
 msgid "_Left:"
 msgstr "_Αριστερά:"
 
-#: ../src/orca/orca-setup.glade.h:60 ../src/orca/orca_gui_prefs.py:1031
-#, fuzzy
+#: ../src/orca/orca-setup.glade.h:60 ../src/orca/orca_gui_prefs.py:1033
 msgid "_None"
-msgstr ""
-"#-#-#-#-#  evolution.HEAD.el.po (el)  #-#-#-#-#\n"
-"Κα_νένα\n"
-"#-#-#-#-#  gnome-control-center.HEAD.el.po (el)  #-#-#-#-#\n"
-"_Κανένα\n"
-"#-#-#-#-#  gnopernicus.HEAD.el.po (el)  #-#-#-#-#\n"
-"Κα_νένα"
+msgstr "_Κανένα"
+""
 
 #: ../src/orca/orca-setup.glade.h:61
 #, fuzzy
@@ -933,69 +915,42 @@ msgid "_Voice settings:"
 msgstr "Ρυθμίσεις βίντεο"
 
 #: ../src/orca/orca-setup.glade.h:67
-#, fuzzy
 msgid "_Width:"
-msgstr ""
-"#-#-#-#-#  gnome-applets.HEAD.el.po (el)  #-#-#-#-#\n"
-"_Πλάτος:\n"
-"#-#-#-#-#  gtk+.HEAD.el.po (el)  #-#-#-#-#\n"
-"_Πλάτος:\n"
-"#-#-#-#-#  gtkhtml.HEAD.el.po (el)  #-#-#-#-#\n"
-"Π_λάτος:\n"
-"#-#-#-#-#  libgnomeprintui.HEAD.el.po (el)  #-#-#-#-#\n"
-"_Πλάτος:"
+msgstr "_Πλάτος:"
 
 #: ../src/orca/orca-setup.glade.h:68
 msgid "pixels"
 msgstr "εικονοστοιχεία"
 
 # gconf/gconfd.c:955 gconf/gconfd.c:967
-#: ../src/orca/orca.py:241
+#: ../src/orca/orca.py:219
 #, fuzzy
 msgid "User logged out - shutting down."
 msgstr "Ο εξυπηρετητής GConf δεν είναι σε χρήση, τερματισμός."
 
-#: ../src/orca/orca.py:406
+#: ../src/orca/orca.py:383
 #, fuzzy
 msgid "Debug level all."
 msgstr "_Διαγραφή όλων"
 
-#: ../src/orca/orca.py:408
+#: ../src/orca/orca.py:385
 msgid "Debug level finest."
 msgstr ""
 
-#: ../src/orca/orca.py:410
+#: ../src/orca/orca.py:387
 msgid "Debug level finer."
 msgstr ""
 
-#: ../src/orca/orca.py:461
-msgid "Entering learn mode.  Press any key to hear its function. "
-msgstr ""
-
-#: ../src/orca/orca.py:462
-msgid "To exit learn mode, press the escape key."
-msgstr ""
-
-#: ../src/orca/orca.py:463
-msgid "Learn mode.  Press escape to exit."
-msgstr ""
-
-#: ../src/orca/orca.py:473 ../src/orca/orca.py:474
-#, fuzzy
-msgid "Exiting learn mode."
-msgstr "Εξαγωγή σε ασύγχρονη κατάσταση"
-
-#: ../src/orca/orca.py:644
-#, fuzzy
+#: ../src/orca/orca.py:586
 msgid "Caps_Lock"
-msgstr "caps lock"
+msgstr "Caps_Lock"
 
-#: ../src/orca/orca.py:646
+#: ../src/orca/orca.py:588
 #, fuzzy
 msgid " off"
 msgstr "από"
 
-#: ../src/orca/orca.py:648
+#: ../src/orca/orca.py:590
 #, fuzzy
 msgid " on"
 msgstr ""
@@ -1004,80 +959,73 @@ msgstr ""
 "#-#-#-#-#  gnopernicus.HEAD.el.po (el)  #-#-#-#-#\n"
 "πάνω σε"
 
-#: ../src/orca/orca.py:650
-#, fuzzy
+#: ../src/orca/orca.py:592
 msgid "Num_Lock"
-msgstr "num lock"
+msgstr "Num_Lock"
 
-#: ../src/orca/orca.py:840
+#: ../src/orca/orca.py:775
 #, fuzzy
 msgid "Speech enabled."
 msgstr "Έγινε επαναφορά ομιλίας"
 
-#: ../src/orca/orca.py:842
+#: ../src/orca/orca.py:777
 #, fuzzy
 msgid "Speech disabled."
 msgstr "Ταχείες κλήσεις"
 
-#: ../src/orca/orca.py:880
+#: ../src/orca/orca.py:815
 #, fuzzy
 msgid "Orca user settings reloaded."
 msgstr "Φορτώθηκαν όλες οι προεπιλεγμένες ρυθμίσεις."
 
-#: ../src/orca/orca.py:1006 ../src/orca/orca.py:1007
+#: ../src/orca/orca.py:956 ../src/orca/orca.py:957
 #, fuzzy
 msgid "Welcome to Orca."
 msgstr "Καλωσορίσατε στον Ιάγνο!"
 
-#. [[[TODO: WDW - the timer stuff is an experiment to see if
-#. we can recover from hangs.  It's only experimental, so it's
-#. commented out for now.]]]
-#.
-#. timer = threading.Timer(5.0, timeout)
-#. timer.start()
-#: ../src/orca/orca.py:1059
+#: ../src/orca/orca.py:1013
 msgid "goodbye."
 msgstr ""
 
-#: ../src/orca/orca.py:1060
+#: ../src/orca/orca.py:1014
 #, fuzzy
 msgid "Goodbye."
 msgstr "Gode"
 
-#: ../src/orca/orca.py:1126
+#: ../src/orca/orca.py:1094
 #, fuzzy
 msgid "Usage: orca [OPTION...]"
 msgstr "[ΕΠΙΛΟΓΗ...]"
 
-#: ../src/orca/orca.py:1128
+#: ../src/orca/orca.py:1096
 msgid "-?, --help                   Show this help message"
 msgstr ""
 
-#: ../src/orca/orca.py:1129
+#: ../src/orca/orca.py:1097
 #, python-format
 msgid "-v, --version                %s"
 msgstr ""
 
-#: ../src/orca/orca.py:1130
+#: ../src/orca/orca.py:1098
 msgid "-s, --setup, --gui-setup     Set up user preferences"
 msgstr ""
 
-#: ../src/orca/orca.py:1131
+#: ../src/orca/orca.py:1099
 msgid "-t, --text-setup             Set up user preferences (text version)"
 msgstr ""
 
-#: ../src/orca/orca.py:1132
+#: ../src/orca/orca.py:1100
 msgid "-n, --no-setup               Skip set up of user preferences"
 msgstr ""
 
-#: ../src/orca/orca.py:1134
+#: ../src/orca/orca.py:1102
 msgid ""
 "If Orca has not been previously set up by the user, Orca\n"
 "will automatically launch the preferences set up unless\n"
 "the -n or --no-setup option is used."
 msgstr ""
 
-#: ../src/orca/orca.py:1136
+#: ../src/orca/orca.py:1104
 msgid "Report bugs to orca-list@gnome.org."
 msgstr ""
 
@@ -1097,9 +1045,9 @@ msgstr ""
 
 #: ../src/orca/orca_console_prefs.py:117 ../src/orca/orca_console_prefs.py:138
 #: ../src/orca/orca_console_prefs.py:164
-#, fuzzy, python-format
+#, python-format
 msgid "%d. %s"
-msgstr "_%d. %s"
+msgstr "%d. %s"
 
 #: ../src/orca/orca_console_prefs.py:120 ../src/orca/orca_console_prefs.py:141
 #: ../src/orca/orca_console_prefs.py:171
@@ -1204,62 +1152,33 @@ msgstr ""
 msgid "Setup complete.  Press Return to continue."
 msgstr ""
 
-#: ../src/orca/orca_gui_prefs.py:127 ../src/orca/orca_gui_prefs.py:423
-#: ../src/orca/orca_gui_prefs.py:465
+#: ../src/orca/orca_gui_prefs.py:128 ../src/orca/orca_gui_prefs.py:424
+#: ../src/orca/orca_gui_prefs.py:466
 #, fuzzy
 msgid "Speech not available."
 msgstr "Η υπηρεσία δεν είναι διαθέσιμη"
 
-#: ../src/orca/orca_gui_prefs.py:365 ../src/orca/orca_gui_prefs.py:369
-#: ../src/orca/orca_gui_prefs.py:1309
+#: ../src/orca/orca_gui_prefs.py:366 ../src/orca/orca_gui_prefs.py:370
+#: ../src/orca/orca_gui_prefs.py:1311
 #, fuzzy
 msgid "Bilinear"
 msgstr "διγραμμικό"
 
 # #-#-#-#-#  nautilus.HEAD.el.po (el)  #-#-#-#-#
 #
-#: ../src/orca/orca_gui_prefs.py:367 ../src/orca/orca_gui_prefs.py:380
-#: ../src/orca/orca_gui_prefs.py:1311 ../src/orca/orca_gui_prefs.py:1334
-#, fuzzy
+#: ../src/orca/orca_gui_prefs.py:368 ../src/orca/orca_gui_prefs.py:381
+#: ../src/orca/orca_gui_prefs.py:1313 ../src/orca/orca_gui_prefs.py:1336
 msgid "None"
-msgstr ""
-"#-#-#-#-#  ekiga.HEAD.el.po (el)  #-#-#-#-#\n"
-"Κανένα\n"
-"#-#-#-#-#  evince.HEAD.el.po (el)  #-#-#-#-#\n"
-"Κανένα\n"
-"#-#-#-#-#  evolution-data-server.HEAD.el.po (el)  #-#-#-#-#\n"
-"Κανένας\n"
-"#-#-#-#-#  evolution-exchange.HEAD.el.po (el)  #-#-#-#-#\n"
-"Κανένα\n"
-"#-#-#-#-#  evolution.HEAD.el.po (el)  #-#-#-#-#\n"
-"Κανένα\n"
-"#-#-#-#-#  gdm2.HEAD.el.po (el)  #-#-#-#-#\n"
-"Κανένα\n"
-"#-#-#-#-#  gedit.HEAD.el.po (el)  #-#-#-#-#\n"
-"Καμία\n"
-"#-#-#-#-#  gnome-games.HEAD.el.po (el)  #-#-#-#-#\n"
-"Καμμία\n"
-"#-#-#-#-#  gok.HEAD.el.po (el)  #-#-#-#-#\n"
-"Κανένα\n"
-"#-#-#-#-#  gtk+.HEAD.el.po (el)  #-#-#-#-#\n"
-"Κανένα\n"
-"#-#-#-#-#  gtkhtml.HEAD.el.po (el)  #-#-#-#-#\n"
-"Κανένα\n"
-"#-#-#-#-#  nautilus-cd-burner.HEAD.el.po (el)  #-#-#-#-#\n"
-"Κανένα\n"
-"#-#-#-#-#  nautilus.HEAD.el.po (el)  #-#-#-#-#\n"
-"κανένα\n"
-"#-#-#-#-#  totem.HEAD.el.po (el)  #-#-#-#-#\n"
-"Κανένα"
+msgstr "Κανένα"
 
-#: ../src/orca/orca_gui_prefs.py:378 ../src/orca/orca_gui_prefs.py:386
-#: ../src/orca/orca_gui_prefs.py:1328
+#: ../src/orca/orca_gui_prefs.py:379 ../src/orca/orca_gui_prefs.py:387
+#: ../src/orca/orca_gui_prefs.py:1330
 msgid "Centered"
 msgstr "Κεντραρισμένη"
 
 # #-#-#-#-#  gnome-terminal.HEAD.el.po (el)  #-#-#-#-#
 #
-#: ../src/orca/orca_gui_prefs.py:382 ../src/orca/orca_gui_prefs.py:1332
+#: ../src/orca/orca_gui_prefs.py:383 ../src/orca/orca_gui_prefs.py:1334
 #, fuzzy
 msgid "Proportional"
 msgstr ""
@@ -1268,52 +1187,32 @@ msgstr ""
 "#-#-#-#-#  gnopernicus.HEAD.el.po (el)  #-#-#-#-#\n"
 "αναλογικό"
 
-#: ../src/orca/orca_gui_prefs.py:384 ../src/orca/orca_gui_prefs.py:1330
+#: ../src/orca/orca_gui_prefs.py:385 ../src/orca/orca_gui_prefs.py:1332
 msgid "Push"
 msgstr "Push"
 
 # #-#-#-#-#  gnome-system-tools.HEAD.el.po (el)  #-#-#-#-#
 #
-#: ../src/orca/orca_gui_prefs.py:502 ../src/orca/orca_gui_prefs.py:527
-#, fuzzy
+#: ../src/orca/orca_gui_prefs.py:503 ../src/orca/orca_gui_prefs.py:528
 msgid "Default"
-msgstr ""
-"#-#-#-#-#  eel.HEAD.el.po (el)  #-#-#-#-#\n"
-"Προεπιλογή\n"
-"#-#-#-#-#  epiphany.HEAD.el.po (el)  #-#-#-#-#\n"
-"Προεπιλογή\n"
-"#-#-#-#-#  evolution.HEAD.el.po (el)  #-#-#-#-#\n"
-"Προεπιλογή\n"
-"#-#-#-#-#  gedit.HEAD.el.po (el)  #-#-#-#-#\n"
-"Προεπιλογή\n"
-"#-#-#-#-#  gnome-applets.HEAD.el.po (el)  #-#-#-#-#\n"
-"Προεπιλογή\n"
-"#-#-#-#-#  gnome-control-center.HEAD.el.po (el)  #-#-#-#-#\n"
-"Προεπιλεγμένη\n"
-"#-#-#-#-#  gnome-system-tools.HEAD.el.po (el)  #-#-#-#-#\n"
-"Προεπιλογή\n"
-"#-#-#-#-#  gnome-terminal.HEAD.el.po (el)  #-#-#-#-#\n"
-"Προεπιλογή\n"
-"#-#-#-#-#  gtk+.HEAD.el.po (el)  #-#-#-#-#\n"
-"Προεπιλογή\n"
-"#-#-#-#-#  gtksourceview.HEAD.el.po (el)  #-#-#-#-#\n"
-"Προεπιλογή"
+msgstr "Προεπιλογή"
+""
 
-#: ../src/orca/orca_gui_prefs.py:504 ../src/orca/orca_gui_prefs.py:529
+#: ../src/orca/orca_gui_prefs.py:505 ../src/orca/orca_gui_prefs.py:530
 #, fuzzy
 msgid "Uppercase"
 msgstr "Ανώτερο"
 
-#: ../src/orca/orca_gui_prefs.py:506 ../src/orca/orca_gui_prefs.py:535
+#: ../src/orca/orca_gui_prefs.py:507 ../src/orca/orca_gui_prefs.py:536
 #, fuzzy
 msgid "Hyperlink"
 msgstr "Hyper"
 
-#: ../src/orca/orca_gui_prefs.py:1397
+#: ../src/orca/orca_gui_prefs.py:1399
 msgid "Accessibility support for GNOME has just been enabled."
 msgstr ""
 
-#: ../src/orca/orca_gui_prefs.py:1398
+#: ../src/orca/orca_gui_prefs.py:1400
 #, fuzzy
 msgid "You need to log out and log back in for the change to take effect."
 msgstr ""
@@ -1662,9 +1561,8 @@ msgid "glass pane"
 msgstr "glass pane"
 
 #: ../src/orca/rolenames.py:272
-#, fuzzy
 msgid "html"
-msgstr "Chetumal"
+msgstr "html"
 
 #: ../src/orca/rolenames.py:273
 #, fuzzy
@@ -1837,19 +1735,8 @@ msgid "page"
 msgstr "σελίδα"
 
 #: ../src/orca/rolenames.py:333
-#, fuzzy
 msgid "Page"
-msgstr ""
-"#-#-#-#-#  evince.HEAD.el.po (el)  #-#-#-#-#\n"
-"Σελίδα\n"
-"#-#-#-#-#  evolution.HEAD.el.po (el)  #-#-#-#-#\n"
-"Σελίδα\n"
-"#-#-#-#-#  gnome-applets-locations.HEAD.el.po (el)  #-#-#-#-#\n"
-"Page\n"
-"#-#-#-#-#  gtkhtml.HEAD.el.po (el)  #-#-#-#-#\n"
-"Σελίδα\n"
-"#-#-#-#-#  gtk+-properties.HEAD.el.po (el)  #-#-#-#-#\n"
-"Σελίδα"
+msgstr "Σελίδα"
 
 #: ../src/orca/rolenames.py:337
 #, fuzzy
@@ -1893,15 +1780,9 @@ msgid "pwd"
 msgstr ""
 
 #: ../src/orca/rolenames.py:348
-#, fuzzy
 msgid "Password"
-msgstr ""
-"#-#-#-#-#  evolution-data-server.HEAD.el.po (el)  #-#-#-#-#\n"
-"Κωδικός Πρόσβασης\n"
-"#-#-#-#-#  file-roller.HEAD.el.po (el)  #-#-#-#-#\n"
-"Κωδικός πρόσβασης\n"
-"#-#-#-#-#  gnome-system-tools.HEAD.el.po (el)  #-#-#-#-#\n"
-"Κωδικός"
+msgstr "Κωδικός πρόσβασης"
+""
 
 #: ../src/orca/rolenames.py:349
 #, fuzzy
@@ -2038,7 +1919,6 @@ msgid "scbr"
 msgstr "srcore"
 
 #: ../src/orca/rolenames.py:393
-#, fuzzy
 msgid "ScrollBar"
 msgstr "Γραμμή κύλισης"
 
@@ -2234,21 +2114,8 @@ msgid "tbar"
 msgstr "Atbara"
 
 #: ../src/orca/rolenames.py:468
-#, fuzzy
 msgid "ToolBar"
 msgstr ""
-"#-#-#-#-#  eog.HEAD.el.po (el)  #-#-#-#-#\n"
-"Ερ_γαλειοθήκη\n"
-"#-#-#-#-#  evince.HEAD.el.po (el)  #-#-#-#-#\n"
-"_Εργαλειοθήκη\n"
-"#-#-#-#-#  file-roller.HEAD.el.po (el)  #-#-#-#-#\n"
-"_Εργαλειοθήκη\n"
-"#-#-#-#-#  gedit.HEAD.el.po (el)  #-#-#-#-#\n"
-"_Εργαλειοθήκη\n"
-"#-#-#-#-#  gnome-games.HEAD.el.po (el)  #-#-#-#-#\n"
-"_Εργαλειοθήκη\n"
-"#-#-#-#-#  gnome-utils.HEAD.el.po (el)  #-#-#-#-#\n"
-"Ε_ργαλειοθήκη"
 
 #: ../src/orca/rolenames.py:469
 msgid "tool bar"
@@ -2303,47 +2170,10 @@ msgid "unk"
 msgstr "Punk"
 
 #: ../src/orca/rolenames.py:488
-#, fuzzy
 msgid "Unknown"
-msgstr ""
-"#-#-#-#-#  dasher.HEAD.el.po (el)  #-#-#-#-#\n"
-"Άγνωστο\n"
-"#-#-#-#-#  eel.HEAD.el.po (el)  #-#-#-#-#\n"
-"Άγνωστο\n"
-"#-#-#-#-#  epiphany.HEAD.el.po (el)  #-#-#-#-#\n"
-"Άγνωστο\n"
-"#-#-#-#-#  evolution-data-server.HEAD.el.po (el)  #-#-#-#-#\n"
-"Άγνωστο\n"
-"#-#-#-#-#  evolution-exchange.HEAD.el.po (el)  #-#-#-#-#\n"
-"Άγνωστο\n"
-"#-#-#-#-#  evolution.HEAD.el.po (el)  #-#-#-#-#\n"
-"Άγνωστο\n"
-"#-#-#-#-#  gedit.HEAD.el.po (el)  #-#-#-#-#\n"
-"Άγνωστο\n"
-"#-#-#-#-#  gnome-applets.HEAD.el.po (el)  #-#-#-#-#\n"
-"Άγνωστο\n"
-"#-#-#-#-#  gnome-control-center.HEAD.el.po (el)  #-#-#-#-#\n"
-"Άγνωστο\n"
-"#-#-#-#-#  gnome-media.HEAD.el.po (el)  #-#-#-#-#\n"
-"Άγνωστο\n"
-"#-#-#-#-#  gnome-netstatus.HEAD.el.po (el)  #-#-#-#-#\n"
-"Άγνωστο\n"
-"#-#-#-#-#  gnome-nettool.HEAD.el.po (el)  #-#-#-#-#\n"
-"Άγνωστο\n"
-"#-#-#-#-#  gnome-session.HEAD.el.po (el)  #-#-#-#-#\n"
-"Άγνωστο\n"
-"#-#-#-#-#  gnome-system-tools.HEAD.el.po (el)  #-#-#-#-#\n"
-"Άγνωστο\n"
-"#-#-#-#-#  gnome-utils.HEAD.el.po (el)  #-#-#-#-#\n"
-"Άγνωστο\n"
-"#-#-#-#-#  gnome-vfs.HEAD.el.po (el)  #-#-#-#-#\n"
-"Άγνωστος\n"
-"#-#-#-#-#  gnopernicus.HEAD.el.po (el)  #-#-#-#-#\n"
-"Άγνωστο\n"
-"#-#-#-#-#  gtk+.HEAD.el.po (el)  #-#-#-#-#\n"
-"Άγνωστο\n"
-"#-#-#-#-#  totem.HEAD.el.po (el)  #-#-#-#-#\n"
-"Άγνωστο"
+msgstr "Άγνωστο"
+""
+""
 
 # #-#-#-#-#  nautilus.HEAD.el.po (el)  #-#-#-#-#
 #
@@ -2528,20 +2358,13 @@ msgstr "Απελευθέρωση"
 # #-#-#-#-#  gdm2.HEAD.el.po (el)  #-#-#-#-#
 #
 #: ../src/orca/scripts/Evolution.py:179
-#, fuzzy
 msgid "Welcome"
-msgstr ""
-"#-#-#-#-#  evolution-exchange.HEAD.el.po (el)  #-#-#-#-#\n"
-"Καλώς ήλθατε\n"
-"#-#-#-#-#  evolution.HEAD.el.po (el)  #-#-#-#-#\n"
-"Καλώς Ήλθατε\n"
-"#-#-#-#-#  gdm2.HEAD.el.po (el)  #-#-#-#-#\n"
-"Καλώς ήλθατε"
+msgstr "Καλώς ήλθατε"
+""
 
 #: ../src/orca/scripts/Evolution.py:180
-#, fuzzy
 msgid "Congratulations"
-msgstr "Συγχαρητήρια!"
+msgstr "Συγχαρητήρια"
 
 #: ../src/orca/scripts/Evolution.py:687
 #, fuzzy
@@ -2557,7 +2380,7 @@ msgstr "Διαγραφή κουμπιού"
 msgid "Assistant"
 msgstr "Βοηθός"
 
-#: ../src/orca/scripts/Mozilla.py:231 ../src/orca/scripts/StarOffice.py:408
+#: ../src/orca/scripts/Mozilla.py:234 ../src/orca/scripts/StarOffice.py:406
 msgid "link"
 msgstr "σύνδεσμος"
 
@@ -2623,12 +2446,12 @@ msgstr "Τα περιεχόμενα της καταχώρισης"
 msgid "empty"
 msgstr "(κενό)"
 
-#: ../src/orca/scripts/StarOffice.py:426
+#: ../src/orca/scripts/StarOffice.py:424
 #, fuzzy
 msgid "Welcome to StarOffice"
 msgstr "Καλώς ήλθατε στο Gnopernicus"
 
-#: ../src/orca/scripts/StarOffice.py:554 ../src/orca/scripts/StarOffice.py:803
+#: ../src/orca/scripts/StarOffice.py:552 ../src/orca/scripts/StarOffice.py:801
 #, fuzzy
 msgid "Spellcheck:"
 msgstr ""
@@ -2637,19 +2460,19 @@ msgstr ""
 "#-#-#-#-#  gtkhtml.HEAD.el.po (el)  #-#-#-#-#\n"
 "Έλεγχος ορθογραφίας"
 
-#: ../src/orca/scripts/StarOffice.py:582
+#: ../src/orca/scripts/StarOffice.py:580
 msgid "Note that the Scroll Down button has to be pressed numerous times."
 msgstr ""
 
-#: ../src/orca/scripts/StarOffice.py:596
+#: ../src/orca/scripts/StarOffice.py:594
 msgid "License Agreement Accept button now has focus."
 msgstr ""
 
-#: ../src/orca/scripts/StarOffice.py:619
+#: ../src/orca/scripts/StarOffice.py:617
 msgid "First name"
 msgstr "Όνομα"
 
-#: ../src/orca/scripts/StarOffice.py:867
+#: ../src/orca/scripts/StarOffice.py:865
 msgid " has formula"
 msgstr ""
 
@@ -2661,24 +2484,24 @@ msgstr ""
 #. translation is by running the application and then viewing its
 #. name in the main window of at-poke.
 #.
-#: ../src/orca/settings.py:411
+#: ../src/orca/settings.py:435
 msgid "[\\S\\s]*StarOffice[\\s\\S]*"
 msgstr ""
 
-#: ../src/orca/settings.py:412
+#: ../src/orca/settings.py:436
 msgid "soffice.bin"
-msgstr ""
+msgstr "soffice.bin"
 
-#: ../src/orca/settings.py:413
+#: ../src/orca/settings.py:437
 #, fuzzy
 msgid "[Ee]volution"
 msgstr "Evolution"
 
-#: ../src/orca/settings.py:414
+#: ../src/orca/settings.py:438
 msgid "Deer Park"
 msgstr "Deer Park"
 
-#: ../src/orca/settings.py:415
+#: ../src/orca/settings.py:439
 #, fuzzy
 msgid "Bon Echo"
 msgstr "Bornholm"
@@ -2731,7 +2554,7 @@ msgid "not checked"
 msgstr "μη επιλεγμένο"
 
 #: ../src/orca/speechgenerator.py:909 ../src/orca/speechgenerator.py:912
-#: ../src/orca/util.py:1118
+#: ../src/orca/util.py:1171
 msgid "selected"
 msgstr "επιλεγμένο"
 
@@ -2745,12 +2568,12 @@ msgstr "αποεπιλεγμένο"
 msgid "tear off"
 msgstr "αναστροφή ανενεργή"
 
-#: ../src/orca/util.py:384
+#: ../src/orca/util.py:433
 #, fuzzy
 msgid "Misspelled word: "
 msgstr "Ανορθόγραφη λέξη:"
 
-#: ../src/orca/util.py:385
+#: ../src/orca/util.py:434
 #, fuzzy
 msgid " Context is "
 msgstr ""
@@ -2759,37 +2582,37 @@ msgstr ""
 "#-#-#-#-#  libgnomeprint.HEAD.el.po (el)  #-#-#-#-#\n"
 "Περιεχόμενο"
 
-#: ../src/orca/util.py:1062
+#: ../src/orca/util.py:1115
 #, fuzzy
 msgid "page selected from cursor position"
 msgstr "Εισαγωγή στη θέση δρομέα"
 
-#: ../src/orca/util.py:1066
+#: ../src/orca/util.py:1119
 #, fuzzy
 msgid "page selected to cursor position"
 msgstr "Εισαγωγή στη θέση δρομέα"
 
-#: ../src/orca/util.py:1070
+#: ../src/orca/util.py:1123
 #, fuzzy
 msgid "line selected down from cursor position"
 msgstr "Εισαγωγή στη θέση δρομέα"
 
-#: ../src/orca/util.py:1074
+#: ../src/orca/util.py:1127
 #, fuzzy
 msgid "line selected up from cursor position"
 msgstr "Εισαγωγή στη θέση δρομέα"
 
-#: ../src/orca/util.py:1078
+#: ../src/orca/util.py:1131
 #, fuzzy
 msgid "document selected to cursor position"
 msgstr "Εισαγωγή στη θέση δρομέα"
 
-#: ../src/orca/util.py:1082
+#: ../src/orca/util.py:1135
 #, fuzzy
 msgid "document selected from cursor position"
 msgstr "Εισαγωγή στη θέση δρομέα"
 
-#: ../src/orca/util.py:1126
+#: ../src/orca/util.py:1179
 msgid "unselected"
 msgstr "αποεπιλεγμένο"
 
