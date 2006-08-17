@@ -1044,7 +1044,7 @@ class BrailleGenerator:
             # valid table. It's possible that the parent could be a
             # table cell too (see bug #351501).
             #
-            if settings.readTableCellRow and parent.table:
+            if settings.readTableCellRow and obj.parent.table:
                 rowRegions = []
                 savedBrailleVerbosityLevel = settings.brailleVerbosityLevel
                 settings.brailleVerbosityLevel = \
