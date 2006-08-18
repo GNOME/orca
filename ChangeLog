@@ -1,3 +1,11 @@
+2006-08-18  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca.in: also exit on a SEGV.  The reason for this is
+	that there are cases where Python will SEGV when Orca attempts to
+	exit normally.  This happens because of something going on in
+	pyorbit.  This should be fixed in pyorbit 2.14.1, but not everyone
+	has that.  So...we'll check for it.
+
 2006-08-18  Oana Serb <os@baum.ro>
 
 	* src/orca/J2SE-access-bridge.py:

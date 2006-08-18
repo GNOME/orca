@@ -145,6 +145,18 @@ main()
     do
         runOrca
         RUN=$?  # quit on a normal exit status from Orca
+
+	# We will stop re-running Orca on SEGV's (139 = SEGV + 128).
+	# The reason for this is that there are cases where Python
+	# will SEGV when Orca attempts to exit normally.  This happens
+	# because of something going on in pyorbit.  This should be
+	# fixed in pyorbit 2.14.1, but not everyone has that.
+	# So...we'll check for it.  
+        #
+	if [ "$RUN" -eq 139 ]
+	then
+	    RUN=0
+        fi
     done
     kill_orca
 }
