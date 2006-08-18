@@ -1,3 +1,9 @@
+2006-08-18  Oana Serb <os@baum.ro>
+
+	* src/orca/J2SE-access-bridge.py:
+	Fix for bug #350740: report combo box selection change for 
+	java applications.
+
 2006-08-17  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/braillegenerator.py:

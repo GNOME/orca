@@ -119,7 +119,8 @@ class Script(default.Script):
             default.Script.onFocus(self, event)
 
     def onStateChanged(self, event):
-        """Called whenever an object's state changes.
+        """Called whenever an object's state changes.  Currently, the
+        state changes for non-focused objects are ignored.
 
         Arguments:
         - event: the Event
@@ -131,8 +132,18 @@ class Script(default.Script):
         if ((event.source.role == rolenames.ROLE_LABEL) and \
             (event.type == "object:state-changed:expanded")):
             orca.visualAppearanceChanged(event, event.source)
-        else:
-            default.Script.onStateChanged(self, event)
+	    return
+
+	# Present a value change in case of an focused popup menu.
+	# Fix for Swing file chooser.
+	#
+	if event.type == "object:state-changed:visible" and \
+		event.source.role == rolenames.ROLE_POPUP_MENU and \
+		event.source.parent.state.count(Accessibility.STATE_FOCUSED):
+	    orca.setLocusOfFocus(event, event.source.parent)
+	    return
+	
+	default.Script.onStateChanged(self, event)
 
     def onSelectionChanged(self, event):
         """Called when an object's selection changes.
@@ -199,3 +210,4 @@ class Script(default.Script):
                 return
 
         default.Script.visualAppearanceChanged(self, event, obj)
+
