@@ -284,6 +284,16 @@ def applySettings():
 
     _magnifier.clearAllZoomRegions()
 
+    try:
+        _magnifier.TargetDisplay = settings.magnifierTargetDisplay
+    except:
+        pass
+
+    try:
+        _magnifier.SourceDisplay = settings.magnifierSourceDisplay
+    except:
+        pass
+
     magnifierPBag = _magnifier.getProperties()
 
     try:
@@ -315,7 +325,7 @@ def applySettings():
             magnifierPBag, "cursor-size", 0)
 
     bonobo.pbclient_set_string(magnifierPBag, "cursor-set", "default")
-    
+
     # Convert the colorPreference string to something we can use.
     # The main issue here is that the color preferences are saved
     # as 4 byte values per color.  We only need 2 bytes, so we
@@ -390,7 +400,7 @@ def applySettings():
         _pollMouseDisabled = True
     except:
         _pollMouseDisabled = False
-        
+
     _zoomer.setMagFactor(settings.magZoomFactor, settings.magZoomFactor)
 
     bonobo.pbclient_set_boolean(

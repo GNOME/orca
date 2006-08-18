@@ -1,5 +1,15 @@
 2006-08-18  Willie Walker <william.walker@sun.com>
 
+	* src/orca/mag.py: add latent support to allow the setting of the
+	source and target displays for magnification.  If it exists,
+	settings.magnifierTargetDisplay will be treated as an X Window
+	System DISPLAY string (e.g., ":0.1") that says where to display
+	the magnified area (the default is split screen magnification on
+	the primary display).  If it exists,
+	settings.magnifierSourceDisplay will be treated as an X Window
+	System DISPLAY string (e.g., ":0.0") that says what is to be
+	magnified.
+	
 	* src/orca/util.py: fix for bug 351847 - defensive code in the
 	event the AT-SPI implementation gives us a cycle when looking
 	at the RELATION_NODE_CHILD_OF relation.
