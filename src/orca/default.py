@@ -1868,14 +1868,23 @@ class Script(script.Script):
         if not event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
             return
 
+
+        # There can be cases when the object that fires an
+        # active-descendant-changed event has no children. In this case,
+        # use the object that fired the event, otherwise, use the child.
+        #
         child = atspi.Accessible.makeAccessible(event.any_data.value())
-        orca.setLocusOfFocus(event, child)
+        if child:
+            orca.setLocusOfFocus(event, child)
+        else:
+            orca.setLocusOfFocus(event, event.source)
 
         # We'll tuck away the activeDescendant information for future
         # reference since the AT-SPI gives us little help in finding
         # this.
         #
-        if orca_state.locusOfFocus:
+        if orca_state.locusOfFocus \
+           and (orca_state.locusOfFocus != event.source):
             event.source.activeDescendantInfo = \
                 [orca_state.locusOfFocus.parent,
                  orca_state.locusOfFocus.index]

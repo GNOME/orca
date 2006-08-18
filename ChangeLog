@@ -1,3 +1,9 @@
+2006-08-18  Oana Serb <os@baum.ro> and Willie Walker <william.walker@sun.com>
+
+	* src/orca/default.py: fix for bug 351891 - provide better 
+	handling when receiving an active descendant changed for
+	an object with no active descendant.
+	
 2006-08-18  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca.in: also exit on a SEGV.  The reason for this is
