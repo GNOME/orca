@@ -110,10 +110,29 @@ class Script(default.Script):
         - event: the Event
         """
 
-        # A JMenu has always selection.nSelectedChildren > 0
-        #
         role = event.source.role
-        if (role == rolenames.ROLE_MENU):
+        if role == rolenames.ROLE_LIST:
+	    selectedItem = None
+	    selection = event.source.selection
+	    if selection and selection.nSelectedChildren > 0:
+        	selectedItem = atspi.Accessible.makeAccessible(
+            				selection.getSelectedChild(0))
+	    elif event.source.childCount > 0:
+		selectedItem = event.source.child(0)
+	    if selectedItem:
+		orca.setLocusOfFocus(event, selectedItem)
+	    else:
+		# if impossible to get selection or list has 0 items, present list
+		orca.setLocusOfFocus(event, event.source)
+	elif role == rolenames.ROLE_LABEL:
+	    # In FileChooserDemo, when enter in a new folder, a focus event for 
+	    # the top combo box selected item (not SHOWING item) is received.
+	    # Should this check be more specific ?
+	    #
+	    if not event.source.state.count (Accessibility.STATE_SHOWING):
+		return
+	elif role == rolenames.ROLE_MENU:
+    	    # A JMenu has always selection.nSelectedChildren > 0
             orca.setLocusOfFocus(event, event.source)
         else:
             default.Script.onFocus(self, event)
