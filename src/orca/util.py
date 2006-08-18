@@ -633,7 +633,7 @@ def getNodeLevel(obj):
     if not obj:
         return -1
 
-    level = -1
+    nodes = []
     node = obj
     done = False
     while not done:
@@ -642,13 +642,25 @@ def getNodeLevel(obj):
         for relation in relations:
             if relation.getRelationType() \
                    == atspi.Accessibility.RELATION_NODE_CHILD_OF:
-                level += 1
                 node = atspi.Accessible.makeAccessible(relation.getTarget(0))
                 break
-        done = not node
-        debug.println(debug.LEVEL_FINEST, "util.getNodeLevel %d" % level)
 
-    return level
+        # We want to avoid situations where something gives us an
+        # infinite cycle of nodes.  Bon Echo has been seen to do
+        # this (see bug 351847).
+        #
+        if (len(nodes) > 100) or nodes.count(node):
+            debug.println(debug.LEVEL_WARNING,
+                          "util.getNodeLevel detected a cycle!!!")
+            done = True
+        elif node:
+            nodes.append(node)
+            debug.println(debug.LEVEL_FINEST,
+                          "util.getNodeLevel %d" % len(nodes))
+        else:
+            done = True
+
+    return len(nodes) - 1
 
 def getAcceleratorAndShortcut(obj):
     """Gets the accelerator string (and possibly shortcut) for the given

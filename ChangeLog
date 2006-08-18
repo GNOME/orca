@@ -1,3 +1,9 @@
+2006-08-18  Willie Walker <william.walker@sun.com>
+
+	* src/orca/util.py: fix for bug 351847 - defensive code in the
+	event the AT-SPI implementation gives us a cycle when looking
+	at the RELATION_NODE_CHILD_OF relation.
+	
 2006-08-18  Oana Serb <os@baum.ro> and Willie Walker <william.walker@sun.com>
 
 	* src/orca/default.py: fix for bug 351891 - provide better 
