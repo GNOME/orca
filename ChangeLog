@@ -1,5 +1,10 @@
 2006-08-18  Willie Walker <william.walker@sun.com>
 
+	* src/orca/orca.in: bypass the watchdog and backgrounding of orca
+	if arguments are to be used or if accessibility has not been
+	enabled.  This permits the text-based setup option of orca to run
+	in the foreground.	
+	
 	* src/orca/mag.py: add latent support to allow the setting of the
 	source and target displays for magnification.  If it exists,
 	settings.magnifierTargetDisplay will be treated as an X Window

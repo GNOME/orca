@@ -40,6 +40,10 @@ RUN=1
 #
 watchdog_pid=0
 
+# Save the arguments away.
+#
+ARGS="$*"
+
 # The watchdog will periodically ping Orca to see if it is responding.
 # If orca isn't responding, the watchdog will kill the Orca process.
 # The watchdog logic requires 'wget', so we won't do it if we can't
@@ -86,9 +90,7 @@ runOrca()
     exec_prefix=@prefix@
     PYTHONPATH=@pyexecdir@
     export PYTHONPATH
-    @PYTHON@ -c "import orca.orca; orca.orca.main()" "$*" &
-    orca_pid=$!
-    wait $orca_pid
+    @PYTHON@ -c "import orca.orca; orca.orca.main()" "$ARGS"
 }
 
 # Runs a watchdog process in the background.  It merely attempts to
@@ -143,7 +145,10 @@ main()
     fi
     while [ "$RUN" -gt 0 ]
     do
-        runOrca
+        runOrca &
+	orca_pid=$!
+	wait $orca_pid
+
         RUN=$?  # quit on a normal exit status from Orca
 
 	# We will stop re-running Orca on SEGV's (139 = SEGV + 128).
@@ -164,9 +169,22 @@ main()
 trap kill_orca QUIT TERM INT ABRT
 trap hup_orca HUP
 
-if [ "x$RUNONCE" = "xfalse" ]
+# Orca will fall into a text-based question and answer session if the
+# user has not configured orca and/or accessibility yet.  We will
+# force that to happen in the foreground (i.e., RUNONCE=true).  In
+# addition, if the user passes any command line arguments to orca, we
+# will run it in the foreground as well to avoid a situation where
+# orca dumps itself into the text-based setup utility.
+#
+ACCESSIBILITY_ENABLED=`gconftool-2 --get /desktop/gnome/interface/accessibility`
+if [ "x$ACCESSIBILITY_ENABLED" != "xtrue" ]
+then
+    RUNONCE="true"
+fi
+
+if [ "x$RUNONCE" = "xfalse" -a "x$ARGS" = "x" ]
 then
     main
 else
-    runOrca "$*"
+    runOrca
 fi
