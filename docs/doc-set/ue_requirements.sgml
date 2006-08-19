@@ -62,15 +62,11 @@
 	    <listitem><para>Communication with gnome-speech: Failures
 	      are currently handled with a restart of the connection
 	      to gnome-speech, including providing a fallback to
-	      working speech engines.  Hangs, however, are not
-	      detected, and can cause Orca to hang. &mustdeliver;
+	      working speech engines.   &mustdeliver;
 	      V1.0.</para></listitem>
 
 	    <listitem><para>Communication with at-spi: Failures are
-	      currently handled somewhat gracefully.  Hangs, however,
-	      can occur and are not detected. Some of this may be
-	      resolved with a new multi-threaded event queue mechanism
-	      to be put in the at-spi registry itself [[[WDW - need
+	      currently handled somewhat gracefully.   [[[WDW - need
 	      pointer to at-spi RFE]]], but Orca still needs to detect
 	      and recover from hangs when calling at-spi
 	      functions. &mustdeliver; V1.0.</para></listitem>
@@ -123,10 +119,7 @@
 
         <para>&incomplete; [OWNER: LMS] Orca has been simultaneously
           tested with BrlTTY, GOK, and Dasher.  Orca still needs
-          testing, however, with AccessX and with Gnopernicus to
-          verify that we can use Gnopernicus as a magnification
-          solution while we build out magnification support in
-          Orca. &mustdeliver; V1.0.</para>
+          testing, however, with AccessX. &mustdeliver; V1.0.</para>
 
       </section>
 
@@ -227,22 +220,22 @@
 	      focus. &mustdeliver; V1.0.</para>
 	  </listitem>
           <listitem>
-	    <para>&incomplete; [OWNER: RNB] Keystroke to speak/braille
+	    <para>&complete; [OWNER: RNB] Keystroke to speak/braille
 	      the current script (and script class) in use. &mustdeliver;
 	      V1.0.</para>
 	  </listitem>
           <listitem>
-	    <para>&incomplete; [OWNER: RNB] Keystroke to dump
+	    <para>&complete; [OWNER: RNB] Keystroke to dump
 	      all applications.  Currently bound to Insert+F5, needs to
 	      be rebound to something else. &mustdeliver; V1.0.</para>
 	  </listitem>
           <listitem>
-	    <para>&incomplete; [OWNER: RNB] Keystroke to dump the ancestors
+	    <para>&complete; [OWNER: RNB] Keystroke to dump the ancestors
 	      of the object with focus.  Currently bound to Insert+F7,
 	      needs to be rebound to something else. &mustdeliver; V1.0.</para>
 	  </listitem>
           <listitem>
-	    <para>&incomplete; [OWNER: RNB] Keystroke to dump the
+	    <para>&complete; [OWNER: RNB] Keystroke to dump the
 	      widget hierarchy of the application with
 	      focus. Currently bound to Ctrl+Insert+F7, needs to be
 	      rebound to something else. &mustdeliver; V1.0.</para>
@@ -304,7 +297,7 @@
                 <entry>Calendar</entry>
                 <entry>Evolution - GNOME 2.16</entry>
                 <entry>&incomplete; [OWNER: RNB] month view not
-                  done. &shoulddeliver; V1.0.</entry>
+                  done. &shoulddeliver; V1.1+.</entry>
 		<entry>&ecaltestlink;</entry>
               </row>
               <row>
@@ -322,8 +315,7 @@
               <row>
                 <entry>Help</entry>
                 <entry>Yelp - GNOME 2.16</entry>
-                <entry>&incomplete; [OWNER: LMS] No script and
-                  untested. &mustdeliver; V1.0</entry>
+                <entry>&complete; [OWNER: LMS] mozilla script. &mustdeliver; V1.0</entry>
 		<entry>&yelptestlink;</entry>
               </row>
               <row>
@@ -348,9 +340,7 @@
 	        <entry>Web Browsing</entry>
 		<entry>Firefox 2.0 (minimal); Firefox 3.0 (better)</entry>
 		<entry>&incomplete; [OWNER: RNB] Working with Firefox team to fix issues with
-		  accessing the Firefox widget set (XUL) for 2.0 and
-		  also working on a structural caret navigation
-		  extension for FF2 - &mustdeliver; V1.0.  Working with
+		  accessing the Firefox widget set (XUL) for 2.0  &mustdeliver; V1.0.  Working with
 		  IBM and Firefox team to provide better information
 		  via AT-SPI for FF3 - &mustdeliver; V1.1.</entry>
 		<entry>&ff2testlink;</entry>
@@ -358,8 +348,8 @@
 	      <row>
 	        <entry>Content Viewing</entry>
 		<entry>Adobe Reader</entry>
-		<entry>&incomplete; [OWNER: MMP] needs testing and
-		  possible work from Adobe. &shoulddeliver;
+		<entry>&incomplete; [OWNER: MMP] 
+		   needs work from Adobe. &shoulddeliver;
 		  V1.0</entry>
 		<entry>&acroreadtestlink;</entry>
 	      </row>
@@ -390,7 +380,7 @@
         presentation modes (i.e., speech, braille, magnification) on
         or off without the need to restart Orca.</para>
       <section><title>Functional Description and Status</title>
-        <para>&incomplete; [OWNER: MMP - further define requirements and
+        <para>&complete; [OWNER: MMP - further define requirements and
 	  functionality] [OWNER: RNB - implementation] 
 	  The &ugcustomizationlink; section of the &userguidelink;
 	  will provide details on the specific customization
@@ -411,12 +401,12 @@
       <para>When navigating text areas in a character-by-character or
         word-by-word fashion (or any linear fashion for that matter),
         Orca must provide an option to play an audio cue when the
-        caret crosses line boundaries.</para>
+        caret crosses line boundaries.  This will be looked at in a future release.</para>
 
       <section><title>Functional Description and Status</title>
 
         <para>&incomplete; does not provide audio cues when crossing linear
-	  boundaries. &shoulddeliver; V1.1.</para>
+	  boundaries. &shoulddeliver; V1.1+.</para>
 
       </section>
 
@@ -435,7 +425,7 @@
         display.</para>
       <para>Play audio cues across line boundaries.</para>
       <para>In addition, when in flat review mode, Orca will
-        optionally allow the mouse to follow the object of interest.</para>
+        optionally allow the mouse to follow the object of interest.  This will be added in a future release.</para>
       <para>The review of the desktop will follow the &styleguidelink;,
         and will at least provide a short summary of the available
         applications.  While the review of an application will also
@@ -455,7 +445,7 @@
 
         <para>&incomplete; [OWNER: WDW] no automatic reading of dialogs
           from current position or from top left. &shoulddeliver;
-          V1.0.</para>
+          V1.1.</para>
 
 	<para>&incomplete; no audio cues when navigating across line
 	  boundaries. &shoulddeliver; V1.1.</para>
@@ -470,7 +460,7 @@
         the current word, Orca must provide the ability to spell it
         out in either letter-by-letter or phonetic (e.g., military
         spelling) mode.  When speaking a line or set of lines, Orca
-        must offer the ability to verbalize punctuation, and must provide several levels of punctutation verbalization (none, some, most, all).</para>
+        must offer the ability to verbalize punctuation, and must provide several levels of punctuation verbalization (none, some, most, all).</para>
       <para>Orca must provide the ability to present the following to the
         user:</para>
       <itemizedlist>
@@ -702,12 +692,9 @@
 
       <section><title>Functional Description and Status</title>
         <para>&sayalltestlink;</para>
-        <para>&incomplete; [OWNER: RNB] reading works well in GEdit,
+        <para>&complete; [OWNER: RNB] reading works well in GEdit,
 	  including setting the caret position when speech is
-	  interrupted.  Does not work well at all in in Evolution,
-	  StarOffice, Firefox, etc.  The main issue is the it only
-	  speaks the current text object and probably should speak
-	  contiguous text objects in the same hierarchy.
+	  interrupted.  
 	  &mustdeliver; V1.0.</para>
 	<para>&incomplete; text is not highlighted, nor is there an
 	  option to do so. &deliver; V1.1+.</para>
