@@ -1,3 +1,8 @@
+2006-08-19  Mike Pedersen <michael.pedersen@sun.com> 
+
+        *  docs/doc-set/ue_requirements.sgml
+          Updates to the requirements guide.
+
 2006-08-18  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca.in: bypass the watchdog and backgrounding of orca
