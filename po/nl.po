@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  cvs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-31 10:33+0200\n"
-"PO-Revision-Date: 2006-07-31 16:05+0200\n"
+"POT-Creation-Date: 2006-08-19 09:41+0200\n"
+"PO-Revision-Date: 2006-08-19 14:51+0200\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,23 +17,34 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
+# vergrootglas/loep
+#: ../orca.desktop.in.h:1
+msgid "Orca Screen Reader and Magnifier"
+msgstr "Orca schermlezer en loep"
+
+#: ../orca.desktop.in.h:2
+msgid ""
+"Present on-screen information as speech or braille, or magnify the screen"
+msgstr "Biedt de informatie op het scherm aan in spraak of braille, of vergroot het scherm"
+
 # grijs (houdt het zo kort mogelijk, uitgegrijsd is te lang)
 #: ../src/orca/braillegenerator.py:193 ../src/orca/speechgenerator.py:191
 msgid "grayed"
 msgstr "grijs"
 
-#: ../src/orca/braillegenerator.py:1084 ../src/orca/speechgenerator.py:1198
+#: ../src/orca/braillegenerator.py:1096 ../src/orca/speechgenerator.py:1198
 msgid "expanded"
 msgstr "uitgevouwen"
 
-#: ../src/orca/braillegenerator.py:1086 ../src/orca/speechgenerator.py:1200
+#: ../src/orca/braillegenerator.py:1098 ../src/orca/speechgenerator.py:1200
 msgid "collapsed"
 msgstr "ingevouwen"
 
-#: ../src/orca/braillegenerator.py:1090
+# wordt dit uitgesproken?
+#: ../src/orca/braillegenerator.py:1102
 #, python-format
 msgid "TREE LEVEL %d"
-msgstr ""
+msgstr "BOOM NIVEAU %d"
 
 #: ../src/orca/chnames.py:32
 msgid "space"
@@ -314,19 +325,19 @@ msgstr ""
 
 #: ../src/orca/default.py:198
 msgid "Decreases the speech rate."
-msgstr ""
+msgstr "Verlaagt de spraaksnelheid."
 
 #: ../src/orca/default.py:202
 msgid "Increases the speech rate."
-msgstr ""
+msgstr "Verhoogt de spraaksnelheid."
 
 #: ../src/orca/default.py:206
 msgid "Decreases the speech pitch."
-msgstr ""
+msgstr "Verlaagt de spraakhoogte."
 
 #: ../src/orca/default.py:210
 msgid "Increases the speech pitch."
-msgstr ""
+msgstr "Verhoogt de spraakhoogte."
 
 # verlaat orca
 #: ../src/orca/default.py:214
@@ -378,56 +389,56 @@ msgid "Switches to the next presentation manager."
 msgstr ""
 
 # vertakking/boomniveau/vertakkingsniveau
-#: ../src/orca/default.py:1106 ../src/orca/default.py:1325
+#: ../src/orca/default.py:1067 ../src/orca/default.py:1282
 #, python-format
 msgid "tree level %d"
 msgstr "vertakking %d"
 
-#: ../src/orca/default.py:1110 ../src/orca/focus_tracking_presenter.py:638
+#: ../src/orca/default.py:1071 ../src/orca/focus_tracking_presenter.py:639
 msgid "No focus"
 msgstr "Geen focus"
 
-#: ../src/orca/default.py:1716
+#: ../src/orca/default.py:1673
 msgid "entire document selected"
 msgstr "gehele document geselecteerd"
 
-#: ../src/orca/default.py:2100
+#: ../src/orca/default.py:2132
 msgid "Speak "
 msgstr "Spreken"
 
-#: ../src/orca/default.py:2103
+#: ../src/orca/default.py:2135
 msgid "row"
 msgstr "rij"
 
-#: ../src/orca/default.py:2105 ../src/orca/rolenames.py:432
+#: ../src/orca/default.py:2137 ../src/orca/rolenames.py:432
 #: ../src/orca/rolenames.py:434
 msgid "cell"
 msgstr "cel"
 
-#: ../src/orca/default.py:2260
+#: ../src/orca/default.py:2292
 msgid "Entering learn mode.  Press any key to hear its function. "
 msgstr ""
 
-#: ../src/orca/default.py:2261
+#: ../src/orca/default.py:2293
 msgid "To exit learn mode, press the escape key."
 msgstr ""
 
-#: ../src/orca/default.py:2262
+#: ../src/orca/default.py:2294
 msgid "Learn mode.  Press escape to exit."
 msgstr ""
 
-#: ../src/orca/default.py:2274 ../src/orca/default.py:2275
+#: ../src/orca/default.py:2306 ../src/orca/default.py:2307
 msgid "Exiting learn mode."
 msgstr ""
 
 # blanko/leeg
-#: ../src/orca/default.py:2605 ../src/orca/default.py:2733
-#: ../src/orca/default.py:2738 ../src/orca/default.py:2810
-#: ../src/orca/default.py:2815
+#: ../src/orca/default.py:2637 ../src/orca/default.py:2765
+#: ../src/orca/default.py:2770 ../src/orca/default.py:2842
+#: ../src/orca/default.py:2847
 msgid "blank"
 msgstr "leeg"
 
-#: ../src/orca/default.py:2607 ../src/orca/default.py:2740
+#: ../src/orca/default.py:2639 ../src/orca/default.py:2772
 msgid "white space"
 msgstr "spatie"
 
@@ -435,7 +446,7 @@ msgstr "spatie"
 msgid "Emacspeak Speech Services"
 msgstr "Emacspeak spraakdiensten"
 
-#: ../src/orca/focus_tracking_presenter.py:733
+#: ../src/orca/focus_tracking_presenter.py:734
 msgid "Switching to focus tracking mode."
 msgstr ""
 
@@ -554,15 +565,15 @@ msgstr ""
 # uitvoerigheid/uitgebreidheid
 #: ../src/orca/orca-setup.glade.h:5
 msgid "<b>Verbosity</b>"
-msgstr ""
+msgstr "<b>uitvoerigheid</b>"
 
 #: ../src/orca/orca-setup.glade.h:6
 msgid "<b>Zoomer Position</b>"
-msgstr ""
+msgstr "<b>Zoomer positie</b>"
 
 #: ../src/orca/orca-setup.glade.h:7
 msgid "<b>Zoomer Settings</b>"
-msgstr ""
+msgstr "<b>Zoomer instellingen</b>"
 
 #: ../src/orca/orca-setup.glade.h:8
 msgid "Braille"
@@ -606,35 +617,35 @@ msgstr ""
 # enable: gebruiken
 #: ../src/orca/orca-setup.glade.h:19
 msgid "Enable Braille _monitor"
-msgstr ""
+msgstr "Braille_monitor gebruiken"
 
 #: ../src/orca/orca-setup.glade.h:20
 msgid "Enable Braille _support"
-msgstr ""
+msgstr "_Braille gebruiken"
 
 #: ../src/orca/orca-setup.glade.h:21
 msgid "Enable _alphanumeric and punctuation keys"
-msgstr ""
+msgstr "_Alfanumerieke tekens en leestekens gebruiken"
 
 #: ../src/orca/orca-setup.glade.h:22
 msgid "Enable _function keys"
-msgstr ""
+msgstr "_Functietoetsen gebruiken"
 
 #: ../src/orca/orca-setup.glade.h:23
 msgid "Enable _key echo"
-msgstr ""
+msgstr "_Toetsecho gebruiken"
 
 #: ../src/orca/orca-setup.glade.h:24
 msgid "Enable _magnifier"
-msgstr ""
+msgstr "_Loep gebruiken"
 
 #: ../src/orca/orca-setup.glade.h:25
 msgid "Enable _modifier keys"
-msgstr ""
+msgstr "_Controletoetsen gebruiken"
 
 #: ../src/orca/orca-setup.glade.h:26
 msgid "Enable ac_tion keys"
-msgstr ""
+msgstr "Actietoetsen _gebruiken"
 
 #: ../src/orca/orca-setup.glade.h:27
 msgid "Enable c_ursor"
@@ -652,11 +663,12 @@ msgstr ""
 msgid "Enable echo by _word"
 msgstr "Toetsecho per _woord gebruiken"
 
+# scroll-lock/caps-lock/num-lock
 #: ../src/orca/orca-setup.glade.h:31
-#, fuzzy
 msgid "Enable lockin_g keys"
-msgstr "Toets echo gebruiken?  Geef j of n: "
+msgstr "Loc_k-toetsen gebruiken"
 
+# verwisselen/omdraaien
 #: ../src/orca/orca-setup.glade.h:32
 msgid "In_vert colors"
 msgstr "_Kleuren omdraaien"
@@ -676,7 +688,7 @@ msgstr "Vergrootglas"
 
 #: ../src/orca/orca-setup.glade.h:36
 msgid "Mouse trac_king mode:"
-msgstr ""
+msgstr "_Muisvolgen modus:"
 
 #: ../src/orca/orca-setup.glade.h:37
 msgid ""
@@ -712,15 +724,15 @@ msgstr "_Enkele"
 
 #: ../src/orca/orca-setup.glade.h:45
 msgid "Speak _indentation and justification"
-msgstr ""
+msgstr "I_nspringruimte en uitlijnen oplezen"
 
 #: ../src/orca/orca-setup.glade.h:46 ../src/orca/orca_gui_prefs.py:1079
 msgid "Speak current _cell"
-msgstr ""
+msgstr "Huidige _cell oplezen"
 
 #: ../src/orca/orca-setup.glade.h:47
 msgid "Speak current ro_w"
-msgstr ""
+msgstr "Huidige _rij oplezen"
 
 #: ../src/orca/orca-setup.glade.h:48
 msgid "Speech"
@@ -739,12 +751,12 @@ msgstr "Spraaks_ynthesizer:"
 # uitvoerig/uitgebreid
 #: ../src/orca/orca-setup.glade.h:51
 msgid "Ver_bose"
-msgstr ""
+msgstr "_Uitvoerig"
 
 # volume geluidssterkte
 #: ../src/orca/orca-setup.glade.h:52
 msgid "Vo_lume:"
-msgstr ""
+msgstr "_Geluidsvolume:"
 
 #: ../src/orca/orca-setup.glade.h:53
 msgid ""
@@ -765,9 +777,10 @@ msgstr "_Alles"
 msgid "_Bottom:"
 msgstr "_Onder:"
 
+# hier is 'aanzetten' beter vind ik (tino)
 #: ../src/orca/orca-setup.glade.h:58
 msgid "_Enable speech"
-msgstr ""
+msgstr "_Oplezen aanzetten"
 
 # linkerkant/links
 #: ../src/orca/orca-setup.glade.h:59
@@ -847,13 +860,12 @@ msgid "Num_Lock"
 msgstr "Num_Lock"
 
 #: ../src/orca/orca.py:775
-#, fuzzy
 msgid "Speech enabled."
-msgstr "Spraak zal niet worden gebruikt.\n"
+msgstr "Oplezen aangezet."
 
 #: ../src/orca/orca.py:777
 msgid "Speech disabled."
-msgstr ""
+msgstr "Oplezen uitgezet."
 
 #: ../src/orca/orca.py:815
 msgid "Orca user settings reloaded."
@@ -886,15 +898,15 @@ msgstr "-v, --version                %s"
 
 #: ../src/orca/orca.py:1098
 msgid "-s, --setup, --gui-setup     Set up user preferences"
-msgstr ""
+msgstr "-s, --setup, --gui-setup     Gebruikersinstellingen"
 
 #: ../src/orca/orca.py:1099
 msgid "-t, --text-setup             Set up user preferences (text version)"
-msgstr ""
+msgstr "-t, --text-setup             Gebruikersinstellingen (tekstversie)"
 
 #: ../src/orca/orca.py:1100
 msgid "-n, --no-setup               Skip set up of user preferences"
-msgstr ""
+msgstr "-n, --no-setup               Gebruikersinstellingen overslaan"
 
 #: ../src/orca/orca.py:1102
 msgid ""
@@ -902,11 +914,15 @@ msgid ""
 "will automatically launch the preferences set up unless\n"
 "the -n or --no-setup option is used."
 msgstr ""
+"Indien Orca niet eerder door de gebruiker ingesteld is, zal\n"
+"Orca automatisch de gebruikersinstellingen tonen tenzij de\n"
+"opties -n of --no-setup gebruikt worden."
 
 #: ../src/orca/orca.py:1104
 msgid "Report bugs to orca-list@gnome.org."
 msgstr "Rapporteer fouten bij orca-list@gnome.org."
 
+# zie ook: speech is not available
 #: ../src/orca/orca_console_prefs.py:93 ../src/orca/orca_console_prefs.py:109
 msgid "Speech is unavailable."
 msgstr "Spraak is niet beschikbaar."
@@ -915,10 +931,10 @@ msgstr "Spraak is niet beschikbaar."
 msgid "Welcome to Orca setup."
 msgstr "Welkom bij de Orca configuratie."
 
+# voorleessysteem/opleessysteem
 #: ../src/orca/orca_console_prefs.py:112
-#, fuzzy
 msgid "Select desired speech system:"
-msgstr "Kies standaard stemsynthesizer"
+msgstr "Kies het gewenste spraaksysteem:"
 
 #: ../src/orca/orca_console_prefs.py:117 ../src/orca/orca_console_prefs.py:138
 #: ../src/orca/orca_console_prefs.py:164
@@ -929,7 +945,7 @@ msgstr "%d. %s"
 #: ../src/orca/orca_console_prefs.py:120 ../src/orca/orca_console_prefs.py:141
 #: ../src/orca/orca_console_prefs.py:171
 msgid "Enter choice: "
-msgstr "Geef keuze: "
+msgstr "Geef uw keuze: "
 
 #: ../src/orca/orca_console_prefs.py:122 ../src/orca/orca_console_prefs.py:130
 #: ../src/orca/orca_console_prefs.py:143 ../src/orca/orca_console_prefs.py:152
@@ -942,9 +958,8 @@ msgid "No servers available.\n"
 msgstr "Geen servers beschikbaar.\n"
 
 #: ../src/orca/orca_console_prefs.py:133
-#, fuzzy
 msgid "Select desired speech server."
-msgstr "Kies standaard stemsynthesizer"
+msgstr "Kies het gewenste spraaksysteem."
 
 #: ../src/orca/orca_console_prefs.py:151
 msgid "No voices available.\n"
@@ -983,48 +998,43 @@ msgstr "Toetsecho gebruiken?  Geef j of n: "
 
 #: ../src/orca/orca_console_prefs.py:241
 msgid "Enable alphanumeric and punctuation keys?  Enter y or n: "
-msgstr ""
+msgstr "Alhanumerieke tekens en leestekens gebruiken? Geef j of n: "
 
 #: ../src/orca/orca_console_prefs.py:249
-#, fuzzy
 msgid "Enable modifier keys?  Enter y or n: "
-msgstr "Een andere stem aanmaken?  Geef j of n: "
+msgstr "Controle-toetsen gebruiken?  Geef j of n: "
 
+# caps-lock/num-lock/scroll-lock
 #: ../src/orca/orca_console_prefs.py:257
-#, fuzzy
 msgid "Enable locking keys?  Enter y or n: "
-msgstr "Toets echo gebruiken?  Geef j of n: "
+msgstr "Lock-toetsen gebruiken?  Geef j of n: "
 
 #: ../src/orca/orca_console_prefs.py:265
-#, fuzzy
 msgid "Enable function keys?  Enter y or n: "
-msgstr "Toets echo gebruiken?  Geef j of n: "
+msgstr "Functietoetsen gebruiken?  Geef j of n: "
 
 #: ../src/orca/orca_console_prefs.py:273
-#, fuzzy
 msgid "Enable action keys?  Enter y or n: "
-msgstr "Toets echo gebruiken?  Geef j of n: "
+msgstr "Actietoetsen gebruiken?  Geef j of n: "
 
 #: ../src/orca/orca_console_prefs.py:301
-#, fuzzy
 msgid "Enable Braille?  Enter y or n: "
-msgstr "Een andere stem aanmaken?  Geef j of n: "
+msgstr "Braille gebruiken?  Geef j of n: "
 
 #: ../src/orca/orca_console_prefs.py:309
-#, fuzzy
 msgid "Enable Braille Monitor?  Enter y or n: "
-msgstr "Een andere stem aanmaken?  Geef j of n: "
+msgstr "Braillemonitor gebruiken?  Geef j of n: "
 
+# BUG: extra witruimte veroorzaakt dubbel bericht
 #: ../src/orca/orca_console_prefs.py:319
 msgid "Accessibility support for GNOME has just been enabled. "
-msgstr ""
+msgstr "Toegankelijkheid-ondersteuning voor Gnome is zojuist aangezet. "
 
+# BUG: extra spatie op eind
 # effectief zijn/effect hebben/doorgevoerd worden
 #: ../src/orca/orca_console_prefs.py:324
 msgid "You need to log out and log back in for the change to take effect. "
-msgstr ""
-"U moet eerst afmelden en opnieuw aanmelden voordat de wijzigingen effect "
-"hebben."
+msgstr "U moet eerst afmelden en opnieuw aanmelden voordat de wijzigingen effect hebben. "
 
 #: ../src/orca/orca_console_prefs.py:330
 msgid "Setup complete.  Press Return to continue."
@@ -1032,9 +1042,8 @@ msgstr "Configuratie voltooid. Geef Return om door te gaan."
 
 #: ../src/orca/orca_gui_prefs.py:128 ../src/orca/orca_gui_prefs.py:424
 #: ../src/orca/orca_gui_prefs.py:466
-#, fuzzy
 msgid "Speech not available."
-msgstr "Spraak zal niet worden gebruikt.\n"
+msgstr "Spraak niet beschikbaar."
 
 #: ../src/orca/orca_gui_prefs.py:366 ../src/orca/orca_gui_prefs.py:370
 #: ../src/orca/orca_gui_prefs.py:1311
@@ -1071,13 +1080,14 @@ msgstr "Hoofdletter"
 msgid "Hyperlink"
 msgstr "Hyperlink"
 
+# ondersteuning voor toegankelijkheid/toegankelijkheid/
 #: ../src/orca/orca_gui_prefs.py:1399
 msgid "Accessibility support for GNOME has just been enabled."
-msgstr ""
+msgstr "Toegankelijkheid-ondersteuning voor Gnome is zojuist aangezet."
 
 #: ../src/orca/orca_gui_prefs.py:1400
 msgid "You need to log out and log back in for the change to take effect."
-msgstr ""
+msgstr "U moet eerst afmelden en opnieuw aanmelden voordat de wijzigingen effect hebben."
 
 #: ../src/orca/rolenames.py:147
 msgid "???"
@@ -1301,9 +1311,8 @@ msgid "draw"
 msgstr ""
 
 #: ../src/orca/rolenames.py:243
-#, fuzzy
 msgid "DrawingArea"
-msgstr "tekengebied"
+msgstr ""
 
 #: ../src/orca/rolenames.py:244
 msgid "drawing area"
@@ -1317,7 +1326,7 @@ msgstr ""
 msgid "FileChooser"
 msgstr ""
 
-# bestandenkiezer
+# bestandenkiezer/bestandsverkenner
 #: ../src/orca/rolenames.py:249
 msgid "file chooser"
 msgstr "bestandskiezer"
@@ -1537,7 +1546,7 @@ msgstr "pwd"
 
 #: ../src/orca/rolenames.py:348
 msgid "Password"
-msgstr ""
+msgstr "Wachtwoord"
 
 #: ../src/orca/rolenames.py:349
 msgid "password"
@@ -1683,9 +1692,8 @@ msgstr ""
 
 #: ../src/orca/rolenames.py:408
 msgid "Slider"
-msgstr ""
+msgstr "Schuifknop"
 
-# schuifknop/schuiver
 #: ../src/orca/rolenames.py:409
 msgid "slider"
 msgstr "schuifknop"
@@ -1733,7 +1741,7 @@ msgstr ""
 
 #: ../src/orca/rolenames.py:428
 msgid "Table"
-msgstr ""
+msgstr "Tabel"
 
 #: ../src/orca/rolenames.py:429
 msgid "table"
@@ -1773,7 +1781,7 @@ msgstr ""
 
 #: ../src/orca/rolenames.py:458
 msgid "Text"
-msgstr ""
+msgstr "Tekst"
 
 #: ../src/orca/rolenames.py:459
 msgid "text"
@@ -1987,7 +1995,9 @@ msgstr "agendanotitie"
 msgid " screen"
 msgstr " scherm"
 
-# in nl zeggen we eigenlijk nooit aub
+# in nl zeggen we eigenlijk nooit alstublieft, we laten het weg.
+# Doordat de zinnen nu in stukjes opgedeeld worden, kunnen we het niet
+# goed vertalen. Dit is een BUG.
 #. Most of the Setup Assistant screens have a useful piece
 #. of text starting with the word "Please". We want to speak
 #. these. For the first screen, the useful piece of text
@@ -1995,9 +2005,8 @@ msgstr " scherm"
 #. with "Congratulations". Speak those too.
 #.
 #: ../src/orca/scripts/Evolution.py:178
-#, fuzzy
 msgid "Please"
-msgstr "Pagina"
+msgstr "Alstublieft"
 
 #: ../src/orca/scripts/Evolution.py:179
 msgid "Welcome"
@@ -2057,11 +2066,11 @@ msgstr "Foutgespeld woord:"
 #. Try to detect this and let the user know.
 #: ../src/orca/scripts/gedit.py:165
 msgid "Completed spell checking"
-msgstr ""
+msgstr "Spellingscontrole voltooid"
 
 #: ../src/orca/scripts/gedit.py:166
 msgid "Spell checking is complete."
-msgstr "Spellingscontrole is voltooid."
+msgstr "De spellingscontrole is voltooid."
 
 #: ../src/orca/scripts/gedit.py:168
 msgid "Press Tab and Return to terminate."
@@ -2074,7 +2083,7 @@ msgstr "Controleer spelling"
 
 #: ../src/orca/scripts/StarOffice.py:243
 msgid "Speaks the contents of the input line."
-msgstr ""
+msgstr "Leest de inhoud van de invoerregel."
 
 #: ../src/orca/scripts/StarOffice.py:283
 msgid "empty"
@@ -2097,13 +2106,12 @@ msgid "License Agreement Accept button now has focus."
 msgstr ""
 
 #: ../src/orca/scripts/StarOffice.py:617
-#, fuzzy
 msgid "First name"
-msgstr "Frame"
+msgstr "Voornaam"
 
 #: ../src/orca/scripts/StarOffice.py:865
 msgid " has formula"
-msgstr ""
+msgstr " heeft formule"
 
 #. Note to translators: the regular expression here represents a
 #. string to match in the localized application name as seen by
@@ -2172,7 +2180,7 @@ msgid "not checked"
 msgstr "niet aangevinkt"
 
 #: ../src/orca/speechgenerator.py:909 ../src/orca/speechgenerator.py:912
-#: ../src/orca/util.py:1122
+#: ../src/orca/util.py:1183
 msgid "selected"
 msgstr "geselecteerd"
 
@@ -2185,39 +2193,39 @@ msgstr "niet geselecteerd"
 msgid "tear off"
 msgstr "afscheuren"
 
-#: ../src/orca/util.py:384
+#: ../src/orca/util.py:433
 msgid "Misspelled word: "
 msgstr "Foutgespeld woord: "
 
-#: ../src/orca/util.py:385
+#: ../src/orca/util.py:434
 msgid " Context is "
 msgstr " Context is "
 
-#: ../src/orca/util.py:1066
+#: ../src/orca/util.py:1127
 msgid "page selected from cursor position"
 msgstr "pagina geselecteerd vanaf cursorpositie"
 
-#: ../src/orca/util.py:1070
+#: ../src/orca/util.py:1131
 msgid "page selected to cursor position"
 msgstr "pagina geselecteerd tot aan cursorpositie"
 
-#: ../src/orca/util.py:1074
+#: ../src/orca/util.py:1135
 msgid "line selected down from cursor position"
 msgstr "regel geselecteerd vanaf cursorpositie"
 
-#: ../src/orca/util.py:1078
+#: ../src/orca/util.py:1139
 msgid "line selected up from cursor position"
 msgstr "regel geselecteerd tot aan cursorpositie"
 
-#: ../src/orca/util.py:1082
+#: ../src/orca/util.py:1143
 msgid "document selected to cursor position"
 msgstr "document geselecteerd tot aan cursorpositie"
 
-#: ../src/orca/util.py:1086
+#: ../src/orca/util.py:1147
 msgid "document selected from cursor position"
 msgstr "document geselecteerd vanaf cursorpositie"
 
-#: ../src/orca/util.py:1130
+#: ../src/orca/util.py:1191
 msgid "unselected"
 msgstr "gedeselecteerd"
 
@@ -2250,18 +2258,6 @@ msgstr "gedeselecteerd"
 
 #~ msgid "Creating .orca directory."
 #~ msgstr "Bezig met aanmaken .orca map."
-
-#, fuzzy
-#~ msgid "Creating .orca script directory."
-#~ msgstr "Bezig met aanmaken .orca map."
-
-#, fuzzy
-#~ msgid "Creating __init_.py in .orca script directory."
-#~ msgstr "Bezig met aanmaken .orca map."
-
-#, fuzzy
-#~ msgid "tabs"
-#~ msgstr "tab"
 
 #~ msgid "Braille support appears to work, use it?  Enter y or n. "
 #~ msgstr "Braille-ondersteuning lijkt te werken, gebruiken?  Geef j of n. "
