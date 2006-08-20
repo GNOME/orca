@@ -1,3 +1,10 @@
+2006-08-19  Willie Walker <william.walker@sun.com>
+
+	* configure.in: fix bug 352073 - provide "gnome-python with
+	bonobo" hint for missing dependency.  Also provide a note at the
+	end providing a more obvious message when support for
+	BrlTTY/BrlAPI cannot be found.
+	
 2006-08-19  Mike Pedersen <michael.pedersen@sun.com> 
 
         *  docs/doc-set/ue_requirements.sgml
