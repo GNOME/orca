@@ -38,6 +38,9 @@ for the Java platform:
    * Fix for bug 350724: improve handling of LABEL_FOR and LABELLED_BY
      objects.
 
+   * Fix for bug 351914: provide better support for combo boxes on
+     Java platform.
+
 * Fix for bug 350213: provide defensive programming for combo box
 braille generator.
 

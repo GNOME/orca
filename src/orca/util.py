@@ -249,8 +249,11 @@ def __getDisplayedTextInComboBox(combo):
         selectedItem = None
         comboSelection = combo.selection
         if comboSelection and comboSelection.nSelectedChildren > 0:
-            selectedItem = atspi.Accessible.makeAccessible(
-                comboSelection.getSelectedChild(0))
+            try:
+                selectedItem = atspi.Accessible.makeAccessible(
+                    comboSelection.getSelectedChild(0))
+            except:
+                pass
         if selectedItem:
             displayedText = getDisplayedText(selectedItem)
             #print "SELECTEDITEM", displayedText
