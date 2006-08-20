@@ -237,8 +237,8 @@
 	  <para>&complete; [OWNER: WDW] Complete as of 0.2.5..</para>
         </listitem>
         <listitem>
-          <para>CONTROL+INSERT+s: resets connection to the speech 
-            engine.</para>
+          <para>CONTROL+INSERT+space: resets connection to the speech 
+            engine as well as reloads all user settings.</para>
 	  <para>&complete; [OWNER: WDW] Complete as of 0.2.5..</para>
         </listitem>
         <listitem>
@@ -266,7 +266,7 @@
         </listitem>
         <listitem>
           <para>INSERT+SPACE: brings up configuration GUI</para>
-	  <para>&incomplete; [OWNER: RNB] Completed as of 0.2.5 along with the config UI.</para>
+	  <para>&complete; [OWNER: RNB] Completed as of 0.2.5 along with the config UI.</para>
         </listitem>
       </itemizedlist>
 

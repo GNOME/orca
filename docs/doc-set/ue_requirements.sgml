@@ -119,7 +119,7 @@
 
         <para>&incomplete; [OWNER: LMS] Orca has been simultaneously
           tested with BrlTTY, GOK, and Dasher.  Orca still needs
-          testing, however, with AccessX. &mustdeliver; V1.0.</para>
+          testing, however, with AccessX. &mustdeliver; V1.1.</para>
 
       </section>
 
@@ -216,7 +216,7 @@
 	      settings.</para>
           </listitem>
           <listitem>
-	    <para>&incomplete; [OWNER: RNB] Keystroke to speak/braille application with 
+	    <para>&complete; [OWNER: RNB] Keystroke to speak/braille application with 
 	      focus. &mustdeliver; V1.0.</para>
 	  </listitem>
           <listitem>
@@ -321,7 +321,7 @@
               <row>
                 <entry>Document Generation</entry>
                 <entry>StarOffice 8 PP3, OpenOffice 2.0.3 (initial); StarOffice 8 PP4, OpenOffice 2.0.4 (better)</entry>
-                <entry>&incomplete; [OWNER: RNB] Working with StarOffice team to fix AT-SPI issues; Script under development. &mustdeliver V1.0</entry>
+                <entry>&incomplete; [OWNER: RNB] Working with StarOffice team to fix AT-SPI issues; Script under development.  Note that this is an on going task but much progress has been made for V1.0. &mustdeliver V1.0</entry>
 		<entry>&sowritertestlink;</entry>
               </row>
 	      <row>
@@ -339,8 +339,8 @@
 	      <row>
 	        <entry>Web Browsing</entry>
 		<entry>Firefox 2.0 (minimal); Firefox 3.0 (better)</entry>
-		<entry>&incomplete; [OWNER: RNB] Working with Firefox team to fix issues with
-		  accessing the Firefox widget set (XUL) for 2.0  &mustdeliver; V1.0.  Working with
+		<entry>&incomplete; [OWNER: LMS] Working with Firefox team to fix issues with
+		  accessing the Firefox widget set (XUL) for 2.0.  Firefox 2.0 is probably as good as it is going to get.    &mustdeliver; V1.0.  Working with
 		  IBM and Firefox team to provide better information
 		  via AT-SPI for FF3 - &mustdeliver; V1.1.</entry>
 		<entry>&ff2testlink;</entry>
@@ -356,7 +356,7 @@
 	      <row>
 	        <entry>Java platform</entry>
 		<entry>Swing toolkit</entry>
-		<entry>&incomplete; [OWNER: LMS] minimal testing, <ulink
+		<entry>&complete; [OWNER: LMS] minimal testing, <ulink
 		  url="http://bugzilla.gnome.org/show_bug.cgi?id=319639">bug
 		  with keycodes</ulink> - &mustdeliver; V1.0</entry>
 		<entry>&javatestlink;</entry>
@@ -494,7 +494,7 @@
 
         <para>&textattributestestlink;</para>
 
-        <para>&incomplete; [OWNER: MMP - further define requirements and
+        <para>&complete; [OWNER: MMP - further define requirements and
 	  functionality] [OWNER: RNB - implementation] need
 	  to define what to deliver. &mustdeliver; V1.0.</para>
       </section>
@@ -556,11 +556,9 @@
         not.</para>
       <section><title>Functional Description and Status</title>
         <para>&whereamitestlink;</para>
-        <para>&incomplete; [OWNER: MMP - further define requirements and
+        <para>&complete; [OWNER: MMP - further define requirements and
 	  functionality] [OWNER: WDW - implementation]
-	  currently provides top down "Where am I" functionality only.
-	  Should provide both bottom up and top down.  In addition,
-	  the user design for this needs to be better specified.
+	  currently provides top down "Where am I" functionality.
 	  &mustdeliver; V1.0.</para>
       </section>
     </section>
@@ -825,28 +823,28 @@
         <para>&incomplete; Verbalized caps. &mustdeliver; V1.1.</para>
 
         <para>&incomplete; [OWNER: RNB] Verbalized
-          hyperlinks. &mustdeliver; V1.0.</para>
+          hyperlinks. &mustdeliver; V1.1.</para>
 
         <para>&complete; V0.2.2.  Speaking rate modification.
           Insert+{left,right}_arrow.</para>
 
         <para>&incomplete; Multilingual text. &deliver; V1.1+.</para>
 
-        <para>&incomplete; [OWNER: MMP - further define requirements and functionality]
+        <para>&complete; [OWNER: MMP - further define requirements and functionality]
 	  [OWNER: WDW - implementation] 
 	  Spelling mode (letters). &mustdeliver; V1.0.</para>
 
         <para>&incomplete; [OWNER: MMP - further define requirements and functionality]
 	  [OWNER: WDW - implementation] 
-          Spelling mode (military). &mustdeliver; V1.0.</para>
+          Spelling mode (military). &mustdeliver; V1.1.</para>
 
-        <para>&incomplete; [OWNER: MMP - further define requirements and functionality]
+        <para>&complete; [OWNER: MMP - further define requirements and functionality]
 	  [OWNER: WDW - implementation] 
           Verbalized punctuation. &mustdeliver; V1.0.</para>
 
         <para>&incomplete; [OWNER: MMP - further define requirements and functionality]
 	  [OWNER: WDW - implementation] 
-          Repeated character count. &shoulddeliver; V1.0.</para>
+          Repeated character count. &shoulddeliver; V1.1.</para>
 
       </section>
 
@@ -864,7 +862,7 @@
 
         <para>&keywordechotestlink;</para>
 
-        <para>&incomplete; [OWNER: RNB] &mustdeliver; V1.0.</para>
+        <para>&complete; [OWNER: RNB] &mustdeliver; V1.0.</para>
 
         <para>There will be two main options for selecting key and
           word echo: key and word.  These are not mutually
@@ -1046,7 +1044,7 @@
 
         <para>&incomplete; [OWNER: MMP - further define requirements and functionality]
 	  [OWNER: WDW - implementation] 
-          Effective use of space.  Not addressed at all. &mustdeliver V1.0.</para>
+          Effective use of space.  Not addressed at all. &mustdeliver V1.1.</para>
 
         <para>&incomplete; Effective use of input buttons. Does OK for
           general panning and flat review control, but other

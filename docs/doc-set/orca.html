@@ -2928,8 +2928,7 @@ TARGET="_top"
 >Communication with gnome-speech: Failures
 	      are currently handled with a restart of the connection
 	      to gnome-speech, including providing a fallback to
-	      working speech engines.  Hangs, however, are not
-	      detected, and can cause Orca to hang. <SPAN
+	      working speech engines.   <SPAN
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
@@ -2941,10 +2940,7 @@ CLASS="EMPHASIS"
 ><LI
 ><P
 >Communication with at-spi: Failures are
-	      currently handled somewhat gracefully.  Hangs, however,
-	      can occur and are not detected. Some of this may be
-	      resolved with a new multi-threaded event queue mechanism
-	      to be put in the at-spi registry itself [[[WDW - need
+	      currently handled somewhat gracefully.   [[[WDW - need
 	      pointer to at-spi RFE]]], but Orca still needs to detect
 	      and recover from hangs when calling at-spi
 	      functions. <SPAN
@@ -3063,16 +3059,13 @@ CLASS="EMPHASIS"
 ></SPAN
 > [OWNER: LMS] Orca has been simultaneously
           tested with BrlTTY, GOK, and Dasher.  Orca still needs
-          testing, however, with AccessX and with Gnopernicus to
-          verify that we can use Gnopernicus as a magnification
-          solution while we build out magnification support in
-          Orca. <SPAN
+          testing, however, with AccessX. <SPAN
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
 >MUST DELIVER FOR</I
 ></SPAN
-> V1.0.</P
+> V1.1.</P
 ></DIV
 ></DIV
 ><DIV
@@ -3275,7 +3268,7 @@ CLASS="EMPHASIS"
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
->INCOMPLETE:</I
+>COMPLETE:</I
 ></SPAN
 > [OWNER: RNB] Keystroke to speak/braille application with 
 	      focus. <SPAN
@@ -3292,7 +3285,7 @@ CLASS="EMPHASIS"
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
->INCOMPLETE:</I
+>COMPLETE:</I
 ></SPAN
 > [OWNER: RNB] Keystroke to speak/braille
 	      the current script (and script class) in use. <SPAN
@@ -3310,7 +3303,7 @@ CLASS="EMPHASIS"
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
->INCOMPLETE:</I
+>COMPLETE:</I
 ></SPAN
 > [OWNER: RNB] Keystroke to dump
 	      all applications.  Currently bound to Insert+F5, needs to
@@ -3328,7 +3321,7 @@ CLASS="EMPHASIS"
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
->INCOMPLETE:</I
+>COMPLETE:</I
 ></SPAN
 > [OWNER: RNB] Keystroke to dump the ancestors
 	      of the object with focus.  Currently bound to Insert+F7,
@@ -3346,7 +3339,7 @@ CLASS="EMPHASIS"
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
->INCOMPLETE:</I
+>COMPLETE:</I
 ></SPAN
 > [OWNER: RNB] Keystroke to dump the
 	      widget hierarchy of the application with
@@ -3507,7 +3500,7 @@ CLASS="emphasis"
 CLASS="EMPHASIS"
 >SHOULD DELIVER FOR</I
 ></SPAN
-> V1.0.</TD
+> V1.1+.</TD
 ><TD
 ><A
 HREF="#ECALTEST"
@@ -3562,10 +3555,9 @@ HREF="#GAIMTEST"
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
->INCOMPLETE:</I
+>COMPLETE:</I
 ></SPAN
-> [OWNER: LMS] No script and
-                  untested. <SPAN
+> [OWNER: LMS] mozilla script. <SPAN
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
@@ -3590,7 +3582,7 @@ CLASS="emphasis"
 CLASS="EMPHASIS"
 >INCOMPLETE:</I
 ></SPAN
-> [OWNER: RNB] Working with StarOffice team to fix AT-SPI issues; Script under development. <SPAN
+> [OWNER: RNB] Working with StarOffice team to fix AT-SPI issues; Script under development.  Note that this is an on going task but much progress has been made for V1.0. <SPAN
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
@@ -3665,10 +3657,8 @@ CLASS="emphasis"
 CLASS="EMPHASIS"
 >INCOMPLETE:</I
 ></SPAN
-> [OWNER: RNB] Working with Firefox team to fix issues with
-		  accessing the Firefox widget set (XUL) for 2.0 and
-		  also working on a structural caret navigation
-		  extension for FF2 - <SPAN
+> [OWNER: LMS] Working with Firefox team to fix issues with
+		  accessing the Firefox widget set (XUL) for 2.0.  Firefox 2.0 is probably as good as it is going to get.    <SPAN
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
@@ -3701,8 +3691,8 @@ CLASS="emphasis"
 CLASS="EMPHASIS"
 >INCOMPLETE:</I
 ></SPAN
-> [OWNER: MMP] needs testing and
-		  possible work from Adobe. <SPAN
+> [OWNER: MMP] 
+		   needs work from Adobe. <SPAN
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
@@ -3726,7 +3716,7 @@ HREF="#ACROREADTEST"
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
->INCOMPLETE:</I
+>COMPLETE:</I
 ></SPAN
 > [OWNER: LMS] minimal testing, <A
 HREF="http://bugzilla.gnome.org/show_bug.cgi?id=319639"
@@ -3784,7 +3774,7 @@ NAME="AEN624"
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
->INCOMPLETE:</I
+>COMPLETE:</I
 ></SPAN
 > [OWNER: MMP - further define requirements and
 	  functionality] [OWNER: RNB - implementation] 
@@ -3830,7 +3820,7 @@ HREF="#STYLEGUIDE"
 >When navigating text areas in a character-by-character or
         word-by-word fashion (or any linear fashion for that matter),
         Orca must provide an option to play an audio cue when the
-        caret crosses line boundaries.</P
+        caret crosses line boundaries.  This will be looked at in a future release.</P
 ><DIV
 CLASS="SECTION"
 ><HR><H3
@@ -3853,7 +3843,7 @@ CLASS="emphasis"
 CLASS="EMPHASIS"
 >SHOULD DELIVER FOR</I
 ></SPAN
-> V1.1.</P
+> V1.1+.</P
 ></DIV
 ></DIV
 ><DIV
@@ -3880,7 +3870,7 @@ NAME="URFLATREVIEW"
 >Play audio cues across line boundaries.</P
 ><P
 >In addition, when in flat review mode, Orca will
-        optionally allow the mouse to follow the object of interest.</P
+        optionally allow the mouse to follow the object of interest.  This will be added in a future release.</P
 ><P
 >The review of the desktop will follow the <A
 HREF="#STYLEGUIDE"
@@ -3940,7 +3930,7 @@ CLASS="EMPHASIS"
 >SHOULD DELIVER FOR</I
 ></SPAN
 >
-          V1.0.</P
+          V1.1.</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -3972,7 +3962,7 @@ NAME="URTEXTATTRIBUTES"
         the current word, Orca must provide the ability to spell it
         out in either letter-by-letter or phonetic (e.g., military
         spelling) mode.  When speaking a line or set of lines, Orca
-        must offer the ability to verbalize punctuation, and must provide several levels of punctutation verbalization (none, some, most, all).</P
+        must offer the ability to verbalize punctuation, and must provide several levels of punctuation verbalization (none, some, most, all).</P
 ><P
 >Orca must provide the ability to present the following to the
         user:</P
@@ -4064,7 +4054,7 @@ HREF="#TEXTATTRIBUTESTEST"
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
->INCOMPLETE:</I
+>COMPLETE:</I
 ></SPAN
 > [OWNER: MMP - further define requirements and
 	  functionality] [OWNER: RNB - implementation] need
@@ -4228,13 +4218,11 @@ HREF="#WHEREAMITEST"
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
->INCOMPLETE:</I
+>COMPLETE:</I
 ></SPAN
 > [OWNER: MMP - further define requirements and
 	  functionality] [OWNER: WDW - implementation]
-	  currently provides top down "Where am I" functionality only.
-	  Should provide both bottom up and top down.  In addition,
-	  the user design for this needs to be better specified.
+	  currently provides top down "Where am I" functionality.
 	  <SPAN
 CLASS="emphasis"
 ><I
@@ -4516,14 +4504,11 @@ HREF="#SAYALLTEST"
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
->INCOMPLETE:</I
+>COMPLETE:</I
 ></SPAN
 > [OWNER: RNB] reading works well in GEdit,
 	  including setting the caret position when speech is
-	  interrupted.  Does not work well at all in in Evolution,
-	  StarOffice, Firefox, etc.  The main issue is the it only
-	  speaks the current text object and probably should speak
-	  contiguous text objects in the same hierarchy.
+	  interrupted.  
 	  <SPAN
 CLASS="emphasis"
 ><I
@@ -4840,7 +4825,7 @@ CLASS="emphasis"
 CLASS="EMPHASIS"
 >MUST DELIVER FOR</I
 ></SPAN
-> V1.0.</P
+> V1.1.</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -4869,7 +4854,7 @@ CLASS="EMPHASIS"
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
->INCOMPLETE:</I
+>COMPLETE:</I
 ></SPAN
 > [OWNER: MMP - further define requirements and functionality]
 	  [OWNER: WDW - implementation] 
@@ -4895,13 +4880,13 @@ CLASS="emphasis"
 CLASS="EMPHASIS"
 >MUST DELIVER FOR</I
 ></SPAN
-> V1.0.</P
+> V1.1.</P
 ><P
 ><SPAN
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
->INCOMPLETE:</I
+>COMPLETE:</I
 ></SPAN
 > [OWNER: MMP - further define requirements and functionality]
 	  [OWNER: WDW - implementation] 
@@ -4927,7 +4912,7 @@ CLASS="emphasis"
 CLASS="EMPHASIS"
 >SHOULD DELIVER FOR</I
 ></SPAN
-> V1.0.</P
+> V1.1.</P
 ></DIV
 ></DIV
 ><DIV
@@ -4962,7 +4947,7 @@ HREF="#KEYWORDECHOTEST"
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
->INCOMPLETE:</I
+>COMPLETE:</I
 ></SPAN
 > [OWNER: RNB] <SPAN
 CLASS="emphasis"
@@ -5269,7 +5254,7 @@ CLASS="emphasis"
 CLASS="EMPHASIS"
 >MUST DELIVER FOR</I
 ></SPAN
-> V1.0.</P
+> V1.1.</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -6208,8 +6193,8 @@ CLASS="EMPHASIS"
 ></LI
 ><LI
 ><P
->CONTROL+INSERT+s: resets connection to the speech 
-            engine.</P
+>CONTROL+INSERT+space: resets connection to the speech 
+            engine as well as reloads all user settings.</P
 ><P
 ><SPAN
 CLASS="emphasis"
@@ -6300,7 +6285,7 @@ CLASS="EMPHASIS"
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
->INCOMPLETE:</I
+>COMPLETE:</I
 ></SPAN
 > [OWNER: RNB] Completed as of 0.2.5 along with the config UI.</P
 ></LI
