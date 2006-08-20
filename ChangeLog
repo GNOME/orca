@@ -1,5 +1,9 @@
 2006-08-19  Willie Walker <william.walker@sun.com>
 
+	* NEWS, configure.in, README: initial prep for 0.9.0.
+
+2006-08-19  Willie Walker <william.walker@sun.com>
+
 	* configure.in: fix bug 352073 - provide "gnome-python with
 	bonobo" hint for missing dependency.  Also provide a note at the
 	end providing a more obvious message when support for

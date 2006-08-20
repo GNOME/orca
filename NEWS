@@ -1,4 +1,97 @@
-0.2.8 
+0.9.0 - 21-Aug-2006
+
+* For regression testing purposes, allow us to get what would have
+been spoken even if settings.speechServerFactory is None.
+
+* Improvements to the "orca" shell script.  Provides better
+availability and also provides a better means for killing/restarting
+Orca.
+
+* New orca.desktop file and icon.
+
+* New latent support to allow the setting of the source and target
+displays for magnification.  If it exists,
+settings.magnifierTargetDisplay will be treated as an X Window System
+DISPLAY string (e.g., ":0.1") that says where to display the magnified
+area (the default is split screen magnification on the primary
+display).  If it exists, settings.magnifierSourceDisplay will be
+treated as an X Window System DISPLAY string (e.g., ":0.0") that says
+what is to be magnified.
+	
+* Updates to the requirements guide.
+
+* Many thanks to our friends at Baum for providing many fixes and testing
+for the Java platform:
+
+   * Fix for bug 351891: provide better handling when receiving an
+     active descendant changed for an object with no active
+     descendant.
+
+   * Fix for bug 350740: report combo box selection change for Java
+     applications.
+
+   * Fix for bug 350736: better presentation for focused lists in Java
+     applications.
+
+   * Fix for bug 350739: improve list navigation for the Java platform. 
+
+   * Fix for bug 350724: improve handling of LABEL_FOR and LABELLED_BY
+     objects.
+
+* Fix for bug 350213: provide defensive programming for combo box
+braille generator.
+
+* Fix for bug 351501: do not generate a traceback when trying to
+braille Evolution message folder tree.
+
+* Fix for bug 350854: handle object:state-changed:focused events so
+Orca will recognize when GEdit's edit area has focus again after a
+maximize/unmaxmize of GEdit's window on GNOME 2.15/16.
+	
+* Fix for bug 352073: provide "gnome-python with bonobo" hint for
+missing dependency.  Also provide a note at the end providing a more
+obvious message when support for BrlTTY/BrlAPI cannot be found.
+
+* Fix for bug 351847: add defensive code in the event the AT-SPI
+implementation gives us a cycle when looking at the
+RELATION_NODE_CHILD_OF relation.
+	
+* Fix for bug 349465: take some defensive actions in the event that
+the AT-SPI implementation has implemented getTextAtOffset incorrectly
+(i.e., it gives back garbage for offsets).
+
+* Fix for bug 350218: GtkDemo Editable cells tree demo no longer
+speaks both cells in a row
+
+* Fix for bug 350294: Eliminate TypeError in _initGUIState in GUI prefs.
+
+* Fix for bug 350212: Improve speaking of Spin Button changes.
+
+* New/Updated Translations (Thanks!): 
+    Catalan:     Josep Puigdemont i Casamajó (NEW)
+    Chinese:     (Traditional Hong Kong) Chao-Hsiung Liao
+    Chinese:     (Traditional Taiwan) Chao-Hsiung Liao
+    Dzongkha:    Guntupalli Karunakar
+    Finnish:     Ilkka Tuohela
+    German:      Hendrik Brandt
+    Greek:       Nikos Charonitakis
+    Gujarati:    Ankit Patel
+    Japanese:    Satoru SATOH (NEW)
+    Korean:      Changwoo Ryu (NEW)
+    Lithuanian:  Žygimantas Beručka (NEW)
+    Macedonian:  Jovan Naumovski
+    Marathi:     Rahul Bhalerao (NEW)
+    Norwegian:   (Bokmål) Sigurd Gartmann
+    Russian:     Nickolay V. Shmyrev (NEW)
+    Spanish:     Francisco Javier F. Serrador
+    Swedish:	 Danial Nylander
+    Tino Meinen: Vincent van Adrighem
+    Ukrainian:   Maxim Dziumanenko
+    Vietnamese:  Clytie Siddall
+
+==========
+
+0.2.8 - 06-Aug-2006
 * Orca has been approved for inclusion into GNOME 2.16!!!  YEAH!
   Thanks everyone for your support.
 * Many thanks also to the team from Baum for their contributions in
@@ -60,7 +153,7 @@
 
 ==========
 
-0.2.7 
+0.2.7 - 24-Jul-2006
 * Much work on hangs.  It's better, but we still have work to do.
 * Vastly improved work with GAIM.  Also added Insert+{1,2,3,...} to
   allow you to read the last n messages.
@@ -99,7 +192,7 @@
 
 ==========
 
-0.2.6
+0.2.6 - 09-Jul-2006
 * Addition of verbalized punctuation settings.
 * Addition of spoken indentation information for lines.
 * Adjustments to brief verbosity settings for speech.
@@ -157,7 +250,7 @@
 
 ==========
 
-0.2.5
+0.2.5 - 11-Jun-2006
 * Re-map keyboard bindings and add additional keyboard bindings.
   See http://live.gnome.org/Orca/KeyboardCommands for the list.
 * Improvements to StarOffice support to provide better access to text
@@ -213,7 +306,7 @@
 
 ==========
 
-0.2.4 
+0.2.4 - 15-May-2006
 * Addition of text and GUI preferences configuration tools.  
   NOTE: 0.2.4 eliminates orca-setup and replaces it with the 
   "--setup" (GUI or text, depending upon your environment),
@@ -272,7 +365,7 @@
 
 ==========
 
-0.2.3
+0.2.3 - 22-Apr-2006
 * Many changes to the way settings are handled, including allowing them
   to be dynamically reloaded at run time.
 * Nascent support for configuration GUI (still needs work).
@@ -300,7 +393,7 @@
 
 ==========
 
-0.2.2
+0.2.2 - 17-Mar-2006
 * CSUN release - the bits we plan to show at CSUN '06.
 * Add output of text attributes at caret - press Insert+f (Rich Burridge)
 * Pre-filter TTS strings to prevent them from being interpreted as commands
@@ -326,7 +419,7 @@
 
 ==========
 
-0.2.1
+0.2.1 - 22-Feb-2006
 * *Much* work on Evolution script - this far outshadows much of the 
   other work done for this release (Rich Burridge and Mike Pedersen)
 * Various code cleanup (Willie Walker and Rich Burridge)
@@ -358,7 +451,7 @@
 
 ==========
 
-0.2.0
+0.2.0 - 29-Nov-2005
 * Many many changes: new scripting architecture; better support for
 speech and braille; decent support for GTK applications; flat review
 mode.
@@ -372,14 +465,14 @@ Silva, Funda Wang, Gareth Owen, and Duarte Loreto.
 
 ==========
 
-0.1.0
+0.1.0 - 25-Jun-2004
 * Changed scripting model -- scripts are now always all loaded at once
 and the Orca event processor decides which script should receive which
 events
 
 ==========
 
-0.0.13
+0.0.13 - 10-Jun-2004
 * Added spec file
 * Sorted out packaging issues
 * Fixed automatic dialog reading

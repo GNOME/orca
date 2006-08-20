@@ -1,11 +1,12 @@
-Orca 0.2.8
+Orca 0.9.0
 
 Introduction
 ========================================================================
 
 Orca a scriptable screen reader for people with visual impairments.
-To read more about Orca, please refer to the Orca documentation series
-available in the ./docs/doc-set directory and also the Orca WIKI at
+To read more about Orca, including its capabilities and known
+limitations, please refer to the Orca documentation series available
+in the ./docs/doc-set directory and also the Orca WIKI at
 http://live.gnome.org/Orca.
 
 
