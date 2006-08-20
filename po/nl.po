@@ -1,15 +1,18 @@
-# Dutch translation
-# Copyright (C) 2003 THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the Alleyoop package.
+# Dutch translation of orca
+#
+# Orca is (c) copyright Sun Microsystems Inc.
+# This file is distributed under the same license as the orca package.
+#
 # Tino Meinen <a.t.meinen@chello.nl> 2006.
 #
 # Speak      - Spreken/Lezen/Oplezen
+#
 msgid ""
 msgstr ""
-"Project-Id-Version:  cvs\n"
+"Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-19 09:41+0200\n"
-"PO-Revision-Date: 2006-08-19 14:51+0200\n"
+"POT-Creation-Date: 2006-08-20 16:33+0200\n"
+"PO-Revision-Date: 2006-08-20 16:31+0200 \n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +28,9 @@ msgstr "Orca schermlezer en loep"
 #: ../orca.desktop.in.h:2
 msgid ""
 "Present on-screen information as speech or braille, or magnify the screen"
-msgstr "Biedt de informatie op het scherm aan in spraak of braille, of vergroot het scherm"
+msgstr ""
+"Biedt de informatie op het scherm aan in spraak of braille, of vergroot het "
+"scherm"
 
 # grijs (houdt het zo kort mogelijk, uitgegrijsd is te lang)
 #: ../src/orca/braillegenerator.py:193 ../src/orca/speechgenerator.py:191
@@ -1034,7 +1039,9 @@ msgstr "Toegankelijkheid-ondersteuning voor Gnome is zojuist aangezet. "
 # effectief zijn/effect hebben/doorgevoerd worden
 #: ../src/orca/orca_console_prefs.py:324
 msgid "You need to log out and log back in for the change to take effect. "
-msgstr "U moet eerst afmelden en opnieuw aanmelden voordat de wijzigingen effect hebben. "
+msgstr ""
+"U moet eerst afmelden en opnieuw aanmelden voordat de wijzigingen effect "
+"hebben. "
 
 #: ../src/orca/orca_console_prefs.py:330
 msgid "Setup complete.  Press Return to continue."
@@ -1087,7 +1094,9 @@ msgstr "Toegankelijkheid-ondersteuning voor Gnome is zojuist aangezet."
 
 #: ../src/orca/orca_gui_prefs.py:1400
 msgid "You need to log out and log back in for the change to take effect."
-msgstr "U moet eerst afmelden en opnieuw aanmelden voordat de wijzigingen effect hebben."
+msgstr ""
+"U moet eerst afmelden en opnieuw aanmelden voordat de wijzigingen effect "
+"hebben."
 
 #: ../src/orca/rolenames.py:147
 msgid "???"
@@ -2180,7 +2189,7 @@ msgid "not checked"
 msgstr "niet aangevinkt"
 
 #: ../src/orca/speechgenerator.py:909 ../src/orca/speechgenerator.py:912
-#: ../src/orca/util.py:1183
+#: ../src/orca/util.py:1186
 msgid "selected"
 msgstr "geselecteerd"
 
@@ -2193,39 +2202,39 @@ msgstr "niet geselecteerd"
 msgid "tear off"
 msgstr "afscheuren"
 
-#: ../src/orca/util.py:433
+#: ../src/orca/util.py:436
 msgid "Misspelled word: "
 msgstr "Foutgespeld woord: "
 
-#: ../src/orca/util.py:434
+#: ../src/orca/util.py:437
 msgid " Context is "
 msgstr " Context is "
 
-#: ../src/orca/util.py:1127
+#: ../src/orca/util.py:1130
 msgid "page selected from cursor position"
 msgstr "pagina geselecteerd vanaf cursorpositie"
 
-#: ../src/orca/util.py:1131
+#: ../src/orca/util.py:1134
 msgid "page selected to cursor position"
 msgstr "pagina geselecteerd tot aan cursorpositie"
 
-#: ../src/orca/util.py:1135
+#: ../src/orca/util.py:1138
 msgid "line selected down from cursor position"
 msgstr "regel geselecteerd vanaf cursorpositie"
 
-#: ../src/orca/util.py:1139
+#: ../src/orca/util.py:1142
 msgid "line selected up from cursor position"
 msgstr "regel geselecteerd tot aan cursorpositie"
 
-#: ../src/orca/util.py:1143
+#: ../src/orca/util.py:1146
 msgid "document selected to cursor position"
 msgstr "document geselecteerd tot aan cursorpositie"
 
-#: ../src/orca/util.py:1147
+#: ../src/orca/util.py:1150
 msgid "document selected from cursor position"
 msgstr "document geselecteerd vanaf cursorpositie"
 
-#: ../src/orca/util.py:1191
+#: ../src/orca/util.py:1194
 msgid "unselected"
 msgstr "gedeselecteerd"
 
