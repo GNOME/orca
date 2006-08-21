@@ -1,5 +1,7 @@
 0.9.0 - 21-Aug-2006
 
+* Updates to the requirements guide and input and output style guides.
+
 * For regression testing purposes, allow us to get what would have
 been spoken even if settings.speechServerFactory is None.
 
@@ -18,8 +20,6 @@ display).  If it exists, settings.magnifierSourceDisplay will be
 treated as an X Window System DISPLAY string (e.g., ":0.0") that says
 what is to be magnified.
 	
-* Updates to the requirements guide.
-
 * Many thanks to our friends at Baum for providing many fixes and testing
 for the Java platform:
 
@@ -41,6 +41,12 @@ for the Java platform:
    * Fix for bug 351914: provide better support for combo boxes on
      Java platform.
 
+   * Fix for bug 352233: prevent exception when getting the child of
+     an object from a Java application.
+
+   * Fix for bug 352238: do not assume last input event	was a keyboard 
+     event.
+	
 * Fix for bug 350213: provide defensive programming for combo box
 braille generator.
 
@@ -85,6 +91,7 @@ speaks both cells in a row
     Macedonian:  Jovan Naumovski
     Marathi:     Rahul Bhalerao (NEW)
     Norwegian:   (Bokmål) Sigurd Gartmann
+    Oriya:       Subhransu Behera (NEW)
     Russian:     Nickolay V. Shmyrev (NEW)
     Spanish:     Francisco Javier F. Serrador
     Swedish:	 Danial Nylander

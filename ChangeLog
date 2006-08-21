@@ -1,5 +1,9 @@
 2006-08-21  Willie Walker <william.walker@sun.com>
 
+	* NEWS: final prep for 0.9.0.
+
+2006-08-21  Willie Walker <william.walker@sun.com>
+
 	* README: Fix bug 351463 - add documentation to say how to specify
 	a particular python interpreter.
 
