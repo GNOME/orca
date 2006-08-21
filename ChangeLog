@@ -1,7 +1,12 @@
 2006-08-21  Willie Walker <william.walker@sun.com>
 
-	* README: Fix bug 351463: add documentation to say how to specify
+	* README: Fix bug 351463 - add documentation to say how to specify
 	a particular python interpreter.
+
+2006-08-21  Oana Serb <os@baum.ro>
+
+	* src/orca/util.py: fix bug 352233 - prevent exception when getting
+	the child of an object from a Java application.
 	
 2006-08-19  Mike Pedersen <michael.pedersen@sun.com> 
 

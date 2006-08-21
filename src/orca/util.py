@@ -197,10 +197,13 @@ def getDisplayedLabel(object):
                 ((parent.role == rolenames.ROLE_FILLER) \
                         or (parent.role == rolenames.ROLE_PANEL)):
                 for i in range (0, parent.childCount):
-                    potentialLabel = parent.child(i)
-                    useLabel = __isLabeling(potentialLabel, object)
-                    if useLabel:
-                        break
+                    try:
+                        potentialLabel = parent.child(i)
+                        useLabel = __isLabeling(potentialLabel, object)
+                        if useLabel:
+                            break
+                    except:
+                        pass
 
         if useLabel and potentialLabel:
             label = potentialLabel.name
