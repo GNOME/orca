@@ -7,6 +7,9 @@
 
 	* src/orca/util.py: fix bug 352233 - prevent exception when getting
 	the child of an object from a Java application.
+
+	* src/orca/util.py: fix bug 352238 - do not assume last input event
+	was a keyboard event.
 	
 2006-08-19  Mike Pedersen <michael.pedersen@sun.com> 
 

@@ -1122,8 +1122,13 @@ def speakTextSelectionState(obj, startOffset, endOffset):
     # Control-Shift-Home: speak "document selected to cursor position".
     # Control-Shift-End:  speak "document selected from cursor position".
     #
-    eventStr = orca_state.lastInputEvent.event_string
-    mods = orca_state.lastInputEvent.modifiers
+    if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
+        eventStr = orca_state.lastInputEvent.event_string
+        mods = orca_state.lastInputEvent.modifiers
+    else:
+        eventStr = None
+        mods = 0
+
     isControlKey = mods & (1 << atspi.Accessibility.MODIFIER_CONTROL)
     isShiftKey = mods & (1 << atspi.Accessibility.MODIFIER_SHIFT)
 
