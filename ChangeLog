@@ -1,11 +1,15 @@
+2006-08-21  Willie Walker <william.walker@sun.com>
+
+	* README: Fix bug 351463: add documentation to say how to specify
+	a particular python interpreter.
+	
 2006-08-19  Mike Pedersen <michael.pedersen@sun.com> 
 
-        *  docs/doc-set/ue_requirements.sgml
-        *  docs/doc-set/ue_output_style.sgml
-        *  docs/doc-set/ue_input_style.sgml
-        *  docs/doc-set/orca.html
-        *  docs/doc-set/orca.pdf
-          Updates to the requirements guide, the input and output styles, as well as the html and pdf docs.
+        * docs/doc-set/ue_requirements.sgml,
+	docs/doc-set/ue_output_style.sgml
+	docs/doc-set/ue_input_style.sgml, docs/doc-set/orca.html,
+	docs/doc-set/orca.pdf: Updates to the requirements guide, the
+	input and output styles, as well as the html and pdf docs.
 
 2006-08-19  Willie Walker <william.walker@sun.com>
 

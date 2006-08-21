@@ -26,6 +26,17 @@ the development modules for the following to be installed:
 * BrlTTY >= 3.7.2            - BrlTTY support for braille (optional)
 * BrlAPI >= 0.4.1            - BrlAPI support for braille (optional)
 
+NOTE: If you have multiple versions of the python interpreter installed
+on your machine, you should set the PYTHON environment variable when 
+configuring Orca.  For example:
+
+   PYTHON=/usr/bin/python2.4 ./autogen.sh
+
+or
+
+   PYTHON=/usr/bin/python2.4 ./configure
+
+
 Overview
 ========================================================================
 
