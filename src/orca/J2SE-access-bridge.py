@@ -62,7 +62,12 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             utterances = self._getDefaultSpeech(obj, already_focused)
 
         obj.was_selected = False
-        if obj.state.count(Accessibility.STATE_SELECTED) != 0:
+        if obj.state.count(Accessibility.STATE_EXPANDED) != 0:
+            utterances.append(_("expanded"))
+        elif obj.state.count(Accessibility.STATE_EXPANDED) == 0 and \
+                obj.state.count(Accessibility.STATE_EXPANDABLE) != 0:
+            utterances.append(_("collapsed"))
+        elif obj.state.count(Accessibility.STATE_SELECTED) != 0:
             utterances.append(_("selected"))
             obj.was_selected = True
         elif obj.state.count(Accessibility.STATE_SELECTED) == 0 and \
