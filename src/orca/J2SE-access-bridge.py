@@ -150,6 +150,12 @@ class Script(default.Script):
         - event: the Event
         """
 
+	# In java applications the events are comming in other order:
+	# "focus:" event comes before "state-changed:focused" event
+	#
+	if (event.type == "object:state-changed:focused"):
+	    return
+
         # Hand state changes when JTree labels become expanded
         # or collapsed.
         #
@@ -175,6 +181,9 @@ class Script(default.Script):
         Arguments:
         - event: the Event
         """
+
+	if not event.source.state.count (atspi.Accessibility.STATE_FOCUSED):
+	    return
 
         if event.source.role == rolenames.ROLE_TABLE:
             return

@@ -1,3 +1,9 @@
+2006-08-23 Oana Serb <os@baum.ro>
+
+	* src/orca/J2SE-access-bridge.py:
+	Prevent wrong object report for java applications in case of different
+	event ordering (Fix for bug #352240).
+
 2006-08-22 Oana Serb <os@baum.ro>
 
 	* src/orca/J2SE-access-bridge.py:
