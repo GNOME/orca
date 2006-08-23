@@ -55,12 +55,46 @@ def isSameObject(obj1, obj2):
         return False
 
     try:
-        return (obj1.parent == obj2.parent) \
-               and (obj1.name == obj2.name) \
-               and (obj1.index == obj2.index)
+	if obj1.name != obj2.name:
+	    return False
+	
+	# When we're looking at children of objects that manage 
+	# their descendants, we will often get different objects 
+	# that point to the same logical child.  We want to be able 
+	# to determine if two objects are in fact pointing to the same child.
+	# If we cannot do so easily (i.e., object equivalence), we examine 
+	# the hierarchy and the object index at each level.
+	#
+	parent1 = obj1
+	parent2 = obj2
+	while (parent1 and parent2 and \
+		parent1.state.count(atspi.Accessibility.STATE_TRANSIENT) and \
+		parent2.state.count(atspi.Accessibility.STATE_TRANSIENT)):
+	    if parent1.index != parent2.index:
+		return False
+	    parent1 = parent1.parent
+	    parent2 = parent2.parent
+	if parent1 and parent2 and parent1 == parent2:
+	    return True
     except:
         pass
 
+    # In java applications, TRANSIENT state is missing for tree items
+    # (fix for bug #352250)
+    #
+    try:
+	parent1 = obj1
+	parent2 = obj2
+	while parent1 and parent2 and \
+		parent1.role == rolenames.ROLE_LABEL and \
+		parent2.role == rolenames.ROLE_LABEL:
+	    parent1 = parent1.parent
+	    parent2 = parent2.parent
+	if parent1 and parent2 and parent1 == parent2:
+	    return True
+    except:
+	pass
+    
     return False
 
 def appendString(text, newText, delimiter=" "):

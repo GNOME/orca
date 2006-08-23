@@ -188,6 +188,9 @@ class Script(default.Script):
         if event.source.role == rolenames.ROLE_TABLE:
             return
 
+        if event.source.role == rolenames.ROLE_TREE:
+            return
+
         if event.source.role == rolenames.ROLE_LIST:
             selection = event.source.selection
             if selection.nSelectedChildren <= 0:

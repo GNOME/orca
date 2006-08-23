@@ -3,6 +3,12 @@
 	* src/orca/J2SE-access-bridge.py:
 	Prevent wrong object report for java applications in case of different
 	event ordering (Fix for bug #352240).
+	* src/orca/util.py:
+	Improved isSameObject() function: in case of getting different objects
+	that point to same logical child (for children of objects that manage 
+	their descendants), we examine the hierarchy and the object index 
+	at each level to see if two objects point to the same child.
+	(Fix bug #352257)
 
 2006-08-22 Oana Serb <os@baum.ro>
 
