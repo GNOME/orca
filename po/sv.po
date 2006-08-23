@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-20 09:25+0200\n"
-"PO-Revision-Date: 2006-08-21 07:38+0100\n"
+"POT-Creation-Date: 2006-08-22 17:03+0200\n"
+"PO-Revision-Date: 2006-08-23 08:06+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -190,11 +190,11 @@ msgstr "utelämningstecken"
 
 #: ../src/orca/default.py:78
 msgid "Performs left click on current flat review item."
-msgstr ""
+msgstr "Genomför vänsterklick på aktuellt flat granskningspost."
 
 #: ../src/orca/default.py:82
 msgid "Performs right click on current flat review item."
-msgstr ""
+msgstr "Genomför högerklick på aktuellt flat granskningspost."
 
 #: ../src/orca/default.py:86
 #: ../src/orca/scripts/Evolution.py:107
@@ -211,67 +211,67 @@ msgstr "Ritar och skriver ut de synliga zonerna i det aktiva fönstret."
 
 #: ../src/orca/default.py:98
 msgid "Enters and exits flat review mode."
-msgstr ""
+msgstr "Går in i och lämnar flat granskningsläge."
 
 #: ../src/orca/default.py:102
 msgid "Moves flat review to the beginning of the previous line."
-msgstr ""
+msgstr "Flyttar flat granskning till början av föregående rad."
 
 #: ../src/orca/default.py:106
 msgid "Moves flat review to the home position."
-msgstr ""
+msgstr "Flyttar flat granskning till hempositionen."
 
 #: ../src/orca/default.py:110
 msgid "Speaks the current flat review line."
-msgstr ""
+msgstr "Läser upp den aktuella flata granskningsraden."
 
 #: ../src/orca/default.py:114
 msgid "Moves flat review to the beginning of the next line."
-msgstr ""
+msgstr "Flyttar flat granskning till början av nästa rad."
 
 #: ../src/orca/default.py:118
 msgid "Moves flat review to the end position."
-msgstr ""
+msgstr "Flyttar flat granskning till slutpositionen."
 
 #: ../src/orca/default.py:122
 msgid "Moves flat review to the previous item or word."
-msgstr ""
+msgstr "Flyttar flat granskning till den föregående posten eller ordet."
 
 #: ../src/orca/default.py:126
 msgid "Moves flat review to the word above the current word."
-msgstr ""
+msgstr "Flyttar flat granskning till ordet ovanför det aktuella ordet."
 
 #: ../src/orca/default.py:130
 msgid "Speaks or spells the current flat review item or word."
-msgstr ""
+msgstr "Läser upp eller stavar aktuella flata granskningsposten eller ordet"
 
 #: ../src/orca/default.py:134
 msgid "Speaks the current flat review object."
-msgstr ""
+msgstr "Läser upp den aktuella flata granskningsposten."
 
 #: ../src/orca/default.py:138
 msgid "Moves flat review to the next item or word."
-msgstr ""
+msgstr "Flyttar flat granskning till nästa post eller ord."
 
 #: ../src/orca/default.py:142
 msgid "Moves flat review to the word below the current word."
-msgstr ""
+msgstr "Flyttar flat granskning till ordet nedanför det aktuella ordet."
 
 #: ../src/orca/default.py:146
 msgid "Moves flat review to the previous character."
-msgstr ""
+msgstr "Flyttar flat granskning till föregående tecken."
 
 #: ../src/orca/default.py:150
 msgid "Moves flat review to the end of the line."
-msgstr ""
+msgstr "Flyttar flat granskning till slutet på raden."
 
 #: ../src/orca/default.py:154
 msgid "Speaks the current flat review character."
-msgstr ""
+msgstr "Läser upp det aktuella flata granskningstecknet."
 
 #: ../src/orca/default.py:158
 msgid "Moves flat review to the next character."
-msgstr ""
+msgstr "Flyttar flat granskning till nästa tecken."
 
 #: ../src/orca/default.py:162
 msgid "Toggles whether to read just the current table cell or the whole row."
@@ -295,7 +295,7 @@ msgstr "Flyttar braille-displayen åt höger."
 
 #: ../src/orca/default.py:182
 msgid "Moves flat review to the bottom left."
-msgstr ""
+msgstr "Flyttar flat granskning till nedre vänsterkant."
 
 #: ../src/orca/default.py:186
 msgid "Returns to object with keyboard focus."
@@ -642,7 +642,7 @@ msgstr "Aktivera sik_te"
 
 #: ../src/orca/orca-setup.glade.h:29
 msgid "Enable cross-hair cli_p"
-msgstr ""
+msgstr "Aktivera klippning av sikt_e"
 
 #: ../src/orca/orca-setup.glade.h:30
 msgid "Enable echo by _word"
@@ -2181,7 +2181,7 @@ msgstr "inte kryssad"
 
 #: ../src/orca/speechgenerator.py:909
 #: ../src/orca/speechgenerator.py:912
-#: ../src/orca/util.py:1186
+#: ../src/orca/util.py:1194
 msgid "selected"
 msgstr "vald"
 
@@ -2194,39 +2194,39 @@ msgstr "inte vald"
 msgid "tear off"
 msgstr "ta bort"
 
-#: ../src/orca/util.py:436
+#: ../src/orca/util.py:439
 msgid "Misspelled word: "
 msgstr "Felstavat ord: "
 
-#: ../src/orca/util.py:437
+#: ../src/orca/util.py:440
 msgid " Context is "
 msgstr " Sammanhanget är "
 
-#: ../src/orca/util.py:1130
+#: ../src/orca/util.py:1138
 msgid "page selected from cursor position"
 msgstr "sida vald från markörposition"
 
-#: ../src/orca/util.py:1134
+#: ../src/orca/util.py:1142
 msgid "page selected to cursor position"
 msgstr "sida vald till markörposition"
 
-#: ../src/orca/util.py:1138
+#: ../src/orca/util.py:1146
 msgid "line selected down from cursor position"
 msgstr "rad vald ner från markörposition"
 
-#: ../src/orca/util.py:1142
+#: ../src/orca/util.py:1150
 msgid "line selected up from cursor position"
 msgstr "rad vald upp från markörposition"
 
-#: ../src/orca/util.py:1146
+#: ../src/orca/util.py:1154
 msgid "document selected to cursor position"
 msgstr "dokument valt till markörposition"
 
-#: ../src/orca/util.py:1150
+#: ../src/orca/util.py:1158
 msgid "document selected from cursor position"
 msgstr "dokument valt från markörposition"
 
-#: ../src/orca/util.py:1194
+#: ../src/orca/util.py:1202
 msgid "unselected"
 msgstr "avmarkerad"
 
