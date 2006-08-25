@@ -1,3 +1,8 @@
+2006-08-25  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca.in: when orca is run again while orca is already
+	running, kill the other orca process and start new.
+	
 2006-08-23 Oana Serb <os@baum.ro>
 
 	* src/orca/J2SE-access-bridge.py:

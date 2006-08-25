@@ -78,7 +78,7 @@ cleanup()
 
     if [ "x$PIDS" != "x" ]
     then
-        kill -9 $PIDS > /dev/null
+        kill -9 $PIDS > /dev/null 2>&1
     fi
 }
 
@@ -121,13 +121,18 @@ watchdog()
     ) &
 }
 
-kill_orca()
+kill_watchdog()
 {
-    cleanup
     if [ "x$watchdog_pid" != x0 ]
     then
-        kill -9 $watchdog_pid > /dev/null
+        kill -9 $watchdog_pid > /dev/null 2>&1
     fi
+}
+
+kill_orca()
+{
+    kill_watchdog
+    cleanup
     exit
 }
 
@@ -162,8 +167,18 @@ main()
 	then
 	    RUN=0
         fi
+
+	# We will also stop re-running Orca on KILL's (137 = KILL + 128).
+	# The reason for this is that if someone has done a "kill -KILL"
+	# on the Python process, it was probably on purpose and they want
+	# everything to die.
+        #
+	if [ "$RUN" -eq 137 ]
+	then
+	    RUN=0
+        fi
     done
-    kill_orca
+    kill_watchdog
 }
 
 trap kill_orca QUIT TERM INT ABRT
