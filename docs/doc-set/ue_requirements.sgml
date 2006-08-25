@@ -51,27 +51,12 @@
 
       <section><title>Functional Description and Status</title>
 
-        <para>&incomplete; [OWNER: WDW] <ulink
-          url="http://bugzilla.gnome.org/show_bug.cgi?id=319652">Bugzilla
-          Bug 319652</ulink> is an outstanding Orca bug to track this.
-          Much work has been done in this space, but Orca still needs
-          to be able to better detect hangs and failures when:</para>
+        <para>&complete; V0.9.0.  Orca provides a script that will
+	restart Orca in the event of catastrophic failure, and it also
+	periodically pings and restarts Orca if necessary.
+	Furthermore, Orca will also detect hangs inside itself and
+	quit if possible.</para>
 
-	  <itemizedlist>
-
-	    <listitem><para>Communication with gnome-speech: Failures
-	      are currently handled with a restart of the connection
-	      to gnome-speech, including providing a fallback to
-	      working speech engines.   &mustdeliver;
-	      V1.0.</para></listitem>
-
-	    <listitem><para>Communication with at-spi: Failures are
-	      currently handled somewhat gracefully.   [[[WDW - need
-	      pointer to at-spi RFE]]], but Orca still needs to detect
-	      and recover from hangs when calling at-spi
-	      functions. &mustdeliver; V1.0.</para></listitem>
-
-	  </itemizedlist>
       </section>
     </section>
 
@@ -117,9 +102,8 @@
 
       <section><title>Functional Description and Status</title>
 
-        <para>&incomplete; [OWNER: LMS] Orca has been simultaneously
-          tested with BrlTTY, GOK, and Dasher.  Orca still needs
-          testing, however, with AccessX. &mustdeliver; V1.1.</para>
+        <para>&complete; V0.9.0. [OWNER: LMS] Orca has been simultaneously
+          tested with BrlTTY, GOK, and Dasher and AccessX.</para>
 
       </section>
 
@@ -143,10 +127,8 @@
 
       <section><title>Functional Description and Status</title>
 
-        <para>&incomplete; [OWNER: MMP] Orca currently provides a
-	  &styleguidelink; and a <literal>default.py</literal> script.
-	  However, we need to revisit both to make sure they are in
-	  line with each other and up-to-date. &mustdeliver; V1.0.</para>
+        <para>&complete; V0.9.0. Orca currently provides a
+	  &styleguidelink; and a <literal>default.py</literal> script
 
       </section>
 
@@ -170,18 +152,9 @@
 
       <section><title>Functional Description and Status</title>
 
-        <para>&incomplete; [OWNER: WDW] Orca currently provides the
-	  framework for customized scripts.  This framework is
-	  documented in the &scriptguidelink;.  Over time, however,
-	  the team has learned that different toolkits provide
-	  different interaction models via the AT-SPI and Orca needs
-	  the ability to have a default script per toolkit. This work
-	  needs to be done, and should be done in conjunction with the
-	  work on the Java platform script (i.e., the Swing toolkit)
-	  as well as Firefox (i.e., the Mozilla toolkit).  This
-	  refactoring is being tracked in <ulink
-	  url="http://bugzilla.gnome.org/show_bug.cgi?id=319668">
-	  Bugzilla Bug 319668</ulink>. &mustdeliver; V1.0.  </para>
+        <para>&complete; V0.2.4.  Orca provides a framework for both
+	  per-application and per-toolkit customized scripts.  This
+	  framework is documented in the &scriptguidelink;.</para>
 
       </section>
 
@@ -198,9 +171,10 @@
 
         <itemizedlist>
           <listitem>
-	    <para>&complete; V0.2.2. Debug utilities to output AT-SPI and input device
-	      events. Managed via several debug level settings in the
-	      <literal>debug.py</literal> module.</para>
+	    <para>&complete; V0.2.2. Debug utilities to output AT-SPI
+	      and input device events. Managed via several debug level
+	      settings in the <literal>debug.py</literal>
+	      module.</para>
           </listitem>
           <listitem>
 	    <para>&complete; V0.2.2. Debug utilities to record and playback keystrokes.
@@ -208,7 +182,7 @@
 	      <literal>src/tools/record_keystrokes.py</literal> and
 	      <literal>play_keystrokes.py</literal> modules.
 	      Keystroke recording can also be enabled by pressing the
-	      "Pause" key while running Orca itself.</para>
+	      "Insert+Pause" keys while running Orca itself.</para>
           </listitem>
           <listitem>
 	    <para>&complete; V0.2.2. Debug utilities to record what is being sent to
@@ -216,29 +190,29 @@
 	      settings.</para>
           </listitem>
           <listitem>
-	    <para>&complete; [OWNER: RNB] Keystroke to speak/braille application with 
-	      focus. &mustdeliver; V1.0.</para>
+
+	    <para>&complete; V0.2.7.  Keystroke to speak/braille
+	      application with focus: Insert+F6.</para>
+
 	  </listitem>
           <listitem>
-	    <para>&complete; [OWNER: RNB] Keystroke to speak/braille
-	      the current script (and script class) in use. &mustdeliver;
-	      V1.0.</para>
+
+	    <para>&complete; V0.2.7. Keystroke to speak/braille
+	      the current script (and script class) in use: Insert+F6</para>
+
 	  </listitem>
           <listitem>
-	    <para>&complete; [OWNER: RNB] Keystroke to dump
-	      all applications.  Currently bound to Insert+F5, needs to
-	      be rebound to something else. &mustdeliver; V1.0.</para>
+	    <para>&complete; V0.2.7.  Keystroke to dump
+	      all applications: Insert+F5.</para>
 	  </listitem>
           <listitem>
-	    <para>&complete; [OWNER: RNB] Keystroke to dump the ancestors
-	      of the object with focus.  Currently bound to Insert+F7,
-	      needs to be rebound to something else. &mustdeliver; V1.0.</para>
+	    <para>&complete; V0.2.7.  Keystroke to dump the ancestors
+	      of the object with focus: Insert+F7.</para>
 	  </listitem>
           <listitem>
-	    <para>&complete; [OWNER: RNB] Keystroke to dump the
+	    <para>&complete; V0.2.7.  Keystroke to dump the
 	      widget hierarchy of the application with
-	      focus. Currently bound to Ctrl+Insert+F7, needs to be
-	      rebound to something else. &mustdeliver; V1.0.</para>
+	      focus: Insert+F8.</para>
 	  </listitem>
         </itemizedlist>
       </section>
@@ -272,7 +246,9 @@
               <row>
                 <entry>Desktop</entry>
                 <entry>gnome-panel and metacity - GNOME 2.16</entry>
-                <entry>&incomplete; [OWNER WDW]. &shoulddeliver; V1.0.</entry>
+                <entry>&incomplete; metacity working well, gnome-panel
+                working OK, but the keyboard navigation model needs
+                work. &shoulddeliver; V1.0.</entry>
 		<entry>&desktoptestlink;</entry>
               </row>
               <row>
@@ -315,19 +291,19 @@
               <row>
                 <entry>Help</entry>
                 <entry>Yelp - GNOME 2.16</entry>
-                <entry>&complete; [OWNER: LMS] mozilla script. &mustdeliver; V1.0</entry>
+                <entry>&complete; V0.9.0 via mozilla script.</entry>
 		<entry>&yelptestlink;</entry>
               </row>
               <row>
                 <entry>Document Generation</entry>
                 <entry>StarOffice 8 PP3, OpenOffice 2.0.3 (initial); StarOffice 8 PP4, OpenOffice 2.0.4 (better)</entry>
-                <entry>&incomplete; [OWNER: RNB] Working with StarOffice team to fix AT-SPI issues; Script under development.  Note that this is an on going task but much progress has been made for V1.0. &mustdeliver V1.0</entry>
+                <entry>&complete; V0.9.0.</entry>
 		<entry>&sowritertestlink;</entry>
               </row>
 	      <row>
 	        <entry>Spreadsheet</entry>
                 <entry>StarOffice 8 PP3, OpenOffice 2.0.3 (initial); StarOffice 8 PP4, OpenOffice 2.0.4 (better)</entry>
-                <entry>&incomplete; [OWNER: RNB] Working with StarOffice team to fix AT-SPI issues; Script under development. &mustdeliver; V1.0</entry>
+                <entry>&complete; V0.9.0.</entry>
 		<entry>&socalctestlink;</entry>
 	      </row>
 	      <row>
@@ -339,10 +315,12 @@
 	      <row>
 	        <entry>Web Browsing</entry>
 		<entry>Firefox 2.0 (minimal); Firefox 3.0 (better)</entry>
-		<entry>&incomplete; [OWNER: LMS] Working with Firefox team to fix issues with
-		  accessing the Firefox widget set (XUL) for 2.0.  Firefox 2.0 is probably as good as it is going to get.    &mustdeliver; V1.0.  Working with
+
+		<entry>&incomplete; [OWNER: LMS] Firefox 2.0 is
+		  probably as good as it is going to get. Working with
 		  IBM and Firefox team to provide better information
 		  via AT-SPI for FF3 - &mustdeliver; V1.1.</entry>
+
 		<entry>&ff2testlink;</entry>
 	      </row>
 	      <row>
@@ -356,9 +334,7 @@
 	      <row>
 	        <entry>Java platform</entry>
 		<entry>Swing toolkit</entry>
-		<entry>&complete; [OWNER: LMS] minimal testing, <ulink
-		  url="http://bugzilla.gnome.org/show_bug.cgi?id=319639">bug
-		  with keycodes</ulink> - &mustdeliver; V1.0</entry>
+		<entry>&complete; V0.9.0.</entry>
 		<entry>&javatestlink;</entry>
 	      </row>
   	    </tbody>
@@ -380,11 +356,8 @@
         presentation modes (i.e., speech, braille, magnification) on
         or off without the need to restart Orca.</para>
       <section><title>Functional Description and Status</title>
-        <para>&complete; [OWNER: MMP - further define requirements and
-	  functionality] [OWNER: RNB - implementation] 
-	  The &ugcustomizationlink; section of the &userguidelink;
-	  will provide details on the specific customization
-	  parameters for Orca. &mustdeliver; V1.0.</para>
+        <para>&complete; V0.9.0. Orca provides both text-based and GUI-based
+	  configuration mechanisms.</para>
       </section>
 
     </section>
@@ -456,13 +429,7 @@
 
     <section id="urtextattributes"><title>Presentation of Text Attributes</title>
       <para>For any given piece of text, Orca must provide the ability
-        to speak the current character, word, or line.  When speaking
-        the current word, Orca must provide the ability to spell it
-        out in either letter-by-letter or phonetic (e.g., military
-        spelling) mode.  When speaking a line or set of lines, Orca
-        must offer the ability to verbalize punctuation, and must provide several levels of punctuation verbalization (none, some, most, all).</para>
-      <para>Orca must provide the ability to present the following to the
-        user:</para>
+        to speak the following text features:</para>
       <itemizedlist>
         <listitem>
           <para><emphasis role="bold">Attributes</emphasis> - font size,
@@ -494,9 +461,23 @@
 
         <para>&textattributestestlink;</para>
 
-        <para>&complete; [OWNER: MMP - further define requirements and
-	  functionality] [OWNER: RNB - implementation] need
-	  to define what to deliver. &mustdeliver; V1.0.</para>
+        <para>&incomplete; text attributes ('indent',
+	'underline', 'strikethrough', 'justification', 'style',
+	'size', and 'family-name') are spoken when the user presses
+	Insert+f, but they are not presented on the braille
+	display.</para>
+
+        <para>&incomplete; capital letters are spoken with a
+	different voice, but 'verbalized' capitalization (e.g.,
+	"capital m") has not been implemented.</para>
+
+        <para>&incomplete; the user is notified when they
+	select text, but they are not notified if they navigate to
+	selected text.</para>
+
+        <para>&incomplete; there is no option to present text bounds
+	to the user.</para>
+	
       </section>
 
     </section>
@@ -514,7 +495,8 @@
 
         <para>&learnmodetestlink;</para>
 
-        <para>&complete; V0.2.2.</para>
+        <para>&complete; V0.2.2.  Insert+F1 brings up learn mode and
+	Escape exits it.</para>
 
       </section>
 
@@ -530,14 +512,10 @@
 
       <section><title>Functional Description and Status</title>
 
-        <para>&complete; V0.2.2.  The framework is done as of V0.2.2.
-          See the &ugcustomizationlink; section of the &userguidelink;
-          for more information.</para>
-
 	<para>&incomplete; the current way to define these is by
 	  manually editing the <literal>user-settings.py</literal> or
 	  <literal>orca-customizations.py</literal> file.
-	  &shoulddeliver; V1.0, &mustdeliver; V1.1.</para>
+	  &mustdeliver; V1.1.</para>
 
       </section>
 
@@ -556,10 +534,8 @@
         not.</para>
       <section><title>Functional Description and Status</title>
         <para>&whereamitestlink;</para>
-        <para>&complete; [OWNER: MMP - further define requirements and
-	  functionality] [OWNER: WDW - implementation]
-	  currently provides top down "Where am I" functionality.
-	  &mustdeliver; V1.0.</para>
+        <para>&complete; V1.0. Orca provides top down "Where am I"
+        functionality when the user presses the KP_Enter key.</para>
       </section>
     </section>
 
@@ -690,10 +666,8 @@
 
       <section><title>Functional Description and Status</title>
         <para>&sayalltestlink;</para>
-        <para>&complete; [OWNER: RNB] reading works well in GEdit,
-	  including setting the caret position when speech is
-	  interrupted.  
-	  &mustdeliver; V1.0.</para>
+        <para>&complete; V0.9.0. Reading works well, including setting
+	  the caret position when speech is interrupted.</para>
 	<para>&incomplete; text is not highlighted, nor is there an
 	  option to do so. &deliver; V1.1+.</para>
 	<para>&incomplete; audio cues not played when auto
@@ -821,31 +795,20 @@
         <para>&complete; V0.2.2.  General synthesis.</para>
         <para>&complete; V0.2.2.  Voice styles done via ACSS.</para>
         <para>&incomplete; Verbalized caps. &mustdeliver; V1.1.</para>
-
         <para>&incomplete; [OWNER: RNB] Verbalized
-          hyperlinks. &mustdeliver; V1.1.</para>
-
+        hyperlinks. &mustdeliver; V1.1.</para>
         <para>&complete; V0.2.2.  Speaking rate modification.
           Insert+{left,right}_arrow.</para>
-
         <para>&incomplete; Multilingual text. &deliver; V1.1+.</para>
-
-        <para>&complete; [OWNER: MMP - further define requirements and functionality]
-	  [OWNER: WDW - implementation] 
-	  Spelling mode (letters). &mustdeliver; V1.0.</para>
-
-        <para>&incomplete; [OWNER: MMP - further define requirements and functionality]
-	  [OWNER: WDW - implementation] 
-          Spelling mode (military). &mustdeliver; V1.1.</para>
-
-        <para>&complete; [OWNER: MMP - further define requirements and functionality]
-	  [OWNER: WDW - implementation] 
-          Verbalized punctuation. &mustdeliver; V1.0.</para>
-
+        <para>&incomplete; V0.2.7. Letter-by-letter spelling mode of
+	current flat review item performed when user quickly presses
+	KP_5 (word review) or KP_8 (line review) twice in a
+	row.  Military spelling is a &mustdeliver; V1.1.</para>
+        <para>&complete; V0.2.6. Verbalized punctuation is a settable
+	option.</para>
         <para>&incomplete; [OWNER: MMP - further define requirements and functionality]
 	  [OWNER: WDW - implementation] 
           Repeated character count. &shoulddeliver; V1.1.</para>
-
       </section>
 
     </section>
@@ -860,11 +823,7 @@
 
       <section><title>Functional Description and Status</title>
 
-        <para>&keywordechotestlink;</para>
-
-        <para>&complete; [OWNER: RNB] &mustdeliver; V1.0.</para>
-
-        <para>There will be two main options for selecting key and
+        <para>There are be two main options for selecting key and
           word echo: key and word.  These are not mutually
           exclusive.</para>
 
@@ -956,6 +915,10 @@
 	      what it was, the user should hear this.</para>
 	  </listitem>
 	</itemizedlist>
+
+        <para>&keywordechotestlink;</para>
+
+        <para>&complete; V0.2.4.</para>
 
       </section>
 
@@ -1078,9 +1041,11 @@
 
       <section><title>Functional Description and Status</title>
 
-        <para>&incomplete; [OWNER: COMMUNITY] &shoulddeliver V1.0 or
-          &mustdeliver; V1.1, depending upon community
-          contributions.</para>
+        <para>&incomplete; [OWNER: COMMUNITY] mimimal magnification
+	support is in Orca as of V0.9.0.  Need to work with the
+	community to further define what a compelling magnifier
+	experience means.  &shoulddeliver V1.0 or &mustdeliver; V1.1,
+	depending upon community contributions.</para>
 
       </section>
 

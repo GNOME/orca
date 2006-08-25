@@ -100,7 +100,7 @@
           <para>&detail; bound to
              <literal>default.Script.sayAll</literal>.
              </para>
-	  <para>&incomplete; [OWNER: RNB] As of 0.2.5. this is now implemented for focus tracking mode but not yet for flat review.</para>
+	  <para>&incomplete; [OWNER: RNB] As of V0.2.5. this is implemented for focus tracking mode but not yet for flat review.</para>
         </listitem>
         <listitem>
           <para>"KEYPAD_ENTER": performs "Where Am I?"  If this key is
@@ -234,12 +234,12 @@
         </listitem>
         <listitem>
           <para>INSERT+s: toggles speech on and off.</para>
-	  <para>&complete; [OWNER: WDW] Complete as of 0.2.5..</para>
+	  <para>&complete; V0.2.5.</para>
         </listitem>
         <listitem>
           <para>CONTROL+INSERT+space: resets connection to the speech 
             engine as well as reloads all user settings.</para>
-	  <para>&complete; [OWNER: WDW] Complete as of 0.2.5..</para>
+	  <para>&complete; V0.2.5.</para>
         </listitem>
         <listitem>
           <para>INSERT+v: brings up a "quick" verbosity preferences
@@ -266,7 +266,7 @@
         </listitem>
         <listitem>
           <para>INSERT+SPACE: brings up configuration GUI</para>
-	  <para>&complete; [OWNER: RNB] Completed as of 0.2.5 along with the config UI.</para>
+	  <para>&complete; V0.2.5.</para>
         </listitem>
       </itemizedlist>
 

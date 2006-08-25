@@ -135,7 +135,7 @@
           </listitem>
           <listitem>
             <para>When reviewing the screen, Orca compresses white
-              space on the braille display to allow Lee to review more
+              space on the braille display to allow Lee to review it more
               quickly.  For example, when there are only blanks to the
               right and Lee presses the pan-right button on the
               braille display, Orca will take Lee to beginning of the
@@ -182,7 +182,6 @@
             <para>Read documents in grade two braille.  Lee uses a
               &wkc; to toggle between grade one and grade two
               braille.</para>
-            <para>&todo; Perhaps not a 1.0 requirement.</para>
           </listitem>
           <listitem>
             <para>Detect attributes of text.  Lee does this in the same
@@ -287,8 +286,6 @@
               and vi.  Orca also updates the braille display to track
               the navigation of fields in terminal apps (such as curses
               applications).</para>
-            <para>&todo; Handling curses applications may be a lower
-              priority task at this point.</para>
           </listitem>
         </itemizedlist>
   
@@ -320,7 +317,7 @@
   
       </section>
   
-      <section><title>Browses the web using Mozilla</title>
+      <section><title>Browse the web using Mozilla</title>
   
         <para>Lee uses Mozilla to read JDK JavaDoc, the latest Java Tips
           and Tricks article, and the latest slashdot content.  Lee
@@ -332,9 +329,6 @@
               activate them.  Orca allows Lee to arrow through the links
               and hit first letter (or perhaps enter key) to activate
               them.</para>
-            <para>&todo; might need to be concerned about conflict
-              with web forms with buttons such as "Submit All Changes"
-              that will react to presses of the enter key.</para>
           </listitem>
           <listitem>
             <para>Jump past links on the page to get directly to large
@@ -381,7 +375,7 @@
         user and typically performs the tasks outlined in the following
         sections:</para>
   
-      <section><title>Browses the web using Mozilla</title>
+      <section><title>Browse the web using Mozilla</title>
   
         <para>Each morning before going to work, Pat uses Mozilla to
           read the daily news from CNN.  To do so, Pat needs to do the
@@ -525,30 +519,19 @@
           <listitem>
             <para>Determine the position on the slide that typed text
               will appear.</para> 
-            <para>&todo; is this perhaps more for someone who doesn't
-              use magnification?</para>
           </listitem>
           <listitem>
             <para>Determine if the slide is full or if part of text or
               an object won't fit.</para>
-            <para>&todo; is this perhaps more for someone who doesn't
-              use magnification?</para>
           </listitem>
           <listitem>
             <para>Cut and paste objects and text from and to a slide.</para>
-            <para>&todo; the application should provide this, but Pat will
-              still need to be able to determine what is selected.  How
-              will Pat do this?</para>
           </listitem>
           <listitem>
             <para>Move and size objects on a slide.</para>
-            <para>&todo; is this perhaps more for someone who doesn't
-              use magnification?</para>
           </listitem>
           <listitem>
             <para>Determine bullets and indentation levels for text.</para>
-            <para>&todo; is this perhaps more for someone who doesn't
-              use magnification?</para>
           </listitem>
           <listitem>
             <para>Pat sometimes invokes a spreadsheet while writing
@@ -640,8 +623,6 @@
               character-by-character or word-by-word.  Orca also
               provides a &wkc; (e.g., "say selection") to read the
               currently selected text.</para>
-            <para>&todo; what happens when there are multiple
-              discontiguous regions selected?</para>
           </listitem>
         </itemizedlist>
       </section>
@@ -745,13 +726,11 @@
           <listitem>
             <para>Read the entire appointment.  Orca provides this via
               a &wkc; to read an entire dialog.</para>
-            <para>&todo; this assumes the appointment information is 
-              input via a dialog.</para>
           </listitem>
         </itemizedlist>
       </section>
   
-      <section><title>Browses the web using Mozilla</title>
+      <section><title>Browse the web using Mozilla</title>
   
         <para>Kim often orders office supplies and books travel for
           others on line.  Kim does this in a manner similar to Pat, but
@@ -841,9 +820,6 @@
           </listitem>
           <listitem>
             <para>Determine and modify size of cell.</para>
-            <para>&todo; this might require some emulation of mouse 
-              behavior if StarOffice doesn't provide dialogs to do 
-              this.</para>
           </listitem>
           <listitem>
             <para>Select a range of cells and know that they are
@@ -927,8 +903,6 @@
             <para>Watch a particular field in a dialog box (e.g., the "%
               CPU utilization" field and be notified when it
               changes.</para>
-            <para>&todo; how does Sam specify what to watch and
-              how does Orca notify Sam when the value changes?</para>
           </listitem>
         </itemizedlist>
       </section>
