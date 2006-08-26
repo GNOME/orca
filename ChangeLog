@@ -1,5 +1,10 @@
 2006-08-25  Willie Walker <william.walker@sun.com>
 
+	* docs/doc-set/personas.sgml, docs/doc-set/ue_input_style.sgml,
+	docs/doc-set/ue_requirements.sgml, docs/doc-set/user_experience.sgml,
+	docs/doc-set/orca.html, docs/doc-set/orca.pdf: update requirements
+	documents to reflect Orca as of V0.9.0.
+	
 	* src/orca/orca.in: when orca is run again while orca is already
 	running, kill the other orca process and start new.
 	
