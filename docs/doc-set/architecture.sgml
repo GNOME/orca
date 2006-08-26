@@ -119,7 +119,7 @@
         for use in Python programs, and takes care of many of the
         details such as managing memory and type casting. When
         combined with PyORBit and gnome-python, it can be used to
-        write full featured Gnome applications.</para>
+        write full featured GNOME applications.</para>
     </section>
 
     <section><title>AT-SPI v1.6.6 or better</title>
@@ -128,7 +128,7 @@
         the AT-SPI <citation><xref linkend="at-spi"
         endterm="at-spi.abbrev"/></citation>.  As such, a
         functioning AT-SPI environment is mandatory.  The AT-SPI
-        provides a CORBA-based approach to detect, examine, and
+        provides an IDL/CORBA-based approach to detect, examine, and
         manipulate desktop and application content.  It supports the
         registration of event listeners for changes to desktop and
         application content.  Finally, the AT-SPI supports the
@@ -139,9 +139,9 @@
     </section>
 
     <section><title>gnome-speech v0.3.9 or better</title>
-      <para>GNOME-Speech <citation><xref linkend="gnome-speech"
-      endterm="gnome-speech.abbrev"/></citation> provides a
-      CORBA-based approach to access speech synthesizers as network
+      <para>gnome-Speech <citation><xref linkend="gnome-speech"
+      endterm="gnome-speech.abbrev"/></citation> provides an
+      IDL/CORBA-based approach to access speech synthesizers as network
       services.</para>
     </section>
 
@@ -155,7 +155,7 @@
 
     <section><title>gnome-mag v0.11.11 or better</title>
       <para>GNOME-mag <citation><xref linkend="gnome-mag"
-      endterm="gnome-mag.abbrev"/></citation> provides a CORBA-based
+      endterm="gnome-mag.abbrev"/></citation> provides an IDL/CORBA-based
       approach to access and manipulate a screen magnifier as a
       network service.</para>
     </section>
@@ -209,17 +209,17 @@
 
       <para>Orca's sole view of any application on the desktop is via
         the AT-SPI <citation><xref linkend="at-spi"
-        endterm="at-spi.abbrev"/></citation>.  The AT-SPI is a
-        CORBA/Bonobo-based technology <citation><xref linkend="bonobo"
+        endterm="at-spi.abbrev"/></citation>.  The AT-SPI is an
+        IDL/CORBA/Bonobo-based technology <citation><xref linkend="bonobo"
         endterm="bonobo.abbrev"/></citation> that provides a common
         interface for the desktop and its applications to expose their
         GUI component hierarchy to assistive technologies such as
         Orca.  AT-SPI support is provided by toolkits such as GNOME's
         GTK+ toolkit (via gail <citation><xref linkend="gail"
         endterm="gail.abbrev"/></citation>), the Java platform (via
-        the Java access bridge &todo; get link), and the custom
+        the Java access bridge), and the custom
         toolkits used by applications such as Mozilla and Open
-        Office.</para>
+        Office.  Future support includes the Qt toolkit of KDE.</para>
 
       <para>Assistive Technologies interact with the AT-SPI via two
         primary means: the AT-SPI registry and accessible objects.
@@ -241,7 +241,8 @@
         </listitem>
         <listitem>
           <para>From another Accessible via parent/child relationships
-            and other relationships</para>
+            and other relationships such as "label for" and 
+	    "labeled by".</para>
         </listitem>
       </orderedlist>
 
@@ -252,11 +253,11 @@
         number of classes that help with AT-SPI interaction:
         <literal>Registry</literal>, <literal>Accessible</literal>,
         and <literal>Event</literal>.  The full documentation for
-        each of these classes is available in the pydoc for Orca, 
-        and the following paragraphs provide a brief overview.</para>
+        each of these classes is available in the pydoc for Orca
+	while the following paragraphs provide a brief overview.</para>
 
       <para>The <literal>Registry</literal> class provides a singleton
-        (actually a "Borg") class instance to access to the AT-SPI
+        class instance to access to the AT-SPI
         registry.  It provides convenience methods for registering
         AT-SPI event listeners and device event listeners, and also
         provides the mechanism for starting and stopping event
@@ -278,7 +279,8 @@
         accessible source of the event into a Python
         <literal>Accessible</literal> instance and to also provide an
         <literal>Event</literal> instance that can be annotated by
-        scripts (the AT-SPI event is read-only).</para>
+        scripts (the actual AT-SPI event delivered by the registry is 
+	read-only).</para>
 
       <para>As illustrated in the high level Orca architecture
         diagram, the <literal>atspi</literal> module has been used to
@@ -297,8 +299,9 @@
         <literal>focus_tracking_presenter</literal> module receives
         AT-SPI events which it then passes on the script for the
         application associated with the event.  If there is no script,
-        the <literal>focus_tracking_presenter</literal> will create
-        one.  See the &scriptguidelink; for more information.</para>
+        the <literal>focus_tracking_presenter</literal> will create an
+        instance of the default script.  See the &scriptguidelink; for
+        more information.</para>
 
       <para>The <literal>atspi</literal> module also registers its
         own set of event listeners that it uses to keep its local
@@ -308,26 +311,13 @@
         time consuming, and because the notification of AT-SPI object
         events is relatively "bursty," the
         <literal>focus_tracking_presenter</literal> maintains a queue
-        of AT-SPI object events. It adds the events to this queue when
-        it receives them and processes the events on the GLib idle
-        handling thread.  This permits Orca to survive a relatively
-        long burst of events and also allows it to handle the events
-        on a thread that is compatible with GLib.</para>
+        of AT-SPI object and input device events. It adds the events
+        to this queue when it receives them and processes the events
+        on the GLib idle handling thread.  This permits Orca to
+        survive a relatively long burst of events and also allows it
+        to handle the events on a thread that is compatible with
+        GLib.</para>
 
-      <para>&detail; Unlike AT-SPI object events, Orca must process
-        keyboard events immediately and quickly because it needs to
-        determine if it should consume those events or not.  As such,
-        the <literal>atspi</literal> component will dispatch keyboard
-        events directly to the keyboard event listeners registered by
-        Orca.</para>
-
-      <para> &todo; The system needs to be able to cope with failure.
-        Right now, if Orca fails while handling a keyboard event, the
-        whole desktop can hang.  I'm curious if the AT-SPI-enabled app
-        can heal when the connection to Orca is broken or if there is
-        a timeout?  Conversations with Bill Haneman lead me to believe
-        there is no such thing as a timeout for the synchronous form
-        of device event notification.</para>
     </section>
 
     <section><title>Orca</title>
@@ -340,21 +330,34 @@
         appropriately.</para>
 
       <para>The <literal>orca</literal> module maintains the current
-        known "locus of focus" in its <literal>locusOfFocus</literal>
-        field that is set via the <literal>setLocusOfFocus</literal>
-        method.  This locus of focus represents the current object
-        that effectively has keyboard focus.  That is, the object that
-        will change and or react to keyboard input events.  Orca
-        scripts call this method to inform Orca when the locus of
-        focus has changed.  In addition, in the event that there was
-        a visual appearance change to the object that has the locus
-        of focus, the <literal>orca</literal> module provides a
-        <literal>visualAppearanceChanged</literal> that scripts can
-        use to inform Orca of this event.</para>
+        known "locus of focus" in the <literal>locusOfFocus</literal>
+        field of the <literal>orca_state</literal> module.  The
+        <literal>locusOfFocus</literal> is intended to represent the
+        current object that the user is working with.  In simple
+        terms, it is the object that is highlighted or has the dotted
+        line drawn around it.  Be advised that the notion of "focus"
+        differs from toolkit to toolkit.  For example, the object with
+        toolkit focus may actually be the parent of the object that is
+        highlighted.  The <literal>locusOfFocus</literal> is an an
+        attempt to neutralize these differences across toolkits: the
+        locus of focus is the individual object that is highlighted,
+        has the caret, etc.</para>
 
-      <para>The <literal>orca</literal> module also maintains a list
-        of all known applications.  This list is available as the
-        <literal>apps</literal> field.</para>
+      <para>Orca scripts set the locus of focus to inform Orca when
+        the locus of focus has changed.  In addition, in the event
+        that there was a visual appearance change to the object that
+        has the locus of focus, the <literal>orca</literal> module
+        provides a <literal>visualAppearanceChanged</literal> that
+        scripts can use to inform Orca of this event.</para>
+
+      <para>&note; The <literal>orca_state.locusOfFocus</literal>
+        field is intended to be set only via the
+        <literal>setLocusOfFocus</literal> method of the
+        <literal>orca</literal> module. Because the
+        <literal>setLocusOfFocus</literal> method performs bookkeeping
+        and other tasks, the
+        <literal>orca_state.locusOfFocus</literal> field should never
+        be set directly.</para>
 
       <section><title>settings</title> 
         <para>The <emphasis role="bold">settings</emphasis> module
@@ -365,37 +368,27 @@
           (see the &userrequirementslink; for details on these
           features).</para>
 
-        <para>Any Orca module can request the value of a setting by
-          calling the <literal>getSetting</literal> method of the
-          <literal>settings</literal> module.  When first called, this
-          module will import the <literal>user-settings</literal>
-          module from the <literal>~/.orca directory</literal>, if it
-          exists.  The <literal>user-settings</literal> module is a
-          Python script, allowing it to contain functions, class
-          definitions, etc.  Furthermore, the import of the
-          <literal>user-settings</literal> module will cause any
-          executable statements to be run, allowing the module to
-          define/set fields in itself and call functions in other
-          modules.  For example, the module will typically define the
-          use of output mode (speech, braille, mag) and may also call
-          functions in other modules, such as the
-          <literal>setDebugLevel</literal> method of the
-          <literal>debug</literal> module.</para>
+        <para>Any Orca module can check the value of a setting by
+          examining the field directly in the
+          <literal>settings</literal> module.  In addition, the
+          <literal>orca</literal> module will import the
+          <literal>user-settings</literal> module from the
+          <literal>~/.orca directory</literal>, if it exists (it
+	  is created as part of the configuration process that
+	  is run the first time Orca is used or when the user
+	  presses Insert+Space to invoke the configuration GUI).</para>
 
-         <para>The <literal>getSetting</literal> method of the
-           <literal>settings</literal> module is intended to discover
-           field attribute values.  It will first look to the
-           <literal>user-settings</literal> module for the field, and
-           then fall back to the <literal>settings</literal> module.
-           The <literal>getSetting</literal> method also accepts a
-           default value in the event the field does not exist in
-           either the <literal>user-settings</literal> or
-           <literal>settings</literal> module.</para> 
+	<para>The <literal>user-settings</literal> module is a Python
+          script, allowing it to contain functions, class definitions,
+          etc.  The primary job of the
+          <literal>user-settings</literal> is to directly set the
+          values of fields in the <literal>settings</literal>
+          module.</para>
 
-         <para>&detail; the <literal>init</literal> method of the
-           <literal>orca</literal> module obtains settings.  As a
-           result, the <literal>user-settings</literal> module is
-           imported very early in the Orca life cycle.</para>
+        <para>&detail; the <literal>init</literal> method of the
+          <literal>orca</literal> module obtains settings.  As a
+          result, the <literal>user-settings</literal> module is
+          imported very early in the Orca life cycle.</para>
 
       </section>
     </section>
@@ -477,7 +470,7 @@
           methods that delegate to the <literal>SpeechServer</literal>
           instance.  This model allows scripts to use their own
           <literal>SpeechServer</literal> instances if they wish, but
-          to also just rely upon the user's default
+          scripts typically just rely upon the user's default
           preferences.</para>
       </section>
 
@@ -532,7 +525,9 @@
       community of open source translators to provide the
       localizations.</para>
     <para>The synthesis of localized speech is to be provided by the
-      underlying gnome-speech implementation.</para>
+      underlying gnome-speech engine.  That is, Orca merely passes
+      localized text to the speech engine, which is responsible for
+      the correct interpretation and pronunciation.</para>
     <para>The generation of localized braille is to be determined.
       &todo; BrlTTY currently does not support this at the moment, but
       it is expected that the BrlTTY developers will add this in the
@@ -615,21 +610,21 @@
     </biblioentry>
 
     <biblioentry role="unpublished" id="gnome-mag">
-      <abbrev id="gnome-mag.abbrev">Gnome-Mag</abbrev>
+      <abbrev id="gnome-mag.abbrev">gnome-mag</abbrev>
       <author><firstname>Bill</firstname><surname>Haneman</surname></author>
       <title><ulink url="http://directory.fsf.org/accessibility/gnome-mag.html">
-        Gnome-Mag</ulink>
+        gnome-mag</ulink>
     </title>
     </biblioentry>
 
     <biblioentry role="unpublished" id="gnome-speech">
-      <abbrev id="gnome-speech.abbrev">Gnome-Speech</abbrev>
+      <abbrev id="gnome-speech.abbrev">gnome-speech</abbrev>
       <authorgroup>
         <author><firstname>Marc</firstname><surname>Mulcahy</surname></author>
         <author><firstname>Michael</firstname><surname>Meeks</surname></author>
       </authorgroup>
       <title><ulink url="http://directory.fsf.org/accessibility/gnome-speech.html">
-        Gnome-Speech</ulink>
+        gnome-speech</ulink>
     </title>
     </biblioentry>
 

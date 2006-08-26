@@ -1,3 +1,9 @@
+2006-08-26  Willie Walker <william.walker@sun.com>
+
+	* docs/doc-set/architecture.sgml, docs/doc-set/script_guide.sgml,
+	docs/doc-set/orca.html, docs/doc-set/orca.pdf: update architecture
+	and script writing guide to reflect Orca as of V0.9.0.
+	
 2006-08-25  Willie Walker <william.walker@sun.com>
 
 	* docs/doc-set/personas.sgml, docs/doc-set/ue_input_style.sgml,

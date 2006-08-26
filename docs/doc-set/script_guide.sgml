@@ -35,14 +35,13 @@
 
   <chapter><title>Introduction</title>
 
-    <para>In this document, you will learn how to create your own 
-      custom scripts for Orca.</para>
+    <para>In this document, you will learn more about the Orca
+      architecture as well as how to create your own custom scripts
+      for Orca.</para>
 
-    <para>Orca's scripting approach provides a mechanism for providing
-      customized support for the specific user interaction model of an
-      application.  The goal is to provide Orca with the capability of
-      providing a natural feeling and compelling user experience for
-      the various user interaction models of different desktop
+    <para>The goal of scripting is to provide Orca with the capability
+      of providing a natural feeling and compelling user experience
+      for the various user interaction models of different desktop
       applications.</para>
 
     <para>The Orca scripting approach allows scripts to extend and/or
@@ -82,15 +81,31 @@
       interpret keystrokes and braille input events, allowing it to
       further extend the behavior of Orca.</para>
 
+    <section><title>Script Contract</title>
+
+      <para>The contract for a script is documented in detail in the
+        pydoc of the <literal>Script</literal> class in the
+        <literal>script.py</literal> module.  The
+        <literal>Script</literal> subclass defined in the
+        <literal>default.py</literal> module provides the default
+        behavior for Orca when it encounters applications and toolkits
+        that behave like the GTK toolkit.  It is expected that new
+        scripts will typically extend the <literal>Script</literal>
+        subclass of the <literal>default.py</literal> module rather
+        than directly extending the <literal>Script</literal> class
+        defined in the <literal>script.py</literal> module.</para>
+
+    </section>
+
     <section><title>Script Life Cycle</title>
 
       <para>BIRTH: Orca's <literal>focus_tracking_presenter</literal>
         module is the sole maintainer of scripts. Whenever it receives
-        a <literal>window:activated</literal> event from the AT-SPI
-        Registry, the <literal>focus_tracking_presenter</literal> will
-        determine the application associated with that event and
-        create a script for that application if necessary.  Only one
-        script instance per application is managed by the
+        an event from the AT-SPI Registry, the
+        <literal>focus_tracking_presenter</literal> will determine the
+        application associated with that event and create a new script
+        for that application if on has not yet been created.  Only one
+        script instance per application instance is allowed by the
         <literal>focus_tracking_presenter</literal>.</para>
 
       <para>The script creation process consists of the following
@@ -111,9 +126,12 @@
             utilities section</link> to determine what to name your
             script).  If it cannot find such a module in the Python
             search path, the
-            <literal>focus_tracking_presenter</literal> will create an
-            instance of the <literal>Default</literal> script in
-            default.py.</para>
+            <literal>focus_tracking_presenter</literal> will then
+            check in the <literal>orca</literal> package for a module
+            matching the name of the toolkit used by the application.
+            Failing that, Orca will create an instance of the
+            <literal>Script</literal> class defined in the
+            <literal>default.py</literal> module.</para>
 
           <para>&note; the <literal>focus_tracking_presenter</literal>
             also maintains a table to map application names to script
@@ -126,9 +144,9 @@
 
           <para>&detail; it is possible to tell Orca to bypass all
             custom script creation by setting
-            <literal>useCustomScripts=False</literal> in your
-            <literal>~/.orca/user-settings.py</literal> module.  This
-            can be useful for debugging purposes.</para>
+            <literal>orca.settings.enableCustomScripts=False</literal>
+            in your <literal>~/.orca/user-settings.py</literal>
+            module.  This can be useful for debugging purposes.</para>
 
         </listitem>
         <listitem>
@@ -155,9 +173,9 @@
             script (i.e., the script should not register these events
             itself).  When the
             <literal>focus_tracking_presenter</literal> receives the
-            events, it will pass the event directly to the script
-            associated with the event, regardless if the application
-            associated with the script has focus or not.</para>
+            events, it will pass the event to the script associated
+            with the event, regardless if the application associated
+            with the script has focus or not.</para>
 
           <para>&detail; the
             <literal>focus_tracking_presenter</literal> registers its
@@ -212,13 +230,16 @@
             <literal>processBrailleEvent</literal> methods of the
             active script.</para>
 
-          <para>&detail; the
-            <literal>focus_tracking_presenter</literal> provides logic
-            to allow the user's
-            <literal>~/.orca/user-settings.py</literal> module to
-            extend and/or override key and braille bindings.  This
-            logic is currently latent, however, and is not documented
-            or supported.</para>
+          <para>&detail; Because processing AT-SPI object events can
+            be time consuming, and because the notification of AT-SPI
+            object events is relatively "bursty," the
+            <literal>focus_tracking_presenter</literal> maintains a
+            queue of AT-SPI object and input device events. It adds
+            the events to this queue when it receives them and
+            processes the events on the GLib idle handling thread.
+            This permits Orca to survive a relatively long burst of
+            events and also allows it to handle the events on a thread
+            that is compatible with GLib.</para>
 
         </listitem>
       </itemizedlist>
@@ -229,7 +250,17 @@
         detects a change in the locus of focus, it should call
         <literal>orca.setLocusOfFocus</literal> with the
         <literal>Accessible</literal> object instance that is the new
-        locus of focus.</para>
+        locus of focus.  Among other things, this results in the
+	<literal>orca_state.locusOfFocus</literal> field being updated.</para>
+
+      <para>&note; The <literal>orca_state.locusOfFocus</literal>
+        field is intended to be set only via the
+        <literal>setLocusOfFocus</literal> method of the
+        <literal>orca</literal> module. Because the
+        <literal>setLocusOfFocus</literal> method performs bookkeeping
+        and other tasks, the
+        <literal>orca_state.locusOfFocus</literal> field should never
+        be set directly.</para>
 
       <para>&detail; The <literal>orca</literal> module has logic to
         detect if the locus of focus really changed and will propagate
@@ -273,25 +304,6 @@
         <literal>object:children-changed:remove</literal> event on
         the desktop.</para>
 
-      <para>&todo; it needs to be verified that scripts are actually
-        being reclaimed.  I think something somewhere is hanging on
-        to a handle of the script, preventing it from being garbage
-        collected.</para>
-    </section>
-
-    <section><title>Script Contract</title>
-
-      <para>The contract for a script is documented in detail in the
-        <literal>script.py</literal> module.  The
-        <literal>Default</literal> script subclass defined in the
-        <literal>default.py</literal> module provides the default
-        behavior for Orca when it encounters applications and toolkits
-        that behave like the GTK toolkit.  It is expected that new
-        scripts will typically extend the <literal>Default</literal>
-        script subclass rather than directly extending the
-        <literal>Script</literal> class defined in the
-        <literal>script.py</literal> module.</para>
-
     </section>
 
   </chapter>
@@ -306,6 +318,13 @@
   -->
 
   <chapter id="customization"><title>Customized Behavior</title>
+
+    <para>&note; THIS WILL CHANGE POST V1.0.  In particular, the
+      method for setting up event handlers and keyboard/braille
+      bindings will be changed so as to allow for easier customization
+      of these bindings.  As such, the information in this chapter is
+      here only for historical purposes.</para>
+
     <para>The customized behavior of a script is set up in its
       constructor.  In its constructor, each script is expected to
       extend/override several fields as illustrated in the following
@@ -350,8 +369,10 @@
 
     <para>The constructor for the <literal>Script</literal> class,
       which all scripts should ultimately extend (most will extend the
-      <literal>Default</literal> class, which in turn extends
-      <literal>Script</literal>), sets up empty values for each of
+      <literal>Script</literal> subclass of the <literal>default.py</literal>
+      module, which in turn extends
+      <literal>Script</literal> class of the <literal>script.py</literal>
+      module), sets up empty values for each of
       these fields.  As such, a subclass merely needs to
       extend/override these fields.  Each of these fields is described
       in more detail in the following sections.</para>
@@ -374,7 +395,7 @@ self.listeners["focus:"] = self.onFocus
         <literal>listeners</literal> dictionary, it will be overridden
         by the new value.</para>
 
-      <para>As decribed previously, the
+      <para>As described previously, the
         <literal>focus_tracking_presenter</literal> will register
         listeners on behalf of a script, and will notify the script of
         any events via the script's
@@ -610,8 +631,8 @@ self.braillebindings[braille.CMD_TOP_LEFT] = reviewHomeHandler
         <literal>~/.orca/user-settings.py</literal>:</para>
 
       <programlisting>
-debug.setEventDebugFilter(re.compile('window:activate'))
-debug.setEventDebugLevel(debug.LEVEL_OFF)
+orca.debug.setEventDebugFilter(re.compile('window:activate'))
+orca.debug.setEventDebugLevel(debug.LEVEL_OFF)
       </programlisting>
 
       <para>Now, when you rerun Orca, it will output information
@@ -629,6 +650,28 @@ OBJECT EVENT: window:activate detail=(0,0)
         the name of the application is 'StarOffice.'  As such, if you
         wanted to write a custom script, you would call it
         <literal>StarOffice.py</literal>.</para>
+
+      <para>&note; you can also get other information while Orca is
+        running by pressing the debug keystrokes:</para>
+
+        <itemizedlist>
+          <listitem>
+	    <para>Insert+F5: dump a list of all applications to the
+	      console</para>
+	  </listitem>
+          <listitem>
+	    <para>Insert+F6: speak/braille information about the active
+	      script and application with focus</para>
+	  </listitem>
+          <listitem>
+	    <para>Insert+F7: dump the ancestors of the object with focus
+	      to the console</para>
+	  </listitem>
+          <listitem>
+	    <para>Insert+F8: dump the entire widget hierarchy of the 
+	      application with focus to the console</para>
+	  </listitem>
+        </itemizedlist>
 
       <para>The debug module also includes a number of other methods,
         each of which is described in more detail in
@@ -727,9 +770,9 @@ ACTIVE SCRIPT: gnome-terminal (module=orca.scripts.gnome-terminal)
       <literal>SpeechGenerator</literal> class that can be used to to
       actually generate the text to be spoken for various objects.
       The expected use of the two modules is as follows: a script will
-      instantiate its own instance of a
+      create its own instance of a
       <literal>SpeechGenerator</literal> and will use it to generate
-      text to be spoken.  The script will then pass this text to the
+      text.  The script will then pass this text to the
       <literal>speech.py</literal> module to be spoken.</para>
 
       <section><title><literal>speech.py</literal></title>
@@ -755,7 +798,7 @@ ACTIVE SCRIPT: gnome-terminal (module=orca.scripts.gnome-terminal)
         <itemizedlist>
           <listitem>
             <para><literal>getSpeech(obj, already_focused)</literal>:
-              returns a list (i.e., an array) of strings to be spoken
+              returns a list of strings to be spoken
               for the given accessible object.  The
               <literal>already_focused</literal> boolean parameter
               provides a hint to the speech generator about how much
@@ -764,11 +807,11 @@ ACTIVE SCRIPT: gnome-terminal (module=orca.scripts.gnome-terminal)
               for this is that the state changed between checked and
               unchecked.  As a result, an appropriate thing to do in
               this situation is to only speak the new change in
-              state.</para>              
+              state (e.g., "checked").</para>              
           </listitem>
           <listitem>
             <para><literal>getSpeechContext(obj,
-              stopAncestor)</literal>: returns a list (i.e., an array)
+              stopAncestor)</literal>: returns a list
               of strings to be spoken that describe the visual context
               of the given accessible object.  This is loosely
               represented by the hierarchical relationship of the
@@ -793,25 +836,12 @@ ACTIVE SCRIPT: gnome-terminal (module=orca.scripts.gnome-terminal)
           <literal>SpeechGenerator</literal> subclass is expected to
           examine the <literal>speechVerbosityLevel</literal> property
           of the <literal>settings.py</literal> module and provide the
-          appropriate level of text.  The verbosity setting can be
-          obtained via the following call to
-          <literal>settings.getSetting</literal>:</para>
+          appropriate level of text:</para>
 
         <programlisting>
-# Obtain speech verbosity level.  If it has not been set,
-# default to the VERBOSITY_LEVEL_VERBOSE level.
-#
-verbosity = settings.getSetting(settings.SPEECH_VERBOSITY_LEVEL,
-                                settings.VERBOSITY_LEVEL_VERBOSE)
+if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
+    utterances.append(rolenames.getSpeechForRoleName(obj))
         </programlisting>
-
-        <para>One can currently set the verbosity level from their
-          <literal>~/.orca/user-settings.py</literal> module:</para>
-
-        <programlisting>
-speechVerbosityLevel = settings.VERBOSITY_LEVEL_BRIEF
-        </programlisting>
-
       </section>
 
     </section>
@@ -827,18 +857,15 @@ speechVerbosityLevel = settings.VERBOSITY_LEVEL_BRIEF
       <literal>BrailleGenerator</literal> class that can be used to to
       actually generate the text to be displayed for various objects.
       The expected use of the two modules is as follows: a script will
-      instantiate its own instance of a
-      <literal>BrailleGenerator</literal> and will use it to generate
-      text to be display.  The script will then pass this text to the
+      create its own instance of a
+      <literal>BrailleGenerator</literal> and will use it to braille
+      regions.  The script will then pass these braille regions to the
       <literal>braille.py</literal> module to be displayed.</para>
 
       <section><title><literal>braille.py</literal></title> 
         <para>&todo; [[[WDW - much writing to be done here, especially
           regarding how regions will provide automatic support for
           cursor routing keys.]]]</para>
-        <para>&todo; [[[WDW - I'm not satisfied with
-          <literal>braille.py</literal>.  It will change before Orca 1.0 
-          is released, so be aware of this.]]]</para>
       </section>
 
       <section><title><literal>braillegenerator.py</literal></title>
@@ -894,23 +921,12 @@ speechVerbosityLevel = settings.VERBOSITY_LEVEL_BRIEF
           <literal>BrailleGenerator</literal> subclass is expected to
           examine the <literal>brailleVerbosityLevel</literal> property
           of the <literal>settings.py</literal> module and provide the
-          appropriate level of text.  The verbosity setting can be
-          obtained via the following call to
-          <literal>settings.getSetting</literal>:</para>
+          appropriate level of text:</para>
 
         <programlisting>
-# Obtain braille verbosity level.  If it has not been set,
-# default to the VERBOSITY_LEVEL_VERBOSE level.
-#
-verbosity = settings.getSetting(settings.BRAILLE_VERBOSITY_LEVEL,
-                                settings.VERBOSITY_LEVEL_VERBOSE)
-        </programlisting>
-
-        <para>One can currently set the verbosity level from their
-          <literal>~/.orca/user-settings.py</literal> module:</para>
-
-        <programlisting>
-brailleVerbosityLevel = settings.VERBOSITY_LEVEL_BRIEF
+if settings.brailleVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
+    regions.append(braille.Region(
+                   " " + rolenames.getBrailleForRoleName(obj)))
         </programlisting>
 
       </section>
