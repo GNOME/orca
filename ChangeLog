@@ -1,5 +1,12 @@
 2006-08-27  Willie Walker <william.walker@sun.com>
 
+	* src/orca/orca.in, src/orca/orca.py: apply modified patch to
+	partially fix bug 352866 - add "-q" and "--quit" options to allow
+	one to more easily kill running Orca processes.  Supplied by
+	community member Javier (thanks!)
+	
+2006-08-27  Willie Walker <william.walker@sun.com>
+
 	* docs/doc-set/user_guide.sgml, docs/doc-set/orca.html, 
 	docs/doc-set/orca.pdf: add some needed material to the
 	User's Guide.

@@ -201,5 +201,10 @@ if [ "x$RUNONCE" = "xfalse" -a "x$ARGS" = "x" ]
 then
     main
 else
-    runOrca
+    if [ `echo $ARGS | grep -c "\-q" - ` -gt 0 ]
+    then
+        cleanup
+    else
+        runOrca
+    fi
 fi
