@@ -1,3 +1,9 @@
+2006-08-27  Willie Walker <william.walker@sun.com>
+
+	* docs/doc-set/user_guide.sgml, docs/doc-set/orca.html, 
+	docs/doc-set/orca.pdf: add some needed material to the
+	User's Guide.
+	
 2006-08-26  Willie Walker <william.walker@sun.com>
 
 	* docs/doc-set/architecture.sgml, docs/doc-set/script_guide.sgml,
