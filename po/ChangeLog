@@ -1,3 +1,8 @@
+2006-08-28  Ani Peter <peter.ani@gmail.com>
+
+	* ml.po: Added and Updated MAlayalm translation
+	* LINGUAS: Added Malayalam (ml) to the list of Languages
+
 2006-08-25  Duarte Loreto <happyguy_pt@hotmail.com>
 
 	* pt.po: Updated Portuguese translation.
