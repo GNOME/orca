@@ -314,3 +314,24 @@ class Script(default.Script):
 
         # Pass the event onto the parent class to be handled in the default way.
         default.Script.onNameChanged(self, event)
+
+    def onStateChanged(self, event):
+        """Called whenever an object's state changes.
+
+        Arguments:
+        - event: the Event
+        """
+
+        # Sometimes an object will tell us it is focused this
+        # way versus issuing a focus event.  GEdit's edit area,
+        # for example, will do this: when you use metacity's
+        # window menu to do things like maximize or unmaximize
+        # a window, you will only get a state-changed event
+        # from the text area when it regains focus.
+        # (See bug #350854 for more details).
+        #
+        if (event.type == "object:state-changed:focused") \
+           and (event.detail1):
+            orca.setLocusOfFocus(event, event.source)
+
+        default.Script.onSelectionChanged(self, event)

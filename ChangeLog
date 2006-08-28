@@ -3,6 +3,13 @@
         * src/orca/orca_gui_prefs.py:
           Fixed bug #352578 - unchecking speech does not disable speech.
 
+        * src/orca/default.py:
+          src/orca/scripts/gedit.py:
+          Refixed bug #350854 - Orca should handle object:state-changed:focus 
+          events (thanks Will).
+          Fixed bug #353268 - Orca is double reading lines in OpenOffice 
+          with latest Ubuntu live CD.
+
 2006-08-28  Oana Serb <os@baum.ro>
 
 	* src/orca/atspi.py: prevent COMM_FAILURE messages when

@@ -1918,17 +1918,6 @@ class Script(script.Script):
         - event: the Event
         """
 
-        # Sometimes an object will tell us it is focused this
-        # way versus issuing a focus event.  GEdit's edit area,
-        # for example, will do this: when you use metacity's
-        # window menu to do things like maximize or unmaximize
-        # a window, you will only get a state-changed event
-        # from the text area when it regains focus.
-        #
-        if (event.type == "object:state-changed:focused") \
-           and (event.detail1):
-            orca.setLocusOfFocus(event, event.source)
-
         # Do we care?
         #
         if state_change_notifiers.has_key(event.source.role):
