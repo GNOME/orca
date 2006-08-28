@@ -334,4 +334,4 @@ class Script(default.Script):
            and (event.detail1):
             orca.setLocusOfFocus(event, event.source)
 
-        default.Script.onSelectionChanged(self, event)
+        default.Script.onStateChanged(self, event)
