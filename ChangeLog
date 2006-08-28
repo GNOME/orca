@@ -1,3 +1,8 @@
+2006-08-28  Oana Serb <os@baum.ro>
+
+	* src/orca/atspi.py: prevent COMM_FAILURE messages when
+	trying to get the object state (fix for bug #353237)
+
 2006-08-28  Willie Walker <william.walker@sun.com>
 
 	* po/POTFILES.in: add J2SE-access-bridge.py to list of

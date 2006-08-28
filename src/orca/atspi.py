@@ -932,7 +932,10 @@ class Accessible:
         sequence of Accessible StateTypes.
         """
 
-        stateSet = self.accessible.getState()
+        try:
+            stateSet = self.accessible.getState()
+        except:
+            stateSet = None
         if stateSet:
             try:
                 state = stateSet._narrow(Accessibility.StateSet).getStates()
