@@ -158,7 +158,6 @@ class orcaSetupGUI(GladeWrapper):
         self.serverChoices = None
         self._setupServers()
         self._setupVoices()
-        self.prefsDict["enableSpeech"] = True
         self._initGUIState()
         self.initializing = False
 
@@ -1386,7 +1385,8 @@ class orcaSetupGUI(GladeWrapper):
         - widget: the component that generated the signal.
         """
 
-        self.prefsDict["enableSpeech"] = True
+        enable = self.speechSupportCheckbutton.get_active()
+        self.prefsDict["enableSpeech"] = enable
         self.prefsDict["speechServerFactory"] = self.factory
         self.prefsDict["speechServerInfo"] = self.server
         self.prefsDict["voices"] = {
