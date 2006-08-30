@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.HEAD.mk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-10 16:47+0200\n"
-"PO-Revision-Date: 2006-08-10 17:50+0200\n"
+"POT-Creation-Date: 2006-08-30 22:09+0200\n"
+"PO-Revision-Date: 2006-08-30 23:53+0200\n"
 "Last-Translator: Jovan Naumovski <jovan@lugola.net>\n"
 "Language-Team: Macedonian <ossm-members@hedona.on.net.mk>\n"
 "MIME-Version: 1.0\n"
@@ -22,21 +22,25 @@ msgstr "Орка читач и зголемувач на екранот"
 
 #: ../orca.desktop.in.h:2
 msgid "Present on-screen information as speech or braille, or magnify the screen"
-msgstr "Претстави ги информациите на екранот како говор, преку брајов уред или зголеми го екранот"
+msgstr ""
+"Претстави ги информациите на екранот како говор, преку брајов уред или "
+"зголеми го екранот"
 
 #: ../src/orca/braillegenerator.py:193 ../src/orca/speechgenerator.py:191
 msgid "grayed"
 msgstr "засивено"
 
-#: ../src/orca/braillegenerator.py:1085 ../src/orca/speechgenerator.py:1198
+#: ../src/orca/braillegenerator.py:1096 ../src/orca/J2SE-access-bridge.py:66
+#: ../src/orca/speechgenerator.py:1198
 msgid "expanded"
 msgstr "проширено"
 
-#: ../src/orca/braillegenerator.py:1087 ../src/orca/speechgenerator.py:1200
+#: ../src/orca/braillegenerator.py:1098 ../src/orca/J2SE-access-bridge.py:69
+#: ../src/orca/speechgenerator.py:1200
 msgid "collapsed"
 msgstr "спуштено"
 
-#: ../src/orca/braillegenerator.py:1091
+#: ../src/orca/braillegenerator.py:1102
 #, python-format
 msgid "TREE LEVEL %d"
 msgstr "НИВО НА ДРВОТО %d"
@@ -373,7 +377,7 @@ msgstr "Испишува информации за дебагирање за а�
 msgid "Switches to the next presentation manager."
 msgstr "Преминува на следниот менаџер на презентации."
 
-#: ../src/orca/default.py:1067 ../src/orca/default.py:1286
+#: ../src/orca/default.py:1067 ../src/orca/default.py:1282
 #, python-format
 msgid "tree level %d"
 msgstr "ниво на дрвото %d"
@@ -382,48 +386,48 @@ msgstr "ниво на дрвото %d"
 msgid "No focus"
 msgstr "Нема фокус"
 
-#: ../src/orca/default.py:1677
+#: ../src/orca/default.py:1673
 msgid "entire document selected"
 msgstr "целиот документ е избран"
 
-#: ../src/orca/default.py:2098
+#: ../src/orca/default.py:2121
 msgid "Speak "
 msgstr "Зборува"
 
-#: ../src/orca/default.py:2101
+#: ../src/orca/default.py:2124
 msgid "row"
 msgstr "ред"
 
-#: ../src/orca/default.py:2103 ../src/orca/rolenames.py:432
+#: ../src/orca/default.py:2126 ../src/orca/rolenames.py:432
 #: ../src/orca/rolenames.py:434
 msgid "cell"
 msgstr "ќелија"
 
-#: ../src/orca/default.py:2258
+#: ../src/orca/default.py:2281
 msgid "Entering learn mode.  Press any key to hear its function. "
 msgstr ""
 "Влегувам во режимот за учење.  Притиснете го било кое копче за да ја "
 "слушните неговата функција. "
 
-#: ../src/orca/default.py:2259
+#: ../src/orca/default.py:2282
 msgid "To exit learn mode, press the escape key."
 msgstr "За излез од режимот на учење, притиснете го копчето escape."
 
-#: ../src/orca/default.py:2260
+#: ../src/orca/default.py:2283
 msgid "Learn mode.  Press escape to exit."
 msgstr "Режим на учење.  Притиснете escape за излез."
 
-#: ../src/orca/default.py:2272 ../src/orca/default.py:2273
+#: ../src/orca/default.py:2295 ../src/orca/default.py:2296
 msgid "Exiting learn mode."
 msgstr "Излегувам од режимот на учење."
 
-#: ../src/orca/default.py:2603 ../src/orca/default.py:2731
-#: ../src/orca/default.py:2736 ../src/orca/default.py:2808
-#: ../src/orca/default.py:2813
+#: ../src/orca/default.py:2626 ../src/orca/default.py:2754
+#: ../src/orca/default.py:2759 ../src/orca/default.py:2831
+#: ../src/orca/default.py:2836
 msgid "blank"
 msgstr "празно"
 
-#: ../src/orca/default.py:2605 ../src/orca/default.py:2738
+#: ../src/orca/default.py:2628 ../src/orca/default.py:2761
 msgid "white space"
 msgstr "празен простор"
 
@@ -437,33 +441,42 @@ msgstr "Преминувам на режим за пратење на фокус
 
 #: ../src/orca/gnomespeechfactory.py:159
 msgid "GNOME Speech Services"
-msgstr "Сервиси за говор на Гном"
+msgstr "Сервиси за говор на GNOME"
 
 #. # Replace ellipses (both manual and unicode) with "dot dot dot"
 #. #
-#: ../src/orca/gnomespeechfactory.py:605 ../src/orca/gnomespeechfactory.py:606
+#: ../src/orca/gnomespeechfactory.py:610 ../src/orca/gnomespeechfactory.py:611
 msgid " dot dot dot"
 msgstr " три точки"
 
-#: ../src/orca/gnomespeechfactory.py:765
+#: ../src/orca/gnomespeechfactory.py:770
 msgid "higher."
 msgstr "повисоко."
 
-#: ../src/orca/gnomespeechfactory.py:793
+#: ../src/orca/gnomespeechfactory.py:798
 msgid "lower."
 msgstr "пониско."
 
-#: ../src/orca/gnomespeechfactory.py:818
+#: ../src/orca/gnomespeechfactory.py:823
 msgid "faster."
 msgstr "побрзо."
 
-#: ../src/orca/gnomespeechfactory.py:848
+#: ../src/orca/gnomespeechfactory.py:853
 msgid "slower."
 msgstr "побавно."
 
 #: ../src/orca/hierarchical_presenter.py:436
 msgid "Switching to hierarchical navigation mode."
 msgstr "Преминувам на режим на хиерархиска навигација."
+
+#: ../src/orca/J2SE-access-bridge.py:71 ../src/orca/speechgenerator.py:909
+#: ../src/orca/speechgenerator.py:912 ../src/orca/util.py:1228
+msgid "selected"
+msgstr "избрано"
+
+#: ../src/orca/J2SE-access-bridge.py:75 ../src/orca/util.py:1236
+msgid "unselected"
+msgstr "необележано"
 
 #: ../src/orca/keynames.py:32 ../src/orca/keynames.py:35
 msgid "left shift"
@@ -561,8 +574,8 @@ msgstr "<b>Поставувања на зумерот</b>"
 msgid "Braille"
 msgstr "Брајов"
 
-#: ../src/orca/orca-setup.glade.h:9 ../src/orca/orca_gui_prefs.py:1059
-#: ../src/orca/orca_gui_prefs.py:1114
+#: ../src/orca/orca-setup.glade.h:9 ../src/orca/orca_gui_prefs.py:1058
+#: ../src/orca/orca_gui_prefs.py:1113
 msgid "Brie_f"
 msgstr "Кратк_о"
 
@@ -656,7 +669,7 @@ msgstr "Пр_еврти бои"
 msgid "Key Echo"
 msgstr "Ехо на копчињата"
 
-#: ../src/orca/orca-setup.glade.h:34 ../src/orca/orca_gui_prefs.py:1039
+#: ../src/orca/orca-setup.glade.h:34 ../src/orca/orca_gui_prefs.py:1038
 msgid "M_ost"
 msgstr "П_овеќето"
 
@@ -696,7 +709,7 @@ msgstr "Фактор на намалување:"
 msgid "Si_ze:"
 msgstr "Го_лемина:"
 
-#: ../src/orca/orca-setup.glade.h:44 ../src/orca/orca_gui_prefs.py:1036
+#: ../src/orca/orca-setup.glade.h:44 ../src/orca/orca_gui_prefs.py:1035
 msgid "So_me"
 msgstr "Не_кои"
 
@@ -704,7 +717,7 @@ msgstr "Не_кои"
 msgid "Speak _indentation and justification"
 msgstr "_Скратување и поедноставување на говорот"
 
-#: ../src/orca/orca-setup.glade.h:46 ../src/orca/orca_gui_prefs.py:1079
+#: ../src/orca/orca-setup.glade.h:46 ../src/orca/orca_gui_prefs.py:1078
 msgid "Speak current _cell"
 msgstr "Изговори ја тековната _ќелија"
 
@@ -760,7 +773,7 @@ msgstr "_Овозможи говор"
 msgid "_Left:"
 msgstr "_Лево:"
 
-#: ../src/orca/orca-setup.glade.h:60 ../src/orca/orca_gui_prefs.py:1033
+#: ../src/orca/orca-setup.glade.h:60 ../src/orca/orca_gui_prefs.py:1032
 msgid "_None"
 msgstr "_Ништо"
 
@@ -881,7 +894,7 @@ msgstr ""
 "-n, --no-setup               Прескокни го поставувањето на корисничките "
 "параметри"
 
-#: ../src/orca/orca.py:1102
+#: ../src/orca/orca.py:1103
 msgid ""
 "If Orca has not been previously set up by the user, Orca\n"
 "will automatically launch the preferences set up unless\n"
@@ -891,7 +904,7 @@ msgstr ""
 "автоматски ќе ги пушти поставувањата на параметрите освен ако\n"
 "се користат опциите за поставување „-n“ или „--no-setup“"
 
-#: ../src/orca/orca.py:1104
+#: ../src/orca/orca.py:1105
 msgid "Report bugs to orca-list@gnome.org."
 msgstr "Пријавете бубачки на orca-list@gnome.org."
 
@@ -997,7 +1010,7 @@ msgstr "Овозможи брајов Монитор? Внесете y или n:
 
 #: ../src/orca/orca_console_prefs.py:319
 msgid "Accessibility support for GNOME has just been enabled. "
-msgstr "Поддршката за пристапност на Гном е овозможена. "
+msgstr "Поддршката за пристапност на GNOME е овозможена. "
 
 #: ../src/orca/orca_console_prefs.py:324
 msgid "You need to log out and log back in for the change to take effect. "
@@ -1007,49 +1020,49 @@ msgstr "Треба да се одјавите и да се најавите по
 msgid "Setup complete.  Press Return to continue."
 msgstr "Поставувањето е завршено.  Притиснете ентер за да продолжите."
 
-#: ../src/orca/orca_gui_prefs.py:128 ../src/orca/orca_gui_prefs.py:424
-#: ../src/orca/orca_gui_prefs.py:466
+#: ../src/orca/orca_gui_prefs.py:128 ../src/orca/orca_gui_prefs.py:423
+#: ../src/orca/orca_gui_prefs.py:465
 msgid "Speech not available."
 msgstr "Говорот не е достапен."
 
-#: ../src/orca/orca_gui_prefs.py:366 ../src/orca/orca_gui_prefs.py:370
-#: ../src/orca/orca_gui_prefs.py:1311
+#: ../src/orca/orca_gui_prefs.py:365 ../src/orca/orca_gui_prefs.py:369
+#: ../src/orca/orca_gui_prefs.py:1310
 msgid "Bilinear"
 msgstr "Билинеарно"
 
-#: ../src/orca/orca_gui_prefs.py:368 ../src/orca/orca_gui_prefs.py:381
-#: ../src/orca/orca_gui_prefs.py:1313 ../src/orca/orca_gui_prefs.py:1336
+#: ../src/orca/orca_gui_prefs.py:367 ../src/orca/orca_gui_prefs.py:380
+#: ../src/orca/orca_gui_prefs.py:1312 ../src/orca/orca_gui_prefs.py:1335
 msgid "None"
 msgstr "Ништо"
 
-#: ../src/orca/orca_gui_prefs.py:379 ../src/orca/orca_gui_prefs.py:387
-#: ../src/orca/orca_gui_prefs.py:1330
+#: ../src/orca/orca_gui_prefs.py:378 ../src/orca/orca_gui_prefs.py:386
+#: ../src/orca/orca_gui_prefs.py:1329
 msgid "Centered"
 msgstr "Центрирано"
 
-#: ../src/orca/orca_gui_prefs.py:383 ../src/orca/orca_gui_prefs.py:1334
+#: ../src/orca/orca_gui_prefs.py:382 ../src/orca/orca_gui_prefs.py:1333
 msgid "Proportional"
 msgstr "Пропорционално"
 
-#: ../src/orca/orca_gui_prefs.py:385 ../src/orca/orca_gui_prefs.py:1332
+#: ../src/orca/orca_gui_prefs.py:384 ../src/orca/orca_gui_prefs.py:1331
 msgid "Push"
 msgstr "Притисни"
 
-#: ../src/orca/orca_gui_prefs.py:503 ../src/orca/orca_gui_prefs.py:528
+#: ../src/orca/orca_gui_prefs.py:502 ../src/orca/orca_gui_prefs.py:527
 msgid "Default"
 msgstr "Стандардно"
 
-#: ../src/orca/orca_gui_prefs.py:505 ../src/orca/orca_gui_prefs.py:530
+#: ../src/orca/orca_gui_prefs.py:504 ../src/orca/orca_gui_prefs.py:529
 msgid "Uppercase"
 msgstr "Големи букви"
 
-#: ../src/orca/orca_gui_prefs.py:507 ../src/orca/orca_gui_prefs.py:536
+#: ../src/orca/orca_gui_prefs.py:506 ../src/orca/orca_gui_prefs.py:535
 msgid "Hyperlink"
 msgstr "Хиперврска"
 
 #: ../src/orca/orca_gui_prefs.py:1399
 msgid "Accessibility support for GNOME has just been enabled."
-msgstr "Поддршката за пристапност на Гном е овозможена."
+msgstr "Поддршката за пристапност на GNOME е овозможена."
 
 #: ../src/orca/orca_gui_prefs.py:1400
 msgid "You need to log out and log back in for the change to take effect."
@@ -2134,11 +2147,6 @@ msgstr "чекирано"
 msgid "not checked"
 msgstr "не е чекирано"
 
-#: ../src/orca/speechgenerator.py:909 ../src/orca/speechgenerator.py:912
-#: ../src/orca/util.py:1122
-msgid "selected"
-msgstr "избрано"
-
 #: ../src/orca/speechgenerator.py:920 ../src/orca/speechgenerator.py:923
 msgid "not selected"
 msgstr "не е избрано"
@@ -2147,39 +2155,35 @@ msgstr "не е избрано"
 msgid "tear off"
 msgstr "раскини"
 
-#: ../src/orca/util.py:384
+#: ../src/orca/util.py:473
 msgid "Misspelled word: "
 msgstr "Зборови со грешен правопис: "
 
-#: ../src/orca/util.py:385
+#: ../src/orca/util.py:474
 msgid " Context is "
 msgstr "Содржината е"
 
-#: ../src/orca/util.py:1066
+#: ../src/orca/util.py:1172
 msgid "page selected from cursor position"
 msgstr "страница избрана од позицијата на стрелката"
 
-#: ../src/orca/util.py:1070
+#: ../src/orca/util.py:1176
 msgid "page selected to cursor position"
 msgstr "страница избрана на позицијата на стрелката"
 
-#: ../src/orca/util.py:1074
+#: ../src/orca/util.py:1180
 msgid "line selected down from cursor position"
 msgstr "линија избрана долу од позицијата на стрелката"
 
-#: ../src/orca/util.py:1078
+#: ../src/orca/util.py:1184
 msgid "line selected up from cursor position"
 msgstr "линија избрана горе од позицијата на стрелката"
 
-#: ../src/orca/util.py:1082
+#: ../src/orca/util.py:1188
 msgid "document selected to cursor position"
 msgstr "документ избран на позицијата на стрелката"
 
-#: ../src/orca/util.py:1086
+#: ../src/orca/util.py:1192
 msgid "document selected from cursor position"
 msgstr "документ избран од позицијата на стрелката"
-
-#: ../src/orca/util.py:1130
-msgid "unselected"
-msgstr "необележано"
 
