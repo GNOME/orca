@@ -1,3 +1,13 @@
+2006-08-30  Willie Walker <william.walker@sun.com>
+
+	Applied approved GNOME 2.16 freeze break fixes:
+	
+	* src/orca/orca.in: fix for bug 353467 - run in a terminal if we
+	detect text setup will be used.
+
+	* src/orca/gnomespeechfactory.py: fix for bug 353476 - apply
+	better fallback algorithm to find a working synthesis engine.
+	
 2006-08-28  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca_gui_prefs.py:

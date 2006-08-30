@@ -216,15 +216,20 @@ class SpeechServer(speechserver.SpeechServer):
         if not gserver:
             return None
 
+        server = None
         try:
             server = SpeechServer.__createServer(gserver.iid)
         except:
+            debug.printException(debug.LEVEL_WARNING)
+
+        if not server:
             for s in gservers:
                 try:
                     server = SpeechServer.__createServer(s.iid)
+                    if server:
+                        break
                 except:
                     debug.printException(debug.LEVEL_WARNING)
-                    pass
 
         return server
 
