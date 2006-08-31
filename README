@@ -1,20 +1,77 @@
-Orca 0.9.0
+Orca v1.0.0
 
 Introduction
 ========================================================================
 
-Orca a scriptable screen reader for people with visual impairments.
-To read more about Orca, including its capabilities and known
-limitations, please refer to the Orca documentation series available
-in the ./docs/doc-set directory and also the Orca WIKI at
-http://live.gnome.org/Orca.
+Orca is a free, open source, flexible, and extensible screen reader
+that provides access to the graphical desktop via user-customizable
+combinations of speech, braille, and/or magnification.  Under
+development by the Sun Microsystems, Inc., Accessibility Program
+Office since 2004, Orca has been created with early input from and
+continued engagement with its end users.  In fact, the user interface
+designer for Orca is also a user.
+
+Orca works with applications and toolkits that support the assistive
+technology service provider interface (AT-SPI), which is the primary
+assistive technology infrastructure for the Solaris and Linux
+operating environments.  Applications and toolkits supporting the
+AT-SPI include the GNOME GTK+ toolkit, the Java platform's Swing
+toolkit, OpenOffice, and Mozilla.  AT-SPI support for the KDE Qt
+toolkit is currently being pursued.
+
+The focus for Orca v1.0.0 has been to provide usable access to key
+office productivity applications, including the following:
+
+Application Class        Application
+-----------------        -----------
+Graphical Desktop        GNOME 2.16 Desktop
+Help                     yelp v2.16
+Simple Text Editing      gedit v2.16
+Terminal                 gnome-terminal v2.16
+E-mail                   evolution v2.8
+Calendar                 evolution v2.8
+Contact Management       evolution v2.8
+Instant Messaging        gaim v1.5.1 or better
+Text Document Content    OpenOffice v2.0.4 or StarOffice PP4
+Spreadsheet Content      OpenOffice v2.0.4 or StarOffice PP4
+
+Notably absent from this list are the following applications that we
+plan to address with Orca v1.1 (to be released in the GNOME 2.18 time
+frame):
+
+* Web Content Accessibility: while Orca can provide access to
+  relatively simple web pages via the Firefox v2.0 web browser, the
+  team is working closely with the Firefox team to focus on providing
+  compelling access to web content for Firefox v3.0.  Firefox v3.0 is
+  scheduled for Spring 2007, but several interim releases of Firefox
+  v3.0 and Orca's support for Firefox v3.0 will be available prior to
+  the "official" release.  We encourage Orca users to test these
+  releases and provide us with feedback.
+
+* PDF Document Accessibility: the Orca team is working with Adobe to
+  identify and fix accessibility issues with the Adobe Acrobat Reader
+  and we expect to see these issues resolved soon.  Orca should "just
+  work" with the fixed Adobe Acrobat Reader, but we will release a new
+  version of Orca if changes are necessary.
+
+* Presentation Content: the Orca team focused on what our users
+  specified as the most important content for OpenOffice and
+  StarOffice: text documents and spreadsheets.  For v1.1, we plan on
+  providing more compelling access to these features as well as access
+  to the generation and reading of presentation content.
+
+See also http://live.gnome.org/Orca for detailed English and Spanish
+information on Orca, including how to run Orca, how to communicate
+with the Orca user community, and where to log bugs and feature
+requests.
 
 
 Build Requirements
 ========================================================================
 
-Orca depends upon GNOME 2.14 or better.  Building Orca also requires
-the development modules for the following to be installed:
+Orca is supported on GNOME 2.16 or better, but we have also tested it
+on GNOME 2.14.  Building Orca also requires the development modules
+for the following to be installed:
 
 * Python >= 2.4              - Python platform
 * pyorbit >= 2.14.0          - Python bindings for ORBit2
@@ -37,59 +94,82 @@ or
    PYTHON=/usr/bin/python2.4 ./configure
 
 
-Overview
+Running Orca
 ========================================================================
 
-One of the biggest challenges in screen reading technology is
-providing a consistent user experience across multiple applications
-which may use objects in different ways, and to allow quick access to
-information which may not be easily accessible through an
-application's keyboard navigation commands.  Orca explores how to
-solve some of these difficulties.  Some common scenarios which Orca's
-script-based architecture would be suited to solve:
+To run Orca, you have several options:
 
-* An application which displays text of interest to the user in a
-  non-focusable object
+1) Enable accessibility and the screen reader via the
+   "System->Preferences->Assistive Technology Preferences"
+   dialog box (also available as the 'gnome-at-properties'
+   application).  As of GNOME 2.16, this will cause Orca to
+   be automatically launched when you log in.
 
-* Create hot keys to be used in certain applications to collect and
-  read various pieces of information
+2) Add Orca as a startup application in the
+   "Systems->Preferences->Sessions" dialog box (also available as
+   the 'gnome-session-properties' application).  This will cause Orca
+   to be launched automatically when you log in.
 
-* Cause the Braille display to show status information retrieved from
-  status bars or other objects in the application
+3) Select "Orca Screen Reader and Magnifier" from the 
+   Applications->Accessibility launch menu (also available as
+   the 'orca' application).  This will run Orca once.
 
-Orca is written in primarily in Python.  Orca defines a set of default
-behaviors (reactions to application events) and key bindings (reaction
-to user key presses).  These default behaviors and key bindings can be
-overwritten on a per-application basis.  Orca creates a script object
-for each running application, which merges both the default behaviors
-and key bindings with the application-specific ones.  Orca provides
-the infrastructure to activate and deactivate scripts as well as a
-host of services accessible from within the scripts.  Some of these
-services include:
+4) Press Alt+F2 to bring up the "Run Application" dialog
+   box.  Enter "orca" and press Return.  This will run
+   Orca once.
 
-* A speech module which provides named voices definable by the user
+5) Run the "orca" command from a virtual console or 
+   gnome-terminal window.  This will run Orca once.
 
-* A braille module which uses BrlTTY to provide high-level
-  braille services to scripts - these services include braille
-  keyboard callback support, software-based virtual regions for the
-  braille display, and scrolling management
+When you run Orca for the first time, you will be prompted for your
+initial user preferences.  The first time you run Orca, you also need
+to log out and log back in in order for accessibility to be enabled in
+your environment.  If you wish to modify your Orca preferences in the
+future, you can press "Insert+space" while Orca is running, or you can
+re-run orca with the "--setup" command line option.
 
-* Convenience functions for finding the labels of objects, getting all the
-  objects within a given object, etc.
-
-
-Initial Setup
-========================================================================
-
-The first time you run orca using the "orca" command, it will
-automatically launch the setup utility.  The setup utility creates a
-.orca directory in your home directory.  This directory stores your
-user settings as well as any scripts you want use that are not part of
-the default Orca installation.  If you wish to rerun the setup
-utility, you ccan run orca with the "--setup" or "--text-setup"
-options, and you can also press "Insert+Space" when Orca is running to
-bring up the GUI setup utility.
-
-You can also bypass the setup utility by running orca with the
+You can bypass the Orca setup utility by running orca with the
 "--no-setup" option.  This is useful for running from environments
 such as the login screen.
+
+In general, you should not have to use any Orca-specific keystrokes;
+Orca will follow your focus as you navigate the screen using the
+built-in keyboard navigation mechanisms of the GNOME desktop.  For
+more information on accessing the desktop, including the built-in
+keyboard shortcuts of the GNOME desktop, see the GNOME Desktop
+Accessibility Guide:
+
+http://www.gnome.org/learn/access-guide/latest/
+
+If you find you run into an ill-behaved application, or you just want
+to explore an application using Orca's flat review mode, you can use
+the numeric keypad.  A quick overview of the keypad is as follows.
+More details on all of Orca's keystrokes are available at the
+following URL:
+
+http://cvs.gnome.org/viewcvs/*checkout*/orca/docs/doc-set/orca.html#GESTURES
+
+Keypad 7, 8, 9:  review previous, current, and next line of window
+Keypad 4, 5, 6:  review previous, current, and next word
+Keypad 1, 2, 3:  review previous, current, and next character
+Keypad Enter:    provide "where am I?" information
+Keypad +:        read the current text document
+
+Other Orca keyboard commands include:
+
+Insert+space:       bring up the configuration GUI
+Insert+s:           turn speech on and off
+Insert+left_arrow:  slow speech down
+Insert+right_arrow: speed speech up
+Insert+up_arrow:    increase speech pitch
+Insert+down_arrow:  decrease speech pitch
+Insert+f:           read the text attributes at the caret position
+Insert+q:           quit Orca
+
+Furthermore, to get help while running Orca, press "Insert+F1".  This
+will enable "learn mode", which provides a spoken and brailled
+description of what various keyboard and braille input device actions
+will do.  To exit learn mode, press "Escape."
+
+To quit Orca, you can press "Insert+q" as shown above, or run 
+"orca --quit" from the command line.

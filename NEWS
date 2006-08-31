@@ -1,3 +1,90 @@
+1.0.0 - 04-Sep-2006
+
+* Updates to User's Guide, Architecture, Requirements, and Script Writing
+  Guide.
+
+* Fix for bug 353467: run in a terminal if we detect text setup will
+  be used.
+
+* Fix for bug 353476: apply better fallback algorithm to find a
+  working synthesis engine.
+	
+* Fix for bug 352578: ensure that checking/unchecking speech in the
+  configuration GUI does the appropriate thing.
+
+* Refixed bug 350854 and fix for bug 353268: do not double read lines
+  in OpenOffice and also make sure focus is properly handled in gedit
+  after a window maximize.
+
+* Fix for bug 353237: prevent COMM_FAILURE messages when trying to get
+  the object state (thanks Oana from Baum!).
+
+* Fix for bug 352866: add "-q" and "--quit" options to orca script to
+  allow one to more easily kill orca (thanks Javier from ONCE!).
+
+* Fix for bug 352240: prevent wrong object report for Java
+  applications in case of different event ordering (thanks Oana from
+  Baum!).
+
+* Fix for bug 352257: improved isSameObject() function (thanks Oana from 
+  Baum!).
+
+* Fix for bug 352254: better handling of expand/collapse events for the
+  Java platform (thanks Oana from Baum!).
+
+* Translations:  
+    bg      Bulgarian            Alexander Shopov, Rostislav Raykov,
+				 Vladimir Petkov, and Iassen Pramatarov
+    bn      Bengali	         Runa Bhattacharjee
+    bn_IN   Bengali	         Runa Bhattacharjee
+    ca      Catalan              Gil Forcada and Josep Puigdemont i Casamajó 
+    cs      Czech	         Miloslav Trmac
+    cy	    Welsh	         Rhys Jones
+    de	    German	         Hendrik Brandt
+    dz      Dzongkha             Guntupalli Karunakar
+    el      Greek	         Nikos Charonitakis
+    en_CA   English/Canada       Adam Weinberger
+    en_GB   English/British      David Lodge and Gareth Owen
+    es	    Spanish	         Francisco Javier F. Serrador 
+				 and Maria Majadas
+    eu      Basque	         Iñaki Larrañaga Murgoitio
+    fi      Finnish	         Ilkka Tuohela
+    fr      French	         Cedric Corazza, Robert-André Mauchin, 
+			         and Christophe Merlet
+    gu      Gujarati	         Ankit Patel
+    hi      Hindi	         Rajesh Ranjan
+    it      Italian	         Aldo Giambelluca and Alessio Frusciante
+    ja      Japanese	         Satoru Satoh
+    ko	    Korean	         Changwoo Ryu
+    lt      Lithuanian           Žygimantas Beručka and Gintautas Miliauskas
+    lv      Latvian	         Raivis Dejus
+    mk      Macedonian           Jovan Naumovski
+    ml      Malayalam	         Ani Peter
+    mr      Marathi	         Rahul Bhalerao
+    nb      Norwegian Bokmål     Kjartan Maraas and Sigurd Gartmann
+    ne      Nepali               Pawan Chitrakar and Shiva Prasad Pokharel
+    nl      Dutch	         Tino Meinen, Elros Cyriatan, Taco Witte, 
+                                 and Vincent van Adrighem
+    or      Oriya                Subhransu Behera
+    pa	    Punjabi              Amanpreet Singh Alam
+    pt_BR   Brazilian Portuguese Raphael Higino, Gustavo Noronha Silva,
+				 and Estêvão Samuel Procópio
+    pt      Portuguese           Duarte Loreto
+    ru      Russian		 Nickolay V. Shmyrev
+    rw      Kinyarwanda          Steve Murphy, Philibert Ndandali,
+                                 Viateur Mugenzi, Noëlla Mupole,
+				 Carole Karema, Jean Baptiste Ngendahayo,
+				 Augustin Kiberwa, and Donatien Nsengiyumva
+    sr@Latn Serbian		 Danilo Šegan
+    sr      Serbian		 Danilo Šegan
+    sv	    Swedish		 Christian Rose and Daniel Nylander
+    ta	    Tamil		 I. Felix
+    uk      Ukrainian	         Maxim Dziumanenko
+    vi      Vietnamese		 Clytie Siddall
+    zh_CN   Simplified Chinese   Funda Wang and Li Shaojie
+    zh_HK   Traditional Chinese  Chao-Hsiung Liao and Woodman Tuen
+    zh_TW   Traditional Chinese  Chao-Hsiung Liao and Woodman Tuen
+
 0.9.0 - 21-Aug-2006
 
 * Updates to the requirements guide and input and output style guides.
