@@ -1,730 +1,616 @@
-# Bulgarian translation of orca's po-file.
-# Copyright (C) 2006 THE orca'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the orca package.
-# Alexander Shopov <ash@contact.bg>, 2006.
+# Bulgarian translation of gnopernicus.
+# Copyright (C) 2004, 2005, 2006 THE gnopernicus'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the gnopernicus package.
+# Rostislav Raykov <zbrox@i-space.org>, 2004, 2005
+# Vladimir Petkov <vpetkov@i-space.org>, 2005.
+# Iassen Pramatarov <turin@fsa-bg.org>, 2005.
+# Alexander Shopov <ash@contact.bg>, 2005, 2006.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: orca HEAD\n"
+"Project-Id-Version: gnopernicus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-24 17:31-0400\n"
-"PO-Revision-Date: 2006-07-09 14:40+0300\n"
+"POT-Creation-Date: 2006-08-31 08:07+0300\n"
+"PO-Revision-Date: 2006-08-31 08:06+0300\n"
 "Last-Translator: Alexander Shopov <ash@contact.bg>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: src/orca/braillegenerator.py:193 src/orca/speechgenerator.py:191
+#: ../orca.desktop.in.h:1
+#, fuzzy
+msgid "Orca Screen Reader and Magnifier"
+msgstr "Orca - четец на екрана и увеличител"
+
+#: ../orca.desktop.in.h:2
+msgid ""
+"Present on-screen information as speech or braille, or magnify the screen"
+msgstr ""
+
+#: ../src/orca/braillegenerator.py:193 ../src/orca/speechgenerator.py:191
+#, fuzzy
 msgid "grayed"
-msgstr ""
+msgstr "грав"
 
-#: src/orca/braillegenerator.py:1084 src/orca/speechgenerator.py:1198
+#: ../src/orca/braillegenerator.py:1096 ../src/orca/J2SE-access-bridge.py:66
+#: ../src/orca/speechgenerator.py:1198
 msgid "expanded"
-msgstr ""
+msgstr "разгърнат"
 
-#: src/orca/braillegenerator.py:1086 src/orca/speechgenerator.py:1200
+#: ../src/orca/braillegenerator.py:1098 ../src/orca/J2SE-access-bridge.py:69
+#: ../src/orca/speechgenerator.py:1200
 msgid "collapsed"
-msgstr ""
+msgstr "свит"
 
-#: src/orca/braillegenerator.py:1090
+#: ../src/orca/braillegenerator.py:1102
 #, python-format
 msgid "TREE LEVEL %d"
-msgstr ""
+msgstr "НИВО В ДЪРВОТО %d"
 
-#: src/orca/chnames.py:32
+#: ../src/orca/chnames.py:32
 msgid "space"
-msgstr ""
+msgstr "шпация"
 
-#: src/orca/chnames.py:33
+#: ../src/orca/chnames.py:33
 msgid "newline"
-msgstr ""
+msgstr "нов ред"
 
-#: src/orca/chnames.py:34
+#: ../src/orca/chnames.py:34
 msgid "tab"
-msgstr ""
+msgstr "табулация"
 
-#: src/orca/chnames.py:36
+#: ../src/orca/chnames.py:36
 msgid "exclaim"
-msgstr ""
+msgstr "удивителна"
 
-#: src/orca/chnames.py:37
+#: ../src/orca/chnames.py:37
 msgid "apostrophe"
-msgstr ""
+msgstr "апостроф"
 
-#: src/orca/chnames.py:38
+#: ../src/orca/chnames.py:38
 msgid "comma"
-msgstr ""
+msgstr "запетая"
 
-#: src/orca/chnames.py:39
+#: ../src/orca/chnames.py:39
 msgid "dot"
-msgstr ""
+msgstr "точка"
 
-#: src/orca/chnames.py:40
+#: ../src/orca/chnames.py:40
 msgid "question"
-msgstr ""
+msgstr "въпросителна"
 
-#: src/orca/chnames.py:42
+#: ../src/orca/chnames.py:42
 msgid "quote"
-msgstr ""
+msgstr "цитат"
 
-#: src/orca/chnames.py:43
+#: ../src/orca/chnames.py:43
 msgid "left paren"
-msgstr ""
+msgstr "лява скоба"
 
-#: src/orca/chnames.py:44
+#: ../src/orca/chnames.py:44
 msgid "right paren"
-msgstr ""
+msgstr "дясна скоба"
 
-#: src/orca/chnames.py:45
+#: ../src/orca/chnames.py:45
 msgid "dash"
-msgstr ""
+msgstr "тире"
 
-#: src/orca/chnames.py:46
+#: ../src/orca/chnames.py:46
 msgid "underscore"
-msgstr ""
+msgstr "долна черта"
 
-#: src/orca/chnames.py:47
+#: ../src/orca/chnames.py:47
 msgid "colon"
-msgstr ""
+msgstr "двуеточие"
 
-#: src/orca/chnames.py:48
+#: ../src/orca/chnames.py:48
 msgid "semicolon"
-msgstr ""
+msgstr "точка и запетая"
 
-#: src/orca/chnames.py:49
+#: ../src/orca/chnames.py:49
 msgid "less than"
-msgstr ""
+msgstr "по-малко"
 
-#: src/orca/chnames.py:50
+#: ../src/orca/chnames.py:50
 msgid "greater than"
-msgstr ""
+msgstr "по-голямо"
 
-#: src/orca/chnames.py:51
+#: ../src/orca/chnames.py:51
 msgid "left bracket"
-msgstr ""
+msgstr "лява квадратна скоба"
 
-#: src/orca/chnames.py:52
+#: ../src/orca/chnames.py:52
 msgid "right bracket"
-msgstr ""
+msgstr "дясна квадратна скоба"
 
-#: src/orca/chnames.py:53
+#: ../src/orca/chnames.py:53
 msgid "backslash"
-msgstr ""
+msgstr "обратна наклонена черта"
 
-#: src/orca/chnames.py:54
+#: ../src/orca/chnames.py:54
 msgid "vertical line"
-msgstr ""
+msgstr "вертикална линия"
 
-#: src/orca/chnames.py:55
+#: ../src/orca/chnames.py:55
 msgid "grave accent"
-msgstr ""
+msgstr "тежко ударение"
 
-#: src/orca/chnames.py:56
+#: ../src/orca/chnames.py:56
 msgid "tilde"
-msgstr ""
+msgstr "тилда"
 
-#: src/orca/chnames.py:57
+#: ../src/orca/chnames.py:57
 msgid "left brace"
-msgstr ""
+msgstr "лява фигурна скоба"
 
-#: src/orca/chnames.py:58
+#: ../src/orca/chnames.py:58
 msgid "right brace"
-msgstr ""
+msgstr "дясна фигрна скоба"
 
-#: src/orca/chnames.py:60
+#: ../src/orca/chnames.py:60
+#, fuzzy
 msgid "pound"
-msgstr ""
+msgstr "диез"
 
-#: src/orca/chnames.py:61
+#: ../src/orca/chnames.py:61
 msgid "dollar"
-msgstr ""
+msgstr "долар"
 
-#: src/orca/chnames.py:62 src/orca/speechgenerator.py:851
+#: ../src/orca/chnames.py:62 ../src/orca/speechgenerator.py:851
 msgid "percent"
-msgstr ""
+msgstr "процент"
 
-#: src/orca/chnames.py:63
+#: ../src/orca/chnames.py:63
 msgid "and"
-msgstr ""
+msgstr "и"
 
-#: src/orca/chnames.py:64
+#: ../src/orca/chnames.py:64
 msgid "star"
-msgstr ""
+msgstr "звезда"
 
-#: src/orca/chnames.py:65
+#: ../src/orca/chnames.py:65
 msgid "plus"
-msgstr ""
+msgstr "плюс"
 
-#: src/orca/chnames.py:66
+#: ../src/orca/chnames.py:66
 msgid "slash"
-msgstr ""
+msgstr "наклонена черта"
 
-#: src/orca/chnames.py:67
+#: ../src/orca/chnames.py:67
 msgid "equals"
-msgstr ""
+msgstr "равно"
 
-#: src/orca/chnames.py:68
+#: ../src/orca/chnames.py:68
 msgid "at"
-msgstr ""
+msgstr "на"
 
-#: src/orca/chnames.py:69
+#: ../src/orca/chnames.py:69
+#, fuzzy
 msgid "caret"
-msgstr ""
+msgstr "каретка"
 
-#: src/orca/default.py:77
+#: ../src/orca/default.py:78
 msgid "Performs left click on current flat review item."
 msgstr ""
 
-#: src/orca/default.py:81
+#: ../src/orca/default.py:82
 msgid "Performs right click on current flat review item."
 msgstr ""
 
-#: src/orca/default.py:85 src/orca/scripts/Evolution.py:107
+#: ../src/orca/default.py:86 ../src/orca/scripts/Evolution.py:107
 msgid "Speaks entire document."
-msgstr ""
+msgstr "Произнасяне на целия документ."
 
-#: src/orca/default.py:89
+#: ../src/orca/default.py:90
 msgid "Performs the where am I operation."
-msgstr ""
+msgstr "Извършване на операцията „Къде съм?“"
 
-#: src/orca/default.py:93
+#: ../src/orca/default.py:94
 msgid "Paints and prints the visible zones in the active window."
-msgstr ""
+msgstr "Оцветяване и отпечатване на видимите зони в активния прозорец."
 
-#: src/orca/default.py:97
+#: ../src/orca/default.py:98
 msgid "Enters and exits flat review mode."
-msgstr ""
+msgstr "Влизане и излизане от режим на плосък преглед"
 
-#: src/orca/default.py:101
+#: ../src/orca/default.py:102
 msgid "Moves flat review to the beginning of the previous line."
-msgstr ""
+msgstr "Преместване на плоския преглед в началото на предишния ред."
 
-#: src/orca/default.py:105
+#: ../src/orca/default.py:106
 msgid "Moves flat review to the home position."
-msgstr ""
+msgstr "Преместване на плоския преглед в началото."
 
-#: src/orca/default.py:109
+#: ../src/orca/default.py:110
 msgid "Speaks the current flat review line."
-msgstr ""
+msgstr "Произнасяне на текущия ред в плоския преглед."
 
-#: src/orca/default.py:113
+#: ../src/orca/default.py:114
 msgid "Moves flat review to the beginning of the next line."
-msgstr ""
+msgstr "Преместване на плоския преглед в началото на следващия ред."
 
-#: src/orca/default.py:117
+#: ../src/orca/default.py:118
 msgid "Moves flat review to the end position."
-msgstr ""
+msgstr "Преместване на плоския преглед в края."
 
-#: src/orca/default.py:121
+#: ../src/orca/default.py:122
 msgid "Moves flat review to the previous item or word."
-msgstr ""
+msgstr "Преместване на плоския преглед към предишния елемент или дума."
 
-#: src/orca/default.py:125
+#: ../src/orca/default.py:126
 msgid "Moves flat review to the word above the current word."
-msgstr ""
+msgstr "Преместване на плоския преглед към думата над текущата."
 
-#: src/orca/default.py:129
+#: ../src/orca/default.py:130
 msgid "Speaks or spells the current flat review item or word."
 msgstr ""
+"Произнасяне или побуквено произнасяне на текущия елемент или дума в плоския "
+"преглед."
 
-#: src/orca/default.py:133
+#: ../src/orca/default.py:134
 msgid "Speaks the current flat review object."
 msgstr ""
+"Произнасяне или побуквено произнасяне на текущия обект в плоския преглед."
 
-#: src/orca/default.py:137
+#: ../src/orca/default.py:138
 msgid "Moves flat review to the next item or word."
-msgstr ""
+msgstr "Преместване на плоския преглед към следващия елемент или дума."
 
-#: src/orca/default.py:141
+#: ../src/orca/default.py:142
 msgid "Moves flat review to the word below the current word."
-msgstr ""
+msgstr "Преместване на плоския преглед към думата под текущата."
 
-#: src/orca/default.py:145
+#: ../src/orca/default.py:146
 msgid "Moves flat review to the previous character."
-msgstr ""
+msgstr "Преместване на плоския преглед към предишния знак."
 
-#: src/orca/default.py:149
+#: ../src/orca/default.py:150
 msgid "Moves flat review to the end of the line."
 msgstr ""
 
-#: src/orca/default.py:153
+#: ../src/orca/default.py:154
 msgid "Speaks the current flat review character."
 msgstr ""
+"Произнасяне или побуквено произнасяне на текущия знак в плоския преглед."
 
-#: src/orca/default.py:157
+#: ../src/orca/default.py:158
 msgid "Moves flat review to the next character."
-msgstr ""
+msgstr "Преместване на плоския преглед към следващия знак."
 
-#: src/orca/default.py:161
+#: ../src/orca/default.py:162
 msgid "Toggles whether to read just the current table cell or the whole row."
 msgstr ""
 
-#: src/orca/default.py:165
+#: ../src/orca/default.py:166
 msgid "Reads the attributes associated with the current text character."
 msgstr ""
 
-#: src/orca/default.py:169
+#: ../src/orca/default.py:170
 msgid "Reports information on current script."
 msgstr ""
 
-#: src/orca/default.py:173
+#: ../src/orca/default.py:174
 msgid "Pans the braille display to the left."
 msgstr ""
 
-#: src/orca/default.py:177
+#: ../src/orca/default.py:178
 msgid "Pans the braille display to the right."
 msgstr ""
 
-#: src/orca/default.py:181
+#: ../src/orca/default.py:182
 msgid "Moves flat review to the bottom left."
 msgstr ""
 
-#: src/orca/default.py:185
+#: ../src/orca/default.py:186
 msgid "Returns to object with keyboard focus."
 msgstr ""
 
-#: src/orca/default.py:189
+#: ../src/orca/default.py:190
 msgid "Enters learn mode.  Press escape to exit learn mode."
 msgstr ""
 
-#: src/orca/default.py:193
+#: ../src/orca/default.py:194
+msgid "Exits learn mode."
+msgstr ""
+
+#: ../src/orca/default.py:198
+#, fuzzy
 msgid "Decreases the speech rate."
-msgstr ""
+msgstr "Намаляване на скоростта"
 
-#: src/orca/default.py:197
+#: ../src/orca/default.py:202
+#, fuzzy
 msgid "Increases the speech rate."
-msgstr ""
+msgstr "Увеличаване на скоростта"
 
-#: src/orca/default.py:201
+#: ../src/orca/default.py:206
+#, fuzzy
 msgid "Decreases the speech pitch."
-msgstr ""
+msgstr "Намаляване на височината"
 
-#: src/orca/default.py:205
+#: ../src/orca/default.py:210
+#, fuzzy
 msgid "Increases the speech pitch."
-msgstr ""
+msgstr "Увеличаване на височината"
 
-#: src/orca/default.py:209
+#: ../src/orca/default.py:214
 msgid "Quits Orca"
 msgstr ""
 
-#: src/orca/default.py:213
+#: ../src/orca/default.py:218
 msgid "Toggles keystroke recording on and off."
 msgstr ""
 
-#: src/orca/default.py:217
+#: ../src/orca/default.py:222
 msgid "Displays the preferences configuration dialog."
 msgstr ""
 
-#: src/orca/default.py:221
+#: ../src/orca/default.py:226
 msgid "Reloads user settings and reinitializes services as necessary."
 msgstr ""
 
-#: src/orca/default.py:225
+#: ../src/orca/default.py:230
 msgid "Toggles the silencing of speech."
 msgstr ""
 
-#: src/orca/default.py:229
+#: ../src/orca/default.py:234
 msgid ""
 "Prints a debug listing of all known applications to the console where Orca "
 "is running."
 msgstr ""
 
-#: src/orca/default.py:233
+#: ../src/orca/default.py:238
 msgid "Cycles the debug level at run time."
 msgstr ""
 
-#: src/orca/default.py:237
+#: ../src/orca/default.py:242
 msgid ""
 "Prints debug information about the currently active application to the "
 "console where Orca is running."
 msgstr ""
 
-#: src/orca/default.py:241
+#: ../src/orca/default.py:246
 msgid "Prints debug information about the ancestry of the object with focus"
 msgstr ""
 
-#: src/orca/default.py:245
+#: ../src/orca/default.py:250
 msgid "Prints debug information about the application with focus"
 msgstr ""
 
-#: src/orca/default.py:249
+#: ../src/orca/default.py:254
 msgid "Switches to the next presentation manager."
 msgstr ""
 
-#: src/orca/default.py:1084 src/orca/default.py:1303
+#: ../src/orca/default.py:1067 ../src/orca/default.py:1282
 #, python-format
 msgid "tree level %d"
 msgstr ""
 
-#. Attempt to sidestep GIL
-#: src/orca/default.py:1088 src/orca/focus_tracking_presenter.py:653
+#: ../src/orca/default.py:1071 ../src/orca/focus_tracking_presenter.py:639
 msgid "No focus"
-msgstr ""
+msgstr "Няма фокус"
 
-#: src/orca/default.py:1692
+#: ../src/orca/default.py:1673
 msgid "entire document selected"
 msgstr ""
 
-#: src/orca/default.py:2047
+#: ../src/orca/default.py:2121
+#, fuzzy
 msgid "Speak "
-msgstr ""
+msgstr "Говорител"
 
-#: src/orca/default.py:2050
+#: ../src/orca/default.py:2124
+#, fuzzy
 msgid "row"
-msgstr ""
+msgstr "Стрелка"
 
-#: src/orca/default.py:2052 src/orca/rolenames.py:432
-#: src/orca/rolenames.py:434
+#: ../src/orca/default.py:2126 ../src/orca/rolenames.py:432
+#: ../src/orca/rolenames.py:434
 msgid "cell"
 msgstr ""
 
-#: src/orca/default.py:2514 src/orca/default.py:2642 src/orca/default.py:2647
-#: src/orca/default.py:2719 src/orca/default.py:2724
+#: ../src/orca/default.py:2281
+msgid "Entering learn mode.  Press any key to hear its function. "
+msgstr ""
+
+#: ../src/orca/default.py:2282
+msgid "To exit learn mode, press the escape key."
+msgstr ""
+
+#: ../src/orca/default.py:2283
+msgid "Learn mode.  Press escape to exit."
+msgstr ""
+
+#: ../src/orca/default.py:2295 ../src/orca/default.py:2296
+msgid "Exiting learn mode."
+msgstr ""
+
+#: ../src/orca/default.py:2626 ../src/orca/default.py:2754
+#: ../src/orca/default.py:2759 ../src/orca/default.py:2831
+#: ../src/orca/default.py:2836
+#, fuzzy
 msgid "blank"
-msgstr ""
+msgstr "връзка"
 
-#: src/orca/default.py:2516 src/orca/default.py:2649
+#: ../src/orca/default.py:2628 ../src/orca/default.py:2761
+#, fuzzy
 msgid "white space"
-msgstr ""
+msgstr "празно място"
 
-#: src/orca/espeechfactory.py:93
+#: ../src/orca/espeechfactory.py:93
 msgid "Emacspeak Speech Services"
 msgstr ""
 
-#: src/orca/focus_tracking_presenter.py:748
+#: ../src/orca/focus_tracking_presenter.py:734
+#, fuzzy
 msgid "Switching to focus tracking mode."
-msgstr ""
+msgstr "режим на следене на фокуса"
 
-#: src/orca/gnomespeechfactory.py:158
+#: ../src/orca/gnomespeechfactory.py:159
+#, fuzzy
 msgid "GNOME Speech Services"
-msgstr ""
+msgstr "Настройки на речта"
 
 #. # Replace ellipses (both manual and unicode) with "dot dot dot"
 #. #
-#: src/orca/gnomespeechfactory.py:602 src/orca/gnomespeechfactory.py:603
+#: ../src/orca/gnomespeechfactory.py:610 ../src/orca/gnomespeechfactory.py:611
 msgid " dot dot dot"
 msgstr ""
 
-#: src/orca/gnomespeechfactory.py:762
+#: ../src/orca/gnomespeechfactory.py:770
 msgid "higher."
 msgstr ""
 
-#: src/orca/gnomespeechfactory.py:790
+#: ../src/orca/gnomespeechfactory.py:798
 msgid "lower."
 msgstr ""
 
-#: src/orca/gnomespeechfactory.py:815
+#: ../src/orca/gnomespeechfactory.py:823
 msgid "faster."
 msgstr ""
 
-#: src/orca/gnomespeechfactory.py:845
+#: ../src/orca/gnomespeechfactory.py:853
 msgid "slower."
 msgstr ""
 
-#: src/orca/hierarchical_presenter.py:436
+#: ../src/orca/hierarchical_presenter.py:436
+#, fuzzy
 msgid "Switching to hierarchical navigation mode."
-msgstr ""
+msgstr "смяна на режима на навигация"
 
-#: src/orca/keynames.py:32 src/orca/keynames.py:35
+#: ../src/orca/J2SE-access-bridge.py:71 ../src/orca/speechgenerator.py:909
+#: ../src/orca/speechgenerator.py:912 ../src/orca/util.py:1228
+msgid "selected"
+msgstr "Избран"
+
+#: ../src/orca/J2SE-access-bridge.py:75 ../src/orca/util.py:1236
+msgid "unselected"
+msgstr "Неизбран"
+
+#: ../src/orca/keynames.py:32 ../src/orca/keynames.py:35
+#, fuzzy
 msgid "left shift"
-msgstr ""
+msgstr "shift"
 
-#: src/orca/keynames.py:33
+#: ../src/orca/keynames.py:33
+#, fuzzy
 msgid "left alt"
-msgstr ""
+msgstr "ляво"
 
-#: src/orca/keynames.py:34
+#: ../src/orca/keynames.py:34
+#, fuzzy
 msgid "left control"
-msgstr ""
+msgstr "control"
 
-#: src/orca/keynames.py:36
+#: ../src/orca/keynames.py:36
+#, fuzzy
 msgid "right shift"
-msgstr ""
+msgstr "shift"
 
-#: src/orca/keynames.py:37
+#: ../src/orca/keynames.py:37
+#, fuzzy
 msgid "right alt"
-msgstr ""
+msgstr "дясно"
 
-#: src/orca/keynames.py:38
+#: ../src/orca/keynames.py:38
+#, fuzzy
 msgid "right control"
-msgstr ""
+msgstr "control"
 
-#: src/orca/keynames.py:39
+#: ../src/orca/keynames.py:39
+#, fuzzy
 msgid "left meta"
-msgstr ""
+msgstr "ляво"
 
-#: src/orca/keynames.py:40
+#: ../src/orca/keynames.py:40
+#, fuzzy
 msgid "right meta"
-msgstr ""
+msgstr "дясно"
 
-#: src/orca/keynames.py:41
+#: ../src/orca/keynames.py:41
 msgid "num lock"
-msgstr ""
+msgstr "num lock"
 
-#: src/orca/keynames.py:42
+#: ../src/orca/keynames.py:42
 msgid "caps lock"
-msgstr ""
+msgstr "caps lock"
 
-#: src/orca/keynames.py:43
+#: ../src/orca/keynames.py:43
+#, fuzzy
 msgid "scroll lock"
-msgstr ""
+msgstr "caps lock"
 
-#: src/orca/keynames.py:44
+#: ../src/orca/keynames.py:44
 msgid "page up"
-msgstr ""
+msgstr "страница нагоре"
 
-#: src/orca/keynames.py:45
+#: ../src/orca/keynames.py:45
 msgid "page down"
-msgstr ""
+msgstr "страница надолу"
 
-#: src/orca/keynames.py:46
+#: ../src/orca/keynames.py:46
+#, fuzzy
 msgid "left tab"
-msgstr ""
+msgstr "ляво"
 
-#: src/orca/keynames.py:47
+#: ../src/orca/keynames.py:47
+#, fuzzy
 msgid "F 11"
-msgstr ""
+msgstr "F11"
 
-#: src/orca/keynames.py:48
+#: ../src/orca/keynames.py:48
+#, fuzzy
 msgid "F 12"
-msgstr ""
+msgstr "F12"
 
-#: src/orca/orca-setup.glade:8
-msgid "Orca Preferences"
-msgstr ""
+#: ../src/orca/orca-setup.glade.h:1
+#, fuzzy
+msgid "<b>Cross-hair Settings</b>"
+msgstr "<b>Кръстче</b>"
 
-#: src/orca/orca-setup.glade:124
-msgid "_Enable speech"
-msgstr ""
+#: ../src/orca/orca-setup.glade.h:2
+#, fuzzy
+msgid "<b>Cursor Settings</b>"
+msgstr "<b>Настройки за курсора</b>"
 
-#: src/orca/orca-setup.glade:161
-msgid "Speech _system:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:213
-msgid "Speech synthesi_zer:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:244
-msgid "_Voice settings:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:275
-msgid "_Rate:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:332
-msgid "Pi_tch:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:423
-msgid "_Person:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:492
-msgid "Vo_lume:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:542
-msgid ""
-"Default\n"
-"Uppercase\n"
-"Hyperlink"
-msgstr ""
-
-#: src/orca/orca-setup.glade:609 src/orca/orca_gui_prefs.py:1031
-msgid "_None"
-msgstr ""
-
-#: src/orca/orca-setup.glade:629 src/orca/orca_gui_prefs.py:1034
-msgid "So_me"
-msgstr ""
-
-#: src/orca/orca-setup.glade:650 src/orca/orca_gui_prefs.py:1037
-msgid "M_ost"
-msgstr ""
-
-#: src/orca/orca-setup.glade:671
-msgid "_All"
-msgstr ""
-
-#: src/orca/orca-setup.glade:695
+#: ../src/orca/orca-setup.glade.h:3
+#, fuzzy
 msgid "<b>Punctuation Level</b>"
-msgstr ""
+msgstr "<b>Пунктуация</b>"
 
-#: src/orca/orca-setup.glade:769 src/orca/orca-setup.glade:1156
-#: src/orca/orca_gui_prefs.py:1057 src/orca/orca_gui_prefs.py:1112
+#: ../src/orca/orca-setup.glade.h:4
+#, fuzzy
+msgid "<b>Table Row Speech</b>"
+msgstr "<b>Текстово ехо</b>"
+
+#: ../src/orca/orca-setup.glade.h:5
+#, fuzzy
+msgid "<b>Verbosity</b>"
+msgstr "<b>Глас</b>"
+
+#: ../src/orca/orca-setup.glade.h:6
+#, fuzzy
+msgid "<b>Zoomer Position</b>"
+msgstr "<b>Позиция</b>"
+
+#: ../src/orca/orca-setup.glade.h:7
+#, fuzzy
+msgid "<b>Zoomer Settings</b>"
+msgstr "<b>Настройки за границите</b>"
+
+#: ../src/orca/orca-setup.glade.h:8
+#, fuzzy
+msgid "Braille"
+msgstr "Брайл"
+
+#: ../src/orca/orca-setup.glade.h:9 ../src/orca/orca_gui_prefs.py:1058
+#: ../src/orca/orca_gui_prefs.py:1113
 msgid "Brie_f"
 msgstr ""
 
-#: src/orca/orca-setup.glade:789 src/orca/orca-setup.glade:1176
-msgid "Ver_bose"
-msgstr ""
-
-#: src/orca/orca-setup.glade:813 src/orca/orca-setup.glade:1200
-msgid "<b>Verbosity</b>"
-msgstr ""
-
-#: src/orca/orca-setup.glade:887 src/orca/orca_gui_prefs.py:1077
-msgid "Speak current _cell"
-msgstr ""
-
-#: src/orca/orca-setup.glade:907
-msgid "Speak current ro_w"
-msgstr ""
-
-#: src/orca/orca-setup.glade:931
-msgid "<b>Table Row Speech</b>"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1000
-msgid "Speak _indentation and justification"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1027
-msgid "Speech"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1058
-msgid "Enable Braille _support"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1078
-msgid "Enable Braille _monitor"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1098
-msgid "_Abbreviated role names"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1241
-msgid "Braille"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1272
-msgid "Enable _key echo"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1304
-msgid "Enable _alphanumeric and punctuation keys"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1338
-msgid "Enable _modifier keys"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1372
-msgid "Enable lockin_g keys"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1406
-msgid "Enable _function keys"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1440
-msgid "Enable ac_tion keys"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1462
-msgid "Enable echo by _word"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1487
-msgid "Key Echo"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1529
-msgid "Enable _magnifier"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1613
-msgid "Enable c_ursor"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1648
-msgid "Custom siz_e"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1680
-msgid "Color:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1727
-msgid "_Width:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1756 src/orca/orca-setup.glade:2030
-msgid "pixels"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1820
-msgid "<b>Cursor Settings</b>"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1907
-msgid "Enable cross-hair cli_p"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1943
-msgid "Enable cross-h_air"
-msgstr ""
-
-#: src/orca/orca-setup.glade:1984
-msgid "Si_ze:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:2071
-msgid "<b>Cross-hair Settings</b>"
-msgstr ""
-
-#: src/orca/orca-setup.glade:2157
-msgid "Scale _factor:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:2209
-msgid "In_vert colors"
-msgstr ""
-
-#: src/orca/orca-setup.glade:2237
-msgid "<b>Zoomer Settings</b>"
-msgstr ""
-
-#: src/orca/orca-setup.glade:2330
-msgid "_Top:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:2397
-msgid "_Bottom:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:2464
-msgid "_Left:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:2530
-msgid "_Right:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:2597
-msgid "<b>Zoomer Position</b>"
-msgstr ""
-
-#: src/orca/orca-setup.glade:2644
-msgid "_Smoothing:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:2677
-msgid "Mouse trac_king mode:"
-msgstr ""
-
-#: src/orca/orca-setup.glade:2720
-msgid ""
-"None\n"
-"Bilinear"
-msgstr ""
-
-#: src/orca/orca-setup.glade:2744
+#: ../src/orca/orca-setup.glade.h:10
 msgid ""
 "Centered\n"
 "None\n"
@@ -732,182 +618,402 @@ msgid ""
 "Push"
 msgstr ""
 
-#: src/orca/orca-setup.glade:2781
+#: ../src/orca/orca-setup.glade.h:14
+#, fuzzy
+msgid "Color:"
+msgstr "Двуеточие"
+
+#: ../src/orca/orca-setup.glade.h:15
+#, fuzzy
+msgid "Custom siz_e"
+msgstr "Размер на курсора"
+
+#: ../src/orca/orca-setup.glade.h:16
+msgid ""
+"Default\n"
+"Uppercase\n"
+"Hyperlink"
+msgstr ""
+
+#: ../src/orca/orca-setup.glade.h:19
+#, fuzzy
+msgid "Enable Braille _monitor"
+msgstr "Брайлов монитор"
+
+#: ../src/orca/orca-setup.glade.h:20
+#, fuzzy
+msgid "Enable Braille _support"
+msgstr "Включване на поддръжка"
+
+#: ../src/orca/orca-setup.glade.h:21
+msgid "Enable _alphanumeric and punctuation keys"
+msgstr ""
+
+#: ../src/orca/orca-setup.glade.h:22
+#, fuzzy
+msgid "Enable _function keys"
+msgstr "Указване на функция за клавишите за показване"
+
+#: ../src/orca/orca-setup.glade.h:23
+msgid "Enable _key echo"
+msgstr ""
+
+#: ../src/orca/orca-setup.glade.h:24
+#, fuzzy
+msgid "Enable _magnifier"
+msgstr "увеличител"
+
+#: ../src/orca/orca-setup.glade.h:25
+#, fuzzy
+msgid "Enable _modifier keys"
+msgstr "_Ключове за модификатор:"
+
+#: ../src/orca/orca-setup.glade.h:26
+#, fuzzy
+msgid "Enable ac_tion keys"
+msgstr "Произнасяне на всички навигационни клавиши"
+
+#: ../src/orca/orca-setup.glade.h:27
+#, fuzzy
+msgid "Enable c_ursor"
+msgstr "Включване на поддръжка"
+
+#: ../src/orca/orca-setup.glade.h:28
+msgid "Enable cross-h_air"
+msgstr ""
+
+#: ../src/orca/orca-setup.glade.h:29
+#, fuzzy
+msgid "Enable cross-hair cli_p"
+msgstr "Цвят на кръстчето-курсор:"
+
+#: ../src/orca/orca-setup.glade.h:30
+msgid "Enable echo by _word"
+msgstr ""
+
+#: ../src/orca/orca-setup.glade.h:31
+#, fuzzy
+msgid "Enable lockin_g keys"
+msgstr "Ред на таблица"
+
+#: ../src/orca/orca-setup.glade.h:32
+#, fuzzy
+msgid "In_vert colors"
+msgstr "Обръщане вкл/изкл"
+
+#: ../src/orca/orca-setup.glade.h:33
+msgid "Key Echo"
+msgstr ""
+
+#: ../src/orca/orca-setup.glade.h:34 ../src/orca/orca_gui_prefs.py:1038
+#, fuzzy
+msgid "M_ost"
+msgstr "Повечето"
+
+#: ../src/orca/orca-setup.glade.h:35
+#, fuzzy
 msgid "Magnifier"
-msgstr ""
+msgstr "Увеличител"
 
-#: src/orca/orca-setup.glade:2820
+#: ../src/orca/orca-setup.glade.h:36
+#, fuzzy
+msgid "Mouse trac_king mode:"
+msgstr "режим на следене на мишката"
+
+#: ../src/orca/orca-setup.glade.h:37
+#, fuzzy
+msgid ""
+"None\n"
+"Bilinear"
+msgstr "двулинеен"
+
+#: ../src/orca/orca-setup.glade.h:39
+#, fuzzy
+msgid "Orca Preferences"
+msgstr "Настройки на търсенето"
+
+#: ../src/orca/orca-setup.glade.h:40
+#, fuzzy
+msgid "Pi_tch:"
+msgstr "Височина:"
+
+#: ../src/orca/orca-setup.glade.h:41
 msgid "Question"
+msgstr "Въпрос"
+
+#: ../src/orca/orca-setup.glade.h:42
+msgid "Scale _factor:"
 msgstr ""
 
-#: src/orca/orca-setup.glade:2907
+#: ../src/orca/orca-setup.glade.h:43
+#, fuzzy
+msgid "Si_ze:"
+msgstr "Размер:"
+
+#: ../src/orca/orca-setup.glade.h:44 ../src/orca/orca_gui_prefs.py:1035
+#, fuzzy
+msgid "So_me"
+msgstr "Някои"
+
+#: ../src/orca/orca-setup.glade.h:45
+msgid "Speak _indentation and justification"
+msgstr ""
+
+#: ../src/orca/orca-setup.glade.h:46 ../src/orca/orca_gui_prefs.py:1078
+#, fuzzy
+msgid "Speak current _cell"
+msgstr "Клетка от електронна таблица"
+
+#: ../src/orca/orca-setup.glade.h:47
+msgid "Speak current ro_w"
+msgstr ""
+
+#: ../src/orca/orca-setup.glade.h:48
+#, fuzzy
+msgid "Speech"
+msgstr "Реч"
+
+#: ../src/orca/orca-setup.glade.h:49
+#, fuzzy
+msgid "Speech _system:"
+msgstr "Речта е възстановена"
+
+#: ../src/orca/orca-setup.glade.h:50
+msgid "Speech synthesi_zer:"
+msgstr ""
+
+#: ../src/orca/orca-setup.glade.h:51
+#, fuzzy
+msgid "Ver_bose"
+msgstr "Подробна информация"
+
+#: ../src/orca/orca-setup.glade.h:52
+#, fuzzy
+msgid "Vo_lume:"
+msgstr "Ниво на звука:"
+
+#: ../src/orca/orca-setup.glade.h:53
 msgid ""
 "You will have to log out for the change to take effect.\n"
 "Do you want to log out now? "
 msgstr ""
+"Ще трябва да излезете от работната среда, за да\n"
+"влезнат в действие тези настройки.\n"
+"Искате ли да излезете сега?"
 
-#: src/orca/orca.py:241
+#: ../src/orca/orca-setup.glade.h:55
+msgid "_Abbreviated role names"
+msgstr ""
+
+#: ../src/orca/orca-setup.glade.h:56
+#, fuzzy
+msgid "_All"
+msgstr "_0 Всичко"
+
+#: ../src/orca/orca-setup.glade.h:57
+msgid "_Bottom:"
+msgstr "Долу:"
+
+#: ../src/orca/orca-setup.glade.h:58
+#, fuzzy
+msgid "_Enable speech"
+msgstr "Включване на поддръжка"
+
+#: ../src/orca/orca-setup.glade.h:59
+msgid "_Left:"
+msgstr "Ляво:"
+
+#: ../src/orca/orca-setup.glade.h:60 ../src/orca/orca_gui_prefs.py:1032
+msgid "_None"
+msgstr "Няма"
+
+#: ../src/orca/orca-setup.glade.h:61
+msgid "_Person:"
+msgstr ""
+
+#: ../src/orca/orca-setup.glade.h:62
+msgid "_Rate:"
+msgstr "Скорост:"
+
+#: ../src/orca/orca-setup.glade.h:63
+msgid "_Right:"
+msgstr "Дясно:"
+
+#: ../src/orca/orca-setup.glade.h:64
+#, fuzzy
+msgid "_Smoothing:"
+msgstr "Вид заглаждане"
+
+#: ../src/orca/orca-setup.glade.h:65
+msgid "_Top:"
+msgstr "Горе:"
+
+#: ../src/orca/orca-setup.glade.h:66
+#, fuzzy
+msgid "_Voice settings:"
+msgstr "Настройки на увеличителя"
+
+#: ../src/orca/orca-setup.glade.h:67
+#, fuzzy
+msgid "_Width:"
+msgstr "Височина:"
+
+#: ../src/orca/orca-setup.glade.h:68
+msgid "pixels"
+msgstr ""
+
+#: ../src/orca/orca.py:219
 msgid "User logged out - shutting down."
 msgstr ""
 
-#: src/orca/orca.py:406
+#: ../src/orca/orca.py:383
 msgid "Debug level all."
 msgstr ""
 
-#: src/orca/orca.py:408
+#: ../src/orca/orca.py:385
 msgid "Debug level finest."
 msgstr ""
 
-#: src/orca/orca.py:410
+#: ../src/orca/orca.py:387
 msgid "Debug level finer."
 msgstr ""
 
-#: src/orca/orca.py:461
-msgid "Entering learn mode.  Press any key to hear its function. "
-msgstr ""
-
-#: src/orca/orca.py:462
-msgid "To exit learn mode, press the escape key."
-msgstr ""
-
-#: src/orca/orca.py:463
-msgid "Learn mode.  Press escape to exit."
-msgstr ""
-
-#: src/orca/orca.py:473 src/orca/orca.py:474
-msgid "Exiting learn mode."
-msgstr ""
-
-#: src/orca/orca.py:644
+#: ../src/orca/orca.py:586
+#, fuzzy
 msgid "Caps_Lock"
-msgstr ""
+msgstr "caps lock"
 
-#: src/orca/orca.py:646
+#: ../src/orca/orca.py:588
 msgid " off"
 msgstr ""
 
-#: src/orca/orca.py:648
+#: ../src/orca/orca.py:590
+#, fuzzy
 msgid " on"
-msgstr ""
+msgstr "на"
 
-#: src/orca/orca.py:650
+#: ../src/orca/orca.py:592
+#, fuzzy
 msgid "Num_Lock"
-msgstr ""
+msgstr "num lock"
 
-#: src/orca/orca.py:840
+#: ../src/orca/orca.py:775
+#, fuzzy
 msgid "Speech enabled."
-msgstr ""
+msgstr "Речта е възстановена"
 
-#: src/orca/orca.py:842
+#: ../src/orca/orca.py:777
+#, fuzzy
 msgid "Speech disabled."
-msgstr ""
+msgstr "Реч (неналично)"
 
-#: src/orca/orca.py:880
+#: ../src/orca/orca.py:815
+#, fuzzy
 msgid "Orca user settings reloaded."
-msgstr ""
+msgstr "Всички стандартни настройки заредени"
 
-#: src/orca/orca.py:1006 src/orca/orca.py:1007
+#: ../src/orca/orca.py:956 ../src/orca/orca.py:957
+#, fuzzy
 msgid "Welcome to Orca."
-msgstr ""
+msgstr "Добре дошли в Gnopernicus"
 
-#. [[[TODO: WDW - the timer stuff is an experiment to see if
-#. we can recover from hangs.  It's only experimental, so it's
-#. commented out for now.]]]
-#.
-#. timer = threading.Timer(5.0, timeout)
-#. timer.start()
-#: src/orca/orca.py:1059
+#: ../src/orca/orca.py:1013
 msgid "goodbye."
 msgstr ""
 
-#: src/orca/orca.py:1060
+#: ../src/orca/orca.py:1014
 msgid "Goodbye."
 msgstr ""
 
-#: src/orca/orca.py:1126
+#: ../src/orca/orca.py:1094
 msgid "Usage: orca [OPTION...]"
 msgstr ""
 
-#: src/orca/orca.py:1128
+#: ../src/orca/orca.py:1096
 msgid "-?, --help                   Show this help message"
 msgstr ""
 
-#: src/orca/orca.py:1129
+#: ../src/orca/orca.py:1097
 #, python-format
 msgid "-v, --version                %s"
 msgstr ""
 
-#: src/orca/orca.py:1130
+#: ../src/orca/orca.py:1098
 msgid "-s, --setup, --gui-setup     Set up user preferences"
 msgstr ""
 
-#: src/orca/orca.py:1131
+#: ../src/orca/orca.py:1099
 msgid "-t, --text-setup             Set up user preferences (text version)"
 msgstr ""
 
-#: src/orca/orca.py:1132
+#: ../src/orca/orca.py:1100
 msgid "-n, --no-setup               Skip set up of user preferences"
 msgstr ""
 
-#: src/orca/orca.py:1134
+#: ../src/orca/orca.py:1103
 msgid ""
 "If Orca has not been previously set up by the user, Orca\n"
 "will automatically launch the preferences set up unless\n"
 "the -n or --no-setup option is used."
 msgstr ""
 
-#: src/orca/orca.py:1136
+#: ../src/orca/orca.py:1105
 msgid "Report bugs to orca-list@gnome.org."
 msgstr ""
 
-#: src/orca/orca_console_prefs.py:93 src/orca/orca_console_prefs.py:109
+#: ../src/orca/orca_console_prefs.py:93 ../src/orca/orca_console_prefs.py:109
+#, fuzzy
 msgid "Speech is unavailable."
-msgstr ""
+msgstr "Реч (неналично)"
 
-#: src/orca/orca_console_prefs.py:97
+#: ../src/orca/orca_console_prefs.py:97
+#, fuzzy
 msgid "Welcome to Orca setup."
-msgstr ""
+msgstr "Добре дошли в Gnopernicus"
 
-#: src/orca/orca_console_prefs.py:112
+#: ../src/orca/orca_console_prefs.py:112
 msgid "Select desired speech system:"
 msgstr ""
 
-#: src/orca/orca_console_prefs.py:117 src/orca/orca_console_prefs.py:138
-#: src/orca/orca_console_prefs.py:164
+#: ../src/orca/orca_console_prefs.py:117 ../src/orca/orca_console_prefs.py:138
+#: ../src/orca/orca_console_prefs.py:164
 #, python-format
 msgid "%d. %s"
 msgstr ""
 
-#: src/orca/orca_console_prefs.py:120 src/orca/orca_console_prefs.py:141
-#: src/orca/orca_console_prefs.py:171
+#: ../src/orca/orca_console_prefs.py:120 ../src/orca/orca_console_prefs.py:141
+#: ../src/orca/orca_console_prefs.py:171
 msgid "Enter choice: "
 msgstr ""
 
-#: src/orca/orca_console_prefs.py:122 src/orca/orca_console_prefs.py:130
-#: src/orca/orca_console_prefs.py:143 src/orca/orca_console_prefs.py:152
-#: src/orca/orca_console_prefs.py:176
+#: ../src/orca/orca_console_prefs.py:122 ../src/orca/orca_console_prefs.py:130
+#: ../src/orca/orca_console_prefs.py:143 ../src/orca/orca_console_prefs.py:152
+#: ../src/orca/orca_console_prefs.py:176
 msgid "Speech will not be used.\n"
 msgstr ""
 
-#: src/orca/orca_console_prefs.py:129
+#: ../src/orca/orca_console_prefs.py:129
+#, fuzzy
 msgid "No servers available.\n"
-msgstr ""
+msgstr "няма налична роля"
 
-#: src/orca/orca_console_prefs.py:133
+#: ../src/orca/orca_console_prefs.py:133
 msgid "Select desired speech server."
 msgstr ""
 
-#: src/orca/orca_console_prefs.py:151
+#: ../src/orca/orca_console_prefs.py:151
+#, fuzzy
 msgid "No voices available.\n"
-msgstr ""
+msgstr "няма налична роля"
 
-#: src/orca/orca_console_prefs.py:155
+#: ../src/orca/orca_console_prefs.py:155
+#, fuzzy
 msgid "Select desired voice:"
-msgstr ""
+msgstr "Избор на брайлово устройство"
 
 #. Ask the user if they would like to enable echoing by word.
 #.
-#: src/orca/orca_console_prefs.py:209
+#: ../src/orca/orca_console_prefs.py:209
 msgid "Enable echo by word?  Enter y or n: "
 msgstr ""
 
@@ -928,991 +1034,1163 @@ msgstr ""
 #. o Action keys: space, enter, escape, tab, backspace, delete, arrow
 #. keys, page up, page down, etc.
 #.
-#: src/orca/orca_console_prefs.py:234
+#: ../src/orca/orca_console_prefs.py:234
 msgid "Enable key echo?  Enter y or n: "
 msgstr ""
 
-#: src/orca/orca_console_prefs.py:241
+#: ../src/orca/orca_console_prefs.py:241
 msgid "Enable alphanumeric and punctuation keys?  Enter y or n: "
 msgstr ""
 
-#: src/orca/orca_console_prefs.py:249
+#: ../src/orca/orca_console_prefs.py:249
 msgid "Enable modifier keys?  Enter y or n: "
 msgstr ""
 
-#: src/orca/orca_console_prefs.py:257
+#: ../src/orca/orca_console_prefs.py:257
 msgid "Enable locking keys?  Enter y or n: "
 msgstr ""
 
-#: src/orca/orca_console_prefs.py:265
+#: ../src/orca/orca_console_prefs.py:265
 msgid "Enable function keys?  Enter y or n: "
 msgstr ""
 
-#: src/orca/orca_console_prefs.py:273
+#: ../src/orca/orca_console_prefs.py:273
 msgid "Enable action keys?  Enter y or n: "
 msgstr ""
 
-#: src/orca/orca_console_prefs.py:301
+#: ../src/orca/orca_console_prefs.py:301
 msgid "Enable Braille?  Enter y or n: "
 msgstr ""
 
-#: src/orca/orca_console_prefs.py:309
+#: ../src/orca/orca_console_prefs.py:309
 msgid "Enable Braille Monitor?  Enter y or n: "
 msgstr ""
 
-#: src/orca/orca_console_prefs.py:319
+#: ../src/orca/orca_console_prefs.py:319
 msgid "Accessibility support for GNOME has just been enabled. "
 msgstr ""
 
-#: src/orca/orca_console_prefs.py:324
+#: ../src/orca/orca_console_prefs.py:324
+#, fuzzy
 msgid "You need to log out and log back in for the change to take effect. "
 msgstr ""
+"Ще трябва да излезете от работната среда, за да\n"
+"влезнат в действие тези настройки.\n"
+"Искате ли да излезете сега?"
 
-#: src/orca/orca_console_prefs.py:330
+#: ../src/orca/orca_console_prefs.py:330
 msgid "Setup complete.  Press Return to continue."
 msgstr ""
 
-#: src/orca/orca_gui_prefs.py:127 src/orca/orca_gui_prefs.py:423
-#: src/orca/orca_gui_prefs.py:465
+#: ../src/orca/orca_gui_prefs.py:128 ../src/orca/orca_gui_prefs.py:423
+#: ../src/orca/orca_gui_prefs.py:465
+#, fuzzy
 msgid "Speech not available."
-msgstr ""
+msgstr "Реч (неналично)"
 
-#: src/orca/orca_gui_prefs.py:365 src/orca/orca_gui_prefs.py:369
-#: src/orca/orca_gui_prefs.py:1309
+#: ../src/orca/orca_gui_prefs.py:365 ../src/orca/orca_gui_prefs.py:369
+#: ../src/orca/orca_gui_prefs.py:1310
+#, fuzzy
 msgid "Bilinear"
-msgstr ""
+msgstr "двулинеен"
 
-#: src/orca/orca_gui_prefs.py:367 src/orca/orca_gui_prefs.py:380
-#: src/orca/orca_gui_prefs.py:1311 src/orca/orca_gui_prefs.py:1334
+#: ../src/orca/orca_gui_prefs.py:367 ../src/orca/orca_gui_prefs.py:380
+#: ../src/orca/orca_gui_prefs.py:1312 ../src/orca/orca_gui_prefs.py:1335
+#, fuzzy
 msgid "None"
-msgstr ""
+msgstr "Няма"
 
-#: src/orca/orca_gui_prefs.py:378 src/orca/orca_gui_prefs.py:386
-#: src/orca/orca_gui_prefs.py:1328
+#: ../src/orca/orca_gui_prefs.py:378 ../src/orca/orca_gui_prefs.py:386
+#: ../src/orca/orca_gui_prefs.py:1329
+#, fuzzy
 msgid "Centered"
-msgstr ""
+msgstr "Центрирано"
 
-#: src/orca/orca_gui_prefs.py:382 src/orca/orca_gui_prefs.py:1332
+#: ../src/orca/orca_gui_prefs.py:382 ../src/orca/orca_gui_prefs.py:1333
+#, fuzzy
 msgid "Proportional"
-msgstr ""
+msgstr "пропорционално"
 
-#: src/orca/orca_gui_prefs.py:384 src/orca/orca_gui_prefs.py:1330
+#: ../src/orca/orca_gui_prefs.py:384 ../src/orca/orca_gui_prefs.py:1331
+#, fuzzy
 msgid "Push"
-msgstr ""
+msgstr "избутване"
 
-#: src/orca/orca_gui_prefs.py:502 src/orca/orca_gui_prefs.py:527
+#: ../src/orca/orca_gui_prefs.py:502 ../src/orca/orca_gui_prefs.py:527
+#, fuzzy
 msgid "Default"
-msgstr ""
+msgstr "по подразбиране"
 
-#: src/orca/orca_gui_prefs.py:504 src/orca/orca_gui_prefs.py:529
+#: ../src/orca/orca_gui_prefs.py:504 ../src/orca/orca_gui_prefs.py:529
 msgid "Uppercase"
 msgstr ""
 
-#: src/orca/orca_gui_prefs.py:506 src/orca/orca_gui_prefs.py:535
+#: ../src/orca/orca_gui_prefs.py:506 ../src/orca/orca_gui_prefs.py:535
+#, fuzzy
 msgid "Hyperlink"
-msgstr ""
+msgstr "връзка"
 
-#: src/orca/orca_gui_prefs.py:1397
+#: ../src/orca/orca_gui_prefs.py:1399
 msgid "Accessibility support for GNOME has just been enabled."
 msgstr ""
 
-#: src/orca/orca_gui_prefs.py:1398
+#: ../src/orca/orca_gui_prefs.py:1400
+#, fuzzy
 msgid "You need to log out and log back in for the change to take effect."
 msgstr ""
+"Ще трябва да излезете от работната среда, за да\n"
+"влезнат в действие тези настройки.\n"
+"Искате ли да излезете сега?"
 
-#: src/orca/rolenames.py:147
+#: ../src/orca/rolenames.py:147
 msgid "???"
-msgstr ""
+msgstr "???"
 
-#: src/orca/rolenames.py:148
+#: ../src/orca/rolenames.py:148
 msgid "Invalid"
-msgstr ""
+msgstr "Невалиден"
 
-#: src/orca/rolenames.py:149
+#: ../src/orca/rolenames.py:149
+#, fuzzy
 msgid "invalid"
-msgstr ""
+msgstr "Невалиден"
 
-#: src/orca/rolenames.py:152
+#: ../src/orca/rolenames.py:152
 msgid "acc"
 msgstr ""
 
-#: src/orca/rolenames.py:153
+#: ../src/orca/rolenames.py:153
+#, fuzzy
 msgid "Accelerator"
-msgstr ""
+msgstr "ускорител"
 
-#: src/orca/rolenames.py:154
+#: ../src/orca/rolenames.py:154
 msgid "accelerator"
-msgstr ""
+msgstr "ускорител"
 
-#: src/orca/rolenames.py:157 src/orca/rolenames.py:159
+#: ../src/orca/rolenames.py:157 ../src/orca/rolenames.py:159
+#, fuzzy
 msgid "alert"
-msgstr ""
+msgstr "Аларма"
 
-#: src/orca/rolenames.py:158
+#: ../src/orca/rolenames.py:158
 msgid "Alert"
-msgstr ""
+msgstr "Аларма"
 
-#: src/orca/rolenames.py:162
+#: ../src/orca/rolenames.py:162
+#, fuzzy
 msgid "Anim"
-msgstr ""
+msgstr "Анимация"
 
-#: src/orca/rolenames.py:163
+#: ../src/orca/rolenames.py:163
 msgid "Animation"
-msgstr ""
+msgstr "Анимация"
 
-#: src/orca/rolenames.py:164
+#: ../src/orca/rolenames.py:164
+#, fuzzy
 msgid "animation"
-msgstr ""
+msgstr "Анимация"
 
-#: src/orca/rolenames.py:167 src/orca/rolenames.py:169
+#: ../src/orca/rolenames.py:167 ../src/orca/rolenames.py:169
+#, fuzzy
 msgid "arrow"
-msgstr ""
+msgstr "Стрелка"
 
-#: src/orca/rolenames.py:168
+#: ../src/orca/rolenames.py:168
 msgid "Arrow"
-msgstr ""
+msgstr "Стрелка"
 
-#: src/orca/rolenames.py:172
+#: ../src/orca/rolenames.py:172
+#, fuzzy
 msgid "cal"
-msgstr ""
+msgstr "alt"
 
-#: src/orca/rolenames.py:173
+#: ../src/orca/rolenames.py:173
 msgid "Calendar"
-msgstr ""
+msgstr "Календар"
 
-#: src/orca/rolenames.py:174
+#: ../src/orca/rolenames.py:174
+#, fuzzy
 msgid "calendar"
-msgstr ""
+msgstr "Календар"
 
-#: src/orca/rolenames.py:177
+#: ../src/orca/rolenames.py:177
 msgid "cnv"
 msgstr ""
 
-#: src/orca/rolenames.py:178
+#: ../src/orca/rolenames.py:178
 msgid "Canvas"
-msgstr ""
+msgstr "Canvas"
 
-#: src/orca/rolenames.py:179
+#: ../src/orca/rolenames.py:179
+#, fuzzy
 msgid "canvas"
-msgstr ""
+msgstr "Canvas"
 
-#: src/orca/rolenames.py:182 src/orca/rolenames.py:187
+#: ../src/orca/rolenames.py:182 ../src/orca/rolenames.py:187
+#, fuzzy
 msgid "chk"
-msgstr ""
+msgstr "зададен"
 
-#: src/orca/rolenames.py:183
+#: ../src/orca/rolenames.py:183
+#, fuzzy
 msgid "CheckBox"
-msgstr ""
+msgstr "Check box"
 
-#: src/orca/rolenames.py:184
+#: ../src/orca/rolenames.py:184
+#, fuzzy
 msgid "check box"
-msgstr ""
+msgstr "Check box"
 
-#: src/orca/rolenames.py:188
+#: ../src/orca/rolenames.py:188
+#, fuzzy
 msgid "CheckItem"
-msgstr ""
+msgstr "Елемент от меню с отметки"
 
-#: src/orca/rolenames.py:189
+#: ../src/orca/rolenames.py:189
+#, fuzzy
 msgid "check item"
-msgstr ""
+msgstr "Елемент от меню с отметки"
 
-#: src/orca/rolenames.py:192
+#: ../src/orca/rolenames.py:192
 msgid "ckm"
 msgstr ""
 
-#: src/orca/rolenames.py:193
+#: ../src/orca/rolenames.py:193
+#, fuzzy
 msgid "CheckMenu"
-msgstr ""
+msgstr "Елемент от меню с отметки"
 
-#: src/orca/rolenames.py:194
+#: ../src/orca/rolenames.py:194
+#, fuzzy
 msgid "check menu"
-msgstr ""
+msgstr "зададен"
 
-#: src/orca/rolenames.py:197
+#: ../src/orca/rolenames.py:197
+#, fuzzy
 msgid "clrchsr"
-msgstr ""
+msgstr "Избор на цвят"
 
-#: src/orca/rolenames.py:198
+#: ../src/orca/rolenames.py:198
+#, fuzzy
 msgid "ColorChooser"
-msgstr ""
+msgstr "Избор на цвят"
 
-#: src/orca/rolenames.py:199
+#: ../src/orca/rolenames.py:199
+#, fuzzy
 msgid "color chooser"
-msgstr ""
+msgstr "Избор на цвят"
 
-#: src/orca/rolenames.py:202 src/orca/rolenames.py:437
+#: ../src/orca/rolenames.py:202 ../src/orca/rolenames.py:437
+#, fuzzy
 msgid "colhdr"
-msgstr ""
+msgstr "колонтитул на колона"
 
-#: src/orca/rolenames.py:203 src/orca/rolenames.py:438
+#: ../src/orca/rolenames.py:203 ../src/orca/rolenames.py:438
+#, fuzzy
 msgid "ColumnHeader"
-msgstr ""
+msgstr "Заглавие на колона"
 
-#: src/orca/rolenames.py:204 src/orca/rolenames.py:439
+#: ../src/orca/rolenames.py:204 ../src/orca/rolenames.py:439
 msgid "column header"
-msgstr ""
+msgstr "колонтитул на колона"
 
-#: src/orca/rolenames.py:207
+#: ../src/orca/rolenames.py:207
 msgid "cbo"
 msgstr ""
 
-#: src/orca/rolenames.py:208
+#: ../src/orca/rolenames.py:208
+#, fuzzy
 msgid "Combo"
-msgstr ""
+msgstr "Combo box"
 
-#: src/orca/rolenames.py:209
+#: ../src/orca/rolenames.py:209
+#, fuzzy
 msgid "combo box"
-msgstr ""
+msgstr "Combo box"
 
-#: src/orca/rolenames.py:212
+#: ../src/orca/rolenames.py:212
+#, fuzzy
 msgid "dat"
-msgstr ""
+msgstr "alt"
 
-#: src/orca/rolenames.py:213
+#: ../src/orca/rolenames.py:213
+#, fuzzy
 msgid "DateEditor"
-msgstr ""
+msgstr "Редактор на дата"
 
-#: src/orca/rolenames.py:214
+#: ../src/orca/rolenames.py:214
+#, fuzzy
 msgid "date editor"
-msgstr ""
+msgstr "Редактор на дата"
 
-#: src/orca/rolenames.py:217 src/orca/rolenames.py:277
-#: src/orca/rolenames.py:279
+#: ../src/orca/rolenames.py:217 ../src/orca/rolenames.py:277
+#: ../src/orca/rolenames.py:279
+#, fuzzy
 msgid "icon"
-msgstr ""
+msgstr "Икона"
 
-#: src/orca/rolenames.py:218
+#: ../src/orca/rolenames.py:218
+#, fuzzy
 msgid "DesktopIcon"
-msgstr ""
+msgstr "Икона на работния плот"
 
-#: src/orca/rolenames.py:219
+#: ../src/orca/rolenames.py:219
+#, fuzzy
 msgid "desktop icon"
-msgstr ""
+msgstr "Икона на работния плот"
 
-#: src/orca/rolenames.py:222 src/orca/rolenames.py:264
-#: src/orca/rolenames.py:287
+#: ../src/orca/rolenames.py:222 ../src/orca/rolenames.py:264
+#: ../src/orca/rolenames.py:287
+#, fuzzy
 msgid "frame"
-msgstr ""
+msgstr "Рамка"
 
-#: src/orca/rolenames.py:223
+#: ../src/orca/rolenames.py:223
+#, fuzzy
 msgid "DesktopFrame"
-msgstr ""
+msgstr "Рамка на работното място"
 
-#: src/orca/rolenames.py:224
+#: ../src/orca/rolenames.py:224
+#, fuzzy
 msgid "desktop frame"
-msgstr ""
+msgstr "Рамка на работното място"
 
-#: src/orca/rolenames.py:227 src/orca/rolenames.py:229
+#: ../src/orca/rolenames.py:227 ../src/orca/rolenames.py:229
+#, fuzzy
 msgid "dial"
-msgstr ""
+msgstr "Dial"
 
-#: src/orca/rolenames.py:228
+#: ../src/orca/rolenames.py:228
 msgid "Dial"
-msgstr ""
+msgstr "Dial"
 
-#: src/orca/rolenames.py:232
+#: ../src/orca/rolenames.py:232
 msgid "dlg"
 msgstr ""
 
-#: src/orca/rolenames.py:233
+#: ../src/orca/rolenames.py:233
 msgid "Dialog"
-msgstr ""
+msgstr "Диалог"
 
-#: src/orca/rolenames.py:234
+#: ../src/orca/rolenames.py:234
+#, fuzzy
 msgid "dialog"
-msgstr ""
+msgstr "Диалог"
 
-#: src/orca/rolenames.py:237
+#: ../src/orca/rolenames.py:237
 msgid "dip"
 msgstr ""
 
-#: src/orca/rolenames.py:238
+#: ../src/orca/rolenames.py:238
+#, fuzzy
 msgid "DirectoryPane"
-msgstr ""
+msgstr "Панел с папки"
 
-#: src/orca/rolenames.py:239
+#: ../src/orca/rolenames.py:239
+#, fuzzy
 msgid "directory pane"
-msgstr ""
+msgstr "Панел с папки"
 
-#: src/orca/rolenames.py:242
+#: ../src/orca/rolenames.py:242
 msgid "draw"
 msgstr ""
 
-#: src/orca/rolenames.py:243
+#: ../src/orca/rolenames.py:243
+#, fuzzy
 msgid "DrawingArea"
-msgstr ""
+msgstr "Област за рисуване"
 
-#: src/orca/rolenames.py:244
+#: ../src/orca/rolenames.py:244
+#, fuzzy
 msgid "drawing area"
-msgstr ""
+msgstr "Област за рисуване"
 
-#: src/orca/rolenames.py:247
+#: ../src/orca/rolenames.py:247
 msgid "fchsr"
 msgstr ""
 
-#: src/orca/rolenames.py:248
+#: ../src/orca/rolenames.py:248
+#, fuzzy
 msgid "FileChooser"
-msgstr ""
+msgstr "ИЗбор на файлове"
 
-#: src/orca/rolenames.py:249
+#: ../src/orca/rolenames.py:249
+#, fuzzy
 msgid "file chooser"
-msgstr ""
+msgstr "ИЗбор на файлове"
 
-#: src/orca/rolenames.py:252
+#: ../src/orca/rolenames.py:252
 msgid "flr"
 msgstr ""
 
-#: src/orca/rolenames.py:253
+#: ../src/orca/rolenames.py:253
 msgid "Filler"
-msgstr ""
+msgstr "Filler"
 
-#: src/orca/rolenames.py:254
+#: ../src/orca/rolenames.py:254
+#, fuzzy
 msgid "filler"
-msgstr ""
+msgstr "Filler"
 
-#: src/orca/rolenames.py:257
+#: ../src/orca/rolenames.py:257
 msgid "fnt"
 msgstr ""
 
-#: src/orca/rolenames.py:258
+#: ../src/orca/rolenames.py:258
+#, fuzzy
 msgid "FontChooser"
-msgstr ""
+msgstr "Избор на шрифт"
 
-#: src/orca/rolenames.py:259
+#: ../src/orca/rolenames.py:259
+#, fuzzy
 msgid "font chooser"
-msgstr ""
+msgstr "Избор на шрифт"
 
-#: src/orca/rolenames.py:262
+#: ../src/orca/rolenames.py:262
+#, fuzzy
 msgid "frm"
-msgstr ""
+msgstr "от"
 
-#: src/orca/rolenames.py:263
+#: ../src/orca/rolenames.py:263
 msgid "Frame"
-msgstr ""
+msgstr "Рамка"
 
-#: src/orca/rolenames.py:267
+#: ../src/orca/rolenames.py:267
 msgid "gpn"
 msgstr ""
 
-#: src/orca/rolenames.py:268
+#: ../src/orca/rolenames.py:268
+#, fuzzy
 msgid "GlassPane"
-msgstr ""
+msgstr "Glass pane"
 
-#: src/orca/rolenames.py:269
+#: ../src/orca/rolenames.py:269
+#, fuzzy
 msgid "glass pane"
-msgstr ""
+msgstr "Glass pane"
 
-#: src/orca/rolenames.py:272
+#: ../src/orca/rolenames.py:272
 msgid "html"
 msgstr ""
 
-#: src/orca/rolenames.py:273
+#: ../src/orca/rolenames.py:273
+#, fuzzy
 msgid "HtmlContainer"
-msgstr ""
+msgstr "H T M L container"
 
-#: src/orca/rolenames.py:274
+#: ../src/orca/rolenames.py:274
+#, fuzzy
 msgid "h t m l container"
-msgstr ""
+msgstr "H T M L container"
 
-#: src/orca/rolenames.py:278
+#: ../src/orca/rolenames.py:278
 msgid "Icon"
-msgstr ""
+msgstr "Икона"
 
-#: src/orca/rolenames.py:282
+#: ../src/orca/rolenames.py:282
 msgid "img"
 msgstr ""
 
-#: src/orca/rolenames.py:283
+#: ../src/orca/rolenames.py:283
 msgid "Image"
-msgstr ""
+msgstr "Изображение"
 
-#: src/orca/rolenames.py:284
+#: ../src/orca/rolenames.py:284
+#, fuzzy
 msgid "image"
-msgstr ""
+msgstr "Изображение"
 
-#: src/orca/rolenames.py:288
+#: ../src/orca/rolenames.py:288
+#, fuzzy
 msgid "InternalFrame"
-msgstr ""
+msgstr "Вътрешна рамка"
 
-#: src/orca/rolenames.py:289
+#: ../src/orca/rolenames.py:289
+#, fuzzy
 msgid "internal frame"
-msgstr ""
+msgstr "Вътрешна рамка"
 
-#: src/orca/rolenames.py:292
+#: ../src/orca/rolenames.py:292
 msgid "lbl"
 msgstr ""
 
-#: src/orca/rolenames.py:293
+#: ../src/orca/rolenames.py:293
 msgid "Label"
-msgstr ""
+msgstr "Етикет"
 
-#: src/orca/rolenames.py:294
+#: ../src/orca/rolenames.py:294
+#, fuzzy
 msgid "label"
-msgstr ""
+msgstr "Етикет"
 
-#: src/orca/rolenames.py:297
+#: ../src/orca/rolenames.py:297
 msgid "lyrdpn"
 msgstr ""
 
-#: src/orca/rolenames.py:298
+#: ../src/orca/rolenames.py:298
+#, fuzzy
 msgid "LayeredPane"
-msgstr ""
+msgstr "Панел на пластове"
 
-#: src/orca/rolenames.py:299
+#: ../src/orca/rolenames.py:299
+#, fuzzy
 msgid "layered pane"
-msgstr ""
+msgstr "Панел на пластове"
 
-#: src/orca/rolenames.py:302
+#: ../src/orca/rolenames.py:302
+#, fuzzy
 msgid "lst"
-msgstr ""
+msgstr "alt"
 
-#: src/orca/rolenames.py:303
+#: ../src/orca/rolenames.py:303
 msgid "List"
-msgstr ""
+msgstr "Списък"
 
-#: src/orca/rolenames.py:304
+#: ../src/orca/rolenames.py:304
+#, fuzzy
 msgid "list"
-msgstr ""
+msgstr "Списък"
 
-#: src/orca/rolenames.py:307
+#: ../src/orca/rolenames.py:307
+#, fuzzy
 msgid "lstitm"
-msgstr ""
+msgstr "елемент от списък"
 
-#: src/orca/rolenames.py:308
+#: ../src/orca/rolenames.py:308
+#, fuzzy
 msgid "ListItem"
-msgstr ""
+msgstr "елемент от списък"
 
-#: src/orca/rolenames.py:309
+#: ../src/orca/rolenames.py:309
+#, fuzzy
 msgid "list item"
-msgstr ""
+msgstr "елемент от списък"
 
-#: src/orca/rolenames.py:312
+#: ../src/orca/rolenames.py:312
+#, fuzzy
 msgid "mnu"
-msgstr ""
+msgstr "минус"
 
-#: src/orca/rolenames.py:313
+#: ../src/orca/rolenames.py:313
 msgid "Menu"
-msgstr ""
+msgstr "Меню"
 
-#: src/orca/rolenames.py:314
+#: ../src/orca/rolenames.py:314
+#, fuzzy
 msgid "menu"
-msgstr ""
+msgstr "Меню"
 
-#: src/orca/rolenames.py:317
+#: ../src/orca/rolenames.py:317
+#, fuzzy
 msgid "mnubr"
-msgstr ""
+msgstr "няма лента с менюта"
 
-#: src/orca/rolenames.py:318
+#: ../src/orca/rolenames.py:318
+#, fuzzy
 msgid "MenuBar"
-msgstr ""
+msgstr "лента с менюта"
 
-#: src/orca/rolenames.py:319
+#: ../src/orca/rolenames.py:319
+#, fuzzy
 msgid "menu bar"
-msgstr ""
+msgstr "лента с менюта"
 
-#: src/orca/rolenames.py:322
+#: ../src/orca/rolenames.py:322
+#, fuzzy
 msgid "mnuitm"
-msgstr ""
+msgstr "Елемент от меню"
 
-#: src/orca/rolenames.py:323
+#: ../src/orca/rolenames.py:323
+#, fuzzy
 msgid "MenuItem"
-msgstr ""
+msgstr "Елемент от меню"
 
-#: src/orca/rolenames.py:324
+#: ../src/orca/rolenames.py:324
+#, fuzzy
 msgid "menu item"
-msgstr ""
+msgstr "Елемент от меню"
 
-#: src/orca/rolenames.py:327
+#: ../src/orca/rolenames.py:327
 msgid "optnpn"
 msgstr ""
 
-#: src/orca/rolenames.py:328
+#: ../src/orca/rolenames.py:328
+#, fuzzy
 msgid "OptionPane"
-msgstr ""
+msgstr "Панел с настройки"
 
-#: src/orca/rolenames.py:329
+#: ../src/orca/rolenames.py:329
+#, fuzzy
 msgid "option pane"
-msgstr ""
+msgstr "Панел с настройки"
 
-#: src/orca/rolenames.py:332 src/orca/rolenames.py:334
+#: ../src/orca/rolenames.py:332 ../src/orca/rolenames.py:334
+#, fuzzy
 msgid "page"
-msgstr ""
+msgstr "страница нагоре"
 
-#: src/orca/rolenames.py:333
+#: ../src/orca/rolenames.py:333
+#, fuzzy
 msgid "Page"
-msgstr ""
+msgstr "Изображение"
 
-#: src/orca/rolenames.py:337
+#: ../src/orca/rolenames.py:337
 msgid "tblst"
 msgstr ""
 
-#: src/orca/rolenames.py:338
+#: ../src/orca/rolenames.py:338
+#, fuzzy
 msgid "TabList"
-msgstr ""
+msgstr "Списък"
 
-#: src/orca/rolenames.py:339
+#: ../src/orca/rolenames.py:339
+#, fuzzy
 msgid "tab list"
-msgstr ""
+msgstr "Списък с табовете на страница"
 
-#: src/orca/rolenames.py:342
+#: ../src/orca/rolenames.py:342
 msgid "pnl"
 msgstr ""
 
-#: src/orca/rolenames.py:343
+#: ../src/orca/rolenames.py:343
 msgid "Panel"
-msgstr ""
+msgstr "Панел"
 
-#: src/orca/rolenames.py:344
+#: ../src/orca/rolenames.py:344
+#, fuzzy
 msgid "panel"
-msgstr ""
+msgstr "Панел"
 
-#: src/orca/rolenames.py:347
+#: ../src/orca/rolenames.py:347
 msgid "pwd"
 msgstr ""
 
-#: src/orca/rolenames.py:348
+#: ../src/orca/rolenames.py:348
+#, fuzzy
 msgid "Password"
-msgstr ""
+msgstr "Парола"
 
-#: src/orca/rolenames.py:349
+#: ../src/orca/rolenames.py:349
+#, fuzzy
 msgid "password"
-msgstr ""
+msgstr "Парола"
 
-#: src/orca/rolenames.py:352
+#: ../src/orca/rolenames.py:352
+#, fuzzy
 msgid "popmnu"
-msgstr ""
+msgstr "Изскачащо меню"
 
-#: src/orca/rolenames.py:353
+#: ../src/orca/rolenames.py:353
+#, fuzzy
 msgid "PopupMenu"
-msgstr ""
+msgstr "Изскачащо меню"
 
-#: src/orca/rolenames.py:354
+#: ../src/orca/rolenames.py:354
+#, fuzzy
 msgid "popup menu"
-msgstr ""
+msgstr "Изскачащо меню"
 
-#: src/orca/rolenames.py:357
+#: ../src/orca/rolenames.py:357
 msgid "pgbar"
 msgstr ""
 
-#: src/orca/rolenames.py:358
+#: ../src/orca/rolenames.py:358
+#, fuzzy
 msgid "Progress"
-msgstr ""
+msgstr "Лента за прогреса"
 
-#: src/orca/rolenames.py:359
+#: ../src/orca/rolenames.py:359
+#, fuzzy
 msgid "progress bar"
-msgstr ""
+msgstr "Лента за прогреса"
 
-#: src/orca/rolenames.py:362
+#: ../src/orca/rolenames.py:362
 msgid "btn"
 msgstr ""
 
-#: src/orca/rolenames.py:363
+#: ../src/orca/rolenames.py:363
 msgid "Button"
 msgstr ""
 
-#: src/orca/rolenames.py:364
+#: ../src/orca/rolenames.py:364
+#, fuzzy
 msgid "button"
-msgstr ""
+msgstr "Натискане на бутон"
 
-#: src/orca/rolenames.py:367
+#: ../src/orca/rolenames.py:367
 msgid "radio"
 msgstr ""
 
-#: src/orca/rolenames.py:368
+#: ../src/orca/rolenames.py:368
+#, fuzzy
 msgid "RadioButton"
-msgstr ""
+msgstr "Радио бутон"
 
-#: src/orca/rolenames.py:369
+#: ../src/orca/rolenames.py:369
+#, fuzzy
 msgid "radio button"
-msgstr ""
+msgstr "Радио бутон"
 
-#: src/orca/rolenames.py:372
+#: ../src/orca/rolenames.py:372
 msgid "rdmnuitm"
 msgstr ""
 
-#: src/orca/rolenames.py:373
+#: ../src/orca/rolenames.py:373
+#, fuzzy
 msgid "RadioItem"
-msgstr ""
+msgstr "Елемент от радио меню"
 
-#: src/orca/rolenames.py:374
+#: ../src/orca/rolenames.py:374
+#, fuzzy
 msgid "radio menu item"
-msgstr ""
+msgstr "Елемент от радио меню"
 
-#: src/orca/rolenames.py:377
+#: ../src/orca/rolenames.py:377
+#, fuzzy
 msgid "rdmnu"
-msgstr ""
+msgstr "минус"
 
-#: src/orca/rolenames.py:378
+#: ../src/orca/rolenames.py:378
+#, fuzzy
 msgid "RadioMenu"
-msgstr ""
+msgstr "Елемент от радио меню"
 
-#: src/orca/rolenames.py:379
+#: ../src/orca/rolenames.py:379
+#, fuzzy
 msgid "radio menu"
-msgstr ""
+msgstr "Елемент от радио меню"
 
-#: src/orca/rolenames.py:382
+#: ../src/orca/rolenames.py:382
 msgid "rtpn"
 msgstr ""
 
-#: src/orca/rolenames.py:383
+#: ../src/orca/rolenames.py:383
+#, fuzzy
 msgid "RootPane"
-msgstr ""
+msgstr "Основен панел"
 
-#: src/orca/rolenames.py:384
+#: ../src/orca/rolenames.py:384
+#, fuzzy
 msgid "root pane"
-msgstr ""
+msgstr "Основен панел"
 
-#: src/orca/rolenames.py:387 src/orca/rolenames.py:442
+#: ../src/orca/rolenames.py:387 ../src/orca/rolenames.py:442
+#, fuzzy
 msgid "rwhdr"
-msgstr ""
+msgstr "колонтитул на ред"
 
-#: src/orca/rolenames.py:388 src/orca/rolenames.py:443
+#: ../src/orca/rolenames.py:388 ../src/orca/rolenames.py:443
+#, fuzzy
 msgid "RowHeader"
-msgstr ""
+msgstr "Заглавие на ред"
 
-#: src/orca/rolenames.py:389 src/orca/rolenames.py:444
+#: ../src/orca/rolenames.py:389 ../src/orca/rolenames.py:444
 msgid "row header"
-msgstr ""
+msgstr "колонтитул на ред"
 
-#: src/orca/rolenames.py:392
+#: ../src/orca/rolenames.py:392
+#, fuzzy
 msgid "scbr"
-msgstr ""
+msgstr "srcore"
 
-#: src/orca/rolenames.py:393
+#: ../src/orca/rolenames.py:393
+#, fuzzy
 msgid "ScrollBar"
-msgstr ""
+msgstr "Плъзгач"
 
-#: src/orca/rolenames.py:394
+#: ../src/orca/rolenames.py:394
+#, fuzzy
 msgid "scroll bar"
-msgstr ""
+msgstr "Плъзгач"
 
-#: src/orca/rolenames.py:397
+#: ../src/orca/rolenames.py:397
+#, fuzzy
 msgid "scpn"
-msgstr ""
+msgstr "escape"
 
-#: src/orca/rolenames.py:398
+#: ../src/orca/rolenames.py:398
+#, fuzzy
 msgid "ScrollPane"
-msgstr ""
+msgstr "Панел за скролиране"
 
-#: src/orca/rolenames.py:399
+#: ../src/orca/rolenames.py:399
+#, fuzzy
 msgid "scroll pane"
-msgstr ""
+msgstr "Панел за скролиране"
 
-#: src/orca/rolenames.py:402
+#: ../src/orca/rolenames.py:402
+#, fuzzy
 msgid "seprtr"
-msgstr ""
+msgstr "Разделител"
 
-#: src/orca/rolenames.py:403
+#: ../src/orca/rolenames.py:403
 msgid "Separator"
-msgstr ""
+msgstr "Разделител"
 
-#: src/orca/rolenames.py:404
+#: ../src/orca/rolenames.py:404
+#, fuzzy
 msgid "separator"
-msgstr ""
+msgstr "Разделител"
 
-#: src/orca/rolenames.py:407
+#: ../src/orca/rolenames.py:407
+#, fuzzy
 msgid "sldr"
-msgstr ""
+msgstr "Плъзгач"
 
-#: src/orca/rolenames.py:408
+#: ../src/orca/rolenames.py:408
 msgid "Slider"
-msgstr ""
+msgstr "Плъзгач"
 
-#: src/orca/rolenames.py:409
+#: ../src/orca/rolenames.py:409
+#, fuzzy
 msgid "slider"
-msgstr ""
+msgstr "Плъзгач"
 
-#: src/orca/rolenames.py:412
+#: ../src/orca/rolenames.py:412
+#, fuzzy
 msgid "spltpn"
-msgstr ""
+msgstr "Split pane"
 
-#: src/orca/rolenames.py:413
+#: ../src/orca/rolenames.py:413
+#, fuzzy
 msgid "SplitPane"
-msgstr ""
+msgstr "Split pane"
 
-#: src/orca/rolenames.py:414
+#: ../src/orca/rolenames.py:414
+#, fuzzy
 msgid "split pane"
-msgstr ""
+msgstr "Split pane"
 
-#: src/orca/rolenames.py:417
+#: ../src/orca/rolenames.py:417
 msgid "spin"
 msgstr ""
 
-#: src/orca/rolenames.py:418
+#: ../src/orca/rolenames.py:418
+#, fuzzy
 msgid "SpinButton"
-msgstr ""
+msgstr "Spin button"
 
-#: src/orca/rolenames.py:419
+#: ../src/orca/rolenames.py:419
+#, fuzzy
 msgid "spin button"
-msgstr ""
+msgstr "Spin button"
 
-#: src/orca/rolenames.py:422
+#: ../src/orca/rolenames.py:422
+#, fuzzy
 msgid "statbr"
-msgstr ""
+msgstr "табулация"
 
-#: src/orca/rolenames.py:423
+#: ../src/orca/rolenames.py:423
+#, fuzzy
 msgid "StatusBar"
-msgstr ""
+msgstr "Лента за състоянието"
 
-#: src/orca/rolenames.py:424
+#: ../src/orca/rolenames.py:424
+#, fuzzy
 msgid "status bar"
-msgstr ""
+msgstr "Лента за състоянието"
 
-#: src/orca/rolenames.py:427
+#: ../src/orca/rolenames.py:427
+#, fuzzy
 msgid "tbl"
-msgstr ""
+msgstr "табулация"
 
-#: src/orca/rolenames.py:428
+#: ../src/orca/rolenames.py:428
 msgid "Table"
-msgstr ""
+msgstr "Таблица"
 
-#: src/orca/rolenames.py:429
+#: ../src/orca/rolenames.py:429
+#, fuzzy
 msgid "table"
-msgstr ""
+msgstr "Таблица"
 
-#: src/orca/rolenames.py:433
+#: ../src/orca/rolenames.py:433
 msgid "Cell"
 msgstr ""
 
-#: src/orca/rolenames.py:447
+#: ../src/orca/rolenames.py:447
 msgid "tomnuitm"
 msgstr ""
 
-#: src/orca/rolenames.py:448
+#: ../src/orca/rolenames.py:448
 msgid "TearOffMenuItem"
 msgstr ""
 
-#: src/orca/rolenames.py:449 src/orca/speechgenerator.py:1258
+#: ../src/orca/rolenames.py:449 ../src/orca/speechgenerator.py:1258
+#, fuzzy
 msgid "tear off menu item"
-msgstr ""
+msgstr "Елемент от радио меню"
 
-#: src/orca/rolenames.py:452
+#: ../src/orca/rolenames.py:452
+#, fuzzy
 msgid "term"
-msgstr ""
+msgstr "елемент"
 
-#: src/orca/rolenames.py:453
+#: ../src/orca/rolenames.py:453
 msgid "Terminal"
-msgstr ""
+msgstr "Терминал"
 
-#: src/orca/rolenames.py:454
+#: ../src/orca/rolenames.py:454
+#, fuzzy
 msgid "terminal"
-msgstr ""
+msgstr "Терминал"
 
-#: src/orca/rolenames.py:457
+#: ../src/orca/rolenames.py:457
 msgid "txt"
 msgstr ""
 
-#: src/orca/rolenames.py:458
+#: ../src/orca/rolenames.py:458
+#, fuzzy
 msgid "Text"
-msgstr ""
+msgstr "Текст"
 
-#: src/orca/rolenames.py:459
+#: ../src/orca/rolenames.py:459
+#, fuzzy
 msgid "text"
-msgstr ""
+msgstr "Текст"
 
-#: src/orca/rolenames.py:462
+#: ../src/orca/rolenames.py:462
 msgid "tglbtn"
 msgstr ""
 
-#: src/orca/rolenames.py:463
+#: ../src/orca/rolenames.py:463
+#, fuzzy
 msgid "ToggleButton"
-msgstr ""
+msgstr "Превключващ бутон"
 
-#: src/orca/rolenames.py:464
+#: ../src/orca/rolenames.py:464
+#, fuzzy
 msgid "toggle button"
-msgstr ""
+msgstr "Превключващ бутон"
 
-#: src/orca/rolenames.py:467
+#: ../src/orca/rolenames.py:467
+#, fuzzy
 msgid "tbar"
-msgstr ""
+msgstr "Редактиране на лента"
 
-#: src/orca/rolenames.py:468
+#: ../src/orca/rolenames.py:468
+#, fuzzy
 msgid "ToolBar"
-msgstr ""
+msgstr "Лента с инструменти"
 
-#: src/orca/rolenames.py:469
+#: ../src/orca/rolenames.py:469
+#, fuzzy
 msgid "tool bar"
-msgstr ""
+msgstr "Лента с инструменти"
 
-#: src/orca/rolenames.py:472
+#: ../src/orca/rolenames.py:472
 msgid "tip"
 msgstr ""
 
-#: src/orca/rolenames.py:473
+#: ../src/orca/rolenames.py:473
+#, fuzzy
 msgid "ToolTip"
-msgstr ""
+msgstr "Подсказка"
 
-#: src/orca/rolenames.py:474
+#: ../src/orca/rolenames.py:474
+#, fuzzy
 msgid "tool tip"
-msgstr ""
+msgstr "Подсказка"
 
-#: src/orca/rolenames.py:477 src/orca/rolenames.py:479
+#: ../src/orca/rolenames.py:477 ../src/orca/rolenames.py:479
+#, fuzzy
 msgid "tree"
-msgstr ""
+msgstr "Tree"
 
-#: src/orca/rolenames.py:478
+#: ../src/orca/rolenames.py:478
 msgid "Tree"
-msgstr ""
+msgstr "Tree"
 
-#: src/orca/rolenames.py:482
+#: ../src/orca/rolenames.py:482
+#, fuzzy
 msgid "trtbl"
-msgstr ""
+msgstr "_Ctrl"
 
-#: src/orca/rolenames.py:483
+#: ../src/orca/rolenames.py:483
+#, fuzzy
 msgid "TreeTable"
-msgstr ""
+msgstr "Дървовидна таблица"
 
-#: src/orca/rolenames.py:484
+#: ../src/orca/rolenames.py:484
+#, fuzzy
 msgid "tree table"
-msgstr ""
+msgstr "Дървовидна таблица"
 
-#: src/orca/rolenames.py:487
+#: ../src/orca/rolenames.py:487
 msgid "unk"
 msgstr ""
 
-#: src/orca/rolenames.py:488
+#: ../src/orca/rolenames.py:488
 msgid "Unknown"
-msgstr ""
+msgstr "Неизвестен"
 
-#: src/orca/rolenames.py:489
+#: ../src/orca/rolenames.py:489
+#, fuzzy
 msgid "unknown"
-msgstr ""
+msgstr "Неизвестен"
 
-#: src/orca/rolenames.py:492
+#: ../src/orca/rolenames.py:492
+#, fuzzy
 msgid "vwprt"
-msgstr ""
+msgstr "Viewport"
 
-#: src/orca/rolenames.py:493
+#: ../src/orca/rolenames.py:493
 msgid "Viewport"
-msgstr ""
+msgstr "Viewport"
 
-#: src/orca/rolenames.py:494
+#: ../src/orca/rolenames.py:494
+#, fuzzy
 msgid "viewport"
-msgstr ""
+msgstr "Viewport"
 
-#: src/orca/rolenames.py:497
+#: ../src/orca/rolenames.py:497
+#, fuzzy
 msgid "wnd"
-msgstr ""
+msgstr "And"
 
-#: src/orca/rolenames.py:498
+#: ../src/orca/rolenames.py:498
 msgid "Window"
-msgstr ""
+msgstr "Прозорец"
 
-#: src/orca/rolenames.py:499
+#: ../src/orca/rolenames.py:499
+#, fuzzy
 msgid "window"
-msgstr ""
+msgstr "Прозорец"
 
-#: src/orca/rolenames.py:502
+#: ../src/orca/rolenames.py:502
 msgid "hdr"
 msgstr ""
 
-#: src/orca/rolenames.py:503
+#: ../src/orca/rolenames.py:503
+#, fuzzy
 msgid "Header"
-msgstr ""
+msgstr "колонтитул на ред"
 
-#: src/orca/rolenames.py:504
+#: ../src/orca/rolenames.py:504
+#, fuzzy
 msgid "header"
-msgstr ""
+msgstr "колонтитул на ред"
 
-#: src/orca/rolenames.py:507
+#: ../src/orca/rolenames.py:507
 msgid "ftr"
 msgstr ""
 
-#: src/orca/rolenames.py:508
+#: ../src/orca/rolenames.py:508
+#, fuzzy
 msgid "Footer"
-msgstr ""
+msgstr "Увеличители"
 
-#: src/orca/rolenames.py:509
+#: ../src/orca/rolenames.py:509
+#, fuzzy
 msgid "footer"
-msgstr ""
+msgstr "Увеличители"
 
-#: src/orca/rolenames.py:512
+#: ../src/orca/rolenames.py:512
+#, fuzzy
 msgid "para"
-msgstr ""
+msgstr "Разделител"
 
-#: src/orca/rolenames.py:513
+#: ../src/orca/rolenames.py:513
+#, fuzzy
 msgid "Paragraph"
-msgstr ""
+msgstr "абзацът е изтрит"
 
-#: src/orca/rolenames.py:514
+#: ../src/orca/rolenames.py:514
+#, fuzzy
 msgid "paragraph"
-msgstr ""
+msgstr "абзацът е изтрит"
 
-#: src/orca/rolenames.py:517
+#: ../src/orca/rolenames.py:517
+#, fuzzy
 msgid "app"
-msgstr ""
+msgstr "глвн"
 
-#: src/orca/rolenames.py:518
+#: ../src/orca/rolenames.py:518
+#, fuzzy
 msgid "Application"
-msgstr ""
+msgstr "Програма"
 
-#: src/orca/rolenames.py:519
+#: ../src/orca/rolenames.py:519
+#, fuzzy
 msgid "application"
-msgstr ""
+msgstr "на програма"
 
-#: src/orca/rolenames.py:522
+#: ../src/orca/rolenames.py:522
+#, fuzzy
 msgid "auto"
-msgstr ""
+msgstr "Автоматично"
 
-#: src/orca/rolenames.py:523
+#: ../src/orca/rolenames.py:523
 msgid "AutoComplete"
 msgstr ""
 
-#: src/orca/rolenames.py:524
+#: ../src/orca/rolenames.py:524
 msgid "autocomplete"
 msgstr ""
 
-#: src/orca/rolenames.py:527
+#: ../src/orca/rolenames.py:527
+#, fuzzy
 msgid "edtbr"
-msgstr ""
+msgstr "Редактиране на лента"
 
-#: src/orca/rolenames.py:528
+#: ../src/orca/rolenames.py:528
+#, fuzzy
 msgid "EditBar"
-msgstr ""
+msgstr "Редактиране на лента"
 
-#: src/orca/rolenames.py:529
+#: ../src/orca/rolenames.py:529
+#, fuzzy
 msgid "edit bar"
-msgstr ""
+msgstr "Редактиране на лента"
 
-#: src/orca/rolenames.py:532
+#: ../src/orca/rolenames.py:532
 msgid "emb"
 msgstr ""
 
-#: src/orca/rolenames.py:533
+#: ../src/orca/rolenames.py:533
+#, fuzzy
 msgid "EmbeddedComponent"
-msgstr ""
+msgstr "Вложен"
 
-#: src/orca/rolenames.py:534
+#: ../src/orca/rolenames.py:534
+#, fuzzy
 msgid "embedded component"
-msgstr ""
+msgstr "Добавяне на вградени празни линии"
 
-#: src/orca/scripts/Evolution.py:86
+#: ../src/orca/scripts/Evolution.py:86
 msgid "calv"
 msgstr ""
 
-#: src/orca/scripts/Evolution.py:87
+#: ../src/orca/scripts/Evolution.py:87
+#, fuzzy
 msgid "CalendarView"
-msgstr ""
+msgstr "Календар"
 
-#: src/orca/scripts/Evolution.py:88
+#: ../src/orca/scripts/Evolution.py:88
+#, fuzzy
 msgid "calendar view"
-msgstr ""
+msgstr "Календар"
 
-#: src/orca/scripts/Evolution.py:93
+#: ../src/orca/scripts/Evolution.py:93
+#, fuzzy
 msgid "cale"
-msgstr ""
+msgstr "Таблица"
 
-#: src/orca/scripts/Evolution.py:94
+#: ../src/orca/scripts/Evolution.py:94
+#, fuzzy
 msgid "CalendarEvent"
-msgstr ""
+msgstr "Календар"
 
-#: src/orca/scripts/Evolution.py:95
+#: ../src/orca/scripts/Evolution.py:95
+#, fuzzy
 msgid "calendar event"
-msgstr ""
+msgstr "Календар"
 
-#: src/orca/scripts/Evolution.py:149
+#: ../src/orca/scripts/Evolution.py:149
+#, fuzzy
 msgid " screen"
-msgstr ""
+msgstr "Открива на екрана"
 
 #. Most of the Setup Assistant screens have a useful piece
 #. of text starting with the word "Please". We want to speak
@@ -1920,111 +2198,118 @@ msgstr ""
 #. starts with "Welcome". For the last screen, it starts
 #. with "Congratulations". Speak those too.
 #.
-#: src/orca/scripts/Evolution.py:178
+#: ../src/orca/scripts/Evolution.py:178
+#, fuzzy
 msgid "Please"
-msgstr ""
+msgstr "Плюсове"
 
-#: src/orca/scripts/Evolution.py:179
+#: ../src/orca/scripts/Evolution.py:179
 msgid "Welcome"
 msgstr ""
 
-#: src/orca/scripts/Evolution.py:180
+#: ../src/orca/scripts/Evolution.py:180
 msgid "Congratulations"
 msgstr ""
 
-#: src/orca/scripts/Evolution.py:687
+#: ../src/orca/scripts/Evolution.py:687
 msgid "No appointments"
 msgstr ""
 
-#: src/orca/scripts/Evolution.py:761
+#: ../src/orca/scripts/Evolution.py:761
+#, fuzzy
 msgid "Directories button"
-msgstr ""
+msgstr "Панел с папки"
 
-#: src/orca/scripts/Evolution.py:900 src/orca/scripts/Evolution.py:938
+#: ../src/orca/scripts/Evolution.py:900 ../src/orca/scripts/Evolution.py:938
 msgid "Assistant"
 msgstr ""
 
-#: src/orca/scripts/Mozilla.py:231 src/orca/scripts/StarOffice.py:408
+#: ../src/orca/scripts/Mozilla.py:234 ../src/orca/scripts/StarOffice.py:406
 msgid "link"
-msgstr ""
+msgstr "връзка"
 
-#: src/orca/scripts/gaim.py:149
+#: ../src/orca/scripts/gaim.py:149
 msgid ""
 "Toggle whether we prefix chat room messages with the name of the chat room."
 msgstr ""
 
-#: src/orca/scripts/gaim.py:153
+#: ../src/orca/scripts/gaim.py:153
 msgid "Speak and braille a previous chat room message."
 msgstr ""
 
-#: src/orca/scripts/gaim.py:194
+#: ../src/orca/scripts/gaim.py:194
 msgid "speak chat room name."
 msgstr ""
 
-#: src/orca/scripts/gaim.py:197
+#: ../src/orca/scripts/gaim.py:197
+#, fuzzy
 msgid "Do not speak chat room name."
-msgstr ""
+msgstr "Без произнасяне на текста"
 
-#: src/orca/scripts/gaim.py:215
+#: ../src/orca/scripts/gaim.py:215
 msgid "Message from chat room "
 msgstr ""
 
-#: src/orca/scripts/gedit.py:135
+#: ../src/orca/scripts/gedit.py:135
+#, fuzzy
 msgid "Change to:"
-msgstr ""
+msgstr "Грешка при подаване на промяна."
 
-#: src/orca/scripts/gedit.py:136
+#: ../src/orca/scripts/gedit.py:136
 msgid "Misspelled word:"
 msgstr ""
 
 #. The indication that spell checking is complete is when the
 #. "misspelt" word is set to "Completed spell checking". Ugh!
 #. Try to detect this and let the user know.
-#: src/orca/scripts/gedit.py:165
+#: ../src/orca/scripts/gedit.py:165
 msgid "Completed spell checking"
 msgstr ""
 
-#: src/orca/scripts/gedit.py:166
+#: ../src/orca/scripts/gedit.py:166
 msgid "Spell checking is complete."
 msgstr ""
 
-#: src/orca/scripts/gedit.py:168
+#: ../src/orca/scripts/gedit.py:168
 msgid "Press Tab and Return to terminate."
 msgstr ""
 
-#: src/orca/scripts/gedit.py:255 src/orca/scripts/gedit.py:308
+#: ../src/orca/scripts/gedit.py:255 ../src/orca/scripts/gedit.py:308
 msgid "Check Spelling"
 msgstr ""
 
-#: src/orca/scripts/StarOffice.py:243
+#: ../src/orca/scripts/StarOffice.py:243
 msgid "Speaks the contents of the input line."
 msgstr ""
 
-#: src/orca/scripts/StarOffice.py:283
+#: ../src/orca/scripts/StarOffice.py:283
+#, fuzzy
 msgid "empty"
-msgstr ""
+msgstr "празен ред"
 
-#: src/orca/scripts/StarOffice.py:426
+#: ../src/orca/scripts/StarOffice.py:424
+#, fuzzy
 msgid "Welcome to StarOffice"
-msgstr ""
+msgstr "Добре дошли в Gnopernicus"
 
-#: src/orca/scripts/StarOffice.py:554 src/orca/scripts/StarOffice.py:803
+#: ../src/orca/scripts/StarOffice.py:552 ../src/orca/scripts/StarOffice.py:801
 msgid "Spellcheck:"
 msgstr ""
 
-#: src/orca/scripts/StarOffice.py:582
+#: ../src/orca/scripts/StarOffice.py:580
 msgid "Note that the Scroll Down button has to be pressed numerous times."
 msgstr ""
 
-#: src/orca/scripts/StarOffice.py:596
+#: ../src/orca/scripts/StarOffice.py:594
 msgid "License Agreement Accept button now has focus."
 msgstr ""
 
-#: src/orca/scripts/StarOffice.py:619
+#: ../src/orca/scripts/StarOffice.py:617
+#, fuzzy
 msgid "First name"
-msgstr ""
+msgstr "Име на шрифт"
 
-#: src/orca/scripts/StarOffice.py:867
+#: ../src/orca/scripts/StarOffice.py:865
 msgid " has formula"
 msgstr ""
 
@@ -2036,25 +2321,26 @@ msgstr ""
 #. translation is by running the application and then viewing its
 #. name in the main window of at-poke.
 #.
-#: src/orca/settings.py:411
+#: ../src/orca/settings.py:435
 msgid "[\\S\\s]*StarOffice[\\s\\S]*"
 msgstr ""
 
-#: src/orca/settings.py:412
+#: ../src/orca/settings.py:436
 msgid "soffice.bin"
 msgstr ""
 
-#: src/orca/settings.py:413
+#: ../src/orca/settings.py:437
 msgid "[Ee]volution"
 msgstr ""
 
-#: src/orca/settings.py:414
+#: ../src/orca/settings.py:438
 msgid "Deer Park"
 msgstr ""
 
-#: src/orca/settings.py:415
+#: ../src/orca/settings.py:439
+#, fuzzy
 msgid "Bon Echo"
-msgstr ""
+msgstr "Избор на шрифт"
 
 #. Note to translators:  the "Workspace " string is the
 #. prefix of what metacity shows when you press Ctrl+Alt
@@ -2062,83 +2348,3218 @@ msgstr ""
 #. workspaces.  The goal here is to find a match with
 #. that prefix.
 #.
-#: src/orca/scripts/metacity.py:112
+#: ../src/orca/scripts/metacity.py:112
+#, fuzzy
 msgid "Workspace "
-msgstr ""
+msgstr "празно място"
 
-#: src/orca/scripts/metacity.py:113
+#: ../src/orca/scripts/metacity.py:113
 msgid "inaccessible"
 msgstr ""
 
-#: src/orca/scripts/planner.py:77 src/orca/scripts/planner.py:135
+#: ../src/orca/scripts/planner.py:77 ../src/orca/scripts/planner.py:135
+#, fuzzy
 msgid "Display more options"
-msgstr ""
+msgstr "Показване с двата шрифта"
 
-#: src/orca/scripts/planner.py:139 src/orca/scripts/planner.py:147
-#: src/orca/scripts/planner.py:172 src/orca/scripts/planner.py:180
-#: src/orca/speechgenerator.py:1314 src/orca/speechgenerator.py:1317
+#: ../src/orca/scripts/planner.py:139 ../src/orca/scripts/planner.py:147
+#: ../src/orca/scripts/planner.py:172 ../src/orca/scripts/planner.py:180
+#: ../src/orca/speechgenerator.py:1314 ../src/orca/speechgenerator.py:1317
 msgid "pressed"
-msgstr ""
+msgstr "натиснати"
 
-#: src/orca/scripts/planner.py:141 src/orca/scripts/planner.py:149
-#: src/orca/scripts/planner.py:174 src/orca/scripts/planner.py:182
-#: src/orca/speechgenerator.py:1323 src/orca/speechgenerator.py:1326
+#: ../src/orca/scripts/planner.py:141 ../src/orca/scripts/planner.py:149
+#: ../src/orca/scripts/planner.py:174 ../src/orca/scripts/planner.py:182
+#: ../src/orca/speechgenerator.py:1323 ../src/orca/speechgenerator.py:1326
+#, fuzzy
 msgid "not pressed"
-msgstr ""
+msgstr "не е натиснат"
 
-#: src/orca/speechgenerator.py:367 src/orca/speechgenerator.py:370
+#: ../src/orca/speechgenerator.py:367 ../src/orca/speechgenerator.py:370
 msgid "checked"
-msgstr ""
+msgstr "зададен"
 
-#: src/orca/speechgenerator.py:376 src/orca/speechgenerator.py:379
+#: ../src/orca/speechgenerator.py:376 ../src/orca/speechgenerator.py:379
+#, fuzzy
 msgid "not checked"
-msgstr ""
+msgstr "изключен"
 
-#: src/orca/speechgenerator.py:909 src/orca/speechgenerator.py:912
-#: src/orca/util.py:1118
-msgid "selected"
-msgstr ""
-
-#: src/orca/speechgenerator.py:920 src/orca/speechgenerator.py:923
+#: ../src/orca/speechgenerator.py:920 ../src/orca/speechgenerator.py:923
+#, fuzzy
 msgid "not selected"
-msgstr ""
+msgstr "Неизбран"
 
-#: src/orca/speechgenerator.py:1260
+#: ../src/orca/speechgenerator.py:1260
+#, fuzzy
 msgid "tear off"
-msgstr ""
+msgstr "обръщане изключено"
 
-#: src/orca/util.py:384
+#: ../src/orca/util.py:473
 msgid "Misspelled word: "
 msgstr ""
 
-#: src/orca/util.py:385
+#: ../src/orca/util.py:474
+#, fuzzy
 msgid " Context is "
-msgstr ""
+msgstr "Броене на празните редове"
 
-#: src/orca/util.py:1062
+#: ../src/orca/util.py:1172
 msgid "page selected from cursor position"
 msgstr ""
 
-#: src/orca/util.py:1066
+#: ../src/orca/util.py:1176
 msgid "page selected to cursor position"
 msgstr ""
 
-#: src/orca/util.py:1070
+#: ../src/orca/util.py:1180
 msgid "line selected down from cursor position"
 msgstr ""
 
-#: src/orca/util.py:1074
+#: ../src/orca/util.py:1184
 msgid "line selected up from cursor position"
 msgstr ""
 
-#: src/orca/util.py:1078
+#: ../src/orca/util.py:1188
 msgid "document selected to cursor position"
 msgstr ""
 
-#: src/orca/util.py:1082
+#: ../src/orca/util.py:1192
 msgid "document selected from cursor position"
 msgstr ""
 
-#: src/orca/util.py:1126
-msgid "unselected"
-msgstr ""
+#~ msgid "Braille remote"
+#~ msgstr "Отдалечен брайлов"
+
+#~ msgid "Invalid port number: %d."
+#~ msgstr "Невалиден номер на порт: %d"
+
+#~ msgid "port_no = [1025 - 30000]."
+#~ msgstr "№ порт = [1025 - 30000]."
+
+#~ msgid "Can not open socket!"
+#~ msgstr "Не може да се отвори сокета!"
+
+#~ msgid "Can not bind port number %d."
+#~ msgstr "Грешка при свързване с порт номер %d."
+
+#~ msgid "Waiting for data on port UDP %u."
+#~ msgstr "Изчакване за данни на UDP порт %u."
+
+#~ msgid "Failed to init gconf client."
+#~ msgstr "Неуспех при иниц. на клиент за gconf."
+
+#~ msgid "Failed to add directory."
+#~ msgstr "Грешка при добавяне на папка."
+
+#~ msgid "Failed to add notify."
+#~ msgstr "Неуспех при добавянето на уведомяване."
+
+#~ msgid "Expected key: %s"
+#~ msgstr "Очакван ключ: %s"
+
+#~ msgid "Failed to set value: %d"
+#~ msgstr "Грешка при настройване на стойност: %d"
+
+#~ msgid "Invalid type of key: %s."
+#~ msgstr "Грешен вид на ключ: %s"
+
+#~ msgid "Failed to set int value: %d."
+#~ msgstr "Неуспех при задаването на вътр. стойност: %d."
+
+#~ msgid "Failed to get value: %s."
+#~ msgstr "Неуспех при взимането на стойност: %s."
+
+#~ msgid "Failed to set value: %d."
+#~ msgstr "Грешка при задаване на стойността: %d."
+
+#~ msgid "Failed to set boolean value: %d."
+#~ msgstr "Неуспех при задаването на стойност тип boolean: %d."
+
+#~ msgid "Failed to set value: %s."
+#~ msgstr "Грешка при настройване на стойност: %s"
+
+#~ msgid "Failed to get string value: %s."
+#~ msgstr "Неуспех при взимането на стойност на низ: %s."
+
+#~ msgid "Failed to set string value: %s."
+#~ msgstr "Грешка при взимане на стойност на низ: %s"
+
+#~ msgid "Invalid modetype: %s."
+#~ msgstr "Грешен вид режим: %s."
+
+#~ msgid "%s font not installed."
+#~ msgstr "%s не е инсталиран."
+
+#~ msgid "Can not parse color string."
+#~ msgstr "Неуспех при прегледа на цветния низ."
+
+#~ msgid "Status"
+#~ msgstr "Статус"
+
+#~ msgid "Too many cells on display. [Max %d]"
+#~ msgstr "Твърде много клетки в екрана. (Най-много разрешени: %d)"
+
+#~ msgid "Load default display size. Line: %d Column: %d."
+#~ msgstr "Зареждане размера на екрана по подразбиране: %d реда, %d колони."
+
+#~ msgid "BRLOUT attribute %s is not supported."
+#~ msgstr "BRLOUT атрибута %s не е поддържан."
+
+#~ msgid "TEXT attribute %s is not supported."
+#~ msgstr "TEXT атрибута %s не е поддържан."
+
+#~ msgid "Failed to set display size."
+#~ msgstr "Грешка при настройване на размера на дисплея."
+
+#~ msgid "Failed to set display position."
+#~ msgstr "Неуспех при задаването на позиция на дисплея."
+
+#~ msgid "Failed to set display mode."
+#~ msgstr "Грешка при настройване на режима на дисплея."
+
+#~ msgid "Failed to set dot type colors."
+#~ msgstr "Грешка при настройване на цветовете на точките."
+
+#~ msgid "Failed to set font size."
+#~ msgstr "Грешка при настройване на размера на шрифта."
+
+#~ msgid "Invalid position: %s."
+#~ msgstr "Невалидна позиция: %s."
+
+#~ msgid "Unable to allocate memory."
+#~ msgstr "Не може да бъде заделена памет."
+
+#~ msgid "Failed to set braille style: %s."
+#~ msgstr "Неуспех при задаването на брайлов стил: %s."
+
+#~ msgid "Failed to set braille cursor style: %s."
+#~ msgstr "Неуспех при задаването на брайлов стил на показалеца: %s."
+
+#~ msgid "Failed to set attribute settings: %d."
+#~ msgstr "Неуспех при задаването на настройките на атрибутите: %d."
+
+#~ msgid "Failed to set braille device: %s."
+#~ msgstr "Неуспех при задаването на брайлово устройство: %s."
+
+#~ msgid "Failed to set fill character: %s."
+#~ msgstr "Неуспех при задаването на символа за запълване: %s."
+
+#~ msgid "Failed to set serial port number: %d."
+#~ msgstr "Неуспех при задаването на номер на сериен порт: %d."
+
+#~ msgid "Failed to set serial port : %s."
+#~ msgstr "Неуспех при задаването на номер на сериен порт: %s."
+
+#~ msgid "Failed to set translation table: %s."
+#~ msgstr "Неуспех при задаването на таблицата за превод: %s."
+
+#~ msgid "Failed to set optical sensor: %d."
+#~ msgstr "Неуспех при задаването на оптически сензор: %d."
+
+#~ msgid "Failed to set position sensor: %d."
+#~ msgstr "Неуспех при задаването на позицията на сензор: %d."
+
+#~ msgid "Failed to set status cell: %s."
+#~ msgstr "Неуспех при задаването на клетката за състояние: %s."
+
+#~ msgid "<none>"
+#~ msgstr "<няма>"
+
+#~ msgid "American English"
+#~ msgstr "Американски английски"
+
+#~ msgid "German"
+#~ msgstr "Немски"
+
+#~ msgid "Spanish"
+#~ msgstr "Испански"
+
+#~ msgid "Swedish"
+#~ msgstr "Шведски"
+
+#~ msgid "French"
+#~ msgstr "Френски"
+
+#~ msgid "X display's _terminal number:"
+#~ msgstr "Номера на терминала за X дисплея:"
+
+#~ msgid "_Port:"
+#~ msgstr "Порт:"
+
+#~ msgid "Language"
+#~ msgstr "Език"
+
+#~ msgid "No selected command!"
+#~ msgstr "Няма избрана команда!"
+
+#~ msgid "Invalid device key!"
+#~ msgstr "Невалиден ключ за устройство!"
+
+#~ msgid "Commands"
+#~ msgstr "Команди"
+
+#~ msgid "No selected item to modify!"
+#~ msgstr "Няма избран елемент за промяна!"
+
+#~ msgid "Invalid selected item!"
+#~ msgstr "Невалиден избран елемент!"
+
+#~ msgid "No selected item to remove!"
+#~ msgstr "Няма избран елемент за премахване!"
+
+#~ msgid "Braille Keys"
+#~ msgstr "Брайлови клавиши"
+
+#~ msgid "decrease y scale"
+#~ msgstr "намаляване на на мащаба по y"
+
+#~ msgid "decrease x scale"
+#~ msgstr "намаляване на мащаба по x"
+
+#~ msgid "increase y scale"
+#~ msgstr "увеличаване на мащаба по y"
+
+#~ msgid "increase x scale"
+#~ msgstr "увеличаване на мащаба по x"
+
+#~ msgid "lock xy scale"
+#~ msgstr "заключване на мащаба за xy"
+
+#~ msgid "smoothing toggle"
+#~ msgstr "превключване на заглаждането"
+
+#~ msgid "cursor toggle"
+#~ msgstr "настройка на показалец"
+
+#~ msgid "cursor on/off"
+#~ msgstr "показалец вкл/изкл"
+
+#~ msgid "cursor magnification on/off"
+#~ msgstr "включено увеличението на курсора"
+
+#~ msgid "decrease cursor size"
+#~ msgstr "намаляване на размера на курсора"
+
+#~ msgid "increase cursor size"
+#~ msgstr "увеличаване на размера на курсора"
+
+#~ msgid "invert on/off"
+#~ msgstr "обръщане вкл/изкл"
+
+#~ msgid "magnifier default"
+#~ msgstr "стандартен увеличител"
+
+#~ msgid "crosswire on/off"
+#~ msgstr "кръстче вкл/изкл"
+
+#~ msgid "crosswire clip on/off"
+#~ msgstr "отсек на кръстчето вкл/изкл"
+
+#~ msgid "decrease crosswire size"
+#~ msgstr "намаляване размера на кръстчето"
+
+#~ msgid "increase crosswire size"
+#~ msgstr "увеличаване размера на кръстчето"
+
+#~ msgid "automatic panning on/off"
+#~ msgstr "автоматично преместване вкл/изкл"
+
+#~ msgid "mouse tracking toggle"
+#~ msgstr "следене на мишката вкл/изкл"
+
+#~ msgid "load magnifier defaults"
+#~ msgstr "зареждане на стандартните настройки за увеличителя"
+
+#~ msgid "decrease pitch"
+#~ msgstr "намаляване на височината"
+
+#~ msgid "increase pitch"
+#~ msgstr "увеличаване на височината"
+
+#~ msgid "default pitch"
+#~ msgstr "стандартна височина"
+
+#~ msgid "decrease rate"
+#~ msgstr "намаляване на скоростта"
+
+#~ msgid "increase rate"
+#~ msgstr "увеличаване на скоростта"
+
+#~ msgid "default rate"
+#~ msgstr "стандартна скорост"
+
+#~ msgid "decrease volume"
+#~ msgstr "намаляване на силата на звука"
+
+#~ msgid "increase volume"
+#~ msgstr "увеличаване на силата на звука"
+
+#~ msgid "default volume"
+#~ msgstr "стандартна сила на звука"
+
+#~ msgid "speech default"
+#~ msgstr "стандартна реч"
+
+#~ msgid "goto child"
+#~ msgstr "отиване в синовната"
+
+#~ msgid "goto previous"
+#~ msgstr "предишен"
+
+#~ msgid "goto next"
+#~ msgstr "следващ"
+
+#~ msgid "repeat last"
+#~ msgstr "повтаряне на последното"
+
+#~ msgid "goto focus"
+#~ msgstr "отиване на фокусираното"
+
+#~ msgid "goto title"
+#~ msgstr "отиване на заглавието"
+
+#~ msgid "goto menu"
+#~ msgstr "отиване на менюто"
+
+#~ msgid "goto toolbar"
+#~ msgstr "отиване на лентата с инструменти"
+
+#~ msgid "goto statusbar"
+#~ msgstr "отиване на лентата за състоянието"
+
+#~ msgid "widget surroundings"
+#~ msgstr "заобикалящото на графичния обект"
+
+#~ msgid "goto caret"
+#~ msgstr "каректа за отиване"
+
+#~ msgid "goto first"
+#~ msgstr "първото"
+
+#~ msgid "goto last"
+#~ msgstr "последното"
+
+#~ msgid "toggle flat review/focus tracking mode"
+#~ msgstr "превключване на режим плосък преглед/следване на фокуса"
+
+#~ msgid "flat review"
+#~ msgstr "плоско ревю"
+
+#~ msgid "window hierarchy"
+#~ msgstr "йерархия на прозорците"
+
+#~ msgid "read whole window"
+#~ msgstr "прочитане на целия прозорец"
+
+#~ msgid "detailed information"
+#~ msgstr "подробна информация"
+
+#~ msgid "do default action"
+#~ msgstr "стандартното действие"
+
+#~ msgid "window overview"
+#~ msgstr "бърз преглед на прозореца"
+
+#~ msgid "find next"
+#~ msgstr "намиране на следващо"
+
+#~ msgid "find set"
+#~ msgstr "зададено намиране"
+
+#~ msgid "attributes at caret"
+#~ msgstr "атрибути при каретката"
+
+#~ msgid "unwatch all objects"
+#~ msgstr "спиране наблюдението на всички обекти"
+
+#~ msgid "mouse left press"
+#~ msgstr ""
+#~ "натискане на ляв бутон\n"
+#~ "на мишката"
+
+#~ msgid "mouse left click"
+#~ msgstr "натискане с левия бутон"
+
+#~ msgid "mouse left release"
+#~ msgstr ""
+#~ "отпускане на ляв бутон\n"
+#~ "на мишката"
+
+#~ msgid "mouse right press"
+#~ msgstr ""
+#~ "натискане на десен бутон\n"
+#~ "на мишката"
+
+#~ msgid "mouse right click"
+#~ msgstr "натискане с десния бутон"
+
+#~ msgid "mouse right release"
+#~ msgstr ""
+#~ "отпускане на десен бутон\n"
+#~ "на мишката"
+
+#~ msgid "mouse middle press"
+#~ msgstr ""
+#~ "натискане на среден бутон\n"
+#~ "на мишката"
+
+#~ msgid "mouse middle release"
+#~ msgstr ""
+#~ "отпускане на среден бутон\n"
+#~ "на мишката"
+
+#~ msgid "mouse middle click"
+#~ msgstr "натискане със средния бутон"
+
+#~ msgid "mouse goto current"
+#~ msgstr "мишката да отиде при текущата"
+
+#~ msgid "shutup"
+#~ msgstr "млъкване"
+
+#~ msgid "pause/resume"
+#~ msgstr "пауза/продължаване"
+
+#~ msgid "char left"
+#~ msgstr "символ наляво"
+
+#~ msgid "char right"
+#~ msgstr "символ надясно"
+
+#~ msgid "display left"
+#~ msgstr "показване на ляво"
+
+#~ msgid "display right"
+#~ msgstr "показване на дясно"
+
+#~ msgid "braille on/off"
+#~ msgstr "брайл вкл./изкл."
+
+#~ msgid "speech on/off"
+#~ msgstr "реч вкл./изкл."
+
+#~ msgid "magnifier on/off"
+#~ msgstr "увеличител вкл./изкл."
+
+#~ msgid "braille monitor on/off"
+#~ msgstr "braille monitor on/off"
+
+#~ msgid "A"
+#~ msgstr "A"
+
+#~ msgid "B"
+#~ msgstr "B"
+
+#~ msgid "C"
+#~ msgstr "C"
+
+#~ msgid "D"
+#~ msgstr "D"
+
+#~ msgid "E"
+#~ msgstr "E"
+
+#~ msgid "F"
+#~ msgstr "F"
+
+#~ msgid "G"
+#~ msgstr "G"
+
+#~ msgid "H"
+#~ msgstr "H"
+
+#~ msgid "I"
+#~ msgstr "I"
+
+#~ msgid "J"
+#~ msgstr "J"
+
+#~ msgid "K"
+#~ msgstr "K"
+
+#~ msgid "L"
+#~ msgstr "L"
+
+#~ msgid "M"
+#~ msgstr "M"
+
+#~ msgid "N"
+#~ msgstr "N"
+
+#~ msgid "O"
+#~ msgstr "O"
+
+#~ msgid "P"
+#~ msgstr "P"
+
+#~ msgid "Q"
+#~ msgstr "Q"
+
+#~ msgid "R"
+#~ msgstr "R"
+
+#~ msgid "S"
+#~ msgstr "S"
+
+#~ msgid "T"
+#~ msgstr "T"
+
+#~ msgid "U"
+#~ msgstr "U"
+
+#~ msgid "V"
+#~ msgstr "V"
+
+#~ msgid "W"
+#~ msgstr "W"
+
+#~ msgid "X"
+#~ msgstr "X"
+
+#~ msgid "Y"
+#~ msgstr "Y"
+
+#~ msgid "Z"
+#~ msgstr "Z"
+
+#~ msgid "F1"
+#~ msgstr "F1"
+
+#~ msgid "F2"
+#~ msgstr "F2"
+
+#~ msgid "F3"
+#~ msgstr "F3"
+
+#~ msgid "F4"
+#~ msgstr "F4"
+
+#~ msgid "F5"
+#~ msgstr "F5"
+
+#~ msgid "F6"
+#~ msgstr "F6"
+
+#~ msgid "F7"
+#~ msgstr "F7"
+
+#~ msgid "F8"
+#~ msgstr "F8"
+
+#~ msgid "F9"
+#~ msgstr "F9"
+
+#~ msgid "F10"
+#~ msgstr "F10"
+
+#~ msgid "0"
+#~ msgstr "0"
+
+#~ msgid "1"
+#~ msgstr "1"
+
+#~ msgid "2"
+#~ msgstr "2"
+
+#~ msgid "3"
+#~ msgstr "3"
+
+#~ msgid "4"
+#~ msgstr "4"
+
+#~ msgid "5"
+#~ msgstr "5"
+
+#~ msgid "6"
+#~ msgstr "6"
+
+#~ msgid "7"
+#~ msgstr "7"
+
+#~ msgid "8"
+#~ msgstr "8"
+
+#~ msgid "9"
+#~ msgstr "9"
+
+#~ msgid "bracket left"
+#~ msgstr "лява скоба"
+
+#~ msgid "bracket right"
+#~ msgstr "дясна скоба"
+
+#~ msgid "period"
+#~ msgstr "точка"
+
+#~ msgid "quote left"
+#~ msgstr "лява кавичка"
+
+#~ msgid "Invalid key or existent key."
+#~ msgstr "Невалиден клавиш или съществуващ клавиш."
+
+#~ msgid "Layer Keys"
+#~ msgstr "Пластови клавиши"
+
+#~ msgid "User Keys"
+#~ msgstr "Потребителски клавиши"
+
+#~ msgid "Failed to set exit val: %d."
+#~ msgstr "Грешка при задаване на стойност на изхода: %d."
+
+#~ msgid "Failed to set move mouse: %d."
+#~ msgstr "Грешка при задаване на преместване на мишката: %d."
+
+#~ msgid "Failed to set simulate click: %d."
+#~ msgstr "Грешка при задаване на симулация на натискане: %d."
+
+#~ msgid "Failed to set find text: %s."
+#~ msgstr "Грешка при задаване на текста за търсене: %s."
+
+#~ msgid "Failed to set magnifier status: %d."
+#~ msgstr "Грешка при задаване на състоянието на увеличителя: %d."
+
+#~ msgid "Failed to set speech status: %d."
+#~ msgstr "Неуспех при задаването на състояние на речта: %d."
+
+#~ msgid "Failed to set braille status: %d."
+#~ msgstr "Грешка при задаването на състоянието на брайла: %d."
+
+#~ msgid "Failed to set braille monitor status: %d."
+#~ msgstr "Неуспех при задаването на състояние на браиловия монитор: %d."
+
+#~ msgid "Failed to set minimize flag: %d."
+#~ msgstr "Неуспех при задаването на флаг за минимизиране: %d."
+
+#~ msgid "Failed to set exit ack: %d."
+#~ msgstr "Грешка при задаване на потвърждение за изхода: %d."
+
+#~ msgid "Failed to set language: %s."
+#~ msgstr "Неуспех при задаването на език: %s."
+
+#~ msgid "Failed to set screen review: %d."
+#~ msgstr "Грешка при задаване на прегледа на екрана: %d."
+
+#~ msgid "Are you sure you want to load default values for %s?"
+#~ msgstr ""
+#~ "Сигурни ли сте, че желаете да заредите стандартните стойности за %s?"
+
+#~ msgid "braille"
+#~ msgstr "брайл"
+
+#~ msgid "Braille default setting loaded."
+#~ msgstr "Заредени стандартни брайлови настройки."
+
+#~ msgid "speech"
+#~ msgstr "реч"
+
+#~ msgid "Speech default setting loaded."
+#~ msgstr "Заредени стандартни настройки за речта."
+
+#~ msgid "Magnifier default setting loaded."
+#~ msgstr "Заредени стандартни настройки за увеличителя."
+
+#~ msgid "keyboard"
+#~ msgstr "клавиатура"
+
+#~ msgid "Keyboard default setting loaded."
+#~ msgstr "Заредени стандартни настройки за клавиатура."
+
+#~ msgid "braille monitor"
+#~ msgstr "брайлов монитор"
+
+#~ msgid "Braille monitor default setting loaded."
+#~ msgstr "Заредени стандартните настройки на брайловия монитор"
+
+#~ msgid "Startup default setting loaded."
+#~ msgstr "Заредени стандартни настройки за „начало“."
+
+#~ msgid "command map"
+#~ msgstr "карта с командите"
+
+#~ msgid "Command map default setting loaded."
+#~ msgstr "Стандартните настройки за картата с команди са заредени!"
+
+#~ msgid "presentation"
+#~ msgstr "презентация"
+
+#~ msgid "Presentation default setting loaded."
+#~ msgstr "Заредени стандартни настройки за презентация."
+
+#~ msgid "screen review"
+#~ msgstr "преглед на екрана"
+
+#~ msgid "Screen review default setting loaded."
+#~ msgstr "Заредени стандартни настройки за преглед на екрана."
+
+#~ msgid "all modules"
+#~ msgstr "всички модули"
+
+#~ msgid "_Braille (unavailable)"
+#~ msgstr "Брайл (неналично)"
+
+#~ msgid "_Magnifier (unavailable)"
+#~ msgstr "Увеличител (неналично)"
+
+#~ msgid "B_raille monitor"
+#~ msgstr "Брайлов монитор"
+
+#~ msgid "B_raille monitor (unavailable)"
+#~ msgstr "Брайлов монитор (липсва)"
+
+#~ msgid "Assistive Technologies for Blind and Visually Impaired"
+#~ msgstr "Помощни технологии за слепи и хора със слабо зрение"
+
+#~ msgid "Gconf initialization failed."
+#~ msgstr "Инициализацията на Gconf пропадна."
+
+#~ msgid "gnopernicus"
+#~ msgstr "gnopernicus"
+
+#~ msgid "Gnopernicus"
+#~ msgstr "Gnopernicus"
+
+#~ msgid "Invalid parameters."
+#~ msgstr "Невалидни параметри."
+
+#~ msgid "Multiple instances are NOT ALLOWED. This instance will end."
+#~ msgstr "Множество "
+
+#~ msgid "GTK initialization failed."
+#~ msgstr "Инициализацията на GTK пропадна."
+
+#~ msgid "Can not create a new process."
+#~ msgstr "Не може да се създаде нов процес."
+
+#~ msgid "Exit gnopernicus."
+#~ msgstr "Изход от gnopernicus."
+
+#~ msgid "Gnopernicus initialization failed."
+#~ msgstr "Инициализацията на Gnopernicus пропадна."
+
+#~ msgid "Can not load .glade2 file"
+#~ msgstr "Не може да се зареди файла .glade2"
+
+#~ msgid "srcore exited."
+#~ msgstr "srcore привърши работа."
+
+#~ msgid "<b>Color</b>"
+#~ msgstr "<b>Цвят</b>"
+
+#~ msgid "<b>Font</b>"
+#~ msgstr "<b>Шрифт</b>"
+
+#~ msgid "<b>Mode Type</b>"
+#~ msgstr "<b>Вид режим</b>"
+
+#~ msgid "<b>Size</b>"
+#~ msgstr "<b>Размер</b>"
+
+#~ msgid "B_raille"
+#~ msgstr "Брайл"
+
+#~ msgid "Braille Monitor Preferences"
+#~ msgstr "Настройки за брайловия монитор"
+
+#~ msgid "Color selection for texts which use dot 7"
+#~ msgstr "Цветова селекция за текстове използващи 7 точки"
+
+#~ msgid "Color selection for texts which use dot 8"
+#~ msgstr "Цветова селекция за текстове използващи 8 точки"
+
+#~ msgid "Color selection for texts which use dots 7 and 8"
+#~ msgstr "Цветова селекция за текстове използващи и 7, и 8 точки"
+
+#~ msgid "Colu_mns:"
+#~ msgstr "Колонки:"
+
+#~ msgid "Display at bottom of screen"
+#~ msgstr "Показване най-отдолу на екрана"
+
+#~ msgid "Display on top of screen"
+#~ msgstr "Показване на върха на екрана"
+
+#~ msgid "Display using braille font"
+#~ msgstr "Показване използвайки брайлов шрифт"
+
+#~ msgid "Display using normal font"
+#~ msgstr "Показване използвайки нормален шрифт"
+
+#~ msgid "Dot 7:"
+#~ msgstr "7ма точка:"
+
+#~ msgid "Dot 8:"
+#~ msgstr "8ма точка:"
+
+#~ msgid "Dots 78:"
+#~ msgstr "Точки 78:"
+
+#~ msgid "Number of cell columns"
+#~ msgstr "Брой колони"
+
+#~ msgid "Number of cell lines"
+#~ msgstr "Брой редове"
+
+#~ msgid "Pick a color"
+#~ msgstr "Избор на цвят"
+
+#~ msgid "Size of font"
+#~ msgstr "Размер на шрифт"
+
+#~ msgid "Use system theme colors"
+#~ msgstr "Използване на системни цветове"
+
+#~ msgid "Use theme _system colors"
+#~ msgstr "Използване на системни цветове"
+
+#~ msgid "_Dual"
+#~ msgstr "_Двоен"
+
+#~ msgid "_Lines:"
+#~ msgstr "Линии:"
+
+#~ msgid "_Normal"
+#~ msgstr "Нормално"
+
+#~ msgid "Attributes"
+#~ msgstr "Атрибути"
+
+#~ msgid "_1. Dot 8"
+#~ msgstr "_1. Точка 8"
+
+#~ msgid "_2. Dot 7"
+#~ msgstr "_2. Точка 7"
+
+#~ msgid "_3. Dot 8 or 7"
+#~ msgstr "_3. Точка 8 или 7"
+
+#~ msgid "_4. Off"
+#~ msgstr "_4. Изключено"
+
+#~ msgid "*"
+#~ msgstr "*"
+
+#~ msgid "Braille Device"
+#~ msgstr "Брайлово устройство"
+
+#~ msgid "Braille devices list"
+#~ msgstr "Списък с брайлови устройства"
+
+#~ msgid "Enter manually:"
+#~ msgstr "Въведете на ръка:"
+
+#~ msgid "_Device:"
+#~ msgstr "Устройство:"
+
+#~ msgid "10 _Font size"
+#~ msgstr "10 Размер на шрифта"
+
+#~ msgid "11 _Activate script function \"OnPosSwitch\""
+#~ msgstr "11 _Включване на функцията-скрипт „OnPosSwitch“"
+
+#~ msgid "12 _Present attributes"
+#~ msgstr "12 Текущи атрибути"
+
+#~ msgid "<b>_Braille keys list</b>"
+#~ msgstr "<b>Списък с брайлови клавиши</b>"
+
+#~ msgid "Activate script function \"OnPosSwitch\""
+#~ msgstr "Включване на функцията-скрипт „OnPosSwitch“"
+
+#~ msgid "Add item in braille keys list"
+#~ msgstr "Добавяне на запис в списъка с брайлови клавиши"
+
+#~ msgid "Braille Display Key Mapping"
+#~ msgstr "Подредба на клавишите за брайлов дисплей"
+
+#~ msgid "Braille device keys list"
+#~ msgstr "Списък с клавишите за брайлов дисплей"
+
+#~ msgid "Braille keys list"
+#~ msgstr "Списък с брайлови клавиши"
+
+#~ msgid "Command List"
+#~ msgstr "Списък с команди"
+
+#~ msgid "Command list"
+#~ msgstr "Списък с команди"
+
+#~ msgid "Font size"
+#~ msgstr "Размер на шрифт"
+
+#~ msgid "Font style"
+#~ msgstr "Стил на шрифт"
+
+#~ msgid "Modify selected item"
+#~ msgstr "Промяна на избраният елемент"
+
+#~ msgid "Move caret"
+#~ msgstr "Преместване на каретка"
+
+#~ msgid "Move mouse and click left"
+#~ msgstr "Движете мишката и натиснете левия бутон"
+
+#~ msgid "Move mouse and click left and right"
+#~ msgstr "Движете мишката и натиснете левия и десния бутон"
+
+#~ msgid "Move mouse and click right"
+#~ msgstr "Движете мишката и натиснете десния бутон"
+
+#~ msgid "Only move mouse"
+#~ msgstr "Само мести курсора"
+
+#~ msgid "Optical Sensors"
+#~ msgstr "Оптични сензори"
+
+#~ msgid "Optical sensors off"
+#~ msgstr "Оптични сензори изключени"
+
+#~ msgid "Position Sensors"
+#~ msgstr "Сензори за позиция"
+
+#~ msgid "Position sensors off"
+#~ msgstr "Сензори за позицията изключени"
+
+#~ msgid "Present attributes"
+#~ msgstr "Текущи атрибути"
+
+#~ msgid "Remove selected item from braille keys list"
+#~ msgstr "Премахване на избрания запис от списъка с брайлови клавиши"
+
+#~ msgid "Show X coordinate"
+#~ msgstr "Показване на X координата"
+
+#~ msgid "Show Y coordinate"
+#~ msgstr "Показване на Y координата"
+
+#~ msgid "_0 Optical sensors off"
+#~ msgstr "_0 Оптични сензори изключени"
+
+#~ msgid "_0 Position sensors off"
+#~ msgstr "_0 Сензори за позицията изключени"
+
+#~ msgid "_1 Only move mouse"
+#~ msgstr "_1 Само мести мишката"
+
+#~ msgid "_2 Move mouse and click left"
+#~ msgstr "_2 Движете мишката и натиснете левия бутон"
+
+#~ msgid "_3 Move mouse and click right"
+#~ msgstr "_3 Движете мишката и натиснете десния бутон"
+
+#~ msgid "_4 Move mouse and click left or right"
+#~ msgstr "_4 Движете мишката и натиснете левия или десния бутон"
+
+#~ msgid "_5 Move caret"
+#~ msgstr "_5 Move caret"
+
+#~ msgid "_6 Show X coordinate"
+#~ msgstr "_6 Показване на X координата"
+
+#~ msgid "_7 Show Y coordinate"
+#~ msgstr "_7 Показване на Y координата"
+
+#~ msgid "_8 Font style"
+#~ msgstr "_8 Стил на шрифта"
+
+#~ msgid "_9 Font name"
+#~ msgstr "_9 Име на шрифта"
+
+#~ msgid "_Commands:"
+#~ msgstr "Команди:"
+
+#~ msgid "_Device key:"
+#~ msgstr "Ключ за устройство:"
+
+#~ msgid "_Modify"
+#~ msgstr "Промяна"
+
+#~ msgid "Braille Preferences"
+#~ msgstr "Брайлови настройки"
+
+#~ msgid "Close braille settings"
+#~ msgstr "Затваряне на брайлови настройки"
+
+#~ msgid "Select braille style 8/6 dots"
+#~ msgstr "Избор на брайлов стил 8/6 точки"
+
+#~ msgid "Select cursor setting FullCell/UnderLined/NoCursor"
+#~ msgstr "Избор на настройка за курсор ПълнаКлетка/ДолнаЧерта/БезКурсор"
+
+#~ msgid "Select translation table for braille device"
+#~ msgstr "Избор на таблица за превод за брайлово устройство"
+
+#~ msgid "_1 Braille Device"
+#~ msgstr "_1 Брайлово устройство"
+
+#~ msgid "_2 Translation Table"
+#~ msgstr "_2 Таблица за преводи"
+
+#~ msgid "_3 Braille Style"
+#~ msgstr "_3 Брайлов стил"
+
+#~ msgid "_4 Cursor Preferences"
+#~ msgstr "_4 Настройки на курсора"
+
+#~ msgid "_5 Braille Key Mapping"
+#~ msgstr "_5 Подредба на клавишие за браил"
+
+#~ msgid "Braille Style"
+#~ msgstr "Брайлов стил"
+
+#~ msgid "Use 6 dots"
+#~ msgstr "Използва 6 точки"
+
+#~ msgid "Use 8 dots"
+#~ msgstr "Използва 8 точки"
+
+#~ msgid "_6 Dot Braille"
+#~ msgstr "_6 точкова брайлова"
+
+#~ msgid "_8 Dot Braille"
+#~ msgstr "_8 точкова брайлова"
+
+#~ msgid "Cursor Preferences"
+#~ msgstr "Настройки на курсора"
+
+#~ msgid "Cursor on braille display is a full cell"
+#~ msgstr "Курсора на брайловия дисплей е пълна клетка"
+
+#~ msgid "Cursor on braille display is an underline"
+#~ msgstr "Курсора на брайловия дисплей е долна черта"
+
+#~ msgid "No cursor on braille display"
+#~ msgstr "Няма курсор на брайловия дисплей"
+
+#~ msgid "_Full cell cursor"
+#~ msgstr "_Курсор - запълнена клетка"
+
+#~ msgid "_No cursor"
+#~ msgstr "Без курсор"
+
+#~ msgid "_Underline cursor (dots 7 and 8)"
+#~ msgstr "_Подчертаване на курсор (точки 7 и 8)"
+
+#~ msgid "Translation Table"
+#~ msgstr "Таблица за преводи"
+
+#~ msgid "Translation table list"
+#~ msgstr "Списък с таблици за преводи"
+
+#~ msgid "_Select language:"
+#~ msgstr "Избор на език:"
+
+#~ msgid "   "
+#~ msgstr "   "
+
+#~ msgid "<b>Fi_nd Text:</b>"
+#~ msgstr "<b>Откриване на текст:</b>"
+
+#~ msgid "<b>Find Attributes:</b>"
+#~ msgstr "<b>Откриване на атрибути:</b>"
+
+#~ msgid "<b>Match</b>"
+#~ msgstr "<b>Съвпадение</b>"
+
+#~ msgid "<b>Scope</b>"
+#~ msgstr "<b>Обхват</b>"
+
+#~ msgid "<b>Search For</b>"
+#~ msgstr "<b>Търсене за</b>"
+
+#~ msgid "A_ll chosen attributes"
+#~ msgstr "Всички избрани атрибути"
+
+#~ msgid "A_ny chosen attributes"
+#~ msgstr "Който и да е избран атрибут"
+
+#~ msgid "A_ttribute"
+#~ msgstr "Атрибут"
+
+#~ msgid "Bold"
+#~ msgstr "Удебелен"
+
+#~ msgid "Case _sensitive"
+#~ msgstr "Има значени малки/големи букви"
+
+#~ msgid "Case sensitive on/off"
+#~ msgstr "Разлика големи/малки букви вкл./изкл."
+
+#~ msgid "Italic"
+#~ msgstr "Наклонен"
+
+#~ msgid "S_elected"
+#~ msgstr "Избран"
+
+#~ msgid "Scope area is a desktop"
+#~ msgstr "Обхванат е работния плот"
+
+#~ msgid "Scope area is a window"
+#~ msgstr "Обхванат е прозорец"
+
+#~ msgid "Scope area is an application"
+#~ msgstr "Обхванато е приложение"
+
+#~ msgid "Search criteria are graphics"
+#~ msgstr "Критерият за търсене е изображение"
+
+#~ msgid "Search criterion is an attribute"
+#~ msgstr "Критерият за търсене е атрибут"
+
+#~ msgid "Search criterion is text"
+#~ msgstr "Критерият за търсене е текст"
+
+#~ msgid "Selected item"
+#~ msgstr "Избран елемент"
+
+#~ msgid "Stri_kethrough"
+#~ msgstr "Зачертан"
+
+#~ msgid "Strikethrough"
+#~ msgstr "Зачертан"
+
+#~ msgid "Text to search"
+#~ msgstr "Текст за търсене"
+
+#~ msgid "Underline"
+#~ msgstr "Подчертава"
+
+#~ msgid "_Bold"
+#~ msgstr "Удебелен"
+
+#~ msgid "_Desktop"
+#~ msgstr "Работно място"
+
+#~ msgid "_Graphics"
+#~ msgstr "Графики"
+
+#~ msgid "_Italic"
+#~ msgstr "Наклонен"
+
+#~ msgid "_Underline"
+#~ msgstr "Подчертан"
+
+#~ msgid "_Window"
+#~ msgstr "Прозорец"
+
+#~ msgid "    "
+#~ msgstr "    "
+
+#~ msgid "<b>Active Components</b>"
+#~ msgstr "<b>Активни компоненти</b>"
+
+#~ msgid "<b>Startup</b>"
+#~ msgstr "<b>Начало</b>"
+
+#~ msgid "Braille monitor on/off"
+#~ msgstr "Брайлов монитор вкл./изкл."
+
+#~ msgid "Braille on/off"
+#~ msgstr "Брайл вкл./изкл."
+
+#~ msgid "Magnifier on/off"
+#~ msgstr "Увеличител вкл./изкл."
+
+#~ msgid "Speech on/off"
+#~ msgstr "Реч вкл./изкл."
+
+#~ msgid "Start gnopernicus minimized"
+#~ msgstr "Стартиране на gnopernicus умален"
+
+#~ msgid "Start m_inimized"
+#~ msgstr "Стартиране умален"
+
+#~ msgid "Startup Mode"
+#~ msgstr "Режим Начало"
+
+#~ msgid "Mouse Preferences"
+#~ msgstr "Настройки на мишката"
+
+#~ msgid "Simulate click on current object"
+#~ msgstr "Симулиране на натискане на текущия обект"
+
+#~ msgid "Take mouse at current object"
+#~ msgstr "Преместване на мишката до текущия обект"
+
+#~ msgid "_Simulate click on current object"
+#~ msgstr "Симулиране на _натискане на текущия обект"
+
+#~ msgid "_Take mouse at current object"
+#~ msgstr "_Преместване на мишката до текущия обект"
+
+#~ msgid "Close \"Load Default Preferences\""
+#~ msgstr "Затваряне на „Зареждане стандартни настройки“"
+
+#~ msgid "Load Default Preferences"
+#~ msgstr "Зареждане на стандартни настройки"
+
+#~ msgid "Load Default Settings"
+#~ msgstr "Зареждане на стандартни настройки"
+
+#~ msgid "Load all defaults"
+#~ msgstr "Зареждане на всички стандартни"
+
+#~ msgid "Load braille defaults"
+#~ msgstr "Зареждане на брайлови стандартни"
+
+#~ msgid "Load braille monitor defaults"
+#~ msgstr "Зареждане на стандартни за брайлов монитор"
+
+#~ msgid "Load command map defaults"
+#~ msgstr "Зареждане на стандартни настройки за картата с команди"
+
+#~ msgid "Load magnifier defaults"
+#~ msgstr "Зареждане на стандартни за увеличителя"
+
+#~ msgid "Load mouse defaults"
+#~ msgstr "Зареждане на стандартни за мишка"
+
+#~ msgid "Load presentation defaults"
+#~ msgstr "Зареждане на стандартни за презентация"
+
+#~ msgid "Load screen review defaults"
+#~ msgstr "Зареждане на стандартни за преглед на екрана"
+
+#~ msgid "Load speech defaults"
+#~ msgstr "Зареждане на стандартни за речта"
+
+#~ msgid "Load startup mode defaults"
+#~ msgstr "Зареждане на стандартни за „начало“"
+
+#~ msgid "_1 Braille"
+#~ msgstr "_1 Брайл"
+
+#~ msgid "_2 Speech"
+#~ msgstr "_2 Реч"
+
+#~ msgid "_3 Magnifier"
+#~ msgstr "_3 Увеличител"
+
+#~ msgid "_4 Keyboard"
+#~ msgstr "_4 Клавиатура"
+
+#~ msgid "_5 Braille Monitor"
+#~ msgstr "_5 Брайлов монитор"
+
+#~ msgid "_6 Startup"
+#~ msgstr "_6 Начало"
+
+#~ msgid "_7 Command Map"
+#~ msgstr "_7 Карта с командите"
+
+#~ msgid "_8 Presentation"
+#~ msgstr "_8 Презентация"
+
+#~ msgid "_9 Screen Review"
+#~ msgstr "_9 Преглед на екрана"
+
+#~ msgid "<b>Display screen</b>"
+#~ msgstr "<b>Показване на екрана</b>"
+
+#~ msgid "<b>Focus tracking mode</b>"
+#~ msgstr "<b>Режим за проследяване на фокуса</b>"
+
+#~ msgid "<b>Mo_use tracking mode</b>"
+#~ msgstr "<b>Режим за проследяване на мишката</b>"
+
+#~ msgid "<b>S_moothing</b>"
+#~ msgstr "<b>Изглаждане</b>"
+
+#~ msgid "<b>Zoomer placement</b>"
+#~ msgstr "<b>Позиция на увеличителя</b>"
+
+#~ msgid "<b>Zoomfactor</b>"
+#~ msgstr "<b>Увеличение</b>"
+
+#~ msgid "<b>_Zoomer list</b>"
+#~ msgstr "<b>_Списък на лупите</b>"
+
+#~ msgid "Bor_der size:"
+#~ msgstr "Размер на границата:"
+
+#~ msgid "Border c_olor:"
+#~ msgstr "Цвят на границата:"
+
+#~ msgid "Border color"
+#~ msgstr "Цвят на границата"
+
+#~ msgid "Border size"
+#~ msgstr "Размер на границата"
+
+#~ msgid "C_ursor on/off"
+#~ msgstr "Курсор вкл./изкл."
+
+#~ msgid "Cross-ha_ir size:"
+#~ msgstr "Размер на _кръстчето-курсор:"
+
+#~ msgid "Cross-hair c_lip on/off"
+#~ msgstr "Заграждане на ктъстчето-курсор вкл/изкл"
+
+#~ msgid "Cross-hair color in_verted"
+#~ msgstr "Обърнат е цвета на кръстчето-курсор"
+
+#~ msgid "Cross-hair o_n/off"
+#~ msgstr "Включване/изключване на кръстчето-курсор"
+
+#~ msgid "Crosswire clip on/off"
+#~ msgstr "Кръстче-курсор вкл/изкл"
+
+#~ msgid "Crosswire color"
+#~ msgstr "Цвят на кръстчето-курсор"
+
+#~ msgid "Crosswire on/off"
+#~ msgstr "Включване/изключване на кръстчето-курсор"
+
+#~ msgid "Crosswire size"
+#~ msgstr "Размер на кръстчето-курсор"
+
+#~ msgid "Cursor _size:"
+#~ msgstr "Размер на курсора:"
+
+#~ msgid "Cursor c_olor:"
+#~ msgstr "Цвят на курсора:"
+
+#~ msgid "Cursor color"
+#~ msgstr "Цвят на курсора"
+
+#~ msgid "Cursor magnification"
+#~ msgstr "Увеличение на курсора"
+
+#~ msgid "Cursor on/off"
+#~ msgstr "Курсор вкл./изкл."
+
+#~ msgid "Display screen source"
+#~ msgstr "Показване на източника на екрана"
+
+#~ msgid "Display screen target"
+#~ msgstr "Показване на целевия екран"
+
+#~ msgid "Invert crosswire color"
+#~ msgstr "Обръщане на цвета на кръстчето-курсор"
+
+#~ msgid "Lock zoom _factor"
+#~ msgstr "Заключва стъпката на мащаба"
+
+#~ msgid "Lock zoom factor"
+#~ msgstr "Заключване на мащаба"
+
+#~ msgid "Magnifier Preferences"
+#~ msgstr "Настройки за увеличителя"
+
+#~ msgid "Mouse tracking type"
+#~ msgstr "Вид следене на мишката"
+
+#~ msgid "Panning on/off"
+#~ msgstr "Увеличаване вкл/изкл"
+
+#~ msgid "Set cursor separate from _magnification"
+#~ msgstr "Настройва курсора отделно от увеличението"
+
+#~ msgid "Tar_get:"
+#~ msgstr "Цел:"
+
+#~ msgid "Zoom factor X"
+#~ msgstr "Стъпка на мащаба по X"
+
+#~ msgid "Zoom factor Y"
+#~ msgstr "Стъпка на мащаба по Y"
+
+#~ msgid "Zoom factor _X:"
+#~ msgstr "Стъпка на мащаба по X:"
+
+#~ msgid "Zoom factor _Y:"
+#~ msgstr "Стъпка на мащаба по Y:"
+
+#~ msgid "Zoomer Options"
+#~ msgstr "Настройки на лупата"
+
+#~ msgid "Zoomer placement bottom"
+#~ msgstr "Лупата - отдолу"
+
+#~ msgid "Zoomer placement left"
+#~ msgstr "Лупата - отляво"
+
+#~ msgid "Zoomer placement right"
+#~ msgstr "Лупата - отдясно"
+
+#~ msgid "Zoomer placement top"
+#~ msgstr "Лупата - отгоре"
+
+#~ msgid "Zoomers list"
+#~ msgstr "Списък на лупите"
+
+#~ msgid "_Add/Modify"
+#~ msgstr "Добавяне/Промяна"
+
+#~ msgid "_Invert"
+#~ msgstr "Обръщане"
+
+#~ msgid "_Panning"
+#~ msgstr "_Планиране"
+
+#~ msgid "_Remove"
+#~ msgstr "Премахване"
+
+#~ msgid "_Source:"
+#~ msgstr "Източник:"
+
+#~ msgid "centered"
+#~ msgstr "центрирано"
+
+#~ msgid "none"
+#~ msgstr "няма"
+
+#~ msgid "Expert"
+#~ msgstr "Експертно"
+
+#~ msgid "Mode selected:"
+#~ msgstr "Избран режим:"
+
+#~ msgid "Presentation"
+#~ msgstr "Презентация"
+
+#~ msgid "<b>Horizontal flags</b>"
+#~ msgstr "<b>Хоризонтални флагове</b>"
+
+#~ msgid "<b>Vertical flags</b>"
+#~ msgstr "<b>Вертикални флагове</b>"
+
+#~ msgid "Add all empty lines"
+#~ msgstr "Добавяне на всички празни редове"
+
+#~ msgid "Add all spaces"
+#~ msgstr "Добавяне на всички празни места"
+
+#~ msgid "Add all spaces and empty lines"
+#~ msgstr "Добавяне на всички празни места и празни редове"
+
+#~ msgid "Add embedded spaces"
+#~ msgstr "Добавяне на вградени интервали"
+
+#~ msgid "Add leading empty lines"
+#~ msgstr "Добавяне на водещи празни редове"
+
+#~ msgid "Add leading spaces"
+#~ msgstr "Добавяне на водещи празни места"
+
+#~ msgid "Add trailing empty lines"
+#~ msgstr "Добавяне на следващи празни редове"
+
+#~ msgid "Add trailing spaces"
+#~ msgstr "Добавяне на следващи празни места"
+
+#~ msgid "All _horizontal"
+#~ msgstr "Всички хоризонтални"
+
+#~ msgid "Count em_pty lines"
+#~ msgstr "Броене на празните редове"
+
+#~ msgid "Lea_ding"
+#~ msgstr "Водещи"
+
+#~ msgid "Screen Review Preferences"
+#~ msgstr "Настройки на преглед на екрана"
+
+#~ msgid "T_railing"
+#~ msgstr "Следващи"
+
+#~ msgid "_All flags"
+#~ msgstr "_Всички флагове"
+
+#~ msgid "_Embedded"
+#~ msgstr "Вложен"
+
+#~ msgid "_Leading"
+#~ msgstr "Водещи"
+
+#~ msgid "_Trailing"
+#~ msgstr "Следващи"
+
+#~ msgid "%"
+#~ msgstr "%"
+
+#~ msgid "<b><></b>"
+#~ msgstr "<b><></b>"
+
+#~ msgid "<b>Absolute Value</b>"
+#~ msgstr "<b>Абсолютна стойност</b>"
+
+#~ msgid "<b>Driver</b>"
+#~ msgstr "<b>Драйвер</b>"
+
+#~ msgid "<b>Properties</b>"
+#~ msgstr "<b>Настройки</b>"
+
+#~ msgid "<b>Relative Values</b>"
+#~ msgstr "<b>Относителни стойности</b>"
+
+#~ msgid "<b>_Dictionary</b>"
+#~ msgstr "<b>Речник</b>"
+
+#~ msgid "<b>_Replacement:</b>"
+#~ msgstr "<b>Заместване:</b>"
+
+#~ msgid "<b>_Voice list</b>"
+#~ msgstr "<b>Списък с гласове</b>"
+
+#~ msgid "<b>_Word:</b>"
+#~ msgstr "<b>Дума:</b>"
+
+#~ msgid "A_ll"
+#~ msgstr "Всички"
+
+#~ msgid "Activate pitch"
+#~ msgstr "Активиране на височината"
+
+#~ msgid "Activate rate"
+#~ msgstr "Активиране на скоростта"
+
+#~ msgid "Activate volume"
+#~ msgstr "Активиране силата на звука"
+
+#~ msgid "Add / Modify Dictionary Entry"
+#~ msgstr "Добавяне / Промяна на запис в речника"
+
+#~ msgid "Add / Modify Voice"
+#~ msgstr "Добавяне / Промяна на глас"
+
+#~ msgid "Add new item in voices list"
+#~ msgstr "Добавяне на нови записи в списъка с гласовете"
+
+#~ msgid "Add new word in dictionary"
+#~ msgstr "Добавяне на нова дума в речника"
+
+#~ msgid ""
+#~ "Change for all voices the engine driver and the engine speaker with a "
+#~ "selected driver and speaker"
+#~ msgstr "Променяне за всички гласове драйвера и говорителя към избраните."
+
+#~ msgid "Charac_ter"
+#~ msgstr "Символ"
+
+#~ msgid "Count sym_bols"
+#~ msgstr "Преброяване на сим_воли"
+
+#~ msgid "Count symbols"
+#~ msgstr "Преброяване на символи"
+
+#~ msgid "Decrease volume"
+#~ msgstr "Намаляване на силата на звука"
+
+#~ msgid "Dictionary"
+#~ msgstr "Речник"
+
+#~ msgid "Dictionary list"
+#~ msgstr "Речников списък"
+
+#~ msgid "Edit A_bsolute..."
+#~ msgstr "Редактиране на абсолютна стойност..."
+
+#~ msgid "Edit Absolute Voice Values"
+#~ msgstr "Редактиране на абсолютни стойности на гласа..."
+
+#~ msgid "Edit R_elative..."
+#~ msgstr "Редактиране на относителна стойност..."
+
+#~ msgid "Edit Relative Voice Values"
+#~ msgstr "Редактиране на относителни стойности на гласа..."
+
+#~ msgid "Edit dictionary"
+#~ msgstr "Редактиране на речник"
+
+#~ msgid "Edit parameter values absolutely"
+#~ msgstr "Редактиране на стойностите на променливите абсолютно"
+
+#~ msgid "Edit parameter values relatively"
+#~ msgstr "Редактиране на стойностите на променливите относително"
+
+#~ msgid "Engine _driver:"
+#~ msgstr "_Драйвер на двигател:"
+
+#~ msgid "Engine _speaker:"
+#~ msgstr "_Говорител на двигател:"
+
+#~ msgid "Engine driver"
+#~ msgstr "Драйвер на двигател"
+
+#~ msgid "Engine speaker"
+#~ msgstr "Говорител на двигател"
+
+#~ msgid "Gnopernicus system voice"
+#~ msgstr "Системен глас на Gnopernicus"
+
+#~ msgid "Hz"
+#~ msgstr "Hz"
+
+#~ msgid "Ignore all punctuation"
+#~ msgstr "Игнориране на всички препинателни знаци"
+
+#~ msgid "Increase volume"
+#~ msgstr "Увеличаване силата на звука"
+
+#~ msgid "Made pitch sensitive for changing"
+#~ msgstr "Височината на звука чувствителна за промяна"
+
+#~ msgid "Made rate sensitive for changing"
+#~ msgstr "Скоростта чувствителна за промяна"
+
+#~ msgid "Made volume sensitive for changing"
+#~ msgstr "Силата на звука чувствителна за промяна"
+
+#~ msgid "Modify selected voice"
+#~ msgstr "Промяна на избрания глас"
+
+#~ msgid "Modify word"
+#~ msgstr "Промяна на думата"
+
+#~ msgid "Pitch"
+#~ msgstr "Височина"
+
+#~ msgid "Rate"
+#~ msgstr "Скорост"
+
+#~ msgid "Remove selected voice from voices list"
+#~ msgstr "Премахване на избрания глас от списъка с гласовете"
+
+#~ msgid "Remove word from dictionary"
+#~ msgstr "Премахване на дума от речника"
+
+#~ msgid "Replacement"
+#~ msgstr "Заменяне"
+
+#~ msgid "Sa_y all navigation keys"
+#~ msgstr "Произнасяне на всички навигационни клавиши"
+
+#~ msgid "Say all modi_fiers"
+#~ msgstr "Произнасяне на всички _модификатори"
+
+#~ msgid "Say all modifiers"
+#~ msgstr "Произнасяне на всички модификатори"
+
+#~ msgid "Say all s_paces"
+#~ msgstr "Произнасяне на всички празни места"
+
+#~ msgid "Say all spaces"
+#~ msgstr "Произнасяне на всички празни места"
+
+#~ msgid "Say text as character"
+#~ msgstr "Произнасяне на текста като символ"
+
+#~ msgid "Say text as word"
+#~ msgstr "Произнасяне на текст като дума"
+
+#~ msgid "Set voices and the voice parameters"
+#~ msgstr "Настройване на гласовете и всички гласови параметри"
+
+#~ msgid "Show all punctuation"
+#~ msgstr "Показване на всички препинателни знаци"
+
+#~ msgid "Show most punctuation"
+#~ msgstr "Показване на повечето препинателни знаци"
+
+#~ msgid "Show some punctuation"
+#~ msgstr "Показване на някои препинателни знаци"
+
+#~ msgid "Test selected voice"
+#~ msgstr "Тестване на избрания глас"
+
+#~ msgid "Use dictionary"
+#~ msgstr "Използване на речник"
+
+#~ msgid "Voice _name:"
+#~ msgstr "Име на глас:"
+
+#~ msgid "Voice list"
+#~ msgstr "Списък с гласове"
+
+#~ msgid "Voices"
+#~ msgstr "Гласове"
+
+#~ msgid "Volume"
+#~ msgstr "Ниво на звука"
+
+#~ msgid "Word to replace"
+#~ msgstr "Дума за замяна"
+
+#~ msgid "Word/Min"
+#~ msgstr "Думи/мин"
+
+#~ msgid "_Dictionary..."
+#~ msgstr "Речник..."
+
+#~ msgid "_Force All Voices to Selected Driver and Speaker"
+#~ msgstr "Използване на избрания драйвер и говорител за всички гласове"
+
+#~ msgid "_Ignore"
+#~ msgstr "Игнориране"
+
+#~ msgid "_Pitch (Hz)"
+#~ msgstr "Височина (Хц)"
+
+#~ msgid "_Rate (words/min)"
+#~ msgstr "Скорост (думи/мин)"
+
+#~ msgid "_Test voice"
+#~ msgstr "Тестване на глас"
+
+#~ msgid "_Use dictionary"
+#~ msgstr "Използване на речник"
+
+#~ msgid "_Voices..."
+#~ msgstr "Гласове..."
+
+#~ msgid "_Volume (%)"
+#~ msgstr "Ниво на звука (%)"
+
+#~ msgid "_Word"
+#~ msgstr "Дума"
+
+#~ msgid "words/min"
+#~ msgstr "думи/мин"
+
+#~ msgid "<b>_Commands list</b>"
+#~ msgstr "<b>Списък с команди</b>"
+
+#~ msgid "<b>_Layers list</b>"
+#~ msgstr "Списък с пластове"
+
+#~ msgid "<b>_User defined list</b>"
+#~ msgstr "<b>Потребителски списък</b>"
+
+#~ msgid "Add Layer Key"
+#~ msgstr "Добавяне на пластов бутон"
+
+#~ msgid "Add User Defined Key"
+#~ msgstr "Добавяне на потребителски ключ"
+
+#~ msgid "Add new item"
+#~ msgstr "Добавя нов запис"
+
+#~ msgid "Alt modifier"
+#~ msgstr "Модификатор Alt"
+
+#~ msgid "Command Mapping"
+#~ msgstr "Картографиране на командите"
+
+#~ msgid "Commands List"
+#~ msgstr "Списък с команди"
+
+#~ msgid "Control modifier"
+#~ msgstr "Модификатор Control"
+
+#~ msgid "Key number"
+#~ msgstr "Номер на клавиш"
+
+#~ msgid "Keys list"
+#~ msgstr "Списък с бутони"
+
+#~ msgid "Layer command list"
+#~ msgstr "Списък с команди за пластове"
+
+#~ msgid "Layer number"
+#~ msgstr "Номер на пласт"
+
+#~ msgid "Layers"
+#~ msgstr "Пластове"
+
+#~ msgid "List of gnopernicus commands"
+#~ msgstr "Списък с команди на gnopernicus"
+
+#~ msgid "Modify command for the selected item"
+#~ msgstr "Промяна на командата за избрания запис"
+
+#~ msgid "Remove selected item"
+#~ msgstr "Премахване на избрания обект"
+
+#~ msgid "Shift modifier"
+#~ msgstr "Модификатор Shift"
+
+#~ msgid "User Defined"
+#~ msgstr "Потребителски"
+
+#~ msgid "User defined commands list."
+#~ msgstr "Потребителска команда:"
+
+#~ msgid "_Alt"
+#~ msgstr "_Alt"
+
+#~ msgid "_Key:"
+#~ msgstr "Ключ:"
+
+#~ msgid "_Layer:"
+#~ msgstr "Пласт:"
+
+#~ msgid "_Shift"
+#~ msgstr "_Shift"
+
+#~ msgid ""
+#~ "<b>Gnopernicus has detected that the assistive technology \n"
+#~ "support is not enabled.</b>\n"
+#~ msgstr ""
+#~ "<b>Gnopernicus е засякъл, че помощните технологии \n"
+#~ "не са включени.</b>\n"
+
+#~ msgid "About"
+#~ msgstr "Относно"
+
+#~ msgid "Braille device preferences"
+#~ msgstr "Настройки на брайлово устройство"
+
+#~ msgid "Braille monitor preferences"
+#~ msgstr "Настройки на брайлов монитор"
+
+#~ msgid "Close preferences"
+#~ msgstr "Затваряне на настройки"
+
+#~ msgid "Command mapping"
+#~ msgstr "Картографиране на командите"
+
+#~ msgid "Do you want to enable the assistive technology support?"
+#~ msgstr "Искате ли да включите поддръжката на помощни технологии?"
+
+#~ msgid "Exit from gnopernicus"
+#~ msgstr "Затваряне на gnopernicus"
+
+#~ msgid "Gnopernicus usage help"
+#~ msgstr "Помощ за използването на Gnopernicus"
+
+#~ msgid "Iconify menu"
+#~ msgstr "Иконизиране на менюто"
+
+#~ msgid "Load default preferences"
+#~ msgstr "Зареждане на стандартни настройки"
+
+#~ msgid "Magnifier preferences"
+#~ msgstr "Настройки на увеличителя"
+
+#~ msgid "Mouse preferences"
+#~ msgstr "Настройки на мишката"
+
+#~ msgid "Preferences"
+#~ msgstr "Настройки"
+
+#~ msgid "Preferences..."
+#~ msgstr "Настройки..."
+
+#~ msgid "Role presentation"
+#~ msgstr "Представяне на роля"
+
+#~ msgid "Screen review"
+#~ msgstr "Преглед на екрана"
+
+#~ msgid "Speech preferences"
+#~ msgstr "Настройки на речта"
+
+#~ msgid "Startup mode..."
+#~ msgstr "Режим на стартиране..."
+
+#~ msgid "_1 Speech"
+#~ msgstr "_1 Реч"
+
+#~ msgid "_1 Startup Mode..."
+#~ msgstr "_1 Режим начало..."
+
+#~ msgid "_2 Braille"
+#~ msgstr "_2 Брайл"
+
+#~ msgid "_2 Preferences..."
+#~ msgstr "_2 Настройки..."
+
+#~ msgid "_3 Default Preferences..."
+#~ msgstr "_3 Стандартни настройки..."
+
+#~ msgid "_4 Minimize"
+#~ msgstr "_4 Умаляване"
+
+#~ msgid "_4 Mouse"
+#~ msgstr "_4 Мишка"
+
+#~ msgid "_5 Help"
+#~ msgstr "_5 Помощ"
+
+#~ msgid "_6 About"
+#~ msgstr "_6 Относно"
+
+#~ msgid "_6 Command Mapping"
+#~ msgstr "_6 Картографиране на командите"
+
+#~ msgid "_7 Presentation"
+#~ msgstr "_7 Презентация"
+
+#~ msgid "_8 Screen Review"
+#~ msgstr "_8 Преглед на екрана"
+
+#~ msgid "_9 Search"
+#~ msgstr "_9 Търсене"
+
+#~ msgid "_Don't Enable Support"
+#~ msgstr "Без поддръжка"
+
+#~ msgid "_Quit"
+#~ msgstr "Напуска"
+
+#~ msgid "Failed to set value: %f."
+#~ msgstr "Грешка при настройване на стойност: %f"
+
+#~ msgid "Failed to set value."
+#~ msgstr "Грешка при настройване на стойността."
+
+#~ msgid "We could not load the interface!"
+#~ msgstr "Не може да се зареди интерфейса!"
+
+#~ msgid "Screen Reader and Magnifier for the GNOME Desktop"
+#~ msgstr "Четец на екрана и увеличител за GNOME"
+
+#~ msgid "translator-credits"
+#~ msgstr ""
+#~ "Ростислав „zbrox“ Райков <zbrox@i-space.org>\n"
+#~ "Ясен Праматарое <turin@fsa-bg.org>\n"
+#~ "Владимир Петков <vpetkov@i-space.org>\n"
+#~ "Александър Шопов <ash@contact.bg>\n"
+#~ "\n"
+#~ "Проектът за превод на GNOME има нужда от подкрепа.\n"
+#~ "Научете повече за нас на http://gnome.cult.bg\n"
+#~ "Докладвайте за грешки на http://gnome.cult.bg/bugs"
+
+#~ msgid ""
+#~ "Can NOT remove zoomer because multiple zoomers are not supported in this "
+#~ "version."
+#~ msgstr ""
+#~ "Не може да бъде премахната лупата, понеже повече от една лупи не се "
+#~ "поддържат в тази версия."
+
+#~ msgid "Zoomer Options (%s)"
+#~ msgstr "Настройки на лупата (%s)"
+
+#~ msgid "Failed to set dictionary changes."
+#~ msgstr "Грешка при промените в речника."
+
+#~ msgid "Failed to set removed voice value."
+#~ msgstr "Неуспех при задаването на премахната стойност на глас."
+
+#~ msgid "Failed to set count: %s."
+#~ msgstr "Неуспех при задаване на броя: %s."
+
+#~ msgid "Failed to set Punctuation: %s."
+#~ msgstr "Неуспех при задаване на пунктуация: %s."
+
+#~ msgid "Failed to set text echo value: %s."
+#~ msgstr "Неуспех при задаване на стойността за подаване на текста: %s."
+
+#~ msgid "Failed to set modifiers value: %s."
+#~ msgstr "Неуспех при задаване на стойността на модификатора: %s."
+
+#~ msgid "Failed to set cursors value: %s."
+#~ msgstr "Неуспех при задаване на стойността на курсора: %s."
+
+#~ msgid "Failed to set spaces value: %s."
+#~ msgstr "Неуспех при задаване на стойността на интервалите: %s."
+
+#~ msgid "Failed to set dictionary value: %s."
+#~ msgstr "Неуспех при задаване на стойността на речник: %s."
+
+#~ msgid "Failed to set testable voice %s."
+#~ msgstr "Неуспех при задаването на пробен глас %s."
+
+#~ msgid "%s no name"
+#~ msgstr "%s няма име"
+
+#~ msgid "Invalid word or replacer!"
+#~ msgstr "Невалидна дума или заместител!"
+
+#~ msgid "Word exists in dictionary!"
+#~ msgstr "Думата съществува в речника!"
+
+#~ msgid "No selected word to modify!"
+#~ msgstr "Няма избрана дума за промяна!"
+
+#~ msgid "No selected word to remove!"
+#~ msgstr "Няма избрана дума за премахване!"
+
+#~ msgid "Word"
+#~ msgstr "Дума"
+
+#~ msgid "Replacer"
+#~ msgstr "Заместител"
+
+#~ msgid "<all drivers>"
+#~ msgstr "<всички драйвери>"
+
+#~ msgid "<all voices>"
+#~ msgstr "<всички гласове>"
+
+#~ msgid "Invalid voice!"
+#~ msgstr "Невалиден глас!"
+
+#~ msgid "Invalid driver or voice!"
+#~ msgstr "Невалиден драйвер или глас!"
+
+#~ msgid "No selected voice to modify!"
+#~ msgstr "Няма избран глас за промяна!"
+
+#~ msgid "No selected voice to remove!"
+#~ msgstr "Няма избран глас за премахване!"
+
+#~ msgid "No selected voice to test!"
+#~ msgstr "Няма избран глас за тестване!"
+
+#~ msgid "Voice"
+#~ msgstr "Глас"
+
+#~ msgid "Driver"
+#~ msgstr "Драйвер"
+
+#~ msgid "Phonetic|Alpha"
+#~ msgstr "Фонетично|Алфа"
+
+#~ msgid "Phonetic|Bravo"
+#~ msgstr "Фонетично|Браво"
+
+#~ msgid "Phonetic|Charlie"
+#~ msgstr "Фонетично|Чарли"
+
+#~ msgid "Phonetic|Delta"
+#~ msgstr "Фонетично|Делта"
+
+#~ msgid "Phonetic|Echo"
+#~ msgstr "Фонетично|Ехо"
+
+#~ msgid "Phonetic|Foxtrot"
+#~ msgstr "Фонетично|Фокстрот"
+
+#~ msgid "Phonetic|Golf"
+#~ msgstr "Фонетично|Голф"
+
+#~ msgid "Phonetic|Hotel"
+#~ msgstr "Фонетично|Хотел"
+
+#~ msgid "Phonetic|India"
+#~ msgstr "Фонетично|Индия"
+
+#~ msgid "Phonetic|Juliet"
+#~ msgstr "Фонетично|Жулиета"
+
+#~ msgid "Phonetic|Kilo"
+#~ msgstr "Фонетично|Кило"
+
+#~ msgid "Phonetic|Lima"
+#~ msgstr "Фонетично|Лима"
+
+#~ msgid "Phonetic|Mike"
+#~ msgstr "Фонетично|Майк"
+
+#~ msgid "Phonetic|November"
+#~ msgstr "Фонетично|Новембър"
+
+#~ msgid "Phonetic|Oscar"
+#~ msgstr "Фонетично|Оскар"
+
+#~ msgid "Phonetic|Papa"
+#~ msgstr "Фонетично|Папа"
+
+#~ msgid "Phonetic|Quebec"
+#~ msgstr "Фонетично|Квебек"
+
+#~ msgid "Phonetic|Romeo"
+#~ msgstr "Фонетично|Ромео"
+
+#~ msgid "Phonetic|Sierra"
+#~ msgstr "Фонетично|Сиера"
+
+#~ msgid "Phonetic|Tango"
+#~ msgstr "Фонетично|Танго"
+
+#~ msgid "Phonetic|Uniform"
+#~ msgstr "Фонетично|Униформ"
+
+#~ msgid "Phonetic|Victor"
+#~ msgstr "Фонетично|Виктор"
+
+#~ msgid "Phonetic|Whiskey"
+#~ msgstr "Фонетично|Уиски"
+
+#~ msgid "Phonetic|Xray"
+#~ msgstr "Фонетично|Екс-рей"
+
+#~ msgid "Phonetic|Yankee"
+#~ msgstr "Фонетично|Янки"
+
+#~ msgid "Phonetic|Zulu"
+#~ msgstr "Фонетично|Зулу"
+
+#~ msgid "Failed to access configuration source(s): %s\n"
+#~ msgstr "Неуспех при достъпа на източник за настройки: %s\n"
+
+#~ msgid "Failed to add notify: %s"
+#~ msgstr "Неуспех при добавянето на известяване: %s"
+
+#~ msgid "Failed to remove directory."
+#~ msgstr "Не може да се премахне папката."
+
+#~ msgid "Failed to set configdata."
+#~ msgstr "Неуспех при задаване на данни за настройки."
+
+#~ msgid "Failed set data."
+#~ msgstr "Грешка при задаване на данните."
+
+#~ msgid "( )"
+#~ msgstr "( )"
+
+#~ msgid "(C)"
+#~ msgstr "(C)"
+
+#~ msgid "(E)"
+#~ msgstr "(E)"
+
+#~ msgid "(P)"
+#~ msgstr "(P)"
+
+#~ msgid "(U)"
+#~ msgstr "(U)"
+
+#~ msgid "(c)"
+#~ msgstr "(c)"
+
+#~ msgid "(m)"
+#~ msgstr "(m)"
+
+#~ msgid "(n)"
+#~ msgstr "(n)"
+
+#~ msgid "Give maximum speech and braille output."
+#~ msgstr "Максимален изход чрез реч и брайл"
+
+#~ msgid "available"
+#~ msgstr "налични"
+
+#~ msgid "closing tab"
+#~ msgstr "затваряне на таб"
+
+#~ msgid "closing window"
+#~ msgstr "затваряне на прозорец"
+
+#~ msgid "create window"
+#~ msgstr "създаване на прозорец"
+
+#~ msgid "current value"
+#~ msgstr "текуща стойност"
+
+#~ msgid "items"
+#~ msgstr "елементи"
+
+#~ msgid "level"
+#~ msgstr "ниво"
+
+#~ msgid "maximize window"
+#~ msgstr "максимизиране на прозорец"
+
+#~ msgid "minimize window"
+#~ msgstr "минимизиране на прозорец"
+
+#~ msgid "minimized"
+#~ msgstr "минимизиран"
+
+#~ msgid "no selection anymore"
+#~ msgstr "вече няма селекция"
+
+#~ msgid "normal"
+#~ msgstr "нормално"
+
+#~ msgid "paragraph inserted"
+#~ msgstr "абзацът е вмъкнат"
+
+#~ msgid "rename window"
+#~ msgstr "преименуване на прозорец"
+
+#~ msgid "restore window"
+#~ msgstr "възстановяване на прозорец"
+
+#~ msgid "shortcut"
+#~ msgstr "бърз клавиш"
+
+#~ msgid "show tool tip"
+#~ msgstr "показване на подсказка"
+
+#~ msgid "switch tab"
+#~ msgstr "превключване на таб"
+
+#~ msgid "switch to"
+#~ msgstr "превключване към"
+
+#~ msgid "switch to window"
+#~ msgstr "превключване към прозорец"
+
+#~ msgid "titleize window"
+#~ msgstr "озаглавяване на прозорец"
+
+#~ msgid "unavailable"
+#~ msgstr "не е наличен"
+
+#~ msgid "no parent"
+#~ msgstr "без родител"
+
+#~ msgid "no children"
+#~ msgstr "без дете"
+
+#~ msgid "no next"
+#~ msgstr "няма следващо"
+
+#~ msgid "Cannot find next text!"
+#~ msgstr "Не може да намери следващия текст!"
+
+#~ msgid "Cannot find next image!"
+#~ msgstr "Не може да открие следващото изображение!"
+
+#~ msgid "Cannot find next attributes!"
+#~ msgstr "Не могат да бъдат открити следващите атрибути!"
+
+#~ msgid "no previous"
+#~ msgstr "няма предишно"
+
+#~ msgid "added watch for current object"
+#~ msgstr "добавено наблюдение за текущия обект"
+
+#~ msgid "cannot add watch for current object"
+#~ msgstr "не може да бъде добавено наблюдение за текущия обект"
+
+#~ msgid "no caret"
+#~ msgstr "без каретка"
+
+#~ msgid "already on first"
+#~ msgstr "вече на първото"
+
+#~ msgid "already on last"
+#~ msgstr "вече на последното"
+
+#~ msgid "now navigating in application"
+#~ msgstr "сега се навигира в програмата"
+
+#~ msgid "now navigating in desktop"
+#~ msgstr "сега се навигира на работното място"
+
+#~ msgid "now navigating in window"
+#~ msgstr "сега се навигира в прозорец"
+
+#~ msgid "no focus"
+#~ msgstr "няма фокус"
+
+#~ msgid "no title"
+#~ msgstr "няма заглавие"
+
+#~ msgid "no tool bar"
+#~ msgstr "няма лента с инструменти"
+
+#~ msgid "no status bar"
+#~ msgstr "няма лента за състоянието"
+
+#~ msgid "with"
+#~ msgstr "с"
+
+#~ msgid "in a"
+#~ msgstr "в"
+
+#~ msgid "named "
+#~ msgstr "именуван"
+
+#~ msgid "with no name"
+#~ msgstr "без име"
+
+#~ msgid "on a"
+#~ msgstr "на"
+
+#~ msgid "first line"
+#~ msgstr "първи ред"
+
+#~ msgid "last line"
+#~ msgstr "последен ред"
+
+#~ msgid "[first line]"
+#~ msgstr "[първи ред]"
+
+#~ msgid "[last line]"
+#~ msgstr "[последен ред]"
+
+#~ msgid "%d empty line"
+#~ msgid_plural "%d empty lines"
+#~ msgstr[0] "%d празен ред"
+#~ msgstr[1] "%d празни редове"
+
+#~ msgid "[empty line]"
+#~ msgstr "[празен ред]"
+
+#~ msgid "[%d empty line]"
+#~ msgid_plural "[%d empty lines]"
+#~ msgstr[0] "[%d празен ред]"
+#~ msgstr[1] "[%d празни редове]"
+
+#~ msgid "cannot make flat review for current window"
+#~ msgstr "не може да се направи плосък преглед за текущия прозорец"
+
+#~ msgid "\"%s\" entry has invalid value at position %d."
+#~ msgstr "„%s“ записа има невалидна стойност на позиция %d."
+
+#~ msgid "key \"%s\" has an invalid value at position %d."
+#~ msgstr "ключ „%s“ има невалидна стойност на позиция %d."
+
+#~ msgid "Can not get key pad commands mapping from gconf."
+#~ msgstr ""
+#~ "Не може да се получи съответствието на командите за цифрова клавиатура от "
+#~ "gconf."
+
+#~ msgid "Can not get braille display commands mapping from gconf."
+#~ msgstr ""
+#~ "Не може да се получи съответствието на командите за браилов дисплей от "
+#~ "gconf."
+
+#~ msgid "Can not get user defined commands mapping from gconf."
+#~ msgstr ""
+#~ "Не може да се получи съответствието на потребителските команди от gconf."
+
+#~ msgid "No accessible object is focused"
+#~ msgstr "Няма фокусиран достъпен обект"
+
+#~ msgid "unknown location"
+#~ msgstr "непознато местонахождение"
+
+#~ msgid "no details"
+#~ msgstr "няма подробности"
+
+#~ msgid "layer"
+#~ msgstr "пласт"
+
+#~ msgid "back to layer"
+#~ msgstr "обратно към пласт"
+
+#~ msgid "cursor on"
+#~ msgstr "курсор включен"
+
+#~ msgid "cursor off"
+#~ msgstr "курсор изключен"
+
+#~ msgid "current cursor is"
+#~ msgstr "текущия курсор е"
+
+#~ msgid "cursor size"
+#~ msgstr "размер на курсора"
+
+#~ msgid "cursor magnification on"
+#~ msgstr "увеличение на курсора включено"
+
+#~ msgid "cursor magnification off"
+#~ msgstr "увеличение на курсора изключено"
+
+#~ msgid "cursor color"
+#~ msgstr "цвят на курсора"
+
+#~ msgid "crosswire on"
+#~ msgstr "кръстчето е включено"
+
+#~ msgid "crosswire off"
+#~ msgstr "кръстчето е изключено"
+
+#~ msgid "crosswire clip on"
+#~ msgstr "обграждането на кръстчето е включено"
+
+#~ msgid "crosswire clip off"
+#~ msgstr "обграждането на кръстчето е изключено"
+
+#~ msgid "crosswire size"
+#~ msgstr "размер на кръстчето"
+
+#~ msgid "crosswire color"
+#~ msgstr "цвят на кръстчето"
+
+#~ msgid "zoomer placement left"
+#~ msgstr "лупата - отляво"
+
+#~ msgid "zoomer placement top"
+#~ msgstr "лупата - отдясно"
+
+#~ msgid "zoomer placement width"
+#~ msgstr "ширина на мястото на увеличителя"
+
+#~ msgid "zoomer placement height"
+#~ msgstr "височина на мястото на увеличителя"
+
+#~ msgid "magnifier target"
+#~ msgstr "цел на увеличителя"
+
+#~ msgid "magnifier source"
+#~ msgstr "източник на увеличителя"
+
+#~ msgid "zoom factor x"
+#~ msgstr "стъпка на увеличение по x"
+
+#~ msgid "zoom factor y"
+#~ msgstr "стъпка на увеличение по y"
+
+#~ msgid "zoom factor locked"
+#~ msgstr "стъпка на увеличение заключена"
+
+#~ msgid "zoom factor unlocked"
+#~ msgstr "стъпка на увеличение отключена"
+
+#~ msgid "invert on"
+#~ msgstr "обръщане включено"
+
+#~ msgid "magnifier smoothing type"
+#~ msgstr "вид заглаждане в лупата"
+
+#~ msgid "panning on"
+#~ msgstr "увеличение включено"
+
+#~ msgid "panning off"
+#~ msgstr "увеличение изключено"
+
+#~ msgid "home"
+#~ msgstr "начало"
+
+#~ msgid "end"
+#~ msgstr "край"
+
+#~ msgid "down"
+#~ msgstr "надолу"
+
+#~ msgid "up"
+#~ msgstr "нагоре"
+
+#~ msgid "backspace"
+#~ msgstr "бекспейс"
+
+#~ msgid "delete"
+#~ msgstr "изтриване"
+
+#~ msgid "braille device can not be initialized"
+#~ msgstr "не може да бъде инициализирано брайловото устройство"
+
+#~ msgid "Gnopernicus is now exiting. Have a nice day!"
+#~ msgstr "Gnopernicus сега се затваря. Приятен ден!"
+
+#~ msgid "UNK"
+#~ msgstr "НИВ"
+
+#~ msgid "UNKNOWN"
+#~ msgstr "НЕИЗВЕСТЕН"
+
+#~ msgid "INVALID"
+#~ msgstr "НЕВАЛИДЕН"
+
+#~ msgid "ALR"
+#~ msgstr "АЛАРМ"
+
+#~ msgid "ALERT"
+#~ msgstr "АЛАРМА"
+
+#~ msgid "CNV"
+#~ msgstr "CNV"
+
+#~ msgid "CANVAS"
+#~ msgstr "CANVAS"
+
+#~ msgid "CHK"
+#~ msgstr "CHK"
+
+#~ msgid "CHECK_BOX"
+#~ msgstr "CHECK_BOX"
+
+#~ msgid "MIT"
+#~ msgstr "MIT"
+
+#~ msgid "MENU ITEM"
+#~ msgstr "MENU ITEM"
+
+#~ msgid "CCH"
+#~ msgstr "CCH"
+
+#~ msgid "COLOR CHOOSER"
+#~ msgstr "COLOR CHOOSER"
+
+#~ msgid "CHD"
+#~ msgstr "ИЗБОР НА ЦВЯТ"
+
+#~ msgid "COLUMN HEADER"
+#~ msgstr "ЗАГЛАВИЕ НА КОЛОНА"
+
+#~ msgid "CBO"
+#~ msgstr "CBO"
+
+#~ msgid "COMBO BOX"
+#~ msgstr "COMBO BOX"
+
+#~ msgid "DIC"
+#~ msgstr "ИКОНА"
+
+#~ msgid "DESKTOP ICON"
+#~ msgstr "ИКОНА НА РАБ. ПЛОТ"
+
+#~ msgid "DFR"
+#~ msgstr "DFR"
+
+#~ msgid "DESKTOP FRAME"
+#~ msgstr "DESKTOP FRAME"
+
+#~ msgid "DLG"
+#~ msgstr "ДИА"
+
+#~ msgid "DIALOG"
+#~ msgstr "ДИАЛОГ"
+
+#~ msgid "DIP"
+#~ msgstr "DIP"
+
+#~ msgid "DIRECTORY PANE"
+#~ msgstr "ПАНЕЛ С ПАПКИ"
+
+#~ msgid "FCH"
+#~ msgstr "ИЗБ"
+
+#~ msgid "FILE CHOOSER"
+#~ msgstr "ИЗБОР НА ФАЙЛОВЕ"
+
+#~ msgid "FLR"
+#~ msgstr "FLR"
+
+#~ msgid "FILLER"
+#~ msgstr "FILLER"
+
+#~ msgid "FRM"
+#~ msgstr "РМК"
+
+#~ msgid "FRAME"
+#~ msgstr "РАМКА"
+
+#~ msgid "GPN"
+#~ msgstr "GPN"
+
+#~ msgid "GLASS PANE"
+#~ msgstr "GLASS PANE"
+
+#~ msgid "HTM"
+#~ msgstr "ХТМ"
+
+#~ msgid "HTML CONTAINER"
+#~ msgstr "HTML CONTAINER"
+
+#~ msgid "LNK"
+#~ msgstr "ВРЗ"
+
+#~ msgid "LINK"
+#~ msgstr "ВРЪЗКА"
+
+#~ msgid "ICO"
+#~ msgstr "ИК"
+
+#~ msgid "ICON"
+#~ msgstr "ИКОНА"
+
+#~ msgid "IFR"
+#~ msgstr "ВРАМ"
+
+#~ msgid "INTERNAL FRAME"
+#~ msgstr "ВЪТРЕШНА РАМКА"
+
+#~ msgid "LBL"
+#~ msgstr "ЕТК"
+
+#~ msgid "LABEL"
+#~ msgstr "ЕТИКЕТ"
+
+#~ msgid "LPN"
+#~ msgstr "LPN"
+
+#~ msgid "LAYERED PANE"
+#~ msgstr "LAYERED PANE"
+
+#~ msgid "LST"
+#~ msgstr "СП"
+
+#~ msgid "LIST"
+#~ msgstr "СПИСЪК"
+
+#~ msgid "LIT"
+#~ msgstr "LIT"
+
+#~ msgid "LIST ITEM"
+#~ msgstr "Елемент от списък"
+
+#~ msgid "MNU"
+#~ msgstr "МНЮ"
+
+#~ msgid "MENU"
+#~ msgstr "МЕНЮ"
+
+#~ msgid "MBR"
+#~ msgstr "МЕН"
+
+#~ msgid "MENU BAR"
+#~ msgstr "ЛЕНТА С МЕНЮТА"
+
+#~ msgid "OPN"
+#~ msgstr "НСТР"
+
+#~ msgid "OPTION PANE"
+#~ msgstr "ПАНЕЛ С НАСТРОЙКИ"
+
+#~ msgid "PGT"
+#~ msgstr "ЛЕТ"
+
+#~ msgid "PAGE TAB"
+#~ msgstr "ТАБ НА СТРАНИЦА"
+
+#~ msgid "Page tab"
+#~ msgstr "Таб на страница"
+
+#~ msgid "PTL"
+#~ msgstr "PTL"
+
+#~ msgid "PAGE TAB LIST"
+#~ msgstr "PAGE TAB LIST"
+
+#~ msgid "PNL"
+#~ msgstr "ПНЛ"
+
+#~ msgid "PANEL"
+#~ msgstr "ПАНЕЛ"
+
+#~ msgid "PWD"
+#~ msgstr "ПРЛ"
+
+#~ msgid "PASSWORD TEXT"
+#~ msgstr "ПАРОЛА"
+
+#~ msgid "PMN"
+#~ msgstr "PMN"
+
+#~ msgid "POPUP MENU"
+#~ msgstr "ИЗСКАЧАЩО МЕНЮ"
+
+#~ msgid "PRG"
+#~ msgstr "ПРГ"
+
+#~ msgid "PROGRESS BAR"
+#~ msgstr "ЛЕНТА ЗА ПРОГРЕСА"
+
+#~ msgid "PBT"
+#~ msgstr "НАБ"
+
+#~ msgid "PUSH BUTTON"
+#~ msgstr "НАТИСКАНЕ НА БУТОН"
+
+#~ msgid "RAD"
+#~ msgstr "РБУ"
+
+#~ msgid "RADIO BUTTON"
+#~ msgstr "РАДИО БУТОН"
+
+#~ msgid "RPN"
+#~ msgstr "ОСН"
+
+#~ msgid "ROOT PANE"
+#~ msgstr "ОСНОВЕН ПАНЕЛ"
+
+#~ msgid "RHD"
+#~ msgstr "RHD"
+
+#~ msgid "ROW HEADER"
+#~ msgstr "ЗАГЛАВИЕ НА РЕД"
+
+#~ msgid "SCR"
+#~ msgstr "ПЛЗ"
+
+#~ msgid "SCROLL BAR"
+#~ msgstr "ПЛЪЗГАЧ"
+
+#~ msgid "SPN"
+#~ msgstr "SPN"
+
+#~ msgid "SCROLL PANE"
+#~ msgstr "SCROLL PANE"
+
+#~ msgid "SEP"
+#~ msgstr "РАЗ"
+
+#~ msgid "SEPARATOR"
+#~ msgstr "РАЗДЕЛИТЕЛ"
+
+#~ msgid "SLD"
+#~ msgstr "SLD"
+
+#~ msgid "SLIDER"
+#~ msgstr "SLIDER"
+
+#~ msgid "SPP"
+#~ msgstr "SPP"
+
+#~ msgid "SPLIT PANE"
+#~ msgstr "SPLIT PANE"
+
+#~ msgid "STA"
+#~ msgstr "STA"
+
+#~ msgid "STATUS BAR"
+#~ msgstr "ЛЕНТА ЗА СЪСТОЯНИЕТО"
+
+#~ msgid "TAB"
+#~ msgstr "ТАБ"
+
+#~ msgid "TABLE"
+#~ msgstr "ТАБЛИЦА"
+
+#~ msgid "CEL"
+#~ msgstr "КЛЕ"
+
+#~ msgid "TABLE CELL"
+#~ msgstr "КЛЕТКА ОТ ТАБЛИЦА"
+
+#~ msgid "Table cell"
+#~ msgstr "Клетка от таблица"
+
+#~ msgid "TCH"
+#~ msgstr "TCH"
+
+#~ msgid "TABLE COLUMN HEADER"
+#~ msgstr "ЗАГЛАВИЕ НА КОЛОНА"
+
+#~ msgid "Table column header"
+#~ msgstr "Заглавие на колона"
+
+#~ msgid "TRH"
+#~ msgstr "TRH"
+
+#~ msgid "TABLE ROW HEADER"
+#~ msgstr "ЗАГЛАВИЕ НА РЕД"
+
+#~ msgid "Table row header"
+#~ msgstr "Заглавие на ред"
+
+#~ msgid "TXT"
+#~ msgstr "ТКСТ"
+
+#~ msgid "MULTI LINE TEXT"
+#~ msgstr "ТЕКСТ ОТ МНОГО РЕДОВЕ"
+
+#~ msgid "Multi Line Text"
+#~ msgstr "Текст от много редове"
+
+#~ msgid "SINGLE LINE TEXT"
+#~ msgstr "Текст от един ред"
+
+#~ msgid "Single Line Text"
+#~ msgstr "Текст от един ред"
+
+#~ msgid "TOG"
+#~ msgstr "ПРВК"
+
+#~ msgid "TOGGLE BUTTON"
+#~ msgstr "ПРЕВКЛЮЧВАЩ БУТОН"
+
+#~ msgid "TOL"
+#~ msgstr "TOL"
+
+#~ msgid "TOOL BAR"
+#~ msgstr "ЛЕНТА С ИНСТРУМЕНТИ"
+
+#~ msgid "TIP"
+#~ msgstr "ПСКЗ"
+
+#~ msgid "TOOL TIP"
+#~ msgstr "ПОДСКАЗКА"
+
+#~ msgid "TRE"
+#~ msgstr "TRE"
+
+#~ msgid "TREE"
+#~ msgstr "TREE"
+
+#~ msgid "TRI"
+#~ msgstr "TRI"
+
+#~ msgid "TREE ITEM"
+#~ msgstr "Дървовиден елемент"
+
+#~ msgid "Tree item"
+#~ msgstr "Дървовиден елемент"
+
+#~ msgid "TRT"
+#~ msgstr "TRT"
+
+#~ msgid "VWP"
+#~ msgstr "VWP"
+
+#~ msgid "VIEWPORT"
+#~ msgstr "VIEWPORT"
+
+#~ msgid "WND"
+#~ msgstr "ПРЗ"
+
+#~ msgid "WINDOW"
+#~ msgstr "ПРОЗОРЕЦ"
+
+#~ msgid "ACC"
+#~ msgstr "УСК"
+
+#~ msgid "ACCELERATOR LABEL"
+#~ msgstr "ЕТИКЕТ НА УСКОРИТЕЛ"
+
+#~ msgid "Accelerator label"
+#~ msgstr "Етикет на ускорител"
+
+#~ msgid "ANI"
+#~ msgstr "АНИ"
+
+#~ msgid "ANIMATION"
+#~ msgstr "АНИМАЦИЯ"
+
+#~ msgid "ARR"
+#~ msgstr "СТР"
+
+#~ msgid "ARROW"
+#~ msgstr "СТРЕЛКА"
+
+#~ msgid "CAL"
+#~ msgstr "КАЛ"
+
+#~ msgid "CALENDAR"
+#~ msgstr "КАЛЕНДАР"
+
+#~ msgid "DAT"
+#~ msgstr "РДАТ"
+
+#~ msgid "DATE EDITOR"
+#~ msgstr "РЕДАКТОР НА ДАТА"
+
+#~ msgid "DIL"
+#~ msgstr "DIL"
+
+#~ msgid "DIAL"
+#~ msgstr "DIAL"
+
+#~ msgid "DRW"
+#~ msgstr "РСВ"
+
+#~ msgid "DRAWING AREA"
+#~ msgstr "ОБЛАСТ ЗА РИСУВАНЕ"
+
+#~ msgid "FNT"
+#~ msgstr "ШФТ"
+
+#~ msgid "FONT CHOOSER"
+#~ msgstr "ИЗБОР НА ШРИФТ"
+
+#~ msgid "IMG"
+#~ msgstr "ИБР"
+
+#~ msgid "IMAGE"
+#~ msgstr "ИЗОБРАЖЕНИЕ"
+
+#~ msgid "SPIN BUTTON"
+#~ msgstr "SPIN BUTTON"
+
+#~ msgid "TRM"
+#~ msgstr "ТЕР"
+
+#~ msgid "TERMINAL"
+#~ msgstr "ТЕРМИНАЛ"
+
+#~ msgid "EXT"
+#~ msgstr "РЗ"
+
+#~ msgid "EXTENDED"
+#~ msgstr "РАЗШИРЕН"
+
+#~ msgid "Extended"
+#~ msgstr "Разширен"
+
+#~ msgid "TLI"
+#~ msgstr "TLI"
+
+#~ msgid "TABLE LINE"
+#~ msgstr "РЕД НА ТАБЛИЦА"
+
+#~ msgid "TABLE COLUMNS HEADER"
+#~ msgstr "ЗАГЛАВИЕ НА КОЛОНИ"
+
+#~ msgid "Table columns header"
+#~ msgstr "Заглавие на колони"
+
+#~ msgid "TIT"
+#~ msgstr "ЗАГ"
+
+#~ msgid "TITLE BAR"
+#~ msgstr "ЛЕНТА ЗА ЗАГЛАВИЕТО"
+
+#~ msgid "Title bar"
+#~ msgstr "Лента за заглавието"
+
+#~ msgid "EDB"
+#~ msgstr "РЕЛ"
+
+#~ msgid "EDIT BAR"
+#~ msgstr "РЕДАКТИРАНЕ НА ЛЕНТА"
+
+#~ msgid "SPREAD SHEET CELL"
+#~ msgstr "КЛЕТКА ОТ ЕЛЕКТРОННА ТАБЛИЦА"
+
+#~ msgid "Incorrect parameters for voice \"%s%s\""
+#~ msgstr "Неправилни параметри за гласа „%s%s“"
+
+#~ msgid "failed to send to speech next string \"%s\""
+#~ msgstr "грешка при пращането към реч следващия низ „%s“"
+
+#~ msgid "could not create/modify voice \"%s\""
+#~ msgstr "не може да създаде/промени галса „%s“"
+
+#~ msgid "voice \"%s\" will sound this way"
+#~ msgstr "гласа „%s“ ще звучи по този начин"
+
+#~ msgid "could not test voice \"%s\""
+#~ msgstr "не може да бъде изпробван звукът „%s“"
+
+#~ msgid "value not supported for speech count mode \"%s\""
+#~ msgstr "value not supported for speech count mode „%s“"
+
+#~ msgid "value not supported for speech modifiers type \"%s\""
+#~ msgstr "value not supported for speech modifiers type „%s“"
+
+#~ msgid "value not supported for speech cursors type \"%s\""
+#~ msgstr "value not supported for speech cursors type „%s“"
+
+#~ msgid "value not supported for speech spaces type \"%s\""
+#~ msgstr "value not supported for speech spaces type „%s“"
+
+#~ msgid "value not supported for speech dictionary type \"%s\""
+#~ msgstr "value not supported for speech dictionary type „%s“"
+
+#~ msgid "value not supported for speech text echo type \"%s\""
+#~ msgstr "value not supported for speech text echo type „%s“"
+
+#~ msgid "Tildaes"
+#~ msgstr "Тилди"
+
+#~ msgid "Exclamation"
+#~ msgstr "Удивителна"
+
+#~ msgid "Exclamations"
+#~ msgstr "Удивителни"
+
+#~ msgid "At"
+#~ msgstr "At"
+
+#~ msgid "Ats"
+#~ msgstr "Ats"
+
+#~ msgid "Hash"
+#~ msgstr "Hash"
+
+#~ msgid "Hashes"
+#~ msgstr "Hashes"
+
+#~ msgid "Dollars"
+#~ msgstr "Долари"
+
+#~ msgid "Percents"
+#~ msgstr "Проценти"
+
+#~ msgid "Carets"
+#~ msgstr "Каретки"
+
+#~ msgid "Ands"
+#~ msgstr "Ands"
+
+#~ msgid "Asterisk"
+#~ msgstr "Астериск"
+
+#~ msgid "Asterisks"
+#~ msgstr "Астериски"
+
+#~ msgid "Left Paranthesis"
+#~ msgstr "Отваряща скоба"
+
+#~ msgid "Right Paranthesis"
+#~ msgstr "Затваряща скоба"
+
+#~ msgid "Underscores"
+#~ msgstr "Долни черти"
+
+#~ msgid "Plus"
+#~ msgstr "Плюс"
+
+#~ msgid "Equal"
+#~ msgstr "Знак за равно"
+
+#~ msgid "Equals"
+#~ msgstr "Знаци за равно"
+
+#~ msgid "Minus"
+#~ msgstr "Минус"
+
+#~ msgid "Minuses"
+#~ msgstr "Минуси"
+
+#~ msgid "Quotes"
+#~ msgstr "Цитати"
+
+#~ msgid "Left Brackets"
+#~ msgstr "Леви скоби"
+
+#~ msgid "Right Brackets"
+#~ msgstr "Десни скоби"
+
+#~ msgid "Left Braces"
+#~ msgstr "Леви скоби"
+
+#~ msgid "Right Braces"
+#~ msgstr "Десни скоби"
+
+#~ msgid "Semicolon"
+#~ msgstr "Точка-и-запетая"
+
+#~ msgid "Semicolons"
+#~ msgstr "Точки-и-запетаи"
+
+#~ msgid "Colons"
+#~ msgstr "Двуеточия"
+
+#~ msgid "Double quote"
+#~ msgstr "Двоен цитат"
+
+#~ msgid "Double quotes"
+#~ msgstr "Двойни цитати"
+
+#~ msgid "Apostrophe"
+#~ msgstr "Апостроф"
+
+#~ msgid "Apostrophes"
+#~ msgstr "Апострофи"
+
+#~ msgid "Back Slash"
+#~ msgstr "Обратна наклонена черта"
+
+#~ msgid "Back Slashes"
+#~ msgstr "Обратни наклонени черти"
+
+#~ msgid "Bar"
+#~ msgstr "Лента"
+
+#~ msgid "Bars"
+#~ msgstr "Ленти"
+
+#~ msgid "Greater"
+#~ msgstr "Знак по-голямо"
+
+#~ msgid "Greaters"
+#~ msgstr "Знаци по-голямо"
+
+#~ msgid "Less"
+#~ msgstr "Знак по-малко"
+
+#~ msgid "Lesses"
+#~ msgstr "Знаци по-малко"
+
+#~ msgid "Comma"
+#~ msgstr "Запетая"
+
+#~ msgid "Commas"
+#~ msgstr "Запетаи"
+
+#~ msgid "Dots"
+#~ msgstr "Точки"
+
+#~ msgid "Slash"
+#~ msgstr "Наклонена черта"
+
+#~ msgid "Slashes"
+#~ msgstr "Наклонени черти"
+
+#~ msgid "Questions"
+#~ msgstr "Въпроси"
+
+#~ msgid "value not supported for speech punctuation type \"%s\""
+#~ msgstr "value not supported for speech punctuation type „%s“"
+
+#~ msgid "Unable to initialize hashtable"
+#~ msgstr "Unable to initialize hashtable"
+
+#~ msgid "Unable to load dictionary from gconf"
+#~ msgstr "Не може да се зареди речника от gconf"
+
+#~ msgid "speech initialization succeded"
+#~ msgstr "инициализиране на реч успешно"
+
+#~ msgid "speech initialization failed"
+#~ msgstr "грешка при инициализирането на речта"
+
+#~ msgid "enter"
+#~ msgstr "вход"
+
+#~ msgid "can not find \"%s\" voice. use default voice"
+#~ msgstr "не може да намери гласа „%s“. използва стандартния"
+
+#~ msgid "voices pitch will be set to default value"
+#~ msgstr "височината на гласа ще бъде стандартната"
+
+#~ msgid "voices pitch will be decreased"
+#~ msgstr "височината на гласа ще бъде намалена"
+
+#~ msgid "voices pitch will be increased"
+#~ msgstr "височината на гласа ще бъде увеличена"
+
+#~ msgid "voices rate will be set to default value"
+#~ msgstr "скоростта на речта ще бъде стандартната"
+
+#~ msgid "voices rate will be decreased"
+#~ msgstr "скоростта на речта ще бъде намалена"
+
+#~ msgid "voices rate will be increased"
+#~ msgstr "скоростта на речта ще бъде увеличена"
+
+#~ msgid "voices volume will be set to default value"
+#~ msgstr "силата на гласа ще бъде стандартната"
+
+#~ msgid "voices volume will be decreased"
+#~ msgstr "силата на гласа ще бъде намалена"
+
+#~ msgid "voices volume will be increased"
+#~ msgstr "силата на гласа ще бъде увеличена"
+
+#~ msgid "no support for speech key \"%s\""
+#~ msgstr "ключът за речта „%s“ не е поддържан"
+
+#~ msgid "BRLTTY command code not bound to Gnopernicus key code: 0X%04X\n"
+#~ msgstr ""
+#~ "Кодът на команда за BRLTTY не е свързан с код на клавиш в Gnopernicus: 0X%"
+#~ "04X\n"
+
+#~ msgid "Error opening brlapi connection"
+#~ msgstr "Грешка при отваряне на връзка чрез brlapi"
+
+#~ msgid ""
+#~ "Please check that\n"
+#~ " - %s exists and contains some data\n"
+#~ " - you have read permission on %s\n"
+#~ " - BRLTTY is running\n"
+#~ msgstr ""
+#~ "Проверете дали:\n"
+#~ " - %s съществува и съдържа данни\n"
+#~ " - имате права за четене на %s\n"
+#~ " - BRLTTY върви\n"
+
+#~ msgid "Unable to get display size"
+#~ msgstr "Неуспех при получаването на размера на дисплея."
+
+#~ msgid "BrlAPI detected a %dx%d display\n"
+#~ msgstr "BrlAPI откри дисплей %dx%d\n"
+
+#~ msgid "no XFree86_VT property\n"
+#~ msgstr "няма настройка за XFree86_VT\n"
+
+#~ msgid "no item in XFree86_VT property\n"
+#~ msgstr "няма обект в настройката за XFree86_VT\n"
+
+#~ msgid "Bad format for VT number\n"
+#~ msgstr "Лош формат за номера на VT\n"
+
+#~ msgid "Bad type for VT number\n"
+#~ msgstr "Лош тип за номера на VT\n"
+
+#~ msgid "Unable to get Tty"
+#~ msgstr "Не може да се достигне терминала"
