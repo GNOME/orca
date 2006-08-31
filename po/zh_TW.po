@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Orca 0.2.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-12 03:06+0800\n"
-"PO-Revision-Date: 2006-08-09 16:28+0800\n"
+"POT-Creation-Date: 2006-08-28 18:30+0200\n"
+"PO-Revision-Date: 2006-08-27 03:43+0800\n"
 "Last-Translator: Woodman Tuen <wmtuen@gmail.com>\n"
 "Language-Team: Chinese (Taiwan) <community@linuxhall.org>\n"
 "MIME-Version: 1.0\n"
@@ -23,21 +23,23 @@ msgstr "Orca 螢幕閱讀程式及放大鏡"
 #: ../orca.desktop.in.h:2
 msgid ""
 "Present on-screen information as speech or braille, or magnify the screen"
-msgstr ""
+msgstr "將畫面資訊以語音或點字展示，或放大畫面"
 
 #: ../src/orca/braillegenerator.py:193 ../src/orca/speechgenerator.py:191
 msgid "grayed"
 msgstr "grayed"
 
-#: ../src/orca/braillegenerator.py:1085 ../src/orca/speechgenerator.py:1198
+#: ../src/orca/braillegenerator.py:1096 ../src/orca/J2SE-access-bridge.py:66
+#: ../src/orca/speechgenerator.py:1198
 msgid "expanded"
 msgstr "已展開"
 
-#: ../src/orca/braillegenerator.py:1087 ../src/orca/speechgenerator.py:1200
+#: ../src/orca/braillegenerator.py:1098 ../src/orca/J2SE-access-bridge.py:69
+#: ../src/orca/speechgenerator.py:1200
 msgid "collapsed"
 msgstr "已收起"
 
-#: ../src/orca/braillegenerator.py:1091
+#: ../src/orca/braillegenerator.py:1102
 #, python-format
 msgid "TREE LEVEL %d"
 msgstr "TREE LEVEL %d"
@@ -379,42 +381,42 @@ msgstr "沒有焦點"
 msgid "entire document selected"
 msgstr "已選取整個文件"
 
-#: ../src/orca/default.py:2123
+#: ../src/orca/default.py:2132
 msgid "Speak "
 msgstr "讀出 "
 
-#: ../src/orca/default.py:2126
+#: ../src/orca/default.py:2135
 msgid "row"
 msgstr "列"
 
-#: ../src/orca/default.py:2128 ../src/orca/rolenames.py:432
+#: ../src/orca/default.py:2137 ../src/orca/rolenames.py:432
 #: ../src/orca/rolenames.py:434
 msgid "cell"
 msgstr "儲存格"
 
-#: ../src/orca/default.py:2283
+#: ../src/orca/default.py:2292
 msgid "Entering learn mode.  Press any key to hear its function. "
 msgstr "進入學習模式。 按任何鍵來聽它的功能"
 
-#: ../src/orca/default.py:2284
+#: ../src/orca/default.py:2293
 msgid "To exit learn mode, press the escape key."
 msgstr "離開學習模式，按離開鍵。"
 
-#: ../src/orca/default.py:2285
+#: ../src/orca/default.py:2294
 msgid "Learn mode.  Press escape to exit."
 msgstr "學習模式。 按離開鍵離開。"
 
-#: ../src/orca/default.py:2297 ../src/orca/default.py:2298
+#: ../src/orca/default.py:2306 ../src/orca/default.py:2307
 msgid "Exiting learn mode."
 msgstr "離開學習模式。"
 
-#: ../src/orca/default.py:2628 ../src/orca/default.py:2756
-#: ../src/orca/default.py:2761 ../src/orca/default.py:2833
-#: ../src/orca/default.py:2838
+#: ../src/orca/default.py:2637 ../src/orca/default.py:2765
+#: ../src/orca/default.py:2770 ../src/orca/default.py:2842
+#: ../src/orca/default.py:2847
 msgid "blank"
 msgstr "空白"
 
-#: ../src/orca/default.py:2630 ../src/orca/default.py:2763
+#: ../src/orca/default.py:2639 ../src/orca/default.py:2772
 msgid "white space"
 msgstr "空白空間"
 
@@ -455,6 +457,15 @@ msgstr "較慢。"
 #: ../src/orca/hierarchical_presenter.py:436
 msgid "Switching to hierarchical navigation mode."
 msgstr "切換至組織導航模式。"
+
+#: ../src/orca/J2SE-access-bridge.py:71 ../src/orca/speechgenerator.py:909
+#: ../src/orca/speechgenerator.py:912 ../src/orca/util.py:1228
+msgid "selected"
+msgstr "已選取"
+
+#: ../src/orca/J2SE-access-bridge.py:75 ../src/orca/util.py:1236
+msgid "unselected"
+msgstr "沒有選取"
 
 #: ../src/orca/keynames.py:32 ../src/orca/keynames.py:35
 msgid "left shift"
@@ -868,7 +879,7 @@ msgstr "-t, --text-setup             設置偏好使用者設定（文字版本�
 msgid "-n, --no-setup               Skip set up of user preferences"
 msgstr "-n, --no-setup               略過使用者偏好設定"
 
-#: ../src/orca/orca.py:1102
+#: ../src/orca/orca.py:1103
 msgid ""
 "If Orca has not been previously set up by the user, Orca\n"
 "will automatically launch the preferences set up unless\n"
@@ -878,7 +889,7 @@ msgstr ""
 "Orca 會自動執行偏好設定，\n"
 "除非指定了 -n 或 --no-setup 這項。"
 
-#: ../src/orca/orca.py:1104
+#: ../src/orca/orca.py:1105
 msgid "Report bugs to orca-list@gnome.org."
 msgstr "匯報錯誤至 orca-list@gnome.org"
 
@@ -2116,11 +2127,6 @@ msgstr "已點選"
 msgid "not checked"
 msgstr "沒有點選"
 
-#: ../src/orca/speechgenerator.py:909 ../src/orca/speechgenerator.py:912
-#: ../src/orca/util.py:1171
-msgid "selected"
-msgstr "已選取"
-
 #: ../src/orca/speechgenerator.py:920 ../src/orca/speechgenerator.py:923
 msgid "not selected"
 msgstr "沒有選取"
@@ -2129,41 +2135,37 @@ msgstr "沒有選取"
 msgid "tear off"
 msgstr "浮動"
 
-#: ../src/orca/util.py:433
+#: ../src/orca/util.py:473
 msgid "Misspelled word: "
 msgstr "拼錯字詞："
 
-#: ../src/orca/util.py:434
+#: ../src/orca/util.py:474
 msgid " Context is "
 msgstr " 內文是"
 
-#: ../src/orca/util.py:1115
+#: ../src/orca/util.py:1172
 msgid "page selected from cursor position"
 msgstr "由游標位置開始選取頁"
 
-#: ../src/orca/util.py:1119
+#: ../src/orca/util.py:1176
 msgid "page selected to cursor position"
 msgstr "選取至游標位置的頁"
 
-#: ../src/orca/util.py:1123
+#: ../src/orca/util.py:1180
 msgid "line selected down from cursor position"
 msgstr "由游標位置開始選取行"
 
-#: ../src/orca/util.py:1127
+#: ../src/orca/util.py:1184
 msgid "line selected up from cursor position"
 msgstr "選取至游標位置的行"
 
-#: ../src/orca/util.py:1131
+#: ../src/orca/util.py:1188
 msgid "document selected to cursor position"
 msgstr "選取至游標位置的文件"
 
-#: ../src/orca/util.py:1135
+#: ../src/orca/util.py:1192
 msgid "document selected from cursor position"
 msgstr "由游標位置開始選取文件"
-
-#: ../src/orca/util.py:1179
-msgid "unselected"
-msgstr "沒有選取"
 
 #~ msgid "Assistive Technologies for Blind and Visually Impaired People"
 #~ msgstr "協助眼睛受傷或失明人的輔助技術"
