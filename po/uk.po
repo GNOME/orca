@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-09 12:01+0300\n"
-"PO-Revision-Date: 2006-08-09 12:01+0300\n"
+"POT-Creation-Date: 2006-09-01 10:52+0300\n"
+"PO-Revision-Date: 2006-09-01 12:01+0300\n"
 "Last-Translator: Maxim Dziumanenko <dziumanenko@gmail.com>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,26 +16,31 @@ msgstr ""
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: ../orca.desktop.in.h:1
-msgid "Assistive Technologies for Blind and Visually Impaired People"
-msgstr "Допоміжні технології для сліпих та людей з вадами зору"
-
-#: ../orca.desktop.in.h:2
 msgid "Orca Screen Reader and Magnifier"
 msgstr "Читання екрану Orca та збільшувальне скло"
+
+#: ../orca.desktop.in.h:2
+msgid ""
+"Present on-screen information as speech or braille, or magnify the screen"
+msgstr ""
+"Читання інформації з екрану, представлення за допомогою алфавіту Брайля, "
+"перегляд зі збільшенням"
 
 #: ../src/orca/braillegenerator.py:193 ../src/orca/speechgenerator.py:191
 msgid "grayed"
 msgstr "сірий"
 
-#: ../src/orca/braillegenerator.py:1085 ../src/orca/speechgenerator.py:1198
+#: ../src/orca/braillegenerator.py:1096 ../src/orca/J2SE-access-bridge.py:66
+#: ../src/orca/speechgenerator.py:1198
 msgid "expanded"
 msgstr "розгорнуто"
 
-#: ../src/orca/braillegenerator.py:1087 ../src/orca/speechgenerator.py:1200
+#: ../src/orca/braillegenerator.py:1098 ../src/orca/J2SE-access-bridge.py:69
+#: ../src/orca/speechgenerator.py:1200
 msgid "collapsed"
 msgstr "згорнуто"
 
-#: ../src/orca/braillegenerator.py:1091
+#: ../src/orca/braillegenerator.py:1102
 #, python-format
 msgid "TREE LEVEL %d"
 msgstr "РІВЕНЬ ДЕРЕВА %d"
@@ -369,56 +374,56 @@ msgstr "Виводить налагоджувальну інформацію п�
 msgid "Switches to the next presentation manager."
 msgstr "Перемикає на наступний менеджер презентацій."
 
-#: ../src/orca/default.py:1067 ../src/orca/default.py:1286
+#: ../src/orca/default.py:1067 ../src/orca/default.py:1282
 #, python-format
 msgid "tree level %d"
 msgstr "рівень дерева %d"
 
-#: ../src/orca/default.py:1071 ../src/orca/focus_tracking_presenter.py:638
+#: ../src/orca/default.py:1071 ../src/orca/focus_tracking_presenter.py:639
 msgid "No focus"
 msgstr "Немає фокусу"
 
-#: ../src/orca/default.py:1677
+#: ../src/orca/default.py:1673
 msgid "entire document selected"
 msgstr "виділено весь документ"
 
-#: ../src/orca/default.py:2098
+#: ../src/orca/default.py:2121
 msgid "Speak "
 msgstr "Вимова"
 
-#: ../src/orca/default.py:2101
+#: ../src/orca/default.py:2124
 msgid "row"
 msgstr "рядок"
 
-#: ../src/orca/default.py:2103 ../src/orca/rolenames.py:432
+#: ../src/orca/default.py:2126 ../src/orca/rolenames.py:432
 #: ../src/orca/rolenames.py:434
 msgid "cell"
 msgstr "комірка"
 
-#: ../src/orca/default.py:2258
+#: ../src/orca/default.py:2281
 msgid "Entering learn mode.  Press any key to hear its function. "
 msgstr ""
 "Вхід у режим навчання. Натисніть будь-яку клавішу, щоб почути її функцію."
 
-#: ../src/orca/default.py:2259
+#: ../src/orca/default.py:2282
 msgid "To exit learn mode, press the escape key."
 msgstr "Для виходу з режиму навчання натисніть клавішу Esc."
 
-#: ../src/orca/default.py:2260
+#: ../src/orca/default.py:2283
 msgid "Learn mode.  Press escape to exit."
 msgstr "Режим навчання. Для виходу натисніть Esc."
 
-#: ../src/orca/default.py:2272 ../src/orca/default.py:2273
+#: ../src/orca/default.py:2295 ../src/orca/default.py:2296
 msgid "Exiting learn mode."
 msgstr "Вихід з режиму навчання."
 
-#: ../src/orca/default.py:2603 ../src/orca/default.py:2731
-#: ../src/orca/default.py:2736 ../src/orca/default.py:2808
-#: ../src/orca/default.py:2813
+#: ../src/orca/default.py:2626 ../src/orca/default.py:2754
+#: ../src/orca/default.py:2759 ../src/orca/default.py:2831
+#: ../src/orca/default.py:2836
 msgid "blank"
 msgstr "чистий"
 
-#: ../src/orca/default.py:2605 ../src/orca/default.py:2738
+#: ../src/orca/default.py:2628 ../src/orca/default.py:2761
 msgid "white space"
 msgstr "пробіл"
 
@@ -426,7 +431,7 @@ msgstr "пробіл"
 msgid "Emacspeak Speech Services"
 msgstr "Служби вимови Emacs"
 
-#: ../src/orca/focus_tracking_presenter.py:733
+#: ../src/orca/focus_tracking_presenter.py:734
 msgid "Switching to focus tracking mode."
 msgstr "Перемикання у режим відстеження фокусу."
 
@@ -436,29 +441,38 @@ msgstr "Служби вимови GNOME"
 
 #. # Replace ellipses (both manual and unicode) with "dot dot dot"
 #. #
-#: ../src/orca/gnomespeechfactory.py:605 ../src/orca/gnomespeechfactory.py:606
+#: ../src/orca/gnomespeechfactory.py:610 ../src/orca/gnomespeechfactory.py:611
 msgid " dot dot dot"
 msgstr " три крапки "
 
-#: ../src/orca/gnomespeechfactory.py:765
+#: ../src/orca/gnomespeechfactory.py:770
 msgid "higher."
 msgstr "вище."
 
-#: ../src/orca/gnomespeechfactory.py:793
+#: ../src/orca/gnomespeechfactory.py:798
 msgid "lower."
 msgstr "нижче."
 
-#: ../src/orca/gnomespeechfactory.py:818
+#: ../src/orca/gnomespeechfactory.py:823
 msgid "faster."
 msgstr "швидше."
 
-#: ../src/orca/gnomespeechfactory.py:848
+#: ../src/orca/gnomespeechfactory.py:853
 msgid "slower."
 msgstr "повільніше."
 
 #: ../src/orca/hierarchical_presenter.py:436
 msgid "Switching to hierarchical navigation mode."
 msgstr "Перемикання на режим навігації по ієрархії."
+
+#: ../src/orca/J2SE-access-bridge.py:71 ../src/orca/speechgenerator.py:909
+#: ../src/orca/speechgenerator.py:912 ../src/orca/util.py:1228
+msgid "selected"
+msgstr "виділено"
+
+#: ../src/orca/J2SE-access-bridge.py:75 ../src/orca/util.py:1236
+msgid "unselected"
+msgstr "не виділений"
 
 #: ../src/orca/keynames.py:32 ../src/orca/keynames.py:35
 msgid "left shift"
@@ -556,8 +570,8 @@ msgstr "<b>Параметри збільшувача</b>"
 msgid "Braille"
 msgstr "Шрифт Брайля"
 
-#: ../src/orca/orca-setup.glade.h:9 ../src/orca/orca_gui_prefs.py:1059
-#: ../src/orca/orca_gui_prefs.py:1114
+#: ../src/orca/orca-setup.glade.h:9 ../src/orca/orca_gui_prefs.py:1058
+#: ../src/orca/orca_gui_prefs.py:1113
 msgid "Brie_f"
 msgstr "_Стисло"
 
@@ -651,7 +665,7 @@ msgstr "_Інвертувати кольори"
 msgid "Key Echo"
 msgstr "Відлуння клавіш"
 
-#: ../src/orca/orca-setup.glade.h:34 ../src/orca/orca_gui_prefs.py:1039
+#: ../src/orca/orca-setup.glade.h:34 ../src/orca/orca_gui_prefs.py:1038
 msgid "M_ost"
 msgstr "_Найбільший"
 
@@ -691,7 +705,7 @@ msgstr "_Величина масштабу:"
 msgid "Si_ze:"
 msgstr "_Розмір:"
 
-#: ../src/orca/orca-setup.glade.h:44 ../src/orca/orca_gui_prefs.py:1036
+#: ../src/orca/orca-setup.glade.h:44 ../src/orca/orca_gui_prefs.py:1035
 msgid "So_me"
 msgstr "_Деякі"
 
@@ -699,7 +713,7 @@ msgstr "_Деякі"
 msgid "Speak _indentation and justification"
 msgstr "Вимовляти _відступи та вирівнювання"
 
-#: ../src/orca/orca-setup.glade.h:46 ../src/orca/orca_gui_prefs.py:1079
+#: ../src/orca/orca-setup.glade.h:46 ../src/orca/orca_gui_prefs.py:1078
 msgid "Speak current _cell"
 msgstr "Вимовити поточну _комірку"
 
@@ -755,7 +769,7 @@ msgstr "_Увімкнути вимову"
 msgid "_Left:"
 msgstr "_Ліва:"
 
-#: ../src/orca/orca-setup.glade.h:60 ../src/orca/orca_gui_prefs.py:1033
+#: ../src/orca/orca-setup.glade.h:60 ../src/orca/orca_gui_prefs.py:1032
 msgid "_None"
 msgstr "_Немає"
 
@@ -872,7 +886,7 @@ msgstr "-t, --text-setup             Встановлення параметрі
 msgid "-n, --no-setup               Skip set up of user preferences"
 msgstr "-n, --no-setup               Пропустити встановлення параметрів"
 
-#: ../src/orca/orca.py:1102
+#: ../src/orca/orca.py:1103
 msgid ""
 "If Orca has not been previously set up by the user, Orca\n"
 "will automatically launch the preferences set up unless\n"
@@ -882,7 +896,7 @@ msgstr ""
 "автоматично відкриє вікно параметрів,\n"
 "якщо у аргументах запуску не вказано -n чи --no-setup."
 
-#: ../src/orca/orca.py:1104
+#: ../src/orca/orca.py:1105
 msgid "Report bugs to orca-list@gnome.org."
 msgstr "Сповістіть про помилку за адресою orca-list@gnome.org."
 
@@ -999,43 +1013,43 @@ msgstr "Щоб параметри набрали сили слід вийти з
 msgid "Setup complete.  Press Return to continue."
 msgstr "Встановлення завершено. Для продовження натисніть Enter"
 
-#: ../src/orca/orca_gui_prefs.py:128 ../src/orca/orca_gui_prefs.py:424
-#: ../src/orca/orca_gui_prefs.py:466
+#: ../src/orca/orca_gui_prefs.py:128 ../src/orca/orca_gui_prefs.py:423
+#: ../src/orca/orca_gui_prefs.py:465
 msgid "Speech not available."
 msgstr "Вимова недоступна."
 
-#: ../src/orca/orca_gui_prefs.py:366 ../src/orca/orca_gui_prefs.py:370
-#: ../src/orca/orca_gui_prefs.py:1311
+#: ../src/orca/orca_gui_prefs.py:365 ../src/orca/orca_gui_prefs.py:369
+#: ../src/orca/orca_gui_prefs.py:1310
 msgid "Bilinear"
 msgstr "Білінійна"
 
-#: ../src/orca/orca_gui_prefs.py:368 ../src/orca/orca_gui_prefs.py:381
-#: ../src/orca/orca_gui_prefs.py:1313 ../src/orca/orca_gui_prefs.py:1336
+#: ../src/orca/orca_gui_prefs.py:367 ../src/orca/orca_gui_prefs.py:380
+#: ../src/orca/orca_gui_prefs.py:1312 ../src/orca/orca_gui_prefs.py:1335
 msgid "None"
 msgstr "Немає"
 
-#: ../src/orca/orca_gui_prefs.py:379 ../src/orca/orca_gui_prefs.py:387
-#: ../src/orca/orca_gui_prefs.py:1330
+#: ../src/orca/orca_gui_prefs.py:378 ../src/orca/orca_gui_prefs.py:386
+#: ../src/orca/orca_gui_prefs.py:1329
 msgid "Centered"
 msgstr "По центру"
 
-#: ../src/orca/orca_gui_prefs.py:383 ../src/orca/orca_gui_prefs.py:1334
+#: ../src/orca/orca_gui_prefs.py:382 ../src/orca/orca_gui_prefs.py:1333
 msgid "Proportional"
 msgstr "Пропорційно"
 
-#: ../src/orca/orca_gui_prefs.py:385 ../src/orca/orca_gui_prefs.py:1332
+#: ../src/orca/orca_gui_prefs.py:384 ../src/orca/orca_gui_prefs.py:1331
 msgid "Push"
 msgstr "Натиснути"
 
-#: ../src/orca/orca_gui_prefs.py:503 ../src/orca/orca_gui_prefs.py:528
+#: ../src/orca/orca_gui_prefs.py:502 ../src/orca/orca_gui_prefs.py:527
 msgid "Default"
 msgstr "Типово"
 
-#: ../src/orca/orca_gui_prefs.py:505 ../src/orca/orca_gui_prefs.py:530
+#: ../src/orca/orca_gui_prefs.py:504 ../src/orca/orca_gui_prefs.py:529
 msgid "Uppercase"
 msgstr "У верхньому регістрі"
 
-#: ../src/orca/orca_gui_prefs.py:507 ../src/orca/orca_gui_prefs.py:536
+#: ../src/orca/orca_gui_prefs.py:506 ../src/orca/orca_gui_prefs.py:535
 msgid "Hyperlink"
 msgstr "Гіперпосилання"
 
@@ -2123,11 +2137,6 @@ msgstr "відмічено"
 msgid "not checked"
 msgstr "не відмічено"
 
-#: ../src/orca/speechgenerator.py:909 ../src/orca/speechgenerator.py:912
-#: ../src/orca/util.py:1122
-msgid "selected"
-msgstr "виділено"
-
 #: ../src/orca/speechgenerator.py:920 ../src/orca/speechgenerator.py:923
 msgid "not selected"
 msgstr "не виділено"
@@ -2136,41 +2145,40 @@ msgstr "не виділено"
 msgid "tear off"
 msgstr "відірвано"
 
-#: ../src/orca/util.py:384
+#: ../src/orca/util.py:473
 msgid "Misspelled word: "
 msgstr "Слово з помилкою:"
 
-#: ../src/orca/util.py:385
+#: ../src/orca/util.py:474
 msgid " Context is "
 msgstr "Контекст"
 
-#: ../src/orca/util.py:1066
+#: ../src/orca/util.py:1172
 msgid "page selected from cursor position"
 msgstr "сторінка виділена від позиції курсора"
 
-#: ../src/orca/util.py:1070
+#: ../src/orca/util.py:1176
 msgid "page selected to cursor position"
 msgstr "сторінка виділена до позиції курсора"
 
-#: ../src/orca/util.py:1074
+#: ../src/orca/util.py:1180
 msgid "line selected down from cursor position"
 msgstr "рядок виділено вниз від позиції курсора"
 
-#: ../src/orca/util.py:1078
+#: ../src/orca/util.py:1184
 msgid "line selected up from cursor position"
 msgstr "рядок виділено вгору від позиції курсора"
 
-#: ../src/orca/util.py:1082
+#: ../src/orca/util.py:1188
 msgid "document selected to cursor position"
 msgstr "документ виділено до позиції курсора"
 
-#: ../src/orca/util.py:1086
+#: ../src/orca/util.py:1192
 msgid "document selected from cursor position"
 msgstr "документ виділено від позиції курсора"
 
-#: ../src/orca/util.py:1130
-msgid "unselected"
-msgstr "не виділений"
+#~ msgid "Assistive Technologies for Blind and Visually Impaired People"
+#~ msgstr "Допоміжні технології для сліпих та людей з вадами зору"
 
 #~ msgid "bang"
 #~ msgstr "удар"
