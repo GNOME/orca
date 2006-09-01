@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.HEAD.mk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-30 22:09+0200\n"
-"PO-Revision-Date: 2006-08-30 23:53+0200\n"
+"POT-Creation-Date: 2006-08-31 11:52+0200\n"
+"PO-Revision-Date: 2006-09-01 01:18+0200\n"
 "Last-Translator: Jovan Naumovski <jovan@lugola.net>\n"
 "Language-Team: Macedonian <ossm-members@hedona.on.net.mk>\n"
 "MIME-Version: 1.0\n"
@@ -333,7 +333,7 @@ msgstr "Го пушта или исклучува снимањето на коп
 
 #: ../src/orca/default.py:222
 msgid "Displays the preferences configuration dialog."
-msgstr "Ги прикажува преференците на конфигурациониот дијалог."
+msgstr "Ги прикажува преференциите на конфигурациониот дијалог."
 
 #: ../src/orca/default.py:226
 msgid "Reloads user settings and reinitializes services as necessary."
@@ -691,7 +691,7 @@ msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:39
 msgid "Orca Preferences"
-msgstr "Преференци за Орка (Orca)"
+msgstr "Преференции за Orca"
 
 #: ../src/orca/orca-setup.glade.h:40
 msgid "Pi_tch:"
