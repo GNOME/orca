@@ -1,3 +1,7 @@
+2006-09-01  Kjartan Maraas  <kmaraas@gnome.org>
+
+        * po/LINGUAS: Add forgotten nb entry.
+
 2006-09-01  Jovan Naumovski  <jovan@lugola.net>
 
 	* mk.po: Updated Macedonian translation.
