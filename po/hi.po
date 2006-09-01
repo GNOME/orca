@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.HEAD.hi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-29 20:01+0200\n"
+"POT-Creation-Date: 2006-09-01 13:37+0200\n"
 "PO-Revision-Date: 2006-08-30 15:48+0530\n"
 "Last-Translator: Rajesh Ranjan <rranjan@redhat.com>\n"
 "Language-Team: Hindi <fedora-trans-hi@redhat.com>\n"
@@ -17,16 +17,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\n\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"\n"
 "\n"
 "\n"
 
 #: ../orca.desktop.in.h:1
 msgid "Orca Screen Reader and Magnifier"
-msgstr "Orca स्क्रीन रीडर और आवर्द्धक"
+msgstr "Orca स्क्रीन पाठक व आवर्द्धक"
 
 #: ../orca.desktop.in.h:2
-msgid "Present on-screen information as speech or braille, or magnify the screen"
+msgid ""
+"Present on-screen information as speech or braille, or magnify the screen"
 msgstr "भाषण या ब्रेल के रूप में ऑन स्क्रीन सूचना देता है, या स्क्रीन आवर्द्धित करता है"
 
 #: ../src/orca/braillegenerator.py:193 ../src/orca/speechgenerator.py:191
@@ -453,23 +455,23 @@ msgstr "गनोम भाषण सेवाएँ"
 
 #. # Replace ellipses (both manual and unicode) with "dot dot dot"
 #. #
-#: ../src/orca/gnomespeechfactory.py:605 ../src/orca/gnomespeechfactory.py:606
+#: ../src/orca/gnomespeechfactory.py:610 ../src/orca/gnomespeechfactory.py:611
 msgid " dot dot dot"
 msgstr " dot dot dot"
 
-#: ../src/orca/gnomespeechfactory.py:765
+#: ../src/orca/gnomespeechfactory.py:770
 msgid "higher."
 msgstr "उच्चतर."
 
-#: ../src/orca/gnomespeechfactory.py:793
+#: ../src/orca/gnomespeechfactory.py:798
 msgid "lower."
 msgstr "निचला."
 
-#: ../src/orca/gnomespeechfactory.py:818
+#: ../src/orca/gnomespeechfactory.py:823
 msgid "faster."
 msgstr "तेज."
 
-#: ../src/orca/gnomespeechfactory.py:848
+#: ../src/orca/gnomespeechfactory.py:853
 msgid "slower."
 msgstr "धीमा."
 
@@ -2001,7 +2003,8 @@ msgid "link"
 msgstr "लिंक "
 
 #: ../src/orca/scripts/gaim.py:149
-msgid "Toggle whether we prefix chat room messages with the name of the chat room."
+msgid ""
+"Toggle whether we prefix chat room messages with the name of the chat room."
 msgstr "टॉगल करें कि क्या हमें चैट रूम संदेश को चैट रूम के नाम से उपसर्ग करना है."
 
 #: ../src/orca/scripts/gaim.py:153
@@ -2185,4 +2188,3 @@ msgstr "कर्सर स्थिति से दस्तावेज च�
 #: ../src/orca/util.py:1192
 msgid "document selected from cursor position"
 msgstr "कर्सर स्थिति से दस्तावेज चयनित"
-
