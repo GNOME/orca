@@ -1,10 +1,14 @@
+2006-09-02  Wouter Bolsterlee  <uws+gnome@xs4all.nl>
+
+	* nl.po: Translation updated by Wouter Bolsterlee.
+
 2006-08-31  Rajesh Ranjan <rajeshkajha@yahoo.com>
 
-        * hi.po: Updated Hindi Translation.
+	* hi.po: Updated Hindi Translation.
 
 2006-09-01  Kjartan Maraas  <kmaraas@gnome.org>
 
-        * po/LINGUAS: Add forgotten nb entry.
+	* po/LINGUAS: Add forgotten nb entry.
 
 2006-09-01  Jovan Naumovski  <jovan@lugola.net>
 
@@ -17,8 +21,8 @@
 
 2006-08-31  Chao-Hsiung Liao  <j_h_liau@yahoo.com.tw>
 
-        * zh_HK.po: Updated Traditional Chinese translation(Hong Kong).
-        * zh_TW.po: Updated Traditional Chinese translation(Taiwan).
+	* zh_HK.po: Updated Traditional Chinese translation(Hong Kong).
+	* zh_TW.po: Updated Traditional Chinese translation(Taiwan).
 
 2006-08-31  Alexander Shopov  <ash@contact.bg>
 
@@ -36,7 +40,7 @@
 
 2006-08-30  Rajesh Ranjan <rajeshkajha@yahoo.com>
 
-        * hi.po: Updated Hindi Translation.
+	* hi.po: Updated Hindi Translation.
 
 2006-08-29  Francisco Javier F. Serrador  <serrador@openshine.com>
 
@@ -44,7 +48,7 @@
 
 2006-08-29  Rajesh Ranjan <rajeshkajha@yahoo.com>
 
-        * hi.po: Updated Hindi Translation.
+	* hi.po: Updated Hindi Translation.
 
 2006-08-29  Gintautas Miliauskas  <gintas@akl.lt>
 
@@ -70,7 +74,7 @@
 
 2006-08-24  Raivis Dejus  <orvils@gmail.com>
 
-        * lv.po: Updated Latvian translation.
+	* lv.po: Updated Latvian translation.
 
 2006-08-23  Daniel Nylander <po@danielnylander.se>
 
@@ -147,8 +151,8 @@
 
 2006-08-12  Chao-Hsiung Liao  <j_h_liau@yahoo.com.tw>
 
-        * zh_HK.po: Updated Traditional Chinese translation(Hong Kong).
-        * zh_TW.po: Updated Traditional Chinese translation(Taiwan).
+	* zh_HK.po: Updated Traditional Chinese translation(Hong Kong).
+	* zh_TW.po: Updated Traditional Chinese translation(Taiwan).
 
 2006-08-10  Jovan Naumovski  <jovan@lugola.net>
 
@@ -234,8 +238,8 @@
 
 2006-07-18  Guntupalli Karunakar  <karunakar@freedomink.org>
 
-        * dz.po: Updated Dzongkha translation by
-        Dzongkhalinux team, DIT
+	* dz.po: Updated Dzongkha translation by
+	Dzongkhalinux team, DIT
 
 2006-07-18  Francisco Javier F. Serrador  <serrador@openshine.com>
 
@@ -535,7 +539,7 @@
 
 2005-04-01  Steve Murphy  <murf@e-tools.com>
 
-        * rw.po: Added Kinyarwanda translation.
+	* rw.po: Added Kinyarwanda translation.
 
 2005-04-01  Adam Weinberger  <adamw@gnome.org>
 
@@ -587,9 +591,9 @@
 	* pt_BR.po: Updated Brazilian Portuguese translation.
 
 2004-10-17  David Lodge <dave@cirt.net>
-                                                                                
-        * en_GB.po: Updated British English translation.
-                                                                                
+
+	* en_GB.po: Updated British English translation.
+
 2004-10-16  Danilo Šegan  <dsegan@gmx.net>
 
 	* sr.po, sr@Latn.po: Added Serbian translation.
@@ -601,9 +605,9 @@
 	* gu.po: Added Gujarati Translation.
 
 2004-09-07  David Lodge <dave@cirt.net>
-                                                                                
-        * en_GB.po: Updated British translation.
-                                                                                
+
+	* en_GB.po: Updated British translation.
+
 2004-09-01  Estêvão Samuel Procópio  <tevaum@cvs.gnome.org>
 
 	* pt_BR.po: Updated Brazilian Portuguese translation.
