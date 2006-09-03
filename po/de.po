@@ -4,13 +4,14 @@
 # This file is distributed under the same license as the orca package.
 #
 # Hendrik Brandt <heb@gnome-de.org>, 2004-2005, 2006.
+# Hendrik Richter <hendrikr@gnome.org>, 2006.
 msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-17 22:43+0200\n"
-"PO-Revision-Date: 2006-08-17 22:43+0200\n"
-"Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
+"POT-Creation-Date: 2006-09-03 12:17+0200\n"
+"PO-Revision-Date: 2006-09-03 12:55+0200\n"
+"Last-Translator: Hendrik Richter <hendrikr@gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -32,11 +33,13 @@ msgstr ""
 msgid "grayed"
 msgstr "ausgegraut"
 
-#: ../src/orca/braillegenerator.py:1096 ../src/orca/speechgenerator.py:1198
+#: ../src/orca/braillegenerator.py:1096 ../src/orca/J2SE-access-bridge.py:66
+#: ../src/orca/speechgenerator.py:1198
 msgid "expanded"
 msgstr "aufgeklappt"
 
-#: ../src/orca/braillegenerator.py:1098 ../src/orca/speechgenerator.py:1200
+#: ../src/orca/braillegenerator.py:1098 ../src/orca/J2SE-access-bridge.py:69
+#: ../src/orca/speechgenerator.py:1200
 msgid "collapsed"
 msgstr "zugeklappt"
 
@@ -187,11 +190,11 @@ msgstr "hoch"
 
 #: ../src/orca/default.py:78
 msgid "Performs left click on current flat review item."
-msgstr ""
+msgstr "Einen Linksklick auf das aktuelle Objekt ausführen."
 
 #: ../src/orca/default.py:82
 msgid "Performs right click on current flat review item."
-msgstr ""
+msgstr "Einen Rechtsklick auf das aktuelle Objekt ausführen."
 
 #: ../src/orca/default.py:86 ../src/orca/scripts/Evolution.py:107
 msgid "Speaks entire document."
@@ -207,67 +210,67 @@ msgstr "Die sichtbaren Bereiche im aktiven Fenster zeichnen und ausgeben."
 
 #: ../src/orca/default.py:98
 msgid "Enters and exits flat review mode."
-msgstr ""
+msgstr "Den Übersichts-Modus (»Flat Review«) betreten und verlassen"
 
 #: ../src/orca/default.py:102
 msgid "Moves flat review to the beginning of the previous line."
-msgstr ""
+msgstr "Die Übersicht zum Anfang der vorherigen Zeile bewegen."
 
 #: ../src/orca/default.py:106
 msgid "Moves flat review to the home position."
-msgstr ""
+msgstr "Die Übersicht zur Ausgangsposition bewegen."
 
 #: ../src/orca/default.py:110
 msgid "Speaks the current flat review line."
-msgstr ""
+msgstr "Die aktuelle Zeile vorlesen."
 
 #: ../src/orca/default.py:114
 msgid "Moves flat review to the beginning of the next line."
-msgstr ""
+msgstr "Die Übersicht zum Beginn der nächsten Zeile bewegen."
 
 #: ../src/orca/default.py:118
 msgid "Moves flat review to the end position."
-msgstr ""
+msgstr "Die Übersicht zur letzten Position bewegen."
 
 #: ../src/orca/default.py:122
 msgid "Moves flat review to the previous item or word."
-msgstr ""
+msgstr "Die Übersicht zum vorherigen Eintrag oder Wort bewegen."
 
 #: ../src/orca/default.py:126
 msgid "Moves flat review to the word above the current word."
-msgstr ""
+msgstr "Die Übersicht zum Wort, das über dem aktuellen liegt, bewegen."
 
 #: ../src/orca/default.py:130
 msgid "Speaks or spells the current flat review item or word."
-msgstr ""
+msgstr "Den aktuellen Eintrag oder das aktuelle Wort vorlesen."
 
 #: ../src/orca/default.py:134
 msgid "Speaks the current flat review object."
-msgstr ""
+msgstr "Das aktuelle Objekt vorlesen."
 
 #: ../src/orca/default.py:138
 msgid "Moves flat review to the next item or word."
-msgstr ""
+msgstr "Die Übersicht zum nächsten Eintrag oder Wort bewegen."
 
 #: ../src/orca/default.py:142
 msgid "Moves flat review to the word below the current word."
-msgstr ""
+msgstr "Die Übersicht zum Wort, das unter dem aktuellen liegt, bewegen."
 
 #: ../src/orca/default.py:146
 msgid "Moves flat review to the previous character."
-msgstr ""
+msgstr "Die Übersicht zum vorherigen Zeichen bewegen."
 
 #: ../src/orca/default.py:150
 msgid "Moves flat review to the end of the line."
-msgstr ""
+msgstr "Die Übersicht zum Zeilenende bewegen."
 
 #: ../src/orca/default.py:154
 msgid "Speaks the current flat review character."
-msgstr ""
+msgstr "Das aktuelle Zeichen vorlesen."
 
 #: ../src/orca/default.py:158
 msgid "Moves flat review to the next character."
-msgstr ""
+msgstr "Die Übersicht zum nächsten Zeichen bewegen."
 
 #: ../src/orca/default.py:162
 msgid "Toggles whether to read just the current table cell or the whole row."
@@ -285,15 +288,15 @@ msgstr "Informationen zum aktuellen Skript erhalten."
 
 #: ../src/orca/default.py:174
 msgid "Pans the braille display to the left."
-msgstr "Setzt "
+msgstr "Setzt die Braille-Anzeige nach links."
 
 #: ../src/orca/default.py:178
 msgid "Pans the braille display to the right."
-msgstr ""
+msgstr "Setzt die Braille-Anzeige nach rechts."
 
 #: ../src/orca/default.py:182
 msgid "Moves flat review to the bottom left."
-msgstr ""
+msgstr "Die Übersicht nach unten links bewegen."
 
 #: ../src/orca/default.py:186
 msgid "Returns to object with keyboard focus."
@@ -394,44 +397,44 @@ msgstr "Kein Fokus"
 msgid "entire document selected"
 msgstr "das gesamte Dokument ist ausgewählt"
 
-#: ../src/orca/default.py:2123
+#: ../src/orca/default.py:2121
 msgid "Speak "
 msgstr "Lesen "
 
-#: ../src/orca/default.py:2126
+#: ../src/orca/default.py:2124
 msgid "row"
 msgstr "Reihe"
 
-#: ../src/orca/default.py:2128 ../src/orca/rolenames.py:432
+#: ../src/orca/default.py:2126 ../src/orca/rolenames.py:432
 #: ../src/orca/rolenames.py:434
 msgid "cell"
 msgstr "Zelle"
 
-#: ../src/orca/default.py:2283
+#: ../src/orca/default.py:2281
 msgid "Entering learn mode.  Press any key to hear its function. "
 msgstr ""
 "Lernmodus wird eingeschaltet. Bitte drücken Sie eine beliebige Taste um "
 "seine Funktion zu hören. "
 
-#: ../src/orca/default.py:2284
+#: ../src/orca/default.py:2282
 msgid "To exit learn mode, press the escape key."
 msgstr "Drücken Sie die Escape-Taste, um den Lernmodus zu verlassen."
 
-#: ../src/orca/default.py:2285
+#: ../src/orca/default.py:2283
 msgid "Learn mode.  Press escape to exit."
 msgstr "Lernmodus. Drücken Sie zum Verlassen die Escape-Taste."
 
-#: ../src/orca/default.py:2297 ../src/orca/default.py:2298
+#: ../src/orca/default.py:2295 ../src/orca/default.py:2296
 msgid "Exiting learn mode."
 msgstr "Lernmodus wird verlassen."
 
-#: ../src/orca/default.py:2628 ../src/orca/default.py:2756
-#: ../src/orca/default.py:2761 ../src/orca/default.py:2833
-#: ../src/orca/default.py:2838
+#: ../src/orca/default.py:2626 ../src/orca/default.py:2754
+#: ../src/orca/default.py:2759 ../src/orca/default.py:2831
+#: ../src/orca/default.py:2836
 msgid "blank"
 msgstr "leer"
 
-#: ../src/orca/default.py:2630 ../src/orca/default.py:2763
+#: ../src/orca/default.py:2628 ../src/orca/default.py:2761
 msgid "white space"
 msgstr "Leerzeichen"
 
@@ -449,29 +452,38 @@ msgstr "GNOME-Sprachausgabe"
 
 #. # Replace ellipses (both manual and unicode) with "dot dot dot"
 #. #
-#: ../src/orca/gnomespeechfactory.py:605 ../src/orca/gnomespeechfactory.py:606
+#: ../src/orca/gnomespeechfactory.py:610 ../src/orca/gnomespeechfactory.py:611
 msgid " dot dot dot"
 msgstr " Punkt Punkt Punkt"
 
-#: ../src/orca/gnomespeechfactory.py:765
+#: ../src/orca/gnomespeechfactory.py:770
 msgid "higher."
 msgstr "höher."
 
-#: ../src/orca/gnomespeechfactory.py:793
+#: ../src/orca/gnomespeechfactory.py:798
 msgid "lower."
 msgstr "tiefer."
 
-#: ../src/orca/gnomespeechfactory.py:818
+#: ../src/orca/gnomespeechfactory.py:823
 msgid "faster."
 msgstr "schneller."
 
-#: ../src/orca/gnomespeechfactory.py:848
+#: ../src/orca/gnomespeechfactory.py:853
 msgid "slower."
 msgstr "langsamer."
 
 #: ../src/orca/hierarchical_presenter.py:436
 msgid "Switching to hierarchical navigation mode."
 msgstr "Es wird den den hierarchischen Navigationsmodus gewechselt."
+
+#: ../src/orca/J2SE-access-bridge.py:71 ../src/orca/speechgenerator.py:909
+#: ../src/orca/speechgenerator.py:912 ../src/orca/util.py:1228
+msgid "selected"
+msgstr "ausgewählt"
+
+#: ../src/orca/J2SE-access-bridge.py:75 ../src/orca/util.py:1236
+msgid "unselected"
+msgstr "nicht ausgewählt"
 
 #: ../src/orca/keynames.py:32 ../src/orca/keynames.py:35
 msgid "left shift"
@@ -558,12 +570,10 @@ msgid "<b>Verbosity</b>"
 msgstr "<b>Ausführlichkeit</b>"
 
 #: ../src/orca/orca-setup.glade.h:6
-#, fuzzy
 msgid "<b>Zoomer Position</b>"
 msgstr "<b>Zoomer-Position</b>"
 
 #: ../src/orca/orca-setup.glade.h:7
-#, fuzzy
 msgid "<b>Zoomer Settings</b>"
 msgstr "<b>Zoomer-Einstellungen</b>"
 
@@ -571,8 +581,8 @@ msgstr "<b>Zoomer-Einstellungen</b>"
 msgid "Braille"
 msgstr "Braille"
 
-#: ../src/orca/orca-setup.glade.h:9 ../src/orca/orca_gui_prefs.py:1059
-#: ../src/orca/orca_gui_prefs.py:1114
+#: ../src/orca/orca-setup.glade.h:9 ../src/orca/orca_gui_prefs.py:1058
+#: ../src/orca/orca_gui_prefs.py:1113
 msgid "Brie_f"
 msgstr "_Kurz"
 
@@ -648,11 +658,11 @@ msgstr "_Fadenkreuz aktivieren"
 
 #: ../src/orca/orca-setup.glade.h:29
 msgid "Enable cross-hair cli_p"
-msgstr ""
+msgstr "Fadenkreuz-_Clip aktivieren"
 
 #: ../src/orca/orca-setup.glade.h:30
 msgid "Enable echo by _word"
-msgstr ""
+msgstr "_Wortglocke aktivieren"
 
 #: ../src/orca/orca-setup.glade.h:31
 msgid "Enable lockin_g keys"
@@ -666,9 +676,9 @@ msgstr "Farben _invertieren"
 msgid "Key Echo"
 msgstr "Tastaturglocke"
 
-#: ../src/orca/orca-setup.glade.h:34 ../src/orca/orca_gui_prefs.py:1039
+#: ../src/orca/orca-setup.glade.h:34 ../src/orca/orca_gui_prefs.py:1038
 msgid "M_ost"
-msgstr ""
+msgstr "Die _meisten"
 
 #: ../src/orca/orca-setup.glade.h:35
 msgid "Magnifier"
@@ -706,15 +716,15 @@ msgstr "Maßstab:"
 msgid "Si_ze:"
 msgstr "G_röße:"
 
-#: ../src/orca/orca-setup.glade.h:44 ../src/orca/orca_gui_prefs.py:1036
+#: ../src/orca/orca-setup.glade.h:44 ../src/orca/orca_gui_prefs.py:1035
 msgid "So_me"
-msgstr ""
+msgstr "_Einige"
 
 #: ../src/orca/orca-setup.glade.h:45
 msgid "Speak _indentation and justification"
 msgstr "_Einrückungen und Ausrichtung vorlesen"
 
-#: ../src/orca/orca-setup.glade.h:46 ../src/orca/orca_gui_prefs.py:1079
+#: ../src/orca/orca-setup.glade.h:46 ../src/orca/orca_gui_prefs.py:1078
 msgid "Speak current _cell"
 msgstr "Aktuelle _Zelle vorlesen"
 
@@ -770,9 +780,9 @@ msgstr "Sprache _aktivieren:"
 msgid "_Left:"
 msgstr "_Links:"
 
-#: ../src/orca/orca-setup.glade.h:60 ../src/orca/orca_gui_prefs.py:1033
+#: ../src/orca/orca-setup.glade.h:60 ../src/orca/orca_gui_prefs.py:1032
 msgid "_None"
-msgstr ""
+msgstr "_Keine"
 
 #: ../src/orca/orca-setup.glade.h:61
 msgid "_Person:"
@@ -824,7 +834,7 @@ msgstr "Feiner Debug-Grad."
 
 #: ../src/orca/orca.py:586
 msgid "Caps_Lock"
-msgstr ""
+msgstr "Feststelltaste"
 
 #: ../src/orca/orca.py:588
 msgid " off"
@@ -836,7 +846,7 @@ msgstr " an"
 
 #: ../src/orca/orca.py:592
 msgid "Num_Lock"
-msgstr ""
+msgstr "Num"
 
 #: ../src/orca/orca.py:775
 msgid "Speech enabled."
@@ -890,7 +900,7 @@ msgstr ""
 "-n, --no-setup               Das Einrichten der Benutzereinstellungen "
 "überspringen"
 
-#: ../src/orca/orca.py:1102
+#: ../src/orca/orca.py:1103
 msgid ""
 "If Orca has not been previously set up by the user, Orca\n"
 "will automatically launch the preferences set up unless\n"
@@ -900,7 +910,7 @@ msgstr ""
 "wird es automatisch den Einstellungesdialog starten, außer\n"
 "die Option -n bzw. --no-setup wird verwendet."
 
-#: ../src/orca/orca.py:1104
+#: ../src/orca/orca.py:1105
 msgid "Report bugs to orca-list@gnome.org."
 msgstr "Programmfehler an orca-list@gnome.org melden."
 
@@ -952,7 +962,6 @@ msgstr "Eine der verfügbaren Stimmen wählen:"
 #. Ask the user if they would like to enable echoing by word.
 #.
 #: ../src/orca/orca_console_prefs.py:209
-#, fuzzy
 msgid "Enable echo by word?  Enter y or n: "
 msgstr ""
 "Soll die Wortglocke benutzt werden? Geben Sie »y« für Ja oder »n« für Nein "
@@ -984,31 +993,31 @@ msgstr ""
 #: ../src/orca/orca_console_prefs.py:241
 msgid "Enable alphanumeric and punctuation keys?  Enter y or n: "
 msgstr ""
-"Möchten Sie die alphanumerischen und Interpunktions-Tasten aktivieren? "
-"Geben·Sie·»y«·für·Ja·oder·»n«·für·Nein·ein:·"
+"Sollen die alphanumerischen und Interpunktions-Tasten aktiviert werden? "
+"Geben Sie »y« für Ja oder »n« für Nein ein: "
 
 #: ../src/orca/orca_console_prefs.py:249
-#, fuzzy
 msgid "Enable modifier keys?  Enter y or n: "
 msgstr ""
-"Eine andere Stimme erstellen?  Geben Sie »y« für Ja oder »n« für Nein ein."
+"Sollen die Modifikatortasten aktiviert werden?  Geben Sie »y« für Ja oder "
+"»n« für Nein ein."
 
 #: ../src/orca/orca_console_prefs.py:257
 msgid "Enable locking keys?  Enter y or n: "
 msgstr ""
-"Soll die Sperrtasten aktiviert werden? Geben Sie »y« für Ja oder »n« für "
+"Sollen die Sperrtasten aktiviert werden? Geben Sie »y« für Ja oder »n« für "
 "Nein ein."
 
 #: ../src/orca/orca_console_prefs.py:265
 msgid "Enable function keys?  Enter y or n: "
 msgstr ""
-"Soll die Funktionstasten aktiviert werden? Geben Sie »y« für Ja oder »n« für "
-"Nein ein."
+"Sollen die Funktionstasten aktiviert werden? Geben Sie »y« für Ja oder »n« "
+"für Nein ein."
 
 #: ../src/orca/orca_console_prefs.py:273
 msgid "Enable action keys?  Enter y or n: "
 msgstr ""
-"Soll die Aktionstasten aktiviert werden? Geben Sie »y« für Ja oder »n« für "
+"Sollen die Aktionstasten aktiviert werden? Geben Sie »y« für Ja oder »n« für "
 "Nein ein."
 
 #: ../src/orca/orca_console_prefs.py:301
@@ -1035,43 +1044,43 @@ msgstr ""
 msgid "Setup complete.  Press Return to continue."
 msgstr "Einrichtung komplett. Drücken Sie Eingabe um fortzusetzen."
 
-#: ../src/orca/orca_gui_prefs.py:128 ../src/orca/orca_gui_prefs.py:424
-#: ../src/orca/orca_gui_prefs.py:466
+#: ../src/orca/orca_gui_prefs.py:128 ../src/orca/orca_gui_prefs.py:423
+#: ../src/orca/orca_gui_prefs.py:465
 msgid "Speech not available."
 msgstr "Sprachausgabe nicht verfügbar."
 
-#: ../src/orca/orca_gui_prefs.py:366 ../src/orca/orca_gui_prefs.py:370
-#: ../src/orca/orca_gui_prefs.py:1311
+#: ../src/orca/orca_gui_prefs.py:365 ../src/orca/orca_gui_prefs.py:369
+#: ../src/orca/orca_gui_prefs.py:1310
 msgid "Bilinear"
 msgstr "Bilinear"
 
-#: ../src/orca/orca_gui_prefs.py:368 ../src/orca/orca_gui_prefs.py:381
-#: ../src/orca/orca_gui_prefs.py:1313 ../src/orca/orca_gui_prefs.py:1336
+#: ../src/orca/orca_gui_prefs.py:367 ../src/orca/orca_gui_prefs.py:380
+#: ../src/orca/orca_gui_prefs.py:1312 ../src/orca/orca_gui_prefs.py:1335
 msgid "None"
 msgstr "Keine"
 
-#: ../src/orca/orca_gui_prefs.py:379 ../src/orca/orca_gui_prefs.py:387
-#: ../src/orca/orca_gui_prefs.py:1330
+#: ../src/orca/orca_gui_prefs.py:378 ../src/orca/orca_gui_prefs.py:386
+#: ../src/orca/orca_gui_prefs.py:1329
 msgid "Centered"
 msgstr "Zentriert"
 
-#: ../src/orca/orca_gui_prefs.py:383 ../src/orca/orca_gui_prefs.py:1334
+#: ../src/orca/orca_gui_prefs.py:382 ../src/orca/orca_gui_prefs.py:1333
 msgid "Proportional"
 msgstr "Proportional"
 
-#: ../src/orca/orca_gui_prefs.py:385 ../src/orca/orca_gui_prefs.py:1332
+#: ../src/orca/orca_gui_prefs.py:384 ../src/orca/orca_gui_prefs.py:1331
 msgid "Push"
 msgstr "Drücken"
 
-#: ../src/orca/orca_gui_prefs.py:503 ../src/orca/orca_gui_prefs.py:528
+#: ../src/orca/orca_gui_prefs.py:502 ../src/orca/orca_gui_prefs.py:527
 msgid "Default"
 msgstr "Vorgabe"
 
-#: ../src/orca/orca_gui_prefs.py:505 ../src/orca/orca_gui_prefs.py:530
+#: ../src/orca/orca_gui_prefs.py:504 ../src/orca/orca_gui_prefs.py:529
 msgid "Uppercase"
 msgstr "Großbuchstaben"
 
-#: ../src/orca/orca_gui_prefs.py:507 ../src/orca/orca_gui_prefs.py:536
+#: ../src/orca/orca_gui_prefs.py:506 ../src/orca/orca_gui_prefs.py:535
 msgid "Hyperlink"
 msgstr "Hyper-Link"
 
@@ -1150,15 +1159,15 @@ msgstr "Kalender"
 
 #: ../src/orca/rolenames.py:177
 msgid "cnv"
-msgstr ""
+msgstr "lnwnd"
 
 #: ../src/orca/rolenames.py:178
 msgid "Canvas"
-msgstr ""
+msgstr "Leinwand"
 
 #: ../src/orca/rolenames.py:179
 msgid "canvas"
-msgstr ""
+msgstr "Leinwand"
 
 #: ../src/orca/rolenames.py:182 ../src/orca/rolenames.py:187
 msgid "chk"
@@ -1174,23 +1183,23 @@ msgstr "Ankreuzfeld"
 
 #: ../src/orca/rolenames.py:188
 msgid "CheckItem"
-msgstr ""
+msgstr "Ankreuzeintrag"
 
 #: ../src/orca/rolenames.py:189
 msgid "check item"
-msgstr ""
+msgstr "Ankreuzeintrag"
 
 #: ../src/orca/rolenames.py:192
 msgid "ckm"
-msgstr ""
+msgstr "akm"
 
 #: ../src/orca/rolenames.py:193
 msgid "CheckMenu"
-msgstr ""
+msgstr "Ankreuzmenü"
 
 #: ../src/orca/rolenames.py:194
 msgid "check menu"
-msgstr ""
+msgstr "Ankreuzmenü"
 
 #: ../src/orca/rolenames.py:197
 msgid "clrchsr"
@@ -1218,15 +1227,15 @@ msgstr "Spaltenkopf"
 
 #: ../src/orca/rolenames.py:207
 msgid "cbo"
-msgstr ""
+msgstr "kmb"
 
 #: ../src/orca/rolenames.py:208
 msgid "Combo"
-msgstr ""
+msgstr "Kombination"
 
 #: ../src/orca/rolenames.py:209
 msgid "combo box"
-msgstr ""
+msgstr "Kombinationsfeld"
 
 #: ../src/orca/rolenames.py:212
 msgid "dat"
@@ -1616,15 +1625,15 @@ msgstr "Monowahl-Menü"
 
 #: ../src/orca/rolenames.py:382
 msgid "rtpn"
-msgstr ""
+msgstr "wrzlfld"
 
 #: ../src/orca/rolenames.py:383
 msgid "RootPane"
-msgstr ""
+msgstr "Wurzelfeld"
 
 #: ../src/orca/rolenames.py:384
 msgid "root pane"
-msgstr ""
+msgstr "Wurzelfeld"
 
 #: ../src/orca/rolenames.py:387 ../src/orca/rolenames.py:442
 msgid "rwhdr"
@@ -1652,15 +1661,15 @@ msgstr "Bildlaufleiste"
 
 #: ../src/orca/rolenames.py:397
 msgid "scpn"
-msgstr ""
+msgstr "rllfld"
 
 #: ../src/orca/rolenames.py:398
 msgid "ScrollPane"
-msgstr ""
+msgstr "Rollfeld"
 
 #: ../src/orca/rolenames.py:399
 msgid "scroll pane"
-msgstr ""
+msgstr "Rollfeld"
 
 #: ../src/orca/rolenames.py:402
 msgid "seprtr"
@@ -2002,7 +2011,7 @@ msgstr "Keine Termine"
 
 #: ../src/orca/scripts/Evolution.py:761
 msgid "Directories button"
-msgstr ""
+msgstr "Verzeichnis-Knopf"
 
 #: ../src/orca/scripts/Evolution.py:900 ../src/orca/scripts/Evolution.py:938
 msgid "Assistant"
@@ -2015,7 +2024,7 @@ msgstr "Verknüpfung"
 #: ../src/orca/scripts/gaim.py:149
 msgid ""
 "Toggle whether we prefix chat room messages with the name of the chat room."
-msgstr ""
+msgstr "Legt fest, ob Nachrichten in Chats mit dessen Namen versehen werden."
 
 #: ../src/orca/scripts/gaim.py:153
 msgid "Speak and braille a previous chat room message."
@@ -2079,6 +2088,7 @@ msgstr "Rechtschreibprüfung:"
 #: ../src/orca/scripts/StarOffice.py:580
 msgid "Note that the Scroll Down button has to be pressed numerous times."
 msgstr ""
+"Beachten Sie, dass der Knopf zum Runterrollen mehrmals gedrückt werden muss."
 
 #: ../src/orca/scripts/StarOffice.py:594
 msgid "License Agreement Accept button now has focus."
@@ -2158,11 +2168,6 @@ msgstr "ausgewählt"
 msgid "not checked"
 msgstr "nicht ausgewählt"
 
-#: ../src/orca/speechgenerator.py:909 ../src/orca/speechgenerator.py:912
-#: ../src/orca/util.py:1171
-msgid "selected"
-msgstr "ausgewählt"
-
 #: ../src/orca/speechgenerator.py:920 ../src/orca/speechgenerator.py:923
 msgid "not selected"
 msgstr "nicht ausgewählt"
@@ -2171,38 +2176,34 @@ msgstr "nicht ausgewählt"
 msgid "tear off"
 msgstr "abtrennbar"
 
-#: ../src/orca/util.py:433
+#: ../src/orca/util.py:473
 msgid "Misspelled word: "
 msgstr "Falsch geschriebenes Wort: "
 
-#: ../src/orca/util.py:434
+#: ../src/orca/util.py:474
 msgid " Context is "
 msgstr "Kontext ist "
 
-#: ../src/orca/util.py:1115
+#: ../src/orca/util.py:1172
 msgid "page selected from cursor position"
-msgstr ""
+msgstr "die durch Zeigerposition ausgewählte Seite"
 
-#: ../src/orca/util.py:1119
+#: ../src/orca/util.py:1176
 msgid "page selected to cursor position"
-msgstr ""
+msgstr "die zur Zeigerposition ausgewählte Seite"
 
-#: ../src/orca/util.py:1123
+#: ../src/orca/util.py:1180
 msgid "line selected down from cursor position"
-msgstr ""
+msgstr "die unterhalb des Zeigers ausgewählte Zeile"
 
-#: ../src/orca/util.py:1127
+#: ../src/orca/util.py:1184
 msgid "line selected up from cursor position"
-msgstr ""
+msgstr "die oberhalb des Zeigers ausgewählte Zeile"
 
-#: ../src/orca/util.py:1131
+#: ../src/orca/util.py:1188
 msgid "document selected to cursor position"
-msgstr ""
+msgstr "das zur Zeigerposition ausgewählte Dokument"
 
-#: ../src/orca/util.py:1135
+#: ../src/orca/util.py:1192
 msgid "document selected from cursor position"
-msgstr ""
-
-#: ../src/orca/util.py:1179
-msgid "unselected"
-msgstr "nicht ausgewählt"
+msgstr "das durch Zeigerposition ausgewählte Dokument"
