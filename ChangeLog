@@ -1,3 +1,7 @@
+2006-09-03  Willie Walker <william.walker@sun.com>
+
+	* NEWS: final prep for v1.0.0.
+
 2006-08-31  Willie Walker <william.walker@sun.com>
 
 	* NEWS, configure.in, README, TODO: initial prep for v1.0.0.
