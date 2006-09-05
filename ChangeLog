@@ -1,3 +1,16 @@
+2006-09-05  Rich Burridge <rich.burridge@sun.com>
+
+        * configure.in:
+          docs/Makefile.am:
+          docs/man/Makefile.am:  (new)
+          docs/man/orca.sgml:  (new)
+          docs/man/orca.1:  (new)
+          Added in Orca manual pages.
+
+          The SGML source file is converted to nroff (on Solaris) with:
+
+            % /usr/lib/sgml/sgml2roff orca.sgml > orca.1
+
 2006-09-03  Willie Walker <william.walker@sun.com>
 
 	* NEWS: final prep for v1.0.0.

@@ -1,0 +1,653 @@
+'\" te
+.TH orca 1 "1 Sep 2006" "" ""
+.SH "NAME"
+orca \- a screen reader / magnifier
+.SH "SYNOPSIS"
+.PP
+\fBorca\fR [-\fBs\fR] [-\fB-gui-setup\fR] [-\fB-setup\fR] [-\fBt\fR] [-\fB-text-setup\fR] [-\fBn\fR] [-\fB-no-setup\fR] [-\fB?\fR] [-\fB-h\fR] [-\fB-help\fR] [-\fBv\fR] [-\fB-version\fR] [-\fBq\fR] [-\fB-quit\fR]
+.SH ""
+.PP
+Orca is a screen reader for people with visual impairments,
+and provides alternative access to the desktop by making use
+of speech synthesis, braille, and magnification  support on
+the platform\&.
+.PP
+In addition, orca only provides access to
+applications/toolkits that support the assistive technology
+service provide interface (AT-SPI), which include GTK,
+Mozilla, Firefox, Evolution, OpenOffice, StarOffice,
+Java/Swing, etc\&.
+.SH ""
+.PP
+The following options are supported:
+.sp
+.ne 2
+.mk
+\fB-\fBs\fR\fR
+.in +9n
+.rt
+When starting
+orca bring up the GUI configuration dialog\&.
+You can also use -\fB-gui-setup\fR or -\fB-setup\fR
+to specify this option\&.
+.sp
+.sp 1
+.in -9n
+.sp
+.ne 2
+.mk
+\fB-\fBt\fR\fR
+.in +9n
+.rt
+When starting 
+orca initiate the text-based configuration\&.
+You can also use -\fB-text-setup\fR to specify this option\&.
+.sp
+.sp 1
+.in -9n
+.sp
+.ne 2
+.mk
+\fB-\fBn\fR\fR
+.in +9n
+.rt
+When starting 
+orca force the application to be started without configuration, even though
+it might have needed it\&. This is useful when starting orca via something like
+gdm\&.
+You can also use -\fB-no-setup\fR to specify this option\&.
+.sp
+.sp 1
+.in -9n
+.sp
+.ne 2
+.mk
+\fB-\fB?\fR\fR
+.in +9n
+.rt
+Show the help 
+message of this release of the orca program\&.
+You can also use -\fBh\fR or -\fB-help\fR
+to specify this option\&.
+.sp
+.sp 1
+.in -9n
+.sp
+.ne 2
+.mk
+\fB-\fBv\fR\fR
+.in +9n
+.rt
+Return the 
+orca version number\&.
+You can also use -\fB-version\fR to specify this option\&.
+.sp
+.sp 1
+.in -9n
+.sp
+.ne 2
+.mk
+\fB-\fBq\fR\fR
+.in +9n
+.rt
+Quit orca\&.
+You can also use -\fB-quit\fR to specify this option\&.
+.sp
+.sp 1
+.in -9n
+.SH ""
+.PP
+In order for this "Accessible GNOME Desktop" to be accessible
+to users who are blind or have low vision, users will need to 
+employ an assistive technology (AT) that exposes the graphical
+desktop information encoded in the GNOME Accessibility Framework\&.
+.PP
+Customers with blind employees/students need to have the ability
+to adapt and customize their assistive technology solutions - both 
+to improve the efficiency of their blind users (to help make up for
+disadvantages inherent in not being able to "see" the entire screen
+immediately at a glace), and also to "work around" poorly designed 
+and not particularly accessible applications that their blind users
+need to use\&.
+.PP
+orca is an extensible assistive technology that provides end-user
+access to applications and toolkits that support the GNOME 
+Accessibility Framework\&. It has been designed with direct continual
+feedback from its disability user community\&.
+.PP
+orca uses a "scripting" approach to easily allow  customization
+per application and provides the ability for each user to further 
+customize their AT environment based on their own preferences\&.
+The "scripting" approach of orca provides a much more adaptable
+and compelling assistive technology solution than existing AT 
+for the JDS desktop\&.
+.PP
+Functionally orca has to do 4 major things:
+.br
+.sp
+1.
+.mk
+.in +4
+.rt
+Present information to the user via speech synthesis
+(text-to-speech), or refreshable braille (hardware connected
+to serial or USB port), or a magnified image on the user\&'s display\&.
+.sp
+.in -4
+.br
+.sp
+2.
+.mk
+.in +4
+.rt
+Acquire information from the applications and desktop
+graphical display via the GNOME Accessibility Framework\&.
+.sp
+.in -4
+.br
+.sp
+3.
+.mk
+.in +4
+.rt
+Track events occurring in the applications and desktop
+graphical display via the GNOME Accessibility Framework\&.
+.sp
+.in -4
+.br
+.sp
+4.
+.mk
+.in +4
+.rt
+Intercept and optionally consume user input events from
+the system keyboard and the buttons on a refreshable braille
+display\&. Based on the input, orca will either pass the
+event on to the application for normal processing, execute
+Orca-specific commands (such as reading the next line in the
+display or panning the braille display), or perform operations 
+on application objects (such as clicking buttons or modifying text areas)\&.
+.sp
+.in -4
+.PP
+orca will also:
+.sp
+.in +2
+\(bu
+.mk
+.in +3
+.rt
+be a collection of building blocks that comprise screen reading and 
+magnification technology, including use of text-to-speech, braille
+input/output, magnification logic, screen reading logic, keyboard 
+and mouse interception modules, and event coalescing\&.
+.sp
+.in -3
+\(bu
+.mk
+.in +3
+.rt
+be developed with the standard GNOME build environment\&.
+.sp
+.in -3
+\(bu
+.mk
+.in +3
+.rt
+support multiple braille displays\&.
+.sp
+.in -3
+\(bu
+.mk
+.in +3
+.rt
+support the gnome-speech module for text-to-speech\&.
+.sp
+.in -3
+\(bu
+.mk
+.in +3
+.rt
+intercept keyboard & mouse events through the GNOME
+Accessibility Framework and other supported X mechanisms\&.
+.sp
+.in -3
+\(bu
+.mk
+.in +3
+.rt
+support the gnome-mag module to provide end-user magnification
+of the screen between 2 and 16 times magnification in integer increments\&.
+.sp
+.in -3
+\(bu
+.mk
+.in +3
+.rt
+render its own graphical user interface using GTK+ widgets\&.
+.sp
+.in -3
+\(bu
+.mk
+.in +3
+.rt
+provide a scripting mechanism, giving it the ability to customize how 
+each application on the JDS desktop is handled by orca\&.
+.sp
+.in -3
+\(bu
+.mk
+.in +3
+.rt
+provide further customization on a per-user basis\&.
+.sp
+.in -3
+.in -2
+.PP
+Orca provides a set of its own keyboard commands\&. 
+Note that you can always enter Orca\&'s "learn mode" while running Orca by 
+pressing Insert+F1\&. When in learn mode, Orca will intercept all keyboard 
+and braille input events and will tell you what the effect of them would 
+be\&. To exit learn mode, press the escape key\&.
+.sp
+.in +2
+\(bu
+.mk
+.in +3
+.rt
+Commands for adjusting speech parameters
+.sp
+.sp
+.ne 2
+.mk
+\fB-\fB Insert-right arrow\fR\fR
+.sp .6
+.in +4
+increase speech rate
+.sp
+.sp 1
+.in -4
+.sp
+.ne 2
+.mk
+\fB-\fB Insert-left arrow\fR\fR
+.sp .6
+.in +4
+decrease speech rate
+.sp
+.sp 1
+.in -4
+.sp
+.ne 2
+.mk
+\fB-\fB Insert-up arrow\fR\fR
+.sp .6
+.in +4
+raise the pitch
+.sp
+.sp 1
+.in -4
+.sp
+.ne 2
+.mk
+\fB-\fB Insert-down arrow\fR\fR
+.sp .6
+.in +4
+decrease the pitch
+.sp
+.sp 1
+.in -4
+.in -3
+\(bu
+.mk
+.in +3
+.rt
+Flat review commands
+.sp
+.sp
+.ne 2
+.mk
+\fB-\fB Numpad-7\fR\fR
+.in +16n
+.rt
+move the flat review cursor to the previous line, and read it\&.
+.sp
+.sp 1
+.in -16n
+.sp
+.ne 2
+.mk
+\fB-\fB Numpad-8\fR\fR
+.in +16n
+.rt
+read the current line\&.
+.sp
+.sp 1
+.in -16n
+.sp
+.ne 2
+.mk
+\fB-\fB Numpad-9\fR\fR
+.in +16n
+.rt
+move the flat review cursor to the next line, and read it\&.
+.sp
+.sp 1
+.in -16n
+.sp
+.ne 2
+.mk
+\fB-\fB Numpad-4\fR\fR
+.in +16n
+.rt
+move the flat review cursor to the previous word, and read it\&.
+.sp
+.sp 1
+.in -16n
+.sp
+.ne 2
+.mk
+\fB-\fB Numpad-5\fR\fR
+.in +16n
+.rt
+read the current word\&.
+.sp
+.sp 1
+.in -16n
+.sp
+.ne 2
+.mk
+\fB-\fB Numpad-6\fR\fR
+.in +16n
+.rt
+move the flat review cursor to the next word, and read it\&.
+.sp
+.sp 1
+.in -16n
+.sp
+.ne 2
+.mk
+\fB-\fB Numpad-1\fR\fR
+.in +16n
+.rt
+move the flat review cursor to the previous character, and read it\&.
+.sp
+.sp 1
+.in -16n
+.sp
+.ne 2
+.mk
+\fB-\fB Numpad-2\fR\fR
+.in +16n
+.rt
+read the current character\&.
+.sp
+.sp 1
+.in -16n
+.sp
+.ne 2
+.mk
+\fB-\fB Numpad-3\fR\fR
+.in +16n
+.rt
+move the flat review cursor to the next character, and read it\&.
+.sp
+.sp 1
+.in -16n
+.sp
+.ne 2
+.mk
+\fB-\fB Numpad-slash\fR\fR
+.in +16n
+.rt
+perform a left mouse click at the location of the flat review 
+cursor\&.
+.sp
+.sp 1
+.in -16n
+.sp
+.ne 2
+.mk
+\fB-\fB Numpad-star\fR\fR
+.in +16n
+.rt
+perform a right mouse click at the location of the flat review 
+cursor\&.
+.sp
+.sp 1
+.in -16n
+.in -3
+.in -2
+.PP
+Note: the above commands apply when working with objects as well as when 
+working with text\&. For example, if the flat review cursor were positioned 
+on a menu bar, pressing the read current line command would speak the 
+names of all visible menus\&. Similarly, pressing read next word would 
+speak the object to the right of the flat review cursor on the same line, 
+or move flat review to the next line if no more objects were found\&.
+.sp
+.in +2
+\(bu
+.mk
+.in +3
+.rt
+Miscellaneous functions
+.sp
+.sp
+.ne 2
+.mk
+\fB-\fB Insert-F1\fR\fR
+.sp .6
+.in +4
+enter learn mode (press escape to exit)
+.sp
+.sp 1
+.in -4
+.sp
+.ne 2
+.mk
+\fB-\fB Insert-f\fR\fR
+.sp .6
+.in +4
+speak font and attribute information for the current character\&.
+.sp
+.sp 1
+.in -4
+.sp
+.ne 2
+.mk
+\fB-\fB Insert-space\fR\fR
+.sp .6
+.in +4
+launch the Orca Configuration dialog\&.
+.sp
+.sp 1
+.in -4
+.sp
+.ne 2
+.mk
+\fB-\fB Insert-Control-space\fR\fR
+.sp .6
+.in +4
+reload user settings and reinitialize services as necessary\&.
+.sp
+.sp 1
+.in -4
+.sp
+.ne 2
+.mk
+\fB-\fB Insert-s\fR\fR
+.sp .6
+.in +4
+toggle speech on and off
+.sp
+.sp 1
+.in -4
+.sp
+.ne 2
+.mk
+\fB-\fB Insert-F11\fR\fR
+.sp .6
+.in +4
+toggle the reading of tables, either by single cell, or whole row\&.
+.sp
+.sp 1
+.in -4
+.sp
+.ne 2
+.mk
+\fB-\fBInsert-q\fR\fR
+.sp .6
+.in +4
+quit orca\&.
+.sp
+.sp 1
+.in -4
+.in -3
+\(bu
+.mk
+.in +3
+.rt
+Commands for debugging
+.sp
+.sp
+.ne 2
+.mk
+\fB-\fB Insert-F3\fR\fR
+.in +16n
+.rt
+report information on the currently active script\&.
+.sp
+.sp 1
+.in -16n
+.sp
+.ne 2
+.mk
+\fB-\fB Insert-F4\fR\fR
+.in +16n
+.rt
+cycle through Orca\&'s various debug levels\&.
+.sp
+.sp 1
+.in -16n
+.sp
+.ne 2
+.mk
+\fB-\fB Insert-F5\fR\fR
+.in +16n
+.rt
+prints a debug listing of all known applications to the console 
+where Orca is running\&.
+.sp
+.sp 1
+.in -16n
+.sp
+.ne 2
+.mk
+\fB-\fB Insert-F7\fR\fR
+.in +16n
+.rt
+prints debug information about the ancestry of the object with 
+focus\&.
+.sp
+.sp 1
+.in -16n
+.sp
+.ne 2
+.mk
+\fB-\fB Insert-F8\fR\fR
+.in +16n
+.rt
+prints debug information about the application with focus\&.
+.sp
+.sp 1
+.in -16n
+.PP
+Note, in order for the last three commands to be of use, Orca needs 
+to be started from a virtual console or via gnome-terminal\&. Output is sent 
+to the console only (i\&.e\&., it is not sent to speech or braille)\&.
+.in -3
+.in -2
+.SH ""
+.PP
+The following exit values are returned:
+.sp
+.ne 2
+.mk
+\fB\fB0\fR\fR
+.in +9n
+.rt
+Application exited successfully
+.sp
+.sp 1
+.in -9n
+.sp
+.ne 2
+.mk
+\fB\fB1\fR\fR
+.in +9n
+.rt
+Application exited with error
+.sp
+.sp 1
+.in -9n
+.sp
+.ne 2
+.mk
+\fB\fB2\fR\fR
+.in +9n
+.rt
+orca cannot parse its command line options\&.
+.sp
+.sp 1
+.in -9n
+.SH ""
+.PP
+The following files are used by this application:
+.sp
+.ne 2
+.mk
+\fB\fB/usr/bin/orca\fR\fR
+.in +32n
+.rt
+orca executable
+.sp
+.sp 1
+.in -32n
+.sp
+.ne 2
+.mk
+\fB\fB~/\&.orca/user-settings\&.py\fR\fR
+.in +32n
+.rt
+user\&'s personal configuration settings for orca
+.sp
+.sp 1
+.in -32n
+.SH ""
+.PP
+See \fBattributes\fR(5)
+for descriptions of the following attributes:
+.sp
+.TS
+tab() allbox;
+cw(2.750000i)| cw(2.750000i)
+lw(2.750000i)| lw(2.750000i).
+ATTRIBUTE TYPEATTRIBUTE VALUE
+AvailabilitySUNWgnome-a11y-orca
+Interface stabilityExternal
+.TE
+.sp
+.SH ""
+.PP
+orca online reference manual\&.
+.PP
+Latest version of the \fIGNOME Accessibility Guide\fR
+for your platform\&.
+.PP
+Latest version of the \fIGNOME Desktop User Guide\fR
+for your platform\&.5
+.SH ""
+.PP
+Written by Rich Burridge, Sun Microsystems Inc\&., 2006\&.
+...\" created by instant / solbook-to-man, Tue 05 Sep 2006, 12:32

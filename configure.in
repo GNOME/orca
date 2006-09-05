@@ -128,6 +128,7 @@ Makefile
 orca.spec
 docs/Makefile
 docs/pydoc/Makefile
+docs/man/Makefile
 po/Makefile.in
 src/Makefile
 src/brl/Makefile

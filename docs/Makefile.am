@@ -1,1 +1,1 @@
-SUBDIRS = pydoc
+SUBDIRS = pydoc man
