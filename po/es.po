@@ -1,4 +1,4 @@
-# translation of orca.HEAD.po to Spanish
+# translation of es.po to Spanish
 # Traducción de Orca al Español
 # This file is distributed under the same license as the ORCA package.
 # Copyright (C) 2005 Gnome Foundation.
@@ -8,10 +8,10 @@
 # maria <maria.majadas@hispalinux.es>, 2005.
 msgid ""
 msgstr ""
-"Project-Id-Version: orca.HEAD\n"
+"Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-09-05 20:13+0200\n"
-"PO-Revision-Date: 2006-09-06 18:08+0200\n"
+"PO-Revision-Date: 2006-09-06 18:21+0200\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -165,7 +165,7 @@ msgstr "porciento"
 
 #: ../src/orca/chnames.py:63
 msgid "and"
-msgstr "et"
+msgstr "ampersand"
 
 #: ../src/orca/chnames.py:64
 msgid "star"
@@ -302,11 +302,12 @@ msgstr "Mueve la revisión a la esquina inferior izquierda."
 
 #: ../src/orca/default.py:186
 msgid "Returns to object with keyboard focus."
-msgstr "Volver al objeto con el foco de teclado."
+msgstr "Vuelve al objeto con el foco de teclado."
 
+# Escape es hablado
 #: ../src/orca/default.py:190
 msgid "Enters learn mode.  Press escape to exit learn mode."
-msgstr "Entra en modo de aprendizaje.  Pulse Esc para salir del modo de aprendizaje"
+msgstr "Entra en modo de aprendizaje.  Pulse escape para salir del modo de aprendizaje"
 
 #: ../src/orca/default.py:194
 msgid "Exits learn mode."
@@ -318,7 +319,7 @@ msgstr "Disminuye la velocidad de la voz."
 
 #: ../src/orca/default.py:202
 msgid "Increases the speech rate."
-msgstr "Aumenta la velocidad de la voz."
+msgstr "Incrementa la velocidad de la voz."
 
 #: ../src/orca/default.py:206
 msgid "Decreases the speech pitch."
