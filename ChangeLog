@@ -1,3 +1,9 @@
+2006-09-06  Rich Burridge <rich.burridge@sun.com>
+
+        * docs/man/orca.1:
+          Removed ATTRIBUTES section of the nroff'ed Orca man pages for
+          the community version.
+
 2006-09-05  Rich Burridge <rich.burridge@sun.com>
 
         * configure.in:
