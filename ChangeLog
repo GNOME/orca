@@ -1,6 +1,6 @@
 2006-09-06  Willie Walker <william.walker@sun.com>
 
-        * Makefile.am, configure.in: fix bug 353476 - don't require
+        * Makefile.am, configure.in: fix bug 353600 - don't require
 	the user to be root when doing a "make distcheck".
 	
 2006-09-06  Willie Walker <william.walker@sun.com>
