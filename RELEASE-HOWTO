@@ -21,6 +21,9 @@ Modify ./README to make sure is has the right Orca version.
 
 Update ./NEWS based upon entries in ./ChangeLog
 
+NOTE: You should also make sure the external dependencies listed in
+configure.in and README are accurate.
+
 
 BUILD THE RELEASE:
 -----------------

@@ -1,3 +1,8 @@
+2006-09-06  Willie Walker <william.walker@sun.com>
+
+	* RELEASE_HOWTO: add note to remind releasers to verify that 
+	the dependencies in configure.in and README are correct.
+
 2006-09-06  Rich Burridge <rich.burridge@sun.com>
 
         * docs/man/orca.1:
