@@ -35,7 +35,6 @@ EXTRA_DIST =                \
 	$(icon_DATA)        \
 	ChangeLog           \
 	MAINTAINERS         \
-	m4                  \
 	intltool-extract.in \
 	intltool-merge.in   \
 	intltool-update.in
