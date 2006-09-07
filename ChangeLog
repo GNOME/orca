@@ -1,3 +1,15 @@
+2006-09-07  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca-setup.glade:
+          src/orca/orca_gui_prefs.py:
+          Fixed bug #354166 - no apply button in mag properties window.
+          Adjusted the Glade file to include a standard "Apply" button.
+          Added an applyButtonClicked() callback to orca_gui_pref.py.
+          Moved most of the code from okButtonClicked() to 
+          applyButtonClicked().
+          GNOME HIG references for Apply buttons at:
+          http://developer.gnome.org/projects/gup/hig/2.0/windows-utility.html
+
 2006-09-07  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca.py: add "-q" and "--quit" usage to fully fix bug

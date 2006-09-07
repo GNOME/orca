@@ -1361,6 +1361,38 @@ class orcaSetupGUI(GladeWrapper):
 
         print "Help not currently implemented."
 
+    def applyButtonClicked(self, widget):
+        """Signal handler for the "clicked" signal for the applyButton
+           GtkButton widget. The user has clicked the Apply button.
+           Write out the users preferences. If GNOME accessibility hadn't
+           previously been enabled, warn the user that they will need to
+           log out. Shut down any active speech servers that were started.
+           Reload the users preferences to get the new speech, braille and
+           key echo value to take effect. Do not dismiss the configuration 
+           window.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        enable = self.speechSupportCheckbutton.get_active()
+        self.prefsDict["enableSpeech"] = enable
+        self.prefsDict["speechServerFactory"] = self.factory
+        self.prefsDict["speechServerInfo"] = self.server
+        self.prefsDict["voices"] = {
+            settings.DEFAULT_VOICE   : self.defaultVoice,
+            settings.UPPERCASE_VOICE : self.uppercaseVoice,
+            settings.HYPERLINK_VOICE : self.hyperlinkVoice
+        }
+
+        if orca_prefs.writePreferences(self.prefsDict):
+            self._say(_("Accessibility support for GNOME has just been enabled."))
+            self._say(_("You need to log out and log back in for the change to take effect."))
+
+        for factory in self.workingFactories:
+            factory.SpeechServer.shutdownActiveServers()
+        orca.loadUserSettings()
+
     def cancelButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the cancelButton
            GtkButton widget. The user has clicked the Cancel button.
@@ -1385,23 +1417,7 @@ class orcaSetupGUI(GladeWrapper):
         - widget: the component that generated the signal.
         """
 
-        enable = self.speechSupportCheckbutton.get_active()
-        self.prefsDict["enableSpeech"] = enable
-        self.prefsDict["speechServerFactory"] = self.factory
-        self.prefsDict["speechServerInfo"] = self.server
-        self.prefsDict["voices"] = {
-            settings.DEFAULT_VOICE   : self.defaultVoice,
-            settings.UPPERCASE_VOICE : self.uppercaseVoice,
-            settings.HYPERLINK_VOICE : self.hyperlinkVoice
-        }
-
-        if orca_prefs.writePreferences(self.prefsDict):
-            self._say(_("Accessibility support for GNOME has just been enabled."))
-            self._say(_("You need to log out and log back in for the change to take effect."))
-
-        for factory in self.workingFactories:
-            factory.SpeechServer.shutdownActiveServers()
-        orca.loadUserSettings()
+        self.applyButtonClicked(widget)
         self.orcaSetupWindow.hide()
 
     def windowDestroyed(self, widget):
