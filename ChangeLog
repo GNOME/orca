@@ -10,6 +10,10 @@
           GNOME HIG references for Apply buttons at:
           http://developer.gnome.org/projects/gup/hig/2.0/windows-utility.html
 
+        * src/orca/orca.in:
+          Fixed bug #351826 - "kill -HUP <orca shell script pid>" doesn't 
+          restart Orca on Solaris. Changed from /bin/sh to /bin/bash.
+
 2006-09-07  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca.py: add "-q" and "--quit" usage to fully fix bug
