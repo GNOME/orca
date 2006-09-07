@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.Dz\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-10 01:57+0530\n"
-"PO-Revision-Date: 2006-08-09 10:19+0530\n"
+"POT-Creation-Date: 2006-08-29 01:22+0200\n"
+"PO-Revision-Date: 2006-08-29 12:22+0530\n"
 "Last-Translator: Mindu Dorji\n"
 "Language-Team: Dzongkha <pgeyleg@dit.giv.bt>\n"
 "MIME-Version: 1.0\n"
@@ -24,23 +24,27 @@ msgid "Orca Screen Reader and Magnifier"
 msgstr "ཨོར་ཀ་གསལ་གཞི་ལྷག་བྱེད་དང་ཆེ་ཤེལ།"
 
 #: ../orca.desktop.in.h:2
-msgid ""
-"Present on-screen information as speech or braille, or magnify the screen"
-msgstr ""
+msgid "Present on-screen information as speech or braille, or magnify the screen"
+msgstr "གསལ་གཞི་གུ་ཡོད་པའིབརྡ་དོན་དེ་ གསུང་བཤད་ ཡང་ན་ འབུར་ཡིག་སྦེ་ གསལ་སྟོན་འབད་ ཡང་ན་ གསལ་གཞི་ཆེར་སྐྱེད་འབད།"
 
-#: ../src/orca/braillegenerator.py:193 ../src/orca/speechgenerator.py:191
+#: ../src/orca/braillegenerator.py:193
+#: ../src/orca/speechgenerator.py:191
 msgid "grayed"
 msgstr "སྐྱ་ཐལ་ཅན།"
 
-#: ../src/orca/braillegenerator.py:1085 ../src/orca/speechgenerator.py:1198
+#: ../src/orca/braillegenerator.py:1096
+#: ../src/orca/J2SE-access-bridge.py:66
+#: ../src/orca/speechgenerator.py:1198
 msgid "expanded"
 msgstr "རྒྱ་བསྐྱེད་ཅན།"
 
-#: ../src/orca/braillegenerator.py:1087 ../src/orca/speechgenerator.py:1200
+#: ../src/orca/braillegenerator.py:1098
+#: ../src/orca/J2SE-access-bridge.py:69
+#: ../src/orca/speechgenerator.py:1200
 msgid "collapsed"
 msgstr "རམས་སོང་ཡོདཔ།"
 
-#: ../src/orca/braillegenerator.py:1091
+#: ../src/orca/braillegenerator.py:1102
 #, python-format
 msgid "TREE LEVEL %d"
 msgstr "རྩ་འབྲེལ་གནས་རིམ་%d།"
@@ -153,7 +157,8 @@ msgstr "པཱའུན།"
 msgid "dollar"
 msgstr "ཌོ་ལར།"
 
-#: ../src/orca/chnames.py:62 ../src/orca/speechgenerator.py:851
+#: ../src/orca/chnames.py:62
+#: ../src/orca/speechgenerator.py:851
 msgid "percent"
 msgstr "བརྒྱ་ཆ།"
 
@@ -193,7 +198,8 @@ msgstr "ད་ལྟོའི་ཕེ་ལེཊི་བསྐྱར་ཞི
 msgid "Performs right click on current flat review item."
 msgstr "ད་ལྟོའི་ཕེ་ལེཊི་བསྐྱར་ཞིབ་རྣམ་གྲངས་ཚུ་ལུ་ གཡས་ཀྱི་གཡེབ་གཏང་ལག་ལེན་འཐབ་ཨིན།"
 
-#: ../src/orca/default.py:86 ../src/orca/scripts/Evolution.py:107
+#: ../src/orca/default.py:86
+#: ../src/orca/scripts/Evolution.py:107
 msgid "Speaks entire document."
 msgstr "ཡིག་ཆ་ཧྲིལ་བུ་སླབ་ཨིན།"
 
@@ -271,9 +277,7 @@ msgstr "ཕེ་ལེཊི་བསྐྱར་ཞིབ་དེ་ ཤུ�
 
 #: ../src/orca/default.py:162
 msgid "Toggles whether to read just the current table cell or the whole row."
-msgstr ""
-"ད་ལྟོའི་ཐིག་ཁྲམ་གྱི་ནང་ཐིག་རྐྱངམ་གཅིག་ ལྷག་ནི་ཨིན་ན་ ཡང་ན་ གྲལ་ཐིག་ཧྲིལ་བུ་ལྷག་ནི་ཨིན་ན་ སོར་སྟོན་"
-"འབདཝ་ཨིན།"
+msgstr "ད་ལྟོའི་ཐིག་ཁྲམ་གྱི་ནང་ཐིག་རྐྱངམ་གཅིག་ ལྷག་ནི་ཨིན་ན་ ཡང་ན་ གྲལ་ཐིག་ཧྲིལ་བུ་ལྷག་ནི་ཨིན་ན་ སོར་སྟོན་འབདཝ་ཨིན།"
 
 #: ../src/orca/default.py:166
 msgid "Reads the attributes associated with the current text character."
@@ -337,38 +341,27 @@ msgstr "དགའ་གདམ་རིམ་སྒྲིག་ཌའི་ལོ
 
 #: ../src/orca/default.py:226
 msgid "Reloads user settings and reinitializes services as necessary."
-msgstr ""
-"ལག་ལེནཔའི་སྒྲིག་སྟངས་སླར་མངོན་གསལ་འབད་དེ་ དགོས་མཁོ་དང་བསྟུན་ཏེ་ ཞབས་ཏོག་ཚུ་ སླར་འགོ་འབྱེད་འབདཝ་"
-"ཨིན།"
+msgstr "ལག་ལེནཔའི་སྒྲིག་སྟངས་སླར་མངོན་གསལ་འབད་དེ་ དགོས་མཁོ་དང་བསྟུན་ཏེ་ ཞབས་ཏོག་ཚུ་ སླར་འགོ་འབྱེད་འབདཝ་ཨིན།"
 
 #: ../src/orca/default.py:230
 msgid "Toggles the silencing of speech."
 msgstr "ཁ་སླབ་སྒྲ་མེད་བཟོ་ནི་དེ་ སོར་སྟོན་འབདཝ་ཨིན།"
 
 #: ../src/orca/default.py:234
-msgid ""
-"Prints a debug listing of all known applications to the console where Orca "
-"is running."
-msgstr ""
-"ཡོངས་གྲགས་ཡོད་པའི་གློག་རིམ་ཆ་མཉམ་གྱི་ རྐྱེན་སེལ་ཐོ་ཡིག་ཅིག་ ཨོར་ཀ་གཡོག་བཀོལ་ཏེ་ཡོད་པའི་མ་སྒྲོམ་དེ་ལུ་ "
-"དཔར་བསྐྲུན་འབདཝ་ཨིན།"
+msgid "Prints a debug listing of all known applications to the console where Orca is running."
+msgstr "ཡོངས་གྲགས་ཡོད་པའི་གློག་རིམ་ཆ་མཉམ་གྱི་ རྐྱེན་སེལ་ཐོ་ཡིག་ཅིག་ ཨོར་ཀ་གཡོག་བཀོལ་ཏེ་ཡོད་པའི་མ་སྒྲོམ་དེ་ལུ་ དཔར་བསྐྲུན་འབདཝ་ཨིན།"
 
 #: ../src/orca/default.py:238
 msgid "Cycles the debug level at run time."
 msgstr "གཡོག་བཀོལ་བའི་སྐབས་ རྐྱེན་སེལ་གནས་རིམ་དེ་ བསྐྱར་འཁོར་འབདཝ་ཨིན།"
 
 #: ../src/orca/default.py:242
-msgid ""
-"Prints debug information about the currently active application to the "
-"console where Orca is running."
-msgstr ""
-"ད་ལྟོ་གཡོག་ཤུགས་ལྡན་ཡོད་པའི་ གློག་རིམ་དེ་གི་སྐོར་ལས་ རྐྱེན་སེལ་གྱི་བརྡ་དོན་ཚུ་ གཡོག་བཀོལ་ཏེ་ཡོད་པའི་མ་སྒྲོམ་"
-"དེ་ལུ་ དཔར་བསྐྲུན་འབདཝ་ཨིན།"
+msgid "Prints debug information about the currently active application to the console where Orca is running."
+msgstr "ད་ལྟོ་གཡོག་ཤུགས་ལྡན་ཡོད་པའི་ གློག་རིམ་དེ་གི་སྐོར་ལས་ རྐྱེན་སེལ་གྱི་བརྡ་དོན་ཚུ་ གཡོག་བཀོལ་ཏེ་ཡོད་པའི་མ་སྒྲོམ་དེ་ལུ་ དཔར་བསྐྲུན་འབདཝ་ཨིན།"
 
 #: ../src/orca/default.py:246
 msgid "Prints debug information about the ancestry of the object with focus"
-msgstr ""
-"ཆེད་དམིགས་དང་བཅས་པའི་ དངོས་པོ་དེ་གི་རྒྱུད་པ་གི་སྐོར་ལས་ རྐྱེན་སེལ་གྱི་བརྡ་དོན་ དཔར་བསྐྲུན་འབདཝ་ཨིན།"
+msgstr "ཆེད་དམིགས་དང་བཅས་པའི་ དངོས་པོ་དེ་གི་རྒྱུད་པ་གི་སྐོར་ལས་ རྐྱེན་སེལ་གྱི་བརྡ་དོན་ དཔར་བསྐྲུན་འབདཝ་ཨིན།"
 
 #: ../src/orca/default.py:250
 msgid "Prints debug information about the application with focus"
@@ -378,55 +371,62 @@ msgstr "ཆེད་དམིགས་དང་བཅས་པའི་ གླ�
 msgid "Switches to the next presentation manager."
 msgstr "ཤུལ་མའི་གསལ་སྟོན་འཛིན་སྐྱོང་པ་ལུ་སོར་སྟོན་འབདཝ་ཨིན།"
 
-#: ../src/orca/default.py:1067 ../src/orca/default.py:1286
+#: ../src/orca/default.py:1067
+#: ../src/orca/default.py:1282
 #, python-format
 msgid "tree level %d"
 msgstr "རྩ་འབྲེལ་གནས་རིམ་%d།"
 
-#: ../src/orca/default.py:1071 ../src/orca/focus_tracking_presenter.py:638
+#: ../src/orca/default.py:1071
+#: ../src/orca/focus_tracking_presenter.py:639
 msgid "No focus"
 msgstr "ཆེད་དམིགས་མེདཔ།"
 
-#: ../src/orca/default.py:1677
+#: ../src/orca/default.py:1673
 msgid "entire document selected"
 msgstr "ཡིག་ཆ་ཧྲིལ་བུ་ སེལ་འཐུ་འབད་ཡོད།"
 
-#: ../src/orca/default.py:2098
+#: ../src/orca/default.py:2121
 msgid "Speak "
 msgstr "སླབ།"
 
-#: ../src/orca/default.py:2101
+#: ../src/orca/default.py:2124
 msgid "row"
 msgstr "གྲལ་ཐིག"
 
-#: ../src/orca/default.py:2103 ../src/orca/rolenames.py:432
+#: ../src/orca/default.py:2126
+#: ../src/orca/rolenames.py:432
 #: ../src/orca/rolenames.py:434
 msgid "cell"
 msgstr "ནང་ཐིག"
 
-#: ../src/orca/default.py:2258
+#: ../src/orca/default.py:2281
 msgid "Entering learn mode.  Press any key to hear its function. "
 msgstr "ལྷབ་ནིའི་ཐབས་ལམ་ནང་འཛུལ་དོ། དེ་གི་ལས་འགན་གོ་ནི་ལུ་ ལྡེ་མིག་གང་རུང་ཅིག་མནན།"
 
-#: ../src/orca/default.py:2259
+#: ../src/orca/default.py:2282
 msgid "To exit learn mode, press the escape key."
 msgstr "ལྷབ་ནིའི་ཐབས་ལམ་ཕྱིར་འཐོན་འབད་ནི་ལུ་ ཐར་ལྡེ་མནན།"
 
-#: ../src/orca/default.py:2260
+#: ../src/orca/default.py:2283
 msgid "Learn mode.  Press escape to exit."
 msgstr "ལྷབ་ནིའི་ཐབས་ལམ། ཕྱིར་འཐོན་འབད་ནི་ལུ་ ཐར་ལྡེ་མནན།"
 
-#: ../src/orca/default.py:2272 ../src/orca/default.py:2273
+#: ../src/orca/default.py:2295
+#: ../src/orca/default.py:2296
 msgid "Exiting learn mode."
 msgstr "ལྷབ་ནིའི་ཐབས་ལམ་ཕྱིར་འཐོན་འབད་དོ།"
 
-#: ../src/orca/default.py:2603 ../src/orca/default.py:2731
-#: ../src/orca/default.py:2736 ../src/orca/default.py:2808
-#: ../src/orca/default.py:2813
+#: ../src/orca/default.py:2626
+#: ../src/orca/default.py:2754
+#: ../src/orca/default.py:2759
+#: ../src/orca/default.py:2831
+#: ../src/orca/default.py:2836
 msgid "blank"
 msgstr "སྟོངམ།"
 
-#: ../src/orca/default.py:2605 ../src/orca/default.py:2738
+#: ../src/orca/default.py:2628
+#: ../src/orca/default.py:2761
 msgid "white space"
 msgstr "བར་སྟོང་དཀརཔོ།"
 
@@ -434,7 +434,7 @@ msgstr "བར་སྟོང་དཀརཔོ།"
 msgid "Emacspeak Speech Services"
 msgstr "ཨི་མེཀ་ཁ་སླབ་ཞབས་ཏོག"
 
-#: ../src/orca/focus_tracking_presenter.py:733
+#: ../src/orca/focus_tracking_presenter.py:734
 msgid "Switching to focus tracking mode."
 msgstr "ཆེད་དམིགས་རྗེས་འཚོལ་ཐབས་ལམ་ལུ་ སོར་བསྒྱུར་འབད་དོ།"
 
@@ -444,7 +444,8 @@ msgstr "ཇི་ནོམ་ཁ་སླབ་ཞབས་ཏོག"
 
 #. # Replace ellipses (both manual and unicode) with "dot dot dot"
 #. #
-#: ../src/orca/gnomespeechfactory.py:605 ../src/orca/gnomespeechfactory.py:606
+#: ../src/orca/gnomespeechfactory.py:605
+#: ../src/orca/gnomespeechfactory.py:606
 msgid " dot dot dot"
 msgstr "ཚག་ ཚག་ ཚག"
 
@@ -468,7 +469,20 @@ msgstr "ལྷོད་མི།"
 msgid "Switching to hierarchical navigation mode."
 msgstr "སྡེ་རིམ་འགྲུལ་བསྐྱོད་ཐབས་ལམ་ལུ་ སོར་བསྒྱུར་འབད་དོ།"
 
-#: ../src/orca/keynames.py:32 ../src/orca/keynames.py:35
+#: ../src/orca/J2SE-access-bridge.py:71
+#: ../src/orca/speechgenerator.py:909
+#: ../src/orca/speechgenerator.py:912
+#: ../src/orca/util.py:1228
+msgid "selected"
+msgstr "སེལ་འཐུ་འབད་ཡོདཔ།"
+
+#: ../src/orca/J2SE-access-bridge.py:75
+#: ../src/orca/util.py:1236
+msgid "unselected"
+msgstr "སེལ་འཐུ་མ་འབདཝ།"
+
+#: ../src/orca/keynames.py:32
+#: ../src/orca/keynames.py:35
 msgid "left shift"
 msgstr "གཡེོན་གྱི་སོར་ལྡེ།"
 
@@ -564,8 +578,9 @@ msgstr "<b>རྒྱས་ཟུམ་སྒྲིག་སྟངས་</b"
 msgid "Braille"
 msgstr "འབུར་ཡིག"
 
-#: ../src/orca/orca-setup.glade.h:9 ../src/orca/orca_gui_prefs.py:1059
-#: ../src/orca/orca_gui_prefs.py:1114
+#: ../src/orca/orca-setup.glade.h:9
+#: ../src/orca/orca_gui_prefs.py:1058
+#: ../src/orca/orca_gui_prefs.py:1113
 msgid "Brie_f"
 msgstr "མདོར་བསྡུས།(_f)"
 
@@ -659,7 +674,8 @@ msgstr "ཚོས་གཞི་གནས་ལོག་འབད།(_v)"
 msgid "Key Echo"
 msgstr "ལྡེ་མིག་གི་བྲག་ཅ།"
 
-#: ../src/orca/orca-setup.glade.h:34 ../src/orca/orca_gui_prefs.py:1039
+#: ../src/orca/orca-setup.glade.h:34
+#: ../src/orca/orca_gui_prefs.py:1038
 msgid "M_ost"
 msgstr "མང་ཤེོས།(_o)"
 
@@ -699,7 +715,8 @@ msgstr "ཚད་འཇལ་ཆ་རྐྱེན་:(_f)"
 msgid "Si_ze:"
 msgstr "ཚད་:(_z)"
 
-#: ../src/orca/orca-setup.glade.h:44 ../src/orca/orca_gui_prefs.py:1036
+#: ../src/orca/orca-setup.glade.h:44
+#: ../src/orca/orca_gui_prefs.py:1035
 msgid "So_me"
 msgstr "དུམ་གྲ་ཅིག(_m)"
 
@@ -707,7 +724,8 @@ msgstr "དུམ་གྲ་ཅིག(_m)"
 msgid "Speak _indentation and justification"
 msgstr "འགོ་མཚམས་དང་ལྟེམས་བཅོས་སླབ།(_i)"
 
-#: ../src/orca/orca-setup.glade.h:46 ../src/orca/orca_gui_prefs.py:1079
+#: ../src/orca/orca-setup.glade.h:46
+#: ../src/orca/orca_gui_prefs.py:1078
 msgid "Speak current _cell"
 msgstr "ད་ལྟོའི་ནང་ཐིག་སླབ།(_c)"
 
@@ -763,7 +781,8 @@ msgstr "ཁ་སླབ་ལྕོགས་ཅན་བཟོ།(_E)"
 msgid "_Left:"
 msgstr "གཡོན་:(_L)"
 
-#: ../src/orca/orca-setup.glade.h:60 ../src/orca/orca_gui_prefs.py:1033
+#: ../src/orca/orca-setup.glade.h:60
+#: ../src/orca/orca_gui_prefs.py:1032
 msgid "_None"
 msgstr "ཅི་མེད།(_N)"
 
@@ -843,7 +862,8 @@ msgstr "ཁ་སླབ་ལྕོགས་མིན་བཟོ་ཡོད།
 msgid "Orca user settings reloaded."
 msgstr "ཨོར་ཀ་ལག་ལེན་པའི་སྒྲིག་སྟངས་ སླར་མངོན་གསལ་འབད་ཡི།"
 
-#: ../src/orca/orca.py:956 ../src/orca/orca.py:957
+#: ../src/orca/orca.py:956
+#: ../src/orca/orca.py:957
 msgid "Welcome to Orca."
 msgstr "ཨོར་ཀ་ལུ་འབྱོན་པ་ལེགས་སོ།"
 
@@ -874,14 +894,13 @@ msgstr "-ཨེསི་, --གཞི་སྒྲིག་, --གུའི་-�
 
 #: ../src/orca/orca.py:1099
 msgid "-t, --text-setup             Set up user preferences (text version)"
-msgstr ""
-"-ཊི་, --ཚིག་ཡིག་གཞི་སྒྲིག             ལག་ལེན་པའི་དགའ་གདམ་ཚུ་གཞི་སྒྲིག་འབད། (ཚིག་ཡིག་ཐོན་རིམ)"
+msgstr "-ཊི་, --ཚིག་ཡིག་གཞི་སྒྲིག             ལག་ལེན་པའི་དགའ་གདམ་ཚུ་གཞི་སྒྲིག་འབད། (ཚིག་ཡིག་ཐོན་རིམ)"
 
 #: ../src/orca/orca.py:1100
 msgid "-n, --no-setup               Skip set up of user preferences"
 msgstr "-ཨེན་, --གཞི་སྒྲིག་མེད། ལག་ལེན་པའི་གདའ་གདམ་ཚུ་གི་གཞི་སྒྲིག་གོམ་འགྱོ། "
 
-#: ../src/orca/orca.py:1102
+#: ../src/orca/orca.py:1103
 msgid ""
 "If Orca has not been previously set up by the user, Orca\n"
 "will automatically launch the preferences set up unless\n"
@@ -891,11 +910,12 @@ msgstr ""
 " རང་བཞིན་གྱིས་ -ཨེན་ ཡང་ན་ --གཞི་སྒྲིག་མེད་པའི་གདམ་ཁ་དེ་ ལག་ལེན་མ་འཐཔ་ཅིན་\n"
 "ཨོར་ཀ་གིས་རང་བཞིན་གྱིས་ གདའ་གདམ་ཚུ་གཞི་སྒྲིག་འབད་འོང་།"
 
-#: ../src/orca/orca.py:1104
+#: ../src/orca/orca.py:1105
 msgid "Report bugs to orca-list@gnome.org."
 msgstr "རྐྱེན་གྱི་སྙན་ཞུ་ཚུ་ orca-list@gnome.org ལུ་གཏང་།"
 
-#: ../src/orca/orca_console_prefs.py:93 ../src/orca/orca_console_prefs.py:109
+#: ../src/orca/orca_console_prefs.py:93
+#: ../src/orca/orca_console_prefs.py:109
 msgid "Speech is unavailable."
 msgstr "ཁ་སླབ་མི་ཐོབ་པས།"
 
@@ -907,19 +927,23 @@ msgstr "ཨོར་ཀ་གཞི་སྒྲིག་ལུ་ འབྱོ�
 msgid "Select desired speech system:"
 msgstr "རེ་འདོད་ཅན་གྱི་ཁ་སླབ་རིམ་ལུགས་སེལ་འཐུ་འབད།"
 
-#: ../src/orca/orca_console_prefs.py:117 ../src/orca/orca_console_prefs.py:138
+#: ../src/orca/orca_console_prefs.py:117
+#: ../src/orca/orca_console_prefs.py:138
 #: ../src/orca/orca_console_prefs.py:164
 #, python-format
 msgid "%d. %s"
 msgstr "%d. %s"
 
-#: ../src/orca/orca_console_prefs.py:120 ../src/orca/orca_console_prefs.py:141
+#: ../src/orca/orca_console_prefs.py:120
+#: ../src/orca/orca_console_prefs.py:141
 #: ../src/orca/orca_console_prefs.py:171
 msgid "Enter choice: "
 msgstr "གདམ་ཁ་ཐོ་བཀོད་འབད།"
 
-#: ../src/orca/orca_console_prefs.py:122 ../src/orca/orca_console_prefs.py:130
-#: ../src/orca/orca_console_prefs.py:143 ../src/orca/orca_console_prefs.py:152
+#: ../src/orca/orca_console_prefs.py:122
+#: ../src/orca/orca_console_prefs.py:130
+#: ../src/orca/orca_console_prefs.py:143
+#: ../src/orca/orca_console_prefs.py:152
 #: ../src/orca/orca_console_prefs.py:176
 msgid "Speech will not be used.\n"
 msgstr "ཁ་སླབ་ལག་ལེན་མི་འཐབ།\n"
@@ -1007,43 +1031,53 @@ msgstr "བསྒྱུར་བཅོས་ཚུ་ལུ་ ནུས་པ�
 msgid "Setup complete.  Press Return to continue."
 msgstr "གཞི་སྒྲིག་ཡོངས་སྒྲུབ། འཕྲོ་མཐུད་ནི་ལུ་ ལོག་ལྡེ་མནན།"
 
-#: ../src/orca/orca_gui_prefs.py:128 ../src/orca/orca_gui_prefs.py:424
-#: ../src/orca/orca_gui_prefs.py:466
+#: ../src/orca/orca_gui_prefs.py:128
+#: ../src/orca/orca_gui_prefs.py:423
+#: ../src/orca/orca_gui_prefs.py:465
 msgid "Speech not available."
 msgstr "ཁ་སླབ་མི་འཐོབ་པས།"
 
-#: ../src/orca/orca_gui_prefs.py:366 ../src/orca/orca_gui_prefs.py:370
-#: ../src/orca/orca_gui_prefs.py:1311
+#: ../src/orca/orca_gui_prefs.py:365
+#: ../src/orca/orca_gui_prefs.py:369
+#: ../src/orca/orca_gui_prefs.py:1310
 msgid "Bilinear"
 msgstr "བའི་ལི་ནིའར།"
 
-#: ../src/orca/orca_gui_prefs.py:368 ../src/orca/orca_gui_prefs.py:381
-#: ../src/orca/orca_gui_prefs.py:1313 ../src/orca/orca_gui_prefs.py:1336
+#: ../src/orca/orca_gui_prefs.py:367
+#: ../src/orca/orca_gui_prefs.py:380
+#: ../src/orca/orca_gui_prefs.py:1312
+#: ../src/orca/orca_gui_prefs.py:1335
 msgid "None"
 msgstr "ཅི་མེད།"
 
-#: ../src/orca/orca_gui_prefs.py:379 ../src/orca/orca_gui_prefs.py:387
-#: ../src/orca/orca_gui_prefs.py:1330
+#: ../src/orca/orca_gui_prefs.py:378
+#: ../src/orca/orca_gui_prefs.py:386
+#: ../src/orca/orca_gui_prefs.py:1329
 msgid "Centered"
 msgstr "དབུས་བསྒྲིགས།"
 
-#: ../src/orca/orca_gui_prefs.py:383 ../src/orca/orca_gui_prefs.py:1334
+#: ../src/orca/orca_gui_prefs.py:382
+#: ../src/orca/orca_gui_prefs.py:1333
 msgid "Proportional"
 msgstr "ཆ་ཚད་ཅན།"
 
-#: ../src/orca/orca_gui_prefs.py:385 ../src/orca/orca_gui_prefs.py:1332
+#: ../src/orca/orca_gui_prefs.py:384
+#: ../src/orca/orca_gui_prefs.py:1331
 msgid "Push"
 msgstr "འཕུལ།"
 
-#: ../src/orca/orca_gui_prefs.py:503 ../src/orca/orca_gui_prefs.py:528
+#: ../src/orca/orca_gui_prefs.py:502
+#: ../src/orca/orca_gui_prefs.py:527
 msgid "Default"
 msgstr "སྔོན་སྒྲིག"
 
-#: ../src/orca/orca_gui_prefs.py:505 ../src/orca/orca_gui_prefs.py:530
+#: ../src/orca/orca_gui_prefs.py:504
+#: ../src/orca/orca_gui_prefs.py:529
 msgid "Uppercase"
 msgstr "ཚུགས་ཡིག"
 
-#: ../src/orca/orca_gui_prefs.py:507 ../src/orca/orca_gui_prefs.py:536
+#: ../src/orca/orca_gui_prefs.py:506
+#: ../src/orca/orca_gui_prefs.py:535
 msgid "Hyperlink"
 msgstr "ཨའི་པར་ལིངཀ།"
 
@@ -1079,7 +1113,8 @@ msgstr "མགྱོགས་འཕྲུལ།"
 msgid "accelerator"
 msgstr "མགྱོགས་འཕྲུལ།"
 
-#: ../src/orca/rolenames.py:157 ../src/orca/rolenames.py:159
+#: ../src/orca/rolenames.py:157
+#: ../src/orca/rolenames.py:159
 msgid "alert"
 msgstr "དྲན་བརྡ།"
 
@@ -1099,7 +1134,8 @@ msgstr "བསྒུལ་བཟོ།"
 msgid "animation"
 msgstr "བསྒུལ་བཟོ།"
 
-#: ../src/orca/rolenames.py:167 ../src/orca/rolenames.py:169
+#: ../src/orca/rolenames.py:167
+#: ../src/orca/rolenames.py:169
 msgid "arrow"
 msgstr "མདའ་རྟགས།"
 
@@ -1131,7 +1167,8 @@ msgstr "འབྲི་གཞི།"
 msgid "canvas"
 msgstr "འབྲི་གཞི།"
 
-#: ../src/orca/rolenames.py:182 ../src/orca/rolenames.py:187
+#: ../src/orca/rolenames.py:182
+#: ../src/orca/rolenames.py:187
 msgid "chk"
 msgstr "སི་ཨེཆ་ཀེ་"
 
@@ -1175,15 +1212,18 @@ msgstr "ཚོས་གཞི་འདེམས་བྱེད།"
 msgid "color chooser"
 msgstr "ཚོས་གཞི་འདེམས་བྱེད།"
 
-#: ../src/orca/rolenames.py:202 ../src/orca/rolenames.py:437
+#: ../src/orca/rolenames.py:202
+#: ../src/orca/rolenames.py:437
 msgid "colhdr"
 msgstr "སི་ཨོ་ཨེལ་ཨེཆ་ཌི་ཨར།"
 
-#: ../src/orca/rolenames.py:203 ../src/orca/rolenames.py:438
+#: ../src/orca/rolenames.py:203
+#: ../src/orca/rolenames.py:438
 msgid "ColumnHeader"
 msgstr "ཀེར་ཐིག་མགོ་ཡིག"
 
-#: ../src/orca/rolenames.py:204 ../src/orca/rolenames.py:439
+#: ../src/orca/rolenames.py:204
+#: ../src/orca/rolenames.py:439
 msgid "column header"
 msgstr "ཀེར་ཐིག་མགོ་ཡིག"
 
@@ -1211,7 +1251,8 @@ msgstr "ཚེས་གྲངས་ཞུན་དགཔ།"
 msgid "date editor"
 msgstr "ཚེས་གྲངས་ཞུན་དགཔ།"
 
-#: ../src/orca/rolenames.py:217 ../src/orca/rolenames.py:277
+#: ../src/orca/rolenames.py:217
+#: ../src/orca/rolenames.py:277
 #: ../src/orca/rolenames.py:279
 msgid "icon"
 msgstr "ངོས་དཔར།"
@@ -1224,7 +1265,8 @@ msgstr "ཌེཀསི་ཊོཔ་ངོས་དཔར།"
 msgid "desktop icon"
 msgstr "ཌེཀསི་ཊོཔ་ངོས་དཔར།"
 
-#: ../src/orca/rolenames.py:222 ../src/orca/rolenames.py:264
+#: ../src/orca/rolenames.py:222
+#: ../src/orca/rolenames.py:264
 #: ../src/orca/rolenames.py:287
 msgid "frame"
 msgstr "གཞི་ཁྲམ།"
@@ -1237,7 +1279,8 @@ msgstr "ཌེཀསི་ཊོཔ་གཞི་ཁྲམ།"
 msgid "desktop frame"
 msgstr "ཌེཀསི་ཊོཔ་གཞི་ཁྲམ།"
 
-#: ../src/orca/rolenames.py:227 ../src/orca/rolenames.py:229
+#: ../src/orca/rolenames.py:227
+#: ../src/orca/rolenames.py:229
 msgid "dial"
 msgstr "ཌ་ཡེལ།"
 
@@ -1469,7 +1512,8 @@ msgstr "གདམ་ཁའི་པེན།"
 msgid "option pane"
 msgstr "གདམ་ཁའི་པེན།"
 
-#: ../src/orca/rolenames.py:332 ../src/orca/rolenames.py:334
+#: ../src/orca/rolenames.py:332
+#: ../src/orca/rolenames.py:334
 msgid "page"
 msgstr "ཤོག་ལེབ།"
 
@@ -1597,15 +1641,18 @@ msgstr "རྩ་བའི་པེན།"
 msgid "root pane"
 msgstr "རྩ་བའི་པེན།"
 
-#: ../src/orca/rolenames.py:387 ../src/orca/rolenames.py:442
+#: ../src/orca/rolenames.py:387
+#: ../src/orca/rolenames.py:442
 msgid "rwhdr"
 msgstr "ཨར་ཌབ་ལུ་ཨེཆ་ཌི་ཨར།"
 
-#: ../src/orca/rolenames.py:388 ../src/orca/rolenames.py:443
+#: ../src/orca/rolenames.py:388
+#: ../src/orca/rolenames.py:443
 msgid "RowHeader"
 msgstr "གྲལ་ཐིག་མགོ་ཡིག"
 
-#: ../src/orca/rolenames.py:389 ../src/orca/rolenames.py:444
+#: ../src/orca/rolenames.py:389
+#: ../src/orca/rolenames.py:444
 msgid "row header"
 msgstr "གྲལ་ཐིག་མགོ་ཡིག"
 
@@ -1717,7 +1764,8 @@ msgstr "ཌི་ཨོ་ཨེམ་ཨེན་ཡུ་ཨའི་ཊི་
 msgid "TearOffMenuItem"
 msgstr "ཊིའར་ཨོཕ་དཀར་ཆག་རྣམ་གྲངས།"
 
-#: ../src/orca/rolenames.py:449 ../src/orca/speechgenerator.py:1258
+#: ../src/orca/rolenames.py:449
+#: ../src/orca/speechgenerator.py:1258
 msgid "tear off menu item"
 msgstr "ཊིའར་ཨོཕ་དཀར་ཆག་རྣམ་གྲང"
 
@@ -1781,7 +1829,8 @@ msgstr "ལག་ཆས་ཕན་བསླབ།"
 msgid "tool tip"
 msgstr "ལག་ཆས་ཕན་བསླབ།"
 
-#: ../src/orca/rolenames.py:477 ../src/orca/rolenames.py:479
+#: ../src/orca/rolenames.py:477
+#: ../src/orca/rolenames.py:479
 msgid "tree"
 msgstr "རྩ་འབྲེལ།"
 
@@ -1975,20 +2024,19 @@ msgstr "ངོ་ཕྲད་མིན་འདུག"
 msgid "Directories button"
 msgstr "སྣོད་ཐོའི་ཨེབ་རྟ།"
 
-#: ../src/orca/scripts/Evolution.py:900 ../src/orca/scripts/Evolution.py:938
+#: ../src/orca/scripts/Evolution.py:900
+#: ../src/orca/scripts/Evolution.py:938
 msgid "Assistant"
 msgstr "ལས་རོགས།"
 
-#: ../src/orca/scripts/Mozilla.py:234 ../src/orca/scripts/StarOffice.py:406
+#: ../src/orca/scripts/Mozilla.py:234
+#: ../src/orca/scripts/StarOffice.py:406
 msgid "link"
 msgstr "འབྲེལ་ལམ།"
 
 #: ../src/orca/scripts/gaim.py:149
-msgid ""
-"Toggle whether we prefix chat room messages with the name of the chat room."
-msgstr ""
-"ང་བཅས་ཀྱིས་ ཡིག་ཐོག་ཁ་སླབ་ཁང་མིག་གི་འཕྲིན་དོན་ཚུ་ ཁ་སླབ་ཁང་མིག་གི་ མིང་དང་བཅསཔ་སྦེ་ སྔོན་ཚིག་བཀོད་"
-"དགོཔ་ཨིན་ན་མེན་ སོར་སྟོན་འབད།"
+msgid "Toggle whether we prefix chat room messages with the name of the chat room."
+msgstr "ང་བཅས་ཀྱིས་ ཡིག་ཐོག་ཁ་སླབ་ཁང་མིག་གི་འཕྲིན་དོན་ཚུ་ ཁ་སླབ་ཁང་མིག་གི་ མིང་དང་བཅསཔ་སྦེ་ སྔོན་ཚིག་བཀོད་དགོཔ་ཨིན་ན་མེན་ སོར་སྟོན་འབད།"
 
 #: ../src/orca/scripts/gaim.py:153
 msgid "Speak and braille a previous chat room message."
@@ -2029,7 +2077,8 @@ msgstr "སྡེབ་དཔཡད་འབད་ནི་ཚར་ཡི།"
 msgid "Press Tab and Return to terminate."
 msgstr "རྩ་འགྲོལ་གཏང་ནི་ལུ་ མཆོངས་ལྡེ་དང་ལོག་ལྡེ་མནན།"
 
-#: ../src/orca/scripts/gedit.py:255 ../src/orca/scripts/gedit.py:308
+#: ../src/orca/scripts/gedit.py:255
+#: ../src/orca/scripts/gedit.py:308
 msgid "Check Spelling"
 msgstr "སྡེབ་དཔྱད་འབད།"
 
@@ -2045,7 +2094,8 @@ msgstr "སྟོངམ།"
 msgid "Welcome to StarOffice"
 msgstr "སིཊར་ཨོ་ཕིསི་ལུ་ འབྱོན་པ་ལེགས་སོ།"
 
-#: ../src/orca/scripts/StarOffice.py:552 ../src/orca/scripts/StarOffice.py:801
+#: ../src/orca/scripts/StarOffice.py:552
+#: ../src/orca/scripts/StarOffice.py:801
 msgid "Spellcheck:"
 msgstr "སྡེབ་དཔྱད་:"
 
@@ -2107,36 +2157,41 @@ msgstr "ལཱ་གི་ས་སྒོ།"
 msgid "inaccessible"
 msgstr "འཛུལ་སྤྱོད་འབད་མ་བཏུབ།"
 
-#: ../src/orca/scripts/planner.py:77 ../src/orca/scripts/planner.py:135
+#: ../src/orca/scripts/planner.py:77
+#: ../src/orca/scripts/planner.py:135
 msgid "Display more options"
 msgstr "གདམ་ཁ་མངམ་བཀྲམ་སྟོན་འབད།"
 
-#: ../src/orca/scripts/planner.py:139 ../src/orca/scripts/planner.py:147
-#: ../src/orca/scripts/planner.py:172 ../src/orca/scripts/planner.py:180
-#: ../src/orca/speechgenerator.py:1314 ../src/orca/speechgenerator.py:1317
+#: ../src/orca/scripts/planner.py:139
+#: ../src/orca/scripts/planner.py:147
+#: ../src/orca/scripts/planner.py:172
+#: ../src/orca/scripts/planner.py:180
+#: ../src/orca/speechgenerator.py:1314
+#: ../src/orca/speechgenerator.py:1317
 msgid "pressed"
 msgstr "མནན་ཡོདཔ།"
 
-#: ../src/orca/scripts/planner.py:141 ../src/orca/scripts/planner.py:149
-#: ../src/orca/scripts/planner.py:174 ../src/orca/scripts/planner.py:182
-#: ../src/orca/speechgenerator.py:1323 ../src/orca/speechgenerator.py:1326
+#: ../src/orca/scripts/planner.py:141
+#: ../src/orca/scripts/planner.py:149
+#: ../src/orca/scripts/planner.py:174
+#: ../src/orca/scripts/planner.py:182
+#: ../src/orca/speechgenerator.py:1323
+#: ../src/orca/speechgenerator.py:1326
 msgid "not pressed"
 msgstr "མ་མནནམ།"
 
-#: ../src/orca/speechgenerator.py:367 ../src/orca/speechgenerator.py:370
+#: ../src/orca/speechgenerator.py:367
+#: ../src/orca/speechgenerator.py:370
 msgid "checked"
 msgstr "ཞིབ་དཔྱད་འབད་ཡོདཔ།"
 
-#: ../src/orca/speechgenerator.py:376 ../src/orca/speechgenerator.py:379
+#: ../src/orca/speechgenerator.py:376
+#: ../src/orca/speechgenerator.py:379
 msgid "not checked"
 msgstr "ཞིབ་དཔྱད་མ་འབདཝཝ"
 
-#: ../src/orca/speechgenerator.py:909 ../src/orca/speechgenerator.py:912
-#: ../src/orca/util.py:1122
-msgid "selected"
-msgstr "སེལ་འཐུ་འབད་ཡོདཔ།"
-
-#: ../src/orca/speechgenerator.py:920 ../src/orca/speechgenerator.py:923
+#: ../src/orca/speechgenerator.py:920
+#: ../src/orca/speechgenerator.py:923
 msgid "not selected"
 msgstr "སེལ་འཐུ་མ་འབདཝ།"
 
@@ -2144,47 +2199,42 @@ msgstr "སེལ་འཐུ་མ་འབདཝ།"
 msgid "tear off"
 msgstr "ཊིའར་ཨོཕ།"
 
-#: ../src/orca/util.py:384
+#: ../src/orca/util.py:473
 msgid "Misspelled word: "
 msgstr "སྡེབ་འཛོལ་མིང་ཚིག་:"
 
-#: ../src/orca/util.py:385
+#: ../src/orca/util.py:474
 msgid " Context is "
 msgstr "སྐབས་དོན།"
 
-#: ../src/orca/util.py:1066
+#: ../src/orca/util.py:1172
 msgid "page selected from cursor position"
 msgstr "འོད་རྟགས་གནས་ས་ལས་ སེལ་འཐུ་འབད་ཡོད་པའི་ཤོག་ལེབ།"
 
-#: ../src/orca/util.py:1070
+#: ../src/orca/util.py:1176
 msgid "page selected to cursor position"
 msgstr "འོད་རྟགས་གནས་ས་ལུ་ སེལ་འཐུ་འབད་ཡོད་པའི་ཤོག་ལེབ།"
 
-#: ../src/orca/util.py:1074
+#: ../src/orca/util.py:1180
 msgid "line selected down from cursor position"
 msgstr "འོད་རྟགས་གནས་ས་ལས་མར་ སེལ་འཐུ་འབད་ཡོད་པའི་གྱལ་རིམ།"
 
-#: ../src/orca/util.py:1078
+#: ../src/orca/util.py:1184
 msgid "line selected up from cursor position"
 msgstr "འོད་རྟགས་གནས་ས་ལས་ཡར་ སེལ་འཐུ་འབད་ཡོད་པའི་གྱལ་རིམ།"
 
-#: ../src/orca/util.py:1082
+#: ../src/orca/util.py:1188
 msgid "document selected to cursor position"
 msgstr "འོད་རྟགས་གནས་ས་ལུ་ སེལ་འཐུ་འབད་ཡོད་པའི་ཡིག་ཆ།"
 
-#: ../src/orca/util.py:1086
+#: ../src/orca/util.py:1192
 msgid "document selected from cursor position"
 msgstr "འོད་རྟགས་གནས་ས་ལས་ སེལ་འཐུ་འབད་ཡོད་པའི་ཡིག་ཆ།"
 
-#: ../src/orca/util.py:1130
-msgid "unselected"
-msgstr "སེལ་འཐུ་མ་འབདཝ།"
-
 #~ msgid "Assistive Technologies for Blind and Visually Impaired People"
 #~ msgstr "མིག་ཞར་དང་ མིག་ཏོ་སྐྱོན་ཅན་ཚུ་གི་དོན་ལུ་ ཕན་ཐབས་ཅན་གྱི་འཕྲུལ་རིག།"
-
 #~ msgid "Brief"
 #~ msgstr "མདོར་བསྡུས།"
-
 #~ msgid "_cell"
 #~ msgstr "ནང་ཐིག(_c)"
+
