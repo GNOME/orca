@@ -1098,7 +1098,7 @@ def usage():
     print _("-s, --setup, --gui-setup     Set up user preferences")
     print _("-t, --text-setup             Set up user preferences (text version)")
     print _("-n, --no-setup               Skip set up of user preferences")
-    #print _("-q, --quit                   Quits Orca (if shell script used)")
+    print _("-q, --quit                   Quits Orca (if shell script used)")
     print
     print _("If Orca has not been previously set up by the user, Orca\nwill automatically launch the preferences set up unless\nthe -n or --no-setup option is used.")
     print
