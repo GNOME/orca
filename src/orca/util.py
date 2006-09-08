@@ -600,7 +600,7 @@ def isWordDelimiter(character):
     """
 
     return (character in string.whitespace) \
-           or (character in string.punctuation)
+           or (character in '!*+,-./:;<=>?@[\]^_{|}')
 
 def getFrame(obj):
     """Returns the frame containing this object, or None if this object
@@ -1207,16 +1207,14 @@ def speakTextSelectionState(obj, startOffset, endOffset):
         #
         if n > 1:
             while endOffset > startOffset:
-                if str[n-1] in string.whitespace or \
-                   str[n-1] in string.punctuation:
+                if isWordDelimiter(str[n-1]):
                     n -= 1
                     endOffset -= 1
                 else:
                     break
             n = 0
             while startOffset < endOffset:
-                if str[n] in string.whitespace or \
-                   str[n] in string.punctuation:
+                if isWordDelimiter(str[n]):
                     n += 1
                     startOffset += 1
                 else:

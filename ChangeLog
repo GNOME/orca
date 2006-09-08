@@ -1,3 +1,10 @@
+2006-09-08  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/util.py:
+          Fixed bug #354487 - apostrophe should not delimit a word boundry.
+          util.isWordDelimiter() now only checks against of subset of what
+          is in string.punctuation.
+
 2006-09-07  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade:
