@@ -49,6 +49,7 @@ __all__=['Speaker']
 import os
 
 import debug
+import settings
 import speechserver
 
 from orca_i18n import _           # for gettext support
@@ -243,6 +244,12 @@ class SpeechServer(speechserver.SpeechServer):
 
     def speak(self, text="", acss=None, interrupt=True):
         """Speaks specified text. All queued text is spoken immediately."""
+
+        # If the user has speech turned off, just return.
+        #
+        if not settings.enableSpeech:
+            return
+
         if acss:
             code =self.getvoice(acss)
             self._output.write("q {%s %s %s}\nd\n" %(code[0], text, code[1]))

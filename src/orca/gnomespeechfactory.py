@@ -666,6 +666,11 @@ class SpeechServer(speechserver.SpeechServer):
         be spoken.
         """
 
+        # If the user has speech turned off, just return.
+        #
+        if not settings.enableSpeech:
+            return -1
+
         speaker = self.__getSpeaker(acss)
         if acss and not acss.has_key(ACSS.RATE):
             voices = settings.voices

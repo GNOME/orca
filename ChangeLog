@@ -16,6 +16,13 @@
           Fixed bug #354985 ? gedit script generates traceback.
           Missing an import line for orca.orca.
 
+        * src/orca/espeechfactory.py:
+          src/orca/gnomespeechfactory.py:
+          Fixed bug #353269 - Orca speech routines ignore current state 
+          of settings.enableSpeech.
+          Adjusted the speech routines for the Emacspeak and GNOME Speech
+          factories to just return if user doesn't want speech.
+
 2006-09-07  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade:
