@@ -29,6 +29,7 @@ import orca.debug as debug
 import orca.atspi as atspi
 import orca.braille as braille
 import orca.default as default
+import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.rolenames as rolenames
 import orca.speech as speech

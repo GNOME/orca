@@ -5,6 +5,10 @@
           util.isWordDelimiter() now only checks against of subset of what
           is in string.punctuation.
 
+        * src/orca/scripts/gedit.py:
+          Fixed bug #354985 ? gedit script generates traceback.
+          Missing an import line for orca.orca.
+
 2006-09-07  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade:
