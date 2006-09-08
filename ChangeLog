@@ -23,6 +23,10 @@
           Adjusted the speech routines for the Emacspeak and GNOME Speech
           factories to just return if user doesn't want speech.
 
+        * src/orca/speechgenerator.py:
+          Fixed bug #342602 - StarOffice Writer - order of speaking 
+          information of table cells is incorrect.
+
 2006-09-07  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade:

@@ -1485,13 +1485,16 @@ class SpeechGenerator:
                    and (((not label) or (len(label) == 0) \
                          or (not text) or (len(text) == 0))):
                     pass
-                else:
+                elif parent.role != rolenames.ROLE_TABLE_CELL:
                     utterances.append(rolenames.getSpeechForRoleName(parent))
 
                 if text and len(text):
                     utterances.append(text)
                 if label and len(label):
                     utterances.append(label)
+
+                if parent.role == rolenames.ROLE_TABLE_CELL:
+                    utterances.append(rolenames.getSpeechForRoleName(parent))
 
             # [[[TODO: HACK - we've discovered oddness in hierarchies
             # such as the gedit Edit->Preferences dialog.  In this
