@@ -1,3 +1,10 @@
+2006-09-08  Rodrigo Moya <rodrigo@novell.com>
+
+	Fixes #354983
+
+	* src/brl/brlmodule.c (brl_module_getDriverId, brl_module_getDriverName):
+	fill in dead code paths.
+
 2006-09-08  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/util.py:

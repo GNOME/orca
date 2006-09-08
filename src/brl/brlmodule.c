@@ -281,11 +281,13 @@ static PyObject *brl_module_getDriverId (PyObject *self) {
         }
 
         if (brlapi_getDriverId(id, sizeof(id)) >= 0) {
-                PyString_FromString((const char *) id);
+                return PyString_FromString((const char *) id);
         } else {
                 Py_INCREF (Py_None);
                 return Py_None;
         }
+
+	return Py_None;
 }
 
 
@@ -298,11 +300,13 @@ static PyObject *brl_module_getDriverName(PyObject *self) {
         }
 
         if (brlapi_getDriverName(name, sizeof(name)) >= 0) {
-                PyString_FromString((const char *) name);
+                return PyString_FromString((const char *) name);
         } else {
                 Py_INCREF (Py_None);
                 return Py_None;
         }
+
+	return Py_None;
 }
 
 
