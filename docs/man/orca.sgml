@@ -308,6 +308,12 @@ cursor.</para>
 </listitem>
 </varlistentry>
 
+<varlistentry><term><option> Numpad-plus</option></term>
+<listitem>
+<para>speaks the entire document.</para>
+</listitem>
+</varlistentry>
+
 </variablelist>
 </listitem>
 </itemizedlist>

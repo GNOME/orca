@@ -1,3 +1,13 @@
+2006-09-11  Rich Burridge <rich.burridge@sun.com>
+
+        * docs/man/.cvsignore:
+          Added to ignore Makefile and Makefile.in
+
+        * docs/man/orca.sgml:
+          docs/man/orca.1:
+          Fixed bug #355442 - Orca manual pages don't include description 
+          of Numpad + ("say all" command).
+
 2006-09-08  Rodrigo Moya <rodrigo@novell.com>
 
 	Fixes #354983
