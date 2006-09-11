@@ -8,31 +8,55 @@ export GTK_MODULES=:gail:atk-bridge:
 debugFile=`basename $1`
 
 # Set up our local user settings file for the output format we want.
+#
+# If a <testfilename>.settings file exists, should use that instead of 
+# the default user-settings.py.in.
+# We still need to run sed on it, to adjust the debug filename and 
+# create a user-settings.py file in the /tmp directory.
+#
 # (Orca will look in our local directory first for user-settings.py
 # before looking in ~/.orca)
 #
-sed "s^%debug%^$debugFile.orca^g" `dirname $0`/user-settings.py.in > user-settings.py
+SETTINGS_FILE=`dirname $0`/`basename $0`.settings
+if [ ! -f $SETTINGS_FILE ]
+then
+    SETTINGS_FILE=`dirname $0`/user-settings.py.in
+fi
+sed "s^%debug%^$debugFile.orca^g" $SETTINGS_FILE > user-settings.py
 
 # Run the event listener...
 #
-python `dirname $0`/event_listener.py > $debugFile.events &
-sleep 2
+# python `dirname $0`/event_listener.py > $debugFile.events &
+# sleep 2
 
 # Run orca and let it settle in.
 #
 orca &
 sleep 5
 
-# Run the app and let it settle in.
+# Run the app (or gnome-terminal if no app was given) and let it settle in.
 #
 if [ -n "$2" ]
 then
-    $2 &
-    sleep 5
+    APP_NAME=$2
+else
+    APP_NAME=gnome-terminal
 fi
+$APP_NAME &
+APP_PID=$!
+sleep 5
 
 # Play the keystrokes.
 #
 python `dirname $0`/../../src/tools/play_keystrokes.py < $1
+
+# Compare the new results against the expected results.
+#
+# XXX: to be completed.
+
+# Terminate the running application and Orca
+#
+kill -9 $APP_PID
+orca --quit
 
 rm user-settings.py*

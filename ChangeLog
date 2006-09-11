@@ -1,5 +1,41 @@
 2006-09-11  Rich Burridge <rich.burridge@sun.com>
 
+        First part of the automated regression testing changes.
+
+        * src/orca/default.py: 
+          Fixed up keystroke recording hot-key binding to be 
+          Insert-Pause (not Pause).
+
+        * tests/harness/runall.sh:
+          - Removed the F12.py lines. When the orca script now starts, it
+            will automatically attempt a cleanup of any previously running
+            orca commands.
+          - Removed the "-maxdepth 1" option from the find commands. There
+            is no such option with the find command on Solaris.
+          - Adjusted the find command at line 41 to use '-name "*.keys"',
+            because there will now be other files in the same directory.
+          - Removed the 'which application' (i.e. never pass in a $2, so 
+            that gnome-terminal will be started by the runone.sh script).
+
+        * tests/harness/runone.sh:
+          - If a <testfilename>.settings file exists, should use that 
+            instead of the default user-settings.py.in.
+            We still need to run sed on it, to adjust the debug filename 
+            and create a user-settings.py file in the /tmp directory.
+          - Commented out the event listener stuff for now.
+            (We can possibly improve on this later.)
+          - Adjusted line 28 to add an "else" clause to start 
+            gnome-terminal if there was no $2 supplied.
+          - Terminate what ever was started ($2 or gnome-terminal)
+            and Orca (with "orca --quit").
+
+        * tests/harness/user-settings.py.in:
+          Adjusted to contain the initial current set of settings (as 
+          created by "orca --text-setup", but also set the speech factory 
+          to None, and removed all the other speech settings.
+
+2006-09-11  Rich Burridge <rich.burridge@sun.com>
+
         * docs/man/.cvsignore:
           Added to ignore Makefile and Makefile.in
 
