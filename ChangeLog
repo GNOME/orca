@@ -30,6 +30,12 @@
           Added code to compare an "expected test results" file with the
           new test results and print out the differences.
 
+        * test/harness/exit.keys:
+          test/harness/testone.sh:
+          Created a new exit.keys keystroke file that gets run in
+          runone.sh, to terminate the gnome-terminal application
+          (if that was used).
+
 2006-09-12  Willie Walker <william.walker@sun.com>
 
 	* src/orca/default.py, src/orca/input_event.py: fix for bug 347128 - 

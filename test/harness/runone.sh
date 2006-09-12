@@ -43,7 +43,6 @@ else
     APP_NAME=gnome-terminal
 fi
 $APP_NAME &
-APP_PID=$!
 sleep 5
 
 # Play the keystrokes.
@@ -52,7 +51,10 @@ python `dirname $0`/../../src/tools/play_keystrokes.py < $1
 
 # Terminate the running application and Orca
 #
-kill -9 $APP_PID
+if [ "x$APP_NAME" == xgnome-terminal ]
+then
+    python `dirname $0`/../../src/tools/play_keystrokes.py < ../../exit.keys
+fi
 orca --quit
 
 rm user-settings.py*
