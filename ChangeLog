@@ -1,3 +1,27 @@
+2006-09-12  Rich Burridge <rich.burridge@sun.com>
+
+        Second part of the automated regression testing changes.
+
+        * test/results, test/results/gedit, test/results/gnome-terminal:
+          test/results/gtk-demo, test/results/ubuntu: 
+          test/results/gedit/simple.orca
+          test/results/gtk-demo/buttonboxes.orca
+          New directory hierarchy for containing default expected test 
+          results for for each keystroke file. Format of results files 
+          under these subdirectories is <testname>.orca
+
+        * test/harness/runall.sh:
+          Added a process_cl() routine that looks for optional command 
+          line arguments:
+            -h|--help          - print a usage message.
+            -k <keystrokesDir> - alternate keystroke directory 
+                                 (default is ../results).
+            -r <resultsDir>    - alternate results directory 
+                                 (default is ../keystrokes).
+
+          Added code to compare an "expected test results" file with the
+          new test results and print out the differences.
+
 2006-09-12  Willie Walker <william.walker@sun.com>
 
 	* src/orca/default.py, src/orca/input_event.py: fix for bug 347128 - 

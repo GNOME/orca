@@ -5,14 +5,14 @@
 #
 export GTK_MODULES=:gail:atk-bridge:
 
-debugFile=`basename $1`
+debugFile=`basename $1 .keys`
 
 # Set up our local user settings file for the output format we want.
 #
 # If a <testfilename>.settings file exists, should use that instead of 
 # the default user-settings.py.in.
 # We still need to run sed on it, to adjust the debug filename and 
-# create a user-settings.py file in the /tmp directory.
+# create a user-settings.py file in the tmp directory.
 #
 # (Orca will look in our local directory first for user-settings.py
 # before looking in ~/.orca)
@@ -49,10 +49,6 @@ sleep 5
 # Play the keystrokes.
 #
 python `dirname $0`/../../src/tools/play_keystrokes.py < $1
-
-# Compare the new results against the expected results.
-#
-# XXX: to be completed.
 
 # Terminate the running application and Orca
 #
