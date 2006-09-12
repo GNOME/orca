@@ -67,11 +67,12 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         #
         self.registry        = atspi.Registry()
         self._knownScripts   = {}
-        self._activeScript   = None
         self._eventQueue     = Queue.Queue(0)
         self._gidleId        = 0
         self._gidleLock      = threading.Lock()
         self.noFocusTimestamp = 0.0
+
+        orca_state.activeScript = None
 
         if settings.debugEventQueue:
             self._enqueueEventCount = 0
@@ -306,9 +307,9 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         Arguments:
         - keyboardEvent: an instance of input_event.KeyboardEvent
         """
-        if self._activeScript:
+        if orca_state.activeScript:
             try:
-                self._activeScript.processKeyboardEvent(keyboardEvent)
+                orca_state.activeScript.processKeyboardEvent(keyboardEvent)
             except:
                 debug.printException(debug.LEVEL_WARNING)
                 debug.printStack(debug.LEVEL_WARNING)
@@ -319,9 +320,9 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         Arguments:
         - brailleEvent: an instance of input_event.BrailleEvent
         """
-        if self._activeScript:
+        if orca_state.activeScript:
             try:
-                self._activeScript.processBrailleEvent(brailleEvent)
+                orca_state.activeScript.processBrailleEvent(brailleEvent)
             except:
                 debug.printException(debug.LEVEL_WARNING)
                 debug.printStack(debug.LEVEL_WARNING)
@@ -402,9 +403,9 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                     # We'll let someone else decide if it's important
                     # to stop speech or not.
                     #speech.stop()
-                    self._activeScript = self._getScript(event.source.app)
+                    orca_state.activeScript = self._getScript(event.source.app)
                     debug.println(debug.LEVEL_FINE, "ACTIVE SCRIPT: " \
-                                  + self._activeScript.name)
+                                  + orca_state.activeScript.name)
                 s = self._getScript(event.source.app)
                 s.processObjectEvent(event)
                 if retryCount:
@@ -626,7 +627,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             # some reason if done inside an acquire/release block for a
             # lock.  So...we do it here.]]]
             #
-            noFocus = (not self._activeScript) \
+            noFocus = (not orca_state.activeScript) \
                       or ((not orca_state.locusOfFocus) \
                           and (self.noFocusTimestamp \
                                != orca_state.noFocusTimestamp))
@@ -674,8 +675,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         Returns True if the event should be consumed.
         """
 
-        if self._activeScript \
-           and self._activeScript.consumesKeyboardEvent(keyboardEvent):
+        if orca_state.activeScript \
+           and orca_state.activeScript.consumesKeyboardEvent(keyboardEvent):
             self._enqueueEvent(keyboardEvent)
             return True
         else:
@@ -690,8 +691,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         Returns True if the command was consumed; otherwise False
         """
 
-        if self._activeScript \
-           and self._activeScript.consumesBrailleEvent(brailleEvent):
+        if orca_state.activeScript \
+           and orca_state.activeScript.consumesBrailleEvent(brailleEvent):
             self._enqueueEvent(brailleEvent)
             return True
         else:
@@ -706,10 +707,10 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         - newLocusOfFocus: Accessible that is the new locus of focus
         """
 
-        if self._activeScript:
-            self._activeScript.locusOfFocusChanged(event,
-                                                   oldLocusOfFocus,
-                                                   newLocusOfFocus)
+        if orca_state.activeScript:
+            orca_state.activeScript.locusOfFocusChanged(event,
+                                                        oldLocusOfFocus,
+                                                        newLocusOfFocus)
 
     def visualAppearanceChanged(self, event, obj):
         """Called when the visual appearance of an object changes.
@@ -725,8 +726,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         - obj: the Accessible whose visual appearance changed.
         """
 
-        if self._activeScript:
-            self._activeScript.visualAppearanceChanged(event, obj)
+        if orca_state.activeScript:
+            orca_state.activeScript.visualAppearanceChanged(event, obj)
 
     def activate(self):
         """Called when this presentation manager is activated."""
@@ -736,7 +737,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         self._listenerCounts = {}
         self._knownScripts   = {}
         self._defaultScript  = None
-        self._activeScript   = self._getScript(None)
+
+        orca_state.activeScript = self._getScript(None)
 
         self._registerEventListener("window:activate")
         self._registerEventListener("window:deactivate")
@@ -764,4 +766,5 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         self._listenerCounts = {}
         self._knownScripts   = {}
         self._defaultScript  = None
-        self._activeScript   = None
+
+        orca_state.activeScript = None

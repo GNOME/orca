@@ -38,6 +38,10 @@ locusOfFocus = None
 #
 activeWindow = None
 
+# The currently active script.
+#
+activeScript = None
+
 # The InputEvent instance representing the last input event.  This is
 # set each time a keyboard or braille event is received.
 #

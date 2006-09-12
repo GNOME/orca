@@ -1,3 +1,10 @@
+2006-09-12  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca_state.py, src/orca/focus_tracking_presenter.py:
+	fix for bug 347650 - move activeScript from
+	focus_tracking_presenter.py to orca_state.py and make it "public"
+	(i.e., instead of _activeScript, name it activeScript).
+	
 2006-09-11  Rich Burridge <rich.burridge@sun.com>
 
         First part of the automated regression testing changes.
