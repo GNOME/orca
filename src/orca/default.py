@@ -196,12 +196,14 @@ class Script(script.Script):
         self.inputEventHandlers["panBrailleLeftHandler"] = \
             input_event.InputEventHandler(
                 Script.panBrailleLeft,
-                _("Pans the braille display to the left."))
+                _("Pans the braille display to the left."),
+                False) # Do not enable learn mode for this action
 
         self.inputEventHandlers["panBrailleRightHandler"] = \
             input_event.InputEventHandler(
                 Script.panBrailleRight,
-                _("Pans the braille display to the right."))
+                _("Pans the braille display to the right."),
+                False) # Do not enable learn mode for this action
 
         self.inputEventHandlers["reviewBottomLeftHandler"] = \
             input_event.InputEventHandler(

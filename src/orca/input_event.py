@@ -125,7 +125,7 @@ class SpeechEvent(InputEvent):
 
 class InputEventHandler:
 
-    def __init__(self, function, description):
+    def __init__(self, function, description, learnModeEnabled=True):
         """Creates a new InputEventHandler instance.  All bindings
         (e.g., key bindings and braille bindings) will be handled
         by an instance of an InputEventHandler.
@@ -137,10 +137,14 @@ class InputEventHandler:
                     False
         - description: a localized string describing what this InputEvent
                        does
+        - learnModeEnabled: if True, the description will be spoken and
+                            brailled if learn mode is enabled.  If False,
+                            the function will be called no matter what.
         """
 
         self._function = function
         self._description = description
+        self._learnModeEnabled = learnModeEnabled
 
     def processInputEvent(self, script, inputEvent):
         """Processes an input event.  If settings.learnModeEnabled is True,
@@ -160,7 +164,7 @@ class InputEventHandler:
 
         consumed = False
 
-        if settings.learnModeEnabled:
+        if settings.learnModeEnabled and self._learnModeEnabled:
             if self._description:
                 # These imports are here to eliminate circular imports.
                 #
