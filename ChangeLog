@@ -1,5 +1,13 @@
 2006-09-12  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/orca-setup.glade:
+          Fix for one of the problems mentioned in bug #351797.
+          When Calum Benson's HCI changes were incorporated in rev 1.21 of
+          the orca-setup.glade file, the handler for the "destroy" event 
+          for the main Preferences window was lost.
+
+2006-09-12  Rich Burridge <rich.burridge@sun.com>
+
         Second part of the automated regression testing changes.
 
         * test/results, test/results/gedit, test/results/gnome-terminal:
