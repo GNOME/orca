@@ -144,13 +144,15 @@ class Script(default.Script):
         debug.println(self.debugLevel, "gaim.setupInputEventHandlers.")
 
         default.Script.setupInputEventHandlers(self)
-        self.togglePrefixHandler = input_event.InputEventHandler(
-            Script.togglePrefix,
-            _("Toggle whether we prefix chat room messages with the name of the chat room."))
+        self.inputEventHandlers["togglePrefixHandler"] = \
+            input_event.InputEventHandler(
+                Script.togglePrefix,
+                _("Toggle whether we prefix chat room messages with the name of the chat room."))
 
-        self.readPreviousMessageHandler = input_event.InputEventHandler(
-            Script.readPreviousMessage,
-            _("Speak and braille a previous chat room message."))
+        self.inputEventHandlers["readPreviousMessageHandler"] = \
+            input_event.InputEventHandler(
+                Script.readPreviousMessage,
+                _("Speak and braille a previous chat room message."))
 
     def getKeyBindings(self):
         """Defines the key bindings for this script. Setup the default
@@ -168,7 +170,7 @@ class Script(default.Script):
                 "h",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.togglePrefixHandler))
+                self.inputEventHandlers["togglePrefixHandler"]))
 
         messageKeys = [ "1", "2", "3", "4", "5", "6", "7", "8", "9" ]
         for i in range(0, len(messageKeys)):
@@ -177,7 +179,7 @@ class Script(default.Script):
                     messageKeys[i],
                     1 << settings.MODIFIER_ORCA,
                     1 << settings.MODIFIER_ORCA,
-                    self.readPreviousMessageHandler))
+                    self.inputEventHandlers["readPreviousMessageHandler"]))
 
         return keyBindings
 

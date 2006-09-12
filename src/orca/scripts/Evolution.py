@@ -102,9 +102,10 @@ class Script(default.Script):
 
         default.Script.setupInputEventHandlers(self)
 
-        self.sayAllHandler = input_event.InputEventHandler(
-            Script.sayAll,
-            _("Speaks entire document."))
+        self.inputEventHandlers["sayAllHandler"] = \
+            input_event.InputEventHandler(
+                Script.sayAll,
+                _("Speaks entire document."))
 
     def speakSetupAssistantLabel(self, label):
         """Perform a variety of tests on this Setup Assistant label to see

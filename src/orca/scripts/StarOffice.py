@@ -93,8 +93,8 @@ def isSpreadSheetCell(obj):
     return util.isDesiredFocusedItem(obj, rolesList)
 
 class BrailleGenerator(braillegenerator.BrailleGenerator):
-    """Overrides _getBrailleRegionsForTableCell so that, when we are in 
-    a spread sheet, we can braille the location of the table cell as well 
+    """Overrides _getBrailleRegionsForTableCell so that, when we are in
+    a spread sheet, we can braille the location of the table cell as well
     as the contents.
     """
 
@@ -141,7 +141,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
 class SpeechGenerator(speechgenerator.SpeechGenerator):
     """Overrides _getSpeechForTableCell so that, when we are in a spread
-    sheet, we can speak the location of the table cell as well as the 
+    sheet, we can speak the location of the table cell as well as the
     contents.
     """
 
@@ -238,9 +238,10 @@ class Script(default.Script):
 
         default.Script.setupInputEventHandlers(self)
 
-        self.speakInputLineHandler = input_event.InputEventHandler(
-            Script.speakInputLine,
-            _("Speaks the contents of the input line."))
+        self.inputEventHandlers["speakInputLineHandler"] = \
+            input_event.InputEventHandler(
+                Script.speakInputLine,
+                _("Speaks the contents of the input line."))
 
     def getKeyBindings(self):
         """Defines the key bindings for this script. Setup the default
@@ -256,13 +257,13 @@ class Script(default.Script):
                 "a",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.speakInputLineHandler))
+                self.inputEventHandlers["speakInputLineHandler"]))
 
         return keyBindings
 
     def speakInputLine(self, inputEvent):
-        """Speak the contents of the spread sheet input line (assuming we 
-        have a handle to it - generated when we first focus on a spread 
+        """Speak the contents of the spread sheet input line (assuming we
+        have a handle to it - generated when we first focus on a spread
         sheet table cell.
 
         This will be either the contents of the table cell that has focus
@@ -406,9 +407,9 @@ class Script(default.Script):
             speech.speak(_("link"))
 
     def isSetupDialog(self, obj):
-        """ Check to see if this object is in the Setup dialog by walking 
-        back up the object hierarchy until we get to the dialog object and 
-        checking to see if it has a name that starts with "Welcome to 
+        """ Check to see if this object is in the Setup dialog by walking
+        back up the object hierarchy until we get to the dialog object and
+        checking to see if it has a name that starts with "Welcome to
         StarOffice".
 
         Arguments:
@@ -422,7 +423,7 @@ class Script(default.Script):
         while obj and obj.role != rolenames.ROLE_APPLICATION:
             if obj.role == rolenames.ROLE_DIALOG and \
                 (obj.name and obj.name.startswith(_("Welcome to StarOffice"))):
-                debug.println(self.debugLevel, 
+                debug.println(self.debugLevel,
                               "StarOffice.isSetupDialog: True.")
                 found = True
 
@@ -650,7 +651,7 @@ class Script(default.Script):
         # 4) Calc - spread sheet table.
         #
         # If we are in the Calc spread sheet table, and we want to read all
-        # of the row (as opposed to a single cell), then generate the braille 
+        # of the row (as opposed to a single cell), then generate the braille
         # and speech for each of the showing spread sheet cells in the current
         # row.
         #
@@ -685,8 +686,8 @@ class Script(default.Script):
                 utterances = []
                 regions = []
 
-                # [[[TODO: richb - one speedup improvement we can do here is 
-                # to look left and look right along the row from the current 
+                # [[[TODO: richb - one speedup improvement we can do here is
+                # to look left and look right along the row from the current
                 # column, to just get the range of cells to show.]]]
                 #
                 for i in range(0, table.nColumns):
@@ -749,12 +750,12 @@ class Script(default.Script):
                                         rolenames.ROLE_PANEL)
             for i in range(0, len(allPanels)):
                 if not allPanels[i].name:
-                    allLabels = util.findByRole(allPanels[i], 
+                    allLabels = util.findByRole(allPanels[i],
                                                 rolenames.ROLE_LABEL)
                     for i in range(0, len(allLabels)):
                         self.speakSetupLabel(allLabels[i])
         else:
-            # Pass the event onto the parent class to be handled in the 
+            # Pass the event onto the parent class to be handled in the
             # default way.
             #
             default.Script.onWindowActivated(self, event)
@@ -846,9 +847,9 @@ class Script(default.Script):
             if orca_state.locusOfFocus.role == rolenames.ROLE_TABLE_CELL:
                 cell = orca_state.locusOfFocus
 
-                # We are getting two "object:selection-changed" events 
-                # for each spread sheet cell move, so in order to prevent 
-                # appending "has formula" twice, we only do it if the last 
+                # We are getting two "object:selection-changed" events
+                # for each spread sheet cell move, so in order to prevent
+                # appending "has formula" twice, we only do it if the last
                 # cell is different from this one.
                 #
                 if cell != self.lastCell:
@@ -873,4 +874,3 @@ class Script(default.Script):
                                         # the default handler.
 
         default.Script.onSelectionChanged(self, event)
-

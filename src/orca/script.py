@@ -69,6 +69,7 @@ class Script:
 
         self.listeners = self.getListeners()
 
+        self.inputEventHandlers = {}
         self.setupInputEventHandlers()
         self.keyBindings = self.getKeyBindings()
         self.brailleBindings = self.getBrailleBindings()

@@ -73,185 +73,230 @@ class Script(script.Script):
         """Defines InputEventHandler fields for this script that can be
         called by the key and braille bindings."""
 
-        self.leftClickReviewItemHandler = input_event.InputEventHandler(
-            Script.leftClickReviewItem,
-            _("Performs left click on current flat review item."))
+        self.inputEventHandlers["leftClickReviewItemHandler"] = \
+            input_event.InputEventHandler(
+                Script.leftClickReviewItem,
+                _("Performs left click on current flat review item."))
 
-        self.rightClickReviewItemHandler = input_event.InputEventHandler(
-            Script.rightClickReviewItem,
-            _("Performs right click on current flat review item."))
+        self.inputEventHandlers["rightClickReviewItemHandler"] = \
+             input_event.InputEventHandler(
+                Script.rightClickReviewItem,
+                _("Performs right click on current flat review item."))
 
-        self.sayAllHandler = input_event.InputEventHandler(
-            Script.sayAll,
-            _("Speaks entire document."))
+        self.inputEventHandlers["sayAllHandler"] = \
+            input_event.InputEventHandler(
+                Script.sayAll,
+                _("Speaks entire document."))
 
-        self.whereAmIHandler = input_event.InputEventHandler(
-            Script.whereAmI,
-            _("Performs the where am I operation."))
+        self.inputEventHandlers["whereAmIHandler"] = \
+            input_event.InputEventHandler(
+                Script.whereAmI,
+                _("Performs the where am I operation."))
 
-        self.showZonesHandler = input_event.InputEventHandler(
-            Script.showZones,
-            _("Paints and prints the visible zones in the active window."))
+        self.inputEventHandlers["showZonesHandler"] = \
+            input_event.InputEventHandler(
+                Script.showZones,
+                _("Paints and prints the visible zones in the active window."))
 
-        self.toggleFlatReviewModeHandler = input_event.InputEventHandler(
-            Script.toggleFlatReviewMode,
-            _("Enters and exits flat review mode."))
+        self.inputEventHandlers["toggleFlatReviewModeHandler"] = \
+            input_event.InputEventHandler(
+                Script.toggleFlatReviewMode,
+                _("Enters and exits flat review mode."))
 
-        self.reviewPreviousLineHandler = input_event.InputEventHandler(
-            Script.reviewPreviousLine,
-            _("Moves flat review to the beginning of the previous line."))
+        self.inputEventHandlers["reviewPreviousLineHandler"] = \
+            input_event.InputEventHandler(
+                Script.reviewPreviousLine,
+                _("Moves flat review to the beginning of the previous line."))
 
-        self.reviewHomeHandler = input_event.InputEventHandler(
-            Script.reviewHome,
-            _("Moves flat review to the home position."))
+        self.inputEventHandlers["reviewHomeHandler"] = \
+            input_event.InputEventHandler(
+                Script.reviewHome,
+                _("Moves flat review to the home position."))
 
-        self.reviewCurrentLineHandler = input_event.InputEventHandler(
-            Script.reviewCurrentLine,
-            _("Speaks the current flat review line."))
+        self.inputEventHandlers["reviewCurrentLineHandler"] = \
+            input_event.InputEventHandler(
+                Script.reviewCurrentLine,
+                _("Speaks the current flat review line."))
 
-        self.reviewNextLineHandler = input_event.InputEventHandler(
+        self.inputEventHandlers["reviewNextLineHandler"] = \
+            input_event.InputEventHandler(
                 Script.reviewNextLine,
                 _("Moves flat review to the beginning of the next line."))
 
-        self.reviewEndHandler = input_event.InputEventHandler(
-            Script.reviewEnd,
-            _("Moves flat review to the end position."))
+        self.inputEventHandlers["reviewEndHandler"] = \
+            input_event.InputEventHandler(
+                Script.reviewEnd,
+                _("Moves flat review to the end position."))
 
-        self.reviewPreviousItemHandler = input_event.InputEventHandler(
-            Script.reviewPreviousItem,
-            _("Moves flat review to the previous item or word."))
+        self.inputEventHandlers["reviewPreviousItemHandler"] = \
+            input_event.InputEventHandler(
+                Script.reviewPreviousItem,
+                _("Moves flat review to the previous item or word."))
 
-        self.reviewAboveHandler = input_event.InputEventHandler(
-            Script.reviewAbove,
-            _("Moves flat review to the word above the current word."))
+        self.inputEventHandlers["reviewAboveHandler"] = \
+            input_event.InputEventHandler(
+                Script.reviewAbove,
+                _("Moves flat review to the word above the current word."))
 
-        self.reviewCurrentItemHandler = input_event.InputEventHandler(
-            Script.reviewCurrentItem,
-            _("Speaks or spells the current flat review item or word."))
+        self.inputEventHandlers["reviewCurrentItemHandler"] = \
+            input_event.InputEventHandler(
+                Script.reviewCurrentItem,
+                _("Speaks or spells the current flat review item or word."))
 
-        self.reviewCurrentAccessibleHandler = input_event.InputEventHandler(
-            Script.reviewCurrentAccessible,
-            _("Speaks the current flat review object."))
+        self.inputEventHandlers["reviewCurrentAccessibleHandler"] = \
+            input_event.InputEventHandler(
+                Script.reviewCurrentAccessible,
+                _("Speaks the current flat review object."))
 
-        self.reviewNextItemHandler = input_event.InputEventHandler(
-            Script.reviewNextItem,
-            _("Moves flat review to the next item or word."))
+        self.inputEventHandlers["reviewNextItemHandler"] = \
+            input_event.InputEventHandler(
+                Script.reviewNextItem,
+                _("Moves flat review to the next item or word."))
 
-        self.reviewBelowHandler = input_event.InputEventHandler(
-            Script.reviewBelow,
-            _("Moves flat review to the word below the current word."))
+        self.inputEventHandlers["reviewBelowHandler"] = \
+            input_event.InputEventHandler(
+                Script.reviewBelow,
+                _("Moves flat review to the word below the current word."))
 
-        self.reviewPreviousCharacterHandler = input_event.InputEventHandler(
-            Script.reviewPreviousCharacter,
-            _("Moves flat review to the previous character."))
+        self.inputEventHandlers["reviewPreviousCharacterHandler"] = \
+            input_event.InputEventHandler(
+                Script.reviewPreviousCharacter,
+                _("Moves flat review to the previous character."))
 
-        self.reviewEndOfLineHandler = input_event.InputEventHandler(
-            Script.reviewEndOfLine,
-            _("Moves flat review to the end of the line."))
+        self.inputEventHandlers["reviewEndOfLineHandler"] = \
+            input_event.InputEventHandler(
+                Script.reviewEndOfLine,
+                _("Moves flat review to the end of the line."))
 
-        self.reviewCurrentCharacterHandler = input_event.InputEventHandler(
-            Script.reviewCurrentCharacter,
-            _("Speaks the current flat review character."))
+        self.inputEventHandlers["reviewCurrentCharacterHandler"] = \
+            input_event.InputEventHandler(
+                Script.reviewCurrentCharacter,
+                _("Speaks the current flat review character."))
 
-        self.reviewNextCharacterHandler = input_event.InputEventHandler(
-            Script.reviewNextCharacter,
-            _("Moves flat review to the next character."))
+        self.inputEventHandlers["reviewNextCharacterHandler"] = \
+            input_event.InputEventHandler(
+                Script.reviewNextCharacter,
+                _("Moves flat review to the next character."))
 
-        self.toggleTableCellReadModeHandler = input_event.InputEventHandler(
-            Script.toggleTableCellReadMode,
-            _("Toggles whether to read just the current table cell or the whole row."))
+        self.inputEventHandlers["toggleTableCellReadModeHandler"] = \
+            input_event.InputEventHandler(
+                Script.toggleTableCellReadMode,
+                _("Toggles whether to read just the current table cell or the whole row."))
 
-        self.readCharAttributesHandler = input_event.InputEventHandler(
-            Script.readCharAttributes,
-            _("Reads the attributes associated with the current text character."))
+        self.inputEventHandlers["readCharAttributesHandler"] = \
+            input_event.InputEventHandler(
+                Script.readCharAttributes,
+                _("Reads the attributes associated with the current text character."))
 
-        self.reportScriptInfoHandler = input_event.InputEventHandler(
-            Script.reportScriptInfo,
-            _("Reports information on current script."))
+        self.inputEventHandlers["reportScriptInfoHandler"] = \
+            input_event.InputEventHandler(
+                Script.reportScriptInfo,
+                _("Reports information on current script."))
 
-        self.panBrailleLeftHandler = input_event.InputEventHandler(
-            Script.panBrailleLeft,
-            _("Pans the braille display to the left."))
+        self.inputEventHandlers["panBrailleLeftHandler"] = \
+            input_event.InputEventHandler(
+                Script.panBrailleLeft,
+                _("Pans the braille display to the left."))
 
-        self.panBrailleRightHandler = input_event.InputEventHandler(
-            Script.panBrailleRight,
-            _("Pans the braille display to the right."))
+        self.inputEventHandlers["panBrailleRightHandler"] = \
+            input_event.InputEventHandler(
+                Script.panBrailleRight,
+                _("Pans the braille display to the right."))
 
-        self.reviewBottomLeftHandler = input_event.InputEventHandler(
-            Script.reviewBottomLeft,
-            _("Moves flat review to the bottom left."))
+        self.inputEventHandlers["reviewBottomLeftHandler"] = \
+            input_event.InputEventHandler(
+                Script.reviewBottomLeft,
+                _("Moves flat review to the bottom left."))
 
-        self.goBrailleHomeHandler = input_event.InputEventHandler(
-            Script.goBrailleHome,
-            _("Returns to object with keyboard focus."))
+        self.inputEventHandlers["goBrailleHomeHandler"] = \
+            input_event.InputEventHandler(
+                Script.goBrailleHome,
+                _("Returns to object with keyboard focus."))
 
-        self.enterLearnModeHandler = input_event.InputEventHandler(
-            Script.enterLearnMode,
-            _("Enters learn mode.  Press escape to exit learn mode."))
+        self.inputEventHandlers["enterLearnModeHandler"] = \
+            input_event.InputEventHandler(
+                Script.enterLearnMode,
+                _("Enters learn mode.  Press escape to exit learn mode."))
 
-        self.exitLearnModeHandler = input_event.InputEventHandler(
-            Script.exitLearnMode,
-            _("Exits learn mode."))
+        self.inputEventHandlers["exitLearnModeHandler"] = \
+            input_event.InputEventHandler(
+                Script.exitLearnMode,
+                _("Exits learn mode."))
 
-        self.decreaseSpeechRateHandler = input_event.InputEventHandler(
-            speech.decreaseSpeechRate,
-            _("Decreases the speech rate."))
+        self.inputEventHandlers["decreaseSpeechRateHandler"] = \
+            input_event.InputEventHandler(
+                speech.decreaseSpeechRate,
+                _("Decreases the speech rate."))
 
-        self.increaseSpeechRateHandler = input_event.InputEventHandler(
-            speech.increaseSpeechRate,
-            _("Increases the speech rate."))
+        self.inputEventHandlers["increaseSpeechRateHandler"] = \
+            input_event.InputEventHandler(
+                speech.increaseSpeechRate,
+                _("Increases the speech rate."))
 
-        self.decreaseSpeechPitchHandler = input_event.InputEventHandler(
-            speech.decreaseSpeechPitch,
-            _("Decreases the speech pitch."))
+        self.inputEventHandlers["decreaseSpeechPitchHandler"] = \
+            input_event.InputEventHandler(
+                speech.decreaseSpeechPitch,
+                _("Decreases the speech pitch."))
 
-        self.increaseSpeechPitchHandler = input_event.InputEventHandler(
-            speech.increaseSpeechPitch,
-            _("Increases the speech pitch."))
+        self.inputEventHandlers["increaseSpeechPitchHandler"] = \
+            input_event.InputEventHandler(
+                speech.increaseSpeechPitch,
+                _("Increases the speech pitch."))
 
-        self.shutdownHandler = input_event.InputEventHandler(
-            orca.shutdown,
-            _("Quits Orca"))
+        self.inputEventHandlers["shutdownHandler"] = \
+            input_event.InputEventHandler(
+                orca.shutdown,
+                _("Quits Orca"))
 
-        self.keystrokeRecordingHandler = input_event.InputEventHandler(
-            orca.toggleKeystrokeRecording,
-            _("Toggles keystroke recording on and off."))
+        self.inputEventHandlers["keystrokeRecordingHandler"] = \
+            input_event.InputEventHandler(
+                orca.toggleKeystrokeRecording,
+                _("Toggles keystroke recording on and off."))
 
-        self.preferencesSettingsHandler = input_event.InputEventHandler(
-            orca._showPreferencesGUI,
-            _("Displays the preferences configuration dialog."))
+        self.inputEventHandlers["preferencesSettingsHandler"] = \
+            input_event.InputEventHandler(
+                orca._showPreferencesGUI,
+                _("Displays the preferences configuration dialog."))
 
-        self.loadUserSettingsHandler = input_event.InputEventHandler(
-            orca.loadUserSettings,
-            _("Reloads user settings and reinitializes services as necessary."))
+        self.inputEventHandlers["loadUserSettingsHandler"] = \
+            input_event.InputEventHandler(
+                orca.loadUserSettings,
+                _("Reloads user settings and reinitializes services as necessary."))
 
-        self.toggleSilenceSpeechHandler = input_event.InputEventHandler(
-            orca._toggleSilenceSpeech,
-            _("Toggles the silencing of speech."))
+        self.inputEventHandlers["toggleSilenceSpeechHandler"] = \
+            input_event.InputEventHandler(
+                orca._toggleSilenceSpeech,
+                _("Toggles the silencing of speech."))
 
-        self.listAppsHandler = input_event.InputEventHandler(
-            orca.printApps,
-            _("Prints a debug listing of all known applications to the console where Orca is running."))
+        self.inputEventHandlers["listAppsHandler"] = \
+            input_event.InputEventHandler(
+                orca.printApps,
+                _("Prints a debug listing of all known applications to the console where Orca is running."))
 
-        self.cycleDebugLevelHandler = input_event.InputEventHandler(
-            orca.cycleDebugLevel,
-            _("Cycles the debug level at run time."))
+        self.inputEventHandlers["cycleDebugLevelHandler"] = \
+            input_event.InputEventHandler(
+                orca.cycleDebugLevel,
+                _("Cycles the debug level at run time."))
 
-        self.printActiveAppHandler = input_event.InputEventHandler(
-            orca.printActiveApp,
-            _("Prints debug information about the currently active application to the console where Orca is running."))
+        self.inputEventHandlers["printActiveAppHandler"] = \
+            input_event.InputEventHandler(
+                orca.printActiveApp,
+                _("Prints debug information about the currently active application to the console where Orca is running."))
 
-        self.printAncestryHandler = input_event.InputEventHandler(
-            orca.printAncestry,
-            _("Prints debug information about the ancestry of the object with focus"))
+        self.inputEventHandlers["printAncestryHandler"] = \
+            input_event.InputEventHandler(
+                orca.printAncestry,
+                _("Prints debug information about the ancestry of the object with focus"))
 
-        self.printHierarchyHandler = input_event.InputEventHandler(
-            orca.printHierarchy,
-            _("Prints debug information about the application with focus"))
+        self.inputEventHandlers["printHierarchyHandler"] = \
+            input_event.InputEventHandler(
+                orca.printHierarchy,
+                _("Prints debug information about the application with focus"))
 
-        self.nextPresentationManagerHandler = input_event.InputEventHandler(
-            orca._switchToNextPresentationManager,
-            _("Switches to the next presentation manager."))
+        self.inputEventHandlers["nextPresentationManagerHandler"] = \
+            input_event.InputEventHandler(
+                orca._switchToNextPresentationManager,
+                _("Switches to the next presentation manager."))
 
     def getListeners(self):
         """Sets up the AT-SPI event listeners for this script.
@@ -324,375 +369,375 @@ class Script(script.Script):
                 "KP_Divide",
                 0,
                 0,
-                self.leftClickReviewItemHandler))
+                self.inputEventHandlers["leftClickReviewItemHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Multiply",
                 0,
                 0,
-                self.rightClickReviewItemHandler))
+                self.inputEventHandlers["rightClickReviewItemHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Add",
                 0,
                 0,
-                self.sayAllHandler))
+                self.inputEventHandlers["sayAllHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Enter",
                 0,
                 0,
-                self.whereAmIHandler))
+                self.inputEventHandlers["whereAmIHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Num_Lock",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.showZonesHandler))
+                self.inputEventHandlers["showZonesHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Subtract",
                 0,
                 0,
-                self.toggleFlatReviewModeHandler))
+                self.inputEventHandlers["toggleFlatReviewModeHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_7",
                 1 << settings.MODIFIER_ORCA,
                 0,
-                self.reviewPreviousLineHandler))
+                self.inputEventHandlers["reviewPreviousLineHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Home",
                 1 << settings.MODIFIER_ORCA,
                 0,
-                self.reviewPreviousLineHandler))
+                self.inputEventHandlers["reviewPreviousLineHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_7",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.reviewHomeHandler))
+                self.inputEventHandlers["reviewHomeHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Home",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.reviewHomeHandler))
+                self.inputEventHandlers["reviewHomeHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_8",
                 0,
                 0,
-                self.reviewCurrentLineHandler))
+                self.inputEventHandlers["reviewCurrentLineHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Up",
                 0,
                 0,
-                self.reviewCurrentLineHandler))
+                self.inputEventHandlers["reviewCurrentLineHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_9",
                 1 << settings.MODIFIER_ORCA,
                 0,
-                self.reviewNextLineHandler))
+                self.inputEventHandlers["reviewNextLineHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Page_Up",
                 1 << settings.MODIFIER_ORCA,
                 0,
-                self.reviewNextLineHandler))
+                self.inputEventHandlers["reviewNextLineHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_9",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.reviewEndHandler))
+                self.inputEventHandlers["reviewEndHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Page_Up",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.reviewEndHandler))
+                self.inputEventHandlers["reviewEndHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_4",
                 1 << settings.MODIFIER_ORCA,
                 0,
-                self.reviewPreviousItemHandler))
+                self.inputEventHandlers["reviewPreviousItemHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Left",
                 1 << settings.MODIFIER_ORCA,
                 0,
-                self.reviewPreviousItemHandler))
+                self.inputEventHandlers["reviewPreviousItemHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_4",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.reviewAboveHandler))
+                self.inputEventHandlers["reviewAboveHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Left",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.reviewAboveHandler))
+                self.inputEventHandlers["reviewAboveHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_5",
                 1 << settings.MODIFIER_ORCA,
                 0,
-                self.reviewCurrentItemHandler))
+                self.inputEventHandlers["reviewCurrentItemHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Begin",
                 1 << settings.MODIFIER_ORCA,
                 0,
-                self.reviewCurrentItemHandler))
+                self.inputEventHandlers["reviewCurrentItemHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_5",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.reviewCurrentAccessibleHandler))
+                self.inputEventHandlers["reviewCurrentAccessibleHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Begin",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.reviewCurrentAccessibleHandler))
+                self.inputEventHandlers["reviewCurrentAccessibleHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_6",
                 1 << settings.MODIFIER_ORCA,
                 0,
-                self.reviewNextItemHandler))
+                self.inputEventHandlers["reviewNextItemHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Right",
                 1 << settings.MODIFIER_ORCA,
                 0,
-                self.reviewNextItemHandler))
+                self.inputEventHandlers["reviewNextItemHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_6",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.reviewBelowHandler))
+                self.inputEventHandlers["reviewBelowHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Right",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.reviewBelowHandler))
+                self.inputEventHandlers["reviewBelowHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_1",
                 1 << settings.MODIFIER_ORCA,
                 0,
-                self.reviewPreviousCharacterHandler))
+                self.inputEventHandlers["reviewPreviousCharacterHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_End",
                 1 << settings.MODIFIER_ORCA,
                 0,
-                self.reviewPreviousCharacterHandler))
+                self.inputEventHandlers["reviewPreviousCharacterHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_1",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.reviewEndOfLineHandler))
+                self.inputEventHandlers["reviewEndOfLineHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_End",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.reviewEndOfLineHandler))
+                self.inputEventHandlers["reviewEndOfLineHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_2",
                 0,
                 0,
-                self.reviewCurrentCharacterHandler))
+                self.inputEventHandlers["reviewCurrentCharacterHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Down",
                 0,
                 0,
-                self.reviewCurrentCharacterHandler))
+                self.inputEventHandlers["reviewCurrentCharacterHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_3",
                 0,
                 0,
-                self.reviewNextCharacterHandler))
+                self.inputEventHandlers["reviewNextCharacterHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Page_Down",
                 0,
                 0,
-                self.reviewNextCharacterHandler))
+                self.inputEventHandlers["reviewNextCharacterHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "F11",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.toggleTableCellReadModeHandler))
+                self.inputEventHandlers["toggleTableCellReadModeHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "SunF36",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.toggleTableCellReadModeHandler))
+                self.inputEventHandlers["toggleTableCellReadModeHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "f",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.readCharAttributesHandler))
+                self.inputEventHandlers["readCharAttributesHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "F3",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.reportScriptInfoHandler))
+                self.inputEventHandlers["reportScriptInfoHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "F1",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.enterLearnModeHandler))
+                self.inputEventHandlers["enterLearnModeHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Left",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.decreaseSpeechRateHandler))
+                self.inputEventHandlers["decreaseSpeechRateHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Right",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.increaseSpeechRateHandler))
+                self.inputEventHandlers["increaseSpeechRateHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Down",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.decreaseSpeechPitchHandler))
+                self.inputEventHandlers["decreaseSpeechPitchHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Up",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.increaseSpeechPitchHandler))
+                self.inputEventHandlers["increaseSpeechPitchHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "q",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.shutdownHandler))
+                self.inputEventHandlers["shutdownHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Pause",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.keystrokeRecordingHandler))
+                self.inputEventHandlers["keystrokeRecordingHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "space",
-                (1 << settings.MODIFIER_ORCA | \
-                     1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 1 << settings.MODIFIER_ORCA,
-                self.preferencesSettingsHandler))
+                self.inputEventHandlers["preferencesSettingsHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "space",
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 (1 << settings.MODIFIER_ORCA | \
                      1 << atspi.Accessibility.MODIFIER_CONTROL),
-                (1 << settings.MODIFIER_ORCA | \
-                     1 << atspi.Accessibility.MODIFIER_CONTROL),
-                self.loadUserSettingsHandler))
+                self.inputEventHandlers["loadUserSettingsHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "s",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.toggleSilenceSpeechHandler))
+                self.inputEventHandlers["toggleSilenceSpeechHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "F5",
-                (1 << settings.MODIFIER_ORCA | \
-                     1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 1 << settings.MODIFIER_ORCA,
-                self.listAppsHandler))
+                self.inputEventHandlers["listAppsHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "F4",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.cycleDebugLevelHandler))
+                self.inputEventHandlers["cycleDebugLevelHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "F6",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.printActiveAppHandler))
+                self.inputEventHandlers["printActiveAppHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
@@ -700,21 +745,21 @@ class Script(script.Script):
                 (1 << settings.MODIFIER_ORCA | \
                      1 << atspi.Accessibility.MODIFIER_CONTROL),
                 1 << settings.MODIFIER_ORCA,
-                self.printAncestryHandler))
+                self.inputEventHandlers["printAncestryHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "F8",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.printHierarchyHandler))
+                self.inputEventHandlers["printHierarchyHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "F10",
-                1 << settings.MODIFIER_ORCA, \
                 1 << settings.MODIFIER_ORCA,
-                self.nextPresentationManagerHandler))
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["nextPresentationManagerHandler"]))
 
         return keyBindings
 
@@ -725,13 +770,20 @@ class Script(script.Script):
         values are InputEventHandler instances.
         """
         brailleBindings = script.Script.getBrailleBindings(self)
-        brailleBindings[braille.CMD_FWINLT]   = self.panBrailleLeftHandler
-        brailleBindings[braille.CMD_FWINRT]   = self.panBrailleRightHandler
-        brailleBindings[braille.CMD_LNUP]     = self.reviewAboveHandler
-        brailleBindings[braille.CMD_LNDN]     = self.reviewBelowHandler
-        brailleBindings[braille.CMD_TOP_LEFT] = self.reviewHomeHandler
-        brailleBindings[braille.CMD_BOT_LEFT] = self.reviewBottomLeftHandler
-        brailleBindings[braille.CMD_HOME]     = self.goBrailleHomeHandler
+        brailleBindings[braille.CMD_FWINLT]   = \
+            self.inputEventHandlers["panBrailleLeftHandler"]
+        brailleBindings[braille.CMD_FWINRT]   = \
+            self.inputEventHandlers["panBrailleRightHandler"]
+        brailleBindings[braille.CMD_LNUP]     = \
+            self.inputEventHandlers["reviewAboveHandler"]
+        brailleBindings[braille.CMD_LNDN]     = \
+            self.inputEventHandlers["reviewBelowHandler"]
+        brailleBindings[braille.CMD_TOP_LEFT] = \
+            self.inputEventHandlers["reviewHomeHandler"]
+        brailleBindings[braille.CMD_BOT_LEFT] = \
+            self.inputEventHandlers["reviewBottomLeftHandler"]
+        brailleBindings[braille.CMD_HOME]     = \
+            self.inputEventHandlers["goBrailleHomeHandler"]
 
         return brailleBindings
 
@@ -2274,7 +2326,7 @@ class Script(script.Script):
             "Escape",
             0,
             0,
-            self.exitLearnModeHandler)
+            self.inputEventHandlers["exitLearnModeHandler"])
         self.keyBindings.add(self.exitLearnModeKeyBinding)
 
         speech.speak(

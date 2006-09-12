@@ -1,5 +1,12 @@
 2006-09-12  Willie Walker <william.walker@sun.com>
 
+        * src/orca/default.py, src/orca/script.py,
+	src/orca/scripts/Evolution.py, src/orca/scripts/StarOffice.py
+	src/orca/scripts/gaim.py: apply part 1 of fix for bug 354970 -
+	refactor the way key and braille bindings are created and managed.
+	
+2006-09-12  Willie Walker <william.walker@sun.com>
+	
 	* src/orca/orca_state.py, src/orca/focus_tracking_presenter.py:
 	fix for bug 347650 - move activeScript from
 	focus_tracking_presenter.py to orca_state.py and make it "public"
