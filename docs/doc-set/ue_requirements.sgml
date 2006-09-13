@@ -803,7 +803,7 @@
         <para>&incomplete; V0.2.7. Letter-by-letter spelling mode of
 	current flat review item performed when user quickly presses
 	KP_5 (word review) or KP_8 (line review) twice in a
-	row.  Military spelling is a &mustdeliver; V1.1.</para>
+	row.  Military spelling will be performed when these keys are pressed quickly 3 times in a row.  Military spelling is a &mustdeliver; V1.1.</para>
         <para>&complete; V0.2.6. Verbalized punctuation is a settable
 	option.</para>
         <para>&incomplete; [OWNER: MMP - further define requirements and functionality]
