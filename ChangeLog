@@ -1,3 +1,11 @@
+2006-09-14  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca_gui_prefs.py:
+          In _initGUIState(), need to set the active voice type item
+          before trying to get it's text. Problem found while trying
+          to find the root cause of the remaining problem in
+          bug #351797.
+
 2006-09-12  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade:

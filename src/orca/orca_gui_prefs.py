@@ -204,8 +204,8 @@ class orcaSetupGUI(GladeWrapper):
         if serverPrefs:
             self._setServerChoice(self.serverChoices, serverPrefs[0])
 
-        voiceType = self.voiceType.get_active_text()
         self.voiceType.set_active(0)
+        voiceType = self.voiceType.get_active_text()
         self._setVoiceSettingForVoiceType(voiceType)
 
         if prefs["verbalizePunctuationStyle"] == \
