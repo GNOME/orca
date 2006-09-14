@@ -90,7 +90,6 @@ class orcaSetupGUI(GladeWrapper):
         accordingly.
         """
 
-        self._setTimeStamp()
         self.initializing = True
         self.prefsDict = orca_prefs.readPreferences()
         self.defaultVoice   = self.prefsDict["voices"]["default"]
@@ -707,25 +706,23 @@ class orcaSetupGUI(GladeWrapper):
                 return
             i += 1
 
-    def _setTimeStamp(self):
-        """Set the current time on the Configuration GUI window so that it'll
-        get focus. set_user_time is a new call in pygtk 2.9.2 or later.
-        It's surronded by a try/except block here so that if it's not found,
-        then we can fail gracefully.
-        """
-
-        try:
-            self.orcaSetupWindow.window.set_user_time(\
-                orca_state.lastInputEventTimestamp)
-        except AttributeError:
-            debug.printException(debug.LEVEL_FINEST)
-
     def _showGUI(self):
         """Show the Orca configuration GUI window. This assumes that
         the GUI has already been created.
         """
 
-        self._setTimeStamp()
+        # Set the current time on the Configuration GUI window so that it'll
+        # get focus. set_user_time is a new call in pygtk 2.9.2 or later.
+        # It's surronded by a try/except block here so that if it's not found,
+        # then we can fail gracefully.
+        #
+        try:
+            self.orcaSetupWindow.realize()
+            self.orcaSetupWindow.window.set_user_time(\
+                orca_state.lastInputEventTimestamp)
+        except AttributeError:
+            debug.printException(debug.LEVEL_FINEST)
+
         self.orcaSetupWindow.show()
 
     def _initComboBox(self, combobox):

@@ -11,11 +11,11 @@
           to find the root cause of the remaining problem in
           bug #351797.
 
-          Fixed bug #351797 (I hope). Added a new _setTimeStamp() 
-          routine that will get called in two places. One is the path 
-          when the GUI is being created out of the Glade file. The 
-          other is just before showing it again after it had been 
-          hidden because the user has pressed the Cancel button. 
+        * src/orca/orca_gui_prefs.py:
+          src/orca/orca-setup.glade:
+          Fixed bug #351797 (thanks Elijah!). No longer map the Orca
+          Preferences window directly in the Glade file. It is now
+          realized just before setting the timestamp.
 
         * src/orca/Makefile.am:
           src/orca/phonnames.py:
