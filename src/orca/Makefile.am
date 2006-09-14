@@ -36,6 +36,7 @@ orca_python_PYTHON = \
 	orca_i18n.py \
 	orca_prefs.py \
 	orca_state.py \
+	phonnames.py \
 	platform.py \
 	presentation_manager.py \
 	punctuation_settings.py \

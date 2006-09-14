@@ -6,6 +6,13 @@
           to find the root cause of the remaining problem in
           bug #351797.
 
+        * src/orca/Makefile.am:
+          src/orca/phonnames.py:
+          Add a new source file that exposes a dictionary, phonnames, 
+          that maps each letter of the alphabet into its localized 
+          phonetic equivalent. This will be used to implement military 
+          spelling (bug #354460).
+
 2006-09-12  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade:
