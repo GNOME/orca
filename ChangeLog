@@ -11,6 +11,12 @@
           to find the root cause of the remaining problem in
           bug #351797.
 
+          Fixed bug #351797 (I hope). Added a new _setTimeStamp() 
+          routine that will get called in two places. One is the path 
+          when the GUI is being created out of the Glade file. The 
+          other is just before showing it again after it had been 
+          hidden because the user has pressed the Cancel button. 
+
         * src/orca/Makefile.am:
           src/orca/phonnames.py:
           Add a new source file that exposes a dictionary, phonnames, 
