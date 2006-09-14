@@ -1,3 +1,8 @@
+2006-09-14  Matic Zgur  <mr.zgur@gmail.com>
+
+	* sl.po: Added Slovenian translation.
+	* LINGUAS: Added Slovenian (sl) to the list of languages.
+
 2006-09-12  Priit Laes  <plaes@cvs.gnome.org>
 
 	* et.po: Added Estonian Translation 
