@@ -1470,6 +1470,7 @@ class SpeechGenerator:
             if parent == stopAncestor:
                 break
             if (parent.role != rolenames.ROLE_FILLER) \
+                and (parent.role != rolenames.ROLE_LAYERED_PANE) \
                 and (parent.role != rolenames.ROLE_SPLIT_PANE) \
                 and (parent.role != rolenames.ROLE_SCROLL_PANE) \
                 and (parent.role != rolenames.ROLE_UNKNOWN):
