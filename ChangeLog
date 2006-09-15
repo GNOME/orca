@@ -1,3 +1,9 @@
+2006-09-15  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca.py:
+          Fixed bug #356179 - The test in Orca to determine if the 
+          desktop is running, isn't working.
+
 2006-09-14  Willie Walker <william.walker@sun.com>
 
 	* src/orca/scripts/metacity.py: fix for bug 355927 - make 

@@ -1130,7 +1130,8 @@ def main():
     desktopRunning = False
     try:
         import gtk
-        desktopRunning = True
+        if gtk.gdk.display_get_default():
+            desktopRunning = True
     except:
         pass
 
