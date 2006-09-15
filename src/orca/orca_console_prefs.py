@@ -31,6 +31,16 @@ import settings
 import speech
 import speechserver
 import orca_prefs
+import platform
+import time
+
+desktopRunning = False
+try:
+    import gtk
+    if gtk.gdk.display_get_default():
+        desktopRunning = True
+except:
+    pass
 
 from orca_i18n import _  # for gettext support
 
@@ -288,6 +298,21 @@ def setupSpeech(prefsDict):
 
     return True
 
+def logoutUser():
+    """Automatically log the user out of the GNOME desktop."""
+
+    import gnome
+    import gnome.ui
+
+    program = gnome.init(platform.package, platform.version)
+    client = gnome.ui.master_client()
+
+    client.request_save(gnome.ui.SAVE_GLOBAL,  # Save style
+                        True,                  # Shutdown
+                        gnome.ui.INTERACT_ANY, # Allow user interaction
+                        False,                 # Fast
+                        True)                  # All apps save state
+
 def showPreferencesUI():
     """Uses the console to query the user for Orca preferences."""
 
@@ -326,6 +351,27 @@ def showPreferencesUI():
                     False,
                     speechServerChoice,
                     speechVoiceChoice)
+
+        if desktopRunning:
+            answer = sayAndPrint(_("Do you want to logout now?  Enter y or n: "),
+                                 False,
+                                 True,
+                                 speechServerChoice,
+                                 speechVoiceChoice)
+            if answer[0:1] == 'Y' or answer[0:1] == 'y':
+                sayAndPrint(_("Setup complete. Logging out now."),
+                            False,
+                            False,
+                            speechServerChoice,
+                            speechVoiceChoice)
+                time.sleep(2)
+
+                import bonobo
+                import gobject
+
+                gobject.threads_init()
+                gobject.idle_add(logoutUser)
+                bonobo.main()
 
     answer = sayAndPrint(_("Setup complete.  Press Return to continue."),
                          not logoutNeeded,

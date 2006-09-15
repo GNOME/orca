@@ -4,6 +4,13 @@
           Fixed bug #356179 - The test in Orca to determine if the 
           desktop is running, isn't working.
 
+        * src/orca/orca_console_prefs.py:
+          Fixed bug #340849 - orca --setup is not enabling the 
+          accessibility flag. The remaining piece that's just been
+          fixed, was to provide an option to allow the user to 
+          automatically logout of the GNOME desktop if the gconf 
+          accessibility flag wasn't previously enabled.
+
 2006-09-14  Willie Walker <william.walker@sun.com>
 
 	* src/orca/scripts/metacity.py: fix for bug 355927 - make 
