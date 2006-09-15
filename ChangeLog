@@ -1,5 +1,11 @@
 2006-09-14  Willie Walker <william.walker@sun.com>
 
+	* src/orca/scripts/metacity.py: fix for bug 355927 - make 
+	sure duplicate window titles get spoken when navigating 
+	between them using Alt+Tab.  Tested on Solaris and Ubuntu.
+	
+2006-09-14  Willie Walker <william.walker@sun.com>
+
 	* src/orca/speechgenerator.py: fix for bug 350216 - take
 	"LAYERED_PANE" out of speech context.
 	

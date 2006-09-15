@@ -64,56 +64,6 @@ class Script(default.Script):
         #
         if event.source.role != rolenames.ROLE_STATUSBAR:
             default.Script.onNameChanged(self, event)
-            return
-
-        # Let's make sure the name really changed.  Metacity seems
-        # to like to give us multiple name changed events.
-        #
-        if event.source.__dict__.has_key("oldName"):
-            oldName = event.source.oldName
-        else:
-            oldName = None
-
-        name = event.source.name
-        if name == oldName:
-            return
-        else:
-            event.source.oldName = name
-
-        # We have to stop speech, as Metacity has a key grab and we're not
-        # getting keys
-        #
-        speech.stop()
-
-        # Do we know about this window?  Traverse through our list of apps
-        # and go through the toplevel windows in each to see if we know
-        # about this one.  If we do, it's accessible.  If we don't, it is
-        # not.
-        #
-        found = False
-        for app in util.getKnownApplications():
-            i = 0
-            while i < app.childCount:
-                win = app.child(i)
-                if win is None:
-                    print "app error " + app.name
-                elif win.name == name:
-                    found = True
-                i = i + 1
-
-        text = name
-
-        # Note to translators:  the "Workspace " string is the
-        # prefix of what metacity shows when you press Ctrl+Alt
-        # and the left or right arrow keys to switch between
-        # workspaces.  The goal here is to find a match with
-        # that prefix.
-        #
-        if (not found) and (not text.startswith(_("Workspace "))):
-            text += ". " + _("inaccessible")
-
-        braille.displayMessage(text)
-        speech.speak(text)
 
     def onStateChanged(self, event):
         """The status bar in metacity tells us what toplevel window will be
@@ -139,6 +89,43 @@ class Script(default.Script):
         #
         if event.source.role != rolenames.ROLE_STATUSBAR:
             default.Script.onTextInserted(self, event)
+
+        # We have to stop speech, as Metacity has a key grab and we're not
+        # getting keys
+        #
+        speech.stop()
+
+        # Do we know about this window?  Traverse through our list of apps
+        # and go through the toplevel windows in each to see if we know
+        # about this one.  If we do, it's accessible.  If we don't, it is
+        # not.
+        #
+        found = False
+        for app in util.getKnownApplications():
+            i = 0
+            while i < app.childCount:
+                win = app.child(i)
+                if win is None:
+                    print "app error " + app.name
+                elif win.name == event.source.name:
+                    found = True
+                i = i + 1
+
+        text = event.source.name
+
+        # Note to translators: the "Workspace " and "Desk " strings
+        # are the prefix of what metacity shows when you press
+        # Ctrl+Alt and the left or right arrow keys to switch between
+        # workspaces.  The goal here is to find a match with that
+        # prefix.
+        #
+        if text.startswith(_("Workspace ")) or text.startswith(_("Desk ")):
+            pass
+        elif not found:
+            text += ". " + _("inaccessible")
+
+        braille.displayMessage(text)
+        speech.speak(text)
 
     def onTextDeleted(self, event):
         """Called whenever text is deleted from an object.
