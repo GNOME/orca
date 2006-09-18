@@ -1,3 +1,24 @@
+2006-09-18  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          src/orca/orca_state.py:
+          src/orca/util.py:
+          Fixed bug #354460 - [requirement] Military spelling
+          > Replaces the util.isDoubleClick() routine with util.getClickCount
+            which return the count of the number of clicks a user has made to 
+            one of the keys on the keyboard.
+          > Implement phonetic (military) spelling on a triple-click for
+            Numpad-2 (flat review current character)
+            Numpad-5 (flat review current word)
+            Numpad-8 (flat review current line)
+            This includes using the UPPERCASE_VOICE for upper-case letters.
+          > Fixes up a traceback is _reviewCurrentCharacter() if string was 
+            None.
+
+          Double-click will continue to ordinarily spell the 
+          character/word/line. Four or more clicks will be treated as if 
+          the user had just done a single click.
+
 2006-09-15  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca.py:

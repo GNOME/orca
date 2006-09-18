@@ -44,9 +44,11 @@ import script
 import settings
 import speech
 import speechserver
+import string
 import util
 
 from orca_i18n import _                          # for gettext support
+from phonnames import phonnames
 
 ########################################################################
 #                                                                      #
@@ -2651,19 +2653,19 @@ class Script(script.Script):
     def reviewCurrentLine(self, inputEvent):
         """Presents the current flat review line via braille and speech."""
 
-        spellWord = util.isDoubleClick(self.lastReviewCurrentEvent,
-                                       inputEvent)
-        self._reviewCurrentLine(inputEvent, spellWord)
+        clickCount = util.getClickCount(self.lastReviewCurrentEvent,
+                                           inputEvent)
+        self._reviewCurrentLine(inputEvent, clickCount)
         self.lastReviewCurrentEvent = inputEvent
 
         return True
 
-    def _reviewCurrentLine(self, inputEvent, spellWord=False):
+    def _reviewCurrentLine(self, inputEvent, clickCount=1):
         """Presents the current flat review line via braille and speech.
 
         Arguments:
         - inputEvent - the current input event.
-        - spellWord - if True, spell the current line, otherwise speak it.
+        - clickCount - number of times the user has "clicked" the current key.
         """
 
         context = self.getFlatReviewContext()
@@ -2680,10 +2682,12 @@ class Script(script.Script):
                 speech.speak(_("blank"))
             elif string.isspace():
                 speech.speak(_("white space"))
-            elif not spellWord:
-                speech.speak(string)
-            else:
+            elif clickCount == 2:
                 self.spellCurrentItem(string)
+            elif clickCount == 3:
+                self.phoneticSpellCurrentItem(string)
+            else:
+                speech.speak(string)
 
         self.updateBrailleReview()
 
@@ -2762,12 +2766,13 @@ class Script(script.Script):
 
     def reviewCurrentItem(self, inputEvent, targetCursorCell=0):
         """Speak/Braille the current item to the user. A "double-click"
-        of this key will cause the word to be spelt.
+        of this key will cause the word to be spelt. A "triple-click"
+        will cause the word to be phonetically spelt.
         """
 
-        spellWord = util.isDoubleClick(self.lastReviewCurrentEvent,
-                                       inputEvent)
-        self._reviewCurrentItem(inputEvent, targetCursorCell, spellWord)
+        clickCount = util.getClickCount(self.lastReviewCurrentEvent,
+                                           inputEvent)
+        self._reviewCurrentItem(inputEvent, targetCursorCell, clickCount)
         self.lastReviewCurrentEvent = inputEvent
 
         return True
@@ -2785,14 +2790,33 @@ class Script(script.Script):
             else:
                 speech.speak(character)
 
+    def phoneticSpellCurrentItem(self, string):
+        """Phonetically spell the current flat review word or line.
+
+        Arguments:
+        - string: the string to phonetically spell.
+        """
+
+        for (index, character) in enumerate(string):
+            if character.isupper():
+                voice = self.voices[settings.UPPERCASE_VOICE]
+                character = character.lower()
+            else:
+                voice =  self.voices[settings.DEFAULT_VOICE]
+            try:
+                string = phonnames[character]
+            except:
+                string = character
+            speech.speak(string, voice)
+
     def _reviewCurrentItem(self, inputEvent, targetCursorCell=0,
-                           spellWord=False):
+                           clickCount=1):
         """Presents the current item to the user.
 
         Arguments:
         - inputEvent - the current input event.
         - targetCursorCell - if non-zero, the target braille cursor cell.
-        - spellWord - if True, spell the current word, otherwise speak it.
+        - clickCount - number of times the user has "clicked" the current key.
         """
 
         context = self.getFlatReviewContext()
@@ -2815,10 +2839,12 @@ class Script(script.Script):
                     speech.speak(_("white space"))
                 elif string.isupper() and not spellWord:
                     speech.speak(string, self.voices[settings.UPPERCASE_VOICE])
-                elif not spellWord:
-                    speech.speak(string)
-                else:
+                elif clickCount == 2:
                     self.spellCurrentItem(string)
+                elif clickCount == 3:
+                    self.phoneticSpellCurrentItem(string)
+                else:
+                    speech.speak(string)
 
         self.updateBrailleReview(targetCursorCell)
 
@@ -2871,6 +2897,24 @@ class Script(script.Script):
         return True
 
     def reviewCurrentCharacter(self, inputEvent):
+        """Presents the current flat review character via braille and speech.
+        """
+
+        clickCount = util.getClickCount(self.lastReviewCurrentEvent,
+                                           inputEvent)
+        self._reviewCurrentCharacter(inputEvent, clickCount)
+        self.lastReviewCurrentEvent = inputEvent
+
+        return True
+
+    def _reviewCurrentCharacter(self, inputEvent, clickCount=1):
+        """Presents the current flat review character via braille and speech.
+
+        Arguments:
+        - inputEvent - the current input event.
+        - clickCount - number of times the user has "clicked" the current key.
+        """
+
         context = self.getFlatReviewContext()
 
         [string, x, y, width, height] = \
@@ -2881,13 +2925,17 @@ class Script(script.Script):
         # the Braille display as an input device.
         #
         if not isinstance(inputEvent, input_event.BrailleEvent):
-            if (len(string) == 0):
+            if (not string) or (len(string) == 0):
                 speech.speak(_("blank"))
             else:
                 [lineString, x, y, width, height] = \
                          context.getCurrent(flat_review.Context.LINE)
                 if lineString == "\n":
                     speech.speak(_("blank"))
+                elif clickCount == 2:
+                    self.spellCurrentItem(string)
+                elif clickCount == 3:
+                    self.phoneticSpellCurrentItem(string)
                 elif string.isupper():
                     speech.speak(string, self.voices[settings.UPPERCASE_VOICE])
                 else:

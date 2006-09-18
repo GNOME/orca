@@ -406,9 +406,9 @@ def findFocusedObject(root):
 
     return None
 
-def isDoubleClick(lastInputEvent, inputEvent):
-    """Return an indication of whether the user has double-clicked a
-    one of the keys on the keyboard.
+def getClickCount(lastInputEvent, inputEvent):
+    """Return the count of the number of clicks a user has made to one of the
+    keys on the keyboard.
 
     Arguments:
     - lastInputEvent: the last input event.
@@ -417,16 +417,19 @@ def isDoubleClick(lastInputEvent, inputEvent):
 
     if not isinstance(lastInputEvent, input_event.KeyboardEvent) or \
        not isinstance(inputEvent, input_event.KeyboardEvent):
-        return False
+        orca_state.clickCount = 0
+        return orca_state.clickCount
 
     if (lastInputEvent.hw_code != inputEvent.hw_code) or \
        (lastInputEvent.modifiers != inputEvent.modifiers):
-        return False
+        orca_state.clickCount = 1
+        return orca_state.clickCount
 
     if (inputEvent.time - lastInputEvent.time) < settings.doubleClickTimeout:
-        return True
+        orca_state.clickCount += 1
     else:
-        return False
+        orca_state.clickCount = 0
+    return orca_state.clickCount+1
 
 def isDesiredFocusedItem(obj, rolesList):
     """Called to determine if the given object and it's hierarchy of
