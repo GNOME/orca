@@ -87,6 +87,8 @@ userCustomizableSettings = [
     "enableMagZoomerColorInversion",
     "magSmoothingMode",
     "magMouseTrackingMode",
+    "magSourceDisplay",
+    "magTargetDisplay",
     "verbalizePunctuationStyle",
 ]
 
@@ -253,6 +255,14 @@ MAG_MOUSE_TRACKING_MODE_NONE         = 1
 MAG_MOUSE_TRACKING_MODE_PROPORTIONAL = 2
 MAG_MOUSE_TRACKING_MODE_PUSH         = 3
 magMouseTrackingMode                 = MAG_MOUSE_TRACKING_MODE_CENTERED
+
+# Magnification source display
+#
+magSourceDisplay                 = ''
+
+# Magnification target display
+#
+magTargetDisplay                 = ''
 
 # if True, enable word echo.
 # Note that it is allowable for both enableEchoByWord and enableKeyEcho

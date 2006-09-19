@@ -112,6 +112,20 @@ def _enableAccessibility():
 
     return alreadyEnabled != "true"
 
+def _getDisplayString(display):
+    """Returns a string that represents the source or taget magnifier display.
+
+    Arguments:
+    - display: the magnifier source or taget display string.
+
+    Returns a string suitable for the preferences file.
+    """
+
+    if not display:
+        return "''"
+    else:
+        return "'%s'" % display
+
 def _getSpeechServerFactoryString(factory):
     """Returns a string that represents the speech server factory passed in.
 
@@ -301,6 +315,8 @@ def writePreferences(prefsDict):
                 value = _getMagSmoothingModeString(prefsDict[key])
             elif key == "magMouseTrackingMode":
                 value = _getMagMouseTrackingModeString(prefsDict[key])
+            elif key == "magSourceDisplay" or key == "magTargetDisplay":
+                value = _getDisplayString(prefsDict[key])
             else:
                 value = prefsDict[key]
             prefs.writelines("orca.settings.%s = %s\n" % (key, value))

@@ -1,3 +1,20 @@
+2006-09-19  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/mag.py:
+          src/orca/orca-setup.glade:
+          src/orca/orca_gui_prefs.py:
+          src/orca/orca_prefs.py:
+          src/orca/settings.py:
+          Work on bug #351957 - Orca should allow the setting of the 
+          source and target displays for magnification. 
+
+          Hooked this up to two new text areas in the magnifier pane 
+          in the Orca Preferences GUI. Adjusted the existing 
+          magnierSourceDisplay and magnifierTargetDisplay usage in 
+          mag.py to be magSourceDisplay and magTargetDisplay to 
+          retain a consistent naming scheme with the existing magnifier 
+          preferences.
+
 2006-09-18  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:

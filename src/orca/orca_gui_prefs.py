@@ -387,6 +387,14 @@ class orcaSetupGUI(GladeWrapper):
         index = self._getComboBoxIndex(self.magMouseTrackingComboBox, mode)
         self.magMouseTrackingComboBox.set_active(index)
 
+        # Get the magnification source and target displays.
+        #
+        sourceDisplay = prefs["magSourceDisplay"]
+        self.magSourceDisplayEntry.set_text(sourceDisplay)
+
+        targetDisplay = prefs["magTargetDisplay"]
+        self.magTargetDisplayEntry.set_text(targetDisplay)
+
     def _getComboBoxIndex(self, combobox, str):
         """ For each of the entries in the given combo box, look for str.
             Return the index of the entry if str is found.
@@ -1351,6 +1359,32 @@ class orcaSetupGUI(GladeWrapper):
         """
 
         self.prefsDict["enableMagZoomerColorInversion"] = widget.get_active()
+
+    def magSourceDisplayChanged(self, widget):
+        """Signal handler for the "changed" signal for the
+           magSourceDisplayDisplayEntry GtkEntry widget.
+           The user has changed the value of the magnification source
+           display. Set the 'magSourceDisplay' preference
+           to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        self.prefsDict["magSourceDisplay"] = widget.get_text()
+
+    def magTargetDisplayChanged(self, widget):
+        """Signal handler for the "changed" signal for the
+           magTargetDisplayEntry GtkEntry widget.
+           The user has changed the value of the magnification target
+           display. Set the 'magTargetDisplay' preference
+           to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        self.prefsDict["magTargetDisplay"] = widget.get_text()
 
     def helpButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the helpButton

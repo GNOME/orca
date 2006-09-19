@@ -285,12 +285,12 @@ def applySettings():
     _magnifier.clearAllZoomRegions()
 
     try:
-        _magnifier.TargetDisplay = settings.magnifierTargetDisplay
+        _magnifier.TargetDisplay = settings.magTargetDisplay
     except:
         pass
 
     try:
-        _magnifier.SourceDisplay = settings.magnifierSourceDisplay
+        _magnifier.SourceDisplay = settings.magSourceDisplay
     except:
         pass
 
