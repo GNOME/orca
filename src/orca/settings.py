@@ -302,6 +302,15 @@ enableActionKeys        = True
 #
 readTableCellRow    = True
 
+# The limit to enable a repeat character count to be spoken.
+# If set to 0, then there will be no repeat character count.
+# Each character will be spoken singularly (i.e. "dash dash
+# dash dash dash" instead of "five dash characters").
+# If the value is set to 1, 2 or 3 then it's treated as if it was
+# zero. In other words, no repeat character count is given.
+#
+repeatCharacterLimit = 0
+
 # Script developer feature.  If False, just the default script
 # will be used.  Helps determine difference between custom
 # scripts and the default script behavior.

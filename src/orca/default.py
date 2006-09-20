@@ -806,6 +806,57 @@ class Script(script.Script):
 
         return script.Script.processKeyboardEvent(self, keyboardEvent)
 
+    def adjustForRepeats(self, line):
+        """Adjust line to include repeat character counts.
+        As some people will want this and others might not,
+        there is a setting in settings.py that determines
+        whether this functionality is enabled.
+
+        repeatCharacterLimit = <n>
+
+        If <n> is 0, then there would be no repeat characters.
+        Otherwise <n> would be the number of same characters (or more)
+        in a row that cause the repeat character count output.
+        If the value is set to 1, 2 or 3 then it's treated as if it was
+        zero. In other words, no repeat character count is given.
+
+        Arguments:
+        - line: the string to adjust for repeat character counts.
+
+        Returns: a new line adjusted for repeat character counts (if enabled).
+        """
+
+        if (len(line) < 4) or (settings.repeatCharacterLimit < 4):
+            return line
+
+        newLine = ''
+        segment = lastChar = line[0]
+        count = 1
+
+        for i in range(1, len(line)):
+            if line[i] == lastChar:
+                count += 1
+                segment += line[i]
+            else:
+                if count >= settings.repeatCharacterLimit \
+                   and not segment[0] in string.whitespace:
+                    newLine += str(count) + ' ' + segment[0] + " characters "
+                else:
+                    newLine += segment
+
+                segment = line[i]
+                count = 1
+
+            lastChar = line[i]
+
+        if count >= settings.repeatCharacterLimit \
+           and not segment[0] in string.whitespace:
+            newLine += str(count) + ' ' + segment[0] + " characters "
+        else:
+            newLine += segment
+
+        return newLine
+
     def __sayAllProgressCallback(self, context, type):
         # [[[TODO: WDW - this needs work.  Need to be able to manage
         # the monitoring of progress and couple that with both updating
@@ -865,6 +916,7 @@ class Script(script.Script):
             else:
                 voice = self.voices[settings.DEFAULT_VOICE]
 
+            phrase = self.adjustForRepeats(phrase)
             speech.speak(phrase, voice)
             util.speakTextSelectionState(obj, startOffset, endOffset)
 
@@ -889,6 +941,7 @@ class Script(script.Script):
 
             if settings.enableSpeechIndentation:
                 self.speakTextIndentation(obj, line)
+            line = self.adjustForRepeats(line)
             speech.speak(line, voice)
             util.speakTextSelectionState(obj, startOffset, endOffset)
 
@@ -914,6 +967,7 @@ class Script(script.Script):
         else:
             voice = self.voices[settings.DEFAULT_VOICE]
 
+        word = self.adjustForRepeats(word)
         speech.speak(word, voice)
         util.speakTextSelectionState(obj, startOffset, endOffset)
 
@@ -1027,6 +1081,7 @@ class Script(script.Script):
         else:
             voice = self.voices[settings.DEFAULT_VOICE]
 
+        word = self.adjustForRepeats(word)
         speech.speak(word, voice)
 
     def sayCharacter(self, obj):
@@ -2687,6 +2742,7 @@ class Script(script.Script):
             elif clickCount == 3:
                 self.phoneticSpellCurrentItem(string)
             else:
+                string = self.adjustForRepeats(string)
                 speech.speak(string)
 
         self.updateBrailleReview()
@@ -2844,6 +2900,7 @@ class Script(script.Script):
                 elif clickCount == 3:
                     self.phoneticSpellCurrentItem(string)
                 else:
+                    string = self.adjustForRepeats(string)
                     speech.speak(string)
 
         self.updateBrailleReview(targetCursorCell)

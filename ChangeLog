@@ -1,3 +1,26 @@
+2006-09-20  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          src/orca/settings.py:
+          Work on bug #354469 - Repeated character count.
+          The "repeat character count" option should be enabled for all 
+          the scenerios above except:
+
+            Numpad++     - default.sayAll
+            Numpad+Enter - default.whereAmI
+
+          By default, I've set the repeat character count to zero. I.e:
+
+            settings.repeatCharacterLimit = 0
+
+          This is until it has been fully tested and we've made sure that
+          it's doing what is required.
+
+          To enable it, just add the following line to your
+          ~/.orca/user-settings.py file:
+
+            orca.settings.repeatCharacterLimit = 4
+
 2006-09-19  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/mag.py:
