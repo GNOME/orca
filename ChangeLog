@@ -1,3 +1,10 @@
+
+2006-09-20  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          Further work on bug #354469. Hopefuylly the punctuation level is
+          now respected.
+
 2006-09-20  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:

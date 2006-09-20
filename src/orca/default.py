@@ -48,7 +48,9 @@ import string
 import util
 
 from orca_i18n import _                          # for gettext support
+from chnames import chnames
 from phonnames import phonnames
+from punctuation_settings import punctuation
 
 ########################################################################
 #                                                                      #
@@ -806,6 +808,38 @@ class Script(script.Script):
 
         return script.Script.processKeyboardEvent(self, keyboardEvent)
 
+    def _addRepeatSegment(self, segment, line):
+        """Add in the latest line segment, adjusting for repeat characters
+        and punctuation.
+
+        Arguments:
+        - segment: the segment of repeated characters.
+        - line: the current built-up line to characters to speak.
+
+        Returns: the current built-up line plus the new segment, after
+        adjusting for repeat character counts and punctuation.
+        """
+
+        style = settings.verbalizePunctuationStyle
+        isPunctChar = True
+        try:
+            level, action = punctuation[segment[0]]
+        except:
+            isPunctChar = False
+        count = len(segment)
+        if (count >= settings.repeatCharacterLimit) \
+           and (not segment[0] in string.whitespace) \
+           and (not isPunctChar or (style <= level)):
+            if punctuation.has_key(segment[0]):
+                repeatChar = chnames[segment[0]]
+            else:
+                repeatChar = segment[0]
+            line += ' ' + str(count) + ' ' +  repeatChar  + " characters "
+        else:
+            line += segment
+
+        return line
+
     def adjustForRepeats(self, line):
         """Adjust line to include repeat character counts.
         As some people will want this and others might not,
@@ -831,29 +865,17 @@ class Script(script.Script):
 
         newLine = ''
         segment = lastChar = line[0]
-        count = 1
 
         for i in range(1, len(line)):
             if line[i] == lastChar:
-                count += 1
                 segment += line[i]
             else:
-                if count >= settings.repeatCharacterLimit \
-                   and not segment[0] in string.whitespace:
-                    newLine += str(count) + ' ' + segment[0] + " characters "
-                else:
-                    newLine += segment
-
+                newLine = self._addRepeatSegment(segment, newLine)
                 segment = line[i]
-                count = 1
 
             lastChar = line[i]
 
-        if count >= settings.repeatCharacterLimit \
-           and not segment[0] in string.whitespace:
-            newLine += str(count) + ' ' + segment[0] + " characters "
-        else:
-            newLine += segment
+        newLine = self._addRepeatSegment(segment, newLine)
 
         return newLine
 
