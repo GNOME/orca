@@ -20,6 +20,14 @@
         * Fixed bug 356911 - Orca generates a traceback with Numpad-Minus 
           when positioned at the end of a line.
 
+        * src/orca/atspi.py:
+          Add a new debug routine called getRelationString() which returns
+          a space-delimited string composed of the given object's Accessible 
+          relations attribute.
+
+          Adjusted the Accessible toString() method to also print out the
+          accessible objects relations.
+
 2006-09-20  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:

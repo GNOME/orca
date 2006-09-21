@@ -683,6 +683,52 @@ class Accessible:
             except:
                 debug.printException(debug.LEVEL_SEVERE)
 
+    def getRelationString(self):
+        """Returns a space-delimited string composed of the given object's
+        Accessible relations attribute.  This is for debug purposes.
+        """
+
+        relations = self.relations
+        relString = " "
+        for relation in relations:
+            if relation.getRelationType() == Accessibility.RELATION_LABEL_FOR:
+                relString += "LABEL_FOR "
+            if relation.getRelationType() == Accessibility.RELATION_LABELLED_BY:
+                relString += "LABELLED_BY "
+            if relation.getRelationType() == \
+                                       Accessibility.RELATION_CONTROLLER_FOR:
+                relString += "CONTROLLER_FOR "
+            if relation.getRelationType() == \
+                                       Accessibility.RELATION_CONTROLLED_BY:
+                relString += "CONTROLLED_BY "
+            if relation.getRelationType() == Accessibility.RELATION_MEMBER_OF:
+                relString += "MEMBER_OF "
+            if relation.getRelationType() == Accessibility.RELATION_TOOLTIP_FOR:
+                relString += "TOOLTIP_FOR "
+            if relation.getRelationType() == \
+                                       Accessibility.RELATION_NODE_CHILD_OF:
+                relString += "NODE_CHILD_OF "
+            if relation.getRelationType() == Accessibility.RELATION_EXTENDED:
+                relString += "RELATION_EXTENDED "
+            if relation.getRelationType() == Accessibility.RELATION_FLOWS_TO:
+                relString += "FLOWS_TO "
+            if relation.getRelationType() == Accessibility.RELATION_FLOWS_FROM:
+                relString += "FLOWS_FROM "
+            if relation.getRelationType() == \
+                                       Accessibility.RELATION_SUBWINDOW_OF:
+                relString += "SUBWINDOW_OF "
+            if relation.getRelationType() == Accessibility.RELATION_EMBEDS:
+                relString += "EMBEDS "
+            if relation.getRelationType() == Accessibility.RELATION_EMBEDDED_BY:
+                relString += "EMBEDDED_BY "
+            if relation.getRelationType() == Accessibility.RELATION_POPUP_FOR:
+                relString += "POPUP_FOR "
+            if relation.getRelationType() == \
+                                       Accessibility.RELATION_PARENT_WINDOW_OF:
+                relString += "WINDOW_OF "
+
+        return relString.strip()
+
     def getStateString(self):
         """Returns a space-delimited string composed of the given object's
         Accessible state attribute.  This is for debug purposes.
@@ -1315,10 +1361,11 @@ class Accessible:
         else:
             string = indent
 
-        string += "name=%s role='%s' state='%s'" \
+        string += "name=%s role='%s' state='%s' relations='%s'" \
                   % (self.accessibleNameToString(),
                      self.role,
-                     self.getStateString())
+                     self.getStateString(),
+                     self.getRelationString())
 
         return string
 
