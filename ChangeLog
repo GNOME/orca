@@ -6,11 +6,16 @@
           self.adjustForRepeats() before speaking the current line in 
           the mail message.
 
-        * Closing bug #354469 - Repeated character count. This seems to
-          be working nicely now, so I've adjusted the setting in 
-          settings.py to:
+        * src/orca/settings.py:
+          More work on bug #354469 - Repeated character count. 
+          This seems to be working nicely now, so I've adjusted the 
+          setting in settings.py to:
 
           settings.repeatCharacterLimit = 4
+
+          src/orca/default.py:
+          Also adjusted _addRepeatSegment() to not do the repeated
+          character count for non-punctuation characters.
 
         * Fixed bug 356911 - Orca generates a traceback with Numpad-Minus 
           when positioned at the end of a line.

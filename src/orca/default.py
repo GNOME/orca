@@ -829,7 +829,7 @@ class Script(script.Script):
         count = len(segment)
         if (count >= settings.repeatCharacterLimit) \
            and (not segment[0] in string.whitespace) \
-           and (not isPunctChar or (style <= level)):
+           and (isPunctChar and (style <= level)):
             if punctuation.has_key(segment[0]):
                 repeatChar = chnames[segment[0]]
             else:
