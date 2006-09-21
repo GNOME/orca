@@ -6,6 +6,12 @@
           self.adjustForRepeats() before speaking the current line in 
           the mail message.
 
+        * Closing bug #354469 - Repeated character count. This seems to
+          be working nicely now, so I've adjusted the setting in 
+          settings.py to:
+
+          settings.repeatCharacterLimit = 4
+
 2006-09-20  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:

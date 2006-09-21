@@ -309,7 +309,7 @@ readTableCellRow    = True
 # If the value is set to 1, 2 or 3 then it's treated as if it was
 # zero. In other words, no repeat character count is given.
 #
-repeatCharacterLimit = 0
+repeatCharacterLimit = 4
 
 # Script developer feature.  If False, just the default script
 # will be used.  Helps determine difference between custom
