@@ -28,6 +28,11 @@
           Adjusted the Accessible toString() method to also print out the
           accessible objects relations.
 
+        * bugs/bugs.html:
+          Added an entry for OpenOffice issue #69753:
+          http://www.openoffice.org/issues/show_bug.cgi?id=69753
+          This is being tracked in Orca bug #355733.
+
 2006-09-20  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
