@@ -1,3 +1,10 @@
+2006-09-21  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Evolution.py:
+          Fix for bug #356970 - repeated Character Count feature fails 
+          when reading messages in Evolution. Just needed to call 
+          self.adjustForRepeats() before speaking the current line in 
+          the mail message.
 
 2006-09-20  Rich Burridge <rich.burridge@sun.com>
 

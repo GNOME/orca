@@ -340,7 +340,8 @@ class Script(default.Script):
             braille.displayMessage(result[0])
             if settings.enableSpeechIndentation:
                 self.speakTextIndentation(event.source, result[0])
-            speech.speak(result[0])
+            line = self.adjustForRepeats(result[0])
+            speech.speak(line)
             return
 
         # 2) Mail view: current message pane: "standard" mail header lines.
