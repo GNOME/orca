@@ -12,6 +12,9 @@
 
           settings.repeatCharacterLimit = 4
 
+        * Fixed bug 356911 - Orca generates a traceback with Numpad-Minus 
+          when positioned at the end of a line.
+
 2006-09-20  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
