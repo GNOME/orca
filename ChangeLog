@@ -21,6 +21,10 @@
           Also adjusted _addRepeatSegment() to not do the repeated
           character count for non-punctuation characters.
 
+          src/orca/default.py:
+          Replaced bogus instance of spellWord in the _reviewCurrentItem() 
+          method with tests against clickCount.
+
         * Fixed bug 356911 - Orca generates a traceback with Numpad-Minus 
           when positioned at the end of a line.
 

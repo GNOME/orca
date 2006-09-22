@@ -2843,7 +2843,7 @@ class Script(script.Script):
                     speech.speak(_("blank"))
                 elif string.isspace():
                     speech.speak(_("white space"))
-                elif string.isupper() and not spellWord:
+                elif string.isupper() and (clickCount < 2 or clickCount > 3):
                     speech.speak(string, self.voices[settings.UPPERCASE_VOICE])
                 elif clickCount == 2:
                     self.spellCurrentItem(string)
