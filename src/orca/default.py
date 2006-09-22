@@ -1190,8 +1190,9 @@ class Script(script.Script):
 
         # Get the text for the object itself.
         #
-        utterances.extend(
-            self.speechGenerator.getSpeech(orca_state.locusOfFocus, False))
+        text = self.speechGenerator.getSpeech(orca_state.locusOfFocus, False)
+        text[0] = self.adjustForRepeats(text[0])
+        utterances.extend(text)
 
         # Now speak the tree node level.
         #

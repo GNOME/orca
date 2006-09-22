@@ -14,6 +14,10 @@
           settings.repeatCharacterLimit = 4
 
           src/orca/default.py:
+          Added in support for the repeated character count for the
+          whereAmI() function.
+
+          src/orca/default.py:
           Also adjusted _addRepeatSegment() to not do the repeated
           character count for non-punctuation characters.
 
