@@ -1,5 +1,14 @@
 2006-09-21  Rich Burridge <rich.burridge@sun.com>
 
+        * bugs/bugs.html:
+          Added an entry for OpenOffice issue #69791:
+          http://www.openoffice.org/issues/show_bug.cgi?id=69791
+          [a11y] scalc goes into error recovery mode when Orca is 
+          running and you enter Insert-f.
+          This is being tracked in Orca bug #356334.
+
+2006-09-21  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/scripts/Evolution.py:
           Fix for bug #356970 - repeated Character Count feature fails 
           when reading messages in Evolution. Just needed to call 
