@@ -15,7 +15,7 @@
 
           src/orca/default.py:
           Added in support for the repeated character count for the
-          whereAmI() function.
+          whereAmI() and sayAll() functions.
 
           src/orca/default.py:
           Also adjusted _addRepeatSegment() to not do the repeated

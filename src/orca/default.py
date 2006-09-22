@@ -48,9 +48,7 @@ import string
 import util
 
 from orca_i18n import _                          # for gettext support
-from chnames import chnames
 from phonnames import phonnames
-from punctuation_settings import punctuation
 
 ########################################################################
 #                                                                      #
@@ -808,77 +806,6 @@ class Script(script.Script):
 
         return script.Script.processKeyboardEvent(self, keyboardEvent)
 
-    def _addRepeatSegment(self, segment, line):
-        """Add in the latest line segment, adjusting for repeat characters
-        and punctuation.
-
-        Arguments:
-        - segment: the segment of repeated characters.
-        - line: the current built-up line to characters to speak.
-
-        Returns: the current built-up line plus the new segment, after
-        adjusting for repeat character counts and punctuation.
-        """
-
-        style = settings.verbalizePunctuationStyle
-        isPunctChar = True
-        try:
-            level, action = punctuation[segment[0]]
-        except:
-            isPunctChar = False
-        count = len(segment)
-        if (count >= settings.repeatCharacterLimit) \
-           and (not segment[0] in string.whitespace) \
-           and (isPunctChar and (style <= level)):
-            if punctuation.has_key(segment[0]):
-                repeatChar = chnames[segment[0]]
-            else:
-                repeatChar = segment[0]
-            line += ' ' + str(count) + ' ' +  repeatChar  + " characters "
-        else:
-            line += segment
-
-        return line
-
-    def adjustForRepeats(self, line):
-        """Adjust line to include repeat character counts.
-        As some people will want this and others might not,
-        there is a setting in settings.py that determines
-        whether this functionality is enabled.
-
-        repeatCharacterLimit = <n>
-
-        If <n> is 0, then there would be no repeat characters.
-        Otherwise <n> would be the number of same characters (or more)
-        in a row that cause the repeat character count output.
-        If the value is set to 1, 2 or 3 then it's treated as if it was
-        zero. In other words, no repeat character count is given.
-
-        Arguments:
-        - line: the string to adjust for repeat character counts.
-
-        Returns: a new line adjusted for repeat character counts (if enabled).
-        """
-
-        if (len(line) < 4) or (settings.repeatCharacterLimit < 4):
-            return line
-
-        newLine = ''
-        segment = lastChar = line[0]
-
-        for i in range(1, len(line)):
-            if line[i] == lastChar:
-                segment += line[i]
-            else:
-                newLine = self._addRepeatSegment(segment, newLine)
-                segment = line[i]
-
-            lastChar = line[i]
-
-        newLine = self._addRepeatSegment(segment, newLine)
-
-        return newLine
-
     def __sayAllProgressCallback(self, context, type):
         # [[[TODO: WDW - this needs work.  Need to be able to manage
         # the monitoring of progress and couple that with both updating
@@ -938,7 +865,7 @@ class Script(script.Script):
             else:
                 voice = self.voices[settings.DEFAULT_VOICE]
 
-            phrase = self.adjustForRepeats(phrase)
+            phrase = util.adjustForRepeats(phrase)
             speech.speak(phrase, voice)
             util.speakTextSelectionState(obj, startOffset, endOffset)
 
@@ -963,7 +890,7 @@ class Script(script.Script):
 
             if settings.enableSpeechIndentation:
                 self.speakTextIndentation(obj, line)
-            line = self.adjustForRepeats(line)
+            line = util.adjustForRepeats(line)
             speech.speak(line, voice)
             util.speakTextSelectionState(obj, startOffset, endOffset)
 
@@ -989,7 +916,7 @@ class Script(script.Script):
         else:
             voice = self.voices[settings.DEFAULT_VOICE]
 
-        word = self.adjustForRepeats(word)
+        word = util.adjustForRepeats(word)
         speech.speak(word, voice)
         util.speakTextSelectionState(obj, startOffset, endOffset)
 
@@ -1103,7 +1030,7 @@ class Script(script.Script):
         else:
             voice = self.voices[settings.DEFAULT_VOICE]
 
-        word = self.adjustForRepeats(word)
+        word = util.adjustForRepeats(word)
         speech.speak(word, voice)
 
     def sayCharacter(self, obj):
@@ -1191,7 +1118,7 @@ class Script(script.Script):
         # Get the text for the object itself.
         #
         text = self.speechGenerator.getSpeech(orca_state.locusOfFocus, False)
-        text[0] = self.adjustForRepeats(text[0])
+        text[0] = util.adjustForRepeats(text[0])
         utterances.extend(text)
 
         # Now speak the tree node level.
@@ -2765,7 +2692,7 @@ class Script(script.Script):
             elif clickCount == 3:
                 self.phoneticSpellCurrentItem(string)
             else:
-                string = self.adjustForRepeats(string)
+                string = util.adjustForRepeats(string)
                 speech.speak(string)
 
         self.updateBrailleReview()
@@ -2923,7 +2850,7 @@ class Script(script.Script):
                 elif clickCount == 3:
                     self.phoneticSpellCurrentItem(string)
                 else:
-                    string = self.adjustForRepeats(string)
+                    string = util.adjustForRepeats(string)
                     speech.speak(string)
 
         self.updateBrailleReview(targetCursorCell)

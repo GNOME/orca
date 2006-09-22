@@ -46,7 +46,9 @@ import settings
 import speech
 import speechserver
 
+from chnames import chnames
 from orca_i18n import _ # for gettext support
+from punctuation_settings import punctuation
 
 def isSameObject(obj1, obj2):
     if (obj1 == obj2):
@@ -541,6 +543,7 @@ def textLines(obj):
             #if string[-1:] == "\n":
             #    string = string[0][:-1]
 
+            string = adjustForRepeats(string)
             yield [speechserver.SayAllContext(obj, string,
                                               startOffset, endOffset),
                    None]
@@ -562,6 +565,77 @@ def textLines(obj):
                 break
         if not moreLines:
             done = True
+
+def _addRepeatSegment(segment, line):
+    """Add in the latest line segment, adjusting for repeat characters
+    and punctuation.
+
+    Arguments:
+    - segment: the segment of repeated characters.
+    - line: the current built-up line to characters to speak.
+
+    Returns: the current built-up line plus the new segment, after
+    adjusting for repeat character counts and punctuation.
+    """
+
+    style = settings.verbalizePunctuationStyle
+    isPunctChar = True
+    try:
+        level, action = punctuation[segment[0]]
+    except:
+        isPunctChar = False
+    count = len(segment)
+    if (count >= settings.repeatCharacterLimit) \
+       and (not segment[0] in string.whitespace) \
+       and (isPunctChar and (style <= level)):
+        if punctuation.has_key(segment[0]):
+            repeatChar = chnames[segment[0]]
+        else:
+            repeatChar = segment[0]
+        line += ' ' + str(count) + ' ' +  repeatChar  + " characters "
+    else:
+        line += segment
+
+    return line
+
+def adjustForRepeats(line):
+    """Adjust line to include repeat character counts.
+    As some people will want this and others might not,
+    there is a setting in settings.py that determines
+    whether this functionality is enabled.
+
+    repeatCharacterLimit = <n>
+
+    If <n> is 0, then there would be no repeat characters.
+    Otherwise <n> would be the number of same characters (or more)
+    in a row that cause the repeat character count output.
+    If the value is set to 1, 2 or 3 then it's treated as if it was
+    zero. In other words, no repeat character count is given.
+
+    Arguments:
+    - line: the string to adjust for repeat character counts.
+
+    Returns: a new line adjusted for repeat character counts (if enabled).
+    """
+
+    if (len(line) < 4) or (settings.repeatCharacterLimit < 4):
+        return line
+
+    newLine = ''
+    segment = lastChar = line[0]
+
+    for i in range(1, len(line)):
+        if line[i] == lastChar:
+            segment += line[i]
+        else:
+            newLine = _addRepeatSegment(segment, newLine)
+            segment = line[i]
+
+        lastChar = line[i]
+
+    newLine = _addRepeatSegment(segment, newLine)
+
+    return newLine
 
 def getLinkIndex(obj, characterIndex):
     """A brute force method to see if an offset is a link.  This

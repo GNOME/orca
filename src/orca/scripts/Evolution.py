@@ -340,7 +340,7 @@ class Script(default.Script):
             braille.displayMessage(result[0])
             if settings.enableSpeechIndentation:
                 self.speakTextIndentation(event.source, result[0])
-            line = self.adjustForRepeats(result[0])
+            line = util.adjustForRepeats(result[0])
             speech.speak(line)
             return
 
