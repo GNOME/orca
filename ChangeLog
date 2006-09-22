@@ -7,6 +7,12 @@
           running and you enter Insert-f.
           This is being tracked in Orca bug #356334.
 
+        * bugs/bugs.html:
+          Added an entry for gaim bug #1563774:
+          https://sourceforge.net/tracker/?func=detail&atid=100235&aid=1563774&group_id=235
+          [a11y] gaim crashs with Orca when Insert-f is typed
+          This is being tracked in Orca bug #357248.
+
 2006-09-21  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py:
