@@ -1,3 +1,9 @@
+2006-08-07  Mike Pedersen <michael.pedersen@sun.com> 
+
+        * test/keystrokes
+
+          added several new smaller test keystroke files.
+
 2006-09-21  Rich Burridge <rich.burridge@sun.com>
 
         * bugs/bugs.html:
