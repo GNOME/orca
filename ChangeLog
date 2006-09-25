@@ -4,6 +4,10 @@
           Fix for bug #357509 - Flat review does not use the "uppercase" 
           voice settings for uppercase text when navigating by line.
 
+        * src/orca/util.py:
+          Fix for bug #357507 ? SayAll does not use the "uppercase" voice 
+          settings for uppercase text.
+
 2006-09-24  Mike Pedersen <michael.pedersen@sun.com> 
 
         * test/keystrokes

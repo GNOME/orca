@@ -544,9 +544,14 @@ def textLines(obj):
             #    string = string[0][:-1]
 
             string = adjustForRepeats(string)
+            if string.isupper():
+                voice = settings.voices[settings.UPPERCASE_VOICE]
+            else:
+                voice = settings.voices[settings.DEFAULT_VOICE]
+
             yield [speechserver.SayAllContext(obj, string,
                                               startOffset, endOffset),
-                   None]
+                   voice]
 
         moreLines = False
         relations = obj.relations
