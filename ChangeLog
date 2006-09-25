@@ -1,3 +1,9 @@
+2006-09-25  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          Fix for bug #357509 - Flat review does not use the "uppercase" 
+          voice settings for uppercase text when navigating by line.
+
 2006-09-24  Mike Pedersen <michael.pedersen@sun.com> 
 
         * test/keystrokes
