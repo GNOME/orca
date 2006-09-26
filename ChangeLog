@@ -1,3 +1,10 @@
+2006-09-25  Rich Burridge <rich.burridge@sun.com>
+
+        * bugs/bugs.html:
+          Added an entry for OpenOffice issue #69889:
+          [a11y] Table Wizard panel has several inaccessible components.
+          This is being tracked in Orca bug #357545.
+
 2006-09-26  Willie Walker <william.walker@sun.com>
 
 	* bugs/bugs.html: http://bugzilla.mozilla.org/show_bug.cgi?id=354346
