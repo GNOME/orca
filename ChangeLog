@@ -1,5 +1,8 @@
 2006-09-26  Willie Walker <william.walker@sun.com>
 
+	* src/orca/script.py: Partial fix for bug 354970.  Add
+	getKeyBindingsForInputHandler and getBrailleCommandsForInputHandler.
+	
 	* src/orca/settings.py: Add "Minefield" as a mapping to Mozilla.
 
 2006-09-25  Rich Burridge <rich.burridge@sun.com>

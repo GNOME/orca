@@ -100,6 +100,25 @@ class Script:
         """
         return keybindings.KeyBindings()
 
+    def getKeyBindingsForInputHandler(self, inputEventHandler):
+        """ Returns a KeyBindings object with the list of KeyBindings that
+        matche the passed inputEventHandler as argument (at least the
+        inputEventHandler that has the same handler function)
+
+        Arguments:
+        - inputEventHandler: an instance of input_event.InputEventHandler
+
+        Returns an instance of keybindings.KeyBindings populated with
+        keybindings.KeyBinding instances that match the inputEventHandler.
+        """
+        matches = keybindings.KeyBindings()
+
+        for binding in self.keyBindings.keyBindings:
+            if inputEventHandler._function == binding.handler._function:
+                matches.add(binding)
+
+        return matches
+
     def getBrailleBindings(self):
         """Defines the braille bindings for this script.
 
@@ -107,6 +126,24 @@ class Script:
         values are InputEventHandler instances.
         """
         return {}
+
+    def getBrailleCommandsForInputHandler(self, inputEventHandler):
+        """Returns a list of BrlTTY commands (they're in braille.py) that
+        match the given inputEventHandler passed as argument.
+
+        Arguments:
+        - inputEventHandler: an instance of input_event.InputEventHandler
+
+        Returns a list (possibly empty) of BrlTTY commands (they're in
+        braille.py) that match the given inputEventHandler passed.
+        """
+        matches = []
+
+        for command,handler in self.brailleBindings.iteritems():
+            if inputEventHandler._function == handler._function:
+                matches.append(command)
+
+        return matches
 
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.
