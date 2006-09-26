@@ -1,5 +1,8 @@
 2006-09-26  Willie Walker <william.walker@sun.com>
 
+	* bugs/bugs.html: http://bugzilla.mozilla.org/show_bug.cgi?id=354346
+	Submenus sometimes get role of "menu item" instead of "menu".
+	
 	* src/orca/script.py: Partial fix for bug 354970.  Add
 	getKeyBindingsForInputHandler and getBrailleCommandsForInputHandler.
 	
