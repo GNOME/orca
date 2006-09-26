@@ -477,6 +477,11 @@
 
         <para>&incomplete; there is no option to present text bounds
 	to the user.</para>
+        <para>&incomplete; there is no option to present text bounds
+	to the user.</para>
+        <para>&incomplete; When autocomplete appears when a user is typing he or she is not alerted to the fact that this information has appeared.  As soon as the information pops up the first option should be spoken/brailled.  If the user continues typing and the first choice changes this should also be spoken.  It is not expected that the user would hear all possibilitys just the first.  If the user can arrow up or down through choices orca should track this as in any other list or combo.  It is okay if this information overrides the typing echo.</para>
+
+
 	
       </section>
 
