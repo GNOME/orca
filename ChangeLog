@@ -1,3 +1,10 @@
+2006-09-27  Willie Walker <william.walker@sun.com>
+
+	* src/orca/brlmon.py: partial fix for bug 349954 - when walking
+	through a string character by character in brlmon, first convert
+	the string to the unicode type.  Otherwise, we end up walking it
+	byte-by-byte.
+	
 2006-09-25  Rich Burridge <rich.burridge@sun.com>
 
         * bugs/bugs.html:
