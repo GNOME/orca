@@ -304,7 +304,7 @@ class Text(Region):
         self.label = label
         if self.label:
             string = self.label + " " + string
-            cursorOffset += len(self.label) + 1
+            cursorOffset += len(unicode(self.label)) + 1
 
         Region.__init__(self, string, cursorOffset)
 
@@ -320,7 +320,7 @@ class Text(Region):
         lineOffset = result[2]
         cursorOffset = caretOffset - lineOffset
         if self.label:
-            cursorOffset += len(self.label) + 1
+            cursorOffset += len(unicode(self.label)) + 1
 
         if lineOffset != self.lineOffset:
             return False
@@ -338,7 +338,7 @@ class Text(Region):
         scrolled off the display."""
 
         if self.label:
-            offset = offset - len(self.label) - 1
+            offset = offset - len(unicode(self.label)) - 1
             if offset < 0:
                 return
 
@@ -423,7 +423,7 @@ class Line:
         focusOffset = -1
         for region in self.regions:
             if region == _regionWithFocus:
-                focusOffset = len(string)
+                focusOffset = len(unicode(string))
             if region.string:
                 # [[[TODO: WDW - HACK: Replace unicode ellipses with "..."
                 # The ultimate solution is to get i18n support into
@@ -450,10 +450,10 @@ class Line:
         pos = 0
         for region in self.regions:
             string = string + region.string
-            if len(string) > offset:
+            if len(unicode(string)) > offset:
                 break
             else:
-                pos = len(string)
+                pos = len(unicode(string))
 
         return [region, offset - pos]
 
@@ -616,7 +616,7 @@ def refresh(panToCursor=True, targetCursorCell=0):
     # right of the display if we need to pan right.
     #
     if panToCursor and (cursorOffset >= 0):
-        if len(string) <= _displaySize[0]:
+        if len(unicode(string)) <= _displaySize[0]:
             _viewport[0] = 0
         elif targetCursorCell:
             _viewport[0] = max(0, cursorOffset - targetCursorCell + 1)
@@ -653,7 +653,7 @@ def refresh(panToCursor=True, targetCursorCell=0):
         monitor.destroy()
 
     beginningIsShowing = startPos == 0
-    endIsShowing = endPos >= len(string)
+    endIsShowing = endPos >= len(unicode(string))
 
 def displayRegions(regionInfo):
     """Displays a list of regions on a single line, setting focus to the
@@ -733,7 +733,7 @@ def panRight(panAmount=0):
         lineNum = _viewport[1]
         newX = _viewport[0] + panAmount
         [string, focusOffset] = _lines[lineNum].getLineInfo()
-        if newX < len(string):
+        if newX < len(unicode(string)):
             _viewport[0] = newX
 
     return oldX != _viewport[0]
