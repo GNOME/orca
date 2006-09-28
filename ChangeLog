@@ -15,6 +15,34 @@
           recognize F21 (which is the Pause key on my Sun type 6 
           keyboard).
 
+        * src/orca/orca_glade.py:
+          src/orca/orca_quit.py:
+          src/orca/orca-quit.py:
+          src/orca/Makefile.am:
+          src/orca/default.py:
+          src/orca/orca-setup.glade:
+          src/orca/orca.py:
+          src/orca/orca_gui_prefs.py:
+          src/orca/settings.py:
+          Fixed bug 351801 - Please bring back feedback when quitting Orca.
+          > Created a new orca-quit.glade Glade file with a quit dialog in it.
+          > Removed the unneeded logout dialog from orca-setup.glade.
+          > Added a new setting in setting.py:
+            quitModule = "orca_quit"
+            so that this can be adjusted to something else if we so desire.
+         > Created an orca_quit.py file which contains a showQuitUI() method.
+           It also contains an orcaQuitGUI(GladeWrapper) class which contains
+           the signal handlers.
+         > Moved the "class GladeWrapper" lines out of orca_gui_prefs.py
+           into a new file called orca_glade.py. Adjust the GUI classes in
+           orca_gui_prefs.py and orca_quit.py to subclass GladeWrapper from
+           this new file.
+         > Adjusted the shutdownHandler in default.py to call
+           orca._showQuitGUI(), which is similar to the way that
+           orca._showPreferencesGUI() works.
+         > Hooked up the signal handler for the Yes button on the quit
+           dialog to call orca.shutdown().
+
 2006-09-28  Willie Walker <william.walker@sun.com>
 
 	* src/orca/braille.py: use unicode type to determine string length

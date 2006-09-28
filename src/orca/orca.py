@@ -887,6 +887,24 @@ def _showPreferencesConsole(script=None, inputEvent=None):
 
     return True
 
+def _showQuitGUI(script=None, inputEvent=None):
+    """Displays the user interace to quit Orca.
+
+    Returns True to indicate the input event has been consumed.
+    """
+
+    try:
+        module = __import__(settings.quitModule,
+                            globals(),
+                            locals(),
+                            [''])
+        module.showQuitUI()
+    except:
+        debug.printException(debug.LEVEL_SEVERE)
+        pass
+
+    return True
+
 # If True, this module has been initialized.
 #
 _initialized = False

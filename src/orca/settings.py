@@ -99,6 +99,12 @@ userCustomizableSettings = [
 guiPreferencesModule    = "orca_gui_prefs"
 consolePreferencesModule= "orca_console_prefs"
 
+# The name of the module that hold the user interface for quitting Orca.
+# This module is expected to have the method, showQuitUI, which will
+# display the quit GUI.
+#
+quitModule = "orca_quit"
+
 # A list of keys that can serve as the Orca modifier key.  The list is
 # so we can provide better cross platform support (e.g., Sun keyboard
 # vs. PC-104 keyboard layouts).  When any of these keys is pressed,

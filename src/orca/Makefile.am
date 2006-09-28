@@ -34,8 +34,10 @@ orca_python_PYTHON = \
 	orca.py \
 	orca_gui_prefs.py \
 	orca_console_prefs.py \
+	orca_glade.py \
 	orca_i18n.py \
 	orca_prefs.py \
+	orca_quit.py \
 	orca_state.py \
 	phonnames.py \
 	platform.py \
@@ -54,6 +56,7 @@ orca_pythondir=$(pyexecdir)/orca
 SUBDIRS = scripts
 
 glade_DATA = \
+	orca-quit.glade \
 	orca-setup.glade
 
 EXTRA_DIST = \
