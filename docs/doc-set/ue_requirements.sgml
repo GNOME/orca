@@ -480,6 +480,7 @@
         <para>&incomplete; there is no option to present text bounds
 	to the user.</para>
         <para>&incomplete; When autocomplete appears when a user is typing he or she is not alerted to the fact that this information has appeared.  As soon as the information pops up the first option should be spoken/brailled.  If the user continues typing and the first choice changes this should also be spoken.  It is not expected that the user would hear all possibilitys just the first.  If the user can arrow up or down through choices orca should track this as in any other list or combo.  It is okay if this information overrides the typing echo.</para>
+<para>&incomplete; The user should be able to dinamically set a row or column as a header in openoffice calc.  The hot keys for defining this will be insert+r for row and insert+c for column.  In order to set a row or column the user should first set focus to the row or column that they wish to define and then press the appropriate hot key.  Once the user has defined a row or column it will be used to first speak this header when moving between rows or columns.  This will behave similar to the way orca reads headers in the evolution mail list when moving focus from column to column.  For example, if row c is defined as headers the appropriate cell will first be read before reading the cell with focus when the column is changed.  </para>
 
 
 	
@@ -784,7 +785,7 @@
           <para><emphasis role="bold">Repeated Character
             Count</emphasis> - Orca must be able to optionally
             compress the repetition of character by saying something
-            such as "25 dashes" instead of "dash dash dash dash
+            such as "25 dash characters" instead of "dash dash dash dash
             dash..."</para>
         </listitem>
 
