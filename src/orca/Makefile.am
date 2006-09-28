@@ -21,6 +21,7 @@ orca_python_PYTHON = \
 	eventsynthesizer.py \
 	flat_review.py \
 	focus_tracking_presenter.py \
+	Gecko.py \
 	gnomespeechfactory.py \
 	hierarchical_presenter.py \
 	httpserver.py \

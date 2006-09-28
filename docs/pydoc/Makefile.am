@@ -17,6 +17,7 @@ DOC_FILES = \
 	orca.eventsynthesizer \
 	orca.flat_review \
 	orca.focus_tracking_presenter \
+	orca.Gecko \
 	orca.gnomespeechfactory \
 	orca.hierarchical_presenter \
 	orca.httpserver \

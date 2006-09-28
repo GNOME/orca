@@ -1,3 +1,21 @@
+2006-09-28  Willie Walker <william.walker@sun.com>
+
+	* src/orca/Gecko.py, src/orca/Makefile.am,
+	src/docs/pydoc/Makefile.am, src/orca/scripts/Mozilla.py: provide
+	a new toolkit script module (Gecko.py) to help keep us from
+	having to keep updating the script mappings each time Firefox
+	decides to change its name (the toolkit name remains constant
+	as 'Gecko', but the application name keeps changing).  The Mozilla
+	script is now currently a mere simple subclass of Gecko.
+	
+	* src/orca/scripts/Mozilla.py: the Gecko toolkit has a habit of
+	intermingling frame focus events with menu focus events when one
+	moves from menu to menu.  In particular, oddities seem to happen
+	when one moves between the History<->Bookmarks<->Tools menus.
+	The Mozilla script had a check to ignore focus events on frames,
+	but FF3 seems to have added a new "document frame" role type, so
+	we now ignore that as well.
+	
 2006-09-27  Willie Walker <william.walker@sun.com>
 
 	* src/orca/brlmon.py: partial fix for bug 349954 - when walking
