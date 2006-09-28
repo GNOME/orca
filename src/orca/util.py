@@ -1282,7 +1282,10 @@ def speakTextSelectionState(obj, startOffset, endOffset):
         # characters on either end of the text. We adjust the startOffset and
         # endOffset to exclude them.
         #
-        str = unicode(obj.text.getText(startOffset, endOffset))
+        try:
+            str = unicode(obj.text.getText(startOffset, endOffset))
+        except:
+            str = ""
         n = len(str)
 
         # Don't strip whitespace if string length is one (might be a space).

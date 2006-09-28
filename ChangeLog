@@ -20,7 +20,8 @@
 	* src/orca/braille.py: use unicode type to determine string length
 	in characters (versus bytes).
 
-	* src/orca/brlmon.py: trap for UTF-8 conversion errors.
+	* src/orca/brlmon.py, src/orca/util.py: trap for UTF-8 conversion
+	errors.
 	
 	* src/orca/util.py: in speakTextSelectionState, look at characters
 	using unicode string instead of UTF-8 string.  When looking at them
