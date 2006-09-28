@@ -1,5 +1,8 @@
 2006-09-28  Willie Walker <william.walker@sun.com>
 
+	* bugs/bugs.html: add OpenOffice bug 69945 regarding byte offsets
+	versus character offsets in accessible text implementation.
+	
 	* src/orca/Gecko.py, src/orca/Makefile.am,
 	src/docs/pydoc/Makefile.am, src/orca/scripts/Mozilla.py: provide
 	a new toolkit script module (Gecko.py) to help keep us from
