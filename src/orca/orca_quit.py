@@ -45,7 +45,7 @@ OS = None
 class orcaQuitGUI(orca_glade.GladeWrapper):
 
     def _init(self):
-        print "orcaQuitGUI: _init called."
+        pass
 
     def _showGUI(self):
         """Show the Orca quit GUI dialog. This assumes that the GUI has 
