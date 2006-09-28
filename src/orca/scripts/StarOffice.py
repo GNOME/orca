@@ -874,3 +874,28 @@ class Script(default.Script):
                                         # the default handler.
 
         default.Script.onSelectionChanged(self, event)
+
+    def getText(self, obj, startOffset, endOffset):
+        """Returns the substring of the given object's text specialization.
+
+        NOTE: This is here to handle the problematic implementation of
+        getText by OpenOffice.  See the bug discussion at:
+
+           http://bugzilla.gnome.org/show_bug.cgi?id=356425)
+
+        Once the OpenOffice issue has been resolved, this method probably
+        should be removed.
+
+        Arguments:
+        - obj: an accessible supporting the accessible text specialization
+        - startOffset: the starting character position
+        - endOffset: the ending character position
+        """
+        text = unicode(obj.text.getText(0, -1))
+        if startOffset >= len(text):
+            startOffset = len(text) - 1
+        if startOffset >= endOffset:
+            endOffset = startOffset + 1
+        string = text[max(0,startOffset):min(len(text),endOffset)]
+        string = string.encode("UTF-8")
+        return string

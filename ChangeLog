@@ -45,6 +45,16 @@
 
 2006-09-28  Willie Walker <william.walker@sun.com>
 
+	* src/orca/default.py, src/orca/scripts/StarOffice.py: partial fix
+	for bug 356425 - prevent Orca from restarting when dealing with bad
+	implementations of accessible text.  This is done by creating a
+	"getText" method for the script that will delegate to the getText
+	method of the text specialization for an object.  The StarOffice
+	implementation overrides this new method to handle the delegation
+	in a different way.  NOTE that another part of the bug is still
+	valid, but it is blocked by a bug in the way OOo handles caret
+	movement around bullets and other multibyte UTF-8 strings.
+	
 	* src/orca/braille.py: use unicode type to determine string length
 	in characters (versus bytes).
 

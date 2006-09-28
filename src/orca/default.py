@@ -838,6 +838,17 @@ class Script(script.Script):
                 self.speechGenerator.getSpeech(orca_state.locusOfFocus, False))
         return True
 
+
+    def getText(self, obj, startOffset, endOffset):
+        """Returns the substring of the given object's text specialization.
+
+        Arguments:
+        - obj: an accessible supporting the accessible text specialization
+        - startOffset: the starting character position
+        - endOffset: the ending character position
+        """
+        return obj.text.getText(startOffset, endOffset)
+
     def sayPhrase(self, obj, startOffset, endOffset):
         """Speaks the text of an Accessible object between the start and
         end offsets, unless the phrase is empty in which case it's ignored.
@@ -857,7 +868,7 @@ class Script(script.Script):
             endOffset = startOffset
             startOffset = temp
 
-        phrase = obj.text.getText(startOffset, endOffset)
+        phrase = self.getText(obj, startOffset, endOffset)
 
         if len(phrase) != 0:
             if phrase.isupper():
@@ -1021,7 +1032,7 @@ class Script(script.Script):
         if wordStartOffset == wordEndOffset:
             return
         else:
-            word = text.getText(wordStartOffset + 1, wordEndOffset + 1)
+            word = self.getText(obj, wordStartOffset + 1, wordEndOffset + 1)
 
         if util.getLinkIndex(obj, wordStartOffset + 1) >= 0:
             voice = self.voices[settings.HYPERLINK_VOICE]
@@ -1058,7 +1069,7 @@ class Script(script.Script):
         else:
             startOffset = offset
             endOffset = offset+1
-        character = text.getText(startOffset, endOffset)
+        character = self.getText(obj, startOffset, endOffset)
 
         if util.getLinkIndex(obj, offset) >= 0:
             voice = self.voices[settings.HYPERLINK_VOICE]
