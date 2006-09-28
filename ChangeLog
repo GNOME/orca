@@ -1,3 +1,9 @@
+2006-09-28  Mike Pedersen <michael.pedersen@sun.com> 
+
+        * docs/doc-set/ue_requirements.sgml,
+
+          Updates to openoffice calc spec 
+
 2006-09-28  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
