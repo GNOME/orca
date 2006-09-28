@@ -1,5 +1,10 @@
 2006-09-28  Willie Walker <william.walker@sun.com>
 
+	* src/orca/util.py: in speakTextSelectionState, look at characters
+	using unicode string instead of UTF-8 string.  When looking at them
+	as UTF-8 string, we had the problem of looking at single bytes of
+	multibyte characters.
+	
 	* bugs/bugs.html: add OpenOffice bug 69945 regarding byte offsets
 	versus character offsets in accessible text implementation.
 	
