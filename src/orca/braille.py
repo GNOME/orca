@@ -138,6 +138,18 @@ CMD_MAX               = 0x44
 BRL_FLG_REPEAT_INITIAL= 0x800000
 BRL_FLG_REPEAT_DELAY  = 0x400000
 
+# Common names for most used BrlTTY commands, to be shown in the GUI:
+# ATM, the ones used in default.py are:
+#
+command_name = {}
+command_name[CMD_FWINLT]   = _("Line Left")
+command_name[CMD_FWINRT]   = _("Line Right")
+command_name[CMD_LNUP]     = _("Line Up")
+command_name[CMD_LNDN]     = _("Line Down")
+command_name[CMD_TOP_LEFT] = _("Top Left")
+command_name[CMD_BOT_LEFT] = _("Bottom Right")
+command_name[CMD_HOME]     = _("Cursor Position")
+
 # The size of the physical display (width, height).  The coordinate system of
 # the display is set such that the upper left is (0,0), x values increase from
 # left to right, and y values increase from top to bottom.

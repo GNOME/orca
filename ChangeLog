@@ -45,6 +45,9 @@
 
 2006-09-28  Willie Walker <william.walker@sun.com>
 
+	* src/orca/braille.py: add command_name dictionary from Jorge Sandin
+	as partial work on 354970 (thanks Jorge!).
+	
 	* src/orca/default.py, src/orca/scripts/StarOffice.py: partial fix
 	for bug 356425 - prevent Orca from restarting when dealing with bad
 	implementations of accessible text.  This is done by creating a
