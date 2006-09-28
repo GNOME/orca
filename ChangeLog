@@ -1,3 +1,14 @@
+2006-09-28  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          src/orca/orca.py:
+          Fix for bug #357556 - Insert key sticks after running test 
+          keystroke files. The hot-key to start/stop recording of
+          keystrokes within Orca has been reverted to just "Pause".
+          Also adjusted the "don't write pause keystrokes" code to 
+          recognize F21 (which is the Pause key on my Sun type 6 
+          keyboard).
+
 2006-09-28  Willie Walker <william.walker@sun.com>
 
 	* src/orca/util.py: in speakTextSelectionState, look at characters

@@ -693,8 +693,8 @@ class Script(script.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "Pause",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                0,
+                0,
                 self.inputEventHandlers["keystrokeRecordingHandler"]))
 
         keyBindings.add(
