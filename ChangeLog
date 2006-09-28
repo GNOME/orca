@@ -17,6 +17,8 @@
 
 2006-09-28  Willie Walker <william.walker@sun.com>
 
+	* src/orca/brlmon.py: trap for UTF-8 conversion errors.
+	
 	* src/orca/util.py: in speakTextSelectionState, look at characters
 	using unicode string instead of UTF-8 string.  When looking at them
 	as UTF-8 string, we had the problem of looking at single bytes of

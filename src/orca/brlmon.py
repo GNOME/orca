@@ -113,7 +113,11 @@ class BrlMon(gtk.Window):
 
         # Fill out the cells from the string.
         #
-        string = unicode(string)
+        try:
+            string = unicode(string)
+        except:
+            string = ""
+        
         for i in range(0, len(string)):
 
             # Handle special chars so they are not interpreted by pango.
