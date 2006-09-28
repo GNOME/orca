@@ -221,6 +221,22 @@ class Script(default.Script):
 
         default.Script.onSelectionChanged(self, event)
 
+    def onValueChanged(self, event):
+        """Called whenever an object's value changes.  Currently, the
+        value changes for non-focused objects are ignored.
+        
+        Arguments:
+        - event: the Event
+        """
+        
+        # We'll let state-changed:checked event to be used to
+        # manage check boxes in java application
+        #
+        if event.source.role == rolenames.ROLE_CHECK_BOX and \
+               event.type == "object:property-change:accessible-value":
+            return
+
+
     def visualAppearanceChanged(self, event, obj):
         """Called when the visual appearance of an object changes.  This
         method should not be called for objects whose visual appearance

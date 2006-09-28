@@ -51,11 +51,13 @@ def _getKeycode(keysym):
     Returns an integer representing a key code that should match the
     event.hw_code for key events.
     """
-
     if not _keycodeCache.has_key(keysym):
         keymap = gtk.gdk.keymap_get_default()
-        entries = keymap.get_entries_for_keyval(
-            gtk.gdk.keyval_from_name(keysym))
+        keyval = gtk.gdk.keyval_from_name(keysym)
+        if keyval == 0:
+            return 0
+        entries = keymap.get_entries_for_keyval(keyval)
+            
         if entries:
             _keycodeCache[keysym] = entries[0][0]
         else:

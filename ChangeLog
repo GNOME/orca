@@ -1,3 +1,18 @@
+
+2006-09-28  Lynn Monsanto <lynn.monsanto@sun.com>
+
+        * src/orca/keybindings.py:
+          src/orca/J2SE-access-bridge.py:
+          Fix for bug #353531 - checked'/'unchecked' reported twice 
+	  for check boxes in java applications. A new method, 
+	  onValueChanged, was added to J2SE-access-bridge.py to ignore
+	  the value-changed event when a checkbox is checked or unchecked.
+	  The _getKeycode method in keybindings.py was modified to include
+	  a test for the keyval returned by gtk.gdk.keyval_from_name(keysym).
+	  _getKeycode returns 0 if gtk.gdk.keyval_from_name(keysym) returns
+	  0. This prevents an assertion failure in 
+	  keymap.get_entries_for_keyval(keyval) when keyval is 0.
+
 2006-09-28  Mike Pedersen <michael.pedersen@sun.com> 
 
         * docs/doc-set/ue_requirements.sgml,
