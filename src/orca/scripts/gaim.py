@@ -321,8 +321,9 @@ class Script(default.Script):
             if self.flatReviewContext:
                 self.toggleFlatReviewMode()
 
-            message = event.source.text.getText(event.detail1,
-                                                event.detail1 + event.detail2)
+            message = self.getText(event.source,
+                                   event.detail1,
+                                   event.detail1 + event.detail2)
             if message and message[0] == "\n":
                 message = message[1:]
 

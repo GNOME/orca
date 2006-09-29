@@ -218,7 +218,9 @@ class Script(default.Script):
 
         if linkIndex >= 0:
             link = hypertext.getLink(linkIndex)
-            linkText = text.getText(link.startIndex, link.endIndex)
+            linkText = self.getText(event.source,
+                                    link.startIndex,
+                                    link.endIndex)
             [string, startOffset, endOffset] = text.getTextAtOffset(
                 text.caretOffset,
                 atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
@@ -233,7 +235,7 @@ class Script(default.Script):
             # in yelp when we navigate the table of contents of something
             # like the Desktop Accessibility Guide.
             #
-            linkText = text.getText(0, -1)
+            linkText = self.getText(event.source, 0, -1)
             speech.speak(linkText, self.voices[settings.HYPERLINK_VOICE])
         else:
             speech.speak(_("link"), self.voices[settings.HYPERLINK_VOICE])

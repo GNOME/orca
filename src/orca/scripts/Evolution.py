@@ -844,7 +844,7 @@ class Script(default.Script):
                 panel = self.message_panel
                 allText = util.findByRole(panel, rolenames.ROLE_TEXT)
                 for i in range(0, len(allText)):
-                    text = allText[i].text.getText(0, -1)
+                    text = self.getText(allText[i], 0, -1)
                     tokens = text.split()
                     allTokens += tokens
 
@@ -885,7 +885,7 @@ class Script(default.Script):
             table = event.source.parent.parent.parent.parent.parent
             cell = table.child(table.childCount-1)
             allText = util.findByRole(cell, rolenames.ROLE_TEXT)
-            utterance = "for " + allText[0].text.getText(0, -1)
+            utterance = "for " + self.getText(allText[0], 0, -1)
             speech.speak(utterance)
             return
 

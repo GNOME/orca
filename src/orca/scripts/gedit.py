@@ -176,7 +176,7 @@ class Script(default.Script):
             #
             allTokens = []
             for i in range(0, len(allText)):
-                text = allText[i].text.getText(0, -1)
+                text = self.getText(allText[i], 0, -1)
                 tokens = text.split()
                 allTokens += tokens
 

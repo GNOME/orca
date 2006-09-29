@@ -127,7 +127,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             # have already done this for us.
             #
             if obj.text:
-                objectText = obj.text.getText(0, -1)
+                objectText = self.getText(obj, 0, -1)
                 if objectText and len(objectText) != 0:
                     regions.append(braille.Region(" " + obj.name))
 
@@ -173,7 +173,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             # have already done this for us.
             #
             if obj.text:
-                objectText = obj.text.getText(0, -1)
+                objectText = self.getText(obj, 0, -1)
                 if objectText and len(objectText) != 0:
                     utterances.append(" " + obj.name)
         else:
@@ -279,7 +279,7 @@ class Script(default.Script):
         #
         if isSpreadSheetCell(orca_state.locusOfFocus):
             if inputLineForCell and inputLineForCell.text:
-                inputLine = inputLineForCell.text.getText(0,-1)
+                inputLine = self.getText(inputLineForCell, 0, -1)
                 if not inputLine:
                     inputLine = _("empty")
                 debug.println(self.debugLevel,
@@ -318,7 +318,7 @@ class Script(default.Script):
                     endOff = i
                     break
 
-        badWord = paragraph[0].text.getText(startOff, endOff-1)
+        badWord = self.getText(paragraph[0], startOff, endOff - 1)
 
         # Note that we often get two or more of these focus or property-change
         # events each time there is a new misspelt word. We extract the
@@ -339,7 +339,7 @@ class Script(default.Script):
 
         # Create a list of all the words found in the misspelt paragraph.
         #
-        text = paragraph[0].text.getText(0, -1)
+        text = self.getText(paragraph[0], 0, -1)
         allTokens = text.split()
 
         util.speakMisspeltWord(allTokens, badWord)
@@ -856,10 +856,10 @@ class Script(default.Script):
                     self.lastCell = cell
 
                     if cell.text:
-                        cellText = cell.text.getText(0, -1)
+                        cellText = self.getText(cell, 0, -1)
                         if cellText and len(cellText) != 0:
                             if inputLineForCell and inputLineForCell.text:
-                                inputLine = inputLineForCell.text.getText(0,-1)
+                                inputLine = self.getText(inputLineForCell,0,-1)
                                 if inputLine and \
                                     (len(inputLine) > 1) and \
                                     (inputLine[0] == "="):

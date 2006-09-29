@@ -1,3 +1,11 @@
+2006-09-29  Willie Walker <william.walker@sun.com>
+
+        * src/orca/Gecko.py, src/orca/scripts/Evolution.py,
+	src/orca/scripts/StarOffice.py, src/orca/scripts/gaim.py,
+	src/orca/scripts/gcalctool.py, src/orca/scripts/gedit.py: More
+	work as part of partial fix for bug 356425 - make sure all scripts
+	call self.getText instead of calling getText directly on an
+	object's text specialization.
 	
 2006-09-28  Lynn Monsanto <lynn.monsanto@sun.com>
 

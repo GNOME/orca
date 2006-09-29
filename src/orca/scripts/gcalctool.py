@@ -54,7 +54,6 @@ class Script(default.Script):
         default.Script.__init__(self, app)
 
         self._display = None
-        self._display_txt = None
 
     def onWindowActivated(self, event):
         """Called whenever one of gcalctool's toplevel windows is activated.
@@ -93,8 +92,7 @@ class Script(default.Script):
                 braille.displayMessage(contents)
             else:
                 self._display = d[0]
-                self._display_txt = self._display.text
-                contents = self._display_txt.getText(0, -1)
+                contents = self.getText(self._display, 0, -1)
                 braille.displayMessage(contents)
 
             # Call the default onWindowActivated function
@@ -118,7 +116,7 @@ class Script(default.Script):
         # key pressed was enter or equals
         #
         if event.source == self._display:
-            contents = self._display_txt.getText(0, -1)
+            contents = self.getText(self._display, 0, -1)
             braille.displayMessage(contents)
 
             if (orca_state.lastInputEvent is None) \
