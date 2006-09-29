@@ -165,7 +165,7 @@ class Script(default.Script):
                 # search the layered pane for a popup menu
                 child = event.source.child(i)
                 if child.role == rolenames.ROLE_LAYERED_PANE:
-                    popup = util.findByRole(child, rolenames.ROLE_POPUP_MENU, False)(
+                    popup = util.findByRole(child, rolenames.ROLE_POPUP_MENU, False)
                     if len(popup) > 0:
                         # set the locus of focus to the armed menu item
                         item = util.findByRole(popup[0], rolenames.ROLE_MENU_ITEM, False)
