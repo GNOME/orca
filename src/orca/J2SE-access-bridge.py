@@ -150,6 +150,31 @@ class Script(default.Script):
         - event: the Event
         """
 
+        # This is a workaround for a java-access-bridge bug (Bug 355011)
+        # where popup menu events are not sent to Orca.
+        #
+        # When a root pane gets focus, a popup menu may have been invoked.
+        # If there is a popup menu, give locus of focus to the armed menu
+        # item.
+        #
+        if event.source.role == rolenames.ROLE_ROOT_PANE and \
+               event.type == "object:state-changed:focused" and \
+               event.detail1 == 1:
+
+            for i in range(0, event.source.childCount):
+                # search the layered pane for a popup menu
+                child = event.source.child(i)
+                if child.role == rolenames.ROLE_LAYERED_PANE:
+                    popup = util.findByRole(child, rolenames.ROLE_POPUP_MENU, False)(
+                    if len(popup) > 0:
+                        # set the locus of focus to the armed menu item
+                        item = util.findByRole(popup[0], rolenames.ROLE_MENU_ITEM, False)
+                        for j in range(0, len(item)):
+                            if item[j].state.count(Accessibility.STATE_ARMED):
+                                orca.setLocusOfFocus(event, item[j])
+                                return
+        
+
 	# In java applications the events are comming in other order:
 	# "focus:" event comes before "state-changed:focused" event
 	#

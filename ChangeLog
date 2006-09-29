@@ -1,3 +1,13 @@
+	
+2006-09-28  Lynn Monsanto <lynn.monsanto@sun.com>
+
+        * src/orca/J2SE-access-bridge.py:
+	Fix for bug #353532 - [blocked] popup menu items not presented 
+	in java applications. This is a workaround for a java-access-bridge 
+	bug (Bug 355011) where popup menu events are not sent to Orca.
+	When a root pane gets focus, a popup menu may have been invoked.
+        If there is a popup menu, give locus of focus to the armed menu
+        item.
 
 2006-09-28  Lynn Monsanto <lynn.monsanto@sun.com>
 
