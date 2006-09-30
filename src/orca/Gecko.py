@@ -67,11 +67,11 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         if obj is stopAncestor:
             return utterances
 
-        parent = obj.parent
-
         # Just skip cells inside cells - it's kind of a nonsensical
         # hierarchy.
         #
+        parent = obj.parent
+
         while True:
             if parent \
                 and (obj.role == rolenames.ROLE_TABLE_CELL) \
@@ -96,33 +96,45 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             # We try to omit things like fillers off the bat...
             #
             if (parent.role != rolenames.ROLE_FILLER) \
+                and (parent.role != rolenames.ROLE_LAYERED_PANE) \
                 and (parent.role != rolenames.ROLE_SPLIT_PANE) \
+                and (parent.role != rolenames.ROLE_SCROLL_PANE) \
                 and (parent.role != rolenames.ROLE_UNKNOWN):
 
-                # If it has a label, we typically want to speak it, unless
-                # we're on a menu, but the menu is not FOCUSABLE (this
-                # is the way to identify the menu that's duplicated in the
-                # hierarchy)
-                #
+                text = util.getDisplayedText(parent)
                 label = util.getDisplayedLabel(parent)
-                if label and len(label):
+
+                # Don't announce unlabelled panels.
+                #
+                if parent.role == rolenames.ROLE_PANEL \
+                   and (((not label) or (len(label) == 0) \
+                         or (not text) or (len(text) == 0))):
+                    pass
+                elif parent.role != rolenames.ROLE_TABLE_CELL:
+                    if (parent.role == rolenames.ROLE_MENU) \
+                       and not parent.state.count(\
+                           atspi.Accessibility.STATE_FOCUSABLE):
+                        pass
+                    else:
+                        utterances.append(\
+                            rolenames.getSpeechForRoleName(parent))
+
+                # If it is displaying text, we typically want to speak
+                # it, unless we're on a menu, but the menu is not
+                # FOCUSABLE (this is the way to identify the menu
+                # that's duplicated in the hierarchy)
+                #
+                if text and len(text):
                     if (parent.role == rolenames.ROLE_MENU) \
                        and not parent.state.count(\
                                    atspi.Accessibility.STATE_FOCUSABLE):
                         pass
                     else:
-                        utterances.append(label + " " \
+                        utterances.append(text + " " \
                                       + rolenames.getSpeechForRoleName(parent))
-                # Otherwise, we won't speak it if it is a panel with
-                # no name,
-                elif parent.role == rolenames.ROLE_PANEL:
-                    pass
-                # Or if we're in a menu and this is a toolbar,
-                #
-                elif inMenuBar and (parent.role == rolenames.ROLE_TOOL_BAR):
-                    pass
-                else:
-                    utterances.append(rolenames.getSpeechForRoleName(parent))
+
+                if label and len(label):
+                    utterances.append(label)
 
             parent = parent.parent
 
@@ -188,7 +200,8 @@ class Script(default.Script):
         # on the context.
         #
         if (event.source.role == rolenames.ROLE_FRAME) \
-           or (event.source.role == ROLE_DOCUMENT_FRAME):
+           or (event.source.role == ROLE_DOCUMENT_FRAME) \
+           or (not len(event.source.role)):
             return
 
         # We're also going to ignore menus that are children of menu

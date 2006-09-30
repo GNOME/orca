@@ -1,5 +1,9 @@
 2006-09-29  Willie Walker <william.walker@sun.com>
 
+	* src/orca/Gecko.py: incorporate labelled panels into the speech
+	context.  This helps us know when we move between labelled panels
+	in the preferences dialogs.
+	
         * src/orca/Gecko.py, src/orca/scripts/Evolution.py,
 	src/orca/scripts/StarOffice.py, src/orca/scripts/gaim.py,
 	src/orca/scripts/gcalctool.py, src/orca/scripts/gedit.py: More
