@@ -26,8 +26,12 @@ __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import atspi
+import braille
+import braillegenerator
 import debug
 import default
+import orca
+import orca_state
 import rolenames
 import settings
 import speech
@@ -40,11 +44,105 @@ from orca_i18n import _
 #
 ROLE_DOCUMENT_FRAME      = "document frame"
 
-class SpeechGenerator(speechgenerator.SpeechGenerator):
-    """Overrides getSpeechContext to handle Gecko's unique
-    hiearchical representation, such as menus duplicating themselves
-    in the hierarchy and tables used for layout and indentation purposes.
+class BrailleGenerator(braillegenerator.BrailleGenerator):
+    """Handle Gecko's unique hiearchical representation, such as menus
+    duplicating themselves in the hierarchy and tables used for layout
+    and indentation purposes.
     """
+
+    def __init__(self):
+        braillegenerator.BrailleGenerator.__init__(self)
+
+
+    def _getBrailleRegionsForComboBox(self, obj):
+        """Get the braille for a combo box.  If the combo box already has
+        focus, then only the selection is displayed.
+
+        Arguments:
+        - obj: the combo box
+
+        Returns a list where the first element is a list of Regions to display
+        and the second element is the Region which should get focus.
+        """
+
+        self._debugGenerator("Gecko._getBrailleRegionsForComboBox", obj)
+
+        regions = []
+
+        focusedRegionIndex = 0
+        name = obj.name
+        if name and (len(name) > 0):
+            regions.append(braille.Region(name + " "))
+            focusedRegionIndex = 1
+
+        try:
+            menu = obj.child(0)
+            regions.append(braille.Region(menu.name))
+        except:
+            pass
+
+        if settings.brailleVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
+            regions.append(braille.Region(
+                " " + rolenames.getBrailleForRoleName(obj)))
+
+        # Things may not have gone as expected above, so we'll do some
+        # defensive programming to make sure we don't get an index out
+        # of bounds.
+        #
+        if focusedRegionIndex >= len(regions):
+            focusedRegionIndex = 0
+
+        # [[[TODO: WDW - perhaps if a text area was created, we should
+        # give focus to it.]]]
+        #
+        return [regions, regions[focusedRegionIndex]]
+
+class SpeechGenerator(speechgenerator.SpeechGenerator):
+    """Handle Gecko's unique hiearchical representation, such as menus
+    duplicating themselves in the hierarchy and tables used for layout
+    and indentation purposes.
+    """
+
+    def __init__(self):
+        speechgenerator.SpeechGenerator.__init__(self)
+
+    def _getSpeechForComboBox(self, obj, already_focused):
+        """Get the speech for a combo box.  If the combo box already has focus,
+        then only the selection is spoken.
+
+        Arguments:
+        - obj: the combo box
+        - already_focused: False if object just received focus
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        utterances = []
+
+        # With Gecko, the name and the label of a combo box are the
+        # same.  So...we'll just use the name (just in case the label
+        # doesn't exist).
+        #
+        if not already_focused:
+            utterances.extend(self._getSpeechForObjectName(obj))
+
+        if not already_focused:
+            utterances.extend(self._getSpeechForObjectRole(obj))
+
+        try:
+            menu = obj.child(0)
+            utterances.append(menu.name)
+        except:
+            pass
+
+        utterances.extend(self._getSpeechForObjectAvailability(obj))
+
+        self._debugGenerator("Gecko._getSpeechForComboBox",
+                             obj,
+                             already_focused,
+                             utterances)
+
+        return utterances
 
     def getSpeechContext(self, obj, stopAncestor=None):
         """Get the speech that describes the names and role of
@@ -153,6 +251,11 @@ class Script(default.Script):
         #print "Gecko.__init__"
         default.Script.__init__(self, app)
 
+    def getBrailleGenerator(self):
+        """Returns the braille generator for this script.
+        """
+        return BrailleGenerator()
+
     def getSpeechGenerator(self):
         """Returns the speech generator for this script.
         """
@@ -183,9 +286,8 @@ class Script(default.Script):
         Arguments:
         - event: the Event
         """
-
         # We ignore these because Gecko just happily keeps generating
-        # name changed events for objects whose name doesn't change.
+        # name changed events for objects whose name don't change.
         #
         return
 
@@ -218,6 +320,21 @@ class Script(default.Script):
         #   and event.source.parent \
         #   and (event.source.parent.role == rolenames.ROLE_MENU_BAR):
         #    return
+
+        # Gecko's combo boxes are a bit of a struggle to work with.
+        # First of all, the combo box is a container for a menu.
+        # When you arrow up and down in them, the menu item gets
+        # focus and then we see name changed events for the menu
+        # to represent the name of the menu item that was just
+        # selected.  It's all wonderfully convoluted.
+        #
+        if (event.source.role == rolenames.ROLE_MENU_ITEM):
+            parent = event.source.parent
+            if parent and (parent.role == rolenames.ROLE_MENU):
+                parent = parent.parent
+                if parent and (parent.role == rolenames.ROLE_COMBO_BOX):
+                    orca.visualAppearanceChanged(event, parent)
+                    return
 
         default.Script.onFocus(self, event)
 

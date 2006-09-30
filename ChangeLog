@@ -1,5 +1,8 @@
 2006-09-30  Willie Walker <william.walker@sun.com>
 
+	* src/orca/Gecko.py: reverse engineer and handle Gecko's unique
+	way of managing combo boxes.
+	
 	* src/orca/default.py: fix for bug 358508 - use obj instead
 	of event.source in visualAppearanceChanged for speech.
 	
