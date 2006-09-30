@@ -1487,8 +1487,7 @@ class Script(script.Script):
 
         mag.magnifyAccessible(event, obj)
         self.updateBraille(obj)
-        speech.speakUtterances(
-            self.speechGenerator.getSpeech(event.source, True))
+        speech.speakUtterances(self.speechGenerator.getSpeech(obj, True))
 
     def updateBraille(self, obj, extraRegion=None):
         """Updates the braille display to show the give object.
