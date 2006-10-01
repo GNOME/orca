@@ -1,3 +1,9 @@
+2006-10-01  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* th.po: Added Thai traslation by
+	Supranee Thirawatthanasuk <supranee@opentle.org>.
+	* LINGUAS: Added th (Thai).
+
 2006-09-25  Ignacio Casal Quinteiro  <nacho.resa@gmail.com>
 
 	* gl.po: Updated Galician Translation.
