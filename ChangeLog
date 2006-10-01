@@ -1,3 +1,16 @@
+2006-09-30  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Makefile.am:
+          src/orca/scripts/gnome_segv2.py:
+          Fixed bug #344192 - Orca doesn't report on "Application has 
+          unexpected crashed" dialogs. Added in a new gnome_segv2.py
+          script and overrode the locusOfFocusChanged() method. If the 
+          gnome_segv2 application is running it's probably because
+          some application has crashed unexpectedly. If we just called
+          locusOfFocusChanged() in default.py we would hang. To 
+          circumvent this, we set the old locus of focus to None, then
+          we can safely call the locusOfFocusChanged() method in default.py.
+
 2006-09-30  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py: reverse engineer and handle Gecko's unique
