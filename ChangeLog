@@ -1,3 +1,11 @@
+2006-10-02  Willie Walker <william.walker@sun.com>
+
+	* src/orca/default.py: add isTextArea method to determine if an
+	object is a text area or not.  This allows us to deal with the
+	growing number of things that are text areas, but choose to give
+	themselves different roles (e.g., GTK's 'text', OpenOffice's
+	'paragraph', and Gecko's 'entry').
+	
 2006-10-02  Rich Burridge <rich.burridge@sun.com>
 
         * po/POTFILES.in:

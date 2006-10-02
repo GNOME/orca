@@ -838,7 +838,15 @@ class Script(script.Script):
                 self.speechGenerator.getSpeech(orca_state.locusOfFocus, False))
         return True
 
+    def isTextArea(self, obj):
+        """Returns True if obj is a GUI component that is for entering text.
 
+        Arguments:
+        - obj: an accessible
+        """
+        return obj and obj.role and ((obj.role == rolenames.ROLE_TEXT) \
+                                     or (obj.role == rolenames.ROLE_PARAGRAPH))
+    
     def getText(self, obj, startOffset, endOffset):
         """Returns the substring of the given object's text specialization.
 
@@ -1509,9 +1517,7 @@ class Script(script.Script):
         # are on the very first line.  Otherwise, we show only the
         # line.
         #
-        if obj.text \
-            and ((obj.role == rolenames.ROLE_TEXT) \
-                or (obj.role == rolenames.ROLE_PARAGRAPH)):
+        if obj.text and self.isTextArea(obj):
             text = obj.text
             [string, startOffset, endOffset] = text.getTextAtOffset(
                 text.caretOffset,
@@ -2555,8 +2561,7 @@ class Script(script.Script):
             self.targetCursorCell = 1
             self.updateBrailleReview(self.targetCursorCell)
         elif braille.beginningIsShowing and orca_state.locusOfFocus \
-             and ((orca_state.locusOfFocus.role == rolenames.ROLE_TEXT) \
-                  or (orca_state.locusOfFocus.role == rolenames.ROLE_PARAGRAPH)):
+             and self.isTextArea(orca_state.locusOfFocus):
             # If we're at the beginning of a line of a multiline text
             # area, then force it's caret to the end of the previous
             # line.  The assumption here is that we're currently
@@ -2615,8 +2620,7 @@ class Script(script.Script):
             self.targetCursorCell = 1
             self.updateBrailleReview(self.targetCursorCell)
         elif braille.endIsShowing and orca_state.locusOfFocus \
-             and ((orca_state.locusOfFocus.role == rolenames.ROLE_TEXT) \
-                  or (orca_state.locusOfFocus.role == rolenames.ROLE_PARAGRAPH)):
+             and self.isTextArea(orca_state.locusOfFocus):
             # If we're at the end of a line of a multiline text area, then
             # force it's caret to the beginning of the next line.  The
             # assumption here is that we're currently viewing the line that
