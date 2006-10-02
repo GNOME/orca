@@ -31,6 +31,8 @@
             show the Orca main window.
           > Adjusted the quitNoButtonClicked() signal handler in orca_quit.py
             to recreate the Orca main window.
+          > Added the _setMainWindowIcon() method to orca_gui_main.py that
+            set the main Orca window icon to "orca.png".
 
 2006-09-30  Rich Burridge <rich.burridge@sun.com>
 
