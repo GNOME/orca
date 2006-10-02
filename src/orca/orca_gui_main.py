@@ -17,7 +17,7 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-"""Displays a GUI for the user to quit Orca."""
+"""Displays a GUI for the Orca main window."""
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
@@ -42,59 +42,44 @@ from orca_i18n import _  # for gettext support
 
 OS = None
 
-class orcaQuitGUI(orca_glade.GladeWrapper):
+class orcaMainGUI(orca_glade.GladeWrapper):
 
     def _init(self):
         pass
 
     def _showGUI(self):
-        """Show the Orca quit GUI dialog. This assumes that the GUI has 
+        """Show the Orca main window GUI. This assumes that the GUI has 
         already been created.
         """
 
-        # Set the current time on the quit GUI dialog so that it'll
-        # get focus. set_user_time is a new call in pygtk 2.9.2 or later.
-        # It's surronded by a try/except block here so that if it's not found,
-        # then we can fail gracefully.
-        #
-        try:
-            self.quitDialog.realize()
-            self.quitDialog.window.set_user_time(\
-                orca_state.lastInputEventTimestamp)
-        except AttributeError:
-            debug.printException(debug.LEVEL_FINEST)
+        self.mainWindow.show()
 
-        self.quitDialog.show()
-
-    def quitNoButtonClicked(self, widget):
-        """Signal handler for the "clicked" signal for the quitNoButton
-           GtkButton widget. The user has clicked the No button.
-           Don't quit Orca. Just hide the quit dialog and recreate the
-           Orca main window.
+    def quitButtonClicked(self, widget):
+        """Signal handler for the "clicked" signal for the quitButton
+           GtkButton widget. The user has clicked the Quit button.
+           Call the method to bring up the Quit dialog.
 
         Arguments:
         - widget: the component that generated the signal.
         """
 
-        self.quitDialog.hide()
-        orca._showMainWindowGUI()
+        orca._showQuitGUI()
 
-    def quitYesButtonClicked(self, widget):
-        """Signal handler for the "clicked" signal for the quitYesButton
-           GtkButton widget. The user has clicked the Yes button.
-           Call the orca.shutdown() method to gracefully terminate Orca.
+    def preferencesButtonClicked(self, widget):
+        """Signal handler for the "clicked" signal for the preferencesButton
+           GtkButton widget. The user has clicked the Preferences button.
+           Call the method to bring up the Preferences dialog.
 
         Arguments:
         - widget: the component that generated the signal.
         """
 
-        orca.shutdown()
+        orca._showPreferencesGUI()
 
-    def quitDialogDestroyed(self, widget):
-        """Signal handler for the "destroyed" signal for the quitDialog
-           GtkWindow widget. Reset OS to None, so that the GUI can be rebuilt
-           from the Glade file the next time the user wants to display the
-           quit dialog GUI.
+    def mainWindowDestroyed(self, widget):
+        """Signal handler for the "destroyed" signal for the mainWindow
+           GtkWindow widget. Reset OS to None, then call the method to 
+           bring up the quit dialog.
 
         Arguments:
         - widget: the component that generated the signal.
@@ -103,8 +88,9 @@ class orcaQuitGUI(orca_glade.GladeWrapper):
         global OS
 
         OS = None
+        orca._showQuitGUI()
 
-def showQuitUI():
+def showMainUI():
     global OS
 
     if not OS:
@@ -112,8 +98,8 @@ def showQuitUI():
                                  platform.datadirname,
                                  platform.package,
                                  "glade",
-                                 "orca-quit.glade")
-        OS = orcaQuitGUI(gladeFile, "quitDialog")
+                                 "orca-mainwin.glade")
+        OS = orcaMainGUI(gladeFile, "mainWindow")
         OS._init()
 
     OS._showGUI()
@@ -121,7 +107,7 @@ def showQuitUI():
 def main():
     locale.setlocale(locale.LC_ALL, '')
 
-    showQuitUI()
+    showMainUI()
 
     gtk.main()
     sys.exit(0)

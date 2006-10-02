@@ -10,12 +10,14 @@ src/orca/gnomespeechfactory.py
 src/orca/hierarchical_presenter.py
 src/orca/J2SE-access-bridge.py
 src/orca/keynames.py
+src/orca/orca-mainwin.glade
 src/orca/orca-setup.glade
 src/orca/orca-quit.glade
 src/orca/orca.in
 src/orca/orca.py
 src/orca/orca_console_prefs.py
 src/orca/orca_glade.py
+src/orca/orca_gui_main.py
 src/orca/orca_gui_prefs.py
 src/orca/orca_quit.py
 src/orca/rolenames.py

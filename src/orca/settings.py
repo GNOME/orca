@@ -92,6 +92,12 @@ userCustomizableSettings = [
     "verbalizePunctuationStyle",
 ]
 
+# The name of the module that hold the user interface for the main window
+# for Orca. This module is expected to have the method, showMainUI, which 
+# will display the main window GUI.
+#
+mainWindowModule = "orca_gui_main"
+
 # The name of the modules that hold the user interface for setting
 # Orca preferences.  Each module is expected to have the method,
 # showPreferencesUI, which will prompt the user for preferences.

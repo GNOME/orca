@@ -868,6 +868,24 @@ def _showPreferencesGUI(script=None, inputEvent=None):
 
     return True
 
+def _showMainWindowGUI(script=None, inputEvent=None):
+    """Displays the Orca main window.
+
+    Returns True to indicate the input event has been consumed.
+    """
+
+    try:
+        module = __import__(settings.mainWindowModule,
+                            globals(),
+                            locals(),
+                            [''])
+        module.showMainUI()
+    except:
+        debug.printException(debug.LEVEL_SEVERE)
+        pass
+
+    return True
+
 def _showPreferencesConsole(script=None, inputEvent=None):
     """Displays the user interace to configure Orca and set up
     user preferences via a command line interface.
@@ -1238,6 +1256,8 @@ def main():
             _showPreferencesGUI()
         else:
             _showPreferencesConsole()
+
+    _showMainWindowGUI()
 
     start(registry) # waits until we stop the registry
     return 0

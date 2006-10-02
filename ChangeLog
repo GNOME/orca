@@ -3,6 +3,27 @@
         * po/POTFILES.in:
           Added in the names of the new source files recently created.
 
+        * src/orca/orca_gui_main.py:
+          src/orca/orca-mainwin.glade:
+          src/orca/Makefile.am:
+          src/orca/orca.py:
+          src/orca/orca_quit.py:
+          src/orca/settings.py:
+          po/POTFILES.in:
+          Fixed bug 354689 - Orca Preferences.
+          > Created a new orca-mainwin.glade Glade file with an Orca main
+            window in it.
+          > Added a new setting in setting.py:
+            mainWindowModule = "orca_gui_main"
+            so that this can be adjusted to something else if we so desire.
+          > Created an orca_gui_main.py file which contains a showMainUI()
+            method. It also contains an orcaMainGUI(GladeWrapper) class
+            which contains the three signal handlers.
+          > Added code near the end of the main() method in orca.py to
+            show the Orca main window.
+          > Adjusted the quitNoButtonClicked() signal handler in orca_quit.py
+            to recreate the Orca main window.
+
 2006-09-30  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Makefile.am:

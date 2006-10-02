@@ -32,6 +32,7 @@ orca_python_PYTHON = \
 	mag.py \
 	outloud.py \
 	orca.py \
+	orca_gui_main.py \
 	orca_gui_prefs.py \
 	orca_console_prefs.py \
 	orca_glade.py \
@@ -56,6 +57,7 @@ orca_pythondir=$(pyexecdir)/orca
 SUBDIRS = scripts
 
 glade_DATA = \
+	orca-mainwin.glade \
 	orca-quit.glade \
 	orca-setup.glade
 
