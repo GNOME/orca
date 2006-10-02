@@ -1,5 +1,7 @@
 2006-10-02  Willie Walker <william.walker@sun.com>
 
+        * po/POTFILES.in: add braille.py, Gecko.py, phonnames.py
+	
 	* src/orca/default.py: add isTextArea method to determine if an
 	object is a text area or not.  This allows us to deal with the
 	growing number of things that are text areas, but choose to give
