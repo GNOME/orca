@@ -1,3 +1,8 @@
+2006-10-02  Rich Burridge <rich.burridge@sun.com>
+
+        * po/POTFILES.in:
+          Added in the names of the new source files recently created.
+
 2006-09-30  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Makefile.am:
@@ -75,7 +80,7 @@
 
         * src/orca/orca_glade.py:
           src/orca/orca_quit.py:
-          src/orca/orca-quit.py:
+          src/orca/orca-quit.glade:
           src/orca/Makefile.am:
           src/orca/default.py:
           src/orca/orca-setup.glade:
