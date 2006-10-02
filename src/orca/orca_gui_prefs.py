@@ -366,6 +366,10 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         targetDisplay = prefs["magTargetDisplay"]
         self.magTargetDisplayEntry.set_text(targetDisplay)
 
+        # General pane.
+        #
+        self.showMainWindowCheckButton.set_active(prefs["showMainWindow"])
+
     def _getComboBoxIndex(self, combobox, str):
         """ For each of the entries in the given combo box, look for str.
             Return the index of the entry if str is found.
@@ -1356,6 +1360,19 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         self.prefsDict["magTargetDisplay"] = widget.get_text()
+
+    def showMainWindowChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           showMainWindowCheckButton GtkCheckButton widget.
+           The user has [un]checked the 'Show Orca main window'
+           checkbox. Set the 'showMainWindow' preference
+           to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        self.prefsDict["showMainWindow"] = widget.get_active()
 
     def helpButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the helpButton

@@ -845,6 +845,8 @@ def loadUserSettings(script=None, inputEvent=None):
         debug.println(debug.LEVEL_CONFIGURATION,
                       "Magnification module has NOT been initialized.")
 
+    _showMainWindowGUI()
+
     httpserver.init()
 
     return True
@@ -879,7 +881,10 @@ def _showMainWindowGUI(script=None, inputEvent=None):
                             globals(),
                             locals(),
                             [''])
-        module.showMainUI()
+        if settings.showMainWindow:
+            module.showMainUI()
+        else:
+            module.hideMainUI()
     except:
         debug.printException(debug.LEVEL_SEVERE)
         pass
@@ -1256,8 +1261,6 @@ def main():
             _showPreferencesGUI()
         else:
             _showPreferencesConsole()
-
-    _showMainWindowGUI()
 
     start(registry) # waits until we stop the registry
     return 0

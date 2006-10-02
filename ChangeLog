@@ -34,6 +34,17 @@
           > Added the _setMainWindowIcon() method to orca_gui_main.py that
             set the main Orca window icon to "orca.png".
 
+        * src/orca/orca-setup.glade:
+          src/orca/orca.py:
+          src/orca/orca_gui_main.py:
+          src/orca/orca_gui_prefs.py:
+          src/orca/orca_quit.py:
+          src/orca/settings.py:
+          Added a new "General" tab to the Orca Preferences dialog. It
+          has one setting at the moment: a checkbox that indicates whether
+          the Orca main window should be shown (default is yes). Adjusted
+          the Orca code to use this new preferences setting.
+
 2006-09-30  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Makefile.am:

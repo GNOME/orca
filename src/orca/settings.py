@@ -90,11 +90,12 @@ userCustomizableSettings = [
     "magSourceDisplay",
     "magTargetDisplay",
     "verbalizePunctuationStyle",
+    "showMainWindow",
 ]
 
 # The name of the module that hold the user interface for the main window
-# for Orca. This module is expected to have the method, showMainUI, which 
-# will display the main window GUI.
+# for Orca. This module is expected to have two methods, showMainUI and
+# hideMainUI, which will show and hide the main window GUI.
 #
 mainWindowModule = "orca_gui_main"
 
@@ -307,6 +308,10 @@ enableFunctionKeys      = True
 # If True and key echo is enabled, echo Action keys.
 #
 enableActionKeys        = True
+
+# If True, show the main Orca window.
+#
+showMainWindow          = True
 
 
 # If True, reads all the table cells in the current row rather than just

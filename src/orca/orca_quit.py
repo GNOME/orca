@@ -37,6 +37,7 @@ import orca
 import orca_glade
 import orca_state
 import platform
+import settings
 
 from orca_i18n import _  # for gettext support
 
@@ -77,7 +78,8 @@ class orcaQuitGUI(orca_glade.GladeWrapper):
         """
 
         self.quitDialog.hide()
-        orca._showMainWindowGUI()
+        if settings.showMainWindow:
+            orca._showMainWindowGUI()
 
     def quitYesButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the quitYesButton

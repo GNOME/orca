@@ -66,6 +66,13 @@ class orcaMainGUI(orca_glade.GladeWrapper):
         self._setMainWindowIcon()
         self.mainWindow.show()
 
+    def _hideGUI(self):
+        """Hide the Orca main window GUI. This assumes that the GUI has
+        already been created.
+        """
+
+        self.mainWindow.hide()
+
     def quitButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the quitButton
            GtkButton widget. The user has clicked the Quit button.
@@ -115,6 +122,12 @@ def showMainUI():
         OS._init()
 
     OS._showGUI()
+
+def hideMainUI():
+    global OS
+
+    if OS:
+        OS._hideGUI()
 
 def main():
     locale.setlocale(locale.LC_ALL, '')
