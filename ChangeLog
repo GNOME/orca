@@ -1,3 +1,9 @@
+2006-10-03  Willie Walker <william.walker@sun.com>
+
+	* src/orca/Gecko.py: more work on presenting the various styles
+	and implementations of combo boxes and text entry fields in Gecko.
+	Quite challenging.
+	
 2006-10-02  Willie Walker <william.walker@sun.com>
 
         * po/POTFILES.in: add braille.py, Gecko.py, phonnames.py

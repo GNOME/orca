@@ -42,7 +42,18 @@ from orca_i18n import _
 
 # New roles defined by the Gecko toolkit
 #
-ROLE_DOCUMENT_FRAME      = "document frame"
+rolenames.ROLE_ENTRY          = "entry"
+rolenames.ROLE_DOCUMENT_FRAME = "document frame"
+
+rolenames.rolenames[rolenames.ROLE_ENTRY] = \
+    rolenames.rolenames[rolenames.ROLE_TEXT]
+
+def _getAutocompleteEntry(obj):
+    for i in range(0, obj.childCount):
+        child = obj.child(i)
+        if child.role == rolenames.ROLE_ENTRY:
+            return child
+    return None
 
 class BrailleGenerator(braillegenerator.BrailleGenerator):
     """Handle Gecko's unique hiearchical representation, such as menus
@@ -52,8 +63,64 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
     def __init__(self):
         braillegenerator.BrailleGenerator.__init__(self)
+        self.brailleGenerators[rolenames.ROLE_AUTOCOMPLETE] = \
+             self._getBrailleRegionsForAutocomplete
+        self.brailleGenerators[rolenames.ROLE_ENTRY]        = \
+             self._getBrailleRegionsForText
 
+    def _getBrailleRegionsForAutocomplete(self, obj):
+        """Gets the role of an autocomplete box.  We let the handlers
+        for the children do the rest.
 
+        Arguments:
+        - obj: an Accessible
+
+        Returns a list where the first element is a list of Regions to
+        display and the second element is the Region which should get
+        focus.
+        """
+        
+        self._debugGenerator("Gecko._getBrailleRegionsForAutocomplete", obj)
+
+        regions = []
+        if settings.brailleVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
+            regions.append(braille.Region(
+                rolenames.getBrailleForRoleName(obj)))
+        else:
+            regions.append(braille.Region(""))
+            
+        return (regions, regions[0])
+        
+    def _getBrailleRegionsForText(self, obj):
+        """Gets text to be displayed for an autocomplete box.
+
+        Arguments:
+        - obj: an Accessible
+
+        Returns a list where the first element is a list of Regions to
+        display and the second element is the Region which should get
+        focus.
+        """
+
+        self._debugGenerator("Gecko._getBrailleRegionsForText", obj)
+
+        parent = obj.parent
+        if parent.role != rolenames.ROLE_AUTOCOMPLETE:
+            return braillegenerator.BrailleGenerator._getBrailleRegionsForText(
+                self, obj)
+
+        regions = []
+
+        label = util.getDisplayedLabel(parent)
+        if not label or not len(label):
+            label = parent.name
+
+        textRegion = braille.Text(obj, label)
+        regions.append(textRegion)
+        eol = braille.Region(" $l")
+        regions.append(eol)
+        return [regions, textRegion]
+            
     def _getBrailleRegionsForComboBox(self, obj):
         """Get the braille for a combo box.  If the combo box already has
         focus, then only the selection is displayed.
@@ -69,17 +136,32 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
         regions = []
 
+        # With Gecko, a combo box has a menu as a child.  If the menu
+        # has a name (usually the case when the object is labelled by
+        # something), then it is the text showing in the combo box.
+        # If not, then the combo box is probably not labelled by
+        # something.  If that's the case, then the name of the combo
+        # box is the text that is showing.  Except perhaps if the
+        # menu is popped up.  Then, the name is the name of the menu
+        # item that is selected.  
+        #
+        label = util.getDisplayedLabel(obj)
+        menu = obj.child(0)
+        
         focusedRegionIndex = 0
-        name = obj.name
-        if name and (len(name) > 0):
-            regions.append(braille.Region(name + " "))
+        if label and len(label):
+            regions.append(braille.Region(label + " "))
             focusedRegionIndex = 1
 
-        try:
-            menu = obj.child(0)
+        if menu.name:
             regions.append(braille.Region(menu.name))
-        except:
-            pass
+        else:
+            name = obj.name
+            if menu.state.count(atspi.Accessibility.STATE_VISIBLE):
+                selection = menu.selection
+                item = selection.getSelectedChild(0)
+                name = item.name
+            regions.append(braille.Region(name))
 
         if settings.brailleVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
             regions.append(braille.Region(
@@ -105,6 +187,42 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
     def __init__(self):
         speechgenerator.SpeechGenerator.__init__(self)
+        self.speechGenerators[rolenames.ROLE_ENTRY]        = \
+             self._getSpeechForText
+
+    def _getSpeechForText(self, obj, already_focused):
+        """Gets the speech for an autocomplete box.
+
+        Arguments:
+        - obj: an Accessible
+        - already_focused: False if object just received focus
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        parent = obj.parent
+        if parent.role != rolenames.ROLE_AUTOCOMPLETE:
+            return speechgenerator.SpeechGenerator._getSpeechForText(
+                self, obj, already_focused)
+
+        utterances = []
+
+        label = util.getDisplayedLabel(parent)
+        if not label or not len(label):
+            label = parent.name
+        utterances.append(label)
+        
+        utterances.extend(self._getSpeechForObjectRole(obj))
+
+        [text, startOffset, endOffset] = util.getTextLineAtCaret(obj)
+        utterances.append(text)
+            
+        self._debugGenerator("Gecko._getSpeechForText",
+                             obj,
+                             already_focused,
+                             utterances)
+
+        return utterances
 
     def _getSpeechForComboBox(self, obj, already_focused):
         """Get the speech for a combo box.  If the combo box already has focus,
@@ -119,21 +237,33 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
         utterances = []
 
-        # With Gecko, the name and the label of a combo box are the
-        # same.  So...we'll just use the name (just in case the label
-        # doesn't exist).
+        # With Gecko, a combo box has a menu as a child.  If the menu
+        # has a name (usually the case when the object is labelled by
+        # something), then it is the text showing in the combo box.
+        # If not, then the combo box is probably not labelled by
+        # something.  If that's the case, then the name of the combo
+        # box is the text that is showing.  Except perhaps if the
+        # menu is popped up.  Then, the name is the name of the menu
+        # item that is selected.  
         #
-        if not already_focused:
-            utterances.extend(self._getSpeechForObjectName(obj))
+        label = util.getDisplayedLabel(obj)
+        menu = obj.child(0)
+        
+        if not already_focused and label:
+            utterances.append(label)
 
         if not already_focused:
             utterances.extend(self._getSpeechForObjectRole(obj))
 
-        try:
-            menu = obj.child(0)
+        if menu.name:
             utterances.append(menu.name)
-        except:
-            pass
+        else:
+            name = obj.name
+            if menu.state.count(atspi.Accessibility.STATE_VISIBLE):
+                selection = menu.selection
+                item = selection.getSelectedChild(0)
+                name = item.name
+            utterances.append(name)
 
         utterances.extend(self._getSpeechForObjectAvailability(obj))
 
@@ -165,25 +295,13 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         if obj is stopAncestor:
             return utterances
 
-        # Just skip cells inside cells - it's kind of a nonsensical
-        # hierarchy.
-        #
-        parent = obj.parent
-
-        while True:
-            if parent \
-                and (obj.role == rolenames.ROLE_TABLE_CELL) \
-                and (parent.role == rolenames.ROLE_TABLE_CELL):
-                parent = parent.parent
-            else:
-                break
-
         # We'll eliminate toolbars if we're in a menu.  The reason for
         # this is that Gecko puts its menu bar in a couple of nested
         # toolbars.
         #
         inMenuBar = False
 
+        parent = obj.parent
         while parent and (parent.parent != parent):
             if parent == stopAncestor:
                 break
@@ -193,46 +311,57 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
             # We try to omit things like fillers off the bat...
             #
-            if (parent.role != rolenames.ROLE_FILLER) \
-                and (parent.role != rolenames.ROLE_LAYERED_PANE) \
-                and (parent.role != rolenames.ROLE_SPLIT_PANE) \
-                and (parent.role != rolenames.ROLE_SCROLL_PANE) \
-                and (parent.role != rolenames.ROLE_UNKNOWN):
+            if (parent.role == rolenames.ROLE_FILLER) \
+                or (parent.role == rolenames.ROLE_LAYERED_PANE) \
+                or (parent.role == rolenames.ROLE_SPLIT_PANE) \
+                or (parent.role == rolenames.ROLE_SCROLL_PANE) \
+                or (parent.role == rolenames.ROLE_UNKNOWN):
+                parent = parent.parent
+                continue
+            
+            text = util.getDisplayedText(parent)
+            label = util.getDisplayedLabel(parent)
 
-                text = util.getDisplayedText(parent)
-                label = util.getDisplayedLabel(parent)
+            # Don't announce unlabelled panels.
+            #
+            if parent.role == rolenames.ROLE_PANEL \
+                and (((not label) or (len(label) == 0) \
+                      or (not text) or (len(text) == 0))):
+                parent = parent.parent
+                continue
 
-                # Don't announce unlabelled panels.
-                #
-                if parent.role == rolenames.ROLE_PANEL \
-                   and (((not label) or (len(label) == 0) \
-                         or (not text) or (len(text) == 0))):
-                    pass
-                elif parent.role != rolenames.ROLE_TABLE_CELL:
-                    if (parent.role == rolenames.ROLE_MENU) \
-                       and not parent.state.count(\
-                           atspi.Accessibility.STATE_FOCUSABLE):
-                        pass
-                    else:
-                        utterances.append(\
-                            rolenames.getSpeechForRoleName(parent))
+            # Skip table cells.
+            #
+            if parent.role == rolenames.ROLE_TABLE_CELL:
+                parent = parent.parent
+                continue
 
-                # If it is displaying text, we typically want to speak
-                # it, unless we're on a menu, but the menu is not
-                # FOCUSABLE (this is the way to identify the menu
-                # that's duplicated in the hierarchy)
-                #
-                if text and len(text):
-                    if (parent.role == rolenames.ROLE_MENU) \
-                       and not parent.state.count(\
-                                   atspi.Accessibility.STATE_FOCUSABLE):
-                        pass
-                    else:
-                        utterances.append(text + " " \
-                                      + rolenames.getSpeechForRoleName(parent))
+            # Skip unfocusable menus.  This is for earlier versions
+            # of Firefox where menus were nested in kind of an odd
+            # dual nested menu hierarchy.
+            #
+            if (parent.role == rolenames.ROLE_MENU) \
+               and not parent.state.count(atspi.Accessibility.STATE_FOCUSABLE):
+                parent = parent.parent
+                continue
 
-                if label and len(label):
-                    utterances.append(label)
+            # Well...if we made it this far, we will now append the
+            # role, then the text, and then the label.
+            #
+            utterances.append(rolenames.getSpeechForRoleName(parent))
+
+            # Now...autocompletes are wierd.  We'll let the handling of
+            # the entry give us the name.
+            #
+            if parent.role == rolenames.ROLE_AUTOCOMPLETE:
+                parent = parent.parent
+                continue
+            
+            if text and (text != label) and len(text):
+                utterances.append(text)
+
+            if label and len(label):
+                utterances.append(label)
 
             parent = parent.parent
 
@@ -302,7 +431,7 @@ class Script(default.Script):
         # on the context.
         #
         if (event.source.role == rolenames.ROLE_FRAME) \
-           or (event.source.role == ROLE_DOCUMENT_FRAME) \
+           or (event.source.role == rolenames.ROLE_DOCUMENT_FRAME) \
            or (not len(event.source.role)):
             return
 
@@ -330,12 +459,25 @@ class Script(default.Script):
         #
         if (event.source.role == rolenames.ROLE_MENU_ITEM):
             parent = event.source.parent
-            if parent and (parent.role == rolenames.ROLE_MENU):
+            if parent and (parent.role == rolenames.ROLE_COMBO_BOX):
+                orca.setLocusOfFocus(event, parent)
+                orca.visualAppearanceChanged(event, parent)
+                return
+            elif parent and (parent.role == rolenames.ROLE_MENU):
                 parent = parent.parent
                 if parent and (parent.role == rolenames.ROLE_COMBO_BOX):
+                    orca.setLocusOfFocus(event, parent, False)
                     orca.visualAppearanceChanged(event, parent)
                     return
 
+        # Autocomplete widgets are a complex beast as well.  When they
+        # get focus, their child (which is an entry) really has focus.
+        #
+        if event.source.role == rolenames.ROLE_AUTOCOMPLETE:
+            entry = _getAutocompleteEntry(event.source)
+            orca.setLocusOfFocus(event, entry)
+            return
+        
         default.Script.onFocus(self, event)
 
     # This function is called when a hyperlink is selected - This happens
