@@ -127,7 +127,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             # have already done this for us.
             #
             if obj.text:
-                objectText = self.getText(obj, 0, -1)
+                objectText = obj.text.getText(0, -1)
                 if objectText and len(objectText) != 0:
                     regions.append(braille.Region(" " + obj.name))
 
@@ -173,7 +173,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             # have already done this for us.
             #
             if obj.text:
-                objectText = self.getText(obj, 0, -1)
+                objectText = obj.text.getText(0, -1)
                 if objectText and len(objectText) != 0:
                     utterances.append(" " + obj.name)
         else:

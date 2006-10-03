@@ -8,6 +8,9 @@
 
 2006-10-03  Willie Walker <william.walker@sun.com>
 
+	* src/orca/scripts/StarOffice.py: fix bug 359324 - problem that
+	fell out as a result of the script.getText refactor.
+	
 	* src/orca/default.py: fix bug 357150 - use 'append' instead of
 	'extend' to avoid spelling out the 'No focus' message.
 	
