@@ -180,6 +180,7 @@ class Script(default.Script):
         # us a string typically longer than what the length of a
         # compressed string is (we choose 5 here), then output that.
         #
+        matchFound = False
         if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
             wasCommand = orca_state.lastInputEvent.modifiers \
                          & (1 << atspi.Accessibility.MODIFIER_CONTROL \
@@ -192,6 +193,7 @@ class Script(default.Script):
                          or (keyString == "Tab")
             if (text == " " and keyString == "space") \
                 or (text == keyString):
+                matchFound = True
                 pass
             elif wasCommand or (len(text) > 5):
                 if text.isupper():
@@ -200,4 +202,5 @@ class Script(default.Script):
                     speech.speak(text)
 
         if settings.enableEchoByWord and util.isWordDelimiter(text[-1:]):
-            self.echoPreviousWord(event.source)
+            if matchFound:
+                self.echoPreviousWord(event.source)

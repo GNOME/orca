@@ -1,3 +1,11 @@
+2006-10-03  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/gnome-terminal.py:
+          Fix for bug #355602 - $ gets echoed twice in terminal with word 
+          echo enabled. Fix was to only call echoPreviousWord() if the 
+          last keyboard event from the user matches the last character 
+          of the text in the "object:text-changed:insert" event.
+
 2006-09-28  Mike Pedersen <michael.pedersen@sun.com> 
 
         * docs/doc-set/ue_requirements.sgml,
