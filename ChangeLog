@@ -1,5 +1,8 @@
 2006-10-03  Willie Walker <william.walker@sun.com>
 
+	* src/orca/default.py: fix bug 357150 - use 'append' instead of
+	'extend' to avoid spelling out the 'No focus' message.
+	
 	* src/orca/settings.py: add bug-buddy as a mapping to gnome_segv2.
 	
 	* src/orca/Gecko.py: more work on presenting the various styles

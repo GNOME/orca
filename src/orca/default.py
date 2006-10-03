@@ -1149,7 +1149,7 @@ class Script(script.Script):
         if orca_state.locusOfFocus.state.count(\
                     atspi.Accessibility.STATE_SENSITIVE) == 0:
             message = _("No focus")
-            utterances.extend(message)
+            utterances.append(message)
 
         speech.speakUtterances(utterances)
 
