@@ -566,19 +566,19 @@
 
     <section id="urfind"><title>"Find" Command</title>
       <para>Orca will allow users to enter a string to search for a
-	visible text string in the current window or entire desktop.
+	visible text string in the current window or entire desktop.  The keystroke to invoke this dialog will be: (KP_Delete).
 	If the string is found (e.g., the string matches the
 	accessible name of an object or the string matches a string in
 	a text area), Orca will switch to "review mode" and make the
 	associated object the object of interest.  From this point,
-	the user can use a &wkc; to go back to the object with focus,
+	the user can use a &wkc;  to go back to the object with focus,
 	give the found object focus if possible, or perform the
-	equivalent of a mouse click on the found object.</para>
+	equivalent of a mouse click on the found object.  This feature should also support (shift+KP_Delete) to search backword. </para>
       <para>In the event the user is a magnification user, the magnifier
         will moved to the found object.</para>
       <para>The search will be performed in the text flow of the
 	locale (e.g., left-to-right, top-to-bottom) from the current
-	point of interest, wrapping back to the beginning of the
+	point of interest or optionally from the top of the window, wrapping back to the beginning of the
 	window if necessary.</para> 
       <para>The search will provide options for requiring a full word
 	match (e.g., "ok" will not match "token") or substring match
@@ -587,6 +587,7 @@
 	search for text based on attribute (e.g., "bold"), and the
 	search will allow the user to search based solely on attribute
 	type, text string, or a combination of both.</para>
+<para> The dialog will appear as follows; The first control will be the edit field to type the string to be found. The second will be a group of radio buttons to specify if the search is to be performed from the top or from the current position.  The third control will be a check box to determine if the search is case sensitive or not.  This will be followed by "find" and "cancel".   
       <para>&note; this feature is for searching for visible text
 	only.  Traditional searching for text in documents will be
 	supported by application functionality (e.g., the "search"
