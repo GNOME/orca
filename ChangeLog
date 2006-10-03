@@ -1,3 +1,11 @@
+2006-09-28  Mike Pedersen <michael.pedersen@sun.com> 
+
+        * docs/doc-set/ue_requirements.sgml,
+        * docs/doc-set/orca.html,
+        * docs/doc-set/orca.pdf
+
+          Updates to find command  spec 
+
 2006-10-03  Willie Walker <william.walker@sun.com>
 
 	* src/orca/default.py: fix bug 357150 - use 'append' instead of
