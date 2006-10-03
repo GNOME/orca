@@ -47,6 +47,16 @@
           the Orca main window should be shown (default is yes). Adjusted
           the Orca code to use this new preferences setting.
 
+        * src/orca/scripts/gnome-keyring-ask.py:
+          src/orca/scripts/Makefile.am:
+          po/POTFILES.in:
+          Fixed bug #351569 - Orca does not provide access to Unlock 
+          Keyring dialog in Evolution 2.7.
+          Similar fix to bug #344192. Created a gnome-keyring-ask.py script
+          that subclassed the locusOfFocusChanged() method and set the old
+          locus of focus to None before calling locusOfFocusChanged() in
+          default.py.
+
 2006-09-30  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Makefile.am:

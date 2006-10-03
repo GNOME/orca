@@ -8,6 +8,7 @@ orca_python_PYTHON = \
 	gdmlogin.py \
 	gedit.py \
 	gnome_segv2.py \
+	gnome-keyring-ask.py \
 	gnome-terminal.py \
 	gnome-window-properties.py \
 	metacity.py \
