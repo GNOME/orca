@@ -1,3 +1,133 @@
+2.17.0 - 04-Oct-2006
+
+* Updates to user requirements and functional specification.
+
+* Added Orca man pages.
+
+* New and improved regression test harness.
+
+* Added new Orca main window to allow one to have a GUI option for
+  quitting Orca and invoking the configuration settings.  The appearance
+  of this window can be enabled/disabled in the new "General" tab
+  of the configuration dialog.  Also added "Apply" button the configuration
+  GUI window.
+
+* Added new Orca "Quit" dialog.
+
+* Refactor in default.py and other scripts to add isTextArea method to
+  determine if an object is a text area or not.  This allows us to deal
+  with the growing number of things that are text areas, but choose to
+  give themselves different roles (e.g., GTK's 'text', OpenOffice's
+  'paragraph', and Gecko's 'entry').
+
+* Added Gecko.py toolkit script to cover apps that use the Mozilla
+  Gecko toolkit (e.g., Firefox, Thunderbird, Yelp, etc.).  Some work
+  done with new Firefox 3 at-spi implementation, but much work is
+  still needed.
+
+* Added repeated character count handling (rfe/bug 354469).
+
+* Added military spelling (rfe/bug 354460).
+
+* Fix for bug 351957: Orca now allows the setting of the source and target
+  displays for magnification.
+
+* Fix for bug 351569: no longer hang when gnome-keyring password box
+  appears.
+
+* Fix for bug 344192: no longer hang when the "bug buddy" dialog
+  appears.
+
+* Fix for bug 355602: $ was being echoed twice in terminal with word
+  echo enabled.
+
+* Fix for bug 357150: use 'append' instead of 'extend' to avoid
+  spelling out the 'No focus' message.
+
+* Fix for bug 358508: use obj instead of event.source in
+  visualAppearanceChanged for speech.
+
+* Fix for bug 353532: provide a workaround for a java-access-bridge 
+  bug (bug 355011) where popup menu events are not sent to Orca.
+
+* Fix for bug 353531: 'checked'/'unchecked' are no longer reported
+  twice for check boxes in java applications.
+
+* Fix for bug 357556: Insert key no longer sticks after running test
+  keystroke files. The hot-key to start/stop recording of keystrokes
+  within Orca has been reverted to just "Pause".  Also adjusted the
+  "don't write pause keystrokes" code to recognize F21 (which is the
+  Pause key on my Sun type 6 keyboard).
+
+* Partial work on bug 354970: add command_name dictionary from Jorge
+  Sandin (thanks Jorge!).  Also refactored the way keybindings and
+  braille bindings are defined and obtained to make it easier to
+  discover and override their definitions.
+
+* Partial work on bug 349954: become more cognizant of multibyte UTF-8
+  characters.
+
+* Fix for bug 357509: Flat review now uses the "uppercase" voice
+  settings for uppercase text when navigating by line.
+
+* Fix for bug 357507: SayAll now uses the "uppercase" voice settings
+  for uppercase text.
+
+* Fix for bug 356970: repeated character count now works with Evolution
+
+* Fix for bug 356911: Orca no longer generates a traceback with
+  Numpad-Minus when positioned at the end of a line.
+
+* Fix for bug 356179: the test in Orca to determine if the desktop
+  is running now works better.
+
+* Fix for bug 340849: Orca now provides an option to allow the user to
+  automatically logout of the GNOME desktop if the gconf accessibility
+  flag wasn't previously enabled before running the setup utility.
+
+* Fix for bug 355927: duplicate window titles are now spoken when
+  navigating between them using Alt+Tab.
+	
+* Fix for bug 350216: "LAYERED_PANE" is no longer in speech context.
+
+* Fix for bug 351797: make sure configuration GUI pops to top.
+
+* Fix for bug 347128: allow pan buttons to be used on braille display
+  while in learn mode.
+
+* Fix for bug 347650: allow a script to determine if it is the active
+  script or not (compare self to orca_state.activeScript).
+
+* For for bug 354983: From Rodrigo Moya <rodrigo@novell.com> (THANKS!) - fill
+  in dead code paths in brlmodule.c.
+
+* Fix for bug 354487: apostrophe no longer delimits a word boundary.
+
+* Fix for bug 354985: gedit script no longer generates a traceback due to 
+  a missing import line.
+
+* Fix for bug 342602: StarOffice Writer table cell speaking order fixed.
+
+* Fix for bug 351826: change orca shell script from sh to bash to allow
+  it to better respond to "kill -HUP" signals.
+
+* Fix for bug 352866: add "-q" and "--quit" usage information
+	
+* Fix for bug 353600: don't require the user to be root when doing a
+  "make distcheck".
+
+* New and updated translations (THANKS!):
+
+    dz      Dzongkha             Pema Geyleg
+    el      Greek                Simos Xenitellis
+    es      Spanish              Francisco Javier F. Serrador
+    et      Estonian             Priit Laes
+    gl      Galician             Ignacio Casal Quinteiro
+    th	    Thai                 Supranee Thirawatthanasuk and
+    tr      Turkish              Deniz Kocak and Baris Cicek
+
+==========
+
 1.0.0 - 04-Sep-2006
 
 * Updates to User's Guide, Architecture, Requirements, and Script Writing
@@ -84,6 +214,8 @@
     zh_CN   Simplified Chinese   Funda Wang and Li Shaojie
     zh_HK   Traditional Chinese  Chao-Hsiung Liao and Woodman Tuen
     zh_TW   Traditional Chinese  Chao-Hsiung Liao and Woodman Tuen
+
+==========
 
 0.9.0 - 21-Aug-2006
 
