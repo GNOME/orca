@@ -2275,7 +2275,8 @@ class Script(script.Script):
                 # attributes for this character returned by getAttributes().
                 #
                 if allAttributes:
-                    allAttributes = allAttributes.update(charDict)
+                    for key in charDict.keys():
+                        allAttributes[key] = charDict[key]
                 else:
                     allAttributes = charDict
 
