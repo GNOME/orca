@@ -1,15 +1,18 @@
-# Orca
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Orca eesti keele tõlge.
+# Estonian translation of Orca.
+#
+# Copyright (C) 2006, The Gnome Project.
+# This file is distributed under the same license as the orca package.
+#
+# Ivar Smolin <okul@linux.ee>, 2006.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-09-06 17:15+0200\n"
-"PO-Revision-Date: 2006-09-10 12:03+0200\n"
-"Last-Translator: Priit Laes <plaes@plaes.org>\n"
+"PO-Revision-Date: 2006-10-05 23:12+0300\n"
+"Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -17,7 +20,7 @@ msgstr ""
 
 #: ../orca.desktop.in.h:1
 msgid "Orca Screen Reader and Magnifier"
-msgstr ""
+msgstr "Orca ekraanilugeja ja luup"
 
 #: ../orca.desktop.in.h:2
 msgid "Present on-screen information as speech or braille, or magnify the screen"
@@ -229,9 +232,8 @@ msgstr ""
 
 #: ../src/orca/default.py:86
 #: ../src/orca/scripts/Evolution.py:107
-#, fuzzy
 msgid "Speaks entire document."
-msgstr "Kogu dokumendi näitamine"
+msgstr ""
 
 #: ../src/orca/default.py:90
 msgid "Performs the where am I operation."
@@ -488,27 +490,23 @@ msgid "Switching to focus tracking mode."
 msgstr "Click-to-focus annab klõpsu rakendusele edasi."
 
 #: ../src/orca/gnomespeechfactory.py:159
-#, fuzzy
 msgid "GNOME Speech Services"
-msgstr "Aktiivsed võrguteenused"
+msgstr "GNOME kõneteenused"
 
 #. # Replace ellipses (both manual and unicode) with "dot dot dot"
 #. #
 #: ../src/orca/gnomespeechfactory.py:610
 #: ../src/orca/gnomespeechfactory.py:611
-#, fuzzy
 msgid " dot dot dot"
-msgstr "Punkt"
+msgstr ""
 
 #: ../src/orca/gnomespeechfactory.py:770
-#, fuzzy
 msgid "higher."
-msgstr "Kõrge"
+msgstr ""
 
 #: ../src/orca/gnomespeechfactory.py:798
-#, fuzzy
 msgid "lower."
-msgstr "Alumine"
+msgstr ""
 
 #: ../src/orca/gnomespeechfactory.py:823
 msgid "faster."
@@ -526,15 +524,13 @@ msgstr ""
 #: ../src/orca/speechgenerator.py:909
 #: ../src/orca/speechgenerator.py:912
 #: ../src/orca/util.py:1228
-#, fuzzy
 msgid "selected"
-msgstr "Valitud"
+msgstr "valitud"
 
 #: ../src/orca/J2SE-access-bridge.py:75
 #: ../src/orca/util.py:1236
-#, fuzzy
 msgid "unselected"
-msgstr "Valimata veerg"
+msgstr "valimata"
 
 #: ../src/orca/keynames.py:32
 #: ../src/orca/keynames.py:35
@@ -595,12 +591,12 @@ msgstr "Scroll_Lock"
 #: ../src/orca/keynames.py:44
 #, fuzzy
 msgid "page up"
-msgstr "Page Up"
+msgstr "page up"
 
 #: ../src/orca/keynames.py:45
 #, fuzzy
 msgid "page down"
-msgstr "Page Down"
+msgstr "page down"
 
 #: ../src/orca/keynames.py:46
 #, fuzzy
@@ -608,14 +604,12 @@ msgid "left tab"
 msgstr "Liiguta sakk _vasakule"
 
 #: ../src/orca/keynames.py:47
-#, fuzzy
 msgid "F 11"
-msgstr "Sans 11"
+msgstr "F 11"
 
 #: ../src/orca/keynames.py:48
-#, fuzzy
 msgid "F 12"
-msgstr "12"
+msgstr "F 12"
 
 #: ../src/orca/orca-setup.glade.h:1
 #, fuzzy
@@ -623,19 +617,16 @@ msgid "<b>Cross-hair Settings</b>"
 msgstr "Vaikimisi kühmulisuse seaded"
 
 #: ../src/orca/orca-setup.glade.h:2
-#, fuzzy
 msgid "<b>Cursor Settings</b>"
-msgstr "Hõlbustussätted"
+msgstr "<b>Kursorisätted</b>"
 
 #: ../src/orca/orca-setup.glade.h:3
-#, fuzzy
 msgid "<b>Punctuation Level</b>"
-msgstr "Suurendusaste"
+msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:4
-#, fuzzy
 msgid "<b>Table Row Speech</b>"
-msgstr "tabeli reapäis"
+msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:5
 msgid "<b>Verbosity</b>"
@@ -652,7 +643,6 @@ msgid "<b>Zoomer Settings</b>"
 msgstr "Hõlbustussätted"
 
 #: ../src/orca/orca-setup.glade.h:8
-#, fuzzy
 msgid "Braille"
 msgstr "Braille"
 
@@ -671,22 +661,19 @@ msgid ""
 msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:14
-#, fuzzy
 msgid "Color:"
-msgstr "Värv:"
+msgstr "Värvus:"
 
 #: ../src/orca/orca-setup.glade.h:15
-#, fuzzy
 msgid "Custom siz_e"
-msgstr "Omatehtud spektrikomplekt"
+msgstr "Kohandatud _suurus"
 
 #: ../src/orca/orca-setup.glade.h:16
-#, fuzzy
 msgid ""
 "Default\n"
 "Uppercase\n"
 "Hyperlink"
-msgstr "Vaikimisi kühmulisuse seaded"
+msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:19
 #, fuzzy
@@ -2241,31 +2228,27 @@ msgstr ""
 
 #: ../src/orca/scripts/Evolution.py:87
 msgid "CalendarView"
-msgstr ""
+msgstr "KalendriVaade"
 
 #: ../src/orca/scripts/Evolution.py:88
-#, fuzzy
 msgid "calendar view"
-msgstr "calendrivaate sündmus"
+msgstr "calendrivaade"
 
 #: ../src/orca/scripts/Evolution.py:93
-#, fuzzy
 msgid "cale"
-msgstr "_Kalender"
+msgstr ""
 
 #: ../src/orca/scripts/Evolution.py:94
 msgid "CalendarEvent"
-msgstr ""
+msgstr "KalendriSündmus"
 
 #: ../src/orca/scripts/Evolution.py:95
-#, fuzzy
 msgid "calendar event"
-msgstr "calendrivaate sündmus"
+msgstr "kalendrisündmus"
 
 #: ../src/orca/scripts/Evolution.py:149
-#, fuzzy
 msgid " screen"
-msgstr "EKRAAN"
+msgstr ""
 
 #. Most of the Setup Assistant screens have a useful piece
 #. of text starting with the word "Please". We want to speak
@@ -2274,41 +2257,34 @@ msgstr "EKRAAN"
 #. with "Congratulations". Speak those too.
 #.
 #: ../src/orca/scripts/Evolution.py:178
-#, fuzzy
 msgid "Please"
-msgstr "palun oota..."
+msgstr "Palun"
 
 #: ../src/orca/scripts/Evolution.py:179
-#, fuzzy
 msgid "Welcome"
 msgstr "Tere tulemast"
 
 #: ../src/orca/scripts/Evolution.py:180
-#, fuzzy
 msgid "Congratulations"
-msgstr "Õnnitlused!"
+msgstr "Õnnitlused"
 
 #: ../src/orca/scripts/Evolution.py:687
-#, fuzzy
 msgid "No appointments"
-msgstr "Nimi Puudub"
+msgstr ""
 
 #: ../src/orca/scripts/Evolution.py:761
-#, fuzzy
 msgid "Directories button"
-msgstr "Üma_rnurkne nupp..."
+msgstr ""
 
 #: ../src/orca/scripts/Evolution.py:900
 #: ../src/orca/scripts/Evolution.py:938
-#, fuzzy
 msgid "Assistant"
 msgstr "Assistent"
 
 #: ../src/orca/scripts/Mozilla.py:234
 #: ../src/orca/scripts/StarOffice.py:406
-#, fuzzy
 msgid "link"
-msgstr "link"
+msgstr "viit"
 
 #: ../src/orca/scripts/gaim.py:149
 msgid "Toggle whether we prefix chat room messages with the name of the chat room."
@@ -2319,26 +2295,22 @@ msgid "Speak and braille a previous chat room message."
 msgstr ""
 
 #: ../src/orca/scripts/gaim.py:194
-#, fuzzy
 msgid "speak chat room name."
-msgstr "Jutututoaloendi URL"
+msgstr ""
 
 #: ../src/orca/scripts/gaim.py:197
 msgid "Do not speak chat room name."
 msgstr ""
 
 #: ../src/orca/scripts/gaim.py:215
-#, fuzzy
 msgid "Message from chat room "
-msgstr "Jutututoaloendi URL"
+msgstr "Sõnum jututoast "
 
 #: ../src/orca/scripts/gedit.py:135
-#, fuzzy
 msgid "Change to:"
-msgstr "Mi_lleks muuta:"
+msgstr "Milleks muuta:"
 
 #: ../src/orca/scripts/gedit.py:136
-#, fuzzy
 msgid "Misspelled word:"
 msgstr "Probleemne sõna:"
 
@@ -2346,14 +2318,12 @@ msgstr "Probleemne sõna:"
 #. "misspelt" word is set to "Completed spell checking". Ugh!
 #. Try to detect this and let the user know.
 #: ../src/orca/scripts/gedit.py:165
-#, fuzzy
 msgid "Completed spell checking"
-msgstr "Õigekirjakontroll sai kogu dokumendi kontrollitud"
+msgstr ""
 
 #: ../src/orca/scripts/gedit.py:166
-#, fuzzy
 msgid "Spell checking is complete."
-msgstr "Lihtsa õigekirjakontrolli automaatne teostamine"
+msgstr ""
 
 #: ../src/orca/scripts/gedit.py:168
 msgid "Press Tab and Return to terminate."
