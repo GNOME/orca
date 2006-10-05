@@ -38,17 +38,17 @@ except:
 import string
 
 import atspi
+import chnames
 import debug
 import input_event
 import orca_state
+import punctuation_settings
 import rolenames
 import settings
 import speech
 import speechserver
 
-from chnames import chnames
 from orca_i18n import _ # for gettext support
-from punctuation_settings import punctuation
 
 def isSameObject(obj1, obj2):
     if (obj1 == obj2):
@@ -57,27 +57,27 @@ def isSameObject(obj1, obj2):
         return False
 
     try:
-	if obj1.name != obj2.name:
-	    return False
-	
-	# When we're looking at children of objects that manage 
-	# their descendants, we will often get different objects 
-	# that point to the same logical child.  We want to be able 
-	# to determine if two objects are in fact pointing to the same child.
-	# If we cannot do so easily (i.e., object equivalence), we examine 
-	# the hierarchy and the object index at each level.
-	#
-	parent1 = obj1
-	parent2 = obj2
-	while (parent1 and parent2 and \
-		parent1.state.count(atspi.Accessibility.STATE_TRANSIENT) and \
-		parent2.state.count(atspi.Accessibility.STATE_TRANSIENT)):
-	    if parent1.index != parent2.index:
-		return False
-	    parent1 = parent1.parent
-	    parent2 = parent2.parent
-	if parent1 and parent2 and parent1 == parent2:
-	    return True
+        if obj1.name != obj2.name:
+            return False
+
+        # When we're looking at children of objects that manage
+        # their descendants, we will often get different objects
+        # that point to the same logical child.  We want to be able
+        # to determine if two objects are in fact pointing to the same child.
+        # If we cannot do so easily (i.e., object equivalence), we examine
+        # the hierarchy and the object index at each level.
+        #
+        parent1 = obj1
+        parent2 = obj2
+        while (parent1 and parent2 and \
+                parent1.state.count(atspi.Accessibility.STATE_TRANSIENT) and \
+                parent2.state.count(atspi.Accessibility.STATE_TRANSIENT)):
+            if parent1.index != parent2.index:
+                return False
+            parent1 = parent1.parent
+            parent2 = parent2.parent
+        if parent1 and parent2 and parent1 == parent2:
+            return True
     except:
         pass
 
@@ -85,18 +85,18 @@ def isSameObject(obj1, obj2):
     # (fix for bug #352250)
     #
     try:
-	parent1 = obj1
-	parent2 = obj2
-	while parent1 and parent2 and \
-		parent1.role == rolenames.ROLE_LABEL and \
-		parent2.role == rolenames.ROLE_LABEL:
-	    parent1 = parent1.parent
-	    parent2 = parent2.parent
-	if parent1 and parent2 and parent1 == parent2:
-	    return True
+        parent1 = obj1
+        parent2 = obj2
+        while parent1 and parent2 and \
+                parent1.role == rolenames.ROLE_LABEL and \
+                parent2.role == rolenames.ROLE_LABEL:
+            parent1 = parent1.parent
+            parent2 = parent2.parent
+        if parent1 and parent2 and parent1 == parent2:
+            return True
     except:
-	pass
-    
+        pass
+
     return False
 
 def appendString(text, newText, delimiter=" "):
@@ -538,11 +538,6 @@ def textLines(obj):
             lastEndOffset = endOffset
             offset = endOffset
 
-            # Strip trailing new lines
-            #
-            #if string[-1:] == "\n":
-            #    string = string[0][:-1]
-
             string = adjustForRepeats(string)
             if string.isupper():
                 voice = settings.voices[settings.UPPERCASE_VOICE]
@@ -586,18 +581,15 @@ def _addRepeatSegment(segment, line):
     style = settings.verbalizePunctuationStyle
     isPunctChar = True
     try:
-        level, action = punctuation[segment[0]]
+        level, action = punctuation_settings.getPunctuationInfo(segment[0])
     except:
         isPunctChar = False
     count = len(segment)
     if (count >= settings.repeatCharacterLimit) \
        and (not segment[0] in string.whitespace) \
        and (isPunctChar and (style <= level)):
-        if punctuation.has_key(segment[0]):
-            repeatChar = chnames[segment[0]]
-        else:
-            repeatChar = segment[0]
-        line += ' ' + str(count) + ' ' +  repeatChar  + " characters "
+        repeatChar = chnames.getCharacterName(segment[0])
+        line += _(" %d %s characters ") % (count, repeatChar)
     else:
         line += segment
 
@@ -623,10 +615,12 @@ def adjustForRepeats(line):
     Returns: a new line adjusted for repeat character counts (if enabled).
     """
 
-    if (len(line) < 4) or (settings.repeatCharacterLimit < 4):
-        return line
+    line = line.decode("UTF-8")
 
-    newLine = ''
+    if (len(line) < 4) or (settings.repeatCharacterLimit < 4):
+        return line.encode("UTF-8")
+
+    newLine = u''
     segment = lastChar = line[0]
 
     for i in range(1, len(line)):
@@ -640,7 +634,7 @@ def adjustForRepeats(line):
 
     newLine = _addRepeatSegment(segment, newLine)
 
-    return newLine
+    return newLine.encode("UTF-8")
 
 def getLinkIndex(obj, characterIndex):
     """A brute force method to see if an offset is a link.  This
@@ -680,6 +674,9 @@ def isWordDelimiter(character):
 
     Returns True if the given character is a word delimiter.
     """
+
+    if isinstance(character, unicode):
+        character = character.encode("UTF-8")
 
     return (character in string.whitespace) \
            or (character in '!*+,-./:;<=>?@[\]^_{|}')
@@ -736,12 +733,11 @@ def getTextLineAtCaret(obj):
     # text of the line, the second is the start offset, and the third
     # is the end offset.  Sometimes we get the trailing line-feed-- remove it
     #
-    if line[0][-1:] == "\n":
-        content = line[0][:-1]
-    else:
-        content = line[0]
+    content = line[0].decode("UTF-8")
+    if content[-1:] == "\n":
+        content = content[:-1]
 
-    return [content, offset, line[1]]
+    return [content.encode("UTF-8"), offset, line[1]]
 
 def getNodeLevel(obj):
     """Determines the node level of this object if it is in a tree
@@ -1283,9 +1279,9 @@ def speakTextSelectionState(obj, startOffset, endOffset):
         # endOffset to exclude them.
         #
         try:
-            str = unicode(obj.text.getText(startOffset, endOffset))
+            str = obj.text.getText(startOffset, endOffset).decode("UTF-8")
         except:
-            str = ""
+            str = u''
         n = len(str)
 
         # Don't strip whitespace if string length is one (might be a space).

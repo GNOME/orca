@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2005 Sun Microsystems Inc.
+# Copyright 2004-2006 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -17,8 +17,8 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-"""Exposes a dictionary, chnames, that maps punctuation marks and
-other individual characters into localized words."""
+"""Provides getCharacterName that maps punctuation marks and other
+individual characters into localized words."""
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
@@ -28,42 +28,64 @@ __license__   = "LGPL"
 
 from orca_i18n import _ # for gettext support
 
-chnames = {}
-chnames[" "] = _("space")
-chnames["\n"] = _("newline")
-chnames["\t"] = _("tab")
+# __chnames is a dictionary where the keys represent a UTF-8
+# character (possibly multibyte) and the values represent the common
+# term used for the character.
+#
+__chnames = {}
+__chnames[" "] = _("space")
+__chnames["\n"] = _("newline")
+__chnames["\t"] = _("tab")
 
-chnames["!"] = _("exclaim")
-chnames["'"] = _("apostrophe")
-chnames[","] = _("comma")
-chnames["."] = _("dot")
-chnames["?"] = _("question")
+__chnames["!"] = _("exclaim")
+__chnames["'"] = _("apostrophe")
+__chnames[","] = _("comma")
+__chnames["."] = _("dot")
+__chnames["?"] = _("question")
 
-chnames["\""] = _("quote")
-chnames["("] = _("left paren")
-chnames[")"] = _("right paren")
-chnames["-"] = _("dash")
-chnames["_"] = _("underscore")
-chnames[":"] = _("colon")
-chnames[";"] = _("semicolon")
-chnames["<"] = _("less than")
-chnames[">"] = _("greater than")
-chnames["["] = _("left bracket")
-chnames["]"] = _("right bracket")
-chnames["\\"] = _("backslash")
-chnames["|"] = _("vertical line")
-chnames["`"] = _("grave accent")
-chnames["~"] = _("tilde")
-chnames["{"] = _("left brace")
-chnames["}"] = _("right brace")
+__chnames["\""] = _("quote")
+__chnames["("] = _("left paren")
+__chnames[")"] = _("right paren")
+__chnames["-"] = _("dash")
+__chnames["_"] = _("underscore")
+__chnames[":"] = _("colon")
+__chnames[";"] = _("semicolon")
+__chnames["<"] = _("less than")
+__chnames[">"] = _("greater than")
+__chnames["["] = _("left bracket")
+__chnames["]"] = _("right bracket")
+__chnames["\\"] = _("backslash")
+__chnames["|"] = _("vertical line")
+__chnames["`"] = _("grave accent")
+__chnames["~"] = _("tilde")
+__chnames["{"] = _("left brace")
+__chnames["}"] = _("right brace")
 
-chnames["#"] = _("pound")
-chnames["$"] = _("dollar")
-chnames["%"] = _("percent")
-chnames["&"] = _("and")
-chnames["*"] = _("star")
-chnames["+"] = _("plus")
-chnames["/"] = _("slash")
-chnames["="] = _("equals")
-chnames["@"] = _("at")
-chnames["^"] = _("caret")
+__chnames["#"] = _("pound")
+__chnames["$"] = _("dollar")
+__chnames["%"] = _("percent")
+__chnames["&"] = _("and")
+__chnames["*"] = _("star")
+__chnames["+"] = _("plus")
+__chnames["/"] = _("slash")
+__chnames["="] = _("equals")
+__chnames["@"] = _("at")
+__chnames["^"] = _("caret")
+
+def getCharacterName(character):
+    """Given a character, return its name as people might refer to it
+    in ordinary conversation.
+
+    Arguments:
+    - character: the character to get the name for
+
+    Returns a string representing the name for the character
+    """
+
+    if isinstance(character, unicode):
+        character = character.encode("UTF-8")
+
+    try:
+        return __chnames[character]
+    except:
+        return character

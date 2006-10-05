@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2005 Sun Microsystems Inc.
+# Copyright 2006 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -23,26 +23,50 @@ into localized words."""
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2006 Sun Microsystems Inc."
 __license__   = "LGPL"
+
+import chnames
 
 from orca_i18n import _ # for gettext support
 
-keynames = {}
-keynames["Shift_L"]      = _("left shift")
-keynames["Alt_L"]      = _("left alt")
-keynames["Control_L"]      = _("left control")
-keynames["Shift_L"]      = _("left shift")
-keynames["Shift_R"]      = _("right shift")
-keynames["Alt_R"]      = _("right alt")
-keynames["Control_R"]      = _("right control")
-keynames["Meta_L"]      = _("left meta")
-keynames["Meta_R"]      = _("right meta")
-keynames["Num_Lock"]      = _("num lock")
-keynames["Caps_Lock"]      = _("caps lock")
-keynames["Scroll_Lock"]      = _("scroll lock")
-keynames["Page_Up"]      = _("page up")
-keynames["Page_Down"]      = _("page down")
-keynames["ISO_Left_Tab"] = _("left tab")
-keynames["SunF36"]       = _("F 11")
-keynames["SunF37"]       = _("F 12")
+# __keynames is a dictionary where the keys represent a UTF-8
+# string for a keyboard key and the values represent the common
+# phrase used to describe the key.
+#
+__keynames = {}
+__keynames["Shift_L"]      = _("left shift")
+__keynames["Alt_L"]        = _("left alt")
+__keynames["Control_L"]    = _("left control")
+__keynames["Shift_L"]      = _("left shift")
+__keynames["Shift_R"]      = _("right shift")
+__keynames["Alt_R"]        = _("right alt")
+__keynames["Control_R"]    = _("right control")
+__keynames["Meta_L"]       = _("left meta")
+__keynames["Meta_R"]       = _("right meta")
+__keynames["Num_Lock"]     = _("num lock")
+__keynames["Caps_Lock"]    = _("caps lock")
+__keynames["Scroll_Lock"]  = _("scroll lock")
+__keynames["Page_Up"]      = _("page up")
+__keynames["Page_Down"]    = _("page down")
+__keynames["ISO_Left_Tab"] = _("left tab")
+__keynames["SunF36"]       = _("F 11")
+__keynames["SunF37"]       = _("F 12")
+
+def getKeyName(key):
+    """Given a keyboard key, return its name as people might refer to it
+    in ordinary conversation.
+
+    Arguments:
+    - key: the key to get the name for
+
+    Returns a string representing the name for the key
+    """
+
+    if isinstance(key, unicode):
+        key = key.encode("UTF-8")
+
+    try:
+        return __keynames[key]
+    except:
+        return chnames.getCharacterName(key)

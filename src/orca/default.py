@@ -39,6 +39,7 @@ import keybindings
 import mag
 import orca
 import orca_state
+import phonnames
 import rolenames
 import script
 import settings
@@ -48,7 +49,6 @@ import string
 import util
 
 from orca_i18n import _                          # for gettext support
-from phonnames import phonnames
 
 ########################################################################
 #                                                                      #
@@ -846,7 +846,7 @@ class Script(script.Script):
         """
         return obj and obj.role and ((obj.role == rolenames.ROLE_TEXT) \
                                      or (obj.role == rolenames.ROLE_PARAGRAPH))
-    
+
     def getText(self, obj, startOffset, endOffset):
         """Returns the substring of the given object's text specialization.
 
@@ -878,7 +878,7 @@ class Script(script.Script):
 
         phrase = self.getText(obj, startOffset, endOffset)
 
-        if len(phrase) != 0:
+        if len(phrase):
             if phrase.isupper():
                 voice = self.voices[settings.UPPERCASE_VOICE]
             else:
@@ -901,7 +901,7 @@ class Script(script.Script):
         #
         [line, startOffset, endOffset] = util.getTextLineAtCaret(obj)
 
-        if len(line) != 0:
+        if len(line):
             if line.isupper():
                 voice = self.voices[settings.UPPERCASE_VOICE]
             else:
@@ -949,9 +949,11 @@ class Script(script.Script):
         """
 
         # For the purpose of speaking the text indentation, replace
-        # occurances of '\302\240' (non breaking space) with spaces.
+        # occurances of UTF-8 '\302\240' (non breaking space) with
+        # spaces.
         #
         line = line.replace("\302\240",  " ")
+        line = line.decode("UTF-8")
 
         spaceCount = 0
         tabCount = 0
@@ -966,14 +968,14 @@ class Script(script.Script):
         utterance = ''
         if spaceCount:
             if spaceCount == 1:
-                utterance += "1 space "
+                utterance += _("1 space ")
             else:
-                utterance += ("%d spaces " % spaceCount)
+                utterance += (_("%d spaces ") % spaceCount)
         if tabCount:
             if tabCount == 1:
-                utterance += "1 tab "
+                utterance += _("1 tab ")
             else:
-                utterance += ("%d tabs " % tabCount)
+                utterance += (_("%d tabs ") % tabCount)
         if len(utterance):
             speech.speak(utterance)
 
@@ -1931,7 +1933,8 @@ class Script(script.Script):
                 else:
                     speech.speak(text)
 
-        if settings.enableEchoByWord and util.isWordDelimiter(text[-1:]):
+        if settings.enableEchoByWord \
+           and util.isWordDelimiter(text.decode("UTF-8")[-1:]):
             self.echoPreviousWord(event.source)
 
     def onActiveDescendantChanged(self, event):
@@ -2510,7 +2513,7 @@ class Script(script.Script):
         context = self.getFlatReviewContext()
         [regions, regionWithFocus] = context.getCurrentBrailleRegions()
         for region in regions:
-            if ((region.brailleOffset + len(region.string)) \
+            if ((region.brailleOffset + len(region.string.decode("UTF-8"))) \
                    > braille._viewport[0]) \
                 and (isinstance(region, braille.ReviewText) \
                      or isinstance(region, braille.ReviewComponent)):
@@ -2697,7 +2700,7 @@ class Script(script.Script):
         # the Braille display as an input device.
         #
         if not isinstance(inputEvent, input_event.BrailleEvent):
-            if (not string) or (len(string) == 0) or (string == "\n"):
+            if (not string) or (not len(string)) or (string == "\n"):
                 speech.speak(_("blank"))
             elif string.isspace():
                 speech.speak(_("white space"))
@@ -2819,16 +2822,13 @@ class Script(script.Script):
         - string: the string to phonetically spell.
         """
 
-        for (index, character) in enumerate(string):
+        for (index, character) in enumerate(string.decode("UTF-8")):
             if character.isupper():
                 voice = self.voices[settings.UPPERCASE_VOICE]
                 character = character.lower()
             else:
                 voice =  self.voices[settings.DEFAULT_VOICE]
-            try:
-                string = phonnames[character]
-            except:
-                string = character
+            string = phonnames.getPhoneticName(character)
             speech.speak(string, voice)
 
     def _reviewCurrentItem(self, inputEvent, targetCursorCell=0,
@@ -2850,7 +2850,7 @@ class Script(script.Script):
         # the Braille display as an input device.
         #
         if not isinstance(inputEvent, input_event.BrailleEvent):
-            if (not string) or (len(string) == 0) or (string == "\n"):
+            if (not string) or (not len(string)) or (string == "\n"):
                 speech.speak(_("blank"))
             else:
                 [lineString, x, y, width, height] = \
@@ -2948,7 +2948,7 @@ class Script(script.Script):
         # the Braille display as an input device.
         #
         if not isinstance(inputEvent, input_event.BrailleEvent):
-            if (not string) or (len(string) == 0):
+            if (not string) or (not len(string)):
                 speech.speak(_("blank"))
             else:
                 [lineString, x, y, width, height] = \

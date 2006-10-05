@@ -616,8 +616,8 @@ def _keyEcho(event):
 
         # Check to see if there are localized words to be spoken for
         # this key event.
-        if event_string in keynames.keynames:
-            event_string = keynames.keynames[event_string]
+        #
+        event_string = keynames.getKeyName(event_string)
 
         if lockState:
             event_string += lockState

@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005 Sun Microsystems Inc.
+# Copyright 2005-2006 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -67,7 +67,7 @@ class KeyboardEvent(InputEvent):
         # be turned into the string "A").  All these checks here are
         # to just do some sanity checking before doing the
         # conversion. [[[WDW - this is making assumptions about
-        # mapping ASCII control characters to to UTF-8.]]]
+        # mapping ASCII control characters to UTF-8.]]]
         #
         event_string = event.event_string
         if (event.modifiers & (1 << atspi.Accessibility.MODIFIER_CONTROL)) \

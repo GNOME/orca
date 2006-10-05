@@ -102,7 +102,7 @@ class Script(default.Script):
 
         # Speak the character that has just been deleted.
         #
-        character = event.any_data.value()[0]
+        character = event.any_data.value().decode("UTF-8")[0].encode("UTF-8")
         if character.isupper():
             speech.speak(character, self.voices[settings.UPPERCASE_VOICE])
         else:
@@ -155,7 +155,7 @@ class Script(default.Script):
         if (keyString == "Delete") or (keyString == "BackSpace"):
             return
         elif (keyString == "D") and controlPressed:
-            text = text[0]
+            text = text.decode("UTF-8")[0].decode("UTF-8")
 
         # If the last input event was a keyboard event, check to see if
         # the text for this event matches what the user typed. If it does,
@@ -201,6 +201,7 @@ class Script(default.Script):
                 else:
                     speech.speak(text)
 
-        if settings.enableEchoByWord and util.isWordDelimiter(text[-1:]):
+        if settings.enableEchoByWord \
+           and util.isWordDelimiter(text.decode("UTF-8")[-1:]):
             if matchFound:
                 self.echoPreviousWord(event.source)

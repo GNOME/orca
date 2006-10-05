@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2006 Sun Microsystems Inc.
+# Copyright 2006 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -17,13 +17,13 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-"""Punctuation Verbosity settings. 
-The Orca punctuation settings are broken up into 4 modes. 
+"""Punctuation Verbosity settings.
+The Orca punctuation settings are broken up into 4 modes.
 
-These modes are None, Some, Most and All. 
+These modes are None, Some, Most and All.
 
-They are defined by a group of radio buttons on the speech 
-page of the configuration user interface. 
+They are defined by a group of radio buttons on the speech
+page of the configuration user interface.
 
 Each mode is defined below. The 4 bits of information listed here are:
 
@@ -32,10 +32,10 @@ Each mode is defined below. The 4 bits of information listed here are:
   - How the symbol should be pronounced (in the chnames dictionary in
     chnames.py keyed by symbol).
 
-  - The level at which the symbol should be spoken. Note that this 
+  - The level at which the symbol should be spoken. Note that this
     denotes the level containing all lower levels.
 
-  - Whether or not the spoken name for the symbol should replace the 
+  - Whether or not the spoken name for the symbol should replace the
     actual symbol or be inserted before the symbol.
 """
 
@@ -53,39 +53,63 @@ import settings
 PUNCTUATION_REPLACE = 0
 PUNCTUATION_INSERT  = 1
 
-punctuation = {}
+# __punctuation is a dictionary where the keys represent a UTF-8
+# character (possibly multibyte) and the values are a list of two
+# elements where the first represents the punctuation style and
+# the second represents the action to take.
+#
+__punctuation = {}
 
-punctuation["!"] =  [ settings.PUNCTUATION_STYLE_ALL,  PUNCTUATION_INSERT ]
-punctuation["'"] =  [ settings.PUNCTUATION_STYLE_ALL,  PUNCTUATION_REPLACE ]
-punctuation[","] =  [ settings.PUNCTUATION_STYLE_ALL,  PUNCTUATION_INSERT ]
-punctuation["."] =  [ settings.PUNCTUATION_STYLE_ALL,  PUNCTUATION_INSERT ]
-punctuation["?"] =  [ settings.PUNCTUATION_STYLE_ALL,  PUNCTUATION_INSERT ]
+__punctuation["!"] =  [ settings.PUNCTUATION_STYLE_ALL,  PUNCTUATION_INSERT ]
+__punctuation["'"] =  [ settings.PUNCTUATION_STYLE_ALL,  PUNCTUATION_REPLACE ]
+__punctuation[","] =  [ settings.PUNCTUATION_STYLE_ALL,  PUNCTUATION_INSERT ]
+__punctuation["."] =  [ settings.PUNCTUATION_STYLE_ALL,  PUNCTUATION_INSERT ]
+__punctuation["?"] =  [ settings.PUNCTUATION_STYLE_ALL,  PUNCTUATION_INSERT ]
 
-punctuation["\""] = [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_REPLACE ]
-punctuation["("] =  [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_REPLACE ]
-punctuation[")"] =  [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_REPLACE ]
-punctuation["-"] =  [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_INSERT ]
-punctuation["_"] =  [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_REPLACE ]
-punctuation[":"] =  [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_INSERT ]
-punctuation[";"] =  [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_INSERT ]
-punctuation["<"] =  [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_REPLACE ]
-punctuation[">"] =  [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_REPLACE ]
-punctuation["["] =  [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_REPLACE ]
-punctuation["]"] =  [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_REPLACE ]
-punctuation["\\"] = [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_REPLACE ]
-punctuation["|"] =  [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_REPLACE ]
-punctuation["`"] =  [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_REPLACE ]
-punctuation["~"] =  [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_REPLACE ]
-punctuation["{"] =  [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_REPLACE ]
-punctuation["}"] =  [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_REPLACE ]
+__punctuation["\""] = [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_REPLACE ]
+__punctuation["("] =  [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_REPLACE ]
+__punctuation[")"] =  [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_REPLACE ]
+__punctuation["-"] =  [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_INSERT ]
+__punctuation["_"] =  [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_REPLACE ]
+__punctuation[":"] =  [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_INSERT ]
+__punctuation[";"] =  [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_INSERT ]
+__punctuation["<"] =  [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_REPLACE ]
+__punctuation[">"] =  [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_REPLACE ]
+__punctuation["["] =  [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_REPLACE ]
+__punctuation["]"] =  [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_REPLACE ]
+__punctuation["\\"] = [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_REPLACE ]
+__punctuation["|"] =  [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_REPLACE ]
+__punctuation["`"] =  [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_REPLACE ]
+__punctuation["~"] =  [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_REPLACE ]
+__punctuation["{"] =  [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_REPLACE ]
+__punctuation["}"] =  [ settings.PUNCTUATION_STYLE_MOST, PUNCTUATION_REPLACE ]
 
-punctuation["#"] =  [ settings.PUNCTUATION_STYLE_SOME, PUNCTUATION_REPLACE ]
-punctuation["$"] =  [ settings.PUNCTUATION_STYLE_SOME, PUNCTUATION_REPLACE ]
-punctuation["%"] =  [ settings.PUNCTUATION_STYLE_SOME, PUNCTUATION_REPLACE ]
-punctuation["&"] =  [ settings.PUNCTUATION_STYLE_SOME, PUNCTUATION_REPLACE ]
-punctuation["*"] =  [ settings.PUNCTUATION_STYLE_SOME, PUNCTUATION_REPLACE ]
-punctuation["+"] =  [ settings.PUNCTUATION_STYLE_SOME, PUNCTUATION_REPLACE ]
-punctuation["/"] =  [ settings.PUNCTUATION_STYLE_SOME, PUNCTUATION_REPLACE ]
-punctuation["="] =  [ settings.PUNCTUATION_STYLE_SOME, PUNCTUATION_REPLACE ]
-punctuation["@"] =  [ settings.PUNCTUATION_STYLE_SOME, PUNCTUATION_REPLACE ]
-punctuation["^"] =  [ settings.PUNCTUATION_STYLE_SOME, PUNCTUATION_REPLACE ]
+__punctuation["#"] =  [ settings.PUNCTUATION_STYLE_SOME, PUNCTUATION_REPLACE ]
+__punctuation["$"] =  [ settings.PUNCTUATION_STYLE_SOME, PUNCTUATION_REPLACE ]
+__punctuation["%"] =  [ settings.PUNCTUATION_STYLE_SOME, PUNCTUATION_REPLACE ]
+__punctuation["&"] =  [ settings.PUNCTUATION_STYLE_SOME, PUNCTUATION_REPLACE ]
+__punctuation["*"] =  [ settings.PUNCTUATION_STYLE_SOME, PUNCTUATION_REPLACE ]
+__punctuation["+"] =  [ settings.PUNCTUATION_STYLE_SOME, PUNCTUATION_REPLACE ]
+__punctuation["/"] =  [ settings.PUNCTUATION_STYLE_SOME, PUNCTUATION_REPLACE ]
+__punctuation["="] =  [ settings.PUNCTUATION_STYLE_SOME, PUNCTUATION_REPLACE ]
+__punctuation["@"] =  [ settings.PUNCTUATION_STYLE_SOME, PUNCTUATION_REPLACE ]
+__punctuation["^"] =  [ settings.PUNCTUATION_STYLE_SOME, PUNCTUATION_REPLACE ]
+
+def getPunctuationInfo(character):
+    """Given a punctuation character, return the value
+    [punctuation_style, punctuation_action] or None
+
+    Arguments:
+    - character: the punctuation character to get the information for
+
+    Returns return the value [punctuation_style, punctuation_action]
+    or None
+    """
+
+    if isinstance(character, unicode):
+        character = character.encode("UTF-8")
+
+    try:
+        return __punctuation[character]
+    except:
+        return None

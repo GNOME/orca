@@ -1,6 +1,17 @@
 2006-10-05  Willie Walker <william.walker@sun.com>
 
-	* docs/pydoc/Makefile.am: add new modules
+	* src/orca/braille.py, src/orca/brlmon.py, src/orca/chnames.py,
+	src/orca/default.py, src/orca/flat_review.py,
+	src/orca/gnomespeechfactory.py, src/orca/input_event.py,
+	src/orca/keynames.py, src/orca/orca.py, src/orca/phonnames.py,
+	src/orca/punctuation_settings.py, src/orca/util.py,
+	src/orca/scripts/StarOffice.py, src/orca/scripts/gnome-terminal.py:
+	fix for bug 349954 - do not make assumptions that UTF-8 strings
+	contain only single byte characters.
+
+2006-10-05  Willie Walker <william.walker@sun.com>
+
+	* docs/pydoc/Makefile.am: add new modules and final prep for v2.17.0
 	
 2006-10-04  Willie Walker <william.walker@sun.com>
 

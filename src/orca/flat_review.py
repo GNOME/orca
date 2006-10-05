@@ -94,7 +94,7 @@ class Word:
         self.index = index
         self.startOffset = startOffset
         self.string = string
-        self.length = len(string)
+        self.length = len(string.decode("UTF-8"))
         self.x = x
         self.y = y
         self.width = width
@@ -156,7 +156,7 @@ class Zone:
 
         self.accessible = accessible
         self.string = string
-        self.length = len(string)
+        self.length = len(string.decode("UTF-8"))
         self.x = x
         self.y = y
         self.width = width
@@ -200,7 +200,7 @@ class Zone:
         word = None
         offset = 0
         for word in self.words:
-            nextOffset = offset + len(word.string)
+            nextOffset = offset + len(word.string.decode("UTF-8"))
             if nextOffset > charOffset:
                 return [word, charOffset - offset]
             else:
@@ -256,7 +256,7 @@ class TextZone(Zone):
             offset = self.startOffset
             for string in whitespace_re.split(self.string):
                 if len(string):
-                    endOffset = offset + len(string)
+                    endOffset = offset + len(string.decode("UTF-8"))
                     [x, y, width, height] = text.getRangeExtents(
                         offset,
                         endOffset,
@@ -346,7 +346,7 @@ class Line:
                 region.brailleOffset = brailleOffset
                 self.brailleRegions.append(region)
 
-                brailleOffset += len(region.string)
+                brailleOffset += len(region.string.decode("UTF-8"))
 
             if len(self.brailleRegions):
                 pad = braille.Region(" ")
@@ -590,7 +590,7 @@ class Context:
                 if zone.words:
                     for wordIndex in range(0, self.wordIndex):
                         regionWithFocus.cursorOffset += \
-                            len(zone.words[wordIndex].string)
+                            len(zone.words[wordIndex].string.decode("UTF-8"))
                 regionWithFocus.cursorOffset += self.charIndex
                 break
 

@@ -36,6 +36,7 @@ import time
 import bonobo
 
 import atspi
+import chnames
 import debug
 import punctuation_settings
 import settings
@@ -43,7 +44,6 @@ import speech
 import speechserver
 
 from acss import ACSS
-from chnames import chnames
 
 from orca_i18n import _           # for gettext support
 
@@ -584,7 +584,7 @@ class SpeechServer(speechserver.SpeechServer):
         """
         i = 0
         for text in list:
-            if len(text) != 0:
+            if len(text):
                 self.speak(text, acss, interrupt and (i == 0))
             i += 1
 
@@ -605,16 +605,18 @@ class SpeechServer(speechserver.SpeechServer):
         Returns a text string with the punctuation symbols adjusted accordingly.
         """
 
-        ## Replace ellipses (both manual and unicode) with "dot dot dot"
+        ## Replace ellipses (both manual and UTF-8) with "dot dot dot"
         ##
         oldText = oldText.replace("...", _(" dot dot dot"), 1)
         oldText = oldText.replace("\342\200\246",  _(" dot dot dot"), 1)
+        oldText = oldText.decode("UTF-8")
 
         style = settings.verbalizePunctuationStyle
         newText = ''
         for i in range(0, len(oldText)):
             try:
-                level, action = punctuation_settings.punctuation[oldText[i]]
+                level, action = \
+                    punctuation_settings.getPunctuationInfo(oldText[i])
 
                 # Special case for punctuation in text like filenames or URL's:
                 #
@@ -632,19 +634,19 @@ class SpeechServer(speechserver.SpeechServer):
                 if (len(oldText) == 1) or isSpecial or (style <= level):
                     if isPrev:
                         newText += " "
-                    newText += chnames[oldText[i]]
+                    newText += chnames.getCharacterName(oldText[i])
                     if (action == punctuation_settings.PUNCTUATION_INSERT) \
                         and not isNext:
-                        newText += oldText[i]
+                        newText += oldText[i].encode("UTF-8")
                     if isNext:
                         newText += " "
                 else:
-                    newText += oldText[i]
+                    newText += oldText[i].encode("UTF-8")
             except:
-                if (len(oldText) == 1) and chnames.has_key(oldText[i]):
-                    newText += chnames[oldText[i].lower()]
+                if (len(oldText) == 1):
+                    newText += chnames.getCharacterName(oldText[i])
                 else:
-                    newText += oldText[i]
+                    newText += oldText[i].encode("UTF-8")
 
         return newText
 

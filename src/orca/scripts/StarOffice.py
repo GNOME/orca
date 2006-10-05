@@ -494,6 +494,7 @@ class Script(default.Script):
                   "StarOffice.locusOfFocusChanged - Writer: text paragraph.")
 
             result = util.getTextLineAtCaret(event.source)
+            result[0] = result[0].decode("UTF-8")
 
             # Check to see if there are any hypertext links in this paragraph.
             # If no, then just speak the whole line. Otherwise, split the
@@ -503,8 +504,9 @@ class Script(default.Script):
             hypertext = event.source.hypertext
             if not hypertext or (hypertext.getNLinks() == 0):
                 if settings.enableSpeechIndentation:
-                    self.speakTextIndentation(event.source, result[0])
-                speech.speak(result[0], None, False)
+                    self.speakTextIndentation(event.source,
+                                              result[0].encode("UTF-8"))
+                speech.speak(result[0].encode("UTF-8"), None, False)
             else:
                 started = False
                 startOffset = 0
@@ -513,7 +515,7 @@ class Script(default.Script):
                         if started:
                             endOffset = i
                             self.sayWriterWord(event.source,
-                                result[0][startOffset:endOffset+1],
+                                result[0][startOffset:endOffset+1].encode("UTF-8"),
                                 startOffset, endOffset)
                             startOffset = i
                             started = False
@@ -525,8 +527,8 @@ class Script(default.Script):
                 if started:
                     endOffset = len(result[0])
                     self.sayWriterWord(event.source,
-                                       result[0][startOffset:endOffset],
-                                       startOffset, endOffset)
+                        result[0][startOffset:endOffset].encode("UTF-8"),
+                        startOffset, endOffset)
 
             braille.displayRegions(brailleGen.getBrailleRegions(event.source))
 
@@ -857,7 +859,7 @@ class Script(default.Script):
 
                     if cell.text:
                         cellText = self.getText(cell, 0, -1)
-                        if cellText and len(cellText) != 0:
+                        if cellText and len(cellText):
                             if inputLineForCell and inputLineForCell.text:
                                 inputLine = self.getText(inputLineForCell,0,-1)
                                 if inputLine and \
@@ -891,7 +893,7 @@ class Script(default.Script):
         - startOffset: the starting character position
         - endOffset: the ending character position
         """
-        text = unicode(obj.text.getText(0, -1))
+        text = obj.text.getText(0, -1).decode("UTF-8")
         if startOffset >= len(text):
             startOffset = len(text) - 1
         if startOffset >= endOffset:
