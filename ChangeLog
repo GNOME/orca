@@ -5,6 +5,13 @@
           readCharAttributes() method. This now speaks the character
           attributes in StarOffice Writer.
 
+        * src/orca/braillegenerator.py:
+          src/orca/speechgenerator.py:
+          src/orca/scripts/StarOffice.py
+          Fixed bug #354785 - "Process Fields" preferences table in 
+          gnome-system-monitor does not read entire line. Fix involved 
+          a rework of how table cells are brailled and spoken.
+
 2006-10-05  Willie Walker <william.walker@sun.com>
 
 	* src/orca/braille.py, src/orca/brlmon.py, src/orca/chnames.py,

@@ -127,7 +127,7 @@ class SpeechGenerator:
         self.speechGenerators[rolenames.ROLE_TABLE]               = \
              self._getSpeechForTable
         self.speechGenerators[rolenames.ROLE_TABLE_CELL]          = \
-             self._getSpeechForTableCell
+             self._getSpeechForTableCellRow
         self.speechGenerators[rolenames.ROLE_TABLE_COLUMN_HEADER] = \
              self._getSpeechForTableColumnHeader
         self.speechGenerators[rolenames.ROLE_TABLE_ROW_HEADER]    = \
@@ -1130,7 +1130,7 @@ class SpeechGenerator:
         return utterances
 
     def _getSpeechForTableCell(self, obj, already_focused):
-        """Get the speech for a table cell
+        """Get the speech utterances for a single table cell
 
         Arguments:
         - obj: the table
@@ -1150,7 +1150,7 @@ class SpeechGenerator:
         if action:
             for i in range(0, action.nActions):
                 debug.println(debug.LEVEL_FINEST,
-                    "speechgenerator._getSpeechForTableCell " \
+                    "speechgenerator.__getTableCellUtterances " \
                     + "looking at action %d" % i)
                 if action.getName(i) == "toggle":
                     obj.role = rolenames.ROLE_CHECK_BOX
@@ -1159,7 +1159,39 @@ class SpeechGenerator:
                     obj.role = rolenames.ROLE_TABLE_CELL
                     break
 
-        if (len(utterances) == 0) and (not already_focused):
+        utterances.append(util.getDisplayedText(\
+                          util.getRealActiveDescendant(obj)))
+
+        # [[[TODO: WDW - HACK attempt to determine if this is a node;
+        # if so, describe its state.]]]
+        #
+        if obj.state.count(atspi.Accessibility.STATE_EXPANDABLE):
+            if obj.state.count(atspi.Accessibility.STATE_EXPANDED):
+                utterances.append(_("expanded"))
+            else:
+                utterances.append(_("collapsed"))
+
+        self._debugGenerator("_getSpeechForTableCell",
+                             obj,
+                             already_focused,
+                             utterances)
+
+        return utterances
+
+    def _getSpeechForTableCellRow(self, obj, already_focused):
+        """Get the speech for a table cell row or a single table cell
+        if settings.readTableCellRow is False.
+
+        Arguments:
+        - obj: the table
+        - already_focused: False if object just received focus
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        utterances = []
+
+        if (not already_focused):
             if settings.readTableCellRow:
                 parent = obj.parent
                 row = parent.table.getRowAtIndex(obj.index)
@@ -1181,28 +1213,16 @@ class SpeechGenerator:
                     for i in range(0, parent.table.nColumns):
                         accRow = parent.table.getAccessibleAt(row, i)
                         cell = atspi.Accessible.makeAccessible(accRow)
-                        utterances.append(util.getDisplayedText(\
-                            util.getRealActiveDescendant(cell)))
+                        showing = cell.state.count( \
+                                          atspi.Accessibility.STATE_SHOWING)
+                        if showing:
+                            utterances.extend(self._getSpeechForTableCell(cell, 
+                                                           already_focused))
                 else:
-                    utterances.append(util.getDisplayedText(\
-                    util.getRealActiveDescendant(obj)))
+                    utterances.extend(self._getSpeechForTableCell(obj,
+                                                           already_focused))
             else:
-                utterances.append(util.getDisplayedText(\
-                    util.getRealActiveDescendant(obj)))
-
-        # [[[TODO: WDW - HACK attempt to determine if this is a node;
-        # if so, describe its state.]]]
-        #
-        if obj.state.count(atspi.Accessibility.STATE_EXPANDABLE):
-            if obj.state.count(atspi.Accessibility.STATE_EXPANDED):
-                utterances.append(_("expanded"))
-            else:
-                utterances.append(_("collapsed"))
-
-        self._debugGenerator("_getSpeechForTableCell",
-                             obj,
-                             already_focused,
-                             utterances)
+                utterances = self._getSpeechForTableCell(obj, already_focused)
 
         return utterances
 

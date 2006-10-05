@@ -124,7 +124,7 @@ class BrailleGenerator:
         self.brailleGenerators[rolenames.ROLE_TABLE]               = \
              self._getBrailleRegionsForTable
         self.brailleGenerators[rolenames.ROLE_TABLE_CELL]          = \
-             self._getBrailleRegionsForTableCell
+             self._getBrailleRegionsForTableCellRow
         self.brailleGenerators[rolenames.ROLE_TABLE_COLUMN_HEADER] = \
              self._getBrailleRegionsForTableColumnHeader
         self.brailleGenerators[rolenames.ROLE_TABLE_ROW_HEADER]    = \
@@ -1009,7 +1009,7 @@ class BrailleGenerator:
         return self._getDefaultBrailleRegions(obj)
 
     def _getBrailleRegionsForTableCell(self, obj):
-        """Get the braille for a table cell
+        """Get the braille for a single table cell
 
         Arguments:
         - obj: the table
@@ -1040,53 +1040,12 @@ class BrailleGenerator:
                     break
 
         if len(regions) == 0:
-            # Adding in a check here to make sure that the parent is a
-            # valid table. It's possible that the parent could be a
-            # table cell too (see bug #351501).
-            #
-            if settings.readTableCellRow and obj.parent.table:
-                rowRegions = []
-                savedBrailleVerbosityLevel = settings.brailleVerbosityLevel
-                settings.brailleVerbosityLevel = \
-                                             settings.VERBOSITY_LEVEL_BRIEF
-
-                parent = obj.parent
-                row = parent.table.getRowAtIndex(obj.index)
-                column = parent.table.getColumnAtIndex(obj.index)
-
-                # This is an indication of whether we should speak all the
-                # table cells (the user has moved focus up or down a row),
-                # or just the current one (focus has moved left or right in
-                # the same row).
-                #
-                speakAll = True
-                if parent.__dict__.has_key("lastRow") and \
-                    parent.__dict__.has_key("lastColumn"):
-                    speakAll = (parent.lastRow != row) or \
-                           ((row == 0 or row == parent.table.nRows-1) and \
-                            parent.lastColumn == column)
-
-                if speakAll:
-                    focusRowRegion = None
-                    for i in range(0, parent.table.nColumns):
-                        accRow = parent.table.getAccessibleAt(row, i)
-                        cell = atspi.Accessible.makeAccessible(accRow)
-                        [cellRegions, focusRegion] = \
-                            self._getDefaultBrailleRegions(\
-                                util.getRealActiveDescendant(cell))
-                        if len(rowRegions):
-                            rowRegions.append(braille.Region(" "))
-                        rowRegions.append(cellRegions[0])
-                        if i == column:
-                            focusRowRegion = cellRegions[0]
-                    regions = [rowRegions, focusRowRegion]
-                    settings.brailleVerbosityLevel = savedBrailleVerbosityLevel
-                else:
-                    regions = self._getDefaultBrailleRegions(
-                        util.getRealActiveDescendant(obj))
-            else:
-                regions = self._getDefaultBrailleRegions(
-                    util.getRealActiveDescendant(obj))
+            regions = self._getDefaultBrailleRegions(
+                              util.getRealActiveDescendant(obj))
+        else:
+            [cellRegions, focusRegion] = \
+              self._getDefaultBrailleRegions(util.getRealActiveDescendant(obj))
+            regions[0].extend(cellRegions)
 
         # [[[TODO: WDW - HACK attempt to determine if this is a node;
         # if so, describe its state.]]]
@@ -1101,6 +1060,69 @@ class BrailleGenerator:
         if level >= 0:
             regions[0].append(braille.Region(" " + _("TREE LEVEL %d") \
                                              % (level + 1)))
+
+        return regions
+
+    def _getBrailleRegionsForTableCellRow(self, obj):
+        """Get the braille for a table cell row or a single table cell
+        if settings.readTableCellRow is False.
+
+        Arguments:
+        - obj: the table
+
+        Returns a list where the first element is a list of Regions to display
+        and the second element is the Region which should get focus.
+        """
+
+        regions = []
+
+        # Adding in a check here to make sure that the parent is a
+        # valid table. It's possible that the parent could be a
+        # table cell too (see bug #351501).
+        #
+        if settings.readTableCellRow and obj.parent.table:
+            rowRegions = []
+            savedBrailleVerbosityLevel = settings.brailleVerbosityLevel
+            settings.brailleVerbosityLevel = \
+                                         settings.VERBOSITY_LEVEL_BRIEF
+
+            parent = obj.parent
+            row = parent.table.getRowAtIndex(obj.index)
+            column = parent.table.getColumnAtIndex(obj.index)
+
+            # This is an indication of whether we should speak all the
+            # table cells (the user has moved focus up or down a row),
+            # or just the current one (focus has moved left or right in
+            # the same row).
+            #
+            speakAll = True
+            if parent.__dict__.has_key("lastRow") and \
+                parent.__dict__.has_key("lastColumn"):
+                speakAll = (parent.lastRow != row) or \
+                       ((row == 0 or row == parent.table.nRows-1) and \
+                        parent.lastColumn == column)
+
+            if speakAll:
+                focusRowRegion = None
+                for i in range(0, parent.table.nColumns):
+                    accRow = parent.table.getAccessibleAt(row, i)
+                    cell = atspi.Accessible.makeAccessible(accRow)
+                    showing = cell.state.count( \
+                                    atspi.Accessibility.STATE_SHOWING)
+                    if showing:
+                        [cellRegions, focusRegion] = \
+                            self._getBrailleRegionsForTableCell(cell)
+                        if len(rowRegions):
+                            rowRegions.append(braille.Region(" "))
+                        rowRegions.append(cellRegions[0])
+                        if i == column:
+                            focusRowRegion = cellRegions[0]
+                regions = [rowRegions, focusRowRegion]
+                settings.brailleVerbosityLevel = savedBrailleVerbosityLevel
+            else:
+                regions = self._getBrailleRegionsForTableCell(obj)
+        else:
+            regions = self._getBrailleRegionsForTableCell(obj)
 
         return regions
 

@@ -457,7 +457,6 @@ class Script(default.Script):
     # 1) Writer: text paragraph.
     # 2) Writer: spell checking dialog.
     # 3) Welcome to StarOffice dialog.
-    # 4) Calc - spread sheet table.
 
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
@@ -649,73 +648,6 @@ class Script(default.Script):
                     "StarOffice.locusOfFocusChanged - Setup dialog: " \
                     + "Registration: Register Now radio button.")
                 self.handleSetupPanel(event.source.parent)
-
-        # 4) Calc - spread sheet table.
-        #
-        # If we are in the Calc spread sheet table, and we want to read all
-        # of the row (as opposed to a single cell), then generate the braille
-        # and speech for each of the showing spread sheet cells in the current
-        # row.
-        #
-        rolesList = [rolenames.ROLE_TABLE, \
-                     rolenames.ROLE_UNKNOWN, \
-                     rolenames.ROLE_SCROLL_PANE, \
-                     rolenames.ROLE_PANEL, \
-                     rolenames.ROLE_ROOT_PANE, \
-                     rolenames.ROLE_FRAME, \
-                     rolenames.ROLE_APPLICATION]
-        if settings.readTableCellRow and \
-           util.isDesiredFocusedItem(event.source, rolesList):
-            debug.println(self.debugLevel, "StarOffice.locusOfFocusChanged - " \
-                          + "Calc: spread sheet table - read row.")
-            table = event.source.table
-            row = table.getRowAtIndex(newLocusOfFocus.index)
-            column = table.getColumnAtIndex(newLocusOfFocus.index)
-
-            # This is an indication of whether we should speak all the
-            # table cells (the user has moved focus up or down a row),
-            # or just the current one (focus has moved left or right in
-            # the same row).
-            #
-            speakAll = True
-            if event.source.__dict__.has_key("lastRow") and \
-                event.source.__dict__.has_key("lastColumn"):
-                speakAll = (event.source.lastRow != row) or \
-                       ((row == 0 or row == event.source.table.nRows-1) and \
-                        event.source.lastColumn == column)
-
-            if speakAll:
-                utterances = []
-                regions = []
-
-                # [[[TODO: richb - one speedup improvement we can do here is
-                # to look left and look right along the row from the current
-                # column, to just get the range of cells to show.]]]
-                #
-                for i in range(0, table.nColumns):
-                    obj = table.getAccessibleAt(row, i)
-                    cell = atspi.Accessible.makeAccessible(obj)
-
-                    showing = cell.state.count(atspi.Accessibility.STATE_SHOWING)
-                    while cell.childCount:
-                        cell = cell.child(0)
-
-                    if showing:
-                        [cellRegions, focusedRegion] = \
-                            brailleGen.getBrailleRegions(cell)
-                        regions.extend(cellRegions)
-                        regions.append(braille.Region(" "))
-                        if column == i:
-                            cellWithFocus = focusedRegion
-
-                        result = speechGen.getSpeech(cell, True)
-                        utterances.append(result[0])
-
-                braille.displayRegions([regions, cellWithFocus])
-                speech.speakUtterances(utterances)
-                event.source.lastColumn = column
-                event.source.lastRow = row
-                return
 
         # Pass the event onto the parent class to be handled in the default way.
 
