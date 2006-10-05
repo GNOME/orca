@@ -1,3 +1,7 @@
+2006-10-05  Willie Walker <william.walker@sun.com>
+
+	* docs/pydoc/Makefile.am: add new modules
+	
 2006-10-04  Willie Walker <william.walker@sun.com>
 
 	* NEWS, configure.in, README: initial prep for v2.17.0.

@@ -27,14 +27,19 @@ DOC_FILES = \
 	orca.keynames \
 	orca.mag \
 	orca.orca_console_prefs \
+	orca.orca_glade \
+	orca.orca_gui_main \
 	orca.orca_gui_prefs \
 	orca.orca_i18n \
 	orca.orca_prefs \
 	orca.orca \
+	orca.orca_quit \
 	orca.orca_state \
 	orca.outloud \
+	orca.phonnames \
 	orca.platform \
 	orca.presentation_manager \
+	orca.punctuation_settings \
 	orca.rolenames \
 	orca.script \
 	orca.settings \
@@ -48,6 +53,8 @@ DOC_FILES = \
 	orca.scripts.gcalctool \
 	orca.scripts.gdmlogin \
 	orca.scripts.gedit \
+	orca.scripts.gnome_segv2 \
+	orca.scripts.gnome-keyring-ask \
 	orca.scripts.gnome-terminal \
 	orca.scripts.gnome-window-properties \
 	orca.scripts.metacity \
