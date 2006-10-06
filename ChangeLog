@@ -1,3 +1,20 @@
+2006-10-06  Rich Burridge <rich.burridge@sun.com>
+
+        * src/brl/brlmodule.c:
+          src/orca/acss.py:
+          src/orca/dectalk.py:
+          src/orca/espeechfactory.py:
+          src/orca/eventsynthesizer.py:
+          src/orca/keybindings.py:
+          src/orca/outloud.py:
+          src/orca/presentation_manager.py:
+          src/orca/speechserver.py:
+          src/tools/play_keystrokes.py:
+          src/tools/record_keystrokes.py:
+          src/tools/sanity_check.py:
+          Fixed bug #356009 - Orca source files need to have their
+          copyright messages adjusted. Dates include 2006 now.
+
 2006-10-05  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
