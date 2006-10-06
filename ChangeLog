@@ -1,3 +1,11 @@
+2006-10-06  Willie Walker <william.walker@sun.com>
+
+	* src/orca/chnames.py: add some mathematical symbols
+	
+	* src/orca/scripts/gcalctool.py: fix for bug 350523 - give
+	preference to accessible name of a button over the text that is
+	being displayed on a button.
+	
 2006-10-06  Rich Burridge <rich.burridge@sun.com>
 
         * src/brl/brlmodule.c:

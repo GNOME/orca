@@ -32,6 +32,7 @@ import orca.input_event as input_event
 import orca.orca_state as orca_state
 import orca.rolenames as rolenames
 import orca.speech as speech
+import orca.speechgenerator as speechgenerator
 import orca.util as util
 
 ########################################################################
@@ -39,6 +40,33 @@ import orca.util as util
 # The GCalcTool script class.                                          #
 #                                                                      #
 ########################################################################
+
+class SpeechGenerator(speechgenerator.SpeechGenerator):
+    """Overrides _getSpeechForPushButton to handle 'unspeakable'
+    button labels displayed on the screen.
+    """
+
+    def _getSpeechForObjectName(self, obj):
+        """Gives preference to the object name versus what is being
+        displayed on the screen.  This helps accomodate the naming
+        hints being given to us by gcalctool for it's mathematical
+        operator buttons."""
+
+        if obj.role != rolenames.ROLE_PUSH_BUTTON:
+            return speechgenerator.SpeechGenerator._getSpeechForObjectName(\
+                self, obj)
+
+        if obj.name:
+            name = obj.name
+        else:
+            name = util.getDisplayedText(obj)
+
+        if name:
+            return [name]
+        elif obj.description:
+            return [obj.description]
+        else:
+            return []
 
 class Script(default.Script):
 
@@ -54,6 +82,11 @@ class Script(default.Script):
         default.Script.__init__(self, app)
 
         self._display = None
+
+    def getSpeechGenerator(self):
+        """Returns the speech generator for this script.
+        """
+        return SpeechGenerator()
 
     def onWindowActivated(self, event):
         """Called whenever one of gcalctool's toplevel windows is activated.

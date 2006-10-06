@@ -72,6 +72,10 @@ __chnames["="] = _("equals")
 __chnames["@"] = _("at")
 __chnames["^"] = _("caret")
 
+__chnames["\xc2\xb1"] = _("plus minus")
+__chnames["\xc3\xb7"] = _("divide")
+__chnames["\xc3\x97"] = _("multiply")
+
 def getCharacterName(character):
     """Given a character, return its name as people might refer to it
     in ordinary conversation.
