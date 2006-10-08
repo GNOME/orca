@@ -1136,6 +1136,34 @@ class Script(script.Script):
                                         rolenames.ROLE_COLUMN_HEADER].speech
                         utterances.append(text)
 
+        # If this is a normal, check or radio menu item or a menu within a
+        # menu, give its position within the menu and the total number of 
+        # menu items in the parent menu.
+        #
+        parent = orca_state.locusOfFocus.parent
+        role = orca_state.locusOfFocus.role
+        if ((role == rolenames.ROLE_MENU_ITEM) \
+           or (role == rolenames.ROLE_CHECK_MENU_ITEM) \
+           or (role == rolenames.ROLE_RADIO_MENU_ITEM)) \
+           or (role == rolenames.ROLE_MENU \
+              and parent.role == rolenames.ROLE_MENU):
+            total = 0
+            for i in range(0, parent.childCount):
+                child = parent.child(i)
+                role = child.role
+                visible = child.state.count(atspi.Accessibility.STATE_VISIBLE)
+                if visible \
+                   and ((role == rolenames.ROLE_MENU) \
+                   or (role == rolenames.ROLE_MENU_ITEM) \
+                   or (role == rolenames.ROLE_CHECK_MENU_ITEM) \
+                   or (role == rolenames.ROLE_RADIO_MENU_ITEM)):
+                    total += 1
+                    if child == orca_state.locusOfFocus:
+                        item = total
+            text = _("Item ") + str(item) + _(" of ") + \
+                   str(total) + _(" menu items")
+            utterances.append(text)
+
         # Get the text for the object itself.
         #
         text = self.speechGenerator.getSpeech(orca_state.locusOfFocus, False)

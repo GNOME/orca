@@ -1,3 +1,12 @@
+2006-10-09  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          Implemented enhancement #339789 - Orca should report the quantity 
+          of menu and submenu. Added code to the whereAmi method so that if 
+          this is a normal, check or radio menu item or a menu within a
+          menu, give its position within the menu and the total number of
+          menu items in the parent menu.
+
 2006-10-06  Willie Walker <william.walker@sun.com>
 
 	* src/orca/chnames.py: add some mathematical symbols
