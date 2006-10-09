@@ -20,6 +20,10 @@
           Created empty directories for operating system specific
           keystroke tests.
 
+        * src/orca/scripts/gedit.py:
+          Fixed bug #319657 - Orca should speak 'find' command new line.
+          See the comments in the script for more details.
+
 2006-10-08  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:

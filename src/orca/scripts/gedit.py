@@ -189,6 +189,33 @@ class Script(default.Script):
             self.lastBadWord = badWord
             self.lastEventType = event.type
 
+    def isFocusOnFindDialog(self):
+        """Return an indication of whether the current locus of focus is on 
+        the Find button or the combo box in the Find dialog.
+        """
+
+        obj = orca_state.locusOfFocus
+        rolesList1 = [rolenames.ROLE_PUSH_BUTTON,
+                     rolenames.ROLE_FILLER,
+                     rolenames.ROLE_FILLER,
+                     rolenames.ROLE_DIALOG,
+                     rolenames.ROLE_APPLICATION]
+
+        rolesList2 = [rolenames.ROLE_COMBO_BOX,
+                     rolenames.ROLE_PANEL,
+                     rolenames.ROLE_FILLER,
+                     rolenames.ROLE_FILLER,
+                     rolenames.ROLE_DIALOG,
+                     rolenames.ROLE_APPLICATION]
+
+        if (util.isDesiredFocusedItem(obj, rolesList1) \
+            and obj.name == _("Find")) \
+            or (util.isDesiredFocusedItem(obj, rolesList2) \
+                and obj.parent.parent.parent.parent.name == _("Find")):
+            return True
+        else:
+            return False
+
     # This method tries to detect and handle the following cases:
     # 1) Text area (for caching handle for spell checking purposes).
     # 2) Check Spelling Dialog.
@@ -268,6 +295,7 @@ class Script(default.Script):
 
     # This method tries to detect and handle the following cases:
     # 1) check spelling dialog.
+    # 2) find dialog - phrase not found.
 
     def onNameChanged(self, event):
         """Called whenever a property on an object changes.
@@ -313,6 +341,27 @@ class Script(default.Script):
                 self.readMisspeltWord(event, event.source.parent)
                 # Fall-thru to process the event with the default handler.
 
+        # 2) find dialog - phrase not found.
+        #
+        # If we've received an "object:property-change:accessible-name" for
+        # the status bar and the current locus of focus is on the Find 
+        # button on the Find dialog or the combo box in the Find dialog
+        # and the last input event was a Return and the name for the current
+        # event source is "Phrase not found", then speak it.
+        #
+        # [[[TODO: richb - "Phrase not found" is spoken twice because we
+        # apparently get two identical "object:property-change:accessible-name"
+        # events.]]]
+
+        if event.source.role == rolenames.ROLE_STATUSBAR \
+           and self.isFocusOnFindDialog() \
+           and orca_state.lastInputEvent.event_string == "Return" \
+           and event.source.name == _("Phrase not found"):
+                debug.println(self.debugLevel,
+                              "gedit.onNameChanged - phrase not found.")
+
+                speech.speak(event.source.name)
+
         # Pass the event onto the parent class to be handled in the default way.
         default.Script.onNameChanged(self, event)
 
@@ -336,3 +385,45 @@ class Script(default.Script):
             orca.setLocusOfFocus(event, event.source)
 
         default.Script.onStateChanged(self, event)
+
+    # This method tries to detect and handle the following cases:
+    # 1) find dialog - phrase found.
+
+    def onCaretMoved(self, event):
+        """Called whenever the caret moves.
+
+        Arguments:
+        - event: the Event
+        """
+
+        debug.printObjectEvent(self.debugLevel,
+                               event,
+                               event.source.toString())
+
+        # util.printAncestry(event.source)
+
+        # If we've received a text caret moved event and the current locus
+        # of focus is on the Find button on the Find dialog or the combo
+        # box in the Find dialog and the last input event was a Return, 
+        # and if the current line contains the phrase we were looking for,
+        # then speak the current text line, to give an indication of what 
+        # we've just found.
+        #
+        if self.isFocusOnFindDialog() \
+           and orca_state.lastInputEvent.event_string == "Return":
+            debug.println(self.debugLevel, "gedit.onCaretMoved - find dialog.")
+
+            allComboBoxes = util.findByRole(orca_state.locusOfFocus.app,
+                                            rolenames.ROLE_COMBO_BOX)
+            phrase = util.getDisplayedText(allComboBoxes[0])
+            [text, start, end] = util.getTextLineAtCaret(event.source)
+            if text.lower().find(phrase) != -1:
+                speech.speak(_("Phrase found."))
+                utterances = self.speechGenerator.getSpeech(event.source, True)
+                speech.speakUtterances(utterances)
+
+        # For everything else, pass the caret moved event onto the parent 
+        # class to be handled in the default way.
+
+        default.Script.onCaretMoved(self, event)
+
