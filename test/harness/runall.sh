@@ -1,12 +1,13 @@
-#!/bin/bash
+#!/bin/bash -x
 #
 # runall.sh can take the following optional parameters:
 #
 # -h|--help          - print a usage message.
-# -k <keystrokesDir> - alternate keystroke directory (default is ../results).
-# -r <resultsDir>    - alternate results directory (default is ../keystrokes).
+# -k <keystrokesDir> - alternate keystroke directory (default is ../keystrokes).
+# -r <resultsDir>    - alternate results directory (default is ../results).
 #
 
+OPERATING_SYSTEMS="SunOS Linux"
 foo=`dirname $0`
 harnessDir=`cd $foo; pwd`
 keystrokesDir=$harnessDir/../keystrokes
@@ -69,11 +70,50 @@ do
   application=`basename $testDir`
   if [ $application != "CVS" ] && [ $application != `basename $keystrokesDir` ]
     then
+
+# (Bug #359919). Check to see if the application exists. 
+# If it does, then supply that as the $2 parameter to the runone.sh command.
+# If it doesn't exist see if the name is in a list of system types that
+# we care about (currently "SunOS" and "Linux").
+#   If it is, then compare the directory name against the result of running 
+#   `uname`.
+#     If they match, then run the scripts in that directory.
+#     If they don't match, ignore that directory.
+#   If it isn't, then don't supply a $2 parameter to the runone.sh command.
+
+      oldifs="$IFS"
+      IFS=:
+      found=0
+      for dir in $PATH; do
+        test -x "$dir/$application" && {
+          found=1
+          break
+        }
+      done
+      IFS="$oldifs"
       mkdir -p tmp/$application
       cd tmp/$application
-      for testFile in `find $testDir -type f -name "*.keys" | sort`
-      do
-        $harnessDir/runone.sh $testFile
+      for testFile in `find $testDir -type f -name "*.keys" | sort`; do
+        if [ "$found" -gt 0 ]
+        then
+          $harnessDir/runone.sh $testFile $application
+        else
+          osType=`uname`
+          for os in $OPERATING_SYSTEMS; do
+            if [ $application == $os ]
+            then
+              found=1
+              if [ $osType == $os ]
+              then
+                $harnessDir/runone.sh $testFile
+              fi
+            fi
+          done
+          if [ "$found" -eq 0 ]
+          then
+            $harnessDir/runone.sh $testFile
+          fi
+        fi
 	sleep 5
         newResultsFile=`basename $testFile .keys`.orca
         expectedResultsFile=$resultsDir/$application/$newResultsFile

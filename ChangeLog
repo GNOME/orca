@@ -1,5 +1,27 @@
 2006-10-09  Rich Burridge <rich.burridge@sun.com>
 
+        * test/harness/runall.sh:
+          Fixed bug #359919 - Changes needed to the Orca Test Harness.
+          Adjusted the runall script to check to see if the application 
+          exists.
+          If it does, then supply that as a $2 parameter to the runone.sh 
+          command.
+          If it doesn't exist see if the name is in a list of system types 
+          that we care about (currently "SunOS" and "Linux").
+            If it is, then compare the directory name against the result of
+            running `uname`.
+              If they match, then run the scripts in that directory.
+              If they don't match, ignore that directory.
+            If it isn't, then don't supply a $2 parameter to the runone.sh 
+            command.
+
+          test/keystrokes/SunOS:
+          test/keystrokes/Linux:
+          Created empty directories for operating system specific
+          keystroke tests.
+
+2006-10-08  Rich Burridge <rich.burridge@sun.com>
+
         * src/orca/default.py:
           Implemented enhancement #339789 - Orca should report the quantity 
           of menu and submenu. Added code to the whereAmi method so that if 
