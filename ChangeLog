@@ -1,3 +1,10 @@
+2006-10-10  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Staroffice.py:
+          Implemented enhancement #361167 - Add dynamic row and column 
+          header support in Orca for StarOffice/OpenOffice calc. See the 
+          Orca User Requirement specification for more details.
+
 2006-10-10  Willie Walker <william.walker@sun.com>
 
         * src/orca/flat_review.py: add ZONE support for goBegin and goEnd

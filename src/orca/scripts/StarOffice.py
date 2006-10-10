@@ -43,6 +43,67 @@ from orca.orca_i18n import _ # for gettext support
 
 inputLineForCell = None
 
+# Dictionaries for the calc dynamic row and column headers.
+#
+dynamicColumns = {}
+dynamicRows = {}
+
+def getCalcTable(obj):
+    """Get the table that this table cell is in.
+
+    Arguments:
+    - obj: the table cell.
+
+    Return the table that this table cell is in, or None if this object
+    isn't in a table.
+    """
+
+    table = None
+    if obj.role == rolenames.ROLE_TABLE_CELL and obj.parent:
+        table = obj.parent.table
+
+    return table
+
+def getDynamicColumnHeaderCell(obj, column):
+    """Given a table cell, return the dynamic column header cell associated
+    with it.
+
+    Arguments:
+    - obj: the table cell.
+    - column: the column that this dynamic header is on.
+
+    Return the dynamic column header cell associated with the given table cell.
+    """
+
+    accCell = None
+    parent = obj.parent
+    if parent and parent.table:
+        row = parent.table.getRowAtIndex(obj.index)
+        cell = parent.table.getAccessibleAt(row, column)
+        accCell = atspi.Accessible.makeAccessible(cell)
+
+    return accCell
+
+def getDynamicRowHeaderCell(obj, row):
+    """Given a table cell, return the dynamic row header cell associated
+    with it.
+
+    Arguments:
+    - obj: the table cell.
+    - row: the row that this dynamic header is on.
+
+    Return the dynamic row header cell associated with the given table cell.
+    """
+
+    accCell = None
+    parent = obj.parent
+    if parent and parent.table:
+        column = parent.table.getColumnAtIndex(obj.index)
+        cell = parent.table.getAccessibleAt(row, column)
+        accCell = atspi.Accessible.makeAccessible(cell)
+
+    return accCell
+
 def locateInputLine(obj):
     """Return the spread sheet input line. This only needs to be found
     the very first time a spread sheet table cell gets focus. We use the
@@ -110,14 +171,40 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         and the second element is the Region which should get focus.
         """
 
+        global dynamicColumns, dynamicRows
+        global getColumnHeaderCell, getRowHeaderCell
         global inputLineForCell, isSpreadSheetCell, locateInputLine
 
         if isSpreadSheetCell(obj):
             if inputLineForCell == None:
                 inputLineForCell = locateInputLine(obj)
 
-            text = util.getDisplayedText(obj)
             regions = []
+
+            # Check to see if this spread sheet cell has either a dynamic
+            # column or row (or both) associated with it. If it does, then
+            # braille those first before brailling the cell contents.
+            #
+            table = getCalcTable(obj)
+            if dynamicColumns.has_key(table):
+                column = dynamicColumns[table]
+                if column:
+                    header = getDynamicColumnHeaderCell(obj, column)
+                    if header.text:
+                        text = header.text.getText(0, -1)
+                        if text:
+                            regions.append(braille.Region(" " + text))
+
+            if dynamicRows.has_key(table):
+                row = dynamicRows[table]
+                if row:
+                    header = getDynamicRowHeaderCell(obj, row)
+                    if header.text:
+                        text = header.text.getText(0, -1)
+                        if text:
+                            regions.append(braille.Region(" " + text + " "))
+
+            text = util.getDisplayedText(obj)
             componentRegion = braille.Component(obj, text)
             regions.append(componentRegion)
 
@@ -157,10 +244,36 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         Returns a list of utterances to be spoken for the object.
         """
 
+        global dynamicColumns, dynamicRows
+        global getColumnHeaderCell, getRowHeaderCell
         global inputLineForCell, isSpreadSheetCell, locateInputLine
 
         if isSpreadSheetCell(obj):
             utterances = []
+
+            # Check to see if this spread sheet cell has either a dynamic
+            # column or row (or both) associated with it. If it does, then
+            # speak those first before speaking the cell contents.
+            #
+            table = getCalcTable(obj)
+            if dynamicColumns.has_key(table):
+                column = dynamicColumns[table]
+                if column:
+                    header = getDynamicColumnHeaderCell(obj, column)
+                    if header.text:
+                        text = header.text.getText(0, -1)
+                        if text:
+                            utterances.append(text)
+
+            if dynamicRows.has_key(table):
+                row = dynamicRows[table]
+                if row:
+                    header = getDynamicRowHeaderCell(obj, row)
+                    if header.text:
+                        text = header.text.getText(0, -1)
+                        if text:
+                            utterances.append(text)
+
             utterances.append(util.getDisplayedText(\
                     util.getRealActiveDescendant(obj)))
 
@@ -198,6 +311,8 @@ class Script(default.Script):
         - app: the application to create a script for.
         """
 
+        global dynamicColumns, dynamicRows
+
         default.Script.__init__(self, app)
 
         # Set the debug level for all the methods in this script.
@@ -216,6 +331,11 @@ class Script(default.Script):
         self.lastBadWord = ''
         self.lastStartOff = -1
         self.lastEndOff = -1
+
+        # Used to determine if the user has double-clicked the dynamic
+        # row/column hotkeys.
+
+        self.lastDynamicEvent = None
 
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.
@@ -243,6 +363,16 @@ class Script(default.Script):
                 Script.speakInputLine,
                 _("Speaks the contents of the input line."))
 
+        self.inputEventHandlers["setDynamicColumnHandler"] = \
+            input_event.InputEventHandler(
+                Script.setDynamicColumn,
+                _("Set the dynamic column to use when speaking calc cells."))
+
+        self.inputEventHandlers["setDynamicRowHandler"] = \
+            input_event.InputEventHandler(
+                Script.setDynamicRow,
+                _("Set the dynamic row to use when speaking calc cells."))
+
     def getKeyBindings(self):
         """Defines the key bindings for this script. Setup the default
         key bindings, then add one in for reading the input line.
@@ -258,6 +388,20 @@ class Script(default.Script):
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["speakInputLineHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "c",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["setDynamicColumnHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "r",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["setDynamicRowHandler"]))
 
         return keyBindings
 
@@ -285,6 +429,104 @@ class Script(default.Script):
                 debug.println(self.debugLevel,
                         "StarOffice.speakInputLine: contents: %s" % inputLine)
                 speech.speak(inputLine)
+
+    def getCalcRow(self, cell):
+        """Get the row number in the table that this table cell is on.
+
+        Arguments:
+        - cell: the table cell to get the row number for.
+
+        Return the row number that this table cell is on, or None if
+        this isn't a table cell.
+        """
+
+        row = None
+        if cell.role == rolenames.ROLE_TABLE_CELL:
+            parent = cell.parent
+            if parent and parent.table:
+                row = parent.table.getRowAtIndex(cell.index)
+
+        return row
+
+    def getCalcColumn(self, cell):
+        """Get the column number in the table that this table cell is on.
+
+        Arguments:
+        - cell: the table cell to get the column number for.
+
+        Return the column number that this table cell is on, or None if
+        this isn't a table cell.
+        """
+
+        column = None
+        if cell.role == rolenames.ROLE_TABLE_CELL:
+            parent = cell.parent
+            if parent and parent.table:
+                column = parent.table.getColumnAtIndex(cell.index)
+
+        return column
+
+    def setDynamicColumn(self, inputEvent):
+        """Set the dynamic header column to use when speaking calc cell 
+        entries.  In order to set the column, the user should first set 
+        focus to the column that they wish to define and then press Insert-c.
+
+        Once the user has defined the column, it will be used to first speak 
+        this header when moving between rows or columns. 
+
+        A "double-click" of the Insert-c hotkey, will clear the dynamic
+        header column.
+
+        Arguments:
+        - inputEvent: if not None, the input event that caused this action.
+        """
+
+        global dynamicColumns, getCalcTable
+
+        debug.println(self.debugLevel, "StarOffice.setDynamicColumn.")
+
+        clickCount = util.getClickCount(self.lastDynamicEvent, inputEvent)
+        table = getCalcTable(orca_state.locusOfFocus)
+        if table:
+            column = self.getCalcColumn(orca_state.locusOfFocus)
+            if clickCount == 2:
+                dynamicColumns[table] = None
+            else:
+                dynamicColumns[table] = column
+        self.lastDynamicEvent = inputEvent
+
+        return True
+
+    def setDynamicRow(self, inputEvent):
+        """Set the dynamic header row to use when speaking calc cell entries.
+        In order to set the row, the user should first set focus to the row
+        that they wish to define and then press Insert-r.
+
+        Once the user has defined the row, it will be used to first speak
+        this header when moving between rows or columns.
+
+        A "double-click" of the Insert-r hotkey, will clear the dynamic
+        header row.
+
+        Arguments:
+        - inputEvent: if not None, the input event that caused this action.
+        """
+
+        global dynamicRows, getCalcTable
+
+        debug.println(self.debugLevel, "StarOffice.setDynamicRow.")
+
+        clickCount = util.getClickCount(self.lastDynamicEvent, inputEvent)
+        table = getCalcTable(orca_state.locusOfFocus)
+        if table:
+            row = self.getCalcRow(orca_state.locusOfFocus)
+            if clickCount == 2:
+                dynamicRows[table] = None
+            else:
+                dynamicRows[table] = row
+        self.lastDynamicEvent = inputEvent
+
+        return True
 
     def readMisspeltWord(self, event, pane):
         """Speak/braille the current misspelt word plus its context.
