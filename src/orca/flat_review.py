@@ -601,19 +601,23 @@ class Context:
         of the first relevant zone.
 
         Arguments:
-        - type: one of LINE or WINDOW
+        - type: one of ZONE, LINE or WINDOW
 
         Returns True if the locus of interest actually changed.
         """
 
-        if type == Context.LINE:
+        if (type == Context.LINE) or (type == Context.ZONE):
             lineIndex = self.lineIndex
         elif type == Context.WINDOW:
             lineIndex = 0
         else:
             raise Exception("Invalid type: %d" % type)
 
-        zoneIndex = 0
+        if type == Context.ZONE:
+            zoneIndex = self.zoneIndex
+        else:
+            zoneIndex = 0
+
         wordIndex = 0
         charIndex = 0
 
@@ -641,14 +645,18 @@ class Context:
         Returns True if the locus of interest actually changed.
         """
 
-        if type == Context.LINE:
+        if (type == Context.LINE) or (type == Context.ZONE):
             lineIndex = self.lineIndex
         elif type == Context.WINDOW:
             lineIndex  = len(self.lines) - 1
         else:
             raise Exception("Invalid type: %d" % type)
 
-        zoneIndex = len(self.lines[lineIndex].zones) - 1
+        if type == Context.ZONE:
+            zoneIndex = self.zoneIndex
+        else:
+            zoneIndex = len(self.lines[lineIndex].zones) - 1
+
         zone = self.lines[lineIndex].zones[zoneIndex]
         if zone.words:
             wordIndex = len(zone.words) - 1

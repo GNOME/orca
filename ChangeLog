@@ -1,3 +1,8 @@
+2006-10-10  Willie Walker <william.walker@sun.com>
+
+        * src/orca/flat_review.py: add ZONE support for goBegin and goEnd
+	functions (thanks Joanie!).
+
 2006-10-09  Rich Burridge <rich.burridge@sun.com>
 
         * test/harness/runall.sh:
