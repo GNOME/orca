@@ -6,10 +6,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Orca 0.1.0\n"
+"Project-Id-Version: Orca 1.0.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-09-06 17:30+0200\n"
-"PO-Revision-Date: 2006-09-28 12:51+0200\n"
+"PO-Revision-Date: 2006-10-10 10:21+0200\n"
 "Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgstr "Presenta le informazioni a schermo come parlato o braille oppure ingrand
 
 #: ../src/orca/braillegenerator.py:193 ../src/orca/speechgenerator.py:191
 msgid "grayed"
-msgstr ""
+msgstr "non disponibile"
 
 #: ../src/orca/braillegenerator.py:1096 ../src/orca/J2SE-access-bridge.py:66
 #: ../src/orca/speechgenerator.py:1198
@@ -191,14 +191,27 @@ msgstr ""
 msgid "caret"
 msgstr ""
 
-# CONTROLLARE COSA È IL FLAT REVIEW MODE  -Luca
+# http://cvs.gnome.org/viewcvs/*checkout*/orca/docs/doc-set/orca.html
+#
+# Focus Tracking Mode
+#   * a mode to track the current region of interest, which is usually the
+#     object that has keyboard focus.
+#
+# Flat Review Mode
+#   * ability for a user to review the contents of the desktop or a given
+#     application. This is typically done by the user making a well known
+#     command indicating "review," with Orca reacting by presenting the area
+#     to be reviewed. At any time, the user can interrupt the review mode,
+#     causing presentations such as speech output to stop immediately.
+#
+#
 #: ../src/orca/default.py:78
 msgid "Performs left click on current flat review item."
-msgstr ""
+msgstr "Esegue un clic sinistro sull'attuale elemento in revisione piatta."
 
 #: ../src/orca/default.py:82
 msgid "Performs right click on current flat review item."
-msgstr ""
+msgstr "Esegue un clic destro sull'attuale elemento in revisione piatta."
 
 #: ../src/orca/default.py:86 ../src/orca/scripts/Evolution.py:107
 msgid "Speaks entire document."
@@ -214,67 +227,68 @@ msgstr "Disegna e stampa le zono visibili nella finestra attiva."
 
 #: ../src/orca/default.py:98
 msgid "Enters and exits flat review mode."
-msgstr ""
+msgstr "Entra e esce dalla modalità revisione piatta."
 
 #: ../src/orca/default.py:102
 msgid "Moves flat review to the beginning of the previous line."
-msgstr ""
+msgstr "Sposta la revisione piatta all'inizio della riga precedente."
 
 #: ../src/orca/default.py:106
 msgid "Moves flat review to the home position."
-msgstr ""
+msgstr "Sposta la revisione piatta alla posizione home."
 
 #: ../src/orca/default.py:110
 msgid "Speaks the current flat review line."
-msgstr ""
+msgstr "Legge l'attuale riga in revisione piatta"
 
 #: ../src/orca/default.py:114
 msgid "Moves flat review to the beginning of the next line."
-msgstr ""
+msgstr "Sposta la revisione piatta all'inizio della riga successiva."
 
 #: ../src/orca/default.py:118
 msgid "Moves flat review to the end position."
-msgstr ""
+msgstr "Sposta la revisione piatta alla posizione fine."
 
 #: ../src/orca/default.py:122
 msgid "Moves flat review to the previous item or word."
-msgstr ""
+msgstr "Sposta la revisione piatta alla voce o parola precedente."
 
 #: ../src/orca/default.py:126
 msgid "Moves flat review to the word above the current word."
-msgstr ""
+msgstr "Sposta la revisione piatta alla parola sopra l'attuale parola."
 
+# credo che spell sia fare lo spelling, ma dovrei controllare   -Luca
 #: ../src/orca/default.py:130
 msgid "Speaks or spells the current flat review item or word."
-msgstr ""
+msgstr "Legge per intero o lettera per lettera l'attuale voce o parola in revisione piatta."
 
 #: ../src/orca/default.py:134
 msgid "Speaks the current flat review object."
-msgstr ""
+msgstr "Legge l'attuale oggetto in revisione piatta."
 
 #: ../src/orca/default.py:138
 msgid "Moves flat review to the next item or word."
-msgstr ""
+msgstr "Sposta la revisione piatta alla voce o parola successiva."
 
 #: ../src/orca/default.py:142
 msgid "Moves flat review to the word below the current word."
-msgstr ""
+msgstr "Sposta la revisione piatta alla parola sotto l'attuale parola."
 
 #: ../src/orca/default.py:146
 msgid "Moves flat review to the previous character."
-msgstr ""
+msgstr "Sposta la revisione piatta al carattere precedente."
 
 #: ../src/orca/default.py:150
 msgid "Moves flat review to the end of the line."
-msgstr ""
+msgstr "Sposta la revisione piatta al termine della riga."
 
 #: ../src/orca/default.py:154
 msgid "Speaks the current flat review character."
-msgstr ""
+msgstr "Legge l'attuale carattere in revisione piatta."
 
 #: ../src/orca/default.py:158
 msgid "Moves flat review to the next character."
-msgstr ""
+msgstr "Sposta la revisione piatta al carattere successivo."
 
 #: ../src/orca/default.py:162
 msgid "Toggles whether to read just the current table cell or the whole row."
@@ -290,15 +304,15 @@ msgstr "Riporta delle informazioni sullo script attuale."
 
 #: ../src/orca/default.py:174
 msgid "Pans the braille display to the left."
-msgstr ""
+msgstr "Scorre il monitor braille verso sinistra."
 
 #: ../src/orca/default.py:178
 msgid "Pans the braille display to the right."
-msgstr ""
+msgstr "Scorre il monitor braille verso destra."
 
 #: ../src/orca/default.py:182
 msgid "Moves flat review to the bottom left."
-msgstr ""
+msgstr "Sposta la revisione piatta in basso a sinistra."
 
 #: ../src/orca/default.py:186
 msgid "Returns to object with keyboard focus."
@@ -346,7 +360,7 @@ msgstr "Ricarica le impostazioni utente e reinizializza i servizi se necessario.
 
 #: ../src/orca/default.py:230
 msgid "Toggles the silencing of speech."
-msgstr ""
+msgstr "Commuta il silezio del parlato."
 
 #: ../src/orca/default.py:234
 msgid ""
@@ -374,7 +388,7 @@ msgstr ""
 
 #: ../src/orca/default.py:254
 msgid "Switches to the next presentation manager."
-msgstr ""
+msgstr "Passa al successivo gestore di presentazione."
 
 #: ../src/orca/default.py:1067 ../src/orca/default.py:1282
 #, python-format
@@ -1100,11 +1114,11 @@ msgstr "acceleratore"
 
 #: ../src/orca/rolenames.py:157 ../src/orca/rolenames.py:159
 msgid "alert"
-msgstr ""
+msgstr "alert"
 
 #: ../src/orca/rolenames.py:158
 msgid "Alert"
-msgstr ""
+msgstr "Allerta"
 
 #: ../src/orca/rolenames.py:162
 msgid "Anim"
@@ -1978,7 +1992,7 @@ msgstr " schermo"
 #.
 #: ../src/orca/scripts/Evolution.py:178
 msgid "Please"
-msgstr ""
+msgstr "Prego"
 
 #: ../src/orca/scripts/Evolution.py:179
 msgid "Welcome"
@@ -2157,7 +2171,7 @@ msgstr "non selezionato"
 
 #: ../src/orca/speechgenerator.py:1260
 msgid "tear off"
-msgstr ""
+msgstr "staccato"
 
 #: ../src/orca/util.py:473
 msgid "Misspelled word: "
