@@ -1,3 +1,12 @@
+2006-10-11  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Staroffice.py:
+          Further work on enhancement #361167.
+          The StarOffice.py scripts now subclasses 
+          _getBrailleRegionsForTableCellRow and _getSpeechForTableCellRow, 
+          so that we can braille/speak the dynamic headers (if present) 
+          only once per row, per the rules of how headers should be read.
+
 2006-10-10  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Staroffice.py:

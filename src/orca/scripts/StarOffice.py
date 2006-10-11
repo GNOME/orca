@@ -154,15 +154,17 @@ def isSpreadSheetCell(obj):
     return util.isDesiredFocusedItem(obj, rolesList)
 
 class BrailleGenerator(braillegenerator.BrailleGenerator):
-    """Overrides _getBrailleRegionsForTableCell so that, when we are in
+    """Overrides _getBrailleRegionsForTableCellRow so that , when we are 
+    in a spread sheet, we can braille the dynamic row and column headers
+    (assuming they are set).
+    Overrides _getBrailleRegionsForTableCell so that, when we are in
     a spread sheet, we can braille the location of the table cell as well
     as the contents.
     """
 
-    def _getBrailleRegionsForTableCell(self, obj):
-        """Get the braille for a table cell. If this isn't inside a
-        spread sheet, just return the regions returned by the default
-        table cell braille handler.
+    def _getBrailleRegionsForTableCellRow(self, obj):
+        """Get the braille for a table cell row or a single table cell
+        if settings.readTableCellRow is False.
 
         Arguments:
         - obj: the table cell
@@ -172,14 +174,11 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         """
 
         global dynamicColumns, dynamicRows
-        global getColumnHeaderCell, getRowHeaderCell
-        global inputLineForCell, isSpreadSheetCell, locateInputLine
+        global getColumnHeaderCell, getRowHeaderCell, isSpreadSheetCell
+
+        regions = []
 
         if isSpreadSheetCell(obj):
-            if inputLineForCell == None:
-                inputLineForCell = locateInputLine(obj)
-
-            regions = []
 
             # Check to see if this spread sheet cell has either a dynamic
             # column or row (or both) associated with it. If it does, then
@@ -204,6 +203,83 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                         if text:
                             regions.append(braille.Region(" " + text + " "))
 
+            # Adding in a check here to make sure that the parent is a
+            # valid table. It's possible that the parent could be a
+            # table cell too (see bug #351501).
+            #
+            if settings.readTableCellRow and obj.parent.table:
+                rowRegions = []
+                savedBrailleVerbosityLevel = settings.brailleVerbosityLevel
+                settings.brailleVerbosityLevel = \
+                                             settings.VERBOSITY_LEVEL_BRIEF
+
+                parent = obj.parent
+                row = parent.table.getRowAtIndex(obj.index)
+                column = parent.table.getColumnAtIndex(obj.index)
+
+                # This is an indication of whether we should speak all the
+                # table cells (the user has moved focus up or down a row),
+                # or just the current one (focus has moved left or right in
+                # the same row).
+                #
+                speakAll = True
+                if parent.__dict__.has_key("lastRow") and \
+                    parent.__dict__.has_key("lastColumn"):
+                    speakAll = (parent.lastRow != row) or \
+                           ((row == 0 or row == parent.table.nRows-1) and \
+                            parent.lastColumn == column)
+
+                if speakAll:
+                    focusRowRegion = None
+                    for i in range(0, parent.table.nColumns):
+                        accRow = parent.table.getAccessibleAt(row, i)
+                        cell = atspi.Accessible.makeAccessible(accRow)
+                        showing = cell.state.count( \
+                                        atspi.Accessibility.STATE_SHOWING)
+                        if showing:
+                            [cellRegions, focusRegion] = \
+                                self._getBrailleRegionsForTableCell(cell)
+                            if len(rowRegions):
+                                rowRegions.append(braille.Region(" "))
+                            rowRegions.append(cellRegions[0])
+                            if i == column:
+                                focusRowRegion = cellRegions[0]
+                    regions.extend(rowRegions)
+                    settings.brailleVerbosityLevel = savedBrailleVerbosityLevel
+                else:
+                    [cellRegions, focusRegion] = \
+                                self._getBrailleRegionsForTableCell(obj)
+                    regions.extend(cellRegions)
+            else:
+                [cellRegions, focusRegion] = \
+                                self._getBrailleRegionsForTableCell(obj)
+                regions.extend(cellRegions)
+            regions = [regions, focusRegion]
+        else:
+            brailleGen = braillegenerator.BrailleGenerator
+            regions = brailleGen._getBrailleRegionsForTableCellRow(self, obj)
+
+        return regions
+
+    def _getBrailleRegionsForTableCell(self, obj):
+        """Get the braille for a table cell. If this isn't inside a
+        spread sheet, just return the regions returned by the default
+        table cell braille handler.
+
+        Arguments:
+        - obj: the table cell
+
+        Returns a list where the first element is a list of Regions to display
+        and the second element is the Region which should get focus.
+        """
+
+        global inputLineForCell, isSpreadSheetCell, locateInputLine
+
+        if isSpreadSheetCell(obj):
+            if inputLineForCell == None:
+                inputLineForCell = locateInputLine(obj)
+
+            regions = []
             text = util.getDisplayedText(obj)
             componentRegion = braille.Component(obj, text)
             regions.append(componentRegion)
@@ -224,13 +300,99 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             brailleGen = braillegenerator.BrailleGenerator
             regions = brailleGen._getBrailleRegionsForTableCell(self, obj)
 
-            return regions
+        return regions
 
 class SpeechGenerator(speechgenerator.SpeechGenerator):
-    """Overrides _getSpeechForTableCell so that, when we are in a spread
+    """Overrides _getSpeechForTableCellRow so that , when we are in a
+    spread sheet, we can speak the dynamic row and column headers 
+    (assuming they are set).
+    Overrides _getSpeechForTableCell so that, when we are in a spread
     sheet, we can speak the location of the table cell as well as the
     contents.
     """
+
+    def _getSpeechForTableCellRow(self, obj, already_focused):
+        """Get the speech for a table cell row or a single table cell
+        if settings.readTableCellRow is False. If this isn't inside a
+        spread sheet, just return the utterances returned by the default
+        table cell speech handler.
+
+        Arguments:
+        - obj: the table cell
+        - already_focused: False if object just received focus
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        global dynamicColumns, dynamicRows
+        global getColumnHeaderCell, getRowHeaderCell, isSpreadSheetCell
+
+        utterances = []
+
+        if isSpreadSheetCell(obj):
+            if (not already_focused):
+
+                # Check to see if this spread sheet cell has either a dynamic
+                # column or row (or both) associated with it. If it does, then
+                # speak those first before speaking the cell contents.
+                #
+                table = getCalcTable(obj)
+                if dynamicColumns.has_key(table):
+                    column = dynamicColumns[table]
+                    if column:
+                        header = getDynamicColumnHeaderCell(obj, column)
+                        if header.text:
+                            text = header.text.getText(0, -1)
+                            if text:
+                                utterances.append(text)
+
+                if dynamicRows.has_key(table):
+                    row = dynamicRows[table]
+                    if row:
+                        header = getDynamicRowHeaderCell(obj, row)
+                        if header.text:
+                            text = header.text.getText(0, -1)
+                            if text:
+                                utterances.append(text)
+
+                if settings.readTableCellRow:
+                    parent = obj.parent
+                    row = parent.table.getRowAtIndex(obj.index)
+                    column = parent.table.getColumnAtIndex(obj.index)
+
+                    # This is an indication of whether we should speak all the
+                    # table cells (the user has moved focus up or down a row),
+                    # or just the current one (focus has moved left or right in
+                    # the same row).
+                    #
+                    speakAll = True
+                    if parent.__dict__.has_key("lastRow") and \
+                        parent.__dict__.has_key("lastColumn"):
+                        speakAll = (parent.lastRow != row) or \
+                               ((row == 0 or row == parent.table.nRows-1) and \
+                                parent.lastColumn == column)
+
+                    if speakAll:
+                        for i in range(0, parent.table.nColumns):
+                            accRow = parent.table.getAccessibleAt(row, i)
+                            cell = atspi.Accessible.makeAccessible(accRow)
+                            showing = cell.state.count( \
+                                          atspi.Accessibility.STATE_SHOWING)
+                            if showing:
+                                utterances.extend(self._getSpeechForTableCell(\
+                                                  cell, already_focused))
+                    else:
+                        utterances.extend(self._getSpeechForTableCell(obj,
+                                                             already_focused))
+                else:
+                    utterances.extend(self._getSpeechForTableCell(obj, 
+                                                             already_focused))
+        else:
+            speechGen = speechgenerator.SpeechGenerator
+            utterances = speechGen._getSpeechForTableCellRow(self, obj,
+                                                             already_focused)
+
+        return utterances
 
     def _getSpeechForTableCell(self, obj, already_focused):
         """Get the speech for a table cell. If this isn't inside a
@@ -244,35 +406,10 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         Returns a list of utterances to be spoken for the object.
         """
 
-        global dynamicColumns, dynamicRows
-        global getColumnHeaderCell, getRowHeaderCell
         global inputLineForCell, isSpreadSheetCell, locateInputLine
 
         if isSpreadSheetCell(obj):
             utterances = []
-
-            # Check to see if this spread sheet cell has either a dynamic
-            # column or row (or both) associated with it. If it does, then
-            # speak those first before speaking the cell contents.
-            #
-            table = getCalcTable(obj)
-            if dynamicColumns.has_key(table):
-                column = dynamicColumns[table]
-                if column:
-                    header = getDynamicColumnHeaderCell(obj, column)
-                    if header.text:
-                        text = header.text.getText(0, -1)
-                        if text:
-                            utterances.append(text)
-
-            if dynamicRows.has_key(table):
-                row = dynamicRows[table]
-                if row:
-                    header = getDynamicRowHeaderCell(obj, row)
-                    if header.text:
-                        text = header.text.getText(0, -1)
-                        if text:
-                            utterances.append(text)
 
             utterances.append(util.getDisplayedText(\
                     util.getRealActiveDescendant(obj)))
