@@ -8,10 +8,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: orca\n"
+"Project-Id-Version: orca HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-09-06 17:15+0200\n"
-"PO-Revision-Date: 2006-10-05 23:12+0300\n"
+"PO-Revision-Date: 2006-10-11 07:59+0300\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -50,16 +50,12 @@ msgid "TREE LEVEL %d"
 msgstr "Suurendusaste"
 
 #: ../src/orca/chnames.py:32
-#, fuzzy
 msgid "space"
 msgstr "tühik"
 
 #: ../src/orca/chnames.py:33
-#, fuzzy
 msgid "newline"
 msgstr ""
-"\n"
-"\t%s sisaldab reavahetuse sümboleid, "
 
 #: ../src/orca/chnames.py:34
 #, fuzzy
@@ -75,82 +71,68 @@ msgid "apostrophe"
 msgstr ""
 
 #: ../src/orca/chnames.py:38
-#, fuzzy
 msgid "comma"
-msgstr "Koma"
+msgstr "koma"
 
 #: ../src/orca/chnames.py:39
-#, fuzzy
 msgid "dot"
-msgstr "Punkt"
+msgstr "punkt"
 
 #: ../src/orca/chnames.py:40
-#, fuzzy
 msgid "question"
-msgstr "Küsimus"
+msgstr "küsimärk"
 
 #: ../src/orca/chnames.py:42
-#, fuzzy
 msgid "quote"
-msgstr "Tsiteeri"
+msgstr ""
 
 #: ../src/orca/chnames.py:43
-#, fuzzy
 msgid "left paren"
-msgstr "Pööra _vasakule"
+msgstr ""
 
 #: ../src/orca/chnames.py:44
-#, fuzzy
 msgid "right paren"
-msgstr "Pöörab _paremale"
+msgstr ""
 
 #: ../src/orca/chnames.py:45
-#, fuzzy
 msgid "dash"
-msgstr "Kriips"
+msgstr ""
 
 #: ../src/orca/chnames.py:46
 msgid "underscore"
 msgstr "alakriips"
 
 #: ../src/orca/chnames.py:47
-#, fuzzy
 msgid "colon"
-msgstr "_Koolon (:)"
+msgstr "koolon"
 
 #: ../src/orca/chnames.py:48
 msgid "semicolon"
 msgstr "semikoolon"
 
 #: ../src/orca/chnames.py:49
-#, fuzzy
 msgid "less than"
 msgstr "väiksem kui"
 
 #: ../src/orca/chnames.py:50
-#, fuzzy
 msgid "greater than"
 msgstr "suurem kui"
 
 #: ../src/orca/chnames.py:51
-#, fuzzy
 msgid "left bracket"
-msgstr "Vasakpoolne sulg"
+msgstr ""
 
 #: ../src/orca/chnames.py:52
-#, fuzzy
 msgid "right bracket"
-msgstr "Parempoolne sulg"
+msgstr ""
 
 #: ../src/orca/chnames.py:53
-#, fuzzy
 msgid "backslash"
-msgstr "Lõpetav langkriips"
+msgstr "langkriips"
 
 #: ../src/orca/chnames.py:54
-#, fuzzy
 msgid "vertical line"
-msgstr "%s: vigane rida"
+msgstr "vertikaalne rida"
 
 #: ../src/orca/chnames.py:55
 #, fuzzy
@@ -162,30 +144,25 @@ msgid "tilde"
 msgstr "tilde"
 
 #: ../src/orca/chnames.py:57
-#, fuzzy
 msgid "left brace"
-msgstr "Pööra _vasakule"
+msgstr ""
 
 #: ../src/orca/chnames.py:58
-#, fuzzy
 msgid "right brace"
-msgstr "Pöörab _paremale"
+msgstr ""
 
 #: ../src/orca/chnames.py:60
-#, fuzzy
 msgid "pound"
-msgstr "Küprose nael"
+msgstr "nael"
 
 #: ../src/orca/chnames.py:61
-#, fuzzy
 msgid "dollar"
-msgstr "Austraalia dollar"
+msgstr "dollar"
 
 #: ../src/orca/chnames.py:62
 #: ../src/orca/speechgenerator.py:851
-#, fuzzy
 msgid "percent"
-msgstr "protsenti"
+msgstr "protsent"
 
 #: ../src/orca/chnames.py:63
 #, fuzzy
@@ -193,34 +170,28 @@ msgid "and"
 msgstr "ja"
 
 #: ../src/orca/chnames.py:64
-#, fuzzy
 msgid "star"
-msgstr "Täht"
+msgstr "tärn"
 
 #: ../src/orca/chnames.py:65
-#, fuzzy
 msgid "plus"
-msgstr "SQL*Plus käsud"
+msgstr "pluss"
 
 #: ../src/orca/chnames.py:66
-#, fuzzy
 msgid "slash"
-msgstr "SQL*Plus kaldkriips"
+msgstr "kaldkriips"
 
 #: ../src/orca/chnames.py:67
-#, fuzzy
 msgid "equals"
-msgstr "võrdub"
+msgstr "võrdusmärk"
 
 #: ../src/orca/chnames.py:68
-#, fuzzy
 msgid "at"
-msgstr "%A, %-d. %B %Y kell %-I:%M:%S %p"
+msgstr ""
 
 #: ../src/orca/chnames.py:69
-#, fuzzy
 msgid "caret"
-msgstr "Kursor"
+msgstr ""
 
 #: ../src/orca/default.py:78
 msgid "Performs left click on current flat review item."
@@ -755,7 +726,6 @@ msgid "M_ost"
 msgstr "M_aksumus:"
 
 #: ../src/orca/orca-setup.glade.h:35
-#, fuzzy
 msgid "Magnifier"
 msgstr "Luup"
 
@@ -790,15 +760,13 @@ msgid "Scale _factor:"
 msgstr "Üksik faktor"
 
 #: ../src/orca/orca-setup.glade.h:43
-#, fuzzy
 msgid "Si_ze:"
 msgstr "_Suurus:"
 
 #: ../src/orca/orca-setup.glade.h:44
 #: ../src/orca/orca_gui_prefs.py:1035
-#, fuzzy
 msgid "So_me"
-msgstr "Küsi minult"
+msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:45
 msgid "Speak _indentation and justification"
@@ -956,14 +924,12 @@ msgid "Num_Lock"
 msgstr "Num_Lock"
 
 #: ../src/orca/orca.py:775
-#, fuzzy
 msgid "Speech enabled."
-msgstr "Lubatud omadused: "
+msgstr "Kõne lubatud."
 
 #: ../src/orca/orca.py:777
-#, fuzzy
 msgid "Speech disabled."
-msgstr "<b>Keelatud rakendid</b>"
+msgstr "Kõne keelatud."
 
 #: ../src/orca/orca.py:815
 #, fuzzy
@@ -972,9 +938,8 @@ msgstr "_Migreeri GIMP %s kasutaja seaded"
 
 #: ../src/orca/orca.py:956
 #: ../src/orca/orca.py:957
-#, fuzzy
 msgid "Welcome to Orca."
-msgstr "_Vaikimisi: \"Tere tulemast arvutisse %n\""
+msgstr "Tere tulemast Orca'sse."
 
 #: ../src/orca/orca.py:1013
 msgid "goodbye."
@@ -985,31 +950,30 @@ msgid "Goodbye."
 msgstr ""
 
 #: ../src/orca/orca.py:1094
-#, fuzzy
 msgid "Usage: orca [OPTION...]"
-msgstr "Kasuta: %s [VÕTI]...FAIL\n"
+msgstr "Kasutamine: orca [VÕTI...]"
 
 #: ../src/orca/orca.py:1096
-#, fuzzy
 msgid "-?, --help                   Show this help message"
-msgstr "Seda teadet enam uuesti mitte näidata."
+msgstr "-?, --help                   Selle abiteabe näitamine"
 
 #: ../src/orca/orca.py:1097
-#, fuzzy, python-format
+#, python-format
 msgid "-v, --version                %s"
-msgstr "%s versioon %s"
+msgstr "-v, --version                %s"
 
 #: ../src/orca/orca.py:1098
 msgid "-s, --setup, --gui-setup     Set up user preferences"
-msgstr ""
+msgstr "-s, --setup, --gui-setup     Kasutajaeelistuste määramine"
 
 #: ../src/orca/orca.py:1099
 msgid "-t, --text-setup             Set up user preferences (text version)"
 msgstr ""
+"-t, --text-setup             Kasutajaeelistuste määramine (tekstiversioon)"
 
 #: ../src/orca/orca.py:1100
 msgid "-n, --no-setup               Skip set up of user preferences"
-msgstr ""
+msgstr "-n, --no-setup               Kasutajaeelistuste määramise vahelejätmine"
 
 #: ../src/orca/orca.py:1103
 msgid ""
@@ -1020,13 +984,12 @@ msgstr ""
 
 #: ../src/orca/orca.py:1105
 msgid "Report bugs to orca-list@gnome.org."
-msgstr ""
+msgstr "Vigadest palun teatada aadressil orca-list@gnome.org."
 
 #: ../src/orca/orca_console_prefs.py:93
 #: ../src/orca/orca_console_prefs.py:109
-#, fuzzy
 msgid "Speech is unavailable."
-msgstr "Jututuba pole hetkel saadaval"
+msgstr "Kõne pole saadaval."
 
 #: ../src/orca/orca_console_prefs.py:97
 #, fuzzy
@@ -2090,17 +2053,14 @@ msgid "tree table"
 msgstr "puutabel"
 
 #: ../src/orca/rolenames.py:487
-#, fuzzy
 msgid "unk"
-msgstr "UNK."
+msgstr ""
 
 #: ../src/orca/rolenames.py:488
-#, fuzzy
 msgid "Unknown"
 msgstr "Tundmatu"
 
 #: ../src/orca/rolenames.py:489
-#, fuzzy
 msgid "unknown"
 msgstr "tundmatu"
 
@@ -2123,12 +2083,10 @@ msgid "wnd"
 msgstr ""
 
 #: ../src/orca/rolenames.py:498
-#, fuzzy
 msgid "Window"
 msgstr "Aken"
 
 #: ../src/orca/rolenames.py:499
-#, fuzzy
 msgid "window"
 msgstr "aken"
 
@@ -2428,7 +2386,7 @@ msgstr "Näita _rohkem valikuid"
 #: ../src/orca/speechgenerator.py:1314
 #: ../src/orca/speechgenerator.py:1317
 msgid "pressed"
-msgstr ""
+msgstr "vajutatud"
 
 #: ../src/orca/scripts/planner.py:141
 #: ../src/orca/scripts/planner.py:149
@@ -2436,27 +2394,23 @@ msgstr ""
 #: ../src/orca/scripts/planner.py:182
 #: ../src/orca/speechgenerator.py:1323
 #: ../src/orca/speechgenerator.py:1326
-#, fuzzy
 msgid "not pressed"
-msgstr "Vajutamata"
+msgstr "vajutamata"
 
 #: ../src/orca/speechgenerator.py:367
 #: ../src/orca/speechgenerator.py:370
-#, fuzzy
 msgid "checked"
-msgstr "Märgitud"
+msgstr "märgitud"
 
 #: ../src/orca/speechgenerator.py:376
 #: ../src/orca/speechgenerator.py:379
-#, fuzzy
 msgid "not checked"
-msgstr "   (1) Ma ei ole üldse kontrollinud.%s\n"
+msgstr "märkimata"
 
 #: ../src/orca/speechgenerator.py:920
 #: ../src/orca/speechgenerator.py:923
-#, fuzzy
 msgid "not selected"
-msgstr "valitud keel %s"
+msgstr "valimata"
 
 #: ../src/orca/speechgenerator.py:1260
 #, fuzzy
