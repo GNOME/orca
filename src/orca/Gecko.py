@@ -30,6 +30,8 @@ import braille
 import braillegenerator
 import debug
 import default
+import input_event
+import keybindings
 import orca
 import orca_state
 import rolenames
@@ -40,13 +42,10 @@ import util
 
 from orca_i18n import _
 
-# New roles defined by the Gecko toolkit
+# Embedded object character used to indicate that an object is
+# embedded in a string.
 #
-rolenames.ROLE_ENTRY          = "entry"
-rolenames.ROLE_DOCUMENT_FRAME = "document frame"
-
-rolenames.rolenames[rolenames.ROLE_ENTRY] = \
-    rolenames.rolenames[rolenames.ROLE_TEXT]
+EMBEDDED_OBJECT_CHARACTER = u'\ufffc'
 
 def _getAutocompleteEntry(obj):
     for i in range(0, obj.childCount):
@@ -79,7 +78,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         display and the second element is the Region which should get
         focus.
         """
-        
+
         self._debugGenerator("Gecko._getBrailleRegionsForAutocomplete", obj)
 
         regions = []
@@ -88,9 +87,9 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                 rolenames.getBrailleForRoleName(obj)))
         else:
             regions.append(braille.Region(""))
-            
+
         return (regions, regions[0])
-        
+
     def _getBrailleRegionsForText(self, obj):
         """Gets text to be displayed for an autocomplete box.
 
@@ -120,7 +119,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         eol = braille.Region(" $l")
         regions.append(eol)
         return [regions, textRegion]
-            
+
     def _getBrailleRegionsForComboBox(self, obj):
         """Get the braille for a combo box.  If the combo box already has
         focus, then only the selection is displayed.
@@ -143,11 +142,11 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         # something.  If that's the case, then the name of the combo
         # box is the text that is showing.  Except perhaps if the
         # menu is popped up.  Then, the name is the name of the menu
-        # item that is selected.  
+        # item that is selected.
         #
         label = util.getDisplayedLabel(obj)
         menu = obj.child(0)
-        
+
         focusedRegionIndex = 0
         if label and len(label):
             regions.append(braille.Region(label + " "))
@@ -211,12 +210,12 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         if not label or not len(label):
             label = parent.name
         utterances.append(label)
-        
+
         utterances.extend(self._getSpeechForObjectRole(obj))
 
         [text, startOffset, endOffset] = util.getTextLineAtCaret(obj)
         utterances.append(text)
-            
+
         self._debugGenerator("Gecko._getSpeechForText",
                              obj,
                              already_focused,
@@ -244,11 +243,11 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         # something.  If that's the case, then the name of the combo
         # box is the text that is showing.  Except perhaps if the
         # menu is popped up.  Then, the name is the name of the menu
-        # item that is selected.  
+        # item that is selected.
         #
         label = util.getDisplayedLabel(obj)
         menu = obj.child(0)
-        
+
         if not already_focused and label:
             utterances.append(label)
 
@@ -318,7 +317,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 or (parent.role == rolenames.ROLE_UNKNOWN):
                 parent = parent.parent
                 continue
-            
+
             text = util.getDisplayedText(parent)
             label = util.getDisplayedLabel(parent)
 
@@ -356,7 +355,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             if parent.role == rolenames.ROLE_AUTOCOMPLETE:
                 parent = parent.parent
                 continue
-            
+
             if text and (text != label) and len(text):
                 utterances.append(text)
 
@@ -389,6 +388,35 @@ class Script(default.Script):
         """Returns the speech generator for this script.
         """
         return SpeechGenerator(self)
+
+    def setupInputEventHandlers(self):
+        """Defines InputEventHandler fields for this script that can be
+        called by the key and braille bindings.
+        """
+
+        default.Script.setupInputEventHandlers(self)
+
+        self.inputEventHandlers["traverseContentHandler"] = \
+            input_event.InputEventHandler(
+                Script.traverseContent,
+                "Traverses document content.")
+
+    def getKeyBindings(self):
+        """Defines the key bindings for this script.
+
+        Returns an instance of keybindings.KeyBindings.
+        """
+
+        keyBindings = default.Script.getKeyBindings(self)
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "h",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["traverseContentHandler"]))
+
+        return keyBindings
 
     def onCaretMoved(self, event):
         #print "Gecko.onCaretMoved"
@@ -477,7 +505,7 @@ class Script(default.Script):
             entry = _getAutocompleteEntry(event.source)
             orca.setLocusOfFocus(event, entry)
             return
-        
+
         default.Script.onFocus(self, event)
 
     # This function is called when a hyperlink is selected - This happens
@@ -540,3 +568,71 @@ class Script(default.Script):
                                                event,
                                                oldLocusOfFocus,
                                                newLocusOfFocus)
+
+    def getDocumentFrame(self):
+        """Returns the document frame that holds the content being shown."""
+
+        # [[[TODO: WDW - this is based upon the 12-Oct-2006 implementation
+        # that uses the EMBEDS relation on the top level frame as a means
+        # to find the document frame.  Future implementations will break
+        # this.]]]
+        #
+        documentFrame = None
+        for i in range(0, self.app.childCount):
+            child = self.app.child(i)
+            if child.role == rolenames.ROLE_FRAME:
+                relations = child.relations
+                for relation in relations:
+                    if relation.getRelationType()  \
+                        == atspi.Accessibility.RELATION_EMBEDS:
+                        documentFrame = atspi.Accessible.makeAccessible( \
+                            relation.getTarget(0))
+                        break
+
+        return documentFrame
+
+    def walkContent(self, root, accumulated="", indent=""):
+        print "%s{%s} %d" % (indent, root.role, root.accessible.getRole())
+        newlineRoles = [rolenames.ROLE_PARAGRAPH,
+                        rolenames.ROLE_SEPARATOR,
+                        rolenames.ROLE_LIST_ITEM,
+                        rolenames.ROLE_HEADING]
+
+        if newlineRoles.count(root.role) and len(accumulated):
+            accumulated += "\n"
+
+        if root.role == rolenames.ROLE_LINK:
+            accumulated += "<"
+
+        childIndex = 0
+
+        if root.text:
+            text = self.getText(root, 0, -1).decode("UTF-8")
+            for characterIndex in range(0, len(text)):
+                if text[characterIndex] == EMBEDDED_OBJECT_CHARACTER:
+                    child = root.child(childIndex)
+                    accumulated = self.walkContent(child,
+                                                   accumulated,
+                                                   indent + " ")
+                    childIndex += 1
+                else:
+                    accumulated += text[characterIndex]
+                    print text[characterIndex]
+        else:
+            while True:
+                if childIndex < root.childCount:
+                    accumulated = self.walkContent(root.child(childIndex),
+                                                   accumulated,
+                                                   indent + " ")
+                    childIndex += 1
+                else:
+                    break
+
+        if root.role == "link":
+            accumulated += ">"
+
+        return accumulated
+
+    def traverseContent(self, inputEvent):
+        documentFrame = self.getDocumentFrame()
+        print self.walkContent(documentFrame)

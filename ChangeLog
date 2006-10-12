@@ -1,5 +1,10 @@
 2006-10-12  Willie Walker <william.walker@sun.com>
 
+	* src/orca/Gecko.py: Add experimental debug code to start walking
+	the document in an in-order fashion.
+	
+2006-10-12  Willie Walker <william.walker@sun.com>
+
 	* src/orca/atspi.py: add ability to obtain hyperlink specialization
 	
 	* src/orca/atspi.py: add fallback mechanism to determine string
