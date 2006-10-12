@@ -47,7 +47,13 @@ class BrailleGenerator:
     primary entry point.  Subclasses can feel free to override/extend
     the brailleGenerators instance field as they see fit."""
 
-    def __init__(self):
+    def __init__(self, script):
+
+        # The script that created us.  This allows us to ask the
+        # script for information if we need it.
+        #
+        self._script = script
+
         self.brailleGenerators = {}
         self.brailleGenerators[rolenames.ROLE_ALERT]               = \
              self._getBrailleRegionsForAlert

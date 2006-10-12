@@ -38,6 +38,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
     """Overrides _getSpeechForFrame so as to avoid digging into the
     gedit hierarchy and tickling a bug in gedit.
     """
+    def __init__(self, script):
+        speechgenerator.SpeechGenerator.__init__(self, script)
 
     def _getSpeechForAlert(self, obj, already_focused):
         """Gets the title of the dialog.  Do NOT get the contents
@@ -76,4 +78,4 @@ class Script(default.Script):
     def getSpeechGenerator(self):
         """Returns the speech generator for this script.
         """
-        return SpeechGenerator()
+        return SpeechGenerator(self)

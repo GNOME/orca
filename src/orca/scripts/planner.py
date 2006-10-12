@@ -40,16 +40,15 @@ import orca.braillegenerator as braillegenerator
 from orca.orca_i18n import _ # for gettext support
 
 class BrailleGenerator(braillegenerator.BrailleGenerator):
+    """We make this to appropiately present ribbon's toggle button in
+    a toolbar used to display in a menu those options that doesn't
+    fill in toolbar when the application is resized. Also for each one
+    of the grphics buttons in the main window."""
 
-#We make this to appropiately present
-#ribbon's toggle button in a toolbar 
-# used to display in a menu those options that doesn 
-#fill in toolbar when the application is resized.
-#
-# Also for each one of the grphics buttons in the main window
+    def __init__(self, script):
+        braillegenerator.BrailleGenerator.__init__(self, script)
 
     def _getBrailleRegionsForToggleButton(self, obj):
-
         """Get the braille for a radio button.  If the button already had
         focus, then only the state is displayed.
 
@@ -65,35 +64,37 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         text = ""
         text = util.appendString(text, util.getDisplayedLabel(obj))
         text = util.appendString(text, util.getDisplayedText(obj))
-   
-        # First special toggle button is the one in the toolbar and that it has no name
-        # Application should implement an accessible name in this component,
-        # but until this is made We speech/braille "display more options" when
-        # the focus is in one of these toggle buttons.
-        roleList=[rolenames.ROLE_TOGGLE_BUTTON,\
-                  rolenames.ROLE_TOOL_BAR]
+
+        # First special toggle button is the one in the toolbar and
+        # that it has no name Application should implement an
+        # accessible name in this component, but until this is made We
+        # speech/braille "display more options" when the focus is in
+        # one of these toggle buttons.
+        #
+        roleList = [rolenames.ROLE_TOGGLE_BUTTON, rolenames.ROLE_TOOL_BAR]
 
         if util.isDesiredFocusedItem(obj, roleList) and not obj.name:
-           text += _("Display more options")
+            text += _("Display more options")
 
-        # Second special case is each one of the four graphics toggle 
-        # buttons in the main window        
-        # Application should implement an accessible relationship between the button 
-        # and the label, but until this is made we append for each one the button 
-        # the label that should be associated and its state (checked or not)
-        # 
+        # Second special case is each one of the four graphics toggle
+        # buttons in the main window Application should implement an
+        # accessible relationship between the button and the label,
+        # but until this is made we append for each one the button the
+        # label that should be associated and its state (checked or
+        # not)
+        #
         rolesList = [rolenames.ROLE_TOGGLE_BUTTON,\
                      rolenames.ROLE_FILLER,\
                      rolenames.ROLE_FILLER,\
                      rolenames.ROLE_PANEL,\
                      rolenames.ROLE_PANEL]
         if util.isDesiredFocusedItem(obj, rolesList):
-           debug.println(debug.LEVEL_FINEST,
-               "planner.onFocus - main window: " \
-               + "one of the four graphic toggle buttons.")
-           filler = obj.parent
-           allLabels = util.findByRole(filler, rolenames.ROLE_LABEL)
-           text += allLabels[0].name 
+            debug.println(debug.LEVEL_FINEST,
+                          "planner.onFocus - main window: " \
+                          + "one of the four graphic toggle buttons.")
+            filler = obj.parent
+            allLabels = util.findByRole(filler, rolenames.ROLE_LABEL)
+            text += allLabels[0].name
 
         if obj.state.count(atspi.Accessibility.STATE_CHECKED):
             text = util.appendString(text, "&=y")
@@ -108,87 +109,85 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
         return [regions, componentRegion]
 
-
-
 class SpeechGenerator(speechgenerator.SpeechGenerator):
 
-#We make this to appropiately present
-#ribbon's toggle button in a toolbar 
-# used to display in a menu those options that doesn 
-#fill in toolbar when the application is resized.
-#
-# Also for each one of the grphics buttons in the main window
+    def __init__(self, script):
+        speechgenerator.SpeechGenerator.__init__(self, script)
 
-     def _getSpeechForToggleButton(self, obj, already_focused):
+    # We make this to appropiately present ribbon's toggle button in a
+    # toolbar used to display in a menu those options that doesn fill
+    # in toolbar when the application is resized.
+    #
+    # Also for each one of the grphics buttons in the main window
+    #
+    def _getSpeechForToggleButton(self, obj, already_focused):
 
-         utterances=[] 
-         tmp=[]
+        utterances=[]
+        tmp=[]
 
-         # Application should implement an accessible name in this component,
-         # but until this is made We speech/braille "display more options" when
-         # the focus is in one of these toggle buttons.
-         roleList=[rolenames.ROLE_TOGGLE_BUTTON,\
-                   rolenames.ROLE_TOOL_BAR]
+        # Application should implement an accessible name in this
+        # component, but until this is made We speech/braille "display
+        # more options" when the focus is in one of these toggle
+        # buttons.
+        #
+        roleList=[rolenames.ROLE_TOGGLE_BUTTON,\
+                  rolenames.ROLE_TOOL_BAR]
 
-         if util.isDesiredFocusedItem(obj, roleList) and not obj.name:
-           if not already_focused:
-               tmp.append(_("Display more options"))
-               tmp.extend(self._getDefaultSpeech(obj, already_focused))
+        if util.isDesiredFocusedItem(obj, roleList) and not obj.name:
+            if not already_focused:
+                tmp.append(_("Display more options"))
+                tmp.extend(self._getDefaultSpeech(obj, already_focused))
 
-               if obj.state.count(atspi.Accessibility.STATE_CHECKED):
-                 tmp.append(_("pressed"))
-               else:
-                 tmp.append(_("not pressed"))
+                if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+                    tmp.append(_("pressed"))
+                else:
+                    tmp.append(_("not pressed"))
 
-               utterances.extend(tmp)
-               utterances.extend(self._getSpeechForObjectAvailability(obj))
-           else:
-               if obj.state.count(atspi.Accessibility.STATE_CHECKED):
-                 utterances.append(_("pressed"))
-               else:
-                 utterances.append(_("not pressed"))
+                utterances.extend(tmp)
+                utterances.extend(self._getSpeechForObjectAvailability(obj))
+            else:
+                if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+                    utterances.append(_("pressed"))
+                else:
+                    utterances.append(_("not pressed"))
 
-           return utterances
+            return utterances
 
+        # Application should implement an accessible relationship
+        # between the button and the label, but until this is made we
+        # append for each one the button the label that should be
+        # associated and its state (checked or not)
+        #
+        roleList = [rolenames.ROLE_TOGGLE_BUTTON,\
+                    rolenames.ROLE_FILLER,\
+                    rolenames.ROLE_FILLER,\
+                    rolenames.ROLE_PANEL,\
+                    rolenames.ROLE_PANEL]
+        if util.isDesiredFocusedItem(obj, roleList):
+            debug.println(debug.LEVEL_FINEST,
+                          "planner.onFocus - main window: " \
+                          + "one of the four graphic toggle buttons.")
+            if not already_focused:
+                filler = obj.parent
+                allLabels = util.findByRole(filler, rolenames.ROLE_LABEL)
+                tmp.append(allLabels[0].name)
+                tmp.extend(self._getDefaultSpeech(obj, already_focused))
+                if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+                    tmp.append(_("pressed"))
+                else:
+                    tmp.append(_("not pressed"))
 
-         # Application should implement an accessible relationship between the button 
-         # and the label, but until this is made we append for each one the button 
-         # the label that should be associated and its state (checked or not)
-         roleList = [rolenames.ROLE_TOGGLE_BUTTON,\
-                     rolenames.ROLE_FILLER,\
-                     rolenames.ROLE_FILLER,\
-                     rolenames.ROLE_PANEL,\
-                     rolenames.ROLE_PANEL]
-         if util.isDesiredFocusedItem(obj, roleList):
-           debug.println(debug.LEVEL_FINEST,
-                         "planner.onFocus - main window: " \
-                       + "one of the four graphic toggle buttons.")
-           if not already_focused:
-             filler = obj.parent
-             allLabels = util.findByRole(filler, rolenames.ROLE_LABEL)
-             tmp.append(allLabels[0].name)
-             tmp.extend(self._getDefaultSpeech(obj, already_focused))
-             if obj.state.count(atspi.Accessibility.STATE_CHECKED):
-               tmp.append(_("pressed"))
-             else:
-               tmp.append(_("not pressed"))
+                utterances.extend(tmp)
+                utterances.extend(self._getSpeechForObjectAvailability(obj))
+            else:
+                if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+                    utterances.append(_("pressed"))
+                else:
+                    utterances.append(_("not pressed"))
 
-             utterances.extend(tmp)
-             utterances.extend(self._getSpeechForObjectAvailability(obj))
-           else:
-             if obj.state.count(atspi.Accessibility.STATE_CHECKED):
-               utterances.append(_("pressed"))
-             else:
-               utterances.append(_("not pressed"))
+            return utterances
 
-
-           return utterances
-
-
-         self._getSpeechForLabel(obj, already_focused)
-
-
-
+        return self._getSpeechForLabel(obj, already_focused)
 
 ########################################################################
 #                                                                      #
@@ -204,17 +203,14 @@ class Script(default.Script):
         Arguments:
         - app: the application to create a script for.
         """
-
         default.Script.__init__(self, app)
 
     # This method tries to detect and handle the following cases:
     # 1) Toolbar: the last toggle button to show 'more options'
     # 2) Main window: one of the four graphic toggle buttons.
-
+    #
     def getBrailleGenerator(self):
-        return BrailleGenerator()
-
+        return BrailleGenerator(self)
 
     def getSpeechGenerator(self):
-        return SpeechGenerator()
-
+        return SpeechGenerator(self)

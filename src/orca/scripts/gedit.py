@@ -48,6 +48,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
     """Overrides _getSpeechForFrame so as to avoid digging into the
     gedit hierarchy and tickling a bug in gedit.
     """
+    def __init__(self, script):
+        speechgenerator.SpeechGenerator.__init__(self, script)
 
     def _getSpeechForFrame(self, obj, already_focused):
         """Get the speech for a frame.  [[[TODO: WDW - This avoids
@@ -106,7 +108,7 @@ class Script(default.Script):
     def getSpeechGenerator(self):
         """Returns the speech generator for this script.
         """
-        return SpeechGenerator()
+        return SpeechGenerator(self)
 
     def readMisspeltWord(self, event, panel):
         """Speak/braille the current misspelt word plus its context.

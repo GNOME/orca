@@ -45,7 +45,9 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
     """Overrides _getSpeechForPushButton to handle 'unspeakable'
     button labels displayed on the screen.
     """
-
+    def __init__(self, script):
+        speechgenerator.SpeechGenerator.__init__(self, script)
+        
     def _getSpeechForObjectName(self, obj):
         """Gives preference to the object name versus what is being
         displayed on the screen.  This helps accomodate the naming
@@ -86,7 +88,7 @@ class Script(default.Script):
     def getSpeechGenerator(self):
         """Returns the speech generator for this script.
         """
-        return SpeechGenerator()
+        return SpeechGenerator(self)
 
     def onWindowActivated(self, event):
         """Called whenever one of gcalctool's toplevel windows is activated.

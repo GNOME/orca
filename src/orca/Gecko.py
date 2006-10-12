@@ -61,8 +61,8 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
     and indentation purposes.
     """
 
-    def __init__(self):
-        braillegenerator.BrailleGenerator.__init__(self)
+    def __init__(self, script):
+        braillegenerator.BrailleGenerator.__init__(self, script)
         self.brailleGenerators[rolenames.ROLE_AUTOCOMPLETE] = \
              self._getBrailleRegionsForAutocomplete
         self.brailleGenerators[rolenames.ROLE_ENTRY]        = \
@@ -185,8 +185,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
     and indentation purposes.
     """
 
-    def __init__(self):
-        speechgenerator.SpeechGenerator.__init__(self)
+    def __init__(self, script):
+        speechgenerator.SpeechGenerator.__init__(self, script)
         self.speechGenerators[rolenames.ROLE_ENTRY]        = \
              self._getSpeechForText
 
@@ -383,12 +383,12 @@ class Script(default.Script):
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.
         """
-        return BrailleGenerator()
+        return BrailleGenerator(self)
 
     def getSpeechGenerator(self):
         """Returns the speech generator for this script.
         """
-        return SpeechGenerator()
+        return SpeechGenerator(self)
 
     def onCaretMoved(self, event):
         #print "Gecko.onCaretMoved"

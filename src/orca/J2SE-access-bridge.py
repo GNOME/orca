@@ -47,6 +47,9 @@ from orca_i18n import _ # for gettext support
 class SpeechGenerator(speechgenerator.SpeechGenerator):
     """Overrides _getSpeechForLabel
     """
+    def __init__(self, script):
+        speechgenerator.SpeechGenerator.__init__(self, script)
+        
     def _getSpeechForLabel(self, obj, already_focused):
         """Get the speech for a label.
 
@@ -94,7 +97,7 @@ class Script(default.Script):
     def getSpeechGenerator(self):
         """Returns the speech generator for this script.
         """
-        return SpeechGenerator()
+        return SpeechGenerator(self)
 
     def consumesKeyboardEvent(self, keyboardEvent):
         """Called when a key is pressed on the keyboard.

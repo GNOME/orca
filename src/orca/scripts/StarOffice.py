@@ -154,13 +154,16 @@ def isSpreadSheetCell(obj):
     return util.isDesiredFocusedItem(obj, rolesList)
 
 class BrailleGenerator(braillegenerator.BrailleGenerator):
-    """Overrides _getBrailleRegionsForTableCellRow so that , when we are 
+    """Overrides _getBrailleRegionsForTableCellRow so that , when we are
     in a spread sheet, we can braille the dynamic row and column headers
     (assuming they are set).
     Overrides _getBrailleRegionsForTableCell so that, when we are in
     a spread sheet, we can braille the location of the table cell as well
     as the contents.
     """
+
+    def __init__(self, script):
+        braillegenerator.BrailleGenerator.__init__(self, script)
 
     def _getBrailleRegionsForTableCellRow(self, obj):
         """Get the braille for a table cell row or a single table cell
@@ -190,7 +193,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                 if column:
                     header = getDynamicColumnHeaderCell(obj, column)
                     if header.text:
-                        text = header.text.getText(0, -1)
+                        text = self._script.getText(header, 0, -1)
                         if text:
                             regions.append(braille.Region(" " + text))
 
@@ -199,7 +202,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                 if row:
                     header = getDynamicRowHeaderCell(obj, row)
                     if header.text:
-                        text = header.text.getText(0, -1)
+                        text = self._script.getText(header, 0, -1)
                         if text:
                             regions.append(braille.Region(" " + text + " "))
 
@@ -290,7 +293,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             # have already done this for us.
             #
             if obj.text:
-                objectText = obj.text.getText(0, -1)
+                objectText = self._script.getText(obj, 0, -1)
                 if objectText and len(objectText) != 0:
                     regions.append(braille.Region(" " + obj.name))
 
@@ -304,12 +307,14 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
 class SpeechGenerator(speechgenerator.SpeechGenerator):
     """Overrides _getSpeechForTableCellRow so that , when we are in a
-    spread sheet, we can speak the dynamic row and column headers 
+    spread sheet, we can speak the dynamic row and column headers
     (assuming they are set).
     Overrides _getSpeechForTableCell so that, when we are in a spread
     sheet, we can speak the location of the table cell as well as the
     contents.
     """
+    def __init__(self, script):
+        speechgenerator.SpeechGenerator.__init__(self, script)
 
     def _getSpeechForTableCellRow(self, obj, already_focused):
         """Get the speech for a table cell row or a single table cell
@@ -342,7 +347,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                     if column:
                         header = getDynamicColumnHeaderCell(obj, column)
                         if header.text:
-                            text = header.text.getText(0, -1)
+                            text = self._script.getText(header, 0, -1)
                             if text:
                                 utterances.append(text)
 
@@ -351,7 +356,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                     if row:
                         header = getDynamicRowHeaderCell(obj, row)
                         if header.text:
-                            text = header.text.getText(0, -1)
+                            text = self._script.getText(header, 0, -1)
                             if text:
                                 utterances.append(text)
 
@@ -385,7 +390,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                         utterances.extend(self._getSpeechForTableCell(obj,
                                                              already_focused))
                 else:
-                    utterances.extend(self._getSpeechForTableCell(obj, 
+                    utterances.extend(self._getSpeechForTableCell(obj,
                                                              already_focused))
         else:
             speechGen = speechgenerator.SpeechGenerator
@@ -423,7 +428,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             # have already done this for us.
             #
             if obj.text:
-                objectText = obj.text.getText(0, -1)
+                objectText = self._script.getText(obj, 0, -1)
                 if objectText and len(objectText) != 0:
                     utterances.append(" " + obj.name)
         else:
@@ -478,13 +483,13 @@ class Script(default.Script):
         """Returns the braille generator for this script.
         """
 
-        return BrailleGenerator()
+        return BrailleGenerator(self)
 
     def getSpeechGenerator(self):
         """Returns the speech generator for this script.
         """
 
-        return SpeechGenerator()
+        return SpeechGenerator(self)
 
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
@@ -604,12 +609,12 @@ class Script(default.Script):
         return column
 
     def setDynamicColumn(self, inputEvent):
-        """Set the dynamic header column to use when speaking calc cell 
-        entries.  In order to set the column, the user should first set 
+        """Set the dynamic header column to use when speaking calc cell
+        entries.  In order to set the column, the user should first set
         focus to the column that they wish to define and then press Insert-c.
 
-        Once the user has defined the column, it will be used to first speak 
-        this header when moving between rows or columns. 
+        Once the user has defined the column, it will be used to first speak
+        this header when moving between rows or columns.
 
         A "double-click" of the Insert-c hotkey, will clear the dynamic
         header column.
@@ -1207,7 +1212,9 @@ class Script(default.Script):
         text = obj.text.getText(0, -1).decode("UTF-8")
         if startOffset >= len(text):
             startOffset = len(text) - 1
-        if startOffset >= endOffset:
+        if endOffset == -1:
+            endOffset = len(text)
+        elif startOffset >= endOffset:
             endOffset = startOffset + 1
         string = text[max(0,startOffset):min(len(text),endOffset)]
         string = string.encode("UTF-8")

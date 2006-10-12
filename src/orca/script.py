@@ -148,12 +148,12 @@ class Script:
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.
         """
-        return braillegenerator.BrailleGenerator()
+        return braillegenerator.BrailleGenerator(self)
 
     def getSpeechGenerator(self):
         """Returns the speech generator for this script.
         """
-        return speechgenerator.SpeechGenerator()
+        return speechgenerator.SpeechGenerator(self)
 
     # [[[WDW - There is a circular reference going on somewhere (see
     # bug 333168).  In the presence of this reference, the existence
