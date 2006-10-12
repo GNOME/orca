@@ -1,3 +1,16 @@
+2006-10-12  Willie Walker <william.walker@sun.com>
+
+	* src/orca/atspi.py: add ability to obtain hyperlink specialization
+	
+	* src/orca/atspi.py: add fallback mechanism to determine string
+	for role for LINK and INPUT_METHOD_WINDOW - these strings somehow
+	didn't make it into the atk implementation (bug filed as
+	http://bugzilla.gnome.org/show_bug.cgi?id=361757).
+	
+	* src/orca/atspi.py, src/orca/rolenames.py: add LINK, HEADING,
+	INPUT_METHOD_WINDOW, ENTRY, and DOCUMENT_FRAME roles that were
+	recently added to the AT-SPI infrastructure. 
+	
 2006-10-12  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Staroffice.py:
