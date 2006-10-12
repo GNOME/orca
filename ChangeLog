@@ -7,6 +7,10 @@
           > Implementation confused what was row headers and what was
             column headers. They have now been reversed.
 
+        * src/orca/default.py:
+          Fixed bug 361747 - Orca should use weight to determine if 
+          text is bolded in OO writer and calc.
+
 2006-10-11  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py, src/orca/J2SE-access-bridge.py, 

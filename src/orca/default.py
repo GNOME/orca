@@ -2269,7 +2269,13 @@ class Script(script.Script):
         for key in attributes.keys():
             attribute = attributes[key]
             if attribute:
-                line = key + " " + attribute
+                # If it's the 'weight' attribute and greater than 400, just
+                # speak it as bold, otherwise speak the weight.
+                #
+                if key == "weight" and int(attribute) > 400:
+                    line = _("bold")
+                else:
+                    line = key + " " + attribute
                 speech.speak(line)
 
     def readCharAttributes(self, inputEvent=None):
@@ -2315,6 +2321,10 @@ class Script(script.Script):
             attributes = {}
             attributes['size']        = allAttributes.get('size')
             attributes['family-name'] = allAttributes.get('family-name')
+
+            attr = allAttributes.get('weight')
+            if attr != "400":
+                attributes['weight'] = attr
 
             attr = allAttributes.get('indent')
             if attr != "0":
