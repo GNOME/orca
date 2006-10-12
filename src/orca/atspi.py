@@ -918,6 +918,21 @@ class Accessible:
 
         role = self.accessible.getRoleName()
 
+        # [[[TODO: WDW - HACK to handle the situation where some
+        # things might not be quite lined up with the ATK and AT-SPI.
+        # That is, some roles might have ids but no string yet.  See
+        # http://bugzilla.gnome.org/show_bug.cgi?id=361757.
+        #
+        if not len(role):
+            try:
+                roleId = self.accessible.getRole()
+                if roleId == Accessibility.ROLE_LINK:
+                    role = rolenames.ROLE_LINK
+                elif roleId == Accessibility.ROLE_INPUT_METHOD_WINDOW:
+                    role = rolenames.ROLE_INPUT_METHOD_WINDOW
+            except:
+                pass
+
         # [[[TODO: HACK to coalesce menu items with children into
         # menus.  The menu demo in gtk-demo does this, and one
         # might view that as an edge case.  But, in
@@ -1137,6 +1152,26 @@ class Accessible:
 
         return component
 
+    def __get_hyperlink(self):
+        """Returns an object that implements the Accessibility_Hyperlink
+        interface for this object, or None if this object doesn't implement
+        the Accessibility_Hyperlink interface.
+        """
+
+        hyperlink = self.accessible.queryInterface(\
+            "IDL:Accessibility/Hyperlink:1.0")
+
+        if hyperlink:
+            try:
+                hyperlink = hyperlink._narrow(Accessibility.Hyperlink)
+            except:
+                hyperlink = None
+
+        if hyperlink and settings.cacheValues:
+            self.hyperlink = hyperlink
+
+        return hyperlink
+
     def __get_hypertext(self):
         """Returns an object that implements the Accessibility_Hypertext
         interface for this object, or None if this object doesn't implement
@@ -1293,6 +1328,8 @@ class Accessible:
             return self.__get_action()
         elif attr == "component":
             return self.__get_component()
+        elif attr == "hyperlink":
+            return self.__get_hyperlink()
         elif attr == "hypertext":
             return self.__get_hypertext()
         elif attr == "image":

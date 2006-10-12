@@ -57,18 +57,23 @@ ROLE_DESKTOP_FRAME       = "desktop frame"
 ROLE_DIAL                = "dial"
 ROLE_DIALOG              = "dialog"
 ROLE_DIRECTORY_PANE      = "directory pane"
+ROLE_DOCUMENT_FRAME      = "document frame"
 ROLE_DRAWING_AREA        = "drawing area"
+ROLE_ENTRY               = "entry"
 ROLE_FILE_CHOOSER        = "file chooser"
 ROLE_FILLER              = "filler"
 ROLE_FONT_CHOOSER        = "fontchooser"
 ROLE_FRAME               = "frame"
 ROLE_GLASS_PANE          = "glass pane"
+ROLE_HEADING             = "heading"
 ROLE_HTML_CONTAINER      = "html container"
 ROLE_ICON                = "icon"
 ROLE_IMAGE               = "image"
 ROLE_INTERNAL_FRAME      = "internal frame"
+ROLE_INPUT_METHOD_WINDOW = "input method window"
 ROLE_LABEL               = "label"
 ROLE_LAYERED_PANE        = "layered pane"
+ROLE_LINK                = "link"
 ROLE_LIST                = "list"
 ROLE_LIST_ITEM           = "list item"
 ROLE_MENU                = "menu"
@@ -268,6 +273,11 @@ rolenames[ROLE_GLASS_PANE] = Rolename(ROLE_GLASS_PANE,
                                       _("GlassPane"),
                                       _("glass pane"))
 
+rolenames[ROLE_HEADING] = Rolename(ROLE_HEADING,
+                                   _("heading"),
+                                   _("Heading"),
+                                   _("hdng"))
+
 rolenames[ROLE_HTML_CONTAINER] = Rolename(ROLE_HTML_CONTAINER,
                                           _("html"),
                                           _("HtmlContainer"),
@@ -457,6 +467,8 @@ rolenames[ROLE_TEXT] = Rolename(ROLE_TEXT,
                                 _("txt"),
                                 _("Text"),
                                 _("text"))
+
+rolenames[ROLE_ENTRY] = rolenames[ROLE_TEXT]
 
 rolenames[ROLE_TOGGLE_BUTTON] = Rolename(ROLE_TOGGLE_BUTTON,
                                          _("tglbtn"),
