@@ -45,8 +45,8 @@ inputLineForCell = None
 
 # Dictionaries for the calc dynamic row and column headers.
 #
-dynamicColumns = {}
-dynamicRows = {}
+dynamicColumnHeaders = {}
+dynamicRowHeaders = {}
 
 def getCalcTable(obj):
     """Get the table that this table cell is in.
@@ -176,7 +176,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         and the second element is the Region which should get focus.
         """
 
-        global dynamicColumns, dynamicRows
+        global dynamicColumnHeaders, dynamicRowHeaders
         global getColumnHeaderCell, getRowHeaderCell, isSpreadSheetCell
 
         regions = []
@@ -184,27 +184,34 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         if isSpreadSheetCell(obj):
 
             # Check to see if this spread sheet cell has either a dynamic
-            # column or row (or both) associated with it. If it does, then
-            # braille those first before brailling the cell contents.
+            # column heading or row heading (or both) associated with it. 
+            # If it does, then braille those first before brailling the 
+            # cell contents.
             #
             table = getCalcTable(obj)
-            if dynamicColumns.has_key(table):
-                column = dynamicColumns[table]
-                if column:
-                    header = getDynamicColumnHeaderCell(obj, column)
-                    if header.text:
-                        text = self._script.getText(header, 0, -1)
-                        if text:
-                            regions.append(braille.Region(" " + text))
+            parent = obj.parent
 
-            if dynamicRows.has_key(table):
-                row = dynamicRows[table]
-                if row:
-                    header = getDynamicRowHeaderCell(obj, row)
-                    if header.text:
-                        text = self._script.getText(header, 0, -1)
-                        if text:
-                            regions.append(braille.Region(" " + text + " "))
+            if parent.__dict__.has_key("lastColumn") and \
+               parent.lastColumn != parent.table.getColumnAtIndex(obj.index):
+                if dynamicColumnHeaders.has_key(table):
+                    row = dynamicColumnHeaders[table]
+                    if row:
+                        header = getDynamicRowHeaderCell(obj, row)
+                        if header.text:
+                            text = self._script.getText(header, 0, -1)
+                            if text:
+                                regions.append(braille.Region(" " + text))
+
+            if parent.__dict__.has_key("lastRow") and \
+               parent.lastRow != parent.table.getRowAtIndex(obj.index):
+                if dynamicRowHeaders.has_key(table):
+                    column = dynamicRowHeaders[table]
+                    if column:
+                        header = getDynamicColumnHeaderCell(obj, column)
+                        if header.text:
+                            text = self._script.getText(header, 0, -1)
+                            if text:
+                                regions.append(braille.Region(" " + text + " "))
 
             # Adding in a check here to make sure that the parent is a
             # valid table. It's possible that the parent could be a
@@ -329,7 +336,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         Returns a list of utterances to be spoken for the object.
         """
 
-        global dynamicColumns, dynamicRows
+        global dynamicColumnHeaders, dynamicRowHeaders
         global getColumnHeaderCell, getRowHeaderCell, isSpreadSheetCell
 
         utterances = []
@@ -338,27 +345,35 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             if (not already_focused):
 
                 # Check to see if this spread sheet cell has either a dynamic
-                # column or row (or both) associated with it. If it does, then
-                # speak those first before speaking the cell contents.
+                # column heading or row heading (or both) associated with it.
+                # If it does, then speak those first before speaking the cell
+                # contents.
                 #
                 table = getCalcTable(obj)
-                if dynamicColumns.has_key(table):
-                    column = dynamicColumns[table]
-                    if column:
-                        header = getDynamicColumnHeaderCell(obj, column)
-                        if header.text:
-                            text = self._script.getText(header, 0, -1)
-                            if text:
-                                utterances.append(text)
+                parent = obj.parent
 
-                if dynamicRows.has_key(table):
-                    row = dynamicRows[table]
-                    if row:
-                        header = getDynamicRowHeaderCell(obj, row)
-                        if header.text:
-                            text = self._script.getText(header, 0, -1)
-                            if text:
-                                utterances.append(text)
+                if parent.__dict__.has_key("lastColumn") and \
+                   parent.lastColumn != \
+                   parent.table.getColumnAtIndex(obj.index):
+                    if dynamicColumnHeaders.has_key(table):
+                        row = dynamicColumnHeaders[table]
+                        if row:
+                            header = getDynamicRowHeaderCell(obj, row)
+                            if header.text:
+                                text = self._script.getText(header, 0, -1)
+                                if text:
+                                    utterances.append(text)
+
+                if parent.__dict__.has_key("lastRow") and \
+                   parent.lastRow != parent.table.getRowAtIndex(obj.index):
+                    if dynamicRowHeaders.has_key(table):
+                        column = dynamicRowHeaders[table]
+                        if column:
+                            header = getDynamicColumnHeaderCell(obj, column)
+                            if header.text:
+                                text = self._script.getText(header, 0, -1)
+                                if text:
+                                    utterances.append(text)
 
                 if settings.readTableCellRow:
                     parent = obj.parent
@@ -452,8 +467,6 @@ class Script(default.Script):
         Arguments:
         - app: the application to create a script for.
         """
-
-        global dynamicColumns, dynamicRows
 
         default.Script.__init__(self, app)
 
@@ -623,18 +636,18 @@ class Script(default.Script):
         - inputEvent: if not None, the input event that caused this action.
         """
 
-        global dynamicColumns, getCalcTable
+        global dynamicColumnHeaders, getCalcTable
 
         debug.println(self.debugLevel, "StarOffice.setDynamicColumn.")
 
         clickCount = util.getClickCount(self.lastDynamicEvent, inputEvent)
         table = getCalcTable(orca_state.locusOfFocus)
         if table:
-            column = self.getCalcColumn(orca_state.locusOfFocus)
+            row = self.getCalcRow(orca_state.locusOfFocus)
             if clickCount == 2:
-                dynamicColumns[table] = None
+                dynamicColumnHeaders[table] = None
             else:
-                dynamicColumns[table] = column
+                dynamicColumnHeaders[table] = row
         self.lastDynamicEvent = inputEvent
 
         return True
@@ -654,18 +667,18 @@ class Script(default.Script):
         - inputEvent: if not None, the input event that caused this action.
         """
 
-        global dynamicRows, getCalcTable
+        global dynamicRowHeaders, getCalcTable
 
         debug.println(self.debugLevel, "StarOffice.setDynamicRow.")
 
         clickCount = util.getClickCount(self.lastDynamicEvent, inputEvent)
         table = getCalcTable(orca_state.locusOfFocus)
         if table:
-            row = self.getCalcRow(orca_state.locusOfFocus)
+            column = self.getCalcColumn(orca_state.locusOfFocus)
             if clickCount == 2:
-                dynamicRows[table] = None
+                dynamicRowHeaders[table] = None
             else:
-                dynamicRows[table] = row
+                dynamicRowHeaders[table] = column
         self.lastDynamicEvent = inputEvent
 
         return True
