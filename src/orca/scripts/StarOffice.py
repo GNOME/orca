@@ -876,9 +876,16 @@ class Script(default.Script):
 
         # 1) Writer: text paragraph.
         #
-        # When the focus is on a paragraph in the Document view of the Writer,
-        # then just speak/braille the current line (rather than speaking a
-        # bogus initial "paragraph" utterance as well).
+        # We need to handle two things here:
+        #
+        # If the old locus of focus was on the File->New->Text Document
+        # menu item and we are currently have focus on an empty text
+        # paragraph, then we've just created the first new text document
+        # in Writer. Announce it by doing a "where am I".
+        #
+        # Also, when the focus is on a paragraph in the Document view of 
+        # the Writer, then just speak/braille the current line (rather than 
+        # speaking a bogus initial "paragraph" utterance as well).
 
         rolesList = [rolenames.ROLE_PARAGRAPH, \
                      rolenames.ROLE_UNKNOWN, \
@@ -892,6 +899,11 @@ class Script(default.Script):
 
             result = util.getTextLineAtCaret(event.source)
             result[0] = result[0].decode("UTF-8")
+
+            if oldLocusOfFocus.role == rolenames.ROLE_MENU_ITEM and \
+               oldLocusOfFocus.name == _("Text Document") and \
+               len(result[0]) == 0:
+                self.whereAmI(None)
 
             # Check to see if there are any hypertext links in this paragraph.
             # If no, then just speak the whole line. Otherwise, split the

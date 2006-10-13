@@ -5,6 +5,15 @@
           Reversed Insert-r and Insert-c hot-keys and improved the wording
           of the "help" for learn mode for these two hot-keys.
 
+        * src/orca/scripts/StarOffice.py:
+          Fixed bug #350219 ? In OOo, no announcement when you create a 
+          new document. Adjusted clause #1 of the locusOfFocusChanged()
+          methods such that if the old locus of focus was on the 
+          File->New->Text Document menu item and we are currently have 
+          focus on an empty text paragraph, then we've just created the 
+          first new text document in Writer. Announce it by doing a 
+          "where am I".
+
 2006-10-12  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py: Add experimental debug code to start walking
