@@ -25,6 +25,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import logging
+log = logging.getLogger("speech")
+
 import os
 
 import gobject
@@ -454,6 +457,8 @@ class SpeechServer(speechserver.SpeechServer):
                                       "SPEECH OUTPUT: '" \
                                       + self.__sayAll.currentContext.utterance\
                                       + "'")
+                        log.info("'%s'" \
+                                 % self.__sayAll.currentContext.utterance)
                         self.__sayAll.idForCurrentContext = self.__speak(
                             self.__sayAll.currentContext.utterance,
                             acss)
@@ -743,6 +748,7 @@ class SpeechServer(speechserver.SpeechServer):
             [context, acss] = utteranceIterator.next()
             debug.println(debug.LEVEL_INFO,
                           "SPEECH OUTPUT: '" + context.utterance + "'")
+            log.info("'%s'" % context.utterance)
             self.__sayAll = _SayAll(utteranceIterator,
                                     context,
                                     self.__speak(context.utterance, acss),

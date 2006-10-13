@@ -28,6 +28,16 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import logging
+logging.basicConfig()
+
+log = logging.getLogger()
+
+# Set the level to INFO if you want the logging of speech and braille
+# output.
+#
+#log.setLevel(logging.INFO)
+
 import traceback
 
 # Used to turn off all debugging.

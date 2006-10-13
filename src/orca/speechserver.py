@@ -30,6 +30,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import logging
+log = logging.getLogger("speech")
+
 import debug
 
 class VoiceFamily(dict):
@@ -221,6 +224,7 @@ class SpeechServer:
         for [context, acss] in utteranceIterator:
             debug.println(debug.LEVEL_INFO,
                           "SPEECH OUTPUT: '" + context.utterance + "'")
+            log.info("'%s'" % context.utterance)
             self.speak(context.utterance, acss)
 
     def increaseSpeechRate(self, step=5):

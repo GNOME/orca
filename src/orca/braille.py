@@ -31,6 +31,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import logging
+log = logging.getLogger("braille")
+
 import signal
 import threading
 
@@ -651,9 +654,12 @@ def refresh(panToCursor=True, targetCursorCell=0):
         cursorCell += 1 # Normalize to 1-based offset
 
     debug.println(debug.LEVEL_INFO, "BRAILLE LINE:  '%s'" % string)
+    log.info("line:'%s'" % string)
 
     debug.println(debug.LEVEL_INFO, "     VISIBLE:  '%s', cursor=%d" \
                   % (string[startPos:endPos], cursorCell))
+    log.info("visible:'%s'" % string[startPos:endPos])
+    log.info("cursor:%d" % cursorCell)
 
     string = string.decode("UTF-8")
     substring = string[startPos:endPos].encode("UTF-8")

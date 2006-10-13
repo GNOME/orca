@@ -1,3 +1,10 @@
+2006-10-13  Willie Walker <william.walker@sun.com>
+
+        * src/orca/braille.py, src/orca/debug.py,
+	src/orca/gnomespeechfactory.py, src/orca/orca_prefs.py,
+	src/orca/speech.py, src/orca/speechserver.py: use the Python
+	logging API to log speech and braille output at the INFO level.
+
 2006-10-13  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Staroffice.py:
