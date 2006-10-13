@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: orca HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-09-06 17:15+0200\n"
-"PO-Revision-Date: 2006-10-11 07:59+0300\n"
+"PO-Revision-Date: 2006-10-12 07:47+0300\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -604,14 +604,12 @@ msgid "<b>Verbosity</b>"
 msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:6
-#, fuzzy
 msgid "<b>Zoomer Position</b>"
-msgstr "Kerimisriba asukoht"
+msgstr "<b>Suurendusala asukoht</b>"
 
 #: ../src/orca/orca-setup.glade.h:7
-#, fuzzy
 msgid "<b>Zoomer Settings</b>"
-msgstr "Hõlbustussätted"
+msgstr "<b>Suurendusala sätted</b>"
 
 #: ../src/orca/orca-setup.glade.h:8
 msgid "Braille"
@@ -666,14 +664,12 @@ msgid "Enable _function keys"
 msgstr "<b>Ae_glaste klahvide lubamine</b>"
 
 #: ../src/orca/orca-setup.glade.h:23
-#, fuzzy
 msgid "Enable _key echo"
-msgstr "Kajaeemaldamine lubatud"
+msgstr "_Klahvi kaja lubatud"
 
 #: ../src/orca/orca-setup.glade.h:24
-#, fuzzy
 msgid "Enable _magnifier"
-msgstr "L_uup (pole saadaval)"
+msgstr "_Luup lubatud"
 
 #: ../src/orca/orca-setup.glade.h:25
 #, fuzzy
@@ -686,14 +682,12 @@ msgid "Enable ac_tion keys"
 msgstr "<b>_Põrkeklahvide lubamine</b>"
 
 #: ../src/orca/orca-setup.glade.h:27
-#, fuzzy
 msgid "Enable c_ursor"
-msgstr "Luba animatsioonid"
+msgstr "_Kursor lubatud"
 
 #: ../src/orca/orca-setup.glade.h:28
-#, fuzzy
 msgid "Enable cross-h_air"
-msgstr "Lennuväeakadeemia"
+msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:29
 msgid "Enable cross-hair cli_p"
@@ -784,19 +778,16 @@ msgid "Speak current ro_w"
 msgstr "Sulgeb käesoleva akna"
 
 #: ../src/orca/orca-setup.glade.h:48
-#, fuzzy
 msgid "Speech"
 msgstr "Kõne"
 
 #: ../src/orca/orca-setup.glade.h:49
-#, fuzzy
 msgid "Speech _system:"
-msgstr "Süsteemihaldus"
+msgstr "Kõ_nesüsteem:"
 
 #: ../src/orca/orca-setup.glade.h:50
-#, fuzzy
 msgid "Speech synthesi_zer:"
-msgstr "Kõnemootorit pole võimalik lähtestada\n"
+msgstr "Kõnesün_tesaator:"
 
 #: ../src/orca/orca-setup.glade.h:51
 #, fuzzy
@@ -829,9 +820,8 @@ msgid "_Bottom:"
 msgstr "_Alumine:"
 
 #: ../src/orca/orca-setup.glade.h:58
-#, fuzzy
 msgid "_Enable speech"
-msgstr "Speech dokument"
+msgstr "_Kõne lubatud"
 
 #: ../src/orca/orca-setup.glade.h:59
 #, fuzzy
@@ -845,9 +835,8 @@ msgid "_None"
 msgstr "_Puudub"
 
 #: ../src/orca/orca-setup.glade.h:61
-#, fuzzy
 msgid "_Person:"
-msgstr "Uus isik"
+msgstr "_Isik:"
 
 #: ../src/orca/orca-setup.glade.h:62
 #, fuzzy
@@ -862,7 +851,7 @@ msgstr "_Parem:"
 #: ../src/orca/orca-setup.glade.h:64
 #, fuzzy
 msgid "_Smoothing:"
-msgstr "_Silumine:"
+msgstr "_Pehmendamine:"
 
 #: ../src/orca/orca-setup.glade.h:65
 #, fuzzy
@@ -870,9 +859,8 @@ msgid "_Top:"
 msgstr "_Ülemine:"
 
 #: ../src/orca/orca-setup.glade.h:66
-#, fuzzy
 msgid "_Voice settings:"
-msgstr "Hõlbustussätted"
+msgstr "_Hääle sätted:"
 
 #: ../src/orca/orca-setup.glade.h:67
 #, fuzzy
@@ -992,9 +980,8 @@ msgid "Speech is unavailable."
 msgstr "Kõne pole saadaval."
 
 #: ../src/orca/orca_console_prefs.py:97
-#, fuzzy
 msgid "Welcome to Orca setup."
-msgstr "Tere tulemast GNOME töökeskkonda"
+msgstr "Tere tulemast Orca sätetesse."
 
 #: ../src/orca/orca_console_prefs.py:112
 msgid "Select desired speech system:"
@@ -1019,29 +1006,24 @@ msgstr "Parooli sisestamine"
 #: ../src/orca/orca_console_prefs.py:143
 #: ../src/orca/orca_console_prefs.py:152
 #: ../src/orca/orca_console_prefs.py:176
-#, fuzzy
 msgid "Speech will not be used.\n"
-msgstr "Mustrit %s ei saa kasutada"
+msgstr "Kõne ei kasutata.\n"
 
 #: ../src/orca/orca_console_prefs.py:129
-#, fuzzy
 msgid "No servers available.\n"
-msgstr "Kirjeldust pole saadaval"
+msgstr "Servereid pole saadaval.\n"
 
 #: ../src/orca/orca_console_prefs.py:133
-#, fuzzy
 msgid "Select desired speech server."
-msgstr "Vali jututoaserver, kuhu päring esitada"
+msgstr ""
 
 #: ../src/orca/orca_console_prefs.py:151
-#, fuzzy
 msgid "No voices available.\n"
-msgstr "Kirjeldust pole saadaval"
+msgstr "Hääli pole saadaval.\n"
 
 #: ../src/orca/orca_console_prefs.py:155
-#, fuzzy
 msgid "Select desired voice:"
-msgstr "Sinu hääle salvestamine"
+msgstr ""
 
 #. Ask the user if they would like to enable echoing by word.
 #.
@@ -1114,24 +1096,21 @@ msgstr ""
 #: ../src/orca/orca_gui_prefs.py:128
 #: ../src/orca/orca_gui_prefs.py:423
 #: ../src/orca/orca_gui_prefs.py:465
-#, fuzzy
 msgid "Speech not available."
-msgstr "Fail ei ole kättesaadav"
+msgstr "Kõne pole saadaval."
 
 #: ../src/orca/orca_gui_prefs.py:365
 #: ../src/orca/orca_gui_prefs.py:369
 #: ../src/orca/orca_gui_prefs.py:1310
-#, fuzzy
 msgid "Bilinear"
-msgstr "_Bilineaarne"
+msgstr "Bilineaarne"
 
 #: ../src/orca/orca_gui_prefs.py:367
 #: ../src/orca/orca_gui_prefs.py:380
 #: ../src/orca/orca_gui_prefs.py:1312
 #: ../src/orca/orca_gui_prefs.py:1335
-#, fuzzy
 msgid "None"
-msgstr "Puudub"
+msgstr ""
 
 #: ../src/orca/orca_gui_prefs.py:378
 #: ../src/orca/orca_gui_prefs.py:386
@@ -1219,28 +1198,23 @@ msgid "Alert"
 msgstr "Alert"
 
 #: ../src/orca/rolenames.py:162
-#, fuzzy
 msgid "Anim"
-msgstr "ANIM animatsioon"
+msgstr ""
 
 #: ../src/orca/rolenames.py:163
-#, fuzzy
 msgid "Animation"
 msgstr "Animatsioon"
 
 #: ../src/orca/rolenames.py:164
-#, fuzzy
 msgid "animation"
 msgstr "animatsioon"
 
 #: ../src/orca/rolenames.py:167
 #: ../src/orca/rolenames.py:169
-#, fuzzy
 msgid "arrow"
 msgstr "nool"
 
 #: ../src/orca/rolenames.py:168
-#, fuzzy
 msgid "Arrow"
 msgstr "Nool"
 
@@ -1249,12 +1223,10 @@ msgid "cal"
 msgstr ""
 
 #: ../src/orca/rolenames.py:173
-#, fuzzy
 msgid "Calendar"
 msgstr "Kalender"
 
 #: ../src/orca/rolenames.py:174
-#, fuzzy
 msgid "calendar"
 msgstr "kalender"
 
@@ -1415,12 +1387,10 @@ msgid "dlg"
 msgstr ""
 
 #: ../src/orca/rolenames.py:233
-#, fuzzy
 msgid "Dialog"
 msgstr "Dialoog"
 
 #: ../src/orca/rolenames.py:234
-#, fuzzy
 msgid "dialog"
 msgstr "dialoog"
 
@@ -1515,9 +1485,8 @@ msgid "glass pane"
 msgstr "klaaspaan"
 
 #: ../src/orca/rolenames.py:272
-#, fuzzy
 msgid "html"
-msgstr "HTML 3.2 (*.html)"
+msgstr "html"
 
 #: ../src/orca/rolenames.py:273
 msgid "HtmlContainer"
@@ -1538,12 +1507,10 @@ msgid "img"
 msgstr ""
 
 #: ../src/orca/rolenames.py:283
-#, fuzzy
 msgid "Image"
 msgstr "Pilt"
 
 #: ../src/orca/rolenames.py:284
-#, fuzzy
 msgid "image"
 msgstr "pilt"
 
@@ -1615,12 +1582,10 @@ msgid "mnu"
 msgstr ""
 
 #: ../src/orca/rolenames.py:313
-#, fuzzy
 msgid "Menu"
 msgstr "Menüü"
 
 #: ../src/orca/rolenames.py:314
-#, fuzzy
 msgid "menu"
 msgstr "menüü"
 
@@ -2350,7 +2315,6 @@ msgid "[Ee]volution"
 msgstr "[Ee]volution"
 
 #: ../src/orca/settings.py:438
-#, fuzzy
 msgid "Deer Park"
 msgstr "Deer Park"
 
@@ -2450,4 +2414,3 @@ msgstr ""
 #: ../src/orca/util.py:1192
 msgid "document selected from cursor position"
 msgstr ""
-
