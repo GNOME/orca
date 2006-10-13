@@ -518,15 +518,15 @@ class Script(default.Script):
                 Script.speakInputLine,
                 _("Speaks the contents of the input line."))
 
-        self.inputEventHandlers["setDynamicColumnHandler"] = \
+        self.inputEventHandlers["setDynamicColumnHeadersHandler"] = \
             input_event.InputEventHandler(
-                Script.setDynamicColumn,
-                _("Set the dynamic column to use when speaking calc cells."))
+                Script.setDynamicColumnHeaders,
+                _("Set the row to use as dynamic column headers when speaking calc cells."))
 
-        self.inputEventHandlers["setDynamicRowHandler"] = \
+        self.inputEventHandlers["setDynamicRowHeadersHandler"] = \
             input_event.InputEventHandler(
-                Script.setDynamicRow,
-                _("Set the dynamic row to use when speaking calc cells."))
+                Script.setDynamicRowHeaders,
+                _("Set the column to use as dynamic row headers to use when speaking calc cells."))
 
     def getKeyBindings(self):
         """Defines the key bindings for this script. Setup the default
@@ -546,17 +546,17 @@ class Script(default.Script):
 
         keyBindings.add(
             keybindings.KeyBinding(
-                "c",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
-                self.inputEventHandlers["setDynamicColumnHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
                 "r",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.inputEventHandlers["setDynamicRowHandler"]))
+                self.inputEventHandlers["setDynamicColumnHeadersHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "c",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["setDynamicRowHeadersHandler"]))
 
         return keyBindings
 
@@ -621,13 +621,13 @@ class Script(default.Script):
 
         return column
 
-    def setDynamicColumn(self, inputEvent):
-        """Set the dynamic header column to use when speaking calc cell
-        entries.  In order to set the column, the user should first set
-        focus to the column that they wish to define and then press Insert-c.
+    def setDynamicColumnHeaders(self, inputEvent):
+        """Set the row for the dynamic header columns to use when speaking 
+        calc cell entries. In order to set the row, the user should first set
+        focus to the row that they wish to define and then press Insert-r.
 
-        Once the user has defined the column, it will be used to first speak
-        this header when moving between rows or columns.
+        Once the user has defined the row, it will be used to first speak
+        this header when moving between columns.
 
         A "double-click" of the Insert-c hotkey, will clear the dynamic
         header column.
@@ -638,7 +638,7 @@ class Script(default.Script):
 
         global dynamicColumnHeaders, getCalcTable
 
-        debug.println(self.debugLevel, "StarOffice.setDynamicColumn.")
+        debug.println(self.debugLevel, "StarOffice.setDynamicColumnHeaders.")
 
         clickCount = util.getClickCount(self.lastDynamicEvent, inputEvent)
         table = getCalcTable(orca_state.locusOfFocus)
@@ -652,13 +652,14 @@ class Script(default.Script):
 
         return True
 
-    def setDynamicRow(self, inputEvent):
-        """Set the dynamic header row to use when speaking calc cell entries.
-        In order to set the row, the user should first set focus to the row
-        that they wish to define and then press Insert-r.
+    def setDynamicRowHeaders(self, inputEvent):
+        """Set the column for the dynamic header rows to use when speaking 
+        calc cell entries. In order to set the column, the user should first 
+        set focus to the column that they wish to define and then press 
+        Insert-c.
 
-        Once the user has defined the row, it will be used to first speak
-        this header when moving between rows or columns.
+        Once the user has defined the column, it will be used to first speak
+        this header when moving between rows.
 
         A "double-click" of the Insert-r hotkey, will clear the dynamic
         header row.
@@ -669,7 +670,7 @@ class Script(default.Script):
 
         global dynamicRowHeaders, getCalcTable
 
-        debug.println(self.debugLevel, "StarOffice.setDynamicRow.")
+        debug.println(self.debugLevel, "StarOffice.setDynamicRowHeaders.")
 
         clickCount = util.getClickCount(self.lastDynamicEvent, inputEvent)
         table = getCalcTable(orca_state.locusOfFocus)

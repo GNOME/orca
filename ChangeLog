@@ -1,3 +1,10 @@
+2006-10-13  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/Staroffice.py:
+          Further work on enhancement #361167.
+          Reversed Insert-r and Insert-c hot-keys and improved the wording
+          of the "help" for learn mode for these two hot-keys.
+
 2006-10-12  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py: Add experimental debug code to start walking
