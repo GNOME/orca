@@ -5,6 +5,10 @@
           Combined fix from myself, Will and Joanie for bug #361670 - Flat 
           reviewing immediately after minimizing Orca main window fails.
 
+        * src/orca/default.py:
+          Combined fix from myself and Will for bug #355893 - Network 
+          Preferences - Port label will not be reported by orca.
+
 2006-10-14  Willie Walker <william.walker@sun.com>
 
 	* NEWS, configure.in, README: prep for v2.17.1.
