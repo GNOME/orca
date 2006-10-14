@@ -195,23 +195,21 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                parent.lastColumn != parent.table.getColumnAtIndex(obj.index):
                 if dynamicColumnHeaders.has_key(table):
                     row = dynamicColumnHeaders[table]
-                    if row:
-                        header = getDynamicRowHeaderCell(obj, row)
-                        if header.text:
-                            text = self._script.getText(header, 0, -1)
-                            if text:
-                                regions.append(braille.Region(" " + text))
+                    header = getDynamicRowHeaderCell(obj, row)
+                    if header.text:
+                        text = self._script.getText(header, 0, -1)
+                        if text:
+                            regions.append(braille.Region(" " + text + " "))
 
             if parent.__dict__.has_key("lastRow") and \
                parent.lastRow != parent.table.getRowAtIndex(obj.index):
                 if dynamicRowHeaders.has_key(table):
                     column = dynamicRowHeaders[table]
-                    if column:
-                        header = getDynamicColumnHeaderCell(obj, column)
-                        if header.text:
-                            text = self._script.getText(header, 0, -1)
-                            if text:
-                                regions.append(braille.Region(" " + text + " "))
+                    header = getDynamicColumnHeaderCell(obj, column)
+                    if header.text:
+                        text = self._script.getText(header, 0, -1)
+                        if text:
+                            regions.append(braille.Region(" " + text + " "))
 
             # Adding in a check here to make sure that the parent is a
             # valid table. It's possible that the parent could be a
@@ -357,23 +355,21 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                    parent.table.getColumnAtIndex(obj.index):
                     if dynamicColumnHeaders.has_key(table):
                         row = dynamicColumnHeaders[table]
-                        if row:
-                            header = getDynamicRowHeaderCell(obj, row)
-                            if header.text:
-                                text = self._script.getText(header, 0, -1)
-                                if text:
-                                    utterances.append(text)
+                        header = getDynamicRowHeaderCell(obj, row)
+                        if header.text:
+                            text = self._script.getText(header, 0, -1)
+                            if text:
+                                utterances.append(text)
 
                 if parent.__dict__.has_key("lastRow") and \
                    parent.lastRow != parent.table.getRowAtIndex(obj.index):
                     if dynamicRowHeaders.has_key(table):
                         column = dynamicRowHeaders[table]
-                        if column:
-                            header = getDynamicColumnHeaderCell(obj, column)
-                            if header.text:
-                                text = self._script.getText(header, 0, -1)
-                                if text:
-                                    utterances.append(text)
+                        header = getDynamicColumnHeaderCell(obj, column)
+                        if header.text:
+                            text = self._script.getText(header, 0, -1)
+                            if text:
+                                utterances.append(text)
 
                 if settings.readTableCellRow:
                     parent = obj.parent
@@ -645,7 +641,10 @@ class Script(default.Script):
         if table:
             row = self.getCalcRow(orca_state.locusOfFocus)
             if clickCount == 2:
-                dynamicColumnHeaders[table] = None
+                try:
+                    del dynamicColumnHeaders[table]
+                except:
+                    pass
             else:
                 dynamicColumnHeaders[table] = row
         self.lastDynamicEvent = inputEvent
@@ -677,7 +676,10 @@ class Script(default.Script):
         if table:
             column = self.getCalcColumn(orca_state.locusOfFocus)
             if clickCount == 2:
-                dynamicRowHeaders[table] = None
+                try:
+                    del dynamicRowHeaders[table]
+                except:
+                    pass
             else:
                 dynamicRowHeaders[table] = column
         self.lastDynamicEvent = inputEvent
