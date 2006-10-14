@@ -5,8 +5,8 @@ DOC_FILES = \
 	orca \
 	orca.acss \
 	orca.atspi \
-	orca.braillegenerator \
 	orca.braille \
+	orca.braillegenerator \
 	orca.brl \
 	orca.brlmon \
 	orca.chnames \
@@ -26,13 +26,13 @@ DOC_FILES = \
 	orca.keybindings \
 	orca.keynames \
 	orca.mag \
+	orca.orca \
 	orca.orca_console_prefs \
 	orca.orca_glade \
 	orca.orca_gui_main \
 	orca.orca_gui_prefs \
 	orca.orca_i18n \
 	orca.orca_prefs \
-	orca.orca \
 	orca.orca_quit \
 	orca.orca_state \
 	orca.outloud \
@@ -43,9 +43,9 @@ DOC_FILES = \
 	orca.rolenames \
 	orca.script \
 	orca.settings \
+	orca.speech \
 	orca.speechgenerator \
 	orca.speechserver \
-	orca.speech \
 	orca.util \
 	orca.scripts \
 	orca.scripts.Evolution \

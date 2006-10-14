@@ -1,4 +1,4 @@
-Orca v2.17.0
+Orca v2.17.1
 
 Introduction
 ========================================================================
@@ -19,7 +19,7 @@ AT-SPI include the GNOME GTK+ toolkit, the Java platform's Swing
 toolkit, OpenOffice, and Mozilla.  AT-SPI support for the KDE Qt
 toolkit is currently being pursued.
 
-The focus for Orca v2.17.0 has been to provide usable access to key
+The focus for Orca v2.17.1 has been to provide usable access to key
 office productivity applications, including the following:
 
 Application Class        Application
@@ -36,7 +36,7 @@ Text Document Content    OpenOffice v2.0.4 or StarOffice PP4
 Spreadsheet Content      OpenOffice v2.0.4 or StarOffice PP4
 
 Notably absent from this list are the following applications that we
-plan to address with Orca v1.1 (to be released in the GNOME 2.18 time
+plan to address with Orca v2.18 (to be released in the GNOME 2.18 time
 frame):
 
 * Web Content Accessibility: while Orca can provide access to
@@ -56,7 +56,7 @@ frame):
 
 * Presentation Content: the Orca team focused on what our users
   specified as the most important content for OpenOffice and
-  StarOffice: text documents and spreadsheets.  For v1.1, we plan on
+  StarOffice: text documents and spreadsheets.  For v2.18, we plan on
   providing more compelling access to these features as well as access
   to the generation and reading of presentation content.
 

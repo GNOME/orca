@@ -30,16 +30,16 @@ orca_python_PYTHON = \
 	keybindings.py \
 	keynames.py \
 	mag.py \
-	outloud.py \
 	orca.py \
-	orca_gui_main.py \
-	orca_gui_prefs.py \
 	orca_console_prefs.py \
 	orca_glade.py \
+	orca_gui_main.py \
+	orca_gui_prefs.py \
 	orca_i18n.py \
 	orca_prefs.py \
 	orca_quit.py \
 	orca_state.py \
+	outloud.py \
 	phonnames.py \
 	platform.py \
 	presentation_manager.py \

@@ -1,3 +1,58 @@
+2.17.1 - 14-Oct-2006
+
+* Implemented RFE 361167: add use of Insert+r and Insert+c as a means
+  to specify dynamic column headers and dynamic row headers in Open
+  Office spreadsheets.
+
+* Fixed bug 361747: provide support for the 'weight' text attribute.
+  Also make sure that character text attributes are handled correctly.
+
+* Implemented RFE 319657: In gedit, Orca now speaks the context of 
+  search ('find') results.
+
+* Implemented RFE 339789: Added code to "Where Am I" to report the 
+  number of items in menus and submenus as well as the current 
+  position of a menu item or menu in its menu.
+
+* Fix for bug 350523: In gcalctool, give reference to accessible name
+  of a button over the text that is being displayed on a button.
+
+* Added use of Python logging API to log speech and braille at the 
+  INFO level.  This will dovetail in with the larger testing work
+  being done for GNOME.
+
+* Fix for bug 350219: provide announcement when you create a new 
+  document for the very first time in Open Office.
+
+* Fix for bug 354785: read the entire line in the "Process Fields" 
+  preferences table in gnome-system-monitor. Fix involved a rework 
+  of how table cells are brailled and spoken.
+
+* Fix for bug 349954: do not make assumptions that UTF-8 strings
+  contain only single byte characters.  Handle this by converting
+  to the Python unicode type before doing processing such as
+  string length and character analysis.
+
+* Added 'getText' method to script to provide a means for the script
+  to work around shortcomings in some accessible text implementations. 
+
+* Exploratory work on the Gecko.py script to help debug and provide
+  an understanding of what the Gecko AT-SPI implementation is providing
+  us.
+
+* Added ZONE support for goBegin and goEnd functions of flat review
+  (thanks Joanie Diggs!)
+
+* Improvements to the test harness.  NOTE: as a result of the GNOME
+  Boston 2006 Accessibility Summit, we may revise this harness as
+  the overall testing strategy for GNOME develops.
+
+* New and updated translations (THANKS!):
+
+    et      Estonian             Ivar Smolin
+
+==========
+
 2.17.0 - 04-Oct-2006
 
 * Updates to user requirements and functional specification.

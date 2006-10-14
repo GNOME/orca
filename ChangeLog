@@ -1,3 +1,16 @@
+2006-10-14  Willie Walker <william.walker@sun.com>
+
+	* NEWS, configure.in, README: prep for v2.17.1.
+
+	* docs/pydoc/Makefile.am, po/POTFILES.in, src/orca/Makefile.am:
+	make the alphabetization of things consistent across files to
+	make it easier to check if we've missed something or not.
+	
+2006-10-14  Willie Walker <william.walker@sun.com>
+
+	* src/orca/scripts/Staroffice.py: more work on enhancement 361167
+	to allow column 0 and row 0 to be headers.
+	
 2006-10-13  Willie Walker <william.walker@sun.com>
 
         * src/orca/braille.py, src/orca/debug.py,
