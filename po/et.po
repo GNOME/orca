@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: orca HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-09-06 17:15+0200\n"
-"PO-Revision-Date: 2006-10-13 22:45+0300\n"
+"PO-Revision-Date: 2006-10-14 18:02+0300\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -55,16 +55,15 @@ msgstr "tühik"
 
 #: ../src/orca/chnames.py:33
 msgid "newline"
-msgstr ""
+msgstr "reavahetus"
 
 #: ../src/orca/chnames.py:34
-#, fuzzy
 msgid "tab"
-msgstr "tab"
+msgstr "tabulaator"
 
 #: ../src/orca/chnames.py:36
 msgid "exclaim"
-msgstr ""
+msgstr "hüüumärk"
 
 #: ../src/orca/chnames.py:37
 msgid "apostrophe"
@@ -88,11 +87,11 @@ msgstr ""
 
 #: ../src/orca/chnames.py:43
 msgid "left paren"
-msgstr ""
+msgstr "vasak sulg"
 
 #: ../src/orca/chnames.py:44
 msgid "right paren"
-msgstr ""
+msgstr "parem sulg"
 
 #: ../src/orca/chnames.py:45
 msgid "dash"
@@ -120,11 +119,11 @@ msgstr "suurem kui"
 
 #: ../src/orca/chnames.py:51
 msgid "left bracket"
-msgstr ""
+msgstr "vasak nurksulg"
 
 #: ../src/orca/chnames.py:52
 msgid "right bracket"
-msgstr ""
+msgstr "parem nurksulg"
 
 #: ../src/orca/chnames.py:53
 msgid "backslash"
@@ -135,9 +134,8 @@ msgid "vertical line"
 msgstr "vertikaalne rida"
 
 #: ../src/orca/chnames.py:55
-#, fuzzy
 msgid "grave accent"
-msgstr "Suurtäht"
+msgstr "graavis"
 
 #: ../src/orca/chnames.py:56
 msgid "tilde"
@@ -145,15 +143,15 @@ msgstr "tilde"
 
 #: ../src/orca/chnames.py:57
 msgid "left brace"
-msgstr ""
+msgstr "vasak loogiline sulg"
 
 #: ../src/orca/chnames.py:58
 msgid "right brace"
-msgstr ""
+msgstr "parem loogiline sulg"
 
 #: ../src/orca/chnames.py:60
 msgid "pound"
-msgstr "nael"
+msgstr "trellid"
 
 #: ../src/orca/chnames.py:61
 msgid "dollar"
@@ -165,9 +163,8 @@ msgid "percent"
 msgstr "protsent"
 
 #: ../src/orca/chnames.py:63
-#, fuzzy
 msgid "and"
-msgstr "ja"
+msgstr ""
 
 #: ../src/orca/chnames.py:64
 msgid "star"
@@ -191,7 +188,7 @@ msgstr ""
 
 #: ../src/orca/chnames.py:69
 msgid "caret"
-msgstr ""
+msgstr "katus"
 
 #: ../src/orca/default.py:78
 msgid "Performs left click on current flat review item."
