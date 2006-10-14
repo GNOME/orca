@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: orca HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-09-06 17:15+0200\n"
-"PO-Revision-Date: 2006-10-12 07:47+0300\n"
+"PO-Revision-Date: 2006-10-13 22:45+0300\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -735,16 +735,14 @@ msgid ""
 msgstr "(mitte ükski neist)"
 
 #: ../src/orca/orca-setup.glade.h:39
-#, fuzzy
 msgid "Orca Preferences"
-msgstr "Deskbar'i eelistused"
+msgstr "Orca eelistused"
 
 #: ../src/orca/orca-setup.glade.h:40
 msgid "Pi_tch:"
 msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:41
-#, fuzzy
 msgid "Question"
 msgstr "Küsimus"
 
@@ -1121,9 +1119,8 @@ msgstr "Keskele"
 
 #: ../src/orca/orca_gui_prefs.py:382
 #: ../src/orca/orca_gui_prefs.py:1333
-#, fuzzy
 msgid "Proportional"
-msgstr "proportsionaalne"
+msgstr "Proportsionaalne"
 
 #: ../src/orca/orca_gui_prefs.py:384
 #: ../src/orca/orca_gui_prefs.py:1331
@@ -1132,7 +1129,6 @@ msgstr ""
 
 #: ../src/orca/orca_gui_prefs.py:502
 #: ../src/orca/orca_gui_prefs.py:527
-#, fuzzy
 msgid "Default"
 msgstr "Vaikimisi"
 
@@ -1144,9 +1140,8 @@ msgstr "Kirjatäht, Väiketäht"
 
 #: ../src/orca/orca_gui_prefs.py:506
 #: ../src/orca/orca_gui_prefs.py:535
-#, fuzzy
 msgid "Hyperlink"
-msgstr "Hüperlink"
+msgstr "Hüperviit"
 
 #: ../src/orca/orca_gui_prefs.py:1399
 msgid "Accessibility support for GNOME has just been enabled."
@@ -1157,7 +1152,6 @@ msgid "You need to log out and log back in for the change to take effect."
 msgstr ""
 
 #: ../src/orca/rolenames.py:147
-#, fuzzy
 msgid "???"
 msgstr "???"
 
@@ -1235,14 +1229,12 @@ msgid "cnv"
 msgstr ""
 
 #: ../src/orca/rolenames.py:178
-#, fuzzy
 msgid "Canvas"
-msgstr "canvase tugi"
+msgstr ""
 
 #: ../src/orca/rolenames.py:179
-#, fuzzy
 msgid "canvas"
-msgstr "canvase tugi"
+msgstr ""
 
 #: ../src/orca/rolenames.py:182
 #: ../src/orca/rolenames.py:187
@@ -1250,12 +1242,10 @@ msgid "chk"
 msgstr ""
 
 #: ../src/orca/rolenames.py:183
-#, fuzzy
 msgid "CheckBox"
-msgstr "Kontrollkast"
+msgstr "MärkeRuut"
 
 #: ../src/orca/rolenames.py:184
-#, fuzzy
 msgid "check box"
 msgstr "märkeruut"
 
@@ -1264,9 +1254,8 @@ msgid "CheckItem"
 msgstr ""
 
 #: ../src/orca/rolenames.py:189
-#, fuzzy
 msgid "check item"
-msgstr "märgitav menüükirje"
+msgstr ""
 
 #: ../src/orca/rolenames.py:192
 msgid "ckm"
@@ -1325,35 +1314,30 @@ msgid "combo box"
 msgstr "valikukast"
 
 #: ../src/orca/rolenames.py:212
-#, fuzzy
 msgid "dat"
-msgstr "&Kuupäevaliselt"
+msgstr ""
 
 #: ../src/orca/rolenames.py:213
-#, fuzzy
 msgid "DateEditor"
-msgstr "kuupäevaredaktor"
+msgstr "KuupäevaRedaktor"
 
 #: ../src/orca/rolenames.py:214
-#, fuzzy
 msgid "date editor"
-msgstr "Tööriistariba redaktor"
+msgstr "kuupäevaredaktor"
 
 #: ../src/orca/rolenames.py:217
 #: ../src/orca/rolenames.py:277
 #: ../src/orca/rolenames.py:279
-#, fuzzy
 msgid "icon"
 msgstr "ikoon"
 
 #: ../src/orca/rolenames.py:218
 msgid "DesktopIcon"
-msgstr ""
+msgstr "TöölauaIkoon"
 
 #: ../src/orca/rolenames.py:219
-#, fuzzy
 msgid "desktop icon"
-msgstr "töölaua ikoon"
+msgstr "töölauaikoon"
 
 #: ../src/orca/rolenames.py:222
 #: ../src/orca/rolenames.py:264
@@ -1373,14 +1357,12 @@ msgstr "töölaua raam"
 
 #: ../src/orca/rolenames.py:227
 #: ../src/orca/rolenames.py:229
-#, fuzzy
 msgid "dial"
-msgstr "_Helistamise eesliide:"
+msgstr ""
 
 #: ../src/orca/rolenames.py:228
-#, fuzzy
 msgid "Dial"
-msgstr "_Helistamise eesliide:"
+msgstr ""
 
 #: ../src/orca/rolenames.py:232
 msgid "dlg"
@@ -1427,10 +1409,9 @@ msgstr ""
 
 #: ../src/orca/rolenames.py:248
 msgid "FileChooser"
-msgstr ""
+msgstr "FailiValija"
 
 #: ../src/orca/rolenames.py:249
-#, fuzzy
 msgid "file chooser"
 msgstr "failivalija"
 
@@ -1490,15 +1471,13 @@ msgstr "html"
 
 #: ../src/orca/rolenames.py:273
 msgid "HtmlContainer"
-msgstr ""
+msgstr "HtmlKonteiner"
 
 #: ../src/orca/rolenames.py:274
-#, fuzzy
 msgid "h t m l container"
-msgstr "HTML konteiner"
+msgstr "h t m l konteiner"
 
 #: ../src/orca/rolenames.py:278
-#, fuzzy
 msgid "Icon"
 msgstr "Ikoon"
 
@@ -1673,14 +1652,12 @@ msgid "pwd"
 msgstr ""
 
 #: ../src/orca/rolenames.py:348
-#, fuzzy
 msgid "Password"
 msgstr "Parool"
 
 #: ../src/orca/rolenames.py:349
-#, fuzzy
 msgid "password"
-msgstr "_Parool:"
+msgstr "parool"
 
 #: ../src/orca/rolenames.py:352
 msgid "popmnu"
@@ -1705,7 +1682,6 @@ msgid "Progress"
 msgstr "Edenemine"
 
 #: ../src/orca/rolenames.py:359
-#, fuzzy
 msgid "progress bar"
 msgstr "edenemisriba"
 
@@ -1727,12 +1703,10 @@ msgid "radio"
 msgstr "Raadio"
 
 #: ../src/orca/rolenames.py:368
-#, fuzzy
 msgid "RadioButton"
-msgstr "Raadionupp"
+msgstr "RaadioNupp"
 
 #: ../src/orca/rolenames.py:369
-#, fuzzy
 msgid "radio button"
 msgstr "raadionupp"
 
@@ -1796,12 +1770,10 @@ msgid "scbr"
 msgstr ""
 
 #: ../src/orca/rolenames.py:393
-#, fuzzy
 msgid "ScrollBar"
-msgstr "Kerimisriba"
+msgstr "KerimisRiba"
 
 #: ../src/orca/rolenames.py:394
-#, fuzzy
 msgid "scroll bar"
 msgstr "kerimisriba"
 
@@ -1837,12 +1809,10 @@ msgid "sldr"
 msgstr ""
 
 #: ../src/orca/rolenames.py:408
-#, fuzzy
 msgid "Slider"
 msgstr "Liugur"
 
 #: ../src/orca/rolenames.py:409
-#, fuzzy
 msgid "slider"
 msgstr "liugur"
 
@@ -1852,10 +1822,9 @@ msgstr ""
 
 #: ../src/orca/rolenames.py:413
 msgid "SplitPane"
-msgstr ""
+msgstr "PoolitamisPaan"
 
 #: ../src/orca/rolenames.py:414
-#, fuzzy
 msgid "split pane"
 msgstr "poolitamispaan"
 
@@ -1893,17 +1862,14 @@ msgid "tbl"
 msgstr ""
 
 #: ../src/orca/rolenames.py:428
-#, fuzzy
 msgid "Table"
 msgstr "Tabel"
 
 #: ../src/orca/rolenames.py:429
-#, fuzzy
 msgid "table"
 msgstr "tabel"
 
 #: ../src/orca/rolenames.py:433
-#, fuzzy
 msgid "Cell"
 msgstr "Lahter"
 
@@ -1927,27 +1893,22 @@ msgid "term"
 msgstr "term="
 
 #: ../src/orca/rolenames.py:453
-#, fuzzy
 msgid "Terminal"
 msgstr "Terminal"
 
 #: ../src/orca/rolenames.py:454
-#, fuzzy
 msgid "terminal"
 msgstr "terminal"
 
 #: ../src/orca/rolenames.py:457
-#, fuzzy
 msgid "txt"
-msgstr "-vearaport.txt"
+msgstr ""
 
 #: ../src/orca/rolenames.py:458
-#, fuzzy
 msgid "Text"
 msgstr "Tekst"
 
 #: ../src/orca/rolenames.py:459
-#, fuzzy
 msgid "text"
 msgstr "tekst"
 
@@ -1969,19 +1930,17 @@ msgid "tbar"
 msgstr ""
 
 #: ../src/orca/rolenames.py:468
-#, fuzzy
 msgid "ToolBar"
-msgstr "_Tööriistariba"
+msgstr "TööriistaRiba"
 
 #: ../src/orca/rolenames.py:469
-#, fuzzy
 msgid "tool bar"
 msgstr "tööriistariba"
 
 #: ../src/orca/rolenames.py:472
 #, fuzzy
 msgid "tip"
-msgstr "_Nõuanne:"
+msgstr "nõuanne"
 
 #: ../src/orca/rolenames.py:473
 #, fuzzy
