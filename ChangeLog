@@ -1,3 +1,10 @@
+2006-10-14  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          src/orca/focus_tracking_presenter.py:
+          Combined fix from myself, Will and Joanie for bug #361670 - Flat 
+          reviewing immediately after minimizing Orca main window fails.
+
 2006-10-14  Willie Walker <william.walker@sun.com>
 
 	* NEWS, configure.in, README: prep for v2.17.1.

@@ -2531,13 +2531,17 @@ class Script(script.Script):
         context = self.getFlatReviewContext()
 
         [regions, regionWithFocus] = context.getCurrentBrailleRegions()
+        if not regions:
+            regions = []
+            regionWithFocus = None
 
         line = braille.Line()
         line.addRegions(regions)
         braille.setLines([line])
         braille.setFocus(regionWithFocus, False)
-        braille.panToOffset(regionWithFocus.brailleOffset \
-                            + regionWithFocus.cursorOffset)
+        if regionWithFocus:
+            braille.panToOffset(regionWithFocus.brailleOffset \
+                                + regionWithFocus.cursorOffset)
 
         if self.justEnteredFlatReviewMode:
             braille.refresh(True, self.targetCursorCell)

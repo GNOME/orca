@@ -399,18 +399,21 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         oldLocusOfFocus = orca_state.locusOfFocus
         while retryCount <= settings.commFailureAttemptLimit:
             try:
-                if event.type == "window:activate":
-                    # We'll let someone else decide if it's important
-                    # to stop speech or not.
-                    #speech.stop()
-                    orca_state.activeScript = self._getScript(event.source.app)
-                    debug.println(debug.LEVEL_FINE, "ACTIVE SCRIPT: " \
-                                  + orca_state.activeScript.name)
-                s = self._getScript(event.source.app)
-                s.processObjectEvent(event)
-                if retryCount:
-                    debug.println(debug.LEVEL_WARNING,
-                                  "  SUCCEEDED AFTER %d TRIES" % retryCount)
+                if not event.source.state.count( \
+                                      atspi.Accessibility.STATE_ICONIFIED):
+                    if event.type == "window:activate":
+                        # We'll let someone else decide if it's important
+                        # to stop speech or not.
+                        #speech.stop()
+                        orca_state.activeScript = \
+                            self._getScript(event.source.app)
+                        debug.println(debug.LEVEL_FINE, "ACTIVE SCRIPT: " \
+                                      + orca_state.activeScript.name)
+                    s = self._getScript(event.source.app)
+                    s.processObjectEvent(event)
+                    if retryCount:
+                        debug.println(debug.LEVEL_WARNING,
+                                      "  SUCCEEDED AFTER %d TRIES" % retryCount)
                 break
             except CORBA.COMM_FAILURE:
                 debug.printException(debug.LEVEL_WARNING)
