@@ -1,6 +1,12 @@
 2006-10-14  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
+          Took out the "fix" for bug #355893. It breaks the fix for
+          bug #361670.
+
+2006-10-14  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
           src/orca/focus_tracking_presenter.py:
           Combined fix from myself, Will and Joanie for bug #361670 - Flat 
           reviewing immediately after minimizing Orca main window fails.

@@ -2028,13 +2028,6 @@ class Script(script.Script):
 
         # Do we care?
         #
-        if event.type == "object:state-changed:focused":
-            if event.detail1:
-                self.onFocus(event)
-            else:
-                orca.setLocusOfFocus(event, None)
-            return
-
         if state_change_notifiers.has_key(event.source.role):
             notifiers = state_change_notifiers[event.source.role]
             found = False
