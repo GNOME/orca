@@ -707,6 +707,32 @@ def getFrame(obj):
 
     return obj
 
+def getTopLevel(obj):
+    """Returns the top-level object (frame, dialog ...) containing this 
+    object, or None if this object is not inside a top-level object.
+
+    Arguments:
+    - obj: the Accessible object
+    """
+
+    debug.println(debug.LEVEL_FINEST,
+                  "Finding top-level object for source.name="
+                  + obj.accessibleNameToString())
+
+    while obj \
+          and (obj != obj.parent) \
+          and (obj.parent.role != rolenames.ROLE_APPLICATION):
+        obj = obj.parent
+        debug.println(debug.LEVEL_FINEST, "--> obj.name="
+                      + obj.accessibleNameToString())
+
+    if obj and (obj.parent.role == rolenames.ROLE_APPLICATION):
+        pass
+    else:
+        obj = None
+
+    return obj
+
 def getTextLineAtCaret(obj):
     """Gets the line of text where the caret is.
 

@@ -1,3 +1,10 @@
+2006-10-16  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          src/orca/util.py:
+          New fix for bug #355893. It no longer breaks the fix for
+          bug #361670. Thanks to Joanie for this.
+
 2006-10-14  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:

@@ -2028,6 +2028,22 @@ class Script(script.Script):
 
         # Do we care?
         #
+        if event.type == "object:state-changed:focused":
+            iconified = False
+            try:
+                window = util.getTopLevel(event.source)
+                iconified = window.state.count( \
+                                     atspi.Accessibility.STATE_ICONIFIED)
+            except:
+                debug.println(debug.LEVEL_FINEST,
+                        "onStateChanged: could not get frame of focused item")
+            if not iconified:
+                if event.detail1:
+                    self.onFocus(event)
+                else:
+                    orca.setLocusOfFocus(event, None)
+                return
+
         if state_change_notifiers.has_key(event.source.role):
             notifiers = state_change_notifiers[event.source.role]
             found = False
