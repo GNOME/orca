@@ -5,6 +5,15 @@
           New fix for bug #355893. It no longer breaks the fix for
           bug #361670. Thanks to Joanie for this.
 
+        * src/orca/script.py:
+          src/orca/scripts/Evolution.py:
+          src/orca/scripts/gaim.py:
+          src/orca/scripts/metacity.py:
+          Fix for bug #348693 - Evolution announcement of new mail should 
+          be togglable. 
+          This also fixes bug #357169 - Text output in terminal shouldn't 
+          be announced if gnome-terminal is not focused.
+
 2006-10-14  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:

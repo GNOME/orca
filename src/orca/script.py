@@ -42,6 +42,7 @@ __license__   = "LGPL"
 import braillegenerator
 import debug
 import keybindings
+import orca_state
 import settings
 import speechgenerator
 
@@ -68,6 +69,10 @@ class Script:
         self.name += " (module=" + self.__module__ + ")"
 
         self.listeners = self.getListeners()
+
+        # By default, don't handle events for non-active applications.
+        #
+        self.presentIfInactive = False
 
         self.inputEventHandlers = {}
         self.setupInputEventHandlers()
@@ -181,6 +186,14 @@ class Script:
         Arguments:
         - event: the Event
         """
+
+        # Check to see if we really want to process this event.
+        #
+        processEvent = (orca_state.activeScript == self \
+                        or self.presentIfInactive)
+
+        if not processEvent:
+            return
 
         # This calls the first listener it finds whose key *begins with* or is
         # the same as the event.type.  The reason we do this is that the event

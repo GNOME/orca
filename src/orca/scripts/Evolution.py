@@ -29,6 +29,7 @@ import orca.debug as debug
 import orca.default as default
 import orca.atspi as atspi
 import orca.input_event as input_event
+import orca.keybindings as keybindings
 import orca.rolenames as rolenames
 import orca.braille as braille
 import orca.orca_state as orca_state
@@ -53,11 +54,11 @@ class Script(default.Script):
         - app: the application to create a script for.
         """
 
-        default.Script.__init__(self, app)
-
         # Set the debug level for all the methods in this script.
         #
         self.debugLevel = debug.LEVEL_FINEST
+
+        default.Script.__init__(self, app)
 
         # This will be used to cache a handle to the message area in the
         # Mail compose window.
@@ -106,6 +107,48 @@ class Script(default.Script):
             input_event.InputEventHandler(
                 Script.sayAll,
                 _("Speaks entire document."))
+
+        self.inputEventHandlers["toggleReadMailHandler"] = \
+            input_event.InputEventHandler(
+                Script.toggleReadMail,
+                _("Toggle whether we present new mail if we not not the active script."))
+
+    def getKeyBindings(self):
+        """Defines the new key binding for this script. Setup the default
+        key bindings, then add one in for toggling whether we present new
+        mail if we not not the active script.
+
+        Returns an instance of keybindings.KeyBindings.
+        """
+
+        debug.println(self.debugLevel, "Evolution.getKeyBindings.")
+
+        keyBindings = default.Script.getKeyBindings(self)
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "n",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["toggleReadMailHandler"]))
+        return keyBindings
+
+    def toggleReadMail(self, inputEvent):
+        """ Toggle whether we present new mail if we not not the active script.+
+        Arguments:
+        - inputEvent: if not None, the input event that caused this action.
+        """
+
+        debug.println(self.debugLevel, "Evolution.toggleReadMail.")
+
+        line = _("present new mail if this script is not active.")
+        self.presentIfInactive = not self.presentIfInactive
+        if not self.presentIfInactive:
+            line = _("do not present new mail if this script is not active.")
+
+        speech.speak(line)
+
+        return True
 
     def speakSetupAssistantLabel(self, label):
         """Perform a variety of tests on this Setup Assistant label to see

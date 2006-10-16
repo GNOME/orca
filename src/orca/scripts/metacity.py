@@ -48,7 +48,12 @@ class Script(default.Script):
         Arguments:
         - app: the application to create a script for.
         """
+
         default.Script.__init__(self, app)
+
+        # We want to handle events if we aren't the active application.
+        #
+        self.presentIfInactive = True
 
     def onNameChanged(self, event):
         """The status bar in metacity tells us what toplevel window will be
