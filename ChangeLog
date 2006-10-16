@@ -20,6 +20,11 @@
           This also fixes bug #357169 - Text output in terminal shouldn't 
           be announced if gnome-terminal is not focused.
 
+        * src/orca/default.py:
+          Revised fix for bug #354460. Review previous or next character
+          should not have been doing a phonetic spell if clicked three
+          times.
+
 2006-10-14  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:

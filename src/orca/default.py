@@ -3037,7 +3037,7 @@ class Script(script.Script):
                                    flat_review.Context.WRAP_LINE)
 
         if moved:
-            self.reviewCurrentCharacter(inputEvent)
+            self._reviewCurrentCharacter(inputEvent)
             self.targetCursorCell = braille.cursorCell
 
         return True
@@ -3064,7 +3064,7 @@ class Script(script.Script):
                                flat_review.Context.WRAP_LINE)
 
         if moved:
-            self.reviewCurrentCharacter(inputEvent)
+            self._reviewCurrentCharacter(inputEvent)
             self.targetCursorCell = braille.cursorCell
 
         return True
