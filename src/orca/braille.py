@@ -38,7 +38,19 @@ import signal
 import threading
 
 import atspi
-import brl
+
+# We'll use the official BrlAPI pythons (as of BrlTTY 3.8) if they
+# are available.  Otherwise, we'll fall back to our own bindings.
+#
+try:
+    import brlapi
+    brlAPI = None
+    useBrlAPIBindings = True
+    brlAPIRunning = False
+except:
+    import brl
+    useBrlAPIBindings = False
+
 try:
     # This can fail due to gtk not being available.  We want to
     # be able to recover from that if possible.  The main driver
@@ -606,7 +618,11 @@ def refresh(panToCursor=True, targetCursorCell=0):
     global monitor
 
     if len(_lines) == 0:
-        brl.writeText(0, "")
+        if useBrlAPIBindings:
+            if brlAPIRunning:
+                brlAPI.writeText("", 0)
+        else:
+            brl.writeText(0, "")
         return
 
     # Now determine the location of the cursor.  First, we'll figure
@@ -663,7 +679,16 @@ def refresh(panToCursor=True, targetCursorCell=0):
 
     string = string.decode("UTF-8")
     substring = string[startPos:endPos].encode("UTF-8")
-    brl.writeText(cursorCell, substring)
+    if useBrlAPIBindings:
+        if brlAPIRunning:
+            #writeStruct = brlapi.Write()
+            #writeStruct.text = substring
+            #writeStruct.cursor = cursorCell
+            #writeStruct.charset = "UTF-8"
+            #brlAPI.write(writeStruct)
+            brlAPI.writeText(substring, cursorCell)
+    else:
+        brl.writeText(cursorCell, substring)
 
     if settings.enableBrailleMonitor:
         if not monitor:
@@ -801,7 +826,7 @@ def _processBrailleEvent(command):
     """
 
     _printBrailleEvent(debug.LEVEL_FINE, command)
-
+    
     # [[[TODO: WDW - DaveM suspects the Alva driver is sending us a
     # repeat flag.  So...let's kill a couple birds here until BrlTTY
     # 3.8 fixes the problem: we'll disable autorepeat and we'll also
@@ -841,6 +866,29 @@ def _processBrailleEvent(command):
 
     return consumed
 
+def _brlAPIKeyReader():
+        """Method to read a key from the BrlAPI bindings.  This is a
+        gidle handler.
+        """
+        key = brlAPI.readKey(False)
+        if key:
+            flags = key >> 32
+            lower = key & 0xFFFFFFFF
+            keyType = lower >> 29
+            keyCode = lower & 0x1FFFFFFF
+            
+            # [[TODO: WDW - HACK If we have a cursor routing key, map
+            # it back to the code we used to get with earlier versions
+            # of BrlAPI (i.e., bit 0x100 was the indicator of a cursor
+            # routing key instead of 0x1000).  This may change before
+            # the offical BrlAPI Python bindings are released.]]]
+            #            
+            if keyCode & 0x10000:
+                keyCode = 0x100 | (keyCode & 0xFF)
+            if keyCode:
+                _processBrailleEvent(keyCode)
+        return brlAPIRunning
+
 def init(callback=None, tty=7):
     """Initializes the braille module, connecting to the BrlTTY driver.
 
@@ -860,20 +908,38 @@ def init(callback=None, tty=7):
 
     _callback = callback
 
-    if brl.init(tty):
-        debug.println(debug.LEVEL_CONFIGURATION,
-                      "Braille module has been initialized.")
-        brl.registerCallback(_processBrailleEvent)
+    if useBrlAPIBindings:
+        try:
+            import gobject
+            gobject.threads_init()
+            global brlAPI
+            global brlAPIRunning
+            brlAPI = brlapi.Bridge()
+            brlAPI.getTty(tty)
+            brlAPIRunning = True
+            gobject.idle_add(_brlAPIKeyReader)
+        except:
+            debug.printException(debug.LEVEL_OFF)
+            return False
     else:
-        debug.println(debug.LEVEL_CONFIGURATION,
-                      "Braille module has NOT been initialized.")
-        return False
+        if brl.init(tty):
+            debug.println(debug.LEVEL_CONFIGURATION,
+                          "Braille module has been initialized.")
+            brl.registerCallback(_processBrailleEvent)
+        else:
+            debug.println(debug.LEVEL_CONFIGURATION,
+                          "Braille module has NOT been initialized.")
+            return False
 
     # [[[TODO: WDW - For some reason, BrlTTY wants to say the height of the
     # Vario is 40 so we hardcode it to 1 for now.]]]
     #
     #_displaySize = (brl.getDisplayWidth(), brl.getDisplayHeight())
-    _displaySize = [brl.getDisplayWidth(), 1]
+    if useBrlAPIBindings:
+        (x, y) = brlAPI.displaysize
+        _displaySize = [x, 1]
+    else:
+        _displaySize = [brl.getDisplayWidth(), 1]
 
     debug.println(debug.LEVEL_CONFIGURATION,
                   "braille display size = (%d, %d)" \
@@ -896,7 +962,13 @@ def shutdown():
     if not _initialized:
         return False
 
-    brl.shutdown()
+    global brlAPIRunning
+    if useBrlAPIBindings:
+        if brlAPIRunning:
+            brlAPIRunning = False
+            brlAPI.leaveTty()
+    else:
+        brl.shutdown()
 
     _initialized = False
 
