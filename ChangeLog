@@ -1,5 +1,9 @@
 2006-10-16  Willie Walker <william.walker@sun.com>
 
+	* src/orca/braille.py: use writeStruct with new BrlAPI Python
+	bindings.  This helps address bug 338111 regarding displaying
+	accents correctly (I hope!).
+	
 	* src/orca/braille.py: use the official BrlAPI Python bindings
 	if they exist.  NOTE: this may change since the official BrlAPI
 	bindings have not been released yet.

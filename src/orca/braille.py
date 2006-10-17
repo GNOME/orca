@@ -681,12 +681,17 @@ def refresh(panToCursor=True, targetCursorCell=0):
     substring = string[startPos:endPos].encode("UTF-8")
     if useBrlAPIBindings:
         if brlAPIRunning:
-            #writeStruct = brlapi.Write()
-            #writeStruct.text = substring
-            #writeStruct.cursor = cursorCell
-            #writeStruct.charset = "UTF-8"
-            #brlAPI.write(writeStruct)
-            brlAPI.writeText(substring, cursorCell)
+            writeStruct = brlapi.Write()
+            writeStruct.text = substring
+            writeStruct.regionBegin = 1
+            writeStruct.regionSize = len(substring.decode("UTF-8"))
+            while writeStruct.regionSize < _displaySize[0]:
+                writeStruct.text += " "
+                writeStruct.regionSize += 1
+            writeStruct.cursor = cursorCell
+            writeStruct.charset = "UTF-8"
+            brlAPI.write(writeStruct)
+            #brlAPI.writeText(substring, cursorCell)
     else:
         brl.writeText(cursorCell, substring)
 
@@ -826,7 +831,7 @@ def _processBrailleEvent(command):
     """
 
     _printBrailleEvent(debug.LEVEL_FINE, command)
-    
+
     # [[[TODO: WDW - DaveM suspects the Alva driver is sending us a
     # repeat flag.  So...let's kill a couple birds here until BrlTTY
     # 3.8 fixes the problem: we'll disable autorepeat and we'll also
@@ -876,13 +881,13 @@ def _brlAPIKeyReader():
             lower = key & 0xFFFFFFFF
             keyType = lower >> 29
             keyCode = lower & 0x1FFFFFFF
-            
+
             # [[TODO: WDW - HACK If we have a cursor routing key, map
             # it back to the code we used to get with earlier versions
             # of BrlAPI (i.e., bit 0x100 was the indicator of a cursor
             # routing key instead of 0x1000).  This may change before
             # the offical BrlAPI Python bindings are released.]]]
-            #            
+            #
             if keyCode & 0x10000:
                 keyCode = 0x100 | (keyCode & 0xFF)
             if keyCode:
@@ -919,7 +924,7 @@ def init(callback=None, tty=7):
             brlAPIRunning = True
             gobject.idle_add(_brlAPIKeyReader)
         except:
-            debug.printException(debug.LEVEL_OFF)
+            debug.printException(debug.LEVEL_FINEST)
             return False
     else:
         if brl.init(tty):
