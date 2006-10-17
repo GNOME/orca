@@ -2445,12 +2445,19 @@ class Script(script.Script):
             currentCharIndex = 0
             lines = self.clusterZonesByLine(self.getShowingZones())
             foundZoneWithFocus = False
+
+            if orca_state.locusOfFocus.role == rolenames.ROLE_TABLE_CELL:
+                searchZone = util.getRealActiveDescendant(
+                    orca_state.locusOfFocus)
+            else:
+                searchZone = orca_state.locusOfFocus
+                
             while currentLineIndex < len(lines):
                 line = lines[currentLineIndex]
                 currentZoneIndex = 0
                 while currentZoneIndex < len(line.zones):
                     zone = line.zones[currentZoneIndex]
-                    if zone.accessible == orca_state.locusOfFocus:
+                    if zone.accessible == searchZone:
                         foundZoneWithFocus = True
                         break
                     else:
