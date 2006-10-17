@@ -5,6 +5,10 @@
           Fixed bug #341406 - Orca does not present results when finding 
           files.
 
+        * src/orca/braillegenerator.py:
+          Fix for bug 319783 - Orca should speak/braille the insensitive 
+          states of objects if they are insensitive.
+
 2006-10-16  Willie Walker <william.walker@sun.com>
 
 	* src/orca/braille.py: use writeStruct with new BrlAPI Python

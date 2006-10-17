@@ -193,9 +193,7 @@ class BrailleGenerator:
         Returns a string to be displayed.
         """
 
-        if (settings.brailleVerbosityLevel \
-            == settings.VERBOSITY_LEVEL_VERBOSE) \
-            and obj.state.count(atspi.Accessibility.STATE_SENSITIVE) == 0:
+        if obj.state.count(atspi.Accessibility.STATE_SENSITIVE) == 0:
             return _("grayed")
         else:
             return None
