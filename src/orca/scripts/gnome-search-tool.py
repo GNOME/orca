@@ -78,7 +78,7 @@ class Script(default.Script):
         # Interval in seconds, between utterances of "Searching" when a
         # search is in progress.
         #
-        self.searchInterval = 3.0
+        self.searchInterval = 5.0
 
     def _speakSearching(self):
         """If we are still searching, let the user know. Then start another
