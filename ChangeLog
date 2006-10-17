@@ -1,5 +1,11 @@
 2006-10-16  Willie Walker <william.walker@sun.com>
 
+	* bugs/src/orca/Gecko.py: add throw away code to navigate character
+	by character from the beginning of the document frame.  The code
+	is very rough, not complete, undocumented, and just experimental.
+	The real form will take shape once we have a better understanding
+	of what the user interface design will be.
+	
 	* bugs/bugs.html: add Mozilla bug:
 	https://bugzilla.mozilla.org/show_bug.cgi?id=357032
 

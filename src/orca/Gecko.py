@@ -201,6 +201,10 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
         parent = obj.parent
         if parent.role != rolenames.ROLE_AUTOCOMPLETE:
+            [text, startOffset, endOffset] = util.getTextLineAtCaret(obj)
+            print "HERE", text, startOffset, endOffset
+            print obj.role, obj.text, obj.text.caretOffset
+            print obj.text.getText(0, -1)
             return speechgenerator.SpeechGenerator._getSpeechForText(
                 self, obj, already_focused)
 
@@ -368,6 +372,149 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
         return utterances
 
+class NavigationContext:
+    CHAR   = 1
+
+    def __init__(self, script, documentFrame):
+        self.script = script
+        self.documentFrame =  documentFrame
+
+        # If an object presents text, it implements the accessible
+        # text interface.  If an object has children that also present
+        # text, then the accessible text for the object contains one
+        # EMBEDDED_OBJECT_CHARACTER for each child, where the
+        # EMBEDDED_OBJECT_CHARACTER represents the position of the
+        # child's text in the object and the order of the
+        # EMBEDDED_OBJECT_CHARACTERs represent the order of the
+        # children (i.e., the first EMBEDDED_OBJECT_CHARACTER
+        # represents child 0, the next EMBEDDED_OBJECT_CHARACTER
+        # represents child 1, and so on.)
+        #
+        # So...we keep track of our current position in a page by
+        # managing a context, which is a FIFO stack of [object,
+        # characterIndex, childIndex] tuples where:
+        #
+        # object:           the object we're currently looking at
+        # characterIndex:   the character index in the object's text that
+        #                   we're currently looking at
+        # lastChildIndex:   set when we visit a child, also represents
+        #                   the index of the child prior to the current
+        #                   characterIndex
+        #
+        result = self.initializeContext()
+        print "INITIALIZED AT", result
+
+    def initializeContext(self, root=None):
+        childIndex = -1
+
+        if not root:
+            self.context = []
+            root = self.documentFrame
+            
+        if root.text:
+            text = self.script.getText(root, 0, -1).decode("UTF-8")
+            for characterIndex in range(0, len(text)):
+                if text[characterIndex] == EMBEDDED_OBJECT_CHARACTER:
+                    childIndex += 1
+                    child = root.child(childIndex)
+                    self.context.append([root,
+                                         text,
+                                         characterIndex,
+                                         childIndex])
+                    result = self.initializeContext(child)
+                    if result:
+                        return result
+                    else:
+                        self.context.pop()
+                else:
+                    self.context.append([root,
+                                         text,
+                                         characterIndex,
+                                         childIndex])
+                    return text[characterIndex]
+            return None
+        else:
+            while childIndex < (root.childCount - 1):
+                childIndex += 1
+                self.context.append([root,
+                                     None,
+                                     -1,
+                                     childIndex])
+                result = self.initializeContext(child)
+                if result:
+                    return result
+                else:
+                    self.context.pop()
+
+        return None
+        
+    def setCurrentContext(self, context):
+        if not len(self.context):
+            self.context.append(context)
+        else:
+            self.context[-1] = context
+        
+    def getCurrentContext(self):
+        if not len(self.context):
+            self.initializeContext(self.documentFrame)
+        return self.context[-1]
+
+    def getCurrent(self, type=CHAR):
+        """Returns information about the current position."""
+        [object, text, characterIndex, childIndex] = self.getCurrentContext()
+        if not text and object.text:
+            text = self.script.getText(object, 0, -1).decode("UTF-8")
+        if text:
+            return text[characterIndex]
+        else:
+            return None
+        
+    def goNext(self, type=CHAR):
+        """Moves this context to the first character of the next type."""
+
+        [object, text, characterIndex, childIndex] = self.getCurrentContext()
+        
+        if not text and object.text:
+            text = self.script.getText(object, 0, -1).decode("UTF-8")
+            
+        if text:
+            characterIndex += 1
+            if characterIndex >= len(text):
+                self.context.pop()
+            elif text[characterIndex] == EMBEDDED_OBJECT_CHARACTER:
+                childIndex += 1
+                child = object.child(childIndex)
+                self.setCurrentContext([object,
+                                        text,
+                                        characterIndex,
+                                        childIndex])
+                self.context.append([child, None, 0, -1])
+            else:
+                self.setCurrentContext([object,
+                                        text,
+                                        characterIndex,
+                                        childIndex])
+                return True
+        elif childIndex < (object.childCount - 1):
+            childIndex += 1
+            child = object.child(childIndex)
+            self.setCurrentContext([object,
+                                    text,
+                                    characterIndex,
+                                    childIndex])
+            self.context.append([child, None, 0, -1])
+        else:
+            self.context.pop()
+                
+        if len(self.context):
+            current = self.getCurrent(type)
+            if current and current != EMBEDDED_OBJECT_CHARACTER:
+                return True
+            else:
+                return self.goNext(type)
+        else:
+            return False
+        
 class Script(default.Script):
     """The script for Firefox.
 
@@ -401,6 +548,11 @@ class Script(default.Script):
                 Script.traverseContent,
                 "Traverses document content.")
 
+        self.inputEventHandlers["goNextHandler"] = \
+            input_event.InputEventHandler(
+                Script.goNextCharacter,
+                "Goes to next character.")
+
     def getKeyBindings(self):
         """Defines the key bindings for this script.
 
@@ -415,6 +567,13 @@ class Script(default.Script):
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["traverseContentHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "w",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["goNextHandler"]))
 
         return keyBindings
 
@@ -636,3 +795,15 @@ class Script(default.Script):
     def traverseContent(self, inputEvent):
         documentFrame = self.getDocumentFrame()
         print self.walkContent(documentFrame)
+
+    def goNextCharacter(self, inputEvent):
+
+        try:
+            navigationContext = self.navigationContext
+        except:
+            documentFrame = self.getDocumentFrame()
+            navigationContext = NavigationContext(self, documentFrame)
+            self.navigationContext = navigationContext
+
+        navigationContext.goNext()
+        print navigationContext.getCurrent()
