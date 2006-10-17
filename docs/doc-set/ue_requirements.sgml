@@ -319,7 +319,7 @@
 		<entry>&incomplete; [OWNER: LMS] Firefox 2.0 is
 		  probably as good as it is going to get. Working with
 		  IBM and Firefox team to provide better information
-		  via AT-SPI for FF3 - &mustdeliver; V1.1.</entry>
+		  via AT-SPI for FF3.  FF3 should at least provide the following functionality.  For character and word navigation firefox should honor the standard well known keystrokes ie left and right arrows or CTRL+left and right arrows for moving by character and word.  When the user reaches the beginning or end of a line they should wrap to the next or previus.   - &mustdeliver; V1.1.</entry>
 
 		<entry>&ff2testlink;</entry>
 	      </row>
@@ -611,7 +611,7 @@
 	interest.  From this point, the user can use a &wkc; to go
 	back to the object with focus, give the watched object focus
 	if possible, or perform the equivalent of a mouse click on the
-	watched object.</para>
+	watched object. A watched object should not be restricted to the screen.  For example, a user may want to set a particular cell in a spreadsheet as a watched object.  The user may not care if this cell is visible or not.  The user will press insert+w to move to the watched object and press numpad dash to return to the focus position keeping with the method of exiting flat review.  The user will double press insert+w to actually set a watched object. </para>
 
       <para>In the event the user is a magnification user, the magnifier
         will moved to the found object.  Alternatively, the user may 
