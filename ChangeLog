@@ -11,6 +11,9 @@
 
 2006-10-16  Willie Walker <william.walker@sun.com>
 
+	* bugs/bugs.html: add Mozilla bug:
+	https://bugzilla.mozilla.org/show_bug.cgi?id=357032
+	
 	* src/orca/braille.py: use writeStruct with new BrlAPI Python
 	bindings.  This helps address bug 338111 regarding displaying
 	accents correctly (I hope!).
