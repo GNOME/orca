@@ -37,6 +37,7 @@ import debug
 import input_event
 import orca_state
 import presentation_manager
+import rolenames
 import settings
 import speech
 import util
@@ -401,7 +402,18 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             try:
                 if not event.source.state.count( \
                                       atspi.Accessibility.STATE_ICONIFIED):
-                    if event.type == "window:activate":
+
+                    # [[[TODO: WDW - HACK we look for frame that get
+                    # focus: as a means to detect active scripts
+                    # because yelp does this.  Actually, yelp is a bit
+                    # odd in that it calls itself 'yelp' then changes
+                    # its application name and id to the Gecko toolkit
+                    # in use, and then issues a focus: event on the
+                    # main window, which is a frame.]]]
+                    #
+                    if (event.type == "window:activate") \
+                       or ((event.type == "focus:") \
+                           and (event.source.role == rolenames.ROLE_FRAME)):
                         # We'll let someone else decide if it's important
                         # to stop speech or not.
                         #speech.stop()

@@ -1,3 +1,14 @@
+2006-10-18  Willie Walker <william.walker@sun.com>
+
+	* src/orca/focus_tracking_presenter.py: fix for bug 363242 -
+	handle odd application name changing behavior of yelp so it can
+	still be seen as the active script after it changes its name
+	and id.
+
+	* src/orca/settings.py: add a mapping from 'yelp' to 'Mozilla' to
+	be sure it picks up the Mozilla script.  Part of fix for bug
+	363242.
+	
 2006-10-18  Mike Pedersen <michael.pedersen@sun.com> 
 
         * docs/doc-set/ue_requirements.sgml,
