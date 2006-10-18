@@ -46,34 +46,6 @@ one might experience in the presence of the bug.</p>
     <td><b>Notes</b></td>
   </tr>
 
-
-  <tr>
-    <td>metacity 2.15.4</td>
-    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=350624">350624</a>:
-      No events from status bar are issued</td>
-    <td>No</td>
-    <td>No</td>
-    <td>Metacity is inaccessible when doing Alt+Tab to move between windows.</td>
-  </tr>
- 
-  <tr>
-    <td>gnome-terminal 2.15.4</td>
-    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=350623">350623</a>:
-      getTextAtOffset is broken</td>
-    <td>No</td>
-    <td>No</td>
-    <td>Terminal is inaccessible.</td>
-  </tr>
- 
-  <tr>
-    <td>Eel</td>
-    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=341420">341420</a>:
-      Eel is not setting up the label for/by relations correctly</td>
-    <td>No</td>
-    <td>No</td>
-    <td>Labelled objects don't have their labels spoken in things like Nautilus</td>
-  </tr>
- 
   <tr>
     <td>vte</td>
     <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=150858">150858</a>:
@@ -83,16 +55,6 @@ one might experience in the presence of the bug.</p>
     <td>User doesn't hear text that's been deleted.</td>
   </tr>
   
- <tr>
-    <td>control-center</td>
-    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=342121">342121</a>:
-      Control-center is not setting label for/by properties</td>
-    <td>No</td>
-    <td>No</td>
-    <td>Objects don't have their labels spoken in things like Network Proxy Port</td>
-  </tr>
- 
-
   <tr>
     <td>control-center</td>
     <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=342133">342133</a>:
@@ -104,22 +66,13 @@ one might experience in the presence of the bug.</p>
  
   <tr>
     <td>Nautilus</td>
-    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=338349">338349</a>:
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=356124">356124</a>:
       Nautilus is not setting up the label for/by relations correctly</td>
     <td>No</td>
     <td>No</td>
-    <td>Labelled combo boxes don't have their labels spoken.  We have a workaround for this locally in util.py as a side-effect of the "FILLER/PANEL with two children" work from Baum.</td>
+    <td></td>
   </tr>
 
-  <tr>
-    <td>Nautilus</td>
-    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=338353">338353</a>:
-        [a11y]: Rename file in nautilus not spoken properly by screen reader.
-    <td>No</td>
-    <td>No</td>
-    <td>No workaround known.</td>
-  </tr>
- 
   <tr>
     <td>gail</td>
     <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=340577">340577</a>:
@@ -155,15 +108,6 @@ one might experience in the presence of the bug.</p>
     <td>No</td>
     <td>No</td>
     <td>Discussions with BillH lead us to believe this may require an AT-SPI interface change.  Plus, he considers this an enhancement request versus a bug.  So...we address this locally in our own script for the Java platform.</td>
-  </tr>
-
-  <tr>
-    <td>gtk+</td>
-    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=326362">326362</a>:
-      Crasher in panel.
-    <td>03/17/2006: Yes</td>
-    <td>03/17/2006: (GNOME 2.14) gtk+-2.8.16</td>
-    <td>NOTE: Many people still report that trying to run a command from Alt+F2 while accessibility is enabled causes a crash.  The gtk+ maintainer thinks this should hopefully be fixed for gtk+ 2.10.</td>
   </tr>
 
   <tr>
@@ -204,143 +148,9 @@ one might experience in the presence of the bug.</p>
   </tr>
 
   <tr>
-    <td>gtk+</td>
-    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=323633">323633</a>:
-      Accessible name changes in metacity tab popup are one step behind</td>
-    <td>03/17/2006: Yes</td>
-    <td>03/17/2006: (GNOME 2.14) gtk+-2.8.16</td>
-    <td>Causes metacity to speak previously selected item instead of current item.</td>
-  </tr>
-
-  <tr>
-    <td>gail-1.8.10</td>
-    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=326362">326362</a>:
-      Bad patch causes tree views to be inaccessible.
-    <td>03/17/2006: Yes</td>
-    <td>03/17/2006: (GNOME 2.14) gail-1.8.11</td>
-    <td></td>
-  </tr>
- 
-  <tr>
-    <td>gail</td>
-    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=329230">329230</a>:
-      Infinite recursion/loop when creating accessible context for combo boxes.
-    <td>03/17/2006: Yes</td>
-    <td>03/17/2006: (GNOME 2.14) gail-1.8.11</td>
-    <td></td>
-  </tr>
- 
-  <tr>
-    <td>eel</td>
-    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=330995">330995</a>:
-      Crasher due to lack of error check in eel a11y
-    <td>03/17/2006: Yes</td>
-    <td>03/17/2006: (GNOME 2.14) eel-2.14.0</td>
-    <td>Caused a lot of crashes in Evolution</td>
-  </tr>
-
-  <tr>
-    <td>atk/gail/libgail-gnome/at-spi</td>
-    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=321814">321814</a>:
-      Tickling AT-SPI hierarachy can yield incorrect info and cause app corruption/hang/crash</td>
-    <td>03/17/2006: Yes</td>
-    <td>03/17/2006: (GNOME 2.14) atk-1.11.3, gail-1.8.11, at-spi-1.7.6</td>
-    <td></td>
-  </tr> 
-
-  <tr>
-    <td>gnome-speech-0.3.9</td>
-    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=332247">332247</a>:
-      DECtalk driver can hang on exit.</td>
-    <td>03/17/2006: Yes</td>
-    <td>03/17/2006: (GNOME 2.14) gnome-speech-0.3.10</td>
-    <td></td>
-  </tr>
-
-  <tr>
-    <td>gnome-speech-0.3.8</td>
-    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=319168">319168</a>:
-      Streaming audio player for FreeTTS cannot be selected</td>
-    <td>Yes</td>
-    <td>gnome-speech-0.3.9</td>
-    <td>This bug introduced severe latency on Solaris 11</td>
-  </tr>
-
-  <tr>
-    <td>gnome-speech</td>
-    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=341405">341405</a>:
-      Accessible login crashes gdm</td>
-    <td>Yes</td>
-    <td>07/21/2006: 0.4.1</td>
-    <td>Accessible login crashes gdm</td>
-  </tr>
-
-  <tr>
-    <td>gtkhtml</td>
-    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=318973">318973</a>:
-      Caret Mode broken
-    <td>Yes</td>
-    <td>07/21/2006: GNOME CVS HEAD</td>
-    <td>Originally filed as bug #324002, which was closed as a duplicate of
-        this bug.
-        <br>
-        Workaround: press the "Tab" key to get focus on the initial email 
-        address. Then the arrow keys work.</td>
-  </tr>
-
-  <tr>
-    <td>gtkhtml</td>
-    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=324726">324726</a>:
-      Keynav: Keynav: navigation of HTML mail messages is sub-optimal.
-    <td>Yes</td>
-    <td>07/21/2006: GNOME CVS HEAD</td>
-    <td>Workaround: None currently known.</td>
-  </tr>
-
-  <tr>
-    <td>gail</td>
-    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=326725">326725</a>:
-      Embedded bonobo component accessibility broken
-    <td>Yes</td>
-    <td>gail 1.8.8</td>
-    <td>Attached bug_326725.py to the bug report to help track down the 
-        problem (plus a transcript of the results of running it against 
-        three problematic Evolution components). 
-        <br>
-        Workaround: None currently known.</td>
-  </tr>
-
-  <tr>
-    <td>gnome-panel</td>
-    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=341409">341409</a>:
-      [a11y] Orca - In the "Add to Panel" window the items in the table are not read.
-    <td>No</td>
-    <td>No</td>
-    <td>Workaround: None currently known.</td>
-  </tr>
-
-  <tr>
-    <td>gnome-applets</td>
-    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=337059">337059</a>:
-      [a11y] "Volume Control" embedded component in gnome-panel doesn't set it's accessible name.
-    <td>Fixed in CVS HEAD. Should be in GNOME 2.16</td>
-    <td>No</td>
-    <td>Workaround: None currently known.</td>
-  </tr>
-
-  <tr>
     <td>gconf-editor</td>
     <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=342420">342420</a>:
       [a11y]: Orca not correctly reporting key values in gconf-editor.
-    <td>No</td>
-    <td>No</td>
-    <td>Workaround: None currently known.</td>
-  </tr>
-
-  <tr>
-    <td>rhythmbox</td>
-    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=331042">331042</a>:
-      [a11y] Rhythmbox crashes when entering flat review mode in Orca
     <td>No</td>
     <td>No</td>
     <td>Workaround: None currently known.</td>
@@ -364,11 +174,209 @@ one might experience in the presence of the bug.</p>
     <td>Workaround: None currently known.</td>
   </tr>
 
-  <tr>
-    <td>gaim</td>
+  <tr bgcolor="yellow">
+    <td>Nautilus</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=338353">338353</a>:
+        [a11y]: Rename file in nautilus not spoken properly by screen reader.
+    <td>No</td>
+    <td>No</td>
+    <td>No workaround known.</td>
+  </tr>
+ 
+  <tr bgcolor="green">
+    <td>gail</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=347228">347228</a>:
+      [a11y] Evolution not always firing "object:state-changed:expanded"
+          events when tree table entries are collapsed/expanded.
+    <td>No</td>
+    <td>No</td>
+    <td>No workaround known.</td>
+  </tr>
+
+  <tr bgcolor="green">
+    <td>metacity 2.15.4</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=350624">350624</a>:
+      No events from status bar are issued</td>
+    <td>Yes</td>
+    <td>GNOME 2.16</td>
+    <td>Metacity is inaccessible when doing Alt+Tab to move between windows.</td>
+  </tr>
+ 
+  <tr bgcolor="green">
+    <td>gnome-terminal 2.15.4</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=350623">350623</a>:
+      getTextAtOffset is broken</td>
+    <td>Yes</td>
+    <td>GNOME 2.16</td>
+    <td>Terminal is inaccessible.</td>
+  </tr>
+
+  <tr bgcolor="green">
+    <td>Eel</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=341420">341420</a>:
+      Eel is not setting up the label for/by relations correctly</td>
+    <td>Yes</td>
+    <td>GNOME 2.16</td>
+    <td>Labelled objects don't have their labels spoken in things like Nautilus</td>
+  </tr>
+ 
+  <tr bgcolor="green">
+    <td>control-center</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=342121">342121</a>:
+      Control-center is not setting label for/by properties</td>
+    <td>No</td>
+    <td>No</td>
+    <td>Objects don't have their labels spoken in things like Network Proxy Port</td>
+  </tr>
+ 
+  <tr bgcolor="green">
+    <td>gtk+</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=326362">326362</a>:
+      Crasher in panel.
+    <td>03/17/2006: Yes</td>
+    <td>03/17/2006: (GNOME 2.14) gtk+-2.8.16</td>
+    <td>NOTE: Many people still report that trying to run a command from Alt+F2 while accessibility is enabled causes a crash.  The gtk+ maintainer thinks this should hopefully be fixed for gtk+ 2.10.</td>
+  </tr>
+
+  <tr bgcolor="green">
+    <td>gtk+</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=323633">323633</a>:
+      Accessible name changes in metacity tab popup are one step behind</td>
+    <td>03/17/2006: Yes</td>
+    <td>03/17/2006: (GNOME 2.14) gtk+-2.8.16</td>
+    <td>Causes metacity to speak previously selected item instead of current item.</td>
+  </tr>
+
+  <tr bgcolor="green">
+    <td>gail-1.8.10</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=326362">326362</a>:
+      Bad patch causes tree views to be inaccessible.
+    <td>03/17/2006: Yes</td>
+    <td>03/17/2006: (GNOME 2.14) gail-1.8.11</td>
+    <td></td>
+  </tr>
+ 
+  <tr bgcolor="green">
+    <td>gail</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=329230">329230</a>:
+      Infinite recursion/loop when creating accessible context for combo boxes.
+    <td>03/17/2006: Yes</td>
+    <td>03/17/2006: (GNOME 2.14) gail-1.8.11</td>
+    <td></td>
+  </tr>
+ 
+  <tr bgcolor="green">
+    <td>eel</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=330995">330995</a>:
+      Crasher due to lack of error check in eel a11y
+    <td>03/17/2006: Yes</td>
+    <td>03/17/2006: (GNOME 2.14) eel-2.14.0</td>
+    <td>Caused a lot of crashes in Evolution</td>
+  </tr>
+
+  <tr bgcolor="green">
+    <td>atk/gail/libgail-gnome/at-spi</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=321814">321814</a>:
+      Tickling AT-SPI hierarachy can yield incorrect info and cause app corruption/hang/crash</td>
+    <td>03/17/2006: Yes</td>
+    <td>03/17/2006: (GNOME 2.14) atk-1.11.3, gail-1.8.11, at-spi-1.7.6</td>
+    <td></td>
+  </tr> 
+
+  <tr bgcolor="green">
+    <td>gnome-speech-0.3.9</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=332247">332247</a>:
+      DECtalk driver can hang on exit.</td>
+    <td>03/17/2006: Yes</td>
+    <td>03/17/2006: (GNOME 2.14) gnome-speech-0.3.10</td>
+    <td></td>
+  </tr>
+
+  <tr bgcolor="green">
+    <td>gnome-speech-0.3.8</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=319168">319168</a>:
+      Streaming audio player for FreeTTS cannot be selected</td>
+    <td>Yes</td>
+    <td>gnome-speech-0.3.9</td>
+    <td>This bug introduced severe latency on Solaris 11</td>
+  </tr>
+
+  <tr bgcolor="green">
+    <td>gnome-speech</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=341405">341405</a>:
+      Accessible login crashes gdm</td>
+    <td>Yes</td>
+    <td>07/21/2006: 0.4.1</td>
+    <td>Accessible login crashes gdm</td>
+  </tr>
+
+  <tr bgcolor="green">
+    <td>gtkhtml</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=318973">318973</a>:
+      Caret Mode broken
+    <td>Yes</td>
+    <td>07/21/2006: GNOME CVS HEAD</td>
+    <td>Originally filed as bug #324002, which was closed as a duplicate of
+        this bug.
+        <br>
+        Workaround: press the "Tab" key to get focus on the initial email 
+        address. Then the arrow keys work.</td>
+  </tr>
+
+  <tr bgcolor="green">
+    <td>gtkhtml</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=324726">324726</a>:
+      Keynav: Keynav: navigation of HTML mail messages is sub-optimal.
+    <td>Yes</td>
+    <td>07/21/2006: GNOME CVS HEAD</td>
+    <td>Workaround: None currently known.</td>
+  </tr>
+
+  <tr bgcolor="green">
+    <td>gail</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=326725">326725</a>:
+      Embedded bonobo component accessibility broken
+    <td>Yes</td>
+    <td>gail 1.8.8</td>
+    <td>Attached bug_326725.py to the bug report to help track down the 
+        problem (plus a transcript of the results of running it against 
+        three problematic Evolution components). 
+        <br>
+        Workaround: None currently known.</td>
+  </tr>
+
+  <tr bgcolor="green">
+    <td>gnome-panel</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=341409">341409</a>:
+      [a11y] Orca - In the "Add to Panel" window the items in the table are not read.
+    <td>Not a bug</td>
+    <td>No</td>
+    <td>Workaround: None currently known.</td>
+  </tr>
+
+  <tr bgcolor="green">
+    <td>gnome-applets</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=337059">337059</a>:
+      [a11y] "Volume Control" embedded component in gnome-panel doesn't set it's accessible name.
+    <td>Fixed in CVS HEAD. Should be in GNOME 2.16</td>
+    <td>GNOME 2.16</td>
+    <td>Workaround: None currently known.</td>
+  </tr>
+
+  <tr bgcolor="green">
+    <td>rhythmbox</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=331042">331042</a>:
+      [a11y] Rhythmbox crashes when entering flat review mode in Orca
+    <td>GNOME 2.17.x</td>
+    <td>No</td>
+    <td>Workaround: None currently known.</td>
+  </tr>
+
+  <tr bgcolor="green">
+    <td>atk</td>
     <td><a href="https://sourceforge.net/tracker/?func=detail&atid=100235&aid=1563774&group_id=235">1563774</a>:
       [a11y] gaim crashs with Orca when Insert-f is typed
-    <td>No</td>
+    <td>CVS HEAD</td>
     <td>No</td>
     <td>Workaround: None currently known.
         <br>
@@ -376,6 +384,7 @@ one might experience in the presence of the bug.</p>
         <br>
         Being tracked by Orca bug
         <a href="http://bugzilla.gnome.org/show_bug.cgi?id=357248">357248</a>
+        and atk bug <a href="http://bugzilla.gnome.org/show_bug.cgi?id=357847">357847</a>
     </td>
   </tr>
 
@@ -424,16 +433,6 @@ one might experience in the presence of the bug.</p>
   </tr>
 
   <tr>
-    <td>Evolution 2.6.0</td>
-    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=343035">343035</a>:
-      In evolution, backspace isn't speaking in the subject field of new 
-      messages.
-    <td>No as of Evolution 2.8</td>
-    <td>No</td>
-    <td>Workaround: None currently known.</td>
-  </tr>
-
-  <tr>
     <td>Evolution 2.8</td>
     <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=347347">347347</a>:
       [a11y] Moving the caret around in the message arrow doesn't generate 
@@ -445,6 +444,36 @@ one might experience in the presence of the bug.</p>
   </tr>
 
   <tr>
+    <td>Evolution 2.6.0</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=347964">347964</a>:
+      [a11y] When deleting messages in Evolution, Orca initially speaks 
+      the wrong tree item
+    <td>No</td>
+    <td>No</td>
+    <td>No workaround known.</td>
+  </tr>
+
+  <tr>
+    <td>Evolution 2.6.1</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=351516">351516</a>:
+      [a11y] Evolution does not issue "focus:" events when the last message 
+      in the message header summary list is deleted.
+    <td>No</td>
+    <td>No</td>
+    <td>No workaround known.</td>
+  </tr>
+
+  <tr bgcolor="green">
+    <td>Evolution 2.6.0</td>
+    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=343035">343035</a>:
+      In evolution, backspace isn't speaking in the subject field of new 
+      messages.
+    <td>No as of Evolution 2.8</td>
+    <td>No</td>
+    <td>Workaround: None know.  Duplicate of <a href="http://bugzilla.gnome.org/show_bug.cgi?id=348466">348466</a></td>
+  </tr>
+
+  <tr bgcolor="green">
     <td>Evolution 2.4.x</td>
     <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=322776">322776</a>:
       Unable to keyboard navigate into message headers pane, if no message selected.</td>
@@ -453,7 +482,7 @@ one might experience in the presence of the bug.</p>
     <td>Workaround: press the "arrow down" button after having tabbed to the message list pane</td>
   </tr>
 
-  <tr>
+  <tr bgcolor="green">
     <td>Evolution 2.4.x</td>
     <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=324005">324005</a>:
       Keynav: Apparently unable to navigate to various components in 
@@ -475,7 +504,7 @@ one might experience in the presence of the bug.</p>
     </td>
   </tr>
 
-  <tr>
+  <tr bgcolor="green">
     <td>Evolution 2.4.x</td>
     <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=324104">324104</a>:
       Keynav: Apparently no keyboard equivalent for editing calendar appt.</td>
@@ -489,7 +518,7 @@ one might experience in the presence of the bug.</p>
         </td>
   </tr>
 
-  <tr>
+  <tr bgcolor="green">
     <td>Evolution 2.4.x</td>
     <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=324193">324193</a>:
       Keynav: Keynav: apparently unable to navigate to certain fields on 
@@ -501,7 +530,7 @@ one might experience in the presence of the bug.</p>
         Then press "Tab", the focus is moved to "Start time".</td>
   </tr>
 
-  <tr>
+  <tr bgcolor="green">
     <td>Evolution 2.4.x</td>
     <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=326649">326649</a>:
       Keynav: keynav: Navigating the Preferences dialog is inconsistent.
@@ -510,7 +539,7 @@ one might experience in the presence of the bug.</p>
     <td>Workaround: None currently known.</td>
   </tr>
 
-  <tr>
+  <tr bgcolor="green">
     <td>Evolution 2.5.x (CVS HEAD - 25th Jan 2006)</td>
     <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=329269">329269</a>:
       keynav: no apparent keyboard shortcut for File Under activation.
@@ -519,7 +548,7 @@ one might experience in the presence of the bug.</p>
     <td>Not a bug. The magic incantation is Alt+Down Arrow.</td>
   </tr>
 
-  <tr>
+  <tr bgcolor="green">
     <td>Evolution 2.5.x (CVS HEAD - 25th Jan 2006)</td>
     <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=330712">330712</a>:
       Accessible Name for TimeZone Button shouldn't contain its role
@@ -529,7 +558,7 @@ one might experience in the presence of the bug.</p>
         button".</td>
   </tr>
 
-  <tr>
+  <tr bgcolor="green">
     <td>Evolution 2.5.x (CVS HEAD - 25th Jan 2006)</td>
     <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=329270">329270</a>:
       keynav: Contacts Editor: Control-Tab works unexpectedly.
@@ -538,7 +567,7 @@ one might experience in the presence of the bug.</p>
     <td>Workaround: use tab.</td>
   </tr>
 
-  <tr>
+  <tr bgcolor="green">
     <td>Evolution 2.5.x (CVS HEAD - 25th Jan 2006)</td>
     <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=330723">330723</a>:
       Various components shouldn't include their role in their accessible name.
@@ -548,7 +577,7 @@ one might experience in the presence of the bug.</p>
         twice when in verbose mode</td>
   </tr>
 
-  <tr>
+  <tr bgcolor="green">
     <td>Evolution 2.6.0</td>
     <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=345923">345923</a>:
       [A11y] Unable to keyboard navigate to month view "day" entries, when 
@@ -559,7 +588,7 @@ one might experience in the presence of the bug.</p>
       accessible for Orca V1.0.</td>
   </tr>
 
-  <tr>
+  <tr bgcolor="green">
     <td>Evolution 2.6.0</td>
     <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=345969">345969</a>:
       [A11y] Evolution crashes when trying to creat a calendar event 
@@ -569,41 +598,11 @@ one might experience in the presence of the bug.</p>
     <td></td>
   </tr>
 
-  <tr>
-    <td>Evolution 2.6.0</td>
-    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=347964">347964</a>:
-      [a11y] When deleting messages in Evolution, Orca initially speaks 
-      the wrong tree item
-    <td>No</td>
-    <td>No</td>
-    <td>No workaround known.</td>
-  </tr>
-
-  <tr>
-    <td>Evolution 2.6.0</td>
-    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=347228">347228</a>:
-      [a11y] Evolution not always firing "object:state-changed:expanded"
-          events when tree table entries are collapsed/expanded.
-    <td>No</td>
-    <td>No</td>
-    <td>No workaround known.</td>
-  </tr>
-
-  <tr>
+  <tr bgcolor="green">
     <td>Evolution 2.6.1</td>
     <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=351358">351358</a>:
       [a11y] Evolution crashes after trying to navigate new message after 
       deleting an old one.
-    <td>No</td>
-    <td>No</td>
-    <td>No workaround known.</td>
-  </tr>
-
-  <tr>
-    <td>Evolution 2.6.1</td>
-    <td><a href="http://bugzilla.gnome.org/show_bug.cgi?id=351516">351516</a>:
-      [a11y] Evolution does not issue "focus:" events when the last message 
-      in the message header summary list is deleted.
     <td>No</td>
     <td>No</td>
     <td>No workaround known.</td>
@@ -665,7 +664,7 @@ one might experience in the presence of the bug.</p>
     <td>Orca cannot read the text of entries.</td>
   </tr>
 
-  <tr>
+  <tr bgcolor="green">
     <td>Firefox 3.0a1 - 05122006</td>
     <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=335900">335900</a>:
       No state change indicated when interacting with HTML input element.</td>
@@ -674,7 +673,7 @@ one might experience in the presence of the bug.</p>
     <td>Orca doesn't know when radio buttons and other things have been interacted with.</td>
   </tr>
 
-  <tr>
+  <tr bgcolor="green">
     <td>Firefox 3.0a1 - 05122006</td>
     <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=335900">335900</a>:
       No state change indicated when interacting with HTML input element.</td>
@@ -683,7 +682,7 @@ one might experience in the presence of the bug.</p>
     <td>Orca doesn't know when radio buttons and other things have been interacted with.</td>
   </tr>
 
-  <tr>
+  <tr bgcolor="green">
     <td>Firefox 3.0a1 - 05122006</td>
     <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=338141">338141</a>:
       Focus fired for unfocused controlled.</td>
@@ -692,7 +691,7 @@ one might experience in the presence of the bug.</p>
     <td>Orca has no idea of what has focus.</td>
   </tr>
 
-  <tr>
+  <tr bgcolor="green">
     <td>Firefox 3.0a1 - 05122006</td>
     <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=338233">338233</a>:
       Radio buttons don't get focus when you tab to them.</td>
@@ -701,7 +700,7 @@ one might experience in the presence of the bug.</p>
     <td>Orca cannot speak radio button when the user tabs to it.</td>
   </tr>
 
-  <tr>
+  <tr bgcolor="green">
     <td>Firefox 3.0a1 - 05122006</td>
     <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=338234">338234</a>:
       List selection in preferences dialog is one step behind</td>
@@ -710,25 +709,25 @@ one might experience in the presence of the bug.</p>
     <td>Orca speaks what was selected rather than what is selected.</td>
   </tr>
 
-  <tr>
+  <tr bgcolor="green">
     <td>Firefox 2.0a1</td>
     <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=334650">334650</a>:
       Link-selected events not always issued.</td>
     <td>04/19/2006: No</td>
     <td>No</td>
-    <td>Orca is silent when tabbing across links.</td>
+    <td>Orca is silent when tabbing across links.  In FF3, the implementation now issues focus events for links.</td>
   </tr>
 
-  <tr>
+  <tr bgcolor="green">
     <td>Firefox 2.0a1</td>
     <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=320395">320395</a>:
 Accessible text caret offset is unreliable when tabbing between links</td>
     <td>01/11/2006: In internal build firefox-1.6a1.en-US.linux-i686.tar.bz2</td>
     <td>04/19/2006: Fixed in 2.0a1 nightly from 2006-04-20.</td>
-    <td> </td>
+    <td></td>
   </tr>
 
-  <tr>
+  <tr bgcolor="green">
     <td>Firefox 1.6</td>
     <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=324061">324061</a>:
       Checkboxes in forms do not have accessible names</td>
@@ -737,16 +736,16 @@ Accessible text caret offset is unreliable when tabbing between links</td>
     <td>Cannot read the text for checkboxes.</td>
   </tr>
 
-  <tr>
+  <tr bgcolor="green">
     <td>Firefox 1.6</td>
     <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=322903">322903</a>:
       AccessibleText getTextAtOffset should not cause html pane scrolls</td>
     <td>04/19/2006: No as of Bon Echo 2.0a1</td>
-    <td>No</td>
+    <td>FF2</td>
     <td>Prevents flat review from working well because the page scrolls all over the place as flat review queries the text on the screen. This will also cause text areas to become jumbled as you type in them.</td>
   </tr>
 
-  <tr>
+  <tr bgcolor="green">
     <td>Firefox 1.6</td>
     <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=320393">320393</a>:
 Tree list items in the history pane should have accessible RELATION_NODE_OF relation</td>
@@ -755,7 +754,7 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
     <td> </td>
   </tr>
 
-  <tr>
+  <tr bgcolor="green">
     <td>Firefox 1.6</td>
     <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=320390">320390</a>:
       Pressing escape to close menu doesn't return focus properly</td>
@@ -764,7 +763,7 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
     <td> </td>
   </tr>
 
-  <tr>
+  <tr bgcolor="green">
     <td>Firefox 1.6</td>
     <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=320388">320388</a>:
       The accessible hypertext implementation doesn't appear to support getLinkIndex</td>
@@ -773,7 +772,7 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
     <td> </td>
   </tr>
 
-  <tr>
+  <tr bgcolor="green">
     <td>Firefox 1.6</td>
     <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=320387">320387</a>:
       link-selected event provides incomplete information</td>
@@ -782,7 +781,7 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
     <td>Requires hack workaround to determine link.</td>
   </tr>
 
-  <tr>
+  <tr bgcolor="green">
     <td>Firefox 1.6</td>
     <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=320383">320383</a>:
       History panel accessible name is not human consumable</td>
@@ -791,7 +790,7 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
     <td>Provides nonsensical output to the user</td>
   </tr>
 
-  <tr>
+  <tr bgcolor="green">
     <td>Firefox 1.5</td>
     <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=317482">317482</a>:
       AccessibleText getRangeExtents does not work</td>
@@ -800,7 +799,7 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
     <td>Prevents flat review from working in Firefox</td>
   </tr>
 
-  <tr>
+  <tr bgcolor="green">
     <td>Firefox 1.5</td>
     <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=312093">312093</a>:
       Caret-moved events are not always reported</td>
@@ -810,7 +809,7 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
   </tr>
 
 
-  <tr>
+  <tr bgcolor="green">
     <td>Firefox 1.5</td>
     <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=319752">319752</a>:
       Menus show up twice in the a11y hierarchy</td>
@@ -819,7 +818,7 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
     <td>Causes menus to be spoken twice.</td>
   </tr>
 
-  <tr>
+  <tr bgcolor="green">
     <td>Firefox 1.5</td>
     <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=317475">317475</a>:
       Top level window with focus should have "ACTIVE" state set</td>
@@ -828,7 +827,7 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
     <td>Makes it difficult to know if Firefox is the active app</td>
   </tr>
 
-  <tr>
+  <tr bgcolor="green">
     <td>Firefox 1.5</td>
     <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=317462">317462</a>:
       Top level application object has incorrect accessible role</td>
@@ -837,7 +836,7 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
     <td>Wreaks havoc on Orca logic that finds the application for an event</td>
   </tr>
 
-  <tr>
+  <tr bgcolor="green">
     <td>Firefox 1.5</td>
     <td><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=312092">312092</a>:
       Accessible hierarchy incomplete/incorrect</td>
@@ -856,6 +855,7 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
       <li>URL: <a href="http://qa.openoffice.org/issue_handling/submission_gateway.html">http://qa.openoffice.org/issue_handling/submission_gateway.html</a></li>
       <li>CC: allbugs@openoffice.org (see <a href="http://www.openoffice.org/mail_list.html">http://www.openoffice.org/mail_list.html</a>)</li>
       <li>Keywords: "accessibility"
+      <li>Assign to: "es" (Eric Savary)
   </ul>
 </p>
 
@@ -867,148 +867,6 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
     <td><b>Fixed by Them</b></td>
     <td><b>Verified In Version</b></td>
     <td><b>Notes</b></td>
-  </tr>
-
-  <tr>
-    <td>Open Office - Word Processor</td>
-    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=70538">70538</a>:
-      Character indeces are off by one when at the beginning of a line with a bullet.
-    <td>No</td>
-    <td>No</td>
-    <td></td>
-  </tr>
-
-  <tr>
-    <td>Open Office - Word Processor</td>
-    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=69945">69945</a>:
-      getText seems to use byte offsets and not character offsets
-    <td>No</td>
-    <td>No</td>
-    <td></td>
-  </tr>
-
-  <tr>
-    <td>Open Office - Word Processor</td>
-    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63818">63818</a>:
-      F10 key doesn't bring up the menu bar.
-    <td>No</td>
-    <td>No</td>
-    <td>Workaround: Hit F10, then immediately hit the down arrow.</td>
-  </tr>
-
-  <tr>
-    <td>Open Office - Word Processor</td>
-    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63870">63870</a>:
-      Writer doesn't implement text.getDefaultAttributes (needed for a11y).
-    <td>No</td>
-    <td>No</td>
-    <td>Workaround: None. Won't be looked at until OOo 2.0.4</td>
-  </tr>
-
-  <tr>
-    <td>Open Office - Spreadsheet</td>
-    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63871">63871</a>:
-      Spreadsheet doesn't implement text.getDefaultAttributes (needed for a11y).
-    <td>No</td>
-    <td>No</td>
-    <td>Workaround: None. Won't be looked at until OOo 2.0.4</td>
-  </tr>
-
-  <tr>
-    <td>Open Office - Framework/ui</td>
-    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63979">63979</a>:
-      The User Data options pane is confusing when read with a screen reader.
-    <td>No</td>
-    <td>No</td>
-    <td>Workaround: None.  Suggestion offered to team.</td>
-  </tr>
-
-  <tr>
-    <td>Open Office - Framework/ui</td>
-    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63980">63980</a>:
-      The StarOffice->General options pane doesn't provide useful
-      labels when read by a screen reader.
-    <td>Yes</td>
-    <td>Open Office 2.0.3</td>
-    <td>Workaround: None. Looks like this has been fixed. Waiting for them to
-        adjust the bug status as such.</td>
-  </tr>
-
-  <tr>
-    <td>Open Office - Framework/ui</td>
-    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63981">63981</a>:
-      The StarOffice->View options pane doesn't provide useful labels for checkboxes 
-      when read with a screen reader.
-    <td>Yes</td>
-    <td>Open Office 2.0.3</td>
-    <td>Workaround: None. Looks like this has been fixed. Waiting for them to
-        adjust the bug status as such.</td>
-  </tr>
-
-  <tr>
-    <td>Open Office - Framework/ui</td>
-    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63982">63982</a>:
-      The StarOffice->Print options pane doesn't provide useful
-      information when read with a screen reader.
-    <td>Yes</td>
-    <td>Open Office 2.0.3</td>
-    <td>Workaround: None.</td>
-  </tr>
-
-  <tr>
-    <td>Open Office - Framework/ui</td>
-    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63983">63983</a>:
-      The StarOffice->Paths options pane table doesn't provide useful 
-      information when read with a screen reader.
-    <td>Yes</td>
-    <td>Open Office 2.0.3</td>
-    <td>Workaround: None.</td>
-  </tr>
-
-  <tr>
-    <td>Open Office - Framework/ui</td>
-    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63984">63984</a>:
-      The StarOffice->Security options pane doesn't provide useful
-          information for checkboxes when read with a screen reader.
-    <td>Yes</td>
-    <td>Open Office 2.0.3</td>
-    <td>Workaround: None.</td>
-  </tr>
-
-  <tr>
-    <td>Open Office - Framework/ui</td>
-    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63985">63985</a>:
-          The StarOffice->Accessibility options pane doesn't provide
-          useful information for checkboxes when read with a screen
-          reader.
-    <td>Yes</td>
-    <td>Open Office 2.0.3</td>
-    <td>Workaround: None. Looks like this has been fixed. Waiting for them to
-        adjust the bug status as such.</td>
-  </tr>
-
-  <tr>
-    <td>Open Office - Writer</td>
-    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=62723">62723</a>:
-      Open Dialog "read-only" checkbox has incorrect accessibility information.
-    <td>Yes</td>
-    <td>SO build m167</td>
-    <td>Workaround: None currently known.</td>
-  </tr>
-
-  <tr>
-    <td>Open Office - Writer</td>
-    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=69753">69753</a>:
-      [a11y] Orca sometimes unable to do a "say all" on a document because paragraphs don't have a FLOWS_TO relationship.
-    <td>No</td>
-    <td>No</td>
-    <td>Reproduced in OpenOffice 2.0.4 (RC2)
-        <br>
-        Workaround: None currently known. 
-        <br>
-        This bug is being tracked by Orca bug 
-        <a href="http://bugzilla.gnome.org/show_bug.cgi?id=355733">355733</a>
-    </td>
   </tr>
 
   <tr>
@@ -1028,6 +886,57 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
   </tr>
 
   <tr>
+    <td>Open Office - Word Processor</td>
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=70538">70538</a>:
+      Character indeces are off by one when at the beginning of a line with a bullet.
+    <td>No</td>
+    <td>No</td>
+    <td></td>
+  </tr>
+
+  <tr>
+    <td>Open Office - Writer</td>
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=69753">69753</a>:
+      [a11y] Orca sometimes unable to do a "say all" on a document because paragraphs don't have a FLOWS_TO relationship.
+    <td>No</td>
+    <td>No</td>
+    <td>Reproduced in OpenOffice 2.0.4 (RC2)
+        <br>
+        Workaround: None currently known. 
+        <br>
+        This bug is being tracked by Orca bug 
+        <a href="http://bugzilla.gnome.org/show_bug.cgi?id=355733">355733</a>
+    </td>
+  </tr>
+
+  <tr>
+    <td>Open Office - Word Processor</td>
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=69945">69945</a>:
+      getText seems to use byte offsets and not character offsets
+    <td>No</td>
+    <td>No</td>
+    <td>Possibly fixed in m186 for 2.0.5</td>
+  </tr>
+
+  <tr>
+    <td>Open Office - Word Processor</td>
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63870">63870</a>:
+      Writer doesn't implement text.getDefaultAttributes (needed for a11y).
+    <td>Do we get all that we need?</td>
+    <td>OOo 2.0.4</td>
+    <td>Workaround: None. Won't be looked at until OOo 2.0.4</td>
+  </tr>
+
+  <tr>
+    <td>Open Office - Spreadsheet</td>
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63871">63871</a>:
+      Spreadsheet doesn't implement text.getDefaultAttributes (needed for a11y).
+    <td>Do we get all that we need?</td>
+    <td>OOo 2.0.4</td>
+    <td>Workaround: None.</td>
+  </tr>
+
+  <tr>
     <td>Open Office - Database</td>
     <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=69889">69889</a>:
       [a11y] Table Wizard panel has several inaccessible components.
@@ -1040,6 +949,96 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
         This bug is being tracked by Orca bug
         <a href="http://bugzilla.gnome.org/show_bug.cgi?id=357545">357545</a>
     </td>
+  </tr>
+
+  <tr bgcolor="Yellow">
+    <td>Open Office - Framework/ui</td>
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63981">63981</a>:
+      The StarOffice->View options pane doesn't provide useful labels for checkboxes 
+      when read with a screen reader.
+    <td>Yes</td>
+    <td>Open Office 2.0.3</td>
+    <td>Workaround: None. Looks like this has been fixed. Waiting for them to
+        adjust the bug status as such.</td>
+  </tr>
+
+  <tr>
+    <td>Open Office - Framework/ui</td>
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63979">63979</a>:
+      The User Data options pane is confusing when read with a screen reader.
+    <td>No</td>
+    <td>No</td>
+    <td>Workaround: None.  Suggestion offered to team.</td>
+  </tr>
+
+  <tr>
+    <td>Open Office - Word Processor</td>
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63818">63818</a>:
+      F10 key doesn't bring up the menu bar.
+    <td>No</td>
+    <td>No</td>
+    <td>Workaround: Hit F10, then immediately hit the down arrow.</td>
+  </tr>
+
+  <tr bgcolor="green">
+    <td>Open Office - Framework/ui</td>
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63982">63982</a>:
+      The StarOffice->Print options pane doesn't provide useful
+      information when read with a screen reader.
+    <td>Yes</td>
+    <td>Open Office 2.0.3</td>
+    <td>Workaround: None.</td>
+  </tr>
+
+  <tr bgcolor="green">
+    <td>Open Office - Framework/ui</td>
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63983">63983</a>:
+      The StarOffice->Paths options pane table doesn't provide useful 
+      information when read with a screen reader.
+    <td>Yes</td>
+    <td>Open Office 2.0.3</td>
+    <td>Workaround: None.</td>
+  </tr>
+
+  <tr bgcolor="green">
+    <td>Open Office - Framework/ui</td>
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63980">63980</a>:
+      The StarOffice->General options pane doesn't provide useful
+      labels when read by a screen reader.
+    <td>Yes</td>
+    <td>Open Office 2.0.3</td>
+    <td>Workaround: None.</td>
+  </tr>
+
+  <tr bgcolor="Green">
+    <td>Open Office - Framework/ui</td>
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63984">63984</a>:
+      The StarOffice->Security options pane doesn't provide useful
+          information for checkboxes when read with a screen reader.
+    <td>Yes</td>
+    <td>Open Office 2.0.3</td>
+    <td>Workaround: None.</td>
+  </tr>
+
+  <tr bgcolor="Green">
+    <td>Open Office - Framework/ui</td>
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63985">63985</a>:
+          The StarOffice->Accessibility options pane doesn't provide
+          useful information for checkboxes when read with a screen
+          reader.
+    <td>Yes</td>
+    <td>Open Office 2.0.3</td>
+    <td>Workaround: None. Looks like this has been fixed. Waiting for them to
+        adjust the bug status as such.</td>
+  </tr>
+
+  <tr bgcolor="Green">
+    <td>Open Office - Writer</td>
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=62723">62723</a>:
+      Open Dialog "read-only" checkbox has incorrect accessibility information.
+    <td>Yes</td>
+    <td>SO build m167</td>
+    <td>Workaround: None currently known.</td>
   </tr>
 
 </table>
@@ -1066,35 +1065,8 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
 
   <tr>
     <td>Star Office - Writer</td>
-    <td><a href="https://so-web.germany.sun.com/iBIS/servlet/edit.TaskFormServlet?tid=136070">136070</a>:
-      [A11y] Wrong UAA information in File->Export... dialog.
-    <td>No as of OOo 2.0.3</td>
-    <td>No</td>
-    <td>Workaround: None currently known.</td>
-  </tr>
-
-  <tr>
-    <td>Star Office - Writer</td>
-    <td><a href="https://so-web.germany.sun.com/iBIS/servlet/edit.TaskFormServlet?tid=136068">136068</a>:
-      [A11y] Wrong UAA information in File->Open... dialog.
-    <td>No as of OOo 2.0.3 - marked as dup of 136070</td>
-    <td>No</td>
-    <td>Workaround: None currently known.</td>
-  </tr>
-
-  <tr>
-    <td>Star Office - Writer</td>
-    <td><a href="https://so-web.germany.sun.com/iBIS/servlet/edit.TaskFormServlet?tid=136069">136069</a>:
-      [A11y] Wrong UAA information in File->Save As... dialog.
-    <td>No as of OOo 2.0.3 - marked as dup of 136070</td>
-    <td>No</td>
-    <td>Workaround: None currently known.</td>
-  </tr>
-
-  <tr>
-    <td>Star Office - Writer</td>
-    <td><a href="https://so-web.germany.sun.com/iBIS/servlet/edit.TaskFormServlet?tid=136071">136071</a>:
-      [A11y] Wrong UAA information in Insert->Insert Table... dialog.
+    <td><a href="https://so-web.germany.sun.com/iBIS/servlet/edit.TaskFormServlet?tid=137437">137437</a>:
+      [A11y] Incorrect char in any_data.value() field of event when text is deleted.
     <td>No as of OOo 2.0.3</td>
     <td>No</td>
     <td>Workaround: None currently known.</td>
@@ -1111,15 +1083,6 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
 
   <tr>
     <td>Star Office - Writer</td>
-    <td><a href="https://so-web.germany.sun.com/iBIS/servlet/edit.TaskFormServlet?tid=137415">137415</a>:
-      [A11y] Control-Shift-Left/Right can select whitespace.
-    <td>No as of OOo 2.0.3</td>
-    <td>No</td>
-    <td>Workaround: None currently known.</td>
-  </tr>
-
-  <tr>
-    <td>Star Office - Writer</td>
     <td><a href="https://so-web.germany.sun.com/iBIS/servlet/edit.TaskFormServlet?tid=137416">137416</a>:
       [A11y] No way to get at indentation information in Writer.
     <td>No as of OOo 2.0.3</td>
@@ -1129,14 +1092,50 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
 
   <tr>
     <td>Star Office - Writer</td>
-    <td><a href="https://so-web.germany.sun.com/iBIS/servlet/edit.TaskFormServlet?tid=137437">137437</a>:
-      [A11y] Incorrect char in any_data.value() field of event when text is deleted.
+    <td><a href="https://so-web.germany.sun.com/iBIS/servlet/edit.TaskFormServlet?tid=137415">137415</a>:
+      [A11y] Control-Shift-Left/Right can select whitespace.
     <td>No as of OOo 2.0.3</td>
     <td>No</td>
     <td>Workaround: None currently known.</td>
   </tr>
 
-  <tr>
+  <tr bgcolor="Yellow">
+    <td>Star Office - Writer</td>
+    <td><a href="https://so-web.germany.sun.com/iBIS/servlet/edit.TaskFormServlet?tid=136070">136070</a>:
+      [A11y] Wrong UAA information in File->Export... dialog.
+    <td>Seems to look fine in 2.0.4.</td>
+    <td>No</td>
+    <td>Seems to work fine in 2.0.4  Maybe related to <a href="http://www.openoffice.org/issues/show_bug.cgi?id=62723">62723</a>.</td>
+  </tr>
+
+  <tr bgcolor="Yellow">
+    <td>Star Office - Writer</td>
+    <td><a href="https://so-web.germany.sun.com/iBIS/servlet/edit.TaskFormServlet?tid=136068">136068</a>:
+      [A11y] Wrong UAA information in File->Open... dialog.
+    <td>No as of OOo 2.0.3 - marked as dup of 136070</td>
+    <td>No</td>
+    <td>Seems to work fine in 2.0.4  Maybe related to <a href="http://www.openoffice.org/issues/show_bug.cgi?id=62723">62723</a>.</td>
+  </tr>
+
+  <tr bgcolor="Yellow">
+    <td>Star Office - Writer</td>
+    <td><a href="https://so-web.germany.sun.com/iBIS/servlet/edit.TaskFormServlet?tid=136069">136069</a>:
+      [A11y] Wrong UAA information in File->Save As... dialog.
+    <td>No as of OOo 2.0.3 - marked as dup of 136070</td>
+    <td>No</td>
+    <td>Seems to work fine in 2.0.4  Maybe related to <a href="http://www.openoffice.org/issues/show_bug.cgi?id=62723">62723</a>.</td>
+  </tr>
+
+  <tr bgcolor="Yellow">
+    <td>Star Office - Writer</td>
+    <td><a href="https://so-web.germany.sun.com/iBIS/servlet/edit.TaskFormServlet?tid=136071">136071</a>:
+      [A11y] Wrong UAA information in Insert->Insert Table... dialog.
+    <td>Seems to work fine in 2.0.4  Maybe related to <a href="http://www.openoffice.org/issues/show_bug.cgi?id=62723">62723</a>.</td>
+    <td>No</td>
+    <td>Workaround: None currently known.</td>
+  </tr>
+
+  <tr bgcolor="Yellow">
     <td>Star Office - Writer</td>
     <td><a href="https://so-web.germany.sun.com/iBIS/servlet/edit.TaskFormServlet?tid=136117">136117</a>:
       [A11y] Incorrect event information for Backspace in swriter.

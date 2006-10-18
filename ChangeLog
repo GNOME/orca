@@ -1,6 +1,12 @@
-2006-10-16  Willie Walker <william.walker@sun.com>
+2006-10-18  Willie Walker <william.walker@sun.com>
 
-	* bugs/src/orca/Gecko.py: add throw away code to navigate character
+	* bugs/bugs.html: update and colorize (green means fixed, yellow
+	means fix available for us to test).  Also prioritized the OOo
+	section.
+	
+2006-10-17  Willie Walker <william.walker@sun.com>
+
+	* src/orca/Gecko.py: add throw away code to navigate character
 	by character from the beginning of the document frame.  The code
 	is very rough, not complete, undocumented, and just experimental.
 	The real form will take shape once we have a better understanding
