@@ -3369,7 +3369,7 @@ CLASS="EMPHASIS"
 > [OWNER: LMS] Firefox 2.0 is
 		  probably as good as it is going to get. Working with
 		  IBM and Firefox team to provide better information
-		  via AT-SPI for FF3 - <SPAN
+		  via AT-SPI for FF3.  FF3 should at least provide the following functionality.  For character and word navigation firefox should honor the standard well known keystrokes ie left and right arrows or CTRL+left and right arrows for moving by character and word.  When the user reaches the beginning or end of a line they should wrap to the next or previus.  If the user reaches the beginning or end of a frame they should wrap to the next or previus.  When up and down arrowing orca should as closely as possible move by line in the web page.  If the line contains links, orca should speak the word link after the link.  If possible, the link should also be underlined with dots 7 and 8 on the braille display.  If the line contains form controls, the label for the control should be read followed by the role.  If the role is an edit and the user has placed the cursor at the location where text can be entered the user should also hear "editable".  The braille user will see the cursor followed by "editable".  When tabbing and shift tabbing between elements the user should hear the element followed by the role.  If a user encounters a list or combo he/she should be able to press "space" to expand the control in order to make a selection.  When space is pressed again to make the selection the control will close allowing the user to continue moving through the page.  If tab or shift+tab is pressed while a control is opened, it will be closed and focus will  move to the next element.  Check boxes and buttons will simply be toggled by space as they are in any other application.  The letters "h" and "shift+h" will be used to move between headers.  When the header is reached, orca will speak and braille the header followed by "header and the header level.  The numbers 1 through 9 will also be available to allow the user to move to the next header at that level.  The letters "t" and "shift+t" will be used to move between tables.  When the table is reached its title will be spoken as well as the value of the cell with focus.  CTRL+alt+left, right,up, and down will be used to move from cell to cell.  When changing column or row, the appropriate headings should also be read.   - <SPAN
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
@@ -3782,9 +3782,9 @@ CLASS="EMPHASIS"
 CLASS="emphasis"
 ><I
 CLASS="EMPHASIS"
->INCOMPLETE:</I
+>COMPLETE:</I
 ></SPAN
-> The user should be able to dinamically set a row or column as a header in openoffice calc.  The hot keys for defining this will be insert+r for row and insert+c for column.  In order to set a row or column the user should first set focus to the row or column that they wish to define and then press the appropriate hot key.  Once the user has defined a row or column it will be used to first speak this header when moving between rows or columns.  This will behave similar to the way orca reads headers in the evolution mail list when moving focus from column to column.  For example, if row c is defined as headers the appropriate cell will first be read before reading the cell with focus when the column is changed.  </P
+> The user should be able to dinamically set a row or column as a header in openoffice calc.  The hot keys for defining this will be insert+r for row and insert+c for column.  In order to set a row or column the user should first set focus to the row or column that they wish to define and then press the appropriate hot key.  Once the user has defined a row or column it will be used to first speak this header when moving between rows or columns.  This will behave similar to the way orca reads headers in the evolution mail list when moving focus from column to column.  For example, if row c is defined as headers the appropriate cell will first be read before reading the cell with focus when the column is changed.  If a row or column is already set, double pressing the row or column definition on that row or column will unset it as a dinamic header.</P
 ></DIV
 ></DIV
 ><DIV
@@ -4055,7 +4055,7 @@ NAME="URWATCHED"
 	interest.  From this point, the user can use a well known command to go
 	back to the object with focus, give the watched object focus
 	if possible, or perform the equivalent of a mouse click on the
-	watched object.</P
+	watched object. A watched object should not be restricted to the screen.  For example, a user may want to set a particular cell in a spreadsheet as a watched object.  The user may not care if this cell is visible or not.  The user will press insert+w to move to the watched object and press numpad dash to return to the focus position keeping with the method of exiting flat review.  The user will double press insert+w to actually set a watched object. </P
 ><P
 >In the event the user is a magnification user, the magnifier
         will moved to the found object.  Alternatively, the user may 
