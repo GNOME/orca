@@ -1036,17 +1036,17 @@ def visible(ax, ay, awidth, aheight,
 
     visible = False
 
-    if (lowestTop < highestBottom) \
-       and (rightMostLeftEdge < leftMostRightEdge):
+    if (lowestTop <= highestBottom) \
+       and (rightMostLeftEdge <= leftMostRightEdge):
         visible = True
     elif (aheight == 0):
         if (awidth == 0):
             visible = (lowestTop == highestBottom) \
                       and (leftMostRightEdge == rightMostLeftEdge)
         else:
-            visible = leftMostRightEdge < rightMostLeftEdge
+            visible = leftMostRightEdge <= rightMostLeftEdge
     elif (awidth == 0):
-        visible = (lowestTop < highestBottom)
+        visible = (lowestTop <= highestBottom)
 
     return visible
 

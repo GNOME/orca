@@ -1,3 +1,9 @@
+2006-10-18  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/flat_review.py:
+          Fixed bug #361624 - Flat review sometimes fails to move to second 
+          column of text in OOo Writer documents.
+
 2006-10-18  Willie Walker <william.walker@sun.com>
 
 	* bugs/bugs.html: update and colorize (green means fixed, yellow
