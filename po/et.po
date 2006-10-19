@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: orca HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-09-06 17:15+0200\n"
-"PO-Revision-Date: 2006-10-14 18:02+0300\n"
+"PO-Revision-Date: 2006-10-17 12:28+0300\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -333,9 +333,8 @@ msgid "Increases the speech pitch."
 msgstr "Kõnemootorit pole võimalik lähtestada\n"
 
 #: ../src/orca/default.py:214
-#, fuzzy
 msgid "Quits Orca"
-msgstr "Väljub rakendusest"
+msgstr "Orca'st väljumine"
 
 #: ../src/orca/default.py:218
 msgid "Toggles keystroke recording on and off."
@@ -402,16 +401,14 @@ msgid "Speak "
 msgstr "_Räägi uuesti"
 
 #: ../src/orca/default.py:2124
-#, fuzzy
 msgid "row"
-msgstr "Rida %i"
+msgstr ""
 
 #: ../src/orca/default.py:2126
 #: ../src/orca/rolenames.py:432
 #: ../src/orca/rolenames.py:434
-#, fuzzy
 msgid "cell"
-msgstr "lahter"
+msgstr ""
 
 #: ../src/orca/default.py:2281
 msgid "Entering learn mode.  Press any key to hear its function. "
@@ -422,15 +419,13 @@ msgid "To exit learn mode, press the escape key."
 msgstr ""
 
 #: ../src/orca/default.py:2283
-#, fuzzy
 msgid "Learn mode.  Press escape to exit."
-msgstr "Klaviatuuriga valimise režiimis vajuta lõpetamiseks F7"
+msgstr "Õppimisrežiim.  Väljumiseks vajuta escape."
 
 #: ../src/orca/default.py:2295
 #: ../src/orca/default.py:2296
-#, fuzzy
 msgid "Exiting learn mode."
-msgstr "Täisekraanvaate lõpetamine"
+msgstr "Õppimisrežiimist väljumine."
 
 #: ../src/orca/default.py:2626
 #: ../src/orca/default.py:2754
@@ -443,9 +438,8 @@ msgstr "tühi"
 
 #: ../src/orca/default.py:2628
 #: ../src/orca/default.py:2761
-#, fuzzy
 msgid "white space"
-msgstr "Eraldaja, Tühik"
+msgstr ""
 
 #: ../src/orca/espeechfactory.py:93
 #, fuzzy
@@ -502,59 +496,48 @@ msgstr "valimata"
 
 #: ../src/orca/keynames.py:32
 #: ../src/orca/keynames.py:35
-#, fuzzy
 msgid "left shift"
-msgstr "Nihutamine vasakule"
+msgstr "vasak shift"
 
 #: ../src/orca/keynames.py:33
-#, fuzzy
 msgid "left alt"
-msgstr "ALT Tekst"
+msgstr "vasak alt"
 
 #: ../src/orca/keynames.py:34
-#, fuzzy
 msgid "left control"
-msgstr "Muu, Juhtkood"
+msgstr "vasak control"
 
 #: ../src/orca/keynames.py:36
-#, fuzzy
 msgid "right shift"
-msgstr "Nihutamine paremale"
+msgstr "parem shift"
 
 #: ../src/orca/keynames.py:37
-#, fuzzy
 msgid "right alt"
-msgstr "ALT Tekst"
+msgstr "parem alt"
 
 #: ../src/orca/keynames.py:38
-#, fuzzy
 msgid "right control"
-msgstr "Muu, Juhtkood"
+msgstr "parem control"
 
 #: ../src/orca/keynames.py:39
-#, fuzzy
 msgid "left meta"
-msgstr "Pööra _vasakule"
+msgstr "vasak meta"
 
 #: ../src/orca/keynames.py:40
-#, fuzzy
 msgid "right meta"
-msgstr "Pöörab _paremale"
+msgstr "parem meta"
 
 #: ../src/orca/keynames.py:41
-#, fuzzy
 msgid "num lock"
-msgstr "Num_Lock"
+msgstr "num lock"
 
 #: ../src/orca/keynames.py:42
-#, fuzzy
 msgid "caps lock"
-msgstr "Caps Lock klahv on sisse lülitatud"
+msgstr "caps lock"
 
 #: ../src/orca/keynames.py:43
-#, fuzzy
 msgid "scroll lock"
-msgstr "Scroll_Lock"
+msgstr "scroll lock"
 
 #: ../src/orca/keynames.py:44
 #, fuzzy
@@ -567,9 +550,8 @@ msgid "page down"
 msgstr "page down"
 
 #: ../src/orca/keynames.py:46
-#, fuzzy
 msgid "left tab"
-msgstr "Liiguta sakk _vasakule"
+msgstr "vasak tab"
 
 #: ../src/orca/keynames.py:47
 msgid "F 11"
@@ -580,9 +562,8 @@ msgid "F 12"
 msgstr "F 12"
 
 #: ../src/orca/orca-setup.glade.h:1
-#, fuzzy
 msgid "<b>Cross-hair Settings</b>"
-msgstr "Vaikimisi kühmulisuse seaded"
+msgstr "<b>Sihiku sätted</b>"
 
 #: ../src/orca/orca-setup.glade.h:2
 msgid "<b>Cursor Settings</b>"
@@ -915,9 +896,8 @@ msgid "Speech disabled."
 msgstr "Kõne keelatud."
 
 #: ../src/orca/orca.py:815
-#, fuzzy
 msgid "Orca user settings reloaded."
-msgstr "_Migreeri GIMP %s kasutaja seaded"
+msgstr "Orca kasutajasätted on uuesti laaditud."
 
 #: ../src/orca/orca.py:956
 #: ../src/orca/orca.py:957
@@ -1105,7 +1085,7 @@ msgstr "Bilineaarne"
 #: ../src/orca/orca_gui_prefs.py:1312
 #: ../src/orca/orca_gui_prefs.py:1335
 msgid "None"
-msgstr ""
+msgstr "Puudub"
 
 #: ../src/orca/orca_gui_prefs.py:378
 #: ../src/orca/orca_gui_prefs.py:386
@@ -1163,30 +1143,25 @@ msgid "invalid"
 msgstr "vigane"
 
 #: ../src/orca/rolenames.py:152
-#, fuzzy
 msgid "acc"
-msgstr "Täp"
+msgstr ""
 
 #: ../src/orca/rolenames.py:153
-#, fuzzy
 msgid "Accelerator"
-msgstr "_Kiirklahv:"
+msgstr ""
 
 #: ../src/orca/rolenames.py:154
-#, fuzzy
 msgid "accelerator"
-msgstr "_Kiirklahv:"
+msgstr ""
 
 #: ../src/orca/rolenames.py:157
 #: ../src/orca/rolenames.py:159
-#, fuzzy
 msgid "alert"
-msgstr "häire"
+msgstr ""
 
 #: ../src/orca/rolenames.py:158
-#, fuzzy
 msgid "Alert"
-msgstr "Alert"
+msgstr ""
 
 #: ../src/orca/rolenames.py:162
 msgid "Anim"
@@ -1273,10 +1248,9 @@ msgstr ""
 
 #: ../src/orca/rolenames.py:198
 msgid "ColorChooser"
-msgstr ""
+msgstr "VärviValija"
 
 #: ../src/orca/rolenames.py:199
-#, fuzzy
 msgid "color chooser"
 msgstr "värvivalija"
 
@@ -1288,11 +1262,10 @@ msgstr ""
 #: ../src/orca/rolenames.py:203
 #: ../src/orca/rolenames.py:438
 msgid "ColumnHeader"
-msgstr ""
+msgstr "VeeruPäis"
 
 #: ../src/orca/rolenames.py:204
 #: ../src/orca/rolenames.py:439
-#, fuzzy
 msgid "column header"
 msgstr "veeru päis"
 
@@ -1301,14 +1274,12 @@ msgid "cbo"
 msgstr ""
 
 #: ../src/orca/rolenames.py:208
-#, fuzzy
 msgid "Combo"
-msgstr "Kombokast"
+msgstr ""
 
 #: ../src/orca/rolenames.py:209
-#, fuzzy
 msgid "combo box"
-msgstr "valikukast"
+msgstr ""
 
 #: ../src/orca/rolenames.py:212
 msgid "dat"
@@ -1431,14 +1402,12 @@ msgid "fnt"
 msgstr ""
 
 #: ../src/orca/rolenames.py:258
-#, fuzzy
 msgid "FontChooser"
-msgstr "kirjatüübivalija"
+msgstr "KirjatüübiValija"
 
 #: ../src/orca/rolenames.py:259
-#, fuzzy
 msgid "font chooser"
-msgstr "Väljavalija"
+msgstr "kirjatüübivalija"
 
 #: ../src/orca/rolenames.py:262
 msgid "frm"
@@ -1584,14 +1553,12 @@ msgid "mnuitm"
 msgstr ""
 
 #: ../src/orca/rolenames.py:323
-#, fuzzy
 msgid "MenuItem"
-msgstr "Menüükirje \"Muu\" näitamine"
+msgstr "MenüüKirje"
 
 #: ../src/orca/rolenames.py:324
-#, fuzzy
 msgid "menu item"
-msgstr "menüüelement"
+msgstr "MenüüKirje"
 
 #: ../src/orca/rolenames.py:327
 msgid "optnpn"
@@ -1608,14 +1575,12 @@ msgstr "valikupaan"
 
 #: ../src/orca/rolenames.py:332
 #: ../src/orca/rolenames.py:334
-#, fuzzy
 msgid "page"
-msgstr "leht"
+msgstr ""
 
 #: ../src/orca/rolenames.py:333
-#, fuzzy
 msgid "Page"
-msgstr "Lehekülg"
+msgstr ""
 
 #: ../src/orca/rolenames.py:337
 msgid "tblst"
@@ -1635,12 +1600,10 @@ msgid "pnl"
 msgstr ""
 
 #: ../src/orca/rolenames.py:343
-#, fuzzy
 msgid "Panel"
 msgstr "Paneel"
 
 #: ../src/orca/rolenames.py:344
-#, fuzzy
 msgid "panel"
 msgstr "paneel"
 
@@ -1662,10 +1625,9 @@ msgstr ""
 
 #: ../src/orca/rolenames.py:353
 msgid "PopupMenu"
-msgstr ""
+msgstr "HüpikMenüü"
 
 #: ../src/orca/rolenames.py:354
-#, fuzzy
 msgid "popup menu"
 msgstr "hüpikmenüü"
 
@@ -1674,7 +1636,6 @@ msgid "pgbar"
 msgstr ""
 
 #: ../src/orca/rolenames.py:358
-#, fuzzy
 msgid "Progress"
 msgstr "Edenemine"
 
@@ -1792,12 +1753,10 @@ msgid "seprtr"
 msgstr ""
 
 #: ../src/orca/rolenames.py:403
-#, fuzzy
 msgid "Separator"
 msgstr "Eraldaja"
 
 #: ../src/orca/rolenames.py:404
-#, fuzzy
 msgid "separator"
 msgstr "eraldaja"
 
@@ -1845,14 +1804,12 @@ msgid "statbr"
 msgstr ""
 
 #: ../src/orca/rolenames.py:423
-#, fuzzy
 msgid "StatusBar"
-msgstr "_Olekuriba"
+msgstr "OlekuRiba"
 
 #: ../src/orca/rolenames.py:424
-#, fuzzy
 msgid "status bar"
-msgstr "_Olekuriba"
+msgstr "olekuriba"
 
 #: ../src/orca/rolenames.py:427
 msgid "tbl"
@@ -2016,12 +1973,10 @@ msgid "hdr"
 msgstr ""
 
 #: ../src/orca/rolenames.py:503
-#, fuzzy
 msgid "Header"
 msgstr "Päis"
 
 #: ../src/orca/rolenames.py:504
-#, fuzzy
 msgid "header"
 msgstr "päis"
 
@@ -2246,9 +2201,8 @@ msgid "First name"
 msgstr "Eesnimi"
 
 #: ../src/orca/scripts/StarOffice.py:865
-#, fuzzy
 msgid " has formula"
-msgstr "Valemiguru"
+msgstr ""
 
 #. Note to translators: the regular expression here represents a
 #. string to match in the localized application name as seen by
@@ -2295,9 +2249,8 @@ msgstr "%s pole enam kasutatav"
 
 #: ../src/orca/scripts/planner.py:77
 #: ../src/orca/scripts/planner.py:135
-#, fuzzy
 msgid "Display more options"
-msgstr "Näita _rohkem valikuid"
+msgstr "Kuva rohkem valikuid"
 
 #: ../src/orca/scripts/planner.py:139
 #: ../src/orca/scripts/planner.py:147
@@ -2338,14 +2291,12 @@ msgid "tear off"
 msgstr "rebi-küljest menüüelement"
 
 #: ../src/orca/util.py:473
-#, fuzzy
 msgid "Misspelled word: "
-msgstr "Probleemne sõna:"
+msgstr "Probleemne sõna: "
 
 #: ../src/orca/util.py:474
-#, fuzzy
 msgid " Context is "
-msgstr "On pidev"
+msgstr ""
 
 #: ../src/orca/util.py:1172
 msgid "page selected from cursor position"
