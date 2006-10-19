@@ -13,7 +13,15 @@
           po/POTFILES.in:
           Added in entries for new gnome-search-tool and gnome-panel files.
 
-        * src/orca/scripts.py:
+        * docs/pydoc/Makefile.am:
+          po/POTFILES.in:
+          src/orca/script.py:
+          src/orca/scripts/Evolution.py:
+          src/orca/scripts/Makefile.am:
+          src/orca/scripts/Mozilla.py:
+          src/orca/scripts/gaim.py:
+          src/orca/scripts/gnome-terminal.py:
+          src/orca/scripts/metacity.py:
           Adjusted the default for presentIfInactive to be True, then
           adjusted all the scripts that need to turn this off.
 
