@@ -163,7 +163,7 @@ class Registry:
             debug.println(debug.LEVEL_CONFIGURATION,
                           "atspi.start: using bonobo.main; "
                           + "gilSleepTime=%f" % settings.gilSleepTime)
-            if settings.gilSleepTime:
+            if settings.useBlockPreventor and settings.gilSleepTime:
                 gobject.idle_add(self.__blockPreventor)
             bonobo.main()
         else:

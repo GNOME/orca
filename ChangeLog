@@ -32,6 +32,11 @@
         * src/orca/speechgenerator.py:
           Reverse the order back for state and role utterances for check boxes.
 
+        * src/orca/settings.py:
+          src/orca/atspi.py:
+          Added a new setting in settings.py called useBlockPreventor (default
+          of False) which determine whether we create a gobject idle handler.
+
 2006-10-18  Willie Walker <william.walker@sun.com>
 
 	* src/orca/focus_tracking_presenter.py: fix for bug 363242 -

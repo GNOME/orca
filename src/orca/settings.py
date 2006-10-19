@@ -370,6 +370,10 @@ learnModeEnabled        = False
 #
 gilSleepTime            = 0.00001
 
+# If True, use the gidle __blockPreventor() code in atspi.py.
+#
+useBlockPreventor       = False
+
 # If True, we use the bonobo main loop provided by bonobo to handle
 # all events in atspi.py.  If False, we create our own loop.
 #
