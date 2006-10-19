@@ -363,25 +363,20 @@ class SpeechGenerator:
 
         utterances = []
         if obj.state.count(atspi.Accessibility.STATE_CHECKED):
-            # If it's not already focused, say it's name
-            #
-            if not already_focused:
-                utterances.extend(self._getSpeechForObjectLabel(obj))
-                utterances.extend(self._getSpeechForObjectName(obj))
-                utterances.extend(self._getSpeechForObjectRole(obj))
-                utterances.append(_("checked"))
-                utterances.extend(self._getSpeechForObjectAvailability(obj))
-            else:
-                utterances.append(_("checked"))
+            checkedState = _("checked")
         else:
-            if not already_focused:
-                utterances.extend(self._getSpeechForObjectLabel(obj))
-                utterances.extend(self._getSpeechForObjectName(obj))
-                utterances.extend(self._getSpeechForObjectRole(obj))
-                utterances.append(_("not checked"))
-                utterances.extend(self._getSpeechForObjectAvailability(obj))
-            else:
-                utterances.append(_("not checked"))
+            checkedState = _("not checked")
+
+        # If it's not already focused, say it's name
+        #
+        if not already_focused:
+            utterances.extend(self._getSpeechForObjectLabel(obj))
+            utterances.extend(self._getSpeechForObjectName(obj))
+            utterances.append(checkedState)
+            utterances.extend(self._getSpeechForObjectRole(obj))
+            utterances.extend(self._getSpeechForObjectAvailability(obj))
+        else:
+            utterances.append(checkedState)
 
         self._debugGenerator("_getSpeechForCheckBox",
                              obj,
@@ -903,29 +898,22 @@ class SpeechGenerator:
 
         utterances = []
         if obj.state.count(atspi.Accessibility.STATE_CHECKED):
-            # If it's not already focused, say it's name
-            #
-            if not already_focused:
-                # The label is handled as a context in default.py
-                #
-                #utterances.extend(self._getSpeechForObjectLabel(obj))
-                utterances.extend(self._getSpeechForObjectName(obj))
-                utterances.extend(self._getSpeechForObjectRole(obj))
-                utterances.append(_("selected"))
-                utterances.extend(self._getSpeechForObjectAvailability(obj))
-            else:
-                utterances.append(_("selected"))
+            selectionState = _("selected")
         else:
-            if not already_focused:
-                # The label is handled as a context in default.py
-                #
-                #utterances.extend(self._getSpeechForObjectLabel(obj))
-                utterances.extend(self._getSpeechForObjectName(obj))
-                utterances.extend(self._getSpeechForObjectRole(obj))
-                utterances.append(_("not selected"))
-                utterances.extend(self._getSpeechForObjectAvailability(obj))
-            else:
-                utterances.append(_("not selected"))
+            selectionState = _("not selected")
+
+        # If it's not already focused, say it's name
+        #
+        if not already_focused:
+            # The label is handled as a context in default.py
+            #
+            #utterances.extend(self._getSpeechForObjectLabel(obj))
+            utterances.extend(self._getSpeechForObjectName(obj))
+            utterances.append(selectionState)
+            utterances.extend(self._getSpeechForObjectRole(obj))
+            utterances.extend(self._getSpeechForObjectAvailability(obj))
+        else:
+            utterances.append(selectionState)
 
         self._debugGenerator("_getSpeechForRadioButton",
                              obj,
