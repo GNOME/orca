@@ -30,3 +30,7 @@ import orca.Gecko as Gecko
 class Script(Gecko.Script):
     def __init__(self, app):
         Gecko.Script.__init__(self, app)
+
+        # By default, don't present if Mozilla is not the active application.
+        #
+        self.presentIfInactive = False

@@ -54,6 +54,11 @@ class Script(default.Script):
 
         default.Script.__init__(self, app)
 
+        # By default, don't present if gnome-terminal is not the active 
+        # application.
+        #
+        self.presentIfInactive = False
+
     #def onWindowActivated(self, event):
     #    # Sets the context to the top level window first, so we can
     #    # get information about it the window we just moved to.

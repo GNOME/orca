@@ -134,10 +134,6 @@ class Script(default.Script):
 
         default.Script.__init__(self, app)
 
-        # We want to handle events if we aren't the active application.
-        #
-        self.presentIfInactive = True
-
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
         called by the key and braille bindings. In this particular case,

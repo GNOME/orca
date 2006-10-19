@@ -55,7 +55,6 @@ DOC_FILES = \
 	orca.scripts.gedit \
 	orca.scripts.gnome_segv2 \
 	orca.scripts.gnome-keyring-ask \
-	orca.scripts.gnome-panel \
 	orca.scripts.gnome-search-tool \
 	orca.scripts.gnome-terminal \
 	orca.scripts.gnome-window-properties \

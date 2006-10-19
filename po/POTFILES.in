@@ -32,7 +32,6 @@ src/orca/scripts/Evolution.py
 src/orca/scripts/gaim.py
 src/orca/scripts/gedit.py
 src/orca/scripts/gnome-keyring-ask.py
-src/orca/scripts/gnome-panel.py
 src/orca/scripts/gnome-search-tool.py
 src/orca/scripts/gnome_segv2.py
 src/orca/scripts/Mozilla.py

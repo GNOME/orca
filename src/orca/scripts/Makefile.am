@@ -9,7 +9,6 @@ orca_python_PYTHON = \
 	gedit.py \
 	gnome_segv2.py \
 	gnome-keyring-ask.py \
-	gnome-panel.py \
 	gnome-search-tool.py \
 	gnome-terminal.py \
 	gnome-window-properties.py \

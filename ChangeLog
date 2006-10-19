@@ -13,6 +13,10 @@
           po/POTFILES.in:
           Added in entries for new gnome-search-tool and gnome-panel files.
 
+        * src/orca/scripts.py:
+          Adjusted the default for presentIfInactive to be True, then
+          adjusted all the scripts that need to turn this off.
+
 2006-10-18  Willie Walker <william.walker@sun.com>
 
 	* src/orca/focus_tracking_presenter.py: fix for bug 363242 -

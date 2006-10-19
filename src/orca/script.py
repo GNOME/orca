@@ -70,9 +70,9 @@ class Script:
 
         self.listeners = self.getListeners()
 
-        # By default, don't handle events for non-active applications.
+        # By default, handle events for non-active applications.
         #
-        self.presentIfInactive = False
+        self.presentIfInactive = True
 
         self.inputEventHandlers = {}
         self.setupInputEventHandlers()

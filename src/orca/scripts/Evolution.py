@@ -78,6 +78,10 @@ class Script(default.Script):
         self.lastMessageColumn = -1
         self.lastMessageRow = -1
 
+        # By default, don't present if Evolution is not the active application.
+        #
+        self.presentIfInactive = False
+
         # Evolution defines new custom roles. We need to make them known
         # to Orca for Speech and Braille output.
 
