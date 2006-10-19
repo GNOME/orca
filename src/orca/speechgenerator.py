@@ -372,8 +372,8 @@ class SpeechGenerator:
         if not already_focused:
             utterances.extend(self._getSpeechForObjectLabel(obj))
             utterances.extend(self._getSpeechForObjectName(obj))
-            utterances.append(checkedState)
             utterances.extend(self._getSpeechForObjectRole(obj))
+            utterances.append(checkedState)
             utterances.extend(self._getSpeechForObjectAvailability(obj))
         else:
             utterances.append(checkedState)

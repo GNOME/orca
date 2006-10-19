@@ -29,6 +29,9 @@
           Adjusted the default for presentIfInactive to be True, then
           adjusted all the scripts that need to turn this off.
 
+        * src/orca/speechgenerator.py:
+          Reverse the order back for state and role utterances for check boxes.
+
 2006-10-18  Willie Walker <william.walker@sun.com>
 
 	* src/orca/focus_tracking_presenter.py: fix for bug 363242 -
