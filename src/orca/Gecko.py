@@ -47,12 +47,25 @@ from orca_i18n import _
 #
 EMBEDDED_OBJECT_CHARACTER = u'\ufffc'
 
+# Roles that imply their text starts on a new line.
+#
+NEWLINE_ROLES = [rolenames.ROLE_PARAGRAPH,
+                 rolenames.ROLE_SEPARATOR,
+                 rolenames.ROLE_LIST_ITEM,
+                 rolenames.ROLE_HEADING]
+
 def _getAutocompleteEntry(obj):
     for i in range(0, obj.childCount):
         child = obj.child(i)
         if child.role == rolenames.ROLE_ENTRY:
             return child
     return None
+
+########################################################################
+#                                                                      #
+# Custom BrailleGenerator                                              #
+#                                                                      #
+########################################################################
 
 class BrailleGenerator(braillegenerator.BrailleGenerator):
     """Handle Gecko's unique hiearchical representation, such as menus
@@ -178,6 +191,12 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         #
         return [regions, regions[focusedRegionIndex]]
 
+########################################################################
+#                                                                      #
+# Custom SpeechGenerator                                               #
+#                                                                      #
+########################################################################
+
 class SpeechGenerator(speechgenerator.SpeechGenerator):
     """Handle Gecko's unique hiearchical representation, such as menus
     duplicating themselves in the hierarchy and tables used for layout
@@ -202,9 +221,6 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         parent = obj.parent
         if parent.role != rolenames.ROLE_AUTOCOMPLETE:
             [text, startOffset, endOffset] = util.getTextLineAtCaret(obj)
-            print "HERE", text, startOffset, endOffset
-            print obj.role, obj.text, obj.text.caretOffset
-            print obj.text.getText(0, -1)
             return speechgenerator.SpeechGenerator._getSpeechForText(
                 self, obj, already_focused)
 
@@ -371,150 +387,13 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         utterances.reverse()
 
         return utterances
-
-class NavigationContext:
-    CHAR   = 1
-
-    def __init__(self, script, documentFrame):
-        self.script = script
-        self.documentFrame =  documentFrame
-
-        # If an object presents text, it implements the accessible
-        # text interface.  If an object has children that also present
-        # text, then the accessible text for the object contains one
-        # EMBEDDED_OBJECT_CHARACTER for each child, where the
-        # EMBEDDED_OBJECT_CHARACTER represents the position of the
-        # child's text in the object and the order of the
-        # EMBEDDED_OBJECT_CHARACTERs represent the order of the
-        # children (i.e., the first EMBEDDED_OBJECT_CHARACTER
-        # represents child 0, the next EMBEDDED_OBJECT_CHARACTER
-        # represents child 1, and so on.)
-        #
-        # So...we keep track of our current position in a page by
-        # managing a context, which is a FIFO stack of [object,
-        # characterIndex, childIndex] tuples where:
-        #
-        # object:           the object we're currently looking at
-        # characterIndex:   the character index in the object's text that
-        #                   we're currently looking at
-        # lastChildIndex:   set when we visit a child, also represents
-        #                   the index of the child prior to the current
-        #                   characterIndex
-        #
-        result = self.initializeContext()
-        print "INITIALIZED AT", result
-
-    def initializeContext(self, root=None):
-        childIndex = -1
-
-        if not root:
-            self.context = []
-            root = self.documentFrame
-            
-        if root.text:
-            text = self.script.getText(root, 0, -1).decode("UTF-8")
-            for characterIndex in range(0, len(text)):
-                if text[characterIndex] == EMBEDDED_OBJECT_CHARACTER:
-                    childIndex += 1
-                    child = root.child(childIndex)
-                    self.context.append([root,
-                                         text,
-                                         characterIndex,
-                                         childIndex])
-                    result = self.initializeContext(child)
-                    if result:
-                        return result
-                    else:
-                        self.context.pop()
-                else:
-                    self.context.append([root,
-                                         text,
-                                         characterIndex,
-                                         childIndex])
-                    return text[characterIndex]
-            return None
-        else:
-            while childIndex < (root.childCount - 1):
-                childIndex += 1
-                self.context.append([root,
-                                     None,
-                                     -1,
-                                     childIndex])
-                result = self.initializeContext(child)
-                if result:
-                    return result
-                else:
-                    self.context.pop()
-
-        return None
         
-    def setCurrentContext(self, context):
-        if not len(self.context):
-            self.context.append(context)
-        else:
-            self.context[-1] = context
-        
-    def getCurrentContext(self):
-        if not len(self.context):
-            self.initializeContext(self.documentFrame)
-        return self.context[-1]
+########################################################################
+#                                                                      #
+# Script                                                               #
+#                                                                      #
+########################################################################
 
-    def getCurrent(self, type=CHAR):
-        """Returns information about the current position."""
-        [object, text, characterIndex, childIndex] = self.getCurrentContext()
-        if not text and object.text:
-            text = self.script.getText(object, 0, -1).decode("UTF-8")
-        if text:
-            return text[characterIndex]
-        else:
-            return None
-        
-    def goNext(self, type=CHAR):
-        """Moves this context to the first character of the next type."""
-
-        [object, text, characterIndex, childIndex] = self.getCurrentContext()
-        
-        if not text and object.text:
-            text = self.script.getText(object, 0, -1).decode("UTF-8")
-            
-        if text:
-            characterIndex += 1
-            if characterIndex >= len(text):
-                self.context.pop()
-            elif text[characterIndex] == EMBEDDED_OBJECT_CHARACTER:
-                childIndex += 1
-                child = object.child(childIndex)
-                self.setCurrentContext([object,
-                                        text,
-                                        characterIndex,
-                                        childIndex])
-                self.context.append([child, None, 0, -1])
-            else:
-                self.setCurrentContext([object,
-                                        text,
-                                        characterIndex,
-                                        childIndex])
-                return True
-        elif childIndex < (object.childCount - 1):
-            childIndex += 1
-            child = object.child(childIndex)
-            self.setCurrentContext([object,
-                                    text,
-                                    characterIndex,
-                                    childIndex])
-            self.context.append([child, None, 0, -1])
-        else:
-            self.context.pop()
-                
-        if len(self.context):
-            current = self.getCurrent(type)
-            if current and current != EMBEDDED_OBJECT_CHARACTER:
-                return True
-            else:
-                return self.goNext(type)
-        else:
-            return False
-        
 class Script(default.Script):
     """The script for Firefox.
 
@@ -522,10 +401,16 @@ class Script(default.Script):
     ACCESS TO FIREFOX AT THIS POINT.
     """
 
+    ####################################################################
+    #                                                                  #
+    # Standard Script Methods                                          #
+    #                                                                  #
+    ####################################################################
+
     def __init__(self, app):
         #print "Gecko.__init__"
         default.Script.__init__(self, app)
-
+        
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.
         """
@@ -543,10 +428,10 @@ class Script(default.Script):
 
         default.Script.setupInputEventHandlers(self)
 
-        self.inputEventHandlers["traverseContentHandler"] = \
+        self.inputEventHandlers["dumpContentHandler"] = \
             input_event.InputEventHandler(
-                Script.traverseContent,
-                "Traverses document content.")
+                Script.dumpContent,
+                "Dumps document content.")
 
         self.inputEventHandlers["goNextHandler"] = \
             input_event.InputEventHandler(
@@ -563,10 +448,10 @@ class Script(default.Script):
 
         keyBindings.add(
             keybindings.KeyBinding(
-                "h",
+                "d",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
-                self.inputEventHandlers["traverseContentHandler"]))
+                self.inputEventHandlers["dumpContentHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
@@ -578,11 +463,8 @@ class Script(default.Script):
         return keyBindings
 
     def onCaretMoved(self, event):
-        #print "Gecko.onCaretMoved"
-        #print "  source        =", event.source
-        #print "  source.parent =", event.source.parent
-        #print "  lof           =", state.locusOfFocus
-
+        print "Gecko.onCaretMoved", event.detail1
+        
         # We always automatically go back to focus tracking mode when
         # the caret moves in the focused object.
         #
@@ -611,7 +493,7 @@ class Script(default.Script):
     # focus
     #
     def onFocus(self, event):
-        #print "Gecko.onFocus:", event.type, event.source.toString()
+        print "Gecko.onFocus"
 
         # We're going to ignore focus events on the frame.  They
         # are often intermingled with menu activity, wreaking havoc
@@ -727,7 +609,107 @@ class Script(default.Script):
                                                event,
                                                oldLocusOfFocus,
                                                newLocusOfFocus)
+            
+    ####################################################################
+    #                                                                  #
+    # Utility Methods                                                  #
+    #                                                                  #
+    ####################################################################
 
+    def dumpInfo(self, obj):
+        """Dumps the parental hierachy info to stdout."""
+        
+        if obj.parent:
+            self.dumpInfo(obj.parent)
+            
+        print "---"
+        print obj, obj.role, obj.accessible.getIndexInParent()
+        offset = self.getCharacterOffsetInParent(obj)
+        if offset >= 0:
+            print "  offset =", offset
+
+    def getContents(self):
+        contents = ""
+        lastObj = None
+        [obj, characterOffset] = self.getCaretContext()
+        while obj:
+            if obj and obj.state.count(atspi.Accessibility.STATE_SHOWING):
+                characterExtents = obj.text.getRangeExtents(
+                    characterOffset,
+                    characterOffset + 1,
+                    0)
+                if lastObj and (lastObj != obj):
+                    if obj.role == rolenames.ROLE_LIST_ITEM:
+                        contents += "\n"                        
+                    if lastObj.role == rolenames.ROLE_LINK:
+                        contents += ">"
+                    elif (lastCharacterExtents[1] < characterExtents[1]):
+                        contents += "\n"                        
+                    elif obj.role == rolenames.ROLE_TABLE_CELL:
+                        parent = obj.parent
+                        if parent.table.getColumnAtIndex(obj.index) != 0:
+                            contents += " "
+                    elif obj.role == rolenames.ROLE_LINK:
+                        contents += "<"                        
+                contents += self.getCharacter(obj, characterOffset)
+                [lastObj, lastCharacterOffset] = [obj, characterOffset]
+                lastCharacterExtents = characterExtents
+            [obj, characterOffset] = self.getNextInOrder(obj, characterOffset)
+        if lastObj and lastObj.role == rolenames.ROLE_LINK:
+            contents += ">"
+        return contents
+        
+    def dumpContent(self, inputEvent):
+        """Dumps the document frame content to stdout."""        
+        print self.getContents()
+            
+    def oldDumpContent(self, inputEvent, root=None, accumulated="", indent=""):
+        """Dumps the document frame content to stdout."""
+        
+        if not root:
+            documentFrame = self.getDocumentFrame()
+            if not documentFrame:
+                print "COULD NOT FIND DOCUMENT FRAME"
+            else:
+                print self.oldDumpContent(inputEvent, documentFrame)
+            return
+            
+        if NEWLINE_ROLES.count(root.role) and len(accumulated):
+            accumulated += "\n"
+
+        if root.role == rolenames.ROLE_LINK:
+            accumulated += "<"
+
+        childIndex = 0
+
+        if root.text:
+            text = self.getText(root, 0, -1).decode("UTF-8")
+            for characterIndex in range(0, len(text)):
+                if text[characterIndex] == EMBEDDED_OBJECT_CHARACTER:
+                    child = root.child(childIndex)
+                    accumulated = self.dumpContent(inputEvent,
+                                                   child,
+                                                   accumulated,
+                                                   indent + " ")
+                    childIndex += 1
+                else:
+                    accumulated += text[characterIndex]
+        else:
+            while True:
+                if childIndex < root.childCount:
+                    accumulated = self.dumpContent(inputEvent,
+                                                   root.child(childIndex),
+                                                   accumulated,
+                                                   indent + " ")
+                    childIndex += 1
+                else:
+                    break
+
+        if root.role == "link":
+            accumulated += ">"
+
+        return accumulated
+    
     def getDocumentFrame(self):
         """Returns the document frame that holds the content being shown."""
 
@@ -750,60 +732,158 @@ class Script(default.Script):
 
         return documentFrame
 
-    def walkContent(self, root, accumulated="", indent=""):
-        print "%s{%s} %d" % (indent, root.role, root.accessible.getRole())
-        newlineRoles = [rolenames.ROLE_PARAGRAPH,
-                        rolenames.ROLE_SEPARATOR,
-                        rolenames.ROLE_LIST_ITEM,
-                        rolenames.ROLE_HEADING]
+    def getUnicodeText(self, obj):
+        try:
+            return obj.unicodeText
+        except:
+            if obj.text:
+                obj.unicodeText = self.getText(obj, 0, -1).decode("UTF-8")
+            else:
+                obj.unicodeText = None
+        return obj.unicodeText
+    
+    def getCharacterOffsetInParent(self, obj):
+        """Returns the character offset of the embedded object
+        character for this hyperlink in its parent's accessible text.
 
-        if newlineRoles.count(root.role) and len(accumulated):
-            accumulated += "\n"
+        Arguments:
+        - obj: an Accessible that should implement the accessible hyperlink
+               specialization.
 
-        if root.role == rolenames.ROLE_LINK:
-            accumulated += "<"
+        Returns an integer representing the character offset of the
+        embedded object character for this hyperlink in its parent's
+        accessible text, or -1 if this object is not a hyperlink.
+        """
+        
+        # [[[TODO: WDW - HACK to handle the fact that
+        # hyperlink.startIndex and hyperlink.endIndex is broken in the
+        # Gecko a11y implementation.  This will hopefully be fixed.
+        # If it is, one should be able to use hyperlink.startIndex.]]]
+        #
+        try:
+            return obj.characterOffsetInParent
+        except:
+            hyperlink = obj.hyperlink
+            if obj.hyperlink:
+                index = 0
+                text = self.getUnicodeText(obj.parent)
+                for offset in range(0, len(text)):
+                    if text[offset] == EMBEDDED_OBJECT_CHARACTER:
+                        if index == obj.index:
+                            obj.characterOffsetInParent = offset
+                            break
+                        else:
+                            index += 1
+            else:
+                obj.characterOffsetInParent = -1
 
-        childIndex = 0
+        return obj.characterOffsetInParent
 
-        if root.text:
-            text = self.getText(root, 0, -1).decode("UTF-8")
-            for characterIndex in range(0, len(text)):
-                if text[characterIndex] == EMBEDDED_OBJECT_CHARACTER:
-                    child = root.child(childIndex)
-                    accumulated = self.walkContent(child,
-                                                   accumulated,
-                                                   indent + " ")
-                    childIndex += 1
+    def getChildIndex(self, obj, characterOffset):
+        try:
+            indeces = obj.childrenIndeces
+        except:
+            obj.childrenIndeces = {}
+
+        try:
+            return obj.childrenIndeces[characterOffset]
+        except:
+            index = -1
+            unicodeText = self.getUnicodeText(obj)
+            if unicodeText:
+                for character in range(0, characterOffset + 1):
+                    if unicodeText[character] == EMBEDDED_OBJECT_CHARACTER:
+                        index += 1
+            obj.childrenIndeces[characterOffset] = index
+            
+        return obj.childrenIndeces[characterOffset]
+    
+    def getNextInOrder(self, obj=None, startOffset=-1):
+        """Given an object an a character offset, return the next
+        caret context following an in order traversal rule.
+
+        Arguments:
+        - root: the Accessible to start at.  If None, starts at the
+        document frame.
+        - startOffset: character position in the object text field
+        (if it exists) to start at.  Defaults to -1, which means
+        start at the beginning - that is, the next character is the
+        first character in the object.
+
+        Returns [obj, characterOffset] or [None, -1]
+        
+        DETAIL: If an object presents text, it implements the
+        accessible text interface.  If an object has children that
+        also present text, then the accessible text for the object
+        contains one EMBEDDED_OBJECT_CHARACTER for each child, where
+        the EMBEDDED_OBJECT_CHARACTER represents the position of the
+        child's text in the object and the order of the
+        EMBEDDED_OBJECT_CHARACTERs represent the order of the children
+        (i.e., the first EMBEDDED_OBJECT_CHARACTER represents child 0,
+        the next EMBEDDED_OBJECT_CHARACTER represents child 1, and so
+        on.)
+        
+        So...we keep track of our current position in a page by
+        managing a caret context, which is tuple that consists of an
+        Accessible object in the document frame and our caret offset
+        in that object.
+        """
+
+        if not obj:
+            obj = self.getDocumentFrame()
+            
+        if obj.text:
+            unicodeText = self.getUnicodeText(obj)
+            nextOffset = startOffset + 1
+            if nextOffset < len(unicodeText):
+                if unicodeText[nextOffset] != EMBEDDED_OBJECT_CHARACTER:
+                    return [obj, nextOffset]
                 else:
-                    accumulated += text[characterIndex]
-                    print text[characterIndex]
+                    return self.getNextInOrder(
+                        obj.child(self.getChildIndex(obj, nextOffset)), -1)
+        elif obj.childCount:
+            return self.getNextInOrder(obj.child(0), -1)
+            
+        # If we're here, we need to start looking up the tree
+        #
+        while obj.parent and obj != obj.parent:
+            characterOffsetInParent = self.getCharacterOffsetInParent(obj)
+            if characterOffsetInParent >= 0:
+                return self.getNextInOrder(obj.parent, characterOffsetInParent)
+            else:
+                index = obj.index + 1
+                if index < obj.parent.childCount:
+                    return self.getNextInOrder(obj.parent.child(index), -1)
+            obj = obj.parent
+
+        return [None, -1]
+
+    def getCaretContext(self):
+        try:
+            return self.caretContext
+        except:
+            self.caretContext = self.getNextInOrder()
+        return self.caretContext
+    
+    def getCharacter(self, obj, characterOffset):
+        if obj:
+            unicodeText = self.getUnicodeText(obj)
+            return unicodeText[characterOffset].encode("UTF-8")
         else:
-            while True:
-                if childIndex < root.childCount:
-                    accumulated = self.walkContent(root.child(childIndex),
-                                                   accumulated,
-                                                   indent + " ")
-                    childIndex += 1
-                else:
-                    break
-
-        if root.role == "link":
-            accumulated += ">"
-
-        return accumulated
-
-    def traverseContent(self, inputEvent):
-        documentFrame = self.getDocumentFrame()
-        print self.walkContent(documentFrame)
+            return None
 
     def goNextCharacter(self, inputEvent):
 
-        try:
-            navigationContext = self.navigationContext
-        except:
-            documentFrame = self.getDocumentFrame()
-            navigationContext = NavigationContext(self, documentFrame)
-            self.navigationContext = navigationContext
-
-        navigationContext.goNext()
-        print navigationContext.getCurrent()
+        [obj, characterOffset] = self.getCaretContext()
+        while obj:
+            [obj, characterOffset] = self.getNextInOrder(obj, characterOffset)
+            if obj and obj.state.count(atspi.Accessibility.STATE_SHOWING):
+                self.caretContext = [obj, characterOffset]
+                break
+            
+        character = self.getCharacter(obj, characterOffset)
+        if character:
+            print character
+        else:
+            print "DONE!"
+            del self.caretContext
