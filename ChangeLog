@@ -4,6 +4,11 @@
           Fixed bug #348975 - orca should not speak the role when moving 
           between radio buttons.
 
+        * src/orca/scripts/gnome-panel.py:
+          src/orca/scripts/Makefile.am:
+          Fixed bug #363423 - Orca will not provide access to the 
+          Applications menu if in a Gaim chat window
+
 2006-10-18  Willie Walker <william.walker@sun.com>
 
 	* src/orca/focus_tracking_presenter.py: fix for bug 363242 -
