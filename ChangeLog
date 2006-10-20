@@ -4,6 +4,10 @@
           Updated the table entry for three of the OpenOffice bugs 
           after testing with SO build m186.
 
+        * src/orca/util.py:
+          Fixed bug #357063 - Special case consideration for "repeat 
+          character count" functionality.
+
 2006-10-19  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py: more work on in order traversal ideas.

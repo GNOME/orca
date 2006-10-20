@@ -566,13 +566,14 @@ def textLines(obj):
         if not moreLines:
             done = True
 
-def _addRepeatSegment(segment, line):
+def _addRepeatSegment(segment, line, respectPunctuation=True):
     """Add in the latest line segment, adjusting for repeat characters
     and punctuation.
 
     Arguments:
     - segment: the segment of repeated characters.
     - line: the current built-up line to characters to speak.
+    - respectPunctuation: if False, ignore punctuation level.
 
     Returns: the current built-up line plus the new segment, after
     adjusting for repeat character counts and punctuation.
@@ -586,10 +587,11 @@ def _addRepeatSegment(segment, line):
         isPunctChar = False
     count = len(segment)
     if (count >= settings.repeatCharacterLimit) \
-       and (not segment[0] in string.whitespace) \
-       and (isPunctChar and (style <= level)):
-        repeatChar = chnames.getCharacterName(segment[0])
-        line += _(" %d %s characters ") % (count, repeatChar)
+       and (not segment[0] in string.whitespace):
+        if (not respectPunctuation) \
+           or (isPunctChar and (style <= level)):
+            repeatChar = chnames.getCharacterName(segment[0])
+            line += _(" %d %s characters ") % (count, repeatChar)
     else:
         line += segment
 
@@ -623,16 +625,18 @@ def adjustForRepeats(line):
     newLine = u''
     segment = lastChar = line[0]
 
+    multipleChars = False
     for i in range(1, len(line)):
         if line[i] == lastChar:
             segment += line[i]
         else:
+            multipleChars = True
             newLine = _addRepeatSegment(segment, newLine)
             segment = line[i]
 
         lastChar = line[i]
 
-    newLine = _addRepeatSegment(segment, newLine)
+    newLine = _addRepeatSegment(segment, newLine, multipleChars)
 
     return newLine.encode("UTF-8")
 
