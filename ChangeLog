@@ -1,3 +1,9 @@
+2006-10-20  Rich Burridge <rich.burridge@sun.com>
+
+        * bugs/bugs.html:
+          Updated the table entry for three of the OpenOffice bugs 
+          after testing with SO build m186.
+
 2006-10-19  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py: more work on in order traversal ideas.
