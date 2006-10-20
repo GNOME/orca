@@ -42,6 +42,8 @@
           src/orca/atspi.py:
           Added a new setting in settings.py called useBlockPreventor (default
           of False) which determine whether we create a gobject idle handler.
+          This seems to nicely fix bug #349956 - Orca causes gedit Print 
+          Dialog to slow down.
 
 2006-10-18  Willie Walker <william.walker@sun.com>
 
