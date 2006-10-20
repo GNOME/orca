@@ -8,6 +8,9 @@
           Fixed bug #357063 - Special case consideration for "repeat 
           character count" functionality.
 
+        * src/orca/default.py:
+          Fixed bug 344249 - Orca should report menu mnemonics.
+
 2006-10-19  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py: more work on in order traversal ideas.

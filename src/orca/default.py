@@ -1170,6 +1170,17 @@ class Script(script.Script):
         text[0] = util.adjustForRepeats(text[0])
         utterances.extend(text)
 
+        # If this is one of the various menu item types, speak its shortcut 
+        # (if present).
+        #
+        if (role == rolenames.ROLE_MENU_ITEM) \
+           or (role == rolenames.ROLE_CHECK_MENU_ITEM) \
+           or (role == rolenames.ROLE_RADIO_MENU_ITEM):
+            result = util.getAcceleratorAndShortcut(orca_state.locusOfFocus)
+            shortcut = result[1]
+            if len(shortcut) > 0:
+                utterances.append(_("shortcut") + " " + shortcut)
+
         # Now speak the tree node level.
         #
         level = util.getNodeLevel(orca_state.locusOfFocus)
