@@ -14,6 +14,12 @@
           Fixed bug #363807 - Orca should report the quantity of items 
           in a table.
 
+        * src/orca/default.py:
+          src/orca/orca.py:
+          src/orca/util.py:
+          Fixed bug #363796 - In learn mode, the second press of a letter 
+          should provide the phonetic.
+
 2006-10-21  Willie Walker <william.walker@sun.com>
 
 	* src/orca/flat_review.py: a bit of work to better handle the

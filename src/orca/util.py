@@ -42,6 +42,7 @@ import chnames
 import debug
 import input_event
 import orca_state
+import phonnames
 import punctuation_settings
 import pronunciation_dict
 import rolenames
@@ -1033,6 +1034,22 @@ def findUnrelatedLabels(root):
         sortedLabels.insert(index, label)
 
     return sortedLabels
+
+def phoneticSpellCurrentItem(string):
+    """Phonetically spell the current flat review word or line.
+
+    Arguments:
+    - string: the string to phonetically spell.
+    """
+
+    for (index, character) in enumerate(string.decode("UTF-8")):
+        if character.isupper():
+            voice = settings.voices[settings.UPPERCASE_VOICE]
+            character = character.lower()
+        else:
+            voice =  settings.voices[settings.DEFAULT_VOICE]
+        string = phonnames.getPhoneticName(character)
+        speech.speak(string, voice)
 
 def printAncestry(child):
    """Prints a hierarchical view of a child's ancestry."""

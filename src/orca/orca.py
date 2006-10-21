@@ -706,13 +706,18 @@ def _processKeyboardEvent(event):
         if (not consumed) and settings.learnModeEnabled:
             if keyboardEvent.type \
                 == atspi.Accessibility.KEY_PRESSED_EVENT:
-                # Check to see if there are localized words to be
-                # spoken for this key event.
-                #
-                braille.displayMessage(keyboardEvent.event_string)
-                event_string = keyboardEvent.event_string
-                event_string = keynames.getKeyName(event_string)
-                speech.speak(event_string)
+                clickCount = util.getClickCount(orca_state.lastInputEvent,
+                                            keyboardEvent)
+                if clickCount == 2:
+                    util.phoneticSpellCurrentItem(keyboardEvent.event_string)
+                else:
+                    # Check to see if there are localized words to be
+                    # spoken for this key event.
+                    #
+                    braille.displayMessage(keyboardEvent.event_string)
+                    event_string = keyboardEvent.event_string
+                    event_string = keynames.getKeyName(event_string)
+                    speech.speak(event_string)
             consumed = True
     except:
         debug.printException(debug.LEVEL_SEVERE)

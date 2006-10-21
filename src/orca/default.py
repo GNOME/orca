@@ -39,7 +39,6 @@ import keybindings
 import mag
 import orca
 import orca_state
-import phonnames
 import rolenames
 import script
 import settings
@@ -2791,7 +2790,7 @@ class Script(script.Script):
             elif clickCount == 2:
                 self.spellCurrentItem(string)
             elif clickCount == 3:
-                self.phoneticSpellCurrentItem(string)
+                util.phoneticSpellCurrentItem(string)
             else:
                 string = util.adjustForRepeats(string)
                 speech.speak(string)
@@ -2897,22 +2896,6 @@ class Script(script.Script):
             else:
                 speech.speak(character)
 
-    def phoneticSpellCurrentItem(self, string):
-        """Phonetically spell the current flat review word or line.
-
-        Arguments:
-        - string: the string to phonetically spell.
-        """
-
-        for (index, character) in enumerate(string.decode("UTF-8")):
-            if character.isupper():
-                voice = self.voices[settings.UPPERCASE_VOICE]
-                character = character.lower()
-            else:
-                voice =  self.voices[settings.DEFAULT_VOICE]
-            string = phonnames.getPhoneticName(character)
-            speech.speak(string, voice)
-
     def _reviewCurrentItem(self, inputEvent, targetCursorCell=0,
                            clickCount=1):
         """Presents the current item to the user.
@@ -2946,7 +2929,7 @@ class Script(script.Script):
                 elif clickCount == 2:
                     self.spellCurrentItem(string)
                 elif clickCount == 3:
-                    self.phoneticSpellCurrentItem(string)
+                    util.phoneticSpellCurrentItem(string)
                 else:
                     string = util.adjustForRepeats(string)
                     speech.speak(string)
@@ -3040,7 +3023,7 @@ class Script(script.Script):
                 elif clickCount == 2:
                     self.spellCurrentItem(string)
                 elif clickCount == 3:
-                    self.phoneticSpellCurrentItem(string)
+                    util.phoneticSpellCurrentItem(string)
                 elif string.isupper():
                     speech.speak(string, self.voices[settings.UPPERCASE_VOICE])
                 else:
