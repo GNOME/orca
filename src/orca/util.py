@@ -43,6 +43,7 @@ import debug
 import input_event
 import orca_state
 import punctuation_settings
+import pronunciation_dict
 import rolenames
 import settings
 import speech
@@ -637,6 +638,34 @@ def adjustForRepeats(line):
         lastChar = line[i]
 
     newLine = _addRepeatSegment(segment, newLine, multipleChars)
+
+    return newLine.encode("UTF-8")
+
+def adjustForPronunciation(line):
+    """Adjust the line to replace words in the pronunciation dictionary,
+    with what those words actually sound like.
+
+    Arguments:
+    - line: the string to adjust for words in the pronunciation dictionary.
+
+    Returns: a new line adjusted for words found in the pronunciation 
+    dictionary.
+    """
+
+    line = line.decode("UTF-8")
+    newLine = segment = u''
+
+    for i in range(0, len(line)):
+        if isWordDelimiter(line[i]):
+            if len(segment) != 0:
+                newLine = newLine + pronunciation_dict.getPronunciation(segment)
+            newLine = newLine + line[i]
+            segment = u''
+        else:
+            segment += line[i]
+
+    if len(segment) != 0:
+        newLine = newLine + pronunciation_dict.getPronunciation(segment)
 
     return newLine.encode("UTF-8")
 

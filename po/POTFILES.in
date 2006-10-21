@@ -23,6 +23,7 @@ src/orca/orca-quit.glade
 src/orca/orca-setup.glade
 src/orca/orca-mainwin.glade
 src/orca/phonnames.py
+src/orca/pronunciation_dict.py
 src/orca/rolenames.py
 src/orca/settings.py
 src/orca/speech.py

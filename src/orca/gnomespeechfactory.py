@@ -45,6 +45,7 @@ import punctuation_settings
 import settings
 import speech
 import speechserver
+import util
 
 from acss import ACSS
 
@@ -691,6 +692,7 @@ class SpeechServer(speechserver.SpeechServer):
             return -1
 
         text = self.__addVerbalizedPunctuation(text)
+        text = util.adjustForPronunciation(text)
 
         try:
             # [[[TODO: WDW - back this stop out for now.  The problem is

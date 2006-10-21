@@ -43,6 +43,7 @@ orca_python_PYTHON = \
 	phonnames.py \
 	platform.py \
 	presentation_manager.py \
+	pronunciation_dict.py \
 	punctuation_settings.py \
 	rolenames.py \
 	script.py \

@@ -39,6 +39,7 @@ DOC_FILES = \
 	orca.phonnames \
 	orca.platform \
 	orca.presentation_manager \
+	orca.pronunciation_dict \
 	orca.punctuation_settings \
 	orca.rolenames \
 	orca.script \

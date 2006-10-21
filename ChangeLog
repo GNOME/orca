@@ -1,3 +1,11 @@
+2006-10-21  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/Makefile.am:
+          src/orca/gnomespeechfactory.py:
+          src/orca/pronunciation_dict.py:
+          src/orca/util.py:
+          Fixed bug #321184 - Need a pronunciation dictionary.
+
 2006-10-21  Willie Walker <william.walker@sun.com>
 
 	* src/orca/flat_review.py: a bit of work to better handle the
