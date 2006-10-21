@@ -1096,7 +1096,6 @@ class Script(script.Script):
 
         verbosity = settings.speechVerbosityLevel
 
-        print "whereAmI: role: ", orca_state.locusOfFocus.role
         utterances = []
 
         utterances.extend(
