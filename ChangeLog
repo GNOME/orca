@@ -6,6 +6,10 @@
           src/orca/util.py:
           Fixed bug #321184 - Need a pronunciation dictionary.
 
+        * src/orca/scripts/StarOffice.py:
+          Fixed bug 363802 - When navigating in Calc from cell to cell, 
+          Orca should not say "cell".
+
 2006-10-21  Willie Walker <william.walker@sun.com>
 
 	* src/orca/flat_review.py: a bit of work to better handle the

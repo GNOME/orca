@@ -427,21 +427,15 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         if isSpreadSheetCell(obj):
             utterances = []
 
-            utterances.append(util.getDisplayedText(\
-                    util.getRealActiveDescendant(obj)))
-
             if inputLineForCell == None:
                 inputLineForCell = locateInputLine(obj)
 
-            # If the spread sheet table cell has something in it, then we
-            # want to append the name of the cell (which will be its location).
-            # Note that if the cell was empty, then util.getDisplayedText will
-            # have already done this for us.
-            #
             if obj.text:
                 objectText = self._script.getText(obj, 0, -1)
-                if objectText and len(objectText) != 0:
-                    utterances.append(" " + obj.name)
+                utterances.append(objectText)
+
+            nameList = obj.name.split()
+            utterances.append(nameList[1])
         else:
             speechGen = speechgenerator.SpeechGenerator
             utterances = speechGen._getSpeechForTableCell(self, obj,
