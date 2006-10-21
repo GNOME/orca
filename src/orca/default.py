@@ -1096,6 +1096,7 @@ class Script(script.Script):
 
         verbosity = settings.speechVerbosityLevel
 
+        print "whereAmI: role: ", orca_state.locusOfFocus.role
         utterances = []
 
         utterances.extend(
@@ -1135,6 +1136,11 @@ class Script(script.Script):
                                 + rolenames.rolenames[\
                                         rolenames.ROLE_COLUMN_HEADER].speech
                         utterances.append(text)
+
+                text = _("Item ") + str(row) + _(" of ") + \
+                       str(parent.table.nRows)
+                utterances.append(text)
+
 
         # If this is a normal, check or radio menu item or a menu within a
         # menu, give its position within the menu and the total number of 

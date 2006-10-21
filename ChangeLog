@@ -7,8 +7,12 @@
           Fixed bug #321184 - Need a pronunciation dictionary.
 
         * src/orca/scripts/StarOffice.py:
-          Fixed bug 363802 - When navigating in Calc from cell to cell, 
+          Fixed bug #363802 - When navigating in Calc from cell to cell, 
           Orca should not say "cell".
+
+        * src/orca/default.py:
+          Fixed bug #363807 - Orca should report the quantity of items 
+          in a table.
 
 2006-10-21  Willie Walker <william.walker@sun.com>
 
