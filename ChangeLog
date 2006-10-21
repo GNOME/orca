@@ -1,3 +1,9 @@
+2006-10-20  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca.py: fix keynames.keynames reference in learn
+	mode - use keynames.getKeyName instead.  This was something
+	introduced as a result of fix for bug 349954.
+	
 2006-10-20  Rich Burridge <rich.burridge@sun.com>
 
         * bugs/bugs.html:

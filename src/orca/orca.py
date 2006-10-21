@@ -711,8 +711,7 @@ def _processKeyboardEvent(event):
                 #
                 braille.displayMessage(keyboardEvent.event_string)
                 event_string = keyboardEvent.event_string
-                if event_string in keynames.keynames:
-                    event_string = keynames.keynames[event_string]
+                event_string = keynames.getKeyName(event_string)
                 speech.speak(event_string)
             consumed = True
     except:
