@@ -1,3 +1,15 @@
+2006-10-21  Willie Walker <william.walker@sun.com>
+
+	* src/orca/flat_review.py: a bit of work to better handle the
+	unicode EMBEDDED_OBJECT_CHARACTER method used by Firefox (and
+	maybe OpenOffice) to indicate nesting of textual components.  The
+	main thing was to honor the accessible text of non-leaf nodes and
+	also take care if they had EMBEDDED_OBJECT_CHARACTERs in them.
+	Still not all the way there yet, but it is getting better.  BTW,
+	this fixes the "32 bugs found" issue of bug 355525, but there's
+	still issues with the other test case - flat review doesn't seem
+	to find all the text on that page.  Still looking.
+	
 2006-10-20  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca.py: fix keynames.keynames reference in learn

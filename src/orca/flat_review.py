@@ -231,12 +231,6 @@ class TextZone(Zone):
         Zone.__init__(self, accessible, string, x, y, width, height)
         self.startOffset = startOffset
 
-        # If the accessible for this TextZone is multiline, we will
-        # keep track of the next and previous lines.
-        #
-        self.previousLineZone = None
-        self.nextLineZone = None
-
     def __getattr__(self, attr):
         """Used for lazily determining the words in a Zone.  The words
         will either be all whitespace (interword boundaries) or actual
@@ -1066,103 +1060,59 @@ def clip(ax, ay, awidth, aheight,
 
     return [x, y, width, height]
 
-def getZonesFromAccessible(accessible, cliprect):
-    """Returns a list of Zones for the given accessible.
+def splitTextIntoZones(accessible, string, startOffset, cliprect):
+    """Traverses the string, splitting it up into separate zones if the
+    string contains the EMBEDDED_OBJECT_CHARACTER, which is used by apps
+    such as Firefox to handle containment of things such as links in
+    paragraphs.
 
     Arguments:
     - accessible: the accessible
+    - string: a substring from the accessible's text specialization
+    - startOffset: the starting character offset of the string
     - cliprect: the extents that the Zones must fit inside.
+
+    Returns a list of Zones for the visible text or None if nothing is
+    visible.
     """
 
-    if not accessible.component:
-        return []
-
-    # Get the component extents in screen coordinates.
+    # Embedded object character used to indicate that an object is
+    # embedded in a string.
     #
-    extents = accessible.component.getExtents(0)
+    EMBEDDED_OBJECT_CHARACTER = u'\ufffc'
 
-    if not visible(extents.x, extents.y,
-                   extents.width, extents.height,
-                   cliprect.x, cliprect.y,
-                   cliprect.width, cliprect.height):
-        return []
-
+    # We convert the string to unicode and walk through it.  While doing
+    # this, we keep two sets of offsets:
+    #
+    # substring{Start,End}Offset: where in the accessible text implementation
+    #                             we are
+    #
+    # unicodeStartOffset: where we are in the unicodeString
+    #
+    anyVisible = False
     zones = []
-
-    debug.println(
-        debug.LEVEL_FINEST,
-        "flat_review.getZonesFromAccessible (name=%s role=%s)" \
-        % (accessible.name, accessible.role))
-
-    # Now see if there is any accessible text.  If so, find new zones,
-    # where each zone represents a line of this text object.  When
-    # creating the zone, only keep track of the text that is actually
-    # showing on the screen.
-    #
-    if accessible.text:
-        debug.println(debug.LEVEL_FINEST, "  looking at text:")
-
-        text = accessible.text
-        length = text.characterCount
-
-        offset = 0
-        lastEndOffset = -1
-        while offset < length:
-
-            [string, startOffset, endOffset] = text.getTextAtOffset(
-                offset,
-                atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
-
-            debug.println(debug.LEVEL_FINEST,
-                          "    line at %d is (start=%d end=%d): '%s'" \
-                          % (offset, startOffset, endOffset, string))
-
-            # [[[WDW - HACK: well...gnome-terminal sometimes wants to
-            # give us outrageous values back from getTextAtOffset
-            # (see http://bugzilla.gnome.org/show_bug.cgi?id=343133),
-            # so we try to handle it.  Evolution does similar things.]]]
-            #
-            if (startOffset < 0) \
-               or (endOffset < 0) \
-               or (startOffset > offset) \
-               or (endOffset < offset) \
-               or (startOffset > endOffset) \
-               or (abs(endOffset - startOffset) > 666e3):
-                debug.println(debug.LEVEL_WARNING,
-                              "flat_review:getZonesFromAccessible detected "\
-                              "garbage from getTextAtOffset for accessible "\
-                              "name='%s' role'='%s': offset used=%d, "\
-                              "start/end offset returned=(%d,%d), string='%s'"\
-                              % (accessible.name, accessible.role,
-                                 offset, startOffset, endOffset, string))
-                break
-
-            # [[[WDW - HACK: this is here because getTextAtOffset
-            # tends not to be implemented consistently across toolkits.
-            # Sometimes it behaves properly (i.e., giving us an endOffset
-            # that is the beginning of the next line), sometimes it
-            # doesn't (e.g., giving us an endOffset that is the end of
-            # the current line).  So...we hack.  The whole 'max' deal
-            # is to account for lines that might be a brazillion lines
-            # long.]]]
-            #
-            if endOffset == lastEndOffset:
-                offset = max(offset + 1, lastEndOffset + 1)
-                lastEndOffset = endOffset
-                continue
-
-            lastEndOffset = endOffset
-
-            [x, y, width, height] = text.getRangeExtents(startOffset,
-                                                         endOffset,
+    text = accessible.text
+    substringStartOffset = startOffset
+    substringEndOffset   = startOffset
+    unicodeStartOffset   = 0
+    unicodeString = string.decode("UTF-8")
+    for i in range(0, len(unicodeString) + 1):
+        if (i != len(unicodeString)) \
+           and (unicodeString[i] != EMBEDDED_OBJECT_CHARACTER):
+            substringEndOffset += 1
+        elif (substringEndOffset == substringStartOffset):
+            substringStartOffset += 1
+            substringEndOffset   = substringStartOffset
+            unicodeStartOffset   = i + 1
+        else:
+            [x, y, width, height] = text.getRangeExtents(substringStartOffset,
+                                                         substringEndOffset,
                                                          0)
-
-            offset = endOffset
-            previousLineZone = None
-
             if visible(x, y, width, height,
                        cliprect.x, cliprect.y,
                        cliprect.width, cliprect.height):
+
+                anyVisible = True
 
                 clipping = clip(x, y, width, height,
                                 cliprect.x, cliprect.y,
@@ -1189,46 +1139,162 @@ def getZonesFromAccessible(accessible, cliprect):
                 #    print range.endOffset
                 #    print range.content
 
-                zone = TextZone(accessible,
-                                startOffset,
-                                string,
-                                clipping[0],
-                                clipping[1],
-                                clipping[2],
-                                clipping[3])
-
-                if previousLineZone:
-                    previousLineZone.nextLineZone = zone
-                zone.previousLineZone = previousLineZone
-                zone.nextLineZone = None
-
-                zones.append(zone)
-
-                previousLineZone = zone
-
-            elif len(zones):
-                # We'll break out of searching all the text - the idea
-                # here is that we'll at least try to optimize for when
-                # we gone below the visible clipping area.
-                #
-                # [[[TODO: WDW - would be nice to optimize this better.
-                # for example, perhaps we can assume the caret will always
-                # be visible, and we can start our text search from there.
-                # Logged as bugzilla bug 319771.]]]
-                #
-                break
-
-        # We might have a zero length text area.  In that case, well,
-        # lets hack...
-        #
-        if len(zones) == 0:
-            if (accessible.role == rolenames.ROLE_TEXT) \
-               or ((accessible.role == rolenames.ROLE_PASSWORD_TEXT)):
+                substring = unicodeString[unicodeStartOffset:i]
                 zones.append(TextZone(accessible,
-                                      0,
-                                      "",
-                                      extents.x, extents.y,
-                                      extents.width, extents.height))
+                                      substringStartOffset,
+                                      substring.encode("UTF-8"),
+                                      clipping[0],
+                                      clipping[1],
+                                      clipping[2],
+                                      clipping[3]))
+                substringStartOffset = substringEndOffset + 1
+                substringEndOffset   = substringStartOffset
+                unicodeStartOffset   = i + 1
+
+    if anyVisible:
+        return zones
+    else:
+        return None
+
+def getZonesFromText(accessible, cliprect):
+    """Gets a list of Zones from an object that implements the
+    AccessibleText specialization.
+
+    Arguments:
+    - accessible: the accessible
+    - cliprect: the extents that the Zones must fit inside.
+
+    Returns a list of Zones.
+    """
+
+    debug.println(debug.LEVEL_FINEST, "  looking at text:")
+
+    if accessible.text:
+        zones = []
+    else:
+        return []
+
+    text = accessible.text
+    length = text.characterCount
+
+    offset = 0
+    lastEndOffset = -1
+    while offset < length:
+
+        [string, startOffset, endOffset] = text.getTextAtOffset(
+            offset,
+            atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+
+        debug.println(debug.LEVEL_FINEST,
+                      "    line at %d is (start=%d end=%d): '%s'" \
+                      % (offset, startOffset, endOffset, string))
+
+        # [[[WDW - HACK: well...gnome-terminal sometimes wants to
+        # give us outrageous values back from getTextAtOffset
+        # (see http://bugzilla.gnome.org/show_bug.cgi?id=343133),
+        # so we try to handle it.  Evolution does similar things.]]]
+        #
+        if (startOffset < 0) \
+           or (endOffset < 0) \
+           or (startOffset > offset) \
+           or (endOffset < offset) \
+           or (startOffset > endOffset) \
+           or (abs(endOffset - startOffset) > 666e3):
+            debug.println(debug.LEVEL_WARNING,
+                          "flat_review:getZonesFromAccessible detected "\
+                          "garbage from getTextAtOffset for accessible "\
+                          "name='%s' role'='%s': offset used=%d, "\
+                          "start/end offset returned=(%d,%d), string='%s'"\
+                          % (accessible.name, accessible.role,
+                             offset, startOffset, endOffset, string))
+            break
+
+        # [[[WDW - HACK: this is here because getTextAtOffset
+        # tends not to be implemented consistently across toolkits.
+        # Sometimes it behaves properly (i.e., giving us an endOffset
+        # that is the beginning of the next line), sometimes it
+        # doesn't (e.g., giving us an endOffset that is the end of
+        # the current line).  So...we hack.  The whole 'max' deal
+        # is to account for lines that might be a brazillion lines
+        # long.]]]
+        #
+        if endOffset == lastEndOffset:
+            offset = max(offset + 1, lastEndOffset + 1)
+            lastEndOffset = endOffset
+            continue
+        else:
+            offset = endOffset
+            lastEndOffset = endOffset
+
+        textZones = splitTextIntoZones(
+            accessible, string, startOffset, cliprect)
+
+        if textZones:
+            zones.extend(textZones)
+        elif len(zones):
+            # We'll break out of searching all the text - the idea
+            # here is that we'll at least try to optimize for when
+            # we gone below the visible clipping area.
+            #
+            # [[[TODO: WDW - would be nice to optimize this better.
+            # for example, perhaps we can assume the caret will always
+            # be visible, and we can start our text search from there.
+            # Logged as bugzilla bug 319771.]]]
+            #
+            break
+
+    # We might have a zero length text area.  In that case, well,
+    # lets hack if this is something whose sole purpose is to
+    # act as a text entry area.
+    #
+    if len(zones) == 0:
+        if (accessible.role == rolenames.ROLE_TEXT) \
+           or ((accessible.role == rolenames.ROLE_ENTRY)) \
+           or ((accessible.role == rolenames.ROLE_PASSWORD_TEXT)):
+            extents = accessible.component.getExtents(0)
+            zones.append(TextZone(accessible,
+                                  0,
+                                  "",
+                                  extents.x, extents.y,
+                                  extents.width, extents.height))
+
+    return zones
+
+def getZonesFromAccessible(accessible, cliprect):
+    """Returns a list of Zones for the given accessible.
+
+    Arguments:
+    - accessible: the accessible
+    - cliprect: the extents that the Zones must fit inside.
+    """
+
+    if not accessible.component:
+        return []
+
+    # Get the component extents in screen coordinates.
+    #
+    extents = accessible.component.getExtents(0)
+
+    if not visible(extents.x, extents.y,
+                   extents.width, extents.height,
+                   cliprect.x, cliprect.y,
+                   cliprect.width, cliprect.height):
+        return []
+
+    debug.println(
+        debug.LEVEL_FINEST,
+        "flat_review.getZonesFromAccessible (name=%s role=%s)" \
+        % (accessible.name, accessible.role))
+
+    # Now see if there is any accessible text.  If so, find new zones,
+    # where each zone represents a line of this text object.  When
+    # creating the zone, only keep track of the text that is actually
+    # showing on the screen.
+    #
+    if accessible.text:
+        zones = getZonesFromText(accessible, cliprect)
+    else:
+        zones = []
 
     # We really want the accessible text information.  But, if we have
     # an image, and it has a description, we can fall back on it.
@@ -1258,11 +1324,21 @@ def getZonesFromAccessible(accessible, cliprect):
                                   clipping[2],
                                   clipping[3]))
 
-    # Well...darn.  Maybe we didn't get anything of use, but we certainly
-    # know there's something there.  If that's the case, we'll just use
-    # the component extents and the name or description of the accessible.
+    # If the accessible is a parent, we really only looked at it for
+    # its accessible text.  So...we'll skip the hacking here if that's
+    # the case.  [[[TODO: WDW - HACK That is, except in the case of
+    # combo boxes, which don't implement the accesible text
+    # interface.]]]
     #
-    if len(zones) == 0:
+    # Otherwise, even if we didn't get anything of use, we certainly
+    # know there's something there.  If that's the case, we'll just
+    # use the component extents and the name or description of the
+    # accessible.
+    #
+    if (accessible.role != rolenames.ROLE_COMBO_BOX) \
+        and accessible.childCount > 0:
+        pass
+    elif len(zones) == 0:
         clipping = clip(extents.x, extents.y,
                         extents.width, extents.height,
                         cliprect.x, cliprect.y,
@@ -1413,20 +1489,22 @@ def getShowingZones(root):
 
     # Otherwise, dig deeper.
     #
-    objlist = []
-
     # We'll include page tabs: while they are parents, their extents do
     # not contain their children. [[[TODO: WDW - need to consider all
     # parents, especially those that implement accessible text.  Logged
     # as bugzilla bug 319773.]]]
     #
+    zones = []
     if root.role == rolenames.ROLE_PAGE_TAB:
-        objlist.extend(getZonesFromAccessible(root, root.extents))
+        zones.extend(getZonesFromAccessible(root, root.extents))
+
+    if (len(zones) == 0) and root.text:
+        zones = getZonesFromAccessible(root, root.extents)
 
     if root.state.count(atspi.Accessibility.STATE_MANAGES_DESCENDANTS) \
        and (root.childCount > 50):
         for child in getShowingDescendants(root):
-            objlist.extend(getShowingZones(child))
+            zones.extend(getShowingZones(child))
     else:
         for i in range(0, root.childCount):
             child = root.child(i)
@@ -1443,9 +1521,9 @@ def getShowingZones(root):
                               "flat_review.getShowingZones: " +
                               "WARNING CHILD.PARENT != PARENT!!!")
             elif child.state.count(atspi.Accessibility.STATE_SHOWING):
-                objlist.extend(getShowingZones(child))
+                zones.extend(getShowingZones(child))
 
-    return objlist
+    return zones
 
 def clusterZonesByLine(zones):
     """Given a list of interesting accessible objects (the Zones),
