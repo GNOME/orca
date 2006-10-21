@@ -20,6 +20,10 @@
           Fixed bug #363796 - In learn mode, the second press of a letter 
           should provide the phonetic.
 
+        * src/orca/scripts/StarOffice.py:
+          Fixed bug 363801 - Provide confirmation when the user presses 
+          Insert R/C in Calc.
+
 2006-10-21  Willie Walker <william.walker@sun.com>
 
 	* src/orca/flat_review.py: a bit of work to better handle the

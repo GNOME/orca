@@ -637,10 +637,16 @@ class Script(default.Script):
             if clickCount == 2:
                 try:
                     del dynamicColumnHeaders[table]
+                    line = _("Dynamic column header cleared.")
+                    speech.speak(line)
+                    braille.displayMessage(line)
                 except:
                     pass
             else:
                 dynamicColumnHeaders[table] = row
+                line = _("Dynamic column header set for row ") + str(row+1)
+                speech.speak(line)
+                braille.displayMessage(line)
         self.lastDynamicEvent = inputEvent
 
         return True
@@ -672,10 +678,17 @@ class Script(default.Script):
             if clickCount == 2:
                 try:
                     del dynamicRowHeaders[table]
+                    line = _("Dynamic row header cleared.")
+                    speech.speak(line)
+                    braille.displayMessage(line)
                 except:
                     pass
             else:
                 dynamicRowHeaders[table] = column
+                line = _("Dynamic row header set for column ") + str(column+1)
+                speech.speak(line)
+                braille.displayMessage(line)
+
         self.lastDynamicEvent = inputEvent
 
         return True
