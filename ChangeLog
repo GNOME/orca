@@ -1,7 +1,9 @@
 2006-10-22  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
-          Slight fixup for bug #363807 - item number was off by one.
+          Slight fixups for bug #363807 
+            - item number was off by one.
+            - adjustment of text line to make it more easily localizable.
 
         * src/orca/scripts/StarOffice.py:
           Slight adjustment for bug #363801 - column number now spoken
