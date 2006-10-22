@@ -52,6 +52,11 @@ import speechserver
 
 from orca_i18n import _ # for gettext support
 
+# Embedded object character used to indicate that an object is
+# embedded in a string.
+#
+EMBEDDED_OBJECT_CHARACTER = u'\ufffc'
+
 def isSameObject(obj1, obj2):
     if (obj1 == obj2):
         return True
@@ -649,7 +654,7 @@ def adjustForPronunciation(line):
     Arguments:
     - line: the string to adjust for words in the pronunciation dictionary.
 
-    Returns: a new line adjusted for words found in the pronunciation 
+    Returns: a new line adjusted for words found in the pronunciation
     dictionary.
     """
 
@@ -742,7 +747,7 @@ def getFrame(obj):
     return obj
 
 def getTopLevel(obj):
-    """Returns the top-level object (frame, dialog ...) containing this 
+    """Returns the top-level object (frame, dialog ...) containing this
     object, or None if this object is not inside a top-level object.
 
     Arguments:

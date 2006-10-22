@@ -32,6 +32,7 @@ import atspi
 import braille
 import debug
 import eventsynthesizer
+import orca_state
 import rolenames
 import util
 
@@ -369,23 +370,104 @@ class Context:
     WRAP_TOP_BOTTOM = 1 << 1
     WRAP_ALL        = (WRAP_LINE | WRAP_TOP_BOTTOM)
 
-    def __init__(self, lines, lineIndex, zoneIndex, wordIndex, charIndex):
+    def __init__(self, script):
         """Create a new Context that will be used for handling flat
         review mode.
-
-        Arguments:
-        - lines: an array of arrays of Zones (see clusterZonesByLine)
-        - lineIndex: index into lines
-        - zoneIndex: index into lines[lineIndex].zones
-        - wordIndex: index into lines[lineIndex].zones[zoneIndex].words
-        - charIndex: index lines[lineIndex].zones[zoneIndex].words[wordIndex].chars
         """
 
-        self.lines     = lines
-        self.lineIndex = lineIndex
-        self.zoneIndex = zoneIndex
-        self.wordIndex = wordIndex
-        self.charIndex = charIndex
+        self.script    = script
+
+        if (not orca_state.locusOfFocus) \
+            or (orca_state.locusOfFocus.app != self.script.app):
+            self.lines = []
+        else:
+            # We want to stop at the window or frame or equivalent level.
+            #
+            obj = orca_state.locusOfFocus
+            while obj \
+                      and obj.parent \
+                      and (obj.parent.role != rolenames.ROLE_APPLICATION) \
+                      and (obj != obj.parent):
+                obj = obj.parent
+            if obj:
+                self.lines = self.clusterZonesByLine(self.getShowingZones(obj))
+            else:
+                self.lines = []
+
+        currentLineIndex = 0
+        currentZoneIndex = 0
+        currentWordIndex = 0
+        currentCharIndex = 0
+
+        if orca_state.locusOfFocus.role == rolenames.ROLE_TABLE_CELL:
+            searchZone = util.getRealActiveDescendant(orca_state.locusOfFocus)
+        else:
+            searchZone = orca_state.locusOfFocus
+
+        foundZoneWithFocus = False
+        while currentLineIndex < len(self.lines):
+            line = self.lines[currentLineIndex]
+            currentZoneIndex = 0
+            while currentZoneIndex < len(line.zones):
+                zone = line.zones[currentZoneIndex]
+                if zone.accessible == searchZone:
+                    foundZoneWithFocus = True
+                    break
+                else:
+                    currentZoneIndex += 1
+            if foundZoneWithFocus:
+                break
+            else:
+                currentLineIndex += 1
+
+        # Fallback to the first Zone if we didn't find anything.
+        #
+        if not foundZoneWithFocus:
+            currentLineIndex = 0
+            currentZoneIndex = 0
+        elif isinstance(zone, TextZone):
+            # If we're on an accessible text object, try to set the
+            # review cursor to the caret position of that object.
+            #
+            accessible  = zone.accessible
+            lineIndex   = currentLineIndex
+            zoneIndex   = currentZoneIndex
+            caretOffset = zone.accessible.text.caretOffset
+            foundZoneWithCaret = False
+            while lineIndex < len(self.lines):
+                line = self.lines[lineIndex]
+                while zoneIndex < len(line.zones):
+                    zone = line.zones[zoneIndex]
+                    if zone.accessible == accessible:
+                        if (caretOffset >= zone.startOffset) \
+                               and (caretOffset \
+                                    < (zone.startOffset + zone.length)):
+                            foundZoneWithCaret = True
+                            break
+                    zoneIndex += 1
+                if foundZoneWithCaret:
+                    currentLineIndex = lineIndex
+                    currentZoneIndex = zoneIndex
+                    currentWordIndex = 0
+                    currentCharIndex = 0
+                    offset = zone.startOffset
+                    while currentWordIndex < len(zone.words):
+                        word = zone.words[currentWordIndex]
+                        if (word.length + offset) > caretOffset:
+                            currentCharIndex = caretOffset - offset
+                            break
+                        else:
+                            currentWordIndex += 1
+                            offset += word.length
+                    break
+                else:
+                    zoneIndex = 0
+                    lineIndex += 1
+
+        self.lineIndex = currentLineIndex
+        self.zoneIndex = currentZoneIndex
+        self.wordIndex = currentWordIndex
+        self.charIndex = currentCharIndex
 
         # This is used to tell us where we should strive to move to
         # when going up and down lines to the closest character.
@@ -394,6 +476,591 @@ class Context:
         # by line.
         #
         self.targetCharInfo = None
+
+    def visible(self,
+                ax, ay, awidth, aheight,
+                bx, by, bwidth, bheight):
+        """Returns true if any portion of region 'a' is in region 'b'
+        """
+        highestBottom = min(ay + aheight, by + bheight)
+        lowestTop = max(ay, by)
+
+        leftMostRightEdge = min(ax + awidth, bx + bwidth)
+        rightMostLeftEdge = max(ax, bx)
+
+        visible = False
+
+        if (lowestTop <= highestBottom) \
+           and (rightMostLeftEdge <= leftMostRightEdge):
+            visible = True
+        elif (aheight == 0):
+            if (awidth == 0):
+                visible = (lowestTop == highestBottom) \
+                          and (leftMostRightEdge == rightMostLeftEdge)
+            else:
+                visible = leftMostRightEdge <= rightMostLeftEdge
+        elif (awidth == 0):
+            visible = (lowestTop <= highestBottom)
+
+        return visible
+
+    def clip(self,
+             ax, ay, awidth, aheight,
+             bx, by, bwidth, bheight):
+        """Clips region 'a' by region 'b' and returns the new region as
+        a list: [x, y, width, height].
+        """
+
+        x = max(ax, bx)
+        x2 = min(ax + awidth, bx + bwidth)
+        width = x2 - x
+
+        y = max(ay, by)
+        y2 = min(ay + aheight, by + bheight)
+        height = y2 - y
+
+        return [x, y, width, height]
+
+    def splitTextIntoZones(self, accessible, string, startOffset, cliprect):
+        """Traverses the string, splitting it up into separate zones if the
+        string contains the EMBEDDED_OBJECT_CHARACTER, which is used by apps
+        such as Firefox to handle containment of things such as links in
+        paragraphs.
+
+        Arguments:
+        - accessible: the accessible
+        - string: a substring from the accessible's text specialization
+        - startOffset: the starting character offset of the string
+        - cliprect: the extents that the Zones must fit inside.
+
+        Returns a list of Zones for the visible text or None if nothing is
+        visible.
+        """
+
+        # We convert the string to unicode and walk through it.  While doing
+        # this, we keep two sets of offsets:
+        #
+        # substring{Start,End}Offset: where in the accessible text implementation
+        #                             we are
+        #
+        # unicodeStartOffset: where we are in the unicodeString
+        #
+        anyVisible = False
+        zones = []
+        text = accessible.text
+        substringStartOffset = startOffset
+        substringEndOffset   = startOffset
+        unicodeStartOffset   = 0
+        unicodeString = string.decode("UTF-8")
+        #print "LOOKING AT '%s'" % unicodeString
+        for i in range(0, len(unicodeString) + 1):
+            if (i != len(unicodeString)) \
+               and (unicodeString[i] != util.EMBEDDED_OBJECT_CHARACTER):
+                substringEndOffset += 1
+            elif (substringEndOffset == substringStartOffset):
+                substringStartOffset += 1
+                substringEndOffset   = substringStartOffset
+                unicodeStartOffset   = i + 1
+            else:
+                [x, y, width, height] = text.getRangeExtents(substringStartOffset,
+                                                             substringEndOffset,
+                                                             0)
+                if self.visible(x, y, width, height,
+                                cliprect.x, cliprect.y,
+                                cliprect.width, cliprect.height):
+
+                    anyVisible = True
+
+                    clipping = self.clip(x, y, width, height,
+                                         cliprect.x, cliprect.y,
+                                         cliprect.width, cliprect.height)
+
+                    # [[[TODO: WDW - HACK it would be nice to clip the
+                    # the text by what is really showing on the screen,
+                    # but this seems to hang Orca and the client. Logged
+                    # as bugzilla bug 319770.]]]
+                    #
+                    #ranges = text.getBoundedRanges(\
+                    #    clipping[0],
+                    #    clipping[1],
+                    #    clipping[2],
+                    #    clipping[3],
+                    #    0,
+                    #    atspi.Accessibility.TEXT_CLIP_BOTH,
+                    #    atspi.Accessibility.TEXT_CLIP_BOTH)
+                    #
+                    #print
+                    #print "HERE!"
+                    #for range in ranges:
+                    #    print range.startOffset
+                    #    print range.endOffset
+                    #    print range.content
+
+                    substring = unicodeString[unicodeStartOffset:i]
+                    #print " SUBSTRING '%s'" % substring
+                    zones.append(TextZone(accessible,
+                                          substringStartOffset,
+                                          substring.encode("UTF-8"),
+                                          clipping[0],
+                                          clipping[1],
+                                          clipping[2],
+                                          clipping[3]))
+                    substringStartOffset = substringEndOffset + 1
+                    substringEndOffset   = substringStartOffset
+                    unicodeStartOffset   = i + 1
+
+        if anyVisible:
+            return zones
+        else:
+            return None
+
+    def getZonesFromText(self, accessible, cliprect):
+        """Gets a list of Zones from an object that implements the
+        AccessibleText specialization.
+
+        Arguments:
+        - accessible: the accessible
+        - cliprect: the extents that the Zones must fit inside.
+
+        Returns a list of Zones.
+        """
+
+        debug.println(debug.LEVEL_FINEST, "  looking at text:")
+
+        if accessible.text:
+            zones = []
+        else:
+            return []
+
+        text = accessible.text
+        length = text.characterCount
+
+        offset = 0
+        lastEndOffset = -1
+        while offset < length:
+
+            [string, startOffset, endOffset] = text.getTextAtOffset(
+                offset,
+                atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+
+            #NEED TO SKIP OVER EMBEDDED_OBJECT_CHARACTERS
+
+            #print "STRING at %d is (start=%d end=%d): '%s'" \
+            #      % (offset, startOffset, endOffset, string)
+            #if startOffset > offset:
+            #    embedded = text.getText(offset, offset + 1).decode("UTF-8")
+            #    if embedded[0] == util.EMBEDDED_OBJECT_CHARACTER:
+            #        offset = startOffset
+
+            debug.println(debug.LEVEL_FINEST,
+                          "    line at %d is (start=%d end=%d): '%s'" \
+                          % (offset, startOffset, endOffset, string))
+
+            # [[[WDW - HACK: well...gnome-terminal sometimes wants to
+            # give us outrageous values back from getTextAtOffset
+            # (see http://bugzilla.gnome.org/show_bug.cgi?id=343133),
+            # so we try to handle it.  Evolution does similar things.]]]
+            #
+            if (startOffset < 0) \
+               or (endOffset < 0) \
+               or (startOffset > offset) \
+               or (endOffset < offset) \
+               or (startOffset > endOffset) \
+               or (abs(endOffset - startOffset) > 666e3):
+                debug.println(debug.LEVEL_WARNING,
+                              "flat_review:getZonesFromText detected "\
+                              "garbage from getTextAtOffset for accessible "\
+                              "name='%s' role'='%s': offset used=%d, "\
+                              "start/end offset returned=(%d,%d), string='%s'"\
+                              % (accessible.name, accessible.role,
+                                 offset, startOffset, endOffset, string))
+                break
+
+            # [[[WDW - HACK: this is here because getTextAtOffset
+            # tends not to be implemented consistently across toolkits.
+            # Sometimes it behaves properly (i.e., giving us an endOffset
+            # that is the beginning of the next line), sometimes it
+            # doesn't (e.g., giving us an endOffset that is the end of
+            # the current line).  So...we hack.  The whole 'max' deal
+            # is to account for lines that might be a brazillion lines
+            # long.]]]
+            #
+            if endOffset == lastEndOffset:
+                offset = max(offset + 1, lastEndOffset + 1)
+                lastEndOffset = endOffset
+                continue
+            else:
+                offset = endOffset
+                lastEndOffset = endOffset
+
+            textZones = self.splitTextIntoZones(
+                accessible, string, startOffset, cliprect)
+
+            if textZones:
+                zones.extend(textZones)
+            elif len(zones):
+                # We'll break out of searching all the text - the idea
+                # here is that we'll at least try to optimize for when
+                # we gone below the visible clipping area.
+                #
+                # [[[TODO: WDW - would be nice to optimize this better.
+                # for example, perhaps we can assume the caret will always
+                # be visible, and we can start our text search from there.
+                # Logged as bugzilla bug 319771.]]]
+                #
+                break
+
+        # We might have a zero length text area.  In that case, well,
+        # lets hack if this is something whose sole purpose is to
+        # act as a text entry area.
+        #
+        if len(zones) == 0:
+            if (accessible.role == rolenames.ROLE_TEXT) \
+               or ((accessible.role == rolenames.ROLE_ENTRY)) \
+               or ((accessible.role == rolenames.ROLE_PASSWORD_TEXT)):
+                extents = accessible.component.getExtents(0)
+                zones.append(TextZone(accessible,
+                                      0,
+                                      "",
+                                      extents.x, extents.y,
+                                      extents.width, extents.height))
+
+        return zones
+
+    def getZonesFromAccessible(self, accessible, cliprect):
+        """Returns a list of Zones for the given accessible.
+
+        Arguments:
+        - accessible: the accessible
+        - cliprect: the extents that the Zones must fit inside.
+        """
+
+        if not accessible.component:
+            return []
+
+        # Get the component extents in screen coordinates.
+        #
+        extents = accessible.component.getExtents(0)
+
+        if not self.visible(extents.x, extents.y,
+                            extents.width, extents.height,
+                            cliprect.x, cliprect.y,
+                            cliprect.width, cliprect.height):
+            return []
+
+        debug.println(
+            debug.LEVEL_FINEST,
+            "flat_review.getZonesFromAccessible (name=%s role=%s)" \
+            % (accessible.name, accessible.role))
+
+        # Now see if there is any accessible text.  If so, find new zones,
+        # where each zone represents a line of this text object.  When
+        # creating the zone, only keep track of the text that is actually
+        # showing on the screen.
+        #
+        if accessible.text:
+            zones = self.getZonesFromText(accessible, cliprect)
+        else:
+            zones = []
+
+        # We really want the accessible text information.  But, if we have
+        # an image, and it has a description, we can fall back on it.
+        #
+        if (len(zones) == 0) \
+               and accessible.image \
+               and accessible.image.imageDescription \
+               and len(accessible.image.imageDescription):
+
+            [x, y] = accessible.image.getImagePosition(0)
+            [width, height] = accessible.image.getImageSize()
+
+            if (width != 0) and (height != 0) \
+                   and self.visible(x, y, width, height,
+                                    cliprect.x, cliprect.y,
+                                    cliprect.width, cliprect.height):
+
+                clipping = self.clip(x, y, width, height,
+                                     cliprect.x, cliprect.y,
+                                     cliprect.width, cliprect.height)
+
+                if (clipping[2] != 0) or (clipping[3] != 0):
+                    zones.append(Zone(accessible,
+                                      accessible.image.imageDescription,
+                                      clipping[0],
+                                      clipping[1],
+                                      clipping[2],
+                                      clipping[3]))
+
+        # If the accessible is a parent, we really only looked at it for
+        # its accessible text.  So...we'll skip the hacking here if that's
+        # the case.  [[[TODO: WDW - HACK That is, except in the case of
+        # combo boxes, which don't implement the accesible text
+        # interface.]]]
+        #
+        # Otherwise, even if we didn't get anything of use, we certainly
+        # know there's something there.  If that's the case, we'll just
+        # use the component extents and the name or description of the
+        # accessible.
+        #
+        if (accessible.role != rolenames.ROLE_COMBO_BOX) \
+            and accessible.childCount > 0:
+            pass
+        elif len(zones) == 0:
+            clipping = self.clip(extents.x, extents.y,
+                                 extents.width, extents.height,
+                                 cliprect.x, cliprect.y,
+                                 cliprect.width, cliprect.height)
+            if accessible.name and len(accessible.name):
+                string = accessible.name
+            elif accessible.description and len(accessible.description):
+                string = accessible.description
+            else:
+                string = ""
+
+            if string == "":
+                # [[[TODO: WDW - ooohhhh....this is going to be a headache.
+                # We want to synthesize a string for objects that are there,
+                # but have no text.  For example, scroll bars.  The rub is
+                # that we will sometimes want to do different strings for
+                # speech and braille (e.g., checkbox cells in tables - the
+                # speech will say "checkbox checked" and the braille will
+                # display "checkbox <x>".  Yikes.  That may be a challenge.
+                # So...for now we punt on table cells.  Logged as bugzilla
+                # bug 319772.]]]
+                #
+                if accessible.role != rolenames.ROLE_TABLE_CELL:
+                    string = accessible.role
+
+            if len(string) and ((clipping[2] != 0) or (clipping[3] != 0)):
+                zones.append(Zone(accessible,
+                                  string,
+                                  clipping[0],
+                                  clipping[1],
+                                  clipping[2],
+                                  clipping[3]))
+
+        return zones
+
+    def getShowingDescendants(self, parent):
+        """Given a parent that manages its descendants, return a list of
+        Accessible children that are actually showing.  This algorithm
+        was inspired a little by the srw_elements_from_accessible logic
+        in Gnopernicus, and makes the assumption that the children of
+        an object that manages its descendants are arranged in a row
+        and column format.
+        """
+
+        if (not parent) or (not parent.component):
+            return []
+
+        # A minimal chunk to jump around should we not really know where we
+        # are going.
+        #
+        GRID_SIZE = 7
+
+        descendants = []
+
+        parentExtents = parent.component.getExtents(0)
+
+        # [[[TODO: WDW - HACK related to GAIL bug where table column headers
+        # seem to be ignored: http://bugzilla.gnome.org/show_bug.cgi?id=325809.
+        # The problem is that this causes getAccessibleAtPoint to return the
+        # cell effectively below the real cell at a given point, making a mess
+        # of everything.  So...we just manually add in showing headers for now.
+        # The remainder of the logic below accidentally accounts for this offset,
+        # yet it should also work when bug 325809 is fixed.]]]
+        #
+        table = parent.table
+        if table:
+            for i in range(0, table.nColumns):
+                obj = table.getColumnHeader(i)
+                if obj:
+                    header = atspi.Accessible.makeAccessible(obj)
+                    extents = header.extents
+                    if header.state.count(atspi.Accessibility.STATE_SHOWING) \
+                       and (extents.x >= 0) and (extents.y >= 0) \
+                       and (extents.width > 0) and (extents.height > 0) \
+                       and self.visible(extents.x, extents.y,
+                                        extents.width, extents.height,
+                                        parentExtents.x, parentExtents.y,
+                                        parentExtents.width,
+                                        parentExtents.height):
+                        descendants.append(header)
+
+        # This algorithm goes left to right, top to bottom while attempting
+        # to do *some* optimization over queries.  It could definitely be
+        # improved.
+        #
+        currentY = parentExtents.y
+        while currentY < (parentExtents.y + parentExtents.height):
+            currentX = parentExtents.x
+            minHeight = sys.maxint
+            while currentX < (parentExtents.x + parentExtents.width):
+                obj = parent.component.getAccessibleAtPoint(currentX,
+                                                            currentY,
+                                                            0)
+                if obj:
+                    child = atspi.Accessible.makeAccessible(obj)
+                    extents = child.extents
+                    if extents.x >= 0 and extents.y >= 0:
+                        newX = extents.x + extents.width
+                        minHeight = min(minHeight, extents.height)
+                        if not descendants.count(child):
+                            descendants.append(child)
+                    else:
+                        newX = currentX + GRID_SIZE
+                else:
+                    newX = currentX + GRID_SIZE
+                if newX <= currentX:
+                    currentX += GRID_SIZE
+                else:
+                    currentX = newX
+            if minHeight == sys.maxint:
+                minHeight = GRID_SIZE
+            currentY += minHeight
+
+        return descendants
+
+    def getShowingZones(self, root):
+        """Returns a list of all interesting, non-intersecting, regions
+        that are drawn on the screen.  Each element of the list is the
+        Accessible object associated with a given region.  The term
+        'zone' here is inherited from OCR algorithms and techniques.
+
+        The Zones are returned in no particular order.
+
+        Arguments:
+        - root: the Accessible object to traverse
+
+        Returns: a list of Zones under the specified object
+        """
+
+        if not root:
+            return []
+
+        # If we're at a leaf node, then we've got a good one on our hands.
+        #
+        if root.childCount <= 0:
+            return self.getZonesFromAccessible(root, root.extents)
+
+        # We'll stop at various objects because, while they do have
+        # children, we logically think of them as one region on the
+        # screen.  [[[TODO: WDW - HACK stopping at menu bars for now
+        # because their menu items tell us they are showing even though
+        # they are not showing.  Until I can figure out a reliable way to
+        # get past these lies, I'm going to ignore them.]]]
+        #
+        if (root.parent and (root.parent.role == rolenames.ROLE_MENU_BAR)) \
+           or (root.role == rolenames.ROLE_COMBO_BOX) \
+           or (root.role == rolenames.ROLE_TEXT):
+            return self.getZonesFromAccessible(root, root.extents)
+
+        # Otherwise, dig deeper.
+        #
+        # We'll include page tabs: while they are parents, their extents do
+        # not contain their children. [[[TODO: WDW - need to consider all
+        # parents, especially those that implement accessible text.  Logged
+        # as bugzilla bug 319773.]]]
+        #
+        zones = []
+        if root.role == rolenames.ROLE_PAGE_TAB:
+            zones.extend(self.getZonesFromAccessible(root, root.extents))
+
+        if (len(zones) == 0) and root.text:
+            zones = self.getZonesFromAccessible(root, root.extents)
+
+        if root.state.count(atspi.Accessibility.STATE_MANAGES_DESCENDANTS) \
+           and (root.childCount > 50):
+            for child in self.getShowingDescendants(root):
+                zones.extend(self.getShowingZones(child))
+        else:
+            for i in range(0, root.childCount):
+                child = root.child(i)
+                if child == root:
+                    debug.println(debug.LEVEL_WARNING,
+                                  "flat_review.getShowingZones: " +
+                                  "WARNING CHILD == PARENT!!!")
+                elif not child:
+                    debug.println(debug.LEVEL_WARNING,
+                                  "flat_review.getShowingZones: " +
+                                  "WARNING CHILD IS NONE!!!")
+                elif child.parent != root:
+                    debug.println(debug.LEVEL_WARNING,
+                                  "flat_review.getShowingZones: " +
+                                  "WARNING CHILD.PARENT != PARENT!!!")
+                elif child.state.count(atspi.Accessibility.STATE_SHOWING):
+                    zones.extend(self.getShowingZones(child))
+
+        return zones
+
+    def clusterZonesByLine(self, zones):
+        """Given a list of interesting accessible objects (the Zones),
+        returns a list of lines in order from the top to bottom, where
+        each line is a list of accessible objects in order from left
+        to right.
+        """
+
+        if len(zones) == 0:
+            return []
+
+        # Sort the zones and also find the top most zone - we'll bias
+        # the clustering to the top of the window.  That is, if an
+        # object can be part of multiple clusters, for now it will
+        # become a part of the top most cluster.
+        #
+        numZones = len(zones)
+        for i in range(0, numZones):
+            for j in range(0, numZones - 1 - i):
+                a = zones[j]
+                b = zones[j + 1]
+                if b.y < a.y:
+                    zones[j] = b
+                    zones[j + 1] = a
+
+        # Now we cluster the zones.  We create the clusters on the
+        # fly, adding a zone to an existing cluster only if it's
+        # rectangle horizontally overlaps all other zones in the
+        # cluster.
+        #
+        lineClusters = []
+        for clusterCandidate in zones:
+            addedToCluster = False
+            for lineCluster in lineClusters:
+                inCluster = True
+                for zone in lineCluster:
+                    if not zone.onSameLine(clusterCandidate):
+                        inCluster = False
+                        break
+                if inCluster:
+                    # Add to cluster based on the x position.
+                    #
+                    i = 0
+                    while i < len(lineCluster):
+                        zone = lineCluster[i]
+                        if clusterCandidate.x < zone.x:
+                            break
+                        else:
+                            i += 1
+                    lineCluster.insert(i, clusterCandidate)
+                    addedToCluster = True
+                    break
+            if not addedToCluster:
+                lineClusters.append([clusterCandidate])
+
+        # Now, adjust all the indeces.
+        #
+        lines = []
+        lineIndex = 0
+        for lineCluster in lineClusters:
+            lines.append(Line(lineIndex, lineCluster))
+            zoneIndex = 0
+            for zone in lineCluster:
+                zone.line = lines[lineIndex]
+                zone.index = zoneIndex
+                zoneIndex += 1
+            lineIndex += 1
+
+        return lines
 
     def _dumpCurrentState(self):
         print "line=%d, zone=%d, word=%d, char=%d" \
@@ -1017,579 +1684,3 @@ class Context:
             raise Exception("Invalid type: %d" % type)
 
         return moved
-
-def visible(ax, ay, awidth, aheight,
-            bx, by, bwidth, bheight):
-    """Returns true if any portion of region 'a' is in region 'b'
-    """
-    highestBottom = min(ay + aheight, by + bheight)
-    lowestTop = max(ay, by)
-
-    leftMostRightEdge = min(ax + awidth, bx + bwidth)
-    rightMostLeftEdge = max(ax, bx)
-
-    visible = False
-
-    if (lowestTop <= highestBottom) \
-       and (rightMostLeftEdge <= leftMostRightEdge):
-        visible = True
-    elif (aheight == 0):
-        if (awidth == 0):
-            visible = (lowestTop == highestBottom) \
-                      and (leftMostRightEdge == rightMostLeftEdge)
-        else:
-            visible = leftMostRightEdge <= rightMostLeftEdge
-    elif (awidth == 0):
-        visible = (lowestTop <= highestBottom)
-
-    return visible
-
-def clip(ax, ay, awidth, aheight,
-         bx, by, bwidth, bheight):
-    """Clips region 'a' by region 'b' and returns the new region as
-    a list: [x, y, width, height].
-    """
-
-    x = max(ax, bx)
-    x2 = min(ax + awidth, bx + bwidth)
-    width = x2 - x
-
-    y = max(ay, by)
-    y2 = min(ay + aheight, by + bheight)
-    height = y2 - y
-
-    return [x, y, width, height]
-
-def splitTextIntoZones(accessible, string, startOffset, cliprect):
-    """Traverses the string, splitting it up into separate zones if the
-    string contains the EMBEDDED_OBJECT_CHARACTER, which is used by apps
-    such as Firefox to handle containment of things such as links in
-    paragraphs.
-
-    Arguments:
-    - accessible: the accessible
-    - string: a substring from the accessible's text specialization
-    - startOffset: the starting character offset of the string
-    - cliprect: the extents that the Zones must fit inside.
-
-    Returns a list of Zones for the visible text or None if nothing is
-    visible.
-    """
-
-    # Embedded object character used to indicate that an object is
-    # embedded in a string.
-    #
-    EMBEDDED_OBJECT_CHARACTER = u'\ufffc'
-
-    # We convert the string to unicode and walk through it.  While doing
-    # this, we keep two sets of offsets:
-    #
-    # substring{Start,End}Offset: where in the accessible text implementation
-    #                             we are
-    #
-    # unicodeStartOffset: where we are in the unicodeString
-    #
-    anyVisible = False
-    zones = []
-    text = accessible.text
-    substringStartOffset = startOffset
-    substringEndOffset   = startOffset
-    unicodeStartOffset   = 0
-    unicodeString = string.decode("UTF-8")
-    for i in range(0, len(unicodeString) + 1):
-        if (i != len(unicodeString)) \
-           and (unicodeString[i] != EMBEDDED_OBJECT_CHARACTER):
-            substringEndOffset += 1
-        elif (substringEndOffset == substringStartOffset):
-            substringStartOffset += 1
-            substringEndOffset   = substringStartOffset
-            unicodeStartOffset   = i + 1
-        else:
-            [x, y, width, height] = text.getRangeExtents(substringStartOffset,
-                                                         substringEndOffset,
-                                                         0)
-            if visible(x, y, width, height,
-                       cliprect.x, cliprect.y,
-                       cliprect.width, cliprect.height):
-
-                anyVisible = True
-
-                clipping = clip(x, y, width, height,
-                                cliprect.x, cliprect.y,
-                                cliprect.width, cliprect.height)
-
-                # [[[TODO: WDW - HACK it would be nice to clip the
-                # the text by what is really showing on the screen,
-                # but this seems to hang Orca and the client. Logged
-                # as bugzilla bug 319770.]]]
-                #
-                #ranges = text.getBoundedRanges(\
-                #    clipping[0],
-                #    clipping[1],
-                #    clipping[2],
-                #    clipping[3],
-                #    0,
-                #    atspi.Accessibility.TEXT_CLIP_BOTH,
-                #    atspi.Accessibility.TEXT_CLIP_BOTH)
-                #
-                #print
-                #print "HERE!"
-                #for range in ranges:
-                #    print range.startOffset
-                #    print range.endOffset
-                #    print range.content
-
-                substring = unicodeString[unicodeStartOffset:i]
-                zones.append(TextZone(accessible,
-                                      substringStartOffset,
-                                      substring.encode("UTF-8"),
-                                      clipping[0],
-                                      clipping[1],
-                                      clipping[2],
-                                      clipping[3]))
-                substringStartOffset = substringEndOffset + 1
-                substringEndOffset   = substringStartOffset
-                unicodeStartOffset   = i + 1
-
-    if anyVisible:
-        return zones
-    else:
-        return None
-
-def getZonesFromText(accessible, cliprect):
-    """Gets a list of Zones from an object that implements the
-    AccessibleText specialization.
-
-    Arguments:
-    - accessible: the accessible
-    - cliprect: the extents that the Zones must fit inside.
-
-    Returns a list of Zones.
-    """
-
-    debug.println(debug.LEVEL_FINEST, "  looking at text:")
-
-    if accessible.text:
-        zones = []
-    else:
-        return []
-
-    text = accessible.text
-    length = text.characterCount
-
-    offset = 0
-    lastEndOffset = -1
-    while offset < length:
-
-        [string, startOffset, endOffset] = text.getTextAtOffset(
-            offset,
-            atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
-
-        debug.println(debug.LEVEL_FINEST,
-                      "    line at %d is (start=%d end=%d): '%s'" \
-                      % (offset, startOffset, endOffset, string))
-
-        # [[[WDW - HACK: well...gnome-terminal sometimes wants to
-        # give us outrageous values back from getTextAtOffset
-        # (see http://bugzilla.gnome.org/show_bug.cgi?id=343133),
-        # so we try to handle it.  Evolution does similar things.]]]
-        #
-        if (startOffset < 0) \
-           or (endOffset < 0) \
-           or (startOffset > offset) \
-           or (endOffset < offset) \
-           or (startOffset > endOffset) \
-           or (abs(endOffset - startOffset) > 666e3):
-            debug.println(debug.LEVEL_WARNING,
-                          "flat_review:getZonesFromAccessible detected "\
-                          "garbage from getTextAtOffset for accessible "\
-                          "name='%s' role'='%s': offset used=%d, "\
-                          "start/end offset returned=(%d,%d), string='%s'"\
-                          % (accessible.name, accessible.role,
-                             offset, startOffset, endOffset, string))
-            break
-
-        # [[[WDW - HACK: this is here because getTextAtOffset
-        # tends not to be implemented consistently across toolkits.
-        # Sometimes it behaves properly (i.e., giving us an endOffset
-        # that is the beginning of the next line), sometimes it
-        # doesn't (e.g., giving us an endOffset that is the end of
-        # the current line).  So...we hack.  The whole 'max' deal
-        # is to account for lines that might be a brazillion lines
-        # long.]]]
-        #
-        if endOffset == lastEndOffset:
-            offset = max(offset + 1, lastEndOffset + 1)
-            lastEndOffset = endOffset
-            continue
-        else:
-            offset = endOffset
-            lastEndOffset = endOffset
-
-        textZones = splitTextIntoZones(
-            accessible, string, startOffset, cliprect)
-
-        if textZones:
-            zones.extend(textZones)
-        elif len(zones):
-            # We'll break out of searching all the text - the idea
-            # here is that we'll at least try to optimize for when
-            # we gone below the visible clipping area.
-            #
-            # [[[TODO: WDW - would be nice to optimize this better.
-            # for example, perhaps we can assume the caret will always
-            # be visible, and we can start our text search from there.
-            # Logged as bugzilla bug 319771.]]]
-            #
-            break
-
-    # We might have a zero length text area.  In that case, well,
-    # lets hack if this is something whose sole purpose is to
-    # act as a text entry area.
-    #
-    if len(zones) == 0:
-        if (accessible.role == rolenames.ROLE_TEXT) \
-           or ((accessible.role == rolenames.ROLE_ENTRY)) \
-           or ((accessible.role == rolenames.ROLE_PASSWORD_TEXT)):
-            extents = accessible.component.getExtents(0)
-            zones.append(TextZone(accessible,
-                                  0,
-                                  "",
-                                  extents.x, extents.y,
-                                  extents.width, extents.height))
-
-    return zones
-
-def getZonesFromAccessible(accessible, cliprect):
-    """Returns a list of Zones for the given accessible.
-
-    Arguments:
-    - accessible: the accessible
-    - cliprect: the extents that the Zones must fit inside.
-    """
-
-    if not accessible.component:
-        return []
-
-    # Get the component extents in screen coordinates.
-    #
-    extents = accessible.component.getExtents(0)
-
-    if not visible(extents.x, extents.y,
-                   extents.width, extents.height,
-                   cliprect.x, cliprect.y,
-                   cliprect.width, cliprect.height):
-        return []
-
-    debug.println(
-        debug.LEVEL_FINEST,
-        "flat_review.getZonesFromAccessible (name=%s role=%s)" \
-        % (accessible.name, accessible.role))
-
-    # Now see if there is any accessible text.  If so, find new zones,
-    # where each zone represents a line of this text object.  When
-    # creating the zone, only keep track of the text that is actually
-    # showing on the screen.
-    #
-    if accessible.text:
-        zones = getZonesFromText(accessible, cliprect)
-    else:
-        zones = []
-
-    # We really want the accessible text information.  But, if we have
-    # an image, and it has a description, we can fall back on it.
-    #
-    if (len(zones) == 0) \
-           and accessible.image \
-           and accessible.image.imageDescription \
-           and len(accessible.image.imageDescription):
-
-        [x, y] = accessible.image.getImagePosition(0)
-        [width, height] = accessible.image.getImageSize()
-
-        if (width != 0) and (height != 0) \
-               and visible(x, y, width, height,
-                           cliprect.x, cliprect.y,
-                           cliprect.width, cliprect.height):
-
-            clipping = clip(x, y, width, height,
-                            cliprect.x, cliprect.y,
-                            cliprect.width, cliprect.height)
-
-            if (clipping[2] != 0) or (clipping[3] != 0):
-                zones.append(Zone(accessible,
-                                  accessible.image.imageDescription,
-                                  clipping[0],
-                                  clipping[1],
-                                  clipping[2],
-                                  clipping[3]))
-
-    # If the accessible is a parent, we really only looked at it for
-    # its accessible text.  So...we'll skip the hacking here if that's
-    # the case.  [[[TODO: WDW - HACK That is, except in the case of
-    # combo boxes, which don't implement the accesible text
-    # interface.]]]
-    #
-    # Otherwise, even if we didn't get anything of use, we certainly
-    # know there's something there.  If that's the case, we'll just
-    # use the component extents and the name or description of the
-    # accessible.
-    #
-    if (accessible.role != rolenames.ROLE_COMBO_BOX) \
-        and accessible.childCount > 0:
-        pass
-    elif len(zones) == 0:
-        clipping = clip(extents.x, extents.y,
-                        extents.width, extents.height,
-                        cliprect.x, cliprect.y,
-                        cliprect.width, cliprect.height)
-        if accessible.name and len(accessible.name):
-            string = accessible.name
-        elif accessible.description and len(accessible.description):
-            string = accessible.description
-        else:
-            string = ""
-
-        if string == "":
-            # [[[TODO: WDW - ooohhhh....this is going to be a headache.
-            # We want to synthesize a string for objects that are there,
-            # but have no text.  For example, scroll bars.  The rub is
-            # that we will sometimes want to do different strings for
-            # speech and braille (e.g., checkbox cells in tables - the
-            # speech will say "checkbox checked" and the braille will
-            # display "checkbox <x>".  Yikes.  That may be a challenge.
-            # So...for now we punt on table cells.  Logged as bugzilla
-            # bug 319772.]]]
-            #
-            if accessible.role != rolenames.ROLE_TABLE_CELL:
-                string = accessible.role
-
-        if len(string) and ((clipping[2] != 0) or (clipping[3] != 0)):
-            zones.append(Zone(accessible,
-                              string,
-                              clipping[0],
-                              clipping[1],
-                              clipping[2],
-                              clipping[3]))
-
-    return zones
-
-def getShowingDescendants(parent):
-    """Given a parent that manages its descendants, return a list of
-    Accessible children that are actually showing.  This algorithm
-    was inspired a little by the srw_elements_from_accessible logic
-    in Gnopernicus, and makes the assumption that the children of
-    an object that manages its descendants are arranged in a row
-    and column format.
-    """
-
-    if (not parent) or (not parent.component):
-        return []
-
-    # A minimal chunk to jump around should we not really know where we
-    # are going.
-    #
-    GRID_SIZE = 7
-
-    descendants = []
-
-    parentExtents = parent.component.getExtents(0)
-
-    # [[[TODO: WDW - HACK related to GAIL bug where table column headers
-    # seem to be ignored: http://bugzilla.gnome.org/show_bug.cgi?id=325809.
-    # The problem is that this causes getAccessibleAtPoint to return the
-    # cell effectively below the real cell at a given point, making a mess
-    # of everything.  So...we just manually add in showing headers for now.
-    # The remainder of the logic below accidentally accounts for this offset,
-    # yet it should also work when bug 325809 is fixed.]]]
-    #
-    table = parent.table
-    if table:
-        for i in range(0, table.nColumns):
-            obj = table.getColumnHeader(i)
-            if obj:
-                header = atspi.Accessible.makeAccessible(obj)
-                extents = header.extents
-                if header.state.count(atspi.Accessibility.STATE_SHOWING) \
-                   and (extents.x >= 0) and (extents.y >= 0) \
-                   and (extents.width > 0) and (extents.height > 0) \
-                   and visible(extents.x, extents.y,
-                               extents.width, extents.height,
-                               parentExtents.x, parentExtents.y,
-                               parentExtents.width, parentExtents.height):
-                    descendants.append(header)
-
-    # This algorithm goes left to right, top to bottom while attempting
-    # to do *some* optimization over queries.  It could definitely be
-    # improved.
-    #
-    currentY = parentExtents.y
-    while currentY < (parentExtents.y + parentExtents.height):
-        currentX = parentExtents.x
-        minHeight = sys.maxint
-        while currentX < (parentExtents.x + parentExtents.width):
-            obj = parent.component.getAccessibleAtPoint(currentX,
-                                                        currentY,
-                                                        0)
-            if obj:
-                child = atspi.Accessible.makeAccessible(obj)
-                extents = child.extents
-                if extents.x >= 0 and extents.y >= 0:
-                    newX = extents.x + extents.width
-                    minHeight = min(minHeight, extents.height)
-                    if not descendants.count(child):
-                        descendants.append(child)
-                else:
-                    newX = currentX + GRID_SIZE
-            else:
-                newX = currentX + GRID_SIZE
-            if newX <= currentX:
-                currentX += GRID_SIZE
-            else:
-                currentX = newX
-        if minHeight == sys.maxint:
-            minHeight = GRID_SIZE
-        currentY += minHeight
-
-    return descendants
-
-def getShowingZones(root):
-    """Returns a list of all interesting, non-intersecting, regions
-    that are drawn on the screen.  Each element of the list is the
-    Accessible object associated with a given region.  The term
-    'zone' here is inherited from OCR algorithms and techniques.
-
-    The Zones are returned in no particular order.
-
-    Arguments:
-    - root: the Accessible object to traverse
-
-    Returns: a list of Zones under the specified object
-    """
-
-    if not root:
-        return []
-
-    # If we're at a leaf node, then we've got a good one on our hands.
-    #
-    if root.childCount <= 0:
-        return getZonesFromAccessible(root, root.extents)
-
-    # We'll stop at various objects because, while they do have
-    # children, we logically think of them as one region on the
-    # screen.  [[[TODO: WDW - HACK stopping at menu bars for now
-    # because their menu items tell us they are showing even though
-    # they are not showing.  Until I can figure out a reliable way to
-    # get past these lies, I'm going to ignore them.]]]
-    #
-    if (root.parent and (root.parent.role == rolenames.ROLE_MENU_BAR)) \
-       or (root.role == rolenames.ROLE_COMBO_BOX) \
-       or (root.role == rolenames.ROLE_TEXT):
-        return getZonesFromAccessible(root, root.extents)
-
-    # Otherwise, dig deeper.
-    #
-    # We'll include page tabs: while they are parents, their extents do
-    # not contain their children. [[[TODO: WDW - need to consider all
-    # parents, especially those that implement accessible text.  Logged
-    # as bugzilla bug 319773.]]]
-    #
-    zones = []
-    if root.role == rolenames.ROLE_PAGE_TAB:
-        zones.extend(getZonesFromAccessible(root, root.extents))
-
-    if (len(zones) == 0) and root.text:
-        zones = getZonesFromAccessible(root, root.extents)
-
-    if root.state.count(atspi.Accessibility.STATE_MANAGES_DESCENDANTS) \
-       and (root.childCount > 50):
-        for child in getShowingDescendants(root):
-            zones.extend(getShowingZones(child))
-    else:
-        for i in range(0, root.childCount):
-            child = root.child(i)
-            if child == root:
-                debug.println(debug.LEVEL_WARNING,
-                              "flat_review.getShowingZones: " +
-                              "WARNING CHILD == PARENT!!!")
-            elif not child:
-                debug.println(debug.LEVEL_WARNING,
-                              "flat_review.getShowingZones: " +
-                              "WARNING CHILD IS NONE!!!")
-            elif child.parent != root:
-                debug.println(debug.LEVEL_WARNING,
-                              "flat_review.getShowingZones: " +
-                              "WARNING CHILD.PARENT != PARENT!!!")
-            elif child.state.count(atspi.Accessibility.STATE_SHOWING):
-                zones.extend(getShowingZones(child))
-
-    return zones
-
-def clusterZonesByLine(zones):
-    """Given a list of interesting accessible objects (the Zones),
-    returns a list of lines in order from the top to bottom, where
-    each line is a list of accessible objects in order from left
-    to right.
-    """
-
-    if len(zones) == 0:
-        return []
-
-    # Sort the zones and also find the top most zone - we'll bias
-    # the clustering to the top of the window.  That is, if an
-    # object can be part of multiple clusters, for now it will
-    # become a part of the top most cluster.
-    #
-    numZones = len(zones)
-    for i in range(0, numZones):
-        for j in range(0, numZones - 1 - i):
-            a = zones[j]
-            b = zones[j + 1]
-            if b.y < a.y:
-                zones[j] = b
-                zones[j + 1] = a
-
-    # Now we cluster the zones.  We create the clusters on the
-    # fly, adding a zone to an existing cluster only if it's
-    # rectangle horizontally overlaps all other zones in the
-    # cluster.
-    #
-    lineClusters = []
-    for clusterCandidate in zones:
-        addedToCluster = False
-        for lineCluster in lineClusters:
-            inCluster = True
-            for zone in lineCluster:
-                if not zone.onSameLine(clusterCandidate):
-                    inCluster = False
-                    break
-            if inCluster:
-                # Add to cluster based on the x position.
-                #
-                i = 0
-                while i < len(lineCluster):
-                    zone = lineCluster[i]
-                    if clusterCandidate.x < zone.x:
-                        break
-                    else:
-                        i += 1
-                lineCluster.insert(i, clusterCandidate)
-                addedToCluster = True
-                break
-        if not addedToCluster:
-            lineClusters.append([clusterCandidate])
-
-    # Now, adjust all the indeces.
-    #
-    lines = []
-    lineIndex = 0
-    for lineCluster in lineClusters:
-        lines.append(Line(lineIndex, lineCluster))
-        zoneIndex = 0
-        for zone in lineCluster:
-            zone.line = lines[lineIndex]
-            zone.index = zoneIndex
-            zoneIndex += 1
-        lineIndex += 1
-
-    return lines

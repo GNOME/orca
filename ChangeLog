@@ -1,3 +1,15 @@
+2006-10-22  Willie Walker <william.walker@sun.com>
+
+	* src/orca/util.py, src/orca/flat_review.py, src/orca/default.py,
+	src/orca/script.py: more work on bug 355525.  Move flat review
+	context creation logic out of default.py and into flat_review.py.
+	Move global flat_review helper methods into flat_review Context
+	class and provide knowledge of script in the flat_review Context
+	to give the flat_review the ability to use script-specific helper
+	functions.  Also allow the flat_review Context class to be used by
+	a script to be overridden.  The default is in script.py:
+	self.flatReviewContextClass = flat_review.Context.
+	
 2006-10-22  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:

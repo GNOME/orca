@@ -1140,7 +1140,7 @@ class Script(script.Script):
 
 
         # If this is a normal, check or radio menu item or a menu within a
-        # menu, give its position within the menu and the total number of 
+        # menu, give its position within the menu and the total number of
         # menu items in the parent menu.
         #
         parent = orca_state.locusOfFocus.parent
@@ -1173,7 +1173,7 @@ class Script(script.Script):
         text[0] = util.adjustForRepeats(text[0])
         utterances.extend(text)
 
-        # If this is one of the various menu item types, speak its shortcut 
+        # If this is one of the various menu item types, speak its shortcut
         # (if present).
         #
         if (role == rolenames.ROLE_MENU_ITEM) \
@@ -2206,51 +2206,9 @@ class Script(script.Script):
 
     ########################################################################
     #                                                                      #
-    # Flat review mode support.  [[[TODO: WDW - still under development,   #
-    # but the idea is that a script should be able to provide custom       #
-    # information about layout as well.]]]                                 #
+    # Utilities                                                            #
     #                                                                      #
     ########################################################################
-
-    def getShowingZones(self):
-        """Returns a list of all interesting, non-intersecting,
-        regions that are drawn in the currently active window.  Each
-        element of the list is the Accessible object associated with a
-        given region.  The term 'zone' here is inherited from OCR
-        algorithms and techniques.
-
-        The objects are returned in no particular order.
-
-        Arguments:
-        - root: the Accessible object to traverse
-
-        Returns: a list of all objects under the specified object
-        """
-        if (not orca_state.locusOfFocus) \
-            or (orca_state.locusOfFocus.app != self.app):
-            return []
-
-        # We want to stop at the window or frame or equivalent level.
-        #
-        obj = orca_state.locusOfFocus
-        while obj \
-                  and obj.parent \
-                  and (obj.parent.role != rolenames.ROLE_APPLICATION) \
-                  and (obj != obj.parent):
-            obj = obj.parent
-
-        if obj:
-            return flat_review.getShowingZones(obj)
-        else:
-            return []
-
-    def clusterZonesByLine(self, zones):
-        """Given a list of interesting accessible objects (the zones),
-        returns a list of lines in order from the top to bottom, where
-        each line is a list of accessible objects in order from left
-        to right.  """
-
-        return flat_review.clusterZonesByLine(zones)
 
     def toggleTableCellReadMode(self, inputEvent=None):
         """Toggles an indicator for whether we should just read the current
@@ -2450,90 +2408,10 @@ class Script(script.Script):
         """Returns the flat review context, creating one if necessary."""
 
         if not self.flatReviewContext:
-            # The first thing we try to do is find which Zone has the
-            # Accessible object with focus.
-            #
-            currentLineIndex = 0
-            currentZoneIndex = 0
-            currentWordIndex = 0
-            currentCharIndex = 0
-            lines = self.clusterZonesByLine(self.getShowingZones())
-            foundZoneWithFocus = False
-
-            if orca_state.locusOfFocus.role == rolenames.ROLE_TABLE_CELL:
-                searchZone = util.getRealActiveDescendant(
-                    orca_state.locusOfFocus)
-            else:
-                searchZone = orca_state.locusOfFocus
-                
-            while currentLineIndex < len(lines):
-                line = lines[currentLineIndex]
-                currentZoneIndex = 0
-                while currentZoneIndex < len(line.zones):
-                    zone = line.zones[currentZoneIndex]
-                    if zone.accessible == searchZone:
-                        foundZoneWithFocus = True
-                        break
-                    else:
-                        currentZoneIndex += 1
-                if foundZoneWithFocus:
-                    break
-                else:
-                    currentLineIndex += 1
-
-            # Fallback to the first Zone if we didn't find anything.
-            #
-            if not foundZoneWithFocus:
-                currentLineIndex = 0
-                currentZoneIndex = 0
-            elif isinstance(zone, flat_review.TextZone):
-                # If we're on an accessible text object, try to set the
-                # review cursor to the caret position of that object.
-                #
-                accessible  = zone.accessible
-                lineIndex   = currentLineIndex
-                zoneIndex   = currentZoneIndex
-                caretOffset = zone.accessible.text.caretOffset
-                foundZoneWithCaret = False
-                while lineIndex < len(lines):
-                    line = lines[lineIndex]
-                    while zoneIndex < len(line.zones):
-                        zone = line.zones[zoneIndex]
-                        if zone.accessible == accessible:
-                            if (caretOffset >= zone.startOffset) \
-                                   and (caretOffset \
-                                        < (zone.startOffset + zone.length)):
-                                foundZoneWithCaret = True
-                                break
-                        zoneIndex += 1
-                    if foundZoneWithCaret:
-                        currentLineIndex = lineIndex
-                        currentZoneIndex = zoneIndex
-                        currentWordIndex = 0
-                        currentCharIndex = 0
-                        offset = zone.startOffset
-                        while currentWordIndex < len(zone.words):
-                            word = zone.words[currentWordIndex]
-                            if (word.length + offset) > caretOffset:
-                                currentCharIndex = caretOffset - offset
-                                break
-                            else:
-                                currentWordIndex += 1
-                                offset += word.length
-                        break
-                    else:
-                        zoneIndex = 0
-                        lineIndex += 1
-
-            self.flatReviewContext = flat_review.Context(lines,
-                                                         currentLineIndex,
-                                                         currentZoneIndex,
-                                                         currentWordIndex,
-                                                         currentCharIndex)
-
+            self.flatReviewContext = self.flatReviewContextClass(self)
             self.justEnteredFlatReviewMode = True
 
-            # Also, we want to remember where the cursor currently was
+            # Remember where the cursor currently was
             # when the user was in focus tracking mode.  We'll try to
             # keep the position the same as we move to characters above
             # and below us.

@@ -41,6 +41,7 @@ __license__   = "LGPL"
 
 import braillegenerator
 import debug
+import flat_review
 import keybindings
 import orca_state
 import settings
@@ -82,6 +83,8 @@ class Script:
         self.brailleGenerator = self.getBrailleGenerator()
         self.speechGenerator = self.getSpeechGenerator()
         self.voices = settings.voices
+
+        self.flatReviewContextClass = flat_review.Context
 
         debug.println(debug.LEVEL_FINE, "NEW SCRIPT: %s" % self.name)
 
