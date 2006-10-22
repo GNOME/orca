@@ -707,7 +707,7 @@ class Script(default.Script):
                     pass
             else:
                 dynamicRowHeaders[table] = column
-                line = _("Dynamic row header set for column ") + \
+                line = _("Dynamic row header set for column %s") % \
                        self.columnConvert(column+1)
                 speech.speak(line)
                 braille.displayMessage(line)
