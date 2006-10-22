@@ -3,6 +3,10 @@
         * src/orca/default.py:
           Slight fixup for bug #363807 - item number was off by one.
 
+        * src/orca/scripts/StarOffice.py:
+          Slight adjustment for bug #363801 - column number now spoken
+          as column letter(s).
+
 2006-10-21  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/Makefile.am:

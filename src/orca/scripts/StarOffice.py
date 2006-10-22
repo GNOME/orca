@@ -651,6 +651,28 @@ class Script(default.Script):
 
         return True
 
+    def columnConvert(self, column):
+        """ Convert a spreadsheet column into it's column label
+
+        Arguments:
+        - column: the column number to convert.
+
+        Returns a string representing the spread sheet column.
+        """
+
+        BASE26="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+        if column <= len(BASE26):
+            return BASE26[column-1]
+
+        res = ""
+        while column > 0:
+            digit = column % len(BASE26)
+            res = " " + BASE26[digit-1] + res
+            column /= len(BASE26)
+
+        return res
+
     def setDynamicRowHeaders(self, inputEvent):
         """Set the column for the dynamic header rows to use when speaking 
         calc cell entries. In order to set the column, the user should first 
@@ -685,7 +707,8 @@ class Script(default.Script):
                     pass
             else:
                 dynamicRowHeaders[table] = column
-                line = _("Dynamic row header set for column ") + str(column+1)
+                line = _("Dynamic row header set for column ") + \
+                       self.columnConvert(column+1)
                 speech.speak(line)
                 braille.displayMessage(line)
 
