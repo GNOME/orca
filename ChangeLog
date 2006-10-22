@@ -1,3 +1,8 @@
+2006-10-22  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          Slight fixup for bug #363807 - item number was off by one.
+
 2006-10-21  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/Makefile.am:

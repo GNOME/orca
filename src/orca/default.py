@@ -1135,7 +1135,7 @@ class Script(script.Script):
                                         rolenames.ROLE_COLUMN_HEADER].speech
                         utterances.append(text)
 
-                text = _("Item ") + str(row) + _(" of ") + \
+                text = _("Item ") + str(row+1) + _(" of ") + \
                        str(parent.table.nRows)
                 utterances.append(text)
 
