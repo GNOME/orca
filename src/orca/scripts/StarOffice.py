@@ -887,6 +887,7 @@ class Script(default.Script):
     # 1) Writer: text paragraph.
     # 2) Writer: spell checking dialog.
     # 3) Welcome to StarOffice dialog.
+    # 4) Calc: cell editor.
 
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
@@ -1090,6 +1091,24 @@ class Script(default.Script):
                     "StarOffice.locusOfFocusChanged - Setup dialog: " \
                     + "Registration: Register Now radio button.")
                 self.handleSetupPanel(event.source.parent)
+
+        # 4) Calc: cell editor.
+        #
+        # Check to see if we are editing a spread sheet cell. If so, just
+        # return to avoid uttering something like "Paragraph 0 paragraph".
+        #
+        rolesList = [rolenames.ROLE_PARAGRAPH, \
+                     rolenames.ROLE_PANEL, \
+                     rolenames.ROLE_UNKNOWN, \
+                     rolenames.ROLE_SCROLL_PANE, \
+                     rolenames.ROLE_PANEL, \
+                     rolenames.ROLE_ROOT_PANE, \
+                     rolenames.ROLE_FRAME, \
+                     rolenames.ROLE_APPLICATION]
+        if util.isDesiredFocusedItem(event.source, rolesList):
+            debug.println(self.debugLevel, "StarOffice.locusOfFocusChanged - " \
+                          + "Calc: cell editor.")
+            return
 
         # Pass the event onto the parent class to be handled in the default way.
 
