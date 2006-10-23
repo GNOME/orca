@@ -1,5 +1,9 @@
 2006-10-22  Willie Walker <william.walker@sun.com>
 
+	* bugs/bugs.html: add Firefox bug
+	https://bugzilla.mozilla.org/show_bug.cgi?id=357625 regarding
+	broken getTextAtOffset implementation.
+	
 	* src/orca/util.py, src/orca/flat_review.py, src/orca/default.py,
 	src/orca/script.py: more work on bug 355525.  Move flat review
 	context creation logic out of default.py and into flat_review.py.
