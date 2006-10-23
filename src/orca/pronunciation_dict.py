@@ -28,16 +28,16 @@ __license__   = "LGPL"
 
 from orca_i18n import _ # for gettext support
 
-# __pronunciation_dict is a dictionary where the keys are words and the 
+# pronunciation_dict is a dictionary where the keys are words and the 
 # values represent word the pronunciation of that word (in other words, 
 # what the word sounds like).
 #
 # [[[TODO: richb - need to populate this dictionary with many more values.]]]
 #
-__pronunciation_dict = {}
-__pronunciation_dict[_("ASAP")]    = _("as soon as possible")
-__pronunciation_dict[_("IMAP")]    = _("eye map")
-__pronunciation_dict[_("LOL")]     = _("laughing out loud")
+pronunciation_dict = {}
+pronunciation_dict[_("ASAP")]    = _("as soon as possible")
+pronunciation_dict[_("IMAP")]    = _("eye map")
+pronunciation_dict[_("LOL")]     = _("laughing out loud")
 
 def getPronunciation(word):
     """Given a word, return a string that represents what this word
@@ -54,6 +54,6 @@ def getPronunciation(word):
         word = word.encode("UTF-8")
 
     try:
-        return __pronunciation_dict[word]
+        return pronunciation_dict[word]
     except:
         return word
