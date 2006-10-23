@@ -12,6 +12,10 @@
           Fixed bug #364086 - Orca reports "paragraph 0 paragraph" 
           <char> when you begin typing in a Calc cell.
 
+        * src/orca/default.py:
+          Another slight adjustment to an "Item x of y" line in the 
+          whereAmI() method to make it more easily localizable.
+
 2006-10-18  Mike Pedersen <michael.pedersen@sun.com> 
 
         * docs/doc-set/ue_requirements.sgml,

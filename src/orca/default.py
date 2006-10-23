@@ -1163,8 +1163,7 @@ class Script(script.Script):
                     total += 1
                     if child == orca_state.locusOfFocus:
                         item = total
-            text = _("Item ") + str(item) + _(" of ") + \
-                   str(total) + _(" menu items")
+            text = _("Item %d of %d") % (item, total)
             utterances.append(text)
 
         # Get the text for the object itself.
