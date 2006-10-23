@@ -104,7 +104,7 @@
         </listitem>
         <listitem>
           <para>"KEYPAD_ENTER": performs "Where Am I?"  If this key is
-            pressed twice quickly, any relevant status bar information
+            pressed twice quickly, a bottom up presentation of the where am I information is presented.  If the user presses insert+KPEnter they will hear any relevant status bar information
             will be spoken.</para>
 	  <para>&detail; bound to
             <literal>default.Script.whereAmI</literal>.</para>

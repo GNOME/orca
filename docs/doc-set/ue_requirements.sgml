@@ -541,7 +541,7 @@
       <section><title>Functional Description and Status</title>
         <para>&whereamitestlink;</para>
         <para>&complete; V1.0. Orca provides top down "Where am I"
-        functionality when the user presses the KP_Enter key.</para>
+        functionality when the user presses the KP_Enter key.  Orca should also present bottom-up "where am I" when double pressing KP enter.   </para>
       </section>
     </section>
 
