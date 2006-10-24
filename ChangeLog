@@ -1,4 +1,12 @@
-2006-10-23  Willie Walker <william.walker@sun.com>
+2006-10-24  Mike Pedersen <michael.pedersen@sun.com> 
+
+        * docs/doc-set/ue_requirements.sgml,
+        * docs/doc-set/orca.html,
+        * docs/doc-set/orca.pdf
+
+          Updates to requirements 
+
+2006-10-24  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py: work on getting previous character.  Adjust
 	caret context on caret moved event.  Add debug code to draw a 
