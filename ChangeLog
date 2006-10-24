@@ -1,3 +1,9 @@
+2006-10-23  Willie Walker <william.walker@sun.com>
+
+	* src/orca/Gecko.py: work on getting previous character.  Adjust
+	caret context on caret moved event.  Add debug code to draw a 
+	rectangle around the character we're looking at.
+	
 2006-10-23  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/pronunciation_dict.py:
@@ -16,7 +22,7 @@
           Another slight adjustment to an "Item x of y" line in the 
           whereAmI() method to make it more easily localizable.
 
-2006-10-18  Mike Pedersen <michael.pedersen@sun.com> 
+2006-10-23  Mike Pedersen <michael.pedersen@sun.com> 
 
         * docs/doc-set/ue_requirements.sgml,
         * docs/doc-set/ue_input_style.sgml,
