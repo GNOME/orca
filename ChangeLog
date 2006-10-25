@@ -1,3 +1,10 @@
+2006-10-24  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          src/orca/speechgenerator.py:
+          Fixed bug #363831 - Provide an option to reverse the whereAmI 
+          information.
+
 2006-10-24  Mike Pedersen <michael.pedersen@sun.com> 
 
         * docs/doc-set/ue_requirements.sgml,

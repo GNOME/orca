@@ -1527,4 +1527,4 @@ class SpeechGenerator:
 
         utterances.reverse()
 
-        return [" ".join(utterances)]
+        return utterances

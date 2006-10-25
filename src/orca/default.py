@@ -70,6 +70,11 @@ class Script(script.Script):
         self.windowActivateTime = None
         self.lastReviewCurrentEvent = None
 
+        # Used to determine whether the used double clicked on the
+        # "where am I" key.
+        #
+        self.lastWhereAmIEvent = None
+
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
         called by the key and braille bindings."""
@@ -1095,10 +1100,14 @@ class Script(script.Script):
 
         verbosity = settings.speechVerbosityLevel
 
+        reverse = (util.getClickCount(self.lastWhereAmIEvent, inputEvent) == 2)
+        self.lastWhereAmIEvent = inputEvent
+
         utterances = []
 
-        utterances.extend(
-            self.speechGenerator.getSpeechContext(orca_state.locusOfFocus))
+        context = self.speechGenerator.getSpeechContext(orca_state.locusOfFocus)
+        if not reverse:
+            utterances.append(" ".join(context))
 
         # Now, we'll treat table row and column headers as context
         # as well.  This requires special handling because we're
@@ -1137,7 +1146,6 @@ class Script(script.Script):
 
                 text = _("Item %d of %d") % ((row+1), parent.table.nRows)
                 utterances.append(text)
-
 
         # If this is a normal, check or radio menu item or a menu within a
         # menu, give its position within the menu and the total number of
@@ -1193,6 +1201,11 @@ class Script(script.Script):
                     atspi.Accessibility.STATE_SENSITIVE) == 0:
             message = _("No focus")
             utterances.append(message)
+
+        if reverse:
+            utterances.reverse()
+            context.reverse()
+            utterances.append(" ".join(context))
 
         speech.speakUtterances(utterances)
 
@@ -1309,9 +1322,9 @@ class Script(script.Script):
             commonAncestor = self.findCommonAncestor(oldLocusOfFocus,
                                                      newLocusOfFocus)
             if commonAncestor:
-                utterances.extend(
-                    self.speechGenerator.getSpeechContext(newLocusOfFocus,
-                                                          commonAncestor))
+                context = self.speechGenerator.getSpeechContext( \
+                                           newLocusOfFocus, commonAncestor)
+                utterances.append(" ".join(context))
 
             # Now, we'll treat table row and column headers as context
             # as well.  This requires special handling because we're
