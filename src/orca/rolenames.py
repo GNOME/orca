@@ -63,6 +63,7 @@ ROLE_ENTRY               = "entry"
 ROLE_FILE_CHOOSER        = "file chooser"
 ROLE_FILLER              = "filler"
 ROLE_FONT_CHOOSER        = "fontchooser"
+ROLE_FORM                = "form"
 ROLE_FRAME               = "frame"
 ROLE_GLASS_PANE          = "glass pane"
 ROLE_HEADING             = "heading"
@@ -94,6 +95,7 @@ ROLE_ROOT_PANE           = "root pane"
 ROLE_ROW_HEADER          = "row header"
 ROLE_SCROLL_BAR          = "scroll bar"
 ROLE_SCROLL_PANE         = "scroll pane"
+ROLE_SECTION             = "section"
 ROLE_SEPARATOR           = "separator"
 ROLE_SLIDER              = "slider"
 ROLE_SPLIT_PANE          = "split pane"
@@ -263,6 +265,11 @@ rolenames[ROLE_FONT_CHOOSER] = Rolename(ROLE_FONT_CHOOSER,
                                         _("FontChooser"),
                                         _("font chooser"))
 
+rolenames[ROLE_FORM] = Rolename(ROLE_FORM,
+                                _("form"),
+                                _("Form"),
+                                _("form"))
+
 rolenames[ROLE_FRAME] = Rolename(ROLE_FRAME,
                                  _("frm"),
                                  _("Frame"),
@@ -307,6 +314,11 @@ rolenames[ROLE_LAYERED_PANE] = Rolename(ROLE_LAYERED_PANE,
                                         _("lyrdpn"),
                                         _("LayeredPane"),
                                         _("layered pane"))
+
+rolenames[ROLE_LINK] = Rolename(ROLE_LINK,
+                                _("lnk"),
+                                _("Link"),
+                                _("link"))
 
 rolenames[ROLE_LIST] = Rolename(ROLE_LIST,
                                 _("lst"),
@@ -407,6 +419,11 @@ rolenames[ROLE_SCROLL_PANE] = Rolename(ROLE_SCROLL_PANE,
                                        _("scpn"),
                                        _("ScrollPane"),
                                        _("scroll pane"))
+
+rolenames[ROLE_SECTION] = Rolename(ROLE_SECTION,
+                                   _("sctn"),
+                                   _("Section"),
+                                   _("section"))
 
 rolenames[ROLE_SEPARATOR] = Rolename(ROLE_SEPARATOR,
                                      _("seprtr"),
