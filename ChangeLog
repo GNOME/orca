@@ -1,3 +1,9 @@
+2006-10-25  Willie Walker <william.walker@sun.com>
+
+	* src/orca/flat_review.py: handle menus a little better in Firefox;
+	menus were being skipped in flat review since they don't implement
+	the accessible text interface.
+	
 2006-10-25  Mike Pedersen <michael.pedersen@sun.com> 
 
         * docs/doc-set/ue_requirements.sgml,

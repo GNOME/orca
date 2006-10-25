@@ -795,7 +795,7 @@ class Context:
         # its accessible text.  So...we'll skip the hacking here if that's
         # the case.  [[[TODO: WDW - HACK That is, except in the case of
         # combo boxes, which don't implement the accesible text
-        # interface.]]]
+        # interface.  We also hack with MENU items for similar reasons.]]]
         #
         # Otherwise, even if we didn't get anything of use, we certainly
         # know there's something there.  If that's the case, we'll just
@@ -803,6 +803,7 @@ class Context:
         # accessible.
         #
         if (accessible.role != rolenames.ROLE_COMBO_BOX) \
+            and (accessible.role != rolenames.ROLE_MENU) \
             and accessible.childCount > 0:
             pass
         elif len(zones) == 0:
