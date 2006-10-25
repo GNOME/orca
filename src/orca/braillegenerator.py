@@ -1391,6 +1391,7 @@ class BrailleGenerator:
             # as bugzilla bug 319751.]]]
             #
             if (parent.role != rolenames.ROLE_FILLER) \
+                and (parent.role != rolenames.ROLE_SECTION) \
                 and (parent.role != rolenames.ROLE_SPLIT_PANE):
 
                 # Announce the label and text of the object in the hierarchy.

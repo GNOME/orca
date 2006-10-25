@@ -1,5 +1,11 @@
 2006-10-24  Willie Walker <william.walker@sun.com>
 
+	* src/orca/braillegenerator.py, src/orca/speechgenerator.py:
+	add SECTION as a role to skip for context, and also do not
+	use both label and name in speech for an object if they are
+	both identical (we were getting bad repeats in Firefox for
+	this).
+	
 	* src/orca/rolenames.py: add SECTION, FORM, and LINK roles.
 	
 2006-10-24  Rich Burridge <rich.burridge@sun.com>

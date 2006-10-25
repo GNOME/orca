@@ -263,8 +263,11 @@ class SpeechGenerator:
         utterances = []
 
         if not already_focused:
-            utterances.extend(self._getSpeechForObjectLabel(obj))
-            utterances.extend(self._getSpeechForObjectName(obj))
+            label = self._getSpeechForObjectLabel(obj)
+            utterances.extend(label)
+            name = self._getSpeechForObjectName(obj)
+            if name != label:
+                utterances.extend(name)
             utterances.extend(self._getSpeechForObjectRole(obj))
 
         utterances.extend(self._getSpeechForObjectAvailability(obj))
@@ -288,9 +291,11 @@ class SpeechGenerator:
         """
 
         utterances = []
-        utterances.extend(self._getSpeechForObjectLabel(obj))
-        utterances.extend(self._getSpeechForObjectName(obj))
-        utterances.extend(self._getSpeechForObjectRole(obj))
+        label = self._getSpeechForObjectLabel(obj)
+        utterances.extend(label)
+        name = self._getSpeechForObjectName(obj)
+        if name != label:
+            utterances.extend(name)
 
         # Find all the unrelated labels in the dialog and speak them.
         #
@@ -316,9 +321,11 @@ class SpeechGenerator:
         """
 
         utterances = []
-        utterances.extend(self._getSpeechForObjectLabel(obj))
-        utterances.extend(self._getSpeechForObjectName(obj))
-        utterances.extend(self._getSpeechForObjectRole(obj))
+        label = self._getSpeechForObjectLabel(obj)
+        utterances.extend(label)
+        name = self._getSpeechForObjectName(obj)
+        if name != label:
+            utterances.extend(name)
 
         self._debugGenerator("_getSpeechForAnimation",
                              obj,
@@ -370,8 +377,11 @@ class SpeechGenerator:
         # If it's not already focused, say it's name
         #
         if not already_focused:
-            utterances.extend(self._getSpeechForObjectLabel(obj))
-            utterances.extend(self._getSpeechForObjectName(obj))
+            label = self._getSpeechForObjectLabel(obj)
+            utterances.extend(label)
+            name = self._getSpeechForObjectName(obj)
+            if name != label:
+                utterances.extend(name)
             utterances.extend(self._getSpeechForObjectRole(obj))
             utterances.append(checkedState)
             utterances.extend(self._getSpeechForObjectAvailability(obj))
@@ -442,9 +452,14 @@ class SpeechGenerator:
         utterances = []
 
         if not already_focused:
-            utterances.extend(self._getSpeechForObjectLabel(obj))
+            label = self._getSpeechForObjectLabel(obj)
+            utterances.extend(label)
+        else:
+            label = None
 
-        utterances.extend(self._getSpeechForObjectName(obj))
+        name = self._getSpeechForObjectName(obj)
+        if name != label:
+            utterances.extend(name)
 
         if not already_focused:
             utterances.extend(self._getSpeechForObjectRole(obj))
@@ -598,8 +613,11 @@ class SpeechGenerator:
         # availability.]]]
         #
         utterances = []
-        utterances.extend(self._getSpeechForObjectLabel(obj))
-        utterances.extend(self._getSpeechForObjectName(obj))
+        label = self._getSpeechForObjectLabel(obj)
+        utterances.extend(label)
+        name = self._getSpeechForObjectName(obj)
+        if name != label:
+            utterances.extend(name)
 
         if obj.image:
             description = obj.image.imageDescription
@@ -853,8 +871,11 @@ class SpeechGenerator:
         utterances = []
 
         if not already_focused:
-            utterances.extend(self._getSpeechForObjectLabel(obj))
-            utterances.extend(self._getSpeechForObjectName(obj))
+            label = self._getSpeechForObjectLabel(obj)
+            utterances.extend(label)
+            name = self._getSpeechForObjectName(obj)
+            if name != label:
+                utterances.extend(name)
             utterances.extend(self._getSpeechForObjectRole(obj))
 
         utterances.append(percentage)
@@ -1318,25 +1339,23 @@ class SpeechGenerator:
 
         utterances = []
         if obj.state.count(atspi.Accessibility.STATE_CHECKED):
-            # If it's not already focused, say it's name
-            #
-            if not already_focused:
-                utterances.extend(self._getSpeechForObjectLabel(obj))
-                utterances.extend(self._getSpeechForObjectName(obj))
-                utterances.extend(self._getSpeechForObjectRole(obj))
-                utterances.append(_("pressed"))
-                utterances.extend(self._getSpeechForObjectAvailability(obj))
-            else:
-                utterances.append(_("pressed"))
+            checkedState = _("pressed")
         else:
-            if not already_focused:
-                utterances.extend(self._getSpeechForObjectLabel(obj))
-                utterances.extend(self._getSpeechForObjectName(obj))
-                utterances.extend(self._getSpeechForObjectRole(obj))
-                utterances.append(_("not pressed"))
-                utterances.extend(self._getSpeechForObjectAvailability(obj))
-            else:
-                utterances.append(_("not pressed"))
+            checkedState = _("not pressed")
+            
+        # If it's not already focused, say it's name
+        #
+        if not already_focused:
+            label = self._getSpeechForObjectLabel(obj)
+            utterances.extend(label)
+            name = self._getSpeechForObjectName(obj)
+            if name != label:
+                utterances.extend(name)
+            utterances.extend(self._getSpeechForObjectRole(obj))
+            utterances.append(checkedState)
+            utterances.extend(self._getSpeechForObjectAvailability(obj))
+        else:
+            utterances.append(checkedState)
 
         self._debugGenerator("_getSpeechForToggleButton",
                              obj,
@@ -1483,6 +1502,7 @@ class SpeechGenerator:
             if parent == stopAncestor:
                 break
             if (parent.role != rolenames.ROLE_FILLER) \
+                and (parent.role != rolenames.ROLE_SECTION) \
                 and (parent.role != rolenames.ROLE_LAYERED_PANE) \
                 and (parent.role != rolenames.ROLE_SPLIT_PANE) \
                 and (parent.role != rolenames.ROLE_SCROLL_PANE) \
