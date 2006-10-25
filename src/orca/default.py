@@ -2066,8 +2066,13 @@ class Script(script.Script):
             if not iconified:
                 if event.detail1:
                     self.onFocus(event)
-                else:
-                    orca.setLocusOfFocus(event, None)
+                # We don't set locus of focus of None here because it
+                # wreaks havoc on the code that determines the context
+                # when you tab from widget to widget.  For example,
+                # tabbing between panels in the gtk-demo buttons demo.
+                #
+                #else:
+                #    orca.setLocusOfFocus(event, None)
                 return
 
         if state_change_notifiers.has_key(event.source.role):
