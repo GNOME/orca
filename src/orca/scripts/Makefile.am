@@ -16,7 +16,8 @@ orca_python_PYTHON = \
 	Mozilla.py \
 	planner.py \
 	self_voicing.py \
-	StarOffice.py
+	StarOffice.py \
+	users-admin.py
 
 orca_pythondir=$(pyexecdir)/orca/scripts
 
