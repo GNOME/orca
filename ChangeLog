@@ -1,3 +1,11 @@
+2006-10-25  Mike Pedersen <michael.pedersen@sun.com> 
+
+        * docs/doc-set/ue_requirements.sgml,
+        * docs/doc-set/orca.html,
+        * docs/doc-set/orca.pdf
+
+          Updates to requirements for firefox. 
+
 2006-10-24  Willie Walker <william.walker@sun.com>
 
 	* src/orca/default.py: don't set locus of focus to None in
