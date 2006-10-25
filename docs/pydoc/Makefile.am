@@ -63,7 +63,8 @@ DOC_FILES = \
 	orca.scripts.Mozilla \
 	orca.scripts.planner \
 	orca.scripts.self_voicing \
-	orca.scripts.StarOffice
+	orca.scripts.StarOffice \
+	orca.scripts.users-admin
 
 if ENABLE_PYDOC
 all:
