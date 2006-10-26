@@ -1,3 +1,12 @@
+2006-10-26  Willie Walker <william.walker@sun.com>
+
+	* src/orca/Gecko.py: more hacking in the area of navigating the
+	document hierarchy.  After flushing out a few AT-SPI
+	implementation bugs in Firefox, I think I finally got a handle on
+	this.  Will work some more utility methods next and then start on
+	implementing Mike's navigation scheme written up at
+	http://cvs.gnome.org/viewcvs/*checkout*/orca/docs/doc-set/orca.html#UROFFICEAPPS.
+	
 2006-10-26  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/users-admin.py:
