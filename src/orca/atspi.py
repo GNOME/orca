@@ -1027,9 +1027,6 @@ class Accessible:
             except:
                 pass
 
-        if settings.cacheValues:
-            self.relations = relations
-
         return relations
 
     def __get_app(self):

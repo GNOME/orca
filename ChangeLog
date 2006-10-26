@@ -5,6 +5,12 @@
           in Users and groups dialog of Gnome. Added in braille support
           (previous fix only handled speech).
 
+        * Fixed bug #355733 - Function "Say all" doesn't work correctly 
+          in Openoffice writer.
+          This fix includes removing the caching of relation sets. If we
+          find that this is a performance, there might be some fine tuning
+          that can be done. See comment #11 of the bug for more details.
+
 2006-10-25  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Makefile.am:

@@ -829,7 +829,8 @@ class Script(script.Script):
             context.obj.text.setCaretOffset(context.currentOffset);
         elif type == speechserver.SayAllContext.COMPLETED:
             #print "COMPLETED", context.utterance, context.currentOffset
-            context.obj.text.setCaretOffset(context.currentOffset);
+            orca.setLocusOfFocus(None, context.obj, False)
+            context.obj.text.setCaretOffset(context.currentOffset)
 
     def sayAll(self, inputEvent):
         if not orca_state.locusOfFocus:
