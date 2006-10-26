@@ -806,10 +806,12 @@ class Script(default.Script):
                     return [obj, nextOffset]
                 else:
                     return self.getNextInOrder(
-                        obj.child(self.getChildIndex(obj, nextOffset)), -1)
+                        obj.child(self.getChildIndex(obj, nextOffset)),
+                        -1,
+                        textOnly)
         elif obj.childCount:
             try:
-                return self.getNextInOrder(obj.child(0), -1)
+                return self.getNextInOrder(obj.child(0), -1, textOnly)
             except:
                 debug.printException(debug.LEVEL_SEVERE)
         elif (not textOnly) and (startOffset < 0):
@@ -823,12 +825,16 @@ class Script(default.Script):
         while obj.parent and obj != obj.parent:
             characterOffsetInParent = self.getCharacterOffsetInParent(obj)
             if characterOffsetInParent >= 0:
-                return self.getNextInOrder(obj.parent, characterOffsetInParent)
+                return self.getNextInOrder(obj.parent,
+                                           characterOffsetInParent,
+                                           textOnly)
             else:
                 index = obj.index + 1
                 if index < obj.parent.childCount:
                     try:
-                        return self.getNextInOrder(obj.parent.child(index), -1)
+                        return self.getNextInOrder(obj.parent.child(index),
+                                                   -1,
+                                                   textOnly)
                     except:
                         debug.printException(debug.LEVEL_SEVERE)
             obj = obj.parent
@@ -879,11 +885,14 @@ class Script(default.Script):
                     return [obj, previousOffset]
                 else:
                     return self.getPreviousInOrder(
-                        obj.child(self.getChildIndex(obj, previousOffset)), -1)
+                        obj.child(self.getChildIndex(obj, previousOffset)),
+                        -1,
+                        textOnly)
         elif obj.childCount:
             try:
                 return self.getPreviousInOrder(obj.child(obj.childCount - 1),
-                                               -1)
+                                               -1,
+                                               textOnly)
             except:
                 debug.printException(debug.LEVEL_SEVERE)
         elif (not textOnly) and (startOffset < 0):
@@ -895,24 +904,26 @@ class Script(default.Script):
             characterOffsetInParent = self.getCharacterOffsetInParent(obj)
             if characterOffsetInParent >= 0:
                 return self.getPreviousInOrder(obj.parent,
-                                               characterOffsetInParent)
+                                               characterOffsetInParent,
+                                               textOnly)
             else:
                 index = obj.index - 1
                 if index >= 0:
                     try:
                         return self.getPreviousInOrder(obj.parent.child(index),
-                                                       -1)
+                                                       -1,
+                                                       textOnly)
                     except:
                         debug.printException(debug.LEVEL_SEVERE)
             obj = obj.parent
 
         return [None, -1]
 
-    def getCaretContext(self):
+    def getCaretContext(self, textOnly=True):
         try:
             return self.caretContext
         except:
-            self.caretContext = self.getNextInOrder()
+            self.caretContext = self.getNextInOrder(None, -1, textOnly)
         return self.caretContext
 
     def sameLine(self, a, b):
@@ -923,7 +934,8 @@ class Script(default.Script):
         contents = []
         lastObj = None
         lastExtents = None
-        [obj, characterOffset] = self.getCaretContext()
+        del self.caretContext
+        [obj, characterOffset] = self.getCaretContext(False)
         while obj:
             if True or obj.state.count(atspi.Accessibility.STATE_SHOWING):
                 if obj.text:
@@ -967,7 +979,9 @@ class Script(default.Script):
 
                 lastObj = obj
                 
-            [obj, characterOffset] = self.getNextInOrder(obj, characterOffset)
+            [obj, characterOffset] = self.getNextInOrder(obj,
+                                                         characterOffset,
+                                                         False)
 
         return contents
                 
@@ -980,7 +994,7 @@ class Script(default.Script):
 
     def dumpContent(self, inputEvent):
         """Dumps the document frame content to stdout."""
-        print self.getContents()
+        #print self.getContents()
         contents = self.linearizeContents()
         string = ""
         for content in contents:

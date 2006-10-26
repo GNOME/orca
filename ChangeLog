@@ -1,5 +1,10 @@
 2006-10-26  Willie Walker <william.walker@sun.com>
 
+	* src/orca/Gecko.py: more hacking to get leaf nodes that seem
+	to be showing something, but don't implement accessible text.
+
+2006-10-26  Willie Walker <william.walker@sun.com>
+
 	* src/orca/Gecko.py: more hacking in the area of navigating the
 	document hierarchy.  After flushing out a few AT-SPI
 	implementation bugs in Firefox, I think I finally got a handle on
