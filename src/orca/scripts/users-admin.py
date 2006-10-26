@@ -26,10 +26,69 @@ __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import orca.default as default
+import orca.braille as braille
+import orca.braillegenerator as braillegenerator
 import orca.speechgenerator as speechgenerator
 import orca.util as util
 
 from orca.orca_i18n import _ # for gettext support
+
+class BrailleGenerator(braillegenerator.BrailleGenerator):
+    """Overrides _getBrailleRegionsForTableCellRow to ignore the value of 
+    settings.readTableCellRow and always get the braille for a single table 
+    cell.
+    Overrides _getBrailleRegionsForTableCell so that, we can properly 
+    handle the table cells on the User Privileges pane (which contains two 
+    more table cells).
+    """
+
+    def __init__(self, script):
+        braillegenerator.BrailleGenerator.__init__(self, script)
+
+    def _getBrailleRegionsForTableCellRow(self, obj):
+        """Ignore the value of settings.readTableCellRow and always get 
+        the braille for a single table cell.
+
+        Arguments:
+        - obj: the table
+
+        Returns a list where the first element is a list of Regions to display
+        and the second element is the Region which should get focus.
+        """
+
+        return self._getBrailleRegionsForTableCell(obj)
+
+    def _getBrailleRegionsForTableCell(self, obj):
+        """Get the braille for a table cell. Check to see if the table cell 
+        has any children. If it does, then call 
+        _getBrailleRegionsForTableCell() for each of them. If it doesn't, 
+        then just return the utterances returned by the default table cell 
+        braille handler.
+
+        Arguments:
+        - obj: the table cell
+
+        Returns a list where the first element is a list of Regions to display
+        and the second element is the Region which should get focus.
+        """
+
+        regions = []
+        brailleGen = braillegenerator.BrailleGenerator
+
+        if obj and obj.childCount:
+            for i in range(0, obj.childCount):
+                child = obj.child(i)
+                [cellRegions, focusRegion] = \
+                                self._getBrailleRegionsForTableCell(child)
+
+                if len(regions):
+                    regions.append(braille.Region(" "))
+                regions.append(cellRegions[0])
+            regions = [regions, focusRegion]
+        else:
+            regions = brailleGen._getBrailleRegionsForTableCell(self, obj)
+
+        return regions
 
 class SpeechGenerator(speechgenerator.SpeechGenerator):
     """ Overrides _getSpeechForTableCell so that, we can properly handle
@@ -41,9 +100,10 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         speechgenerator.SpeechGenerator.__init__(self, script)
 
     def _getSpeechForTableCell(self, obj, already_focused):
-        """Get the speech for a table cell. If this isn't inside a
-        spread sheet, just return the utterances returned by the default
-        table cell speech handler.
+        """Get the speech for a table cell. Check to see if the table cell 
+        has any children. If it does, then call _getSpeechForTableCell() 
+        for each of them. If it doesn't, then just return the utterances 
+        returned by the default table cell speech handler.
 
         Arguments:
         - obj: the table cell
@@ -55,10 +115,6 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         utterances = []
         speechGen = speechgenerator.SpeechGenerator 
 
-        # Check to see if the table cell has any children. If it does,
-        # then call _getSpeechForTableCell() for each of them. Otherwise
-        # just call the default method to handle the table cell.
-        #
         if obj and obj.childCount:
             for i in range(0, obj.childCount):
                 child = obj.child(i)
@@ -86,6 +142,12 @@ class Script(default.Script):
         """
 
         default.Script.__init__(self, app)
+
+    def getBrailleGenerator(self):
+        """Returns the braille generator for this script.
+        """
+
+        return BrailleGenerator(self)
 
     def getSpeechGenerator(self):
         """Returns the speech generator for this script.

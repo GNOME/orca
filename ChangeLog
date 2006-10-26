@@ -1,3 +1,10 @@
+2006-10-26  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/users-admin.py:
+          More work on bug #358467 - Orca doesn't read check items status 
+          in Users and groups dialog of Gnome. Added in braille support
+          (previous fix only handled speech).
+
 2006-10-25  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Makefile.am:
