@@ -32,6 +32,7 @@ import time
 
 import atspi
 import braille
+import chnames
 import debug
 import flat_review
 import input_event
@@ -929,9 +930,30 @@ class Script(script.Script):
 
         text = obj.text
         offset = text.caretOffset
+        lastKey = orca_state.lastInputEvent.event_string
+        lastWord = orca_state.lastWord
+
         [word, startOffset, endOffset] = \
             text.getTextAtOffset(offset,
                                  atspi.Accessibility.TEXT_BOUNDARY_WORD_START)
+
+        # Speak a newline if a control-right-arrow or control-left-arrow
+        # was used to cross a line boundary. Handling is different for
+        # the two keys since control-right-arrow places the cursor after
+        # the last character in a word, but control-left-arrow places
+        # the cursor at the beginning of a word.
+        #
+        if lastKey == "Right" and len(lastWord) > 0:
+            lastChar = lastWord[len(lastWord) - 1]
+            if lastChar == "\n" and (not lastWord == word):
+                voice = self.voices[settings.DEFAULT_VOICE]
+                speech.speak(chnames.getCharacterName("\n"), voice)
+                    
+        if lastKey == "Left" and len(word) > 0:
+            lastChar = word[len(word) - 1]
+            if lastChar == "\n" and (not lastWord == word):
+                voice = self.voices[settings.DEFAULT_VOICE]
+                speech.speak(chnames.getCharacterName("\n"), voice)
 
         if util.getLinkIndex(obj, offset) >= 0:
             voice = self.voices[settings.HYPERLINK_VOICE]
@@ -941,6 +963,7 @@ class Script(script.Script):
             voice = self.voices[settings.DEFAULT_VOICE]
 
         word = util.adjustForRepeats(word)
+        orca_state.lastWord = word
         speech.speak(word, voice)
         util.speakTextSelectionState(obj, startOffset, endOffset)
 
@@ -1092,6 +1115,21 @@ class Script(script.Script):
             voice = self.voices[settings.UPPERCASE_VOICE]
         else:
             voice = self.voices[settings.DEFAULT_VOICE]
+
+        if orca_state.lastInputEvent.event_string == "Right":
+
+            prevChar = self.getText(obj, startOffset-1, endOffset-1)
+
+            # We don't what to speak a newline before the cursor
+            # is on the next line. 
+            if character == "\n" and (not prevChar == "\n"):
+                return
+            
+            # If the previous character was a newline, the cursor
+            # is now on the next line, so speak a newline.
+            if prevChar == "\n":
+                voice = self.voices[settings.DEFAULT_VOICE]
+                speech.speak(chnames.getCharacterName("\n"), voice)            
 
         speech.speak(character, voice)
         util.speakTextSelectionState(obj, startOffset, endOffset)

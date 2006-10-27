@@ -41,6 +41,7 @@ import bonobo
 import atspi
 import chnames
 import debug
+import orca_state
 import punctuation_settings
 import settings
 import speech
@@ -616,6 +617,19 @@ class SpeechServer(speechserver.SpeechServer):
         oldText = oldText.replace("...", _(" dot dot dot"), 1)
         oldText = oldText.replace("\342\200\246",  _(" dot dot dot"), 1)
         oldText = oldText.decode("UTF-8")
+
+        ## Don't speak newlines unless the user is moving through text
+        ## using a right or left arrow key.
+        ##
+        removeNewLines = True
+        if orca_state.lastInputEvent and \
+               orca_state.lastInputEvent.__dict__.has_key("event_string"):
+            lastKey = orca_state.lastInputEvent.event_string
+            if lastKey == "Left" or lastKey == "Right":
+                removeNewLines = False
+
+        if removeNewLines:
+            oldText = oldText.replace("\n", _(""), 1)
 
         style = settings.verbalizePunctuationStyle
         newText = ''

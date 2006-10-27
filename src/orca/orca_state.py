@@ -48,7 +48,7 @@ activeScript = None
 clickCount = 0
 
 # The InputEvent instance representing the last input event.  This is
-# set each time a keyboard or braille event is received.
+# set each time a mouse, keyboard or braille event is received.
 #
 lastInputEvent = None
 
@@ -65,3 +65,6 @@ lastKeyEchoTime = None
 #
 noFocusTimestamp = 0.0
 
+# The last word spoken.
+#
+lastWord = ""

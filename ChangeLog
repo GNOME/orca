@@ -1,3 +1,9 @@
+2006-10-27  Mike Pedersen <michael.pedersen@sun.com> 
+
+        * src/orca/default.py
+
+          Lynn's fix for bug 338838.
+
 2006-10-26  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py: more hacking to get leaf nodes that seem
