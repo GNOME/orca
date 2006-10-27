@@ -1,3 +1,9 @@
+2006-10-27  Willie Walker <william.walker@sun.com>
+
+	* src/orca/Gecko.py: add code to get current word at caret context
+	and also code to go to next/previous word.  Not hooked up to speech
+	or braille yet.  Next on to do list is next/previous line.  
+	
 2006-10-27  Mike Pedersen <michael.pedersen@sun.com> 
 
         * src/orca/default.py
