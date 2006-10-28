@@ -5,6 +5,10 @@
           bug #356066. Problem was in _getBrailleRegionsForComboBox() in
           braillegenerator.py.
 
+        * bugs/bugs.html:
+          Added in entries for the six new OOo bugs that have recently 
+          been opened.
+
 2006-10-27  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py: add code to get current word at caret context
