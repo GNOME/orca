@@ -471,11 +471,15 @@ class BrailleGenerator:
         #
         if focusedRegionIndex >= len(regions):
             focusedRegionIndex = 0
+        if len(regions) == 0:
+            focusedRegion = None
+        else:
+            focusedRegion = regions[focusedRegionIndex]
 
         # [[[TODO: WDW - perhaps if a text area was created, we should
         # give focus to it.]]]
         #
-        return [regions, regions[focusedRegionIndex]]
+        return [regions, focusedRegion]
 
     def _getBrailleRegionsForDesktopIcon(self, obj):
         """Get the braille for a desktop icon.

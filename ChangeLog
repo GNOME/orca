@@ -1,3 +1,10 @@
+2006-10-28  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          Fixed an "Index out of range" problem found while investigating
+          bug #356066. Problem was in _getBrailleRegionsForComboBox() in
+          braillegenerator.py.
+
 2006-10-27  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py: add code to get current word at caret context
