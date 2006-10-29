@@ -344,6 +344,119 @@
 
 <para>   FF3 should at least provide the following functionality.  For character and word navigation firefox should honor the standard well known keystrokes ie left and right arrows or CTRL+left and right arrows for moving by character and word.  When the user reaches the beginning or end of a line they should wrap to the next or previus.  If the user reaches the beginning or end of a frame they should wrap to the next or previus.  When up and down arrowing orca should as closely as possible move by line in the web page.  If the line contains links, orca should speak the word link after the link.  If possible, the link should also be underlined with dots 7 and 8 on the braille display.  If the line contains form controls, the label for the control should be read followed by the role.  If the role is an edit and the user has placed the cursor at the location where text can be entered the user should also hear "editable".  The braille user will see the cursor followed by "editable".  When tabbing and shift tabbing between elements the user should hear the element followed by the role.  If a user encounters a  combo he/she should be able to press "space" to expand the control in order to make a selection.  When space is pressed again to make the selection the control will close allowing the user to continue moving through the page.  If tab or shift+tab is pressed while a control is opened, it will be closed and focus will  move to the next element.  Check boxes and buttons will simply be toggled by space as they are in any other application.  The letters "h" and "shift+h" will be used to move between headings.  When the heading is reached, orca will speak and braille the header followed by "heading and the heading level.  The numbers 1 through 6 will also be available to allow the user to move to the next heading at that level.  The letters "t" and "shift+t" will be used to move between tables.  When the table is reached its title will be spoken as well as the value of the cell with focus.  CTRL+alt+left, right,up, and down will be used to move from cell to cell.  Control+alt+home or end will be used to move between the beginning and the end of the current table.  When changing column or row, the appropriate headings should also be read.  The letters f and shift+f will be used to move between form fields.  l and shift+l will allow the user to move from list to list.  The letters u and v will be used to move between unvisited and visited links.</para> 
         </section>
+      <section><title>Where am I specification </title>
+<para>
+There will be four whereAmI-related commands:
+1.Basic information:  KP_Enter 1x
+2.Detailed information: KP_Enter 2x
+3.Title bar: Insert + KP_Enter 1x
+4.Status bar: Insert + KP_Enter 2x
+</para>
+      <section><title>Basic Information: KP_Enter 1x</title>
+<para>
+When KP_Enter is pressed a single time, Orca will speak and display basic information about the item with focus.  In particular:
+Checkboxes
+1.label
+2.role
+3.state
+4.accelerator key (i.e. Alt plus the underlined letter), if any
+(e.g. "Enable speech, checkbox checked, Alt E")
+Radio Buttons
+1.group name
+2.label
+3.role
+4.state
+5.relative position
+6.accelerator key (i.e. Alt plus the underlined letter), if any
+(e.g. "Punctuation Level, Some, Radio button, selected, item 2 of 4, Alt M")
+Combo Boxes
+1.label
+2.role
+3.current value
+4.relative position
+5.accelerator key (i.e. Alt plus the underlined letter), if any
+(e.g. "Speech system: combo box, GNOME Speech Services, item 1 of 1, Alt S")
+Spin Buttons
+1.label
+2.role
+3.current value
+4.accelerator key (i.e. Alt plus the underlined letter), if any
+(e.g. "Scale factor: spin button, 4.00, Alt F")
+Push Buttons
+1.label
+2.role
+3.accelerator key (i.e. Alt plus the underlined letter), if any
+(e.g. "Apply button, Alt A")
+Sliders
+1.label
+2.role
+3.value
+4.percentage, if possible
+5.accelerator (i.e. Alt plus the underlined letter), if any
+(e.g. "Pitch slider, 5.0, 56%"; "Volume slider, 9.0, 100%")
+Menu Items
+1.Name of the menu containing the item, followed by its role
+2.item name, followed by its role (if a menu) followed by its hot key if any
+3.relative position
+4.accelerator key for that item, if any
+(e.g. "File menu, Open..., Control + O, item 2 of 20, O", "File menu, Wizards Menu, item 4 of 20, W")
+Tabs in a Tab List
+1.role
+2.label + "page"
+3.relative position
+4.accelerator (i.e. Alt plus the underlined letter), if any
+(e.g. "Tab list, braille page, item 2 of 5")
+Text Boxes
+1.label, if any
+2.role
+3.contents
+a. if no text on the current line is selected, the current line
+b. if text is selected on the current line, that text, followed by "selected"
+c. if the current line is blank/empty, "blank"
+4. accelerator key (i.e. Alt plus the underlined letter), if any
+(e.g. "Source display: text, blank, Alt O")
+Tree Tables
+1.label, if any
+2.role
+3.current row (regardless of speak cell/row setting)
+4.relative position
+5.if expandable/collapsible: expanded/collapsed
+6.if applicable, the level
+(e.g. "Tree table, Mike Pedersen, item 8 of 10, tree level 2")
+Calc-Specific Handling
+Given the nature of Calc, Orca should override the default KP_Enter behavior when the item with focus is a cell within Calc.  In this instance, the following information should be spoken/displayed:
+1."Cell"
+2.the cell coordinates
+3.the cell contents:
+a. if the cell is empty, "blank"
+b. if the cell is being edited AND if some text within the cell is selected, the selected text followed by "selected"
+c. otherwise, the full contents of the cell
+</para>
+</section>
+      <section><title> KP_Enter 2x </title>
+<para> 
+When KP_Enter is pressed twice quickly, Orca will speak and display the information it currently does when performing the whereAmI command, **with the following changes**:
+1.Orca should pause briefly between items in the hierarchy
+2.Information regarding relative position should come after the item it pertains to, rather than before. (e.g. say/display "Euro Converter, Item 7 of 9")
+3.If focus is within a text box and text within that text box is selected, Orca should NOT read the current line.  Rather, it should state the text that is selected followed by stating "selected".
+Title bar: Insert + KP_Enter 1x
+When Insert + KP_Enter is pressed a single time, Orca will speak and display the following information:
+1.The contents of the title bar of the application main window
+2.If in a dialog box within an application, the contents of the title bar of the dialog box.
+Orca will pause briefly between these two pieces of information so that the speech user can distinguish each.
+Calc-Specific Handling
+If Insert + KP_Enter is pressed a single time while focus is on a cell within Calc, Orca will speak the following information:
+1.The contents of the title bar of the application main window
+2.The title of the current worksheet
+Note that if the application with focus is Calc, but a cell does not have focus, the default behavior should be used.
+Status bar: Insert + KP_Enter 2x
+When Insert + KP_Enter is pressed twice quickly, Orca will speak and display the contents of the status bar.
+Notes:
+1.In applications where the status bar contents are distinguishable elements (e.g. OpenOffice.org Writer), Orca should pause briefly between elements.
+2.In applications where the elements of the status bar are labeled (e.g. OpenOffice.org Writer), Orca should also speak and display the label of a given element followed by that element.  (e.g. "Page Style: Default", "Zoom: 100%"
+</para>
+</section>
+</section>
       </section>
     </section>
 

@@ -482,6 +482,11 @@ class Script(default.Script):
 
         self.lastDynamicEvent = None
 
+        # Used to determine whether the caret has moved to a new paragraph.
+        #
+        self.currentParagraph = None
+        
+
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.
         """
@@ -1205,6 +1210,26 @@ class Script(default.Script):
         # Pass the event onto the parent class to be handled in the default way.
 
         default.Script.onNameChanged(self, event)
+
+
+    def onStateChanged(self, event):
+        """Called whenever an object's state changes.
+
+        Arguments:
+        - event: the Event
+        """
+
+        # Two focus changed events are received when the caret
+        # moves to a new paragraph. Ignore the second one.
+        #
+        if event.type == "object:state-changed:focused" and \
+           event.source.role == rolenames.ROLE_PARAGRAPH and \
+           event.source != self.currentParagraph:
+            self.currentParagraph = event.source
+            return
+                        
+        default.Script.onStateChanged(self, event)
+
 
     # This method tries to detect and handle the following cases:
     # 1) Calc: spread sheet Name Box line.

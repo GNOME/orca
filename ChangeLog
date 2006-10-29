@@ -1,3 +1,11 @@
+2006-10-29  Mike Pedersen <michael.pedersen@sun.com> 
+
+        * docs/doc-set/ue_requirements.sgml,
+        * docs/doc-set/orca.html,
+        * docs/doc-set/orca.pdf
+
+          Updates to requirements for "where am I". 
+
 2006-10-28  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
