@@ -68,9 +68,7 @@ def _getAutocompleteEntry(obj):
 ########################################################################
 
 class BrailleGenerator(braillegenerator.BrailleGenerator):
-    """Handle Gecko's unique hiearchical representation, such as menus
-    duplicating themselves in the hierarchy and tables used for layout
-    and indentation purposes.
+    """Provides a braille generator specific to Gecko.
     """
 
     def __init__(self, script):
@@ -94,6 +92,11 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
         self._debugGenerator("Gecko._getBrailleRegionsForAutocomplete", obj)
 
+        # [[[TODO: WDW - we're doing very little here.  The goal for
+        # autocomplete boxes at the moment is that their children (e.g.,
+        # a text area, a menu, etc., do all the interactive work and
+        # the autocomplete acts as more of a container.]]]
+        #
         regions = []
         if settings.brailleVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
             regions.append(braille.Region(
@@ -104,7 +107,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         return (regions, regions[0])
 
     def _getBrailleRegionsForText(self, obj):
-        """Gets text to be displayed for an autocomplete box.
+        """Gets text to be displayed for the entry of an autocomplete box.
 
         Arguments:
         - obj: an Accessible
@@ -123,6 +126,9 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
         regions = []
 
+        # This is the main difference between this class and the default
+        # class - we'll give this thing a name here.
+        #
         label = util.getDisplayedLabel(parent)
         if not label or not len(label):
             label = parent.name
@@ -198,9 +204,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 ########################################################################
 
 class SpeechGenerator(speechgenerator.SpeechGenerator):
-    """Handle Gecko's unique hiearchical representation, such as menus
-    duplicating themselves in the hierarchy and tables used for layout
-    and indentation purposes.
+    """Provides a speech generator specific to Gecko.
     """
 
     def __init__(self, script):
@@ -220,12 +224,14 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
         parent = obj.parent
         if parent.role != rolenames.ROLE_AUTOCOMPLETE:
-            [text, startOffset, endOffset] = util.getTextLineAtCaret(obj)
             return speechgenerator.SpeechGenerator._getSpeechForText(
                 self, obj, already_focused)
 
         utterances = []
 
+        # This is the main difference between this class and the default
+        # class - we'll give this thing a name here.
+        #
         label = util.getDisplayedLabel(parent)
         if not label or not len(label):
             label = parent.name
@@ -454,6 +460,16 @@ class Script(default.Script):
                 Script.goPreviousWord,
                 "Goes to previous word.")
 
+        self.inputEventHandlers["goNextLineHandler"] = \
+            input_event.InputEventHandler(
+                Script.goNextLine,
+                "Goes to next line.")
+
+        self.inputEventHandlers["goPreviousLineHandler"] = \
+            input_event.InputEventHandler(
+                Script.goPreviousLine,
+                "Goes to previous line.")
+
     def getKeyBindings(self):
         """Defines the key bindings for this script.
 
@@ -503,9 +519,40 @@ class Script(default.Script):
                  | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 self.inputEventHandlers["goPreviousWordHandler"]))
 
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "j",
+                (1 << settings.MODIFIER_ORCA \
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["goPreviousLineHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "k",
+                (1 << settings.MODIFIER_ORCA \
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["goNextLineHandler"]))
+
         return keyBindings
 
     def findCaretContext(self, obj, characterOffset):
+        """Given an object and a character offset, find the first
+        [obj, characterOffset] that is actually presenting something
+        on the display.  The reason we do this is that the
+        [obj, characterOffset] passed in may actually be pointing
+        to an embedded object character.  In those cases, we dig
+        into the hierarchy to find the 'real' thing.
+
+        Arguments:
+        -obj: an accessible object
+        -characterOffset: the offset of the character where to start
+        looking for real rext
+
+        Returns [obj, characterOffset] that points to real content.
+        """
+        
         if obj.text:
             character = self.getText(obj,
                                      characterOffset,
@@ -522,9 +569,33 @@ class Script(default.Script):
             return [obj, -1]
 
     def onCaretMoved(self, event):
+        """Caret movement in Gecko is somewhat unreliable and
+        unpredictable, but we need to handle it.  When we detect caret
+        movement, we make sure we update our own notion of the caret
+        position: our caretContext is an [obj, characterOffset] that
+        points to our current item and character (if applicable) of
+        interest.  If our current item doesn't implement the
+        accessible text specialization, the characterOffset value
+        is meaningless."""
+        
         self.caretContext = self.findCaretContext(\
             event.source,
             event.source.text.caretOffset)
+
+        # If the user presses left or right, we'll set the target
+        # column for up/down navigation by line.
+        #
+        if isinstance(orca_state.lastInputEvent,
+                      input_event.KeyboardEvent):
+            string = orca_state.lastInputEvent.event_string
+            mods = orca_state.lastInputEvent.modifiers
+            if (string == "Left") or (string == "Right"):
+                [obj, characterOffset] = self.caretContext
+                self.targetCharacterExtents = \
+                    self.getExtents(obj,
+                                    characterOffset,
+                                    characterOffset + 1)
+                
         orca.setLocusOfFocus(event, event.source, False)
         default.Script.onCaretMoved(self, event)
 
@@ -539,9 +610,6 @@ class Script(default.Script):
         #
         return
 
-    # This function is called whenever an object within Gecko receives
-    # focus
-    #
     def onFocus(self, event):
         #print "Gecko.onFocus"
 
@@ -599,9 +667,6 @@ class Script(default.Script):
 
         default.Script.onFocus(self, event)
 
-    # This function is called when a hyperlink is selected - This happens
-    # when a link is navigated to using tab/shift-tab
-    #
     def onLinkSelected(self, event):
         text = event.source.text
         hypertext = event.source.hypertext
@@ -692,12 +757,31 @@ class Script(default.Script):
 
         return documentFrame
 
-    def sameLine(self, a, b):
-        """Determine if extents a and b are on the same line."""
-        return abs(a[1] - b[1]) < 5
+    def onSameLine(self, a, b, pixelDelta=5):
+        """Determine if extents a and b are on the same line.
+
+        Arguments:
+        -a: [x, y, width, height]
+        -b: [x, y, width, height]
+
+        Returns True if a and b are on the same line.
+        """
+
+        highestBottom = min(a[1] + a[3], b[1] + b[3])
+        lowestTop     = max(a[1],        b[1])
+
+        # If we do overlap, lets see how much.  We'll require a 25% overlap
+        # for now...
+        #
+        if lowestTop < highestBottom:
+            overlapAmount = highestBottom - lowestTop
+            shortestHeight = min(a[3], b[3])
+            return ((1.0 * overlapAmount) / shortestHeight) > 0.25
+        else:
+            return False
 
     def getUnicodeText(self, obj):
-        """Returns the unicode text for an object, or None if the object
+        """Returns the unicode text for an object or None if the object
         doesn't implement the accessible text specialization.
         """
 
@@ -827,6 +911,8 @@ class Script(default.Script):
         undefined (but is typically -1).
         """
 
+        #print "GO NEXT", obj, obj.role, startOffset
+        
         if not obj:
             obj = self.getDocumentFrame()
 
@@ -984,12 +1070,50 @@ class Script(default.Script):
         if offset >= 0:
             print "  offset =", offset
 
+    def getExtents(self, obj, startOffset, endOffset):
+        """Returns [x, y, width, height] of the text at the given offsets
+        if the object implements accessible text, or just the extents of
+        the object if it doesn't implement accessible text.
+        """
+        if not obj:
+            return [0, 0, 0, 0]
+        if obj.text:
+            extents = obj.text.getRangeExtents(startOffset, endOffset, 0)
+        else:
+            ext = obj.extents
+            extents = [ext.x, ext.y, ext.width, ext.height]
+        return extents
+    
+    def getBoundary(self, a, b):
+        """Returns the smallest [x, y, width, height] that encompasses
+        both extents a and b.
+        
+        Arguments:
+        -a: [x, y, width, height]
+        -b: [x, y, width, height]
+        """
+        if not a:
+            return b
+        if not b:
+            return a
+        smallestX1 = min(a[0], b[0])
+        smallestY1 = min(a[1], b[1])
+        largestX2  = max(a[0] + a[2], b[0] + b[2])
+        largestY2  = max(a[1] + a[3], b[1] + b[3])
+        return [smallestX1,
+                smallestY1,
+                largestX2 - smallestX1,
+                largestY2 - smallestY1]
+    
     def getLinearizedContents(self):
         """Returns an ordered list where each element is composed of
         an [obj, startOffset, endOffset] tuple.  The list is created
         via an in-order traversal of the document contents starting at
         the current caret context (or the beginning of the document if
-        there is no caret context)."""
+        there is no caret context).
+
+        WARNING: THIS TRAVERSES A LARGE PART OF THE DOCUMENT AND IS
+        INTENDED PRIMARILY FOR DEBUGGING PURPOSES ONLY."""
 
         contents = []
         lastObj = None
@@ -1003,14 +1127,12 @@ class Script(default.Script):
                     # gives us odd character extents sometimes, so we
                     # defensively ignore those.
                     #
-                    characterExtents = obj.text.getRangeExtents(
-                        characterOffset,
-                        characterOffset + 1,
-                        0)
+                    characterExtents = self.getExtents(
+                        obj, characterOffset, characterOffset + 1)
                     if characterExtents != (0, 0, 0, 0):
                         if lastExtents \
-                           and not self.sameLine(lastExtents,
-                                                 characterExtents):
+                           and not self.onSameLine(lastExtents,
+                                                   characterExtents):
                             contents.append([None, -1, -1])
                             lastExtents = characterExtents
 
@@ -1047,13 +1169,17 @@ class Script(default.Script):
         return contents
 
     def getCharacterAtOffset(self, obj, characterOffset):
+        """Returns the character at the given characterOffset in the
+        given object or None if the object does not implement the
+        accessible text specialization.
+        """
         if obj and obj.text:
             unicodeText = self.getUnicodeText(obj)
             return unicodeText[characterOffset].encode("UTF-8")
         else:
             return None
 
-    def getContentsAtOffset(self, obj, characterOffset, type):
+    def getWordAtOffset(self, obj, characterOffset):
         """Returns an ordered list where each element is composed of
         an [obj, startOffset, endOffset] tuple.  The list is created
         via an in-order traversal of the document contents starting at
@@ -1065,8 +1191,6 @@ class Script(default.Script):
         Arguments:
         -obj: the object to start at
         -characterOffset: the characterOffset in the object
-        -type: One of Accessibility.TEXT_BOUNDARY_LINE_START or
-               Accessibility.TEXT_BOUNDARY_WORD_START.
         """
 
         if not obj:
@@ -1079,47 +1203,122 @@ class Script(default.Script):
         #
         contents = []
 
-        if type == atspi.Accessibility.TEXT_BOUNDARY_WORD_START:
-            encounteredText = False
+        encounteredText = False
+        [lastObj, lastCharacterOffset] = [obj, characterOffset]
+        while obj == lastObj:
+            if not obj.text:
+                break
+            else:
+                character = self.getCharacterAtOffset(obj, characterOffset)
+                if util.isWordDelimiter(character):
+                    if encounteredText:
+                        break
+                else:
+                    encounteredText = True
+
             [lastObj, lastCharacterOffset] = [obj, characterOffset]
-            while obj == lastObj:
-                if not obj.text:
-                    break
+            [obj, characterOffset] = \
+                  self.getPreviousInOrder(obj, characterOffset)
+
+        contents.append([lastObj,
+                         lastCharacterOffset,
+                         lastCharacterOffset + 1])
+
+        encounteredText = False
+        encounteredDelimiter = False
+        [obj, characterOffset] = [lastObj, lastCharacterOffset]
+        while obj and (obj == lastObj):
+            if not obj.text:
+                break
+            else:
+                character = self.getCharacterAtOffset(obj, characterOffset)
+                if not util.isWordDelimiter(character):
+                    if encounteredText and encounteredDelimiter:
+                        break
+                    encounteredText = True
                 else:
-                    character = self.getCharacterAtOffset(obj, characterOffset)
-                    if util.isWordDelimiter(character):
-                        if encounteredText:
-                            break
-                    else:
-                        encounteredText = True
+                    encounteredDelimiter = True
 
+            [lastObj, lastCharacterOffset] = [obj, characterOffset]
+            [obj, characterOffset] = \
+                  self.getNextInOrder(obj, characterOffset)
+            contents[-1][2] = lastCharacterOffset + 1
+
+        return contents
+
+    def getLineAtOffset(self, obj, characterOffset):
+        """Returns an ordered list where each element is composed of
+        an [obj, startOffset, endOffset] tuple.  The list is created
+        via an in-order traversal of the document contents starting at
+        the given object and characterOffset.  The first element in
+        the list represents the beginning of the line.  The last
+        element in the list represents the character just before the
+        beginning of the next line.
+
+        Arguments:
+        -obj: the object to start at
+        -characterOffset: the characterOffset in the object
+        """
+
+        if not obj:
+            return []
+
+        # If we're looking for the current word, we'll search
+        # backwards to the beginning the current line and then
+        # forwards to the beginning of the next line.
+        #
+        contents = []
+
+        lineExtents = self.getExtents(
+            obj, characterOffset, characterOffset + 1)
+        
+        [lastObj, lastCharacterOffset] = [obj, characterOffset]
+        while obj:
+            [obj, characterOffset] = \
+                  self.getPreviousInOrder(obj, characterOffset)
+
+            extents = self.getExtents(
+                obj, characterOffset, characterOffset + 1)
+
+            if not self.onSameLine(extents, lineExtents):
+                break
+            else:
+                lineExtents = self.getBoundary(lineExtents, extents)
                 [lastObj, lastCharacterOffset] = [obj, characterOffset]
-                [obj, characterOffset] = \
-                      self.getPreviousInOrder(obj, characterOffset)
 
-            contents.append([lastObj,
-                             lastCharacterOffset,
-                             lastCharacterOffset + 1])
+        # [[[TODO: WDW - efficiency alert - we could always start from
+        # what was passed in rather than starting at the beginning of
+        # the line.  I just want to make this work for now, though.]]]
+        #
+        [obj, characterOffset] = [lastObj, lastCharacterOffset]
+        while obj:
+            extents = self.getExtents(
+                obj, characterOffset, characterOffset + 1)
 
-            encounteredText = False
-            encounteredDelimiter = False
-            [obj, characterOffset] = [lastObj, lastCharacterOffset]
-            while obj and (obj == lastObj):
-                if not obj.text:
-                    break
-                else:
-                    character = self.getCharacterAtOffset(obj, characterOffset)
-                    if not util.isWordDelimiter(character):
-                        if encounteredText and encounteredDelimiter:
-                            break
-                        encounteredText = True
-                    else:
-                        encounteredDelimiter = True
+            if extents == (0, 0, 0, 0):
+                # [[[TODO: WDW - HACK.  I think we end up with a zero
+                # sized character when the accessible text implementation
+                # of Gecko gives us whitespace that is not visible, but
+                # is in the raw HTML source.  This should hopefully be
+                # fixed at some point, but we just ignore it for now.
+                #
+                pass
+            elif not self.onSameLine(extents, lineExtents):
+                break
+            elif (lastObj == obj) and len(contents):
+                contents[-1][2] = characterOffset + 1
+            else:
+                contents.append([obj,
+                                 characterOffset,
+                                 characterOffset + 1])
 
-                [lastObj, lastCharacterOffset] = [obj, characterOffset]
-                [obj, characterOffset] = \
-                      self.getNextInOrder(obj, characterOffset)
-                contents[-1][2] = lastCharacterOffset + 1
+            if extents != (0, 0, 0, 0):
+                # [[[TODO: WDW - HACK.  See same reason as above.]]]
+                #
+                lineExtents = self.getBoundary(lineExtents, extents)
+            [lastObj, lastCharacterOffset] = [obj, characterOffset]
+            [obj, characterOffset] = \
+                  self.getNextInOrder(obj, characterOffset)
 
         return contents
 
@@ -1132,10 +1331,8 @@ class Script(default.Script):
         [obj, characterOffset] = self.getCaretContext()
         while obj:
             if obj and obj.state.count(atspi.Accessibility.STATE_SHOWING):
-                characterExtents = obj.text.getRangeExtents(
-                    characterOffset,
-                    characterOffset + 1,
-                    0)
+                characterExtents = self.getExtents(
+                    obj, characterOffset, characterOffset + 1)
                 if lastObj and (lastObj != obj):
                     if obj.role == rolenames.ROLE_LIST_ITEM:
                         contents += "\n"
@@ -1157,14 +1354,22 @@ class Script(default.Script):
             contents += ">"
         return contents
 
+    def outlineExtents(self, obj, startOffset, endOffset):
+        [x, y, width, height] = self.getExtents(obj, startOffset, endOffset)
+        util.drawOutline(x, y, width, height)
+
     def dumpContent(self, inputEvent, contents=None):
         """Dumps the document frame content to stdout."""
         if not contents:
             contents = self.getLinearizedContents()
         string = ""
+        extents = None
         for content in contents:
             [obj, startOffset, endOffset] = content
             if obj:
+                extents = self.getBoundary(
+                    self.getExtents(obj, startOffset, endOffset),
+                    extents)
                 if obj.text:
                     string += "[%s] text='%s' " % (obj.role,
                                                    self.getText(obj,
@@ -1176,16 +1381,7 @@ class Script(default.Script):
                 string += "\nNEWLINE\n"
         print "==========================="
         print string
-
-    def outlineExtents(self, obj, startOffset, endOffset):
-        if obj.text:
-            [x, y, width, height] = obj.text.getRangeExtents(
-                startOffset, endOffset, 0)
-            util.drawOutline(x, y, width, height)
-        else:
-            extents = obj.extents
-            util.drawOutline(extents.x, extents.y,
-                             extents.width, extents.height)
+        util.drawOutline(extents[0], extents[1], extents[2], extents[3])
 
     def goNextCharacter(self, inputEvent):
         [obj, characterOffset] = self.getCaretContext()
@@ -1234,20 +1430,15 @@ class Script(default.Script):
         # Find the beginning of the current word
         #
         [obj, characterOffset] = self.getCaretContext()
-        contents = self.getContentsAtOffset(\
-            obj,
-            characterOffset,
-            atspi.Accessibility.TEXT_BOUNDARY_WORD_START)
+        contents = self.getWordAtOffset(obj, characterOffset)
         [obj, startOffset, endOffset] = contents[0]
 
         # Now go to the beginning of the previous word
         #
         [obj, characterOffset] = self.getPreviousInOrder(obj, startOffset)
-        contents = self.getContentsAtOffset(\
-            obj,
-            characterOffset,
-            atspi.Accessibility.TEXT_BOUNDARY_WORD_START)
+        contents = self.getWordAtOffset(obj, characterOffset)
         [obj, startOffset, endOffset] = contents[0]
+        
         self.caretContext = [obj, startOffset]
 
         focusGrabbed = obj.component.grabFocus()
@@ -1260,26 +1451,19 @@ class Script(default.Script):
 
         # Debug stuff for now...
         #
-        self.outlineExtents(obj, startOffset, endOffset)
         self.dumpContent(None, contents)
 
     def goNextWord(self, inputEvent):
         # Find the beginning of the current word
         #
         [obj, characterOffset] = self.getCaretContext()
-        contents = self.getContentsAtOffset(\
-            obj,
-            characterOffset,
-            atspi.Accessibility.TEXT_BOUNDARY_WORD_START)
+        contents = self.getWordAtOffset(obj, characterOffset)
         [obj, startOffset, endOffset] = contents[0]
 
         # Now go to the beginning of the next word.
         #
         [obj, characterOffset] = self.getNextInOrder(obj, endOffset - 1)
-        contents = self.getContentsAtOffset(\
-            obj,
-            characterOffset,
-            atspi.Accessibility.TEXT_BOUNDARY_WORD_START)
+        contents = self.getWordAtOffset(obj, characterOffset)
         [obj, startOffset, endOffset] = contents[0]
 
         # [[[TODO: WDW - to be more like gedit, we should position the
@@ -1297,5 +1481,102 @@ class Script(default.Script):
 
         # Debug stuff for now...
         #
-        self.outlineExtents(obj, startOffset, endOffset)
         self.dumpContent(None, contents)
+
+    def goPreviousLine(self, inputEvent):
+        [obj, characterOffset] = self.getCaretContext()
+        lineExtents = self.getExtents(
+            obj, characterOffset, characterOffset + 1)
+        try:
+            characterExtents = self.targetCharacterExtents
+        except:
+            characterExtents = lineExtents
+
+        crossedLineBoundary = False
+        [lastObj, lastCharacterOffset] = [obj, characterOffset]
+        while obj:
+            [obj, characterOffset] = \
+                  self.getPreviousInOrder(obj, characterOffset)
+
+            extents = self.getExtents(
+                obj, characterOffset, characterOffset + 1)
+
+            if extents == (0, 0, 0, 0):
+                # [[[TODO: WDW - HACK.  I think we end up with a zero
+                # sized character when the accessible text implementation
+                # of Gecko gives us whitespace that is not visible, but
+                # is in the raw HTML source.  This should hopefully be
+                # fixed at some point, but we just ignore it for now.
+                #
+                pass
+            elif not self.onSameLine(extents, lineExtents):
+                if not crossedLineBoundary:
+                    lineExtents = extents
+                    crossedLineBoundary = True
+                else:
+                    break
+            elif crossedLineBoundary and (extents[0] <= characterExtents[0]):
+                break
+            else:
+                lineExtents = self.getBoundary(lineExtents, extents)
+                [lastObj, lastCharacterOffset] = [obj, characterOffset]
+
+        if not obj:
+            [obj, characterOffset] = [lastObj, lastCharacterOffset]
+            
+        self.caretContext = [obj, characterOffset]
+        
+        # Debug...
+        #
+        contents = self.getLineAtOffset(obj, characterOffset)
+        self.dumpContent(inputEvent, contents)
+        #self.outlineExtents(obj, characterOffset, characterOffset + 1)
+        
+    def goNextLine(self, inputEvent):
+        [obj, characterOffset] = self.getCaretContext()
+        lineExtents = self.getExtents(
+            obj, characterOffset, characterOffset + 1)
+        try:
+            characterExtents = self.targetCharacterExtents
+        except:
+            characterExtents = lineExtents
+
+        crossedLineBoundary = False
+        [lastObj, lastCharacterOffset] = [obj, characterOffset]
+        while obj:
+            [obj, characterOffset] = \
+                  self.getNextInOrder(obj, characterOffset)
+
+            extents = self.getExtents(
+                obj, characterOffset, characterOffset + 1)
+
+            if extents == (0, 0, 0, 0):
+                # [[[TODO: WDW - HACK.  I think we end up with a zero
+                # sized character when the accessible text implementation
+                # of Gecko gives us whitespace that is not visible, but
+                # is in the raw HTML source.  This should hopefully be
+                # fixed at some point, but we just ignore it for now.
+                #
+                pass
+            elif not self.onSameLine(extents, lineExtents):
+                if not crossedLineBoundary:
+                    lineExtents = extents
+                    crossedLineBoundary = True
+                else:
+                    break
+            elif crossedLineBoundary and (extents[0] >= characterExtents[0]):
+                break
+            else:
+                lineExtents = self.getBoundary(extents, lineExtents)
+                [lastObj, lastCharacterOffset] = [obj, characterOffset]
+
+        if not obj:
+            [obj, characterOffset] = [lastObj, lastCharacterOffset]
+            
+        self.caretContext = [obj, characterOffset]
+        
+        # Debug...
+        #
+        contents = self.getLineAtOffset(obj, characterOffset)
+        self.dumpContent(inputEvent, contents)
+        #self.outlineExtents(obj, characterOffset, characterOffset + 1)
