@@ -1,3 +1,9 @@
+2006-10-30  Rich Burridge <rich.burridge@sun.com>
+
+        * bugs/bugs.html:
+          Added in an entry for OpenOffice bug #71010:
+          [a11y] OOo doesn't implement the MEMBER_OF relation for radio buttons.
+
 2006-10-29  Mike Pedersen <michael.pedersen@sun.com> 
 
         * docs/doc-set/ue_requirements.sgml,
