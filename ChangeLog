@@ -1,3 +1,11 @@
+2006-10-31  Mike Pedersen <michael.pedersen@sun.com> 
+
+        * docs/doc-set/ue_requirements.sgml,
+        * docs/doc-set/orca.html,
+        * docs/doc-set/orca.pdf
+
+          Updates to specs
+
 2006-10-31  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py: more work on current/previous/next line for
