@@ -1,5 +1,9 @@
 2006-10-31  Willie Walker <william.walker@sun.com>
 
+	* src/orca/Gecko.py: more work on current/previous/next line for
+	tables.  Still has issues that need to be resolved regarding
+	numbered list items.
+	
 	* src/orca/Gecko.py: more work on current/previous/next line.
 	Still has issues that need to be resolved regarding tables.
 	

@@ -767,6 +767,15 @@ class Script(default.Script):
         Returns True if a and b are on the same line.
         """
 
+        # For now, we'll just take a look at the bottom of the
+        # area.  The code after this takes the whole extents into
+        # account, but that logic has issues in the case where we
+        # have something very tall next to lots of shorter lines
+        # (e.g., an image with lots of text to the left or right
+        # of it.
+        #
+        return abs(a[1] - b[1]) < 5
+
         highestBottom = min(a[1] + a[3], b[1] + b[3])
         lowestTop     = max(a[1],        b[1])
 
@@ -1291,11 +1300,18 @@ class Script(default.Script):
             extents = self.getExtents(
                 obj, characterOffset, characterOffset + 1)
 
-            if not self.onSameLine(extents, lineExtents):
-                break
-            else:
-                lineExtents = self.getBoundary(lineExtents, extents)
-                [lastObj, lastCharacterOffset] = [obj, characterOffset]
+            # [[[TODO: WDW - HACK.  I think we end up with a zero
+            # sized character when the accessible text implementation
+            # of Gecko gives us whitespace that is not visible, but
+            # is in the raw HTML source.  This should hopefully be
+            # fixed at some point, but we just ignore it for now.
+            #
+            if extents != (0, 0, 0, 0):
+                if not self.onSameLine(extents, lineExtents):
+                    break
+                else:
+                    lineExtents = self.getBoundary(lineExtents, extents)
+                    [lastObj, lastCharacterOffset] = [obj, characterOffset]
 
         # [[[TODO: WDW - efficiency alert - we could always start from
         # what was passed in rather than starting at the beginning of
@@ -1306,28 +1322,24 @@ class Script(default.Script):
             extents = self.getExtents(
                 obj, characterOffset, characterOffset + 1)
 
-            if extents == (0, 0, 0, 0):
-                # [[[TODO: WDW - HACK.  I think we end up with a zero
-                # sized character when the accessible text implementation
-                # of Gecko gives us whitespace that is not visible, but
-                # is in the raw HTML source.  This should hopefully be
-                # fixed at some point, but we just ignore it for now.
-                #
-                pass
-            elif not self.onSameLine(extents, lineExtents):
-                break
-            elif (lastObj == obj) and len(contents):
-                contents[-1][2] = characterOffset + 1
-            else:
-                contents.append([obj,
-                                 characterOffset,
-                                 characterOffset + 1])
-
+            # [[[TODO: WDW - HACK.  I think we end up with a zero
+            # sized character when the accessible text implementation
+            # of Gecko gives us whitespace that is not visible, but
+            # is in the raw HTML source.  This should hopefully be
+            # fixed at some point, but we just ignore it for now.
+            #
             if extents != (0, 0, 0, 0):
-                # [[[TODO: WDW - HACK.  See same reason as above.]]]
-                #
+                if not self.onSameLine(extents, lineExtents):
+                    break
+                elif (lastObj == obj) and len(contents):
+                    contents[-1][2] = characterOffset + 1
+                else:
+                    contents.append([obj,
+                                     characterOffset,
+                                     characterOffset + 1])
                 lineExtents = self.getBoundary(lineExtents, extents)
-            [lastObj, lastCharacterOffset] = [obj, characterOffset]
+                [lastObj, lastCharacterOffset] = [obj, characterOffset]
+
             [obj, characterOffset] = \
                   self.getNextInOrder(obj, characterOffset)
 
@@ -1420,12 +1432,12 @@ class Script(default.Script):
             if not caretSet:
                 print "CARET NOT SET", obj.role, characterOffset
         self.caretContext = [obj, characterOffset]
-        
+
     def goNextCharacter(self, inputEvent):
         """Positions the caret offset to the next character or object
         in the document window.
         """
-        
+
         [obj, characterOffset] = self.getCaretContext()
         while obj:
             [obj, characterOffset] = self.getNextInOrder(obj, characterOffset)
@@ -1484,7 +1496,7 @@ class Script(default.Script):
         """Positions the caret offset to the end of next word or object
         in the document window.
         """
-        
+
         # Find the beginning of the current word
         #
         [obj, characterOffset] = self.getCaretContext()
@@ -1518,16 +1530,16 @@ class Script(default.Script):
         except:
             characterExtents = lineExtents
 
-        print "GPL STARTING AT", obj.role, characterOffset
-        
+        #print "GPL STARTING AT", obj.role, characterOffset
+
         crossedLineBoundary = False
         [lastObj, lastCharacterOffset] = [obj, characterOffset]
         while obj:
             extents = self.getExtents(
                 obj, characterOffset, characterOffset + 1)
 
-            print "GPL LOOKING AT", obj.role, extents
-            
+            #print "GPL LOOKING AT", obj.role, extents
+
             # [[[TODO: WDW - HACK.  I think we end up with a zero
             # sized character when the accessible text implementation
             # of Gecko gives us whitespace that is not visible, but
@@ -1546,13 +1558,13 @@ class Script(default.Script):
                     break
                 else:
                     lineExtents = self.getBoundary(lineExtents, extents)
-                
+
                 [lastObj, lastCharacterOffset] = [obj, characterOffset]
 
             [obj, characterOffset] = \
                   self.getPreviousInOrder(obj, characterOffset)
 
-        print "GPL ENDED UP AT", lastObj.role, lineExtents
+        #print "GPL ENDED UP AT", lastObj.role, lineExtents
         self.setCaretPosition(lastObj, lastCharacterOffset)
 
         # Debug...
@@ -1573,16 +1585,16 @@ class Script(default.Script):
         except:
             characterExtents = lineExtents
 
-        print "GNL STARTING AT", obj.role, characterOffset
-        
+        #print "GNL STARTING AT", obj.role, characterOffset
+
         crossedLineBoundary = False
         [lastObj, lastCharacterOffset] = [obj, characterOffset]
         while obj:
             extents = self.getExtents(
                 obj, characterOffset, characterOffset + 1)
 
-            print "GNL LOOKING AT", obj.role, extents
-            
+            #print "GNL LOOKING AT", obj.role, extents
+
             # [[[TODO: WDW - HACK.  I think we end up with a zero
             # sized character when the accessible text implementation
             # of Gecko gives us whitespace that is not visible, but
@@ -1601,13 +1613,13 @@ class Script(default.Script):
                     break
                 else:
                     lineExtents = self.getBoundary(extents, lineExtents)
-                    
+
                 [lastObj, lastCharacterOffset] = [obj, characterOffset]
-                    
+
             [obj, characterOffset] = \
                   self.getNextInOrder(obj, characterOffset)
 
-        print "GNL ENDED UP AT", lastObj.role, lineExtents
+        #print "GNL ENDED UP AT", lastObj.role, lineExtents
         self.setCaretPosition(lastObj, lastCharacterOffset)
 
         # Debug...
