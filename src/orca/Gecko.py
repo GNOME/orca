@@ -552,7 +552,7 @@ class Script(default.Script):
 
         Returns [obj, characterOffset] that points to real content.
         """
-        
+
         if obj.text:
             character = self.getText(obj,
                                      characterOffset,
@@ -577,7 +577,7 @@ class Script(default.Script):
         interest.  If our current item doesn't implement the
         accessible text specialization, the characterOffset value
         is meaningless."""
-        
+
         self.caretContext = self.findCaretContext(\
             event.source,
             event.source.text.caretOffset)
@@ -595,7 +595,7 @@ class Script(default.Script):
                     self.getExtents(obj,
                                     characterOffset,
                                     characterOffset + 1)
-                
+
         orca.setLocusOfFocus(event, event.source, False)
         default.Script.onCaretMoved(self, event)
 
@@ -912,7 +912,7 @@ class Script(default.Script):
         """
 
         #print "GO NEXT", obj, obj.role, startOffset
-        
+
         if not obj:
             obj = self.getDocumentFrame()
 
@@ -933,13 +933,16 @@ class Script(default.Script):
             except:
                 debug.printException(debug.LEVEL_SEVERE)
         elif includeNonText and (startOffset < 0):
-            return [obj, 0]
+            extents = obj.extents
+            if (extents.width != 0) and (extents.height != 0):
+                return [obj, 0]
 
+        # If we're here, we need to start looking up the tree,
+        # going no higher than the document frame, of course.
+        #
         if obj.role == rolenames.ROLE_DOCUMENT_FRAME:
             return [None, -1]
 
-        # If we're here, we need to start looking up the tree
-        #
         while obj.parent and obj != obj.parent:
             characterOffsetInParent = self.getCharacterOffsetInParent(obj)
             if characterOffsetInParent >= 0:
@@ -1019,10 +1022,18 @@ class Script(default.Script):
             except:
                 debug.printException(debug.LEVEL_SEVERE)
         elif includeNonText and (startOffset < 0):
-            return [obj, 0]
+            extents = obj.extents
+            if (extents.width != 0) and (extents.height != 0):
+                return [obj, 0]
 
         # If we're here, we need to start looking up the tree
         #
+        # If we're here, we need to start looking up the tree,
+        # going no higher than the document frame, of course.
+        #
+        if obj.role == rolenames.ROLE_DOCUMENT_FRAME:
+            return [None, -1]
+
         while obj.parent and obj != obj.parent:
             characterOffsetInParent = self.getCharacterOffsetInParent(obj)
             if characterOffsetInParent >= 0:
@@ -1083,11 +1094,11 @@ class Script(default.Script):
             ext = obj.extents
             extents = [ext.x, ext.y, ext.width, ext.height]
         return extents
-    
+
     def getBoundary(self, a, b):
         """Returns the smallest [x, y, width, height] that encompasses
         both extents a and b.
-        
+
         Arguments:
         -a: [x, y, width, height]
         -b: [x, y, width, height]
@@ -1104,7 +1115,7 @@ class Script(default.Script):
                 smallestY1,
                 largestX2 - smallestX1,
                 largestY2 - smallestY1]
-    
+
     def getLinearizedContents(self):
         """Returns an ordered list where each element is composed of
         an [obj, startOffset, endOffset] tuple.  The list is created
@@ -1271,7 +1282,7 @@ class Script(default.Script):
 
         lineExtents = self.getExtents(
             obj, characterOffset, characterOffset + 1)
-        
+
         [lastObj, lastCharacterOffset] = [obj, characterOffset]
         while obj:
             [obj, characterOffset] = \
@@ -1355,11 +1366,24 @@ class Script(default.Script):
         return contents
 
     def outlineExtents(self, obj, startOffset, endOffset):
+        """Draws an outline around the given text for the object or the entire
+        object if it has no text.  This is for debug purposes only.
+
+        Arguments:
+        -obj: the object
+        -startOffset: character offset to start at
+        -endOffset: character offset just after last character to end at
+        """
         [x, y, width, height] = self.getExtents(obj, startOffset, endOffset)
         util.drawOutline(x, y, width, height)
 
     def dumpContent(self, inputEvent, contents=None):
-        """Dumps the document frame content to stdout."""
+        """Dumps the document frame content to stdout.
+
+        Arguments:
+        -inputEvent: the input event that caused this to be called
+        -contents: an ordered list of [obj, startOffset, endOffset] tuples
+        """
         if not contents:
             contents = self.getLinearizedContents()
         string = ""
@@ -1383,7 +1407,25 @@ class Script(default.Script):
         print string
         util.drawOutline(extents[0], extents[1], extents[2], extents[3])
 
+    def setCaretPosition(self, obj, characterOffset):
+        """Sets the caret position to the given character offset in the
+        given object.
+        """
+        focusGrabbed = obj.component.grabFocus()
+        if not focusGrabbed:
+            print "FOCUS NOT GRABBED", obj.role, characterOffset
+        character = self.getCharacterAtOffset(obj, characterOffset)
+        if character:
+            caretSet = obj.text.setCaretOffset(characterOffset)
+            if not caretSet:
+                print "CARET NOT SET", obj.role, characterOffset
+        self.caretContext = [obj, characterOffset]
+        
     def goNextCharacter(self, inputEvent):
+        """Positions the caret offset to the next character or object
+        in the document window.
+        """
+        
         [obj, characterOffset] = self.getCaretContext()
         while obj:
             [obj, characterOffset] = self.getNextInOrder(obj, characterOffset)
@@ -1392,19 +1434,15 @@ class Script(default.Script):
                 break
 
         if obj:
+            self.setCaretPosition(obj, characterOffset)
             self.outlineExtents(obj, characterOffset, characterOffset + 1)
-            focusGrabbed = obj.component.grabFocus()
-            if not focusGrabbed:
-                print "FOCUS NOT GRABBED"
-            character = self.getCharacterAtOffset(obj, characterOffset)
-            if character:
-                caretSet = obj.text.setCaretOffset(characterOffset)
-                if not caretSet:
-                    print "CARET NOT SET", obj.role, characterOffset
         else:
             del self.caretContext
 
     def goPreviousCharacter(self, inputEvent):
+        """Positions the caret offset to the previous character or object
+        in the document window.
+        """
         [obj, characterOffset] = self.getCaretContext()
         while obj:
             [obj, characterOffset] = self.getPreviousInOrder(obj,
@@ -1414,19 +1452,16 @@ class Script(default.Script):
                 break
 
         if obj:
+            self.setCaretPosition(obj, characterOffset)
             self.outlineExtents(obj, characterOffset, characterOffset + 1)
-            focusGrabbed = obj.component.grabFocus()
-            if not focusGrabbed:
-                print "FOCUS NOT GRABBED"
-            character = self.getCharacterAtOffset(obj, characterOffset)
-            if character:
-                caretSet = obj.text.setCaretOffset(characterOffset)
-                if not caretSet:
-                    print "CARET NOT SET", obj.role, characterOffset
         else:
             del self.caretContext
 
     def goPreviousWord(self, inputEvent):
+        """Positions the caret offset to beginning of the previous
+        word or object in the document window.
+        """
+
         # Find the beginning of the current word
         #
         [obj, characterOffset] = self.getCaretContext()
@@ -1438,22 +1473,18 @@ class Script(default.Script):
         [obj, characterOffset] = self.getPreviousInOrder(obj, startOffset)
         contents = self.getWordAtOffset(obj, characterOffset)
         [obj, startOffset, endOffset] = contents[0]
-        
-        self.caretContext = [obj, startOffset]
 
-        focusGrabbed = obj.component.grabFocus()
-        if not focusGrabbed:
-            print "FOCUS NOT GRABBED"
-        if obj.text:
-            caretSet = obj.text.setCaretOffset(startOffset)
-            if not caretSet:
-                print "CARET NOT SET", obj.role, startOffset
+        self.setCaretPosition(obj,  startOffset)
 
         # Debug stuff for now...
         #
         self.dumpContent(None, contents)
 
     def goNextWord(self, inputEvent):
+        """Positions the caret offset to the end of next word or object
+        in the document window.
+        """
+        
         # Find the beginning of the current word
         #
         [obj, characterOffset] = self.getCaretContext()
@@ -1469,21 +1500,16 @@ class Script(default.Script):
         # [[[TODO: WDW - to be more like gedit, we should position the
         # caret just after the last character of the word.]]]
         #
-        self.caretContext = [obj, startOffset]
-
-        focusGrabbed = obj.component.grabFocus()
-        if not focusGrabbed:
-            print "FOCUS NOT GRABBED"
-        if obj.text:
-            caretSet = obj.text.setCaretOffset(startOffset)
-            if not caretSet:
-                print "CARET NOT SET", obj.role, startOffset
+        self.setCaretPosition(obj,  startOffset)
 
         # Debug stuff for now...
         #
         self.dumpContent(None, contents)
 
     def goPreviousLine(self, inputEvent):
+        """Positions the caret offset to the next line in the document
+        window, attempting to preserve horizontal caret position.
+        """
         [obj, characterOffset] = self.getCaretContext()
         lineExtents = self.getExtents(
             obj, characterOffset, characterOffset + 1)
@@ -1492,47 +1518,53 @@ class Script(default.Script):
         except:
             characterExtents = lineExtents
 
+        print "GPL STARTING AT", obj.role, characterOffset
+        
         crossedLineBoundary = False
         [lastObj, lastCharacterOffset] = [obj, characterOffset]
         while obj:
+            extents = self.getExtents(
+                obj, characterOffset, characterOffset + 1)
+
+            print "GPL LOOKING AT", obj.role, extents
+            
+            # [[[TODO: WDW - HACK.  I think we end up with a zero
+            # sized character when the accessible text implementation
+            # of Gecko gives us whitespace that is not visible, but
+            # is in the raw HTML source.  This should hopefully be
+            # fixed at some point, but we just ignore it for now.
+            #
+            if extents != (0, 0, 0, 0):
+                if not self.onSameLine(extents, lineExtents):
+                    if not crossedLineBoundary:
+                        lineExtents = extents
+                        crossedLineBoundary = True
+                    else:
+                        break
+                elif crossedLineBoundary \
+                     and (extents[0] <= characterExtents[0]):
+                    break
+                else:
+                    lineExtents = self.getBoundary(lineExtents, extents)
+                
+                [lastObj, lastCharacterOffset] = [obj, characterOffset]
+
             [obj, characterOffset] = \
                   self.getPreviousInOrder(obj, characterOffset)
 
-            extents = self.getExtents(
-                obj, characterOffset, characterOffset + 1)
+        print "GPL ENDED UP AT", lastObj.role, lineExtents
+        self.setCaretPosition(lastObj, lastCharacterOffset)
 
-            if extents == (0, 0, 0, 0):
-                # [[[TODO: WDW - HACK.  I think we end up with a zero
-                # sized character when the accessible text implementation
-                # of Gecko gives us whitespace that is not visible, but
-                # is in the raw HTML source.  This should hopefully be
-                # fixed at some point, but we just ignore it for now.
-                #
-                pass
-            elif not self.onSameLine(extents, lineExtents):
-                if not crossedLineBoundary:
-                    lineExtents = extents
-                    crossedLineBoundary = True
-                else:
-                    break
-            elif crossedLineBoundary and (extents[0] <= characterExtents[0]):
-                break
-            else:
-                lineExtents = self.getBoundary(lineExtents, extents)
-                [lastObj, lastCharacterOffset] = [obj, characterOffset]
-
-        if not obj:
-            [obj, characterOffset] = [lastObj, lastCharacterOffset]
-            
-        self.caretContext = [obj, characterOffset]
-        
         # Debug...
         #
-        contents = self.getLineAtOffset(obj, characterOffset)
+        contents = self.getLineAtOffset(lastObj, lastCharacterOffset)
         self.dumpContent(inputEvent, contents)
-        #self.outlineExtents(obj, characterOffset, characterOffset + 1)
-        
+
     def goNextLine(self, inputEvent):
+        """Positions the caret offset to the previous line in the
+        document window, attempting to preserve horizontal caret
+        position.
+        """
         [obj, characterOffset] = self.getCaretContext()
         lineExtents = self.getExtents(
             obj, characterOffset, characterOffset + 1)
@@ -1541,42 +1573,44 @@ class Script(default.Script):
         except:
             characterExtents = lineExtents
 
+        print "GNL STARTING AT", obj.role, characterOffset
+        
         crossedLineBoundary = False
         [lastObj, lastCharacterOffset] = [obj, characterOffset]
         while obj:
-            [obj, characterOffset] = \
-                  self.getNextInOrder(obj, characterOffset)
-
             extents = self.getExtents(
                 obj, characterOffset, characterOffset + 1)
 
-            if extents == (0, 0, 0, 0):
-                # [[[TODO: WDW - HACK.  I think we end up with a zero
-                # sized character when the accessible text implementation
-                # of Gecko gives us whitespace that is not visible, but
-                # is in the raw HTML source.  This should hopefully be
-                # fixed at some point, but we just ignore it for now.
-                #
-                pass
-            elif not self.onSameLine(extents, lineExtents):
-                if not crossedLineBoundary:
-                    lineExtents = extents
-                    crossedLineBoundary = True
-                else:
-                    break
-            elif crossedLineBoundary and (extents[0] >= characterExtents[0]):
-                break
-            else:
-                lineExtents = self.getBoundary(extents, lineExtents)
-                [lastObj, lastCharacterOffset] = [obj, characterOffset]
-
-        if not obj:
-            [obj, characterOffset] = [lastObj, lastCharacterOffset]
+            print "GNL LOOKING AT", obj.role, extents
             
-        self.caretContext = [obj, characterOffset]
-        
+            # [[[TODO: WDW - HACK.  I think we end up with a zero
+            # sized character when the accessible text implementation
+            # of Gecko gives us whitespace that is not visible, but
+            # is in the raw HTML source.  This should hopefully be
+            # fixed at some point, but we just ignore it for now.
+            #
+            if extents != (0, 0, 0, 0):
+                if not self.onSameLine(extents, lineExtents):
+                    if not crossedLineBoundary:
+                        lineExtents = extents
+                        crossedLineBoundary = True
+                    else:
+                        break
+                elif crossedLineBoundary \
+                     and (extents[0] >= characterExtents[0]):
+                    break
+                else:
+                    lineExtents = self.getBoundary(extents, lineExtents)
+                    
+                [lastObj, lastCharacterOffset] = [obj, characterOffset]
+                    
+            [obj, characterOffset] = \
+                  self.getNextInOrder(obj, characterOffset)
+
+        print "GNL ENDED UP AT", lastObj.role, lineExtents
+        self.setCaretPosition(lastObj, lastCharacterOffset)
+
         # Debug...
         #
-        contents = self.getLineAtOffset(obj, characterOffset)
+        contents = self.getLineAtOffset(lastObj, lastCharacterOffset)
         self.dumpContent(inputEvent, contents)
-        #self.outlineExtents(obj, characterOffset, characterOffset + 1)
