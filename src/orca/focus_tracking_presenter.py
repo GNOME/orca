@@ -342,11 +342,16 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         # events and Orca attempts to process them.  We're not really
         # doing anything with tool tips right now, so we just ignore
         # them.  Note that this is just a bandaid to the problem.  We
-        # should do something better.]]]
+        # should do something better.  Please refer to bug 368626
+        # http://bugzilla.gnome.org/show_bug.cgi?id=368626 to follow
+        # this problem.]]]
         #
-        if event.source.role == rolenames.ROLE_TOOL_TIP:
-            return
-
+        try:
+            if event.source.role == rolenames.ROLE_TOOL_TIP:
+                return
+        except:
+            pass
+        
         # Reclaim (delete) any scripts when desktop children go away.
         # The idea here is that a desktop child is an app. We also
         # generally do not like object:children-changed:remove events,

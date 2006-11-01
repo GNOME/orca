@@ -767,14 +767,15 @@ class Script(default.Script):
         Returns True if a and b are on the same line.
         """
 
-        # For now, we'll just take a look at the bottom of the
-        # area.  The code after this takes the whole extents into
-        # account, but that logic has issues in the case where we
-        # have something very tall next to lots of shorter lines
-        # (e.g., an image with lots of text to the left or right
-        # of it.
+        # For now, we'll just take a look at the bottom of the area.
+        # The code after this takes the whole extents into account,
+        # but that logic has issues in the case where we have
+        # something very tall next to lots of shorter lines (e.g., an
+        # image with lots of text to the left or right of it.  The
+        # number 14 here represents something that seems to work well
+        # with superscripts and subscripts on a line.
         #
-        return abs(a[1] - b[1]) < 5
+        return abs(a[1] - b[1]) < 14
 
         highestBottom = min(a[1] + a[3], b[1] + b[3])
         lowestTop     = max(a[1],        b[1])
@@ -1423,11 +1424,21 @@ class Script(default.Script):
         """Sets the caret position to the given character offset in the
         given object.
         """
+        
+        # We'd like the thing to have focus if it can take focus.
+        #
         focusGrabbed = obj.component.grabFocus()
         if not focusGrabbed:
             print "FOCUS NOT GRABBED", obj.role, characterOffset
+
+        # If there is a character there, we'd like to position the
+        # caret the right spot.  [[[TODO: WDW - numbered lists are
+        # whacked in that setting the caret offset somewhere in
+        # the number will end up positioning the caret at the end
+        # of the list.]]]
+        #
         character = self.getCharacterAtOffset(obj, characterOffset)
-        if character:
+        if character and (obj.role != rolenames.ROLE_LIST_ITEM):
             caretSet = obj.text.setCaretOffset(characterOffset)
             if not caretSet:
                 print "CARET NOT SET", obj.role, characterOffset
