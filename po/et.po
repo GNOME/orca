@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: orca HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-09-06 17:15+0200\n"
-"PO-Revision-Date: 2006-10-17 12:28+0300\n"
+"PO-Revision-Date: 2006-10-29 00:40+0300\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -34,20 +34,19 @@ msgstr ""
 #: ../src/orca/braillegenerator.py:1096
 #: ../src/orca/J2SE-access-bridge.py:66
 #: ../src/orca/speechgenerator.py:1198
-#, fuzzy
 msgid "expanded"
-msgstr "Laiendatud"
+msgstr "laiendatud"
 
 #: ../src/orca/braillegenerator.py:1098
 #: ../src/orca/J2SE-access-bridge.py:69
 #: ../src/orca/speechgenerator.py:1200
 msgid "collapsed"
-msgstr ""
+msgstr "ahendatud"
 
 #: ../src/orca/braillegenerator.py:1102
-#, fuzzy, python-format
+#, python-format
 msgid "TREE LEVEL %d"
-msgstr "Suurendusaste"
+msgstr ""
 
 #: ../src/orca/chnames.py:32
 msgid "space"
@@ -308,29 +307,24 @@ msgid "Enters learn mode.  Press escape to exit learn mode."
 msgstr ""
 
 #: ../src/orca/default.py:194
-#, fuzzy
 msgid "Exits learn mode."
-msgstr "Täisekraanvaate lõpetamine"
+msgstr "Õppimisvaatest väljumine."
 
 #: ../src/orca/default.py:198
-#, fuzzy
 msgid "Decreases the speech rate."
-msgstr "Intressimäära arvutused"
+msgstr ""
 
 #: ../src/orca/default.py:202
-#, fuzzy
 msgid "Increases the speech rate."
-msgstr "Intressimäära arvutused"
+msgstr ""
 
 #: ../src/orca/default.py:206
-#, fuzzy
 msgid "Decreases the speech pitch."
-msgstr "Kõnemootorit pole võimalik lähtestada\n"
+msgstr ""
 
 #: ../src/orca/default.py:210
-#, fuzzy
 msgid "Increases the speech pitch."
-msgstr "Kõnemootorit pole võimalik lähtestada\n"
+msgstr ""
 
 #: ../src/orca/default.py:214
 msgid "Quits Orca"
@@ -341,18 +335,16 @@ msgid "Toggles keystroke recording on and off."
 msgstr ""
 
 #: ../src/orca/default.py:222
-#, fuzzy
 msgid "Displays the preferences configuration dialog."
-msgstr "Lähema teabe näitamine Seadistuste redaktori kohta"
+msgstr "Eelistuste määramise dialoogi kuvamine."
 
 #: ../src/orca/default.py:226
 msgid "Reloads user settings and reinitializes services as necessary."
-msgstr ""
+msgstr "Kasutaja sätete uuestilaadimine ja vajadusel teenuste taaslähtestamine."
 
 #: ../src/orca/default.py:230
-#, fuzzy
 msgid "Toggles the silencing of speech."
-msgstr "Määra kas operaatoreil lubatakse rääkida või mitte"
+msgstr ""
 
 #: ../src/orca/default.py:234
 msgid "Prints a debug listing of all known applications to the console where Orca is running."
@@ -380,35 +372,32 @@ msgstr ""
 
 #: ../src/orca/default.py:1067
 #: ../src/orca/default.py:1282
-#, fuzzy, python-format
+#, python-format
 msgid "tree level %d"
-msgstr "Suurendusaste"
+msgstr ""
 
 #: ../src/orca/default.py:1071
 #: ../src/orca/focus_tracking_presenter.py:639
-#, fuzzy
 msgid "No focus"
-msgstr "haara fookus"
+msgstr ""
 
 #: ../src/orca/default.py:1673
-#, fuzzy
 msgid "entire document selected"
-msgstr "Kogu dokumendi näitamine"
+msgstr "kogu dokument on valitud"
 
 #: ../src/orca/default.py:2121
-#, fuzzy
 msgid "Speak "
-msgstr "_Räägi uuesti"
+msgstr ""
 
 #: ../src/orca/default.py:2124
 msgid "row"
-msgstr ""
+msgstr "rida"
 
 #: ../src/orca/default.py:2126
 #: ../src/orca/rolenames.py:432
 #: ../src/orca/rolenames.py:434
 msgid "cell"
-msgstr ""
+msgstr "lahter"
 
 #: ../src/orca/default.py:2281
 msgid "Entering learn mode.  Press any key to hear its function. "
@@ -416,7 +405,7 @@ msgstr ""
 
 #: ../src/orca/default.py:2282
 msgid "To exit learn mode, press the escape key."
-msgstr ""
+msgstr "Õppimisrežiimist väljumiseks vajuta escape klahvi."
 
 #: ../src/orca/default.py:2283
 msgid "Learn mode.  Press escape to exit."
@@ -432,7 +421,6 @@ msgstr "Õppimisrežiimist väljumine."
 #: ../src/orca/default.py:2759
 #: ../src/orca/default.py:2831
 #: ../src/orca/default.py:2836
-#, fuzzy
 msgid "blank"
 msgstr "tühi"
 
@@ -442,14 +430,12 @@ msgid "white space"
 msgstr ""
 
 #: ../src/orca/espeechfactory.py:93
-#, fuzzy
 msgid "Emacspeak Speech Services"
-msgstr "Aktiivsed võrguteenused"
+msgstr "Emacspeak kõneteenused"
 
 #: ../src/orca/focus_tracking_presenter.py:734
-#, fuzzy
 msgid "Switching to focus tracking mode."
-msgstr "Click-to-focus annab klõpsu rakendusele edasi."
+msgstr ""
 
 #: ../src/orca/gnomespeechfactory.py:159
 msgid "GNOME Speech Services"
@@ -460,7 +446,7 @@ msgstr "GNOME kõneteenused"
 #: ../src/orca/gnomespeechfactory.py:610
 #: ../src/orca/gnomespeechfactory.py:611
 msgid " dot dot dot"
-msgstr ""
+msgstr " punkt punkt punkt"
 
 #: ../src/orca/gnomespeechfactory.py:770
 msgid "higher."
@@ -540,12 +526,10 @@ msgid "scroll lock"
 msgstr "scroll lock"
 
 #: ../src/orca/keynames.py:44
-#, fuzzy
 msgid "page up"
 msgstr "page up"
 
 #: ../src/orca/keynames.py:45
-#, fuzzy
 msgid "page down"
 msgstr "page down"
 
@@ -623,41 +607,36 @@ msgid ""
 msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:19
-#, fuzzy
 msgid "Enable Braille _monitor"
-msgstr "Süsteemijälgija eelistused"
+msgstr "Braille _jälgija on lubatud"
 
 #: ../src/orca/orca-setup.glade.h:20
-#, fuzzy
 msgid "Enable Braille _support"
-msgstr "Video tugi lubatud"
+msgstr "Braille _tugi on lubatud"
 
 #: ../src/orca/orca-setup.glade.h:21
 msgid "Enable _alphanumeric and punctuation keys"
 msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:22
-#, fuzzy
 msgid "Enable _function keys"
-msgstr "<b>Ae_glaste klahvide lubamine</b>"
+msgstr "_Funktsiooniklahvid on lubatud"
 
 #: ../src/orca/orca-setup.glade.h:23
 msgid "Enable _key echo"
-msgstr "_Klahvi kaja lubatud"
+msgstr "_Klahvi kaja on lubatud"
 
 #: ../src/orca/orca-setup.glade.h:24
 msgid "Enable _magnifier"
-msgstr "_Luup lubatud"
+msgstr "_Luup on lubatud"
 
 #: ../src/orca/orca-setup.glade.h:25
-#, fuzzy
 msgid "Enable _modifier keys"
-msgstr "<b>Ae_glaste klahvide lubamine</b>"
+msgstr "_Muuteklahvid on lubatud"
 
 #: ../src/orca/orca-setup.glade.h:26
-#, fuzzy
 msgid "Enable ac_tion keys"
-msgstr "<b>_Põrkeklahvide lubamine</b>"
+msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:27
 msgid "Enable c_ursor"
@@ -665,7 +644,7 @@ msgstr "_Kursor lubatud"
 
 #: ../src/orca/orca-setup.glade.h:28
 msgid "Enable cross-h_air"
-msgstr ""
+msgstr "Si_hik on lubatud"
 
 #: ../src/orca/orca-setup.glade.h:29
 msgid "Enable cross-hair cli_p"
@@ -687,15 +666,13 @@ msgid "In_vert colors"
 msgstr "_Pööra mask pahupidi"
 
 #: ../src/orca/orca-setup.glade.h:33
-#, fuzzy
 msgid "Key Echo"
-msgstr "Kaja komponent"
+msgstr "Klahvi kaja"
 
 #: ../src/orca/orca-setup.glade.h:34
 #: ../src/orca/orca_gui_prefs.py:1038
-#, fuzzy
 msgid "M_ost"
-msgstr "M_aksumus:"
+msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:35
 msgid "Magnifier"
@@ -825,7 +802,6 @@ msgid "_Right:"
 msgstr "_Parem:"
 
 #: ../src/orca/orca-setup.glade.h:64
-#, fuzzy
 msgid "_Smoothing:"
 msgstr "_Pehmendamine:"
 
@@ -1113,7 +1089,7 @@ msgstr "Vaikimisi"
 #: ../src/orca/orca_gui_prefs.py:529
 #, fuzzy
 msgid "Uppercase"
-msgstr "Kirjatäht, Väiketäht"
+msgstr "Suurtäht"
 
 #: ../src/orca/orca_gui_prefs.py:506
 #: ../src/orca/orca_gui_prefs.py:535
@@ -1133,12 +1109,10 @@ msgid "???"
 msgstr "???"
 
 #: ../src/orca/rolenames.py:148
-#, fuzzy
 msgid "Invalid"
 msgstr "Vigane"
 
 #: ../src/orca/rolenames.py:149
-#, fuzzy
 msgid "invalid"
 msgstr "vigane"
 
@@ -1148,11 +1122,11 @@ msgstr ""
 
 #: ../src/orca/rolenames.py:153
 msgid "Accelerator"
-msgstr ""
+msgstr "Kiirendi"
 
 #: ../src/orca/rolenames.py:154
 msgid "accelerator"
-msgstr ""
+msgstr "kiirendi"
 
 #: ../src/orca/rolenames.py:157
 #: ../src/orca/rolenames.py:159
@@ -1238,9 +1212,8 @@ msgid "CheckMenu"
 msgstr ""
 
 #: ../src/orca/rolenames.py:194
-#, fuzzy
 msgid "check menu"
-msgstr "märgitav menüükirje"
+msgstr ""
 
 #: ../src/orca/rolenames.py:197
 msgid "clrchsr"
@@ -1310,18 +1283,16 @@ msgstr "töölauaikoon"
 #: ../src/orca/rolenames.py:222
 #: ../src/orca/rolenames.py:264
 #: ../src/orca/rolenames.py:287
-#, fuzzy
 msgid "frame"
-msgstr "raam"
+msgstr ""
 
 #: ../src/orca/rolenames.py:223
 msgid "DesktopFrame"
 msgstr ""
 
 #: ../src/orca/rolenames.py:224
-#, fuzzy
 msgid "desktop frame"
-msgstr "töölaua raam"
+msgstr ""
 
 #: ../src/orca/rolenames.py:227
 #: ../src/orca/rolenames.py:229
@@ -1350,10 +1321,9 @@ msgstr ""
 
 #: ../src/orca/rolenames.py:238
 msgid "DirectoryPane"
-msgstr ""
+msgstr "KataloogiPaan"
 
 #: ../src/orca/rolenames.py:239
-#, fuzzy
 msgid "directory pane"
 msgstr "kataloogipaan"
 
@@ -1388,14 +1358,12 @@ msgid "flr"
 msgstr ""
 
 #: ../src/orca/rolenames.py:253
-#, fuzzy
 msgid "Filler"
-msgstr "täitja"
+msgstr ""
 
 #: ../src/orca/rolenames.py:254
-#, fuzzy
 msgid "filler"
-msgstr "täitja"
+msgstr ""
 
 #: ../src/orca/rolenames.py:257
 msgid "fnt"
@@ -1464,21 +1432,18 @@ msgid "InternalFrame"
 msgstr ""
 
 #: ../src/orca/rolenames.py:289
-#, fuzzy
 msgid "internal frame"
-msgstr "sisemine raam"
+msgstr ""
 
 #: ../src/orca/rolenames.py:292
 msgid "lbl"
 msgstr ""
 
 #: ../src/orca/rolenames.py:293
-#, fuzzy
 msgid "Label"
-msgstr "Pealdis"
+msgstr "Silt"
 
 #: ../src/orca/rolenames.py:294
-#, fuzzy
 msgid "label"
 msgstr "silt"
 
@@ -1488,10 +1453,9 @@ msgstr ""
 
 #: ../src/orca/rolenames.py:298
 msgid "LayeredPane"
-msgstr ""
+msgstr "KihilinePaan"
 
 #: ../src/orca/rolenames.py:299
-#, fuzzy
 msgid "layered pane"
 msgstr "kihiline paan"
 
@@ -1500,14 +1464,12 @@ msgid "lst"
 msgstr ""
 
 #: ../src/orca/rolenames.py:303
-#, fuzzy
 msgid "List"
-msgstr "Loend"
+msgstr "Loetelu"
 
 #: ../src/orca/rolenames.py:304
-#, fuzzy
 msgid "list"
-msgstr "nimekiri"
+msgstr "loetelu"
 
 #: ../src/orca/rolenames.py:307
 msgid "lstitm"
@@ -1518,9 +1480,8 @@ msgid "ListItem"
 msgstr ""
 
 #: ../src/orca/rolenames.py:309
-#, fuzzy
 msgid "list item"
-msgstr "nimekirja element"
+msgstr ""
 
 #: ../src/orca/rolenames.py:312
 msgid "mnu"
@@ -1539,12 +1500,10 @@ msgid "mnubr"
 msgstr ""
 
 #: ../src/orca/rolenames.py:318
-#, fuzzy
 msgid "MenuBar"
-msgstr "Näita m_enüüriba"
+msgstr "MenüüRiba"
 
 #: ../src/orca/rolenames.py:319
-#, fuzzy
 msgid "menu bar"
 msgstr "menüüriba"
 
@@ -1569,9 +1528,8 @@ msgid "OptionPane"
 msgstr ""
 
 #: ../src/orca/rolenames.py:329
-#, fuzzy
 msgid "option pane"
-msgstr "valikupaan"
+msgstr ""
 
 #: ../src/orca/rolenames.py:332
 #: ../src/orca/rolenames.py:334
@@ -1591,9 +1549,8 @@ msgid "TabList"
 msgstr ""
 
 #: ../src/orca/rolenames.py:339
-#, fuzzy
 msgid "tab list"
-msgstr "leheküljesakkide nimekiri"
+msgstr ""
 
 #: ../src/orca/rolenames.py:342
 msgid "pnl"
@@ -1656,9 +1613,8 @@ msgid "button"
 msgstr "nupp"
 
 #: ../src/orca/rolenames.py:367
-#, fuzzy
 msgid "radio"
-msgstr "Raadio"
+msgstr ""
 
 #: ../src/orca/rolenames.py:368
 msgid "RadioButton"
@@ -1677,9 +1633,8 @@ msgid "RadioItem"
 msgstr ""
 
 #: ../src/orca/rolenames.py:374
-#, fuzzy
 msgid "radio menu item"
-msgstr "raadionupuga menüülkirje"
+msgstr ""
 
 #: ../src/orca/rolenames.py:377
 msgid "rdmnu"
@@ -1690,9 +1645,8 @@ msgid "RadioMenu"
 msgstr ""
 
 #: ../src/orca/rolenames.py:379
-#, fuzzy
 msgid "radio menu"
-msgstr "raadionupuga menüülkirje"
+msgstr ""
 
 #: ../src/orca/rolenames.py:382
 msgid "rtpn"
@@ -1703,9 +1657,8 @@ msgid "RootPane"
 msgstr ""
 
 #: ../src/orca/rolenames.py:384
-#, fuzzy
 msgid "root pane"
-msgstr "põhipaan"
+msgstr ""
 
 #: ../src/orca/rolenames.py:387
 #: ../src/orca/rolenames.py:442
@@ -1715,11 +1668,10 @@ msgstr ""
 #: ../src/orca/rolenames.py:388
 #: ../src/orca/rolenames.py:443
 msgid "RowHeader"
-msgstr ""
+msgstr "ReaPäis"
 
 #: ../src/orca/rolenames.py:389
 #: ../src/orca/rolenames.py:444
-#, fuzzy
 msgid "row header"
 msgstr "rea päis"
 
@@ -1741,10 +1693,9 @@ msgstr ""
 
 #: ../src/orca/rolenames.py:398
 msgid "ScrollPane"
-msgstr ""
+msgstr "KerimisPaan"
 
 #: ../src/orca/rolenames.py:399
-#, fuzzy
 msgid "scroll pane"
 msgstr "kerimispaan"
 
@@ -1785,19 +1736,16 @@ msgid "split pane"
 msgstr "poolitamispaan"
 
 #: ../src/orca/rolenames.py:417
-#, fuzzy
 msgid "spin"
-msgstr "kerimisnupp"
+msgstr ""
 
 #: ../src/orca/rolenames.py:418
-#, fuzzy
 msgid "SpinButton"
-msgstr "Spinnerinupp uuendamiseks"
+msgstr ""
 
 #: ../src/orca/rolenames.py:419
-#, fuzzy
 msgid "spin button"
-msgstr "kerimisnupp"
+msgstr ""
 
 #: ../src/orca/rolenames.py:422
 msgid "statbr"
@@ -1875,9 +1823,8 @@ msgid "ToggleButton"
 msgstr ""
 
 #: ../src/orca/rolenames.py:464
-#, fuzzy
 msgid "toggle button"
-msgstr "Üma_rnurkne nupp..."
+msgstr ""
 
 #: ../src/orca/rolenames.py:467
 msgid "tbar"
@@ -1892,28 +1839,23 @@ msgid "tool bar"
 msgstr "tööriistariba"
 
 #: ../src/orca/rolenames.py:472
-#, fuzzy
 msgid "tip"
-msgstr "nõuanne"
+msgstr ""
 
 #: ../src/orca/rolenames.py:473
-#, fuzzy
 msgid "ToolTip"
-msgstr "Kohtspikker"
+msgstr "TööriistaVihje"
 
 #: ../src/orca/rolenames.py:474
-#, fuzzy
 msgid "tool tip"
 msgstr "tööriistavihje"
 
 #: ../src/orca/rolenames.py:477
 #: ../src/orca/rolenames.py:479
-#, fuzzy
 msgid "tree"
 msgstr "puu"
 
 #: ../src/orca/rolenames.py:478
-#, fuzzy
 msgid "Tree"
 msgstr "Puu"
 
@@ -1926,9 +1868,8 @@ msgid "TreeTable"
 msgstr ""
 
 #: ../src/orca/rolenames.py:484
-#, fuzzy
 msgid "tree table"
-msgstr "puutabel"
+msgstr ""
 
 #: ../src/orca/rolenames.py:487
 msgid "unk"
@@ -1947,14 +1888,12 @@ msgid "vwprt"
 msgstr ""
 
 #: ../src/orca/rolenames.py:493
-#, fuzzy
 msgid "Viewport"
-msgstr "Vaateava"
+msgstr ""
 
 #: ../src/orca/rolenames.py:494
-#, fuzzy
 msgid "viewport"
-msgstr "vaatepunkt"
+msgstr ""
 
 #: ../src/orca/rolenames.py:497
 msgid "wnd"
@@ -2005,9 +1944,8 @@ msgid "paragraph"
 msgstr "lõik"
 
 #: ../src/orca/rolenames.py:517
-#, fuzzy
 msgid "app"
-msgstr "Rakenduse ID"
+msgstr ""
 
 #: ../src/orca/rolenames.py:518
 msgid "Application"
@@ -2018,9 +1956,8 @@ msgid "application"
 msgstr "rakendus"
 
 #: ../src/orca/rolenames.py:522
-#, fuzzy
 msgid "auto"
-msgstr "Automaatne"
+msgstr ""
 
 #: ../src/orca/rolenames.py:523
 msgid "AutoComplete"
@@ -2036,10 +1973,9 @@ msgstr ""
 
 #: ../src/orca/rolenames.py:528
 msgid "EditBar"
-msgstr ""
+msgstr "RedigeerimisRiba"
 
 #: ../src/orca/rolenames.py:529
-#, fuzzy
 msgid "edit bar"
 msgstr "redigeerimisriba"
 
@@ -2049,12 +1985,11 @@ msgstr ""
 
 #: ../src/orca/rolenames.py:533
 msgid "EmbeddedComponent"
-msgstr ""
+msgstr "PõimitudKomponent"
 
 #: ../src/orca/rolenames.py:534
-#, fuzzy
 msgid "embedded component"
-msgstr "Komponendilehitseja"
+msgstr "põimitudkomponent"
 
 #: ../src/orca/scripts/Evolution.py:86
 msgid "calv"
@@ -2170,18 +2105,16 @@ msgid "Check Spelling"
 msgstr "Õigekirjakontroll"
 
 #: ../src/orca/scripts/StarOffice.py:243
-#, fuzzy
 msgid "Speaks the contents of the input line."
-msgstr "sisendi rida on liiga pikk"
+msgstr ""
 
 #: ../src/orca/scripts/StarOffice.py:283
 msgid "empty"
 msgstr "tühi"
 
 #: ../src/orca/scripts/StarOffice.py:424
-#, fuzzy
 msgid "Welcome to StarOffice"
-msgstr "_Vaikimisi: \"Tere tulemast arvutisse %n\""
+msgstr ""
 
 #: ../src/orca/scripts/StarOffice.py:552
 #: ../src/orca/scripts/StarOffice.py:801
@@ -2243,9 +2176,8 @@ msgid "Workspace "
 msgstr "Tööala"
 
 #: ../src/orca/scripts/metacity.py:113
-#, fuzzy
 msgid "inaccessible"
-msgstr "%s pole enam kasutatav"
+msgstr ""
 
 #: ../src/orca/scripts/planner.py:77
 #: ../src/orca/scripts/planner.py:135
@@ -2286,9 +2218,8 @@ msgid "not selected"
 msgstr "valimata"
 
 #: ../src/orca/speechgenerator.py:1260
-#, fuzzy
 msgid "tear off"
-msgstr "rebi-küljest menüüelement"
+msgstr ""
 
 #: ../src/orca/util.py:473
 msgid "Misspelled word: "
