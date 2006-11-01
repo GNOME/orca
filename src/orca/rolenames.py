@@ -281,9 +281,9 @@ rolenames[ROLE_GLASS_PANE] = Rolename(ROLE_GLASS_PANE,
                                       _("glass pane"))
 
 rolenames[ROLE_HEADING] = Rolename(ROLE_HEADING,
-                                   _("heading"),
+                                   _("hdng"),
                                    _("Heading"),
-                                   _("hdng"))
+                                   _("heading"))
 
 rolenames[ROLE_HTML_CONTAINER] = Rolename(ROLE_HTML_CONTAINER,
                                           _("html"),

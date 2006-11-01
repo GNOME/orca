@@ -1,5 +1,12 @@
 2006-11-01  Willie Walker <william.walker@sun.com>
 
+	* src/orca/rolenames.py: fix speech/braille for "heading" (the
+	two were accidentally swapped).
+	
+	* src/orca/Gecko.py: more work on navigating and trying to
+	figure out what to speak.  It's awful at the moment, both
+	in what is said and how the navigation works.
+	
 	* src/orca/Gecko.py: replace 'vi' style navigation of content 
 	with arrow keys.  NOTE TO ANYONE READING THIS LOG: SUPPORT FOR
 	GECKO IS STILL NOT WORKING AND IS NOT READY FOR COMMENT.  YOU

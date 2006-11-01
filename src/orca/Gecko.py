@@ -558,13 +558,13 @@ class Script(default.Script):
         consumes = False
         if user_bindings:
             handler = user_bindings.getInputHandler(keyboardEvent)
-            if handler._function in self._navigationFunctions:
+            if handler and handler._function in self._navigationFunctions:
                 return self.useOwnNavigationModel()
             else:
                 consumes = handler != None
         if not consumes:
             handler = self.keyBindings.getInputHandler(keyboardEvent)
-            if handler._function in self._navigationFunctions:
+            if handler and handler._function in self._navigationFunctions:
                 return self.useOwnNavigationModel()
             else:
                 consumes = handler != None
@@ -611,9 +611,15 @@ class Script(default.Script):
         accessible text specialization, the characterOffset value
         is meaningless."""
 
-        self.caretContext = self.findCaretContext(\
+        [obj, characterOffset] = self.findCaretContext(\
             event.source,
             event.source.text.caretOffset)
+
+        caretContext = self.getCaretContext()
+        if caretContext == [obj, characterOffset]:
+            return
+        else:
+            self.caretContext = [obj, characterOffset]
 
         # If the user presses left or right, we'll set the target
         # column for up/down navigation by line.
@@ -645,6 +651,9 @@ class Script(default.Script):
 
     def onFocus(self, event):
         #print "Gecko.onFocus"
+
+        if self.useOwnNavigationModel():
+            return
 
         # We're going to ignore focus events on the frame.  They
         # are often intermingled with menu activity, wreaking havoc
@@ -770,10 +779,13 @@ class Script(default.Script):
         we're in something like an entry area or a list because we
         want their keyboard navigation stuff to work.]]]
         """
+        letThemDoItRoles = [rolenames.ROLE_ENTRY]
         obj = orca_state.locusOfFocus
         while obj:
             if obj.role == rolenames.ROLE_DOCUMENT_FRAME:
                 return True
+            elif obj.role in letThemDoItRoles:
+                return False
             else:
                 obj = obj.parent
         return False
@@ -1247,6 +1259,34 @@ class Script(default.Script):
         else:
             return None
 
+    def presentString(self, obj, string, presentRole=False):
+        if not obj or (not string and not presentRole):
+            return
+        if obj.role == rolenames.ROLE_LINK:
+            voice = self.voices[settings.HYPERLINK_VOICE]
+        elif string and string.isupper():
+            voice = self.voices[settings.UPPERCASE_VOICE]
+        else:
+            voice = self.voices[settings.DEFAULT_VOICE]
+
+        if presentRole:
+            ignoreRoles = [rolenames.ROLE_DOCUMENT_FRAME,
+                           rolenames.ROLE_FORM,
+                           rolenames.ROLE_PARAGRAPH,
+                           rolenames.ROLE_SECTION,
+                           rolenames.ROLE_TABLE_CELL]
+            if not obj.role in ignoreRoles:
+                string += " " + rolenames.getSpeechForRoleName(obj)
+
+        if not len(string):
+            return
+
+        speech.speak(string, voice, False)
+
+    def presentCharacterAtOffset(self, obj, characterOffset):
+        self.presentString(obj,
+                           self.getCharacterAtOffset(obj, characterOffset))
+
     def getWordAtOffset(self, obj, characterOffset):
         """Returns an ordered list where each element is composed of
         an [obj, startOffset, endOffset] tuple.  The list is created
@@ -1313,6 +1353,19 @@ class Script(default.Script):
             contents[-1][2] = lastCharacterOffset + 1
 
         return contents
+
+    def presentWordAtOffset(self, obj, characterOffset):
+        contents = self.getWordAtOffset(obj, characterOffset)
+        if not len(contents):
+            return
+        [obj, startOffset, endOffset] = contents[0]
+        if not obj:
+            return
+        if obj.text:
+            string = self.getText(obj, startOffset, endOffset)
+        else:
+            string = obj.name
+        self.presentString(obj, string, True)
 
     def getLineAtOffset(self, obj, characterOffset):
         """Returns an ordered list where each element is composed of
@@ -1393,6 +1446,23 @@ class Script(default.Script):
 
         return contents
 
+    def presentLineAtOffset(self, obj, characterOffset):
+        contents = self.getLineAtOffset(obj, characterOffset)
+        if not len(contents):
+            return
+
+        for content in contents:
+            [obj, startOffset, endOffset] = content
+            if not obj:
+                continue
+
+            if obj.text:
+                string = self.getText(obj, startOffset, endOffset)
+            else:
+                string = obj.name
+
+            self.presentString(obj, string, True)
+
     def getContents(self):
         """Trivial debug utility to stringify the document contents
         showing on the screen."""
@@ -1472,6 +1542,12 @@ class Script(default.Script):
         given object.
         """
 
+        caretContext = self.getCaretContext()
+        if caretContext == [obj, characterOffset]:
+            return
+
+        self.caretContext = [obj, characterOffset]
+
         # We'd like the thing to have focus if it can take focus.
         #
         focusGrabbed = obj.component.grabFocus()
@@ -1484,15 +1560,14 @@ class Script(default.Script):
         # the number will end up positioning the caret at the end
         # of the list.]]]
         #
-        character = self.getCharacterAtOffset(obj, characterOffset)
-        if character:
-            if obj.role != rolenames.ROLE_LIST_ITEM:
-                caretSet = obj.text.setCaretOffset(characterOffset)
-            else:
-                caretSet = False
-            if not caretSet:
-                print "CARET NOT SET", obj.role, characterOffset
-        self.caretContext = [obj, characterOffset]
+        #character = self.getCharacterAtOffset(obj, characterOffset)
+        #if character:
+        #    if obj.role != rolenames.ROLE_LIST_ITEM:
+        #        caretSet = obj.text.setCaretOffset(characterOffset)
+        #    else:
+        #        caretSet = False
+        #    if not caretSet:
+        #        print "CARET NOT SET", obj.role, characterOffset
 
     def goNextCharacter(self, inputEvent):
         """Positions the caret offset to the next character or object
@@ -1508,9 +1583,10 @@ class Script(default.Script):
 
         if obj:
             self.setCaretPosition(obj, characterOffset)
-            self.outlineExtents(obj, characterOffset, characterOffset + 1)
         else:
             del self.caretContext
+
+        self.presentCharacterAtOffset(obj, characterOffset)
 
     def goPreviousCharacter(self, inputEvent):
         """Positions the caret offset to the previous character or object
@@ -1526,9 +1602,10 @@ class Script(default.Script):
 
         if obj:
             self.setCaretPosition(obj, characterOffset)
-            self.outlineExtents(obj, characterOffset, characterOffset + 1)
         else:
             del self.caretContext
+
+        self.presentCharacterAtOffset(obj, characterOffset)
 
     def goPreviousWord(self, inputEvent):
         """Positions the caret offset to beginning of the previous
@@ -1548,10 +1625,7 @@ class Script(default.Script):
         [obj, startOffset, endOffset] = contents[0]
 
         self.setCaretPosition(obj,  startOffset)
-
-        # Debug stuff for now...
-        #
-        self.dumpContent(None, contents)
+        self.presentWordAtOffset(obj, startOffset)
 
     def goNextWord(self, inputEvent):
         """Positions the caret offset to the end of next word or object
@@ -1574,10 +1648,7 @@ class Script(default.Script):
         # caret just after the last character of the word.]]]
         #
         self.setCaretPosition(obj,  startOffset)
-
-        # Debug stuff for now...
-        #
-        self.dumpContent(None, contents)
+        self.presentWordAtOffset(obj, startOffset)
 
     def goPreviousLine(self, inputEvent):
         """Positions the caret offset to the next line in the document
@@ -1627,6 +1698,7 @@ class Script(default.Script):
 
         #print "GPL ENDED UP AT", lastObj.role, lineExtents
         self.setCaretPosition(lastObj, lastCharacterOffset)
+        self.presentLineAtOffset(lastObj, lastCharacterOffset)
 
         # Debug...
         #
@@ -1682,6 +1754,7 @@ class Script(default.Script):
 
         #print "GNL ENDED UP AT", lastObj.role, lineExtents
         self.setCaretPosition(lastObj, lastCharacterOffset)
+        self.presentLineAtOffset(lastObj, lastCharacterOffset)
 
         # Debug...
         #
