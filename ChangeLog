@@ -1,8 +1,12 @@
 2006-11-01  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/Evolution.py:
-          Fixed bug #365939 – When reading the evolution messsage list, the 
+          Fixed bug #365939 - When reading the evolution messsage list, the 
           check boxes should be replaced with meaningful concise information.
+
+        * src/orca/settings.py:
+          Added line to map vte application to the gnome-terminal script
+          (see bug #353422).
 
 2006-11-01  Willie Walker <william.walker@sun.com>
 
