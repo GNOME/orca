@@ -337,6 +337,16 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
 
         debug.printObjectEvent(debug.LEVEL_FINEST, event)
 
+        # [[[TODO: WDW - HACK to prevent gnome-panel from killing
+        # itself.  It seems to do so after it issues some tool tip
+        # events and Orca attempts to process them.  We're not really
+        # doing anything with tool tips right now, so we just ignore
+        # them.  Note that this is just a bandaid to the problem.  We
+        # should do something better.]]]
+        #
+        if event.source.role == rolenames.ROLE_TOOL_TIP:
+            return
+
         # Reclaim (delete) any scripts when desktop children go away.
         # The idea here is that a desktop child is an app. We also
         # generally do not like object:children-changed:remove events,
