@@ -197,6 +197,10 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         #
         return [regions, regions[focusedRegionIndex]]
 
+    def getBrailleRegions(self, obj, groupChildren=True):
+        return braillegenerator.BrailleGenerator.getBrailleRegions(\
+            self, obj, groupChildren)
+
 ########################################################################
 #                                                                      #
 # Custom SpeechGenerator                                               #
@@ -417,6 +421,13 @@ class Script(default.Script):
     def __init__(self, app):
         #print "Gecko.__init__"
         default.Script.__init__(self, app)
+        self._navigationFunctions = \
+            [Script.goNextCharacter,
+             Script.goPreviousCharacter,
+             Script.goNextWord,
+             Script.goPreviousWord,
+             Script.goNextLine,
+             Script.goPreviousLine]
 
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.
@@ -487,55 +498,77 @@ class Script(default.Script):
 
         keyBindings.add(
             keybindings.KeyBinding(
-                "l",
-                (1 << settings.MODIFIER_ORCA \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << settings.MODIFIER_ORCA,
+                "Right",
+                1 << atspi.Accessibility.MODIFIER_CONTROL,
+                0,
                 self.inputEventHandlers["goNextCharacterHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
-                "h",
-                (1 << settings.MODIFIER_ORCA \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << settings.MODIFIER_ORCA,
+                "Left",
+                1 << atspi.Accessibility.MODIFIER_CONTROL,
+                0,
                 self.inputEventHandlers["goPreviousCharacterHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
-                "l",
-                (1 << settings.MODIFIER_ORCA \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                (1 << settings.MODIFIER_ORCA \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                "Right",
+                1 << atspi.Accessibility.MODIFIER_CONTROL,
+                1 << atspi.Accessibility.MODIFIER_CONTROL,
                 self.inputEventHandlers["goNextWordHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
-                "h",
-                (1 << settings.MODIFIER_ORCA \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                (1 << settings.MODIFIER_ORCA \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                "Left",
+                1 << atspi.Accessibility.MODIFIER_CONTROL,
+                1 << atspi.Accessibility.MODIFIER_CONTROL,
                 self.inputEventHandlers["goPreviousWordHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
-                "j",
-                (1 << settings.MODIFIER_ORCA \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << settings.MODIFIER_ORCA,
+                "Up",
+                0,
+                0,
                 self.inputEventHandlers["goPreviousLineHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
-                "k",
-                (1 << settings.MODIFIER_ORCA \
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << settings.MODIFIER_ORCA,
+                "Down",
+                0,
+                0,
                 self.inputEventHandlers["goNextLineHandler"]))
 
         return keyBindings
+
+    def consumesKeyboardEvent(self, keyboardEvent):
+        """Called when a key is pressed on the keyboard.
+
+        Arguments:
+        - keyboardEvent: an instance of input_event.KeyboardEvent
+
+        Returns True if the event is of interest.
+        """
+        user_bindings = None
+        user_bindings_map = settings.keyBindingsMap
+        if user_bindings_map.has_key(self.__module__):
+            user_bindings = user_bindings_map[self.__module__]
+        elif user_bindings_map.has_key("default"):
+            user_bindings = user_bindings_map["default"]
+
+        consumes = False
+        if user_bindings:
+            handler = user_bindings.getInputHandler(keyboardEvent)
+            if handler._function in self._navigationFunctions:
+                return self.useOwnNavigationModel()
+            else:
+                consumes = handler != None
+        if not consumes:
+            handler = self.keyBindings.getInputHandler(keyboardEvent)
+            if handler._function in self._navigationFunctions:
+                return self.useOwnNavigationModel()
+            else:
+                consumes = handler != None
+        return consumes
 
     def findCaretContext(self, obj, characterOffset):
         """Given an object and a character offset, find the first
@@ -730,6 +763,20 @@ class Script(default.Script):
     # Utility Methods                                                  #
     #                                                                  #
     ####################################################################
+
+    def useOwnNavigationModel(self):
+        """Returns True if the current locus of focus is in the
+        document content.  [[[TODO: WDW - this should return False if
+        we're in something like an entry area or a list because we
+        want their keyboard navigation stuff to work.]]]
+        """
+        obj = orca_state.locusOfFocus
+        while obj:
+            if obj.role == rolenames.ROLE_DOCUMENT_FRAME:
+                return True
+            else:
+                obj = obj.parent
+        return False
 
     def getDocumentFrame(self):
         """Returns the document frame that holds the content being shown."""
@@ -1424,7 +1471,7 @@ class Script(default.Script):
         """Sets the caret position to the given character offset in the
         given object.
         """
-        
+
         # We'd like the thing to have focus if it can take focus.
         #
         focusGrabbed = obj.component.grabFocus()
@@ -1438,8 +1485,11 @@ class Script(default.Script):
         # of the list.]]]
         #
         character = self.getCharacterAtOffset(obj, characterOffset)
-        if character and (obj.role != rolenames.ROLE_LIST_ITEM):
-            caretSet = obj.text.setCaretOffset(characterOffset)
+        if character:
+            if obj.role != rolenames.ROLE_LIST_ITEM:
+                caretSet = obj.text.setCaretOffset(characterOffset)
+            else:
+                caretSet = False
             if not caretSet:
                 print "CARET NOT SET", obj.role, characterOffset
         self.caretContext = [obj, characterOffset]
