@@ -1,3 +1,8 @@
+2006-11-01  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* POTFILES.in: Add encoding bits
+	* nb.po: Updated Norwegian bokmål translation.
+
 2006-10-22  Daniel Nylander <po@danielnylander.se>
 
 	* sv.po: Updated Swedish translation.
