@@ -544,6 +544,9 @@ class Script(default.Script):
                                 break
 
                     if toRead:
+                        obj = parent.table.getColumnHeader(i)
+                        header = atspi.Accessible.makeAccessible(obj)
+
                         # Speak/braille the column header for this table cell
                         # if it has focus (unless it's a checkbox).
                         if not checkbox and verbose:
@@ -552,8 +555,6 @@ class Script(default.Script):
                             settings.speechVerbosityLevel = \
                                 settings.VERBOSITY_LEVEL_BRIEF
 
-                            obj = parent.table.getColumnHeader(i)
-                            header = atspi.Accessible.makeAccessible(obj)
                             utterances = speechGen.getSpeech(header, False)
                             [headerRegions, focusedRegion] = \
                                          brailleGen.getBrailleRegions(header)
@@ -565,7 +566,12 @@ class Script(default.Script):
                             if speakAll or (column == i):
                                 speech.speakUtterances(utterances)
 
-                        # Speak/braille the table cell.
+                        # Speak/braille the table cell. 
+                        #
+                        # If this cell has a column header of "Status",
+                        # then speak/braille "read".
+                        # If this cell has a column header of "Attachment",
+                        # then speak/braille "attachment".
                         #
                         if verbose:
                             settings.brailleVerbosityLevel = \
@@ -578,8 +584,20 @@ class Script(default.Script):
                         utterances = speechGen.getSpeech(cell, False)
                         [cellRegions, focusedRegion] = \
                                            brailleGen.getBrailleRegions(cell)
-                        brailleRegions.extend(cellRegions)
-                        brailleRegions.append(braille.Region(" "))
+
+                        if header.name == _("Status"):
+                            text = _("Read")
+                            utterances = [ text ]
+                            brailleRegions.append(braille.Region(text))
+                            brailleRegions.append(braille.Region(" "))
+                        elif header.name == _("Attachment"):
+                            text = header.name
+                            utterances = [ text ]
+                            brailleRegions.append(braille.Region(text))
+                            brailleRegions.append(braille.Region(" "))
+                        else:
+                            brailleRegions.extend(cellRegions)
+                            brailleRegions.append(braille.Region(" "))
 
                         # If the current focus is on a checkbox then we won't
                         # have set braille line focus to its header above, so
