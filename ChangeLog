@@ -1,5 +1,8 @@
 2006-11-02  Willie Walker <william.walker@sun.com>
 
+	* bugs/*, test/html/bugzilla_top.html: add another HTML test
+	file and include some more bugs logged against Firefox.
+	
 	* test/html/textattributes.html, test/html/lists.html,
 	test/html/tables.html, test/html/htmlpage.html: some
 	testing pages.
