@@ -1,3 +1,12 @@
+2006-11-02  Willie Walker <william.walker@sun.com>
+
+	* test/html/textattributes.html, test/html/lists.html,
+	test/html/tables.html, test/html/htmlpage.html: some
+	testing pages.
+
+	* src/orca/Gecko.py: allow easy switching between 'vi' and
+	arrow key navigation.  Mostly for debugging purposes.
+	
 2006-11-02  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca.py:

@@ -481,20 +481,8 @@ class Script(default.Script):
                 Script.goPreviousLine,
                 "Goes to previous line.")
 
-    def getKeyBindings(self):
-        """Defines the key bindings for this script.
-
-        Returns an instance of keybindings.KeyBindings.
-        """
-
-        keyBindings = default.Script.getKeyBindings(self)
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "d",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
-                self.inputEventHandlers["dumpContentHandler"]))
+    def getArrowBindings(self):
+        keyBindings = keybindings.KeyBindings()
 
         keyBindings.add(
             keybindings.KeyBinding(
@@ -537,6 +525,83 @@ class Script(default.Script):
                 0,
                 0,
                 self.inputEventHandlers["goNextLineHandler"]))
+
+        return keyBindings
+
+    def getViBindings(self):
+        keyBindings = keybindings.KeyBindings()
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "l",
+                (1 << settings.MODIFIER_ORCA \
+                | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["goNextCharacterHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "h",
+                (1 << settings.MODIFIER_ORCA \
+                | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["goPreviousCharacterHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "l",
+                (1 << settings.MODIFIER_ORCA \
+                | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA \
+                | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                self.inputEventHandlers["goNextWordHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "h",
+                (1 << settings.MODIFIER_ORCA \
+                | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA \
+                | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                self.inputEventHandlers["goPreviousWordHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "j",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["goPreviousLineHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "k",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["goNextLineHandler"]))
+
+        return keyBindings
+
+    def getKeyBindings(self):
+        """Defines the key bindings for this script.
+
+        Returns an instance of keybindings.KeyBindings.
+        """
+
+        keyBindings = default.Script.getKeyBindings(self)
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "d",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["dumpContentHandler"]))
+
+        if True:
+            for keyBinding in self.getArrowBindings().keyBindings:
+                keyBindings.add(keyBinding)
+        else:
+            for keyBinding in self.getViBindings().keyBindings:
+                keyBindings.add(keyBinding)
 
         return keyBindings
 
