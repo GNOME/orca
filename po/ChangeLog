@@ -1,4 +1,8 @@
-2006-10-30  Djihed Afifi <djihed@gmail.com> 
+2006-11-02  Danilo Šegan  <danilo@gnome.org>
+
+	* POTFILES.in: Add 'encoding: UTF-8'.
+
+2006-10-30  Djihed Afifi <djihed@gmail.com>
 
 	* ar.po Added Arabic Translation.
 
