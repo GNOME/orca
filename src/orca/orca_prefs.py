@@ -289,9 +289,9 @@ def writePreferences(prefsDict):
     Returns True if accessibility was enabled as a result of this
     call."""
 
-    # Set up ~/.orca
+    # Set up the user's preferences directory (~/.orca by default).
     #
-    orcaDir = os.path.join(os.environ["HOME"], ".orca")
+    orcaDir = settings.userPrefsDir
     _createDir(orcaDir)
 
     # Set up ~/.orca/orca-scripts as a Python package

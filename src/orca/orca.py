@@ -1194,6 +1194,7 @@ def main():
     try:
         # ? is for help
         # h is for help
+        # u is for alternate user preferences location
         # s is for setup
         # n is for no setup
         # t is for text setup
@@ -1201,14 +1202,22 @@ def main():
         #
         opts, args = getopt.getopt(
             sys.argv[1:],
-            "?stnv",
+            "?u:stnv",
             ["help",
+             "user-prefs-dir",
              "setup",
              "gui-setup",
              "text-setup",
              "no-setup",
              "version"])
         for opt, val in opts:
+            if opt in ("-u", "--user-prefs-dir"):
+                userPrefsDir = val.strip();
+                try:
+                    os.chdir(userPrefsDir)
+                    settings.userPrefsDir = userPrefsDir
+                except:
+                    debug.printException(debug.LEVEL_FINEST)
             if opt in ("-s", "--gui-setup", "--setup"):
                 setupRequested = True
                 showGUI = desktopRunning
@@ -1245,7 +1254,7 @@ def main():
         print "environment variable has been set."
         return 1
 
-    userprefs = os.path.join(os.environ["HOME"], ".orca")
+    userprefs = settings.userPrefsDir
     sys.path.insert(0, userprefs)
     sys.path.insert(0, '') # current directory
 

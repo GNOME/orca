@@ -1,3 +1,11 @@
+2006-11-02  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca.py:
+          src/orca/orca_prefs.py:
+          src/orca/settings.py:
+          Fixed bug #337063 - Provide the ability to specify an alternate 
+          .orca location.
+
 2006-11-01  Willie Walker <william.walker@sun.com>
 
 	* src/orca/rolenames.py: fix speech/braille for "heading" (the

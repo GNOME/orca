@@ -27,6 +27,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import os
 import re
 import sys
 try:
@@ -359,6 +360,11 @@ cacheAccessibles        = True
 # and exit when you press escape.
 #
 learnModeEnabled        = False
+
+# The location of the user's preferences. By default this is ~/.orca.
+# It can be overridden by the Orca -d command line option.
+#
+userPrefsDir = os.path.join(os.environ["HOME"], ".orca")
 
 # If non-zero, we use time.sleep() in various places to attempt to
 # free up the global interpreter lock.  Take a look at the following
