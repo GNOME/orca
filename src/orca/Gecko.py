@@ -596,7 +596,7 @@ class Script(default.Script):
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["dumpContentHandler"]))
 
-        if True:
+        if False:
             for keyBinding in self.getArrowBindings().keyBindings:
                 keyBindings.add(keyBinding)
         else:
