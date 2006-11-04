@@ -341,6 +341,9 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             # We try to omit things like fillers off the bat...
             #
             if (parent.role == rolenames.ROLE_FILLER) \
+                or (parent.role == rolenames.ROLE_LIST_ITEM) \
+                or (parent.role == rolenames.ROLE_LIST) \
+                or (parent.role == rolenames.ROLE_PARAGRAPH) \
                 or (parent.role == rolenames.ROLE_SECTION) \
                 or (parent.role == rolenames.ROLE_LAYERED_PANE) \
                 or (parent.role == rolenames.ROLE_SPLIT_PANE) \
@@ -414,7 +417,7 @@ class Script(default.Script):
 
     ####################################################################
     #                                                                  #
-    # Standard Script Methods                                          #
+    # Overridden Script Methods                                        #
     #                                                                  #
     ####################################################################
 
@@ -481,7 +484,7 @@ class Script(default.Script):
                 Script.goPreviousLine,
                 "Goes to previous line.")
 
-    def getArrowBindings(self):
+    def __getArrowBindings(self):
         keyBindings = keybindings.KeyBindings()
 
         keyBindings.add(
@@ -528,41 +531,41 @@ class Script(default.Script):
 
         return keyBindings
 
-    def getViBindings(self):
+    def __getViBindings(self):
         keyBindings = keybindings.KeyBindings()
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "l",
-                (1 << settings.MODIFIER_ORCA \
-                | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["goNextCharacterHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "h",
-                (1 << settings.MODIFIER_ORCA \
-                | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["goPreviousCharacterHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "l",
-                (1 << settings.MODIFIER_ORCA \
-                | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                (1 << settings.MODIFIER_ORCA \
-                | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA | \
+                     1 << atspi.Accessibility.MODIFIER_CONTROL),
                 self.inputEventHandlers["goNextWordHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "h",
-                (1 << settings.MODIFIER_ORCA \
-                | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                (1 << settings.MODIFIER_ORCA \
-                | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA | \
+                     1 << atspi.Accessibility.MODIFIER_CONTROL),
                 self.inputEventHandlers["goPreviousWordHandler"]))
 
         keyBindings.add(
@@ -597,10 +600,10 @@ class Script(default.Script):
                 self.inputEventHandlers["dumpContentHandler"]))
 
         if False:
-            for keyBinding in self.getArrowBindings().keyBindings:
+            for keyBinding in self.__getArrowBindings().keyBindings:
                 keyBindings.add(keyBinding)
         else:
-            for keyBinding in self.getViBindings().keyBindings:
+            for keyBinding in self.__getViBindings().keyBindings:
                 keyBindings.add(keyBinding)
 
         return keyBindings
@@ -634,37 +637,6 @@ class Script(default.Script):
             else:
                 consumes = handler != None
         return consumes
-
-    def findCaretContext(self, obj, characterOffset):
-        """Given an object and a character offset, find the first
-        [obj, characterOffset] that is actually presenting something
-        on the display.  The reason we do this is that the
-        [obj, characterOffset] passed in may actually be pointing
-        to an embedded object character.  In those cases, we dig
-        into the hierarchy to find the 'real' thing.
-
-        Arguments:
-        -obj: an accessible object
-        -characterOffset: the offset of the character where to start
-        looking for real rext
-
-        Returns [obj, characterOffset] that points to real content.
-        """
-
-        if obj.text:
-            character = self.getText(obj,
-                                     characterOffset,
-                                     characterOffset + 1).decode("UTF-8")
-            if character == EMBEDDED_OBJECT_CHARACTER:
-                try:
-                    childIndex = self.getChildIndex(obj, characterOffset)
-                    return self.findCaretContext(obj.child(childIndex), 0)
-                except:
-                    return [obj, -1]
-            else:
-                return [obj, characterOffset]
-        else:
-            return [obj, -1]
 
     def onCaretMoved(self, event):
         """Caret movement in Gecko is somewhat unreliable and
@@ -832,6 +804,54 @@ class Script(default.Script):
                                                oldLocusOfFocus,
                                                newLocusOfFocus)
 
+    def sayCharacter(self, obj):
+        [obj, characterOffset] = self.getCaretContext()
+        if obj.text:
+            # [[[TODO: WDW - the caret might be at the end of the text.
+            # Not quite sure what to do in this case.  What we'll do here
+            # is just speak the previous character.  But...maybe we want to
+            # make sure we say something like "new line" or move the
+            # caret context to the beginning of the next character via
+            # a call to goNextWord.]]]
+            #
+            foo = self.getText(obj, 0, -1)
+            if characterOffset >= len(foo):
+                print "YIKES in Gecko.sayCharacter!"
+                characterOffset -= 1
+        self.presentCharacterAtOffset(obj, characterOffset)
+
+    def sayWord(self, obj):
+        [obj, characterOffset] = self.getCaretContext()
+        if obj.text:
+            # [[[TODO: WDW - the caret might be at the end of the text.
+            # Not quite sure what to do in this case.  What we'll do here
+            # is just speak the previous word.  But...maybe we want to
+            # make sure we say something like "new line" or move the
+            # caret context to the beginning of the next word via
+            # a call to goNextWord.]]]
+            #
+            foo = self.getText(obj, 0, -1)
+            if characterOffset >= len(foo):
+                print "YIKES in Gecko.sayWord!"
+                characterOffset -= 1
+        self.presentWordAtOffset(obj, characterOffset)
+
+    def sayLine(self, obj):
+        [obj, characterOffset] = self.getCaretContext()
+        if obj.text:
+            # [[[TODO: WDW - the caret might be at the end of the text.
+            # Not quite sure what to do in this case.  What we'll do here
+            # is just speak the current line.  But...maybe we want to
+            # make sure we say something like "new line" or move the
+            # caret context to the beginning of the next line via
+            # a call to goNextLine.]]]
+            #
+            foo = self.getText(obj, 0, -1)
+            if characterOffset >= len(foo):
+                print "YIKES in Gecko.sayLine!"
+                characterOffset -= 1
+        self.presentLineAtOffset(obj, characterOffset)
+
     ####################################################################
     #                                                                  #
     # Utility Methods                                                  #
@@ -844,6 +864,11 @@ class Script(default.Script):
         we're in something like an entry area or a list because we
         want their keyboard navigation stuff to work.]]]
         """
+        # [[[WDW - disable this for now to see how far we can take
+        # the Gecko navigation model.]]]
+        #
+        return False
+
         letThemDoItRoles = [rolenames.ROLE_ENTRY]
         obj = orca_state.locusOfFocus
         while obj:
@@ -1186,6 +1211,37 @@ class Script(default.Script):
             obj = obj.parent
 
         return [None, -1]
+
+    def findCaretContext(self, obj, characterOffset):
+        """Given an object and a character offset, find the first
+        [obj, characterOffset] that is actually presenting something
+        on the display.  The reason we do this is that the
+        [obj, characterOffset] passed in may actually be pointing
+        to an embedded object character.  In those cases, we dig
+        into the hierarchy to find the 'real' thing.
+
+        Arguments:
+        -obj: an accessible object
+        -characterOffset: the offset of the character where to start
+        looking for real rext
+
+        Returns [obj, characterOffset] that points to real content.
+        """
+
+        if obj.text:
+            character = self.getText(obj,
+                                     characterOffset,
+                                     characterOffset + 1).decode("UTF-8")
+            if character == EMBEDDED_OBJECT_CHARACTER:
+                try:
+                    childIndex = self.getChildIndex(obj, characterOffset)
+                    return self.findCaretContext(obj.child(childIndex), 0)
+                except:
+                    return [obj, -1]
+            else:
+                return [obj, characterOffset]
+        else:
+            return [obj, -1]
 
     def getCaretContext(self, includeNonText=True):
         """Returns the current [obj, caretOffset] if defined.  If not,

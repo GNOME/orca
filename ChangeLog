@@ -1,5 +1,10 @@
 2006-11-04  Willie Walker <william.walker@sun.com>
 
+	* src/orca/Gecko.py: provide say sayCharacter, sayWord, and sayLine
+	methods that deal better with the EMBEDDED_OBJECT_CHARACTER model
+	of Gecko.  Also add several roles to skip when getting the speech
+	context.  These include PARAGRAPH, LIST, LIST_ITEM, etc.
+	
 	* src/orca/default.py: use hyperlink voice if object is a link
 	(NOTE TO MIKE: I know you don't like this, and we have an RFE 
 	to not use the hyperlink voice.  However, we need to make sure
