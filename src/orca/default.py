@@ -948,7 +948,7 @@ class Script(script.Script):
             if lastChar == "\n" and (not lastWord == word):
                 voice = self.voices[settings.DEFAULT_VOICE]
                 speech.speak(chnames.getCharacterName("\n"), voice)
-                    
+
         if lastKey == "Left" and len(word) > 0:
             lastChar = word[len(word) - 1]
             if lastChar == "\n" and (not lastWord == word):
@@ -1121,15 +1121,15 @@ class Script(script.Script):
             prevChar = self.getText(obj, startOffset-1, endOffset-1)
 
             # We don't what to speak a newline before the cursor
-            # is on the next line. 
+            # is on the next line.
             if character == "\n" and (not prevChar == "\n"):
                 return
-            
+
             # If the previous character was a newline, the cursor
             # is now on the next line, so speak a newline.
             if prevChar == "\n":
                 voice = self.voices[settings.DEFAULT_VOICE]
-                speech.speak(chnames.getCharacterName("\n"), voice)            
+                speech.speak(chnames.getCharacterName("\n"), voice)
 
         speech.speak(character, voice)
         util.speakTextSelectionState(obj, startOffset, endOffset)
@@ -1465,7 +1465,13 @@ class Script(script.Script):
             shouldNotInterrupt = (event and event.type == "focus:") \
                 and self.windowActivateTime \
                 and ((time.time() - self.windowActivateTime) < 1.0)
-            speech.speakUtterances(utterances, None, not shouldNotInterrupt)
+
+            if newLocusOfFocus.role == rolenames.ROLE_LINK:
+                voice = self.voices[settings.HYPERLINK_VOICE]
+            else:
+                voice = self.voices[settings.DEFAULT_VOICE]
+
+            speech.speakUtterances(utterances, voice, not shouldNotInterrupt)
 
             # If this is a table cell, save the current row and column
             # information in the table cell's table, so that we can use

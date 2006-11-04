@@ -1,3 +1,11 @@
+2006-11-04  Willie Walker <william.walker@sun.com>
+
+	* src/orca/default.py: use hyperlink voice if object is a link
+	(NOTE TO MIKE: I know you don't like this, and we have an RFE 
+	to not use the hyperlink voice.  However, we need to make sure
+	we use it if it is defined.  When we address the RFE, we'll 
+	address this.)
+	
 2006-11-03  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/gcalctool.py:
