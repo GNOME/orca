@@ -1,3 +1,105 @@
+2.17.2 - 05-Nov-2006
+
+* Updates to requirements and specifications documents.
+
+* Fair amount of work on Gecko.py script, though it is not at all ready 
+  for compelling access to Firefox (and hence the web) yet.  Also did 
+  a fair amount of work looking at flat review and filing a number of
+  bugs against the AT-SPI implementation in progress in Firefox 3.
+
+* Fix for bug 369292: gcalctool now speaks the new result when
+  the "=" button is activated.
+
+* Fix for bug 337063: Orca now supports an alternate .orca location via
+  the -u and --user-prefs-dir command line options.
+	
+* Fix for bug 365939: reading of message list in Evolution now provides
+  more concise information for check box items.
+
+* For for bug 353422: Mapped vte application to gnome-terminal script and
+  also fixed the "backspace" problem in gnome-terminal.
+
+* Workaround for bug 368626: prevent gnome-panel from crashing and add
+  some defensive code to work in the case where there is no event
+  source in an at-spi event.
+
+* Fix for bug 338838: Orca now speaks "newline" only when moving by 
+  character or word.
+
+* Fix for bug 358467: Orca now reads check items status 
+  in "Users and groups" dialog of users-admin application. 
+
+* Fix for bug 355733: SayAll function now works better for OpenOffice.
+
+* Fix for bug 364086: Orca no longer reports "paragraph 0 paragraph"
+  when you begin typing in a OpenOffice Calc cell.
+	
+* Fix for bug 363801: Orca provides confirmation when dynamic row and/or
+  column headers are set.  In addition, column numbers in OpenOffice
+  Calc are now spoken as column letters.
+
+* Fix for bug 363807: Orca now reports the number of items in a table.
+
+* Fix for bug 321184: Orca now supports a custom pronunciation dictionary.
+
+* Fix for bug 363802: Orca no longer says "cell" when navigating from
+  cell to cell in OpenOffice Calc.
+
+* Fix for bug 363796: Second press of a letter in learn mode now provides
+  the phonetic ("military") spelling of the letter.
+
+* Fix for bug 355525: Orca handled EMBEDDED_OBJECT_CHARACTERs in text
+  better.
+
+* Fix for bug 357063: If there are a bunch of repeated characters
+  (like the greater thans) on a line that also has text, Orca respects the
+  punctuation settings in Orca.  But, if the repeated characters are on
+  a line by themselves (i.e.  30 greater thans, nothing else), Orca
+  indicates their presence ("30 greater than characters") regardless
+  of the level of punctuation.
+
+* Fix for bug 344249: Orca reports menu mnemonics as part of the
+  "Where am I" functionality.
+
+* Fix for bug 348975: the state for radio buttons is now spoken prior
+  to the role.
+	
+* Fix for bug 363423: Orca now speaks the "Applications" menu if it is
+  brought up while the focus is in a GAIM chat window.
+
+* Fix for bug 349956: Orca no longer causes the gedit Print Dialog to slow
+  down.
+
+* Fix for bug 361624: Flat review no longer fails to move to second
+  column of text in OOo Writer documents.
+
+* Fix for bug 357829: Use real active descendant of a table cell when
+  looking for locus of focus in flat review.
+	
+* Fix for bug 341406: Orca now presents results when finding files.
+
+* Fix for bug 319783: Orca now speaks/brailles the insensitive states
+  of objects if they are insensitive.
+
+* Fix for bug 338111: Use new BrlAPI Python bindings if they exist. 
+
+* Fix for bug 348693: Announcement of new mail in Evolution is now
+  toggleable via Insert-m.
+
+* Fix for bug 361670: flat review no longer fails after minimizing the 
+  Orca main window.
+
+* Fix for bug 355893: Network Preferences "Port" label is now reported
+  by Orca.
+
+* New and updated translations (THANKS!):
+
+    et      Estonian             Ivar Smolin and Priit Laes
+    nb      Norwegian Bokmål     Kjartan Maraas
+    sv	    Swedish		 Daniel Nylander
+
+==========
+
 2.17.1 - 14-Oct-2006
 
 * Implemented RFE 361167: add use of Insert+r and Insert+c as a means
