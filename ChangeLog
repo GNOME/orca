@@ -1,3 +1,8 @@
+2006-11-06  Willie Walker <william.walker@sun.com>
+
+	* docs/doc-set/ue_requirements.sgml: SGML-ize the "Where am I"
+	and Firefox sections.
+	
 2006-11-05  Willie Walker <william.walker@sun.com>
 
         * src/orca/Gecko.py, src/orca/braille.py, src/orca/default.py,
