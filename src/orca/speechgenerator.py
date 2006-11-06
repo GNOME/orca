@@ -52,7 +52,7 @@ class SpeechGenerator:
         # script for information if we need it.
         #
         self._script = script
-        
+
         # Set up a dictionary that maps role names to functions
         # that generate speech for objects that implement that role.
         #
@@ -782,7 +782,7 @@ class SpeechGenerator:
                 utterances.append(obj.name)
         utterances.extend(self._getSpeechForObjectRole(obj))
 
-        [text, startOffset, endOffset] = util.getTextLineAtCaret(obj)
+        [text, caretOffset, startOffset] = util.getTextLineAtCaret(obj)
         utterances.append(text)
 
         self._debugGenerator("_getSpeechForText",
@@ -1230,7 +1230,7 @@ class SpeechGenerator:
                         showing = cell.state.count( \
                                           atspi.Accessibility.STATE_SHOWING)
                         if showing:
-                            utterances.extend(self._getSpeechForTableCell(cell, 
+                            utterances.extend(self._getSpeechForTableCell(cell,
                                                            already_focused))
                 else:
                     utterances.extend(self._getSpeechForTableCell(obj,
@@ -1342,7 +1342,7 @@ class SpeechGenerator:
             checkedState = _("pressed")
         else:
             checkedState = _("not pressed")
-            
+
         # If it's not already focused, say it's name
         #
         if not already_focused:

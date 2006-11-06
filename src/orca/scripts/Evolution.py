@@ -383,11 +383,12 @@ class Script(default.Script):
                           + "current message pane: " \
                           + "individual lines of text.")
 
-            result = util.getTextLineAtCaret(event.source)
-            braille.displayMessage(result[0])
+            [string, caretOffset, startOffset] = \
+                util.getTextLineAtCaret(event.source)
+            braille.displayMessage(string)
             if settings.enableSpeechIndentation:
-                self.speakTextIndentation(event.source, result[0])
-            line = util.adjustForRepeats(result[0])
+                self.speakTextIndentation(event.source, string)
+            line = util.adjustForRepeats(string)
             speech.speak(line)
             return
 
@@ -436,8 +437,9 @@ class Script(default.Script):
 
                     if cell.role == rolenames.ROLE_TEXT:
                         regions.append(braille.Text(cell))
-                        result = util.getTextLineAtCaret(cell)
-                        utterances.append(result[0])
+                        [string, caretOffset, startOffset] = \
+                            util.getTextLineAtCaret(cell)
+                        utterances.append(string)
 
                 braille.displayRegions([regions, regions[0]])
                 speech.speakUtterances(utterances)
@@ -566,7 +568,7 @@ class Script(default.Script):
                             if speakAll or (column == i):
                                 speech.speakUtterances(utterances)
 
-                        # Speak/braille the table cell. 
+                        # Speak/braille the table cell.
                         #
                         # If this cell has a column header of "Status",
                         # then speak/braille "read".

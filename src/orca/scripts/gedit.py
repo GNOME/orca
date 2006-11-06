@@ -192,7 +192,7 @@ class Script(default.Script):
             self.lastEventType = event.type
 
     def isFocusOnFindDialog(self):
-        """Return an indication of whether the current locus of focus is on 
+        """Return an indication of whether the current locus of focus is on
         the Find button or the combo box in the Find dialog.
         """
 
@@ -346,7 +346,7 @@ class Script(default.Script):
         # 2) find dialog - phrase not found.
         #
         # If we've received an "object:property-change:accessible-name" for
-        # the status bar and the current locus of focus is on the Find 
+        # the status bar and the current locus of focus is on the Find
         # button on the Find dialog or the combo box in the Find dialog
         # and the last input event was a Return and the name for the current
         # event source is "Phrase not found", then speak it.
@@ -406,9 +406,9 @@ class Script(default.Script):
 
         # If we've received a text caret moved event and the current locus
         # of focus is on the Find button on the Find dialog or the combo
-        # box in the Find dialog and the last input event was a Return, 
+        # box in the Find dialog and the last input event was a Return,
         # and if the current line contains the phrase we were looking for,
-        # then speak the current text line, to give an indication of what 
+        # then speak the current text line, to give an indication of what
         # we've just found.
         #
         if self.isFocusOnFindDialog() \
@@ -418,14 +418,14 @@ class Script(default.Script):
             allComboBoxes = util.findByRole(orca_state.locusOfFocus.app,
                                             rolenames.ROLE_COMBO_BOX)
             phrase = util.getDisplayedText(allComboBoxes[0])
-            [text, start, end] = util.getTextLineAtCaret(event.source)
+            [text, caretOffset, startOffset] = \
+                util.getTextLineAtCaret(event.source)
             if text.lower().find(phrase) != -1:
                 speech.speak(_("Phrase found."))
                 utterances = self.speechGenerator.getSpeech(event.source, True)
                 speech.speakUtterances(utterances)
 
-        # For everything else, pass the caret moved event onto the parent 
+        # For everything else, pass the caret moved event onto the parent
         # class to be handled in the default way.
 
         default.Script.onCaretMoved(self, event)
-

@@ -343,9 +343,8 @@ class Text(Region):
         True.  Otherwise, return False.
         """
 
-        result = util.getTextLineAtCaret(self.accessible)
-        caretOffset = result[1]
-        lineOffset = result[2]
+        [string, caretOffset, lineOffset] = \
+                 util.getTextLineAtCaret(self.accessible)
         cursorOffset = caretOffset - lineOffset
         if self.label:
             cursorOffset += len(self.label.decode("UTF-8")) + 1

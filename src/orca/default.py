@@ -905,7 +905,7 @@ class Script(script.Script):
 
         # Get the AccessibleText interface of the provided object
         #
-        [line, startOffset, endOffset] = util.getTextLineAtCaret(obj)
+        [line, caretOffset, startOffset] = util.getTextLineAtCaret(obj)
 
         if len(line):
             if line.isupper():
@@ -917,7 +917,7 @@ class Script(script.Script):
                 self.speakTextIndentation(obj, line)
             line = util.adjustForRepeats(line)
             speech.speak(line, voice)
-            util.speakTextSelectionState(obj, startOffset, endOffset)
+            util.speakTextSelectionState(obj, caretOffset, startOffset)
 
     def sayWord(self, obj):
         """Speaks the word at the caret.  [[[TODO: WDW - what if there is no

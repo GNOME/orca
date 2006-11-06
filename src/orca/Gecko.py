@@ -243,7 +243,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
         utterances.extend(self._getSpeechForObjectRole(obj))
 
-        [text, startOffset, endOffset] = util.getTextLineAtCaret(obj)
+        [text, caretOffset, startOffset] = util.getTextLineAtCaret(obj)
         utterances.append(text)
 
         self._debugGenerator("Gecko._getSpeechForText",

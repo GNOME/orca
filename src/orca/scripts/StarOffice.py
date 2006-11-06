@@ -184,8 +184,8 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         if isSpreadSheetCell(obj):
 
             # Check to see if this spread sheet cell has either a dynamic
-            # column heading or row heading (or both) associated with it. 
-            # If it does, then braille those first before brailling the 
+            # column heading or row heading (or both) associated with it.
+            # If it does, then braille those first before brailling the
             # cell contents.
             #
             table = getCalcTable(obj)
@@ -485,7 +485,7 @@ class Script(default.Script):
         # Used to determine whether the caret has moved to a new paragraph.
         #
         self.currentParagraph = None
-        
+
 
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.
@@ -617,7 +617,7 @@ class Script(default.Script):
         return column
 
     def setDynamicColumnHeaders(self, inputEvent):
-        """Set the row for the dynamic header columns to use when speaking 
+        """Set the row for the dynamic header columns to use when speaking
         calc cell entries. In order to set the row, the user should first set
         focus to the row that they wish to define and then press Insert-r.
 
@@ -679,9 +679,9 @@ class Script(default.Script):
         return res
 
     def setDynamicRowHeaders(self, inputEvent):
-        """Set the column for the dynamic header rows to use when speaking 
-        calc cell entries. In order to set the column, the user should first 
-        set focus to the column that they wish to define and then press 
+        """Set the column for the dynamic header rows to use when speaking
+        calc cell entries. In order to set the column, the user should first
+        set focus to the column that they wish to define and then press
         Insert-c.
 
         Once the user has defined the column, it will be used to first speak
@@ -921,8 +921,8 @@ class Script(default.Script):
         # paragraph, then we've just created the first new text document
         # in Writer. Announce it by doing a "where am I".
         #
-        # Also, when the focus is on a paragraph in the Document view of 
-        # the Writer, then just speak/braille the current line (rather than 
+        # Also, when the focus is on a paragraph in the Document view of
+        # the Writer, then just speak/braille the current line (rather than
         # speaking a bogus initial "paragraph" utterance as well).
 
         rolesList = [rolenames.ROLE_PARAGRAPH, \
@@ -1227,7 +1227,7 @@ class Script(default.Script):
            event.source != self.currentParagraph:
             self.currentParagraph = event.source
             return
-                        
+
         default.Script.onStateChanged(self, event)
 
 

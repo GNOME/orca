@@ -289,7 +289,7 @@ def __getDisplayedTextInComboBox(combo):
             textObj = child
 
     if textObj:
-        [displayedText, startOffset, endOffset] = getTextLineAtCaret(textObj)
+        [displayedText, caretOffset, startOffset] = getTextLineAtCaret(textObj)
         #print "TEXTOBJ", displayedText
     else:
         selectedItem = None
@@ -312,7 +312,8 @@ def __getDisplayedTextInComboBox(combo):
             displayedText = combo.name
             #print "NAME", displayedText
         elif combo.text:
-            [displayedText, startOffset, endOffset] = getTextLineAtCaret(combo)
+            [displayedText, caretOffset, startOffset] = \
+                getTextLineAtCaret(combo)
             #print "TEXT", displayedText
 
     return displayedText
@@ -779,7 +780,8 @@ def getTextLineAtCaret(obj):
     - obj: an Accessible object that implements the AccessibleText
            interface
 
-    Returns the line of text where the caret is.
+    Returns the [string, caretOffset, startOffset] for the line of text
+    where the caret is.
     """
 
     # Get the the AccessibleText interrface
@@ -790,19 +792,16 @@ def getTextLineAtCaret(obj):
 
     # Get the line containing the caret
     #
-    offset = text.caretOffset
-    line = text.getTextAtOffset(offset,
-                                atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+    [string, startOffset, endOffset] = text.getTextAtOffset(
+        text.caretOffset, atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
 
-    # Line is actually a list of objects-- the first is the actual
-    # text of the line, the second is the start offset, and the third
-    # is the end offset.  Sometimes we get the trailing line-feed-- remove it
+    # Sometimes we get the trailing line-feed-- remove it
     #
-    content = line[0].decode("UTF-8")
+    content = string.decode("UTF-8")
     if content[-1:] == "\n":
         content = content[:-1]
 
-    return [content.encode("UTF-8"), offset, line[1]]
+    return [content.encode("UTF-8"), text.caretOffset, startOffset]
 
 def getNodeLevel(obj):
     """Determines the node level of this object if it is in a tree
