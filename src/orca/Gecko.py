@@ -648,6 +648,10 @@ class Script(default.Script):
         accessible text specialization, the characterOffset value
         is meaningless."""
 
+        if not self.useOwnNavigationModel():
+            default.Script.onCaretMoved(self, event)
+            return
+        
         [obj, characterOffset] = self.findCaretContext(\
             event.source,
             event.source.text.caretOffset)
