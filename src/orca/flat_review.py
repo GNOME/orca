@@ -803,6 +803,7 @@ class Context:
         # accessible.
         #
         if (accessible.role != rolenames.ROLE_COMBO_BOX) \
+            and (accessible.role != rolenames.ROLE_EMBEDDED) \
             and (accessible.role != rolenames.ROLE_MENU) \
             and accessible.childCount > 0:
             pass
@@ -953,6 +954,7 @@ class Context:
         #
         if (root.parent and (root.parent.role == rolenames.ROLE_MENU_BAR)) \
            or (root.role == rolenames.ROLE_COMBO_BOX) \
+           or (root.role == rolenames.ROLE_EMBEDDED) \
            or (root.role == rolenames.ROLE_TEXT):
             return self.getZonesFromAccessible(root, root.extents)
 
