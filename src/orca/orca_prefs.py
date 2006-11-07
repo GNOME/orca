@@ -302,6 +302,14 @@ def writePreferences(prefsDict):
     if not os.path.exists(initFile):
         os.close(os.open(initFile, os.O_CREAT, 0700))
 
+    # Set up ~/.orca/app-settings as a Python package.
+    #
+    orcaSettingsDir = os.path.join(orcaDir, "app-settings")
+    _createDir(orcaSettingsDir)
+    initFile = os.path.join(orcaSettingsDir, "__init__.py")
+    if not os.path.exists(initFile):
+        os.close(os.open(initFile, os.O_CREAT, 0700))
+
     # Write ~/.orca/user-settings.py
     #
     prefs = open(os.path.join(orcaDir, "user-settings.py"), "w")

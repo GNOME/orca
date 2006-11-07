@@ -68,6 +68,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         #
         self.registry        = atspi.Registry()
         self._knownScripts   = {}
+        self._knownAppSettings = {}
         self._eventQueue     = Queue.Queue(0)
         self._gidleId        = 0
         self._gidleLock      = threading.Lock()
@@ -296,6 +297,44 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
 
     ########################################################################
     #                                                                      #
+    # METHODS FOR KEEPING TRACK OF APPLICATION SETTINGS.                   #
+    #                                                                      #
+    ########################################################################
+
+    def loadAppSettings(self, app):
+        """Load the users application specific settings for an app.
+
+        Arguments:
+        - app: the Python app
+        """
+
+        settingsPackages = settings.settingsPackages
+        moduleName = settings.getScriptModuleName(app)
+        module = None
+
+        if moduleName and len(moduleName):
+            for package in settingsPackages:
+                if len(package):
+                    name = package + "." + moduleName
+                else:
+                    name = moduleName
+                try:
+                    debug.println(debug.LEVEL_FINEST,
+                                  "Looking for settings at %s.py..." % name)
+                    if self. _knownAppSettings.has_key(name):
+                        reload(self._knownAppSettings[name])
+                    else:
+                        self._knownAppSettings[name] = \
+                            __import__(name, globals(), locals(), [''])
+                    debug.println(debug.LEVEL_FINEST,
+                                  "...found %s.py" % name)
+                    break
+                except ImportError:
+                    debug.println(debug.LEVEL_FINEST,
+                                  "...could not find %s.py" % name)
+
+    ########################################################################
+    #                                                                      #
     # METHODS FOR PRE-PROCESSING AND MASSAGING AT-SPI OBJECT EVENTS        #
     # for processing by the rest of Orca.                                  #
     #                                                                      #
@@ -437,7 +476,24 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                         debug.println(debug.LEVEL_FINE, "ACTIVE SCRIPT: " \
                                       + orca_state.activeScript.name)
                     s = self._getScript(event.source.app)
+
+                    # If this is the active script (or we want to present
+                    # if inactive), save existing application specific 
+                    # settings and load in the application specific settings 
+                    # for the app for this event (if found).
+                    #
+                    if orca_state.activeScript == s or s.presentIfInactive:
+                        oldAppSettings = util.saveOldAppSettings()
+                        appSettings = self.loadAppSettings(event.source.app)
+
                     s.processObjectEvent(event)
+
+                    # If this is the active script (or we want to present
+                    # if inactive), restore previous settings.
+                    #
+                    if orca_state.activeScript == s or s.presentIfInactive:
+                        util.restoreOldAppSettings(oldAppSettings)
+
                     if retryCount:
                         debug.println(debug.LEVEL_WARNING,
                                       "  SUCCEEDED AFTER %d TRIES" % retryCount)

@@ -41,6 +41,7 @@ import atspi
 import chnames
 import debug
 import input_event
+import orca_prefs
 import orca_state
 import phonnames
 import punctuation_settings
@@ -1186,6 +1187,23 @@ def findActiveWindow():
                 debug.printException(debug.LEVEL_FINEST)
 
     return window
+
+def saveOldAppSettings():
+    """Save a copy of all the existing application specific settings
+    (as specified by the settings.userCustomizableSettings dictionary)."""
+
+    return orca_prefs.readPreferences()
+
+def restoreOldAppSettings(prefsDict):
+    """Restore a copy of all the previous saved application settings.
+
+    Arguments:
+    - prefsDict: the dictionary containing the old application settings.
+    """
+
+    for key in settings.userCustomizableSettings:
+        if prefsDict.has_key(key):
+            settings.__dict__[key] = prefsDict[key]
 
 ########################################################################
 #                                                                      #

@@ -416,6 +416,14 @@ commFailureAttemptLimit = 5
 doubleClickTimeout = 0.5
 
 # Which packages to search, and the order in which to search,
+# for application settings.  These packages are expected to be on
+# the PYTHONPATH and/or subpackages of the "orca" package.
+# REMEMBER: to make something a package, the directory has to
+# have a __init__.py file in it.
+#
+settingsPackages          = ["app-settings"]
+
+# Which packages to search, and the order in which to search,
 # for custom scripts.  These packages are expected to be on
 # the PYTHONPATH and/or subpackages of the "orca" package.
 # REMEMBER: to make something a package, the directory has to
