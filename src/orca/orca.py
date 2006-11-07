@@ -25,6 +25,15 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+# We're going to force the name of the app to "orca" so pygtk
+# will end up showing us as "orca" to the AT-SPI.  If we don't
+# do this, the name can end up being "-c".  See bug 364452 at
+# http://bugzilla.gnome.org/show_bug.cgi?id=364452 for more
+# information.
+#
+import sys
+sys.argv[0] = "orca"
+
 try:
     # This can fail due to gtk not being available.  We want to
     # be able to recover from that if possible.  The main driver
@@ -39,7 +48,6 @@ import getopt
 import os
 import signal
 import string
-import sys
 import time
 
 import atspi
