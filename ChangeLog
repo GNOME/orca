@@ -1,3 +1,15 @@
+2006-11-08  Rich Burridge <rich.burridge@sun.com>
+
+        * bugs/bugs.html:
+          Added entries for two new OpenOffice simpress bugs:
+          - Issue # 71354
+            [a11y] No apparent way to keyboard navigate to list of 
+            Presentation [Backgrounds] in Presentation Wizard.
+
+          - Issue # 71355
+            [a11y] No "focus" event given when going from the first to 
+            the second screen in the Presentation wizard.
+
 2006-11-08  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py: a little more work regarding when to take
