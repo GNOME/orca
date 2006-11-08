@@ -1722,6 +1722,17 @@ class Script(script.Script):
            and (event.source == orca_state.locusOfFocus):
             return
 
+        # We do this because we can get name change events even if the
+        # name doesn't change.  [[[TODO: WDW - I'm hesitant to rip the
+        # above TODO out, though, because it's been in here for so long.]]]
+        #
+        try:
+            if event.source.oldName == event.source.name:
+                return
+        except:
+            pass
+
+        event.source.oldName = event.source.name
         orca.visualAppearanceChanged(event, event.source)
 
     def _presentTextAtNewCaretPosition(self, event):

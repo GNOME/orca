@@ -1,3 +1,10 @@
+2006-11-08  Willie Walker <william.walker@sun.com>
+
+	* src/orca/default.py: add defensive code to not announce name
+	changes for objects who tell us their name has changed, but it
+	really hasn't.  This represents the Orca-side of the fix for
+	http://bugzilla.gnome.org/show_bug.cgi?id=353432.
+	
 2006-11-08  Rich Burridge <rich.burridge@sun.com>
 
         * bugs/bugs.html:
