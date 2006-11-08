@@ -8,14 +8,17 @@
 2006-11-08  Rich Burridge <rich.burridge@sun.com>
 
         * bugs/bugs.html:
-          Added entries for two new OpenOffice simpress bugs:
-          - Issue # 71354
+          Added entries for three new OpenOffice bugs:
+          - Issue #71354 (Presentation):
             [a11y] No apparent way to keyboard navigate to list of 
             Presentation [Backgrounds] in Presentation Wizard.
 
-          - Issue # 71355
+          - Issue #71355 (Presentation):
             [a11y] No "focus" event given when going from the first to 
             the second screen in the Presentation wizard.
+
+          - Issue #71360 (Word Processor):
+            [a11y] Unable to detect misspelled words.
 
         * src/orca/focus_tracking_presenter.py:
           More work on bug #363815 - Implement the ability to have 
