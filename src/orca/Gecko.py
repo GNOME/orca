@@ -42,8 +42,18 @@ import util
 
 from orca_i18n import _
 
-# Embedded object character used to indicate that an object is
+# An embedded object character used to indicate that an object is
 # embedded in a string.
+#
+# DETAIL: If an object presents text, it implements the accessible
+# text interface.  If an object has children that also present
+# information, then the accessible text for the object contains one
+# EMBEDDED_OBJECT_CHARACTER for each child, where the
+# EMBEDDED_OBJECT_CHARACTER represents the position of the child's
+# text in the object and the order of the EMBEDDED_OBJECT_CHARACTERs
+# represent the order of the children (i.e., the first
+# EMBEDDED_OBJECT_CHARACTER represents child 0, the next
+# EMBEDDED_OBJECT_CHARACTER represents child 1, and so on.)
 #
 EMBEDDED_OBJECT_CHARACTER = u'\ufffc'
 
@@ -422,7 +432,6 @@ class Script(default.Script):
     ####################################################################
 
     def __init__(self, app):
-        #print "Gecko.__init__"
         default.Script.__init__(self, app)
         self._navigationFunctions = \
             [Script.goNextCharacter,
@@ -485,6 +494,10 @@ class Script(default.Script):
                 "Goes to previous line.")
 
     def __getArrowBindings(self):
+        """Returns an instance of keybindings.KeyBindings that use the
+        arrow keys for navigating HTML content.
+        """
+
         keyBindings = keybindings.KeyBindings()
 
         keyBindings.add(
@@ -532,6 +545,10 @@ class Script(default.Script):
         return keyBindings
 
     def __getViBindings(self):
+        """Returns an instance of keybindings.KeyBindings that use vi
+        editor-style keys for navigating HTML content.
+        """
+
         keyBindings = keybindings.KeyBindings()
 
         keyBindings.add(
@@ -599,6 +616,10 @@ class Script(default.Script):
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["dumpContentHandler"]))
 
+        # [[[TODO: WDW - probably should make the choice of bindings a
+        # setting and more customizable.  For now, it's just
+        # experimental, so we hardcode things here.]]]
+        #
         if False:
             for keyBinding in self.__getArrowBindings().keyBindings:
                 keyBindings.add(keyBinding)
@@ -646,24 +667,24 @@ class Script(default.Script):
         points to our current item and character (if applicable) of
         interest.  If our current item doesn't implement the
         accessible text specialization, the characterOffset value
-        is meaningless."""
+        is meaningless (and typically -1)."""
 
-        if not self.useOwnNavigationModel():
-            default.Script.onCaretMoved(self, event)
-            return
-        
-        [obj, characterOffset] = self.findCaretContext(\
+        self.caretContext = self.findCaretContext(\
             event.source,
             event.source.text.caretOffset)
+        [obj, characterOffset] = self.caretContext
 
-        caretContext = self.getCaretContext()
-        if caretContext == [obj, characterOffset]:
+        if not self.useOwnNavigationModel():
+            orca.setLocusOfFocus(event, event.source, False)
+            default.Script.onCaretMoved(self, event)
             return
-        else:
-            self.caretContext = [obj, characterOffset]
 
         # If the user presses left or right, we'll set the target
-        # column for up/down navigation by line.
+        # column for up/down navigation by line.  [[[TODO: WDW - this
+        # should be bound more to the navigation function versus the
+        # key that was pressed.  For example, if the vi editor-style
+        # keys were used to move the caret, we should manage that as
+        # well.]]]
         #
         if isinstance(orca_state.lastInputEvent,
                       input_event.KeyboardEvent):
@@ -691,11 +712,6 @@ class Script(default.Script):
         return
 
     def onFocus(self, event):
-        #print "Gecko.onFocus"
-
-        if self.useOwnNavigationModel():
-            return
-
         # We're going to ignore focus events on the frame.  They
         # are often intermingled with menu activity, wreaking havoc
         # on the context.
@@ -808,7 +824,77 @@ class Script(default.Script):
                                                oldLocusOfFocus,
                                                newLocusOfFocus)
 
+    def updateBraille(self, obj, extraRegion=None):
+        """Updates the braille display to show the give object.
+
+        Arguments:
+        - obj: the Accessible
+        - extra: extra Region to add to the end
+        """
+
+        """Speaks the character at the current caret position."""
+
+        # We need to handle HTML content differently because of the
+        # EMBEDDED_OBJECT_CHARACTER model of Gecko.  For all other
+        # things, however, we can defer to the default scripts.
+        #
+        if not self.inDocumentContent():
+            default.Script.updateBraille(self, obj, extraRegion)
+            return
+
+        if not obj:
+            return
+
+        braille.clear()
+        line = braille.Line()
+        braille.addLine(line)
+
+        [focusedObj, focusedCharacterOffset] = self.getCaretContext()
+        contents = self.getLineAtOffset(focusedObj, focusedCharacterOffset)
+        if not len(contents):
+            return
+
+        focusedRegion = None
+        for content in contents:
+            [obj, startOffset, endOffset] = content
+            if not obj:
+                continue
+
+            if obj.text:
+                string = self.getText(obj, startOffset, endOffset)
+                if obj == focusedObj:
+                    region = braille.Region(
+                        string,
+                        focusedCharacterOffset - startOffset)
+                    if (focusedCharacterOffset >= startOffset) \
+                       and (focusedCharacterOffset < endOffset):
+                        focusedRegion = region
+                else:
+                    region = braille.Region(string)
+            else:
+                region = braille.Region(obj.name)
+                if obj == focusedObj:
+                    focusedRegion = region
+
+            line.addRegion(region)
+
+        if extraRegion:
+            line.addRegion(extraRegion)
+
+        braille.setFocus(focusedRegion)
+        braille.refresh(True)
+
     def sayCharacter(self, obj):
+        """Speaks the character at the current caret position."""
+
+        # We need to handle HTML content differently because of the
+        # EMBEDDED_OBJECT_CHARACTER model of Gecko.  For all other
+        # things, however, we can defer to the default scripts.
+        #
+        if not self.inDocumentContent():
+            default.Script.sayCharacter(self, obj)
+            return
+
         [obj, characterOffset] = self.getCaretContext()
         if obj.text:
             # [[[TODO: WDW - the caret might be at the end of the text.
@@ -822,9 +908,20 @@ class Script(default.Script):
             if characterOffset >= len(foo):
                 print "YIKES in Gecko.sayCharacter!"
                 characterOffset -= 1
+
         self.presentCharacterAtOffset(obj, characterOffset)
 
     def sayWord(self, obj):
+        """Speaks the word at the current caret position."""
+
+        # We need to handle HTML content differently because of the
+        # EMBEDDED_OBJECT_CHARACTER model of Gecko.  For all other
+        # things, however, we can defer to the default scripts.
+        #
+        if not self.inDocumentContent():
+            default.Script.sayWord(self, obj)
+            return
+
         [obj, characterOffset] = self.getCaretContext()
         if obj.text:
             # [[[TODO: WDW - the caret might be at the end of the text.
@@ -838,9 +935,20 @@ class Script(default.Script):
             if characterOffset >= len(foo):
                 print "YIKES in Gecko.sayWord!"
                 characterOffset -= 1
+
         self.presentWordAtOffset(obj, characterOffset)
 
     def sayLine(self, obj):
+        """Speaks the line at the current caret position."""
+
+        # We need to handle HTML content differently because of the
+        # EMBEDDED_OBJECT_CHARACTER model of Gecko.  For all other
+        # things, however, we can defer to the default scripts.
+        #
+        if not self.inDocumentContent():
+            default.Script.sayLine(self, obj)
+            return
+
         [obj, characterOffset] = self.getCaretContext()
         if obj.text:
             # [[[TODO: WDW - the caret might be at the end of the text.
@@ -862,12 +970,25 @@ class Script(default.Script):
     #                                                                  #
     ####################################################################
 
-    def useOwnNavigationModel(self):
+    def inDocumentContent(self):
         """Returns True if the current locus of focus is in the
-        document content.  [[[TODO: WDW - this should return False if
-        we're in something like an entry area or a list because we
-        want their keyboard navigation stuff to work.]]]
+        document content.
         """
+        obj = orca_state.locusOfFocus
+        while obj:
+            if obj.role == rolenames.ROLE_DOCUMENT_FRAME:
+                return True
+            else:
+                obj = obj.parent
+        return False
+
+    def useOwnNavigationModel(self):
+        """Returns True if we should do our own caret navigation.
+        [[[TODO: WDW - this should return False if we're in something
+        like an entry area or a list because we want their keyboard
+        navigation stuff to work.]]]
+        """
+
         # [[[WDW - disable this for now to see how far we can take
         # the Gecko navigation model.]]]
         #
@@ -1054,24 +1175,6 @@ class Script(default.Script):
         nodes like check boxes, combo boxes, etc.
 
         Returns [obj, characterOffset] or [None, -1]
-
-        DETAIL: If an object presents text, it implements the
-        accessible text interface.  If an object has children that
-        also present text, then the accessible text for the object
-        contains one EMBEDDED_OBJECT_CHARACTER for each child, where
-        the EMBEDDED_OBJECT_CHARACTER represents the position of the
-        child's text in the object and the order of the
-        EMBEDDED_OBJECT_CHARACTERs represent the order of the children
-        (i.e., the first EMBEDDED_OBJECT_CHARACTER represents child 0,
-        the next EMBEDDED_OBJECT_CHARACTER represents child 1, and so
-        on.)
-
-        So...we keep track of our current position in a page by
-        managing a caret context, which is tuple that consists of an
-        Accessible object in the document frame and our caret offset
-        in that object.  If an object does not support the accessible
-        text specialization, the meaning of caret offset value is
-        undefined (but is typically -1).
         """
 
         #print "GO NEXT", obj, obj.role, startOffset
@@ -1141,24 +1244,6 @@ class Script(default.Script):
         last character of the object.
 
         Returns [obj, characterOffset] or [None, -1]
-
-        DETAIL: If an object presents text, it implements the
-        accessible text interface.  If an object has children that
-        also present text, then the accessible text for the object
-        contains one EMBEDDED_OBJECT_CHARACTER for each child, where
-        the EMBEDDED_OBJECT_CHARACTER represents the position of the
-        child's text in the object and the order of the
-        EMBEDDED_OBJECT_CHARACTERs represent the order of the children
-        (i.e., the first EMBEDDED_OBJECT_CHARACTER represents child 0,
-        the next EMBEDDED_OBJECT_CHARACTER represents child 1, and so
-        on.)
-
-        So...we keep track of our current position in a page by
-        managing a caret context, which is tuple that consists of an
-        Accessible object in the document frame and our caret offset
-        in that object.  If an object does not support the accessible
-        text specialization, the meaning of caret offset value is
-        undefined (but is typically -1).
         """
 
         if not obj:
@@ -1533,7 +1618,9 @@ class Script(default.Script):
             # fixed at some point, but we just ignore it for now.
             #
             if extents != (0, 0, 0, 0):
-                if not self.onSameLine(extents, lineExtents):
+                if lineExtents == (0, 0, 0, 0):
+                    lineExtents = extents
+                elif not self.onSameLine(extents, lineExtents):
                     break
                 else:
                     lineExtents = self.getBoundary(lineExtents, extents)
@@ -1573,6 +1660,7 @@ class Script(default.Script):
 
     def presentLineAtOffset(self, obj, characterOffset):
         contents = self.getLineAtOffset(obj, characterOffset)
+
         if not len(contents):
             return
 

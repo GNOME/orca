@@ -1,3 +1,9 @@
+2006-11-08  Willie Walker <william.walker@sun.com>
+
+	* src/orca/Gecko.py: a little more work regarding when to take
+	EMBEDDED_OBJECT_CHARACTER into account when presenting HTML content
+	via speech and braille.
+        
 2006-11-07  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/focus_tracking_presenter.py:
