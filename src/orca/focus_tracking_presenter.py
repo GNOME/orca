@@ -69,6 +69,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         self.registry        = atspi.Registry()
         self._knownScripts   = {}
         self._knownAppSettings = {}
+        self._oldAppSettings = None
         self._eventQueue     = Queue.Queue(0)
         self._gidleId        = 0
         self._gidleLock      = threading.Lock()
@@ -468,6 +469,15 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                     if (event.type == "window:activate") \
                        or ((event.type == "focus:") \
                            and (event.source.role == rolenames.ROLE_FRAME)):
+
+                        # If old ("factory") settings don't exist yet, save 
+                        # a set, else restore the old application settings.
+                        #
+                        if not self._oldAppSettings:
+                            self._oldAppSettings = util.saveOldAppSettings()
+                        else:
+                            util.restoreOldAppSettings(self._oldAppSettings)
+
                         # We'll let someone else decide if it's important
                         # to stop speech or not.
                         #speech.stop()
@@ -475,25 +485,14 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                             self._getScript(event.source.app)
                         debug.println(debug.LEVEL_FINE, "ACTIVE SCRIPT: " \
                                       + orca_state.activeScript.name)
-                    s = self._getScript(event.source.app)
 
-                    # If this is the active script (or we want to present
-                    # if inactive), save existing application specific 
-                    # settings and load in the application specific settings 
-                    # for the app for this event (if found).
-                    #
-                    if orca_state.activeScript == s or s.presentIfInactive:
-                        oldAppSettings = util.saveOldAppSettings()
+                        # Load in the application specific settings for the
+                        # app for this event (if found).
+                        #
                         appSettings = self.loadAppSettings(event.source.app)
 
+                    s = self._getScript(event.source.app)
                     s.processObjectEvent(event)
-
-                    # If this is the active script (or we want to present
-                    # if inactive), restore previous settings.
-                    #
-                    if orca_state.activeScript == s or s.presentIfInactive:
-                        util.restoreOldAppSettings(oldAppSettings)
-
                     if retryCount:
                         debug.println(debug.LEVEL_WARNING,
                                       "  SUCCEEDED AFTER %d TRIES" % retryCount)

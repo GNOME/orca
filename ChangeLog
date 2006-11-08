@@ -17,6 +17,11 @@
             [a11y] No "focus" event given when going from the first to 
             the second screen in the Presentation wizard.
 
+        * src/orca/focus_tracking_presenter.py:
+          More work on bug #363815 - Implement the ability to have 
+          application specific settings. These app specific settings 
+          are now only loaded when orca_state.activeScript changes.
+
 2006-11-08  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py: a little more work regarding when to take
