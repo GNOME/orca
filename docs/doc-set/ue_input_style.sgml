@@ -10,14 +10,14 @@
 
     <section id="keyboardgestures"><title>Input Style: Keyboard Mappings</title>
 
-      <para>This section describes the default keyboard mappings for the
+      <para>This section describes the default desktop and laptop keyboard mappings for the
         focus tracking and flat review modes of the Orca screen reader.
         Note that Orca allows these mappings to be overridden and
         extended, allowing users to define their own keyboard
         mappings.</para>
   
       <para>As with most other available screen readers, the numeric
-        keypad is the primary location for Orca keystrokes.  Where
+        keypad is the primary location for Orca keystrokes on the desktop layout.  Where
         appropriate, the keymap also provides letter-based mnemonics
         that have been carefully chosen so as to make Orca easier to
         translate into other languages.  Furthermore, the default
@@ -30,12 +30,7 @@
         command is issued to review any part of the screen that does not
         have the keyboard focus.</para>
   
-      <para>NOTE: Ideally, a screen reader should provide good access
-        on a laptop, which typically means using the numeric keypad is
-        an inconvenient access method.  As appropriate, Orca's default
-        keyboard mappings may change to reflect this ideal goal;
-        alternatively, Orca may provide another set of keyboard
-        mappings optimized for laptop use.</para>
+      <para>For the laptop layout Orca will use a very similar layout using the orca modifier key plus the keys on the right side of the keyboard.</para>
   
       <para>In brief summary, the default keyboard mappings break the
         numeric keypad into the following logical sections:</para>
@@ -44,27 +39,27 @@
         <listitem>
           <para>The top row is for mouse clicks, managing focus, and
             switching review mode between focus tracking and flat
-            review.</para>
+            review.  On the laptop these map to Orca modifier+7, 8, and 9.</para>
         </listitem>
         <listitem>
-          <para>Keypad keys 7, 8, and 9 are for navigating lines</para>
+          <para>Keypad keys 7, 8, and 9 are for navigating lines.  On the laptop u, i, and o are used.</para>
         </listitem>
         <listitem>
-          <para>Keypad keys 4, 5, and 6 are for navigating words</para>
+          <para>Keypad keys 4, 5, and 6 are for navigating words.  On the laptop j, k, and l are used.</para>
         </listitem>
         <listitem>
-          <para>Keypad keys 1, 2, and 3 are for navigating characters</para>
+          <para>Keypad keys 1, 2, and 3 are for navigating characters.  On the laptop m, ,, and . are used.</para>
         </listitem>
       </itemizedlist>
   
       <para>In more detail, the keyboard mappings are as follows, and
-        use the "Insert" key as a modifier (see the &ugcustomizationlink; 
+        use the "Insert" key for desktop keyboards and the caps-lock key for laptops as a modifier (see the &ugcustomizationlink; 
         section of the &userguidelink; for more information on how to
-	customize this):</para>
+	customize this):  Note that the first key listed is for the desktop layout and the second is for laptop.</para>
   
       <itemizedlist>
         <listitem>
-          <para>"KEYPAD_/": performs a left mouse click on the current
+          <para>"KEYPAD_/" or "modifier+7": performs a left mouse click on the current
              object of interest.</para>
 	  <para>&detail; bound to
              <literal>default.Script.leftClickReviewItem</literal>.
@@ -72,7 +67,7 @@
 	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
-          <para>"KEYPAD_*":  performs a right mouse click on the current
+          <para>"KEYPAD_*" or "modifier+8":  performs a right mouse click on the current
              object of interest.</para>
 	  <para>&detail; bound to 
              <literal>default.Script.rightClickReviewItem</literal>.
@@ -80,7 +75,7 @@
 	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
-          <para>"KEYPAD_-": when in flat review, returns to the object
+          <para>"KEYPAD_-" or "modifier+p: when in flat review, returns to the object
              with keyboard focus (note that any user action that causes
              the screen or focus to change will also do this).  If the
              user is currently in focus tracking mode, pressing this key
@@ -91,7 +86,7 @@
 	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
-          <para>"KEYPAD_+": reads from current position to end of
+          <para>"KEYPAD_+" or "modifier+;": reads from current position to end of
              document.  If any key is pressed afterwards, reading stops
              and the appropriate object is given appropriate focus
              (e.g., the text caret will be placed on the last word
@@ -103,36 +98,36 @@
 	  <para>&incomplete; [OWNER: RNB] As of V0.2.5. this is implemented for focus tracking mode but not yet for flat review.</para>
         </listitem>
         <listitem>
-          <para>"KEYPAD_ENTER": performs "Where Am I?"  If this key is
-            pressed twice quickly, a bottom up presentation of the where am I information is presented.  If the user presses insert+KPEnter they will hear any relevant status bar information
+          <para>"KEYPAD_ENTER" or "modifier+enter": performs "Where Am I?"  If this key is
+            pressed twice quickly, a bottom up presentation of the where am I information is presented.  If the user presses insert+KPEnter or modifier+/ they will hear any relevant status bar information
             will be spoken.</para>
 	  <para>&detail; bound to
             <literal>default.Script.whereAmI</literal>.</para>
 	  <para>&incomplete; [OWNER: WDW] The "where am I" is implemented in V0.2.5. however pressing twice does not yet give statusbar information.</para>
         </listitem>
         <listitem>
-          <para>"KEYPAD_.": performs a "screen find."  Pressing this key
+          <para>"KEYPAD_." or "modifier+'": performs a "screen find."  Pressing this key
             brings up a dialog where a user can enter a search string
             and decide where on the screen the search should begin IE
             from the top or current position.</para>
-	  <para>&incomplete; [OWNER: WDW] &shoulddeliver; V1.0.</para>
+	  <para>&incomplete; [OWNER: WDW] &shoulddeliver; V1.1.</para>
         </listitem>
         <listitem>
-          <para>"KEYPAD_7": moves the review position to the prior line,
+          <para>"KEYPAD_7" or "modifier+u": moves the review position to the prior line,
              landing on object closest to current object.</para>
 	  <para>&detail; bound to
             <literal>default.Script.reviewPreviousLine</literal>.</para>
 	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
-          <para>"INSERT+KEYPAD_7": moves the review position to the
+          <para>"INSERT+KEYPAD_7" or "modifier+u" twice quickly : moves the review position to the
             home position.</para>
 	  <para>&detail; bound to
             <literal>default.Script.reviewHome</literal>.</para>
 	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
-          <para>"KEYPAD_8": speaks current line.  If flat review has been
+          <para>"KEYPAD_8" or "modifier+i": speaks current line.  If flat review has been
              activated, this acts on the line at the review location.  If
              the user is in focus tracking mode, the line or item with
              focus is spoken.  When this key is pressed twice quickly
@@ -144,35 +139,35 @@
 	    and the double press.  &shoulddeliver; V1.0.</para>
         </listitem>
         <listitem>
-          <para>"KEYPAD_9": moves the review position to the next
+          <para>"KEYPAD_9" or "modifier+o": moves the review position to the next
             line.</para>
 	  <para>&detail; bound to
             <literal>default.Script.reviewNextLine</literal>.</para>
 	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
-          <para>"INSERT+KEYPAD_9": moves the review position to the end
+          <para>"INSERT+KEYPAD_9" or "modifier+o" twice quickly: moves the review position to the end
             of the review area.</para>
 	  <para>&detail; bound to
             <literal>default.Script.reviewEnd</literal>.</para>
 	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
-          <para>"KEYPAD_4": moves the review position to the prior word or
+          <para>"KEYPAD_4" or "modifier+j": moves the review position to the prior word or
             item.</para>
 	  <para>&detail; bound to
             <literal>default.Script.reviewPreviousItem</literal>.</para>
 	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
-          <para>"INSERT+KEYPAD_4": moves the review position to the word
+          <para>"INSERT+KEYPAD_4" or "modifier+j" twice quickly: moves the review position to the word
             spatially above the current word.</para>
 	  <para>&detail; bound to
             <literal>default.Script.reviewAbove</literal>.</para>
 	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
-          <para>"KEYPAD_5": speaks the current word or item.  If this key
+          <para>"KEYPAD_5" or "modifier+k": speaks the current word or item.  If this key
              is pressed twice quickly the word is spelled and any
              capitalization is be announced; three times results in
              phonetic spelling</para>
@@ -189,60 +184,59 @@
 	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
-          <para>"KEYPAD_6": moves the review position to the next word or
+          <para>"KEYPAD_6" or "modifier+l": moves the review position to the next word or
             item.</para>
 	  <para>&detail; bound to
             <literal>default.Script.reviewNextItem</literal>.</para>
 	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
-          <para>"INSERT+KEYPAD_6": moves the review position to the word
+          <para>"INSERT+KEYPAD_6" or "modifier+l" twice quickly: moves the review position to the word
             spatially below the current word.</para>
 	  <para>&detail; bound to
             <literal>default.Script.reviewBelow</literal>.</para>
 	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
-          <para>"KEYPAD_1": moves the review position to the prior
+          <para>"KEYPAD_1" or "modifier+m": moves the review position to the prior
             character.</para>
 	  <para>&detail; bound to
             <literal>default.Script.reviewPreviousCharacter</literal>.</para>
 	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
-          <para>"INSERT+KEYPAD_1": moves the review position to the end
+          <para>"INSERT+KEYPAD_1" or "modifier+m" twice quickly: moves the review position to the end
             of the line.</para>
 	  <para>&detail; bound to
             <literal>default.Script.reviewEndOfLine</literal>.</para>
 	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
-          <para>"KEYPAD_2": speaks the current character.  If this key is
+          <para>"KEYPAD_2" or "modifier+,": speaks the current character.  If this key is
              pressed twice quickly the character is pronounced
              phonetically (if it is a letter)</para>
 	  <para>&detail; bound to
             <literal>default.Script.reviewCurrentCharacter</literal>.</para>
-	  <para>&incomplete; [OWNER: WDW] handles the single press,
-	    but not the double press.  &mustdeliver; V1.1.</para>
+	  <para>&complete; [OWNER: WDW].  &mustdeliver; V1.1.</para>
         </listitem>
         <listitem>
-          <para>"KEYPAD_3": moves the review position to the next
+          <para>"KEYPAD_3" or "modifier+.": moves the review position to the next
             character</para>
 	  <para>&detail; bound to
             <literal>default.Script.reviewNextCharacter</literal>.</para>
 	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
-          <para>INSERT+s: toggles speech on and off.</para>
+          <para>modifier+s: toggles speech on and off.</para>
 	  <para>&complete; V0.2.5.</para>
         </listitem>
         <listitem>
-          <para>CONTROL+INSERT+space: resets connection to the speech 
+          <para>CONTROL+modifier+space: resets connection to the speech 
             engine as well as reloads all user settings.</para>
 	  <para>&complete; V0.2.5.</para>
         </listitem>
         <listitem>
-          <para>INSERT+v: brings up a "quick" verbosity preferences
+          <para>modifier+v: brings up a "quick" verbosity preferences
 	     dialog to set preferences that are temporary to the
 	     current session (i.e., they are not saved permanently
 	     like the Configuration GUI would do).  Example settings
@@ -253,19 +247,19 @@
 	  <para>&incomplete; [OWNER: RNB] &mustdeliver; V1.1.</para>
         </listitem>
         <listitem>
-          <para>INSERT+RIGHT_ARROW: increases speech rate</para>
+          <para>modifier+RIGHT_ARROW: increases speech rate</para>
 	  <para>&detail; bound to
             <literal>speech.increaseSpeechRate</literal>.</para>
 	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
-          <para>INSERT+LEFT_ARROW: decreases speech rate</para>
+          <para>modifier+LEFT_ARROW: decreases speech rate</para>
 	  <para>&detail; bound to
             <literal>speech.decreaseSpeechRate</literal>.</para>
 	  <para>&complete; V0.2.2.</para>
         </listitem>
         <listitem>
-          <para>INSERT+SPACE: brings up configuration GUI</para>
+          <para>modifier+SPACE: brings up configuration GUI</para>
 	  <para>&complete; V0.2.5.</para>
         </listitem>
       </itemizedlist>
