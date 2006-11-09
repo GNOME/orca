@@ -26,7 +26,7 @@ ACSS definitions into engine-specific markup codes.
 """
 
 __id__ = "$Id$"
-__author__ = "$Author$"
+__author__ = "T. V. Raman"
 __version__ = "$Revision$"
 __date__ = "$Date$"
 __copyright__ = "Copyright (c) 2005 Google Inc."
