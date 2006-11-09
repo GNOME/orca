@@ -8,7 +8,7 @@
     **********************************************************************
     -->
 
-    <section><title>Output Style: Speech Synthesis and Braille</title>
+    <section id="ueoutputstyle"><title>Output Style: Speech Synthesis and Braille</title>
 
       <para>This section provides output styles for each relevant
         Accessible role. &todo; this is a work in progress and will

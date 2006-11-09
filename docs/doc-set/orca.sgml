@@ -21,7 +21,8 @@
     <!ENTITY mustdeliver '<emphasis>MUST DELIVER FOR</emphasis>'>
 
   <!ENTITY styleguidelink '<link linkend="styleguide">style guide</link>'>
-  <!ENTITY gestureslink '<link linkend="gestures">input gestures</link>'>
+  <!ENTITY keyboardgestureslink '<link linkend="keyboardgestures">keyboard gestures</link>'>
+  <!ENTITY braillegestureslink '<link linkend="braillegestures">braille gestures</link>'>
   <!ENTITY uepersonas SYSTEM "personas.sgml">
   <!ENTITY uerequirements SYSTEM "ue_requirements.sgml">
   <!ENTITY ueinputstyle SYSTEM "ue_input_style.sgml">

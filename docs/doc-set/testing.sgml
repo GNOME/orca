@@ -1,6 +1,6 @@
 <!-- Copyright 2005-2006, Sun Microsystems, Inc. -->
 
-<book>
+<book id="testingplan">
   <title>Orca Testing Plan</title>
   <bookinfo>
     &legal;
@@ -15,7 +15,7 @@
   ************************************************************************
   -->
 
-  <preface><title>Foreword</title>
+  <preface id="tpforward"><title>Foreword</title>
     &blurb;
     <para>This book contains the testing plan for Orca.
     </para>
@@ -259,7 +259,7 @@
   <chapter id="specifictest"><title>Specific Office Productivity Applications</title>
 
     <section id="desktoptest"><title>Desktop Test Plan</title>
-      <section><title>Navigate Start Menu</title>
+      <section id="tpstartmenu"><title>Navigate Start Menu</title>
         <para>&tgoal; Determine if Orca reads the top level of the start menu.</para>
         <para>&tprocedure; Open the start menu from the keyboard and arrow up and down through all the items.</para>
         <para>&tresult; When first entering the menu orca should speak the name of the panel gaining focus.  Orca should speak the selected item  while arrowing.  If an item is a submenu, orca should fillow the item name with "menu".</para>
@@ -365,7 +365,7 @@ of systems.  Click the 'Cancel' button or press Alt-C> to return to GDM. </para>
  The GDM login screen reappears.</para>
 
       </section>
-      <section><title>Alt+Tab to Other Applications</title>
+      <section id="tpalttab"><title>Alt+Tab to Other Applications</title>
         <para>&tgoal; Determine if Orca reads metacity status window.</para>
         <para>&tprocedure; Open gedit, terminal, star office writer, and firefox.  With these apps opened, hold sown alt and press tab slowly several times.</para>
         <para>&tresult; Whith each press of tab orca should speak the name of the application that will gain focus if alt is released.</para>
@@ -373,7 +373,7 @@ of systems.  Click the 'Cancel' button or press Alt-C> to return to GDM. </para>
     </section>
 
     <section id="nautilustest"><title>Nautilus Test Plan</title>
-      <section><title>File list navigation</title>
+      <section id="tpfilelist"><title>File list navigation</title>
         <para>&tgoal; Determine if orca reads the file names and the folder names..</para>
         <para>&tprocedure; Go to the places menu and open your home folder.  Down arrow to each item in the list.  At the end of the list reverse direction back to the top.</para>
         <para>&tresult; As each item is selected its name should be spoken.  If the item is a folder the expanded or collapsed state should also be spoken.</para>
@@ -419,8 +419,8 @@ folder icon.  Change the folder's name by pressing either F2 or choosing 'Edit'-
 as "this is a changed file name".</para>
 </section>
     </section>
-<section id="Gcalctest"><title>gnome Calc Test Plan</title>
-      <section><title>calc Test</title>
+<section id="Gcalctest"><title>GNOME Calc Test Plan</title>
+      <section id="tpcalc"><title>GNOME Calc Test</title>
 <para>&tgoal; Ability   to  find out the square root of a selected number </para>
 <para>&tprocedure; Start the calculator by choosing 'Applications'->'Accessories'->'Calculator'. Input the number 144 . navigate to the 'SQRT' button. Select
 'Calculator'->'Quit' to exit. </para>
@@ -430,7 +430,7 @@ as "this is a changed file name".</para>
     </section>
 
     <section id="gedittest"><title>GEdit Test Plan</title>
-      <section><title>Toolbar and menubar test</title>
+      <section id="tptoolandmenu"><title>Toolbar and menubar test</title>
         <para>&tgoal; Determine if orca reads the menubar and the sub menus.</para>
         <para>&tprocedure; Press F10 and right arrow across the menubar.  When reaching the help menu left arrow back to the file menu.  On the file menu down arrow to all the choices.</para>
         <para>&tresult; On the menubar orca should read each item followed by "menu".  When navigating the file menu orca should read each item followed by "..." if that item contains more options.</para>
@@ -438,7 +438,7 @@ as "this is a changed file name".</para>
         <para>&tprocedure; Use KP7 to move up to the toolbar.  Press KP6 to move to each toolbar item.  On each button press KP/ to activate the button.</para>
         <para>&tresult; Orca should read each button and when clicked with KP/ the appropriate action should be taken.</para>
       </section>
-      <section><title>Dialog box test</title>
+      <section id="tpdialogbox"><title>Dialog box test</title>
         <para>&tgoal; Determine if Orca correctly reads the "file open" dialog.</para>
         <para>&tprocedure; Open gedit and only using the arrows and enter navigate to the Change.log under your orca sub directory.</para>
         <para>&tresult; When traversing the directory structure orca should read each item telling the user if it is a file or folder.</para>
@@ -458,7 +458,7 @@ as "this is a changed file name".</para>
 	  from gedit.  The same text file is reopened is gedit.</para>
 
       </section>
-            <section><title> spell check test</title>
+            <section id="tpspell"><title> spell check test</title>
               <para>&tgoal; Determine if Orca correctly reads the spell check test.</para>
               <para>&tprocedure; Open the orca change log in gedit and press F7 to open the spell checker.  Spell check several words.</para>
               <para>&tresult; When each word is flagged it should be spoken followed by the surrounding context.</para>
@@ -490,7 +490,7 @@ as "this is a changed file name".</para>
     </section>
 
     <section id="gaimtest"><title>GAIM Test Plan</title>
-      <section><title>instant messenger test. </title>
+      <section id="tpim"><title>instant messenger test. </title>
         <para>&tgoal; Ability to configure IM, and connect to IRC chat server </para>
 		<para>&tprocedure; Launch 'Applications'->'Internet'->'Instant Messenger'.  navigate to the 'Accounts' button on the main window of GAIM .  navigate to the 'Add' button
 		in the Accounts dialog.  Select 'IRC' from the options in the 'Protocol:' combo box. Type "a11ytest" for the 'Screenname:' text field.  Navigate to the

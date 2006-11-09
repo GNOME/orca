@@ -1,5 +1,25 @@
 2006-11-08  Willie Walker <william.walker@sun.com>
 
+	* docs/doc-set/*.sgml: make sure all chapters and sections
+	have ids so chunkified db2html will produce consistent
+	files and URLs.  
+
+	* docs/doc-set/docbook-utils.dsl: new stylesheet to
+	enable use-id-as-filename to work with the above.  The
+	command to use this stylesheet is:
+
+	  db2html -d docbook-utils.dsl#html orca.sgml
+
+	This will produce a large number of files in the orca
+	subdirectory, each of whose filename matches the id
+	tag in the sgml file.
+
+	* docs/doc-set/orca.html: redirect to docs/doc-set/orca/orca.html
+	so we don't need to keep doing a copy of orca/orca.html.
+
+	* docs/doc-set/orca/orca.html: the default file that is output
+	by db2html --nochunks orca.sgml.
+	
 	* src/orca/default.py: add defensive code to not announce name
 	changes for objects who tell us their name has changed, but it
 	really hasn't.  This represents the Orca-side of the fix for

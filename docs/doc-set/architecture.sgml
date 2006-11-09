@@ -1,6 +1,6 @@
 <!-- Copyright 2005, Sun Microsystems, Inc. -->
 
-<book>
+<book id="archandfunc">
   <title>Orca Architecture and Functional Specification</title>
   <bookinfo>
     &legal;
@@ -15,7 +15,7 @@
   ************************************************************************
   -->
 
-  <preface><title>Foreword</title>
+  <preface id="archforward"><title>Foreword</title>
     &blurb;
     <para>This book covers the architecture and functional
       specification of Orca.  The specification was driven primarily
@@ -32,7 +32,7 @@
   ************************************************************************
   -->
 
-  <chapter><title>Introduction</title>
+  <chapter id="archintroduction"><title>Introduction</title>
 
     <para>The Orca architecture has been driven primarily by the Orca
       User Experience Design.  There are two primary operating modes
@@ -78,7 +78,7 @@
   ************************************************************************
   -->
 
-  <chapter><title>Prerequisites</title>
+  <chapter id="prereq"><title>Prerequisites</title>
     <para>To help narrow the scope of the Orca development activity,
       Orca uses existing software where available.  For example, as
       mentioned in the requirements, Orca is a screen reader that
@@ -87,34 +87,34 @@
       provider of such services.  Given this, Orca has the following
       dependencies:</para>
 
-    <section><title>GNOME 2.14 or better</title> 
+    <section id="prereqgnome"><title>GNOME 2.14 or better</title> 
       <para>The GNOME 2.14 desktop contains a number of bug fixes and
         enhancements to the accessibility infrastructure.  These are
 	needed for Orca to run properly.</para>
     </section>
 
-    <section><title>Python v2.4 or better</title> 
+    <section id="prereqpython"><title>Python v2.4 or better</title> 
       <para>Orca is written in the Python programming language and
         depends upon features found in Python versions 2.4 and
         greater.</para>
     </section>
 
-    <section><title>pyorbit v2.14.0 or better</title> 
+    <section id="prereqpyorbit"><title>pyorbit v2.14.0 or better</title> 
       <para>PyORBit provides the Python language bindings for ORBit,
         which is Bonobo's CORBA ORB implementation.</para>
     </section>
 
-    <section><title>libbonobo v2.0.0 or better</title> 
+    <section id="prereqlibbonobo"><title>libbonobo v2.0.0 or better</title> 
       <para>libbonobo provides the Python language bindings for Bonobo,
         which gives Orca access to the AT-SPI.</para>
     </section>
 
-    <section><title>gnome-python-2.0 v2.6.0 or better</title> 
+    <section id="prereqgnomepython"><title>gnome-python-2.0 v2.6.0 or better</title> 
       <para>GNOME-Python provides the Python language bindings for the
         GNOME libraries.</para>
     </section>
 
-    <section><title>pygtk-2.0 v2.4.0 or better</title> 
+    <section id="prereqpygtk"><title>pygtk-2.0 v2.4.0 or better</title> 
       <para>PyGTK provides a convenient wrapper for the GTK library
         for use in Python programs, and takes care of many of the
         details such as managing memory and type casting. When
@@ -122,7 +122,7 @@
         write full featured GNOME applications.</para>
     </section>
 
-    <section><title>AT-SPI v1.6.6 or better</title>
+    <section id="prereqatspi"><title>AT-SPI v1.6.6 or better</title>
       <para> Orca's means of gathering information about the desktop
         as well interacting with the desktop will be done through
         the AT-SPI <citation><xref linkend="at-spi"
@@ -138,14 +138,14 @@
         or applications on the desktop.</para>
     </section>
 
-    <section><title>gnome-speech v0.3.9 or better</title>
+    <section id="prereqgnomespeech"><title>gnome-speech v0.3.9 or better</title>
       <para>gnome-Speech <citation><xref linkend="gnome-speech"
       endterm="gnome-speech.abbrev"/></citation> provides an
       IDL/CORBA-based approach to access speech synthesizers as network
       services.</para>
     </section>
 
-    <section><title>BrlTTY v3.7.2 or better</title>
+    <section id="prereqbrltty"><title>BrlTTY v3.7.2 or better</title>
       <para>BrlTTY <citation><xref linkend="brltty"
         endterm="brltty.abbrev"/></citation> provides access to a
         variety of Braille displays, and consists of a library and a
@@ -153,14 +153,14 @@
         display.</para>
     </section>
 
-    <section><title>gnome-mag v0.11.11 or better</title>
+    <section id="prereqgnomemag"><title>gnome-mag v0.11.11 or better</title>
       <para>GNOME-mag <citation><xref linkend="gnome-mag"
       endterm="gnome-mag.abbrev"/></citation> provides an IDL/CORBA-based
       approach to access and manipulate a screen magnifier as a
       network service.</para>
     </section>
 
-    <section><title>Keyboard Navigation</title>
+    <section id="prereqkeyboardnav"><title>Keyboard Navigation</title>
       <para>As much as possible, Orca relies upon the keyboard
         navigation methods built in to the native platform.  For
         example, it is expected that the native platform will provide
@@ -205,7 +205,7 @@
     <para>The following sections describe the architecture in more
       detail.</para>
 
-    <section><title>Desktop and AT-SPI</title>
+    <section id="archdesktop"><title>Desktop and AT-SPI</title>
 
       <para>Orca's sole view of any application on the desktop is via
         the AT-SPI <citation><xref linkend="at-spi"
@@ -320,7 +320,7 @@
 
     </section>
 
-    <section><title>Orca</title>
+    <section id="archorca"><title>Orca</title>
 
       <para>The <literal>orca</literal> module is the "main entry
         point" of Orca.  It initializes the components that Orca uses
@@ -359,7 +359,7 @@
         <literal>orca_state.locusOfFocus</literal> field should never
         be set directly.</para>
 
-      <section><title>settings</title> 
+      <section id="archsettings"><title>settings</title> 
         <para>The <emphasis role="bold">settings</emphasis> module
           (not depicted in the high level Orca architecture diagram)
           holds preferences set by the user during configuration.
@@ -410,7 +410,7 @@
 
     </section>
 
-    <section><title>System Services</title>
+    <section id="archsystemservices"><title>System Services</title>
 
       <para> Orca relies on existing system services to provide
         support for speech synthesis, braille, and screen
@@ -418,7 +418,7 @@
         the modules described in the following sections.
       </para>
 
-      <section><title>speech</title>
+      <section id="archspeech"><title>speech</title>
 
         <para>The <emphasis role="bold">speech</emphasis> module
           provides Orca's Python interface to system speech services.
@@ -474,7 +474,7 @@
           preferences.</para>
       </section>
 
-      <section><title>braille</title>
+      <section id="archbraille"><title>braille</title>
         <para> The <emphasis role="bold">braille</emphasis> module
           provides Orca's Python interface to the system's BrlTTY
           <citation><xref linkend="brltty"
@@ -485,7 +485,7 @@
         <para>&todo; flesh this section out more.</para>
       </section>
 
-      <section><title>mag</title>
+      <section id="archmag"><title>mag</title>
         <para> The <emphasis role="bold">mag</emphasis> module
           provides Orca's Python interface to the system's gnome-mag
           <citation><xref linkend="gnome-mag"
@@ -509,7 +509,7 @@
   ************************************************************************
   -->
 
-  <chapter><title>Internationalization (I18N) Support</title>
+  <chapter id="i18n"><title>Internationalization (I18N) Support</title>
     <para>All human-consumable text obtained from AT-SPI calls is
       expected to be in a localized form.  As such, Orca does not
       do any extra localization processing when working with text
@@ -542,7 +542,7 @@
   ************************************************************************
   -->
 
-  <bibliography>
+  <bibliography id="archbibliography">
     <biblioentry role="unpublished" id="at-spi">
       <abbrev id="at-spi.abbrev">AT-SPI</abbrev>
       <authorgroup>

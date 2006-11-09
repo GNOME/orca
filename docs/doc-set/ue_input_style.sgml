@@ -8,7 +8,7 @@
     **********************************************************************
     -->
 
-    <section id="gestures"><title>Input Style: Keyboard Mappings</title>
+    <section id="keyboardgestures"><title>Input Style: Keyboard Mappings</title>
 
       <para>This section describes the default keyboard mappings for the
         focus tracking and flat review modes of the Orca screen reader.
@@ -272,7 +272,7 @@
 
     </section>
 
-    <section><title>Input Style: Braille Mappings</title>
+    <section id="braillegestures"><title>Input Style: Braille Mappings</title>
 
       <para>This section describes the default braille mappings for the
         focus tracking and flat review modes of the Orca screen reader.

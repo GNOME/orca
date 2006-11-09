@@ -1,7 +1,7 @@
 <!-- Copyright 2005, Sun Microsystems, Inc. -->
 
-<book>
-  <title id="scriptguide">Orca Script Writing Guide</title>
+<book id="scriptguide">
+  <title>Orca Script Writing Guide</title>
   <bookinfo>
     &legal;
   </bookinfo>
@@ -16,7 +16,7 @@
   ************************************************************************
   -->
 
-  <preface><title>Foreword</title>
+  <preface id="sgforward"><title>Foreword</title>
     &blurb;
     <para>This book is intended for programmers intending to
       extend Orca's functionality by writing custom scripts.
@@ -33,7 +33,7 @@
   ************************************************************************
   -->
 
-  <chapter><title>Introduction</title>
+  <chapter id="sgintroduction"><title>Introduction</title>
 
     <para>In this document, you will learn more about the Orca
       architecture as well as how to create your own custom scripts
@@ -65,7 +65,7 @@
   ************************************************************************
   -->
 
-  <chapter><title>Overview</title>
+  <chapter id="sgoverview"><title>Overview</title>
 
     <para>The primary operating mode of Orca is "focus tracking
       mode," where Orca keeps track of the most relevant user
@@ -81,7 +81,7 @@
       interpret keystrokes and braille input events, allowing it to
       further extend the behavior of Orca.</para>
 
-    <section><title>Script Contract</title>
+    <section id="sgcontract"><title>Script Contract</title>
 
       <para>The contract for a script is documented in detail in the
         pydoc of the <literal>Script</literal> class in the
@@ -97,7 +97,7 @@
 
     </section>
 
-    <section><title>Script Life Cycle</title>
+    <section id="sglifecycle"><title>Script Life Cycle</title>
 
       <para>BIRTH: Orca's <literal>focus_tracking_presenter</literal>
         module is the sole maintainer of scripts. Whenever it receives
@@ -377,7 +377,7 @@
       extend/override these fields.  Each of these fields is described
       in more detail in the following sections.</para>
 
-    <section><title>Defining Event Listeners</title> 
+    <section id="sgeventlisteners"><title>Defining Event Listeners</title> 
 
       <para>As described above, the <literal>listeners</literal> field
         is a dictionary where the keys are strings that match AT-SPI
@@ -434,7 +434,7 @@ def onFocus(self, event):
 
     </section>
 
-    <section><title>Input Event Handlers</title>
+    <section id="sginputeventhandlers"><title>Input Event Handlers</title>
 
       <para>Before describing how to set up keyboard and braille event
         handlers, it is import to first understand the
@@ -489,7 +489,7 @@ def reviewHome(self, inputEvent):
 
     </section>
 
-    <section><title>Defining Keyboard Bindings</title>
+    <section id="sgkeybindings"><title>Defining Keyboard Bindings</title>
 
       <para>The keyboard bindings for a script are held in the
         <literal>keybindings</literal> field, which is a
@@ -548,7 +548,7 @@ self.keybindings.add(
         described in the previous section.</para>
     </section>
 
-    <section><title>Defining Braille Bindings</title>
+    <section id="sgbraillebindings"><title>Defining Braille Bindings</title>
 
       <para>Refreshable braille displays have buttons that the user
         can press.  The BrlTTY system provides a means for
@@ -584,7 +584,7 @@ self.braillebindings[braille.CMD_TOP_LEFT] = reviewHomeHandler
   ************************************************************************
   -->
 
-  <chapter><title>Script Utilities</title>
+  <chapter id="sgutilities"><title>Script Utilities</title>
 
     <para>There are many common things a script wants to do: generate
       speech, update braille, etc.  In addition, there are many common
@@ -759,7 +759,7 @@ ACTIVE SCRIPT: gnome-terminal (module=orca.scripts.gnome-terminal)
 
     </section>
 
-    <section><title>Speech Synthesis</title>
+    <section id="sgtts"><title>Speech Synthesis</title>
 
       <para>Orca provides two main modules for speech output:
       <literal>speech.py</literal> and
@@ -775,7 +775,7 @@ ACTIVE SCRIPT: gnome-terminal (module=orca.scripts.gnome-terminal)
       text.  The script will then pass this text to the
       <literal>speech.py</literal> module to be spoken.</para>
 
-      <section><title><literal>speech.py</literal></title>
+      <section id="sgspeechpy"><title><literal>speech.py</literal></title>
  
         <para>For the purposes of script writing, the main entry
           points of the <literal>speech.py</literal> module are
@@ -788,7 +788,7 @@ ACTIVE SCRIPT: gnome-terminal (module=orca.scripts.gnome-terminal)
 
       </section>
 
-      <section><title><literal>speechgenerator.py</literal></title>
+      <section id="sgsgpy"><title><literal>speechgenerator.py</literal></title>
 
         <para>The primary goal of a <literal>SpeechGenerator</literal>
           is to create text to be spoken for an accessible object.
@@ -846,7 +846,7 @@ if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
 
     </section>
 
-    <section><title>Braille Output</title>
+    <section id="sgbrailleoutput"><title>Braille Output</title>
 
       <para>Like speech, Orca provides two main modules for braille:
       <literal>braille.py</literal> and
@@ -862,13 +862,13 @@ if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
       regions.  The script will then pass these braille regions to the
       <literal>braille.py</literal> module to be displayed.</para>
 
-      <section><title><literal>braille.py</literal></title> 
+      <section id="sgbraillepy"><title><literal>braille.py</literal></title> 
         <para>&todo; [[[WDW - much writing to be done here, especially
           regarding how regions will provide automatic support for
           cursor routing keys.]]]</para>
       </section>
 
-      <section><title><literal>braillegenerator.py</literal></title>
+      <section id="sgbgpy"><title><literal>braillegenerator.py</literal></title>
         <para>The primary goal of a <literal>BrailleGenerator</literal>
           is to create text to be displayed for an accessible object.
           There are two public entry points into a

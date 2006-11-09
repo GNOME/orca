@@ -586,10 +586,12 @@
     </section>
 
     <section id="urgestures"><title>Customizable Gestures</title>
-      <para>While Orca will provide a default set of well known 
-        keyboard and braille &gestureslink;, users must be able to
-        override these gestures and extend them with gestures of
-        their own choosing.</para>
+
+      <para>While Orca will provide a default set of well known
+        &keyboardgestureslink; and &braillegestureslink;, users must
+        be able to override these gestures and extend them with
+        gestures of their own choosing.</para>
+
       <para>The user interface for defining these gestures must be
         easy to use.</para>
 

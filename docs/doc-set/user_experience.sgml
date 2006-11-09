@@ -1,6 +1,6 @@
 <!-- Copyright 2005, Sun Microsystems, Inc. -->
 
-<book>
+<book id="userexperience">
   <title>Orca User Experience Design</title>
   <bookinfo>
     &legal;
@@ -15,7 +15,7 @@
   ************************************************************************
   -->
 
-  <preface><title>Foreword</title>
+  <preface id="ueforward"><title>Foreword</title>
     &blurb;
     <para>This book covers the design of the user experience for Orca.
     </para>
@@ -30,7 +30,7 @@
   ************************************************************************
   -->
 
-  <chapter><title>Introduction</title>
+  <chapter id="ueintroduction"><title>Introduction</title>
     <para>The design of Orca is centered primarily on the
       requirements of its end users.  Orca's users may require
       non-visual access methods such as speech and/or braille and they
@@ -101,7 +101,7 @@
   ************************************************************************
   -->
 
-  <bibliography>
+  <bibliography id="uebibliography">
     <biblioentry id="cooper99" xreflabel="cooper99">
       <abbrev id="cooper99.abbrev">Cooper99</abbrev>
       <authorgroup>
