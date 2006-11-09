@@ -1,3 +1,23 @@
+2006-11-09  Rich Burridge <rich.burridge@sun.com>
+
+        * bugs/bugs.html:
+          Added two new OpenOffice bugs:
+
+          - Issue #71383 (Writer)
+            [a11y] Default style and font name text attributes are not 
+            provided.
+
+          - Issue #71385 (Writer)
+            [a11y] Numerous text attributes not provided.
+
+          and removed one:
+
+          - Issue #71354 (Presentation):
+            [a11y] No apparent way to keyboard navigate to list of
+            Presentation [Backgrounds] in Presentation Wizard.
+
+          which isn't a bug.
+
 2006-11-08  Willie Walker <william.walker@sun.com>
 
 	* docs/doc-set/*.sgml: make sure all chapters and sections
