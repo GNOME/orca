@@ -1,3 +1,16 @@
+2006-11-10  Rich Burridge <rich.burridge@sun.com>
+
+        * bugs/bugs.html:
+          Added two new OpenOffice bugs:
+
+          - Issue #71430 (Writer)
+            [a11y] In the Navigator window, the labels in the tree table 
+            should have a RELATION_NODE_CHILD_OF relation provided.
+
+          - Issue #71431 (Presentation)
+            [a11y] No apparent way to navigate to the presentation layout 
+            area using the keyboard.
+
 2006-11-10  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca.in, src/orca/orca.py: fix for bug 373381 to allow
