@@ -15,7 +15,11 @@
         Note that Orca allows these mappings to be overridden and
         extended, allowing users to define their own keyboard
         mappings.</para>
-  
+      <para>The user will be able to switch between the desktop and laptop
+      layouts from the Orca config UI.  
+      A group of radio buttons will be added to the general tab allowing the user to choose between desktop and laptop.
+      If desktop is chosen, the user will get the insert as the modifier by default and the laptop modifier will be caps lock.
+      In the orca text setup the user should also be asked which layout they prefer.</para> 
       <para>As with most other available screen readers, the numeric
         keypad is the primary location for Orca keystrokes on the desktop layout.  Where
         appropriate, the keymap also provides letter-based mnemonics

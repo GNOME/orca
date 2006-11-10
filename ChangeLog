@@ -1,3 +1,11 @@
+2006-11-10  Mike Pedersen <michael.pedersen@sun.com> 
+
+        * docs/doc-set/ue_input_style.sgml,
+        * docs/doc-set/orca.html,
+        * docs/doc-set/orca.pdf
+
+          Added spec for the ability to change keyboard layouts from the GUI.
+
 2006-11-10  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
