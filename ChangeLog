@@ -1,5 +1,7 @@
 2006-11-10  Willie Walker <william.walker@sun.com>
 
+	* src/orca/rolenames.py: add caption role.
+	
 	* src/orca/keybindings.py: add a little more code and logic to try
 	to get keybinding support to work a little better with the Solaris
 	keypad.  NumLock still presents an issue on Solaris, though.  Also

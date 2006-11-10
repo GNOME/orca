@@ -44,6 +44,7 @@ ROLE_ALERT               = "alert"
 ROLE_ANIMATION           = "animation"
 ROLE_ARROW               = "arrow"
 ROLE_CALENDAR            = "calendar"
+ROLE_CAPTION             = "caption"
 ROLE_CANVAS              = "canvas"
 ROLE_CHECK_BOX           = "check box"
 ROLE_CHECK_MENU_ITEM     = "check menu item"
@@ -184,6 +185,11 @@ rolenames[ROLE_CANVAS] = Rolename(ROLE_CANVAS,
                                   _("cnv"),
                                   _("Canvas"),
                                   _("canvas"))
+
+rolenames[ROLE_CAPTION] = Rolename(ROLE_CAPTION,
+                                   _("cptn"),
+                                   _("Caption"),
+                                   _("caption"))
 
 rolenames[ROLE_CHECK_BOX] = Rolename(ROLE_CHECK_BOX,
                                      _("chk"),
