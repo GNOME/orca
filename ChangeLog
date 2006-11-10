@@ -8,6 +8,11 @@
 
 2006-11-10  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/orca.in:
+          Specifically set a $PATH for the orca script to use.
+          This was needed because xmodmap lives in /usr/openwin/bin 
+          on Solaris.
+
         * src/orca/default.py:
           Partial fix for bug #356060 - Provide access to tree item level 
           and state in OOo Navigator.

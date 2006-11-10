@@ -28,6 +28,10 @@
 # __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 # __license__   = "LGPL"
 
+# Set the user's $PATH for this script.
+#
+export PATH="/usr/ccs/bin:/usr/bin:/usr/sbin:/bin:/usr/sfw/bin:/usr/openwin/bin"
+
 # If you set RUNONCE to "true", then this will just run Orca once and quit.
 #
 RUNONCE="false"
