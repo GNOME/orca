@@ -33,13 +33,13 @@
   <chapter id="generaltest"><title>General Orca Functionality</title>
 
     <para>The tests in this section are meant to test general Orca
-      functionality that should be work regardless of the application
+      functionality that should be working regardless of the application
       in use.</para>
 
     <section id="interoperabilitytest"><title>Interaction with Other ATs</title>
       <para>The tests in this section are to ensure that Orca does not
-        can adverse effects on other assistive technologies that may be
-	running, and that other assitive technologies do not adversely
+        have adverse effects on other assistive technologies that may be
+	running, and that other assistive technologies do not adversely
 	effect Orca.</para>
 
     </section>
@@ -48,10 +48,10 @@
 
       <para>The tests in this section are to ensure that the Orca flat
         review functionality is working as expected.  This includes
-	making sure the various keystrokes work and produce the
-	desired results.</para>
+        making sure the various keystrokes work and produce the
+        desired results.</para>
         <para>&tgoal; Test basic flat review navigation.</para>
-        <para>&tprocedure; Open gnome terminal and type "ls".  Use the number 7 on the numpad to move up by line until you reach the menubar.  At this point press numpad 6 repeatedly to move across the menubar.</para>
+        <para>&tprocedure; Open gnome terminal and type "ls".  Use the number 7 on the numpad  to  move up by line until you reach the menubar.  At this point press numpad 6 repeatedly to move across the menubar.</para>
         <para>&tresult; While moving up with 7 each line of the terminal window should be read.  While moving right across the menubar each word of each menu item should be read.  After finishing, reverse this process using KP4 and KP9 for word and line respectively.</para>
         <para>&tgoal; Test the performance of mouse clicks in flat review.</para>
         <para>&tprocedure; Open gnome terminal and review to the top of the screen with numpad 7.  At this point, move to the right with  KP3 until you reach the e of the edit menu.  While on the "e" press KP/ to perform a left mouse click.</para>
@@ -66,7 +66,7 @@
         keyboard and braille, including entering and exiting Learn
         Mode.</para>
         <para>&tgoal; Test the learn mode to assure that orca speaks useful information for each orca keystroke.</para>
-        <para>&tprocedure; Press insert+f1 to enable learn mode.  Press all keys on the numpad both with and without the orca modifier key (usually insert).  After testing all keys, press escape to exit learn mode.</para>
+        <para>&tprocedure; Press insert+f1 to enable learn mode.  Press all keys on the numpad both with and without the orca modifier key (usually insert).  After testing all keys, press escape to exit learn mode.  This test should also be performed with all keys in the laptop layout.</para>
         <para>&tresult; Listen to the speech output associated with each keypress.  Orca should give meaningful output describing what the key does.  This information should also appear on the braille display.  If information is un-clear a bug should be filed.</para>
 
     </section>
@@ -201,8 +201,8 @@
         <para>&tprocedure; Open gedit and press f10.</para>
         <para>&tresult; Orca should say "f 10" before speaking the focus in the menubar.</para>
                 <para>&tgoal; Orca should speak function keys along with modifiers as they are pressed.</para>
-	        <para>&tprocedure; Open gedit and press shift+f10.</para>
-	        <para>&tresult; Orca should say "shift f 10" before speaking the focus in the menubar.</para>
+        <para>&tprocedure; Open gedit and press shift+f10.</para>
+        <para>&tresult; Orca should say "shift f 10" before speaking the focus in the menubar.</para>
 
       </section>
       <section><title>lock key echo test </title>
@@ -216,13 +216,13 @@
         <para>&tresult; When each character is deleted the next character on the line should be spoken after saying "delete".  </para>
         <para>&tgoal; when pressing backspace orca should speak the word "back" folowed by the updated information after backspace is pressed.</para>
         <para>&tprocedure; Open gedit and type a line of text.  Press backspace until all characters have been deleted.</para>
-        <para>&tresult; When each character is deleted orca should say "back" then say the previous character on the line should be spoken.  </para>
+        <para>&tresult; When each character is deleted orca should say "back" then say the previous character.  </para>
         <para>&tgoal; Orca should speak location information after home and end are pressed.</para>
         <para>&tprocedure; Open gedit and type a line of text.  Press home to return to the beginning of the line and press end  to move to the end of the line.</para>
         <para>&tresult; When these keys are pressed the character under the cursor should be spoken preceeded by the key name.  This includes spaces.</para>
         <para>&tgoal; Orca should speak location information after page up and page down are pressed.</para>
-        <para>&tprocedure; Open gedit and open a long document.  Press CTRL+home to return to the beginning of the line and press page down several times to move to the next pages of the document.</para>
-        <para>&tresult; When these keys are pressed the line under the cursor should be spoken preceeded by the key name.  This includes spaces.  When the end of the document is reached nothing should be spoken.  Repeat this test with page up expecting the same results.  </para>
+        <para>&tprocedure; Open gedit and open a long document.  Press CTRL+home to return to the beginning of the line and press page down several times to move to  each next page of the document.</para>
+        <para>&tresult; When these keys are pressed the line under the cursor should be spoken preceeded by the key name.  This includes spaces.  When the end of the document is reached "bottom of document" should be spoken.  Repeat this test with page up expecting the same results.  </para>
         <para>&tgoal; Orca should speak tab and shift+tab when navigating a dialog.</para>
         <para>&tprocedure; Open gedit and press CTRL+o to bring up the file open dialog.  Tab through the controls in the dialog box.</para>
         <para>&tresult; The Word "tab" should be heard before the control with focus.</para>
@@ -239,8 +239,8 @@
         <para>&tprocedure; Open gedit and type a line of text.  Press home to return to the beginning of the line and press end  to move to the end of the line.</para>
         <para>&tresult; When these keys are pressed the character under the cursor should be spoken.  This includes spaces.</para>
         <para>&tgoal; Orca should speak location information after page up and page down are pressed.</para>
-        <para>&tprocedure; Open gedit and open a long document.  Press CTRL+home to return to the beginning of the line and press page down several times to move to the next pages of the document.</para>
-        <para>&tresult; When these keys are pressed the line under the cursor should be spoken.  This includes spaces.  When the end of the document is reached nothing should be spoken.  Repeat this test with page up expecting the same results.  </para>
+        <para>&tprocedure; Open gedit and open a long document.  Press CTRL+home to return to the beginning of the line and press page down several times to move to each  next page of the document.</para>
+        <para>&tresult; When these keys are pressed the line under the cursor should be spoken.  This includes spaces.  When the end of the document is reached "bottom of document" should be spoken.  Repeat this test with page up expecting the same results.  </para>
 
       </section>
 
@@ -262,7 +262,7 @@
       <section id="tpstartmenu"><title>Navigate Start Menu</title>
         <para>&tgoal; Determine if Orca reads the top level of the start menu.</para>
         <para>&tprocedure; Open the start menu from the keyboard and arrow up and down through all the items.</para>
-        <para>&tresult; When first entering the menu orca should speak the name of the panel gaining focus.  Orca should speak the selected item  while arrowing.  If an item is a submenu, orca should fillow the item name with "menu".</para>
+        <para>&tresult; When first entering the menu orca should speak the name of the panel gaining focus.  Orca should speak the selected item  while arrowing.  If an item is a submenu, orca should follow the item name with "menu".</para>
                 <para>&tgoal; Determine if Orca reads correctly when entering submenus.</para>
         <para>&tprocedure; Open the start menu and navigate into each of the submenus..</para>
         <para>&tresult; When moving into the submenu orca should speak the new item with focus.</para>
@@ -276,7 +276,7 @@ from the menubar of the Wastebasket window.  Close the Wastebasket by choosing '
 <para>&tresult; The
 files / folders are moved from the desktop into the wastebasket.  The files / folders are permanently removed from the nautilus Wastebasket window.</para>
 <para>&tgoal; Determine if Orca reads and navigates the top and bottom panels.</para>
-        <para>&tprocedure; Press CTRL+ALT+tab to get to the desktop.  Press this combination again to get to the top panel with the varius status bottons.  Press space on each button.</para>
+        <para>&tprocedure; Press CTRL+ALT+tab to get to the desktop.  Press this combination again to get to the top panel with the varius status buttons.  Press space on each button.</para>
         <para>&tresult; When arrowing to each pannel applet orca should read it and it's status.  When activating it orca should read any changes the user makes in the dialog.</para>
 <para>&tgoal; Ability to  change volume using arrow keys </para>
 <para>&tprocedure;  Focus the top panel.  Pop-up it's context menu with either Ctrl-F10> or by right-clicking on the panel.  Select 'Add to Panel'->'Multimedia'->'Volume
@@ -304,8 +304,8 @@ entry field.  Navigate to 'Browse' button and action it. Navigate 'Folders' and 
 and action it. Focus 'Edit' button and action it.  Verify values can be changed.  Focus 'Close' button and action it. </para>
 <para>&tresult; The 'File
 Associations' window pops up.  User can add a new file type and re-edit it's values afterwards.</para>
-		<para>&tgoal; Ability   to choose different Desktop font family and size </para>
-		<para>&tprocedure; Start up nautilus file manager by selecting  'Preferences'->'Display'->'Font'.  Navigate to 'Desktop font' button with Tab.  Activate
+    <para>&tgoal; Ability   to choose different Desktop font family and size </para>
+    <para>&tprocedure; Start up nautilus file manager by selecting  'Preferences'->'Display'->'Font'.  Navigate to 'Desktop font' button with Tab.  Activate
 		this button's dialog with Space or press Alt-D>.  Choose a different font family.  Choose a bold-italic font style.  Choose a size +10 greater.  Action
 		the 'OK' button to confirm these changes.  Reset the 'Desktop font' settings back.  Close the 'Font Preferences' dialog. </para>
 		<para>&tresult; Font
@@ -324,7 +324,7 @@ and action it.  Focus the launcher icon in the bottom panel.  Activate the icon 
 on the printer manager icon.  Activate it's context menu with either Shift+F10 or by right-clicking on it.  Remove it by selecting 'Remove From Panel'
 menu item.  Alt-Tab> to the Print Manager app and close it.        </para>
 <para>&tresult; Printer launcher icon available in bottom panel.  An instance
-of the nautilus Print Manager launched.  "altered; text was changed" icon removed from the bottom panel.</para>
+of the nautilus Print Manager launches.  "altered; text was changed" icon removed from the bottom panel.</para>
 <para>&tgoal; Ability to change from 'direct' to 'manual' and edit the 'manual' setting        </para>
 <para>&tprocedure; Launch 'Preferences'->'Internet'.  Navigate to 'Direct Internet connection' and back to 'Manual proxy configuration'. Navigate to text
 entry fields in 'Manual' and change some values.  Focus 'Close' button and action it.  Relaunch the 'Internet' dialog to verify settings change.  Close
