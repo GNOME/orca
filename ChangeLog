@@ -1,3 +1,11 @@
+2006-11-10  Willie Walker <william.walker@sun.com>
+
+	* src/orca/keybindings.py: add a little more code and logic to try
+	to get keybinding support to work a little better with the Solaris
+	keypad.  NumLock still presents an issue on Solaris, though.  Also
+	added more documentation to say why we're looking at keycodes 
+	instead of keysyms.
+	
 2006-11-10  Mike Pedersen <michael.pedersen@sun.com> 
 
         * docs/doc-set/ue_input_style.sgml,

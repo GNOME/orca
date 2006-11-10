@@ -45,6 +45,21 @@ def _getKeycode(keysym):
     """Converts an XKeysym string (e.g., 'KP_Enter') to a keycode that
     should match the event.hw_code for key events.
 
+    This whole situation is caused by the fact that Solaris chooses
+    to give us different keycodes for the same key, and the keypad
+    is the primary place where this happens: if NumLock is not on,
+    there is no telling the difference between keypad keys and the
+    other navigation keys (e.g., arrows, page up/down, etc.).  One,
+    for example, would expect to get KP_End for the '1' key on the
+    keypad if NumLock were not on.  Instead, we get 'End' and the
+    keycode for it matches the keycode for the other 'End' key.  Odd.
+    If NumLock is on, we at least get KP_* keys.
+
+    So...when setting up keybindings, we say we're interested in
+    KeySyms, but those keysyms are carefully chosen so as to result
+    in a keycode that matches the actual key on the keyboard.  This
+    is why we use KP_1 instead of KP_End and so on in our keybindings.
+
     Arguments:
     - keysym: a string that is a valid representation of an XKeysym.
 
@@ -53,15 +68,30 @@ def _getKeycode(keysym):
     """
     if not _keycodeCache.has_key(keysym):
         keymap = gtk.gdk.keymap_get_default()
+
+        # Find the numerical value of the keysym
+        #
         keyval = gtk.gdk.keyval_from_name(keysym)
         if keyval == 0:
             return 0
+
+        # Now find the keycodes for the keysym.   Since a keysym can
+        # be associated with more than one key, we'll shoot for the
+        # keysym that's in group 0, regardless of shift level (each
+        # entry is of the form [keycode, group, level]).
+        #
+        _keycodeCache[keysym] = 0
         entries = keymap.get_entries_for_keyval(keyval)
-            
         if entries:
-            _keycodeCache[keysym] = entries[0][0]
-        else:
-            _keycodeCache[keysym] = 0
+            for entry in entries:
+                if entry[1] == 0:  # group = 0
+                    _keycodeCache[keysym] = entry[0]
+                    break
+                if _keycodeCache[keysym] == 0:
+                    _keycodeCache[keysym] = entries[0][0]
+
+        #print keysym, keyval, entries, _keycodeCache[keysym]
+
     return _keycodeCache[keysym]
 
 class KeyBinding:
