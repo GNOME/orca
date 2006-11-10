@@ -857,6 +857,10 @@ def loadUserSettings(script=None, inputEvent=None):
         debug.println(debug.LEVEL_CONFIGURATION,
                       "Magnification module has NOT been initialized.")
 
+    for keyName in settings.orcaModifierKeys:
+        if keyName == "Caps_Lock":
+            os.system('xmodmap -e "clear Lock"')
+
     _showMainWindowGUI()
 
     httpserver.init()

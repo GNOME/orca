@@ -90,7 +90,16 @@ runOrca()
     exec_prefix=@prefix@
     PYTHONPATH=@pyexecdir@
     export PYTHONPATH
+
+    # We'll save and restore the Caps_Lock as a modifier just in case
+    # the user is using the Caps_Lock as the Orca modifier key.
+    #
+    CAPSLOCKSETTING=`xmodmap | grep Caps_Lock | cut -f1`
     @PYTHON@ -c "import orca.orca; orca.orca.main()" "$ARGS"
+    if [ "x$CAPSLOCKSETTING" != "x" ]
+    then
+	xmodmap -e "add $CAPSLOCKSETTING = Caps_Lock" 
+    fi
 }
 
 # Runs a watchdog process in the background.  It merely attempts to

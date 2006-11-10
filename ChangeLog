@@ -1,3 +1,8 @@
+2006-11-10  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca.in, src/orca/orca.py: fix for bug 373381 to allow
+	the Caps Lock key to be used as the Orca modifier.
+	
 2006-11-09  Mike Pedersen <michael.pedersen@sun.com> 
 
         * docs/doc-set/ue_input_style.sgml,
