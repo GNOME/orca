@@ -1,18 +1,22 @@
+# translation of orca.gnome-2-16.po to Arabic
 # Copyright (C) 2006 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Djihed Afifi <djihed@gmail.com>, 2006.
 #
+# Djihed Afifi <djihed@gmail.com>, 2006.
+# Khaled Hosny <khaledhosny@eglug.org>, 2006.
 msgid ""
 msgstr ""
-"Project-Id-Version: orca.gnome-2-16-.ar\n"
+"Project-Id-Version: orca.gnome-2-16\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-11-07 22:20+0000\n"
-"PO-Revision-Date: 2006-10-06 17:42-0000\n"
-"Last-Translator: Djihed Afifi <djihed@gmail.com>\n"
-"Language-Team: Arabic <support@arabeyes.org>\n"
+"PO-Revision-Date: 2006-11-10 06:28+0200\n"
+"Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
+"Language-Team: Arabic <support@eglug.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.2\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 0 : n==2 ? 1 : n>=3 && n<=10 ? 2 : 3\n\n"
 
 #: ../orca.desktop.in.h:1
 #, fuzzy
@@ -20,8 +24,7 @@ msgid "Orca Screen Reader and Magnifier"
 msgstr "قارئ شاشة و مكبّرة لمكتب جنوم"
 
 #: ../orca.desktop.in.h:2
-msgid ""
-"Present on-screen information as speech or braille, or magnify the screen"
+msgid "Present on-screen information as speech or braille, or magnify the screen"
 msgstr ""
 
 #: ../src/orca/braillegenerator.py:193 ../src/orca/speechgenerator.py:191
@@ -828,7 +831,7 @@ msgstr "تفعيل/تعطيل الكلام"
 #: ../src/orca/orca-setup.glade.h:51
 #, fuzzy
 msgid "Ver_bose"
-msgstr "يتطلب ال_نادل التوثّق"
+msgstr "يتطلب ال_خادم التوثّق"
 
 #: ../src/orca/orca-setup.glade.h:52
 msgid "Vo_lume:"
@@ -2264,8 +2267,7 @@ msgid "link"
 msgstr "وصلة"
 
 #: ../src/orca/scripts/gaim.py:149
-msgid ""
-"Toggle whether we prefix chat room messages with the name of the chat room."
+msgid "Toggle whether we prefix chat room messages with the name of the chat room."
 msgstr ""
 
 #: ../src/orca/scripts/gaim.py:153
@@ -2469,3 +2471,4 @@ msgstr ""
 #: ../src/orca/util.py:1192
 msgid "document selected from cursor position"
 msgstr ""
+
