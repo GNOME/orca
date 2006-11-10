@@ -1412,8 +1412,8 @@ class Script(script.Script):
                                         rolenames.ROLE_COLUMN_HEADER].speech
                             utterances.append(text)
 
-                oldNodeLevel = util.getNodeLevel(oldLocusOfFocus)
-                newNodeLevel = util.getNodeLevel(newLocusOfFocus)
+            oldNodeLevel = util.getNodeLevel(oldLocusOfFocus)
+            newNodeLevel = util.getNodeLevel(newLocusOfFocus)
 
             # We'll also treat radio button groups as though they are
             # in a context, with the label for the group being the

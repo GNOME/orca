@@ -1,5 +1,9 @@
 2006-11-10  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/default.py:
+          Partial fix for bug #356060 - Provide access to tree item level 
+          and state in OOo Navigator.
+
         * bugs/bugs.html:
           Added two new OpenOffice bugs:
 
