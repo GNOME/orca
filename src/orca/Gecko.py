@@ -64,13 +64,6 @@ NEWLINE_ROLES = [rolenames.ROLE_PARAGRAPH,
                  rolenames.ROLE_LIST_ITEM,
                  rolenames.ROLE_HEADING]
 
-def _getAutocompleteEntry(obj):
-    for i in range(0, obj.childCount):
-        child = obj.child(i)
-        if child.role == rolenames.ROLE_ENTRY:
-            return child
-    return None
-
 ########################################################################
 #                                                                      #
 # Custom BrailleGenerator                                              #
@@ -760,7 +753,7 @@ class Script(default.Script):
         # get focus, their child (which is an entry) really has focus.
         #
         if event.source.role == rolenames.ROLE_AUTOCOMPLETE:
-            entry = _getAutocompleteEntry(event.source)
+            entry = self.getAutocompleteEntry(event.source)
             orca.setLocusOfFocus(event, entry)
             return
 
@@ -969,6 +962,67 @@ class Script(default.Script):
     # Utility Methods                                                  #
     #                                                                  #
     ####################################################################
+
+    def getAutocompleteEntry(self, obj):
+        """Returns the ROLE_ENTRY object of a ROLE_AUTOCOMPLETE object or
+        None if the entry cannot be found.
+        """
+        for i in range(0, obj.childCount):
+            child = obj.child(i)
+            if child.role == rolenames.ROLE_ENTRY:
+                return child
+        return None
+
+    def getCellCoordinates(self, obj):
+        """Returns the [row, col] of a ROLE_TABLE_CELL or [0, 0] if this
+        if the coordinates cannot be found.
+        """
+
+        # [[[TODO: WDW - we do this here because Gecko's table interface
+        # is broken and does not give us valid answers.  So...we hack
+        # and try to find the coordinates in other ways.  We assume
+        # the cells are laid out in row/column order, thus allowing us
+        # to do some easy math to find the coordinated.]]]
+        #
+        parent = obj.parent
+        if parent and parent.table:
+            row = obj.index / parent.table.nColumns
+            col = obj.index % parent.table.nColumns
+            return [row, col]
+
+            # By the way, here's the proper way to do it, since we
+            # cannot always depend upon the ordering of the children.
+            # Easy if it works...
+            #
+            row = parent.table.getRowAtIndex(obj.index)
+            col = parent.table.getColumnAtIndex(obj.index)
+            return [row, col]
+
+        return [0, 0]
+
+    def getCellHeaders(self, obj):
+        """Returns the [rowHeader, colHeader] of a ROLE_TABLE_CELL or
+        [None, None] if the headers cannot be found.
+        """
+
+        parent = obj.parent
+        if parent and parent.table:
+            [row, col] = self.getCellCoordinates(obj)
+            rowHeader = parent.table.getRowDescription(row)
+            colHeader = parent.table.getColumnDescription(col)
+            return [rowHeader, colHeader]
+
+        return [None, None]
+
+    def getTableCaption(self, obj):
+        """Returns the ROLE_CAPTION object of a ROLE_TABLE object or None
+        if the caption cannot be found.
+        """
+        for i in range(0, obj.childCount):
+            child = obj.child(i)
+            if child.role == rolenames.ROLE_CAPTION:
+                return child
+        return None
 
     def inDocumentContent(self):
         """Returns True if the current locus of focus is in the
@@ -1673,6 +1727,18 @@ class Script(default.Script):
                 string = self.getText(obj, startOffset, endOffset)
             else:
                 string = obj.name
+
+            # Debug code.
+            #
+            #if obj.role == rolenames.ROLE_TABLE_CELL:
+            #    [row, col] = self.getCellCoordinates(obj)
+            #    [rowHeader, colHeader] = self.getCellHeaders(obj)
+            #    captionObj = self.getTableCaption(obj.parent)
+            #    if captionObj:
+            #        caption = util.getDisplayedText(captionObj)
+            #    else:
+            #        caption = ""
+            #    print "FOO", string, caption, row, col, rowHeader, colHeader
 
             self.presentString(obj, string, True)
 

@@ -1,3 +1,10 @@
+2006-11-11  Willie Walker <william.walker@sun.com>
+
+	* src/orca/Gecko.py: add code to gather information about tables
+	and table cells, some of which is needed to workaround bugs in
+	the Firefox AT-SPI implementation (these are marked with TODO's
+	that should be removed once Firefox is fixed).
+	
 2006-11-10  Willie Walker <william.walker@sun.com>
 
 	* src/orca/rolenames.py: add caption role.
