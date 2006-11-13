@@ -370,6 +370,11 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         #
         self.showMainWindowCheckButton.set_active(prefs["showMainWindow"])
 
+        if prefs["keyboardLayout"] == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
+            self.generalDesktopButton.set_active(True)
+        else:
+            self.generalLaptopButton.set_active(True)
+
     def _getComboBoxIndex(self, combobox, str):
         """ For each of the entries in the given combo box, look for str.
             Return the index of the entry if str is found.
@@ -1373,6 +1378,31 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         self.prefsDict["showMainWindow"] = widget.get_active()
+
+    def keyboardLayoutChanged(self, widget):
+        """Signal handler for the "toggled" signal for the generalDesktopButton,
+           or generalLaptopButton GtkRadioButton widgets. The user has
+           toggled the keyboard layout value. If this signal was
+           generated as the result of a radio button getting selected
+           (as opposed to a radio button losing the selection), set the
+           'keyboardLayout' preference to the new value. Also set the 
+           matching list of Orca modifier keys
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        if widget.get_active():
+            if widget.get_label() == _("_Desktop"):
+                self.prefsDict["keyboardLayout"] = \
+                    settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
+                self.prefsDict["orcaModifierKeys"] = \
+                    settings.DESKTOP_MODIFIER_KEYS
+            else:
+                self.prefsDict["keyboardLayout"] = \
+                    settings.GENERAL_KEYBOARD_LAYOUT_LAPTOP
+                self.prefsDict["orcaModifierKeys"] = \
+                    settings.LAPTOP_MODIFIER_KEYS
 
     def helpButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the helpButton

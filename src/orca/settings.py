@@ -92,6 +92,7 @@ userCustomizableSettings = [
     "magTargetDisplay",
     "verbalizePunctuationStyle",
     "showMainWindow",
+    "keyboardLayout"
 ]
 
 # The name of the module that hold the user interface for the main window
@@ -120,7 +121,12 @@ quitModule = "orca_quit"
 # a KeyboardEvent input event.  The keys are currently compared to the
 # event_string of a keyboard input event from AT-SPI.
 #
-orcaModifierKeys        = ["Insert", "KP_Insert"]
+# The initial set of modifier keys is dependant upon whether the user
+# has specified a desktop or a laptop keyboard layout.
+#
+DESKTOP_MODIFIER_KEYS = ["Insert", "KP_Insert"]
+LAPTOP_MODIFIER_KEYS  = ["Caps_Lock"]
+orcaModifierKeys      = DESKTOP_MODIFIER_KEYS
 
 # A new modifier to use (set by the press of any key in the
 # orcaModifierKeys list) to represent the Orca modifier.
@@ -313,6 +319,12 @@ enableActionKeys        = True
 # If True, show the main Orca window.
 #
 showMainWindow          = True
+
+# Keyboard layout options (see keyboardLayout).
+#
+GENERAL_KEYBOARD_LAYOUT_DESKTOP = 1
+GENERAL_KEYBOARD_LAYOUT_LAPTOP  = 2
+keyboardLayout                  = GENERAL_KEYBOARD_LAYOUT_DESKTOP
 
 
 # If True, reads all the table cells in the current row rather than just

@@ -480,7 +480,8 @@ def _isModifierKey(event_string):
     #    event.]]]
 
     modifierKeys = [ 'Alt_L', 'Alt_R', 'Control_L', 'Control_R', \
-                     'Shift_L', 'Shift_R', 'Meta_L', 'Meta_R', "Insert" ]
+                     'Shift_L', 'Shift_R', 'Meta_L', 'Meta_R' ]
+    modifierKeys.extend(settings.orcaModifierKeys)
 
     reply = event_string in modifierKeys
     debug.println(debug.LEVEL_FINEST,
@@ -498,7 +499,8 @@ def _isLockingKey(event_string):
 
     lockingKeys = [ "Caps_Lock", "Num_Lock", "Scroll_Lock" ]
 
-    reply = event_string in lockingKeys
+    reply = event_string in lockingKeys \
+            and not event_string in settings.orcaModifierKeys
     debug.println(debug.LEVEL_FINEST,
                   "orca._echoLockingKey: returning: %s" % reply)
     return reply
@@ -806,6 +808,10 @@ def loadUserSettings(script=None, inputEvent=None):
     speech.shutdown()
     braille.shutdown()
     mag.shutdown()
+
+    if _currentPresentationManager >= 0:
+        _PRESENTATION_MANAGERS[_currentPresentationManager].deactivate()
+
     time.sleep(1)
 
     reloaded = False
@@ -860,6 +866,9 @@ def loadUserSettings(script=None, inputEvent=None):
     for keyName in settings.orcaModifierKeys:
         if keyName == "Caps_Lock":
             os.system('xmodmap -e "clear Lock"')
+
+    if _currentPresentationManager >= 0:
+        _PRESENTATION_MANAGERS[_currentPresentationManager].activate()
 
     _showMainWindowGUI()
 

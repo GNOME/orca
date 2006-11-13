@@ -821,6 +821,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
 
         self._listenerCounts = {}
         self._knownScripts   = {}
+        self._knownAppSettings = {}
+        self._oldAppSettings = None
         self._defaultScript  = None
 
         orca_state.activeScript = self._getScript(None)
@@ -850,6 +852,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                                                   eventType)
         self._listenerCounts = {}
         self._knownScripts   = {}
+        self._knownAppSettings = {}
+        self._oldAppSettings = None
         self._defaultScript  = None
 
         orca_state.activeScript = None

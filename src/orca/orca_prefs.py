@@ -183,6 +183,22 @@ def _getVoicesString(voices):
 
     return voicesStr
 
+def _getKeyboardLayoutString(keyboardLayout):
+    """Returns a string that represents the keyboard layout passed in."""
+
+    if keyboardLayout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
+        return "orca.settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP"
+    else:
+        return "orca.settings.GENERAL_KEYBOARD_LAYOUT_LAPTOP"
+
+def _getOrcaModifierKeysString(orcaModifierKeys):
+    """Returns a string that represents the Orca modifier keys passed in."""
+
+    if orcaModifierKeys == settings.DESKTOP_MODIFIER_KEYS:
+        return "orca.settings.DESKTOP_MODIFIER_KEYS"
+    else:
+        return "orca.settings.LAPTOP_MODIFIER_KEYS"
+
 def _getVerbosityString(verbosityLevel):
     """Returns a string that represents the verbosity level passed in."""
     if verbosityLevel == settings.VERBOSITY_LEVEL_BRIEF:
@@ -336,6 +352,10 @@ def writePreferences(prefsDict):
                 value = _getMagMouseTrackingModeString(prefsDict[key])
             elif key == "magSourceDisplay" or key == "magTargetDisplay":
                 value = _getDisplayString(prefsDict[key])
+            elif key == "keyboardLayout":
+                value = _getKeyboardLayoutString(prefsDict[key])
+            elif key == "orcaModifierKeys":
+                value = _getOrcaModifierKeysString(prefsDict[key])
             else:
                 value = prefsDict[key]
             prefs.writelines("orca.settings.%s = %s\n" % (key, value))

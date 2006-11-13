@@ -366,12 +366,12 @@ class Script(script.Script):
 
         return listeners
 
-    def getKeyBindings(self):
-        """Defines the key bindings for this script.
-
-        Returns an instance of keybindings.KeyBindings.
+    def __getDesktopBindings(self):
+        """Returns an instance of keybindings.KeyBindings that use the
+        numeric keypad for focus tracking and flat review.
         """
-        keyBindings = script.Script.getKeyBindings(self)
+
+        keyBindings = keybindings.KeyBindings()
 
         keyBindings.add(
             keybindings.KeyBinding(
@@ -389,6 +389,13 @@ class Script(script.Script):
 
         keyBindings.add(
             keybindings.KeyBinding(
+                "KP_Subtract",
+                0,
+                0,
+                self.inputEventHandlers["toggleFlatReviewModeHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
                 "KP_Add",
                 0,
                 0,
@@ -401,19 +408,12 @@ class Script(script.Script):
                 0,
                 self.inputEventHandlers["whereAmIHandler"]))
 
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "Num_Lock",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
-                self.inputEventHandlers["showZonesHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "KP_Subtract",
-                0,
-                0,
-                self.inputEventHandlers["toggleFlatReviewModeHandler"]))
+        # keyBindings.add(
+        #     keybindings.KeyBinding(
+        #         "KP_Delete",
+        #         0,
+        #         0,
+        #         self.inputEventHandlers["screenFindHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
@@ -624,6 +624,195 @@ class Script(script.Script):
                 0,
                 0,
                 self.inputEventHandlers["reviewNextCharacterHandler"]))
+
+        return keyBindings
+
+    def __getLaptopBindings(self):
+        """Returns an instance of keybindings.KeyBindings that use the
+        the main keyboard keys for focus tracking and flat review.
+        """
+
+        keyBindings = keybindings.KeyBindings()
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "7",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["leftClickReviewItemHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "8",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["rightClickReviewItemHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "p",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["toggleFlatReviewModeHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                ";",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["sayAllHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "Return",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["whereAmIHandler"]))
+
+        # keyBindings.add(
+        #     keybindings.KeyBinding(
+        #         "'",
+        #         1 << settings.MODIFIER_ORCA,
+        #         1 << settings.MODIFIER_ORCA,
+        #         self.inputEventHandlers["screenFindHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "u",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["reviewPreviousLineHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "u",
+                (1 << settings.MODIFIER_ORCA | \
+                 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA | \
+                 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                self.inputEventHandlers["reviewHomeHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "i",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["reviewCurrentLineHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "o",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["reviewNextLineHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "o",
+                (1 << settings.MODIFIER_ORCA | \
+                 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA | \
+                 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                self.inputEventHandlers["reviewEndHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "j",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["reviewPreviousItemHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "j",
+                (1 << settings.MODIFIER_ORCA | \
+                 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA | \
+                 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                self.inputEventHandlers["reviewAboveHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "k",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["reviewCurrentItemHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "k",
+                (1 << settings.MODIFIER_ORCA | \
+                 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA | \
+                 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                self.inputEventHandlers["reviewCurrentAccessibleHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "l",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["reviewNextItemHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "l",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["reviewBelowHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "m",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["reviewPreviousCharacterHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "m",
+                (1 << settings.MODIFIER_ORCA | \
+                 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA | \
+                 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                self.inputEventHandlers["reviewEndOfLineHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                ",",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["reviewCurrentCharacterHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                ".",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["reviewNextCharacterHandler"]))
+
+        return keyBindings
+
+    def getKeyBindings(self):
+        """Defines the key bindings for this script.
+
+        Returns an instance of keybindings.KeyBindings.
+        """
+        keyBindings = script.Script.getKeyBindings(self)
+
+        if settings.keyboardLayout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
+            for keyBinding in self.__getDesktopBindings().keyBindings:
+                keyBindings.add(keyBinding)
+        else:
+            for keyBinding in self.__getLaptopBindings().keyBindings:
+                keyBindings.add(keyBinding)
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "Num_Lock",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["showZonesHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
