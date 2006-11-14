@@ -1,3 +1,9 @@
+2006-11-14  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          Adjusted the key bindings for laptop layout for "comma", 
+          "period" and "semicolon".
+
 2006-11-13  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade:

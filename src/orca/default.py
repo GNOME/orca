@@ -657,7 +657,7 @@ class Script(script.Script):
 
         keyBindings.add(
             keybindings.KeyBinding(
-                ";",
+                "semicolon",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["sayAllHandler"]))
