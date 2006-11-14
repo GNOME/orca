@@ -779,14 +779,14 @@ class Script(script.Script):
 
         keyBindings.add(
             keybindings.KeyBinding(
-                ",",
+                "comma",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["reviewCurrentCharacterHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
-                ".",
+                "period",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["reviewNextCharacterHandler"]))
