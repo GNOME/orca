@@ -426,13 +426,16 @@ class Script(default.Script):
 
     def __init__(self, app):
         default.Script.__init__(self, app)
-        self._navigationFunctions = \
+        self._caretNavigationFunctions = \
             [Script.goNextCharacter,
              Script.goPreviousCharacter,
              Script.goNextWord,
              Script.goPreviousWord,
              Script.goNextLine,
              Script.goPreviousLine]
+        self._structuralNavigationFunctions = \
+            [Script.goNextHeading,
+             Script.goPreviousHeading]
 
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.
@@ -485,6 +488,16 @@ class Script(default.Script):
             input_event.InputEventHandler(
                 Script.goPreviousLine,
                 "Goes to previous line.")
+
+        self.inputEventHandlers["goPreviousHeadingHandler"] = \
+            input_event.InputEventHandler(
+                Script.goPreviousHeading,
+                "Goes to previous heading.")
+
+        self.inputEventHandlers["goNextHeadingHandler"] = \
+            input_event.InputEventHandler(
+                Script.goNextHeading,
+                "Goes to next heading.")
 
     def __getArrowBindings(self):
         """Returns an instance of keybindings.KeyBindings that use the
@@ -604,6 +617,20 @@ class Script(default.Script):
 
         keyBindings.add(
             keybindings.KeyBinding(
+                "h",
+                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                self.inputEventHandlers["goPreviousHeadingHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "h",
+                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                0,
+                self.inputEventHandlers["goNextHeadingHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
                 "d",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
@@ -640,14 +667,20 @@ class Script(default.Script):
         consumes = False
         if user_bindings:
             handler = user_bindings.getInputHandler(keyboardEvent)
-            if handler and handler._function in self._navigationFunctions:
-                return self.useOwnNavigationModel()
+            if handler and handler._function in self._caretNavigationFunctions:
+                return self.useCaretNavigationModel()
+            elif handler \
+                and handler._function in self._structuralNavigationFunctions:
+                return self.useStructuralNavigationModel()
             else:
                 consumes = handler != None
         if not consumes:
             handler = self.keyBindings.getInputHandler(keyboardEvent)
-            if handler and handler._function in self._navigationFunctions:
-                return self.useOwnNavigationModel()
+            if handler and handler._function in self._caretNavigationFunctions:
+                return self.useCaretNavigationModel()
+            elif handler \
+                and handler._function in self._structuralNavigationFunctions:
+                return self.useStructuralNavigationModel()
             else:
                 consumes = handler != None
         return consumes
@@ -662,15 +695,10 @@ class Script(default.Script):
         accessible text specialization, the characterOffset value
         is meaningless (and typically -1)."""
 
-        self.caretContext = self.findCaretContext(\
+        self.caretContext = self.getFirstCaretContext(\
             event.source,
             event.source.text.caretOffset)
         [obj, characterOffset] = self.caretContext
-
-        if not self.useOwnNavigationModel():
-            orca.setLocusOfFocus(event, event.source, False)
-            default.Script.onCaretMoved(self, event)
-            return
 
         # If the user presses left or right, we'll set the target
         # column for up/down navigation by line.  [[[TODO: WDW - this
@@ -1036,7 +1064,7 @@ class Script(default.Script):
                 obj = obj.parent
         return False
 
-    def useOwnNavigationModel(self):
+    def useCaretNavigationModel(self):
         """Returns True if we should do our own caret navigation.
         [[[TODO: WDW - this should return False if we're in something
         like an entry area or a list because we want their keyboard
@@ -1047,6 +1075,24 @@ class Script(default.Script):
         # the Gecko navigation model.]]]
         #
         return False
+
+        letThemDoItRoles = [rolenames.ROLE_ENTRY]
+        obj = orca_state.locusOfFocus
+        while obj:
+            if obj.role == rolenames.ROLE_DOCUMENT_FRAME:
+                return True
+            elif obj.role in letThemDoItRoles:
+                return False
+            else:
+                obj = obj.parent
+        return False
+
+    def useStructuralNavigationModel(self):
+        """Returns True if we should do our own structural navigation.
+        [[[TODO: WDW - this should return False if we're in something
+        like an entry area or a list because we want their keyboard
+        navigation stuff to work.]]]
+        """
 
         letThemDoItRoles = [rolenames.ROLE_ENTRY]
         obj = orca_state.locusOfFocus
@@ -1213,7 +1259,9 @@ class Script(default.Script):
 
         return obj.childrenIndeces[characterOffset]
 
-    def getNextInOrder(self, obj=None, startOffset=-1, includeNonText=True):
+    def getNextCaretInOrder(self, obj=None,
+                            startOffset=-1,
+                            includeNonText=True):
         """Given an object an a character offset, return the next
         caret context following an in order traversal rule.
 
@@ -1243,13 +1291,15 @@ class Script(default.Script):
                 if unicodeText[nextOffset] != EMBEDDED_OBJECT_CHARACTER:
                     return [obj, nextOffset]
                 else:
-                    return self.getNextInOrder(
+                    return self.getNextCaretInOrder(
                         obj.child(self.getChildIndex(obj, nextOffset)),
                         -1,
                         includeNonText)
         elif obj.childCount:
             try:
-                return self.getNextInOrder(obj.child(0), -1, includeNonText)
+                return self.getNextCaretInOrder(obj.child(0),
+                                                -1,
+                                                includeNonText)
             except:
                 debug.printException(debug.LEVEL_SEVERE)
         elif includeNonText and (startOffset < 0):
@@ -1266,26 +1316,27 @@ class Script(default.Script):
         while obj.parent and obj != obj.parent:
             characterOffsetInParent = self.getCharacterOffsetInParent(obj)
             if characterOffsetInParent >= 0:
-                return self.getNextInOrder(obj.parent,
-                                           characterOffsetInParent,
-                                           includeNonText)
+                return self.getNextCaretInOrder(obj.parent,
+                                                characterOffsetInParent,
+                                                includeNonText)
             else:
                 index = obj.index + 1
                 if index < obj.parent.childCount:
                     try:
-                        return self.getNextInOrder(obj.parent.child(index),
-                                                   -1,
-                                                   includeNonText)
+                        return self.getNextCaretInOrder(
+                            obj.parent.child(index),
+                            -1,
+                            includeNonText)
                     except:
                         debug.printException(debug.LEVEL_SEVERE)
             obj = obj.parent
 
         return [None, -1]
 
-    def getPreviousInOrder(self,
-                           obj=None,
-                           startOffset=-1,
-                           includeNonText=True):
+    def getPreviousCaretInOrder(self,
+                                obj=None,
+                                startOffset=-1,
+                                includeNonText=True):
         """Given an object an a character offset, return the previous
         caret context following an in order traversal rule.
 
@@ -1312,15 +1363,16 @@ class Script(default.Script):
                 if unicodeText[previousOffset] != EMBEDDED_OBJECT_CHARACTER:
                     return [obj, previousOffset]
                 else:
-                    return self.getPreviousInOrder(
+                    return self.getPreviousCaretInOrder(
                         obj.child(self.getChildIndex(obj, previousOffset)),
                         -1,
                         includeNonText)
         elif obj.childCount:
             try:
-                return self.getPreviousInOrder(obj.child(obj.childCount - 1),
-                                               -1,
-                                               includeNonText)
+                return self.getPreviousCaretInOrder(
+                    obj.child(obj.childCount - 1),
+                    -1,
+                    includeNonText)
             except:
                 debug.printException(debug.LEVEL_SEVERE)
         elif includeNonText and (startOffset < 0):
@@ -1339,23 +1391,24 @@ class Script(default.Script):
         while obj.parent and obj != obj.parent:
             characterOffsetInParent = self.getCharacterOffsetInParent(obj)
             if characterOffsetInParent >= 0:
-                return self.getPreviousInOrder(obj.parent,
-                                               characterOffsetInParent,
-                                               includeNonText)
+                return self.getPreviousCaretInOrder(obj.parent,
+                                                    characterOffsetInParent,
+                                                    includeNonText)
             else:
                 index = obj.index - 1
                 if index >= 0:
                     try:
-                        return self.getPreviousInOrder(obj.parent.child(index),
-                                                       -1,
-                                                       includeNonText)
+                        return self.getPreviousCaretInOrder(
+                            obj.parent.child(index),
+                            -1,
+                            includeNonText)
                     except:
                         debug.printException(debug.LEVEL_SEVERE)
             obj = obj.parent
 
         return [None, -1]
 
-    def findCaretContext(self, obj, characterOffset):
+    def getFirstCaretContext(self, obj, characterOffset):
         """Given an object and a character offset, find the first
         [obj, characterOffset] that is actually presenting something
         on the display.  The reason we do this is that the
@@ -1378,11 +1431,22 @@ class Script(default.Script):
             if character == EMBEDDED_OBJECT_CHARACTER:
                 try:
                     childIndex = self.getChildIndex(obj, characterOffset)
-                    return self.findCaretContext(obj.child(childIndex), 0)
+                    return self.getFirstCaretContext(obj.child(childIndex), 0)
                 except:
                     return [obj, -1]
             else:
-                return [obj, characterOffset]
+                # [[[TODO: WDW - HACK because Gecko currently exposes
+                # whitespace from the raw HTML to us.  We can infer this
+                # by seeing if the extents are nil.  If so, we skip to
+                # the next character.]]]
+                #
+                extents = self.getExtents(obj,
+                                          characterOffset,
+                                          characterOffset + 1)
+                if extents == (0, 0, 0,0):
+                    return self.getFirstCaretContext(obj, characterOffset + 1)
+                else:
+                    return [obj, characterOffset]
         else:
             return [obj, -1]
 
@@ -1394,7 +1458,9 @@ class Script(default.Script):
         try:
             return self.caretContext
         except:
-            self.caretContext = self.getNextInOrder(None, -1, includeNonText)
+            self.caretContext = self.getNextCaretInOrder(None,
+                                                         -1,
+                                                         includeNonText)
         return self.caretContext
 
     def dumpInfo(self, obj):
@@ -1507,8 +1573,8 @@ class Script(default.Script):
 
                 lastObj = obj
 
-            [obj, characterOffset] = self.getNextInOrder(obj,
-                                                         characterOffset)
+            [obj, characterOffset] = self.getNextCaretInOrder(obj,
+                                                              characterOffset)
 
         return contents
 
@@ -1590,7 +1656,7 @@ class Script(default.Script):
 
             [lastObj, lastCharacterOffset] = [obj, characterOffset]
             [obj, characterOffset] = \
-                  self.getPreviousInOrder(obj, characterOffset)
+                  self.getPreviousCaretInOrder(obj, characterOffset)
 
         contents.append([lastObj,
                          lastCharacterOffset,
@@ -1613,7 +1679,7 @@ class Script(default.Script):
 
             [lastObj, lastCharacterOffset] = [obj, characterOffset]
             [obj, characterOffset] = \
-                  self.getNextInOrder(obj, characterOffset)
+                  self.getNextCaretInOrder(obj, characterOffset)
             contents[-1][2] = lastCharacterOffset + 1
 
         return contents
@@ -1660,7 +1726,7 @@ class Script(default.Script):
         [lastObj, lastCharacterOffset] = [obj, characterOffset]
         while obj:
             [obj, characterOffset] = \
-                  self.getPreviousInOrder(obj, characterOffset)
+                  self.getPreviousCaretInOrder(obj, characterOffset)
 
             extents = self.getExtents(
                 obj, characterOffset, characterOffset + 1)
@@ -1708,7 +1774,7 @@ class Script(default.Script):
                 [lastObj, lastCharacterOffset] = [obj, characterOffset]
 
             [obj, characterOffset] = \
-                  self.getNextInOrder(obj, characterOffset)
+                  self.getNextCaretInOrder(obj, characterOffset)
 
         return contents
 
@@ -1769,7 +1835,8 @@ class Script(default.Script):
                 contents += self.getCharacterAtOffset(obj, characterOffset)
                 [lastObj, lastCharacterOffset] = [obj, characterOffset]
                 lastCharacterExtents = characterExtents
-            [obj, characterOffset] = self.getNextInOrder(obj, characterOffset)
+            [obj, characterOffset] = self.getNextCaretInOrder(obj,
+                                                              characterOffset)
         if lastObj and lastObj.role == rolenames.ROLE_LINK:
             contents += ">"
         return contents
@@ -1839,14 +1906,14 @@ class Script(default.Script):
         # the number will end up positioning the caret at the end
         # of the list.]]]
         #
-        #character = self.getCharacterAtOffset(obj, characterOffset)
-        #if character:
-        #    if obj.role != rolenames.ROLE_LIST_ITEM:
-        #        caretSet = obj.text.setCaretOffset(characterOffset)
-        #    else:
-        #        caretSet = False
-        #    if not caretSet:
-        #        print "CARET NOT SET", obj.role, characterOffset
+        character = self.getCharacterAtOffset(obj, characterOffset)
+        if character:
+            if obj.role != rolenames.ROLE_LIST_ITEM:
+                caretSet = obj.text.setCaretOffset(characterOffset)
+            else:
+                caretSet = False
+            if not caretSet:
+                print "CARET NOT SET", obj.role, characterOffset
 
     def goNextCharacter(self, inputEvent):
         """Positions the caret offset to the next character or object
@@ -1855,7 +1922,8 @@ class Script(default.Script):
 
         [obj, characterOffset] = self.getCaretContext()
         while obj:
-            [obj, characterOffset] = self.getNextInOrder(obj, characterOffset)
+            [obj, characterOffset] = self.getNextCaretInOrder(obj,
+                                                              characterOffset)
             if obj and obj.state.count(atspi.Accessibility.STATE_SHOWING):
                 self.caretContext = [obj, characterOffset]
                 break
@@ -1873,8 +1941,8 @@ class Script(default.Script):
         """
         [obj, characterOffset] = self.getCaretContext()
         while obj:
-            [obj, characterOffset] = self.getPreviousInOrder(obj,
-                                                             characterOffset)
+            [obj, characterOffset] = self.getPreviousCaretInOrder(
+                obj, characterOffset)
             if obj and obj.state.count(atspi.Accessibility.STATE_SHOWING):
                 self.caretContext = [obj, characterOffset]
                 break
@@ -1899,7 +1967,7 @@ class Script(default.Script):
 
         # Now go to the beginning of the previous word
         #
-        [obj, characterOffset] = self.getPreviousInOrder(obj, startOffset)
+        [obj, characterOffset] = self.getPreviousCaretInOrder(obj, startOffset)
         contents = self.getWordAtOffset(obj, characterOffset)
         [obj, startOffset, endOffset] = contents[0]
 
@@ -1919,7 +1987,7 @@ class Script(default.Script):
 
         # Now go to the beginning of the next word.
         #
-        [obj, characterOffset] = self.getNextInOrder(obj, endOffset - 1)
+        [obj, characterOffset] = self.getNextCaretInOrder(obj, endOffset - 1)
         contents = self.getWordAtOffset(obj, characterOffset)
         [obj, startOffset, endOffset] = contents[0]
 
@@ -1930,8 +1998,9 @@ class Script(default.Script):
         self.presentWordAtOffset(obj, startOffset)
 
     def goPreviousLine(self, inputEvent):
-        """Positions the caret offset to the next line in the document
-        window, attempting to preserve horizontal caret position.
+        """Positions the caret offset at the previous line in the
+        document window, attempting to preserve horizontal caret
+        position.
         """
         [obj, characterOffset] = self.getCaretContext()
         lineExtents = self.getExtents(
@@ -1973,7 +2042,7 @@ class Script(default.Script):
                 [lastObj, lastCharacterOffset] = [obj, characterOffset]
 
             [obj, characterOffset] = \
-                  self.getPreviousInOrder(obj, characterOffset)
+                  self.getPreviousCaretInOrder(obj, characterOffset)
 
         #print "GPL ENDED UP AT", lastObj.role, lineExtents
         self.setCaretPosition(lastObj, lastCharacterOffset)
@@ -1985,9 +2054,8 @@ class Script(default.Script):
         self.dumpContent(inputEvent, contents)
 
     def goNextLine(self, inputEvent):
-        """Positions the caret offset to the previous line in the
-        document window, attempting to preserve horizontal caret
-        position.
+        """Positions the caret offset at the next line in the document
+        window, attempting to preserve horizontal caret position.
         """
         [obj, characterOffset] = self.getCaretContext()
         lineExtents = self.getExtents(
@@ -2029,7 +2097,7 @@ class Script(default.Script):
                 [lastObj, lastCharacterOffset] = [obj, characterOffset]
 
             [obj, characterOffset] = \
-                  self.getNextInOrder(obj, characterOffset)
+                  self.getNextCaretInOrder(obj, characterOffset)
 
         #print "GNL ENDED UP AT", lastObj.role, lineExtents
         self.setCaretPosition(lastObj, lastCharacterOffset)
@@ -2039,3 +2107,51 @@ class Script(default.Script):
         #
         contents = self.getLineAtOffset(lastObj, lastCharacterOffset)
         self.dumpContent(inputEvent, contents)
+
+    def getPreviousRole(self, role):
+        """Positions the caret offset at the beginnig of the next object
+        of the given role.
+        """
+        [currentObj, characterOffset] = self.getCaretContext()
+
+        obj = currentObj
+        while obj:
+            [obj, characterOffset] = self.getPreviousCaretInOrder(
+                obj, characterOffset)
+            if obj and (obj != currentObj) and (obj.role == role):
+                return [obj, characterOffset]
+
+        return [None, -1]
+
+    def getNextRole(self, role):
+        """Positions the caret offset at the beginnig of the next object
+        of the given role.
+        """
+        [currentObj, characterOffset] = self.getCaretContext()
+
+        obj = currentObj
+        while obj:
+            [obj, characterOffset] = self.getNextCaretInOrder(
+                obj, characterOffset)
+            if obj and (obj != currentObj) and (obj.role == role):
+                return [obj, characterOffset]
+
+        return [None, -1]
+
+    def goPreviousHeading(self, inputEvent):
+        [obj, characterOffset] = self.getPreviousRole(rolenames.ROLE_HEADING)
+        if obj:
+            [obj, characterOffset] = self.getFirstCaretContext(obj, 0)
+            self.setCaretPosition(obj, characterOffset)
+            self.presentLineAtOffset(obj, characterOffset)
+        else:
+            speech.speak("No more headings.")
+
+    def goNextHeading(self, inputEvent):
+        [obj, characterOffset] = self.getNextRole(rolenames.ROLE_HEADING)
+        if obj:
+            [obj, characterOffset] = self.getFirstCaretContext(obj, 0)
+            self.setCaretPosition(obj, characterOffset)
+            self.presentLineAtOffset(obj, characterOffset)
+        else:
+            speech.speak("No more headings.")

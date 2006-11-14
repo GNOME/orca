@@ -1,3 +1,8 @@
+2006-11-14  Willie Walker <william.walker@sun.com>
+
+	* src/orca/Gecko.py: add preliminary "h" and "Shift+h" to 
+	navigate to next and previous headings.
+	
 2006-11-14  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
