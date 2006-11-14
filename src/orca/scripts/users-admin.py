@@ -76,15 +76,19 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         brailleGen = braillegenerator.BrailleGenerator
 
         if obj and obj.childCount:
-            for i in range(0, obj.childCount):
+            i = obj.childCount - 1
+            while i >= 0:
                 child = obj.child(i)
                 [cellRegions, focusRegion] = \
                                 self._getBrailleRegionsForTableCell(child)
 
                 if len(regions):
                     regions.append(braille.Region(" "))
+                else:
+                    cellFocusedRegion = focusRegion
                 regions.append(cellRegions[0])
-            regions = [regions, focusRegion]
+                i -= 1
+            regions = [regions, cellFocusedRegion]
         else:
             regions = brailleGen._getBrailleRegionsForTableCell(self, obj)
 
@@ -116,10 +120,12 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         speechGen = speechgenerator.SpeechGenerator 
 
         if obj and obj.childCount:
-            for i in range(0, obj.childCount):
+            i = obj.childCount - 1
+            while i >= 0:
                 child = obj.child(i)
                 utterances.extend(self._getSpeechForTableCell(child, 
                                                          already_focused))
+                i -= 1
         else:
             utterances = speechGen._getSpeechForTableCell(self, \
                            util.getRealActiveDescendant(obj), already_focused)

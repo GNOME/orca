@@ -16,6 +16,10 @@
           layout for "comma", 
           "period" and "semicolon".
 
+        * src/orca/scripts/users-admin.py:
+          Change for bug #358467. Reverse the order that the user privileges
+          table cells are spoken and brailled.
+
 2006-11-13  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade:
