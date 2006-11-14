@@ -201,7 +201,7 @@ def setupSpeech(prefsDict):
     defaultACSS[acss.ACSS.GAIN] = 9
     defaultACSS[acss.ACSS.AVERAGE_PITCH] = 5
     uppercaseACSS = acss.ACSS({acss.ACSS.AVERAGE_PITCH : 6})
-    hyperlinkACSS = acss.ACSS({acss.ACSS.AVERAGE_PITCH : 2})
+    hyperlinkACSS = acss.ACSS({})
 
     voices = {
         settings.DEFAULT_VOICE   : defaultACSS,

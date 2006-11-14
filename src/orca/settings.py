@@ -194,7 +194,7 @@ HYPERLINK_VOICE         = "hyperlink"
 voices = {
     DEFAULT_VOICE   : ACSS({}),
     UPPERCASE_VOICE : ACSS({ACSS.AVERAGE_PITCH : 6}),
-    HYPERLINK_VOICE : ACSS({ACSS.AVERAGE_PITCH : 8})
+    HYPERLINK_VOICE : ACSS({})
 }
 
 # If True, enable speaking of speech indentation and justification.

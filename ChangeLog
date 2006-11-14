@@ -5,8 +5,15 @@
 	
 2006-11-14  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/settings.py:
+          src/orca/orca_console_prefs.py:
+          Fixed bug #364529 - Allow voice styles (e.g., link voice) to 
+          be undefined. The hypertext link voice will now initially derive
+          its values from the default voice settings.
+
         * src/orca/default.py:
-          Adjusted the key bindings for laptop layout for "comma", 
+          Change for bug #373566. Adjusted the key bindings for laptop 
+          layout for "comma", 
           "period" and "semicolon".
 
 2006-11-13  Rich Burridge <rich.burridge@sun.com>
