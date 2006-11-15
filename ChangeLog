@@ -1,3 +1,15 @@
+2006-11-15  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/StarOffice.py:
+          Fixed bug #364407 - Shift+Ctrl+T in OOCalc results in very 
+          verbose output. We work around presenting the really, really 
+          long name that the Name Box component currently has (see OOo 
+          issue #70955), and replace it with something much nicer.
+
+        * src/orca/orca_console_prefs.py:
+          Change for bug #373566. First sayAndPrint() for keyboard layout
+          should not ask for input from user.
+
 2006-11-14  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py: add preliminary "h" and "Shift+h" to 
