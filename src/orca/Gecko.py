@@ -42,6 +42,10 @@ import util
 
 from orca_i18n import _
 
+# If True, it tells us to take over caret navigation.
+#
+controlCaretNavigation = False
+
 # An embedded object character used to indicate that an object is
 # embedded in a string.
 #
@@ -436,6 +440,10 @@ class Script(default.Script):
         self._structuralNavigationFunctions = \
             [Script.goNextHeading,
              Script.goPreviousHeading]
+        if controlCaretNavigation:
+            print "Gecko.py is controlling the caret."
+        else:
+            print "Firefox is controlling the caret."
 
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.
@@ -629,23 +637,17 @@ class Script(default.Script):
                 0,
                 self.inputEventHandlers["goNextHeadingHandler"]))
 
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "d",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
-                self.inputEventHandlers["dumpContentHandler"]))
-
-        # [[[TODO: WDW - probably should make the choice of bindings a
-        # setting and more customizable.  For now, it's just
-        # experimental, so we hardcode things here.]]]
-        #
-        if False:
-            for keyBinding in self.__getArrowBindings().keyBindings:
-                keyBindings.add(keyBinding)
-        else:
-            for keyBinding in self.__getViBindings().keyBindings:
-                keyBindings.add(keyBinding)
+        if controlCaretNavigation:
+            # [[[TODO: WDW - probably should make the choice of
+            # bindings a setting and more customizable.  For now, it's
+            # just experimental, so we hardcode things here.]]]
+            #
+            if True:
+                for keyBinding in self.__getArrowBindings().keyBindings:
+                    keyBindings.add(keyBinding)
+            else:
+                for keyBinding in self.__getViBindings().keyBindings:
+                    keyBindings.add(keyBinding)
 
         return keyBindings
 
@@ -839,11 +841,22 @@ class Script(default.Script):
                 self.toggleFlatReviewMode()
             self.updateBraille(newLocusOfFocus)
             speech.speak(rolenames.getSpeechForRoleName(newLocusOfFocus))
-        else:
-            default.Script.locusOfFocusChanged(self,
-                                               event,
-                                               oldLocusOfFocus,
-                                               newLocusOfFocus)
+            return
+        elif newLocusOfFocus.role == rolenames.ROLE_LINK:
+            # Gecko issues focus: events for a link when you move the
+            # caret to or tab to a link.  By the time we've gotten here,
+            # though, we've already presented the link via a caret moved
+            # event or some other event.  So...we don't anything.
+            #
+            if self.caretContext:
+                [obj, characterOffset] = self.caretContext
+                if newLocusOfFocus == obj:
+                    return
+
+        default.Script.locusOfFocusChanged(self,
+                                           event,
+                                           oldLocusOfFocus,
+                                           newLocusOfFocus)
 
     def updateBraille(self, obj, extraRegion=None):
         """Updates the braille display to show the give object.
@@ -1071,10 +1084,8 @@ class Script(default.Script):
         navigation stuff to work.]]]
         """
 
-        # [[[WDW - disable this for now to see how far we can take
-        # the Gecko navigation model.]]]
-        #
-        return False
+        if not controlCaretNavigation:
+            return False
 
         letThemDoItRoles = [rolenames.ROLE_ENTRY]
         obj = orca_state.locusOfFocus
@@ -1085,6 +1096,7 @@ class Script(default.Script):
                 return False
             else:
                 obj = obj.parent
+
         return False
 
     def useStructuralNavigationModel(self):
@@ -1933,6 +1945,7 @@ class Script(default.Script):
         else:
             del self.caretContext
 
+        self.updateBraille(obj)
         self.presentCharacterAtOffset(obj, characterOffset)
 
     def goPreviousCharacter(self, inputEvent):
@@ -1952,6 +1965,7 @@ class Script(default.Script):
         else:
             del self.caretContext
 
+        self.updateBraille(obj)
         self.presentCharacterAtOffset(obj, characterOffset)
 
     def goPreviousWord(self, inputEvent):
@@ -1972,6 +1986,7 @@ class Script(default.Script):
         [obj, startOffset, endOffset] = contents[0]
 
         self.setCaretPosition(obj,  startOffset)
+        self.updateBraille(obj)
         self.presentWordAtOffset(obj, startOffset)
 
     def goNextWord(self, inputEvent):
@@ -1995,6 +2010,7 @@ class Script(default.Script):
         # caret just after the last character of the word.]]]
         #
         self.setCaretPosition(obj,  startOffset)
+        self.updateBraille(obj)
         self.presentWordAtOffset(obj, startOffset)
 
     def goPreviousLine(self, inputEvent):
@@ -2046,12 +2062,13 @@ class Script(default.Script):
 
         #print "GPL ENDED UP AT", lastObj.role, lineExtents
         self.setCaretPosition(lastObj, lastCharacterOffset)
+        self.updateBraille(lastObj)
         self.presentLineAtOffset(lastObj, lastCharacterOffset)
 
         # Debug...
         #
-        contents = self.getLineAtOffset(lastObj, lastCharacterOffset)
-        self.dumpContent(inputEvent, contents)
+        #contents = self.getLineAtOffset(lastObj, lastCharacterOffset)
+        #self.dumpContent(inputEvent, contents)
 
     def goNextLine(self, inputEvent):
         """Positions the caret offset at the next line in the document
@@ -2101,12 +2118,13 @@ class Script(default.Script):
 
         #print "GNL ENDED UP AT", lastObj.role, lineExtents
         self.setCaretPosition(lastObj, lastCharacterOffset)
+        self.updateBraille(lastObj)
         self.presentLineAtOffset(lastObj, lastCharacterOffset)
 
         # Debug...
         #
-        contents = self.getLineAtOffset(lastObj, lastCharacterOffset)
-        self.dumpContent(inputEvent, contents)
+        #contents = self.getLineAtOffset(lastObj, lastCharacterOffset)
+        #self.dumpContent(inputEvent, contents)
 
     def getPreviousRole(self, role):
         """Positions the caret offset at the beginnig of the next object

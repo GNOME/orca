@@ -1,3 +1,15 @@
+2006-11-15  Willie Walker <william.walker@sun.com>
+
+	* src/orca/Gecko.py: more work on caret navigation.  Added a
+	"controlCaretNavigation" field that is False by default (False
+	means to let Firefox do caret navigation, True means tell Orca to
+	override caret navigation).  You can tell Orca to do caret
+	navigation by adding the following lines to your
+	~/.orca/user-settings.py or ~/.orca/orca-customizations.py files:
+	
+	import orca.Gecko
+	orca.Gecko.controlCaretNavigation = True
+
 2006-11-15  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:
