@@ -27,6 +27,7 @@ __license__   = "LGPL"
 
 import orca.debug as debug
 import orca.atspi as atspi
+import orca.chnames as chnames
 import orca.default as default
 import orca.input_event as input_event
 import orca.rolenames as rolenames
@@ -1218,14 +1219,17 @@ class Script(default.Script):
         Arguments:
         - event: the Event
         """
-
-        # Two focus changed events are received when the caret
-        # moves to a new paragraph. Ignore the second one.
-        #
+        # Two events are received when the caret moves
+        # to a new paragraph. The first is a focus event
+        # (in the form of object:state-changed:focused
+        # instead of focus:). The second is a caret-moved
+        # event. Just set the locusOfFocus for the first event.
+        # 
         if event.type == "object:state-changed:focused" and \
            event.source.role == rolenames.ROLE_PARAGRAPH and \
            event.source != self.currentParagraph:
             self.currentParagraph = event.source
+            orca.setLocusOfFocus(event, event.source, False)
             return
 
         default.Script.onStateChanged(self, event)
@@ -1321,3 +1325,99 @@ class Script(default.Script):
         string = text[max(0,startOffset):min(len(text),endOffset)]
         string = string.encode("UTF-8")
         return string
+
+    def onCaretMoved(self, event):
+        """Called whenever the caret moves.
+
+        Arguments:
+        - event: the Event
+        """
+
+        # Speak a newline, if appropriate.
+        if self.speakNewLine(event.source):
+            speech.speak(chnames.getCharacterName("\n"), None, False)
+
+        # Speak a blank line, if appropriate.
+        if self.speakBlankLine(event.source):
+            speech.speak(_("blank"), None, False)
+
+        default.Script.onCaretMoved(self, event)
+
+
+    def speakNewLine(self, obj):
+        """Returns True if a newline should be spoken.
+           Otherwise, returns False.
+        """
+
+        # Get the the AccessibleText interrface.
+        text = obj.text
+        if not text:
+            return False
+
+        # Was a left or right-arrow key pressed?
+        if not (orca_state.lastInputEvent and \
+                orca_state.lastInputEvent.__dict__.has_key("event_string")):
+            return False
+        
+        lastKey = orca_state.lastInputEvent.event_string
+        if lastKey != "Left" and lastKey != "Right":
+            return False
+
+        # Was a control key pressed?
+        mods = orca_state.lastInputEvent.modifiers
+        isControlKey = mods & (1 << atspi.Accessibility.MODIFIER_CONTROL)
+        
+        # Get the line containing the caret
+        caretOffset = text.caretOffset
+        line = text.getTextAtOffset(caretOffset, \
+            atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+        lineStart = line[1]
+        lineEnd = line[2]
+
+        if isControlKey:  # control-right-arrow or control-left-arrow
+
+            # Get the word containing the caret.
+            word = text.getTextAtOffset(caretOffset, \
+                atspi.Accessibility.TEXT_BOUNDARY_WORD_START)
+            wordStart = word[1]
+            wordEnd = word[2]
+            
+            if lastKey == "Right":
+                if wordStart == lineStart:
+                    return True
+            else: 
+                if wordEnd == lineEnd:
+                    return True
+                
+        else:  # right arrow or left arrow
+            
+            if lastKey == "Right":
+                if caretOffset == lineStart:
+                    return True
+            else: 
+                if caretOffset == lineEnd:
+                    return True
+
+        return False
+
+
+    def speakBlankLine(self, obj):
+        """Returns True if a blank line should be spoken.
+        Otherwise, returns False.
+        """
+        
+        # Get the the AccessibleText interrface. 
+        text = obj.text
+        if not text:
+            return False
+
+        # Get the line containing the caret
+        caretOffset = text.caretOffset
+        line = text.getTextAtOffset(caretOffset, \
+            atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+
+        # If this is a blank line, announce it if the user requested
+        # that blank lines be spoken.
+        if line[1] == 0 and line[2] == 0:
+            return settings.speakBlankLines
+

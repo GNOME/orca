@@ -92,7 +92,8 @@ userCustomizableSettings = [
     "magTargetDisplay",
     "verbalizePunctuationStyle",
     "showMainWindow",
-    "keyboardLayout"
+    "keyboardLayout",
+    "speakBlankLines",   
 ]
 
 # The name of the module that hold the user interface for the main window
@@ -326,6 +327,9 @@ GENERAL_KEYBOARD_LAYOUT_DESKTOP = 1
 GENERAL_KEYBOARD_LAYOUT_LAPTOP  = 2
 keyboardLayout                  = GENERAL_KEYBOARD_LAYOUT_DESKTOP
 
+# If True, speak blank lines.
+#
+speakBlankLines         = True
 
 # If True, reads all the table cells in the current row rather than just
 # the current one.

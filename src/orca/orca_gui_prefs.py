@@ -204,6 +204,9 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         self.speechIndentationCheckbutton.set_active(\
             prefs["enableSpeechIndentation"])
 
+        self.speakBlankLinesCheckButton.set_active(\
+            prefs["speakBlankLines"])
+
         # Braille pane.
         #
         self.brailleSupportCheckbutton.set_active(prefs["enableBraille"])
@@ -838,6 +841,18 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         enable = widget.get_active()
         self.prefsDict["enableSpeechIndentation"] = enable
+
+    def speakBlankLinesChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           speakBlankLinesCheckButton GtkCheckButton widget. The user has
+           [un]checked the 'Speak blank lines' checkbox.
+           Set the 'speakBlankLines' preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        self.prefsDict["speakBlankLines"] = widget.get_active()
 
     def brailleSupportChecked(self, widget):
         """Signal handler for the "toggled" signal for the

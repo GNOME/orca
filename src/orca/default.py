@@ -1095,6 +1095,9 @@ class Script(script.Script):
         # Get the AccessibleText interface of the provided object
         #
         [line, caretOffset, startOffset] = util.getTextLineAtCaret(obj)
+        debug.println(debug.LEVEL_FINEST, \
+            "sayLine: line=<%s>, len=%d, start=%d, caret=%d, speakBlankLines=%s" % \
+            (line, len(line), startOffset, caretOffset, settings.speakBlankLines))
 
         if len(line):
             if line.isupper():
@@ -1107,6 +1110,22 @@ class Script(script.Script):
             line = util.adjustForRepeats(line)
             speech.speak(line, voice)
             util.speakTextSelectionState(obj, caretOffset, startOffset)
+
+        else:
+            # Speak blank line if appropriate. It's necessary to
+            # test whether the first character is a newline, because
+            # StarOffice blank lines are empty, and so StarOffice.py
+            # handles speaking blank lines.
+            char = obj.text.getTextAtOffset(caretOffset,
+                atspi.Accessibility.TEXT_BOUNDARY_CHAR)
+            debug.println(debug.LEVEL_FINEST,
+                "sayLine: character=<%s>, start=%d, end=%d" % \
+                (char[0], char[1], char[2]))
+            
+            if char[0] == "\n" and startOffset == caretOffset \
+                   and settings.speakBlankLines:
+                speech.speak(_("blank"))
+
 
     def sayWord(self, obj):
         """Speaks the word at the caret.  [[[TODO: WDW - what if there is no
@@ -1134,15 +1153,15 @@ class Script(script.Script):
         #
         if lastKey == "Right" and len(lastWord) > 0:
             lastChar = lastWord[len(lastWord) - 1]
-            if lastChar == "\n" and (not lastWord == word):
+            if lastChar == "\n" and lastWord != word:
                 voice = self.voices[settings.DEFAULT_VOICE]
-                speech.speak(chnames.getCharacterName("\n"), voice)
+                speech.speak(chnames.getCharacterName("\n"), voice, False)
 
         if lastKey == "Left" and len(word) > 0:
             lastChar = word[len(word) - 1]
-            if lastChar == "\n" and (not lastWord == word):
+            if lastChar == "\n" and lastWord != word:
                 voice = self.voices[settings.DEFAULT_VOICE]
-                speech.speak(chnames.getCharacterName("\n"), voice)
+                speech.speak(chnames.getCharacterName("\n"), voice, False)
 
         if util.getLinkIndex(obj, offset) >= 0:
             voice = self.voices[settings.HYPERLINK_VOICE]
@@ -1305,22 +1324,35 @@ class Script(script.Script):
         else:
             voice = self.voices[settings.DEFAULT_VOICE]
 
+        prevChar = self.getText(obj, startOffset-1, endOffset-1)
+
+        debug.println(debug.LEVEL_FINEST, \
+            "sayCharacter: prev=<%s>, char=<%s>, startOffset=%d, caretOffset=%d, endOffset=%d, speakBlankLines=%s" % \
+            (prevChar, character, startOffset, offset, endOffset, settings.speakBlankLines))
+
+        # Handle speaking newlines when the right-arrow key is pressed.
         if orca_state.lastInputEvent.event_string == "Right":
-
-            prevChar = self.getText(obj, startOffset-1, endOffset-1)
-
-            # We don't what to speak a newline before the cursor
-            # is on the next line.
-            if character == "\n" and (not prevChar == "\n"):
-                return
-
-            # If the previous character was a newline, the cursor
-            # is now on the next line, so speak a newline.
             if prevChar == "\n":
-                voice = self.voices[settings.DEFAULT_VOICE]
-                speech.speak(chnames.getCharacterName("\n"), voice)
+                # The cursor is at the beginning of a line.
+                # Speak a newline.
+                speech.speak(chnames.getCharacterName("\n"), voice, False)
 
-        speech.speak(character, voice)
+        # Handle speaking newlines when the left-arrow key is pressed.
+        elif orca_state.lastInputEvent.event_string == "Left":
+            if character == "\n":
+                # The cursor is at the end of a line.
+                # Speak a newline.
+                speech.speak(chnames.getCharacterName("\n"), voice, False)
+                    
+        if character == "\n":
+            if prevChar == "\n":
+                # This is a blank line. Announce it if the user requested
+                # that blank lines be spoken.
+                if settings.speakBlankLines:
+                    speech.speak(_("blank"), voice, False)
+        else:
+            speech.speak(character, voice, False)
+  
         util.speakTextSelectionState(obj, startOffset, endOffset)
 
     def whereAmI(self, inputEvent):

@@ -36,6 +36,7 @@ import orca.orca_state as orca_state
 import orca.speech as speech
 import orca.settings as settings
 import orca.util as util
+import orca.chnames as chnames
 
 from orca.orca_i18n import _ # for gettext support
 
@@ -389,7 +390,12 @@ class Script(default.Script):
             if settings.enableSpeechIndentation:
                 self.speakTextIndentation(event.source, string)
             line = util.adjustForRepeats(string)
-            speech.speak(line)
+                
+            if self.speakNewLine(event.source):
+                speech.speak(chnames.getCharacterName("\n"), None, False)
+ 
+            speech.speak(line, None, False)
+
             return
 
         # 2) Mail view: current message pane: "standard" mail header lines.
@@ -855,7 +861,11 @@ class Script(default.Script):
                           + "compose window: message area.")
 
             self.message_panel = event.source.parent.parent
+            
+        if self.speakNewLine(event.source):
+            speech.speak(chnames.getCharacterName("\n"), None, False)
 
+                
         # 9) Spell Checking Dialog
         #
         # This works in conjunction with code in section 8). Check to see if
@@ -983,6 +993,62 @@ class Script(default.Script):
 
         default.Script.locusOfFocusChanged(self, event,
                                            oldLocusOfFocus, newLocusOfFocus)
+
+    def speakNewLine(self, obj):
+        """Returns True if a newline should be spoken.
+           Otherwise, returns False.
+        """
+
+        # Get the the AccessibleText interrface.
+        text = obj.text
+        if not text:
+            return False
+
+        # Was a left or right-arrow key pressed?
+        if not (orca_state.lastInputEvent and \
+                orca_state.lastInputEvent.__dict__.has_key("event_string")):
+            return False
+        
+        lastKey = orca_state.lastInputEvent.event_string
+        if lastKey != "Left" and lastKey != "Right":
+            return False
+
+        # Was a control key pressed?
+        mods = orca_state.lastInputEvent.modifiers
+        isControlKey = mods & (1 << atspi.Accessibility.MODIFIER_CONTROL)
+        
+        # Get the line containing the caret
+        caretOffset = text.caretOffset
+        line = text.getTextAtOffset(caretOffset, \
+            atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+        lineStart = line[1]
+        lineEnd = line[2]
+        
+        if isControlKey:  # control-right-arrow or control-left-arrow
+
+            # Get the word containing the caret.
+            word = text.getTextAtOffset(caretOffset, \
+                atspi.Accessibility.TEXT_BOUNDARY_WORD_START)
+            wordStart = word[1]
+            wordEnd = word[2]
+            
+            if lastKey == "Right":
+                if wordStart == lineStart:
+                    return True
+            else: 
+                if wordEnd == lineEnd:
+                    return True
+                
+        else:  # right arrow or left arrow
+            
+            if lastKey == "Right":
+                if caretOffset == lineStart:
+                    return True
+            else: 
+                if caretOffset == lineEnd:
+                    return True
+
+        return False
 
     def onStateChanged(self, event):
         """Called whenever an object's state changes.  We are only
