@@ -33,6 +33,7 @@ import orca.input_event as input_event
 import orca.rolenames as rolenames
 import orca.braille as braille
 import orca.braillegenerator as braillegenerator
+import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.speech as speech
 import orca.speechgenerator as speechgenerator
@@ -312,7 +313,9 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         return regions
 
 class SpeechGenerator(speechgenerator.SpeechGenerator):
-    """Overrides _getSpeechForTableCellRow so that , when we are in a
+    """Overrides _getSpeechForComboBox so that we can provide a name for
+    the Calc Name combo box.
+    Overrides _getSpeechForTableCellRow so that , when we are in a
     spread sheet, we can speak the dynamic row and column headers
     (assuming they are set).
     Overrides _getSpeechForTableCell so that, when we are in a spread
@@ -321,6 +324,45 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
     """
     def __init__(self, script):
         speechgenerator.SpeechGenerator.__init__(self, script)
+
+    def _getSpeechForComboBox(self, obj, already_focused):
+        """Get the speech for a combo box. If the combo box already has focus,
+        then only the selection is spoken.
+        Also provides a name for the OOo Calc Name combo box. This name is
+        provided in clause 5) of locusOfFocusChanged() below.
+
+        Arguments:
+        - obj: the combo box
+        - already_focused: False if object just received focus
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        utterances = []
+
+        if not already_focused:
+            label = self._getSpeechForObjectLabel(obj)
+            if not label:
+                label = [ obj.name ]
+            utterances.extend(label)
+        else:
+            label = None
+
+        name = self._getSpeechForObjectName(obj)
+        if name != label:
+            utterances.extend(name)
+
+        if not already_focused:
+            utterances.extend(self._getSpeechForObjectRole(obj))
+
+        utterances.extend(self._getSpeechForObjectAvailability(obj))
+
+        self._debugGenerator("_getSpeechForComboBox",
+                             obj,
+                             already_focused,
+                             utterances)
+
+        return utterances
 
     def _getSpeechForTableCellRow(self, obj, already_focused):
         """Get the speech for a table cell row or a single table cell
@@ -894,6 +936,7 @@ class Script(default.Script):
     # 2) Writer: spell checking dialog.
     # 3) Welcome to StarOffice dialog.
     # 4) Calc: cell editor.
+    # 5) Calc: name box.
 
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
@@ -1116,6 +1159,28 @@ class Script(default.Script):
                           + "Calc: cell editor.")
             return
 
+        # 5) Calc: name box
+        #
+        # Check to see if the focus has just moved to the Name Box combo
+        # box in Calc. If so, then replace the non-existent name with a
+        # simple one before falling through and calling the default 
+        # locusOfFocusChanged method, which in turn will result in our
+        # _getSpeechForComboBox() method being called.
+        #
+        rolesList = [rolenames.ROLE_COMBO_BOX, \
+                     rolenames.ROLE_TOOL_BAR, \
+                     rolenames.ROLE_PANEL, \
+                     rolenames.ROLE_ROOT_PANE, \
+                     rolenames.ROLE_FRAME, \
+                     rolenames.ROLE_APPLICATION]
+
+        if util.isDesiredFocusedItem(event.source, rolesList) \
+            and (not event.source.name or len(event.source.name) == 0):
+            debug.println(self.debugLevel, "StarOffice.locusOfFocusChanged - " \
+                          + "Calc: name box.")
+
+            event.source.name = _("Move to cell")
+
         # Pass the event onto the parent class to be handled in the default way.
 
         default.Script.locusOfFocusChanged(self, event,
@@ -1213,12 +1278,30 @@ class Script(default.Script):
         default.Script.onNameChanged(self, event)
 
 
+    def onFocus(self, event):
+        """Called whenever an object gets focus. Overridden in this script 
+        so that we can adjust "focus:" events for children of a combo-box 
+        to just set the focus to the combo box. This is needed to help 
+        reduce the verbosity of focusing on the Calc Name combo box (see 
+        bug #364407).
+
+        Arguments:
+        - event: the Event
+        """
+
+        if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+            orca.setLocusOfFocus(None, event.source.parent, False)
+            return
+
+        default.Script.onFocus(self, event)
+
     def onStateChanged(self, event):
         """Called whenever an object's state changes.
 
         Arguments:
         - event: the Event
         """
+
         # Two events are received when the caret moves
         # to a new paragraph. The first is a focus event
         # (in the form of object:state-changed:focused
@@ -1230,6 +1313,15 @@ class Script(default.Script):
            event.source != self.currentParagraph:
             self.currentParagraph = event.source
             orca.setLocusOfFocus(event, event.source, False)
+            return
+
+        # If we get "object:state-changed:focused" events for children of 
+        # a combo-box, just set the focus to the combo box. This is needed 
+        # to help reduce the verbosity of focusing on the Calc Name combo 
+        # box (see bug #364407).
+        #
+        if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+            orca.setLocusOfFocus(None, event.source.parent, False)
             return
 
         default.Script.onStateChanged(self, event)
