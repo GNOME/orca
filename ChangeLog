@@ -10,6 +10,10 @@
           Change for bug #373566. First sayAndPrint() for keyboard layout
           should not ask for input from user.
 
+        * src/orca/orca-setup.glade:
+          Change for bug #364529. Initial value in the Preferences Glade
+          file for pitch should be 5.0 not 9.0.
+
 2006-11-14  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py: add preliminary "h" and "Shift+h" to 
