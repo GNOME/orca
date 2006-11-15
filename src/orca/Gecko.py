@@ -842,16 +842,19 @@ class Script(default.Script):
             self.updateBraille(newLocusOfFocus)
             speech.speak(rolenames.getSpeechForRoleName(newLocusOfFocus))
             return
-        elif newLocusOfFocus.role == rolenames.ROLE_LINK:
+        elif newLocusOfFocus \
+            and newLocusOfFocus.role == rolenames.ROLE_LINK:
             # Gecko issues focus: events for a link when you move the
             # caret to or tab to a link.  By the time we've gotten here,
             # though, we've already presented the link via a caret moved
             # event or some other event.  So...we don't anything.
             #
-            if self.caretContext:
+            try:
                 [obj, characterOffset] = self.caretContext
                 if newLocusOfFocus == obj:
                     return
+            except:
+                pass
 
         default.Script.locusOfFocusChanged(self,
                                            event,
@@ -1158,10 +1161,11 @@ class Script(default.Script):
         # but that logic has issues in the case where we have
         # something very tall next to lots of shorter lines (e.g., an
         # image with lots of text to the left or right of it.  The
-        # number 14 here represents something that seems to work well
-        # with superscripts and subscripts on a line.
+        # number 11 here represents something that seems to work well
+        # with superscripts and subscripts on a line as well as pages
+        # with smaller fonts on them, such as craig's list.
         #
-        return abs(a[1] - b[1]) < 14
+        return abs(a[1] - b[1]) < 11
 
         highestBottom = min(a[1] + a[3], b[1] + b[3])
         lowestTop     = max(a[1],        b[1])

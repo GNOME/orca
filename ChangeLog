@@ -1,5 +1,9 @@
 2006-11-15  Willie Walker <william.walker@sun.com>
 
+	* src/orca/Gecko.py: a little more poking at Craig's list as a
+	test case.  Turns out that the small font size was causing issues
+	with the onSameLine method.
+	
 	* src/orca/Gecko.py: more work on caret navigation.  Added a
 	"controlCaretNavigation" field that is False by default (False
 	means to let Firefox do caret navigation, True means tell Orca to
