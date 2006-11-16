@@ -223,7 +223,11 @@ class BrailleGenerator:
         try:
             minimumIncrement = value.minimumIncrement
         except:
-            minimumIncrement = (value.maximumValue - value.minimumValue) / 100.0
+            pass
+
+        if minimumIncrement == 0.0:
+            minimumIncrement = (value.maximumValue - value.minimumValue) \
+                               / 100.0
 
         try:
             decimalPlaces = max(0, -math.log10(minimumIncrement))

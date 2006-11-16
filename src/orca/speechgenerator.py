@@ -1033,6 +1033,9 @@ class SpeechGenerator:
         try:
             minimumIncrement = value.minimumIncrement
         except:
+            pass
+
+        if minimumIncrement == 0.0:
             minimumIncrement = (value.maximumValue - value.minimumValue) \
                                / 100.0
 
