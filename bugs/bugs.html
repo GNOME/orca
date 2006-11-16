@@ -963,16 +963,18 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
     </td>
   </tr>
 
-  <tr bgcolor="green">
-    <td>Open Office - Word Processor</td>
-    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=70538">70538</a>:
-      Character indeces are off by one when at the beginning of a line with a bullet.
-    <td>Yes</td>
+  <tr>
+    <td>Open Office - Writer</td>
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=70872">70872</a>:
+      [a11y] Various keyboard events that toggle the state of UI widgets do not send a11y events
     <td>No</td>
-    <td>This seems to be a duplicate of
-        <a href="http://www.openoffice.org/issues/show_bug.cgi?id=69945">69945</a>
+    <td>No</td>
+    <td>Reproduced in OpenOffice 2.0.4 (RC2)
         <br>
-        If so, then it's fixed in SO build m186 for OOo 2.0.5
+        Workaround: None currently known.
+        <br>
+        This bug is being tracked by Orca bug
+        <a href="http://bugzilla.gnome.org/show_bug.cgi?id=363830">363830</a>
     </td>
   </tr>
 
@@ -988,25 +990,6 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
         <br>
         This bug is being tracked by Orca bug 
         <a href="http://bugzilla.gnome.org/show_bug.cgi?id=355733">355733</a>
-    </td>
-  </tr>
-
-  <tr bgcolor="green">
-    <td>Open Office - Word Processor</td>
-    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=69945">69945</a>:
-      getText seems to use byte offsets and not character offsets
-    <td>Yes</td>
-    <td>No</td>
-    <td>Fixed in SO build m186 for OOo 2.0.5</td>
-  </tr>
-
-  <tr bgcolor="green">
-    <td>Open Office - Word Processor</td>
-    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63870">63870</a>:
-      Writer doesn't implement text.getDefaultAttributes (needed for a11y).
-    <td>Yes</td>
-    <td>OOo 2.0.4</td>
-    <td>Fixed in SO build m186 for OOo 2.0.4
     </td>
   </tr>
 
@@ -1061,67 +1044,6 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
     <td>No</td>
     <td>No</td>
     <td>Workaround: Hit F10, then immediately hit the down arrow.</td>
-  </tr>
-
-  <tr bgcolor="green">
-    <td>Open Office - Framework/ui</td>
-    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63982">63982</a>:
-      The StarOffice->Print options pane doesn't provide useful
-      information when read with a screen reader.
-    <td>Yes</td>
-    <td>Open Office 2.0.3</td>
-    <td>Workaround: None.</td>
-  </tr>
-
-  <tr bgcolor="green">
-    <td>Open Office - Framework/ui</td>
-    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63983">63983</a>:
-      The StarOffice->Paths options pane table doesn't provide useful 
-      information when read with a screen reader.
-    <td>Yes</td>
-    <td>Open Office 2.0.3</td>
-    <td>Workaround: None.</td>
-  </tr>
-
-  <tr bgcolor="green">
-    <td>Open Office - Framework/ui</td>
-    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63980">63980</a>:
-      The StarOffice->General options pane doesn't provide useful
-      labels when read by a screen reader.
-    <td>Yes</td>
-    <td>Open Office 2.0.3</td>
-    <td>Workaround: None.</td>
-  </tr>
-
-  <tr bgcolor="Green">
-    <td>Open Office - Framework/ui</td>
-    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63984">63984</a>:
-      The StarOffice->Security options pane doesn't provide useful
-          information for checkboxes when read with a screen reader.
-    <td>Yes</td>
-    <td>Open Office 2.0.3</td>
-    <td>Workaround: None.</td>
-  </tr>
-
-  <tr bgcolor="Green">
-    <td>Open Office - Framework/ui</td>
-    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63985">63985</a>:
-          The StarOffice->Accessibility options pane doesn't provide
-          useful information for checkboxes when read with a screen
-          reader.
-    <td>Yes</td>
-    <td>Open Office 2.0.3</td>
-    <td>Workaround: None. Looks like this has been fixed. Waiting for them to
-        adjust the bug status as such.</td>
-  </tr>
-
-  <tr bgcolor="Green">
-    <td>Open Office - Writer</td>
-    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=62723">62723</a>:
-      Open Dialog "read-only" checkbox has incorrect accessibility information.
-    <td>Yes</td>
-    <td>SO build m167</td>
-    <td>Workaround: None currently known.</td>
   </tr>
 
   <tr>
@@ -1314,6 +1236,99 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
         <br>
         Workaround: None currently known.
     </td>
+  </tr>
+
+  <tr bgcolor="green">
+    <td>Open Office - Word Processor</td>
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=70538">70538</a>:
+      Character indeces are off by one when at the beginning of a line with a bullet.
+    <td>Yes</td>
+    <td>No</td>
+    <td>This seems to be a duplicate of
+        <a href="http://www.openoffice.org/issues/show_bug.cgi?id=69945">69945</a>
+        <br>
+        If so, then it's fixed in SO build m186 for OOo 2.0.5
+    </td>
+  </tr>
+
+  <tr bgcolor="green">
+    <td>Open Office - Word Processor</td>
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=69945">69945</a>:
+      getText seems to use byte offsets and not character offsets
+    <td>Yes</td>
+    <td>No</td>
+    <td>Fixed in SO build m186 for OOo 2.0.5</td>
+  </tr>
+
+  <tr bgcolor="green">
+    <td>Open Office - Word Processor</td>
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63870">63870</a>:
+      Writer doesn't implement text.getDefaultAttributes (needed for a11y).
+    <td>Yes</td>
+    <td>OOo 2.0.4</td>
+    <td>Fixed in SO build m186 for OOo 2.0.4
+    </td>
+  </tr>
+
+  <tr bgcolor="green">
+    <td>Open Office - Framework/ui</td>
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63982">63982</a>:
+      The StarOffice->Print options pane doesn't provide useful
+      information when read with a screen reader.
+    <td>Yes</td>
+    <td>Open Office 2.0.3</td>
+    <td>Workaround: None.</td>
+  </tr>
+
+  <tr bgcolor="green">
+    <td>Open Office - Framework/ui</td>
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63983">63983</a>:
+      The StarOffice->Paths options pane table doesn't provide useful 
+      information when read with a screen reader.
+    <td>Yes</td>
+    <td>Open Office 2.0.3</td>
+    <td>Workaround: None.</td>
+  </tr>
+
+  <tr bgcolor="green">
+    <td>Open Office - Framework/ui</td>
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63980">63980</a>:
+      The StarOffice->General options pane doesn't provide useful
+      labels when read by a screen reader.
+    <td>Yes</td>
+    <td>Open Office 2.0.3</td>
+    <td>Workaround: None.</td>
+  </tr>
+
+  <tr bgcolor="Green">
+    <td>Open Office - Framework/ui</td>
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63984">63984</a>:
+      The StarOffice->Security options pane doesn't provide useful
+          information for checkboxes when read with a screen reader.
+    <td>Yes</td>
+    <td>Open Office 2.0.3</td>
+    <td>Workaround: None.</td>
+  </tr>
+
+  <tr bgcolor="Green">
+    <td>Open Office - Framework/ui</td>
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63985">63985</a>:
+          The StarOffice->Accessibility options pane doesn't provide
+          useful information for checkboxes when read with a screen
+          reader.
+    <td>Yes</td>
+    <td>Open Office 2.0.3</td>
+    <td>Workaround: None. Looks like this has been fixed. Waiting for them to
+        adjust the bug status as such.</td>
+  </tr>
+
+  <tr bgcolor="Green">
+    <td>Open Office - Writer</td>
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=62723">62723</a>:
+      Open Dialog "read-only" checkbox has incorrect accessibility information.
+    <td>Yes</td>
+    <td>SO build m167</td>
+    <td>Workaround: None currently known.</td>
   </tr>
 
 </table>
