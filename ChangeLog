@@ -1,3 +1,9 @@
+2006-11-16  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/settings.py:
+          Change for bug #358467. Mapped the time-admin to the users-admin
+          script so that Orca can correctly read the table of time servers.
+
 2006-11-15  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py: a little more poking at Craig's list as a
