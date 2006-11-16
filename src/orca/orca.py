@@ -77,6 +77,10 @@ from orca_i18n import _           # for gettext support
 #
 _userSettings = None
 
+# Command line options that override any other settings.
+#
+_commandLineSettings = {}
+
 ########################################################################
 #                                                                      #
 # METHODS FOR HANDLING PRESENTATION MANAGERS                           #
@@ -827,6 +831,12 @@ def loadUserSettings(script=None, inputEvent=None):
         except ImportError:
             debug.printException(debug.LEVEL_FINEST)
 
+    # If any settings were added to the command line, they take
+    # precedence over everything else.
+    #
+    for key in _commandLineSettings:
+        settings.__dict__[key] = _commandLineSettings[key]
+
     if settings.enableSpeech:
         try:
             speech.init()
@@ -1166,6 +1176,14 @@ def usage():
     print _("-t, --text-setup             Set up user preferences (text version)")
     print _("-n, --no-setup               Skip set up of user preferences")
     print _("-u, --user-prefs-dir         Use alternate directory for user preferences")
+    print _("--enable-speech              Force the use of speech (if available)")
+    print _("--disable-speech             Prevent the use of speech")
+    print _("--enable-braille             Force the use of braille (if available)")
+    print _("--disable-braille            Prevent the use of braille")
+    print _("--enable-braille-monitor     Force the use of the braille monitor")
+    print _("--disable-braille-monitor    Prevent the use of he braille monitor")
+    print _("--enable-magnifier           Force the use of the magnifier")
+    print _("--disable-magnifier          Prevent the use of the magnifier")
     print _("-q, --quit                   Quits Orca (if shell script used)")
     print
     print _("If Orca has not been previously set up by the user, Orca\nwill automatically launch the preferences set up unless\nthe -n or --no-setup option is used.")
@@ -1179,6 +1197,8 @@ def main():
     signal used to terminate Orca (if a signal was used).  Otherwise,
     an exit code of 0 means normal completion and an exit code of 50
     means Orca exited because of a hang."""
+
+    global _commandLineSettings
 
     # Method to call when we think something might be hung.
     #
@@ -1227,6 +1247,14 @@ def main():
             "?u:stnv",
             ["help",
              "user-prefs-dir",
+             "enable-speech",
+             "disable-speech",
+             "enable-braille",
+             "disable-braille",
+             "enable-braille-monitor",
+             "disable-braille-monitor",
+             "enable-magnifier",
+             "disable-magnifier",
              "setup",
              "gui-setup",
              "text-setup",
@@ -1240,6 +1268,27 @@ def main():
                     settings.userPrefsDir = userPrefsDir
                 except:
                     debug.printException(debug.LEVEL_FINEST)
+
+            if opt in ("--enable-speech"):
+                _commandLineSettings["enableSpeech"] = True
+            if opt in ("--disable-speech"):
+                _commandLineSettings["enableSpeech"] = False
+
+            if opt in ("--enable-braille"):
+                _commandLineSettings["enableBraille"] = True
+            if opt in ("--disable-braille"):
+                _commandLineSettings["enableBraille"] = False
+
+            if opt in ("--enable-braille-monitor"):
+                _commandLineSettings["enableBrailleMonitor"] = True
+            if opt in ("--disable-braille-monitor"):
+                _commandLineSettings["enableBrailleMonitor"] = False
+
+            if opt in ("--enable-magnifier"):
+                _commandLineSettings["enableMagnifier"] = True
+            if opt in ("--disable-magnifier"):
+                _commandLineSettings["enableMagnifier"] = False
+
             if opt in ("-s", "--gui-setup", "--setup"):
                 setupRequested = True
                 showGUI = desktopRunning
