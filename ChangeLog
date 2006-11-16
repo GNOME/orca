@@ -4,6 +4,10 @@
           Change for bug #358467. Mapped the time-admin to the users-admin
           script so that Orca can correctly read the table of time servers.
 
+        * src/orca/orca.py:
+          Added a line in the Orca usage message for the user preferences
+          directory options.
+
 2006-11-15  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py: a little more poking at Craig's list as a
