@@ -1,3 +1,11 @@
+2006-11-16  Mike Pedersen <michael.pedersen@sun.com> 
+
+        * docs/doc-set/ue_input_style.sgml,
+        * docs/doc-set/orca.html,
+        * docs/doc-set/orca.pdf
+
+          Slight change to the laptop keyboard layout
+
 2006-11-16  Willie Walker <william.walker@sun.com>
 
 	* src/orca/speechgenerator.py, src/orca/braillegenerator.py: fix 
