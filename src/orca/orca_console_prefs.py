@@ -297,15 +297,15 @@ def setupSpeech(prefsDict):
         prefsDict["enableActionKeys"]    = False
 
     sayAndPrint(_("Select desired keyboard layout."),
-                True,
-                True,
+                False,
+                False,
                 speechServerChoice,
                 speechVoiceChoice)
     i = 1
     choices = {}
     sayAndPrint(_("1. Desktop"))
     sayAndPrint(_("2. Laptop"))
-    choice = int(sayAndPrint(_("Enter choice: "), False, False))
+    choice = int(sayAndPrint(_("Enter choice: "), False, True))
     if choice == 2:
         prefsDict["keyboardLayout"] = settings.GENERAL_KEYBOARD_LAYOUT_LAPTOP
         prefsDict["orcaModifierKeys"] = settings.LAPTOP_MODIFIER_KEYS

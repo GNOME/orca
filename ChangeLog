@@ -1,5 +1,8 @@
 2006-11-17  Willie Walker <william.walker@sun.com>
 
+	* src/orca/orca_console_prefs.py: make sure the laptop/desktop
+	choice works as expected.
+	
 	* src/orca/orca.in: add /usr/X11R6/bin to PATH so xmodmap
 	can be found on Debian (I wonder if there is a better way
 	to find the prefixes for where X11 binaries are installed).
