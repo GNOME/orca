@@ -68,6 +68,43 @@ NEWLINE_ROLES = [rolenames.ROLE_PARAGRAPH,
                  rolenames.ROLE_LIST_ITEM,
                  rolenames.ROLE_HEADING]
 
+# Roles that represent a logical chunk of information in a document
+#
+OBJECT_ROLES = [rolenames.ROLE_CHECK_BOX,
+                rolenames.ROLE_COLUMN_HEADER,
+                rolenames.ROLE_COMBO_BOX,
+                rolenames.ROLE_DIAL,
+                rolenames.ROLE_ENTRY,
+                rolenames.ROLE_HEADING,
+                rolenames.ROLE_ICON,
+                rolenames.ROLE_IMAGE,
+                rolenames.ROLE_LABEL,
+                rolenames.ROLE_LIST_ITEM,
+                rolenames.ROLE_MENU,
+                rolenames.ROLE_MENU_ITEM,
+                rolenames.ROLE_PAGE_TAB,
+                rolenames.ROLE_PARAGRAPH,
+                rolenames.ROLE_PASSWORD_TEXT,
+                rolenames.ROLE_PROGRESS_BAR,
+                rolenames.ROLE_PUSH_BUTTON,
+                rolenames.ROLE_RADIO_BUTTON,
+                rolenames.ROLE_RADIO_MENU_ITEM,
+                rolenames.ROLE_RADIO_MENU,
+                rolenames.ROLE_ROW_HEADER,
+                rolenames.ROLE_SECTION,
+                rolenames.ROLE_SEPARATOR,
+                rolenames.ROLE_SLIDER,
+                rolenames.ROLE_SPIN_BUTTON,
+                rolenames.ROLE_STATUSBAR,
+                rolenames.ROLE_TABLE_CELL,
+                rolenames.ROLE_TABLE_COLUMN_HEADER,
+                rolenames.ROLE_TABLE_ROW_HEADER,
+                rolenames.ROLE_TEAR_OFF_MENU_ITEM,
+                rolenames.ROLE_TERMINAL,
+                rolenames.ROLE_TEXT,
+                rolenames.ROLE_TOGGLE_BUTTON,
+                rolenames.ROLE_AUTOCOMPLETE]
+
 ########################################################################
 #                                                                      #
 # Custom BrailleGenerator                                              #
@@ -439,7 +476,9 @@ class Script(default.Script):
              Script.goPreviousLine]
         self._structuralNavigationFunctions = \
             [Script.goNextHeading,
-             Script.goPreviousHeading]
+             Script.goPreviousHeading,
+             Script.goNextChunk,
+             Script.goPreviousChunk]
         if controlCaretNavigation:
             print "Gecko.py is controlling the caret."
         else:
@@ -506,6 +545,16 @@ class Script(default.Script):
             input_event.InputEventHandler(
                 Script.goNextHeading,
                 "Goes to next heading.")
+
+        self.inputEventHandlers["goPreviousChunkHandler"] = \
+            input_event.InputEventHandler(
+                Script.goPreviousChunk,
+                "Goes to previous chunk.")
+
+        self.inputEventHandlers["goNextChunkHandler"] = \
+            input_event.InputEventHandler(
+                Script.goNextChunk,
+                "Goes to next chunk.")
 
     def __getArrowBindings(self):
         """Returns an instance of keybindings.KeyBindings that use the
@@ -636,6 +685,20 @@ class Script(default.Script):
                 1 << atspi.Accessibility.MODIFIER_SHIFT,
                 0,
                 self.inputEventHandlers["goNextHeadingHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "o",
+                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                self.inputEventHandlers["goPreviousChunkHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "o",
+                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                0,
+                self.inputEventHandlers["goNextChunkHandler"]))
 
         if controlCaretNavigation:
             # [[[TODO: WDW - probably should make the choice of
@@ -1109,7 +1172,9 @@ class Script(default.Script):
         navigation stuff to work.]]]
         """
 
-        letThemDoItRoles = [rolenames.ROLE_ENTRY]
+        letThemDoItRoles = [rolenames.ROLE_ENTRY,
+                            rolenames.ROLE_TEXT,
+                            rolenames.ROLE_PASSWORD_TEXT]
         obj = orca_state.locusOfFocus
         while obj:
             if obj.role == rolenames.ROLE_DOCUMENT_FRAME:
@@ -1794,9 +1859,7 @@ class Script(default.Script):
 
         return contents
 
-    def presentLineAtOffset(self, obj, characterOffset):
-        contents = self.getLineAtOffset(obj, characterOffset)
-
+    def presentContents(self, contents):
         if not len(contents):
             return
 
@@ -1823,6 +1886,43 @@ class Script(default.Script):
             #    print "FOO", string, caption, row, col, rowHeader, colHeader
 
             self.presentString(obj, string, True)
+
+    def presentLineAtOffset(self, obj, characterOffset):
+        self.presentContents(self.getLineAtOffset(obj, characterOffset))
+
+    def getContentsAtOffset(self, obj, characterOffset):
+        """Returns an ordered list where each element is composed of
+        an [obj, startOffset, endOffset] tuple.  The list is created
+        via an in-order traversal of the document contents starting and
+        stopping at the given object.
+        """
+
+        #if not obj.state.count(atspi.Accessibility.STATE_SHOWING):
+        #    return [[None, -1, -1]]
+
+        if not obj.text:
+            return [[obj, -1, -1]]
+
+        contents = []
+        text = self.getUnicodeText(obj)
+        for offset in range(characterOffset, len(text)):
+            if text[offset] == EMBEDDED_OBJECT_CHARACTER:
+                contents.extend(self.getContentsAtOffset(
+                    obj.child(self.getChildIndex(obj, offset)),
+                    0))
+            elif len(contents):
+                [currentObj, startOffset, endOffset] = contents[-1]
+                if obj == currentObj:
+                    contents[-1] = [obj, startOffset, offset + 1]
+                else:
+                    contents.append([obj, offset, offset + 1])
+            else:
+                contents.append([obj, offset, offset + 1])
+
+        return contents
+
+    def presentContentsAtOffset(self, obj, characterOffset):
+        self.presentContents(self.getContentsAtOffset(obj, characterOffset))
 
     def getContents(self):
         """Trivial debug utility to stringify the document contents
@@ -2130,9 +2230,14 @@ class Script(default.Script):
         #contents = self.getLineAtOffset(lastObj, lastCharacterOffset)
         #self.dumpContent(inputEvent, contents)
 
-    def getPreviousRole(self, role):
+    def getPreviousRole(self, roles, match=True):
         """Positions the caret offset at the beginnig of the next object
-        of the given role.
+        using the given roles list as a pattern to match or not match.
+
+        Arguments:
+        -roles: a list of roles from rolenames.py
+        -match: if True, the found object will have a role from roles;
+                if False, the found object will not have a role from roles
         """
         [currentObj, characterOffset] = self.getCaretContext()
 
@@ -2140,14 +2245,21 @@ class Script(default.Script):
         while obj:
             [obj, characterOffset] = self.getPreviousCaretInOrder(
                 obj, characterOffset)
-            if obj and (obj != currentObj) and (obj.role == role):
-                return [obj, characterOffset]
+            if obj and (obj != currentObj):
+                if (match and (obj.role in roles)) \
+                    or (not match and not (obj.role in roles)):
+                    return [obj, characterOffset]
 
         return [None, -1]
 
-    def getNextRole(self, role):
+    def getNextRole(self, roles, match=True):
         """Positions the caret offset at the beginnig of the next object
-        of the given role.
+        using the given roles list as a pattern to match or not match.
+
+        Arguments:
+        -roles: a list of roles from rolenames.py
+        -match: if True, the found object will have a role from roles;
+                if False, the found object will not have a role from roles
         """
         [currentObj, characterOffset] = self.getCaretContext()
 
@@ -2155,25 +2267,48 @@ class Script(default.Script):
         while obj:
             [obj, characterOffset] = self.getNextCaretInOrder(
                 obj, characterOffset)
-            if obj and (obj != currentObj) and (obj.role == role):
-                return [obj, characterOffset]
+            if obj and (obj != currentObj):
+                if (match and (obj.role in roles)) \
+                    or (not match and not (obj.role in roles)):
+                    return [obj, characterOffset]
 
         return [None, -1]
 
     def goPreviousHeading(self, inputEvent):
-        [obj, characterOffset] = self.getPreviousRole(rolenames.ROLE_HEADING)
+        [obj, characterOffset] = self.getPreviousRole([rolenames.ROLE_HEADING])
         if obj:
             [obj, characterOffset] = self.getFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
             self.presentLineAtOffset(obj, characterOffset)
         else:
-            speech.speak("No more headings.")
+            speech.speak(_("No more headings."))
 
     def goNextHeading(self, inputEvent):
-        [obj, characterOffset] = self.getNextRole(rolenames.ROLE_HEADING)
+        [obj, characterOffset] = self.getNextRole([rolenames.ROLE_HEADING])
         if obj:
             [obj, characterOffset] = self.getFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
+            self.updateBraille(obj)
             self.presentLineAtOffset(obj, characterOffset)
         else:
-            speech.speak("No more headings.")
+            speech.speak(_("No more headings."))
+
+    def goPreviousChunk(self, inputEvent):
+        [obj, characterOffset] = self.getPreviousRole(OBJECT_ROLES)
+        if obj:
+            [obj, characterOffset] = self.getFirstCaretContext(obj, 0)
+            self.setCaretPosition(obj, characterOffset)
+            self.updateBraille(obj)
+            self.presentContentsAtOffset(obj, characterOffset)
+        else:
+            speech.speak(_("No more chunks."))
+
+    def goNextChunk(self, inputEvent):
+        [obj, characterOffset] = self.getNextRole(OBJECT_ROLES)
+        if obj:
+            [obj, characterOffset] = self.getFirstCaretContext(obj, 0)
+            self.setCaretPosition(obj, characterOffset)
+            self.updateBraille(obj)
+            self.presentContentsAtOffset(obj, characterOffset)
+        else:
+            speech.speak(_("No more chunks."))

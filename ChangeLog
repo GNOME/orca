@@ -1,5 +1,11 @@
 2006-11-17  Willie Walker <william.walker@sun.com>
 
+	* src/orca/Gecko.py: began looking at implementing the prev/next
+	chunk functionality.  There's still a lot of logic needed to
+	figure out what "next" and "previous" mean, especially when we're
+	dealing with hierarchies of stuff full of
+	EMBEDDED_OBJECT_CHARACTERs.
+	
 	* src/orca/orca_console_prefs.py: make sure the laptop/desktop
 	choice works as expected.
 	
