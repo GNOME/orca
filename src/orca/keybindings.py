@@ -38,6 +38,9 @@ except:
 
 import atspi
 import debug
+import settings
+
+from orca_i18n import _           # for gettext support
 
 _keycodeCache = {}
 
@@ -93,6 +96,34 @@ def _getKeycode(keysym):
         #print keysym, keyval, entries, _keycodeCache[keysym]
 
     return _keycodeCache[keysym]
+
+def getModifierNames(mods):
+    """Gets the modifier names of a numeric modifier mask as a human
+    consumable string.
+    """
+
+    text = ""
+    if mods & (1 << settings.MODIFIER_ORCA):
+        text += _("Orca") + "+"
+    #if mods & (1 << atspi.Accessibility.MODIFIER_NUMLOCK):
+    #    text += _("Num_Lock") + "+"
+    if mods & 128:
+        text += _("Alt_R") + "+"
+    if mods & (1 << atspi.Accessibility.MODIFIER_META3):
+        text += _("Super") + "+"
+    if mods & (1 << atspi.Accessibility.MODIFIER_META2):
+        text += _("Meta2") + "+"
+    if mods & (1 << atspi.Accessibility.MODIFIER_META):
+        text += _("Meta") + "+"
+    if mods & (1 << atspi.Accessibility.MODIFIER_ALT):
+        text += _("Alt_L") + "+"
+    if mods & (1 << atspi.Accessibility.MODIFIER_CONTROL):
+        text += _("Ctrl") + "+"
+    if mods & (1 << atspi.Accessibility.MODIFIER_SHIFTLOCK):
+        text += _("Caps_Lock") + "+"
+    if mods & (1 << atspi.Accessibility.MODIFIER_SHIFT):
+        text += _("Shift") + "+"
+    return text
 
 class KeyBinding:
     """A single key binding, consisting of a keycode, a modifier mask,
@@ -158,6 +189,43 @@ class KeyBindings:
         for i in range(0, len(self.keyBindings)):
             if keyBinding == self.keyBindings[i]:
                 del self.keyBindings[i]
+
+    def hasKeyBinding (self, newKeyBinding, typeOfSearch="strict"):
+        """Return True if keyBinding is already in self.keyBindings.
+
+           The typeOfSearch can be:
+              "strict":      matches everything (description, modifiers, key)
+              "description": matches only description.
+              "keys":        matches only modifiers and key.
+        """
+
+        hasIt = False
+
+        for keyBinding in self.keyBindings:
+            if typeOfSearch == "strict":
+                if (keyBinding.handler._description \
+                    == newKeyBinding.handler._description) \
+                    and (keyBinding.keysymstring \
+                         == newKeyBinding.keysymstring) \
+                    and (keyBinding.modifier_mask \
+                         == newKeyBinding.modifier_mask) \
+                    and (keyBinding.modifiers \
+                         == newKeyBinding.modifiers):
+                    hasIt = True
+            elif typeOfSearch == "description":
+                if keyBinding.handler._description \
+                    == newKeyBinding.handler._description:
+                    hasIt = True
+            elif typeOfSearch == "keys":
+                if (keyBinding.keysymstring \
+                    == newKeyBinding.keysymstring) \
+                    and (keyBinding.modifier_mask \
+                         == newKeyBinding.modifier_mask) \
+                    and (keyBinding.modifiers \
+                         == newKeyBinding.modifiers):
+                    hasIt = True
+
+        return hasIt
 
     def getInputHandler(self, keyboardEvent):
         """Returns the input handler of the key binding that matches the

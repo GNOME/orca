@@ -1,3 +1,10 @@
+2006-11-16  Jorge Sandín <jorges@elsendero.es>
+
+	* src/orca/keybindings.py, src/orca/orca-setup.glade,
+	src/orca/orca_gui_prefs.py: work for RFE 354970.  Adds
+	a tab to the Orca preferences dialog to show the Orca
+	modifier keys and the default keybindings.
+
 2006-11-16  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca.py: rework fix for bug 376002 to get the 
