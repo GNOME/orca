@@ -2528,37 +2528,43 @@ class Script(script.Script):
         Arguments:
         - str: the string of tokens containing <key>:<value>; pairs.
 
-        Returns a dictionary of key/value items.
+        Returns a list containing two items:
+        A list of the keys in the order they were extracted from the 
+        text attribute string and a dictionary of key/value items.
         """
 
+        list = []
         dictionary = {}
         allTokens = str.split()
         for i in range(0, len(allTokens)):
             item = allTokens[i].split(":")
-            if item[1].endswith(";"):
-              item[1] = item[1][0:len(item[1])-1]
+            if item[1] and item[1].endswith(";"):
+                item[1] = item[1][0:len(item[1])-1]
+            list.append(item[0])
             dictionary[item[0]] = item[1]
 
-        return dictionary
+        return [list, dictionary]
 
-    def outputCharAttributes(self, attributes):
+    def outputCharAttributes(self, keys, attributes):
         """Speak each of the text attributes given dictionary.
 
         Arguments:
         - attributes: a dictionary of text attributes to speak.
         """
 
-        for key in attributes.keys():
-            attribute = attributes[key]
-            if attribute:
-                # If it's the 'weight' attribute and greater than 400, just
-                # speak it as bold, otherwise speak the weight.
-                #
-                if key == "weight" and int(attribute) > 400:
-                    line = _("bold")
-                else:
-                    line = key + " " + attribute
-                speech.speak(line)
+        for i in range(0, len(keys)):
+            key = keys[i]
+            if attributes.has_key(key):
+                attribute = attributes[key]
+                if attribute:
+                    # If it's the 'weight' attribute and greater than 400, just
+                    # speak it as bold, otherwise speak the weight.
+                    #
+                    if key == "weight" and int(attribute) > 400:
+                        line = _("bold")
+                    else:
+                        line = key + " " + attribute
+                    speech.speak(line)
 
     def readCharAttributes(self, inputEvent=None):
         """Reads the attributes associated with the current text character.
@@ -2578,12 +2584,13 @@ class Script(script.Script):
             # entries we are interested in.
             #
             defAttributes = text.getDefaultAttributes()
-            defDict = self.textAttrsToDictionary(defAttributes)
+            [defUser, defDict] = self.textAttrsToDictionary(defAttributes)
             allAttributes = defDict
 
             charAttributes = text.getAttributes(caretOffset)
             if charAttributes[0]:
-                charDict = self.textAttrsToDictionary(charAttributes[0])
+                [charList, charDict] = \
+                    self.textAttrsToDictionary(charAttributes[0])
 
                 # It looks like some applications like Evolution and Star
                 # Office don't implement getDefaultAttributes(). In that
@@ -2596,39 +2603,25 @@ class Script(script.Script):
                 else:
                     allAttributes = charDict
 
+            # Get a dictionary of text attributes that the user cares about.
+            #
+            [userAttrList, userAttrDict] = \
+                self.textAttrsToDictionary(settings.enabledTextAttributes)
+
             # Create a dictionary of just the items we are interested in.
             # Always include size and family-name. For the others, if the
             # value is the default, then ignore it.
             #
             attributes = {}
-            attributes['size']        = allAttributes.get('size')
-            attributes['family-name'] = allAttributes.get('family-name')
+            for i in range(0, len(userAttrList)):
+                key = userAttrList[i]
+                if allAttributes.has_key(key):
+                    textAttr = allAttributes.get(key)
+                    userAttr = userAttrDict.get(key)
+                    if textAttr != userAttr or len(userAttr) == 0:
+                        attributes[key] = textAttr
 
-            attr = allAttributes.get('weight')
-            if attr != "400":
-                attributes['weight'] = attr
-
-            attr = allAttributes.get('indent')
-            if attr != "0":
-                attributes['indent'] = attr
-
-            attr = allAttributes.get('underline')
-            if attr != "none":
-                attributes['underline'] = attr
-
-            attr = allAttributes.get('strikethrough')
-            if attr != "false":
-                attributes['strikethrough'] = attr
-
-            attr = allAttributes.get('justification')
-            if attr != "left":
-                attributes['justification'] = attr
-
-            attr = allAttributes.get('style')
-            if attr != "normal":
-                attributes['style'] = attr
-
-            self.outputCharAttributes(attributes)
+            self.outputCharAttributes(userAttrList, attributes)
 
         return True
 

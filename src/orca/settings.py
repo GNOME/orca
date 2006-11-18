@@ -336,6 +336,16 @@ speakBlankLines         = True
 #
 readTableCellRow    = True
 
+# The default set of text attributes to speak to the user. Specific
+# application scripts (or individual users can override these values if
+# so desired. Each of these text attributes is of the form <key>:<value>;
+# The <value> part will be the "default" value for that attribute. In
+# other words, if the attribute for a given piece of text has that value,
+# it won't be spoken. If no value part is given, then that attribute will
+# always be spoken.
+
+enabledTextAttributes = "size:; family-name:; weight:400; indent:0; underline:none; strikethrough:false; justification:left; style:normal;"
+
 # The limit to enable a repeat character count to be spoken.
 # If set to 0, then there will be no repeat character count.
 # Each character will be spoken singularly (i.e. "dash dash

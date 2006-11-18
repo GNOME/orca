@@ -186,7 +186,8 @@ class Script(default.Script):
             if label.text:
                 charAttributes = label.text.getAttributes(0)
                 if charAttributes[0]:
-                    charDict = self.textAttrsToDictionary(charAttributes[0])
+                    [charKeys, charDict] = \
+                        self.textAttrsToDictionary(charAttributes[0])
                     weight = charDict.get('weight')
                     if weight and weight == '800':
                         text = util.getDisplayedText(label)

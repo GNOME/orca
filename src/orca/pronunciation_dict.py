@@ -38,6 +38,7 @@ pronunciation_dict = {}
 pronunciation_dict[_("ASAP")]    = _("as soon as possible")
 pronunciation_dict[_("IMAP")]    = _("eye map")
 pronunciation_dict[_("LOL")]     = _("laughing out loud")
+pronunciation_dict[_("strikethrough")] = _("strike through")
 
 def getPronunciation(word):
     """Given a word, return a string that represents what this word
