@@ -1,3 +1,11 @@
+2006-11-18  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          Change for bug #372964. Bullet-proofing added to the
+          textAttrsToDictionary() method in default.py to handle
+          the mal-formed family-name attribute in gaim beta2.0.0beta5
+          (Ubuntu Fiesty Fawn).
+
 2006-11-17  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/settings.py:
