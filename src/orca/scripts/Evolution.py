@@ -863,8 +863,8 @@ class Script(default.Script):
 
             self.message_panel = event.source.parent.parent
             
-        if self.speakNewLine(event.source):
-            speech.speak(chnames.getCharacterName("\n"), None, False)
+            if self.speakNewLine(event.source):
+                speech.speak(chnames.getCharacterName("\n"), None, False)
 
                 
         # 9) Spell Checking Dialog

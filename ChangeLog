@@ -5,6 +5,10 @@
           - OpenOffice Framework: issue #71744.
           - atk/gail: bug #377085.
 
+        * src/orca/scripts/Evolution.py:
+          Fixed bug #376347 - Orca should not speak new-line in the 
+          evolution menubar.
+
 2006-11-18  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
