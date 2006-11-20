@@ -1,3 +1,10 @@
+2006-11-20  Rich Burridge <rich.burridge@sun.com>
+
+        * bugs/bugs.html:
+          Added in entries for two more bugs:
+          - OpenOffice Framework: issue #71744.
+          - atk/gail: bug #377085.
+
 2006-11-18  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
