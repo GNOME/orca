@@ -1,3 +1,9 @@
+2006-11-21  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          Added a line of debug to the readCharAttributes() method to
+          help Padraig debug bug #377985.
+
 2006-11-20  Rich Burridge <rich.burridge@sun.com>
 
         * bugs/bugs.html:

@@ -2584,6 +2584,9 @@ class Script(script.Script):
             # entries we are interested in.
             #
             defAttributes = text.getDefaultAttributes()
+            debug.println(debug.LEVEL_FINEST, \
+                "readCharAttributes: default text attributes: %s" % \
+                defAttributes)
             [defUser, defDict] = self.textAttrsToDictionary(defAttributes)
             allAttributes = defDict
 
