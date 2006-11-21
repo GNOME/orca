@@ -9,646 +9,196 @@ msgstr ""
 "Project-Id-Version: orca.gnome-2-16\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-11-07 22:20+0000\n"
-"PO-Revision-Date: 2006-11-10 06:28+0200\n"
-"Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
+"PO-Revision-Date: 2006-11-21 16:43+0100\n"
+"Last-Translator: Djihed Afifi <djihed@gmail.com>\n"
 "Language-Team: Arabic <support@eglug.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.2\n"
-"Plural-Forms: nplurals=4; plural=n==1 ? 0 : n==2 ? 1 : n>=3 && n<=10 ? 2 : 3\n\n"
-
-#: ../orca.desktop.in.h:1
-#, fuzzy
-msgid "Orca Screen Reader and Magnifier"
-msgstr "قارئ شاشة و مكبّرة لمكتب جنوم"
-
-#: ../orca.desktop.in.h:2
-msgid "Present on-screen information as speech or braille, or magnify the screen"
-msgstr ""
-
-#: ../src/orca/braillegenerator.py:193 ../src/orca/speechgenerator.py:191
-msgid "grayed"
-msgstr ""
-
-#: ../src/orca/braillegenerator.py:1096 ../src/orca/J2SE-access-bridge.py:66
-#: ../src/orca/speechgenerator.py:1198
-#, fuzzy
-msgid "expanded"
-msgstr "ممدد"
-
-#: ../src/orca/braillegenerator.py:1098 ../src/orca/J2SE-access-bridge.py:69
-#: ../src/orca/speechgenerator.py:1200
-msgid "collapsed"
-msgstr ""
-
-#: ../src/orca/braillegenerator.py:1102
-#, fuzzy, python-format
-msgid "TREE LEVEL %d"
-msgstr "مستوى واحد"
-
-#: ../src/orca/chnames.py:32
-#, fuzzy
-msgid "space"
-msgstr "فراغ"
-
-#: ../src/orca/chnames.py:33
-msgid "newline"
-msgstr ""
-
-#: ../src/orca/chnames.py:34
-#, fuzzy
-msgid "tab"
-msgstr "tab"
-
-#: ../src/orca/chnames.py:36
-msgid "exclaim"
-msgstr ""
-
-#: ../src/orca/chnames.py:37
-#, fuzzy
-msgid "apostrophe"
-msgstr "الفاصلة"
-
-#: ../src/orca/chnames.py:38
-#, fuzzy
-msgid "comma"
-msgstr "فاصلة"
-
-#: ../src/orca/chnames.py:39
-#, fuzzy
-msgid "dot"
-msgstr "7 نقاط:"
-
-#: ../src/orca/chnames.py:40
-#, fuzzy
-msgid "question"
-msgstr "سؤال"
-
-#: ../src/orca/chnames.py:42
-#, fuzzy
-msgid "quote"
-msgstr "اقتباس"
-
-#: ../src/orca/chnames.py:43
-#, fuzzy
-msgid "left paren"
-msgstr "الإلتفاف إلى جهة اليسار"
-
-#: ../src/orca/chnames.py:44
-#, fuzzy
-msgid "right paren"
-msgstr "الإلتفاف إلى جهة اليمين"
-
-#: ../src/orca/chnames.py:45
-#, fuzzy
-msgid "dash"
-msgstr "خط فاصل"
-
-#: ../src/orca/chnames.py:46
-#, fuzzy
-msgid "underscore"
-msgstr "تسطير"
-
-#: ../src/orca/chnames.py:47
-#, fuzzy
-msgid "colon"
-msgstr "نقطتان"
-
-#: ../src/orca/chnames.py:48
-#, fuzzy
-msgid "semicolon"
-msgstr "الفارزة المنقوطة"
-
-#: ../src/orca/chnames.py:49
-#, fuzzy
-msgid "less than"
-msgstr "أصغر من"
-
-#: ../src/orca/chnames.py:50
-#, fuzzy
-msgid "greater than"
-msgstr "أكبر من"
-
-#: ../src/orca/chnames.py:51
-#, fuzzy
-msgid "left bracket"
-msgstr "القوس اﻷيسر"
-
-#: ../src/orca/chnames.py:52
-#, fuzzy
-msgid "right bracket"
-msgstr "القوس الأيمن"
-
-#: ../src/orca/chnames.py:53
-#, fuzzy
-msgid "backslash"
-msgstr "شَّرطة معكوسة"
-
-#: ../src/orca/chnames.py:54
-#, fuzzy
-msgid "vertical line"
-msgstr "لف السّطور"
-
-#: ../src/orca/chnames.py:55
-msgid "grave accent"
-msgstr ""
-
-#: ../src/orca/chnames.py:56
-#, fuzzy
-msgid "tilde"
-msgstr "تلدة"
-
-#: ../src/orca/chnames.py:57
-#, fuzzy
-msgid "left brace"
-msgstr "قوص أيسر"
-
-#: ../src/orca/chnames.py:58
-#, fuzzy
-msgid "right brace"
-msgstr "قوص أيمن"
-
-#: ../src/orca/chnames.py:60
-msgid "pound"
-msgstr ""
-
-#: ../src/orca/chnames.py:61
-#, fuzzy
-msgid "dollar"
-msgstr "دولار"
-
-#: ../src/orca/chnames.py:62 ../src/orca/speechgenerator.py:851
-#, fuzzy
-msgid "percent"
-msgstr "بجزء من المائة"
-
-#: ../src/orca/chnames.py:63
-#, fuzzy
-msgid "and"
-msgstr "و"
-
-#: ../src/orca/chnames.py:64
-#, fuzzy
-msgid "star"
-msgstr "رمز النجمة"
-
-#: ../src/orca/chnames.py:65
-#, fuzzy
-msgid "plus"
-msgstr "زائد"
-
-#: ../src/orca/chnames.py:66
-#, fuzzy
-msgid "slash"
-msgstr "شَّرطة"
-
-#: ../src/orca/chnames.py:67
-#, fuzzy
-msgid "equals"
-msgstr "مساويات"
-
-#: ../src/orca/chnames.py:68
-#, fuzzy
-msgid "at"
-msgstr "%s عند %s"
-
-#: ../src/orca/chnames.py:69
-#, fuzzy
-msgid "caret"
-msgstr "مؤشر"
-
-#: ../src/orca/default.py:78
-msgid "Performs left click on current flat review item."
-msgstr ""
-
-#: ../src/orca/default.py:82
-msgid "Performs right click on current flat review item."
-msgstr ""
-
-#: ../src/orca/default.py:86 ../src/orca/scripts/Evolution.py:107
-#, fuzzy
-msgid "Speaks entire document."
-msgstr "عرض كامل المستند"
-
-#: ../src/orca/default.py:90
-msgid "Performs the where am I operation."
-msgstr ""
-
-#: ../src/orca/default.py:94
-msgid "Paints and prints the visible zones in the active window."
-msgstr ""
-
-#: ../src/orca/default.py:98
-msgid "Enters and exits flat review mode."
-msgstr ""
-
-#: ../src/orca/default.py:102
-msgid "Moves flat review to the beginning of the previous line."
-msgstr ""
-
-#: ../src/orca/default.py:106
-msgid "Moves flat review to the home position."
-msgstr ""
-
-#: ../src/orca/default.py:110
-#, fuzzy
-msgid "Speaks the current flat review line."
-msgstr "لا يمكن القيام بمعاينة بسيطة للنافذة الحالية"
-
-#: ../src/orca/default.py:114
-msgid "Moves flat review to the beginning of the next line."
-msgstr ""
-
-#: ../src/orca/default.py:118
-msgid "Moves flat review to the end position."
-msgstr ""
-
-#: ../src/orca/default.py:122
-msgid "Moves flat review to the previous item or word."
-msgstr ""
-
-#: ../src/orca/default.py:126
-msgid "Moves flat review to the word above the current word."
-msgstr ""
-
-#: ../src/orca/default.py:130
-msgid "Speaks or spells the current flat review item or word."
-msgstr ""
-
-#: ../src/orca/default.py:134
-#, fuzzy
-msgid "Speaks the current flat review object."
-msgstr "لا يمكن القيام بمعاينة بسيطة للنافذة الحالية"
-
-#: ../src/orca/default.py:138
-msgid "Moves flat review to the next item or word."
-msgstr ""
-
-#: ../src/orca/default.py:142
-msgid "Moves flat review to the word below the current word."
-msgstr ""
-
-#: ../src/orca/default.py:146
-msgid "Moves flat review to the previous character."
-msgstr ""
-
-#: ../src/orca/default.py:150
-msgid "Moves flat review to the end of the line."
-msgstr ""
-
-#: ../src/orca/default.py:154
-#, fuzzy
-msgid "Speaks the current flat review character."
-msgstr "لا يمكن القيام بمعاينة بسيطة للنافذة الحالية"
-
-#: ../src/orca/default.py:158
-msgid "Moves flat review to the next character."
-msgstr ""
-
-#: ../src/orca/default.py:162
-msgid "Toggles whether to read just the current table cell or the whole row."
-msgstr ""
-
-#: ../src/orca/default.py:166
-msgid "Reads the attributes associated with the current text character."
-msgstr ""
-
-#: ../src/orca/default.py:170
-msgid "Reports information on current script."
-msgstr ""
-
-#: ../src/orca/default.py:174
-msgid "Pans the braille display to the left."
-msgstr ""
-
-#: ../src/orca/default.py:178
-#, fuzzy
-msgid "Pans the braille display to the right."
-msgstr "ما اذا سيعرض الهامش الأيمن"
-
-#: ../src/orca/default.py:182
-msgid "Moves flat review to the bottom left."
-msgstr ""
-
-#: ../src/orca/default.py:186
-msgid "Returns to object with keyboard focus."
-msgstr ""
-
-#: ../src/orca/default.py:190
-msgid "Enters learn mode.  Press escape to exit learn mode."
-msgstr ""
-
-#: ../src/orca/default.py:194
-#, fuzzy
-msgid "Exits learn mode."
-msgstr "وضع المكالمة الواردة"
-
-#: ../src/orca/default.py:198
-#, fuzzy
-msgid "Decreases the speech rate."
-msgstr "تردد الت_حديث:"
-
-#: ../src/orca/default.py:202
-#, fuzzy
-msgid "Increases the speech rate."
-msgstr "تردد الت_حديث:"
-
-#: ../src/orca/default.py:206
-#, fuzzy
-msgid "Decreases the speech pitch."
-msgstr "تفعيل/تعطيل الكلام"
-
-#: ../src/orca/default.py:210
-#, fuzzy
-msgid "Increases the speech pitch."
-msgstr "تفعيل/تعطيل الكلام"
-
-#: ../src/orca/default.py:214
-msgid "Quits Orca"
-msgstr ""
-
-#: ../src/orca/default.py:218
-msgid "Toggles keystroke recording on and off."
-msgstr ""
-
-#: ../src/orca/default.py:222
-#, fuzzy
-msgid "Displays the preferences configuration dialog."
-msgstr "إظهار الحوار حول محرّر الإعدادات"
-
-#: ../src/orca/default.py:226
-msgid "Reloads user settings and reinitializes services as necessary."
-msgstr ""
-
-#: ../src/orca/default.py:230
-#, fuzzy
-msgid "Toggles the silencing of speech."
-msgstr "تفعيل/تعطيل الكلام"
-
-#: ../src/orca/default.py:234
-msgid ""
-"Prints a debug listing of all known applications to the console where Orca "
-"is running."
-msgstr ""
-
-#: ../src/orca/default.py:238
-msgid "Cycles the debug level at run time."
-msgstr ""
-
-#: ../src/orca/default.py:242
-msgid ""
-"Prints debug information about the currently active application to the "
-"console where Orca is running."
-msgstr ""
-
-#: ../src/orca/default.py:246
-msgid "Prints debug information about the ancestry of the object with focus"
-msgstr ""
-
-#: ../src/orca/default.py:250
-msgid "Prints debug information about the application with focus"
-msgstr ""
-
-#: ../src/orca/default.py:254
-msgid "Switches to the next presentation manager."
-msgstr ""
-
-#: ../src/orca/default.py:1067 ../src/orca/default.py:1282
-#, fuzzy, python-format
-msgid "tree level %d"
-msgstr "مستوى واحد"
-
-#: ../src/orca/default.py:1071 ../src/orca/focus_tracking_presenter.py:639
-#, fuzzy
-msgid "No focus"
-msgstr "بدون تركيز"
-
-#: ../src/orca/default.py:1673
-#, fuzzy
-msgid "entire document selected"
-msgstr "عرض كامل المستند"
-
-#: ../src/orca/default.py:2121
-#, fuzzy
-msgid "Speak "
-msgstr "_ابحث مرة أخرى"
-
-#: ../src/orca/default.py:2124
-#, fuzzy
-msgid "row"
-msgstr "_صف"
-
-#: ../src/orca/default.py:2126 ../src/orca/rolenames.py:432
-#: ../src/orca/rolenames.py:434
-#, fuzzy
-msgid "cell"
-msgstr "خلية"
-
-#: ../src/orca/default.py:2281
-msgid "Entering learn mode.  Press any key to hear its function. "
-msgstr ""
-
-#: ../src/orca/default.py:2283
-#, fuzzy
-msgid "Learn mode.  Press escape to exit."
-msgstr "في نسق الاختيار بلوحة المفاتيح, أنقر F7 للخروج"
-
-#: ../src/orca/default.py:2295 ../src/orca/default.py:2296
-#, fuzzy
-msgid "Exiting learn mode."
-msgstr "وضع المكالمة الواردة"
-
-#: ../src/orca/default.py:2626 ../src/orca/default.py:2754
-#: ../src/orca/default.py:2759 ../src/orca/default.py:2831
-#: ../src/orca/default.py:2836
-#, fuzzy
-msgid "blank"
-msgstr "فارغ"
-
-#: ../src/orca/default.py:2628 ../src/orca/default.py:2761
-#, fuzzy
-msgid "white space"
-msgstr "فضاء ال_قرص:"
-
-#: ../src/orca/espeechfactory.py:93
-#, fuzzy
-msgid "Emacspeak Speech Services"
-msgstr "خدمات الشّبكة النّشطة"
-
-#: ../src/orca/focus_tracking_presenter.py:734
-#, fuzzy
-msgid "Switching to focus tracking mode."
-msgstr "تحوّل بين نسق التتبع البسيط للتركيز/المعاينة"
-
-#: ../src/orca/gnomespeechfactory.py:159
-#, fuzzy
-msgid "GNOME Speech Services"
-msgstr "خدمات الشّبكة النّشطة"
+"Plural-Forms: nplurals=4; plural=n==1 ? 0 : n==2 ? 1 : n>=3 && n<=10 ? 2 : 3\n"
+
+#: ../src/orca/util.py:474
+msgid " Context is "
+msgstr "السياق هو"
 
 #. # Replace ellipses (both manual and unicode) with "dot dot dot"
 #. #
-#: ../src/orca/gnomespeechfactory.py:610 ../src/orca/gnomespeechfactory.py:611
-#, fuzzy
+#: ../src/orca/gnomespeechfactory.py:610
+#: ../src/orca/gnomespeechfactory.py:611
 msgid " dot dot dot"
-msgstr "7 نقاط:"
+msgstr "نقطة نقطة نقطة"
 
-#: ../src/orca/gnomespeechfactory.py:770
-#, fuzzy
-msgid "higher."
-msgstr "أعلى"
+#: ../src/orca/scripts/StarOffice.py:865
+msgid " has formula"
+msgstr "له وظيفة"
 
-#: ../src/orca/gnomespeechfactory.py:798
-#, fuzzy
-msgid "lower."
-msgstr "أدنى"
+#: ../src/orca/orca.py:588
+msgid " off"
+msgstr "موقف"
 
-#: ../src/orca/gnomespeechfactory.py:823
-msgid "faster."
-msgstr ""
+#: ../src/orca/orca.py:590
+msgid " on"
+msgstr "مشتغل"
 
-#: ../src/orca/gnomespeechfactory.py:853
-msgid "slower."
-msgstr ""
+#: ../src/orca/scripts/Evolution.py:149
+msgid " screen"
+msgstr "شاشة"
 
-#: ../src/orca/hierarchical_presenter.py:436
-msgid "Switching to hierarchical navigation mode."
-msgstr ""
+#: ../src/orca/orca_console_prefs.py:117
+#: ../src/orca/orca_console_prefs.py:138
+#: ../src/orca/orca_console_prefs.py:164
+msgid "%d. %s"
+msgstr "%d. %s"
 
-#: ../src/orca/J2SE-access-bridge.py:71 ../src/orca/speechgenerator.py:909
-#: ../src/orca/speechgenerator.py:912 ../src/orca/util.py:1228
-#, fuzzy
-msgid "selected"
-msgstr "مُنتقى"
+#: ../src/orca/orca.py:1096
+msgid "-?, --help                   Show this help message"
+msgstr "-?, --help                   أظهر المساعدة"
 
-#: ../src/orca/J2SE-access-bridge.py:75 ../src/orca/util.py:1236
-#, fuzzy
-msgid "unselected"
-msgstr "عمود غير منتقى"
+#: ../src/orca/orca.py:1100
+msgid "-n, --no-setup               Skip set up of user preferences"
+msgstr "-n, --no-setup               تخطّى تحديد تفضيلات المستخدم"
 
-#: ../src/orca/keynames.py:32 ../src/orca/keynames.py:35
-#, fuzzy
-msgid "left shift"
-msgstr "نقل لليسار"
+#: ../src/orca/orca.py:1098
+msgid "-s, --setup, --gui-setup     Set up user preferences"
+msgstr "-s, --setup, --gui-setup     اعداد تفضيلات المستخدم"
 
-#: ../src/orca/keynames.py:33
-#, fuzzy
-msgid "left alt"
-msgstr "مفتاح التعديل Alt"
+#: ../src/orca/orca.py:1099
+msgid "-t, --text-setup             Set up user preferences (text version)"
+msgstr "-t, --text-setup             إعداد تفضيلات المستخدم نصيا"
 
-#: ../src/orca/keynames.py:34
-#, fuzzy
-msgid "left control"
-msgstr "<b>أسلوب القطعة:</b>"
-
-#: ../src/orca/keynames.py:36
-#, fuzzy
-msgid "right shift"
-msgstr "نقل لليمين"
-
-#: ../src/orca/keynames.py:37
-#, fuzzy
-msgid "right alt"
-msgstr "مفتاح التعديل Alt"
-
-#: ../src/orca/keynames.py:38
-#, fuzzy
-msgid "right control"
-msgstr "<b>أسلوب القطعة:</b>"
-
-#: ../src/orca/keynames.py:39
-#, fuzzy
-msgid "left meta"
-msgstr "الإلتفاف إلى جهة اليسار"
-
-#: ../src/orca/keynames.py:40
-#, fuzzy
-msgid "right meta"
-msgstr "الإلتفاف إلى جهة اليمين"
-
-#: ../src/orca/keynames.py:41
-#, fuzzy
-msgid "num lock"
-msgstr "num lock"
-
-#: ../src/orca/keynames.py:42
-#, fuzzy
-msgid "caps lock"
-msgstr "caps lock"
-
-#: ../src/orca/keynames.py:43
-#, fuzzy
-msgid "scroll lock"
-msgstr "إقفال الشاشة"
-
-#: ../src/orca/keynames.py:44
-#, fuzzy
-msgid "page up"
-msgstr "page up"
-
-#: ../src/orca/keynames.py:45
-#, fuzzy
-msgid "page down"
-msgstr "page down"
-
-#: ../src/orca/keynames.py:46
-#, fuzzy
-msgid "left tab"
-msgstr "نقل اللسان إلى ال_يسار"
-
-#: ../src/orca/keynames.py:47
-#, fuzzy
-msgid "F 11"
-msgstr "Sans 11"
-
-#: ../src/orca/keynames.py:48
-#, fuzzy
-msgid "F 12"
-msgstr "12"
+#: ../src/orca/orca.py:1097
+msgid "-v, --version                %s"
+msgstr "-v, --version                %s"
 
 #: ../src/orca/orca-setup.glade.h:1
-#, fuzzy
 msgid "<b>Cross-hair Settings</b>"
-msgstr "تفعيل/تعطيل _علامة مشبك التقاطع"
+msgstr "<b>تفضيلات مشبك التقاطع</b>"
 
 #: ../src/orca/orca-setup.glade.h:2
-#, fuzzy
 msgid "<b>Cursor Settings</b>"
-msgstr "اختر الإعدادات"
+msgstr "<b>إعدادات المؤشّر</b>"
 
 #: ../src/orca/orca-setup.glade.h:3
-#, fuzzy
 msgid "<b>Punctuation Level</b>"
-msgstr "مستوى واحد"
+msgstr "<b>مستوى التنقيط</b>"
 
 #: ../src/orca/orca-setup.glade.h:4
-#, fuzzy
 msgid "<b>Table Row Speech</b>"
-msgstr "ترويسة سطر الجدول"
+msgstr "<b>نطق الجدول بالصف</b>"
 
 #: ../src/orca/orca-setup.glade.h:5
 msgid "<b>Verbosity</b>"
-msgstr ""
+msgstr "<b>الاسهاب</b>"
 
 #: ../src/orca/orca-setup.glade.h:6
-#, fuzzy
 msgid "<b>Zoomer Position</b>"
-msgstr "موقع المؤشّر"
+msgstr "<b>موقع المكبّر</b>"
 
 #: ../src/orca/orca-setup.glade.h:7
-#, fuzzy
 msgid "<b>Zoomer Settings</b>"
-msgstr "اختر الإعدادات"
+msgstr "<b>إعدادات المكبّر</b>"
+
+#: ../src/orca/rolenames.py:147
+msgid "???"
+msgstr "؟؟؟"
+
+#: ../src/orca/rolenames.py:153
+msgid "Accelerator"
+msgstr "مُسَرِّع"
+
+#: ../src/orca/orca_console_prefs.py:319
+#, fuzzy
+msgid "Accessibility support for GNOME has just been enabled. "
+msgstr "الوصول للتمثال الذي لم يمكن."
+
+#: ../src/orca/orca_gui_prefs.py:1399
+#, fuzzy
+msgid "Accessibility support for GNOME has just been enabled."
+msgstr "الوصول للتمثال الذي لم يمكن."
+
+#: ../src/orca/rolenames.py:158
+msgid "Alert"
+msgstr "تنبيه"
+
+#: ../src/orca/rolenames.py:162
+msgid "Anim"
+msgstr "انيم"
+
+#: ../src/orca/rolenames.py:163
+msgid "Animation"
+msgstr "رسوم متحركة"
+
+#: ../src/orca/rolenames.py:518
+msgid "Application"
+msgstr "تطبيق"
+
+#: ../src/orca/rolenames.py:168
+msgid "Arrow"
+msgstr "سهم"
+
+#: ../src/orca/scripts/Evolution.py:900
+#: ../src/orca/scripts/Evolution.py:938
+msgid "Assistant"
+msgstr "مساعد"
+
+#: ../src/orca/rolenames.py:523
+msgid "AutoComplete"
+msgstr "تكملة آلية"
+
+#: ../src/orca/orca_gui_prefs.py:365
+#: ../src/orca/orca_gui_prefs.py:369
+#: ../src/orca/orca_gui_prefs.py:1310
+msgid "Bilinear"
+msgstr "ثنائي خطّي"
+
+#: ../src/orca/settings.py:439
+msgid "Bon Echo"
+msgstr "بون إيكو"
 
 #: ../src/orca/orca-setup.glade.h:8
-#, fuzzy
 msgid "Braille"
 msgstr "براي"
 
-#: ../src/orca/orca-setup.glade.h:9 ../src/orca/orca_gui_prefs.py:1058
+#: ../src/orca/orca-setup.glade.h:9
+#: ../src/orca/orca_gui_prefs.py:1058
 #: ../src/orca/orca_gui_prefs.py:1113
 msgid "Brie_f"
-msgstr ""
+msgstr "م_لخّص"
+
+#: ../src/orca/rolenames.py:363
+msgid "Button"
+msgstr "زر"
+
+#: ../src/orca/rolenames.py:173
+msgid "Calendar"
+msgstr "رزنامة"
+
+#: ../src/orca/scripts/Evolution.py:94
+msgid "CalendarEvent"
+msgstr "حدثرزنامة"
+
+#: ../src/orca/scripts/Evolution.py:87
+msgid "CalendarView"
+msgstr "مظهررزنامة"
+
+#: ../src/orca/rolenames.py:178
+msgid "Canvas"
+msgstr "مساحة رسم"
+
+#: ../src/orca/orca.py:586
+msgid "Caps_Lock"
+msgstr "تغيير الزر"
+
+#: ../src/orca/rolenames.py:433
+msgid "Cell"
+msgstr "خلية"
+
+#: ../src/orca/orca_gui_prefs.py:378
+#: ../src/orca/orca_gui_prefs.py:386
+#: ../src/orca/orca_gui_prefs.py:1329
+msgid "Centered"
+msgstr "موسَّط"
 
 #: ../src/orca/orca-setup.glade.h:10
 msgid ""
@@ -656,17 +206,111 @@ msgid ""
 "None\n"
 "Proportional\n"
 "Push"
-msgstr ""
+msgstr "موسَّط/لا شيء/ نسبي/ادفع"
+
+#: ../src/orca/scripts/gedit.py:135
+msgid "Change to:"
+msgstr "تغيير إلى: "
+
+#: ../src/orca/scripts/gedit.py:255
+#: ../src/orca/scripts/gedit.py:308
+msgid "Check Spelling"
+msgstr "تثبت من تهجيئ الكلمات"
+
+#: ../src/orca/rolenames.py:183
+msgid "CheckBox"
+msgstr "مربع_خيار"
+
+#: ../src/orca/rolenames.py:188
+msgid "CheckItem"
+msgstr "عنصر_خيار"
+
+#: ../src/orca/rolenames.py:193
+msgid "CheckMenu"
+msgstr "قائمة_خيار"
 
 #: ../src/orca/orca-setup.glade.h:14
-#, fuzzy
 msgid "Color:"
-msgstr "اللّون"
+msgstr "لون:"
+
+#: ../src/orca/rolenames.py:198
+msgid "ColorChooser"
+msgstr "حوار_اختيار_الألوان"
+
+#: ../src/orca/rolenames.py:203
+#: ../src/orca/rolenames.py:438
+#, fuzzy
+msgid "ColumnHeader"
+msgstr "كولومنهيدر"
+
+#: ../src/orca/rolenames.py:208
+#, fuzzy
+msgid "Combo"
+msgstr "صندوق مجموعة"
+
+#. The indication that spell checking is complete is when the
+#. "misspelt" word is set to "Completed spell checking". Ugh!
+#. Try to detect this and let the user know.
+#: ../src/orca/scripts/gedit.py:165
+#, fuzzy
+msgid "Completed spell checking"
+msgstr "إكمال التثبت من التهجئة"
+
+#: ../src/orca/scripts/Evolution.py:180
+#, fuzzy
+msgid "Congratulations"
+msgstr "تهاني"
 
 #: ../src/orca/orca-setup.glade.h:15
 #, fuzzy
 msgid "Custom siz_e"
 msgstr "مشهد مخصّص"
+
+#: ../src/orca/default.py:238
+#, fuzzy
+msgid "Cycles the debug level at run time."
+msgstr "دورة في نقح مستوى ادارة الوقت."
+
+#: ../src/orca/rolenames.py:213
+#, fuzzy
+msgid "DateEditor"
+msgstr "محرر التاريخ"
+
+#: ../src/orca/orca.py:383
+#, fuzzy
+msgid "Debug level all."
+msgstr "كل الفئات المدعومة"
+
+#: ../src/orca/orca.py:387
+#, fuzzy
+msgid "Debug level finer."
+msgstr "تعديل مستوى التكبير"
+
+#: ../src/orca/orca.py:385
+#, fuzzy
+msgid "Debug level finest."
+msgstr "تعديل مستوى التكبير"
+
+#: ../src/orca/default.py:206
+#, fuzzy
+msgid "Decreases the speech pitch."
+msgstr "تفعيل/تعطيل الكلام"
+
+#: ../src/orca/default.py:198
+#, fuzzy
+msgid "Decreases the speech rate."
+msgstr "تردد الت_حديث:"
+
+#: ../src/orca/settings.py:438
+#, fuzzy
+msgid "Deer Park"
+msgstr "فينكس-ديير"
+
+#: ../src/orca/orca_gui_prefs.py:502
+#: ../src/orca/orca_gui_prefs.py:527
+#, fuzzy
+msgid "Default"
+msgstr "الافتراضي"
 
 #: ../src/orca/orca-setup.glade.h:16
 #, fuzzy
@@ -675,6 +319,75 @@ msgid ""
 "Uppercase\n"
 "Hyperlink"
 msgstr "عرض الفيديو الافتراضي"
+
+#: ../src/orca/rolenames.py:223
+#, fuzzy
+msgid "DesktopFrame"
+msgstr "ديسكتوبفرامي"
+
+#: ../src/orca/rolenames.py:218
+#, fuzzy
+msgid "DesktopIcon"
+msgstr "ديسكتوبيكون"
+
+#: ../src/orca/rolenames.py:228
+msgid "Dial"
+msgstr "اتصال"
+
+#: ../src/orca/rolenames.py:233
+msgid "Dialog"
+msgstr "حوار"
+
+#: ../src/orca/scripts/Evolution.py:761
+#, fuzzy
+msgid "Directories button"
+msgstr "رسم الزّر"
+
+#: ../src/orca/rolenames.py:238
+#, fuzzy
+msgid "DirectoryPane"
+msgstr "ديريكتوريباني"
+
+#: ../src/orca/scripts/planner.py:77
+#: ../src/orca/scripts/planner.py:135
+#, fuzzy
+msgid "Display more options"
+msgstr "<b>خيارات قائمة المهام</b>"
+
+#: ../src/orca/default.py:222
+#, fuzzy
+msgid "Displays the preferences configuration dialog."
+msgstr "إظهار الحوار حول محرّر الإعدادات"
+
+#: ../src/orca/scripts/gaim.py:197
+#, fuzzy
+msgid "Do not speak chat room name."
+msgstr "لا اتكلم باسم غرفة المحادثة."
+
+#: ../src/orca/rolenames.py:243
+#, fuzzy
+msgid "DrawingArea"
+msgstr "دراوينغاريا"
+
+#: ../src/orca/rolenames.py:528
+#, fuzzy
+msgid "EditBar"
+msgstr "يديتبار"
+
+#: ../src/orca/espeechfactory.py:93
+#, fuzzy
+msgid "Emacspeak Speech Services"
+msgstr "خدمات الشّبكة النّشطة"
+
+#: ../src/orca/rolenames.py:533
+#, fuzzy
+msgid "EmbeddedComponent"
+msgstr "يمبيديدكومبونينت"
+
+#: ../src/orca/orca_console_prefs.py:309
+#, fuzzy
+msgid "Enable Braille Monitor?  Enter y or n: "
+msgstr "يمكن رصد برايل؟نعم او ان تدخل :"
 
 #: ../src/orca/orca-setup.glade.h:19
 #, fuzzy
@@ -686,9 +399,15 @@ msgstr "تفضيلات مراقب بريل"
 msgid "Enable Braille _support"
 msgstr "_تفعيل دعم الفيديو"
 
+#: ../src/orca/orca_console_prefs.py:301
+#, fuzzy
+msgid "Enable Braille?  Enter y or n: "
+msgstr "أدخل دولتك أو مدينتك"
+
 #: ../src/orca/orca-setup.glade.h:21
+#, fuzzy
 msgid "Enable _alphanumeric and punctuation keys"
-msgstr ""
+msgstr "يمكن _alphanumeric المفاتيح وعلامات الترقيم"
 
 #: ../src/orca/orca-setup.glade.h:22
 #, fuzzy
@@ -701,9 +420,8 @@ msgid "Enable _key echo"
 msgstr "تفعيل إلغاء الصدى"
 
 #: ../src/orca/orca-setup.glade.h:24
-#, fuzzy
 msgid "Enable _magnifier"
-msgstr "إفتراضات المكبرة"
+msgstr "تفعيل ال_مكبّرة"
 
 #: ../src/orca/orca-setup.glade.h:25
 #, fuzzy
@@ -715,10 +433,19 @@ msgstr "<b>تفعيل إ_بطاء المفاتيح</b>"
 msgid "Enable ac_tion keys"
 msgstr "<b>تفعيل المفاتيح ال_مرتدّة</b>"
 
-#: ../src/orca/orca-setup.glade.h:27
+#: ../src/orca/orca_console_prefs.py:273
 #, fuzzy
+msgid "Enable action keys?  Enter y or n: "
+msgstr "يمكن عمل المفاتيح؟نعم او ان تدخل :"
+
+#: ../src/orca/orca_console_prefs.py:241
+#, fuzzy
+msgid "Enable alphanumeric and punctuation keys?  Enter y or n: "
+msgstr "يمكن ابجدية وعلامات الترقيم المفاتيح؟نعم او ان تدخل :"
+
+#: ../src/orca/orca-setup.glade.h:27
 msgid "Enable c_ursor"
-msgstr "مكّن ال_تّسجيل"
+msgstr "تفعيل ال_مؤشّر"
 
 #: ../src/orca/orca-setup.glade.h:28
 #, fuzzy
@@ -735,33 +462,343 @@ msgstr "تفعيل/تعطيل _علامة مشبك التقاطع"
 msgid "Enable echo by _word"
 msgstr "اختيار باعتبار رموز ال_كلمات:"
 
+#. Ask the user if they would like to enable echoing by word.
+#: ../src/orca/orca_console_prefs.py:209
+#, fuzzy
+msgid "Enable echo by word?  Enter y or n: "
+msgstr "يمكن صدى من كلمة؟نعم او ان تدخل :"
+
+#: ../src/orca/orca_console_prefs.py:265
+#, fuzzy
+msgid "Enable function keys?  Enter y or n: "
+msgstr "يمكن المفاتيح الوظيفة؟نعم او ان تدخل :"
+
+#. Ask the user if they would like to enable key echo. If they say
+#. yes, then for each of the five different types of keys, ask the
+#. user if they would like to enable them.
+#. These key types are:
+#. o Alphanumeric and punctuation keys
+#. o Modifier keys: CTRL, ALT, Shift, Insert, and "Fn" on laptops.
+#. o Locking keys: Caps Lock, Num Lock, Scroll Lock, etc.
+#. o Function keys: The keys at the top of the keyboard.
+#. o Action keys: space, enter, escape, tab, backspace, delete, arrow
+#. keys, page up, page down, etc.
+#: ../src/orca/orca_console_prefs.py:234
+#, fuzzy
+msgid "Enable key echo?  Enter y or n: "
+msgstr "يمكن صدى الرئيسية؟نعم او ان تدخل :"
+
 #: ../src/orca/orca-setup.glade.h:31
 #, fuzzy
 msgid "Enable lockin_g keys"
 msgstr "<b>تفعيل إ_بطاء المفاتيح</b>"
+
+#: ../src/orca/orca_console_prefs.py:257
+#, fuzzy
+msgid "Enable locking keys?  Enter y or n: "
+msgstr "يمكن قفل المفاتيح؟نعم او ان تدخل :"
+
+#: ../src/orca/orca_console_prefs.py:249
+#, fuzzy
+msgid "Enable modifier keys?  Enter y or n: "
+msgstr "يمكن المعدل المفاتيح؟نعم او ان تدخل :"
+
+#: ../src/orca/orca_console_prefs.py:120
+#: ../src/orca/orca_console_prefs.py:141
+#: ../src/orca/orca_console_prefs.py:171
+#, fuzzy
+msgid "Enter choice: "
+msgstr "أدخل كلمة المرور"
+
+#: ../src/orca/default.py:2281
+#, fuzzy
+msgid "Entering learn mode.  Press any key to hear its function. "
+msgstr "تعلم طريقة الدخول.اضغط على اي مفتاح للاستماع وظيفتها."
+
+#: ../src/orca/default.py:98
+#, fuzzy
+msgid "Enters and exits flat review mode."
+msgstr "دخول وخروج مراجعة نمط ثابت."
+
+#: ../src/orca/default.py:190
+#, fuzzy
+msgid "Enters learn mode.  Press escape to exit learn mode."
+msgstr "يدخل تعلم طريقة.صحافه الهروب الى الخروج تعلم طريقة."
+
+#: ../src/orca/default.py:2295
+#: ../src/orca/default.py:2296
+#, fuzzy
+msgid "Exiting learn mode."
+msgstr "وضع المكالمة الواردة"
+
+#: ../src/orca/default.py:194
+#, fuzzy
+msgid "Exits learn mode."
+msgstr "وضع المكالمة الواردة"
+
+#: ../src/orca/keynames.py:47
+msgid "F 11"
+msgstr "ف 11"
+
+#: ../src/orca/keynames.py:48
+msgid "F 12"
+msgstr "ف 12"
+
+#: ../src/orca/rolenames.py:248
+#, fuzzy
+msgid "FileChooser"
+msgstr "فيليشوسير"
+
+#: ../src/orca/rolenames.py:253
+msgid "Filler"
+msgstr "مملئ"
+
+#: ../src/orca/scripts/StarOffice.py:617
+msgid "First name"
+msgstr "الاسم الأول"
+
+#: ../src/orca/rolenames.py:258
+#, fuzzy
+msgid "FontChooser"
+msgstr "مختار الخطوط"
+
+#: ../src/orca/rolenames.py:508
+#, fuzzy
+msgid "Footer"
+msgstr "الهامش:"
+
+#: ../src/orca/rolenames.py:263
+msgid "Frame"
+msgstr "إطار"
+
+#: ../src/orca/gnomespeechfactory.py:159
+#, fuzzy
+msgid "GNOME Speech Services"
+msgstr "خدمات الشّبكة النّشطة"
+
+#: ../src/orca/rolenames.py:268
+#, fuzzy
+msgid "GlassPane"
+msgstr "غلاسباني"
+
+#: ../src/orca/orca.py:1014
+msgid "Goodbye."
+msgstr "وداعا."
+
+#: ../src/orca/rolenames.py:503
+msgid "Header"
+msgstr "عنوان"
+
+#: ../src/orca/rolenames.py:273
+#, fuzzy
+msgid "HtmlContainer"
+msgstr "تملكونتاينر"
+
+#: ../src/orca/orca_gui_prefs.py:506
+#: ../src/orca/orca_gui_prefs.py:535
+#, fuzzy
+msgid "Hyperlink"
+msgstr "الوصله الفاءقه"
+
+#: ../src/orca/rolenames.py:278
+msgid "Icon"
+msgstr "أيقونة."
+
+#: ../src/orca/orca.py:1103
+#, fuzzy
+msgid ""
+"If Orca has not been previously set up by the user, Orca\n"
+"will automatically launch the preferences set up unless\n"
+"the -n or --no-setup option is used."
+msgstr "الخرائط اذا لم تتم اقامتها مستعملالخرائط / نويل تلقائيا اطلاق التفضيلات اقامة إلا / ن او نثي -- لم يعد خيار استخدامها."
+
+#: ../src/orca/rolenames.py:283
+msgid "Image"
+msgstr "صورة"
 
 #: ../src/orca/orca-setup.glade.h:32
 #, fuzzy
 msgid "In_vert colors"
 msgstr "استخدام الألوان الخاصة"
 
+#: ../src/orca/default.py:210
+#, fuzzy
+msgid "Increases the speech pitch."
+msgstr "تفعيل/تعطيل الكلام"
+
+#: ../src/orca/default.py:202
+#, fuzzy
+msgid "Increases the speech rate."
+msgstr "تردد الت_حديث:"
+
+#: ../src/orca/rolenames.py:288
+#, fuzzy
+msgid "InternalFrame"
+msgstr "ينترنالفرامي"
+
+#: ../src/orca/rolenames.py:148
+msgid "Invalid"
+msgstr "غير صحيح"
+
 #: ../src/orca/orca-setup.glade.h:33
 #, fuzzy
 msgid "Key Echo"
 msgstr "<b>كتابة النصوص</b>"
 
-#: ../src/orca/orca-setup.glade.h:34 ../src/orca/orca_gui_prefs.py:1038
+#: ../src/orca/rolenames.py:293
+msgid "Label"
+msgstr "علامة"
+
+#: ../src/orca/rolenames.py:298
+#, fuzzy
+msgid "LayeredPane"
+msgstr "لاييريدباني"
+
+#: ../src/orca/default.py:2283
+#, fuzzy
+msgid "Learn mode.  Press escape to exit."
+msgstr "في نسق الاختيار بلوحة المفاتيح, أنقر F7 للخروج"
+
+#: ../src/orca/scripts/StarOffice.py:594
+#, fuzzy
+msgid "License Agreement Accept button now has focus."
+msgstr "قبول اتفاقيه ترخيص زر التركيز الآن."
+
+#: ../src/orca/rolenames.py:303
+msgid "List"
+msgstr "قائمة"
+
+#: ../src/orca/rolenames.py:308
+#, fuzzy
+msgid "ListItem"
+msgstr "ليستيتيم"
+
+#: ../src/orca/orca-setup.glade.h:34
+#: ../src/orca/orca_gui_prefs.py:1038
+#, fuzzy
 msgid "M_ost"
-msgstr ""
+msgstr "M_ost"
 
 #: ../src/orca/orca-setup.glade.h:35
-#, fuzzy
 msgid "Magnifier"
 msgstr "مكبر"
 
+#: ../src/orca/rolenames.py:313
+msgid "Menu"
+msgstr "قائمة"
+
+#: ../src/orca/rolenames.py:318
+#, fuzzy
+msgid "MenuBar"
+msgstr "إظهار _عمود القائمة"
+
+#: ../src/orca/rolenames.py:323
+#, fuzzy
+msgid "MenuItem"
+msgstr "اظهر عنصر القائمة \"أخرى\" "
+
+#: ../src/orca/scripts/gaim.py:215
+#, fuzzy
+msgid "Message from chat room "
+msgstr "لصق رسالة (أو رسائل) من الحافظة"
+
+#: ../src/orca/util.py:473
+msgid "Misspelled word: "
+msgstr "كلمة مهجأة خاطئا:"
+
+#: ../src/orca/scripts/gedit.py:136
+msgid "Misspelled word:"
+msgstr "كلمة مهجأة خاطئا:"
+
 #: ../src/orca/orca-setup.glade.h:36
 msgid "Mouse trac_king mode:"
-msgstr ""
+msgstr "نمط تت_بع الفأرة:"
+
+#: ../src/orca/default.py:114
+#, fuzzy
+msgid "Moves flat review to the beginning of the next line."
+msgstr "مراجعة خطوات ثابتة الى بداية السطر التالي."
+
+#: ../src/orca/default.py:102
+#, fuzzy
+msgid "Moves flat review to the beginning of the previous line."
+msgstr "مراجعة خطوات ثابتة الى بداية السطر السابق."
+
+#: ../src/orca/default.py:182
+#, fuzzy
+msgid "Moves flat review to the bottom left."
+msgstr "مراجعة خطوات ثابتة الى أسفل اليسار."
+
+#: ../src/orca/default.py:150
+#, fuzzy
+msgid "Moves flat review to the end of the line."
+msgstr "مراجعة خطوات ثابتة الى نهاية الخط."
+
+#: ../src/orca/default.py:118
+#, fuzzy
+msgid "Moves flat review to the end position."
+msgstr "مراجعة خطوات ثابتة الى نهاية الموقف."
+
+#: ../src/orca/default.py:106
+#, fuzzy
+msgid "Moves flat review to the home position."
+msgstr "خطوات ثابتة الى مراجعة موقع البيت."
+
+#: ../src/orca/default.py:158
+#, fuzzy
+msgid "Moves flat review to the next character."
+msgstr "شقة استعراض الخطوات المقبلة الى طبيعه."
+
+#: ../src/orca/default.py:138
+#, fuzzy
+msgid "Moves flat review to the next item or word."
+msgstr "مراجعة خطوات ثابتة الى البند التالي أو كلمة."
+
+#: ../src/orca/default.py:146
+#, fuzzy
+msgid "Moves flat review to the previous character."
+msgstr "خطوات ثابتة الى مراجعة طبيعه السابقة."
+
+#: ../src/orca/default.py:122
+#, fuzzy
+msgid "Moves flat review to the previous item or word."
+msgstr "خطوات ثابتة لمراجعة البند السابق أو كلمة."
+
+#: ../src/orca/default.py:126
+#, fuzzy
+msgid "Moves flat review to the word above the current word."
+msgstr "خطوات ثابتة لمراجعة الكلمه فوق الكلمه الحالية."
+
+#: ../src/orca/default.py:142
+#, fuzzy
+msgid "Moves flat review to the word below the current word."
+msgstr "خطوات ثابتة لمراجعة الكلمه تحت كلمة الحالي."
+
+#: ../src/orca/scripts/Evolution.py:687
+#, fuzzy
+msgid "No appointments"
+msgstr "لا تاريخ"
+
+#: ../src/orca/default.py:1071
+#: ../src/orca/focus_tracking_presenter.py:639
+msgid "No focus"
+msgstr "لا تركيز"
+
+#: ../src/orca/orca_console_prefs.py:129
+msgid "No servers available.\n"
+msgstr "لا وجود لنوادل.\n"
+
+#: ../src/orca/orca_console_prefs.py:151
+#, fuzzy
+msgid "No voices available.\n"
+msgstr "لا وجود لوصف."
+
+#: ../src/orca/orca_gui_prefs.py:367
+#: ../src/orca/orca_gui_prefs.py:380
+#: ../src/orca/orca_gui_prefs.py:1312
+#: ../src/orca/orca_gui_prefs.py:1335
+msgid "None"
+msgstr "لا شيء"
 
 #: ../src/orca/orca-setup.glade.h:37
 #, fuzzy
@@ -770,40 +807,274 @@ msgid ""
 "Bilinear"
 msgstr "<small><i>لا شيء</i></small>"
 
-#: ../src/orca/orca-setup.glade.h:39
+#: ../src/orca/scripts/StarOffice.py:580
 #, fuzzy
+msgid "Note that the Scroll Down button has to be pressed numerous times."
+msgstr "علما بأن وضع زر لفيفه ان يكون الضغط عدة مرات."
+
+#: ../src/orca/orca.py:592
+#, fuzzy
+msgid "Num_Lock"
+msgstr "num lock"
+
+#: ../src/orca/rolenames.py:328
+#, fuzzy
+msgid "OptionPane"
+msgstr "وبوسيباني"
+
+#: ../src/orca/orca-setup.glade.h:39
 msgid "Orca Preferences"
-msgstr "خيارات داشر"
+msgstr "خيارات أوركا"
+
+#: ../orca.desktop.in.h:1
+msgid "Orca Screen Reader and Magnifier"
+msgstr "قارئ الشاشة و المكبّر أوركا"
+
+#: ../src/orca/orca.py:815
+#, fuzzy
+msgid "Orca user settings reloaded."
+msgstr "الخرائط المستخدمة اماكن إعادة تحميلها."
+
+#: ../src/orca/rolenames.py:333
+msgid "Page"
+msgstr "صفحة"
+
+#: ../src/orca/default.py:94
+#, fuzzy
+msgid "Paints and prints the visible zones in the active window."
+msgstr "البويات وبصمات واضحة في المناطق النشطه النافذة."
+
+#: ../src/orca/rolenames.py:343
+#, fuzzy
+msgid "Panel"
+msgstr "لوحة المهام"
+
+#: ../src/orca/default.py:174
+#, fuzzy
+msgid "Pans the braille display to the left."
+msgstr "عرض المقالي برايل الى اليسار."
+
+#: ../src/orca/default.py:178
+#, fuzzy
+msgid "Pans the braille display to the right."
+msgstr "ما اذا سيعرض الهامش الأيمن"
+
+#: ../src/orca/rolenames.py:513
+msgid "Paragraph"
+msgstr "فقرة"
+
+#: ../src/orca/rolenames.py:348
+msgid "Password"
+msgstr "كلمة السّر"
+
+#: ../src/orca/default.py:78
+#, fuzzy
+msgid "Performs left click on current flat review item."
+msgstr "يؤدي ترك انقر على شقة حاليا مراجعة البند."
+
+#: ../src/orca/default.py:82
+#, fuzzy
+msgid "Performs right click on current flat review item."
+msgstr "يؤدي حق انقر على شقة حاليا مراجعة البند."
+
+#: ../src/orca/default.py:90
+#, fuzzy
+msgid "Performs the where am I operation."
+msgstr "يقوم فيه أنا عملية."
 
 #: ../src/orca/orca-setup.glade.h:40
+#, fuzzy
 msgid "Pi_tch:"
-msgstr ""
+msgstr "Pi_tch :"
+
+#. Most of the Setup Assistant screens have a useful piece
+#. of text starting with the word "Please". We want to speak
+#. these. For the first screen, the useful piece of text
+#. starts with "Welcome". For the last screen, it starts
+#. with "Congratulations". Speak those too.
+#: ../src/orca/scripts/Evolution.py:178
+msgid "Please"
+msgstr "رجاء"
+
+#: ../src/orca/rolenames.py:353
+#, fuzzy
+msgid "PopupMenu"
+msgstr "بوبوبمينو"
+
+#: ../orca.desktop.in.h:2
+#, fuzzy
+msgid "Present on-screen information as speech or braille, or magnify the screen"
+msgstr "هذا على الشاشه معلومات عن كلمة او بطريقة بريل أو كبر الشاشه"
+
+#: ../src/orca/scripts/gedit.py:168
+#, fuzzy
+msgid "Press Tab and Return to terminate."
+msgstr "الصحافة حبه والعودة الى انهائه."
+
+#: ../src/orca/default.py:234
+#, fuzzy
+msgid "Prints a debug listing of all known applications to the console where Orca is running."
+msgstr "فنقح تسجيل بصمات جميع التطبيقات المعروفة على لوحة المفاتيح الخرائط التي تدير."
+
+#: ../src/orca/default.py:246
+#, fuzzy
+msgid "Prints debug information about the ancestry of the object with focus"
+msgstr "الطبعات نقح المعلومات عن الاصل لوجه مع التركيز"
+
+#: ../src/orca/default.py:250
+#, fuzzy
+msgid "Prints debug information about the application with focus"
+msgstr "الطبعات نقح معلومات عن الطلب مع التركيز"
+
+#: ../src/orca/default.py:242
+#, fuzzy
+msgid "Prints debug information about the currently active application to the console where Orca is running."
+msgstr "الطبعات نقح المعلومات عن التطبيق النشط حاليا على لوحة المفاتيح الخرائط التي تدير."
+
+#: ../src/orca/rolenames.py:358
+msgid "Progress"
+msgstr "تقدُّم"
+
+#: ../src/orca/orca_gui_prefs.py:382
+#: ../src/orca/orca_gui_prefs.py:1333
+msgid "Proportional"
+msgstr "متناسب"
+
+#: ../src/orca/orca_gui_prefs.py:384
+#: ../src/orca/orca_gui_prefs.py:1331
+msgid "Push"
+msgstr "دفع"
 
 #: ../src/orca/orca-setup.glade.h:41
-#, fuzzy
 msgid "Question"
 msgstr "سؤال"
+
+#: ../src/orca/default.py:214
+msgid "Quits Orca"
+msgstr "خروج من أوركا"
+
+#: ../src/orca/rolenames.py:368
+#, fuzzy
+msgid "RadioButton"
+msgstr "زر راديو"
+
+#: ../src/orca/rolenames.py:373
+#, fuzzy
+msgid "RadioItem"
+msgstr "راديويتيم"
+
+#: ../src/orca/rolenames.py:378
+#, fuzzy
+msgid "RadioMenu"
+msgstr "راديومينو"
+
+#: ../src/orca/default.py:166
+#, fuzzy
+msgid "Reads the attributes associated with the current text character."
+msgstr "كما الصفات المرتبطه طبيعه النص الحالي."
+
+#: ../src/orca/default.py:226
+#, fuzzy
+msgid "Reloads user settings and reinitializes services as necessary."
+msgstr "يعيد تحميل المستعمل رينيتياليزيس الاماكن والخدمات."
+
+#: ../src/orca/orca.py:1105
+#, fuzzy
+msgid "Report bugs to orca-list@gnome.org."
+msgstr "تقرير البق لorca-list@gnome.org."
+
+#: ../src/orca/default.py:170
+#, fuzzy
+msgid "Reports information on current script."
+msgstr "تقارير معلومات عن الانشطه الجاريه كتابته."
+
+#: ../src/orca/default.py:186
+#, fuzzy
+msgid "Returns to object with keyboard focus."
+msgstr "عودة الى موضوع مع تركيز لوحة المفاتيح."
+
+#: ../src/orca/rolenames.py:383
+#, fuzzy
+msgid "RootPane"
+msgstr "روتباني"
+
+#: ../src/orca/rolenames.py:388
+#: ../src/orca/rolenames.py:443
+#, fuzzy
+msgid "RowHeader"
+msgstr "رووهيدر"
 
 #: ../src/orca/orca-setup.glade.h:42
 #, fuzzy
 msgid "Scale _factor:"
 msgstr "معامل التكبير س"
 
+#: ../src/orca/rolenames.py:393
+#, fuzzy
+msgid "ScrollBar"
+msgstr "شريط تمرير"
+
+#: ../src/orca/rolenames.py:398
+#, fuzzy
+msgid "ScrollPane"
+msgstr "سكرولباني"
+
+#: ../src/orca/orca_console_prefs.py:133
+#, fuzzy
+msgid "Select desired speech server."
+msgstr "كلمة خادم اختيار المطلوب."
+
+#: ../src/orca/orca_console_prefs.py:112
+#, fuzzy
+msgid "Select desired speech system:"
+msgstr "اختيار النظام المطلوب خطاب :"
+
+#: ../src/orca/orca_console_prefs.py:155
+#, fuzzy
+msgid "Select desired voice:"
+msgstr "جاري تسجيل صوتك"
+
+#: ../src/orca/rolenames.py:403
+#, fuzzy
+msgid "Separator"
+msgstr "فاصل"
+
+#: ../src/orca/orca_console_prefs.py:330
+#, fuzzy
+msgid "Setup complete.  Press Return to continue."
+msgstr "تجهيز كامل.الصحافة العودة الى الاستمرار."
+
 #: ../src/orca/orca-setup.glade.h:43
 #, fuzzy
 msgid "Si_ze:"
 msgstr "ح_جم:"
 
-#: ../src/orca/orca-setup.glade.h:44 ../src/orca/orca_gui_prefs.py:1035
+#: ../src/orca/rolenames.py:408
+msgid "Slider"
+msgstr "مزلق"
+
+#: ../src/orca/orca-setup.glade.h:44
+#: ../src/orca/orca_gui_prefs.py:1035
 #, fuzzy
 msgid "So_me"
 msgstr "عني:"
 
-#: ../src/orca/orca-setup.glade.h:45
-msgid "Speak _indentation and justification"
-msgstr ""
+#: ../src/orca/default.py:2121
+msgid "Speak "
+msgstr "تكلم"
 
-#: ../src/orca/orca-setup.glade.h:46 ../src/orca/orca_gui_prefs.py:1078
+#: ../src/orca/orca-setup.glade.h:45
+#, fuzzy
+msgid "Speak _indentation and justification"
+msgstr "_indentation الكلام والتبرير"
+
+#: ../src/orca/scripts/gaim.py:153
+#, fuzzy
+msgid "Speak and braille a previous chat room message."
+msgstr "الكلام السابق برايل المحادثة الرسالة."
+
+#: ../src/orca/orca-setup.glade.h:46
+#: ../src/orca/orca_gui_prefs.py:1078
 #, fuzzy
 msgid "Speak current _cell"
 msgstr "رقم تعريف خلية الترويس"
@@ -813,29 +1084,273 @@ msgstr "رقم تعريف خلية الترويس"
 msgid "Speak current ro_w"
 msgstr "ابق الإعدادات الحالية"
 
-#: ../src/orca/orca-setup.glade.h:48
+#: ../src/orca/default.py:86
+#: ../src/orca/scripts/Evolution.py:107
 #, fuzzy
-msgid "Speech"
-msgstr "خطبة"
+msgid "Speaks entire document."
+msgstr "عرض كامل المستند"
+
+#: ../src/orca/default.py:130
+#, fuzzy
+msgid "Speaks or spells the current flat review item or word."
+msgstr "يتكلم او نوبات الحالية شقة مراجعة البند او كلمة."
+
+#: ../src/orca/scripts/StarOffice.py:243
+#, fuzzy
+msgid "Speaks the contents of the input line."
+msgstr "يتكلم محتويات المساهمة الخط."
+
+#: ../src/orca/default.py:154
+#, fuzzy
+msgid "Speaks the current flat review character."
+msgstr "لا يمكن القيام بمعاينة بسيطة للنافذة الحالية"
+
+#: ../src/orca/default.py:110
+#, fuzzy
+msgid "Speaks the current flat review line."
+msgstr "لا يمكن القيام بمعاينة بسيطة للنافذة الحالية"
+
+#: ../src/orca/default.py:134
+#, fuzzy
+msgid "Speaks the current flat review object."
+msgstr "لا يمكن القيام بمعاينة بسيطة للنافذة الحالية"
 
 #: ../src/orca/orca-setup.glade.h:49
 #, fuzzy
 msgid "Speech _system:"
 msgstr "إفتراض النظام"
 
+#: ../src/orca/orca.py:777
+#, fuzzy
+msgid "Speech disabled."
+msgstr "<b>بريمجات معطلة</b>"
+
+#: ../src/orca/orca.py:775
+#, fuzzy
+msgid "Speech enabled."
+msgstr "تلميحات الأدوات مفعلة"
+
+#: ../src/orca/orca_console_prefs.py:93
+#: ../src/orca/orca_console_prefs.py:109
+#, fuzzy
+msgid "Speech is unavailable."
+msgstr "مدير الشاشة غير متوفّر"
+
+#: ../src/orca/orca_gui_prefs.py:128
+#: ../src/orca/orca_gui_prefs.py:423
+#: ../src/orca/orca_gui_prefs.py:465
+#, fuzzy
+msgid "Speech not available."
+msgstr "الخيار غير متوفّر."
+
 #: ../src/orca/orca-setup.glade.h:50
 #, fuzzy
 msgid "Speech synthesi_zer:"
 msgstr "تفعيل/تعطيل الكلام"
+
+#: ../src/orca/orca_console_prefs.py:122
+#: ../src/orca/orca_console_prefs.py:130
+#: ../src/orca/orca_console_prefs.py:143
+#: ../src/orca/orca_console_prefs.py:152
+#: ../src/orca/orca_console_prefs.py:176
+#, fuzzy
+msgid "Speech will not be used.\n"
+msgstr "%s لم يمكن فتحه"
+
+#: ../src/orca/orca-setup.glade.h:48
+#, fuzzy
+msgid "Speech"
+msgstr "خطبة"
+
+#: ../src/orca/scripts/gedit.py:166
+#, fuzzy
+msgid "Spell checking is complete."
+msgstr "فحص النوبة كاملة."
+
+#: ../src/orca/scripts/StarOffice.py:552
+#: ../src/orca/scripts/StarOffice.py:801
+#, fuzzy
+msgid "Spellcheck:"
+msgstr "تحقق املائي :"
+
+#: ../src/orca/rolenames.py:418
+#, fuzzy
+msgid "SpinButton"
+msgstr "الزر اللولبي للتحديث"
+
+#: ../src/orca/rolenames.py:413
+#, fuzzy
+msgid "SplitPane"
+msgstr "سبليتباني"
+
+#: ../src/orca/rolenames.py:423
+#, fuzzy
+msgid "StatusBar"
+msgstr "شريط ال_حالة"
+
+#: ../src/orca/default.py:254
+#, fuzzy
+msgid "Switches to the next presentation manager."
+msgstr "مفاتيح الى مدير القادم."
+
+#: ../src/orca/focus_tracking_presenter.py:734
+#, fuzzy
+msgid "Switching to focus tracking mode."
+msgstr "تحوّل بين نسق التتبع البسيط للتركيز/المعاينة"
+
+#: ../src/orca/hierarchical_presenter.py:436
+#, fuzzy
+msgid "Switching to hierarchical navigation mode."
+msgstr "التحويل الى الاسلوب الهرمي الملاحة."
+
+#: ../src/orca/braillegenerator.py:1102
+#, fuzzy
+msgid "TREE LEVEL %d"
+msgstr "مستوى واحد"
+
+#: ../src/orca/rolenames.py:338
+#, fuzzy
+msgid "TabList"
+msgstr "تابليست"
+
+#: ../src/orca/rolenames.py:428
+msgid "Table"
+msgstr "جدول"
+
+#: ../src/orca/rolenames.py:448
+#, fuzzy
+msgid "TearOffMenuItem"
+msgstr "تيروفمينويتيم"
+
+#: ../src/orca/rolenames.py:453
+msgid "Terminal"
+msgstr "شاشة طرفية"
+
+#: ../src/orca/rolenames.py:458
+msgid "Text"
+msgstr "نص"
+
+#: ../src/orca/scripts/gaim.py:149
+#, fuzzy
+msgid "Toggle whether we prefix chat room messages with the name of the chat room."
+msgstr "مسمار اذا كنا البادءه رسائل المحادثة مع اسم المحادثة."
+
+#: ../src/orca/rolenames.py:463
+#, fuzzy
+msgid "ToggleButton"
+msgstr "توغليبوتون"
+
+#: ../src/orca/default.py:218
+#, fuzzy
+msgid "Toggles keystroke recording on and off."
+msgstr "مسامير لمس المفاتيح وتسجيل على من."
+
+#: ../src/orca/default.py:230
+#, fuzzy
+msgid "Toggles the silencing of speech."
+msgstr "تفعيل/تعطيل الكلام"
+
+#: ../src/orca/default.py:162
+#, fuzzy
+msgid "Toggles whether to read just the current table cell or the whole row."
+msgstr "مسامير سواء قراءة الجدول الحالي خلية او صف بأكمله."
+
+#: ../src/orca/rolenames.py:468
+#, fuzzy
+msgid "ToolBar"
+msgstr "شريط الأ_دوات"
+
+#: ../src/orca/rolenames.py:473
+#, fuzzy
+msgid "ToolTip"
+msgstr "التّلميحة"
+
+#: ../src/orca/rolenames.py:478
+#, fuzzy
+msgid "Tree"
+msgstr "شجرة"
+
+#: ../src/orca/rolenames.py:483
+#, fuzzy
+msgid "TreeTable"
+msgstr "تريتابلي"
+
+#: ../src/orca/rolenames.py:488
+#, fuzzy
+msgid "Unknown"
+msgstr "مجهول"
+
+#: ../src/orca/orca_gui_prefs.py:504
+#: ../src/orca/orca_gui_prefs.py:529
+#, fuzzy
+msgid "Uppercase"
+msgstr "حرف، كبير"
+
+#: ../src/orca/orca.py:1094
+#, fuzzy
+msgid "Usage: orca [OPTION...]"
+msgstr "الخيار غير متوفّر."
+
+#: ../src/orca/orca.py:219
+#, fuzzy
+msgid "User logged out - shutting down."
+msgstr "تسجيل المستخدمين خارج اغلاق."
 
 #: ../src/orca/orca-setup.glade.h:51
 #, fuzzy
 msgid "Ver_bose"
 msgstr "يتطلب ال_خادم التوثّق"
 
+#: ../src/orca/rolenames.py:493
+#, fuzzy
+msgid "Viewport"
+msgstr "منفذ عرض"
+
 #: ../src/orca/orca-setup.glade.h:52
+#, fuzzy
 msgid "Vo_lume:"
-msgstr ""
+msgstr "Vo_lume :"
+
+#: ../src/orca/orca_console_prefs.py:97
+#, fuzzy
+msgid "Welcome to Orca setup."
+msgstr "مرحبا بك في مكتب جنوم"
+
+#: ../src/orca/orca.py:956
+#: ../src/orca/orca.py:957
+msgid "Welcome to Orca."
+msgstr "أهلا بك في أوركا."
+
+#: ../src/orca/scripts/StarOffice.py:424
+msgid "Welcome to StarOffice"
+msgstr "أهلا بك في StarOffice"
+
+#: ../src/orca/scripts/Evolution.py:179
+msgid "Welcome"
+msgstr "مرحبا"
+
+#: ../src/orca/rolenames.py:498
+msgid "Window"
+msgstr "نافذة"
+
+#. Note to translators:  the "Workspace " string is the
+#. prefix of what metacity shows when you press Ctrl+Alt
+#. and the left or right arrow keys to switch between
+#. workspaces.  The goal here is to find a match with
+#. that prefix.
+#: ../src/orca/scripts/metacity.py:112
+msgid "Workspace "
+msgstr "مساحة عمل"
+
+#: ../src/orca/orca_console_prefs.py:324
+#, fuzzy
+msgid "You need to log out and log back in for the change to take effect. "
+msgstr "انت في حاجة الى ان سجل وسجل في اعادة لتغيير مفعولها."
+
+#: ../src/orca/orca_gui_prefs.py:1400
+#, fuzzy
+msgid "You need to log out and log back in for the change to take effect."
+msgstr "انت في حاجة الى ان سجل وسجل في اعادة لتغيير مفعولها."
 
 #: ../src/orca/orca-setup.glade.h:53
 #, fuzzy
@@ -846,18 +1361,33 @@ msgstr ""
 "ستحتاج للخروج من النظام ليأخذ التغيير أثره.\n"
 "هل تريد الخروج الآن؟"
 
+#: ../src/orca/settings.py:437
+#, fuzzy
+msgid "[Ee]volution"
+msgstr "[ه] حركة دوارة"
+
+#. Note to translators: the regular expression here represents a
+#. string to match in the localized application name as seen by
+#. at-poke.  For most cases, the application name is the name of
+#. the binary used to start the application, but this is an
+#. unreliable assumption.  The only reliable way to do the
+#. translation is by running the application and then viewing its
+#. name in the main window of at-poke.
+#: ../src/orca/settings.py:435
+#, fuzzy
+msgid "[\\S\\s]*StarOffice[\\s\\S]*"
+msgstr "[/ / ق / / ق] * ستاراوفايس [/ / ق / / ق] *"
+
 #: ../src/orca/orca-setup.glade.h:55
 #, fuzzy
 msgid "_Abbreviated role names"
 msgstr "أسماء مساحات العمل"
 
 #: ../src/orca/orca-setup.glade.h:56
-#, fuzzy
 msgid "_All"
 msgstr "ال_كل"
 
 #: ../src/orca/orca-setup.glade.h:57
-#, fuzzy
 msgid "_Bottom:"
 msgstr "اﻷ_سفل"
 
@@ -867,564 +1397,263 @@ msgid "_Enable speech"
 msgstr "افتراضات أداة التكلم "
 
 #: ../src/orca/orca-setup.glade.h:59
-#, fuzzy
 msgid "_Left:"
-msgstr "_يسار"
+msgstr "_يسار:"
 
-#: ../src/orca/orca-setup.glade.h:60 ../src/orca/orca_gui_prefs.py:1032
-#, fuzzy
+#: ../src/orca/orca-setup.glade.h:60
+#: ../src/orca/orca_gui_prefs.py:1032
 msgid "_None"
 msgstr "_لا شيء"
 
 #: ../src/orca/orca-setup.glade.h:61
-#, fuzzy
 msgid "_Person:"
-msgstr "شخص مجهول"
+msgstr "_شخص:"
 
 #: ../src/orca/orca-setup.glade.h:62
-#, fuzzy
 msgid "_Rate:"
-msgstr "ال_معدل:"
+msgstr "_معدل:"
 
 #: ../src/orca/orca-setup.glade.h:63
-#, fuzzy
 msgid "_Right:"
-msgstr "_يمين"
+msgstr "_يمين:"
 
 #: ../src/orca/orca-setup.glade.h:64
-#, fuzzy
 msgid "_Smoothing:"
-msgstr "<b>التنعيم:</b>"
+msgstr "تنعيم:"
 
 #: ../src/orca/orca-setup.glade.h:65
-#, fuzzy
 msgid "_Top:"
-msgstr "_فوق"
+msgstr "_فوق:"
 
 #: ../src/orca/orca-setup.glade.h:66
-#, fuzzy
 msgid "_Voice settings:"
-msgstr "اختر الإعدادات"
+msgstr "إعدادات ال_صوت:"
 
 #: ../src/orca/orca-setup.glade.h:67
-#, fuzzy
 msgid "_Width:"
-msgstr "ال_عرض:"
-
-#: ../src/orca/orca-setup.glade.h:68
-#, fuzzy
-msgid "pixels"
-msgstr "بكسلات"
-
-#: ../src/orca/orca.py:219
-msgid "User logged out - shutting down."
-msgstr ""
-
-#: ../src/orca/orca.py:383
-#, fuzzy
-msgid "Debug level all."
-msgstr "كل الفئات المدعومة"
-
-#: ../src/orca/orca.py:385
-#, fuzzy
-msgid "Debug level finest."
-msgstr "تعديل مستوى التكبير"
-
-#: ../src/orca/orca.py:387
-#, fuzzy
-msgid "Debug level finer."
-msgstr "تعديل مستوى التكبير"
-
-#: ../src/orca/orca.py:586
-#, fuzzy
-msgid "Caps_Lock"
-msgstr "caps lock"
-
-#: ../src/orca/orca.py:588
-#, fuzzy
-msgid " off"
-msgstr "_4 إيقاف"
-
-#: ../src/orca/orca.py:590
-#, fuzzy
-msgid " on"
-msgstr "يعمل"
-
-#: ../src/orca/orca.py:592
-#, fuzzy
-msgid "Num_Lock"
-msgstr "num lock"
-
-#: ../src/orca/orca.py:775
-#, fuzzy
-msgid "Speech enabled."
-msgstr "تلميحات الأدوات مفعلة"
-
-#: ../src/orca/orca.py:777
-#, fuzzy
-msgid "Speech disabled."
-msgstr "<b>بريمجات معطلة</b>"
-
-#: ../src/orca/orca.py:815
-msgid "Orca user settings reloaded."
-msgstr ""
-
-#: ../src/orca/orca.py:956 ../src/orca/orca.py:957
-#, fuzzy
-msgid "Welcome to Orca."
-msgstr "أهلا بك في Iagno!"
-
-#: ../src/orca/orca.py:1013
-msgid "goodbye."
-msgstr ""
-
-#: ../src/orca/orca.py:1014
-msgid "Goodbye."
-msgstr ""
-
-#: ../src/orca/orca.py:1094
-#, fuzzy
-msgid "Usage: orca [OPTION...]"
-msgstr "الخيار غير متوفّر."
-
-#: ../src/orca/orca.py:1096
-#, fuzzy
-msgid "-?, --help                   Show this help message"
-msgstr "لا _تظهر هذه الرسالة مرة أخرى"
-
-#: ../src/orca/orca.py:1097
-#, fuzzy, python-format
-msgid "-v, --version                %s"
-msgstr "اﻻصدارة"
-
-#: ../src/orca/orca.py:1098
-msgid "-s, --setup, --gui-setup     Set up user preferences"
-msgstr ""
-
-#: ../src/orca/orca.py:1099
-msgid "-t, --text-setup             Set up user preferences (text version)"
-msgstr ""
-
-#: ../src/orca/orca.py:1100
-msgid "-n, --no-setup               Skip set up of user preferences"
-msgstr ""
-
-#: ../src/orca/orca.py:1103
-msgid ""
-"If Orca has not been previously set up by the user, Orca\n"
-"will automatically launch the preferences set up unless\n"
-"the -n or --no-setup option is used."
-msgstr ""
-
-#: ../src/orca/orca.py:1105
-msgid "Report bugs to orca-list@gnome.org."
-msgstr ""
-
-#: ../src/orca/orca_console_prefs.py:93 ../src/orca/orca_console_prefs.py:109
-#, fuzzy
-msgid "Speech is unavailable."
-msgstr "مدير الشاشة غير متوفّر"
-
-#: ../src/orca/orca_console_prefs.py:97
-#, fuzzy
-msgid "Welcome to Orca setup."
-msgstr "مرحبا بك في مكتب جنوم"
-
-#: ../src/orca/orca_console_prefs.py:112
-msgid "Select desired speech system:"
-msgstr ""
-
-#: ../src/orca/orca_console_prefs.py:117 ../src/orca/orca_console_prefs.py:138
-#: ../src/orca/orca_console_prefs.py:164
-#, python-format
-msgid "%d. %s"
-msgstr ""
-
-#: ../src/orca/orca_console_prefs.py:120 ../src/orca/orca_console_prefs.py:141
-#: ../src/orca/orca_console_prefs.py:171
-#, fuzzy
-msgid "Enter choice: "
-msgstr "أدخل كلمة المرور"
-
-#: ../src/orca/orca_console_prefs.py:122 ../src/orca/orca_console_prefs.py:130
-#: ../src/orca/orca_console_prefs.py:143 ../src/orca/orca_console_prefs.py:152
-#: ../src/orca/orca_console_prefs.py:176
-#, fuzzy
-msgid "Speech will not be used.\n"
-msgstr "%s لم يمكن فتحه"
-
-#: ../src/orca/orca_console_prefs.py:129
-#, fuzzy
-msgid "No servers available.\n"
-msgstr "لا وجود لوصف."
-
-#: ../src/orca/orca_console_prefs.py:133
-msgid "Select desired speech server."
-msgstr ""
-
-#: ../src/orca/orca_console_prefs.py:151
-#, fuzzy
-msgid "No voices available.\n"
-msgstr "لا وجود لوصف."
-
-#: ../src/orca/orca_console_prefs.py:155
-#, fuzzy
-msgid "Select desired voice:"
-msgstr "جاري تسجيل صوتك"
-
-#. Ask the user if they would like to enable echoing by word.
-#.
-#: ../src/orca/orca_console_prefs.py:209
-msgid "Enable echo by word?  Enter y or n: "
-msgstr ""
-
-#. Ask the user if they would like to enable key echo. If they say
-#. yes, then for each of the five different types of keys, ask the
-#. user if they would like to enable them.
-#.
-#. These key types are:
-#.
-#. o Alphanumeric and punctuation keys
-#.
-#. o Modifier keys: CTRL, ALT, Shift, Insert, and "Fn" on laptops.
-#.
-#. o Locking keys: Caps Lock, Num Lock, Scroll Lock, etc.
-#.
-#. o Function keys: The keys at the top of the keyboard.
-#.
-#. o Action keys: space, enter, escape, tab, backspace, delete, arrow
-#. keys, page up, page down, etc.
-#.
-#: ../src/orca/orca_console_prefs.py:234
-msgid "Enable key echo?  Enter y or n: "
-msgstr ""
-
-#: ../src/orca/orca_console_prefs.py:241
-msgid "Enable alphanumeric and punctuation keys?  Enter y or n: "
-msgstr ""
-
-#: ../src/orca/orca_console_prefs.py:249
-msgid "Enable modifier keys?  Enter y or n: "
-msgstr ""
-
-#: ../src/orca/orca_console_prefs.py:257
-msgid "Enable locking keys?  Enter y or n: "
-msgstr ""
-
-#: ../src/orca/orca_console_prefs.py:265
-msgid "Enable function keys?  Enter y or n: "
-msgstr ""
-
-#: ../src/orca/orca_console_prefs.py:273
-msgid "Enable action keys?  Enter y or n: "
-msgstr ""
-
-#: ../src/orca/orca_console_prefs.py:301
-#, fuzzy
-msgid "Enable Braille?  Enter y or n: "
-msgstr "أدخل دولتك أو مدينتك"
-
-#: ../src/orca/orca_console_prefs.py:309
-msgid "Enable Braille Monitor?  Enter y or n: "
-msgstr ""
-
-#: ../src/orca/orca_console_prefs.py:319
-msgid "Accessibility support for GNOME has just been enabled. "
-msgstr ""
-
-#: ../src/orca/orca_console_prefs.py:324
-msgid "You need to log out and log back in for the change to take effect. "
-msgstr ""
-
-#: ../src/orca/orca_console_prefs.py:330
-msgid "Setup complete.  Press Return to continue."
-msgstr ""
-
-#: ../src/orca/orca_gui_prefs.py:128 ../src/orca/orca_gui_prefs.py:423
-#: ../src/orca/orca_gui_prefs.py:465
-#, fuzzy
-msgid "Speech not available."
-msgstr "الخيار غير متوفّر."
-
-#: ../src/orca/orca_gui_prefs.py:365 ../src/orca/orca_gui_prefs.py:369
-#: ../src/orca/orca_gui_prefs.py:1310
-#, fuzzy
-msgid "Bilinear"
-msgstr "خطي ثنائي"
-
-#: ../src/orca/orca_gui_prefs.py:367 ../src/orca/orca_gui_prefs.py:380
-#: ../src/orca/orca_gui_prefs.py:1312 ../src/orca/orca_gui_prefs.py:1335
-#, fuzzy
-msgid "None"
-msgstr "لا شيء"
-
-#: ../src/orca/orca_gui_prefs.py:378 ../src/orca/orca_gui_prefs.py:386
-#: ../src/orca/orca_gui_prefs.py:1329
-#, fuzzy
-msgid "Centered"
-msgstr "موسّط"
-
-#: ../src/orca/orca_gui_prefs.py:382 ../src/orca/orca_gui_prefs.py:1333
-#, fuzzy
-msgid "Proportional"
-msgstr "متناسب"
-
-#: ../src/orca/orca_gui_prefs.py:384 ../src/orca/orca_gui_prefs.py:1331
-#, fuzzy
-msgid "Push"
-msgstr "دفع"
-
-#: ../src/orca/orca_gui_prefs.py:502 ../src/orca/orca_gui_prefs.py:527
-#, fuzzy
-msgid "Default"
-msgstr "الافتراضي"
-
-#: ../src/orca/orca_gui_prefs.py:504 ../src/orca/orca_gui_prefs.py:529
-#, fuzzy
-msgid "Uppercase"
-msgstr "حرف، كبير"
-
-#: ../src/orca/orca_gui_prefs.py:506 ../src/orca/orca_gui_prefs.py:535
-msgid "Hyperlink"
-msgstr ""
-
-#: ../src/orca/orca_gui_prefs.py:1399
-msgid "Accessibility support for GNOME has just been enabled."
-msgstr ""
-
-#: ../src/orca/orca_gui_prefs.py:1400
-msgid "You need to log out and log back in for the change to take effect."
-msgstr ""
-
-#: ../src/orca/rolenames.py:147
-#, fuzzy
-msgid "???"
-msgstr "؟؟؟"
-
-#: ../src/orca/rolenames.py:148
-#, fuzzy
-msgid "Invalid"
-msgstr "غير صحيح"
-
-#: ../src/orca/rolenames.py:149
-#, fuzzy
-msgid "invalid"
-msgstr "غير صالح"
+msgstr "_عرض:"
 
 #: ../src/orca/rolenames.py:152
-#, fuzzy
 msgid "acc"
-msgstr "درجة الدقة"
-
-#: ../src/orca/rolenames.py:153
-#, fuzzy
-msgid "Accelerator"
-msgstr "الم_سرّع:"
+msgstr "مسرع"
 
 #: ../src/orca/rolenames.py:154
-#, fuzzy
 msgid "accelerator"
-msgstr "الم_سرّع:"
+msgstr "مسرع"
 
-#: ../src/orca/rolenames.py:157 ../src/orca/rolenames.py:159
-#, fuzzy
+#: ../src/orca/rolenames.py:157
+#: ../src/orca/rolenames.py:159
 msgid "alert"
 msgstr "تنبيه"
 
-#: ../src/orca/rolenames.py:158
-#, fuzzy
-msgid "Alert"
-msgstr "ألرت"
-
-#: ../src/orca/rolenames.py:162
-msgid "Anim"
-msgstr ""
-
-#: ../src/orca/rolenames.py:163
-#, fuzzy
-msgid "Animation"
-msgstr "رسوم متحركة"
+#: ../src/orca/chnames.py:63
+msgid "and"
+msgstr "و"
 
 #: ../src/orca/rolenames.py:164
-#, fuzzy
 msgid "animation"
 msgstr "رسوم متحركة"
 
-#: ../src/orca/rolenames.py:167 ../src/orca/rolenames.py:169
-#, fuzzy
+#: ../src/orca/chnames.py:37
+msgid "apostrophe"
+msgstr "حركة"
+
+#: ../src/orca/rolenames.py:517
+msgid "app"
+msgstr "تطق"
+
+#: ../src/orca/rolenames.py:519
+msgid "application"
+msgstr "تطبيق"
+
+#: ../src/orca/rolenames.py:167
+#: ../src/orca/rolenames.py:169
 msgid "arrow"
 msgstr "سهم"
 
-#: ../src/orca/rolenames.py:168
-#, fuzzy
-msgid "Arrow"
-msgstr "سهم"
+#: ../src/orca/chnames.py:68
+msgid "at"
+msgstr "عند"
+
+#: ../src/orca/rolenames.py:522
+msgid "auto"
+msgstr "آلي"
+
+#: ../src/orca/rolenames.py:524
+msgid "autocomplete"
+msgstr "إنهاء آلي"
+
+#: ../src/orca/chnames.py:53
+msgid "backslash"
+msgstr "شَّرطة معكوسة"
+
+#: ../src/orca/default.py:2626
+#: ../src/orca/default.py:2754
+#: ../src/orca/default.py:2759
+#: ../src/orca/default.py:2831
+#: ../src/orca/default.py:2836
+msgid "blank"
+msgstr "فارغ"
+
+#: ../src/orca/rolenames.py:362
+msgid "btn"
+msgstr "زر"
+
+#: ../src/orca/rolenames.py:364
+msgid "button"
+msgstr "زر"
 
 #: ../src/orca/rolenames.py:172
 msgid "cal"
-msgstr ""
+msgstr "رزنم"
 
-#: ../src/orca/rolenames.py:173
-#, fuzzy
-msgid "Calendar"
-msgstr "الرُّزنامة"
+#: ../src/orca/scripts/Evolution.py:93
+msgid "cale"
+msgstr "رزنامة"
+
+#: ../src/orca/scripts/Evolution.py:95
+msgid "calendar event"
+msgstr "حدث رزنامة"
+
+#: ../src/orca/scripts/Evolution.py:88
+msgid "calendar view"
+msgstr "مظهر رزنامة"
 
 #: ../src/orca/rolenames.py:174
-#, fuzzy
 msgid "calendar"
 msgstr "رزنامة"
 
-#: ../src/orca/rolenames.py:177
-msgid "cnv"
-msgstr ""
-
-#: ../src/orca/rolenames.py:178
-#, fuzzy
-msgid "Canvas"
-msgstr "مساحة رسم"
+#: ../src/orca/scripts/Evolution.py:86
+msgid "calv"
+msgstr "كالف"
 
 #: ../src/orca/rolenames.py:179
-#, fuzzy
 msgid "canvas"
 msgstr "مساحة رسم"
 
-#: ../src/orca/rolenames.py:182 ../src/orca/rolenames.py:187
-msgid "chk"
-msgstr ""
+#: ../src/orca/keynames.py:42
+msgid "caps lock"
+msgstr "تغيير الزر"
 
-#: ../src/orca/rolenames.py:183
-msgid "CheckBox"
-msgstr ""
+#: ../src/orca/chnames.py:69
+msgid "caret"
+msgstr "مؤشر"
+
+#: ../src/orca/rolenames.py:207
+#, fuzzy
+msgid "cbo"
+msgstr "منظمات"
+
+#: ../src/orca/default.py:2126
+#: ../src/orca/rolenames.py:432
+#: ../src/orca/rolenames.py:434
+msgid "cell"
+msgstr "خلية"
 
 #: ../src/orca/rolenames.py:184
-#, fuzzy
 msgid "check box"
-msgstr "صندوق ضبط"
-
-#: ../src/orca/rolenames.py:188
-msgid "CheckItem"
-msgstr ""
+msgstr "مربع ضبط"
 
 #: ../src/orca/rolenames.py:189
 #, fuzzy
 msgid "check item"
 msgstr "ضبط عنصر القائمة"
 
-#: ../src/orca/rolenames.py:192
-msgid "ckm"
-msgstr ""
-
-#: ../src/orca/rolenames.py:193
-msgid "CheckMenu"
-msgstr ""
-
 #: ../src/orca/rolenames.py:194
 #, fuzzy
 msgid "check menu"
 msgstr "ضبط عنصر القائمة"
 
-#: ../src/orca/rolenames.py:197
-msgid "clrchsr"
-msgstr ""
+#: ../src/orca/speechgenerator.py:367
+#: ../src/orca/speechgenerator.py:370
+#, fuzzy
+msgid "checked"
+msgstr "مأكد منها (حالة)"
 
-#: ../src/orca/rolenames.py:198
-msgid "ColorChooser"
-msgstr ""
+#: ../src/orca/rolenames.py:182
+#: ../src/orca/rolenames.py:187
+#, fuzzy
+msgid "chk"
+msgstr "شك"
+
+#: ../src/orca/rolenames.py:192
+#, fuzzy
+msgid "ckm"
+msgstr "ككم"
+
+#: ../src/orca/rolenames.py:197
+#, fuzzy
+msgid "clrchsr"
+msgstr "كلرشسر"
+
+#: ../src/orca/rolenames.py:177
+#, fuzzy
+msgid "cnv"
+msgstr "الوطنية للأوراق المالية"
+
+#: ../src/orca/rolenames.py:202
+#: ../src/orca/rolenames.py:437
+#, fuzzy
+msgid "colhdr"
+msgstr "كولهدر"
+
+#: ../src/orca/braillegenerator.py:1098
+#: ../src/orca/J2SE-access-bridge.py:69
+#: ../src/orca/speechgenerator.py:1200
+msgid "collapsed"
+msgstr "منهار"
+
+#: ../src/orca/chnames.py:47
+#, fuzzy
+msgid "colon"
+msgstr "نقطتان"
 
 #: ../src/orca/rolenames.py:199
-#, fuzzy
 msgid "color chooser"
 msgstr "مختار الألوان"
 
-#: ../src/orca/rolenames.py:202 ../src/orca/rolenames.py:437
-msgid "colhdr"
-msgstr ""
-
-#: ../src/orca/rolenames.py:203 ../src/orca/rolenames.py:438
-msgid "ColumnHeader"
-msgstr ""
-
-#: ../src/orca/rolenames.py:204 ../src/orca/rolenames.py:439
+#: ../src/orca/rolenames.py:204
+#: ../src/orca/rolenames.py:439
 #, fuzzy
 msgid "column header"
 msgstr "ترويسة العمود"
-
-#: ../src/orca/rolenames.py:207
-msgid "cbo"
-msgstr ""
-
-#: ../src/orca/rolenames.py:208
-#, fuzzy
-msgid "Combo"
-msgstr "صندوق مجموعة"
 
 #: ../src/orca/rolenames.py:209
 #, fuzzy
 msgid "combo box"
 msgstr "صندوق مجموعة"
 
+#: ../src/orca/chnames.py:38
+msgid "comma"
+msgstr "فاصلة"
+
+#: ../src/orca/chnames.py:45
+msgid "dash"
+msgstr "خط فاصل"
+
 #: ../src/orca/rolenames.py:212
 msgid "dat"
-msgstr ""
-
-#: ../src/orca/rolenames.py:213
-#, fuzzy
-msgid "DateEditor"
-msgstr "محرر التاريخ"
+msgstr "دأت"
 
 #: ../src/orca/rolenames.py:214
-#, fuzzy
 msgid "date editor"
-msgstr "<b>خط المحرر:</b>"
-
-#: ../src/orca/rolenames.py:217 ../src/orca/rolenames.py:277
-#: ../src/orca/rolenames.py:279
-#, fuzzy
-msgid "icon"
-msgstr "أيقونة"
-
-#: ../src/orca/rolenames.py:218
-msgid "DesktopIcon"
-msgstr ""
-
-#: ../src/orca/rolenames.py:219
-#, fuzzy
-msgid "desktop icon"
-msgstr "أيقونة المكتب"
-
-#: ../src/orca/rolenames.py:222 ../src/orca/rolenames.py:264
-#: ../src/orca/rolenames.py:287
-#, fuzzy
-msgid "frame"
-msgstr "إطار"
-
-#: ../src/orca/rolenames.py:223
-msgid "DesktopFrame"
-msgstr ""
+msgstr "محرر التاريخ"
 
 #: ../src/orca/rolenames.py:224
 #, fuzzy
 msgid "desktop frame"
 msgstr "إطار المكتب"
 
-#: ../src/orca/rolenames.py:227 ../src/orca/rolenames.py:229
+#: ../src/orca/rolenames.py:219
+#, fuzzy
+msgid "desktop icon"
+msgstr "أيقونة المكتب"
+
+#: ../src/orca/rolenames.py:227
+#: ../src/orca/rolenames.py:229
 #, fuzzy
 msgid "dial"
 msgstr "اتصال"
-
-#: ../src/orca/rolenames.py:228
-#, fuzzy
-msgid "Dial"
-msgstr "اتصال"
-
-#: ../src/orca/rolenames.py:232
-msgid "dlg"
-msgstr ""
-
-#: ../src/orca/rolenames.py:233
-#, fuzzy
-msgid "Dialog"
-msgstr "حوار"
 
 #: ../src/orca/rolenames.py:234
 #, fuzzy
@@ -1432,1043 +1661,823 @@ msgid "dialog"
 msgstr "حوار"
 
 #: ../src/orca/rolenames.py:237
+#, fuzzy
 msgid "dip"
-msgstr ""
-
-#: ../src/orca/rolenames.py:238
-msgid "DirectoryPane"
-msgstr ""
+msgstr "الإنخفاض"
 
 #: ../src/orca/rolenames.py:239
 #, fuzzy
 msgid "directory pane"
 msgstr "شباك الدلائل"
 
-#: ../src/orca/rolenames.py:242
+#: ../src/orca/rolenames.py:232
 #, fuzzy
+msgid "dlg"
+msgstr "دلغ"
+
+#: ../src/orca/util.py:1192
+#, fuzzy
+msgid "document selected from cursor position"
+msgstr "وثائق مختارة من موقع المءشره"
+
+#: ../src/orca/util.py:1188
+#, fuzzy
+msgid "document selected to cursor position"
+msgstr "الوثيقة اختيار موقع المءشره"
+
+#: ../src/orca/chnames.py:61
+#, fuzzy
+msgid "dollar"
+msgstr "دولار"
+
+#: ../src/orca/chnames.py:39
+msgid "dot"
+msgstr "نقطة"
+
+#: ../src/orca/rolenames.py:242
 msgid "draw"
 msgstr "رسم"
 
-#: ../src/orca/rolenames.py:243
-msgid "DrawingArea"
-msgstr ""
-
 #: ../src/orca/rolenames.py:244
-#, fuzzy
 msgid "drawing area"
-msgstr "مساحة الرسم"
-
-#: ../src/orca/rolenames.py:247
-msgid "fchsr"
-msgstr ""
-
-#: ../src/orca/rolenames.py:248
-msgid "FileChooser"
-msgstr ""
-
-#: ../src/orca/rolenames.py:249
-#, fuzzy
-msgid "file chooser"
-msgstr "مختار الملفات"
-
-#: ../src/orca/rolenames.py:252
-msgid "flr"
-msgstr ""
-
-#: ../src/orca/rolenames.py:253
-#, fuzzy
-msgid "Filler"
-msgstr "مملئ"
-
-#: ../src/orca/rolenames.py:254
-#, fuzzy
-msgid "filler"
-msgstr "مملئ"
-
-#: ../src/orca/rolenames.py:257
-msgid "fnt"
-msgstr ""
-
-#: ../src/orca/rolenames.py:258
-#, fuzzy
-msgid "FontChooser"
-msgstr "مختار الخطوط"
-
-#: ../src/orca/rolenames.py:259
-#, fuzzy
-msgid "font chooser"
-msgstr "مختار الألوان"
-
-#: ../src/orca/rolenames.py:262
-msgid "frm"
-msgstr ""
-
-#: ../src/orca/rolenames.py:263
-#, fuzzy
-msgid "Frame"
-msgstr "إطار"
-
-#: ../src/orca/rolenames.py:267
-msgid "gpn"
-msgstr ""
-
-#: ../src/orca/rolenames.py:268
-msgid "GlassPane"
-msgstr ""
-
-#: ../src/orca/rolenames.py:269
-#, fuzzy
-msgid "glass pane"
-msgstr "شباك بلوري"
-
-#: ../src/orca/rolenames.py:272
-#, fuzzy
-msgid "html"
-msgstr "HTML"
-
-#: ../src/orca/rolenames.py:273
-msgid "HtmlContainer"
-msgstr ""
-
-#: ../src/orca/rolenames.py:274
-#, fuzzy
-msgid "h t m l container"
-msgstr "محتو DIV"
-
-#: ../src/orca/rolenames.py:278
-#, fuzzy
-msgid "Icon"
-msgstr "أيقونة."
-
-#: ../src/orca/rolenames.py:282
-msgid "img"
-msgstr ""
-
-#: ../src/orca/rolenames.py:283
-#, fuzzy
-msgid "Image"
-msgstr "صورة"
-
-#: ../src/orca/rolenames.py:284
-#, fuzzy
-msgid "image"
-msgstr "صورة"
-
-#: ../src/orca/rolenames.py:288
-msgid "InternalFrame"
-msgstr ""
-
-#: ../src/orca/rolenames.py:289
-#, fuzzy
-msgid "internal frame"
-msgstr "إطار داخلي"
-
-#: ../src/orca/rolenames.py:292
-msgid "lbl"
-msgstr ""
-
-#: ../src/orca/rolenames.py:293
-#, fuzzy
-msgid "Label"
-msgstr "علامة"
-
-#: ../src/orca/rolenames.py:294
-#, fuzzy
-msgid "label"
-msgstr "شارة"
-
-#: ../src/orca/rolenames.py:297
-msgid "lyrdpn"
-msgstr ""
-
-#: ../src/orca/rolenames.py:298
-msgid "LayeredPane"
-msgstr ""
-
-#: ../src/orca/rolenames.py:299
-#, fuzzy
-msgid "layered pane"
-msgstr "شباك ذي مستويات"
-
-#: ../src/orca/rolenames.py:302
-msgid "lst"
-msgstr ""
-
-#: ../src/orca/rolenames.py:303
-#, fuzzy
-msgid "List"
-msgstr "قائمة"
-
-#: ../src/orca/rolenames.py:304
-#, fuzzy
-msgid "list"
-msgstr "سرد"
-
-#: ../src/orca/rolenames.py:307
-msgid "lstitm"
-msgstr ""
-
-#: ../src/orca/rolenames.py:308
-msgid "ListItem"
-msgstr ""
-
-#: ../src/orca/rolenames.py:309
-#, fuzzy
-msgid "list item"
-msgstr "عنصر قائمة"
-
-#: ../src/orca/rolenames.py:312
-msgid "mnu"
-msgstr ""
-
-#: ../src/orca/rolenames.py:313
-#, fuzzy
-msgid "Menu"
-msgstr "القائمة"
-
-#: ../src/orca/rolenames.py:314
-#, fuzzy
-msgid "menu"
-msgstr "قائمة"
-
-#: ../src/orca/rolenames.py:317
-msgid "mnubr"
-msgstr ""
-
-#: ../src/orca/rolenames.py:318
-#, fuzzy
-msgid "MenuBar"
-msgstr "إظهار _عمود القائمة"
-
-#: ../src/orca/rolenames.py:319
-#, fuzzy
-msgid "menu bar"
-msgstr "عمود قائمة"
-
-#: ../src/orca/rolenames.py:322
-msgid "mnuitm"
-msgstr ""
-
-#: ../src/orca/rolenames.py:323
-#, fuzzy
-msgid "MenuItem"
-msgstr "اظهر عنصر القائمة \"أخرى\" "
-
-#: ../src/orca/rolenames.py:324
-#, fuzzy
-msgid "menu item"
-msgstr "عنصر قائمة"
-
-#: ../src/orca/rolenames.py:327
-msgid "optnpn"
-msgstr ""
-
-#: ../src/orca/rolenames.py:328
-msgid "OptionPane"
-msgstr ""
-
-#: ../src/orca/rolenames.py:329
-#, fuzzy
-msgid "option pane"
-msgstr "شباك الخيارات"
-
-#: ../src/orca/rolenames.py:332 ../src/orca/rolenames.py:334
-#, fuzzy
-msgid "page"
-msgstr "الصّفحة %d من %d"
-
-#: ../src/orca/rolenames.py:333
-#, fuzzy
-msgid "Page"
-msgstr "صفحة"
-
-#: ../src/orca/rolenames.py:337
-msgid "tblst"
-msgstr ""
-
-#: ../src/orca/rolenames.py:338
-msgid "TabList"
-msgstr ""
-
-#: ../src/orca/rolenames.py:339
-#, fuzzy
-msgid "tab list"
-msgstr "قائمة ألسنة الصفحات"
-
-#: ../src/orca/rolenames.py:342
-msgid "pnl"
-msgstr ""
-
-#: ../src/orca/rolenames.py:343
-#, fuzzy
-msgid "Panel"
-msgstr "لوحة المهام"
-
-#: ../src/orca/rolenames.py:344
-#, fuzzy
-msgid "panel"
-msgstr "شريط"
-
-#: ../src/orca/rolenames.py:347
-msgid "pwd"
-msgstr ""
-
-#: ../src/orca/rolenames.py:348
-#, fuzzy
-msgid "Password"
-msgstr "كلمة السّر"
-
-#: ../src/orca/rolenames.py:349
-#, fuzzy
-msgid "password"
-msgstr "كلمة المرور:"
-
-#: ../src/orca/rolenames.py:352
-msgid "popmnu"
-msgstr ""
-
-#: ../src/orca/rolenames.py:353
-msgid "PopupMenu"
-msgstr ""
-
-#: ../src/orca/rolenames.py:354
-#, fuzzy
-msgid "popup menu"
-msgstr "قاءمة منبثقة"
-
-#: ../src/orca/rolenames.py:357
-msgid "pgbar"
-msgstr ""
-
-#: ../src/orca/rolenames.py:358
-#, fuzzy
-msgid "Progress"
-msgstr "تقدُّم"
-
-#: ../src/orca/rolenames.py:359
-#, fuzzy
-msgid "progress bar"
-msgstr "عمود التقدم"
-
-#: ../src/orca/rolenames.py:362
-msgid "btn"
-msgstr ""
-
-#: ../src/orca/rolenames.py:363
-#, fuzzy
-msgid "Button"
-msgstr "زر"
-
-#: ../src/orca/rolenames.py:364
-#, fuzzy
-msgid "button"
-msgstr "زر"
-
-#: ../src/orca/rolenames.py:367
-#, fuzzy
-msgid "radio"
-msgstr "المذياع"
-
-#: ../src/orca/rolenames.py:368
-msgid "RadioButton"
-msgstr ""
-
-#: ../src/orca/rolenames.py:369
-#, fuzzy
-msgid "radio button"
-msgstr "زر مشع"
-
-#: ../src/orca/rolenames.py:372
-msgid "rdmnuitm"
-msgstr ""
-
-#: ../src/orca/rolenames.py:373
-msgid "RadioItem"
-msgstr ""
-
-#: ../src/orca/rolenames.py:374
-#, fuzzy
-msgid "radio menu item"
-msgstr "عنصر قائمة مشع"
-
-#: ../src/orca/rolenames.py:377
-msgid "rdmnu"
-msgstr ""
-
-#: ../src/orca/rolenames.py:378
-msgid "RadioMenu"
-msgstr ""
-
-#: ../src/orca/rolenames.py:379
-#, fuzzy
-msgid "radio menu"
-msgstr "عنصر قائمة مشع"
-
-#: ../src/orca/rolenames.py:382
-msgid "rtpn"
-msgstr ""
-
-#: ../src/orca/rolenames.py:383
-msgid "RootPane"
-msgstr ""
-
-#: ../src/orca/rolenames.py:384
-#, fuzzy
-msgid "root pane"
-msgstr "شباك الجذر"
-
-#: ../src/orca/rolenames.py:387 ../src/orca/rolenames.py:442
-msgid "rwhdr"
-msgstr ""
-
-#: ../src/orca/rolenames.py:388 ../src/orca/rolenames.py:443
-msgid "RowHeader"
-msgstr ""
-
-#: ../src/orca/rolenames.py:389 ../src/orca/rolenames.py:444
-#, fuzzy
-msgid "row header"
-msgstr "ترويسة السطر"
-
-#: ../src/orca/rolenames.py:392
-msgid "scbr"
-msgstr ""
-
-#: ../src/orca/rolenames.py:393
-#, fuzzy
-msgid "ScrollBar"
-msgstr "شريط تمرير"
-
-#: ../src/orca/rolenames.py:394
-#, fuzzy
-msgid "scroll bar"
-msgstr "عمود اللف"
-
-#: ../src/orca/rolenames.py:397
-msgid "scpn"
-msgstr ""
-
-#: ../src/orca/rolenames.py:398
-msgid "ScrollPane"
-msgstr ""
-
-#: ../src/orca/rolenames.py:399
-#, fuzzy
-msgid "scroll pane"
-msgstr "شباك اللف"
-
-#: ../src/orca/rolenames.py:402
-msgid "seprtr"
-msgstr ""
-
-#: ../src/orca/rolenames.py:403
-#, fuzzy
-msgid "Separator"
-msgstr "فاصل"
-
-#: ../src/orca/rolenames.py:404
-#, fuzzy
-msgid "separator"
-msgstr "فاصل"
-
-#: ../src/orca/rolenames.py:407
-msgid "sldr"
-msgstr ""
-
-#: ../src/orca/rolenames.py:408
-#, fuzzy
-msgid "Slider"
-msgstr "مزلق"
-
-#: ../src/orca/rolenames.py:409
-#, fuzzy
-msgid "slider"
-msgstr "مزلق"
-
-#: ../src/orca/rolenames.py:412
-msgid "spltpn"
-msgstr ""
-
-#: ../src/orca/rolenames.py:413
-msgid "SplitPane"
-msgstr ""
-
-#: ../src/orca/rolenames.py:414
-#, fuzzy
-msgid "split pane"
-msgstr "شباك الإنقسام"
-
-#: ../src/orca/rolenames.py:417
-#, fuzzy
-msgid "spin"
-msgstr "زر تدوير"
-
-#: ../src/orca/rolenames.py:418
-#, fuzzy
-msgid "SpinButton"
-msgstr "الزر اللولبي للتحديث"
-
-#: ../src/orca/rolenames.py:419
-#, fuzzy
-msgid "spin button"
-msgstr "زر تدوير"
-
-#: ../src/orca/rolenames.py:422
-msgid "statbr"
-msgstr ""
-
-#: ../src/orca/rolenames.py:423
-#, fuzzy
-msgid "StatusBar"
-msgstr "شريط ال_حالة"
-
-#: ../src/orca/rolenames.py:424
-#, fuzzy
-msgid "status bar"
-msgstr "لا عمود حالة"
-
-#: ../src/orca/rolenames.py:427
-msgid "tbl"
-msgstr ""
-
-#: ../src/orca/rolenames.py:428
-#, fuzzy
-msgid "Table"
-msgstr "جدول"
-
-#: ../src/orca/rolenames.py:429
-#, fuzzy
-msgid "table"
-msgstr "جدول"
-
-#: ../src/orca/rolenames.py:433
-#, fuzzy
-msgid "Cell"
-msgstr "خلية"
-
-#: ../src/orca/rolenames.py:447
-msgid "tomnuitm"
-msgstr ""
-
-#: ../src/orca/rolenames.py:448
-msgid "TearOffMenuItem"
-msgstr ""
-
-#: ../src/orca/rolenames.py:449 ../src/orca/speechgenerator.py:1258
-#, fuzzy
-msgid "tear off menu item"
-msgstr "قلع عنصر القائمة"
-
-#: ../src/orca/rolenames.py:452
-#, fuzzy
-msgid "term"
-msgstr "عبارة"
-
-#: ../src/orca/rolenames.py:453
-#, fuzzy
-msgid "Terminal"
-msgstr "شاشة طرفية"
-
-#: ../src/orca/rolenames.py:454
-#, fuzzy
-msgid "terminal"
-msgstr "شاشة طرفية"
-
-#: ../src/orca/rolenames.py:457
-#, fuzzy
-msgid "txt"
-msgstr "-bugreport.txt"
-
-#: ../src/orca/rolenames.py:458
-#, fuzzy
-msgid "Text"
-msgstr "النّص"
-
-#: ../src/orca/rolenames.py:459
-#, fuzzy
-msgid "text"
-msgstr "نص"
-
-#: ../src/orca/rolenames.py:462
-msgid "tglbtn"
-msgstr ""
-
-#: ../src/orca/rolenames.py:463
-msgid "ToggleButton"
-msgstr ""
-
-#: ../src/orca/rolenames.py:464
-#, fuzzy
-msgid "toggle button"
-msgstr "زر التحول"
-
-#: ../src/orca/rolenames.py:467
-msgid "tbar"
-msgstr ""
-
-#: ../src/orca/rolenames.py:468
-#, fuzzy
-msgid "ToolBar"
-msgstr "شريط الأ_دوات"
-
-#: ../src/orca/rolenames.py:469
-#, fuzzy
-msgid "tool bar"
-msgstr "عمود الأدوات"
-
-#: ../src/orca/rolenames.py:472
-#, fuzzy
-msgid "tip"
-msgstr "تلميحة"
-
-#: ../src/orca/rolenames.py:473
-#, fuzzy
-msgid "ToolTip"
-msgstr "التّلميحة"
-
-#: ../src/orca/rolenames.py:474
-#, fuzzy
-msgid "tool tip"
-msgstr "تلميحة عن اﻷدوات"
-
-#: ../src/orca/rolenames.py:477 ../src/orca/rolenames.py:479
-#, fuzzy
-msgid "tree"
-msgstr "شجرة"
-
-#: ../src/orca/rolenames.py:478
-#, fuzzy
-msgid "Tree"
-msgstr "شجرة"
-
-#: ../src/orca/rolenames.py:482
-msgid "trtbl"
-msgstr ""
-
-#: ../src/orca/rolenames.py:483
-msgid "TreeTable"
-msgstr ""
-
-#: ../src/orca/rolenames.py:484
-#, fuzzy
-msgid "tree table"
-msgstr "جدول شجرة"
-
-#: ../src/orca/rolenames.py:487
-msgid "unk"
-msgstr ""
-
-#: ../src/orca/rolenames.py:488
-#, fuzzy
-msgid "Unknown"
-msgstr "مجهول"
-
-#: ../src/orca/rolenames.py:489
-#, fuzzy
-msgid "unknown"
-msgstr "مجهول"
-
-#: ../src/orca/rolenames.py:492
-msgid "vwprt"
-msgstr ""
-
-#: ../src/orca/rolenames.py:493
-#, fuzzy
-msgid "Viewport"
-msgstr "منفذ عرض"
-
-#: ../src/orca/rolenames.py:494
-#, fuzzy
-msgid "viewport"
-msgstr "منفذ عرض"
-
-#: ../src/orca/rolenames.py:497
-msgid "wnd"
-msgstr ""
-
-#: ../src/orca/rolenames.py:498
-#, fuzzy
-msgid "Window"
-msgstr "النافذة"
-
-#: ../src/orca/rolenames.py:499
-#, fuzzy
-msgid "window"
-msgstr "نافذة"
-
-#: ../src/orca/rolenames.py:502
-msgid "hdr"
-msgstr ""
-
-#: ../src/orca/rolenames.py:503
-#, fuzzy
-msgid "Header"
-msgstr "التّرويسة"
-
-#: ../src/orca/rolenames.py:504
-#, fuzzy
-msgid "header"
-msgstr "ترويسة"
-
-#: ../src/orca/rolenames.py:507
-msgid "ftr"
-msgstr ""
-
-#: ../src/orca/rolenames.py:508
-#, fuzzy
-msgid "Footer"
-msgstr "الهامش:"
-
-#: ../src/orca/rolenames.py:509
-#, fuzzy
-msgid "footer"
-msgstr "هامش"
-
-#: ../src/orca/rolenames.py:512
-msgid "para"
-msgstr ""
-
-#: ../src/orca/rolenames.py:513
-#, fuzzy
-msgid "Paragraph"
-msgstr "فقرة"
-
-#: ../src/orca/rolenames.py:514
-#, fuzzy
-msgid "paragraph"
-msgstr "فقرة"
-
-#: ../src/orca/rolenames.py:517
-#, fuzzy
-msgid "app"
-msgstr "هويّة التطبيق"
-
-#: ../src/orca/rolenames.py:518
-#, fuzzy
-msgid "Application"
-msgstr "تطبيق"
-
-#: ../src/orca/rolenames.py:519
-#, fuzzy
-msgid "application"
-msgstr "تطبيق"
-
-#: ../src/orca/rolenames.py:522
-#, fuzzy
-msgid "auto"
-msgstr "تلقائي"
-
-#: ../src/orca/rolenames.py:523
-#, fuzzy
-msgid "AutoComplete"
-msgstr "إنهاء آلي"
-
-#: ../src/orca/rolenames.py:524
-#, fuzzy
-msgid "autocomplete"
-msgstr "إنهاء آلي"
-
-#: ../src/orca/rolenames.py:527
-msgid "edtbr"
-msgstr ""
-
-#: ../src/orca/rolenames.py:528
-msgid "EditBar"
-msgstr ""
+msgstr "مساحة رسم"
 
 #: ../src/orca/rolenames.py:529
-#, fuzzy
 msgid "edit bar"
-msgstr "تحرير العمود"
+msgstr "عمود التحرير "
+
+#: ../src/orca/rolenames.py:527
+#, fuzzy
+msgid "edtbr"
+msgstr "يدتبر"
 
 #: ../src/orca/rolenames.py:532
+#, fuzzy
 msgid "emb"
-msgstr ""
-
-#: ../src/orca/rolenames.py:533
-msgid "EmbeddedComponent"
-msgstr ""
+msgstr "يداوم المكتب"
 
 #: ../src/orca/rolenames.py:534
 #, fuzzy
 msgid "embedded component"
 msgstr "مكوّن مضمّن"
 
-#: ../src/orca/scripts/Evolution.py:86
-msgid "calv"
-msgstr ""
-
-#: ../src/orca/scripts/Evolution.py:87
-msgid "CalendarView"
-msgstr ""
-
-#: ../src/orca/scripts/Evolution.py:88
-#, fuzzy
-msgid "calendar view"
-msgstr "إعرض لوح الاتصال"
-
-#: ../src/orca/scripts/Evolution.py:93
-#, fuzzy
-msgid "cale"
-msgstr "الرزنامة:"
-
-#: ../src/orca/scripts/Evolution.py:94
-msgid "CalendarEvent"
-msgstr ""
-
-#: ../src/orca/scripts/Evolution.py:95
-#, fuzzy
-msgid "calendar event"
-msgstr "معلومات الحدث"
-
-#: ../src/orca/scripts/Evolution.py:149
-#, fuzzy
-msgid " screen"
-msgstr "الشاشة"
-
-#. Most of the Setup Assistant screens have a useful piece
-#. of text starting with the word "Please". We want to speak
-#. these. For the first screen, the useful piece of text
-#. starts with "Welcome". For the last screen, it starts
-#. with "Congratulations". Speak those too.
-#.
-#: ../src/orca/scripts/Evolution.py:178
-#, fuzzy
-msgid "Please"
-msgstr "الرجاء الإنتظار..."
-
-#: ../src/orca/scripts/Evolution.py:179
-#, fuzzy
-msgid "Welcome"
-msgstr "مرحبا"
-
-#: ../src/orca/scripts/Evolution.py:180
-msgid "Congratulations"
-msgstr ""
-
-#: ../src/orca/scripts/Evolution.py:687
-#, fuzzy
-msgid "No appointments"
-msgstr "لا تاريخ"
-
-#: ../src/orca/scripts/Evolution.py:761
-#, fuzzy
-msgid "Directories button"
-msgstr "رسم الزّر"
-
-#: ../src/orca/scripts/Evolution.py:900 ../src/orca/scripts/Evolution.py:938
-#, fuzzy
-msgid "Assistant"
-msgstr "المساعد"
-
-#: ../src/orca/scripts/Mozilla.py:234 ../src/orca/scripts/StarOffice.py:406
-#, fuzzy
-msgid "link"
-msgstr "وصلة"
-
-#: ../src/orca/scripts/gaim.py:149
-msgid "Toggle whether we prefix chat room messages with the name of the chat room."
-msgstr ""
-
-#: ../src/orca/scripts/gaim.py:153
-msgid "Speak and braille a previous chat room message."
-msgstr ""
-
-#: ../src/orca/scripts/gaim.py:194
-msgid "speak chat room name."
-msgstr ""
-
-#: ../src/orca/scripts/gaim.py:197
-msgid "Do not speak chat room name."
-msgstr ""
-
-#: ../src/orca/scripts/gaim.py:215
-#, fuzzy
-msgid "Message from chat room "
-msgstr "لصق رسالة (أو رسائل) من الحافظة"
-
-#: ../src/orca/scripts/gedit.py:135
-#, fuzzy
-msgid "Change to:"
-msgstr "تغيير _إلى: "
-
-#: ../src/orca/scripts/gedit.py:136
-#, fuzzy
-msgid "Misspelled word:"
-msgstr "كلمة مهجأة خاطئا:"
-
-#. The indication that spell checking is complete is when the
-#. "misspelt" word is set to "Completed spell checking". Ugh!
-#. Try to detect this and let the user know.
-#: ../src/orca/scripts/gedit.py:165
-#, fuzzy
-msgid "Completed spell checking"
-msgstr "إكمال التثبت من التهجئة"
-
-#: ../src/orca/scripts/gedit.py:166
-msgid "Spell checking is complete."
-msgstr ""
-
-#: ../src/orca/scripts/gedit.py:168
-msgid "Press Tab and Return to terminate."
-msgstr ""
-
-#: ../src/orca/scripts/gedit.py:255 ../src/orca/scripts/gedit.py:308
-#, fuzzy
-msgid "Check Spelling"
-msgstr "تثبت من تهجيئ الكلمات"
-
-#: ../src/orca/scripts/StarOffice.py:243
-msgid "Speaks the contents of the input line."
-msgstr ""
-
 #: ../src/orca/scripts/StarOffice.py:283
 #, fuzzy
 msgid "empty"
 msgstr "فارغ"
 
-#: ../src/orca/scripts/StarOffice.py:424
+#: ../src/orca/default.py:1673
 #, fuzzy
-msgid "Welcome to StarOffice"
-msgstr "أهلا بك في Iagno!"
+msgid "entire document selected"
+msgstr "عرض كامل المستند"
 
-#: ../src/orca/scripts/StarOffice.py:552 ../src/orca/scripts/StarOffice.py:801
-msgid "Spellcheck:"
-msgstr ""
+#: ../src/orca/chnames.py:67
+msgid "equals"
+msgstr "يساوي"
 
-#: ../src/orca/scripts/StarOffice.py:580
-msgid "Note that the Scroll Down button has to be pressed numerous times."
-msgstr ""
-
-#: ../src/orca/scripts/StarOffice.py:594
-msgid "License Agreement Accept button now has focus."
-msgstr ""
-
-#: ../src/orca/scripts/StarOffice.py:617
+#: ../src/orca/chnames.py:36
 #, fuzzy
-msgid "First name"
-msgstr "الاسم الأول"
+msgid "exclaim"
+msgstr "صح"
 
-#: ../src/orca/scripts/StarOffice.py:865
+#: ../src/orca/braillegenerator.py:1096
+#: ../src/orca/J2SE-access-bridge.py:66
+#: ../src/orca/speechgenerator.py:1198
 #, fuzzy
-msgid " has formula"
-msgstr "له تركيز"
+msgid "expanded"
+msgstr "ممدد"
 
-#. Note to translators: the regular expression here represents a
-#. string to match in the localized application name as seen by
-#. at-poke.  For most cases, the application name is the name of
-#. the binary used to start the application, but this is an
-#. unreliable assumption.  The only reliable way to do the
-#. translation is by running the application and then viewing its
-#. name in the main window of at-poke.
-#.
-#: ../src/orca/settings.py:435
-msgid "[\\S\\s]*StarOffice[\\s\\S]*"
-msgstr ""
-
-#: ../src/orca/settings.py:436
-msgid "soffice.bin"
-msgstr ""
-
-#: ../src/orca/settings.py:437
-msgid "[Ee]volution"
-msgstr ""
-
-#: ../src/orca/settings.py:438
+#: ../src/orca/gnomespeechfactory.py:823
 #, fuzzy
-msgid "Deer Park"
-msgstr "فينكس-ديير"
+msgid "faster."
+msgstr "اسرع."
 
-#: ../src/orca/settings.py:439
+#: ../src/orca/rolenames.py:247
 #, fuzzy
-msgid "Bon Echo"
-msgstr "<b>كتابة النصوص</b>"
+msgid "fchsr"
+msgstr "فشسر"
 
-#. Note to translators:  the "Workspace " string is the
-#. prefix of what metacity shows when you press Ctrl+Alt
-#. and the left or right arrow keys to switch between
-#. workspaces.  The goal here is to find a match with
-#. that prefix.
-#.
-#: ../src/orca/scripts/metacity.py:112
+#: ../src/orca/rolenames.py:249
 #, fuzzy
-msgid "Workspace "
-msgstr "مساحة العمل %d"
+msgid "file chooser"
+msgstr "مختار الملفات"
+
+#: ../src/orca/rolenames.py:254
+#, fuzzy
+msgid "filler"
+msgstr "مملئ"
+
+#: ../src/orca/rolenames.py:252
+#, fuzzy
+msgid "flr"
+msgstr "كنزي"
+
+#: ../src/orca/rolenames.py:257
+#, fuzzy
+msgid "fnt"
+msgstr "فنت"
+
+#: ../src/orca/rolenames.py:259
+msgid "font chooser"
+msgstr "مختار الألوان"
+
+#: ../src/orca/rolenames.py:509
+#, fuzzy
+msgid "footer"
+msgstr "هامش"
+
+#: ../src/orca/rolenames.py:222
+#: ../src/orca/rolenames.py:264
+#: ../src/orca/rolenames.py:287
+#, fuzzy
+msgid "frame"
+msgstr "إطار"
+
+#: ../src/orca/rolenames.py:262
+#, fuzzy
+msgid "frm"
+msgstr "ألماني"
+
+#: ../src/orca/rolenames.py:507
+#, fuzzy
+msgid "ftr"
+msgstr "تقارير المعاملات المالية"
+
+#: ../src/orca/rolenames.py:269
+#, fuzzy
+msgid "glass pane"
+msgstr "شباك بلوري"
+
+#: ../src/orca/orca.py:1013
+msgid "goodbye."
+msgstr "وداعا."
+
+#: ../src/orca/rolenames.py:267
+#, fuzzy
+msgid "gpn"
+msgstr "تنتفع"
+
+#: ../src/orca/chnames.py:55
+#, fuzzy
+msgid "grave accent"
+msgstr "لكنه خطير"
+
+#: ../src/orca/braillegenerator.py:193
+#: ../src/orca/speechgenerator.py:191
+#, fuzzy
+msgid "grayed"
+msgstr "جرايد"
+
+#: ../src/orca/chnames.py:50
+msgid "greater than"
+msgstr "أكبر من"
+
+#: ../src/orca/rolenames.py:274
+#, fuzzy
+msgid "h t m l container"
+msgstr "محتو DIV"
+
+#: ../src/orca/rolenames.py:502
+#, fuzzy
+msgid "hdr"
+msgstr "’"
+
+#: ../src/orca/rolenames.py:504
+#, fuzzy
+msgid "header"
+msgstr "ترويسة"
+
+#: ../src/orca/gnomespeechfactory.py:770
+#, fuzzy
+msgid "higher."
+msgstr "أعلى"
+
+#: ../src/orca/rolenames.py:272
+#, fuzzy
+msgid "html"
+msgstr "HTML"
+
+#: ../src/orca/rolenames.py:217
+#: ../src/orca/rolenames.py:277
+#: ../src/orca/rolenames.py:279
+msgid "icon"
+msgstr "أيقونة"
+
+#: ../src/orca/rolenames.py:284
+msgid "image"
+msgstr "صورة"
+
+#: ../src/orca/rolenames.py:282
+#, fuzzy
+msgid "img"
+msgstr "الالماني"
 
 #: ../src/orca/scripts/metacity.py:113
+#, fuzzy
 msgid "inaccessible"
-msgstr ""
+msgstr "الوصول"
 
-#: ../src/orca/scripts/planner.py:77 ../src/orca/scripts/planner.py:135
+#: ../src/orca/rolenames.py:289
 #, fuzzy
-msgid "Display more options"
-msgstr "<b>خيارات قائمة المهام</b>"
+msgid "internal frame"
+msgstr "إطار داخلي"
 
-#: ../src/orca/scripts/planner.py:139 ../src/orca/scripts/planner.py:147
-#: ../src/orca/scripts/planner.py:172 ../src/orca/scripts/planner.py:180
-#: ../src/orca/speechgenerator.py:1314 ../src/orca/speechgenerator.py:1317
+#: ../src/orca/rolenames.py:149
+msgid "invalid"
+msgstr "غير صالح"
+
+#: ../src/orca/rolenames.py:294
+msgid "label"
+msgstr "شارة"
+
+#: ../src/orca/rolenames.py:299
+msgid "layered pane"
+msgstr "عمود ذي مستويات"
+
+#: ../src/orca/rolenames.py:292
 #, fuzzy
-msgid "pressed"
-msgstr "م_ضغوط"
+msgid "lbl"
+msgstr "لبل"
 
-#: ../src/orca/scripts/planner.py:141 ../src/orca/scripts/planner.py:149
-#: ../src/orca/scripts/planner.py:174 ../src/orca/scripts/planner.py:182
-#: ../src/orca/speechgenerator.py:1323 ../src/orca/speechgenerator.py:1326
+#: ../src/orca/keynames.py:33
 #, fuzzy
-msgid "not pressed"
-msgstr "غير صحيح"
+msgid "left alt"
+msgstr "مفتاح التعديل Alt"
 
-#: ../src/orca/speechgenerator.py:367 ../src/orca/speechgenerator.py:370
+#: ../src/orca/chnames.py:57
 #, fuzzy
-msgid "checked"
-msgstr "مأكد منها (حالة)"
+msgid "left brace"
+msgstr "قوص أيسر"
 
-#: ../src/orca/speechgenerator.py:376 ../src/orca/speechgenerator.py:379
+#: ../src/orca/chnames.py:51
+#, fuzzy
+msgid "left bracket"
+msgstr "القوس اﻷيسر"
+
+#: ../src/orca/keynames.py:34
+#, fuzzy
+msgid "left control"
+msgstr "<b>أسلوب القطعة:</b>"
+
+#: ../src/orca/keynames.py:39
+#, fuzzy
+msgid "left meta"
+msgstr "الإلتفاف إلى جهة اليسار"
+
+#: ../src/orca/chnames.py:43
+#, fuzzy
+msgid "left paren"
+msgstr "الإلتفاف إلى جهة اليسار"
+
+#: ../src/orca/keynames.py:32
+#: ../src/orca/keynames.py:35
+#, fuzzy
+msgid "left shift"
+msgstr "نقل لليسار"
+
+#: ../src/orca/keynames.py:46
+#, fuzzy
+msgid "left tab"
+msgstr "نقل اللسان إلى ال_يسار"
+
+#: ../src/orca/chnames.py:49
+msgid "less than"
+msgstr "أصغر من"
+
+#: ../src/orca/util.py:1180
+#, fuzzy
+msgid "line selected down from cursor position"
+msgstr "خط مختار عليها من موقع المءشره"
+
+#: ../src/orca/util.py:1184
+#, fuzzy
+msgid "line selected up from cursor position"
+msgstr "انشاء خط مختار من موقع المءشره"
+
+#: ../src/orca/scripts/Mozilla.py:234
+#: ../src/orca/scripts/StarOffice.py:406
+msgid "link"
+msgstr "وصلة"
+
+#: ../src/orca/rolenames.py:309
+msgid "list item"
+msgstr "عنصر قائمة"
+
+#: ../src/orca/rolenames.py:304
+msgid "list"
+msgstr "قائمة"
+
+#: ../src/orca/gnomespeechfactory.py:798
+msgid "lower."
+msgstr "أدنى."
+
+#: ../src/orca/rolenames.py:302
+#, fuzzy
+msgid "lst"
+msgstr "الاولى"
+
+#: ../src/orca/rolenames.py:307
+#, fuzzy
+msgid "lstitm"
+msgstr "لستيتم"
+
+#: ../src/orca/rolenames.py:297
+#, fuzzy
+msgid "lyrdpn"
+msgstr "ليردبن"
+
+#: ../src/orca/rolenames.py:319
+#, fuzzy
+msgid "menu bar"
+msgstr "عمود قائمة"
+
+#: ../src/orca/rolenames.py:324
+#, fuzzy
+msgid "menu item"
+msgstr "عنصر قائمة"
+
+#: ../src/orca/rolenames.py:314
+msgid "menu"
+msgstr "قائمة"
+
+#: ../src/orca/rolenames.py:312
+#, fuzzy
+msgid "mnu"
+msgstr "منو"
+
+#: ../src/orca/rolenames.py:317
+#, fuzzy
+msgid "mnubr"
+msgstr "منوبر"
+
+#: ../src/orca/rolenames.py:322
+#, fuzzy
+msgid "mnuitm"
+msgstr "منويتم"
+
+#: ../src/orca/chnames.py:33
+#, fuzzy
+msgid "newline"
+msgstr "سطر جديد"
+
+#: ../src/orca/speechgenerator.py:376
+#: ../src/orca/speechgenerator.py:379
 #, fuzzy
 msgid "not checked"
 msgstr "مأكد منها (حالة)"
 
-#: ../src/orca/speechgenerator.py:920 ../src/orca/speechgenerator.py:923
+#: ../src/orca/scripts/planner.py:141
+#: ../src/orca/scripts/planner.py:149
+#: ../src/orca/scripts/planner.py:174
+#: ../src/orca/scripts/planner.py:182
+#: ../src/orca/speechgenerator.py:1323
+#: ../src/orca/speechgenerator.py:1326
+#, fuzzy
+msgid "not pressed"
+msgstr "غير صحيح"
+
+#: ../src/orca/speechgenerator.py:920
+#: ../src/orca/speechgenerator.py:923
 #, fuzzy
 msgid "not selected"
 msgstr "اليوم المنتقى (%a %b %d %Y)"
 
-#: ../src/orca/speechgenerator.py:1260
+#: ../src/orca/keynames.py:41
 #, fuzzy
-msgid "tear off"
-msgstr "قلع عنصر القائمة"
+msgid "num lock"
+msgstr "num lock"
 
-#: ../src/orca/util.py:473
+#: ../src/orca/rolenames.py:329
 #, fuzzy
-msgid "Misspelled word: "
-msgstr "كلمة مهجأة خاطئا:"
+msgid "option pane"
+msgstr "شباك الخيارات"
 
-#: ../src/orca/util.py:474
+#: ../src/orca/rolenames.py:327
 #, fuzzy
-msgid " Context is "
-msgstr "كما هي"
+msgid "optnpn"
+msgstr "وبتنبن"
+
+#: ../src/orca/keynames.py:45
+#, fuzzy
+msgid "page down"
+msgstr "page down"
 
 #: ../src/orca/util.py:1172
+#, fuzzy
 msgid "page selected from cursor position"
-msgstr ""
+msgstr "صفحة مختارة من موقع المءشره"
 
 #: ../src/orca/util.py:1176
+#, fuzzy
 msgid "page selected to cursor position"
-msgstr ""
+msgstr "الصفحه اختيار موقع المءشره"
 
-#: ../src/orca/util.py:1180
-msgid "line selected down from cursor position"
-msgstr ""
+#: ../src/orca/keynames.py:44
+#, fuzzy
+msgid "page up"
+msgstr "page up"
 
-#: ../src/orca/util.py:1184
-msgid "line selected up from cursor position"
-msgstr ""
+#: ../src/orca/rolenames.py:332
+#: ../src/orca/rolenames.py:334
+msgid "page"
+msgstr "صفحة"
 
-#: ../src/orca/util.py:1188
-msgid "document selected to cursor position"
-msgstr ""
+#: ../src/orca/rolenames.py:344
+msgid "panel"
+msgstr "شريط"
 
-#: ../src/orca/util.py:1192
-msgid "document selected from cursor position"
-msgstr ""
+#: ../src/orca/rolenames.py:512
+#, fuzzy
+msgid "para"
+msgstr "المظلي"
+
+#: ../src/orca/rolenames.py:514
+msgid "paragraph"
+msgstr "فقرة"
+
+#: ../src/orca/rolenames.py:349
+msgid "password"
+msgstr "كلمة مرور"
+
+#: ../src/orca/chnames.py:62
+#: ../src/orca/speechgenerator.py:851
+msgid "percent"
+msgstr "نسبة مئوية"
+
+#: ../src/orca/rolenames.py:357
+#, fuzzy
+msgid "pgbar"
+msgstr "بغبار"
+
+#: ../src/orca/orca-setup.glade.h:68
+msgid "pixels"
+msgstr "بكسلات"
+
+#: ../src/orca/chnames.py:65
+msgid "plus"
+msgstr "زائد"
+
+#: ../src/orca/rolenames.py:342
+#, fuzzy
+msgid "pnl"
+msgstr "بنل"
+
+#: ../src/orca/rolenames.py:352
+#, fuzzy
+msgid "popmnu"
+msgstr "بوبمنو"
+
+#: ../src/orca/rolenames.py:354
+#, fuzzy
+msgid "popup menu"
+msgstr "قاءمة منبثقة"
+
+#: ../src/orca/chnames.py:60
+#, fuzzy
+msgid "pound"
+msgstr "الباون"
+
+#: ../src/orca/scripts/planner.py:139
+#: ../src/orca/scripts/planner.py:147
+#: ../src/orca/scripts/planner.py:172
+#: ../src/orca/scripts/planner.py:180
+#: ../src/orca/speechgenerator.py:1314
+#: ../src/orca/speechgenerator.py:1317
+msgid "pressed"
+msgstr "مضغوط"
+
+#: ../src/orca/rolenames.py:359
+msgid "progress bar"
+msgstr "عمود تقدم"
+
+#: ../src/orca/rolenames.py:347
+msgid "pwd"
+msgstr "ب.أ.د"
+
+#: ../src/orca/chnames.py:40
+msgid "question"
+msgstr "سؤال"
+
+#: ../src/orca/chnames.py:42
+msgid "quote"
+msgstr "اقتباس"
+
+#: ../src/orca/rolenames.py:369
+msgid "radio button"
+msgstr "زر اختيار"
+
+#: ../src/orca/rolenames.py:374
+msgid "radio menu item"
+msgstr "عنصر قائمة اختيار"
+
+#: ../src/orca/rolenames.py:379
+msgid "radio menu"
+msgstr "قائمة اختيار"
+
+#: ../src/orca/rolenames.py:367
+msgid "radio"
+msgstr "اختيار"
+
+#: ../src/orca/rolenames.py:377
+msgid "rdmnu"
+msgstr "ردمن"
+
+#: ../src/orca/rolenames.py:372
+#, fuzzy
+msgid "rdmnuitm"
+msgstr "ردمنويتم"
+
+#: ../src/orca/keynames.py:37
+#, fuzzy
+msgid "right alt"
+msgstr "مفتاح التعديل Alt"
+
+#: ../src/orca/chnames.py:58
+#, fuzzy
+msgid "right brace"
+msgstr "قوص أيمن"
+
+#: ../src/orca/chnames.py:52
+#, fuzzy
+msgid "right bracket"
+msgstr "القوس الأيمن"
+
+#: ../src/orca/keynames.py:38
+#, fuzzy
+msgid "right control"
+msgstr "<b>أسلوب القطعة:</b>"
+
+#: ../src/orca/keynames.py:40
+#, fuzzy
+msgid "right meta"
+msgstr "الإلتفاف إلى جهة اليمين"
+
+#: ../src/orca/chnames.py:44
+#, fuzzy
+msgid "right paren"
+msgstr "الإلتفاف إلى جهة اليمين"
+
+#: ../src/orca/keynames.py:36
+#, fuzzy
+msgid "right shift"
+msgstr "نقل لليمين"
+
+#: ../src/orca/rolenames.py:384
+#, fuzzy
+msgid "root pane"
+msgstr "شباك الجذر"
+
+#: ../src/orca/rolenames.py:389
+#: ../src/orca/rolenames.py:444
+#, fuzzy
+msgid "row header"
+msgstr "ترويسة السطر"
+
+#: ../src/orca/default.py:2124
+#, fuzzy
+msgid "row"
+msgstr "_صف"
+
+#: ../src/orca/rolenames.py:382
+#, fuzzy
+msgid "rtpn"
+msgstr "رتبن"
+
+#: ../src/orca/rolenames.py:387
+#: ../src/orca/rolenames.py:442
+#, fuzzy
+msgid "rwhdr"
+msgstr "رودر"
+
+#: ../src/orca/rolenames.py:392
+msgid "scbr"
+msgstr "scbr"
+
+#: ../src/orca/rolenames.py:397
+msgid "scpn"
+msgstr "لف"
+
+#: ../src/orca/rolenames.py:394
+msgid "scroll bar"
+msgstr "عمود اللف"
+
+#: ../src/orca/keynames.py:43
+msgid "scroll lock"
+msgstr "إقفال اللف"
+
+#: ../src/orca/rolenames.py:399
+msgid "scroll pane"
+msgstr "عمود اللف"
+
+#: ../src/orca/J2SE-access-bridge.py:71
+#: ../src/orca/speechgenerator.py:909
+#: ../src/orca/speechgenerator.py:912
+#: ../src/orca/util.py:1228
+msgid "selected"
+msgstr "مُنتقى"
+
+#: ../src/orca/chnames.py:48
+msgid "semicolon"
+msgstr "فاصلة منقوطة"
+
+#: ../src/orca/rolenames.py:404
+msgid "separator"
+msgstr "مفرق"
+
+#: ../src/orca/rolenames.py:402
+msgid "seprtr"
+msgstr "مفرق"
+
+#: ../src/orca/chnames.py:66
+msgid "slash"
+msgstr "شرطة"
+
+#: ../src/orca/rolenames.py:407
+msgid "sldr"
+msgstr "مزلق"
+
+#: ../src/orca/rolenames.py:409
+msgid "slider"
+msgstr "مزلق"
+
+#: ../src/orca/gnomespeechfactory.py:853
+msgid "slower."
+msgstr "أبطأ."
+
+#: ../src/orca/settings.py:436
+msgid "soffice.bin"
+msgstr "soffice.bin"
+
+#: ../src/orca/chnames.py:32
+msgid "space"
+msgstr "فراغ"
+
+#: ../src/orca/scripts/gaim.py:194
+msgid "speak chat room name."
+msgstr "تكلم باسم غرفة المحادثة."
+
+#: ../src/orca/rolenames.py:419
+msgid "spin button"
+msgstr "زر تدوير"
+
+#: ../src/orca/rolenames.py:417
+msgid "spin"
+msgstr "تدوير"
+
+#: ../src/orca/rolenames.py:414
+msgid "split pane"
+msgstr "عمود الإنقسام"
+
+#: ../src/orca/rolenames.py:412
+msgid "spltpn"
+msgstr "إنقسام"
+
+#: ../src/orca/chnames.py:64
+msgid "star"
+msgstr "نجمة"
+
+#: ../src/orca/rolenames.py:422
+msgid "statbr"
+msgstr "حالة"
+
+#: ../src/orca/rolenames.py:424
+msgid "status bar"
+msgstr "عمود حالة"
+
+#: ../src/orca/rolenames.py:339
+msgid "tab list"
+msgstr "قائمة ألسنة"
+
+#: ../src/orca/chnames.py:34
+msgid "tab"
+msgstr "لسان"
+
+#: ../src/orca/rolenames.py:429
+msgid "table"
+msgstr "جدول"
+
+#: ../src/orca/rolenames.py:467
+msgid "tbar"
+msgstr "أدوات"
+
+#: ../src/orca/rolenames.py:427
+msgid "tbl"
+msgstr "جدول"
+
+#: ../src/orca/rolenames.py:337
+msgid "tblst"
+msgstr "جداول"
+
+#: ../src/orca/rolenames.py:449
+#: ../src/orca/speechgenerator.py:1258
+msgid "tear off menu item"
+msgstr "قلع عنصر القائمة"
+
+#: ../src/orca/speechgenerator.py:1260
+msgid "tear off"
+msgstr "قلع"
+
+#: ../src/orca/rolenames.py:452
+msgid "term"
+msgstr "عبارة"
+
+#: ../src/orca/rolenames.py:454
+msgid "terminal"
+msgstr "شاشة طرفية"
+
+#: ../src/orca/rolenames.py:459
+msgid "text"
+msgstr "نص"
+
+#: ../src/orca/rolenames.py:462
+msgid "tglbtn"
+msgstr "زر"
+
+#: ../src/orca/chnames.py:56
+msgid "tilde"
+msgstr "حركة"
+
+#: ../src/orca/rolenames.py:472
+msgid "tip"
+msgstr "تلميحة"
+
+#: ../src/orca/rolenames.py:464
+msgid "toggle button"
+msgstr "زر التحول"
+
+#: ../src/orca/rolenames.py:447
+msgid "tomnuitm"
+msgstr "نزع عنصر"
+
+#: ../src/orca/rolenames.py:469
+msgid "tool bar"
+msgstr "عمود الأدوات"
+
+#: ../src/orca/rolenames.py:474
+msgid "tool tip"
+msgstr "تلميحة"
+
+#: ../src/orca/default.py:1067
+#: ../src/orca/default.py:1282
+msgid "tree level %d"
+msgstr "مستوى الشجرة %d"
+
+#: ../src/orca/rolenames.py:484
+msgid "tree table"
+msgstr "جدول شجرة"
+
+#: ../src/orca/rolenames.py:477
+#: ../src/orca/rolenames.py:479
+msgid "tree"
+msgstr "شجرة"
+
+#: ../src/orca/rolenames.py:482
+msgid "trtbl"
+msgstr "جشجرة"
+
+#: ../src/orca/rolenames.py:457
+msgid "txt"
+msgstr "نص"
+
+#: ../src/orca/chnames.py:46
+msgid "underscore"
+msgstr "حرف تحت السّطر"
+
+#: ../src/orca/rolenames.py:487
+msgid "unk"
+msgstr "unk"
+
+#: ../src/orca/rolenames.py:489
+msgid "unknown"
+msgstr "مجهول"
+
+#: ../src/orca/J2SE-access-bridge.py:75
+#: ../src/orca/util.py:1236
+msgid "unselected"
+msgstr "غير منتقى"
+
+#: ../src/orca/chnames.py:54
+msgid "vertical line"
+msgstr "خط عمودي"
+
+#: ../src/orca/rolenames.py:494
+msgid "viewport"
+msgstr "مظهر"
+
+#: ../src/orca/rolenames.py:492
+msgid "vwprt"
+msgstr "مظهر"
+
+#: ../src/orca/default.py:2628
+#: ../src/orca/default.py:2761
+msgid "white space"
+msgstr "فراغ"
+
+#: ../src/orca/rolenames.py:499
+msgid "window"
+msgstr "نافذة"
+
+#: ../src/orca/rolenames.py:497
+msgid "wnd"
+msgstr "نفذ"
 
