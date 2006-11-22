@@ -1,3 +1,9 @@
+2006-11-22  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/pronunciation_dict.py:
+          Fixed bug #377955 - Suggested additions to pronunciation 
+          dictionary.
+
 2006-11-21  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:

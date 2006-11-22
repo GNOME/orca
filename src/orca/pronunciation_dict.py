@@ -36,9 +36,13 @@ from orca_i18n import _ # for gettext support
 #
 pronunciation_dict = {}
 pronunciation_dict[_("ASAP")]    = _("as soon as possible")
+pronunciation_dict[_("GHz")]     = _("gigahertz")
 pronunciation_dict[_("IMAP")]    = _("eye map")
+pronunciation_dict[_("LDAP")]    = _("ell dap")
 pronunciation_dict[_("LOL")]     = _("laughing out loud")
+pronunciation_dict[_("MHz")]     = _("megahertz")
 pronunciation_dict[_("strikethrough")] = _("strike through")
+pronunciation_dict[_("SELinux")] = _("ess ee linux")
 
 def getPronunciation(word):
     """Given a word, return a string that represents what this word
