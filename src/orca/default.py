@@ -2535,11 +2535,10 @@ class Script(script.Script):
 
         list = []
         dictionary = {}
-        allTokens = str.split()
+        allTokens = str.split(";")
         for i in range(0, len(allTokens)):
             item = allTokens[i].split(":")
-            if len(item) == 2 and item[1].endswith(";"):
-                item[1] = item[1][0:len(item[1])-1]
+            if len(item) == 2:
                 list.append(item[0])
                 dictionary[item[0]] = item[1]
 

@@ -1,5 +1,9 @@
 2006-11-22  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/default.py:
+          Fixed bug #377085 - family-name text attribute is malformed 
+          for multi-word family names.
+
         * src/orca/pronunciation_dict.py:
           Fixed bug #377955 - Suggested additions to pronunciation 
           dictionary.
