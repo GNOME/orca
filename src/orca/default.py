@@ -1122,7 +1122,7 @@ class Script(script.Script):
             debug.println(debug.LEVEL_FINEST,
                 "sayLine: character=<%s>, start=%d, end=%d" % \
                 (char[0], char[1], char[2]))
-            
+
             if char[0] == "\n" and startOffset == caretOffset \
                    and settings.speakBlankLines:
                 speech.speak(_("blank"))
@@ -1344,7 +1344,7 @@ class Script(script.Script):
                 # The cursor is at the end of a line.
                 # Speak a newline.
                 speech.speak(chnames.getCharacterName("\n"), voice, False)
-                    
+
         if character == "\n":
             if prevChar == "\n":
                 # This is a blank line. Announce it if the user requested
@@ -1353,7 +1353,7 @@ class Script(script.Script):
                     speech.speak(_("blank"), voice, False)
         else:
             speech.speak(character, voice, False)
-  
+
         util.speakTextSelectionState(obj, startOffset, endOffset)
 
     def whereAmI(self, inputEvent):
@@ -1515,7 +1515,7 @@ class Script(script.Script):
                     newRow = table.getRowAtIndex(newLocusOfFocus.index)
                     newCol = table.getColumnAtIndex(newLocusOfFocus.index)
 
-                    if newRow != oldRow:
+                    if (newRow != oldRow) or (oldParent != newParent):
                         desc = newParent.table.getRowDescription(newRow)
                         if desc and len(desc):
                             text = desc
@@ -1525,7 +1525,7 @@ class Script(script.Script):
                                         + rolenames.rolenames[\
                                         rolenames.ROLE_ROW_HEADER].speech
                             utterances.append(text)
-                    if newCol != oldCol:
+                    if (newCol != oldCol) or (oldParent != newParent):
                         desc = newParent.table.getColumnDescription(newCol)
                         if desc and len(desc):
                             text = desc
@@ -2432,7 +2432,7 @@ class Script(script.Script):
         - str: the string of tokens containing <key>:<value>; pairs.
 
         Returns a list containing two items:
-        A list of the keys in the order they were extracted from the 
+        A list of the keys in the order they were extracted from the
         text attribute string and a dictionary of key/value items.
         """
 

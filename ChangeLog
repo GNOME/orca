@@ -1,3 +1,8 @@
+2006-11-27  Willie Walker <william.walker@sun.com>
+
+	* src/orca/default.py: fix for bug 372808: orca now reports
+	the appropriate header information when tabbing between tables.
+
 2006-11-22  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
