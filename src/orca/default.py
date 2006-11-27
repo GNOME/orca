@@ -47,6 +47,7 @@ import speech
 import speechserver
 import string
 import util
+import where_am_I
 
 from orca_i18n import _                          # for gettext support
 
@@ -1356,6 +1357,8 @@ class Script(script.Script):
         util.speakTextSelectionState(obj, startOffset, endOffset)
 
     def whereAmI(self, inputEvent):
+        """Speaks information about the current object of interest."""
+
         self.updateBraille(orca_state.locusOfFocus)
 
         verbosity = settings.speechVerbosityLevel
@@ -1368,108 +1371,8 @@ class Script(script.Script):
         context = self.speechGenerator.getSpeechContext(orca_state.locusOfFocus)
         if not reverse:
             utterances.append(" ".join(context))
-
-        # Now, we'll treat table row and column headers as context
-        # as well.  This requires special handling because we're
-        # making headers seem hierarchical in the context, but they
-        # are not hierarchical in the containment hierarchicy.
-        # We also only want to speak the one that changed.  If both
-        # changed, first speak the row header, then the column header.
-        #
-        # We also keep track of tree level depth and only announce
-        # that if it changes.
-        #
-        if orca_state.locusOfFocus.role == rolenames.ROLE_TABLE_CELL:
-            parent = orca_state.locusOfFocus.parent
-            if parent and parent.table:
-                table = parent.table
-                row = table.getRowAtIndex(orca_state.locusOfFocus.index)
-                col = table.getColumnAtIndex(orca_state.locusOfFocus.index)
-
-                desc = parent.table.getRowDescription(row)
-                if desc and len(desc):
-                    text = desc
-                    if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
-                        text += " " \
-                                + rolenames.rolenames[\
-                                        rolenames.ROLE_ROW_HEADER].speech
-                        utterances.append(text)
-
-                desc = parent.table.getColumnDescription(col)
-                if desc and len(desc):
-                    text = desc
-                    if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
-                        text += " " \
-                                + rolenames.rolenames[\
-                                        rolenames.ROLE_COLUMN_HEADER].speech
-                        utterances.append(text)
-
-                text = _("Item %d of %d") % ((row+1), parent.table.nRows)
-                utterances.append(text)
-
-        # If this is a normal, check or radio menu item or a menu within a
-        # menu, give its position within the menu and the total number of
-        # menu items in the parent menu.
-        #
-        parent = orca_state.locusOfFocus.parent
-        role = orca_state.locusOfFocus.role
-        if ((role == rolenames.ROLE_MENU_ITEM) \
-           or (role == rolenames.ROLE_CHECK_MENU_ITEM) \
-           or (role == rolenames.ROLE_RADIO_MENU_ITEM)) \
-           or (role == rolenames.ROLE_MENU \
-              and parent.role == rolenames.ROLE_MENU):
-            total = 0
-            for i in range(0, parent.childCount):
-                child = parent.child(i)
-                role = child.role
-                visible = child.state.count(atspi.Accessibility.STATE_VISIBLE)
-                if visible \
-                   and ((role == rolenames.ROLE_MENU) \
-                   or (role == rolenames.ROLE_MENU_ITEM) \
-                   or (role == rolenames.ROLE_CHECK_MENU_ITEM) \
-                   or (role == rolenames.ROLE_RADIO_MENU_ITEM)):
-                    total += 1
-                    if child == orca_state.locusOfFocus:
-                        item = total
-            text = _("Item %d of %d") % (item, total)
-            utterances.append(text)
-
-        # Get the text for the object itself.
-        #
-        text = self.speechGenerator.getSpeech(orca_state.locusOfFocus, False)
-        text[0] = util.adjustForRepeats(text[0])
-        utterances.extend(text)
-
-        # If this is one of the various menu item types, speak its shortcut
-        # (if present).
-        #
-        if (role == rolenames.ROLE_MENU_ITEM) \
-           or (role == rolenames.ROLE_CHECK_MENU_ITEM) \
-           or (role == rolenames.ROLE_RADIO_MENU_ITEM):
-            result = util.getAcceleratorAndShortcut(orca_state.locusOfFocus)
-            shortcut = result[1]
-            if len(shortcut) > 0:
-                utterances.append(_("shortcut") + " " + shortcut)
-
-        # Now speak the tree node level.
-        #
-        level = util.getNodeLevel(orca_state.locusOfFocus)
-        if level >= 0:
-            utterances.append(_("tree level %d") % (level + 1))
-
-        if orca_state.locusOfFocus.state.count(\
-                    atspi.Accessibility.STATE_SENSITIVE) == 0:
-            message = _("No focus")
-            utterances.append(message)
-
-        if reverse:
-            utterances.reverse()
-            context.reverse()
-            utterances.append(" ".join(context))
-
-        speech.speakUtterances(utterances)
-
-        return True
+            
+        return where_am_I.whereAmI(orca_state.locusOfFocus, utterances)
 
     def findCommonAncestor(self, a, b):
         """Finds the common ancestor between Accessible a and Accessible b.
