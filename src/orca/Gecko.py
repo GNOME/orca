@@ -42,7 +42,11 @@ import util
 
 from orca_i18n import _
 
-# If True, it tells us to take over caret navigation.
+# If True, it tells us to take over caret navigation.  This is something
+# that can be set in user-settings.py:
+#
+# import orca.Gecko
+# orca.Gecko.controlCaretNavigation = True
 #
 controlCaretNavigation = False
 
@@ -123,8 +127,8 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
              self._getBrailleRegionsForText
 
     def _getBrailleRegionsForAutocomplete(self, obj):
-        """Gets the role of an autocomplete box.  We let the handlers
-        for the children do the rest.
+        """Gets the braille for an autocomplete box.  We let the
+        handlers for the children do the rest.
 
         Arguments:
         - obj: an Accessible
@@ -467,6 +471,10 @@ class Script(default.Script):
 
     def __init__(self, app):
         default.Script.__init__(self, app)
+
+        # _caretNavigationFunctions are functions that represent fundamental
+        # ways to move the caret (e.g., by the arrow keys).
+        #
         self._caretNavigationFunctions = \
             [Script.goNextCharacter,
              Script.goPreviousCharacter,
@@ -474,15 +482,23 @@ class Script(default.Script):
              Script.goPreviousWord,
              Script.goNextLine,
              Script.goPreviousLine]
+
+        # _structuralNavigationFunctions are functions that represent
+        # more complex navigation functions (e.g., moving by heading,
+        # chunk, etc.).
+        #
         self._structuralNavigationFunctions = \
             [Script.goNextHeading,
              Script.goPreviousHeading,
              Script.goNextChunk,
              Script.goPreviousChunk]
+
         if controlCaretNavigation:
-            print "Gecko.py is controlling the caret."
+            debug.println(debug.LEVEL_CONFIGURATION,
+                          "Gecko.py is controlling the caret.")
         else:
-            print "Firefox is controlling the caret."
+            debug.println(debug.LEVEL_CONFIGURATION,
+                          "Firefox is controlling the caret.")
 
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.
@@ -501,6 +517,8 @@ class Script(default.Script):
 
         default.Script.setupInputEventHandlers(self)
 
+        # Debug only.
+        #
         self.inputEventHandlers["dumpContentHandler"] = \
             input_event.InputEventHandler(
                 Script.dumpContent,
@@ -607,63 +625,6 @@ class Script(default.Script):
 
         return keyBindings
 
-    def __getViBindings(self):
-        """Returns an instance of keybindings.KeyBindings that use vi
-        editor-style keys for navigating HTML content.
-        """
-
-        keyBindings = keybindings.KeyBindings()
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "l",
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << settings.MODIFIER_ORCA,
-                self.inputEventHandlers["goNextCharacterHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "h",
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                1 << settings.MODIFIER_ORCA,
-                self.inputEventHandlers["goPreviousCharacterHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "l",
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                (1 << settings.MODIFIER_ORCA | \
-                     1 << atspi.Accessibility.MODIFIER_CONTROL),
-                self.inputEventHandlers["goNextWordHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "h",
-                (1 << settings.MODIFIER_ORCA
-                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
-                (1 << settings.MODIFIER_ORCA | \
-                     1 << atspi.Accessibility.MODIFIER_CONTROL),
-                self.inputEventHandlers["goPreviousWordHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "j",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
-                self.inputEventHandlers["goPreviousLineHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "k",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
-                self.inputEventHandlers["goNextLineHandler"]))
-
-        return keyBindings
-
     def getKeyBindings(self):
         """Defines the key bindings for this script.
 
@@ -701,16 +662,8 @@ class Script(default.Script):
                 self.inputEventHandlers["goNextChunkHandler"]))
 
         if controlCaretNavigation:
-            # [[[TODO: WDW - probably should make the choice of
-            # bindings a setting and more customizable.  For now, it's
-            # just experimental, so we hardcode things here.]]]
-            #
-            if True:
-                for keyBinding in self.__getArrowBindings().keyBindings:
-                    keyBindings.add(keyBinding)
-            else:
-                for keyBinding in self.__getViBindings().keyBindings:
-                    keyBindings.add(keyBinding)
+            for keyBinding in self.__getArrowBindings().keyBindings:
+                keyBindings.add(keyBinding)
 
         return keyBindings
 
@@ -722,6 +675,16 @@ class Script(default.Script):
 
         Returns True if the event is of interest.
         """
+
+        # The reason we override this method is that we only want
+        # to consume keystrokes under certain conditions.  For
+        # example, we only control the arrow keys when we're
+        # managing caret navigation and we're inside document content.
+        #
+        # [[[TODO: WDW - this might be broken when we're inside a
+        # text area that's inside document (or anything else that
+        # we want to allow to control its own destiny).]]]
+
         user_bindings = None
         user_bindings_map = settings.keyBindingsMap
         if user_bindings_map.has_key(self.__module__):
@@ -766,11 +729,10 @@ class Script(default.Script):
         [obj, characterOffset] = self.caretContext
 
         # If the user presses left or right, we'll set the target
-        # column for up/down navigation by line.  [[[TODO: WDW - this
-        # should be bound more to the navigation function versus the
-        # key that was pressed.  For example, if the vi editor-style
-        # keys were used to move the caret, we should manage that as
-        # well.]]]
+        # column for up/down navigation by line.  The goal here is
+        # to make sure the caret moves somewhat vertically when
+        # going up/down by line versus jumping to the beginning of
+        # the line.
         #
         if isinstance(orca_state.lastInputEvent,
                       input_event.KeyboardEvent):
@@ -853,6 +815,12 @@ class Script(default.Script):
         default.Script.onFocus(self, event)
 
     def onLinkSelected(self, event):
+
+        # NOTE: In Firefox 3, link seleced events are not issued when
+        # a link is selected.  Instead, they've decided to issue focus:
+        # events when a link is selected.  This is 'old' code leftover
+        # from Yelp and Firefox 2.
+
         text = event.source.text
         hypertext = event.source.hypertext
         linkIndex = util.getLinkIndex(event.source, text.caretOffset)
@@ -1000,7 +968,7 @@ class Script(default.Script):
             # [[[TODO: WDW - the caret might be at the end of the text.
             # Not quite sure what to do in this case.  What we'll do here
             # is just speak the previous character.  But...maybe we want to
-            # make sure we say something like "new line" or move the
+            # make sure we say something like "end of line" or move the
             # caret context to the beginning of the next character via
             # a call to goNextWord.]]]
             #
@@ -1027,7 +995,7 @@ class Script(default.Script):
             # [[[TODO: WDW - the caret might be at the end of the text.
             # Not quite sure what to do in this case.  What we'll do here
             # is just speak the previous word.  But...maybe we want to
-            # make sure we say something like "new line" or move the
+            # make sure we say something like "end of line" or move the
             # caret context to the beginning of the next word via
             # a call to goNextWord.]]]
             #
@@ -1054,7 +1022,7 @@ class Script(default.Script):
             # [[[TODO: WDW - the caret might be at the end of the text.
             # Not quite sure what to do in this case.  What we'll do here
             # is just speak the current line.  But...maybe we want to
-            # make sure we say something like "new line" or move the
+            # make sure we say something like "end of line" or move the
             # caret context to the beginning of the next line via
             # a call to goNextLine.]]]
             #
@@ -1343,8 +1311,8 @@ class Script(default.Script):
     def getNextCaretInOrder(self, obj=None,
                             startOffset=-1,
                             includeNonText=True):
-        """Given an object an a character offset, return the next
-        caret context following an in order traversal rule.
+        """Given an object at a character offset, return the next
+        caret context following an in-order traversal rule.
 
         Arguments:
         - root: the Accessible to start at.  If None, starts at the

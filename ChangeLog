@@ -1,5 +1,8 @@
 2006-11-27  Willie Walker <william.walker@sun.com>
 
+	* src/orca/Gecko.py: update docs a bit to make it easier for
+	someone to come help me go on a fox hunt.
+	
 	* src/orca/default.py: fix for bug 372808: orca now reports
 	the appropriate header information when tabbing between tables.
 
