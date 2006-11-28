@@ -1,3 +1,12 @@
+2006-11-28  Mike Pedersen <michael.pedersen@sun.com> 
+
+        * docs/doc-set/ue_input_style.sgml,
+        * docs/doc-set/ue_requirements.sgml,
+        * docs/doc-set/orca.html,
+        * docs/doc-set/orca.pdf
+
+          Updates to specs for where am I, find, and keyboard layouts
+
 2006-11-27  Lynn Monsanto <lynn.monsanto@sun.com>
 
 	* src/orca/default.py: 
