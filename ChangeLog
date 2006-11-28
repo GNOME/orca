@@ -1,3 +1,11 @@
+2006-11-27  Lynn Monsanto <lynn.monsanto@sun.com>
+
+	* src/orca/default.py: 
+	  src/orca/where_am_I.py: 
+
+	Implemented the "where am I" specification for check boxes
+	through table cells bug (#371122).
+
 2006-11-27  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py: update docs a bit to make it easier for
