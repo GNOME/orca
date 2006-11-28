@@ -363,7 +363,7 @@
         a text entry area and the user has placed the cursor at the location
         where text can be entered, the user should also hear
         "editable".  The braille user will see the cursor followed by
-        "editable".</para>
+        "edit".</para>
 
 	<para>When tabbing and shift tabbing between elements the user
         should hear the element followed by the role.  If a user
@@ -620,7 +620,7 @@
       <section><title>Functional Description and Status</title>
         <para>&whereamitestlink;</para>
 
-        <para>&complete; V1.0. Orca provides top down "Where am I"
+        <para>&incomplete; V2.17.3. Orca provides top down "Where am I"
         functionality when the user presses the KP_Enter key.  Orca
         should also present bottom-up "Where am I" when double
         pressing KP enter.  </para>
@@ -923,7 +923,7 @@
 	      <para>If focus is within a text box and text within that
 	      text box is selected, Orca should NOT read the current
 	      line.  Rather, it should state the text that is selected
-	      followed by stating "selected".</para>
+	      followed by stating "selected".  Orca should also speak any attributes present in this line of text.  IE if a word is bold bold should be spoken before the word.</para>
 	    </listitem>
 	  </orderedlist>
 

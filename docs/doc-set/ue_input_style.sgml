@@ -20,6 +20,7 @@
       A group of radio buttons will be added to the general tab allowing the user to choose between desktop and laptop.
       If desktop is chosen, the user will get the insert as the modifier by default and the laptop modifier will be caps lock.
       In the orca text setup the user should also be asked which layout they prefer.</para> 
+      <para> Orca should also provide for language specific keyboard layouts.  The laptop layout is designed primarily for an English keyboard.  Many users with non-western layouts will not easily be able to use this layout.  It should be possible to use an orca keymap based on the current language.  </para>  
       <para>As with most other available screen readers, the numeric
         keypad is the primary location for Orca keystrokes on the desktop layout.  Where
         appropriate, the keymap also provides letter-based mnemonics
