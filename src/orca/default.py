@@ -1361,21 +1361,13 @@ class Script(script.Script):
         """Speaks information about the current object of interest."""
 
         obj = orca_state.locusOfFocus
-        utterances = []
-
         self.updateBraille(obj)
 
-        # Speak context if the input-event key was double-clicked
         doubleClick = \
            (util.getClickCount(self.lastWhereAmIEvent, inputEvent) == 2)
-
-        if doubleClick:
-            context = self.speechGenerator.getSpeechContext(obj)
-            utterances.append(" ".join(context))
-            
         self.lastWhereAmIEvent = inputEvent
 
-        return where_am_I.whereAmI(orca_state.locusOfFocus, utterances, doubleClick)
+        return where_am_I.whereAmI(obj, doubleClick)
     
 
     def findCommonAncestor(self, a, b):
