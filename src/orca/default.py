@@ -1355,24 +1355,28 @@ class Script(script.Script):
             speech.speak(character, voice, False)
 
         util.speakTextSelectionState(obj, startOffset, endOffset)
+        
 
     def whereAmI(self, inputEvent):
         """Speaks information about the current object of interest."""
 
-        self.updateBraille(orca_state.locusOfFocus)
-
-        verbosity = settings.speechVerbosityLevel
-
-        reverse = (util.getClickCount(self.lastWhereAmIEvent, inputEvent) == 2)
-        self.lastWhereAmIEvent = inputEvent
-
+        obj = orca_state.locusOfFocus
         utterances = []
 
-        context = self.speechGenerator.getSpeechContext(orca_state.locusOfFocus)
-        if not reverse:
+        self.updateBraille(obj)
+
+        # Speak context if the input-event key was double-clicked
+        doubleClick = \
+           (util.getClickCount(self.lastWhereAmIEvent, inputEvent) == 2)
+
+        if doubleClick:
+            context = self.speechGenerator.getSpeechContext(obj)
             utterances.append(" ".join(context))
             
-        return where_am_I.whereAmI(orca_state.locusOfFocus, utterances)
+        self.lastWhereAmIEvent = inputEvent
+
+        return where_am_I.whereAmI(orca_state.locusOfFocus, utterances, doubleClick)
+    
 
     def findCommonAncestor(self, a, b):
         """Finds the common ancestor between Accessible a and Accessible b.

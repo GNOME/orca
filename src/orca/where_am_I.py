@@ -41,7 +41,7 @@ from orca_i18n import _ # for gettext support
 
 _debugLevel = debug.LEVEL_FINEST
 
-def whereAmI(obj, utterances, speakContext=False):
+def whereAmI(obj, utterances, doubleClick):
     """
     Speaks information about the current object of interest, including
     the object itself, which window it is in, which application, which
@@ -52,6 +52,10 @@ def whereAmI(obj, utterances, speakContext=False):
     object of interest is the object with keyboard focus. In review
     mode, the object of interest is the object currently being visited,
     whether it has keyboard focus or not.
+
+    Note: doubleClick means the input-event key was double-clicked. If
+    doubleClick, speak the component position before the component name.
+    Otherwise, speak the component name first.
     """
 
     parent = obj.parent
@@ -66,12 +70,6 @@ def whereAmI(obj, utterances, speakContext=False):
          obj.getStateString(),
          util.getAcceleratorAndShortcut(obj)))
     
-
-    # Speak the appropriate information for the component role. The
-    # 'utterances' list may already contain context information.
-    #
-    if not speakContext:
-        utterances = []
 
     if role == rolenames.ROLE_CHECK_BOX:
         """Checkboxes present the following information
@@ -115,6 +113,10 @@ def whereAmI(obj, utterances, speakContext=False):
         text = _("%s") % _getGroupLabel(obj)
         utterances.append(text)
 
+        if doubleClick:
+            text = _("%s") % _getPositionInGroup(obj)
+            utterances.append(text)
+
         text = _("%s") % _getObjLabelAndName(obj)
         utterances.append(text)
 
@@ -127,8 +129,9 @@ def whereAmI(obj, utterances, speakContext=False):
             text = _("not checked")
         utterances.append(text)
 
-        text = _("%s") % _getPositionInGroup(obj)
-        utterances.append(text)
+        if not doubleClick:
+            text = _("%s") % _getPositionInGroup(obj)
+            utterances.append(text)
 
         text = _("%s") % _getObjMnemonic(obj)
         utterances.append(text)
@@ -155,12 +158,20 @@ def whereAmI(obj, utterances, speakContext=False):
         text = _("%s") % rolenames.getSpeechForRoleName(obj)
         utterances.append(text)
 
-        name = _("%s") % _getObjName(obj)
-        utterances.append(name)
+        if doubleClick:
+            # child(0) is the popup list
+            name = _("%s") % _getObjName(obj)
+            text = _("%s") % _getPositionInList(obj.child(0), name)
+            utterances.append(text)
 
-        # child(0) is the popup list
-        text = _("%s") % _getPositionInList(obj.child(0), name)
-        utterances.append(text)
+            utterances.append(name)
+        else:
+            name = _("%s") % _getObjName(obj)
+            utterances.append(name)
+            
+            # child(0) is the popup list
+            text = _("%s") % _getPositionInList(obj.child(0), name)
+            utterances.append(text)
 
         text = _("%s") % _getObjMnemonic(obj)
         utterances.append(text)
@@ -265,6 +276,12 @@ def whereAmI(obj, utterances, speakContext=False):
         text = _("%s") % _getObjLabelAndName(obj.parent)
         utterances.append(text)
 
+        if doubleClick:
+            # parent is the page tab list
+            name = _("%s") % _getObjName(obj)
+            text = _("%s") % _getPositionInList(obj.parent, name)
+            utterances.append(text)
+
         text = _("%s") % _getObjLabelAndName(obj)
         utterances.append(text)
 
@@ -274,10 +291,11 @@ def whereAmI(obj, utterances, speakContext=False):
         text = _("%s") % rolenames.getSpeechForRoleName(obj)
         utterances.append(text)
 
-        # parent is the page tab list
-        name = _("%s") % _getObjName(obj)
-        text = _("%s") % _getPositionInList(obj.parent, name)
-        utterances.append(text)
+        if not doubleClick:
+            # parent is the page tab list
+            name = _("%s") % _getObjName(obj)
+            text = _("%s") % _getPositionInList(obj.parent, name)
+            utterances.append(text)
 
         text = _("%s") % _getObjShortcut(obj)
         utterances.append(text)
@@ -299,13 +317,21 @@ def whereAmI(obj, utterances, speakContext=False):
         text = _("%s") % rolenames.getSpeechForRoleName(obj)
         utterances.append(text)
 
-        text = _("%s page") % _getObjLabelAndName(obj)
-        utterances.append(text)
-
-        name = _("%s") % _getObjName(obj)
-        text = _("%s") % _getPositionInList(obj.parent, name)
-        utterances.append(text)
-
+        if doubleClick:
+            text = _("%s page") % _getObjLabelAndName(obj)
+            utterances.append(text)
+            
+            name = _("%s") % _getObjName(obj)
+            text = _("%s") % _getPositionInList(obj.parent, name)
+            utterances.append(text)
+        else:
+            name = _("%s") % _getObjName(obj)
+            text = _("%s") % _getPositionInList(obj.parent, name)
+            utterances.append(text)
+            
+            text = _("%s page") % _getObjLabelAndName(obj)
+            utterances.append(text)
+            
         text = _("%s") % _getObjMnemonic(obj)
         utterances.append(text)
 
@@ -361,7 +387,7 @@ def whereAmI(obj, utterances, speakContext=False):
         5. if expandable/collapsible: expanded/collapsed
         6. if applicable, the level
         """
-        # Speak the first two items.
+        # Speak the first two items (and possibly the position)
         text = _("%s") % _getObjLabel(obj)
         utterances.append(text)
 
@@ -369,6 +395,13 @@ def whereAmI(obj, utterances, speakContext=False):
         utterances.append(text)
         debug.println(_debugLevel, "table cell utterances 1=%s" % \
                       utterances)
+
+        if doubleClick:
+            table = parent.table
+            row = table.getRowAtIndex(orca_state.locusOfFocus.index)
+            text = _("row %d of %d") % ((row+1), parent.table.nRows)
+            utterances.append(text)
+
         speech.speakUtterances(utterances)
 
         # Speak the current row
@@ -379,10 +412,12 @@ def whereAmI(obj, utterances, speakContext=False):
 
         # Speak the remaining items.
         utterances = []
-        table = parent.table
-        row = table.getRowAtIndex(orca_state.locusOfFocus.index)
-        text = _("row %d of %d") % ((row+1), parent.table.nRows)
-        utterances.append(text)
+
+        if not doubleClick:
+            table = parent.table
+            row = table.getRowAtIndex(orca_state.locusOfFocus.index)
+            text = _("row %d of %d") % ((row+1), parent.table.nRows)
+            utterances.append(text)
 
         if obj.state.count(atspi.Accessibility.STATE_EXPANDABLE):
             if obj.state.count(atspi.Accessibility.STATE_EXPANDED):
