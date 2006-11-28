@@ -19,6 +19,12 @@
 
 """Speaks information about the current object of interest."""
 
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
+__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__license__   = "LGPL"
+
 import string
 
 import atspi
@@ -41,7 +47,8 @@ from orca_i18n import _ # for gettext support
 
 _debugLevel = debug.LEVEL_FINEST
 
-def whereAmI(obj, utterances, doubleClick):
+
+def whereAmI(obj, doubleClick):
     """
     Speaks information about the current object of interest, including
     the object itself, which window it is in, which application, which
@@ -52,24 +59,20 @@ def whereAmI(obj, utterances, doubleClick):
     object of interest is the object with keyboard focus. In review
     mode, the object of interest is the object currently being visited,
     whether it has keyboard focus or not.
-
-    Note: doubleClick means the input-event key was double-clicked. If
-    doubleClick, speak the component position before the component name.
-    Otherwise, speak the component name first.
     """
 
     parent = obj.parent
     role = obj.role
+    utterances = []
 
     debug.println(_debugLevel,
-        "whereAmI: context = %s, label=%s name=%s, role=%s state=%s, mnemonics=%s" % \
-        (utterances,
-         _getObjLabel(obj),
+        "whereAmI: label=%s name=%s, role=%s state=%s, mnemonics=%s" % \
+        (_getObjLabel(obj),
          _getObjName(obj),
          rolenames.getSpeechForRoleName(obj),
          obj.getStateString(),
          util.getAcceleratorAndShortcut(obj)))
-    
+
 
     if role == rolenames.ROLE_CHECK_BOX:
         """Checkboxes present the following information
@@ -261,7 +264,10 @@ def whereAmI(obj, utterances, doubleClick):
         speech.speakUtterances(utterances)
         
 
-    elif role == rolenames.ROLE_MENU_ITEM:
+    elif role == rolenames.ROLE_MENU or \
+         role == rolenames.ROLE_MENU_ITEM or \
+         role == rolenames.ROLE_CHECK_MENU or \
+         role == rolenames.ROLE_CHECK_MENU_ITEM:
         """
         Menu items present the following information (examples include
         'File menu, Open..., Control + O, item 2 of 20, O', 'File menu,
@@ -340,7 +346,7 @@ def whereAmI(obj, utterances, doubleClick):
         speech.speakUtterances(utterances)
         
 
-    elif role == rolenames.ROLE_TEXT:
+    elif role == rolenames.ROLE_TEXT or role == rolenames.ROLE_TERMINAL:
         """
         Text boxes present the following information (an example is
         'Source display: text, blank, Alt O'):
@@ -741,21 +747,31 @@ def _getTextContents(obj):
     """
 
     textObj = obj.text
+    caretOffset = textObj.caretOffset
     textContents = ""
     selected = False
 
     nSelections = textObj.getNSelections()
+    debug.println(_debugLevel,
+        "_getTextContents: caretOffset=%d, nSelections=%d" % \
+        (caretOffset, nSelections))
+
     if nSelections:
+        selected = True
         for i in range(0, nSelections):
             [startSelOffset, endSelOffset] = textObj.getSelection(i)
+            
+            debug.println(_debugLevel,
+                "_getTextContents: selection start=%d, end=%d" % \
+                (startSelOffset, endSelOffset))
+            
+            selectedText = textObj.getText(startSelOffset, endSelOffset)
+            debug.println(_debugLevel,
+                "_getTextContents: selected text=<%s>" % selectedText)
 
-        selectedText = textObj.getText(startSelOffset, endSelOffset)
-        debug.println(_debugLevel,
-            "_getTextContents: start=%d, end=%d, selected text=<%s>" % \
-            (startSelOffset, endSelOffset, selectedText))
-        
-        textContents = selectedText
-        selected = True
+            if i > 0:
+                textContents += " "
+            textContents += selectedText
 
     else:
         [line, caretOffset, startOffset] = util.getTextLineAtCaret(obj)

@@ -1,3 +1,8 @@
+2006-11-28  Lynn Monsanto <lynn.monsanto@sun.com>
+
+	* src/orca/where_am_I.py: Fixed "where am I" problems
+	with Evolution and Terminal. Bug #371122
+
 2006-11-28  Mike Pedersen <michael.pedersen@sun.com> 
 
         * docs/doc-set/ue_input_style.sgml,
