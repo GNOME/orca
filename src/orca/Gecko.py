@@ -816,7 +816,7 @@ class Script(default.Script):
 
     def onLinkSelected(self, event):
 
-        # NOTE: In Firefox 3, link seleced events are not issued when
+        # NOTE: In Firefox 3, link selected events are not issued when
         # a link is selected.  Instead, they've decided to issue focus:
         # events when a link is selected.  This is 'old' code leftover
         # from Yelp and Firefox 2.
@@ -977,7 +977,7 @@ class Script(default.Script):
                 print "YIKES in Gecko.sayCharacter!"
                 characterOffset -= 1
 
-        self.presentCharacterAtOffset(obj, characterOffset)
+        self.speakCharacterAtOffset(obj, characterOffset)
 
     def sayWord(self, obj):
         """Speaks the word at the current caret position."""
@@ -1004,7 +1004,7 @@ class Script(default.Script):
                 print "YIKES in Gecko.sayWord!"
                 characterOffset -= 1
 
-        self.presentWordAtOffset(obj, characterOffset)
+        self.speakWordAtOffset(obj, characterOffset)
 
     def sayLine(self, obj):
         """Speaks the line at the current caret position."""
@@ -1030,7 +1030,7 @@ class Script(default.Script):
             if characterOffset >= len(foo):
                 print "YIKES in Gecko.sayLine!"
                 characterOffset -= 1
-        self.presentLineAtOffset(obj, characterOffset)
+        self.speakLineAtOffset(obj, characterOffset)
 
     ####################################################################
     #                                                                  #
@@ -1069,9 +1069,9 @@ class Script(default.Script):
             # cannot always depend upon the ordering of the children.
             # Easy if it works...
             #
-            row = parent.table.getRowAtIndex(obj.index)
-            col = parent.table.getColumnAtIndex(obj.index)
-            return [row, col]
+            # row = parent.table.getRowAtIndex(obj.index)
+            # col = parent.table.getColumnAtIndex(obj.index)
+            # return [row, col]
 
         return [0, 0]
 
@@ -1289,14 +1289,14 @@ class Script(default.Script):
         # over and over again.
         #
         try:
-            indeces = obj.childrenIndeces
+            indices = obj.childrenIndices
         except:
-            obj.childrenIndeces = {}
+            obj.childrenIndices = {}
 
         try:
-            return obj.childrenIndeces[characterOffset]
+            return obj.childrenIndices[characterOffset]
         except:
-            obj.childrenIndeces[characterOffset] = -1
+            obj.childrenIndices[characterOffset] = -1
             unicodeText = self.getUnicodeText(obj)
             if unicodeText \
                and (unicodeText[characterOffset] == EMBEDDED_OBJECT_CHARACTER):
@@ -1304,9 +1304,9 @@ class Script(default.Script):
                 for character in range(0, characterOffset + 1):
                     if unicodeText[character] == EMBEDDED_OBJECT_CHARACTER:
                         index += 1
-                obj.childrenIndeces[characterOffset] = index
+                obj.childrenIndices[characterOffset] = index
 
-        return obj.childrenIndeces[characterOffset]
+        return obj.childrenIndices[characterOffset]
 
     def getNextCaretInOrder(self, obj=None,
                             startOffset=-1,
@@ -1492,7 +1492,7 @@ class Script(default.Script):
                 extents = self.getExtents(obj,
                                           characterOffset,
                                           characterOffset + 1)
-                if extents == (0, 0, 0,0):
+                if extents == (0, 0, 0, 0):
                     return self.getFirstCaretContext(obj, characterOffset + 1)
                 else:
                     return [obj, characterOffset]
@@ -1638,8 +1638,9 @@ class Script(default.Script):
         else:
             return None
 
-    def presentString(self, obj, string, presentRole=False):
-        if not obj or (not string and not presentRole):
+    def speakString(self, obj, string, speakRole=False):
+        """Speaks the given string for the given object."""
+        if not obj or (not string and not speakRole):
             return
         if obj.role == rolenames.ROLE_LINK:
             voice = self.voices[settings.HYPERLINK_VOICE]
@@ -1648,7 +1649,7 @@ class Script(default.Script):
         else:
             voice = self.voices[settings.DEFAULT_VOICE]
 
-        if presentRole:
+        if speakRole:
             ignoreRoles = [rolenames.ROLE_DOCUMENT_FRAME,
                            rolenames.ROLE_FORM,
                            rolenames.ROLE_PARAGRAPH,
@@ -1662,9 +1663,11 @@ class Script(default.Script):
 
         speech.speak(string, voice, False)
 
-    def presentCharacterAtOffset(self, obj, characterOffset):
-        self.presentString(obj,
-                           self.getCharacterAtOffset(obj, characterOffset))
+    def speakCharacterAtOffset(self, obj, characterOffset):
+        """Speaks the character at the given characterOffset in the
+        given object."""
+        self.speakString(obj,
+                         self.getCharacterAtOffset(obj, characterOffset))
 
     def getWordAtOffset(self, obj, characterOffset):
         """Returns an ordered list where each element is composed of
@@ -1733,7 +1736,8 @@ class Script(default.Script):
 
         return contents
 
-    def presentWordAtOffset(self, obj, characterOffset):
+    def speakWordAtOffset(self, obj, characterOffset):
+        """Speaks the word at the given characterOffset in the given object."""
         contents = self.getWordAtOffset(obj, characterOffset)
         if not len(contents):
             return
@@ -1744,7 +1748,7 @@ class Script(default.Script):
             string = self.getText(obj, startOffset, endOffset)
         else:
             string = obj.name
-        self.presentString(obj, string, True)
+        self.speakString(obj, string, True)
 
     def getLineAtOffset(self, obj, characterOffset):
         """Returns an ordered list where each element is composed of
@@ -1827,7 +1831,10 @@ class Script(default.Script):
 
         return contents
 
-    def presentContents(self, contents):
+    def speakContents(self, contents):
+        """Speaks the given contents, which is a list of
+        [obj, startOffset, endOffset] tuples."""
+
         if not len(contents):
             return
 
@@ -1853,10 +1860,12 @@ class Script(default.Script):
             #        caption = ""
             #    print "FOO", string, caption, row, col, rowHeader, colHeader
 
-            self.presentString(obj, string, True)
+            self.speakString(obj, string, True)
 
-    def presentLineAtOffset(self, obj, characterOffset):
-        self.presentContents(self.getLineAtOffset(obj, characterOffset))
+    def speakLineAtOffset(self, obj, characterOffset):
+        """Speaks the line that holds the given characterOffset for the
+        given object."""
+        self.speakContents(self.getLineAtOffset(obj, characterOffset))
 
     def getContentsAtOffset(self, obj, characterOffset):
         """Returns an ordered list where each element is composed of
@@ -1889,8 +1898,9 @@ class Script(default.Script):
 
         return contents
 
-    def presentContentsAtOffset(self, obj, characterOffset):
-        self.presentContents(self.getContentsAtOffset(obj, characterOffset))
+    def speakContentsAtOffset(self, obj, characterOffset):
+        """Speaks the entire subtree for the given object."""
+        self.speakContents(self.getContentsAtOffset(obj, characterOffset))
 
     def getContents(self):
         """Trivial debug utility to stringify the document contents
@@ -2018,7 +2028,7 @@ class Script(default.Script):
             del self.caretContext
 
         self.updateBraille(obj)
-        self.presentCharacterAtOffset(obj, characterOffset)
+        self.speakCharacterAtOffset(obj, characterOffset)
 
     def goPreviousCharacter(self, inputEvent):
         """Positions the caret offset to the previous character or object
@@ -2038,7 +2048,7 @@ class Script(default.Script):
             del self.caretContext
 
         self.updateBraille(obj)
-        self.presentCharacterAtOffset(obj, characterOffset)
+        self.speakCharacterAtOffset(obj, characterOffset)
 
     def goPreviousWord(self, inputEvent):
         """Positions the caret offset to beginning of the previous
@@ -2059,7 +2069,7 @@ class Script(default.Script):
 
         self.setCaretPosition(obj,  startOffset)
         self.updateBraille(obj)
-        self.presentWordAtOffset(obj, startOffset)
+        self.speakWordAtOffset(obj, startOffset)
 
     def goNextWord(self, inputEvent):
         """Positions the caret offset to the end of next word or object
@@ -2083,7 +2093,7 @@ class Script(default.Script):
         #
         self.setCaretPosition(obj,  startOffset)
         self.updateBraille(obj)
-        self.presentWordAtOffset(obj, startOffset)
+        self.speakWordAtOffset(obj, startOffset)
 
     def goPreviousLine(self, inputEvent):
         """Positions the caret offset at the previous line in the
@@ -2135,7 +2145,7 @@ class Script(default.Script):
         #print "GPL ENDED UP AT", lastObj.role, lineExtents
         self.setCaretPosition(lastObj, lastCharacterOffset)
         self.updateBraille(lastObj)
-        self.presentLineAtOffset(lastObj, lastCharacterOffset)
+        self.speakLineAtOffset(lastObj, lastCharacterOffset)
 
         # Debug...
         #
@@ -2191,7 +2201,7 @@ class Script(default.Script):
         #print "GNL ENDED UP AT", lastObj.role, lineExtents
         self.setCaretPosition(lastObj, lastCharacterOffset)
         self.updateBraille(lastObj)
-        self.presentLineAtOffset(lastObj, lastCharacterOffset)
+        self.speakLineAtOffset(lastObj, lastCharacterOffset)
 
         # Debug...
         #
@@ -2199,7 +2209,7 @@ class Script(default.Script):
         #self.dumpContent(inputEvent, contents)
 
     def getPreviousRole(self, roles, match=True):
-        """Positions the caret offset at the beginnig of the next object
+        """Positions the caret offset at the beginning of the next object
         using the given roles list as a pattern to match or not match.
 
         Arguments:
@@ -2221,7 +2231,7 @@ class Script(default.Script):
         return [None, -1]
 
     def getNextRole(self, roles, match=True):
-        """Positions the caret offset at the beginnig of the next object
+        """Positions the caret offset at the beginning of the next object
         using the given roles list as a pattern to match or not match.
 
         Arguments:
@@ -2247,7 +2257,7 @@ class Script(default.Script):
         if obj:
             [obj, characterOffset] = self.getFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
-            self.presentLineAtOffset(obj, characterOffset)
+            self.speakLineAtOffset(obj, characterOffset)
         else:
             speech.speak(_("No more headings."))
 
@@ -2257,7 +2267,7 @@ class Script(default.Script):
             [obj, characterOffset] = self.getFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
             self.updateBraille(obj)
-            self.presentLineAtOffset(obj, characterOffset)
+            self.speakLineAtOffset(obj, characterOffset)
         else:
             speech.speak(_("No more headings."))
 
@@ -2267,7 +2277,7 @@ class Script(default.Script):
             [obj, characterOffset] = self.getFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
             self.updateBraille(obj)
-            self.presentContentsAtOffset(obj, characterOffset)
+            self.speakContentsAtOffset(obj, characterOffset)
         else:
             speech.speak(_("No more chunks."))
 
@@ -2277,6 +2287,6 @@ class Script(default.Script):
             [obj, characterOffset] = self.getFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
             self.updateBraille(obj)
-            self.presentContentsAtOffset(obj, characterOffset)
+            self.speakContentsAtOffset(obj, characterOffset)
         else:
             speech.speak(_("No more chunks."))

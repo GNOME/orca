@@ -1,3 +1,8 @@
+2006-11-28  Willie Walker <william.walker@sun.com>
+
+	* src/orca/Gecko.py: updates to docs and fix typos based
+	upon review with Rich.
+	
 2006-11-28  Lynn Monsanto <lynn.monsanto@sun.com>
 
 	* src/orca/where_am_I.py: Fixed "where am I" problems
