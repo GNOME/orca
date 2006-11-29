@@ -1,5 +1,18 @@
 2006-11-28  Willie Walker <william.walker@sun.com>
 
+	Updates to the test harness and keystroke files.  I still have
+	to get to the oowriter tests before attempting a full runall.sh,
+	but I wanted to get these checked in for now.
+	
+	* test/harness/runone.sh: kill the app that was running using
+	kill on its PID versus running exit.keys.
+
+	* test/keystrokes/gedit/*, test/keystrokes/gnome-terminal/*,
+	test/keystrokes/gtk-demo/*: make sure these keystroke files
+	actually work.
+	
+2006-11-28  Willie Walker <william.walker@sun.com>
+
 	* src/orca/Gecko.py: updates to docs and fix typos based
 	upon review with Rich.
 	
