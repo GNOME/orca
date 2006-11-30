@@ -1,3 +1,11 @@
+2006-11-29  Lynn Monsanto <lynn.monsanto@sun.com>
+
+	* src/orca/default.py: 
+	  src/orca/where_am_I.py: 
+
+	Implemented more "where am I" functionality, including
+	support for orca-key and double-clike (#371122).
+
 2006-11-29  Willie Walker <william.walker@sun.com>
 
 	* test/keystrokes/gnome-terminal/edit-profiles.keys, 
