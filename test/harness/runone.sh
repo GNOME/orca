@@ -17,11 +17,12 @@ debugFile=`basename $1 .keys`
 # (Orca will look in our local directory first for user-settings.py
 # before looking in ~/.orca)
 #
-SETTINGS_FILE=`dirname $0`/`basename $0`.settings
+SETTINGS_FILE=`dirname $1`/$debugFile.settings
 if [ ! -f $SETTINGS_FILE ]
 then
     SETTINGS_FILE=`dirname $0`/user-settings.py.in
 fi
+echo "Using settings file:" $SETTINGS_FILE
 sed "s^%debug%^$debugFile.orca^g" $SETTINGS_FILE > user-settings.py
 
 # Run the event listener...
@@ -52,9 +53,8 @@ python `dirname $0`/../../src/tools/play_keystrokes.py < $1
 
 # Terminate the running application and Orca
 #
-orca --quit
+orca --quit > /dev/null 2>&1
 
-echo "KILLING", $APP_PID
 kill -9 $APP_PID > /dev/null 2>&1
 
 rm user-settings.py*

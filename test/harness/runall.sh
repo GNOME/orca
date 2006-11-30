@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 #
 # runall.sh can take the following optional parameters:
 #
@@ -65,6 +65,7 @@ process_cl "${@}"
 # found sub-directories. We go ahead and run this using our
 # runone.sh script.
 #
+dirprefix=`date +%Y-%m-%d_%H:%M:%S`
 for testDir in `find $keystrokesDir -type d`
 do
   application=`basename $testDir`
@@ -91,8 +92,9 @@ do
         }
       done
       IFS="$oldifs"
-      mkdir -p tmp/$application
-      cd tmp/$application
+      outputdir=$dirprefix/$application
+      mkdir -p $outputdir
+      cd $outputdir
       for testFile in `find $testDir -type f -name "*.keys" | sort`; do
         if [ "$found" -gt 0 ]
         then
