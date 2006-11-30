@@ -761,13 +761,14 @@ def getTopLevel(obj):
                   + obj.accessibleNameToString())
 
     while obj \
+          and obj.parent \
           and (obj != obj.parent) \
           and (obj.parent.role != rolenames.ROLE_APPLICATION):
         obj = obj.parent
         debug.println(debug.LEVEL_FINEST, "--> obj.name="
                       + obj.accessibleNameToString())
 
-    if obj and (obj.parent.role == rolenames.ROLE_APPLICATION):
+    if obj and obj.parent and (obj.parent.role == rolenames.ROLE_APPLICATION):
         pass
     else:
         obj = None

@@ -101,6 +101,11 @@ class Script(script.Script):
                 Script.whereAmI,
                 _("Performs the where am I operation."))
 
+        self.inputEventHandlers["whereAmIHandler2"] = \
+            input_event.InputEventHandler(
+                Script.whereAmI2,
+                _("Performs the where am I operation."))
+
         self.inputEventHandlers["showZonesHandler"] = \
             input_event.InputEventHandler(
                 Script.showZones,
@@ -409,6 +414,13 @@ class Script(script.Script):
                 0,
                 self.inputEventHandlers["whereAmIHandler"]))
 
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "KP_Enter",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["whereAmIHandler2"]))
+
         # keyBindings.add(
         #     keybindings.KeyBinding(
         #         "KP_Delete",
@@ -666,9 +678,16 @@ class Script(script.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "Return",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                0,
+                0,
                 self.inputEventHandlers["whereAmIHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "Return",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["whereAmIHandler2"]))
 
         # keyBindings.add(
         #     keybindings.KeyBinding(
@@ -1358,8 +1377,10 @@ class Script(script.Script):
         
 
     def whereAmI(self, inputEvent):
-        """Speaks information about the current object of interest."""
-
+        """
+        Speaks information about the current object of interest.
+        The Orca modifier key *was not* pressed.
+        """
         obj = orca_state.locusOfFocus
         self.updateBraille(obj)
 
@@ -1367,7 +1388,24 @@ class Script(script.Script):
            (util.getClickCount(self.lastWhereAmIEvent, inputEvent) == 2)
         self.lastWhereAmIEvent = inputEvent
 
-        return where_am_I.whereAmI(obj, doubleClick)
+        context = self.speechGenerator.getSpeechContext(obj)
+        return where_am_I.whereAmI(obj, context, doubleClick, False)
+
+    
+    def whereAmI2(self, inputEvent):
+        """
+        Speaks information about the current object of interest.
+        The Orca modifier key *was* pressed.
+        """
+        obj = orca_state.locusOfFocus
+        self.updateBraille(obj)
+
+        doubleClick = \
+           (util.getClickCount(self.lastWhereAmIEvent, inputEvent) == 2)
+        self.lastWhereAmIEvent = inputEvent
+
+        context = self.speechGenerator.getSpeechContext(obj)
+        return where_am_I.whereAmI(obj, context, doubleClick, True)
     
 
     def findCommonAncestor(self, a, b):
