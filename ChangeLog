@@ -1,3 +1,18 @@
+2006-11-30  Joanmarie Diggs <via rich.burridge@sun.com>
+
+        * src/orca/Makefile.am:
+          src/orca/default.py:
+          src/orca/find.py:
+          src/orca/orca-find.glade:
+          src/orca/orca.py:
+          src/orca/orca_gui_find.py:
+          src/orca/orca_state.py:
+          src/orca/script.py:
+          src/orca/settings.py:
+          Fixed bug #354463 – [requirement] "Find" command.
+
+Willie Walker <william.walker@sun.com>
+
 2006-11-30  Willie Walker <william.walker@sun.com>
 
 	* bugs/bugs.html: review and rough priority ordering of OOo bugs.

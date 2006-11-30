@@ -963,6 +963,22 @@ def _showQuitGUI(script=None, inputEvent=None):
 
     return True
 
+def _showFindGUI(script=None, inputEvent=None):
+    """Displays the user interace to perform an Orca Find.
+
+    Returns True to indicate the input event has been consumed.
+    """
+
+    try:
+        module = __import__(settings.findModule,
+                            globals(),
+                            locals(),
+                            [''])
+        module.showFindUI()
+    except:
+        debug.printException(debug.LEVEL_SEVERE)
+        pass
+
 # If True, this module has been initialized.
 #
 _initialized = False

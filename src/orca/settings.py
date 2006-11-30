@@ -115,6 +115,11 @@ consolePreferencesModule= "orca_console_prefs"
 #
 quitModule = "orca_quit"
 
+# The name of the module that holds the user interface for performing a
+# flat review find.
+#
+findModule = "orca_gui_find"
+
 # A list of keys that can serve as the Orca modifier key.  The list is
 # so we can provide better cross platform support (e.g., Sun keyboard
 # vs. PC-104 keyboard layouts).  When any of these keys is pressed,

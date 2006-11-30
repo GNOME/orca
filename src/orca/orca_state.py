@@ -68,3 +68,8 @@ noFocusTimestamp = 0.0
 # The last word spoken.
 #
 lastWord = ""
+
+# The last searchQuery
+#
+searchQuery = None
+

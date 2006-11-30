@@ -34,6 +34,7 @@ import atspi
 import braille
 import chnames
 import debug
+import find
 import flat_review
 import input_event
 import keybindings
@@ -105,6 +106,21 @@ class Script(script.Script):
             input_event.InputEventHandler(
                 Script.whereAmI2,
                 _("Performs the where am I operation."))
+
+        self.inputEventHandlers["findHandler"] = \
+            input_event.InputEventHandler(
+                orca._showFindGUI,
+                _("Opens the Orca Find dialog."))
+
+        self.inputEventHandlers["findNextHandler"] = \
+            input_event.InputEventHandler(
+                Script.findNext,
+                _("Searches for the next instance of a string."))
+
+        self.inputEventHandlers["findPreviousHandler"] = \
+            input_event.InputEventHandler(
+                Script.findPrevious,
+                _("Searches for the previous instance of a string."))
 
         self.inputEventHandlers["showZonesHandler"] = \
             input_event.InputEventHandler(
@@ -421,12 +437,29 @@ class Script(script.Script):
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["whereAmIHandler2"]))
 
-        # keyBindings.add(
-        #     keybindings.KeyBinding(
-        #         "KP_Delete",
-        #         0,
-        #         0,
-        #         self.inputEventHandlers["screenFindHandler"]))
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "KP_Delete",
+                1 << settings.MODIFIER_ORCA,
+                0,
+                self.inputEventHandlers["findHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "KP_Delete",
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_SHIFT),
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["findNextHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "KP_Delete",
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_SHIFT),
+                (1 << settings.MODIFIER_ORCA | \
+                     1 << atspi.Accessibility.MODIFIER_SHIFT),
+                self.inputEventHandlers["findPreviousHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
@@ -1472,6 +1505,15 @@ class Script(script.Script):
         - newLocusOfFocus: Accessible that is the new locus of focus
         """
 
+        try:
+            if self.findCommandRun:
+                # Then the Orca Find dialog has just given up focus
+                # to the original window.  We don't want to speak
+                # the window title, current line, etc.
+                return
+        except:
+            pass
+
         if newLocusOfFocus:
             mag.magnifyAccessible(event, newLocusOfFocus)
 
@@ -2268,6 +2310,12 @@ class Script(script.Script):
 
         # Do we care?
         #
+        if event.type == "object:state-changed:active":
+            if self.findCommandRun:
+                self.findCommandRun = False
+                self.find()
+                return
+
         if event.type == "object:state-changed:focused":
             iconified = False
             try:
@@ -3216,7 +3264,6 @@ class Script(script.Script):
 
         flatReviewContext = self.getFlatReviewContext()
         lines = flatReviewContext.lines
-        print "Number of lines:", len(lines)
         for line in lines:
             string = ""
             for zone in line.zones:
@@ -3225,6 +3272,60 @@ class Script(script.Script):
                                  False)
             debug.println(debug.LEVEL_OFF, string)
         self.flatReviewContext = None
+
+    def find(self, query=None):
+        """Searches for the specified query.  If no query is specified,
+        it searches for the query specified in the Orca Find dialog.
+
+        Arguments:
+        - query: The search query to find.
+        """
+
+        if not query:
+            query = find.getLastQuery()
+        if query:
+            context = self.getFlatReviewContext()
+            location = query.findQuery(context)
+            if not location:
+                braille.displayMessage(_("string not found"))
+                speech.speak(_("string not found"))
+            else:
+                context.setCurrent(location.lineIndex, location.zoneIndex, \
+                                   location.wordIndex, location.charIndex)
+                self.reviewCurrentItem(None)
+                self.targetCursorCell = braille.cursorCell
+
+    def findNext(self, inputEvent):
+        """Searches forward for the next instance of the string
+        searched for via the Orca Find dialog.  Other than direction
+        and the starting point, the search options initially specified
+        (case sensitivity, window wrap, and full/partial match) are
+        preserved.
+        """
+
+        lastQuery = find.getLastQuery()
+        if lastQuery:
+            lastQuery.searchBackwards = False
+            lastQuery.startAtTop = False
+            self.find(lastQuery)
+        else:
+            orca._showFindGUI()
+
+    def findPrevious(self, inputEvent):
+        """Searches backwards for the next instance of the string
+        searched for via the Orca Find dialog.  Other than direction
+        and the starting point, the search options initially specified
+        (case sensitivity, window wrap, and full/partial match) are
+        preserved.
+        """
+
+        lastQuery = find.getLastQuery()
+        if lastQuery:
+            lastQuery.searchBackwards = True
+            lastQuery.startAtTop = False
+            self.find(lastQuery)
+        else:
+            orca._showFindGUI()
 
 # Dictionary that defines the state changes we care about for various
 # objects.  The key represents the role and the value represents a list

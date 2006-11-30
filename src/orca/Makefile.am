@@ -19,6 +19,7 @@ orca_python_PYTHON = \
 	default.py \
 	espeechfactory.py \
 	eventsynthesizer.py \
+	find.py \
 	flat_review.py \
 	focus_tracking_presenter.py \
 	Gecko.py \
@@ -33,6 +34,7 @@ orca_python_PYTHON = \
 	orca.py \
 	orca_console_prefs.py \
 	orca_glade.py \
+	orca_gui_find.py \
 	orca_gui_main.py \
 	orca_gui_prefs.py \
 	orca_i18n.py \
@@ -59,6 +61,7 @@ orca_pythondir=$(pyexecdir)/orca
 SUBDIRS = scripts
 
 glade_DATA = \
+	orca-find.glade \
 	orca-mainwin.glade \
 	orca-quit.glade \
 	orca-setup.glade

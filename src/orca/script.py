@@ -86,6 +86,8 @@ class Script:
 
         self.flatReviewContextClass = flat_review.Context
 
+        self.findCommandRun = False
+
         debug.println(debug.LEVEL_FINE, "NEW SCRIPT: %s" % self.name)
 
     def getListeners(self):

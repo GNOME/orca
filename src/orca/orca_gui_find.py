@@ -1,0 +1,248 @@
+# Orca
+#
+# Copyright 2006 Sun Microsystems Inc.
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General Public
+# License along with this library; if not, write to the
+# Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+# Boston, MA 02111-1307, USA.
+
+"""Displays a GUI for the Orca Find window"""
+
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
+__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__license__   = "LGPL"
+
+import os
+import sys
+import debug
+import gettext
+import gtk
+import gtk.glade
+import locale
+
+import default
+import find
+import orca
+import orca_glade
+import orca_state
+import platform
+
+from orca_i18n import _  # for gettext support
+
+OS = None
+
+class orcaFindGUI(orca_glade.GladeWrapper):
+
+    def _init(self):
+        # Initialize the dialog box controls.
+        self.searchString = ""
+        self.searchBackwards = False
+        self.caseSensitive = False
+        self.matchEntireWord = False
+        self.windowWrap = True
+        self.startAtTop = False
+
+        self.activeScript = orca_state.activeScript
+
+    def _showGUI(self):
+        """Show the Orca Find dialog. This assumes that the GUI has
+        already been created.
+        """
+
+        # Set the current time on the Find GUI dialog so that it'll
+        # get focus. set_user_time is a new call in pygtk 2.9.2 or later.
+        # It's surronded by a try/except block here so that if it's not found,
+        # then we can fail gracefully.
+        #
+        try:
+            self.findDialog.realize()
+            self.findDialog.window.set_user_time(\
+                orca_state.lastInputEventTimestamp)
+        except AttributeError:
+            debug.printException(debug.LEVEL_FINEST)
+
+        self.findDialog.show()
+
+        # Populate the dialog box from the previous searchQuery, should
+        # one exist.  Note:  This is necessary because we are destroying
+        # the dialog (rather than merely hiding it) before performing the
+        # search.
+
+        try:
+            self.searchForEntry.set_text(\
+                orca_state.searchQuery.searchString)
+            self.searchForEntry.select_region (0,
+                len(self.searchForEntry.get_text()))
+            if orca_state.searchQuery.startAtTop:
+                self.topRadioButton.set_active(True)
+            self.matchCaseCheckbox.set_active(\
+                orca_state.searchQuery.caseSensitive)
+            self.matchEntireWordCheckbox.set_active(\
+                orca_state.searchQuery.matchEntireWord)
+            self.wrapAroundCheckbox.set_active(\
+                orca_state.searchQuery.windowWrap)
+            self.searchBackwardsCheckbox.set_active(\
+                orca_state.searchQuery.searchBackwards)
+        except:
+            pass
+
+    def searchForEntryChanged(self,widget):
+        """Signal handler for the "changed" signal for the
+           searchForEntry GtkEntry widget. The user has changed
+           the string to be searched for.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        self.searchString = widget.get_text()
+        if len(self.searchString) > 0:
+            self.findButton.set_sensitive(True)
+        else:
+            self.findButton.set_sensitive(False)
+
+    def startingPointChanged(self, widget):
+        """Signal handler for the "toggled" signal for the
+           currentLocationRadioButton or topRadioButton GtkRadioButton
+           widgets. The user has toggled the starting point for the search.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        if widget.get_active():
+            if widget.get_label() == _("C_urrent location"):
+                self.startAtTop = False
+            else:
+                self.startAtTop = True
+
+    def matchCaseChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           matchCaseCheckbox GtkCheckButton widget. The user has
+           [un]checked the "Match Case" checkbox.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        self.caseSensitive = widget.get_active()
+
+    def matchEntireWordChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           matchEntireWordCheckbox GtkCheckButton widget.
+           The user has [un]checked the "Match entire word"
+           checkbox.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        self.matchEntireWord = widget.get_active()
+
+    def searchBackwardsChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           searchBackwardsCheckbox GtkCheckButton widget.
+           The user has [un]checked the "Search backwards"
+           checkbox.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        self.searchBackwards = widget.get_active()
+
+    def wrapAroundChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           wrapAroundCheckbox GtkCheckButton widget. The user has
+           [un]checked the "Wrap around" checkbox.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        self.windowWrap = widget.get_active()
+
+    def closeButtonClicked(self, widget):
+        """Signal handler for the "clicked" signal for the cancelButton
+           GtkButton widget. The user has clicked the Cancel button.
+           Hide the dialog.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        self.findDialog.hide()
+
+    def findButtonClicked(self, widget):
+        """Signal handler for the "clicked" signal for the findButton
+           GtkButton widget. The user has clicked the Find button.
+           Call the method to begin the search.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        orca_state.searchQuery = find.SearchQuery()
+        orca_state.searchQuery.searchString = self.searchString
+        orca_state.searchQuery.searchBackwards = self.searchBackwards
+        orca_state.searchQuery.caseSensitive = self.caseSensitive
+        orca_state.searchQuery.matchEntireWord = self.matchEntireWord
+        orca_state.searchQuery.startAtTop = self.startAtTop
+        orca_state.searchQuery.windowWrap = self.windowWrap
+
+        self.activeScript.findCommandRun = True
+
+        # Merely hiding the dialog causes the find to take place before
+        # the original window has fully regained focus.
+        self.findDialog.destroy()
+
+
+    def findDialogDestroyed(self, widget):
+        """Signal handler for the "destroyed" signal for the findDialog
+           GtkWindow widget. Reset OS to None.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        global OS
+
+        OS = None
+
+def showFindUI():
+    global OS
+
+    if not OS:
+        gladeFile = os.path.join(platform.prefix,
+                                 platform.datadirname,
+                                 platform.package,
+                                 "glade",
+                                 "orca-find.glade")
+        OS = orcaFindGUI(gladeFile, "findDialog")
+        OS._init()
+
+    OS._showGUI()
+
+def main():
+    locale.setlocale(locale.LC_ALL, '')
+
+    showFindUI()
+
+    gtk.main()
+    sys.exit(0)
+
+if __name__ == "__main__":
+    main()
