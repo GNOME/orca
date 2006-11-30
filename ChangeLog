@@ -15,7 +15,9 @@
 	
 	* test/harness/runone.sh, test/harness/runall.sh: make sure keystroke specific
 	settings files are actually found and used.  Also change the location where
-	the output is stored (make it dependent upon the date and time).
+	the output is stored (make it dependent upon the date and time).  Also run
+	under /tmp as a means to help make sure that things that expose directory
+	names tend to do so consistently.
 	
 2006-11-28  Willie Walker <william.walker@sun.com>
 

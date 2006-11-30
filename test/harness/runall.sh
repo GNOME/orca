@@ -93,8 +93,13 @@ do
       done
       IFS="$oldifs"
       outputdir=$dirprefix/$application
-      mkdir -p $outputdir
-      cd $outputdir
+      currentdir=`pwd`
+
+      # We run under /tmp as a means to help provide consistent
+      # output for things that expose directory paths.
+      #
+      mkdir -p /tmp/$application
+      cd /tmp/$application
       for testFile in `find $testDir -type f -name "*.keys" | sort`; do
         if [ "$found" -gt 0 ]
         then
@@ -118,11 +123,14 @@ do
         fi
 	sleep 5
         newResultsFile=`basename $testFile .keys`.orca
+	mkdir -p $currentdir/$outputdir
+	cp $newResultsFile $currentdir/$outputdir
         expectedResultsFile=$resultsDir/$application/$newResultsFile
         echo Comparing results for $testFile
         diff -s $expectedResultsFile $newResultsFile
         echo ========================================
       done
-      cd ../..
+      cd $currentdir
+      rm -rf /tmp/$application
   fi 
 done
