@@ -11,6 +11,11 @@
           src/orca/settings.py:
           Fixed bug #354463 – [requirement] "Find" command.
 
+        * bugs/bugs.html:
+          Added in an entry for OpenOffice Writer issue #72155:
+          [a11y] OOo v2.0.4 oowriter goes into error recovery mode when 
+          Orca does a find operation.
+
 Willie Walker <william.walker@sun.com>
 
 2006-11-30  Willie Walker <william.walker@sun.com>
