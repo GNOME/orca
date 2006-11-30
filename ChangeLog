@@ -1,3 +1,7 @@
+2006-11-30  Willie Walker <william.walker@sun.com>
+
+	* bugs/bugs.html: final review and priority ordering of OOo bugs.
+	
 2006-11-30  Lynn Monsanto <lynn.monsanto@sun.com>
 
 	* src/orca/default.py: 
@@ -23,8 +27,6 @@
           Added in an entry for OpenOffice Writer issue #72155:
           [a11y] OOo v2.0.4 oowriter goes into error recovery mode when 
           Orca does a find operation.
-
-Willie Walker <william.walker@sun.com>
 
 2006-11-30  Willie Walker <william.walker@sun.com>
 
