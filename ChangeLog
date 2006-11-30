@@ -1,3 +1,7 @@
+2006-11-30  Willie Walker <william.walker@sun.com>
+
+	* bugs/bugs.html: review and rough priority ordering of OOo bugs.
+	
 2006-11-29  Lynn Monsanto <lynn.monsanto@sun.com>
 
 	* src/orca/default.py: 
@@ -8,24 +12,26 @@
 
 2006-11-29  Willie Walker <william.walker@sun.com>
 
-	* test/keystrokes/gnome-terminal/edit-profiles.keys, 
-	test/keystrokes/gnome-terminal/simple.keys: make these work a little better
-	by shortening the amount of time some keys were held down (they started
-	autorepeating when we didn't want them to).
+	* test/keystrokes/gnome-terminal/edit-profiles.keys,
+	test/keystrokes/gnome-terminal/simple.keys: make these work a
+	little better by shortening the amount of time some keys were held
+	down (they started autorepeating when we didn't want them to).
 
 	* test/keystrokes/oowriter/menus.keys,
 	test/keystrokes/oowriter/open-file.keys: make sure oowriter actually 
 	exits at the end of the test
 	
-	* test/keystrokes/gedit/wordecho.settings, 
-	test/keystrokes/gedit/printableecho.settings: add new settings files
-	to ensure word and key echo are enabled when we want them to be enabled.
+	* test/keystrokes/gedit/wordecho.settings,
+	test/keystrokes/gedit/printableecho.settings: add new settings
+	files to ensure word and key echo are enabled when we want them to
+	be enabled.
 	
-	* test/harness/runone.sh, test/harness/runall.sh: make sure keystroke specific
-	settings files are actually found and used.  Also change the location where
-	the output is stored (make it dependent upon the date and time).  Also run
-	under /tmp as a means to help make sure that things that expose directory
-	names tend to do so consistently.
+	* test/harness/runone.sh, test/harness/runall.sh: make sure
+	keystroke specific settings files are actually found and used.
+	Also change the location where the output is stored (make it
+	dependent upon the date and time).  Also run under /tmp as a means
+	to help make sure that things that expose directory names tend to
+	do so consistently.
 	
 2006-11-28  Willie Walker <william.walker@sun.com>
 

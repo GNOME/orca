@@ -953,6 +953,17 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
   </tr>
 
   <tr>
+    <td>Open Office - Writer</td>
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=71500">71500</a>: Spellcheck crashes oowriter
+    <td>No</td>
+    <td>No</td>
+    <td>Reproduced in OpenOffice 2.0.4 on Ubuntu Edgy (Final)
+        <br>
+        Workaround: None currently known.
+    </td>
+  </tr>
+
+  <tr>
     <td>Open Office - Calc</td>
     <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=69791">69791</a>:
       [a11y] scalc goes into error recovery mode when Orca is running and 
@@ -973,6 +984,15 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
   </tr>
 
   <tr>
+    <td>Open Office - General</td>
+http://www.openoffice.org/issues/show_bug.cgi?id=72116
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=72116">72116</a>: [A11y] soffice.bin called VCLSalFrame in at-poke</td>
+    <td>No</td>
+    <td>No</td>
+    <td>Wreaks havoc on the Orca script-finding mechanism</td>
+  </tr>
+
+  <tr>
     <td>Open Office - Writer</td>
     <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=70872">70872</a>:
       [a11y] Various keyboard events that toggle the state of UI widgets do not send a11y events
@@ -989,26 +1009,41 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
 
   <tr>
     <td>Open Office - Writer</td>
-    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=69753">69753</a>:
-      [a11y] Orca sometimes unable to do a "say all" on a document because paragraphs don't have a FLOWS_TO relationship.
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=71383">71383</a>:
+      [a11y] Default style and font name text attributes are not provided.
     <td>No</td>
     <td>No</td>
-    <td>Reproduced in OpenOffice 2.0.4 (RC2)
+    <td>Reproduced in OpenOffice 2.0.4 (Final)
         <br>
-        Workaround: None currently known. 
+        Workaround: None currently known.
         <br>
-        This bug is being tracked by Orca bug 
-        <a href="http://bugzilla.gnome.org/show_bug.cgi?id=355733">355733</a>
+        This bug is being tracked by Orca bug
+        <a href="http://bugzilla.gnome.org/show_bug.cgi?id=363827">363827</a>
     </td>
   </tr>
 
   <tr>
+    <td>Open Office - Writer</td>
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=71385">71385</a>:
+      [a11y] Numerous text attributes not provided.
+    <td>No</td>
+    <td>No</td>
+    <td>Reproduced in OpenOffice 2.0.4 (Final)
+        <br>
+        Workaround: None currently known.
+        <br>
+        This bug is being tracked by Orca bug
+        <a href="http://bugzilla.gnome.org/show_bug.cgi?id=372965">372965</a>
+    </td>
+  </tr>
+
+  <tr bgcolor="yellow">
     <td>Open Office - Spreadsheet</td>
     <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63871">63871</a>:
       Spreadsheet doesn't implement text.getDefaultAttributes (needed for a11y).
     <td>Do we get all that we need?</td>
     <td>OOo 2.0.4</td>
-    <td>Workaround: None.</td>
+    <td>Workaround: None.  Marked as fixed in m181.</td>
   </tr>
 
   <tr>
@@ -1035,15 +1070,19 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
     <td>Workaround: None.</td>
   </tr>
 
-  <tr bgcolor="Yellow">
-    <td>Open Office - Framework/ui</td>
-    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63981">63981</a>:
-      The StarOffice->View options pane doesn't provide useful labels for checkboxes 
-      when read with a screen reader.
-    <td>Yes</td>
-    <td>Open Office 2.0.3</td>
-    <td>Workaround: None. Looks like this has been fixed. Waiting for them to
-        adjust the bug status as such.</td>
+  <tr>
+    <td>Open Office - Writer</td>
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=71360">71360</a>:
+       [a11y] Unable to detect misspelled words.
+    <td>No</td>
+    <td>No</td>
+    <td>Reproduced in OpenOffice 2.0.4 (Final)
+        <br>
+        Workaround: None currently known.
+        <br>
+        This bug is being tracked by Orca bug
+        <a href="http://bugzilla.gnome.org/show_bug.cgi?id=364772">364772</a>
+    </td>
   </tr>
 
   <tr>
@@ -1081,8 +1120,8 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
 
   <tr>
     <td>Open Office - Writer</td>
-    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=70872">70872</a>:
-      [a11y] Various keyboard events that toggle the state of UI widgets do not send a11y events.
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=70966">70966</a>:
+      [a11y] Arrowing around in the Navigator windows doesn't always generate a11y events.
     <td>No</td>
     <td>No</td>
     <td>Reproduced in OpenOffice 2.0.4 (Final)
@@ -1090,7 +1129,7 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
         Workaround: None currently known.
         <br>
         This bug is being tracked by Orca bug
-        <a href="http://bugzilla.gnome.org/show_bug.cgi?id=363830">363830</a>
+        <a href="http://bugzilla.gnome.org/show_bug.cgi?id=356066">356066</a>
     </td>
   </tr>
 
@@ -1140,21 +1179,6 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
   </tr>
 
   <tr>
-    <td>Open Office - Writer</td>
-    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=70966">70966</a>:
-      [a11y] Arrowing around in the Navigator windows doesn't always generate a11y events.
-    <td>No</td>
-    <td>No</td>
-    <td>Reproduced in OpenOffice 2.0.4 (Final)
-        <br>
-        Workaround: None currently known.
-        <br>
-        This bug is being tracked by Orca bug
-        <a href="http://bugzilla.gnome.org/show_bug.cgi?id=356066">356066</a>
-    </td>
-  </tr>
-
-  <tr>
     <td>Open Office - Framework</td>
     <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=71010">71010</a>:
       [a11y] OOo doesn't implement the MEMBER_OF relation for radio buttons.
@@ -1184,51 +1208,6 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
 
   <tr>
     <td>Open Office - Writer</td>
-    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=71360">71360</a>:
-       [a11y] Unable to detect misspelled words.
-    <td>No</td>
-    <td>No</td>
-    <td>Reproduced in OpenOffice 2.0.4 (Final)
-        <br>
-        Workaround: None currently known.
-        <br>
-        This bug is being tracked by Orca bug
-        <a href="http://bugzilla.gnome.org/show_bug.cgi?id=364772">364772</a>
-    </td>
-  </tr>
-
-  <tr>
-    <td>Open Office - Writer</td>
-    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=71383">71383</a>:
-      [a11y] Default style and font name text attributes are not provided.
-    <td>No</td>
-    <td>No</td>
-    <td>Reproduced in OpenOffice 2.0.4 (Final)
-        <br>
-        Workaround: None currently known.
-        <br>
-        This bug is being tracked by Orca bug
-        <a href="http://bugzilla.gnome.org/show_bug.cgi?id=363827">363827</a>
-    </td>
-  </tr>
-
-  <tr>
-    <td>Open Office - Writer</td>
-    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=71385">71385</a>:
-      [a11y] Numerous text attributes not provided.
-    <td>No</td>
-    <td>No</td>
-    <td>Reproduced in OpenOffice 2.0.4 (Final)
-        <br>
-        Workaround: None currently known.
-        <br>
-        This bug is being tracked by Orca bug
-        <a href="http://bugzilla.gnome.org/show_bug.cgi?id=372965">372965</a>
-    </td>
-  </tr>
-
-  <tr>
-    <td>Open Office - Writer</td>
     <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=71430">71430</a>:
       [a11y] In the Navigator window, the labels in the tree table
             should have a RELATION_NODE_CHILD_OF relation provided.
@@ -1244,17 +1223,6 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
   </tr>
 
   <tr>
-    <td>Open Office - Writer</td>
-    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=71500">71500</a>: Spellcheck crashes oowriter
-    <td>No</td>
-    <td>No</td>
-    <td>Reproduced in OpenOffice 2.0.4 on Ubuntu Edgy (Final)
-        <br>
-        Workaround: None currently known.
-    </td>
-  </tr>
-
-  <tr>
     <td>Open Office - Presentation</td>
     <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=71431">71431</a>:
       [a11y] No apparent way to navigate to the presentation layout
@@ -1265,6 +1233,32 @@ Tree list items in the history pane should have accessible RELATION_NODE_OF rela
         <br>
         Workaround: None currently known.
     </td>
+  </tr>
+
+  <tr bgcolor="green">
+    <td>Open Office - Writer</td>
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=69753">69753</a>:
+      [a11y] Orca sometimes unable to do a "say all" on a document because paragraphs don't have a FLOWS_TO relationship.
+    <td>No</td>
+    <td>No</td>
+    <td>Reproduced in OpenOffice 2.0.4 (RC2)
+        <br>
+        Workaround: None currently known. 
+        <br>
+        This bug is being tracked by Orca bug 
+        <a href="http://bugzilla.gnome.org/show_bug.cgi?id=355733">355733</a>
+    </td>
+  </tr>
+
+  <tr bgcolor="Green">
+    <td>Open Office - Framework/ui</td>
+    <td><a href="http://www.openoffice.org/issues/show_bug.cgi?id=63981">63981</a>:
+      The StarOffice->View options pane doesn't provide useful labels for checkboxes 
+      when read with a screen reader.
+    <td>Yes</td>
+    <td>Open Office 2.0.3</td>
+    <td>Workaround: None. Fixed and marked as duplicate of
+<a href="http://www.openoffice.org/issues/show_bug.cgi?id=62723">62723</a></td>
   </tr>
 
   <tr bgcolor="green">
