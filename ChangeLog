@@ -1,3 +1,11 @@
+2006-11-30  Lynn Monsanto <lynn.monsanto@sun.com>
+
+	* src/orca/default.py: 
+	  src/orca/where_am_I.py: 
+
+	Fixed problems with laptop binding and "where am I" #371122.
+
+
 2006-11-30  Joanmarie Diggs <via rich.burridge@sun.com>
 
         * src/orca/Makefile.am:

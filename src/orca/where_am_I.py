@@ -528,7 +528,9 @@ def _speakTableCell(obj, doubleClick):
     utterances.append(text)
     debug.println(_debugLevel, "first table cell utterances=%s" % \
                   utterances)
+    speech.speakUtterances(utterances)
     
+    utterances = []
     if doubleClick:
         table = parent.table
         row = table.getRowAtIndex(orca_state.locusOfFocus.index)
