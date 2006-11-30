@@ -1,3 +1,11 @@
+2006-11-30  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/find.py:
+          Fixups:
+          - self.debugLevel should default to debug.debugLevel
+          - Only print out final location variable, if not None.
+          - Removed unwanted commented out section.
+
 2006-11-30  Willie Walker <william.walker@sun.com>
 
 	* bugs/bugs.html: final review and priority ordering of OOo bugs.
@@ -8,7 +16,6 @@
 	  src/orca/where_am_I.py: 
 
 	Fixed problems with laptop binding and "where am I" #371122.
-
 
 2006-11-30  Joanmarie Diggs <via rich.burridge@sun.com>
 

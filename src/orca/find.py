@@ -63,7 +63,7 @@ class SearchQuery:
         self.windowWrap = False
         self.startAtTop = False
 
-        self.debugLevel = debug.LEVEL_FINEST
+        self.debugLevel = debug.debugLevel
 
     def debugContext(self, context, string):
         debug.println(self.debugLevel, \
@@ -202,14 +202,6 @@ class SearchQuery:
                                 else:
                                     i += 1
                     if not found:
-                        ## Check to see if we've looked at all the zones on
-                        ## this line. If we have, then reset the zone, word
-                        ## and char indices, bump the line index and get the 
-                        ## next line.
-                        ##
-                        #if context.zoneIndex == (noZones-1):
-                        #    continue
-
                         # Locate the next zone to try again.
                         #
                         if self.searchBackwards:
@@ -274,10 +266,11 @@ class SearchQuery:
                            originalWordIndex, originalCharIndex)
         self.debugContext(context, "after setting original")
 
-        debug.println(self.debugLevel, \
-            "findQuery: returning line=%d zone=%d word=%d char=%d" \
-                % (location.lineIndex, location.zoneIndex, \
-                   location.wordIndex, location.charIndex))
+        if location:
+            debug.println(self.debugLevel, \
+                "findQuery: returning line=%d zone=%d word=%d char=%d" \
+                    % (location.lineIndex, location.zoneIndex, \
+                       location.wordIndex, location.charIndex))
 
         return location
 
