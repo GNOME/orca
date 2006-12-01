@@ -6,6 +6,9 @@
           - Only print out final location variable, if not None.
           - Removed unwanted commented out section.
 
+        * src/orca/scripts/StarOffice.py:
+          With Joanie, we fixed the find problem in comment #18 of bug #354463.
+
 2006-11-30  Willie Walker <william.walker@sun.com>
 
 	* bugs/bugs.html: final review and priority ordering of OOo bugs.

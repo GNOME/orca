@@ -932,6 +932,7 @@ class Script(default.Script):
             self.speakSetupLabel(allLabels[i])
 
     # This method tries to detect and handle the following cases:
+    # 0) Writer: find command.
     # 1) Writer: text paragraph.
     # 2) Writer: spell checking dialog.
     # 3) Welcome to StarOffice dialog.
@@ -955,6 +956,17 @@ class Script(default.Script):
                                event.source.toString())
 
         # util.printAncestry(event.source)
+
+        # 0) Writer: find command
+        #
+        # Check to see if this is this is for the find command. See 
+        # comment #18 of bug #354463.
+        #
+        if self.findCommandRun and \
+           event.type == "object:state-changed:focused":
+            self.findCommandRun = False
+            self.find()
+            return
 
         # 1) Writer: text paragraph.
         #
@@ -1301,6 +1313,13 @@ class Script(default.Script):
         Arguments:
         - event: the Event
         """
+
+        # Prevent  "object:state-changed:active" events from activating
+        # the find operation. See comment #18 of bug #354463.
+        #
+        if event.type == "object:state-changed:active":
+            if self.findCommandRun:
+                return
 
         # Two events are received when the caret moves
         # to a new paragraph. The first is a focus event
