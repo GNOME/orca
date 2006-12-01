@@ -1,3 +1,9 @@
+2006-12-01  Mike Pedersen <michael.pedersen@sun.com> 
+
+        * test/keystrokes/gtk-demo/* 
+
+          Added some tests and removed the ones that worn't correct.
+
 2006-12-01  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/find.py:
