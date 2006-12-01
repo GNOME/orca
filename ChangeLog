@@ -1,3 +1,10 @@
+2006-12-01  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/find.py:
+          src/orca/default.py:
+          More work on bug #354463 – [requirement] "Find" command.
+          Fixes problem described in comment #13.
+
 2006-11-30  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/find.py:

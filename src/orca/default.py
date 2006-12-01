@@ -3268,7 +3268,7 @@ class Script(script.Script):
             query = find.getLastQuery()
         if query:
             context = self.getFlatReviewContext()
-            location = query.findQuery(context)
+            location = query.findQuery(context, self.justEnteredFlatReviewMode)
             if not location:
                 braille.displayMessage(_("string not found"))
                 speech.speak(_("string not found"))

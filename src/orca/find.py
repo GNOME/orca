@@ -96,11 +96,13 @@ class SearchQuery:
                         (k, context.lines[i].zones[j].words[k].string, \
                          len(context.lines[i].zones[j].words[k].string))
 
-    def findQuery(self, context):
+    def findQuery(self, context, justEnteredFlatReview):
         """Performs a search on the string specified in searchQuery.
 
            Arguments:
            - context: The context from active script
+           - justEnteredFlatReview: If true, we began the search in focus
+             tracking mode.
 
            Returns:
            - The context of the match, if found
@@ -193,7 +195,8 @@ class SearchQuery:
                                     context.wordIndex = nextInstance.index
                                     context.charIndex = 0
                                     found = True
-                                elif not offsetDiff and not startedInThisZone:
+                                elif not offsetDiff and \
+                                    (not startedInThisZone or justEnteredFlatReview):
                                     # We landed on a match by happenstance.
                                     # This can occur when the nextInstance is
                                     # the first thing we come across.
