@@ -5,6 +5,14 @@
           More work on bug #354463 – [requirement] "Find" command.
           Fixes problem described in comment #13.
 
+        * src/orca/orca_gui_prefs.py:
+          In the callback for the Cancel button on the Orca Preferences
+          window, the code has been adjusted to destroy that window, so 
+          that the next time the user displays the Preferences dialog, 
+          all of the settings will reflect the current running state 
+          rather than how the user left the GUI components before hitting 
+          the Cancel button.
+
 2006-11-30  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/find.py:

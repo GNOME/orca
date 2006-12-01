@@ -1709,13 +1709,13 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
     def cancelButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the cancelButton
            GtkButton widget. The user has clicked the Cancel button.
-           Don't write out the preferences. Hide the configuration window.
+           Don't write out the preferences. Destroy the configuration window.
 
         Arguments:
         - widget: the component that generated the signal.
         """
 
-        self.orcaSetupWindow.hide()
+        self.orcaSetupWindow.destroy()
 
     def okButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the okButton
