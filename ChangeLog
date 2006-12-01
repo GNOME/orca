@@ -4,12 +4,15 @@
 
           Added some tests and removed the ones that worn't correct.
 
-2006-12-01  Rich Burridge <rich.burridge@sun.com>
+2006-12-01  Joanmarie Diggs <via rich.burridge@sun.com>
 
         * src/orca/find.py:
           src/orca/default.py:
           More work on bug #354463 – [requirement] "Find" command.
-          Fixes problem described in comment #13.
+          - Fixed problem described in comment #13.
+          - Added in laptop keyboard bindings.
+
+2006-12-01  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca_gui_prefs.py:
           In the callback for the Cancel button on the Orca Preferences

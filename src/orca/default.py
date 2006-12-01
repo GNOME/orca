@@ -710,12 +710,29 @@ class Script(script.Script):
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["whereAmIHandler"]))
 
-        # keyBindings.add(
-        #     keybindings.KeyBinding(
-        #         "'",
-        #         1 << settings.MODIFIER_ORCA,
-        #         1 << settings.MODIFIER_ORCA,
-        #         self.inputEventHandlers["screenFindHandler"]))
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "bracketleft",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["findHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "bracketright",
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["findNextHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "bracketright",
+                (1 << settings.MODIFIER_ORCA
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA | \
+                     1 << atspi.Accessibility.MODIFIER_CONTROL),
+                self.inputEventHandlers["findPreviousHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
