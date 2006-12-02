@@ -1,6 +1,6 @@
 # DATE=12:08:53 PM 12/01/2006 PST
 # SYSTEM=Linux desktop 2.6.17-10-generic #2 SMP Fri Oct 13 18:45:35 UTC 2006 i686 GNU/Linux
-
+# tests the treestory demo in the gtk-demo application
 KEYEVENT: type=1
           hw_code=37
           modifiers=12

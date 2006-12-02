@@ -1,6 +1,7 @@
 # DATE=12:05:28 PM 12/01/2006 PST
 # SYSTEM=Linux desktop 2.6.17-10-generic #2 SMP Fri Oct 13 18:45:35 UTC 2006 i686 GNU/Linux
-
+# tests the liststore demo under the tree exapmles in the gtk-demo 
+# application
 KEYEVENT: type=1
           hw_code=37
           modifiers=12
