@@ -63,7 +63,7 @@ class SearchQuery:
         self.windowWrap = False
         self.startAtTop = False
 
-        self.debugLevel = debug.debugLevel
+        self.debugLevel = debug.LEVEL_FINEST
 
     def debugContext(self, context, string):
         debug.println(self.debugLevel, \
