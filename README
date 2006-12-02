@@ -1,4 +1,4 @@
-Orca v2.17.2
+Orca v2.17.3
 
 Introduction
 ========================================================================
@@ -19,7 +19,7 @@ AT-SPI include the GNOME GTK+ toolkit, the Java platform's Swing
 toolkit, OpenOffice, and Mozilla.  AT-SPI support for the KDE Qt
 toolkit is currently being pursued.
 
-The focus for Orca v2.17.2 has been to provide usable access to key
+The focus for Orca v2.17.3 has been to provide usable access to key
 office productivity applications, including the following:
 
 Application Class        Application
@@ -143,11 +143,7 @@ http://www.gnome.org/learn/access-guide/latest/
 
 If you find you run into an ill-behaved application, or you just want
 to explore an application using Orca's flat review mode, you can use
-the numeric keypad.  A quick overview of the keypad is as follows.
-More details on all of Orca's keystrokes are available at the
-following URL:
-
-http://cvs.gnome.org/viewcvs/*checkout*/orca/docs/doc-set/orca.html#GESTURES
+the numeric keypad.  A quick overview of the keypad is as follows:
 
 Keypad 7, 8, 9:  review previous, current, and next line of window
 Keypad 4, 5, 6:  review previous, current, and next word
@@ -166,10 +162,17 @@ Insert+down_arrow:  decrease speech pitch
 Insert+f:           read the text attributes at the caret position
 Insert+q:           quit Orca
 
+More details on all of Orca's keystrokes are available at the
+following URL:
+
+http://cvs.gnome.org/viewcvs/*checkout*/orca/docs/doc-set/orca.html#GESTURES
+
 Furthermore, to get help while running Orca, press "Insert+F1".  This
 will enable "learn mode", which provides a spoken and brailled
 description of what various keyboard and braille input device actions
-will do.  To exit learn mode, press "Escape."
+will do.  To exit learn mode, press "Escape."  Finally, the
+preferences dialog contains a "Key Bindings" tab that lists the
+keyboard binding for Orca.
 
 To quit Orca, you can press "Insert+q" as shown above, or run 
 "orca --quit" from the command line.

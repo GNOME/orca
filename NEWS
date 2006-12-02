@@ -1,9 +1,95 @@
+2.17.3 - 03-Dec-2006
+
+* Implementation of RFE 373566: Added support to switch between
+  desktop and laptop bindings.  Also added support for allowing the
+  Caps Lock key to act as the Orca modifier.
+
+* Added feature to the preferences dialog to present the key bindings
+  as progress towards RFE 354970.  Many thanks to Jorge Sandín for
+  this work!
+
+* Implementation of RFE 354463 - The "Find" command is now working,
+  with the exception of bug 381391.  Many thanks to Joanie Diggs for
+  her hard work on this!
+
+* Implementation of RFE 376002: Added command line options to tell
+  Orca to start with speech, braille, and/or magnification.  This
+  is mostly to aid things such as accessible installs and logins.
+
+* Work on RFE 371122: much of the "Where am I" command has been
+  implemented, though we're still testing and refining it.
+
+* A fair amount of work has been done on the Gecko script for Firefox 3.
+  Please note this is still a work in progress and is still somewhat
+  unstable.  The Orca and Firefox teams are working feverishly on the
+  support and are still targetting Firefox 3 for compelling web
+  access.
+
+* Continued work on identifying (and resolving when possible) accessibility
+  issues in other applications.  Please do a search on the "orca" component
+  at http://bugzilla.gnome.org for summaries containing the "[blocked]"
+  string to get a list.
+
+* In the callback for the Cancel button on the Orca Preferences
+  window, the code has been adjusted to destroy that window, so that
+  the next time the user displays the Preferences dialog, all of the
+  settings will reflect the current running state rather than how the
+  user left the GUI components before hitting the Cancel button.
+
+* Fix for bug 372808: Orca now reports the appropriate header
+  information when tabbing between tables.
+
+* Fix for bug 377085: family-name text attribute are no longer
+  malformed for multi-word family names.
+
+* Implementation of RFE 377955: Suggested additions to pronunciation
+  dictionary.
+
+* Fix for bug 376347: Orca no longer speaks new-line in the
+  Evolution menu bar.
+
+* Fix for bug 372964: Added text-attribute settings.
+
+* Fix for bug 376006: Handle minimum increment value of 0.0 when
+  calculating decimal places to present for sliders.
+
+* Fix for bug 358467: Mapped the time-admin to the users-admin
+  script so that Orca can correctly read the table of time servers.
+
+* Change for bug 364529. Initial value in the Preferences Glade file
+  for pitch is now 5.0 and not 9.0.  Also allow voice styles to be
+  undefined.  The hypertext link voice will now initially derive
+  its values from the default voice settings.
+
+* Partial fix for bug 356060: Provide access to tree item level and
+  state in OOo Navigator.
+
+* Defensive fix for bug 353432: Orca no longer announces name changes
+  for objects who tell us their name has changed when it really
+  hasn't.
+
+* Work on bug 363815: Implement the ability to have application
+  specific settings.
+
+* Fix for bug 364452: make sure Orca's name shows up as "orca" and not
+  "-c" in at-poke.
+
+* More work on the specification and regression test suite.
+
+* New and updated translations (THANKS!):
+
+    et      Estonian             Ivar Smolin and Priit Laes
+    hu      Hungarian            Kálmán Kéménczy and Gabor Kelemen
+    sv      Swedish              Daniel Nylander
+
+==========
+
 2.17.2 - 05-Nov-2006
 
 * Updates to requirements and specifications documents.
 
-* Fair amount of work on Gecko.py script, though it is not at all ready 
-  for compelling access to Firefox (and hence the web) yet.  Also did 
+* Fair amount of work on Gecko.py script, though it is not at all ready
+  for compelling access to Firefox (and hence the web) yet.  Also did
   a fair amount of work looking at flat review and filing a number of
   bugs against the AT-SPI implementation in progress in Firefox 3.
 
@@ -12,7 +98,7 @@
 
 * Fix for bug 337063: Orca now supports an alternate .orca location via
   the -u and --user-prefs-dir command line options.
-	
+
 * Fix for bug 365939: reading of message list in Evolution now provides
   more concise information for check box items.
 
@@ -23,17 +109,17 @@
   some defensive code to work in the case where there is no event
   source in an at-spi event.
 
-* Fix for bug 338838: Orca now speaks "newline" only when moving by 
+* Fix for bug 338838: Orca now speaks "newline" only when moving by
   character or word.
 
-* Fix for bug 358467: Orca now reads check items status 
-  in "Users and groups" dialog of users-admin application. 
+* Fix for bug 358467: Orca now reads check items status
+  in "Users and groups" dialog of users-admin application.
 
 * Fix for bug 355733: SayAll function now works better for OpenOffice.
 
 * Fix for bug 364086: Orca no longer reports "paragraph 0 paragraph"
   when you begin typing in a OpenOffice Calc cell.
-	
+
 * Fix for bug 363801: Orca provides confirmation when dynamic row and/or
   column headers are set.  In addition, column numbers in OpenOffice
   Calc are now spoken as column letters.
@@ -63,7 +149,7 @@
 
 * Fix for bug 348975: the state for radio buttons is now spoken prior
   to the role.
-	
+
 * Fix for bug 363423: Orca now speaks the "Applications" menu if it is
   brought up while the focus is in a GAIM chat window.
 
@@ -75,18 +161,18 @@
 
 * Fix for bug 357829: Use real active descendant of a table cell when
   looking for locus of focus in flat review.
-	
+
 * Fix for bug 341406: Orca now presents results when finding files.
 
 * Fix for bug 319783: Orca now speaks/brailles the insensitive states
   of objects if they are insensitive.
 
-* Fix for bug 338111: Use new BrlAPI Python bindings if they exist. 
+* Fix for bug 338111: Use new BrlAPI Python bindings if they exist.
 
 * Fix for bug 348693: Announcement of new mail in Evolution is now
   toggleable via Insert-m.
 
-* Fix for bug 361670: flat review no longer fails after minimizing the 
+* Fix for bug 361670: flat review no longer fails after minimizing the
   Orca main window.
 
 * Fix for bug 355893: Network Preferences "Port" label is now reported
@@ -96,7 +182,7 @@
 
     et      Estonian             Ivar Smolin and Priit Laes
     nb      Norwegian Bokmål     Kjartan Maraas
-    sv	    Swedish		 Daniel Nylander
+    sv      Swedish              Daniel Nylander
 
 ==========
 
@@ -109,25 +195,25 @@
 * Fixed bug 361747: provide support for the 'weight' text attribute.
   Also make sure that character text attributes are handled correctly.
 
-* Implemented RFE 319657: In gedit, Orca now speaks the context of 
+* Implemented RFE 319657: In gedit, Orca now speaks the context of
   search ('find') results.
 
-* Implemented RFE 339789: Added code to "Where Am I" to report the 
-  number of items in menus and submenus as well as the current 
+* Implemented RFE 339789: Added code to "Where Am I" to report the
+  number of items in menus and submenus as well as the current
   position of a menu item or menu in its menu.
 
 * Fix for bug 350523: In gcalctool, give reference to accessible name
   of a button over the text that is being displayed on a button.
 
-* Added use of Python logging API to log speech and braille at the 
+* Added use of Python logging API to log speech and braille at the
   INFO level.  This will dovetail in with the larger testing work
   being done for GNOME.
 
-* Fix for bug 350219: provide announcement when you create a new 
+* Fix for bug 350219: provide announcement when you create a new
   document for the very first time in Open Office.
 
-* Fix for bug 354785: read the entire line in the "Process Fields" 
-  preferences table in gnome-system-monitor. Fix involved a rework 
+* Fix for bug 354785: read the entire line in the "Process Fields"
+  preferences table in gnome-system-monitor. Fix involved a rework
   of how table cells are brailled and spoken.
 
 * Fix for bug 349954: do not make assumptions that UTF-8 strings
@@ -136,7 +222,7 @@
   string length and character analysis.
 
 * Added 'getText' method to script to provide a means for the script
-  to work around shortcomings in some accessible text implementations. 
+  to work around shortcomings in some accessible text implementations.
 
 * Exploratory work on the Gecko.py script to help debug and provide
   an understanding of what the Gecko AT-SPI implementation is providing
@@ -204,7 +290,7 @@
 * Fix for bug 358508: use obj instead of event.source in
   visualAppearanceChanged for speech.
 
-* Fix for bug 353532: provide a workaround for a java-access-bridge 
+* Fix for bug 353532: provide a workaround for a java-access-bridge
   bug (bug 355011) where popup menu events are not sent to Orca.
 
 * Fix for bug 353531: 'checked'/'unchecked' are no longer reported
@@ -244,7 +330,7 @@
 
 * Fix for bug 355927: duplicate window titles are now spoken when
   navigating between them using Alt+Tab.
-	
+
 * Fix for bug 350216: "LAYERED_PANE" is no longer in speech context.
 
 * Fix for bug 351797: make sure configuration GUI pops to top.
@@ -260,7 +346,7 @@
 
 * Fix for bug 354487: apostrophe no longer delimits a word boundary.
 
-* Fix for bug 354985: gedit script no longer generates a traceback due to 
+* Fix for bug 354985: gedit script no longer generates a traceback due to
   a missing import line.
 
 * Fix for bug 342602: StarOffice Writer table cell speaking order fixed.
@@ -269,7 +355,7 @@
   it to better respond to "kill -HUP" signals.
 
 * Fix for bug 352866: add "-q" and "--quit" usage information
-	
+
 * Fix for bug 353600: don't require the user to be root when doing a
   "make distcheck".
 
@@ -280,7 +366,7 @@
     es      Spanish              Francisco Javier F. Serrador
     et      Estonian             Priit Laes
     gl      Galician             Ignacio Casal Quinteiro
-    th	    Thai                 Supranee Thirawatthanasuk and
+    th      Thai                 Supranee Thirawatthanasuk and
     tr      Turkish              Deniz Kocak and Baris Cicek
 
 ==========
@@ -295,7 +381,7 @@
 
 * Fix for bug 353476: apply better fallback algorithm to find a
   working synthesis engine.
-	
+
 * Fix for bug 352578: ensure that checking/unchecking speech in the
   configuration GUI does the appropriate thing.
 
@@ -313,61 +399,61 @@
   applications in case of different event ordering (thanks Oana from
   Baum!).
 
-* Fix for bug 352257: improved isSameObject() function (thanks Oana from 
+* Fix for bug 352257: improved isSameObject() function (thanks Oana from
   Baum!).
 
 * Fix for bug 352254: better handling of expand/collapse events for the
   Java platform (thanks Oana from Baum!).
 
-* Translations:  
+* Translations:
     bg      Bulgarian            Alexander Shopov, Rostislav Raykov,
-				 Vladimir Petkov, and Iassen Pramatarov
-    bn      Bengali	         Runa Bhattacharjee
-    bn_IN   Bengali	         Runa Bhattacharjee
-    ca      Catalan              Gil Forcada and Josep Puigdemont i Casamajó 
-    cs      Czech	         Miloslav Trmac
-    cy	    Welsh	         Rhys Jones
-    de	    German	         Hendrik Brandt
+                                 Vladimir Petkov, and Iassen Pramatarov
+    bn      Bengali              Runa Bhattacharjee
+    bn_IN   Bengali              Runa Bhattacharjee
+    ca      Catalan              Gil Forcada and Josep Puigdemont i Casamajó
+    cs      Czech                Miloslav Trmac
+    cy      Welsh                Rhys Jones
+    de      German               Hendrik Brandt
     dz      Dzongkha             Guntupalli Karunakar
-    el      Greek	         Nikos Charonitakis
+    el      Greek                Nikos Charonitakis
     en_CA   English/Canada       Adam Weinberger
     en_GB   English/British      David Lodge and Gareth Owen
-    es	    Spanish	         Francisco Javier F. Serrador 
-				 and Maria Majadas
-    eu      Basque	         Iñaki Larrañaga Murgoitio
-    fi      Finnish	         Ilkka Tuohela
-    fr      French	         Cedric Corazza, Robert-André Mauchin, 
-			         and Christophe Merlet
-    gu      Gujarati	         Ankit Patel
-    hi      Hindi	         Rajesh Ranjan
-    it      Italian	         Aldo Giambelluca and Alessio Frusciante
-    ja      Japanese	         Satoru Satoh
-    ko	    Korean	         Changwoo Ryu
+    es      Spanish              Francisco Javier F. Serrador
+                                 and Maria Majadas
+    eu      Basque               Iñaki Larrañaga Murgoitio
+    fi      Finnish              Ilkka Tuohela
+    fr      French               Cedric Corazza, Robert-André Mauchin,
+                                 and Christophe Merlet
+    gu      Gujarati             Ankit Patel
+    hi      Hindi                Rajesh Ranjan
+    it      Italian              Aldo Giambelluca and Alessio Frusciante
+    ja      Japanese             Satoru Satoh
+    ko      Korean               Changwoo Ryu
     lt      Lithuanian           Žygimantas Beručka and Gintautas Miliauskas
-    lv      Latvian	         Raivis Dejus
+    lv      Latvian              Raivis Dejus
     mk      Macedonian           Jovan Naumovski
-    ml      Malayalam	         Ani Peter
-    mr      Marathi	         Rahul Bhalerao
+    ml      Malayalam            Ani Peter
+    mr      Marathi              Rahul Bhalerao
     nb      Norwegian Bokmål     Kjartan Maraas and Sigurd Gartmann
     ne      Nepali               Pawan Chitrakar and Shiva Prasad Pokharel
-    nl      Dutch	         Tino Meinen, Elros Cyriatan, Taco Witte, 
+    nl      Dutch                Tino Meinen, Elros Cyriatan, Taco Witte,
                                  Vincent van Adrighem, and Wouter Bolsterlee
     or      Oriya                Subhransu Behera
-    pa	    Punjabi              Amanpreet Singh Alam
+    pa      Punjabi              Amanpreet Singh Alam
     pt_BR   Brazilian Portuguese Raphael Higino, Gustavo Noronha Silva,
-				 and Estêvão Samuel Procópio
+                                 and Estêvão Samuel Procópio
     pt      Portuguese           Duarte Loreto
-    ru      Russian		 Nickolay V. Shmyrev
+    ru      Russian              Nickolay V. Shmyrev
     rw      Kinyarwanda          Steve Murphy, Philibert Ndandali,
                                  Viateur Mugenzi, Noëlla Mupole,
-				 Carole Karema, Jean Baptiste Ngendahayo,
-				 Augustin Kiberwa, and Donatien Nsengiyumva
-    sr@Latn Serbian		 Danilo Šegan
-    sr      Serbian		 Danilo Šegan
-    sv	    Swedish		 Christian Rose and Daniel Nylander
-    ta	    Tamil		 I. Felix
-    uk      Ukrainian	         Maxim Dziumanenko
-    vi      Vietnamese		 Clytie Siddall
+                                 Carole Karema, Jean Baptiste Ngendahayo,
+                                 Augustin Kiberwa, and Donatien Nsengiyumva
+    sr@Latn Serbian              Danilo Šegan
+    sr      Serbian              Danilo Šegan
+    sv      Swedish              Christian Rose and Daniel Nylander
+    ta      Tamil                I. Felix
+    uk      Ukrainian            Maxim Dziumanenko
+    vi      Vietnamese           Clytie Siddall
     zh_CN   Simplified Chinese   Funda Wang and Li Shaojie
     zh_HK   Traditional Chinese  Chao-Hsiung Liao and Woodman Tuen
     zh_TW   Traditional Chinese  Chao-Hsiung Liao and Woodman Tuen
@@ -395,7 +481,7 @@ area (the default is split screen magnification on the primary
 display).  If it exists, settings.magnifierSourceDisplay will be
 treated as an X Window System DISPLAY string (e.g., ":0.0") that says
 what is to be magnified.
-	
+
 * Many thanks to our friends at Baum for providing many fixes and testing
 for the Java platform:
 
@@ -409,7 +495,7 @@ for the Java platform:
    * Fix for bug 350736: better presentation for focused lists in Java
      applications.
 
-   * Fix for bug 350739: improve list navigation for the Java platform. 
+   * Fix for bug 350739: improve list navigation for the Java platform.
 
    * Fix for bug 350724: improve handling of LABEL_FOR and LABELLED_BY
      objects.
@@ -420,9 +506,9 @@ for the Java platform:
    * Fix for bug 352233: prevent exception when getting the child of
      an object from a Java application.
 
-   * Fix for bug 352238: do not assume last input event	was a keyboard 
+   * Fix for bug 352238: do not assume last input event was a keyboard
      event.
-	
+
 * Fix for bug 350213: provide defensive programming for combo box
 braille generator.
 
@@ -432,7 +518,7 @@ braille Evolution message folder tree.
 * Fix for bug 350854: handle object:state-changed:focused events so
 Orca will recognize when GEdit's edit area has focus again after a
 maximize/unmaxmize of GEdit's window on GNOME 2.15/16.
-	
+
 * Fix for bug 352073: provide "gnome-python with bonobo" hint for
 missing dependency.  Also provide a note at the end providing a more
 obvious message when support for BrlTTY/BrlAPI cannot be found.
@@ -440,7 +526,7 @@ obvious message when support for BrlTTY/BrlAPI cannot be found.
 * Fix for bug 351847: add defensive code in the event the AT-SPI
 implementation gives us a cycle when looking at the
 RELATION_NODE_CHILD_OF relation.
-	
+
 * Fix for bug 349465: take some defensive actions in the event that
 the AT-SPI implementation has implemented getTextAtOffset incorrectly
 (i.e., it gives back garbage for offsets).
@@ -452,7 +538,7 @@ speaks both cells in a row
 
 * Fix for bug 350212: Improve speaking of Spin Button changes.
 
-* New/Updated Translations (Thanks!): 
+* New/Updated Translations (Thanks!):
     Catalan:     Josep Puigdemont i Casamajó (NEW)
     Chinese:     (Traditional Hong Kong) Chao-Hsiung Liao
     Chinese:     (Traditional Taiwan) Chao-Hsiung Liao
@@ -471,7 +557,7 @@ speaks both cells in a row
     Oriya:       Subhransu Behera (NEW)
     Russian:     Nickolay V. Shmyrev (NEW)
     Spanish:     Francisco Javier F. Serrador
-    Swedish:	 Danial Nylander
+    Swedish:     Danial Nylander
     Ukrainian:   Maxim Dziumanenko
     Vietnamese:  Clytie Siddall
 
@@ -486,9 +572,9 @@ speaks both cells in a row
   Thanks very much to community members for helping test Orca and
   provide us with constructive feedback and informative bug reports.
   These community members include: Joanmarie Diggs, Al Puzzuoli,
-  Fco. Javier Dorado Martínez, and Cody Hurst.  
+  Fco. Javier Dorado Martínez, and Cody Hurst.
 * Improvements to Yelp access.
-* Improvements to Firefox 2 chrome.  NOTE: we are targeting Firefox 3 
+* Improvements to Firefox 2 chrome.  NOTE: we are targeting Firefox 3
   as the means for providing compelling access to web content.
 * The main 'orca' executable is now a shell script that launches the
   Python process for orca.  It includes some utilities to clean up
@@ -521,7 +607,7 @@ speaks both cells in a row
 * Added additional testing and debugging utilities.  Also added
   additional helper lines to ~/.orca/user-settings.py that make
   it more convenient to turn on/off various debugging and testing
-  utilities.  
+  utilities.
 * Pychecker fixes and also eliminated circular imports in the python
   modules.
 * Additional keystrokes files for testing.  We're ramping up our regression
@@ -529,7 +615,7 @@ speaks both cells in a row
   release.
 * Provide smoother handling of the crosswires and cursor in the
   magnifier when tracking the mouse.
-* New/Updated Translations (Thanks!): 
+* New/Updated Translations (Thanks!):
     Latvian:     Raivis Dejus
     Macedonian:  Jovan Naumovski
     Dutch:       Tino Meinen and Vincent van Adrighem
@@ -551,7 +637,7 @@ speaks both cells in a row
 * Fix bug 348131 - make SayAll perform properly in Evolution.
 * Moved the Orca specific keybindings out of the init() routine in
   orca.py over to the setupInputEventHandlers and getKeyBindings()
-  routines in default.py. 
+  routines in default.py.
 * Reworked how Orca handles "no focus."  It is much better now.
 * Added new keynames for various keys.
 * Fixed bug #347228 - correctly identify state of top level item in
@@ -561,7 +647,7 @@ speaks both cells in a row
 * Added in support for numeric keypad 8 double-clicking, which spells
   the current line, and numeric keypad 5 double clicking, which spells
   the current word.
-* Translations: 
+* Translations:
     Latvian:     Raivis Dejus
     Spanish:     Francisco Javier F. Serrador
     Gujarati:    Ankit Patel
@@ -573,7 +659,7 @@ speaks both cells in a row
     Macedonian:  Jovan Naumovski
     Hindi:       Rajesh Ranjan
     Dutch:       Tino Meinen and Vincent van Adrighem
-    Welsh:	 Rhys Jone
+    Welsh:       Rhys Jone
     Tamil:       I. Felix
 
 ==========
@@ -605,17 +691,17 @@ speaks both cells in a row
 * Fix for bug 344880 - process command line arguments even if a11y is not
   enabled.
 * Updates to the style guide.
-* Translations to date (many thanks!): 
+* Translations to date (many thanks!):
     Bengali:     Runa Bhattacharjee
     British:     David Lodge and Gareth Owen
     Bulgarian:   Alexander Shopov
     Canadian:    Adam Weinberger
     Chinese:     (Simplified) Funda Wang
-    Czech:	 Miloslav Trmac
-    Dutch:	 Tino Meinen, Taco Witte, Elros Cyriatan, 
+    Czech:       Miloslav Trmac
+    Dutch:       Tino Meinen, Taco Witte, Elros Cyriatan,
                  and Vincent van Adrighem
-    Dzongkha:    Guntupalli Karunakar	
-    Finnish:	 Ilkka Tuohela
+    Dzongkha:    Guntupalli Karunakar
+    Finnish:     Ilkka Tuohela
     French:      Christophe Merlet
     German:      Hendrik Brandt
     Gujarati:    Ankit Patel
@@ -625,8 +711,8 @@ speaks both cells in a row
     Macedonian:  Jovan Naumovski
     Nepali:      Pawan Chitrakar
     Portuguese:  (Brazilian) Raphael Higino, Gustavo Noronha Silva,
-		 and Estêvão Samuel Procópio
-    Serbian:	 Danilo Šegan
+                 and Estêvão Samuel Procópio
+    Serbian:     Danilo Šegan
     Spanish:     Francisco Javier F. Serrador
     Swedish:     Christian Rose
     Tamil:       I. Felix
@@ -662,7 +748,7 @@ speaks both cells in a row
   decided to make this an optional feature turned off by default.
 * Addition of utility to report information on the currently active
   script.  This is primarily for helping script writers do debugging
-  and is accessed by pressing Insert+F3.  
+  and is accessed by pressing Insert+F3.
 * Addition of orca.settings.cacheAccessibles (default=True) as a
   means to turn the local caching of accessible objects on or off.
   This is primarily an orca developer debugging feature.
@@ -676,7 +762,7 @@ speaks both cells in a row
   page in gnome-terminal.
 * Fix for bug #343013 - the command line option strings should not be
   translatable.
-* Partial fix for bug 319652 - become a better Python thread citizen 
+* Partial fix for bug 319652 - become a better Python thread citizen
   to help reduce hangs.
 * Fix for bug 342303 - stop speech when the user presses the mouse button.
 * Fix for bug 342122 - use all labels for an object when presenting
@@ -693,16 +779,16 @@ speaks both cells in a row
 ==========
 
 0.2.4 - 15-May-2006
-* Addition of text and GUI preferences configuration tools.  
-  NOTE: 0.2.4 eliminates orca-setup and replaces it with the 
+* Addition of text and GUI preferences configuration tools.
+  NOTE: 0.2.4 eliminates orca-setup and replaces it with the
   "--setup" (GUI or text, depending upon your environment),
-  "--gui-setup" (GUI), "--text-setup" (text), "--no-setup" 
+  "--gui-setup" (GUI), "--text-setup" (text), "--no-setup"
   (bypass any automatic setup mechanism - useful for running
-  with gdm accessible login) command line options to the 
-  "orca" command.  You can also bring up the GUI while orca 
-  is running by pressing Insert+space. 
-  WARNING: 0.2.4 also introduces an incompatible change to 
-  the configuration file and requires you to "rm -rf ~/.orca" 
+  with gdm accessible login) command line options to the
+  "orca" command.  You can also bring up the GUI while orca
+  is running by pressing Insert+space.
+  WARNING: 0.2.4 also introduces an incompatible change to
+  the configuration file and requires you to "rm -rf ~/.orca"
   and rerun orca setup.
 * Fix for bug 340662 - do not require the desktop to be running
   to set up orca preferences.
@@ -710,42 +796,42 @@ speaks both cells in a row
   Gnopernicus.
 * Fix for bug 331512 - addition of key and word echo.  We need
   community feedback on this.
-* Work on specifying the external dependencies for building 
+* Work on specifying the external dependencies for building
   and running Orca.
-* Fix for bug where metacity workspaces (accessed via 
+* Fix for bug where metacity workspaces (accessed via
   Ctrl+Alt+Arrow) were being announced as inaccessible.
-* Work on dealing with the Java platform giving us 
-  CORBA::Unknown objects instead of Bonobo::Unknown objects.  
+* Work on dealing with the Java platform giving us
+  CORBA::Unknown objects instead of Bonobo::Unknown objects.
   Java platform support, however, still has a long way to go.
 * Work on coping with CORBA COMM_FAILURES a little better.
-* Fix for bug 338097 - better support for the "planner" 
+* Fix for bug 338097 - better support for the "planner"
   application.
-* Work for bug 338890 - add ""--version" option to orca to 
+* Work for bug 338890 - add ""--version" option to orca to
   output the version.  Orca also now uses the getopt facility
   to get command line options.
-* Fix for bug 340773 - focus events were interrupting the 
+* Fix for bug 340773 - focus events were interrupting the
   automatic reading of dialog boxes.
 * Fix for bug 340625 - better handling of table cells.
-* Fix for bugs 340559, 337371 - reduce repetitive output of 
+* Fix for bugs 340559, 337371 - reduce repetitive output of
   slider values.
-* Fix for bug 319732 - move .label logic from atspi.spi to 
+* Fix for bug 319732 - move .label logic from atspi.spi to
   something that can be more easily overridden by scripts.
-* Fix for bug 340481 - combo box updates were not being 
+* Fix for bug 340481 - combo box updates were not being
   handled correctly.
 * Fix for bug 340305 - combo box labels were not being presented.
-* Fix for bug 340556 - radio button group names were not being 
+* Fix for bug 340556 - radio button group names were not being
   presented.
-* Fix for bug 338839 - allow speech to be enabled/disabled using 
+* Fix for bug 338839 - allow speech to be enabled/disabled using
   Insert+s.
-* Fix for bug 339932 - shutdown orca better on Ctrl+C from 
+* Fix for bug 339932 - shutdown orca better on Ctrl+C from
   the command line.
-* Fix for bug 339927 - use floating point values for speech 
+* Fix for bug 339927 - use floating point values for speech
   rate, gain, and pitch to provide finer granularity of settings.
-* Fix for bug 341415 - attempt to listen for AT-SPI events and 
-  present accessible information even if no accessible windows 
+* Fix for bug 341415 - attempt to listen for AT-SPI events and
+  present accessible information even if no accessible windows
   are active when orca starts.
 * Work on bug 340849 - automatically enable desktop accessibility
-  if needed and remind the user to log out and log back in for 
+  if needed and remind the user to log out and log back in for
   this to take effect.
 * Additions to and development of the test plan.
 
@@ -792,7 +878,7 @@ speaks both cells in a row
 * Fix for speechgenerator._getSpeechForTableCell (Rich Burridge)
 * More work on Evolution script (Rich Burridge)
 * Work on StarOffice script, including spell checking (Rich Burridge)
-* Fix for bug 333765 to allow Orca to better clean up when shutting 
+* Fix for bug 333765 to allow Orca to better clean up when shutting
   down under adverse conditions (Willie Walker)
 * Fix for bug 333792 and also provide better fallback for broken
   speech drivers (Willie Walker)
@@ -806,7 +892,7 @@ speaks both cells in a row
 ==========
 
 0.2.1 - 22-Feb-2006
-* *Much* work on Evolution script - this far outshadows much of the 
+* *Much* work on Evolution script - this far outshadows much of the
   other work done for this release (Rich Burridge and Mike Pedersen)
 * Various code cleanup (Willie Walker and Rich Burridge)
 * Introduction of prototype testing harness (Willie Walker)
@@ -824,7 +910,7 @@ speaks both cells in a row
 * Use EventDetails.host_application if it is available (Willie Walker)
 * Internationalize script mappings.
 * Some work with OOo and its new UNO<->ATK bridge (Willie Walker)
-* Allow scripts to be picked up from . directory where orca is run 
+* Allow scripts to be picked up from . directory where orca is run
   (Willie Walker).
 * Added braille monitor - add useBrailleMonitor=True to
   ~/.orca/user-settings.py to enable it (Willie Walker)
@@ -832,7 +918,7 @@ speaks both cells in a row
   folks: Francisco Javier F. Serrador, Adam Weinberger, Clytie Siddall
 * Add Insert+s option to manually tell speech to reset should something
   go awry (Willie Walker)
-* Add KP_Insert as an equivalent of Insert for the Orca modifier. 
+* Add KP_Insert as an equivalent of Insert for the Orca modifier.
   (Willie Walker)
 
 ==========
