@@ -1289,6 +1289,8 @@ class SpeechGenerator:
                                                            already_focused))
             else:
                 utterances = self._getSpeechForTableCell(obj, already_focused)
+        else:
+            utterances = self._getSpeechForTableCell(obj, already_focused)
 
         return utterances
 

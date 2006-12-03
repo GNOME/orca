@@ -77,6 +77,9 @@
 * Fix for bug 319666: Orca now announces "0 items" when encountering
   various empty objects.
 
+* Fix for bug 381653: Orca now announces the new state of a checkbox
+  when it is changed inside a table cell.
+
 * More work on the specification and regression test suite.
 
 * New and updated translations (THANKS!):
