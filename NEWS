@@ -74,6 +74,9 @@
 * Fix for bug 364452: make sure Orca's name shows up as "orca" and not
   "-c" in at-poke.
 
+* Fix for bug 319666: Orca now announces "0 items" when encountering
+  various empty objects.
+
 * More work on the specification and regression test suite.
 
 * New and updated translations (THANKS!):

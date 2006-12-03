@@ -91,6 +91,8 @@ class SpeechGenerator:
              self._getSpeechForImage
         self.speechGenerators[rolenames.ROLE_LABEL]               = \
              self._getSpeechForLabel
+        self.speechGenerators[rolenames.ROLE_LAYERED_PANE]        = \
+             self._getSpeechForLayeredPane
         self.speechGenerators[rolenames.ROLE_LIST]                = \
              self._getSpeechForList
         self.speechGenerators[rolenames.ROLE_MENU]                = \
@@ -672,6 +674,36 @@ class SpeechGenerator:
 
         return utterances
 
+    def _getSpeechForLayeredPane(self, obj, already_focused):
+        """Get the speech for a layered pane
+
+        Arguments:
+        - obj: the table
+        - already_focused: False if object just received focus
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        utterances = self._getDefaultSpeech(obj, already_focused)
+
+        self._debugGenerator("_getSpeechForLayeredPane",
+                             obj,
+                             already_focused,
+                             utterances)
+
+        # If this has no children, then let the user know.
+        #
+        hasItems = False
+        for i in range(0, obj.childCount):
+            child = obj.child(i)
+            if child.state.count(atspi.Accessibility.STATE_SHOWING):
+                hasItems = True
+                break
+        if not hasItems:
+            utterances.append(_("0 items"))
+
+        return utterances
+
     def _getSpeechForList(self, obj, already_focused):
         """Get the speech for a list.
 
@@ -1144,6 +1176,17 @@ class SpeechGenerator:
                              already_focused,
                              utterances)
 
+        # If this is a table with no children, then let the user know.
+        #
+        hasItems = False
+        for i in range(0, obj.childCount):
+            child = obj.child(i)
+            if child.state.count(atspi.Accessibility.STATE_SHOWING):
+                hasItems = True
+                break
+        if not hasItems:
+            utterances.append(_("0 items"))
+
         return utterances
 
     def _getSpeechForTableCell(self, obj, already_focused):
@@ -1187,6 +1230,12 @@ class SpeechGenerator:
                 utterances.append(_("expanded"))
             else:
                 utterances.append(_("collapsed"))
+
+            # If this is an expandable table cell with no children, then
+            # let the user know.
+            #
+            if obj.childCount == 0:
+                utterances.append(_("0 items"))
 
         self._debugGenerator("_getSpeechForTableCell",
                              obj,
