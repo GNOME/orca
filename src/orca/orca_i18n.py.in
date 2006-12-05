@@ -35,3 +35,5 @@ _ = gettext.gettext
 localedir = os.path.join ("@prefix@", "@DATADIRNAME@", "locale")
 gettext.bindtextdomain ("@GETTEXT_PACKAGE@", localedir)
 gettext.textdomain("orca")
+gtk.glade.bindtextdomain ("@GETTEXT_PACKAGE@", localedir)
+gtk.glade.textdomain("orca")
