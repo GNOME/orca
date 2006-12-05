@@ -1,0 +1,275 @@
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/orca.py", line 857, in loadUserSettings
+    braille.init(_processBrailleEvent, 7)
+  File "/usr/lib/python2.4/site-packages/orca/braille.py", line 929, in init
+    if brl.init(tty):
+StandardError: Failed to load libbrlapi.so
+
+Could not initialize connection to braille.
+SPEECH OUTPUT: 'Welcome to Orca.'
+BRAILLE LINE:  'Welcome to Orca.'
+     VISIBLE:  'Welcome to Orca.', cursor=0
+SPEECH OUTPUT: 'Switching to focus tracking mode.'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame'
+     VISIBLE:  'Orca Screen Reader / Magnifier F', cursor=1
+SPEECH OUTPUT: 'Orca Screen Reader / Magnifier frame'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame Preferences Button'
+     VISIBLE:  'Preferences Button', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Preferences button'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame'
+     VISIBLE:  'Untitled1 - OpenOffice.org Write', cursor=1
+SPEECH OUTPUT: 'Untitled1 - OpenOffice.org Writer frame'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane Panel'
+     VISIBLE:  'Panel', cursor=1
+SPEECH OUTPUT: 'Untitled1 - OpenOffice.org Writer frame Untitled1 - OpenOffice.org Writer root pane'
+SPEECH OUTPUT: 'panel'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 1 $l'
+     VISIBLE:  '1 $l', cursor=2
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 1 $l'
+     VISIBLE:  '1 $l', cursor=2
+BRAILLE LINE:  '1 $l'
+     VISIBLE:  '1 $l', cursor=1
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 2 $l'
+     VISIBLE:  '2 $l', cursor=2
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 2 $l'
+     VISIBLE:  '2 $l', cursor=2
+BRAILLE LINE:  '2 $l'
+     VISIBLE:  '2 $l', cursor=1
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 3 $l'
+     VISIBLE:  '3 $l', cursor=2
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 3 $l'
+     VISIBLE:  '3 $l', cursor=2
+BRAILLE LINE:  '3 $l'
+     VISIBLE:  '3 $l', cursor=1
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 4 $l'
+     VISIBLE:  '4 $l', cursor=2
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 4 $l'
+     VISIBLE:  '4 $l', cursor=2
+BRAILLE LINE:  '4 $l'
+     VISIBLE:  '4 $l', cursor=1
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 5 $l'
+     VISIBLE:  '5 $l', cursor=2
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 5 $l'
+     VISIBLE:  '5 $l', cursor=2
+BRAILLE LINE:  '5 $l'
+     VISIBLE:  '5 $l', cursor=1
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 6 $l'
+     VISIBLE:  '6 $l', cursor=2
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 6 $l'
+     VISIBLE:  '6 $l', cursor=2
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 6 $l'
+     VISIBLE:  ' 6 $l', cursor=1
+BRAILLE LINE:  ' $l'
+     VISIBLE:  ' $l', cursor=1
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 6 $l'
+     VISIBLE:  '6 $l', cursor=1
+SPEECH OUTPUT: '6'
+BRAILLE LINE:  '6 $l'
+     VISIBLE:  '6 $l', cursor=1
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 5 $l'
+     VISIBLE:  '5 $l', cursor=1
+SPEECH OUTPUT: '5'
+BRAILLE LINE:  '5 $l'
+     VISIBLE:  '5 $l', cursor=1
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 4 $l'
+     VISIBLE:  '4 $l', cursor=1
+SPEECH OUTPUT: '4'
+BRAILLE LINE:  '4 $l'
+     VISIBLE:  '4 $l', cursor=1
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 3 $l'
+     VISIBLE:  '3 $l', cursor=1
+SPEECH OUTPUT: '3'
+BRAILLE LINE:  '3 $l'
+     VISIBLE:  '3 $l', cursor=1
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 2 $l'
+     VISIBLE:  '2 $l', cursor=1
+SPEECH OUTPUT: '2'
+BRAILLE LINE:  '2 $l'
+     VISIBLE:  '2 $l', cursor=1
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 1 $l'
+     VISIBLE:  '1 $l', cursor=1
+SPEECH OUTPUT: '1'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 1 $l'
+     VISIBLE:  '1 $l', cursor=2
+SPEECH OUTPUT: '1'
+BRAILLE LINE:  '1 $l'
+     VISIBLE:  '1 $l', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'newline'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 2 $l'
+     VISIBLE:  '2 $l', cursor=1
+SPEECH OUTPUT: '2'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 2 $l'
+     VISIBLE:  '2 $l', cursor=2
+SPEECH OUTPUT: '2'
+BRAILLE LINE:  '2 $l'
+     VISIBLE:  '2 $l', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'newline'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 3 $l'
+     VISIBLE:  '3 $l', cursor=1
+SPEECH OUTPUT: '3'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 3 $l'
+     VISIBLE:  '3 $l', cursor=2
+SPEECH OUTPUT: '3'
+BRAILLE LINE:  '3 $l'
+     VISIBLE:  '3 $l', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'newline'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 4 $l'
+     VISIBLE:  '4 $l', cursor=1
+SPEECH OUTPUT: '4'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 4 $l'
+     VISIBLE:  '4 $l', cursor=2
+SPEECH OUTPUT: '4'
+BRAILLE LINE:  '4 $l'
+     VISIBLE:  '4 $l', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'newline'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 5 $l'
+     VISIBLE:  '5 $l', cursor=1
+SPEECH OUTPUT: '5'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 5 $l'
+     VISIBLE:  '5 $l', cursor=2
+SPEECH OUTPUT: '5'
+BRAILLE LINE:  '5 $l'
+     VISIBLE:  '5 $l', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'newline'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 6 $l'
+     VISIBLE:  '6 $l', cursor=1
+SPEECH OUTPUT: '6'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 6 $l'
+     VISIBLE:  '6 $l', cursor=2
+SPEECH OUTPUT: '6'
+BRAILLE LINE:  '6 $l'
+     VISIBLE:  '6 $l', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'newline'
+SPEECH OUTPUT: 'blank'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view  $l'
+     VISIBLE:  ' $l', cursor=1
+SPEECH OUTPUT: ''
+BRAILLE LINE:  ' $l'
+     VISIBLE:  ' $l', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'newline'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 6 $l'
+     VISIBLE:  '6 $l', cursor=2
+SPEECH OUTPUT: '6'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 6 $l'
+     VISIBLE:  '6 $l', cursor=1
+SPEECH OUTPUT: '6'
+BRAILLE LINE:  '6 $l'
+     VISIBLE:  '6 $l', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'newline'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 5 $l'
+     VISIBLE:  '5 $l', cursor=2
+SPEECH OUTPUT: '5'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 5 $l'
+     VISIBLE:  '5 $l', cursor=1
+SPEECH OUTPUT: '5'
+SPEECH OUTPUT: 'blank'
+BRAILLE LINE:  '5 $l'
+     VISIBLE:  '5 $l', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'newline'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 4 $l'
+     VISIBLE:  '4 $l', cursor=2
+SPEECH OUTPUT: '4'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 4 $l'
+     VISIBLE:  '4 $l', cursor=1
+SPEECH OUTPUT: '4'
+BRAILLE LINE:  '4 $l'
+     VISIBLE:  '4 $l', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'newline'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 3 $l'
+     VISIBLE:  '3 $l', cursor=2
+SPEECH OUTPUT: '3'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 3 $l'
+     VISIBLE:  '3 $l', cursor=1
+SPEECH OUTPUT: '3'
+BRAILLE LINE:  '3 $l'
+     VISIBLE:  '3 $l', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'newline'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 2 $l'
+     VISIBLE:  '2 $l', cursor=2
+SPEECH OUTPUT: '2'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 2 $l'
+     VISIBLE:  '2 $l', cursor=1
+SPEECH OUTPUT: '2'
+BRAILLE LINE:  '2 $l'
+     VISIBLE:  '2 $l', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'newline'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 1 $l'
+     VISIBLE:  '1 $l', cursor=2
+SPEECH OUTPUT: '1'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view 1 $l'
+     VISIBLE:  '1 $l', cursor=1
+SPEECH OUTPUT: '1'
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar New Menu'
+     VISIBLE:  'New Menu', cursor=1
+SPEECH OUTPUT: 'menu bar File menu'
+SPEECH OUTPUT: 'New menu'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Exit(Control q)'
+     VISIBLE:  'Exit(Control q)', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Exit Control q'
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+BRAILLE LINE:  'soffice.bin Application OpenOffice.org 2.0  Alert'
+     VISIBLE:  'OpenOffice.org 2.0  Alert', cursor=1
+SPEECH OUTPUT: 'OpenOffice.org 2.0  The document "Untitled1" has been modified.
+Do you want to save your changes?'
+BRAILLE LINE:  'soffice.bin Application OpenOffice.org 2.0  Alert OpenOffice.org 2.0  OptionPane Save Button'
+     VISIBLE:  'Save Button', cursor=1
+SPEECH OUTPUT: 'OpenOffice.org 2.0  option pane'
+SPEECH OUTPUT: 'Save button'
+BRAILLE LINE:  'soffice.bin Application OpenOffice.org 2.0  Alert OpenOffice.org 2.0  OptionPane Discard Button'
+     VISIBLE:  'Discard Button', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Discard button'

@@ -1,0 +1,165 @@
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/orca.py", line 857, in loadUserSettings
+    braille.init(_processBrailleEvent, 7)
+  File "/usr/lib/python2.4/site-packages/orca/braille.py", line 929, in init
+    if brl.init(tty):
+StandardError: Failed to load libbrlapi.so
+
+Could not initialize connection to braille.
+SPEECH OUTPUT: 'Welcome to Orca.'
+BRAILLE LINE:  'Welcome to Orca.'
+     VISIBLE:  'Welcome to Orca.', cursor=0
+SPEECH OUTPUT: 'Switching to focus tracking mode.'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame'
+     VISIBLE:  'Orca Screen Reader / Magnifier F', cursor=1
+SPEECH OUTPUT: 'Orca Screen Reader / Magnifier frame'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame Preferences Button'
+     VISIBLE:  'Preferences Button', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Preferences button'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame'
+     VISIBLE:  'Unsaved Document 1 - gedit Frame', cursor=1
+SPEECH OUTPUT: 'Unsaved Document 1 - gedit frame'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame TabList Unsaved Document 1 ScrollPane  $l'
+     VISIBLE:  ' $l', cursor=1
+SPEECH OUTPUT: 'tab list Unsaved Document 1 page'
+SPEECH OUTPUT: 'text '
+BRAILLE LINE:  'gedit Application *Unsaved Document 1 - gedit Frame TabList *Unsaved Document 1 ScrollPane 1 $l'
+     VISIBLE:  '1 $l', cursor=2
+BRAILLE LINE:  'gedit Application *Unsaved Document 1 - gedit Frame TabList *Unsaved Document 1 ScrollPane 1 $l'
+     VISIBLE:  '1 $l', cursor=2
+BRAILLE LINE:  ' $l'
+     VISIBLE:  ' $l', cursor=1
+BRAILLE LINE:  ' $l'
+     VISIBLE:  ' $l', cursor=1
+BRAILLE LINE:  '2 $l'
+     VISIBLE:  '2 $l', cursor=2
+BRAILLE LINE:  '2 $l'
+     VISIBLE:  '2 $l', cursor=2
+BRAILLE LINE:  ' $l'
+     VISIBLE:  ' $l', cursor=1
+BRAILLE LINE:  ' $l'
+     VISIBLE:  ' $l', cursor=1
+BRAILLE LINE:  '3 $l'
+     VISIBLE:  '3 $l', cursor=2
+BRAILLE LINE:  '3 $l'
+     VISIBLE:  '3 $l', cursor=2
+BRAILLE LINE:  ' $l'
+     VISIBLE:  ' $l', cursor=1
+BRAILLE LINE:  ' $l'
+     VISIBLE:  ' $l', cursor=1
+BRAILLE LINE:  '4 $l'
+     VISIBLE:  '4 $l', cursor=2
+BRAILLE LINE:  '4 $l'
+     VISIBLE:  '4 $l', cursor=2
+BRAILLE LINE:  ' $l'
+     VISIBLE:  ' $l', cursor=1
+BRAILLE LINE:  ' $l'
+     VISIBLE:  ' $l', cursor=1
+BRAILLE LINE:  '5 $l'
+     VISIBLE:  '5 $l', cursor=2
+BRAILLE LINE:  '5 $l'
+     VISIBLE:  '5 $l', cursor=2
+BRAILLE LINE:  ' $l'
+     VISIBLE:  ' $l', cursor=1
+BRAILLE LINE:  ' $l'
+     VISIBLE:  ' $l', cursor=1
+BRAILLE LINE:  '6 $l'
+     VISIBLE:  '6 $l', cursor=2
+BRAILLE LINE:  '6 $l'
+     VISIBLE:  '6 $l', cursor=2
+BRAILLE LINE:  ' $l'
+     VISIBLE:  ' $l', cursor=1
+BRAILLE LINE:  ' $l'
+     VISIBLE:  ' $l', cursor=1
+BRAILLE LINE:  '6 $l'
+     VISIBLE:  '6 $l', cursor=1
+SPEECH OUTPUT: '6'
+BRAILLE LINE:  '5 $l'
+     VISIBLE:  '5 $l', cursor=1
+SPEECH OUTPUT: '5'
+BRAILLE LINE:  '4 $l'
+     VISIBLE:  '4 $l', cursor=1
+SPEECH OUTPUT: '4'
+BRAILLE LINE:  '3 $l'
+     VISIBLE:  '3 $l', cursor=1
+SPEECH OUTPUT: '3'
+BRAILLE LINE:  '2 $l'
+     VISIBLE:  '2 $l', cursor=1
+SPEECH OUTPUT: '2'
+BRAILLE LINE:  'gedit Application *Unsaved Document 1 - gedit Frame TabList *Unsaved Document 1 ScrollPane 1 $l'
+     VISIBLE:  '1 $l', cursor=1
+SPEECH OUTPUT: '1'
+BRAILLE LINE:  'gedit Application *Unsaved Document 1 - gedit Frame TabList *Unsaved Document 1 ScrollPane 1 $l'
+     VISIBLE:  '1 $l', cursor=2
+BRAILLE LINE:  '2 $l'
+     VISIBLE:  '2 $l', cursor=1
+SPEECH OUTPUT: 'newline'
+SPEECH OUTPUT: '2'
+BRAILLE LINE:  '2 $l'
+     VISIBLE:  '2 $l', cursor=2
+BRAILLE LINE:  '3 $l'
+     VISIBLE:  '3 $l', cursor=1
+SPEECH OUTPUT: 'newline'
+SPEECH OUTPUT: '3'
+BRAILLE LINE:  '3 $l'
+     VISIBLE:  '3 $l', cursor=2
+BRAILLE LINE:  '4 $l'
+     VISIBLE:  '4 $l', cursor=1
+SPEECH OUTPUT: 'newline'
+SPEECH OUTPUT: '4'
+BRAILLE LINE:  '4 $l'
+     VISIBLE:  '4 $l', cursor=2
+BRAILLE LINE:  '5 $l'
+     VISIBLE:  '5 $l', cursor=1
+SPEECH OUTPUT: 'newline'
+SPEECH OUTPUT: '5'
+BRAILLE LINE:  '5 $l'
+     VISIBLE:  '5 $l', cursor=2
+BRAILLE LINE:  '6 $l'
+     VISIBLE:  '6 $l', cursor=1
+SPEECH OUTPUT: 'newline'
+SPEECH OUTPUT: '6'
+BRAILLE LINE:  '6 $l'
+     VISIBLE:  '6 $l', cursor=2
+BRAILLE LINE:  ' $l'
+     VISIBLE:  ' $l', cursor=1
+SPEECH OUTPUT: 'newline'
+SPEECH OUTPUT: ''
+BRAILLE LINE:  '6 $l'
+     VISIBLE:  '6 $l', cursor=2
+SPEECH OUTPUT: 'newline'
+BRAILLE LINE:  '6 $l'
+     VISIBLE:  '6 $l', cursor=1
+SPEECH OUTPUT: '6'
+BRAILLE LINE:  '5 $l'
+     VISIBLE:  '5 $l', cursor=2
+SPEECH OUTPUT: 'newline'
+BRAILLE LINE:  '5 $l'
+     VISIBLE:  '5 $l', cursor=1
+SPEECH OUTPUT: '5'
+BRAILLE LINE:  '4 $l'
+     VISIBLE:  '4 $l', cursor=2
+SPEECH OUTPUT: 'newline'
+BRAILLE LINE:  '4 $l'
+     VISIBLE:  '4 $l', cursor=1
+SPEECH OUTPUT: '4'
+BRAILLE LINE:  '3 $l'
+     VISIBLE:  '3 $l', cursor=2
+SPEECH OUTPUT: 'newline'
+BRAILLE LINE:  '3 $l'
+     VISIBLE:  '3 $l', cursor=1
+SPEECH OUTPUT: '3'
+BRAILLE LINE:  '2 $l'
+     VISIBLE:  '2 $l', cursor=2
+SPEECH OUTPUT: 'newline'
+BRAILLE LINE:  '2 $l'
+     VISIBLE:  '2 $l', cursor=1
+SPEECH OUTPUT: '2'
+BRAILLE LINE:  'gedit Application *Unsaved Document 1 - gedit Frame TabList *Unsaved Document 1 ScrollPane 1 $l'
+     VISIBLE:  '1 $l', cursor=2
+SPEECH OUTPUT: 'newline'
+BRAILLE LINE:  'gedit Application *Unsaved Document 1 - gedit Frame TabList *Unsaved Document 1 ScrollPane 1 $l'
+     VISIBLE:  '1 $l', cursor=1
+SPEECH OUTPUT: '1'

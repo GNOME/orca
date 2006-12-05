@@ -1,0 +1,578 @@
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/orca.py", line 857, in loadUserSettings
+    braille.init(_processBrailleEvent, 7)
+  File "/usr/lib/python2.4/site-packages/orca/braille.py", line 929, in init
+    if brl.init(tty):
+StandardError: Failed to load libbrlapi.so
+
+Could not initialize connection to braille.
+SPEECH OUTPUT: 'Welcome to Orca.'
+BRAILLE LINE:  'Welcome to Orca.'
+     VISIBLE:  'Welcome to Orca.', cursor=0
+SPEECH OUTPUT: 'Switching to focus tracking mode.'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame'
+     VISIBLE:  'Orca Screen Reader / Magnifier F', cursor=1
+SPEECH OUTPUT: 'Orca Screen Reader / Magnifier frame'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame Preferences Button'
+     VISIBLE:  'Preferences Button', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Preferences button'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame'
+     VISIBLE:  'Untitled1 - OpenOffice.org Write', cursor=1
+SPEECH OUTPUT: 'Untitled1 - OpenOffice.org Writer frame'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane Panel'
+     VISIBLE:  'Panel', cursor=1
+SPEECH OUTPUT: 'Untitled1 - OpenOffice.org Writer frame Untitled1 - OpenOffice.org Writer root pane'
+SPEECH OUTPUT: 'panel'
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar New Menu'
+     VISIBLE:  'New Menu', cursor=1
+SPEECH OUTPUT: 'menu bar File menu'
+SPEECH OUTPUT: 'New menu'
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object ScrollPane Files Table Name ColumnHeader bin 07/30/2006'
+     VISIBLE:  'bin 07/30/2006', cursor=1
+SPEECH OUTPUT: 'Name column header'
+SPEECH OUTPUT: 'bin 07/30/2006'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object ScrollPane Files Table Name ColumnHeader bin 07/30/2006'
+     VISIBLE:  'bin 07/30/2006', cursor=1
+SPEECH OUTPUT: 'Name column header'
+SPEECH OUTPUT: 'bin 07/30/2006'
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object ScrollPane Files Table Name ColumnHeader Desktop Today'
+     VISIBLE:  'Desktop Today', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Desktop Today'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object ScrollPane Files Table Name ColumnHeader Examples 10/25/2006'
+     VISIBLE:  'Examples 10/25/2006', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Examples 10/25/2006'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object ScrollPane Files Table Name ColumnHeader orca Today'
+     VISIBLE:  'orca Today', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'orca Today'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object ScrollPane Files Table Name ColumnHeader bin 07/30/2006'
+     VISIBLE:  'bin 07/30/2006', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'bin 07/30/2006'
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object All files  Combo'
+     VISIBLE:  'All files  Combo', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'All files  combo box'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object File type & y ToggleButton'
+     VISIBLE:  'File type & y ToggleButton', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'File type toggle button not pressed'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object Read-only < > CheckBox'
+     VISIBLE:  'Read-only < > CheckBox', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Read-only check box not checked'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object Cancel Button'
+     VISIBLE:  'Cancel Button', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Cancel button'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object Open Button'
+     VISIBLE:  'Open Button', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Open button'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object Type a file name & y ToggleButton'
+     VISIBLE:  'Type a file name & y ToggleButto', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Type a file name toggle button not pressed'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object Button'
+     VISIBLE:  'Open redundant object Button', cursor=23
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'button'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object orca &=y ToggleButton'
+     VISIBLE:  'orca &=y ToggleButton', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'orca toggle button pressed'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object ScrollPane Places Table _Places ColumnHeader orca'
+     VISIBLE:  'orca', cursor=1
+SPEECH OUTPUT: 'Places table'
+SPEECH OUTPUT: '_Places column header'
+SPEECH OUTPUT: 'orca'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object ScrollPane Places Table _Places ColumnHeader Desktop'
+     VISIBLE:  'Desktop', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Desktop'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object ScrollPane Places Table _Places ColumnHeader File System'
+     VISIBLE:  'File System', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'File System'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object ScrollPane Places Table _Places ColumnHeader Network Servers'
+     VISIBLE:  'Network Servers', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Network Servers'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object ScrollPane Places Table _Places ColumnHeader File System'
+     VISIBLE:  'File System', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'File System'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object ScrollPane Places Table _Places ColumnHeader Desktop'
+     VISIBLE:  'Desktop', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Desktop'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object ScrollPane Places Table _Places ColumnHeader orca'
+     VISIBLE:  'orca', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'orca'
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object Add Button'
+     VISIBLE:  'Open redundant object Add Button', cursor=23
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Add button'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object ScrollPane Files Table Name ColumnHeader Name ColumnHeader'
+     VISIBLE:  'Name ColumnHeader', cursor=1
+SPEECH OUTPUT: 'Files table'
+SPEECH OUTPUT: 'Name column header'
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object ScrollPane Files Table Name ColumnHeader bin 07/30/2006'
+     VISIBLE:  'bin 07/30/2006', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'bin 07/30/2006'
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object All files  Combo'
+     VISIBLE:  'All files  Combo', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'All files  combo box'
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object File type & y ToggleButton'
+     VISIBLE:  'File type & y ToggleButton', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'File type toggle button not pressed'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object Read-only < > CheckBox'
+     VISIBLE:  'Read-only < > CheckBox', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Read-only check box not checked'
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame'
+     VISIBLE:  'Untitled1 - OpenOffice.org Write', cursor=1
+SPEECH OUTPUT: 'Untitled1 - OpenOffice.org Writer frame'
+SPEECH OUTPUT: ''
+BRAILLE LINE:  ' $l'
+     VISIBLE:  ' $l', cursor=1
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar New Menu'
+     VISIBLE:  'New Menu', cursor=1
+SPEECH OUTPUT: 'menu bar File menu'
+SPEECH OUTPUT: 'New menu'
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane'
+     VISIBLE:  'Untitled1 - OpenOffice.org Write', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Untitled1 - OpenOffice.org Writer root pane'
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 495, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1342, in onStateChanged
+    if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame'
+     VISIBLE:  'Orca Screen Reader / Magnifier F', cursor=1
+SPEECH OUTPUT: 'Orca Screen Reader / Magnifier frame'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame Preferences Button'
+     VISIBLE:  'Preferences Button', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Preferences button'

@@ -1,0 +1,33 @@
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/orca.py", line 857, in loadUserSettings
+    braille.init(_processBrailleEvent, 7)
+  File "/usr/lib/python2.4/site-packages/orca/braille.py", line 929, in init
+    if brl.init(tty):
+StandardError: Failed to load libbrlapi.so
+
+Could not initialize connection to braille.
+SPEECH OUTPUT: 'Welcome to Orca.'
+BRAILLE LINE:  'Welcome to Orca.'
+     VISIBLE:  'Welcome to Orca.', cursor=0
+SPEECH OUTPUT: 'Switching to focus tracking mode.'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame'
+     VISIBLE:  'Orca Screen Reader / Magnifier F', cursor=1
+SPEECH OUTPUT: 'Orca Screen Reader / Magnifier frame'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame Preferences Button'
+     VISIBLE:  'Preferences Button', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Preferences button'
+BRAILLE LINE:  'gnome-terminal Application Terminal Frame'
+     VISIBLE:  'Terminal Frame', cursor=1
+SPEECH OUTPUT: 'Terminal frame'
+BRAILLE LINE:  'gnome-terminal Application Terminal Frame TabList  Terminal Terminal'
+     VISIBLE:  '', cursor=1
+SPEECH OUTPUT: 'tab list page'
+SPEECH OUTPUT: 'Terminal'
+BRAILLE LINE:  'gnome-terminal Application Terminal Frame TabList  Terminal Terminal'
+     VISIBLE:  '', cursor=1
+BRAILLE LINE:  'gnome-terminal Application Terminal Frame TabList  Terminal Terminal'
+     VISIBLE:  '', cursor=32
+BRAILLE LINE:  'gnome-terminal Application Terminal Frame TabList  Terminal Terminalorca@ubuntu:/tmp/general-orca$  '
+     VISIBLE:  'orca@ubuntu:/tmp/general-orca$  ', cursor=32

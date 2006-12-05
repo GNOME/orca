@@ -1,0 +1,151 @@
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/orca.py", line 857, in loadUserSettings
+    braille.init(_processBrailleEvent, 7)
+  File "/usr/lib/python2.4/site-packages/orca/braille.py", line 929, in init
+    if brl.init(tty):
+StandardError: Failed to load libbrlapi.so
+
+Could not initialize connection to braille.
+SPEECH OUTPUT: 'Welcome to Orca.'
+BRAILLE LINE:  'Welcome to Orca.'
+     VISIBLE:  'Welcome to Orca.', cursor=0
+SPEECH OUTPUT: 'Switching to focus tracking mode.'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame'
+     VISIBLE:  'Orca Screen Reader / Magnifier F', cursor=1
+SPEECH OUTPUT: 'Orca Screen Reader / Magnifier frame'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame Preferences Button'
+     VISIBLE:  'Preferences Button', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Preferences button'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame'
+     VISIBLE:  'Unsaved Document 1 - gedit Frame', cursor=1
+SPEECH OUTPUT: 'Unsaved Document 1 - gedit frame'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame TabList Unsaved Document 1 ScrollPane  $l'
+     VISIBLE:  ' $l', cursor=1
+SPEECH OUTPUT: 'tab list Unsaved Document 1 page'
+SPEECH OUTPUT: 'text '
+BRAILLE LINE:  'gedit Application Open Files... Dialog'
+     VISIBLE:  'Open Files... Dialog', cursor=1
+SPEECH OUTPUT: 'Open Files…'
+BRAILLE LINE:  'gedit Application Open Files... Dialog ScrollPane Files Table'
+     VISIBLE:  'Files Table', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Files table'
+BRAILLE LINE:  'gedit Application Open Files... Dialog ScrollPane Files Table Name ColumnHeader blanklines.orca Today'
+     VISIBLE:  'blanklines.orca Today', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Name column header'
+SPEECH OUTPUT: 'blanklines.orca Today'
+BRAILLE LINE:  'gedit Application Open Files... Dialog ScrollPane Files Table Name ColumnHeader file-open.orca Today'
+     VISIBLE:  'file-open.orca Today', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'file-open.orca Today'
+BRAILLE LINE:  'gedit Application Open Files... Dialog ScrollPane Files Table Name ColumnHeader user-settings.py Today'
+     VISIBLE:  'user-settings.py Today', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'user-settings.py Today'
+BRAILLE LINE:  'gedit Application Open Files... Dialog ScrollPane Files Table Name ColumnHeader user-settings.pyc Today'
+     VISIBLE:  'user-settings.pyc Today', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'user-settings.pyc Today'
+BRAILLE LINE:  'gedit Application Open Files... Dialog ScrollPane Files Table Name ColumnHeader user-settings.py Today'
+     VISIBLE:  'user-settings.py Today', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'user-settings.py Today'
+BRAILLE LINE:  'gedit Application Open Files... Dialog ScrollPane Files Table Name ColumnHeader file-open.orca Today'
+     VISIBLE:  'file-open.orca Today', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'file-open.orca Today'
+BRAILLE LINE:  'gedit Application Open Files... Dialog ScrollPane Files Table Name ColumnHeader blanklines.orca Today'
+     VISIBLE:  'blanklines.orca Today', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'blanklines.orca Today'
+BRAILLE LINE:  'gedit Application Open Files... Dialog All Files Combo'
+     VISIBLE:  'All Files Combo', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'All Files combo box'
+BRAILLE LINE:  'gedit Application Open Files... Dialog Character Coding: Auto Detected Combo'
+     VISIBLE:  'Auto Detected Combo', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Character Coding: Auto Detected combo box'
+BRAILLE LINE:  'gedit Application Open Files... Dialog Cancel Button'
+     VISIBLE:  'Cancel Button', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Cancel button'
+BRAILLE LINE:  'gedit Application Open Files... Dialog Open Button'
+     VISIBLE:  'Open Button', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Open button'
+BRAILLE LINE:  'gedit Application Open Files... Dialog Type a file name & y ToggleButton'
+     VISIBLE:  'Type a file name & y ToggleButto', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Type a file name toggle button not pressed'
+BRAILLE LINE:  'gedit Application Open Files... Dialog & y ToggleButton'
+     VISIBLE:  '& y ToggleButton', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'toggle button not pressed'
+BRAILLE LINE:  'gedit Application Open Files... Dialog tmp & y ToggleButton'
+     VISIBLE:  'tmp & y ToggleButton', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'tmp toggle button not pressed'
+BRAILLE LINE:  'gedit Application Open Files... Dialog gedit &=y ToggleButton'
+     VISIBLE:  'gedit &=y ToggleButton', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'gedit toggle button pressed'
+BRAILLE LINE:  'gedit Application Open Files... Dialog ScrollPane Places Table'
+     VISIBLE:  'Places Table', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Places table'
+BRAILLE LINE:  'gedit Application Open Files... Dialog ScrollPane Places Table _Places ColumnHeader orca'
+     VISIBLE:  'orca', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: '_Places column header'
+SPEECH OUTPUT: 'orca'
+BRAILLE LINE:  'gedit Application Open Files... Dialog ScrollPane Files Table Name ColumnHeader Name ColumnHeader'
+     VISIBLE:  'Name ColumnHeader', cursor=1
+SPEECH OUTPUT: 'Files table'
+SPEECH OUTPUT: 'Name column header'
+BRAILLE LINE:  'gedit Application Open Files... Dialog ScrollPane Files Table'
+     VISIBLE:  'Files Table', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Files table'
+BRAILLE LINE:  'gedit Application Open Files... Dialog ScrollPane Files Table Name ColumnHeader blanklines.orca Today'
+     VISIBLE:  'blanklines.orca Today', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Name column header'
+SPEECH OUTPUT: 'blanklines.orca Today'
+BRAILLE LINE:  'gedit Application Open Files... Dialog All Files Combo'
+     VISIBLE:  'All Files Combo', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'All Files combo box'
+BRAILLE LINE:  'gedit Application Open Files... Dialog Character Coding: Auto Detected Combo'
+     VISIBLE:  'Auto Detected Combo', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Character Coding: Auto Detected combo box'
+BRAILLE LINE:  'gedit Application Open Files... Dialog Cancel Button'
+     VISIBLE:  'Cancel Button', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Cancel button'
+BRAILLE LINE:  'gedit Application Open Files... Dialog Open Button'
+     VISIBLE:  'Open Button', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Open button'
+BRAILLE LINE:  'gedit Application Open Files... Dialog Type a file name & y ToggleButton'
+     VISIBLE:  'Type a file name & y ToggleButto', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Type a file name toggle button not pressed'
+BRAILLE LINE:  'gedit Application Open Files... Dialog & y ToggleButton'
+     VISIBLE:  '& y ToggleButton', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'toggle button not pressed'
+BRAILLE LINE:  'gedit Application Open Files... Dialog tmp & y ToggleButton'
+     VISIBLE:  'tmp & y ToggleButton', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'tmp toggle button not pressed'
+BRAILLE LINE:  'gedit Application Open Files... Dialog tmp &=y ToggleButton'
+     VISIBLE:  'tmp &=y ToggleButton', cursor=1
+SPEECH OUTPUT: 'pressed'
+BRAILLE LINE:  'gedit Application Open Files... Dialog tmp &=y ToggleButton'
+     VISIBLE:  'tmp &=y ToggleButton', cursor=1
+SPEECH OUTPUT: 'pressed'

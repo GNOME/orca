@@ -1,0 +1,215 @@
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/orca.py", line 857, in loadUserSettings
+    braille.init(_processBrailleEvent, 7)
+  File "/usr/lib/python2.4/site-packages/orca/braille.py", line 929, in init
+    if brl.init(tty):
+StandardError: Failed to load libbrlapi.so
+
+Could not initialize connection to braille.
+SPEECH OUTPUT: 'Welcome to Orca.'
+BRAILLE LINE:  'Welcome to Orca.'
+     VISIBLE:  'Welcome to Orca.', cursor=0
+SPEECH OUTPUT: 'Switching to focus tracking mode.'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame'
+     VISIBLE:  'Orca Screen Reader / Magnifier F', cursor=1
+SPEECH OUTPUT: 'Orca Screen Reader / Magnifier frame'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame Preferences Button'
+     VISIBLE:  'Preferences Button', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Preferences button'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame'
+     VISIBLE:  'GTK+ Code Demos Frame', cursor=1
+SPEECH OUTPUT: 'GTK+ Code Demos frame'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Application main window'
+     VISIBLE:  'Application main window', cursor=1
+SPEECH OUTPUT: 'tab list Widget (double click for demo) page tree table'
+SPEECH OUTPUT: 'Widget (double click for demo) column header'
+SPEECH OUTPUT: 'Application main window'
+SPEECH OUTPUT: 'tree level 1'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Button Boxes'
+     VISIBLE:  'Button Boxes', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Button Boxes'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Change Display'
+     VISIBLE:  'Change Display', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Change Display'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Clipboard'
+     VISIBLE:  'Clipboard', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Clipboard'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Color Selector'
+     VISIBLE:  'Color Selector', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Color Selector'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Combo boxes'
+     VISIBLE:  'Combo boxes', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Combo boxes'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Dialog and Message Boxes'
+     VISIBLE:  'Dialog and Message Boxes', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Dialog and Message Boxes'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Drawing Area'
+     VISIBLE:  'Drawing Area', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Drawing Area'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Entry Completion'
+     VISIBLE:  'Entry Completion', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Entry Completion'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Expander'
+     VISIBLE:  'Expander', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Expander'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Icon View'
+     VISIBLE:  'Icon View', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Icon View collapsed 0 items'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Images'
+     VISIBLE:  'Images', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Images'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Menus'
+     VISIBLE:  'Menus', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Menus'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Paned Widgets'
+     VISIBLE:  'Paned Widgets', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Paned Widgets'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Pickers'
+     VISIBLE:  'Pickers', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Pickers'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Pixbufs'
+     VISIBLE:  'Pixbufs', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Pixbufs'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Printing'
+     VISIBLE:  'Printing', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Printing'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Rotated Text'
+     VISIBLE:  'Rotated Text', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Rotated Text'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Size Groups'
+     VISIBLE:  'Size Groups', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Size Groups'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Stock Item and Icon Browser'
+     VISIBLE:  'Stock Item and Icon Browser', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Stock Item and Icon Browser'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Text Widget'
+     VISIBLE:  'Text Widget', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Text Widget collapsed 0 items'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Tree View'
+     VISIBLE:  'Tree View', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Tree View collapsed 0 items'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Tree View expanded TREE LEVEL 1'
+     VISIBLE:  'Tree View expanded TREE LEVEL 1', cursor=1
+SPEECH OUTPUT: 'Tree View expanded 0 items'
+BRAILLE LINE:  'gtk-demo GTK+ Code Demos  Widget (double click for demo)   Widget (double click for demo)Editable Cells'
+     VISIBLE:  'Editable Cells', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Editable Cells'
+SPEECH OUTPUT: 'tree level 2'
+BRAILLE LINE:  'gtk-demo GTK+ Code Demos  Widget (double click for demo)   Widget (double click for demo)List Store'
+     VISIBLE:  'List Store', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'List Store'
+BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame'
+     VISIBLE:  'GtkListStore demo Frame', cursor=1
+SPEECH OUTPUT: 'GtkListStore demo frame'
+BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Bug number ColumnHeader Bug number ColumnHeader'
+     VISIBLE:  'Bug number ColumnHeader', cursor=1
+SPEECH OUTPUT: 'table'
+SPEECH OUTPUT: 'Bug number column header'
+BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Severity ColumnHeader Severity ColumnHeader'
+     VISIBLE:  'Severity ColumnHeader', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Severity column header'
+BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Description ColumnHeader Description ColumnHeader'
+     VISIBLE:  'Description ColumnHeader', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Description column header'
+BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Bug number ColumnHeader Bug number ColumnHeader'
+     VISIBLE:  'Bug number ColumnHeader', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Bug number column header'
+BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Severity ColumnHeader Severity ColumnHeader'
+     VISIBLE:  'Severity ColumnHeader', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Severity column header'
+BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Description ColumnHeader Description ColumnHeader'
+     VISIBLE:  'Description ColumnHeader', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Description column header'
+BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Bug number ColumnHeader Bug number ColumnHeader'
+     VISIBLE:  'Bug number ColumnHeader', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Bug number column header'
+BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Fixed? ColumnHeader < > 60482 Normal scrollable notebooks and hidden tabs'
+     VISIBLE:  '< > 60482 Normal scrollable note', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Fixed? column header'
+SPEECH OUTPUT: 'check box not checked  60482 Normal scrollable notebooks and hidden tabs'
+BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Bug number ColumnHeader < > 60620 Critical gdk_window_clear_area (gdkwindow-win32.c) is not thread-safe'
+     VISIBLE:  '60620 Critical gdk_window_clear_', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Bug number column header'
+SPEECH OUTPUT: 'check box not checked  60620 Critical gdk_window_clear_area (gdkwindow-win32.c) is not thread-safe'
+BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Bug number ColumnHeader < > 50214 Major Xft support does not clean up correctly'
+     VISIBLE:  '50214 Major Xft support does not', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'check box not checked  50214 Major Xft support does not clean up correctly'
+BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Bug number ColumnHeader <x> 52877 Major GtkFileSelection needs a refresh method. '
+     VISIBLE:  '52877 Major GtkFileSelection nee', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'check box checked  52877 Major GtkFileSelection needs a refresh method. '
+BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Bug number ColumnHeader < > 56070 Normal Can't click button after setting in sensitive'
+     VISIBLE:  '56070 Normal Can't click button ', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'check box not checked  56070 Normal Can't click button after setting in sensitive'
+BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Bug number ColumnHeader <x> 56355 Normal GtkLabel - Not all changes propagate correctly'
+     VISIBLE:  '56355 Normal GtkLabel - Not all ', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'check box checked  56355 Normal GtkLabel - Not all changes propagate correctly'
+BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Bug number ColumnHeader < > 50055 Normal Rework width/height computations for TreeView'
+     VISIBLE:  '50055 Normal Rework width/height', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'check box not checked  50055 Normal Rework width/height computations for TreeView'
+BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Bug number ColumnHeader < > 58278 Normal gtk_dialog_set_response_sensitive () doesn't work'
+     VISIBLE:  '58278 Normal gtk_dialog_set_resp', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'check box not checked  58278 Normal gtk_dialog_set_response_sensitive () doesn't work'
+BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Severity ColumnHeader Normal'
+     VISIBLE:  'Normal', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Severity column header'
+SPEECH OUTPUT: 'Normal'
+BRAILLE LINE:  'gtk-demo GtkListStore demo   Descriptiongtk_dialog_set_response_sensitive () doesn't work'
+     VISIBLE:  'gtk_dialog_set_response_sensitiv', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Description column header'
+SPEECH OUTPUT: 'gtk_dialog_set_response_sensitive () doesn't work'
+BRAILLE LINE:  'gtk-demo GtkListStore demo   SeverityNormal'
+     VISIBLE:  'Normal', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Severity column header'
+SPEECH OUTPUT: 'Normal'
+BRAILLE LINE:  'gtk-demo GtkListStore demo   Bug number58278'
+     VISIBLE:  '58278', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Bug number column header'
+SPEECH OUTPUT: '58278'
+BRAILLE LINE:  'gtk-demo GtkListStore demo   Fixed?< >'
+     VISIBLE:  '< >', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Fixed? column header'
+SPEECH OUTPUT: 'check box not checked '

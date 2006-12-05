@@ -1,0 +1,304 @@
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/orca.py", line 857, in loadUserSettings
+    braille.init(_processBrailleEvent, 7)
+  File "/usr/lib/python2.4/site-packages/orca/braille.py", line 929, in init
+    if brl.init(tty):
+StandardError: Failed to load libbrlapi.so
+
+Could not initialize connection to braille.
+SPEECH OUTPUT: 'Welcome to Orca.'
+BRAILLE LINE:  'Welcome to Orca.'
+     VISIBLE:  'Welcome to Orca.', cursor=0
+SPEECH OUTPUT: 'Switching to focus tracking mode.'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame'
+     VISIBLE:  'Orca Screen Reader / Magnifier F', cursor=1
+SPEECH OUTPUT: 'Orca Screen Reader / Magnifier frame'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame Preferences Button'
+     VISIBLE:  'Preferences Button', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Preferences button'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame'
+     VISIBLE:  'GTK+ Code Demos Frame', cursor=1
+SPEECH OUTPUT: 'GTK+ Code Demos frame'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Application main window'
+     VISIBLE:  'Application main window', cursor=1
+SPEECH OUTPUT: 'tab list Widget (double click for demo) page tree table'
+SPEECH OUTPUT: 'Widget (double click for demo) column header'
+SPEECH OUTPUT: 'Application main window'
+SPEECH OUTPUT: 'tree level 1'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Button Boxes'
+     VISIBLE:  'Button Boxes', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Button Boxes'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Change Display'
+     VISIBLE:  'Change Display', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Change Display'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Clipboard'
+     VISIBLE:  'Clipboard', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Clipboard'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Color Selector'
+     VISIBLE:  'Color Selector', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Color Selector'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Combo boxes'
+     VISIBLE:  'Combo boxes', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Combo boxes'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Dialog and Message Boxes'
+     VISIBLE:  'Dialog and Message Boxes', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Dialog and Message Boxes'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Drawing Area'
+     VISIBLE:  'Drawing Area', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Drawing Area'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Entry Completion'
+     VISIBLE:  'Entry Completion', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Entry Completion'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Expander'
+     VISIBLE:  'Expander', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Expander'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Icon View'
+     VISIBLE:  'Icon View', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Icon View collapsed 0 items'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Images'
+     VISIBLE:  'Images', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Images'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Menus'
+     VISIBLE:  'Menus', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Menus'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Paned Widgets'
+     VISIBLE:  'Paned Widgets', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Paned Widgets'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Pickers'
+     VISIBLE:  'Pickers', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Pickers'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Pixbufs'
+     VISIBLE:  'Pixbufs', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Pixbufs'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Printing'
+     VISIBLE:  'Printing', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Printing'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Rotated Text'
+     VISIBLE:  'Rotated Text', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Rotated Text'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Size Groups'
+     VISIBLE:  'Size Groups', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Size Groups'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Stock Item and Icon Browser'
+     VISIBLE:  'Stock Item and Icon Browser', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Stock Item and Icon Browser'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Text Widget'
+     VISIBLE:  'Text Widget', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Text Widget collapsed 0 items'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Tree View'
+     VISIBLE:  'Tree View', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Tree View collapsed 0 items'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Tree View expanded TREE LEVEL 1'
+     VISIBLE:  'Tree View expanded TREE LEVEL 1', cursor=1
+SPEECH OUTPUT: 'Tree View expanded 0 items'
+BRAILLE LINE:  'gtk-demo GTK+ Code Demos  Widget (double click for demo)   Widget (double click for demo)Editable Cells'
+     VISIBLE:  'Editable Cells', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Editable Cells'
+SPEECH OUTPUT: 'tree level 2'
+BRAILLE LINE:  'gtk-demo GTK+ Code Demos  Widget (double click for demo)   Widget (double click for demo)List Store'
+     VISIBLE:  'List Store', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'List Store'
+BRAILLE LINE:  'gtk-demo GTK+ Code Demos  Widget (double click for demo)   Widget (double click for demo)Tree Store'
+     VISIBLE:  'Tree Store', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Tree Store'
+BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame'
+     VISIBLE:  'Card planning sheet Frame', cursor=1
+SPEECH OUTPUT: 'Card planning sheet frame'
+BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Holiday ColumnHeader Holiday ColumnHeader'
+     VISIBLE:  'Holiday ColumnHeader', cursor=1
+SPEECH OUTPUT: 'tree table'
+SPEECH OUTPUT: 'Holiday column header'
+BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Alex ColumnHeader Alex ColumnHeader'
+     VISIBLE:  'Alex ColumnHeader', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Alex column header'
+BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Holiday ColumnHeader Holiday ColumnHeader'
+     VISIBLE:  'Holiday ColumnHeader', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Holiday column header'
+BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable'
+     VISIBLE:  'TreeTable', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'tree table'
+BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Alex ColumnHeader January < > < > < > < > < >'
+     VISIBLE:  '< > < > < > < > < >', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Alex column header'
+SPEECH OUTPUT: 'January expanded 0 items check box not checked  check box not checked  check box not checked  check box not checked  check box not checked '
+BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Holiday ColumnHeader January expanded TREE LEVEL 1'
+     VISIBLE:  'January expanded TREE LEVEL 1', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Holiday column header'
+SPEECH OUTPUT: 'January expanded 0 items'
+SPEECH OUTPUT: 'tree level 1'
+BRAILLE LINE:  'gtk-demo Card planning sheet   HolidayNew Years Day <x> <x> <x> <x> < >'
+     VISIBLE:  'New Years Day <x> <x> <x> <x> < ', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'New Years Day check box checked  check box checked  check box checked  check box checked  check box not checked '
+SPEECH OUTPUT: 'tree level 2'
+BRAILLE LINE:  'gtk-demo Card planning sheet   Alex<x>'
+     VISIBLE:  '<x>', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Alex column header'
+SPEECH OUTPUT: 'check box checked '
+BRAILLE LINE:  'gtk-demo Card planning sheet   Havoc<x>'
+     VISIBLE:  '<x>', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Havoc column header'
+SPEECH OUTPUT: 'check box checked '
+BRAILLE LINE:  'gtk-demo Card planning sheet   Tim<x>'
+     VISIBLE:  '<x>', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Tim column header'
+SPEECH OUTPUT: 'check box checked '
+BRAILLE LINE:  'gtk-demo Card planning sheet   Owen<x>'
+     VISIBLE:  '<x>', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Owen column header'
+SPEECH OUTPUT: 'check box checked '
+BRAILLE LINE:  'gtk-demo Card planning sheet   Dave< >'
+     VISIBLE:  '< >', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Dave column header'
+SPEECH OUTPUT: 'check box not checked '
+BRAILLE LINE:  'gtk-demo Card planning sheet   Owen<x>'
+     VISIBLE:  '<x>', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Owen column header'
+SPEECH OUTPUT: 'check box checked '
+BRAILLE LINE:  'gtk-demo Card planning sheet   Tim<x>'
+     VISIBLE:  '<x>', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Tim column header'
+SPEECH OUTPUT: 'check box checked '
+BRAILLE LINE:  'gtk-demo Card planning sheet   Havoc<x>'
+     VISIBLE:  '<x>', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Havoc column header'
+SPEECH OUTPUT: 'check box checked '
+BRAILLE LINE:  'gtk-demo Card planning sheet   Havoc< >'
+     VISIBLE:  '< >', cursor=1
+SPEECH OUTPUT: 'not checked '
+BRAILLE LINE:  'gtk-demo Card planning sheet   Alex<x>'
+     VISIBLE:  '<x>', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Alex column header'
+SPEECH OUTPUT: 'check box checked '
+BRAILLE LINE:  'gtk-demo Card planning sheet   Alex< >'
+     VISIBLE:  '< >', cursor=1
+SPEECH OUTPUT: 'not checked '
+BRAILLE LINE:  'gtk-demo Card planning sheet   HolidayNew Years Day TREE LEVEL 2'
+     VISIBLE:  'New Years Day TREE LEVEL 2', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Holiday column header'
+SPEECH OUTPUT: 'New Years Day'
+SPEECH OUTPUT: 'tree level 2'
+BRAILLE LINE:  'gtk-demo Card planning sheet   HolidayPresidential Inauguration < > <x> < > <x> < >'
+     VISIBLE:  'Presidential Inauguration < > <x', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Presidential Inauguration check box not checked  check box checked  check box not checked  check box checked  check box not checked '
+BRAILLE LINE:  'gtk-demo Card planning sheet   HolidayMartin Luther King Jr. day < > <x> < > <x> < >'
+     VISIBLE:  'Martin Luther King Jr. day < > <', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Martin Luther King Jr. day check box not checked  check box checked  check box not checked  check box checked  check box not checked '
+BRAILLE LINE:  'gtk-demo Card planning sheet   HolidayFebruary < > < > < > < > < >'
+     VISIBLE:  'February < > < > < > < > < >', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'February expanded 0 items check box not checked  check box not checked  check box not checked  check box not checked  check box not checked '
+SPEECH OUTPUT: 'tree level 1'
+BRAILLE LINE:  'gtk-demo Card planning sheet   HolidayPresidents' Day < > <x> < > <x> < >'
+     VISIBLE:  'Presidents' Day < > <x> < > <x> ', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Presidents' Day check box not checked  check box checked  check box not checked  check box checked  check box not checked '
+SPEECH OUTPUT: 'tree level 2'
+BRAILLE LINE:  'gtk-demo Card planning sheet   Alex< >'
+     VISIBLE:  '< >', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Alex column header'
+SPEECH OUTPUT: 'check box not checked '
+BRAILLE LINE:  'gtk-demo Card planning sheet   Havoc<x>'
+     VISIBLE:  '<x>', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Havoc column header'
+SPEECH OUTPUT: 'check box checked '
+BRAILLE LINE:  'gtk-demo Card planning sheet   Havoc< >'
+     VISIBLE:  '< >', cursor=1
+SPEECH OUTPUT: 'not checked '
+BRAILLE LINE:  'gtk-demo Card planning sheet   Alex< >'
+     VISIBLE:  '< >', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Alex column header'
+SPEECH OUTPUT: 'check box not checked '
+BRAILLE LINE:  'gtk-demo Card planning sheet   Havoc< >'
+     VISIBLE:  '< >', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Havoc column header'
+SPEECH OUTPUT: 'check box not checked '
+BRAILLE LINE:  'gtk-demo Card planning sheet   Tim< >'
+     VISIBLE:  '< >', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Tim column header'
+SPEECH OUTPUT: 'check box not checked '
+BRAILLE LINE:  'gtk-demo Card planning sheet   Owen<x>'
+     VISIBLE:  '<x>', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Owen column header'
+SPEECH OUTPUT: 'check box checked '
+BRAILLE LINE:  'gtk-demo Card planning sheet   Owen< >'
+     VISIBLE:  '< >', cursor=1
+SPEECH OUTPUT: 'not checked '
+BRAILLE LINE:  'gtk-demo Card planning sheet   Tim< >'
+     VISIBLE:  '< >', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Tim column header'
+SPEECH OUTPUT: 'check box not checked '
+BRAILLE LINE:  'gtk-demo Card planning sheet   Havoc< >'
+     VISIBLE:  '< >', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Havoc column header'
+SPEECH OUTPUT: 'check box not checked '
+BRAILLE LINE:  'gtk-demo Card planning sheet   Alex< >'
+     VISIBLE:  '< >', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Alex column header'
+SPEECH OUTPUT: 'check box not checked '
+BRAILLE LINE:  'gtk-demo Card planning sheet   HolidayPresidents' Day TREE LEVEL 2'
+     VISIBLE:  'Presidents' Day TREE LEVEL 2', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Holiday column header'
+SPEECH OUTPUT: 'Presidents' Day'
+SPEECH OUTPUT: 'tree level 2'
+BRAILLE LINE:  'gtk-demo Card planning sheet   HolidayGroundhog Day < > < > < > < > < >'
+     VISIBLE:  'Groundhog Day < > < > < > < > < ', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Groundhog Day check box not checked  check box not checked  check box not checked  check box not checked  check box not checked '
+BRAILLE LINE:  'gtk-demo Card planning sheet   HolidayValentine's Day < > < > < > < > <x>'
+     VISIBLE:  'Valentine's Day < > < > < > < > ', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Valentine's Day check box not checked  check box not checked  check box not checked  check box not checked  check box checked '
