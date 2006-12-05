@@ -434,16 +434,22 @@ class Context:
             zoneIndex   = currentZoneIndex
             caretOffset = zone.accessible.text.caretOffset
             foundZoneWithCaret = False
+            checkForEOF = False
             while lineIndex < len(self.lines):
                 line = self.lines[lineIndex]
                 while zoneIndex < len(line.zones):
                     zone = line.zones[zoneIndex]
                     if zone.accessible == accessible:
-                        if (caretOffset >= zone.startOffset) \
-                               and (caretOffset \
+                        if (caretOffset >= zone.startOffset):
+                            if (caretOffset \
                                     < (zone.startOffset + zone.length)):
-                            foundZoneWithCaret = True
-                            break
+                                foundZoneWithCaret = True
+                                break
+                            elif (caretOffset \
+                                    == (zone.startOffset + zone.length)):
+                                checkForEOF = True
+                                lineToCheck = lineIndex
+                                zoneToCheck = zoneIndex
                     zoneIndex += 1
                 if foundZoneWithCaret:
                     currentLineIndex = lineIndex
@@ -463,6 +469,19 @@ class Context:
                 else:
                     zoneIndex = 0
                     lineIndex += 1
+            atEOF = not foundZoneWithCaret and checkForEOF
+            if atEOF:
+                # JD - HACK: The caret is on a character to which we
+                # cannot flat review. Set wordIndex to be one greater
+                # than the wordIndex of the final word in this zone.
+                # Then be sure that getCurrent handles it appropriately.
+                #
+                line = self.lines[lineToCheck]
+                zone = line.zones[zoneToCheck]
+                currentLineIndex = lineToCheck
+                currentZoneIndex = zoneToCheck
+                currentWordIndex = len(zone.words) - 1
+                currentCharIndex = zone.words[currentWordIndex].length - 1
 
         self.lineIndex = currentLineIndex
         self.zoneIndex = currentZoneIndex
