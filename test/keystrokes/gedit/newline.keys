@@ -2,18 +2,6 @@
 # SYSTEM=Linux desktop 2.6.17-10-generic #2 SMP Fri Oct 13 18:45:35 UTC 2006 i686 GNU/Linux
 # This test enters some text into gedit and arrows through it to hear the change between lines.
 # This test should be run with both keyboard and word echo unchecked.
-KEYEVENT: type=1
-          hw_code=37
-          modifiers=12
-          event_string=(Control_L)
-          is_text=True
-          time=1165096110.058877
-KEYEVENT: type=1
-          hw_code=64
-          modifiers=8
-          event_string=(Alt_L)
-          is_text=True
-          time=1165096110.060210
 KEYEVENT: type=0
           hw_code=10
           modifiers=0

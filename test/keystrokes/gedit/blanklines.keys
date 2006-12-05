@@ -2,19 +2,6 @@
 # SYSTEM=Linux desktop 2.6.17-10-generic #2 SMP Fri Oct 13 18:45:35 UTC 2006 i686 GNU/Linux
 # This test  enters some text into geditand arrows through it to rear blank lines being spoken.
 # This test should be run with both key echo and word echo unchecked.
-
-KEYEVENT: type=1
-          hw_code=37
-          modifiers=12
-          event_string=(Control_L)
-          is_text=True
-          time=1165095596.308967
-KEYEVENT: type=1
-          hw_code=64
-          modifiers=8
-          event_string=(Alt_L)
-          is_text=True
-          time=1165095596.312848
 KEYEVENT: type=0
           hw_code=73
           modifiers=0

@@ -1,18 +1,6 @@
 # DATE=11:29:50 AM 12/01/2006 PST
 # SYSTEM=Linux desktop 2.6.17-10-generic #2 SMP Fri Oct 13 18:45:35 UTC 2006 i686 GNU/Linux
 # tests the dialogbox demo in the gtk-demo application
-KEYEVENT: type=1
-          hw_code=37
-          modifiers=12
-          event_string=(Control_L)
-          is_text=True
-          time=1165001394.238854
-KEYEVENT: type=1
-          hw_code=64
-          modifiers=8
-          event_string=(Alt_L)
-          is_text=True
-          time=1165001394.239815
 KEYEVENT: type=0
           hw_code=104
           modifiers=0

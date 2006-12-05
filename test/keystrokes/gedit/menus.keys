@@ -1,6 +1,5 @@
 # DATE=04:52:48 PM 11/28/2006 EST
 # SYSTEM=Linux ubuntu 2.6.17-10-generic #2 SMP Fri Oct 13 18:45:35 UTC 2006 i686 GNU/Linux
-
 KEYEVENT: type=0
           hw_code=76
           modifiers=0
