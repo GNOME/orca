@@ -145,6 +145,7 @@ def isSpreadSheetCell(obj):
     Returns True if this is a table cell, False otherwise.
     """
 
+    found = False
     rolesList = [rolenames.ROLE_TABLE_CELL, \
                  rolenames.ROLE_TABLE, \
                  rolenames.ROLE_UNKNOWN, \
@@ -153,7 +154,19 @@ def isSpreadSheetCell(obj):
                  rolenames.ROLE_ROOT_PANE, \
                  rolenames.ROLE_FRAME, \
                  rolenames.ROLE_APPLICATION]
-    return util.isDesiredFocusedItem(obj, rolesList)
+    if util.isDesiredFocusedItem(obj, rolesList):
+        # We've found a table cell with the correct hierarchy. Now check
+        # that we are in a spreadsheet as opposed to the writer application.
+        # See bug #382408.
+        #
+        current = obj.parent
+        while current.role != rolenames.ROLE_APPLICATION:
+            if current.role == rolenames.ROLE_FRAME and \
+               (current.name and current.name.endswith(_("Calc"))):
+                found = True
+            current = current.parent
+
+    return found
 
 class BrailleGenerator(braillegenerator.BrailleGenerator):
     """Overrides _getBrailleRegionsForTableCellRow so that , when we are
@@ -1339,7 +1352,8 @@ class Script(default.Script):
         # to help reduce the verbosity of focusing on the Calc Name combo 
         # box (see bug #364407).
         #
-        if event.source.parent.role == rolenames.ROLE_COMBO_BOX:
+        if event.source.parent and \
+           event.source.parent.role == rolenames.ROLE_COMBO_BOX:
             orca.setLocusOfFocus(None, event.source.parent, False)
             return
 

@@ -1,3 +1,12 @@
+2006-12-05  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/StarOffice.py:
+          Fix for bug #382408 – Significant sluggishness when navigating 
+          in OOo Writer tables.
+
+          Also added in a check for a event.source.parent != None
+          that was causing a traceback as I was testing the above fix.
+
 2006-12-05  Willie Walker <william.walker@sun.com>
 
 	* test/*: add README and remove stray keystrokes from some
