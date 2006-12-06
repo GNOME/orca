@@ -689,8 +689,23 @@ def refresh(panToCursor=True, targetCursorCell=0):
                 writeStruct.regionSize += 1
             writeStruct.cursor = cursorCell
             writeStruct.charset = "UTF-8"
+
+            # [[[WDW - if you want to muck around with the dots on the
+            # display to do things such as add underlines, you can use
+            # the attrOr field of the write structure to do so.  The
+            # attrOr field is a string whose length must be the same
+            # length as the display and whose dots will end up showing
+            # up on the display.  Each character represents a bitfield
+            # where each bit corresponds to a dot (i.e., bit 0 = dot 1,
+            # bit 1 = dot 2, and so on).  Here's an example that underlines
+            # all the text.]]]
+            #
+            #myUnderline = ""
+            #for i in range(0, _displaySize[0]):
+            #    myUnderline += '\xc0'
+            #writeStruct.attrOr = myUnderline
+
             brlAPI.write(writeStruct)
-            #brlAPI.writeText(substring, cursorCell)
     else:
         brl.writeText(cursorCell, substring)
 

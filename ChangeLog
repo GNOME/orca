@@ -1,3 +1,11 @@
+2006-12-06  Willie Walker <william.walker@sun.com>
+
+	* src/orca/braille.py: while I was digging around in the latest
+	BrlAPI docs, I added some example code to braille.py to show
+	how to underline something with dots 7+8, assuming we know what
+	to underline.  Search for 'myUnderline' in the code to find 
+	the example.
+	
 2006-12-06  Joanmarie Diggs <via william.walker@sun.com>
 
 	* src/orca/flat_review.py: fix for bug 382891 to allow flat
