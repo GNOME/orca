@@ -629,7 +629,7 @@ class SpeechServer(speechserver.SpeechServer):
                 removeNewLines = False
 
         if removeNewLines:
-            oldText = oldText.replace("\n", _(""), 1)
+            oldText = oldText.replace("\n", "", 1)
 
         style = settings.verbalizePunctuationStyle
         newText = ''
