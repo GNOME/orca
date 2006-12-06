@@ -723,6 +723,15 @@ class Script(default.Script):
         accessible text specialization, the characterOffset value
         is meaningless (and typically -1)."""
 
+        # We need to handle HTML content differently because we do our
+        # own navigation and we also handle the EMBEDDED_OBJECT_CHARACTER.
+        # But...if we're not in HTML content, we'll defer to the default
+        # script.
+        #
+        if not self.inDocumentContent():
+            default.Script.onCaretMoved(self, event)
+            return
+
         self.caretContext = self.getFirstCaretContext(\
             event.source,
             event.source.text.caretOffset)
