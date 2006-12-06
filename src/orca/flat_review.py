@@ -471,11 +471,6 @@ class Context:
                     lineIndex += 1
             atEOF = not foundZoneWithCaret and checkForEOF
             if atEOF:
-                # JD - HACK: The caret is on a character to which we
-                # cannot flat review. Set wordIndex to be one greater
-                # than the wordIndex of the final word in this zone.
-                # Then be sure that getCurrent handles it appropriately.
-                #
                 line = self.lines[lineToCheck]
                 zone = line.zones[zoneToCheck]
                 currentLineIndex = lineToCheck
