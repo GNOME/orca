@@ -918,8 +918,8 @@ def init(callback=None, tty=7):
             gobject.threads_init()
             global brlAPI
             global brlAPIRunning
-            brlAPI = brlapi.Bridge()
-            brlAPI.getTty(tty)
+            brlAPI = brlapi.Connection()
+            brlAPI.enterTtyMode(tty)
             brlAPIRunning = True
             gobject.idle_add(_brlAPIKeyReader)
         except:
@@ -940,7 +940,7 @@ def init(callback=None, tty=7):
     #
     #_displaySize = (brl.getDisplayWidth(), brl.getDisplayHeight())
     if useBrlAPIBindings:
-        (x, y) = brlAPI.displaysize
+        (x, y) = brlAPI.displaySize
         _displaySize = [x, 1]
     else:
         _displaySize = [brl.getDisplayWidth(), 1]
@@ -970,7 +970,7 @@ def shutdown():
     if useBrlAPIBindings:
         if brlAPIRunning:
             brlAPIRunning = False
-            brlAPI.leaveTty()
+            brlAPI.leaveTtyMode()
     else:
         brl.shutdown()
 
