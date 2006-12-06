@@ -480,8 +480,10 @@ class Context:
                 zone = line.zones[zoneToCheck]
                 currentLineIndex = lineToCheck
                 currentZoneIndex = zoneToCheck
-                currentWordIndex = len(zone.words) - 1
-                currentCharIndex = zone.words[currentWordIndex].length - 1
+                if caretOffset:
+                    currentWordIndex = len(zone.words) - 1
+                    currentCharIndex = \
+                          zone.words[currentWordIndex].length - 1
 
         self.lineIndex = currentLineIndex
         self.zoneIndex = currentZoneIndex

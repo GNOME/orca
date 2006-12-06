@@ -1,3 +1,9 @@
+2006-12-06  Joanmarie Diggs <via william.walker@sun.com>
+
+	* src/orca/flat_review.py: fix for bug 382891 to allow flat
+	review to work in the face of empty text areas.  See also 
+	bug 381391.
+	
 2006-12-06  Willie Walker <william.walker@sun.com>
 
 	* src/orca/gnomespeechfactory.py: don't use _("") since it
