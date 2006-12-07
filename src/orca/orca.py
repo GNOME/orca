@@ -1192,8 +1192,8 @@ def usage():
     print _("-t, --text-setup             Set up user preferences (text version)")
     print _("-n, --no-setup               Skip set up of user preferences")
     print _("-u, --user-prefs-dir=dirname Use alternate directory for user preferences")
-    print _("-e, --enable=[speech|braille|braille-monitor|magnifier] Force use of option")
-    print _("-d, --disable=[speech|braille|braille-monitor|magnifier] Prevent use of option")
+    print _("-e, --enable=[speech|braille|braille-monitor|magnifier|main-window] Force use of option")
+    print _("-d, --disable=[speech|braille|braille-monitor|magnifier|main-window] Prevent use of option")
     print _("-q, --quit                   Quits Orca (if shell script used)")
     print
     print _("If Orca has not been previously set up by the user, Orca\nwill automatically launch the preferences set up unless\nthe -n or --no-setup option is used.")
@@ -1295,6 +1295,8 @@ def main():
                     _commandLineSettings["enableBrailleMonitor"] = True
                 elif feature == "magnifier":
                     _commandLineSettings["enableMagnifier"] = True
+                elif feature == "main-window":
+                    _commandLineSettings["showMainWindow"] = True
                 else:
                     usage()
                     os._exit(2)
@@ -1309,6 +1311,8 @@ def main():
                     _commandLineSettings["enableBrailleMonitor"] = False
                 elif feature == "magnifier":
                     _commandLineSettings["enableMagnifier"] = False
+                elif feature == "main-window":
+                    _commandLineSettings["showMainWindow"] = False
                 else:
                     usage()
                     os._exit(2)

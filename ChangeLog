@@ -1,5 +1,10 @@
 2006-12-06  Willie Walker <william.walker@sun.com>
 
+	* src/orca/orca.py: add "main-window" as a feature to be enabled
+	or disabled from the command line.  This allows accessible login
+	to prevent the window from popping up and covering the login
+	dialog.
+	
 	* src/orca/orca.py: make the {-n,--no-setup} options completely
 	bypass any sense of setup, even when the gconf setting for a11y
 	is false.  This allows Orca to work better with accessible login.
