@@ -1997,12 +1997,6 @@ class Script(default.Script):
 
         self.caretContext = [obj, characterOffset]
 
-        # We'd like the thing to have focus if it can take focus.
-        #
-        focusGrabbed = obj.component.grabFocus()
-        if not focusGrabbed:
-            print "FOCUS NOT GRABBED", obj.role, characterOffset
-
         # If there is a character there, we'd like to position the
         # caret the right spot.  [[[TODO: WDW - numbered lists are
         # whacked in that setting the caret offset somewhere in
@@ -2017,18 +2011,28 @@ class Script(default.Script):
                 caretSet = False
             if not caretSet:
                 print "CARET NOT SET", obj.role, characterOffset
+            else:
+                #print "CARET SET", obj.role, characterOffset
+                pass
+
+        # We'd like the thing to have focus if it can take focus.
+        #
+        focusGrabbed = obj.component.grabFocus()
+        if not focusGrabbed:
+            print "FOCUS NOT GRABBED", obj.role, characterOffset
+        else:
+            #print "FOCUS GRABBED", obj.role, characterOffset
+            pass
 
     def goNextCharacter(self, inputEvent):
         """Positions the caret offset to the next character or object
         in the document window.
         """
-
         [obj, characterOffset] = self.getCaretContext()
         while obj:
             [obj, characterOffset] = self.getNextCaretInOrder(obj,
                                                               characterOffset)
             if obj and obj.state.count(atspi.Accessibility.STATE_SHOWING):
-                self.caretContext = [obj, characterOffset]
                 break
 
         if obj:
@@ -2048,7 +2052,6 @@ class Script(default.Script):
             [obj, characterOffset] = self.getPreviousCaretInOrder(
                 obj, characterOffset)
             if obj and obj.state.count(atspi.Accessibility.STATE_SHOWING):
-                self.caretContext = [obj, characterOffset]
                 break
 
         if obj:
