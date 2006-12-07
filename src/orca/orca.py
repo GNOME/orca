@@ -1333,11 +1333,16 @@ def main():
         os._exit(2)
 
     # Do not run Orca if accessibility has not been enabled.
+    # We do allow, however, one to force Orca to run via the
+    # "-n" switch.  The main reason is so that things such
+    # as accessible login can work -- in those cases, the gconf
+    # setting is typically not set since the gdm user does not
+    # have a home.
     #
     import commands
     a11yEnabled = commands.getoutput(\
         "gconftool-2 --get /desktop/gnome/interface/accessibility")
-    if a11yEnabled != "true":
+    if (not bypassSetup) and (a11yEnabled != "true"):
         _showPreferencesConsole()
         abort()
 
