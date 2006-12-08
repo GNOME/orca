@@ -694,7 +694,7 @@ class Script(default.Script):
         if user_bindings:
             handler = user_bindings.getInputHandler(keyboardEvent)
             if handler and handler._function in self._caretNavigationFunctions:
-                return self.useCaretNavigationModel()
+                return self.useCaretNavigationModel(keyboardEvent)
             elif handler \
                 and handler._function in self._structuralNavigationFunctions:
                 return self.useStructuralNavigationModel()
@@ -703,7 +703,7 @@ class Script(default.Script):
         if not consumes:
             handler = self.keyBindings.getInputHandler(keyboardEvent)
             if handler and handler._function in self._caretNavigationFunctions:
-                return self.useCaretNavigationModel()
+                return self.useCaretNavigationModel(keyboardEvent)
             elif handler \
                 and handler._function in self._structuralNavigationFunctions:
                 return self.useStructuralNavigationModel()
@@ -1118,23 +1118,34 @@ class Script(default.Script):
                 obj = obj.parent
         return False
 
-    def useCaretNavigationModel(self):
+    def useCaretNavigationModel(self, keyboardEvent):
         """Returns True if we should do our own caret navigation.
-        [[[TODO: WDW - this should return False if we're in something
-        like an entry area or a list because we want their keyboard
-        navigation stuff to work.]]]
         """
 
         if not controlCaretNavigation:
             return False
 
-        letThemDoItRoles = [rolenames.ROLE_ENTRY]
         obj = orca_state.locusOfFocus
+
         while obj:
             if obj.role == rolenames.ROLE_DOCUMENT_FRAME:
                 return True
-            elif obj.role in letThemDoItRoles:
-                return False
+            elif obj.role == rolenames.ROLE_ENTRY:
+                text        = obj.text
+                length      = text.characterCount
+                caretOffset = text.caretOffset
+                if length == 0:
+                    return True
+                elif caretOffset <= 0:
+                    weHandleIt = keyboardEvent.event_string \
+                                 in ["Up", "Left"]
+                    return weHandleIt
+                elif caretOffset >= length -1:
+                    weHandleIt = keyboardEvent.event_string \
+                                 in ["Down", "Right"]
+                    return weHandleIt
+                else:
+                    return False
             else:
                 obj = obj.parent
 
