@@ -1,5 +1,12 @@
 2006-12-08  Lynn Monsanto <Lynn.Monsanto@sun.com>
 
+	* src/orca/scripts/where_am_I.py: added support for
+	speaking character attributes in where-am-I command.
+	#371122
+	
+	
+2006-12-08  Lynn Monsanto <Lynn.Monsanto@sun.com>
+
 	* src/orca/scripts/Evolution.py: speak blank lines when
 	appropriate #375395
 

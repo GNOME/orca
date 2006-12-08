@@ -44,8 +44,9 @@ import util
 from orca_i18n import _ # for gettext support
 
 _debugLevel = debug.LEVEL_FINEST
-_statusBar = None
 _appName = None
+_statusBar = None
+_lastAttributeString = ""
 
 def whereAmI(obj, context, doubleClick, orcaKey):
     """
@@ -187,6 +188,7 @@ def _speakRadioButton(obj, doubleClick):
     """
     Radio Buttons present the following information (an example is
     'Punctuation Level, Some, Radio button, selected, item 2 of 4, Alt M'):
+    
     1. group name
     2. label
     3. role
@@ -443,9 +445,12 @@ def _speakText(obj, doubleClick):
     3. contents
         A. if no text on the current line is selected, the current line
         B. if text is selected on the current line, that text, followed
-        by 'selected'
+        attibute information before  (bold "text")
+        by 'selected' (single press) 
         C. if the current line is blank/empty, 'blank'
     4. mnemonic (i.e. Alt plus the underlined letter), if any
+
+    Gaim, gedit, OpenOffice Writer and Terminal
     """
     utterances = []
     text = _("%s") % _getObjLabel(obj)
@@ -453,14 +458,30 @@ def _speakText(obj, doubleClick):
     
     text = _("%s") % rolenames.getSpeechForRoleName(obj)
     utterances.append(text)
+
+    [textContents, startOffset, endOffset, selected] = \
+                   _getTextContents(obj, doubleClick)
+    if doubleClick:
+        # Speak character attributes.
+        textContents = \
+            _insertAttributes(obj, startOffset, endOffset, textContents)
+        savedStyle = settings.verbalizePunctuationStyle
+        settings.verbalizePunctuationStyle = settings.PUNCTUATION_STYLE_SOME
     
-    [textContents, selected] = _getTextContents(obj)
     text = _("%s") % textContents
     utterances.append(text)
+    debug.println(_debugLevel, "first text utterances=%s" % \
+                  utterances)
+    speech.speakUtterances(utterances)
+
+    if doubleClick:
+        verbalizePunctuationStyle = savedStyle
+    
+    utterances = []
     if selected:
         text = _("%s") % "selected"
         utterances.append(text)
-        
+
     text = _("%s") % _getObjMnemonic(obj)
     utterances.append(text)
     
@@ -513,6 +534,8 @@ def _speakTableCell(obj, doubleClick):
     4. relative position
     5. if expandable/collapsible: expanded/collapsed
     6. if applicable, the level
+    
+    Nautilus and Gaim
     """
     
     # Speak the first two items (and possibly the position)
@@ -578,24 +601,35 @@ def _speakParagraph(obj, doubleClick):
     OpenOffice Calc cells have the role "paragraph" when
     they are being edited.
     """
-    utterances = []
     if _getAppName() == "soffice.bin":
         top = util.getTopLevel(obj)
         if top and top.name.endswith(" Calc"):
-            utterances.append(_("Cell"))
+            _speakCalc(obj, doubleClick)
 
-            # No way to get cell coordinates?
+        elif top and top.name.endswith(" Writer"):
+            _speakText(obj, doubleClick)
 
-            [textContents, selected] = _getTextContents(obj)
-            text = _("%s") % textContents
-            utterances.append(text)
-            if selected:
-                text = _("%s") % "selected"
-                utterances.append(text)
-                
-            debug.println(_debugLevel, "editable table cell utterances=%s" % \
-                          utterances)
-            speech.speakUtterances(utterances)
+
+
+def _speakCalc(obj, doubleClick):
+    """
+    Speak a OpenOffice Calc cell.
+    """
+    utterances = []
+    utterances.append(_("Cell"))
+    
+    # No way to get cell coordinates?
+    
+    [textContents, startOffset, endOffset, selected] = _getTextContents(obj)
+    text = _("%s") % textContents
+    utterances.append(text)
+    if selected:
+        text = _("%s") % "selected"
+        utterances.append(text)
+        
+    debug.println(_debugLevel, "editable table cell utterances=%s" % \
+                  utterances)
+    speech.speakUtterances(utterances)
             
 
 def _getObjName(obj):
@@ -885,7 +919,7 @@ def _getCheckBox(obj):
     return utterances
 
 
-def _getTextContents(obj):
+def _getTextContents(obj, doubleClick):
     """
     Returns utterences for text.
 
@@ -898,6 +932,8 @@ def _getTextContents(obj):
     caretOffset = textObj.caretOffset
     textContents = ""
     selected = False
+    startSelOffset = -1
+    endSelOffset = -1
 
     nSelections = textObj.getNSelections()
     debug.println(_debugLevel,
@@ -907,13 +943,13 @@ def _getTextContents(obj):
     if nSelections:
         selected = True
         for i in range(0, nSelections):
-            [startSelOffset, endSelOffset] = textObj.getSelection(i)
+            [startOffset, endOffset] = textObj.getSelection(i)
             
             debug.println(_debugLevel,
                 "_getTextContents: selection start=%d, end=%d" % \
-                (startSelOffset, endSelOffset))
+                (startOffset, endOffset))
             
-            selectedText = textObj.getText(startSelOffset, endSelOffset)
+            selectedText = textObj.getText(startOffset, endOffset)
             debug.println(_debugLevel,
                 "_getTextContents: selected text=<%s>" % selectedText)
 
@@ -922,10 +958,13 @@ def _getTextContents(obj):
             textContents += selectedText
 
     else:
-        [line, caretOffset, startOffset] = util.getTextLineAtCaret(obj)
+        # Get the line containing the caret
+        #
+        [line, startOffset, endOffset] = textObj.getTextAtOffset(
+            textObj.caretOffset, atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
         debug.println(_debugLevel, \
-            "_getTextContents: len=%d, start=%d, caret=%d, line=<%s>" % \
-            (len(line), startOffset, caretOffset, line))
+            "_getTextContents: len=%d, start=%d, end=%d, line=<%s>" % \
+            (len(line), startOffset, endOffset, line))
 
         if len(line):
             line = util.adjustForRepeats(line)
@@ -942,8 +981,121 @@ def _getTextContents(obj):
                    and settings.speakBlankLines:
                 textContents = (_("blank"))
 
-    return [textContents, selected]
+    return [textContents, startOffset, endOffset, selected]
 
+
+def _insertAttributes(obj, startOffset, endOffset, line):
+    """
+    Adjust line to include attribute information.
+    """
+    text = obj.text
+    if not text:
+        return ""
+    
+    newLine = ""
+    textOffset = startOffset
+
+    for i in range(0, len(line)):
+        attribs =_getAttributesForChar(text, textOffset, line, i)
+        debug.println(_debugLevel,
+                      "line attribs <%s>" % (attribs))
+        if attribs:
+            newLine += " ; "
+            newLine += attribs
+            newLine += " "
+
+        newLine += line[i]
+        textOffset += 1
+
+    debug.println(_debugLevel, "newLine: <%s>" % (newLine))
+    return newLine
+
+
+def _getAttributesForChar(text, textOffset, line, lineIndex):
+
+    global _lastAttributeString
+    keys = [ "style", "weight", "underline" ]
+
+    attribStr = ""
+
+    charAttributes = text.getAttributes(textOffset)
+    
+    if charAttributes[0]:
+        charDict = _stringToDictionary(charAttributes[0])
+        debug.println(_debugLevel,
+                      "charDict: %s" % (charDict))
+
+        for i in range(0, len(keys)):
+            key = keys[i]
+            if charDict.has_key(key):
+                attribute = charDict[key]
+                if attribute:
+                    # If it's the 'weight' attribute and greater than 400, just
+                    # speak it as bold, otherwise speak the weight.
+                    #
+                    if key == "weight" and int(attribute) > 400:
+                        attribStr += " "
+                        attribStr += _("bold")
+                        
+                    elif key == "underline":
+                        if attribute != "none":
+                            attribStr += " "
+                            attribStr += key
+                        
+                    elif key == "style":
+                        if attribute != "normal":
+                            attribStr += " "
+                            attribStr += attribute
+                    else:
+                        attribStr += " "
+                        attribStr += (key + " " + attribute)
+
+        debug.println(_debugLevel,
+                      "char <%s>: %s" % (line[lineIndex], attribStr))
+
+    # Only return attributes for the beginning of an attribute run.
+    if attribStr != _lastAttributeString:
+        _lastAttributeString = attribStr
+        return attribStr
+    else:
+        return ""
+
+
+def _stringToDictionary(str):
+    """
+    Converts a string of text attribute tokens of the form
+    <key>:<value>; into a dictionary of keys and values.
+    Text before the colon is the key and text afterwards is the
+    value. If there is a final semi-colon, then it's ignored.
+    """
+    dictionary = {}
+    allTokens = str.split(";")
+    for i in range(0, len(allTokens)):
+        item = allTokens[i].split(":")
+        if len(item) == 2:
+            item[0] = _removeLeadingSpaces(item[0])
+            item[1] = _removeLeadingSpaces(item[1])
+            dictionary[item[0]] = item[1]
+            
+    return dictionary
+
+
+def _removeLeadingSpaces(str):
+    """
+    Returns a string with the leading space characters removed.
+    """
+    newStr = ""
+    leadingSpaces = True
+    for i in range(0, len(str)):
+        if str[i] == " ":
+            if leadingSpaces:
+                continue
+        else:
+            leadingSpaces = False
+
+        newStr += str[i]
+
+    return newStr
 
 def _handleOrcaKey(obj, doubleClick):
     """
@@ -1037,6 +1189,7 @@ def _getFrameAndDialog(obj):
 
     return list
 
+
 def _getCalcFrameAndSheet(obj):
     """
     Returns the Calc frame and sheet
@@ -1054,6 +1207,7 @@ def _getCalcFrameAndSheet(obj):
         parent = parent.parent
 
     return list
+
 
 def _getStatusBar(obj):
     """
@@ -1119,3 +1273,6 @@ def _speakCalcStatusBar():
     debug.println(_debugLevel, "Calc statusbar utterances=%s" % \
                   utterances)
     speech.speakUtterances(utterances)
+
+
+
