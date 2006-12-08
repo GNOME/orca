@@ -395,9 +395,13 @@ class Script(default.Script):
             if self.speakNewLine(event.source):
                 speech.speak(chnames.getCharacterName("\n"), None, False)
  
-            speech.speak(line, None, False)
+            if self.speakBlankLine(event.source):
+                speech.speak(_("blank"), None, False)
+            else:
+                speech.speak(line, None, False)
 
             return
+        
 
         # 2) Mail view: current message pane: "standard" mail header lines.
         #
@@ -866,6 +870,10 @@ class Script(default.Script):
             if self.speakNewLine(event.source):
                 speech.speak(chnames.getCharacterName("\n"), None, False)
 
+
+            if self.speakBlankLine(event.source):
+                 speech.speak(_("blank"), None, False)
+
                 
         # 9) Spell Checking Dialog
         #
@@ -1050,7 +1058,31 @@ class Script(default.Script):
                     return True
 
         return False
+    def speakBlankLine(self, obj):
+        """Returns True if a blank line should be spoken.
+        Otherwise, returns False.
+        """
+        
+        # Get the the AccessibleText interrface. 
+        text = obj.text
+        if not text:
+            return False
 
+        # Get the line containing the caret
+        caretOffset = text.caretOffset
+        line = text.getTextAtOffset(caretOffset, \
+            atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+
+        debug.println(debug.LEVEL_FINEST, "speakBlankLine: start=%d, end=%d, line=<%s>" % (line[1], line[2], line[0]))
+
+        # If this is a blank line, announce it if the user requested
+        # that blank lines be spoken.
+        if line[1] == 0 and line[2] == 0:
+            return settings.speakBlankLines
+        else:
+            return False
+
+        
     def onStateChanged(self, event):
         """Called whenever an object's state changes.  We are only
         interested in "object:state-changed:showing" events for any
