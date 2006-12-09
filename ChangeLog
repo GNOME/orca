@@ -1,5 +1,13 @@
 2006-12-09  Willie Walker <william.walker@sun.com>
 
+	* src/orca/braille.py, src/orca/settings.py: if it exists, use the
+	root window's XFree86_VT property to determine the default value
+	for settings.tty (fallback to 7 otherwise).  Also add comment to
+	braille.py regarding future use of WINDOWPATH if it is ever rolled
+	into X.
+	
+2006-12-09  Willie Walker <william.walker@sun.com>
+
 	* src/orca/orca.py, src/orca/settings.py: add "tty" setting to
 	allow the specification of the tty the server is running on.
 	This can be set via settings.tty.  The default value is currently

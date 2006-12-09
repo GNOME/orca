@@ -30,6 +30,11 @@ __license__   = "LGPL"
 import os
 import re
 import sys
+
+screenWidth = 640
+screenHeight = 480
+tty = 7
+
 try:
     # This can fail due to gtk not being available.  We want to
     # be able to recover from that if possible.  The main driver
@@ -37,13 +42,22 @@ try:
     # the desktop is not running.
     #
     import gtk.gdk
-    screenWidth = gtk.gdk.screen_get_default().get_width()
-    screenHeight = gtk.gdk.screen_get_default().get_height()
-except:
-    # Just default to something that hopefully everybody has.
+    _display = gtk.gdk.display_get_default()
+    _screen = _display.get_default_screen()
+    _root_window = _screen.get_root_window()
+
+    # These are used for placing the magnifier zoomer.
     #
-    screenWidth = 640
-    screenHeight = 480
+    screenWidth = _screen.get_width()
+    screenHeight = _screen.get_height()
+
+    # We want to know what the tty is so we can send it to BrlAPI
+    # if possible.
+    #
+    (atom, format, data) = _root_window.property_get("XFree86_VT")
+    tty = data[0]
+except:
+    pass
 
 import debug
 from acss import ACSS
@@ -95,10 +109,6 @@ userCustomizableSettings = [
     "keyboardLayout",
     "speakBlankLines",
 ]
-
-# The TTY for BrlAPI
-#
-tty = 7
 
 # The name of the module that hold the user interface for the main window
 # for Orca. This module is expected to have two methods, showMainUI and

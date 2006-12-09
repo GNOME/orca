@@ -934,6 +934,13 @@ def init(callback=None, tty=7):
             global brlAPI
             global brlAPIRunning
             brlAPI = brlapi.Connection()
+
+            # [[[TODO: WDW - apparently, there is a proposal to have a
+            # WINDOWPATH environment variable that allows you to know
+            # where the X Server is running.  If it exists, then
+            # call enterTtyModeWithPath() (no arguments) and BrlAPI is
+            # supposed to do the right thing.]]]
+            #
             brlAPI.enterTtyMode(tty)
             brlAPIRunning = True
             gobject.idle_add(_brlAPIKeyReader)
