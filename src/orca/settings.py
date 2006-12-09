@@ -93,8 +93,12 @@ userCustomizableSettings = [
     "verbalizePunctuationStyle",
     "showMainWindow",
     "keyboardLayout",
-    "speakBlankLines",   
+    "speakBlankLines",
 ]
+
+# The TTY for BrlAPI
+#
+tty = 7
 
 # The name of the module that hold the user interface for the main window
 # for Orca. This module is expected to have two methods, showMainUI and

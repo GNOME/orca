@@ -854,7 +854,9 @@ def loadUserSettings(script=None, inputEvent=None):
 
     if settings.enableBraille:
         try:
-            braille.init(_processBrailleEvent, 7)
+            debug.println(debug.LEVEL_CONFIGURATION,
+                          "Initializing braille on tty=%d" % settings.tty)
+            braille.init(_processBrailleEvent, settings.tty)
         except:
             debug.printException(debug.LEVEL_WARNING)
             debug.println(debug.LEVEL_WARNING,
