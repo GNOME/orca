@@ -1,44 +1,49 @@
-# List of source files containing translatable strings.
-# Please keep this file sorted alphabetically.
-[encoding: UTF-8]
 
+[encoding: UTF-8]
+# List of source files containing translatable strings.
 orca.desktop.in
-src/orca/braille.py
+# Please keep this file sorted alphabetically.
 src/orca/braillegenerator.py
+src/orca/braille.py
 src/orca/chnames.py
 src/orca/default.py
 src/orca/espeechfactory.py
+src/orca/find.py
 src/orca/focus_tracking_presenter.py
 src/orca/Gecko.py
 src/orca/gnomespeechfactory.py
 src/orca/hierarchical_presenter.py
 src/orca/J2SE-access-bridge.py
+src/orca/keybindings.py
 src/orca/keynames.py
-src/orca/orca.in
-src/orca/orca.py
 src/orca/orca_console_prefs.py
+src/orca/orca-find.glade
 src/orca/orca_glade.py
+src/orca/orca_gui_find.py
 src/orca/orca_gui_main.py
 src/orca/orca_gui_prefs.py
-src/orca/orca_quit.py
-src/orca/orca-quit.glade
-src/orca/orca-setup.glade
+src/orca/orca.in
 src/orca/orca-mainwin.glade
+src/orca/orca.py
+src/orca/orca-quit.glade
+src/orca/orca_quit.py
+src/orca/orca-setup.glade
 src/orca/phonnames.py
 src/orca/pronunciation_dict.py
 src/orca/rolenames.py
-src/orca/settings.py
-src/orca/speech.py
-src/orca/speechgenerator.py
-src/orca/util.py
 src/orca/scripts/Evolution.py
 src/orca/scripts/gaim.py
 src/orca/scripts/gedit.py
 src/orca/scripts/gnome-keyring-ask.py
 src/orca/scripts/gnome-search-tool.py
 src/orca/scripts/gnome_segv2.py
-src/orca/scripts/Mozilla.py
-src/orca/scripts/StarOffice.py
 src/orca/scripts/metacity.py
+src/orca/scripts/Mozilla.py
 src/orca/scripts/planner.py
+src/orca/scripts/StarOffice.py
 src/orca/scripts/users-admin.py
+src/orca/settings.py
+src/orca/speechgenerator.py
+src/orca/speech.py
+src/orca/util.py
+src/orca/where_am_I.py

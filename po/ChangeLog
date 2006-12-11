@@ -1,3 +1,8 @@
+2006-12-11  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* POTFILES.in: Update this.
+	* nb.po: Updated Norwegian bokmål translation.
+
 2006-12-11  Francisco Javier F. Serrador  <serrador@openshine.com>
 
 	* es.po: Updated Spanish translation.
