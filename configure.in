@@ -115,7 +115,19 @@ AM_CHECK_PYMOD(ORBit,CORBA,,[AC_MSG_ERROR(Could not find python module ORBit.COR
 AM_CHECK_PYORBIT_MOD(Accessibility,,[AC_MSG_ERROR(Could not find python ORBit module Accessibility - make sure you have the atspi libspi-1.0 >= 1.7.6 installed)])
 AM_CHECK_PYORBIT_MOD(GNOME_Speech,,[AC_MSG_WARN(Could not find python ORBit module Speech - you need gnome-speech-1.0 >= 0.3.10 installed to use speech)])
 AM_CHECK_PYORBIT_MOD(GNOME_Magnifier,,[AC_MSG_WARN(Could not find python ORBit module GNOME_Magnifier - you need gnome-mag-1.0 >= 0.12.5 installed to use magnification)])
-AC_CHECK_LIB(brlapi, brlapi_initializeConnection,, [brlapi_available="no"; AC_MSG_WARN(Could not find libbrlapi.so - you need BrlTTY >= 3.7.2 and BrlAPI >= 0.4.1 installed to use braille)])
+
+# Check for BrlAPI.  For BrlTTY <= v3.7.2, there were no Python bindings
+# for BrlAPI, so we rolled our own.  We know if we have v3.7.2 installed
+# because brlapi_initializeConnection will exist, whereas it was removed
+# from later versions.  For later versions (3.8 and up), BrlAPI provides
+# Python bindings in the 'brlapi' module, so we check for that as well.
+# Orca's braille.py module attempts to automatically find and use the 
+# right one at run time.
+#
+AC_CHECK_LIB(brlapi, brlapi_initializeConnection,[brlapi_available="yes"],[brlapi_available="no"])
+if test "x$brlapi_available" = "xno" ; then
+    AM_CHECK_PYMOD(brlapi,,[brlapi_available="yes"],[brlapi_available="no"])
+fi
 
 AC_SUBST(orca_LIBS)
 AC_SUBST(orca_CFLAGS)
