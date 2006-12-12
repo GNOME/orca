@@ -2524,8 +2524,10 @@ class Script(script.Script):
         for i in range(0, len(allTokens)):
             item = allTokens[i].split(":")
             if len(item) == 2:
-                list.append(item[0])
-                dictionary[item[0]] = item[1]
+                key = item[0].strip()
+                attribute = item[1].strip()
+                list.append(key)
+                dictionary[key] = attribute
 
         return [list, dictionary]
 
