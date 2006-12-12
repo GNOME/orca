@@ -1,0 +1,3162 @@
+# Slovenian translation of orca.
+# Copyright (C) 2005-2006 Free Software Foundation, Inc.
+# This file is distributed under the same license as the orca package.
+#
+# Matjaž Horvat <m@owca.info>, 2006.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: orca\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-09-12 15:58+0200\n"
+"PO-Revision-Date: 2006-12-12 22:50+0100\n"
+"Last-Translator: Matic Žgur <mr.zgur@gmail.com>\n"
+"Language-Team: Slovenian <SL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n%100==4 ? 3 : 0);\n"
+"X-Poedit-Language: Slovenian\n"
+"X-Poedit-Country: Slovenia\n"
+
+#: ../orca.desktop.in.h:1
+msgid "Orca Screen Reader and Magnifier"
+msgstr "Povečevalo in bralnik zaslona Orca"
+
+#: ../orca.desktop.in.h:2
+msgid "Present on-screen information as speech or braille, or magnify the screen"
+msgstr "Vsebino zaslona prikaže v Braillovi pisavi ali jo prebere in povečuje zaslon"
+
+#: ../src/orca/braillegenerator.py:197
+#: ../src/orca/speechgenerator.py:198
+msgid "grayed"
+msgstr "sivo"
+
+#: ../src/orca/braillegenerator.py:1067
+#: ../src/orca/J2SE-access-bridge.py:69
+#: ../src/orca/speechgenerator.py:1231
+#: ../src/orca/where_am_I.py:585
+msgid "expanded"
+msgstr "razširjeno"
+
+#: ../src/orca/braillegenerator.py:1069
+#: ../src/orca/J2SE-access-bridge.py:72
+#: ../src/orca/speechgenerator.py:1233
+#: ../src/orca/where_am_I.py:587
+msgid "collapsed"
+msgstr "združeno"
+
+#: ../src/orca/braillegenerator.py:1073
+#, python-format
+msgid "TREE LEVEL %d"
+msgstr "TREE LEVEL %d"
+
+#: ../src/orca/braille.py:161
+msgid "Line Left"
+msgstr ""
+
+#: ../src/orca/braille.py:162
+msgid "Line Right"
+msgstr ""
+
+#: ../src/orca/braille.py:163
+msgid "Line Up"
+msgstr ""
+
+#: ../src/orca/braille.py:164
+msgid "Line Down"
+msgstr ""
+
+#: ../src/orca/braille.py:165
+msgid "Top Left"
+msgstr ""
+
+#: ../src/orca/braille.py:166
+#, fuzzy
+msgid "Bottom Right"
+msgstr "_Spodaj:"
+
+#: ../src/orca/braille.py:167
+msgid "Cursor Position"
+msgstr ""
+
+#: ../src/orca/chnames.py:36
+msgid "space"
+msgstr "presledek"
+
+#: ../src/orca/chnames.py:37
+msgid "newline"
+msgstr "nova vrstica"
+
+#: ../src/orca/chnames.py:38
+msgid "tab"
+msgstr "tabulator"
+
+#: ../src/orca/chnames.py:40
+msgid "exclaim"
+msgstr "klicaj"
+
+#: ../src/orca/chnames.py:41
+msgid "apostrophe"
+msgstr "opuščaj"
+
+#: ../src/orca/chnames.py:42
+msgid "comma"
+msgstr "vejica"
+
+#: ../src/orca/chnames.py:43
+msgid "dot"
+msgstr "pika"
+
+#: ../src/orca/chnames.py:44
+msgid "question"
+msgstr "vprašaj"
+
+#: ../src/orca/chnames.py:46
+msgid "quote"
+msgstr "navednice"
+
+#: ../src/orca/chnames.py:47
+msgid "left paren"
+msgstr "levi oklepaj"
+
+#: ../src/orca/chnames.py:48
+msgid "right paren"
+msgstr "desni oklepaj"
+
+#: ../src/orca/chnames.py:49
+msgid "dash"
+msgstr "pomišljaj"
+
+#: ../src/orca/chnames.py:50
+msgid "underscore"
+msgstr "podčrtaj"
+
+#: ../src/orca/chnames.py:51
+msgid "colon"
+msgstr "dvopičje"
+
+#: ../src/orca/chnames.py:52
+msgid "semicolon"
+msgstr "podpičje"
+
+#: ../src/orca/chnames.py:53
+msgid "less than"
+msgstr "manj kot"
+
+#: ../src/orca/chnames.py:54
+msgid "greater than"
+msgstr "več kot"
+
+#: ../src/orca/chnames.py:55
+msgid "left bracket"
+msgstr "levi oglati oklepaj"
+
+#: ../src/orca/chnames.py:56
+msgid "right bracket"
+msgstr "desni oglati oklepaj"
+
+#: ../src/orca/chnames.py:57
+msgid "backslash"
+msgstr "poševnica nazaj"
+
+#: ../src/orca/chnames.py:58
+msgid "vertical line"
+msgstr "navpična črta"
+
+#: ../src/orca/chnames.py:59
+msgid "grave accent"
+msgstr "krativec"
+
+#: ../src/orca/chnames.py:60
+msgid "tilde"
+msgstr "tilda"
+
+#: ../src/orca/chnames.py:61
+msgid "left brace"
+msgstr "levi zaviti oklepaj"
+
+#: ../src/orca/chnames.py:62
+msgid "right brace"
+msgstr "desni zaviti oklepaj"
+
+#: ../src/orca/chnames.py:64
+msgid "pound"
+msgstr "funt"
+
+#: ../src/orca/chnames.py:65
+msgid "dollar"
+msgstr "dolar"
+
+#: ../src/orca/chnames.py:66
+#: ../src/orca/speechgenerator.py:902
+msgid "percent"
+msgstr "odstotek"
+
+#: ../src/orca/chnames.py:67
+msgid "and"
+msgstr "ijn"
+
+#: ../src/orca/chnames.py:68
+msgid "star"
+msgstr "zvezdica"
+
+#: ../src/orca/chnames.py:69
+msgid "plus"
+msgstr "plus"
+
+#: ../src/orca/chnames.py:70
+msgid "slash"
+msgstr "poševnica"
+
+#: ../src/orca/chnames.py:71
+msgid "equals"
+msgstr "enačaj"
+
+#: ../src/orca/chnames.py:72
+msgid "at"
+msgstr "afna"
+
+#: ../src/orca/chnames.py:73
+msgid "caret"
+msgstr "kazalka"
+
+#: ../src/orca/chnames.py:75
+#, fuzzy
+msgid "plus minus"
+msgstr "pojavni meni"
+
+#: ../src/orca/chnames.py:76
+#, fuzzy
+msgid "divide"
+msgstr "neveljavno"
+
+#: ../src/orca/chnames.py:77
+msgid "multiply"
+msgstr ""
+
+#: ../src/orca/default.py:88
+msgid "Performs left click on current flat review item."
+msgstr "Izvede levi klik na trenutnem predmetu ploske ocene."
+
+#: ../src/orca/default.py:93
+msgid "Performs right click on current flat review item."
+msgstr "Izvede desni klik na trenutnem predmetu ploske ocene."
+
+#: ../src/orca/default.py:98
+#: ../src/orca/scripts/Evolution.py:114
+msgid "Speaks entire document."
+msgstr "Prebere celoten dokument."
+
+#: ../src/orca/default.py:103
+msgid "Performs the where am I operation."
+msgstr "Izvede operacijo kje sem."
+
+#: ../src/orca/default.py:108
+msgid "Opens the Orca Find dialog."
+msgstr ""
+
+#: ../src/orca/default.py:113
+#, fuzzy
+msgid "Searches for the next instance of a string."
+msgstr "Izpiše razhroščevalne podatke prednika predmeta, ki ima fokus"
+
+#: ../src/orca/default.py:118
+msgid "Searches for the previous instance of a string."
+msgstr ""
+
+#: ../src/orca/default.py:123
+msgid "Paints and prints the visible zones in the active window."
+msgstr "Nariše in napiše vidne dele aktivnega okna."
+
+#: ../src/orca/default.py:128
+msgid "Enters and exits flat review mode."
+msgstr "Vstopi in izstopi iz načina ploske ocene."
+
+#: ../src/orca/default.py:133
+msgid "Moves flat review to the beginning of the previous line."
+msgstr "Plosko oceno premakne na začetek prejšnje vrstice."
+
+#: ../src/orca/default.py:138
+msgid "Moves flat review to the home position."
+msgstr "Plosko oceno premakne na začetek."
+
+#: ../src/orca/default.py:143
+msgid "Speaks the current flat review line."
+msgstr "Izgovori trenutno vrstico ploske ocene."
+
+#: ../src/orca/default.py:148
+msgid "Moves flat review to the beginning of the next line."
+msgstr "Plosko oceno premakne na začetek naslednje vrstice."
+
+#: ../src/orca/default.py:153
+msgid "Moves flat review to the end position."
+msgstr "Plosko oceno premakne na konec."
+
+#: ../src/orca/default.py:158
+msgid "Moves flat review to the previous item or word."
+msgstr "Plosko oceno premakne na prejšnji predmet ali besedo."
+
+#: ../src/orca/default.py:163
+msgid "Moves flat review to the word above the current word."
+msgstr "Plosko oceno premakne do besede nad trenutno besedo."
+
+#: ../src/orca/default.py:168
+msgid "Speaks or spells the current flat review item or word."
+msgstr "Izgovori ali črkuje trenutni predmet ali besedo ploske ocene."
+
+#: ../src/orca/default.py:173
+msgid "Speaks the current flat review object."
+msgstr "Izgovori trenutni predmet ploske ocene."
+
+#: ../src/orca/default.py:178
+msgid "Moves flat review to the next item or word."
+msgstr "Plosko oceno premakne do naslednjega predmeta ali besede."
+
+#: ../src/orca/default.py:183
+msgid "Moves flat review to the word below the current word."
+msgstr "Plosko oceno premakne do besede pod trenutno besedo."
+
+#: ../src/orca/default.py:188
+msgid "Moves flat review to the previous character."
+msgstr "Plosko oceno premakne do prejšnjega znaka."
+
+#: ../src/orca/default.py:193
+msgid "Moves flat review to the end of the line."
+msgstr "Plosko oceno premakne na konec vrstice."
+
+#: ../src/orca/default.py:198
+msgid "Speaks the current flat review character."
+msgstr "Izgovori trenutni znak ploske ocene."
+
+#: ../src/orca/default.py:203
+msgid "Moves flat review to the next character."
+msgstr "Plosko oceno premakne do naslednjega znaka."
+
+#: ../src/orca/default.py:208
+msgid "Toggles whether to read just the current table cell or the whole row."
+msgstr "Preklopi med branjem trenutne celice ali celotne vrstice tabele."
+
+#: ../src/orca/default.py:213
+msgid "Reads the attributes associated with the current text character."
+msgstr "Prebere atribute, ki so povezani s trenutnim besedilnim znakom."
+
+#: ../src/orca/default.py:218
+msgid "Reports information on current script."
+msgstr "Sporoča podatke o trenutni skripti."
+
+#: ../src/orca/default.py:223
+msgid "Pans the braille display to the left."
+msgstr "Postavi Braillov zaslon levo."
+
+#: ../src/orca/default.py:229
+msgid "Pans the braille display to the right."
+msgstr "Postavi Braillov zaslon desno."
+
+#: ../src/orca/default.py:235
+msgid "Moves flat review to the bottom left."
+msgstr "Plosko oceno premakne v spodnji levi kot."
+
+#: ../src/orca/default.py:240
+msgid "Returns to object with keyboard focus."
+msgstr "Vrne se na predmet s fokusom tipkovnice."
+
+#: ../src/orca/default.py:245
+msgid "Enters learn mode.  Press escape to exit learn mode."
+msgstr "Vstopi v učni način. Za izhod pritisnite Esc."
+
+#: ../src/orca/default.py:250
+msgid "Exits learn mode."
+msgstr "Zapusti učni način.<"
+
+#: ../src/orca/default.py:255
+msgid "Decreases the speech rate."
+msgstr "Zmanjša hitrost govora."
+
+#: ../src/orca/default.py:260
+msgid "Increases the speech rate."
+msgstr "Poveča hitrost govora."
+
+#: ../src/orca/default.py:265
+msgid "Decreases the speech pitch."
+msgstr "Zmanjša višino govora."
+
+#: ../src/orca/default.py:270
+msgid "Increases the speech pitch."
+msgstr "Poveča višino govora."
+
+#: ../src/orca/default.py:275
+msgid "Quits Orca"
+msgstr "Izhod iz Orce"
+
+#: ../src/orca/default.py:280
+msgid "Toggles keystroke recording on and off."
+msgstr "Preklopi snemanje tipk."
+
+#: ../src/orca/default.py:285
+msgid "Displays the preferences configuration dialog."
+msgstr "Prikaže nastavitveno okno."
+
+#: ../src/orca/default.py:290
+msgid "Reloads user settings and reinitializes services as necessary."
+msgstr "Ponovno naloži uporabnikove nastavitve in zažene potrebne storitve."
+
+#: ../src/orca/default.py:295
+msgid "Toggles the silencing of speech."
+msgstr "Preklopi utišanje zvoka."
+
+#: ../src/orca/default.py:300
+msgid "Prints a debug listing of all known applications to the console where Orca is running."
+msgstr "Izpiše razhroščevalni seznam vseh znanih programov v konzolo, v kateri teče Orca."
+
+#: ../src/orca/default.py:305
+msgid "Cycles the debug level at run time."
+msgstr "Kroži med ravnmi razhroščevanja med zagonom."
+
+#: ../src/orca/default.py:310
+msgid "Prints debug information about the currently active application to the console where Orca is running."
+msgstr "Izpiše razhroščevalne podatke trenutno dejavnega programa v konzolo, v kateri teče Orca."
+
+#: ../src/orca/default.py:315
+msgid "Prints debug information about the ancestry of the object with focus"
+msgstr "Izpiše razhroščevalne podatke prednika predmeta, ki ima fokus"
+
+#: ../src/orca/default.py:320
+msgid "Prints debug information about the application with focus"
+msgstr "Izpiše razhroščevalne podatke programa, ki ima fokus"
+
+#: ../src/orca/default.py:325
+msgid "Switches to the next presentation manager."
+msgstr "Izpiše razhroščevalne podatke prednika predmeta, ki ima fokus"
+
+#: ../src/orca/default.py:1185
+#: ../src/orca/default.py:1410
+#: ../src/orca/default.py:2938
+#: ../src/orca/default.py:3072
+#: ../src/orca/default.py:3077
+#: ../src/orca/default.py:3170
+#: ../src/orca/default.py:3175
+#: ../src/orca/scripts/Evolution.py:399
+#: ../src/orca/scripts/Evolution.py:875
+#: ../src/orca/scripts/StarOffice.py:1592
+#: ../src/orca/scripts/StarOffice.py:1601
+#: ../src/orca/where_am_I.py:982
+msgid "blank"
+msgstr "prazno"
+
+#: ../src/orca/default.py:1265
+#, fuzzy
+msgid "1 space "
+msgstr "presledek"
+
+#: ../src/orca/default.py:1267
+#, fuzzy, python-format
+msgid "%d spaces "
+msgstr "presledek"
+
+#: ../src/orca/default.py:1270
+#, fuzzy
+msgid "1 tab "
+msgstr "tabulator"
+
+#: ../src/orca/default.py:1272
+#, python-format
+msgid "%d tabs "
+msgstr ""
+
+#: ../src/orca/default.py:1657
+#: ../src/orca/where_am_I.py:592
+#, python-format
+msgid "tree level %d"
+msgstr "raven drevesa %d"
+
+#: ../src/orca/default.py:2062
+msgid "entire document selected"
+msgstr "izbran celoten dokument"
+
+#: ../src/orca/default.py:2496
+msgid "Speak "
+msgstr "Govori"
+
+#: ../src/orca/default.py:2499
+msgid "row"
+msgstr "vrstica"
+
+#: ../src/orca/default.py:2501
+#: ../src/orca/rolenames.py:465
+#: ../src/orca/rolenames.py:467
+msgid "cell"
+msgstr "celica"
+
+#: ../src/orca/default.py:2550
+#: ../src/orca/where_am_I.py:1038
+#, fuzzy
+msgid "bold"
+msgstr "glvstl"
+
+#: ../src/orca/default.py:2664
+msgid "Entering learn mode.  Press any key to hear its function. "
+msgstr "Vstop v učni način. Za poslušanje funkcije pritisnite poljubno tipko."
+
+#: ../src/orca/default.py:2666
+msgid "Learn mode.  Press escape to exit."
+msgstr "Učni način. Pritisnite Esc za izhod."
+
+#: ../src/orca/default.py:2678
+#: ../src/orca/default.py:2679
+msgid "Exiting learn mode."
+msgstr "Izhod iz učnega načina."
+
+#: ../src/orca/default.py:2940
+#: ../src/orca/default.py:3079
+msgid "white space"
+msgstr "prazen prostor"
+
+#: ../src/orca/default.py:3292
+#: ../src/orca/default.py:3293
+msgid "string not found"
+msgstr ""
+
+#: ../src/orca/espeechfactory.py:94
+msgid "Emacspeak Speech Services"
+msgstr "Govorne storitve Emacspeak"
+
+#: ../src/orca/find.py:247
+msgid "Wrapping to Bottom"
+msgstr ""
+
+#: ../src/orca/find.py:253
+msgid "Wrapping to Top"
+msgstr ""
+
+#: ../src/orca/focus_tracking_presenter.py:730
+msgid "No focus"
+msgstr "Brez fokusa"
+
+#: ../src/orca/focus_tracking_presenter.py:825
+msgid "Switching to focus tracking mode."
+msgstr "Preklapljanje na način sledenja fokusa."
+
+#: ../src/orca/Gecko.py:857
+#: ../src/orca/rolenames.py:327
+#: ../src/orca/scripts/StarOffice.py:928
+msgid "link"
+msgstr "povezava"
+
+#: ../src/orca/Gecko.py:2288
+#: ../src/orca/Gecko.py:2298
+msgid "No more headings."
+msgstr ""
+
+#: ../src/orca/Gecko.py:2308
+#: ../src/orca/Gecko.py:2318
+#, fuzzy
+msgid "No more chunks."
+msgstr "Brez fokusa"
+
+#: ../src/orca/gnomespeechfactory.py:164
+msgid "GNOME Speech Services"
+msgstr "Govorne storitve GNOME"
+
+#. # Replace ellipses (both manual and UTF-8) with "dot dot dot"
+#. #
+#: ../src/orca/gnomespeechfactory.py:617
+#: ../src/orca/gnomespeechfactory.py:618
+msgid " dot dot dot"
+msgstr " pika pika pika"
+
+#: ../src/orca/gnomespeechfactory.py:799
+msgid "higher."
+msgstr "višje."
+
+#: ../src/orca/gnomespeechfactory.py:827
+msgid "lower."
+msgstr "nižje."
+
+#: ../src/orca/gnomespeechfactory.py:852
+msgid "faster."
+msgstr "hitreje."
+
+#: ../src/orca/gnomespeechfactory.py:882
+msgid "slower."
+msgstr "počasneje."
+
+#: ../src/orca/hierarchical_presenter.py:436
+msgid "Switching to hierarchical navigation mode."
+msgstr "Preklapljanje na način hierarhičnega krmarjenja."
+
+#: ../src/orca/J2SE-access-bridge.py:74
+#: ../src/orca/speechgenerator.py:955
+#: ../src/orca/util.py:1406
+msgid "selected"
+msgstr "izbrano"
+
+#: ../src/orca/J2SE-access-bridge.py:78
+#: ../src/orca/util.py:1414
+msgid "unselected"
+msgstr "neizbrano"
+
+#: ../src/orca/keybindings.py:107
+msgid "Orca"
+msgstr ""
+
+#: ../src/orca/keybindings.py:111
+#, fuzzy
+msgid "Alt_R"
+msgstr "Opozorilo"
+
+#: ../src/orca/keybindings.py:113
+msgid "Super"
+msgstr ""
+
+#: ../src/orca/keybindings.py:115
+msgid "Meta2"
+msgstr ""
+
+#: ../src/orca/keybindings.py:117
+msgid "Meta"
+msgstr ""
+
+#: ../src/orca/keybindings.py:119
+#, fuzzy
+msgid "Alt_L"
+msgstr "Opozorilo"
+
+#: ../src/orca/keybindings.py:121
+#, fuzzy
+msgid "Ctrl"
+msgstr "tabdrv"
+
+#: ../src/orca/keybindings.py:123
+#: ../src/orca/orca.py:600
+msgid "Caps_Lock"
+msgstr "Caps_Lock"
+
+#: ../src/orca/keybindings.py:125
+msgid "Shift"
+msgstr ""
+
+#: ../src/orca/keynames.py:38
+#: ../src/orca/keynames.py:41
+msgid "left shift"
+msgstr "levi Shift"
+
+#: ../src/orca/keynames.py:39
+msgid "left alt"
+msgstr "desni Shift"
+
+#: ../src/orca/keynames.py:40
+msgid "left control"
+msgstr "levi Ctrl"
+
+#: ../src/orca/keynames.py:42
+msgid "right shift"
+msgstr "desni Ctrl"
+
+#: ../src/orca/keynames.py:43
+msgid "right alt"
+msgstr "desni Atf"
+
+#: ../src/orca/keynames.py:44
+msgid "right control"
+msgstr "levi Alt"
+
+#: ../src/orca/keynames.py:45
+msgid "left meta"
+msgstr "levi meta"
+
+#: ../src/orca/keynames.py:46
+msgid "right meta"
+msgstr "desni meta"
+
+#: ../src/orca/keynames.py:47
+msgid "num lock"
+msgstr "num lock"
+
+#: ../src/orca/keynames.py:48
+msgid "caps lock"
+msgstr "caps lock"
+
+#: ../src/orca/keynames.py:49
+msgid "scroll lock"
+msgstr "scroll lock"
+
+#: ../src/orca/keynames.py:50
+msgid "page up"
+msgstr "page up"
+
+#: ../src/orca/keynames.py:51
+msgid "page down"
+msgstr "page down"
+
+#: ../src/orca/keynames.py:52
+msgid "left tab"
+msgstr "levi tabulator"
+
+#: ../src/orca/keynames.py:53
+msgid "F 11"
+msgstr "F 11"
+
+#: ../src/orca/keynames.py:54
+msgid "F 12"
+msgstr "F 12"
+
+#: ../src/orca/orca_console_prefs.py:103
+#: ../src/orca/orca_console_prefs.py:119
+msgid "Speech is unavailable."
+msgstr "Govor ni na voljo."
+
+#: ../src/orca/orca_console_prefs.py:107
+msgid "Welcome to Orca setup."
+msgstr "Pozdravljeni v nastavitvah Orce."
+
+#: ../src/orca/orca_console_prefs.py:122
+msgid "Select desired speech system:"
+msgstr "Izberite želeni govorni sistem:"
+
+#: ../src/orca/orca_console_prefs.py:127
+#: ../src/orca/orca_console_prefs.py:148
+#: ../src/orca/orca_console_prefs.py:174
+#, python-format
+msgid "%d. %s"
+msgstr "%d. %s"
+
+#: ../src/orca/orca_console_prefs.py:130
+#: ../src/orca/orca_console_prefs.py:151
+#: ../src/orca/orca_console_prefs.py:181
+#: ../src/orca/orca_console_prefs.py:308
+msgid "Enter choice: "
+msgstr "Vnesite izbiro:"
+
+#: ../src/orca/orca_console_prefs.py:132
+#: ../src/orca/orca_console_prefs.py:140
+#: ../src/orca/orca_console_prefs.py:153
+#: ../src/orca/orca_console_prefs.py:162
+#: ../src/orca/orca_console_prefs.py:186
+msgid "Speech will not be used.\n"
+msgstr "Govor ne bo uporabljen.\n"
+
+#: ../src/orca/orca_console_prefs.py:139
+msgid "No servers available.\n"
+msgstr "Noben strežnik ni na voljo.\n"
+
+#: ../src/orca/orca_console_prefs.py:143
+msgid "Select desired speech server."
+msgstr "Izberite želen govorni sistem."
+
+#: ../src/orca/orca_console_prefs.py:161
+msgid "No voices available.\n"
+msgstr "Noben glas ni na voljo.\n"
+
+#: ../src/orca/orca_console_prefs.py:165
+msgid "Select desired voice:"
+msgstr "Izberite želen glas:"
+
+#. Ask the user if they would like to enable echoing by word.
+#.
+#: ../src/orca/orca_console_prefs.py:219
+msgid "Enable echo by word?  Enter y or n: "
+msgstr "Želite omogočiti odmev besed? Vnesite y ali n:"
+
+#. Ask the user if they would like to enable key echo. If they say
+#. yes, then for each of the five different types of keys, ask the
+#. user if they would like to enable them.
+#.
+#. These key types are:
+#.
+#. o Alphanumeric and punctuation keys
+#.
+#. o Modifier keys: CTRL, ALT, Shift, Insert, and "Fn" on laptops.
+#.
+#. o Locking keys: Caps Lock, Num Lock, Scroll Lock, etc.
+#.
+#. o Function keys: The keys at the top of the keyboard.
+#.
+#. o Action keys: space, enter, escape, tab, backspace, delete, arrow
+#. keys, page up, page down, etc.
+#.
+#: ../src/orca/orca_console_prefs.py:244
+msgid "Enable key echo?  Enter y or n: "
+msgstr "Želite omogočiti odmev? Vnesite y ali n:"
+
+#: ../src/orca/orca_console_prefs.py:251
+msgid "Enable alphanumeric and punctuation keys?  Enter y or n: "
+msgstr "Želite omogočiti alfanumerične tipke in ločila? Vnesite y ali n:"
+
+#: ../src/orca/orca_console_prefs.py:259
+msgid "Enable modifier keys?  Enter y or n: "
+msgstr "Želite omogočiti modifikatorske tipke? Vnesite y ali n:"
+
+#: ../src/orca/orca_console_prefs.py:267
+msgid "Enable locking keys?  Enter y or n: "
+msgstr "Želite omogočiti tipke za zaklep? Vnesite y ali n:"
+
+#: ../src/orca/orca_console_prefs.py:275
+msgid "Enable function keys?  Enter y or n: "
+msgstr "Želite omogočiti funkcijske tipke? Vnesite y ali n:"
+
+#: ../src/orca/orca_console_prefs.py:283
+msgid "Enable action keys?  Enter y or n: "
+msgstr "Želite omogočiti tipke dejanj? Vnesite y ali n:"
+
+#: ../src/orca/orca_console_prefs.py:299
+#, fuzzy
+msgid "Select desired keyboard layout."
+msgstr "Izberite želeni govorni sistem:"
+
+#: ../src/orca/orca_console_prefs.py:306
+#, fuzzy
+msgid "1. Desktop"
+msgstr "NamiznaIkona"
+
+#: ../src/orca/orca_console_prefs.py:307
+msgid "2. Laptop"
+msgstr ""
+
+#: ../src/orca/orca_console_prefs.py:316
+msgid "Invalid choice. Selecting desktop keyboard layout.\n"
+msgstr ""
+
+#: ../src/orca/orca_console_prefs.py:345
+msgid "Enable Braille?  Enter y or n: "
+msgstr "Želite omogočiti Braillovo pisavo? Vnesite y ali n:"
+
+#: ../src/orca/orca_console_prefs.py:353
+msgid "Enable Braille Monitor?  Enter y or n: "
+msgstr "Želite omogočiti Braillov monitor? Vnesite y ali n:"
+
+#: ../src/orca/orca_console_prefs.py:363
+msgid "Accessibility support for GNOME has just been enabled. "
+msgstr "Podpora dostopnosti za GNOME je bila pravkar omogočena."
+
+#: ../src/orca/orca_console_prefs.py:368
+msgid "You need to log out and log back in for the change to take effect. "
+msgstr "Za uveljavitev sprememb se morate odjaviti in ponovno prijaviti."
+
+#: ../src/orca/orca_console_prefs.py:375
+msgid "Do you want to logout now?  Enter y or n: "
+msgstr ""
+
+#: ../src/orca/orca_console_prefs.py:381
+msgid "Setup complete. Logging out now."
+msgstr ""
+
+#: ../src/orca/orca_console_prefs.py:395
+msgid "Setup complete.  Press Return to continue."
+msgstr "Nastavitev je končana. Za nadaljevanje pritisnite Enter."
+
+#: ../src/orca/orca-find.glade.h:1
+msgid "<b>Start from:</b>"
+msgstr ""
+
+#: ../src/orca/orca-find.glade.h:2
+#: ../src/orca/orca_gui_find.py:127
+msgid "C_urrent location"
+msgstr ""
+
+#: ../src/orca/orca-find.glade.h:3
+msgid "Close"
+msgstr ""
+
+#: ../src/orca/orca-find.glade.h:4
+msgid "Match _entire word only"
+msgstr ""
+
+#: ../src/orca/orca-find.glade.h:5
+msgid "Orca Find"
+msgstr ""
+
+#: ../src/orca/orca-find.glade.h:6
+msgid "Orca Find Dialog"
+msgstr ""
+
+#: ../src/orca/orca-find.glade.h:7
+msgid "Search _backwards"
+msgstr ""
+
+#: ../src/orca/orca-find.glade.h:8
+#, fuzzy
+msgid "Search for:"
+msgstr "Ločilnik"
+
+#: ../src/orca/orca-find.glade.h:9
+msgid "Start from:"
+msgstr ""
+
+#: ../src/orca/orca-find.glade.h:10
+#, fuzzy
+msgid "Top of window"
+msgstr "okno"
+
+#: ../src/orca/orca-find.glade.h:11
+msgid "_Match case"
+msgstr ""
+
+#: ../src/orca/orca-find.glade.h:12
+msgid "_Search for:"
+msgstr ""
+
+#: ../src/orca/orca-find.glade.h:13
+#, fuzzy
+msgid "_Top of window"
+msgstr "okno"
+
+#: ../src/orca/orca-find.glade.h:14
+msgid "_Wrap around"
+msgstr ""
+
+#. Treeview Column Implementation:
+#. (HANDLER,    DESCRIP,    DEFAULT_KEY,
+#. MOD_MASK1,  MOD_USED1,  KEY1,       TEXT1,
+#. MOD_MASK2,  MOD_USED2,  KEY2,       TEXT2,
+#. MODIF)
+#. HANDLER
+#.
+#: ../src/orca/orca_gui_prefs.py:108
+#, fuzzy
+msgid "Handler"
+msgstr "Glava"
+
+#: ../src/orca/orca_gui_prefs.py:120
+#, fuzzy
+msgid "Function"
+msgstr "vprašaj"
+
+#. DEFAULT_KEY
+#.
+#: ../src/orca/orca_gui_prefs.py:128
+#, fuzzy
+msgid "Default Key"
+msgstr "Privzeto"
+
+#. MOD_MASK1
+#.
+#: ../src/orca/orca_gui_prefs.py:138
+msgid "Mod.Mask 1"
+msgstr ""
+
+#. MOD_USED1
+#.
+#: ../src/orca/orca_gui_prefs.py:148
+msgid "Use Mod.1"
+msgstr ""
+
+#. KEY1
+#.
+#: ../src/orca/orca_gui_prefs.py:158
+msgid "Key1"
+msgstr ""
+
+#. rendererText.set_property('editable', True)
+#. rendererText.connect("editing-started",
+#. self.editingKey,
+#. self.keyBindingsModel)
+#. rendererText.connect('edited',
+#. self.editedKey,
+#. self.keyBindingsModel)
+#: ../src/orca/orca_gui_prefs.py:176
+msgid "Key Binding"
+msgstr ""
+
+#. MOD_MASK2
+#.
+#: ../src/orca/orca_gui_prefs.py:185
+msgid "Mod.Mask 2"
+msgstr ""
+
+#. MOD_USED2
+#.
+#: ../src/orca/orca_gui_prefs.py:195
+msgid "Use Mod.2"
+msgstr ""
+
+#. KEY2
+#.
+#: ../src/orca/orca_gui_prefs.py:205
+msgid "Key2"
+msgstr ""
+
+#. rendererText.set_property('editable', True)
+#. rendererText.connect("editing-started",
+#. self.editingKey,
+#. self.keyBindingsModel)
+#. rendererText.connect('edited',
+#. self.editedKey,
+#. self.keyBindingsModel)
+#: ../src/orca/orca_gui_prefs.py:221
+#, fuzzy
+msgid "Alternate"
+msgstr "Opozorilo"
+
+#: ../src/orca/orca_gui_prefs.py:232
+msgid "Modified"
+msgstr ""
+
+#: ../src/orca/orca_gui_prefs.py:274
+#: ../src/orca/orca_gui_prefs.py:589
+#: ../src/orca/orca_gui_prefs.py:631
+msgid "Speech not available."
+msgstr "Govor ni na voljo."
+
+#: ../src/orca/orca_gui_prefs.py:514
+#: ../src/orca/orca_gui_prefs.py:518
+#: ../src/orca/orca_gui_prefs.py:1558
+msgid "Bilinear"
+msgstr "Bilinearno"
+
+#: ../src/orca/orca_gui_prefs.py:516
+#: ../src/orca/orca_gui_prefs.py:529
+#: ../src/orca/orca_gui_prefs.py:1560
+#: ../src/orca/orca_gui_prefs.py:1583
+msgid "None"
+msgstr "Brez"
+
+#: ../src/orca/orca_gui_prefs.py:527
+#: ../src/orca/orca_gui_prefs.py:535
+#: ../src/orca/orca_gui_prefs.py:1577
+msgid "Centered"
+msgstr "V sredini"
+
+#: ../src/orca/orca_gui_prefs.py:531
+#: ../src/orca/orca_gui_prefs.py:1581
+msgid "Proportional"
+msgstr "Proporcionalno"
+
+#: ../src/orca/orca_gui_prefs.py:533
+#: ../src/orca/orca_gui_prefs.py:1579
+msgid "Push"
+msgstr "Potisni"
+
+#: ../src/orca/orca_gui_prefs.py:668
+#: ../src/orca/orca_gui_prefs.py:693
+msgid "Default"
+msgstr "Privzeto"
+
+#: ../src/orca/orca_gui_prefs.py:670
+#: ../src/orca/orca_gui_prefs.py:695
+msgid "Uppercase"
+msgstr "Velike črke"
+
+#: ../src/orca/orca_gui_prefs.py:672
+#: ../src/orca/orca_gui_prefs.py:701
+msgid "Hyperlink"
+msgstr "Hiperpovezava"
+
+#: ../src/orca/orca_gui_prefs.py:1280
+#: ../src/orca/orca-setup.glade.h:69
+msgid "_None"
+msgstr "_Brez"
+
+#: ../src/orca/orca_gui_prefs.py:1283
+#: ../src/orca/orca-setup.glade.h:51
+msgid "So_me"
+msgstr "_Nekaj"
+
+#: ../src/orca/orca_gui_prefs.py:1286
+#: ../src/orca/orca-setup.glade.h:38
+msgid "M_ost"
+msgstr "N_ajveč"
+
+#: ../src/orca/orca_gui_prefs.py:1306
+#: ../src/orca/orca_gui_prefs.py:1361
+#: ../src/orca/orca-setup.glade.h:10
+msgid "Brie_f"
+msgstr "_Kratko"
+
+#: ../src/orca/orca_gui_prefs.py:1326
+#: ../src/orca/orca-setup.glade.h:54
+msgid "Speak current _cell"
+msgstr "Izgovarjanje _celic"
+
+#: ../src/orca/orca_gui_prefs.py:1655
+#: ../src/orca/orca-setup.glade.h:65
+#, fuzzy
+msgid "_Desktop"
+msgstr "NamiznaIkona"
+
+#: ../src/orca/orca_gui_prefs.py:1701
+msgid "Accessibility support for GNOME has just been enabled."
+msgstr "Podpora dostopnosti za GNOME je bila pravkar omogočena."
+
+#: ../src/orca/orca_gui_prefs.py:1702
+msgid "You need to log out and log back in for the change to take effect."
+msgstr "Za uveljavitev sprememb se morate odjaviti in ponovno prijaviti."
+
+#: ../src/orca/orca-mainwin.glade.h:1
+#, fuzzy
+msgid "Orca Screen Reader / Magnifier"
+msgstr "Povečevalo in bralnik zaslona Orca"
+
+#: ../src/orca/orca-mainwin.glade.h:2
+#, fuzzy
+msgid "Preferences"
+msgstr "Nastavitve Orce"
+
+#: ../src/orca/orca-mainwin.glade.h:3
+#, fuzzy
+msgid "Quit"
+msgstr "prdmen"
+
+#: ../src/orca/orca.py:231
+msgid "User logged out - shutting down."
+msgstr "Uporabnik se je odjavil oz. zaustavil sistem."
+
+#: ../src/orca/orca.py:395
+msgid "Debug level all."
+msgstr "Razhroščevalna raven vsega."
+
+#: ../src/orca/orca.py:397
+msgid "Debug level finest."
+msgstr "Razhroščevalna raven najlepših."
+
+#: ../src/orca/orca.py:399
+msgid "Debug level finer."
+msgstr "Razhroščevalna raven lepših."
+
+#: ../src/orca/orca.py:602
+msgid " off"
+msgstr " izključeno"
+
+#: ../src/orca/orca.py:604
+msgid " on"
+msgstr " vključeno"
+
+#: ../src/orca/orca.py:606
+msgid "Num_Lock"
+msgstr "Num_Lock"
+
+#: ../src/orca/orca.py:794
+msgid "Speech enabled."
+msgstr "Govor omogočen."
+
+#: ../src/orca/orca.py:796
+msgid "Speech disabled."
+msgstr "Govor onemogočen."
+
+#: ../src/orca/orca.py:844
+msgid "Orca user settings reloaded."
+msgstr "Uporabniške nastavitve Orce ponovno naložene."
+
+#: ../src/orca/orca.py:1049
+#: ../src/orca/orca.py:1050
+msgid "Welcome to Orca."
+msgstr "Pozdravljeni v Orci."
+
+#: ../src/orca/orca.py:1106
+msgid "goodbye."
+msgstr "nasvidenje."
+
+#: ../src/orca/orca.py:1107
+msgid "Goodbye."
+msgstr "Nasvidenje."
+
+#: ../src/orca/orca.py:1187
+msgid "Usage: orca [OPTION...]"
+msgstr "Uporaba: orca [MOŽNOST ...]"
+
+#: ../src/orca/orca.py:1189
+msgid "-?, --help                   Show this help message"
+msgstr "-?, --help                   Prikaže to sporočilo pomoči"
+
+#: ../src/orca/orca.py:1190
+#, python-format
+msgid "-v, --version                %s"
+msgstr "-v, --version                %s"
+
+#: ../src/orca/orca.py:1191
+msgid "-s, --setup, --gui-setup     Set up user preferences"
+msgstr "-s, --setup, --gui-setup     Spreminjanje uporabniških nastavitev"
+
+#: ../src/orca/orca.py:1192
+msgid "-t, --text-setup             Set up user preferences (text version)"
+msgstr "-t, --text-setup             Spreminjanje uporabniških nastavitev (besedilni način)"
+
+#: ../src/orca/orca.py:1193
+msgid "-n, --no-setup               Skip set up of user preferences"
+msgstr "-n, --no-setup               Preskoči uporabniške nastavitve"
+
+#: ../src/orca/orca.py:1194
+msgid "-u, --user-prefs-dir=dirname Use alternate directory for user preferences"
+msgstr ""
+
+#: ../src/orca/orca.py:1195
+msgid "-e, --enable=[speech|braille|braille-monitor|magnifier|main-window] Force use of option"
+msgstr ""
+
+#: ../src/orca/orca.py:1196
+msgid "-d, --disable=[speech|braille|braille-monitor|magnifier|main-window] Prevent use of option"
+msgstr ""
+
+#: ../src/orca/orca.py:1197
+#, fuzzy
+msgid "-q, --quit                   Quits Orca (if shell script used)"
+msgstr "-?, --help                   Prikaže to sporočilo pomoči"
+
+#: ../src/orca/orca.py:1199
+msgid ""
+"If Orca has not been previously set up by the user, Orca\n"
+"will automatically launch the preferences set up unless\n"
+"the -n or --no-setup option is used."
+msgstr ""
+"Če uporabnik ni predhodno nastavil Orce,\n"
+"bo samodejno uporabila nastavitve, razen če\n"
+"uporabite stikali -n ali --no-setup."
+
+#: ../src/orca/orca.py:1201
+msgid "Report bugs to orca-list@gnome.org."
+msgstr "Sporoči hrošče na orca-list@gnome.org."
+
+#: ../src/orca/orca-quit.glade.h:1
+msgid "Do you really want to quit Orca?"
+msgstr ""
+
+#: ../src/orca/orca-quit.glade.h:2
+msgid "Question"
+msgstr "Vprašaj"
+
+#: ../src/orca/orca-setup.glade.h:1
+msgid "<b>Cross-hair Settings</b>"
+msgstr "<b>Nastavitve tarče</b>"
+
+#: ../src/orca/orca-setup.glade.h:2
+msgid "<b>Cursor Settings</b>"
+msgstr "<b>Nastavitve kazalca</b>"
+
+#: ../src/orca/orca-setup.glade.h:3
+msgid "<b>Keyboard Layout</b>"
+msgstr ""
+
+#: ../src/orca/orca-setup.glade.h:4
+msgid "<b>Punctuation Level</b>"
+msgstr "<b>Raven ločil</b>"
+
+#: ../src/orca/orca-setup.glade.h:5
+msgid "<b>Table Row Speech</b>"
+msgstr "<b>Govor vrstice tabele</b>"
+
+#: ../src/orca/orca-setup.glade.h:6
+msgid "<b>Verbosity</b>"
+msgstr "<b>Razločnost</b>"
+
+#: ../src/orca/orca-setup.glade.h:7
+msgid "<b>Zoomer Position</b>"
+msgstr "<b>Položaj povečevanja</b>"
+
+#: ../src/orca/orca-setup.glade.h:8
+msgid "<b>Zoomer Settings</b>"
+msgstr "<b>Nastavitve povečevanja</b>"
+
+#: ../src/orca/orca-setup.glade.h:9
+msgid "Braille"
+msgstr "Braillova pisava"
+
+#: ../src/orca/orca-setup.glade.h:11
+msgid ""
+"Centered\n"
+"None\n"
+"Proportional\n"
+"Push"
+msgstr ""
+"V sredini\n"
+"Brez\n"
+"Proporcionalno\n"
+"Potisni"
+
+#: ../src/orca/orca-setup.glade.h:15
+msgid "Color:"
+msgstr "Barva:"
+
+#: ../src/orca/orca-setup.glade.h:16
+msgid "Custom siz_e"
+msgstr "V_elikost po meri"
+
+#: ../src/orca/orca-setup.glade.h:17
+msgid ""
+"Default\n"
+"Uppercase\n"
+"Hyperlink"
+msgstr ""
+"Privzeto\n"
+"Velike črke\n"
+"Hiperpovezava"
+
+#: ../src/orca/orca-setup.glade.h:20
+msgid "Enable Braille _monitor"
+msgstr "Omogoči Braillov_monitor"
+
+#: ../src/orca/orca-setup.glade.h:21
+msgid "Enable Braille _support"
+msgstr "Omogoči Braillovo _podporo"
+
+#: ../src/orca/orca-setup.glade.h:22
+msgid "Enable _alphanumeric and punctuation keys"
+msgstr "Omogoči _alfanumerične znake in ločila"
+
+#: ../src/orca/orca-setup.glade.h:23
+msgid "Enable _function keys"
+msgstr "Omogoči _funkcijske tipke"
+
+#: ../src/orca/orca-setup.glade.h:24
+msgid "Enable _key echo"
+msgstr "Omogoči odmev t_ipk"
+
+#: ../src/orca/orca-setup.glade.h:25
+msgid "Enable _magnifier"
+msgstr "Omogoči _povečevalo"
+
+#: ../src/orca/orca-setup.glade.h:26
+msgid "Enable _modifier keys"
+msgstr "Omogoči _modifikatorske tipke"
+
+#: ../src/orca/orca-setup.glade.h:27
+msgid "Enable ac_tion keys"
+msgstr "Omogoči _tipke dejanj"
+
+#: ../src/orca/orca-setup.glade.h:28
+msgid "Enable c_ursor"
+msgstr "Omogoči k_azalec"
+
+#: ../src/orca/orca-setup.glade.h:29
+msgid "Enable cross-h_air"
+msgstr "Omogoči t_arčo"
+
+#: ../src/orca/orca-setup.glade.h:30
+msgid "Enable cross-hair cli_p"
+msgstr "Omogoči s_ponko tarče"
+
+#: ../src/orca/orca-setup.glade.h:31
+msgid "Enable echo by _word"
+msgstr "Omogoči odmev _besed"
+
+#: ../src/orca/orca-setup.glade.h:32
+msgid "Enable lockin_g keys"
+msgstr "Omo_goči zaklepanje tipk"
+
+#: ../src/orca/orca-setup.glade.h:33
+msgid "General"
+msgstr ""
+
+#: ../src/orca/orca-setup.glade.h:34
+msgid "In_vert colors"
+msgstr "_Obrni barve"
+
+#: ../src/orca/orca-setup.glade.h:35
+msgid "Key Binding List"
+msgstr ""
+
+#: ../src/orca/orca-setup.glade.h:36
+msgid "Key Bindings"
+msgstr ""
+
+#: ../src/orca/orca-setup.glade.h:37
+msgid "Key Echo"
+msgstr "Odmev tipk"
+
+#: ../src/orca/orca-setup.glade.h:39
+msgid "Magnifier"
+msgstr "Povečevalo"
+
+#: ../src/orca/orca-setup.glade.h:40
+msgid "Mouse trac_king mode:"
+msgstr "Način sledenja miš_ke:"
+
+#: ../src/orca/orca-setup.glade.h:41
+msgid ""
+"None\n"
+"Bilinear"
+msgstr ""
+"Brez\n"
+"Bilinearno"
+
+#: ../src/orca/orca-setup.glade.h:43
+#, fuzzy
+msgid "Orca Modifier Keys"
+msgstr "Omogoči _modifikatorske tipke"
+
+#: ../src/orca/orca-setup.glade.h:44
+msgid "Orca Preferences"
+msgstr "Nastavitve Orce"
+
+#: ../src/orca/orca-setup.glade.h:45
+#, fuzzy
+msgid "Orca _Modifier Key(s):"
+msgstr "Omogoči _modifikatorske tipke"
+
+#: ../src/orca/orca-setup.glade.h:46
+msgid "Pi_tch:"
+msgstr "_Višina:"
+
+#: ../src/orca/orca-setup.glade.h:47
+msgid "S_ource display:"
+msgstr ""
+
+#: ../src/orca/orca-setup.glade.h:48
+msgid "Scale _factor:"
+msgstr "_Faktor merila:"
+
+#: ../src/orca/orca-setup.glade.h:49
+msgid "Show Orca _main window"
+msgstr ""
+
+#: ../src/orca/orca-setup.glade.h:50
+msgid "Si_ze:"
+msgstr "_Velikost:"
+
+#: ../src/orca/orca-setup.glade.h:52
+msgid "Speak _indentation and justification"
+msgstr "_Izgovarjanje zamikov in poravnav"
+
+#: ../src/orca/orca-setup.glade.h:53
+msgid "Speak blank lines"
+msgstr ""
+
+#: ../src/orca/orca-setup.glade.h:55
+msgid "Speak current ro_w"
+msgstr "Izgovarjanje trenutne _vrstice"
+
+#: ../src/orca/orca-setup.glade.h:56
+msgid "Speech"
+msgstr "Govor"
+
+#: ../src/orca/orca-setup.glade.h:57
+msgid "Speech _system:"
+msgstr "Govorni _sistem:"
+
+#: ../src/orca/orca-setup.glade.h:58
+msgid "Speech synthesi_zer:"
+msgstr "Sinte_za govora:"
+
+#: ../src/orca/orca-setup.glade.h:59
+msgid "Tar_get display:"
+msgstr ""
+
+#: ../src/orca/orca-setup.glade.h:60
+msgid "Ver_bose"
+msgstr "_Razločno"
+
+#: ../src/orca/orca-setup.glade.h:61
+msgid "Vo_lume:"
+msgstr "G_lasnost:"
+
+#: ../src/orca/orca-setup.glade.h:62
+msgid "_Abbreviated role names"
+msgstr "Okr_ajšana imena vlog"
+
+#: ../src/orca/orca-setup.glade.h:63
+msgid "_All"
+msgstr "_Vse"
+
+#: ../src/orca/orca-setup.glade.h:64
+msgid "_Bottom:"
+msgstr "_Spodaj:"
+
+#: ../src/orca/orca-setup.glade.h:66
+msgid "_Enable speech"
+msgstr "_Omogoči govor"
+
+#: ../src/orca/orca-setup.glade.h:67
+#, fuzzy
+msgid "_Laptop"
+msgstr "prog"
+
+#: ../src/orca/orca-setup.glade.h:68
+msgid "_Left:"
+msgstr "_Levo:"
+
+#: ../src/orca/orca-setup.glade.h:70
+msgid "_Person:"
+msgstr "_Oseba:"
+
+#: ../src/orca/orca-setup.glade.h:71
+msgid "_Rate:"
+msgstr "Hit_rost:"
+
+#: ../src/orca/orca-setup.glade.h:72
+msgid "_Right:"
+msgstr "_Desno:"
+
+#: ../src/orca/orca-setup.glade.h:73
+msgid "_Smoothing:"
+msgstr "_Glajenje:"
+
+#: ../src/orca/orca-setup.glade.h:74
+msgid "_Top:"
+msgstr "_Zgoraj:"
+
+#: ../src/orca/orca-setup.glade.h:75
+msgid "_Voice settings:"
+msgstr "Nasta_vitve glasu:"
+
+#: ../src/orca/orca-setup.glade.h:76
+msgid "_Width:"
+msgstr "Š_irina:"
+
+#: ../src/orca/orca-setup.glade.h:77
+msgid "pixels"
+msgstr "pik"
+
+#: ../src/orca/phonnames.py:36
+msgid "alpha"
+msgstr ""
+
+#: ../src/orca/phonnames.py:37
+#, fuzzy
+msgid "bravo"
+msgstr "radio"
+
+#: ../src/orca/phonnames.py:38
+#, fuzzy
+msgid "charlie"
+msgstr "dogkol"
+
+#: ../src/orca/phonnames.py:39
+msgid "delta"
+msgstr ""
+
+#: ../src/orca/phonnames.py:40
+#, fuzzy
+msgid "echo"
+msgstr "Odmev tipk"
+
+#: ../src/orca/phonnames.py:41
+#, fuzzy
+msgid "foxtrot"
+msgstr "noga"
+
+#: ../src/orca/phonnames.py:42
+msgid "golf"
+msgstr ""
+
+#: ../src/orca/phonnames.py:43
+#, fuzzy
+msgid "hotel"
+msgstr "html"
+
+#: ../src/orca/phonnames.py:44
+#, fuzzy
+msgid "india"
+msgstr "kliči"
+
+#: ../src/orca/phonnames.py:45
+#, fuzzy
+msgid "juliet"
+msgstr "seznam"
+
+#: ../src/orca/phonnames.py:46
+#, fuzzy
+msgid "kilo"
+msgstr "PogovornoOkno"
+
+#: ../src/orca/phonnames.py:47
+#, fuzzy
+msgid "lima"
+msgstr "slika"
+
+#: ../src/orca/phonnames.py:48
+msgid "mike"
+msgstr ""
+
+#: ../src/orca/phonnames.py:49
+msgid "november"
+msgstr ""
+
+#: ../src/orca/phonnames.py:50
+#, fuzzy
+msgid "oscar"
+msgstr "zvezdica"
+
+#: ../src/orca/phonnames.py:51
+#, fuzzy
+msgid "papa"
+msgstr "ods"
+
+#: ../src/orca/phonnames.py:52
+msgid "quebec"
+msgstr ""
+
+#: ../src/orca/phonnames.py:53
+#, fuzzy
+msgid "romeo"
+msgstr "_Nekaj"
+
+#: ../src/orca/phonnames.py:54
+#, fuzzy
+msgid "sierra"
+msgstr "loč"
+
+#: ../src/orca/phonnames.py:55
+msgid "tango"
+msgstr ""
+
+#: ../src/orca/phonnames.py:56
+#, fuzzy
+msgid "uniform"
+msgstr "okv"
+
+#: ../src/orca/phonnames.py:57
+#, fuzzy
+msgid "victor"
+msgstr "ikona"
+
+#: ../src/orca/phonnames.py:58
+msgid "whiskey"
+msgstr ""
+
+#: ../src/orca/phonnames.py:59
+#, fuzzy
+msgid "xray"
+msgstr "sivo"
+
+#: ../src/orca/phonnames.py:60
+msgid "yankee"
+msgstr ""
+
+#: ../src/orca/phonnames.py:61
+msgid "zulu"
+msgstr ""
+
+#: ../src/orca/pronunciation_dict.py:38
+msgid "ASAP"
+msgstr ""
+
+#: ../src/orca/pronunciation_dict.py:38
+msgid "as soon as possible"
+msgstr ""
+
+#: ../src/orca/pronunciation_dict.py:39
+msgid "GHz"
+msgstr ""
+
+#: ../src/orca/pronunciation_dict.py:39
+#, fuzzy
+msgid "gigahertz"
+msgstr "višje."
+
+#: ../src/orca/pronunciation_dict.py:40
+msgid "IMAP"
+msgstr ""
+
+#: ../src/orca/pronunciation_dict.py:40
+msgid "eye map"
+msgstr ""
+
+#: ../src/orca/pronunciation_dict.py:41
+msgid "LDAP"
+msgstr ""
+
+#: ../src/orca/pronunciation_dict.py:41
+msgid "ell dap"
+msgstr ""
+
+#: ../src/orca/pronunciation_dict.py:42
+msgid "LOL"
+msgstr ""
+
+#: ../src/orca/pronunciation_dict.py:42
+msgid "laughing out loud"
+msgstr ""
+
+#: ../src/orca/pronunciation_dict.py:43
+msgid "MHz"
+msgstr ""
+
+#: ../src/orca/pronunciation_dict.py:43
+msgid "megahertz"
+msgstr ""
+
+#: ../src/orca/pronunciation_dict.py:44
+msgid "strikethrough"
+msgstr ""
+
+#: ../src/orca/pronunciation_dict.py:44
+msgid "strike through"
+msgstr ""
+
+#: ../src/orca/pronunciation_dict.py:45
+msgid "SELinux"
+msgstr ""
+
+#: ../src/orca/pronunciation_dict.py:45
+msgid "ess ee linux"
+msgstr ""
+
+#: ../src/orca/rolenames.py:155
+msgid "???"
+msgstr "???"
+
+#: ../src/orca/rolenames.py:156
+msgid "Invalid"
+msgstr "Neveljavno"
+
+#: ../src/orca/rolenames.py:157
+msgid "invalid"
+msgstr "neveljavno"
+
+#: ../src/orca/rolenames.py:160
+msgid "acc"
+msgstr "bli"
+
+#: ../src/orca/rolenames.py:161
+msgid "Accelerator"
+msgstr "Bližnjica"
+
+#: ../src/orca/rolenames.py:162
+msgid "accelerator"
+msgstr "bližnjica"
+
+#: ../src/orca/rolenames.py:165
+#: ../src/orca/rolenames.py:167
+msgid "alert"
+msgstr "opozorilo"
+
+#: ../src/orca/rolenames.py:166
+msgid "Alert"
+msgstr "Opozorilo"
+
+#: ../src/orca/rolenames.py:170
+msgid "Anim"
+msgstr "Anim"
+
+#: ../src/orca/rolenames.py:171
+msgid "Animation"
+msgstr "Animacija"
+
+#: ../src/orca/rolenames.py:172
+msgid "animation"
+msgstr "animacija"
+
+#: ../src/orca/rolenames.py:175
+#: ../src/orca/rolenames.py:177
+msgid "arrow"
+msgstr "puščica"
+
+#: ../src/orca/rolenames.py:176
+msgid "Arrow"
+msgstr "Puščica"
+
+#: ../src/orca/rolenames.py:180
+msgid "cal"
+msgstr "kol"
+
+#: ../src/orca/rolenames.py:181
+msgid "Calendar"
+msgstr "Koledar"
+
+#: ../src/orca/rolenames.py:182
+msgid "calendar"
+msgstr "koledar"
+
+#: ../src/orca/rolenames.py:185
+msgid "cnv"
+msgstr "pan"
+
+#: ../src/orca/rolenames.py:186
+msgid "Canvas"
+msgstr "Pano"
+
+#: ../src/orca/rolenames.py:187
+msgid "canvas"
+msgstr "pano"
+
+#: ../src/orca/rolenames.py:190
+#, fuzzy
+msgid "cptn"
+msgstr "drspan"
+
+#: ../src/orca/rolenames.py:191
+#, fuzzy
+msgid "Caption"
+msgstr "program"
+
+#: ../src/orca/rolenames.py:192
+#, fuzzy
+msgid "caption"
+msgstr "Program"
+
+#: ../src/orca/rolenames.py:195
+#: ../src/orca/rolenames.py:200
+msgid "chk"
+msgstr "pot"
+
+#: ../src/orca/rolenames.py:196
+msgid "CheckBox"
+msgstr "PotrditvenoPolje"
+
+#: ../src/orca/rolenames.py:197
+msgid "check box"
+msgstr "potrditveno polje"
+
+#: ../src/orca/rolenames.py:201
+msgid "CheckItem"
+msgstr "PotrditveniPredmet"
+
+#: ../src/orca/rolenames.py:202
+msgid "check item"
+msgstr "potrditveni predmet"
+
+#: ../src/orca/rolenames.py:205
+msgid "ckm"
+msgstr "pom"
+
+#: ../src/orca/rolenames.py:206
+msgid "CheckMenu"
+msgstr "PotrditveniMeni"
+
+#: ../src/orca/rolenames.py:207
+msgid "check menu"
+msgstr "potrditveni meni"
+
+#: ../src/orca/rolenames.py:210
+msgid "clrchsr"
+msgstr "izbbrv"
+
+#: ../src/orca/rolenames.py:211
+msgid "ColorChooser"
+msgstr "IzbirnikBarv"
+
+#: ../src/orca/rolenames.py:212
+msgid "color chooser"
+msgstr "izbirni barv"
+
+#: ../src/orca/rolenames.py:215
+#: ../src/orca/rolenames.py:470
+msgid "colhdr"
+msgstr "glvstl"
+
+#: ../src/orca/rolenames.py:216
+#: ../src/orca/rolenames.py:471
+msgid "ColumnHeader"
+msgstr "GlavaStolpca"
+
+#: ../src/orca/rolenames.py:217
+#: ../src/orca/rolenames.py:472
+msgid "column header"
+msgstr "glava stolpca"
+
+#: ../src/orca/rolenames.py:220
+msgid "cbo"
+msgstr "sps"
+
+#: ../src/orca/rolenames.py:221
+msgid "Combo"
+msgstr "SpustniSeznam"
+
+#: ../src/orca/rolenames.py:222
+msgid "combo box"
+msgstr "spustni seznam"
+
+#: ../src/orca/rolenames.py:225
+msgid "dat"
+msgstr "dat"
+
+#: ../src/orca/rolenames.py:226
+msgid "DateEditor"
+msgstr "UrejevalnikDatuma"
+
+#: ../src/orca/rolenames.py:227
+msgid "date editor"
+msgstr "urejevalnik datuma"
+
+#: ../src/orca/rolenames.py:230
+#: ../src/orca/rolenames.py:300
+#: ../src/orca/rolenames.py:302
+msgid "icon"
+msgstr "ikona"
+
+#: ../src/orca/rolenames.py:231
+msgid "DesktopIcon"
+msgstr "NamiznaIkona"
+
+#: ../src/orca/rolenames.py:232
+msgid "desktop icon"
+msgstr "namizna ikona"
+
+#: ../src/orca/rolenames.py:235
+#: ../src/orca/rolenames.py:282
+#: ../src/orca/rolenames.py:310
+msgid "frame"
+msgstr "okvir"
+
+#: ../src/orca/rolenames.py:236
+msgid "DesktopFrame"
+msgstr "OkvirNamizja"
+
+#: ../src/orca/rolenames.py:237
+msgid "desktop frame"
+msgstr "okvir namizja"
+
+#: ../src/orca/rolenames.py:240
+#: ../src/orca/rolenames.py:242
+msgid "dial"
+msgstr "kliči"
+
+#: ../src/orca/rolenames.py:241
+msgid "Dial"
+msgstr "Kliči"
+
+#: ../src/orca/rolenames.py:245
+msgid "dlg"
+msgstr "pog"
+
+#: ../src/orca/rolenames.py:246
+msgid "Dialog"
+msgstr "PogovornoOkno"
+
+#: ../src/orca/rolenames.py:247
+msgid "dialog"
+msgstr "pogovorno okno"
+
+#: ../src/orca/rolenames.py:250
+msgid "dip"
+msgstr "pmap"
+
+#: ../src/orca/rolenames.py:251
+msgid "DirectoryPane"
+msgstr "PanoMape"
+
+#: ../src/orca/rolenames.py:252
+msgid "directory pane"
+msgstr "pano mape"
+
+#: ../src/orca/rolenames.py:255
+msgid "draw"
+msgstr "ris"
+
+#: ../src/orca/rolenames.py:256
+msgid "DrawingArea"
+msgstr "RisalnoObmočje"
+
+#: ../src/orca/rolenames.py:257
+msgid "drawing area"
+msgstr "risalno območje"
+
+#: ../src/orca/rolenames.py:260
+msgid "fchsr"
+msgstr "izdat"
+
+#: ../src/orca/rolenames.py:261
+msgid "FileChooser"
+msgstr "IzbirnikDatotek"
+
+#: ../src/orca/rolenames.py:262
+msgid "file chooser"
+msgstr "izbirnik datotek"
+
+#: ../src/orca/rolenames.py:265
+msgid "flr"
+msgstr "flr"
+
+#: ../src/orca/rolenames.py:266
+msgid "Filler"
+msgstr "Filler"
+
+#: ../src/orca/rolenames.py:267
+msgid "filler"
+msgstr "filler"
+
+#: ../src/orca/rolenames.py:270
+msgid "fnt"
+msgstr "pis"
+
+#: ../src/orca/rolenames.py:271
+msgid "FontChooser"
+msgstr "IzbirnikPisav"
+
+#: ../src/orca/rolenames.py:272
+msgid "font chooser"
+msgstr "izbirnik pisav"
+
+#: ../src/orca/rolenames.py:275
+#: ../src/orca/rolenames.py:277
+#, fuzzy
+msgid "form"
+msgstr "okv"
+
+#: ../src/orca/rolenames.py:276
+#, fuzzy
+msgid "Form"
+msgstr "Okvir"
+
+#: ../src/orca/rolenames.py:280
+msgid "frm"
+msgstr "okv"
+
+#: ../src/orca/rolenames.py:281
+msgid "Frame"
+msgstr "Okvir"
+
+#: ../src/orca/rolenames.py:285
+msgid "gpn"
+msgstr "stk"
+
+#: ../src/orca/rolenames.py:286
+msgid "GlassPane"
+msgstr "SteklenPano"
+
+#: ../src/orca/rolenames.py:287
+msgid "glass pane"
+msgstr "steklen pano"
+
+#: ../src/orca/rolenames.py:290
+msgid "hdng"
+msgstr ""
+
+#: ../src/orca/rolenames.py:291
+#, fuzzy
+msgid "Heading"
+msgstr "Glava"
+
+#: ../src/orca/rolenames.py:292
+#, fuzzy
+msgid "heading"
+msgstr "glava"
+
+#: ../src/orca/rolenames.py:295
+msgid "html"
+msgstr "html"
+
+#: ../src/orca/rolenames.py:296
+msgid "HtmlContainer"
+msgstr "VsebovalnikHtml"
+
+#: ../src/orca/rolenames.py:297
+msgid "h t m l container"
+msgstr "vsebovalnik h t m l"
+
+#: ../src/orca/rolenames.py:301
+msgid "Icon"
+msgstr "Ikona"
+
+#: ../src/orca/rolenames.py:305
+msgid "img"
+msgstr "slk"
+
+#: ../src/orca/rolenames.py:306
+msgid "Image"
+msgstr "Slika"
+
+#: ../src/orca/rolenames.py:307
+msgid "image"
+msgstr "slika"
+
+#: ../src/orca/rolenames.py:311
+msgid "InternalFrame"
+msgstr "NotranjiOkvir"
+
+#: ../src/orca/rolenames.py:312
+msgid "internal frame"
+msgstr "notranji okvir"
+
+#: ../src/orca/rolenames.py:315
+msgid "lbl"
+msgstr "ozn"
+
+#: ../src/orca/rolenames.py:316
+msgid "Label"
+msgstr "Oznaka"
+
+#: ../src/orca/rolenames.py:317
+msgid "label"
+msgstr "oznaka"
+
+#: ../src/orca/rolenames.py:320
+msgid "lyrdpn"
+msgstr "panrvn"
+
+#: ../src/orca/rolenames.py:321
+msgid "LayeredPane"
+msgstr "PanoRavni"
+
+#: ../src/orca/rolenames.py:322
+msgid "layered pane"
+msgstr "pano ravni"
+
+#: ../src/orca/rolenames.py:325
+#, fuzzy
+msgid "lnk"
+msgstr "povezava"
+
+#: ../src/orca/rolenames.py:326
+#, fuzzy
+msgid "Link"
+msgstr "povezava"
+
+#: ../src/orca/rolenames.py:330
+msgid "lst"
+msgstr "sez"
+
+#: ../src/orca/rolenames.py:331
+msgid "List"
+msgstr "Seznam"
+
+#: ../src/orca/rolenames.py:332
+msgid "list"
+msgstr "seznam"
+
+#: ../src/orca/rolenames.py:335
+msgid "lstitm"
+msgstr "prdsez"
+
+#: ../src/orca/rolenames.py:336
+msgid "ListItem"
+msgstr "PredmetSeznama"
+
+#: ../src/orca/rolenames.py:337
+msgid "list item"
+msgstr "predmet seznama"
+
+#: ../src/orca/rolenames.py:340
+msgid "mnu"
+msgstr "mni"
+
+#: ../src/orca/rolenames.py:341
+msgid "Menu"
+msgstr "Meni"
+
+#: ../src/orca/rolenames.py:342
+msgid "menu"
+msgstr "meni"
+
+#: ../src/orca/rolenames.py:345
+msgid "mnubr"
+msgstr "mnvrs"
+
+#: ../src/orca/rolenames.py:346
+msgid "MenuBar"
+msgstr "MenijskaVrstica"
+
+#: ../src/orca/rolenames.py:347
+msgid "menu bar"
+msgstr "menijska vrstica"
+
+#: ../src/orca/rolenames.py:350
+msgid "mnuitm"
+msgstr "prdmen"
+
+#: ../src/orca/rolenames.py:351
+msgid "MenuItem"
+msgstr "PredmetMenija"
+
+#: ../src/orca/rolenames.py:352
+msgid "menu item"
+msgstr "predmet menija"
+
+#: ../src/orca/rolenames.py:355
+msgid "optnpn"
+msgstr "izbpan"
+
+#: ../src/orca/rolenames.py:356
+msgid "OptionPane"
+msgstr "IzbirniPano"
+
+#: ../src/orca/rolenames.py:357
+msgid "option pane"
+msgstr "izbirni pani"
+
+#: ../src/orca/rolenames.py:360
+#: ../src/orca/rolenames.py:362
+msgid "page"
+msgstr "stran"
+
+#: ../src/orca/rolenames.py:361
+msgid "Page"
+msgstr "Stran"
+
+#: ../src/orca/rolenames.py:365
+msgid "tblst"
+msgstr "sezzav"
+
+#: ../src/orca/rolenames.py:366
+msgid "TabList"
+msgstr "SeznamZavihkov"
+
+#: ../src/orca/rolenames.py:367
+msgid "tab list"
+msgstr "seznam zavihkov"
+
+#: ../src/orca/rolenames.py:370
+msgid "pnl"
+msgstr "plt"
+
+#: ../src/orca/rolenames.py:371
+msgid "Panel"
+msgstr "Pult"
+
+#: ../src/orca/rolenames.py:372
+msgid "panel"
+msgstr "pult"
+
+#: ../src/orca/rolenames.py:375
+msgid "pwd"
+msgstr "ges"
+
+#: ../src/orca/rolenames.py:376
+msgid "Password"
+msgstr "Geslo"
+
+#: ../src/orca/rolenames.py:377
+msgid "password"
+msgstr "geslo"
+
+#: ../src/orca/rolenames.py:380
+msgid "popmnu"
+msgstr "pjvmen"
+
+#: ../src/orca/rolenames.py:381
+msgid "PopupMenu"
+msgstr "PojavniMeni"
+
+#: ../src/orca/rolenames.py:382
+msgid "popup menu"
+msgstr "pojavni meni"
+
+#: ../src/orca/rolenames.py:385
+msgid "pgbar"
+msgstr "kaznap"
+
+#: ../src/orca/rolenames.py:386
+msgid "Progress"
+msgstr "Napredek"
+
+#: ../src/orca/rolenames.py:387
+msgid "progress bar"
+msgstr "kazalnik napredka"
+
+#: ../src/orca/rolenames.py:390
+msgid "btn"
+msgstr "gmb"
+
+#: ../src/orca/rolenames.py:391
+msgid "Button"
+msgstr "Gumb"
+
+#: ../src/orca/rolenames.py:392
+msgid "button"
+msgstr "gumb"
+
+#: ../src/orca/rolenames.py:395
+msgid "radio"
+msgstr "radio"
+
+#: ../src/orca/rolenames.py:396
+msgid "RadioButton"
+msgstr "RadijskiGumb"
+
+#: ../src/orca/rolenames.py:397
+msgid "radio button"
+msgstr "radijski gumb"
+
+#: ../src/orca/rolenames.py:400
+msgid "rdmnuitm"
+msgstr "radpred"
+
+#: ../src/orca/rolenames.py:401
+msgid "RadioItem"
+msgstr "RadijskiPredmet"
+
+#: ../src/orca/rolenames.py:402
+msgid "radio menu item"
+msgstr "radijski predmet menija"
+
+#: ../src/orca/rolenames.py:405
+msgid "rdmnu"
+msgstr "radmen"
+
+#: ../src/orca/rolenames.py:406
+msgid "RadioMenu"
+msgstr "RadijskiMeni"
+
+#: ../src/orca/rolenames.py:407
+msgid "radio menu"
+msgstr "radijski meni"
+
+#: ../src/orca/rolenames.py:410
+msgid "rtpn"
+msgstr "korpan"
+
+#: ../src/orca/rolenames.py:411
+msgid "RootPane"
+msgstr "KorenskiPano"
+
+#: ../src/orca/rolenames.py:412
+msgid "root pane"
+msgstr "korenski pano"
+
+#: ../src/orca/rolenames.py:415
+#: ../src/orca/rolenames.py:475
+msgid "rwhdr"
+msgstr "glavrs"
+
+#: ../src/orca/rolenames.py:416
+#: ../src/orca/rolenames.py:476
+msgid "RowHeader"
+msgstr "GlavaVrstice"
+
+#: ../src/orca/rolenames.py:417
+#: ../src/orca/rolenames.py:477
+msgid "row header"
+msgstr "glava vrstice"
+
+#: ../src/orca/rolenames.py:420
+msgid "scbr"
+msgstr "drs"
+
+#: ../src/orca/rolenames.py:421
+msgid "ScrollBar"
+msgstr "Drsnik"
+
+#: ../src/orca/rolenames.py:422
+msgid "scroll bar"
+msgstr "drsnik"
+
+#: ../src/orca/rolenames.py:425
+msgid "scpn"
+msgstr "drspan"
+
+#: ../src/orca/rolenames.py:426
+msgid "ScrollPane"
+msgstr "DrsniPano"
+
+#: ../src/orca/rolenames.py:427
+msgid "scroll pane"
+msgstr "drsni pano"
+
+#: ../src/orca/rolenames.py:430
+#, fuzzy
+msgid "sctn"
+msgstr "drspan"
+
+#: ../src/orca/rolenames.py:431
+#, fuzzy
+msgid "Section"
+msgstr "vprašaj"
+
+#: ../src/orca/rolenames.py:432
+#, fuzzy
+msgid "section"
+msgstr "vprašaj"
+
+#: ../src/orca/rolenames.py:435
+msgid "seprtr"
+msgstr "loč"
+
+#: ../src/orca/rolenames.py:436
+msgid "Separator"
+msgstr "Ločilnik"
+
+#: ../src/orca/rolenames.py:437
+msgid "separator"
+msgstr "ločilnik"
+
+#: ../src/orca/rolenames.py:440
+msgid "sldr"
+msgstr "drsgmb"
+
+#: ../src/orca/rolenames.py:441
+msgid "Slider"
+msgstr "DrsniGumb"
+
+#: ../src/orca/rolenames.py:442
+msgid "slider"
+msgstr "drsni gumb"
+
+#: ../src/orca/rolenames.py:445
+msgid "spltpn"
+msgstr "ločpan"
+
+#: ../src/orca/rolenames.py:446
+msgid "SplitPane"
+msgstr "LočitveniPano"
+
+#: ../src/orca/rolenames.py:447
+msgid "split pane"
+msgstr "ločitveni pano"
+
+#: ../src/orca/rolenames.py:450
+msgid "spin"
+msgstr "vrt"
+
+#: ../src/orca/rolenames.py:451
+msgid "SpinButton"
+msgstr "VrtljivGumb"
+
+#: ../src/orca/rolenames.py:452
+msgid "spin button"
+msgstr "vrtljiv gumb"
+
+#: ../src/orca/rolenames.py:455
+msgid "statbr"
+msgstr "vrstan"
+
+#: ../src/orca/rolenames.py:456
+msgid "StatusBar"
+msgstr "VrsticaStanja"
+
+#: ../src/orca/rolenames.py:457
+msgid "status bar"
+msgstr "vrstica stanja"
+
+#: ../src/orca/rolenames.py:460
+msgid "tbl"
+msgstr "tbl"
+
+#: ../src/orca/rolenames.py:461
+msgid "Table"
+msgstr "Tabela"
+
+#: ../src/orca/rolenames.py:462
+msgid "table"
+msgstr "tabela"
+
+#: ../src/orca/rolenames.py:466
+#: ../src/orca/where_am_I.py:510
+#: ../src/orca/where_am_I.py:619
+msgid "Cell"
+msgstr "Celica"
+
+#: ../src/orca/rolenames.py:480
+msgid "tomnuitm"
+msgstr "prodtmen"
+
+#: ../src/orca/rolenames.py:481
+msgid "TearOffMenuItem"
+msgstr "PredmetOdtrgljivegaMenija"
+
+#: ../src/orca/rolenames.py:482
+#: ../src/orca/speechgenerator.py:1347
+msgid "tear off menu item"
+msgstr "predmet odtrgljivega menija"
+
+#: ../src/orca/rolenames.py:485
+msgid "term"
+msgstr "term"
+
+#: ../src/orca/rolenames.py:486
+msgid "Terminal"
+msgstr "Terminal"
+
+#: ../src/orca/rolenames.py:487
+msgid "terminal"
+msgstr "terminal"
+
+#: ../src/orca/rolenames.py:490
+msgid "txt"
+msgstr "bes"
+
+#: ../src/orca/rolenames.py:491
+msgid "Text"
+msgstr "Besedilo"
+
+#: ../src/orca/rolenames.py:492
+msgid "text"
+msgstr "besedilo"
+
+#: ../src/orca/rolenames.py:497
+msgid "tglbtn"
+msgstr "prkgmb"
+
+#: ../src/orca/rolenames.py:498
+msgid "ToggleButton"
+msgstr "PreklopniGumb"
+
+#: ../src/orca/rolenames.py:499
+msgid "toggle button"
+msgstr "preklopni gumb"
+
+#: ../src/orca/rolenames.py:502
+msgid "tbar"
+msgstr "orvrs"
+
+#: ../src/orca/rolenames.py:503
+msgid "ToolBar"
+msgstr "OrodnaVrstica"
+
+#: ../src/orca/rolenames.py:504
+msgid "tool bar"
+msgstr "orodna vrstica"
+
+#: ../src/orca/rolenames.py:507
+msgid "tip"
+msgstr "nam"
+
+#: ../src/orca/rolenames.py:508
+msgid "ToolTip"
+msgstr "Namig"
+
+#: ../src/orca/rolenames.py:509
+msgid "tool tip"
+msgstr "namig"
+
+#: ../src/orca/rolenames.py:512
+#: ../src/orca/rolenames.py:514
+msgid "tree"
+msgstr "drevo"
+
+#: ../src/orca/rolenames.py:513
+msgid "Tree"
+msgstr "Drevo"
+
+#: ../src/orca/rolenames.py:517
+msgid "trtbl"
+msgstr "tabdrv"
+
+#: ../src/orca/rolenames.py:518
+msgid "TreeTable"
+msgstr "TabelaDrevesa"
+
+#: ../src/orca/rolenames.py:519
+msgid "tree table"
+msgstr "tabela drevesa"
+
+#: ../src/orca/rolenames.py:522
+msgid "unk"
+msgstr "nez"
+
+#: ../src/orca/rolenames.py:523
+msgid "Unknown"
+msgstr "Neznano"
+
+#: ../src/orca/rolenames.py:524
+msgid "unknown"
+msgstr "neznano"
+
+#: ../src/orca/rolenames.py:527
+msgid "vwprt"
+msgstr "vwprt"
+
+#: ../src/orca/rolenames.py:528
+msgid "Viewport"
+msgstr "Viewport"
+
+#: ../src/orca/rolenames.py:529
+msgid "viewport"
+msgstr "viewport"
+
+#: ../src/orca/rolenames.py:532
+msgid "wnd"
+msgstr "okn"
+
+#: ../src/orca/rolenames.py:533
+msgid "Window"
+msgstr "Okno"
+
+#: ../src/orca/rolenames.py:534
+msgid "window"
+msgstr "okno"
+
+#: ../src/orca/rolenames.py:537
+msgid "hdr"
+msgstr "glv"
+
+#: ../src/orca/rolenames.py:538
+msgid "Header"
+msgstr "Glava"
+
+#: ../src/orca/rolenames.py:539
+msgid "header"
+msgstr "glava"
+
+#: ../src/orca/rolenames.py:542
+msgid "ftr"
+msgstr "nog"
+
+#: ../src/orca/rolenames.py:543
+msgid "Footer"
+msgstr "Noga"
+
+#: ../src/orca/rolenames.py:544
+msgid "footer"
+msgstr "noga"
+
+#: ../src/orca/rolenames.py:547
+msgid "para"
+msgstr "ods"
+
+#: ../src/orca/rolenames.py:548
+msgid "Paragraph"
+msgstr "Odstavek"
+
+#: ../src/orca/rolenames.py:549
+msgid "paragraph"
+msgstr "odstavek"
+
+#: ../src/orca/rolenames.py:552
+msgid "app"
+msgstr "prog"
+
+#: ../src/orca/rolenames.py:553
+msgid "Application"
+msgstr "Program"
+
+#: ../src/orca/rolenames.py:554
+msgid "application"
+msgstr "program"
+
+#: ../src/orca/rolenames.py:557
+msgid "auto"
+msgstr "sam"
+
+#: ../src/orca/rolenames.py:558
+msgid "AutoComplete"
+msgstr "Samodokončaj"
+
+#: ../src/orca/rolenames.py:559
+msgid "autocomplete"
+msgstr "samodokončaj"
+
+#: ../src/orca/rolenames.py:562
+msgid "edtbr"
+msgstr "urvrs"
+
+#: ../src/orca/rolenames.py:563
+msgid "EditBar"
+msgstr "VrsticaZaUrejanje"
+
+#: ../src/orca/rolenames.py:564
+msgid "edit bar"
+msgstr "vrstica za urejanje"
+
+#: ../src/orca/rolenames.py:567
+msgid "emb"
+msgstr "vgr"
+
+#: ../src/orca/rolenames.py:568
+msgid "EmbeddedComponent"
+msgstr "VgrajenaKomponenta"
+
+#: ../src/orca/rolenames.py:569
+msgid "embedded component"
+msgstr "vgrajena komponenta"
+
+#: ../src/orca/scripts/Evolution.py:92
+msgid "calv"
+msgstr "pogkol"
+
+#: ../src/orca/scripts/Evolution.py:93
+msgid "CalendarView"
+msgstr "PogledKoledarja"
+
+#: ../src/orca/scripts/Evolution.py:94
+msgid "calendar view"
+msgstr "pogled koledarja"
+
+#: ../src/orca/scripts/Evolution.py:99
+msgid "cale"
+msgstr "dogkol"
+
+#: ../src/orca/scripts/Evolution.py:100
+msgid "CalendarEvent"
+msgstr "DogodekKoledarja"
+
+#: ../src/orca/scripts/Evolution.py:101
+msgid "calendar event"
+msgstr "dogodek koledarja"
+
+#: ../src/orca/scripts/Evolution.py:119
+#, fuzzy
+msgid "Toggle whether we present new mail if we not not the active script."
+msgstr "Preklopi predpone sporočil pogovorov z imenom pogovorne sobe."
+
+#: ../src/orca/scripts/Evolution.py:149
+msgid "present new mail if this script is not active."
+msgstr ""
+
+#: ../src/orca/scripts/Evolution.py:152
+msgid "do not present new mail if this script is not active."
+msgstr ""
+
+#: ../src/orca/scripts/Evolution.py:199
+msgid " screen"
+msgstr " zaslon"
+
+#. Most of the Setup Assistant screens have a useful piece
+#. of text starting with the word "Please". We want to speak
+#. these. For the first screen, the useful piece of text
+#. starts with "Welcome". For the last screen, it starts
+#. with "Congratulations". Speak those too.
+#.
+#: ../src/orca/scripts/Evolution.py:228
+msgid "Please"
+msgstr "Prosim"
+
+#: ../src/orca/scripts/Evolution.py:229
+msgid "Welcome"
+msgstr "Pozdravljeni"
+
+#: ../src/orca/scripts/Evolution.py:230
+msgid "Congratulations"
+msgstr "Nastavitve"
+
+#: ../src/orca/scripts/Evolution.py:601
+#, fuzzy
+msgid "Status"
+msgstr "VrsticaStanja"
+
+#: ../src/orca/scripts/Evolution.py:602
+#: ../src/orca/where_am_I.py:892
+#, fuzzy
+msgid "Read"
+msgstr "GlavaVrstice"
+
+#: ../src/orca/scripts/Evolution.py:606
+msgid "Attachment"
+msgstr ""
+
+#: ../src/orca/scripts/Evolution.py:767
+msgid "No appointments"
+msgstr "Brez sestankov"
+
+#: ../src/orca/scripts/Evolution.py:841
+msgid "Directories button"
+msgstr "Gumb map"
+
+#: ../src/orca/scripts/Evolution.py:988
+#: ../src/orca/scripts/Evolution.py:1106
+msgid "Assistant"
+msgstr "Pomočnik"
+
+#: ../src/orca/scripts/gaim.py:150
+msgid "Toggle whether we prefix chat room messages with the name of the chat room."
+msgstr "Preklopi predpone sporočil pogovorov z imenom pogovorne sobe."
+
+#: ../src/orca/scripts/gaim.py:155
+msgid "Speak and braille a previous chat room message."
+msgstr "Izgovori in z Braillovo pisavo izpiši sporočilo pogovorne sobe."
+
+#: ../src/orca/scripts/gaim.py:196
+msgid "speak chat room name."
+msgstr "izgovori ime pogovorne sobe."
+
+#: ../src/orca/scripts/gaim.py:199
+msgid "Do not speak chat room name."
+msgstr "Ne izgovori imena pogovorne sobe."
+
+#: ../src/orca/scripts/gaim.py:217
+msgid "Message from chat room "
+msgstr "Sporočilo pogovorne sobe"
+
+#: ../src/orca/scripts/gedit.py:138
+msgid "Change to:"
+msgstr "Spremeni na:"
+
+#: ../src/orca/scripts/gedit.py:139
+msgid "Misspelled word:"
+msgstr "Napačno črkovana beseda:"
+
+#. The indication that spell checking is complete is when the
+#. "misspelt" word is set to "Completed spell checking". Ugh!
+#. Try to detect this and let the user know.
+#: ../src/orca/scripts/gedit.py:168
+msgid "Completed spell checking"
+msgstr "Preverjanje črkovanja končano"
+
+#: ../src/orca/scripts/gedit.py:169
+msgid "Spell checking is complete."
+msgstr "Preverjanje črkovanja je končano."
+
+#: ../src/orca/scripts/gedit.py:171
+msgid "Press Tab and Return to terminate."
+msgstr "Pritisnite Tab in Enter za izhod."
+
+#. Check to see if we have just had an "object:state-changed:showing"
+#. event for the Find button. If the name is "Find", and one of its
+#. states is VISIBLE and we are currently searching, that means we
+#. have just stopped a search. Inform the user that the search is
+#. complete and tell them how many files were found.
+#.
+#: ../src/orca/scripts/gedit.py:214
+#: ../src/orca/scripts/gedit.py:216
+#: ../src/orca/scripts/gnome-search-tool.py:152
+#, fuzzy
+msgid "Find"
+msgstr "Okno"
+
+#: ../src/orca/scripts/gedit.py:285
+#: ../src/orca/scripts/gedit.py:339
+msgid "Check Spelling"
+msgstr "Preveri črkovanje"
+
+#. Fall-thru to process the event with the default handler.
+#. 2) find dialog - phrase not found.
+#.
+#. If we've received an "object:property-change:accessible-name" for
+#. the status bar and the current locus of focus is on the Find
+#. button on the Find dialog or the combo box in the Find dialog
+#. and the last input event was a Return and the name for the current
+#. event source is "Phrase not found", then speak it.
+#.
+#. [[[TODO: richb - "Phrase not found" is spoken twice because we
+#. apparently get two identical "object:property-change:accessible-name"
+#. events.]]]
+#: ../src/orca/scripts/gedit.py:361
+msgid "Phrase not found"
+msgstr ""
+
+#: ../src/orca/scripts/gedit.py:424
+msgid "Phrase found."
+msgstr ""
+
+#: ../src/orca/scripts/gnome-search-tool.py:94
+msgid "Searching."
+msgstr ""
+
+#. Check to see if we have just had an "object:state-changed:showing"
+#. event for the Stop button. If the name is "Stop", and one of its
+#. states is VISIBLE, that means we have started a search. As the
+#. search progresses, regularly inform the user of this by speaking
+#. "Searching" (assuming the search tool has focus).
+#.
+#: ../src/orca/scripts/gnome-search-tool.py:128
+msgid "Stop"
+msgstr ""
+
+#: ../src/orca/scripts/gnome-search-tool.py:158
+#, fuzzy
+msgid "Search complete."
+msgstr "Preverjanje črkovanja je končano."
+
+#: ../src/orca/scripts/gnome-search-tool.py:163
+msgid " files found"
+msgstr ""
+
+#: ../src/orca/scripts/gnome-search-tool.py:165
+msgid "No files found."
+msgstr ""
+
+#. Note to translators: the "Workspace " and "Desk " strings
+#. are the prefix of what metacity shows when you press
+#. Ctrl+Alt and the left or right arrow keys to switch between
+#. workspaces.  The goal here is to find a match with that
+#. prefix.
+#.
+#: ../src/orca/scripts/metacity.py:123
+msgid "Workspace "
+msgstr "Delovna površina"
+
+#: ../src/orca/scripts/metacity.py:123
+msgid "Desk "
+msgstr ""
+
+#: ../src/orca/scripts/metacity.py:126
+msgid "inaccessible"
+msgstr "nedostopno"
+
+#: ../src/orca/scripts/planner.py:77
+#: ../src/orca/scripts/planner.py:138
+msgid "Display more options"
+msgstr "Prikaži več možnosti"
+
+#: ../src/orca/scripts/planner.py:142
+#: ../src/orca/scripts/planner.py:150
+#: ../src/orca/scripts/planner.py:176
+#: ../src/orca/scripts/planner.py:184
+#: ../src/orca/speechgenerator.py:1397
+msgid "pressed"
+msgstr "pritisnjeno"
+
+#: ../src/orca/scripts/planner.py:144
+#: ../src/orca/scripts/planner.py:152
+#: ../src/orca/scripts/planner.py:178
+#: ../src/orca/scripts/planner.py:186
+#: ../src/orca/speechgenerator.py:1399
+msgid "not pressed"
+msgstr "ni pritisnjeno"
+
+#: ../src/orca/scripts/StarOffice.py:165
+msgid "Calc"
+msgstr ""
+
+#: ../src/orca/scripts/StarOffice.py:600
+msgid "Speaks the contents of the input line."
+msgstr "Izgovori vsebino vhodne vrstice."
+
+#: ../src/orca/scripts/StarOffice.py:605
+msgid "Set the row to use as dynamic column headers when speaking calc cells."
+msgstr ""
+
+#: ../src/orca/scripts/StarOffice.py:610
+msgid "Set the column to use as dynamic row headers to use when speaking calc cells."
+msgstr ""
+
+#: ../src/orca/scripts/StarOffice.py:664
+msgid "empty"
+msgstr "prazno"
+
+#: ../src/orca/scripts/StarOffice.py:731
+#, fuzzy
+msgid "Dynamic column header cleared."
+msgstr "glava stolpca"
+
+#: ../src/orca/scripts/StarOffice.py:738
+msgid "Dynamic column header set for row "
+msgstr ""
+
+#: ../src/orca/scripts/StarOffice.py:794
+msgid "Dynamic row header cleared."
+msgstr ""
+
+#: ../src/orca/scripts/StarOffice.py:801
+#, python-format
+msgid "Dynamic row header set for column %s"
+msgstr ""
+
+#: ../src/orca/scripts/StarOffice.py:946
+msgid "Welcome to StarOffice"
+msgstr "Pozdravljeni v StarOffice"
+
+#: ../src/orca/scripts/StarOffice.py:1041
+msgid "Text Document"
+msgstr ""
+
+#: ../src/orca/scripts/StarOffice.py:1101
+#: ../src/orca/scripts/StarOffice.py:1323
+msgid "Spellcheck:"
+msgstr "Preveri črkovanje:"
+
+#: ../src/orca/scripts/StarOffice.py:1129
+msgid "Note that the Scroll Down button has to be pressed numerous times."
+msgstr "Vedite da je gumb za drsenje nazvdol potrebno pritisniti večkrat."
+
+#: ../src/orca/scripts/StarOffice.py:1143
+msgid "License Agreement Accept button now has focus."
+msgstr "Gumb za sprejem dovoljenja ima zdaj fokus."
+
+#: ../src/orca/scripts/StarOffice.py:1166
+msgid "First name"
+msgstr "Ime"
+
+#: ../src/orca/scripts/StarOffice.py:1237
+msgid "Move to cell"
+msgstr ""
+
+#: ../src/orca/scripts/StarOffice.py:1483
+msgid " has formula"
+msgstr " ima formulo"
+
+#: ../src/orca/scripts/StarOffice.py:1529
+#, fuzzy
+msgid "Cell "
+msgstr "Celica"
+
+#. Note to translators: the regular expression here represents a
+#. string to match in the localized application name as seen by
+#. at-poke.  For most cases, the application name is the name of
+#. the binary used to start the application, but this is an
+#. unreliable assumption.  The only reliable way to do the
+#. translation is by running the application and then viewing its
+#. name in the main window of at-poke.
+#.
+#: ../src/orca/settings.py:534
+msgid "[\\S\\s]*StarOffice[\\s\\S]*"
+msgstr "[\\S\\s]*StarOffice[\\s\\S]*"
+
+#: ../src/orca/settings.py:535
+msgid "soffice.bin"
+msgstr "soffice.bin"
+
+#: ../src/orca/settings.py:536
+msgid "[Ee]volution"
+msgstr "[Ee]volution"
+
+#: ../src/orca/settings.py:537
+msgid "Deer Park"
+msgstr "Deer Park"
+
+#: ../src/orca/settings.py:538
+msgid "yelp"
+msgstr ""
+
+#: ../src/orca/settings.py:539
+msgid "Bon Echo"
+msgstr "Bon Echo"
+
+#: ../src/orca/settings.py:540
+msgid "Minefield"
+msgstr ""
+
+#: ../src/orca/settings.py:541
+msgid "bug-buddy"
+msgstr ""
+
+#: ../src/orca/settings.py:542
+msgid "vte"
+msgstr ""
+
+#: ../src/orca/settings.py:543
+msgid "time-admin"
+msgstr ""
+
+#: ../src/orca/speechgenerator.py:375
+#: ../src/orca/where_am_I.py:174
+#: ../src/orca/where_am_I.py:214
+#: ../src/orca/where_am_I.py:911
+msgid "checked"
+msgstr "označeno"
+
+#: ../src/orca/speechgenerator.py:377
+#: ../src/orca/where_am_I.py:176
+#: ../src/orca/where_am_I.py:216
+#: ../src/orca/where_am_I.py:913
+msgid "not checked"
+msgstr "ni označeno"
+
+#: ../src/orca/speechgenerator.py:703
+#: ../src/orca/speechgenerator.py:1189
+#: ../src/orca/speechgenerator.py:1239
+#, fuzzy
+msgid "0 items"
+msgstr "predmet seznama"
+
+#: ../src/orca/speechgenerator.py:957
+msgid "not selected"
+msgstr "ni izbrano"
+
+#: ../src/orca/speechgenerator.py:1349
+msgid "tear off"
+msgstr "odtrgaj"
+
+#: ../src/orca/util.py:487
+msgid "Misspelled word: "
+msgstr "Napačno črkovana beseda:"
+
+#: ../src/orca/util.py:488
+msgid " Context is "
+msgstr " Kontekst je"
+
+#: ../src/orca/util.py:603
+#, python-format
+msgid " %d %s characters "
+msgstr ""
+
+#: ../src/orca/util.py:1349
+msgid "page selected from cursor position"
+msgstr "stran izbrana iz položaja kazalca"
+
+#: ../src/orca/util.py:1353
+msgid "page selected to cursor position"
+msgstr "stran izbrana na položaj kazalca"
+
+#: ../src/orca/util.py:1357
+msgid "line selected down from cursor position"
+msgstr "vrstica izbrana pod položajem kazalca"
+
+#: ../src/orca/util.py:1361
+msgid "line selected up from cursor position"
+msgstr "vrstica izbrana nad položajem kazalca"
+
+#: ../src/orca/util.py:1365
+msgid "document selected to cursor position"
+msgstr "dokument izbran na položaj kazalca"
+
+#: ../src/orca/util.py:1369
+msgid "document selected from cursor position"
+msgstr "dokument izbran pod položajem kazalca"
+
+#. child(0) is the popup list
+#. parent is the page tab list
+#: ../src/orca/where_am_I.py:170
+#: ../src/orca/where_am_I.py:179
+#: ../src/orca/where_am_I.py:200
+#: ../src/orca/where_am_I.py:204
+#: ../src/orca/where_am_I.py:207
+#: ../src/orca/where_am_I.py:210
+#: ../src/orca/where_am_I.py:220
+#: ../src/orca/where_am_I.py:223
+#: ../src/orca/where_am_I.py:243
+#: ../src/orca/where_am_I.py:246
+#: ../src/orca/where_am_I.py:251
+#: ../src/orca/where_am_I.py:252
+#: ../src/orca/where_am_I.py:257
+#: ../src/orca/where_am_I.py:261
+#: ../src/orca/where_am_I.py:264
+#: ../src/orca/where_am_I.py:283
+#: ../src/orca/where_am_I.py:286
+#: ../src/orca/where_am_I.py:294
+#: ../src/orca/where_am_I.py:312
+#: ../src/orca/where_am_I.py:315
+#: ../src/orca/where_am_I.py:318
+#: ../src/orca/where_am_I.py:338
+#: ../src/orca/where_am_I.py:341
+#: ../src/orca/where_am_I.py:345
+#: ../src/orca/where_am_I.py:348
+#: ../src/orca/where_am_I.py:369
+#: ../src/orca/where_am_I.py:374
+#: ../src/orca/where_am_I.py:375
+#: ../src/orca/where_am_I.py:378
+#: ../src/orca/where_am_I.py:381
+#: ../src/orca/where_am_I.py:384
+#: ../src/orca/where_am_I.py:389
+#: ../src/orca/where_am_I.py:390
+#: ../src/orca/where_am_I.py:393
+#: ../src/orca/where_am_I.py:412
+#: ../src/orca/where_am_I.py:419
+#: ../src/orca/where_am_I.py:420
+#: ../src/orca/where_am_I.py:423
+#: ../src/orca/where_am_I.py:424
+#: ../src/orca/where_am_I.py:430
+#: ../src/orca/where_am_I.py:456
+#: ../src/orca/where_am_I.py:459
+#: ../src/orca/where_am_I.py:471
+#: ../src/orca/where_am_I.py:482
+#: ../src/orca/where_am_I.py:485
+#: ../src/orca/where_am_I.py:547
+#: ../src/orca/where_am_I.py:550
+#: ../src/orca/where_am_I.py:624
+#: ../src/orca/where_am_I.py:627
+#: ../src/orca/where_am_I.py:645
+#: ../src/orca/where_am_I.py:658
+#: ../src/orca/where_am_I.py:672
+#: ../src/orca/where_am_I.py:787
+#: ../src/orca/where_am_I.py:802
+#: ../src/orca/where_am_I.py:815
+#: ../src/orca/where_am_I.py:907
+#: ../src/orca/where_am_I.py:916
+#: ../src/orca/where_am_I.py:1125
+#: ../src/orca/where_am_I.py:1128
+#: ../src/orca/where_am_I.py:1162
+#: ../src/orca/where_am_I.py:1165
+#: ../src/orca/where_am_I.py:1251
+#: ../src/orca/where_am_I.py:1270
+#, python-format
+msgid "%s"
+msgstr ""
+
+#: ../src/orca/where_am_I.py:346
+#, fuzzy, python-format
+msgid "%s percent"
+msgstr "odstotek"
+
+#: ../src/orca/where_am_I.py:416
+#: ../src/orca/where_am_I.py:427
+#, fuzzy, python-format
+msgid "%s page"
+msgstr "stran"
+
+#: ../src/orca/where_am_I.py:513
+#, fuzzy, python-format
+msgid "column %d"
+msgstr "glava stolpca"
+
+#: ../src/orca/where_am_I.py:515
+#, fuzzy, python-format
+msgid "row %d"
+msgstr "vrstica"
+
+#: ../src/orca/where_am_I.py:560
+#: ../src/orca/where_am_I.py:580
+#, python-format
+msgid "row %d of %d"
+msgstr ""
+
+#: ../src/orca/where_am_I.py:670
+#: ../src/orca/where_am_I.py:789
+#, fuzzy, python-format
+msgid "%s %s"
+msgstr "%d. %s"
+
+#: ../src/orca/where_am_I.py:733
+#: ../src/orca/where_am_I.py:773
+#, python-format
+msgid "item %d of %d"
+msgstr ""
+
