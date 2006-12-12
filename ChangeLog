@@ -1,3 +1,17 @@
+2006-12-11  Lynn Monsanto <Lynn.Monsanto@sun.com>
+
+	* src/orca/atspi.py, src/orca/debug.py: Modified the
+	Accessible.child(index) method to no longer throw an
+	exception if self.accessible.getChildAtIndex(index)
+	returns None.
+	
+	Rhythmbox incorrectly reports the number of Acccessible
+	children in the "Source" table. The accessible.getChildAtIndex
+	method returns None for some children. This is a non-fatal
+	error since correct information is returned for all valid
+	table cells.  
+	
+
 2006-12-11  Rich Burridge <rich.burridge@sun.com>
 
         * bugs/bugs.html:

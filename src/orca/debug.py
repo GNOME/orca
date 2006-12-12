@@ -205,5 +205,5 @@ def printDetails(level, indent, accessible, includeApp=True):
     - includeApp: if True, include information about the app
     """
 
-    if accessible:
+    if level >= debugLevel and accessible:
         println(level, accessible.toString(indent, includeApp))

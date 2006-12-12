@@ -1371,7 +1371,8 @@ class Accessible:
                 newChild.app = self.app
 
         if not newChild:
-            raise Exception("Invalid child at index: %d" % index)
+            debug.println(debug.LEVEL_FINEST,
+                          "Child at index %d is not an Accessible" % index)
 
         return newChild
 
