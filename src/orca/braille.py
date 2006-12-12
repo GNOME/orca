@@ -50,6 +50,7 @@ try:
 except:
     import brl
     useBrlAPIBindings = False
+    brlAPIRunning = False
 
 try:
     # This can fail due to gtk not being available.  We want to
