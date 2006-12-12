@@ -1552,7 +1552,8 @@ class Script(default.Script):
             #
             if (event_string == "Up" or event_string == "Down"):
                 if settings.readTableCellRow == False:
-                    self.speakCellName(event.source.parent.name)
+                    if event.detail1 != -1:
+                        self.speakCellName(event.source.parent.name)
                 return
 
             # If we are moving left or right and we are in a new cell, just
