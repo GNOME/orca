@@ -320,8 +320,24 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             return [regions, componentRegion]
 
         else:
-            brailleGen = braillegenerator.BrailleGenerator
-            regions = brailleGen._getBrailleRegionsForTableCell(self, obj)
+            # Check to see how many children this table cell has. If it's
+            # just one (or none), then pass it on to the superclass to be
+            # processed.
+            #
+            # If it's more than one, then get the braille regions for each 
+            # child, and call this method again.
+            #
+            if obj.childCount <= 1:
+                brailleGen = braillegenerator.BrailleGenerator
+                regions = brailleGen._getBrailleRegionsForTableCell(self, obj)
+            else:
+                regions = []
+                for i in range(0, obj.childCount):
+                    child = obj.child(i)
+                    [cellRegions, focusRegion] = \
+                                self._getBrailleRegionsForTableCell(child)
+                    regions.extend(cellRegions)
+                return [regions, focusRegion]
 
         return regions
 
@@ -493,9 +509,23 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             nameList = obj.name.split()
             utterances.append(nameList[1])
         else:
-            speechGen = speechgenerator.SpeechGenerator
-            utterances = speechGen._getSpeechForTableCell(self, obj,
-                                                      already_focused)
+            # Check to see how many children this table cell has. If it's
+            # just one (or none), then pass it on to the superclass to be 
+            # processed.
+            #
+            # If it's more than one, then get the speech for each child,
+            # and call this method again.
+            #
+            if obj.childCount <= 1:
+                speechGen = speechgenerator.SpeechGenerator
+                utterances = speechGen._getSpeechForTableCell(self, obj,
+                                                        already_focused)
+            else:
+                utterances = []
+                for i in range(0, obj.childCount):
+                    child = obj.child(i)
+                    utterances.extend(self._getSpeechForTableCell(child,
+                                                        already_focused))
 
         return utterances
 
@@ -1318,6 +1348,18 @@ class Script(default.Script):
             orca.setLocusOfFocus(None, event.source.parent, False)
             return
 
+        # If we are FOCUSED on a paragraph inside a table cell (in Writer),
+        # then speak/braille that parent table cell (see bug #382415).
+        #
+        if event.source.role == rolenames.ROLE_PARAGRAPH and \
+           event.source.parent.role == rolenames.ROLE_TABLE_CELL and \
+           event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
+            if self.lastCell != event.source.parent:
+                default.Script.locusOfFocusChanged(self, event,
+                                                   None, event.source.parent)
+                self.lastCell = event.source.parent
+            return
+
         default.Script.onFocus(self, event)
 
     def onStateChanged(self, event):
@@ -1333,6 +1375,32 @@ class Script(default.Script):
         if event.type == "object:state-changed:active":
             if self.findCommandRun:
                 return
+
+        # If we are FOCUSED on a paragraph inside a table cell (in Writer),
+        # then speak/braille that parent table cell (see bug #382415).
+        #
+        if event.type == "object:state-changed:focused" and \
+           event.source.role == rolenames.ROLE_PARAGRAPH and \
+           event.source.parent.role == rolenames.ROLE_TABLE_CELL and \
+           event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
+
+            # Check to see if the last input event was "Up" or "Down".
+            # If it was, and we are in the same table cell as last time,
+            # and if that table cell has more than one child, then just
+            # get the speech for that single child, otherwise speak/braille
+            # the parent table cell.
+            #
+            event_string = orca_state.lastInputEvent.event_string
+            if (event_string == "Up" or event_string == "Down") and \
+               event.source.parent == self.lastCell and \
+               event.source.parent.childCount > 1:
+                default.Script.locusOfFocusChanged(self, event,
+                                                   None, event.source)
+            else:
+                default.Script.locusOfFocusChanged(self, event,
+                                                   None, event.source.parent)
+            self.lastCell = event.source.parent
+            return
 
         # Two events are received when the caret moves
         # to a new paragraph. The first is a focus event
@@ -1451,12 +1519,77 @@ class Script(default.Script):
         string = string.encode("UTF-8")
         return string
 
+    def speakCellName(self, name):
+        """Speaks the given cell name.
+
+        Arguments:
+        - name: the name of the cell
+        """
+
+        line = _("Cell ") + name
+        speech.speak(line)
+
     def onCaretMoved(self, event):
         """Called whenever the caret moves.
 
         Arguments:
         - event: the Event
         """
+
+        # If we are FOCUSED on a paragraph inside a table cell (in Writer),
+        # then just return (modulo the special cases below). Speaking and 
+        # brailling will have been done in the onStateChanged() routine 
+        # (see bug #382415).
+        #
+        if event.source.role == rolenames.ROLE_PARAGRAPH and \
+           event.source.parent.role == rolenames.ROLE_TABLE_CELL and \
+           event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
+            event_string = orca_state.lastInputEvent.event_string
+
+            # If we are moving up and down, and we are speaking-by-cell
+            # (as opposed to by-row), then speak the cell name. Otherwise
+            # just return.
+            #
+            if (event_string == "Up" or event_string == "Down"):
+                if settings.readTableCellRow == False:
+                    self.speakCellName(event.source.parent.name)
+                return
+
+            # If we are moving left or right and we are in a new cell, just
+            # return.
+            #
+            if (event_string == "Left" or event_string == "Right") and \
+               self.lastCell != event.source.parent:
+                return
+
+            caretOffset = event.source.text.caretOffset
+            len = event.source.text.characterCount
+
+            # If you are in a table cell and you arrow Right, the caret 
+            # will focus at the end of the current paragraph before moving 
+            # into the next cell. To be similar to the way that caret 
+            # navigation works in other paragraphs in OOo, just return.
+            #
+            if event_string == "Right" and caretOffset == len:
+                return
+
+            # If we have moved left and the caret position is at the end of
+            # the paragraph or if we have moved right and the caret position
+            # is at the start of the text string, or the last key input was
+            # Tab or Shift-Tab, and if we are speaking-by-cell (as opposed 
+            # to by-row), then speak the cell name, otherwise just return 
+            # (see bug #382418).
+            #
+            if (event_string == "Left" and caretOffset == len) or \
+               (event_string == "Right" and caretOffset == 0) or \
+               (event_string == "Tab" or event_string == "ISO_Left_Tab"):
+                if settings.readTableCellRow == False:
+                    self.speakCellName(event.source.parent.name)
+
+                # Speak a blank line, if appropriate.
+                if self.speakBlankLine(event.source):
+                    speech.speak(_("blank"), None, False)
+                return
 
         # Speak a newline, if appropriate.
         if self.speakNewLine(event.source):

@@ -812,7 +812,8 @@ class SpeechGenerator:
         if len(utterances) == 0:
             if obj.name and (len(obj.name)):
                 utterances.append(obj.name)
-        utterances.extend(self._getSpeechForObjectRole(obj))
+        if obj.role != rolenames.ROLE_PARAGRAPH:
+            utterances.extend(self._getSpeechForObjectRole(obj))
 
         [text, caretOffset, startOffset] = util.getTextLineAtCaret(obj)
         utterances.append(text)

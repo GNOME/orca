@@ -4,6 +4,15 @@
           Fixed bug #384393 - Orca no longer reports bold or underline 
           in OOo Writer when Insert F is pressed.
 
+        * src/orca/speechgenerator.py:
+          src/orca/scripts/StarOffice.py:
+          Fixed bug #382880 - No speech output when tabbing among cells 
+          in OOo Writer tables.
+          Fixed bug #382888 - New: Orca should announce when you cross a 
+          cell boundary in OOo Writer tables.
+          Fixed bug #382415 – Speak cell/row setting ignored in OOo Writer 
+          tables.
+
 2006-12-12  Willie Walker <william.walker@sun.com>
 
 	* src/orca/braille.py: make sure brlAPIRunning is defined
