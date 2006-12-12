@@ -940,8 +940,6 @@ def setupKeyRanges(keys):
     if len(keySet):
         brlAPI.acceptKeySet(keySet)
 
-    print "BrlAPI key ranges set up."
-
 def init(callback=None, tty=7):
     """Initializes the braille module, connecting to the BrlTTY driver.
 
