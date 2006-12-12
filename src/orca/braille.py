@@ -908,6 +908,40 @@ def _brlAPIKeyReader():
                 _processBrailleEvent(keyCode)
         return brlAPIRunning
 
+def setupKeyRanges(keys):
+    """Hacky method to tell BrlTTY what to send and not send us via
+    the readKey method.  This only works with BrlTTY v3.8 and better.
+
+    Arguments:
+    -keys: a list of BrlAPI commands.
+    """
+    if not brlAPIRunning:
+        return
+
+    # First, start by ignoring everything.
+    #
+    everything=[0,
+                brlapi.KEY_FLAGS_MASK \
+                | brlapi.KEY_TYPE_MASK \
+                | brlapi.KEY_CODE_MASK]
+    brlAPI.ignoreKeyRange(everything)
+
+    # Next, enable cursor routing keys.
+    #
+    cursorRoutingKeys = [brlapi.KEY_CMD_ROUTE,
+                         brlapi.KEY_CMD_ROUTE | brlapi.KEY_CMD_ARG_MASK]
+    brlAPI.acceptKeyRange(cursorRoutingKeys)
+
+    # Finally, enable the commands we care about.
+    #
+    keySet = []
+    for key in keys:
+        keySet.append(brlapi.KEY_TYPE_CMD | key)
+    if len(keySet):
+        brlAPI.acceptKeySet(keySet)
+
+    print "BrlAPI key ranges set up."
+
 def init(callback=None, tty=7):
     """Initializes the braille module, connecting to the BrlTTY driver.
 
@@ -935,15 +969,23 @@ def init(callback=None, tty=7):
             global brlAPIRunning
             brlAPI = brlapi.Connection()
 
-            # [[[TODO: WDW - apparently, there is a proposal to have a
-            # WINDOWPATH environment variable that allows you to know
-            # where the X Server is running.  If it exists, then
-            # call enterTtyModeWithPath() (no arguments) and BrlAPI is
-            # supposed to do the right thing.]]]
-            #
-            brlAPI.enterTtyMode(tty)
-            brlAPIRunning = True
-            gobject.idle_add(_brlAPIKeyReader)
+            try:
+                import os
+                windowPath = os.environ["WINDOWPATH"]
+                brlAPI.enterTtyModeWithPath()
+                brlAPIRunning = True
+                gobject.idle_add(_brlAPIKeyReader)
+                debug.println(\
+                    debug.LEVEL_CONFIGURATION,
+                    "Braille module has been initialized using WINDOWPATH=" \
+                    + "%s" % windowPath)
+            except:
+                brlAPI.enterTtyMode(tty)
+                brlAPIRunning = True
+                gobject.idle_add(_brlAPIKeyReader)
+                debug.println(\
+                    debug.LEVEL_CONFIGURATION,
+                    "Braille module has been initialized using tty=%d" % tty)
         except:
             debug.printException(debug.LEVEL_FINEST)
             return False

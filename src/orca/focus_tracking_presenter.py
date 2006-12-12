@@ -391,7 +391,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                 return
         except:
             pass
-        
+
         # Reclaim (delete) any scripts when desktop children go away.
         # The idea here is that a desktop child is an app. We also
         # generally do not like object:children-changed:remove events,
@@ -470,7 +470,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                        or ((event.type == "focus:") \
                            and (event.source.role == rolenames.ROLE_FRAME)):
 
-                        # If old ("factory") settings don't exist yet, save 
+                        # If old ("factory") settings don't exist yet, save
                         # a set, else restore the old application settings.
                         #
                         if not self._oldAppSettings:
@@ -490,6 +490,11 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                         # app for this event (if found).
                         #
                         appSettings = self.loadAppSettings(event.source.app)
+
+                        # Tell BrlTTY which commands we care about.
+                        #
+                        braille.setupKeyRanges(\
+                            activeScript.brailleBindings.keys())
 
                     s = self._getScript(event.source.app)
                     s.processObjectEvent(event)
@@ -826,6 +831,10 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         self._defaultScript  = None
 
         orca_state.activeScript = self._getScript(None)
+
+        # Tell BrlTTY which commands we care about.
+        #
+        braille.setupKeyRanges(orca_state.activeScript.brailleBindings.keys())
 
         self._registerEventListener("window:activate")
         self._registerEventListener("window:deactivate")

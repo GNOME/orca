@@ -1,5 +1,11 @@
 2006-12-12  Willie Walker <william.walker@sun.com>
 
+	* src/orca/orca.py, src/orca/focus_tracking_presenter.py,
+	src/orca/braille.py: when using BrlTTY v3.8 or better, 
+	tell BrlTTY which braille commands we care about so we 
+	do not step on the interpretation of other commands.
+	Also incorporate check for WINDOWPATH.
+	
 	* src/orca/Gecko.py: a little more work on navigating in text
 	areas.  There are so many outstanding Firefox accessibility bugs
 	in the caret navigation space at the moment, though, that I have
