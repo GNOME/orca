@@ -1585,7 +1585,8 @@ class Script(default.Script):
                (event_string == "Right" and caretOffset == 0) or \
                (event_string == "Tab" or event_string == "ISO_Left_Tab"):
                 if settings.readTableCellRow == False:
-                    self.speakCellName(event.source.parent.name)
+                    if event.detail1 != -1:
+                        self.speakCellName(event.source.parent.name)
 
                 # Speak a blank line, if appropriate.
                 if self.speakBlankLine(event.source):
