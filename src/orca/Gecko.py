@@ -1134,18 +1134,23 @@ class Script(default.Script):
                 text        = obj.text
                 length      = text.characterCount
                 caretOffset = text.caretOffset
+                singleLine  = obj.state.count(
+                    atspi.Accessibility.STATE_SINGLE_LINE)
                 if length == 0:
-                    return True
+                    weHandleIt = True
                 elif caretOffset <= 0:
                     weHandleIt = keyboardEvent.event_string \
                                  in ["Up", "Left"]
-                    return weHandleIt
-                elif caretOffset >= length -1:
+                elif caretOffset >= length - 1:
                     weHandleIt = keyboardEvent.event_string \
                                  in ["Down", "Right"]
-                    return weHandleIt
                 else:
-                    return False
+                    weHandleIt = False
+
+                if singleLine and not weHandleIt:
+                    weHandleIt = keyboardEvent.event_string in ["Up", "Down"]
+
+                return weHandleIt
             else:
                 obj = obj.parent
 
