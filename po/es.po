@@ -48,7 +48,7 @@ msgstr "Línea abajo"
 
 #: ../src/orca/braille.py:164
 msgid "Top Left"
-msgstr ""
+msgstr "Arriba Izquierda"
 
 #: ../src/orca/braille.py:165
 msgid "Bottom Right"
@@ -525,7 +525,7 @@ msgstr "enlace"
 
 #: ../src/orca/Gecko.py:2283 ../src/orca/Gecko.py:2293
 msgid "No more headings."
-msgstr ""
+msgstr "No hay más cabeceras."
 
 #: ../src/orca/Gecko.py:2303 ../src/orca/Gecko.py:2313
 msgid "No more chunks."
@@ -934,7 +934,7 @@ msgstr "Tecla1"
 #. self.keyBindingsModel)
 #: ../src/orca/orca_gui_prefs.py:176
 msgid "Key Binding"
-msgstr "Vinculación de tecla"
+msgstr "Atajo de teclado"
 
 #. MOD_MASK2
 #.
@@ -1178,15 +1178,15 @@ msgstr "_Invertir colores"
 
 #: ../src/orca/orca-setup.glade.h:35
 msgid "Key Binding List"
-msgstr "Lista de teclas vinculadas"
+msgstr "Lista de atajos de teclado"
 
 #: ../src/orca/orca-setup.glade.h:36
 msgid "Key Bindings"
-msgstr "Vinculaciones de teclas"
+msgstr "Atajos de teclado"
 
 #: ../src/orca/orca-setup.glade.h:37
 msgid "Key Echo"
-msgstr "Eco de teclado"
+msgstr "Eco de tecla"
 
 #: ../src/orca/orca-setup.glade.h:39
 msgid "Magnifier"
@@ -1242,7 +1242,7 @@ msgstr "Leer _sangrado y justificación"
 
 #: ../src/orca/orca-setup.glade.h:53
 msgid "Speak blank lines"
-msgstr ""
+msgstr "Hablar líneas en blanco"
 
 #: ../src/orca/orca-setup.glade.h:55
 msgid "Speak current ro_w"
@@ -1342,7 +1342,7 @@ msgstr "Salir"
 
 #: ../src/orca/phonnames.py:36
 msgid "alpha"
-msgstr ""
+msgstr "alfa"
 
 #: ../src/orca/phonnames.py:37
 msgid "bravo"
@@ -1450,7 +1450,7 @@ msgstr "ASAP"
 
 #: ../src/orca/pronunciation_dict.py:38
 msgid "as soon as possible"
-msgstr ""
+msgstr "tan pronto como sea posible"
 
 #: ../src/orca/pronunciation_dict.py:39
 msgid "GHz"
@@ -1482,7 +1482,7 @@ msgstr "LOL"
 
 #: ../src/orca/pronunciation_dict.py:42
 msgid "laughing out loud"
-msgstr "laughing out loud"
+msgstr "carcajadas"
 
 #: ../src/orca/pronunciation_dict.py:43
 msgid "MHz"
@@ -2472,7 +2472,7 @@ msgstr "Bon Echo"
 
 #: ../src/orca/settings.py:540
 msgid "Minefield"
-msgstr ""
+msgstr "Campo de minas"
 
 #: ../src/orca/settings.py:541
 msgid "bug-buddy"
@@ -2531,7 +2531,7 @@ msgstr " El contexto es "
 #: ../src/orca/util.py:603
 #, python-format
 msgid " %d %s characters "
-msgstr ""
+msgstr " caracteres %d %s "
 
 #: ../src/orca/util.py:1349
 msgid "page selected from cursor position"
@@ -2716,15 +2716,15 @@ msgstr "Corregir ortografía"
 #. events.]]]
 #: ../src/orca/scripts/gedit.py:361
 msgid "Phrase not found"
-msgstr ""
+msgstr "Frase no encontrada"
 
 #: ../src/orca/scripts/gedit.py:424
 msgid "Phrase found."
-msgstr ""
+msgstr "Frase encontrada"
 
 #: ../src/orca/scripts/gnome-search-tool.py:94
 msgid "Searching."
-msgstr ""
+msgstr "Buscando."
 
 #. Check to see if we have just had an "object:state-changed:showing"
 #. event for the Stop button. If the name is "Stop", and one of its
@@ -2734,7 +2734,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/gnome-search-tool.py:128
 msgid "Stop"
-msgstr ""
+msgstr "Parar"
 
 #: ../src/orca/scripts/gnome-search-tool.py:158
 msgid "Search complete."
@@ -2742,11 +2742,11 @@ msgstr "Búsqueda completa."
 
 #: ../src/orca/scripts/gnome-search-tool.py:163
 msgid " files found"
-msgstr ""
+msgstr " archivos encontrados"
 
 #: ../src/orca/scripts/gnome-search-tool.py:165
 msgid "No files found."
-msgstr ""
+msgstr " archivos no encontrados."
 
 #: ../src/orca/scripts/StarOffice.py:165
 msgid "Calc"
@@ -2792,7 +2792,7 @@ msgstr "Bienvenido a StarOffice"
 
 #: ../src/orca/scripts/StarOffice.py:1011
 msgid "Text Document"
-msgstr ""
+msgstr "Documento de Texto"
 
 #: ../src/orca/scripts/StarOffice.py:1071
 #: ../src/orca/scripts/StarOffice.py:1293
@@ -2815,7 +2815,7 @@ msgstr "Nombre"
 
 #: ../src/orca/scripts/StarOffice.py:1207
 msgid "Move to cell"
-msgstr ""
+msgstr "Ir a la celda"
 
 #: ../src/orca/scripts/StarOffice.py:1415
 msgid " has formula"
@@ -2833,7 +2833,7 @@ msgstr "Área de trabajo "
 
 #: ../src/orca/scripts/metacity.py:123
 msgid "Desk "
-msgstr ""
+msgstr "Escritorio "
 
 #: ../src/orca/scripts/metacity.py:126
 msgid "inaccessible"
