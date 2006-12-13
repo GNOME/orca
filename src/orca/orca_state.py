@@ -47,6 +47,11 @@ activeScript = None
 #
 clickCount = 0
 
+# Used to capture keys to redefine key bindings by the user.
+#
+capturingKeys   = False
+lastCapturedKey = None
+
 # The InputEvent instance representing the last input event.  This is
 # set each time a mouse, keyboard or braille event is received.
 #

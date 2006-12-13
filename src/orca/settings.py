@@ -460,6 +460,11 @@ commFailureAttemptLimit = 5
 #
 doubleClickTimeout = 0.5
 
+# Allow for the customization of key bindings.
+#
+def overrideKeyBindings(script, keyBindings):
+    return keyBindings
+
 # Which packages to search, and the order in which to search,
 # for application settings.  These packages are expected to be on
 # the PYTHONPATH and/or subpackages of the "orca" package.

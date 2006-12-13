@@ -113,8 +113,8 @@ def getModifierNames(mods):
         text += _("Super") + "+"
     if mods & (1 << atspi.Accessibility.MODIFIER_META2):
         text += _("Meta2") + "+"
-    if mods & (1 << atspi.Accessibility.MODIFIER_META):
-        text += _("Meta") + "+"
+    #if mods & (1 << atspi.Accessibility.MODIFIER_META):
+    #    text += _("Meta") + "+"
     if mods & (1 << atspi.Accessibility.MODIFIER_ALT):
         text += _("Alt_L") + "+"
     if mods & (1 << atspi.Accessibility.MODIFIER_CONTROL):
@@ -190,11 +190,20 @@ class KeyBindings:
             if keyBinding == self.keyBindings[i]:
                 del self.keyBindings[i]
 
+    def removeByHandler(self, handler):
+        """Removes the given KeyBinding instance from this set of keybindings.
+        """
+        i = len(self.keyBindings)
+        while i > 0:
+            if self.keyBindings[i - 1].handler == handler:
+                del self.keyBindings[i - 1]
+            i = i - 1
+
     def hasKeyBinding (self, newKeyBinding, typeOfSearch="strict"):
         """Return True if keyBinding is already in self.keyBindings.
 
            The typeOfSearch can be:
-              "strict":      matches everything (description, modifiers, key)
+              "strict":      matches description, modifiers, key
               "description": matches only description.
               "keys":        matches only modifiers and key.
         """

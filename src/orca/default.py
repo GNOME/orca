@@ -324,6 +324,19 @@ class Script(script.Script):
                 orca._switchToNextPresentationManager,
                 _("Switches to the next presentation manager."))
 
+    def getInputEventHandlerKey(self, inputEventHandler):
+        """Returns the name of the key that contains an inputEventHadler
+        passed as argument
+        """
+
+        key = None
+
+        for keyName,handler in self.inputEventHandlers.iteritems():
+            if handler._function == inputEventHandler._function:
+                key = keyName
+
+        return key
+
     def getListeners(self):
         """Sets up the AT-SPI event listeners for this script.
         """
@@ -1017,6 +1030,8 @@ class Script(script.Script):
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["nextPresentationManagerHandler"]))
 
+        keyBindings = settings.overrideKeyBindings(self, keyBindings)
+
         return keyBindings
 
     def getBrailleBindings(self):
@@ -1412,17 +1427,22 @@ class Script(script.Script):
             speech.speak(character, voice, False)
 
         util.speakTextSelectionState(obj, startOffset, endOffset)
-        
+
 
     def whereAmI(self, inputEvent):
         """
         Speaks information about the current object of interest.
         """
-        string = atspi.KeystrokeListener.keyEventToString(inputEvent)
-        debug.println(debug.LEVEL_FINEST, "default.whereAmI: %s" % string)
-        
         obj = orca_state.locusOfFocus
         self.updateBraille(obj)
+
+        if inputEvent and orca_state.lastInputEvent \
+           and isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
+            string = atspi.KeystrokeListener.keyEventToString(inputEvent)
+            debug.println(debug.LEVEL_FINEST, "default.whereAmI: %s" % string)
+        else:
+            context = self.speechGenerator.getSpeechContext(obj)
+            return where_am_I.whereAmI(obj, context, False, False)
 
         orcaKey = False
         if settings.keyboardLayout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
@@ -1435,12 +1455,10 @@ class Script(script.Script):
            (util.getClickCount(self.lastWhereAmIEvent, inputEvent) == 2)
         self.lastWhereAmIEvent = inputEvent
 
-            
         context = self.speechGenerator.getSpeechContext(obj)
-        
+
         return where_am_I.whereAmI(obj, context, doubleClick, orcaKey)
 
-    
     def findCommonAncestor(self, a, b):
         """Finds the common ancestor between Accessible a and Accessible b.
 

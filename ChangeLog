@@ -1,3 +1,10 @@
+2006-12-12  Jorge Sandín <jorges@elsendero.es>
+
+	* src/orca/default.py, src/orca/keybindings.py, src/orca/orca.py,
+	src/orca/orca_gui_prefs.py, src/orca/orca_prefs.py,
+	src/orca/orca_state.py, src/orca/settings.py: implement the ability
+	to edit key bindings.
+
 2006-12-12  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:

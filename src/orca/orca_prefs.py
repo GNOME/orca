@@ -32,6 +32,9 @@ import settings
 
 from orca_i18n import _  # for gettext support
 
+# The same fields than in orca_gui_prefs.py:
+(HANDLER, DESCRIP, MOD_MASK1, MOD_USED1, KEY1, TEXT1, MOD_MASK2, MOD_USED2, KEY2, TEXT2, MODIF, EDITABLE) = range(12)
+
 def _createDir(dirname):
     """Creates the given directory if it doesn't already exist.
     """
@@ -65,7 +68,7 @@ def _writePreferencesPreamble(prefs):
     prefs.writelines("# import logging\n")
     prefs.writelines("# orca.debug.log.setLevel(logging.INFO)\n")
     prefs.writelines("\n")
-    
+
     prefs.writelines("#orca.debug.debugLevel = orca.debug.LEVEL_OFF\n")
     prefs.writelines("orca.debug.debugLevel = orca.debug.LEVEL_SEVERE\n")
     prefs.writelines("#orca.debug.debugLevel = orca.debug.LEVEL_WARNING\n")
@@ -282,6 +285,80 @@ def _getMagMouseTrackingModeString(mouseTrackingMode):
     else:
         return "orca.settings.MAG_MOUSE_TRACKING_MODE_CENTERED"
 
+def _writeKeyBindingsPreamble(prefs):
+    """Writes the preamble to the user-settings.py keyBindings section."""
+
+    prefs.writelines("\n")
+    prefs.writelines("# Set up a user key-bindings profile\n")
+    prefs.writelines("#\n")
+    prefs.writelines('def overrideKeyBindings(script, keyB):\n')
+
+    return
+
+def _writeKeyBinding(prefs, tupl):
+    """Writes a single keyBinding to the user-settings.py keyBindings section.
+
+    Arguments:
+    - prefs: text string - file to write the key binding to.
+    - tupl:    tuple     - a tuple with the values of the
+                             keybinding (gtk.TreeStore model columns)
+    """
+
+    prefs.writelines("   keyB.removeByHandler(script.inputEventHandlers['"+str(tupl[HANDLER])+"'])\n")
+
+    if (tupl[TEXT1]):
+        prefs.writelines("   keyB.add(orca.keybindings.KeyBinding(\n")
+        prefs.writelines("      '" + str(tupl[KEY1]) + "',\n")
+        if tupl[MOD_MASK1] or tupl[MOD_USED1]:
+            prefs.writelines("      " + str(tupl[MOD_MASK1]) + ",\n")
+            prefs.writelines("      " + str(tupl[MOD_USED1]) + ",\n")
+        else:
+            prefs.writelines("      0,\n")
+            prefs.writelines("      0,\n")
+        prefs.writelines('      script.inputEventHandlers["'+ str(tupl[HANDLER]) +'"]))\n\n')
+
+    if (tupl[TEXT2]):
+        prefs.writelines("   keyB.add(orca.keybindings.KeyBinding(\n")
+        prefs.writelines("      '" + str(tupl[KEY2]) + "',\n")
+        if tupl[MOD_MASK2] or tupl[MOD_USED2]:
+            prefs.writelines("      " + str(tupl[MOD_MASK2]) + ",\n")
+            prefs.writelines("      " + str(tupl[MOD_USED2]) + ",\n")
+        else:
+            prefs.writelines("      0,\n")
+            prefs.writelines("      0,\n")
+        prefs.writelines('      script.inputEventHandlers["'+ str(tupl[HANDLER]) +'"]))\n\n')
+    return
+
+def _writeKeyBindingsPostamble(prefs):
+    """Writes the postamble to the user-settings.py keyBindings section."""
+
+    prefs.writelines('   return keyB')
+    prefs.writelines("\n\n")
+    prefs.writelines('orca.settings.overrideKeyBindings = overrideKeyBindings')
+    prefs.writelines("\n")
+    return
+
+def _writeKeyBindingsMap(prefs, treeModel):
+    """Write to configuration file 'prefs' the key bindings passed in the
+    model treeModel.
+    """
+
+    _writeKeyBindingsPreamble(prefs)
+
+    iter = treeModel.get_iter_first()
+    while iter != None:
+        iterChild = treeModel.iter_children(iter)
+        while iterChild != None:
+            values = treeModel.get(iterChild, 0,1,2,3,4,5,6,7,8,9,10,11)
+            if values[MODIF]:
+                _writeKeyBinding(prefs, values)
+            iterChild = treeModel.iter_next(iterChild)
+        iter = treeModel.iter_next(iter)
+
+    _writeKeyBindingsPostamble(prefs)
+
+    return
+
 def readPreferences():
     """Returns a dictionary containing the names and values of the
     customizable features of Orca."""
@@ -293,7 +370,7 @@ def readPreferences():
 
     return prefsDict
 
-def writePreferences(prefsDict):
+def writePreferences(prefsDict, treeModel):
     """Creates the directory and files to hold user preferences.  Note
     that callers of this method may want to consider using an ordered
     dictionary so that the keys are output in a deterministic order.
@@ -359,6 +436,9 @@ def writePreferences(prefsDict):
             else:
                 value = prefsDict[key]
             prefs.writelines("orca.settings.%s = %s\n" % (key, value))
+
+    _writeKeyBindingsMap(prefs, treeModel)
+
     _writePreferencesPostamble(prefs)
     prefs.close()
 

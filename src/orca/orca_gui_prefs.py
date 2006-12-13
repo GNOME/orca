@@ -39,6 +39,7 @@ import gtk.glade
 import gobject
 import pango   # for ellipsize property constants of CellRendererText
 import locale
+import atspi
 
 import acss
 import orca
@@ -47,8 +48,11 @@ import orca_prefs
 import orca_state
 import platform
 import settings
+import script
 import default    # for the default keyBindings
+import input_event
 import keybindings
+import braille
 import speech as speech
 import speechserver as speechserver
 
@@ -56,7 +60,7 @@ from orca_i18n import _  # for gettext support
 
 OS = None
 
-(HANDLER, DESCRIP, DEFAULT_KEY, MOD_MASK1, MOD_USED1, KEY1, TEXT1, MOD_MASK2, MOD_USED2, KEY2, TEXT2, MODIF) = range(12)
+(HANDLER, DESCRIP, MOD_MASK1, MOD_USED1, KEY1, TEXT1, MOD_MASK2, MOD_USED2, KEY2, TEXT2, MODIF, EDITABLE) = range(12)
 
 
 class orcaSetupGUI(orca_glade.GladeWrapper):
@@ -81,27 +85,27 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         # ***** Key Bindings treeview initialization *****
 
         self.keyBindView = self.widgets.get_widget("keyBindingsTreeview")
-        self.keyBindingsModel = gtk.ListStore(
+        self.keyBindingsModel = gtk.TreeStore(
             gobject.TYPE_STRING,  # Handler name
-            gobject.TYPE_STRING,  # Description
-            gobject.TYPE_STRING,  # Default Orca Key
+            gobject.TYPE_STRING,  # Human Readable Description
             gobject.TYPE_STRING,  # Modifier mask 1
             gobject.TYPE_STRING,  # Used Modifiers 1
-            gobject.TYPE_STRING,  # Modifier key names 1
-            gobject.TYPE_STRING,  # User Defined Key 1
+            gobject.TYPE_STRING,  # Modifier key name 1
+            gobject.TYPE_STRING,  # Text of the Key Binding Shown 1
             gobject.TYPE_STRING,  # Modifier mask 2
             gobject.TYPE_STRING,  # Used Modifiers 2
-            gobject.TYPE_STRING,  # Modifier key names 2
-            gobject.TYPE_STRING,  # User Defined Key 2
-            gobject.TYPE_BOOLEAN) # Key Modified by User
+            gobject.TYPE_STRING,  # Modifier key name 2
+            gobject.TYPE_STRING,  # Text of the Key Binding Shown 2
+            gobject.TYPE_BOOLEAN, # Key Modified by User
+            gobject.TYPE_BOOLEAN) # Row with fields editable or not
         self.keyBindView.set_model(self.keyBindingsModel)
         self.keyBindView.set_headers_visible(True)
 
         # Treeview Column Implementation:
-        #      (HANDLER,    DESCRIP,    DEFAULT_KEY,
-        #       MOD_MASK1,  MOD_USED1,  KEY1,       TEXT1,
-        #       MOD_MASK2,  MOD_USED2,  KEY2,       TEXT2,
-        #       MODIF)
+        #      (HANDLER,    DESCRIP,
+        #       MOD_MASK1,  MOD_USED1,  KEY1,   TEXT1,
+        #       MOD_MASK2,  MOD_USED2,  KEY2,   TEXT2,
+        #       MODIF,      EDITABLE)
 
         # HANDLER
         #
@@ -119,18 +123,8 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         rendererText.set_property("ellipsize", pango.ELLIPSIZE_END)
         column = gtk.TreeViewColumn(_("Function"), rendererText, text=DESCRIP)
         column.set_resizable(True)
-        column.set_min_width(360)
+        column.set_min_width(380)
         column.set_sort_column_id(DESCRIP)
-        self.keyBindView.append_column(column)
-
-        # DEFAULT_KEY
-        #
-        column = gtk.TreeViewColumn(_("Default Key"),
-                                    gtk.CellRendererText(),
-                                    text=DEFAULT_KEY)
-        column.set_visible(False)
-        column.set_resizable(True)
-        column.set_sort_column_id(DEFAULT_KEY)
         self.keyBindView.append_column(column)
 
         # MOD_MASK1
@@ -166,16 +160,17 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         # TEXT1
         #
         rendererText = gtk.CellRendererText()
-        #rendererText.set_property('editable', True)
-        #rendererText.connect("editing-started",
-        #                     self.editingKey,
-        #                     self.keyBindingsModel)
-        #rendererText.connect('edited',
-        #                     self.editedKey,
-        #                     self.keyBindingsModel)
+        rendererText.connect("editing-started",
+                             self.editingKey,
+                             self.keyBindingsModel)
+        rendererText.connect('edited',
+                             self.editedKey,
+                             self.keyBindingsModel,
+                             MOD_MASK1, MOD_USED1, KEY1, TEXT1)
         column = gtk.TreeViewColumn(_("Key Binding"),
                                     rendererText,
-                                    text=TEXT1)
+                                    text=TEXT1,
+                                    editable=EDITABLE)
         column.set_resizable(True)
         column.set_sort_column_id(TEXT1)
         self.keyBindView.append_column(column)
@@ -211,16 +206,17 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         # TEXT2
         #
         rendererText = gtk.CellRendererText()
-        #rendererText.set_property('editable', True)
-        #rendererText.connect("editing-started",
-        #                     self.editingKey,
-        #                     self.keyBindingsModel)
-        #rendererText.connect('edited',
-        #                     self.editedKey,
-        #                     self.keyBindingsModel)
+        rendererText.connect("editing-started",
+                             self.editingKey,
+                             self.keyBindingsModel)
+        rendererText.connect('edited',
+                             self.editedKey,
+                             self.keyBindingsModel,
+                             MOD_MASK2, MOD_USED2, KEY2, TEXT2)
         column = gtk.TreeViewColumn(_("Alternate"),
-                                    gtk.CellRendererText(),
-                                    text=TEXT2)
+                                    rendererText,
+                                    text=TEXT2,
+                                    editable=EDITABLE)
         column.set_resizable(True)
         column.set_sort_column_id(TEXT2)
         self.keyBindView.append_column(column)
@@ -228,13 +224,29 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         # MODIF
         #
         rendererToggle = gtk.CellRendererToggle()
+        rendererToggle.connect('toggled',
+                               self.keyModifiedToggle,
+                               self.keyBindingsModel,
+                               MODIF)
+        column = gtk.TreeViewColumn(_("Modified"),
+                                    rendererToggle,
+                                    active=MODIF,
+                                    activatable=EDITABLE)
+        #column.set_visible(False)
+        column.set_resizable(True)
+        column.set_sort_column_id(MODIF)
+        self.keyBindView.append_column(column)
+
+        # EDITABLE
+        #
+        rendererToggle = gtk.CellRendererToggle()
         rendererToggle.set_property('activatable',False)
         column = gtk.TreeViewColumn(_("Modified"),
                                     rendererToggle,
-                                    active=MODIF)
+                                    active=EDITABLE)
         column.set_visible(False)
         column.set_resizable(True)
-        column.set_sort_column_id(MODIF)
+        column.set_sort_column_id(EDITABLE)
         self.keyBindView.append_column(column)
 
         # Populates the treeview with all the keybindings:
@@ -244,7 +256,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         self.keyBindView.show()
 
         self.window = self.widgets.get_widget("orcaSetupWindow")
-        self.window.resize(730,580);
+        self.window.resize(790,580);
 
         self._setKeyEchoItems()
 
@@ -932,6 +944,41 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         speech.speak(text)
 
+    def _createNode(self, appName):
+        """Create a new root node in the TreeStore model with the name of the
+            application.
+
+        Arguments:
+        - appName: the name of the TreeStore Node (the same of the application)
+        """
+
+        model = self.keyBindingsModel
+
+        iter = model.append(None)
+        model.set(iter,
+                  DESCRIP, appName,
+                  MODIF, False)
+
+        return iter
+
+    def _getIterOf(self, appName):
+        """Returns the gtk.TreeIter of the TreeStore model
+        that matches the application name passed as argument
+
+        Arguments:
+        - appName: a string with the name of the application of the node wanted
+                    it's the same that the field DESCRIP of the model treeStore
+        """
+
+        model = self.keyBindingsModel
+
+        for row in model:
+            if ((model.iter_depth(row.iter) == 0) \
+                and (row[DESCRIP] == appName)):
+                return row.iter
+
+        return None
+
     def _addAlternateKeyBinding(self, kb):
         """Adds an alternate keybinding to the existing handler and
         returns true.  In case it doesn't exist yet, just returns
@@ -941,44 +988,115 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         - kb: the keybinding to be added as an alternate keybinding.
         """
 
-        iter = self.keyBindingsModel.get_iter_first()
+        model = self.keyBindingsModel
+        iter = model.get_iter_first()
         exist = False
 
-        for row in self.keyBindingsModel:
-            if row[DESCRIP]==kb.handler._description:
-                exist = True
-                row[MOD_MASK2] = kb.modifier_mask
-                row[MOD_USED2] = kb.modifiers
-                row[KEY2]      = kb.keysymstring
-                row[TEXT2]     = keybindings.getModifierNames(kb.modifiers) \
-                                 + kb.keysymstring
+        while iter != None:
+            iterChild = model.iter_children(iter)
+            while iterChild != None:
+                if model.get(iterChild,DESCRIP)[0] == kb.handler._description:
+                    exist = True
+                    model.set(iterChild,
+                              MOD_MASK2, kb.modifier_mask,
+                              MOD_USED2, kb.modifiers,
+                              KEY2, kb.keysymstring,
+                              TEXT2,keybindings.getModifierNames(kb.modifiers)\
+                                  + kb.keysymstring)
+                iterChild = model.iter_next(iterChild)
+            iter = model.iter_next(iter)
 
         return exist
 
-    def _insert_row(self, kb, modif=False):
+    def _insertRow(self, handl, kb, parent=None, modif=False):
         """Appends a new row with the new keybinding data to the treeview
 
         Arguments:
-        - kb:    the new keybinding.
-        - modif: whether to check the modified field or not.
+        - handl:  the name of the handler associated to the keyBinding
+        - kb:     the new keybinding.
+        - parent: the parent node of the treeview, where to append the kb
+        - modif:  whether to check the modified field or not.
 
         Returns a gtk.TreeIter pointing at the new row.
         """
 
         model = self.keyBindingsModel
 
-        myiter = model.insert_after(None, None)
-        model.set (myiter,
-                   HANDLER,     kb.handler,
-                   DESCRIP,     kb.handler._description,
-                   DEFAULT_KEY, kb.keysymstring,
-                   MOD_MASK1,   kb.modifier_mask,
-                   MOD_USED1,   kb.modifiers,
-                   KEY1,        kb.keysymstring,
-                   TEXT1,       keybindings.getModifierNames(kb.modifiers) \
-                                + kb.keysymstring,
-                   MODIF,       modif)
-        return myiter
+        if parent == None:
+            parent = self._getIterOf(_("Orca"))
+
+        if parent != None:
+            myiter = model.append(parent)
+            model.set (myiter,
+                       HANDLER,   handl,
+                       DESCRIP,   kb.handler._description,
+                       MOD_MASK1, kb.modifier_mask,
+                       MOD_USED1, kb.modifiers,
+                       KEY1,      kb.keysymstring,
+                       TEXT1,     keybindings.getModifierNames(kb.modifiers) \
+                                  + kb.keysymstring,
+                       MODIF,     modif,
+                       EDITABLE,  True)
+            return myiter
+        else:
+            return None
+
+    def _insertRowBraille(self, handl, com, inputEvHand, parent=None, modif=False):
+        """Appends a new row with the new braille binding data to the treeview
+
+        Arguments:
+        - handl:       the name of the handler associated to the brailleBinding
+        - com:         the BrlTTY command
+        - inputEvHand: the inputEventHandler with the new brailleBinding
+        - parent:      the parent node of the treeview, where to append the kb
+        - modif:       whether to check the modified field or not.
+
+        Returns a gtk.TreeIter pointing at the new row.
+        """
+
+        model = self.keyBindingsModel
+
+        if parent == None:
+            parent = self._getIterOf(_("Braille Bindings"))
+
+        if parent != None:
+            myiter = model.append(parent)
+            model.set (myiter,
+                       HANDLER,  handl,
+                       DESCRIP,  inputEvHand._description,
+                       KEY1,     com,
+                       TEXT1,    braille.command_name[com],
+                       MODIF,    modif,
+                       EDITABLE, False)
+            return myiter
+        else:
+            return None
+
+    def _markModified(self):
+        """ Mark as modified the user custom key bindings:
+        """
+
+        try:
+            defScript = default.Script(None)
+            defScript.setupInputEventHandlers()
+            keyBinds = keybindings.KeyBindings()
+            keyBinds = settings.overrideKeyBindings(defScript,keyBinds)
+            keyBind = keybindings.KeyBinding(None,None,None,None)
+            treeModel = self.keyBindingsModel
+
+            iter = treeModel.get_iter_first()
+            while iter != None:
+                iterChild = treeModel.iter_children(iter)
+                while iterChild != None:
+                    descrip = treeModel.get_value(iterChild, DESCRIP)
+                    keyBind.handler=input_event.InputEventHandler(None,descrip)
+                    if keyBinds.hasKeyBinding(keyBind,
+                                              typeOfSearch="description"):
+                        treeModel.set_value(iterChild, MODIF, True)
+                    iterChild = treeModel.iter_next(iterChild)
+                iter = treeModel.iter_next(iter)
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
 
     def _populateKeyBindings(self):
         """Fills the TreeView with the list of Orca keybindings
@@ -989,16 +1107,32 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         # KeyBindings from the default script, in default.py (Orca's default)
         #
-        self.kbindingsDef = default.Script(None).getKeyBindings()
+        iterOrca = self._createNode(_("Orca"))
+        defScript = default.Script(None)
+        self.kbindingsDef = defScript.getKeyBindings()
+
         for kb in self.kbindingsDef.keyBindings:
             if not self.kbindings.hasKeyBinding(kb, typeOfSearch="strict"):
                 if not self._addAlternateKeyBinding(kb):
-                    self._insert_row(kb)
+                    handl = defScript.getInputEventHandlerKey(kb.handler)
+                    self._insertRow(handl, kb, iterOrca)
 
         self.orcaModKeyEntry = self.widgets.get_widget("orcaModKeyEntry")
         self.orcaModKeyEntry.set_text(
-            settings.orcaModifierKeys.__str__()[1:-1].replace("'",""))
+            str(settings.orcaModifierKeys)[1:-1].replace("'",""))
 
+        self._markModified()
+
+        # Braille Bindings from default script, in default.py
+        #
+        iterBB = self._createNode(_("Braille Bindings"))
+
+        self.bbindings = defScript.getBrailleBindings()
+        for com, inputEvHand in self.bbindings.iteritems():
+            handl = defScript.getInputEventHandlerKey(inputEvHand)
+            self._insertRowBraille(handl, com, inputEvHand, iterBB)
+
+        self.keyBindView.expand_all()
         self.keyBindingsModel.set_sort_column_id(TEXT1, gtk.SORT_ASCENDING)
 
     def speechSupportChecked(self, widget):
@@ -1599,6 +1733,47 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         self.prefsDict["enableMagZoomerColorInversion"] = widget.get_active()
 
+    def keyModifiedToggle(self, cell, path, model, col):
+        """When the user changes a checkbox field (boolean field)"""
+
+        model[path][col] = not model[path][col]
+        return
+
+    def editingKey(self, cell, editable, path, treeModel):
+        """Starts user input of a Key for a selected key binding"""
+
+        editable.set_text(_("enter new key"))
+        orca_state.capturingKeys = True
+        return
+
+    def editedKey(self, cell, path, new_text, treeModel, modMask, modUsed, key, text):
+        """The user changes the key for a Keybinding:
+            update the model of the treeview
+        """
+
+        newKeyEvent = orca_state.lastCapturedKey
+        newKey = str(orca_state.lastCapturedKey.event_string)
+        mods = keybindings.getModifierNames(newKeyEvent.modifiers)
+
+        orca_state.capturingKeys = False
+
+        if (newKey != treeModel[path][key]) \
+           or (newKeyEvent.modifiers != int(treeModel[path][modUsed])):
+            iter = treeModel.get_iter_from_string(path)
+            treeModel.set(iter,
+                          modMask, newKeyEvent.modifiers,
+                          modUsed, newKeyEvent.modifiers,
+                          key, newKey,
+                          text, mods + newKey,
+                          MODIF, True)
+            speech.stop()
+            speech.speak(_("The new key is: %s") % newKey)
+        else:
+            speech.stop()
+            speech.speak(_("The key entered is the same. Nothing changed."))
+
+        return
+
     def magSourceDisplayChanged(self, widget):
         """Signal handler for the "changed" signal for the
            magSourceDisplayDisplayEntry GtkEntry widget.
@@ -1697,7 +1872,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
             settings.HYPERLINK_VOICE : self.hyperlinkVoice
         }
 
-        if orca_prefs.writePreferences(self.prefsDict):
+        if orca_prefs.writePreferences(self.prefsDict, self.keyBindingsModel):
             self._say(_("Accessibility support for GNOME has just been enabled."))
             self._say(_("You need to log out and log back in for the change to take effect."))
 

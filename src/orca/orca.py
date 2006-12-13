@@ -646,6 +646,25 @@ def _keyEcho(event):
 
         speech.speak(event_string, voice)
 
+def _processKeyCaptured(event):
+    """Called when a new key event arrives and orca_state.capturingKeys=True.
+    (used for key bindings redefinition)
+    """
+
+    if event.type == 0:
+        if _isModifierKey(event.event_string) \
+               or event.event_string == "Return":
+            pass
+        elif event.event_string == "Escape":
+            orca_state.capturingKeys = False
+        else:
+            speech.speak(_("Key captured: %s. Press enter to confirm.") \
+                         % str(event.event_string))
+            orca_state.lastCapturedKey = event
+    else:
+        pass
+    return False
+
 def _processKeyboardEvent(event):
     """The primary key event handler for Orca.  Keeps track of various
     attributes, such as the lastInputEvent.  Also calls keyEcho as well
@@ -713,26 +732,29 @@ def _processKeyboardEvent(event):
     #
     consumed = False
     try:
-        consumed = _keyBindings.consumeKeyboardEvent(None, keyboardEvent)
-        if (not consumed) and (_currentPresentationManager >= 0):
-            consumed = _PRESENTATION_MANAGERS[_currentPresentationManager].\
-                       processKeyboardEvent(keyboardEvent)
-        if (not consumed) and settings.learnModeEnabled:
-            if keyboardEvent.type \
-                == atspi.Accessibility.KEY_PRESSED_EVENT:
-                clickCount = util.getClickCount(orca_state.lastInputEvent,
-                                            keyboardEvent)
-                if clickCount == 2:
-                    util.phoneticSpellCurrentItem(keyboardEvent.event_string)
-                else:
-                    # Check to see if there are localized words to be
-                    # spoken for this key event.
-                    #
-                    braille.displayMessage(keyboardEvent.event_string)
-                    event_string = keyboardEvent.event_string
-                    event_string = keynames.getKeyName(event_string)
-                    speech.speak(event_string)
-            consumed = True
+        if orca_state.capturingKeys:
+            _processKeyCaptured(keyboardEvent)
+        else:
+            consumed = _keyBindings.consumeKeyboardEvent(None, keyboardEvent)
+            if (not consumed) and (_currentPresentationManager >= 0):
+                consumed = _PRESENTATION_MANAGERS[_currentPresentationManager].\
+                           processKeyboardEvent(keyboardEvent)
+            if (not consumed) and settings.learnModeEnabled:
+                if keyboardEvent.type \
+                    == atspi.Accessibility.KEY_PRESSED_EVENT:
+                    clickCount = util.getClickCount(orca_state.lastInputEvent,
+                                                keyboardEvent)
+                    if clickCount == 2:
+                        util.phoneticSpellCurrentItem(keyboardEvent.event_string)
+                    else:
+                        # Check to see if there are localized words to be
+                        # spoken for this key event.
+                        #
+                        braille.displayMessage(keyboardEvent.event_string)
+                        event_string = keyboardEvent.event_string
+                        event_string = keynames.getKeyName(event_string)
+                        speech.speak(event_string)
+                consumed = True
     except:
         debug.printException(debug.LEVEL_SEVERE)
 
