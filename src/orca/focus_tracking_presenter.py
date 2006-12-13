@@ -494,7 +494,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                         # Tell BrlTTY which commands we care about.
                         #
                         braille.setupKeyRanges(\
-                            activeScript.brailleBindings.keys())
+                            orca_state.activeScript.brailleBindings.keys())
 
                     s = self._getScript(event.source.app)
                     s.processObjectEvent(event)
