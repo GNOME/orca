@@ -1382,7 +1382,7 @@ class Script(default.Script):
         if event.type == "object:state-changed:focused" and \
            event.source.role == rolenames.ROLE_PARAGRAPH and \
            event.source.parent.role == rolenames.ROLE_TABLE_CELL and \
-           event.source.detail1 == 1 and \
+           event.detail1 == 1 and \
            event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
 
             # Check to see if the last input event was "Up" or "Down".
