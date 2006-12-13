@@ -65,13 +65,25 @@ def whereAmI(obj, context, doubleClick, orcaKey):
         return False
 
     debug.println(_debugLevel,
-        "whereAmI: context=%s, parent= %s, label=%s name=%s, role=%s, mnemonics=%s, double-click=%s, orca-key=%s" % \
+        "whereAmI: \
+       \n  context= %s \
+       \n  label=%s \
+       \n  name=%s \
+       \n  role=%s \
+       \n  mnemonics=%s \
+       \n  parent label= %s \
+       \n  parent name=%s \
+       \n  parent role=%s \
+       \n  double-click=%s \
+       \n  orca-key=%s" % \
         (context,
-         obj.parent.role,
          _getObjLabel(obj),
          _getObjName(obj),
-         rolenames.getSpeechForRoleName(obj),
+         obj.role,
          util.getAcceleratorAndShortcut(obj),
+         _getObjLabel(obj.parent),
+         _getObjName(obj.parent),
+         obj.parent.role,
          doubleClick,
          orcaKey))
 
@@ -109,7 +121,9 @@ def whereAmI(obj, context, doubleClick, orcaKey):
     elif role == rolenames.ROLE_MENU or \
          role == rolenames.ROLE_MENU_ITEM or \
          role == rolenames.ROLE_CHECK_MENU or \
-         role == rolenames.ROLE_CHECK_MENU_ITEM:
+         role == rolenames.ROLE_CHECK_MENU_ITEM or \
+         role == rolenames.ROLE_RADIO_MENU or \
+         role == rolenames.ROLE_RADIO_MENU_ITEM:
         _speakMenuItem(obj, doubleClick)
 
 
@@ -759,7 +773,7 @@ def _getPositionInList(obj, name):
     
     for i in range(0, obj.childCount):
         next = _getObjName(obj.child(i))
-        if next == "" or next == "Empty":
+        if next == "" or next == "Empty" or next == "separator":
             continue
         
         index += 1
