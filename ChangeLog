@@ -9,6 +9,13 @@
           Updated entries for OOo issues #71500, #72155, #69791 and #72159.
           All seem to be nicely fixed in OOo v2.1.
 
+        * bugs/bugs.html:
+          Updated entries for OOo issues #70872, #71383 and #71385.
+          All still present in OOo v2.1
+
+          Update entry for OOo issue #63871.
+          Seems to be fixed in OOo v2.1.
+
 2006-12-12  Jorge Sandín <jorges@elsendero.es>
 
 	* src/orca/default.py, src/orca/keybindings.py, src/orca/orca.py,
