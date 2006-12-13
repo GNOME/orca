@@ -1,3 +1,9 @@
+2006-12-13  Rich Burridge <rich.burridge@sun.com>
+
+        * bugs/bugs.html:
+          Updated entries for OOo issues #71500, #72155, #69791 and #72159.
+          All seem to be nicely fixed in OOo v2.1.
+
 2006-12-12  Jorge Sandín <jorges@elsendero.es>
 
 	* src/orca/default.py, src/orca/keybindings.py, src/orca/orca.py,
