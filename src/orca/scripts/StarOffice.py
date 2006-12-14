@@ -641,6 +641,41 @@ class Script(default.Script):
 
         return keyBindings
 
+    def checkForTableBoundry(self, oldFocus, newFocus):
+        """Check to see if we've entered or left a table.
+        When entering a table, announce the table dimensions.
+        When leaving a table, announce that the table has been exited.
+
+        Arguments:
+        - oldFocus: Accessible that is the old locus of focus
+        - newFocus: Accessible that is the new locus of focus
+        """
+
+        if oldFocus == None or newFocus == None:
+            return
+
+        oldFocusIsTable = None 
+        while oldFocus.role != rolenames.ROLE_APPLICATION:
+            if oldFocus.role == rolenames.ROLE_TABLE:
+                oldFocusIsTable = oldFocus
+                break
+            oldFocus = oldFocus.parent 
+
+        newFocusIsTable = None
+        while newFocus.role != rolenames.ROLE_APPLICATION:
+            if newFocus.role == rolenames.ROLE_TABLE:
+                newFocusIsTable = newFocus
+                break
+            newFocus = newFocus.parent
+
+        if oldFocusIsTable == None and newFocusIsTable != None:
+            rows = newFocusIsTable.table.nRows
+            columns = newFocusIsTable.table.nColumns
+            line = _("table with %d rows and %d columns.") % (rows, columns)
+            speech.speak(line)
+        elif oldFocusIsTable != None and newFocusIsTable == None:
+            speech.speak(_("leaving table."))
+
     def speakInputLine(self, inputEvent):
         """Speak the contents of the spread sheet input line (assuming we
         have a handle to it - generated when we first focus on a spread
@@ -1368,6 +1403,19 @@ class Script(default.Script):
         Arguments:
         - event: the Event
         """
+
+        # If this is a state change "focused" event that we care about, and 
+        # we are in Writer, check to see if we are entering or leaving a table.
+        #
+        if event.type == "object:state-changed:focused" and event.detail1 == 1:
+            current = event.source.parent
+            while current.role != rolenames.ROLE_APPLICATION:
+                if current.role == rolenames.ROLE_FRAME and \
+                   (current.name and current.name.endswith(_("Writer"))):
+                    self.checkForTableBoundry(orca_state.locusOfFocus, 
+                                              event.source)
+                    break
+                current = current.parent
 
         # Prevent  "object:state-changed:active" events from activating
         # the find operation. See comment #18 of bug #354463.
