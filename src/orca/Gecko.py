@@ -813,10 +813,20 @@ class Script(default.Script):
 
         # Autocomplete widgets are a complex beast as well.  When they
         # get focus, their child (which is an entry) really has focus.
+        # Their child also issues a focus: event, so we just ignore
+        # the autocomplete focus: event.
         #
         if event.source.role == rolenames.ROLE_AUTOCOMPLETE:
-            entry = self.getAutocompleteEntry(event.source)
-            orca.setLocusOfFocus(event, entry)
+            # [[[WDW - we used to force the locus of focus to the
+            # entry.  The idea was that even if the entry issued
+            # a focus: event, the locus of focus would not change.
+            # The problem, however, is that Gecko often gives us
+            # a *different* child whenever we ask for the entry.
+            # So...we end up just depending upon the entry to issue
+            # focus: events.]]]
+            #
+            #entry = self.getAutocompleteEntry(event.source)
+            #orca.setLocusOfFocus(event, entry)
             return
 
         default.Script.onFocus(self, event)
@@ -1125,36 +1135,32 @@ class Script(default.Script):
         if not controlCaretNavigation:
             return False
 
+        if not self.inDocumentContent():
+            return False
+
+        weHandleIt = False
         obj = orca_state.locusOfFocus
-
-        while obj:
-            if obj.role == rolenames.ROLE_DOCUMENT_FRAME:
-                return True
-            elif obj.role == rolenames.ROLE_ENTRY:
-                text        = obj.text
-                length      = text.characterCount
-                caretOffset = text.caretOffset
-                singleLine  = obj.state.count(
-                    atspi.Accessibility.STATE_SINGLE_LINE)
-                if length == 0:
-                    weHandleIt = True
-                elif caretOffset <= 0:
-                    weHandleIt = keyboardEvent.event_string \
-                                 in ["Up", "Left"]
-                elif caretOffset >= length - 1:
-                    weHandleIt = keyboardEvent.event_string \
-                                 in ["Down", "Right"]
-                else:
-                    weHandleIt = False
-
-                if singleLine and not weHandleIt:
-                    weHandleIt = keyboardEvent.event_string in ["Up", "Down"]
-
-                return weHandleIt
+        if obj.role == rolenames.ROLE_ENTRY:
+            text        = obj.text
+            length      = text.characterCount
+            caretOffset = text.caretOffset
+            singleLine  = obj.state.count(
+                atspi.Accessibility.STATE_SINGLE_LINE)
+            if length == 0:
+                weHandleIt = True
+            elif caretOffset <= 0:
+                weHandleIt = keyboardEvent.event_string \
+                             in ["Up", "Left"]
+            elif caretOffset >= length - 1:
+                weHandleIt = keyboardEvent.event_string \
+                             in ["Down", "Right"]
             else:
-                obj = obj.parent
+                weHandleIt = False
 
-        return False
+            if singleLine and not weHandleIt:
+                weHandleIt = keyboardEvent.event_string in ["Up", "Down"]
+
+        return weHandleIt
 
     def useStructuralNavigationModel(self):
         """Returns True if we should do our own structural navigation.

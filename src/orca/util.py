@@ -792,10 +792,15 @@ def getTextLineAtCaret(obj):
     if not text:
         return ["", 0, 0]
 
+    if text.caretOffset == text.characterCount:
+        caretOffset = max(0, text.caretOffset - 1)
+    else:
+        caretOffset = text.caretOffset
+
     # Get the line containing the caret
     #
     [string, startOffset, endOffset] = text.getTextAtOffset(
-        text.caretOffset, atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+        caretOffset, atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
 
     # Sometimes we get the trailing line-feed-- remove it
     #

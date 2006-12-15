@@ -1,3 +1,12 @@
+2006-12-15  Willie Walker <william.walker@sun.com>
+
+	* src/orca/util.py: in getTextLineAtCaret, handle case where the
+	caret is at the very end of the last line of the text.
+
+	* src/orca/Gecko.py: handle the entry portion of an autocomplete
+	better.  Still need to figure out what to do when it pops up
+	a menu.
+	
 2006-12-14  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:
