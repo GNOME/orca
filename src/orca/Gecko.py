@@ -217,11 +217,11 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             regions.append(braille.Region(label + " "))
             focusedRegionIndex = 1
 
-        if menu.name:
+        if menu and menu.name:
             regions.append(braille.Region(menu.name))
         else:
             name = obj.name
-            if menu.state.count(atspi.Accessibility.STATE_VISIBLE):
+            if menu and menu.state.count(atspi.Accessibility.STATE_VISIBLE):
                 selection = menu.selection
                 item = selection.getSelectedChild(0)
                 name = item.name
@@ -330,11 +330,11 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         if not already_focused:
             utterances.extend(self._getSpeechForObjectRole(obj))
 
-        if menu.name:
+        if menu and menu.name:
             utterances.append(menu.name)
         else:
             name = obj.name
-            if menu.state.count(atspi.Accessibility.STATE_VISIBLE):
+            if menu and menu.state.count(atspi.Accessibility.STATE_VISIBLE):
                 selection = menu.selection
                 item = selection.getSelectedChild(0)
                 name = item.name
