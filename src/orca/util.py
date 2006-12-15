@@ -775,6 +775,15 @@ def getTopLevel(obj):
 
     return obj
 
+def getTopLevelName(obj):
+    """ Returns the name of the top-level object. See getTopLevel.
+    """
+    top = getTopLevel(obj)
+    if (not top) or (not top.name):
+        return ""
+    else:
+        return top.name
+
 def getTextLineAtCaret(obj):
     """Gets the line of text where the caret is.
 

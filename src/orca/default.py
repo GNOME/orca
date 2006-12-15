@@ -1620,15 +1620,19 @@ class Script(script.Script):
                                         rolenames.ROLE_ROW_HEADER].speech
                             utterances.append(text)
                     if (newCol != oldCol) or (oldParent != newParent):
-                        desc = newParent.table.getColumnDescription(newCol)
-                        if desc and len(desc):
-                            text = desc
-                            if settings.speechVerbosityLevel \
-                                   == settings.VERBOSITY_LEVEL_VERBOSE:
-                                text += " " \
-                                        + rolenames.rolenames[\
-                                        rolenames.ROLE_COLUMN_HEADER].speech
-                            utterances.append(text)
+                        # Don't speak Thunderbird column headers, since
+                        # it's not possible to navigate across a row.
+                        topName = util.getTopLevelName(newLocusOfFocus)
+                        if not topName.endswith(" - Thunderbird"):
+                            desc = newParent.table.getColumnDescription(newCol)
+                            if desc and len(desc):
+                                text = desc
+                                if settings.speechVerbosityLevel \
+                                       == settings.VERBOSITY_LEVEL_VERBOSE:
+                                    text += " " \
+                                            + rolenames.rolenames[\
+                                            rolenames.ROLE_COLUMN_HEADER].speech
+                                utterances.append(text)
 
             oldNodeLevel = util.getNodeLevel(oldLocusOfFocus)
             newNodeLevel = util.getNodeLevel(newLocusOfFocus)
