@@ -251,6 +251,11 @@ rolenames[ROLE_DIRECTORY_PANE] = Rolename(ROLE_DIRECTORY_PANE,
                                           _("DirectoryPane"),
                                           _("directory pane"))
 
+rolenames[ROLE_DOCUMENT_FRAME] = Rolename(ROLE_DOCUMENT_FRAME,
+                                _("html"),
+                                _("HtmlPane"),
+                                _("html content"))
+
 rolenames[ROLE_DRAWING_AREA] = Rolename(ROLE_DRAWING_AREA,
                                         _("draw"),
                                         _("DrawingArea"),

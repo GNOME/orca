@@ -259,8 +259,34 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
     def __init__(self, script):
         speechgenerator.SpeechGenerator.__init__(self, script)
-        self.speechGenerators[rolenames.ROLE_ENTRY]        = \
+        self.speechGenerators[rolenames.ROLE_DOCUMENT_FRAME] = \
+             self._getSpeechForDocumentFrame
+        self.speechGenerators[rolenames.ROLE_ENTRY]          = \
              self._getSpeechForText
+
+    def _getSpeechForDocumentFrame(self, obj, already_focused):
+        """Gets the speech for a document frame.
+
+        Arguments:
+        - obj: an Accessible
+        - already_focused: False if object just received focus
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        utterances = []
+        name = obj.name
+        if name and len(name):
+            utterances.append(name)
+
+        utterances.extend(self._getSpeechForObjectRole(obj))
+
+        self._debugGenerator("Gecko._getSpeechForDocumentFrame",
+                             obj,
+                             already_focused,
+                             utterances)
+
+        return utterances
 
     def _getSpeechForText(self, obj, already_focused):
         """Gets the speech for an autocomplete box.
@@ -772,7 +798,6 @@ class Script(default.Script):
         # on the context.
         #
         if (event.source.role == rolenames.ROLE_FRAME) \
-           or (event.source.role == rolenames.ROLE_DOCUMENT_FRAME) \
            or (not len(event.source.role)):
             return
 
