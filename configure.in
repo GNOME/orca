@@ -152,9 +152,7 @@ src/orca/platform.py
 
 if test "x$brlapi_available" = "xno" ; then
 echo
-echo "NOTE: This script was unable to find libbrlapi.so, which is needed"
-echo "for braille device support.  Orca will continue to work fine without"
-echo "braille support.  If you want to use braille, however, you must"
-echo "install and run BrlTTY >= 3.7.2 and BrlAPI >= 0.4.1."
+echo "NOTE: Braille support requires BrlTTY >= 3.7.2 and BrlAPI >= 0.4.1."
+echo "A suitable version could not be found, so braille will not be enabled."
 echo
 fi
