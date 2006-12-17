@@ -1,3 +1,78 @@
+2.17.4 - 17-Dec-2006
+
+* Added new support to edit your key bindings from the Orca
+  preferences dialog (thanks Jorge Sandín <jorges@elsendero.es>!!!)
+
+* Added new implementation of "Where Am I" based upon the discussion
+  on the Orca user's list (thanks for your work, everyone!).
+
+* Fix for bug 382891: Flat review now works in the face of empty text
+  areas (thanks Joanie Diggs!!).
+
+* Fix for bug 381391: Flat review initialization now handles
+  situations where the caret is at the end of a text area (thanks
+  Joanie Diggs!!).
+
+* Fix for bug 382408: Eliminated significant sluggishness when
+  navigating in OOo Writer tables (many thanks to our Orca users
+  for speaking up about this!).
+
+* Fix for bug 382495: orca --setup is now localized (thanks Takao!).
+
+* Fix for bug 382418: Orca now announces when you enter/leave a table
+  in OOo Writer documents.
+
+* Fix for bug 382880: Orca now provides speech output when tabbing
+  among cells in OOo Writer documents.
+
+* Fix for bug 382888: Orca now announces when you cross a cell boundary
+  in OOo Writer tables.
+
+* Fix for bug 382415: Orca now honors speak cell/row setting in OOo
+  Writer tables.
+
+* Fix for bug 384393: Orca now reports bold or underline in OOo Writer
+  when Insert F is pressed (this was a regression).
+
+* Fix for bug 375395: Orca now speaks blank lines in Evolution when
+  appropriate.
+
+* Allow Orca to run better under gdm for accessible login.  With this
+  work, we've been informed by the gdm maintainer that Orca is the
+  first assistive technology ever that can run without requiring gdm
+  to have a home directory. NOTE: the typical line to add to
+  /etc/X11/gdm/modules/AccessKeyMouseEvents is something like the
+  following, depending upon what you want Orca to do when it starts:
+
+  <Control>o  1 1000 10000  /bin/sh -c "GTK_MODULES=gail:atk-bridge ctrun -l child -i none orca -n -d main-window"
+
+* Improved support for BrlTTY v3.8.  Orca will now first attempt to
+  use the new Python bindings for BrlAPI 0.5 (which is what comes with
+  BrlTTY v3.8) and then fallback to its own bindings for BrlAPI 0.4.1
+  (which is what comes with BrlTTY 3.7.2).  When using BrlTTY v3.8,
+  Orca is now a better BrlTTY citizen: Orca only consumes BrlTTY
+  events that it cares about, and Orca is also smarter about which TTY
+  it chooses. NOTE: Our plan is to eventually retire Orca's BrlAPI 0.4.1
+  Python bindings as BrlAPI 0.5 becomes more prevalent.
+
+* More work done with Gecko.py (the Firefox script), but there's still
+  a lot of work to do here, both on the Firefox and Orca
+  implementations.
+
+* More work done with Thunderbird, but there's still a lot more work
+  to be done with it as well, both on the Firefox and Orca
+  implementations.
+
+* Improvements and additions to the Orca regression test harness.
+
+* New and updated translations (THANKS!):
+
+    es	    Spanish	         Jorge Sandín and Francisco Javier F. Serrador
+    nb      Norwegian Bokmål     Kjartan Maraas
+    sl	    Slovenian            Matic Zgur
+
+==========
+
 2.17.3 - 03-Dec-2006
 
 * Implementation of RFE 373566: Added support to switch between

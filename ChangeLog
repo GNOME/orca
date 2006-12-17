@@ -1,3 +1,7 @@
+2006-12-17  Willie Walker <william.walker@sun.com>
+
+	* NEWS, configure.in, README: prep for v2.17.4.
+
 2006-12-15  Willie Walker <william.walker@sun.com>
 
 	* configure.in: Adjust message about not finding braille.
