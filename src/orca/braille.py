@@ -681,7 +681,14 @@ def refresh(panToCursor=True, targetCursorCell=0):
     substring = string[startPos:endPos].encode("UTF-8")
     if useBrlAPIBindings:
         if brlAPIRunning:
-            writeStruct = brlapi.Write()
+            try:
+                # The name after (and including) BrlTTY v3.8 revision 2810
+                #
+                writeStruct = brlapi.WriteStruct()
+            except:
+                # The name before BrlTTY v3.8 revision 2810
+                #
+                writeStruct = brlapi.Write()
             writeStruct.text = substring
             writeStruct.regionBegin = 1
             writeStruct.regionSize = len(substring.decode("UTF-8"))
