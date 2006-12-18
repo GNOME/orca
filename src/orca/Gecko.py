@@ -1163,7 +1163,7 @@ class Script(default.Script):
         if not self.inDocumentContent():
             return False
 
-        weHandleIt = False
+        weHandleIt = True
         obj = orca_state.locusOfFocus
         if obj.role == rolenames.ROLE_ENTRY:
             text        = obj.text
