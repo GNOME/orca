@@ -2077,6 +2077,7 @@ class Script(default.Script):
         else:
             #print "FOCUS GRABBED", obj.role, characterOffset
             pass
+        orca.setLocusOfFocus(None, obj, True)
 
     def goNextCharacter(self, inputEvent):
         """Positions the caret offset to the next character or object
