@@ -1,5 +1,9 @@
 2006-12-18  Willie Walker <william.walker@sun.com>
 
+	* src/orca/Gecko.py: Add ALT modifiers to keybindings (i.e.,
+	say that we care about ALT and that it should not be set)
+	so we do not interfere with menu mnemonics.
+	
 	* src/orca/Gecko.py: make sure we use our own caret navigation
 	when we are supposed to.
 	

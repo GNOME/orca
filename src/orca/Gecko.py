@@ -657,31 +657,38 @@ class Script(default.Script):
 
         keyBindings = default.Script.getKeyBindings(self)
 
+        # NOTE: We include ALT in all the bindings below so as to not
+        # conflict with menu and other mnemonics.
+
         keyBindings.add(
             keybindings.KeyBinding(
                 "h",
-                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT),
                 1 << atspi.Accessibility.MODIFIER_SHIFT,
                 self.inputEventHandlers["goPreviousHeadingHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "h",
-                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT),
                 0,
                 self.inputEventHandlers["goNextHeadingHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "o",
-                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT),
                 1 << atspi.Accessibility.MODIFIER_SHIFT,
                 self.inputEventHandlers["goPreviousChunkHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "o",
-                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT),
                 0,
                 self.inputEventHandlers["goNextChunkHandler"]))
 
@@ -1197,6 +1204,7 @@ class Script(default.Script):
         letThemDoItRoles = [rolenames.ROLE_ENTRY,
                             rolenames.ROLE_TEXT,
                             rolenames.ROLE_PASSWORD_TEXT]
+
         obj = orca_state.locusOfFocus
         while obj:
             if obj.role == rolenames.ROLE_DOCUMENT_FRAME:
@@ -1205,6 +1213,7 @@ class Script(default.Script):
                 return False
             else:
                 obj = obj.parent
+
         return False
 
     def getDocumentFrame(self):
