@@ -1,5 +1,8 @@
 2006-12-18  Willie Walker <william.walker@sun.com>
 
+	* src/orca/Gecko.py: make sure that the unchecked/checked state
+	of a checkbox in document content is announced when you change it.
+	
 	* src/orca/Gecko.py: workaround fact that we cannot tell Gecko
 	to take focus off of a text area - we just manage it via our
 	own internal caret context and locus of focus.

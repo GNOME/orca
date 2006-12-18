@@ -900,6 +900,25 @@ class Script(default.Script):
 
         self.updateBraille(event.source)
 
+    def visualAppearanceChanged(self, event, obj):
+        """Called when the visual appearance of an object changes.  This
+        method should not be called for objects whose visual appearance
+        changes solely because of focus -- setLocusOfFocus is used for that.
+        Instead, it is intended mostly for objects whose notional 'value' has
+        changed, such as a checkbox changing state, a progress bar advancing,
+        a slider moving, text inserted, caret moved, etc.
+
+        Arguments:
+        - event: if not None, the Event that caused this to happen
+        - obj: the Accessible whose visual appearance changed.
+        """
+
+        if (obj.role == rolenames.ROLE_CHECK_BOX) \
+            and obj.state.count(atspi.Accessibility.STATE_FOCUSED):
+            orca.setLocusOfFocus(event, obj, False)
+
+        default.Script.visualAppearanceChanged(self, event, obj)
+
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
 
