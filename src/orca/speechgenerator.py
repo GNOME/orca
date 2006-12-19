@@ -1259,7 +1259,7 @@ class SpeechGenerator:
         utterances = []
 
         if (not already_focused):
-            if settings.readTableCellRow:
+            if settings.readTableCellRow and obj.parent.table:
                 parent = obj.parent
                 row = parent.table.getRowAtIndex(obj.index)
                 column = parent.table.getColumnAtIndex(obj.index)
