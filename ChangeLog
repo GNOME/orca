@@ -19,6 +19,10 @@
           Fixed bug #382890 – Extend dynamic row and column header 
           support to OOo Writer tables.
 
+        * src/orca/scripts/Evolution.py:
+          Fixed bug #386267 – In Evolution orca should speak/braille 
+          the unread instead of the read status.
+
 2006-12-18  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py: reorganize methods to prepare for a minor

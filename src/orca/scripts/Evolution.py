@@ -542,6 +542,13 @@ class Script(default.Script):
                     # is, then to reduce verbosity, only speak and braille it,
                     # if it's checked or if we are moving the focus from to the
                     # left or right on the same row.
+                    #
+                    # The one exception to the above is if this is for the
+                    # Status checkbox, in which case we speake/braille it if
+                    # the message is unread (not checked).
+                    #
+                    header_obj = parent.table.getColumnHeader(i)
+                    header = atspi.Accessible.makeAccessible(header_obj)
 
                     checkbox = False
                     toRead = True
@@ -552,16 +559,18 @@ class Script(default.Script):
                                 checkbox = True
                                 checked = cell.state.count( \
                                     atspi.Accessibility.STATE_CHECKED)
-                                if not checked and speakAll:
-                                    toRead = False
+                                if speakAll:
+                                    if header.name == _("Status"):
+                                        toRead = not checked
+                                        break
+                                    if not checked:
+                                        toRead = False
                                 break
 
                     if toRead:
-                        obj = parent.table.getColumnHeader(i)
-                        header = atspi.Accessible.makeAccessible(obj)
-
                         # Speak/braille the column header for this table cell
                         # if it has focus (unless it's a checkbox).
+                        #
                         if not checkbox and verbose:
                             settings.brailleVerbosityLevel = \
                                 settings.VERBOSITY_LEVEL_BRIEF
@@ -599,7 +608,7 @@ class Script(default.Script):
                                            brailleGen.getBrailleRegions(cell)
 
                         if header.name == _("Status"):
-                            text = _("Read")
+                            text = _("unread")
                             utterances = [ text ]
                             brailleRegions.append(braille.Region(text))
                             brailleRegions.append(braille.Region(" "))
