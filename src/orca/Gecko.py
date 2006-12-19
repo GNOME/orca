@@ -1655,8 +1655,6 @@ class Script(default.Script):
         Returns [obj, characterOffset] or [None, -1]
         """
 
-        #print "GO NEXT", obj, obj.role, startOffset
-
         if not obj:
             obj = self.getDocumentFrame()
 
@@ -1666,7 +1664,7 @@ class Script(default.Script):
             if nextOffset < len(unicodeText):
                 if unicodeText[nextOffset] != EMBEDDED_OBJECT_CHARACTER:
                     return [obj, nextOffset]
-                else:
+                elif obj.childCount:
                     return self.findNextCaretInOrder(
                         obj.child(self.getChildIndex(obj, nextOffset)),
                         -1,
@@ -2159,7 +2157,6 @@ class Script(default.Script):
                                                                characterOffset)
             if obj and obj.state.count(atspi.Accessibility.STATE_SHOWING):
                 break
-
         if obj:
             self.setCaretPosition(obj, characterOffset)
         else:
@@ -2281,6 +2278,7 @@ class Script(default.Script):
                   self.findPreviousCaretInOrder(obj, characterOffset)
 
         #print "GPL ENDED UP AT", lastObj.role, lineExtents
+
         self.setCaretPosition(lastObj, lastCharacterOffset)
         self.updateBraille(lastObj)
         self.speakContents(self.getLineContentsAtOffset(lastObj,
@@ -2317,7 +2315,7 @@ class Script(default.Script):
             # sized character when the accessible text implementation
             # of Gecko gives us whitespace that is not visible, but
             # is in the raw HTML source.  This should hopefully be
-            # fixed at some point, but we just ignore it for now.
+            # fixed at some point, but we just ignore it for now.]]]
             #
             if extents != (0, 0, 0, 0):
                 if not self.onSameLine(extents, lineExtents):
