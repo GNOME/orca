@@ -864,12 +864,11 @@ class Script(default.Script):
         default.Script.onFocus(self, event)
 
     def onLinkSelected(self, event):
-
         # NOTE: In Firefox 3, link selected events are not issued when
         # a link is selected.  Instead, they've decided to issue focus:
         # events when a link is selected.  This is 'old' code leftover
         # from Yelp and Firefox 2.
-
+        #
         text = event.source.text
         hypertext = event.source.hypertext
         linkIndex = util.getLinkIndex(event.source, text.caretOffset)
@@ -1106,67 +1105,6 @@ class Script(default.Script):
     #                                                                  #
     ####################################################################
 
-    def getAutocompleteEntry(self, obj):
-        """Returns the ROLE_ENTRY object of a ROLE_AUTOCOMPLETE object or
-        None if the entry cannot be found.
-        """
-        for i in range(0, obj.childCount):
-            child = obj.child(i)
-            if child.role == rolenames.ROLE_ENTRY:
-                return child
-        return None
-
-    def getCellCoordinates(self, obj):
-        """Returns the [row, col] of a ROLE_TABLE_CELL or [0, 0] if this
-        if the coordinates cannot be found.
-        """
-
-        # [[[TODO: WDW - we do this here because Gecko's table interface
-        # is broken and does not give us valid answers.  So...we hack
-        # and try to find the coordinates in other ways.  We assume
-        # the cells are laid out in row/column order, thus allowing us
-        # to do some easy math to find the coordinated.]]]
-        #
-        parent = obj.parent
-        if parent and parent.table:
-            row = obj.index / parent.table.nColumns
-            col = obj.index % parent.table.nColumns
-            return [row, col]
-
-            # By the way, here's the proper way to do it, since we
-            # cannot always depend upon the ordering of the children.
-            # Easy if it works...
-            #
-            # row = parent.table.getRowAtIndex(obj.index)
-            # col = parent.table.getColumnAtIndex(obj.index)
-            # return [row, col]
-
-        return [0, 0]
-
-    def getCellHeaders(self, obj):
-        """Returns the [rowHeader, colHeader] of a ROLE_TABLE_CELL or
-        [None, None] if the headers cannot be found.
-        """
-
-        parent = obj.parent
-        if parent and parent.table:
-            [row, col] = self.getCellCoordinates(obj)
-            rowHeader = parent.table.getRowDescription(row)
-            colHeader = parent.table.getColumnDescription(col)
-            return [rowHeader, colHeader]
-
-        return [None, None]
-
-    def getTableCaption(self, obj):
-        """Returns the ROLE_CAPTION object of a ROLE_TABLE object or None
-        if the caption cannot be found.
-        """
-        for i in range(0, obj.childCount):
-            child = obj.child(i)
-            if child.role == rolenames.ROLE_CAPTION:
-                return child
-        return None
-
     def inDocumentContent(self):
         """Returns True if the current locus of focus is in the
         document content.
@@ -1178,6 +1116,48 @@ class Script(default.Script):
             else:
                 obj = obj.parent
         return False
+
+    def getDocumentFrame(self):
+        """Returns the document frame that holds the content being shown."""
+
+        # [[[TODO: WDW - this is based upon the 12-Oct-2006 implementation
+        # that uses the EMBEDS relation on the top level frame as a means
+        # to find the document frame.  Future implementations will break
+        # this.]]]
+        #
+        documentFrame = None
+        for i in range(0, self.app.childCount):
+            child = self.app.child(i)
+            if child.role == rolenames.ROLE_FRAME:
+                relations = child.relations
+                for relation in relations:
+                    if relation.getRelationType()  \
+                        == atspi.Accessibility.RELATION_EMBEDS:
+                        documentFrame = atspi.Accessible.makeAccessible( \
+                            relation.getTarget(0))
+                        if documentFrame.state.count( \
+                            atspi.Accessibility.STATE_SHOWING):
+                            break
+                        else:
+                            documentFrame = None
+
+        return documentFrame
+
+    def getUnicodeText(self, obj):
+        """Returns the unicode text for an object or None if the object
+        doesn't implement the accessible text specialization.
+        """
+
+        # We cache the text once we get it.
+        #
+        try:
+            return obj.unicodeText
+        except:
+            if obj.text:
+                obj.unicodeText = self.getText(obj, 0, -1).decode("UTF-8")
+            else:
+                obj.unicodeText = None
+        return obj.unicodeText
 
     def useCaretNavigationModel(self, keyboardEvent):
         """Returns True if we should do our own caret navigation.
@@ -1234,82 +1214,6 @@ class Script(default.Script):
                 obj = obj.parent
 
         return False
-
-    def getDocumentFrame(self):
-        """Returns the document frame that holds the content being shown."""
-
-        # [[[TODO: WDW - this is based upon the 12-Oct-2006 implementation
-        # that uses the EMBEDS relation on the top level frame as a means
-        # to find the document frame.  Future implementations will break
-        # this.]]]
-        #
-        documentFrame = None
-        for i in range(0, self.app.childCount):
-            child = self.app.child(i)
-            if child.role == rolenames.ROLE_FRAME:
-                relations = child.relations
-                for relation in relations:
-                    if relation.getRelationType()  \
-                        == atspi.Accessibility.RELATION_EMBEDS:
-                        documentFrame = atspi.Accessible.makeAccessible( \
-                            relation.getTarget(0))
-                        if documentFrame.state.count( \
-                            atspi.Accessibility.STATE_SHOWING):
-                            break
-                        else:
-                            documentFrame = None
-
-        return documentFrame
-
-    def onSameLine(self, a, b, pixelDelta=5):
-        """Determine if extents a and b are on the same line.
-
-        Arguments:
-        -a: [x, y, width, height]
-        -b: [x, y, width, height]
-
-        Returns True if a and b are on the same line.
-        """
-
-        # For now, we'll just take a look at the bottom of the area.
-        # The code after this takes the whole extents into account,
-        # but that logic has issues in the case where we have
-        # something very tall next to lots of shorter lines (e.g., an
-        # image with lots of text to the left or right of it.  The
-        # number 11 here represents something that seems to work well
-        # with superscripts and subscripts on a line as well as pages
-        # with smaller fonts on them, such as craig's list.
-        #
-        return abs(a[1] - b[1]) < 11
-
-        highestBottom = min(a[1] + a[3], b[1] + b[3])
-        lowestTop     = max(a[1],        b[1])
-
-        # If we do overlap, lets see how much.  We'll require a 25% overlap
-        # for now...
-        #
-        if lowestTop < highestBottom:
-            overlapAmount = highestBottom - lowestTop
-            shortestHeight = min(a[3], b[3])
-            return ((1.0 * overlapAmount) / shortestHeight) > 0.25
-        else:
-            return False
-
-    def getUnicodeText(self, obj):
-        """Returns the unicode text for an object or None if the object
-        doesn't implement the accessible text specialization.
-        """
-
-        # We cache the text once we get it.
-        #
-        try:
-            return obj.unicodeText
-        except:
-            if obj.text:
-                obj.unicodeText = self.getText(obj, 0, -1).decode("UTF-8")
-            else:
-                obj.unicodeText = None
-        return obj.unicodeText
 
     def getCharacterOffsetInParent(self, obj):
         """Returns the character offset of the embedded object
@@ -1389,6 +1293,339 @@ class Script(default.Script):
                 obj.childrenIndices[characterOffset] = index
 
         return obj.childrenIndices[characterOffset]
+
+    def getExtents(self, obj, startOffset, endOffset):
+        """Returns [x, y, width, height] of the text at the given offsets
+        if the object implements accessible text, or just the extents of
+        the object if it doesn't implement accessible text.
+        """
+        if not obj:
+            return [0, 0, 0, 0]
+        if obj.text:
+            extents = obj.text.getRangeExtents(startOffset, endOffset, 0)
+        else:
+            ext = obj.extents
+            extents = [ext.x, ext.y, ext.width, ext.height]
+        return extents
+
+    def getBoundary(self, a, b):
+        """Returns the smallest [x, y, width, height] that encompasses
+        both extents a and b.
+
+        Arguments:
+        -a: [x, y, width, height]
+        -b: [x, y, width, height]
+        """
+        if not a:
+            return b
+        if not b:
+            return a
+        smallestX1 = min(a[0], b[0])
+        smallestY1 = min(a[1], b[1])
+        largestX2  = max(a[0] + a[2], b[0] + b[2])
+        largestY2  = max(a[1] + a[3], b[1] + b[3])
+        return [smallestX1,
+                smallestY1,
+                largestX2 - smallestX1,
+                largestY2 - smallestY1]
+
+    def onSameLine(self, a, b, pixelDelta=5):
+        """Determine if extents a and b are on the same line.
+
+        Arguments:
+        -a: [x, y, width, height]
+        -b: [x, y, width, height]
+
+        Returns True if a and b are on the same line.
+        """
+
+        # For now, we'll just take a look at the bottom of the area.
+        # The code after this takes the whole extents into account,
+        # but that logic has issues in the case where we have
+        # something very tall next to lots of shorter lines (e.g., an
+        # image with lots of text to the left or right of it.  The
+        # number 11 here represents something that seems to work well
+        # with superscripts and subscripts on a line as well as pages
+        # with smaller fonts on them, such as craig's list.
+        #
+        return abs(a[1] - b[1]) < 11
+
+        highestBottom = min(a[1] + a[3], b[1] + b[3])
+        lowestTop     = max(a[1],        b[1])
+
+        # If we do overlap, lets see how much.  We'll require a 25% overlap
+        # for now...
+        #
+        if lowestTop < highestBottom:
+            overlapAmount = highestBottom - lowestTop
+            shortestHeight = min(a[3], b[3])
+            return ((1.0 * overlapAmount) / shortestHeight) > 0.25
+        else:
+            return False
+
+    def getAutocompleteEntry(self, obj):
+        """Returns the ROLE_ENTRY object of a ROLE_AUTOCOMPLETE object or
+        None if the entry cannot be found.
+        """
+        for i in range(0, obj.childCount):
+            child = obj.child(i)
+            if child.role == rolenames.ROLE_ENTRY:
+                return child
+        return None
+
+    def getCellCoordinates(self, obj):
+        """Returns the [row, col] of a ROLE_TABLE_CELL or [0, 0] if this
+        if the coordinates cannot be found.
+        """
+
+        # [[[TODO: WDW - we do this here because Gecko's table interface
+        # is broken and does not give us valid answers.  So...we hack
+        # and try to find the coordinates in other ways.  We assume
+        # the cells are laid out in row/column order, thus allowing us
+        # to do some easy math to find the coordinated.]]]
+        #
+        parent = obj.parent
+        if parent and parent.table:
+            row = obj.index / parent.table.nColumns
+            col = obj.index % parent.table.nColumns
+            return [row, col]
+
+            # By the way, here's the proper way to do it, since we
+            # cannot always depend upon the ordering of the children.
+            # Easy if it works...
+            #
+            # row = parent.table.getRowAtIndex(obj.index)
+            # col = parent.table.getColumnAtIndex(obj.index)
+            # return [row, col]
+
+        return [0, 0]
+
+    def getCellHeaders(self, obj):
+        """Returns the [rowHeader, colHeader] of a ROLE_TABLE_CELL or
+        [None, None] if the headers cannot be found.
+        """
+
+        parent = obj.parent
+        if parent and parent.table:
+            [row, col] = self.getCellCoordinates(obj)
+            rowHeader = parent.table.getRowDescription(row)
+            colHeader = parent.table.getColumnDescription(col)
+            return [rowHeader, colHeader]
+
+        return [None, None]
+
+    def getTableCaption(self, obj):
+        """Returns the ROLE_CAPTION object of a ROLE_TABLE object or None
+        if the caption cannot be found.
+        """
+        for i in range(0, obj.childCount):
+            child = obj.child(i)
+            if child.role == rolenames.ROLE_CAPTION:
+                return child
+        return None
+
+    def outlineExtents(self, obj, startOffset, endOffset):
+        """Draws an outline around the given text for the object or the entire
+        object if it has no text.  This is for debug purposes only.
+
+        Arguments:
+        -obj: the object
+        -startOffset: character offset to start at
+        -endOffset: character offset just after last character to end at
+        """
+        [x, y, width, height] = self.getExtents(obj, startOffset, endOffset)
+        util.drawOutline(x, y, width, height)
+
+    def dumpInfo(self, obj):
+        """Dumps the parental hierachy info of obj to stdout."""
+
+        if obj.parent:
+            self.dumpInfo(obj.parent)
+
+        print "---"
+        if obj.role != rolenames.ROLE_DOCUMENT_FRAME and obj.text:
+            string = self.getText(obj, 0, -1)
+        else:
+            string = ""
+        print obj, obj.name, obj.role, \
+              obj.accessible.getIndexInParent(), string
+        offset = self.getCharacterOffsetInParent(obj)
+        if offset >= 0:
+            print "  offset =", offset
+
+    def getLinearizedContents(self):
+        """Returns an ordered list where each element is composed of
+        an [obj, startOffset, endOffset] tuple.  The list is created
+        via an in-order traversal of the document contents starting at
+        the current caret context (or the beginning of the document if
+        there is no caret context).
+
+        WARNING: THIS TRAVERSES A LARGE PART OF THE DOCUMENT AND IS
+        INTENDED PRIMARILY FOR DEBUGGING PURPOSES ONLY."""
+
+        contents = []
+        lastObj = None
+        lastExtents = None
+        del self.caretContext
+        [obj, characterOffset] = self.getCaretContext()
+        while obj:
+            if True or obj.state.count(atspi.Accessibility.STATE_SHOWING):
+                if obj.text:
+                    # Check for text being on a different line.  Gecko
+                    # gives us odd character extents sometimes, so we
+                    # defensively ignore those.
+                    #
+                    characterExtents = self.getExtents(
+                        obj, characterOffset, characterOffset + 1)
+                    if characterExtents != (0, 0, 0, 0):
+                        if lastExtents \
+                           and not self.onSameLine(lastExtents,
+                                                   characterExtents):
+                            contents.append([None, -1, -1])
+                            lastExtents = characterExtents
+
+                    # Check to see if we've moved across objects or are
+                    # still on the same object.  If we've moved, we want
+                    # to add another context.  If we're still on the same
+                    # object, we just want to update the end offset.
+                    #
+                    if (len(contents) == 0) or (obj != lastObj):
+                        contents.append([obj,
+                                         characterOffset,
+                                         characterOffset + 1])
+                    else:
+                        [currentObj, startOffset, endOffset] = contents[-1]
+                        if characterOffset == endOffset:
+                            contents[-1] = [currentObj,    # obj
+                                            startOffset,   # startOffset
+                                            endOffset + 1] # endOffset
+                        else:
+                            contents.append([obj,
+                                             characterOffset,
+                                             characterOffset + 1])
+                else:
+                    # Some objects present text and/or something visual
+                    # (e.g., a checkbox), so we want to track it.
+                    #
+                    contents.append([obj, -1, -1])
+
+                lastObj = obj
+
+            [obj, characterOffset] = self.getNextCaretInOrder(obj,
+                                                              characterOffset)
+
+        return contents
+
+    def getContents(self):
+        """Trivial debug utility to stringify the document contents
+        showing on the screen."""
+
+        contents = ""
+        lastObj = None
+        [obj, characterOffset] = self.getCaretContext()
+        while obj:
+            if obj and obj.state.count(atspi.Accessibility.STATE_SHOWING):
+                characterExtents = self.getExtents(
+                    obj, characterOffset, characterOffset + 1)
+                if lastObj and (lastObj != obj):
+                    if obj.role == rolenames.ROLE_LIST_ITEM:
+                        contents += "\n"
+                    if lastObj.role == rolenames.ROLE_LINK:
+                        contents += ">"
+                    elif (lastCharacterExtents[1] < characterExtents[1]):
+                        contents += "\n"
+                    elif obj.role == rolenames.ROLE_TABLE_CELL:
+                        parent = obj.parent
+                        if parent.table.getColumnAtIndex(obj.index) != 0:
+                            contents += " "
+                    elif obj.role == rolenames.ROLE_LINK:
+                        contents += "<"
+                contents += self.getCharacterAtOffset(obj, characterOffset)
+                [lastObj, lastCharacterOffset] = [obj, characterOffset]
+                lastCharacterExtents = characterExtents
+            [obj, characterOffset] = self.getNextCaretInOrder(obj,
+                                                              characterOffset)
+        if lastObj and lastObj.role == rolenames.ROLE_LINK:
+            contents += ">"
+        return contents
+
+    def dumpContent(self, inputEvent, contents=None):
+        """Dumps the document frame content to stdout.
+
+        Arguments:
+        -inputEvent: the input event that caused this to be called
+        -contents: an ordered list of [obj, startOffset, endOffset] tuples
+        """
+        if not contents:
+            contents = self.getLinearizedContents()
+        string = ""
+        extents = None
+        for content in contents:
+            [obj, startOffset, endOffset] = content
+            if obj:
+                extents = self.getBoundary(
+                    self.getExtents(obj, startOffset, endOffset),
+                    extents)
+                if obj.text:
+                    string += "[%s] text='%s' " % (obj.role,
+                                                   self.getText(obj,
+                                                                startOffset,
+                                                                endOffset))
+                else:
+                    string += "[%s] name='%s' " % (obj.role, obj.name)
+            else:
+                string += "\nNEWLINE\n"
+        print "==========================="
+        print string
+        util.drawOutline(extents[0], extents[1], extents[2], extents[3])
+
+    ####################################################################
+    #                                                                  #
+    # Methods to find previous and next objects.                       #
+    #                                                                  #
+    ####################################################################
+
+    def getFirstCaretContext(self, obj, characterOffset):
+        """Given an object and a character offset, find the first
+        [obj, characterOffset] that is actually presenting something
+        on the display.  The reason we do this is that the
+        [obj, characterOffset] passed in may actually be pointing
+        to an embedded object character.  In those cases, we dig
+        into the hierarchy to find the 'real' thing.
+
+        Arguments:
+        -obj: an accessible object
+        -characterOffset: the offset of the character where to start
+        looking for real rext
+
+        Returns [obj, characterOffset] that points to real content.
+        """
+
+        if obj.text:
+            character = self.getText(obj,
+                                     characterOffset,
+                                     characterOffset + 1).decode("UTF-8")
+            if character == EMBEDDED_OBJECT_CHARACTER:
+                try:
+                    childIndex = self.getChildIndex(obj, characterOffset)
+                    return self.getFirstCaretContext(obj.child(childIndex), 0)
+                except:
+                    return [obj, -1]
+            else:
+                # [[[TODO: WDW - HACK because Gecko currently exposes
+                # whitespace from the raw HTML to us.  We can infer this
+                # by seeing if the extents are nil.  If so, we skip to
+                # the next character.]]]
+                #
+                extents = self.getExtents(obj,
+                                          characterOffset,
+                                          characterOffset + 1)
+                if extents == (0, 0, 0, 0):
+                    return self.getFirstCaretContext(obj, characterOffset + 1)
+                else:
+                    return [obj, characterOffset]
+        else:
+            return [obj, -1]
 
     def getNextCaretInOrder(self, obj=None,
                             startOffset=-1,
@@ -1539,47 +1776,55 @@ class Script(default.Script):
 
         return [None, -1]
 
-    def getFirstCaretContext(self, obj, characterOffset):
-        """Given an object and a character offset, find the first
-        [obj, characterOffset] that is actually presenting something
-        on the display.  The reason we do this is that the
-        [obj, characterOffset] passed in may actually be pointing
-        to an embedded object character.  In those cases, we dig
-        into the hierarchy to find the 'real' thing.
+    def getPreviousRole(self, roles, match=True):
+        """Positions the caret offset at the beginning of the next object
+        using the given roles list as a pattern to match or not match.
 
         Arguments:
-        -obj: an accessible object
-        -characterOffset: the offset of the character where to start
-        looking for real rext
-
-        Returns [obj, characterOffset] that points to real content.
+        -roles: a list of roles from rolenames.py
+        -match: if True, the found object will have a role from roles;
+                if False, the found object will not have a role from roles
         """
+        [currentObj, characterOffset] = self.getCaretContext()
 
-        if obj.text:
-            character = self.getText(obj,
-                                     characterOffset,
-                                     characterOffset + 1).decode("UTF-8")
-            if character == EMBEDDED_OBJECT_CHARACTER:
-                try:
-                    childIndex = self.getChildIndex(obj, characterOffset)
-                    return self.getFirstCaretContext(obj.child(childIndex), 0)
-                except:
-                    return [obj, -1]
-            else:
-                # [[[TODO: WDW - HACK because Gecko currently exposes
-                # whitespace from the raw HTML to us.  We can infer this
-                # by seeing if the extents are nil.  If so, we skip to
-                # the next character.]]]
-                #
-                extents = self.getExtents(obj,
-                                          characterOffset,
-                                          characterOffset + 1)
-                if extents == (0, 0, 0, 0):
-                    return self.getFirstCaretContext(obj, characterOffset + 1)
-                else:
+        obj = currentObj
+        while obj:
+            [obj, characterOffset] = self.getPreviousCaretInOrder(
+                obj, characterOffset)
+            if obj and (obj != currentObj):
+                if (match and (obj.role in roles)) \
+                    or (not match and not (obj.role in roles)):
                     return [obj, characterOffset]
-        else:
-            return [obj, -1]
+
+        return [None, -1]
+
+    def getNextRole(self, roles, match=True):
+        """Positions the caret offset at the beginning of the next object
+        using the given roles list as a pattern to match or not match.
+
+        Arguments:
+        -roles: a list of roles from rolenames.py
+        -match: if True, the found object will have a role from roles;
+                if False, the found object will not have a role from roles
+        """
+        [currentObj, characterOffset] = self.getCaretContext()
+
+        obj = currentObj
+        while obj:
+            [obj, characterOffset] = self.getNextCaretInOrder(
+                obj, characterOffset)
+            if obj and (obj != currentObj):
+                if (match and (obj.role in roles)) \
+                    or (not match and not (obj.role in roles)):
+                    return [obj, characterOffset]
+
+        return [None, -1]
+
+    ####################################################################
+    #                                                                  #
+    # Methods to find current objects.                                 #
+    #                                                                  #
+    ####################################################################
 
     def getCaretContext(self, includeNonText=True):
         """Returns the current [obj, caretOffset] if defined.  If not,
@@ -1594,121 +1839,6 @@ class Script(default.Script):
                                                          includeNonText)
         return self.caretContext
 
-    def dumpInfo(self, obj):
-        """Dumps the parental hierachy info of obj to stdout."""
-
-        if obj.parent:
-            self.dumpInfo(obj.parent)
-
-        print "---"
-        if obj.role != rolenames.ROLE_DOCUMENT_FRAME and obj.text:
-            string = self.getText(obj, 0, -1)
-        else:
-            string = ""
-        print obj, obj.name, obj.role, \
-              obj.accessible.getIndexInParent(), string
-        offset = self.getCharacterOffsetInParent(obj)
-        if offset >= 0:
-            print "  offset =", offset
-
-    def getExtents(self, obj, startOffset, endOffset):
-        """Returns [x, y, width, height] of the text at the given offsets
-        if the object implements accessible text, or just the extents of
-        the object if it doesn't implement accessible text.
-        """
-        if not obj:
-            return [0, 0, 0, 0]
-        if obj.text:
-            extents = obj.text.getRangeExtents(startOffset, endOffset, 0)
-        else:
-            ext = obj.extents
-            extents = [ext.x, ext.y, ext.width, ext.height]
-        return extents
-
-    def getBoundary(self, a, b):
-        """Returns the smallest [x, y, width, height] that encompasses
-        both extents a and b.
-
-        Arguments:
-        -a: [x, y, width, height]
-        -b: [x, y, width, height]
-        """
-        if not a:
-            return b
-        if not b:
-            return a
-        smallestX1 = min(a[0], b[0])
-        smallestY1 = min(a[1], b[1])
-        largestX2  = max(a[0] + a[2], b[0] + b[2])
-        largestY2  = max(a[1] + a[3], b[1] + b[3])
-        return [smallestX1,
-                smallestY1,
-                largestX2 - smallestX1,
-                largestY2 - smallestY1]
-
-    def getLinearizedContents(self):
-        """Returns an ordered list where each element is composed of
-        an [obj, startOffset, endOffset] tuple.  The list is created
-        via an in-order traversal of the document contents starting at
-        the current caret context (or the beginning of the document if
-        there is no caret context).
-
-        WARNING: THIS TRAVERSES A LARGE PART OF THE DOCUMENT AND IS
-        INTENDED PRIMARILY FOR DEBUGGING PURPOSES ONLY."""
-
-        contents = []
-        lastObj = None
-        lastExtents = None
-        del self.caretContext
-        [obj, characterOffset] = self.getCaretContext()
-        while obj:
-            if True or obj.state.count(atspi.Accessibility.STATE_SHOWING):
-                if obj.text:
-                    # Check for text being on a different line.  Gecko
-                    # gives us odd character extents sometimes, so we
-                    # defensively ignore those.
-                    #
-                    characterExtents = self.getExtents(
-                        obj, characterOffset, characterOffset + 1)
-                    if characterExtents != (0, 0, 0, 0):
-                        if lastExtents \
-                           and not self.onSameLine(lastExtents,
-                                                   characterExtents):
-                            contents.append([None, -1, -1])
-                            lastExtents = characterExtents
-
-                    # Check to see if we've moved across objects or are
-                    # still on the same object.  If we've moved, we want
-                    # to add another context.  If we're still on the same
-                    # object, we just want to update the end offset.
-                    #
-                    if (len(contents) == 0) or (obj != lastObj):
-                        contents.append([obj,
-                                         characterOffset,
-                                         characterOffset + 1])
-                    else:
-                        [currentObj, startOffset, endOffset] = contents[-1]
-                        if characterOffset == endOffset:
-                            contents[-1] = [currentObj,    # obj
-                                            startOffset,   # startOffset
-                                            endOffset + 1] # endOffset
-                        else:
-                            contents.append([obj,
-                                             characterOffset,
-                                             characterOffset + 1])
-                else:
-                    # Some objects present text and/or something visual
-                    # (e.g., a checkbox), so we want to track it.
-                    #
-                    contents.append([obj, -1, -1])
-
-                lastObj = obj
-
-            [obj, characterOffset] = self.getNextCaretInOrder(obj,
-                                                              characterOffset)
-
-        return contents
-
     def getCharacterAtOffset(self, obj, characterOffset):
         """Returns the character at the given characterOffset in the
         given object or None if the object does not implement the
@@ -1719,37 +1849,6 @@ class Script(default.Script):
             return unicodeText[characterOffset].encode("UTF-8")
         else:
             return None
-
-    def speakString(self, obj, string, speakRole=False):
-        """Speaks the given string for the given object."""
-        if not obj or (not string and not speakRole):
-            return
-        if obj.role == rolenames.ROLE_LINK:
-            voice = self.voices[settings.HYPERLINK_VOICE]
-        elif string and string.isupper():
-            voice = self.voices[settings.UPPERCASE_VOICE]
-        else:
-            voice = self.voices[settings.DEFAULT_VOICE]
-
-        if speakRole:
-            ignoreRoles = [rolenames.ROLE_DOCUMENT_FRAME,
-                           rolenames.ROLE_FORM,
-                           rolenames.ROLE_PARAGRAPH,
-                           rolenames.ROLE_SECTION,
-                           rolenames.ROLE_TABLE_CELL]
-            if not obj.role in ignoreRoles:
-                string += " " + rolenames.getSpeechForRoleName(obj)
-
-        if not len(string):
-            return
-
-        speech.speak(string, voice, False)
-
-    def speakCharacterAtOffset(self, obj, characterOffset):
-        """Speaks the character at the given characterOffset in the
-        given object."""
-        self.speakString(obj,
-                         self.getCharacterAtOffset(obj, characterOffset))
 
     def getWordAtOffset(self, obj, characterOffset):
         """Returns an ordered list where each element is composed of
@@ -1817,20 +1916,6 @@ class Script(default.Script):
             contents[-1][2] = lastCharacterOffset + 1
 
         return contents
-
-    def speakWordAtOffset(self, obj, characterOffset):
-        """Speaks the word at the given characterOffset in the given object."""
-        contents = self.getWordAtOffset(obj, characterOffset)
-        if not len(contents):
-            return
-        [obj, startOffset, endOffset] = contents[0]
-        if not obj:
-            return
-        if obj.text:
-            string = self.getText(obj, startOffset, endOffset)
-        else:
-            string = obj.name
-        self.speakString(obj, string, True)
 
     def getLineAtOffset(self, obj, characterOffset):
         """Returns an ordered list where each element is composed of
@@ -1913,6 +1998,88 @@ class Script(default.Script):
 
         return contents
 
+    def getContentsAtOffset(self, obj, characterOffset):
+        """Returns an ordered list where each element is composed of
+        an [obj, startOffset, endOffset] tuple.  The list is created
+        via an in-order traversal of the document contents starting and
+        stopping at the given object.
+        """
+
+        #if not obj.state.count(atspi.Accessibility.STATE_SHOWING):
+        #    return [[None, -1, -1]]
+
+        if not obj.text:
+            return [[obj, -1, -1]]
+
+        contents = []
+        text = self.getUnicodeText(obj)
+        for offset in range(characterOffset, len(text)):
+            if text[offset] == EMBEDDED_OBJECT_CHARACTER:
+                contents.extend(self.getContentsAtOffset(
+                    obj.child(self.getChildIndex(obj, offset)),
+                    0))
+            elif len(contents):
+                [currentObj, startOffset, endOffset] = contents[-1]
+                if obj == currentObj:
+                    contents[-1] = [obj, startOffset, offset + 1]
+                else:
+                    contents.append([obj, offset, offset + 1])
+            else:
+                contents.append([obj, offset, offset + 1])
+
+        return contents
+
+    ####################################################################
+    #                                                                  #
+    # Methods to speak current objects.                                #
+    #                                                                  #
+    ####################################################################
+
+    def speakString(self, obj, string, speakRole=False):
+        """Speaks the given string for the given object."""
+        if not obj or (not string and not speakRole):
+            return
+        if obj.role == rolenames.ROLE_LINK:
+            voice = self.voices[settings.HYPERLINK_VOICE]
+        elif string and string.isupper():
+            voice = self.voices[settings.UPPERCASE_VOICE]
+        else:
+            voice = self.voices[settings.DEFAULT_VOICE]
+
+        if speakRole:
+            ignoreRoles = [rolenames.ROLE_DOCUMENT_FRAME,
+                           rolenames.ROLE_FORM,
+                           rolenames.ROLE_PARAGRAPH,
+                           rolenames.ROLE_SECTION,
+                           rolenames.ROLE_TABLE_CELL]
+            if not obj.role in ignoreRoles:
+                string += " " + rolenames.getSpeechForRoleName(obj)
+
+        if not len(string):
+            return
+
+        speech.speak(string, voice, False)
+
+    def speakCharacterAtOffset(self, obj, characterOffset):
+        """Speaks the character at the given characterOffset in the
+        given object."""
+        self.speakString(obj,
+                         self.getCharacterAtOffset(obj, characterOffset))
+
+    def speakWordAtOffset(self, obj, characterOffset):
+        """Speaks the word at the given characterOffset in the given object."""
+        contents = self.getWordAtOffset(obj, characterOffset)
+        if not len(contents):
+            return
+        [obj, startOffset, endOffset] = contents[0]
+        if not obj:
+            return
+        if obj.text:
+            string = self.getText(obj, startOffset, endOffset)
+        else:
+            string = obj.name
+        self.speakString(obj, string, True)
+
     def speakContents(self, contents):
         """Speaks the given contents, which is a list of
         [obj, startOffset, endOffset] tuples."""
@@ -1949,115 +2116,15 @@ class Script(default.Script):
         given object."""
         self.speakContents(self.getLineAtOffset(obj, characterOffset))
 
-    def getContentsAtOffset(self, obj, characterOffset):
-        """Returns an ordered list where each element is composed of
-        an [obj, startOffset, endOffset] tuple.  The list is created
-        via an in-order traversal of the document contents starting and
-        stopping at the given object.
-        """
-
-        #if not obj.state.count(atspi.Accessibility.STATE_SHOWING):
-        #    return [[None, -1, -1]]
-
-        if not obj.text:
-            return [[obj, -1, -1]]
-
-        contents = []
-        text = self.getUnicodeText(obj)
-        for offset in range(characterOffset, len(text)):
-            if text[offset] == EMBEDDED_OBJECT_CHARACTER:
-                contents.extend(self.getContentsAtOffset(
-                    obj.child(self.getChildIndex(obj, offset)),
-                    0))
-            elif len(contents):
-                [currentObj, startOffset, endOffset] = contents[-1]
-                if obj == currentObj:
-                    contents[-1] = [obj, startOffset, offset + 1]
-                else:
-                    contents.append([obj, offset, offset + 1])
-            else:
-                contents.append([obj, offset, offset + 1])
-
-        return contents
-
     def speakContentsAtOffset(self, obj, characterOffset):
         """Speaks the entire subtree for the given object."""
         self.speakContents(self.getContentsAtOffset(obj, characterOffset))
 
-    def getContents(self):
-        """Trivial debug utility to stringify the document contents
-        showing on the screen."""
-
-        contents = ""
-        lastObj = None
-        [obj, characterOffset] = self.getCaretContext()
-        while obj:
-            if obj and obj.state.count(atspi.Accessibility.STATE_SHOWING):
-                characterExtents = self.getExtents(
-                    obj, characterOffset, characterOffset + 1)
-                if lastObj and (lastObj != obj):
-                    if obj.role == rolenames.ROLE_LIST_ITEM:
-                        contents += "\n"
-                    if lastObj.role == rolenames.ROLE_LINK:
-                        contents += ">"
-                    elif (lastCharacterExtents[1] < characterExtents[1]):
-                        contents += "\n"
-                    elif obj.role == rolenames.ROLE_TABLE_CELL:
-                        parent = obj.parent
-                        if parent.table.getColumnAtIndex(obj.index) != 0:
-                            contents += " "
-                    elif obj.role == rolenames.ROLE_LINK:
-                        contents += "<"
-                contents += self.getCharacterAtOffset(obj, characterOffset)
-                [lastObj, lastCharacterOffset] = [obj, characterOffset]
-                lastCharacterExtents = characterExtents
-            [obj, characterOffset] = self.getNextCaretInOrder(obj,
-                                                              characterOffset)
-        if lastObj and lastObj.role == rolenames.ROLE_LINK:
-            contents += ">"
-        return contents
-
-    def outlineExtents(self, obj, startOffset, endOffset):
-        """Draws an outline around the given text for the object or the entire
-        object if it has no text.  This is for debug purposes only.
-
-        Arguments:
-        -obj: the object
-        -startOffset: character offset to start at
-        -endOffset: character offset just after last character to end at
-        """
-        [x, y, width, height] = self.getExtents(obj, startOffset, endOffset)
-        util.drawOutline(x, y, width, height)
-
-    def dumpContent(self, inputEvent, contents=None):
-        """Dumps the document frame content to stdout.
-
-        Arguments:
-        -inputEvent: the input event that caused this to be called
-        -contents: an ordered list of [obj, startOffset, endOffset] tuples
-        """
-        if not contents:
-            contents = self.getLinearizedContents()
-        string = ""
-        extents = None
-        for content in contents:
-            [obj, startOffset, endOffset] = content
-            if obj:
-                extents = self.getBoundary(
-                    self.getExtents(obj, startOffset, endOffset),
-                    extents)
-                if obj.text:
-                    string += "[%s] text='%s' " % (obj.role,
-                                                   self.getText(obj,
-                                                                startOffset,
-                                                                endOffset))
-                else:
-                    string += "[%s] name='%s' " % (obj.role, obj.name)
-            else:
-                string += "\nNEWLINE\n"
-        print "==========================="
-        print string
-        util.drawOutline(extents[0], extents[1], extents[2], extents[3])
+    ####################################################################
+    #                                                                  #
+    # Methods to navigate to previous and next objects.                #
+    #                                                                  #
+    ####################################################################
 
     def setCaretPosition(self, obj, characterOffset):
         """Sets the caret position to the given character offset in the
@@ -2293,50 +2360,6 @@ class Script(default.Script):
         #
         #contents = self.getLineAtOffset(lastObj, lastCharacterOffset)
         #self.dumpContent(inputEvent, contents)
-
-    def getPreviousRole(self, roles, match=True):
-        """Positions the caret offset at the beginning of the next object
-        using the given roles list as a pattern to match or not match.
-
-        Arguments:
-        -roles: a list of roles from rolenames.py
-        -match: if True, the found object will have a role from roles;
-                if False, the found object will not have a role from roles
-        """
-        [currentObj, characterOffset] = self.getCaretContext()
-
-        obj = currentObj
-        while obj:
-            [obj, characterOffset] = self.getPreviousCaretInOrder(
-                obj, characterOffset)
-            if obj and (obj != currentObj):
-                if (match and (obj.role in roles)) \
-                    or (not match and not (obj.role in roles)):
-                    return [obj, characterOffset]
-
-        return [None, -1]
-
-    def getNextRole(self, roles, match=True):
-        """Positions the caret offset at the beginning of the next object
-        using the given roles list as a pattern to match or not match.
-
-        Arguments:
-        -roles: a list of roles from rolenames.py
-        -match: if True, the found object will have a role from roles;
-                if False, the found object will not have a role from roles
-        """
-        [currentObj, characterOffset] = self.getCaretContext()
-
-        obj = currentObj
-        while obj:
-            [obj, characterOffset] = self.getNextCaretInOrder(
-                obj, characterOffset)
-            if obj and (obj != currentObj):
-                if (match and (obj.role in roles)) \
-                    or (not match and not (obj.role in roles)):
-                    return [obj, characterOffset]
-
-        return [None, -1]
 
     def goPreviousHeading(self, inputEvent):
         [obj, characterOffset] = self.getPreviousRole([rolenames.ROLE_HEADING])

@@ -1,5 +1,18 @@
 2006-12-18  Willie Walker <william.walker@sun.com>
 
+	* src/orca/Gecko.py: reorganize methods to prepare for a minor
+	refactor tomorrow.  The refactoring plan is to think of things
+	as lists of [obj, startOffset, endOffset] tuples.  The speech
+	functions will turns these into lists of [text, acss] tuples
+	and the braille functions will turn these into lists of 
+	braille regions.  That's the thinking, anyway.  We'll see 
+	how far I get.
+
+	NOTE: emacs code folding trick: "Ctrl+u # Ctrl+x $" will hide
+	lines that start at column # or greater.  "Ctrl+x $" will put
+	things back to normal.  For example, "Ctrl+u 5 Ctrl+x $" will
+	compress the view to just class and method names.
+	
 	* src/orca/Gecko.py: make sure that the unchecked/checked state
 	of a checkbox in document content is announced when you change it.
 	
