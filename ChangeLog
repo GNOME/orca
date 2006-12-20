@@ -1,5 +1,24 @@
 2006-12-20  Willie Walker <william.walker@sun.com>
 
+	* src/orca/Gecko.py: get caret navigation a bit back on track
+	after discovering a bit of an oddity/change in the latest Firefox
+	nightly.  Ah well.  Here's what I really wanted to do today:
+
+	1) When arrowing through items in a list in a form, set their 
+	selected state.  Right now, you cannot select them with Orca's
+	caret navigation model.
+
+	2) Now that our display is based upon 'contents' tuples, do a
+	better job displaying the contents in braille and presenting them
+	in speech.  This will most likely involve pruning the contents to
+	eliminate redundant content, such as labelled checkboxes and the
+	labels labelling them.  I'd also like to try to hook them up to
+	the speech and braille generators.
+
+	Maybe tomorrow.  But, at least it's written down somewhere in
+	case I forget and accidentally use my notes to start a fire
+	in the woodstove.
+	
 	* src/orca/orca_prefs.py: fix for bug 338039 to prevent 
 	stack trace when running orca -t.
 	

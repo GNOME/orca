@@ -808,6 +808,17 @@ class Script(default.Script):
            or (not len(event.source.role)):
             return
 
+        # We also ignore focus events on the panel that holds the document
+        # frame.  We end up getting these typically because we've called
+        # grabFocus on this panel when we're doing caret navigation.  In
+        # those cases, we want the locus of focus to be the subcomponent
+        # that really holds the caret.
+        #
+        if event.source.role == rolenames.ROLE_PANEL:
+            documentFrame = self.getDocumentFrame()
+            if documentFrame and (documentFrame.parent == event.source):
+                return
+
         # We're also going to ignore menus that are children of menu
         # bars.  They never really get focus themselves - it's always
         # a transient event and one of the menu items or submenus will
@@ -1610,6 +1621,10 @@ class Script(default.Script):
         """
 
         if obj.text:
+            unicodeText = self.getUnicodeText(obj)
+            if characterOffset >= len(unicodeText):
+                return [obj, -1]
+
             character = self.getText(obj,
                                      characterOffset,
                                      characterOffset + 1).decode("UTF-8")
@@ -2117,24 +2132,32 @@ class Script(default.Script):
 
         self.caretContext = [obj, characterOffset]
 
-        # We'd like the object to have focus if it can take focus.
-        # Otherwise, we bubble up until we find a parent that can
-        # take focus.  This is to allow us to help force focus out
-        # of something such as a text area and back into the document
-        # content.
+        # Reset focus if need be.
         #
-        objectForFocus = obj
-        while objectForFocus and obj:
-            if objectForFocus.state.count(atspi.Accessibility.STATE_FOCUSABLE):
-                break
-            else:
-                objectForFocus = objectForFocus.parent
+        if obj != orca_state.locusOfFocus:
+            orca.setLocusOfFocus(None, obj, False)
 
-        if objectForFocus:
-            focusGrabbed = objectForFocus.component.grabFocus()
-            orca.setLocusOfFocus(None, objectForFocus, False)
-            #print "RESULT of grabFocus ON %s %s" \
-            #      % (objectForFocus.role, objectForFocus.name), focusGrabbed
+            # We'd like the object to have focus if it can take focus.
+            # Otherwise, we bubble up until we find a parent that can
+            # take focus.  This is to allow us to help force focus out
+            # of something such as a text area and back into the
+            # document content.
+            #
+            objectForFocus = obj
+            while objectForFocus and obj:
+                if objectForFocus.state.count(\
+                    atspi.Accessibility.STATE_FOCUSABLE):
+                    break
+                else:
+                    objectForFocus = objectForFocus.parent
+
+            if objectForFocus:
+                # [[[See https://bugzilla.mozilla.org/show_bug.cgi?id=363214.
+                # We need to set focus on the parent of the document frame.]]]
+                #
+                if objectForFocus.role == rolenames.ROLE_DOCUMENT_FRAME:
+                    objectForFocus = objectForFocus.parent
+                focusGrabbed = objectForFocus.component.grabFocus()
 
         # If there is a character there, we'd like to position the
         # caret the right spot.  [[[TODO: WDW - numbered lists are
