@@ -1,3 +1,8 @@
+2006-12-20  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca_prefs.py: fix for bug 338039 to prevent 
+	stack trace when running orca -t.
+	
 2006-12-19  Willie Walker <william.walker@sun.com>
 
 	* src/orca/speechgenerator.py: check to make sure a table cell

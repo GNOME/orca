@@ -370,7 +370,7 @@ def readPreferences():
 
     return prefsDict
 
-def writePreferences(prefsDict, treeModel):
+def writePreferences(prefsDict, treeModel=None):
     """Creates the directory and files to hold user preferences.  Note
     that callers of this method may want to consider using an ordered
     dictionary so that the keys are output in a deterministic order.
@@ -437,7 +437,8 @@ def writePreferences(prefsDict, treeModel):
                 value = prefsDict[key]
             prefs.writelines("orca.settings.%s = %s\n" % (key, value))
 
-    _writeKeyBindingsMap(prefs, treeModel)
+    if treeModel:
+        _writeKeyBindingsMap(prefs, treeModel)
 
     _writePreferencesPostamble(prefs)
     prefs.close()
