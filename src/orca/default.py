@@ -1182,7 +1182,7 @@ class Script(script.Script):
                 self.speakTextIndentation(obj, line)
             line = util.adjustForRepeats(line)
             speech.speak(line, voice)
-            util.speakTextSelectionState(obj, caretOffset, startOffset)
+            util.speakTextSelectionState(obj, startOffset, caretOffset)
 
         else:
             # Speak blank line if appropriate. It's necessary to
