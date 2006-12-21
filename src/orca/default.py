@@ -1388,8 +1388,10 @@ class Script(script.Script):
         else:
             startOffset = offset
             endOffset = offset+1
-        character = self.getText(obj, startOffset, endOffset)
-
+        if endOffset > text.characterCount:
+            character = "\n"
+        else:
+            character = self.getText(obj, startOffset, endOffset)
         if util.getLinkIndex(obj, offset) >= 0:
             voice = self.voices[settings.HYPERLINK_VOICE]
         elif character.isupper():
