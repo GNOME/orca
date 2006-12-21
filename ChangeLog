@@ -1,3 +1,9 @@
+2006-12-21  Willie Walker <william.walker@sun.com>
+
+	* src/orca/atspi.py: fix problem where the __main__ test was
+	not working - needed to change app.role to app.getRoleName()
+	(thanks Nags!)
+	
 2006-12-20  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py: get caret navigation a bit back on track

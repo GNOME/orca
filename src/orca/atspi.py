@@ -1431,7 +1431,7 @@ def __printDesktops():
         for j in range(0, desktop.childCount):
             app = desktop.getChildAtIndex(j)
             print "    App %d: name=%s role=%s" \
-                  % (j, app.name, app.role)
+                  % (j, app.name, app.getRoleName())
 
 def __notifyEvent(event):
         print event.type, event.source.name, \
