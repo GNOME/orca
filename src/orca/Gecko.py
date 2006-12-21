@@ -424,6 +424,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             # We try to omit things like fillers off the bat...
             #
             if (parent.role == rolenames.ROLE_FILLER) \
+                or (parent.role == rolenames.ROLE_FORM) \
                 or (parent.role == rolenames.ROLE_LIST_ITEM) \
                 or (parent.role == rolenames.ROLE_LIST) \
                 or (parent.role == rolenames.ROLE_PARAGRAPH) \
