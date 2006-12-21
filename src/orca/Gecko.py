@@ -152,6 +152,42 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
         return (regions, regions[0])
 
+    def _getBrailleRegionsForCheckBox(self, obj):
+        """Get the braille for a check box.  If the check box already had
+        focus, then only the state is displayed.
+
+        Arguments:
+        - obj: the check box
+
+        Returns a list where the first element is a list of Regions to display
+        and the second element is the Region which should get focus.
+        """
+
+        self._debugGenerator("_getBrailleRegionsForCheckBox", obj)
+
+        # In document content (I'm not sure about XUL widgets yet),
+        # a checkbox is its own little beast with no text.  So...
+        # if it has a label, that's the only text we're going to
+        # get for it.
+        #
+        text = ""
+        text = util.appendString(text, util.getDisplayedLabel(obj))
+        if not self._script.inDocumentContent():
+            text = util.appendString(text, util.getDisplayedText(obj))
+
+        if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+            text = util.appendString(text, "<x>")
+        else:
+            text = util.appendString(text, "< >")
+
+        text = util.appendString(text, self._getTextForRole(obj))
+
+        regions = []
+        componentRegion = braille.Component(obj, text)
+        regions.append(componentRegion)
+
+        return [regions, componentRegion]
+
     def _getBrailleRegionsForText(self, obj):
         """Gets text to be displayed for the entry of an autocomplete box.
 
@@ -223,8 +259,9 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             name = obj.name
             if menu and menu.state.count(atspi.Accessibility.STATE_VISIBLE):
                 selection = menu.selection
-                item = selection.getSelectedChild(0)
-                name = item.name
+                if selection:
+                    item = selection.getSelectedChild(0)
+                    name = item.name
             regions.append(braille.Region(name))
 
         if settings.brailleVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
@@ -1019,23 +1056,37 @@ class Script(default.Script):
             if not obj:
                 continue
 
-            if obj.text:
-                string = self.getText(obj, startOffset, endOffset)
-                if obj == focusedObj:
-                    region = braille.Region(
-                        string,
-                        focusedCharacterOffset - startOffset)
-                    if (focusedCharacterOffset >= startOffset) \
-                       and (focusedCharacterOffset < endOffset):
-                        focusedRegion = region
-                else:
-                    region = braille.Region(string)
-            else:
-                region = braille.Region(obj.name)
-                if obj == focusedObj:
-                    focusedRegion = region
+            # If this is a label that's labelling something else, we'll
+            # get the label via a braille generator.
+            #
+            if self.isLabellingContents(obj, contents):
+                continue
 
-            line.addRegion(region)
+            if obj.role in [rolenames.ROLE_ENTRY,
+                            rolenames.ROLE_PASSWORD_TEXT]:
+                label = util.getDisplayedLabel(obj)
+                regions = [braille.Text(obj, label)]
+                if obj == focusedObj:
+                    focusedRegion = regions[0]
+            elif obj.text:
+                string = self.getText(obj, startOffset, endOffset)
+                regions = [braille.Region(
+                    string,
+                    focusedCharacterOffset - startOffset)]
+                if (obj == focusedObj) \
+                   and (focusedCharacterOffset >= startOffset) \
+                   and (focusedCharacterOffset < endOffset):
+                    focusedRegion = regions[0]
+            else:
+                [regions, fRegion] = \
+                          self.brailleGenerator.getBrailleRegions(obj)
+                if obj == focusedObj:
+                    focusedRegion = fRegion
+
+            if len(line.regions):
+                line.addRegion(braille.Region(" "))
+
+            line.addRegions(regions)
 
         if extraRegion:
             line.addRegion(extraRegion)
@@ -1548,6 +1599,29 @@ class Script(default.Script):
             return ((1.0 * overlapAmount) / shortestHeight) > 0.25
         else:
             return False
+
+    def isLabellingContents(self, obj, contents):
+        """Given and obj and a list of [obj, startOffset, endOffset] tuples,
+        determine if obj is labelling anything in the tuples."""
+
+        if obj.role != rolenames.ROLE_LABEL:
+            return False
+
+        relations = obj.relations
+        if not relations:
+            return False
+
+        for relation in relations:
+            if relation.getRelationType() \
+                == atspi.Accessibility.RELATION_LABEL_FOR:
+                for i in range(0, relation.getNTargets()):
+                    target = atspi.Accessible.makeAccessible(\
+                        relation.getTarget(i))
+                    for content in contents:
+                        if content[0] == target:
+                            return True
+
+        return False
 
     def getAutocompleteEntry(self, obj):
         """Returns the ROLE_ENTRY object of a ROLE_AUTOCOMPLETE object or
@@ -2079,29 +2153,6 @@ class Script(default.Script):
 
         return acss
 
-    def isLabellingContents(self, obj, contents):
-        """Given and obj and a list of [obj, startOffset, endOffset] tuples,
-        determine if obj is labelling anything in the tuples."""
-
-        if obj.role != rolenames.ROLE_LABEL:
-            return False
-
-        relations = obj.relations
-        if not relations:
-            return False
-
-        for relation in relations:
-            if relation.getRelationType() \
-                == atspi.Accessibility.RELATION_LABEL_FOR:
-                for i in range(0, relation.getNTargets()):
-                    target = atspi.Accessible.makeAccessible(\
-                        relation.getTarget(i))
-                    for content in contents:
-                        if content[0] == target:
-                            return True
-
-        return False
-
     def getUtterancesFromContents(self, contents, speakRole=True):
         """Returns a list of [text, acss] tuples based upon the
         list of [obj, startOffset, endOffset] tuples passed in.
@@ -2147,7 +2198,7 @@ class Script(default.Script):
         """Speaks the character at the given characterOffset in the
         given object."""
         character = self.getCharacterAtOffset(obj, characterOffset)
-        if obj:
+        if obj and character:
             speech.speak(character, self.getACSS(obj, character), False)
 
     ####################################################################

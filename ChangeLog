@@ -1,5 +1,14 @@
 2006-12-21  Willie Walker <william.walker@sun.com>
 
+	* src/orca/Gecko.py: retool braille to use braille generators
+	where possible.  Also attempt to eliminate reduncant labels.
+	NOTE: I think there's a bug lurking in Firefox somewhere where it
+	will give us a different accessible each time we look at the same
+	child.  This is a bit disconcerting.  I'll be spending another
+	half day (I've already spent about a half day on it) tracking it
+	down.  In any case, the upshot of this is that it makes it very
+	difficult for us to properly set the braille cursor.
+	
 	* src/orca/Gecko.py: filter forms out of speech context.
 	
 	* src/orca/Gecko.py: retool speech to use speech generators
