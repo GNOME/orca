@@ -264,6 +264,16 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         self.speechGenerators[rolenames.ROLE_ENTRY]          = \
              self._getSpeechForText
 
+    def _getSpeechForObjectRole(self, obj):
+        """Prevents some roles from being spoken."""
+        if obj.role in [rolenames.ROLE_PARAGRAPH,
+                        rolenames.ROLE_SECTION,
+                        rolenames.ROLE_LABEL,
+                        rolenames.ROLE_UNKNOWN]:
+            return []
+        else:
+            return [rolenames.getSpeechForRoleName(obj)]
+
     def _getSpeechForDocumentFrame(self, obj, already_focused):
         """Gets the speech for a document frame.
 
@@ -362,8 +372,9 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             name = obj.name
             if menu and menu.state.count(atspi.Accessibility.STATE_VISIBLE):
                 selection = menu.selection
-                item = selection.getSelectedChild(0)
-                name = item.name
+                if selection:
+                    item = selection.getSelectedChild(0)
+                    name = item.name
             utterances.append(name)
 
         utterances.extend(self._getSpeechForObjectAvailability(obj))
@@ -2067,6 +2078,29 @@ class Script(default.Script):
 
         return acss
 
+    def isLabellingContents(self, obj, contents):
+        """Given and obj and a list of [obj, startOffset, endOffset] tuples,
+        determine if obj is labelling anything in the tuples."""
+
+        if obj.role != rolenames.ROLE_LABEL:
+            return False
+
+        relations = obj.relations
+        if not relations:
+            return False
+
+        for relation in relations:
+            if relation.getRelationType() \
+                == atspi.Accessibility.RELATION_LABEL_FOR:
+                for i in range(0, relation.getNTargets()):
+                    target = atspi.Accessible.makeAccessible(\
+                        relation.getTarget(i))
+                    for content in contents:
+                        if content[0] == target:
+                            return True
+
+        return False
+
     def getUtterancesFromContents(self, contents, speakRole=True):
         """Returns a list of [text, acss] tuples based upon the
         list of [obj, startOffset, endOffset] tuples passed in.
@@ -2085,21 +2119,20 @@ class Script(default.Script):
             if not obj:
                 continue
 
+            # If this is a label that's labelling something else, we'll
+            # get the label via a speech generator.
+            #
+            if self.isLabellingContents(obj, contents):
+                continue
+
             if obj.text:
-                string = self.getText(obj, startOffset, endOffset)
+                strings = [self.getText(obj, startOffset, endOffset)]
+                strings.extend(\
+                    self.speechGenerator._getSpeechForObjectRole(obj))
             else:
-                string = obj.name
+                strings = self.speechGenerator.getSpeech(obj, False)
 
-            if speakRole:
-                ignoreRoles = [rolenames.ROLE_DOCUMENT_FRAME,
-                               rolenames.ROLE_FORM,
-                               rolenames.ROLE_PARAGRAPH,
-                               rolenames.ROLE_SECTION,
-                               rolenames.ROLE_TABLE_CELL]
-                if not obj.role in ignoreRoles:
-                    string += " " + rolenames.getSpeechForRoleName(obj)
-
-            if len(string):
+            for string in strings:
                 utterances.append([string, self.getACSS(obj, string)])
 
         return utterances
@@ -2113,7 +2146,8 @@ class Script(default.Script):
         """Speaks the character at the given characterOffset in the
         given object."""
         character = self.getCharacterAtOffset(obj, characterOffset)
-        speech.speak(character, self.getACSS(obj, character), False)
+        if obj:
+            speech.speak(character, self.getACSS(obj, character), False)
 
     ####################################################################
     #                                                                  #
