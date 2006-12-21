@@ -1,5 +1,15 @@
 2006-12-21  Willie Walker <william.walker@sun.com>
 
+	* src/orca/Gecko.py: handle focus a little better.  This helps
+	eliminate the "html container" verboseness when moving around in
+	content.  Also added some code to make sure we speak something for
+	things that are there when we arrow to them, but don't have any
+	text (e.g., a checkbox).
+
+	TODO: figure out why we don't set the braille cursor properly
+	when looking at a set of checkboxes or when looking at the
+	very first line of a text entry area.
+	
 	* src/orca/Gecko.py: retool braille to use braille generators
 	where possible.  Also attempt to eliminate reduncant labels.
 	NOTE: I think there's a bug lurking in Firefox somewhere where it

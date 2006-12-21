@@ -322,10 +322,10 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         """
 
         utterances = []
+
         name = obj.name
         if name and len(name):
             utterances.append(name)
-
         utterances.extend(self._getSpeechForObjectRole(obj))
 
         self._debugGenerator("Gecko._getSpeechForDocumentFrame",
@@ -803,6 +803,11 @@ class Script(default.Script):
         accessible text specialization, the characterOffset value
         is meaningless (and typically -1)."""
 
+        # We'll just always assume that the thing in which the caret
+        # moved is the locus of focus.
+        #
+        orca.setLocusOfFocus(event, event.source, False)
+
         # We need to handle HTML content differently because we do our
         # own navigation and we also handle the EMBEDDED_OBJECT_CHARACTER.
         # But...if we're not in HTML content, we'll defer to the default
@@ -834,7 +839,6 @@ class Script(default.Script):
                                     characterOffset,
                                     characterOffset + 1)
 
-        orca.setLocusOfFocus(event, event.source, False)
         default.Script.onCaretMoved(self, event)
 
     def onNameChanged(self, event):
@@ -867,6 +871,20 @@ class Script(default.Script):
             documentFrame = self.getDocumentFrame()
             if documentFrame and (documentFrame.parent == event.source):
                 return
+
+        # When we get a focus event on the document frame, it's usually
+        # because we did a grabFocus on its parent in setCaretPosition.
+        # We try to handle this here by seeing if there is already a
+        # caret context for the document frame.
+        #
+        if event.source \
+            and (event.source.role == rolenames.ROLE_DOCUMENT_FRAME):
+            try:
+                [obj, characterOffset] = self.caretContext
+                orca.setLocusOfFocus(event, obj)
+                return
+            except:
+                pass
 
         # We're also going to ignore menus that are children of menu
         # bars.  They never really get focus themselves - it's always
@@ -986,6 +1004,18 @@ class Script(default.Script):
         - oldLocusOfFocus: Accessible that is the old locus of focus
         - newLocusOfFocus: Accessible that is the new locus of focus
         """
+
+        # Try to handle the case where a spurious focus event was tossed
+        # at us.
+        #
+        if newLocusOfFocus and self.inDocumentContent(newLocusOfFocus):
+            if event.source.text:
+                caretOffset = event.source.text.caretOffset
+            else:
+                caretOffset = 0
+            self.caretContext = self.findFirstCaretContext(event.source,
+                                                           caretOffset)
+
         # Don't bother speaking all the information about the HTML
         # container - it's duplicated all over the place.  So, we
         # just speak the role.
@@ -1342,11 +1372,12 @@ class Script(default.Script):
     #                                                                  #
     ####################################################################
 
-    def inDocumentContent(self):
-        """Returns True if the current locus of focus is in the
-        document content.
+    def inDocumentContent(self, obj=None):
+        """Returns True if the given object (defaults to the current
+        locus of focus is in the document content).
         """
-        obj = orca_state.locusOfFocus
+        if not obj:
+            obj = orca_state.locusOfFocus
         while obj:
             if obj.role == rolenames.ROLE_DOCUMENT_FRAME:
                 return True
@@ -2198,8 +2229,16 @@ class Script(default.Script):
         """Speaks the character at the given characterOffset in the
         given object."""
         character = self.getCharacterAtOffset(obj, characterOffset)
-        if obj and character:
-            speech.speak(character, self.getACSS(obj, character), False)
+        if obj:
+            if character:
+                speech.speak(character, self.getACSS(obj, character), False)
+            else:
+                # We'll run into this when we hit a component with no
+                # text, such as a checkbox.  In these cases, we'll
+                # just speak the entire component.
+                #
+                utterances = self.speechGenerator.getSpeech(obj, False)
+                speech.speakUtterances(utterances)
 
     ####################################################################
     #                                                                  #
