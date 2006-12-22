@@ -1033,19 +1033,25 @@ class Script(default.Script):
             self.updateBraille(newLocusOfFocus)
             speech.speak(rolenames.getSpeechForRoleName(newLocusOfFocus))
             return
-        elif newLocusOfFocus \
-            and newLocusOfFocus.role == rolenames.ROLE_LINK:
-            # Gecko issues focus: events for a link when you move the
-            # caret to or tab to a link.  By the time we've gotten here,
-            # though, we've already presented the link via a caret moved
-            # event or some other event.  So...we don't anything.
-            #
-            try:
-                [obj, characterOffset] = self.caretContext
-                if newLocusOfFocus == obj:
-                    return
-            except:
-                pass
+        # [[[TODO: WDW - I commented this out because we all of a sudden
+        # started losing the presentation of links when we tabbed to them
+        # sometime around 21-Dec-2006.  It was a hack to begin with, so
+        # it might be something to completely remove at some time in the
+        # future.]]]
+        #
+        #elif newLocusOfFocus \
+        #    and newLocusOfFocus.role == rolenames.ROLE_LINK:
+        #    # Gecko issues focus: events for a link when you move the
+        #    # caret to or tab to a link.  By the time we've gotten here,
+        #    # though, we've already presented the link via a caret moved
+        #    # event or some other event.  So...we don't anything.
+        #    #
+        #    try:
+        #        [obj, characterOffset] = self.caretContext
+        #        if newLocusOfFocus == obj:
+        #            return
+        #    except:
+        #        pass
 
         default.Script.locusOfFocusChanged(self,
                                            event,
