@@ -165,15 +165,27 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
         self._debugGenerator("_getBrailleRegionsForCheckBox", obj)
 
-        # In document content (I'm not sure about XUL widgets yet),
-        # a checkbox is its own little beast with no text.  So...
-        # if it has a label, that's the only text we're going to
-        # get for it.
+        # In document content (I'm not sure about XUL widgets yet), a
+        # checkbox is its own little beast with no text.  So...  if it
+        # is in document content and has a label, we're likely to be
+        # displaying that label already.  If it doesn't have a label,
+        # though, we'll display its name.
         #
         text = ""
-        text = util.appendString(text, util.getDisplayedLabel(obj))
         if not self._script.inDocumentContent():
+            text = util.appendString(text, util.getDisplayedLabel(obj))
             text = util.appendString(text, util.getDisplayedText(obj))
+        else:
+            isLabelled = False
+            relations = obj.relations
+            if relations:
+                for relation in relations:
+                    if relation.getRelationType() \
+                        == atspi.Accessibility.RELATION_LABELLED_BY:
+                        isLabelled = True
+                        break
+            if not isLabelled and obj.name and len(obj.name):
+                text = util.appendString(text, obj.name)
 
         if obj.state.count(atspi.Accessibility.STATE_CHECKED):
             text = util.appendString(text, "<x>")
@@ -444,19 +456,10 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         if obj is stopAncestor:
             return utterances
 
-        # We'll eliminate toolbars if we're in a menu.  The reason for
-        # this is that Gecko puts its menu bar in a couple of nested
-        # toolbars.
-        #
-        inMenuBar = False
-
         parent = obj.parent
         while parent and (parent.parent != parent):
             if parent == stopAncestor:
                 break
-
-            if parent.role == rolenames.ROLE_MENU_BAR:
-                inMenuBar = True
 
             # We try to omit things like fillers off the bat...
             #
@@ -1087,30 +1090,48 @@ class Script(default.Script):
                 continue
 
             # If this is a label that's labelling something else, we'll
-            # get the label via a braille generator.
+            # get the label via a braille generator. [[[TODO: WDW - this is
+            # all to hack around the way checkboxes and their labels
+            # are handled in document content.  For now, we will display
+            # the label so we can track the caret in it on the braille
+            # display.]]]
             #
-            if self.isLabellingContents(obj, contents):
-                continue
+            #if self.isLabellingContents(obj, contents):
+            #    continue
+
+            # [[[TODO: WDW - Something odd is going on with text
+            # entries and checkboxes and other things: we are ending
+            # up with different accessibles for the same object.  I'm
+            # not sure if this is a Firefox bug or an Orca bug, but
+            # it's wreaking havoc on us.  This is a hack to try to
+            # get around that.]]]
+            #
+            isFocusedObj = (obj == focusedObj) \
+                           or ((obj.role == focusedObj.role) \
+                               and (obj.name == focusedObj.name) \
+                               and (obj.parent == focusedObj.parent))
 
             if obj.role in [rolenames.ROLE_ENTRY,
                             rolenames.ROLE_PASSWORD_TEXT]:
                 label = util.getDisplayedLabel(obj)
                 regions = [braille.Text(obj, label)]
-                if obj == focusedObj:
+                eol = braille.Region(" $l")
+                regions.append(eol)
+                if isFocusedObj:
                     focusedRegion = regions[0]
             elif obj.text:
                 string = self.getText(obj, startOffset, endOffset)
                 regions = [braille.Region(
                     string,
                     focusedCharacterOffset - startOffset)]
-                if (obj == focusedObj) \
+                if isFocusedObj \
                    and (focusedCharacterOffset >= startOffset) \
                    and (focusedCharacterOffset < endOffset):
                     focusedRegion = regions[0]
             else:
                 [regions, fRegion] = \
                           self.brailleGenerator.getBrailleRegions(obj)
-                if obj == focusedObj:
+                if isFocusedObj:
                     focusedRegion = fRegion
 
             if len(line.regions):
@@ -1309,6 +1330,7 @@ class Script(default.Script):
 
         contents = ""
         lastObj = None
+        lastCharacterExtents = None
         [obj, characterOffset] = self.getCaretContext()
         while obj:
             if obj and obj.state.count(atspi.Accessibility.STATE_SHOWING):
@@ -1507,7 +1529,6 @@ class Script(default.Script):
         try:
             return obj.characterOffsetInParent
         except:
-            hyperlink = obj.hyperlink
             if obj.hyperlink:
                 index = 0
                 text = self.getUnicodeText(obj.parent)

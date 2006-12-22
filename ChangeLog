@@ -1,3 +1,14 @@
+2006-12-22  Willie Walker <william.walker@sun.com>
+
+	* src/orca/Gecko.py: a bit more work with managing focus for the
+	braille display.  Right now, a checkbox and its label are handled
+	as two separate objects because they are given to us that way.  At
+	some point, I'd like to join for the purposes of braille.  I'm
+	still not sure if the different object for the same child problem
+	is an Orca bug or a Firefox bug.  I've been trying to come up with
+	sample apps to show it is a Firefox bug, but I haven't been
+	successful.
+	
 2006-12-21  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py: handle focus a little better.  This helps
