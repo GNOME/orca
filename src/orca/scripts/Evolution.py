@@ -116,7 +116,7 @@ class Script(default.Script):
         self.inputEventHandlers["toggleReadMailHandler"] = \
             input_event.InputEventHandler(
                 Script.toggleReadMail,
-                _("Toggle whether we present new mail if we not not the active script."))
+                _("Toggle whether we present new mail if we are not the active script."))
 
     def getKeyBindings(self):
         """Defines the new key binding for this script. Setup the default
