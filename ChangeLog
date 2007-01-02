@@ -1,3 +1,9 @@
+2007-01-02  Rich Burridge <rich.burridge@sun.com>
+
+        * bugs/bugs.html:
+          Added in an entry for atk/gail bug #387960 – Calls to 
+          text.getAttributeRun cause gedit to crash when running with Orca.
+
 2007-01-02  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca_i18n.py.in: make sure debug module is imported.
