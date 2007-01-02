@@ -36,6 +36,8 @@ localedir = os.path.join ("@prefix@", "@DATADIRNAME@", "locale")
 gettext.bindtextdomain ("@GETTEXT_PACKAGE@", localedir)
 gettext.textdomain("orca")
 
+import debug
+
 try:
     import gtk.glade
 
