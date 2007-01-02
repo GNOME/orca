@@ -22,9 +22,9 @@
 # This script performs some clean up and will run Orca.  It will also
 # rerun Orca if it detects that Orca died an unnatural death.
 
-# __id__        = "$Id$"
-# __version__   = "$Revision$"
-# __date__      = "$Date$"
+# __id__        = "$Id: orca.in,v 1.22 2006/12/08 16:21:25 wwalker Exp $"
+# __version__   = "$Revision: 1.22 $"
+# __date__      = "$Date: 2006/12/08 16:21:25 $"
 # __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 # __license__   = "LGPL"
 
@@ -98,11 +98,14 @@ runOrca()
     # We'll save and restore the Caps_Lock as a modifier just in case
     # the user is using the Caps_Lock as the Orca modifier key.
     #
-    CAPSLOCKSETTING=`xmodmap | grep Caps_Lock | cut -f1`
+    if [ "x$DISPLAY" != "x" ]
+    then
+        CAPSLOCKSETTING=`xmodmap | grep Caps_Lock | cut -f1`
+    fi
     @PYTHON@ -c "import orca.orca; orca.orca.main()" "$ARGS"
     if [ "x$CAPSLOCKSETTING" != "x" ]
     then
-        xmodmap -e "add $CAPSLOCKSETTING = Caps_Lock" 
+        xmodmap -e "add $CAPSLOCKSETTING = Caps_Lock"
     fi
 }
 
@@ -174,7 +177,7 @@ main()
         # will SEGV when Orca attempts to exit normally.  This happens
         # because of something going on in pyorbit.  This should be
         # fixed in pyorbit 2.14.1, but not everyone has that.
-        # So...we'll check for it.  
+        # So...we'll check for it.
         #
         if [ "$RUN" -eq 139 ]
         then
@@ -204,7 +207,7 @@ trap hup_orca HUP
 # will run it in the foreground as well to avoid a situation where
 # orca dumps itself into the text-based setup utility.
 #
-# We make a special exception for gdm, which is used to handle the 
+# We make a special exception for gdm, which is used to handle the
 # accessible login.  If we're running as gdm, we assume everything is
 # all set and we don't need to muck around.
 #
@@ -215,7 +218,7 @@ then
     then
         # Because we will be running Orca in text-setup mode, we want to
         # make sure it is run in a terminal window.  If we're already in
-        # a terminal, this is great.  If not, we spawn a gnome-terminal 
+        # a terminal, this is great.  If not, we spawn a gnome-terminal
         # and run orca in it.
         #
         tty -s && IN_TTY="true" || IN_TTY="false"
