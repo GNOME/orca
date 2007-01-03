@@ -31,6 +31,7 @@ __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import os
+import commands
 import sys
 import debug
 import gettext
@@ -559,6 +560,13 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         # General pane.
         #
         self.showMainWindowCheckButton.set_active(prefs["showMainWindow"])
+
+        self.disableKeyGrabPref = commands.getoutput( \
+                              "gconftool-2 --get /apps/gksu/disable-grab")
+        if self.disableKeyGrabPref == "true":
+            self.disableKeyGrabCheckButton.set_active(True)
+        else:
+            self.disableKeyGrabCheckButton.set_active(False)
 
         if prefs["keyboardLayout"] == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
             self.generalDesktopButton.set_active(True)
@@ -1813,6 +1821,19 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         self.prefsDict["showMainWindow"] = widget.get_active()
 
+    def disableKeyGrabChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           disableKeyGrabCheckButton GtkCheckButton widget.
+           The user has [un]checked the 'Disable gksu keyboard grab'
+           checkbox. Set the gconf '/apps/gksu/disable-grab' resource
+           to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        self.disableKeyGrabPref = widget.get_active()
+
     def keyboardLayoutChanged(self, widget):
         """Signal handler for the "toggled" signal for the generalDesktopButton,
            or generalLaptopButton GtkRadioButton widgets. The user has
@@ -1871,6 +1892,13 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
             settings.UPPERCASE_VOICE : self.uppercaseVoice,
             settings.HYPERLINK_VOICE : self.hyperlinkVoice
         }
+
+        if self.disableKeyGrabPref:
+            keyGrabState = "true"
+        else:
+            keyGrabState = "false"
+        os.system("gconftool-2 --type bool --set " \
+                  + "/apps/gksu/disable-grab " + keyGrabState)
 
         if orca_prefs.writePreferences(self.prefsDict, self.keyBindingsModel):
             self._say(_("Accessibility support for GNOME has just been enabled."))

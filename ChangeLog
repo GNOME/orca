@@ -1,3 +1,10 @@
+2007-01-03  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca-setup.glade:
+          src/orca/orca_gui_prefs.py:
+          Fixed bug #347124 – Orca hangs when attempting to access apps 
+          started via gksu.
+
 2007-01-02  Rich Burridge <rich.burridge@sun.com>
 
         * bugs/bugs.html:
