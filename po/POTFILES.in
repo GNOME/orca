@@ -37,6 +37,7 @@ src/orca/scripts/gedit.py
 src/orca/scripts/gnome-keyring-ask.py
 src/orca/scripts/gnome-search-tool.py
 src/orca/scripts/gnome_segv2.py
+src/orca/scripts/liferea.py
 src/orca/scripts/metacity.py
 src/orca/scripts/Mozilla.py
 src/orca/scripts/planner.py

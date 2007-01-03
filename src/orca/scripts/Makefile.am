@@ -12,6 +12,7 @@ orca_python_PYTHON = \
 	gnome-search-tool.py \
 	gnome-terminal.py \
 	gnome-window-properties.py \
+	liferea.py \
 	metacity.py \
 	Mozilla.py \
 	planner.py \

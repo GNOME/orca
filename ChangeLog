@@ -9,6 +9,12 @@
           Adjusted the order of the items on the General Preferences pane.
           Keyboard layout is now first.
 
+        * po/POTFILES.in:
+          src/orca/scripts/Makefile.am:
+          src/orca/scripts/liferea.py:
+          Fixed bug #350233 – Orca should better support Liferea application.
+          Supplied by community member Javier (thanks!)
+
 2007-01-02  Rich Burridge <rich.burridge@sun.com>
 
         * bugs/bugs.html:
