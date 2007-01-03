@@ -22,6 +22,10 @@
           Fixed bug #350233 – Orca should better support Liferea application.
           Supplied by community member Javier (thanks!)
 
+        * bugs/bugs.html:
+          Added in an entry for gaim bug #1627333 - gaim 2.0.0beta5 buddy 
+          list table not accessible.
+
 2007-01-02  Rich Burridge <rich.burridge@sun.com>
 
         * bugs/bugs.html:
