@@ -1260,15 +1260,20 @@ def _speakStatusBar():
         return
 
     utterances = []
-    for i in range(0, _statusBar.childCount):
-        child = _statusBar.child(i)
-        text = _("%s") % _getObjName(child)
+
+    if _statusBar.childCount == 0:
+        text = _("%s") % _getObjName(_statusBar)
         utterances.append(text)
+    else:
+        for i in range(0, _statusBar.childCount):
+            child = _statusBar.child(i)
+            text = _("%s") % _getObjName(child)
+            utterances.append(text)
 
     debug.println(_debugLevel, "statusbar utterances=%s" % \
                   utterances)
     speech.speakUtterances(utterances)
-
+    
     
 def _speakCalcStatusBar():
     """

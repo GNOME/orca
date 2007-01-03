@@ -1,3 +1,10 @@
+2007-01-03  Lynn Monsanto <Lynn.Monsanto@sun.com>
+
+	* src/orca/where_am_I.py: Fixed problem speaking status
+	bar contents (Insert+KP_Enter) when the status bar is a 
+	single component (e.g., text field), rather than a container 
+	with multiple sub-components. #362546
+
 2007-01-03  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade:
