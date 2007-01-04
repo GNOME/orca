@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2006 Sun Microsystems Inc.
+# Copyright 2005-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -899,6 +899,7 @@ def _brlAPIKeyReader():
         """
         key = brlAPI.readKey(False)
         if key:
+            print "HERE", key
             flags = key >> 32
             lower = key & 0xFFFFFFFF
             keyType = lower >> 29
@@ -928,17 +929,15 @@ def setupKeyRanges(keys):
 
     # First, start by ignoring everything.
     #
-    everything=[0,
-                brlapi.KEY_FLAGS_MASK \
-                | brlapi.KEY_TYPE_MASK \
-                | brlapi.KEY_CODE_MASK]
-    brlAPI.ignoreKeyRange(everything)
+    brlAPI.ignoreKeyRange(0,
+                          brlapi.KEY_FLAGS_MASK \
+                          | brlapi.KEY_TYPE_MASK \
+                          | brlapi.KEY_CODE_MASK)
 
     # Next, enable cursor routing keys.
     #
-    cursorRoutingKeys = [brlapi.KEY_CMD_ROUTE,
-                         brlapi.KEY_CMD_ROUTE | brlapi.KEY_CMD_ARG_MASK]
-    brlAPI.acceptKeyRange(cursorRoutingKeys)
+    brlAPI.acceptKeyRange(brlapi.KEY_CMD_ROUTE,
+                          brlapi.KEY_CMD_ROUTE | brlapi.KEY_CMD_ARG_MASK)
 
     # Finally, enable the commands we care about.
     #

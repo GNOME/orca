@@ -1,3 +1,11 @@
+2007-01-03  Willie Walker <william.walker@sun.com>
+
+	* src/orca/braille.py: update to use BrlAPI 0.5.0 Python bindings
+	that have changed since December 18th.  NOTE: there is a problem
+	with cursor routing keys now - we no longer seem to get the cursor
+	routing key events from BrlAPI.  I have a question into the BrlAPI
+	folks on this.
+
 2007-01-03  Lynn Monsanto <Lynn.Monsanto@sun.com>
 
 	* src/orca/where_am_I.py: Fixed problem speaking status
@@ -117,7 +125,7 @@
 	case I forget and accidentally use my notes to start a fire
 	in the woodstove.
 	
-	* src/orca/orca_prefs.py: fix for bug 338039 to prevent 
+	* src/orca/orca_prefs.py: fix for bug 388039 to prevent 
 	stack trace when running orca -t.
 	
 2006-12-19  Willie Walker <william.walker@sun.com>
