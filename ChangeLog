@@ -1,4 +1,9 @@
-2007-01-03  Willie Walker <william.walker@sun.com>
+2007-01-04  Willie Walker <william.walker@sun.com>
+
+	* src/orca/braille.py: get cursor routing keys working again 
+	(needed to 'OR' in brlapi.KEY_TYPE_CMD for the key ranges).
+
+2007-01-04  Willie Walker <william.walker@sun.com>
 
 	* src/orca/braille.py: update to use BrlAPI 0.5.0 Python bindings
 	that have changed since December 18th.  NOTE: there is a problem

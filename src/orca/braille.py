@@ -899,7 +899,6 @@ def _brlAPIKeyReader():
         """
         key = brlAPI.readKey(False)
         if key:
-            print "HERE", key
             flags = key >> 32
             lower = key & 0xFFFFFFFF
             keyType = lower >> 29
@@ -936,8 +935,9 @@ def setupKeyRanges(keys):
 
     # Next, enable cursor routing keys.
     #
-    brlAPI.acceptKeyRange(brlapi.KEY_CMD_ROUTE,
-                          brlapi.KEY_CMD_ROUTE | brlapi.KEY_CMD_ARG_MASK)
+    brlAPI.acceptKeyRange(brlapi.KEY_TYPE_CMD | brlapi.KEY_CMD_ROUTE,
+                          brlapi.KEY_TYPE_CMD \
+                          | brlapi.KEY_CMD_ROUTE | brlapi.KEY_CMD_ARG_MASK)
 
     # Finally, enable the commands we care about.
     #
