@@ -6,6 +6,10 @@
           StarOffice.py script will now speak the text attribute 
           "left-margin:" if it's different from the norm (0).
 
+        * src/orca/scripts/StarOffice.py:
+          Later that same day...
+          Added "right-margin:" to the list of text attributes to check.
+
 2007-01-04  Joanmarie Diggs <via william.walker@sun.com>
 
 	* Add script for acroread. (NOTE from Will: This work was done
