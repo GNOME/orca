@@ -29,6 +29,7 @@ DOC_FILES = \
 	orca.orca \
 	orca.orca_console_prefs \
 	orca.orca_glade \
+	orca.orca_gui_find \
 	orca.orca_gui_main \
 	orca.orca_gui_prefs \
 	orca.orca_i18n \
@@ -48,7 +49,9 @@ DOC_FILES = \
 	orca.speechgenerator \
 	orca.speechserver \
 	orca.util \
+	orca.where_am_I \
 	orca.scripts \
+	orca.scripts.acroread \
 	orca.scripts.Evolution \
 	orca.scripts.gaim \
 	orca.scripts.gcalctool \
@@ -59,6 +62,7 @@ DOC_FILES = \
 	orca.scripts.gnome-search-tool \
 	orca.scripts.gnome-terminal \
 	orca.scripts.gnome-window-properties \
+	orca.scripts.liferea \
 	orca.scripts.metacity \
 	orca.scripts.Mozilla \
 	orca.scripts.planner \

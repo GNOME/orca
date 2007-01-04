@@ -2,6 +2,7 @@ orca_pathdir=$(pyexecdir)
 
 orca_python_PYTHON = \
 	__init__.py \
+	acroread.py \
 	Evolution.py \
 	gaim.py \
 	gcalctool.py \

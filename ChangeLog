@@ -1,3 +1,9 @@
+2007-01-04  Joanmarie Diggs <via william.walker@sun.com>
+
+	* Add script for acroread. (NOTE from Will: This work was done
+	Joanmarie's vacation.  Amazing and many thanks for your
+	dedication!).
+	
 2007-01-04  Willie Walker <william.walker@sun.com>
 
 	* src/orca/braille.py: get cursor routing keys working again 
