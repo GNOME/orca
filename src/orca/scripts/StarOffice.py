@@ -620,6 +620,12 @@ class Script(default.Script):
         #
         self.currentParagraph = None
 
+        # The default set of text attributes to speak to the user. The
+        # only difference over the default set in settings.py is to use
+        # "left-margin:" instead of "indent:" to get the level of text
+        # indentation.
+
+        settings.enabledTextAttributes = "size:; family-name:; weight:400; indent:0; left-margin:0; underline:none; strikethrough:false; justification:left; style:normal;"
 
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.

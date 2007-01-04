@@ -1,3 +1,11 @@
+2007-01-04  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/StarOffice.py:
+          Workaround for the problem reported in bug #376517 – Orca does 
+          not report indentation in OOo Writer documents correctly. The
+          StarOffice.py script will now speak the text attribute 
+          "left-margin:" if it's different from the norm (0).
+
 2007-01-04  Joanmarie Diggs <via william.walker@sun.com>
 
 	* Add script for acroread. (NOTE from Will: This work was done
