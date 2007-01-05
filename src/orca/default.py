@@ -2572,6 +2572,8 @@ class Script(script.Script):
                     #
                     if key == "weight" and int(attribute) > 400:
                         line = _("bold")
+                    elif key == "left-margin" or key == "right-margin":
+                        line = key + " " + attribute + _(" pixels")
                     else:
                         line = key + " " + attribute
                     speech.speak(line)

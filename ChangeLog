@@ -4,6 +4,12 @@
           Fixed bug #393074 – Repeated characters are not correctly read.
           (Thanks to community member Juan Ramon Jimenez for this fix).
 
+        * src/orca/default.py:
+          Further work on bug #376517 – Orca does not report indentation 
+          in OOo Writer documents correctly. It will now speak the unit 
+          of measure (pixels) after the left-margin and/or right-margin 
+          text attributes, if they differ from the norm.
+
 2007-01-05  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py: use util.EMBEDDED_OBJECT_CHARACTER rather
