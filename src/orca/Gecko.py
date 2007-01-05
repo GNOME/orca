@@ -50,21 +50,6 @@ from orca_i18n import _
 #
 controlCaretNavigation = False
 
-# An embedded object character used to indicate that an object is
-# embedded in a string.
-#
-# DETAIL: If an object presents text, it implements the accessible
-# text interface.  If an object has children that also present
-# information, then the accessible text for the object contains one
-# EMBEDDED_OBJECT_CHARACTER for each child, where the
-# EMBEDDED_OBJECT_CHARACTER represents the position of the child's
-# text in the object and the order of the EMBEDDED_OBJECT_CHARACTERs
-# represent the order of the children (i.e., the first
-# EMBEDDED_OBJECT_CHARACTER represents child 0, the next
-# EMBEDDED_OBJECT_CHARACTER represents child 1, and so on.)
-#
-EMBEDDED_OBJECT_CHARACTER = u'\ufffc'
-
 # Roles that imply their text starts on a new line.
 #
 NEWLINE_ROLES = [rolenames.ROLE_PARAGRAPH,
@@ -1540,7 +1525,7 @@ class Script(default.Script):
                 text = self.getUnicodeText(obj.parent)
                 if text:
                     for offset in range(0, len(text)):
-                        if text[offset] == EMBEDDED_OBJECT_CHARACTER:
+                        if text[offset] == util.EMBEDDED_OBJECT_CHARACTER:
                             if index == obj.index:
                                 obj.characterOffsetInParent = offset
                                 break
@@ -1580,10 +1565,12 @@ class Script(default.Script):
             obj.childrenIndices[characterOffset] = -1
             unicodeText = self.getUnicodeText(obj)
             if unicodeText \
-               and (unicodeText[characterOffset] == EMBEDDED_OBJECT_CHARACTER):
+               and (unicodeText[characterOffset] \
+                    == util.EMBEDDED_OBJECT_CHARACTER):
                 index = -1
                 for character in range(0, characterOffset + 1):
-                    if unicodeText[character] == EMBEDDED_OBJECT_CHARACTER:
+                    if unicodeText[character] \
+                        == util.EMBEDDED_OBJECT_CHARACTER:
                         index += 1
                 obj.childrenIndices[characterOffset] = index
 
@@ -1772,7 +1759,7 @@ class Script(default.Script):
             character = self.getText(obj,
                                      characterOffset,
                                      characterOffset + 1).decode("UTF-8")
-            if character == EMBEDDED_OBJECT_CHARACTER:
+            if character == util.EMBEDDED_OBJECT_CHARACTER:
                 try:
                     childIndex = self.getChildIndex(obj, characterOffset)
                     return self.findFirstCaretContext(obj.child(childIndex), 0)
@@ -1821,7 +1808,7 @@ class Script(default.Script):
             unicodeText = self.getUnicodeText(obj)
             nextOffset = startOffset + 1
             if nextOffset < len(unicodeText):
-                if unicodeText[nextOffset] != EMBEDDED_OBJECT_CHARACTER:
+                if unicodeText[nextOffset] != util.EMBEDDED_OBJECT_CHARACTER:
                     return [obj, nextOffset]
                 elif obj.childCount:
                     return self.findNextCaretInOrder(
@@ -1893,7 +1880,8 @@ class Script(default.Script):
                 startOffset = len(unicodeText)
             previousOffset = startOffset - 1
             if previousOffset >= 0:
-                if unicodeText[previousOffset] != EMBEDDED_OBJECT_CHARACTER:
+                if unicodeText[previousOffset] \
+                    != util.EMBEDDED_OBJECT_CHARACTER:
                     return [obj, previousOffset]
                 else:
                     return self.findPreviousCaretInOrder(
@@ -2179,7 +2167,7 @@ class Script(default.Script):
         contents = []
         text = self.getUnicodeText(obj)
         for offset in range(characterOffset, len(text)):
-            if text[offset] == EMBEDDED_OBJECT_CHARACTER:
+            if text[offset] == util.EMBEDDED_OBJECT_CHARACTER:
                 contents.extend(self.getObjectContentsAtOffset(
                     obj.child(self.getChildIndex(obj, offset)),
                     0))
@@ -2237,8 +2225,9 @@ class Script(default.Script):
 
             if obj.text:
                 strings = [self.getText(obj, startOffset, endOffset)]
-                strings.extend(\
-                    self.speechGenerator._getSpeechForObjectRole(obj))
+                if obj.role != rolenames.ROLE_DOCUMENT_FRAME:
+                    strings.extend(\
+                        self.speechGenerator._getSpeechForObjectRole(obj))
             else:
                 strings = self.speechGenerator.getSpeech(obj, False)
 

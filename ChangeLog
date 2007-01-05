@@ -1,3 +1,11 @@
+2007-01-05  Willie Walker <william.walker@sun.com>
+
+	* src/orca/Gecko.py: use util.EMBEDDED_OBJECT_CHARACTER rather
+	than making an identical local constant for it.  Also remove
+	an annoying "html content" that is spoken when you navigate 
+	around some pages (this involved checking for ROLE_DOCUMENT_FRAME
+	in getUtterancesFromContents).
+
 2007-01-04  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:
