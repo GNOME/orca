@@ -337,6 +337,8 @@ def getDisplayedText(obj):
     # The accessible text of an object is used to represent what is
     # drawn on the screen.
     #
+    print "getDisplayedText: obj.text: ", obj.text
+    print "getDisplayedText: obj.name: ", obj.name
     if obj.text:
         displayedText = obj.text.getText(0, -1)
 
@@ -383,6 +385,8 @@ def getRealActiveDescendant(obj):
     # comment is here to remind us this is being done in poor taste
     # and we need to eventually clean up our act.]]]
     #
+    print "getRealActiveDescendant: role: ", obj.role
+    print "getRealActiveDescendant: childCount: ", obj.childCount
     if obj and obj.childCount:
         return obj.child(obj.childCount - 1)
     else:
@@ -601,6 +605,8 @@ def _addRepeatSegment(segment, line, respectPunctuation=True):
            or (isPunctChar and (style <= level)):
             repeatChar = chnames.getCharacterName(segment[0])
             line += _(" %d %s characters ") % (count, repeatChar)
+        else:
+            line += segment
     else:
         line += segment
 
