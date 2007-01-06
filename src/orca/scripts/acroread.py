@@ -295,14 +295,26 @@ class Script(default.Script):
         global currentInputEvent
         currentInputEvent = None
 
-        if not findToolbarActive and \
-           (event.source.role == rolenames.ROLE_TEXT and \
-           (event.source.parent.role == rolenames.ROLE_DRAWING_AREA or \
-            event.source.parent.role == rolenames.ROLE_UNKNOWN)):
-            # We're going to get at least one (and likely several) caret-moved
-            # events which will cause this to get spoken, so skip it for now.
-            #
+        # We get two focused events when check boxes, radio buttons, and
+        # push buttons in the Search panel gain focus.  In the first event,
+        # the item has focus but its state does not reflect that.  Ignore
+        # that event.
+        #
+        if (event.source.role == rolenames.ROLE_CHECK_BOX or \
+            event.source.role == rolenames.ROLE_PUSH_BUTTON or \
+            event.source.role == rolenames.ROLE_RADIO_BUTTON) and \
+           not event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
             return
+
+        if not findToolbarActive and event.source.role == rolenames.ROLE_TEXT:
+            if event.source.parent and \
+               (event.source.parent.role == rolenames.ROLE_DRAWING_AREA or \
+                event.source.parent.role == rolenames.ROLE_UNKNOWN):
+                # We're going to get at least one (and likely several)
+                # caret-moved events which will cause this to get spoken, 
+                # so skip it for now.
+                #
+                return
 
         if event.source.role == rolenames.ROLE_DRAWING_AREA:
             # A drawing area can claim focus when visually what has focus is
@@ -456,6 +468,41 @@ class Script(default.Script):
         currentInputEvent = orca_state.lastInputEvent
         self.checkForTableBoundary(orca_state.locusOfFocus, event.source)
         default.Script.onCaretMoved(self, event)
+
+    def onStateChanged(self, event):
+        """Called whenever an object's state changes.
+
+        Arguments:
+        - event: the Event
+        """
+
+        if event.type == "object:state-changed:checked" and \
+           event.source.role == rolenames.ROLE_RADIO_BUTTON:
+            # Radio buttons in the Search panel are not automatically
+            # selected when you arrow to them.  You have to press Space
+            # to select the current radio button.  Watch for this.
+            #
+            orca.visualAppearanceChanged(event, event.source)
+            return
+
+        elif event.type == "object:state-changed:focused" and \
+             event.source.role == rolenames.ROLE_PUSH_BUTTON:
+            if event.detail1 == 1:
+                # In the Search panel, we get state-changed:focused events
+                # when a push button gains focus.  We just want to speak
+                # the button info; not the information related to the
+                # drawing area in which it is contained.
+                #
+                utterances = \
+                     self.speechGenerator.getSpeech(event.source, False)
+                speech.speakUtterances(utterances)
+                brailleRegions = \
+                     self.brailleGenerator.getBrailleRegions(event.source)
+                braille.displayRegions(brailleRegions)
+                orca.setLocusOfFocus(event, event.source, False)
+                return
+
+        default.Script.onStateChanged(self, event)
 
     def onWindowActivated(self, event):
         """Called whenever a toplevel window is activated. Overridden
