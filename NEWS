@@ -1,3 +1,69 @@
+2.17.5 - 07-Jan-2007
+
+* Brand new script for Adobe Acrobat Reader from Joanie Diggs (Thanks
+  Joanie!!!).  NOTE:  there are still some accessibility issues to
+  be worked out with the team at Adobe, but this script helps provide
+  some level of access to PDF documents via Reader.
+
+* Much more work on Gecko.py script for Firefox 3.0.  There's still
+  much more work to do in the Firefox 3.0 internals as well as the
+  Gecko.py script.  We're still working feverishly on it.
+	
+* Adjusted bleeding edge Orca code to work with bleeding edge BrlAPI
+  code.  We expect there to be one more change in BrlAPI 0.5.0 before
+  it stabilizes, but it wasn't ready at the time of this release.
+  
+* Work on bug 350233 (actually an RFE): New script for the Liferea
+  application from community member Francisco Javier Dorado Martínez
+  (thanks Javier!!!).
+
+* Work on bug 376517: Orca now speaks the unit of measure (pixels)
+  after the left-margin and/or right-margin text attributes if they
+  differ from the norm.
+
+* Work on bug 347124: Added feature to allow user to tell gksu to 
+  disable keyboard grabs.  This is just one of the several pieces
+  of the puzzle to help prevent hangs when launching sysadmin apps
+  from the desktop of a non-root user.
+
+* Fix for bug 393074: Repeated characters are now correctly read.
+  (Thanks to Juan Ramon Jimenez for this fix!!!).
+
+* Fix for bug 362546: Fixed problem speaking status bar contents
+  (Insert+KP_Enter) when the status bar is a single component (e.g.,
+  text field), rather than a container with multiple
+  sub-components.
+
+* Moved the keyboard layout to the first tab in the preferences
+  dialog.
+	
+* Fix for bug 388620: Fixed wording of "not not" string.
+
+* Fix for bug 388317: Prevent crash in Adobe Acrobat Reader (thanks
+  Joanie!!!).
+
+* Fix for bug 387556: Make arrowing to end of line in OOo consistent
+  with what happens in gedit (thanks Joanie!!!).
+	
+* Fix for bug 388039: prevent stack trace when running orca -t.
+
+* Fix for bug 386267: In Evolution, Orca now speaks/brailles the
+  unread status instead of the read status in the message summary
+  list.
+	
+* Fix for bug 382890: Extended dynamic row and column header support
+  to OOo Writer tables (thank Joanie!!!).
+
+* New and updated translations (THANKS EVERYONE!!!):
+
+    ar      Arabic               Djihed Afifi
+    en_GB   English/British      David Lodge
+    es	    Spanish	         Francisco Javier F. Serrador
+    nb      Norwegian Bokmål     Kjartan Maraas
+    sv      Swedish              Daniel Nylander
+
+==========
+
 2.17.4 - 17-Dec-2006
 
 * Added new support to edit your key bindings from the Orca

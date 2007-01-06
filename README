@@ -1,4 +1,4 @@
-Orca v2.17.4
+Orca v2.17.5
 
 Introduction
 ========================================================================
@@ -8,8 +8,7 @@ that provides access to the graphical desktop via user-customizable
 combinations of speech, braille, and/or magnification.  Under
 development by the Sun Microsystems, Inc., Accessibility Program
 Office since 2004, Orca has been created with early input from and
-continued engagement with its end users.  In fact, the user interface
-designer for Orca is also a user.
+continued engagement with its end users.
 
 Orca works with applications and toolkits that support the assistive
 technology service provider interface (AT-SPI), which is the primary
@@ -19,7 +18,7 @@ AT-SPI include the GNOME GTK+ toolkit, the Java platform's Swing
 toolkit, OpenOffice, and Mozilla.  AT-SPI support for the KDE Qt
 toolkit is currently being pursued.
 
-The focus for Orca v2.17.4 has been to provide usable access to key
+The focus for Orca v2.17.5 has been to provide usable access to key
 office productivity applications, including the following:
 
 Application Class        Application
@@ -50,9 +49,7 @@ frame):
 
 * PDF Document Accessibility: the Orca team is working with Adobe to
   identify and fix accessibility issues with the Adobe Acrobat Reader
-  and we expect to see these issues resolved soon.  Orca should "just
-  work" with the fixed Adobe Acrobat Reader, but we will release a new
-  version of Orca if changes are necessary.
+  and we expect to see these issues resolved soon.  
 
 * Presentation Content: the Orca team focused on what our users
   specified as the most important content for OpenOffice and

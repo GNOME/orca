@@ -46,8 +46,10 @@ orca
 TAG THE RELEASE:
 ---------------
 
-cvs commit
-cvs tag ORCA_0_2_5
+#cvs commit
+#cvs tag ORCA_0_2_5
+
+svn cp . svn+ssh://wwalker@svn.gnome.org/svn/orca/tags/ORCA_0_2_5 
 
 
 UPLOAD THE RELEASE:
