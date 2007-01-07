@@ -1,3 +1,8 @@
+2007-01-07  Bart Bunting <via william.walker@sun.com>
+
+	* src/orca/outloud.py: provide more voices and also prevent
+	crash when running with ViaVoice.
+	
 2007-01-07  Joanmarie Diggs <via william.walker@sun.com>
 
 	* src/orca/scripts/acroread.py: address more chattiness and

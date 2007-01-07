@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2006 Google Inc.
+# Copyright 2005-2007 Google Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -84,6 +84,13 @@ _male_ap = [
 _update_map(_table, ('male', 'average-pitch'),
             " `vb%s `vh%s ",  _male_ap)
 
+# same for Paul Frank
+_update_map(_table, ('paul', 'average-pitch'),
+            " `vb%s `vh%s ",  _male_ap)
+_update_map(_table, ('frank', 'average-pitch'),
+            " `vb%s `vh%s ",  _male_ap)
+
+
 #Harry  has a big head --and a lower pitch for the middle setting
 _man_ap = [
     (0, 0, 90),
@@ -100,6 +107,12 @@ _man_ap = [
 
 _update_map(_table,('man', 'average-pitch'),
             " `vb%s `vh% s",_man_ap)
+# same for Harry and dennis
+_update_map(_table,('harry', 'average-pitch'),
+            " `vb%s `vh% s",_man_ap)
+_update_map(_table, ('dennis', 'average-pitch'),
+            " `vb%s `vh%s ",  _male_ap)
+
 #defalt baseline is average pitch of 81
 
 _female_ap = [
@@ -117,6 +130,38 @@ _female_ap = [
 
 _update_map(_table, ('female', 'average-pitch'),
             " `vb%s `vh% s",_female_ap)
+
+# same for Betty
+_update_map(_table, ('betty', 'average-pitch'),
+            " `vb%s `vh% s",_female_ap)
+
+_update_map(_table, ('ursula', 'average-pitch'),
+            " `vb%s `vh% s",_female_ap)
+_update_map(_table, ('rita', 'average-pitch'),
+            " `vb%s `vh% s",_female_ap)
+_update_map(_table, ('wendy', 'average-pitch'),
+            " `vb%s `vh% s",_female_ap)
+
+#defalt baseline is average pitch of 81
+
+_child_ap = [
+    (0, 60, 33),
+    (1, 65, 29),
+    (2, 70, 26),
+    (3, 75, 23),
+    (4, 80, 20, ),
+    (5, 85, 17),
+    (6, 90, 14),
+    (7, 95, 11),
+    (8, 97, 8),
+    (9, 99, 5)
+    ]
+
+_update_map(_table, ('kit', 'average-pitch'),
+            " `vb%s `vh% s",_female_ap)
+_update_map(_table, ('child', 'average-pitch'),
+            " `vb%s `vh% s",_female_ap)
+
 
 # pitch-range for male:
 
@@ -141,6 +186,15 @@ _male_pr = [
 _update_map(_table, ('male', 'pitch-range'),
             " `vf%s  ", _male_pr)
 
+# same for paul frank and dennis
+_update_map(_table, ('paul', 'pitch-range'),
+            " `vf%s  ", _male_pr)
+_update_map(_table, ('frank', 'pitch-range'),
+            " `vf%s  ", _male_pr)
+_update_map(_table, ('dennis', 'pitch-range'),
+            " `vf%s  ", _male_pr)
+
+
 _man_pr = [
     (0, 0, ),
     (1, 5, ),
@@ -156,6 +210,10 @@ _man_pr = [
 
 _update_map(_table, ('man', 'pitch-range'),
             " `vf%s  ", _man_pr)
+# same for Harry
+_update_map(_table, ('harry', 'pitch-range'),
+            " `vf%s  ", _man_pr)
+
 
 _female_pr = [
     (0, 0, ),
@@ -172,6 +230,35 @@ _female_pr = [
 
 _update_map(_table, ('female', 'pitch-range'),
             " `vf%s  ", _female_pr)
+# same for Betty
+_update_map(_table, ('betty', 'pitch-range'),
+            " `vf%s  ", _female_pr)
+_update_map(_table, ('ursula', 'pitch-range'),
+            " `vf%s  ", _female_pr)
+_update_map(_table, ('rita', 'pitch-range'),
+            " `vf%s  ", _female_pr)
+_update_map(_table, ('wendy', 'pitch-range'),
+            " `vf%s  ", _female_pr)
+
+
+_child_pr = [
+    (0, 0, ),
+    (1, 5, ),
+    (2, 15),
+    (3, 20),
+    (4, 25, ),
+    (5, 30, ),
+    (6, 47),
+    (7, 64),
+    (8, 81),
+    (9, 100)
+    ]
+
+_update_map(_table, ('kit', 'pitch-range'),
+            " `vf%s  ", _child_pr)
+_update_map(_table, ('child', 'pitch-range'),
+            " `vf%s  ", _child_pr)
+
 
 # Stress:
 # On the outloud we map stress to roughness
@@ -189,15 +276,33 @@ _male_stress =[
     (9, 45)
     ]
 
+
+# same stress values work for other voices
 _update_map(_table, ('male', 'stress'),
             " `vr%s  ", _male_stress)
-
-#Same stress values work for female and man:
-
+_update_map(_table, ('paul', 'stress'),
+            " `vr%s  ", _male_stress)
+_update_map(_table, ('frank', 'stress'),
+            " `vr%s  ", _male_stress)
+_update_map(_table, ('dennis', 'stress'),
+            " `vr%s  ", _male_stress)
 _update_map(_table, ('man', 'stress'),
             " `vr%s  ", _male_stress)
-
+_update_map(_table, ('harry', 'stress'),
+            " `vr%s  ", _male_stress)
 _update_map(_table, ('female', 'stress'),
+            " `vr%s  ", _male_stress)
+_update_map(_table, ('betty', 'stress'),
+            " `vr%s  ", _male_stress)
+_update_map(_table, ('ursula', 'stress'),
+            " `vr%s  ", _male_stress)
+_update_map(_table, ('rita', 'stress'),
+            " `vr%s  ", _male_stress)
+_update_map(_table, ('wendy', 'stress'),
+            " `vr%s  ", _male_stress)
+_update_map(_table, ('kit', 'stress'),
+            " `vr%s  ", _male_stress)
+_update_map(_table, ('child', 'stress'),
             " `vr%s  ", _male_stress)
 
 #richness
@@ -219,15 +324,32 @@ _male_richness = [
     (9, 36, 100)
     ]
 
+#same settings work for other voices
 _update_map(_table, ('male', 'richness'),
             " `vy%s  `vv%s " ,_male_richness)
-
-#same settings work for man and female:
-
+_update_map(_table, ('paul', 'richness'),
+            " `vy%s  `vv%s " ,_male_richness)
+_update_map(_table, ('frank', 'richness'),
+            " `vy%s  `vv%s " ,_male_richness)
+_update_map(_table, ('dennis', 'richness'),
+            " `vy%s  `vv%s " ,_male_richness)
 _update_map(_table, ('man', 'richness'),
+            " `vy%s  `vv%s " ,_male_richness)
+_update_map(_table, ('harry', 'richness'),
             " `vy%s  `vv%s " , _male_richness)
-
 _update_map(_table, ('female', 'richness'),
+            " `vy%s  `vv%s ", _male_richness)
+_update_map(_table, ('betty', 'richness'),
+            " `vy%s  `vv%s ", _male_richness)
+_update_map(_table, ('ursula', 'richness'),
+            " `vy%s  `vv%s ", _male_richness)
+_update_map(_table, ('rita', 'richness'),
+            " `vy%s  `vv%s ", _male_richness)
+_update_map(_table, ('wendy', 'richness'),
+            " `vy%s  `vv%s ", _male_richness)
+_update_map(_table, ('kit', 'richness'),
+            " `vy%s  `vv%s ", _male_richness)
+_update_map(_table, ('child', 'richness'),
             " `vy%s  `vv%s ", _male_richness)
 
 # getrate is here for symmetry with other engines:
