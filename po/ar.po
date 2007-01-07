@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.gnome-2-16\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-24 13:03+0000\n"
-"PO-Revision-Date: 2006-12-21 00:36+0100\n"
+"POT-Creation-Date: 2007-01-02 03:05+0000\n"
+"PO-Revision-Date: 2007-01-07 12:14+0100\n"
 "Last-Translator: Djihed Afifi <djihed@gmail.com>\n"
 "Language-Team: Arabic <doc@arabeyes.org>\n"
 "MIME-Version: 1.0\n"
@@ -403,6 +403,10 @@ msgstr "خلية"
 #: ../src/orca/default.py:2281
 msgid "Entering learn mode.  Press any key to hear its function. "
 msgstr "الدخول إلى نمط التعلم. اضغط أي زر لسماع وظيفته."
+
+#: ../src/orca/default.py:2282
+msgid "To exit learn mode, press the escape key."
+msgstr "للخروج من نسق التعلم اضغط  ESC."
 
 #: ../src/orca/default.py:2283
 msgid "Learn mode.  Press escape to exit."
