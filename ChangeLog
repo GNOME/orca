@@ -1,3 +1,9 @@
+2007-01-07  Willie Walker <william.walker@sun.com>
+
+	* svn+ssh://wwalker@svn.gnome.org/svn/orca/tags/ORCA_2_17_5:
+	final prep for v2.17.5.  Everything below this line is included
+	in v2.17.5 - many many thanks to all involved.
+	
 2007-01-07  Bart Bunting <via william.walker@sun.com>
 
 	* src/orca/outloud.py: provide more voices and also prevent
