@@ -55,6 +55,7 @@ lastCaretMovedLine = None
 # toolbar is active.
 #
 findToolbarActive = False
+findToolbarName = None
 preFindLine = None
 
 def getDocument(locusOfFocus):
@@ -180,6 +181,39 @@ def getCellCoordinates(table, cell):
 
     return [row, column]
 
+def isInFindToolbar(obj):
+    """Examines the current object to identify if it is in the Find
+    tool bar.  If so, it also sets findToolbarName so that we can
+    identify this frame by name independent of localization.
+
+    Arguments:
+    - obj: an Accessible
+
+    Returns True if the object is in the Find tool bar.
+    """
+
+    global findToolbarName
+
+    inFindToolbar = False
+    rolesList = [rolenames.ROLE_DRAWING_AREA, \
+                 rolenames.ROLE_DRAWING_AREA, \
+                 rolenames.ROLE_DRAWING_AREA, \
+                 rolenames.ROLE_TOOL_BAR, \
+                 rolenames.ROLE_PANEL, \
+                 rolenames.ROLE_PANEL, \
+                 rolenames.ROLE_FRAME]
+
+    try:
+        while obj.role != rolenames.ROLE_DRAWING_AREA:
+            obj = obj.parent
+        if util.isDesiredFocusedItem(obj, rolesList):
+            inFindToolbar = True
+            findToolbarName = util.getFrame(obj).name
+    except:
+        pass
+
+    return inFindToolbar
+
 ########################################################################
 #                                                                      #
 # The acroread script class.                                           #
@@ -295,15 +329,16 @@ class Script(default.Script):
         global currentInputEvent
         currentInputEvent = None
 
-        # We get two focused events when check boxes, radio buttons, and
-        # push buttons in the Search panel gain focus.  In the first event,
-        # the item has focus but its state does not reflect that.  Ignore
-        # that event.
+        # We sometimes get focus events for items that don't --
+        # or don't yet) have focus.  Ignore these.
         #
         if (event.source.role == rolenames.ROLE_CHECK_BOX or \
             event.source.role == rolenames.ROLE_PUSH_BUTTON or \
             event.source.role == rolenames.ROLE_RADIO_BUTTON) and \
            not event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
+            return
+
+        if not event.source.state.count(atspi.Accessibility.STATE_SHOWING):
             return
 
         if not findToolbarActive and event.source.role == rolenames.ROLE_TEXT:
@@ -373,15 +408,8 @@ class Script(default.Script):
                 if newText == preFindLine:
                     orca.setLocusOfFocus(event, oldLocusOfFocus, False)
                     return
-            elif newLocusOfFocus.role == rolenames.ROLE_DRAWING_AREA or \
-                  (newLocusOfFocus.role == rolenames.ROLE_PUSH_BUTTON and \
-                   newLocusOfFocus.name == "Stop"):
+            if newLocusOfFocus.role == rolenames.ROLE_DRAWING_AREA:
                 orca.setLocusOfFocus(event, oldLocusOfFocus, False)
-                return
-            elif oldLocusOfFocus and \
-                 oldLocusOfFocus.role == rolenames.ROLE_FRAME and \
-                 newLocusOfFocus.role == rolenames.ROLE_TEXT:
-                orca.setLocusOfFocus(event, newLocusOfFocus, False)
                 return
 
             utterances = \
@@ -391,6 +419,13 @@ class Script(default.Script):
                  self.brailleGenerator.getBrailleRegions(newLocusOfFocus)
             braille.displayRegions(brailleRegions)
             orca.setLocusOfFocus(event, newLocusOfFocus, False)
+            return
+
+        # Eliminate unnecessary chattiness in the Search panel.
+        #
+        if newLocusOfFocus.role == rolenames.ROLE_PUSH_BUTTON and \
+           oldLocusOfFocus and oldLocusOfFocus.role == self.ROLE_LINK and \
+           newLocusOfFocus.name == oldLocusOfFocus.name:
             return
 
         # Eliminate general document chattiness.
@@ -464,7 +499,7 @@ class Script(default.Script):
 
         # [[[TODO: JD - Sometimes it's showing AND we didn't just leave
         # it. This also seems to occur sometimes with the Find toolbar.]]]
-
+        
         currentInputEvent = orca_state.lastInputEvent
         self.checkForTableBoundary(orca_state.locusOfFocus, event.source)
         default.Script.onCaretMoved(self, event)
@@ -476,6 +511,8 @@ class Script(default.Script):
         - event: the Event
         """
 
+        global findToolbarActive
+
         if event.type == "object:state-changed:checked" and \
            event.source.role == rolenames.ROLE_RADIO_BUTTON:
             # Radio buttons in the Search panel are not automatically
@@ -486,12 +523,9 @@ class Script(default.Script):
             return
 
         elif event.type == "object:state-changed:focused" and \
-             event.source.role == rolenames.ROLE_PUSH_BUTTON:
-            if event.detail1 == 1:
-                # In the Search panel, we get state-changed:focused events
-                # when a push button gains focus.  We just want to speak
-                # the button info; not the information related to the
-                # drawing area in which it is contained.
+             event.detail1 == 1:
+            if event.source.role == rolenames.ROLE_PUSH_BUTTON:
+                # Try to minimize chattiness in the Search panel
                 #
                 utterances = \
                      self.speechGenerator.getSpeech(event.source, False)
@@ -502,23 +536,14 @@ class Script(default.Script):
                 orca.setLocusOfFocus(event, event.source, False)
                 return
 
+            elif event.source.role == rolenames.ROLE_TEXT:
+                # There's an excellent chance that the Find toolbar just
+                # gained focus.  Check.
+                #
+                if isInFindToolbar(event.source):
+                    findToolbarActive = True
+
         default.Script.onStateChanged(self, event)
-
-    def onWindowActivated(self, event):
-        """Called whenever a toplevel window is activated. Overridden
-        in this script to deal with significant chattiness surrounding
-        the use of the Find toolbar.
-
-        Arguments:
-        - event: the Event
-        """
-
-        global findToolbarActive
-
-        if event.source.name == "Find":
-            findToolbarActive = True
-
-        default.Script.onWindowActivated(self, event)
 
     def onWindowDeactivated(self, event):
         """Called whenever a toplevel window is deactivated. Overridden
@@ -528,10 +553,11 @@ class Script(default.Script):
         Arguments:
         - event: the Event
         """
+
         global findToolbarActive, preFindLine
         locusOfFocus = orca_state.locusOfFocus
 
-        if event.source.name == "Find":
+        if event.source.name == findToolbarName:
             findToolbarActive = False
         elif locusOfFocus.text:
             preFindLine = util.getTextLineAtCaret(locusOfFocus)
