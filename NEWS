@@ -8,7 +8,10 @@
 * Much more work on Gecko.py script for Firefox 3.0.  There's still
   much more work to do in the Firefox 3.0 internals as well as the
   Gecko.py script.  We're still working feverishly on it.
-	
+
+* Update to outloud.py to add more voices and prevent crash when 
+  ViaVoice is used (thanks to community member Bart Bunting!!!)
+
 * Adjusted bleeding edge Orca code to work with bleeding edge BrlAPI
   code.  We expect there to be one more change in BrlAPI 0.5.0 before
   it stabilizes, but it wasn't ready at the time of this release.
