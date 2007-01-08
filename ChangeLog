@@ -1,3 +1,8 @@
+2007-01-08  Willie Walker <william.walker@sun.com>
+
+	* bugs/bugs.html: add Gecko bug 366340 regarding incorrect 
+	value of SHOWING state on hidden list items.
+	
 2007-01-07  Willie Walker <william.walker@sun.com>
 
 	* svn+ssh://wwalker@svn.gnome.org/svn/orca/tags/ORCA_2_17_5:
