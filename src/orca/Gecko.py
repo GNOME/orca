@@ -1488,7 +1488,9 @@ class Script(default.Script):
         obj = orca_state.locusOfFocus
         while obj:
             if obj.role == rolenames.ROLE_DOCUMENT_FRAME:
-                return True
+                # Don't use the structural navivation model if the
+                # user is editing the document.
+                return not obj.state.count(atspi.Accessibility.STATE_EDITABLE)
             elif obj.role in letThemDoItRoles:
                 return False
             else:
