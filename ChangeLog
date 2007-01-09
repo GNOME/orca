@@ -1,5 +1,11 @@
 2007-01-09  Willie Walker <william.walker@sun.com>
 
+	* src/orca/atspi.py: if we expect to find a child, but it doesn't
+	exist, make sure we raise it as a warning.  This is not good
+	behavior on part of the AT-SPI implementation and we need to make
+	sure we know about it so we can log a bug with the appropriate
+	AT-SPI implementation.
+	
 	* src/orca/util.py: in getDisplayedText, handle case where the
 	text is a single EMBEDDED_OBJECT_CHARACTER.  In these cases,
 	we'll defer to getDisplayedText on the child for the text.  The

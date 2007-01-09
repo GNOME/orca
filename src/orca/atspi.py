@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2006 Sun Microsystems Inc.
+# Copyright 2005-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -1371,7 +1371,12 @@ class Accessible:
                 newChild.app = self.app
 
         if not newChild:
-            debug.println(debug.LEVEL_FINEST,
+            # The problem with a child not existing is a bad one.
+            # We want to issue a warning and we also want to know
+            # where it happens.
+            #
+            debug.printStack(debug.LEVEL_WARNING)
+            debug.println(debug.LEVEL_WARNING,
                           "Child at index %d is not an Accessible" % index)
 
         return newChild
