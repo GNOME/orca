@@ -1,5 +1,10 @@
 2007-01-09  Willie Walker <william.walker@sun.com>
 
+	* src/orca/Gecko.py: some work on comboboxes inside HTML forms.
+	Note that the the combobox AT-SPI implement seems a bit broken,
+	so I could only take this so far (see my bugs.html entry from
+	this same day).
+	
 	* src/orca/atspi.py: if we expect to find a child, but it doesn't
 	exist, make sure we raise it as a warning.  This is not good
 	behavior on part of the AT-SPI implementation and we need to make

@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2006 Sun Microsystems Inc.
+# Copyright 2005-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -243,23 +243,43 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         # item that is selected.
         #
         label = util.getDisplayedLabel(obj)
-        menu = obj.child(0)
 
         focusedRegionIndex = 0
         if label and len(label):
             regions.append(braille.Region(label + " "))
             focusedRegionIndex = 1
 
-        if menu and menu.name:
-            regions.append(braille.Region(menu.name))
+        # But...of course combo boxes inside HTML forms are different.
+        # There's no need to make anything consistent anywhere because
+        # that would just make life uninteresting.  In HTML forms, the
+        # third child of a combo box is a list.  We'll cue off of that.
+        #
+        if obj.childCount >= 3:
+            listObject = obj.child(2)
+            if listObject and (listObject.role != rolenames.ROLE_LIST):
+                listObject = None
         else:
-            name = obj.name
-            if menu and menu.state.count(atspi.Accessibility.STATE_VISIBLE):
-                selection = menu.selection
-                if selection:
-                    item = selection.getSelectedChild(0)
-                    name = item.name
-            regions.append(braille.Region(name))
+            listObject = None
+
+        if listObject:
+            selection = listObject.selection
+            if selection:
+                item = selection.getSelectedChild(0)
+                name = item.name
+                regions.append(braille.Region(name))
+        else:
+            menu = obj.child(0)
+            if menu and menu.name:
+                regions.append(braille.Region(menu.name))
+            else:
+                name = obj.name
+                if menu \
+                    and menu.state.count(atspi.Accessibility.STATE_VISIBLE):
+                    selection = menu.selection
+                    if selection:
+                        item = selection.getSelectedChild(0)
+                        name = item.name
+                regions.append(braille.Region(name))
 
         if settings.brailleVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
             regions.append(braille.Region(
@@ -392,7 +412,6 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         # item that is selected.
         #
         label = util.getDisplayedLabel(obj)
-        menu = obj.child(0)
 
         if not already_focused and label:
             utterances.append(label)
@@ -400,16 +419,37 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         if not already_focused:
             utterances.extend(self._getSpeechForObjectRole(obj))
 
-        if menu and menu.name:
-            utterances.append(menu.name)
+        # But...of course combo boxes inside HTML forms are different.
+        # There's no need to make anything consistent anywhere because
+        # that would just make life uninteresting.  In HTML forms, the
+        # third child of a combo box is a list.  We'll cue off of that.
+        #
+        if obj.childCount >= 3:
+            listObject = obj.child(2)
+            if listObject and (listObject.role != rolenames.ROLE_LIST):
+                listObject = None
         else:
-            name = obj.name
-            if menu and menu.state.count(atspi.Accessibility.STATE_VISIBLE):
-                selection = menu.selection
-                if selection:
-                    item = selection.getSelectedChild(0)
-                    name = item.name
-            utterances.append(name)
+            listObject = None
+
+        if listObject:
+            selection = listObject.selection
+            if selection:
+                item = selection.getSelectedChild(0)
+                name = item.name
+                utterances.append(name)
+        else:
+            menu = obj.child(0)
+            if menu and menu.name:
+                utterances.append(menu.name)
+            else:
+                name = obj.name
+                if menu \
+                    and menu.state.count(atspi.Accessibility.STATE_VISIBLE):
+                    selection = menu.selection
+                    if selection:
+                        item = selection.getSelectedChild(0)
+                        name = item.name
+                utterances.append(name)
 
         utterances.extend(self._getSpeechForObjectAvailability(obj))
 
@@ -1452,7 +1492,7 @@ class Script(default.Script):
 
         weHandleIt = True
         obj = orca_state.locusOfFocus
-        if obj.role == rolenames.ROLE_ENTRY:
+        if obj and (obj.role == rolenames.ROLE_ENTRY):
             text        = obj.text
             length      = text.characterCount
             caretOffset = text.caretOffset
@@ -1471,6 +1511,20 @@ class Script(default.Script):
 
             if singleLine and not weHandleIt:
                 weHandleIt = keyboardEvent.event_string in ["Up", "Down"]
+        elif keyboardEvent.modifiers & (1 << atspi.Accessibility.MODIFIER_ALT):
+            # We won't handle keyboard events with Alt in them since
+            # they are for things like going back in history and
+            # opening and closing combo boxes.
+            #
+            weHandleIt = False
+        elif obj and (obj.role == rolenames.ROLE_LIST_ITEM):
+            list = obj.parent
+            if list and (list.role == rolenames.ROLE_LIST):
+                # We'll let Firefox handle the navigation of combo boxes.
+                #
+                combo = list.parent
+                if combo and (combo.role == rolenames.ROLE_COMBO_BOX):
+                    weHandleIt = False
 
         return weHandleIt
 
@@ -1676,7 +1730,7 @@ class Script(default.Script):
         """
         for i in range(0, obj.childCount):
             child = obj.child(i)
-            if child.role == rolenames.ROLE_ENTRY:
+            if child and (child.role == rolenames.ROLE_ENTRY):
                 return child
         return None
 
@@ -1727,7 +1781,7 @@ class Script(default.Script):
         """
         for i in range(0, obj.childCount):
             child = obj.child(i)
-            if child.role == rolenames.ROLE_CAPTION:
+            if child and (child.role == rolenames.ROLE_CAPTION):
                 return child
         return None
 
@@ -1813,11 +1867,12 @@ class Script(default.Script):
                 if unicodeText[nextOffset] != util.EMBEDDED_OBJECT_CHARACTER:
                     return [obj, nextOffset]
                 elif obj.childCount:
-                    return self.findNextCaretInOrder(
-                        obj.child(self.getChildIndex(obj, nextOffset)),
-                        -1,
-                        includeNonText)
-        elif obj.childCount:
+                    child = obj.child(self.getChildIndex(obj, nextOffset))
+                    if child:
+                        return self.findNextCaretInOrder(child,
+                                                         -1,
+                                                         includeNonText)
+        elif obj.childCount and obj.child(0):
             try:
                 return self.findNextCaretInOrder(obj.child(0),
                                                  -1,
@@ -1890,7 +1945,7 @@ class Script(default.Script):
                         obj.child(self.getChildIndex(obj, previousOffset)),
                         -1,
                         includeNonText)
-        elif obj.childCount:
+        elif obj.childCount and obj.child(obj.childCount - 1):
             try:
                 return self.findPreviousCaretInOrder(
                     obj.child(obj.childCount - 1),
