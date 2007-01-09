@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2006 Sun Microsystems Inc.
+# Copyright 2005-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -286,7 +286,7 @@ def __getDisplayedTextInComboBox(combo):
     textObj = None
     for i in range(0, combo.childCount):
         child = combo.child(i)
-        if child.role == rolenames.ROLE_TEXT:
+        if child and child.role == rolenames.ROLE_TEXT:
             textObj = child
 
     if textObj:
@@ -339,6 +339,23 @@ def getDisplayedText(obj):
     #
     if obj.text:
         displayedText = obj.text.getText(0, -1)
+
+        # [[[WDW - HACK to account for things such as Gecko that want
+        # to use the EMBEDDED_OBJECT_CHARACTER on a label to hold the
+        # object that has the real accessible text for the label.  We
+        # detect this by the specfic case where the text for the
+        # current object is a single EMBEDDED_OBJECT_CHARACTER.  In
+        # this case, we look to the child for the real text.]]]
+        #
+        unicodeText = displayedText.decode("UTF-8")
+        if unicodeText \
+           and (len(unicodeText) == 1) \
+           and (unicodeText[0] == EMBEDDED_OBJECT_CHARACTER) \
+           and (obj.role == rolenames.ROLE_LABEL):
+            try:
+                displayedText = getDisplayedText(obj.child(0))
+            except:
+                debug.printException(debug.LEVEL_WARNING)
 
     if (not displayedText) or (len(displayedText) == 0):
         displayedText = obj.name

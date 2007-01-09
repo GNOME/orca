@@ -1,5 +1,15 @@
 2007-01-09  Willie Walker <william.walker@sun.com>
 
+	* src/orca/util.py: in getDisplayedText, handle case where the
+	text is a single EMBEDDED_OBJECT_CHARACTER.  In these cases,
+	we'll defer to getDisplayedText on the child for the text.  The
+	main driver for this is the Gecko toolkit, and this is a fix
+	to handle the majority of the problems I've been seeing with
+	labels in Gecko.  At some point, we may need to provide a more
+	sophisticated algorithm to handle strings containing one or
+	more EMBEDDED_OBJECT_CHARACTERs, but we'll cross that bridge
+	when we get to it.
+	
 	* bugs/bugs.html: Add Firefox/Gecko bugs 366434 (crasher) and
 	366435 (combobox children disappearing from hierarchy when
 	activated from keyboard).
