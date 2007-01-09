@@ -1,3 +1,9 @@
+2007-01-09  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/gnomespeechfactory.py:
+          Fix for bug #392939 – "-" should be spoken when used as a 
+          negative sign at "some" punctuation.
+
 2007-01-09  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py: some work on comboboxes inside HTML forms.

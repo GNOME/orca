@@ -651,7 +651,26 @@ class SpeechServer(speechserver.SpeechServer):
                 #
                 isSpecial = isPrev and isNext and (oldText[i] == ".")
 
-                if (len(oldText) == 1) or isSpecial or (style <= level):
+                # If this is a dash and the users punctuation level is not 
+                # NONE and the previous character is a white space character,
+                # and the next character is a dollar sign or a digit, then 
+                # always speak it. See bug #392939.
+                #
+                prevCharMatches = nextCharMatches = False
+                currencySymbols = util.getUnicodeCurrencySymbols()
+                if i > 0:
+                    prevCharMatches = (oldText[i - 1] in string.whitespace)
+                if i < (len(oldText) - 1):
+                    nextCharMatches = (oldText[i + 1] in string.digits or \
+                                       oldText[i + 1] in currencySymbols)
+
+                if oldText[i] == "-" and \
+                   style != settings.PUNCTUATION_STYLE_NONE and \
+                   prevCharMatches and nextCharMatches:
+                    if isPrev:
+                        newText += " "
+                    newText += _("minus")
+                elif (len(oldText) == 1) or isSpecial or (style <= level):
                     if isPrev:
                         newText += " "
                     newText += chnames.getCharacterName(oldText[i])
