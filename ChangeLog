@@ -1,9 +1,13 @@
+2007-01-09  Willie Walker <william.walker@sun.com>
+
+	* bugs/bugs.html: Add Firefox/Gecko bugs 366434 (crasher) and
+	366435 (combobox children disappearing from hierarchy when
+	activated from keyboard).
 
 2007-01-08  Lynn Monsanto <lynn.monsanto@sun.com>
 
 	* src/orca/Gecko.py: Don't use the structural navivation 
 	model if the user is editing the document.
-
 
 2007-01-08  Willie Walker <william.walker@sun.com>
 
