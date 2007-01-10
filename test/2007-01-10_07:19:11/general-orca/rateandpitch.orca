@@ -1,0 +1,24 @@
+SPEECH OUTPUT: 'Welcome to Orca.'
+BRAILLE LINE:  'Welcome to Orca.'
+     VISIBLE:  'Welcome to Orca.', cursor=0
+SPEECH OUTPUT: 'Switching to focus tracking mode.'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame'
+     VISIBLE:  'Orca Screen Reader / Magnifier F', cursor=1
+SPEECH OUTPUT: 'Orca Screen Reader / Magnifier frame'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame Preferences Button'
+     VISIBLE:  'Preferences Button', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Preferences button'
+BRAILLE LINE:  'gnome-terminal Application Terminal Frame'
+     VISIBLE:  'Terminal Frame', cursor=1
+SPEECH OUTPUT: 'Terminal frame'
+BRAILLE LINE:  'gnome-terminal Application Terminal Frame TabList  Terminal Terminal'
+     VISIBLE:  '', cursor=2
+SPEECH OUTPUT: 'tab list page'
+SPEECH OUTPUT: 'Terminal'
+BRAILLE LINE:  'gnome-terminal Application Terminal Frame TabList  Terminal Terminal'
+     VISIBLE:  '', cursor=2
+BRAILLE LINE:  'gnome-terminal Application orca@ubuntu: /tmp/general-orca Frame TabList  orca@ubuntu: /tmp/general-orca Terminalorca@ubuntu:/tmp/general-orca$  '
+     VISIBLE:  'orca@ubuntu:/tmp/general-orca$  ', cursor=32
+BRAILLE LINE:  'gnome-terminal Application orca@ubuntu: /tmp/general-orca Frame TabList  orca@ubuntu: /tmp/general-orca Terminalorca@ubuntu:/tmp/general-orca$  '
+     VISIBLE:  'orca@ubuntu:/tmp/general-orca$  ', cursor=32

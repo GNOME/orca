@@ -1,0 +1,128 @@
+SPEECH OUTPUT: 'Welcome to Orca.'
+BRAILLE LINE:  'Welcome to Orca.'
+     VISIBLE:  'Welcome to Orca.', cursor=0
+SPEECH OUTPUT: 'Switching to focus tracking mode.'
+BRAILLE LINE:  'soffice.bin Application OpenOffice.org 2.0  Alert'
+     VISIBLE:  'OpenOffice.org 2.0  Alert', cursor=1
+SPEECH OUTPUT: 'OpenOffice.org 2.0  The document "Untitled2" has been modified.
+Do you want to save your changes?'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame'
+     VISIBLE:  'Orca Screen Reader / Magnifier F', cursor=1
+SPEECH OUTPUT: 'Orca Screen Reader / Magnifier frame'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame Preferences Button'
+     VISIBLE:  'Preferences Button', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Preferences button'
+BRAILLE LINE:  'gnome-terminal Application Terminal Frame'
+     VISIBLE:  'Terminal Frame', cursor=1
+SPEECH OUTPUT: 'Terminal frame'
+BRAILLE LINE:  'gnome-terminal Application Terminal Frame TabList  Terminal Terminal'
+     VISIBLE:  '', cursor=2
+SPEECH OUTPUT: 'tab list page'
+SPEECH OUTPUT: 'Terminal'
+BRAILLE LINE:  'gnome-terminal Application Terminal Frame TabList  Terminal Terminal'
+     VISIBLE:  '', cursor=2
+BRAILLE LINE:  'gnome-terminal Application Terminal Frame TabList  orca@ubuntu: /tmp/gnome-terminal Terminalorca@ubuntu:/tmp/gnome-terminal$  '
+     VISIBLE:  'ca@ubuntu:/tmp/gnome-terminal$  ', cursor=32
+BRAILLE LINE:  'gnome-terminal Application orca@ubuntu: /tmp/gnome-terminal Frame TabList  orca@ubuntu: /tmp/gnome-terminal Terminalorca@ubuntu:/tmp/gnome-terminal$  '
+     VISIBLE:  'ca@ubuntu:/tmp/gnome-terminal$  ', cursor=32
+BRAILLE LINE:  'gnome-terminal Application orca@ubuntu: /tmp/gnome-terminal Frame TabList  orca@ubuntu: /tmp/gnome-terminal Terminalorca@ubuntu:/tmp/gnome-terminal$  '
+     VISIBLE:  'a@ubuntu:/tmp/gnome-terminal$  ', cursor=32
+BRAILLE LINE:  'gnome-terminal Application orca@ubuntu: /tmp/gnome-terminal Frame TabList  orca@ubuntu: /tmp/gnome-terminal Terminalorca@ubuntu:/tmp/gnome-terminal$ l '
+     VISIBLE:  'a@ubuntu:/tmp/gnome-terminal$ l ', cursor=32
+BRAILLE LINE:  'gnome-terminal Application orca@ubuntu: /tmp/gnome-terminal Frame TabList  orca@ubuntu: /tmp/gnome-terminal Terminalorca@ubuntu:/tmp/gnome-terminal$ l '
+     VISIBLE:  '@ubuntu:/tmp/gnome-terminal$ l ', cursor=32
+BRAILLE LINE:  'gnome-terminal Application orca@ubuntu: /tmp/gnome-terminal Frame TabList  orca@ubuntu: /tmp/gnome-terminal Terminalorca@ubuntu:/tmp/gnome-terminal$ ls '
+     VISIBLE:  '@ubuntu:/tmp/gnome-terminal$ ls ', cursor=32
+BRAILLE LINE:  'gnome-terminal Application orca@ubuntu: /tmp/gnome-terminal Frame TabList  orca@ubuntu: /tmp/gnome-terminal Terminal'
+     VISIBLE:  '', cursor=1
+BRAILLE LINE:  'gnome-terminal Application orca@ubuntu: /tmp/gnome-terminal Frame TabList  orca@ubuntu: /tmp/gnome-terminal Terminalorca@ubuntu:/tmp/gnome-terminal$  '
+     VISIBLE:  'ca@ubuntu:/tmp/gnome-terminal$  ', cursor=32
+BRAILLE LINE:  'gnome-terminal Application orca@ubuntu: /tmp/gnome-terminal Frame TabList  orca@ubuntu: /tmp/gnome-terminal Terminalorca@ubuntu:/tmp/gnome-terminal$  '
+     VISIBLE:  'ca@ubuntu:/tmp/gnome-terminal$  ', cursor=32
+BRAILLE LINE:  'gnome-terminal Application orca@ubuntu: /tmp/gnome-terminal Frame TabList  orca@ubuntu: /tmp/gnome-terminal Terminalorca@ubuntu:/tmp/gnome-terminal$  '
+     VISIBLE:  'ca@ubuntu:/tmp/gnome-terminal$  ', cursor=32
+SPEECH OUTPUT: 'edit-profiles.orca  flat-review.orca  user-settings.py  user-settings.pyc 
+ '
+BRAILLE LINE:  'gnome-terminal Application orca@ubuntu: /tmp/gnome-terminal Frame TabList  orca@ubuntu: /tmp/gnome-terminal Terminalorca@ubuntu:/tmp/gnome-terminal$  '
+     VISIBLE:  'ca@ubuntu:/tmp/gnome-terminal$  ', cursor=32
+BRAILLE LINE:  'gnome-terminal Application orca@ubuntu: /tmp/gnome-terminal Frame TabList  orca@ubuntu: /tmp/gnome-terminal Terminalorca@ubuntu:/tmp/gnome-terminal$  '
+     VISIBLE:  'ca@ubuntu:/tmp/gnome-terminal$  ', cursor=32
+SPEECH OUTPUT: 'orca@ubuntu:/tmp/gnome-terminal$ '
+SPEECH OUTPUT: 'edit-profiles.orca  flat-review.orca  user-settings.py  user-settings.pyc 
+'
+BRAILLE LINE:  'edit-profiles.orca  flat-review.orca  user-settings.py  user-settings.pyc  $l'
+     VISIBLE:  'edit-profiles.orca  flat-review.', cursor=1
+SPEECH OUTPUT: 'orca@ubuntu:/tmp/gnome-terminal$ ls 
+ scroll bar'
+BRAILLE LINE:  'orca@ubuntu:/tmp/gnome-terminal$ ls  scroll bar $l'
+     VISIBLE:  'orca@ubuntu:/tmp/gnome-terminal$', cursor=1
+SPEECH OUTPUT: 'File Edit View Terminal Tabs Help'
+BRAILLE LINE:  'File Edit View Terminal Tabs Help $l'
+     VISIBLE:  'File Edit View Terminal Tabs Hel', cursor=1
+SPEECH OUTPUT: 'Edit'
+BRAILLE LINE:  'File Edit View Terminal Tabs Help $l'
+     VISIBLE:  'File Edit View Terminal Tabs Hel', cursor=6
+SPEECH OUTPUT: 'View'
+BRAILLE LINE:  'File Edit View Terminal Tabs Help $l'
+     VISIBLE:  'File Edit View Terminal Tabs Hel', cursor=11
+SPEECH OUTPUT: 'Terminal'
+BRAILLE LINE:  'File Edit View Terminal Tabs Help $l'
+     VISIBLE:  'File Edit View Terminal Tabs Hel', cursor=16
+SPEECH OUTPUT: 'Tabs'
+BRAILLE LINE:  'File Edit View Terminal Tabs Help $l'
+     VISIBLE:  'File Edit View Terminal Tabs Hel', cursor=25
+SPEECH OUTPUT: 'Help'
+BRAILLE LINE:  'File Edit View Terminal Tabs Help $l'
+     VISIBLE:  'File Edit View Terminal Tabs Hel', cursor=30
+SPEECH OUTPUT: 'orca@ubuntu:/tmp/gnome-terminal$'
+BRAILLE LINE:  'orca@ubuntu:/tmp/gnome-terminal$ ls  scroll bar $l'
+     VISIBLE:  'orca@ubuntu:/tmp/gnome-terminal$', cursor=1
+SPEECH OUTPUT: 'Help'
+BRAILLE LINE:  'File Edit View Terminal Tabs Help $l'
+     VISIBLE:  'File Edit View Terminal Tabs Hel', cursor=30
+SPEECH OUTPUT: 'Tabs'
+BRAILLE LINE:  'File Edit View Terminal Tabs Help $l'
+     VISIBLE:  'File Edit View Terminal Tabs Hel', cursor=25
+SPEECH OUTPUT: 'Terminal'
+BRAILLE LINE:  'File Edit View Terminal Tabs Help $l'
+     VISIBLE:  'File Edit View Terminal Tabs Hel', cursor=16
+SPEECH OUTPUT: 'View'
+BRAILLE LINE:  'File Edit View Terminal Tabs Help $l'
+     VISIBLE:  'File Edit View Terminal Tabs Hel', cursor=11
+SPEECH OUTPUT: 'Edit'
+BRAILLE LINE:  'File Edit View Terminal Tabs Help $l'
+     VISIBLE:  'File Edit View Terminal Tabs Hel', cursor=6
+SPEECH OUTPUT: 'File'
+BRAILLE LINE:  'File Edit View Terminal Tabs Help $l'
+     VISIBLE:  'File Edit View Terminal Tabs Hel', cursor=1
+SPEECH OUTPUT: 'orca@ubuntu:/tmp/gnome-terminal$ ls 
+ scroll bar'
+BRAILLE LINE:  'orca@ubuntu:/tmp/gnome-terminal$ ls  scroll bar $l'
+     VISIBLE:  'orca@ubuntu:/tmp/gnome-terminal$', cursor=1
+SPEECH OUTPUT: 'edit-profiles.orca  flat-review.orca  user-settings.py  user-settings.pyc 
+'
+BRAILLE LINE:  'edit-profiles.orca  flat-review.orca  user-settings.py  user-settings.pyc  $l'
+     VISIBLE:  'edit-profiles.orca  flat-review.', cursor=1
+SPEECH OUTPUT: 'orca@ubuntu:/tmp/gnome-terminal$  
+'
+BRAILLE LINE:  'orca@ubuntu:/tmp/gnome-terminal$   $l'
+     VISIBLE:  'orca@ubuntu:/tmp/gnome-terminal$', cursor=1
+SPEECH OUTPUT: 'blank'
+BRAILLE LINE:  ' $l'
+     VISIBLE:  ' $l', cursor=1
+SPEECH OUTPUT: 'blank'
+BRAILLE LINE:  ' $l'
+     VISIBLE:  ' $l', cursor=1
+SPEECH OUTPUT: 'blank'
+BRAILLE LINE:  ' $l'
+     VISIBLE:  ' $l', cursor=1
+SPEECH OUTPUT: 'blank'
+BRAILLE LINE:  ' $l'
+     VISIBLE:  ' $l', cursor=1
+SPEECH OUTPUT: 'blank'
+BRAILLE LINE:  ' $l'
+     VISIBLE:  ' $l', cursor=1
+SPEECH OUTPUT: 'blank'
+BRAILLE LINE:  ' $l'
+     VISIBLE:  ' $l', cursor=1

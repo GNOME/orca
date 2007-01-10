@@ -1,0 +1,22 @@
+SPEECH OUTPUT: 'Welcome to Orca.'
+BRAILLE LINE:  'Welcome to Orca.'
+     VISIBLE:  'Welcome to Orca.', cursor=0
+SPEECH OUTPUT: 'Switching to focus tracking mode.'
+BRAILLE LINE:  'soffice.bin Application OpenOffice.org 2.0  Alert'
+     VISIBLE:  'OpenOffice.org 2.0  Alert', cursor=1
+SPEECH OUTPUT: 'OpenOffice.org 2.0  The document "Untitled2" has been modified.
+Do you want to save your changes?'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame'
+     VISIBLE:  'Orca Screen Reader / Magnifier F', cursor=1
+SPEECH OUTPUT: 'Orca Screen Reader / Magnifier frame'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame Preferences Button'
+     VISIBLE:  'Preferences Button', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Preferences button'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame'
+     VISIBLE:  'Unsaved Document 1 - gedit Frame', cursor=1
+SPEECH OUTPUT: 'Unsaved Document 1 - gedit frame'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame TabList Unsaved Document 1 ScrollPane  $l'
+     VISIBLE:  ' $l', cursor=1
+SPEECH OUTPUT: 'tab list Unsaved Document 1 page'
+SPEECH OUTPUT: 'text '

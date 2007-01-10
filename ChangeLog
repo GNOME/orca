@@ -1,3 +1,9 @@
+2007-01-10  Willie Walker <william.walker@sun.com>
+
+	* test/harness/runall.sh: update to ignore .svn directories
+
+	* test/2007-01-10_07:19:11/*: new test results
+	
 2007-01-09  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/gnomespeechfactory.py:

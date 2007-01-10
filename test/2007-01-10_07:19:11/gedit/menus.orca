@@ -1,0 +1,302 @@
+SPEECH OUTPUT: 'Welcome to Orca.'
+BRAILLE LINE:  'Welcome to Orca.'
+     VISIBLE:  'Welcome to Orca.', cursor=0
+SPEECH OUTPUT: 'Switching to focus tracking mode.'
+BRAILLE LINE:  'soffice.bin Application OpenOffice.org 2.0  Alert'
+     VISIBLE:  'OpenOffice.org 2.0  Alert', cursor=1
+SPEECH OUTPUT: 'OpenOffice.org 2.0  The document "Untitled2" has been modified.
+Do you want to save your changes?'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame'
+     VISIBLE:  'Orca Screen Reader / Magnifier F', cursor=1
+SPEECH OUTPUT: 'Orca Screen Reader / Magnifier frame'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame Preferences Button'
+     VISIBLE:  'Preferences Button', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Preferences button'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame'
+     VISIBLE:  'Unsaved Document 1 - gedit Frame', cursor=1
+SPEECH OUTPUT: 'Unsaved Document 1 - gedit frame'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame TabList Unsaved Document 1 ScrollPane  $l'
+     VISIBLE:  ' $l', cursor=1
+SPEECH OUTPUT: 'tab list Unsaved Document 1 page'
+SPEECH OUTPUT: 'text '
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame File Menu'
+     VISIBLE:  'File Menu', cursor=1
+SPEECH OUTPUT: 'menu bar'
+SPEECH OUTPUT: 'File menu'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame Edit Menu'
+     VISIBLE:  'Edit Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Edit menu'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame View Menu'
+     VISIBLE:  'View Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'View menu'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame Search Menu'
+     VISIBLE:  'Search Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Search menu'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame Tools Menu'
+     VISIBLE:  'Tools Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Tools menu'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame Documents Menu'
+     VISIBLE:  'Documents Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Documents menu'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame Help Menu'
+     VISIBLE:  'Help Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Help menu'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Contents(F1)'
+     VISIBLE:  'Contents(F1)', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Contents F1'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Get Help Online...'
+     VISIBLE:  'Get Help Online...', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Get Help Online...'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Translate This Application...'
+     VISIBLE:  'Translate This Application...', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Translate This Application...'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar About'
+     VISIBLE:  'About', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'About'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Save All(Shift Control l)'
+     VISIBLE:  'Save All(Shift Control l)', cursor=1
+SPEECH OUTPUT: 'Documents menu'
+SPEECH OUTPUT: 'Save All Shift Control l'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Close All(Shift Control w)'
+     VISIBLE:  'Close All(Shift Control w)', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Close All Shift Control w'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Unsaved Document 1 <x> CheckItem(Alt 1)'
+     VISIBLE:  'Unsaved Document 1 <x> CheckItem', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Unsaved Document 1 check item checked Alt 1'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Check Spelling(F7)'
+     VISIBLE:  'Check Spelling(F7)', cursor=1
+SPEECH OUTPUT: 'Tools menu'
+SPEECH OUTPUT: 'Check Spelling F7'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Autocheck Spelling < > CheckItem'
+     VISIBLE:  'Autocheck Spelling < > CheckItem', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Autocheck Spelling check item not checked'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Set Language...'
+     VISIBLE:  'Set Language...', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Set Language...'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Document Statistics'
+     VISIBLE:  'Document Statistics', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Document Statistics'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Find...(Control f)'
+     VISIBLE:  'Find...(Control f)', cursor=1
+SPEECH OUTPUT: 'Search menu'
+SPEECH OUTPUT: 'Find... Control f'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Interactive search...(Control k)'
+     VISIBLE:  'Interactive search...(Control k)', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Interactive search... Control k'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Replace...(Control h)'
+     VISIBLE:  'Replace...(Control h)', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Replace... Control h'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Go to Line...(Control i)'
+     VISIBLE:  'Go to Line...(Control i)', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Go to Line... Control i'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Toolbar <x> CheckItem'
+     VISIBLE:  'Toolbar <x> CheckItem', cursor=1
+SPEECH OUTPUT: 'View menu'
+SPEECH OUTPUT: 'Toolbar check item checked'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Statusbar <x> CheckItem'
+     VISIBLE:  'Statusbar <x> CheckItem', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Statusbar check item checked'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Side Pane < > CheckItem(F9)'
+     VISIBLE:  'Side Pane < > CheckItem(F9)', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Side Pane check item not checked F9'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Highlight Mode Menu'
+     VISIBLE:  'Highlight Mode Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Highlight Mode menu'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar View Menu None <x> CheckItem'
+     VISIBLE:  'None <x> CheckItem', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'None check item checked'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar View Menu Sources Menu'
+     VISIBLE:  'Sources Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Sources menu'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar View Menu Highlight Mode Menu Ada < > CheckItem'
+     VISIBLE:  'Ada < > CheckItem', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Ada check item not checked'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar View Menu Highlight Mode Menu Boo < > CheckItem'
+     VISIBLE:  'Boo < > CheckItem', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Boo check item not checked'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar View Menu Highlight Mode Menu C < > CheckItem'
+     VISIBLE:  'C < > CheckItem', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'C check item not checked'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar View Menu Highlight Mode Menu C# < > CheckItem'
+     VISIBLE:  'C# < > CheckItem', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'C# check item not checked'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar View Menu Highlight Mode Menu C++ < > CheckItem'
+     VISIBLE:  'C++ < > CheckItem', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'C++ check item not checked'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar View Menu Highlight Mode Menu D < > CheckItem'
+     VISIBLE:  'D < > CheckItem', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'D check item not checked'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar View Menu Sources Menu'
+     VISIBLE:  'Sources Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Sources menu'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar View Menu Others Menu'
+     VISIBLE:  'Others Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Others menu'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar View Menu Highlight Mode Menu ChangeLog < > CheckItem'
+     VISIBLE:  'ChangeLog < > CheckItem', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'ChangeLog check item not checked'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar View Menu Highlight Mode Menu CSS < > CheckItem'
+     VISIBLE:  'CSS < > CheckItem', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'CSS check item not checked'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar View Menu Highlight Mode Menu .desktop < > CheckItem'
+     VISIBLE:  '.desktop < > CheckItem', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: '.desktop check item not checked'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar View Menu Highlight Mode Menu Diff < > CheckItem'
+     VISIBLE:  'Diff < > CheckItem', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Diff check item not checked'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar View Menu Others Menu'
+     VISIBLE:  'Others Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Others menu'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar View Menu Markup Menu'
+     VISIBLE:  'Markup Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Markup menu'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar View Menu Highlight Mode Menu HTML < > CheckItem'
+     VISIBLE:  'HTML < > CheckItem', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'HTML check item not checked'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar View Menu Highlight Mode Menu LaTeX < > CheckItem'
+     VISIBLE:  'LaTeX < > CheckItem', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'LaTeX check item not checked'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar View Menu Highlight Mode Menu Texinfo < > CheckItem'
+     VISIBLE:  'Texinfo < > CheckItem', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Texinfo check item not checked'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar View Menu Markup Menu'
+     VISIBLE:  'Markup Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Markup menu'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar View Menu Scripts Menu'
+     VISIBLE:  'Scripts Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Scripts menu'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar View Menu Highlight Mode Menu JavaScript < > CheckItem'
+     VISIBLE:  'JavaScript < > CheckItem', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'JavaScript check item not checked'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar View Menu Highlight Mode Menu Lua < > CheckItem'
+     VISIBLE:  'Lua < > CheckItem', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Lua check item not checked'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar View Menu Highlight Mode Menu Octave < > CheckItem'
+     VISIBLE:  'Octave < > CheckItem', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Octave check item not checked'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar View Menu Highlight Mode Menu Perl < > CheckItem'
+     VISIBLE:  'Perl < > CheckItem', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Perl check item not checked'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar View Menu Scripts Menu'
+     VISIBLE:  'Scripts Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Scripts menu'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Highlight Mode Menu'
+     VISIBLE:  'Highlight Mode Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Highlight Mode menu'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Paste(Control v)'
+     VISIBLE:  'Paste(Control v)', cursor=1
+SPEECH OUTPUT: 'Edit menu'
+SPEECH OUTPUT: 'Paste Control v'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Select All(Control a)'
+     VISIBLE:  'Select All(Control a)', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Select All Control a'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Insert Date and Time...'
+     VISIBLE:  'Insert Date and Time...', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Insert Date and Time...'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Preferences'
+     VISIBLE:  'Preferences', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Preferences'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar New(Control n)'
+     VISIBLE:  'New(Control n)', cursor=1
+SPEECH OUTPUT: 'File menu'
+SPEECH OUTPUT: 'New Control n'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Quit(Control q)'
+     VISIBLE:  'Quit(Control q)', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Quit Control q'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Close(Control w)'
+     VISIBLE:  'Close(Control w)', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Close Control w'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Quit(Control q)'
+     VISIBLE:  'Quit(Control q)', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Quit Control q'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar New(Control n)'
+     VISIBLE:  'New(Control n)', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'New Control n'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Open...(Control o)'
+     VISIBLE:  'Open...(Control o)', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Open... Control o'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Open Location...(Control l)'
+     VISIBLE:  'Open Location...(Control l)', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Open Location... Control l'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Save(Control s)'
+     VISIBLE:  'Save(Control s)', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Save Control s'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Save As...(Shift Control s)'
+     VISIBLE:  'Save As...(Shift Control s)', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Save As... Shift Control s'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Page Setup...'
+     VISIBLE:  'Page Setup...', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Page Setup...'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Print Preview(Shift Control p)'
+     VISIBLE:  'Print Preview(Shift Control p)', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Print Preview Shift Control p'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame MenuBar Print...(Control p)'
+     VISIBLE:  'Print...(Control p)', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Print... Control p'
+BRAILLE LINE:  'gedit Application Unsaved Document 1 - gedit Frame TabList Unsaved Document 1 ScrollPane  $l'
+     VISIBLE:  ' $l', cursor=1
+SPEECH OUTPUT: 'tab list Unsaved Document 1 page'
+SPEECH OUTPUT: 'text '

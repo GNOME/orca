@@ -69,14 +69,14 @@ dirprefix=`date +%Y-%m-%d_%H:%M:%S`
 for testDir in `find $keystrokesDir -type d`
 do
   application=`basename $testDir`
-  if [ $application != "CVS" ] && [ $application != `basename $keystrokesDir` ]
+  if [ $application != ".svn" ] && [ $application != `basename $keystrokesDir` ]
     then
 
-# (Bug #359919). Check to see if the application exists. 
+# (Bug #359919). Check to see if the application exists.
 # If it does, then supply that as the $2 parameter to the runone.sh command.
 # If it doesn't exist see if the name is in a list of system types that
 # we care about (currently "SunOS" and "Linux").
-#   If it is, then compare the directory name against the result of running 
+#   If it is, then compare the directory name against the result of running
 #   `uname`.
 #     If they match, then run the scripts in that directory.
 #     If they don't match, ignore that directory.
@@ -101,6 +101,8 @@ do
       mkdir -p /tmp/$application
       cd /tmp/$application
       for testFile in `find $testDir -type f -name "*.keys" | sort`; do
+        echo ========================================
+        echo Running $testFile
         if [ "$found" -gt 0 ]
         then
           $harnessDir/runone.sh $testFile $application
@@ -121,10 +123,10 @@ do
             $harnessDir/runone.sh $testFile
           fi
         fi
-	sleep 5
+        sleep 5
         newResultsFile=`basename $testFile .keys`.orca
-	mkdir -p $currentdir/$outputdir
-	cp $newResultsFile $currentdir/$outputdir
+        mkdir -p $currentdir/$outputdir
+        cp $newResultsFile $currentdir/$outputdir
         expectedResultsFile=$resultsDir/$application/$newResultsFile
         echo Comparing results for $testFile
         diff -s $expectedResultsFile $newResultsFile
@@ -132,5 +134,5 @@ do
       done
       cd $currentdir
       rm -rf /tmp/$application
-  fi 
+  fi
 done
