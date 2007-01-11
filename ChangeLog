@@ -1,5 +1,12 @@
 2007-01-11  Willie Walker <william.walker@sun.com>
 
+	* src/orca/util.py: fix for bug 394397 - handle arrowing to
+	the end of a line and prevent the line from being spoken again.
+	This is designed to work with the getTextAtOffset implementations
+	provided by at least GEdit, Gecko, and OOo.
+	
+2007-01-11  Willie Walker <william.walker@sun.com>
+
 	* test/harness/runall.sh: add "-s" option to require test
 	runner to press "Return" to go from one keystroke file to
 	the next.  This is useful in helping to analyze keystroke

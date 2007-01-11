@@ -53,7 +53,7 @@ import speechserver
 
 from orca_i18n import _ # for gettext support
 
-# Unicode currency symbols (populated by the getUnicodeCurrencySymbols() 
+# Unicode currency symbols (populated by the getUnicodeCurrencySymbols()
 # routine).
 #
 _unicodeCurrencySymbols = []
@@ -864,21 +864,41 @@ def getTextLineAtCaret(obj):
     if not text:
         return ["", 0, 0]
 
+    # The caret might be positioned at the very end of the text area.
+    # In these cases, calling text.getTextAtOffset on an offset that's
+    # not positioned to a character can yield unexpected results.  In
+    # particular, we'll see the Gecko toolkit return a start and end
+    # offset of (0, 0), and we'll see other implementations, such as
+    # gedit, return reasonable results (i.e., gedit will give us the
+    # last line).
+    #
+    # In order to accommodate the differing behavior of different
+    # AT-SPI implementations, we'll make sure we give getTextAtOffset
+    # the offset of an actual character.  Then, we'll do a little check
+    # to see if that character is a newline - if it is, we'll treat it
+    # as the line.
+    #
     if text.caretOffset == text.characterCount:
         caretOffset = max(0, text.caretOffset - 1)
+        character = text.getText(caretOffset, caretOffset + 1).decode("UTF-8")
     else:
         caretOffset = text.caretOffset
 
-    # Get the line containing the caret
-    #
-    [string, startOffset, endOffset] = text.getTextAtOffset(
-        caretOffset, atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+    if (text.caretOffset == text.characterCount) \
+        and (character == "\n"):
+        content = ""
+        startOffset = caretOffset
+    else:
+        # Get the line containing the caret
+        #
+        [string, startOffset, endOffset] = text.getTextAtOffset(
+            caretOffset, atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
 
-    # Sometimes we get the trailing line-feed-- remove it
-    #
-    content = string.decode("UTF-8")
-    if content[-1:] == "\n":
-        content = content[:-1]
+        # Sometimes we get the trailing line-feed-- remove it
+        #
+        content = string.decode("UTF-8")
+        if content[-1:] == "\n":
+            content = content[:-1]
 
     return [content.encode("UTF-8"), text.caretOffset, startOffset]
 
