@@ -429,6 +429,24 @@ def getRealActiveDescendant(obj):
     manages its descendants.
     """
 
+    # If obj is a table cell and all of it's children are table cells
+    # (probably cell renderers), then return the first child which has
+    # a non zero length text string. If no such object is found, just
+    # fall through and use the default approach below. See bug #376791
+    # for more details.
+    #
+    if obj.role == rolenames.ROLE_TABLE_CELL and obj.childCount:
+        nonTableCellFound = False
+        for i in range (0, obj.childCount):
+            if obj.child(i).role != rolenames.ROLE_TABLE_CELL:
+                nonTableCellFound = True
+        if nonTableCellFound == False:
+            for i in range (0, obj.childCount):
+                if obj.child(i).text:
+                    text = obj.child(i).text.getText(0, -1)
+                    if len(text) != 0:
+                        return obj.child(i)
+
     # [[[TODO: WDW - this is an odd hacky thing I've somewhat drawn
     # from Gnopernicus.  The notion here is that we get an active
     # descendant changed event, but that object tends to have children

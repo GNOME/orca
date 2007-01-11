@@ -1,3 +1,9 @@
+2007-01-11  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/util.py:
+          Fix for bug #376791 – Orca does not provide access to the buddy 
+          list in Gaim 2.0.0 beta 5.
+
 2007-01-11  Willie Walker <william.walker@sun.com>
 
 	* src/orca/util.py: fix for bug 394397 - handle arrowing to
