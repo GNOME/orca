@@ -1,8 +1,16 @@
-2007-01-08  Lynn Monsanto <lynn.monsanto@sun.com>
+2007-01-11  Willie Walker <william.walker@sun.com>
+
+	* test/harness/runall.sh: add "-s" option to require test
+	runner to press "Return" to go from one keystroke file to
+	the next.  This is useful in helping to analyze keystroke
+	files -- you can more easily kill the test harness when
+	you that a test has gone awry, and you have a better idea
+	of which test when awry.
+	
+2007-01-10  Lynn Monsanto <lynn.monsanto@sun.com>
 
 	* src/orca/scripts/Thunderbird.py: Handle preferences that 
 	contain editable text fields.
-
 
 2007-01-10  Willie Walker <william.walker@sun.com>
 

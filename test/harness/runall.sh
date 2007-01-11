@@ -32,12 +32,16 @@ process_cl () {
                 fi
                 resultsDir=$1
                 ;;
+            -s )
+                stepMode=1
+                ;;
             -h|--help)
                 echo "Usage: $0 [options]"
                 echo "options:"
                 echo "   -h, --help        print this usage message"
                 echo "   -k keystrokeDir   specify an alternate keystrokes directory"
                 echo "   -r resultsDir     specify an alternate results directory"
+                echo "   -s                require a return to be pressed between keystrokes files"
                 exit 0
                 ;;
             *)
@@ -130,6 +134,12 @@ do
         expectedResultsFile=$resultsDir/$application/$newResultsFile
         echo Comparing results for $testFile
         diff -s $expectedResultsFile $newResultsFile
+        echo Finished running $testFile.
+        if [ "x$stepMode" == "x1" ]
+        then
+          echo Press Return to continue...
+          read foo
+        fi
         echo ========================================
       done
       cd $currentdir
