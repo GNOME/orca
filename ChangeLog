@@ -1,3 +1,8 @@
+2007-01-11  Lynn Monsanto <lynn.monsanto@sun.com>
+
+	* src/orca/scripts/Thunderbird.py: In the Account Settings
+	dialog, speak the enclosing panel if it is named.
+
 2007-01-11  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/util.py:
