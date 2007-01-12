@@ -26,6 +26,7 @@ __date__      = "$Date: $"
 __copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import orca.atspi as atspi
 import orca.debug as debug
 import orca.default as default
 import orca.rolenames as rolenames
@@ -39,7 +40,7 @@ from orca.orca_i18n import _
 
 ########################################################################
 #                                                                      #
-# The Thunderbird script class.                                               #
+# The Thunderbird script class.                                        #
 #                                                                      #
 ########################################################################
 
@@ -56,7 +57,7 @@ class Script(Gecko.Script):
 
         # Set the debug level for all the methods in this script.
         #
-        self.debugLevel = debug.LEVEL_SEVERE
+        self.debugLevel = debug.LEVEL_FINEST
 
         Gecko.Script.__init__(self, app)
 
@@ -76,72 +77,115 @@ class Script(Gecko.Script):
         """
         obj = event.source
         top = util.getTopLevel(obj)
+        consume = False
 
-        if top.name == _("Account Settings"):
-            # Don't speak chrome URLs.
-            if obj.name == "" or obj.name.startswith("chrome://"):
-                return
+        self._debug("onFocus: name='%s', role='%s', top name='%s', top role='%s'" \
+                    % (obj.name, obj.role, top.name, top.role))
 
-            # Speak the enclosing panel if it is named. Going two
-            # containers up the hierarchy appears to be far enough
-            # to find a named panel, if there is one.
-            parent = obj.parent
-            if not parent:
-                pass
-            elif parent.name != "" and \
-                     (not parent.name.startswith("chrome://")) and \
-                     parent.role == rolenames.ROLE_PANEL:
+        # Don't speak a chrome URL.
+        if obj.name.startswith("_(chrome://"):
+            return
 
+        # Handle dialogs.
+        if top.role == rolenames.ROLE_DIALOG:
+
+            self._speakEnclosingPanel(obj)
+
+            if obj.role == rolenames.ROLE_ENTRY:
+                consume = self._handleTextEntry(obj)
+
+        if not consume:
+            Gecko.Script.onFocus(self, event)
+            
+
+    def _speakEnclosingPanel(self, obj):
+        # Speak the enclosing panel if it is named. Going two
+        # containers up the hierarchy appears to be far enough
+        # to find a named panel, if there is one.
+        
+        self._debug("_speakEnclosingPanel")
+
+        parent = obj.parent
+        if not parent:
+            return
+        
+        if parent.name != "" and \
+               (not parent.name.startswith(_("chrome://"))) and \
+               parent.role == rolenames.ROLE_PANEL:
+            
+            # Speak the panel name only once.
+            if parent.name != self._containingPanelName:
+                self._containingPanelName = parent.name
+                utterances = []
+                text = _("%s panel") % parent.name
+                utterances.append(text)
+                speech.speakUtterances(utterances)
+            
+        else:
+            grandparent = parent.parent
+            if grandparent and \
+                   grandparent.name != "" and \
+                   (not grandparent.name.startswith(_("chrome://"))) and \
+                   grandparent.role == rolenames.ROLE_PANEL:
+                
                 # Speak the panel name only once.
-                if parent.name != self._containingPanelName:
-                    self._containingPanelName = parent.name
+                if grandparent.name != self._containingPanelName:
+                    self._containingPanelName = grandparent.name
                     utterances = []
-                    text = "%s panel" % parent.name
+                    text = _("%s panel") % grandparent.name
                     utterances.append(text)
                     speech.speakUtterances(utterances)
 
-            else:
-                grandparent = parent.parent
-                if grandparent and \
-                       grandparent.name != "" and \
-                       (not grandparent.name.startswith("chrome://")) and \
-                       grandparent.role == rolenames.ROLE_PANEL:
-                    
-                    # Speak the panel name only once.
-                    if grandparent.name != self._containingPanelName:
-                        self._containingPanelName = grandparent.name
-                        utterances = []
-                        text = "%s panel" % grandparent.name
-                        utterances.append(text)
-                        speech.speakUtterances(utterances)
                         
+    def _handleTextEntry(self, obj):
+        # Handle preferences that contain editable text fields. If
+        # the object with keyboard focus is editable text field,
+        # examine the previous and next sibling to get the order
+        # for speaking the preference objects.
+        #
+        # Returns whether to consume the event.
+        
+        self._debug("_handleTextEntry: childCount=%d, index=%d" % \
+                    (obj.parent.childCount, obj.index))
 
-        if top.name == _("Thunderbird Preferences"):
-            # Handle preferences that contain editable text fields. If
-            # the object with keyboard focus is editable text field,
-            # examine the previous and next sibling to get the order
-            # for speaking the preference objects,
-            if obj.role == rolenames.ROLE_ENTRY and obj.text:
+        if not obj.text:
+            return False
+        
+        if obj.index > 0:
+            prev = obj.parent.child(obj.index - 1)
+            self._debug("_handleTextEntry: prev='%s', role='%s'" \
+                    % (prev.name, prev.role))
+            
+        if obj.parent.childCount > obj.index:
+            next = obj.parent.child(obj.index + 1)
+            self._debug("_handleTextEntry: next='%s', role='%s'" \
+                    % (next.name, next.role))
 
-                if obj.index > 0:
-                    prev = obj.parent.child(obj.index - 1)
+        # Get the entry text.
+        [word, startOffset, endOffset] = obj.text.getTextAtOffset(0,
+            atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+        if len(word) == 0:
+            # The above may incorrectly return an empty string
+            # if the entry contains a single character.
+            [word, startOffset, endOffset] = obj.text.getTextAtOffset(0,
+                atspi.Accessibility.TEXT_BOUNDARY_CHAR)
 
-                if obj.parent.childCount > obj.index:
-                    next = obj.parent.child(obj.index + 1)
+        self._debug("_handleTextEntry: word='%s'" % word)
 
-                [word, startOffset, endOffset] = obj.text.getTextAtOffset(0,
-                    atspi.Accessibility.TEXT_BOUNDARY_WORD_START)
-
-                if len(word) > 0:
-                    if prev and prev.role == rolenames.ROLE_LABEL:
-                        if next and next.role == rolenames.ROLE_LABEL:
-                            text = _("%s text %s %s") % (obj.name, word, next.name)
-                        else:
-                            text = _("%s text %s") % (obj.name, word)
-                    else:
-                        text = _("text %s %s") % (word, obj.name)
+        # Determine the order for speaking the component parts.
+        if len(word) > 0:
+            if prev and prev.role == rolenames.ROLE_LABEL:
+                if next and next.role == rolenames.ROLE_LABEL:
+                    text = _("%s text %s %s") % (obj.name, word, next.name)
+                else:
+                    text = _("%s text %s") % (obj.name, word)
+            else:
+                if next and next.role == rolenames.ROLE_LABEL:
+                    text = _("%s text %s %s") % (obj.name, word, next.name)
+                else:
+                    text = _("text %s %s") % (word, obj.name)
                     
-                    speech.speakUtterances([text])
-                    return
+            speech.speakUtterances([text])
+            return True
 
-        Gecko.Script.onFocus(self, event)
+        return False
