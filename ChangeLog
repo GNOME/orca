@@ -1,5 +1,14 @@
 2007-01-12  Willie Walker <william.walker@sun.com>
 
+	* src/orca/util.py, src/orca/Gecko.py: hackndle (hack and handle)
+	the case where things in the speech context are objects that are
+	not our special objects that consist solely of a single
+	EMBEDDED_OBJECT_CHARACTER.  I'm going to need to bite the bullet
+	at some point and handle this whole EMBEDDED_OBJECT_CHARACTER
+	business.  It isn't going to be pretty.
+	
+2007-01-12  Willie Walker <william.walker@sun.com>
+
 	*  test/harness/runall.sh: add  info  at end  that  allows you  to
 	determine  how long  the test  took (it  currently takes  about 33
 	minutes on my laptop).

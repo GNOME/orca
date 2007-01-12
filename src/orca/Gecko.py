@@ -528,6 +528,22 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 parent = parent.parent
                 continue
 
+            # Well...now we skip the parent if it's accessible text is
+            # a single EMBEDDED_OBJECT_CHARACTER.  The reason for this
+            # is that it util.py:getDisplayedText will end up coming
+            # back to the children of an object for the text in the
+            # children if an object's text contains an
+            # EMBEDDED_OBJECT_CHARACTER.
+            #
+            if parent.text:
+                displayedText = parent.text.getText(0, -1)
+                unicodeText = displayedText.decode("UTF-8")
+                if unicodeText \
+                    and (len(unicodeText) == 1) \
+                    and (unicodeText[0] == util.EMBEDDED_OBJECT_CHARACTER):
+                    parent = parent.parent
+                    continue
+
             # Finally, put in the text and label (if they exist)
             #
             text = util.getDisplayedText(parent)

@@ -399,6 +399,16 @@ def getDisplayedText(obj):
                 displayedText = getDisplayedText(obj.child(0))
             except:
                 debug.printException(debug.LEVEL_WARNING)
+        elif unicodeText:
+            # [[[TODO: HACK - Welll.....we'll just plain ignore any
+            # text with EMBEDDED_OBJECT_CHARACTERs here.  We still need a
+            # general case to handle this stuff and expand objects
+            # with EMBEDDED_OBJECT_CHARACTERs.]]]
+            #
+            for i in range(0, len(unicodeText)):
+                if unicodeText[i] == EMBEDDED_OBJECT_CHARACTER:
+                    displayedText = None
+                    break
 
     if (not displayedText) or (len(displayedText) == 0):
         displayedText = obj.name
