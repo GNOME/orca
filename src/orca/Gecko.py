@@ -17,7 +17,11 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-"""Custom script for Gecko toolkit.  NOT WORKING WELL AT THE MOMENT."""
+"""Custom script for Gecko toolkit.  NOT WORKING WELL AT THE MOMENT.
+Please refer to the following URL for more information on the AT-SPI
+implementation in Gecko:
+http://developer.mozilla.org/en/docs/Accessibility/ATSPI_Support
+"""
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
@@ -467,7 +471,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
         Arguments:
         - obj: the object
-        - stopAncestor: the anscestor to stop at and not include (None
+        - stopAncestor: the ancestor to stop at and not include (None
           means include all ancestors)
 
         Returns a list of utterances to be spoken.
@@ -497,24 +501,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 or (parent.role == rolenames.ROLE_LAYERED_PANE) \
                 or (parent.role == rolenames.ROLE_SPLIT_PANE) \
                 or (parent.role == rolenames.ROLE_SCROLL_PANE) \
-                or (parent.role == rolenames.ROLE_UNKNOWN):
-                parent = parent.parent
-                continue
-
-            text = util.getDisplayedText(parent)
-            label = util.getDisplayedLabel(parent)
-
-            # Don't announce unlabelled panels.
-            #
-            if parent.role == rolenames.ROLE_PANEL \
-                and (((not label) or (len(label) == 0) \
-                      or (not text) or (len(text) == 0))):
-                parent = parent.parent
-                continue
-
-            # Skip table cells.
-            #
-            if parent.role == rolenames.ROLE_TABLE_CELL:
+                or (parent.role == rolenames.ROLE_UNKNOWN) \
+                or (self._script.isLayoutOnly(parent)):
                 parent = parent.parent
                 continue
 
@@ -530,7 +518,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             # Well...if we made it this far, we will now append the
             # role, then the text, and then the label.
             #
-            utterances.append(rolenames.getSpeechForRoleName(parent))
+            if parent.role != rolenames.ROLE_TABLE_CELL:
+                utterances.append(rolenames.getSpeechForRoleName(parent))
 
             # Now...autocompletes are wierd.  We'll let the handling of
             # the entry give us the name.
@@ -539,9 +528,12 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 parent = parent.parent
                 continue
 
+            # Finally, put in the text and label (if they exist)
+            #
+            text = util.getDisplayedText(parent)
+            label = util.getDisplayedLabel(parent)
             if text and (text != label) and len(text):
                 utterances.append(text)
-
             if label and len(label):
                 utterances.append(label)
 

@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2006 Sun Microsystems Inc.
+# Copyright 2004-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -2512,6 +2512,30 @@ class Script(script.Script):
     # Utilities                                                            #
     #                                                                      #
     ########################################################################
+
+    def isLayoutOnly(self, obj):
+        """Returns True if the given object is a table and is for layout
+        purposes only."""
+
+        layoutOnly = False
+
+        if obj and (obj.role == rolenames.ROLE_TABLE) and obj.attributes:
+            for attribute in obj.attributes:
+                if attribute == "layout-guess:true":
+                    layoutOnly = True
+                    break
+        elif obj and (obj.role == rolenames.ROLE_PANEL):
+            text = util.getDisplayedText(obj)
+            label = util.getDisplayedLabel(obj)
+            if not ((label and len(label)) or (text and len(text))):
+                layoutOnly = True
+
+        if layoutOnly:
+            debug.println(debug.LEVEL_FINEST,
+                          "Object deemed to be for layout purposes only: " \
+                          + obj.toString("", True))
+
+        return layoutOnly
 
     def toggleTableCellReadMode(self, inputEvent=None):
         """Toggles an indicator for whether we should just read the current

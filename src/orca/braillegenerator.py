@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2006 Sun Microsystems Inc.
+# Copyright 2005-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -1400,17 +1400,16 @@ class BrailleGenerator:
             #
             if (parent.role != rolenames.ROLE_FILLER) \
                 and (parent.role != rolenames.ROLE_SECTION) \
-                and (parent.role != rolenames.ROLE_SPLIT_PANE):
+                and (parent.role != rolenames.ROLE_SPLIT_PANE) \
+                and (not self._script.isLayoutOnly(parent)):
 
                 # Announce the label and text of the object in the hierarchy.
                 #
                 label = util.getDisplayedLabel(parent)
                 text = util.getDisplayedText(parent)
-                if ((label and len(label)) or (text and len(text))) \
-                    or (parent.role != rolenames.ROLE_PANEL):
-                    regions.append(braille.Region(" "))
-                    result = self.getBrailleRegions(parent, False)
-                    regions.extend(result[0])
+                regions.append(braille.Region(" "))
+                result = self.getBrailleRegions(parent, False)
+                regions.extend(result[0])
 
             # [[[TODO: HACK - we've discovered oddness in hierarchies
             # such as the gedit Edit->Preferences dialog.  In this

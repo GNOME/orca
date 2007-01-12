@@ -900,6 +900,7 @@ def getTextLineAtCaret(obj):
         character = text.getText(caretOffset, caretOffset + 1).decode("UTF-8")
     else:
         caretOffset = text.caretOffset
+        character = None
 
     if (text.caretOffset == text.characterCount) \
         and (character == "\n"):

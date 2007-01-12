@@ -1286,6 +1286,17 @@ class Accessible:
 
         return value
 
+    def __get_attributes(self):
+        """Returns an Accessibility_AttributeSet of the object.
+        """
+
+        try:
+            attributes = self.accessible.getAttributes()
+        except:
+            attributes = None
+
+        return attributes
+
     def __getattr__(self, attr):
         """Created virtual attributes for the Accessible object to make
         the syntax a bit nicer (e.g., acc.name rather than acc.name()).
@@ -1339,6 +1350,8 @@ class Accessible:
             return self.__get_text()
         elif attr == "value":
             return self.__get_value()
+        elif attr == "attributes":
+            return self.__get_attributes()
         elif attr.startswith('__') and attr.endswith('__'):
             raise AttributeError, attr
         else:

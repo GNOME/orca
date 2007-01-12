@@ -1,11 +1,38 @@
 2007-01-12  Willie Walker <william.walker@sun.com>
 
+	*  test/harness/runall.sh: add  info  at end  that  allows you  to
+	determine  how long  the test  took (it  currently takes  about 33
+	minutes on my laptop).
+	
+	* src/orca/default.py, src/orca/Gecko.py,
+	src/orca/speechgenerator.py, src/orca/braillegenerator.py: add new
+	isLayoutOnly method to default.py where isLayoutOnly returns True
+	if the object is for layout/spacing purposes only. If so, don't
+	add it to the speech or braille context.  The current logic looks
+	for the Gecko "layout-guess" property as well as
+	unlabelled/unnamed panels.  Refactor the
+	get{Speech,Braille}Context methods to use this new method.  Note
+	that the "layout-guess" property of Gecko is a built-in heuristic
+	of Gecko and does not require specific markup in the HTML.  It
+	seems to work OK and is what we seem to end up needing to use
+	because I cannot figure out other ways to get things like border
+	width and such out objects.
+	
+	* src/orca/at-spi.py: add 'attributes' field to Python Accessible
+	and have it delegate to the getAttributes method of the AT-SPI
+	Accessible object.
+	
+	* src/orca/util.py: additional fix for bug 394397: make sure
+	local variables are set before being used.	
+	
+2007-01-12  Willie Walker <william.walker@sun.com>
+
 	* src/orca/util.py: In getDisplayedText, genericize the expansion
 	of accessible text when the accessible text is a single
 	EMBEDDED_OBJECT_CHARACTER.  This provides a little better
 	experience for Gecko.  The note from my EMBEDDED_OBJECT_CHARACTER
 	commit on 2007-01-09 still applies, though.	
-	
+
 2007-01-11  Lynn Monsanto <lynn.monsanto@sun.com>
 
 	* src/orca/scripts/Thunderbird.py: In the Account Settings

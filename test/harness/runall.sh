@@ -146,3 +146,4 @@ do
       rm -rf /tmp/$application
   fi
 done
+echo $dirprefix completed at `date +%Y-%m-%d_%H:%M:%S`

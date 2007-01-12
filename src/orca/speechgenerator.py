@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2006 Sun Microsystems Inc.
+# Copyright 2005-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -1561,20 +1561,17 @@ class SpeechGenerator:
                 and (parent.role != rolenames.ROLE_LAYERED_PANE) \
                 and (parent.role != rolenames.ROLE_SPLIT_PANE) \
                 and (parent.role != rolenames.ROLE_SCROLL_PANE) \
-                and (parent.role != rolenames.ROLE_UNKNOWN):
+                and (parent.role != rolenames.ROLE_UNKNOWN) \
+                and (not self._script.isLayoutOnly(parent)):
 
                 # Announce the label and text of the object in the hierarchy.
                 #
                 text = util.getDisplayedText(parent)
                 label = util.getDisplayedLabel(parent)
 
-                # Don't announce unlabelled panels.
+                # Push announcement of cell after text and label.
                 #
-                if parent.role == rolenames.ROLE_PANEL \
-                   and (((not label) or (len(label) == 0) \
-                         or (not text) or (len(text) == 0))):
-                    pass
-                elif parent.role != rolenames.ROLE_TABLE_CELL:
+                if parent.role != rolenames.ROLE_TABLE_CELL:
                     utterances.append(rolenames.getSpeechForRoleName(parent))
 
                 if text and len(text):
