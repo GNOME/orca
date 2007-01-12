@@ -394,8 +394,7 @@ def getDisplayedText(obj):
         unicodeText = displayedText.decode("UTF-8")
         if unicodeText \
            and (len(unicodeText) == 1) \
-           and (unicodeText[0] == EMBEDDED_OBJECT_CHARACTER) \
-           and (obj.role == rolenames.ROLE_LABEL):
+           and (unicodeText[0] == EMBEDDED_OBJECT_CHARACTER):
             try:
                 displayedText = getDisplayedText(obj.child(0))
             except:

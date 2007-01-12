@@ -1,3 +1,11 @@
+2007-01-12  Willie Walker <william.walker@sun.com>
+
+	* src/orca/util.py: In getDisplayedText, genericize the expansion
+	of accessible text when the accessible text is a single
+	EMBEDDED_OBJECT_CHARACTER.  This provides a little better
+	experience for Gecko.  The note from my EMBEDDED_OBJECT_CHARACTER
+	commit on 2007-01-09 still applies, though.	
+	
 2007-01-11  Lynn Monsanto <lynn.monsanto@sun.com>
 
 	* src/orca/scripts/Thunderbird.py: In the Account Settings
