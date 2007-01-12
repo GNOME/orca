@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-10 21:22+0100\n"
-"PO-Revision-Date: 2007-01-10 21:22+0100\n"
+"POT-Creation-Date: 2007-01-12 15:42+0100\n"
+"PO-Revision-Date: 2007-01-12 15:42+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -580,11 +580,11 @@ msgid "Switching to hierarchical navigation mode."
 msgstr "Växlar till hierarkiskt navigeringsläge."
 
 #: ../src/orca/J2SE-access-bridge.py:74 ../src/orca/speechgenerator.py:955
-#: ../src/orca/util.py:1483
+#: ../src/orca/util.py:1520
 msgid "selected"
 msgstr "vald"
 
-#: ../src/orca/J2SE-access-bridge.py:78 ../src/orca/util.py:1491
+#: ../src/orca/J2SE-access-bridge.py:78 ../src/orca/util.py:1528
 msgid "unselected"
 msgstr "avmarkerad"
 
@@ -2909,6 +2909,29 @@ msgstr " har formel"
 msgid "Cell "
 msgstr "Cell "
 
+#: ../src/orca/scripts/Thunderbird.py:80
+msgid "Account Settings"
+msgstr "Kontoinställningar"
+
+#: ../src/orca/scripts/Thunderbird.py:119
+msgid "Thunderbird Preferences"
+msgstr "Inställningar för Thunderbird"
+
+#: ../src/orca/scripts/Thunderbird.py:138
+#, python-format
+msgid "%s text %s %s"
+msgstr "%s text %s %s"
+
+#: ../src/orca/scripts/Thunderbird.py:140
+#, python-format
+msgid "%s text %s"
+msgstr "%s text %s"
+
+#: ../src/orca/scripts/Thunderbird.py:142
+#, python-format
+msgid "text %s %s"
+msgstr "text %s %s"
+
 #. Note to translators: the regular expression here represents a
 #. string to match in the localized application name as seen by
 #. at-poke.  For most cases, the application name is the name of
@@ -2980,40 +3003,40 @@ msgstr "inte vald"
 msgid "tear off"
 msgstr "ta bort"
 
-#: ../src/orca/util.py:548
+#: ../src/orca/util.py:565
 msgid "Misspelled word: "
 msgstr "Felstavat ord: "
 
-#: ../src/orca/util.py:549
+#: ../src/orca/util.py:566
 msgid " Context is "
 msgstr " Sammanhanget är "
 
-#: ../src/orca/util.py:664
+#: ../src/orca/util.py:681
 #, python-format
 msgid " %d %s characters "
 msgstr " %d %s tecken "
 
-#: ../src/orca/util.py:1426
+#: ../src/orca/util.py:1463
 msgid "page selected from cursor position"
 msgstr "sida vald från markörposition"
 
-#: ../src/orca/util.py:1430
+#: ../src/orca/util.py:1467
 msgid "page selected to cursor position"
 msgstr "sida vald till markörposition"
 
-#: ../src/orca/util.py:1434
+#: ../src/orca/util.py:1471
 msgid "line selected down from cursor position"
 msgstr "rad vald ner från markörposition"
 
-#: ../src/orca/util.py:1438
+#: ../src/orca/util.py:1475
 msgid "line selected up from cursor position"
 msgstr "rad vald upp från markörposition"
 
-#: ../src/orca/util.py:1442
+#: ../src/orca/util.py:1479
 msgid "document selected to cursor position"
 msgstr "dokument valt till markörposition"
 
-#: ../src/orca/util.py:1446
+#: ../src/orca/util.py:1483
 msgid "document selected from cursor position"
 msgstr "dokument valt från markörposition"
 
