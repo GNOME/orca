@@ -96,6 +96,27 @@ OBJECT_ROLES = [rolenames.ROLE_CHECK_BOX,
                 rolenames.ROLE_TOGGLE_BUTTON,
                 rolenames.ROLE_AUTOCOMPLETE]
 
+def _getLinkBasename(obj):
+    """Returns the relevant information from the URI.  The idea is
+    to attempt to strip off all prefix and suffix, much like the
+    basename command in a shell."""
+
+    basename = None
+    if obj and obj.hyperlink:
+        uri = obj.hyperlink.getURI(0)
+        if uri and len(uri):
+            # Get the last thing after all the /'s.
+            #
+            basename = uri.split('/')[-1]
+
+            # Now, try to strip off the suffixes.
+            #
+            basename = basename.split('.')[0]
+            basename = basename.split('?')[0]
+            basename = basename.split('#')[0]
+
+    return basename
+
 ########################################################################
 #                                                                      #
 # Custom BrailleGenerator                                              #
@@ -112,6 +133,8 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
              self._getBrailleRegionsForAutocomplete
         self.brailleGenerators[rolenames.ROLE_ENTRY]        = \
              self._getBrailleRegionsForText
+        self.brailleGenerators[rolenames.ROLE_LINK]         = \
+             self._getBrailleRegionsForLink
 
     def _getBrailleRegionsForAutocomplete(self, obj):
         """Gets the braille for an autocomplete box.  We let the
@@ -301,6 +324,43 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         #
         return [regions, regions[focusedRegionIndex]]
 
+    def _getBrailleRegionsForLink(self, obj):
+        """Gets text to be displayed for the current object's name,
+        role, and any accelerators.
+
+        Arguments:
+        - obj: an Accessible
+
+        Returns a list where the first element is a list of Regions to
+        display and the second element is the Region which should get
+        focus.
+        """
+
+        self._debugGenerator("Gecko._getBrailleRegionsForLink", obj)
+
+        regions = []
+
+        text = ""
+        text = util.appendString(text, util.getDisplayedLabel(obj))
+        text = util.appendString(text, util.getDisplayedText(obj))
+
+        # If there's no text for the link, expose part of the
+        # URI to the user.
+        #
+        if len(text) == 0:
+            basename = _getLinkBasename(obj)
+            if basename:
+                text = basename
+
+        text = util.appendString(text, self._getTextForValue(obj))
+        text = util.appendString(text, self._getTextForRole(obj))
+
+        regions = []
+        componentRegion = braille.Component(obj, text)
+        regions.append(componentRegion)
+
+        return [regions, componentRegion]
+
     def getBrailleRegions(self, obj, groupChildren=True):
         return braillegenerator.BrailleGenerator.getBrailleRegions(\
             self, obj, groupChildren)
@@ -321,6 +381,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
              self._getSpeechForDocumentFrame
         self.speechGenerators[rolenames.ROLE_ENTRY]          = \
              self._getSpeechForText
+        self.speechGenerators[rolenames.ROLE_LINK]           = \
+             self._getSpeechForLink
 
     def _getSpeechForObjectRole(self, obj):
         """Prevents some roles from being spoken."""
@@ -458,6 +520,45 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         utterances.extend(self._getSpeechForObjectAvailability(obj))
 
         self._debugGenerator("Gecko._getSpeechForComboBox",
+                             obj,
+                             already_focused,
+                             utterances)
+
+        return utterances
+
+    def _getSpeechForLink(self, obj, already_focused):
+        """Gets a list of utterances to be spoken for the current
+        object's name, role, and any accelerators.
+
+        Arguments:
+        - obj: an Accessible
+        - already_focused: False if object just received focus
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        utterances = []
+
+        if not already_focused:
+            label = self._getSpeechForObjectLabel(obj)
+            utterances.extend(label)
+            name = self._getSpeechForObjectName(obj)
+            if name != label:
+                utterances.extend(name)
+
+            # If there's no text for the link, expose part of the
+            # URI to the user.
+            #
+            if not len(utterances):
+                basename = _getLinkBasename(obj)
+                if basename:
+                    utterances.append(basename)
+
+            utterances.extend(self._getSpeechForObjectRole(obj))
+
+        utterances.extend(self._getSpeechForObjectAvailability(obj))
+
+        self._debugGenerator("Gecko._getSpeechForLink",
                              obj,
                              already_focused,
                              utterances)
