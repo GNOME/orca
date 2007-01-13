@@ -2511,7 +2511,8 @@ class Script(default.Script):
 
             if obj.text:
                 strings = [self.getText(obj, startOffset, endOffset)]
-                if obj.role != rolenames.ROLE_DOCUMENT_FRAME:
+                if not obj.role in [rolenames.ROLE_DOCUMENT_FRAME,
+                                    rolenames.ROLE_TABLE_CELL]:
                     strings.extend(\
                         self.speechGenerator._getSpeechForObjectRole(obj))
             else:

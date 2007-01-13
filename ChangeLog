@@ -1,5 +1,7 @@
 2007-01-13  Willie Walker <william.walker@sun.com>
 
+	* src/orca/Gecko.py: don't speak 'cell'.
+
 	* src/orca/Gecko.py: clump speech utterances together by acss
 	in an attempt to avoid choppiness in speech.
 	
