@@ -2524,7 +2524,20 @@ class Script(default.Script):
 
     def speakContents(self, contents):
         utterances = self.getUtterancesFromContents(contents)
+
+        # Now...clump utterances together by acss.
+        #
+        clumped = []
+
         for [string, acss] in utterances:
+            if len(clumped) == 0:
+                clumped = [[string, acss]]
+            elif acss == clumped[-1][1]:
+                clumped[-1][0] += " " + string
+            else:
+                clumped.append([string, acss])
+
+        for [string, acss] in clumped:
             speech.speak(string, acss, False)
 
     def speakCharacterAtOffset(self, obj, characterOffset):
