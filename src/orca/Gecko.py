@@ -1298,6 +1298,9 @@ class Script(default.Script):
             if not obj:
                 continue
 
+            if self.isUselessImage(obj):
+                continue
+
             # If this is a label that's labelling something else, we'll
             # get the label via a braille generator. [[[TODO: WDW - this is
             # all to hack around the way checkboxes and their labels
@@ -2014,6 +2017,29 @@ class Script(default.Script):
 
         return linkObj
 
+    def isUselessImage(self, obj):
+        """Returns true if the given object is an image that doesn't
+        have any meaningful text associated with it and it is not
+        inside a link."""
+
+        if (not obj) or (obj.role != rolenames.ROLE_IMAGE):
+            return False
+
+        useless = False
+
+        text = util.getDisplayedText(obj)
+        if (not text) or (len(text) == 0):
+            text = util.getDisplayedLabel(obj)
+            if (not text) or (len(text) == 0):
+                useless = True
+
+        if useless:
+            link = self.getContainingLink(obj)
+            if link:
+                useless = False
+
+        return useless
+
     ####################################################################
     #                                                                  #
     # Methods to find previous and next objects.                       #
@@ -2501,6 +2527,9 @@ class Script(default.Script):
         for content in contents:
             [obj, startOffset, endOffset] = content
             if not obj:
+                continue
+
+            if self.isUselessImage(obj):
                 continue
 
             # If this is a label that's labelling something else, we'll

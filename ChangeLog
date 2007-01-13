@@ -1,5 +1,9 @@
 2007-01-13  Willie Walker <william.walker@sun.com>
 
+	* src/orca/Gecko.py: attempt to get rid of presentation of 
+	"useless" images.  Note that you can still navigate to these
+	useless images -- I'll work on fixing that later.
+	
 	* src/orca/Gecko.py: don't speak 'cell'.
 
 	* src/orca/Gecko.py: clump speech utterances together by acss
