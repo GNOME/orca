@@ -96,27 +96,6 @@ OBJECT_ROLES = [rolenames.ROLE_CHECK_BOX,
                 rolenames.ROLE_TOGGLE_BUTTON,
                 rolenames.ROLE_AUTOCOMPLETE]
 
-def _getLinkBasename(obj):
-    """Returns the relevant information from the URI.  The idea is
-    to attempt to strip off all prefix and suffix, much like the
-    basename command in a shell."""
-
-    basename = None
-    if obj and obj.hyperlink:
-        uri = obj.hyperlink.getURI(0)
-        if uri and len(uri):
-            # Get the last thing after all the /'s.
-            #
-            basename = uri.split('/')[-1]
-
-            # Now, try to strip off the suffixes.
-            #
-            basename = basename.split('.')[0]
-            basename = basename.split('?')[0]
-            basename = basename.split('#')[0]
-
-    return basename
-
 ########################################################################
 #                                                                      #
 # Custom BrailleGenerator                                              #
@@ -348,7 +327,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         # URI to the user.
         #
         if len(text) == 0:
-            basename = _getLinkBasename(obj)
+            basename = self._script.getLinkBasename(obj)
             if basename:
                 text = basename
 
@@ -550,7 +529,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             # URI to the user.
             #
             if not len(utterances):
-                basename = _getLinkBasename(obj)
+                basename = self._script.getLinkBasename(obj)
                 if basename:
                     utterances.append(basename)
 
@@ -1893,6 +1872,28 @@ class Script(default.Script):
             if child and (child.role == rolenames.ROLE_CAPTION):
                 return child
         return None
+
+    def getLinkBasename(self, obj):
+        """Returns the relevant information from the URI.  The idea is
+        to attempt to strip off all prefix and suffix, much like the
+        basename command in a shell."""
+
+        basename = None
+
+        if obj and obj.hyperlink:
+            uri = obj.hyperlink.getURI(0)
+            if uri and len(uri):
+                # Get the last thing after all the /'s.
+                #
+                basename = uri.split('/')[-1]
+
+                # Now, try to strip off the suffixes.
+                #
+                basename = basename.split('.')[0]
+                basename = basename.split('?')[0]
+                basename = basename.split('#')[0]
+
+        return basename
 
     ####################################################################
     #                                                                  #
