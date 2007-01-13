@@ -303,6 +303,50 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         #
         return [regions, regions[focusedRegionIndex]]
 
+    def _getBrailleRegionsForImage(self, obj):
+        """Gets text to be displayed for the current object's name,
+        role, and any accelerators.  This is usually the fallback
+        braille generator should no other specialized braille
+        generator exist for this object.
+
+        Arguments:
+        - obj: an Accessible
+
+        Returns a list where the first element is a list of Regions to
+        display and the second element is the Region which should get
+        focus.
+        """
+
+        self._debugGenerator("Gecko._getBrailleRegionsForImage", obj)
+
+        regions = []
+
+        text = ""
+        text = util.appendString(text, util.getDisplayedLabel(obj))
+        text = util.appendString(text, util.getDisplayedText(obj))
+
+        # If there's no text for the link, expose part of the
+        # link to the user if the image is in a link.
+        #
+        link = self._script.getContainingLink(obj)
+        if len(text) == 0:
+            if link:
+                [linkRegions, focusedRegion] = \
+                    self._getBrailleRegionsForLink(link)
+                for region in linkRegions:
+                    text += region.string
+        elif link:
+            text = util.appendString(text, self._getTextForRole(link))
+
+        text = util.appendString(text, self._getTextForValue(obj))
+        text = util.appendString(text, self._getTextForRole(obj))
+
+        regions = []
+        componentRegion = braille.Component(obj, text)
+        regions.append(componentRegion)
+
+        return [regions, componentRegion]
+
     def _getBrailleRegionsForLink(self, obj):
         """Gets text to be displayed for the current object's name,
         role, and any accelerators.
@@ -499,6 +543,52 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         utterances.extend(self._getSpeechForObjectAvailability(obj))
 
         self._debugGenerator("Gecko._getSpeechForComboBox",
+                             obj,
+                             already_focused,
+                             utterances)
+
+        return utterances
+
+    def _getSpeechForImage(self, obj, already_focused):
+        """Gets a list of utterances to be spoken for the current
+        object's name, role, and any accelerators.
+
+        The default speech will be of the following form:
+
+        label name role availability
+
+        Arguments:
+        - obj: an Accessible
+        - already_focused: False if object just received focus
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        utterances = []
+
+        if not already_focused:
+            label = self._getSpeechForObjectLabel(obj)
+            utterances.extend(label)
+            name = self._getSpeechForObjectName(obj)
+            if name != label:
+                utterances.extend(name)
+
+            # If there's no text for the image, expose the link to
+            # the user if the image is in a link.
+            #
+            link = self._script.getContainingLink(obj)
+            if not len(utterances):
+                if link:
+                    utterances.extend(self._getSpeechForLink(link,
+                                                             already_focused))
+            elif link:
+                utterances.extend(self._getSpeechForObjectRole(link))
+
+            utterances.extend(self._getSpeechForObjectRole(obj))
+
+        utterances.extend(self._getSpeechForObjectAvailability(obj))
+
+        self._debugGenerator("Gecko._getSpeechForImage",
                              obj,
                              already_focused,
                              utterances)
@@ -1243,6 +1333,14 @@ class Script(default.Script):
                 regions = [braille.Region(
                     string,
                     focusedCharacterOffset - startOffset)]
+                if obj.role == rolenames.ROLE_LINK:
+                    link = obj
+                else:
+                    link = self.getContainingLink(obj)
+                if link:
+                    regions.append(braille.Region(
+                        " " + rolenames.getBrailleForRoleName(link)))
+
                 if isFocusedObj \
                    and (focusedCharacterOffset >= startOffset) \
                    and (focusedCharacterOffset < endOffset):
@@ -1894,6 +1992,27 @@ class Script(default.Script):
                 basename = basename.split('#')[0]
 
         return basename
+
+    def getContainingLink(self, obj):
+        """Returns the link containing the given object, or None if the
+        given object is not in a link."""
+
+        if not obj:
+            return None
+
+        linkObj = None
+
+        obj = obj.parent
+        while obj and (obj != obj.parent):
+            if obj.role == rolenames.ROLE_LINK:
+                linkObj = obj
+                break
+            elif obj.role == rolenames.ROLE_DOCUMENT_FRAME:
+                break
+            else:
+                obj = obj.parent
+
+        return linkObj
 
     ####################################################################
     #                                                                  #

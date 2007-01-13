@@ -1,5 +1,10 @@
 2007-01-13  Willie Walker <william.walker@sun.com>
 
+	* src/orca/Gecko.py: add in detection of images that are links.
+	I'm not sure I like this since it only operates on images (I'd
+	like for the script to handle *anything* that's in a link), 
+	but it is much better now than it used to be.
+	
 	* src/orca/Gecko.py: move getLinkBasename to script instead of
 	making it a module method (just to be a bit tidier).
 	
