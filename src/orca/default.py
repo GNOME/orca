@@ -2166,7 +2166,7 @@ class Script(script.Script):
         if string == "BackSpace":
             # Speak the character that has just been deleted.
             #
-            character = event.any_data.value()
+            character = event.any_data
 
         elif string == "Delete":
             # Speak the character to the right of the caret after
@@ -2226,7 +2226,7 @@ class Script(script.Script):
 
         self.updateBraille(event.source)
 
-        text = event.any_data.value()
+        text = event.any_data
 
         # If this is a spin button, then speak the text and return.
         #
@@ -2287,7 +2287,7 @@ class Script(script.Script):
         # active-descendant-changed event has no children. In this case,
         # use the object that fired the event, otherwise, use the child.
         #
-        child = atspi.Accessible.makeAccessible(event.any_data.value())
+        child = event.any_data
         if child:
             orca.setLocusOfFocus(event, child)
         else:

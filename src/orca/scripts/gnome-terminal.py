@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2006 Sun Microsystems Inc.
+# Copyright 2005-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -107,7 +107,7 @@ class Script(default.Script):
 
         # Speak the character that has just been deleted.
         #
-        character = event.any_data.value().decode("UTF-8")[0].encode("UTF-8")
+        character = event.any_data.decode("UTF-8")[0].encode("UTF-8")
         if character.isupper():
             speech.speak(character, self.voices[settings.UPPERCASE_VOICE])
         else:
@@ -136,7 +136,7 @@ class Script(default.Script):
 
         self.updateBraille(event.source)
 
-        text = event.any_data.value()
+        text = event.any_data
 
         # When one does a delete in a terminal, the remainder of the
         # line is "inserted" instead of being shifted left.  We will

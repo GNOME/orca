@@ -1,3 +1,10 @@
+2007-01-14  Willie Walker <william.walker@sun.com>
+
+	* src/orca/atspi.py, src/orca/default.py,
+	src/orca/gnome-terminal.py: fix for bug 395749: make sure we
+	reference any_data values when we get an event rather than waiting
+	to work with them asynchronously.
+	
 2007-01-13  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py: attempt to get rid of presentation of 

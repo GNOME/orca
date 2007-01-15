@@ -64,31 +64,6 @@ class Event:
     object with their own attributes.
     """
 
-    def getAnyData(e):
-        """Returns the any_data field, compensating for any
-        differences between pre-1.7.0 and post-1.7.0 implementations
-        of the AT-SPI."""
-
-        # [[[TODO: WDW - HACK because AT-SPI 1.7.0 has
-        # introduced a binary incompatibility where the
-        # "any_data" of the event has changed from being a
-        # real "any_data" to an EventDetails structure that
-        # holds "any_data."  This check here helps us deal
-        # with the case where we might be talking to a
-        # pre-1.7.0 implementation or a 1.7.0+ implementation.
-        # What we're doing is just checking the CORBA typecode
-        # (as a string) to see if the type of the "any_data"
-        # field is this new structure.  If it is, we pull the
-        # "any_data" field from it.  If it isn't, we get the
-        # "any_data" field as we normally would.]]]
-        #
-        if e.any_data and (e.any_data.typecode().name) == "EventDetails":
-            return e.any_data.value().any_data
-        else:
-            return e.any_data
-
-    getAnyData = staticmethod(getAnyData)
-
     def __init__(self, e=None):
         if e:
             self.source   = Accessible.makeAccessible(e.source)
@@ -108,6 +83,21 @@ class Event:
                         details.host_application)
             else:
                 self.any_data = e.any_data
+
+            # We need to make sure we reference any object that comes
+            # to us via an any_data because we process events
+            # asynchronously.  If we don't reference them, we may
+            # end up with OBJECT_NOT_EXIST errors.  Please see
+            # http://bugzilla.gnome.org/show_bug.cgi?id=395749 for
+            # more information.
+            #
+            if self.type == "object:active-descendant-changed":
+                self.any_data = Accessible.makeAccessible(
+                    self.any_data.value())
+            elif self.type == "object:text-changed:insert":
+                self.any_data = self.any_data.value()
+            elif self.type == "object:text-changed:delete":
+                self.any_data = self.any_data.value()
         else:
             self.source   = None
             self.type     = None
