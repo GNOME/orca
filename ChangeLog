@@ -1,3 +1,8 @@
+2007-01-17  Willie Walker <william.walker@sun.com>
+
+	* src/orca/Gecko.py: rework combobox support as a result of
+	fixed/changed combobox support in the Gecko AT-SPI implementation.
+	
 2007-01-16  Joanmarie Diggs <j-diggs@comcast.net>
 
 	* bugs/bugs.html: Added an acroread section.

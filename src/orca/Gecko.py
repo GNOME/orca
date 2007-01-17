@@ -239,53 +239,38 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
         regions = []
 
-        # With Gecko, a combo box has a menu as a child.  If the menu
-        # has a name (usually the case when the object is labelled by
-        # something), then it is the text showing in the combo box.
-        # If not, then the combo box is probably not labelled by
-        # something.  If that's the case, then the name of the combo
-        # box is the text that is showing.  Except perhaps if the
-        # menu is popped up.  Then, the name is the name of the menu
-        # item that is selected.
+        # With Gecko, a combo box has a menu as a child.  We will use
+        # the menu's selection as the text being displayed by the
+        # combo box.  In addition, if the LABELLED_BY property is
+        # set, we will use it as the label of the combo box.  Otherwise,
+        # we'll fall back to the accessible name.
         #
         label = util.getDisplayedLabel(obj)
+        if not label:
+            label = obj.name
 
         focusedRegionIndex = 0
         if label and len(label):
             regions.append(braille.Region(label + " "))
             focusedRegionIndex = 1
 
-        # But...of course combo boxes inside HTML forms are different.
-        # There's no need to make anything consistent anywhere because
-        # that would just make life uninteresting.  In HTML forms, the
-        # third child of a combo box is a list.  We'll cue off of that.
-        #
-        if obj.childCount >= 3:
-            listObject = obj.child(2)
-            if listObject and (listObject.role != rolenames.ROLE_LIST):
-                listObject = None
-        else:
-            listObject = None
+        menu = None
+        for i in range(0, obj.childCount):
+            child = obj.child(i)
+            if child.role == rolenames.ROLE_MENU:
+                menu = child
+                break
 
-        if listObject:
-            selection = listObject.selection
+        # If the menu is not popped up, then it has no selection and
+        # its name is the item that the combo box is showing.
+        #
+        if menu:
+            selection = menu.selection
             if selection:
                 item = selection.getSelectedChild(0)
-                name = item.name
-                regions.append(braille.Region(name))
-        else:
-            menu = obj.child(0)
-            if menu and menu.name:
+                regions.append(braille.Region(item.name))
+            elif menu.name:
                 regions.append(braille.Region(menu.name))
-            else:
-                name = obj.name
-                if menu \
-                    and menu.state.count(atspi.Accessibility.STATE_VISIBLE):
-                    selection = menu.selection
-                    if selection:
-                        item = selection.getSelectedChild(0)
-                        name = item.name
-                regions.append(braille.Region(name))
 
         if settings.brailleVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
             regions.append(braille.Region(
@@ -491,16 +476,15 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
         utterances = []
 
-        # With Gecko, a combo box has a menu as a child.  If the menu
-        # has a name (usually the case when the object is labelled by
-        # something), then it is the text showing in the combo box.
-        # If not, then the combo box is probably not labelled by
-        # something.  If that's the case, then the name of the combo
-        # box is the text that is showing.  Except perhaps if the
-        # menu is popped up.  Then, the name is the name of the menu
-        # item that is selected.
+        # With Gecko, a combo box has a menu as a child.  We will use
+        # the menu's selection as the text being displayed by the
+        # combo box.  In addition, if the LABELLED_BY property is
+        # set, we will use it as the label of the combo box.  Otherwise,
+        # we'll fall back to the accessible name.
         #
         label = util.getDisplayedLabel(obj)
+        if not label:
+            label = obj.name
 
         if not already_focused and label:
             utterances.append(label)
@@ -508,37 +492,23 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         if not already_focused:
             utterances.extend(self._getSpeechForObjectRole(obj))
 
-        # But...of course combo boxes inside HTML forms are different.
-        # There's no need to make anything consistent anywhere because
-        # that would just make life uninteresting.  In HTML forms, the
-        # third child of a combo box is a list.  We'll cue off of that.
-        #
-        if obj.childCount >= 3:
-            listObject = obj.child(2)
-            if listObject and (listObject.role != rolenames.ROLE_LIST):
-                listObject = None
-        else:
-            listObject = None
+        menu = None
+        for i in range(0, obj.childCount):
+            child = obj.child(i)
+            if child.role == rolenames.ROLE_MENU:
+                menu = child
+                break
 
-        if listObject:
-            selection = listObject.selection
+        # If the menu is not popped up, then it has no selection and
+        # its name is the item that the combo box is showing.
+        #
+        if menu:
+            selection = menu.selection
             if selection:
                 item = selection.getSelectedChild(0)
-                name = item.name
-                utterances.append(name)
-        else:
-            menu = obj.child(0)
-            if menu and menu.name:
+                utterances.append(item.name)
+            elif menu.name:
                 utterances.append(menu.name)
-            else:
-                name = obj.name
-                if menu \
-                    and menu.state.count(atspi.Accessibility.STATE_VISIBLE):
-                    selection = menu.selection
-                    if selection:
-                        item = selection.getSelectedChild(0)
-                        name = item.name
-                utterances.append(name)
 
         utterances.extend(self._getSpeechForObjectAvailability(obj))
 
@@ -1700,20 +1670,28 @@ class Script(default.Script):
 
             if singleLine and not weHandleIt:
                 weHandleIt = keyboardEvent.event_string in ["Up", "Down"]
+
         elif keyboardEvent.modifiers & (1 << atspi.Accessibility.MODIFIER_ALT):
             # We won't handle keyboard events with Alt in them since
             # they are for things like going back in history and
             # opening and closing combo boxes.
             #
             weHandleIt = False
-        elif obj and (obj.role == rolenames.ROLE_LIST_ITEM):
-            list = obj.parent
-            if list and (list.role == rolenames.ROLE_LIST):
-                # We'll let Firefox handle the navigation of combo boxes.
-                #
-                combo = list.parent
-                if combo and (combo.role == rolenames.ROLE_COMBO_BOX):
-                    weHandleIt = False
+
+        elif obj and (obj.role == rolenames.ROLE_COMBO_BOX):
+            # We'll let Firefox handle the navigation of combo boxes.
+            #
+            weHandleIt = keyboardEvent.event_string in ["Left", "Right"]
+
+        elif obj and (obj.role == rolenames.ROLE_MENU_ITEM):
+            # We'll let Firefox handle the navigation of combo boxes.
+            #
+            parent = obj.parent
+            if parent:
+                parent = parent.parent
+                if parent and (parent.role == rolenames.ROLE_COMBO_BOX):
+                    weHandleIt = \
+                        keyboardEvent.event_string in ["Left", "Right"]
 
         return weHandleIt
 
