@@ -14,6 +14,7 @@ one might experience in the presence of the bug.</p>
     <li><a href="#evolution">Evolution Bugs</a></li>
     <li><a href="#firefox">Firefox Bugs</a></li>
     <li><a href="#openoffice">OpenOffice Bugs</a></li>
+    <li><a href="#acroread">Acrobat Reader Bugs</a></li>
 </ul>
 
 <hr>
@@ -779,6 +780,191 @@ some texts in Account Setting->Security dialog need LABEL_FOR set</td>
     <td><b>USABILITY PROBLEM - SHOULD BE FIXED</b>
         <br>Workaround: None currently known.
         <br>Still present in OOo v2.1.</td>
+  </tr>
+
+</table>
+
+<hr>
+
+<h1 id="acroread">Acrobat Reader Bug List</h1>
+
+<h2>Where to file Acrobat Reader bugs:</h2>
+<p>Adobe does not have a public bug-tracking system for Acrobat Reader.</p>
+
+<table border=1>
+
+  <tr>
+    <td><b>Component</b></td>
+    <td><b>Bug</b></td>
+    <td><b>Fixed by Them</b></td>
+    <td><b>Verified In Version</b></td>
+    <td><b>Notes</b></td>
+  </tr>
+
+  <tr bgcolor="red">
+    <td>Acroread 7.0.8+</td>
+    <td>Acroread does not generate an event when text selection changes</td>
+    <td>No</td>
+    <td>No</td>
+    <td><b>USABILITY PROBLEM - MUST BE FIXED</b>
+        <br>Unable to accurately notify the user about what text has been
+            selected/unselected, making it difficult for users to accurately
+            and efficiently select and copy a portion of a document.
+        <br>This bug can be reproduced by logging 
+            "object:text-selection-changed" events in AT-POKE and then 
+            attempting to select text in acroread.
+    </td>
+  </tr>
+
+  <tr bgcolor="red">
+    <td>Acroread 7.0.8+</td>
+    <td>Acroread does not expose selected text through getNSelections</td>
+    <td>No</td>
+    <td>No</td>
+    <td><b>USABILITY PROBLEM - MUST BE FIXED</b>
+        <br>Unable to accurately notify the user about what text is currently
+            selected/unselected, making it difficult for users to accurately
+            and efficiently select and copy a portion of a document and/or
+            get reoriented to the screen contents and state.
+        <br>This bug can be reproduced using the 
+            <a href="acroread_diag.py">acroread_diag.py</a> script.
+    </td>
+  </tr>
+  
+  <tr bgcolor="red">
+    <td>Acroread 7.0.8+</td>
+    <td>Acroread does not respond to setCaretOffset</td>
+    <td>No</td>
+    <td>No</td>
+    <td><b>USABILITY PROBLEM - MUST BE FIXED</b>
+        <ol>
+            <li>Unable to position the caret when a "say all" has been 
+                interrupted/completed, making it difficult to read a large 
+                document in chunks (e.g. by paragraph or page).</li>
+            <li>Unable to position the caret when a braille user presses a 
+                cursor routing key on his/her display.</li>
+        </ol>
+        This bug can be reproduced using the 
+        <a href="acroread_diag.py">acroread_diag.py</a> script as well as
+        by using AT-POKE.
+    </td>
+  </tr>
+
+  <tr bgcolor="red">
+    <td>Acroread 7.0.8+</td>
+    <td>Acroread does not expose any text attribute information</td>
+    <td>No</td>
+    <td>No</td>
+    <td><b>USABILITY PROBLEM - MUST BE FIXED</b>
+        <br>Unable to provide any information about the appearance of the
+            document, making it necessary for a user who needs this
+            information to seek sighted assistance.
+        <br>This bug can be reproduced using the 
+            <a href="acroread_diag.py">acroread_diag.py</a> script.
+    </td>
+  </tr>
+
+  <tr bgcolor="red">
+    <td>Acroread 7.0.8+</td>
+    <td>Acroread does not expose any size and position information
+        for the character/glyph at a given offset</td>
+    <td>No</td>
+    <td>No</td>
+    <td><b>USABILITY PROBLEM - MUST BE FIXED</b>
+        <br>Users cannot use flat review to examine a document.
+        <br>This bug can be reproduced using the 
+            <a href="acroread_diag.py">acroread_diag.py</a> script.
+    </td>
+  </tr>
+  
+  <tr bgcolor="red">
+    <td>Acroread 7.0.8+</td>
+    <td>Acroread does not generate events when navigating within
+        the text of an image.</td>
+    <td>No</td>
+    <td>No</td>
+    <td><b>USABILITY PROBLEM - MUST BE FIXED</b>
+        <br>Some documents present information in an image whose
+            name contains the full text being displayed.  Please
+            see <a href="http://www.census.gov/prod/2002pubs/p20-542.pdf">
+            this document from census.gov</a>.  In these circumstances,
+            one can use the keyboard to navigate within as well as select
+            the text, but without the corresponding events we cannot
+            provide access to the text.
+        <br>This bug can be reproduced by logging events in AT-POKE and then 
+            using the keyboard to navigate and select text within the 
+            document.
+    </td>
+  </tr>
+  
+  
+  <tr>
+    <td>Acroread 7.0.8+</td>
+    <td>Acroread should provide additional options for keyboard navigation
+        within tables.</td>
+    <td>No</td>
+    <td>No</td>
+    <td><b>USABILITY PROBLEM - SHOULD BE FIXED</b>
+        <br>In a typical table within Acrobat Reader, using the arrow keys 
+            moves you from cell to cell horizontally first.  This makes it
+            quite tedious and time-consuming to navigate within a table if
+             you cannot use a mouse.  There should be commands to:
+            <ul>
+                <li>Move to the next/previous row</li>
+                <li>Move to the beginning/end of the row</li>
+                <li>Move to the beginning/end of the table</li>
+            </ul>
+        Note: This cannot be remedied within Orca due to the fact that
+        acroread does not respond to setCaretOffset.  
+        <br>This bug can be reproduced using the 
+            <a href="acroread_diag.py">acroread_diag.py</a> script.
+    </td>
+  </tr>
+  
+  
+  <tr>
+    <td>Acroread 7.0.8+</td>
+    <td>Text boxes in the Search Panel should be labeled</td>
+    <td>No</td>
+    <td>No</td>
+    <td><b>USABILITY PROBLEM - SHOULD BE FIXED</b>
+        <br>The text boxes are not labeled, but preceded in the
+            drawing area by an object of role "unknown" which contains
+            the text that should be the label.
+        <br>This bug can be reproduced using AT-POKE.
+    </td>
+  </tr>
+  
+  <tr>
+    <td>Acroread 7.0.8+</td>
+    <td>It is not possible to access the page number text box in the
+        Acroread tool bar</td>
+    <td>No</td>
+    <td>No</td>
+    <td><b>USABILITY PROBLEM - SHOULD BE FIXED</b>
+        <br>The text box near the bottom of the acroread reader cannot
+            be given focus without using the mouse.  In addition, its
+            contents cannot be accessed via at-spi.  As a result, there
+            is no way to notify the user of his/her new location when
+            navigating by page or after performing a search.
+        <br>Work around: The user can manually get into the GoTo Page
+            dialog to obtain the current page and then use flat review
+            to obtain the total number of pages, but fixing this problem
+            would make the user much more efficient.
+        <br>This bug can be reproduced using AT-POKE.
+    </td>
+  </tr>
+  
+    <tr>
+    <td>Acroread 7.0.8+</td>
+    <td>Acroread does not respond to getTextBeforeOffset, getTextAfterOffset;
+        does not implement sentence boundary types</td>
+    <td>No</td>
+    <td>No</td>
+    <td><b>NICE TO FIX</b>
+        <br>This bug can be reproduced using the 
+            <a href="acroread_diag.py">acroread_diag.py</a> script.
+    </td>
   </tr>
 
 </table>
