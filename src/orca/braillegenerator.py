@@ -1086,13 +1086,16 @@ class BrailleGenerator:
         and the second element is the Region which should get focus.
         """
 
+        self._debugGenerator("_getBrailleRegionsForTableColumnHeader", obj)
+
         regions = []
 
         # Adding in a check here to make sure that the parent is a
         # valid table. It's possible that the parent could be a
         # table cell too (see bug #351501).
         #
-        if settings.readTableCellRow and obj.parent.table:
+        if settings.readTableCellRow and obj.parent.table \
+            and (not self._script.isLayoutOnly(obj.parent)):
             rowRegions = []
             savedBrailleVerbosityLevel = settings.brailleVerbosityLevel
             settings.brailleVerbosityLevel = \

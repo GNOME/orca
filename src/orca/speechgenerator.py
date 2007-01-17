@@ -1259,7 +1259,8 @@ class SpeechGenerator:
         utterances = []
 
         if (not already_focused):
-            if settings.readTableCellRow and obj.parent.table:
+            if settings.readTableCellRow and obj.parent.table \
+                and (not self._script.isLayoutOnly(obj.parent)):
                 parent = obj.parent
                 row = parent.table.getRowAtIndex(obj.index)
                 column = parent.table.getColumnAtIndex(obj.index)
@@ -1292,6 +1293,11 @@ class SpeechGenerator:
                 utterances = self._getSpeechForTableCell(obj, already_focused)
         else:
             utterances = self._getSpeechForTableCell(obj, already_focused)
+
+        self._debugGenerator("_getSpeechForTableCellRow",
+                             obj,
+                             already_focused,
+                             utterances)
 
         return utterances
 
