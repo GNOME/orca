@@ -1288,10 +1288,12 @@ class Script(default.Script):
             # it's wreaking havoc on us.  This is a hack to try to
             # get around that.]]]
             #
-            isFocusedObj = (obj == focusedObj) \
-                           or ((obj.role == focusedObj.role) \
-                               and (obj.name == focusedObj.name) \
-                               and (obj.parent == focusedObj.parent))
+            isFocusedObj = \
+                (obj == focusedObj) \
+                or ((obj.role == focusedObj.role) \
+                    and (obj.name == focusedObj.name) \
+                    and (obj.parent == focusedObj.parent)) \
+                or obj.state.count(atspi.Accessibility.STATE_FOCUSED)
 
             if obj.role in [rolenames.ROLE_ENTRY,
                             rolenames.ROLE_PASSWORD_TEXT]:

@@ -1,5 +1,8 @@
 2007-01-17  Willie Walker <william.walker@sun.com>
 
+	* src/orca/Gecko.py: provide better braille cursor tracking in
+	link text.
+	
 	* src/orca/Gecko.py: ignore empty table cells that appear to be
 	there solely for layout purposes.  This helps a bit more with 
 	navigation.
