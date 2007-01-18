@@ -2112,7 +2112,8 @@ class Script(default.Script):
                                                  includeNonText)
             except:
                 debug.printException(debug.LEVEL_SEVERE)
-        elif includeNonText and (startOffset < 0):
+        elif includeNonText and (startOffset < 0) \
+            and (not self.isUselessImage(obj)):
             extents = obj.extents
             if (extents.width != 0) and (extents.height != 0):
                 return [obj, 0]
@@ -2186,13 +2187,12 @@ class Script(default.Script):
                     includeNonText)
             except:
                 debug.printException(debug.LEVEL_SEVERE)
-        elif includeNonText and (startOffset < 0):
+        elif includeNonText and (startOffset < 0) \
+            and (not self.isUselessImage(obj)):
             extents = obj.extents
             if (extents.width != 0) and (extents.height != 0):
                 return [obj, 0]
 
-        # If we're here, we need to start looking up the tree
-        #
         # If we're here, we need to start looking up the tree,
         # going no higher than the document frame, of course.
         #

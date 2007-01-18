@@ -1,4 +1,15 @@
-2007-01-12  Lynn Monsanto <lynn.monsanto@sun.com>
+2007-01-17  Willie Walker <william.walker@sun.com>
+
+	* src/orca/Gecko.py: ignore useless images when navigating.  This
+	seems to help with a number (but not all) of navigation problems.
+	Still need to look at problems where we seem to get stuck on a
+	line.  I suspect this has to do with small font sizes on a page.
+	If you want to experiment, press Ctrl+Plus to increase the font
+	size.  I've found it makes the current Orca logic work a little
+	better, and I'll look to see what we can do to avoid requiring
+	the user to manually increase the font size.
+	
+2007-01-17  Lynn Monsanto <lynn.monsanto@sun.com>
 
 	* src/orca/scripts/Thunderbird.py: Added a speechgenerator
 	to filter out unrelated text in the Account Settings dialog.
