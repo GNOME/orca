@@ -1,5 +1,9 @@
 2007-01-17  Willie Walker <william.walker@sun.com>
 
+	* src/orca/Gecko.py: ignore empty table cells that appear to be
+	there solely for layout purposes.  This helps a bit more with 
+	navigation.
+	
 	* src/orca/Gecko.py: ignore useless images when navigating.  This
 	seems to help with a number (but not all) of navigation problems.
 	Still need to look at problems where we seem to get stuck on a

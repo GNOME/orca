@@ -1268,7 +1268,7 @@ class Script(default.Script):
             if not obj:
                 continue
 
-            if self.isUselessImage(obj):
+            if self.isLayoutOnly(obj):
                 continue
 
             # If this is a label that's labelling something else, we'll
@@ -1995,21 +1995,22 @@ class Script(default.Script):
 
         return linkObj
 
-    def isUselessImage(self, obj):
-        """Returns true if the given object is an image that doesn't
-        have any meaningful text associated with it and it is not
-        inside a link."""
+    def isUselessObject(self, obj):
+        """Returns true if the given object is an obj that doesn't
+        have any meaning associated with it and it is not inside a
+        link."""
 
-        if (not obj) or (obj.role != rolenames.ROLE_IMAGE):
-            return False
+        if not obj:
+            return True
 
         useless = False
 
-        text = util.getDisplayedText(obj)
-        if (not text) or (len(text) == 0):
-            text = util.getDisplayedLabel(obj)
+        if obj.role in [rolenames.ROLE_IMAGE, rolenames.ROLE_TABLE_CELL]:
+            text = util.getDisplayedText(obj)
             if (not text) or (len(text) == 0):
-                useless = True
+                text = util.getDisplayedLabel(obj)
+                if (not text) or (len(text) == 0):
+                    useless = True
 
         if useless:
             link = self.getContainingLink(obj)
@@ -2017,6 +2018,18 @@ class Script(default.Script):
                 useless = False
 
         return useless
+
+    def isLayoutOnly(self, obj):
+        """Returns True if the given object is a table and is for layout
+        purposes only."""
+
+        if self.isUselessObject(obj):
+            debug.println(debug.LEVEL_FINEST,
+                          "Object deemed to be useless: " \
+                          + obj.toString("", True))
+            return True
+        else:
+            return default.Script.isLayoutOnly(self, obj)
 
     ####################################################################
     #                                                                  #
@@ -2113,7 +2126,7 @@ class Script(default.Script):
             except:
                 debug.printException(debug.LEVEL_SEVERE)
         elif includeNonText and (startOffset < 0) \
-            and (not self.isUselessImage(obj)):
+            and (not self.isLayoutOnly(obj)):
             extents = obj.extents
             if (extents.width != 0) and (extents.height != 0):
                 return [obj, 0]
@@ -2188,7 +2201,7 @@ class Script(default.Script):
             except:
                 debug.printException(debug.LEVEL_SEVERE)
         elif includeNonText and (startOffset < 0) \
-            and (not self.isUselessImage(obj)):
+            and (not self.isLayoutOnly(obj)):
             extents = obj.extents
             if (extents.width != 0) and (extents.height != 0):
                 return [obj, 0]
@@ -2507,7 +2520,7 @@ class Script(default.Script):
             if not obj:
                 continue
 
-            if self.isUselessImage(obj):
+            if self.isLayoutOnly(obj):
                 continue
 
             # If this is a label that's labelling something else, we'll
