@@ -87,46 +87,14 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         labels = util.findUnrelatedLabels(obj)
 
         for label in labels:
+            if label.name.endswith(_(":")):
+                # Filter out unrelated labels that end with a colon.
+                # This is a temporary workaround for a Thunderbird
+                # bug, where many (all?) unrelated labels ending in a
+                # colon, do not have the LABEL_FOR relation set.
+                continue
             utterances.append(label.name)
 
-        # Remove all static text except for text at the beginning
-        # of the dialog. This is what the user needs to hear
-        # when the dialog is first presented.
-        if utterances[0] == 'Account Settings':
-
-            if utterances[1] == 'Server Settings':
-                utterances = utterances[0:4]
-                
-            elif utterances[1] == 'Copies & Folders':
-                utterances = utterances[0:2]
-        
-            elif utterances[1] == 'Composition & Addressing':
-                utterances = utterances[0:2]
-        
-            elif utterances[1] == 'Offline & Disk Space':
-                utterances = utterances[0:3]
-        
-            elif utterances[1] == 'Junk Settings':
-                utterances = utterances[0:3]
-        
-            elif utterances[1] == 'Return Receipts':
-                utterances = utterances[0:2]
-        
-            elif utterances[1] == 'Security':
-                utterances = utterances[0:3]
-        
-            elif utterances[1] == 'Account Settings':
-                utterances = utterances[1:3]
-        
-            elif utterances[1] == 'Disk Space':
-                utterances = utterances[0:2]
-        
-            elif utterances[1] == 'Junk Settings':
-                utterances = utterances[0:3]
-        
-            elif utterances[1] == 'Outgoing Server (SMTP) Settings':
-                utterances = utterances[0:2]
-        
         self._debug("unrelated labels='%s'" % utterances)
         return utterances
 
@@ -268,12 +236,12 @@ class Script(Gecko.Script):
         top = util.getTopLevel(obj)
         consume = False
 
-        # self._debug("onFocus: name='%s', role='%s', top name='%s', top role='%s'" \
-        #             % (obj.name, obj.role, top.name, top.role))
+        self._debug("onFocus: name='%s', role='%s'" \
+                    % (obj.name, obj.role))
 
         # Don't speak a chrome URL.
-        # if obj.name.startswith(_("chrome://")):
-        #    return
+        if obj.name.startswith(_("chrome://")):
+            return
 
         # Handle dialogs.
         if top.role == rolenames.ROLE_DIALOG:

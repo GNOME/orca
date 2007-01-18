@@ -1,3 +1,10 @@
+2007-01-18  Lynn Monsanto <lynn.monsanto@sun.com>
+
+	* src/orca/scripts/Thunderbird.py: Filters out unrelated 
+	labels that end with a colon. This is a temporary workaround 
+	for a Thunderbird bug, where many (all?) unrelated labels 
+	ending in a colon, do not have the LABEL_FOR relation set.
+
 2007-01-18  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/bugs.html:
