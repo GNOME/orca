@@ -2592,8 +2592,12 @@ class Script(default.Script):
             else:
                 clumped.append([string, acss])
 
-        for [string, acss] in clumped:
-            speech.speak(string, acss, False)
+        if (len(clumped) == 1) and (clumped[0][0] == "\n"):
+            if settings.speakBlankLines:
+                speech.speak(_("blank"), clumped[0][1], False)
+        else:
+            for [string, acss] in clumped:
+                speech.speak(string, acss, False)
 
     def speakCharacterAtOffset(self, obj, characterOffset):
         """Speaks the character at the given characterOffset in the
