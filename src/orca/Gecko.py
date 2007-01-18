@@ -634,6 +634,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             #
             if (parent.role == rolenames.ROLE_FILLER) \
                 or (parent.role == rolenames.ROLE_FORM) \
+                or (parent.role == rolenames.ROLE_LINK) \
                 or (parent.role == rolenames.ROLE_LIST_ITEM) \
                 or (parent.role == rolenames.ROLE_LIST) \
                 or (parent.role == rolenames.ROLE_PARAGRAPH) \
@@ -1114,6 +1115,19 @@ class Script(default.Script):
             #entry = self.getAutocompleteEntry(event.source)
             #orca.setLocusOfFocus(event, entry)
             return
+
+        # If a link gets focus, it might be a link that contains just an
+        # image, as we often see in web pages.  In these cases, we give
+        # the image focus and announce it.
+        #
+        if event.source.role == rolenames.ROLE_LINK:
+            containingLink = self.getContainingLink(orca_state.locusOfFocus)
+            if containingLink == event.source:
+                return
+            elif event.source.childCount == 1:
+                child = event.source.child(0)
+                orca.setLocusOfFocus(event, child)
+                return
 
         default.Script.onFocus(self, event)
 

@@ -12,8 +12,12 @@
           certain input in gnome-terminal when key echo is set to off 
           (on Ubuntu Feisty).
 
-2007-01-17  Willie Walker <william.walker@sun.com>
+2007-01-18  Willie Walker <william.walker@sun.com>
 
+	* src/orca/Gecko.py: provide a little better navigation around
+	links that are images -- the attempt here is to reduce verbosity
+	and to reduce the number of keystrokes to arrow over such a beast.
+	
 	* src/orca/Gecko.py: provide better braille cursor tracking in
 	plain old 'static' text.
 	
