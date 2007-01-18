@@ -1268,9 +1268,6 @@ class Script(default.Script):
             if not obj:
                 continue
 
-            if self.isLayoutOnly(obj):
-                continue
-
             # If this is a label that's labelling something else, we'll
             # get the label via a braille generator. [[[TODO: WDW - this is
             # all to hack around the way checkboxes and their labels
@@ -1294,6 +1291,25 @@ class Script(default.Script):
                     and (obj.name == focusedObj.name) \
                     and (obj.parent == focusedObj.parent)) \
                 or obj.state.count(atspi.Accessibility.STATE_FOCUSED)
+
+            # [[[TODO: WDW - one more stab before we say it is the focused
+            # object.  If the text attributes are different, we definitely
+            # know they are not the same.]]]
+            #
+            if isFocusedObj:
+                if obj.text:
+                    if not focusedObj.text:
+                        isFocusedObj = False
+                    else:
+                        string1 = self.getText(obj,
+                                               startOffset,
+                                               endOffset)
+                        string2 = self.getText(focusedObj,
+                                               startOffset,
+                                               endOffset)
+                        isFocusedObj = string1 == string2
+                else:
+                    isFocusedObj = not focusedObj.text
 
             if obj.role in [rolenames.ROLE_ENTRY,
                             rolenames.ROLE_PASSWORD_TEXT]:
@@ -1320,6 +1336,9 @@ class Script(default.Script):
                    and (focusedCharacterOffset >= startOffset) \
                    and (focusedCharacterOffset < endOffset):
                     focusedRegion = regions[0]
+
+            elif self.isLayoutOnly(obj):
+                continue
             else:
                 [regions, fRegion] = \
                           self.brailleGenerator.getBrailleRegions(obj)
@@ -2522,9 +2541,6 @@ class Script(default.Script):
             if not obj:
                 continue
 
-            if self.isLayoutOnly(obj):
-                continue
-
             # If this is a label that's labelling something else, we'll
             # get the label via a speech generator.
             #
@@ -2537,6 +2553,8 @@ class Script(default.Script):
                                     rolenames.ROLE_TABLE_CELL]:
                     strings.extend(\
                         self.speechGenerator._getSpeechForObjectRole(obj))
+            elif self.isLayoutOnly(obj):
+                continue
             else:
                 strings = self.speechGenerator.getSpeech(obj, False)
 
