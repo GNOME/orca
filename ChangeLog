@@ -1,5 +1,18 @@
 2007-01-19  Willie Walker <william.walker@sun.com>
 
+	* src/orca/Gecko.py: add option, "arrowToLineBeginning". If True,
+	it tells us to position the caret at the beginning of a line when
+	arrowing up and down.  If False, we'll try to position the caret
+	directly above or below the current caret position.  The default
+	value is True.  Note that the default value of True represents a
+	new behavior.  The old behavior was to try to position the caret
+	directly above or below the current caret position.  If you want
+	to experiment, you can add the following lines to your
+	~/.orca/user-settings.py or ~/.orca/orca-customizations.py files:
+	
+	import orca.Gecko
+	orca.Gecko.arrowToLineBeginning = False
+	
 	* src/orca/orca_gui_prefs.py, src/orca/orca_console_prefs.py,
 	src/orca/gnomespeechfactory.py: fix for bug 397797 to expose
 	and use the language attribute for speech.

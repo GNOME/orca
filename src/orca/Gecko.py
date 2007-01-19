@@ -54,6 +54,12 @@ from orca_i18n import _
 #
 controlCaretNavigation = False
 
+# If True, it tells us to position the caret at the beginning of a
+# line when arrowing up and down.  If False, we'll try to position the
+# caret directly above or below the current caret position.
+#
+arrowToLineBeginning = True
+
 # Roles that imply their text starts on a new line.
 #
 NEWLINE_ROLES = [rolenames.ROLE_PARAGRAPH,
@@ -2801,10 +2807,16 @@ class Script(default.Script):
 
         #print "GPL ENDED UP AT", lastObj.role, lineExtents
 
+        contents = self.getLineContentsAtOffset(lastObj,
+                                                lastCharacterOffset)
+
+        if arrowToLineBeginning:
+            [lastObj, lastCharacterOffset, endOffset] = contents[0]
+
         self.setCaretPosition(lastObj, lastCharacterOffset)
+
         self.updateBraille(lastObj)
-        self.speakContents(self.getLineContentsAtOffset(lastObj,
-                                                        lastCharacterOffset))
+        self.speakContents(contents)
 
         # Debug...
         #
@@ -2844,6 +2856,10 @@ class Script(default.Script):
                     if not crossedLineBoundary:
                         lineExtents = extents
                         crossedLineBoundary = True
+                        if arrowToLineBeginning:
+                            [lastObj, lastCharacterOffset] = \
+                                [obj, characterOffset]
+                            break
                     else:
                         break
                 elif crossedLineBoundary \
