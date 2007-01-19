@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2006 Sun Microsystems Inc.
+# Copyright 2005-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -363,7 +363,50 @@ class SpeechServer(speechserver.SpeechServer):
         if self.__speakers.has_key(acss.name()):
             return self.__speakers[acss.name()]
 
-        # Create a new voice for all unique ACSS's we see.
+        # Search for matching languages first, as that is the most
+        # important thing.  We also try to look for the desired language
+        # first, but then fall back to the default language.
+        #
+        languages = []
+        try:
+            if acss.has_key(ACSS.FAMILY):
+                family = acss[ACSS.FAMILY]
+                languages = [family[speechserver.VoiceFamily.LOCALE]]
+            elif defaultACSS.has_key(ACSS.FAMILY):
+                family = defaultACSS[ACSS.FAMILY]
+                languages = [family[speechserver.VoiceFamily.LOCALE]]
+        except:
+            pass
+
+        # [[[TODO: WDW - I'm using an array of languages here because
+        # it will give us the opportunity to provide a match for
+        # gnome-speech driver implementations that do not designate
+        # languages using the combination of ISO 639-1 and 3166-1
+        # language_region strings (e.g., they use 'english' instead of
+        # "en_US").  Thus, we could detect the default language is
+        # "en_US" and just automatically append "english" and such to
+        # the list to allow us to accomodate these kind of
+        # variants.]]]
+        #
+        if len(languages) == 0:
+            import locale
+            language, encoding = locale.getdefaultlocale()
+            languages = [language]
+
+        voices = self.__driver.getAllVoices()
+        foundVoices = []
+        for voice in voices:
+            if voice.language in languages:
+                foundVoices.append(voice)
+
+        # If we didn't find any matches, well...punt.
+        #
+        if len(foundVoices):
+            voices = foundVoices
+        else:
+            voices = self.__driver.getAllVoices()
+
+        # Now search for a matching family name.
         #
         familyName = None
         if acss.has_key(ACSS.FAMILY):
@@ -373,7 +416,6 @@ class SpeechServer(speechserver.SpeechServer):
             family = defaultACSS[ACSS.FAMILY]
             familyName = family[speechserver.VoiceFamily.NAME]
 
-        voices = self.__driver.getAllVoices()
         found = False
         for voice in voices:
             if (not familyName) or (voice.name == familyName):
@@ -651,9 +693,9 @@ class SpeechServer(speechserver.SpeechServer):
                 #
                 isSpecial = isPrev and isNext and (oldText[i] == ".")
 
-                # If this is a dash and the users punctuation level is not 
+                # If this is a dash and the users punctuation level is not
                 # NONE and the previous character is a white space character,
-                # and the next character is a dollar sign or a digit, then 
+                # and the next character is a dollar sign or a digit, then
                 # always speak it. See bug #392939.
                 #
                 prevCharMatches = nextCharMatches = False

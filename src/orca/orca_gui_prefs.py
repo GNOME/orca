@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2006 Sun Microsystems Inc.
+# Copyright 2006-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -655,14 +655,16 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         if len(self.families) > 1:
             i = 1
             for family in self.families:
-                name = family[speechserver.VoiceFamily.NAME]
+                name = family[speechserver.VoiceFamily.NAME] \
+                    + " (%s)" % family[speechserver.VoiceFamily.LOCALE]
                 self.acss = acss.ACSS({acss.ACSS.FAMILY : family})
                 self.voiceChoices[i] = self.acss
                 self.voicesModel.append((i, name))
                 i += 1
             self.defaultACSS = self.voiceChoices[1]
         else:
-            name = self.families[0][speechserver.VoiceFamily.NAME]
+            name = self.families[0][speechserver.VoiceFamily.NAME] \
+                + " (%s)" % self.families[0][speechserver.VoiceFamily.LOCALE]
             self.voicesModel.append((1, name))
             self.defaultACSS = \
                 acss.ACSS({acss.ACSS.FAMILY : self.families[0]})
@@ -743,15 +745,15 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         familyName = None
-        family = self._getKeyForVoiceType(voiceType, "family")
+        family = self._getKeyForVoiceType(voiceType, acss.ACSS.FAMILY)
 
         if family:
-            if family.has_key("name"):
-                familyName = family["name"]
+            if family.has_key(speechserver.VoiceFamily.NAME):
+                familyName = family[speechserver.VoiceFamily.NAME]
 
         return familyName
 
-    def _setFamilyNameForVoiceType(self, voiceType, value):
+    def _setFamilyNameForVoiceType(self, voiceType, name, language):
         """Set the name of the voice family for the given voice type.
 
         Arguments:
@@ -759,13 +761,15 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         - value: the name of the voice family to set.
         """
 
-        family = self._getKeyForVoiceType(voiceType, "family", False)
+        family = self._getKeyForVoiceType(voiceType, acss.ACSS.FAMILY, False)
         if family:
-            family["name"] = value
+            family[speechserver.VoiceFamily.NAME] = name
+            family[speechserver.VoiceFamily.LOCALE] = language
         else:
             voice = self._getVoiceForVoiceType(voiceType)
-            voice["family"] = {}
-            voice["family"]["name"] = value
+            voice[acss.ACSS.FAMILY] = {}
+            voice[acss.ACSS.FAMILY][speechserver.VoiceFamily.NAME] = name
+            voice[acss.ACSS.FAMILY][speechserver.VoiceFamily.LOCALE] = language
 
     def _getRateForVoiceType(self, voiceType):
         """Get the rate value for the given voice type.
@@ -1207,13 +1211,17 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         Arguments:
         - widget: the component that generated the signal.
         """
-
-        iter = widget.get_active_iter()
-        model = widget.get_model()
-
-        name = model.get_value(iter, 1)
         voiceType = self.voiceType.get_active_text()
-        self._setFamilyNameForVoiceType(voiceType, name)
+        selectedIndex = widget.get_active()
+        try:
+            acss = self.voiceChoices[selectedIndex + 1]
+            family = acss[acss.FAMILY]
+            name = family[speechserver.VoiceFamily.NAME]
+            language = family[speechserver.VoiceFamily.LOCALE]
+            self._setFamilyNameForVoiceType(voiceType, name, language)
+        except:
+            debug.printException(debug.LEVEL_WARNING)
+            pass
 
     def speechIndentationChecked(self, widget):
         """Signal handler for the "toggled" signal for the

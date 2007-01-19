@@ -1,3 +1,9 @@
+2007-01-19  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca_gui_prefs.py, src/orca/orca_console_prefs.py,
+	src/orca/gnomespeechfactory.py: fix for bug 397797 to expose
+	and use the language attribute for speech.
+	
 2007-01-18  Lynn Monsanto <lynn.monsanto@sun.com>
 
 	* src/orca/scripts/Thunderbird.py: Temporary Braille workaround

@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2006 Sun Microsystems Inc.
+# Copyright 2004-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -169,7 +169,8 @@ def setupSpeech(prefsDict):
         i = 1
         choices = {}
         for family in families:
-            name = family[speechserver.VoiceFamily.NAME]
+            name = family[speechserver.VoiceFamily.NAME] \
+                + " (%s)" %  family[speechserver.VoiceFamily.LOCALE]
             voice = acss.ACSS({acss.ACSS.FAMILY : family})
             sayAndPrint(_("%d. %s") % (i, name),
                         False,              # stop
