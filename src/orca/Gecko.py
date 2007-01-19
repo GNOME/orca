@@ -2660,8 +2660,13 @@ class Script(default.Script):
                 # [[[See https://bugzilla.mozilla.org/show_bug.cgi?id=363214.
                 # We need to set focus on the parent of the document frame.]]]
                 #
-                if objectForFocus.role == rolenames.ROLE_DOCUMENT_FRAME:
-                    objectForFocus = objectForFocus.parent
+                # [[[WDW - additional note - just setting focus on the
+                # first focusable object seems to do the trick, so we
+                # won't follow the advice from 363214.  Besides, if we
+                # follow that advice, it doesn't work.]]]
+                #
+                #if objectForFocus.role == rolenames.ROLE_DOCUMENT_FRAME:
+                #    objectForFocus = objectForFocus.parent
                 focusGrabbed = objectForFocus.component.grabFocus()
 
         # If there is a character there, we'd like to position the

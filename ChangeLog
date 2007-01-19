@@ -1,5 +1,15 @@
 2007-01-19  Willie Walker <william.walker@sun.com>
 
+	* src/orca/Gecko.py: adjust how we grab focus of the object
+	containing the paragraph object.  Basically, the idea is to find
+	the first focusable object in the ancestry of the paragraph.  This
+	typically ends up being the document frame.  Note that we're told
+	this will not work in
+	https://bugzilla.mozilla.org/show_bug.cgi?id=363214, but the
+	advice given there (grab focus on the parent of the document
+	frame) doesn't work.  In any case, this fixes the problem with
+	the missing caret.  
+	
 	* src/orca/Gecko.py: add option, "arrowToLineBeginning". If True,
 	it tells us to position the caret at the beginning of a line when
 	arrowing up and down.  If False, we'll try to position the caret
