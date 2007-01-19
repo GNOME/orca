@@ -31,12 +31,119 @@ import orca.debug as debug
 import orca.default as default
 import orca.rolenames as rolenames
 import orca.settings as settings
-import orca.speechgenerator as speechgenerator
+import orca.braille as braille
+import orca.braillegenerator as braillegenerator
 import orca.speech as speech
+import orca.speechgenerator as speechgenerator
 import orca.util as util
 import orca.Gecko as Gecko
 
 from orca.orca_i18n import _
+
+
+########################################################################
+#                                                                      #
+# Custom BrailleGenerator                                              #
+#                                                                      #
+########################################################################
+
+class BrailleGenerator(braillegenerator.BrailleGenerator):
+    """Provides a braille generator specific to Gecko.
+    """
+
+    def __init__(self, script):
+        self.debugLevel = debug.LEVEL_FINEST
+        
+        self._debug("__init__")
+        braillegenerator.BrailleGenerator.__init__(self, script)
+
+
+    def _debug(self, msg):
+        """ Convenience method for printing debug messages
+        """
+        debug.println(self.debugLevel, "Thunderbird.BrailleGenerator: "+msg)
+
+
+    def _getDefaultBrailleRegions(self, obj):
+        """Gets text to be displayed for the current object's name,
+        role, and any accelerators.  This is usually the fallback
+        braille generator should no other specialized braille
+        generator exist for this object.
+
+        Arguments:
+        - obj: an Accessible
+
+        Returns a list where the first element is a list of Regions to
+        display and the second element is the Region which should get
+        focus.
+        """
+
+        self._debug("_getDefaultBrailleRegions: name='%s', role='%s'" % \
+                    (obj.name, obj.role))
+        
+        regions = []
+        text = ""
+
+        if obj.text:
+            # Handle preferences that contain editable text fields. If
+            # the object with keyboard focus is editable text field,
+            # examine the previous and next sibling to get the order
+            # for speaking the preference objects. This is a temporary
+            # workaround for Thunderbird not setting the LABEL_FOR relation
+            # for some labels.
+            #
+            # Returns whether to consume the event.
+            
+            self._debug("_getDefaultBrailleRegions: childCount=%d, index=%d" % \
+                        (obj.parent.childCount, obj.index))
+            
+            if obj.index > 0:
+                prev = obj.parent.child(obj.index - 1)
+                self._debug("_getDefaultBrailleRegions: prev='%s', role='%s'" \
+                            % (prev.name, prev.role))
+                
+                if obj.parent.childCount > obj.index:
+                    next = obj.parent.child(obj.index + 1)
+                    self._debug("_getDefaultBrailleRegions: next='%s', role='%s'" \
+                                % (next.name, next.role))
+
+            # Get the entry text.
+            [word, startOffset, endOffset] = obj.text.getTextAtOffset(0,
+                atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+            if len(word) == 0:
+                # The above may incorrectly return an empty string
+                # if the entry contains a single character.
+                [word, startOffset, endOffset] = obj.text.getTextAtOffset(0,
+                    atspi.Accessibility.TEXT_BOUNDARY_CHAR)
+
+            self._debug("_getDefaultBrailleRegions: word='%s'" % word)
+            
+            # Determine the order for speaking the component parts.
+            if len(word) > 0:
+                if prev and prev.role == rolenames.ROLE_LABEL:
+                    if next and next.role == rolenames.ROLE_LABEL:
+                        text = _("%s text %s %s") % (obj.name, word, next.name)
+                    else:
+                        text = _("%s text %s") % (obj.name, word)
+                else:
+                    if next and next.role == rolenames.ROLE_LABEL:
+                        text = _("%s text %s %s") % (obj.name, word, next.name)
+                    else:
+                        text = _("text %s %s") % (word, obj.name)
+            
+        else: # non-text object
+            text = util.appendString(text, util.getDisplayedLabel(obj))
+            text = util.appendString(text, util.getDisplayedText(obj))
+            text = util.appendString(text, self._getTextForValue(obj))
+            text = util.appendString(text, self._getTextForRole(obj))
+            
+        self._debug("_getDefaultBrailleRegions: text='%s'" % text)
+
+        regions = []
+        componentRegion = braille.Component(obj, text)
+        regions.append(componentRegion)
+
+        return [regions, componentRegion]
 
 
 ########################################################################
@@ -96,20 +203,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             utterances.append(label.name)
 
         self._debug("unrelated labels='%s'" % utterances)
+        
         return utterances
-
-
-    def _getSpeechForDialog(self, obj, already_focused):
-        """Get the speech for a dialog box.
-
-        Arguments:
-        - obj: the dialog box
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        return self._getSpeechForAlert(obj, already_focused)
 
 
     def getSpeechContext(self, obj, stopAncestor=None):
@@ -212,6 +307,11 @@ class Script(Gecko.Script):
 
         Gecko.Script.__init__(self, app)
 
+
+    def getBrailleGenerator(self):
+        """Returns the braille generator for this script.
+        """
+        return BrailleGenerator(self)
 
     def getSpeechGenerator(self):
         """Returns the speech generator for this script.

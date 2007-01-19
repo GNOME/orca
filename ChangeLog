@@ -1,5 +1,12 @@
 2007-01-18  Lynn Monsanto <lynn.monsanto@sun.com>
 
+	* src/orca/scripts/Thunderbird.py: Temporary Braille workaround
+	for not displaying a label that follows an editable text field.
+	This is another temporary workaround for Thunderbird not assigning
+	a LABEL_FOR relation to the label.
+
+2007-01-18  Lynn Monsanto <lynn.monsanto@sun.com>
+
 	* src/orca/scripts/Thunderbird.py: Filters out unrelated 
 	labels that end with a colon. This is a temporary workaround 
 	for a Thunderbird bug, where many (all?) unrelated labels 
