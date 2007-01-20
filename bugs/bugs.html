@@ -3,7 +3,7 @@
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE></TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.0  (Linux)">
+	<meta name="generator" content="Bluefish 1.0.6">
 	<META NAME="CREATED" CONTENT="20070118;16525200">
 	<META NAME="CHANGEDBY" CONTENT="Lynn Monsanto">
 	<META NAME="CHANGED" CONTENT="20070118;16593000">
@@ -1463,6 +1463,34 @@ Reader.</P>
 			<P>Acroread 7.0.8+</P>
 		</TD>
 		<TD>
+			<P>Accessible hierarchy is incomplete</P>
+		</TD>
+		<TD>
+			<P>No</P>
+		</TD>
+		<TD>
+			<P>No</P>
+		</TD>
+		<TD>
+			<P><B>SECTION 508 AND USABILITY PROBLEM - MUST BE FIXED</B> 
+			<BR>There are a number of objects, mostly drawing areas, in the 
+			acroread hierarchy for which we do not have complete information.   
+			Because these objects cannot be accessed via AT-SPI, we cannot reliably 
+			examine a hierarchy in which they are 	found, obtain role information, 
+			obtain a child count, etc.  As a result, it is difficult to determine 
+			if focus is in a particular object and to obtain information about 
+			siblings within such an object (e.g. to provide access to text which 
+			is serving as a label for controls within the Search panel. See below.).  
+			<BR>Many times this can be verified using AT-POKE:  These objects are 
+			shown without any state information. 
+			</P>
+		</TD>
+	</TR>
+		<TR BGCOLOR="#ff0000">
+		<TD>
+			<P>Acroread 7.0.8+</P>
+		</TD>
+		<TD>
 			<P>Acroread does not generate an event when text selection changes</P>
 		</TD>
 		<TD>
@@ -1472,8 +1500,8 @@ Reader.</P>
 			<P>No</P>
 		</TD>
 		<TD>
-			<P><B>USABILITY PROBLEM - MUST BE FIXED</B> <BR>Unable to
-			accurately notify the user about what text has been
+			<P><B>SECTION 508 AND USABILITY PROBLEM - MUST BE FIXED</B> 
+			<BR>Unable to accurately notify the user about what text has been
 			selected/unselected, making it difficult for users to accurately
 			and efficiently select and copy a portion of a document. <BR>This
 			bug can be reproduced by logging &quot;object:text-selection-changed&quot;
@@ -1495,8 +1523,8 @@ Reader.</P>
 			<P>No</P>
 		</TD>
 		<TD>
-			<P><B>USABILITY PROBLEM - MUST BE FIXED</B> <BR>Unable to
-			accurately notify the user about what text is currently
+			<P><B>SECTION 508 AND USABILITY PROBLEM - MUST BE FIXED</B> 
+			<BR>Unable to accurately notify the user about what text is currently
 			selected/unselected, making it difficult for users to accurately
 			and efficiently select and copy a portion of a document and/or get
 			reoriented to the screen contents and state. <BR>This bug can be
@@ -1519,7 +1547,7 @@ Reader.</P>
 			<P>No</P>
 		</TD>
 		<TD>
-			<P><B>USABILITY PROBLEM - MUST BE FIXED</B> 
+			<P><B>SECTION 508 AND USABILITY PROBLEM - MUST BE FIXED</B> 
 			</P>
 			<OL>
 				<LI><P STYLE="margin-bottom: 0in">Unable to position the caret
@@ -1541,6 +1569,34 @@ Reader.</P>
 			<P>Acroread 7.0.8+</P>
 		</TD>
 		<TD>
+			<P>Caret has no relation to one's location when tabbing</P>
+		</TD>
+		<TD>
+			<P>No</P>
+		</TD>
+		<TD>
+			<P>No</P>
+		</TD>
+		<TD>
+			<P><B>SECTION 508 AND USABILITY PROBLEM - MUST BE FIXED</B>
+			<BR>When in a document which contains links to other sections 
+			of the document, pressing Tab </li> should move the user to the 
+			next link with respect to the (selection) caret and not with 
+			respect to the top of the page as it currently does.  Similarly,
+			having tabbed to a new location, the caret should be moved to that
+			same location rather than left in place -- as is currently the case.
+			The present functionality is disorienting to the user who
+			is accessing the content non-visually.  It also slows the user down
+			because it is necessary to manually "sync" one's locations.
+			<BR>This bug can be reproduced without the need for special tools.
+			</P>
+		</TD>
+	</TR>
+	<TR BGCOLOR="#ff0000">
+		<TD>
+			<P>Acroread 7.0.8+</P>
+		</TD>
+		<TD>
 			<P>Acroread does not expose any text attribute information</P>
 		</TD>
 		<TD>
@@ -1550,9 +1606,9 @@ Reader.</P>
 			<P>No</P>
 		</TD>
 		<TD>
-			<P><B>USABILITY PROBLEM - MUST BE FIXED</B> <BR>Unable to provide
-			any information about the appearance of the document, making it
-			necessary for a user who needs this information to seek sighted
+			<P><B>SECTION 508 AND USABILITY PROBLEM - MUST BE FIXED</B> 
+			<BR>Unable to provide any information about the appearance of the document, 
+			making it necessary for a user who needs this information to seek sighted
 			assistance. <BR>This bug can be reproduced using the
 			<A HREF="acroread_diag.py">acroread_diag.py</A> script. 
 			</P>
@@ -1573,8 +1629,12 @@ Reader.</P>
 			<P>No</P>
 		</TD>
 		<TD>
-			<P><B>USABILITY PROBLEM - MUST BE FIXED</B> <BR>Users cannot use
-			flat review to examine a document. <BR>This bug can be reproduced
+			<P><B>SECTION 508 AND USABILITY PROBLEM - MUST BE FIXED</B> 
+			<BR>Users cannot use	flat review to examine a document. In addition, we
+			have no way to check for the case where text is contained in multiple drawing
+			areas but spatially occupying a single line.  When that occurs, we can only
+			provide access to the text in the drawing area which contains the caret.
+			<BR>This bug can be reproduced
 			using the <A HREF="acroread_diag.py">acroread_diag.py</A> script. 
 			</P>
 		</TD>
@@ -1594,16 +1654,44 @@ Reader.</P>
 			<P>No</P>
 		</TD>
 		<TD>
-			<P><B>USABILITY PROBLEM - MUST BE FIXED</B> <BR>Some documents
-			present information in an image whose name contains the full text
+			<P><B>SECTION 508 AND USABILITY PROBLEM - MUST BE FIXED</B> 
+			<BR>Some documents present information in an image whose name contains the full text
 			being displayed. Please see <A HREF="http://www.census.gov/prod/2002pubs/p20-542.pdf">this
-			document from census.gov</A>. In these circumstances, one can use
-			the keyboard to navigate within as well as select the text, but
-			without the corresponding events we cannot provide access to the
+			document from census.gov</A>. In these circumstances one can use
+			the keyboard to navigate within, as well as select, the content. However,
+			without the corresponding events, we cannot provide access to the
 			text. <BR>This bug can be reproduced by logging events in AT-POKE
 			and then using the keyboard to navigate and select text within the
 			document. 
 			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD>
+			<P>Acroread 7.0.8+</P>
+		</TD>
+		<TD>
+			<P>Pages panel is inaccessible: fails to provide 
+			relevant events; generates erroneous object:text-caret-moved 
+			events</P>
+		</TD>
+		<TD>
+			<P>No</P>
+		</TD>
+		<TD>
+			<P>No</P>
+		</TD>
+		<TD>
+			<P><B>USABILITY PROBLEM - SHOULD BE FIXED</B> <BR>When
+			navigating among the thumbnails in the Pages panel we fail to receive any 
+			relevant events (e.g. object:selection-changed).  Instead, each press of
+			an arrow key results in an object:text-caret-moved for the text which
+			had focus prior to our moving from the document to the Pages panel.  As a
+			result, the user cannot access the Pages panel because we cannot identify
+			what page he/she has arrowed to.
+			<BR>Work-around: Use the "Go to page" dialog instead.
+			<BR>This bug can be reproduced by logging events in AT-POKE
+			and then using the keyboard to navigate to, and then within, the Pages panel.
 		</TD>
 	</TR>
 	<TR>
@@ -1660,7 +1748,10 @@ Reader.</P>
 			<P><B>USABILITY PROBLEM - SHOULD BE FIXED</B> <BR>The text boxes
 			are not labeled, but preceded in the drawing area by an object of
 			role &quot;unknown&quot; which contains the text that should be
-			the label. <BR>This bug can be reproduced using AT-POKE. 
+			the label. <br>Note: We cannot work around this situation because
+			the parent which contains the text box and &quot;label&quot; is of type
+			None (thus we cannot access its children).
+			 </br>This bug can be reproduced using AT-POKE. 
 			</P>
 		</TD>
 	</TR>
@@ -1680,15 +1771,39 @@ Reader.</P>
 		</TD>
 		<TD>
 			<P><B>USABILITY PROBLEM - SHOULD BE FIXED</B> <BR>The text box
-			near the bottom of the acroread reader cannot be given focus
+			near the bottom of the Acrobate reader window cannot be given focus
 			without using the mouse. In addition, its contents cannot be
-			accessed via at-spi. As a result, there is no way to notify the
+			accessed via AT-SPI. As a result, there is no way to notify the
 			user of his/her new location when navigating by page or after
 			performing a search. <BR>Work around: The user can manually get
 			into the GoTo Page dialog to obtain the current page and then use
 			flat review to obtain the total number of pages, but fixing this
 			problem would make the user much more efficient. <BR>This bug can
 			be reproduced using AT-POKE. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD>
+			<P>Acroread 7.0.8+</P>
+		</TD>
+		<TD>
+			<P>Acroread does not implement RelationType</P>
+		</TD>
+		<TD>
+			<P>No</P>
+		</TD>
+		<TD>
+			<P>No</P>
+		</TD>
+		<TD>
+			<P><B>NICE TO FIX</B>
+			<BR>Providing the relationship between objects (e.g. RELATION_FLOWS_TO,
+			RELATION_FLOWS_FROM, RELATION_LABEL_FOR, RELATION_LABELLED_BY, etc.)
+			would take the guesswork out of providing access to the information in
+			the acroread window because we would <i>know</i> how one object related 
+			to another rather than having to surmise relationships based on observation.
+			<BR>This bug can be reproduced using AT-POKE. 
 			</P>
 		</TD>
 	</TR>
