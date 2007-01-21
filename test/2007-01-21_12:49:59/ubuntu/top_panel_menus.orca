@@ -1,0 +1,174 @@
+SPEECH OUTPUT: 'Welcome to Orca.'
+BRAILLE LINE:  'Welcome to Orca.'
+     VISIBLE:  'Welcome to Orca.', cursor=0
+SPEECH OUTPUT: 'Switching to focus tracking mode.'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame'
+     VISIBLE:  'Orca Screen Reader / Magnifier F', cursor=1
+SPEECH OUTPUT: 'Orca Screen Reader / Magnifier frame'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame Preferences Button'
+     VISIBLE:  'Preferences Button', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Preferences button'
+BRAILLE LINE:  'gnome-terminal Application Terminal Frame'
+     VISIBLE:  'Terminal Frame', cursor=1
+SPEECH OUTPUT: 'Terminal frame'
+BRAILLE LINE:  'gnome-terminal Application Terminal Frame TabList  Terminal Terminal'
+     VISIBLE:  '', cursor=2
+SPEECH OUTPUT: 'tab list page'
+SPEECH OUTPUT: 'Terminal'
+BRAILLE LINE:  'gnome-terminal Application Terminal Frame TabList  Terminal Terminal'
+     VISIBLE:  '', cursor=2
+BRAILLE LINE:  'gnome-terminal Application Terminal Frame TabList  Terminal Terminalorca@ubuntu:/tmp/ubuntu$  '
+     VISIBLE:  'orca@ubuntu:/tmp/ubuntu$  ', cursor=26
+BRAILLE LINE:  'gnome-terminal Application Terminal Frame TabList  Terminal Terminalorca@ubuntu:/tmp/ubuntu$  '
+     VISIBLE:  'orca@ubuntu:/tmp/ubuntu$  ', cursor=26
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame'
+     VISIBLE:  'Top Panel Frame', cursor=1
+SPEECH OUTPUT: 'Top Panel frame'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel Panel Notification Area Panel'
+     VISIBLE:  'Panel Notification Area Panel', cursor=1
+SPEECH OUTPUT: 'Top Panel panel'
+SPEECH OUTPUT: 'Panel Notification Area panel'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel Applications Menu'
+     VISIBLE:  'Applications Menu', cursor=1
+SPEECH OUTPUT: 'menu bar'
+SPEECH OUTPUT: 'Applications menu'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar Accessibility Menu'
+     VISIBLE:  'Accessibility Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Accessibility menu'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar Accessories Menu'
+     VISIBLE:  'Accessories Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Accessories menu'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar Games Menu'
+     VISIBLE:  'Games Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Games menu'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar Graphics Menu'
+     VISIBLE:  'Graphics Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Graphics menu'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar Internet Menu'
+     VISIBLE:  'Internet Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Internet menu'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar Office Menu'
+     VISIBLE:  'Office Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Office menu'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar Programming Menu'
+     VISIBLE:  'Programming Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Programming menu'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar Sound & Video Menu'
+     VISIBLE:  'Sound & Video Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Sound & Video menu'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar Applications Menu Movie Player'
+     VISIBLE:  'Movie Player', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Movie Player'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar Applications Menu Rhythmbox Music Player'
+     VISIBLE:  'Rhythmbox Music Player', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Rhythmbox Music Player'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar Applications Menu Serpentine Audio CD Creator'
+     VISIBLE:  'Serpentine Audio CD Creator', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Serpentine Audio CD Creator'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar Home Folder'
+     VISIBLE:  'Home Folder', cursor=1
+SPEECH OUTPUT: 'Places menu'
+SPEECH OUTPUT: 'Home Folder'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar Desktop'
+     VISIBLE:  'Desktop', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Desktop'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar Home Folder'
+     VISIBLE:  'Home Folder', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Home Folder'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar About GNOME'
+     VISIBLE:  'About GNOME', cursor=1
+SPEECH OUTPUT: 'System menu'
+SPEECH OUTPUT: 'About GNOME'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar About Ubuntu'
+     VISIBLE:  'About Ubuntu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'About Ubuntu'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar Quit...'
+     VISIBLE:  'Quit...', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Quit...'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar Preferences Menu'
+     VISIBLE:  'Preferences Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Preferences menu'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar Administration Menu'
+     VISIBLE:  'Administration Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Administration menu'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar Help Menu'
+     VISIBLE:  'Help Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Help menu'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar About GNOME'
+     VISIBLE:  'About GNOME', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'About GNOME'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar About Ubuntu'
+     VISIBLE:  'About Ubuntu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'About Ubuntu'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar Quit...'
+     VISIBLE:  'Quit...', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Quit...'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar Preferences Menu'
+     VISIBLE:  'Preferences Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Preferences menu'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar Administration Menu'
+     VISIBLE:  'Administration Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Administration menu'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar Help Menu'
+     VISIBLE:  'Help Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Help menu'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar About GNOME'
+     VISIBLE:  'About GNOME', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'About GNOME'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar About Ubuntu'
+     VISIBLE:  'About Ubuntu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'About Ubuntu'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar Quit...'
+     VISIBLE:  'Quit...', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Quit...'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar Preferences Menu'
+     VISIBLE:  'Preferences Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Preferences menu'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar Administration Menu'
+     VISIBLE:  'Administration Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Administration menu'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar Help Menu'
+     VISIBLE:  'Help Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Help menu'
+BRAILLE LINE:  'gnome-panel Application Top Panel Frame Top Panel Panel MenuBar About GNOME'
+     VISIBLE:  'About GNOME', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'About GNOME'
+BRAILLE LINE:  'gnome-terminal Application orca@ubuntu: /tmp/ubuntu Frame'
+     VISIBLE:  'orca@ubuntu: /tmp/ubuntu Frame', cursor=1
+SPEECH OUTPUT: 'orca@ubuntu: /tmp/ubuntu frame'
+BRAILLE LINE:  'gnome-terminal Application orca@ubuntu: /tmp/ubuntu Frame TabList  orca@ubuntu: /tmp/ubuntu Terminalorca@ubuntu:/tmp/ubuntu$  '
+     VISIBLE:  'orca@ubuntu:/tmp/ubuntu$  ', cursor=26
+SPEECH OUTPUT: 'tab list page'
+SPEECH OUTPUT: 'orca@ubuntu: /tmp/ubuntu'

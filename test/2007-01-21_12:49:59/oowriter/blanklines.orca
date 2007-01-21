@@ -1,0 +1,421 @@
+SPEECH OUTPUT: 'Welcome to Orca.'
+BRAILLE LINE:  'Welcome to Orca.'
+     VISIBLE:  'Welcome to Orca.', cursor=0
+SPEECH OUTPUT: 'Switching to focus tracking mode.'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame'
+     VISIBLE:  'Orca Screen Reader / Magnifier F', cursor=1
+SPEECH OUTPUT: 'Orca Screen Reader / Magnifier frame'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame Preferences Button'
+     VISIBLE:  'Preferences Button', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Preferences button'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame'
+     VISIBLE:  'Untitled1 - OpenOffice.org Write', cursor=1
+SPEECH OUTPUT: 'Untitled1 - OpenOffice.org Writer frame'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane Panel'
+     VISIBLE:  'Panel', cursor=1
+SPEECH OUTPUT: 'Untitled1 - OpenOffice.org Writer frame Untitled1 - OpenOffice.org Writer root pane'
+SPEECH OUTPUT: 'panel'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view T $l'
+     VISIBLE:  'T $l', cursor=2
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view T $l'
+     VISIBLE:  'T $l', cursor=2
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view Th $l'
+     VISIBLE:  'Th $l', cursor=3
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view Th $l'
+     VISIBLE:  'Th $l', cursor=3
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This i $l'
+     VISIBLE:  'This i $l', cursor=7
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This i $l'
+     VISIBLE:  'This i $l', cursor=7
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This i $l'
+     VISIBLE:  'This i $l', cursor=7
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This i $l'
+     VISIBLE:  'This i $l', cursor=7
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This i $l'
+     VISIBLE:  'This i $l', cursor=7
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This i $l'
+     VISIBLE:  'This i $l', cursor=7
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is $l'
+     VISIBLE:  'This is $l', cursor=8
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is $l'
+     VISIBLE:  'This is $l', cursor=8
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is  $l'
+     VISIBLE:  'This is  $l', cursor=9
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is  $l'
+     VISIBLE:  'This is  $l', cursor=9
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is t $l'
+     VISIBLE:  'This is t $l', cursor=10
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is t $l'
+     VISIBLE:  'This is t $l', cursor=10
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is th $l'
+     VISIBLE:  'This is th $l', cursor=11
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is th $l'
+     VISIBLE:  'This is th $l', cursor=11
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the $l'
+     VISIBLE:  'This is the $l', cursor=12
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the $l'
+     VISIBLE:  'This is the $l', cursor=13
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the  $l'
+     VISIBLE:  'This is the  $l', cursor=13
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the f $l'
+     VISIBLE:  'This is the f $l', cursor=14
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the f $l'
+     VISIBLE:  'This is the f $l', cursor=14
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the fi $l'
+     VISIBLE:  'This is the fi $l', cursor=15
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the fi $l'
+     VISIBLE:  'This is the fi $l', cursor=15
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the fir $l'
+     VISIBLE:  'This is the fir $l', cursor=16
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the fir $l'
+     VISIBLE:  'This is the fir $l', cursor=16
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the firs $l'
+     VISIBLE:  'This is the firs $l', cursor=17
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the firs $l'
+     VISIBLE:  'This is the firs $l', cursor=17
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first $l'
+     VISIBLE:  'This is the first $l', cursor=18
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first $l'
+     VISIBLE:  'This is the first $l', cursor=18
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first  $l'
+     VISIBLE:  'This is the first  $l', cursor=19
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first  $l'
+     VISIBLE:  'This is the first  $l', cursor=19
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first l $l'
+     VISIBLE:  'This is the first l $l', cursor=20
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first l $l'
+     VISIBLE:  'This is the first l $l', cursor=20
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first li $l'
+     VISIBLE:  'This is the first li $l', cursor=21
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first li $l'
+     VISIBLE:  'This is the first li $l', cursor=21
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first lin $l'
+     VISIBLE:  'This is the first lin $l', cursor=22
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first lin $l'
+     VISIBLE:  'This is the first lin $l', cursor=22
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line $l'
+     VISIBLE:  'This is the first line $l', cursor=23
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line $l'
+     VISIBLE:  'This is the first line $l', cursor=23
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line  $l'
+     VISIBLE:  'This is the first line  $l', cursor=24
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line  $l'
+     VISIBLE:  'This is the first line  $l', cursor=24
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line a $l'
+     VISIBLE:  'This is the first line a $l', cursor=25
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line a $l'
+     VISIBLE:  'This is the first line a $l', cursor=25
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line af $l'
+     VISIBLE:  'This is the first line af $l', cursor=26
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line af $l'
+     VISIBLE:  'This is the first line af $l', cursor=26
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line aft $l'
+     VISIBLE:  'This is the first line aft $l', cursor=27
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line aft $l'
+     VISIBLE:  'This is the first line aft $l', cursor=27
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line afte $l'
+     VISIBLE:  'This is the first line afte $l', cursor=28
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line afte $l'
+     VISIBLE:  'This is the first line afte $l', cursor=28
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after $l'
+     VISIBLE:  'This is the first line after $l', cursor=29
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after $l'
+     VISIBLE:  'This is the first line after $l', cursor=29
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after  $l'
+     VISIBLE:  'This is the first line after  $l', cursor=30
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after  $l'
+     VISIBLE:  'This is the first line after  $l', cursor=30
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after a $l'
+     VISIBLE:  'This is the first line after a $', cursor=31
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after a $l'
+     VISIBLE:  'This is the first line after a $', cursor=31
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after a  $l'
+     VISIBLE:  'This is the first line after a  ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after a  $l'
+     VISIBLE:  'This is the first line after a  ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after a b $l'
+     VISIBLE:  'his is the first line after a b ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after a b $l'
+     VISIBLE:  'his is the first line after a b ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after a bl $l'
+     VISIBLE:  'is is the first line after a bl ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after a bl $l'
+     VISIBLE:  'is is the first line after a bl ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after a bla $l'
+     VISIBLE:  's is the first line after a bla ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after a bla $l'
+     VISIBLE:  's is the first line after a bla ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after a blan $l'
+     VISIBLE:  ' is the first line after a blan ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after a blan $l'
+     VISIBLE:  ' is the first line after a blan ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after a blank $l'
+     VISIBLE:  'is the first line after a blank ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after a blank $l'
+     VISIBLE:  'is the first line after a blank ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after a blank  $l'
+     VISIBLE:  's the first line after a blank  ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after a blank  $l'
+     VISIBLE:  's the first line after a blank  ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after a blank l $l'
+     VISIBLE:  ' the first line after a blank l ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after a blank l $l'
+     VISIBLE:  ' the first line after a blank l ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after a blank li $l'
+     VISIBLE:  'the first line after a blank li ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after a blank li $l'
+     VISIBLE:  'the first line after a blank li ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after a blank lin $l'
+     VISIBLE:  'he first line after a blank lin ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after a blank lin $l'
+     VISIBLE:  'he first line after a blank lin ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after a blank line $l'
+     VISIBLE:  'e first line after a blank line ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after a blank line $l'
+     VISIBLE:  'e first line after a blank line ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after a blank line. $l'
+     VISIBLE:  ' first line after a blank line. ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after a blank line. $l'
+     VISIBLE:  ' first line after a blank line. ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after a blank line.  $l'
+     VISIBLE:  'first line after a blank line.  ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after a blank line.  $l'
+     VISIBLE:  'first line after a blank line.  ', cursor=32
+BRAILLE LINE:  'This is the first line after a blank line.  $l'
+     VISIBLE:  'This is the first line after a b', cursor=1
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view T $l'
+     VISIBLE:  'T $l', cursor=2
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view T $l'
+     VISIBLE:  'T $l', cursor=2
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view Th $l'
+     VISIBLE:  'Th $l', cursor=3
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view Th $l'
+     VISIBLE:  'Th $l', cursor=3
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view Thi $l'
+     VISIBLE:  'Thi $l', cursor=4
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view Thi $l'
+     VISIBLE:  'Thi $l', cursor=4
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This $l'
+     VISIBLE:  'This $l', cursor=5
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This $l'
+     VISIBLE:  'This $l', cursor=5
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This  $l'
+     VISIBLE:  'This  $l', cursor=6
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This  $l'
+     VISIBLE:  'This  $l', cursor=6
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This i $l'
+     VISIBLE:  'This i $l', cursor=7
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This i $l'
+     VISIBLE:  'This i $l', cursor=7
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is $l'
+     VISIBLE:  'This is $l', cursor=8
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is $l'
+     VISIBLE:  'This is $l', cursor=8
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is  $l'
+     VISIBLE:  'This is  $l', cursor=9
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is  $l'
+     VISIBLE:  'This is  $l', cursor=9
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is a $l'
+     VISIBLE:  'This is a $l', cursor=10
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is a $l'
+     VISIBLE:  'This is a $l', cursor=10
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is an $l'
+     VISIBLE:  'This is an $l', cursor=11
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is an $l'
+     VISIBLE:  'This is an $l', cursor=11
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is ano $l'
+     VISIBLE:  'This is ano $l', cursor=12
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is ano $l'
+     VISIBLE:  'This is ano $l', cursor=12
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is anot $l'
+     VISIBLE:  'This is anot $l', cursor=13
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is anot $l'
+     VISIBLE:  'This is anot $l', cursor=13
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is anoth $l'
+     VISIBLE:  'This is anoth $l', cursor=14
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is anoth $l'
+     VISIBLE:  'This is anoth $l', cursor=14
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is anothe $l'
+     VISIBLE:  'This is anothe $l', cursor=15
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is anothe $l'
+     VISIBLE:  'This is anothe $l', cursor=15
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another $l'
+     VISIBLE:  'This is another $l', cursor=16
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another $l'
+     VISIBLE:  'This is another $l', cursor=16
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another  $l'
+     VISIBLE:  'This is another  $l', cursor=17
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another  $l'
+     VISIBLE:  'This is another  $l', cursor=17
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another l $l'
+     VISIBLE:  'This is another l $l', cursor=18
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another l $l'
+     VISIBLE:  'This is another l $l', cursor=18
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another li $l'
+     VISIBLE:  'This is another li $l', cursor=19
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another li $l'
+     VISIBLE:  'This is another li $l', cursor=19
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another lin $l'
+     VISIBLE:  'This is another lin $l', cursor=20
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another lin $l'
+     VISIBLE:  'This is another lin $l', cursor=20
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line $l'
+     VISIBLE:  'This is another line $l', cursor=21
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line $l'
+     VISIBLE:  'This is another line $l', cursor=21
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line  $l'
+     VISIBLE:  'This is another line  $l', cursor=22
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line  $l'
+     VISIBLE:  'This is another line  $l', cursor=22
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line a $l'
+     VISIBLE:  'This is another line a $l', cursor=23
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line a $l'
+     VISIBLE:  'This is another line a $l', cursor=23
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line af $l'
+     VISIBLE:  'This is another line af $l', cursor=24
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line af $l'
+     VISIBLE:  'This is another line af $l', cursor=24
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line aft $l'
+     VISIBLE:  'This is another line aft $l', cursor=25
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line aft $l'
+     VISIBLE:  'This is another line aft $l', cursor=25
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line afte $l'
+     VISIBLE:  'This is another line afte $l', cursor=26
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line afte $l'
+     VISIBLE:  'This is another line afte $l', cursor=26
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after $l'
+     VISIBLE:  'This is another line after $l', cursor=27
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after $l'
+     VISIBLE:  'This is another line after $l', cursor=27
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after  $l'
+     VISIBLE:  'This is another line after  $l', cursor=28
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after  $l'
+     VISIBLE:  'This is another line after  $l', cursor=28
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after a $l'
+     VISIBLE:  'This is another line after a $l', cursor=29
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after a $l'
+     VISIBLE:  'This is another line after a $l', cursor=29
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after a  $l'
+     VISIBLE:  'This is another line after a  $l', cursor=30
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after a  $l'
+     VISIBLE:  'This is another line after a  $l', cursor=30
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after a b $l'
+     VISIBLE:  'This is another line after a b $', cursor=31
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after a b $l'
+     VISIBLE:  'This is another line after a b $', cursor=31
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after a bl $l'
+     VISIBLE:  'This is another line after a bl ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after a bl $l'
+     VISIBLE:  'This is another line after a bl ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after a bla $l'
+     VISIBLE:  'his is another line after a bla ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after a bla $l'
+     VISIBLE:  'his is another line after a bla ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after a blan $l'
+     VISIBLE:  'is is another line after a blan ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after a blan $l'
+     VISIBLE:  'is is another line after a blan ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after a blank $l'
+     VISIBLE:  's is another line after a blank ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after a blank $l'
+     VISIBLE:  's is another line after a blank ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after a blank  $l'
+     VISIBLE:  ' is another line after a blank  ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after a blank  $l'
+     VISIBLE:  ' is another line after a blank  ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after a blank l $l'
+     VISIBLE:  'is another line after a blank l ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after a blank l $l'
+     VISIBLE:  'is another line after a blank l ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after a blank li $l'
+     VISIBLE:  's another line after a blank li ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after a blank li $l'
+     VISIBLE:  's another line after a blank li ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after a blank lin $l'
+     VISIBLE:  ' another line after a blank lin ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after a blank lin $l'
+     VISIBLE:  ' another line after a blank lin ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after a blank line $l'
+     VISIBLE:  'another line after a blank line ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after a blank line $l'
+     VISIBLE:  'another line after a blank line ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after a blank line. $l'
+     VISIBLE:  'nother line after a blank line. ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after a blank line. $l'
+     VISIBLE:  'nother line after a blank line. ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after a blank line.  $l'
+     VISIBLE:  'other line after a blank line.  ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after a blank line.  $l'
+     VISIBLE:  'other line after a blank line.  ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after a blank line.   $l'
+     VISIBLE:  'ther line after a blank line.   ', cursor=32
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after a blank line.   $l'
+     VISIBLE:  'ther line after a blank line.   ', cursor=32
+BRAILLE LINE:  'This is another line after a blank line.   $l'
+     VISIBLE:  'This is another line after a bla', cursor=1
+SPEECH OUTPUT: 'blank'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view  $l'
+     VISIBLE:  ' $l', cursor=1
+BRAILLE LINE:  ' $l'
+     VISIBLE:  ' $l', cursor=1
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after a blank line.  $l'
+     VISIBLE:  'first line after a blank line.  ', cursor=32
+SPEECH OUTPUT: 'This is the first line after a blank line. '
+BRAILLE LINE:  'This is the first line after a blank line.  $l'
+     VISIBLE:  'This is the first line after a b', cursor=1
+SPEECH OUTPUT: 'blank'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view  $l'
+     VISIBLE:  ' $l', cursor=1
+BRAILLE LINE:  ' $l'
+     VISIBLE:  ' $l', cursor=1
+SPEECH OUTPUT: 'blank'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view  $l'
+     VISIBLE:  ' $l', cursor=1
+BRAILLE LINE:  ' $l'
+     VISIBLE:  ' $l', cursor=1
+SPEECH OUTPUT: 'blank'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view  $l'
+     VISIBLE:  ' $l', cursor=1
+BRAILLE LINE:  ' $l'
+     VISIBLE:  ' $l', cursor=1
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is the first line after a blank line.  $l'
+     VISIBLE:  'first line after a blank line.  ', cursor=32
+SPEECH OUTPUT: 'This is the first line after a blank line. '
+BRAILLE LINE:  ' $l'
+     VISIBLE:  ' $l', cursor=0
+SPEECH OUTPUT: 'blank'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view  $l'
+     VISIBLE:  ' $l', cursor=1
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view  $l'
+     VISIBLE:  ' $l', cursor=1
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view This is another line after a blank line.   $l'
+     VISIBLE:  'ther line after a blank line.   ', cursor=32
+SPEECH OUTPUT: 'This is another line after a blank line.  '
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar New Menu'
+     VISIBLE:  'New Menu', cursor=1
+SPEECH OUTPUT: 'menu bar File menu'
+SPEECH OUTPUT: 'New menu'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Exit(Control q)'
+     VISIBLE:  'Exit(Control q)', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Exit Control q'
+BRAILLE LINE:  'soffice.bin Application OpenOffice.org 2.0  Alert'
+     VISIBLE:  'OpenOffice.org 2.0  Alert', cursor=1
+SPEECH OUTPUT: 'OpenOffice.org 2.0  The document "Untitled1" has been modified.
+Do you want to save your changes?'
+BRAILLE LINE:  'soffice.bin Application OpenOffice.org 2.0  Alert OpenOffice.org 2.0  OptionPane Save Button'
+     VISIBLE:  'Save Button', cursor=1
+SPEECH OUTPUT: 'OpenOffice.org 2.0  option pane'
+SPEECH OUTPUT: 'Save button'
+BRAILLE LINE:  'soffice.bin Application OpenOffice.org 2.0  Alert OpenOffice.org 2.0  OptionPane Discard Button'
+     VISIBLE:  'Discard Button', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Discard button'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame'
+     VISIBLE:  'Orca Screen Reader / Magnifier F', cursor=1
+SPEECH OUTPUT: 'Orca Screen Reader / Magnifier frame'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame Preferences Button'
+     VISIBLE:  'Preferences Button', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Preferences button'

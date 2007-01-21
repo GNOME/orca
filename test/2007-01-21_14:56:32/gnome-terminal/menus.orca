@@ -1,0 +1,92 @@
+SPEECH OUTPUT: 'Welcome to Orca.'
+BRAILLE LINE:  'Welcome to Orca.'
+     VISIBLE:  'Welcome to Orca.', cursor=0
+SPEECH OUTPUT: 'Switching to focus tracking mode.'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame'
+     VISIBLE:  'Orca Screen Reader / Magnifier F', cursor=1
+SPEECH OUTPUT: 'Orca Screen Reader / Magnifier frame'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame Preferences Button'
+     VISIBLE:  'Preferences Button', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Preferences button'
+BRAILLE LINE:  'gnome-terminal Application Terminal Frame'
+     VISIBLE:  'Terminal Frame', cursor=1
+SPEECH OUTPUT: 'Terminal frame'
+BRAILLE LINE:  'gnome-terminal Application Terminal Frame TabList  Terminal Terminal'
+     VISIBLE:  '', cursor=2
+SPEECH OUTPUT: 'tab list page'
+SPEECH OUTPUT: 'Terminal'
+BRAILLE LINE:  'gnome-terminal Application Terminal Frame TabList  Terminal Terminal'
+     VISIBLE:  '', cursor=2
+BRAILLE LINE:  'gnome-terminal Application Terminal Frame TabList  Terminal Terminalorca@ubuntu:/tmp/gnome-terminal$  '
+     VISIBLE:  'ca@ubuntu:/tmp/gnome-terminal$  ', cursor=32
+BRAILLE LINE:  'gnome-terminal Application Terminal Frame TabList  Terminal Terminalorca@ubuntu:/tmp/gnome-terminal$  '
+     VISIBLE:  'ca@ubuntu:/tmp/gnome-terminal$  ', cursor=32
+BRAILLE LINE:  'gnome-terminal Application orca@ubuntu: /tmp/gnome-terminal Frame File Menu'
+     VISIBLE:  'File Menu', cursor=1
+SPEECH OUTPUT: 'menu bar'
+SPEECH OUTPUT: 'File menu'
+BRAILLE LINE:  'gnome-terminal Application orca@ubuntu: /tmp/gnome-terminal Frame Edit Menu'
+     VISIBLE:  'Edit Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Edit menu'
+BRAILLE LINE:  'gnome-terminal Application orca@ubuntu: /tmp/gnome-terminal Frame View Menu'
+     VISIBLE:  'View Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'View menu'
+BRAILLE LINE:  'gnome-terminal Application orca@ubuntu: /tmp/gnome-terminal Frame Terminal Menu'
+     VISIBLE:  'Terminal Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Terminal menu'
+BRAILLE LINE:  'gnome-terminal Application orca@ubuntu: /tmp/gnome-terminal Frame Tabs Menu'
+     VISIBLE:  'Tabs Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Tabs menu'
+BRAILLE LINE:  'gnome-terminal Application orca@ubuntu: /tmp/gnome-terminal Frame Help Menu'
+     VISIBLE:  'Help Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Help menu'
+BRAILLE LINE:  'gnome-terminal Application orca@ubuntu: /tmp/gnome-terminal Frame File Menu'
+     VISIBLE:  'File Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'File menu'
+BRAILLE LINE:  'gnome-terminal Application orca@ubuntu: /tmp/gnome-terminal Frame MenuBar Open Terminal(Shift Control n)'
+     VISIBLE:  'Open Terminal(Shift Control n)', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Open Terminal Shift Control n'
+BRAILLE LINE:  'gnome-terminal Application orca@ubuntu: /tmp/gnome-terminal Frame MenuBar Open Tab(Shift Control t)'
+     VISIBLE:  'Open Tab(Shift Control t)', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Open Tab Shift Control t'
+BRAILLE LINE:  'gnome-terminal Application orca@ubuntu: /tmp/gnome-terminal Frame MenuBar New Profile...'
+     VISIBLE:  'New Profile...', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'New Profile...'
+BRAILLE LINE:  'gnome-terminal Application orca@ubuntu: /tmp/gnome-terminal Frame MenuBar Close Window(Shift Control q)'
+     VISIBLE:  'Close Window(Shift Control q)', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Close Window Shift Control q'
+BRAILLE LINE:  'gnome-terminal Application orca@ubuntu: /tmp/gnome-terminal Frame MenuBar Open Terminal(Shift Control n)'
+     VISIBLE:  'Open Terminal(Shift Control n)', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Open Terminal Shift Control n'
+BRAILLE LINE:  'gnome-terminal Application orca@ubuntu: /tmp/gnome-terminal Frame MenuBar Profiles...'
+     VISIBLE:  'Profiles...', cursor=1
+SPEECH OUTPUT: 'Edit menu'
+SPEECH OUTPUT: 'Profiles...'
+BRAILLE LINE:  'gnome-terminal Application orca@ubuntu: /tmp/gnome-terminal Frame MenuBar Keyboard Shortcuts...'
+     VISIBLE:  'Keyboard Shortcuts...', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Keyboard Shortcuts...'
+BRAILLE LINE:  'gnome-terminal Application orca@ubuntu: /tmp/gnome-terminal Frame MenuBar Current Profile...'
+     VISIBLE:  'Current Profile...', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Current Profile...'
+BRAILLE LINE:  'gnome-terminal Application orca@ubuntu: /tmp/gnome-terminal Frame MenuBar Profiles...'
+     VISIBLE:  'Profiles...', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Profiles...'
+BRAILLE LINE:  'gnome-terminal Application orca@ubuntu: /tmp/gnome-terminal Frame TabList  orca@ubuntu: /tmp/gnome-terminal Terminalorca@ubuntu:/tmp/gnome-terminal$  '
+     VISIBLE:  'ca@ubuntu:/tmp/gnome-terminal$  ', cursor=32
+SPEECH OUTPUT: 'tab list page'
+SPEECH OUTPUT: 'orca@ubuntu: /tmp/gnome-terminal'

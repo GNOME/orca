@@ -1,0 +1,333 @@
+SPEECH OUTPUT: 'Welcome to Orca.'
+BRAILLE LINE:  'Welcome to Orca.'
+     VISIBLE:  'Welcome to Orca.', cursor=0
+SPEECH OUTPUT: 'Switching to focus tracking mode.'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame'
+     VISIBLE:  'Orca Screen Reader / Magnifier F', cursor=1
+SPEECH OUTPUT: 'Orca Screen Reader / Magnifier frame'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame Preferences Button'
+     VISIBLE:  'Preferences Button', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Preferences button'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame'
+     VISIBLE:  'GTK+ Code Demos Frame', cursor=1
+SPEECH OUTPUT: 'GTK+ Code Demos frame'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Application main window'
+     VISIBLE:  'Application main window', cursor=1
+SPEECH OUTPUT: 'tab list Widget (double click for demo) page tree table'
+SPEECH OUTPUT: 'Widget (double click for demo) column header'
+SPEECH OUTPUT: 'Application main window'
+SPEECH OUTPUT: 'tree level 1'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Button Boxes'
+     VISIBLE:  'Button Boxes', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Button Boxes'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Change Display'
+     VISIBLE:  'Change Display', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Change Display'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Clipboard'
+     VISIBLE:  'Clipboard', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Clipboard'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Color Selector'
+     VISIBLE:  'Color Selector', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Color Selector'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Combo boxes'
+     VISIBLE:  'Combo boxes', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Combo boxes'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Dialog and Message Boxes'
+     VISIBLE:  'Dialog and Message Boxes', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Dialog and Message Boxes'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Drawing Area'
+     VISIBLE:  'Drawing Area', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Drawing Area'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Entry Completion'
+     VISIBLE:  'Entry Completion', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Entry Completion'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Expander'
+     VISIBLE:  'Expander', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Expander'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Icon View'
+     VISIBLE:  'Icon View', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Icon View collapsed 0 items'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Images'
+     VISIBLE:  'Images', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Images'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Menus'
+     VISIBLE:  'Menus', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Menus'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Paned Widgets'
+     VISIBLE:  'Paned Widgets', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Paned Widgets'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Pickers'
+     VISIBLE:  'Pickers', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Pickers'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Pixbufs'
+     VISIBLE:  'Pixbufs', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Pixbufs'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Printing'
+     VISIBLE:  'Printing', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Printing'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Rotated Text'
+     VISIBLE:  'Rotated Text', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Rotated Text'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Size Groups'
+     VISIBLE:  'Size Groups', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Size Groups'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Stock Item and Icon Browser'
+     VISIBLE:  'Stock Item and Icon Browser', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Stock Item and Icon Browser'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Text Widget'
+     VISIBLE:  'Text Widget', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Text Widget collapsed 0 items'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Tree View'
+     VISIBLE:  'Tree View', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Tree View collapsed 0 items'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Tree View expanded TREE LEVEL 1'
+     VISIBLE:  'Tree View expanded TREE LEVEL 1', cursor=1
+SPEECH OUTPUT: 'Tree View expanded 0 items'
+BRAILLE LINE:  'gtk-demo GTK+ Code Demos  Widget (double click for demo)   Widget (double click for demo)Editable Cells'
+     VISIBLE:  'Editable Cells', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Editable Cells'
+SPEECH OUTPUT: 'tree level 2'
+BRAILLE LINE:  'gtk-demo Application Shopping list Frame'
+     VISIBLE:  'Shopping list Frame', cursor=1
+SPEECH OUTPUT: 'Shopping list frame'
+BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 3 bottles of coke'
+     VISIBLE:  '3 bottles of coke', cursor=1
+SPEECH OUTPUT: 'table'
+SPEECH OUTPUT: 'Number column header'
+SPEECH OUTPUT: '3 bottles of coke'
+BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Product ColumnHeader bottles of coke'
+     VISIBLE:  'bottles of coke', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Product column header'
+SPEECH OUTPUT: 'bottles of coke'
+BRAILLE LINE:  'gtk-demo Shopping list   Yummy'
+     VISIBLE:  'gtk-demo Shopping list   Yummy', cursor=31
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Yummy column header'
+SPEECH OUTPUT: ''
+BRAILLE LINE:  'gtk-demo Shopping list   Productbottles of coke'
+     VISIBLE:  'bottles of coke', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Product column header'
+SPEECH OUTPUT: 'bottles of coke'
+BRAILLE LINE:  'gtk-demo Shopping list   Number3'
+     VISIBLE:  'gtk-demo Shopping list   Number3', cursor=32
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Number column header'
+SPEECH OUTPUT: '3'
+BRAILLE LINE:  'gtk-demo Shopping list   Number5 packages of noodles'
+     VISIBLE:  '5 packages of noodles', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: '5 packages of noodles'
+BRAILLE LINE:  'gtk-demo Shopping list   Productpackages of noodles'
+     VISIBLE:  'packages of noodles', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Product column header'
+SPEECH OUTPUT: 'packages of noodles'
+BRAILLE LINE:  'gtk-demo Shopping list   Yummy'
+     VISIBLE:  'gtk-demo Shopping list   Yummy', cursor=31
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Yummy column header'
+SPEECH OUTPUT: ''
+BRAILLE LINE:  'gtk-demo Shopping list   Productpackages of noodles'
+     VISIBLE:  'packages of noodles', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Product column header'
+SPEECH OUTPUT: 'packages of noodles'
+BRAILLE LINE:  'gtk-demo Shopping list   Number5'
+     VISIBLE:  'gtk-demo Shopping list   Number5', cursor=32
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Number column header'
+SPEECH OUTPUT: '5'
+BRAILLE LINE:  'gtk-demo Shopping list   Number2 packages of chocolate chip cookies'
+     VISIBLE:  '2 packages of chocolate chip coo', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: '2 packages of chocolate chip cookies'
+BRAILLE LINE:  'gtk-demo Shopping list   Productpackages of chocolate chip cookies'
+     VISIBLE:  'packages of chocolate chip cooki', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Product column header'
+SPEECH OUTPUT: 'packages of chocolate chip cookies'
+BRAILLE LINE:  'gtk-demo Shopping list   Yummy'
+     VISIBLE:  'gtk-demo Shopping list   Yummy', cursor=31
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Yummy column header'
+SPEECH OUTPUT: ''
+BRAILLE LINE:  'gtk-demo Shopping list   Yummy1 can vanilla ice cream '
+     VISIBLE:  '', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: '1 can vanilla ice cream '
+BRAILLE LINE:  'gtk-demo Shopping list Add item'
+     VISIBLE:  'gtk-demo Shopping list Add item', cursor=24
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Add item button'
+BRAILLE LINE:  'gtk-demo Shopping list Remove item'
+     VISIBLE:  'Remove item', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Remove item button'
+BRAILLE LINE:  'gtk-demo Shopping list   Number3 bottles of coke '
+     VISIBLE:  '3 bottles of coke ', cursor=1
+SPEECH OUTPUT: 'table'
+SPEECH OUTPUT: 'Number column header'
+SPEECH OUTPUT: '3 bottles of coke '
+BRAILLE LINE:  'gtk-demo Shopping list   Yummy'
+     VISIBLE:  'gtk-demo Shopping list   Yummy', cursor=31
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Yummy column header'
+SPEECH OUTPUT: ''
+BRAILLE LINE:  'gtk-demo Shopping list   Number3'
+     VISIBLE:  'gtk-demo Shopping list   Number3', cursor=32
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Number column header'
+SPEECH OUTPUT: '3'
+BRAILLE LINE:  'gtk-demo Shopping list   Productbottles of coke'
+     VISIBLE:  'bottles of coke', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Product column header'
+SPEECH OUTPUT: 'bottles of coke'
+BRAILLE LINE:  'gtk-demo Shopping list   Number3'
+     VISIBLE:  'gtk-demo Shopping list   Number3', cursor=32
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Number column header'
+SPEECH OUTPUT: '3'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame'
+     VISIBLE:  'GTK+ Code Demos Frame', cursor=1
+SPEECH OUTPUT: 'GTK+ Code Demos frame'
+BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) ScrollPane TreeTable Widget (double click for demo) ColumnHeader Editable Cells TREE LEVEL 2'
+     VISIBLE:  'Editable Cells TREE LEVEL 2', cursor=1
+SPEECH OUTPUT: 'tab list Widget (double click for demo) page tree table'
+SPEECH OUTPUT: 'Widget (double click for demo) column header'
+SPEECH OUTPUT: 'Editable Cells'
+SPEECH OUTPUT: 'tree level 2'
+BRAILLE LINE:  'gtk-demo GTK+ Code Demos  Widget (double click for demo)   Widget (double click for demo)List Store'
+     VISIBLE:  'List Store', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'List Store'
+BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame'
+     VISIBLE:  'GtkListStore demo Frame', cursor=1
+SPEECH OUTPUT: 'GtkListStore demo frame'
+BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Bug number ColumnHeader Bug number ColumnHeader'
+     VISIBLE:  'Bug number ColumnHeader', cursor=1
+SPEECH OUTPUT: 'table'
+SPEECH OUTPUT: 'Bug number column header'
+BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Severity ColumnHeader Severity ColumnHeader'
+     VISIBLE:  'Severity ColumnHeader', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Severity column header'
+BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Description ColumnHeader Description ColumnHeader'
+     VISIBLE:  'Description ColumnHeader', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Description column header'
+BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Bug number ColumnHeader Bug number ColumnHeader'
+     VISIBLE:  'Bug number ColumnHeader', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Bug number column header'
+BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Severity ColumnHeader Severity ColumnHeader'
+     VISIBLE:  'Severity ColumnHeader', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Severity column header'
+BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Description ColumnHeader Description ColumnHeader'
+     VISIBLE:  'Description ColumnHeader', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Description column header'
+BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Bug number ColumnHeader Bug number ColumnHeader'
+     VISIBLE:  'Bug number ColumnHeader', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Bug number column header'
+BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Fixed? ColumnHeader < > 60482 Normal scrollable notebooks and hidden tabs'
+     VISIBLE:  '< > 60482 Normal scrollable note', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Fixed? column header'
+SPEECH OUTPUT: 'check box not checked  60482 Normal scrollable notebooks and hidden tabs'
+BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Bug number ColumnHeader < > 60620 Critical gdk_window_clear_area (gdkwindow-win32.c) is not thread-safe'
+     VISIBLE:  '60620 Critical gdk_window_clear_', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Bug number column header'
+SPEECH OUTPUT: 'check box not checked  60620 Critical gdk_window_clear_area (gdkwindow-win32.c) is not thread-safe'
+BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Bug number ColumnHeader < > 50214 Major Xft support does not clean up correctly'
+     VISIBLE:  '50214 Major Xft support does not', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'check box not checked  50214 Major Xft support does not clean up correctly'
+BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Severity ColumnHeader Major'
+     VISIBLE:  'Major', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Severity column header'
+SPEECH OUTPUT: 'Major'
+BRAILLE LINE:  'gtk-demo GtkListStore demo   DescriptionXft support does not clean up correctly'
+     VISIBLE:  'Xft support does not clean up co', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Description column header'
+SPEECH OUTPUT: 'Xft support does not clean up correctly'
+BRAILLE LINE:  'gtk-demo GtkListStore demo   SeverityMajor'
+     VISIBLE:  'Major', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Severity column header'
+SPEECH OUTPUT: 'Major'
+BRAILLE LINE:  'gtk-demo GtkListStore demo   Bug number50214'
+     VISIBLE:  '50214', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Bug number column header'
+SPEECH OUTPUT: '50214'
+BRAILLE LINE:  'gtk-demo GtkListStore demo   Fixed?< >'
+     VISIBLE:  '< >', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Fixed? column header'
+SPEECH OUTPUT: 'check box not checked '
+BRAILLE LINE:  'gtk-demo GtkListStore demo   Fixed?<x> 52877 Major GtkFileSelection needs a refresh method. '
+     VISIBLE:  '<x> 52877 Major GtkFileSelection', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'check box checked  52877 Major GtkFileSelection needs a refresh method. '
+BRAILLE LINE:  'gtk-demo GtkListStore demo   Fixed?< > 56070 Normal Can't click button after setting in sensitive'
+     VISIBLE:  '< > 56070 Normal Can't click but', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'check box not checked  56070 Normal Can't click button after setting in sensitive'
+BRAILLE LINE:  'gtk-demo GtkListStore demo   Fixed?<x> 56355 Normal GtkLabel - Not all changes propagate correctly'
+     VISIBLE:  '<x> 56355 Normal GtkLabel - Not ', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'check box checked  56355 Normal GtkLabel - Not all changes propagate correctly'
+BRAILLE LINE:  'gtk-demo GtkListStore demo   Bug number56355'
+     VISIBLE:  '56355', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Bug number column header'
+SPEECH OUTPUT: '56355'
+BRAILLE LINE:  'gtk-demo GtkListStore demo   Bug numberBug number'
+     VISIBLE:  'Bug number', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Bug number column header'
+BRAILLE LINE:  'gtk-demo GtkListStore demo   Fixed?<x>'
+     VISIBLE:  '<x>', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Fixed? column header'
+SPEECH OUTPUT: 'check box checked '
+BRAILLE LINE:  'gtk-demo GtkListStore demo   Bug numberBug number'
+     VISIBLE:  'Bug number', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Bug number column header'
+BRAILLE LINE:  'gtk-demo GtkListStore demo   Fixed?<x>'
+     VISIBLE:  '<x>', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Fixed? column header'
+SPEECH OUTPUT: 'check box checked '

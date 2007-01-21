@@ -1,0 +1,337 @@
+SPEECH OUTPUT: 'Welcome to Orca.'
+BRAILLE LINE:  'Welcome to Orca.'
+     VISIBLE:  'Welcome to Orca.', cursor=0
+SPEECH OUTPUT: 'Switching to focus tracking mode.'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame'
+     VISIBLE:  'Orca Screen Reader / Magnifier F', cursor=1
+SPEECH OUTPUT: 'Orca Screen Reader / Magnifier frame'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame Preferences Button'
+     VISIBLE:  'Preferences Button', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Preferences button'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame'
+     VISIBLE:  'Untitled1 - OpenOffice.org Write', cursor=1
+SPEECH OUTPUT: 'Untitled1 - OpenOffice.org Writer frame'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane Panel'
+     VISIBLE:  'Panel', cursor=1
+SPEECH OUTPUT: 'Untitled1 - OpenOffice.org Writer frame Untitled1 - OpenOffice.org Writer root pane'
+SPEECH OUTPUT: 'panel'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar'
+     VISIBLE:  'MenuBar', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'menu bar'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane File Menu'
+     VISIBLE:  'File Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'File menu'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane Edit Menu'
+     VISIBLE:  'Edit Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Edit menu'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane View Menu'
+     VISIBLE:  'View Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'View menu'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane Insert Menu'
+     VISIBLE:  'Insert Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Insert menu'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane Format Menu'
+     VISIBLE:  'Format Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Format menu'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane Table Menu'
+     VISIBLE:  'Table Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Table menu'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane Tools Menu'
+     VISIBLE:  'Tools Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Tools menu'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane Window Menu'
+     VISIBLE:  'Window Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Window menu'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane Help Menu'
+     VISIBLE:  'Help Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Help menu'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane File Menu'
+     VISIBLE:  'File Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'File menu'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar New Menu'
+     VISIBLE:  'New Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'New menu'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Open...(Control o)'
+     VISIBLE:  'Open...(Control o)', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Open... Control o'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Recent Documents Menu'
+     VISIBLE:  'Recent Documents Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Recent Documents menu'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Wizards Menu'
+     VISIBLE:  'Wizards Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Wizards menu'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Close'
+     VISIBLE:  'Close', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Close'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Save As...'
+     VISIBLE:  'Save As...', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Save As...'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Export...'
+     VISIBLE:  'Export...', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Export...'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Export as PDF...'
+     VISIBLE:  'Export as PDF...', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Export as PDF...'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Send Menu'
+     VISIBLE:  'Send Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Send menu'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Properties...'
+     VISIBLE:  'Properties...', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Properties...'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Digital Signatures...'
+     VISIBLE:  'Digital Signatures...', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Digital Signatures...'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Templates Menu'
+     VISIBLE:  'Templates Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Templates menu'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Page Preview'
+     VISIBLE:  'Page Preview', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Page Preview'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Templates Menu'
+     VISIBLE:  'Templates Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Templates menu'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar File Menu Organize...'
+     VISIBLE:  'Organize...', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Organize...'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar File Menu Address Book Source...'
+     VISIBLE:  'Address Book Source...', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Address Book Source...'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar File Menu Save...'
+     VISIBLE:  'Save...', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Save...'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar File Menu Edit...'
+     VISIBLE:  'Edit...', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Edit...'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar File Menu Organize...'
+     VISIBLE:  'Organize...', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Organize...'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Page Preview'
+     VISIBLE:  'Page Preview', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Page Preview'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Print...(Control p)'
+     VISIBLE:  'Print...(Control p)', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Print... Control p'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Printer Settings...'
+     VISIBLE:  'Printer Settings...', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Printer Settings...'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Exit(Control q)'
+     VISIBLE:  'Exit(Control q)', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Exit Control q'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar New Menu'
+     VISIBLE:  'New Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'New menu'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar File Menu Text Document(Control n)'
+     VISIBLE:  'Text Document(Control n)', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Text Document Control n'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar File Menu Spreadsheet'
+     VISIBLE:  'Spreadsheet', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Spreadsheet'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar File Menu Presentation'
+     VISIBLE:  'Presentation', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Presentation'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar File Menu Drawing'
+     VISIBLE:  'Drawing', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Drawing'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar File Menu Database'
+     VISIBLE:  'Database', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Database'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar File Menu HTML Document'
+     VISIBLE:  'HTML Document', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'HTML Document'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar File Menu XML Form Document'
+     VISIBLE:  'XML Form Document', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'XML Form Document'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar File Menu Master Document'
+     VISIBLE:  'Master Document', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Master Document'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar File Menu Formula'
+     VISIBLE:  'Formula', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Formula'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar File Menu Labels'
+     VISIBLE:  'Labels', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Labels'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar File Menu Business Cards'
+     VISIBLE:  'Business Cards', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Business Cards'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar File Menu Templates and Documents'
+     VISIBLE:  'Templates and Documents', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Templates and Documents'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar File Menu Text Document(Control n)'
+     VISIBLE:  'Text Document(Control n)', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Text Document Control n'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar File Menu Spreadsheet'
+     VISIBLE:  'Spreadsheet', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Spreadsheet'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane Edit Menu'
+     VISIBLE:  'Edit Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Edit menu'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Select All(Control a)'
+     VISIBLE:  'Select All(Control a)', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Select All Control a'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Changes Menu'
+     VISIBLE:  'Changes Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Changes menu'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Compare Document...'
+     VISIBLE:  'Compare Document...', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Compare Document...'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Find & Replace...(Control f)'
+     VISIBLE:  'Find & Replace...(Control f)', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Find & Replace... Control f'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Navigator'
+     VISIBLE:  'Navigator', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Navigator'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar AutoText...(Control )'
+     VISIBLE:  'AutoText...(Control )', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'AutoText... Control '
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Exchange Database...'
+     VISIBLE:  'Exchange Database...', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Exchange Database...'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Plug-in'
+     VISIBLE:  'Plug-in', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Plug-in'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Object Menu'
+     VISIBLE:  'Object Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Object menu'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Select All(Control a)'
+     VISIBLE:  'Select All(Control a)', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Select All Control a'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Changes Menu'
+     VISIBLE:  'Changes Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Changes menu'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Compare Document...'
+     VISIBLE:  'Compare Document...', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Compare Document...'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Find & Replace...(Control f)'
+     VISIBLE:  'Find & Replace...(Control f)', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Find & Replace... Control f'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar Navigator'
+     VISIBLE:  'Navigator', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Navigator'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar'
+     VISIBLE:  'MenuBar', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'menu bar'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane Edit Menu'
+     VISIBLE:  'Edit Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Edit menu'
+SPEECH OUTPUT: ''
+BRAILLE LINE:  ' $l'
+     VISIBLE:  ' $l', cursor=1
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view Window PopupMenu Edit Paragraph Style...'
+     VISIBLE:  'Edit Paragraph Style...', cursor=1
+SPEECH OUTPUT: 'window popup menu'
+SPEECH OUTPUT: 'Edit Paragraph Style...'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view Window PopupMenu Default Formatting'
+     VISIBLE:  'Default Formatting', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Default Formatting'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view Window PopupMenu Font Menu'
+     VISIBLE:  'Font Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Font menu'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view Window PopupMenu Size Menu'
+     VISIBLE:  'Size Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Size menu'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view Window PopupMenu Style Menu'
+     VISIBLE:  'Style Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Style menu'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view Window PopupMenu Alignment Menu'
+     VISIBLE:  'Alignment Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Alignment menu'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view Window PopupMenu Line Spacing Menu'
+     VISIBLE:  'Line Spacing Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Line Spacing menu'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view Window PopupMenu Character...'
+     VISIBLE:  'Character...', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Character...'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view Window PopupMenu Paragraph...'
+     VISIBLE:  'Paragraph...', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Paragraph...'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view Window PopupMenu Page...'
+     VISIBLE:  'Page...', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Page...'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view Window PopupMenu Numbering/Bullets...'
+     VISIBLE:  'Numbering/Bullets...', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Numbering/Bullets...'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view Window PopupMenu Case/Characters Menu'
+     VISIBLE:  'Case/Characters Menu', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Case/Characters menu'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane ScrollPane Document view Window PopupMenu Edit Paragraph Style...'
+     VISIBLE:  'Edit Paragraph Style...', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Edit Paragraph Style...'

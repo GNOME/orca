@@ -1,0 +1,299 @@
+SPEECH OUTPUT: 'Welcome to Orca.'
+BRAILLE LINE:  'Welcome to Orca.'
+     VISIBLE:  'Welcome to Orca.', cursor=0
+SPEECH OUTPUT: 'Switching to focus tracking mode.'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame'
+     VISIBLE:  'Orca Screen Reader / Magnifier F', cursor=1
+SPEECH OUTPUT: 'Orca Screen Reader / Magnifier frame'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame Preferences Button'
+     VISIBLE:  'Preferences Button', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Preferences button'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame'
+     VISIBLE:  'Untitled1 - OpenOffice.org Write', cursor=1
+SPEECH OUTPUT: 'Untitled1 - OpenOffice.org Writer frame'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane Panel'
+     VISIBLE:  'Panel', cursor=1
+SPEECH OUTPUT: 'Untitled1 - OpenOffice.org Writer frame Untitled1 - OpenOffice.org Writer root pane'
+SPEECH OUTPUT: 'panel'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar New Menu'
+     VISIBLE:  'New Menu', cursor=1
+SPEECH OUTPUT: 'menu bar File menu'
+SPEECH OUTPUT: 'New menu'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object ScrollPane Files Table Name ColumnHeader  07/30/2006'
+     VISIBLE:  ' 07/30/2006', cursor=1
+SPEECH OUTPUT: 'Name column header'
+SPEECH OUTPUT: ' bin 07/30/2006'
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 500, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1467, in onStateChanged
+    while current.role != rolenames.ROLE_APPLICATION:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object ScrollPane Files Table Name ColumnHeader  07/30/2006'
+     VISIBLE:  ' 07/30/2006', cursor=1
+SPEECH OUTPUT: 'Name column header'
+SPEECH OUTPUT: ' bin 07/30/2006'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object ScrollPane Files Table Name ColumnHeader  12/05/2006'
+     VISIBLE:  ' 12/05/2006', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: ' Desktop 12/05/2006'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object ScrollPane Files Table Name ColumnHeader  10/25/2006'
+     VISIBLE:  ' 10/25/2006', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: ' Examples 10/25/2006'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object ScrollPane Files Table Name ColumnHeader  01/12/2007'
+     VISIBLE:  ' 01/12/2007', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: ' orca 01/12/2007'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object ScrollPane Files Table Name ColumnHeader  12/05/2006'
+     VISIBLE:  ' 12/05/2006', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: ' attachment.cgi 12/05/2006'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object ScrollPane Files Table Name ColumnHeader  12/05/2006'
+     VISIBLE:  ' 12/05/2006', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: ' patch.381391 12/05/2006'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object ScrollPane Files Table Name ColumnHeader  07/30/2006'
+     VISIBLE:  ' 07/30/2006', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: ' bin 07/30/2006'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object All files  Combo'
+     VISIBLE:  'All files  Combo', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'All files  combo box'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object File type & y ToggleButton'
+     VISIBLE:  'File type & y ToggleButton', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'File type toggle button not pressed'
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 500, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1467, in onStateChanged
+    while current.role != rolenames.ROLE_APPLICATION:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object Read-only < > CheckBox'
+     VISIBLE:  'Read-only < > CheckBox', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Read-only check box not checked'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object Cancel Button'
+     VISIBLE:  'Cancel Button', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Cancel button'
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 500, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1467, in onStateChanged
+    while current.role != rolenames.ROLE_APPLICATION:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object Open Button'
+     VISIBLE:  'Open Button', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Open button'
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 500, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1467, in onStateChanged
+    while current.role != rolenames.ROLE_APPLICATION:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object Type a file name & y ToggleButton'
+     VISIBLE:  'Type a file name & y ToggleButto', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Type a file name toggle button not pressed'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object Button'
+     VISIBLE:  'Open redundant object Button', cursor=23
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'button'
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 500, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1467, in onStateChanged
+    while current.role != rolenames.ROLE_APPLICATION:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object orca &=y ToggleButton'
+     VISIBLE:  'orca &=y ToggleButton', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'orca toggle button pressed'
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 500, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1467, in onStateChanged
+    while current.role != rolenames.ROLE_APPLICATION:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object ScrollPane Places Table _Places ColumnHeader '
+     VISIBLE:  '', cursor=1
+SPEECH OUTPUT: 'Places table'
+SPEECH OUTPUT: '_Places column header'
+SPEECH OUTPUT: ' orca'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object ScrollPane Places Table _Places ColumnHeader '
+     VISIBLE:  '', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: ' Desktop'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object ScrollPane Places Table _Places ColumnHeader '
+     VISIBLE:  '', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: ' File System'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object ScrollPane Places Table _Places ColumnHeader '
+     VISIBLE:  '', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: ' Network Servers'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object ScrollPane Places Table _Places ColumnHeader '
+     VISIBLE:  '', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: ' File System'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object ScrollPane Places Table _Places ColumnHeader '
+     VISIBLE:  '', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: ' Desktop'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object ScrollPane Places Table _Places ColumnHeader '
+     VISIBLE:  '', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: ' orca'
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object Add Button'
+     VISIBLE:  'Open redundant object Add Button', cursor=23
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Add button'
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 500, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1467, in onStateChanged
+    while current.role != rolenames.ROLE_APPLICATION:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object ScrollPane Files Table Name ColumnHeader Name ColumnHeader'
+     VISIBLE:  'Name ColumnHeader', cursor=1
+SPEECH OUTPUT: 'Files table'
+SPEECH OUTPUT: 'Name column header'
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 500, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1467, in onStateChanged
+    while current.role != rolenames.ROLE_APPLICATION:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object ScrollPane Files Table Name ColumnHeader  07/30/2006'
+     VISIBLE:  ' 07/30/2006', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: ' bin 07/30/2006'
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 500, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1467, in onStateChanged
+    while current.role != rolenames.ROLE_APPLICATION:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object All files  Combo'
+     VISIBLE:  'All files  Combo', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'All files  combo box'
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 500, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1467, in onStateChanged
+    while current.role != rolenames.ROLE_APPLICATION:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object File type & y ToggleButton'
+     VISIBLE:  'File type & y ToggleButton', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'File type toggle button not pressed'
+
+Traceback (most recent call last):
+  File "/usr/lib/python2.4/site-packages/orca/focus_tracking_presenter.py", line 500, in _processObjectEvent
+    s.processObjectEvent(event)
+  File "/usr/lib/python2.4/site-packages/orca/script.py", line 215, in processObjectEvent
+    self.listeners[key](event)
+  File "/usr/lib/python2.4/site-packages/orca/scripts/StarOffice.py", line 1467, in onStateChanged
+    while current.role != rolenames.ROLE_APPLICATION:
+AttributeError: 'NoneType' object has no attribute 'role'
+
+No rolename for redundant object
+BRAILLE LINE:  'Open redundant object Read-only < > CheckBox'
+     VISIBLE:  'Read-only < > CheckBox', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Read-only check box not checked'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame'
+     VISIBLE:  'Untitled1 - OpenOffice.org Write', cursor=1
+SPEECH OUTPUT: 'Untitled1 - OpenOffice.org Writer frame'
+SPEECH OUTPUT: ''
+BRAILLE LINE:  ' $l'
+     VISIBLE:  ' $l', cursor=1
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane MenuBar New Menu'
+     VISIBLE:  'New Menu', cursor=1
+SPEECH OUTPUT: 'menu bar File menu'
+SPEECH OUTPUT: 'New menu'
+BRAILLE LINE:  'soffice.bin Application Untitled1 - OpenOffice.org Writer Frame Untitled1 - OpenOffice.org Writer RootPane'
+     VISIBLE:  'Untitled1 - OpenOffice.org Write', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Untitled1 - OpenOffice.org Writer root pane'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame'
+     VISIBLE:  'Orca Screen Reader / Magnifier F', cursor=1
+SPEECH OUTPUT: 'Orca Screen Reader / Magnifier frame'
+BRAILLE LINE:  'orca Application Orca Screen Reader / Magnifier Frame Preferences Button'
+     VISIBLE:  'Preferences Button', cursor=1
+SPEECH OUTPUT: ''
+SPEECH OUTPUT: 'Preferences button'
