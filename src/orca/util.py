@@ -449,7 +449,7 @@ def getRealActiveDescendant(obj):
         for i in range (0, obj.childCount):
             if obj.child(i).role != rolenames.ROLE_TABLE_CELL:
                 nonTableCellFound = True
-        if nonTableCellFound == False:
+        if not nonTableCellFound:
             for i in range (0, obj.childCount):
                 if obj.child(i).text:
                     text = obj.child(i).text.getText(0, -1)

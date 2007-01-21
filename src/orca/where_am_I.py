@@ -634,7 +634,8 @@ def _speakCalc(obj, doubleClick):
     
     # No way to get cell coordinates?
     
-    [textContents, startOffset, endOffset, selected] = _getTextContents(obj)
+    [textContents, startOffset, endOffset, selected] = \
+        _getTextContents(obj, doubleClick)
     text = _("%s") % textContents
     utterances.append(text)
     if selected:

@@ -384,7 +384,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         else:
             self.speechVerboseButton.set_active(True)
 
-        if prefs["readTableCellRow"] == True:
+        if prefs["readTableCellRow"]:
             self.rowSpeechButton.set_active(True)
         else:
             self.cellSpeechButton.set_active(True)
