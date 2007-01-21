@@ -49,6 +49,8 @@ TAG THE RELEASE:
 #cvs commit
 #cvs tag ORCA_0_2_5
 
+While in the trunk directory:
+
 svn cp . svn+ssh://wwalker@svn.gnome.org/svn/orca/tags/ORCA_0_2_5 
 
 

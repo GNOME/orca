@@ -1,3 +1,9 @@
+2007-01-21  Willie Walker <william.walker@sun.com>
+
+	* NEWS, configure.in, README: prep for v2.17.90.
+
+	* RELEASE_HOWTO: update how to "tag" a release.
+	
 2007-01-20  Joanmarie Diggs <j-diggs@comcast.net>
 
 	* bugs/bugs.html: Added some acroread bugs. Having read up
