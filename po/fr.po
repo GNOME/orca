@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the orca package.
 #
 # Cédric Corazza <cedric.corazza@laposte.net>, 2004.
-# Robert-André Mauchin <zebob.m@gmail.com>, 2006.
+# Robert-André Mauchin <zebob.m@gmail.com>, 2006-2007.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca 0.9.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-30 19:45+0200\n"
-"PO-Revision-Date: 2006-08-30 19:37+0200\n"
+"POT-Creation-Date: 2007-01-23 00:51+0100\n"
+"PO-Revision-Date: 2007-01-23 00:51+0100\n"
 "Last-Translator: Robert-André Mauchin <zebob.m@gmail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +25,7 @@ msgstr "Lecteur d'écran et loupe Orca"
 msgid ""
 "Present on-screen information as speech or braille, or magnify the screen"
 msgstr ""
-"Présente les informations à l'écran par la voix ou en braille, et aggrandit "
+"Présente les informations à l'écran par la voix ou en braille, et agrandit "
 "l'écran"
 
 #: ../src/orca/braillegenerator.py:193 ../src/orca/speechgenerator.py:191
@@ -253,7 +253,7 @@ msgstr "Déplace la révision globale au prochain élément ou mot."
 
 #: ../src/orca/default.py:142
 msgid "Moves flat review to the word below the current word."
-msgstr "Déplace la révision globale en-dessous du mot actuel."
+msgstr "Déplace la révision globale en dessous du mot actuel."
 
 #: ../src/orca/default.py:146
 msgid "Moves flat review to the previous character."
@@ -354,19 +354,19 @@ msgid ""
 "Prints a debug listing of all known applications to the console where Orca "
 "is running."
 msgstr ""
-"Imprime une liste de débogage de toutes les applications connues dans la "
+"Imprime une liste de débogage de toutes les applications connues vers la "
 "console où Orca est lancé."
 
 #: ../src/orca/default.py:238
 msgid "Cycles the debug level at run time."
-msgstr ""
+msgstr "Itère le niveau de débogage à l'exécution"
 
 #: ../src/orca/default.py:242
 msgid ""
 "Prints debug information about the currently active application to the "
 "console where Orca is running."
 msgstr ""
-"Imprime les informations de débogage pour l'application active actuelle dans "
+"Imprime les informations de débogage pour l'application active actuelle vers "
 "la console où Orca est lancé."
 
 #: ../src/orca/default.py:246
@@ -658,7 +658,7 @@ msgstr "Activer le pointeur en cr_oix"
 
 #: ../src/orca/orca-setup.glade.h:29
 msgid "Enable cross-hair cli_p"
-msgstr ""
+msgstr "Activer l'a_ttache du pointeur en croix"
 
 #: ../src/orca/orca-setup.glade.h:30
 msgid "Enable echo by _word"
@@ -906,13 +906,13 @@ msgid ""
 "will automatically launch the preferences set up unless\n"
 "the -n or --no-setup option is used."
 msgstr ""
-"Si Orca n'a pas été précédement configuré par l'utilisateur,\n"
+"Si Orca n'a pas été précédemment configuré par l'utilisateur,\n"
 "Orca démarrera automatiquement la configuration des préférences, sauf\n"
-"si l'option -n ou --no-setup a été utilisée.."
+"si l'option -n ou --no-setup a été utilisée."
 
 #: ../src/orca/orca.py:1105
 msgid "Report bugs to orca-list@gnome.org."
-msgstr "Rapportez les bugs à orca-list@gnome.org."
+msgstr "Rapportez les bogues à orca-list@gnome.org."
 
 #: ../src/orca/orca_console_prefs.py:93 ../src/orca/orca_console_prefs.py:109
 msgid "Speech is unavailable."
@@ -924,7 +924,7 @@ msgstr "Bienvenue dans le programme d'installation de Orca."
 
 #: ../src/orca/orca_console_prefs.py:112
 msgid "Select desired speech system:"
-msgstr "Sélectionner le synthétiseur vocal désiré :"
+msgstr "Sélectionnez le synthétiseur vocal désiré :"
 
 #: ../src/orca/orca_console_prefs.py:117 ../src/orca/orca_console_prefs.py:138
 #: ../src/orca/orca_console_prefs.py:164
@@ -949,7 +949,7 @@ msgstr "Aucun serveur disponible.\n"
 
 #: ../src/orca/orca_console_prefs.py:133
 msgid "Select desired speech server."
-msgstr "Sélectionner le synthétiseur vocal désiré."
+msgstr "Sélectionne le synthétiseur vocal désiré."
 
 #: ../src/orca/orca_console_prefs.py:151
 msgid "No voices available.\n"
@@ -957,7 +957,7 @@ msgstr "Aucune voix disponible.\n"
 
 #: ../src/orca/orca_console_prefs.py:155
 msgid "Select desired voice:"
-msgstr "Sélectionner la voix désirée :"
+msgstr "Sélectionnez la voix désirée :"
 
 #. Ask the user if they would like to enable echoing by word.
 #.
@@ -1028,7 +1028,7 @@ msgstr ""
 
 #: ../src/orca/orca_console_prefs.py:330
 msgid "Setup complete.  Press Return to continue."
-msgstr "Installation terminée. Appuyez sur Entrée pour continuer."
+msgstr "L'installation est terminée. Appuyez sur Entrée pour continuer."
 
 #: ../src/orca/orca_gui_prefs.py:128 ../src/orca/orca_gui_prefs.py:423
 #: ../src/orca/orca_gui_prefs.py:465
@@ -1170,11 +1170,11 @@ msgstr "case à cocher"
 
 #: ../src/orca/rolenames.py:188
 msgid "CheckItem"
-msgstr ""
+msgstr "ÉlémentÀCocher"
 
 #: ../src/orca/rolenames.py:189
 msgid "check item"
-msgstr ""
+msgstr "Élément à cocher"
 
 #: ../src/orca/rolenames.py:192
 msgid "ckm"
@@ -1182,11 +1182,11 @@ msgstr "ckm"
 
 #: ../src/orca/rolenames.py:193
 msgid "CheckMenu"
-msgstr ""
+msgstr "MenuÀCocher"
 
 #: ../src/orca/rolenames.py:194
 msgid "check menu"
-msgstr ""
+msgstr "menu à cocher"
 
 #: ../src/orca/rolenames.py:197
 msgid "clrchsr"
@@ -1252,7 +1252,7 @@ msgstr "icône du bureau"
 #: ../src/orca/rolenames.py:222 ../src/orca/rolenames.py:264
 #: ../src/orca/rolenames.py:287
 msgid "frame"
-msgstr "frame"
+msgstr "cadre"
 
 #: ../src/orca/rolenames.py:223
 msgid "DesktopFrame"
@@ -1356,11 +1356,11 @@ msgstr "gpn"
 
 #: ../src/orca/rolenames.py:268
 msgid "GlassPane"
-msgstr ""
+msgstr "PanneauDeVerre"
 
 #: ../src/orca/rolenames.py:269
 msgid "glass pane"
-msgstr ""
+msgstr "panneau de verre"
 
 #: ../src/orca/rolenames.py:272
 msgid "html"
@@ -1676,11 +1676,11 @@ msgstr "sldr"
 
 #: ../src/orca/rolenames.py:408
 msgid "Slider"
-msgstr ""
+msgstr "Curseur"
 
 #: ../src/orca/rolenames.py:409
 msgid "slider"
-msgstr ""
+msgstr "curseur"
 
 #: ../src/orca/rolenames.py:412
 msgid "spltpn"
@@ -2026,7 +2026,7 @@ msgstr "lire le nom du salon de discussion."
 
 #: ../src/orca/scripts/gaim.py:197
 msgid "Do not speak chat room name."
-msgstr "Ne par lire le nom du salon de discussion."
+msgstr "Ne pas lire le nom du salon de discussion."
 
 #: ../src/orca/scripts/gaim.py:215
 msgid "Message from chat room "
