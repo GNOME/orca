@@ -75,7 +75,7 @@ def whereAmI(obj, context, doubleClick, orcaKey):
        \n  parent name=%s \
        \n  parent role=%s \
        \n  double-click=%s \
-       \n  orca-key=%s" % \
+S       \n  orca-key=%s" % \
         (context,
          _getObjLabel(obj),
          _getObjName(obj),
@@ -92,7 +92,16 @@ def whereAmI(obj, context, doubleClick, orcaKey):
     role = obj.role
 
     if orcaKey:
-        _handleOrcaKey(obj, doubleClick)
+        # Handle the Orca modifier key being pressed.
+        if _getAppName() == "soffice.bin":
+            top = util.getTopLevel(obj)
+            if top and top.name.endswith(" Calc"):
+                _handleCalcOrcaKey(obj, doubleClick)
+            else:
+                _handleOrcaKey(obj, doubleClick)
+        else:
+            _handleOrcaKey(obj, doubleClick)
+
 
     elif role == rolenames.ROLE_CHECK_BOX:
         _speakCheckBox(obj, doubleClick)
@@ -155,18 +164,6 @@ def _getAppName():
     """
     global _appName
     return _appName
-
-
-def _handleOrcaKey(obj, doubleClick):
-    """
-    Handle the Orca modifier key being pressed.
-    """
-    if _getAppName() == "soffice.bin":
-        top = util.getTopLevel(obj)
-        if top and top.name.endswith(" Calc"):
-            _handleCalcOrcaKey(obj, doubleClick)
-    else:
-        _handleOrcaKey(obj, doubleClick)
 
 
 def _speakCheckBox(obj, doubleClick):
