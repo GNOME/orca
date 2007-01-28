@@ -1,4 +1,4 @@
-Orca v1.0.0
+Orca v1.0.1
 
 Introduction
 ========================================================================
@@ -8,8 +8,7 @@ that provides access to the graphical desktop via user-customizable
 combinations of speech, braille, and/or magnification.  Under
 development by the Sun Microsystems, Inc., Accessibility Program
 Office since 2004, Orca has been created with early input from and
-continued engagement with its end users.  In fact, the user interface
-designer for Orca is also a user.
+continued engagement with its end users.
 
 Orca works with applications and toolkits that support the assistive
 technology service provider interface (AT-SPI), which is the primary
@@ -19,51 +18,18 @@ AT-SPI include the GNOME GTK+ toolkit, the Java platform's Swing
 toolkit, OpenOffice, and Mozilla.  AT-SPI support for the KDE Qt
 toolkit is currently being pursued.
 
-The focus for Orca v1.0.0 has been to provide usable access to key
-office productivity applications, including the following:
+The sole goal of Orca v1.0.1 has been to provide updated translations
+of Orca v1.0.0 for operating system distributions that are unable to
+include the Orca v2.17.x releases.  MANY MANY THANKS to the
+translators that have done this work in their spare time.
 
-Application Class        Application
------------------        -----------
-Graphical Desktop        GNOME 2.16 Desktop
-Help                     yelp v2.16
-Simple Text Editing      gedit v2.16
-Terminal                 gnome-terminal v2.16
-E-mail                   evolution v2.8
-Calendar                 evolution v2.8
-Contact Management       evolution v2.8
-Instant Messaging        gaim v1.5.1 or better
-Text Document Content    OpenOffice v2.0.4 or StarOffice PP4
-Spreadsheet Content      OpenOffice v2.0.4 or StarOffice PP4
+Note that the Orca v2.17.x releases contain significant usability
+improvements and additions over the Orca v1.0.x releases.  As such, we
+highly encourage end users and distributions to work with the Orca
+v2.17.x releases if possible.
 
-Notably absent from this list are the following applications that we
-plan to address with Orca v1.1 (to be released in the GNOME 2.18 time
-frame):
-
-* Web Content Accessibility: while Orca can provide access to
-  relatively simple web pages via the Firefox v2.0 web browser, the
-  team is working closely with the Firefox team to focus on providing
-  compelling access to web content for Firefox v3.0.  Firefox v3.0 is
-  scheduled for Spring 2007, but several interim releases of Firefox
-  v3.0 and Orca's support for Firefox v3.0 will be available prior to
-  the "official" release.  We encourage Orca users to test these
-  releases and provide us with feedback.
-
-* PDF Document Accessibility: the Orca team is working with Adobe to
-  identify and fix accessibility issues with the Adobe Acrobat Reader
-  and we expect to see these issues resolved soon.  Orca should "just
-  work" with the fixed Adobe Acrobat Reader, but we will release a new
-  version of Orca if changes are necessary.
-
-* Presentation Content: the Orca team focused on what our users
-  specified as the most important content for OpenOffice and
-  StarOffice: text documents and spreadsheets.  For v1.1, we plan on
-  providing more compelling access to these features as well as access
-  to the generation and reading of presentation content.
-
-See also http://live.gnome.org/Orca for detailed English and Spanish
-information on Orca, including how to run Orca, how to communicate
-with the Orca user community, and where to log bugs and feature
-requests.
+Please see http://live.gnome.org/Orca for more information on using
+Orca and for obtaining the latest release.
 
 
 Build Requirements

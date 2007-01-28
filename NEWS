@@ -1,3 +1,24 @@
+1.0.1 - 28-Jan-2007
+
+* Updated and New Translations (THANKS!!!)
+
+    ar      Arabic               Djihed Afifi
+    de	    German	         Hendrik Richter
+    dz      Dzongkha             Pema Geyleg
+    en_GB   English/British      David Lodge
+    et      Estonian             Priit Laes and Ivar Smolin
+    fr      French	         Robert-André Mauchin, 
+			         and Stéphane Raimbault
+    gl      Galician             Ignacio Casal Quinteiro
+    hu      Hungarian            Gabor Kelemen
+    it      Italian              Luca Ferretti
+    nb      Norwegian Bokmål     Kjartan Maraas
+    or      Oriya                Subhransu Behera
+    pl      Polish               Stanisław Małolepszy
+    sl      Slovenian            Matic Zgur
+    th      Thai                 Supranee Thirawatthanasuk
+    tr      Turkish              Deniz Kocak and Baris Cicek
+
 1.0.0 - 04-Sep-2006
 
 * Updates to User's Guide, Architecture, Requirements, and Script Writing
