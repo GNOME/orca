@@ -2251,6 +2251,8 @@ class Script(script.Script):
         #
         if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
             keyString = orca_state.lastInputEvent.event_string
+            wasAutoComplete = (event.source.role == rolenames.ROLE_TEXT and \
+                               event.source.text.getNSelections())
             wasCommand = orca_state.lastInputEvent.modifiers \
                          & (1 << atspi.Accessibility.MODIFIER_CONTROL \
                             | 1 << atspi.Accessibility.MODIFIER_ALT \
@@ -2260,7 +2262,7 @@ class Script(script.Script):
             if (text == " " and keyString == "space") \
                 or (text == keyString):
                 pass
-            elif wasCommand or \
+            elif wasCommand or wasAutoComplete or \
                    (event.source.role == rolenames.ROLE_PASSWORD_TEXT):
                 if text.isupper():
                     speech.speak(text, self.voices[settings.UPPERCASE_VOICE])

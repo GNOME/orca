@@ -1,3 +1,11 @@
+2007-01-29  Joanmarie Diggs <j-diggs@comcast.net>
+
+	* src/orca/default.py: During a text-inserted event,
+        if the last input event was a keyboard event, check
+        for selection.  If text is selected, it's an autocomplete
+        and the full field should be spoken. Fix for bug #400766
+        as well as #348464.
+
 2007-01-12  Lynn Monsanto <lynn.monsanto@sun.com>
 
 	* src/orca/where_am_I.py: Fixed multiply-defined method.
