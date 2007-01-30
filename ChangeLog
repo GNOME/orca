@@ -1,3 +1,12 @@
+2007-01-29  Lynn Monsanto <lynn.monsanto@sun.com>
+
+	* src/orca/where_am_I.py: Removed typo.
+
+	* src/orca/scripts/Thunderbird.py: Fixed fence-post
+	error that was causing Orca to not speak the contents
+	of the Notes text area in the New Contact dialog.
+
+
 2007-01-29  Joanmarie Diggs <j-diggs@comcast.net>
 
 	* src/orca/default.py: During a text-inserted event,
@@ -8,7 +17,7 @@
 
 2007-01-12  Lynn Monsanto <lynn.monsanto@sun.com>
 
-	* src/orca/where_am_I.py: Fixed multiply-defined method.
+	* src/orca/where_am_I.py: Fixed multiple-defined method.
 
 2007-01-21  Willie Walker <william.walker@sun.com>
 

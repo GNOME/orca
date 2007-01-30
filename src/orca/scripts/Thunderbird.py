@@ -99,13 +99,15 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             
             if obj.index > 0:
                 prev = obj.parent.child(obj.index - 1)
-                self._debug("_getDefaultBrailleRegions: prev='%s', role='%s'" \
-                            % (prev.name, prev.role))
+                if prev:
+                    self._debug("_getDefaultBrailleRegions: prev='%s', role='%s'" \
+                                % (prev.name, prev.role))
                 
                 if obj.parent.childCount > obj.index:
                     next = obj.parent.child(obj.index + 1)
-                    self._debug("_getDefaultBrailleRegions: next='%s', role='%s'" \
-                                % (next.name, next.role))
+                    if next:
+                        self._debug("_getDefaultBrailleRegions: next='%s', role='%s'" \
+                                    % (next.name, next.role))
 
             # Get the entry text.
             [word, startOffset, endOffset] = obj.text.getTextAtOffset(0,
@@ -402,25 +404,33 @@ class Script(Gecko.Script):
         #
         # Returns whether to consume the event.
         
-        self._debug("_handleTextEntry: childCount=%d, index=%d" % \
-                    (obj.parent.childCount, obj.index))
+        self._debug("_handleTextEntry: childCount=%d, index=%d, caretOffset=%d, length=%d" % \
+                    (obj.parent.childCount, obj.index, obj.text.caretOffset, obj.text.characterCount))
 
-        if not obj.text:
-            return False
-        
         if obj.index > 0:
             prev = obj.parent.child(obj.index - 1)
-            self._debug("_handleTextEntry: prev='%s', role='%s'" \
-                    % (prev.name, prev.role))
+            if prev:
+                self._debug("_handleTextEntry: prev='%s', role='%s'" \
+                            % (prev.name, prev.role))
             
-        if obj.parent.childCount > obj.index:
+        if obj.index <= obj.parent.childCount - 1:
             next = obj.parent.child(obj.index + 1)
-            self._debug("_handleTextEntry: next='%s', role='%s'" \
-                    % (next.name, next.role))
+            if next:
+                self._debug("_handleTextEntry: next='%s', role='%s'" \
+                            % (next.name, next.role))
 
         # Get the entry text.
         [word, startOffset, endOffset] = obj.text.getTextAtOffset(0,
             atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+        
+        if len(word) == 0:
+            [word, startOffset, endOffset] = obj.text.getTextAtOffset(obj.text.caretOffset,
+                atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+
+        if len(word) == 0:
+            [word, startOffset, endOffset] = obj.text.getTextAtOffset(0,
+                atspi.Accessibility.TEXT_BOUNDARY_WORD_START)
+
         if len(word) == 0:
             # The above may incorrectly return an empty string
             # if the entry contains a single character.

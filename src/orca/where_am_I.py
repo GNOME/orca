@@ -75,7 +75,7 @@ def whereAmI(obj, context, doubleClick, orcaKey):
        \n  parent name=%s \
        \n  parent role=%s \
        \n  double-click=%s \
-S       \n  orca-key=%s" % \
+       \n  orca-key=%s" % \
         (context,
          _getObjLabel(obj),
          _getObjName(obj),
