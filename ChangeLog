@@ -1,3 +1,9 @@
+2007-01-31  Willie Walker <william.walker@sun.com>
+
+	* src/orca/Gecko.py: handle unnamed link images that end in a "/"
+	a little better (we now speak the stuff just prior to the "/" in
+	these cases).
+	
 2007-01-30  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py: first pass at letting the user know when

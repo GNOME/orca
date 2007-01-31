@@ -2141,15 +2141,21 @@ class Script(default.Script):
         if obj and obj.hyperlink:
             uri = obj.hyperlink.getURI(0)
             if uri and len(uri):
-                # Get the last thing after all the /'s.
+                # Get the last thing after all the /'s, unless it ends
+                # in a /.  If it ends in a /, we'll look to the stuff
+                # before the ending /.
                 #
-                basename = uri.split('/')[-1]
+                if uri[-1] == "/":
+                    basename = uri[0:-1]
+                    basename = basename.split('/')[-1]
+                else:
+                    basename = uri.split('/')[-1]
 
-                # Now, try to strip off the suffixes.
-                #
-                basename = basename.split('.')[0]
-                basename = basename.split('?')[0]
-                basename = basename.split('#')[0]
+                    # Now, try to strip off the suffixes.
+                    #
+                    basename = basename.split('.')[0]
+                    basename = basename.split('?')[0]
+                    basename = basename.split('#')[0]
 
         return basename
 
