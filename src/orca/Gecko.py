@@ -756,6 +756,22 @@ class Script(default.Script):
             debug.println(debug.LEVEL_CONFIGURATION,
                           "Firefox is controlling the caret.")
 
+        # We keep track of whether we're currently in the process of
+        # loading a page.  Ideally, Gecko will let us know when a page
+        # is being loaded by:
+        #
+        # Setting the BUSY state of the document frame.  We should get
+        # a object:state-changed:busy event with a detail1 that tells
+        # us if the frame is busy (detail1==1) or not (detail1==0).
+        #
+        # Sending us "document:load-complete", "document:reload", and
+        # "document:load-stopped" events.
+        #
+        # We can also watch for value change events on the progress
+        # bar to let us know how things are progressing.
+        #
+        self._loadingDocumentContent = False
+
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.
         """
@@ -829,6 +845,27 @@ class Script(default.Script):
             input_event.InputEventHandler(
                 Script.goNextChunk,
                 "Goes to next chunk.")
+
+    def getListeners(self):
+        """Sets up the AT-SPI event listeners for this script.
+        """
+        listeners = default.Script.getListeners(self)
+
+        listeners["document:reload"]                        = \
+            self.onDocumentReload
+        listeners["document:load-complete"]                 = \
+            self.onDocumentLoadComplete
+        listeners["document:load-stopped"]                  = \
+            self.onDocumentLoadStopped
+
+        # [[[TODO: HACK - WDW we need to accomodate Gecko's incorrect
+        # use of underscores instead of dashes until they fix their bug.
+        # See https://bugzilla.mozilla.org/show_bug.cgi?id=368729]]]
+        #
+        listeners["object:property-change:accessible_value"] = \
+            self.onValueChanged
+
+        return listeners
 
     def __getArrowBindings(self):
         """Returns an instance of keybindings.KeyBindings that use the
@@ -1024,6 +1061,37 @@ class Script(default.Script):
 
         default.Script.onCaretMoved(self, event)
 
+    def onDocumentReload(self, event):
+        """Called when the reload button is hit for a web page."""
+        self._loadingDocumentContent = True
+        # [[[TODO: WDW - Currently, we handle loading notification by
+        # looking at the state changed events on the document frame
+        # (we care about busy state there) and visibility/value changes
+        # on the progress bar.]]]
+        #
+        self._loadingDocumentContent = True
+        pass
+
+    def onDocumentLoadComplete(self, event):
+        """Called when a web page load is completed."""
+        # [[[TODO: WDW - Currently, we handle loading notification by
+        # looking at the state changed events on the document frame
+        # (we care about busy state there) and visibility/value changes
+        # on the progress bar.]]]
+        #
+        self._loadingDocumentContent = False
+        pass
+
+    def onDocumentLoadStopped(self, event):
+        """Called when a web page load is interrupted."""
+        # [[[TODO: WDW - Currently, we handle loading notification by
+        # looking at the state changed events on the document frame
+        # (we care about busy state there) and visibility/value changes
+        # on the progress bar.]]]
+        #
+        self._loadingDocumentContent = False
+        pass
+
     def onNameChanged(self, event):
         """Called whenever a property on an object changes.
 
@@ -1173,6 +1241,53 @@ class Script(default.Script):
 
         self.updateBraille(event.source)
 
+    def onStateChanged(self, event):
+        """Called whenever an object's state changes.
+
+        Arguments:
+        - event: the Event
+        """
+
+        # We care when the document frame changes it's busy state.  That
+        # means it has started/stopped loading content.
+        #
+        if event.type == "object:state-changed:busy":
+            if event.source \
+                and (event.source.role == rolenames.ROLE_DOCUMENT_FRAME):
+                if event.detail1:
+                    self._loadingDocumentContent = True
+                    message = _("Loading.  Please wait.")
+                    braille.displayMessage(message)
+                    speech.stop()
+                    speech.speak(message)
+                else:
+                    self._loadingDocumentContent = False
+                    speech.stop()
+                    speech.speak(_("Finished loading %s.") \
+                                 % event.source.name)
+            return
+
+        # [[[TODO: HACK - WDW because Gecko is not giving us state
+        # change events for when the document frame becomes busy,
+        # we look to see when the progress bar becomes visible.
+        # Because there can be more than one progress bar, we look
+        # for the one in a status bar, which should be the one we
+        # care about.]]]
+        #
+        if (event.type == "object:state-changed:visible") \
+            and (event.source.role == rolenames.ROLE_PROGRESS_BAR) \
+            and event.detail1 \
+            and event.source.parent \
+            and (event.source.parent.role == rolenames.ROLE_STATUSBAR):
+            self._loadingDocumentContent = True
+            message = _("Loading.  Please wait.")
+            braille.displayMessage(message)
+            speech.stop()
+            speech.speak(message)
+            return
+
+        default.Script.onStateChanged(self, event)
+
     def visualAppearanceChanged(self, event, obj):
         """Called when the visual appearance of an object changes.  This
         method should not be called for objects whose visual appearance
@@ -1185,6 +1300,29 @@ class Script(default.Script):
         - event: if not None, the Event that caused this to happen
         - obj: the Accessible whose visual appearance changed.
         """
+
+        # We'll try to give some presentation of progress level for
+        # loading the document content if we can.  [[[TODO: HACK - WDW
+        # I've been filling the talkback buffers with Firefox crashes
+        # all day today.  Looks like Gecko wants to crash when you
+        # probe things about progress bars.  Maybe it's a passive
+        # aggressive way of saying "HEY! QUIT CHECKING MY STATUS!
+        # I'LL TELL YOU WHEN I'M DONE!!!".  So...we won't offer
+        # this feature right now.]]]
+        #
+        if False and obj.role == rolenames.ROLE_PROGRESS_BAR:
+            if self._loadingDocumentContent:
+                [regions, focusedRegion] = \
+                    self.brailleGenerator.getBrailleRegions(event.source)
+                braille.clear()
+                line = braille.Line()
+                braille.addLine(line)
+                braille.setFocus(focusedRegion)
+                braille.refresh(True)
+                if not speech.isSpeaking():
+                    speech.speakUtterances(\
+                        self.speechGenerator.getSpeech(event.source, True))
+                return
 
         if (obj.role == rolenames.ROLE_CHECK_BOX) \
             and obj.state.count(atspi.Accessibility.STATE_FOCUSED):
