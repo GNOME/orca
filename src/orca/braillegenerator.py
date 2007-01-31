@@ -223,7 +223,7 @@ class BrailleGenerator:
         try:
             minimumIncrement = value.minimumIncrement
         except:
-            pass
+            minimumIncrement = 0.0
 
         if minimumIncrement == 0.0:
             minimumIncrement = (value.maximumValue - value.minimumValue) \

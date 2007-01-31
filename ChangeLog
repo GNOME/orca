@@ -1,3 +1,10 @@
+2007-01-30  Willie Walker <william.walker@sun.com>
+
+	* src/orca/braillegenerator.py, src/orca/speechgenerator.py:
+	make sure minimumIncrement is defined when calculating
+	percentages for progress bars.  Looks like Gecko doesn't
+	want to give us a minimumIncrement on the value for them.
+	
 2007-01-29  Lynn Monsanto <lynn.monsanto@sun.com>
 
 	* src/orca/where_am_I.py: Removed typo.
