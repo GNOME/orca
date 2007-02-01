@@ -1,3 +1,10 @@
+2007-02-01  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca_gui_prefs.py:
+          Fixed bug #380050 – New window should be focused after user 
+          presses "Quit" or "Preferences" button in Orca Preferences 
+          window. Thanks to Joanie for extensively testing this.
+
 2007-01-31  Lynn Monsanto <lynn.monsanto@sun.com>
 
 	* src/orca/scripts/Thunderbird.py: Sets focus to the cell 

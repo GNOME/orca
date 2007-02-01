@@ -901,17 +901,26 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         the GUI has already been created.
         """
 
-        # Set the current time on the Configuration GUI window so that it'll
-        # get focus. set_user_time is a new call in pygtk 2.9.2 or later.
-        # It's surronded by a try/except block here so that if it's not found,
-        # then we can fail gracefully.
+        # We want the Orca preferences window to have focus when it is
+        # shown. First try using the present() call. If this isn't present
+        # in the version of pygtk that the user is using, fall back to
+        # trying to set the current time on the Preferences window using
+        # set_user_time. If that isn't found, then catch the exception and
+        # fail gracefully.
         #
+        self.orcaSetupWindow.realize()
         try:
-            self.orcaSetupWindow.realize()
-            self.orcaSetupWindow.window.set_user_time(\
-                orca_state.lastInputEventTimestamp)
-        except AttributeError:
-            debug.printException(debug.LEVEL_FINEST)
+            if settings.showMainWindow:
+                self.orcaSetupWindow.present()
+            else:
+                self.orcaSetupWindow.window.set_user_time(\
+                    orca_state.lastInputEventTimestamp)
+        except:
+            try:
+                self.orcaSetupWindow.window.set_user_time(\
+                    orca_state.lastInputEventTimestamp)
+            except AttributeError:
+                debug.printException(debug.LEVEL_FINEST)
 
         self.orcaSetupWindow.show()
 
