@@ -5,6 +5,15 @@
           presses "Quit" or "Preferences" button in Orca Preferences 
           window. Thanks to Joanie for extensively testing this.
 
+        * src/orca/focus_tracking_presenter.py:
+          Work on bug #400763 – Orca hangs after starting the update 
+          process in update manager. Checked in a patch that checks to
+          see whether the event.source.valid field is set or not for each
+          event, in the _enqueueEvent() routine and ignores invalid events. 
+          We still get the initial COMM_FAILURE's when we try to access an 
+          invalid accessible, but overall Orca is now much more responsive 
+          in a situation like this.
+
 2007-01-31  Lynn Monsanto <lynn.monsanto@sun.com>
 
 	* src/orca/scripts/Thunderbird.py: Sets focus to the cell 

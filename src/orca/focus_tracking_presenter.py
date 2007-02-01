@@ -601,9 +601,18 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             # we want it to ref, thus allowing things to survive until
             # they are processed on the gidle thread.
             #
+            # If the event doesn't have a source or that source is not marked
+            # valid, then we don't care about this event. Just return.
+            #
+            event = atspi.Event(e)
+            if not event.source or not event.source.valid:
+                debug.println(debug.LEVEL_FINEST,
+                      "---------> IGNORING INVALID EVENT %s" % e.type)
+                if settings.debugEventQueue:
+                    self._enqueueEventCount -= 1
+                return
             debug.println(debug.LEVEL_FINEST,
                           "---------> QUEUEING EVENT %s" % e.type)
-            event = atspi.Event(e)
 
         if event:
             if settings.debugEventQueue:
