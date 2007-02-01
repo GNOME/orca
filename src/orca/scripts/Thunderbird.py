@@ -26,6 +26,7 @@ __date__      = "$Date: $"
 __copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import orca.orca as orca
 import orca.atspi as atspi
 import orca.debug as debug
 import orca.default as default
