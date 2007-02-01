@@ -1,3 +1,12 @@
+2007-01-31  Lynn Monsanto <lynn.monsanto@sun.com>
+
+	* src/orca/scripts/Thunderbird.py: Sets focus to the cell 
+	at the beginning of table rows, so Braille shows the row 
+	from the beginning. This is an issue for message header
+	table rows, where the cell with focus is in the column
+	that is sorted on (e.g., date).
+
+
 2007-01-31  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py: handle unnamed link images that end in a "/"

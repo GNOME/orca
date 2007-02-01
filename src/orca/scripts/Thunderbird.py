@@ -335,15 +335,27 @@ class Script(Gecko.Script):
         
         """
         obj = event.source
+        parent = obj.parent
         top = util.getTopLevel(obj)
         consume = False
 
-        self._debug("onFocus: name='%s', role='%s'" \
-                    % (obj.name, obj.role))
+        self._debug("onFocus: name='%s', role='%s'" % (obj.name, obj.role))
 
         # Don't speak a chrome URL.
         if obj.name.startswith(_("chrome://")):
             return
+
+        # Set focus to the cell at the beginning of the row, so Braille
+        # shows the row from the beginning. Subtract one from the index
+        # because the first child in the table is a list of header names.
+        if obj.role == rolenames.ROLE_TABLE_CELL:
+            table = parent.table
+            inColumn = (obj.index - 1) % table.nColumns
+            if (inColumn != 0):
+                newIndex = obj.index - inColumn
+                startCell = parent.child(newIndex)
+                if startCell:
+                    orca.setLocusOfFocus(event, startCell)
 
         # Handle dialogs.
         if top.role == rolenames.ROLE_DIALOG:
