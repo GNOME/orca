@@ -296,7 +296,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 class Script(Gecko.Script):
 
     _containingPanelName = ""
-
+    
     def __init__(self, app):
         """ Creates a new script for the given application.
 
@@ -342,7 +342,11 @@ class Script(Gecko.Script):
 
         self._debug("onFocus: name='%s', role='%s'" % (obj.name, obj.role))
 
-        # Don't speak a chrome URL.
+        # Let onTextInsertion handle autocompletion.
+        if parent.role == rolenames.ROLE_AUTOCOMPLETE:
+            return
+
+        # Don't speak chrome URLs.
         if obj.name.startswith(_("chrome://")):
             return
 
@@ -369,6 +373,43 @@ class Script(Gecko.Script):
         if not consume:
             Gecko.Script.onFocus(self, event)
             
+
+
+    def onTextInserted(self, event):
+        """Called whenever text is inserted into an object.
+
+        Arguments:
+        - event: the Event
+        """
+        obj = event.source
+        self._debug("onTextInserted: name='%s', role='%s', parent='%s'" %\
+                    (obj.name, obj.role, obj.parent.role))
+
+        parent = obj.parent
+        
+        if parent.role == rolenames.ROLE_AUTOCOMPLETE:
+            speech.stop()
+
+            utterances = []
+            utterances.append(rolenames.getSpeechForRoleName(parent))
+
+            [text, caretOffset, startOffset] = util.getTextLineAtCaret(obj)
+
+            self._debug("onTextInserted: text='%s'" % text)
+
+            [word, startOffset, endOffset] = obj.text.getTextAtOffset(0,
+               atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+
+            self._debug("onTextInserted: getTextAtOffset='%s'" % text)
+
+            utterances.append(text)
+            self._debug("onTextInserted: utterances='%s'" % utterances)
+
+            speech.speakUtterances(utterances)
+
+        else:
+            Gecko.Script.onTextInserted(self, event)
+        
 
     def _speakEnclosingPanel(self, obj):
         # Speak the enclosing panel if it is named. Going two
