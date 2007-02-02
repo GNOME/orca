@@ -462,7 +462,7 @@
 			      <property name="single_line_mode">False</property>
 			      <property name="angle">0</property>
 			      <accessibility>
-				<atkrelation target="voiceType" type="label-for"/>
+				<atkrelation target="voiceTypes" type="label-for"/>
 			      </accessibility>
 			    </widget>
 			    <packing>
@@ -602,14 +602,14 @@
 			      <property name="right_padding">0</property>
 
 			      <child>
-				<widget class="GtkComboBox" id="voices">
+				<widget class="GtkComboBox" id="speechFamilies">
 				  <property name="visible">True</property>
 				  <property name="add_tearoffs">False</property>
 				  <property name="focus_on_click">True</property>
 				  <accessibility>
 				    <atkrelation target="familyLabel" type="labelled-by"/>
 				  </accessibility>
-				  <signal name="changed" handler="voiceFamilyChanged" last_modification_time="Fri, 28 Apr 2006 18:55:50 GMT"/>
+				  <signal name="changed" handler="speechFamiliesChanged" last_modification_time="Fri, 28 Apr 2006 18:55:50 GMT"/>
 				</widget>
 			      </child>
 			    </widget>
@@ -641,7 +641,7 @@
 			      <property name="single_line_mode">False</property>
 			      <property name="angle">0</property>
 			      <accessibility>
-				<atkrelation target="voices" type="label-for"/>
+				<atkrelation target="speechFamilies" type="label-for"/>
 			      </accessibility>
 			    </widget>
 			    <packing>
@@ -743,7 +743,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkComboBox" id="voiceType">
+			    <widget class="GtkComboBox" id="voiceTypes">
 			      <property name="visible">True</property>
 			      <property name="items" translatable="yes">Default
 Uppercase
@@ -753,7 +753,7 @@ Hyperlink</property>
 			      <accessibility>
 				<atkrelation target="voiceSettingsLabel" type="labelled-by"/>
 			      </accessibility>
-			      <signal name="changed" handler="voiceTypeChanged" last_modification_time="Fri, 28 Apr 2006 18:55:04 GMT"/>
+			      <signal name="changed" handler="voiceTypesChanged" last_modification_time="Fri, 28 Apr 2006 18:55:04 GMT"/>
 			    </widget>
 			    <packing>
 			      <property name="left_attach">1</property>

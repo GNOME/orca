@@ -1,6 +1,7 @@
 # Orca
 #
 # Copyright 2005-2006 Google Inc.
+# Portions Copyright 2007, Sun Microsystems, Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -61,7 +62,18 @@ class ACSS(dict):
     def __init__(self,props={}):
         """Create and initialize ACSS structure."""
         for k in props:
-            if k in ACSS.settings: self[k] = props[k]
+            if k in ACSS.settings:
+                # Do a 'deep copy' of the family.  Otherwise,
+                # the new ACSS shares the actual data with the
+                # props passed in.  This can cause unexpected
+                # side effects.
+                #
+                if k == ACSS.FAMILY:
+                    self[k] = {}
+                    for j in props[k].keys():
+                        self[k][j] = props[k][j]
+                else:
+                    self[k] = props[k]
         self.updateName()
 
     def __setitem__ (self, key, value):

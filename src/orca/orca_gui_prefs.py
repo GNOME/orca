@@ -19,7 +19,7 @@
 
 # TODO:
 #
-# - Improve reclaimation of "old" speech servers in _setupServers().
+# - Improve reclaimation of "old" speech servers in _setupSpeechServers().
 # - Implement the Help button callback.
 
 """Displays a GUI for the user to set Orca preferences."""
@@ -40,7 +40,6 @@ import gtk.glade
 import gobject
 import pango   # for ellipsize property constants of CellRendererText
 import locale
-import atspi
 
 import acss
 import orca
@@ -49,13 +48,12 @@ import orca_prefs
 import orca_state
 import platform
 import settings
-import script
 import default    # for the default keyBindings
 import input_event
 import keybindings
 import braille
-import speech as speech
-import speechserver as speechserver
+import speech
+import speechserver
 
 from orca_i18n import _  # for gettext support
 
@@ -73,15 +71,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         accordingly.
         """
 
-        self.initializing = True
         self.prefsDict = orca_prefs.readPreferences()
-        self.defaultVoice   = self.prefsDict["voices"]["default"]
-        self.uppercaseVoice = self.prefsDict["voices"]["uppercase"]
-        self.hyperlinkVoice = self.prefsDict["voices"]["hyperlink"]
-
-        self.speechSystemsModel = self._initComboBox(self.speechSystems)
-        self.speechServersModel = self._initComboBox(self.speechServers)
-        self.voicesModel        = self._initComboBox(self.voices)
 
         # ***** Key Bindings treeview initialization *****
 
@@ -261,76 +251,195 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         self._setKeyEchoItems()
 
-        factories = speech.getSpeechServerFactories()
-        if len(factories) == 0:
-            self.prefsDict["enableSpeech"] = False
-            return
+        self.speechSystemsModel  = self._initComboBox(self.speechSystems)
+        self.speechServersModel  = self._initComboBox(self.speechServers)
+        self.speechFamiliesModel = self._initComboBox(self.speechFamilies)
+        self._initSpeechState()
 
-        speech.init()
-
-        self.workingFactories = []
-        for factory in factories:
-            try:
-                servers = factory.SpeechServer.getSpeechServers()
-                if len(servers):
-                    self.workingFactories.append(factory)
-            except:
-                debug.printException(debug.LEVEL_FINEST)
-                pass
-
-        debug.println(debug.LEVEL_FINEST,
-                      "orca_gui_prefs._init: workingFactories: %s" \
-                      % self.workingFactories)
-
-        self.factoryChoices = {}
-        if len(self.workingFactories) == 0:
-            debug.println(debug.LEVEL_SEVERE, _("Speech not available."))
-            debug.printStack(debug.LEVEL_FINEST)
-            self.prefsDict["enableSpeech"] = False
-            self.factory = None
-            self.server = None
-            return
-        elif len(self.workingFactories) > 1:
-            i = 1
-            for workingFactory in self.workingFactories:
-                self.factoryChoices[i] = workingFactory
-                name = workingFactory.SpeechServer.getFactoryName()
-                self.speechSystemsModel.append((i, name))
-                i += 1
-            self.factory = self.factoryChoices[1]
-        else:
-            self.factoryChoices[1] = self.workingFactories[0]
-            name = self.workingFactories[0].SpeechServer.getFactoryName()
-            self.speechSystemsModel.append((1, name))
-            self.factory = self.workingFactories[0]
-
-        debug.println(debug.LEVEL_FINEST,
-                      "orca_gui_prefs._init: factoryChoices: %s" \
-                      % self.factoryChoices)
-        debug.println(debug.LEVEL_FINEST,
-                      "orca_gui_prefs._init: factory: %s" \
-                      % self.factory)
-        debug.println(debug.LEVEL_FINEST,
-                      "orca_gui_prefs._init: servers: %s" \
-                      % servers)
-
-        self.serverChoices = None
-        self._setupServers()
-        self._setupVoices()
         self._initGUIState()
-        self.initializing = False
 
-    def _setVoiceSettingForVoiceType(self, voiceType):
-        """Set the family, rate, pitch and volume GUI components based
-        on the given voice type.
+    def _getACSSForVoiceType(self, voiceType):
+        """Return the ACSS value for the the given voice type.
+
+        Arguments:
+        - voiceType: the voice type ("Default", "Uppercase" or "Hyperlink",
+        where the string is localized).
+
+        Returns the voice dictionary for the given voice type.
+        """
+
+        if voiceType == _("Default"):
+            voiceACSS = self.defaultVoice
+        elif voiceType == _("Uppercase"):
+            voiceACSS = self.uppercaseVoice
+        elif voiceType == _("Hyperlink"):
+            voiceACSS = self.hyperlinkVoice
+        else:
+            voiceACSS = self.defaultVoice
+
+        return voiceACSS
+
+    def _getKeyValueForVoiceType(self, voiceType, key, useDefault=True):
+        """Look for the value of the given key in the voice dictionary
+           for the given voice type.
+
+        Arguments:
+        - voiceType: the voice type ("Default", "Uppercase" or "Hyperlink").
+        - key: the key to look for in the voice dictionary.
+        - useDefault: if True, and the key isn't found for the given voice
+                      type, the look for it in the default voice dictionary
+                      as well.
+
+        Returns the value of the given key, or None if it's not set.
+        """
+
+        if voiceType == _("Default"):
+            voice = self.defaultVoice
+        elif voiceType == _("Uppercase"):
+            voice = self.uppercaseVoice
+            if not voice.has_key(key):
+                if not useDefault:
+                    return None
+                voice = self.defaultVoice
+        elif voiceType == _("Hyperlink"):
+            voice = self.hyperlinkVoice
+            if not voice.has_key(key):
+                if not useDefault:
+                    return None
+                voice = self.defaultVoice
+        else:
+            voice = self.defaultVoice
+
+        if voice.has_key(key):
+            return voice[key]
+        else:
+            return None
+
+    def _getFamilyNameForVoiceType(self, voiceType):
+        """Gets the name of the voice family for the given voice type.
+
+        Arguments:
+        - voiceType: the voice type ("Default", "Uppercase" or "Hyperlink").
+
+        Returns the name of the voice family for the given voice type,
+        or None if not set.
+        """
+
+        familyName = None
+        family = self._getKeyValueForVoiceType(voiceType, acss.ACSS.FAMILY)
+
+        if family and family.has_key(speechserver.VoiceFamily.NAME):
+            familyName = family[speechserver.VoiceFamily.NAME]
+
+        return familyName
+
+    def _setFamilyNameForVoiceType(self, voiceType, name, language):
+        """Sets the name of the voice family for the given voice type.
+
+        Arguments:
+        - voiceType: the voice type ("Default", "Uppercase" or "Hyperlink").
+        - name: the name of the voice family to set.
+        - language: the locale of the voice family to set.
+        """
+
+        family = self._getKeyValueForVoiceType(voiceType,
+                                               acss.ACSS.FAMILY,
+                                               False)
+        if family:
+            family[speechserver.VoiceFamily.NAME] = name
+            family[speechserver.VoiceFamily.LOCALE] = language
+        else:
+            voiceACSS = self._getACSSForVoiceType(voiceType)
+            voiceACSS[acss.ACSS.FAMILY] = {}
+            voiceACSS[acss.ACSS.FAMILY][speechserver.VoiceFamily.NAME] = name
+            voiceACSS[acss.ACSS.FAMILY][speechserver.VoiceFamily.LOCALE] = language
+
+        #voiceACSS = self._getACSSForVoiceType(voiceType)
+        #settings.voices[voiceType] = voiceACSS
+
+    def _getRateForVoiceType(self, voiceType):
+        """Gets the speaking rate value for the given voice type.
+
+        Arguments:
+        - voiceType: the voice type ("Default", "Uppercase" or "Hyperlink").
+
+        Returns the rate value for the given voice type, or None if
+        not set.
+        """
+
+        return self._getKeyValueForVoiceType(voiceType, acss.ACSS.RATE)
+
+    def _setRateForVoiceType(self, voiceType, value):
+        """Sets the speaking rate value for the given voice type.
 
         Arguments:
         - voiceType: the voice type (Default, Uppercase or Hyperlink).
+        - value: the rate value to set.
+        """
+
+        voiceACSS = self._getACSSForVoiceType(voiceType)
+        voiceACSS[acss.ACSS.RATE] = value
+        #settings.voices[voiceType] = voiceACSS
+
+    def _getPitchForVoiceType(self, voiceType):
+        """Gets the pitch value for the given voice type.
+
+        Arguments:
+        - voiceType: the voice type ("Default", "Uppercase" or "Hyperlink").
+
+        Returns the pitch value for the given voice type, or None if
+        not set.
+        """
+
+        return self._getKeyValueForVoiceType(voiceType,
+                                             acss.ACSS.AVERAGE_PITCH)
+
+    def _setPitchForVoiceType(self, voiceType, value):
+        """Sets the pitch value for the given voice type.
+
+        Arguments:
+        - voiceType: the voice type ("Default", "Uppercase" or "Hyperlink").
+        - value: the pitch value to set.
+        """
+
+        voiceACSS = self._getACSSForVoiceType(voiceType)
+        voiceACSS[acss.ACSS.AVERAGE_PITCH] = value
+        #settings.voices[voiceType] = voiceACSS
+
+    def _getVolumeForVoiceType(self, voiceType):
+        """Gets the volume (gain) value for the given voice type.
+
+        Arguments:
+        - voiceType: the voice type ("Default", "Uppercase" or "Hyperlink").
+
+        Returns the volume (gain) value for the given voice type, or
+        None if not set.
+        """
+
+        return self._getKeyValueForVoiceType(voiceType, acss.ACSS.GAIN)
+
+    def _setVolumeForVoiceType(self, voiceType, value):
+        """Sets the volume (gain) value for the given voice type.
+
+        Arguments:
+        - voiceType: the voice type ("Default", "Uppercase" or "Hyperlink").
+        - value: the volume (gain) value to set.
+        """
+
+        voiceACSS = self._getACSSForVoiceType(voiceType)
+        voiceACSS[acss.ACSS.GAIN] = value
+        #settings.voices[voiceType] = voiceACSS
+
+    def _setVoiceSettingsForVoiceType(self, voiceType):
+        """Sets the family, rate, pitch and volume GUI components based
+        on the given voice type.
+
+        Arguments:
+        - voiceType: the voice type ("Default", "Uppercase" or "Hyperlink").
         """
 
         familyName = self._getFamilyNameForVoiceType(voiceType)
-        if familyName:
-            self._setVoiceChoice(self.families, familyName)
+        self._setSpeechFamiliesChoice(familyName)
 
         rate = self._getRateForVoiceType(voiceType)
         if rate:
@@ -344,6 +453,248 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         if volume:
             self.volumeScale.set_value(volume)
 
+    def _setSpeechFamiliesChoice(self, familyName):
+        """Sets the active item in the families ("Person:") combo box
+        to the given family name.
+
+        Arguments:
+        - families: the list of available voice families.
+        - familyName: the family name to use to set the active combo box item.
+        """
+
+        if len(self.speechFamiliesChoices) == 0:
+            return
+
+        valueSet = False
+        i = 0
+        for family in self.speechFamiliesChoices:
+            name = family[speechserver.VoiceFamily.NAME]
+            if name == familyName:
+                self.speechFamilies.set_active(i)
+                self.speechFamiliesChoice = self.speechFamiliesChoices[i]
+                valueSet = True
+                break
+            i += 1
+
+        if not valueSet:
+            debug.println(debug.LEVEL_FINEST,
+                          "Could not find speech family match for %s" \
+                          % familyName)
+            self.speechFamilies.set_active(0)
+            self.speechFamiliesChoice = self.speechFamiliesChoices[0]
+
+    def _setupFamilies(self):
+        """Gets the list of voice families for the current speech server.
+        If there aren't any families, set the 'enableSpeech' to False and
+        return, otherwise get the information associated with each voice
+        family and add an entry for it to the families GtkComboBox list.
+        """
+
+        self.speechFamiliesModel.clear()
+        families = self.speechServersChoice.getVoiceFamilies()
+        self.speechFamiliesChoices = []
+        if len(families) == 0:
+            debug.println(debug.LEVEL_SEVERE, _("Speech not available."))
+            debug.printStack(debug.LEVEL_FINEST)
+            self.prefsDict["enableSpeech"] = False
+            self.speechFamiliesChoice = None
+            return
+
+        i = 0
+        for family in families:
+            name = family[speechserver.VoiceFamily.NAME] \
+                   + " (%s)" % family[speechserver.VoiceFamily.LOCALE]
+            self.speechFamiliesChoices.append(family)
+            self.speechFamiliesModel.append((i, name))
+            i += 1
+
+        # The family name will be selected as part of selecting the
+        # voice type.  Whenever the families change, we'll reset the
+        # voice type selection to the first one ("Default").
+        #
+        self.voiceTypes.set_active(0)
+        voiceType = self.voiceTypes.get_active_text()
+        self._setVoiceSettingsForVoiceType(voiceType)
+
+    def _setSpeechServersChoice(self, serverInfo):
+        """Sets the active item in the speech servers combo box to the
+        given server.
+
+        Arguments:
+        - serversChoices: the list of available speech servers.
+        - serverInfo: the speech server to use to set the active combo
+        box item.
+        """
+
+        if len(self.speechServersChoices) == 0:
+            return
+
+        # We'll fallback to whatever we happen to be using in the event
+        # that this preference has never been set.
+        #
+        if not serverInfo:
+            serverInfo = speech._speechserver.getInfo()
+
+        valueSet = False
+        i = 0
+        for server in self.speechServersChoices:
+            if serverInfo == server.getInfo():
+                self.speechServers.set_active(i)
+                self.speechServersChoice = server
+                valueSet = True
+                break
+            i += 1
+
+        if not valueSet:
+            debug.println(debug.LEVEL_FINEST,
+                          "Could not find speech server match for %s" \
+                          %  repr(serverInfo))
+            self.speechServers.set_active(0)
+            self.speechServersChoice = self.speechServersChoices[0]
+
+        self._setupFamilies()
+
+    def _setupSpeechServers(self):
+        """Gets the list of speech servers for the current speech factory.
+        If there aren't any servers, set the 'enableSpeech' to False and
+        return, otherwise get the information associated with each speech
+        server and add an entry for it to the speechServers GtkComboBox list.
+        Set the current choice to be the first item.
+        """
+
+        self.speechServersModel.clear()
+        self.speechServersChoices = \
+                self.speechSystemsChoice.SpeechServer.getSpeechServers()
+        if len(self.speechServersChoices) == 0:
+            debug.println(debug.LEVEL_SEVERE, _("Speech not available."))
+            debug.printStack(debug.LEVEL_FINEST)
+            self.prefsDict["enableSpeech"] = False
+            self.speechServersChoice = None
+            self.speechFamiliesChoices = []
+            self.speechFamiliesChoice = None
+            return
+
+        i = 0
+        for server in self.speechServersChoices:
+            name = server.getInfo()[0]
+            self.speechServersModel.append((i, name))
+            i += 1
+
+        self._setSpeechServersChoice(self.prefsDict["speechServerInfo"])
+
+        debug.println(
+            debug.LEVEL_FINEST,
+            "orca_gui_prefs._setupSpeechServers: speechServersChoice: %s" \
+            % self.speechServersChoice.getInfo())
+
+    def _setSpeechSystemsChoice(self, systemName):
+        """Set the active item in the speech systems combo box to the
+        given system name.
+
+        Arguments:
+        - factoryChoices: the list of available speech factories (systems).
+        - systemName: the speech system name to use to set the active combo
+        box item.
+        """
+
+        if len(self.speechSystemsChoices) == 0:
+            return
+
+        valueSet = False
+        i = 0
+        for speechSystem in self.speechSystemsChoices:
+            name = speechSystem.__name__
+            if name.endswith(systemName):
+                self.speechSystems.set_active(i)
+                self.speechSystemsChoice = self.speechSystemsChoices[i]
+                valueSet = True
+                break
+            i += 1
+
+        if not valueSet:
+            debug.println(debug.LEVEL_FINEST,
+                          "Could not find speech system match for %s" \
+                          % systemName)
+            self.speechSystems.set_active(0)
+            self.speechSystemsChoice = self.speechSystemsChoices[0]
+
+        self._setupSpeechServers()
+
+    def _setupSpeechSystems(self, factories):
+        """Sets up the speech systems combo box and sets the selection
+        to the preferred speech system.
+
+        Arguments:
+        -factories: the list of known speech factories (working or not)
+        """
+        self.speechSystemsModel.clear()
+        self.workingFactories = []
+        for factory in factories:
+            try:
+                servers = factory.SpeechServer.getSpeechServers()
+                if len(servers):
+                    self.workingFactories.append(factory)
+            except:
+                debug.printException(debug.LEVEL_FINEST)
+                pass
+
+        self.speechSystemsChoices = []
+        if len(self.workingFactories) == 0:
+            debug.println(debug.LEVEL_SEVERE, _("Speech not available."))
+            debug.printStack(debug.LEVEL_FINEST)
+            self.prefsDict["enableSpeech"] = False
+            self.speechSystemsChoice = None
+            self.speechServersChoices = []
+            self.speechServersChoice = None
+            self.speechFamiliesChoices = []
+            self.speechFamiliesChoice = None
+            return
+
+        i = 0
+        for workingFactory in self.workingFactories:
+            self.speechSystemsChoices.append(workingFactory)
+            name = workingFactory.SpeechServer.getFactoryName()
+            self.speechSystemsModel.append((i, name))
+            i += 1
+
+        self._setSpeechSystemsChoice(self.prefsDict["speechServerFactory"])
+
+        debug.println(
+            debug.LEVEL_FINEST,
+            "orca_gui_prefs._setupSpeechSystems: speechSystemsChoice: %s" \
+            % self.speechSystemsChoice)
+
+    def _initSpeechState(self):
+        """Initialize the various speech components.
+        """
+
+        voices = self.prefsDict["voices"]
+        self.defaultVoice   = acss.ACSS(voices[settings.DEFAULT_VOICE])
+        self.uppercaseVoice = acss.ACSS(voices[settings.UPPERCASE_VOICE])
+        self.hyperlinkVoice = acss.ACSS(voices[settings.HYPERLINK_VOICE])
+
+        # Just a note on general naming pattern:
+        #
+        # *        = The name of the combobox
+        # *Model   = the name of the comobox model
+        # *Choices = the Orca/speech python objects
+        # *Choice  = a value from *Choices
+        #
+        # Where * = speechSystems, speechServers, speechFamilies
+        #
+        factories = speech.getSpeechServerFactories()
+        if len(factories) == 0:
+            self.prefsDict["enableSpeech"] = False
+            return
+
+        speech.init()
+
+        # This cascades into systems->servers->voice_type->families...
+        #
+        self.initializingSpeech = True
+        self._setupSpeechSystems(factories)
+        self.initializingSpeech = False
+
     def _initGUIState(self):
         """Adjust the settings of the various components on the
         configuration GUI depending upon the users preferences.
@@ -356,16 +707,6 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         enable = prefs["enableSpeech"]
         self.speechSupportCheckbutton.set_active(enable)
         self.speechTable.set_sensitive(enable)
-
-        self._setSystemChoice(self.factoryChoices, prefs["speechServerFactory"])
-
-        serverPrefs = prefs["speechServerInfo"]
-        if serverPrefs:
-            self._setServerChoice(self.serverChoices, serverPrefs[0])
-
-        self.voiceType.set_active(0)
-        voiceType = self.voiceType.get_active_text()
-        self._setVoiceSettingForVoiceType(voiceType)
 
         if prefs["verbalizePunctuationStyle"] == \
                                settings.PUNCTUATION_STYLE_NONE:
@@ -594,307 +935,6 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
             iter = model.iter_next(iter)
 
         return 0
-
-    def _setupServers(self):
-        """Get the list of speech servers for the current speech factory.
-        If there aren't any servers, set the 'enableSpeech' to False and
-        return, otherwise get the information associated with each speech
-        server and add an entry for it to the speechServers GtkComboBox list.
-        Set the current choice to be the first item.
-        """
-
-        self.servers = self.factory.SpeechServer.getSpeechServers()
-        self.serverChoices = {}
-        if len(self.servers) == 0:
-            debug.println(debug.LEVEL_SEVERE, _("Speech not available."))
-            debug.printStack(debug.LEVEL_FINEST)
-            self.prefsDict["enableSpeech"] = False
-            self.server = None
-            return
-        if len(self.servers) > 1:
-            i = 1
-            for self.server in self.servers:
-                self.serverChoices[i] = self.server
-                name = self.server.getInfo()[0]
-                self.speechServersModel.append((i, name))
-                i += 1
-            self.server = self.serverChoices[1]
-        else:
-            self.serverChoices[1] = self.servers[0]
-            name = self.servers[0].getInfo()[0]
-            self.speechServersModel.append((1, name))
-            self.server = self.servers[0]
-
-        self.speechServers.set_active(0)
-
-        debug.println(debug.LEVEL_FINEST,
-                      "orca_gui_prefs._init: serverChoices: %s" \
-                      % self.serverChoices)
-        debug.println(debug.LEVEL_FINEST,
-                      "orca_gui_prefs._init: server: %s" \
-                      % self.server)
-
-    def _setupVoices(self):
-        """Get the list of voice families for the current speech server.
-        If there aren't any voices, set the 'enableSpeech' to False and
-        return, otherwise get the information associated with each voice
-        family and add an entry for it to the voices GtkComboBox list.
-        If we are not doing graphics initialisation (i.e. the user has
-        deliberately changed the current value in the voices combo box),
-        then set the current choice to be the first item.
-        """
-
-        self.families = self.server.getVoiceFamilies()
-
-        self.voiceChoices = {}
-        if len(self.families) == 0:
-            debug.println(debug.LEVEL_SEVERE, _("Speech not available."))
-            debug.printStack(debug.LEVEL_FINEST)
-            self.prefsDict["enableSpeech"] = False
-            return
-        if len(self.families) > 1:
-            i = 1
-            for family in self.families:
-                name = family[speechserver.VoiceFamily.NAME] \
-                    + " (%s)" % family[speechserver.VoiceFamily.LOCALE]
-                self.acss = acss.ACSS({acss.ACSS.FAMILY : family})
-                self.voiceChoices[i] = self.acss
-                self.voicesModel.append((i, name))
-                i += 1
-            self.defaultACSS = self.voiceChoices[1]
-        else:
-            name = self.families[0][speechserver.VoiceFamily.NAME] \
-                + " (%s)" % self.families[0][speechserver.VoiceFamily.LOCALE]
-            self.voicesModel.append((1, name))
-            self.defaultACSS = \
-                acss.ACSS({acss.ACSS.FAMILY : self.families[0]})
-            self.voiceChoices[1] = self.defaultACSS
-
-        if not self.initializing:
-            self.voices.set_active(0)
-
-        debug.println(debug.LEVEL_FINEST,
-                      "orca_gui_prefs._init: voiceChoices: %s" \
-                      % self.voiceChoices)
-
-    def _getVoiceForVoiceType(self, voiceType):
-        """Return the dictionary of voice preferences for the given
-        voice type.
-
-        Arguments:
-        - voiceType: the voice type (Default, Uppercase or Hyperlink).
-
-        Returns the voice dictionary for the given voice type.
-        """
-
-        if voiceType == _("Default"):
-            voice = self.defaultVoice
-        elif voiceType == _("Uppercase"):
-            voice = self.uppercaseVoice
-        elif voiceType == _("Hyperlink"):
-            voice = self.hyperlinkVoice
-        else:
-            voice = self.defaultVoice
-
-        return voice
-
-    def _getKeyForVoiceType(self, voiceType, key, useDefault=True):
-        """Look for the value of the given key, in the voice dictionary
-           for the given voice type.
-
-        Arguments:
-        - voiceType: the voice type (Default, Uppercase or Hyperlink).
-        - key: the key to look for in the voice dictionary.
-        - useDefault: if True, and the key isn't found for the given voice
-                      type, the look for it in the default voice dictionary
-                      as well.
-
-        Returns the value of the given key, or None if it's not set.
-        """
-
-        if voiceType == _("Default"):
-            voice = self.defaultVoice
-        elif voiceType == _("Uppercase"):
-            voice = self.uppercaseVoice
-            if not voice.has_key(key):
-                if not useDefault:
-                    return None
-                voice = self.defaultVoice
-        elif voiceType == _("Hyperlink"):
-            voice = self.hyperlinkVoice
-            if not voice.has_key(key):
-                if not useDefault:
-                    return None
-                voice = self.defaultVoice
-        else:
-            voice = self.defaultVoice
-
-        if voice.has_key(key):
-            return voice[key]
-        else:
-            return None
-
-    def _getFamilyNameForVoiceType(self, voiceType):
-        """Return the name of the voice family for the given voice type.
-
-        Arguments:
-        - voiceType: the voice type (Default, Uppercase or Hyperlink).
-
-        Returns the name of the voice family for the given voice type,
-        or None if not set.
-        """
-
-        familyName = None
-        family = self._getKeyForVoiceType(voiceType, acss.ACSS.FAMILY)
-
-        if family:
-            if family.has_key(speechserver.VoiceFamily.NAME):
-                familyName = family[speechserver.VoiceFamily.NAME]
-
-        return familyName
-
-    def _setFamilyNameForVoiceType(self, voiceType, name, language):
-        """Set the name of the voice family for the given voice type.
-
-        Arguments:
-        - voiceType: the voice type (Default, Uppercase or Hyperlink).
-        - value: the name of the voice family to set.
-        """
-
-        family = self._getKeyForVoiceType(voiceType, acss.ACSS.FAMILY, False)
-        if family:
-            family[speechserver.VoiceFamily.NAME] = name
-            family[speechserver.VoiceFamily.LOCALE] = language
-        else:
-            voice = self._getVoiceForVoiceType(voiceType)
-            voice[acss.ACSS.FAMILY] = {}
-            voice[acss.ACSS.FAMILY][speechserver.VoiceFamily.NAME] = name
-            voice[acss.ACSS.FAMILY][speechserver.VoiceFamily.LOCALE] = language
-
-    def _getRateForVoiceType(self, voiceType):
-        """Get the rate value for the given voice type.
-
-        Arguments:
-        - voiceType: the voice type (Default, Uppercase or Hyperlink).
-
-        Returns the rate value for the given voice type, or None if
-        not set.
-        """
-
-        return self._getKeyForVoiceType(voiceType, "rate", True)
-
-    def _setRateForVoiceType(self, voiceType, value):
-        """Set the rate value for the given voice type.
-
-        Arguments:
-        - voiceType: the voice type (Default, Uppercase or Hyperlink).
-        - value: the rate value to set.
-        """
-
-        voice = self._getVoiceForVoiceType(voiceType)
-        voice["rate"] = value
-
-    def _getPitchForVoiceType(self, voiceType):
-        """Get the pitch value for the given voice type.
-
-        Arguments:
-        - voiceType: the voice type (Default, Uppercase or Hyperlink).
-
-        Returns the pitch value for the given voice type, or None if
-        not set.
-        """
-
-        return self._getKeyForVoiceType(voiceType, "average-pitch", True)
-
-    def _setPitchForVoiceType(self, voiceType, value):
-        """Set the pitch value for the given voice type.
-
-        Arguments:
-        - voiceType: the voice type (Default, Uppercase or Hyperlink).
-        - value: the pitch value to set.
-        """
-
-        voice = self._getVoiceForVoiceType(voiceType)
-        voice["average-pitch"] = value
-
-    def _getVolumeForVoiceType(self, voiceType):
-        """Get the volume (gain) value for the given voice type.
-
-        Arguments:
-        - voiceType: the voice type (Default, Uppercase or Hyperlink).
-
-        Returns the volume (gain) value for the given voice type, or
-        None if not set.
-        """
-
-        return self._getKeyForVoiceType(voiceType, "gain", True)
-
-    def _setVolumeForVoiceType(self, voiceType, value):
-        """Set the volume (gain) value for the given voice type.
-
-        Arguments:
-        - voiceType: the voice type (Default, Uppercase or Hyperlink).
-        - value: the volume (gain) value to set.
-        """
-
-        voice = self._getVoiceForVoiceType(voiceType)
-        voice["gain"] = value
-
-    def _setSystemChoice(self, factoryChoices, systemName):
-        """Set the active item in the speech systems combo box to the
-        given system name.
-
-        Arguments:
-        - factoryChoices: the list of available speech factories (systems).
-        - value: the speech system name to use to set the active combo
-        box item.
-        """
-
-        model = self.speechSystemsModel
-        i = 1
-        for factory in factoryChoices.values():
-            name = factory.__name__
-            if name == systemName:
-                self.speechSystems.set_active(i-1)
-                return
-            i += 1
-
-    def _setServerChoice(self, serverChoices, serverName):
-        """Set the active item in the speech servers combo box to the
-        given server name.
-
-        Arguments:
-        - serverChoices: the list of available speech servers.
-        - value: the speech server name to use to set the active combo
-        box item.
-        """
-
-        model = self.speechServersModel
-        i = 1
-        for server in serverChoices.values():
-            name = server.getInfo()[0]
-            if name == serverName:
-                self.speechServers.set_active(i-1)
-                return
-            i += 1
-
-    def _setVoiceChoice(self, families, voiceName):
-        """Set the active item in the voices combo box to the given
-        voice name.
-
-        Arguments:
-        - families: the list of available voice families.
-        - value: the voice name to use to set the active combo box item.
-        """
-
-        model = self.voicesModel
-        i = 1
-        for family in families:
-            name = family[speechserver.VoiceFamily.NAME]
-            if name == voiceName:
-                self.voices.set_active(i-1)
-                return
-            i += 1
 
     def _showGUI(self):
         """Show the Orca configuration GUI window. This assumes that
@@ -1182,17 +1222,12 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         - widget: the component that generated the signal.
         """
 
-        iter = widget.get_active_iter()
-        model = widget.get_model()
+        if self.initializingSpeech:
+            return
 
-        index = model.get_value(iter, 0)
-        self.factory = self.factoryChoices[index]
-        self.speechServersModel.clear()
-        self._setupServers()
-
-        self.server = self.serverChoices[1]
-        self.voicesModel.clear()
-        self._setupVoices()
+        selectedIndex = widget.get_active()
+        self.speechSystemsChoice = self.speechSystemsChoices[selectedIndex]
+        self._setupSpeechServers()
 
     def speechServersChanged(self, widget):
         """Signal handler for the "changed" signal for the speechServers
@@ -1204,33 +1239,107 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         - widget: the component that generated the signal.
         """
 
-        iter = widget.get_active_iter()
-        model = widget.get_model()
+        if self.initializingSpeech:
+            return
 
-        index = model.get_value(iter, 0)
-        self.voicesModel.clear()
-        self.server = self.serverChoices[index]
-        self._setupVoices()
+        selectedIndex = widget.get_active()
+        self.speechServersChoice = self.speechServersChoices[selectedIndex]
 
-    def voiceFamilyChanged(self, widget):
-        """Signal handler for the "value_changed" signal for the voices
+        # Whenever the speech servers change, we need to make sure we
+        # clear whatever family was in use by the current voice types.
+        # Otherwise, we can end up with family names from one server
+        # bleeding over (e.g., "Paul" from Fonix ends up getting in
+        # the "Default" voice type after we switch to eSpeak).
+        #
+        try:
+            del self.defaultVoice[acss.ACSS.FAMILY]
+            del self.uppercaseVoice[acss.ACSS.FAMILY]
+            del self.hyperlinkVoice[acss.ACSS.FAMILY]
+        except:
+            pass
+
+        self._setupFamilies()
+
+    def speechFamiliesChanged(self, widget):
+        """Signal handler for the "value_changed" signal for the families
            GtkComboBox widget. The user has selected a different voice
            family. Save the new voice family name based on the new choice.
 
         Arguments:
         - widget: the component that generated the signal.
         """
-        voiceType = self.voiceType.get_active_text()
+
+        if self.initializingSpeech:
+            return
+
         selectedIndex = widget.get_active()
         try:
-            acss = self.voiceChoices[selectedIndex + 1]
-            family = acss[acss.FAMILY]
+            family = self.speechFamiliesChoices[selectedIndex]
             name = family[speechserver.VoiceFamily.NAME]
             language = family[speechserver.VoiceFamily.LOCALE]
+            voiceType = self.voiceTypes.get_active_text()
             self._setFamilyNameForVoiceType(voiceType, name, language)
         except:
-            debug.printException(debug.LEVEL_WARNING)
+            debug.printException(debug.LEVEL_SEVERE)
             pass
+
+    def voiceTypesChanged(self, widget):
+        """Signal handler for the "changed" signal for the voiceTypes
+           GtkComboBox widget. The user has selected a different voice
+           type. Setup the new family, rate, pitch and volume component
+           values based on the new choice.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        if self.initializingSpeech:
+            return
+
+        voiceType = widget.get_active_text()
+        self._setVoiceSettingsForVoiceType(voiceType)
+
+    def rateValueChanged(self, widget):
+        """Signal handler for the "value_changed" signal for the rateScale
+           GtkHScale widget. The user has changed the current rate value.
+           Save the new rate value based on the currently selected voice
+           type.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        rate = widget.get_value()
+        voiceType = self.voiceTypes.get_active_text()
+        self._setRateForVoiceType(voiceType, rate)
+
+    def pitchValueChanged(self, widget):
+        """Signal handler for the "value_changed" signal for the pitchScale
+           GtkHScale widget. The user has changed the current pitch value.
+           Save the new pitch value based on the currently selected voice
+           type.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        pitch = widget.get_value()
+        voiceType = self.voiceTypes.get_active_text()
+        self._setPitchForVoiceType(voiceType, pitch)
+
+    def volumeValueChanged(self, widget):
+        """Signal handler for the "value_changed" signal for the voiceScale
+           GtkHScale widget. The user has changed the current volume value.
+           Save the new volume value based on the currently selected voice
+           type.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        volume = widget.get_value()
+        voiceType = self.voiceTypes.get_active_text()
+        self._setVolumeForVoiceType(voiceType, volume)
 
     def speechIndentationChecked(self, widget):
         """Signal handler for the "toggled" signal for the
@@ -1367,61 +1476,6 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         self.prefsDict["enableEchoByWord"] = widget.get_active()
-
-    def voiceTypeChanged(self, widget):
-        """Signal handler for the "changed" signal for the voiceType
-           GtkComboBox widget. The user has selected a different voice
-           type. Setup the new family, rate, pitch and volume component
-           values based on the new choice.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        voiceType = widget.get_active_text()
-        self._setVoiceSettingForVoiceType(voiceType)
-
-    def rateValueChanged(self, widget):
-        """Signal handler for the "value_changed" signal for the rateScale
-           GtkHScale widget. The user has changed the current rate value.
-           Save the new rate value based on the currently selected voice
-           type.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        rate = widget.get_value()
-        voiceType = self.voiceType.get_active_text()
-        self._setRateForVoiceType(voiceType, rate)
-
-    def pitchValueChanged(self, widget):
-        """Signal handler for the "value_changed" signal for the pitchScale
-           GtkHScale widget. The user has changed the current pitch value.
-           Save the new pitch value based on the currently selected voice
-           type.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        pitch = widget.get_value()
-        voiceType = self.voiceType.get_active_text()
-        self._setPitchForVoiceType(voiceType, pitch)
-
-    def volumeValueChanged(self, widget):
-        """Signal handler for the "value_changed" signal for the voiceScale
-           GtkHScale widget. The user has changed the current volume value.
-           Save the new volume value based on the currently selected voice
-           type.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        volume = widget.get_value()
-        voiceType = self.voiceType.get_active_text()
-        self._setVolumeForVoiceType(voiceType, volume)
 
     def punctuationLevelChanged(self, widget):
         """Signal handler for the "toggled" signal for the noneButton,
@@ -1902,12 +1956,13 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 
         enable = self.speechSupportCheckbutton.get_active()
         self.prefsDict["enableSpeech"] = enable
-        self.prefsDict["speechServerFactory"] = self.factory
-        self.prefsDict["speechServerInfo"] = self.server
+        self.prefsDict["speechServerFactory"] = \
+            self.speechSystemsChoice.__name__
+        self.prefsDict["speechServerInfo"] = self.speechServersChoice.getInfo()
         self.prefsDict["voices"] = {
-            settings.DEFAULT_VOICE   : self.defaultVoice,
-            settings.UPPERCASE_VOICE : self.uppercaseVoice,
-            settings.HYPERLINK_VOICE : self.hyperlinkVoice
+            settings.DEFAULT_VOICE   : acss.ACSS(self.defaultVoice),
+            settings.UPPERCASE_VOICE : acss.ACSS(self.uppercaseVoice),
+            settings.HYPERLINK_VOICE : acss.ACSS(self.hyperlinkVoice)
         }
 
         if self.disableKeyGrabPref:
@@ -1921,9 +1976,10 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
             self._say(_("Accessibility support for GNOME has just been enabled."))
             self._say(_("You need to log out and log back in for the change to take effect."))
 
-        for factory in self.workingFactories:
-            factory.SpeechServer.shutdownActiveServers()
         orca.loadUserSettings()
+
+        self._initSpeechState()
+
         self._populateKeyBindings()
 
     def cancelButtonClicked(self, widget):

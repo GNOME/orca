@@ -1,9 +1,15 @@
-2007-01-31  Lynn Monsanto <lynn.monsanto@sun.com>
+2007-02-02  Willie Walker <william.walker@sun.com>
+
+	* src/orca/acss.py, src/orca/orca-setup.glade,
+	src/orca/orca_prefs.py, src/orca/speech.py,
+	src/orca/orca_gui_prefs.py: fix for bug 398531 to better handle
+	the population of the speech preferences tab.
+
+2007-02-01  Lynn Monsanto <lynn.monsanto@sun.com>
 
 	* src/orca/scripts/Thunderbird.py: Fixed problem with
 	not speaking the message header when "View Message Pane"
 	is disabled.
-
 
 2007-02-01  Rich Burridge <rich.burridge@sun.com>
 
@@ -28,7 +34,6 @@
 	from the beginning. This is an issue for message header
 	table rows, where the cell with focus is in the column
 	that is sorted on (e.g., date).
-
 
 2007-01-31  Willie Walker <william.walker@sun.com>
 

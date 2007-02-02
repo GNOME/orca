@@ -41,7 +41,7 @@ from orca_i18n import _           # for gettext support
 
 # The speech server to use for all speech operations.
 #
-__speechserver = None
+_speechserver = None
 
 def getSpeechServerFactories():
     """Imports all known SpeechServer factory modules.  Returns a list
@@ -66,9 +66,9 @@ def getSpeechServerFactories():
 
 def init():
 
-    global __speechserver
+    global _speechserver
 
-    if __speechserver:
+    if _speechserver:
         return
 
     # First, find the factory module to use.  We will
@@ -106,9 +106,9 @@ def init():
     #
     speechServerInfo = settings.speechServerInfo
     if speechServerInfo:
-        __speechserver = factory.SpeechServer.getSpeechServer(speechServerInfo)
+        _speechserver = factory.SpeechServer.getSpeechServer(speechServerInfo)
     else:
-        __speechserver = factory.SpeechServer.getSpeechServer()
+        _speechserver = factory.SpeechServer.getSpeechServer()
 
 def __resolveACSS(acss=None):
     if acss:
@@ -120,8 +120,8 @@ def __resolveACSS(acss=None):
 def sayAll(utteranceIterator, progressCallback):
     if settings.silenceSpeech:
         return
-    if __speechserver:
-        __speechserver.sayAll(utteranceIterator, progressCallback)
+    if _speechserver:
+        _speechserver.sayAll(utteranceIterator, progressCallback)
 
 def speak(text, acss=None, interrupt=True):
     """Speaks all queued text immediately.  If text is not None,
@@ -150,13 +150,13 @@ def speak(text, acss=None, interrupt=True):
     debug.println(debug.LEVEL_INFO, "SPEECH OUTPUT: '" + text + "'")
     log.info("'%s'" % text)
 
-    if __speechserver:
-        __speechserver.speak(text, __resolveACSS(acss), interrupt)
+    if _speechserver:
+        _speechserver.speak(text, __resolveACSS(acss), interrupt)
 
 def isSpeaking():
     """"Returns True if the system is currently speaking."""
-    if __speechserver:
-        return __speechserver.isSpeaking()
+    if _speechserver:
+        return _speechserver.isSpeaking()
     else:
         return False
 
@@ -187,45 +187,45 @@ def speakUtterances(utterances, acss=None, interrupt=True):
                       "SPEECH OUTPUT: '" + utterance + "'")
         log.info("'%s'" % utterance)
 
-    if __speechserver:
-        __speechserver.speakUtterances(utterances,
+    if _speechserver:
+        _speechserver.speakUtterances(utterances,
                                        __resolveACSS(acss),
                                        interrupt)
 
 def stop():
-    if __speechserver:
-        __speechserver.stop()
+    if _speechserver:
+        _speechserver.stop()
 
 def increaseSpeechRate(script=None, inputEvent=None):
-    if __speechserver:
-        __speechserver.increaseSpeechRate()
+    if _speechserver:
+        _speechserver.increaseSpeechRate()
     return True
 
 def decreaseSpeechRate(script=None, inputEvent=None):
-    if __speechserver:
-        __speechserver.decreaseSpeechRate()
+    if _speechserver:
+        _speechserver.decreaseSpeechRate()
     return True
 
 def increaseSpeechPitch(script=None, inputEvent=None):
-    if __speechserver:
-        __speechserver.increaseSpeechPitch()
+    if _speechserver:
+        _speechserver.increaseSpeechPitch()
     return True
 
 def decreaseSpeechPitch(script=None, inputEvent=None):
-    if __speechserver:
-        __speechserver.decreaseSpeechPitch()
+    if _speechserver:
+        _speechserver.decreaseSpeechPitch()
     return True
 
 def shutdown():
-    global __speechserver
-    if __speechserver:
-        __speechserver.shutdownActiveServers()
-        __speechserver = None
+    global _speechserver
+    if _speechserver:
+        _speechserver.shutdownActiveServers()
+        _speechserver = None
 
 def reset(text=None, acss=None):
-    global __speechserver
-    if __speechserver:
-        __speechserver.reset(text, acss)
+    global _speechserver
+    if _speechserver:
+        _speechserver.reset(text, acss)
 
 def testNoSettingsInit():
     init()

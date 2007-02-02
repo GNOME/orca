@@ -166,6 +166,8 @@ def _getSpeechServerString(server):
     """
     if not server:
         return None
+    elif isinstance(server, [].__class__):
+        return repr(server)
     else:
         return repr(server.getInfo())
 
