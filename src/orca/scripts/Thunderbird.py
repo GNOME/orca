@@ -41,7 +41,6 @@ import orca.Gecko as Gecko
 
 from orca.orca_i18n import _
 
-
 ########################################################################
 #                                                                      #
 # Custom BrailleGenerator                                              #
@@ -54,16 +53,14 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
     def __init__(self, script):
         self.debugLevel = debug.LEVEL_FINEST
-        
+
         self._debug("__init__")
         braillegenerator.BrailleGenerator.__init__(self, script)
-
 
     def _debug(self, msg):
         """ Convenience method for printing debug messages
         """
         debug.println(self.debugLevel, "Thunderbird.BrailleGenerator: "+msg)
-
 
     def _getDefaultBrailleRegions(self, obj):
         """Gets text to be displayed for the current object's name,
@@ -81,7 +78,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
         self._debug("_getDefaultBrailleRegions: name='%s', role='%s'" % \
                     (obj.name, obj.role))
-        
+
         regions = []
         text = ""
 
@@ -94,16 +91,16 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             # for some labels.
             #
             # Returns whether to consume the event.
-            
+
             self._debug("_getDefaultBrailleRegions: childCount=%d, index=%d" % \
                         (obj.parent.childCount, obj.index))
-            
+
             if obj.index > 0:
                 prev = obj.parent.child(obj.index - 1)
                 if prev:
                     self._debug("_getDefaultBrailleRegions: prev='%s', role='%s'" \
                                 % (prev.name, prev.role))
-                
+
                 if obj.parent.childCount > obj.index:
                     next = obj.parent.child(obj.index + 1)
                     if next:
@@ -120,7 +117,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                     atspi.Accessibility.TEXT_BOUNDARY_CHAR)
 
             self._debug("_getDefaultBrailleRegions: word='%s'" % word)
-            
+
             # Determine the order for speaking the component parts.
             if len(word) > 0:
                 if prev and prev.role == rolenames.ROLE_LABEL:
@@ -133,13 +130,13 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                         text = _("%s text %s %s") % (obj.name, word, next.name)
                     else:
                         text = _("text %s %s") % (word, obj.name)
-            
+
         else: # non-text object
             text = util.appendString(text, util.getDisplayedLabel(obj))
             text = util.appendString(text, util.getDisplayedText(obj))
             text = util.appendString(text, self._getTextForValue(obj))
             text = util.appendString(text, self._getTextForRole(obj))
-            
+
         self._debug("_getDefaultBrailleRegions: text='%s'" % text)
 
         regions = []
@@ -147,7 +144,6 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         regions.append(componentRegion)
 
         return [regions, componentRegion]
-
 
 ########################################################################
 #                                                                      #
@@ -166,13 +162,11 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
         self._debug("__init__")
         speechgenerator.SpeechGenerator.__init__(self, script)
-        
 
     def _debug(self, msg):
         """ Convenience method for printing debug messages
         """
         debug.println(self.debugLevel, "Thunderbird.SpeechGenerator: "+msg)
-
 
     def _getSpeechForAlert(self, obj, already_focused):
         """Gets the title of the dialog and the contents of labels inside the
@@ -206,9 +200,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             utterances.append(label.name)
 
         self._debug("unrelated labels='%s'" % utterances)
-        
-        return utterances
 
+        return utterances
 
     def getSpeechContext(self, obj, stopAncestor=None):
         """Get the speech that describes the names and role of
@@ -286,7 +279,6 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
         return utterances
 
-
 ########################################################################
 #                                                                      #
 # The Thunderbird script class.                                        #
@@ -296,7 +288,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 class Script(Gecko.Script):
 
     _containingPanelName = ""
-    
+
     def __init__(self, app):
         """ Creates a new script for the given application.
 
@@ -310,7 +302,6 @@ class Script(Gecko.Script):
 
         Gecko.Script.__init__(self, app)
 
-
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.
         """
@@ -321,19 +312,17 @@ class Script(Gecko.Script):
         """
         return SpeechGenerator(self)
 
-
     def _debug(self, msg):
         """ Convenience method for printing debug messages
         """
         debug.println(self.debugLevel, "Thunderbird.py: "+msg)
-
 
     def onFocus(self, event):
         """ Called whenever an object gets focus.
 
         Arguments:
         - event: the Event
-        
+
         """
         obj = event.source
         parent = obj.parent
@@ -372,8 +361,19 @@ class Script(Gecko.Script):
 
         if not consume:
             Gecko.Script.onFocus(self, event)
-            
 
+    def onStateChanged(self, event):
+        """Called whenever an object's state changes.
+
+        Arguments:
+        - event: the Event
+        """
+
+        # For now, we'll bypass the Gecko script's desire to
+        # let someone know when a page has started/completed
+        # loading.
+        #
+        default.Script.onStateChanged(self, event)
 
     def onTextInserted(self, event):
         """Called whenever text is inserted into an object.
@@ -386,7 +386,7 @@ class Script(Gecko.Script):
                     (obj.name, obj.role, obj.parent.role))
 
         parent = obj.parent
-        
+
         if parent.role == rolenames.ROLE_AUTOCOMPLETE:
             speech.stop()
 
@@ -409,23 +409,22 @@ class Script(Gecko.Script):
 
         else:
             Gecko.Script.onTextInserted(self, event)
-        
 
     def _speakEnclosingPanel(self, obj):
         # Speak the enclosing panel if it is named. Going two
         # containers up the hierarchy appears to be far enough
         # to find a named panel, if there is one.
-        
+
         self._debug("_speakEnclosingPanel")
 
         parent = obj.parent
         if not parent:
             return
-        
+
         if parent.name != "" and \
                (not parent.name.startswith(_("chrome://"))) and \
                parent.role == rolenames.ROLE_PANEL:
-            
+
             # Speak the panel name only once.
             if parent.name != self._containingPanelName:
                 self._containingPanelName = parent.name
@@ -433,14 +432,14 @@ class Script(Gecko.Script):
                 text = _("%s panel") % parent.name
                 utterances.append(text)
                 speech.speakUtterances(utterances)
-            
+
         else:
             grandparent = parent.parent
             if grandparent and \
                    grandparent.name != "" and \
                    (not grandparent.name.startswith(_("chrome://"))) and \
                    grandparent.role == rolenames.ROLE_PANEL:
-                
+
                 # Speak the panel name only once.
                 if grandparent.name != self._containingPanelName:
                     self._containingPanelName = grandparent.name
@@ -449,7 +448,6 @@ class Script(Gecko.Script):
                     utterances.append(text)
                     speech.speakUtterances(utterances)
 
-                        
     def _handleTextEntry(self, obj):
         # Handle preferences that contain editable text fields. If
         # the object with keyboard focus is editable text field,
@@ -457,7 +455,7 @@ class Script(Gecko.Script):
         # for speaking the preference objects.
         #
         # Returns whether to consume the event.
-        
+
         self._debug("_handleTextEntry: childCount=%d, index=%d, caretOffset=%d, length=%d" % \
                     (obj.parent.childCount, obj.index, obj.text.caretOffset, obj.text.characterCount))
 
@@ -466,7 +464,7 @@ class Script(Gecko.Script):
             if prev:
                 self._debug("_handleTextEntry: prev='%s', role='%s'" \
                             % (prev.name, prev.role))
-            
+
         if obj.index <= obj.parent.childCount - 1:
             next = obj.parent.child(obj.index + 1)
             if next:
@@ -476,7 +474,7 @@ class Script(Gecko.Script):
         # Get the entry text.
         [word, startOffset, endOffset] = obj.text.getTextAtOffset(0,
             atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
-        
+
         if len(word) == 0:
             [word, startOffset, endOffset] = obj.text.getTextAtOffset(obj.text.caretOffset,
                 atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
@@ -505,7 +503,7 @@ class Script(Gecko.Script):
                     text = _("%s text %s %s") % (obj.name, word, next.name)
                 else:
                     text = _("text %s %s") % (word, obj.name)
-                    
+
             speech.speakUtterances([text])
             return True
 

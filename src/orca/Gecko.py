@@ -1260,11 +1260,15 @@ class Script(default.Script):
                     braille.displayMessage(message)
                     speech.stop()
                     speech.speak(message)
-                else:
+                elif event.source.name:
                     self._loadingDocumentContent = False
                     speech.stop()
                     speech.speak(_("Finished loading %s.") \
                                  % event.source.name)
+                else:
+                    self._loadingDocumentContent = False
+                    speech.stop()
+                    speech.speak(_("Finished loading."))
             return
 
         # [[[TODO: HACK - WDW because Gecko is not giving us state

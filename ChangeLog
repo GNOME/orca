@@ -1,8 +1,12 @@
+2007-02-02  Willie Walker <william.walker@sun.com>
+
+	* src/orca/Gecko.py, src/orca/scripts/Thunderbird.py: prevent
+	Thunderbird from saying "Finished loading.".
+	
 2007-02-02  Lynn Monsanto <lynn.monsanto@sun.com>
 
 	* src/orca/scripts/Thunderbird.py: Fixed #Bug 403767 - Orca 
 	does not speak Thunderbird autocompetions
-
 
 2007-02-02  Willie Walker <william.walker@sun.com>
 
