@@ -1271,25 +1271,6 @@ class Script(default.Script):
                     speech.speak(_("Finished loading."))
             return
 
-        # [[[TODO: HACK - WDW because Gecko is not giving us state
-        # change events for when the document frame becomes busy,
-        # we look to see when the progress bar becomes visible.
-        # Because there can be more than one progress bar, we look
-        # for the one in a status bar, which should be the one we
-        # care about.]]]
-        #
-        if (event.type == "object:state-changed:visible") \
-            and (event.source.role == rolenames.ROLE_PROGRESS_BAR) \
-            and event.detail1 \
-            and event.source.parent \
-            and (event.source.parent.role == rolenames.ROLE_STATUSBAR):
-            self._loadingDocumentContent = True
-            message = _("Loading.  Please wait.")
-            braille.displayMessage(message)
-            speech.stop()
-            speech.speak(message)
-            return
-
         default.Script.onStateChanged(self, event)
 
     def visualAppearanceChanged(self, event, obj):

@@ -1,5 +1,10 @@
 2007-02-02  Willie Walker <william.walker@sun.com>
 
+	* src/orca/Gecko.py: remove progress bar visibility hack to
+	determine when a page is loading now that the Firefox folks
+	have fixed the busy state event notification on the document
+	frame.
+	
 	* src/orca/Gecko.py, src/orca/scripts/Thunderbird.py: prevent
 	Thunderbird from saying "Finished loading.".
 	
