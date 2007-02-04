@@ -1,5 +1,9 @@
 2007-02-04  Willie Walker <william.walker@sun.com>
 
+        * docs/planning.html: first pass at prioritization of tasks.
+
+2007-02-04  Willie Walker <william.walker@sun.com>
+
 	* src/orca/Gecko.py, src/orca/mag.py: allow the magnifier to
 	better track the cursor in Firefox.
 	
