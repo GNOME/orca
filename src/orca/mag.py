@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2006 Sun Microsystems Inc.
+# Copyright 2005-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -432,7 +432,7 @@ def applySettings():
     #print "ZOOMER PROPERTIES:", _zoomer
     #__dumpPropertyBag(_zoomer)
 
-def magnifyAccessible(event, obj):
+def magnifyAccessible(event, obj, extents=None):
     """Sets the region of interest to the upper left of the given
     accessible, if it implements the Component interface.  Otherwise,
     does nothing.
@@ -445,7 +445,9 @@ def magnifyAccessible(event, obj):
     if not _initialized:
         return
 
-    if event and (event.type == "object:text-caret-moved") \
+    if extents:
+        [x, y, width, height] = extents
+    elif event and (event.type == "object:text-caret-moved") \
        and obj.text and (obj.text.caretOffset >= 0):
         offset = obj.text.caretOffset
         [x, y, width, height] = obj.text.getCharacterExtents(offset,

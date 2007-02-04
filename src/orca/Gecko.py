@@ -36,6 +36,7 @@ import debug
 import default
 import input_event
 import keybindings
+import mag
 import orca
 import orca_state
 import rolenames
@@ -2808,6 +2809,11 @@ class Script(default.Script):
         if character:
             if obj.role != rolenames.ROLE_LIST_ITEM:
                 caretSet = obj.text.setCaretOffset(characterOffset)
+                mag.magnifyAccessible(None,
+                                      obj,
+                                      self.getExtents(obj,
+                                                      characterOffset,
+                                                      characterOffset + 1))
 
     def goNextCharacter(self, inputEvent):
         """Positions the caret offset to the next character or object
