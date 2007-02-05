@@ -247,13 +247,6 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 parent = parent.parent
                 continue
 
-            # Well...if we made it this far, we will now append the
-            # role, then the text, and then the label.
-            #
-            if parent.role != rolenames.ROLE_TABLE_CELL:
-                self._debug("gettingSpeechForRole: '%s'" % parent.role)
-                utterances.append(rolenames.getSpeechForRoleName(parent))
-
             # Now...autocompletes are wierd.  We'll let the handling of
             # the entry give us the name.
             #
@@ -391,7 +384,6 @@ class Script(Gecko.Script):
             speech.stop()
 
             utterances = []
-            utterances.append(rolenames.getSpeechForRoleName(parent))
 
             [text, caretOffset, startOffset] = util.getTextLineAtCaret(obj)
 
