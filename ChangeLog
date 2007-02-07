@@ -1,3 +1,12 @@
+2007-02-07  Joanmarie Diggs <j-diggs@comcast.net>
+
+	* src/orca/flat_review.py, src/orca/scripts/StarOffice.py:
+        Part fix and part hack for bug #363830.  Now Orca is much
+        more likely to announce when bold, underline, italics, and
+        the various alignment toggle buttons change state in OOo.
+        Should this fail, the work-around is to give any flat review
+        command which will cause us to start getting the needed events.
+
 2007-02-05  Lynn Monsanto <lynn.monsanto@sun.com>
 
 	* src/orca/scripts/Thunderbird.py: Additional fix for

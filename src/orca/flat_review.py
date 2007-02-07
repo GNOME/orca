@@ -399,7 +399,8 @@ class Context:
         currentWordIndex = 0
         currentCharIndex = 0
 
-        if orca_state.locusOfFocus.role == rolenames.ROLE_TABLE_CELL:
+        if orca_state.locusOfFocus and \
+           orca_state.locusOfFocus.role == rolenames.ROLE_TABLE_CELL:
             searchZone = util.getRealActiveDescendant(orca_state.locusOfFocus)
         else:
             searchZone = orca_state.locusOfFocus

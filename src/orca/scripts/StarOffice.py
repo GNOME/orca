@@ -385,6 +385,11 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
     Overrides _getSpeechForTableCell so that, when we are in a spread
     sheet, we can speak the location of the table cell as well as the
     contents.
+    Overrides _getSpeechForToggleButton so that, when the toggle buttons
+    on the Formatting toolbar change state, we provide both the name and
+    the state (as "on" or "off")
+    Overrides _getSpeechForPushButton because sometimes the toggle buttons
+    on the Formatting toolbar claim to be push buttons.
     """
     def __init__(self, script):
         speechgenerator.SpeechGenerator.__init__(self, script)
@@ -577,6 +582,60 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
         return utterances
 
+    def _getSpeechForToggleButton(self, obj, already_focused):
+        """Get the speech for a toggle button.  We always want to speak the
+        state if it's on a toolbar.
+
+        Arguments:
+        - obj: the toggle button
+        - already_focused: False if object just received focus
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        utterances = []
+        if obj.parent.role == rolenames.ROLE_TOOL_BAR:
+            if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+                checkedState = _("on")
+            else:
+                checkedState = _("off")
+
+            utterances.append(obj.name)
+            utterances.append(checkedState)
+        else:
+            speechGen = speechgenerator.SpeechGenerator
+            utterances.extend(speechGen._getSpeechForToggleButton(self, obj,
+                                                             already_focused))
+
+        return utterances
+
+    def _getSpeechForPushButton(self, obj, already_focused):
+        """Get the speech for a push button.  We always want to speak the
+        state if it's on a toolbar.
+
+        Arguments:
+        - obj: the push button
+        - already_focused: False if object just received focus
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        utterances = []
+        if obj.parent.role == rolenames.ROLE_TOOL_BAR:
+            if obj.state.count(atspi.Accessibility.STATE_CHECKED):
+                checkedState = _("on")
+            else:
+                checkedState = _("off")
+
+            utterances.append(obj.name)
+            utterances.append(checkedState)
+        else:
+            speechGen = speechgenerator.SpeechGenerator
+            utterances.extend(speechGen._getSpeechForPushButton(self, obj,
+                                                             already_focused))
+
+        return utterances
+
 ########################################################################
 #                                                                      #
 # The StarOffice script class.                                         #
@@ -625,6 +684,13 @@ class Script(default.Script):
         # in "left-margin:" and "right-margin:".
 
         settings.enabledTextAttributes = "size:; family-name:; weight:400; indent:0; left-margin:0; right-margin:0; underline:none; strikethrough:false; justification:left; style:normal;"
+
+        # [[[TODO: JD - HACK because we won't get events from toggle
+        # buttons on the Formatting toolbar until we "tickle/poke"
+        # the hierarchy. But we only want to do it once.  
+        # See bug #363830 and OOo issue #70872.]]]
+        #
+        self.tickled = None
 
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.
@@ -1478,6 +1544,42 @@ class Script(default.Script):
         if event.type == "object:state-changed:active":
             if self.findCommandRun:
                 return
+
+            # [[[TODO: JD - HACK because we won't get events from toggle
+            # buttons on the Formatting toolbar until we "tickle/poke"
+            # the hierarchy. But we only want to do it once.
+            # See bug #363830 and OOo issue #70872.]]]
+            #
+            if not self.tickled:
+                self.tickled = self.flatReviewContextClass(self)
+
+        # Announce when the toolbar buttons are toggled if we just toggled
+        # them; not if we navigated to some text.
+        #
+        if event.type == "object:state-changed:checked" and \
+           (event.source.role == rolenames.ROLE_TOGGLE_BUTTON or \
+            event.source.role == rolenames.ROLE_PUSH_BUTTON):
+            weToggledIt = False
+            if isinstance(orca_state.lastInputEvent, \
+                          input_event.MouseButtonEvent):
+                x = orca_state.lastInputEvent.x
+                y = orca_state.lastInputEvent.y
+                weToggledIt = event.source.component.contains(x, y, 0)
+
+            elif isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
+                keyString = orca_state.lastInputEvent.event_string  
+                navKeys = ["Up", "Down", "Page_Up", "Page_Down", "Home", "End"]
+                wasCommand = orca_state.lastInputEvent.modifiers \
+                             & (1 << atspi.Accessibility.MODIFIER_CONTROL \
+                              | 1 << atspi.Accessibility.MODIFIER_ALT \
+                              | 1 << atspi.Accessibility.MODIFIER_META \
+                              | 1 << atspi.Accessibility.MODIFIER_META2 \
+                              | 1 << atspi.Accessibility.MODIFIER_META3)
+                weToggledIt = wasCommand and keyString not in navKeys
+
+            if weToggledIt:
+                speech.speakUtterances(self.speechGenerator.getSpeech( \
+                                       event.source, False))
 
         # If we are FOCUSED on a paragraph inside a table cell (in Writer),
         # then speak/braille that parent table cell (see bug #382415).
