@@ -1,3 +1,9 @@
+2007-02-07  Lynn Monsanto <lynn.monsanto@sun.com>
+
+	* src/orca/scripts/Thunderbird.py: Fixed bug #405541 - 
+	regression: Braille stopped showing message header from 
+	beginning of row
+
 2007-02-07  Joanmarie Diggs <j-diggs@comcast.net>
 
 	* src/orca/flat_review.py, src/orca/scripts/StarOffice.py:

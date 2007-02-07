@@ -340,9 +340,13 @@ class Script(Gecko.Script):
             inColumn = (obj.index - 1) % table.nColumns
             if (inColumn != 0):
                 newIndex = obj.index - inColumn
-                startCell = parent.child(newIndex)
-                if startCell:
-                    orca.setLocusOfFocus(event, startCell)
+                self._debug("cell index='%d, inColumn='%d', newIndex='%d'" % \
+                            (obj.index, inColumn, newIndex))
+                # Calling orca.setLocusOfFocus for the first table
+                # cell does not result in the first table cell
+                # being displayed. It's necessary to change the
+                # object index.
+                obj.index = newIndex;
 
         # Handle dialogs.
         if top.role == rolenames.ROLE_DIALOG:
