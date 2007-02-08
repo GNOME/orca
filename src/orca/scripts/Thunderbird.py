@@ -145,6 +145,30 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
         return [regions, componentRegion]
 
+
+    def _getBrailleRegionsForText(self, obj):
+        """Get the braille for a text component.
+
+        Arguments:
+        - obj: the text component
+
+        Returns a list where the first element is a list of Regions to display
+        and the second element is the Region which should get focus.
+        """
+
+        regions = []
+
+        textRegion = braille.Text(obj, util.getDisplayedLabel(obj))
+        regions.append(textRegion)
+
+        eol = braille.Region(" $l")
+        regions.append(eol)
+
+        # We do not want the role at the end of text areas.
+
+        return [regions, textRegion]
+
+
 ########################################################################
 #                                                                      #
 # Custom SpeechGenerator for Thunderbird                               #
