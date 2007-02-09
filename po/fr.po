@@ -10,13 +10,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca 0.9.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-04 20:10+0100\n"
-"PO-Revision-Date: 2007-02-03 10:08+0100\n"
+"POT-Creation-Date: 2007-02-09 19:24+0100\n"
+"PO-Revision-Date: 2007-02-08 16:53+0100\n"
 "Last-Translator: Jonathan Ernst <jonathan@ernstfamily.ch>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
 
 #: ../orca.desktop.in.h:1
 msgid "Orca Screen Reader and Magnifier"
@@ -443,8 +444,8 @@ msgstr "Bascule vers le gestionnaire de présentation suivant."
 #: ../src/orca/default.py:3129 ../src/orca/default.py:3222
 #: ../src/orca/default.py:3227 ../src/orca/Gecko.py:2733
 #: ../src/orca/scripts/Evolution.py:399 ../src/orca/scripts/Evolution.py:884
-#: ../src/orca/scripts/StarOffice.py:1699
-#: ../src/orca/scripts/StarOffice.py:1708 ../src/orca/where_am_I.py:994
+#: ../src/orca/scripts/StarOffice.py:1801
+#: ../src/orca/scripts/StarOffice.py:1810 ../src/orca/where_am_I.py:994
 msgid "blank"
 msgstr "vide"
 
@@ -543,7 +544,7 @@ msgid "Switching to focus tracking mode."
 msgstr "Activation du mode de suivi du focus."
 
 #: ../src/orca/Gecko.py:1241 ../src/orca/rolenames.py:332
-#: ../src/orca/scripts/acroread.py:251 ../src/orca/scripts/StarOffice.py:1018
+#: ../src/orca/scripts/acroread.py:251 ../src/orca/scripts/StarOffice.py:1084
 msgid "link"
 msgstr "lien"
 
@@ -2601,14 +2602,14 @@ msgstr "document"
 
 #. We've entered a table.  Announce the dimensions.
 #.
-#: ../src/orca/scripts/acroread.py:290 ../src/orca/scripts/StarOffice.py:727
+#: ../src/orca/scripts/acroread.py:290 ../src/orca/scripts/StarOffice.py:793
 #, python-format
 msgid "table with %d rows and %d columns."
 msgstr "tableau avec %d lignes et %d colonnes."
 
 #. We've left a table.  Announce this fact.
 #.
-#: ../src/orca/scripts/acroread.py:297 ../src/orca/scripts/StarOffice.py:730
+#: ../src/orca/scripts/acroread.py:297 ../src/orca/scripts/StarOffice.py:796
 msgid "leaving table."
 msgstr "sortie du tableau."
 
@@ -2861,120 +2862,128 @@ msgstr "non pressé"
 msgid "Calc"
 msgstr "Tableur"
 
-#: ../src/orca/scripts/StarOffice.py:653
+#: ../src/orca/scripts/StarOffice.py:599 ../src/orca/scripts/StarOffice.py:626
+msgid "on"
+msgstr "activé"
+
+#: ../src/orca/scripts/StarOffice.py:601 ../src/orca/scripts/StarOffice.py:628
+msgid "off"
+msgstr "désactivé"
+
+#: ../src/orca/scripts/StarOffice.py:719
 msgid "Speaks the contents of the input line."
 msgstr "Lit le contenu de la ligne de saisie."
 
-#: ../src/orca/scripts/StarOffice.py:658
+#: ../src/orca/scripts/StarOffice.py:724
 msgid "Set the row to use as dynamic column headers when speaking calc cells."
 msgstr ""
 "Définir la ligne à utiliser comme en-têtes dynamiques de colonne lors de la "
 "lecture des cellules d'un tableur."
 
-#: ../src/orca/scripts/StarOffice.py:663
+#: ../src/orca/scripts/StarOffice.py:729
 msgid ""
 "Set the column to use as dynamic row headers to use when speaking calc cells."
 msgstr ""
 "Définir la colonne à utiliser comme en-têtes dynamiques de ligne lors de la "
 "lecture des cellules d'un tableur."
 
-#: ../src/orca/scripts/StarOffice.py:752
+#: ../src/orca/scripts/StarOffice.py:818
 msgid "empty"
 msgstr "vide"
 
-#: ../src/orca/scripts/StarOffice.py:821
+#: ../src/orca/scripts/StarOffice.py:887
 msgid "Dynamic column header cleared."
 msgstr "En-tête dynamique de colonne effacé."
 
-#: ../src/orca/scripts/StarOffice.py:828
+#: ../src/orca/scripts/StarOffice.py:894
 msgid "Dynamic column header set for row "
 msgstr "En-tête dynamique de colonne défini pour la ligne "
 
-#: ../src/orca/scripts/StarOffice.py:884
+#: ../src/orca/scripts/StarOffice.py:950
 msgid "Dynamic row header cleared."
 msgstr "En-tête dynamique de ligne effacé."
 
-#: ../src/orca/scripts/StarOffice.py:891
+#: ../src/orca/scripts/StarOffice.py:957
 #, python-format
 msgid "Dynamic row header set for column %s"
 msgstr "En-tête dynamique de ligne défini pour la colonne %s"
 
-#: ../src/orca/scripts/StarOffice.py:1036
+#: ../src/orca/scripts/StarOffice.py:1102
 msgid "Welcome to StarOffice"
 msgstr "Bienvenue dans StarOffice"
 
-#: ../src/orca/scripts/StarOffice.py:1131
+#: ../src/orca/scripts/StarOffice.py:1197
 msgid "Text Document"
 msgstr "Document texte"
 
-#: ../src/orca/scripts/StarOffice.py:1191
-#: ../src/orca/scripts/StarOffice.py:1413
+#: ../src/orca/scripts/StarOffice.py:1257
+#: ../src/orca/scripts/StarOffice.py:1479
 msgid "Spellcheck:"
 msgstr "Vérification orthographique :"
 
-#: ../src/orca/scripts/StarOffice.py:1219
+#: ../src/orca/scripts/StarOffice.py:1285
 msgid "Note that the Scroll Down button has to be pressed numerous times."
 msgstr ""
 "Notez que le bouton dé défilement vers le bas doit être pressé de nombreuses "
 "fois."
 
-#: ../src/orca/scripts/StarOffice.py:1233
+#: ../src/orca/scripts/StarOffice.py:1299
 msgid "License Agreement Accept button now has focus."
 msgstr "Le bouton d'acceptation du contrat de licence a maintenant le focus."
 
-#: ../src/orca/scripts/StarOffice.py:1256
+#: ../src/orca/scripts/StarOffice.py:1322
 msgid "First name"
 msgstr "Prénom"
 
-#: ../src/orca/scripts/StarOffice.py:1327
+#: ../src/orca/scripts/StarOffice.py:1393
 msgid "Move to cell"
 msgstr "Se déplacer vers la cellule"
 
-#: ../src/orca/scripts/StarOffice.py:1469
+#: ../src/orca/scripts/StarOffice.py:1535
 msgid "Writer"
 msgstr "Traitement de texte"
 
-#: ../src/orca/scripts/StarOffice.py:1589
+#: ../src/orca/scripts/StarOffice.py:1691
 msgid " has formula"
 msgstr " a une formule"
 
-#: ../src/orca/scripts/StarOffice.py:1635
+#: ../src/orca/scripts/StarOffice.py:1737
 msgid "Cell "
 msgstr "Cellule "
 
 #: ../src/orca/scripts/Thunderbird.py:125
 #: ../src/orca/scripts/Thunderbird.py:130
-#: ../src/orca/scripts/Thunderbird.py:498
-#: ../src/orca/scripts/Thunderbird.py:503
+#: ../src/orca/scripts/Thunderbird.py:518
+#: ../src/orca/scripts/Thunderbird.py:523
 #, python-format
 msgid "%s text %s %s"
 msgstr "%s texte %s %s"
 
 #: ../src/orca/scripts/Thunderbird.py:127
-#: ../src/orca/scripts/Thunderbird.py:500
+#: ../src/orca/scripts/Thunderbird.py:520
 #, python-format
 msgid "%s text %s"
 msgstr "%s texte %s"
 
 #: ../src/orca/scripts/Thunderbird.py:132
-#: ../src/orca/scripts/Thunderbird.py:505
+#: ../src/orca/scripts/Thunderbird.py:525
 #, python-format
 msgid "text %s %s"
 msgstr "texte %s %s"
 
-#: ../src/orca/scripts/Thunderbird.py:194
+#: ../src/orca/scripts/Thunderbird.py:218
 msgid ":"
 msgstr " :"
 
 #. Don't speak chrome URLs.
-#: ../src/orca/scripts/Thunderbird.py:339
-#: ../src/orca/scripts/Thunderbird.py:425
-#: ../src/orca/scripts/Thunderbird.py:440
+#: ../src/orca/scripts/Thunderbird.py:356
+#: ../src/orca/scripts/Thunderbird.py:445
+#: ../src/orca/scripts/Thunderbird.py:460
 msgid "chrome://"
 msgstr "chrome://"
 
-#: ../src/orca/scripts/Thunderbird.py:432
-#: ../src/orca/scripts/Thunderbird.py:447
+#: ../src/orca/scripts/Thunderbird.py:452
+#: ../src/orca/scripts/Thunderbird.py:467
 #, python-format
 msgid "%s panel"
 msgstr "panneau %s"
