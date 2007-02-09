@@ -156,17 +156,12 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         and the second element is the Region which should get focus.
         """
 
-        regions = []
+        # Gecko._getBrailleRegionsForText does not return the correct
+        # braille for Thunderbird. Let the default braillegenerator
+        # handle this.
+        return braillegenerator.BrailleGenerator._getBrailleRegionsForText(
+                self, obj)
 
-        textRegion = braille.Text(obj, util.getDisplayedLabel(obj))
-        regions.append(textRegion)
-
-        eol = braille.Region(" $l")
-        regions.append(eol)
-
-        # We do not want the role at the end of text areas.
-
-        return [regions, textRegion]
 
 
 ########################################################################

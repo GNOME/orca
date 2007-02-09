@@ -1,5 +1,19 @@
 2007-02-07  Lynn Monsanto <lynn.monsanto@sun.com>
 
+	* src/orca/scripts/Thunderbird.py: Additional change for
+	bug #405541 - regression: Braille stopped showing message 
+	header from beginning of row. Defers text field autocompletion
+	handling to braillegenerator.BrailleGenerator. 
+	Gecko._getBrailleRegionsForText does not return the correct 
+	autocompletion for Thunderbird. This needs to be further 
+	investigated, but this fix works in the mean time.
+	
+	The additional change was to directly call 
+	braillegenerator.BrailleGenerator.__getBrailleRegionsForText
+	instead of repeating the logic in Thunderbird.py
+
+2007-02-07  Lynn Monsanto <lynn.monsanto@sun.com>
+
 	* src/orca/scripts/Thunderbird.py: Fixed bug #405562 - 
 	regression: Braille autocompletion in Thunderbird compose 
 	dialog stopped working
