@@ -926,26 +926,59 @@ def setupKeyRanges(keys):
     if not brlAPIRunning:
         return
 
-    # First, start by ignoring everything.
-    #
-    brlAPI.ignoreKeyRange(0,
-                          brlapi.KEY_FLAGS_MASK \
-                          | brlapi.KEY_TYPE_MASK \
-                          | brlapi.KEY_CODE_MASK)
+    try:
+        # First, start by ignoring everything.
+        #
+        brlAPI.ignoreKeys(brlapi.rangeType_all, [0])
 
-    # Next, enable cursor routing keys.
-    #
-    brlAPI.acceptKeyRange(brlapi.KEY_TYPE_CMD | brlapi.KEY_CMD_ROUTE,
-                          brlapi.KEY_TYPE_CMD \
-                          | brlapi.KEY_CMD_ROUTE | brlapi.KEY_CMD_ARG_MASK)
+        # Next, enable cursor routing keys.
+        #
+        keySet = [brlapi.KEY_TYPE_CMD | brlapi.KEY_CMD_ROUTE]
 
-    # Finally, enable the commands we care about.
-    #
-    keySet = []
-    for key in keys:
-        keySet.append(brlapi.KEY_TYPE_CMD | key)
-    if len(keySet):
-        brlAPI.acceptKeySet(keySet)
+        # Finally, enable the commands we care about.
+        #
+        for key in keys:
+            keySet.append(brlapi.KEY_TYPE_CMD | key)
+
+        brlAPI.acceptKeys(brlapi.rangeType_command, keySet)
+
+        debug.println(debug.LEVEL_FINEST, "Using BrlAPI v0.5.0+")
+    except:
+        debug.printException(debug.LEVEL_FINEST)
+        try:
+            # Old, incompatible way that was in v3.8 devel, but
+            # changed prior to release.  We need this just in case
+            # people have not updated yet.
+
+            # First, start by ignoring everything.
+            #
+            brlAPI.ignoreKeyRange(0,
+                                  brlapi.KEY_FLAGS_MASK \
+                                  | brlapi.KEY_TYPE_MASK \
+                                  | brlapi.KEY_CODE_MASK)
+
+            # Next, enable cursor routing keys.
+            #
+            brlAPI.acceptKeyRange(brlapi.KEY_TYPE_CMD | brlapi.KEY_CMD_ROUTE,
+                                  brlapi.KEY_TYPE_CMD \
+                                  | brlapi.KEY_CMD_ROUTE \
+                                  | brlapi.KEY_CMD_ARG_MASK)
+
+            # Finally, enable the commands we care about.
+            #
+            keySet = []
+            for key in keys:
+                keySet.append(brlapi.KEY_TYPE_CMD | key)
+            if len(keySet):
+                brlAPI.acceptKeySet(keySet)
+
+            debug.println(debug.LEVEL_FINEST,
+                          "Using BrlAPI pre-release v0.5.0")
+        except:
+            debug.printException(debug.LEVEL_FINEST)
+            debug.println(
+                debug.LEVEL_WARNING,
+                "Braille module cannot listen for braille input events")
 
 def init(callback=None, tty=7):
     """Initializes the braille module, connecting to the BrlTTY driver.
