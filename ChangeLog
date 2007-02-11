@@ -1,3 +1,7 @@
+2007-02-11  Willie Walker <william.walker@sun.com>
+
+        * docs/planning.ods: replace planning.html with planning.ods.
+
 2007-02-11  Joanmarie Diggs <j-diggs@comcast.net>
 
 	* src/orca/settings.py, src/orca/focus_tracking_presenter.py,
@@ -9,7 +13,7 @@
 
 2007-02-11  Willie Walker <william.walker@sun.com>
 
-	* src/orca/baille.py: update to support latest BrlAPI.
+	* src/orca/braille.py: update to support latest BrlAPI.
 	
 2007-02-07  Lynn Monsanto <lynn.monsanto@sun.com>
 
