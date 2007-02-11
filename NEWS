@@ -6,13 +6,6 @@
   the various alignment toggle buttons change state in OpenOffice.
   (Thanks for the fix, Joanie!)
 
-* Continued work on Gecko.py script for Firefox 3.0.  We're getting
-  there step by step, and it requires work both inside Firefox 3.0
-  and inside Orca.
-
-* Updated to support latest BrlAPI.  Orca should now work various
-  versions of BrlTTY and BrlAPI.
-	
 * Fix for bug 397787: Orca now handles if OpenOffice recovery mode
   better.
 
@@ -34,18 +27,25 @@
 * Fix for bugs 400766 and 348464: better handling of autocomplete
   entries in GTK widgets as used by the "Run..." dialog and Evolution.
 
+* Continued work on Gecko.py script for Firefox 3.0.  We're getting
+  there step by step, and it requires work both inside Firefox 3.0
+  and inside Orca.
+
+* Updated to support latest BrlAPI.  Orca should now work various
+  versions of BrlTTY and BrlAPI.
+
 * New and updated translations (THANKS EVERYONE!!!):
 
     ar      Arabic               Djihed Afifi and Khaled Hosny
     ca      Catalan              Gil Forcada and Josep Puigdemont i Casamajó
     en_GB   English/British      David Lodge
     fr      French               Stéphane Raimbault, Robert-André Mauchin
-				 and Jonathan Ernst
+                                 and Jonathan Ernst
     it      Italian              Luca Ferretti
     nb      Norwegian Bokmål     Kjartan Maraas
     sv      Swedish              Daniel Nylander
-    th      Thai                 Supranee Thirawatthanasuk and 
-				 Theppitak Karoonboonyanan
+    th      Thai                 Supranee Thirawatthanasuk and
+                                 Theppitak Karoonboonyanan
     zh_HK   Traditional Chinese  Chao-Hsiung Liao
     zh_TW   Traditional Chinese  Chao-Hsiung Liao
 
@@ -53,8 +53,8 @@
 
 2.17.90 - 21-Jan-2007
 
-* Much more work on the Gecko script (to support both Firefox and 
-Thunderbird).  Please note that this is still a work in progress 
+* Much more work on the Gecko script (to support both Firefox and
+Thunderbird).  Please note that this is still a work in progress
 and much more work needs to be done both inside Orca and inside
 Firefox and Thunderbird.  We're working very very hard.
 
@@ -71,14 +71,14 @@ voices.
 
 * Fix for bug 394397: Orca now handles arrowing to the end of a line
 better and prevents the line from being spoken again.
-	
+
 * Fix for bug 392939: "-" is now spoken spoken when used as a negative
 sign at "some" punctuation.
 
 * Fix for bug 395749: make sure we reference any_data values when we
 get an event rather than waiting to work with them asynchronously.
-	
-* Added new 'attributes' field to the Python Accessible class 
+
+* Added new 'attributes' field to the Python Accessible class
 defined in at-spi.py.  This allows scripts to more easily access
 the attributes of an AT-SPI object.
 
@@ -104,13 +104,13 @@ the attributes of an AT-SPI object.
   much more work to do in the Firefox 3.0 internals as well as the
   Gecko.py script.  We're still working feverishly on it.
 
-* Update to outloud.py to add more voices and prevent crash when 
+* Update to outloud.py to add more voices and prevent crash when
   ViaVoice is used (thanks to community member Bart Bunting!!!)
 
 * Adjusted bleeding edge Orca code to work with bleeding edge BrlAPI
   code.  We expect there to be one more change in BrlAPI 0.5.0 before
   it stabilizes, but it wasn't ready at the time of this release.
-  
+
 * Work on bug 350233 (actually an RFE): New script for the Liferea
   application from community member Francisco Javier Dorado Martínez
   (thanks Javier!!!).
@@ -119,7 +119,7 @@ the attributes of an AT-SPI object.
   after the left-margin and/or right-margin text attributes if they
   differ from the norm.
 
-* Work on bug 347124: Added feature to allow user to tell gksu to 
+* Work on bug 347124: Added feature to allow user to tell gksu to
   disable keyboard grabs.  This is just one of the several pieces
   of the puzzle to help prevent hangs when launching sysadmin apps
   from the desktop of a non-root user.
@@ -134,7 +134,7 @@ the attributes of an AT-SPI object.
 
 * Moved the keyboard layout to the first tab in the preferences
   dialog.
-	
+
 * Fix for bug 388620: Fixed wording of "not not" string.
 
 * Fix for bug 388317: Prevent crash in Adobe Acrobat Reader (thanks
@@ -142,13 +142,13 @@ the attributes of an AT-SPI object.
 
 * Fix for bug 387556: Make arrowing to end of line in OOo consistent
   with what happens in gedit (thanks Joanie!!!).
-	
+
 * Fix for bug 388039: prevent stack trace when running orca -t.
 
 * Fix for bug 386267: In Evolution, Orca now speaks/brailles the
   unread status instead of the read status in the message summary
   list.
-	
+
 * Fix for bug 382890: Extended dynamic row and column header support
   to OOo Writer tables.
 
@@ -156,7 +156,7 @@ the attributes of an AT-SPI object.
 
     ar      Arabic               Djihed Afifi
     en_GB   English/British      David Lodge
-    es	    Spanish	         Francisco Javier F. Serrador
+    es      Spanish              Francisco Javier F. Serrador
     nb      Norwegian Bokmål     Kjartan Maraas
     sv      Swedish              Daniel Nylander
 
@@ -231,9 +231,9 @@ the attributes of an AT-SPI object.
 
 * New and updated translations (THANKS!):
 
-    es	    Spanish	         Jorge Sandín and Francisco Javier F. Serrador
+    es      Spanish              Jorge Sandín and Francisco Javier F. Serrador
     nb      Norwegian Bokmål     Kjartan Maraas
-    sl	    Slovenian            Matic Zgur
+    sl      Slovenian            Matic Zgur
 
 ==========
 

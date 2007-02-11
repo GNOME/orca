@@ -1,4 +1,4 @@
-Orca v2.17.90
+Orca v2.17.91
 
 Introduction
 ========================================================================
@@ -18,7 +18,7 @@ AT-SPI include the GNOME GTK+ toolkit, the Java platform's Swing
 toolkit, OpenOffice, and Mozilla.  AT-SPI support for the KDE Qt
 toolkit is currently being pursued.
 
-The focus for Orca v2.17.90 has been to provide usable access to key
+The focus for Orca v2.17.91 has been to provide usable access to key
 office productivity applications, including the following:
 
 Application Class        Application
