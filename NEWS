@@ -1,5 +1,7 @@
 2.17.91 - 11-Feb-2007
 
+* Fix for bug 385949: Better handling of comboboxes in Firefox 3.0.
+
 * Work on bug 363830: announce when bold, underline, italics, and
   the various alignment toggle buttons change state in OpenOffice.
   (Thanks for the fix, Joanie!)
@@ -12,7 +14,7 @@
   versions of BrlTTY and BrlAPI.
 	
 * Fix for bug 397787: Orca now handles if OpenOffice recovery mode
-  better.  (Thanks, Joanie!)
+  better.
 
 * Fix for bug 405541: provide better handle brailling of message
   summaries in Thunderbird message summary list.

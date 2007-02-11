@@ -269,13 +269,23 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                 break
 
         # If the menu is not popped up, then it has no selection and
-        # its name is the item that the combo box is showing.
+        # its name is the item that the combo box is showing.  NOTE:
+        # This seems to have changed.  See Mozilla bug #363955 and
+        # comments below.
         #
         if menu:
             selection = menu.selection
             if selection:
-                item = selection.getSelectedChild(0)
-                regions.append(braille.Region(item.name))
+                # The menu might have a selection, but when we go to get
+                # the selected item, we get None. In those cases, we'll 
+                # revert to the name of the menu because that tends to be
+                # what text is being presented by the combobox in these cases.
+                #
+                try:
+                    item = selection.getSelectedChild(0)
+                    regions.append(braille.Region(item.name))
+                except:
+                    regions.append(braille.Region(menu.name))
             elif menu.name:
                 regions.append(braille.Region(menu.name))
 
@@ -507,13 +517,23 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 break
 
         # If the menu is not popped up, then it has no selection and
-        # its name is the item that the combo box is showing.
+        # its name is the item that the combo box is showing.  NOTE:
+        # This seems to have changed.  See Mozilla bug #363955 and
+        # comments below.
         #
         if menu:
             selection = menu.selection
             if selection:
-                item = selection.getSelectedChild(0)
-                utterances.append(item.name)
+                # The menu might have a selection, but when we go to get
+                # the selected item, we get None. In those cases, we'll 
+                # revert to the name of the menu because that tends to be
+                # what text is being presented by the combobox in these cases.
+                #
+                try:
+                    item = selection.getSelectedChild(0)
+                    utterances.append(item.name)
+                except:
+                    utterances.append(menu.name)
             elif menu.name:
                 utterances.append(menu.name)
 
