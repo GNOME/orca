@@ -445,14 +445,6 @@ debugEventQueue         = False
 timeoutTime             = 10   # a value of 0 means don't do hang checking
 timeoutCallback         = None # Set by orca.py:init to orca.timeout
 
-# Assists with dealing with CORBA COMM_FAILURES.  A failure doesn't
-# always mean an object disappeared - there just might be a network
-# glitch.  So, on COMM_FAILURES, we might retry a few times before
-# giving up on an object.
-#
-commFailureWaitTime     = 0.1
-commFailureAttemptLimit = 5
-
 # Keyboard double-click period. If the same key is pressed within
 # this time period, it's considered to be a double-click and might
 # provide different functionality (for example, Numpad 5 double-click

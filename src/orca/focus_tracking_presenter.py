@@ -453,7 +453,15 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         #
         retryCount = 0
         oldLocusOfFocus = orca_state.locusOfFocus
-        while retryCount <= settings.commFailureAttemptLimit:
+        try:
+            s = self._getScript(event.source.app)
+        except:
+            s = None
+            debug.printException(debug.LEVEL_WARNING)
+            debug.println(debug.LEVEL_WARNING,
+                          "ERROR: received an event, but Script is None")
+
+        while s and retryCount <= s.commFailureAttemptLimit:
             try:
                 if not event.source.state.count( \
                                       atspi.Accessibility.STATE_ICONIFIED):
@@ -496,7 +504,6 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                         braille.setupKeyRanges(\
                             orca_state.activeScript.brailleBindings.keys())
 
-                    s = self._getScript(event.source.app)
                     s.processObjectEvent(event)
                     if retryCount:
                         debug.println(debug.LEVEL_WARNING,
@@ -508,7 +515,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                               "COMM_FAILURE above while processing: " \
                               + event.type)
                 retryCount += 1
-                if retryCount <= settings.commFailureAttemptLimit:
+                if retryCount <= s.commFailureAttemptLimit:
                     # We want the old locus of focus to be reset so
                     # the proper stuff will be spoken if the locus
                     # of focus changed during our last attempt at
@@ -517,7 +524,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                     orca_state.locusOfFocus = oldLocusOfFocus
                     debug.println(debug.LEVEL_WARNING,
                                   "  TRYING AGAIN (%d)" % retryCount)
-                    time.sleep(settings.commFailureWaitTime)
+                    time.sleep(s.commFailureWaitTime)
                 else:
                     debug.println(debug.LEVEL_WARNING,
                                   "  GIVING UP AFTER %d TRIES" \

@@ -88,6 +88,15 @@ class Script:
 
         self.findCommandRun = False
 
+        # Assists with dealing with CORBA COMM_FAILURES.  A failure doesn't
+        # always mean an object disappeared - there just might be a network
+        # glitch.  So, on COMM_FAILURES, we might retry a few times before
+        # giving up on an object.  This might need to be overridden by the
+        # script.  See bug #397787.
+        #
+        self.commFailureWaitTime = 0.1
+        self.commFailureAttemptLimit = 5
+
         debug.println(debug.LEVEL_FINE, "NEW SCRIPT: %s" % self.name)
 
     def getListeners(self):

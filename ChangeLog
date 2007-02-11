@@ -1,3 +1,12 @@
+2007-02-11  Joanmarie Diggs <j-diggs@comcast.net>
+
+	* src/orca/settings.py, src/orca/focus_tracking_presenter.py,
+        src/orca/script.py, src/orca/scripts/StarOffice.py: Fix for
+        bug #397787: Orca non-responsive if OOo goes into recovery
+        mode.  Since we seem to want/need different values for
+        commFailureAttemptLimit, pull it out of settings.py and make
+        it script-specific.
+
 2007-02-11  Willie Walker <william.walker@sun.com>
 
 	* src/orca/baille.py: update to support latest BrlAPI.
