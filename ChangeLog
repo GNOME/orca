@@ -1,5 +1,9 @@
 2007-02-12  Willie Walker <william.walker@sun.com>
 
+	* bugs/bugs.html: added new bugs.  Also did some reformatting
+	by hand to make this easier to edit by hand.  Don't edit this
+	file with a WSYWIG editor.  Those things don't like people.
+	
 	* bugs/bugs.html: update based upon bugs that have been fixed.
 	Still need to roll in a slurry of news ones that are hanging
 	in my inbox.  I also reformatted this file using 'nvu'.  It
