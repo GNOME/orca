@@ -1,3 +1,10 @@
+2007-02-12  Willie Walker <william.walker@sun.com>
+
+	* bugs/bugs.html: update based upon bugs that have been fixed.
+	Still need to roll in a slurry of news ones that are hanging
+	in my inbox.  I also reformatted this file using 'nvu'.  It
+	gave us a little bit of hand-editability back.
+	
 2007-02-11  Willie Walker <william.walker@sun.com>
 
 	* NEWS, configure.in, README: prep for v2.17.91.
