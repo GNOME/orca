@@ -2038,11 +2038,20 @@ class Script(default.Script):
         # with superscripts and subscripts on a line as well as pages
         # with smaller fonts on them, such as craig's list.
         #
-        return abs(a[1] - b[1]) < 11
+        if abs(a[1] - b[1]) > 11:
+            return False
 
+        # If there's no overlap, they are on different lines.  Keep in
+        # mind "lowest" and "highest" mean visually on the screen, but
+        # that the value is the y coordinate.
+        #
         highestBottom = min(a[1] + a[3], b[1] + b[3])
         lowestTop     = max(a[1],        b[1])
+        if lowestTop > highestBottom:
+            return False
 
+        return True
+    
         # If we do overlap, lets see how much.  We'll require a 25% overlap
         # for now...
         #

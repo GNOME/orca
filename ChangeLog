@@ -1,5 +1,13 @@
 2007-02-13  Willie Walker <william.walker@sun.com>
 
+	* src/orca/Gecko.py: add a little more logic to onSameLine. 
+	It now says objects are on the same line if: 1) their base
+	lines are within 11 pixels and 2) their bounding rectangles
+	at least touch top/bottom.  This seems to help a lot with
+	pages with really small fonts.
+	
+2007-02-13  Willie Walker <william.walker@sun.com>
+
         * docs/planning.ods: update to include bugs as of this morning
 
 2007-02-12  Willie Walker <william.walker@sun.com>
