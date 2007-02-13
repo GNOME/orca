@@ -103,6 +103,8 @@ def isSameObject(obj1, obj2):
         while parent1 and parent2 and \
                 parent1.role == rolenames.ROLE_LABEL and \
                 parent2.role == rolenames.ROLE_LABEL:
+            if parent1.index != parent2.index:
+                return False
             parent1 = parent1.parent
             parent2 = parent2.parent
         if parent1 and parent2 and parent1 == parent2:
