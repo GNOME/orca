@@ -1,5 +1,23 @@
 2007-02-14  Willie Walker <william.walker@sun.com>
 
+	* src/orca/Gecko.py: add Insert+F12 as a means to toggle between
+	Orca controlling the caret and Firefox controlling the caret in
+	HTML content.  The change is not persistent between runs.  If 
+	you want a persistent setting, use something like the following
+	in your ~/.orca/orca-customizations.py file:
+
+	import orca.Gecko
+	orca.Gecko.controlCaretNavigation = True
+
+	NOTE: the strings presented as a result of this change are
+	currently not marked as needing translation.  There are also
+	several other strings I had missed from earlier work.  So...I'm
+	going to just check this stuff in and request a string freeze
+	break for the whole set of strings at once.  I'm a dope and I
+	apologize.
+	
+2007-02-14  Willie Walker <william.walker@sun.com>
+
 	* src/orca/orca.in: fix bug 407480 to prevent "orca --help" and
 	other information-only command lines option from killing other
 	Orca processes.

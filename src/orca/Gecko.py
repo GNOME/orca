@@ -277,7 +277,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             selection = menu.selection
             if selection:
                 # The menu might have a selection, but when we go to get
-                # the selected item, we get None. In those cases, we'll 
+                # the selected item, we get None. In those cases, we'll
                 # revert to the name of the menu because that tends to be
                 # what text is being presented by the combobox in these cases.
                 #
@@ -525,7 +525,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             selection = menu.selection
             if selection:
                 # The menu might have a selection, but when we go to get
-                # the selected item, we get None. In those cases, we'll 
+                # the selected item, we get None. In those cases, we'll
                 # revert to the name of the menu because that tends to be
                 # what text is being presented by the combobox in these cases.
                 #
@@ -867,6 +867,11 @@ class Script(default.Script):
                 Script.goNextChunk,
                 "Goes to next chunk.")
 
+        self.inputEventHandlers["toggleCaretNavigationHandler"] = \
+            input_event.InputEventHandler(
+                Script.toggleCaretNavigation,
+                "Switches between Firefox native and Orca caret navigation.")
+
     def getListeners(self):
         """Sets up the AT-SPI event listeners for this script.
         """
@@ -981,6 +986,13 @@ class Script(default.Script):
                  | 1 << atspi.Accessibility.MODIFIER_ALT),
                 0,
                 self.inputEventHandlers["goNextChunkHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "F12",
+                1 << settings.MODIFIER_ORCA,
+                1 << settings.MODIFIER_ORCA,
+                self.inputEventHandlers["toggleCaretNavigationHandler"]))
 
         if controlCaretNavigation:
             for keyBinding in self.__getArrowBindings().keyBindings:
@@ -2051,7 +2063,7 @@ class Script(default.Script):
             return False
 
         return True
-    
+
         # If we do overlap, lets see how much.  We'll require a 25% overlap
         # for now...
         #
@@ -3097,3 +3109,23 @@ class Script(default.Script):
                                                               characterOffset))
         else:
             speech.speak(_("No more chunks."))
+
+    def toggleCaretNavigation(self, inputEvent):
+        """Toggles between Firefox native and Orca caret navigation."""
+
+        global controlCaretNavigation
+
+        if controlCaretNavigation:
+            for keyBinding in self.__getArrowBindings().keyBindings:
+                self.keyBindings.removeByHandler(keyBinding.handler)
+            controlCaretNavigation = False
+            string = "Firefox is controlling the caret."
+        else:
+            controlCaretNavigation = True
+            for keyBinding in self.__getArrowBindings().keyBindings:
+                self.keyBindings.add(keyBinding)
+            string = "Orca is controlling the caret."
+
+        debug.println(debug.LEVEL_CONFIGURATION, string)
+        speech.speak(string)
+        braille.displayMessage(string)
