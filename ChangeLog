@@ -1,3 +1,10 @@
+2007-02-14  Willie Walker <william.walker@sun.com>
+
+	* src/orca/Gecko.py: don't use uppercase voice for strings such
+	as "2:40 AM".  This merely involved checking to make sure a 
+	string was isupper ("2:40 AM" matches that) and isalpha ("2:40 AM"
+	fails that).
+	
 2007-02-13  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/util.py:

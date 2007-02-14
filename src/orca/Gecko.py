@@ -2695,7 +2695,7 @@ class Script(default.Script):
         """Returns the ACSS to speak anything for the given obj."""
         if obj.role == rolenames.ROLE_LINK:
             acss = self.voices[settings.HYPERLINK_VOICE]
-        elif string and string.isupper():
+        elif string and string.isupper() and string.strip().isalpha():
             acss = self.voices[settings.UPPERCASE_VOICE]
         else:
             acss = self.voices[settings.DEFAULT_VOICE]
