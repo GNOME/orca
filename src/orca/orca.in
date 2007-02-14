@@ -2,7 +2,7 @@
 #
 # Orca
 #
-# Copyright 2006 Sun Microsystems Inc.
+# Copyright 2006-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -90,7 +90,10 @@ cleanup()
 #
 runOrca()
 {
-    cleanup
+    if [ -z "$1" ]
+    then
+        cleanup
+    fi
     exec_prefix=@prefix@
     PYTHONPATH=@pyexecdir@
     export PYTHONPATH
@@ -235,10 +238,24 @@ if [ "x$RUNONCE" = "xfalse" -a "x$ARGS" = "x" ]
 then
     main
 else
-    if [ `echo $ARGS | grep -c "\-q"` -gt 0 ]
+    if [ `grep -c "\-q" <<< $ARGS` -gt 0 ]
     then
         cleanup
     else
-        runOrca
+        # If the user passed in a flag that results in orca only
+        # outputting data to the console, don't kill any other orca
+        # process.  We do this by looking for flags that *should*
+        # result in a cleanup (i.e., every legal command except
+        # -?, --help, -v, and --version).  This way, if the user
+        # erroneously types an illegal command line argument, the
+        # help text is emitted and the other orca is not killed.
+        #
+	echo `grep -c -E "\-s|\-g|\-t|\-n|\-u|\-e|\-d" <<< $ARGS`
+        if [ `grep -c -E "\-s|\-g|\-t|\-n|\-u|\-e|\-d" <<< $ARGS` -eq 0 ]
+        then
+            runOrca "NO_CLEANUP"
+        else
+            runOrca
+        fi
     fi
 fi
