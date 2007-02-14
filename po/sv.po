@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-03 03:21+0000\n"
-"PO-Revision-Date: 2007-02-07 13:02+0100\n"
+"POT-Creation-Date: 2007-02-08 03:20+0000\n"
+"PO-Revision-Date: 2007-02-14 23:34+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -433,11 +433,11 @@ msgstr "Växlar till nästa presentationshanterare."
 #: ../src/orca/default.py:3129
 #: ../src/orca/default.py:3222
 #: ../src/orca/default.py:3227
-#: ../src/orca/Gecko.py:2732
+#: ../src/orca/Gecko.py:2733
 #: ../src/orca/scripts/Evolution.py:399
 #: ../src/orca/scripts/Evolution.py:884
-#: ../src/orca/scripts/StarOffice.py:1699
-#: ../src/orca/scripts/StarOffice.py:1708
+#: ../src/orca/scripts/StarOffice.py:1801
+#: ../src/orca/scripts/StarOffice.py:1810
 #: ../src/orca/where_am_I.py:994
 msgid "blank"
 msgstr "blank"
@@ -541,33 +541,33 @@ msgstr "Ingen fokus"
 msgid "Switching to focus tracking mode."
 msgstr "Växlar till fokusspårningsläget."
 
-#: ../src/orca/Gecko.py:1240
+#: ../src/orca/Gecko.py:1241
 #: ../src/orca/rolenames.py:332
 #: ../src/orca/scripts/acroread.py:251
-#: ../src/orca/scripts/StarOffice.py:1018
+#: ../src/orca/scripts/StarOffice.py:1084
 msgid "link"
 msgstr "länk"
 
-#: ../src/orca/Gecko.py:1259
+#: ../src/orca/Gecko.py:1260
 msgid "Loading.  Please wait."
 msgstr "Läser in. Var god vänta."
 
-#: ../src/orca/Gecko.py:1266
+#: ../src/orca/Gecko.py:1267
 #, python-format
 msgid "Finished loading %s."
 msgstr "Inläsning av %s färdig."
 
-#: ../src/orca/Gecko.py:1271
+#: ../src/orca/Gecko.py:1272
 msgid "Finished loading."
 msgstr "Inläsning färdig."
 
-#: ../src/orca/Gecko.py:3031
-#: ../src/orca/Gecko.py:3042
+#: ../src/orca/Gecko.py:3037
+#: ../src/orca/Gecko.py:3048
 msgid "No more headings."
 msgstr "Inga fler rubriker."
 
-#: ../src/orca/Gecko.py:3053
-#: ../src/orca/Gecko.py:3064
+#: ../src/orca/Gecko.py:3059
+#: ../src/orca/Gecko.py:3070
 msgid "No more chunks."
 msgstr "Inga fler delar."
 
@@ -2639,7 +2639,7 @@ msgstr "dokument"
 #. We've entered a table.  Announce the dimensions.
 #.
 #: ../src/orca/scripts/acroread.py:290
-#: ../src/orca/scripts/StarOffice.py:727
+#: ../src/orca/scripts/StarOffice.py:793
 #, python-format
 msgid "table with %d rows and %d columns."
 msgstr "tabell med %d rader och %d kolumner."
@@ -2647,7 +2647,7 @@ msgstr "tabell med %d rader och %d kolumner."
 #. We've left a table.  Announce this fact.
 #.
 #: ../src/orca/scripts/acroread.py:297
-#: ../src/orca/scripts/StarOffice.py:730
+#: ../src/orca/scripts/StarOffice.py:796
 msgid "leaving table."
 msgstr "lämnar tabell."
 
@@ -2903,113 +2903,123 @@ msgstr "inte nedtryckt"
 msgid "Calc"
 msgstr "Kalkylark"
 
-#: ../src/orca/scripts/StarOffice.py:653
+#: ../src/orca/scripts/StarOffice.py:599
+#: ../src/orca/scripts/StarOffice.py:626
+msgid "on"
+msgstr "på"
+
+#: ../src/orca/scripts/StarOffice.py:601
+#: ../src/orca/scripts/StarOffice.py:628
+msgid "off"
+msgstr "av"
+
+#: ../src/orca/scripts/StarOffice.py:719
 msgid "Speaks the contents of the input line."
 msgstr "Talar innehållet på inmatningsraden."
 
-#: ../src/orca/scripts/StarOffice.py:658
+#: ../src/orca/scripts/StarOffice.py:724
 msgid "Set the row to use as dynamic column headers when speaking calc cells."
 msgstr "Ställ in raden att använda som dynamiska kolumnhuvud när beräkningsceller talas."
 
-#: ../src/orca/scripts/StarOffice.py:663
+#: ../src/orca/scripts/StarOffice.py:729
 msgid "Set the column to use as dynamic row headers to use when speaking calc cells."
 msgstr "Ställ in kolumnen att använda som dynamiska radhuvud när beräkningsceller talas."
 
-#: ../src/orca/scripts/StarOffice.py:752
+#: ../src/orca/scripts/StarOffice.py:818
 msgid "empty"
 msgstr "tom"
 
-#: ../src/orca/scripts/StarOffice.py:821
+#: ../src/orca/scripts/StarOffice.py:887
 msgid "Dynamic column header cleared."
 msgstr "Dynamiskt kolumnhuvud tömdes."
 
-#: ../src/orca/scripts/StarOffice.py:828
+#: ../src/orca/scripts/StarOffice.py:894
 msgid "Dynamic column header set for row "
 msgstr "Dynamtiskt kolumnhuvud inställt för raden "
 
-#: ../src/orca/scripts/StarOffice.py:884
+#: ../src/orca/scripts/StarOffice.py:950
 msgid "Dynamic row header cleared."
 msgstr "Dynamiskt radhuvud tömdes."
 
-#: ../src/orca/scripts/StarOffice.py:891
+#: ../src/orca/scripts/StarOffice.py:957
 #, python-format
 msgid "Dynamic row header set for column %s"
 msgstr "Dynamtisk radhuvud inställt för kolumnen %s"
 
-#: ../src/orca/scripts/StarOffice.py:1036
+#: ../src/orca/scripts/StarOffice.py:1102
 msgid "Welcome to StarOffice"
 msgstr "Välkommen till StarOffice"
 
-#: ../src/orca/scripts/StarOffice.py:1131
+#: ../src/orca/scripts/StarOffice.py:1197
 msgid "Text Document"
 msgstr "Textdokument"
 
-#: ../src/orca/scripts/StarOffice.py:1191
-#: ../src/orca/scripts/StarOffice.py:1413
+#: ../src/orca/scripts/StarOffice.py:1257
+#: ../src/orca/scripts/StarOffice.py:1479
 msgid "Spellcheck:"
 msgstr "Stavningskontroll:"
 
-#: ../src/orca/scripts/StarOffice.py:1219
+#: ../src/orca/scripts/StarOffice.py:1285
 msgid "Note that the Scroll Down button has to be pressed numerous times."
 msgstr "Notera att Rulla ner-knappen måste tryckas ner flera gånger."
 
-#: ../src/orca/scripts/StarOffice.py:1233
+#: ../src/orca/scripts/StarOffice.py:1299
 msgid "License Agreement Accept button now has focus."
 msgstr "Licensavtalets knapp för att acceptera har nu fokus."
 
-#: ../src/orca/scripts/StarOffice.py:1256
+#: ../src/orca/scripts/StarOffice.py:1322
 msgid "First name"
 msgstr "Förnamn"
 
-#: ../src/orca/scripts/StarOffice.py:1327
+#: ../src/orca/scripts/StarOffice.py:1393
 msgid "Move to cell"
 msgstr "Flytta till cell"
 
-#: ../src/orca/scripts/StarOffice.py:1469
+#: ../src/orca/scripts/StarOffice.py:1535
 msgid "Writer"
 msgstr "Ordbehandlare"
 
-#: ../src/orca/scripts/StarOffice.py:1589
+#: ../src/orca/scripts/StarOffice.py:1691
 msgid " has formula"
 msgstr " har formel"
 
-#: ../src/orca/scripts/StarOffice.py:1635
+#: ../src/orca/scripts/StarOffice.py:1737
 msgid "Cell "
 msgstr "Cell "
 
 #: ../src/orca/scripts/Thunderbird.py:125
 #: ../src/orca/scripts/Thunderbird.py:130
-#: ../src/orca/scripts/Thunderbird.py:498
-#: ../src/orca/scripts/Thunderbird.py:503
+#: ../src/orca/scripts/Thunderbird.py:518
+#: ../src/orca/scripts/Thunderbird.py:523
 #, python-format
 msgid "%s text %s %s"
 msgstr "%s text %s %s"
 
 #: ../src/orca/scripts/Thunderbird.py:127
-#: ../src/orca/scripts/Thunderbird.py:500
+#: ../src/orca/scripts/Thunderbird.py:520
 #, python-format
 msgid "%s text %s"
 msgstr "%s text %s"
 
 #: ../src/orca/scripts/Thunderbird.py:132
-#: ../src/orca/scripts/Thunderbird.py:505
+#: ../src/orca/scripts/Thunderbird.py:525
 #, python-format
 msgid "text %s %s"
 msgstr "text %s %s"
 
-#: ../src/orca/scripts/Thunderbird.py:194
+#: ../src/orca/scripts/Thunderbird.py:218
 msgid ":"
 msgstr ":"
 
 #. Don't speak chrome URLs.
-#: ../src/orca/scripts/Thunderbird.py:339
-#: ../src/orca/scripts/Thunderbird.py:425
-#: ../src/orca/scripts/Thunderbird.py:440
+#: ../src/orca/scripts/Thunderbird.py:356
+#: ../src/orca/scripts/Thunderbird.py:445
+#: ../src/orca/scripts/Thunderbird.py:460
 msgid "chrome://"
 msgstr "chrome://"
 
-#: ../src/orca/scripts/Thunderbird.py:432
-#: ../src/orca/scripts/Thunderbird.py:447
+#: ../src/orca/scripts/Thunderbird.py:452
+#: ../src/orca/scripts/Thunderbird.py:467
 #, python-format
 msgid "%s panel"
 msgstr "%s panel"
