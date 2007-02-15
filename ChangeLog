@@ -10,6 +10,11 @@
           default.py doesn't work
           (Thanks to community member Juan Ramon Jimenez for this fix).
 
+        * src/orca/scripts/nautilus.py: (new)
+          src/orca/scripts/Makefile.am:
+          Fixed bug #350674 – make Orca announce when a new folder is 
+          opened and announce number of items.
+
 2007-02-14  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py: add Insert+F12 as a means to toggle between
