@@ -750,7 +750,8 @@ class Script(script.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "u",
-                1 << settings.MODIFIER_ORCA,
+                (1 << settings.MODIFIER_ORCA | \
+                 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["reviewPreviousLineHandler"]))
 
@@ -773,7 +774,8 @@ class Script(script.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "o",
-                1 << settings.MODIFIER_ORCA,
+                (1 << settings.MODIFIER_ORCA | \
+                 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["reviewNextLineHandler"]))
 
@@ -789,7 +791,8 @@ class Script(script.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "j",
-                1 << settings.MODIFIER_ORCA,
+                (1 << settings.MODIFIER_ORCA | \
+                 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["reviewPreviousItemHandler"]))
 
@@ -805,7 +808,8 @@ class Script(script.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "k",
-                1 << settings.MODIFIER_ORCA,
+                (1 << settings.MODIFIER_ORCA | \
+                 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["reviewCurrentItemHandler"]))
 
@@ -821,21 +825,25 @@ class Script(script.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "l",
-                1 << settings.MODIFIER_ORCA,
+                (1 << settings.MODIFIER_ORCA | \
+                 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["reviewNextItemHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "l",
-                1 << settings.MODIFIER_ORCA,
-                1 << settings.MODIFIER_ORCA,
+                (1 << settings.MODIFIER_ORCA | \
+                 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << settings.MODIFIER_ORCA | \
+                 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 self.inputEventHandlers["reviewBelowHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "m",
-                1 << settings.MODIFIER_ORCA,
+                (1 << settings.MODIFIER_ORCA | \
+                 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 1 << settings.MODIFIER_ORCA,
                 self.inputEventHandlers["reviewPreviousCharacterHandler"]))
 
