@@ -361,6 +361,8 @@ class Script(script.Script):
             self.noOp
         listeners["object:link-selected"]                   = \
             self.onLinkSelected
+        listeners["object:bounds-changed"]                  = \
+            self.onBoundsChanged
         listeners["object:state-changed:"]                  = \
             self.onStateChanged
         listeners["object:selection-changed"]               = \
@@ -2334,6 +2336,18 @@ class Script(script.Script):
         #   and (orca_state.locusOfFocus.app == event.source.app):
         #    orca.setLocusOfFocus(event, event.source)
         orca.setLocusOfFocus(event, event.source)
+        
+
+    def onBoundsChanged(self, event):
+        """Called whenever an object's bounds change.
+        
+        Arguments:
+        - event: the Event
+        """
+
+        # The subclasses does all the work.
+        return
+    
 
     def onStateChanged(self, event):
         """Called whenever an object's state changes.

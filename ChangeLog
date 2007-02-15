@@ -1,3 +1,18 @@
+2007-02-15  Lynn Monsanto <lynn.monsanto@sun.com>
+
+	* src/orca/scripts/gnome-power-manager.py: Partial fix
+	for Bug #354479 - Automatic presentation of "balloon" 
+	type messages. The partial fix speaks the displayed
+	text in the Gnome Power Manager when the manager is
+	displayed. There will probably need to be scripts for
+	all the other important balloon-type messages.
+
+	* src/orca/default.py: Added a listener for 
+	"object:bounds-changed:" events. The onBoundsChanged
+	method is intended to be overridden by subclasses; in
+	this case, gnome-power-manager.py
+	
+
 2007-02-15  Willie Walker <william.walker@sun.com>
 
 	* src/orca/scripts/Thunderbird.py: do a fair amount of work to
