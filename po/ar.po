@@ -4,6 +4,8 @@
 #
 # Djihed Afifi <djihed@gmail.com>, 2006.
 # Khaled Hosny <khaledhosny@eglug.org>, 2006, 2007.
+# Ahmad Farghal <ahmad.farghal@gmail.com>, 2007
+
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.gnome-2-16\n"
@@ -2805,9 +2807,9 @@ msgid "inaccessible"
 msgstr "مستحيل الوصول"
 
 #: ../src/orca/scripts/nautilus.py:103
-#, fuzzy, python-format
+#, python-format
 msgid " %d items"
-msgstr "0 عناصر"
+msgstr " %d عناصر"
 
 #: ../src/orca/scripts/planner.py:77 ../src/orca/scripts/planner.py:138
 msgid "Display more options"
