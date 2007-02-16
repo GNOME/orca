@@ -27,11 +27,9 @@ __copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import orca.orca as orca
-import orca.orca_state as orca_state
 import orca.atspi as atspi
 import orca.debug as debug
 import orca.default as default
-import orca.input_event as input_event
 import orca.rolenames as rolenames
 import orca.settings as settings
 import orca.braille as braille
@@ -49,7 +47,7 @@ from orca.orca_i18n import _
 #                                                                      #
 ########################################################################
 
-class BrailleGenerator(Gecko.BrailleGenerator):
+class BrailleGenerator(braillegenerator.BrailleGenerator):
     """Provides a braille generator specific to Gecko.
     """
 
@@ -57,9 +55,7 @@ class BrailleGenerator(Gecko.BrailleGenerator):
         self.debugLevel = debug.LEVEL_FINEST
 
         self._debug("__init__")
-        Gecko.BrailleGenerator.__init__(self, script)
-        self.brailleGenerators[rolenames.ROLE_DOCUMENT_FRAME] = \
-             self._getBrailleRegionsForText
+        braillegenerator.BrailleGenerator.__init__(self, script)
 
     def _debug(self, msg):
         """ Convenience method for printing debug messages
@@ -110,9 +106,6 @@ class BrailleGenerator(Gecko.BrailleGenerator):
                     if next:
                         self._debug("_getDefaultBrailleRegions: next='%s', role='%s'" \
                                     % (next.name, next.role))
-            else:
-                prev = None
-                next = None
 
             # Get the entry text.
             [word, startOffset, endOffset] = obj.text.getTextAtOffset(0,
@@ -152,6 +145,7 @@ class BrailleGenerator(Gecko.BrailleGenerator):
 
         return [regions, componentRegion]
 
+
     def _getBrailleRegionsForText(self, obj):
         """Get the braille for a text component.
 
@@ -165,9 +159,10 @@ class BrailleGenerator(Gecko.BrailleGenerator):
         # Gecko._getBrailleRegionsForText does not return the correct
         # braille for Thunderbird. Let the default braillegenerator
         # handle this.
-        #
-        return braillegenerator.BrailleGenerator._getBrailleRegionsForText(\
-            self, obj)
+        return braillegenerator.BrailleGenerator._getBrailleRegionsForText(
+                self, obj)
+
+
 
 ########################################################################
 #                                                                      #
@@ -175,7 +170,7 @@ class BrailleGenerator(Gecko.BrailleGenerator):
 #                                                                      #
 ########################################################################
 
-class SpeechGenerator(Gecko.SpeechGenerator):
+class SpeechGenerator(speechgenerator.SpeechGenerator):
     """Provides a speech generator specific to Thunderbird.
     """
 
@@ -185,9 +180,7 @@ class SpeechGenerator(Gecko.SpeechGenerator):
         self.debugLevel = debug.LEVEL_FINEST
 
         self._debug("__init__")
-        Gecko.SpeechGenerator.__init__(self, script)
-        self.speechGenerators[rolenames.ROLE_DOCUMENT_FRAME] = \
-             self._getSpeechForText
+        speechgenerator.SpeechGenerator.__init__(self, script)
 
     def _debug(self, msg):
         """ Convenience method for printing debug messages
@@ -398,32 +391,6 @@ class Script(Gecko.Script):
         #
         default.Script.onStateChanged(self, event)
 
-    def onCaretMoved(self, event):
-        """Called whenever the caret moves.
-
-        Arguments:
-        - event: the Event
-        """
-
-        # We expect text inserted methods to tell us when to speak
-        # text areas.  But, when someone tabs into one, we don't
-        # always get this.  So...we'll look to see if they tabbed
-        # in and will present the text if they did.  The endswith
-        # bit is to capture Tab and ISO_Left_Tab.
-        #
-        if event and event.source and \
-           (event.source != orca_state.locusOfFocus) and \
-            event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
-            if isinstance(orca_state.lastInputEvent,
-                          input_event.KeyboardEvent) \
-                and event.source.parent \
-                and (event.source.parent.role == rolenames.ROLE_AUTOCOMPLETE):
-                string = orca_state.lastInputEvent.event_string
-                if (string.endswith("Tab")):
-                    self.sayLine(event.source)
-
-        Gecko.Script.onCaretMoved(self, event)
-
     def onTextInserted(self, event):
         """Called whenever text is inserted into an object.
 
@@ -555,15 +522,4 @@ class Script(Gecko.Script):
             speech.speakUtterances([text])
             return True
 
-        return False
-
-    def inDocumentContent(self, obj=None):
-        """Returns True if the given object (defaults to the current
-        locus of focus is in the document content).
-        """
-        # For now, we just let default.py take care of everything for
-        # Thunderbird.  This is a major hack, and it's here because
-        # we're having problems with the Gecko script handling message
-        # composition.
-        #
         return False
