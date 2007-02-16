@@ -100,7 +100,7 @@ class Script(default.Script):
                     elif child.role == rolenames.ROLE_TABLE:
                         itemCount = child.table.nRows
                     if itemCount != -1:
-                        itemCountString = _(" %d items") % itemCount
+                        itemCountString = " %d items" % itemCount
                     break
 
         return itemCountString
