@@ -26,7 +26,7 @@ http://developer.mozilla.org/en/docs/Accessibility/ATSPI_Support
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import atspi
@@ -219,7 +219,8 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         regions = []
 
         # This is the main difference between this class and the default
-        # class - we'll give this thing a name here.
+        # class - we'll give this thing a name here, and we'll make it
+        # be the name of the autocomplete.
         #
         label = util.getDisplayedLabel(parent)
         if not label or not len(label):
@@ -306,10 +307,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         return [regions, regions[focusedRegionIndex]]
 
     def _getBrailleRegionsForImage(self, obj):
-        """Gets text to be displayed for the current object's name,
-        role, and any accelerators.  This is usually the fallback
-        braille generator should no other specialized braille
-        generator exist for this object.
+        """Get the braille regions for an image.
 
         Arguments:
         - obj: an Accessible
@@ -350,8 +348,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         return [regions, componentRegion]
 
     def _getBrailleRegionsForLink(self, obj):
-        """Gets text to be displayed for the current object's name,
-        role, and any accelerators.
+        """Gets text to be displayed for a link.
 
         Arguments:
         - obj: an Accessible
@@ -385,10 +382,6 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         regions.append(componentRegion)
 
         return [regions, componentRegion]
-
-    def getBrailleRegions(self, obj, groupChildren=True):
-        return braillegenerator.BrailleGenerator.getBrailleRegions(\
-            self, obj, groupChildren)
 
 ########################################################################
 #                                                                      #
@@ -461,7 +454,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         utterances = []
 
         # This is the main difference between this class and the default
-        # class - we'll give this thing a name here.
+        # class - we'll give this thing a name here, and we'll make it
+        # be the name of the autocomplete.
         #
         label = util.getDisplayedLabel(parent)
         if not label or not len(label):
@@ -547,8 +541,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         return utterances
 
     def _getSpeechForImage(self, obj, already_focused):
-        """Gets a list of utterances to be spoken for the current
-        object's name, role, and any accelerators.
+        """Gets a list of utterances to be spoken for an image.
 
         The default speech will be of the following form:
 
@@ -593,8 +586,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         return utterances
 
     def _getSpeechForLink(self, obj, already_focused):
-        """Gets a list of utterances to be spoken for the current
-        object's name, role, and any accelerators.
+        """Gets a list of utterances to be spoken for a link.
 
         Arguments:
         - obj: an Accessible
@@ -772,24 +764,13 @@ class Script(default.Script):
 
         if controlCaretNavigation:
             debug.println(debug.LEVEL_CONFIGURATION,
-                          "Gecko.py is controlling the caret.")
+                          "Orca is controlling the caret.")
         else:
             debug.println(debug.LEVEL_CONFIGURATION,
-                          "Firefox is controlling the caret.")
+                          "Gecko is controlling the caret.")
 
         # We keep track of whether we're currently in the process of
-        # loading a page.  Ideally, Gecko will let us know when a page
-        # is being loaded by:
-        #
-        # Setting the BUSY state of the document frame.  We should get
-        # a object:state-changed:busy event with a detail1 that tells
-        # us if the frame is busy (detail1==1) or not (detail1==0).
-        #
-        # Sending us "document:load-complete", "document:reload", and
-        # "document:load-stopped" events.
-        #
-        # We can also watch for value change events on the progress
-        # bar to let us know how things are progressing.
+        # loading a page.
         #
         self._loadingDocumentContent = False
 
@@ -1062,9 +1043,13 @@ class Script(default.Script):
         orca.setLocusOfFocus(event, event.source, False)
 
         # We need to handle HTML content differently because we do our
-        # own navigation and we also handle the EMBEDDED_OBJECT_CHARACTER.
-        # But...if we're not in HTML content, we'll defer to the default
-        # script.
+        # own navigation and we also handle the
+        # EMBEDDED_OBJECT_CHARACTER.  If we're not in HTML content,
+        # we'll defer to the default script.  If we are in HTML
+        # content, we'll figure out where we are and then defer to the
+        # default script.  It will typically end up calling some of
+        # our other overidden methods (e.g., sayCharacter, sayWord,
+        # sayLine, etc.).
         #
         if not self.inDocumentContent():
             default.Script.onCaretMoved(self, event)
@@ -1079,7 +1064,9 @@ class Script(default.Script):
         # column for up/down navigation by line.  The goal here is
         # to make sure the caret moves somewhat vertically when
         # going up/down by line versus jumping to the beginning of
-        # the line.
+        # the line.  Note that whether we actually attempt to do
+        # this is handled by the value of the global
+        # arrowToLineBeginning.
         #
         if isinstance(orca_state.lastInputEvent,
                       input_event.KeyboardEvent):
@@ -1159,7 +1146,8 @@ class Script(default.Script):
         # When we get a focus event on the document frame, it's usually
         # because we did a grabFocus on its parent in setCaretPosition.
         # We try to handle this here by seeing if there is already a
-        # caret context for the document frame.
+        # caret context for the document frame.  If we succeed, then
+        # we set the focus on the object that's holding the caret.
         #
         if event.source \
             and (event.source.role == rolenames.ROLE_DOCUMENT_FRAME):
@@ -1217,7 +1205,9 @@ class Script(default.Script):
             # The problem, however, is that Gecko often gives us
             # a *different* child whenever we ask for the entry.
             # So...we end up just depending upon the entry to issue
-            # focus: events.]]]
+            # us a focus: event.  The focus: event usually
+            # occurs immediately after the autocomplete gets
+            # focus.]]]
             #
             #entry = self.getAutocompleteEntry(event.source)
             #orca.setLocusOfFocus(event, entry)
@@ -1295,13 +1285,16 @@ class Script(default.Script):
                     speech.speak(message)
                 elif event.source.name:
                     self._loadingDocumentContent = False
+                    message = _("Finished loading %s.") % event.source.name
+                    braille.displayMessage(message)
                     speech.stop()
-                    speech.speak(_("Finished loading %s.") \
-                                 % event.source.name)
+                    speech.speak(message)
                 else:
                     self._loadingDocumentContent = False
+                    message = _("Finished loading.")
+                    braille.displayMessage(message)
                     speech.stop()
-                    speech.speak(_("Finished loading."))
+                    speech.speak(message)
             return
 
         default.Script.onStateChanged(self, event)
@@ -1415,12 +1408,6 @@ class Script(default.Script):
         - extra: extra Region to add to the end
         """
 
-        """Speaks the character at the current caret position."""
-
-        # We need to handle HTML content differently because of the
-        # EMBEDDED_OBJECT_CHARACTER model of Gecko.  For all other
-        # things, however, we can defer to the default scripts.
-        #
         if not self.inDocumentContent():
             default.Script.updateBraille(self, obj, extraRegion)
             return
@@ -1432,9 +1419,15 @@ class Script(default.Script):
         line = braille.Line()
         braille.addLine(line)
 
+        # Some text areas have a character offset of -1 when you tab
+        # into them.  In these cases, they show all the text as being
+        # selected.  We don't know quite what to do in that case,
+        # so we'll just pretend the caret is at the beginning (0).
+        #
         [focusedObj, focusedCharacterOffset] = self.getCaretContext()
         contents = self.getLineContentsAtOffset(focusedObj,
-                                                focusedCharacterOffset)
+                                                max(0, focusedCharacterOffset))
+
         if not len(contents):
             return
 
@@ -1449,7 +1442,7 @@ class Script(default.Script):
             # all to hack around the way checkboxes and their labels
             # are handled in document content.  For now, we will display
             # the label so we can track the caret in it on the braille
-            # display.]]]
+            # display.  So...we'll comment this section out.]]]
             #
             #if self.isLabellingContents(obj, contents):
             #    continue
@@ -3119,7 +3112,7 @@ class Script(default.Script):
             for keyBinding in self.__getArrowBindings().keyBindings:
                 self.keyBindings.removeByHandler(keyBinding.handler)
             controlCaretNavigation = False
-            string = "Firefox is controlling the caret."
+            string = "Gecko is controlling the caret."
         else:
             controlCaretNavigation = True
             for keyBinding in self.__getArrowBindings().keyBindings:

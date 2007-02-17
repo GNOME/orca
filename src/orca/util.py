@@ -22,7 +22,7 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 try:
@@ -919,10 +919,18 @@ def getTextLineAtCaret(obj):
         content = ""
         startOffset = caretOffset
     else:
-        # Get the line containing the caret
+        # Get the line containing the caret.  [[[TODO: HACK WDW - If
+        # there's only 1 character in the string, well, we get it.  We
+        # do this because Gecko's implementation of getTextAtOffset
+        # is broken if there is just one character in the string.]]]
         #
-        [string, startOffset, endOffset] = text.getTextAtOffset(
-            caretOffset, atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+        if (text.characterCount == 1):
+            string = text.getText(caretOffset, caretOffset + 1)
+            startOffset = caretOffset
+            endOffset = caretOffset + 1
+        else:
+            [string, startOffset, endOffset] = text.getTextAtOffset(
+                caretOffset, atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
 
         # Sometimes we get the trailing line-feed-- remove it
         #

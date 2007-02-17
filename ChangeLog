@@ -1,3 +1,20 @@
+2007-02-16  Willie Walker <william.walker@sun.com>
+
+	* test/html/simpleform.html: add a text entry area that uses
+	an onFocus tag to reset the value when you tab to it.  Gecko
+	seems to have issues with its accessible implementation when
+	it comes to these kinds of things.
+
+	* src/orca/Gecko.py: update some documentation, ensure braille
+	is updated when a page is finished loading, and handle the 
+	case where the caret offset of a text area is a nonsensical
+	value (-1) when you tab into it.
+
+	* src/orca/util.py: modify getTextLineAtCaret to return the sole
+	character if the length of the text is 1.  We do this because
+	Gecko's getTextAtOffset implementation seems to be flawed if the
+	length of the text is 1.
+	
 2007-02-16  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/nautilus.py:
