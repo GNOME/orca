@@ -2,16 +2,18 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 #
-# Amanpreet Singh Alam <aalam@redhat.com>, 2005.
-# A S Alam <apbrar@gmail.com>, 2006.
+# Amanpreet Singh Alam <aalam @ redhat.com>, 2005.
+# A S Alam <apbrar @ gmail.com>, 2006.
+# A S Alam <aalam @ users.sf.net>, 2007.
+# A S Alam <aalam@users.sf.net>, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-24 11:28+0100\n"
-"PO-Revision-Date: 2006-12-24 21:58+0530\n"
-"Last-Translator: A S Alam <apbrar@gmail.com>\n"
-"Language-Team: Punjabi <fedora-trans-pa@redhat.com>\n"
+"POT-Creation-Date: 2007-02-16 12:46+0000\n"
+"PO-Revision-Date: 2007-02-17 05:44+0530\n"
+"Last-Translator: A S Alam <aalam@users.sf.net>\n"
+"Language-Team: Punjabi <punjabi-l10n@lists.sf.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -25,18 +27,20 @@ msgstr "ਓਰਕਾ ਸਕਰੀਨ ਰੀਡਰ ਅਤੇ ਵੱਡਦਰਸ�
 #: ../orca.desktop.in.h:2
 msgid "Present on-screen information as speech or braille, or magnify the screen"
 msgstr ""
+"ਸਕਰੀਨ-ਉੱਤਲੀ ਜਾਣਕਾਰੀ ਨੂੰ ਬੋਲੀ ਜਾਂ ਬਰਾਇੱਲੀ ਵਾਂਗ ਪੇਸ਼ ਕਰੋ ਜਾਂ ਸਕਰੀਨ ਵੱਡੀ ਕਰਕੇ "
+"ਵੇਖਾਓ"
 
 #: ../src/orca/braillegenerator.py:197 ../src/orca/speechgenerator.py:198
 msgid "grayed"
 msgstr "ਗਰੇ ਕੀਤਾ"
 
 #: ../src/orca/braillegenerator.py:1067 ../src/orca/J2SE-access-bridge.py:69
-#: ../src/orca/speechgenerator.py:1231 ../src/orca/where_am_I.py:599
+#: ../src/orca/speechgenerator.py:1231 ../src/orca/where_am_I.py:596
 msgid "expanded"
 msgstr "ਫੈਲਾਇਆ"
 
 #: ../src/orca/braillegenerator.py:1069 ../src/orca/J2SE-access-bridge.py:72
-#: ../src/orca/speechgenerator.py:1233 ../src/orca/where_am_I.py:601
+#: ../src/orca/speechgenerator.py:1233 ../src/orca/where_am_I.py:598
 msgid "collapsed"
 msgstr "ਸਮੇਟਿਆ"
 
@@ -183,7 +187,7 @@ msgstr "ਡਾਲਰ"
 
 #: ../src/orca/chnames.py:66 ../src/orca/speechgenerator.py:902
 msgid "percent"
-msgstr "ਪ੍ਰਤੀਸ਼ਤ"
+msgstr "ਫ਼ੀ-ਸਦੀ"
 
 #: ../src/orca/chnames.py:67
 msgid "and"
@@ -233,7 +237,8 @@ msgstr "ਮੌਜੂਦਾ ਸਮਤਲ ਝਲਕ ਇਕਾਈ ਉੱਤੇ ਖ�
 msgid "Performs right click on current flat review item."
 msgstr "ਮੌਜੂਦਾ ਸਮਤਲ ਝਲਕ ਇਕਾਈ ਉੱਤੇ ਸੱਜਾ ਕਲਿੱਕ ਕਰਦੀ ਹੈ।"
 
-#: ../src/orca/default.py:98 ../src/orca/scripts/Evolution.py:114
+#: ../src/orca/default.py:98 ../src/orca/scripts/acroread.py:264
+#: ../src/orca/scripts/Evolution.py:114
 msgid "Speaks entire document."
 msgstr "ਪੂਰਾ ਦਸਤਾਵੇਜ ਬੋਲਦੀ ਹੈ।"
 
@@ -421,76 +426,85 @@ msgstr "ਫੋਕਸ ਨਾਲ ਕਾਰਜ ਬਾਰੇ ਡੀਬੱਗ ਜਾ�
 msgid "Switches to the next presentation manager."
 msgstr "ਅਗਲੀ ਪੇਸ਼ਕਾਰੀ ਮੈਨੇਜਰ ਨੂੰ ਤਬਦੀਲ ਕਰਦੀ ਹੈ।"
 
-#: ../src/orca/default.py:1200 ../src/orca/default.py:1427
-#: ../src/orca/default.py:2962 ../src/orca/default.py:3096
-#: ../src/orca/default.py:3101 ../src/orca/default.py:3194
-#: ../src/orca/default.py:3199 ../src/orca/scripts/Evolution.py:399
-#: ../src/orca/scripts/Evolution.py:884 ../src/orca/scripts/StarOffice.py:1694
-#: ../src/orca/scripts/StarOffice.py:1703 ../src/orca/where_am_I.py:996
+#: ../src/orca/default.py:1210 ../src/orca/default.py:1437
+#: ../src/orca/default.py:3012 ../src/orca/default.py:3146
+#: ../src/orca/default.py:3151 ../src/orca/default.py:3244
+#: ../src/orca/default.py:3249 ../src/orca/Gecko.py:2774
+#: ../src/orca/scripts/Evolution.py:399 ../src/orca/scripts/Evolution.py:884
+#: ../src/orca/scripts/StarOffice.py:1807
+#: ../src/orca/scripts/StarOffice.py:1816 ../src/orca/where_am_I.py:994
 msgid "blank"
 msgstr "ਖਾਲੀ"
 
-#: ../src/orca/default.py:1280
+#: ../src/orca/default.py:1290
 msgid "1 space "
 msgstr "1 ਸਪੇਸ "
 
-#: ../src/orca/default.py:1282
+#: ../src/orca/default.py:1292
 #, python-format
 msgid "%d spaces "
 msgstr "%d ਸਪੇਸ "
 
-#: ../src/orca/default.py:1285
+#: ../src/orca/default.py:1295
 msgid "1 tab "
 msgstr "1 ਟੈਬ"
 
-#: ../src/orca/default.py:1287
+#: ../src/orca/default.py:1297
 #, python-format
 msgid "%d tabs "
 msgstr "%d ਟੈਬਾਂ"
 
-#: ../src/orca/default.py:1681 ../src/orca/where_am_I.py:606
+#: ../src/orca/default.py:1691 ../src/orca/where_am_I.py:603
 #, python-format
 msgid "tree level %d"
 msgstr "ਲੜੀ ਪੱਧਰ %d"
 
-#: ../src/orca/default.py:2086
+#: ../src/orca/default.py:2096
 msgid "entire document selected"
 msgstr "ਪੂਰਾ ਦਸਤਾਵੇਜ਼ ਚੁਣਿਆ"
 
-#: ../src/orca/default.py:2520
+#: ../src/orca/default.py:2568
 msgid "Speak "
 msgstr "ਸਪੀਕ"
 
-#: ../src/orca/default.py:2523
+#: ../src/orca/default.py:2571
 msgid "row"
 msgstr "ਕਤਾਰ"
 
-#: ../src/orca/default.py:2525 ../src/orca/rolenames.py:470
+#: ../src/orca/default.py:2573 ../src/orca/rolenames.py:470
 #: ../src/orca/rolenames.py:472
 msgid "cell"
 msgstr "ਸੈੱਲ"
 
-#: ../src/orca/default.py:2574 ../src/orca/where_am_I.py:1052
+#: ../src/orca/default.py:2622 ../src/orca/where_am_I.py:1050
 msgid "bold"
 msgstr "ਗੂੜਾ"
 
-#: ../src/orca/default.py:2688
+#: ../src/orca/default.py:2624
+msgid " pixels"
+msgstr " ਪਿਕਸਲ"
+
+#: ../src/orca/default.py:2738
 msgid "Entering learn mode.  Press any key to hear its function. "
 msgstr "ਸਿੱਖਣ ਢੰਗ 'ਚ ਦਾਖਲ ਹੋਇਆ ਜਾ ਰਿਹਾ ਹੈ।  ਇਹ ਫੰਕਸ਼ਨ ਸੁਣਨ ਲਈ ਕੋਈ ਸਵਿੱਚ ਦਬਾਓ। "
 
-#: ../src/orca/default.py:2690
+#: ../src/orca/default.py:2739
+msgid "To exit learn mode, press the escape key."
+msgstr "ਸਿੱਖਣ ਢੰਗ ਤੋਂ ਬਾਹਰ ਜਾਣ ਲਈ Escape ਦਬਾਓ।"
+
+#: ../src/orca/default.py:2740
 msgid "Learn mode.  Press escape to exit."
 msgstr "ਸਿੱਖਣ ਢੰਗ ਹੈ। ਬਾਹਰ ਜਾਣ ਲਈ Escape ਦਬਾਓ।"
 
-#: ../src/orca/default.py:2702 ../src/orca/default.py:2703
+#: ../src/orca/default.py:2752 ../src/orca/default.py:2753
 msgid "Exiting learn mode."
 msgstr "ਸਿੱਖਣ ਢੰਗ ਬੰਦ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ।"
 
-#: ../src/orca/default.py:2964 ../src/orca/default.py:3103
+#: ../src/orca/default.py:3014 ../src/orca/default.py:3153
 msgid "white space"
 msgstr "ਖਾਲੀ ਥਾਂ"
 
-#: ../src/orca/default.py:3316 ../src/orca/default.py:3317
+#: ../src/orca/default.py:3366 ../src/orca/default.py:3367
 msgid "string not found"
 msgstr "ਸਤਰ ਨਹੀਂ ਲੱਭੀ"
 
@@ -506,24 +520,37 @@ msgstr "ਹੇਠਾਂ ਤੋਂ ਸਮੇਟਿਆ ਜਾ ਰਿਹਾ ਹੈ"
 msgid "Wrapping to Top"
 msgstr "ਉੱਤੇ ਤੋਂ ਸਮੇਟਿਆ ਜਾ ਰਿਹਾ ਹੈ"
 
-#: ../src/orca/focus_tracking_presenter.py:730
+#: ../src/orca/focus_tracking_presenter.py:746
 msgid "No focus"
 msgstr "ਕੋਈ ਫੋਕਸ ਨਹੀਂ"
 
-#: ../src/orca/focus_tracking_presenter.py:825
+#: ../src/orca/focus_tracking_presenter.py:841
 msgid "Switching to focus tracking mode."
 msgstr "ਫੋਕਸ ਟਰੇਕਿੰਗ ਢੰਗ ਲਈ ਤਬਦੀਲ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ।"
 
-#: ../src/orca/Gecko.py:979 ../src/orca/rolenames.py:332
-#: ../src/orca/scripts/StarOffice.py:1013
+#: ../src/orca/Gecko.py:1273 ../src/orca/rolenames.py:332
+#: ../src/orca/scripts/acroread.py:251 ../src/orca/scripts/StarOffice.py:1090
 msgid "link"
 msgstr "ਸਬੰਧ"
 
-#: ../src/orca/Gecko.py:2534 ../src/orca/Gecko.py:2545
+#: ../src/orca/Gecko.py:1292
+msgid "Loading.  Please wait."
+msgstr "ਲੋਡਿੰਗ ਜਾਰੀ। ਉਡੀਕੋ ਜੀ।"
+
+#: ../src/orca/Gecko.py:1299
+#, python-format
+msgid "Finished loading %s."
+msgstr "%s ਲੋਡਿੰਗ ਪੂਰੀ ਹੋਈ।"
+
+#: ../src/orca/Gecko.py:1304
+msgid "Finished loading."
+msgstr "ਲੋਡਿੰਗ ਪੂਰੀ ਹੋਈ।"
+
+#: ../src/orca/Gecko.py:3078 ../src/orca/Gecko.py:3089
 msgid "No more headings."
 msgstr "ਕੋਈ ਹੋਰ ਸਿਰਲੇਖ ਨਹੀਂ ਹੈ।"
 
-#: ../src/orca/Gecko.py:2556 ../src/orca/Gecko.py:2567
+#: ../src/orca/Gecko.py:3100 ../src/orca/Gecko.py:3111
 msgid "No more chunks."
 msgstr "ਕੋਈ ਹੋਰ ਚੰਕ ਨਹੀਂ ਹੈ।"
 
@@ -533,23 +560,27 @@ msgstr "ਗਨੋਮ ਧੁਨੀ ਸੇਵਾਵਾਂ"
 
 #. # Replace ellipses (both manual and UTF-8) with "dot dot dot"
 #. #
-#: ../src/orca/gnomespeechfactory.py:617 ../src/orca/gnomespeechfactory.py:618
+#: ../src/orca/gnomespeechfactory.py:659 ../src/orca/gnomespeechfactory.py:660
 msgid " dot dot dot"
 msgstr " ਡਾਟ ਡਾਟ ਡਾਟ"
 
-#: ../src/orca/gnomespeechfactory.py:799
+#: ../src/orca/gnomespeechfactory.py:714
+msgid "minus"
+msgstr "ਘਟਾਓ"
+
+#: ../src/orca/gnomespeechfactory.py:860
 msgid "higher."
 msgstr "ਉੱਤਲਾ।"
 
-#: ../src/orca/gnomespeechfactory.py:827
+#: ../src/orca/gnomespeechfactory.py:888
 msgid "lower."
 msgstr "ਹੇਠਲਾਂ।"
 
-#: ../src/orca/gnomespeechfactory.py:852
+#: ../src/orca/gnomespeechfactory.py:913
 msgid "faster."
 msgstr "ਤੇਜ਼।"
 
-#: ../src/orca/gnomespeechfactory.py:882
+#: ../src/orca/gnomespeechfactory.py:943
 msgid "slower."
 msgstr "ਹੌਲੀ।"
 
@@ -558,18 +589,18 @@ msgid "Switching to hierarchical navigation mode."
 msgstr "ਲੜੀਬੱਧ ਨੇਵੀਗੇਸ਼ਨ ਢੰਗ ਲਈ ਬਦਲਿਆ ਜਾ ਰਿਹਾ ਹੈ।"
 
 #: ../src/orca/J2SE-access-bridge.py:74 ../src/orca/speechgenerator.py:955
-#: ../src/orca/util.py:1420
+#: ../src/orca/util.py:1533
 msgid "selected"
 msgstr "ਚੁਣਿਆ"
 
-#: ../src/orca/J2SE-access-bridge.py:78 ../src/orca/util.py:1428
+#: ../src/orca/J2SE-access-bridge.py:78 ../src/orca/util.py:1541
 msgid "unselected"
 msgstr "ਨਾ-ਚੁਣਿਆ"
 
 #. KeyBindings from the default script, in default.py (Orca's default)
 #.
-#: ../src/orca/keybindings.py:107 ../src/orca/orca_gui_prefs.py:1026
-#: ../src/orca/orca_gui_prefs.py:1110
+#: ../src/orca/keybindings.py:107 ../src/orca/orca_gui_prefs.py:1087
+#: ../src/orca/orca_gui_prefs.py:1171
 msgid "Orca"
 msgstr "ਓਰਕਾ"
 
@@ -678,19 +709,19 @@ msgid "Select desired speech system:"
 msgstr "ਲੋੜੀਦਾ ਸਪੀਚ ਸਿਸਟਮ ਚੁਣੋ:"
 
 #: ../src/orca/orca_console_prefs.py:127 ../src/orca/orca_console_prefs.py:148
-#: ../src/orca/orca_console_prefs.py:174
+#: ../src/orca/orca_console_prefs.py:175
 #, python-format
 msgid "%d. %s"
 msgstr "%d. %s"
 
 #: ../src/orca/orca_console_prefs.py:130 ../src/orca/orca_console_prefs.py:151
-#: ../src/orca/orca_console_prefs.py:181 ../src/orca/orca_console_prefs.py:308
+#: ../src/orca/orca_console_prefs.py:182 ../src/orca/orca_console_prefs.py:309
 msgid "Enter choice: "
 msgstr "ਚੋਣ ਦਿਓ: "
 
 #: ../src/orca/orca_console_prefs.py:132 ../src/orca/orca_console_prefs.py:140
 #: ../src/orca/orca_console_prefs.py:153 ../src/orca/orca_console_prefs.py:162
-#: ../src/orca/orca_console_prefs.py:186
+#: ../src/orca/orca_console_prefs.py:187
 msgid "Speech will not be used.\n"
 msgstr "ਧੁਨੀ ਨਹੀਂ ਵਰਤੀ ਜਾਵੇਗੀ।\n"
 
@@ -712,7 +743,7 @@ msgstr "ਲੋੜੀਦੀ ਆਵਾਜ਼ ਚੁਣੋ:"
 
 #. Ask the user if they would like to enable echoing by word.
 #.
-#: ../src/orca/orca_console_prefs.py:219
+#: ../src/orca/orca_console_prefs.py:220
 msgid "Enable echo by word?  Enter y or n: "
 msgstr "ਕੀ ਸ਼ਬਦ ਰਾਹੀਂ ਈਚੋ ਯੋਗ ਕਰਨਾ ਹੈ? y ਜਾਂ n ਭਰੋ: "
 
@@ -733,71 +764,71 @@ msgstr "ਕੀ ਸ਼ਬਦ ਰਾਹੀਂ ਈਚੋ ਯੋਗ ਕਰਨਾ ਹ
 #. o Action keys: space, enter, escape, tab, backspace, delete, arrow
 #. keys, page up, page down, etc.
 #.
-#: ../src/orca/orca_console_prefs.py:244
+#: ../src/orca/orca_console_prefs.py:245
 msgid "Enable key echo?  Enter y or n: "
 msgstr "ਕੀ ਸਵਿੱਚ ਈਚੋ ਯੋਗ? y ਜਾਂ n ਭਰੋ: "
 
-#: ../src/orca/orca_console_prefs.py:251
+#: ../src/orca/orca_console_prefs.py:252
 msgid "Enable alphanumeric and punctuation keys?  Enter y or n: "
 msgstr "ਕੀ ਅਲਫਾ-ਨੂਮੈਰਿਕ ਅਤੇ ਵਿਰਾਮ-ਚਿੰਨ੍ਹ ਸਵਿੱਚ ਯੋਗ ਕਰਨੀਆਂ ਹਨ?  y ਜਾਂ n ਦਿਓ: "
 
-#: ../src/orca/orca_console_prefs.py:259
+#: ../src/orca/orca_console_prefs.py:260
 msgid "Enable modifier keys?  Enter y or n: "
 msgstr "ਕੀ ਮਾਡੀਫਾਇਰ ਸਵਿੱਚਾਂ ਯੋਗ?  y ਜਾਂ n ਦਿਓ।"
 
-#: ../src/orca/orca_console_prefs.py:267
+#: ../src/orca/orca_console_prefs.py:268
 msgid "Enable locking keys?  Enter y or n: "
 msgstr "ਕੀ ਤਾਲਾਬੰਦ ਸਵਿੱਚਾਂ ਯੋਗ?  y ਜਾਂ n ਭਰੋ: "
 
-#: ../src/orca/orca_console_prefs.py:275
+#: ../src/orca/orca_console_prefs.py:276
 msgid "Enable function keys?  Enter y or n: "
 msgstr "ਕੀ ਫੰਕਸ਼ਨ ਸਵਿੱਚਾਂ ਯੋਗ? y ਜਾਂ n ਭਰੋ: "
 
-#: ../src/orca/orca_console_prefs.py:283
+#: ../src/orca/orca_console_prefs.py:284
 msgid "Enable action keys?  Enter y or n: "
 msgstr "ਕੀ ਸਰਗਰਮ ਸਵਿੱਚਾਂ ਯੋਗ? y ਜਾਂ n ਭਰੋ: "
 
-#: ../src/orca/orca_console_prefs.py:299
+#: ../src/orca/orca_console_prefs.py:300
 msgid "Select desired keyboard layout."
 msgstr "ਲੋੜੀਦਾ ਕੀ-ਬੋਰਡ ਖਾਕਾ ਚੁਣੋ।"
 
-#: ../src/orca/orca_console_prefs.py:306
+#: ../src/orca/orca_console_prefs.py:307
 msgid "1. Desktop"
 msgstr "1 ਡਿਸਕਟਾਪ"
 
-#: ../src/orca/orca_console_prefs.py:307
+#: ../src/orca/orca_console_prefs.py:308
 msgid "2. Laptop"
 msgstr "2. ਲੈਪਟਾਪ"
 
-#: ../src/orca/orca_console_prefs.py:316
+#: ../src/orca/orca_console_prefs.py:317
 msgid "Invalid choice. Selecting desktop keyboard layout.\n"
 msgstr "ਗਲਤ ਚੋਣ ਹੈ। ਡਿਸਕਟਾਪ ਕੀ-ਬੋਰਡ ਖਾਕਾ ਚੋਣ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ।\n"
 
-#: ../src/orca/orca_console_prefs.py:345
+#: ../src/orca/orca_console_prefs.py:346
 msgid "Enable Braille?  Enter y or n: "
 msgstr "ਕੀ ਬਰਾਇੱਲੇ ਯੋਗ?  y ਜਾਂ n ਦਿਓ।"
 
-#: ../src/orca/orca_console_prefs.py:353
+#: ../src/orca/orca_console_prefs.py:354
 msgid "Enable Braille Monitor?  Enter y or n: "
 msgstr "ਕੀ ਬਰਾਇੱਲੇ ਨਿਗਰਾਨ ਯੋਗ?  y ਜਾਂ n ਦਿਓ।"
 
-#: ../src/orca/orca_console_prefs.py:363
+#: ../src/orca/orca_console_prefs.py:364
 msgid "Accessibility support for GNOME has just been enabled. "
 msgstr "ਗਨੋਮ ਲਈ ਸਹੂਲਤ ਸਹਿਯੋਗ ਨੂੰ ਹਾਲੇ ਯੋਗ ਕੀਤਾ ਗਿਆ ਹੈ। "
 
-#: ../src/orca/orca_console_prefs.py:368
+#: ../src/orca/orca_console_prefs.py:369
 msgid "You need to log out and log back in for the change to take effect. "
 msgstr "ਤੁਹਾਨੂੰ ਪਰਭਾਵ ਪ੍ਰਾਪਤ ਕਰਨ ਲਈ ਲਾਗ ਆਉਟ ਕਰਕੇ ਮੁੜ ਲਾਗਇਨ ਕਰਨਾ ਪਵੇਗਾ। "
 
-#: ../src/orca/orca_console_prefs.py:375
+#: ../src/orca/orca_console_prefs.py:376
 msgid "Do you want to logout now?  Enter y or n: "
 msgstr "ਕੀ ਤੁਸੀਂ ਹੁਣ ਲਾਗਆਉਟ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ?  y ਜਾਂ n ਲਿਖੋ"
 
-#: ../src/orca/orca_console_prefs.py:381
+#: ../src/orca/orca_console_prefs.py:382
 msgid "Setup complete. Logging out now."
 msgstr "ਸੈਟਅੱਪ ਮੁਕੰਮਲ ਹੋਇਆ। ਹੁਣ ਲਾਗਆਉਟ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
 
-#: ../src/orca/orca_console_prefs.py:395
+#: ../src/orca/orca_console_prefs.py:396
 msgid "Setup complete.  Press Return to continue."
 msgstr "ਸੈੱਟਅੱਪ ਪੂਰਾ ਹੋਇਆ ਹੈ। ਜਾਰੀ ਰੱਖਣ ਲਈ Enter ਦਬਾਓ।"
 
@@ -864,151 +895,151 @@ msgstr "ਪਾਸਿਓ ਸਮੇਟੋ(_W)"
 #. MODIF,      EDITABLE)
 #. HANDLER
 #.
-#: ../src/orca/orca_gui_prefs.py:112
+#: ../src/orca/orca_gui_prefs.py:103
 msgid "Handler"
 msgstr "ਹੈਂਡਲਰ"
 
-#: ../src/orca/orca_gui_prefs.py:124
+#: ../src/orca/orca_gui_prefs.py:115
 msgid "Function"
 msgstr "ਫੰਕਸ਼ਨ"
 
 #. MOD_MASK1
 #.
-#: ../src/orca/orca_gui_prefs.py:132
+#: ../src/orca/orca_gui_prefs.py:123
 msgid "Mod.Mask 1"
 msgstr "Mod.Mask 1"
 
 #. MOD_USED1
 #.
-#: ../src/orca/orca_gui_prefs.py:142
+#: ../src/orca/orca_gui_prefs.py:133
 msgid "Use Mod.1"
 msgstr "Mod.1 ਵਰਤੋਂ"
 
 #. KEY1
 #.
-#: ../src/orca/orca_gui_prefs.py:152
+#: ../src/orca/orca_gui_prefs.py:143
 msgid "Key1"
 msgstr "Key1"
 
-#: ../src/orca/orca_gui_prefs.py:170
+#: ../src/orca/orca_gui_prefs.py:161
 msgid "Key Binding"
 msgstr "ਸਵਿੱਚ ਬਾਈਡਿੰਗ"
 
 #. MOD_MASK2
 #.
-#: ../src/orca/orca_gui_prefs.py:180
+#: ../src/orca/orca_gui_prefs.py:171
 msgid "Mod.Mask 2"
 msgstr "Mod.Mask 2"
 
 #. MOD_USED2
 #.
-#: ../src/orca/orca_gui_prefs.py:190
+#: ../src/orca/orca_gui_prefs.py:181
 msgid "Use Mod.2"
 msgstr "Mod.2 ਵਰਤੋਂ"
 
 #. KEY2
 #.
-#: ../src/orca/orca_gui_prefs.py:200
+#: ../src/orca/orca_gui_prefs.py:191
 msgid "Key2"
 msgstr "Key2"
 
-#: ../src/orca/orca_gui_prefs.py:216
+#: ../src/orca/orca_gui_prefs.py:207
 msgid "Alternate"
 msgstr "ਬਦਲ"
 
-#: ../src/orca/orca_gui_prefs.py:231 ../src/orca/orca_gui_prefs.py:244
+#: ../src/orca/orca_gui_prefs.py:222 ../src/orca/orca_gui_prefs.py:235
 msgid "Modified"
 msgstr "ਸੋਧਿਆਂ"
 
-#: ../src/orca/orca_gui_prefs.py:286 ../src/orca/orca_gui_prefs.py:601
+#: ../src/orca/orca_gui_prefs.py:271 ../src/orca/orca_gui_prefs.py:296
+msgid "Default"
+msgstr "ਮੂਲ"
+
+#: ../src/orca/orca_gui_prefs.py:273 ../src/orca/orca_gui_prefs.py:298
+msgid "Uppercase"
+msgstr "ਵੱਡੇ ਅੱਖਰ"
+
+#: ../src/orca/orca_gui_prefs.py:275 ../src/orca/orca_gui_prefs.py:304
+msgid "Hyperlink"
+msgstr "ਹਾਇਪਰਲਿੰਕ"
+
+#: ../src/orca/orca_gui_prefs.py:497 ../src/orca/orca_gui_prefs.py:569
 #: ../src/orca/orca_gui_prefs.py:643
 msgid "Speech not available."
 msgstr "ਸਪੀਚ ਉਪਲੱਬਧ ਨਹੀਂ ਹੈ।"
 
-#: ../src/orca/orca_gui_prefs.py:526 ../src/orca/orca_gui_prefs.py:530
-#: ../src/orca/orca_gui_prefs.py:1692
+#: ../src/orca/orca_gui_prefs.py:868 ../src/orca/orca_gui_prefs.py:872
+#: ../src/orca/orca_gui_prefs.py:1771
 msgid "Bilinear"
 msgstr "ਦੋ-ਰੇਖੀ"
 
-#: ../src/orca/orca_gui_prefs.py:528 ../src/orca/orca_gui_prefs.py:541
-#: ../src/orca/orca_gui_prefs.py:1694 ../src/orca/orca_gui_prefs.py:1717
+#: ../src/orca/orca_gui_prefs.py:870 ../src/orca/orca_gui_prefs.py:883
+#: ../src/orca/orca_gui_prefs.py:1773 ../src/orca/orca_gui_prefs.py:1796
 msgid "None"
 msgstr "ਕੋਈ ਨਹੀਂ"
 
-#: ../src/orca/orca_gui_prefs.py:539 ../src/orca/orca_gui_prefs.py:547
-#: ../src/orca/orca_gui_prefs.py:1711
+#: ../src/orca/orca_gui_prefs.py:881 ../src/orca/orca_gui_prefs.py:889
+#: ../src/orca/orca_gui_prefs.py:1790
 msgid "Centered"
 msgstr "ਕੇਂਦਰੀ"
 
-#: ../src/orca/orca_gui_prefs.py:543 ../src/orca/orca_gui_prefs.py:1715
+#: ../src/orca/orca_gui_prefs.py:885 ../src/orca/orca_gui_prefs.py:1794
 msgid "Proportional"
 msgstr "ਅਨੁਪਾਤੀ"
 
-#: ../src/orca/orca_gui_prefs.py:545 ../src/orca/orca_gui_prefs.py:1713
+#: ../src/orca/orca_gui_prefs.py:887 ../src/orca/orca_gui_prefs.py:1792
 msgid "Push"
 msgstr "ਧੱਕਾ"
 
-#: ../src/orca/orca_gui_prefs.py:680 ../src/orca/orca_gui_prefs.py:705
-msgid "Default"
-msgstr "ਮੂਲ"
-
-#: ../src/orca/orca_gui_prefs.py:682 ../src/orca/orca_gui_prefs.py:707
-msgid "Uppercase"
-msgstr "ਵੱਡੇ ਅੱਖਰ"
-
-#: ../src/orca/orca_gui_prefs.py:684 ../src/orca/orca_gui_prefs.py:713
-msgid "Hyperlink"
-msgstr "ਹਾਇਪਰਲਿੰਕ"
-
 #. Braille Bindings from default script, in default.py
 #.
-#: ../src/orca/orca_gui_prefs.py:1060 ../src/orca/orca_gui_prefs.py:1128
+#: ../src/orca/orca_gui_prefs.py:1121 ../src/orca/orca_gui_prefs.py:1189
 msgid "Braille Bindings"
 msgstr "ਬਰਾਇੱਲੇ ਬਾਇਡਿੰਗ"
 
-#: ../src/orca/orca_gui_prefs.py:1414 ../src/orca/orca-setup.glade.h:69
+#: ../src/orca/orca_gui_prefs.py:1493 ../src/orca/orca-setup.glade.h:70
 msgid "_None"
 msgstr "ਕੋਈ ਨਹੀਂ(_N)"
 
-#: ../src/orca/orca_gui_prefs.py:1417 ../src/orca/orca-setup.glade.h:51
+#: ../src/orca/orca_gui_prefs.py:1496 ../src/orca/orca-setup.glade.h:52
 msgid "So_me"
 msgstr "ਕੁਝ(_m)"
 
-#: ../src/orca/orca_gui_prefs.py:1420 ../src/orca/orca-setup.glade.h:38
+#: ../src/orca/orca_gui_prefs.py:1499 ../src/orca/orca-setup.glade.h:39
 msgid "M_ost"
 msgstr "ਅਕਸਰ(_o)"
 
-#: ../src/orca/orca_gui_prefs.py:1440 ../src/orca/orca_gui_prefs.py:1495
+#: ../src/orca/orca_gui_prefs.py:1519 ../src/orca/orca_gui_prefs.py:1574
 #: ../src/orca/orca-setup.glade.h:10
 msgid "Brie_f"
 msgstr "ਸੰਖੇਪ(_f)"
 
-#: ../src/orca/orca_gui_prefs.py:1460 ../src/orca/orca-setup.glade.h:54
+#: ../src/orca/orca_gui_prefs.py:1539 ../src/orca/orca-setup.glade.h:55
 msgid "Speak current _cell"
 msgstr "ਮੌਜੂਦਾ ਸੈੱਲ ਬੋਲੋ(_c)"
 
-#: ../src/orca/orca_gui_prefs.py:1745
+#: ../src/orca/orca_gui_prefs.py:1824
 msgid "enter new key"
 msgstr "ਨਵੀਂ ਸਵਿੱਚ ਦਿਓ"
 
-#: ../src/orca/orca_gui_prefs.py:1770
+#: ../src/orca/orca_gui_prefs.py:1849
 #, python-format
 msgid "The new key is: %s"
 msgstr "ਨਵੀਂ ਸਵਿੱਚ: %s"
 
-#: ../src/orca/orca_gui_prefs.py:1773
+#: ../src/orca/orca_gui_prefs.py:1852
 msgid "The key entered is the same. Nothing changed."
 msgstr "ਸਵਿੱਚ ਦਿੱਤੀ ਗਈ ਹੈ ਇੱਕੋ ਹੈ। ਕੁਝ ਬਦਲਿਆ ਨਹੀਂ ਹੈ।"
 
-#: ../src/orca/orca_gui_prefs.py:1830 ../src/orca/orca-setup.glade.h:65
+#: ../src/orca/orca_gui_prefs.py:1922 ../src/orca/orca-setup.glade.h:66
 msgid "_Desktop"
 msgstr "ਵੇਹੜਾ(_D)"
 
-#: ../src/orca/orca_gui_prefs.py:1876
+#: ../src/orca/orca_gui_prefs.py:1976
 msgid "Accessibility support for GNOME has just been enabled."
 msgstr "ਗਨੋਮ ਲਈ ਸਹੂਲਤ ਸਹਿਯੋਗ ਨੂੰ ਹਾਲੇ ਯੋਗ ਕੀਤਾ ਗਿਆ ਹੈ।"
 
-#: ../src/orca/orca_gui_prefs.py:1877
+#: ../src/orca/orca_gui_prefs.py:1977
 msgid "You need to log out and log back in for the change to take effect."
 msgstr "ਪਰਭਾਵ ਪ੍ਰਾਪਤ ਕਰਨ ਲਈ ਤੁਹਾਨੂੰ ਲਾਗਆਉਟ ਕਰਕੇ ਲਾਗਇਨ ਕਰਨਾ ਪਵੇਗਾ।"
 
@@ -1219,86 +1250,90 @@ msgstr ""
 "ਹਾਇਪਰਲਿੰਕ"
 
 #: ../src/orca/orca-setup.glade.h:20
+msgid "Disable gksu _keyboard grab"
+msgstr "g_ksu ਕੀਬੋਰਡ ਫੜਨਾ ਆਯੋਗ"
+
+#: ../src/orca/orca-setup.glade.h:21
 msgid "Enable Braille _monitor"
 msgstr "ਬਰਾਲੀ ਨਿਗਰਾਨੀ ਯੋਗ(_M)"
 
-#: ../src/orca/orca-setup.glade.h:21
+#: ../src/orca/orca-setup.glade.h:22
 msgid "Enable Braille _support"
 msgstr "ਬਰਾਲੀ ਸਹਿਯੋਗ ਯੋਗ(_S)"
 
-#: ../src/orca/orca-setup.glade.h:22
+#: ../src/orca/orca-setup.glade.h:23
 msgid "Enable _alphanumeric and punctuation keys"
 msgstr "ਐਲਫਾਨੂਮੈਰਿਕ ਅਤੇ ਵਿਰਾਮ-ਚਿੰਨ੍ਹ ਸਵਿੱਚਾਂ ਯੋਗ(_a)"
 
-#: ../src/orca/orca-setup.glade.h:23
+#: ../src/orca/orca-setup.glade.h:24
 msgid "Enable _function keys"
 msgstr "ਫੰਕਸ਼ਨ ਸਵਿੱਚਾਂ ਯੋਗ(_f)"
 
-#: ../src/orca/orca-setup.glade.h:24
+#: ../src/orca/orca-setup.glade.h:25
 msgid "Enable _key echo"
 msgstr "ਸਵਿੱਚ ਗੂੰਜ ਯੋਗ(_k)"
 
-#: ../src/orca/orca-setup.glade.h:25
+#: ../src/orca/orca-setup.glade.h:26
 msgid "Enable _magnifier"
 msgstr "ਵੱਡਦਰਸ਼ੀ ਯੋਗ(_m)"
 
-#: ../src/orca/orca-setup.glade.h:26
+#: ../src/orca/orca-setup.glade.h:27
 msgid "Enable _modifier keys"
 msgstr "ਮਾਡੀਫਾਇਰ ਸਵਿੱਚਾਂ ਯੋਗ(_m)"
 
-#: ../src/orca/orca-setup.glade.h:27
+#: ../src/orca/orca-setup.glade.h:28
 msgid "Enable ac_tion keys"
 msgstr "ਕਾਰਵਾਈ ਕੁੰਜੀਆਂ ਯੋਗ(_t)"
 
-#: ../src/orca/orca-setup.glade.h:28
+#: ../src/orca/orca-setup.glade.h:29
 msgid "Enable c_ursor"
 msgstr "ਕਰਸਰ ਯੋਗ(_u)"
 
-#: ../src/orca/orca-setup.glade.h:29
+#: ../src/orca/orca-setup.glade.h:30
 msgid "Enable cross-h_air"
 msgstr "ਕਰਾਂਸ-ਹੇਅਰ ਯੋਗ(_a)"
 
-#: ../src/orca/orca-setup.glade.h:30
+#: ../src/orca/orca-setup.glade.h:31
 msgid "Enable cross-hair cli_p"
 msgstr "ਕਰਾਂਸ ਹੇਅਰ ਕਲਿੱਪ ਯੋਗ(_p)"
 
-#: ../src/orca/orca-setup.glade.h:31
+#: ../src/orca/orca-setup.glade.h:32
 msgid "Enable echo by _word"
 msgstr "ਸ਼ਬਦ ਰਾਹੀਂ ਗੂੰਜ ਯੋਗ(_w)"
 
-#: ../src/orca/orca-setup.glade.h:32
+#: ../src/orca/orca-setup.glade.h:33
 msgid "Enable lockin_g keys"
 msgstr "ਲਾਕਿੰਗ ਸਵਿੱਚਾਂ ਯੋਗ(_g)"
 
-#: ../src/orca/orca-setup.glade.h:33
+#: ../src/orca/orca-setup.glade.h:34
 msgid "General"
 msgstr "ਆਮ"
 
-#: ../src/orca/orca-setup.glade.h:34
+#: ../src/orca/orca-setup.glade.h:35
 msgid "In_vert colors"
 msgstr "ਉਲਟ ਰੰਗ(_v)"
 
-#: ../src/orca/orca-setup.glade.h:35
+#: ../src/orca/orca-setup.glade.h:36
 msgid "Key Binding List"
 msgstr "ਸਵਿੱਚ ਬਾਈਡਿੰਗ ਸੂਚੀ"
 
-#: ../src/orca/orca-setup.glade.h:36
+#: ../src/orca/orca-setup.glade.h:37
 msgid "Key Bindings"
 msgstr "ਸਵਿੱਚ ਬਾਈਡਿੰਗ"
 
-#: ../src/orca/orca-setup.glade.h:37
+#: ../src/orca/orca-setup.glade.h:38
 msgid "Key Echo"
 msgstr "ਸਵਿੱਚ ਗੂੰਜ"
 
-#: ../src/orca/orca-setup.glade.h:39
+#: ../src/orca/orca-setup.glade.h:40
 msgid "Magnifier"
 msgstr "ਵੱਡਦਰਸ਼ੀ"
 
-#: ../src/orca/orca-setup.glade.h:40
+#: ../src/orca/orca-setup.glade.h:41
 msgid "Mouse trac_king mode:"
 msgstr "ਮਾਊਸ ਟਰੇਕਿੰਗ ਢੰਗ(_k):"
 
-#: ../src/orca/orca-setup.glade.h:41
+#: ../src/orca/orca-setup.glade.h:42
 msgid ""
 "None\n"
 "Bilinear"
@@ -1306,127 +1341,127 @@ msgstr ""
 "ਕੋਈ ਨਹੀਂ\n"
 "ਦੋ-ਰੇਖੀ"
 
-#: ../src/orca/orca-setup.glade.h:43
+#: ../src/orca/orca-setup.glade.h:44
 msgid "Orca Modifier Keys"
 msgstr "ਓਰਕਾ ਮੋਡੀਫਾਇਰ ਸਵਿੱਚਾਂ"
 
-#: ../src/orca/orca-setup.glade.h:44
+#: ../src/orca/orca-setup.glade.h:45
 msgid "Orca Preferences"
 msgstr "ਓਰਕਾ ਪਸੰਦ"
 
-#: ../src/orca/orca-setup.glade.h:45
+#: ../src/orca/orca-setup.glade.h:46
 msgid "Orca _Modifier Key(s):"
 msgstr "ਓਰਕਾ ਮੋਡੀਫਾਇਰ ਸਵਿੱਚਾਂ(_M):"
 
-#: ../src/orca/orca-setup.glade.h:46
+#: ../src/orca/orca-setup.glade.h:47
 msgid "Pi_tch:"
 msgstr "ਪਿੱਚ(_t):"
 
-#: ../src/orca/orca-setup.glade.h:47
+#: ../src/orca/orca-setup.glade.h:48
 msgid "S_ource display:"
 msgstr "ਸਰੋਤ ਵੇਖਾਓ(_o):"
 
-#: ../src/orca/orca-setup.glade.h:48
+#: ../src/orca/orca-setup.glade.h:49
 msgid "Scale _factor:"
 msgstr "ਸਕੇਲ ਫੈਕਟਰ(_f):"
 
-#: ../src/orca/orca-setup.glade.h:49
+#: ../src/orca/orca-setup.glade.h:50
 msgid "Show Orca _main window"
 msgstr "ਓਰਕਾ ਮੁੱਖ ਝਰੋਖਾ ਵੇਖਾਓ(_m)"
 
-#: ../src/orca/orca-setup.glade.h:50
+#: ../src/orca/orca-setup.glade.h:51
 msgid "Si_ze:"
 msgstr "ਅਕਾਰ(_z):"
 
-#: ../src/orca/orca-setup.glade.h:52
+#: ../src/orca/orca-setup.glade.h:53
 msgid "Speak _indentation and justification"
 msgstr "ਬੋਲ ਦੂਰੀ ਅਤੇ ਇਕਸਾਰਤਾ(_i)"
 
-#: ../src/orca/orca-setup.glade.h:53
+#: ../src/orca/orca-setup.glade.h:54
 msgid "Speak blank lines"
 msgstr "ਖਾਲੀ ਲਾਇਨਾਂ ਬੋਲ੍ਹੋ"
 
-#: ../src/orca/orca-setup.glade.h:55
+#: ../src/orca/orca-setup.glade.h:56
 msgid "Speak current ro_w"
 msgstr "ਮੌਜੂਦਾ ਕਤਾਰ ਬੋਲੋ(_w)"
 
-#: ../src/orca/orca-setup.glade.h:56
+#: ../src/orca/orca-setup.glade.h:57
 msgid "Speech"
 msgstr "ਬੋਲੀ"
 
-#: ../src/orca/orca-setup.glade.h:57
+#: ../src/orca/orca-setup.glade.h:58
 msgid "Speech _system:"
 msgstr "ਬੋਲਣ ਸਿਸਟਮ(_s):"
 
-#: ../src/orca/orca-setup.glade.h:58
+#: ../src/orca/orca-setup.glade.h:59
 msgid "Speech synthesi_zer:"
 msgstr "ਸਪੀਚ ਸ਼ੰਸ਼ਲੇਸ਼ਕ(_z):"
 
-#: ../src/orca/orca-setup.glade.h:59
+#: ../src/orca/orca-setup.glade.h:60
 msgid "Tar_get display:"
 msgstr "ਨਿਸ਼ਾਨਾ ਵੇਖਾਓ(_g):"
 
-#: ../src/orca/orca-setup.glade.h:60
+#: ../src/orca/orca-setup.glade.h:61
 msgid "Ver_bose"
 msgstr "ਜਾਣਕਾਰੀ(_b)"
 
-#: ../src/orca/orca-setup.glade.h:61
+#: ../src/orca/orca-setup.glade.h:62
 msgid "Vo_lume:"
 msgstr "ਵਾਲੀਅਮ(_l):"
 
-#: ../src/orca/orca-setup.glade.h:62
+#: ../src/orca/orca-setup.glade.h:63
 msgid "_Abbreviated role names"
 msgstr "ਸੰਖੇਪ ਰੋਲ ਨਾਂ(_A)"
 
-#: ../src/orca/orca-setup.glade.h:63
+#: ../src/orca/orca-setup.glade.h:64
 msgid "_All"
 msgstr "ਸਭ(_A)"
 
-#: ../src/orca/orca-setup.glade.h:64
+#: ../src/orca/orca-setup.glade.h:65
 msgid "_Bottom:"
 msgstr "ਹੇਠਾਂ(_B):"
 
-#: ../src/orca/orca-setup.glade.h:66
+#: ../src/orca/orca-setup.glade.h:67
 msgid "_Enable speech"
 msgstr "ਬੋਲ ਯੋਗ(_E)"
 
-#: ../src/orca/orca-setup.glade.h:67
+#: ../src/orca/orca-setup.glade.h:68
 msgid "_Laptop"
 msgstr "ਲੈਪਟਾਪ(_L)"
 
-#: ../src/orca/orca-setup.glade.h:68
+#: ../src/orca/orca-setup.glade.h:69
 msgid "_Left:"
 msgstr "ਖੱਬਾ(_L):"
 
-#: ../src/orca/orca-setup.glade.h:70
+#: ../src/orca/orca-setup.glade.h:71
 msgid "_Person:"
 msgstr "ਵਿਅਕਤੀ(_P):"
 
-#: ../src/orca/orca-setup.glade.h:71
+#: ../src/orca/orca-setup.glade.h:72
 msgid "_Rate:"
 msgstr "ਦਰ(_R):"
 
-#: ../src/orca/orca-setup.glade.h:72
+#: ../src/orca/orca-setup.glade.h:73
 msgid "_Right:"
 msgstr "ਸੱਜਾ(_R):"
 
-#: ../src/orca/orca-setup.glade.h:73
+#: ../src/orca/orca-setup.glade.h:74
 msgid "_Smoothing:"
 msgstr "ਕੋਮਲ(_S):"
 
-#: ../src/orca/orca-setup.glade.h:74
+#: ../src/orca/orca-setup.glade.h:75
 msgid "_Top:"
 msgstr "ਉੱਪਰ(_T):"
 
-#: ../src/orca/orca-setup.glade.h:75
+#: ../src/orca/orca-setup.glade.h:76
 msgid "_Voice settings:"
 msgstr "ਆਵਾਜ਼ ਸਥਾਪਨ(_V):"
 
-#: ../src/orca/orca-setup.glade.h:76
+#: ../src/orca/orca-setup.glade.h:77
 msgid "_Width:"
 msgstr "ਚੌੜਾਈ(_W):"
 
-#: ../src/orca/orca-setup.glade.h:77
+#: ../src/orca/orca-setup.glade.h:78
 msgid "pixels"
 msgstr "ਪਿਕਸਲ"
 
@@ -1980,11 +2015,11 @@ msgstr "ਪਰਤੀ ਬਾਹੀ"
 msgid "layered pane"
 msgstr "ਪਰਤੀਬਾਹੀ"
 
-#: ../src/orca/rolenames.py:330
+#: ../src/orca/rolenames.py:330 ../src/orca/scripts/acroread.py:249
 msgid "lnk"
 msgstr "ਸਿਆਹੀ"
 
-#: ../src/orca/rolenames.py:331
+#: ../src/orca/rolenames.py:331 ../src/orca/scripts/acroread.py:250
 msgid "Link"
 msgstr "ਸਬੰਧ"
 
@@ -2308,8 +2343,8 @@ msgstr "ਸਾਰਣੀ"
 msgid "table"
 msgstr "ਸਾਰਣੀ"
 
-#: ../src/orca/rolenames.py:471 ../src/orca/where_am_I.py:524
-#: ../src/orca/where_am_I.py:633
+#: ../src/orca/rolenames.py:471 ../src/orca/where_am_I.py:521
+#: ../src/orca/where_am_I.py:630
 msgid "Cell"
 msgstr "ਸੈੱਲ"
 
@@ -2321,7 +2356,7 @@ msgstr "tomnuitm"
 msgid "TearOffMenuItem"
 msgstr "ਵੱਖਣਮੇਨੂ ਇਕਾਈ"
 
-#: ../src/orca/rolenames.py:487 ../src/orca/speechgenerator.py:1347
+#: ../src/orca/rolenames.py:487 ../src/orca/speechgenerator.py:1353
 msgid "tear off menu item"
 msgstr "ਵੱਖਰਾ ਮੇਨੂ ਇਕਾਈ"
 
@@ -2525,6 +2560,45 @@ msgstr "ਸ਼ਾਮਿਲ ਭਾਗ"
 msgid "embedded component"
 msgstr "ਸ਼ਾਮਿਲ-ਭਾਗ"
 
+#: ../src/orca/scripts/acroread.py:242
+msgid "doc"
+msgstr "ਦਸਤਾਵੇਜ਼"
+
+#: ../src/orca/scripts/acroread.py:243
+msgid "Document"
+msgstr "ਦਸਤਾਵੇਜ਼"
+
+#: ../src/orca/scripts/acroread.py:244
+msgid "document"
+msgstr "ਦਸਤਾਵੇਜ਼"
+
+#. We've entered a table.  Announce the dimensions.
+#.
+#: ../src/orca/scripts/acroread.py:290 ../src/orca/scripts/StarOffice.py:799
+#, python-format
+msgid "table with %d rows and %d columns."
+msgstr "%d ਕਤਾਰਾਂ ਅਤੇ %d ਕਾਲਮਾਂ ਨਾਲ ਸਾਰਣੀ ਹੈ।"
+
+#. We've left a table.  Announce this fact.
+#.
+#: ../src/orca/scripts/acroread.py:297 ../src/orca/scripts/StarOffice.py:802
+msgid "leaving table."
+msgstr "ਸਾਰਣੀ ਛੱਡੀ ਜਾ ਰਹੀ ਹੈ।"
+
+#. We can't count on being in the first/last cell
+#. of the new row -- only the first/last cell of
+#. the new row that contains data.
+#.
+#: ../src/orca/scripts/acroread.py:312
+#, python-format
+msgid "row %d, column %d"
+msgstr "%d ਕਤਾਰ, %d ਕਾਲਮ"
+
+#: ../src/orca/scripts/acroread.py:315 ../src/orca/where_am_I.py:524
+#, python-format
+msgid "column %d"
+msgstr "ਕਾਲਮ %d"
+
 #: ../src/orca/scripts/Evolution.py:92
 msgid "calv"
 msgstr "calv"
@@ -2550,8 +2624,8 @@ msgid "calendar event"
 msgstr "ਕੈਲੰਡਰ ਘਟਨਾ"
 
 #: ../src/orca/scripts/Evolution.py:119
-msgid "Toggle whether we present new mail if we not not the active script."
-msgstr ""
+msgid "Toggle whether we present new mail if we are not the active script."
+msgstr "ਬਦਲੋ ਕਿ ਕੀ ਸਾਡੇ ਕੋਲ ਕੋਈ ਨਾ ਸਕ੍ਰਿਪਟ ਸਰਗਰਮ ਹੋਣ ਦੀ ਹਾਲਤ 'ਚ ਨਵੀਂ ਮੇਲ ਦਿੱਤੀ ਜਾਵੇ।"
 
 #: ../src/orca/scripts/Evolution.py:149
 msgid "present new mail if this script is not active."
@@ -2609,11 +2683,11 @@ msgstr "ਸਹਾਇਕ"
 
 #: ../src/orca/scripts/gaim.py:150
 msgid "Toggle whether we prefix chat room messages with the name of the chat room."
-msgstr ""
+msgstr "ਬਦਲੋ ਕਿ ਕੀ ਗੱਲਬਾਤ ਰੂਮ ਸੁਨੇਹਿਆਂ ਅੱਗੇ ਗੱਲਬਾਤ ਰੂਮ ਦਾ ਜੋੜਿਆ ਜਾਵੇ।"
 
 #: ../src/orca/scripts/gaim.py:155
 msgid "Speak and braille a previous chat room message."
-msgstr ""
+msgstr "ਇੱਕ ਪਿਛਲਾ ਗੱਲਬਾਤ ਰੂਮ ਸੁਨੇਹਾ ਬੋਲੋ ਅਤੇ ਬਰਾਇੱਲੀ"
 
 #: ../src/orca/scripts/gaim.py:196
 msgid "speak chat room name."
@@ -2711,6 +2785,10 @@ msgstr " ਫਾਇਲ ਮਿਲੀ"
 msgid "No files found."
 msgstr "ਕੋਈ ਫਾਇਲ ਨਹੀਂ ਲੱਭੀ ਹੈ।"
 
+#: ../src/orca/scripts/liferea.py:123
+msgid "Work online / offline"
+msgstr "ਆਨਲਾਇਨ / ਆਫਲਾਇਨ ਕੰਮ"
+
 #. Note to translators: the "Workspace " and "Desk " strings
 #. are the prefix of what metacity shows when you press
 #. Ctrl+Alt and the left or right arrow keys to switch between
@@ -2729,19 +2807,24 @@ msgstr "ਡੈਕ "
 msgid "inaccessible"
 msgstr "ਨਾ-ਪਹੁੰਚਯੋਗ"
 
+#: ../src/orca/scripts/nautilus.py:103
+#, python-format
+msgid " %d items"
+msgstr " %d ਇਕਾਈਆਂ"
+
 #: ../src/orca/scripts/planner.py:77 ../src/orca/scripts/planner.py:138
 msgid "Display more options"
 msgstr "ਹੋਰ ਚੋਣਾਂ ਵੇਖਾਓ"
 
 #: ../src/orca/scripts/planner.py:142 ../src/orca/scripts/planner.py:150
 #: ../src/orca/scripts/planner.py:176 ../src/orca/scripts/planner.py:184
-#: ../src/orca/speechgenerator.py:1397
+#: ../src/orca/speechgenerator.py:1403
 msgid "pressed"
 msgstr "ਦਬਾਇਆ"
 
 #: ../src/orca/scripts/planner.py:144 ../src/orca/scripts/planner.py:152
 #: ../src/orca/scripts/planner.py:178 ../src/orca/scripts/planner.py:186
-#: ../src/orca/speechgenerator.py:1399
+#: ../src/orca/speechgenerator.py:1405
 msgid "not pressed"
 msgstr "ਨਹੀਂ ਦਬਾਇਆ"
 
@@ -2749,88 +2832,124 @@ msgstr "ਨਹੀਂ ਦਬਾਇਆ"
 msgid "Calc"
 msgstr "Calc"
 
-#: ../src/orca/scripts/StarOffice.py:648
+#: ../src/orca/scripts/StarOffice.py:599 ../src/orca/scripts/StarOffice.py:626
+msgid "on"
+msgstr "ਚਾਲੂ"
+
+#: ../src/orca/scripts/StarOffice.py:601 ../src/orca/scripts/StarOffice.py:628
+msgid "off"
+msgstr "ਬੰਦ"
+
+#: ../src/orca/scripts/StarOffice.py:725
 msgid "Speaks the contents of the input line."
 msgstr "ਇਨਪੁੱਟ ਫਾਇਲ ਦੇ ਭਾਗ ਬੋਲੋ।"
 
-#: ../src/orca/scripts/StarOffice.py:653
+#: ../src/orca/scripts/StarOffice.py:730
 msgid "Set the row to use as dynamic column headers when speaking calc cells."
-msgstr ""
+msgstr "ਕੈਲਸ ਸੈੱਲ ਬੋਲਣ ਦੌਰਾਨ ਡਾਇਨਮਿਕ ਕਾਲਮ ਹੈਡਰ ਵਾਂਗ ਵਰਤਣ ਵਾਸਤੇ ਕਤਾਰ ਦਿਓ।"
 
-#: ../src/orca/scripts/StarOffice.py:658
+#: ../src/orca/scripts/StarOffice.py:735
 msgid "Set the column to use as dynamic row headers to use when speaking calc cells."
-msgstr ""
+msgstr "ਕੈਲਸ ਸੈੱਲ ਬੋਲਣ ਦੌਰਾਨ ਡਾਇਨਮਿਕ ਕਾਤਰ ਹੈਡਰ ਵਾਂਗ ਵਰਤਣ ਵਾਸਤੇ ਕਾਲਮ ਦਿਓ।"
 
-#: ../src/orca/scripts/StarOffice.py:722
-#, python-format
-msgid "table with %d rows and %d columns."
-msgstr "%d ਕਤਾਰਾਂ ਅਤੇ %d ਕਾਲਮਾਂ ਨਾਲ ਸਾਰਣੀ ਹੈ।"
-
-#: ../src/orca/scripts/StarOffice.py:725
-msgid "leaving table."
-msgstr "ਸਾਰਣੀ ਛੱਡੀ ਜਾ ਰਹੀ ਹੈ।"
-
-#: ../src/orca/scripts/StarOffice.py:747
+#: ../src/orca/scripts/StarOffice.py:824
 msgid "empty"
 msgstr "ਖਾਲੀ"
 
-#: ../src/orca/scripts/StarOffice.py:816
+#: ../src/orca/scripts/StarOffice.py:893
 msgid "Dynamic column header cleared."
 msgstr "ਸਫ਼ਰੀ ਕਾਲਮ ਸਿਰਲੇਖ ਸਾਫ਼ ਕੀਤਾ।"
 
-#: ../src/orca/scripts/StarOffice.py:823
+#: ../src/orca/scripts/StarOffice.py:900
 msgid "Dynamic column header set for row "
 msgstr "ਕਤਾਰ ਲਈ ਸਫ਼ਰੀ ਕਾਲਮ ਸਿਰਲੇਖ ਸੈੱਟ ਦਿਓ।"
 
-#: ../src/orca/scripts/StarOffice.py:879
+#: ../src/orca/scripts/StarOffice.py:956
 msgid "Dynamic row header cleared."
 msgstr "ਸਫ਼ਰੀ ਕਤਾਰ ਸਿਰਲਖੇ ਸਾਫ਼ ਕਰੋ।"
 
-#: ../src/orca/scripts/StarOffice.py:886
+#: ../src/orca/scripts/StarOffice.py:963
 #, python-format
 msgid "Dynamic row header set for column %s"
 msgstr "ਕਾਲਮ %s ਲਈ ਸਫ਼ਰੀ ਕਤਾਰ ਸਿਰਲੇਖ ਦਿਓ"
 
-#: ../src/orca/scripts/StarOffice.py:1031
+#: ../src/orca/scripts/StarOffice.py:1108
 msgid "Welcome to StarOffice"
 msgstr "ਸਟਾਰਆਫਿਸ ਵਲੋਂ ਜੀ ਆਇਆਂ ਨੂੰ"
 
-#: ../src/orca/scripts/StarOffice.py:1126
+#: ../src/orca/scripts/StarOffice.py:1203
 msgid "Text Document"
 msgstr "ਪਾਠ ਦਸਤਾਵੇਜ਼"
 
-#: ../src/orca/scripts/StarOffice.py:1186
-#: ../src/orca/scripts/StarOffice.py:1408
+#: ../src/orca/scripts/StarOffice.py:1263
+#: ../src/orca/scripts/StarOffice.py:1485
 msgid "Spellcheck:"
 msgstr "ਸ਼ਬਦ-ਜੋੜ ਜਾਂਚ:"
 
-#: ../src/orca/scripts/StarOffice.py:1214
+#: ../src/orca/scripts/StarOffice.py:1291
 msgid "Note that the Scroll Down button has to be pressed numerous times."
 msgstr "ਯਾਦ ਰੱਖੋ ਕਿ ਸਕਰੋਲਡਾਊਨ ਬਟਨ ਨੂੰ ਕਈ ਵਾਰ ਦਬਾਇਆ ਗਿਆ ਹੈ।"
 
-#: ../src/orca/scripts/StarOffice.py:1228
+#: ../src/orca/scripts/StarOffice.py:1305
 msgid "License Agreement Accept button now has focus."
 msgstr "ਲਾਇਸੈਂਸ ਸਹਿਮਤੀ ਮਨਜ਼ੂਰ ਬਟਨ ਹੁਣ ਕੇਂਦਰਿਤ ਹੈ।"
 
-#: ../src/orca/scripts/StarOffice.py:1251
+#: ../src/orca/scripts/StarOffice.py:1328
 msgid "First name"
 msgstr "ਪਹਿਲਾਂ ਨਾਂ"
 
-#: ../src/orca/scripts/StarOffice.py:1322
+#: ../src/orca/scripts/StarOffice.py:1399
 msgid "Move to cell"
 msgstr "ਸੈੱਲ 'ਚ ਭੇਜੋ"
 
-#: ../src/orca/scripts/StarOffice.py:1464
+#: ../src/orca/scripts/StarOffice.py:1541
 msgid "Writer"
 msgstr "ਲੇਖਕ"
 
-#: ../src/orca/scripts/StarOffice.py:1584
+#: ../src/orca/scripts/StarOffice.py:1697
 msgid " has formula"
 msgstr " ਫਾਰਮੂਲ ਹੈ"
 
-#: ../src/orca/scripts/StarOffice.py:1630
+#: ../src/orca/scripts/StarOffice.py:1743
 msgid "Cell "
 msgstr "ਸੈੱਲ "
+
+#: ../src/orca/scripts/Thunderbird.py:132
+#: ../src/orca/scripts/Thunderbird.py:137
+#: ../src/orca/scripts/Thunderbird.py:546
+#: ../src/orca/scripts/Thunderbird.py:551
+#, python-format
+msgid "%s text %s %s"
+msgstr "%s ਪਾਠ %s %s"
+
+#: ../src/orca/scripts/Thunderbird.py:134
+#: ../src/orca/scripts/Thunderbird.py:548
+#, python-format
+msgid "%s text %s"
+msgstr "%s ਪਾਠ %s"
+
+#: ../src/orca/scripts/Thunderbird.py:139
+#: ../src/orca/scripts/Thunderbird.py:553
+#, python-format
+msgid "text %s %s"
+msgstr "ਪਾਠ %s %s"
+
+#: ../src/orca/scripts/Thunderbird.py:220
+msgid ":"
+msgstr ":"
+
+#. Don't speak chrome URLs.
+#: ../src/orca/scripts/Thunderbird.py:358
+#: ../src/orca/scripts/Thunderbird.py:473
+#: ../src/orca/scripts/Thunderbird.py:488
+msgid "chrome://"
+msgstr "chrome://"
+
+#: ../src/orca/scripts/Thunderbird.py:480
+#: ../src/orca/scripts/Thunderbird.py:495
+#, python-format
+msgid "%s panel"
+msgstr "%s ਪੈਨਲ"
 
 #. Note to translators: the regular expression here represents a
 #. string to match in the localized application name as seen by
@@ -2840,53 +2959,53 @@ msgstr "ਸੈੱਲ "
 #. translation is by running the application and then viewing its
 #. name in the main window of at-poke.
 #.
-#: ../src/orca/settings.py:539
+#: ../src/orca/settings.py:531
 msgid "[\\S\\s]*StarOffice[\\s\\S]*"
 msgstr "[\\S\\s]*StarOffice[\\s\\S]*"
 
-#: ../src/orca/settings.py:540
+#: ../src/orca/settings.py:532
 msgid "soffice.bin"
 msgstr "soffice.bin"
 
-#: ../src/orca/settings.py:541
+#: ../src/orca/settings.py:533
 msgid "[Ee]volution"
 msgstr "[Ee]volution"
 
-#: ../src/orca/settings.py:542
+#: ../src/orca/settings.py:534
 msgid "Deer Park"
 msgstr "ਡੀਅਰ ਪਾਰਕ"
 
-#: ../src/orca/settings.py:543
+#: ../src/orca/settings.py:535
 msgid "yelp"
 msgstr "ਯੇਲਪ"
 
-#: ../src/orca/settings.py:544
+#: ../src/orca/settings.py:536
 msgid "Bon Echo"
 msgstr "ਬੋਨ ਈਚੋ"
 
-#: ../src/orca/settings.py:545
+#: ../src/orca/settings.py:537
 msgid "Minefield"
 msgstr "ਸੁਰੰਗ-ਖੇਤਰ"
 
-#: ../src/orca/settings.py:546
+#: ../src/orca/settings.py:538
 msgid "bug-buddy"
 msgstr "ਬੱਗ-ਬੱਡੀ"
 
-#: ../src/orca/settings.py:547
+#: ../src/orca/settings.py:539
 msgid "vte"
 msgstr "vte"
 
-#: ../src/orca/settings.py:548
+#: ../src/orca/settings.py:540
 msgid "time-admin"
 msgstr "ਸਮਾਂ-ਪ੍ਰਸ਼ਾਸ਼ਕ"
 
-#: ../src/orca/speechgenerator.py:375 ../src/orca/where_am_I.py:188
-#: ../src/orca/where_am_I.py:228 ../src/orca/where_am_I.py:925
+#: ../src/orca/speechgenerator.py:375 ../src/orca/where_am_I.py:185
+#: ../src/orca/where_am_I.py:225 ../src/orca/where_am_I.py:923
 msgid "checked"
 msgstr "ਸਹੀਂ ਕੀਤਾ"
 
-#: ../src/orca/speechgenerator.py:377 ../src/orca/where_am_I.py:190
-#: ../src/orca/where_am_I.py:230 ../src/orca/where_am_I.py:927
+#: ../src/orca/speechgenerator.py:377 ../src/orca/where_am_I.py:187
+#: ../src/orca/where_am_I.py:227 ../src/orca/where_am_I.py:925
 msgid "not checked"
 msgstr "ਸਹੀਂ ਨਹੀਂ ਕੀਤਾ"
 
@@ -2899,121 +3018,116 @@ msgstr "0 ਇਕਾਈ"
 msgid "not selected"
 msgstr "ਚੁਣਿਆ ਨਹੀਂ"
 
-#: ../src/orca/speechgenerator.py:1349
+#: ../src/orca/speechgenerator.py:1355
 msgid "tear off"
 msgstr "ਵੱਖ ਕੀਤਾ"
 
-#: ../src/orca/util.py:487
+#: ../src/orca/util.py:577
 msgid "Misspelled word: "
 msgstr "ਗਲਤ ਸ਼ਬਦ-ਜੋੜ: "
 
-#: ../src/orca/util.py:488
+#: ../src/orca/util.py:578
 msgid " Context is "
 msgstr " ਪਰਸੰਗ ਸੀ"
 
-#: ../src/orca/util.py:603
+#: ../src/orca/util.py:693
 #, python-format
 msgid " %d %s characters "
 msgstr " %d %s ਅੱਖਰ "
 
-#: ../src/orca/util.py:1363
+#: ../src/orca/util.py:1476
 msgid "page selected from cursor position"
 msgstr "ਕਰਸਰ ਸਥਿਤੀ ਤੋਂ ਸਫ਼ਾ ਚੁਣਿਆ"
 
-#: ../src/orca/util.py:1367
+#: ../src/orca/util.py:1480
 msgid "page selected to cursor position"
 msgstr "ਕਰਸਰ ਸਥਿਤੀ ਤੱਕ ਸਫ਼ਾ ਚੁਣਿਆ"
 
-#: ../src/orca/util.py:1371
+#: ../src/orca/util.py:1484
 msgid "line selected down from cursor position"
 msgstr "ਕਰਸਰ ਸਥਿਤੀ ਤੋਂ ਸਤਰਾਂ ਚੁਣੀਆਂ ਸਤਰਾਂ"
 
-#: ../src/orca/util.py:1375
+#: ../src/orca/util.py:1488
 msgid "line selected up from cursor position"
 msgstr "ਕਰਸਰ ਸਥਿਤੀ ਤੋਂ ਉੱਪਰ ਚੁਣੀਆਂ ਸਤਰਾਂ"
 
-#: ../src/orca/util.py:1379
+#: ../src/orca/util.py:1492
 msgid "document selected to cursor position"
 msgstr "ਕਰਸਰ ਸਥਿਤੀ ਤੱਕ ਚੁਣਿਆ ਦਸਤਾਵੇਜ਼"
 
-#: ../src/orca/util.py:1383
+#: ../src/orca/util.py:1496
 msgid "document selected from cursor position"
 msgstr "ਕਰਸਰ ਸਥਿਤੀ ਤੋਂ ਚੁਣਿਆ ਦਸਤਾਵੇਜ਼"
 
 #. child(0) is the popup list
 #. parent is the page tab list
-#: ../src/orca/where_am_I.py:184 ../src/orca/where_am_I.py:193
-#: ../src/orca/where_am_I.py:214 ../src/orca/where_am_I.py:218
-#: ../src/orca/where_am_I.py:221 ../src/orca/where_am_I.py:224
-#: ../src/orca/where_am_I.py:234 ../src/orca/where_am_I.py:237
-#: ../src/orca/where_am_I.py:257 ../src/orca/where_am_I.py:260
-#: ../src/orca/where_am_I.py:265 ../src/orca/where_am_I.py:266
-#: ../src/orca/where_am_I.py:271 ../src/orca/where_am_I.py:275
-#: ../src/orca/where_am_I.py:278 ../src/orca/where_am_I.py:297
-#: ../src/orca/where_am_I.py:300 ../src/orca/where_am_I.py:308
-#: ../src/orca/where_am_I.py:326 ../src/orca/where_am_I.py:329
-#: ../src/orca/where_am_I.py:332 ../src/orca/where_am_I.py:352
-#: ../src/orca/where_am_I.py:355 ../src/orca/where_am_I.py:359
-#: ../src/orca/where_am_I.py:362 ../src/orca/where_am_I.py:383
-#: ../src/orca/where_am_I.py:388 ../src/orca/where_am_I.py:389
-#: ../src/orca/where_am_I.py:392 ../src/orca/where_am_I.py:395
-#: ../src/orca/where_am_I.py:398 ../src/orca/where_am_I.py:403
-#: ../src/orca/where_am_I.py:404 ../src/orca/where_am_I.py:407
-#: ../src/orca/where_am_I.py:426 ../src/orca/where_am_I.py:433
-#: ../src/orca/where_am_I.py:434 ../src/orca/where_am_I.py:437
-#: ../src/orca/where_am_I.py:438 ../src/orca/where_am_I.py:444
-#: ../src/orca/where_am_I.py:470 ../src/orca/where_am_I.py:473
-#: ../src/orca/where_am_I.py:485 ../src/orca/where_am_I.py:496
-#: ../src/orca/where_am_I.py:499 ../src/orca/where_am_I.py:561
-#: ../src/orca/where_am_I.py:564 ../src/orca/where_am_I.py:638
-#: ../src/orca/where_am_I.py:641 ../src/orca/where_am_I.py:659
-#: ../src/orca/where_am_I.py:672 ../src/orca/where_am_I.py:686
-#: ../src/orca/where_am_I.py:801 ../src/orca/where_am_I.py:816
-#: ../src/orca/where_am_I.py:829 ../src/orca/where_am_I.py:921
-#: ../src/orca/where_am_I.py:930 ../src/orca/where_am_I.py:1139
-#: ../src/orca/where_am_I.py:1142 ../src/orca/where_am_I.py:1176
-#: ../src/orca/where_am_I.py:1179 ../src/orca/where_am_I.py:1265
-#: ../src/orca/where_am_I.py:1284
+#: ../src/orca/where_am_I.py:181 ../src/orca/where_am_I.py:190
+#: ../src/orca/where_am_I.py:211 ../src/orca/where_am_I.py:215
+#: ../src/orca/where_am_I.py:218 ../src/orca/where_am_I.py:221
+#: ../src/orca/where_am_I.py:231 ../src/orca/where_am_I.py:234
+#: ../src/orca/where_am_I.py:254 ../src/orca/where_am_I.py:257
+#: ../src/orca/where_am_I.py:262 ../src/orca/where_am_I.py:263
+#: ../src/orca/where_am_I.py:268 ../src/orca/where_am_I.py:272
+#: ../src/orca/where_am_I.py:275 ../src/orca/where_am_I.py:294
+#: ../src/orca/where_am_I.py:297 ../src/orca/where_am_I.py:305
+#: ../src/orca/where_am_I.py:323 ../src/orca/where_am_I.py:326
+#: ../src/orca/where_am_I.py:329 ../src/orca/where_am_I.py:349
+#: ../src/orca/where_am_I.py:352 ../src/orca/where_am_I.py:356
+#: ../src/orca/where_am_I.py:359 ../src/orca/where_am_I.py:380
+#: ../src/orca/where_am_I.py:385 ../src/orca/where_am_I.py:386
+#: ../src/orca/where_am_I.py:389 ../src/orca/where_am_I.py:392
+#: ../src/orca/where_am_I.py:395 ../src/orca/where_am_I.py:400
+#: ../src/orca/where_am_I.py:401 ../src/orca/where_am_I.py:404
+#: ../src/orca/where_am_I.py:423 ../src/orca/where_am_I.py:430
+#: ../src/orca/where_am_I.py:431 ../src/orca/where_am_I.py:434
+#: ../src/orca/where_am_I.py:435 ../src/orca/where_am_I.py:441
+#: ../src/orca/where_am_I.py:467 ../src/orca/where_am_I.py:470
+#: ../src/orca/where_am_I.py:482 ../src/orca/where_am_I.py:493
+#: ../src/orca/where_am_I.py:496 ../src/orca/where_am_I.py:558
+#: ../src/orca/where_am_I.py:561 ../src/orca/where_am_I.py:636
+#: ../src/orca/where_am_I.py:639 ../src/orca/where_am_I.py:657
+#: ../src/orca/where_am_I.py:670 ../src/orca/where_am_I.py:684
+#: ../src/orca/where_am_I.py:799 ../src/orca/where_am_I.py:814
+#: ../src/orca/where_am_I.py:827 ../src/orca/where_am_I.py:919
+#: ../src/orca/where_am_I.py:928 ../src/orca/where_am_I.py:1137
+#: ../src/orca/where_am_I.py:1140 ../src/orca/where_am_I.py:1174
+#: ../src/orca/where_am_I.py:1177 ../src/orca/where_am_I.py:1263
+#: ../src/orca/where_am_I.py:1268 ../src/orca/where_am_I.py:1287
 #, python-format
 msgid "%s"
 msgstr "%s"
 
-#: ../src/orca/where_am_I.py:360
+#: ../src/orca/where_am_I.py:357
 #, python-format
 msgid "%s percent"
 msgstr "   ਫੀ-ਸਦੀ     %s"
 
-#: ../src/orca/where_am_I.py:430 ../src/orca/where_am_I.py:441
+#: ../src/orca/where_am_I.py:427 ../src/orca/where_am_I.py:438
 #, python-format
 msgid "%s page"
 msgstr "   ਸਫ਼ਾ  %s"
 
-#: ../src/orca/where_am_I.py:527
-#, python-format
-msgid "column %d"
-msgstr "ਕਾਲਮ %d"
-
-#: ../src/orca/where_am_I.py:529
+#: ../src/orca/where_am_I.py:526
 #, python-format
 msgid "row %d"
 msgstr "ਕਤਾਰ %d"
 
-#: ../src/orca/where_am_I.py:574 ../src/orca/where_am_I.py:594
+#: ../src/orca/where_am_I.py:571 ../src/orca/where_am_I.py:591
 #, python-format
 msgid "row %d of %d"
 msgstr "%d ਕਤਾਰ %d ਵਿੱਚੋਂ"
 
-#: ../src/orca/where_am_I.py:684 ../src/orca/where_am_I.py:803
+#: ../src/orca/where_am_I.py:682 ../src/orca/where_am_I.py:801
 #, python-format
 msgid "%s %s"
 msgstr "%s %s"
 
-#: ../src/orca/where_am_I.py:747 ../src/orca/where_am_I.py:787
+#: ../src/orca/where_am_I.py:745 ../src/orca/where_am_I.py:785
 #, python-format
 msgid "item %d of %d"
 msgstr "%d ਇਕਾਈ %d ਵਿੱਚੋਂ"
 
-#: ../src/orca/where_am_I.py:906
+#: ../src/orca/where_am_I.py:904
 msgid "Read"
 msgstr "ਪੜ੍ਹੋ"
 
