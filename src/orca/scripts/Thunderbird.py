@@ -369,6 +369,7 @@ class Script(Gecko.Script):
         if top.role == rolenames.ROLE_DIALOG:
             self._speakEnclosingPanel(obj)
 
+        if not consume:
             Gecko.Script.onFocus(self, event)
             
 
