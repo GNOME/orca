@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-16 20:12+0300\n"
-"PO-Revision-Date: 2007-02-16 20:29+0300\n"
+"POT-Creation-Date: 2007-02-19 21:23+0300\n"
+"PO-Revision-Date: 2007-02-19 21:44+0300\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -430,7 +430,7 @@ msgstr "Siirtyy seuraavaan esityksenhallintaohjelmaan."
 #: ../src/orca/default.py:1210 ../src/orca/default.py:1437
 #: ../src/orca/default.py:3012 ../src/orca/default.py:3146
 #: ../src/orca/default.py:3151 ../src/orca/default.py:3244
-#: ../src/orca/default.py:3249 ../src/orca/Gecko.py:2774
+#: ../src/orca/default.py:3249 ../src/orca/Gecko.py:2767
 #: ../src/orca/scripts/Evolution.py:399 ../src/orca/scripts/Evolution.py:884
 #: ../src/orca/scripts/StarOffice.py:1807
 #: ../src/orca/scripts/StarOffice.py:1816 ../src/orca/where_am_I.py:994
@@ -479,7 +479,7 @@ msgstr "solu"
 
 #: ../src/orca/default.py:2622 ../src/orca/where_am_I.py:1050
 msgid "bold"
-msgstr ""
+msgstr "korostettu"
 
 #: ../src/orca/default.py:2624
 msgid " pixels"
@@ -503,7 +503,7 @@ msgstr "tyhjä tila"
 
 #: ../src/orca/default.py:3366 ../src/orca/default.py:3367
 msgid "string not found"
-msgstr ""
+msgstr "merkkijonoa ei löydy"
 
 #: ../src/orca/espeechfactory.py:94
 msgid "Emacspeak Speech Services"
@@ -511,11 +511,11 @@ msgstr "Emacspeak-puhelpalvelut"
 
 #: ../src/orca/find.py:247
 msgid "Wrapping to Bottom"
-msgstr ""
+msgstr "Siirrytään alas"
 
 #: ../src/orca/find.py:253
 msgid "Wrapping to Top"
-msgstr ""
+msgstr "Siirrytään ylös"
 
 #: ../src/orca/focus_tracking_presenter.py:746
 msgid "No focus"
@@ -525,31 +525,31 @@ msgstr "Ei kohdistusta"
 msgid "Switching to focus tracking mode."
 msgstr "Siirrytään kohdistuksen seurantatilaan."
 
-#: ../src/orca/Gecko.py:1273 ../src/orca/rolenames.py:332
+#: ../src/orca/Gecko.py:1263 ../src/orca/rolenames.py:332
 #: ../src/orca/scripts/acroread.py:251 ../src/orca/scripts/StarOffice.py:1090
 msgid "link"
 msgstr "linkki"
 
-#: ../src/orca/Gecko.py:1292
+#: ../src/orca/Gecko.py:1282
 msgid "Loading.  Please wait."
-msgstr ""
+msgstr "Ladataan, odota."
 
-#: ../src/orca/Gecko.py:1299
+#: ../src/orca/Gecko.py:1288
 #, python-format
 msgid "Finished loading %s."
 msgstr "Kohteen %s lataus valmistui."
 
-#: ../src/orca/Gecko.py:1304
+#: ../src/orca/Gecko.py:1294
 msgid "Finished loading."
 msgstr "Lataus valmistui."
 
-#: ../src/orca/Gecko.py:3078 ../src/orca/Gecko.py:3089
+#: ../src/orca/Gecko.py:3071 ../src/orca/Gecko.py:3082
 msgid "No more headings."
 msgstr "Ei lisää otsakkeita."
 
-#: ../src/orca/Gecko.py:3100 ../src/orca/Gecko.py:3111
+#: ../src/orca/Gecko.py:3093 ../src/orca/Gecko.py:3104
 msgid "No more chunks."
-msgstr ""
+msgstr "Ei enempää paloja."
 
 #: ../src/orca/gnomespeechfactory.py:164
 msgid "GNOME Speech Services"
@@ -586,11 +586,11 @@ msgid "Switching to hierarchical navigation mode."
 msgstr "Siirrytään hiearkiseen navigointitilaan."
 
 #: ../src/orca/J2SE-access-bridge.py:74 ../src/orca/speechgenerator.py:955
-#: ../src/orca/util.py:1533
+#: ../src/orca/util.py:1541
 msgid "selected"
 msgstr "valittu"
 
-#: ../src/orca/J2SE-access-bridge.py:78 ../src/orca/util.py:1541
+#: ../src/orca/J2SE-access-bridge.py:78 ../src/orca/util.py:1549
 msgid "unselected"
 msgstr "ei valittu"
 
@@ -627,7 +627,7 @@ msgstr "Caps_Lock"
 
 #: ../src/orca/keybindings.py:125
 msgid "Shift"
-msgstr ""
+msgstr "Vaihto"
 
 #: ../src/orca/keynames.py:38 ../src/orca/keynames.py:41
 msgid "left shift"
@@ -819,11 +819,11 @@ msgstr "Sinun täytyy kirjautua kerran ulos jotta muutokset tulevat voimaan. "
 
 #: ../src/orca/orca_console_prefs.py:376
 msgid "Do you want to logout now?  Enter y or n: "
-msgstr ""
+msgstr "Haluatko kirjautua nyt ulos? Paina y tai n: "
 
 #: ../src/orca/orca_console_prefs.py:382
 msgid "Setup complete. Logging out now."
-msgstr ""
+msgstr "Asetukset ovat valmiit, kirjaudutaan ulos."
 
 #: ../src/orca/orca_console_prefs.py:396
 msgid "Setup complete.  Press Return to continue."
@@ -831,15 +831,15 @@ msgstr "Määrittely valmis. Paina Return jatkaaksesi."
 
 #: ../src/orca/orca-find.glade.h:1
 msgid "<b>Start from:</b>"
-msgstr ""
+msgstr "<b>Aloita kohdasta:</b>"
 
 #: ../src/orca/orca-find.glade.h:2 ../src/orca/orca_gui_find.py:127
 msgid "C_urrent location"
-msgstr ""
+msgstr "_Nykyinen sijainti"
 
 #: ../src/orca/orca-find.glade.h:3
 msgid "Close"
-msgstr ""
+msgstr "Sulje"
 
 #: ../src/orca/orca-find.glade.h:4
 msgid "Match _entire word only"
@@ -875,7 +875,7 @@ msgstr "Täsmää _kirjainkoko"
 
 #: ../src/orca/orca-find.glade.h:12
 msgid "_Search for:"
-msgstr ""
+msgstr "_Etsi:"
 
 #: ../src/orca/orca-find.glade.h:13
 msgid "_Top of window"
@@ -904,13 +904,13 @@ msgstr "Funktio"
 #.
 #: ../src/orca/orca_gui_prefs.py:123
 msgid "Mod.Mask 1"
-msgstr ""
+msgstr "Muok.peite 1"
 
 #. MOD_USED1
 #.
 #: ../src/orca/orca_gui_prefs.py:133
 msgid "Use Mod.1"
-msgstr ""
+msgstr "Käytä muok.1"
 
 #. KEY1
 #.
@@ -926,13 +926,13 @@ msgstr "Näppäinsidos"
 #.
 #: ../src/orca/orca_gui_prefs.py:171
 msgid "Mod.Mask 2"
-msgstr ""
+msgstr "Muok.peite 2"
 
 #. MOD_USED2
 #.
 #: ../src/orca/orca_gui_prefs.py:181
 msgid "Use Mod.2"
-msgstr ""
+msgstr "Käytä muok.2"
 
 #. KEY2
 #.
@@ -1017,16 +1017,16 @@ msgstr "Puhu valittu _solu"
 
 #: ../src/orca/orca_gui_prefs.py:1824
 msgid "enter new key"
-msgstr ""
+msgstr "syötä uusi näppäin"
 
 #: ../src/orca/orca_gui_prefs.py:1849
 #, python-format
 msgid "The new key is: %s"
-msgstr ""
+msgstr "Uusi näppäin on: %s"
 
 #: ../src/orca/orca_gui_prefs.py:1852
 msgid "The key entered is the same. Nothing changed."
-msgstr ""
+msgstr "Uusi näppäin on sama kuin vanha, mikään ei muuttunut."
 
 #: ../src/orca/orca_gui_prefs.py:1922 ../src/orca/orca-setup.glade.h:66
 msgid "_Desktop"
@@ -1139,18 +1139,23 @@ msgstr "-n, --no-setup               Ohita käyttäjien asetusten määrittely"
 msgid ""
 "-u, --user-prefs-dir=dirname Use alternate directory for user preferences"
 msgstr ""
+"-u, --user-prefs-dir=kansio Käytä käyttäjän asetuksille muuta kansiota"
 
 #: ../src/orca/orca.py:1217
 msgid ""
 "-e, --enable=[speech|braille|braille-monitor|magnifier|main-window] Force "
 "use of option"
 msgstr ""
+"-e, --enable=[speech|braille|braille-monitor|magnifier|main-window] Pakota "
+"valinta käyttöön"
 
 #: ../src/orca/orca.py:1218
 msgid ""
 "-d, --disable=[speech|braille|braille-monitor|magnifier|main-window] Prevent "
 "use of option"
 msgstr ""
+"-d, --disable=[speech|braille|braille-monitor|magnifier|main-window] Estä "
+"valinnan käyttö"
 
 #: ../src/orca/orca.py:1219
 msgid "-q, --quit                   Quits Orca (if shell script used)"
@@ -1172,7 +1177,7 @@ msgstr "Kerro vioista osoitteeseen orca-list@gnome.org."
 
 #: ../src/orca/orca-quit.glade.h:1
 msgid "Do you really want to quit Orca?"
-msgstr ""
+msgstr "Haluatko varmasti sulkea Orcan?"
 
 #: ../src/orca/orca-quit.glade.h:2
 msgid "Question"
@@ -1188,7 +1193,7 @@ msgstr "<b>Kohdistimen asetukset</b>"
 
 #: ../src/orca/orca-setup.glade.h:3
 msgid "<b>Keyboard Layout</b>"
-msgstr ""
+msgstr "<b>Näppäinasettelu</b>"
 
 #: ../src/orca/orca-setup.glade.h:4
 msgid "<b>Punctuation Level</b>"
@@ -1246,7 +1251,7 @@ msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:20
 msgid "Disable gksu _keyboard grab"
-msgstr ""
+msgstr "Estä gksu:n _näppäimistön kaappaus"
 
 #: ../src/orca/orca-setup.glade.h:21
 msgid "Enable Braille _monitor"
@@ -1302,7 +1307,7 @@ msgstr "Ota _lukittuvat näppäimet käyttöön"
 
 #: ../src/orca/orca-setup.glade.h:34
 msgid "General"
-msgstr ""
+msgstr "Yleiset"
 
 #: ../src/orca/orca-setup.glade.h:35
 msgid "In_vert colors"
@@ -1310,11 +1315,11 @@ msgstr "Käännä _värit"
 
 #: ../src/orca/orca-setup.glade.h:36
 msgid "Key Binding List"
-msgstr ""
+msgstr "Luettelo näppäinsidoksista"
 
 #: ../src/orca/orca-setup.glade.h:37
 msgid "Key Bindings"
-msgstr ""
+msgstr "Näppäinsidokset"
 
 #: ../src/orca/orca-setup.glade.h:38
 msgid "Key Echo"
@@ -1354,7 +1359,7 @@ msgstr "Kor_keus:"
 
 #: ../src/orca/orca-setup.glade.h:48
 msgid "S_ource display:"
-msgstr ""
+msgstr "Lähde_näyttö:"
 
 #: ../src/orca/orca-setup.glade.h:49
 msgid "Scale _factor:"
@@ -1362,7 +1367,7 @@ msgstr "Skaalaus_kerroin:"
 
 #: ../src/orca/orca-setup.glade.h:50
 msgid "Show Orca _main window"
-msgstr ""
+msgstr "Näytä Orcan _pääikkuna"
 
 #: ../src/orca/orca-setup.glade.h:51
 msgid "Si_ze:"
@@ -1374,7 +1379,7 @@ msgstr "Puhu _sisennykset ja tasaukset"
 
 #: ../src/orca/orca-setup.glade.h:54
 msgid "Speak blank lines"
-msgstr ""
+msgstr "Puhu tyhjät rivit"
 
 #: ../src/orca/orca-setup.glade.h:56
 msgid "Speak current ro_w"
@@ -1394,7 +1399,7 @@ msgstr "Puhe_syntetisaattori:"
 
 #: ../src/orca/orca-setup.glade.h:60
 msgid "Tar_get display:"
-msgstr ""
+msgstr "K_ohdenäyttö:"
 
 #: ../src/orca/orca-setup.glade.h:61
 msgid "Ver_bose"
@@ -1582,7 +1587,7 @@ msgstr "gigahertsi"
 
 #: ../src/orca/pronunciation_dict.py:40
 msgid "IMAP"
-msgstr ""
+msgstr "IMAP"
 
 #: ../src/orca/pronunciation_dict.py:40
 msgid "eye map"
@@ -1590,7 +1595,7 @@ msgstr ""
 
 #: ../src/orca/pronunciation_dict.py:41
 msgid "LDAP"
-msgstr ""
+msgstr "LDAP"
 
 #: ../src/orca/pronunciation_dict.py:41
 msgid "ell dap"
@@ -2619,17 +2624,16 @@ msgid "calendar event"
 msgstr "kalenteritapahtuma"
 
 #: ../src/orca/scripts/Evolution.py:119
-#, fuzzy
 msgid "Toggle whether we present new mail if we are not the active script."
-msgstr "Liitetäänkö keskusteluhuoneen viestien alkuun huoneen nimi vai ei."
+msgstr "Esitetäänkö uudet postit, jos ei olla aktiivisena skriptinä."
 
 #: ../src/orca/scripts/Evolution.py:149
 msgid "present new mail if this script is not active."
-msgstr ""
+msgstr "estä uudet viestit jos skripti ei ole aktiivinen."
 
 #: ../src/orca/scripts/Evolution.py:152
 msgid "do not present new mail if this script is not active."
-msgstr ""
+msgstr "älä esitä uusia viestejä, jos skripti ei ole aktiivinen."
 
 #: ../src/orca/scripts/Evolution.py:199
 msgid " screen"
@@ -2654,17 +2658,16 @@ msgid "Congratulations"
 msgstr "Onneksi olkoon"
 
 #: ../src/orca/scripts/Evolution.py:563 ../src/orca/scripts/Evolution.py:610
-#, fuzzy
 msgid "Status"
-msgstr "Tilapalkki"
+msgstr "Tila"
 
 #: ../src/orca/scripts/Evolution.py:611
 msgid "unread"
-msgstr ""
+msgstr "lukematon"
 
 #: ../src/orca/scripts/Evolution.py:615
 msgid "Attachment"
-msgstr ""
+msgstr "Liite"
 
 #: ../src/orca/scripts/Evolution.py:776
 msgid "No appointments"
@@ -2751,15 +2754,15 @@ msgstr "Tarkista oikeinkirjoitus"
 #. events.]]]
 #: ../src/orca/scripts/gedit.py:361
 msgid "Phrase not found"
-msgstr ""
+msgstr "Lausetta ei löydy"
 
 #: ../src/orca/scripts/gedit.py:424
 msgid "Phrase found."
-msgstr ""
+msgstr "Lause löytyi."
 
 #: ../src/orca/scripts/gnome-search-tool.py:94
 msgid "Searching."
-msgstr ""
+msgstr "Etsitään."
 
 #. Check to see if we have just had an "object:state-changed:showing"
 #. event for the Stop button. If the name is "Stop", and one of its
@@ -2769,7 +2772,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/gnome-search-tool.py:128
 msgid "Stop"
-msgstr ""
+msgstr "Pysäytä"
 
 #: ../src/orca/scripts/gnome-search-tool.py:158
 msgid "Search complete."
@@ -2785,7 +2788,7 @@ msgstr "Tiedostoja ei löytynyt."
 
 #: ../src/orca/scripts/liferea.py:123
 msgid "Work online / offline"
-msgstr ""
+msgstr "Yhteydellinen ja yhteydetön tila"
 
 #. Note to translators: the "Workspace " and "Desk " strings
 #. are the prefix of what metacity shows when you press
@@ -2799,16 +2802,11 @@ msgstr "Työpöytä "
 
 #: ../src/orca/scripts/metacity.py:123
 msgid "Desk "
-msgstr ""
+msgstr "Työpöytä "
 
 #: ../src/orca/scripts/metacity.py:126
 msgid "inaccessible"
 msgstr "ei saatavilla"
-
-#: ../src/orca/scripts/nautilus.py:103
-#, python-format
-msgid " %d items"
-msgstr ""
 
 #: ../src/orca/scripts/planner.py:77 ../src/orca/scripts/planner.py:138
 msgid "Display more options"
@@ -2828,7 +2826,7 @@ msgstr "ei painettu"
 
 #: ../src/orca/scripts/StarOffice.py:185
 msgid "Calc"
-msgstr ""
+msgstr "Laskin"
 
 #: ../src/orca/scripts/StarOffice.py:599 ../src/orca/scripts/StarOffice.py:626
 msgid "on"
@@ -2856,22 +2854,21 @@ msgid "empty"
 msgstr "tyhjä"
 
 #: ../src/orca/scripts/StarOffice.py:893
-#, fuzzy
 msgid "Dynamic column header cleared."
-msgstr "sarakkeen otsikko"
+msgstr "Dynaaminen sarakkeen otsikko tyhjennetty."
 
 #: ../src/orca/scripts/StarOffice.py:900
 msgid "Dynamic column header set for row "
-msgstr ""
+msgstr "Dynaaminen sarakkeen otsikko asetettu riville "
 
 #: ../src/orca/scripts/StarOffice.py:956
 msgid "Dynamic row header cleared."
-msgstr ""
+msgstr "Dynaaminen rivin otsikko tyhjennetty."
 
 #: ../src/orca/scripts/StarOffice.py:963
 #, python-format
 msgid "Dynamic row header set for column %s"
-msgstr ""
+msgstr "Dynaaminen rivn otsikko asetettu sarakkeelle %s"
 
 #: ../src/orca/scripts/StarOffice.py:1108
 msgid "Welcome to StarOffice"
@@ -2879,7 +2876,7 @@ msgstr "Tervetuloa StarOfficeen"
 
 #: ../src/orca/scripts/StarOffice.py:1203
 msgid "Text Document"
-msgstr ""
+msgstr "Tekstiasiakirja"
 
 #: ../src/orca/scripts/StarOffice.py:1263
 #: ../src/orca/scripts/StarOffice.py:1485
@@ -2914,39 +2911,39 @@ msgstr " sisältää kaavan"
 msgid "Cell "
 msgstr "Solu"
 
-#: ../src/orca/scripts/Thunderbird.py:132
-#: ../src/orca/scripts/Thunderbird.py:137
-#: ../src/orca/scripts/Thunderbird.py:546
-#: ../src/orca/scripts/Thunderbird.py:551
+#: ../src/orca/scripts/Thunderbird.py:125
+#: ../src/orca/scripts/Thunderbird.py:130
+#: ../src/orca/scripts/Thunderbird.py:513
+#: ../src/orca/scripts/Thunderbird.py:518
 #, python-format
 msgid "%s text %s %s"
 msgstr "%s teksti %s %s"
 
-#: ../src/orca/scripts/Thunderbird.py:134
-#: ../src/orca/scripts/Thunderbird.py:548
+#: ../src/orca/scripts/Thunderbird.py:127
+#: ../src/orca/scripts/Thunderbird.py:515
 #, python-format
 msgid "%s text %s"
 msgstr "%s teksti %s"
 
-#: ../src/orca/scripts/Thunderbird.py:139
-#: ../src/orca/scripts/Thunderbird.py:553
+#: ../src/orca/scripts/Thunderbird.py:132
+#: ../src/orca/scripts/Thunderbird.py:520
 #, python-format
 msgid "text %s %s"
 msgstr "teksti %s %s"
 
-#: ../src/orca/scripts/Thunderbird.py:220
+#: ../src/orca/scripts/Thunderbird.py:213
 msgid ":"
-msgstr ""
+msgstr ":"
 
 #. Don't speak chrome URLs.
-#: ../src/orca/scripts/Thunderbird.py:358
-#: ../src/orca/scripts/Thunderbird.py:473
-#: ../src/orca/scripts/Thunderbird.py:488
+#: ../src/orca/scripts/Thunderbird.py:351
+#: ../src/orca/scripts/Thunderbird.py:440
+#: ../src/orca/scripts/Thunderbird.py:455
 msgid "chrome://"
 msgstr "chrome://"
 
-#: ../src/orca/scripts/Thunderbird.py:480
-#: ../src/orca/scripts/Thunderbird.py:495
+#: ../src/orca/scripts/Thunderbird.py:447
+#: ../src/orca/scripts/Thunderbird.py:462
 #, python-format
 msgid "%s panel"
 msgstr "%s-paneeli"
@@ -3033,29 +3030,29 @@ msgstr " Konteksti on "
 #: ../src/orca/util.py:693
 #, python-format
 msgid " %d %s characters "
-msgstr ""
+msgstr " %d %s merkkiä"
 
-#: ../src/orca/util.py:1476
+#: ../src/orca/util.py:1484
 msgid "page selected from cursor position"
 msgstr "sivu valittu kohdistimen sijainnista saakka"
 
-#: ../src/orca/util.py:1480
+#: ../src/orca/util.py:1488
 msgid "page selected to cursor position"
 msgstr "sivu valittu kohdistimen sijaintiin saakka"
 
-#: ../src/orca/util.py:1484
+#: ../src/orca/util.py:1492
 msgid "line selected down from cursor position"
 msgstr "rivi valittu kohdistimen sijannista alkaen"
 
-#: ../src/orca/util.py:1488
+#: ../src/orca/util.py:1496
 msgid "line selected up from cursor position"
 msgstr "rivi valittu kohdistimen sijaintiin saakka"
 
-#: ../src/orca/util.py:1492
+#: ../src/orca/util.py:1500
 msgid "document selected to cursor position"
 msgstr "asiakirja valittu kohdistimen sijaintiin saakka"
 
-#: ../src/orca/util.py:1496
+#: ../src/orca/util.py:1504
 msgid "document selected from cursor position"
 msgstr "asiakirja avattu kohdistimen sijainnista alkaen"
 
@@ -3095,7 +3092,7 @@ msgstr "asiakirja avattu kohdistimen sijainnista alkaen"
 #: ../src/orca/where_am_I.py:1268 ../src/orca/where_am_I.py:1287
 #, python-format
 msgid "%s"
-msgstr ""
+msgstr "%s"
 
 #: ../src/orca/where_am_I.py:357
 #, python-format
