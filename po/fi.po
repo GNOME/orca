@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-02-19 21:23+0300\n"
-"PO-Revision-Date: 2007-02-19 21:44+0300\n"
+"PO-Revision-Date: 2007-02-19 21:52+0300\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -1467,107 +1467,107 @@ msgstr "pikseliä"
 
 #: ../src/orca/phonnames.py:36
 msgid "alpha"
-msgstr ""
+msgstr "Aarne"
 
 #: ../src/orca/phonnames.py:37
 msgid "bravo"
-msgstr ""
+msgstr "Bertta"
 
 #: ../src/orca/phonnames.py:38
 msgid "charlie"
-msgstr ""
+msgstr "Celcius"
 
 #: ../src/orca/phonnames.py:39
 msgid "delta"
-msgstr ""
+msgstr "Daavid"
 
 #: ../src/orca/phonnames.py:40
 msgid "echo"
-msgstr ""
+msgstr "Eemeli"
 
 #: ../src/orca/phonnames.py:41
 msgid "foxtrot"
-msgstr ""
+msgstr "Faarao"
 
 #: ../src/orca/phonnames.py:42
 msgid "golf"
-msgstr ""
+msgstr "Gideon"
 
 #: ../src/orca/phonnames.py:43
 msgid "hotel"
-msgstr ""
+msgstr "Heikki"
 
 #: ../src/orca/phonnames.py:44
 msgid "india"
-msgstr ""
+msgstr "Iivari"
 
 #: ../src/orca/phonnames.py:45
 msgid "juliet"
-msgstr ""
+msgstr "Jussi"
 
 #: ../src/orca/phonnames.py:46
 msgid "kilo"
-msgstr ""
+msgstr "Kalle"
 
 #: ../src/orca/phonnames.py:47
 msgid "lima"
-msgstr ""
+msgstr "Lauri"
 
 #: ../src/orca/phonnames.py:48
 msgid "mike"
-msgstr ""
+msgstr "Matti"
 
 #: ../src/orca/phonnames.py:49
 msgid "november"
-msgstr ""
+msgstr "Niilo"
 
 #: ../src/orca/phonnames.py:50
 msgid "oscar"
-msgstr ""
+msgstr "Otto"
 
 #: ../src/orca/phonnames.py:51
 msgid "papa"
-msgstr ""
+msgstr "Paavo"
 
 #: ../src/orca/phonnames.py:52
 msgid "quebec"
-msgstr ""
+msgstr "kuu"
 
 #: ../src/orca/phonnames.py:53
 msgid "romeo"
-msgstr ""
+msgstr "Risto"
 
 #: ../src/orca/phonnames.py:54
 msgid "sierra"
-msgstr ""
+msgstr "Sakari"
 
 #: ../src/orca/phonnames.py:55
 msgid "tango"
-msgstr ""
+msgstr "Tyyne"
 
 #: ../src/orca/phonnames.py:56
 msgid "uniform"
-msgstr ""
+msgstr "Urho"
 
 #: ../src/orca/phonnames.py:57
 msgid "victor"
-msgstr ""
+msgstr "Vihtori"
 
 #: ../src/orca/phonnames.py:58
 msgid "whiskey"
-msgstr ""
+msgstr "Wiski"
 
 #: ../src/orca/phonnames.py:59
 msgid "xray"
-msgstr ""
+msgstr "äksä"
 
 #: ../src/orca/phonnames.py:60
 msgid "yankee"
-msgstr ""
+msgstr "Yrjö"
 
 #: ../src/orca/phonnames.py:61
 msgid "zulu"
-msgstr ""
+msgstr "tseta"
 
 #: ../src/orca/pronunciation_dict.py:38
 msgid "ASAP"
