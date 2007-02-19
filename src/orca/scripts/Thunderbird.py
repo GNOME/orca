@@ -368,11 +368,9 @@ class Script(Gecko.Script):
         # Handle dialogs.
         if top.role == rolenames.ROLE_DIALOG:
             self._speakEnclosingPanel(obj)
-            if obj.role == rolenames.ROLE_ENTRY:
-                consume = self._handleTextEntry(obj)
 
-        if not consume:
             Gecko.Script.onFocus(self, event)
+            
 
     def onStateChanged(self, event):
         """Called whenever an object's state changes.
@@ -458,64 +456,3 @@ class Script(Gecko.Script):
                     text = _("%s panel") % grandparent.name
                     utterances.append(text)
                     speech.speakUtterances(utterances)
-
-    def _handleTextEntry(self, obj):
-        # Handle preferences that contain editable text fields. If
-        # the object with keyboard focus is editable text field,
-        # examine the previous and next sibling to get the order
-        # for speaking the preference objects.
-        #
-        # Returns whether to consume the event.
-
-        self._debug("_handleTextEntry: childCount=%d, index=%d, caretOffset=%d, length=%d" % \
-                    (obj.parent.childCount, obj.index, obj.text.caretOffset, obj.text.characterCount))
-
-        if obj.index > 0:
-            prev = obj.parent.child(obj.index - 1)
-            if prev:
-                self._debug("_handleTextEntry: prev='%s', role='%s'" \
-                            % (prev.name, prev.role))
-
-        if obj.index <= obj.parent.childCount - 1:
-            next = obj.parent.child(obj.index + 1)
-            if next:
-                self._debug("_handleTextEntry: next='%s', role='%s'" \
-                            % (next.name, next.role))
-
-        # Get the entry text.
-        [word, startOffset, endOffset] = obj.text.getTextAtOffset(0,
-            atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
-
-        if len(word) == 0:
-            [word, startOffset, endOffset] = obj.text.getTextAtOffset(obj.text.caretOffset,
-                atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
-
-        if len(word) == 0:
-            [word, startOffset, endOffset] = obj.text.getTextAtOffset(0,
-                atspi.Accessibility.TEXT_BOUNDARY_WORD_START)
-
-        if len(word) == 0:
-            # The above may incorrectly return an empty string
-            # if the entry contains a single character.
-            [word, startOffset, endOffset] = obj.text.getTextAtOffset(0,
-                atspi.Accessibility.TEXT_BOUNDARY_CHAR)
-
-        self._debug("_handleTextEntry: word='%s'" % word)
-
-        # Determine the order for speaking the component parts.
-        if len(word) > 0:
-            if prev and prev.role == rolenames.ROLE_LABEL:
-                if next and next.role == rolenames.ROLE_LABEL:
-                    text = _("%s text %s %s") % (obj.name, word, next.name)
-                else:
-                    text = _("%s text %s") % (obj.name, word)
-            else:
-                if next and next.role == rolenames.ROLE_LABEL:
-                    text = _("%s text %s %s") % (obj.name, word, next.name)
-                else:
-                    text = _("text %s %s") % (word, obj.name)
-
-            speech.speakUtterances([text])
-            return True
-
-        return False

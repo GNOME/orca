@@ -1,5 +1,22 @@
 2007-02-19  Lynn Monsanto <lynn.monsanto@sun.com>
 
+        * src/orca/scripts/Thunderbird.py: I reopened Bug #381455 
+	for two reasons:
+
+	- to document that this problem was a general one where 
+	Thunderbird did not the present labels around dialog text 
+	entries For example, in the Preferences/Composition/General
+	panel, Thunderbird did not present the "minutes" label after
+	the "Autosave every" text entry.
+
+	- to show the patch for removing the code in Thunderbird.py 
+	that worked around this problem. It appears that Thunderbird 
+	is now setting the LABELLED_BY and LABEL_FOR relations correctly. 
+	There is no longer a need for a workaround.
+	
+
+2007-02-19  Lynn Monsanto <lynn.monsanto@sun.com>
+
         * src/orca/scripts/Thunderbird.py: This is a better fix for
 	bug #405541. Thunderbird gives focus to the cell in the column 
 	that is being sorted (e.g., Date). Braille should show the row
