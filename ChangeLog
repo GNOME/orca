@@ -1,3 +1,12 @@
+2007-02-19  Lynn Monsanto <lynn.monsanto@sun.com>
+
+        * src/orca/scripts/Thunderbird.py: This is a better fix for
+	bug #405541. Thunderbird gives focus to the cell in the column 
+	that is being sorted (e.g., Date). Braille should show the row
+	from the begining. This fix calls orca.setLocusOfFocus to give
+	focus to the cell at the beginning of the row.
+
+
 2007-02-16  Willie Walker <william.walker@sun.com>
 
 	* test/html/simpleform.html: add a text entry area that uses

@@ -351,27 +351,23 @@ class Script(Gecko.Script):
         if obj.name.startswith(_("chrome://")):
             return
 
-        # Set focus to the cell at the beginning of the row, so Braille
-        # shows the row from the beginning. Subtract one from the index
-        # because the first child in the table is a list of header names.
+        # This is a better fix for bug #405541. Thunderbird gives
+        # focus to the cell in the column that is being sorted
+        # (e.g., Date). Braille should show the row from the begining.
+        # This fix calls orca.setLocusOfFocus to give focus to the
+        # cell at the beginning of the row. It consume the event
+        # so Gecko.py doesn't reset the focus.
         if obj.role == rolenames.ROLE_TABLE_CELL:
             table = parent.table
-            inColumn = (obj.index - 1) % table.nColumns
-            if (inColumn != 0):
-                newIndex = obj.index - inColumn
-                self._debug("cell index='%d, inColumn='%d', newIndex='%d'" % \
-                            (obj.index, inColumn, newIndex))
-                # Calling orca.setLocusOfFocus for the first table
-                # cell does not result in the first table cell
-                # being displayed. It's necessary to change the
-                # object index.
-                obj.index = newIndex;
+            row = table.getRowAtIndex(obj.index)
+            cell = table.getAccessibleAt(row, 0)
+            acc = atspi.Accessible.makeAccessible(cell)
+            orca.setLocusOfFocus(event, acc)
+            consume = True
 
         # Handle dialogs.
         if top.role == rolenames.ROLE_DIALOG:
-
             self._speakEnclosingPanel(obj)
-
             if obj.role == rolenames.ROLE_ENTRY:
                 consume = self._handleTextEntry(obj)
 
