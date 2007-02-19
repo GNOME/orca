@@ -1,5 +1,23 @@
 2007-02-19  Lynn Monsanto <lynn.monsanto@sun.com>
 
+        * src/orca/scripts/Thunderbird.py: Removed unnecessary
+	code that work around Thunderbird bugs that have fixed.
+	Yeh! The workaround code could have been a source of
+	regressions as Thunderbird changes. Also added comments
+	giving more information about the reason for the 
+	workarounds, and why the code may need to be removed
+	or modified when Thunderbird changes. The same goes
+	for changes to Gecko.py. Bug #409708
+
+	Note: I tested for regressions, but removing this much
+	code could have caused regressions that I have not found.
+	The code changes are isolated in Thunderbird.py, so they
+	should not cause any core regressions. Thunderbird needs
+	be be tested more by others.
+	
+	
+2007-02-19  Lynn Monsanto <lynn.monsanto@sun.com>
+
         * src/orca/scripts/Thunderbird.py: Additional fix for
 	Bug #381455: replaced an accidently deleted "if not consume"
 	statement.
