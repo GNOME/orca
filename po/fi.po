@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-19 21:23+0300\n"
-"PO-Revision-Date: 2007-02-19 21:52+0300\n"
+"POT-Creation-Date: 2007-02-20 07:41+0300\n"
+"PO-Revision-Date: 2007-02-20 07:50+0300\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -1138,8 +1138,7 @@ msgstr "-n, --no-setup               Ohita käyttäjien asetusten määrittely"
 #: ../src/orca/orca.py:1216
 msgid ""
 "-u, --user-prefs-dir=dirname Use alternate directory for user preferences"
-msgstr ""
-"-u, --user-prefs-dir=kansio Käytä käyttäjän asetuksille muuta kansiota"
+msgstr "-u, --user-prefs-dir=kansio Käytä käyttäjän asetuksille muuta kansiota"
 
 #: ../src/orca/orca.py:1217
 msgid ""
@@ -1591,7 +1590,7 @@ msgstr "IMAP"
 
 #: ../src/orca/pronunciation_dict.py:40
 msgid "eye map"
-msgstr ""
+msgstr "imap"
 
 #: ../src/orca/pronunciation_dict.py:41
 msgid "LDAP"
@@ -1599,7 +1598,7 @@ msgstr "LDAP"
 
 #: ../src/orca/pronunciation_dict.py:41
 msgid "ell dap"
-msgstr ""
+msgstr "ldap"
 
 #: ../src/orca/pronunciation_dict.py:42
 msgid "LOL"
@@ -1607,7 +1606,7 @@ msgstr "LOL"
 
 #: ../src/orca/pronunciation_dict.py:42
 msgid "laughing out loud"
-msgstr ""
+msgstr "laughing out loud"
 
 #: ../src/orca/pronunciation_dict.py:43
 msgid "MHz"
@@ -1615,15 +1614,15 @@ msgstr "MHz"
 
 #: ../src/orca/pronunciation_dict.py:43
 msgid "megahertz"
-msgstr ""
+msgstr "megahertsi"
 
 #: ../src/orca/pronunciation_dict.py:44
 msgid "strikethrough"
-msgstr ""
+msgstr "yliviivaus"
 
 #: ../src/orca/pronunciation_dict.py:44
 msgid "strike through"
-msgstr ""
+msgstr "yliviivaus"
 
 #: ../src/orca/pronunciation_dict.py:45
 msgid "SELinux"
@@ -1631,7 +1630,7 @@ msgstr "SELinux"
 
 #: ../src/orca/pronunciation_dict.py:45
 msgid "ess ee linux"
-msgstr ""
+msgstr "äss ee Linux"
 
 #: ../src/orca/rolenames.py:155
 msgid "???"
@@ -1711,15 +1710,15 @@ msgstr "kangas"
 
 #: ../src/orca/rolenames.py:190
 msgid "cptn"
-msgstr ""
+msgstr "ots"
 
 #: ../src/orca/rolenames.py:191
 msgid "Caption"
-msgstr ""
+msgstr "Otsake"
 
 #: ../src/orca/rolenames.py:192
 msgid "caption"
-msgstr ""
+msgstr "otsake"
 
 #: ../src/orca/rolenames.py:195 ../src/orca/rolenames.py:200
 msgid "chk"
@@ -2843,11 +2842,13 @@ msgstr "Puhuu syöterivin sisällön."
 #: ../src/orca/scripts/StarOffice.py:730
 msgid "Set the row to use as dynamic column headers when speaking calc cells."
 msgstr ""
+"Aseta soluja puhuttaessa dynaamisina sarakkeen otsakkeina käytettävä rivi."
 
 #: ../src/orca/scripts/StarOffice.py:735
 msgid ""
 "Set the column to use as dynamic row headers to use when speaking calc cells."
 msgstr ""
+"Aseta soluja puhuttaessa dynaamisina rivin otsakkeina käytettävä sarake."
 
 #: ../src/orca/scripts/StarOffice.py:824
 msgid "empty"
@@ -2911,39 +2912,15 @@ msgstr " sisältää kaavan"
 msgid "Cell "
 msgstr "Solu"
 
-#: ../src/orca/scripts/Thunderbird.py:125
-#: ../src/orca/scripts/Thunderbird.py:130
-#: ../src/orca/scripts/Thunderbird.py:513
-#: ../src/orca/scripts/Thunderbird.py:518
-#, python-format
-msgid "%s text %s %s"
-msgstr "%s teksti %s %s"
-
-#: ../src/orca/scripts/Thunderbird.py:127
-#: ../src/orca/scripts/Thunderbird.py:515
-#, python-format
-msgid "%s text %s"
-msgstr "%s teksti %s"
-
-#: ../src/orca/scripts/Thunderbird.py:132
-#: ../src/orca/scripts/Thunderbird.py:520
-#, python-format
-msgid "text %s %s"
-msgstr "teksti %s %s"
-
-#: ../src/orca/scripts/Thunderbird.py:213
-msgid ":"
-msgstr ":"
-
 #. Don't speak chrome URLs.
-#: ../src/orca/scripts/Thunderbird.py:351
-#: ../src/orca/scripts/Thunderbird.py:440
-#: ../src/orca/scripts/Thunderbird.py:455
+#: ../src/orca/scripts/Thunderbird.py:235
+#: ../src/orca/scripts/Thunderbird.py:315
+#: ../src/orca/scripts/Thunderbird.py:330
 msgid "chrome://"
 msgstr "chrome://"
 
-#: ../src/orca/scripts/Thunderbird.py:447
-#: ../src/orca/scripts/Thunderbird.py:462
+#: ../src/orca/scripts/Thunderbird.py:322
+#: ../src/orca/scripts/Thunderbird.py:337
 #, python-format
 msgid "%s panel"
 msgstr "%s-paneeli"
@@ -3127,6 +3104,18 @@ msgstr "kohta %d kaikkiaan %d"
 #: ../src/orca/where_am_I.py:904
 msgid "Read"
 msgstr "Lue"
+
+#~ msgid "%s text %s %s"
+#~ msgstr "%s teksti %s %s"
+
+#~ msgid "%s text %s"
+#~ msgstr "%s teksti %s"
+
+#~ msgid "text %s %s"
+#~ msgstr "teksti %s %s"
+
+#~ msgid ":"
+#~ msgstr ":"
 
 #~ msgid "To exit learn mode, press the escape key."
 #~ msgstr "Sulje oppimistila painamalla Escape-näppäintä."
