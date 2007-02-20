@@ -1,3 +1,8 @@
+2007-02-20  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca.in: additional fix for bug 407480 to make sure
+	this works with the grep/egrep in /usr/bin on Solaris.
+	
 2007-02-19  Lynn Monsanto <lynn.monsanto@sun.com>
 
         * src/orca/scripts/Thunderbird.py: Removed unnecessary

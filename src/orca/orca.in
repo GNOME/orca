@@ -250,8 +250,7 @@ else
         # erroneously types an illegal command line argument, the
         # help text is emitted and the other orca is not killed.
         #
-	echo `grep -c -E "\-s|\-g|\-t|\-n|\-u|\-e|\-d" <<< $ARGS`
-        if [ `grep -c -E "\-s|\-g|\-t|\-n|\-u|\-e|\-d" <<< $ARGS` -eq 0 ]
+        if [ `egrep -c "\-s|\-g|\-t|\-n|\-u|\-e|\-d" <<< $ARGS` -eq 0 ]
         then
             runOrca "NO_CLEANUP"
         else
