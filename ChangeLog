@@ -1,3 +1,8 @@
+2007-02-21  Willie Walker <william.walker@sun.com>
+
+        * docs/pydoc/Makefile.am: add find, gnome-power-manager, nautilus,
+	and Thunderbird modules to pydoc target.
+	
 2007-02-20  Willie Walker <william.walker@sun.com>
 
 	* src/orca/orca.in: additional fix for bug 407480 to make sure

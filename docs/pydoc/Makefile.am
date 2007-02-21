@@ -15,6 +15,7 @@ DOC_FILES = \
 	orca.default \
 	orca.espeechfactory \
 	orca.eventsynthesizer \
+	orca.find \
 	orca.flat_review \
 	orca.focus_tracking_presenter \
 	orca.Gecko \
@@ -58,6 +59,7 @@ DOC_FILES = \
 	orca.scripts.gdmlogin \
 	orca.scripts.gedit \
 	orca.scripts.gnome_segv2 \
+	orca.scripts.gnome-power-manager \
 	orca.scripts.gnome-keyring-ask \
 	orca.scripts.gnome-search-tool \
 	orca.scripts.gnome-terminal \
@@ -65,9 +67,11 @@ DOC_FILES = \
 	orca.scripts.liferea \
 	orca.scripts.metacity \
 	orca.scripts.Mozilla \
+	orca.scripts.nautilus \
 	orca.scripts.planner \
 	orca.scripts.self_voicing \
 	orca.scripts.StarOffice \
+	orca.scripts.Thunderbird \
 	orca.scripts.users-admin
 
 if ENABLE_PYDOC
