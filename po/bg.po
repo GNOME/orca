@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-22 09:21+0200\n"
-"PO-Revision-Date: 2007-02-22 09:12+0200\n"
+"POT-Creation-Date: 2007-02-23 00:21+0200\n"
+"PO-Revision-Date: 2007-02-23 00:21+0200\n"
 "Last-Translator: Alexander Shopov <ash@contact.bg>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "MIME-Version: 1.0\n"
@@ -436,7 +436,7 @@ msgstr "Превключване към следващия мениджър на
 #: ../src/orca/default.py:1210 ../src/orca/default.py:1437
 #: ../src/orca/default.py:3012 ../src/orca/default.py:3146
 #: ../src/orca/default.py:3151 ../src/orca/default.py:3244
-#: ../src/orca/default.py:3249 ../src/orca/Gecko.py:2767
+#: ../src/orca/default.py:3249 ../src/orca/Gecko.py:2820
 #: ../src/orca/scripts/Evolution.py:399 ../src/orca/scripts/Evolution.py:884
 #: ../src/orca/scripts/StarOffice.py:1807
 #: ../src/orca/scripts/StarOffice.py:1816 ../src/orca/where_am_I.py:994
@@ -537,29 +537,29 @@ msgstr "Няма фокус"
 msgid "Switching to focus tracking mode."
 msgstr "Преминаване към режим на следене на фокуса"
 
-#: ../src/orca/Gecko.py:1263 ../src/orca/rolenames.py:332
+#: ../src/orca/Gecko.py:1262 ../src/orca/rolenames.py:332
 #: ../src/orca/scripts/acroread.py:251 ../src/orca/scripts/StarOffice.py:1090
 msgid "link"
 msgstr "връзка"
 
-#: ../src/orca/Gecko.py:1282
+#: ../src/orca/Gecko.py:1281
 msgid "Loading.  Please wait."
 msgstr "Зареждане - изчакайте."
 
-#: ../src/orca/Gecko.py:1288
+#: ../src/orca/Gecko.py:1287
 #, python-format
 msgid "Finished loading %s."
 msgstr "Зареждането на „%s“ свърши."
 
-#: ../src/orca/Gecko.py:1294
+#: ../src/orca/Gecko.py:1293
 msgid "Finished loading."
 msgstr "Зареждането свърши."
 
-#: ../src/orca/Gecko.py:3071 ../src/orca/Gecko.py:3082
+#: ../src/orca/Gecko.py:3124 ../src/orca/Gecko.py:3135
 msgid "No more headings."
 msgstr "Няма повече заглавия."
 
-#: ../src/orca/Gecko.py:3093 ../src/orca/Gecko.py:3104
+#: ../src/orca/Gecko.py:3146 ../src/orca/Gecko.py:3157
 msgid "No more chunks."
 msgstr "Няма повече дялове."
 
@@ -983,25 +983,25 @@ msgstr "Липсва възможност за произнасяне."
 #: ../src/orca/orca_gui_prefs.py:868 ../src/orca/orca_gui_prefs.py:872
 #: ../src/orca/orca_gui_prefs.py:1771
 msgid "Bilinear"
-msgstr "Билинеен"
+msgstr "билинейно"
 
 #: ../src/orca/orca_gui_prefs.py:870 ../src/orca/orca_gui_prefs.py:883
 #: ../src/orca/orca_gui_prefs.py:1773 ../src/orca/orca_gui_prefs.py:1796
 msgid "None"
-msgstr "Никакъв"
+msgstr "никакво"
 
 #: ../src/orca/orca_gui_prefs.py:881 ../src/orca/orca_gui_prefs.py:889
 #: ../src/orca/orca_gui_prefs.py:1790
 msgid "Centered"
-msgstr "Центриран"
+msgstr "центрирано"
 
 #: ../src/orca/orca_gui_prefs.py:885 ../src/orca/orca_gui_prefs.py:1794
 msgid "Proportional"
-msgstr "Пропорционален"
+msgstr "пропорционално"
 
 #: ../src/orca/orca_gui_prefs.py:887 ../src/orca/orca_gui_prefs.py:1792
 msgid "Push"
-msgstr "С избутване"
+msgstr "с избутване"
 
 #. Braille Bindings from default script, in default.py
 #.
@@ -1011,24 +1011,24 @@ msgstr "Брайлови функции на клавишите"
 
 #: ../src/orca/orca_gui_prefs.py:1493 ../src/orca/orca-setup.glade.h:70
 msgid "_None"
-msgstr "_Няма"
+msgstr "Ня_ма"
 
 #: ../src/orca/orca_gui_prefs.py:1496 ../src/orca/orca-setup.glade.h:52
 msgid "So_me"
-msgstr "_Някои"
+msgstr "Н_якои"
 
 #: ../src/orca/orca_gui_prefs.py:1499 ../src/orca/orca-setup.glade.h:39
 msgid "M_ost"
-msgstr "_Повечето"
+msgstr "Пов_ечето"
 
 #: ../src/orca/orca_gui_prefs.py:1519 ../src/orca/orca_gui_prefs.py:1574
 #: ../src/orca/orca-setup.glade.h:10
 msgid "Brie_f"
-msgstr "_Ниска"
+msgstr "Зани_жена"
 
 #: ../src/orca/orca_gui_prefs.py:1539 ../src/orca/orca-setup.glade.h:55
 msgid "Speak current _cell"
-msgstr "Произнасяне на текущата _клетка"
+msgstr "Произнасяне на тек_ущата клетка"
 
 #: ../src/orca/orca_gui_prefs.py:1824
 msgid "enter new key"
@@ -1142,7 +1142,7 @@ msgstr "-v, --version                       %s"
 
 #: ../src/orca/orca.py:1213
 msgid "-s, --setup, --gui-setup     Set up user preferences"
-msgstr "-s, --setup, --gui-setup       Задаване на настройките"
+msgstr "-s, --setup, --gui-setup            Задаване на настройките"
 
 #: ../src/orca/orca.py:1214
 msgid "-t, --text-setup             Set up user preferences (text version)"
@@ -1211,7 +1211,7 @@ msgstr "Въпрос"
 
 #: ../src/orca/orca-setup.glade.h:1
 msgid "<b>Cross-hair Settings</b>"
-msgstr "<b>Настройки на кръстчето</b>"
+msgstr "<b>Настройки на кръстачката</b>"
 
 #: ../src/orca/orca-setup.glade.h:2
 msgid "<b>Cursor Settings</b>"
@@ -1263,7 +1263,7 @@ msgstr "Цвят:"
 
 #: ../src/orca/orca-setup.glade.h:16
 msgid "Custom siz_e"
-msgstr "Потребителски _размер на курсора"
+msgstr "Потре_бителски размер на курсора"
 
 #: ../src/orca/orca-setup.glade.h:17
 msgid ""
@@ -1277,7 +1277,7 @@ msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:20
 msgid "Disable gksu _keyboard grab"
-msgstr "Изключване на при_хващането на клавиатурата от gksu"
+msgstr "_Изключване на прихващането на клавиатурата от gksu"
 
 #: ../src/orca/orca-setup.glade.h:21
 msgid "Enable Braille _monitor"
@@ -1297,7 +1297,7 @@ msgstr "Включване на _функционалните клавиши"
 
 #: ../src/orca/orca-setup.glade.h:25
 msgid "Enable _key echo"
-msgstr "Включване на _произнасянето на клавиши"
+msgstr "_Включване на произнасянето на клавиши"
 
 #: ../src/orca/orca-setup.glade.h:26
 msgid "Enable _magnifier"
@@ -1309,7 +1309,7 @@ msgstr "Включване на _модификаторите на клавиш�
 
 #: ../src/orca/orca-setup.glade.h:28
 msgid "Enable ac_tion keys"
-msgstr "Включване на _действащите клавиши"
+msgstr "Включване на де_йстващите клавиши"
 
 #: ../src/orca/orca-setup.glade.h:29
 msgid "Enable c_ursor"
@@ -1317,15 +1317,15 @@ msgstr "Включване на _курсор"
 
 #: ../src/orca/orca-setup.glade.h:30
 msgid "Enable cross-h_air"
-msgstr "Включване на кр_ъстче"
+msgstr "Включване на кр_ъстачка"
 
 #: ../src/orca/orca-setup.glade.h:31
 msgid "Enable cross-hair cli_p"
-msgstr "Включване на изрязване на _кръстчето"
+msgstr "Включване на изрязване на кръста_чката"
 
 #: ../src/orca/orca-setup.glade.h:32
 msgid "Enable echo by _word"
-msgstr "Включване на произнасяне по _думи"
+msgstr "Включване на произнасяне по д_уми"
 
 #: ../src/orca/orca-setup.glade.h:33
 msgid "Enable lockin_g keys"
@@ -1337,7 +1337,7 @@ msgstr "Общи"
 
 #: ../src/orca/orca-setup.glade.h:35
 msgid "In_vert colors"
-msgstr "_Обръщане на цветовете"
+msgstr "Обръ_щане на цветовете"
 
 #: ../src/orca/orca-setup.glade.h:36
 msgid "Key Binding List"
@@ -1357,7 +1357,7 @@ msgstr "Лупа"
 
 #: ../src/orca/orca-setup.glade.h:41
 msgid "Mouse trac_king mode:"
-msgstr "Режим на следене на _мишката"
+msgstr "_Следене на мишката"
 
 #: ../src/orca/orca-setup.glade.h:42
 msgid ""
@@ -1381,11 +1381,11 @@ msgstr "_Модификатори на клавиши в Orca"
 
 #: ../src/orca/orca-setup.glade.h:47
 msgid "Pi_tch:"
-msgstr "_Височина:"
+msgstr "В_исочина:"
 
 #: ../src/orca/orca-setup.glade.h:48
 msgid "S_ource display:"
-msgstr "_Изходен дисплей:"
+msgstr "Из_ходен дисплей:"
 
 #: ../src/orca/orca-setup.glade.h:49
 msgid "Scale _factor:"
@@ -1393,15 +1393,15 @@ msgstr "Коефициент на _мащабиране:"
 
 #: ../src/orca/orca-setup.glade.h:50
 msgid "Show Orca _main window"
-msgstr "Показване на _основния прозорец на Orca"
+msgstr "Пок_азване на основния прозорец на Orca"
 
 #: ../src/orca/orca-setup.glade.h:51
 msgid "Si_ze:"
-msgstr "_Размер:"
+msgstr "Р_азмер:"
 
 #: ../src/orca/orca-setup.glade.h:53
 msgid "Speak _indentation and justification"
-msgstr "Произнасяне на _отместването по ред и подравняването"
+msgstr "Произн_асяне на отместването по ред и подравняването"
 
 #: ../src/orca/orca-setup.glade.h:54
 msgid "Speak blank lines"
@@ -1409,7 +1409,7 @@ msgstr "Произнасяне на празните редове"
 
 #: ../src/orca/orca-setup.glade.h:56
 msgid "Speak current ro_w"
-msgstr "Произнасяне на текущия _ред"
+msgstr "Произнасяне на теку_щия ред"
 
 #: ../src/orca/orca-setup.glade.h:57
 msgid "Speech"
@@ -1417,11 +1417,11 @@ msgstr "Глас"
 
 #: ../src/orca/orca-setup.glade.h:58
 msgid "Speech _system:"
-msgstr "Система за _глас:"
+msgstr "_Система за глас:"
 
 #: ../src/orca/orca-setup.glade.h:59
 msgid "Speech synthesi_zer:"
-msgstr "_Синтезатор на глас:"
+msgstr "Синтезатор на _глас:"
 
 #: ../src/orca/orca-setup.glade.h:60
 msgid "Tar_get display:"
@@ -1429,11 +1429,11 @@ msgstr "_Целеви дисплей:"
 
 #: ../src/orca/orca-setup.glade.h:61
 msgid "Ver_bose"
-msgstr "_Подробно"
+msgstr "Пови_шена"
 
 #: ../src/orca/orca-setup.glade.h:62
 msgid "Vo_lume:"
-msgstr "_Ниво на звука:"
+msgstr "Ниво на _звука:"
 
 #: ../src/orca/orca-setup.glade.h:63
 msgid "_Abbreviated role names"
@@ -1441,11 +1441,11 @@ msgstr "_Съкратени имена на ролите"
 
 #: ../src/orca/orca-setup.glade.h:64
 msgid "_All"
-msgstr "_Всичко"
+msgstr "Всич_ко"
 
 #: ../src/orca/orca-setup.glade.h:65
 msgid "_Bottom:"
-msgstr "До_лу:"
+msgstr "Дол_у:"
 
 #: ../src/orca/orca-setup.glade.h:67
 msgid "_Enable speech"
@@ -1453,7 +1453,7 @@ msgstr "_Включване на глас"
 
 #: ../src/orca/orca-setup.glade.h:68
 msgid "_Laptop"
-msgstr "_Преносим компютър"
+msgstr "Преносим _компютър"
 
 #: ../src/orca/orca-setup.glade.h:69
 msgid "_Left:"
@@ -1465,11 +1465,11 @@ msgstr "_Човек"
 
 #: ../src/orca/orca-setup.glade.h:72
 msgid "_Rate:"
-msgstr "_Скорост:"
+msgstr "Скорос_т:"
 
 #: ../src/orca/orca-setup.glade.h:73
 msgid "_Right:"
-msgstr "_Дясно:"
+msgstr "Д_ясно:"
 
 #: ../src/orca/orca-setup.glade.h:74
 msgid "_Smoothing:"
@@ -1489,7 +1489,7 @@ msgstr "_Широчина:"
 
 #: ../src/orca/orca-setup.glade.h:78
 msgid "pixels"
-msgstr "пиксели"
+msgstr "пиксела"
 
 #: ../src/orca/phonnames.py:36
 msgid "alpha"
