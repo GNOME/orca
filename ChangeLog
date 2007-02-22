@@ -1,3 +1,7 @@
+2007-02-22  Joanmarie Diggs <j-diggs@comcast.net>
+
+	* bugs/bugs.html: added several new Firefox bugs.
+
 2007-02-22  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py: a little work on bug 407948 to handle
