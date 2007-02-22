@@ -26,9 +26,10 @@ string and return a localized string for that string.
 import os       # to get localdir path
 import gettext  # to get gettext (i18n) support
 
-# Alias gettext.gettext to _
+# Alias gettext.gettext to _ and gettext.ngettext to ngettext
 #
 _ = gettext.gettext
+ngettext = gettext.ngettext
 
 # Tell gettext where to find localized strings.
 #
