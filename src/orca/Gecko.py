@@ -91,7 +91,6 @@ OBJECT_ROLES = [rolenames.ROLE_CHECK_BOX,
                 rolenames.ROLE_RADIO_MENU_ITEM,
                 rolenames.ROLE_RADIO_MENU,
                 rolenames.ROLE_ROW_HEADER,
-                rolenames.ROLE_SECTION,
                 rolenames.ROLE_SLIDER,
                 rolenames.ROLE_SPIN_BUTTON,
                 rolenames.ROLE_STATUSBAR,
@@ -1903,7 +1902,7 @@ class Script(default.Script):
                 # user is editing the document.
                 return not obj.state.count(atspi.Accessibility.STATE_EDITABLE)
             elif obj.role in letThemDoItRoles:
-                return False
+                return not obj.state.count(atspi.Accessibility.STATE_EDITABLE)
             else:
                 obj = obj.parent
 
@@ -2437,30 +2436,79 @@ class Script(default.Script):
 
         return [None, -1]
 
-    def findPreviousRole(self, roles, match=True):
-        """Positions the caret offset at the beginning of the next object
-        using the given roles list as a pattern to match or not match.
+    def findPreviousObject(self, obj):
+        """Finds the object prior to this one, where the tree we're
+        dealing with is a DOM and 'prior' means the previous object
+        in a linear presentation sense.
+
+        Arguments:
+        -obj: the object where to start.
+        """
+
+        previousObj = None
+
+        index = obj.index - 1
+        if (index < 0) and (obj.role != rolenames.ROLE_DOCUMENT_FRAME):
+            previousObj = obj.parent
+        else:
+            previousObj = obj.parent.child(index)
+            while previousObj.childCount:
+                previousObj = previousObj.child(previousObj.childCount - 1)
+
+        return previousObj
+
+    def findNextObject(self, obj):
+        """Finds the object after to this one, where the tree we're
+        dealing with is a DOM and 'next' means the next object
+        in a linear presentation sense.
+
+        Arguments:
+        -obj: the object where to start.
+        """
+
+        nextObj = None
+
+        if obj.childCount:
+            nextObj = obj.child(0)
+        elif (obj.index + 1) < obj.parent.childCount:
+            nextObj = obj.parent.child(obj.index + 1)
+        else:
+            candidate = obj
+            while (candidate.index >= (candidate.parent.childCount - 1)) \
+                and (candidate.role != rolenames.ROLE_DOCUMENT_FRAME):
+                candidate = candidate.parent
+            if candidate.role != rolenames.ROLE_DOCUMENT_FRAME:
+                nextObj = candidate.parent.child(candidate.index + 1)
+
+        return nextObj
+
+    def findPreviousRole(self, roles):
+        """Finds the caret offset at the beginning of the next object
+        using the given roles list as a pattern to match.
 
         Arguments:
         -roles: a list of roles from rolenames.py
-        -match: if True, the found object will have a role from roles;
-                if False, the found object will not have a role from roles
         """
+
         [currentObj, characterOffset] = self.getCaretContext()
 
-        obj = currentObj
+        ancestors = []
+        obj = currentObj.parent
         while obj:
-            [obj, characterOffset] = self.findPreviousCaretInOrder(
-                obj, characterOffset)
-            if obj and (obj != currentObj):
-                if (match and (obj.role in roles)) \
-                    or (not match and not (obj.role in roles)):
-                    return [obj, characterOffset]
+            ancestors.append(obj)
+            obj = obj.parent
+
+        obj = self.findPreviousObject(currentObj)
+        while obj:
+            if (not obj in ancestors) and (obj.role in roles):
+                return self.findFirstCaretContext(obj, 0)
+            else:
+                obj = self.findPreviousObject(obj)
 
         return [None, -1]
 
-    def findNextRole(self, roles, match=True):
-        """Positions the caret offset at the beginning of the next object
+    def findNextRole(self, roles):
+        """Finds the caret offset at the beginning of the next object
         using the given roles list as a pattern to match or not match.
 
         Arguments:
@@ -2468,16 +2516,21 @@ class Script(default.Script):
         -match: if True, the found object will have a role from roles;
                 if False, the found object will not have a role from roles
         """
+
         [currentObj, characterOffset] = self.getCaretContext()
 
-        obj = currentObj
+        ancestors = []
+        obj = currentObj.parent
         while obj:
-            [obj, characterOffset] = self.findNextCaretInOrder(
-                obj, characterOffset)
-            if obj and (obj != currentObj):
-                if (match and (obj.role in roles)) \
-                    or (not match and not (obj.role in roles)):
-                    return [obj, characterOffset]
+            ancestors.append(obj)
+            obj = obj.parent
+
+        obj = self.findNextObject(currentObj)
+        while obj:
+            if (not obj in ancestors) and (obj.role in roles):
+                return self.findFirstCaretContext(obj, 0)
+            else:
+                obj = self.findNextObject(obj)
 
         return [None, -1]
 
@@ -3065,8 +3118,8 @@ class Script(default.Script):
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
-            self.speakContents(self.getObjectContentsAtOffset(obj,
-                                                              characterOffset))
+            self.speakContents(self.getLineContentsAtOffset(obj,
+                                                            characterOffset))
         else:
             speech.speak(_("No more headings."))
 
@@ -3076,8 +3129,8 @@ class Script(default.Script):
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
             self.updateBraille(obj)
-            self.speakContents(self.getObjectContentsAtOffset(obj,
-                                                              characterOffset))
+            self.speakContents(self.getLineContentsAtOffset(obj,
+                                                            characterOffset))
         else:
             speech.speak(_("No more headings."))
 
