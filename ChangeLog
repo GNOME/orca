@@ -1,3 +1,14 @@
+2007-02-22  Lynn Monsanto <lynn.monsanto@sun.com>
+
+        * src/orca/scripts/gnome-power-manager,py. Addional fix
+	for bug #354479. The Gnome Power Manager communicates
+	information about power management state in the object
+	description in "object:bounds-changed" events. It is 
+	necessary to turn of the caching of accessible values
+	to force the power manager to send the current power
+	management state, othrwise the old cached description
+	is returned for the object.
+
 2007-02-22  Joanmarie Diggs <j-diggs@comcast.net>
 
 	* bugs/bugs.html: added several new Firefox bugs.

@@ -843,7 +843,7 @@ class Accessible:
 
         description = self.accessible.description
 
-        if description and settings.cacheValues:
+        if description and settings.cacheValues and settings.cacheDescriptions:
             self.description = description
 
         return description

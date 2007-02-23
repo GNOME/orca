@@ -29,6 +29,7 @@ __license__   = "LGPL"
 import orca.orca as orca
 import orca.default as default
 import orca.debug as debug
+import orca.settings as settings
 import orca.speech as speech
 import orca.util as util
 
@@ -52,11 +53,28 @@ class Script(default.Script):
         # Set the debug level for all the methods in this script.
         #
         self.debugLevel = debug.LEVEL_FINEST
-        self._lastSpeech = ""
-        self._debug("__init__")
+        self._lastInfo = ""
+
+        # The power manager does not send events indication
+        # that the accessible description has changed.
+        # Disabling the caching of accessible descriptions, 
+        # forces the power manager to return a new description 
+        # with the latest power management information.
+        settings.cacheDescriptions = False
 
         default.Script.__init__(self, app)
         
+
+    def getListeners(self):
+        """Sets up the AT-SPI event listeners for this script.
+        """
+        listeners = default.Script.getListeners(self)
+
+        listeners["object:bounds-changed"] = \
+            self.onBoundsChanged
+
+        return listeners
+
 
     def _debug(self, msg):
         """ Convenience method for printing debug messages
@@ -65,57 +83,18 @@ class Script(default.Script):
 
 
     def onBoundsChanged(self, event):
-        """Called whenever an object's bounds change. This happens
+        """ Called whenever an object's bounds change. This happens
         when the Gnome Power Manager balloon is displayed on the
         desktop.
 
         Arguments:
         - event: the Event
         """
-        self._debug("onBoundsChanged")
-        obj = event.source
-        self._debug("'%s' src='%s'" % (event.type, obj.role))
-        
-        self._searchChildrenForDisplayedText(obj, "")
+        info = event.source.description
+        self._debug("onBoundsChanged: '%s'" % info)
 
+        if info != self._lastInfo:
+            self._lastInfo = info
+            if len(info) > 0:
+                speech.speak(info, None, True)
 
-    def _searchChildrenForDisplayedText(self, parent, indent):
-        """
-        Recursively descends the Gnome Power Manage and
-        speaks the displayed text it finds.
-        """
-
-        self._debug("_searchChildrenForDisplayedText")
-
-        text = self._getObjText(parent)
-
-        self._debug("%s role='%s', text='%s'" % \
-                    (indent, parent.role, text))
-
-        if text and len(text) > 0:
-            if text != self._lastSpeech:
-                self._lastSpeech = text
-                speech.speak(text, None, True)
-        
-        for i in range(0, parent.childCount):
-            self._searchChildrenForDisplayedText(parent.child(i), indent+"  ")
-
-
-    def _getObjText(self, obj):
-        """
-        Returns the text for an object.
-        """
-        retval = ""
-        text = util.getDisplayedText(obj)
-        if not text:
-            text = obj.description
-            
-        if text and text != "None":
-            retval = text
-            
-        self._debug("_getObjText: text='%s', desc='%s', label='%s'" % \
-                    (util.getDisplayedText(obj), obj.description,
-                     util.getDisplayedLabel(obj)))
-        return retval
-
-    

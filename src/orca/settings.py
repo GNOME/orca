@@ -393,6 +393,7 @@ brailleBindingsMap      = {}
 # objects.
 #
 cacheValues             = True
+cacheDescriptions       = True
 
 # Script developer feature.  If False, no AT-SPI objects
 # will be cached locally.  Helps determine if there might be a
