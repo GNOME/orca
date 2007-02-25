@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2006 Sun Microsystems Inc.
+# Copyright 2004-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,7 +22,7 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 # We're going to force the name of the app to "orca" so pygtk
@@ -1190,13 +1190,15 @@ def shutdownOnSignal(signum, frame):
             #
             speech.shutdown()
             shutdown()
+        cleanExit = True
     except:
-        pass
+        cleanExit = False
 
     if settings.timeoutCallback and (settings.timeoutTime > 0):
         signal.alarm(0)
 
-    abort(signum)
+    if not cleanExit:
+        abort(signum)
 
 def abortOnSignal(signum, frame):
     debug.println(debug.LEVEL_ALL,
