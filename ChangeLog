@@ -1,5 +1,10 @@
 2007-02-25  Willie Walker <william.walker@sun.com>
 
+	* test/html/simpleheader.html: include some more test
+	cases for where Orca gets stuck with navigation.
+	
+2007-02-25  Willie Walker <william.walker@sun.com>
+
 	* src/orca/orca.py: fix for bug 412058 to terminate the python
 	process better when it receives a TERM signal.  Note that one must
 	send the TERM signal directly to the Python process.  Sending it
