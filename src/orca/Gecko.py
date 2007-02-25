@@ -2451,9 +2451,42 @@ class Script(default.Script):
         if (index < 0) and (obj.role != rolenames.ROLE_DOCUMENT_FRAME):
             previousObj = obj.parent
         else:
-            previousObj = obj.parent.child(index)
-            while previousObj.childCount:
-                previousObj = previousObj.child(previousObj.childCount - 1)
+            # [[[TODO: HACK - WDW defensive programming because Gecko
+            # ally hierarchies are not always working.  Objects say
+            # they have children, but these children don't exist when
+            # we go to get them.  So...we'll just keep going backwards
+            # until we find a real child that we can work with.]]]
+            #
+            while not isinstance(previousObj, atspi.Accessible) \
+                and index >= 0:
+                previousObj = obj.parent.child(index)
+                index -= 1
+
+            # Now that we're at a child we can work with, we need to
+            # look at it further.  It could be the root of a hierarchy.
+            # In that case, the last child in this hierarchy is what
+            # we want.  So, we dive down the 'right hand side' of the
+            # tree to get there.
+            #
+            # [[[TODO: HACK - WDW we need to be defensive because of
+            # Gecko's broken a11y hierarchies, so we make this much
+            # more complex than it really has to be.]]]
+            #
+            if not previousObj:
+                if obj.role != rolenames.ROLE_DOCUMENT_FRAME:
+                    previousObj = obj.parent
+            else:
+                while previousObj.childCount:
+                    index = previousObj.childCount - 1
+                    while index >= 0:
+                        child = previousObj.child(index)
+                        if isinstance(child, atspi.Accessible):
+                            previousObj = child
+                            break
+                        else:
+                            index -= 1
+                    if index < 0:
+                        break
 
         return previousObj
 
@@ -2468,17 +2501,68 @@ class Script(default.Script):
 
         nextObj = None
 
-        if obj.childCount:
-            nextObj = obj.child(0)
-        elif (obj.index + 1) < obj.parent.childCount:
-            nextObj = obj.parent.child(obj.index + 1)
-        else:
-            candidate = obj
+        # If the object has children, we'll choose the first one.
+        #
+        # [[[TODO: HACK - WDW Gecko's broken hierarchies make this
+        # a bit of a challenge.]]]
+        #
+        index = 0
+        while index < obj.childCount:
+            child = obj.child(index)
+            if isinstance(child, atspi.Accessible):
+                nextObj = child
+                break
+            else:
+                index += 1
+
+        # Otherwise, we'll look to the next sibling.
+        #
+        # [[[TODO: HACK - WDW Gecko's broken hierarchies make this
+        # a bit of a challenge.]]]
+        #
+        if not nextObj:
+            index = obj.index + 1
+            while index < obj.parent.childCount:
+                child = obj.parent.child(index)
+                if isinstance(child, atspi.Accessible):
+                    nextObj = child
+                    break
+                else:
+                    index += 1
+
+        # If there is no next sibling, we'll move upwards.
+        #
+        candidate = obj
+        while not nextObj:
+            # Go up until we find a parent that might have a sibling to
+            # the right for us.
+            #
             while (candidate.index >= (candidate.parent.childCount - 1)) \
                 and (candidate.role != rolenames.ROLE_DOCUMENT_FRAME):
                 candidate = candidate.parent
+
+            # Now...let's get the sibling.
+            #
+            # [[[TODO: HACK - WDW Gecko's broken hierarchies make this
+            # a bit of a challenge.]]]
+            #
             if candidate.role != rolenames.ROLE_DOCUMENT_FRAME:
-                nextObj = candidate.parent.child(candidate.index + 1)
+                index = candidate.index + 1
+                while index < candidate.parent.childCount:
+                    child = candidate.parent.child(index)
+                    if isinstance(child, atspi.Accessible):
+                        nextObj = child
+                        break
+                    else:
+                        index += 1
+
+                # We've exhausted trying to get all the children, but
+                # Gecko's broken hierarchy has failed us for all of
+                # them.  So, we need to go higher.
+                #
+                candidate = candidate.parent
+            else:
+                break
 
         return nextObj
 
@@ -2500,7 +2584,8 @@ class Script(default.Script):
 
         obj = self.findPreviousObject(currentObj)
         while obj:
-            if (not obj in ancestors) and (obj.role in roles):
+            if (not obj in ancestors) and (obj.role in roles) \
+               and (not self.isUselessObject(obj)):
                 return self.findFirstCaretContext(obj, 0)
             else:
                 obj = self.findPreviousObject(obj)
@@ -2527,7 +2612,8 @@ class Script(default.Script):
 
         obj = self.findNextObject(currentObj)
         while obj:
-            if (not obj in ancestors) and (obj.role in roles):
+            if (not obj in ancestors) and (obj.role in roles) \
+                and (not self.isUselessObject(obj)):
                 return self.findFirstCaretContext(obj, 0)
             else:
                 obj = self.findNextObject(obj)
