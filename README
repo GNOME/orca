@@ -1,4 +1,4 @@
-Orca v2.17.91
+Orca v2.17.92
 
 Introduction
 ========================================================================
@@ -18,7 +18,7 @@ AT-SPI include the GNOME GTK+ toolkit, the Java platform's Swing
 toolkit, OpenOffice, and Mozilla.  AT-SPI support for the KDE Qt
 toolkit is currently being pursued.
 
-The focus for Orca v2.17.91 has been to provide usable access to key
+The focus for Orca v2.17.92 has been to provide usable access to key
 office productivity applications, including the following:
 
 Application Class        Application
@@ -90,6 +90,23 @@ or
 
    PYTHON=/usr/bin/python2.4 ./configure
 
+NOTE FOR BRLTTY USERS:
+
+If you are using BrlTTY v3.8, Orca depends upon the Python bindings
+for BrlAPI.  You can determine if the Python bindings for BrlAPI are
+installed by running the following command:
+
+python -c "import brlapi"
+
+If you get the following error, the Python bindings for BrlAPI are not
+installed.  This is most likely because whoever built BrlTTY did not
+have Pyrex installed before building BrlTTY:
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ImportError: No module named brlapi
+
+If you run into this, install python-pyrex and rebuild/reinstall BrlTTY.
 
 Running Orca
 ========================================================================
