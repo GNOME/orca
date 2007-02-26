@@ -2585,7 +2585,7 @@ class Script(default.Script):
         obj = self.findPreviousObject(currentObj)
         while obj:
             if (not obj in ancestors) and (obj.role in roles) \
-               and (not self.isUselessObject(obj)):
+               and (not self.isLayoutOnly(obj)):
                 return self.findFirstCaretContext(obj, 0)
             else:
                 obj = self.findPreviousObject(obj)
@@ -2613,7 +2613,7 @@ class Script(default.Script):
         obj = self.findNextObject(currentObj)
         while obj:
             if (not obj in ancestors) and (obj.role in roles) \
-                and (not self.isUselessObject(obj)):
+                and (not self.isLayoutOnly(obj)):
                 return self.findFirstCaretContext(obj, 0)
             else:
                 obj = self.findNextObject(obj)
@@ -3088,9 +3088,15 @@ class Script(default.Script):
 
         crossedLineBoundary = False
         [lastObj, lastCharacterOffset] = [obj, characterOffset]
+        previousChar = None
         while obj:
             extents = self.getExtents(
                 obj, characterOffset, characterOffset + 1)
+            if characterOffset > 0:
+                previousChar = \
+                        obj.text.getText(characterOffset - 1, characterOffset)
+            currentChar = obj.text.getText(characterOffset,
+                                           characterOffset + 1)
 
             #print "GPL LOOKING AT", obj.role, extents
 
@@ -3104,7 +3110,10 @@ class Script(default.Script):
                 if not self.onSameLine(extents, lineExtents):
                     if not crossedLineBoundary:
                         lineExtents = extents
-                        crossedLineBoundary = True
+                        if currentChar != "\n":
+                            crossedLineBoundary = True
+                        elif previousChar == "\n":
+                            crossedLineBoundary = True
                     else:
                         break
                 elif crossedLineBoundary \
@@ -3152,9 +3161,15 @@ class Script(default.Script):
 
         crossedLineBoundary = False
         [lastObj, lastCharacterOffset] = [obj, characterOffset]
+        previousChar = None
         while obj:
             extents = self.getExtents(
                 obj, characterOffset, characterOffset + 1)
+            if characterOffset > 0:
+                previousChar = \
+                        obj.text.getText(characterOffset - 1, characterOffset)
+            currentChar = \
+                        obj.text.getText(characterOffset, characterOffset + 1)
 
             #print "GNL LOOKING AT", obj.role, extents
 
@@ -3168,8 +3183,11 @@ class Script(default.Script):
                 if not self.onSameLine(extents, lineExtents):
                     if not crossedLineBoundary:
                         lineExtents = extents
-                        crossedLineBoundary = True
-                        if arrowToLineBeginning:
+                        if currentChar != "\n":
+                            crossedLineBoundary = True
+                        elif previousChar == "\n":
+                            crossedLineBoundary = True
+                        if crossedLineBoundary and arrowToLineBeginning:
                             [lastObj, lastCharacterOffset] = \
                                 [obj, characterOffset]
                             break
@@ -3187,12 +3205,17 @@ class Script(default.Script):
                   self.findNextCaretInOrder(obj, characterOffset)
 
         #print "GNL ENDED UP AT", lastObj.role, lineExtents
+        #print "GNL ENDED UP AT", lastObj
+        #print "                ", lastObj.role, lastCharacterOffset
+        #print "                '%s'" % self.getText(lastObj, 0, -1)
+        #print "                '%s'" % self.getText(lastObj,
+        #                                            lastCharacterOffset,
+        #                                            lastCharacterOffset + 1)
 
         self.setCaretPosition(lastObj, lastCharacterOffset)
         self.updateBraille(lastObj)
         self.speakContents(self.getLineContentsAtOffset(lastObj,
                                                         lastCharacterOffset))
-
         # Debug...
         #
         #contents = self.getLineContentsAtOffset(lastObj, lastCharacterOffset)

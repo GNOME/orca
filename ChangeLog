@@ -1,3 +1,8 @@
+2007-02-26  Willie Walker <william.walker@sun.com>
+
+	* src/orca/Gecko.py: fix for bug 411261 to better navigate by
+	line in the presence of linebreaks (<br>'s) in HTML content.
+	
 2007-02-25  Willie Walker <william.walker@sun.com>
 
 	* NEWS, configure.in, README: initial prep for v2.17.92.
