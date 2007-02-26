@@ -1,0 +1,41 @@
+<html>
+<head>
+<style type="text/css">
+fieldset legend { display: none; }
+a:focus { overflow:hidden }
+</style>
+<title>Hey Nerd</title>
+</head>
+<body>
+    <h4>Stories</h4>
+    <h4>About</h4>
+    <h4>Services</h4>
+    <h4><a href="foo">Science</a></h4>
+    <h4><a href="/tags">Recent Tags</a></h4>
+    <h4>Slashdot Login</h4>
+        <form action="login.pl" method="post">
+          <fieldset>
+  	    <legend>Log in</legend>
+	    <label>Nickname</label>
+	    <input type="text" name="unickname" size="20" value="">
+	    <label>Password</label>
+	    <input type="hidden" name="returnto" value="foo">
+	    <input type="hidden" name="op" value="userlogin">
+	    <input type="password" name="upasswd" size="20">
+	    <input type="submit" name="userlogin" value="Log in" class="button">
+	  </fieldset>
+        </form>
+    <h4>Some Poll</h4>
+        <form action="foo" method="post">
+          <fieldset>
+            <legend>Poll</legend>
+            <input type="hidden" name="qid" value="1392">
+            <input type="hidden" name="section" value="mainpage">
+            <b>What is your favorite poison?</b>
+            <br><input type="radio" name="aid" value="1">Some polls
+          </fieldset>
+        </form>
+    <h4><a href="foo">Book Reviews</a></h4>
+    <h4>Older Stuff</h4>
+</body>
+</html>
