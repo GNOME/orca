@@ -1,11 +1,7 @@
 2.17.92 - 26-Feb-2007
 
-* Much more work on Gecko.py support for Firefox.
-
-* Fix for bug 350674 to announce when a new folder is opened in 
-  nautilus and announce number of items.  NOTE: this came in after
-  the string freeze.  If our string break request is not approved,
-  we'll need to pull this and defer it to GNOME 2.19.x.
+* Much more work on Gecko.py support for Firefox.  Firefox support
+  still has a ways to go, both inside Firefox itself and inside Orca.
 
 * Fix for bug 412058 to terminate the python process better when it
   receives a TERM signal.  Note that one must send the TERM signal
@@ -42,6 +38,7 @@
     en_GB   English/British      David Lodge
     fi      Finnish              Ilkka Tuohela
     fr      French               Jonathan Ernst and Stéphane Raimbault
+    it      Italian              Luca Ferretti
     ko      Korean               Changwoo Ryu
     nb      Norwegian Bokmål     Kjartan Maraas and Sigurd Gartmann
     pl      Polish               Artur Flints and GNOME PL Team

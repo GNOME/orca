@@ -67,7 +67,6 @@ DOC_FILES = \
 	orca.scripts.liferea \
 	orca.scripts.metacity \
 	orca.scripts.Mozilla \
-	orca.scripts.nautilus \
 	orca.scripts.planner \
 	orca.scripts.self_voicing \
 	orca.scripts.StarOffice \
