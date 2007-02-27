@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2006 Sun Microsystems Inc.
+# Copyright 2004-2007 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,7 +22,7 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import gobject
@@ -419,7 +419,10 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                 atspi.Accessible.deleteAccessible(event.source)
                 return
 
-            debug.printDetails(debug.LEVEL_FINEST, "    ", event.source)
+            if (not debug.eventDebugFilter) \
+                or (debug.eventDebugFilter \
+                    and debug.eventDebugFilter.match(event.type)):
+                debug.printDetails(debug.LEVEL_FINEST, "    ", event.source)
 
         except CORBA.COMM_FAILURE:
             debug.printException(debug.LEVEL_WARNING)
@@ -618,8 +621,12 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                 if settings.debugEventQueue:
                     self._enqueueEventCount -= 1
                 return
-            debug.println(debug.LEVEL_FINEST,
-                          "---------> QUEUEING EVENT %s" % e.type)
+
+            if (not debug.eventDebugFilter) \
+                or (debug.eventDebugFilter \
+                    and debug.eventDebugFilter.match(e.type)):
+                debug.println(debug.LEVEL_FINEST,
+                              "---------> QUEUEING EVENT %s" % e.type)
 
         if event:
             if settings.debugEventQueue:
@@ -711,12 +718,12 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                               "\n^^^^^ PROCESS BRAILLE EVENT %d ^^^^^"\
                               % event.event)
             else:
-                debug.println(debug.LEVEL_FINEST, "DEQUEUED EVENT %s <----------" \
-                              % event.type)
-
                 if (not debug.eventDebugFilter) \
                     or (debug.eventDebugFilter \
                         and debug.eventDebugFilter.match(event.type)):
+                    debug.println(debug.LEVEL_FINEST,
+                                  "DEQUEUED EVENT %s <----------" \
+                                  % event.type)
                     debug.println(debug.eventDebugLevel,
                                   "\nvvvvv PROCESS OBJECT EVENT %s vvvvv" \
                                   % event.type)

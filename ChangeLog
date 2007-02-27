@@ -1,5 +1,12 @@
 2007-02-27  Willie Walker <william.walker@sun.com>
 
+	* src/orca/focus_tracking_presenter.py, src/orca/orca_prefs.py:
+	allow for better filtering of events.  Also include sample line
+	in user-settings.py (commented out) to show how to eliminate
+	logging of bounds-changed events.
+	
+2007-02-27  Willie Walker <william.walker@sun.com>
+
 	* bugs/bugs.html: add more Firefox bugs.
 	
 2007-02-26  Willie Walker <william.walker@sun.com>
