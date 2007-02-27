@@ -1,3 +1,7 @@
+2007-02-27  Joanmarie Diggs <j-diggs@comcast.net>
+
+	* bugs/bugs.html: added another Firefox/Thunderbird bug.
+
 2007-02-27  Lynn Monsanto <lynn.monsanto@sun.com>
 
         * src/orca/test_coverage.py, src/orca/coverage.py
