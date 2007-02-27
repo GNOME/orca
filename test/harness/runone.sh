@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# set -x
+
 # Set up our accessibility environment for those apps that 
 # don't do it on their own.
 #
@@ -25,24 +27,31 @@ fi
 echo "Using settings file:" $SETTINGS_FILE
 sed "s^%debug%^$debugFile.orca^g" $SETTINGS_FILE > user-settings.py
 
+if [ -n "$3" ]
+then
+    APP_NAME=$2
+    getCodeCoverage=$3
+else
+    APP_NAME=gnome-terminal
+    getCodeCoverage=$2
+fi
+echo "getCodeCoverage=" $getCodeCoverage
+
 # Run the event listener...
 #
 # python `dirname $0`/event_listener.py > $debugFile.events &
 # sleep 2
 
-# Run orca and let it settle in.
+# Run orca and let it settle in, unless we are getting code coverage
 #
-orca &
-sleep 5
+if [ "$getCodeCoverage" -eq 0 ]
+then
+    orca &
+    sleep 5
+fi
 
 # Run the app (or gnome-terminal if no app was given) and let it settle in.
 #
-if [ -n "$2" ]
-then
-    APP_NAME=$2
-else
-    APP_NAME=gnome-terminal
-fi
 $APP_NAME &
 APP_PID=$!
 sleep 5
@@ -53,7 +62,11 @@ python `dirname $0`/../../src/tools/play_keystrokes.py < $1
 
 # Terminate the running application and Orca
 #
-orca --quit > /dev/null 2>&1
+
+if [ "$getCodeCoverage" -eq 0 ]
+then
+    orca --quit > /dev/null 2>&1
+fi
 
 kill -9 $APP_PID > /dev/null 2>&1
 

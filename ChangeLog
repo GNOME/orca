@@ -1,3 +1,26 @@
+2007-02-27  Lynn Monsanto <lynn.monsanto@sun.com>
+
+        * src/orca/test_coverage.py, src/orca/coverage.py
+	src/orca/orca.in, src/test/runone.sh, src/test/runall.sh: 
+	
+	First cut at getting code test coverage for Orca. Coverage
+	testing is done using the coverage.py package developed by
+	Ned Batchelder.
+	(http://www.nedbatchelder.com/code/modules/rees-coverage.html)
+	I put src/orca/coverage.py under SVN control since it it
+	not normally included in Python distributions.
+
+	src/orca/test_coverage.py needs a lot of refinement! For example,
+	the orca modules to test were manually entered into the source
+	file.
+
+	The code coverage reports need to be converted to a more
+	friendly HTML format.
+
+	To invoke code coverage testing: run runall.sh with the "-Z"
+	flag.
+
+
 2007-02-27  Willie Walker <william.walker@sun.com>
 
 	* src/orca/focus_tracking_presenter.py, src/orca/orca_prefs.py:
