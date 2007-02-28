@@ -7,14 +7,11 @@
 # -r <resultsDir>    - alternate results directory (default is ../results).
 #
 
-# set -x
-
 OPERATING_SYSTEMS="SunOS Linux"
 foo=`dirname $0`
 harnessDir=`cd $foo; pwd`
 keystrokesDir=$harnessDir/../keystrokes
 resultsDir=$harnessDir/../results
-getCodeCoverage=0
 
 process_cl () {
     while [ $# != 0 ]; do
@@ -37,9 +34,6 @@ process_cl () {
                 ;;
             -s )
                 stepMode=1
-		;;
-            -Z )
-                getCodeCoverage=1
                 ;;
             -h|--help)
                 echo "Usage: $0 [options]"
@@ -62,15 +56,6 @@ process_cl () {
 # Process the users command line options.
 #
 process_cl "${@}"
-
-# Run orca and let it settle in, unless we are getting code coverage
-#
-if [ "$getCodeCoverage" -eq 1 ]
-then
-    echo "STARTING ORCA -Z"
-    orca -Z &
-    sleep 5
-fi
 
 # Look in the keystrokes directory for directories.
 # The name of each directory under the keystrokes directory
@@ -124,7 +109,7 @@ do
         echo Running $testFile
         if [ "$found" -gt 0 ]
         then
-          $harnessDir/runone.sh $testFile $application $getCodeCoverage
+          $harnessDir/runone.sh $testFile $application
         else
           osType=`uname`
           for os in $OPERATING_SYSTEMS; do
@@ -133,13 +118,13 @@ do
               found=1
               if [ $osType == $os ]
               then
-                $harnessDir/runone.sh $testFile $getCodeCoverage
+                $harnessDir/runone.sh $testFile
               fi
             fi
           done
           if [ "$found" -eq 0 ]
           then
-            $harnessDir/runone.sh $testFile $getCodeCoverage
+            $harnessDir/runone.sh $testFile
           fi
         fi
         sleep 5

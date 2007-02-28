@@ -1,3 +1,13 @@
+2007-02-27  Willie Walker <william.walker@sun.com>
+
+	* src/orca/test_coverage.py, src/orca/coverage.py
+	src/orca/orca.in, src/test/runone.sh, src/test/runall.sh: revert
+	the test coverage change.  It's too risky for GNOME 2.18.  Let's
+	also wait to discuss this after the branch for GNOME 2.19.  I'd
+	like to explore ways to not require any changes under the src
+	directory.  My hope is that it can all be isolated to the
+	test/harness directory.
+ 	
 2007-02-27  Joanmarie Diggs <j-diggs@comcast.net>
 
 	* bugs/bugs.html: added another Firefox/Thunderbird bug.

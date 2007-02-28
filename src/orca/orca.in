@@ -112,34 +112,6 @@ runOrca()
     fi
 }
 
-# get code coverage
-#
-getCodeCoverage()
-{
-    if [ -z "$1" ]
-    then
-        cleanup
-    fi
-    exec_prefix=@prefix@
-    PYTHONPATH=@pyexecdir@
-    export PYTHONPATH
-
-    # We'll save and restore the Caps_Lock as a modifier just in case
-    # the user is using the Caps_Lock as the Orca modifier key.
-    #
-    if [ "x$DISPLAY" != "x" ]
-    then
-        CAPSLOCKSETTING=`xmodmap | grep Caps_Lock | cut -f1`
-    fi
-
-    # run the orca test_coverage
-    @PYTHON@ -c "import orca.test_coverage; orca.test_coverage.main()" "$ARGS" &
-    if [ "x$CAPSLOCKSETTING" != "x" ]
-    then
-        xmodmap -e "add $CAPSLOCKSETTING = Caps_Lock"
-    fi
-}
-
 # Runs a watchdog process in the background.  It merely attempts to
 # get to Orca via some other means than the AT-SPI.  Here we use
 # Orca's http server at port 20433.  If it doesn't respond, then
@@ -269,11 +241,6 @@ else
     if [ `grep -c "\-q" <<< $ARGS` -gt 0 ]
     then
         cleanup
-
-    elif [ `grep -c "\-Z" <<< $ARGS` -gt 0 ]
-    then
-        getCodeCoverage
-
     else
         # If the user passed in a flag that results in orca only
         # outputting data to the console, don't kill any other orca

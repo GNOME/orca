@@ -13,7 +13,6 @@ orca_python_PYTHON = \
 	braille.py \
 	braillegenerator.py \
 	brlmon.py \
-	coverage.py \
 	chnames.py \
 	debug.py \
 	dectalk.py \
@@ -54,7 +53,6 @@ orca_python_PYTHON = \
 	speech.py \
 	speechgenerator.py \
 	speechserver.py \
-	test_coverage.py \
 	util.py \
 	where_am_I.py
 

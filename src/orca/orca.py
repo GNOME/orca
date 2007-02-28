@@ -1190,7 +1190,6 @@ def shutdownOnSignal(signum, frame):
             #
             speech.shutdown()
             shutdown()
-        return
         cleanExit = True
     except:
         cleanExit = False
@@ -1291,7 +1290,7 @@ def main():
         #
         opts, args = getopt.getopt(
             arglist,
-            "?stnvd:e:u:Z",
+            "?stnvd:e:u:",
             ["help",
              "user-prefs-dir=",
              "enable=",
@@ -1350,8 +1349,6 @@ def main():
                 showGUI = False
             if opt in ("-n", "--no-setup"):
                 bypassSetup = True
-            if opt in ("-Z"):
-                debug.println(debug.LEVEL_FINE, "STARTED CODE COVERAGE")
             if opt in ("-?", "--help"):
                 usage()
                 os._exit(0)
