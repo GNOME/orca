@@ -1,19 +1,18 @@
-# translation of orca.HEAD.ar.po to Arabic
+# translation of orca.HEAD.ar.po to
 # Copyright (C) 2006 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Djihed Afifi <djihed@gmail.com>, 2006.
 # Khaled Hosny <khaledhosny@eglug.org>, 2006, 2007.
 # Ahmad Farghal <ahmad.farghal@gmail.com>, 2007
-
 msgid ""
 msgstr ""
-"Project-Id-Version: orca.gnome-2-16\n"
+"Project-Id-Version: orca.HEAD.ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-16 05:51-0800\n"
-"PO-Revision-Date: 2007-02-09 19:02+0200\n"
-"Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
-"Language-Team: Arabic <doc@arabeyes.org>\n"
+"POT-Creation-Date: 2007-02-28 11:37+0000\n"
+"PO-Revision-Date: 2007-02-22 20:35+0200\n"
+"Last-Translator: \n"
+"Language-Team:  <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -427,9 +426,9 @@ msgid "Switches to the next presentation manager."
 msgstr "يبدل إلى مدير العرض التالي."
 
 #: ../src/orca/default.py:1210 ../src/orca/default.py:1437
-#: ../src/orca/default.py:3012 ../src/orca/default.py:3146
-#: ../src/orca/default.py:3151 ../src/orca/default.py:3244
-#: ../src/orca/default.py:3249 ../src/orca/Gecko.py:2774
+#: ../src/orca/default.py:3001 ../src/orca/default.py:3135
+#: ../src/orca/default.py:3140 ../src/orca/default.py:3233
+#: ../src/orca/default.py:3238 ../src/orca/Gecko.py:2906
 #: ../src/orca/scripts/Evolution.py:399 ../src/orca/scripts/Evolution.py:884
 #: ../src/orca/scripts/StarOffice.py:1807
 #: ../src/orca/scripts/StarOffice.py:1816 ../src/orca/where_am_I.py:994
@@ -463,48 +462,44 @@ msgstr "مستوى الشجرة %d"
 msgid "entire document selected"
 msgstr "كامل المستند"
 
-#: ../src/orca/default.py:2568
+#: ../src/orca/default.py:2557
 msgid "Speak "
 msgstr "تكلم"
 
-#: ../src/orca/default.py:2571
+#: ../src/orca/default.py:2560
 msgid "row"
 msgstr "صف"
 
-#: ../src/orca/default.py:2573 ../src/orca/rolenames.py:470
+#: ../src/orca/default.py:2562 ../src/orca/rolenames.py:470
 #: ../src/orca/rolenames.py:472
 msgid "cell"
 msgstr "خلية"
 
-#: ../src/orca/default.py:2622 ../src/orca/where_am_I.py:1050
+#: ../src/orca/default.py:2611 ../src/orca/where_am_I.py:1050
 msgid "bold"
 msgstr "سميك"
 
-#: ../src/orca/default.py:2624
+#: ../src/orca/default.py:2613
 msgid " pixels"
 msgstr " بكسلات"
 
-#: ../src/orca/default.py:2738
+#: ../src/orca/default.py:2727
 msgid "Entering learn mode.  Press any key to hear its function. "
 msgstr "الدخول إلى نمط التعلم. اضغط أي زر لسماع وظيفته."
 
-#: ../src/orca/default.py:2739
-msgid "To exit learn mode, press the escape key."
-msgstr "للخروج من نمط نسق التعلم. اضغط ESC ."
-
-#: ../src/orca/default.py:2740
+#: ../src/orca/default.py:2729
 msgid "Learn mode.  Press escape to exit."
 msgstr "نسق التعلم. اضغط  ESC للخروج."
 
-#: ../src/orca/default.py:2752 ../src/orca/default.py:2753
+#: ../src/orca/default.py:2741 ../src/orca/default.py:2742
 msgid "Exiting learn mode."
 msgstr "الخروج من نمط التعلم."
 
-#: ../src/orca/default.py:3014 ../src/orca/default.py:3153
+#: ../src/orca/default.py:3003 ../src/orca/default.py:3142
 msgid "white space"
 msgstr "فراغ"
 
-#: ../src/orca/default.py:3366 ../src/orca/default.py:3367
+#: ../src/orca/default.py:3355 ../src/orca/default.py:3356
 msgid "string not found"
 msgstr "غير قادر على العثور على العبارة"
 
@@ -520,37 +515,37 @@ msgstr "اللف للأسفل"
 msgid "Wrapping to Top"
 msgstr "اللف للأعلى"
 
-#: ../src/orca/focus_tracking_presenter.py:746
+#: ../src/orca/focus_tracking_presenter.py:753
 msgid "No focus"
 msgstr "لا تركيز"
 
-#: ../src/orca/focus_tracking_presenter.py:841
+#: ../src/orca/focus_tracking_presenter.py:848
 msgid "Switching to focus tracking mode."
 msgstr "تحوّل إلى نسق تتبع التركيز"
 
-#: ../src/orca/Gecko.py:1273 ../src/orca/rolenames.py:332
+#: ../src/orca/Gecko.py:1262 ../src/orca/rolenames.py:332
 #: ../src/orca/scripts/acroread.py:251 ../src/orca/scripts/StarOffice.py:1090
 msgid "link"
 msgstr "وصلة"
 
-#: ../src/orca/Gecko.py:1292
+#: ../src/orca/Gecko.py:1281
 msgid "Loading.  Please wait."
 msgstr "جاري التحميل. الرجاء الإنتظار."
 
-#: ../src/orca/Gecko.py:1299
+#: ../src/orca/Gecko.py:1287
 #, python-format
 msgid "Finished loading %s."
 msgstr "انتهى تحميل %s."
 
-#: ../src/orca/Gecko.py:1304
+#: ../src/orca/Gecko.py:1293
 msgid "Finished loading."
 msgstr "انتهى التحميل"
 
-#: ../src/orca/Gecko.py:3078 ../src/orca/Gecko.py:3089
+#: ../src/orca/Gecko.py:3233 ../src/orca/Gecko.py:3244
 msgid "No more headings."
 msgstr "لا عناوين أخرى."
 
-#: ../src/orca/Gecko.py:3100 ../src/orca/Gecko.py:3111
+#: ../src/orca/Gecko.py:3255 ../src/orca/Gecko.py:3266
 msgid "No more chunks."
 msgstr "لا قطع أخرى."
 
@@ -589,11 +584,11 @@ msgid "Switching to hierarchical navigation mode."
 msgstr "تحوّل إلى نسق التصفخ الهيكلي"
 
 #: ../src/orca/J2SE-access-bridge.py:74 ../src/orca/speechgenerator.py:955
-#: ../src/orca/util.py:1533
+#: ../src/orca/util.py:1541
 msgid "selected"
 msgstr "مُنتقى"
 
-#: ../src/orca/J2SE-access-bridge.py:78 ../src/orca/util.py:1541
+#: ../src/orca/J2SE-access-bridge.py:78 ../src/orca/util.py:1549
 msgid "unselected"
 msgstr "غير منتقى"
 
@@ -1112,37 +1107,37 @@ msgstr "وداعا."
 msgid "Goodbye."
 msgstr "وداعا."
 
-#: ../src/orca/orca.py:1209
+#: ../src/orca/orca.py:1211
 msgid "Usage: orca [OPTION...]"
 msgstr "الإستعمال: orca [OPTION...]"
 
-#: ../src/orca/orca.py:1211
+#: ../src/orca/orca.py:1213
 msgid "-?, --help                   Show this help message"
 msgstr "-?, --help                   أظهر المساعدة"
 
-#: ../src/orca/orca.py:1212
+#: ../src/orca/orca.py:1214
 #, python-format
 msgid "-v, --version                %s"
 msgstr "-v, --version                %s"
 
-#: ../src/orca/orca.py:1213
+#: ../src/orca/orca.py:1215
 msgid "-s, --setup, --gui-setup     Set up user preferences"
 msgstr "-s, --setup, --gui-setup     اعداد تفضيلات المستخدم"
 
-#: ../src/orca/orca.py:1214
+#: ../src/orca/orca.py:1216
 msgid "-t, --text-setup             Set up user preferences (text version)"
 msgstr "-t, --text-setup             إعداد تفضيلات المستخدم نصيا"
 
-#: ../src/orca/orca.py:1215
+#: ../src/orca/orca.py:1217
 msgid "-n, --no-setup               Skip set up of user preferences"
 msgstr "-n, --no-setup               تخطّى تحديد تفضيلات المستخدم"
 
-#: ../src/orca/orca.py:1216
+#: ../src/orca/orca.py:1218
 msgid ""
 "-u, --user-prefs-dir=dirname Use alternate directory for user preferences"
 msgstr "-u, --user-prefs-dir=dirname استخدم دليل بديل لتفضيلات المستخدم"
 
-#: ../src/orca/orca.py:1217
+#: ../src/orca/orca.py:1219
 msgid ""
 "-e, --enable=[speech|braille|braille-monitor|magnifier|main-window] Force "
 "use of option"
@@ -1150,7 +1145,7 @@ msgstr ""
 "-e, --enable=[speech|braille|braille-monitor|magnifier|main-window] اجبر على "
 "استخدام خيار"
 
-#: ../src/orca/orca.py:1218
+#: ../src/orca/orca.py:1220
 msgid ""
 "-d, --disable=[speech|braille|braille-monitor|magnifier|main-window] Prevent "
 "use of option"
@@ -1158,12 +1153,12 @@ msgstr ""
 "-d, --disable=[speech|braille|braille-monitor|magnifier|main-window] امنع "
 "استخدام خيار"
 
-#: ../src/orca/orca.py:1219
+#: ../src/orca/orca.py:1221
 msgid "-q, --quit                   Quits Orca (if shell script used)"
 msgstr ""
 "-q, --quit                  إنهاء أوركا (ان تم استخدام برنامج نصي للصدفة)"
 
-#: ../src/orca/orca.py:1221
+#: ../src/orca/orca.py:1223
 msgid ""
 "If Orca has not been previously set up by the user, Orca\n"
 "will automatically launch the preferences set up unless\n"
@@ -1173,7 +1168,7 @@ msgstr ""
 "سيطلق أوركا حوار التفضيلات إلا إذا كانت الخيارات\n"
 "-n أو --no-setup محذّدة."
 
-#: ../src/orca/orca.py:1223
+#: ../src/orca/orca.py:1225
 msgid "Report bugs to orca-list@gnome.org."
 msgstr "تقرير العلل لـ orca-list@gnome.org."
 
@@ -2135,7 +2130,7 @@ msgstr "كلمة السّر"
 
 #: ../src/orca/rolenames.py:382
 msgid "password"
-msgstr "كلمة مرور"
+msgstr "كلمة سر"
 
 #: ../src/orca/rolenames.py:385
 msgid "popmnu"
@@ -2806,11 +2801,6 @@ msgstr "مكتب"
 msgid "inaccessible"
 msgstr "مستحيل الوصول"
 
-#: ../src/orca/scripts/nautilus.py:103
-#, python-format
-msgid " %d items"
-msgstr " %d عناصر"
-
 #: ../src/orca/scripts/planner.py:77 ../src/orca/scripts/planner.py:138
 msgid "Display more options"
 msgstr "عرض خيارات أخرى"
@@ -2914,39 +2904,15 @@ msgstr "له وظيفة"
 msgid "Cell "
 msgstr "خلية"
 
-#: ../src/orca/scripts/Thunderbird.py:132
-#: ../src/orca/scripts/Thunderbird.py:137
-#: ../src/orca/scripts/Thunderbird.py:546
-#: ../src/orca/scripts/Thunderbird.py:551
-#, python-format
-msgid "%s text %s %s"
-msgstr "%s نص %s %s"
-
-#: ../src/orca/scripts/Thunderbird.py:134
-#: ../src/orca/scripts/Thunderbird.py:548
-#, python-format
-msgid "%s text %s"
-msgstr "%s نص %s"
-
-#: ../src/orca/scripts/Thunderbird.py:139
-#: ../src/orca/scripts/Thunderbird.py:553
-#, python-format
-msgid "text %s %s"
-msgstr "نص %s %s"
-
-#: ../src/orca/scripts/Thunderbird.py:220
-msgid ":"
-msgstr ":"
-
 #. Don't speak chrome URLs.
-#: ../src/orca/scripts/Thunderbird.py:358
-#: ../src/orca/scripts/Thunderbird.py:473
-#: ../src/orca/scripts/Thunderbird.py:488
+#: ../src/orca/scripts/Thunderbird.py:235
+#: ../src/orca/scripts/Thunderbird.py:315
+#: ../src/orca/scripts/Thunderbird.py:330
 msgid "chrome://"
 msgstr "chrome://"
 
-#: ../src/orca/scripts/Thunderbird.py:480
-#: ../src/orca/scripts/Thunderbird.py:495
+#: ../src/orca/scripts/Thunderbird.py:322
+#: ../src/orca/scripts/Thunderbird.py:337
 #, python-format
 msgid "%s panel"
 msgstr "%s لوحة"
@@ -2959,43 +2925,43 @@ msgstr "%s لوحة"
 #. translation is by running the application and then viewing its
 #. name in the main window of at-poke.
 #.
-#: ../src/orca/settings.py:531
+#: ../src/orca/settings.py:532
 msgid "[\\S\\s]*StarOffice[\\s\\S]*"
 msgstr "[\\S\\s]*StarOffice[\\s\\S]*"
 
-#: ../src/orca/settings.py:532
+#: ../src/orca/settings.py:533
 msgid "soffice.bin"
 msgstr "soffice.bin"
 
-#: ../src/orca/settings.py:533
+#: ../src/orca/settings.py:534
 msgid "[Ee]volution"
 msgstr "[Ee]volution"
 
-#: ../src/orca/settings.py:534
+#: ../src/orca/settings.py:535
 msgid "Deer Park"
 msgstr "ديير بارك"
 
-#: ../src/orca/settings.py:535
+#: ../src/orca/settings.py:536
 msgid "yelp"
 msgstr "يلب"
 
-#: ../src/orca/settings.py:536
+#: ../src/orca/settings.py:537
 msgid "Bon Echo"
 msgstr "بون إيكو"
 
-#: ../src/orca/settings.py:537
+#: ../src/orca/settings.py:538
 msgid "Minefield"
 msgstr "حقل الألغام"
 
-#: ../src/orca/settings.py:538
+#: ../src/orca/settings.py:539
 msgid "bug-buddy"
 msgstr "باج بادي"
 
-#: ../src/orca/settings.py:539
+#: ../src/orca/settings.py:540
 msgid "vte"
 msgstr "فتي"
 
-#: ../src/orca/settings.py:540
+#: ../src/orca/settings.py:541
 msgid "time-admin"
 msgstr "time-admin"
 
@@ -3035,27 +3001,27 @@ msgstr "السياق هو"
 msgid " %d %s characters "
 msgstr " %d %s محارف"
 
-#: ../src/orca/util.py:1476
+#: ../src/orca/util.py:1484
 msgid "page selected from cursor position"
 msgstr "صفحة مختارة من مكان المؤشّر."
 
-#: ../src/orca/util.py:1480
+#: ../src/orca/util.py:1488
 msgid "page selected to cursor position"
 msgstr "صفحة مختارة إلى مكان المؤشّر."
 
-#: ../src/orca/util.py:1484
+#: ../src/orca/util.py:1492
 msgid "line selected down from cursor position"
 msgstr "مستند مختار تحت مكان المؤشّر."
 
-#: ../src/orca/util.py:1488
+#: ../src/orca/util.py:1496
 msgid "line selected up from cursor position"
 msgstr "مستند مختار فوق مكان المؤشّر."
 
-#: ../src/orca/util.py:1492
+#: ../src/orca/util.py:1500
 msgid "document selected to cursor position"
 msgstr "مستند مختار إلى مكان المؤشّر."
 
-#: ../src/orca/util.py:1496
+#: ../src/orca/util.py:1504
 msgid "document selected from cursor position"
 msgstr "مستند مختار من مكان المؤشّر."
 
@@ -3130,3 +3096,21 @@ msgstr "العنصر %d من %d"
 #: ../src/orca/where_am_I.py:904
 msgid "Read"
 msgstr "اقرأ"
+
+#~ msgid "To exit learn mode, press the escape key."
+#~ msgstr "للخروج من نمط نسق التعلم. اضغط ESC ."
+
+#~ msgid " %d items"
+#~ msgstr " %d عناصر"
+
+#~ msgid "%s text %s %s"
+#~ msgstr "%s نص %s %s"
+
+#~ msgid "%s text %s"
+#~ msgstr "%s نص %s"
+
+#~ msgid "text %s %s"
+#~ msgstr "نص %s %s"
+
+#~ msgid ":"
+#~ msgstr ":"
