@@ -989,6 +989,7 @@ class Script(default.Script):
 
         textLength = paragraph[0].text.characterCount
         startFound = False
+        startOff = 0
         endOff = textLength
         for i in range(0, textLength):
             attributes = paragraph[0].text.getAttributes(i)
