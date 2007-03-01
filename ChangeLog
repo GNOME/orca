@@ -1,3 +1,9 @@
+2007-03-01  Willie Walker <william.walker@sun.com>
+
+        * src/orca/punctuation_settings.py: fix bug 413457 to prevent
+	Orca from speaking various names for the "-" twice in a row
+	in German.
+
 2007-02-28  Joanmarie Diggs <j-diggs@comcast.net>
 
 	* test/html/image-test.html: another test case where Orca
