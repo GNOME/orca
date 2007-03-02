@@ -2101,13 +2101,13 @@ class Script(default.Script):
         if abs(a[1] - b[1]) > 11:
             return False
 
-        # If there's no overlap, they are on different lines.  Keep in
-        # mind "lowest" and "highest" mean visually on the screen, but
-        # that the value is the y coordinate.
+        # If there's an overlap of 1 pixel or less, they are on different
+        # lines.  Keep in mind "lowest" and "highest" mean visually on the
+        # screen, but that the value is the y coordinate.
         #
         highestBottom = min(a[1] + a[3], b[1] + b[3])
         lowestTop     = max(a[1],        b[1])
-        if lowestTop > highestBottom:
+        if lowestTop >= highestBottom - 1:
             return False
 
         return True
@@ -3153,15 +3153,20 @@ class Script(default.Script):
 
         crossedLineBoundary = False
         [lastObj, lastCharacterOffset] = [obj, characterOffset]
-        previousChar = None
         while obj:
             extents = self.getExtents(
                 obj, characterOffset, characterOffset + 1)
-            if characterOffset > 0:
-                previousChar = \
+            if obj.text:
+                if characterOffset > 0:
+                    previousChar = \
                         obj.text.getText(characterOffset - 1, characterOffset)
-            currentChar = obj.text.getText(characterOffset,
-                                           characterOffset + 1)
+                else:
+                    previousChar = None
+                currentChar = obj.text.getText(characterOffset,
+                                               characterOffset + 1)
+            else:
+                previousChar = None
+                currentChar = None
 
             #print "GPL LOOKING AT", obj.role, extents
 
@@ -3201,7 +3206,6 @@ class Script(default.Script):
             [lastObj, lastCharacterOffset, endOffset] = contents[0]
 
         self.setCaretPosition(lastObj, lastCharacterOffset)
-
         self.updateBraille(lastObj)
         self.speakContents(contents)
 
@@ -3226,15 +3230,20 @@ class Script(default.Script):
 
         crossedLineBoundary = False
         [lastObj, lastCharacterOffset] = [obj, characterOffset]
-        previousChar = None
         while obj:
             extents = self.getExtents(
                 obj, characterOffset, characterOffset + 1)
-            if characterOffset > 0:
-                previousChar = \
+            if obj.text:
+                if characterOffset > 0:
+                    previousChar = \
                         obj.text.getText(characterOffset - 1, characterOffset)
-            currentChar = \
+                else:
+                    previousChar = None
+                currentChar = \
                         obj.text.getText(characterOffset, characterOffset + 1)
+            else:
+                previousChar = None
+                currentChar = None
 
             #print "GNL LOOKING AT", obj.role, extents
 
