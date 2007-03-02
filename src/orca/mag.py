@@ -23,7 +23,7 @@ early in development.  One might even say it is pre-prototype.]]]"""
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import bonobo
@@ -253,6 +253,11 @@ def __dumpPropertyBag(obj):
     slots = pbag.getKeys("")
     print "  Available slots: ", pbag.getKeys("")
     for slot in slots:
+        # These crash the magnifier since it doesn't know how to marshall
+        # them to us.
+        #
+        if slot in ["cursor-set", "smoothing-type"]:
+            continue
         print "    About '%s':" % slot
         print "    Doc Title:", pbag.getDocTitle(slot)
         print "    Type:", pbag.getType(slot)
@@ -426,6 +431,8 @@ def applySettings():
 
     _maxROIX = _sourceDisplayBounds.x2 - (_roiWidth / 2)
     _maxROIY = _sourceDisplayBounds.y2 - (_roiHeight / 2)
+
+    _magnifier.addZoomRegion(_zoomer)
 
     #print "MAGNIFIER PROPERTIES:", _magnifier
     #__dumpPropertyBag(_magnifier)

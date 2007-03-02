@@ -1,3 +1,16 @@
+2007-03-02  Willie Walker <william.walker@sun.com>
+
+	* src/orca/mag.py: add addZoomRegion call to get this
+	working better with gnome-mag.  NOTE: the COMPOSITE
+	extension has issues on Ubuntu (perhaps X11R7.2.0).
+	The gnome-mag magnifier should be run with the
+	--ignore-composite flag.  You can force this to 
+	happen by modifying the exe line in 
+	/usr/lib/bonobo/servers/GNOME_Magnifier.server to:
+	type="exe" location="/usr/bin/magnifier --ignore-composite">
+	This will be the default for GNOME 2.18 (or so Carlos
+	and I agreed tonight :-)).
+	
 2007-03-02  Joanmarie Diggs <j-diggs@comcast.net>
 
 	* src/orca/Gecko.py: fix for bug 413253 to keep Orca from
