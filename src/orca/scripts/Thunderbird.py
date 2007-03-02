@@ -43,52 +43,11 @@ from orca.orca_i18n import _
 
 ########################################################################
 #                                                                      #
-# Custom BrailleGenerator                                              #
-#                                                                      #
-########################################################################
-
-class BrailleGenerator(braillegenerator.BrailleGenerator):
-    """Provides a braille generator specific to Gecko.
-    """
-
-    def __init__(self, script):
-        self.debugLevel = debug.LEVEL_FINEST
-
-        self._debug("__init__")
-        braillegenerator.BrailleGenerator.__init__(self, script)
-        
-
-    def _debug(self, msg):
-        """ Convenience method for printing debug messages
-        """
-        debug.println(self.debugLevel, "Thunderbird.BrailleGenerator: "+msg)
-
-
-    def _getBrailleRegionsForText(self, obj):
-        """Get the braille for a text component.
-
-        Arguments:
-        - obj: the text component
-
-        Returns a list where the first element is a list of Regions to display
-        and the second element is the Region which should get focus.
-        """
-
-        # Gecko._getBrailleRegionsForText does not return the correct
-        # braille for Thunderbird. Let the default braillegenerator
-        # handle this.
-        return braillegenerator.BrailleGenerator._getBrailleRegionsForText(
-                self, obj)
-
-
-
-########################################################################
-#                                                                      #
 # Custom SpeechGenerator for Thunderbird                               #
 #                                                                      #
 ########################################################################
 
-class SpeechGenerator(speechgenerator.SpeechGenerator):
+class SpeechGenerator(Gecko.SpeechGenerator):
     """Provides a speech generator specific to Thunderbird.
     """
 
@@ -98,14 +57,12 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         self.debugLevel = debug.LEVEL_FINEST
 
         self._debug("__init__")
-        speechgenerator.SpeechGenerator.__init__(self, script)
-        
+        Gecko.SpeechGenerator.__init__(self, script)
 
     def _debug(self, msg):
         """ Convenience method for printing debug messages
         """
         debug.println(self.debugLevel, "Thunderbird.SpeechGenerator: "+msg)
-        
 
     def getSpeechContext(self, obj, stopAncestor=None):
         """Get the speech that describes the names and role of
@@ -158,8 +115,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             # that starts with "chrome://"
             text = util.getDisplayedText(parent)
             label = util.getDisplayedLabel(parent)
-            if text and (text != label) and len(text) and \
-                   (not text.startswith("chrome://")):
+            if text and (text != label) and len(text) \
+                and (not text.startswith("chrome://")):
                 utterances.append(text)
             if label and len(label):
                 utterances.append(label)
@@ -170,7 +127,6 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         self._debug("'%s'" % utterances)
 
         return utterances
-    
 
 ########################################################################
 #                                                                      #
@@ -193,25 +149,16 @@ class Script(Gecko.Script):
         self.debugLevel = debug.LEVEL_FINEST
 
         Gecko.Script.__init__(self, app)
-        
 
-    def getBrailleGenerator(self):
-        """Returns the braille generator for this script.
-        """
-        return BrailleGenerator(self)
-    
-    
     def getSpeechGenerator(self):
         """Returns the speech generator for this script.
         """
         return SpeechGenerator(self)
-    
 
     def _debug(self, msg):
         """ Convenience method for printing debug messages
         """
         debug.println(self.debugLevel, "Thunderbird.py: "+msg)
-        
 
     def onFocus(self, event):
         """ Called whenever an object gets focus.
@@ -228,10 +175,12 @@ class Script(Gecko.Script):
         self._debug("onFocus: name='%s', role='%s'" % (obj.name, obj.role))
 
         # Let onTextInsertion handle autocompletion.
+        #
         if parent and parent.role == rolenames.ROLE_AUTOCOMPLETE:
             return
 
         # Don't speak chrome URLs.
+        #
         if obj.name.startswith(_("chrome://")):
             return
 
@@ -241,6 +190,7 @@ class Script(Gecko.Script):
         # This fix calls orca.setLocusOfFocus to give focus to the
         # cell at the beginning of the row. It consume the event
         # so Gecko.py doesn't reset the focus.
+        #
         if obj.role == rolenames.ROLE_TABLE_CELL:
             table = parent.table
             row = table.getRowAtIndex(obj.index)
@@ -250,12 +200,12 @@ class Script(Gecko.Script):
             consume = True
 
         # Handle dialogs.
+        #
         if top.role == rolenames.ROLE_DIALOG:
             self._speakEnclosingPanel(obj)
 
         if not consume:
             Gecko.Script.onFocus(self, event)
-            
 
     def onStateChanged(self, event):
         """Called whenever an object's state changes.
@@ -264,12 +214,12 @@ class Script(Gecko.Script):
         - event: the Event
         """
 
-        # For now, we'll bypass the Gecko script's desire to
-        # let someone know when a page has started/completed
-        # loading.
+        # For now, we'll bypass the Gecko script's desire to let
+        # someone know when a page has started/completed loading.  The
+        # reason for this is that getting message content from someone
+        # is counted as loading a page.
         #
         default.Script.onStateChanged(self, event)
-
 
     def onTextInserted(self, event):
         """Called whenever text is inserted into an object.
@@ -278,14 +228,15 @@ class Script(Gecko.Script):
         - event: the Event
         """
         obj = event.source
-        self._debug("onTextInserted: name='%s', role='%s', parent='%s'" %\
-                    (obj.name, obj.role, obj.parent.role))
+        self._debug("onTextInserted: name='%s', role='%s', parent='%s'" \
+                    % (obj.name, obj.role, obj.parent.role))
 
         parent = obj.parent
 
         if parent.role == rolenames.ROLE_AUTOCOMPLETE:
             # Thunderbird does not present all the text in an
             # autocompletion text entry. This is a workaround.
+            #
             speech.stop()
 
             utterances = []
@@ -294,16 +245,14 @@ class Script(Gecko.Script):
             self._debug("onTextInserted: utterances='%s'" % utterances)
 
             speech.speakUtterances(utterances)
-
         else:
             Gecko.Script.onTextInserted(self, event)
-            
 
     def _speakEnclosingPanel(self, obj):
-        # Speak the enclosing panel for the object, if it is
-        # named. Going two containers up the hierarchy appears
-        # to be far enough to find a named panel, if there is one.
-        # Don't speak panels whose name begins with "chrome://"
+        """Speak the enclosing panel for the object, if it is
+        named. Going two containers up the hierarchy appears to be far
+        enough to find a named panel, if there is one.  Don't speak
+        panels whose name begins with 'chrome://'"""
 
         self._debug("_speakEnclosingPanel")
 
@@ -311,26 +260,27 @@ class Script(Gecko.Script):
         if not parent:
             return
 
-        if parent.name != "" and \
-               (not parent.name.startswith(_("chrome://"))) and \
-               parent.role == rolenames.ROLE_PANEL:
+        if parent.name != "" \
+            and (not parent.name.startswith(_("chrome://"))) \
+            and (parent.role == rolenames.ROLE_PANEL):
 
-            # Speak the [arent panel name, but only once.
+            # Speak the parent panel name, but only once.
+            #
             if parent.name != self._containingPanelName:
                 self._containingPanelName = parent.name
                 utterances = []
                 text = _("%s panel") % parent.name
                 utterances.append(text)
                 speech.speakUtterances(utterances)
-
         else:
             grandparent = parent.parent
-            if grandparent and \
-                   grandparent.name != "" and \
-                   (not grandparent.name.startswith(_("chrome://"))) and \
-                   grandparent.role == rolenames.ROLE_PANEL:
+            if grandparent \
+                and (grandparent.name != "") \
+                and (not grandparent.name.startswith(_("chrome://"))) \
+                and (grandparent.role == rolenames.ROLE_PANEL):
 
                 # Speak the grandparent panel name, but only once.
+                #
                 if grandparent.name != self._containingPanelName:
                     self._containingPanelName = grandparent.name
                     utterances = []

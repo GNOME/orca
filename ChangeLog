@@ -1,5 +1,14 @@
 2007-03-02  Willie Walker <william.walker@sun.com>
 
+	* src/orca/settings.py: add mapping from "Mail/News" to
+	"Thunderbird" script to accomodate new name change.
+	(Thanks Rich!)
+
+	* src/orca/scripts/Thunderbird.py: do a bit of work to make this
+	work with our target version of Thunderbird (version 3.0).
+	
+2007-03-02  Willie Walker <william.walker@sun.com>
+
 	* src/orca/mag.py: add addZoomRegion call to get this
 	working better with gnome-mag.  NOTE: the COMPOSITE
 	extension has issues on Ubuntu (perhaps X11R7.2.0).
