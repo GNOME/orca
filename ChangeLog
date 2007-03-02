@@ -1,3 +1,9 @@
+2007-03-02  Willie Walker <william.walker@sun.com>
+
+	* src/orca/Gecko.py: fix for bug 408670 to provide better 
+	tracking in speech and braille for text entry objects in
+	Thunderbird and Firefox.
+	
 2007-03-01  Willie Walker <william.walker@sun.com>
 
         * src/orca/punctuation_settings.py: fix bug 413457 to prevent

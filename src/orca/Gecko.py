@@ -1054,10 +1054,17 @@ class Script(default.Script):
             default.Script.onCaretMoved(self, event)
             return
 
+        #print "HERE: caretContext=", self.caretContext
+        #print "            source=", event.source
+        #print "       caretOffset=", event.source.text.caretOffset
+        #print "    characterCount=", event.source.text.characterCount
+
         self.caretContext = self.findFirstCaretContext(\
             event.source,
             event.source.text.caretOffset)
         [obj, characterOffset] = self.caretContext
+
+        #print "       ended up at=", self.caretContext
 
         # If the user presses left or right, we'll set the target
         # column for up/down navigation by line.  The goal here is
@@ -1079,6 +1086,38 @@ class Script(default.Script):
                                     characterOffset + 1)
 
         default.Script.onCaretMoved(self, event)
+
+    def onTextDeleted(self, event):
+        """Called whenever text is from an an object.
+
+        Arguments:
+        - event: the Event
+        """
+        # If text is deleted from an object, we want to trash our
+        # cache of the unicode text.
+        #
+        try:
+            del event.source.unicodeText
+        except:
+            pass
+
+        default.Script.onTextDeleted(self, event)
+
+    def onTextInserted(self, event):
+        """Called whenever text is inserted into an object.
+
+        Arguments:
+        - event: the Event
+        """
+        # If text is inserted into an object, we want to trash our
+        # cache of the unicode text.
+        #
+        try:
+            del event.source.unicodeText
+        except:
+            pass
+
+        default.Script.onTextInserted(self, event)
 
     def onDocumentReload(self, event):
         """Called when the reload button is hit for a web page."""
@@ -1424,8 +1463,23 @@ class Script(default.Script):
         # so we'll just pretend the caret is at the beginning (0).
         #
         [focusedObj, focusedCharacterOffset] = self.getCaretContext()
+
+        # [[[TODO: HACK - WDW when composing e-mail in Thunderbird and
+        # when entering text in editable text areas, Gecko likes to
+        # force the last character of a line to be a newline.  So,
+        # we adjust for this because we want to keep meaningful text
+        # on the display.]]]
+        #
+        lineContentsOffset = focusedCharacterOffset
+        if focusedObj.text:
+            char = self.getText(focusedObj,
+                                focusedCharacterOffset,
+                                focusedCharacterOffset + 1)
+            if char == "\n":
+                lineContentsOffset = max(0, focusedCharacterOffset - 1)
+
         contents = self.getLineContentsAtOffset(focusedObj,
-                                                max(0, focusedCharacterOffset))
+                                                max(0, lineContentsOffset))
 
         if not len(contents):
             return
@@ -1480,7 +1534,9 @@ class Script(default.Script):
                     isFocusedObj = not focusedObj.text
 
             if obj.role in [rolenames.ROLE_ENTRY,
-                            rolenames.ROLE_PASSWORD_TEXT]:
+                            rolenames.ROLE_PASSWORD_TEXT] \
+                or ((obj.role == rolenames.ROLE_DOCUMENT_FRAME) \
+                    and obj.state.count(atspi.Accessibility.STATE_EDITABLE)):
                 label = util.getDisplayedLabel(obj)
                 regions = [braille.Text(obj, label)]
                 eol = braille.Region(" $l")
@@ -2280,7 +2336,8 @@ class Script(default.Script):
                 extents = self.getExtents(obj,
                                           characterOffset,
                                           characterOffset + 1)
-                if extents == (0, 0, 0, 0):
+                if (extents == (0, 0, 0, 0)) \
+                    and ((characterOffset + 1) < len(unicodeText)):
                     return self.findFirstCaretContext(obj, characterOffset + 1)
                 else:
                     return [obj, characterOffset]
@@ -3041,6 +3098,10 @@ class Script(default.Script):
         [obj, characterOffset] = self.findPreviousCaretInOrder(obj,
                                                                startOffset)
         contents = self.getWordContentsAtOffset(obj, characterOffset)
+
+        if not len(contents):
+            return
+
         [obj, startOffset, endOffset] = contents[0]
 
         self.setCaretPosition(obj,  startOffset)
@@ -3062,6 +3123,10 @@ class Script(default.Script):
         #
         [obj, characterOffset] = self.findNextCaretInOrder(obj, endOffset - 1)
         contents = self.getWordContentsAtOffset(obj, characterOffset)
+
+        if not len(contents):
+            return
+
         [obj, startOffset, endOffset] = contents[0]
 
         # [[[TODO: WDW - to be more like gedit, we should position the
