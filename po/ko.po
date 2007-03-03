@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-25 08:23+0900\n"
-"PO-Revision-Date: 2007-02-25 08:52+0900\n"
+"POT-Creation-Date: 2007-03-03 16:57+0900\n"
+"PO-Revision-Date: 2007-03-03 16:58+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: GNOME Korea <gnome-kr-hackers@lists.kldp.net>\n"
 "MIME-Version: 1.0\n"
@@ -426,10 +426,10 @@ msgstr "다음 표시 관리자로 전환합니다."
 #: ../src/orca/default.py:1210 ../src/orca/default.py:1437
 #: ../src/orca/default.py:3001 ../src/orca/default.py:3135
 #: ../src/orca/default.py:3140 ../src/orca/default.py:3233
-#: ../src/orca/default.py:3238 ../src/orca/Gecko.py:2820
+#: ../src/orca/default.py:3238 ../src/orca/Gecko.py:2963
 #: ../src/orca/scripts/Evolution.py:399 ../src/orca/scripts/Evolution.py:884
-#: ../src/orca/scripts/StarOffice.py:1807
-#: ../src/orca/scripts/StarOffice.py:1816 ../src/orca/where_am_I.py:994
+#: ../src/orca/scripts/StarOffice.py:1808
+#: ../src/orca/scripts/StarOffice.py:1817 ../src/orca/where_am_I.py:994
 msgid "blank"
 msgstr "빈칸"
 
@@ -514,37 +514,37 @@ msgstr "맨 아래로 넘어감"
 msgid "Wrapping to Top"
 msgstr "맨 위로 넘어감"
 
-#: ../src/orca/focus_tracking_presenter.py:746
+#: ../src/orca/focus_tracking_presenter.py:753
 msgid "No focus"
 msgstr "포커스 없음"
 
-#: ../src/orca/focus_tracking_presenter.py:841
+#: ../src/orca/focus_tracking_presenter.py:848
 msgid "Switching to focus tracking mode."
 msgstr "포커스 추적 모드로 바꿉니다."
 
-#: ../src/orca/Gecko.py:1262 ../src/orca/rolenames.py:332
-#: ../src/orca/scripts/acroread.py:251 ../src/orca/scripts/StarOffice.py:1090
+#: ../src/orca/Gecko.py:1301 ../src/orca/rolenames.py:332
+#: ../src/orca/scripts/acroread.py:251 ../src/orca/scripts/StarOffice.py:1091
 msgid "link"
 msgstr "바로가기"
 
-#: ../src/orca/Gecko.py:1281
+#: ../src/orca/Gecko.py:1320
 msgid "Loading.  Please wait."
 msgstr "읽어들이는 중입니다.  잠시 기다리십시오."
 
-#: ../src/orca/Gecko.py:1287
+#: ../src/orca/Gecko.py:1326
 #, python-format
 msgid "Finished loading %s."
 msgstr "%s 읽어들이기를 마쳤습니다."
 
-#: ../src/orca/Gecko.py:1293
+#: ../src/orca/Gecko.py:1332
 msgid "Finished loading."
 msgstr "읽어들이기를 마쳤습니다."
 
-#: ../src/orca/Gecko.py:3124 ../src/orca/Gecko.py:3135
+#: ../src/orca/Gecko.py:3307 ../src/orca/Gecko.py:3318
 msgid "No more headings."
 msgstr "머리말이 더 이상 없습니다."
 
-#: ../src/orca/Gecko.py:3146 ../src/orca/Gecko.py:3157
+#: ../src/orca/Gecko.py:3329 ../src/orca/Gecko.py:3340
 msgid "No more chunks."
 msgstr "청크가 더 이상 없습니다."
 
@@ -1106,54 +1106,60 @@ msgstr "안녕히."
 msgid "Goodbye."
 msgstr "안녕히."
 
-#: ../src/orca/orca.py:1209
+#: ../src/orca/orca.py:1211
 msgid "Usage: orca [OPTION...]"
 msgstr "사용법: orca [옵션...]"
 
-#: ../src/orca/orca.py:1211
+#: ../src/orca/orca.py:1213
 msgid "-?, --help                   Show this help message"
 msgstr "-?, --help                   이 도움말을 표시합니다"
 
-#: ../src/orca/orca.py:1212
+#: ../src/orca/orca.py:1214
 #, python-format
 msgid "-v, --version                %s"
 msgstr "-v, --version                %s"
 
-#: ../src/orca/orca.py:1213
+#: ../src/orca/orca.py:1215
 msgid "-s, --setup, --gui-setup     Set up user preferences"
 msgstr "-s, --setup, --gui-setup     사용자 기본 설정을 설정합니다"
 
-#: ../src/orca/orca.py:1214
+#: ../src/orca/orca.py:1216
 msgid "-t, --text-setup             Set up user preferences (text version)"
 msgstr ""
 "-t, --text-setup             사용자 기본 설정을 설정합니다 (텍스트 버전)"
 
-#: ../src/orca/orca.py:1215
+#: ../src/orca/orca.py:1217
 msgid "-n, --no-setup               Skip set up of user preferences"
 msgstr "-n, --no-setup               사용자 기본 설정을 무시합니다"
 
-#: ../src/orca/orca.py:1216
+#: ../src/orca/orca.py:1218
 msgid ""
 "-u, --user-prefs-dir=dirname Use alternate directory for user preferences"
-msgstr "-u, --user-prefs-dir=<디렉토리이름> 사용자 기본 설정에 다른 디렉토리 사용"
+msgstr ""
+"-u, --user-prefs-dir=<디렉토리이름> 사용자 기본 설정에 다른 디렉토리 사용"
 
-#: ../src/orca/orca.py:1217
+#: ../src/orca/orca.py:1219
 msgid ""
 "-e, --enable=[speech|braille|braille-monitor|magnifier|main-window] Force "
 "use of option"
-msgstr "-e, --enable=[speech|braille|braille-monitor|magnifier|main-window] 옵션 사용을 강제합니다"
+msgstr ""
+"-e, --enable=[speech|braille|braille-monitor|magnifier|main-window] 옵션 사용"
+"을 강제합니다"
 
-#: ../src/orca/orca.py:1218
+#: ../src/orca/orca.py:1220
 msgid ""
 "-d, --disable=[speech|braille|braille-monitor|magnifier|main-window] Prevent "
 "use of option"
-msgstr "-d, --disable=[speech|braille|braille-monitor|magnifier|main-window] 옵션 사용을 막습니다"
-
-#: ../src/orca/orca.py:1219
-msgid "-q, --quit                   Quits Orca (if shell script used)"
-msgstr "-q, --quit                   오르카를 끝냅니다 (쉘 스크립트 사용하는 경우)"
+msgstr ""
+"-d, --disable=[speech|braille|braille-monitor|magnifier|main-window] 옵션 사"
+"용을 막습니다"
 
 #: ../src/orca/orca.py:1221
+msgid "-q, --quit                   Quits Orca (if shell script used)"
+msgstr ""
+"-q, --quit                   오르카를 끝냅니다 (쉘 스크립트 사용하는 경우)"
+
+#: ../src/orca/orca.py:1223
 msgid ""
 "If Orca has not been previously set up by the user, Orca\n"
 "will automatically launch the preferences set up unless\n"
@@ -1163,7 +1169,7 @@ msgstr ""
 "내용을 가지고 오르카가 동작합니다. 단 -n이나 -no-setup\n"
 "옵션을 사용하면 설정을 무시합니다."
 
-#: ../src/orca/orca.py:1223
+#: ../src/orca/orca.py:1225
 msgid "Report bugs to orca-list@gnome.org."
 msgstr "문제점을 orca-list@gnome.org로 알려주십시오."
 
@@ -2862,56 +2868,57 @@ msgstr "동적인 행 헤더 비움."
 msgid "Dynamic row header set for column %s"
 msgstr "%s 열에 동적인 행 헤더 설정"
 
-#: ../src/orca/scripts/StarOffice.py:1108
+#: ../src/orca/scripts/StarOffice.py:1109
 msgid "Welcome to StarOffice"
 msgstr "스타오피스입니다"
 
-#: ../src/orca/scripts/StarOffice.py:1203
+#: ../src/orca/scripts/StarOffice.py:1204
 msgid "Text Document"
 msgstr "텍스트 문서"
 
-#: ../src/orca/scripts/StarOffice.py:1263
-#: ../src/orca/scripts/StarOffice.py:1485
+#: ../src/orca/scripts/StarOffice.py:1264
+#: ../src/orca/scripts/StarOffice.py:1486
 msgid "Spellcheck:"
 msgstr "맞춤법 검사:"
 
-#: ../src/orca/scripts/StarOffice.py:1291
+#: ../src/orca/scripts/StarOffice.py:1292
 msgid "Note that the Scroll Down button has to be pressed numerous times."
 msgstr "아래로 스크롤 단추를 여러번 눌렀습니다."
 
-#: ../src/orca/scripts/StarOffice.py:1305
+#: ../src/orca/scripts/StarOffice.py:1306
 msgid "License Agreement Accept button now has focus."
 msgstr "사용 계약 동의 단추에 포커스가 있습니다."
 
-#: ../src/orca/scripts/StarOffice.py:1328
+#: ../src/orca/scripts/StarOffice.py:1329
 msgid "First name"
 msgstr "이름"
 
-#: ../src/orca/scripts/StarOffice.py:1399
+#: ../src/orca/scripts/StarOffice.py:1400
 msgid "Move to cell"
 msgstr "셀로 이동"
 
-#: ../src/orca/scripts/StarOffice.py:1541
+#: ../src/orca/scripts/StarOffice.py:1542
 msgid "Writer"
 msgstr "Writer"
 
-#: ../src/orca/scripts/StarOffice.py:1697
+#: ../src/orca/scripts/StarOffice.py:1698
 msgid " has formula"
 msgstr " 수식이 있습니다 "
 
-#: ../src/orca/scripts/StarOffice.py:1743
+#: ../src/orca/scripts/StarOffice.py:1744
 msgid "Cell "
 msgstr "셀 "
 
 #. Don't speak chrome URLs.
-#: ../src/orca/scripts/Thunderbird.py:235
-#: ../src/orca/scripts/Thunderbird.py:315
-#: ../src/orca/scripts/Thunderbird.py:330
+#.
+#: ../src/orca/scripts/Thunderbird.py:184
+#: ../src/orca/scripts/Thunderbird.py:264
+#: ../src/orca/scripts/Thunderbird.py:279
 msgid "chrome://"
 msgstr "chrome://"
 
-#: ../src/orca/scripts/Thunderbird.py:322
-#: ../src/orca/scripts/Thunderbird.py:337
+#: ../src/orca/scripts/Thunderbird.py:272
+#: ../src/orca/scripts/Thunderbird.py:287
 #, python-format
 msgid "%s panel"
 msgstr "%s 패널"
@@ -2953,14 +2960,18 @@ msgid "Minefield"
 msgstr "지뢰찾기"
 
 #: ../src/orca/settings.py:539
+msgid "Mail/News"
+msgstr "메일/뉴스"
+
+#: ../src/orca/settings.py:540
 msgid "bug-buddy"
 msgstr "버그버디"
 
-#: ../src/orca/settings.py:540
+#: ../src/orca/settings.py:541
 msgid "vte"
 msgstr "vte"
 
-#: ../src/orca/settings.py:541
+#: ../src/orca/settings.py:542
 msgid "time-admin"
 msgstr "시간 관리"
 
