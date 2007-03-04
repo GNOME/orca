@@ -1,3 +1,10 @@
+2007-03-04  Willie Walker <william.walker@sun.com>
+
+	* src/orca/Gecko.py, src/orca/default.py, src/orca/flat_review.py:
+	partial fix for bug 408071 to prevent Orca from reading content
+	in tabs that really are not on the screen, but Gecko is telling us
+	they are there.
+	
 2007-03-04  Joanmarie Diggs <j-diggs@comcast.net>
 
 	* src/orca/Gecko.py: fix for bug 414360: if a character claims

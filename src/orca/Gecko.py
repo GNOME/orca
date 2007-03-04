@@ -2352,6 +2352,28 @@ class Script(default.Script):
         else:
             return default.Script.isLayoutOnly(self, obj)
 
+    def pursueForFlatReview(self, obj):
+        """Determines if we should look any further at the object
+        for flat review."""
+
+        # [[[TODO: HACK - WDW Gecko has issues about the SHOWING
+        # state of objects, especially those in document frames.
+        # It tells us the content in tabs that are not showing
+        # is actually showing.  See:
+        #
+        # http://bugzilla.gnome.org/show_bug.cgi?id=408071
+        #
+        # To work around this, we do a little extra check.  If
+        # the obj is a document, and it's not the one that
+        # Firefox is currently showing the user, we skip it.
+        #
+        pursue = default.Script.pursueForFlatReview(self, obj)
+        if pursue and (obj.role == rolenames.ROLE_DOCUMENT_FRAME):
+            documentFrame = self.getDocumentFrame()
+            pursue = obj == documentFrame
+
+        return pursue
+
     ####################################################################
     #                                                                  #
     # Methods to find previous and next objects.                       #

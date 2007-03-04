@@ -1008,7 +1008,7 @@ class Context:
                     debug.println(debug.LEVEL_WARNING,
                                   "flat_review.getShowingZones: " +
                                   "WARNING CHILD.PARENT != PARENT!!!")
-                elif child.state.count(atspi.Accessibility.STATE_SHOWING):
+                elif self.script.pursueForFlatReview(child):
                     zones.extend(self.getShowingZones(child))
 
         return zones

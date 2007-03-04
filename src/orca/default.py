@@ -2336,7 +2336,7 @@ class Script(script.Script):
         #   and (orca_state.locusOfFocus.app == event.source.app):
         #    orca.setLocusOfFocus(event, event.source)
         orca.setLocusOfFocus(event, event.source)
-        
+
 
     def onStateChanged(self, event):
         """Called whenever an object's state changes.
@@ -2742,6 +2742,11 @@ class Script(script.Script):
         braille.displayMessage(_("Exiting learn mode."))
         self.whereAmI(None)
         return True
+
+    def pursueForFlatReview(self, obj):
+        """Determines if we should look any further at the object
+        for flat review."""
+        return obj.state.count(atspi.Accessibility.STATE_SHOWING)
 
     def getFlatReviewContext(self):
         """Returns the flat review context, creating one if necessary."""
