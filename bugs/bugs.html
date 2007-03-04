@@ -921,6 +921,31 @@ the link to it here:
         </p>
       </td>
     </tr>
+    <tr>
+      <td>
+        <p>Firefox 3.0</p>
+      </td>
+      <td>
+        <p><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=372545">372545</a>:
+           Misidentification of data tables in at-spi based on empty summary or caption
+        </p>
+      </td>
+      <td>
+        <p>No</p>
+      </td>
+      <td>
+        <p>No</p>
+      </td>
+      <td>
+        <p><b>USABILITY PROBLEM - MUST BE FIXED</b> 
+           <br>
+           Firefox is claiming that a table with an empty summary is a data table based
+           upon that summary.  Similarly, it is claiming that a table with an empty
+           caption -- along with all parent tables -- is a data table.  As a result, Orca
+           says "table" -- sometimes several times -- when it shouldn't be.
+        </p>
+      </td>
+    </tr>
   </tbody>
 </table>
 
