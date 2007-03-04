@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-16 13:45+0100\n"
-"PO-Revision-Date: 2007-02-16 13:34+0100\n"
+"POT-Creation-Date: 2007-03-03 03:21+0000\n"
+"PO-Revision-Date: 2007-03-04 10:17+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -22,23 +22,25 @@ msgid "Orca Screen Reader and Magnifier"
 msgstr "Orca skärmläsare och -förstorare"
 
 #: ../orca.desktop.in.h:2
-msgid ""
-"Present on-screen information as speech or braille, or magnify the screen"
-msgstr ""
-"Visa information på skärmen som uppläsning eller braille, eller förstora "
-"skärmen"
+msgid "Present on-screen information as speech or braille, or magnify the screen"
+msgstr "Visa information på skärmen som uppläsning eller braille, eller förstora skärmen"
 
-#: ../src/orca/braillegenerator.py:197 ../src/orca/speechgenerator.py:198
+#: ../src/orca/braillegenerator.py:197
+#: ../src/orca/speechgenerator.py:198
 msgid "grayed"
 msgstr "gråad"
 
-#: ../src/orca/braillegenerator.py:1067 ../src/orca/J2SE-access-bridge.py:69
-#: ../src/orca/speechgenerator.py:1231 ../src/orca/where_am_I.py:596
+#: ../src/orca/braillegenerator.py:1067
+#: ../src/orca/J2SE-access-bridge.py:69
+#: ../src/orca/speechgenerator.py:1231
+#: ../src/orca/where_am_I.py:596
 msgid "expanded"
 msgstr "utfälld"
 
-#: ../src/orca/braillegenerator.py:1069 ../src/orca/J2SE-access-bridge.py:72
-#: ../src/orca/speechgenerator.py:1233 ../src/orca/where_am_I.py:598
+#: ../src/orca/braillegenerator.py:1069
+#: ../src/orca/J2SE-access-bridge.py:72
+#: ../src/orca/speechgenerator.py:1233
+#: ../src/orca/where_am_I.py:598
 msgid "collapsed"
 msgstr "infälld"
 
@@ -185,7 +187,8 @@ msgstr "pund"
 msgid "dollar"
 msgstr "dollartecken"
 
-#: ../src/orca/chnames.py:66 ../src/orca/speechgenerator.py:902
+#: ../src/orca/chnames.py:66
+#: ../src/orca/speechgenerator.py:902
 msgid "percent"
 msgstr "procenttecken"
 
@@ -237,7 +240,8 @@ msgstr "Genomför vänsterklick på aktuellt flat granskningspost."
 msgid "Performs right click on current flat review item."
 msgstr "Genomför högerklick på aktuellt flat granskningspost."
 
-#: ../src/orca/default.py:98 ../src/orca/scripts/acroread.py:264
+#: ../src/orca/default.py:98
+#: ../src/orca/scripts/acroread.py:264
 #: ../src/orca/scripts/Evolution.py:114
 msgid "Speaks entire document."
 msgstr "Talar hela dokument."
@@ -328,9 +332,7 @@ msgstr "Flyttar flat granskning till nästa tecken."
 
 #: ../src/orca/default.py:208
 msgid "Toggles whether to read just the current table cell or the whole row."
-msgstr ""
-"Växlar huruvida bara den aktuella tabellcellen eller hela raden ska läsas "
-"upp."
+msgstr "Växlar huruvida bara den aktuella tabellcellen eller hela raden ska läsas upp."
 
 #: ../src/orca/default.py:213
 msgid "Reads the attributes associated with the current text character."
@@ -394,32 +396,23 @@ msgstr "Visar dialogrutan för inställningar."
 
 #: ../src/orca/default.py:290
 msgid "Reloads user settings and reinitializes services as necessary."
-msgstr ""
-"Läser om användarens inställningar och ominitierar nödvändiga tjänster."
+msgstr "Läser om användarens inställningar och ominitierar nödvändiga tjänster."
 
 #: ../src/orca/default.py:295
 msgid "Toggles the silencing of speech."
 msgstr "Växlar uppläsningen av eller på."
 
 #: ../src/orca/default.py:300
-msgid ""
-"Prints a debug listing of all known applications to the console where Orca "
-"is running."
-msgstr ""
-"Skriver ut en felsökningslista på alla kända program till konsollen där Orca "
-"kör."
+msgid "Prints a debug listing of all known applications to the console where Orca is running."
+msgstr "Skriver ut en felsökningslista på alla kända program till konsollen där Orca kör."
 
 #: ../src/orca/default.py:305
 msgid "Cycles the debug level at run time."
 msgstr "Växlar felsökningsnivån vid körtid."
 
 #: ../src/orca/default.py:310
-msgid ""
-"Prints debug information about the currently active application to the "
-"console where Orca is running."
-msgstr ""
-"Skriver ut felsökningsinformation om det för närvarande aktia programmet "
-"till konsollen där Orca kör."
+msgid "Prints debug information about the currently active application to the console where Orca is running."
+msgstr "Skriver ut felsökningsinformation om det för närvarande aktia programmet till konsollen där Orca kör."
 
 #: ../src/orca/default.py:315
 msgid "Prints debug information about the ancestry of the object with focus"
@@ -433,13 +426,19 @@ msgstr "Skriver ut felsökningsinformation om det fokuserade programmet"
 msgid "Switches to the next presentation manager."
 msgstr "Växlar till nästa presentationshanterare."
 
-#: ../src/orca/default.py:1210 ../src/orca/default.py:1437
-#: ../src/orca/default.py:3012 ../src/orca/default.py:3146
-#: ../src/orca/default.py:3151 ../src/orca/default.py:3244
-#: ../src/orca/default.py:3249 ../src/orca/Gecko.py:2774
-#: ../src/orca/scripts/Evolution.py:399 ../src/orca/scripts/Evolution.py:884
-#: ../src/orca/scripts/StarOffice.py:1807
-#: ../src/orca/scripts/StarOffice.py:1816 ../src/orca/where_am_I.py:994
+#: ../src/orca/default.py:1210
+#: ../src/orca/default.py:1437
+#: ../src/orca/default.py:3001
+#: ../src/orca/default.py:3135
+#: ../src/orca/default.py:3140
+#: ../src/orca/default.py:3233
+#: ../src/orca/default.py:3238
+#: ../src/orca/Gecko.py:2963
+#: ../src/orca/scripts/Evolution.py:399
+#: ../src/orca/scripts/Evolution.py:884
+#: ../src/orca/scripts/StarOffice.py:1808
+#: ../src/orca/scripts/StarOffice.py:1817
+#: ../src/orca/where_am_I.py:994
 msgid "blank"
 msgstr "blank"
 
@@ -462,7 +461,8 @@ msgstr "1 flik "
 msgid "%d tabs "
 msgstr "%d flikar "
 
-#: ../src/orca/default.py:1691 ../src/orca/where_am_I.py:603
+#: ../src/orca/default.py:1691
+#: ../src/orca/where_am_I.py:603
 #, python-format
 msgid "tree level %d"
 msgstr "trädnivå %d"
@@ -471,45 +471,53 @@ msgstr "trädnivå %d"
 msgid "entire document selected"
 msgstr "hela dokumentet valt"
 
-#: ../src/orca/default.py:2568
+#: ../src/orca/default.py:2557
 msgid "Speak "
 msgstr "Tala"
 
-#: ../src/orca/default.py:2571
+#: ../src/orca/default.py:2560
 msgid "row"
 msgstr "rad"
 
-#: ../src/orca/default.py:2573 ../src/orca/rolenames.py:470
+#: ../src/orca/default.py:2562
+#: ../src/orca/rolenames.py:470
 #: ../src/orca/rolenames.py:472
 msgid "cell"
 msgstr "cell"
 
-#: ../src/orca/default.py:2622 ../src/orca/where_am_I.py:1050
+#: ../src/orca/default.py:2611
+#: ../src/orca/where_am_I.py:1050
 msgid "bold"
 msgstr "fet"
 
-#: ../src/orca/default.py:2624
+#: ../src/orca/default.py:2613
 msgid " pixels"
 msgstr " bildpunkter"
 
-#: ../src/orca/default.py:2738
+#: ../src/orca/default.py:2727
 msgid "Entering learn mode.  Press any key to hear its function. "
-msgstr ""
-"Går in i inlärningsläge. Tryck på en tangent för att höra dess funktion. "
+msgstr "Går in i inlärningsläge. Tryck på en tangent för att höra dess funktion. "
 
-#: ../src/orca/default.py:2740
+#: ../src/orca/default.py:2728
+msgid "To exit learn mode, press the escape key."
+msgstr "För att lämna inlärningsläget, tryck Escape."
+
+#: ../src/orca/default.py:2729
 msgid "Learn mode.  Press escape to exit."
 msgstr "Inlärningsläge. Tryck Escape för att lämna."
 
-#: ../src/orca/default.py:2752 ../src/orca/default.py:2753
+#: ../src/orca/default.py:2741
+#: ../src/orca/default.py:2742
 msgid "Exiting learn mode."
 msgstr "Lämnar inlärningsläget."
 
-#: ../src/orca/default.py:3014 ../src/orca/default.py:3153
+#: ../src/orca/default.py:3003
+#: ../src/orca/default.py:3142
 msgid "white space"
 msgstr "vitsteg"
 
-#: ../src/orca/default.py:3366 ../src/orca/default.py:3367
+#: ../src/orca/default.py:3355
+#: ../src/orca/default.py:3356
 msgid "string not found"
 msgstr "strängen hittades inte"
 
@@ -525,37 +533,41 @@ msgstr "Börjar om från botten"
 msgid "Wrapping to Top"
 msgstr "Börjar om från toppen"
 
-#: ../src/orca/focus_tracking_presenter.py:746
+#: ../src/orca/focus_tracking_presenter.py:753
 msgid "No focus"
 msgstr "Ingen fokus"
 
-#: ../src/orca/focus_tracking_presenter.py:841
+#: ../src/orca/focus_tracking_presenter.py:848
 msgid "Switching to focus tracking mode."
 msgstr "Växlar till fokusspårningsläget."
 
-#: ../src/orca/Gecko.py:1273 ../src/orca/rolenames.py:332
-#: ../src/orca/scripts/acroread.py:251 ../src/orca/scripts/StarOffice.py:1090
+#: ../src/orca/Gecko.py:1301
+#: ../src/orca/rolenames.py:332
+#: ../src/orca/scripts/acroread.py:251
+#: ../src/orca/scripts/StarOffice.py:1091
 msgid "link"
 msgstr "länk"
 
-#: ../src/orca/Gecko.py:1292
+#: ../src/orca/Gecko.py:1320
 msgid "Loading.  Please wait."
 msgstr "Läser in. Var god vänta."
 
-#: ../src/orca/Gecko.py:1299
+#: ../src/orca/Gecko.py:1326
 #, python-format
 msgid "Finished loading %s."
 msgstr "Inläsning av %s färdig."
 
-#: ../src/orca/Gecko.py:1304
+#: ../src/orca/Gecko.py:1332
 msgid "Finished loading."
 msgstr "Inläsning färdig."
 
-#: ../src/orca/Gecko.py:3078 ../src/orca/Gecko.py:3089
+#: ../src/orca/Gecko.py:3307
+#: ../src/orca/Gecko.py:3318
 msgid "No more headings."
 msgstr "Inga fler rubriker."
 
-#: ../src/orca/Gecko.py:3100 ../src/orca/Gecko.py:3111
+#: ../src/orca/Gecko.py:3329
+#: ../src/orca/Gecko.py:3340
 msgid "No more chunks."
 msgstr "Inga fler delar."
 
@@ -565,7 +577,8 @@ msgstr "GNOME-uppläsningstjänster"
 
 #. # Replace ellipses (both manual and UTF-8) with "dot dot dot"
 #. #
-#: ../src/orca/gnomespeechfactory.py:659 ../src/orca/gnomespeechfactory.py:660
+#: ../src/orca/gnomespeechfactory.py:659
+#: ../src/orca/gnomespeechfactory.py:660
 msgid " dot dot dot"
 msgstr " punkt punkt punkt"
 
@@ -593,18 +606,21 @@ msgstr "långsammare."
 msgid "Switching to hierarchical navigation mode."
 msgstr "Växlar till hierarkiskt navigeringsläge."
 
-#: ../src/orca/J2SE-access-bridge.py:74 ../src/orca/speechgenerator.py:955
-#: ../src/orca/util.py:1533
+#: ../src/orca/J2SE-access-bridge.py:74
+#: ../src/orca/speechgenerator.py:955
+#: ../src/orca/util.py:1541
 msgid "selected"
 msgstr "vald"
 
-#: ../src/orca/J2SE-access-bridge.py:78 ../src/orca/util.py:1541
+#: ../src/orca/J2SE-access-bridge.py:78
+#: ../src/orca/util.py:1549
 msgid "unselected"
 msgstr "avmarkerad"
 
 #. KeyBindings from the default script, in default.py (Orca's default)
 #.
-#: ../src/orca/keybindings.py:107 ../src/orca/orca_gui_prefs.py:1087
+#: ../src/orca/keybindings.py:107
+#: ../src/orca/orca_gui_prefs.py:1087
 #: ../src/orca/orca_gui_prefs.py:1171
 msgid "Orca"
 msgstr "Orca"
@@ -629,7 +645,8 @@ msgstr "Alt_L"
 msgid "Ctrl"
 msgstr "Ctrl"
 
-#: ../src/orca/keybindings.py:123 ../src/orca/orca.py:600
+#: ../src/orca/keybindings.py:123
+#: ../src/orca/orca.py:600
 msgid "Caps_Lock"
 msgstr "Caps_Lock"
 
@@ -637,7 +654,8 @@ msgstr "Caps_Lock"
 msgid "Shift"
 msgstr "Skift"
 
-#: ../src/orca/keynames.py:38 ../src/orca/keynames.py:41
+#: ../src/orca/keynames.py:38
+#: ../src/orca/keynames.py:41
 msgid "left shift"
 msgstr "vänster shift"
 
@@ -701,7 +719,8 @@ msgstr "F 11"
 msgid "F 12"
 msgstr "F 12"
 
-#: ../src/orca/orca_console_prefs.py:103 ../src/orca/orca_console_prefs.py:119
+#: ../src/orca/orca_console_prefs.py:103
+#: ../src/orca/orca_console_prefs.py:119
 msgid "Speech is unavailable."
 msgstr "Uppläsning är inte tillgängligt."
 
@@ -713,19 +732,24 @@ msgstr "Välkommen till konfigurationen av Orca."
 msgid "Select desired speech system:"
 msgstr "Välj önskat uppläsningssystem:"
 
-#: ../src/orca/orca_console_prefs.py:127 ../src/orca/orca_console_prefs.py:148
+#: ../src/orca/orca_console_prefs.py:127
+#: ../src/orca/orca_console_prefs.py:148
 #: ../src/orca/orca_console_prefs.py:175
 #, python-format
 msgid "%d. %s"
 msgstr "%d. %s"
 
-#: ../src/orca/orca_console_prefs.py:130 ../src/orca/orca_console_prefs.py:151
-#: ../src/orca/orca_console_prefs.py:182 ../src/orca/orca_console_prefs.py:309
+#: ../src/orca/orca_console_prefs.py:130
+#: ../src/orca/orca_console_prefs.py:151
+#: ../src/orca/orca_console_prefs.py:182
+#: ../src/orca/orca_console_prefs.py:309
 msgid "Enter choice: "
 msgstr "Ange val: "
 
-#: ../src/orca/orca_console_prefs.py:132 ../src/orca/orca_console_prefs.py:140
-#: ../src/orca/orca_console_prefs.py:153 ../src/orca/orca_console_prefs.py:162
+#: ../src/orca/orca_console_prefs.py:132
+#: ../src/orca/orca_console_prefs.py:140
+#: ../src/orca/orca_console_prefs.py:153
+#: ../src/orca/orca_console_prefs.py:162
 #: ../src/orca/orca_console_prefs.py:187
 msgid "Speech will not be used.\n"
 msgstr "Uppläsning kommer inte att användas.\n"
@@ -823,8 +847,7 @@ msgstr "Tillgänglighetsstöd för GNOME har precis blivit aktiverat."
 
 #: ../src/orca/orca_console_prefs.py:369
 msgid "You need to log out and log back in for the change to take effect. "
-msgstr ""
-"Du behöver logga ut och logga in igen för att ändringarna ska bli aktiva."
+msgstr "Du behöver logga ut och logga in igen för att ändringarna ska bli aktiva."
 
 #: ../src/orca/orca_console_prefs.py:376
 msgid "Do you want to logout now?  Enter y or n: "
@@ -842,7 +865,8 @@ msgstr "Konfiguration färdig. Tryck Return för att fortsätta."
 msgid "<b>Start from:</b>"
 msgstr "<b>Börja från:</b>"
 
-#: ../src/orca/orca-find.glade.h:2 ../src/orca/orca_gui_find.py:127
+#: ../src/orca/orca-find.glade.h:2
+#: ../src/orca/orca_gui_find.py:127
 msgid "C_urrent location"
 msgstr "A_ktuell position"
 
@@ -953,74 +977,91 @@ msgstr "Tangent2"
 msgid "Alternate"
 msgstr "Alternativ"
 
-#: ../src/orca/orca_gui_prefs.py:222 ../src/orca/orca_gui_prefs.py:235
+#: ../src/orca/orca_gui_prefs.py:222
+#: ../src/orca/orca_gui_prefs.py:235
 msgid "Modified"
 msgstr "Ändrad"
 
-#: ../src/orca/orca_gui_prefs.py:271 ../src/orca/orca_gui_prefs.py:296
+#: ../src/orca/orca_gui_prefs.py:271
+#: ../src/orca/orca_gui_prefs.py:296
 msgid "Default"
 msgstr "Standard"
 
-#: ../src/orca/orca_gui_prefs.py:273 ../src/orca/orca_gui_prefs.py:298
+#: ../src/orca/orca_gui_prefs.py:273
+#: ../src/orca/orca_gui_prefs.py:298
 msgid "Uppercase"
 msgstr "Versaler"
 
-#: ../src/orca/orca_gui_prefs.py:275 ../src/orca/orca_gui_prefs.py:304
+#: ../src/orca/orca_gui_prefs.py:275
+#: ../src/orca/orca_gui_prefs.py:304
 msgid "Hyperlink"
 msgstr "Hyperlänk"
 
-#: ../src/orca/orca_gui_prefs.py:497 ../src/orca/orca_gui_prefs.py:569
+#: ../src/orca/orca_gui_prefs.py:497
+#: ../src/orca/orca_gui_prefs.py:569
 #: ../src/orca/orca_gui_prefs.py:643
 msgid "Speech not available."
 msgstr "Uppläsning är inte tillgängligt."
 
-#: ../src/orca/orca_gui_prefs.py:868 ../src/orca/orca_gui_prefs.py:872
+#: ../src/orca/orca_gui_prefs.py:868
+#: ../src/orca/orca_gui_prefs.py:872
 #: ../src/orca/orca_gui_prefs.py:1771
 msgid "Bilinear"
 msgstr "Bilinjär"
 
-#: ../src/orca/orca_gui_prefs.py:870 ../src/orca/orca_gui_prefs.py:883
-#: ../src/orca/orca_gui_prefs.py:1773 ../src/orca/orca_gui_prefs.py:1796
+#: ../src/orca/orca_gui_prefs.py:870
+#: ../src/orca/orca_gui_prefs.py:883
+#: ../src/orca/orca_gui_prefs.py:1773
+#: ../src/orca/orca_gui_prefs.py:1796
 msgid "None"
 msgstr "Ingen"
 
-#: ../src/orca/orca_gui_prefs.py:881 ../src/orca/orca_gui_prefs.py:889
+#: ../src/orca/orca_gui_prefs.py:881
+#: ../src/orca/orca_gui_prefs.py:889
 #: ../src/orca/orca_gui_prefs.py:1790
 msgid "Centered"
 msgstr "Centrerad"
 
-#: ../src/orca/orca_gui_prefs.py:885 ../src/orca/orca_gui_prefs.py:1794
+#: ../src/orca/orca_gui_prefs.py:885
+#: ../src/orca/orca_gui_prefs.py:1794
 msgid "Proportional"
 msgstr "Proportionell"
 
-#: ../src/orca/orca_gui_prefs.py:887 ../src/orca/orca_gui_prefs.py:1792
+#: ../src/orca/orca_gui_prefs.py:887
+#: ../src/orca/orca_gui_prefs.py:1792
 msgid "Push"
 msgstr "Tryck"
 
 #. Braille Bindings from default script, in default.py
 #.
-#: ../src/orca/orca_gui_prefs.py:1121 ../src/orca/orca_gui_prefs.py:1189
+#: ../src/orca/orca_gui_prefs.py:1121
+#: ../src/orca/orca_gui_prefs.py:1189
 msgid "Braille Bindings"
 msgstr "Braille-bindningar"
 
-#: ../src/orca/orca_gui_prefs.py:1493 ../src/orca/orca-setup.glade.h:70
+#: ../src/orca/orca_gui_prefs.py:1493
+#: ../src/orca/orca-setup.glade.h:70
 msgid "_None"
 msgstr "_Ingen"
 
-#: ../src/orca/orca_gui_prefs.py:1496 ../src/orca/orca-setup.glade.h:52
+#: ../src/orca/orca_gui_prefs.py:1496
+#: ../src/orca/orca-setup.glade.h:52
 msgid "So_me"
 msgstr "Vi_ssa"
 
-#: ../src/orca/orca_gui_prefs.py:1499 ../src/orca/orca-setup.glade.h:39
+#: ../src/orca/orca_gui_prefs.py:1499
+#: ../src/orca/orca-setup.glade.h:39
 msgid "M_ost"
 msgstr "M_est"
 
-#: ../src/orca/orca_gui_prefs.py:1519 ../src/orca/orca_gui_prefs.py:1574
+#: ../src/orca/orca_gui_prefs.py:1519
+#: ../src/orca/orca_gui_prefs.py:1574
 #: ../src/orca/orca-setup.glade.h:10
 msgid "Brie_f"
 msgstr "Kor_t"
 
-#: ../src/orca/orca_gui_prefs.py:1539 ../src/orca/orca-setup.glade.h:55
+#: ../src/orca/orca_gui_prefs.py:1539
+#: ../src/orca/orca-setup.glade.h:55
 msgid "Speak current _cell"
 msgstr "Säg aktuell _cell"
 
@@ -1037,7 +1078,8 @@ msgstr "Den nya tangenten är: %s"
 msgid "The key entered is the same. Nothing changed."
 msgstr "Angiven tangent är den samma. Ingenting har ändrats."
 
-#: ../src/orca/orca_gui_prefs.py:1922 ../src/orca/orca-setup.glade.h:66
+#: ../src/orca/orca_gui_prefs.py:1922
+#: ../src/orca/orca-setup.glade.h:66
 msgid "_Desktop"
 msgstr "_Skrivbord"
 
@@ -1106,7 +1148,8 @@ msgstr "Uppläsning inte aktiverat."
 msgid "Orca user settings reloaded."
 msgstr "Användarinställningar omlästa."
 
-#: ../src/orca/orca.py:1071 ../src/orca/orca.py:1072
+#: ../src/orca/orca.py:1071
+#: ../src/orca/orca.py:1072
 msgid "Welcome to Orca."
 msgstr "Välkommen till Orca."
 
@@ -1118,62 +1161,48 @@ msgstr "hejdå."
 msgid "Goodbye."
 msgstr "Hej då."
 
-#: ../src/orca/orca.py:1209
+#: ../src/orca/orca.py:1211
 msgid "Usage: orca [OPTION...]"
 msgstr "Användning: orca [FLAGGA...]"
 
-#: ../src/orca/orca.py:1211
+#: ../src/orca/orca.py:1213
 msgid "-?, --help                   Show this help message"
 msgstr "-?, --help                   Visa detta hjälpmeddelande"
 
-#: ../src/orca/orca.py:1212
+#: ../src/orca/orca.py:1214
 #, python-format
 msgid "-v, --version                %s"
 msgstr "-v, --version                %s"
 
-#: ../src/orca/orca.py:1213
+#: ../src/orca/orca.py:1215
 msgid "-s, --setup, --gui-setup     Set up user preferences"
 msgstr "-s, --setup, --gui-setup     Ställ in användarinställningar"
 
-#: ../src/orca/orca.py:1214
-msgid "-t, --text-setup             Set up user preferences (text version)"
-msgstr ""
-"-t, --text-setup             Ställ in användarens inställningar (textversion)"
-
-#: ../src/orca/orca.py:1215
-msgid "-n, --no-setup               Skip set up of user preferences"
-msgstr ""
-"-n, --no-setup               Hoppa över konfiguration av användarens "
-"inställningar"
-
 #: ../src/orca/orca.py:1216
-msgid ""
-"-u, --user-prefs-dir=dirname Use alternate directory for user preferences"
-msgstr ""
-"-u, --user-prefs-dir=dirname Använd alternativ katalog för "
-"användarinställningar"
+msgid "-t, --text-setup             Set up user preferences (text version)"
+msgstr "-t, --text-setup             Ställ in användarens inställningar (textversion)"
 
 #: ../src/orca/orca.py:1217
-msgid ""
-"-e, --enable=[speech|braille|braille-monitor|magnifier|main-window] Force "
-"use of option"
-msgstr ""
-"-e, --enable=[speech|braille|braille-monitor|magnifier|main-window] Tvinga "
-"användning av alternativ"
+msgid "-n, --no-setup               Skip set up of user preferences"
+msgstr "-n, --no-setup               Hoppa över konfiguration av användarens inställningar"
 
 #: ../src/orca/orca.py:1218
-msgid ""
-"-d, --disable=[speech|braille|braille-monitor|magnifier|main-window] Prevent "
-"use of option"
-msgstr ""
-"-d, --disable=[speech|braille|braille-monitor|magnifier|main-window] "
-"Förhindra användning av alternativ"
+msgid "-u, --user-prefs-dir=dirname Use alternate directory for user preferences"
+msgstr "-u, --user-prefs-dir=dirname Använd alternativ katalog för användarinställningar"
 
 #: ../src/orca/orca.py:1219
+msgid "-e, --enable=[speech|braille|braille-monitor|magnifier|main-window] Force use of option"
+msgstr "-e, --enable=[speech|braille|braille-monitor|magnifier|main-window] Tvinga användning av alternativ"
+
+#: ../src/orca/orca.py:1220
+msgid "-d, --disable=[speech|braille|braille-monitor|magnifier|main-window] Prevent use of option"
+msgstr "-d, --disable=[speech|braille|braille-monitor|magnifier|main-window] Förhindra användning av alternativ"
+
+#: ../src/orca/orca.py:1221
 msgid "-q, --quit                   Quits Orca (if shell script used)"
 msgstr "-q, --quit                   Avslutar Orca (om skalskript används)"
 
-#: ../src/orca/orca.py:1221
+#: ../src/orca/orca.py:1223
 msgid ""
 "If Orca has not been previously set up by the user, Orca\n"
 "will automatically launch the preferences set up unless\n"
@@ -1183,7 +1212,7 @@ msgstr ""
 "kommer Orca automatiskt att starta konfigurationen\n"
 "såvida inte flaggorna -n eller --no-setup används."
 
-#: ../src/orca/orca.py:1223
+#: ../src/orca/orca.py:1225
 msgid "Report bugs to orca-list@gnome.org."
 msgstr ""
 "Rapportera fel till orca-list@gnome.org\n"
@@ -1671,7 +1700,8 @@ msgstr "Snabbtangent"
 msgid "accelerator"
 msgstr "snabbtangent"
 
-#: ../src/orca/rolenames.py:165 ../src/orca/rolenames.py:167
+#: ../src/orca/rolenames.py:165
+#: ../src/orca/rolenames.py:167
 msgid "alert"
 msgstr "alarm"
 
@@ -1691,7 +1721,8 @@ msgstr "Animering"
 msgid "animation"
 msgstr "animering"
 
-#: ../src/orca/rolenames.py:175 ../src/orca/rolenames.py:177
+#: ../src/orca/rolenames.py:175
+#: ../src/orca/rolenames.py:177
 msgid "arrow"
 msgstr "pil"
 
@@ -1735,7 +1766,8 @@ msgstr "Rubrik"
 msgid "caption"
 msgstr "rubrik"
 
-#: ../src/orca/rolenames.py:195 ../src/orca/rolenames.py:200
+#: ../src/orca/rolenames.py:195
+#: ../src/orca/rolenames.py:200
 msgid "chk"
 msgstr "kry"
 
@@ -1779,15 +1811,18 @@ msgstr "Färgväljare"
 msgid "color chooser"
 msgstr "färgväljare"
 
-#: ../src/orca/rolenames.py:215 ../src/orca/rolenames.py:475
+#: ../src/orca/rolenames.py:215
+#: ../src/orca/rolenames.py:475
 msgid "colhdr"
 msgstr "kolhuv"
 
-#: ../src/orca/rolenames.py:216 ../src/orca/rolenames.py:476
+#: ../src/orca/rolenames.py:216
+#: ../src/orca/rolenames.py:476
 msgid "ColumnHeader"
 msgstr "Kolumnhuvud"
 
-#: ../src/orca/rolenames.py:217 ../src/orca/rolenames.py:477
+#: ../src/orca/rolenames.py:217
+#: ../src/orca/rolenames.py:477
 msgid "column header"
 msgstr "kolumnhuvud"
 
@@ -1815,7 +1850,8 @@ msgstr "Datumredigerare"
 msgid "date editor"
 msgstr "datumredigerare"
 
-#: ../src/orca/rolenames.py:230 ../src/orca/rolenames.py:305
+#: ../src/orca/rolenames.py:230
+#: ../src/orca/rolenames.py:305
 #: ../src/orca/rolenames.py:307
 msgid "icon"
 msgstr "ikon"
@@ -1828,7 +1864,8 @@ msgstr "Skrivbordsikon"
 msgid "desktop icon"
 msgstr "skrivbordsikon"
 
-#: ../src/orca/rolenames.py:235 ../src/orca/rolenames.py:287
+#: ../src/orca/rolenames.py:235
+#: ../src/orca/rolenames.py:287
 #: ../src/orca/rolenames.py:315
 msgid "frame"
 msgstr "ram"
@@ -1841,7 +1878,8 @@ msgstr "Skrivbordsram"
 msgid "desktop frame"
 msgstr "skrivbordsram"
 
-#: ../src/orca/rolenames.py:240 ../src/orca/rolenames.py:242
+#: ../src/orca/rolenames.py:240
+#: ../src/orca/rolenames.py:242
 msgid "dial"
 msgstr "ring"
 
@@ -1873,7 +1911,8 @@ msgstr "Katalogpanel"
 msgid "directory pane"
 msgstr "katalogpanel"
 
-#: ../src/orca/rolenames.py:255 ../src/orca/rolenames.py:300
+#: ../src/orca/rolenames.py:255
+#: ../src/orca/rolenames.py:300
 msgid "html"
 msgstr "html"
 
@@ -1933,7 +1972,8 @@ msgstr "Typsnittsväljare"
 msgid "font chooser"
 msgstr "typsnittsväljare"
 
-#: ../src/orca/rolenames.py:280 ../src/orca/rolenames.py:282
+#: ../src/orca/rolenames.py:280
+#: ../src/orca/rolenames.py:282
 msgid "form"
 msgstr "formulär"
 
@@ -2029,11 +2069,13 @@ msgstr "Lagerpanel"
 msgid "layered pane"
 msgstr "lagerpanel"
 
-#: ../src/orca/rolenames.py:330 ../src/orca/scripts/acroread.py:249
+#: ../src/orca/rolenames.py:330
+#: ../src/orca/scripts/acroread.py:249
 msgid "lnk"
 msgstr "lnk"
 
-#: ../src/orca/rolenames.py:331 ../src/orca/scripts/acroread.py:250
+#: ../src/orca/rolenames.py:331
+#: ../src/orca/scripts/acroread.py:250
 msgid "Link"
 msgstr "Länk"
 
@@ -2109,7 +2151,8 @@ msgstr "Alternativpanel"
 msgid "option pane"
 msgstr "alternativpanel"
 
-#: ../src/orca/rolenames.py:365 ../src/orca/rolenames.py:367
+#: ../src/orca/rolenames.py:365
+#: ../src/orca/rolenames.py:367
 msgid "page"
 msgstr "sida"
 
@@ -2238,15 +2281,18 @@ msgstr "Rotpanel"
 msgid "root pane"
 msgstr "rotpanel"
 
-#: ../src/orca/rolenames.py:420 ../src/orca/rolenames.py:480
+#: ../src/orca/rolenames.py:420
+#: ../src/orca/rolenames.py:480
 msgid "rwhdr"
 msgstr "rahuv"
 
-#: ../src/orca/rolenames.py:421 ../src/orca/rolenames.py:481
+#: ../src/orca/rolenames.py:421
+#: ../src/orca/rolenames.py:481
 msgid "RowHeader"
 msgstr "Radhuvud"
 
-#: ../src/orca/rolenames.py:422 ../src/orca/rolenames.py:482
+#: ../src/orca/rolenames.py:422
+#: ../src/orca/rolenames.py:482
 msgid "row header"
 msgstr "radhuvud"
 
@@ -2358,7 +2404,8 @@ msgstr "Tabell"
 msgid "table"
 msgstr "tabell"
 
-#: ../src/orca/rolenames.py:471 ../src/orca/where_am_I.py:521
+#: ../src/orca/rolenames.py:471
+#: ../src/orca/where_am_I.py:521
 #: ../src/orca/where_am_I.py:630
 msgid "Cell"
 msgstr "Cell"
@@ -2371,7 +2418,8 @@ msgstr "mpatb"
 msgid "TearOffMenuItem"
 msgstr "Menypost att ta bort"
 
-#: ../src/orca/rolenames.py:487 ../src/orca/speechgenerator.py:1353
+#: ../src/orca/rolenames.py:487
+#: ../src/orca/speechgenerator.py:1353
 msgid "tear off menu item"
 msgstr "menypost att ta bort"
 
@@ -2435,7 +2483,8 @@ msgstr "Verktygstips"
 msgid "tool tip"
 msgstr "verktygstips"
 
-#: ../src/orca/rolenames.py:517 ../src/orca/rolenames.py:519
+#: ../src/orca/rolenames.py:517
+#: ../src/orca/rolenames.py:519
 msgid "tree"
 msgstr "träd"
 
@@ -2589,14 +2638,16 @@ msgstr "dokument"
 
 #. We've entered a table.  Announce the dimensions.
 #.
-#: ../src/orca/scripts/acroread.py:290 ../src/orca/scripts/StarOffice.py:799
+#: ../src/orca/scripts/acroread.py:290
+#: ../src/orca/scripts/StarOffice.py:799
 #, python-format
 msgid "table with %d rows and %d columns."
 msgstr "tabell med %d rader och %d kolumner."
 
 #. We've left a table.  Announce this fact.
 #.
-#: ../src/orca/scripts/acroread.py:297 ../src/orca/scripts/StarOffice.py:802
+#: ../src/orca/scripts/acroread.py:297
+#: ../src/orca/scripts/StarOffice.py:802
 msgid "leaving table."
 msgstr "lämnar tabell."
 
@@ -2609,7 +2660,8 @@ msgstr "lämnar tabell."
 msgid "row %d, column %d"
 msgstr "rad %d, kolumn %d"
 
-#: ../src/orca/scripts/acroread.py:315 ../src/orca/where_am_I.py:524
+#: ../src/orca/scripts/acroread.py:315
+#: ../src/orca/where_am_I.py:524
 #, python-format
 msgid "column %d"
 msgstr "kolumn %d"
@@ -2672,7 +2724,8 @@ msgstr "Välkommen"
 msgid "Congratulations"
 msgstr "Gratulerar"
 
-#: ../src/orca/scripts/Evolution.py:563 ../src/orca/scripts/Evolution.py:610
+#: ../src/orca/scripts/Evolution.py:563
+#: ../src/orca/scripts/Evolution.py:610
 msgid "Status"
 msgstr "Status"
 
@@ -2692,15 +2745,14 @@ msgstr "Inga möten"
 msgid "Directories button"
 msgstr "Katalogerknapp"
 
-#: ../src/orca/scripts/Evolution.py:997 ../src/orca/scripts/Evolution.py:1115
+#: ../src/orca/scripts/Evolution.py:997
+#: ../src/orca/scripts/Evolution.py:1115
 msgid "Assistant"
 msgstr "Assistent"
 
 #: ../src/orca/scripts/gaim.py:150
-msgid ""
-"Toggle whether we prefix chat room messages with the name of the chat room."
-msgstr ""
-"Växla huruvida vi inleder chattrumsmeddelanden med namnet på chattrummet."
+msgid "Toggle whether we prefix chat room messages with the name of the chat room."
+msgstr "Växla huruvida vi inleder chattrumsmeddelanden med namnet på chattrummet."
 
 #: ../src/orca/scripts/gaim.py:155
 msgid "Speak and braille a previous chat room message."
@@ -2747,12 +2799,14 @@ msgstr "Tryck Tab och Return för att avsluta."
 #. have just stopped a search. Inform the user that the search is
 #. complete and tell them how many files were found.
 #.
-#: ../src/orca/scripts/gedit.py:214 ../src/orca/scripts/gedit.py:216
+#: ../src/orca/scripts/gedit.py:214
+#: ../src/orca/scripts/gedit.py:216
 #: ../src/orca/scripts/gnome-search-tool.py:152
 msgid "Find"
 msgstr "Sök"
 
-#: ../src/orca/scripts/gedit.py:285 ../src/orca/scripts/gedit.py:339
+#: ../src/orca/scripts/gedit.py:285
+#: ../src/orca/scripts/gedit.py:339
 msgid "Check Spelling"
 msgstr "Kontrollera stavning"
 
@@ -2824,23 +2878,23 @@ msgstr "Skrivbord "
 msgid "inaccessible"
 msgstr "otillgänglig"
 
-#: ../src/orca/scripts/nautilus.py:103
-#, python-format
-msgid " %d items"
-msgstr " %d objekt"
-
-#: ../src/orca/scripts/planner.py:77 ../src/orca/scripts/planner.py:138
+#: ../src/orca/scripts/planner.py:77
+#: ../src/orca/scripts/planner.py:138
 msgid "Display more options"
 msgstr "Visa fler alternativ"
 
-#: ../src/orca/scripts/planner.py:142 ../src/orca/scripts/planner.py:150
-#: ../src/orca/scripts/planner.py:176 ../src/orca/scripts/planner.py:184
+#: ../src/orca/scripts/planner.py:142
+#: ../src/orca/scripts/planner.py:150
+#: ../src/orca/scripts/planner.py:176
+#: ../src/orca/scripts/planner.py:184
 #: ../src/orca/speechgenerator.py:1403
 msgid "pressed"
 msgstr "nedtryckt"
 
-#: ../src/orca/scripts/planner.py:144 ../src/orca/scripts/planner.py:152
-#: ../src/orca/scripts/planner.py:178 ../src/orca/scripts/planner.py:186
+#: ../src/orca/scripts/planner.py:144
+#: ../src/orca/scripts/planner.py:152
+#: ../src/orca/scripts/planner.py:178
+#: ../src/orca/scripts/planner.py:186
 #: ../src/orca/speechgenerator.py:1405
 msgid "not pressed"
 msgstr "inte nedtryckt"
@@ -2849,11 +2903,13 @@ msgstr "inte nedtryckt"
 msgid "Calc"
 msgstr "Kalkylark"
 
-#: ../src/orca/scripts/StarOffice.py:599 ../src/orca/scripts/StarOffice.py:626
+#: ../src/orca/scripts/StarOffice.py:599
+#: ../src/orca/scripts/StarOffice.py:626
 msgid "on"
 msgstr "på"
 
-#: ../src/orca/scripts/StarOffice.py:601 ../src/orca/scripts/StarOffice.py:628
+#: ../src/orca/scripts/StarOffice.py:601
+#: ../src/orca/scripts/StarOffice.py:628
 msgid "off"
 msgstr "av"
 
@@ -2863,16 +2919,11 @@ msgstr "Talar innehållet på inmatningsraden."
 
 #: ../src/orca/scripts/StarOffice.py:730
 msgid "Set the row to use as dynamic column headers when speaking calc cells."
-msgstr ""
-"Ställ in raden att använda som dynamiska kolumnhuvud när beräkningsceller "
-"talas."
+msgstr "Ställ in raden att använda som dynamiska kolumnhuvud när beräkningsceller talas."
 
 #: ../src/orca/scripts/StarOffice.py:735
-msgid ""
-"Set the column to use as dynamic row headers to use when speaking calc cells."
-msgstr ""
-"Ställ in kolumnen att använda som dynamiska radhuvud när beräkningsceller "
-"talas."
+msgid "Set the column to use as dynamic row headers to use when speaking calc cells."
+msgstr "Ställ in kolumnen att använda som dynamiska radhuvud när beräkningsceller talas."
 
 #: ../src/orca/scripts/StarOffice.py:824
 msgid "empty"
@@ -2895,80 +2946,57 @@ msgstr "Dynamiskt radhuvud tömdes."
 msgid "Dynamic row header set for column %s"
 msgstr "Dynamtisk radhuvud inställt för kolumnen %s"
 
-#: ../src/orca/scripts/StarOffice.py:1108
+#: ../src/orca/scripts/StarOffice.py:1109
 msgid "Welcome to StarOffice"
 msgstr "Välkommen till StarOffice"
 
-#: ../src/orca/scripts/StarOffice.py:1203
+#: ../src/orca/scripts/StarOffice.py:1204
 msgid "Text Document"
 msgstr "Textdokument"
 
-#: ../src/orca/scripts/StarOffice.py:1263
-#: ../src/orca/scripts/StarOffice.py:1485
+#: ../src/orca/scripts/StarOffice.py:1264
+#: ../src/orca/scripts/StarOffice.py:1486
 msgid "Spellcheck:"
 msgstr "Stavningskontroll:"
 
-#: ../src/orca/scripts/StarOffice.py:1291
+#: ../src/orca/scripts/StarOffice.py:1292
 msgid "Note that the Scroll Down button has to be pressed numerous times."
 msgstr "Notera att Rulla ner-knappen måste tryckas ner flera gånger."
 
-#: ../src/orca/scripts/StarOffice.py:1305
+#: ../src/orca/scripts/StarOffice.py:1306
 msgid "License Agreement Accept button now has focus."
 msgstr "Licensavtalets knapp för att acceptera har nu fokus."
 
-#: ../src/orca/scripts/StarOffice.py:1328
+#: ../src/orca/scripts/StarOffice.py:1329
 msgid "First name"
 msgstr "Förnamn"
 
-#: ../src/orca/scripts/StarOffice.py:1399
+#: ../src/orca/scripts/StarOffice.py:1400
 msgid "Move to cell"
 msgstr "Flytta till cell"
 
-#: ../src/orca/scripts/StarOffice.py:1541
+#: ../src/orca/scripts/StarOffice.py:1542
 msgid "Writer"
 msgstr "Ordbehandlare"
 
-#: ../src/orca/scripts/StarOffice.py:1697
+#: ../src/orca/scripts/StarOffice.py:1698
 msgid " has formula"
 msgstr " har formel"
 
-#: ../src/orca/scripts/StarOffice.py:1743
+#: ../src/orca/scripts/StarOffice.py:1744
 msgid "Cell "
 msgstr "Cell "
 
-#: ../src/orca/scripts/Thunderbird.py:132
-#: ../src/orca/scripts/Thunderbird.py:137
-#: ../src/orca/scripts/Thunderbird.py:546
-#: ../src/orca/scripts/Thunderbird.py:551
-#, python-format
-msgid "%s text %s %s"
-msgstr "%s text %s %s"
-
-#: ../src/orca/scripts/Thunderbird.py:134
-#: ../src/orca/scripts/Thunderbird.py:548
-#, python-format
-msgid "%s text %s"
-msgstr "%s text %s"
-
-#: ../src/orca/scripts/Thunderbird.py:139
-#: ../src/orca/scripts/Thunderbird.py:553
-#, python-format
-msgid "text %s %s"
-msgstr "text %s %s"
-
-#: ../src/orca/scripts/Thunderbird.py:220
-msgid ":"
-msgstr ":"
-
 #. Don't speak chrome URLs.
-#: ../src/orca/scripts/Thunderbird.py:358
-#: ../src/orca/scripts/Thunderbird.py:473
-#: ../src/orca/scripts/Thunderbird.py:488
+#.
+#: ../src/orca/scripts/Thunderbird.py:184
+#: ../src/orca/scripts/Thunderbird.py:264
+#: ../src/orca/scripts/Thunderbird.py:279
 msgid "chrome://"
 msgstr "chrome://"
 
-#: ../src/orca/scripts/Thunderbird.py:480
-#: ../src/orca/scripts/Thunderbird.py:495
+#: ../src/orca/scripts/Thunderbird.py:272
+#: ../src/orca/scripts/Thunderbird.py:287
 #, python-format
 msgid "%s panel"
 msgstr "%s panel"
@@ -2981,57 +3009,66 @@ msgstr "%s panel"
 #. translation is by running the application and then viewing its
 #. name in the main window of at-poke.
 #.
-#: ../src/orca/settings.py:531
+#: ../src/orca/settings.py:532
 msgid "[\\S\\s]*StarOffice[\\s\\S]*"
 msgstr "[\\S\\s]*StarOffice[\\s\\S]*"
 
-#: ../src/orca/settings.py:532
+#: ../src/orca/settings.py:533
 msgid "soffice.bin"
 msgstr "soffice.bin"
 
-#: ../src/orca/settings.py:533
+#: ../src/orca/settings.py:534
 msgid "[Ee]volution"
 msgstr "[Ee]volution"
 
-#: ../src/orca/settings.py:534
+#: ../src/orca/settings.py:535
 msgid "Deer Park"
 msgstr "Deer Park"
 
-#: ../src/orca/settings.py:535
+#: ../src/orca/settings.py:536
 msgid "yelp"
 msgstr "yelp"
 
-#: ../src/orca/settings.py:536
+#: ../src/orca/settings.py:537
 msgid "Bon Echo"
 msgstr "Bon Echo"
 
-#: ../src/orca/settings.py:537
+#: ../src/orca/settings.py:538
 msgid "Minefield"
 msgstr "Minröj"
 
-#: ../src/orca/settings.py:538
+#: ../src/orca/settings.py:539
+msgid "Mail/News"
+msgstr "E-post/Diskussionsgrupper"
+
+#: ../src/orca/settings.py:540
 msgid "bug-buddy"
 msgstr "bug-buddy"
 
-#: ../src/orca/settings.py:539
+#: ../src/orca/settings.py:541
 msgid "vte"
 msgstr "vte"
 
-#: ../src/orca/settings.py:540
+#: ../src/orca/settings.py:542
 msgid "time-admin"
 msgstr "time-admin"
 
-#: ../src/orca/speechgenerator.py:375 ../src/orca/where_am_I.py:185
-#: ../src/orca/where_am_I.py:225 ../src/orca/where_am_I.py:923
+#: ../src/orca/speechgenerator.py:375
+#: ../src/orca/where_am_I.py:185
+#: ../src/orca/where_am_I.py:225
+#: ../src/orca/where_am_I.py:923
 msgid "checked"
 msgstr "kryssad"
 
-#: ../src/orca/speechgenerator.py:377 ../src/orca/where_am_I.py:187
-#: ../src/orca/where_am_I.py:227 ../src/orca/where_am_I.py:925
+#: ../src/orca/speechgenerator.py:377
+#: ../src/orca/where_am_I.py:187
+#: ../src/orca/where_am_I.py:227
+#: ../src/orca/where_am_I.py:925
 msgid "not checked"
 msgstr "inte kryssad"
 
-#: ../src/orca/speechgenerator.py:703 ../src/orca/speechgenerator.py:1189
+#: ../src/orca/speechgenerator.py:703
+#: ../src/orca/speechgenerator.py:1189
 #: ../src/orca/speechgenerator.py:1239
 msgid "0 items"
 msgstr "0 objekt"
@@ -3057,64 +3094,96 @@ msgstr " Sammanhanget är "
 msgid " %d %s characters "
 msgstr " %d %s tecken "
 
-#: ../src/orca/util.py:1476
+#: ../src/orca/util.py:1484
 msgid "page selected from cursor position"
 msgstr "sida vald från markörposition"
 
-#: ../src/orca/util.py:1480
+#: ../src/orca/util.py:1488
 msgid "page selected to cursor position"
 msgstr "sida vald till markörposition"
 
-#: ../src/orca/util.py:1484
+#: ../src/orca/util.py:1492
 msgid "line selected down from cursor position"
 msgstr "rad vald ner från markörposition"
 
-#: ../src/orca/util.py:1488
+#: ../src/orca/util.py:1496
 msgid "line selected up from cursor position"
 msgstr "rad vald upp från markörposition"
 
-#: ../src/orca/util.py:1492
+#: ../src/orca/util.py:1500
 msgid "document selected to cursor position"
 msgstr "dokument valt till markörposition"
 
-#: ../src/orca/util.py:1496
+#: ../src/orca/util.py:1504
 msgid "document selected from cursor position"
 msgstr "dokument valt från markörposition"
 
 #. child(0) is the popup list
 #. parent is the page tab list
-#: ../src/orca/where_am_I.py:181 ../src/orca/where_am_I.py:190
-#: ../src/orca/where_am_I.py:211 ../src/orca/where_am_I.py:215
-#: ../src/orca/where_am_I.py:218 ../src/orca/where_am_I.py:221
-#: ../src/orca/where_am_I.py:231 ../src/orca/where_am_I.py:234
-#: ../src/orca/where_am_I.py:254 ../src/orca/where_am_I.py:257
-#: ../src/orca/where_am_I.py:262 ../src/orca/where_am_I.py:263
-#: ../src/orca/where_am_I.py:268 ../src/orca/where_am_I.py:272
-#: ../src/orca/where_am_I.py:275 ../src/orca/where_am_I.py:294
-#: ../src/orca/where_am_I.py:297 ../src/orca/where_am_I.py:305
-#: ../src/orca/where_am_I.py:323 ../src/orca/where_am_I.py:326
-#: ../src/orca/where_am_I.py:329 ../src/orca/where_am_I.py:349
-#: ../src/orca/where_am_I.py:352 ../src/orca/where_am_I.py:356
-#: ../src/orca/where_am_I.py:359 ../src/orca/where_am_I.py:380
-#: ../src/orca/where_am_I.py:385 ../src/orca/where_am_I.py:386
-#: ../src/orca/where_am_I.py:389 ../src/orca/where_am_I.py:392
-#: ../src/orca/where_am_I.py:395 ../src/orca/where_am_I.py:400
-#: ../src/orca/where_am_I.py:401 ../src/orca/where_am_I.py:404
-#: ../src/orca/where_am_I.py:423 ../src/orca/where_am_I.py:430
-#: ../src/orca/where_am_I.py:431 ../src/orca/where_am_I.py:434
-#: ../src/orca/where_am_I.py:435 ../src/orca/where_am_I.py:441
-#: ../src/orca/where_am_I.py:467 ../src/orca/where_am_I.py:470
-#: ../src/orca/where_am_I.py:482 ../src/orca/where_am_I.py:493
-#: ../src/orca/where_am_I.py:496 ../src/orca/where_am_I.py:558
-#: ../src/orca/where_am_I.py:561 ../src/orca/where_am_I.py:636
-#: ../src/orca/where_am_I.py:639 ../src/orca/where_am_I.py:657
-#: ../src/orca/where_am_I.py:670 ../src/orca/where_am_I.py:684
-#: ../src/orca/where_am_I.py:799 ../src/orca/where_am_I.py:814
-#: ../src/orca/where_am_I.py:827 ../src/orca/where_am_I.py:919
-#: ../src/orca/where_am_I.py:928 ../src/orca/where_am_I.py:1137
-#: ../src/orca/where_am_I.py:1140 ../src/orca/where_am_I.py:1174
-#: ../src/orca/where_am_I.py:1177 ../src/orca/where_am_I.py:1263
-#: ../src/orca/where_am_I.py:1268 ../src/orca/where_am_I.py:1287
+#: ../src/orca/where_am_I.py:181
+#: ../src/orca/where_am_I.py:190
+#: ../src/orca/where_am_I.py:211
+#: ../src/orca/where_am_I.py:215
+#: ../src/orca/where_am_I.py:218
+#: ../src/orca/where_am_I.py:221
+#: ../src/orca/where_am_I.py:231
+#: ../src/orca/where_am_I.py:234
+#: ../src/orca/where_am_I.py:254
+#: ../src/orca/where_am_I.py:257
+#: ../src/orca/where_am_I.py:262
+#: ../src/orca/where_am_I.py:263
+#: ../src/orca/where_am_I.py:268
+#: ../src/orca/where_am_I.py:272
+#: ../src/orca/where_am_I.py:275
+#: ../src/orca/where_am_I.py:294
+#: ../src/orca/where_am_I.py:297
+#: ../src/orca/where_am_I.py:305
+#: ../src/orca/where_am_I.py:323
+#: ../src/orca/where_am_I.py:326
+#: ../src/orca/where_am_I.py:329
+#: ../src/orca/where_am_I.py:349
+#: ../src/orca/where_am_I.py:352
+#: ../src/orca/where_am_I.py:356
+#: ../src/orca/where_am_I.py:359
+#: ../src/orca/where_am_I.py:380
+#: ../src/orca/where_am_I.py:385
+#: ../src/orca/where_am_I.py:386
+#: ../src/orca/where_am_I.py:389
+#: ../src/orca/where_am_I.py:392
+#: ../src/orca/where_am_I.py:395
+#: ../src/orca/where_am_I.py:400
+#: ../src/orca/where_am_I.py:401
+#: ../src/orca/where_am_I.py:404
+#: ../src/orca/where_am_I.py:423
+#: ../src/orca/where_am_I.py:430
+#: ../src/orca/where_am_I.py:431
+#: ../src/orca/where_am_I.py:434
+#: ../src/orca/where_am_I.py:435
+#: ../src/orca/where_am_I.py:441
+#: ../src/orca/where_am_I.py:467
+#: ../src/orca/where_am_I.py:470
+#: ../src/orca/where_am_I.py:482
+#: ../src/orca/where_am_I.py:493
+#: ../src/orca/where_am_I.py:496
+#: ../src/orca/where_am_I.py:558
+#: ../src/orca/where_am_I.py:561
+#: ../src/orca/where_am_I.py:636
+#: ../src/orca/where_am_I.py:639
+#: ../src/orca/where_am_I.py:657
+#: ../src/orca/where_am_I.py:670
+#: ../src/orca/where_am_I.py:684
+#: ../src/orca/where_am_I.py:799
+#: ../src/orca/where_am_I.py:814
+#: ../src/orca/where_am_I.py:827
+#: ../src/orca/where_am_I.py:919
+#: ../src/orca/where_am_I.py:928
+#: ../src/orca/where_am_I.py:1137
+#: ../src/orca/where_am_I.py:1140
+#: ../src/orca/where_am_I.py:1174
+#: ../src/orca/where_am_I.py:1177
+#: ../src/orca/where_am_I.py:1263
+#: ../src/orca/where_am_I.py:1268
+#: ../src/orca/where_am_I.py:1287
 #, python-format
 msgid "%s"
 msgstr "%s"
@@ -3124,7 +3193,8 @@ msgstr "%s"
 msgid "%s percent"
 msgstr "%s procent"
 
-#: ../src/orca/where_am_I.py:427 ../src/orca/where_am_I.py:438
+#: ../src/orca/where_am_I.py:427
+#: ../src/orca/where_am_I.py:438
 #, python-format
 msgid "%s page"
 msgstr "%s sida"
@@ -3134,17 +3204,20 @@ msgstr "%s sida"
 msgid "row %d"
 msgstr "rad %d"
 
-#: ../src/orca/where_am_I.py:571 ../src/orca/where_am_I.py:591
+#: ../src/orca/where_am_I.py:571
+#: ../src/orca/where_am_I.py:591
 #, python-format
 msgid "row %d of %d"
 msgstr "rad %d av %d"
 
-#: ../src/orca/where_am_I.py:682 ../src/orca/where_am_I.py:801
+#: ../src/orca/where_am_I.py:682
+#: ../src/orca/where_am_I.py:801
 #, python-format
 msgid "%s %s"
 msgstr "%s %s"
 
-#: ../src/orca/where_am_I.py:745 ../src/orca/where_am_I.py:785
+#: ../src/orca/where_am_I.py:745
+#: ../src/orca/where_am_I.py:785
 #, python-format
 msgid "item %d of %d"
 msgstr "objekt %d av %d"
@@ -3153,27 +3226,28 @@ msgstr "objekt %d av %d"
 msgid "Read"
 msgstr "Läs"
 
-#~ msgid "To exit learn mode, press the escape key."
-#~ msgstr "För att lämna inlärningsläget, tryck Escape."
-
+#~ msgid " %d items"
+#~ msgstr " %d objekt"
+#~ msgid "%s text %s %s"
+#~ msgstr "%s text %s %s"
+#~ msgid "%s text %s"
+#~ msgstr "%s text %s"
+#~ msgid "text %s %s"
+#~ msgstr "text %s %s"
+#~ msgid ":"
+#~ msgstr ":"
 #~ msgid "Account Settings"
 #~ msgstr "Kontoinställningar"
-
 #~ msgid "Thunderbird Preferences"
 #~ msgstr "Inställningar för Thunderbird"
-
 #~ msgid "shortcut"
 #~ msgstr "genväg"
-
 #~ msgid "Default Key"
 #~ msgstr "Standardtangent"
-
 #~ msgid "Item "
 #~ msgstr "Post "
-
 #~ msgid " of "
 #~ msgstr " av "
-
 #~ msgid ""
 #~ "You will have to log out for the change to take effect.\n"
 #~ "Do you want to log out now? "
@@ -3184,47 +3258,34 @@ msgstr "Läs"
 #, fuzzy
 #~ msgid "tick"
 #~ msgstr "_Fast"
-
 #~ msgid "semi"
 #~ msgstr "semikolon"
-
 #~ msgid "back"
 #~ msgstr "tillbaka"
-
 #~ msgid "bar"
 #~ msgstr "lodstreck"
-
 #~ msgid "version"
 #~ msgstr "version"
-
 #~ msgid "Creating .orca directory."
 #~ msgstr "Skapar .orca-katalog."
-
 #~ msgid "Creating .orca script directory."
 #~ msgstr "Skapar .orca-skriptkatalog."
-
 #~ msgid "Creating __init_.py in .orca script directory."
 #~ msgstr "Skapar __init_.py i .orca-skriptkatalogen."
-
 #~ msgid "Braille support appears to work, use it?  Enter y or n. "
 #~ msgstr ""
 #~ "Stödet för Braille verkar fungera, använda det? Ange y (ja) eller n "
 #~ "(nej). "
-
 #~ msgid "No page to read."
 #~ msgstr "Ingen sida att läsa."
-
 #~ msgid "Reading web page failed."
 #~ msgstr "Läsning av webbsida misslyckades."
-
 #~ msgid "Input"
 #~ msgstr "Indata"
-
 #~ msgid "Message Log"
 #~ msgstr "Meddelandelogg"
-
 #~ msgid "Enter choice."
 #~ msgstr "Ange val."
-
 #~ msgid "Enter voice name: "
 #~ msgstr "Ange röstnamn: "
+
