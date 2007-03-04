@@ -1,3 +1,8 @@
+2007-03-04  Willie Walker <william.walker@sun.com>
+
+	* src/orca/Gecko.py: fix for bug 414585 to speak/braille the title
+	of the tab page when you switch to it in Firefox.
+	
 2007-03-03  Joanmarie Diggs <j-diggs@comcast.net>
 
 	* bugs/bugs.html: added another Firefox bug.

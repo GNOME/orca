@@ -773,6 +773,13 @@ class Script(default.Script):
         #
         self._loadingDocumentContent = False
 
+        # In tabbed content (i.e., Firefox's support for one tab per
+        # URL), we also keep track of the caret context in each tab.
+        # the key is the document frame and the value is the caret
+        # context for that frame.
+        #
+        self._documentFrameCaretContext = {}
+
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.
         """
@@ -863,6 +870,8 @@ class Script(default.Script):
             self.onDocumentLoadComplete
         listeners["document:load-stopped"]                  = \
             self.onDocumentLoadStopped
+        listeners["object:visible-data-changed"]            = \
+            self.onVisibleDataChanged
 
         # [[[TODO: HACK - WDW we need to accomodate Gecko's incorrect
         # use of underscores instead of dashes until they fix their bug.
@@ -1059,10 +1068,20 @@ class Script(default.Script):
         #print "       caretOffset=", event.source.text.caretOffset
         #print "    characterCount=", event.source.text.characterCount
 
+
         self.caretContext = self.findFirstCaretContext(\
             event.source,
             event.source.text.caretOffset)
         [obj, characterOffset] = self.caretContext
+
+        # Save where we are in this particular document frame.
+        # We do this because the user might have several URLs
+        # open in several different tabs, and we keep track of
+        # where the caret is for each documentFrame.
+        #
+        documentFrame = self.getDocumentFrame()
+        if documentFrame:
+            self._documentFrameCaretContext[documentFrame] = self.caretContext
 
         #print "       ended up at=", self.caretContext
 
@@ -1336,6 +1355,48 @@ class Script(default.Script):
             return
 
         default.Script.onStateChanged(self, event)
+
+    def onVisibleDataChanged(self, event):
+        """Called when the visible data of an object changes.
+        We do this to detect when the user switches between
+        the tabs holding different URL pages in the Firefox
+        window."""
+
+        # See if we have a frame who has a document frame.
+        #
+        documentFrame = None
+        if (event.source.role == rolenames.ROLE_FRAME) \
+            and event.source.state.count(atspi.Accessibility.STATE_ACTIVE):
+            documentFrame = self.getDocumentFrame()
+            try:
+                self.caretContext = self._documentFrameCaretContext[\
+                    documentFrame]
+            except:
+                self.caretContext = self.findNextCaretInOrder(documentFrame)
+                self._documentFrameCaretContext[documentFrame] = \
+                    self.caretContext
+
+            #print "HERE", documentFrame.name
+            #print "    ", documentFrame
+            #print "    ", documentFrame.parent
+
+            braille.displayMessage(documentFrame.name)
+            speech.stop()
+            speech.speak(
+                "%s %s" \
+                % (documentFrame.name,
+                   rolenames.rolenames[rolenames.ROLE_PAGE_TAB].speech))
+
+            # [[[TODO: WDW - commented this out.  It is an attempt to
+            # read the line at the current character offset for the
+            # window, but it doesn't seem to be reliable.]]]
+            #
+            #if self.caretContext:
+            #    [obj, characterOffset] = self.caretContext
+            #    self.updateBraille(obj)
+            #    self.speakContents(
+            #        self.getLineContentsAtOffset(obj,
+            #                                     characterOffset))
 
     def visualAppearanceChanged(self, event, obj):
         """Called when the visual appearance of an object changes.  This
@@ -2992,6 +3053,16 @@ class Script(default.Script):
         """
 
         caretContext = self.getCaretContext()
+
+        # Save where we are in this particular document frame.
+        # We do this because the user might have several URLs
+        # open in several different tabs, and we keep track of
+        # where the caret is for each documentFrame.
+        #
+        documentFrame = self.getDocumentFrame()
+        if documentFrame:
+            self._documentFrameCaretContext[documentFrame] = caretContext
+
         if caretContext == [obj, characterOffset]:
             return
 
@@ -3201,6 +3272,9 @@ class Script(default.Script):
 
         contents = self.getLineContentsAtOffset(lastObj,
                                                 lastCharacterOffset)
+
+        if not len(contents):
+            return
 
         if arrowToLineBeginning:
             [lastObj, lastCharacterOffset, endOffset] = contents[0]
