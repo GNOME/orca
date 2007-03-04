@@ -3241,13 +3241,21 @@ class Script(default.Script):
 
             #print "GPL LOOKING AT", obj.role, extents
 
+            # Sometimes the reported width and/or height of a character
+            # is a large negative number.  When that occurs, we want to
+            # ignore that character.
+            #
+            validExtents = True
+            if (extents[2] < 0) or (extents[3] < 0):
+                validExtents = False
+
             # [[[TODO: WDW - HACK.  I think we end up with a zero
             # sized character when the accessible text implementation
             # of Gecko gives us whitespace that is not visible, but
             # is in the raw HTML source.  This should hopefully be
             # fixed at some point, but we just ignore it for now.
             #
-            if extents != (0, 0, 0, 0):
+            if validExtents and extents != (0, 0, 0, 0):
                 if not self.onSameLine(extents, lineExtents):
                     if not crossedLineBoundary:
                         lineExtents = extents
@@ -3321,13 +3329,21 @@ class Script(default.Script):
 
             #print "GNL LOOKING AT", obj.role, extents
 
+            # Sometimes the reported width and/or height of a character
+            # is a large negative number.  When that occurs, we want to
+            # ignore that character.
+            #
+            validExtents = True
+            if (extents[2] < 0) or (extents[3] < 0):
+                validExtents = False
+
             # [[[TODO: WDW - HACK.  I think we end up with a zero
             # sized character when the accessible text implementation
             # of Gecko gives us whitespace that is not visible, but
             # is in the raw HTML source.  This should hopefully be
             # fixed at some point, but we just ignore it for now.]]]
             #
-            if extents != (0, 0, 0, 0):
+            if validExtents and extents != (0, 0, 0, 0):
                 if not self.onSameLine(extents, lineExtents):
                     if not crossedLineBoundary:
                         lineExtents = extents
