@@ -12,7 +12,7 @@
 <refentry id="orca-1">
 <!-- %Z%%M% %I% %E% SMI; -->
 <refmeta><refentrytitle>orca</refentrytitle><manvolnum>1</manvolnum>
-<refmiscinfo class="date">1 Sep 2006</refmiscinfo>
+<refmiscinfo class="date">5 Mar 2007</refmiscinfo>
 <refmiscinfo class="sectdesc">&man1;</refmiscinfo>
 <refmiscinfo class="software">&release;</refmiscinfo>
 <refmiscinfo class="arch">generic</refmiscinfo>
@@ -33,6 +33,12 @@
 <arg><option>-text-setup</option></arg>
 <arg><option>n</option></arg>
 <arg><option>-no-setup</option></arg>
+<arg><option>u dirname</option></arg>
+<arg><option>-user-prefs-dir=dirname</option></arg>
+<arg><option>e [speech|braille|braille-monitor|magnifier|main-window]</option></arg>
+<arg><option>-enable=[speech|braille|braille-monitor|magnifier|main-window]</option></arg>
+<arg><option>d [speech|braille|braille-monitor|magnifier|main-window]</option></arg>
+<arg><option>-disable=[speech|braille|braille-monitor|magnifier|main-window]</option></arg>
 <arg><option>?</option></arg>
 <arg><option>-h</option></arg>
 <arg><option>-help</option></arg>
@@ -76,6 +82,21 @@ orca force the application to be started without configuration, even though
 it might have needed it. This is useful when starting orca via something like
 gdm.
 You can also use <option>-no-setup</option> to specify this option.
+</para></listitem></varlistentry>
+
+<varlistentry><term><option>u</option></term><listitem><para>When starting
+orca, use dirname as an alternate directory for the user preferences.
+You can also use <option>-user-prefs-dir</option> to specify this option.
+</para></listitem></varlistentry>
+
+<varlistentry><term><option>e</option></term><listitem><para>When starting
+orca, force the enabling of the supplied options.
+You can also use <option>-enable</option> to specify this option.
+</para></listitem></varlistentry>
+
+<varlistentry><term><option>d</option></term><listitem><para>When starting
+orca, force the disabling of the supplied options.
+You can also use <option>-disable</option> to specify this option.
 </para></listitem></varlistentry>
 
 <varlistentry><term><option>?</option></term><listitem><para>Show the help 
@@ -266,7 +287,8 @@ be. To exit learn mode, press the escape key.
 
 <varlistentry><term><option> Numpad-5</option></term>
 <listitem>
-<para>read the current word.</para>
+<para>read the current word. Double tap on Numpad-5 to spell the current word, 
+and triple tap on Numpad-5 to get military spelling.</para>
 </listitem>
 </varlistentry>
 
@@ -311,6 +333,18 @@ cursor.</para>
 <varlistentry><term><option> Numpad-plus</option></term>
 <listitem>
 <para>speaks the entire document.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term><option> Numpad-Enter</option></term>
+<listitem>
+<para>perform a "where am I" operation.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term><option> Numpad-Delete</option></term>
+<listitem>
+<para>bring up the Find dialog.</para>
 </listitem>
 </varlistentry>
 
@@ -490,7 +524,7 @@ for your platform.</para>
 </refsect1>
 
 <refsect1 id="orca-1-note"><title>&note-tt;</title>
-<para>Written by Rich Burridge, Sun Microsystems Inc., 2006.</para>
+<para>Written by Rich Burridge, Sun Microsystems Inc., 2006-2007.</para>
 </refsect1>
 </refentry>
 <?Pub *0000004990>

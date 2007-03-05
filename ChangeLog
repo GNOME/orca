@@ -1,3 +1,19 @@
+2007-03-05  Rich Burridge <rich.burridge@sun.com>
+
+        * docs/man/orca.sgml:
+          docs/man/orca.1:
+          Fixed bug #414981. Updated Orca man pages for GNOME 2.18.
+          - Added in text for new command line options:
+            -u --user-prefs-dir
+            -e --enable
+            -d --disable
+          - Added two new entries to the flat review section:
+            o Numpad-enter for "Where am I" 
+            o Numpad-delete to bring up the "Find" dialog
+          - Adjusted the Numpad-5 entry to include:
+            "Double tap on Numpad-5 to spell word, triple tap on Numpad-5 
+            to get military spelling.
+
 2007-03-04  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py, src/orca/default.py, src/orca/flat_review.py:
