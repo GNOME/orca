@@ -26,6 +26,14 @@
             "Double tap on Numpad-5 to spell word, triple tap on Numpad-5
             to get military spelling.
 
+        * src/orca/default.py:
+          src/orca/util.py:
+          src/orca/scripts/acroread.py:
+          Another partial fix for bug #395548.
+
+          Moved:
+          def speakTextSelectionState(obj, startOffset, endOffset):
+
 2007-03-04  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py, src/orca/default.py, src/orca/flat_review.py:

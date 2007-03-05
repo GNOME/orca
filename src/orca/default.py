@@ -1164,7 +1164,7 @@ class Script(script.Script):
 
             phrase = util.adjustForRepeats(phrase)
             speech.speak(phrase, voice)
-            util.speakTextSelectionState(obj, startOffset, endOffset)
+            self.speakTextSelectionState(obj, startOffset, endOffset)
 
     def sayLine(self, obj):
         """Speaks the line of an AccessibleText object that contains the
@@ -1192,7 +1192,7 @@ class Script(script.Script):
                 self.speakTextIndentation(obj, line)
             line = util.adjustForRepeats(line)
             speech.speak(line, voice)
-            util.speakTextSelectionState(obj, startOffset, caretOffset)
+            self.speakTextSelectionState(obj, startOffset, caretOffset)
 
         else:
             # Speak blank line if appropriate. It's necessary to
@@ -1256,7 +1256,7 @@ class Script(script.Script):
         word = util.adjustForRepeats(word)
         orca_state.lastWord = word
         speech.speak(word, voice)
-        util.speakTextSelectionState(obj, startOffset, endOffset)
+        self.speakTextSelectionState(obj, startOffset, endOffset)
 
     def speakTextIndentation(self, obj, line):
         """Speaks a summary of the number of spaces and/or tabs at the
@@ -1438,7 +1438,7 @@ class Script(script.Script):
         else:
             speech.speak(character, voice, False)
 
-        util.speakTextSelectionState(obj, startOffset, endOffset)
+        self.speakTextSelectionState(obj, startOffset, endOffset)
 
 
     def whereAmI(self, inputEvent):
@@ -3396,6 +3396,124 @@ class Script(script.Script):
             self.find(lastQuery)
         else:
             orca._showFindGUI()
+
+# Routines that were previously in util.py, but that have now been moved
+# here so that they can be customized in application scripts if so desired.
+# 
+
+    def speakTextSelectionState(self, obj, startOffset, endOffset):
+        """Speak "selected" if the text was just selected, "unselected" if
+        it was just unselected.
+
+        Arguments:
+        - obj: the Accessible object.
+        - startOffset: text start offset.
+        - endOffset: text end offset.
+        """
+
+        if not obj or not obj.text:
+            return
+
+        # Handle special cases.
+        #
+        # Shift-Page-Down:    speak "page selected from cursor position".
+        # Shift-Page-Up:      speak "page selected to cursor position".
+        #
+        # Control-Shift-Down: speak "line selected down from cursor position".
+        # Control-Shift-Up:   speak "line selected up from cursor position".
+        #
+        # Control-Shift-Home: speak "document selected to cursor position".
+        # Control-Shift-End:  speak "document selected from cursor position".
+        #
+        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
+            eventStr = orca_state.lastInputEvent.event_string
+            mods = orca_state.lastInputEvent.modifiers
+        else:
+            eventStr = None
+            mods = 0
+
+        isControlKey = mods & (1 << atspi.Accessibility.MODIFIER_CONTROL)
+        isShiftKey = mods & (1 << atspi.Accessibility.MODIFIER_SHIFT)
+
+        specialCaseFound = False
+        if (eventStr == "Page_Down") and isShiftKey and not isControlKey:
+            specialCaseFound = True
+            line = _("page selected from cursor position")
+
+        elif (eventStr == "Page_Up") and isShiftKey and not isControlKey:
+            specialCaseFound = True
+            line = _("page selected to cursor position")
+
+        elif (eventStr == "Down") and isShiftKey and isControlKey:
+            specialCaseFound = True
+            line = _("line selected down from cursor position")
+
+        elif (eventStr == "Up") and isShiftKey and isControlKey:
+            specialCaseFound = True
+            line = _("line selected up from cursor position")
+
+        elif (eventStr == "Home") and isShiftKey and isControlKey:
+            specialCaseFound = True
+            line = _("document selected to cursor position")
+
+        elif (eventStr == "End") and isShiftKey and isControlKey:
+            specialCaseFound = True
+            line = _("document selected from cursor position")
+
+        if specialCaseFound:
+            speech.speak(line, None, False)
+            return
+
+        try:
+            # If we are selecting by word, then there possibly will be 
+            # whitespace characters on either end of the text. We adjust 
+            # the startOffset and endOffset to exclude them.
+            #
+            try:
+                str = obj.text.getText(startOffset, endOffset).decode("UTF-8")
+            except:
+                str = u''
+            n = len(str)
+
+            # Don't strip whitespace if string length is one (might be a 
+            # space).
+            #
+            if n > 1:
+                while endOffset > startOffset:
+                    if isWordDelimiter(str[n-1]):
+                        n -= 1
+                        endOffset -= 1
+                    else:
+                        break
+                n = 0
+                while startOffset < endOffset:
+                    if isWordDelimiter(str[n]):
+                        n += 1
+                        startOffset += 1
+                    else:
+                        break
+        except:
+            debug.printException(debug.LEVEL_FINEST)
+
+        if util.isTextSelected(obj, startOffset, endOffset):
+            speech.speak(_("selected"), None, False)
+        else:
+            if obj.__dict__.has_key("lastSelections"):
+                for i in range(0, len(obj.lastSelections)):
+                    startSelOffset = obj.lastSelections[0][0]
+                    endSelOffset = obj.lastSelections[0][1]
+                    if (startOffset >= startSelOffset) \
+                        and (endOffset <= endSelOffset):
+                        speech.speak(_("unselected"), None, False)
+                        break
+
+        # Save away the current text cursor position and list of text
+        # selections for next time.
+        #
+        obj.lastCursorPosition = obj.text.caretOffset
+        obj.lastSelections = []
+        for i in range(0, obj.text.getNSelections()):
+            obj.lastSelections.append(obj.text.getSelection(i))
 
 # Dictionary that defines the state changes we care about for various
 # objects.  The key represents the role and the value represents a list

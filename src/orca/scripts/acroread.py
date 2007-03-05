@@ -667,4 +667,4 @@ class Script(default.Script):
             word = util.adjustForRepeats(word)
             orca_state.lastWord = word
             speech.speak(word, voice)
-            util.speakTextSelectionState(obj, startOffset, endOffset)
+            self.speakTextSelectionState(obj, startOffset, endOffset)
