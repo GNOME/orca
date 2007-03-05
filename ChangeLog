@@ -10,6 +10,22 @@
           def traceit(frame, event, arg):
           (in this case into debug.py).
 
+        * docs/man/orca.sgml:
+          docs/man/orca.1:
+          Partial fix for bug #414981. Updated Orca man pages to include
+          the same changes as were made for GNOME 2.18 (in the gnome-2-18
+          branch).
+          - Added in text for new command line options:
+            -u --user-prefs-dir
+            -e --enable
+            -d --disable
+          - Added two new entries to the flat review section:
+            o Numpad-enter for "Where am I"
+            o Numpad-delete to bring up the "Find" dialog
+          - Adjusted the Numpad-5 entry to include:
+            "Double tap on Numpad-5 to spell word, triple tap on Numpad-5
+            to get military spelling.
+
 2007-03-04  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py, src/orca/default.py, src/orca/flat_review.py:

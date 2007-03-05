@@ -1,10 +1,10 @@
 '\" te
-.TH orca 1 "1 Sep 2006" "" ""
+.TH orca 1 "5 Mar 2007" "" ""
 .SH "NAME"
 orca \- a screen reader / magnifier
 .SH "SYNOPSIS"
 .PP
-\fBorca\fR [-\fBs\fR] [-\fB-gui-setup\fR] [-\fB-setup\fR] [-\fBt\fR] [-\fB-text-setup\fR] [-\fBn\fR] [-\fB-no-setup\fR] [-\fB?\fR] [-\fB-h\fR] [-\fB-help\fR] [-\fBv\fR] [-\fB-version\fR] [-\fBq\fR] [-\fB-quit\fR]
+\fBorca\fR [-\fBs\fR] [-\fB-gui-setup\fR] [-\fB-setup\fR] [-\fBt\fR] [-\fB-text-setup\fR] [-\fBn\fR] [-\fB-no-setup\fR] [-\fBu dirname\fR] [-\fB-user-prefs-dir=dirname\fR] [-\fBe [speech|braille|braille-monitor|magnifier|main-window]\fR] [-\fB-enable=[speech|braille|braille-monitor|magnifier|main-window]\fR] [-\fBd [speech|braille|braille-monitor|magnifier|main-window]\fR] [-\fB-disable=[speech|braille|braille-monitor|magnifier|main-window]\fR] [-\fB?\fR] [-\fB-h\fR] [-\fB-help\fR] [-\fBv\fR] [-\fB-version\fR] [-\fBq\fR] [-\fB-quit\fR]
 .SH ""
 .PP
 Orca is a screen reader for people with visual impairments,
@@ -56,6 +56,42 @@ orca force the application to be started without configuration, even though
 it might have needed it\&. This is useful when starting orca via something like
 gdm\&.
 You can also use -\fB-no-setup\fR to specify this option\&.
+.sp
+.sp 1
+.in -9n
+.sp
+.ne 2
+.mk
+\fB-\fBu\fR\fR
+.in +9n
+.rt
+When starting
+orca, use dirname as an alternate directory for the user preferences\&.
+You can also use -\fB-user-prefs-dir\fR to specify this option\&.
+.sp
+.sp 1
+.in -9n
+.sp
+.ne 2
+.mk
+\fB-\fBe\fR\fR
+.in +9n
+.rt
+When starting
+orca, force the enabling of the supplied options\&.
+You can also use -\fB-enable\fR to specify this option\&.
+.sp
+.sp 1
+.in -9n
+.sp
+.ne 2
+.mk
+\fB-\fBd\fR\fR
+.in +9n
+.rt
+When starting
+orca, force the disabling of the supplied options\&.
+You can also use -\fB-disable\fR to specify this option\&.
 .sp
 .sp 1
 .in -9n
@@ -350,7 +386,8 @@ move the flat review cursor to the previous word, and read it\&.
 \fB-\fB Numpad-5\fR\fR
 .in +16n
 .rt
-read the current word\&.
+read the current word\&. Double tap on Numpad-5 to spell word, 
+triple tap on Numpad-5 to get military spelling\&.
 .sp
 .sp 1
 .in -16n
@@ -423,6 +460,26 @@ cursor\&.
 .in +16n
 .rt
 speaks the entire document\&.
+.sp
+.sp 1
+.in -16n
+.sp
+.ne 2
+.mk
+\fB-\fB Numpad-Enter\fR\fR
+.in +16n
+.rt
+perform a "where am I" operation\&.
+.sp
+.sp 1
+.in -16n
+.sp
+.ne 2
+.mk
+\fB-\fB Numpad-Delete\fR\fR
+.in +16n
+.rt
+bring up the Find dialog\&.
 .sp
 .sp 1
 .in -16n
@@ -636,6 +693,20 @@ user\&'s personal configuration settings for orca
 .in -32n
 .SH ""
 .PP
+See \fBattributes\fR(5)
+for descriptions of the following attributes:
+.sp
+.TS
+tab() allbox;
+cw(2.750000i)| cw(2.750000i)
+lw(2.750000i)| lw(2.750000i).
+ATTRIBUTE TYPEATTRIBUTE VALUE
+AvailabilitySUNWgnome-a11y-orca
+Interface stabilityExternal
+.TE
+.sp
+.SH ""
+.PP
 orca online reference manual\&.
 .PP
 Latest version of the \fIGNOME Accessibility Guide\fR
@@ -645,5 +716,5 @@ Latest version of the \fIGNOME Desktop User Guide\fR
 for your platform\&.5
 .SH ""
 .PP
-Written by Rich Burridge, Sun Microsystems Inc\&., 2006\&.
-...\" created by instant / solbook-to-man, Mon 11 Sep 2006, 09:26
+Written by Rich Burridge, Sun Microsystems Inc\&., 2006-2007\&.
+...\" created by instant / solbook-to-man, Mon 05 Mar 2007, 10:21
