@@ -5,9 +5,9 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Orca 0.2.8\n"
+"Project-Id-Version: Orca 0.2.17.92\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-04 14:32+0800\n"
+"POT-Creation-Date: 2007-03-05 20:36+0800\n"
 "PO-Revision-Date: 2007-03-02 11:14+0800\n"
 "Last-Translator: Woodman Tuen <wmtuen@gmail.com>\n"
 "Language-Team: Chinese (Taiwan) <community@linuxhall.org>\n"
@@ -421,9 +421,9 @@ msgid "Switches to the next presentation manager."
 msgstr "切換至下一個展示管理員。"
 
 #: ../src/orca/default.py:1210 ../src/orca/default.py:1437
-#: ../src/orca/default.py:3001 ../src/orca/default.py:3135
-#: ../src/orca/default.py:3140 ../src/orca/default.py:3233
-#: ../src/orca/default.py:3238 ../src/orca/Gecko.py:2963
+#: ../src/orca/default.py:3006 ../src/orca/default.py:3140
+#: ../src/orca/default.py:3145 ../src/orca/default.py:3238
+#: ../src/orca/default.py:3243 ../src/orca/Gecko.py:3046
 #: ../src/orca/scripts/Evolution.py:399 ../src/orca/scripts/Evolution.py:884
 #: ../src/orca/scripts/StarOffice.py:1808
 #: ../src/orca/scripts/StarOffice.py:1817 ../src/orca/where_am_I.py:994
@@ -490,11 +490,11 @@ msgstr "學習模式。 按離開鍵離開。"
 msgid "Exiting learn mode."
 msgstr "離開學習模式。"
 
-#: ../src/orca/default.py:3003 ../src/orca/default.py:3142
+#: ../src/orca/default.py:3008 ../src/orca/default.py:3147
 msgid "white space"
 msgstr "空白空間"
 
-#: ../src/orca/default.py:3355 ../src/orca/default.py:3356
+#: ../src/orca/default.py:3360 ../src/orca/default.py:3361
 msgid "string not found"
 msgstr "找不到字串"
 
@@ -518,29 +518,29 @@ msgstr "沒有焦點"
 msgid "Switching to focus tracking mode."
 msgstr "切換至焦點追蹤模式。"
 
-#: ../src/orca/Gecko.py:1301 ../src/orca/rolenames.py:332
+#: ../src/orca/Gecko.py:1320 ../src/orca/rolenames.py:332
 #: ../src/orca/scripts/acroread.py:251 ../src/orca/scripts/StarOffice.py:1091
 msgid "link"
 msgstr "連結"
 
-#: ../src/orca/Gecko.py:1320
+#: ../src/orca/Gecko.py:1339
 msgid "Loading.  Please wait."
 msgstr "載入中，請稍候。"
 
-#: ../src/orca/Gecko.py:1326
+#: ../src/orca/Gecko.py:1345
 #, python-format
 msgid "Finished loading %s."
 msgstr "載入 %s 完成。"
 
-#: ../src/orca/Gecko.py:1332
+#: ../src/orca/Gecko.py:1351
 msgid "Finished loading."
 msgstr "載入完成。"
 
-#: ../src/orca/Gecko.py:3307 ../src/orca/Gecko.py:3318
+#: ../src/orca/Gecko.py:3419 ../src/orca/Gecko.py:3430
 msgid "No more headings."
 msgstr "No more headings."
 
-#: ../src/orca/Gecko.py:3329 ../src/orca/Gecko.py:3340
+#: ../src/orca/Gecko.py:3441 ../src/orca/Gecko.py:3452
 msgid "No more chunks."
 msgstr "No more chunks."
 
@@ -2953,7 +2953,7 @@ msgstr "拆地雷"
 
 #: ../src/orca/settings.py:539
 msgid "Mail/News"
-msgstr ""
+msgstr "郵件/新聞組"
 
 #: ../src/orca/settings.py:540
 msgid "bug-buddy"
