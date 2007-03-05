@@ -99,8 +99,8 @@ def _writePreferencesPreamble(prefs):
 
     prefs.writelines("if False:\n")
     prefs.writelines("    import sys\n")
-    prefs.writelines("    import orca.util\n")
-    prefs.writelines("    sys.settrace(orca.util.traceit)\n")
+    prefs.writelines("    import orca.debug\n")
+    prefs.writelines("    sys.settrace(orca.debug.traceit)\n")
     prefs.writelines("    orca.debug.debugLevel = orca.debug.LEVEL_ALL\n")
     prefs.writelines("\n")
 

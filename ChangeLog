@@ -1,3 +1,15 @@
+2007-03-05  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/debug.py:
+          src/orca/orca_prefs.py:
+          src/orca/util.py:
+          Partial fix for bug #395548.  Move routines out of util.py and 
+          (mostly) into default.py and adjust the code that uses them.
+
+          Moved:
+          def traceit(frame, event, arg):
+          (in this case into debug.py).
+
 2007-03-04  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py, src/orca/default.py, src/orca/flat_review.py:

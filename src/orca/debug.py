@@ -207,3 +207,37 @@ def printDetails(level, indent, accessible, includeApp=True):
 
     if level >= debugLevel and accessible:
         println(level, accessible.toString(indent, includeApp))
+
+# The following code has been borrowed from the following URL:
+# 
+# http://www.dalkescientific.com/writings/diary/archive/2005/04/20/tracing_python_code.html
+#
+import linecache
+
+def traceit(frame, event, arg):
+    """Line tracing utility to output all lines as they are executed by
+    the interpreter.  This is to be used by sys.settrace and is for 
+    debugging purposes.
+   
+    Arguments:
+    - frame: is the current stack frame
+    - event: 'call', 'line', 'return', 'exception', 'c_call', 'c_return',
+             or 'c_exception'
+    - arg:   depends on the event type (see docs for sys.settrace)
+    """ 
+
+    if event == "line":
+        lineno = frame.f_lineno
+        filename = frame.f_globals["__file__"]
+        if (filename.endswith(".pyc") or
+            filename.endswith(".pyo")):
+            filename = filename[:-1]
+        name = frame.f_globals["__name__"]
+        if name == "gettext" \
+           or name == "locale" \
+           or name == "posixpath" \
+           or name == "UserDict":
+            return traceit
+        line = linecache.getline(filename, lineno)
+        println(LEVEL_ALL, "TRACE %s:%s: %s" % (name, lineno, line.rstrip()))
+    return traceit
