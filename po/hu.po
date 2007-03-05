@@ -1,15 +1,15 @@
 # Hungarian translation of orca
-# Copyright (C) 2006, Free Software Foundation, Inc.
+# Copyright (C) 2006, 2007, Free Software Foundation, Inc.
 # This file is distributed under the same license as the orca package.
 #
 # Kálmán Kéménczy <kkemenczy@novell.com>, 2006.
-# Gabor Kelemen <kelemeng@gnome.hu>, 2006.
+# Gabor Kelemen <kelemeng@gnome.hu>, 2006, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-09 16:54+0200\n"
-"PO-Revision-Date: 2006-11-17 11:45+0100\n"
+"POT-Creation-Date: 2007-03-03 03:21+0000\n"
+"PO-Revision-Date: 2007-03-05 03:32+0100\n"
 "Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
 "MIME-Version: 1.0\n"
@@ -19,437 +19,570 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../orca.desktop.in.h:1
-msgid "Assistive Technologies for Blind and Visually Impaired People"
-msgstr "Akadálymentesítési technológiák vakoknak és gyengénlátóknak"
-
-#: ../orca.desktop.in.h:2
 msgid "Orca Screen Reader and Magnifier"
 msgstr "Orca képernyőolvasó és nagyító"
 
-#: ../src/orca/braillegenerator.py:193 ../src/orca/speechgenerator.py:191
+#: ../orca.desktop.in.h:2
+msgid "Present on-screen information as speech or braille, or magnify the screen"
+msgstr "A képernyő információnak felolvasása, Braille-kimenetté alakítása vagy a képernyő nagyítása"
+
+#: ../src/orca/braillegenerator.py:197 ../src/orca/speechgenerator.py:198
 msgid "grayed"
 msgstr "szürkített"
 
-#: ../src/orca/braillegenerator.py:1085 ../src/orca/speechgenerator.py:1198
+#: ../src/orca/braillegenerator.py:1067 ../src/orca/J2SE-access-bridge.py:69
+#: ../src/orca/speechgenerator.py:1231 ../src/orca/where_am_I.py:596
 msgid "expanded"
 msgstr "kiterjesztett"
 
-#: ../src/orca/braillegenerator.py:1087 ../src/orca/speechgenerator.py:1200
+#: ../src/orca/braillegenerator.py:1069 ../src/orca/J2SE-access-bridge.py:72
+#: ../src/orca/speechgenerator.py:1233 ../src/orca/where_am_I.py:598
 msgid "collapsed"
 msgstr "összecsukott"
 
-#: ../src/orca/braillegenerator.py:1091
+#: ../src/orca/braillegenerator.py:1073
 #, python-format
 msgid "TREE LEVEL %d"
 msgstr "%d. FA SZINT"
 
-#: ../src/orca/chnames.py:32
+#: ../src/orca/braille.py:161
+msgid "Line Left"
+msgstr "Sor balra"
+
+#: ../src/orca/braille.py:162
+msgid "Line Right"
+msgstr "Sor jobbra"
+
+#: ../src/orca/braille.py:163
+msgid "Line Up"
+msgstr "Sor fel"
+
+#: ../src/orca/braille.py:164
+msgid "Line Down"
+msgstr "Sor le"
+
+#: ../src/orca/braille.py:165
+msgid "Top Left"
+msgstr "Balra fent"
+
+#: ../src/orca/braille.py:166
+msgid "Bottom Right"
+msgstr "Jobbra lent"
+
+#: ../src/orca/braille.py:167
+msgid "Cursor Position"
+msgstr "Kurzorpozíció"
+
+#: ../src/orca/chnames.py:36
 msgid "space"
 msgstr "szóköz"
 
-#: ../src/orca/chnames.py:33
+#: ../src/orca/chnames.py:37
 msgid "newline"
 msgstr "új sor"
 
-#: ../src/orca/chnames.py:34
+#: ../src/orca/chnames.py:38
 msgid "tab"
 msgstr "tabulátor"
 
-#: ../src/orca/chnames.py:36
+#: ../src/orca/chnames.py:40
 msgid "exclaim"
 msgstr "felkiáltójel"
 
-#: ../src/orca/chnames.py:37
+#: ../src/orca/chnames.py:41
 msgid "apostrophe"
 msgstr "aposztróf"
 
-#: ../src/orca/chnames.py:38
+#: ../src/orca/chnames.py:42
 msgid "comma"
 msgstr "vessző"
 
-#: ../src/orca/chnames.py:39
+#: ../src/orca/chnames.py:43
 msgid "dot"
 msgstr "pont"
 
-#: ../src/orca/chnames.py:40
+#: ../src/orca/chnames.py:44
 msgid "question"
 msgstr "kérdőjel"
 
-#: ../src/orca/chnames.py:42
+#: ../src/orca/chnames.py:46
 msgid "quote"
 msgstr "idézőjel"
 
-#: ../src/orca/chnames.py:43
+#: ../src/orca/chnames.py:47
 msgid "left paren"
 msgstr "bal zárójel"
 
-#: ../src/orca/chnames.py:44
+#: ../src/orca/chnames.py:48
 msgid "right paren"
 msgstr "jobb zárójel"
 
-#: ../src/orca/chnames.py:45
+#: ../src/orca/chnames.py:49
 msgid "dash"
 msgstr "kötőjel"
 
-#: ../src/orca/chnames.py:46
+#: ../src/orca/chnames.py:50
 msgid "underscore"
 msgstr "aláhúzás"
 
-#: ../src/orca/chnames.py:47
+#: ../src/orca/chnames.py:51
 msgid "colon"
 msgstr "kettőspont"
 
-#: ../src/orca/chnames.py:48
+#: ../src/orca/chnames.py:52
 msgid "semicolon"
 msgstr "pontosvessző"
 
-#: ../src/orca/chnames.py:49
+#: ../src/orca/chnames.py:53
 msgid "less than"
 msgstr "kisebb"
 
-#: ../src/orca/chnames.py:50
+#: ../src/orca/chnames.py:54
 msgid "greater than"
 msgstr "nagyobb"
 
-#: ../src/orca/chnames.py:51
+#: ../src/orca/chnames.py:55
 msgid "left bracket"
 msgstr "zárójel nyitás"
 
-#: ../src/orca/chnames.py:52
+#: ../src/orca/chnames.py:56
 msgid "right bracket"
 msgstr "zárójel zárás"
 
-#: ../src/orca/chnames.py:53
+#: ../src/orca/chnames.py:57
 msgid "backslash"
 msgstr "fordított törtvonal"
 
-#: ../src/orca/chnames.py:54
+#: ../src/orca/chnames.py:58
 msgid "vertical line"
 msgstr "függőleges vonal"
 
-#: ../src/orca/chnames.py:55
+#: ../src/orca/chnames.py:59
 msgid "grave accent"
 msgstr "visszafelé dőlő ékezet"
 
-#: ../src/orca/chnames.py:56
+#: ../src/orca/chnames.py:60
 msgid "tilde"
 msgstr "hullámjel"
 
-#: ../src/orca/chnames.py:57
+#: ../src/orca/chnames.py:61
 msgid "left brace"
 msgstr "nyitó kapcsos zárójel"
 
-#: ../src/orca/chnames.py:58
+#: ../src/orca/chnames.py:62
 msgid "right brace"
 msgstr "záró kapcsos zárójel"
 
-#: ../src/orca/chnames.py:60
+#: ../src/orca/chnames.py:64
 msgid "pound"
 msgstr "font"
 
-#: ../src/orca/chnames.py:61
+#: ../src/orca/chnames.py:65
 msgid "dollar"
 msgstr "dollár"
 
-#: ../src/orca/chnames.py:62 ../src/orca/speechgenerator.py:851
+#: ../src/orca/chnames.py:66 ../src/orca/speechgenerator.py:902
 msgid "percent"
 msgstr "százalék"
 
-#: ../src/orca/chnames.py:63
+#: ../src/orca/chnames.py:67
 msgid "and"
 msgstr "és"
 
-#: ../src/orca/chnames.py:64
+#: ../src/orca/chnames.py:68
 msgid "star"
 msgstr "csillag"
 
-#: ../src/orca/chnames.py:65
+#: ../src/orca/chnames.py:69
 msgid "plus"
 msgstr "összeadás"
 
-#: ../src/orca/chnames.py:66
+#: ../src/orca/chnames.py:70
 msgid "slash"
 msgstr "törtvonal"
 
-#: ../src/orca/chnames.py:67
+#: ../src/orca/chnames.py:71
 msgid "equals"
 msgstr "egyenlő"
 
-#: ../src/orca/chnames.py:68
+#: ../src/orca/chnames.py:72
 msgid "at"
 msgstr "kukac-"
 
-#: ../src/orca/chnames.py:69
+#: ../src/orca/chnames.py:73
 msgid "caret"
 msgstr "hiányjel"
 
-#: ../src/orca/default.py:78
+#: ../src/orca/chnames.py:75
+msgid "plus minus"
+msgstr "pluszmínusz"
+
+#: ../src/orca/chnames.py:76
+msgid "divide"
+msgstr "osztás"
+
+#: ../src/orca/chnames.py:77
+msgid "multiply"
+msgstr "szorzás"
+
+#: ../src/orca/default.py:88
 msgid "Performs left click on current flat review item."
 msgstr "Bal kattintást végez a jelenlegi egyszerű áttekintés elemen."
 
-#: ../src/orca/default.py:82
+#: ../src/orca/default.py:93
 msgid "Performs right click on current flat review item."
 msgstr "Jobb kattintást végez a jelenlegi egyszerű áttekintés elemen."
 
-#: ../src/orca/default.py:86 ../src/orca/scripts/Evolution.py:107
+#: ../src/orca/default.py:98 ../src/orca/scripts/acroread.py:264
+#: ../src/orca/scripts/Evolution.py:114
 msgid "Speaks entire document."
-msgstr "Az egész dokumentum felolvasása."
+msgstr "Felolvassa az egész dokumentumot."
 
-#: ../src/orca/default.py:90
+#: ../src/orca/default.py:103
 msgid "Performs the where am I operation."
 msgstr "Végrehajtja a hol vagyok műveletet"
 
-#: ../src/orca/default.py:94
+#: ../src/orca/default.py:108
+msgid "Opens the Orca Find dialog."
+msgstr "Megnyitja az Orca keresés párbeszédablakát."
+
+#: ../src/orca/default.py:113
+msgid "Searches for the next instance of a string."
+msgstr "A karakterlánc következő előfordulását keresi."
+
+#: ../src/orca/default.py:118
+msgid "Searches for the previous instance of a string."
+msgstr "A karakterlánc előző előfordulását keresi."
+
+#: ../src/orca/default.py:123
 msgid "Paints and prints the visible zones in the active window."
-msgstr "Kirajzolja és kiírja az aktív ablak látható zónáit."
+msgstr "Az aktív ablak látható zónáinak kirajzolása és kiírása."
 
-#: ../src/orca/default.py:98
+#: ../src/orca/default.py:128
 msgid "Enters and exits flat review mode."
-msgstr "Belép az egyszerű áttekints módba, majd kilép belőle."
+msgstr "Belép az egyszerű áttekintés módba, majd kilép belőle."
 
-#: ../src/orca/default.py:102
+#: ../src/orca/default.py:133
 msgid "Moves flat review to the beginning of the previous line."
 msgstr "Az egyszerű áttekintést az előző sor elejére mozgatja."
 
-#: ../src/orca/default.py:106
+#: ../src/orca/default.py:138
 msgid "Moves flat review to the home position."
 msgstr "Az egyszerű áttekintést a kezdő pozícióra mozgatja."
 
-#: ../src/orca/default.py:110
+#: ../src/orca/default.py:143
 msgid "Speaks the current flat review line."
 msgstr "Kimondja az aktuális egyszerű áttekintés sort."
 
-#: ../src/orca/default.py:114
+#: ../src/orca/default.py:148
 msgid "Moves flat review to the beginning of the next line."
 msgstr "Az egyszerű áttekintést a következő sor elejére mozgatja."
 
-#: ../src/orca/default.py:118
+#: ../src/orca/default.py:153
 msgid "Moves flat review to the end position."
 msgstr "Az egyszerű áttekintést a záró pozícióra mozgatja."
 
-#: ../src/orca/default.py:122
+#: ../src/orca/default.py:158
 msgid "Moves flat review to the previous item or word."
 msgstr "Az egyszerű áttekintést az előző szóra vagy elemre mozgatja."
 
-#: ../src/orca/default.py:126
+#: ../src/orca/default.py:163
 msgid "Moves flat review to the word above the current word."
 msgstr "Az egyszerű áttekintést a jelenlegi szó fölötti szóra mozgatja."
 
-#: ../src/orca/default.py:130
+#: ../src/orca/default.py:168
 msgid "Speaks or spells the current flat review item or word."
 msgstr "Kimondja vagy lebetűzi a jelenlegi egyszerű áttekintés elemet vagy szót."
 
-#: ../src/orca/default.py:134
+#: ../src/orca/default.py:173
 msgid "Speaks the current flat review object."
 msgstr "Kimondja a jelenlegi egyszerű áttekintés objektumot."
 
-#: ../src/orca/default.py:138
+#: ../src/orca/default.py:178
 msgid "Moves flat review to the next item or word."
 msgstr "Az egyszerű áttekintést a következő elemre vagy szóra mozgatja."
 
-#: ../src/orca/default.py:142
+#: ../src/orca/default.py:183
 msgid "Moves flat review to the word below the current word."
 msgstr "Az egyszerű áttekintést a jelenlegi szó alatti szóra mozgatja."
 
-#: ../src/orca/default.py:146
+#: ../src/orca/default.py:188
 msgid "Moves flat review to the previous character."
 msgstr "Az egyszerű áttekintést az előző karakterre mozgatja."
 
-#: ../src/orca/default.py:150
+#: ../src/orca/default.py:193
 msgid "Moves flat review to the end of the line."
-msgstr "Az egyszerű áttekintést az sor végére mozgatja."
+msgstr "Az egyszerű áttekintést a sor végére mozgatja."
 
-#: ../src/orca/default.py:154
+#: ../src/orca/default.py:198
 msgid "Speaks the current flat review character."
 msgstr "Kimondja a jelenlegi egyszerű áttekintés karaktert."
 
-#: ../src/orca/default.py:158
+#: ../src/orca/default.py:203
 msgid "Moves flat review to the next character."
 msgstr "Az egyszerű áttekintést a következő karakterre mozgatja."
 
-#: ../src/orca/default.py:162
+#: ../src/orca/default.py:208
 msgid "Toggles whether to read just the current table cell or the whole row."
-msgstr "Váltás a jelenlegi táblázatcella és az egész sor felolvasása között."
+msgstr "Vált a jelenlegi táblázatcella és az egész sor felolvasása között."
 
-#: ../src/orca/default.py:166
+#: ../src/orca/default.py:213
 msgid "Reads the attributes associated with the current text character."
 msgstr "Felolvassa a jelenlegi szöveges karakterhez társított attribútumokat."
 
-#: ../src/orca/default.py:170
+#: ../src/orca/default.py:218
 msgid "Reports information on current script."
 msgstr "Információkat jelenít meg a jelenlegi parancsfájlról."
 
-#: ../src/orca/default.py:174
+#: ../src/orca/default.py:223
 msgid "Pans the braille display to the left."
 msgstr "A braille képernyőt balra görgeti."
 
-#: ../src/orca/default.py:178
+#: ../src/orca/default.py:229
 msgid "Pans the braille display to the right."
 msgstr "A braille képernyőt jobbra görgeti."
 
-#: ../src/orca/default.py:182
+#: ../src/orca/default.py:235
 msgid "Moves flat review to the bottom left."
 msgstr "Az egyszerű áttekintést a bal alsó sarokba mozgatja."
 
-#: ../src/orca/default.py:186
+#: ../src/orca/default.py:240
 msgid "Returns to object with keyboard focus."
 msgstr "Visszaadja a billentyűzetfókusszal rendelkező objektumot."
 
-#: ../src/orca/default.py:190
+#: ../src/orca/default.py:245
 msgid "Enters learn mode.  Press escape to exit learn mode."
-msgstr "Belépés a tanulási módba. Az Esc megnyomásával kiléphet belőle."
+msgstr "Belép a tanulási módba. Az Esc megnyomásával kiléphet belőle."
 
-#: ../src/orca/default.py:194
+#: ../src/orca/default.py:250
 msgid "Exits learn mode."
 msgstr "Kilépés a tanulási módból."
 
-#: ../src/orca/default.py:198
+#: ../src/orca/default.py:255
 msgid "Decreases the speech rate."
 msgstr "Csökkenti a beszéd sebességét."
 
-#: ../src/orca/default.py:202
+#: ../src/orca/default.py:260
 msgid "Increases the speech rate."
 msgstr "Növeli a beszéd sebességét."
 
-#: ../src/orca/default.py:206
+#: ../src/orca/default.py:265
 msgid "Decreases the speech pitch."
 msgstr "Csökkenti a beszéd hangmagasságát."
 
-#: ../src/orca/default.py:210
+#: ../src/orca/default.py:270
 msgid "Increases the speech pitch."
 msgstr "Növeli a beszéd hangmagasságát."
 
-#: ../src/orca/default.py:214
+#: ../src/orca/default.py:275
 msgid "Quits Orca"
-msgstr "Kilépés a programból"
+msgstr "Kilép a programból"
 
-#: ../src/orca/default.py:218
+#: ../src/orca/default.py:280
 msgid "Toggles keystroke recording on and off."
 msgstr "Be- és kikapcsolja a leütésrögzítést."
 
-#: ../src/orca/default.py:222
+#: ../src/orca/default.py:285
 msgid "Displays the preferences configuration dialog."
-msgstr "Beállító párbeszédablak megjelenítése."
+msgstr "Megjeleníti a beállító párbeszédablakot."
 
-#: ../src/orca/default.py:226
+#: ../src/orca/default.py:290
 msgid "Reloads user settings and reinitializes services as necessary."
-msgstr "Felhasználói beállítások újratöltése és szükség estén szolgáltatások újraindítása."
+msgstr "Újratölti a felhasználói beállításokat és szükség estén újraindítja a szolgáltatásokat."
 
-#: ../src/orca/default.py:230
+#: ../src/orca/default.py:295
 msgid "Toggles the silencing of speech."
-msgstr "A beszéd némításának átváltása."
+msgstr "Átváltja a beszéd némítását."
 
-#: ../src/orca/default.py:234
+#: ../src/orca/default.py:300
 msgid ""
 "Prints a debug listing of all known applications to the console where Orca "
 "is running."
-msgstr "Kiírja az összes ismert alkalmazás nevét arra a konzolra, amelyről az Orca fut."
+msgstr ""
+"Kiírja az összes ismert alkalmazás nevét arra a konzolra, amelyről az Orca "
+"fut."
 
-#: ../src/orca/default.py:238
+#: ../src/orca/default.py:305
 msgid "Cycles the debug level at run time."
 msgstr "Futás közben végiglépked a hibakeresési szinteken."
 
-#: ../src/orca/default.py:242
+#: ../src/orca/default.py:310
 msgid ""
 "Prints debug information about the currently active application to the "
 "console where Orca is running."
-msgstr "Hibakereső információkat ír ki a jelenleg aktív alkalmazásról arra a konzolra, amelyen az Orca fut."
+msgstr ""
+"Hibakereső információkat ír ki a jelenleg aktív alkalmazásról arra a "
+"konzolra, amelyen az Orca fut."
 
-#: ../src/orca/default.py:246
+#: ../src/orca/default.py:315
 msgid "Prints debug information about the ancestry of the object with focus"
 msgstr "Hibakereső információkat ír ki a fókusszal rendelkező objektum őseiről"
 
-#: ../src/orca/default.py:250
+#: ../src/orca/default.py:320
 msgid "Prints debug information about the application with focus"
 msgstr "Hibakereső információkat ír ki a fókusszal rendelkező alkalmazásról"
 
-#: ../src/orca/default.py:254
+#: ../src/orca/default.py:325
 msgid "Switches to the next presentation manager."
 msgstr "A következő bemutatókezelőre vált."
 
-#: ../src/orca/default.py:1067 ../src/orca/default.py:1286
+#: ../src/orca/default.py:1210 ../src/orca/default.py:1437
+#: ../src/orca/default.py:3001 ../src/orca/default.py:3135
+#: ../src/orca/default.py:3140 ../src/orca/default.py:3233
+#: ../src/orca/default.py:3238 ../src/orca/Gecko.py:2963
+#: ../src/orca/scripts/Evolution.py:399 ../src/orca/scripts/Evolution.py:884
+#: ../src/orca/scripts/StarOffice.py:1808
+#: ../src/orca/scripts/StarOffice.py:1817 ../src/orca/where_am_I.py:994
+msgid "blank"
+msgstr "üres"
+
+#: ../src/orca/default.py:1290
+msgid "1 space "
+msgstr "1 szóköz "
+
+#: ../src/orca/default.py:1292
+#, python-format
+msgid "%d spaces "
+msgstr "%d szóköz "
+
+#: ../src/orca/default.py:1295
+msgid "1 tab "
+msgstr "1 tabulátor "
+
+#: ../src/orca/default.py:1297
+#, python-format
+msgid "%d tabs "
+msgstr "%d tabulátor "
+
+#: ../src/orca/default.py:1691 ../src/orca/where_am_I.py:603
 #, python-format
 msgid "tree level %d"
 msgstr "%d. fa szint"
 
-#: ../src/orca/default.py:1071 ../src/orca/focus_tracking_presenter.py:638
-msgid "No focus"
-msgstr "Nincs fókusz"
-
-#: ../src/orca/default.py:1677
+#: ../src/orca/default.py:2096
 msgid "entire document selected"
 msgstr "az egész dokumentum kiválasztva"
 
-#: ../src/orca/default.py:2098
+#: ../src/orca/default.py:2557
 msgid "Speak "
 msgstr "Beszéd"
 
-#: ../src/orca/default.py:2101
+#: ../src/orca/default.py:2560
 msgid "row"
 msgstr "sor"
 
-#: ../src/orca/default.py:2103 ../src/orca/rolenames.py:432
-#: ../src/orca/rolenames.py:434
+#: ../src/orca/default.py:2562 ../src/orca/rolenames.py:470
+#: ../src/orca/rolenames.py:472
 msgid "cell"
 msgstr "cella"
 
-#: ../src/orca/default.py:2258
-msgid "Entering learn mode.  Press any key to hear its function. "
-msgstr "Belépés a tanulómódba.  Nyomjon meg egy billentyűt, hogy hallja ezt a funkciót. "
+#: ../src/orca/default.py:2611 ../src/orca/where_am_I.py:1050
+msgid "bold"
+msgstr "félkövér"
 
-#: ../src/orca/default.py:2259
+#: ../src/orca/default.py:2613
+msgid " pixels"
+msgstr " képpont"
+
+#: ../src/orca/default.py:2727
+msgid "Entering learn mode.  Press any key to hear its function. "
+msgstr ""
+"Belépés a tanulómódba.  Nyomjon meg egy billentyűt, hogy hallja ezt a "
+"funkciót. "
+
+#: ../src/orca/default.py:2728
 msgid "To exit learn mode, press the escape key."
 msgstr "A tanulómódból való kilépéshez, nyomja meg az Esc billentyűt."
 
-#: ../src/orca/default.py:2260
+#: ../src/orca/default.py:2729
 msgid "Learn mode.  Press escape to exit."
 msgstr "Tanulómód  Kilépéshez nyomja meg az Esc billentyűt."
 
-#: ../src/orca/default.py:2272 ../src/orca/default.py:2273
+#: ../src/orca/default.py:2741 ../src/orca/default.py:2742
 msgid "Exiting learn mode."
 msgstr "Kilépés a tanulómódból."
 
-#: ../src/orca/default.py:2603 ../src/orca/default.py:2731
-#: ../src/orca/default.py:2736 ../src/orca/default.py:2808
-#: ../src/orca/default.py:2813
-msgid "blank"
-msgstr "üres"
-
-#: ../src/orca/default.py:2605 ../src/orca/default.py:2738
+#: ../src/orca/default.py:3003 ../src/orca/default.py:3142
 msgid "white space"
 msgstr "üreshely"
 
-#: ../src/orca/espeechfactory.py:93
+#: ../src/orca/default.py:3355 ../src/orca/default.py:3356
+msgid "string not found"
+msgstr "a karakterlánc nem található"
+
+#: ../src/orca/espeechfactory.py:94
 msgid "Emacspeak Speech Services"
 msgstr "Emacspeak felolvasó szolgáltatás"
 
-#: ../src/orca/focus_tracking_presenter.py:733
+#: ../src/orca/find.py:247
+msgid "Wrapping to Bottom"
+msgstr "Keresés a végéig"
+
+#: ../src/orca/find.py:253
+msgid "Wrapping to Top"
+msgstr "Keresés az elejéig"
+
+#: ../src/orca/focus_tracking_presenter.py:753
+msgid "No focus"
+msgstr "Nincs fókusz"
+
+#: ../src/orca/focus_tracking_presenter.py:848
 msgid "Switching to focus tracking mode."
 msgstr "Váltás fókuszkövető módra."
 
-#: ../src/orca/gnomespeechfactory.py:159
+#: ../src/orca/Gecko.py:1301 ../src/orca/rolenames.py:332
+#: ../src/orca/scripts/acroread.py:251 ../src/orca/scripts/StarOffice.py:1091
+msgid "link"
+msgstr "link"
+
+#: ../src/orca/Gecko.py:1320
+msgid "Loading.  Please wait."
+msgstr "Betöltés, kis türelmet."
+
+#: ../src/orca/Gecko.py:1326
+#, python-format
+msgid "Finished loading %s."
+msgstr "%s betöltése befejeződött."
+
+#: ../src/orca/Gecko.py:1332
+msgid "Finished loading."
+msgstr "A betöltés befejeződött."
+
+#: ../src/orca/Gecko.py:3307 ../src/orca/Gecko.py:3318
+msgid "No more headings."
+msgstr "Nincs több címsor."
+
+#: ../src/orca/Gecko.py:3329 ../src/orca/Gecko.py:3340
+msgid "No more chunks."
+msgstr "Nincs több darab."
+
+#: ../src/orca/gnomespeechfactory.py:164
 msgid "GNOME Speech Services"
 msgstr "GNOME felolvasó szolgáltatás"
 
-#. # Replace ellipses (both manual and unicode) with "dot dot dot"
+#. # Replace ellipses (both manual and UTF-8) with "dot dot dot"
 #. #
-#: ../src/orca/gnomespeechfactory.py:605 ../src/orca/gnomespeechfactory.py:606
+#: ../src/orca/gnomespeechfactory.py:659 ../src/orca/gnomespeechfactory.py:660
 msgid " dot dot dot"
 msgstr " pont pont pont"
 
-#: ../src/orca/gnomespeechfactory.py:765
+#: ../src/orca/gnomespeechfactory.py:714
+msgid "minus"
+msgstr "mínusz"
+
+#: ../src/orca/gnomespeechfactory.py:860
 msgid "higher."
 msgstr "magasabb."
 
-#: ../src/orca/gnomespeechfactory.py:793
+#: ../src/orca/gnomespeechfactory.py:888
 msgid "lower."
 msgstr "mélyebb."
 
-#: ../src/orca/gnomespeechfactory.py:818
+#: ../src/orca/gnomespeechfactory.py:913
 msgid "faster."
 msgstr "gyorsabb."
 
-#: ../src/orca/gnomespeechfactory.py:848
+#: ../src/orca/gnomespeechfactory.py:943
 msgid "slower."
 msgstr "lassabb."
 
@@ -457,479 +590,162 @@ msgstr "lassabb."
 msgid "Switching to hierarchical navigation mode."
 msgstr "Átváltás hierarchikus navigációra."
 
-#: ../src/orca/keynames.py:32 ../src/orca/keynames.py:35
-msgid "left shift"
-msgstr "bal shift"
-
-#: ../src/orca/keynames.py:33
-msgid "left alt"
-msgstr "bal alt"
-
-#: ../src/orca/keynames.py:34
-msgid "left control"
-msgstr "bal ctrl"
-
-#: ../src/orca/keynames.py:36
-msgid "right shift"
-msgstr "jobb shift"
-
-#: ../src/orca/keynames.py:37
-msgid "right alt"
-msgstr "jobb alt"
-
-#: ../src/orca/keynames.py:38
-msgid "right control"
-msgstr "jobb ctrl"
-
-#: ../src/orca/keynames.py:39
-msgid "left meta"
-msgstr "bal meta"
-
-#: ../src/orca/keynames.py:40
-msgid "right meta"
-msgstr "jobb meta"
-
-#: ../src/orca/keynames.py:41
-msgid "num lock"
-msgstr "num lock"
-
-#: ../src/orca/keynames.py:42
-msgid "caps lock"
-msgstr "caps lock"
-
-#: ../src/orca/keynames.py:43
-msgid "scroll lock"
-msgstr "scroll lock"
-
-#: ../src/orca/keynames.py:44
-msgid "page up"
-msgstr "page up"
-
-#: ../src/orca/keynames.py:45
-msgid "page down"
-msgstr "page down"
-
-#: ../src/orca/keynames.py:46
-msgid "left tab"
-msgstr "bal tab"
-
-#: ../src/orca/keynames.py:47
-msgid "F 11"
-msgstr "F 11"
-
-#: ../src/orca/keynames.py:48
-msgid "F 12"
-msgstr "F 12"
-
-#: ../src/orca/orca-setup.glade.h:1
-msgid "<b>Cross-hair Settings</b>"
-msgstr "<b>Szálkereszt beállításai</b>"
-
-#: ../src/orca/orca-setup.glade.h:2
-msgid "<b>Cursor Settings</b>"
-msgstr "<b>Kurzor beállításai</b>"
-
-#: ../src/orca/orca-setup.glade.h:3
-msgid "<b>Punctuation Level</b>"
-msgstr "<b>Központozás szintje</b>"
-
-#: ../src/orca/orca-setup.glade.h:4
-msgid "<b>Table Row Speech</b>"
-msgstr "<b>Táblázatoszlopok olvasása</b>"
-
-#: ../src/orca/orca-setup.glade.h:5
-msgid "<b>Verbosity</b>"
-msgstr "<b>Bőbeszédűség</b>"
-
-#: ../src/orca/orca-setup.glade.h:6
-msgid "<b>Zoomer Position</b>"
-msgstr "<b>Nagyító pozíciója</b>"
-
-#: ../src/orca/orca-setup.glade.h:7
-msgid "<b>Zoomer Settings</b>"
-msgstr "<b>Nagyító beállításai</b>"
-
-#: ../src/orca/orca-setup.glade.h:8
-msgid "Braille"
-msgstr "Braille"
-
-#: ../src/orca/orca-setup.glade.h:9 ../src/orca/orca_gui_prefs.py:1059
-#: ../src/orca/orca_gui_prefs.py:1114
-msgid "Brie_f"
-msgstr "_Tömör"
-
-#: ../src/orca/orca-setup.glade.h:10
-msgid ""
-"Centered\n"
-"None\n"
-"Proportional\n"
-"Push"
-msgstr ""
-"Középre\n"
-"Nincs\n"
-"Arányos\n"
-"Görgetés"
-
-#: ../src/orca/orca-setup.glade.h:14
-msgid "Color:"
-msgstr "Szín:"
-
-#: ../src/orca/orca-setup.glade.h:15
-msgid "Custom siz_e"
-msgstr "_Egyedi méret"
-
-#: ../src/orca/orca-setup.glade.h:16
-msgid ""
-"Default\n"
-"Uppercase\n"
-"Hyperlink"
-msgstr ""
-"Alapértelmezett\n"
-"Nagybetűs\n"
-"Hiperlink"
-
-#: ../src/orca/orca-setup.glade.h:19
-msgid "Enable Braille _monitor"
-msgstr "Braille _monitor engedélyezés"
-
-#: ../src/orca/orca-setup.glade.h:20
-msgid "Enable Braille _support"
-msgstr "Braille támogatá_s engedélyezése"
-
-#: ../src/orca/orca-setup.glade.h:21
-msgid "Enable _alphanumeric and punctuation keys"
-msgstr "Alfan_umerikus- és írásjelek engedélyezése"
-
-#: ../src/orca/orca-setup.glade.h:22
-msgid "Enable _function keys"
-msgstr "_Funkcióbillentyűk engedélyezése"
-
-#: ../src/orca/orca-setup.glade.h:23
-msgid "Enable _key echo"
-msgstr "Billentyűzet_visszhang engedélyezése"
-
-#: ../src/orca/orca-setup.glade.h:24
-msgid "Enable _magnifier"
-msgstr "_Nagyító engedélyezése"
-
-#: ../src/orca/orca-setup.glade.h:25
-msgid "Enable _modifier keys"
-msgstr "_Módosítóbillentyűk engedélyezése"
-
-#: ../src/orca/orca-setup.glade.h:26
-msgid "Enable ac_tion keys"
-msgstr "Művele_tbillentyűk engedélyezése"
-
-#: ../src/orca/orca-setup.glade.h:27
-msgid "Enable c_ursor"
-msgstr "K_urzor engedélyezése"
-
-#: ../src/orca/orca-setup.glade.h:28
-msgid "Enable cross-h_air"
-msgstr "Szál_kereszt engedélyezése"
-
-#: ../src/orca/orca-setup.glade.h:29
-msgid "Enable cross-hair cli_p"
-msgstr "Szálkereszt ki_vágásának engedélyezése"
-
-#: ../src/orca/orca-setup.glade.h:30
-msgid "Enable echo by _word"
-msgstr "Szava_nkénti visszhang engedélyezése"
-
-#: ../src/orca/orca-setup.glade.h:31
-msgid "Enable lockin_g keys"
-msgstr "_Zárolóbillentyűk engedélyezése"
-
-#: ../src/orca/orca-setup.glade.h:32
-msgid "In_vert colors"
-msgstr "S_zínek megfordítása"
-
-#: ../src/orca/orca-setup.glade.h:33
-msgid "Key Echo"
-msgstr "Billentyűvisszhang"
-
-#: ../src/orca/orca-setup.glade.h:34 ../src/orca/orca_gui_prefs.py:1039
-msgid "M_ost"
-msgstr "_Legtöbb"
-
-#: ../src/orca/orca-setup.glade.h:35
-msgid "Magnifier"
-msgstr "Nagyító"
-
-#: ../src/orca/orca-setup.glade.h:36
-msgid "Mouse trac_king mode:"
-msgstr "Egérkövetés mó_dja:"
-
-#: ../src/orca/orca-setup.glade.h:37
-msgid ""
-"None\n"
-"Bilinear"
-msgstr ""
-"Nincs\n"
-"Bilineáris"
-
-#: ../src/orca/orca-setup.glade.h:39
-msgid "Orca Preferences"
-msgstr "Beállítások"
-
-#: ../src/orca/orca-setup.glade.h:40
-msgid "Pi_tch:"
-msgstr "Hangmaga_sság:"
-
-#: ../src/orca/orca-setup.glade.h:41
-msgid "Question"
-msgstr "Kérdés"
-
-#: ../src/orca/orca-setup.glade.h:42
-msgid "Scale _factor:"
-msgstr "Nagyítási a_rány:"
-
-#: ../src/orca/orca-setup.glade.h:43
-msgid "Si_ze:"
-msgstr "_Méret:"
-
-#: ../src/orca/orca-setup.glade.h:44 ../src/orca/orca_gui_prefs.py:1036
-msgid "So_me"
-msgstr "Né_hány"
-
-#: ../src/orca/orca-setup.glade.h:45
-msgid "Speak _indentation and justification"
-msgstr "Behúzás és _igazítás felolvasása"
-
-#: ../src/orca/orca-setup.glade.h:46 ../src/orca/orca_gui_prefs.py:1079
-msgid "Speak current _cell"
-msgstr "Aktuális _cella felolvasása"
-
-#: ../src/orca/orca-setup.glade.h:47
-msgid "Speak current ro_w"
-msgstr "Aktuális s_or felolvasása"
-
-#: ../src/orca/orca-setup.glade.h:48
-msgid "Speech"
-msgstr "Beszéd"
-
-#: ../src/orca/orca-setup.glade.h:49
-msgid "Speech _system:"
-msgstr "Beszé_drendszer:"
-
-#: ../src/orca/orca-setup.glade.h:50
-msgid "Speech synthesi_zer:"
-msgstr "Beszédszintetizát_or:"
-
-#: ../src/orca/orca-setup.glade.h:51
-msgid "Ver_bose"
-msgstr "Bőbes_zédű"
-
-#: ../src/orca/orca-setup.glade.h:52
-msgid "Vo_lume:"
-msgstr "Hange_rő:"
-
-#: ../src/orca/orca-setup.glade.h:53
-msgid ""
-"You will have to log out for the change to take effect.\n"
-"Do you want to log out now? "
-msgstr ""
-"Ki kell jelentkeznie, hogy a változtatás életbe lépjen.\n"
-"Ki szeretne jelentkezni most? "
-
-#: ../src/orca/orca-setup.glade.h:55
-msgid "_Abbreviated role names"
-msgstr "_Rövidített szerepnevek"
-
-#: ../src/orca/orca-setup.glade.h:56
-msgid "_All"
-msgstr "_Mindent"
-
-#: ../src/orca/orca-setup.glade.h:57
-msgid "_Bottom:"
-msgstr "_Alul:"
-
-#: ../src/orca/orca-setup.glade.h:58
-msgid "_Enable speech"
-msgstr "Beszéd _engedélyezése"
-
-#: ../src/orca/orca-setup.glade.h:59
-msgid "_Left:"
-msgstr "_Balra:"
-
-#: ../src/orca/orca-setup.glade.h:60 ../src/orca/orca_gui_prefs.py:1033
-msgid "_None"
-msgstr "_Nincs"
-
-#: ../src/orca/orca-setup.glade.h:61
-msgid "_Person:"
-msgstr "_Személy:"
-
-#: ../src/orca/orca-setup.glade.h:62
-msgid "_Rate:"
-msgstr "Se_besség:"
-
-#: ../src/orca/orca-setup.glade.h:63
-msgid "_Right:"
-msgstr "_Jobbra:"
-
-#: ../src/orca/orca-setup.glade.h:64
-msgid "_Smoothing:"
-msgstr "S_imítás:"
-
-#: ../src/orca/orca-setup.glade.h:65
-msgid "_Top:"
-msgstr "_Fent:"
-
-#: ../src/orca/orca-setup.glade.h:66
-msgid "_Voice settings:"
-msgstr "_Hangbeállítás:"
-
-#: ../src/orca/orca-setup.glade.h:67
-msgid "_Width:"
-msgstr "_Szélesség:"
-
-#: ../src/orca/orca-setup.glade.h:68
-msgid "pixels"
-msgstr "képpont"
-
-#: ../src/orca/orca.py:219
-msgid "User logged out - shutting down."
-msgstr "A felhasználó kijelentkezett - leállítás."
-
-#: ../src/orca/orca.py:383
-msgid "Debug level all."
-msgstr "Hibakeresési szint: mind."
-
-#: ../src/orca/orca.py:385
-msgid "Debug level finest."
-msgstr "Hibakeresési szint: legfinomabb."
-
-#: ../src/orca/orca.py:387
-msgid "Debug level finer."
-msgstr "Hibakeresési szint: finomabb."
-
-#: ../src/orca/orca.py:586
+#: ../src/orca/J2SE-access-bridge.py:74 ../src/orca/speechgenerator.py:955
+#: ../src/orca/util.py:1541
+msgid "selected"
+msgstr "kijelölt"
+
+#: ../src/orca/J2SE-access-bridge.py:78 ../src/orca/util.py:1549
+msgid "unselected"
+msgstr "kijelöletlen"
+
+#. KeyBindings from the default script, in default.py (Orca's default)
+#.
+#: ../src/orca/keybindings.py:107 ../src/orca/orca_gui_prefs.py:1087
+#: ../src/orca/orca_gui_prefs.py:1171
+msgid "Orca"
+msgstr "Orca"
+
+#: ../src/orca/keybindings.py:111
+msgid "Alt_R"
+msgstr "J_Alt"
+
+#: ../src/orca/keybindings.py:113
+msgid "Super"
+msgstr "Super"
+
+#: ../src/orca/keybindings.py:115
+msgid "Meta2"
+msgstr "Meta2"
+
+#: ../src/orca/keybindings.py:119
+msgid "Alt_L"
+msgstr "B_Alt"
+
+#: ../src/orca/keybindings.py:121
+msgid "Ctrl"
+msgstr "Ctrl"
+
+#: ../src/orca/keybindings.py:123 ../src/orca/orca.py:600
 msgid "Caps_Lock"
 msgstr "Caps_Lock"
 
-#: ../src/orca/orca.py:588
-msgid " off"
-msgstr " ki"
+#: ../src/orca/keybindings.py:125
+msgid "Shift"
+msgstr "Shift"
 
-#: ../src/orca/orca.py:590
-msgid " on"
-msgstr " be"
+#: ../src/orca/keynames.py:38 ../src/orca/keynames.py:41
+msgid "left shift"
+msgstr "bal shift"
 
-#: ../src/orca/orca.py:592
-msgid "Num_Lock"
-msgstr "Num_Lock"
+#: ../src/orca/keynames.py:39
+msgid "left alt"
+msgstr "bal alt"
 
-#: ../src/orca/orca.py:775
-msgid "Speech enabled."
-msgstr "Beszéd engedélyezése."
+#: ../src/orca/keynames.py:40
+msgid "left control"
+msgstr "bal ctrl"
 
-#: ../src/orca/orca.py:777
-msgid "Speech disabled."
-msgstr "Beszéd tiltása."
+#: ../src/orca/keynames.py:42
+msgid "right shift"
+msgstr "jobb shift"
 
-#: ../src/orca/orca.py:815
-msgid "Orca user settings reloaded."
-msgstr "Orca felhasználói beállítások újratöltése megtörtént."
+#: ../src/orca/keynames.py:43
+msgid "right alt"
+msgstr "jobb alt"
 
-#: ../src/orca/orca.py:956 ../src/orca/orca.py:957
-msgid "Welcome to Orca."
-msgstr "Üdvözöljük az Orcaban."
+#: ../src/orca/keynames.py:44
+msgid "right control"
+msgstr "jobb ctrl"
 
-#: ../src/orca/orca.py:1013
-msgid "goodbye."
-msgstr "viszontlátásra."
+#: ../src/orca/keynames.py:45
+msgid "left meta"
+msgstr "bal meta"
 
-#: ../src/orca/orca.py:1014
-msgid "Goodbye."
-msgstr "Viszontlátásra."
+#: ../src/orca/keynames.py:46
+msgid "right meta"
+msgstr "jobb meta"
 
-#: ../src/orca/orca.py:1094
-msgid "Usage: orca [OPTION...]"
-msgstr "Használat: orca [KAPCSOLÓ]..."
+#: ../src/orca/keynames.py:47
+msgid "num lock"
+msgstr "num lock"
 
-#: ../src/orca/orca.py:1096
-msgid "-?, --help                   Show this help message"
-msgstr "-?, --help                   Ezen súgóüzenet"
+#: ../src/orca/keynames.py:48
+msgid "caps lock"
+msgstr "caps lock"
 
-#: ../src/orca/orca.py:1097
-#, python-format
-msgid "-v, --version                %s"
-msgstr "-v, --version                %s"
+#: ../src/orca/keynames.py:49
+msgid "scroll lock"
+msgstr "scroll lock"
 
-#: ../src/orca/orca.py:1098
-msgid "-s, --setup, --gui-setup     Set up user preferences"
-msgstr "-s, --setup, --gui-setup     Felhasználói beállítások megjelenítése"
+#: ../src/orca/keynames.py:50
+msgid "page up"
+msgstr "page up"
 
-#: ../src/orca/orca.py:1099
-msgid "-t, --text-setup             Set up user preferences (text version)"
-msgstr "-t, --text-setup             Felhasználói beállítások megjelenítése (szöveges)"
+#: ../src/orca/keynames.py:51
+msgid "page down"
+msgstr "page down"
 
-#: ../src/orca/orca.py:1100
-msgid "-n, --no-setup               Skip set up of user preferences"
-msgstr "-n, --no-setup               Felhasználói beállítások kihagyása"
+#: ../src/orca/keynames.py:52
+msgid "left tab"
+msgstr "bal tab"
 
-#: ../src/orca/orca.py:1102
-msgid ""
-"If Orca has not been previously set up by the user, Orca\n"
-"will automatically launch the preferences set up unless\n"
-"the -n or --no-setup option is used."
-msgstr ""
-"Ha a felhasználó még nem állította be az Orcat, akkor automatikusan\n"
-"elindul a beállítás, hacsak a -n vagy --no-setup kapcsoló nincs megadva."
+#: ../src/orca/keynames.py:53
+msgid "F 11"
+msgstr "F 11"
 
-#: ../src/orca/orca.py:1104
-msgid "Report bugs to orca-list@gnome.org."
-msgstr "A hibákat az orca-list@gnome.org címen jelentheti."
+#: ../src/orca/keynames.py:54
+msgid "F 12"
+msgstr "F 12"
 
-#: ../src/orca/orca_console_prefs.py:93 ../src/orca/orca_console_prefs.py:109
+#: ../src/orca/orca_console_prefs.py:103 ../src/orca/orca_console_prefs.py:119
 msgid "Speech is unavailable."
 msgstr "A beszéd nem érhető el."
 
-#: ../src/orca/orca_console_prefs.py:97
+#: ../src/orca/orca_console_prefs.py:107
 msgid "Welcome to Orca setup."
 msgstr "Üdvözli az Orca beállítófelülete."
 
-#: ../src/orca/orca_console_prefs.py:112
+#: ../src/orca/orca_console_prefs.py:122
 msgid "Select desired speech system:"
 msgstr "Válassza ki a kívánt beszédrendszert:"
 
-#: ../src/orca/orca_console_prefs.py:117 ../src/orca/orca_console_prefs.py:138
-#: ../src/orca/orca_console_prefs.py:164
+#: ../src/orca/orca_console_prefs.py:127 ../src/orca/orca_console_prefs.py:148
+#: ../src/orca/orca_console_prefs.py:175
 #, python-format
 msgid "%d. %s"
 msgstr "%d. %s"
 
-#: ../src/orca/orca_console_prefs.py:120 ../src/orca/orca_console_prefs.py:141
-#: ../src/orca/orca_console_prefs.py:171
+#: ../src/orca/orca_console_prefs.py:130 ../src/orca/orca_console_prefs.py:151
+#: ../src/orca/orca_console_prefs.py:182 ../src/orca/orca_console_prefs.py:309
 msgid "Enter choice: "
 msgstr "Válasszon: "
 
-#: ../src/orca/orca_console_prefs.py:122 ../src/orca/orca_console_prefs.py:130
-#: ../src/orca/orca_console_prefs.py:143 ../src/orca/orca_console_prefs.py:152
-#: ../src/orca/orca_console_prefs.py:176
+#: ../src/orca/orca_console_prefs.py:132 ../src/orca/orca_console_prefs.py:140
+#: ../src/orca/orca_console_prefs.py:153 ../src/orca/orca_console_prefs.py:162
+#: ../src/orca/orca_console_prefs.py:187
 msgid "Speech will not be used.\n"
 msgstr "Nem lesz beszéd használva.\n"
 
-#: ../src/orca/orca_console_prefs.py:129
+#: ../src/orca/orca_console_prefs.py:139
 msgid "No servers available.\n"
 msgstr "Nem állnak rendelkezésre kiszolgálók.\n"
 
-#: ../src/orca/orca_console_prefs.py:133
+#: ../src/orca/orca_console_prefs.py:143
 msgid "Select desired speech server."
 msgstr "Válassza ki a kívánt beszédkiszolgálót."
 
-#: ../src/orca/orca_console_prefs.py:151
+#: ../src/orca/orca_console_prefs.py:161
 msgid "No voices available.\n"
 msgstr "Nem állnak rendelkezésre hangok.\n"
 
-#: ../src/orca/orca_console_prefs.py:155
+#: ../src/orca/orca_console_prefs.py:165
 msgid "Select desired voice:"
 msgstr "Válassza ki a kívánt hangot:"
 
 #. Ask the user if they would like to enable echoing by word.
 #.
-#: ../src/orca/orca_console_prefs.py:209
+#: ../src/orca/orca_console_prefs.py:220
 msgid "Enable echo by word?  Enter y or n: "
 msgstr "Engedélyezi a szavankénti visszhangot? (y vagy n): "
 
@@ -950,989 +766,1875 @@ msgstr "Engedélyezi a szavankénti visszhangot? (y vagy n): "
 #. o Action keys: space, enter, escape, tab, backspace, delete, arrow
 #. keys, page up, page down, etc.
 #.
-#: ../src/orca/orca_console_prefs.py:234
+#: ../src/orca/orca_console_prefs.py:245
 msgid "Enable key echo?  Enter y or n: "
 msgstr "Engedélyezi a billentyűzetvisszhangot? (y vagy n): "
 
-#: ../src/orca/orca_console_prefs.py:241
+#: ../src/orca/orca_console_prefs.py:252
 msgid "Enable alphanumeric and punctuation keys?  Enter y or n: "
 msgstr "Engedélyezi az alfanumerikus- és írásjeleket? (y vagy n): "
 
-#: ../src/orca/orca_console_prefs.py:249
+#: ../src/orca/orca_console_prefs.py:260
 msgid "Enable modifier keys?  Enter y or n: "
 msgstr "Engedélyezi a módosítóbillentyűket? (y vagy n): "
 
-#: ../src/orca/orca_console_prefs.py:257
+#: ../src/orca/orca_console_prefs.py:268
 msgid "Enable locking keys?  Enter y or n: "
 msgstr "Engedélyezi a zárolóbillentyűket? (y vagy n): "
 
-#: ../src/orca/orca_console_prefs.py:265
+#: ../src/orca/orca_console_prefs.py:276
 msgid "Enable function keys?  Enter y or n: "
 msgstr "Engedélyezi a funkcióbillentyűket? (y vagy n): "
 
-#: ../src/orca/orca_console_prefs.py:273
+#: ../src/orca/orca_console_prefs.py:284
 msgid "Enable action keys?  Enter y or n: "
 msgstr "Engedélyezi a műveletbillentyűket? (y vagy n): "
 
-#: ../src/orca/orca_console_prefs.py:301
+#: ../src/orca/orca_console_prefs.py:300
+msgid "Select desired keyboard layout."
+msgstr "Válassza ki a kívánt billentyűzetkiosztást."
+
+#: ../src/orca/orca_console_prefs.py:307
+msgid "1. Desktop"
+msgstr "1. asztali"
+
+#: ../src/orca/orca_console_prefs.py:308
+msgid "2. Laptop"
+msgstr "2. laptop"
+
+#: ../src/orca/orca_console_prefs.py:317
+msgid "Invalid choice. Selecting desktop keyboard layout.\n"
+msgstr "Érvénytelen választás. Az asztali kiosztás lesz kiválasztva.\n"
+
+#: ../src/orca/orca_console_prefs.py:346
 msgid "Enable Braille?  Enter y or n: "
 msgstr "Engedélyezi a Braille-t? (y vagy n): "
 
-#: ../src/orca/orca_console_prefs.py:309
+#: ../src/orca/orca_console_prefs.py:354
 msgid "Enable Braille Monitor?  Enter y or n: "
 msgstr "Engedélyezi a Braille monitort? (y vagy n): "
 
-#: ../src/orca/orca_console_prefs.py:319
+#: ../src/orca/orca_console_prefs.py:364
 msgid "Accessibility support for GNOME has just been enabled. "
 msgstr "A GNOME akadálymentesítési támogatása engedélyezve. "
 
-#: ../src/orca/orca_console_prefs.py:324
+#: ../src/orca/orca_console_prefs.py:369
 msgid "You need to log out and log back in for the change to take effect. "
 msgstr "Ki kell jelentkeznie és újra be kell lépnie a módosítás életbe lépéséhez. "
 
-#: ../src/orca/orca_console_prefs.py:330
+#: ../src/orca/orca_console_prefs.py:376
+msgid "Do you want to logout now?  Enter y or n: "
+msgstr "Ki akar jelentkezni? (y vagy n): "
+
+#: ../src/orca/orca_console_prefs.py:382
+msgid "Setup complete. Logging out now."
+msgstr "A beállítás befejeződött. Kijelentkezés."
+
+#: ../src/orca/orca_console_prefs.py:396
 msgid "Setup complete.  Press Return to continue."
 msgstr "A beállítások megtörténtek. A folytatáshoz nyomja meg az Entert."
 
-#: ../src/orca/orca_gui_prefs.py:128 ../src/orca/orca_gui_prefs.py:424
-#: ../src/orca/orca_gui_prefs.py:466
-msgid "Speech not available."
-msgstr "A beszéd nem áll rendelkezésre."
+#: ../src/orca/orca-find.glade.h:1
+msgid "<b>Start from:</b>"
+msgstr "<b>Kezdés:</b>"
 
-#: ../src/orca/orca_gui_prefs.py:366 ../src/orca/orca_gui_prefs.py:370
-#: ../src/orca/orca_gui_prefs.py:1311
-msgid "Bilinear"
-msgstr "Bilineáris"
+#: ../src/orca/orca-find.glade.h:2 ../src/orca/orca_gui_find.py:127
+msgid "C_urrent location"
+msgstr "_Jelenlegi hely"
 
-#: ../src/orca/orca_gui_prefs.py:368 ../src/orca/orca_gui_prefs.py:381
-#: ../src/orca/orca_gui_prefs.py:1313 ../src/orca/orca_gui_prefs.py:1336
-msgid "None"
-msgstr "Nincs"
+#: ../src/orca/orca-find.glade.h:3
+msgid "Close"
+msgstr "Bezárás"
 
-#: ../src/orca/orca_gui_prefs.py:379 ../src/orca/orca_gui_prefs.py:387
-#: ../src/orca/orca_gui_prefs.py:1330
-msgid "Centered"
-msgstr "Középre helyezett"
+#: ../src/orca/orca-find.glade.h:4
+msgid "Match _entire word only"
+msgstr "Csak _teljes szóra"
 
-#: ../src/orca/orca_gui_prefs.py:383 ../src/orca/orca_gui_prefs.py:1334
-msgid "Proportional"
-msgstr "Arányos"
+#: ../src/orca/orca-find.glade.h:5
+msgid "Orca Find"
+msgstr "Orca keresés"
 
-#: ../src/orca/orca_gui_prefs.py:385 ../src/orca/orca_gui_prefs.py:1332
-msgid "Push"
-msgstr "Görgetés"
+#: ../src/orca/orca-find.glade.h:6
+msgid "Orca Find Dialog"
+msgstr "Orca keresés párbeszédablak"
 
-#: ../src/orca/orca_gui_prefs.py:503 ../src/orca/orca_gui_prefs.py:528
+#: ../src/orca/orca-find.glade.h:7
+msgid "Search _backwards"
+msgstr "Keresés _visszafelé"
+
+#: ../src/orca/orca-find.glade.h:8
+msgid "Search for:"
+msgstr "Keresés erre:"
+
+#: ../src/orca/orca-find.glade.h:9
+msgid "Start from:"
+msgstr "Kezdés:"
+
+#: ../src/orca/orca-find.glade.h:10
+msgid "Top of window"
+msgstr "Ablak teteje"
+
+#: ../src/orca/orca-find.glade.h:11
+msgid "_Match case"
+msgstr "Kis- és _nagybetű"
+
+#: ../src/orca/orca-find.glade.h:12
+msgid "_Search for:"
+msgstr "_Keresés:"
+
+#: ../src/orca/orca-find.glade.h:13
+msgid "_Top of window"
+msgstr "_Ablak teteje"
+
+#: ../src/orca/orca-find.glade.h:14
+msgid "_Wrap around"
+msgstr "Kö_rbe"
+
+#. Treeview Column Implementation:
+#. (HANDLER,    DESCRIP,
+#. MOD_MASK1,  MOD_USED1,  KEY1,   TEXT1,
+#. MOD_MASK2,  MOD_USED2,  KEY2,   TEXT2,
+#. MODIF,      EDITABLE)
+#. HANDLER
+#.
+#: ../src/orca/orca_gui_prefs.py:103
+msgid "Handler"
+msgstr "Kezelő"
+
+#: ../src/orca/orca_gui_prefs.py:115
+msgid "Function"
+msgstr "Függvény"
+
+#. MOD_MASK1
+#.
+#: ../src/orca/orca_gui_prefs.py:123
+msgid "Mod.Mask 1"
+msgstr "Mod.maszk 1"
+
+#. MOD_USED1
+#.
+#: ../src/orca/orca_gui_prefs.py:133
+msgid "Use Mod.1"
+msgstr "A Mod.1 használata"
+
+#. KEY1
+#.
+#: ../src/orca/orca_gui_prefs.py:143
+msgid "Key1"
+msgstr "1. billentyű"
+
+#: ../src/orca/orca_gui_prefs.py:161
+msgid "Key Binding"
+msgstr "Billentyűtársítás"
+
+#. MOD_MASK2
+#.
+#: ../src/orca/orca_gui_prefs.py:171
+msgid "Mod.Mask 2"
+msgstr "Mod.maszk 2"
+
+#. MOD_USED2
+#.
+#: ../src/orca/orca_gui_prefs.py:181
+msgid "Use Mod.2"
+msgstr "A Mod.2 használata"
+
+#. KEY2
+#.
+#: ../src/orca/orca_gui_prefs.py:191
+msgid "Key2"
+msgstr "2. billentyű"
+
+#: ../src/orca/orca_gui_prefs.py:207
+msgid "Alternate"
+msgstr "Tartalék"
+
+#: ../src/orca/orca_gui_prefs.py:222 ../src/orca/orca_gui_prefs.py:235
+msgid "Modified"
+msgstr "Módosítva"
+
+#: ../src/orca/orca_gui_prefs.py:271 ../src/orca/orca_gui_prefs.py:296
 msgid "Default"
 msgstr "Alapértelmezett"
 
-#: ../src/orca/orca_gui_prefs.py:505 ../src/orca/orca_gui_prefs.py:530
+#: ../src/orca/orca_gui_prefs.py:273 ../src/orca/orca_gui_prefs.py:298
 msgid "Uppercase"
 msgstr "Nagybetűkké"
 
-#: ../src/orca/orca_gui_prefs.py:507 ../src/orca/orca_gui_prefs.py:536
+#: ../src/orca/orca_gui_prefs.py:275 ../src/orca/orca_gui_prefs.py:304
 msgid "Hyperlink"
 msgstr "Hiperlink"
 
-#: ../src/orca/orca_gui_prefs.py:1399
+#: ../src/orca/orca_gui_prefs.py:497 ../src/orca/orca_gui_prefs.py:569
+#: ../src/orca/orca_gui_prefs.py:643
+msgid "Speech not available."
+msgstr "A beszéd nem áll rendelkezésre."
+
+#: ../src/orca/orca_gui_prefs.py:868 ../src/orca/orca_gui_prefs.py:872
+#: ../src/orca/orca_gui_prefs.py:1771
+msgid "Bilinear"
+msgstr "Bilineáris"
+
+#: ../src/orca/orca_gui_prefs.py:870 ../src/orca/orca_gui_prefs.py:883
+#: ../src/orca/orca_gui_prefs.py:1773 ../src/orca/orca_gui_prefs.py:1796
+msgid "None"
+msgstr "Nincs"
+
+#: ../src/orca/orca_gui_prefs.py:881 ../src/orca/orca_gui_prefs.py:889
+#: ../src/orca/orca_gui_prefs.py:1790
+msgid "Centered"
+msgstr "Középre helyezett"
+
+#: ../src/orca/orca_gui_prefs.py:885 ../src/orca/orca_gui_prefs.py:1794
+msgid "Proportional"
+msgstr "Arányos"
+
+#: ../src/orca/orca_gui_prefs.py:887 ../src/orca/orca_gui_prefs.py:1792
+msgid "Push"
+msgstr "Görgetés"
+
+#. Braille Bindings from default script, in default.py
+#.
+#: ../src/orca/orca_gui_prefs.py:1121 ../src/orca/orca_gui_prefs.py:1189
+msgid "Braille Bindings"
+msgstr "Braille társítások"
+
+#: ../src/orca/orca_gui_prefs.py:1493 ../src/orca/orca-setup.glade.h:70
+msgid "_None"
+msgstr "_Nincs"
+
+#: ../src/orca/orca_gui_prefs.py:1496 ../src/orca/orca-setup.glade.h:52
+msgid "So_me"
+msgstr "Né_hány"
+
+#: ../src/orca/orca_gui_prefs.py:1499 ../src/orca/orca-setup.glade.h:39
+msgid "M_ost"
+msgstr "_Legtöbb"
+
+#: ../src/orca/orca_gui_prefs.py:1519 ../src/orca/orca_gui_prefs.py:1574
+#: ../src/orca/orca-setup.glade.h:10
+msgid "Brie_f"
+msgstr "_Tömör"
+
+#: ../src/orca/orca_gui_prefs.py:1539 ../src/orca/orca-setup.glade.h:55
+msgid "Speak current _cell"
+msgstr "Aktuális _cella felolvasása"
+
+#: ../src/orca/orca_gui_prefs.py:1824
+msgid "enter new key"
+msgstr "üsse le az új billentyűt"
+
+#: ../src/orca/orca_gui_prefs.py:1849
+#, python-format
+msgid "The new key is: %s"
+msgstr "Az új billentyű: %s"
+
+#: ../src/orca/orca_gui_prefs.py:1852
+msgid "The key entered is the same. Nothing changed."
+msgstr "A leütött billentyű ugyanaz, nincs módosítás."
+
+#: ../src/orca/orca_gui_prefs.py:1922 ../src/orca/orca-setup.glade.h:66
+msgid "_Desktop"
+msgstr "As_ztali"
+
+#: ../src/orca/orca_gui_prefs.py:1976
 msgid "Accessibility support for GNOME has just been enabled."
 msgstr "A GNOME akadálymentesítési támogatása engedélyezve."
 
-#: ../src/orca/orca_gui_prefs.py:1400
+#: ../src/orca/orca_gui_prefs.py:1977
 msgid "You need to log out and log back in for the change to take effect."
 msgstr "Ki kell jelentkeznie és újra be kell lépnie a módosítás életbe lépéséhez. "
 
-#: ../src/orca/rolenames.py:147
+#: ../src/orca/orca-mainwin.glade.h:1
+msgid "Orca Screen Reader / Magnifier"
+msgstr "Orca képernyőolvasó és nagyító"
+
+#: ../src/orca/orca-mainwin.glade.h:2
+msgid "Preferences"
+msgstr "Beállítások"
+
+#: ../src/orca/orca-mainwin.glade.h:3
+msgid "Quit"
+msgstr "Kilépés"
+
+#: ../src/orca/orca.py:231
+msgid "User logged out - shutting down."
+msgstr "A felhasználó kijelentkezett - leállítás."
+
+#: ../src/orca/orca.py:395
+msgid "Debug level all."
+msgstr "Hibakeresési szint: mind."
+
+#: ../src/orca/orca.py:397
+msgid "Debug level finest."
+msgstr "Hibakeresési szint: legfinomabb."
+
+#: ../src/orca/orca.py:399
+msgid "Debug level finer."
+msgstr "Hibakeresési szint: finomabb."
+
+#: ../src/orca/orca.py:602
+msgid " off"
+msgstr " ki"
+
+#: ../src/orca/orca.py:604
+msgid " on"
+msgstr " be"
+
+#: ../src/orca/orca.py:606
+msgid "Num_Lock"
+msgstr "Num_Lock"
+
+#: ../src/orca/orca.py:661
+#, python-format
+msgid "Key captured: %s. Press enter to confirm."
+msgstr "Billentyűütés: %s. A megerősítéshez nyomja meg az Entert."
+
+#: ../src/orca/orca.py:816
+msgid "Speech enabled."
+msgstr "Beszéd engedélyezése."
+
+#: ../src/orca/orca.py:818
+msgid "Speech disabled."
+msgstr "Beszéd tiltása."
+
+#: ../src/orca/orca.py:866
+msgid "Orca user settings reloaded."
+msgstr "Orca felhasználói beállítások újratöltése megtörtént."
+
+#: ../src/orca/orca.py:1071 ../src/orca/orca.py:1072
+msgid "Welcome to Orca."
+msgstr "Üdvözöljük az Orcaban."
+
+#: ../src/orca/orca.py:1128
+msgid "goodbye."
+msgstr "viszontlátásra."
+
+#: ../src/orca/orca.py:1129
+msgid "Goodbye."
+msgstr "Viszontlátásra."
+
+#: ../src/orca/orca.py:1211
+msgid "Usage: orca [OPTION...]"
+msgstr "Használat: orca [KAPCSOLÓ]..."
+
+#: ../src/orca/orca.py:1213
+msgid "-?, --help                   Show this help message"
+msgstr "-?, --help                   Ezen súgóüzenet"
+
+#: ../src/orca/orca.py:1214
+#, python-format
+msgid "-v, --version                %s"
+msgstr "-v, --version                %s"
+
+#: ../src/orca/orca.py:1215
+msgid "-s, --setup, --gui-setup     Set up user preferences"
+msgstr "-s, --setup, --gui-setup     Felhasználói beállítások megjelenítése"
+
+#: ../src/orca/orca.py:1216
+msgid "-t, --text-setup             Set up user preferences (text version)"
+msgstr ""
+"-t, --text-setup             Felhasználói beállítások megjelenítése "
+"(szöveges)"
+
+#: ../src/orca/orca.py:1217
+msgid "-n, --no-setup               Skip set up of user preferences"
+msgstr "-n, --no-setup               Felhasználói beállítások kihagyása"
+
+#: ../src/orca/orca.py:1218
+msgid "-u, --user-prefs-dir=dirname Use alternate directory for user preferences"
+msgstr "-u, --user-prefs-dir=könyvtár Másik könyvtár használata a felhasználói beállításokhoz"
+
+#: ../src/orca/orca.py:1219
+msgid ""
+"-e, --enable=[speech|braille|braille-monitor|magnifier|main-window] Force "
+"use of option"
+msgstr "-e, --enable=[speech|braille|braille-monitor|magnifier|main-window] Egy szolgáltatás használatának kényszerítése"
+
+#: ../src/orca/orca.py:1220
+msgid ""
+"-d, --disable=[speech|braille|braille-monitor|magnifier|main-window] Prevent "
+"use of option"
+msgstr "-d, --disable=[speech|braille|braille-monitor|magnifier|main-window] Egy szolgáltatás használatának megakadályozása"
+
+#: ../src/orca/orca.py:1221
+msgid "-q, --quit                   Quits Orca (if shell script used)"
+msgstr "-q, --quit                   Kilép az Orca-ból (parancsfájl használatakor)"
+
+#: ../src/orca/orca.py:1223
+msgid ""
+"If Orca has not been previously set up by the user, Orca\n"
+"will automatically launch the preferences set up unless\n"
+"the -n or --no-setup option is used."
+msgstr ""
+"Ha a felhasználó még nem állította be az Orca-t, akkor automatikusan\n"
+"elindul a beállítás, hacsak a -n vagy --no-setup kapcsoló nincs megadva."
+
+#: ../src/orca/orca.py:1225
+msgid "Report bugs to orca-list@gnome.org."
+msgstr "A hibákat az orca-list@gnome.org címen jelentheti."
+
+#: ../src/orca/orca-quit.glade.h:1
+msgid "Do you really want to quit Orca?"
+msgstr "Valóban kilép az Orca-ból?"
+
+#: ../src/orca/orca-quit.glade.h:2
+msgid "Question"
+msgstr "Kérdés"
+
+#: ../src/orca/orca-setup.glade.h:1
+msgid "<b>Cross-hair Settings</b>"
+msgstr "<b>Szálkereszt beállításai</b>"
+
+#: ../src/orca/orca-setup.glade.h:2
+msgid "<b>Cursor Settings</b>"
+msgstr "<b>Kurzor beállításai</b>"
+
+#: ../src/orca/orca-setup.glade.h:3
+msgid "<b>Keyboard Layout</b>"
+msgstr "<b>Billentyűzetkiosztás</b>"
+
+#: ../src/orca/orca-setup.glade.h:4
+msgid "<b>Punctuation Level</b>"
+msgstr "<b>Központozás szintje</b>"
+
+#: ../src/orca/orca-setup.glade.h:5
+msgid "<b>Table Row Speech</b>"
+msgstr "<b>Táblázatoszlopok olvasása</b>"
+
+#: ../src/orca/orca-setup.glade.h:6
+msgid "<b>Verbosity</b>"
+msgstr "<b>Részletesség</b>"
+
+#: ../src/orca/orca-setup.glade.h:7
+msgid "<b>Zoomer Position</b>"
+msgstr "<b>Nagyító pozíciója</b>"
+
+#: ../src/orca/orca-setup.glade.h:8
+msgid "<b>Zoomer Settings</b>"
+msgstr "<b>Nagyító beállításai</b>"
+
+#: ../src/orca/orca-setup.glade.h:9
+msgid "Braille"
+msgstr "Braille"
+
+#: ../src/orca/orca-setup.glade.h:11
+msgid ""
+"Centered\n"
+"None\n"
+"Proportional\n"
+"Push"
+msgstr ""
+"Középre\n"
+"Nincs\n"
+"Arányos\n"
+"Görgetés"
+
+#: ../src/orca/orca-setup.glade.h:15
+msgid "Color:"
+msgstr "Szín:"
+
+#: ../src/orca/orca-setup.glade.h:16
+msgid "Custom siz_e"
+msgstr "_Egyedi méret"
+
+#: ../src/orca/orca-setup.glade.h:17
+msgid ""
+"Default\n"
+"Uppercase\n"
+"Hyperlink"
+msgstr ""
+"Alapértelmezett\n"
+"Nagybetűs\n"
+"Hiperlink"
+
+#: ../src/orca/orca-setup.glade.h:20
+msgid "Disable gksu _keyboard grab"
+msgstr "A gksu _nem ragadhatja meg a billentyűzetet"
+
+#: ../src/orca/orca-setup.glade.h:21
+msgid "Enable Braille _monitor"
+msgstr "Braille _monitor engedélyezése"
+
+#: ../src/orca/orca-setup.glade.h:22
+msgid "Enable Braille _support"
+msgstr "Braille támogatá_s engedélyezése"
+
+#: ../src/orca/orca-setup.glade.h:23
+msgid "Enable _alphanumeric and punctuation keys"
+msgstr "Alfan_umerikus- és írásjelek engedélyezése"
+
+#: ../src/orca/orca-setup.glade.h:24
+msgid "Enable _function keys"
+msgstr "_Funkcióbillentyűk engedélyezése"
+
+#: ../src/orca/orca-setup.glade.h:25
+msgid "Enable _key echo"
+msgstr "Billentyűzet_visszhang engedélyezése"
+
+#: ../src/orca/orca-setup.glade.h:26
+msgid "Enable _magnifier"
+msgstr "_Nagyító engedélyezése"
+
+#: ../src/orca/orca-setup.glade.h:27
+msgid "Enable _modifier keys"
+msgstr "_Módosítóbillentyűk engedélyezése"
+
+#: ../src/orca/orca-setup.glade.h:28
+msgid "Enable ac_tion keys"
+msgstr "Művele_tbillentyűk engedélyezése"
+
+#: ../src/orca/orca-setup.glade.h:29
+msgid "Enable c_ursor"
+msgstr "K_urzor engedélyezése"
+
+#: ../src/orca/orca-setup.glade.h:30
+msgid "Enable cross-h_air"
+msgstr "Szál_kereszt engedélyezése"
+
+#: ../src/orca/orca-setup.glade.h:31
+msgid "Enable cross-hair cli_p"
+msgstr "Szálkereszt ki_vágásának engedélyezése"
+
+#: ../src/orca/orca-setup.glade.h:32
+msgid "Enable echo by _word"
+msgstr "Szava_nkénti visszhang engedélyezése"
+
+#: ../src/orca/orca-setup.glade.h:33
+msgid "Enable lockin_g keys"
+msgstr "_Zárolóbillentyűk engedélyezése"
+
+#: ../src/orca/orca-setup.glade.h:34
+msgid "General"
+msgstr "Általános"
+
+#: ../src/orca/orca-setup.glade.h:35
+msgid "In_vert colors"
+msgstr "S_zínek megfordítása"
+
+#: ../src/orca/orca-setup.glade.h:36
+msgid "Key Binding List"
+msgstr "Billentyűtársítások listája"
+
+#: ../src/orca/orca-setup.glade.h:37
+msgid "Key Bindings"
+msgstr "Billentyűtársítások"
+
+#: ../src/orca/orca-setup.glade.h:38
+msgid "Key Echo"
+msgstr "Billentyűvisszhang"
+
+#: ../src/orca/orca-setup.glade.h:40
+msgid "Magnifier"
+msgstr "Nagyító"
+
+#: ../src/orca/orca-setup.glade.h:41
+msgid "Mouse trac_king mode:"
+msgstr "Egérkövetés mó_dja:"
+
+#: ../src/orca/orca-setup.glade.h:42
+msgid ""
+"None\n"
+"Bilinear"
+msgstr ""
+"Nincs\n"
+"Bilineáris"
+
+#: ../src/orca/orca-setup.glade.h:44
+msgid "Orca Modifier Keys"
+msgstr "Orca módosítóbillentyűk"
+
+#: ../src/orca/orca-setup.glade.h:45
+msgid "Orca Preferences"
+msgstr "Beállítások"
+
+#: ../src/orca/orca-setup.glade.h:46
+msgid "Orca _Modifier Key(s):"
+msgstr "Orca _módosítóbillentyűk: "
+
+#: ../src/orca/orca-setup.glade.h:47
+msgid "Pi_tch:"
+msgstr "Hangmaga_sság:"
+
+#: ../src/orca/orca-setup.glade.h:48
+msgid "S_ource display:"
+msgstr "_Forrás megjelenítő:"
+
+#: ../src/orca/orca-setup.glade.h:49
+msgid "Scale _factor:"
+msgstr "Nagyítási a_rány:"
+
+#: ../src/orca/orca-setup.glade.h:50
+msgid "Show Orca _main window"
+msgstr "Az Or_ca főablakának megjelenítése"
+
+#: ../src/orca/orca-setup.glade.h:51
+msgid "Si_ze:"
+msgstr "_Méret:"
+
+#: ../src/orca/orca-setup.glade.h:53
+msgid "Speak _indentation and justification"
+msgstr "Behúzás és _igazítás felolvasása"
+
+#: ../src/orca/orca-setup.glade.h:54
+msgid "Speak blank lines"
+msgstr "Üres sorok olvasása"
+
+#: ../src/orca/orca-setup.glade.h:56
+msgid "Speak current ro_w"
+msgstr "Aktuális s_or felolvasása"
+
+#: ../src/orca/orca-setup.glade.h:57
+msgid "Speech"
+msgstr "Beszéd"
+
+#: ../src/orca/orca-setup.glade.h:58
+msgid "Speech _system:"
+msgstr "Beszé_drendszer:"
+
+#: ../src/orca/orca-setup.glade.h:59
+msgid "Speech synthesi_zer:"
+msgstr "Beszédszintetizát_or:"
+
+#: ../src/orca/orca-setup.glade.h:60
+msgid "Tar_get display:"
+msgstr "_Cél kijelző:"
+
+#: ../src/orca/orca-setup.glade.h:61
+msgid "Ver_bose"
+msgstr "Rés_zletes"
+
+#: ../src/orca/orca-setup.glade.h:62
+msgid "Vo_lume:"
+msgstr "Hange_rő:"
+
+#: ../src/orca/orca-setup.glade.h:63
+msgid "_Abbreviated role names"
+msgstr "_Rövidített szerepnevek"
+
+#: ../src/orca/orca-setup.glade.h:64
+msgid "_All"
+msgstr "_Mindent"
+
+#: ../src/orca/orca-setup.glade.h:65
+msgid "_Bottom:"
+msgstr "_Alul:"
+
+#: ../src/orca/orca-setup.glade.h:67
+msgid "_Enable speech"
+msgstr "Beszéd _engedélyezése"
+
+#: ../src/orca/orca-setup.glade.h:68
+msgid "_Laptop"
+msgstr "_Laptop"
+
+#: ../src/orca/orca-setup.glade.h:69
+msgid "_Left:"
+msgstr "_Balra:"
+
+#: ../src/orca/orca-setup.glade.h:71
+msgid "_Person:"
+msgstr "_Személy:"
+
+#: ../src/orca/orca-setup.glade.h:72
+msgid "_Rate:"
+msgstr "Se_besség:"
+
+#: ../src/orca/orca-setup.glade.h:73
+msgid "_Right:"
+msgstr "_Jobbra:"
+
+#: ../src/orca/orca-setup.glade.h:74
+msgid "_Smoothing:"
+msgstr "S_imítás:"
+
+#: ../src/orca/orca-setup.glade.h:75
+msgid "_Top:"
+msgstr "_Fent:"
+
+#: ../src/orca/orca-setup.glade.h:76
+msgid "_Voice settings:"
+msgstr "_Hangbeállítás:"
+
+#: ../src/orca/orca-setup.glade.h:77
+msgid "_Width:"
+msgstr "_Szélesség:"
+
+#: ../src/orca/orca-setup.glade.h:78
+msgid "pixels"
+msgstr "képpont"
+
+#: ../src/orca/phonnames.py:36
+msgid "alpha"
+msgstr "Antal"
+
+#: ../src/orca/phonnames.py:37
+msgid "bravo"
+msgstr "Béla"
+
+#: ../src/orca/phonnames.py:38
+msgid "charlie"
+msgstr "Cézár"
+
+#: ../src/orca/phonnames.py:39
+msgid "delta"
+msgstr "Dénes"
+
+#: ../src/orca/phonnames.py:40
+msgid "echo"
+msgstr "Elemér"
+
+#: ../src/orca/phonnames.py:41
+msgid "foxtrot"
+msgstr "Ferenc"
+
+#: ../src/orca/phonnames.py:42
+msgid "golf"
+msgstr "Géza"
+
+#: ../src/orca/phonnames.py:43
+msgid "hotel"
+msgstr "Helén"
+
+#: ../src/orca/phonnames.py:44
+msgid "india"
+msgstr "Ibolya"
+
+#: ../src/orca/phonnames.py:45
+msgid "juliet"
+msgstr "János"
+
+#: ../src/orca/phonnames.py:46
+msgid "kilo"
+msgstr "Károly"
+
+#: ../src/orca/phonnames.py:47
+msgid "lima"
+msgstr "László"
+
+#: ../src/orca/phonnames.py:48
+msgid "mike"
+msgstr "Mária"
+
+#: ../src/orca/phonnames.py:49
+msgid "november"
+msgstr "Nelli"
+
+#: ../src/orca/phonnames.py:50
+msgid "oscar"
+msgstr "Olga"
+
+#: ../src/orca/phonnames.py:51
+msgid "papa"
+msgstr "Péter"
+
+#: ../src/orca/phonnames.py:52
+msgid "quebec"
+msgstr "Kvelle"
+
+#: ../src/orca/phonnames.py:53
+msgid "romeo"
+msgstr "Róbert"
+
+#: ../src/orca/phonnames.py:54
+msgid "sierra"
+msgstr "Sándor"
+
+#: ../src/orca/phonnames.py:55
+msgid "tango"
+msgstr "Tamás"
+
+#: ../src/orca/phonnames.py:56
+msgid "uniform"
+msgstr "Ubul"
+
+#: ../src/orca/phonnames.py:57
+msgid "victor"
+msgstr "Vilmos"
+
+#: ../src/orca/phonnames.py:58
+msgid "whiskey"
+msgstr "dupla Vilmos"
+
+#: ../src/orca/phonnames.py:59
+msgid "xray"
+msgstr "Xénia"
+
+#: ../src/orca/phonnames.py:60
+msgid "yankee"
+msgstr "jenki"
+
+#: ../src/orca/phonnames.py:61
+msgid "zulu"
+msgstr "Zoltán"
+
+#: ../src/orca/pronunciation_dict.py:38
+msgid "ASAP"
+msgstr "ASAP"
+
+#: ../src/orca/pronunciation_dict.py:38
+msgid "as soon as possible"
+msgstr "amint lehetséges"
+
+#: ../src/orca/pronunciation_dict.py:39
+msgid "GHz"
+msgstr "GHz"
+
+#: ../src/orca/pronunciation_dict.py:39
+msgid "gigahertz"
+msgstr "gigaherc"
+
+#: ../src/orca/pronunciation_dict.py:40
+msgid "IMAP"
+msgstr "IMAP"
+
+#: ../src/orca/pronunciation_dict.py:40
+msgid "eye map"
+msgstr "ájmep"
+
+#: ../src/orca/pronunciation_dict.py:41
+msgid "LDAP"
+msgstr "LDAP"
+
+#: ../src/orca/pronunciation_dict.py:41
+msgid "ell dap"
+msgstr "ell dap"
+
+#: ../src/orca/pronunciation_dict.py:42
+msgid "LOL"
+msgstr "LOL"
+
+#: ../src/orca/pronunciation_dict.py:42
+msgid "laughing out loud"
+msgstr "hangosan nevetek"
+
+#: ../src/orca/pronunciation_dict.py:43
+msgid "MHz"
+msgstr "MHz"
+
+#: ../src/orca/pronunciation_dict.py:43
+msgid "megahertz"
+msgstr "megaherc"
+
+#: ../src/orca/pronunciation_dict.py:44
+msgid "strikethrough"
+msgstr "áthúzott"
+
+#: ../src/orca/pronunciation_dict.py:44
+msgid "strike through"
+msgstr "áthúzott"
+
+#: ../src/orca/pronunciation_dict.py:45
+msgid "SELinux"
+msgstr "SELinux"
+
+#: ../src/orca/pronunciation_dict.py:45
+msgid "ess ee linux"
+msgstr "ess ee linux"
+
+#: ../src/orca/rolenames.py:155
 msgid "???"
 msgstr "???"
 
-#: ../src/orca/rolenames.py:148
+#: ../src/orca/rolenames.py:156
 msgid "Invalid"
 msgstr "Érvénytelen"
 
-#: ../src/orca/rolenames.py:149
+#: ../src/orca/rolenames.py:157
 msgid "invalid"
 msgstr "érvénytelen"
 
-#: ../src/orca/rolenames.py:152
+#: ../src/orca/rolenames.py:160
 msgid "acc"
 msgstr "gyb"
 
-#: ../src/orca/rolenames.py:153
+#: ../src/orca/rolenames.py:161
 msgid "Accelerator"
 msgstr "Gyorsbillentyű"
 
-#: ../src/orca/rolenames.py:154
+#: ../src/orca/rolenames.py:162
 msgid "accelerator"
 msgstr "gyorsbillentyű"
 
-#: ../src/orca/rolenames.py:157 ../src/orca/rolenames.py:159
+#: ../src/orca/rolenames.py:165 ../src/orca/rolenames.py:167
 msgid "alert"
 msgstr "figyelmeztetés"
 
-#: ../src/orca/rolenames.py:158
+#: ../src/orca/rolenames.py:166
 msgid "Alert"
 msgstr "Figyelmeztetés"
 
-#: ../src/orca/rolenames.py:162
+#: ../src/orca/rolenames.py:170
 msgid "Anim"
 msgstr "Anim"
 
-#: ../src/orca/rolenames.py:163
+#: ../src/orca/rolenames.py:171
 msgid "Animation"
 msgstr "Animáció"
 
-#: ../src/orca/rolenames.py:164
+#: ../src/orca/rolenames.py:172
 msgid "animation"
 msgstr "animáció"
 
-#: ../src/orca/rolenames.py:167 ../src/orca/rolenames.py:169
+#: ../src/orca/rolenames.py:175 ../src/orca/rolenames.py:177
 msgid "arrow"
 msgstr "nyíl"
 
-#: ../src/orca/rolenames.py:168
+#: ../src/orca/rolenames.py:176
 msgid "Arrow"
 msgstr "Nyíl"
 
-#: ../src/orca/rolenames.py:172
+#: ../src/orca/rolenames.py:180
 msgid "cal"
 msgstr "npt"
 
-#: ../src/orca/rolenames.py:173
+#: ../src/orca/rolenames.py:181
 msgid "Calendar"
 msgstr "Naptár"
 
-#: ../src/orca/rolenames.py:174
+#: ../src/orca/rolenames.py:182
 msgid "calendar"
 msgstr "naptár"
 
-#: ../src/orca/rolenames.py:177
+#: ../src/orca/rolenames.py:185
 msgid "cnv"
 msgstr "vsz"
 
-#: ../src/orca/rolenames.py:178
+#: ../src/orca/rolenames.py:186
 msgid "Canvas"
 msgstr "Vászon"
 
-#: ../src/orca/rolenames.py:179
+#: ../src/orca/rolenames.py:187
 msgid "canvas"
 msgstr "vászon"
 
-#: ../src/orca/rolenames.py:182 ../src/orca/rolenames.py:187
+#: ../src/orca/rolenames.py:190
+msgid "cptn"
+msgstr "feli"
+
+#: ../src/orca/rolenames.py:191
+msgid "Caption"
+msgstr "Felirat"
+
+#: ../src/orca/rolenames.py:192
+msgid "caption"
+msgstr "felirat"
+
+#: ../src/orca/rolenames.py:195 ../src/orca/rolenames.py:200
 msgid "chk"
 msgstr "jnz"
 
-#: ../src/orca/rolenames.py:183
+#: ../src/orca/rolenames.py:196
 msgid "CheckBox"
 msgstr "Jelölőnégyzet"
 
-#: ../src/orca/rolenames.py:184
+#: ../src/orca/rolenames.py:197
 msgid "check box"
 msgstr "jelölőnégyzet"
 
-#: ../src/orca/rolenames.py:188
+#: ../src/orca/rolenames.py:201
 msgid "CheckItem"
 msgstr "Jelölőelem"
 
-#: ../src/orca/rolenames.py:189
+#: ../src/orca/rolenames.py:202
 msgid "check item"
 msgstr "jelölőelem"
 
-#: ../src/orca/rolenames.py:192
+#: ../src/orca/rolenames.py:205
 msgid "ckm"
 msgstr "jm"
 
-#: ../src/orca/rolenames.py:193
+#: ../src/orca/rolenames.py:206
 msgid "CheckMenu"
 msgstr "Jelölőmenü"
 
-#: ../src/orca/rolenames.py:194
+#: ../src/orca/rolenames.py:207
 msgid "check menu"
 msgstr "jelölőmenü"
 
-#: ../src/orca/rolenames.py:197
+#: ../src/orca/rolenames.py:210
 msgid "clrchsr"
 msgstr "szvl"
 
-#: ../src/orca/rolenames.py:198
+#: ../src/orca/rolenames.py:211
 msgid "ColorChooser"
 msgstr "Színválasztó"
 
-#: ../src/orca/rolenames.py:199
+#: ../src/orca/rolenames.py:212
 msgid "color chooser"
 msgstr "színválasztó"
 
-#: ../src/orca/rolenames.py:202 ../src/orca/rolenames.py:437
+#: ../src/orca/rolenames.py:215 ../src/orca/rolenames.py:475
 msgid "colhdr"
 msgstr "ofl"
 
-#: ../src/orca/rolenames.py:203 ../src/orca/rolenames.py:438
+#: ../src/orca/rolenames.py:216 ../src/orca/rolenames.py:476
 msgid "ColumnHeader"
 msgstr "Oszlopfejléc"
 
-#: ../src/orca/rolenames.py:204 ../src/orca/rolenames.py:439
+#: ../src/orca/rolenames.py:217 ../src/orca/rolenames.py:477
 msgid "column header"
 msgstr "oszlopfejléc"
 
-#: ../src/orca/rolenames.py:207
+#: ../src/orca/rolenames.py:220
 msgid "cbo"
 msgstr "lgd"
 
-#: ../src/orca/rolenames.py:208
+#: ../src/orca/rolenames.py:221
 msgid "Combo"
 msgstr "Legördülő"
 
-#: ../src/orca/rolenames.py:209
+#: ../src/orca/rolenames.py:222
 msgid "combo box"
 msgstr "legördülő doboz"
 
-#: ../src/orca/rolenames.py:212
+#: ../src/orca/rolenames.py:225
 msgid "dat"
 msgstr "dat"
 
-#: ../src/orca/rolenames.py:213
+#: ../src/orca/rolenames.py:226
 msgid "DateEditor"
 msgstr "Dátumszerkesztő"
 
-#: ../src/orca/rolenames.py:214
+#: ../src/orca/rolenames.py:227
 msgid "date editor"
 msgstr "dátumszerkesztő"
 
-#: ../src/orca/rolenames.py:217 ../src/orca/rolenames.py:277
-#: ../src/orca/rolenames.py:279
+#: ../src/orca/rolenames.py:230 ../src/orca/rolenames.py:305
+#: ../src/orca/rolenames.py:307
 msgid "icon"
 msgstr "ikon"
 
-#: ../src/orca/rolenames.py:218
+#: ../src/orca/rolenames.py:231
 msgid "DesktopIcon"
 msgstr "Munkaasztalikon"
 
-#: ../src/orca/rolenames.py:219
+#: ../src/orca/rolenames.py:232
 msgid "desktop icon"
 msgstr "munkaasztalikon"
 
-#: ../src/orca/rolenames.py:222 ../src/orca/rolenames.py:264
-#: ../src/orca/rolenames.py:287
+#: ../src/orca/rolenames.py:235 ../src/orca/rolenames.py:287
+#: ../src/orca/rolenames.py:315
 msgid "frame"
 msgstr "keret"
 
-#: ../src/orca/rolenames.py:223
+#: ../src/orca/rolenames.py:236
 msgid "DesktopFrame"
 msgstr "Munkaasztalkeret"
 
-#: ../src/orca/rolenames.py:224
+#: ../src/orca/rolenames.py:237
 msgid "desktop frame"
 msgstr "munkaasztalkeret"
 
-#: ../src/orca/rolenames.py:227 ../src/orca/rolenames.py:229
+#: ../src/orca/rolenames.py:240 ../src/orca/rolenames.py:242
 msgid "dial"
 msgstr "tárcs"
 
-#: ../src/orca/rolenames.py:228
+#: ../src/orca/rolenames.py:241
 msgid "Dial"
 msgstr "Tárcsázás"
 
-#: ../src/orca/rolenames.py:232
+#: ../src/orca/rolenames.py:245
 msgid "dlg"
 msgstr "pbsz"
 
-#: ../src/orca/rolenames.py:233
+#: ../src/orca/rolenames.py:246
 msgid "Dialog"
 msgstr "Párbeszédablak"
 
-#: ../src/orca/rolenames.py:234
+#: ../src/orca/rolenames.py:247
 msgid "dialog"
 msgstr "párbeszédablak"
 
-#: ../src/orca/rolenames.py:237
+#: ../src/orca/rolenames.py:250
 msgid "dip"
 msgstr "kat"
 
-#: ../src/orca/rolenames.py:238
+#: ../src/orca/rolenames.py:251
 msgid "DirectoryPane"
 msgstr "Könyvtár-ablaktábla"
 
-#: ../src/orca/rolenames.py:239
+#: ../src/orca/rolenames.py:252
 msgid "directory pane"
 msgstr "könyvtár-ablaktábla"
 
-#: ../src/orca/rolenames.py:242
-msgid "draw"
-msgstr "rajz"
-
-#: ../src/orca/rolenames.py:243
-msgid "DrawingArea"
-msgstr "Rajzterület"
-
-#: ../src/orca/rolenames.py:244
-msgid "drawing area"
-msgstr "rajzterület"
-
-#: ../src/orca/rolenames.py:247
-msgid "fchsr"
-msgstr "fvl"
-
-#: ../src/orca/rolenames.py:248
-msgid "FileChooser"
-msgstr "Fájlválasztó"
-
-#: ../src/orca/rolenames.py:249
-msgid "file chooser"
-msgstr "fájlválasztó"
-
-#: ../src/orca/rolenames.py:252
-msgid "flr"
-msgstr "kit"
-
-#: ../src/orca/rolenames.py:253
-msgid "Filler"
-msgstr "Kitöltő"
-
-#: ../src/orca/rolenames.py:254
-msgid "filler"
-msgstr "kitöltő"
-
-#: ../src/orca/rolenames.py:257
-msgid "fnt"
-msgstr "btk"
-
-#: ../src/orca/rolenames.py:258
-msgid "FontChooser"
-msgstr "Betűkészlet-kiválasztó"
-
-#: ../src/orca/rolenames.py:259
-msgid "font chooser"
-msgstr "betűkészlet-kiválasztó"
-
-#: ../src/orca/rolenames.py:262
-msgid "frm"
-msgstr "krt"
-
-#: ../src/orca/rolenames.py:263
-msgid "Frame"
-msgstr "Keret"
-
-#: ../src/orca/rolenames.py:267
-msgid "gpn"
-msgstr "üvg"
-
-#: ../src/orca/rolenames.py:268
-msgid "GlassPane"
-msgstr "Üveg-ablaktábla"
-
-#: ../src/orca/rolenames.py:269
-msgid "glass pane"
-msgstr "üveg-ablaktábla"
-
-#: ../src/orca/rolenames.py:272
+#: ../src/orca/rolenames.py:255 ../src/orca/rolenames.py:300
 msgid "html"
 msgstr "html"
 
-#: ../src/orca/rolenames.py:273
+#: ../src/orca/rolenames.py:256
+msgid "HtmlPane"
+msgstr "Html-ablaktábla"
+
+#: ../src/orca/rolenames.py:257
+msgid "html content"
+msgstr "html tartalom"
+
+#: ../src/orca/rolenames.py:260
+msgid "draw"
+msgstr "rajz"
+
+#: ../src/orca/rolenames.py:261
+msgid "DrawingArea"
+msgstr "Rajzterület"
+
+#: ../src/orca/rolenames.py:262
+msgid "drawing area"
+msgstr "rajzterület"
+
+#: ../src/orca/rolenames.py:265
+msgid "fchsr"
+msgstr "fvl"
+
+#: ../src/orca/rolenames.py:266
+msgid "FileChooser"
+msgstr "Fájlválasztó"
+
+#: ../src/orca/rolenames.py:267
+msgid "file chooser"
+msgstr "fájlválasztó"
+
+#: ../src/orca/rolenames.py:270
+msgid "flr"
+msgstr "kit"
+
+#: ../src/orca/rolenames.py:271
+msgid "Filler"
+msgstr "Kitöltő"
+
+#: ../src/orca/rolenames.py:272
+msgid "filler"
+msgstr "kitöltő"
+
+#: ../src/orca/rolenames.py:275
+msgid "fnt"
+msgstr "btk"
+
+#: ../src/orca/rolenames.py:276
+msgid "FontChooser"
+msgstr "Betűkészlet-kiválasztó"
+
+#: ../src/orca/rolenames.py:277
+msgid "font chooser"
+msgstr "betűkészlet-kiválasztó"
+
+#: ../src/orca/rolenames.py:280 ../src/orca/rolenames.py:282
+msgid "form"
+msgstr "űrlap"
+
+#: ../src/orca/rolenames.py:281
+msgid "Form"
+msgstr "Űrlap"
+
+#: ../src/orca/rolenames.py:285
+msgid "frm"
+msgstr "krt"
+
+#: ../src/orca/rolenames.py:286
+msgid "Frame"
+msgstr "Keret"
+
+#: ../src/orca/rolenames.py:290
+msgid "gpn"
+msgstr "üvg"
+
+#: ../src/orca/rolenames.py:291
+msgid "GlassPane"
+msgstr "Üveg-ablaktábla"
+
+#: ../src/orca/rolenames.py:292
+msgid "glass pane"
+msgstr "üveg-ablaktábla"
+
+#: ../src/orca/rolenames.py:295
+msgid "hdng"
+msgstr "cmsr"
+
+#: ../src/orca/rolenames.py:296
+msgid "Heading"
+msgstr "Címsor"
+
+#: ../src/orca/rolenames.py:297
+msgid "heading"
+msgstr "címsor"
+
+#: ../src/orca/rolenames.py:301
 msgid "HtmlContainer"
 msgstr "Html tároló"
 
-#: ../src/orca/rolenames.py:274
+#: ../src/orca/rolenames.py:302
 msgid "h t m l container"
 msgstr "h t m l tároló"
 
-#: ../src/orca/rolenames.py:278
+#: ../src/orca/rolenames.py:306
 msgid "Icon"
 msgstr "Ikon"
 
-#: ../src/orca/rolenames.py:282
+#: ../src/orca/rolenames.py:310
 msgid "img"
 msgstr "img"
 
-#: ../src/orca/rolenames.py:283
+#: ../src/orca/rolenames.py:311
 msgid "Image"
 msgstr "Kép"
 
-#: ../src/orca/rolenames.py:284
+#: ../src/orca/rolenames.py:312
 msgid "image"
 msgstr "kép"
 
-#: ../src/orca/rolenames.py:288
+#: ../src/orca/rolenames.py:316
 msgid "InternalFrame"
 msgstr "Belső keret"
 
-#: ../src/orca/rolenames.py:289
+#: ../src/orca/rolenames.py:317
 msgid "internal frame"
 msgstr "belső keret"
 
-#: ../src/orca/rolenames.py:292
+#: ../src/orca/rolenames.py:320
 msgid "lbl"
 msgstr "lbl"
 
-#: ../src/orca/rolenames.py:293
+#: ../src/orca/rolenames.py:321
 msgid "Label"
 msgstr "Címke"
 
-#: ../src/orca/rolenames.py:294
+#: ../src/orca/rolenames.py:322
 msgid "label"
 msgstr "címke"
 
-#: ../src/orca/rolenames.py:297
+#: ../src/orca/rolenames.py:325
 msgid "lyrdpn"
 msgstr "lyrdpn"
 
-#: ../src/orca/rolenames.py:298
+#: ../src/orca/rolenames.py:326
 msgid "LayeredPane"
 msgstr "Réteges ablaktábla"
 
-#: ../src/orca/rolenames.py:299
+#: ../src/orca/rolenames.py:327
 msgid "layered pane"
 msgstr "réteges ablaktábla"
 
-#: ../src/orca/rolenames.py:302
+#: ../src/orca/rolenames.py:330 ../src/orca/scripts/acroread.py:249
+msgid "lnk"
+msgstr "hiv"
+
+#: ../src/orca/rolenames.py:331 ../src/orca/scripts/acroread.py:250
+msgid "Link"
+msgstr "Hivatkozás"
+
+#: ../src/orca/rolenames.py:335
 msgid "lst"
 msgstr "lst"
 
-#: ../src/orca/rolenames.py:303
+#: ../src/orca/rolenames.py:336
 msgid "List"
 msgstr "Lista"
 
-#: ../src/orca/rolenames.py:304
+#: ../src/orca/rolenames.py:337
 msgid "list"
 msgstr "lista"
 
-#: ../src/orca/rolenames.py:307
+#: ../src/orca/rolenames.py:340
 msgid "lstitm"
 msgstr "lstitm"
 
-#: ../src/orca/rolenames.py:308
+#: ../src/orca/rolenames.py:341
 msgid "ListItem"
 msgstr "Listaelem"
 
-#: ../src/orca/rolenames.py:309
+#: ../src/orca/rolenames.py:342
 msgid "list item"
 msgstr "listaelem"
 
-#: ../src/orca/rolenames.py:312
+#: ../src/orca/rolenames.py:345
 msgid "mnu"
 msgstr "mnu"
 
-#: ../src/orca/rolenames.py:313
+#: ../src/orca/rolenames.py:346
 msgid "Menu"
 msgstr "Menü"
 
-#: ../src/orca/rolenames.py:314
+#: ../src/orca/rolenames.py:347
 msgid "menu"
 msgstr "menü"
 
-#: ../src/orca/rolenames.py:317
+#: ../src/orca/rolenames.py:350
 msgid "mnubr"
 msgstr "mnubr"
 
-#: ../src/orca/rolenames.py:318
+#: ../src/orca/rolenames.py:351
 msgid "MenuBar"
 msgstr "Menüsor"
 
-#: ../src/orca/rolenames.py:319
+#: ../src/orca/rolenames.py:352
 msgid "menu bar"
 msgstr "menüsor"
 
-#: ../src/orca/rolenames.py:322
+#: ../src/orca/rolenames.py:355
 msgid "mnuitm"
 msgstr "mnuitm"
 
-#: ../src/orca/rolenames.py:323
+#: ../src/orca/rolenames.py:356
 msgid "MenuItem"
 msgstr "Menüelem"
 
-#: ../src/orca/rolenames.py:324
+#: ../src/orca/rolenames.py:357
 msgid "menu item"
 msgstr "menüelem"
 
-#: ../src/orca/rolenames.py:327
+#: ../src/orca/rolenames.py:360
 msgid "optnpn"
 msgstr "optnpn"
 
-#: ../src/orca/rolenames.py:328
+#: ../src/orca/rolenames.py:361
 msgid "OptionPane"
 msgstr "Beállítás-ablaktábla"
 
-#: ../src/orca/rolenames.py:329
+#: ../src/orca/rolenames.py:362
 msgid "option pane"
 msgstr "beállítás-ablaktábla"
 
-#: ../src/orca/rolenames.py:332 ../src/orca/rolenames.py:334
+#: ../src/orca/rolenames.py:365 ../src/orca/rolenames.py:367
 msgid "page"
 msgstr "oldal"
 
-#: ../src/orca/rolenames.py:333
+#: ../src/orca/rolenames.py:366
 msgid "Page"
 msgstr "Oldal"
 
-#: ../src/orca/rolenames.py:337
+#: ../src/orca/rolenames.py:370
 msgid "tblst"
 msgstr "lplst"
 
-#: ../src/orca/rolenames.py:338
+#: ../src/orca/rolenames.py:371
 msgid "TabList"
 msgstr "Laplista"
 
-#: ../src/orca/rolenames.py:339
+#: ../src/orca/rolenames.py:372
 msgid "tab list"
 msgstr "laplista"
 
-#: ../src/orca/rolenames.py:342
+#: ../src/orca/rolenames.py:375
 msgid "pnl"
 msgstr "pnl"
 
-#: ../src/orca/rolenames.py:343
+#: ../src/orca/rolenames.py:376
 msgid "Panel"
 msgstr "Panel"
 
-#: ../src/orca/rolenames.py:344
+#: ../src/orca/rolenames.py:377
 msgid "panel"
 msgstr "panel"
 
-#: ../src/orca/rolenames.py:347
+#: ../src/orca/rolenames.py:380
 msgid "pwd"
 msgstr "jsz"
 
-#: ../src/orca/rolenames.py:348
+#: ../src/orca/rolenames.py:381
 msgid "Password"
 msgstr "Jelszó"
 
-#: ../src/orca/rolenames.py:349
+#: ../src/orca/rolenames.py:382
 msgid "password"
 msgstr "jelszó"
 
-#: ../src/orca/rolenames.py:352
+#: ../src/orca/rolenames.py:385
 msgid "popmnu"
 msgstr "fugmnu"
 
-#: ../src/orca/rolenames.py:353
+#: ../src/orca/rolenames.py:386
 msgid "PopupMenu"
 msgstr "Felugró menü"
 
-#: ../src/orca/rolenames.py:354
+#: ../src/orca/rolenames.py:387
 msgid "popup menu"
 msgstr "felugró menü"
 
-#: ../src/orca/rolenames.py:357
+#: ../src/orca/rolenames.py:390
 msgid "pgbar"
 msgstr "fmj"
 
-#: ../src/orca/rolenames.py:358
+#: ../src/orca/rolenames.py:391
 msgid "Progress"
 msgstr "Folyamatjelző"
 
-#: ../src/orca/rolenames.py:359
+#: ../src/orca/rolenames.py:392
 msgid "progress bar"
 msgstr "folyamatjelző"
 
-#: ../src/orca/rolenames.py:362
+#: ../src/orca/rolenames.py:395
 msgid "btn"
 msgstr "gmb"
 
-#: ../src/orca/rolenames.py:363
+#: ../src/orca/rolenames.py:396
 msgid "Button"
 msgstr "Gomb"
 
-#: ../src/orca/rolenames.py:364
+#: ../src/orca/rolenames.py:397
 msgid "button"
 msgstr "gomb"
 
-#: ../src/orca/rolenames.py:367
+#: ../src/orca/rolenames.py:400
 msgid "radio"
 msgstr "vg"
 
-#: ../src/orca/rolenames.py:368
+#: ../src/orca/rolenames.py:401
 msgid "RadioButton"
 msgstr "Választógomb"
 
-#: ../src/orca/rolenames.py:369
+#: ../src/orca/rolenames.py:402
 msgid "radio button"
 msgstr "választógomb"
 
-#: ../src/orca/rolenames.py:372
+#: ../src/orca/rolenames.py:405
 msgid "rdmnuitm"
 msgstr "vgelm"
 
-#: ../src/orca/rolenames.py:373
+#: ../src/orca/rolenames.py:406
 msgid "RadioItem"
 msgstr "Választógomb-elem"
 
-#: ../src/orca/rolenames.py:374
+#: ../src/orca/rolenames.py:407
 msgid "radio menu item"
 msgstr "választógomb-elem"
 
-#: ../src/orca/rolenames.py:377
+#: ../src/orca/rolenames.py:410
 msgid "rdmnu"
 msgstr "vmnu"
 
-#: ../src/orca/rolenames.py:378
+#: ../src/orca/rolenames.py:411
 msgid "RadioMenu"
 msgstr "Választómenü"
 
-#: ../src/orca/rolenames.py:379
+#: ../src/orca/rolenames.py:412
 msgid "radio menu"
 msgstr "választómenü"
 
-#: ../src/orca/rolenames.py:382
+#: ../src/orca/rolenames.py:415
 msgid "rtpn"
 msgstr "gyat"
 
-#: ../src/orca/rolenames.py:383
+#: ../src/orca/rolenames.py:416
 msgid "RootPane"
 msgstr "Gyökér-ablaktábla"
 
-#: ../src/orca/rolenames.py:384
+#: ../src/orca/rolenames.py:417
 msgid "root pane"
 msgstr "gyökér-ablaktábla"
 
-#: ../src/orca/rolenames.py:387 ../src/orca/rolenames.py:442
+#: ../src/orca/rolenames.py:420 ../src/orca/rolenames.py:480
 msgid "rwhdr"
 msgstr "sfl"
 
-#: ../src/orca/rolenames.py:388 ../src/orca/rolenames.py:443
+#: ../src/orca/rolenames.py:421 ../src/orca/rolenames.py:481
 msgid "RowHeader"
 msgstr "Sorfejléc"
 
-#: ../src/orca/rolenames.py:389 ../src/orca/rolenames.py:444
+#: ../src/orca/rolenames.py:422 ../src/orca/rolenames.py:482
 msgid "row header"
 msgstr "sorfejléc"
 
-#: ../src/orca/rolenames.py:392
+#: ../src/orca/rolenames.py:425
 msgid "scbr"
 msgstr "gsv"
 
-#: ../src/orca/rolenames.py:393
+#: ../src/orca/rolenames.py:426
 msgid "ScrollBar"
 msgstr "Gördítősáv"
 
-#: ../src/orca/rolenames.py:394
+#: ../src/orca/rolenames.py:427
 msgid "scroll bar"
 msgstr "gördítősáv"
 
-#: ../src/orca/rolenames.py:397
+#: ../src/orca/rolenames.py:430
 msgid "scpn"
 msgstr "gat"
 
-#: ../src/orca/rolenames.py:398
+#: ../src/orca/rolenames.py:431
 msgid "ScrollPane"
 msgstr "Gördíthető ablaktábla"
 
-#: ../src/orca/rolenames.py:399
+#: ../src/orca/rolenames.py:432
 msgid "scroll pane"
 msgstr "gördíthető ablaktábla"
 
-#: ../src/orca/rolenames.py:402
+#: ../src/orca/rolenames.py:435
+msgid "sctn"
+msgstr "szksz"
+
+#: ../src/orca/rolenames.py:436
+msgid "Section"
+msgstr "Szakasz"
+
+#: ../src/orca/rolenames.py:437
+msgid "section"
+msgstr "szakasz"
+
+#: ../src/orca/rolenames.py:440
 msgid "seprtr"
 msgstr "elv"
 
-#: ../src/orca/rolenames.py:403
+#: ../src/orca/rolenames.py:441
 msgid "Separator"
 msgstr "Elválasztó"
 
-#: ../src/orca/rolenames.py:404
+#: ../src/orca/rolenames.py:442
 msgid "separator"
 msgstr "elválasztó"
 
-#: ../src/orca/rolenames.py:407
+#: ../src/orca/rolenames.py:445
 msgid "sldr"
 msgstr "csszk"
 
-#: ../src/orca/rolenames.py:408
+#: ../src/orca/rolenames.py:446
 msgid "Slider"
 msgstr "Csúszka"
 
-#: ../src/orca/rolenames.py:409
+#: ../src/orca/rolenames.py:447
 msgid "slider"
 msgstr "csúszka"
 
-#: ../src/orca/rolenames.py:412
+#: ../src/orca/rolenames.py:450
 msgid "spltpn"
 msgstr "oat"
 
-#: ../src/orca/rolenames.py:413
+#: ../src/orca/rolenames.py:451
 msgid "SplitPane"
 msgstr "Osztott ablaktábla"
 
-#: ../src/orca/rolenames.py:414
+#: ../src/orca/rolenames.py:452
 msgid "split pane"
 msgstr "osztott ablaktábla"
 
-#: ../src/orca/rolenames.py:417
+#: ../src/orca/rolenames.py:455
 msgid "spin"
 msgstr "lpt"
 
-#: ../src/orca/rolenames.py:418
+#: ../src/orca/rolenames.py:456
 msgid "SpinButton"
 msgstr "Léptetőgomb"
 
-#: ../src/orca/rolenames.py:419
+#: ../src/orca/rolenames.py:457
 msgid "spin button"
 msgstr "léptetőgomb"
 
-#: ../src/orca/rolenames.py:422
+#: ../src/orca/rolenames.py:460
 msgid "statbr"
 msgstr "álls"
 
-#: ../src/orca/rolenames.py:423
+#: ../src/orca/rolenames.py:461
 msgid "StatusBar"
 msgstr "Állapotsor"
 
-#: ../src/orca/rolenames.py:424
+#: ../src/orca/rolenames.py:462
 msgid "status bar"
 msgstr "állapotsor"
 
-#: ../src/orca/rolenames.py:427
+#: ../src/orca/rolenames.py:465
 msgid "tbl"
 msgstr "tbl"
 
-#: ../src/orca/rolenames.py:428
+#: ../src/orca/rolenames.py:466
 msgid "Table"
 msgstr "Táblázat"
 
-#: ../src/orca/rolenames.py:429
+#: ../src/orca/rolenames.py:467
 msgid "table"
 msgstr "táblázat"
 
-#: ../src/orca/rolenames.py:433
+#: ../src/orca/rolenames.py:471 ../src/orca/where_am_I.py:521
+#: ../src/orca/where_am_I.py:630
 msgid "Cell"
 msgstr "Cella"
 
-#: ../src/orca/rolenames.py:447
+#: ../src/orca/rolenames.py:485
 msgid "tomnuitm"
 msgstr "lvmnue"
 
-#: ../src/orca/rolenames.py:448
+#: ../src/orca/rolenames.py:486
 msgid "TearOffMenuItem"
 msgstr "Leválasztható menüelem"
 
-#: ../src/orca/rolenames.py:449 ../src/orca/speechgenerator.py:1258
+#: ../src/orca/rolenames.py:487 ../src/orca/speechgenerator.py:1353
 msgid "tear off menu item"
 msgstr "leválasztható menüelem"
 
-#: ../src/orca/rolenames.py:452
+#: ../src/orca/rolenames.py:490
 msgid "term"
 msgstr "term"
 
-#: ../src/orca/rolenames.py:453
+#: ../src/orca/rolenames.py:491
 msgid "Terminal"
 msgstr "Terminál"
 
-#: ../src/orca/rolenames.py:454
+#: ../src/orca/rolenames.py:492
 msgid "terminal"
 msgstr "terminál"
 
-#: ../src/orca/rolenames.py:457
+#: ../src/orca/rolenames.py:495
 msgid "txt"
 msgstr "txt"
 
-#: ../src/orca/rolenames.py:458
+#: ../src/orca/rolenames.py:496
 msgid "Text"
 msgstr "Szöveg"
 
-#: ../src/orca/rolenames.py:459
+#: ../src/orca/rolenames.py:497
 msgid "text"
 msgstr "szöveg"
 
-#: ../src/orca/rolenames.py:462
+#: ../src/orca/rolenames.py:502
 msgid "tglbtn"
 msgstr "kpgmb"
 
-#: ../src/orca/rolenames.py:463
+#: ../src/orca/rolenames.py:503
 msgid "ToggleButton"
 msgstr "Kapcsológomb"
 
-#: ../src/orca/rolenames.py:464
+#: ../src/orca/rolenames.py:504
 msgid "toggle button"
 msgstr "kapcsológomb"
 
-#: ../src/orca/rolenames.py:467
+#: ../src/orca/rolenames.py:507
 msgid "tbar"
 msgstr "etár"
 
-#: ../src/orca/rolenames.py:468
+#: ../src/orca/rolenames.py:508
 msgid "ToolBar"
 msgstr "Eszköztár"
 
-#: ../src/orca/rolenames.py:469
+#: ../src/orca/rolenames.py:509
 msgid "tool bar"
 msgstr "eszköztár"
 
-#: ../src/orca/rolenames.py:472
+#: ../src/orca/rolenames.py:512
 msgid "tip"
 msgstr "bsg"
 
-#: ../src/orca/rolenames.py:473
+#: ../src/orca/rolenames.py:513
 msgid "ToolTip"
 msgstr "Buboréksúgó"
 
-#: ../src/orca/rolenames.py:474
+#: ../src/orca/rolenames.py:514
 msgid "tool tip"
 msgstr "buboréksúgó"
 
-#: ../src/orca/rolenames.py:477 ../src/orca/rolenames.py:479
+#: ../src/orca/rolenames.py:517 ../src/orca/rolenames.py:519
 msgid "tree"
 msgstr "fa"
 
-#: ../src/orca/rolenames.py:478
+#: ../src/orca/rolenames.py:518
 msgid "Tree"
 msgstr "Fa"
 
-#: ../src/orca/rolenames.py:482
+#: ../src/orca/rolenames.py:522
 msgid "trtbl"
 msgstr "fatbl"
 
-#: ../src/orca/rolenames.py:483
+#: ../src/orca/rolenames.py:523
 msgid "TreeTable"
 msgstr "Fatáblázat"
 
-#: ../src/orca/rolenames.py:484
+#: ../src/orca/rolenames.py:524
 msgid "tree table"
 msgstr "fatáblázat"
 
-#: ../src/orca/rolenames.py:487
+#: ../src/orca/rolenames.py:527
 msgid "unk"
 msgstr "ism"
 
-#: ../src/orca/rolenames.py:488
+#: ../src/orca/rolenames.py:528
 msgid "Unknown"
 msgstr "Ismeretlen"
 
-#: ../src/orca/rolenames.py:489
+#: ../src/orca/rolenames.py:529
 msgid "unknown"
 msgstr "ismeretlen"
 
-#: ../src/orca/rolenames.py:492
+#: ../src/orca/rolenames.py:532
 msgid "vwprt"
 msgstr "nmz"
 
-#: ../src/orca/rolenames.py:493
+#: ../src/orca/rolenames.py:533
 msgid "Viewport"
 msgstr "Nézetmező"
 
-#: ../src/orca/rolenames.py:494
+#: ../src/orca/rolenames.py:534
 msgid "viewport"
 msgstr "nézetmező"
 
-#: ../src/orca/rolenames.py:497
+#: ../src/orca/rolenames.py:537
 msgid "wnd"
 msgstr "abl"
 
-#: ../src/orca/rolenames.py:498
+#: ../src/orca/rolenames.py:538
 msgid "Window"
 msgstr "Ablak"
 
-#: ../src/orca/rolenames.py:499
+#: ../src/orca/rolenames.py:539
 msgid "window"
 msgstr "ablak"
 
-#: ../src/orca/rolenames.py:502
+#: ../src/orca/rolenames.py:542
 msgid "hdr"
 msgstr "flc"
 
-#: ../src/orca/rolenames.py:503
+#: ../src/orca/rolenames.py:543
 msgid "Header"
 msgstr "Fejléc"
 
-#: ../src/orca/rolenames.py:504
+#: ../src/orca/rolenames.py:544
 msgid "header"
 msgstr "fejléc"
 
-#: ../src/orca/rolenames.py:507
+#: ../src/orca/rolenames.py:547
 msgid "ftr"
 msgstr "llc"
 
-#: ../src/orca/rolenames.py:508
+#: ../src/orca/rolenames.py:548
 msgid "Footer"
 msgstr "Lábléc"
 
-#: ../src/orca/rolenames.py:509
+#: ../src/orca/rolenames.py:549
 msgid "footer"
 msgstr "lábléc"
 
-#: ../src/orca/rolenames.py:512
+#: ../src/orca/rolenames.py:552
 msgid "para"
 msgstr "bek"
 
-#: ../src/orca/rolenames.py:513
+#: ../src/orca/rolenames.py:553
 msgid "Paragraph"
 msgstr "Bekezdés"
 
-#: ../src/orca/rolenames.py:514
+#: ../src/orca/rolenames.py:554
 msgid "paragraph"
 msgstr "bekezdés"
 
-#: ../src/orca/rolenames.py:517
+#: ../src/orca/rolenames.py:557
 msgid "app"
 msgstr "alk"
 
-#: ../src/orca/rolenames.py:518
+#: ../src/orca/rolenames.py:558
 msgid "Application"
 msgstr "Alkalmazás"
 
-#: ../src/orca/rolenames.py:519
+#: ../src/orca/rolenames.py:559
 msgid "application"
 msgstr "alkalmazás"
 
-#: ../src/orca/rolenames.py:522
+#: ../src/orca/rolenames.py:562
 msgid "auto"
 msgstr "auto"
 
-#: ../src/orca/rolenames.py:523
+#: ../src/orca/rolenames.py:563
 msgid "AutoComplete"
 msgstr "Automatikus kiegészítés"
 
-#: ../src/orca/rolenames.py:524
+#: ../src/orca/rolenames.py:564
 msgid "autocomplete"
 msgstr "automatikus kiegészítés"
 
-#: ../src/orca/rolenames.py:527
+#: ../src/orca/rolenames.py:567
 msgid "edtbr"
 msgstr "szsv"
 
-#: ../src/orca/rolenames.py:528
+#: ../src/orca/rolenames.py:568
 msgid "EditBar"
 msgstr "Szerkesztősáv"
 
-#: ../src/orca/rolenames.py:529
+#: ../src/orca/rolenames.py:569
 msgid "edit bar"
 msgstr "szerkesztősáv"
 
-#: ../src/orca/rolenames.py:532
+#: ../src/orca/rolenames.py:572
 msgid "emb"
 msgstr "bkmp"
 
-#: ../src/orca/rolenames.py:533
+#: ../src/orca/rolenames.py:573
 msgid "EmbeddedComponent"
 msgstr "Beágyazott komponens"
 
-#: ../src/orca/rolenames.py:534
+#: ../src/orca/rolenames.py:574
 msgid "embedded component"
 msgstr "beágyazott komponens"
 
-#: ../src/orca/scripts/Evolution.py:86
+#: ../src/orca/scripts/acroread.py:242
+msgid "doc"
+msgstr "dok"
+
+#: ../src/orca/scripts/acroread.py:243
+msgid "Document"
+msgstr "Dokumentum"
+
+#: ../src/orca/scripts/acroread.py:244
+msgid "document"
+msgstr "dokumentum"
+
+#. We've entered a table.  Announce the dimensions.
+#.
+#: ../src/orca/scripts/acroread.py:290 ../src/orca/scripts/StarOffice.py:799
+#, python-format
+msgid "table with %d rows and %d columns."
+msgstr "táblázat %d sorral és %d oszloppal."
+
+#. We've left a table.  Announce this fact.
+#.
+#: ../src/orca/scripts/acroread.py:297 ../src/orca/scripts/StarOffice.py:802
+msgid "leaving table."
+msgstr "táblázat elhagyása."
+
+#. We can't count on being in the first/last cell
+#. of the new row -- only the first/last cell of
+#. the new row that contains data.
+#.
+#: ../src/orca/scripts/acroread.py:312
+#, python-format
+msgid "row %d, column %d"
+msgstr "%d. sor, %d. oszlop"
+
+#: ../src/orca/scripts/acroread.py:315 ../src/orca/where_am_I.py:524
+#, python-format
+msgid "column %d"
+msgstr "%d. oszlop"
+
+#: ../src/orca/scripts/Evolution.py:92
 msgid "calv"
 msgstr "nptn"
 
-#: ../src/orca/scripts/Evolution.py:87
+#: ../src/orca/scripts/Evolution.py:93
 msgid "CalendarView"
 msgstr "Naptárnézet"
 
-#: ../src/orca/scripts/Evolution.py:88
+#: ../src/orca/scripts/Evolution.py:94
 msgid "calendar view"
 msgstr "naptárnézet"
 
-#: ../src/orca/scripts/Evolution.py:93
+#: ../src/orca/scripts/Evolution.py:99
 msgid "cale"
 msgstr "nptb"
 
-#: ../src/orca/scripts/Evolution.py:94
+#: ../src/orca/scripts/Evolution.py:100
 msgid "CalendarEvent"
 msgstr "Naptárbejegyzés"
 
-#: ../src/orca/scripts/Evolution.py:95
+#: ../src/orca/scripts/Evolution.py:101
 msgid "calendar event"
 msgstr "naptárbejegyzés"
 
+#: ../src/orca/scripts/Evolution.py:119
+msgid "Toggle whether we present new mail if we are not the active script."
+msgstr "Megjelenjenek-e az új levelek, ha nem ez az aktív parancsfájl."
+
 #: ../src/orca/scripts/Evolution.py:149
+msgid "present new mail if this script is not active."
+msgstr "új levelek megjelenítése, ha ez a parancsfájl nem aktív."
+
+#: ../src/orca/scripts/Evolution.py:152
+msgid "do not present new mail if this script is not active."
+msgstr "ne jelenjenek meg az új levelek, ha ez a parancsfájl nem aktív."
+
+#: ../src/orca/scripts/Evolution.py:199
 msgid " screen"
 msgstr " képernyő"
 
@@ -1942,112 +2644,283 @@ msgstr " képernyő"
 #. starts with "Welcome". For the last screen, it starts
 #. with "Congratulations". Speak those too.
 #.
-#: ../src/orca/scripts/Evolution.py:178
+#: ../src/orca/scripts/Evolution.py:228
 msgid "Please"
 msgstr "Kérem"
 
-#: ../src/orca/scripts/Evolution.py:179
+#: ../src/orca/scripts/Evolution.py:229
 msgid "Welcome"
 msgstr "Üdvözlet"
 
-#: ../src/orca/scripts/Evolution.py:180
+#: ../src/orca/scripts/Evolution.py:230
 msgid "Congratulations"
 msgstr "Gratulálunk"
 
-#: ../src/orca/scripts/Evolution.py:687
+#: ../src/orca/scripts/Evolution.py:563 ../src/orca/scripts/Evolution.py:610
+msgid "Status"
+msgstr "Állapot"
+
+#: ../src/orca/scripts/Evolution.py:611
+msgid "unread"
+msgstr "olvasatlan"
+
+#: ../src/orca/scripts/Evolution.py:615
+msgid "Attachment"
+msgstr "Melléklet"
+
+#: ../src/orca/scripts/Evolution.py:776
 msgid "No appointments"
 msgstr "Nincsenek értekezletek"
 
-#: ../src/orca/scripts/Evolution.py:761
+#: ../src/orca/scripts/Evolution.py:850
 msgid "Directories button"
 msgstr "Könyvtárak gomb"
 
-#: ../src/orca/scripts/Evolution.py:900 ../src/orca/scripts/Evolution.py:938
+#: ../src/orca/scripts/Evolution.py:997 ../src/orca/scripts/Evolution.py:1115
 msgid "Assistant"
 msgstr "Asszisztens"
 
-#: ../src/orca/scripts/Mozilla.py:234 ../src/orca/scripts/StarOffice.py:406
-msgid "link"
-msgstr "link"
-
-#: ../src/orca/scripts/gaim.py:149
+#: ../src/orca/scripts/gaim.py:150
 msgid "Toggle whether we prefix chat room messages with the name of the chat room."
 msgstr "A csatorna nevének a csevegőüzenetek elé szúrása be/ki."
 
-#: ../src/orca/scripts/gaim.py:153
+#: ../src/orca/scripts/gaim.py:155
 msgid "Speak and braille a previous chat room message."
 msgstr "Előző csevegőszoba-üzenet kimondása és megjelenítése braille-terminálon."
 
-#: ../src/orca/scripts/gaim.py:194
+#: ../src/orca/scripts/gaim.py:196
 msgid "speak chat room name."
 msgstr "csevegőszoba nevének kimondása."
 
-#: ../src/orca/scripts/gaim.py:197
+#: ../src/orca/scripts/gaim.py:199
 msgid "Do not speak chat room name."
 msgstr "Ne mondja ki a csevegőszoba nevét."
 
-#: ../src/orca/scripts/gaim.py:215
+#: ../src/orca/scripts/gaim.py:217
 msgid "Message from chat room "
 msgstr "Üzenet ezen csevegőszobából: "
 
-#: ../src/orca/scripts/gedit.py:135
+#: ../src/orca/scripts/gedit.py:138
 msgid "Change to:"
 msgstr "Csere:"
 
-#: ../src/orca/scripts/gedit.py:136
+#: ../src/orca/scripts/gedit.py:139
 msgid "Misspelled word:"
 msgstr "Hibásan írt szó:"
 
 #. The indication that spell checking is complete is when the
 #. "misspelt" word is set to "Completed spell checking". Ugh!
 #. Try to detect this and let the user know.
-#: ../src/orca/scripts/gedit.py:165
+#: ../src/orca/scripts/gedit.py:168
 msgid "Completed spell checking"
 msgstr "Helyesírás-ellenőrzés kész"
 
-#: ../src/orca/scripts/gedit.py:166
+#: ../src/orca/scripts/gedit.py:169
 msgid "Spell checking is complete."
 msgstr "A helyesírás-ellenőrzés befejeződött."
 
-#: ../src/orca/scripts/gedit.py:168
+#: ../src/orca/scripts/gedit.py:171
 msgid "Press Tab and Return to terminate."
 msgstr "Nyomja meg a Tab és a Return billentyűket a megszakításhoz."
 
-#: ../src/orca/scripts/gedit.py:255 ../src/orca/scripts/gedit.py:308
+#. Check to see if we have just had an "object:state-changed:showing"
+#. event for the Find button. If the name is "Find", and one of its
+#. states is VISIBLE and we are currently searching, that means we
+#. have just stopped a search. Inform the user that the search is
+#. complete and tell them how many files were found.
+#.
+#: ../src/orca/scripts/gedit.py:214 ../src/orca/scripts/gedit.py:216
+#: ../src/orca/scripts/gnome-search-tool.py:152
+msgid "Find"
+msgstr "Keresés"
+
+#: ../src/orca/scripts/gedit.py:285 ../src/orca/scripts/gedit.py:339
 msgid "Check Spelling"
 msgstr "Helyesírás-ellenőrzés"
 
-#: ../src/orca/scripts/StarOffice.py:243
+#. Fall-thru to process the event with the default handler.
+#. 2) find dialog - phrase not found.
+#.
+#. If we've received an "object:property-change:accessible-name" for
+#. the status bar and the current locus of focus is on the Find
+#. button on the Find dialog or the combo box in the Find dialog
+#. and the last input event was a Return and the name for the current
+#. event source is "Phrase not found", then speak it.
+#.
+#. [[[TODO: richb - "Phrase not found" is spoken twice because we
+#. apparently get two identical "object:property-change:accessible-name"
+#. events.]]]
+#: ../src/orca/scripts/gedit.py:361
+msgid "Phrase not found"
+msgstr "A kifejezés nem található"
+
+#: ../src/orca/scripts/gedit.py:424
+msgid "Phrase found."
+msgstr "A kifejezés megtalálva."
+
+#: ../src/orca/scripts/gnome-search-tool.py:94
+msgid "Searching."
+msgstr "Keresés."
+
+#. Check to see if we have just had an "object:state-changed:showing"
+#. event for the Stop button. If the name is "Stop", and one of its
+#. states is VISIBLE, that means we have started a search. As the
+#. search progresses, regularly inform the user of this by speaking
+#. "Searching" (assuming the search tool has focus).
+#.
+#: ../src/orca/scripts/gnome-search-tool.py:128
+msgid "Stop"
+msgstr "Leállítás"
+
+#: ../src/orca/scripts/gnome-search-tool.py:158
+msgid "Search complete."
+msgstr "A keresés befejeződött."
+
+#: ../src/orca/scripts/gnome-search-tool.py:163
+msgid " files found"
+msgstr " fájl található"
+
+#: ../src/orca/scripts/gnome-search-tool.py:165
+msgid "No files found."
+msgstr "Nem találhatók fájlok."
+
+#: ../src/orca/scripts/liferea.py:123
+msgid "Work online / offline"
+msgstr "Kapcsolódott/kapcsolat nélküli munka"
+
+#. Note to translators: the "Workspace " and "Desk " strings
+#. are the prefix of what metacity shows when you press
+#. Ctrl+Alt and the left or right arrow keys to switch between
+#. workspaces.  The goal here is to find a match with that
+#. prefix.
+#.
+#: ../src/orca/scripts/metacity.py:123
+msgid "Workspace "
+msgstr "Munkaterület"
+
+#: ../src/orca/scripts/metacity.py:123
+msgid "Desk "
+msgstr "Asztal "
+
+#: ../src/orca/scripts/metacity.py:126
+msgid "inaccessible"
+msgstr "elérhetetlen"
+
+#: ../src/orca/scripts/planner.py:77 ../src/orca/scripts/planner.py:138
+msgid "Display more options"
+msgstr "Több lehetőség megjelenítése"
+
+#: ../src/orca/scripts/planner.py:142 ../src/orca/scripts/planner.py:150
+#: ../src/orca/scripts/planner.py:176 ../src/orca/scripts/planner.py:184
+#: ../src/orca/speechgenerator.py:1403
+msgid "pressed"
+msgstr "lenyomva"
+
+#: ../src/orca/scripts/planner.py:144 ../src/orca/scripts/planner.py:152
+#: ../src/orca/scripts/planner.py:178 ../src/orca/scripts/planner.py:186
+#: ../src/orca/speechgenerator.py:1405
+msgid "not pressed"
+msgstr "nincs lenyomva"
+
+#: ../src/orca/scripts/StarOffice.py:185
+msgid "Calc"
+msgstr "Calc"
+
+#: ../src/orca/scripts/StarOffice.py:599 ../src/orca/scripts/StarOffice.py:626
+msgid "on"
+msgstr "be"
+
+#: ../src/orca/scripts/StarOffice.py:601 ../src/orca/scripts/StarOffice.py:628
+msgid "off"
+msgstr "ki"
+
+#: ../src/orca/scripts/StarOffice.py:725
 msgid "Speaks the contents of the input line."
 msgstr "Felolvassa a beviteli sor tartalmát."
 
-#: ../src/orca/scripts/StarOffice.py:283
+#: ../src/orca/scripts/StarOffice.py:730
+msgid "Set the row to use as dynamic column headers when speaking calc cells."
+msgstr "Beállítja a dinamikus oszlopfejlécekként használandó sort a calc celláinak felolvasásakor."
+
+#: ../src/orca/scripts/StarOffice.py:735
+msgid "Set the column to use as dynamic row headers to use when speaking calc cells."
+msgstr "Beállítja a dinamikus sorfejlécekként használandó oszlopot a calc celláinak felolvasásakor."
+
+#: ../src/orca/scripts/StarOffice.py:824
 msgid "empty"
 msgstr "üres"
 
-#: ../src/orca/scripts/StarOffice.py:424
+#: ../src/orca/scripts/StarOffice.py:893
+msgid "Dynamic column header cleared."
+msgstr "Dinamikus oszlopfejléc törölve."
+
+#: ../src/orca/scripts/StarOffice.py:900
+msgid "Dynamic column header set for row "
+msgstr "Dinamikus oszlopfejléc beállítva a következő sorhoz: "
+
+#: ../src/orca/scripts/StarOffice.py:956
+msgid "Dynamic row header cleared."
+msgstr "Dinamikus sorfejléc törölve."
+
+#: ../src/orca/scripts/StarOffice.py:963
+#, python-format
+msgid "Dynamic row header set for column %s"
+msgstr "Dinamikus sorfejléc beállítva a következő oszlophoz: %s"
+
+#: ../src/orca/scripts/StarOffice.py:1109
 msgid "Welcome to StarOffice"
 msgstr "Üdvözli a StarOffice"
 
-#: ../src/orca/scripts/StarOffice.py:552 ../src/orca/scripts/StarOffice.py:801
+#: ../src/orca/scripts/StarOffice.py:1204
+msgid "Text Document"
+msgstr "Szöveges dokumentum"
+
+#: ../src/orca/scripts/StarOffice.py:1264
+#: ../src/orca/scripts/StarOffice.py:1486
 msgid "Spellcheck:"
 msgstr "Helyesírás-ellenőrzés:"
 
-#: ../src/orca/scripts/StarOffice.py:580
+#: ../src/orca/scripts/StarOffice.py:1292
 msgid "Note that the Scroll Down button has to be pressed numerous times."
 msgstr "Ne feledje, hogy a görgetés lefelé gombot többször is meg kell nyomni."
 
-#: ../src/orca/scripts/StarOffice.py:594
+#: ../src/orca/scripts/StarOffice.py:1306
 msgid "License Agreement Accept button now has focus."
 msgstr "A licencszerződés elfogadása gomb fókuszban van."
 
-#: ../src/orca/scripts/StarOffice.py:617
+#: ../src/orca/scripts/StarOffice.py:1329
 msgid "First name"
 msgstr "Utónév"
 
-#: ../src/orca/scripts/StarOffice.py:865
+#: ../src/orca/scripts/StarOffice.py:1400
+msgid "Move to cell"
+msgstr "Áthelyezés cellába"
+
+#: ../src/orca/scripts/StarOffice.py:1542
+msgid "Writer"
+msgstr "Writer"
+
+#: ../src/orca/scripts/StarOffice.py:1698
 msgid " has formula"
 msgstr " formátuma"
+
+#: ../src/orca/scripts/StarOffice.py:1744
+msgid "Cell "
+msgstr "Cella: "
+
+#. Don't speak chrome URLs.
+#.
+#: ../src/orca/scripts/Thunderbird.py:184
+#: ../src/orca/scripts/Thunderbird.py:264
+#: ../src/orca/scripts/Thunderbird.py:279
+msgid "chrome://"
+msgstr "chrome://"
+
+#: ../src/orca/scripts/Thunderbird.py:272
+#: ../src/orca/scripts/Thunderbird.py:287
+#, python-format
+msgid "%s panel"
+msgstr "%s panel"
 
 #. Note to translators: the regular expression here represents a
 #. string to match in the localized application name as seen by
@@ -2057,110 +2930,179 @@ msgstr " formátuma"
 #. translation is by running the application and then viewing its
 #. name in the main window of at-poke.
 #.
-#: ../src/orca/settings.py:435
+#: ../src/orca/settings.py:532
 msgid "[\\S\\s]*StarOffice[\\s\\S]*"
 msgstr "[\\S\\s]*StarOffice[\\s\\S]*"
 
-#: ../src/orca/settings.py:436
+#: ../src/orca/settings.py:533
 msgid "soffice.bin"
 msgstr "soffice.bin"
 
-#: ../src/orca/settings.py:437
+#: ../src/orca/settings.py:534
 msgid "[Ee]volution"
 msgstr "[Ee]volution"
 
-#: ../src/orca/settings.py:438
+#: ../src/orca/settings.py:535
 msgid "Deer Park"
 msgstr "Deer Park"
 
-#: ../src/orca/settings.py:439
+#: ../src/orca/settings.py:536
+msgid "yelp"
+msgstr "yelp"
+
+#: ../src/orca/settings.py:537
 msgid "Bon Echo"
 msgstr "Bon Echo"
 
-#. Note to translators:  the "Workspace " string is the
-#. prefix of what metacity shows when you press Ctrl+Alt
-#. and the left or right arrow keys to switch between
-#. workspaces.  The goal here is to find a match with
-#. that prefix.
-#.
-#: ../src/orca/scripts/metacity.py:112
-msgid "Workspace "
-msgstr "Munkaterület"
+#: ../src/orca/settings.py:538
+msgid "Minefield"
+msgstr "Minefield"
 
-#: ../src/orca/scripts/metacity.py:113
-msgid "inaccessible"
-msgstr "elérhetetlen"
+#: ../src/orca/settings.py:539
+msgid "Mail/News"
+msgstr "Levél/hírek"
 
-#: ../src/orca/scripts/planner.py:77 ../src/orca/scripts/planner.py:135
-msgid "Display more options"
-msgstr "Több lehetőség megjelenítése"
+#: ../src/orca/settings.py:540
+msgid "bug-buddy"
+msgstr "bug-buddy"
 
-#: ../src/orca/scripts/planner.py:139 ../src/orca/scripts/planner.py:147
-#: ../src/orca/scripts/planner.py:172 ../src/orca/scripts/planner.py:180
-#: ../src/orca/speechgenerator.py:1314 ../src/orca/speechgenerator.py:1317
-msgid "pressed"
-msgstr "lenyomva"
+#: ../src/orca/settings.py:541
+msgid "vte"
+msgstr "vte"
 
-#: ../src/orca/scripts/planner.py:141 ../src/orca/scripts/planner.py:149
-#: ../src/orca/scripts/planner.py:174 ../src/orca/scripts/planner.py:182
-#: ../src/orca/speechgenerator.py:1323 ../src/orca/speechgenerator.py:1326
-msgid "not pressed"
-msgstr "nincs lenyomva"
+#: ../src/orca/settings.py:542
+msgid "time-admin"
+msgstr "time-admin"
 
-#: ../src/orca/speechgenerator.py:367 ../src/orca/speechgenerator.py:370
+#: ../src/orca/speechgenerator.py:375 ../src/orca/where_am_I.py:185
+#: ../src/orca/where_am_I.py:225 ../src/orca/where_am_I.py:923
 msgid "checked"
 msgstr "bejelölve"
 
-#: ../src/orca/speechgenerator.py:376 ../src/orca/speechgenerator.py:379
+#: ../src/orca/speechgenerator.py:377 ../src/orca/where_am_I.py:187
+#: ../src/orca/where_am_I.py:227 ../src/orca/where_am_I.py:925
 msgid "not checked"
 msgstr "kijelöletlen"
 
-#: ../src/orca/speechgenerator.py:909 ../src/orca/speechgenerator.py:912
-#: ../src/orca/util.py:1122
-msgid "selected"
-msgstr "kijelölt"
+#: ../src/orca/speechgenerator.py:703 ../src/orca/speechgenerator.py:1189
+#: ../src/orca/speechgenerator.py:1239
+msgid "0 items"
+msgstr "0 elem"
 
-#: ../src/orca/speechgenerator.py:920 ../src/orca/speechgenerator.py:923
+#: ../src/orca/speechgenerator.py:957
 msgid "not selected"
 msgstr "nincs kijelölve"
 
-#: ../src/orca/speechgenerator.py:1260
+#: ../src/orca/speechgenerator.py:1355
 msgid "tear off"
 msgstr "leválasztás"
 
-#: ../src/orca/util.py:384
+#: ../src/orca/util.py:577
 msgid "Misspelled word: "
 msgstr "Elgépelt szó: "
 
-#: ../src/orca/util.py:385
+#: ../src/orca/util.py:578
 msgid " Context is "
 msgstr " Kontextusa: "
 
-#: ../src/orca/util.py:1066
+#: ../src/orca/util.py:693
+#, python-format
+msgid " %d %s characters "
+msgstr " %d %s karakter "
+
+#: ../src/orca/util.py:1484
 msgid "page selected from cursor position"
 msgstr "oldal kiválasztása a kurzortól"
 
-#: ../src/orca/util.py:1070
+#: ../src/orca/util.py:1488
 msgid "page selected to cursor position"
 msgstr "oldal kiválasztása a kurzorig"
 
-#: ../src/orca/util.py:1074
+#: ../src/orca/util.py:1492
 msgid "line selected down from cursor position"
 msgstr "kurzor alatti sorok kiválasztása"
 
-#: ../src/orca/util.py:1078
+#: ../src/orca/util.py:1496
 msgid "line selected up from cursor position"
 msgstr "kurzor feletti sorok kiválasztása"
 
-#: ../src/orca/util.py:1082
+#: ../src/orca/util.py:1500
 msgid "document selected to cursor position"
 msgstr "dokumentum kiválasztása a kurzorig"
 
-#: ../src/orca/util.py:1086
+#: ../src/orca/util.py:1504
 msgid "document selected from cursor position"
 msgstr "dokumentum kiválasztása a kurzortól"
 
-#: ../src/orca/util.py:1130
-msgid "unselected"
-msgstr "kijelöletlen"
+#. child(0) is the popup list
+#. parent is the page tab list
+#: ../src/orca/where_am_I.py:181 ../src/orca/where_am_I.py:190
+#: ../src/orca/where_am_I.py:211 ../src/orca/where_am_I.py:215
+#: ../src/orca/where_am_I.py:218 ../src/orca/where_am_I.py:221
+#: ../src/orca/where_am_I.py:231 ../src/orca/where_am_I.py:234
+#: ../src/orca/where_am_I.py:254 ../src/orca/where_am_I.py:257
+#: ../src/orca/where_am_I.py:262 ../src/orca/where_am_I.py:263
+#: ../src/orca/where_am_I.py:268 ../src/orca/where_am_I.py:272
+#: ../src/orca/where_am_I.py:275 ../src/orca/where_am_I.py:294
+#: ../src/orca/where_am_I.py:297 ../src/orca/where_am_I.py:305
+#: ../src/orca/where_am_I.py:323 ../src/orca/where_am_I.py:326
+#: ../src/orca/where_am_I.py:329 ../src/orca/where_am_I.py:349
+#: ../src/orca/where_am_I.py:352 ../src/orca/where_am_I.py:356
+#: ../src/orca/where_am_I.py:359 ../src/orca/where_am_I.py:380
+#: ../src/orca/where_am_I.py:385 ../src/orca/where_am_I.py:386
+#: ../src/orca/where_am_I.py:389 ../src/orca/where_am_I.py:392
+#: ../src/orca/where_am_I.py:395 ../src/orca/where_am_I.py:400
+#: ../src/orca/where_am_I.py:401 ../src/orca/where_am_I.py:404
+#: ../src/orca/where_am_I.py:423 ../src/orca/where_am_I.py:430
+#: ../src/orca/where_am_I.py:431 ../src/orca/where_am_I.py:434
+#: ../src/orca/where_am_I.py:435 ../src/orca/where_am_I.py:441
+#: ../src/orca/where_am_I.py:467 ../src/orca/where_am_I.py:470
+#: ../src/orca/where_am_I.py:482 ../src/orca/where_am_I.py:493
+#: ../src/orca/where_am_I.py:496 ../src/orca/where_am_I.py:558
+#: ../src/orca/where_am_I.py:561 ../src/orca/where_am_I.py:636
+#: ../src/orca/where_am_I.py:639 ../src/orca/where_am_I.py:657
+#: ../src/orca/where_am_I.py:670 ../src/orca/where_am_I.py:684
+#: ../src/orca/where_am_I.py:799 ../src/orca/where_am_I.py:814
+#: ../src/orca/where_am_I.py:827 ../src/orca/where_am_I.py:919
+#: ../src/orca/where_am_I.py:928 ../src/orca/where_am_I.py:1137
+#: ../src/orca/where_am_I.py:1140 ../src/orca/where_am_I.py:1174
+#: ../src/orca/where_am_I.py:1177 ../src/orca/where_am_I.py:1263
+#: ../src/orca/where_am_I.py:1268 ../src/orca/where_am_I.py:1287
+#, python-format
+msgid "%s"
+msgstr "%s"
+
+#: ../src/orca/where_am_I.py:357
+#, python-format
+msgid "%s percent"
+msgstr "%s százalék"
+
+#: ../src/orca/where_am_I.py:427 ../src/orca/where_am_I.py:438
+#, python-format
+msgid "%s page"
+msgstr "%s oldal"
+
+#: ../src/orca/where_am_I.py:526
+#, python-format
+msgid "row %d"
+msgstr "%d. sor"
+
+#: ../src/orca/where_am_I.py:571 ../src/orca/where_am_I.py:591
+#, python-format
+msgid "row %d of %d"
+msgstr "%d. sor, összesen %d"
+
+#: ../src/orca/where_am_I.py:682 ../src/orca/where_am_I.py:801
+#, python-format
+msgid "%s %s"
+msgstr "%s %s"
+
+#: ../src/orca/where_am_I.py:745 ../src/orca/where_am_I.py:785
+#, python-format
+msgid "item %d of %d"
+msgstr "%d. elem, összesen %d"
+
+#: ../src/orca/where_am_I.py:904
+msgid "Read"
+msgstr "Olvasás"
 
