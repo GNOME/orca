@@ -3401,6 +3401,31 @@ class Script(script.Script):
 # here so that they can be customized in application scripts if so desired.
 # 
 
+    def isTextSelected(self, obj, startOffset, endOffset):
+        """Returns an indication of whether the text is selected by
+        comparing the text offset with the various selected regions of
+        text for this accessible object.
+
+        Arguments:
+        - obj: the Accessible object.
+        - startOffset: text start offset.
+        - endOffset: text end offset.
+
+        Returns an indication of whether the text is selected.
+        """
+
+        if not obj or not obj.text:
+            return False
+
+        text = obj.text
+        for i in range(0, text.getNSelections()):
+            [startSelOffset, endSelOffset] = text.getSelection(i)
+            if (startOffset >= startSelOffset) \
+               and (endOffset <= endSelOffset):
+                return True
+
+        return False
+
     def speakTextSelectionState(self, obj, startOffset, endOffset):
         """Speak "selected" if the text was just selected, "unselected" if
         it was just unselected.
@@ -3495,7 +3520,7 @@ class Script(script.Script):
         except:
             debug.printException(debug.LEVEL_FINEST)
 
-        if util.isTextSelected(obj, startOffset, endOffset):
+        if self.isTextSelected(obj, startOffset, endOffset):
             speech.speak(_("selected"), None, False)
         else:
             if obj.__dict__.has_key("lastSelections"):

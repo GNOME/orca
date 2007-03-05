@@ -34,6 +34,13 @@
           Moved:
           def speakTextSelectionState(obj, startOffset, endOffset):
 
+        * src/orca/default.py:
+          src/orca/util.py:
+          Another partial fix for bug #395548.
+
+          Moved:
+          def isTextSelected(obj, startOffset, endOffset):
+
 2007-03-04  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py, src/orca/default.py, src/orca/flat_review.py:

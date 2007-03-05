@@ -1418,28 +1418,3 @@ def outlineAccessible(accessible, erasePrevious=True):
                         erasePrevious)
     else:
         drawOutline(-1, 0, 0, 0, erasePrevious)
-
-def isTextSelected(obj, startOffset, endOffset):
-    """Returns an indication of whether the text is selected by
-    comparing the text offset with the various selected regions of
-    text for this accessible object.
-
-    Arguments:
-    - obj: the Accessible object.
-    - startOffset: text start offset.
-    - endOffset: text end offset.
-
-    Returns an indication of whether the text is selected.
-    """
-
-    if not obj or not obj.text:
-        return False
-
-    text = obj.text
-    for i in range(0, text.getNSelections()):
-        [startSelOffset, endSelOffset] = text.getSelection(i)
-        if (startOffset >= startSelOffset) \
-           and (endOffset <= endSelOffset):
-            return True
-
-    return False
