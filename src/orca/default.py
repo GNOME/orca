@@ -28,6 +28,16 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+try:
+    # This can fail due to gtk not being available.  We want to
+    # be able to recover from that if possible.  The main driver
+    # for this is to allow "orca --text-setup" to work even if
+    # the desktop is not running.
+    #
+    import gtk
+except:
+    pass
+
 import time
 
 import atspi
@@ -77,6 +87,11 @@ class Script(script.Script):
         # "where am I" key.
         #
         self.lastWhereAmIEvent = None
+
+        # Used by the drawOutline routine.
+        #
+        self._display = None
+        self._visibleRectangle = None
 
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
@@ -1095,7 +1110,7 @@ class Script(script.Script):
             #[x, y, width, height] = obj.text.getCharacterExtents(
             #    context.currentOffset, 0)
             #print context.currentOffset, x, y, width, height
-            #util.drawOutline(x, y, width, height)
+            #self.drawOutline(x, y, width, height)
             pass
         elif type == speechserver.SayAllContext.INTERRUPTED:
             #print "INTERRUPTED", context.utterance, context.currentOffset
@@ -2768,14 +2783,14 @@ class Script(script.Script):
         """Toggles between flat review mode and focus tracking mode."""
 
         if self.flatReviewContext:
-            util.drawOutline(-1, 0, 0, 0)
+            self.drawOutline(-1, 0, 0, 0)
             self.flatReviewContext = None
             self.updateBraille(orca_state.locusOfFocus)
         else:
             context = self.getFlatReviewContext()
             [string, x, y, width, height] = \
                      context.getCurrent(flat_review.Context.WORD)
-            util.drawOutline(x, y, width, height)
+            self.drawOutline(x, y, width, height)
             self._reviewCurrentItem(inputEvent, self.targetCursorCell)
 
         return True
@@ -2861,7 +2876,7 @@ class Script(script.Script):
 
             [string, x, y, width, height] = \
                 self.flatReviewContext.getCurrent(flat_review.Context.CHAR)
-            util.drawOutline(x, y, width, height)
+            self.drawOutline(x, y, width, height)
 
             self.targetCursorCell = 1
             self.updateBrailleReview(self.targetCursorCell)
@@ -2920,7 +2935,7 @@ class Script(script.Script):
             [string, x, y, width, height] = \
                 self.flatReviewContext.getCurrent(flat_review.Context.CHAR)
 
-            util.drawOutline(x, y, width, height)
+            self.drawOutline(x, y, width, height)
 
             self.targetCursorCell = 1
             self.updateBrailleReview(self.targetCursorCell)
@@ -2996,7 +3011,7 @@ class Script(script.Script):
 
         [string, x, y, width, height] = \
                  context.getCurrent(flat_review.Context.LINE)
-        util.drawOutline(x, y, width, height)
+        self.drawOutline(x, y, width, height)
 
         # Don't announce anything from speech if the user used
         # the Braille display as an input device.
@@ -3130,7 +3145,7 @@ class Script(script.Script):
         context = self.getFlatReviewContext()
         [string, x, y, width, height] = \
                  context.getCurrent(flat_review.Context.WORD)
-        util.drawOutline(x, y, width, height)
+        self.drawOutline(x, y, width, height)
 
         # Don't announce anything from speech if the user used
         # the Braille display as an input device.
@@ -3163,7 +3178,7 @@ class Script(script.Script):
         context = self.getFlatReviewContext()
         [string, x, y, width, height] = \
                  context.getCurrent(flat_review.Context.ZONE)
-        util.drawOutline(x, y, width, height)
+        self.drawOutline(x, y, width, height)
 
         # Don't announce anything from speech if the user used
         # the Braille display as an input device.
@@ -3228,7 +3243,7 @@ class Script(script.Script):
 
         [string, x, y, width, height] = \
                  context.getCurrent(flat_review.Context.CHAR)
-        util.drawOutline(x, y, width, height)
+        self.drawOutline(x, y, width, height)
 
         # Don't announce anything from speech if the user used
         # the Braille display as an input device.
@@ -3338,7 +3353,7 @@ class Script(script.Script):
             string = ""
             for zone in line.zones:
                 string += " '%s' [%s]" % (zone.string, zone.accessible.role)
-                util.drawOutline(zone.x, zone.y, zone.width, zone.height,
+                self.drawOutline(zone.x, zone.y, zone.width, zone.height,
                                  False)
             debug.println(debug.LEVEL_OFF, string)
         self.flatReviewContext = None
@@ -3400,6 +3415,81 @@ class Script(script.Script):
 # Routines that were previously in util.py, but that have now been moved
 # here so that they can be customized in application scripts if so desired.
 # 
+
+    ########################################################################
+    #                                                                      #
+    # METHODS FOR DRAWING RECTANGLES AROUND OBJECTS ON THE SCREEN          #
+    #                                                                      #
+    ########################################################################
+
+    def drawOutline(self, x, y, width, height, erasePrevious=True):
+        """Draws a rectangular outline around the accessible, erasing the
+        last drawn rectangle in the process."""
+
+        if not self._display:
+            try:
+                self._display = gtk.gdk.display_get_default()
+            except:
+                debug.printException(debug.LEVEL_FINEST)
+                self._display = gtk.gdk.display(":0")
+
+            if not self._display:
+                debug.println(debug.LEVEL_SEVERE,
+                              "util.drawOutline could not open display.")
+                return
+
+        screen = self._display.get_default_screen()
+        root_window = screen.get_root_window()
+        graphics_context = root_window.new_gc()
+        graphics_context.set_subwindow(gtk.gdk.INCLUDE_INFERIORS)
+        graphics_context.set_function(gtk.gdk.INVERT)
+        graphics_context.set_line_attributes(3,                  # width
+                                             gtk.gdk.LINE_SOLID, # style
+                                             gtk.gdk.CAP_BUTT,   # end style
+                                             gtk.gdk.JOIN_MITER) # join style
+
+        # Erase the old rectangle.
+        #
+        if self._visibleRectangle and erasePrevious:
+            self.drawOutline(self._visibleRectangle[0], 
+                             self._visibleRectangle[1],
+                             self._visibleRectangle[2], 
+                             self._visibleRectangle[3], 
+                             False)
+            self._visibleRectangle = None
+
+        # We'll use an invalid x value to indicate nothing should be
+        # drawn.
+        #
+        if x < 0:
+            self._visibleRectangle = None
+            return
+
+        # The +1 and -2 stuff here is an attempt to stay within the
+        # bounding box of the object.
+        #
+        root_window.draw_rectangle(graphics_context,
+                                   False, # Fill
+                                   x + 1,
+                                   y + 1,
+                                   max(1, width - 2),
+                                   max(1, height - 2))
+
+        self._visibleRectangle = [x, y, width, height]
+
+    def outlineAccessible(self, accessible, erasePrevious=True):
+        """Draws a rectangular outline around the accessible, erasing the
+        last drawn rectangle in the process."""
+
+        if accessible:
+            component = accessible.component
+            if component:
+                visibleRectangle = component.getExtents(0) # coord type = screen
+                self.drawOutline(visibleRectangle.x, visibleRectangle.y,
+                            visibleRectangle.width, visibleRectangle.height,
+                            erasePrevious)
+        else:
+            self.drawOutline(-1, 0, 0, 0, erasePrevious)
 
     def isTextSelected(self, obj, startOffset, endOffset):
         """Returns an indication of whether the text is selected by

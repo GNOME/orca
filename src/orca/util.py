@@ -25,16 +25,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-try:
-    # This can fail due to gtk not being available.  We want to
-    # be able to recover from that if possible.  The main driver
-    # for this is to allow "orca --text-setup" to work even if
-    # the desktop is not running.
-    #
-    import gtk
-except:
-    pass
-
 import string
 
 import atspi
@@ -1340,81 +1330,3 @@ def restoreOldAppSettings(prefsDict):
     for key in settings.userCustomizableSettings:
         if prefsDict.has_key(key):
             settings.__dict__[key] = prefsDict[key]
-
-########################################################################
-#                                                                      #
-# METHODS FOR DRAWING RECTANGLES AROUND OBJECTS ON THE SCREEN          #
-#                                                                      #
-########################################################################
-
-_display = None
-_visibleRectangle = None
-
-def drawOutline(x, y, width, height, erasePrevious=True):
-    """Draws a rectangular outline around the accessible, erasing the
-    last drawn rectangle in the process."""
-
-    global _display
-    global _visibleRectangle
-
-    if not _display:
-        try:
-            _display = gtk.gdk.display_get_default()
-        except:
-            debug.printException(debug.LEVEL_FINEST)
-            _display = gtk.gdk.display(":0")
-
-        if not _display:
-            debug.println(debug.LEVEL_SEVERE,
-                          "util.drawOutline could not open display.")
-            return
-
-    screen = _display.get_default_screen()
-    root_window = screen.get_root_window()
-    graphics_context = root_window.new_gc()
-    graphics_context.set_subwindow(gtk.gdk.INCLUDE_INFERIORS)
-    graphics_context.set_function(gtk.gdk.INVERT)
-    graphics_context.set_line_attributes(3,                  # width
-                                         gtk.gdk.LINE_SOLID, # style
-                                         gtk.gdk.CAP_BUTT,   # end style
-                                         gtk.gdk.JOIN_MITER) # join style
-
-    # Erase the old rectangle.
-    #
-    if _visibleRectangle and erasePrevious:
-        drawOutline(_visibleRectangle[0], _visibleRectangle[1],
-                    _visibleRectangle[2], _visibleRectangle[3], False)
-        _visibleRectangle = None
-
-    # We'll use an invalid x value to indicate nothing should be
-    # drawn.
-    #
-    if x < 0:
-        _visibleRectangle = None
-        return
-
-    # The +1 and -2 stuff here is an attempt to stay within the
-    # bounding box of the object.
-    #
-    root_window.draw_rectangle(graphics_context,
-                               False, # Fill
-                               x + 1,
-                               y + 1,
-                               max(1, width - 2),
-                               max(1, height - 2))
-
-    _visibleRectangle = [x, y, width, height]
-
-def outlineAccessible(accessible, erasePrevious=True):
-    """Draws a rectangular outline around the accessible, erasing the
-    last drawn rectangle in the process."""
-
-    if accessible:
-        component = accessible.component
-        if component:
-            visibleRectangle = component.getExtents(0) # coord type = screen
-            drawOutline(visibleRectangle.x, visibleRectangle.y,
-                        visibleRectangle.width, visibleRectangle.height,
-                        erasePrevious)
-    else:
-        drawOutline(-1, 0, 0, 0, erasePrevious)

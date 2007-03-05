@@ -41,6 +41,16 @@
           Moved:
           def isTextSelected(obj, startOffset, endOffset):
 
+        * src/orca/Gecko.py:
+          src/orca/default.py:
+          src/orca/hierarchical_presenter.py:
+          src/orca/util.py:
+          Another partial fix for bug #395548.
+
+          Moved:
+          def drawOutline(x, y, width, height, erasePrevious=True):
+          def outlineAccessible(accessible, erasePrevious=True):
+
 2007-03-04  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py, src/orca/default.py, src/orca/flat_review.py:

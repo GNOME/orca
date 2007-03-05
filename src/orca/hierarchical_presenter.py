@@ -29,6 +29,7 @@ __license__   = "LGPL"
 import atspi
 import braille
 import debug
+import orca_state
 import speech
 import util
 import presentation_manager
@@ -448,5 +449,5 @@ class HierarchicalPresenter(presentation_manager.PresentationManager):
 
     def deactivate(self):
         """Called when this presentation manager is deactivated."""
-        util.outlineAccessible(None)
+        orca_state.activeScript.outlineAccessible(None)
 

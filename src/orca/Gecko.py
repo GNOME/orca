@@ -1738,7 +1738,7 @@ class Script(default.Script):
         -endOffset: character offset just after last character to end at
         """
         [x, y, width, height] = self.getExtents(obj, startOffset, endOffset)
-        util.drawOutline(x, y, width, height)
+        self.drawOutline(x, y, width, height)
 
     def dumpInfo(self, obj):
         """Dumps the parental hierachy info of obj to stdout."""
@@ -1882,7 +1882,7 @@ class Script(default.Script):
                 string += "\nNEWLINE\n"
         print "==========================="
         print string
-        util.drawOutline(extents[0], extents[1], extents[2], extents[3])
+        self.drawOutline(extents[0], extents[1], extents[2], extents[3])
 
     ####################################################################
     #                                                                  #
