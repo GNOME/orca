@@ -39,7 +39,6 @@ import orca.speech as speech
 import orca.speechgenerator as speechgenerator
 import orca.settings as settings
 import orca.keybindings as keybindings
-import orca.util as util
 
 from orca.orca_i18n import _ # for gettext support
 

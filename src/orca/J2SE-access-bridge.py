@@ -31,7 +31,6 @@ import orca_state
 import keybindings
 import settings
 import speech
-import util
 import rolenames
 import Accessibility
 import speechgenerator

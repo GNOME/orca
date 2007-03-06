@@ -64,7 +64,6 @@ import settings
 import speech
 
 import threading
-import util
 
 from input_event import BrailleEvent
 from input_event import KeyboardEvent
@@ -724,7 +723,8 @@ def _processKeyboardEvent(event):
                                                 orca_state.lastInputEvent,
                                                 keyboardEvent)
                     if clickCount == 2:
-                        util.phoneticSpellCurrentItem(keyboardEvent.event_string)
+                        orca_state.activeScript.phoneticSpellCurrentItem(\
+                            keyboardEvent.event_string)
                     else:
                         # Check to see if there are localized words to be
                         # spoken for this key event.
@@ -1057,7 +1057,7 @@ def start(registry):
         # [[[WDW - comment out hierarchical_presenter for now.  It
         # relies on the list of known applications, and we've disabled
         # that due to a hang in a call to getChildAtIndex in
-        # util.getKnownApplications.]]]
+        # Script.getKnownApplications.]]]
         #
         #import focus_tracking_presenter
         #import hierarchical_presenter

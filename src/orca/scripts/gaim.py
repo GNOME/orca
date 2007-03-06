@@ -42,7 +42,6 @@ import orca.keybindings as keybindings
 import orca.rolenames as rolenames
 import orca.settings as settings
 import orca.speech as speech
-import orca.util as util
 
 from orca.orca_i18n import _
 

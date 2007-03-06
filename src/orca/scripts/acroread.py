@@ -36,7 +36,6 @@ import orca.rolenames as rolenames
 import orca.orca_state as orca_state
 import orca.settings as settings
 import orca.speech as speech
-import orca.util as util
 
 from orca.orca_i18n import _ # for gettext support
 
@@ -444,7 +443,7 @@ class Script(default.Script):
             utterances = self.speechGenerator.getSpeech(newLocusOfFocus, False)
             adjustedUtterances = []
             for utterance in utterances:
-                adjustedUtterances.append(util.adjustForRepeats(utterance))
+                adjustedUtterances.append(self.adjustForRepeats(utterance))
             speech.speakUtterances(adjustedUtterances)
             brailleRegions = \
                      self.brailleGenerator.getBrailleRegions(newLocusOfFocus)
@@ -664,7 +663,7 @@ class Script(default.Script):
             else:
                 voice = self.voices[settings.DEFAULT_VOICE]
 
-            word = util.adjustForRepeats(word)
+            word = self.adjustForRepeats(word)
             orca_state.lastWord = word
             speech.speak(word, voice)
             self.speakTextSelectionState(obj, startOffset, endOffset)

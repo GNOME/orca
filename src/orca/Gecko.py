@@ -43,7 +43,6 @@ import rolenames
 import settings
 import speech
 import speechgenerator
-import util
 
 from orca_i18n import _
 

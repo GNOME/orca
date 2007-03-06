@@ -33,7 +33,6 @@ import orca.orca as orca
 import orca.braille as braille
 import orca.speech as speech
 import orca.settings as settings
-import orca.util as util
 
 from orca.orca_i18n import _ # for gettext support
 

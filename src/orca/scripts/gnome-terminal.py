@@ -31,7 +31,6 @@ import orca.atspi as atspi
 import orca.debug as debug
 import orca.default as default
 import orca.input_event as input_event
-import orca.util as util
 import orca.orca_state as orca_state
 import orca.rolenames as rolenames
 import orca.settings as settings

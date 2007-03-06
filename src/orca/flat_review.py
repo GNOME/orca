@@ -34,7 +34,6 @@ import debug
 import eventsynthesizer
 import orca_state
 import rolenames
-import util
 
 # [[[WDW - HACK Regular expression to split strings on whitespace
 # boundaries, which is what we'll use for word dividers instead of

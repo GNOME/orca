@@ -29,7 +29,6 @@ import orca.default as default
 import orca.braille as braille
 import orca.braillegenerator as braillegenerator
 import orca.speechgenerator as speechgenerator
-import orca.util as util
 
 from orca.orca_i18n import _ # for gettext support
 

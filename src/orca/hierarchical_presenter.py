@@ -31,7 +31,6 @@ import braille
 import debug
 import orca_state
 import speech
-import util
 import presentation_manager
 
 from orca_i18n import _                          # for gettext support

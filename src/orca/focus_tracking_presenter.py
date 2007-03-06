@@ -40,7 +40,6 @@ import presentation_manager
 import rolenames
 import settings
 import speech
-import util
 
 from orca_i18n import _ # for gettext support
 

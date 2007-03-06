@@ -36,7 +36,6 @@ import orca.braille as braille
 import orca.braillegenerator as braillegenerator
 import orca.speech as speech
 import orca.speechgenerator as speechgenerator
-import orca.util as util
 import orca.Gecko as Gecko
 
 from orca.orca_i18n import _

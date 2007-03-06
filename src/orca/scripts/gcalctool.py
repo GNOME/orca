@@ -33,7 +33,6 @@ import orca.orca_state as orca_state
 import orca.rolenames as rolenames
 import orca.speech as speech
 import orca.speechgenerator as speechgenerator
-import orca.util as util
 
 ########################################################################
 #                                                                      #

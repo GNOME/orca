@@ -29,7 +29,6 @@ __license__   = "LGPL"
 import orca.atspi as atspi
 import orca.default as default
 import orca.orca as orca
-import orca.util as util
 
 ########################################################################
 #                                                                      #

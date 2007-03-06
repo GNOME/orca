@@ -26,7 +26,6 @@ import orca.braille as braille
 import orca.orca_state as orca_state
 import orca.speech as speech
 import orca.settings as settings
-import orca.util as util
 import orca.speechgenerator as speechgenerator
 import orca.braillegenerator as braillegenerator
 import orca.eventsynthesizer as eventsynthesizer

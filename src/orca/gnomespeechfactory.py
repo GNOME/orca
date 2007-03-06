@@ -46,7 +46,6 @@ import punctuation_settings
 import settings
 import speech
 import speechserver
-import util
 
 from acss import ACSS
 

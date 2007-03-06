@@ -35,7 +35,6 @@ import orca.braille as braille
 import orca.orca_state as orca_state
 import orca.speech as speech
 import orca.settings as settings
-import orca.util as util
 import orca.chnames as chnames
 
 from orca.orca_i18n import _ # for gettext support
@@ -390,7 +389,7 @@ class Script(default.Script):
             braille.displayMessage(string)
             if settings.enableSpeechIndentation:
                 self.speakTextIndentation(event.source, string)
-            line = util.adjustForRepeats(string)
+            line = self.adjustForRepeats(string)
                 
             if self.speakNewLine(event.source):
                 speech.speak(chnames.getCharacterName("\n"), None, False)

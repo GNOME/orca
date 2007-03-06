@@ -65,7 +65,6 @@ import debug
 import eventsynthesizer
 import orca_state
 import settings
-import util
 
 from orca_i18n import _                          # for gettext support
 from rolenames import getShortBrailleForRoleName # localized role names

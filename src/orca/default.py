@@ -61,7 +61,6 @@ import settings
 import speech
 import speechserver
 import string
-import util
 import where_am_I
 
 from orca_i18n import _                          # for gettext support
@@ -4758,7 +4757,7 @@ class Script(script.Script):
 
             if not self._display:
                 debug.println(debug.LEVEL_SEVERE,
-                              "util.drawOutline could not open display.")
+                              "Script.drawOutline could not open display.")
                 return
 
         screen = self._display.get_default_screen()

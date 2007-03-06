@@ -40,7 +40,6 @@ import speech
 import speechserver
 import Accessibility
 import math
-import util
 from orca_i18n import _ # for gettext support
 
 _debugLevel = debug.LEVEL_FINEST

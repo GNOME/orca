@@ -37,7 +37,6 @@ import debug
 import orca_state
 import rolenames
 import settings
-import util
 
 from orca_i18n import _                     # for gettext support
 
