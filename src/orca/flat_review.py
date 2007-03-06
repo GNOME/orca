@@ -401,7 +401,8 @@ class Context:
 
         if orca_state.locusOfFocus and \
            orca_state.locusOfFocus.role == rolenames.ROLE_TABLE_CELL:
-            searchZone = util.getRealActiveDescendant(orca_state.locusOfFocus)
+            searchZone = orca_state.activeScript.getRealActiveDescendant(\
+                                                   orca_state.locusOfFocus)
         else:
             searchZone = orca_state.locusOfFocus
 

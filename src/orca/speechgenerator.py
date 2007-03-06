@@ -1221,7 +1221,7 @@ class SpeechGenerator:
                     break
 
         utterances.append(self._script.getDisplayedText(\
-                          util.getRealActiveDescendant(obj)))
+                          self._script.getRealActiveDescendant(obj)))
 
         # [[[TODO: WDW - HACK attempt to determine if this is a node;
         # if so, describe its state.]]]

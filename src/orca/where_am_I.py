@@ -896,7 +896,7 @@ def _getTableCell(obj):
     if notChecked:
         return ""
     
-    descendant = util.getRealActiveDescendant(obj)
+    descendant = orca_state.activeScript.getRealActiveDescendant(obj)
     text = orca_state.activeScript.getDisplayedText(descendant)
 
     # For Evolution mail header list.

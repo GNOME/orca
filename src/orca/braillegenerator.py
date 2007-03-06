@@ -1053,10 +1053,10 @@ class BrailleGenerator:
 
         if len(regions) == 0:
             regions = self._getDefaultBrailleRegions(
-                              util.getRealActiveDescendant(obj))
+                              self._script.getRealActiveDescendant(obj))
         else:
-            [cellRegions, focusRegion] = \
-              self._getDefaultBrailleRegions(util.getRealActiveDescendant(obj))
+            [cellRegions, focusRegion] = self._getDefaultBrailleRegions(\
+                self._script.getRealActiveDescendant(obj))
             regions[0].extend(cellRegions)
 
         # [[[TODO: WDW - HACK attempt to determine if this is a node;
