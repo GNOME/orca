@@ -883,7 +883,7 @@ class Script(default.Script):
 
         debug.println(self.debugLevel, "StarOffice.setDynamicColumnHeaders.")
 
-        clickCount = util.getClickCount(self.lastDynamicEvent, inputEvent)
+        clickCount = self.getClickCount(self.lastDynamicEvent, inputEvent)
         table = getTable(orca_state.locusOfFocus)
         if table:
             row = self.getTableRow(orca_state.locusOfFocus)
@@ -946,7 +946,7 @@ class Script(default.Script):
 
         debug.println(self.debugLevel, "StarOffice.setDynamicRowHeaders.")
 
-        clickCount = util.getClickCount(self.lastDynamicEvent, inputEvent)
+        clickCount = self.getClickCount(self.lastDynamicEvent, inputEvent)
         table = getTable(orca_state.locusOfFocus)
         if table:
             column = self.getTableColumn(orca_state.locusOfFocus)

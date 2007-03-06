@@ -720,7 +720,8 @@ def _processKeyboardEvent(event):
             if (not consumed) and settings.learnModeEnabled:
                 if keyboardEvent.type \
                     == atspi.Accessibility.KEY_PRESSED_EVENT:
-                    clickCount = util.getClickCount(orca_state.lastInputEvent,
+                    clickCount = orca_state.activeScript.getClickCount(\
+                                                orca_state.lastInputEvent,
                                                 keyboardEvent)
                     if clickCount == 2:
                         util.phoneticSpellCurrentItem(keyboardEvent.event_string)

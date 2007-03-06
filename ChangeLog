@@ -162,6 +162,18 @@
           def isDesiredFocusedItem(obj, rolesList):
           def speakMisspeltWord(allTokens, badWord):
 
+        * src/orca/scripts/gdmlogin.py:
+          src/orca/scripts/gnome-terminal.py:
+          src/orca/scripts/StarOffice.py:
+          src/orca/util.py:
+          src/orca/default.py:
+          src/orca/orca.py:
+          Another partial fix for bug #395548.
+
+          Moved:
+          def findFocusedObject(root):
+          def getClickCount(lastInputEvent, inputEvent):
+
 2007-03-05  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/debug.py:

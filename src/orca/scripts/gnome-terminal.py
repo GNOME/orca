@@ -67,7 +67,7 @@ class Script(default.Script):
     #
     #    # Now we find the focused object and set the locus of focus to it.
     #    #
-    #    obj = util.findFocusedObject(self.app)
+    #    obj = self.findFocusedObject(self.app)
     #    if obj:
     #        orca.setLocusOfFocus(event, obj)
     #    else:

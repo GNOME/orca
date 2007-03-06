@@ -1487,7 +1487,7 @@ class Script(script.Script):
             orcaKey = (inputEvent.event_string == "/")
 
         doubleClick = \
-           (util.getClickCount(self.lastWhereAmIEvent, inputEvent) == 2)
+           (self.getClickCount(self.lastWhereAmIEvent, inputEvent) == 2)
         self.lastWhereAmIEvent = inputEvent
 
         context = self.speechGenerator.getSpeechContext(obj)
@@ -3000,7 +3000,7 @@ class Script(script.Script):
     def reviewCurrentLine(self, inputEvent):
         """Presents the current flat review line via braille and speech."""
 
-        clickCount = util.getClickCount(self.lastReviewCurrentEvent,
+        clickCount = self.getClickCount(self.lastReviewCurrentEvent,
                                            inputEvent)
         self._reviewCurrentLine(inputEvent, clickCount)
         self.lastReviewCurrentEvent = inputEvent
@@ -3120,7 +3120,7 @@ class Script(script.Script):
         will cause the word to be phonetically spelt.
         """
 
-        clickCount = util.getClickCount(self.lastReviewCurrentEvent,
+        clickCount = self.getClickCount(self.lastReviewCurrentEvent,
                                            inputEvent)
         self._reviewCurrentItem(inputEvent, targetCursorCell, clickCount)
         self.lastReviewCurrentEvent = inputEvent
@@ -3232,7 +3232,7 @@ class Script(script.Script):
         """Presents the current flat review character via braille and speech.
         """
 
-        clickCount = util.getClickCount(self.lastReviewCurrentEvent,
+        clickCount = self.getClickCount(self.lastReviewCurrentEvent,
                                            inputEvent)
         self._reviewCurrentCharacter(inputEvent, clickCount)
         self.lastReviewCurrentEvent = inputEvent
@@ -3719,6 +3719,60 @@ class Script(script.Script):
                         displayedText = util.appendString(displayedText, childText)
 
         return displayedText
+
+    def findFocusedObject(self, root):
+        """Returns the accessible that has focus under or including the
+        given root.
+
+        TODO: This will currently traverse all children, whether they are
+        visible or not and/or whether they are children of parents that
+        manage their descendants.  At some point, this method should be
+        optimized to take such things into account.
+
+        Arguments:
+        - root: the root object where to start searching
+
+        Returns the object with the FOCUSED state or None if no object with
+        the FOCUSED state can be found.
+        """
+
+        if root.state.count(atspi.Accessibility.STATE_FOCUSED):
+            return root
+
+        for i in range(0, root.childCount):
+            try:
+                candidate = self.findFocusedObject(root.child(i))
+                if candidate:
+                    return candidate
+            except:
+                pass
+
+        return None
+
+    def getClickCount(self, lastInputEvent, inputEvent):
+        """Return the count of the number of clicks a user has made to one
+        of the keys on the keyboard.
+
+        Arguments:
+        - lastInputEvent: the last input event.
+        - inputEvent: the current input event.
+        """
+
+        if not isinstance(lastInputEvent, input_event.KeyboardEvent) or \
+           not isinstance(inputEvent, input_event.KeyboardEvent):
+            orca_state.clickCount = 0
+            return orca_state.clickCount
+
+        if (lastInputEvent.hw_code != inputEvent.hw_code) or \
+           (lastInputEvent.modifiers != inputEvent.modifiers):
+            orca_state.clickCount = 1
+            return orca_state.clickCount
+
+        if (inputEvent.time - lastInputEvent.time) < settings.doubleClickTimeout:
+            orca_state.clickCount += 1
+        else:
+            orca_state.clickCount = 0
+        return orca_state.clickCount+1
 
     def isDesiredFocusedItem(self, obj, rolesList):
         """Called to determine if the given object and it's hierarchy of
