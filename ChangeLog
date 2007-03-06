@@ -60,6 +60,15 @@
           def saveOldAppSettings():
           def restoreOldAppSettings(prefsDict):
 
+        * src/orca/default.py:
+          src/orca/hierarchical_presenter.py:
+          src/orca_focus_tracking_presenter.py:
+          src/orca/util.py:
+          Another partial fix for bug #395548.
+
+          Moved:
+          def findActiveWindow():
+
 2007-03-04  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py, src/orca/default.py, src/orca/flat_review.py:

@@ -1291,25 +1291,3 @@ def isInActiveApp(obj):
     else:
         return orca_state.locusOfFocus \
                and (orca_state.locusOfFocus.app == obj.app)
-
-def findActiveWindow():
-    """Traverses the list of known apps looking for one who has an
-    immediate child (i.e., a window) whose state includes the active state.
-
-    Returns the Python Accessible of the window that's active or None if
-    no windows are active.
-    """
-
-    window = None
-    apps = getKnownApplications()
-    for app in apps:
-        for i in range(0, app.childCount):
-            try:
-                state = app.child(i).state
-                if state.count(atspi.Accessibility.STATE_ACTIVE) > 0:
-                    window = app.child(i)
-                    break
-            except:
-                debug.printException(debug.LEVEL_FINEST)
-
-    return window

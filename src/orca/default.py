@@ -3416,6 +3416,28 @@ class Script(script.Script):
 # here so that they can be customized in application scripts if so desired.
 # 
 
+    def findActiveWindow(self):
+        """Traverses the list of known apps looking for one who has an
+        immediate child (i.e., a window) whose state includes the active state.
+
+        Returns the Python Accessible of the window that's active or None if
+        no windows are active.
+        """
+
+        window = None
+        apps = util.getKnownApplications()
+        for app in apps:
+            for i in range(0, app.childCount):
+                try:
+                    state = app.child(i).state
+                    if state.count(atspi.Accessibility.STATE_ACTIVE) > 0:
+                        window = app.child(i)
+                        break
+                except:
+                    debug.printException(debug.LEVEL_FINEST)
+
+        return window
+
     def saveOldAppSettings(self):
         """Save a copy of all the existing application specific settings
         (as specified by the settings.userCustomizableSettings dictionary)."""

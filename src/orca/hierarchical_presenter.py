@@ -438,7 +438,7 @@ class HierarchicalPresenter(presentation_manager.PresentationManager):
 
         apps = util.getKnownApplications()
 
-        win = util.findActiveWindow()
+        win = orca_state.activeScript.findActiveWindow()
 
         if win:
             self._currentObject = win.app
