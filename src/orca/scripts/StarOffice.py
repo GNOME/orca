@@ -1161,7 +1161,7 @@ class Script(default.Script):
                                event,
                                event.source.toString())
 
-        # util.printAncestry(event.source)
+        # self.printAncestry(event.source)
 
         # 0) Writer: find command
         #
@@ -1418,7 +1418,7 @@ class Script(default.Script):
                                event,
                                event.source.toString())
 
-        # util.printAncestry(event.source)
+        # self.printAncestry(event.source)
 
         # 1) Setup dialog.
         #
@@ -1462,7 +1462,7 @@ class Script(default.Script):
                                event,
                                event.source.toString())
 
-        # util.printAncestry(event.source)
+        # self.printAncestry(event.source)
 
         # 1) Writer: spell checking dialog.
         #
@@ -1657,7 +1657,7 @@ class Script(default.Script):
                                event,
                                event.source.toString())
 
-        # util.printAncestry(event.source)
+        # self.printAncestry(event.source)
 
         # 1) Calc: spread sheet input line.
         #

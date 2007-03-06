@@ -361,7 +361,7 @@ class Script(default.Script):
                                event,
                                event.source.toString())
 
-        # util.printAncestry(event.source)
+        # self.printAncestry(event.source)
 
         # 1) Mail view: current message pane: individual lines of text.
         #

@@ -1,3 +1,21 @@
+2007-03-06  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/gedit.py:
+          src/orca/scripts/gnome-search-tool.py:
+          src/orca/scripts/Evolution.py:
+          src/orca/scripts/StarOffice.py:
+          src/orca/util.py:
+          src/orca/orca.py:
+          src/orca/default.py:
+          Another partial fix for bug #395548.
+
+          Moved:
+          def printAncestry(child):
+          def printHierarchy(root, ooi, indent="", 
+                             onlyShowing=True, omitManaged=True):
+          def printApps():
+          def printActiveApp():
+
 2007-03-05  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/debug.py:

@@ -412,28 +412,6 @@ def cycleDebugLevel(script=None, inputEvent=None):
 
     return True
 
-def printApps(script=None, inputEvent=None):
-    """Prints a list of all applications to stdout."""
-    util.printApps()
-    return True
-
-def printActiveApp(script=None, inputEvent=None):
-    """Prints the currently active application."""
-    util.printActiveApp()
-    return True
-
-def printAncestry(script=None, inputEvent=None):
-    """Prints the ancestry for the current locusOfFocus"""
-    util.printAncestry(orca_state.locusOfFocus)
-    return True
-
-def printHierarchy(script=None, inputEvent=None):
-    """Prints the application for the current locusOfFocus"""
-    if orca_state.locusOfFocus:
-        util.printHierarchy(orca_state.locusOfFocus.app,
-                            orca_state.locusOfFocus)
-    return True
-
 ########################################################################
 #                                                                      #
 # METHODS FOR PRE-PROCESSING AND MASSAGING KEYBOARD EVENTS.            #

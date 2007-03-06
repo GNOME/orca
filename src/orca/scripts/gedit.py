@@ -238,7 +238,7 @@ class Script(default.Script):
                                event,
                                event.source.toString())
 
-        # util.printAncestry(event.source)
+        # self.printAncestry(event.source)
 
         # 1) Text area (for caching handle for spell checking purposes).
         #
@@ -313,7 +313,7 @@ class Script(default.Script):
                                event,
                                event.source.toString())
 
-        # util.printAncestry(event.source)
+        # self.printAncestry(event.source)
 
         # 1) check spelling dialog.
         #
@@ -402,7 +402,7 @@ class Script(default.Script):
                                event,
                                event.source.toString())
 
-        # util.printAncestry(event.source)
+        # self.printAncestry(event.source)
 
         # If we've received a text caret moved event and the current locus
         # of focus is on the Find button on the Find dialog or the combo

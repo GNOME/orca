@@ -107,7 +107,7 @@ class Script(default.Script):
                                event,
                                event.source.toString())
 
-        # util.printAncestry(event.source)
+        # self.printAncestry(event.source)
 
         rolesList = [rolenames.ROLE_PUSH_BUTTON, \
                     rolenames.ROLE_FILLER, \

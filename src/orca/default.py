@@ -311,7 +311,7 @@ class Script(script.Script):
 
         self.inputEventHandlers["listAppsHandler"] = \
             input_event.InputEventHandler(
-                orca.printApps,
+                Script.printAppsHandler,
                 _("Prints a debug listing of all known applications to the console where Orca is running."))
 
         self.inputEventHandlers["cycleDebugLevelHandler"] = \
@@ -321,17 +321,17 @@ class Script(script.Script):
 
         self.inputEventHandlers["printActiveAppHandler"] = \
             input_event.InputEventHandler(
-                orca.printActiveApp,
+                Script.printActiveAppHandler,
                 _("Prints debug information about the currently active application to the console where Orca is running."))
 
         self.inputEventHandlers["printAncestryHandler"] = \
             input_event.InputEventHandler(
-                orca.printAncestry,
+                Script.printAncestryHandler,
                 _("Prints debug information about the ancestry of the object with focus"))
 
         self.inputEventHandlers["printHierarchyHandler"] = \
             input_event.InputEventHandler(
-                orca.printHierarchy,
+                Script.printHierarchyHandler,
                 _("Prints debug information about the application with focus"))
 
         self.inputEventHandlers["nextPresentationManagerHandler"] = \
@@ -3412,9 +3412,132 @@ class Script(script.Script):
         else:
             orca._showFindGUI()
 
+########################################################################
+#                                                                      #
+# DEBUG support.                                                       #
+#                                                                      #
+########################################################################
+
+    def printAppsHandler(self, script=None, inputEvent=None):
+        """Prints a list of all applications to stdout."""
+        self.printApps()
+        return True
+
+    def printActiveAppHandler(self, script=None, inputEvent=None):
+        """Prints the currently active application."""
+        self.printActiveApp()
+        return True
+
+    def printAncestryHandler(self, script=None, inputEvent=None):
+        """Prints the ancestry for the current locusOfFocus"""
+        self.printAncestry(orca_state.locusOfFocus)
+        return True 
+    
+    def printHierarchyHandler(self, script=None, inputEvent=None):
+        """Prints the application for the current locusOfFocus"""
+        if orca_state.locusOfFocus:
+            self.printHierarchy(orca_state.locusOfFocus.app,
+                                orca_state.locusOfFocus)
+        return True
+
 # Routines that were previously in util.py, but that have now been moved
 # here so that they can be customized in application scripts if so desired.
 # 
+
+    def printAncestry(self, child):
+       """Prints a hierarchical view of a child's ancestry."""
+
+       if not child:
+           return
+
+       ancestorList = [child]
+       parent = child.parent
+       while parent and (parent.parent != parent):
+          ancestorList.insert(0, parent)
+          parent = parent.parent
+
+       indent = ""
+       for ancestor in ancestorList:
+          print ancestor.toString(indent + "+-", False)
+          indent += "  "
+
+    def printHierarchy(self, root, ooi, indent="", 
+                       onlyShowing=True, omitManaged=True):
+        """Prints the accessible hierarchy of all children
+
+        Arguments:
+        -indent:      Indentation string
+        -root:        Accessible where to start
+        -ooi:         Accessible object of interest
+        -onlyShowing: If True, only show children painted on the screen
+        -omitManaged: If True, omit children that are managed descendants
+        """
+
+        if not root:
+            return
+
+        if root == ooi:
+           print root.toString(indent + "(*)", False)
+        else:
+           print root.toString(indent + "+-", False)
+
+        rootManagesDescendants = root.state.count(\
+            atspi.Accessibility.STATE_MANAGES_DESCENDANTS)
+
+        for i in range(0, root.childCount):
+            child = root.child(i)
+            if child == root:
+                print indent + "  " + "WARNING CHILD == PARENT!!!"
+            elif not child:
+                print indent + "  " + "WARNING CHILD IS NONE!!!"
+            elif child.parent != root:
+                print indent + "  " + "WARNING CHILD.PARENT != PARENT!!!"
+            else:
+                paint = (not onlyShowing) or (onlyShowing and \
+                         child.state.count(atspi.Accessibility.STATE_SHOWING))
+                paint = paint \
+                        and ((not omitManaged) \
+                             or (omitManaged and not rootManagesDescendants))
+
+                if paint:
+                   self.printHierarchy(child,
+                                       ooi,
+                                       indent + "  ",
+                                       onlyShowing,
+                                       omitManaged)
+
+    def printApps(self):
+        """Prints a list of all applications to stdout."""
+
+        level = debug.LEVEL_OFF
+
+        apps = util.getKnownApplications()
+        debug.println(level, "There are %d Accessible applications" % len(apps))
+        for app in apps:
+            debug.printDetails(level, "  App: ", app, False)
+            for i in range(0, app.childCount):
+                child = app.child(i)
+                debug.printDetails(level, "    Window: ", child, False)
+                if child.parent != app:
+                    debug.println(level,
+                                  "      WARNING: child's parent is not app!!!")
+
+        return True
+
+    def printActiveApp(self):
+        """Prints the active application."""
+
+        level = debug.LEVEL_OFF
+
+        window = self.findActiveWindow()
+        if not window:
+            debug.println(level, "Active application: None")
+        else:
+            app = window.app
+            if not app:
+                debug.println(level, "Active application: None")
+            else:
+                debug.println(level, "Active application: %s" % app.name)
 
     def isInActiveApp(self, obj):
         """Returns True if the given object is from the same application that
