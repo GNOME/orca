@@ -143,7 +143,7 @@ def locateInputLine(obj):
     inputLine = None
     panel = obj.parent.parent.parent.parent
     if panel and panel.role == rolenames.ROLE_PANEL:
-        allParagraphs = util.findByRole(panel, rolenames.ROLE_PARAGRAPH)
+        allParagraphs = self.findByRole(panel, rolenames.ROLE_PARAGRAPH)
         if len(allParagraphs) == 1:
             inputLine = allParagraphs[0]
         else:
@@ -982,7 +982,7 @@ class Script(default.Script):
         - pane: the option pane in the spell check dialog.
         """
 
-        paragraph = util.findByRole(pane, rolenames.ROLE_PARAGRAPH)
+        paragraph = self.findByRole(pane, rolenames.ROLE_PARAGRAPH)
 
         # Determine which word is the misspelt word. This word will have
         # non-default text attributes associated with it.
@@ -1133,7 +1133,7 @@ class Script(default.Script):
         - panel: the Setup panel.
         """
 
-        allLabels = util.findByRole(panel, rolenames.ROLE_LABEL)
+        allLabels = self.findByRole(panel, rolenames.ROLE_LABEL)
         for i in range(0, len(allLabels)):
             self.speakSetupLabel(allLabels[i])
 
@@ -1335,7 +1335,7 @@ class Script(default.Script):
                 # (and not the ones that have LABEL_FOR relationships).
                 #
                 panel = event.source.parent
-                allLabels = util.findByRole(panel, rolenames.ROLE_LABEL)
+                allLabels = self.findByRole(panel, rolenames.ROLE_LABEL)
                 for i in range(0, len(allLabels)):
                     relations = allLabels[i].relations
                     hasLabelFor = False
@@ -1430,11 +1430,11 @@ class Script(default.Script):
             debug.println(self.debugLevel,
                 "StarOffice.onWindowActivated - Setup dialog: Welcome screen.")
 
-            allPanels = util.findByRole(event.source.parent,
+            allPanels = self.findByRole(event.source.parent,
                                         rolenames.ROLE_PANEL)
             for i in range(0, len(allPanels)):
                 if not allPanels[i].name:
-                    allLabels = util.findByRole(allPanels[i],
+                    allLabels = self.findByRole(allPanels[i],
                                                 rolenames.ROLE_LABEL)
                     for i in range(0, len(allLabels)):
                         self.speakSetupLabel(allLabels[i])

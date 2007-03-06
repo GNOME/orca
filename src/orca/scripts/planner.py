@@ -93,7 +93,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                           "planner.onFocus - main window: " \
                           + "one of the four graphic toggle buttons.")
             filler = obj.parent
-            allLabels = util.findByRole(filler, rolenames.ROLE_LABEL)
+            allLabels = self.findByRole(filler, rolenames.ROLE_LABEL)
             text += allLabels[0].name
 
         if obj.state.count(atspi.Accessibility.STATE_CHECKED):
@@ -169,7 +169,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                           + "one of the four graphic toggle buttons.")
             if not already_focused:
                 filler = obj.parent
-                allLabels = util.findByRole(filler, rolenames.ROLE_LABEL)
+                allLabels = self.findByRole(filler, rolenames.ROLE_LABEL)
                 tmp.append(allLabels[0].name)
                 tmp.extend(self._getDefaultSpeech(obj, already_focused))
                 if obj.state.count(atspi.Accessibility.STATE_CHECKED):

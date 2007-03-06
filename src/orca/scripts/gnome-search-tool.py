@@ -137,7 +137,7 @@ class Script(default.Script):
             #
             if not self.fileTable:
                 frame = util.getTopLevel(event.source)
-                allTables = util.findByRole(frame, rolenames.ROLE_TABLE)
+                allTables = self.findByRole(frame, rolenames.ROLE_TABLE)
                 self.fileTable = allTables[0]
 
             gobject.idle_add(self._speakSearching)

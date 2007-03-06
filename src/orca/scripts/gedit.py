@@ -133,7 +133,7 @@ class Script(default.Script):
         # Spelling dialog. Look for the one that isn't a label to
         # another component.
         #
-        allLabels = util.findByRole(panel, rolenames.ROLE_LABEL)
+        allLabels = self.findByRole(panel, rolenames.ROLE_LABEL)
         for i in range(0, len(allLabels)):
             if allLabels[i].name.startswith(_("Change to:")) or \
                allLabels[i].name.startswith(_("Misspelled word:")):
@@ -149,7 +149,7 @@ class Script(default.Script):
         # was called. If they are the same then we ignore it.
 
         if self.textArea != None:
-            allText = util.findByRole(self.textArea, rolenames.ROLE_TEXT)
+            allText = self.findByRole(self.textArea, rolenames.ROLE_TEXT)
             caretPosition = allText[0].text.caretOffset
 
             debug.println(self.debugLevel, \
@@ -415,7 +415,7 @@ class Script(default.Script):
            and orca_state.lastInputEvent.event_string == "Return":
             debug.println(self.debugLevel, "gedit.onCaretMoved - find dialog.")
 
-            allComboBoxes = util.findByRole(orca_state.locusOfFocus.app,
+            allComboBoxes = self.findByRole(orca_state.locusOfFocus.app,
                                             rolenames.ROLE_COMBO_BOX)
             phrase = util.getDisplayedText(allComboBoxes[0])
             [text, caretOffset, startOffset] = \

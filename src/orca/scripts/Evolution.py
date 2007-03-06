@@ -239,7 +239,7 @@ class Script(default.Script):
         - panel: the Setup Assistant panel.
         """
 
-        allLabels = util.findByRole(panel, rolenames.ROLE_LABEL)
+        allLabels = self.findByRole(panel, rolenames.ROLE_LABEL)
         for i in range(0, len(allLabels)):
             self.speakSetupAssistantLabel(allLabels[i])
 
@@ -914,7 +914,7 @@ class Script(default.Script):
             # misspelt word.
             #
             panel = event.source.parent.parent
-            allLabels = util.findByRole(panel, rolenames.ROLE_LABEL)
+            allLabels = self.findByRole(panel, rolenames.ROLE_LABEL)
             found = False
             for i in range(0, len(allLabels)):
                 if not found:
@@ -937,7 +937,7 @@ class Script(default.Script):
             if self.message_panel != None:
                 allTokens = []
                 panel = self.message_panel
-                allText = util.findByRole(panel, rolenames.ROLE_TEXT)
+                allText = self.findByRole(panel, rolenames.ROLE_TEXT)
                 for i in range(0, len(allText)):
                     text = self.getText(allText[i], 0, -1)
                     tokens = text.split()
@@ -979,7 +979,7 @@ class Script(default.Script):
 
             table = event.source.parent.parent.parent.parent.parent
             cell = table.child(table.childCount-1)
-            allText = util.findByRole(cell, rolenames.ROLE_TEXT)
+            allText = self.findByRole(cell, rolenames.ROLE_TEXT)
             utterance = "for " + self.getText(allText[0], 0, -1)
             speech.speak(utterance)
             return

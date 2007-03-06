@@ -143,7 +143,7 @@ class Script(default.Script):
         #
         if orca_state.locusOfFocus.role == rolenames.ROLE_TABLE_COLUMN_HEADER:
              table = event.source.parent
-             cells = util.findByRole(table, rolenames.ROLE_TABLE_CELL)
+             cells = self.findByRole(table, rolenames.ROLE_TABLE_CELL)
              eventsynthesizer.clickObject(cells[1], 1)
         
         default.Script.locusOfFocusChanged(self, event, 

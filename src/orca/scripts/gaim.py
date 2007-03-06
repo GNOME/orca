@@ -305,7 +305,7 @@ class Script(default.Script):
             # text field. Hopefully this is true for other types of chat
             # as well, but is currently untested.
             #
-            allTextFields = util.findByRole(chatRoomTab,
+            allTextFields = self.findByRole(chatRoomTab,
                                             rolenames.ROLE_TEXT)
             index = len(allTextFields) - 2
             if index >= 0:

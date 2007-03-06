@@ -3445,6 +3445,66 @@ class Script(script.Script):
 # here so that they can be customized in application scripts if so desired.
 # 
 
+    def getObjects(self, root, onlyShowing=True):
+        """Returns a list of all objects under the given root.  Objects
+        are returned in no particular order - this function does a simple
+        tree traversal, ignoring the children of objects which report the
+        MANAGES_DESCENDANTS state.
+
+        Arguments:
+        - root:        the Accessible object to traverse
+        - onlyShowing: examine only those objects that are SHOWING
+
+        Returns: a list of all objects under the specified object
+        """
+
+        # The list of object we'll return
+        #
+        objlist = []
+
+        # Start at the first child of the given object
+        #
+        if root.childCount <= 0:
+            return objlist
+
+        for i in range(0, root.childCount):
+            debug.println(debug.LEVEL_FINEST,
+                          "Script.getObjects looking at child %d" % i)
+            child = root.child(i)
+            if child \
+               and ((not onlyShowing) or (onlyShowing and \
+                    (child.state.count(atspi.Accessibility.STATE_SHOWING)))):
+                objlist.append(child)
+                if (child.state.count( \
+                    atspi.Accessibility.STATE_MANAGES_DESCENDANTS) == 0) \
+                    and (child.childCount > 0):
+                    objlist.extend(self.getObjects(child))
+
+        return objlist
+
+    def findByRole(self, root, role, onlyShowing=True):
+        """Returns a list of all objects of a specific role beneath the
+        given root.  [[[TODO: MM - This is very inefficient - this should
+        do it's own traversal and not add objects to the list that aren't
+        of the specified role.  Instead it uses the traversal from
+        getObjects and then deletes objects from the list that aren't of
+        the specified role.  Logged as bugzilla bug 319740.]]]
+
+        Arguments:
+        - root the Accessible object to traverse
+        - role the string describing the Accessible role of the object
+        - onlyShowing: examine only those objects that are SHOWING
+
+        Returns a list of descendants of the root that are of the given role.
+        """
+
+        objlist = []
+        allobjs = self.getObjects(root, onlyShowing)
+        for o in allobjs:
+            if o.role == role:
+                objlist.append(o)
+        return objlist
+
     def findUnrelatedLabels(self, root):
         """Returns a list containing all the unrelated (i.e., have no
         relations to anything and are not a fundamental element of a
@@ -3459,7 +3519,7 @@ class Script(script.Script):
 
         # Find all the labels in the dialog
         #
-        allLabels = findByRole(root, rolenames.ROLE_LABEL)
+        allLabels = self.findByRole(root, rolenames.ROLE_LABEL)
 
         # add the names of only those labels which are not associated with
         # other objects (i.e., empty relation sets).

@@ -31,6 +31,22 @@
           Moved:
           def findUnrelatedLabels(root):
 
+        * src/orca/scripts/gedit.py:
+          src/orca/scripts/planner.py:
+          src/orca/scripts/gcalctool.py:
+          src/orca/scripts/liferea.py:
+          src/orca/scripts/gaim.py:
+          src/orca/scripts/gnome-search-tool.py:
+          src/orca/scripts/Evolution.py:
+          src/orca/scripts/StarOffice.py:
+          src/orca/util.py:
+          src/orca/default.py:
+          src/orca/J2SE-access-bridge.py:
+          Another partial fix for bug #395548.
+
+          Moved:
+          def findByRole(root, role, onlyShowing=True):
+
 2007-03-05  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/debug.py:
