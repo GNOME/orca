@@ -62,7 +62,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         self._debugGenerator("_getBrailleRegionsForRadioButton", obj)
 
         text = ""
-        text = util.appendString(text, util.getDisplayedLabel(obj))
+        text = util.appendString(text, self.getDisplayedLabel(obj))
         text = util.appendString(text, self.getDisplayedText(obj))
 
         # First special toggle button is the one in the toolbar and
@@ -73,7 +73,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         #
         roleList = [rolenames.ROLE_TOGGLE_BUTTON, rolenames.ROLE_TOOL_BAR]
 
-        if util.isDesiredFocusedItem(obj, roleList) and not obj.name:
+        if self.isDesiredFocusedItem(obj, roleList) and not obj.name:
             text += _("Display more options")
 
         # Second special case is each one of the four graphics toggle
@@ -88,7 +88,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                      rolenames.ROLE_FILLER,\
                      rolenames.ROLE_PANEL,\
                      rolenames.ROLE_PANEL]
-        if util.isDesiredFocusedItem(obj, rolesList):
+        if self.isDesiredFocusedItem(obj, rolesList):
             debug.println(debug.LEVEL_FINEST,
                           "planner.onFocus - main window: " \
                           + "one of the four graphic toggle buttons.")
@@ -133,7 +133,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         roleList=[rolenames.ROLE_TOGGLE_BUTTON,\
                   rolenames.ROLE_TOOL_BAR]
 
-        if util.isDesiredFocusedItem(obj, roleList) and not obj.name:
+        if self.isDesiredFocusedItem(obj, roleList) and not obj.name:
             if not already_focused:
                 tmp.append(_("Display more options"))
                 tmp.extend(self._getDefaultSpeech(obj, already_focused))
@@ -163,7 +163,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                     rolenames.ROLE_FILLER,\
                     rolenames.ROLE_PANEL,\
                     rolenames.ROLE_PANEL]
-        if util.isDesiredFocusedItem(obj, roleList):
+        if self.isDesiredFocusedItem(obj, roleList):
             debug.println(debug.LEVEL_FINEST,
                           "planner.onFocus - main window: " \
                           + "one of the four graphic toggle buttons.")

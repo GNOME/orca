@@ -174,7 +174,7 @@ def isSpreadSheetCell(obj):
                  rolenames.ROLE_ROOT_PANE, \
                  rolenames.ROLE_FRAME, \
                  rolenames.ROLE_APPLICATION]
-    if util.isDesiredFocusedItem(obj, rolesList):
+    if self.isDesiredFocusedItem(obj, rolesList):
         # We've found a table cell with the correct hierarchy. Now check
         # that we are in a spreadsheet as opposed to the writer application.
         # See bug #382408.
@@ -1026,7 +1026,7 @@ class Script(default.Script):
         text = self.getText(paragraph[0], 0, -1)
         allTokens = text.split()
 
-        util.speakMisspeltWord(allTokens, badWord)
+        self.speakMisspeltWord(allTokens, badWord)
 
         # Save misspelt word information for comparison purposes next
         # time around.
@@ -1193,7 +1193,7 @@ class Script(default.Script):
                      rolenames.ROLE_PANEL, \
                      rolenames.ROLE_ROOT_PANE, \
                      rolenames.ROLE_FRAME]
-        if util.isDesiredFocusedItem(event.source, rolesList):
+        if self.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel,
                   "StarOffice.locusOfFocusChanged - Writer: text paragraph.")
 
@@ -1259,7 +1259,7 @@ class Script(default.Script):
                      rolenames.ROLE_OPTION_PANE, \
                      rolenames.ROLE_DIALOG, \
                      rolenames.ROLE_APPLICATION]
-        if util.isDesiredFocusedItem(event.source, rolesList):
+        if self.isDesiredFocusedItem(event.source, rolesList):
             pane = event.source.parent
             if pane.name.startswith(_("Spellcheck:")):
                 debug.println(self.debugLevel,
@@ -1284,7 +1284,7 @@ class Script(default.Script):
                          rolenames.ROLE_OPTION_PANE, \
                          rolenames.ROLE_DIALOG, \
                          rolenames.ROLE_APPLICATION]
-            if util.isDesiredFocusedItem(event.source, rolesList):
+            if self.isDesiredFocusedItem(event.source, rolesList):
                 debug.println(self.debugLevel,
                     "StarOffice.locusOfFocusChanged - Setup dialog: " \
                     + "License Agreement screen: Scroll Down button.")
@@ -1299,7 +1299,7 @@ class Script(default.Script):
                          rolenames.ROLE_OPTION_PANE, \
                          rolenames.ROLE_DIALOG, \
                          rolenames.ROLE_APPLICATION]
-            if util.isDesiredFocusedItem(event.source, rolesList):
+            if self.isDesiredFocusedItem(event.source, rolesList):
                 debug.println(self.debugLevel,
                     "StarOffice.locusOfFocusChanged - Setup dialog: " \
                     + "License Agreement screen: accept button.")
@@ -1312,7 +1312,7 @@ class Script(default.Script):
                          rolenames.ROLE_OPTION_PANE, \
                          rolenames.ROLE_DIALOG, \
                          rolenames.ROLE_APPLICATION]
-            if util.isDesiredFocusedItem(event.source, rolesList):
+            if self.isDesiredFocusedItem(event.source, rolesList):
                 debug.println(self.debugLevel,
                     "StarOffice.locusOfFocusChanged - Setup dialog: " \
                     + "Personal Data: Transfer Personal Data check box.")
@@ -1325,7 +1325,7 @@ class Script(default.Script):
                         rolenames.ROLE_OPTION_PANE, \
                         rolenames.ROLE_DIALOG, \
                         rolenames.ROLE_APPLICATION]
-            if util.isDesiredFocusedItem(event.source, rolesList) and \
+            if self.isDesiredFocusedItem(event.source, rolesList) and \
                event.source.name == _("First name"):
                 debug.println(self.debugLevel,
                     "StarOffice.locusOfFocusChanged - Setup dialog: " \
@@ -1353,7 +1353,7 @@ class Script(default.Script):
                         rolenames.ROLE_OPTION_PANE, \
                         rolenames.ROLE_DIALOG, \
                         rolenames.ROLE_APPLICATION]
-            if util.isDesiredFocusedItem(event.source, rolesList):
+            if self.isDesiredFocusedItem(event.source, rolesList):
                 debug.println(self.debugLevel,
                     "StarOffice.locusOfFocusChanged - Setup dialog: " \
                     + "Registration: Register Now radio button.")
@@ -1372,7 +1372,7 @@ class Script(default.Script):
                      rolenames.ROLE_ROOT_PANE, \
                      rolenames.ROLE_FRAME, \
                      rolenames.ROLE_APPLICATION]
-        if util.isDesiredFocusedItem(event.source, rolesList):
+        if self.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel, "StarOffice.locusOfFocusChanged - " \
                           + "Calc: cell editor.")
             return
@@ -1392,7 +1392,7 @@ class Script(default.Script):
                      rolenames.ROLE_FRAME, \
                      rolenames.ROLE_APPLICATION]
 
-        if util.isDesiredFocusedItem(event.source, rolesList) \
+        if self.isDesiredFocusedItem(event.source, rolesList) \
             and (not event.source.name or len(event.source.name) == 0):
             debug.println(self.debugLevel, "StarOffice.locusOfFocusChanged - " \
                           + "Calc: name box.")
@@ -1481,7 +1481,7 @@ class Script(default.Script):
         rolesList = [rolenames.ROLE_OPTION_PANE, \
                      rolenames.ROLE_DIALOG, \
                      rolenames.ROLE_APPLICATION]
-        if util.isDesiredFocusedItem(event.source, rolesList):
+        if self.isDesiredFocusedItem(event.source, rolesList):
             pane = event.source
             if pane.name.startswith(_("Spellcheck:")):
                 debug.println(self.debugLevel,
@@ -1675,7 +1675,7 @@ class Script(default.Script):
                      rolenames.ROLE_ROOT_PANE, \
                      rolenames.ROLE_FRAME, \
                      rolenames.ROLE_APPLICATION]
-        if util.isDesiredFocusedItem(event.source, rolesList):
+        if self.isDesiredFocusedItem(event.source, rolesList):
             if orca_state.locusOfFocus.role == rolenames.ROLE_TABLE_CELL:
                 cell = orca_state.locusOfFocus
 

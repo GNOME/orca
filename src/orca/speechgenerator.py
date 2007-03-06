@@ -200,7 +200,7 @@ class SpeechGenerator:
             return []
 
     def _getSpeechForObjectLabel(self, obj):
-        label = util.getDisplayedLabel(obj)
+        label = self._script.getDisplayedLabel(obj)
         if label:
             return [label]
         else:
@@ -1376,7 +1376,7 @@ class SpeechGenerator:
         if frame:
             title = frame.name
         if not title:
-            title = util.getDisplayedLabel(obj)
+            title = self._script.getDisplayedLabel(obj)
 
         utterances = [title]
 
@@ -1573,7 +1573,7 @@ class SpeechGenerator:
                 # Announce the label and text of the object in the hierarchy.
                 #
                 text = self._script.getDisplayedText(parent)
-                label = util.getDisplayedLabel(parent)
+                label = self._script.getDisplayedLabel(parent)
 
                 # Push announcement of cell after text and label.
                 #
@@ -1597,7 +1597,7 @@ class SpeechGenerator:
             # we add the label to the overall context.]]]
             #
             if parent.role == rolenames.ROLE_FILLER:
-                label = util.getDisplayedLabel(parent)
+                label = self._script.getDisplayedLabel(parent)
                 if label and len (label):
                     utterances.append(label)
 

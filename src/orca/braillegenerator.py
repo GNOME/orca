@@ -293,7 +293,7 @@ class BrailleGenerator:
         regions = []
 
         text = ""
-        text = util.appendString(text, util.getDisplayedLabel(obj))
+        text = util.appendString(text, self._script.getDisplayedLabel(obj))
         text = util.appendString(text, self._script.getDisplayedText(obj))
         text = util.appendString(text, self._getTextForValue(obj))
         text = util.appendString(text, self._getTextForRole(obj))
@@ -332,7 +332,7 @@ class BrailleGenerator:
         self._debugGenerator("_getBrailleRegionsForAnimation", obj)
 
         text = ""
-        text = util.appendString(text, util.getDisplayedLabel(obj))
+        text = util.appendString(text, self._script.getDisplayedLabel(obj))
         text = util.appendString(text, self._script.getDisplayedText(obj))
         text = util.appendString(text, self._getTextForRole(obj))
         text = util.appendString(text, obj.description, ": ")
@@ -375,7 +375,7 @@ class BrailleGenerator:
         self._debugGenerator("_getBrailleRegionsForCheckBox", obj)
 
         text = ""
-        text = util.appendString(text, util.getDisplayedLabel(obj))
+        text = util.appendString(text, self._script.getDisplayedLabel(obj))
         text = util.appendString(text, self._script.getDisplayedText(obj))
 
         if obj.state.count(atspi.Accessibility.STATE_CHECKED):
@@ -405,7 +405,7 @@ class BrailleGenerator:
         self._debugGenerator("_getBrailleRegionsForCheckMenuItem", obj)
 
         text = ""
-        text = util.appendString(text, util.getDisplayedLabel(obj))
+        text = util.appendString(text, self._script.getDisplayedLabel(obj))
         text = util.appendString(text, self._script.getDisplayedText(obj))
 
         if obj.state.count(atspi.Accessibility.STATE_CHECKED):
@@ -456,7 +456,7 @@ class BrailleGenerator:
         regions = []
 
         focusedRegionIndex = 0
-        label = util.getDisplayedLabel(obj)
+        label = self._script.getDisplayedLabel(obj)
         if label and (len(label) > 0):
             regions.append(braille.Region(label + " "))
             focusedRegionIndex = 1
@@ -585,7 +585,7 @@ class BrailleGenerator:
         self._debugGenerator("_getBrailleRegionsForIcon", obj)
 
         text = ""
-        text = util.appendString(text, util.getDisplayedLabel(obj))
+        text = util.appendString(text, self._script.getDisplayedLabel(obj))
         text = util.appendString(text, self._script.getDisplayedText(obj))
 
         if obj.image:
@@ -660,7 +660,7 @@ class BrailleGenerator:
         self._debugGenerator("_getBrailleRegionsForMenu", obj)
 
         text = ""
-        text = util.appendString(text, util.getDisplayedLabel(obj))
+        text = util.appendString(text, self._script.getDisplayedLabel(obj))
         text = util.appendString(text, self._script.getDisplayedText(obj))
         text = util.appendString(text, rolenames.getBrailleForRoleName(obj))
 
@@ -703,7 +703,7 @@ class BrailleGenerator:
         self._debugGenerator("_getBrailleRegionsForMenuItem", obj)
 
         text = ""
-        text = util.appendString(text, util.getDisplayedLabel(obj))
+        text = util.appendString(text, self._script.getDisplayedLabel(obj))
         text = util.appendString(text, self._script.getDisplayedText(obj))
 
         if obj == orca_state.locusOfFocus:
@@ -732,7 +732,7 @@ class BrailleGenerator:
 
         regions = []
 
-        textRegion = braille.Text(obj, util.getDisplayedLabel(obj))
+        textRegion = braille.Text(obj, self._script.getDisplayedLabel(obj))
         regions.append(textRegion)
 
         eol = braille.Region(" $l")
@@ -769,7 +769,7 @@ class BrailleGenerator:
         self._debugGenerator("_getBrailleRegionsForPageTab", obj)
 
         text = ""
-        text = util.appendString(text, util.getDisplayedLabel(obj))
+        text = util.appendString(text, self._script.getDisplayedLabel(obj))
         text = util.appendString(text, self._script.getDisplayedText(obj))
 
         if obj == orca_state.locusOfFocus:
@@ -828,7 +828,7 @@ class BrailleGenerator:
         regions = []
 
         text = ""
-        text = util.appendString(text, util.getDisplayedLabel(obj))
+        text = util.appendString(text, self._script.getDisplayedLabel(obj))
         text = util.appendString(text, self._script.getDisplayedText(obj))
 
         # In Java, some push buttons don't have label and text.
@@ -860,7 +860,7 @@ class BrailleGenerator:
         self._debugGenerator("_getBrailleRegionsForRadioButton", obj)
 
         text = ""
-        text = util.appendString(text, util.getDisplayedLabel(obj))
+        text = util.appendString(text, self._script.getDisplayedLabel(obj))
         text = util.appendString(text, self._script.getDisplayedText(obj))
 
         # In Java, some toggle buttons don't have label and text.
@@ -897,7 +897,7 @@ class BrailleGenerator:
         self._debugGenerator("_getBrailleRegionsForRadioMenuItem", obj)
 
         text = ""
-        text = util.appendString(text, util.getDisplayedLabel(obj))
+        text = util.appendString(text, self._script.getDisplayedLabel(obj))
         text = util.appendString(text, self._script.getDisplayedText(obj))
 
         if obj.state.count(atspi.Accessibility.STATE_CHECKED):
@@ -965,7 +965,7 @@ class BrailleGenerator:
         regions = []
 
         text = ""
-        text = util.appendString(text, util.getDisplayedLabel(obj))
+        text = util.appendString(text, self._script.getDisplayedLabel(obj))
         # Ignore the text on the slider.
         #text = util.appendString(text, self._script.getDisplayedText(obj))
         text = util.appendString(text, self._getTextForValue(obj))
@@ -1203,7 +1203,7 @@ class BrailleGenerator:
         if frame:
             title = frame.name
         if not title:
-            title = util.getDisplayedLabel(obj)
+            title = self._script.getDisplayedLabel(obj)
 
         text = title
         text = util.appendString(text, rolenames.getBrailleForRoleName(obj))
@@ -1408,7 +1408,7 @@ class BrailleGenerator:
 
                 # Announce the label and text of the object in the hierarchy.
                 #
-                label = util.getDisplayedLabel(parent)
+                label = self._script.getDisplayedLabel(parent)
                 text = self._script.getDisplayedText(parent)
                 regions.append(braille.Region(" "))
                 result = self.getBrailleRegions(parent, False)
@@ -1423,7 +1423,7 @@ class BrailleGenerator:
             # we add the label to the overall context.]]]
             #
             if parent.role == rolenames.ROLE_FILLER:
-                label = util.getDisplayedLabel(parent)
+                label = self._script.getDisplayedLabel(parent)
                 if label and len(label) and not label.isspace():
                     regions.append(braille.Region(" "))
                     result = self.getBrailleRegions(parent, False)

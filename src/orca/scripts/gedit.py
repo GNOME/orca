@@ -182,7 +182,7 @@ class Script(default.Script):
                 tokens = text.split()
                 allTokens += tokens
 
-            util.speakMisspeltWord(allTokens, badWord)
+            self.speakMisspeltWord(allTokens, badWord)
 
             # Save misspelt word information for comparison purposes
             # next time around.
@@ -210,9 +210,9 @@ class Script(default.Script):
                      rolenames.ROLE_DIALOG,
                      rolenames.ROLE_APPLICATION]
 
-        if (util.isDesiredFocusedItem(obj, rolesList1) \
+        if (self.isDesiredFocusedItem(obj, rolesList1) \
             and obj.name == _("Find")) \
-            or (util.isDesiredFocusedItem(obj, rolesList2) \
+            or (self.isDesiredFocusedItem(obj, rolesList2) \
                 and obj.parent.parent.parent.parent.name == _("Find")):
             return True
         else:
@@ -256,7 +256,7 @@ class Script(default.Script):
                      rolenames.ROLE_PAGE_TAB,
                      rolenames.ROLE_PAGE_TAB_LIST,
                      rolenames.ROLE_SPLIT_PANE]
-        if util.isDesiredFocusedItem(event.source, rolesList):
+        if self.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel,
                           "gedit.locusOfFocusChanged - text area.")
 
@@ -280,7 +280,7 @@ class Script(default.Script):
                      rolenames.ROLE_PANEL,
                      rolenames.ROLE_FILLER,
                      rolenames.ROLE_FRAME]
-        if util.isDesiredFocusedItem(event.source, rolesList):
+        if self.isDesiredFocusedItem(event.source, rolesList):
             frame = event.source.parent.parent.parent.parent
             if frame.name.startswith(_("Check Spelling")):
                 debug.println(self.debugLevel,
@@ -334,7 +334,7 @@ class Script(default.Script):
                      rolenames.ROLE_PANEL,
                      rolenames.ROLE_FILLER,
                      rolenames.ROLE_FRAME]
-        if util.isDesiredFocusedItem(event.source, rolesList):
+        if self.isDesiredFocusedItem(event.source, rolesList):
             frame = event.source.parent.parent.parent
             if frame.name.startswith(_("Check Spelling")):
                 debug.println(self.debugLevel,

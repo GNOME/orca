@@ -114,7 +114,7 @@ class SpeechGenerator(Gecko.SpeechGenerator):
             # Append the text and label. Skip displayed text
             # that starts with "chrome://"
             text = self.getDisplayedText(parent)
-            label = util.getDisplayedLabel(parent)
+            label = self.getDisplayedLabel(parent)
             if text and (text != label) and len(text) \
                 and (not text.startswith("chrome://")):
                 utterances.append(text)

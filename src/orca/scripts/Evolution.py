@@ -379,7 +379,7 @@ class Script(default.Script):
         rolesList = [rolenames.ROLE_TEXT, \
                      rolenames.ROLE_PANEL, \
                      rolenames.ROLE_UNKNOWN]
-        if util.isDesiredFocusedItem(event.source, rolesList):
+        if self.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - mail view: " \
                           + "current message pane: " \
@@ -427,7 +427,7 @@ class Script(default.Script):
                      rolenames.ROLE_PANEL, \
                      rolenames.ROLE_TABLE_CELL]
         if settings.readTableCellRow \
-            and (util.isDesiredFocusedItem(event.source, rolesList)):
+            and (self.isDesiredFocusedItem(event.source, rolesList)):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - mail view: " \
                           + "current message pane: " \
@@ -478,7 +478,7 @@ class Script(default.Script):
         rolesList = [rolenames.ROLE_TABLE_CELL, \
                      rolenames.ROLE_TREE_TABLE]
         if settings.readTableCellRow \
-            and (util.isDesiredFocusedItem(event.source, rolesList)):
+            and (self.isDesiredFocusedItem(event.source, rolesList)):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - mail view: " \
                           + "message header list.")
@@ -662,7 +662,7 @@ class Script(default.Script):
 
         rolesList = [rolenames.ROLE_CALENDAR_EVENT, \
                      rolenames.ROLE_CALENDAR_VIEW]
-        if util.isDesiredFocusedItem(event.source, rolesList):
+        if self.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - calendar view: " \
                           + "day view: tabbing to day with appts.")
@@ -729,7 +729,7 @@ class Script(default.Script):
         rolesList = [rolenames.ROLE_UNKNOWN, \
                      rolenames.ROLE_TABLE, \
                      rolenames.ROLE_CALENDAR_VIEW]
-        if util.isDesiredFocusedItem(event.source, rolesList):
+        if self.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel,
                       "evolution.locusOfFocusChanged - calendar view: " \
                       + "day view: moving with arrow keys.")
@@ -806,7 +806,7 @@ class Script(default.Script):
                      rolenames.ROLE_TABLE, \
                      rolenames.ROLE_UNKNOWN, \
                      rolenames.ROLE_SCROLL_PANE]
-        if util.isDesiredFocusedItem(event.source, rolesList):
+        if self.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel,
                       "evolution.locusOfFocusChanged - preferences dialog: " \
                       + "table cell in options list.")
@@ -841,7 +841,7 @@ class Script(default.Script):
                      rolenames.ROLE_FILLER, \
                      rolenames.ROLE_FILLER, \
                      rolenames.ROLE_DIALOG]
-        if util.isDesiredFocusedItem(event.source, rolesList):
+        if self.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - mail insert " \
                           + "attachment dialog: unlabelled button.")
@@ -869,7 +869,7 @@ class Script(default.Script):
                      rolenames.ROLE_PANEL, \
                      rolenames.ROLE_PANEL, \
                      rolenames.ROLE_SCROLL_PANE]
-        if util.isDesiredFocusedItem(event.source, rolesList):
+        if self.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - mail " \
                           + "compose window: message area.")
@@ -901,7 +901,7 @@ class Script(default.Script):
                     rolenames.ROLE_PANEL, \
                     rolenames.ROLE_FILLER, \
                     rolenames.ROLE_DIALOG]
-        if util.isDesiredFocusedItem(event.source, rolesList):
+        if self.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel,
                       "evolution.locusOfFocusChanged - spell checking dialog.")
 
@@ -943,7 +943,7 @@ class Script(default.Script):
                     tokens = text.split()
                     allTokens += tokens
 
-                util.speakMisspeltWord(allTokens, badWord)
+                self.speakMisspeltWord(allTokens, badWord)
                 return
 
         # 10) Mail view: message area - attachments.
@@ -967,7 +967,7 @@ class Script(default.Script):
                     rolenames.ROLE_TABLE_CELL, \
                     rolenames.ROLE_TABLE, \
                     rolenames.ROLE_PANEL]
-        if util.isDesiredFocusedItem(event.source, rolesList):
+        if self.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - " \
                           + "mail message area attachments.")

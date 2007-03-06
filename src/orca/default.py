@@ -2562,7 +2562,7 @@ class Script(script.Script):
                     break
         elif obj and (obj.role == rolenames.ROLE_PANEL):
             text = self.getDisplayedText(obj)
-            label = util.getDisplayedLabel(obj)
+            label = self.getDisplayedLabel(obj)
             if not ((label and len(label)) or (text and len(text))):
                 layoutOnly = True
 
@@ -3452,6 +3452,143 @@ class Script(script.Script):
 # here so that they can be customized in application scripts if so desired.
 # 
 
+    def __hasLabelForRelation(self, label):
+        """Check if label has a LABEL_FOR relation
+
+        Arguments:
+        - label: the label in question
+
+        Returns TRUE if label has a LABEL_FOR relation.
+        """
+        if (not label) or (label.role != rolenames.ROLE_LABEL):
+            return False
+
+        relations = label.relations
+
+        for relation in relations:
+            if relation.getRelationType() \
+                   == atspi.Accessibility.RELATION_LABEL_FOR:
+                return True    
+
+        return False
+
+
+    def __isLabeling(self, label, object):
+        """Check if label is connected via  LABEL_FOR relation with object
+
+        Arguments:
+        - object: the object in question
+        - labeled: the label in question
+
+        Returns TRUE if label has a relation LABEL_FOR for object.
+        """
+
+        if (not object) \
+           or (not label) \
+           or (label.role != rolenames.ROLE_LABEL):
+            return False
+
+        relations = label.relations
+        if not relations:
+            return False
+
+        for relation in relations:
+            if relation.getRelationType() \
+                   == atspi.Accessibility.RELATION_LABEL_FOR:
+
+                for i in range(0, relation.getNTargets()):
+                    target = atspi.Accessible.makeAccessible(\
+                                                    relation.getTarget(i))
+                    if target == object:
+                        return True
+
+        return False
+
+    def getDisplayedLabel(self, object):
+        """If there is an object labelling the given object, return the
+        text being displayed for the object labelling this object.
+        Otherwise, return None.
+    
+        Argument:
+        - object: the object in question
+    
+        Returns the string of the object labelling this object, or None
+        if there is nothing of interest here.
+        """
+
+        # For some reason, some objects are labelled by the same thing
+        # more than once.  Go figure, but we need to check for this.
+        #
+        label = None
+        relations = object.relations
+        allTargets = []
+
+        for relation in relations:
+            if relation.getRelationType() \
+                   == atspi.Accessibility.RELATION_LABELLED_BY:
+
+                # The object can be labelled by more than one thing, so we just
+                # get all the labels (from unique objects) and append them
+                # together.  An example of such objects live in the "Basic"
+                # page of the gnome-accessibility-keyboard-properties app.
+                # The "Delay" and "Speed" objects are labelled both by
+                # their names and units.
+                #
+                for i in range(0, relation.getNTargets()):
+                    target = atspi.Accessible.makeAccessible(\
+                                                       relation.getTarget(i))
+                    if not target in allTargets:
+                        allTargets.append(target)
+                        label = util.appendString(label, self.getDisplayedText(target))
+
+        # [[[TODO: HACK - we've discovered oddness in hierarchies such as
+        # the gedit Edit->Preferences dialog.  In this dialog, we have
+        # labeled groupings of objects.  The grouping is done via a FILLER
+        # with two children - one child is the overall label, and the
+        # other is the container for the grouped objects.  When we detect
+        # this, we add the label to the overall context.
+        #
+        # We are also looking for objects which have a PANEL or a FILLER as
+        # parent, and its parent has more children. Through these children,
+        # a potential label with LABEL_FOR relation may exists. We want to
+        # present this label.
+        # This case can be seen in FileChooserDemo application, in Open dialog
+        # window, the line with "Look In" label, a combobox and some
+        # presentation buttons.]]]
+        #
+        if not label:
+
+            potentialLabel = None
+            useLabel = False
+            if ((object.role == rolenames.ROLE_FILLER) \
+                    or (object.role == rolenames.ROLE_PANEL)) \
+                and (object.childCount == 2):
+
+                potentialLabel = object.child(0)
+                secondChild = object.child(1)
+                useLabel = potentialLabel.role == rolenames.ROLE_LABEL \
+                        and ((secondChild.role == rolenames.ROLE_FILLER) \
+                                or (secondChild.role == rolenames.ROLE_PANEL)) \
+                        and not self.__hasLabelForRelation(potentialLabel)
+            else:
+                parent = object.parent
+                if parent and \
+                    ((parent.role == rolenames.ROLE_FILLER) \
+                            or (parent.role == rolenames.ROLE_PANEL)):
+                    for i in range (0, parent.childCount):
+                        try:
+                            potentialLabel = parent.child(i)
+                            useLabel = self.__isLabeling(potentialLabel, object)
+                            if useLabel:
+                                break
+                        except:
+                            pass
+
+            if useLabel and potentialLabel:
+                label = potentialLabel.name
+
+        return label
+
     def __getDisplayedTextInComboBox(self, combo):
 
         """Returns the text being displayed in a combo box.  If nothing is
@@ -3579,9 +3716,58 @@ class Script(script.Script):
                 if child.role == rolenames.ROLE_LABEL:
                     childText = self.getDisplayedText(child)
                     if childText and len(childText):
-                        displayedText = appendString(displayedText, childText)
+                        displayedText = util.appendString(displayedText, childText)
 
         return displayedText
+
+    def isDesiredFocusedItem(self, obj, rolesList):
+        """Called to determine if the given object and it's hierarchy of
+           parent objects, each have the desired roles.
+
+        Arguments:
+        - obj: the accessible object to check.
+        - rolesList: the list of desired roles for the components and the
+          hierarchy of its parents.
+
+        Returns True if all roles match.
+        """
+
+        current = obj
+        for i in range(0, len(rolesList)):
+            if (current == None) or (current.role != rolesList[i]):
+                return False
+            current = current.parent
+
+        return True
+
+    def speakMisspeltWord(self, allTokens, badWord):
+        """Called by various spell checking routine to speak the misspelt word,
+           plus the context that it is being used in.
+
+        Arguments:
+        - allTokens: a list of all the words.
+        - badWord: the misspelt word.
+        """
+
+        # Create an utterance to speak consisting of the misspelt
+        # word plus the context where it is used (upto five words
+        # to either side of it).
+        #
+        for i in range(0, len(allTokens)):
+            if allTokens[i].startswith(badWord):
+                min = i - 5
+                if min < 0:
+                    min = 0
+                max = i + 5
+                if max > (len(allTokens) - 1):
+                    max = len(allTokens) - 1
+
+                utterances = [_("Misspelled word: "), badWord, \
+                              _(" Context is ")] + allTokens[min:max+1]
+
+                # Turn the list of utterances into a string.
+                text = " ".join(utterances)
+                speech.speak(text)
 
     def textLines(self, obj):
         """Creates a generator that can be used to iterate over each line

@@ -124,7 +124,7 @@ class Script(default.Script):
         # search progresses, regularly inform the user of this by speaking
         # "Searching" (assuming the search tool has focus).
         #
-        if util.isDesiredFocusedItem(event.source, rolesList) and \
+        if self.isDesiredFocusedItem(event.source, rolesList) and \
            event.source.name == _("Stop") and visible:
             debug.println(self.debugLevel,
                           "gnome-search-tool.onNameChanged - " \
@@ -148,7 +148,7 @@ class Script(default.Script):
         # have just stopped a search. Inform the user that the search is
         # complete and tell them how many files were found.
         #
-        if util.isDesiredFocusedItem(event.source, rolesList) and \
+        if self.isDesiredFocusedItem(event.source, rolesList) and \
            event.source.name == _("Find") and visible and self.searching:
             debug.println(self.debugLevel,
                           "gnome-search-tool.onNameChanged - " \

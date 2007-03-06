@@ -664,7 +664,7 @@ def _getObjLabel(obj):
     Returns the label to speak for an object.
     """
     text = ""
-    label = util.getDisplayedLabel(obj)
+    label = orca_state.activeScript.getDisplayedLabel(obj)
     
     if label and label != "None":
         text = _("%s") % label

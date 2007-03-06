@@ -156,7 +156,7 @@ def getTableAndDimensions(obj):
                  rolenames.ROLE_UNKNOWN, \
                  rolenames.ROLE_UNKNOWN, \
                  rolenames.ROLE_TABLE]
-    if util.isDesiredFocusedItem(obj, rolesList):
+    if self.isDesiredFocusedItem(obj, rolesList):
         table = obj.parent.parent.parent
         rows = table.childCount
         columns = table.child(0).childCount
@@ -206,7 +206,7 @@ def isInFindToolbar(obj):
     try:
         while obj.role != rolenames.ROLE_DRAWING_AREA:
             obj = obj.parent
-        if util.isDesiredFocusedItem(obj, rolesList):
+        if self.isDesiredFocusedItem(obj, rolesList):
             inFindToolbar = True
             findToolbarName = self.getFrame(obj).name
     except:

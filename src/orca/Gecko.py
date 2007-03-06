@@ -170,7 +170,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         #
         text = ""
         if not self._script.inDocumentContent():
-            text = util.appendString(text, util.getDisplayedLabel(obj))
+            text = util.appendString(text, self.getDisplayedLabel(obj))
             text = util.appendString(text, self.getDisplayedText(obj))
         else:
             isLabelled = False
@@ -221,7 +221,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         # class - we'll give this thing a name here, and we'll make it
         # be the name of the autocomplete.
         #
-        label = util.getDisplayedLabel(parent)
+        label = self.getDisplayedLabel(parent)
         if not label or not len(label):
             label = parent.name
 
@@ -252,7 +252,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         # set, we will use it as the label of the combo box.  Otherwise,
         # we'll fall back to the accessible name.
         #
-        label = util.getDisplayedLabel(obj)
+        label = self.getDisplayedLabel(obj)
         if not label:
             label = obj.name
 
@@ -321,7 +321,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         regions = []
 
         text = ""
-        text = util.appendString(text, util.getDisplayedLabel(obj))
+        text = util.appendString(text, self.getDisplayedLabel(obj))
         text = util.appendString(text, self.getDisplayedText(obj))
 
         # If there's no text for the link, expose part of the
@@ -362,7 +362,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         regions = []
 
         text = ""
-        text = util.appendString(text, util.getDisplayedLabel(obj))
+        text = util.appendString(text, self.getDisplayedLabel(obj))
         text = util.appendString(text, self.getDisplayedText(obj))
 
         # If there's no text for the link, expose part of the
@@ -456,7 +456,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         # class - we'll give this thing a name here, and we'll make it
         # be the name of the autocomplete.
         #
-        label = util.getDisplayedLabel(parent)
+        label = self.getDisplayedLabel(parent)
         if not label or not len(label):
             label = parent.name
         utterances.append(label)
@@ -492,7 +492,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         # set, we will use it as the label of the combo box.  Otherwise,
         # we'll fall back to the accessible name.
         #
-        label = util.getDisplayedLabel(obj)
+        label = self.getDisplayedLabel(obj)
         if not label:
             label = obj.name
 
@@ -706,7 +706,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             # Finally, put in the text and label (if they exist)
             #
             text = self.getDisplayedText(parent)
-            label = util.getDisplayedLabel(parent)
+            label = self.getDisplayedLabel(parent)
             if text and (text != label) and len(text):
                 utterances.append(text)
             if label and len(label):
@@ -1598,7 +1598,7 @@ class Script(default.Script):
                             rolenames.ROLE_PASSWORD_TEXT] \
                 or ((obj.role == rolenames.ROLE_DOCUMENT_FRAME) \
                     and obj.state.count(atspi.Accessibility.STATE_EDITABLE)):
-                label = util.getDisplayedLabel(obj)
+                label = self.getDisplayedLabel(obj)
                 regions = [braille.Text(obj, label)]
                 eol = braille.Region(" $l")
                 regions.append(eol)
@@ -2329,7 +2329,7 @@ class Script(default.Script):
         if obj.role in [rolenames.ROLE_IMAGE, rolenames.ROLE_TABLE_CELL]:
             text = self.getDisplayedText(obj)
             if (not text) or (len(text) == 0):
-                text = util.getDisplayedLabel(obj)
+                text = self.getDisplayedLabel(obj)
                 if (not text) or (len(text) == 0):
                     useless = True
 
