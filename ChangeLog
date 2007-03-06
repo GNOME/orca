@@ -66,6 +66,15 @@
           Moved:
           def getAcceleratorAndShortcut(obj):
 
+        * src/orca/util.py
+          src/orca/default.py:
+          src/orca/where_am_I.py:
+          src/orca/braillegenerator.py:
+          Another partial fix for bug #395548.
+
+          Moved:
+          def getNodeLevel(obj):
+
 2007-03-05  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/debug.py:

@@ -1662,8 +1662,8 @@ class Script(script.Script):
                                             rolenames.ROLE_COLUMN_HEADER].speech
                                 utterances.append(text)
 
-            oldNodeLevel = util.getNodeLevel(oldLocusOfFocus)
-            newNodeLevel = util.getNodeLevel(newLocusOfFocus)
+            oldNodeLevel = self.getNodeLevel(oldLocusOfFocus)
+            newNodeLevel = self.getNodeLevel(newLocusOfFocus)
 
             # We'll also treat radio button groups as though they are
             # in a context, with the label for the group being the
@@ -3444,6 +3444,47 @@ class Script(script.Script):
 # Routines that were previously in util.py, but that have now been moved
 # here so that they can be customized in application scripts if so desired.
 # 
+
+    def getNodeLevel(self, obj):
+        """Determines the node level of this object if it is in a tree
+        relation, with 0 being the top level node.  If this object is
+        not in a tree relation, then -1 will be returned.
+
+        Arguments:
+        -obj: the Accessible object
+        """
+
+        if not obj:
+            return -1
+
+        nodes = []
+        node = obj
+        done = False
+        while not done:
+            relations = node.relations
+            node = None
+            for relation in relations:
+                if relation.getRelationType() \
+                       == atspi.Accessibility.RELATION_NODE_CHILD_OF:
+                    node = atspi.Accessible.makeAccessible(relation.getTarget(0))
+                    break
+
+            # We want to avoid situations where something gives us an
+            # infinite cycle of nodes.  Bon Echo has been seen to do
+            # this (see bug 351847).
+            #
+            if (len(nodes) > 100) or nodes.count(node):
+                debug.println(debug.LEVEL_WARNING,
+                              "Script.getNodeLevel detected a cycle!!!")
+                done = True
+            elif node:
+                nodes.append(node)
+                debug.println(debug.LEVEL_FINEST,
+                              "Script.getNodeLevel %d" % len(nodes))
+            else:
+                done = True
+
+        return len(nodes) - 1
 
     def getAcceleratorAndShortcut(self, obj):
         """Gets the accelerator string (and possibly shortcut) for the given

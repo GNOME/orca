@@ -1068,7 +1068,7 @@ class BrailleGenerator:
             else:
                 regions[0].append(braille.Region(" " + _("collapsed")))
 
-        level = util.getNodeLevel(obj)
+        level = self._script.getNodeLevel(obj)
         if level >= 0:
             regions[0].append(braille.Region(" " + _("TREE LEVEL %d") \
                                              % (level + 1)))

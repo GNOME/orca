@@ -598,7 +598,7 @@ def _speakTableCell(obj, doubleClick):
             text = _("collapsed")
             utterances.append(text)
             
-    level = util.getNodeLevel(orca_state.locusOfFocus)
+    level = orca_state.activeScript.getNodeLevel(orca_state.locusOfFocus)
     if level >= 0:
         utterances.append(_("tree level %d") % (level + 1))
 
