@@ -301,7 +301,7 @@ class SpeechGenerator:
 
         # Find all the unrelated labels in the dialog and speak them.
         #
-        labels = util.findUnrelatedLabels(obj)
+        labels = orca_state.activeScript.findUnrelatedLabels(obj)
         for label in labels:
             utterances.append(label.name)
 

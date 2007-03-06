@@ -1794,7 +1794,7 @@ class Script(script.Script):
             #
             if reallyShowing:
                 utterances = []
-                labels = util.findUnrelatedLabels(obj)
+                labels = self.findUnrelatedLabels(obj)
                 for label in labels:
                     utterances.append(label.name)
 
@@ -3444,6 +3444,67 @@ class Script(script.Script):
 # Routines that were previously in util.py, but that have now been moved
 # here so that they can be customized in application scripts if so desired.
 # 
+
+    def findUnrelatedLabels(self, root):
+        """Returns a list containing all the unrelated (i.e., have no
+        relations to anything and are not a fundamental element of a
+        more atomic component like a combo box) labels under the given
+        root.  Note that the labels must also be showing on the display.
+
+        Arguments:
+        - root the Accessible object to traverse
+
+        Returns a list of unrelated labels under the given root.
+        """
+
+        # Find all the labels in the dialog
+        #
+        allLabels = findByRole(root, rolenames.ROLE_LABEL)
+
+        # add the names of only those labels which are not associated with
+        # other objects (i.e., empty relation sets).
+        #
+        # [[[WDW - HACK: In addition, do not grab free labels whose
+        # parents are push buttons because push buttons can have labels as
+        # children.]]]
+        #
+        # [[[WDW - HACK: panels with labelled borders will have a child
+        # label that does not have its relation set.  So...we check to see
+        # if the panel's name is the same as the label's name.  If so, we
+        # ignore the label.]]]
+        #
+        unrelatedLabels = []
+
+        for label in allLabels:
+            relations = label.relations
+            if len(relations) == 0:
+                parent = label.parent
+                if parent and (parent.role == rolenames.ROLE_PUSH_BUTTON):
+                    pass
+                elif parent and (parent.role == rolenames.ROLE_PANEL) \
+                   and (parent.name == label.name):
+                    pass
+                elif label.state.count(atspi.Accessibility.STATE_SHOWING):
+                    unrelatedLabels.append(label)
+
+        # Now sort the labels based on their geographic position, top to
+        # bottom, left to right.  This is a very inefficient sort, but the
+        # assumption here is that there will not be a lot of labels to
+        # worry about.
+        #
+        sortedLabels = []
+        for label in unrelatedLabels:
+            index = 0
+            for sortedLabel in sortedLabels:
+                if (label.extents.y > sortedLabel.extents.y) \
+                   or ((label.extents.y == sortedLabel.extents.y) \
+                       and (label.extents.x > sortedLabel.extents.x)):
+                    index += 1
+                else:
+                    break
+            sortedLabels.insert(index, label)
+
+        return sortedLabels
 
     def phoneticSpellCurrentItem(self, string):
         """Phonetically spell the current flat review word or line.
