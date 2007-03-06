@@ -165,7 +165,7 @@ class BrailleGenerator:
         if settings.brailleVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
             text = ""
 
-            result = util.getAcceleratorAndShortcut(obj)
+            result = self._script.getAcceleratorAndShortcut(obj)
 
             accelerator = result[0]
             #shortcut = result[1]

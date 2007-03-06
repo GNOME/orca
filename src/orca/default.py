@@ -3445,6 +3445,55 @@ class Script(script.Script):
 # here so that they can be customized in application scripts if so desired.
 # 
 
+    def getAcceleratorAndShortcut(self, obj):
+        """Gets the accelerator string (and possibly shortcut) for the given
+        object.
+
+        Arguments:
+        - obj: the Accessible object
+
+        A list containing the accelerator and shortcut for the given object,
+        where the first element is the accelerator and the second element is
+        the shortcut.
+        """
+
+        action = obj.action
+
+        if not action:
+            return ["", ""]
+
+        # [[[TODO: WDW - assumes the first keybinding is all that we care about.
+        # Logged as bugzilla bug 319741.]]]
+        #
+        bindingStrings = action.getKeyBinding(0).split(';')
+
+        # [[[TODO: WDW - assumes menu items have three bindings.  Logged as
+        # bugzilla bug 319741.]]]
+        #
+        if len(bindingStrings) == 3:
+            #mnemonic       = bindingStrings[0]
+            fullShortcut   = bindingStrings[1]
+            accelerator    = bindingStrings[2]
+        elif len(bindingStrings) > 0:
+            fullShortcut   = bindingStrings[0]
+            accelerator    = ""
+        else:
+            fullShortcut   = ""
+            accelerator    = ""
+
+        fullShortcut = fullShortcut.replace("<","")
+        fullShortcut = fullShortcut.replace(">"," ")
+        fullShortcut = fullShortcut.replace(":"," ")
+
+        # If the accelerator string includes a Space, make sure we speak it.
+        #
+        if accelerator.endswith(" "):
+            accelerator += "space"
+        accelerator  = accelerator.replace("<","")
+        accelerator  = accelerator.replace(">"," ")
+
+        return [accelerator, fullShortcut]
+
     def getKnownApplications(self):
         """Retrieves the list of currently running apps for the desktop
         as a list of Accessible objects.

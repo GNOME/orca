@@ -166,7 +166,7 @@ class SpeechGenerator:
         Returns a list of utterances to be spoken.
         """
 
-        result = util.getAcceleratorAndShortcut(obj)
+        result = self._script.getAcceleratorAndShortcut(obj)
 
         accelerator = result[0]
         #shortcut = result[1]

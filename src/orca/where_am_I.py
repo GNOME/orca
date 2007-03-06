@@ -80,7 +80,7 @@ def whereAmI(obj, context, doubleClick, orcaKey):
          _getObjLabel(obj),
          _getObjName(obj),
          obj.role,
-         util.getAcceleratorAndShortcut(obj),
+         orca_state.activeScript.getAcceleratorAndShortcut(obj),
          _getObjLabel(obj.parent),
          _getObjName(obj.parent),
          obj.parent.role,
@@ -792,7 +792,7 @@ def _getObjMnemonic(obj):
     Returns the accellerator and/or shortcut for the object,
     if either exists.
     """
-    list = util.getAcceleratorAndShortcut(obj)
+    list = orca_state.activeScript.getAcceleratorAndShortcut(obj)
 
     text = ""
     if not list[1]:
@@ -807,7 +807,7 @@ def _getObjAccelerator(obj):
     """
     Returns the accelerator for the object, if it exists.
     """
-    list = util.getAcceleratorAndShortcut(obj)
+    list = orca_state.activeScript.getAcceleratorAndShortcut(obj)
 
     text = ""
     if list[0]:
@@ -820,7 +820,7 @@ def _getObjShortcut(obj):
     """
     Returns the shortcut for the object, if it exists.
     """
-    list = util.getAcceleratorAndShortcut(obj)
+    list = orca_state.activeScript.getAcceleratorAndShortcut(obj)
 
     text = ""
     if list[1]:
