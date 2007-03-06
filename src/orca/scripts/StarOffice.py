@@ -338,13 +338,13 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                 inputLineForCell = locateInputLine(obj)
 
             regions = []
-            text = util.getDisplayedText(obj)
+            text = self.getDisplayedText(obj)
             componentRegion = braille.Component(obj, text)
             regions.append(componentRegion)
 
             # If the spread sheet table cell has something in it, then we
             # want to append the name of the cell (which will be its location).
-            # Note that if the cell was empty, then util.getDisplayedText will
+            # Note that if the cell was empty, then self.getDisplayedText will
             # have already done this for us.
             #
             if obj.text:
@@ -1122,7 +1122,7 @@ class Script(default.Script):
         - label: the Setup dialog Label.
         """
 
-        text = util.getDisplayedText(label)
+        text = self.getDisplayedText(label)
         if text:
             speech.speak(text)
 
@@ -1197,7 +1197,7 @@ class Script(default.Script):
             debug.println(self.debugLevel,
                   "StarOffice.locusOfFocusChanged - Writer: text paragraph.")
 
-            result = util.getTextLineAtCaret(event.source)
+            result = self.getTextLineAtCaret(event.source)
             result[0] = result[0].decode("UTF-8")
 
             if oldLocusOfFocus.role == rolenames.ROLE_MENU_ITEM and \

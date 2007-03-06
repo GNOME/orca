@@ -190,7 +190,7 @@ class Script(default.Script):
                         self.textAttrsToDictionary(charAttributes[0])
                     weight = charDict.get('weight')
                     if weight and weight == '800':
-                        text = util.getDisplayedText(label)
+                        text = self.getDisplayedText(label)
 
                         # Only speak the screen label if we haven't already
                         # done so.
@@ -217,7 +217,7 @@ class Script(default.Script):
             # events for the same label. If we've already handled this
             # label, then just ignore it.
             #
-            text = util.getDisplayedText(label)
+            text = self.getDisplayedText(label)
             if text and not self.setupLabels.has_key(label):
                 # Most of the Setup Assistant screens have a useful piece
                 # of text starting with the word "Please". We want to speak
@@ -386,7 +386,7 @@ class Script(default.Script):
                           + "individual lines of text.")
 
             [string, caretOffset, startOffset] = \
-                util.getTextLineAtCaret(event.source)
+                self.getTextLineAtCaret(event.source)
             braille.displayMessage(string)
             if settings.enableSpeechIndentation:
                 self.speakTextIndentation(event.source, string)
@@ -449,7 +449,7 @@ class Script(default.Script):
                     if cell.role == rolenames.ROLE_TEXT:
                         regions.append(braille.Text(cell))
                         [string, caretOffset, startOffset] = \
-                            util.getTextLineAtCaret(cell)
+                            self.getTextLineAtCaret(cell)
                         utterances.append(string)
 
                 braille.displayRegions([regions, regions[0]])
@@ -918,7 +918,7 @@ class Script(default.Script):
             found = False
             for i in range(0, len(allLabels)):
                 if not found:
-                    text = util.getDisplayedText(allLabels[i])
+                    text = self.getDisplayedText(allLabels[i])
                     if text:
                         tokens = text.split()
                     else:

@@ -171,7 +171,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         text = ""
         if not self._script.inDocumentContent():
             text = util.appendString(text, util.getDisplayedLabel(obj))
-            text = util.appendString(text, util.getDisplayedText(obj))
+            text = util.appendString(text, self.getDisplayedText(obj))
         else:
             isLabelled = False
             relations = obj.relations
@@ -322,7 +322,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
         text = ""
         text = util.appendString(text, util.getDisplayedLabel(obj))
-        text = util.appendString(text, util.getDisplayedText(obj))
+        text = util.appendString(text, self.getDisplayedText(obj))
 
         # If there's no text for the link, expose part of the
         # link to the user if the image is in a link.
@@ -363,7 +363,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
         text = ""
         text = util.appendString(text, util.getDisplayedLabel(obj))
-        text = util.appendString(text, util.getDisplayedText(obj))
+        text = util.appendString(text, self.getDisplayedText(obj))
 
         # If there's no text for the link, expose part of the
         # URI to the user.
@@ -463,7 +463,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
         utterances.extend(self._getSpeechForObjectRole(obj))
 
-        [text, caretOffset, startOffset] = util.getTextLineAtCaret(obj)
+        [text, caretOffset, startOffset] = self.getTextLineAtCaret(obj)
         utterances.append(text)
 
         self._debugGenerator("Gecko._getSpeechForText",
@@ -689,7 +689,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
             # Well...now we skip the parent if it's accessible text is
             # a single EMBEDDED_OBJECT_CHARACTER.  The reason for this
-            # is that it util.py:getDisplayedText will end up coming
+            # is that it Script.getDisplayedText will end up coming
             # back to the children of an object for the text in the
             # children if an object's text contains an
             # EMBEDDED_OBJECT_CHARACTER.
@@ -699,13 +699,13 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 unicodeText = displayedText.decode("UTF-8")
                 if unicodeText \
                     and (len(unicodeText) == 1) \
-                    and (unicodeText[0] == util.EMBEDDED_OBJECT_CHARACTER):
+                    and (unicodeText[0] == self.EMBEDDED_OBJECT_CHARACTER):
                     parent = parent.parent
                     continue
 
             # Finally, put in the text and label (if they exist)
             #
-            text = util.getDisplayedText(parent)
+            text = self.getDisplayedText(parent)
             label = util.getDisplayedLabel(parent)
             if text and (text != label) and len(text):
                 utterances.append(text)
@@ -2054,7 +2054,7 @@ class Script(default.Script):
                 text = self.getUnicodeText(obj.parent)
                 if text:
                     for offset in range(0, len(text)):
-                        if text[offset] == util.EMBEDDED_OBJECT_CHARACTER:
+                        if text[offset] == self.EMBEDDED_OBJECT_CHARACTER:
                             if index == obj.index:
                                 obj.characterOffsetInParent = offset
                                 break
@@ -2095,11 +2095,11 @@ class Script(default.Script):
             unicodeText = self.getUnicodeText(obj)
             if unicodeText \
                and (unicodeText[characterOffset] \
-                    == util.EMBEDDED_OBJECT_CHARACTER):
+                    == self.EMBEDDED_OBJECT_CHARACTER):
                 index = -1
                 for character in range(0, characterOffset + 1):
                     if unicodeText[character] \
-                        == util.EMBEDDED_OBJECT_CHARACTER:
+                        == self.EMBEDDED_OBJECT_CHARACTER:
                         index += 1
                 obj.childrenIndices[characterOffset] = index
 
@@ -2327,7 +2327,7 @@ class Script(default.Script):
         useless = False
 
         if obj.role in [rolenames.ROLE_IMAGE, rolenames.ROLE_TABLE_CELL]:
-            text = util.getDisplayedText(obj)
+            text = self.getDisplayedText(obj)
             if (not text) or (len(text) == 0):
                 text = util.getDisplayedLabel(obj)
                 if (not text) or (len(text) == 0):
@@ -2404,7 +2404,7 @@ class Script(default.Script):
             character = self.getText(obj,
                                      characterOffset,
                                      characterOffset + 1).decode("UTF-8")
-            if character == util.EMBEDDED_OBJECT_CHARACTER:
+            if character == self.EMBEDDED_OBJECT_CHARACTER:
                 try:
                     childIndex = self.getChildIndex(obj, characterOffset)
                     return self.findFirstCaretContext(obj.child(childIndex), 0)
@@ -2454,7 +2454,7 @@ class Script(default.Script):
             unicodeText = self.getUnicodeText(obj)
             nextOffset = startOffset + 1
             if nextOffset < len(unicodeText):
-                if unicodeText[nextOffset] != util.EMBEDDED_OBJECT_CHARACTER:
+                if unicodeText[nextOffset] != self.EMBEDDED_OBJECT_CHARACTER:
                     return [obj, nextOffset]
                 elif obj.childCount:
                     child = obj.child(self.getChildIndex(obj, nextOffset))
@@ -2529,7 +2529,7 @@ class Script(default.Script):
             previousOffset = startOffset - 1
             if previousOffset >= 0:
                 if unicodeText[previousOffset] \
-                    != util.EMBEDDED_OBJECT_CHARACTER:
+                    != self.EMBEDDED_OBJECT_CHARACTER:
                     return [obj, previousOffset]
                 else:
                     return self.findPreviousCaretInOrder(
@@ -2954,7 +2954,7 @@ class Script(default.Script):
         contents = []
         text = self.getUnicodeText(obj)
         for offset in range(characterOffset, len(text)):
-            if text[offset] == util.EMBEDDED_OBJECT_CHARACTER:
+            if text[offset] == self.EMBEDDED_OBJECT_CHARACTER:
                 contents.extend(self.getObjectContentsAtOffset(
                     obj.child(self.getChildIndex(obj, offset)),
                     0))

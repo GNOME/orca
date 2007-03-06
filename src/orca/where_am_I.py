@@ -649,7 +649,7 @@ def _getObjName(obj):
     Returns the name to speak for an object.
     """
     text = ""
-    name = util.getDisplayedText(obj)
+    name = orca_state.activeScript.getDisplayedText(obj)
     if not name:
         name = obj.description
 
@@ -897,7 +897,7 @@ def _getTableCell(obj):
         return ""
     
     descendant = util.getRealActiveDescendant(obj)
-    text = util.getDisplayedText(descendant)
+    text = orca_state.activeScript.getDisplayedText(descendant)
 
     # For Evolution mail header list.
     if _getAppName().startswith("evolution") and text == "Status":

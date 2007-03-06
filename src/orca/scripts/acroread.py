@@ -404,7 +404,7 @@ class Script(default.Script):
         #
         if findToolbarActive:
             if newLocusOfFocus.role == rolenames.ROLE_TEXT:
-                newText = util.getTextLineAtCaret(newLocusOfFocus)
+                newText = self.getTextLineAtCaret(newLocusOfFocus)
                 if newText == preFindLine:
                     orca.setLocusOfFocus(event, oldLocusOfFocus, False)
                     return
@@ -488,7 +488,7 @@ class Script(default.Script):
         # left. Since this SEEMS limited to page up/page down, let's be
         # conservative until we have evidence to the contrary.
         #
-        textLine = util.getTextLineAtCaret(event.source)
+        textLine = self.getTextLineAtCaret(event.source)
         isOldLine = textLine == lastCaretMovedLine and \
                     (lastKey == "Page_Down" or lastKey == "Page_Up")
         if isOldLine:
@@ -560,7 +560,7 @@ class Script(default.Script):
         if event.source.name == findToolbarName:
             findToolbarActive = False
         elif locusOfFocus.text:
-            preFindLine = util.getTextLineAtCaret(locusOfFocus)
+            preFindLine = self.getTextLineAtCaret(locusOfFocus)
 
         default.Script.onWindowDeactivated(self, event)
 

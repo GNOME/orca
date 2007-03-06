@@ -327,7 +327,7 @@ class Script(default.Script):
             if message and message[0] == "\n":
                 message = message[1:]
 
-            chatRoomName = util.getDisplayedText(chatRoomTab)
+            chatRoomName = self.getDisplayedText(chatRoomTab)
             self.utterMessage(chatRoomName, message)
 
             # Add the latest message to the list of saved ones. For each

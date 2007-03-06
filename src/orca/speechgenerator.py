@@ -207,7 +207,7 @@ class SpeechGenerator:
             return []
 
     def _getSpeechForObjectName(self, obj):
-        name = util.getDisplayedText(obj)
+        name = self._script.getDisplayedText(obj)
         if name:
             return [name]
         elif obj.description:
@@ -815,7 +815,7 @@ class SpeechGenerator:
         if obj.role != rolenames.ROLE_PARAGRAPH:
             utterances.extend(self._getSpeechForObjectRole(obj))
 
-        [text, caretOffset, startOffset] = util.getTextLineAtCaret(obj)
+        [text, caretOffset, startOffset] = self._script.getTextLineAtCaret(obj)
         utterances.append(text)
 
         self._debugGenerator("_getSpeechForText",
@@ -1130,7 +1130,7 @@ class SpeechGenerator:
         """
 
         if already_focused:
-            utterances = [util.getDisplayedText(obj)]
+            utterances = [self._script.getDisplayedText(obj)]
         else:
             utterances = self._getDefaultSpeech(obj, already_focused)
 
@@ -1220,7 +1220,7 @@ class SpeechGenerator:
                     obj.role = rolenames.ROLE_TABLE_CELL
                     break
 
-        utterances.append(util.getDisplayedText(\
+        utterances.append(self._script.getDisplayedText(\
                           util.getRealActiveDescendant(obj)))
 
         # [[[TODO: WDW - HACK attempt to determine if this is a node;
@@ -1572,7 +1572,7 @@ class SpeechGenerator:
 
                 # Announce the label and text of the object in the hierarchy.
                 #
-                text = util.getDisplayedText(parent)
+                text = self._script.getDisplayedText(parent)
                 label = util.getDisplayedLabel(parent)
 
                 # Push announcement of cell after text and label.

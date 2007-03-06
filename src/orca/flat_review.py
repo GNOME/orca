@@ -572,7 +572,7 @@ class Context:
         #print "LOOKING AT '%s'" % unicodeString
         for i in range(0, len(unicodeString) + 1):
             if (i != len(unicodeString)) \
-               and (unicodeString[i] != util.EMBEDDED_OBJECT_CHARACTER):
+               and (unicodeString[i] != orca_state.activeScript.EMBEDDED_OBJECT_CHARACTER):
                 substringEndOffset += 1
             elif (substringEndOffset == substringStartOffset):
                 substringStartOffset += 1
@@ -666,7 +666,7 @@ class Context:
             #      % (offset, startOffset, endOffset, string)
             #if startOffset > offset:
             #    embedded = text.getText(offset, offset + 1).decode("UTF-8")
-            #    if embedded[0] == util.EMBEDDED_OBJECT_CHARACTER:
+            #    if embedded[0] == orca_state.activeScript.EMBEDDED_OBJECT_CHARACTER:
             #        offset = startOffset
 
             debug.println(debug.LEVEL_FINEST,

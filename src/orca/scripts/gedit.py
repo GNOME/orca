@@ -417,9 +417,9 @@ class Script(default.Script):
 
             allComboBoxes = self.findByRole(orca_state.locusOfFocus.app,
                                             rolenames.ROLE_COMBO_BOX)
-            phrase = util.getDisplayedText(allComboBoxes[0])
+            phrase = self.getDisplayedText(allComboBoxes[0])
             [text, caretOffset, startOffset] = \
-                util.getTextLineAtCaret(event.source)
+                self.getTextLineAtCaret(event.source)
             if text.lower().find(phrase) != -1:
                 speech.speak(_("Phrase found."))
                 utterances = self.speechGenerator.getSpeech(event.source, True)

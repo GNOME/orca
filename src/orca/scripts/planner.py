@@ -63,7 +63,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
         text = ""
         text = util.appendString(text, util.getDisplayedLabel(obj))
-        text = util.appendString(text, util.getDisplayedText(obj))
+        text = util.appendString(text, self.getDisplayedText(obj))
 
         # First special toggle button is the one in the toolbar and
         # that it has no name Application should implement an

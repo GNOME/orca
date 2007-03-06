@@ -294,7 +294,7 @@ class BrailleGenerator:
 
         text = ""
         text = util.appendString(text, util.getDisplayedLabel(obj))
-        text = util.appendString(text, util.getDisplayedText(obj))
+        text = util.appendString(text, self._script.getDisplayedText(obj))
         text = util.appendString(text, self._getTextForValue(obj))
         text = util.appendString(text, self._getTextForRole(obj))
 
@@ -333,7 +333,7 @@ class BrailleGenerator:
 
         text = ""
         text = util.appendString(text, util.getDisplayedLabel(obj))
-        text = util.appendString(text, util.getDisplayedText(obj))
+        text = util.appendString(text, self._script.getDisplayedText(obj))
         text = util.appendString(text, self._getTextForRole(obj))
         text = util.appendString(text, obj.description, ": ")
 
@@ -376,7 +376,7 @@ class BrailleGenerator:
 
         text = ""
         text = util.appendString(text, util.getDisplayedLabel(obj))
-        text = util.appendString(text, util.getDisplayedText(obj))
+        text = util.appendString(text, self._script.getDisplayedText(obj))
 
         if obj.state.count(atspi.Accessibility.STATE_CHECKED):
             text = util.appendString(text, "<x>")
@@ -406,7 +406,7 @@ class BrailleGenerator:
 
         text = ""
         text = util.appendString(text, util.getDisplayedLabel(obj))
-        text = util.appendString(text, util.getDisplayedText(obj))
+        text = util.appendString(text, self._script.getDisplayedText(obj))
 
         if obj.state.count(atspi.Accessibility.STATE_CHECKED):
             text = util.appendString(text, "<x>")
@@ -461,7 +461,7 @@ class BrailleGenerator:
             regions.append(braille.Region(label + " "))
             focusedRegionIndex = 1
 
-        displayedText = util.getDisplayedText(obj)
+        displayedText = self._script.getDisplayedText(obj)
         if displayedText:
             regions.append(braille.Region(displayedText))
 
@@ -586,7 +586,7 @@ class BrailleGenerator:
 
         text = ""
         text = util.appendString(text, util.getDisplayedLabel(obj))
-        text = util.appendString(text, util.getDisplayedText(obj))
+        text = util.appendString(text, self._script.getDisplayedText(obj))
 
         if obj.image:
             description = obj.image.imageDescription
@@ -661,7 +661,7 @@ class BrailleGenerator:
 
         text = ""
         text = util.appendString(text, util.getDisplayedLabel(obj))
-        text = util.appendString(text, util.getDisplayedText(obj))
+        text = util.appendString(text, self._script.getDisplayedText(obj))
         text = util.appendString(text, rolenames.getBrailleForRoleName(obj))
 
         if obj == orca_state.locusOfFocus:
@@ -704,7 +704,7 @@ class BrailleGenerator:
 
         text = ""
         text = util.appendString(text, util.getDisplayedLabel(obj))
-        text = util.appendString(text, util.getDisplayedText(obj))
+        text = util.appendString(text, self._script.getDisplayedText(obj))
 
         if obj == orca_state.locusOfFocus:
             text = util.appendString(text, self._getTextForAvailability(obj))
@@ -770,7 +770,7 @@ class BrailleGenerator:
 
         text = ""
         text = util.appendString(text, util.getDisplayedLabel(obj))
-        text = util.appendString(text, util.getDisplayedText(obj))
+        text = util.appendString(text, self._script.getDisplayedText(obj))
 
         if obj == orca_state.locusOfFocus:
             text = util.appendString(text, self._getTextForAvailability(obj))
@@ -829,7 +829,7 @@ class BrailleGenerator:
 
         text = ""
         text = util.appendString(text, util.getDisplayedLabel(obj))
-        text = util.appendString(text, util.getDisplayedText(obj))
+        text = util.appendString(text, self._script.getDisplayedText(obj))
 
         # In Java, some push buttons don't have label and text.
         # In this case, we'll add to presentation the object description,
@@ -861,7 +861,7 @@ class BrailleGenerator:
 
         text = ""
         text = util.appendString(text, util.getDisplayedLabel(obj))
-        text = util.appendString(text, util.getDisplayedText(obj))
+        text = util.appendString(text, self._script.getDisplayedText(obj))
 
         # In Java, some toggle buttons don't have label and text.
         # In this case, we'll add to presentation the object description,
@@ -898,7 +898,7 @@ class BrailleGenerator:
 
         text = ""
         text = util.appendString(text, util.getDisplayedLabel(obj))
-        text = util.appendString(text, util.getDisplayedText(obj))
+        text = util.appendString(text, self._script.getDisplayedText(obj))
 
         if obj.state.count(atspi.Accessibility.STATE_CHECKED):
             text = util.appendString(text, "&=y")
@@ -967,7 +967,7 @@ class BrailleGenerator:
         text = ""
         text = util.appendString(text, util.getDisplayedLabel(obj))
         # Ignore the text on the slider.
-        #text = util.appendString(text, util.getDisplayedText(obj))
+        #text = util.appendString(text, self._script.getDisplayedText(obj))
         text = util.appendString(text, self._getTextForValue(obj))
         text = util.appendString(text, self._getTextForRole(obj))
 
@@ -1409,7 +1409,7 @@ class BrailleGenerator:
                 # Announce the label and text of the object in the hierarchy.
                 #
                 label = util.getDisplayedLabel(parent)
-                text = util.getDisplayedText(parent)
+                text = self._script.getDisplayedText(parent)
                 regions.append(braille.Region(" "))
                 result = self.getBrailleRegions(parent, False)
                 regions.extend(result[0])

@@ -61,7 +61,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         if obj.name:
             name = obj.name
         else:
-            name = util.getDisplayedText(obj)
+            name = self.getDisplayedText(obj)
 
         if name:
             return [name]

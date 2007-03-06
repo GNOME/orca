@@ -63,6 +63,7 @@ except:
     pass
 import debug
 import eventsynthesizer
+import orca_state
 import settings
 import util
 
@@ -312,7 +313,7 @@ class Text(Region):
 
         self.accessible = accessible
         [string, self.caretOffset, self.lineOffset] = \
-                 util.getTextLineAtCaret(self.accessible)
+                 orca_state.activeScript.getTextLineAtCaret(self.accessible)
 
         # Sometimes, gnome-terminal will give us very odd values when
         # the user is editing using 'vi' and has positioned the caret
@@ -345,7 +346,7 @@ class Text(Region):
         """
 
         [string, caretOffset, lineOffset] = \
-                 util.getTextLineAtCaret(self.accessible)
+                 orca_state.activeScript.getTextLineAtCaret(self.accessible)
         cursorOffset = caretOffset - lineOffset
         if self.label:
             cursorOffset += len(self.label.decode("UTF-8")) + 1
