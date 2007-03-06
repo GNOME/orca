@@ -1019,27 +1019,3 @@ def getAcceleratorAndShortcut(obj):
     accelerator  = accelerator.replace(">"," ")
 
     return [accelerator, fullShortcut]
-
-def getKnownApplications():
-    """Retrieves the list of currently running apps for the desktop
-    as a list of Accessible objects.
-    """
-
-    debug.println(debug.LEVEL_FINEST,
-                  "util.getKnownApplications...")
-
-    apps = []
-    registry = atspi.Registry()
-    for i in range(0, registry.desktop.childCount):
-        try:
-            acc = registry.desktop.getChildAtIndex(i)
-            app = atspi.Accessible.makeAccessible(acc)
-            if app:
-                apps.insert(0, app)
-        except:
-            debug.printException(debug.LEVEL_FINEST)
-
-    debug.println(debug.LEVEL_FINEST,
-                  "...util.getKnownApplications")
-
-    return apps

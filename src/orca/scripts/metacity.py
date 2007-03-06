@@ -102,7 +102,7 @@ class Script(default.Script):
         # not.
         #
         found = False
-        for app in util.getKnownApplications():
+        for app in self.getKnownApplications():
             i = 0
             while i < app.childCount:
                 win = app.child(i)

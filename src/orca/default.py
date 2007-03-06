@@ -3445,6 +3445,30 @@ class Script(script.Script):
 # here so that they can be customized in application scripts if so desired.
 # 
 
+    def getKnownApplications(self):
+        """Retrieves the list of currently running apps for the desktop
+        as a list of Accessible objects.
+        """
+
+        debug.println(debug.LEVEL_FINEST,
+                      "Script.getKnownApplications...")
+
+        apps = []
+        registry = atspi.Registry()
+        for i in range(0, registry.desktop.childCount):
+            try:
+                acc = registry.desktop.getChildAtIndex(i)
+                app = atspi.Accessible.makeAccessible(acc)
+                if app:
+                    apps.insert(0, app)
+            except:
+                debug.printException(debug.LEVEL_FINEST)
+
+        debug.println(debug.LEVEL_FINEST,
+                      "...Script.getKnownApplications")
+
+        return apps
+
     def getObjects(self, root, onlyShowing=True):
         """Returns a list of all objects under the given root.  Objects
         are returned in no particular order - this function does a simple
@@ -3649,7 +3673,7 @@ class Script(script.Script):
 
         level = debug.LEVEL_OFF
 
-        apps = util.getKnownApplications()
+        apps = self.getKnownApplications()
         debug.println(level, "There are %d Accessible applications" % len(apps))
         for app in apps:
             debug.printDetails(level, "  App: ", app, False)
@@ -3700,7 +3724,7 @@ class Script(script.Script):
         """
 
         window = None
-        apps = util.getKnownApplications()
+        apps = self.getKnownApplications()
         for app in apps:
             for i in range(0, app.childCount):
                 try:

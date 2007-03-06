@@ -47,6 +47,15 @@
           Moved:
           def findByRole(root, role, onlyShowing=True):
 
+        * src/orca/default.py:
+          src/orca/hierarchical_presenter.py:
+          src/orca/util.py:
+          src/orca/scripts/metacity.py:
+          Another partial fix for bug #395548.
+
+          Moved:
+          def getKnownApplications():
+
 2007-03-05  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/debug.py:

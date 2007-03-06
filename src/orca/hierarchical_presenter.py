@@ -107,7 +107,7 @@ class HierarchicalPresenter(presentation_manager.PresentationManager):
         accessible
         """
 
-        apps = util.getKnownApplications()
+        apps = orca_state.activeScript.getKnownApplications()
         for i in range(0, len(apps)):
             if accessible.app == apps[i]:
                 return i
@@ -155,7 +155,7 @@ class HierarchicalPresenter(presentation_manager.PresentationManager):
     def _navigateInterObject(self, keystring):
         """Navigates between objects in the component hierarchy."""
 
-        apps = util.getKnownApplications()
+        apps = orca_state.activeScript.getKnownApplications()
         if keystring == "Up":
             if self._currentObject == self._currentObject.app:
                 index = max(self._getApplicationIndex(self._currentObject) - 1,
@@ -436,7 +436,7 @@ class HierarchicalPresenter(presentation_manager.PresentationManager):
 
         speech.speak(_("Switching to hierarchical navigation mode."))
 
-        apps = util.getKnownApplications()
+        apps = orca_state.activeScript.getKnownApplications()
 
         win = orca_state.activeScript.findActiveWindow()
 
