@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-09 12:23+0000\n"
-"PO-Revision-Date: 2007-02-09 12:23-0000\n"
+"POT-Creation-Date: 2007-03-06 13:26+0000\n"
+"PO-Revision-Date: 2007-03-06 13:26-0000\n"
 "Last-Translator: David Lodge <dave@cirt.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -228,293 +228,328 @@ msgstr "divide"
 msgid "multiply"
 msgstr "multiply"
 
-#: ../src/orca/default.py:88
+#: ../src/orca/default.py:103
 msgid "Performs left click on current flat review item."
 msgstr "Performs left click on current flat review item."
 
-#: ../src/orca/default.py:93
+#: ../src/orca/default.py:108
 msgid "Performs right click on current flat review item."
 msgstr "Performs right click on current flat review item."
 
-#: ../src/orca/default.py:98
+#: ../src/orca/default.py:113
 #: ../src/orca/scripts/acroread.py:264
 #: ../src/orca/scripts/Evolution.py:114
 msgid "Speaks entire document."
 msgstr "Speaks entire document."
 
-#: ../src/orca/default.py:103
+#: ../src/orca/default.py:118
 msgid "Performs the where am I operation."
 msgstr "Performs the where am I operation."
 
-#: ../src/orca/default.py:108
+#: ../src/orca/default.py:123
 msgid "Opens the Orca Find dialog."
 msgstr "Opens the Orca Find dialogue."
 
-#: ../src/orca/default.py:113
+#: ../src/orca/default.py:128
 msgid "Searches for the next instance of a string."
 msgstr "Searches for the next instance of a string."
 
-#: ../src/orca/default.py:118
+#: ../src/orca/default.py:133
 msgid "Searches for the previous instance of a string."
 msgstr "Searches for the previous instance of a string."
 
-#: ../src/orca/default.py:123
+#: ../src/orca/default.py:138
 msgid "Paints and prints the visible zones in the active window."
 msgstr "Paints and prints the visible zones in the active window."
 
-#: ../src/orca/default.py:128
+#: ../src/orca/default.py:143
 msgid "Enters and exits flat review mode."
 msgstr "Enters and exits flat review mode."
 
-#: ../src/orca/default.py:133
+#: ../src/orca/default.py:148
 msgid "Moves flat review to the beginning of the previous line."
 msgstr "Moves flat review to the beginning of the previous line."
 
-#: ../src/orca/default.py:138
+#: ../src/orca/default.py:153
 msgid "Moves flat review to the home position."
 msgstr "Moves flat review to the home position."
 
-#: ../src/orca/default.py:143
+#: ../src/orca/default.py:158
 msgid "Speaks the current flat review line."
 msgstr "Speaks the current flat review line."
 
-#: ../src/orca/default.py:148
+#: ../src/orca/default.py:163
 msgid "Moves flat review to the beginning of the next line."
 msgstr "Moves flat review to the beginning of the next line."
 
-#: ../src/orca/default.py:153
+#: ../src/orca/default.py:168
 msgid "Moves flat review to the end position."
 msgstr "Moves flat review to the end position."
 
-#: ../src/orca/default.py:158
+#: ../src/orca/default.py:173
 msgid "Moves flat review to the previous item or word."
 msgstr "Moves flat review to the previous item or word."
 
-#: ../src/orca/default.py:163
+#: ../src/orca/default.py:178
 msgid "Moves flat review to the word above the current word."
 msgstr "Moves flat review to the word above the current word."
 
-#: ../src/orca/default.py:168
+#: ../src/orca/default.py:183
 msgid "Speaks or spells the current flat review item or word."
 msgstr "Speaks or spells the current flat review item or word."
 
-#: ../src/orca/default.py:173
+#: ../src/orca/default.py:188
 msgid "Speaks the current flat review object."
 msgstr "Speaks the current flat review object."
 
-#: ../src/orca/default.py:178
+#: ../src/orca/default.py:193
 msgid "Moves flat review to the next item or word."
 msgstr "Moves flat review to the next item or word."
 
-#: ../src/orca/default.py:183
+#: ../src/orca/default.py:198
 msgid "Moves flat review to the word below the current word."
 msgstr "Moves flat review to the word below the current word."
 
-#: ../src/orca/default.py:188
+#: ../src/orca/default.py:203
 msgid "Moves flat review to the previous character."
 msgstr "Moves flat review to the previous character."
 
-#: ../src/orca/default.py:193
+#: ../src/orca/default.py:208
 msgid "Moves flat review to the end of the line."
 msgstr "Moves flat review to the end of the line."
 
-#: ../src/orca/default.py:198
+#: ../src/orca/default.py:213
 msgid "Speaks the current flat review character."
 msgstr "Speaks the current flat review character."
 
-#: ../src/orca/default.py:203
+#: ../src/orca/default.py:218
 msgid "Moves flat review to the next character."
 msgstr "Moves flat review to the next character."
 
-#: ../src/orca/default.py:208
+#: ../src/orca/default.py:223
 msgid "Toggles whether to read just the current table cell or the whole row."
 msgstr "Toggles whether to read just the current table cell or the whole row."
 
-#: ../src/orca/default.py:213
+#: ../src/orca/default.py:228
 msgid "Reads the attributes associated with the current text character."
 msgstr "Reads the attributes associated with the current text character."
 
-#: ../src/orca/default.py:218
+#: ../src/orca/default.py:233
 msgid "Reports information on current script."
 msgstr "Reports information on current script."
 
-#: ../src/orca/default.py:223
+#: ../src/orca/default.py:238
 msgid "Pans the braille display to the left."
 msgstr "Pans the braille display to the left."
 
-#: ../src/orca/default.py:229
+#: ../src/orca/default.py:244
 msgid "Pans the braille display to the right."
 msgstr "Pans the braille display to the right."
 
-#: ../src/orca/default.py:235
+#: ../src/orca/default.py:250
 msgid "Moves flat review to the bottom left."
 msgstr "Moves flat review to the bottom left."
 
-#: ../src/orca/default.py:240
+#: ../src/orca/default.py:255
 msgid "Returns to object with keyboard focus."
 msgstr "Returns to object with keyboard focus."
 
-#: ../src/orca/default.py:245
+#: ../src/orca/default.py:260
 msgid "Enters learn mode.  Press escape to exit learn mode."
 msgstr "Enters learn mode.  Press escape to exit learn mode."
 
-#: ../src/orca/default.py:250
+#: ../src/orca/default.py:265
 msgid "Exits learn mode."
 msgstr "Exits learn mode."
 
-#: ../src/orca/default.py:255
+#: ../src/orca/default.py:270
 msgid "Decreases the speech rate."
 msgstr "Decreases the speech rate."
 
-#: ../src/orca/default.py:260
+#: ../src/orca/default.py:275
 msgid "Increases the speech rate."
 msgstr "Increases the speech rate."
 
-#: ../src/orca/default.py:265
+#: ../src/orca/default.py:280
 msgid "Decreases the speech pitch."
 msgstr "Decreases the speech pitch."
 
-#: ../src/orca/default.py:270
+#: ../src/orca/default.py:285
 msgid "Increases the speech pitch."
 msgstr "Increases the speech pitch."
 
-#: ../src/orca/default.py:275
+#: ../src/orca/default.py:290
 msgid "Quits Orca"
 msgstr "Quits Orca"
 
-#: ../src/orca/default.py:280
+#: ../src/orca/default.py:295
 msgid "Toggles keystroke recording on and off."
 msgstr "Toggles keystroke recording on and off."
 
-#: ../src/orca/default.py:285
+#: ../src/orca/default.py:300
 msgid "Displays the preferences configuration dialog."
 msgstr "Displays the preferences configuration dialogue."
 
-#: ../src/orca/default.py:290
+#: ../src/orca/default.py:305
 msgid "Reloads user settings and reinitializes services as necessary."
 msgstr "Reloads user settings and reinitialises services as necessary."
 
-#: ../src/orca/default.py:295
+#: ../src/orca/default.py:310
 msgid "Toggles the silencing of speech."
 msgstr "Toggles the silencing of speech."
 
-#: ../src/orca/default.py:300
+#: ../src/orca/default.py:315
 msgid "Prints a debug listing of all known applications to the console where Orca is running."
 msgstr "Prints a debug listing of all known applications to the console where Orca is running."
 
-#: ../src/orca/default.py:305
+#: ../src/orca/default.py:320
 msgid "Cycles the debug level at run time."
 msgstr "Cycles the debug level at run time."
 
-#: ../src/orca/default.py:310
+#: ../src/orca/default.py:325
 msgid "Prints debug information about the currently active application to the console where Orca is running."
 msgstr "Prints debug information about the currently active application to the console where Orca is running."
 
-#: ../src/orca/default.py:315
+#: ../src/orca/default.py:330
 msgid "Prints debug information about the ancestry of the object with focus"
 msgstr "Prints debug information about the ancestry of the object with focus"
 
-#: ../src/orca/default.py:320
+#: ../src/orca/default.py:335
 msgid "Prints debug information about the application with focus"
 msgstr "Prints debug information about the application with focus"
 
-#: ../src/orca/default.py:325
+#: ../src/orca/default.py:340
 msgid "Switches to the next presentation manager."
 msgstr "Switches to the next presentation manager."
 
-#: ../src/orca/default.py:1200
-#: ../src/orca/default.py:1427
-#: ../src/orca/default.py:2990
-#: ../src/orca/default.py:3124
-#: ../src/orca/default.py:3129
-#: ../src/orca/default.py:3222
-#: ../src/orca/default.py:3227
-#: ../src/orca/Gecko.py:2733
+#: ../src/orca/default.py:1225
+#: ../src/orca/default.py:1452
+#: ../src/orca/default.py:3021
+#: ../src/orca/default.py:3155
+#: ../src/orca/default.py:3160
+#: ../src/orca/default.py:3253
+#: ../src/orca/default.py:3258
+#: ../src/orca/Gecko.py:3046
 #: ../src/orca/scripts/Evolution.py:399
 #: ../src/orca/scripts/Evolution.py:884
-#: ../src/orca/scripts/StarOffice.py:1801
-#: ../src/orca/scripts/StarOffice.py:1810
+#: ../src/orca/scripts/StarOffice.py:1808
+#: ../src/orca/scripts/StarOffice.py:1817
 #: ../src/orca/where_am_I.py:994
 msgid "blank"
 msgstr "blank"
 
-#: ../src/orca/default.py:1280
+#: ../src/orca/default.py:1305
 msgid "1 space "
 msgstr "1 space "
 
-#: ../src/orca/default.py:1282
+#: ../src/orca/default.py:1307
 #, python-format
 msgid "%d spaces "
 msgstr "%d spaces "
 
-#: ../src/orca/default.py:1285
+#: ../src/orca/default.py:1310
 msgid "1 tab "
 msgstr "1 tab "
 
-#: ../src/orca/default.py:1287
+#: ../src/orca/default.py:1312
 #, python-format
 msgid "%d tabs "
 msgstr "%d tabs "
 
-#: ../src/orca/default.py:1681
+#: ../src/orca/default.py:1706
 #: ../src/orca/where_am_I.py:603
 #, python-format
 msgid "tree level %d"
 msgstr "tree level %d"
 
-#: ../src/orca/default.py:2086
+#: ../src/orca/default.py:2111
 msgid "entire document selected"
 msgstr "entire document selected"
 
-#: ../src/orca/default.py:2546
+#: ../src/orca/default.py:2572
 msgid "Speak "
 msgstr "Speak "
 
-#: ../src/orca/default.py:2549
+#: ../src/orca/default.py:2575
 msgid "row"
 msgstr "row"
 
-#: ../src/orca/default.py:2551
+#: ../src/orca/default.py:2577
 #: ../src/orca/rolenames.py:470
 #: ../src/orca/rolenames.py:472
 msgid "cell"
 msgstr "cell"
 
-#: ../src/orca/default.py:2600
+#: ../src/orca/default.py:2626
 #: ../src/orca/where_am_I.py:1050
 msgid "bold"
 msgstr "bold"
 
-#: ../src/orca/default.py:2602
+#: ../src/orca/default.py:2628
 msgid " pixels"
 msgstr " pixels"
 
-#: ../src/orca/default.py:2716
+#: ../src/orca/default.py:2742
 msgid "Entering learn mode.  Press any key to hear its function. "
 msgstr "Entering learn mode.  Press any key to hear its function. "
 
-#: ../src/orca/default.py:2717
+#: ../src/orca/default.py:2743
 msgid "To exit learn mode, press the escape key."
 msgstr "To exit learn mode, press the escape key."
 
-#: ../src/orca/default.py:2718
+#: ../src/orca/default.py:2744
 msgid "Learn mode.  Press escape to exit."
 msgstr "Learn mode.  Press escape to exit."
 
-#: ../src/orca/default.py:2730
-#: ../src/orca/default.py:2731
+#: ../src/orca/default.py:2756
+#: ../src/orca/default.py:2757
 msgid "Exiting learn mode."
 msgstr "Exiting learn mode."
 
-#: ../src/orca/default.py:2992
-#: ../src/orca/default.py:3131
+#: ../src/orca/default.py:3023
+#: ../src/orca/default.py:3162
 msgid "white space"
 msgstr "white space"
 
-#: ../src/orca/default.py:3344
-#: ../src/orca/default.py:3345
+#: ../src/orca/default.py:3375
+#: ../src/orca/default.py:3376
 msgid "string not found"
 msgstr "string not found"
+
+#: ../src/orca/default.py:3609
+msgid "page selected from cursor position"
+msgstr "page selected from cursor position"
+
+#: ../src/orca/default.py:3613
+msgid "page selected to cursor position"
+msgstr "page selected to cursor position"
+
+#: ../src/orca/default.py:3617
+msgid "line selected down from cursor position"
+msgstr "line selected down from cursor position"
+
+#: ../src/orca/default.py:3621
+msgid "line selected up from cursor position"
+msgstr "line selected up from cursor position"
+
+#: ../src/orca/default.py:3625
+msgid "document selected to cursor position"
+msgstr "document selected to cursor position"
+
+#: ../src/orca/default.py:3629
+msgid "document selected from cursor position"
+msgstr "document selected from cursor position"
+
+#: ../src/orca/default.py:3667
+#: ../src/orca/J2SE-access-bridge.py:74
+#: ../src/orca/speechgenerator.py:955
+msgid "selected"
+msgstr "selected"
+
+#: ../src/orca/default.py:3675
+#: ../src/orca/J2SE-access-bridge.py:78
+msgid "unselected"
+msgstr "unselected"
 
 #: ../src/orca/espeechfactory.py:94
 msgid "Emacspeak Speech Services"
@@ -528,41 +563,41 @@ msgstr "Wrapping to Bottom"
 msgid "Wrapping to Top"
 msgstr "Wrapping to Top"
 
-#: ../src/orca/focus_tracking_presenter.py:739
+#: ../src/orca/focus_tracking_presenter.py:755
 msgid "No focus"
 msgstr "No focus"
 
-#: ../src/orca/focus_tracking_presenter.py:834
+#: ../src/orca/focus_tracking_presenter.py:850
 msgid "Switching to focus tracking mode."
 msgstr "Switching to focus tracking mode."
 
-#: ../src/orca/Gecko.py:1241
+#: ../src/orca/Gecko.py:1320
 #: ../src/orca/rolenames.py:332
 #: ../src/orca/scripts/acroread.py:251
-#: ../src/orca/scripts/StarOffice.py:1084
+#: ../src/orca/scripts/StarOffice.py:1091
 msgid "link"
 msgstr "link"
 
-#: ../src/orca/Gecko.py:1260
+#: ../src/orca/Gecko.py:1339
 msgid "Loading.  Please wait."
 msgstr "Loading.  Please wait."
 
-#: ../src/orca/Gecko.py:1267
+#: ../src/orca/Gecko.py:1345
 #, python-format
 msgid "Finished loading %s."
 msgstr "Finished loading %s."
 
-#: ../src/orca/Gecko.py:1272
+#: ../src/orca/Gecko.py:1351
 msgid "Finished loading."
 msgstr "Finished loading."
 
-#: ../src/orca/Gecko.py:3037
-#: ../src/orca/Gecko.py:3048
+#: ../src/orca/Gecko.py:3419
+#: ../src/orca/Gecko.py:3430
 msgid "No more headings."
 msgstr "No more headings."
 
-#: ../src/orca/Gecko.py:3059
-#: ../src/orca/Gecko.py:3070
+#: ../src/orca/Gecko.py:3441
+#: ../src/orca/Gecko.py:3452
 msgid "No more chunks."
 msgstr "No more chunks."
 
@@ -597,20 +632,9 @@ msgstr "faster."
 msgid "slower."
 msgstr "slower."
 
-#: ../src/orca/hierarchical_presenter.py:436
+#: ../src/orca/hierarchical_presenter.py:437
 msgid "Switching to hierarchical navigation mode."
 msgstr "Switching to hierarchical navigation mode."
-
-#: ../src/orca/J2SE-access-bridge.py:74
-#: ../src/orca/speechgenerator.py:955
-#: ../src/orca/util.py:1531
-msgid "selected"
-msgstr "selected"
-
-#: ../src/orca/J2SE-access-bridge.py:78
-#: ../src/orca/util.py:1539
-msgid "unselected"
-msgstr "unselected"
 
 #. KeyBindings from the default script, in default.py (Orca's default)
 #.
@@ -1156,48 +1180,48 @@ msgstr "goodbye."
 msgid "Goodbye."
 msgstr "Goodbye."
 
-#: ../src/orca/orca.py:1209
+#: ../src/orca/orca.py:1211
 msgid "Usage: orca [OPTION...]"
 msgstr "Usage: orca [OPTION...]"
 
-#: ../src/orca/orca.py:1211
+#: ../src/orca/orca.py:1213
 msgid "-?, --help                   Show this help message"
 msgstr "-?, --help                   Show this help message"
 
-#: ../src/orca/orca.py:1212
+#: ../src/orca/orca.py:1214
 #, python-format
 msgid "-v, --version                %s"
 msgstr "-v, --version                %s"
 
-#: ../src/orca/orca.py:1213
+#: ../src/orca/orca.py:1215
 msgid "-s, --setup, --gui-setup     Set up user preferences"
 msgstr "-s, --setup, --gui-setup     Set up user preferences"
 
-#: ../src/orca/orca.py:1214
+#: ../src/orca/orca.py:1216
 msgid "-t, --text-setup             Set up user preferences (text version)"
 msgstr "-t, --text-setup             Set up user preferences (text version)"
 
-#: ../src/orca/orca.py:1215
+#: ../src/orca/orca.py:1217
 msgid "-n, --no-setup               Skip set up of user preferences"
 msgstr "-n, --no-setup               Skip set up of user preferences"
 
-#: ../src/orca/orca.py:1216
+#: ../src/orca/orca.py:1218
 msgid "-u, --user-prefs-dir=dirname Use alternate directory for user preferences"
 msgstr "-u, --user-prefs-dir=dirname Use alternate directory for user preferences"
 
-#: ../src/orca/orca.py:1217
+#: ../src/orca/orca.py:1219
 msgid "-e, --enable=[speech|braille|braille-monitor|magnifier|main-window] Force use of option"
 msgstr "-e, --enable=[speech|braille|braille-monitor|magnifier|main-window] Force use of option"
 
-#: ../src/orca/orca.py:1218
+#: ../src/orca/orca.py:1220
 msgid "-d, --disable=[speech|braille|braille-monitor|magnifier|main-window] Prevent use of option"
 msgstr "-d, --disable=[speech|braille|braille-monitor|magnifier|main-window] Prevent use of option"
 
-#: ../src/orca/orca.py:1219
+#: ../src/orca/orca.py:1221
 msgid "-q, --quit                   Quits Orca (if shell script used)"
 msgstr "-q, --quit                   Quits Orca (if shell script used)"
 
-#: ../src/orca/orca.py:1221
+#: ../src/orca/orca.py:1223
 msgid ""
 "If Orca has not been previously set up by the user, Orca\n"
 "will automatically launch the preferences set up unless\n"
@@ -1207,7 +1231,7 @@ msgstr ""
 "will automatically launch the preferences set up unless\n"
 "the -n or --no-setup option is used."
 
-#: ../src/orca/orca.py:1223
+#: ../src/orca/orca.py:1225
 msgid "Report bugs to orca-list@gnome.org."
 msgstr "Report bugs to orca-list@gnome.org."
 
@@ -2631,7 +2655,7 @@ msgstr "document"
 #. We've entered a table.  Announce the dimensions.
 #.
 #: ../src/orca/scripts/acroread.py:290
-#: ../src/orca/scripts/StarOffice.py:793
+#: ../src/orca/scripts/StarOffice.py:799
 #, python-format
 msgid "table with %d rows and %d columns."
 msgstr "table with %d rows and %d columns."
@@ -2639,7 +2663,7 @@ msgstr "table with %d rows and %d columns."
 #. We've left a table.  Announce this fact.
 #.
 #: ../src/orca/scripts/acroread.py:297
-#: ../src/orca/scripts/StarOffice.py:796
+#: ../src/orca/scripts/StarOffice.py:802
 msgid "leaving table."
 msgstr "leaving table."
 
@@ -2905,113 +2929,90 @@ msgstr "on"
 msgid "off"
 msgstr "off"
 
-#: ../src/orca/scripts/StarOffice.py:719
+#: ../src/orca/scripts/StarOffice.py:725
 msgid "Speaks the contents of the input line."
 msgstr "Speaks the contents of the input line."
 
-#: ../src/orca/scripts/StarOffice.py:724
+#: ../src/orca/scripts/StarOffice.py:730
 msgid "Set the row to use as dynamic column headers when speaking calc cells."
 msgstr "Set the row to use as dynamic column headers when speaking calc cells."
 
-#: ../src/orca/scripts/StarOffice.py:729
+#: ../src/orca/scripts/StarOffice.py:735
 msgid "Set the column to use as dynamic row headers to use when speaking calc cells."
 msgstr "Set the column to use as dynamic row headers to use when speaking calc cells."
 
-#: ../src/orca/scripts/StarOffice.py:818
+#: ../src/orca/scripts/StarOffice.py:824
 msgid "empty"
 msgstr "empty"
 
-#: ../src/orca/scripts/StarOffice.py:887
+#: ../src/orca/scripts/StarOffice.py:893
 msgid "Dynamic column header cleared."
 msgstr "Dynamic column header cleared."
 
-#: ../src/orca/scripts/StarOffice.py:894
+#: ../src/orca/scripts/StarOffice.py:900
 msgid "Dynamic column header set for row "
 msgstr "Dynamic column header set for row "
 
-#: ../src/orca/scripts/StarOffice.py:950
+#: ../src/orca/scripts/StarOffice.py:956
 msgid "Dynamic row header cleared."
 msgstr "Dynamic row header cleared."
 
-#: ../src/orca/scripts/StarOffice.py:957
+#: ../src/orca/scripts/StarOffice.py:963
 #, python-format
 msgid "Dynamic row header set for column %s"
 msgstr "Dynamic row header set for column %s"
 
-#: ../src/orca/scripts/StarOffice.py:1102
+#: ../src/orca/scripts/StarOffice.py:1109
 msgid "Welcome to StarOffice"
 msgstr "Welcome to StarOffice"
 
-#: ../src/orca/scripts/StarOffice.py:1197
+#: ../src/orca/scripts/StarOffice.py:1204
 msgid "Text Document"
 msgstr "Text Document"
 
-#: ../src/orca/scripts/StarOffice.py:1257
-#: ../src/orca/scripts/StarOffice.py:1479
+#: ../src/orca/scripts/StarOffice.py:1264
+#: ../src/orca/scripts/StarOffice.py:1486
 msgid "Spellcheck:"
 msgstr "Spellcheck:"
 
-#: ../src/orca/scripts/StarOffice.py:1285
+#: ../src/orca/scripts/StarOffice.py:1292
 msgid "Note that the Scroll Down button has to be pressed numerous times."
 msgstr "Note that the Scroll Down button has to be pressed numerous times."
 
-#: ../src/orca/scripts/StarOffice.py:1299
+#: ../src/orca/scripts/StarOffice.py:1306
 msgid "License Agreement Accept button now has focus."
 msgstr "Licence Agreement Accept button now has focus."
 
-#: ../src/orca/scripts/StarOffice.py:1322
+#: ../src/orca/scripts/StarOffice.py:1329
 msgid "First name"
 msgstr "First name"
 
-#: ../src/orca/scripts/StarOffice.py:1393
+#: ../src/orca/scripts/StarOffice.py:1400
 msgid "Move to cell"
 msgstr "Move to cell"
 
-#: ../src/orca/scripts/StarOffice.py:1535
+#: ../src/orca/scripts/StarOffice.py:1542
 msgid "Writer"
 msgstr "Writer"
 
-#: ../src/orca/scripts/StarOffice.py:1691
+#: ../src/orca/scripts/StarOffice.py:1698
 msgid " has formula"
 msgstr " has formula"
 
-#: ../src/orca/scripts/StarOffice.py:1737
+#: ../src/orca/scripts/StarOffice.py:1744
 msgid "Cell "
 msgstr "Cell "
 
-#: ../src/orca/scripts/Thunderbird.py:125
-#: ../src/orca/scripts/Thunderbird.py:130
-#: ../src/orca/scripts/Thunderbird.py:518
-#: ../src/orca/scripts/Thunderbird.py:523
-#, python-format
-msgid "%s text %s %s"
-msgstr "%s text %s %s"
-
-#: ../src/orca/scripts/Thunderbird.py:127
-#: ../src/orca/scripts/Thunderbird.py:520
-#, python-format
-msgid "%s text %s"
-msgstr "%s text %s"
-
-#: ../src/orca/scripts/Thunderbird.py:132
-#: ../src/orca/scripts/Thunderbird.py:525
-#, python-format
-msgid "text %s %s"
-msgstr "text %s %s"
-
-#: ../src/orca/scripts/Thunderbird.py:218
-msgid ":"
-msgstr ":"
-
 #. Don't speak chrome URLs.
-#: ../src/orca/scripts/Thunderbird.py:356
-#: ../src/orca/scripts/Thunderbird.py:445
-#: ../src/orca/scripts/Thunderbird.py:460
+#.
+#: ../src/orca/scripts/Thunderbird.py:184
+#: ../src/orca/scripts/Thunderbird.py:264
+#: ../src/orca/scripts/Thunderbird.py:279
 msgid "chrome://"
 msgstr "chrome://"
 
-#: ../src/orca/scripts/Thunderbird.py:452
-#: ../src/orca/scripts/Thunderbird.py:467
+#: ../src/orca/scripts/Thunderbird.py:272
+#: ../src/orca/scripts/Thunderbird.py:287
 #, python-format
 msgid "%s panel"
 msgstr "%s panel"
@@ -3024,43 +3025,47 @@ msgstr "%s panel"
 #. translation is by running the application and then viewing its
 #. name in the main window of at-poke.
 #.
-#: ../src/orca/settings.py:539
+#: ../src/orca/settings.py:532
 msgid "[\\S\\s]*StarOffice[\\s\\S]*"
 msgstr "[\\S\\s]*StarOffice[\\s\\S]*"
 
-#: ../src/orca/settings.py:540
+#: ../src/orca/settings.py:533
 msgid "soffice.bin"
 msgstr "soffice.bin"
 
-#: ../src/orca/settings.py:541
+#: ../src/orca/settings.py:534
 msgid "[Ee]volution"
 msgstr "[Ee]volution"
 
-#: ../src/orca/settings.py:542
+#: ../src/orca/settings.py:535
 msgid "Deer Park"
 msgstr "Deer Park"
 
-#: ../src/orca/settings.py:543
+#: ../src/orca/settings.py:536
 msgid "yelp"
 msgstr "yelp"
 
-#: ../src/orca/settings.py:544
+#: ../src/orca/settings.py:537
 msgid "Bon Echo"
 msgstr "Bon Echo"
 
-#: ../src/orca/settings.py:545
+#: ../src/orca/settings.py:538
 msgid "Minefield"
 msgstr "Minefield"
 
-#: ../src/orca/settings.py:546
+#: ../src/orca/settings.py:539
+msgid "Mail/News"
+msgstr "Mail/News"
+
+#: ../src/orca/settings.py:540
 msgid "bug-buddy"
 msgstr "bug-buddy"
 
-#: ../src/orca/settings.py:547
+#: ../src/orca/settings.py:541
 msgid "vte"
 msgstr "vte"
 
-#: ../src/orca/settings.py:548
+#: ../src/orca/settings.py:542
 msgid "time-admin"
 msgstr "time-admin"
 
@@ -3092,42 +3097,18 @@ msgstr "not selected"
 msgid "tear off"
 msgstr "tear off"
 
-#: ../src/orca/util.py:575
+#: ../src/orca/util.py:567
 msgid "Misspelled word: "
 msgstr "Misspelt word: "
 
-#: ../src/orca/util.py:576
+#: ../src/orca/util.py:568
 msgid " Context is "
 msgstr " Context is "
 
-#: ../src/orca/util.py:691
+#: ../src/orca/util.py:683
 #, python-format
 msgid " %d %s characters "
 msgstr " %d %s characters "
-
-#: ../src/orca/util.py:1474
-msgid "page selected from cursor position"
-msgstr "page selected from cursor position"
-
-#: ../src/orca/util.py:1478
-msgid "page selected to cursor position"
-msgstr "page selected to cursor position"
-
-#: ../src/orca/util.py:1482
-msgid "line selected down from cursor position"
-msgstr "line selected down from cursor position"
-
-#: ../src/orca/util.py:1486
-msgid "line selected up from cursor position"
-msgstr "line selected up from cursor position"
-
-#: ../src/orca/util.py:1490
-msgid "document selected to cursor position"
-msgstr "document selected to cursor position"
-
-#: ../src/orca/util.py:1494
-msgid "document selected from cursor position"
-msgstr "document selected from cursor position"
 
 #. child(0) is the popup list
 #. parent is the page tab list
@@ -3237,6 +3218,14 @@ msgstr "item %d of %d"
 msgid "Read"
 msgstr "Read"
 
+#~ msgid "%s text %s %s"
+#~ msgstr "%s text %s %s"
+#~ msgid "%s text %s"
+#~ msgstr "%s text %s"
+#~ msgid "text %s %s"
+#~ msgstr "text %s %s"
+#~ msgid ":"
+#~ msgstr ":"
 #~ msgid "tick"
 #~ msgstr "tick"
 #~ msgid "semi"
