@@ -51,6 +51,15 @@
           def drawOutline(x, y, width, height, erasePrevious=True):
           def outlineAccessible(accessible, erasePrevious=True):
 
+        * src/orca/default.py:
+          src/orca_focus_tracking_presenter.py:
+          src/orca/util.py:
+          Another partial fix for bug #395548.
+
+          Moved:
+          def saveOldAppSettings():
+          def restoreOldAppSettings(prefsDict):
+
 2007-03-04  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py, src/orca/default.py, src/orca/flat_review.py:

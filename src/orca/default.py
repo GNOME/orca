@@ -3416,6 +3416,23 @@ class Script(script.Script):
 # here so that they can be customized in application scripts if so desired.
 # 
 
+    def saveOldAppSettings(self):
+        """Save a copy of all the existing application specific settings
+        (as specified by the settings.userCustomizableSettings dictionary)."""
+
+        return orca_prefs.readPreferences()
+
+    def restoreOldAppSettings(self, prefsDict):
+        """Restore a copy of all the previous saved application settings.
+
+        Arguments:
+        - prefsDict: the dictionary containing the old application settings.
+        """
+
+        for key in settings.userCustomizableSettings:
+            if prefsDict.has_key(key):
+                settings.__dict__[key] = prefsDict[key]
+
     ########################################################################
     #                                                                      #
     # METHODS FOR DRAWING RECTANGLES AROUND OBJECTS ON THE SCREEN          #

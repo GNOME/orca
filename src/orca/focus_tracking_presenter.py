@@ -481,14 +481,6 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                        or ((event.type == "focus:") \
                            and (event.source.role == rolenames.ROLE_FRAME)):
 
-                        # If old ("factory") settings don't exist yet, save
-                        # a set, else restore the old application settings.
-                        #
-                        if not self._oldAppSettings:
-                            self._oldAppSettings = util.saveOldAppSettings()
-                        else:
-                            util.restoreOldAppSettings(self._oldAppSettings)
-
                         # We'll let someone else decide if it's important
                         # to stop speech or not.
                         #speech.stop()
@@ -496,6 +488,16 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                             self._getScript(event.source.app)
                         debug.println(debug.LEVEL_FINE, "ACTIVE SCRIPT: " \
                                       + orca_state.activeScript.name)
+
+                        # If old ("factory") settings don't exist yet, save
+                        # a set, else restore the old application settings.
+                        #
+                        if not self._oldAppSettings:
+                            self._oldAppSettings = \
+                                  orca_state.activeScript.saveOldAppSettings()
+                        else:
+                            orca_state.activeScript.restoreOldAppSettings( \
+                                                         self._oldAppSettings)
 
                         # Load in the application specific settings for the
                         # app for this event (if found).
