@@ -127,6 +127,18 @@
           def getLinkIndex(obj, characterIndex):
           def isWordDelimiter(character):
 
+        * src/orca/scripts/acroread.py:
+          src/orca/scripts/Evolution.py:
+          src/orca/util.py:
+          src/orca/default.py:
+          src/orca/where_am_I.py:
+          Another partial fix for bug #395548.
+
+          Moved:
+          def textLines(obj):
+          def _addRepeatSegment(segment, line, respectPunctuation=True):
+          def adjustForRepeats(line):
+
 2007-03-05  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/debug.py:

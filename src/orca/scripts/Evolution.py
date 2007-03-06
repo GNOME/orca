@@ -307,7 +307,7 @@ class Script(default.Script):
             panel = atspi.Accessible.makeAccessible(accPanel)
             accTextObj = panel.accessible.getChildAtIndex(0)
             textObj = atspi.Accessible.makeAccessible(accTextObj)
-            for [context, acss] in util.textLines(textObj):
+            for [context, acss] in default.Script.textLines(textObj):
                 yield [context, acss]
 
     def sayAll(self, inputEvent):

@@ -979,7 +979,7 @@ def _getTextContents(obj, doubleClick):
             (len(line), startOffset, endOffset, line))
 
         if len(line):
-            line = util.adjustForRepeats(line)
+            line = orca_state.activeScript.adjustForRepeats(line)
             textContents = line
 
         else:

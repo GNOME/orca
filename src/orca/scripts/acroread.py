@@ -576,7 +576,7 @@ class Script(default.Script):
         """
 
         for textObj in getNextTextObject(obj, nodeList):
-            for [context, acss] in util.textLines(textObj):
+            for [context, acss] in default.Script.textLines(textObj):
                 yield [context, acss]
 
     def sayAll(self, inputEvent):

@@ -1132,7 +1132,7 @@ class Script(script.Script):
         if not orca_state.locusOfFocus:
             pass
         elif orca_state.locusOfFocus.text:
-            speech.sayAll(util.textLines(orca_state.locusOfFocus),
+            speech.sayAll(self.textLines(orca_state.locusOfFocus),
                           self.__sayAllProgressCallback)
         else:
             speech.speakUtterances(
@@ -1185,7 +1185,7 @@ class Script(script.Script):
             else:
                 voice = self.voices[settings.DEFAULT_VOICE]
 
-            phrase = util.adjustForRepeats(phrase)
+            phrase = self.adjustForRepeats(phrase)
             speech.speak(phrase, voice)
             self.speakTextSelectionState(obj, startOffset, endOffset)
 
@@ -1213,7 +1213,7 @@ class Script(script.Script):
 
             if settings.enableSpeechIndentation:
                 self.speakTextIndentation(obj, line)
-            line = util.adjustForRepeats(line)
+            line = self.adjustForRepeats(line)
             speech.speak(line, voice)
             self.speakTextSelectionState(obj, startOffset, caretOffset)
 
@@ -1276,7 +1276,7 @@ class Script(script.Script):
         else:
             voice = self.voices[settings.DEFAULT_VOICE]
 
-        word = util.adjustForRepeats(word)
+        word = self.adjustForRepeats(word)
         orca_state.lastWord = word
         speech.speak(word, voice)
         self.speakTextSelectionState(obj, startOffset, endOffset)
@@ -1393,7 +1393,7 @@ class Script(script.Script):
         else:
             voice = self.voices[settings.DEFAULT_VOICE]
 
-        word = util.adjustForRepeats(word)
+        word = self.adjustForRepeats(word)
         speech.speak(word, voice)
 
     def sayCharacter(self, obj):
@@ -3036,7 +3036,7 @@ class Script(script.Script):
             elif clickCount == 3:
                 self.phoneticSpellCurrentItem(string)
             else:
-                string = util.adjustForRepeats(string)
+                string = self.adjustForRepeats(string)
                 speech.speak(string)
 
         self.updateBrailleReview()
@@ -3175,7 +3175,7 @@ class Script(script.Script):
                 elif clickCount == 3:
                     self.phoneticSpellCurrentItem(string)
                 else:
-                    string = util.adjustForRepeats(string)
+                    string = self.adjustForRepeats(string)
                     speech.speak(string)
 
         self.updateBrailleReview(targetCursorCell)
@@ -3582,6 +3582,166 @@ class Script(script.Script):
                         displayedText = appendString(displayedText, childText)
 
         return displayedText
+
+    def textLines(self, obj):
+        """Creates a generator that can be used to iterate over each line
+        of a text object, starting at the caret offset.
+
+        Arguments:
+        - obj: an Accessible that has a text specialization
+
+        Returns an iterator that produces elements of the form:
+        [SayAllContext, acss], where SayAllContext has the text to be
+        spoken and acss is an ACSS instance for speaking the text.
+        """ 
+        if not obj:
+            return
+
+        text = obj.text 
+        if not text:
+            return 
+
+        length = text.characterCount
+        offset = text.caretOffset
+
+        # Get the next line of text to read
+        #
+        done = False 
+        while not done:
+            lastEndOffset = -1
+            while offset < length:
+                [string, startOffset, endOffset] = text.getTextAtOffset(
+                    offset,
+                    atspi.Accessibility.TEXT_BOUNDARY_LINE_START)
+
+                # [[[WDW - HACK: well...gnome-terminal sometimes wants to
+                # give us outrageous values back from getTextAtOffset
+                # (see http://bugzilla.gnome.org/show_bug.cgi?id=343133),
+                # so we try to handle it.]]]
+                #
+                if startOffset < 0:
+                    break
+
+                # [[[WDW - HACK: this is here because getTextAtOffset
+                # tends not to be implemented consistently across toolkits.
+                # Sometimes it behaves properly (i.e., giving us an endOffset
+                # that is the beginning of the next line), sometimes it
+                # doesn't (e.g., giving us an endOffset that is the end of
+                # the current line).  So...we hack.  The whole 'max' deal
+                # is to account for lines that might be a brazillion lines
+                # long.]]]
+                # 
+                if endOffset == lastEndOffset:
+                    offset = max(offset + 1, lastEndOffset + 1)
+                    lastEndOffset = endOffset
+                    continue
+
+                lastEndOffset = endOffset
+                offset = endOffset
+
+                string = self.adjustForRepeats(string)
+                if string.isupper():
+                    voice = settings.voices[settings.UPPERCASE_VOICE]
+                else:
+                    voice = settings.voices[settings.DEFAULT_VOICE]
+
+                yield [speechserver.SayAllContext(obj, string,
+                                                  startOffset, endOffset),
+                       voice]
+
+            moreLines = False
+            relations = obj.relations
+            for relation in relations:
+                if relation.getRelationType()  \
+                       == atspi.Accessibility.RELATION_FLOWS_TO:
+                    obj = atspi.Accessible.makeAccessible(relation.getTarget(0))
+
+                    text = obj.text
+                    if not text:
+                        return
+
+                    length = text.characterCount
+                    offset = 0
+                    moreLines = True
+                    break
+            if not moreLines:
+                done = True
+
+    def _addRepeatSegment(self, segment, line, respectPunctuation=True):
+        """Add in the latest line segment, adjusting for repeat characters
+        and punctuation.
+
+        Arguments:
+        - segment: the segment of repeated characters.
+        - line: the current built-up line to characters to speak.
+        - respectPunctuation: if False, ignore punctuation level.
+
+        Returns: the current built-up line plus the new segment, after
+        adjusting for repeat character counts and punctuation.
+        """
+
+        style = settings.verbalizePunctuationStyle
+        isPunctChar = True
+        try:
+            level, action = punctuation_settings.getPunctuationInfo(segment[0])
+        except:
+            isPunctChar = False
+        count = len(segment)
+        if (count >= settings.repeatCharacterLimit) \
+           and (not segment[0] in string.whitespace):
+            if (not respectPunctuation) \
+               or (isPunctChar and (style <= level)):
+                repeatChar = chnames.getCharacterName(segment[0])
+                line += _(" %d %s characters ") % (count, repeatChar)
+            else:
+                line += segment
+        else:
+            line += segment
+
+        return line
+
+    def adjustForRepeats(self, line):
+        """Adjust line to include repeat character counts.
+        As some people will want this and others might not,
+        there is a setting in settings.py that determines
+        whether this functionality is enabled.
+
+        repeatCharacterLimit = <n>
+
+        If <n> is 0, then there would be no repeat characters.
+        Otherwise <n> would be the number of same characters (or more)
+        in a row that cause the repeat character count output.
+        If the value is set to 1, 2 or 3 then it's treated as if it was
+        zero. In other words, no repeat character count is given.
+
+        Arguments:
+        - line: the string to adjust for repeat character counts.
+
+        Returns: a new line adjusted for repeat character counts (if enabled).
+        """
+
+        line = line.decode("UTF-8")
+
+        if (len(line) < 4) or (settings.repeatCharacterLimit < 4):
+            return line.encode("UTF-8")
+
+        newLine = u''
+        segment = lastChar = line[0]
+
+        multipleChars = False
+        for i in range(1, len(line)):
+            if line[i] == lastChar:
+                segment += line[i]
+            else:
+                multipleChars = True
+                newLine = self._addRepeatSegment(segment, newLine)
+                segment = line[i]
+
+            lastChar = line[i]
+
+        newLine = self._addRepeatSegment(segment, newLine, multipleChars)
+
+        return newLine.encode("UTF-8")
 
     def adjustForPronunciation(self, line):
         """Adjust the line to replace words in the pronunciation dictionary,
