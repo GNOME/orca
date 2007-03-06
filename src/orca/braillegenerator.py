@@ -1199,7 +1199,7 @@ class BrailleGenerator:
         self._debugGenerator("_getBrailleRegionsForTerminal", obj)
 
         title = None
-        frame = util.getFrame(obj)
+        frame = self._script.getFrame(obj)
         if frame:
             title = frame.name
         if not title:

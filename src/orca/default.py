@@ -1655,7 +1655,7 @@ class Script(script.Script):
                     if (newCol != oldCol) or (oldParent != newParent):
                         # Don't speak Thunderbird column headers, since
                         # it's not possible to navigate across a row.
-                        topName = util.getTopLevelName(newLocusOfFocus)
+                        topName = self.getTopLevelName(newLocusOfFocus)
                         if not topName.endswith(" - Thunderbird"):
                             desc = newParent.table.getColumnDescription(newCol)
                             if desc and len(desc):
@@ -2377,7 +2377,7 @@ class Script(script.Script):
         if event.type == "object:state-changed:focused":
             iconified = False
             try:
-                window = util.getTopLevel(event.source)
+                window = self.getTopLevel(event.source)
                 iconified = window.state.count( \
                                      atspi.Accessibility.STATE_ICONIFIED)
             except:
@@ -3580,6 +3580,69 @@ class Script(script.Script):
                         displayedText = appendString(displayedText, childText)
 
         return displayedText
+
+    def getFrame(self, obj):
+        """Returns the frame containing this object, or None if this object
+        is not inside a frame.
+
+        Arguments:
+        - obj: the Accessible object
+        """
+
+        debug.println(debug.LEVEL_FINEST,
+                      "Finding frame for source.name="
+                      + obj.accessibleNameToString())
+
+        while obj \
+              and (obj != obj.parent) \
+              and (obj.role != rolenames.ROLE_FRAME):
+            obj = obj.parent
+            debug.println(debug.LEVEL_FINEST, "--> obj.name="
+                          + obj.accessibleNameToString())
+
+        if obj and (obj.role == rolenames.ROLE_FRAME):
+            pass
+        else:
+            obj = None
+
+        return obj
+
+    def getTopLevel(self, obj):
+        """Returns the top-level object (frame, dialog ...) containing this
+        object, or None if this object is not inside a top-level object.
+
+        Arguments:
+        - obj: the Accessible object
+        """
+
+        debug.println(debug.LEVEL_FINEST,
+                      "Finding top-level object for source.name="
+                      + obj.accessibleNameToString())
+
+        while obj \
+              and obj.parent \
+              and (obj != obj.parent) \
+              and (obj.parent.role != rolenames.ROLE_APPLICATION):
+            obj = obj.parent
+            debug.println(debug.LEVEL_FINEST, "--> obj.name="
+                          + obj.accessibleNameToString())
+
+        if obj and obj.parent and \
+           (obj.parent.role == rolenames.ROLE_APPLICATION):
+            pass
+        else:
+            obj = None
+
+        return obj
+
+    def getTopLevelName(self, obj):
+        """ Returns the name of the top-level object. See getTopLevel.
+        """
+        top = self.getTopLevel(obj)
+        if (not top) or (not top.name):
+            return ""
+        else:
+            return top.name
 
     def getTextLineAtCaret(self, obj):
         """Gets the line of text where the caret is.

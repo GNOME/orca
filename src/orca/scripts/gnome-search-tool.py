@@ -136,7 +136,7 @@ class Script(default.Script):
             # list of files found, then get it now.
             #
             if not self.fileTable:
-                frame = util.getTopLevel(event.source)
+                frame = self.getTopLevel(event.source)
                 allTables = self.findByRole(frame, rolenames.ROLE_TABLE)
                 self.fileTable = allTables[0]
 

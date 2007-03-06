@@ -94,7 +94,7 @@ def whereAmI(obj, context, doubleClick, orcaKey):
     if orcaKey:
         # Handle the Orca modifier key being pressed.
         if _getAppName() == "soffice.bin":
-            top = util.getTopLevel(obj)
+            top = orca_state.activeScript.getTopLevel(obj)
             if top and top.name.endswith(" Calc"):
                 _handleCalcOrcaKey(obj, doubleClick)
             else:
@@ -613,7 +613,7 @@ def _speakParagraph(obj, doubleClick):
     they are being edited.
     """
     if _getAppName() == "soffice.bin":
-        top = util.getTopLevel(obj)
+        top = orca_state.activeScript.getTopLevel(obj)
         if top and top.name.endswith(" Calc"):
             _speakCalc(obj, doubleClick)
 

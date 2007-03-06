@@ -98,6 +98,21 @@
           def getDisplayedText(obj):
           def getTextLineAtCaret(obj):
 
+        * src/orca/scripts/Thunderbird.py:
+          src/orca/scripts/acroread.py:
+          src/orca/scripts/gnome-search-tool.py:
+          src/orca/util.py:
+          src/orca/speechgenerator.py:
+          src/orca/default.py:
+          src/orca/where_am_I.py:
+          src/orca/braillegenerator.py:
+          Another partial fix for bug #395548.
+
+          Moved:
+          def getFrame(obj):
+          def getTopLevel(obj):
+          def getTopLevelName(obj):
+
 2007-03-05  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/debug.py:

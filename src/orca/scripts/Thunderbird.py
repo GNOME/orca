@@ -169,7 +169,7 @@ class Script(Gecko.Script):
         """
         obj = event.source
         parent = obj.parent
-        top = util.getTopLevel(obj)
+        top = self.getTopLevel(obj)
         consume = False
 
         self._debug("onFocus: name='%s', role='%s'" % (obj.name, obj.role))

@@ -208,7 +208,7 @@ def isInFindToolbar(obj):
             obj = obj.parent
         if util.isDesiredFocusedItem(obj, rolesList):
             inFindToolbar = True
-            findToolbarName = util.getFrame(obj).name
+            findToolbarName = self.getFrame(obj).name
     except:
         pass
 
