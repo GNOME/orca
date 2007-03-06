@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-23 00:21+0200\n"
-"PO-Revision-Date: 2007-02-23 00:21+0200\n"
+"POT-Creation-Date: 2007-03-07 00:17+0200\n"
+"PO-Revision-Date: 2007-03-07 00:13+0200\n"
 "Last-Translator: Alexander Shopov <ash@contact.bg>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "MIME-Version: 1.0\n"
@@ -434,12 +434,12 @@ msgid "Switches to the next presentation manager."
 msgstr "Превключване към следващия мениджър на представяне"
 
 #: ../src/orca/default.py:1210 ../src/orca/default.py:1437
-#: ../src/orca/default.py:3012 ../src/orca/default.py:3146
-#: ../src/orca/default.py:3151 ../src/orca/default.py:3244
-#: ../src/orca/default.py:3249 ../src/orca/Gecko.py:2820
+#: ../src/orca/default.py:3006 ../src/orca/default.py:3140
+#: ../src/orca/default.py:3145 ../src/orca/default.py:3238
+#: ../src/orca/default.py:3243 ../src/orca/Gecko.py:3046
 #: ../src/orca/scripts/Evolution.py:399 ../src/orca/scripts/Evolution.py:884
-#: ../src/orca/scripts/StarOffice.py:1807
-#: ../src/orca/scripts/StarOffice.py:1816 ../src/orca/where_am_I.py:994
+#: ../src/orca/scripts/StarOffice.py:1808
+#: ../src/orca/scripts/StarOffice.py:1817 ../src/orca/where_am_I.py:994
 msgid "blank"
 msgstr "нищо"
 
@@ -470,50 +470,50 @@ msgstr "%d ниво в дървото"
 msgid "entire document selected"
 msgstr "избран е целият документ"
 
-#: ../src/orca/default.py:2568
+#: ../src/orca/default.py:2557
 msgid "Speak "
 msgstr "Произнасяне"
 
-#: ../src/orca/default.py:2571
+#: ../src/orca/default.py:2560
 msgid "row"
 msgstr "ред"
 
-#: ../src/orca/default.py:2573 ../src/orca/rolenames.py:470
+#: ../src/orca/default.py:2562 ../src/orca/rolenames.py:470
 #: ../src/orca/rolenames.py:472
 msgid "cell"
 msgstr "клетка"
 
-#: ../src/orca/default.py:2622 ../src/orca/where_am_I.py:1050
+#: ../src/orca/default.py:2611 ../src/orca/where_am_I.py:1050
 msgid "bold"
 msgstr "получерно"
 
-#: ../src/orca/default.py:2624
+#: ../src/orca/default.py:2613
 msgid " pixels"
 msgstr " пиксели"
 
-#: ../src/orca/default.py:2738
+#: ../src/orca/default.py:2727
 msgid "Entering learn mode.  Press any key to hear its function. "
 msgstr ""
 "Влизане в режим на обучение. Натиснете произволен клавиш, за да чуете "
 "функцията му. "
 
-#: ../src/orca/default.py:2739
+#: ../src/orca/default.py:2728
 msgid "To exit learn mode, press the escape key."
 msgstr "За да излезете от режима на обучение, натиснете клавиша „Esc“."
 
-#: ../src/orca/default.py:2740
+#: ../src/orca/default.py:2729
 msgid "Learn mode.  Press escape to exit."
 msgstr "Режим на обучение. За излизане от него натиснете клавиша „Esc“."
 
-#: ../src/orca/default.py:2752 ../src/orca/default.py:2753
+#: ../src/orca/default.py:2741 ../src/orca/default.py:2742
 msgid "Exiting learn mode."
 msgstr "Излизане от режима на обучение."
 
-#: ../src/orca/default.py:3014 ../src/orca/default.py:3153
+#: ../src/orca/default.py:3008 ../src/orca/default.py:3147
 msgid "white space"
 msgstr "празно място"
 
-#: ../src/orca/default.py:3366 ../src/orca/default.py:3367
+#: ../src/orca/default.py:3360 ../src/orca/default.py:3361
 msgid "string not found"
 msgstr "низът не е открит"
 
@@ -529,37 +529,37 @@ msgstr "Прескачане към края"
 msgid "Wrapping to Top"
 msgstr "Прескачане към началото"
 
-#: ../src/orca/focus_tracking_presenter.py:746
+#: ../src/orca/focus_tracking_presenter.py:753
 msgid "No focus"
 msgstr "Няма фокус"
 
-#: ../src/orca/focus_tracking_presenter.py:841
+#: ../src/orca/focus_tracking_presenter.py:848
 msgid "Switching to focus tracking mode."
 msgstr "Преминаване към режим на следене на фокуса"
 
-#: ../src/orca/Gecko.py:1262 ../src/orca/rolenames.py:332
-#: ../src/orca/scripts/acroread.py:251 ../src/orca/scripts/StarOffice.py:1090
+#: ../src/orca/Gecko.py:1320 ../src/orca/rolenames.py:332
+#: ../src/orca/scripts/acroread.py:251 ../src/orca/scripts/StarOffice.py:1091
 msgid "link"
 msgstr "връзка"
 
-#: ../src/orca/Gecko.py:1281
+#: ../src/orca/Gecko.py:1339
 msgid "Loading.  Please wait."
 msgstr "Зареждане - изчакайте."
 
-#: ../src/orca/Gecko.py:1287
+#: ../src/orca/Gecko.py:1345
 #, python-format
 msgid "Finished loading %s."
 msgstr "Зареждането на „%s“ свърши."
 
-#: ../src/orca/Gecko.py:1293
+#: ../src/orca/Gecko.py:1351
 msgid "Finished loading."
 msgstr "Зареждането свърши."
 
-#: ../src/orca/Gecko.py:3124 ../src/orca/Gecko.py:3135
+#: ../src/orca/Gecko.py:3419 ../src/orca/Gecko.py:3430
 msgid "No more headings."
 msgstr "Няма повече заглавия."
 
-#: ../src/orca/Gecko.py:3146 ../src/orca/Gecko.py:3157
+#: ../src/orca/Gecko.py:3441 ../src/orca/Gecko.py:3452
 msgid "No more chunks."
 msgstr "Няма повече дялове."
 
@@ -1126,44 +1126,44 @@ msgstr "довиждане."
 msgid "Goodbye."
 msgstr "Довиждане."
 
-#: ../src/orca/orca.py:1209
+#: ../src/orca/orca.py:1211
 msgid "Usage: orca [OPTION...]"
 msgstr "Употреба: orca [ОПЦИИ...]"
 
-#: ../src/orca/orca.py:1211
+#: ../src/orca/orca.py:1213
 msgid "-?, --help                   Show this help message"
 msgstr ""
 "-?, --help                          Показване на това помощно съобщение"
 
-#: ../src/orca/orca.py:1212
+#: ../src/orca/orca.py:1214
 #, python-format
 msgid "-v, --version                %s"
 msgstr "-v, --version                       %s"
 
-#: ../src/orca/orca.py:1213
+#: ../src/orca/orca.py:1215
 msgid "-s, --setup, --gui-setup     Set up user preferences"
 msgstr "-s, --setup, --gui-setup            Задаване на настройките"
 
-#: ../src/orca/orca.py:1214
+#: ../src/orca/orca.py:1216
 msgid "-t, --text-setup             Set up user preferences (text version)"
 msgstr ""
 "-t, --text-setup                    Задаване на настройките (текстова\n"
 "                                    версия)"
 
-#: ../src/orca/orca.py:1215
+#: ../src/orca/orca.py:1217
 msgid "-n, --no-setup               Skip set up of user preferences"
 msgstr ""
 "-n, --no-setup                      Пропускане на задаването на потре-\n"
 "                                    бителските настройки"
 
-#: ../src/orca/orca.py:1216
+#: ../src/orca/orca.py:1218
 msgid ""
 "-u, --user-prefs-dir=dirname Use alternate directory for user preferences"
 msgstr ""
 "-u, --user-prefs-dir=ИмеНаПапка     Използване на друга папка за потре-\n"
 "                                    бителските настройки"
 
-#: ../src/orca/orca.py:1217
+#: ../src/orca/orca.py:1219
 msgid ""
 "-e, --enable=[speech|braille|braille-monitor|magnifier|main-window] Force "
 "use of option"
@@ -1171,7 +1171,7 @@ msgstr ""
 "-e, --enable=[speech|braille|braille-monitor|magnifier|main-window]\n"
 "                                    Използване на съответната настройка"
 
-#: ../src/orca/orca.py:1218
+#: ../src/orca/orca.py:1220
 msgid ""
 "-d, --disable=[speech|braille|braille-monitor|magnifier|main-window] Prevent "
 "use of option"
@@ -1180,13 +1180,13 @@ msgstr ""
 "                                    Предотвратяване на ползването на\n"
 "                                    съответната настройка"
 
-#: ../src/orca/orca.py:1219
+#: ../src/orca/orca.py:1221
 msgid "-q, --quit                   Quits Orca (if shell script used)"
 msgstr ""
 "-q, --quit                          Спиране на Orca (ако се използва\n"
 "                                    скрипт на обвивката)"
 
-#: ../src/orca/orca.py:1221
+#: ../src/orca/orca.py:1223
 msgid ""
 "If Orca has not been previously set up by the user, Orca\n"
 "will automatically launch the preferences set up unless\n"
@@ -1197,7 +1197,7 @@ msgstr ""
 "настройване, освен ако не се използва някоя от опциите\n"
 "„-n“ или „--no-setup“."
 
-#: ../src/orca/orca.py:1223
+#: ../src/orca/orca.py:1225
 msgid "Report bugs to orca-list@gnome.org."
 msgstr "Докладвайте за грешки в програмата на адрес: orca-list@gnome.org."
 
@@ -2901,57 +2901,58 @@ msgstr "Динамичната антетка е изчистена."
 msgid "Dynamic row header set for column %s"
 msgstr "Динамичната антетка е зададена за ред %s"
 
-#: ../src/orca/scripts/StarOffice.py:1108
+#: ../src/orca/scripts/StarOffice.py:1109
 msgid "Welcome to StarOffice"
 msgstr "Добре дошли в StarOffice"
 
-#: ../src/orca/scripts/StarOffice.py:1203
+#: ../src/orca/scripts/StarOffice.py:1204
 msgid "Text Document"
 msgstr "Текстов документ"
 
-#: ../src/orca/scripts/StarOffice.py:1263
-#: ../src/orca/scripts/StarOffice.py:1485
+#: ../src/orca/scripts/StarOffice.py:1264
+#: ../src/orca/scripts/StarOffice.py:1486
 msgid "Spellcheck:"
 msgstr "Проверка на правописа:"
 
-#: ../src/orca/scripts/StarOffice.py:1291
+#: ../src/orca/scripts/StarOffice.py:1292
 msgid "Note that the Scroll Down button has to be pressed numerous times."
 msgstr ""
 "Забележете, че трябва да натиснете многократно бутона за прелистване надолу."
 
-#: ../src/orca/scripts/StarOffice.py:1305
+#: ../src/orca/scripts/StarOffice.py:1306
 msgid "License Agreement Accept button now has focus."
 msgstr "Бутонът за приемането на лицензното споразумение е на фокус."
 
-#: ../src/orca/scripts/StarOffice.py:1328
+#: ../src/orca/scripts/StarOffice.py:1329
 msgid "First name"
 msgstr "Лично име"
 
-#: ../src/orca/scripts/StarOffice.py:1399
+#: ../src/orca/scripts/StarOffice.py:1400
 msgid "Move to cell"
 msgstr "Преместване към клетка"
 
-#: ../src/orca/scripts/StarOffice.py:1541
+#: ../src/orca/scripts/StarOffice.py:1542
 msgid "Writer"
 msgstr "Writer"
 
-#: ../src/orca/scripts/StarOffice.py:1697
+#: ../src/orca/scripts/StarOffice.py:1698
 msgid " has formula"
 msgstr " съдържа формула"
 
-#: ../src/orca/scripts/StarOffice.py:1743
+#: ../src/orca/scripts/StarOffice.py:1744
 msgid "Cell "
 msgstr "Клетка "
 
 #. Don't speak chrome URLs.
-#: ../src/orca/scripts/Thunderbird.py:235
-#: ../src/orca/scripts/Thunderbird.py:315
-#: ../src/orca/scripts/Thunderbird.py:330
+#.
+#: ../src/orca/scripts/Thunderbird.py:184
+#: ../src/orca/scripts/Thunderbird.py:264
+#: ../src/orca/scripts/Thunderbird.py:279
 msgid "chrome://"
 msgstr "chrome://"
 
-#: ../src/orca/scripts/Thunderbird.py:322
-#: ../src/orca/scripts/Thunderbird.py:337
+#: ../src/orca/scripts/Thunderbird.py:272
+#: ../src/orca/scripts/Thunderbird.py:287
 #, python-format
 msgid "%s panel"
 msgstr "%s панел"
@@ -2964,43 +2965,47 @@ msgstr "%s панел"
 #. translation is by running the application and then viewing its
 #. name in the main window of at-poke.
 #.
-#: ../src/orca/settings.py:531
+#: ../src/orca/settings.py:532
 msgid "[\\S\\s]*StarOffice[\\s\\S]*"
 msgstr "[\\S\\s]*StarOffice[\\s\\S]*"
 
-#: ../src/orca/settings.py:532
+#: ../src/orca/settings.py:533
 msgid "soffice.bin"
 msgstr "soffice.bin"
 
-#: ../src/orca/settings.py:533
+#: ../src/orca/settings.py:534
 msgid "[Ee]volution"
 msgstr "[Ee]volution"
 
-#: ../src/orca/settings.py:534
+#: ../src/orca/settings.py:535
 msgid "Deer Park"
 msgstr "Deer Park"
 
-#: ../src/orca/settings.py:535
+#: ../src/orca/settings.py:536
 msgid "yelp"
 msgstr "yelp"
 
-#: ../src/orca/settings.py:536
+#: ../src/orca/settings.py:537
 msgid "Bon Echo"
 msgstr "Bon Echo"
 
-#: ../src/orca/settings.py:537
+#: ../src/orca/settings.py:538
 msgid "Minefield"
 msgstr "Minefield"
 
-#: ../src/orca/settings.py:538
+#: ../src/orca/settings.py:539
+msgid "Mail/News"
+msgstr "Mail/News"
+
+#: ../src/orca/settings.py:540
 msgid "bug-buddy"
 msgstr "bug-buddy"
 
-#: ../src/orca/settings.py:539
+#: ../src/orca/settings.py:541
 msgid "vte"
 msgstr "vte"
 
-#: ../src/orca/settings.py:540
+#: ../src/orca/settings.py:542
 msgid "time-admin"
 msgstr "time-admin"
 
