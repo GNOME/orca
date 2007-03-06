@@ -238,7 +238,9 @@ class Script(default.Script):
                 # or if the item doesn't have SELECTED state, but SELECTABLE and
                 # it was selected.
                 #
-                if util.isSameObject (selectedItem, orca_state.locusOfFocus):
+                if orca_state.activeScript and \
+                   orca_state.activeScript.isSameObject(selectedItem,  \
+                                                    orca_state.locusOfFocus):
                     if (orca_state.locusOfFocus.state.count(Accessibility.STATE_SELECTED) != 0 \
                                 and not orca_state.locusOfFocus.was_selected)   \
                         or (orca_state.locusOfFocus.state.count(Accessibility.STATE_SELECTED) == 0 \
@@ -283,7 +285,7 @@ class Script(default.Script):
         # This case is for LISTs which contain labels as items
         # (see Open dialog lists).
         #
-        if util.isSameObject (obj, orca_state.locusOfFocus):
+        if orca_state.activeScript.isSameObject(obj, orca_state.locusOfFocus):
             if obj.role == rolenames.ROLE_LABEL:
                 self.updateBraille(orca_state.locusOfFocus)
                 speech.speakUtterances(self.speechGenerator.getSpeech(orca_state.locusOfFocus, True))

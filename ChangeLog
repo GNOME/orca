@@ -186,6 +186,20 @@
           Moved:
           def getRealActiveDescendant(obj):
 
+        * src/orca/scripts/planner.py:
+          src/orca/util.py:
+          src/orca/default.py:
+          src/orca/Gecko.py:
+          src/orca/J2SE-access-bridge.py:
+          src/orca/braillegenerator.py:
+          src/orca/gnomespeechfactory.py:
+          Another partial fix for bug #395548.
+
+          Moved:
+          def isSameObject(obj1, obj2):
+          def appendString(text, newText, delimiter=" "):
+          def getUnicodeCurrencySymbols():
+
 2007-03-05  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/debug.py:

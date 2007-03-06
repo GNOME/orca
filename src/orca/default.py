@@ -54,6 +54,7 @@ import orca_prefs
 import orca_state
 import phonnames
 import pronunciation_dict
+import punctuation_settings
 import rolenames
 import script
 import settings
@@ -95,6 +96,11 @@ class Script(script.Script):
         # embedded in a string.
         #
         self.EMBEDDED_OBJECT_CHARACTER = u'\ufffc'
+
+        # Unicode currency symbols (populated by the 
+        # getUnicodeCurrencySymbols() routine).
+        #
+        self._unicodeCurrencySymbols = []
 
         # Used by the drawOutline routine.
         #
@@ -1587,7 +1593,7 @@ class Script(script.Script):
         # the objects really could be different even though they seem the
         # same.  Logged as bug 319675.]]]
         #
-        if util.isSameObject(oldLocusOfFocus, newLocusOfFocus):
+        if self.isSameObject(oldLocusOfFocus, newLocusOfFocus):
             return
 
         # Well...now that we got that behind us, let's do what we're supposed
@@ -3452,6 +3458,70 @@ class Script(script.Script):
 # here so that they can be customized in application scripts if so desired.
 # 
 
+    def isSameObject(self, obj1, obj2):
+        if (obj1 == obj2):
+            return True
+        elif (not obj1) or (not obj2):
+            return False
+
+        try:
+            if obj1.name != obj2.name:
+                return False
+
+            # When we're looking at children of objects that manage
+            # their descendants, we will often get different objects
+            # that point to the same logical child.  We want to be able
+            # to determine if two objects are in fact pointing to the 
+            # same child.
+            # If we cannot do so easily (i.e., object equivalence), we examine
+            # the hierarchy and the object index at each level.
+            #
+            parent1 = obj1
+            parent2 = obj2
+            while (parent1 and parent2 and \
+                    parent1.state.count(atspi.Accessibility.STATE_TRANSIENT) and \
+                    parent2.state.count(atspi.Accessibility.STATE_TRANSIENT)):
+                if parent1.index != parent2.index:
+                    return False
+                parent1 = parent1.parent
+                parent2 = parent2.parent
+            if parent1 and parent2 and parent1 == parent2:
+                return True
+        except:
+            pass
+
+        # In java applications, TRANSIENT state is missing for tree items
+        # (fix for bug #352250)
+        #
+        try:
+            parent1 = obj1
+            parent2 = obj2
+            while parent1 and parent2 and \
+                    parent1.role == rolenames.ROLE_LABEL and \
+                    parent2.role == rolenames.ROLE_LABEL:
+                if parent1.index != parent2.index:
+                    return False
+                parent1 = parent1.parent
+                parent2 = parent2.parent
+            if parent1 and parent2 and parent1 == parent2:
+                return True
+        except:
+            pass
+
+        return False
+
+    def appendString(self, text, newText, delimiter=" "):
+        """Appends the newText to the given text with the delimiter in between
+        and returns the new string.  Edge cases, such as no initial text or
+        no newText, are handled gracefully."""
+    
+        if (not newText) or (len(newText) == 0):
+            return text
+        elif text and len(text):
+            return text + delimiter + newText
+        else:
+            return newText
+
     def __hasLabelForRelation(self, label):
         """Check if label has a LABEL_FOR relation
 
@@ -3504,6 +3574,43 @@ class Script(script.Script):
 
         return False
 
+    def getUnicodeCurrencySymbols(self):
+        """Return a list of the unicode currency symbols, populating the list
+        if this is the first time that this routine has been called. 
+    
+        Returns a list of unicode currency symbols.
+        """
+    
+        if not self._unicodeCurrencySymbols:
+            self._unicodeCurrencySymbols = [ \
+                u'\u0024',     # dollar sign
+                u'\u00A2',     # cent sign
+                u'\u00A3',     # pound sign
+                u'\u00A4',     # currency sign
+                u'\u00A5',     # yen sign 
+                u'\u0192',     # latin small letter f with hook
+                u'\u060B',     # afghani sign
+                u'\u09F2',     # bengali rupee mark
+                u'\u09F3',     # bengali rupee sign
+                u'\u0AF1',     # gujarati rupee sign
+                u'\u0BF9',     # tamil rupee sign
+                u'\u0E3F',     # thai currency symbol baht
+                u'\u17DB',     # khmer currency symbol riel
+                u'\u2133',     # script capital m
+                u'\u5143',     # cjk unified ideograph-5143
+                u'\u5186',     # cjk unified ideograph-5186
+                u'\u5706',     # cjk unified ideograph-5706
+                u'\u5713',     # cjk unified ideograph-5713
+                u'\uFDFC',     # rial sign
+            ]
+
+            # Add 20A0 (EURO-CURRENCY SIGN) to 20B5 (CEDI SIGN)
+            #
+            for ordChar in range(ord(u'\u20A0'), ord(u'\u20B5') + 1):
+                self._unicodeCurrencySymbols.append(unichr(ordChar))
+
+        return self._unicodeCurrencySymbols
+
     def getDisplayedLabel(self, object):
         """If there is an object labelling the given object, return the
         text being displayed for the object labelling this object.
@@ -3539,7 +3646,7 @@ class Script(script.Script):
                                                        relation.getTarget(i))
                     if not target in allTargets:
                         allTargets.append(target)
-                        label = util.appendString(label, self.getDisplayedText(target))
+                        label = self.appendString(label, self.getDisplayedText(target))
 
         # [[[TODO: HACK - we've discovered oddness in hierarchies such as
         # the gedit Edit->Preferences dialog.  In this dialog, we have
@@ -3716,7 +3823,7 @@ class Script(script.Script):
                 if child.role == rolenames.ROLE_LABEL:
                     childText = self.getDisplayedText(child)
                     if childText and len(childText):
-                        displayedText = util.appendString(displayedText, childText)
+                        displayedText = self.appendString(displayedText, childText)
 
         return displayedText
 

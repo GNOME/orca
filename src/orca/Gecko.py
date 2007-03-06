@@ -170,8 +170,8 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         #
         text = ""
         if not self._script.inDocumentContent():
-            text = util.appendString(text, self.getDisplayedLabel(obj))
-            text = util.appendString(text, self.getDisplayedText(obj))
+            text = self.appendString(text, self.getDisplayedLabel(obj))
+            text = self.appendString(text, self.getDisplayedText(obj))
         else:
             isLabelled = False
             relations = obj.relations
@@ -182,14 +182,14 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                         isLabelled = True
                         break
             if not isLabelled and obj.name and len(obj.name):
-                text = util.appendString(text, obj.name)
+                text = self.appendString(text, obj.name)
 
         if obj.state.count(atspi.Accessibility.STATE_CHECKED):
-            text = util.appendString(text, "<x>")
+            text = self.appendString(text, "<x>")
         else:
-            text = util.appendString(text, "< >")
+            text = self.appendString(text, "< >")
 
-        text = util.appendString(text, self._getTextForRole(obj))
+        text = self.appendString(text, self._getTextForRole(obj))
 
         regions = []
         componentRegion = braille.Component(obj, text)
@@ -321,8 +321,8 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         regions = []
 
         text = ""
-        text = util.appendString(text, self.getDisplayedLabel(obj))
-        text = util.appendString(text, self.getDisplayedText(obj))
+        text = self.appendString(text, self.getDisplayedLabel(obj))
+        text = self.appendString(text, self.getDisplayedText(obj))
 
         # If there's no text for the link, expose part of the
         # link to the user if the image is in a link.
@@ -335,10 +335,10 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                 for region in linkRegions:
                     text += region.string
         elif link:
-            text = util.appendString(text, self._getTextForRole(link))
+            text = self.appendString(text, self._getTextForRole(link))
 
-        text = util.appendString(text, self._getTextForValue(obj))
-        text = util.appendString(text, self._getTextForRole(obj))
+        text = self.appendString(text, self._getTextForValue(obj))
+        text = self.appendString(text, self._getTextForRole(obj))
 
         regions = []
         componentRegion = braille.Component(obj, text)
@@ -362,8 +362,8 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         regions = []
 
         text = ""
-        text = util.appendString(text, self.getDisplayedLabel(obj))
-        text = util.appendString(text, self.getDisplayedText(obj))
+        text = self.appendString(text, self.getDisplayedLabel(obj))
+        text = self.appendString(text, self.getDisplayedText(obj))
 
         # If there's no text for the link, expose part of the
         # URI to the user.
@@ -373,8 +373,8 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             if basename:
                 text = basename
 
-        text = util.appendString(text, self._getTextForValue(obj))
-        text = util.appendString(text, self._getTextForRole(obj))
+        text = self.appendString(text, self._getTextForValue(obj))
+        text = self.appendString(text, self._getTextForRole(obj))
 
         regions = []
         componentRegion = braille.Component(obj, text)

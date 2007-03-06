@@ -312,7 +312,8 @@ class Text(Region):
         """
 
         self.accessible = accessible
-        [string, self.caretOffset, self.lineOffset] = \
+        if orca_state.activeScript:
+            [string, self.caretOffset, self.lineOffset] = \
                  orca_state.activeScript.getTextLineAtCaret(self.accessible)
 
         # Sometimes, gnome-terminal will give us very odd values when

@@ -62,8 +62,8 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         self._debugGenerator("_getBrailleRegionsForRadioButton", obj)
 
         text = ""
-        text = util.appendString(text, self.getDisplayedLabel(obj))
-        text = util.appendString(text, self.getDisplayedText(obj))
+        text = self.appendString(text, self.getDisplayedLabel(obj))
+        text = self.appendString(text, self.getDisplayedText(obj))
 
         # First special toggle button is the one in the toolbar and
         # that it has no name Application should implement an
@@ -97,11 +97,11 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             text += allLabels[0].name
 
         if obj.state.count(atspi.Accessibility.STATE_CHECKED):
-            text = util.appendString(text, "&=y")
+            text = self.appendString(text, "&=y")
         else:
-            text = util.appendString(text, "& y")
+            text = self.appendString(text, "& y")
 
-        text = util.appendString(text, self._getTextForRole(obj))
+        text = self.appendString(text, self._getTextForRole(obj))
 
         regions = []
         componentRegion = braille.Component(obj, text)

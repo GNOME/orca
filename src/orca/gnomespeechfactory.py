@@ -699,7 +699,9 @@ class SpeechServer(speechserver.SpeechServer):
                 # always speak it. See bug #392939.
                 #
                 prevCharMatches = nextCharMatches = False
-                currencySymbols = util.getUnicodeCurrencySymbols()
+                if orca_state.activeScript:
+                    currencySymbols = \
+                        orca_state.activeScript.getUnicodeCurrencySymbols()
                 if i > 0:
                     prevCharMatches = (oldText[i - 1] in string.whitespace)
                 if i < (len(oldText) - 1):

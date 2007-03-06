@@ -293,10 +293,10 @@ class BrailleGenerator:
         regions = []
 
         text = ""
-        text = util.appendString(text, self._script.getDisplayedLabel(obj))
-        text = util.appendString(text, self._script.getDisplayedText(obj))
-        text = util.appendString(text, self._getTextForValue(obj))
-        text = util.appendString(text, self._getTextForRole(obj))
+        text = self._script.appendString(text, self._script.getDisplayedLabel(obj))
+        text = self._script.appendString(text, self._script.getDisplayedText(obj))
+        text = self._script.appendString(text, self._getTextForValue(obj))
+        text = self._script.appendString(text, self._getTextForRole(obj))
 
         regions = []
         componentRegion = braille.Component(obj, text)
@@ -332,10 +332,10 @@ class BrailleGenerator:
         self._debugGenerator("_getBrailleRegionsForAnimation", obj)
 
         text = ""
-        text = util.appendString(text, self._script.getDisplayedLabel(obj))
-        text = util.appendString(text, self._script.getDisplayedText(obj))
-        text = util.appendString(text, self._getTextForRole(obj))
-        text = util.appendString(text, obj.description, ": ")
+        text = self._script.appendString(text, self._script.getDisplayedLabel(obj))
+        text = self._script.appendString(text, self._script.getDisplayedText(obj))
+        text = self._script.appendString(text, self._getTextForRole(obj))
+        text = self._script.appendString(text, obj.description, ": ")
 
         regions = []
         componentRegion = braille.Component(obj, text)
@@ -375,15 +375,15 @@ class BrailleGenerator:
         self._debugGenerator("_getBrailleRegionsForCheckBox", obj)
 
         text = ""
-        text = util.appendString(text, self._script.getDisplayedLabel(obj))
-        text = util.appendString(text, self._script.getDisplayedText(obj))
+        text = self._script.appendString(text, self._script.getDisplayedLabel(obj))
+        text = self._script.appendString(text, self._script.getDisplayedText(obj))
 
         if obj.state.count(atspi.Accessibility.STATE_CHECKED):
-            text = util.appendString(text, "<x>")
+            text = self._script.appendString(text, "<x>")
         else:
-            text = util.appendString(text, "< >")
+            text = self._script.appendString(text, "< >")
 
-        text = util.appendString(text, self._getTextForRole(obj))
+        text = self._script.appendString(text, self._getTextForRole(obj))
 
         regions = []
         componentRegion = braille.Component(obj, text)
@@ -405,18 +405,18 @@ class BrailleGenerator:
         self._debugGenerator("_getBrailleRegionsForCheckMenuItem", obj)
 
         text = ""
-        text = util.appendString(text, self._script.getDisplayedLabel(obj))
-        text = util.appendString(text, self._script.getDisplayedText(obj))
+        text = self._script.appendString(text, self._script.getDisplayedLabel(obj))
+        text = self._script.appendString(text, self._script.getDisplayedText(obj))
 
         if obj.state.count(atspi.Accessibility.STATE_CHECKED):
-            text = util.appendString(text, "<x>")
+            text = self._script.appendString(text, "<x>")
         else:
-            text = util.appendString(text, "< >")
+            text = self._script.appendString(text, "< >")
 
         if obj == orca_state.locusOfFocus:
-            text = util.appendString(text, self._getTextForRole(obj))
-            text = util.appendString(text, self._getTextForAvailability(obj))
-            text = util.appendString(text,
+            text = self._script.appendString(text, self._getTextForRole(obj))
+            text = self._script.appendString(text, self._getTextForAvailability(obj))
+            text = self._script.appendString(text,
                                       self._getTextForAccelerator(obj),
                                       "")
 
@@ -585,15 +585,15 @@ class BrailleGenerator:
         self._debugGenerator("_getBrailleRegionsForIcon", obj)
 
         text = ""
-        text = util.appendString(text, self._script.getDisplayedLabel(obj))
-        text = util.appendString(text, self._script.getDisplayedText(obj))
+        text = self._script.appendString(text, self._script.getDisplayedLabel(obj))
+        text = self._script.appendString(text, self._script.getDisplayedText(obj))
 
         if obj.image:
             description = obj.image.imageDescription
             if len(description):
-                text = util.appendString(text, description)
+                text = self._script.appendString(text, description)
 
-        text = util.appendString(text, self._getTextForRole(obj))
+        text = self._script.appendString(text, self._getTextForRole(obj))
 
         regions = []
         componentRegion = braille.Component(obj, text)
@@ -660,13 +660,13 @@ class BrailleGenerator:
         self._debugGenerator("_getBrailleRegionsForMenu", obj)
 
         text = ""
-        text = util.appendString(text, self._script.getDisplayedLabel(obj))
-        text = util.appendString(text, self._script.getDisplayedText(obj))
-        text = util.appendString(text, rolenames.getBrailleForRoleName(obj))
+        text = self._script.appendString(text, self._script.getDisplayedLabel(obj))
+        text = self._script.appendString(text, self._script.getDisplayedText(obj))
+        text = self._script.appendString(text, rolenames.getBrailleForRoleName(obj))
 
         if obj == orca_state.locusOfFocus:
-            text = util.appendString(text, self._getTextForAvailability(obj))
-            text = util.appendString(text,
+            text = self._script.appendString(text, self._getTextForAvailability(obj))
+            text = self._script.appendString(text,
                                       self._getTextForAccelerator(obj),
                                       "")
 
@@ -703,12 +703,12 @@ class BrailleGenerator:
         self._debugGenerator("_getBrailleRegionsForMenuItem", obj)
 
         text = ""
-        text = util.appendString(text, self._script.getDisplayedLabel(obj))
-        text = util.appendString(text, self._script.getDisplayedText(obj))
+        text = self._script.appendString(text, self._script.getDisplayedLabel(obj))
+        text = self._script.appendString(text, self._script.getDisplayedText(obj))
 
         if obj == orca_state.locusOfFocus:
-            text = util.appendString(text, self._getTextForAvailability(obj))
-            text = util.appendString(text,
+            text = self._script.appendString(text, self._getTextForAvailability(obj))
+            text = self._script.appendString(text,
                                       self._getTextForAccelerator(obj),
                                       "")
 
@@ -769,12 +769,12 @@ class BrailleGenerator:
         self._debugGenerator("_getBrailleRegionsForPageTab", obj)
 
         text = ""
-        text = util.appendString(text, self._script.getDisplayedLabel(obj))
-        text = util.appendString(text, self._script.getDisplayedText(obj))
+        text = self._script.appendString(text, self._script.getDisplayedLabel(obj))
+        text = self._script.appendString(text, self._script.getDisplayedText(obj))
 
         if obj == orca_state.locusOfFocus:
-            text = util.appendString(text, self._getTextForAvailability(obj))
-            text = util.appendString(text,
+            text = self._script.appendString(text, self._getTextForAvailability(obj))
+            text = self._script.appendString(text,
                                       self._getTextForAccelerator(obj),
                                       "")
 
@@ -828,17 +828,17 @@ class BrailleGenerator:
         regions = []
 
         text = ""
-        text = util.appendString(text, self._script.getDisplayedLabel(obj))
-        text = util.appendString(text, self._script.getDisplayedText(obj))
+        text = self._script.appendString(text, self._script.getDisplayedLabel(obj))
+        text = self._script.appendString(text, self._script.getDisplayedText(obj))
 
         # In Java, some push buttons don't have label and text.
         # In this case, we'll add to presentation the object description,
         # if exists.
         #
         if (not text) and (obj.description):
-            text = util.appendString(text, obj.description)
+            text = self._script.appendString(text, obj.description)
 
-        text = util.appendString(text, self._getTextForRole(obj))
+        text = self._script.appendString(text, self._getTextForRole(obj))
 
         regions = []
         componentRegion = braille.Component(obj, text)
@@ -860,22 +860,22 @@ class BrailleGenerator:
         self._debugGenerator("_getBrailleRegionsForRadioButton", obj)
 
         text = ""
-        text = util.appendString(text, self._script.getDisplayedLabel(obj))
-        text = util.appendString(text, self._script.getDisplayedText(obj))
+        text = self._script.appendString(text, self._script.getDisplayedLabel(obj))
+        text = self._script.appendString(text, self._script.getDisplayedText(obj))
 
         # In Java, some toggle buttons don't have label and text.
         # In this case, we'll add to presentation the object description,
         # if exists.
         #
         if (not text) and (obj.description):
-            text = util.appendString(text, obj.description)
+            text = self._script.appendString(text, obj.description)
 
         if obj.state.count(atspi.Accessibility.STATE_CHECKED):
-            text = util.appendString(text, "&=y")
+            text = self._script.appendString(text, "&=y")
         else:
-            text = util.appendString(text, "& y")
+            text = self._script.appendString(text, "& y")
 
-        text = util.appendString(text, self._getTextForRole(obj))
+        text = self._script.appendString(text, self._getTextForRole(obj))
 
         regions = []
         componentRegion = braille.Component(obj, text)
@@ -897,18 +897,18 @@ class BrailleGenerator:
         self._debugGenerator("_getBrailleRegionsForRadioMenuItem", obj)
 
         text = ""
-        text = util.appendString(text, self._script.getDisplayedLabel(obj))
-        text = util.appendString(text, self._script.getDisplayedText(obj))
+        text = self._script.appendString(text, self._script.getDisplayedLabel(obj))
+        text = self._script.appendString(text, self._script.getDisplayedText(obj))
 
         if obj.state.count(atspi.Accessibility.STATE_CHECKED):
-            text = util.appendString(text, "&=y")
+            text = self._script.appendString(text, "&=y")
         else:
-            text = util.appendString(text, "& y")
+            text = self._script.appendString(text, "& y")
 
         if obj == orca_state.locusOfFocus:
-            text = util.appendString(text, self._getTextForRole(obj))
-            text = util.appendString(text, self._getTextForAvailability(obj))
-            text = util.appendString(text,
+            text = self._script.appendString(text, self._getTextForRole(obj))
+            text = self._script.appendString(text, self._getTextForAvailability(obj))
+            text = self._script.appendString(text,
                                       self._getTextForAccelerator(obj),
                                       "")
 
@@ -965,11 +965,11 @@ class BrailleGenerator:
         regions = []
 
         text = ""
-        text = util.appendString(text, self._script.getDisplayedLabel(obj))
+        text = self._script.appendString(text, self._script.getDisplayedLabel(obj))
         # Ignore the text on the slider.
-        #text = util.appendString(text, self._script.getDisplayedText(obj))
-        text = util.appendString(text, self._getTextForValue(obj))
-        text = util.appendString(text, self._getTextForRole(obj))
+        #text = self._script.appendString(text, self._script.getDisplayedText(obj))
+        text = self._script.appendString(text, self._getTextForValue(obj))
+        text = self._script.appendString(text, self._getTextForRole(obj))
 
         regions = []
         componentRegion = braille.Component(obj, text)
@@ -1206,7 +1206,7 @@ class BrailleGenerator:
             title = self._script.getDisplayedLabel(obj)
 
         text = title
-        text = util.appendString(text, rolenames.getBrailleForRoleName(obj))
+        text = self._script.appendString(text, rolenames.getBrailleForRoleName(obj))
 
         regions = []
         regions.append(braille.Region(text))
