@@ -1277,17 +1277,3 @@ def printActiveApp():
             debug.println(level, "Active application: None")
         else:
             debug.println(level, "Active application: %s" % app.name)
-
-def isInActiveApp(obj):
-    """Returns True if the given object is from the same application that
-    currently has keyboard focus.
-
-    Arguments:
-    - obj: an Accessible object
-    """
-
-    if not obj:
-        return False
-    else:
-        return orca_state.locusOfFocus \
-               and (orca_state.locusOfFocus.app == obj.app)

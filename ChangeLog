@@ -69,6 +69,13 @@
           Moved:
           def findActiveWindow():
 
+        * src/orca/default.py:
+          src/orca/util.py:
+          Another partial fix for bug #395548.
+
+          Moved:
+          def isInActiveApp(obj):
+
 2007-03-04  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py, src/orca/default.py, src/orca/flat_review.py:

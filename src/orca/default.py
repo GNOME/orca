@@ -1770,7 +1770,7 @@ class Script(script.Script):
         #
         if False and (obj.role == rolenames.ROLE_PANEL) \
                and (event.detail1 == 1) \
-               and util.isInActiveApp(obj):
+               and self.isInActiveApp(obj):
 
             # It's only showing if its parent is showing. [[[TODO: WDW -
             # HACK we stop at the application level because applications
@@ -3415,6 +3415,20 @@ class Script(script.Script):
 # Routines that were previously in util.py, but that have now been moved
 # here so that they can be customized in application scripts if so desired.
 # 
+
+    def isInActiveApp(self, obj):
+        """Returns True if the given object is from the same application that
+        currently has keyboard focus.
+
+        Arguments:
+        - obj: an Accessible object
+        """
+
+        if not obj:
+            return False
+        else:
+            return orca_state.locusOfFocus \
+                   and (orca_state.locusOfFocus.app == obj.app)
 
     def findActiveWindow(self):
         """Traverses the list of known apps looking for one who has an
