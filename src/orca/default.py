@@ -51,6 +51,7 @@ import keybindings
 import mag
 import orca
 import orca_state
+import phonnames
 import rolenames
 import script
 import settings
@@ -3026,7 +3027,7 @@ class Script(script.Script):
             elif clickCount == 2:
                 self.spellCurrentItem(string)
             elif clickCount == 3:
-                util.phoneticSpellCurrentItem(string)
+                self.phoneticSpellCurrentItem(string)
             else:
                 string = util.adjustForRepeats(string)
                 speech.speak(string)
@@ -3165,7 +3166,7 @@ class Script(script.Script):
                 elif clickCount == 2:
                     self.spellCurrentItem(string)
                 elif clickCount == 3:
-                    util.phoneticSpellCurrentItem(string)
+                    self.phoneticSpellCurrentItem(string)
                 else:
                     string = util.adjustForRepeats(string)
                     speech.speak(string)
@@ -3259,7 +3260,7 @@ class Script(script.Script):
                 elif clickCount == 2:
                     self.spellCurrentItem(string)
                 elif clickCount == 3:
-                    util.phoneticSpellCurrentItem(string)
+                    self.phoneticSpellCurrentItem(string)
                 elif string.isupper():
                     speech.speak(string, self.voices[settings.UPPERCASE_VOICE])
                 else:
@@ -3443,6 +3444,22 @@ class Script(script.Script):
 # Routines that were previously in util.py, but that have now been moved
 # here so that they can be customized in application scripts if so desired.
 # 
+
+    def phoneticSpellCurrentItem(self, string):
+        """Phonetically spell the current flat review word or line.
+
+        Arguments:
+        - string: the string to phonetically spell.
+        """
+
+        for (index, character) in enumerate(string.decode("UTF-8")):
+            if character.isupper():
+                voice = settings.voices[settings.UPPERCASE_VOICE]
+                character = character.lower()
+            else:
+                voice =  settings.voices[settings.DEFAULT_VOICE]
+            string = phonnames.getPhoneticName(character)
+            speech.speak(string, voice)
 
     def printAncestry(self, child):
        """Prints a hierarchical view of a child's ancestry."""
