@@ -657,7 +657,7 @@ class Script(default.Script):
                     if lastWord == word:
                         return
 
-            if util.getLinkIndex(obj, offset) >= 0:
+            if self.getLinkIndex(obj, offset) >= 0:
                 voice = self.voices[settings.HYPERLINK_VOICE]
             elif word.isupper():
                 voice = self.voices[settings.UPPERCASE_VOICE]

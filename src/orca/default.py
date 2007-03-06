@@ -50,8 +50,10 @@ import input_event
 import keybindings
 import mag
 import orca
+import orca_prefs
 import orca_state
 import phonnames
+import pronunciation_dict
 import rolenames
 import script
 import settings
@@ -1267,7 +1269,7 @@ class Script(script.Script):
                 voice = self.voices[settings.DEFAULT_VOICE]
                 speech.speak(chnames.getCharacterName("\n"), voice, False)
 
-        if util.getLinkIndex(obj, offset) >= 0:
+        if self.getLinkIndex(obj, offset) >= 0:
             voice = self.voices[settings.HYPERLINK_VOICE]
         elif word.isupper():
             voice = self.voices[settings.UPPERCASE_VOICE]
@@ -1349,7 +1351,7 @@ class Script(script.Script):
             text.getTextAtOffset( \
                 offset,
                 atspi.Accessibility.TEXT_BOUNDARY_CHAR)
-        if not util.isWordDelimiter(char):
+        if not self.isWordDelimiter(char):
             return
 
         # OK - we seem to be cool so far.  So...starting with what
@@ -1365,7 +1367,7 @@ class Script(script.Script):
                 text.getTextAtOffset( \
                     wordStartOffset,
                     atspi.Accessibility.TEXT_BOUNDARY_CHAR)
-            if util.isWordDelimiter(char):
+            if self.isWordDelimiter(char):
                 break
             else:
                 wordStartOffset -= 1
@@ -1384,7 +1386,7 @@ class Script(script.Script):
         else:
             word = self.getText(obj, wordStartOffset + 1, wordEndOffset + 1)
 
-        if util.getLinkIndex(obj, wordStartOffset + 1) >= 0:
+        if self.getLinkIndex(obj, wordStartOffset + 1) >= 0:
             voice = self.voices[settings.HYPERLINK_VOICE]
         elif word.isupper():
             voice = self.voices[settings.UPPERCASE_VOICE]
@@ -1423,7 +1425,7 @@ class Script(script.Script):
             character = "\n"
         else:
             character = self.getText(obj, startOffset, endOffset)
-        if util.getLinkIndex(obj, offset) >= 0:
+        if self.getLinkIndex(obj, offset) >= 0:
             voice = self.voices[settings.HYPERLINK_VOICE]
         elif character.isupper():
             voice = self.voices[settings.UPPERCASE_VOICE]
@@ -2212,7 +2214,7 @@ class Script(script.Script):
         else:
             return
 
-        if util.getLinkIndex(event.source, text.caretOffset) >= 0:
+        if self.getLinkIndex(event.source, text.caretOffset) >= 0:
             voice = self.voices[settings.HYPERLINK_VOICE]
         elif character.isupper():
             voice = self.voices[settings.UPPERCASE_VOICE]
@@ -2301,7 +2303,7 @@ class Script(script.Script):
                     speech.speak(text)
 
         if settings.enableEchoByWord \
-           and util.isWordDelimiter(text.decode("UTF-8")[-1:]):
+           and self.isWordDelimiter(text.decode("UTF-8")[-1:]):
             self.echoPreviousWord(event.source)
 
     def onActiveDescendantChanged(self, event):
@@ -3581,6 +3583,80 @@ class Script(script.Script):
 
         return displayedText
 
+    def adjustForPronunciation(self, line):
+        """Adjust the line to replace words in the pronunciation dictionary,
+        with what those words actually sound like.
+
+        Arguments:
+        - line: the string to adjust for words in the pronunciation dictionary.
+
+        Returns: a new line adjusted for words found in the pronunciation
+        dictionary.
+        """
+
+        line = line.decode("UTF-8")
+        newLine = segment = u''
+
+        for i in range(0, len(line)):
+            if self.isWordDelimiter(line[i]):
+                if len(segment) != 0:
+                    newLine = newLine + \
+                              pronunciation_dict.getPronunciation(segment)
+                newLine = newLine + line[i]
+                segment = u''
+            else:
+                segment += line[i]
+
+        if len(segment) != 0:
+            newLine = newLine + pronunciation_dict.getPronunciation(segment)
+
+        return newLine.encode("UTF-8")
+
+    def getLinkIndex(self, obj, characterIndex):
+        """A brute force method to see if an offset is a link.  This
+        is provided because not all Accessible Hypertext implementations
+        properly support the getLinkIndex method.  Returns an index of
+        0 or greater of the characterIndex is on a hyperlink.
+
+        Arguments:
+        -obj: the Accessible object with the Accessible Hypertext specialization
+        -characterIndex: the text position to check
+        """
+
+        if not obj:
+            return -1
+
+        text = obj.text
+        if not text:
+            return -1
+
+        hypertext = obj.hypertext
+        if not hypertext:
+            return -1
+
+        for i in range(0, hypertext.getNLinks()):
+            link = hypertext.getLink(i)
+            if (characterIndex >= link.startIndex) \
+               and (characterIndex <= link.endIndex):
+                return i
+
+        return -1
+
+    def isWordDelimiter(self, character):
+        """Returns True if the given character is a word delimiter.
+
+        Arguments:
+        - character: the character in question
+
+        Returns True if the given character is a word delimiter.
+        """
+
+        if isinstance(character, unicode):
+            character = character.encode("UTF-8")
+
+        return (character in string.whitespace) \
+               or (character in '!*+,-./:;<=>?@[\]^_{|}')
+
     def getFrame(self, obj):
         """Returns the frame containing this object, or None if this object
         is not inside a frame.
@@ -4287,14 +4363,14 @@ class Script(script.Script):
             #
             if n > 1:
                 while endOffset > startOffset:
-                    if isWordDelimiter(str[n-1]):
+                    if self.isWordDelimiter(str[n-1]):
                         n -= 1
                         endOffset -= 1
                     else:
                         break
                 n = 0
                 while startOffset < endOffset:
-                    if isWordDelimiter(str[n]):
+                    if self.isWordDelimiter(str[n]):
                         n += 1
                         startOffset += 1
                     else:

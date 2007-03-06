@@ -113,6 +113,20 @@
           def getTopLevel(obj):
           def getTopLevelName(obj):
 
+        * src/orca/scripts/gnome-terminal.py:
+          src/orca/scripts/acroread.py:
+          src/orca/scripts/StarOffice.py:
+          src/orca/util.py:
+          src/orca/default.py:
+          src/orca/Gecko.py:
+          src/orca/gnomespeechfactory.py:
+          Another partial fix for bug #395548.
+
+          Moved:
+          def adjustForPronunciation(line):
+          def getLinkIndex(obj, characterIndex):
+          def isWordDelimiter(character):
+
 2007-03-05  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/debug.py:

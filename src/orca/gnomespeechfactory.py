@@ -767,7 +767,8 @@ class SpeechServer(speechserver.SpeechServer):
             return -1
 
         text = self.__addVerbalizedPunctuation(text)
-        text = util.adjustForPronunciation(text)
+        if orca_state.activeScript:
+            text = orca_state.activeScript.adjustForPronunciation(text)
 
         try:
             # [[[TODO: WDW - back this stop out for now.  The problem is

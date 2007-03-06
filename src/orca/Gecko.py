@@ -1293,7 +1293,7 @@ class Script(default.Script):
         #
         text = event.source.text
         hypertext = event.source.hypertext
-        linkIndex = util.getLinkIndex(event.source, text.caretOffset)
+        linkIndex = self.getLinkIndex(event.source, text.caretOffset)
 
         if linkIndex >= 0:
             link = hypertext.getLink(linkIndex)
@@ -2821,7 +2821,7 @@ class Script(default.Script):
                 break
             else:
                 character = self.getCharacterAtOffset(obj, characterOffset)
-                if util.isWordDelimiter(character):
+                if self.isWordDelimiter(character):
                     if encounteredText:
                         break
                 else:
@@ -2843,7 +2843,7 @@ class Script(default.Script):
                 break
             else:
                 character = self.getCharacterAtOffset(obj, characterOffset)
-                if not util.isWordDelimiter(character):
+                if not self.isWordDelimiter(character):
                     if encounteredText and encounteredDelimiter:
                         break
                     encounteredText = True

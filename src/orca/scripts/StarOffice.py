@@ -1078,7 +1078,7 @@ class Script(default.Script):
         voices = settings.voices
 
         for i in range(startOffset, endOffset):
-            if util.getLinkIndex(obj, i) >= 0:
+            if self.getLinkIndex(obj, i) >= 0:
                 voice = voices[settings.HYPERLINK_VOICE]
                 break
             elif word.isupper():

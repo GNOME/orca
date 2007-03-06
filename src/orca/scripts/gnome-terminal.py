@@ -207,6 +207,6 @@ class Script(default.Script):
                     speech.speak(text)
 
         if settings.enableEchoByWord \
-           and util.isWordDelimiter(text.decode("UTF-8")[-1:]):
+           and self.isWordDelimiter(text.decode("UTF-8")[-1:]):
             if matchFound:
                 self.echoPreviousWord(event.source)
