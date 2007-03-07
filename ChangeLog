@@ -6,6 +6,10 @@
           Refixed bug #350674 – make Orca announce when a new folder is
           opened and announce number of items.
 
+        * src/orca/orca_gui_prefs.py:
+          Fixed bug #404052 – Say something to let the user know the 
+          Preferences dialog is loading.
+
 2007-03-06  Lynn Monsanto <lynn.monsanto@sun.com>
 
         * test/harness/runone.sh, test/harness/runall.sh: Partial 

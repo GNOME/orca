@@ -2026,6 +2026,10 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
 def showPreferencesUI():
     global OS
 
+    line = _("Starting Orca Preferences. This may take a while.")
+    braille.displayMessage(line)
+    speech.speak(line)
+
     if not OS:
         gladeFile = os.path.join(platform.prefix,
                                  platform.datadirname,
