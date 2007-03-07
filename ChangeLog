@@ -5,6 +5,7 @@
           po/POTFILES.in:
           Refixed bug #350674 – make Orca announce when a new folder is
           opened and announce number of items.
+          [Further adjusted to use ngetext for the item count string].
 
         * src/orca/orca_gui_prefs.py:
           Fixed bug #404052 – Say something to let the user know the 

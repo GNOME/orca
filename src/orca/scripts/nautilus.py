@@ -33,7 +33,8 @@ import orca.rolenames as rolenames
 import orca.speech as speech
 import orca.util as util
 
-from orca.orca_i18n import _ # for gettext support
+from orca.orca_i18n import _         # for gettext support
+from orca.orca_i18n import ngettext  # for ngettext support
 
 ########################################################################
 #                                                                      #
@@ -100,7 +101,9 @@ class Script(default.Script):
                     elif child.role == rolenames.ROLE_TABLE:
                         itemCount = child.table.nRows
                     if itemCount != -1:
-                        itemCountString = " " + _("%d items") % itemCount
+                        itemCountString = " " + ngettext("%d item",
+                                                         "%d items",
+                                                         itemCount) % itemCount
                     break
 
         return itemCountString
