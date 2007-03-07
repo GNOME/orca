@@ -32,6 +32,9 @@ import orca.atspi
 #
 MAX_SLEEP = 5.0
 
+# Minimum time to sleep between arrow key navigation
+MIN_SLEEP = 3.0
+
 # Factor to speed up the playback.  This will compress time by the
 # given amount.  For example, 2.0 will play the events back twice
 # as fast.
@@ -66,6 +69,14 @@ def go():
                 
             line = raw_input() # modifiers
             line = raw_input() # event_string
+
+            arrowKeyPressed = False
+            keyString = line[line.index("=") + 1 :]
+            if type == 0 and \
+                   (keyString == "(Down)" or keyString == "(Up)" or \
+                    keyString == "(Right)" or keyString == "(Left)"):
+                arrowKeyPressed = True
+
             line = raw_input() # is_text
             
             line = raw_input()
@@ -75,6 +86,11 @@ def go():
                 lastTime = event_time
 
             delta = min(MAX_SLEEP, (event_time - lastTime) / SPEED_UP)
+            if arrowKeyPressed:
+                # Make sure there is sufficient delay between
+                # arrow key pressed.
+                delta = max(MIN_SLEEP, delta)
+
             if delta > 0:
                 time.sleep(delta)
             lastTime = event_time

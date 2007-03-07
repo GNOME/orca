@@ -13,6 +13,9 @@ harnessDir=`cd $foo; pwd`
 keystrokesDir=$harnessDir/../keystrokes
 resultsDir=$harnessDir/../results
 
+# number of seconds to wait for application to finish shutting down
+SHUT_DOWN_WAIT_TIME=5
+
 process_cl () {
     while [ $# != 0 ]; do
         case "$1" in
@@ -127,7 +130,10 @@ do
             $harnessDir/runone.sh $testFile
           fi
         fi
-        sleep 5
+
+	# wait for application to finish shutting down
+        sleep $SHUT_DOWN_WAIT_TIME
+
         newResultsFile=`basename $testFile .keys`.orca
         mkdir -p $currentdir/$outputdir
         cp $newResultsFile $currentdir/$outputdir

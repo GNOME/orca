@@ -7,6 +7,12 @@ export GTK_MODULES=:gail:atk-bridge:
 
 debugFile=`basename $1 .keys`
 
+# Number of seconds to wait for orca to start
+ORCA_WAIT_TIME=10
+
+# Number of seconds to wait for test application to start
+APP_WAIT_TIME=20
+
 # Set up our local user settings file for the output format we want.
 #
 # If a <testfilename>.settings file exists, should use that instead of 
@@ -33,7 +39,7 @@ sed "s^%debug%^$debugFile.orca^g" $SETTINGS_FILE > user-settings.py
 # Run orca and let it settle in.
 #
 orca &
-sleep 5
+sleep $ORCA_WAIT_TIME
 
 # Run the app (or gnome-terminal if no app was given) and let it settle in.
 #
@@ -45,7 +51,7 @@ else
 fi
 $APP_NAME &
 APP_PID=$!
-sleep 5
+sleep $APP_WAIT_TIME
 
 # Play the keystrokes.
 #
