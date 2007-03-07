@@ -2610,8 +2610,8 @@ class Script(script.Script):
         list = []
         dictionary = {}
         allTokens = str.split(";")
-        for i in range(0, len(allTokens)):
-            item = allTokens[i].split(":")
+        for token in allTokens:
+            item = token.split(":")
             if len(item) == 2:
                 key = item[0].strip()
                 attribute = item[1].strip()
@@ -2627,8 +2627,7 @@ class Script(script.Script):
         - attributes: a dictionary of text attributes to speak.
         """
 
-        for i in range(0, len(keys)):
-            key = keys[i]
+        for key in keys:
             if attributes.has_key(key):
                 attribute = attributes[key]
                 if attribute:
@@ -2693,8 +2692,7 @@ class Script(script.Script):
             # value is the default, then ignore it.
             #
             attributes = {}
-            for i in range(0, len(userAttrList)):
-                key = userAttrList[i]
+            for key in userAttrList:
                 if allAttributes.has_key(key):
                     textAttr = allAttributes.get(key)
                     userAttr = userAttrDict.get(key)
@@ -3941,8 +3939,8 @@ class Script(script.Script):
         """
 
         current = obj
-        for i in range(0, len(rolesList)):
-            if (current == None) or (current.role != rolesList[i]):
+        for role in rolesList:
+            if (current == None) or (current.role != role):
                 return False
             current = current.parent
 
@@ -3961,8 +3959,8 @@ class Script(script.Script):
         # word plus the context where it is used (upto five words
         # to either side of it).
         #
-        for i in range(0, len(allTokens)):
-            if allTokens[i].startswith(badWord):
+        for token in allTokens:
+            if token.startswith(badWord):
                 min = i - 5
                 if min < 0:
                     min = 0

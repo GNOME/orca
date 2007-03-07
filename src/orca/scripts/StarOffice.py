@@ -1054,9 +1054,9 @@ class Script(default.Script):
         for i in range(0, nLinks):
             links.append(obj.hypertext.getLink(i))
 
-        for i in range(0, len(links)):
-            if links[i].endIndex > startOffset and \
-               links[i].endIndex <= endOffset:
+        for link in links:
+            if link.endIndex > startOffset and \
+               link.endIndex <= endOffset:
                 return True
 
         return False
@@ -1133,8 +1133,8 @@ class Script(default.Script):
         """
 
         allLabels = self.findByRole(panel, rolenames.ROLE_LABEL)
-        for i in range(0, len(allLabels)):
-            self.speakSetupLabel(allLabels[i])
+        for label in allLabels:
+            self.speakSetupLabel(label)
 
     # This method tries to detect and handle the following cases:
     # 0) Writer: find command.
@@ -1335,15 +1335,15 @@ class Script(default.Script):
                 #
                 panel = event.source.parent
                 allLabels = self.findByRole(panel, rolenames.ROLE_LABEL)
-                for i in range(0, len(allLabels)):
-                    relations = allLabels[i].relations
+                for label in allLabels:
+                    relations = label.relations
                     hasLabelFor = False
                     for relation in relations:
                         if relation.getRelationType() \
                                == atspi.Accessibility.RELATION_LABEL_FOR:
                             hasLabelFor = True
                     if not hasLabelFor:
-                        self.speakSetupLabel(allLabels[i])
+                        self.speakSetupLabel(label)
 
             # Check for 5. Registration: Register Now radio button.
             #
@@ -1431,12 +1431,11 @@ class Script(default.Script):
 
             allPanels = self.findByRole(event.source.parent,
                                         rolenames.ROLE_PANEL)
-            for i in range(0, len(allPanels)):
-                if not allPanels[i].name:
-                    allLabels = self.findByRole(allPanels[i],
-                                                rolenames.ROLE_LABEL)
-                    for i in range(0, len(allLabels)):
-                        self.speakSetupLabel(allLabels[i])
+            for panel in allPanels:
+                if not panel.name:
+                    allLabels = self.findByRole(panel, rolenames.ROLE_LABEL)
+                    for label in allLabels:
+                        self.speakSetupLabel(label)
         else:
             # Pass the event onto the parent class to be handled in the
             # default way.

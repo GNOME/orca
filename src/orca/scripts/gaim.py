@@ -172,10 +172,10 @@ class Script(default.Script):
                 self.inputEventHandlers["togglePrefixHandler"]))
 
         messageKeys = [ "1", "2", "3", "4", "5", "6", "7", "8", "9" ]
-        for i in range(0, len(messageKeys)):
+        for messageKey in messageKeys:
             keyBindings.add(
                 keybindings.KeyBinding(
-                    messageKeys[i],
+                    messageKey,
                     1 << settings.MODIFIER_ORCA,
                     1 << settings.MODIFIER_ORCA,
                     self.inputEventHandlers["readPreviousMessageHandler"]))

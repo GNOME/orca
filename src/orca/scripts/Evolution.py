@@ -239,8 +239,8 @@ class Script(default.Script):
         """
 
         allLabels = self.findByRole(panel, rolenames.ROLE_LABEL)
-        for i in range(0, len(allLabels)):
-            self.speakSetupAssistantLabel(allLabels[i])
+        for label in allLabels:
+            self.speakSetupAssistantLabel(label)
 
     def readPageTab(self, tab):
         """Speak/Braille the given page tab. The speech verbosity is set
@@ -915,16 +915,16 @@ class Script(default.Script):
             panel = event.source.parent.parent
             allLabels = self.findByRole(panel, rolenames.ROLE_LABEL)
             found = False
-            for i in range(0, len(allLabels)):
+            for label in allLabels:
                 if not found:
-                    text = self.getDisplayedText(allLabels[i])
+                    text = self.getDisplayedText(label)
                     if text:
                         tokens = text.split()
                     else:
                         tokens = []
-                    for j in range(0, len(tokens)):
-                        if tokens[j].startswith("'"):
-                            badWord = tokens[j]
+                    for token in tokens:
+                        if token.startswith("'"):
+                            badWord = token
                             badWord = badWord[1:len(badWord)-1]
                             found = True
                             break

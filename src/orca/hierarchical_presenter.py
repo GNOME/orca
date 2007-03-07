@@ -107,8 +107,8 @@ class HierarchicalPresenter(presentation_manager.PresentationManager):
         """
 
         apps = orca_state.activeScript.getKnownApplications()
-        for i in range(0, len(apps)):
-            if accessible.app == apps[i]:
+        for app in apps:
+            if accessible.app == app:
                 return i
 
         return -1

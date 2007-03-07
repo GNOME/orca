@@ -31,6 +31,17 @@
           Fixed bug #404052 – Say something to let the user know the 
           Preferences dialog is loading.
 
+        * src/orca/scripts/gedit.py:
+          src/orca/scripts/gaim.py:
+          src/orca/scripts/Evolution.py:
+          src/orca/scripts/StarOffice.py:
+          src/orca/default.py:
+          src/orca/J2SE-access-bridge.py:
+          src/orca/where_am_I.py:
+          src/orca/hierarchical_presenter.py:
+          src/orca/keybindings.py:
+          Fixed bug #402494 – For statement refactoring.
+
 2007-03-06  Lynn Monsanto <lynn.monsanto@sun.com>
 
         * test/harness/runone.sh, test/harness/runall.sh: Partial 

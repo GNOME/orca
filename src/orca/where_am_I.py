@@ -1036,8 +1036,7 @@ def _getAttributesForChar(text, textOffset, line, lineIndex):
         debug.println(_debugLevel,
                       "charDict: %s" % (charDict))
 
-        for i in range(0, len(keys)):
-            key = keys[i]
+        for key in keys:
             if charDict.has_key(key):
                 attribute = charDict[key]
                 if attribute:
@@ -1081,8 +1080,8 @@ def _stringToDictionary(str):
     """
     dictionary = {}
     allTokens = str.split(";")
-    for i in range(0, len(allTokens)):
-        item = allTokens[i].split(":")
+    for token in allTokens:
+        item = token.split(":")
         if len(item) == 2:
             item[0] = _removeLeadingSpaces(item[0])
             item[1] = _removeLeadingSpaces(item[1])

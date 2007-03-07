@@ -133,12 +133,12 @@ class Script(default.Script):
         # another component.
         #
         allLabels = self.findByRole(panel, rolenames.ROLE_LABEL)
-        for i in range(0, len(allLabels)):
-            if allLabels[i].name.startswith(_("Change to:")) or \
-               allLabels[i].name.startswith(_("Misspelled word:")):
+        for label in allLabels:
+            if label.name.startswith(_("Change to:")) or \
+               label.name.startswith(_("Misspelled word:")):
                 continue
             else:
-                badWord = allLabels[i].name
+                badWord = label.name
                 break
 
         # Note that we often get two or more of these focus or property-change
