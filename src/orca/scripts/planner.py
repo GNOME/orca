@@ -61,8 +61,8 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         self._debugGenerator("_getBrailleRegionsForRadioButton", obj)
 
         text = ""
-        text = self.appendString(text, self.getDisplayedLabel(obj))
-        text = self.appendString(text, self.getDisplayedText(obj))
+        text = self._script.appendString(text, self._script.getDisplayedLabel(obj))
+        text = self._script.appendString(text, self._script.getDisplayedText(obj))
 
         # First special toggle button is the one in the toolbar and
         # that it has no name Application should implement an
@@ -72,7 +72,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         #
         roleList = [rolenames.ROLE_TOGGLE_BUTTON, rolenames.ROLE_TOOL_BAR]
 
-        if self.isDesiredFocusedItem(obj, roleList) and not obj.name:
+        if self._script.isDesiredFocusedItem(obj, roleList) and not obj.name:
             text += _("Display more options")
 
         # Second special case is each one of the four graphics toggle
@@ -87,20 +87,20 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                      rolenames.ROLE_FILLER,\
                      rolenames.ROLE_PANEL,\
                      rolenames.ROLE_PANEL]
-        if self.isDesiredFocusedItem(obj, rolesList):
+        if self._script.isDesiredFocusedItem(obj, rolesList):
             debug.println(debug.LEVEL_FINEST,
                           "planner.onFocus - main window: " \
                           + "one of the four graphic toggle buttons.")
             filler = obj.parent
-            allLabels = self.findByRole(filler, rolenames.ROLE_LABEL)
+            allLabels = self._script.findByRole(filler, rolenames.ROLE_LABEL)
             text += allLabels[0].name
 
         if obj.state.count(atspi.Accessibility.STATE_CHECKED):
-            text = self.appendString(text, "&=y")
+            text = self._script.appendString(text, "&=y")
         else:
-            text = self.appendString(text, "& y")
+            text = self._script.appendString(text, "& y")
 
-        text = self.appendString(text, self._getTextForRole(obj))
+        text = self._script.appendString(text, self._getTextForRole(obj))
 
         regions = []
         componentRegion = braille.Component(obj, text)
@@ -132,7 +132,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         roleList=[rolenames.ROLE_TOGGLE_BUTTON,\
                   rolenames.ROLE_TOOL_BAR]
 
-        if self.isDesiredFocusedItem(obj, roleList) and not obj.name:
+        if self._script.isDesiredFocusedItem(obj, roleList) and not obj.name:
             if not already_focused:
                 tmp.append(_("Display more options"))
                 tmp.extend(self._getDefaultSpeech(obj, already_focused))
@@ -162,13 +162,13 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                     rolenames.ROLE_FILLER,\
                     rolenames.ROLE_PANEL,\
                     rolenames.ROLE_PANEL]
-        if self.isDesiredFocusedItem(obj, roleList):
+        if self._script.isDesiredFocusedItem(obj, roleList):
             debug.println(debug.LEVEL_FINEST,
                           "planner.onFocus - main window: " \
                           + "one of the four graphic toggle buttons.")
             if not already_focused:
                 filler = obj.parent
-                allLabels = self.findByRole(filler, rolenames.ROLE_LABEL)
+                allLabels = self._script.findByRole(filler, rolenames.ROLE_LABEL)
                 tmp.append(allLabels[0].name)
                 tmp.extend(self._getDefaultSpeech(obj, already_focused))
                 if obj.state.count(atspi.Accessibility.STATE_CHECKED):

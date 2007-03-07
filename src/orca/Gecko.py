@@ -169,8 +169,8 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         #
         text = ""
         if not self._script.inDocumentContent():
-            text = self.appendString(text, self.getDisplayedLabel(obj))
-            text = self.appendString(text, self.getDisplayedText(obj))
+            text = self._script.appendString(text, self._script.getDisplayedLabel(obj))
+            text = self._script.appendString(text, self._script.getDisplayedText(obj))
         else:
             isLabelled = False
             relations = obj.relations
@@ -181,14 +181,14 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                         isLabelled = True
                         break
             if not isLabelled and obj.name and len(obj.name):
-                text = self.appendString(text, obj.name)
+                text = self._script.appendString(text, obj.name)
 
         if obj.state.count(atspi.Accessibility.STATE_CHECKED):
-            text = self.appendString(text, "<x>")
+            text = self._script.appendString(text, "<x>")
         else:
-            text = self.appendString(text, "< >")
+            text = self._script.appendString(text, "< >")
 
-        text = self.appendString(text, self._getTextForRole(obj))
+        text = self._script.appendString(text, self._getTextForRole(obj))
 
         regions = []
         componentRegion = braille.Component(obj, text)
@@ -220,7 +220,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         # class - we'll give this thing a name here, and we'll make it
         # be the name of the autocomplete.
         #
-        label = self.getDisplayedLabel(parent)
+        label = self._script.getDisplayedLabel(parent)
         if not label or not len(label):
             label = parent.name
 
@@ -251,7 +251,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         # set, we will use it as the label of the combo box.  Otherwise,
         # we'll fall back to the accessible name.
         #
-        label = self.getDisplayedLabel(obj)
+        label = self._script.getDisplayedLabel(obj)
         if not label:
             label = obj.name
 
@@ -320,8 +320,8 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         regions = []
 
         text = ""
-        text = self.appendString(text, self.getDisplayedLabel(obj))
-        text = self.appendString(text, self.getDisplayedText(obj))
+        text = self._script.appendString(text, self._script.getDisplayedLabel(obj))
+        text = self._script.appendString(text, self._script.getDisplayedText(obj))
 
         # If there's no text for the link, expose part of the
         # link to the user if the image is in a link.
@@ -334,10 +334,10 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                 for region in linkRegions:
                     text += region.string
         elif link:
-            text = self.appendString(text, self._getTextForRole(link))
+            text = self._script.appendString(text, self._getTextForRole(link))
 
-        text = self.appendString(text, self._getTextForValue(obj))
-        text = self.appendString(text, self._getTextForRole(obj))
+        text = self._script.appendString(text, self._getTextForValue(obj))
+        text = self._script.appendString(text, self._getTextForRole(obj))
 
         regions = []
         componentRegion = braille.Component(obj, text)
@@ -361,8 +361,8 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         regions = []
 
         text = ""
-        text = self.appendString(text, self.getDisplayedLabel(obj))
-        text = self.appendString(text, self.getDisplayedText(obj))
+        text = self._script.appendString(text, self._script.getDisplayedLabel(obj))
+        text = self._script.appendString(text, self._script.getDisplayedText(obj))
 
         # If there's no text for the link, expose part of the
         # URI to the user.
@@ -372,8 +372,8 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
             if basename:
                 text = basename
 
-        text = self.appendString(text, self._getTextForValue(obj))
-        text = self.appendString(text, self._getTextForRole(obj))
+        text = self._script.appendString(text, self._getTextForValue(obj))
+        text = self._script.appendString(text, self._getTextForRole(obj))
 
         regions = []
         componentRegion = braille.Component(obj, text)
@@ -455,14 +455,14 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         # class - we'll give this thing a name here, and we'll make it
         # be the name of the autocomplete.
         #
-        label = self.getDisplayedLabel(parent)
+        label = self._script.getDisplayedLabel(parent)
         if not label or not len(label):
             label = parent.name
         utterances.append(label)
 
         utterances.extend(self._getSpeechForObjectRole(obj))
 
-        [text, caretOffset, startOffset] = self.getTextLineAtCaret(obj)
+        [text, caretOffset, startOffset] = self._script.getTextLineAtCaret(obj)
         utterances.append(text)
 
         self._debugGenerator("Gecko._getSpeechForText",
@@ -491,7 +491,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         # set, we will use it as the label of the combo box.  Otherwise,
         # we'll fall back to the accessible name.
         #
-        label = self.getDisplayedLabel(obj)
+        label = self._script.getDisplayedLabel(obj)
         if not label:
             label = obj.name
 
@@ -698,14 +698,14 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 unicodeText = displayedText.decode("UTF-8")
                 if unicodeText \
                     and (len(unicodeText) == 1) \
-                    and (unicodeText[0] == self.EMBEDDED_OBJECT_CHARACTER):
+                    and (unicodeText[0] == self._script.EMBEDDED_OBJECT_CHARACTER):
                     parent = parent.parent
                     continue
 
             # Finally, put in the text and label (if they exist)
             #
-            text = self.getDisplayedText(parent)
-            label = self.getDisplayedLabel(parent)
+            text = self._script.getDisplayedText(parent)
+            label = self._script.getDisplayedLabel(parent)
             if text and (text != label) and len(text):
                 utterances.append(text)
             if label and len(label):

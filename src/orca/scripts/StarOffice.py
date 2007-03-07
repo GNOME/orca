@@ -337,14 +337,14 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                 inputLineForCell = locateInputLine(obj)
 
             regions = []
-            text = self.getDisplayedText(obj)
+            text = self._script.getDisplayedText(obj)
             componentRegion = braille.Component(obj, text)
             regions.append(componentRegion)
 
             # If the spread sheet table cell has something in it, then we
             # want to append the name of the cell (which will be its location).
-            # Note that if the cell was empty, then self.getDisplayedText will
-            # have already done this for us.
+            # Note that if the cell was empty, then 
+            # self._script.getDisplayedText will have already done this for us.
             #
             if obj.text:
                 objectText = self._script.getText(obj, 0, -1)

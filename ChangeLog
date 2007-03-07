@@ -42,6 +42,13 @@
           src/orca/keybindings.py:
           Fixed bug #402494 – For statement refactoring.
 
+        * src/orca/scripts/planner.py:
+          src/orca/scripts/gcalctool.py:
+          src/orca/scripts/Thunderbird.py:
+          src/orca/scripts/StarOffice.py:
+          src/orca/Gecko.py:
+          Further adjustments to the refactoring done in bug #395548.
+
 2007-03-06  Lynn Monsanto <lynn.monsanto@sun.com>
 
         * test/harness/runone.sh, test/harness/runall.sh: Partial 
