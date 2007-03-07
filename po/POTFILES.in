@@ -41,6 +41,7 @@ src/orca/scripts/gnome_segv2.py
 src/orca/scripts/liferea.py
 src/orca/scripts/metacity.py
 src/orca/scripts/Mozilla.py
+src/orca/scripts/nautilus.py
 src/orca/scripts/planner.py
 src/orca/scripts/StarOffice.py
 src/orca/scripts/Thunderbird.py
@@ -48,5 +49,4 @@ src/orca/scripts/users-admin.py
 src/orca/settings.py
 src/orca/speechgenerator.py
 src/orca/speech.py
-src/orca/util.py
 src/orca/where_am_I.py

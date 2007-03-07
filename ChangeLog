@@ -1,3 +1,11 @@
+2007-03-07  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/nautilus.py: (new)
+          src/orca/scripts/Makefile.am:
+          po/POTFILES.in:
+          Refixed bug #350674 – make Orca announce when a new folder is
+          opened and announce number of items.
+
 2007-03-06  Lynn Monsanto <lynn.monsanto@sun.com>
 
         * test/harness/runone.sh, test/harness/runall.sh: Partial 

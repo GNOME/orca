@@ -17,6 +17,7 @@ orca_python_PYTHON = \
 	liferea.py \
 	metacity.py \
 	Mozilla.py \
+	nautilus.py \
 	planner.py \
 	self_voicing.py \
 	StarOffice.py \
