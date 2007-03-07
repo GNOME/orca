@@ -33,6 +33,7 @@ import orca.atspi
 MAX_SLEEP = 5.0
 
 # Minimum time to sleep between arrow key navigation
+#
 MIN_SLEEP = 3.0
 
 # Factor to speed up the playback.  This will compress time by the

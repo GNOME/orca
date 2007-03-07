@@ -1,3 +1,18 @@
+2007-03-07  Lynn Monsanto <lynn.monsanto@sun.com>
+
+        * test/harness/runone.sh, test/harness/runall.sh: Partial 
+	fix for bug #412837 - Orca needs test code coverage reporting.
+	Run test/harness/runall.sh with the '-c' flag. This will cause
+	test2html to generate a code coverage report in the 
+	test/coverage directory. The report can be viewed by opening
+	index.html in the code coverage subdirectory, that is labelled
+	by the date and time that runall.sh completed.
+
+	NOTE: After runall.sh completes, the Orca will still be running.
+	In order to generate the code coverage report for this run
+	of runall.sh, it is necessary to quit Orca from the Orca dialog.
+	This needs to be fixed.
+
 2007-03-07  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/nautilus.py: (new)

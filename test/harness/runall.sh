@@ -16,9 +16,14 @@ resultsDir=$harnessDir/../results
 # number of seconds to wait for application to finish shutting down
 SHUT_DOWN_WAIT_TIME=5
 
+coverageMode=0
+
 process_cl () {
     while [ $# != 0 ]; do
         case "$1" in
+            -c )
+                coverageMode=1
+		;;
             -k )
                 shift
                 if [ $# == 0 ]; then
@@ -41,6 +46,7 @@ process_cl () {
             -h|--help)
                 echo "Usage: $0 [options]"
                 echo "options:"
+		echo "   -c                perform code coverage analysis"
                 echo "   -h, --help        print this usage message"
                 echo "   -k keystrokeDir   specify an alternate keystrokes directory"
                 echo "   -r resultsDir     specify an alternate results directory"
@@ -59,6 +65,15 @@ process_cl () {
 # Process the users command line options.
 #
 process_cl "${@}"
+
+if [ "$coverageMode" -eq 1 ]
+then 	 
+    coverageDir=../coverage/`date +%Y-%m-%d_%H:%M:%S`
+    sed "s^%debug%^$debugFile.orca^g" user-settings.py.in > user-settings.py
+    trace2html.py -o $coverageDir -w orca -r runorca.py &
+    trace_pid=$!
+    sleep 5 	 
+fi
 
 # Look in the keystrokes directory for directories.
 # The name of each directory under the keystrokes directory
@@ -112,7 +127,7 @@ do
         echo Running $testFile
         if [ "$found" -gt 0 ]
         then
-          $harnessDir/runone.sh $testFile $application
+          $harnessDir/runone.sh $testFile $application $coverageMode
         else
           osType=`uname`
           for os in $OPERATING_SYSTEMS; do
@@ -121,13 +136,13 @@ do
               found=1
               if [ $osType == $os ]
               then
-                $harnessDir/runone.sh $testFile
+                $harnessDir/runone.sh $testFile $coverageMode
               fi
             fi
           done
           if [ "$found" -eq 0 ]
           then
-            $harnessDir/runone.sh $testFile
+            $harnessDir/runone.sh $testFile $coverageMode
           fi
         fi
 
