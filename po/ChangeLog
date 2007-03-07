@@ -1,5 +1,10 @@
 2007-03-07  Leonardo Ferreira Fontenelle  <leonardof@svn.gnome.org>
 
+	* pt_BR.po: Fixed header comments to credit Jonh Wendell
+	<jwendell@gnome.org>.
+
+2007-03-07  Leonardo Ferreira Fontenelle  <leonardof@svn.gnome.org>
+
 	* pt_BR.po: Updated Brazilian Portuguese translation by Fábio Nogueira
 	<deb-user-ba@ubuntu.com> and Leonardo Ferreira Fontenelle
 	<leo.fontenelle@gmail.com> (me).
