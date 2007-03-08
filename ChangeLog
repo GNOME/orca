@@ -1,3 +1,10 @@
+2007-03-08  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca//gnomespeechfactory.py:
+          Refixed bug #392939 – "-" should be spoken when used as a 
+          negative sign at "some" punctuation. Correctly handle the 
+          situation where a line starts with a minus sign.
+
 2007-03-07  Willie Walker <william.walker@sun.com>
 
         * orca.desktop.in: GNOME GOAL #3 - remove "Application" from

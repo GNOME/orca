@@ -701,6 +701,8 @@ class SpeechServer(speechserver.SpeechServer):
                 if orca_state.activeScript:
                     currencySymbols = \
                         orca_state.activeScript.getUnicodeCurrencySymbols()
+                if i == 0:
+                    prevCharMatches = True
                 if i > 0:
                     prevCharMatches = (oldText[i - 1] in string.whitespace)
                 if i < (len(oldText) - 1):
