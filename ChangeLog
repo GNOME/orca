@@ -5,6 +5,11 @@
           negative sign at "some" punctuation. Correctly handle the 
           situation where a line starts with a minus sign.
 
+        * src/orca/scripts/gnome-mud.py: (new)
+          src/orca/scripts/Makefile.am:
+          Fixed bug #410302 – Better support for gnome-mud application.
+          (Thanks to community member Javier for this fix).
+
 2007-03-07  Willie Walker <william.walker@sun.com>
 
         * orca.desktop.in: GNOME GOAL #3 - remove "Application" from
@@ -32,7 +37,7 @@
           po/POTFILES.in:
           Refixed bug #350674 – make Orca announce when a new folder is
           opened and announce number of items.
-          [Further adjusted to use ngetext for the item count string].
+          [Further adjusted to use ngettext for the item count string].
 
         * src/orca/orca_gui_prefs.py:
           Fixed bug #404052 – Say something to let the user know the 
