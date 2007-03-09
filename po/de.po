@@ -5,12 +5,13 @@
 #
 # Hendrik Brandt <heb@gnome-de.org>, 2004-2005, 2006.
 # Hendrik Richter <hendrikr@gnome.org>, 2006, 2007.
+# Jochen Skulj <jochen@jochenskulj.de>, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-06 19:25+0100\n"
-"PO-Revision-Date: 2007-03-06 19:26+0100\n"
+"POT-Creation-Date: 2007-03-09 20:05+0100\n"
+"PO-Revision-Date: 2007-03-09 20:07+0100\n"
 "Last-Translator: Jochen Skulj <jochen@jochenskulj.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -182,7 +183,7 @@ msgstr "Pfund"
 
 #: ../src/orca/chnames.py:65
 msgid "dollar"
-msgstr "Dollarzeichen"
+msgstr "Dollar-Zeichen"
 
 #: ../src/orca/chnames.py:66 ../src/orca/speechgenerator.py:902
 msgid "percent"
@@ -210,7 +211,7 @@ msgstr "gleich"
 
 #: ../src/orca/chnames.py:72
 msgid "at"
-msgstr "ät"
+msgstr "at"
 
 #: ../src/orca/chnames.py:73
 msgid "caret"
@@ -425,13 +426,13 @@ msgstr ""
 msgid "Prints debug information about the ancestry of the object with focus"
 msgstr ""
 "Gibt auf dem Terminal Fehlerüberprüfungsinformationen über das Elternobjekt "
-"des aktuell fokusierten Objektes aus."
+"des aktuell fokussierten Objektes aus."
 
 #: ../src/orca/default.py:320
 msgid "Prints debug information about the application with focus"
 msgstr ""
 "Gibt auf dem Terminal Fehlerüberprüfungsinformationen über die aktuelle "
-"fokusierte Anwendung aus."
+"fokussierte Anwendung aus."
 
 #: ../src/orca/default.py:325
 msgid "Switches to the next presentation manager."
@@ -493,7 +494,7 @@ msgstr "fett"
 
 #: ../src/orca/default.py:2613
 msgid " pixels"
-msgstr "Pixel"
+msgstr " Pixel"
 
 #: ../src/orca/default.py:2727
 msgid "Entering learn mode.  Press any key to hear its function. "
@@ -845,7 +846,7 @@ msgstr "Die GNOME-Unterstützung für Barrierefreiheit wurde aktiviert. "
 #: ../src/orca/orca_console_prefs.py:369
 msgid "You need to log out and log back in for the change to take effect. "
 msgstr ""
-"Sie·müssen·sich·ab-·und·anmelden,·damit·die·Änderungen·übernommen·werden. "
+"Sie müssen sich ab- und anmelden, damit die Änderungen übernommen werden. "
 
 #: ../src/orca/orca_console_prefs.py:376
 msgid "Do you want to logout now?  Enter y or n: "
@@ -854,7 +855,7 @@ msgstr ""
 
 #: ../src/orca/orca_console_prefs.py:382
 msgid "Setup complete. Logging out now."
-msgstr "Einrichtung komplett. Es wird sich nun abgemeldet."
+msgstr "Einrichtung komplett. Es wird nun abgemeldet."
 
 #: ../src/orca/orca_console_prefs.py:396
 msgid "Setup complete.  Press Return to continue."
@@ -1065,12 +1066,12 @@ msgstr "_Desktop"
 
 #: ../src/orca/orca_gui_prefs.py:1976
 msgid "Accessibility support for GNOME has just been enabled."
-msgstr "Die·GNOME-Unterstützung·für·Barrierefreiheit·wurde·aktiviert.·"
+msgstr "Die GNOME-Unterstützung für Barrierefreiheit wurde aktiviert. "
 
 #: ../src/orca/orca_gui_prefs.py:1977
 msgid "You need to log out and log back in for the change to take effect."
 msgstr ""
-"Sie müssen sich ab -und anmelden, damit die Änderungen übernommen werden.·"
+"Sie müssen sich ab -und anmelden, damit die Änderungen übernommen werden. "
 
 #: ../src/orca/orca-mainwin.glade.h:1
 msgid "Orca Screen Reader / Magnifier"
@@ -1174,7 +1175,7 @@ msgid ""
 "-u, --user-prefs-dir=dirname Use alternate directory for user preferences"
 msgstr ""
 "-u, --user-prefs-dir=dirname Anderes Verzeichnis für die "
-"Benutzereinstellungenverwenden"
+"Benutzereinstellungen verwenden"
 
 #: ../src/orca/orca.py:1219
 msgid ""
@@ -2731,7 +2732,7 @@ msgstr "Eine vorhergehende Chat-Nachricht vorlesen und auf Braille ausgeben."
 
 #: ../src/orca/scripts/gaim.py:196
 msgid "speak chat room name."
-msgstr "Chat-Room-name vorlesen."
+msgstr "Chat-Room-Name vorlesen."
 
 #: ../src/orca/scripts/gaim.py:199
 msgid "Do not speak chat room name."
@@ -2882,7 +2883,7 @@ msgstr "Den Inhalt der Eingabezeile vorlesen."
 #: ../src/orca/scripts/StarOffice.py:730
 msgid "Set the row to use as dynamic column headers when speaking calc cells."
 msgstr ""
-"Die Zeile als dynamische Spaltenüberschriften bei dem Sprechen berechneter "
+"Die Zeile als dynamische Spaltenüberschriften beim Sprechen berechneter "
 "Zellen verwenden."
 
 #: ../src/orca/scripts/StarOffice.py:735
@@ -3010,7 +3011,7 @@ msgstr "Minen"
 
 #: ../src/orca/settings.py:539
 msgid "Mail/News"
-msgstr ""
+msgstr "Mail/Nachrichten"
 
 #: ../src/orca/settings.py:540
 msgid "bug-buddy"
