@@ -1,3 +1,9 @@
+2007-03-09  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/StarOffice.py:
+          Another fixup for bug #395548. Two places which were
+          "self.<whatever>" needed to be "orca_state.activeScript.<whatever>".
+
 2007-03-08  Lynn Monsanto <lynn.monsanto@sun.com>
 
 	Bug #416332 - Orca test coverage needs to be extended

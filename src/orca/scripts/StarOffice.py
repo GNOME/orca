@@ -142,7 +142,8 @@ def locateInputLine(obj):
     inputLine = None
     panel = obj.parent.parent.parent.parent
     if panel and panel.role == rolenames.ROLE_PANEL:
-        allParagraphs = self.findByRole(panel, rolenames.ROLE_PARAGRAPH)
+        allParagraphs = orca.activeScript.findByRole(panel, \
+                                                     rolenames.ROLE_PARAGRAPH)
         if len(allParagraphs) == 1:
             inputLine = allParagraphs[0]
         else:
@@ -173,7 +174,7 @@ def isSpreadSheetCell(obj):
                  rolenames.ROLE_ROOT_PANE, \
                  rolenames.ROLE_FRAME, \
                  rolenames.ROLE_APPLICATION]
-    if self.isDesiredFocusedItem(obj, rolesList):
+    if orca_state.activeScript.isDesiredFocusedItem(obj, rolesList):
         # We've found a table cell with the correct hierarchy. Now check
         # that we are in a spreadsheet as opposed to the writer application.
         # See bug #382408.
