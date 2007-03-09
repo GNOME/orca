@@ -8,7 +8,8 @@ export GTK_MODULES=:gail:atk-bridge:
 debugFile=`basename $1 .keys`
 
 # Number of seconds to wait for test application to start
-APP_WAIT_TIME=20
+FAST_WAIT_TIME=10
+SLOW_WAIT_TIME=20
 
 # Run the event listener...
 #
@@ -26,12 +27,20 @@ else
     coverageMode=$2
 fi
 
+if [ "$coverageMode" -eq "1" ]
+then
+    APP_WAIT_TIME=$SLOW_WAIT_TIME
+else
+    APP_WAIT_TIME=$FAST_WAIT_TIME
+fi
+
 if [ "$coverageMode" -eq 0 ] 	 
 then
     # Run orca and let it settle in.
     orca &
     sleep 5
 fi
+
 
 $APP_NAME &
 APP_PID=$!

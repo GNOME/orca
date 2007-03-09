@@ -1,3 +1,30 @@
+2007-03-08  Lynn Monsanto <lynn.monsanto@sun.com>
+
+	Bug #416332 - Orca test coverage needs to be extended
+
+        * test/harness/runone.sh: minor changes to make testing
+	easier.
+
+	* test/keystrokes/general-orca/learn-mode.keys: new file
+	to test Orca learn mode.
+
+	* test/keystrokes/scalc/F6-navigation.keys: new file to
+	test using F6 to navigate up and down the scalc menu bars.
+	
+	* test/keystrokes/scalc/menu-items.keys: new file to
+	test using using arrow keys to navigate the scalc 
+	menu and sub-menu items.
+
+	* test/keystrokes/swriter: changed directory name to
+	conform to the OpenOffice 2.1 name changes.
+
+	* test/keystrokes/swriter/text-attributes.keys: new 
+	file to test text attributes in swriter.
+
+	* test/keystrokes/gcalctool/square-root.keys: new file
+	to test gcalctool
+
+
 2007-03-08  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca//gnomespeechfactory.py:
@@ -25,7 +52,7 @@
 	index.html in the code coverage subdirectory, that is labelled
 	by the date and time that runall.sh completed.
 
-	NOTE: After runall.sh completes, the Orca will still be running.
+	NOTE: After runall.sh completes, Orca will still be running.
 	In order to generate the code coverage report for this run
 	of runall.sh, it is necessary to quit Orca from the Orca dialog.
 	This needs to be fixed.

@@ -34,7 +34,7 @@ MAX_SLEEP = 5.0
 
 # Minimum time to sleep between arrow key navigation
 #
-MIN_SLEEP = 3.0
+MIN_SLEEP = 1.0
 
 # Factor to speed up the playback.  This will compress time by the
 # given amount.  For example, 2.0 will play the events back twice
