@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca HEAD\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-28 19:21+0300\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org\n"
+"POT-Creation-Date: 2007-03-10 21:40+0300\n"
 "PO-Revision-Date: 2007-02-28 15:03+0200\n"
 "Last-Translator: Nickolay V. Shmyrev <nshmyrev@yandex.ru>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
@@ -429,9 +429,9 @@ msgid "Switches to the next presentation manager."
 msgstr "Переключить к следующему менеджеру презентаций."
 
 #: ../src/orca/default.py:1210 ../src/orca/default.py:1437
-#: ../src/orca/default.py:3001 ../src/orca/default.py:3135
-#: ../src/orca/default.py:3140 ../src/orca/default.py:3233
-#: ../src/orca/default.py:3238 ../src/orca/Gecko.py:2906
+#: ../src/orca/default.py:3006 ../src/orca/default.py:3140
+#: ../src/orca/default.py:3145 ../src/orca/default.py:3238
+#: ../src/orca/default.py:3243 ../src/orca/Gecko.py:3046
 #: ../src/orca/scripts/Evolution.py:399 ../src/orca/scripts/Evolution.py:884
 #: ../src/orca/scripts/StarOffice.py:1808
 #: ../src/orca/scripts/StarOffice.py:1817 ../src/orca/where_am_I.py:994
@@ -502,11 +502,11 @@ msgstr "Режим обучения. Нажмите escape для выхода."
 msgid "Exiting learn mode."
 msgstr "Выход из режима обучения."
 
-#: ../src/orca/default.py:3003 ../src/orca/default.py:3142
+#: ../src/orca/default.py:3008 ../src/orca/default.py:3147
 msgid "white space"
 msgstr "пробел"
 
-#: ../src/orca/default.py:3355 ../src/orca/default.py:3356
+#: ../src/orca/default.py:3360 ../src/orca/default.py:3361
 msgid "string not found"
 msgstr "строка не найдена"
 
@@ -530,29 +530,29 @@ msgstr "Нет фокуса"
 msgid "Switching to focus tracking mode."
 msgstr "Переключение в режим слежения за фокусом"
 
-#: ../src/orca/Gecko.py:1262 ../src/orca/rolenames.py:332
+#: ../src/orca/Gecko.py:1320 ../src/orca/rolenames.py:332
 #: ../src/orca/scripts/acroread.py:251 ../src/orca/scripts/StarOffice.py:1091
 msgid "link"
 msgstr "ссылка"
 
-#: ../src/orca/Gecko.py:1281
+#: ../src/orca/Gecko.py:1339
 msgid "Loading.  Please wait."
 msgstr "Загрузка, подождите."
 
-#: ../src/orca/Gecko.py:1287
+#: ../src/orca/Gecko.py:1345
 #, python-format
 msgid "Finished loading %s."
 msgstr "Завершение загрузки %s."
 
-#: ../src/orca/Gecko.py:1293
+#: ../src/orca/Gecko.py:1351
 msgid "Finished loading."
 msgstr "Загрузка завершена."
 
-#: ../src/orca/Gecko.py:3233 ../src/orca/Gecko.py:3244
+#: ../src/orca/Gecko.py:3419 ../src/orca/Gecko.py:3430
 msgid "No more headings."
 msgstr "Больше нет заголовков"
 
-#: ../src/orca/Gecko.py:3255 ../src/orca/Gecko.py:3266
+#: ../src/orca/Gecko.py:3441 ../src/orca/Gecko.py:3452
 msgid "No more chunks."
 msgstr "Больше нет кусков."
 
@@ -2925,14 +2925,15 @@ msgid "Cell "
 msgstr "Ячейка "
 
 #. Don't speak chrome URLs.
-#: ../src/orca/scripts/Thunderbird.py:235
-#: ../src/orca/scripts/Thunderbird.py:315
-#: ../src/orca/scripts/Thunderbird.py:330
+#.
+#: ../src/orca/scripts/Thunderbird.py:184
+#: ../src/orca/scripts/Thunderbird.py:264
+#: ../src/orca/scripts/Thunderbird.py:279
 msgid "chrome://"
 msgstr "choome://"
 
-#: ../src/orca/scripts/Thunderbird.py:322
-#: ../src/orca/scripts/Thunderbird.py:337
+#: ../src/orca/scripts/Thunderbird.py:272
+#: ../src/orca/scripts/Thunderbird.py:287
 #, python-format
 msgid "%s panel"
 msgstr "панель %s"
@@ -2974,14 +2975,18 @@ msgid "Minefield"
 msgstr "Минное поле"
 
 #: ../src/orca/settings.py:539
+msgid "Mail/News"
+msgstr "Почта/Новости"
+
+#: ../src/orca/settings.py:540
 msgid "bug-buddy"
 msgstr "bug-buddy"
 
-#: ../src/orca/settings.py:540
+#: ../src/orca/settings.py:541
 msgid "vte"
 msgstr "vte"
 
-#: ../src/orca/settings.py:541
+#: ../src/orca/settings.py:542
 msgid "time-admin"
 msgstr "time-admin"
 
