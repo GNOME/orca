@@ -1,3 +1,59 @@
+2.18.0 - 12-Mar-2007
+
+* See http://live.gnome.org/TwoPointSeventeen/ReleaseNotes/Orca for a 
+  summary of what's changed since Orca v1.0.0.  The remainder of these
+  NEWS entries cover what's changed since Orca v2.17.92.
+
+* Much more work on Gecko.py support for Firefox.  Firefox support
+  still has a ways to go, both inside Firefox itself and inside Orca.
+
+* Much more work on Gecko.py support for Thunderbird.  Thunderbird
+  support still has a ways to go, both inside Thunderbird itself and
+  inside Orca.
+
+* Implemented GNOME GOAL #3 - removed "Application" from Categories in
+  desktop file.
+
+* Work to make sure Orca still works with the latest gnome-mag release.
+
+* Updated man page.
+
+* Fix for bug 413457 to prevent Orca from speaking various names for
+  the "-" character twice in a row in German.
+
+* Adjusted StarOffice.py to prevent a traceback in face of some regressions
+  in oowriter.
+
+* Support for better filtering of events in debug logs.
+
+* New and updated translations (THANKS EVERYONE!!!):
+
+    ar      Arabic               Khaled Hosny and Djihed Afifi
+    bg      Bulgarian            Alexander Shopov, Rostislav Raykov,
+                                 Vladimir Petkov, and Iassen Pramatarov
+    ca      Catalan              Gil Forcada and Josep Puigdemont i Casamajó
+    de      German               Hendrik Richter and Jochen Skulj
+    dz      Dzongkha             Pema Geyleg
+    en_GB   English/British      David Lodge and Gareth Owen
+    fi      Finnish              Ilkka Tuohela
+    fr      French               Jonathan Ernst and Stéphane Raimbault
+    gu      Gujarati             Ankit Patel
+    hu      Hungarian            Kálmán Kéménczy and Gabor Kelemen
+    it      Italian              Luca Ferretti
+    ko      Korean               Changwoo Ryu
+    lt      Lithuanian           Žygimantas Beručka and Gintautas Miliauskas
+    mk      Macedonian           Jovan Naumovski
+    pt      Portuguese           Duarte Loreto
+    pt_BR   Brazilian Portuguese Raphael Higino, Og Maciel, Jonh Wendell and
+				 Fábio Nogueira
+    ru      Russian              Nickolay V. Shmyrev
+    sv      Swedish              Daniel Nylander
+    uk      Ukrainian            Maxim Dziumanenko
+    zh_HK   Traditional Chinese  Chao-Hsiung Liao and Woodman Tuen
+    zh_TW   Traditional Chinese  Chao-Hsiung Liao and Woodman Tuen
+ 
+==========
+
 2.17.92 - 26-Feb-2007
 
 * Much more work on Gecko.py support for Firefox.  Firefox support

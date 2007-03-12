@@ -1,3 +1,8 @@
+2007-03-12  Willie Walker <william.walker@sun.com>
+
+	* configure.in, README, NEWS: update to include Orca v2.18.0
+	NEWS entries.  Also bump version to Orca v2.19.0pre..
+	
 2007-03-12  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
