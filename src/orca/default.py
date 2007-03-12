@@ -2287,6 +2287,7 @@ class Script(script.Script):
         # comes across as "space" in the keyboard event and " " in the
         # text event.
         #
+        speakThis = False
         if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
             keyString = orca_state.lastInputEvent.event_string
             wasAutoComplete = (event.source.role == rolenames.ROLE_TEXT and \
@@ -2302,10 +2303,18 @@ class Script(script.Script):
                 pass
             elif wasCommand or wasAutoComplete or \
                    (event.source.role == rolenames.ROLE_PASSWORD_TEXT):
-                if text.isupper():
-                    speech.speak(text, self.voices[settings.UPPERCASE_VOICE])
-                else:
-                    speech.speak(text)
+                speakThis = True
+
+        elif isinstance(orca_state.lastInputEvent, \
+                        input_event.MouseButtonEvent) and \
+             orca_state.lastInputEvent.button == "2":
+            speakThis = True
+
+        if speakThis:
+            if text.isupper():
+                speech.speak(text, self.voices[settings.UPPERCASE_VOICE])
+            else:
+                speech.speak(text)
 
         if settings.enableEchoByWord \
            and self.isWordDelimiter(text.decode("UTF-8")[-1:]):

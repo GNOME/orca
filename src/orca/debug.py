@@ -29,6 +29,7 @@ __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import logging
+import sys
 logging.basicConfig()
 
 log = logging.getLogger()
@@ -152,6 +153,14 @@ def println(level, text = ""):
     - level: the accepted debug level
     - text: the text to print (default is a blank line)
     """
+
+    # Check to see if debugging is not enabled for the calling module.
+    #
+    frame = sys._getframe(1)
+    name = frame.f_globals["__name__"]
+    module = sys.modules[name]
+    if module.__dict__.has_key("_enableDebug") and not module._enableDebug:
+        return
 
     if level >= debugLevel:
         if debugFile:

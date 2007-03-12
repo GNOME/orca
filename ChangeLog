@@ -1,3 +1,12 @@
+2007-03-12  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          src/orca/scripts/StarOffice.py:
+          src/orca/scripts/gnome-terminal.py:
+          From Joanmarie Diggs <j-diggs@comcast.net>
+          Fixed bug #402192 – Orca does not speak text that is pasted 
+          in by middle mouse click.
+
 2007-03-11  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:

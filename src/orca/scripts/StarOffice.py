@@ -1895,3 +1895,26 @@ class Script(default.Script):
         if line[1] == 0 and line[2] == 0:
             return settings.speakBlankLines
 
+    def onTextInserted(self, event):
+        """Called whenever text is inserted into an object.  Overridden here
+        to handle the case when the inserted text was pasted via middle mouse
+        click.
+
+        Arguments:
+        - event: the Event
+        """
+
+        # Because event.source is the paragraph where the text was inserted
+        # and locusOfFocus is the selected text, the default onTextInserted
+        # will return without speaking the text that was pasted.
+        #
+        text = event.any_data
+        if isinstance(orca_state.lastInputEvent, 
+                        input_event.MouseButtonEvent) and \
+             orca_state.lastInputEvent.button == "2":
+            if text.isupper():
+                speech.speak(text, self.voices[settings.UPPERCASE_VOICE])
+            else:
+                speech.speak(text)
+        else:
+            default.Script.onTextInserted(self, event)

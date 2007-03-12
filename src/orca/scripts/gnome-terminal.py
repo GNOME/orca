@@ -146,46 +146,45 @@ class Script(default.Script):
         # We'll let our super class handle "Delete".  We'll handle Ctrl+D.
         #
 
-        if not orca_state.lastInputEvent or \
-            not isinstance(orca_state.lastInputEvent,
-                           input_event.KeyboardEvent):
+        if not orca_state.lastInputEvent:
             return
 
-        keyString = orca_state.lastInputEvent.event_string
-
-        controlPressed = orca_state.lastInputEvent.modifiers \
-                         & (1 << atspi.Accessibility.MODIFIER_CONTROL)
-
-        if (keyString == "Delete") or (keyString == "BackSpace"):
-            return
-        elif (keyString == "D") and controlPressed:
-            text = text.decode("UTF-8")[0].decode("UTF-8")
-
-        # If the last input event was a keyboard event, check to see if
-        # the text for this event matches what the user typed. If it does,
-        # then don't speak it.
-        #
-        # Note that the text widgets sometimes compress their events,
-        # thus we might get a longer string from a single text inserted
-        # event, while we also get individual keyboard events for the
-        # characters used to type the string.  This is ugly.  We attempt
-        # to handle it here by only echoing text if we think it was the
-        # result of a command (e.g., a paste operation).
-        #
-        # Note that we have to special case the space character as it
-        # comes across as "space" in the keyboard event and " " in the
-        # text event.
-        #
-        # For terminal, Return usually ends up in more text from the
-        # system, which we want to hear.  Tab is also often used for
-        # command line completion, so we want to hear that, too.
-        #
-        # Finally, if we missed some command and the system is giving
-        # us a string typically longer than what the length of a
-        # compressed string is (we choose 5 here), then output that.
-        #
         matchFound = False
+        speakThis = False
         if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
+            keyString = orca_state.lastInputEvent.event_string
+
+            controlPressed = orca_state.lastInputEvent.modifiers \
+                             & (1 << atspi.Accessibility.MODIFIER_CONTROL)
+
+            if (keyString == "Delete") or (keyString == "BackSpace"):
+                return
+            elif (keyString == "D") and controlPressed:
+                text = text.decode("UTF-8")[0].decode("UTF-8")
+
+            # If the last input event was a keyboard event, check to see if
+            # the text for this event matches what the user typed. If it does,
+            # then don't speak it.
+            #
+            # Note that the text widgets sometimes compress their events,
+            # thus we might get a longer string from a single text inserted
+            # event, while we also get individual keyboard events for the
+            # characters used to type the string.  This is ugly.  We attempt
+            # to handle it here by only echoing text if we think it was the
+            # result of a command (e.g., a paste operation).
+            #
+            # Note that we have to special case the space character as it
+            # comes across as "space" in the keyboard event and " " in the
+            # text event.
+            #
+            # For terminal, Return usually ends up in more text from the
+            # system, which we want to hear.  Tab is also often used for
+            # command line completion, so we want to hear that, too.
+            #
+            # Finally, if we missed some command and the system is giving
+            # us a string typically longer than what the length of a
+            # compressed string is (we choose 5 here), then output that.
+            #
             wasCommand = orca_state.lastInputEvent.modifiers \
                          & (1 << atspi.Accessibility.MODIFIER_CONTROL \
                             | 1 << atspi.Accessibility.MODIFIER_ALT \
@@ -200,10 +199,18 @@ class Script(default.Script):
                 matchFound = True
                 pass
             elif wasCommand or (len(text) > 5):
-                if text.isupper():
-                    speech.speak(text, self.voices[settings.UPPERCASE_VOICE])
-                else:
-                    speech.speak(text)
+                speakThis = True
+
+        elif isinstance(orca_state.lastInputEvent, \
+                        input_event.MouseButtonEvent) and \
+             orca_state.lastInputEvent.button == "2":
+            speakThis = True
+
+        if speakThis:
+            if text.isupper():
+                speech.speak(text, self.voices[settings.UPPERCASE_VOICE])
+            else:
+                speech.speak(text)
 
         if settings.enableEchoByWord \
            and self.isWordDelimiter(text.decode("UTF-8")[-1:]):
