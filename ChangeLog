@@ -1,3 +1,8 @@
+2007-03-11  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/StarOffice.py:
+          Another fixup for bug #395548.
+
 2007-03-09  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/scripts/StarOffice.py:

@@ -142,7 +142,7 @@ def locateInputLine(obj):
     inputLine = None
     panel = obj.parent.parent.parent.parent
     if panel and panel.role == rolenames.ROLE_PANEL:
-        allParagraphs = orca.activeScript.findByRole(panel, \
+        allParagraphs = orca_state.activeScript.findByRole(panel, \
                                                      rolenames.ROLE_PARAGRAPH)
         if len(allParagraphs) == 1:
             inputLine = allParagraphs[0]
