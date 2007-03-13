@@ -1,3 +1,10 @@
+2007-03-13  Lynn Monsanto <lynn.monsanto@sun.com>
+
+        * test/harness/runone.sh, test/harness/runall.sh: Partial 
+	fix for bug #405061. Fixed merge problem that caused .orca
+	files to not be generated.
+	
+
 2007-03-12  Willie Walker <william.walker@sun.com>
 
 	* configure.in, README, NEWS: update to include Orca v2.18.0

@@ -16,6 +16,11 @@ resultsDir=$harnessDir/../results
 # number of seconds to wait for application to finish shutting down
 SHUT_DOWN_WAIT_TIME=5
 
+# OpenOffice 2.1 executables are installed in 
+# /opt/openoffice.org2.1/program/
+#
+export PATH=$PATH:/opt/openoffice.org2.1/program
+
 coverageMode=0
 
 process_cl () {
@@ -68,11 +73,12 @@ process_cl "${@}"
 
 if [ "$coverageMode" -eq 1 ]
 then 	 
+    echo generating coverage map...
     coverageDir=../coverage/`date +%Y-%m-%d_%H:%M:%S`
-    sed "s^%debug%^$debugFile.orca^g" user-settings.py.in > user-settings.py
     trace2html.py -o $coverageDir -w orca -r runorca.py &
     trace_pid=$!
     sleep 5 	 
+    echo ...finished generating coverage map.
 fi
 
 # Look in the keystrokes directory for directories.
