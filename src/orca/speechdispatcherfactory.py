@@ -93,11 +93,14 @@ class SpeechServer(speechserver.SpeechServer):
         try:
             self._init()
         except ImportError:
-            debug.println(debug.LEVEL_SEVERE,
+            debug.println(debug.LEVEL_WARNING,
                           "Speech Dispatcher interface not installed.")
         except SpeechDispatcherVersionError:
-            debug.println(debug.LEVEL_SEVERE,
+            debug.println(debug.LEVEL_WARNING,
                        "Speech Dispatcher version 0.6.2 or later is required.")
+        except:
+            debug.println(debug.LEVEL_WARNING,
+                       "Speech Dispatcher service failed to connect.")
         else:
             self.__class__._activeServers[self.getInfo()] = self
 
