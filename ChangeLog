@@ -1,5 +1,11 @@
 2007-03-13  Willie Walker <william.walker@sun.com>
 
+	* src/orca/speechdispatcherfactory.py: comment out calls
+	to cancel based upon the interrupt flag.  This isn't working
+	well anywhere in Orca yet.
+	
+2007-03-13  Willie Walker <william.walker@sun.com>
+
 	* docs/pydoc/Makefile.am, src/orca/Makefile.am, 
 	src/orca/speechdispatcherfactory.py, src/orca/settings.py:
 	add experimental speech dispatcher support from bug 349394.

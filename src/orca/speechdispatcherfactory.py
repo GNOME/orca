@@ -168,8 +168,8 @@ class SpeechServer(speechserver.SpeechServer):
                              VoiceFamily.LOCALE: self._default_language}),)
 
     def speak(self, text=None, acss=None, interrupt=True):
-        if interrupt:
-            self._cancel()
+        #if interrupt:
+        #    self._cancel()
         if text:
             self._speak(text, acss)
 
@@ -178,8 +178,8 @@ class SpeechServer(speechserver.SpeechServer):
             self._speak(text, acss)
 
     def speakUtterances(self, list, acss=None, interrupt=True):
-        if interrupt:
-            self._cancel()
+        #if interrupt:
+        #    self._cancel()
         for utterance in list:
             if utterance:
                 self._speak(utterance, acss)
