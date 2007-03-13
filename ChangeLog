@@ -1,3 +1,8 @@
+2007-03-13  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/self_voicing.py:
+          Another small fixup to the refactoring work done in bug #395548.
+
 2007-03-13  Willie Walker <william.walker@sun.com>
 
 	* src/orca/speechdispatcherfactory.py: comment out calls

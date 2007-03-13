@@ -25,9 +25,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import orca.script
+import orca.default as default
 
-class Script(orca.script.Script):
+class Script(default.Script):
     """A script to do nothing.  This is for self-voicing apps."""
     
     def __init__(self, app):
@@ -39,7 +39,7 @@ class Script(orca.script.Script):
         - app: the Python Accessible application to create a script for
         """
 
-        orca.script.Script.__init__(self, app)
+        default.Script.__init__(self, app)
 
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.
