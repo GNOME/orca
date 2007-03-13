@@ -47,6 +47,7 @@ DOC_FILES = \
 	orca.script \
 	orca.settings \
 	orca.speech \
+	orca.speechdispatcherfactory \
 	orca.speechgenerator \
 	orca.speechserver \
 	orca.util \

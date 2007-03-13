@@ -51,6 +51,7 @@ orca_python_PYTHON = \
 	script.py \
 	settings.py \
 	speech.py \
+	speechdispatcherfactory.py \
 	speechgenerator.py \
 	speechserver.py \
 	where_am_I.py

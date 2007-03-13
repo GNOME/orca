@@ -203,7 +203,7 @@ silenceSpeech           = False
 # Settings that apply to the particular speech engine to
 # use as well details on the default voices to use.
 #
-speechFactoryModules    = ["espeechfactory","gnomespeechfactory"]
+speechFactoryModules    = ["espeechfactory","gnomespeechfactory","speechdispatcherfactory"]
 speechServerFactory     = "gnomespeechfactory"
 speechServerInfo        = None # None means let the factory decide.
 
