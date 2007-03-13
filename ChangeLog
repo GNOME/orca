@@ -1,9 +1,13 @@
+2007-03-13  Willie Walker <william.walker@sun.com>
+
+	* src/orca/orca_prefs.py: fix typo in bounds-changed regular
+	expression line.
+	
 2007-03-13  Lynn Monsanto <lynn.monsanto@sun.com>
 
         * test/harness/runone.sh, test/harness/runall.sh: Partial 
 	fix for bug #405061. Fixed merge problem that caused .orca
-	files to not be generated.
-	
+	files to not be generated.	
 
 2007-03-12  Willie Walker <william.walker@sun.com>
 

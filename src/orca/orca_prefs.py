@@ -84,7 +84,7 @@ def _writePreferencesPreamble(prefs):
     prefs.writelines("#orca.debug.eventDebugFilter = re.compile('[\S]*focus|[\S]*activ')\n")
     prefs.writelines("#orca.debug.eventDebugFilter = re.compile('nomatch')\n")
     prefs.writelines("#orca.debug.eventDebugFilter = re.compile('[\S]*:accessible-name')\n")
-    prefs.writelines("#orca.debug.eventDebugFilter = re.compile('[\S]*:(?!bounds-changed')\n")
+    prefs.writelines("#orca.debug.eventDebugFilter = re.compile('[\S]*:(?!bounds-changed)')\n")
 
     prefs.writelines("\n")
 
