@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-11 04:41+0100\n"
-"PO-Revision-Date: 2007-03-11 04:43+0100\n"
+"POT-Creation-Date: 2007-03-13 03:13+0100\n"
+"PO-Revision-Date: 2007-03-07 09:27+0100\n"
 "Last-Translator: Gil Forcada <gilforcada@guifi.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -547,11 +547,11 @@ msgstr "S'està carregant. Espereu."
 #: ../src/orca/Gecko.py:1345
 #, python-format
 msgid "Finished loading %s."
-msgstr "S'ha acabat de carregar %s."
+msgstr "S'ha acabat de carregar el %s"
 
 #: ../src/orca/Gecko.py:1351
 msgid "Finished loading."
-msgstr "S'està acabant de carregar."
+msgstr "S'ha acabat de carregar."
 
 #: ../src/orca/Gecko.py:3419 ../src/orca/Gecko.py:3430
 msgid "No more headings."
@@ -1268,7 +1268,7 @@ msgstr ""
 
 #: ../src/orca/orca-setup.glade.h:20
 msgid "Disable gksu _keyboard grab"
-msgstr ""
+msgstr "No permetis que el gksu capturi el _teclat"
 
 #: ../src/orca/orca-setup.glade.h:21
 msgid "Enable Braille _monitor"
@@ -1484,10 +1484,12 @@ msgid "pixels"
 msgstr "píxels"
 
 #: ../src/orca/phonnames.py:36
+#, fuzzy
 msgid "alpha"
 msgstr "alfa"
 
 #: ../src/orca/phonnames.py:37
+#, fuzzy
 msgid "bravo"
 msgstr "bravo"
 
@@ -1497,10 +1499,12 @@ msgid "charlie"
 msgstr "carles"
 
 #: ../src/orca/phonnames.py:39
+#, fuzzy
 msgid "delta"
 msgstr "delta"
 
 #: ../src/orca/phonnames.py:40
+#, fuzzy
 msgid "echo"
 msgstr "eco"
 
@@ -1510,6 +1514,7 @@ msgid "foxtrot"
 msgstr "foxtrot"
 
 #: ../src/orca/phonnames.py:42
+#, fuzzy
 msgid "golf"
 msgstr "golf"
 
@@ -2601,7 +2606,7 @@ msgstr "component"
 
 #: ../src/orca/scripts/acroread.py:242
 msgid "doc"
-msgstr "doc"
+msgstr "document"
 
 #: ../src/orca/scripts/acroread.py:243
 msgid "Document"
@@ -2664,7 +2669,7 @@ msgstr "esdeveniment de calendari"
 
 #: ../src/orca/scripts/Evolution.py:119
 msgid "Toggle whether we present new mail if we are not the active script."
-msgstr "Commuta si es presenta correu nou si no som l'script actiu."
+msgstr "Commuta si es presenta el correu nou si no som l'script actiu."
 
 #: ../src/orca/scripts/Evolution.py:149
 msgid "present new mail if this script is not active."
@@ -2829,7 +2834,7 @@ msgstr "No s'ha trobat cap fitxer."
 
 #: ../src/orca/scripts/liferea.py:123
 msgid "Work online / offline"
-msgstr "Trella en línia / fóra de línia"
+msgstr "Treballeu en línia / fora de línia"
 
 #. Note to translators: the "Workspace " and "Desk " strings
 #. are the prefix of what metacity shows when you press
@@ -2871,11 +2876,11 @@ msgstr "Calc"
 
 #: ../src/orca/scripts/StarOffice.py:599 ../src/orca/scripts/StarOffice.py:626
 msgid "on"
-msgstr "encès"
+msgstr "actiu"
 
 #: ../src/orca/scripts/StarOffice.py:601 ../src/orca/scripts/StarOffice.py:628
 msgid "off"
-msgstr "apagat"
+msgstr "inactiu"
 
 #: ../src/orca/scripts/StarOffice.py:725
 msgid "Speaks the contents of the input line."
