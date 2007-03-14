@@ -73,6 +73,9 @@ from orca_i18n import _                          # for gettext support
 
 class Script(script.Script):
 
+    EMBEDDED_OBJECT_CHARACTER = u'\ufffc'
+    NO_BREAK_SPACE_CHARACTER  = u'\u00a0'
+    
     def __init__(self, app):
         """Creates a new script for the given application.
 
@@ -90,11 +93,6 @@ class Script(script.Script):
         # "where am I" key.
         #
         self.lastWhereAmIEvent = None
-
-        # Embedded object character used to indicate that an object is
-        # embedded in a string.
-        #
-        self.EMBEDDED_OBJECT_CHARACTER = u'\ufffc'
 
         # Unicode currency symbols (populated by the 
         # getUnicodeCurrencySymbols() routine).
@@ -4212,11 +4210,12 @@ class Script(script.Script):
         Returns True if the given character is a word delimiter.
         """
 
-        if isinstance(character, unicode):
-            character = character.encode("UTF-8")
+        if not isinstance(character, unicode):
+            character = character.decode("UTF-8")
 
         return (character in string.whitespace) \
-               or (character in '!*+,-./:;<=>?@[\]^_{|}')
+               or (character in '!*+,-./:;<=>?@[\]^_{|}') \
+               or (character == self.NO_BREAK_SPACE_CHARACTER)
 
     def getFrame(self, obj):
         """Returns the frame containing this object, or None if this object
