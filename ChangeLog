@@ -6,6 +6,13 @@
           Reworked changes for bug #404052 – Say something to let the 
           user know the Preferences dialog is loading.
 
+        * src/orca/scripts/Evolution.py:
+          The call to textLines() in the textLines() method in the
+          Evolution.py script was incorrect.
+
+        * src/orca/braille.py:
+          Brailling of empty lines was causing a traceback.
+
 2007-03-13  Willie Walker <william.walker@sun.com>
 
 	* src/orca/speechdispatcherfactory.py: handle the case where

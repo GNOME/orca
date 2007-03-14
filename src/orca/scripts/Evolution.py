@@ -289,7 +289,7 @@ class Script(default.Script):
 
         return hrs + ' ' + mins + ' ' + suffix
 
-    def textLines(self):
+    def readTextLines(self):
         """This an iterator that produces elements of the form:
         [SayAllContext, acss], where SayAllContext has the text to be
         spoken and acss is an ACSS instance for speaking the text.  We
@@ -306,7 +306,7 @@ class Script(default.Script):
             panel = atspi.Accessible.makeAccessible(accPanel)
             accTextObj = panel.accessible.getChildAtIndex(0)
             textObj = atspi.Accessible.makeAccessible(accTextObj)
-            for [context, acss] in default.Script.textLines(textObj):
+            for [context, acss] in self.textLines(textObj):
                 yield [context, acss]
 
     def sayAll(self, inputEvent):
@@ -322,9 +322,7 @@ class Script(default.Script):
 
         debug.println(self.debugLevel, "evolution.sayAll.")
         if orca_state.locusOfFocus and orca_state.locusOfFocus.text:
-            #for [context, acss] in self.textLines():
-            #    print context.utterance
-            speech.sayAll(self.textLines(),
+            speech.sayAll(self.readTextLines(),
                           self.__sayAllProgressCallback)
         else:
             default.Script.sayAll(self, inputEvent)

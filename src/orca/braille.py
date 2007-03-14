@@ -690,12 +690,12 @@ def refresh(panToCursor=True, targetCursorCell=0):
                 # The name before BrlTTY v3.8 revision 2810
                 #
                 writeStruct = brlapi.Write()
-            writeStruct.text = substring
             writeStruct.regionBegin = 1
             writeStruct.regionSize = len(substring.decode("UTF-8"))
             while writeStruct.regionSize < _displaySize[0]:
-                writeStruct.text += " "
+                substring += " "
                 writeStruct.regionSize += 1
+            writeStruct.text = substring
             writeStruct.cursor = cursorCell
             writeStruct.charset = "UTF-8"
 
