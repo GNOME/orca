@@ -45,6 +45,7 @@ import speech
 import speechgenerator
 
 from orca_i18n import _
+from orca_i18n import ngettext  # for ngettext support
 
 # If True, it tells us to take over caret navigation.  This is something
 # that can be set in user-settings.py:
@@ -758,7 +759,9 @@ class Script(default.Script):
             [Script.goNextHeading,
              Script.goPreviousHeading,
              Script.goNextChunk,
-             Script.goPreviousChunk]
+             Script.goPreviousChunk,
+             Script.goNextList,
+             Script.goPreviousList]
 
         if controlCaretNavigation:
             debug.println(debug.LEVEL_CONFIGURATION,
@@ -853,6 +856,16 @@ class Script(default.Script):
                 Script.goNextChunk,
                 "Goes to next chunk.")
 
+        self.inputEventHandlers["goPreviousListHandler"] = \
+            input_event.InputEventHandler(
+                Script.goPreviousList,
+                "Goes to previous list.")
+
+        self.inputEventHandlers["goNextListHandler"] = \
+            input_event.InputEventHandler(
+                Script.goNextList,
+                "Goes to next list.")
+
         self.inputEventHandlers["toggleCaretNavigationHandler"] = \
             input_event.InputEventHandler(
                 Script.toggleCaretNavigation,
@@ -940,14 +953,15 @@ class Script(default.Script):
 
         keyBindings = default.Script.getKeyBindings(self)
 
-        # NOTE: We include ALT in all the bindings below so as to not
-        # conflict with menu and other mnemonics.
+        # NOTE: We include ALT and CONTROL in all the bindings below so as
+        # to not conflict with menu and other mnemonics.
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "h",
                 (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT),
+                 | 1 << atspi.Accessibility.MODIFIER_ALT \
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 1 << atspi.Accessibility.MODIFIER_SHIFT,
                 self.inputEventHandlers["goPreviousHeadingHandler"]))
 
@@ -955,7 +969,8 @@ class Script(default.Script):
             keybindings.KeyBinding(
                 "h",
                 (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT),
+                 | 1 << atspi.Accessibility.MODIFIER_ALT \
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 0,
                 self.inputEventHandlers["goNextHeadingHandler"]))
 
@@ -963,7 +978,8 @@ class Script(default.Script):
             keybindings.KeyBinding(
                 "o",
                 (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT),
+                 | 1 << atspi.Accessibility.MODIFIER_ALT \
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 1 << atspi.Accessibility.MODIFIER_SHIFT,
                 self.inputEventHandlers["goPreviousChunkHandler"]))
 
@@ -971,9 +987,28 @@ class Script(default.Script):
             keybindings.KeyBinding(
                 "o",
                 (1 << atspi.Accessibility.MODIFIER_SHIFT \
-                 | 1 << atspi.Accessibility.MODIFIER_ALT),
+                 | 1 << atspi.Accessibility.MODIFIER_ALT \
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 0,
                 self.inputEventHandlers["goNextChunkHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "l",
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT \
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                self.inputEventHandlers["goPreviousListHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "l",
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT \
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                0,
+                self.inputEventHandlers["goNextListHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
@@ -2716,6 +2751,7 @@ class Script(default.Script):
         [currentObj, characterOffset] = self.getCaretContext()
 
         ancestors = []
+        nestableRoles = [rolenames.ROLE_LIST]
         obj = currentObj.parent
         while obj:
             ancestors.append(obj)
@@ -2723,7 +2759,11 @@ class Script(default.Script):
 
         obj = self.findPreviousObject(currentObj)
         while obj:
-            if (not obj in ancestors) and (obj.role in roles) \
+            isNestedItem = ((obj != currentObj.parent) \
+                            and (currentObj.parent.role == obj.role) \
+                            and (obj.role in nestableRoles))
+            if ((not obj in ancestors) or isNestedItem) \
+               and (obj.role in roles) \
                and (not self.isLayoutOnly(obj)):
                 return self.findFirstCaretContext(obj, 0)
             else:
@@ -3449,6 +3489,62 @@ class Script(default.Script):
                                                               characterOffset))
         else:
             speech.speak(_("No more chunks."))
+
+    def goPreviousList(self, inputEvent):
+        [obj, characterOffset] = self.findPreviousRole([rolenames.ROLE_LIST])
+        if obj:
+            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
+            parent = obj.parent
+            while parent.role != rolenames.ROLE_LIST:
+                parent = parent.parent
+            nItems = 0
+            for i in range(0, parent.childCount):
+                if parent.child(i).role == rolenames.ROLE_LIST_ITEM:
+                    nItems += 1
+            itemString = ngettext("List with %d item", 
+                                  "List with %d items", 
+                                  nItems) % nItems
+            speech.speak(itemString)
+            nestingLevel = 0
+            while parent.parent.role == rolenames.ROLE_LIST:
+                nestingLevel += 1
+                parent = parent.parent
+            if nestingLevel:
+                speech.speak(_("Nesting level %d") % nestingLevel)
+            self.setCaretPosition(obj, characterOffset)
+            self.updateBraille(obj)
+            self.speakContents(self.getLineContentsAtOffset(obj,
+                                                            characterOffset))
+        else:
+            speech.speak(_("No more lists."))
+
+    def goNextList(self, inputEvent):
+        [obj, characterOffset] = self.findNextRole([rolenames.ROLE_LIST])
+        if obj:
+            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
+            parent = obj.parent
+            while parent.role != rolenames.ROLE_LIST:
+                parent = parent.parent
+            nItems = 0
+            for i in range(0, parent.childCount):
+                if parent.child(i).role == rolenames.ROLE_LIST_ITEM:
+                    nItems += 1
+            itemString = ngettext("List with %d item", 
+                                  "List with %d items", 
+                                  nItems) % nItems
+            speech.speak(itemString)
+            nestingLevel = 0
+            while parent.parent.role == rolenames.ROLE_LIST:
+                nestingLevel += 1
+                parent = parent.parent
+            if nestingLevel:
+                speech.speak(_("Nesting level %d") % nestingLevel)
+            self.setCaretPosition(obj, characterOffset)
+            self.updateBraille(obj)
+            self.speakContents(self.getLineContentsAtOffset(obj,
+                                                            characterOffset))
+        else:
+            speech.speak(_("No more lists."))
 
     def toggleCaretNavigation(self, inputEvent):
         """Toggles between Firefox native and Orca caret navigation."""

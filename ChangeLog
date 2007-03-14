@@ -1,3 +1,12 @@
+2007-03-14  Joanmarie Diggs <j-diggs@comcast.net>
+
+	* src/orca/Gecko.py: fix for bug 416853 - Structural 
+        Navigation Keys in Firefox interfere with shortcuts.
+        Control O and Control H now work as expected.  Added
+        List structural navigation:  L moves you to the next
+        list; Shift L moves you to the previous list.  See bug
+        416908.
+
 2007-03-14  Willie Walker <william.walker@sun.com>
 
 	* src/orca/Gecko.py: fix for bug 416857 to reposition
