@@ -1,5 +1,12 @@
 2007-03-14  Willie Walker <william.walker@sun.com>
 
+	* src/orca/Gecko.py: fix for bug 416857 to reposition
+	caret better in HTML content after leaving and returning
+	to the content (e.g., opening a separate dialog and then
+	closing it).
+	
+2007-03-14  Willie Walker <william.walker@sun.com>
+
 	* src/orca/default.py: fix for bug 416964 to account for
 	"no break space" character in word delimiters.
 

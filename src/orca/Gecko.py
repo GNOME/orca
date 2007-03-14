@@ -1452,11 +1452,11 @@ class Script(default.Script):
         # at us.
         #
         if newLocusOfFocus and self.inDocumentContent(newLocusOfFocus):
-            if event.source.text:
-                caretOffset = event.source.text.caretOffset
+            if newLocusOfFocus.text:
+                caretOffset = newLocusOfFocus.text.caretOffset
             else:
                 caretOffset = 0
-            self.caretContext = self.findFirstCaretContext(event.source,
+            self.caretContext = self.findFirstCaretContext(newLocusOfFocus,
                                                            caretOffset)
 
         # Don't bother speaking all the information about the HTML
