@@ -1046,12 +1046,6 @@ def start(registry):
         signal.signal(signal.SIGALRM, settings.timeoutCallback)
         signal.alarm(settings.timeoutTime)
 
-    try:
-        speech.speak(_("Welcome to Orca."))
-        braille.displayMessage(_("Welcome to Orca."))
-    except:
-        debug.printException(debug.LEVEL_SEVERE)
-
     if not _PRESENTATION_MANAGERS:
 
         # [[[WDW - comment out hierarchical_presenter for now.  It
@@ -1368,6 +1362,13 @@ def main():
 
     registry = atspi.Registry()
     init(registry)
+
+    try:
+        message = _("Welcome to Orca.")
+        speech.speak(message)
+        braille.displayMessage(message)
+    except:
+        debug.printException(debug.LEVEL_SEVERE)
 
     # Check to see if the user wants the configuration GUI. It's
     # done here so that the user's existing preferences can be used

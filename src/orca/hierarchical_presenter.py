@@ -433,8 +433,6 @@ class HierarchicalPresenter(presentation_manager.PresentationManager):
     def activate(self):
         """Called when this presentation manager is activated."""
 
-        speech.speak(_("Switching to hierarchical navigation mode."))
-
         apps = orca_state.activeScript.getKnownApplications()
 
         win = orca_state.activeScript.findActiveWindow()

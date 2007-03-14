@@ -846,8 +846,6 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
     def activate(self):
         """Called when this presentation manager is activated."""
 
-        speech.speak(_("Switching to focus tracking mode."))
-
         self._listenerCounts = {}
         self._knownScripts   = {}
         self._knownAppSettings = {}
