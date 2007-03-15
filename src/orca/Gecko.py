@@ -761,7 +761,11 @@ class Script(default.Script):
              Script.goNextChunk,
              Script.goPreviousChunk,
              Script.goNextList,
-             Script.goPreviousList]
+             Script.goPreviousList,
+             Script.goNextUnvisitedLink,
+             Script.goPreviousUnvisitedLink,
+             Script.goNextVisitedLink,
+             Script.goPreviousVisitedLink]
 
         if controlCaretNavigation:
             debug.println(debug.LEVEL_CONFIGURATION,
@@ -865,6 +869,26 @@ class Script(default.Script):
             input_event.InputEventHandler(
                 Script.goNextList,
                 "Goes to next list.")
+
+        self.inputEventHandlers["goPreviousUnvisitedLinkHandler"] = \
+            input_event.InputEventHandler(
+                Script.goPreviousUnvisitedLink,
+                "Goes to previous unvisited link.")
+
+        self.inputEventHandlers["goNextUnvisitedLinkHandler"] = \
+            input_event.InputEventHandler(
+                Script.goNextUnvisitedLink,
+                "Goes to next unvisited link.")
+
+        self.inputEventHandlers["goPreviousVisitedLinkHandler"] = \
+            input_event.InputEventHandler(
+                Script.goPreviousVisitedLink,
+                "Goes to previous visited link.")
+
+        self.inputEventHandlers["goNextVisitedLinkHandler"] = \
+            input_event.InputEventHandler(
+                Script.goNextVisitedLink,
+                "Goes to next visited link.")
 
         self.inputEventHandlers["toggleCaretNavigationHandler"] = \
             input_event.InputEventHandler(
@@ -1009,6 +1033,42 @@ class Script(default.Script):
                  | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 0,
                 self.inputEventHandlers["goNextListHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "u",
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT \
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                self.inputEventHandlers["goPreviousUnvisitedLinkHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "u",
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT \
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                0,
+                self.inputEventHandlers["goNextUnvisitedLinkHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "v",
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT \
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                self.inputEventHandlers["goPreviousVisitedLinkHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "v",
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT \
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                0,
+                self.inputEventHandlers["goNextVisitedLinkHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
@@ -2360,7 +2420,9 @@ class Script(default.Script):
 
         useless = False
 
-        if obj.role in [rolenames.ROLE_IMAGE, rolenames.ROLE_TABLE_CELL]:
+        if obj.role in [rolenames.ROLE_IMAGE, \
+                        rolenames.ROLE_TABLE_CELL, \
+                        rolenames.ROLE_SECTION]:
             text = self.getDisplayedText(obj)
             if (not text) or (len(text) == 0):
                 text = self.getDisplayedLabel(obj)
@@ -3545,6 +3607,90 @@ class Script(default.Script):
                                                             characterOffset))
         else:
             speech.speak(_("No more lists."))
+
+    def goPreviousUnvisitedLink(self, inputEvent):
+        # If the currentObject has a link in its ancestry, we've
+        # already started out on a link and need to move off of
+        # it else we'll get stuck.
+        #
+        [currentObj, characterOffset] = self.getCaretContext()
+        containingLink = self.getContainingLink(currentObj)
+        if containingLink:
+            obj = self.findPreviousObject(containingLink)
+        else:
+            obj = self.findPreviousObject(currentObj)
+
+        while obj and \
+              (obj.role != rolenames.ROLE_LINK or \
+               (obj.role == rolenames.ROLE_LINK and \
+                obj.state.count(atspi.Accessibility.STATE_VISITED))):
+            obj = self.findPreviousObject(obj)
+        if obj:
+            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
+            self.setCaretPosition(obj, characterOffset)
+            self.updateBraille(obj)
+            self.speakContents(self.getObjectContentsAtOffset(obj,
+                                                              characterOffset))
+        else:
+            speech.speak(_("No more unvisited links."))
+
+    def goNextUnvisitedLink(self, inputEvent):
+        [obj, characterOffset] = self.getCaretContext()
+        obj = self.findNextObject(obj)
+        while obj and \
+              (obj.role != rolenames.ROLE_LINK or \
+               (obj.role == rolenames.ROLE_LINK and \
+                obj.state.count(atspi.Accessibility.STATE_VISITED))):
+            obj = self.findNextObject(obj)
+        if obj:
+            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
+            self.setCaretPosition(obj, characterOffset)
+            self.updateBraille(obj)
+            self.speakContents(self.getObjectContentsAtOffset(obj,
+                                                              characterOffset))
+        else:
+            speech.speak(_("No more unvisited links."))
+
+    def goPreviousVisitedLink(self, inputEvent):
+        # If the currentObject has a link in its ancestry, we've
+        # already started out on a link and need to move off of
+        # it else we'll get stuck.
+        #
+        [currentObj, characterOffset] = self.getCaretContext()
+        containingLink = self.getContainingLink(currentObj)
+        if containingLink:
+            obj = self.findPreviousObject(containingLink)
+        else:
+            obj = self.findPreviousObject(currentObj)
+
+        while obj and \
+              (obj.role != rolenames.ROLE_LINK or not \
+               obj.state.count(atspi.Accessibility.STATE_VISITED)):
+            obj = self.findPreviousObject(obj)
+        if obj:
+            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
+            self.setCaretPosition(obj, characterOffset)
+            self.updateBraille(obj)
+            self.speakContents(self.getObjectContentsAtOffset(obj,
+                                                              characterOffset))
+        else:
+            speech.speak(_("No more visited links."))
+
+    def goNextVisitedLink(self, inputEvent):
+        [obj, characterOffset] = self.getCaretContext()
+        obj = self.findNextObject(obj)
+        while obj and \
+              (obj.role != rolenames.ROLE_LINK or not \
+               obj.state.count(atspi.Accessibility.STATE_VISITED)):
+            obj = self.findNextObject(obj)
+        if obj:
+            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
+            self.setCaretPosition(obj, characterOffset)
+            self.updateBraille(obj)
+            self.speakContents(self.getObjectContentsAtOffset(obj,
+                                                              characterOffset))
+        else:
+            speech.speak(_("No more visited links."))
 
     def toggleCaretNavigation(self, inputEvent):
         """Toggles between Firefox native and Orca caret navigation."""

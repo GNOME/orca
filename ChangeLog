@@ -1,3 +1,12 @@
+2007-03-15  Joanmarie Diggs <j-diggs@comcast.net>
+
+	* src/orca/Gecko.py: fix for bug 418430 – Empty sections
+        should be treated as layout objects in Firefox.  Added
+        Link structural navigation:  U moves you to the next
+        unvisited link; Shift U to the previous unvisited link;
+        V to the next visited link; Shift V to the previous
+        visited link.  See bug 417001.
+
 2007-03-15  Willie Walker <william.walker@sun.com>
 
 	* src/orca/gnomespeechfactory.py: fix problem with SayAll 
