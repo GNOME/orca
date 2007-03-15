@@ -494,17 +494,20 @@ class SpeechServer(speechserver.SpeechServer):
                         speechserver.SayAllContext.PROGRESS)
                 elif type == GNOME.Speech.speech_callback_speech_ended:
                     try:
-                        [self.__sayAll.currentContext, acss] = \
-                            self.__sayAll.utteranceIterator.next()
-                        debug.println(debug.LEVEL_INFO,
-                                      "SPEECH OUTPUT: '" \
-                                      + self.__sayAll.currentContext.utterance\
-                                      + "'")
-                        log.info("'%s'" \
-                                 % self.__sayAll.currentContext.utterance)
-                        self.__sayAll.idForCurrentContext = self.__speak(
-                            self.__sayAll.currentContext.utterance,
-                            acss)
+                        while True:
+                            [self.__sayAll.currentContext, acss] = \
+                                self.__sayAll.utteranceIterator.next()
+                            utterance = self.__sayAll.currentContext.utterance
+                            debug.println(debug.LEVEL_INFO,
+                                          "SPEECH OUTPUT: '" \
+                                          + utterance \
+                                          + "'")
+                            log.info("'%s'" % utterance)
+                            if utterance and len(utterance)\
+                               and not utterance.isspace():
+                                self.__sayAll.idForCurrentContext = \
+                                    self.__speak(utterance, acss)
+                                break
                     except StopIteration:
                         self.__isSpeaking = False
                         context.currentOffset = context.endOffset
