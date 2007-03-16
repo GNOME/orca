@@ -1,3 +1,10 @@
+2007-03-16  Joanmarie Diggs <j-diggs@comcast.net>
+
+	* src/orca/scripts/acroread.py: fix for bug 419006 -
+        Refactor acroread.py to remove global methods.  This
+        also takes care of a side effect of the refactoring
+        work done in bug #395548.
+
 2007-03-16  Willie Walker <william.walker@sun.com>
 
 	* bugs/bugs.html: reconcile/merge Mozilla and Orca bugs.

@@ -39,180 +39,6 @@ import orca.speech as speech
 
 from orca.orca_i18n import _ # for gettext support
 
-# To handle the multiple, identical object:text-caret-moved events
-# and possible focus events that result from a single key press
-#
-currentInputEvent = None
-
-# To handle the case when we get an object:text-caret-moved event
-# for some text we just left, but which is still showing on the
-# screen.
-#
-lastCaretMovedLine = None
-
-# To minimize chattiness related to focused events when the Find
-# toolbar is active.
-#
-findToolbarActive = False
-findToolbarName = None
-preFindLine = None
-
-def getDocument(locusOfFocus):
-    """ Obtains the Document object that contains the locusOfFocus.
-
-    Arguments:
-    - locusOfFocus: the locusOfFocus
-
-    Returns: the Document object, if found.
-    """
-
-    document = None
-    obj = locusOfFocus
-    while obj.role != rolenames.ROLE_UNKNOWN:
-        obj = obj.parent
-
-    # This is probably it, but the parent of a text object
-    # in a table also has a role of 'unknown' which in turn
-    # has a parent with a role of 'unknown'.  The parent of
-    # the Document object is a drawing area.
-    #
-    if obj.parent.role == rolenames.ROLE_DRAWING_AREA:
-        document = obj
-    else:
-        while obj.role != rolenames.ROLE_TABLE:
-            obj = obj.parent
-        # For now, let's assume no nested tables! :-)
-        #
-        while obj.role != rolenames.ROLE_UNKNOWN:
-            obj = obj.parent
-        document = obj
-
-    return document
-
-def findNodeInDocument(obj):
-    """ Obtains the location of an object with respect to the
-    Document object.
-
-    Arguments:
-    - obj: the accessible whose location we're trying to obtain
-
-    Returns: a list that represents the object's position,
-    ordered from child to parent
-    """
-
-    nodeList = []
-    document = getDocument(obj)
-    while obj != document:
-        nodeList.append(obj.index)
-        obj = obj.parent
-    return nodeList
-
-def getNextTextObject(obj, nodeList=None):
-    """A generator of objects with text in the Document object.
-    Acroread organizes document content into a collection of
-    individual objects that contain (or have associated) text
-    and drawing areas which contain such objects along with
-    additional drawing areas. The depth of the drawing areas
-    in any given document or drawing area is unknown.
-
-    Arguments:
-    - obj:      an Accessible that contains children
-    - nodeList: a list reflecting the current object's position
-    """
-
-    if nodeList:
-        index = nodeList.pop()
-    else:
-        index = 0
-
-    for i in range(index, obj.childCount):
-        child = obj.child(i)
-        for nextObject in getNextTextObject(child, nodeList):
-            yield nextObject
-        yield child
-
-def getTableAndDimensions(obj):
-    """Get the table that this text object is in, along with its
-    dimensions.
-
-    Arguments:
-    - obj: a text object within the Document object.
-
-    Returns the table that this text object cell is in, along with
-    the number of rows and columns.
-    """
-
-    table = None
-    rows = 0
-    columns = 0
-
-    # HACK: Rows, columns, and cells are not labeled or assigned
-    # roles.  However, the table structure and what can claim focus
-    # SEEM to be consistent. So let's punt until things get properly
-    # labeled.
-    #
-    rolesList = [rolenames.ROLE_TEXT, \
-                 rolenames.ROLE_UNKNOWN, \
-                 rolenames.ROLE_UNKNOWN, \
-                 rolenames.ROLE_TABLE]
-    if self.isDesiredFocusedItem(obj, rolesList):
-        table = obj.parent.parent.parent
-        rows = table.childCount
-        columns = table.child(0).childCount
-
-    return [table, rows, columns]
-
-def getCellCoordinates(table, cell):
-    """Get the coordinates of the specified text object with respect
-     to the table that contains it.
-
-    Arguments:
-    - obj: a text object within a table
-
-    Returns the row number and column number.
-    """
-
-    # HACK: Again, these things are not labeled or assigned roles,
-    # so we're punting for now.
-    #
-    column = cell.parent.index + 1
-    row = cell.parent.parent.index + 1
-
-    return [row, column]
-
-def isInFindToolbar(obj):
-    """Examines the current object to identify if it is in the Find
-    tool bar.  If so, it also sets findToolbarName so that we can
-    identify this frame by name independent of localization.
-
-    Arguments:
-    - obj: an Accessible
-
-    Returns True if the object is in the Find tool bar.
-    """
-
-    global findToolbarName
-
-    inFindToolbar = False
-    rolesList = [rolenames.ROLE_DRAWING_AREA, \
-                 rolenames.ROLE_DRAWING_AREA, \
-                 rolenames.ROLE_DRAWING_AREA, \
-                 rolenames.ROLE_TOOL_BAR, \
-                 rolenames.ROLE_PANEL, \
-                 rolenames.ROLE_PANEL, \
-                 rolenames.ROLE_FRAME]
-
-    try:
-        while obj.role != rolenames.ROLE_DRAWING_AREA:
-            obj = obj.parent
-        if self.isDesiredFocusedItem(obj, rolesList):
-            inFindToolbar = True
-            findToolbarName = self.getFrame(obj).name
-    except:
-        pass
-
-    return inFindToolbar
-
 ########################################################################
 #                                                                      #
 # The acroread script class.                                           #
@@ -248,6 +74,23 @@ class Script(default.Script):
                                 _("lnk"),
                                 _("Link"),
                                 _("link"))
+        # To handle the multiple, identical object:text-caret-moved events
+        # and possible focus events that result from a single key press
+        #
+        self.currentInputEvent = None
+
+        # To handle the case when we get an object:text-caret-moved event
+        # for some text we just left, but which is still showing on the
+        # screen.
+        #
+        self.lastCaretMovedLine = None
+
+        # To minimize chattiness related to focused events when the Find
+        # toolbar is active.
+        #
+        self.findToolbarActive = False
+        self.findToolbarName = None
+        self.preFindLine = None
 
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
@@ -262,6 +105,130 @@ class Script(default.Script):
                 Script.sayAll,
                 _("Speaks entire document."))
 
+    def getDocument(self, locusOfFocus):
+        """ Obtains the Document object that contains the locusOfFocus.
+
+        Arguments:
+        - locusOfFocus: the locusOfFocus
+
+        Returns: the Document object, if found.
+        """
+
+        document = None
+        obj = locusOfFocus
+        while obj.role != rolenames.ROLE_UNKNOWN:
+            obj = obj.parent
+
+        # This is probably it, but the parent of a text object
+        # in a table also has a role of 'unknown' which in turn
+        # has a parent with a role of 'unknown'.  The parent of
+        # the Document object is a drawing area.
+        #
+        if obj.parent.role == rolenames.ROLE_DRAWING_AREA:
+            document = obj
+        else:
+            while obj.role != rolenames.ROLE_TABLE:
+                obj = obj.parent
+            # For now, let's assume no nested tables! :-)
+            #
+            while obj.role != rolenames.ROLE_UNKNOWN:
+                obj = obj.parent
+            document = obj
+
+        return document
+
+    def findNodeInDocument(self, obj):
+        """ Obtains the location of an object with respect to the
+        Document object.
+
+        Arguments:
+        - obj: the accessible whose location we're trying to obtain
+
+        Returns: a list that represents the object's position,
+        ordered from child to parent
+        """
+
+        nodeList = []
+        document = self.getDocument(obj)
+        while obj != document:
+            nodeList.append(obj.index)
+            obj = obj.parent
+
+        return nodeList
+
+    def getNextTextObject(self, obj, nodeList=None):
+        """A generator of objects with text in the Document object.
+        Acroread organizes document content into a collection of
+        individual objects that contain (or have associated) text
+        and drawing areas which contain such objects along with
+        additional drawing areas. The depth of the drawing areas
+        in any given document or drawing area is unknown.
+
+        Arguments:
+        - obj:      an Accessible that contains children
+        - nodeList: a list reflecting the current object's position
+        """
+
+        if nodeList:
+            index = nodeList.pop()
+        else:
+            index = 0
+
+        for i in range(index, obj.childCount):
+            child = obj.child(i)
+            for nextObject in self.getNextTextObject(child, nodeList):
+                yield nextObject
+            yield child
+
+    def getTableAndDimensions(self, obj):
+        """Get the table that this text object is in, along with its
+        dimensions.
+
+        Arguments:
+        - obj: a text object within the Document object.
+
+        Returns the table that this text object cell is in, along with
+        the number of rows and columns.
+        """
+
+        table = None
+        rows = 0
+        columns = 0
+
+        # HACK: Rows, columns, and cells are not labeled or assigned
+        # roles.  However, the table structure and what can claim focus
+        # SEEM to be consistent. So let's punt until things get properly
+        # labeled.
+        #
+        rolesList = [rolenames.ROLE_TEXT, \
+                     rolenames.ROLE_UNKNOWN, \
+                     rolenames.ROLE_UNKNOWN, \
+                     rolenames.ROLE_TABLE]
+        if self.isDesiredFocusedItem(obj, rolesList):
+            table = obj.parent.parent.parent
+            rows = table.childCount
+            columns = table.child(0).childCount
+
+        return [table, rows, columns]
+
+    def getCellCoordinates(self, table, cell):
+        """Get the coordinates of the specified text object with respect
+         to the table that contains it.
+
+        Arguments:
+        - obj: a text object within a table
+
+        Returns the row number and column number.
+        """
+
+        # HACK: Again, these things are not labeled or assigned roles,
+        # so we're punting for now.
+        #
+        column = cell.parent.index + 1
+        row = cell.parent.parent.index + 1
+
+        return [row, column]
+
     def checkForTableBoundary (self, oldFocus, newFocus):
         """Check to see if we've crossed any table boundaries,
         speaking the appropriate details when we have.
@@ -275,9 +242,9 @@ class Script(default.Script):
             return
 
         [oldFocusIsTable, oldFocusRows, oldFocusColumns] = \
-                   getTableAndDimensions(oldFocus)
+                   self.getTableAndDimensions(oldFocus)
         [newFocusIsTable, newFocusRows, newFocusColumns] = \
-                   getTableAndDimensions(newFocus)
+                   self.getTableAndDimensions(newFocus)
 
         # [[[TODO: JD - It is possible to move focus into the object
         # that contains the object that contains the text object. We
@@ -300,9 +267,9 @@ class Script(default.Script):
             # what has changed (per Mike).
             #
             [oldRow, oldCol] = \
-                   getCellCoordinates(oldFocusIsTable, oldFocus)
+                   self.getCellCoordinates(oldFocusIsTable, oldFocus)
             [newRow, newCol] = \
-                   getCellCoordinates(newFocusIsTable, newFocus)
+                   self.getCellCoordinates(newFocusIsTable, newFocus)
             if newRow != oldRow:
                 # We can't count on being in the first/last cell
                 # of the new row -- only the first/last cell of
@@ -313,6 +280,37 @@ class Script(default.Script):
             elif newCol != oldCol:
                 line = _("column %d") % newCol
                 speech.speak(line)
+
+    def isInFindToolbar(self, obj):
+        """Examines the current object to identify if it is in the Find
+        tool bar.  If so, it also sets findToolbarName so that we can
+        identify this frame by name independent of localization.
+
+        Arguments:
+        - obj: an Accessible
+
+        Returns True if the object is in the Find tool bar.
+        """
+
+        inFindToolbar = False
+        rolesList = [rolenames.ROLE_DRAWING_AREA, \
+                     rolenames.ROLE_DRAWING_AREA, \
+                     rolenames.ROLE_DRAWING_AREA, \
+                     rolenames.ROLE_TOOL_BAR, \
+                     rolenames.ROLE_PANEL, \
+                     rolenames.ROLE_PANEL, \
+                     rolenames.ROLE_FRAME]
+
+        try:
+            while obj.role != rolenames.ROLE_DRAWING_AREA:
+                obj = obj.parent
+            if self.isDesiredFocusedItem(obj, rolesList):
+                inFindToolbar = True
+                self.findToolbarName = self.getFrame(obj).name
+        except:
+            pass
+
+        return inFindToolbar
 
     def onFocus(self, event):
         """Called whenever an object gets focus. Overridden in this script
@@ -325,8 +323,7 @@ class Script(default.Script):
         - event: the Event
         """
 
-        global currentInputEvent
-        currentInputEvent = None
+        self.currentInputEvent = None
 
         # We sometimes get focus events for items that don't --
         # or don't yet) have focus.  Ignore these.
@@ -340,7 +337,8 @@ class Script(default.Script):
         if not event.source.state.count(atspi.Accessibility.STATE_SHOWING):
             return
 
-        if not findToolbarActive and event.source.role == rolenames.ROLE_TEXT:
+        if not self.findToolbarActive and \
+           event.source.role == rolenames.ROLE_TEXT:
             if event.source.parent and \
                (event.source.parent.role == rolenames.ROLE_DRAWING_AREA or \
                 event.source.parent.role == rolenames.ROLE_UNKNOWN):
@@ -401,10 +399,10 @@ class Script(default.Script):
 
         # Eliminate unnecessary chattiness related to the Find toolbar.
         #
-        if findToolbarActive:
+        if self.findToolbarActive:
             if newLocusOfFocus.role == rolenames.ROLE_TEXT:
                 newText = self.getTextLineAtCaret(newLocusOfFocus)
-                if newText == preFindLine:
+                if newText == self.preFindLine:
                     orca.setLocusOfFocus(event, oldLocusOfFocus, False)
                     return
             if newLocusOfFocus.role == rolenames.ROLE_DRAWING_AREA:
@@ -463,7 +461,6 @@ class Script(default.Script):
         - event: the Event
         """
 
-        global currentInputEvent, lastCaretMovedLine
         lastInputEvent = orca_state.lastInputEvent
         lastKey = lastInputEvent.event_string
 
@@ -471,9 +468,9 @@ class Script(default.Script):
         # identical, caret-moved events.  Check to see if the events are
         # identical or very closely timed (time chosen based on testing).
         #
-        if currentInputEvent and lastInputEvent:
-            timeDiff = abs(currentInputEvent.time - lastInputEvent.time)
-            if currentInputEvent == lastInputEvent or timeDiff < 0.2:
+        if self.currentInputEvent and lastInputEvent:
+            timeDiff = abs(self.currentInputEvent.time - lastInputEvent.time)
+            if self.currentInputEvent == lastInputEvent or timeDiff < 0.2:
                 return
 
         # Changing pages sometimes results in a caret-moved event for
@@ -488,18 +485,18 @@ class Script(default.Script):
         # conservative until we have evidence to the contrary.
         #
         textLine = self.getTextLineAtCaret(event.source)
-        isOldLine = textLine == lastCaretMovedLine and \
+        isOldLine = textLine == self.lastCaretMovedLine and \
                     (lastKey == "Page_Down" or lastKey == "Page_Up")
         if isOldLine:
-            lastCaretMovedLine = None
+            self.lastCaretMovedLine = None
             return
         else:
-            lastCaretMovedLine = textLine
+            self.lastCaretMovedLine = textLine
 
         # [[[TODO: JD - Sometimes it's showing AND we didn't just leave
         # it. This also seems to occur sometimes with the Find toolbar.]]]
         
-        currentInputEvent = orca_state.lastInputEvent
+        self.currentInputEvent = orca_state.lastInputEvent
         self.checkForTableBoundary(orca_state.locusOfFocus, event.source)
         default.Script.onCaretMoved(self, event)
 
@@ -509,8 +506,6 @@ class Script(default.Script):
         Arguments:
         - event: the Event
         """
-
-        global findToolbarActive
 
         if event.type == "object:state-changed:checked" and \
            event.source.role == rolenames.ROLE_RADIO_BUTTON:
@@ -539,8 +534,8 @@ class Script(default.Script):
                 # There's an excellent chance that the Find toolbar just
                 # gained focus.  Check.
                 #
-                if isInFindToolbar(event.source):
-                    findToolbarActive = True
+                if self.isInFindToolbar(event.source):
+                    self.findToolbarActive = True
 
         default.Script.onStateChanged(self, event)
 
@@ -553,13 +548,12 @@ class Script(default.Script):
         - event: the Event
         """
 
-        global findToolbarActive, preFindLine
         locusOfFocus = orca_state.locusOfFocus
 
-        if event.source.name == findToolbarName:
-            findToolbarActive = False
+        if event.source.name == self.findToolbarName:
+            self.findToolbarActive = False
         elif locusOfFocus.text:
-            preFindLine = self.getTextLineAtCaret(locusOfFocus)
+            self.preFindLine = self.getTextLineAtCaret(locusOfFocus)
 
         default.Script.onWindowDeactivated(self, event)
 
@@ -574,8 +568,8 @@ class Script(default.Script):
         - nodeList: A list reflecting the position of the current text object
         """
 
-        for textObj in getNextTextObject(obj, nodeList):
-            for [context, acss] in default.Script.textLines(textObj):
+        for textObj in self.getNextTextObject(obj, nodeList):
+            for [context, acss] in default.Script.textLines(self, textObj):
                 yield [context, acss]
 
     def sayAll(self, inputEvent):
@@ -588,8 +582,8 @@ class Script(default.Script):
         """
 
         if orca_state.locusOfFocus:
-            nodeList = findNodeInDocument(orca_state.locusOfFocus)
-            document = getDocument(orca_state.locusOfFocus)
+            nodeList = self.findNodeInDocument(orca_state.locusOfFocus)
+            document = self.getDocument(orca_state.locusOfFocus)
             # Note:  We get the correct progress callback, but acroread
             # doesn't seem to respond to setCaretOffset, so we cannot
             # update our location when sayAll is interrupted or finished.
