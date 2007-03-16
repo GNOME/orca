@@ -1,0 +1,3216 @@
+# Danish translation of orca
+# Copyright (C) 2007 Free Software Foundation, Inc.
+# This file is distributed under the same license as the orca package.
+#
+# Kenneth Nielsen <k.nielsen81@gmail.com>, 2007.
+#
+# Konventioner:
+# flat review -> flad visning
+# Jeg har placeret en liste over forvalgte forkortelser der bruges i filen
+# rolenames.py den kan findes ved at søge på strengen acc
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: orca\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-02-03 03:21+0000\n"
+"PO-Revision-Date: 2007-03-15 03:52+0100\n"
+"Last-Translator: Kenneth Nielsen <k.nielsen81@gmail.com>\n"
+"Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+
+#: ../orca.desktop.in.h:1
+msgid "Orca Screen Reader and Magnifier"
+msgstr "Orca skærmlæser og -forstørrer"
+
+#: ../orca.desktop.in.h:2
+msgid "Present on-screen information as speech or braille, or magnify the screen"
+msgstr "Præsentér information på skærmen som tale eller blindeskrift, eller forstør skærmen"
+
+#: ../src/orca/braillegenerator.py:197 ../src/orca/speechgenerator.py:198
+# greyed i denne sammenhæng er f.eks. knapper man ikke kan trykke på
+msgid "grayed"
+msgstr "inaktiveret"
+
+#: ../src/orca/braillegenerator.py:1067 ../src/orca/J2SE-access-bridge.py:69
+#: ../src/orca/speechgenerator.py:1231 ../src/orca/where_am_I.py:596
+msgid "expanded"
+msgstr "udvidet"
+
+#: ../src/orca/braillegenerator.py:1069 ../src/orca/J2SE-access-bridge.py:72
+#: ../src/orca/speechgenerator.py:1233 ../src/orca/where_am_I.py:598
+msgid "collapsed"
+msgstr "slået sammen"
+
+#: ../src/orca/braillegenerator.py:1073
+#, python-format
+msgid "TREE LEVEL %d"
+msgstr "TREE LEVEL %d"
+
+#: ../src/orca/braille.py:161
+msgid "Line Left"
+msgstr "Linje venstre"
+
+#: ../src/orca/braille.py:162
+msgid "Line Right"
+msgstr "Linje højre"
+
+#: ../src/orca/braille.py:163
+msgid "Line Up"
+msgstr "Linje op"
+
+#: ../src/orca/braille.py:164
+msgid "Line Down"
+msgstr "Linje ned"
+
+#: ../src/orca/braille.py:165
+msgid "Top Left"
+msgstr "Øverst til venstre"
+
+#: ../src/orca/braille.py:166
+msgid "Bottom Right"
+msgstr "Nederst til højre"
+
+#: ../src/orca/braille.py:167
+msgid "Cursor Position"
+msgstr "Markørposition"
+
+#: ../src/orca/chnames.py:36
+msgid "space"
+msgstr "mellemrum"
+
+#: ../src/orca/chnames.py:37
+msgid "newline"
+msgstr "ny linje"
+
+#: ../src/orca/chnames.py:38
+msgid "tab"
+msgstr "tabulator"
+
+#: ../src/orca/chnames.py:40
+msgid "exclaim"
+msgstr "udråbstegn"
+
+#: ../src/orca/chnames.py:41
+msgid "apostrophe"
+msgstr "apostrof"
+
+#: ../src/orca/chnames.py:42
+msgid "comma"
+msgstr "komma"
+
+#: ../src/orca/chnames.py:43
+msgid "dot"
+msgstr "punktum"
+
+#: ../src/orca/chnames.py:44
+msgid "question"
+msgstr "spørgsmålstegn"
+
+#: ../src/orca/chnames.py:46
+msgid "quote"
+msgstr "anførselstegn"
+
+#: ../src/orca/chnames.py:47
+msgid "left paren"
+msgstr "venstre parentes"
+
+#: ../src/orca/chnames.py:48
+msgid "right paren"
+msgstr "højre parentes"
+
+#: ../src/orca/chnames.py:49
+msgid "dash"
+msgstr "bindestreg"
+
+#: ../src/orca/chnames.py:50
+msgid "underscore"
+msgstr "bundstreg"
+
+#: ../src/orca/chnames.py:51
+msgid "colon"
+msgstr "kolon"
+
+#: ../src/orca/chnames.py:52
+msgid "semicolon"
+msgstr "semikolon"
+
+#: ../src/orca/chnames.py:53
+msgid "less than"
+msgstr "mindre end"
+
+#: ../src/orca/chnames.py:54
+msgid "greater than"
+msgstr "større end"
+
+#: ../src/orca/chnames.py:55
+msgid "left bracket"
+msgstr "venstre kantparentes"
+
+#: ../src/orca/chnames.py:56
+msgid "right bracket"
+msgstr "højre kantparentes"
+
+#: ../src/orca/chnames.py:57
+msgid "backslash"
+msgstr "omvendt skråstreg"
+
+#: ../src/orca/chnames.py:58
+msgid "vertical line"
+msgstr "lodret linje"
+
+#: ../src/orca/chnames.py:59
+msgid "grave accent"
+msgstr "accent grave"
+
+#: ../src/orca/chnames.py:60
+msgid "tilde"
+msgstr "tilde"
+
+#: ../src/orca/chnames.py:61
+msgid "left brace"
+msgstr "venstre krøllet parentes"
+
+#: ../src/orca/chnames.py:62
+msgid "right brace"
+msgstr "højre krøllet parentes"
+
+#: ../src/orca/chnames.py:64
+msgid "pound"
+msgstr "pund"
+
+#: ../src/orca/chnames.py:65
+msgid "dollar"
+msgstr "dollar"
+
+#: ../src/orca/chnames.py:66 ../src/orca/speechgenerator.py:902
+msgid "percent"
+msgstr "procent"
+
+#: ../src/orca/chnames.py:67
+msgid "and"
+msgstr "og"
+
+#: ../src/orca/chnames.py:68
+msgid "star"
+msgstr "stjerne"
+
+#: ../src/orca/chnames.py:69
+msgid "plus"
+msgstr "plus"
+
+#: ../src/orca/chnames.py:70
+msgid "slash"
+msgstr "skråstreg"
+
+#: ../src/orca/chnames.py:71
+msgid "equals"
+msgstr "lig med"
+
+#: ../src/orca/chnames.py:72
+msgid "at"
+msgstr "snabel-a"
+
+#: ../src/orca/chnames.py:73
+msgid "caret"
+msgstr "cirkumflekstegn"
+
+#: ../src/orca/chnames.py:75
+msgid "plus minus"
+msgstr "plus minus"
+
+#: ../src/orca/chnames.py:76
+msgid "divide"
+msgstr "divider"
+
+#: ../src/orca/chnames.py:77
+msgid "multiply"
+msgstr "gange"
+
+#: ../src/orca/default.py:88
+msgid "Performs left click on current flat review item."
+msgstr "Udfører venstreklik på det nuværende objekt i flad visning."
+
+#: ../src/orca/default.py:93
+msgid "Performs right click on current flat review item."
+msgstr "Udfører højreklik på det nuværende objekt i flad visning."
+
+#: ../src/orca/default.py:98 ../src/orca/scripts/acroread.py:264
+#: ../src/orca/scripts/Evolution.py:114
+msgid "Speaks entire document."
+msgstr "Læser hele dokumentet op."
+
+#: ../src/orca/default.py:103
+msgid "Performs the where am I operation."
+msgstr "Udfører \"hvor er jeg\" operationen."
+
+#: ../src/orca/default.py:108
+msgid "Opens the Orca Find dialog."
+msgstr "Åbner Orcas find-vindue."
+
+#: ../src/orca/default.py:113
+msgid "Searches for the next instance of a string."
+msgstr "Søger efter næste forekomst af en streng."
+
+#: ../src/orca/default.py:118
+msgid "Searches for the previous instance of a string."
+msgstr "Søger efter tidligere forekomst af en streng."
+
+#: ../src/orca/default.py:123
+msgid "Paints and prints the visible zones in the active window."
+msgstr "Tegner og udskriver de synlige zoner i det aktive vindue."
+
+#: ../src/orca/default.py:128
+msgid "Enters and exits flat review mode."
+msgstr "Aktiverer eller deaktiverer flad visnings-tilstand."
+
+#: ../src/orca/default.py:133
+msgid "Moves flat review to the beginning of the previous line."
+msgstr "Flytter flad visning til begyndelsen af den forrige linje."
+
+#: ../src/orca/default.py:138
+msgid "Moves flat review to the home position."
+msgstr "Flytter flad visning til udgangspositionen."
+
+#: ../src/orca/default.py:143
+msgid "Speaks the current flat review line."
+msgstr "Læser den nuværende linje i flad visning op."
+
+#: ../src/orca/default.py:148
+msgid "Moves flat review to the beginning of the next line."
+msgstr "Flytter flad visning til begyndelsen af den næste linje."
+
+#: ../src/orca/default.py:153
+msgid "Moves flat review to the end position."
+msgstr "Flytter flad visning til slutpositionen."
+
+#: ../src/orca/default.py:158
+msgid "Moves flat review to the previous item or word."
+msgstr "Flytter flad visning til det foregående objekt eller ord."
+
+#: ../src/orca/default.py:163
+msgid "Moves flat review to the word above the current word."
+msgstr "Flytter flad visning til ordet over det nuværende ord."
+
+#: ../src/orca/default.py:168
+msgid "Speaks or spells the current flat review item or word."
+msgstr "Staver eller oplæser det nuværende objekt i flad visning."
+
+#: ../src/orca/default.py:173
+msgid "Speaks the current flat review object."
+msgstr "Læser det nuværende objekt i flad visning op."
+
+#: ../src/orca/default.py:178
+msgid "Moves flat review to the next item or word."
+msgstr "Flytter flad visning til det næste objekt eller ord."
+
+#: ../src/orca/default.py:183
+msgid "Moves flat review to the word below the current word."
+msgstr "Flytter flad visning til ordet under det nuværende."
+
+#: ../src/orca/default.py:188
+msgid "Moves flat review to the previous character."
+msgstr "Flytter flad visning til det forrige tegn."
+
+#: ../src/orca/default.py:193
+msgid "Moves flat review to the end of the line."
+msgstr "Flytter flad visning til enden af linjen."
+
+#: ../src/orca/default.py:198
+msgid "Speaks the current flat review character."
+msgstr "Læser det nuværende tegn i flad visning op."
+
+#: ../src/orca/default.py:203
+msgid "Moves flat review to the next character."
+msgstr "Flytter flad visning til det næste tegn."
+
+#: ../src/orca/default.py:208
+msgid "Toggles whether to read just the current table cell or the whole row."
+msgstr "Vælger mellem kun at læse nuværende celle eller hele rækken."
+
+#: ../src/orca/default.py:213
+msgid "Reads the attributes associated with the current text character."
+msgstr "Læser det nuværende tegns attributter."
+
+#: ../src/orca/default.py:218
+msgid "Reports information on current script."
+msgstr "Rapporterer information om det nuværende skript."
+
+#: ../src/orca/default.py:223
+msgid "Pans the braille display to the left."
+msgstr "Forskyder blindskrifts-visningen til venstre."
+
+#: ../src/orca/default.py:229
+msgid "Pans the braille display to the right."
+msgstr "Forskyder blindskrifts-visningen til højre."
+
+#: ../src/orca/default.py:235
+msgid "Moves flat review to the bottom left."
+msgstr "Flytter flad visning nederst til venstre."
+
+#: ../src/orca/default.py:240
+msgid "Returns to object with keyboard focus."
+msgstr "Returnerer til objekt med tastaturfokus."
+
+#: ../src/orca/default.py:245
+msgid "Enters learn mode.  Press escape to exit learn mode."
+msgstr "Går i indlæringstilstand. Tryk esc for at afslutte indlæringstilstand."
+
+#: ../src/orca/default.py:250
+msgid "Exits learn mode."
+msgstr "Afslutter indlæringstilstand."
+
+#: ../src/orca/default.py:255
+# jeg har skrevet med en af udviklerne for at prøve at finde ud af om de steder hvor der står speech
+# om de altid bare skal oversættes til tale, eller om man bør bruge læse nogle steder (idet den jo
+# nogle gange bruges til at læse tekst fra et dokument op med). Konklusionen var at der stort set alle
+# steder skal bruges tale. Jeg knytter en tale^^ kommentar til de pågældende beskeder
+msgid "Decreases the speech rate."
+msgstr "Sænk talehastigheden."
+
+#: ../src/orca/default.py:260
+# tale^^
+msgid "Increases the speech rate."
+msgstr "Hæv talehastigheden."
+
+#: ../src/orca/default.py:265
+msgid "Decreases the speech pitch."
+msgstr "Sænk stemmens tonehøjde."
+
+#: ../src/orca/default.py:270
+msgid "Increases the speech pitch."
+msgstr "Hæv stemmens tonehøjde."
+
+#: ../src/orca/default.py:275
+msgid "Quits Orca"
+msgstr "Afslutter Orca"
+
+#: ../src/orca/default.py:280
+msgid "Toggles keystroke recording on and off."
+msgstr "Slår optagelse af tastaturtryk til eller fra."
+
+#: ../src/orca/default.py:285
+msgid "Displays the preferences configuration dialog."
+msgstr "Viser indstillingsvinduet."
+
+#: ../src/orca/default.py:290
+msgid "Reloads user settings and reinitializes services as necessary."
+msgstr "Genindlæser brugerindstillinger og genstarter tjenester hvis det er nødvendigt."
+
+#: ../src/orca/default.py:295
+# tale^^
+msgid "Toggles the silencing of speech."
+msgstr "Slår lyden fra tale til og fra."
+
+#: ../src/orca/default.py:300
+msgid ""
+"Prints a debug listing of all known applications to the console where Orca "
+"is running."
+msgstr "Skriver en fejlsøgningsliste over alle kendte programmer til den terminal som Orca kører i."
+
+#: ../src/orca/default.py:305
+msgid "Cycles the debug level at run time."
+msgstr "Skifter fejlsøgningsniveauet når programmet kører."
+
+#: ../src/orca/default.py:310
+msgid ""
+"Prints debug information about the currently active application to the "
+"console where Orca is running."
+msgstr "Skriver fejlsøgningsinformation for det på nuværende tidspunkt aktive program til den terminal som Orca kører i."
+
+#: ../src/orca/default.py:315
+msgid "Prints debug information about the ancestry of the object with focus"
+msgstr "Skriver fejlsøgningsinformation om ophavet for det objekt der har fokus"
+
+#: ../src/orca/default.py:320
+msgid "Prints debug information about the application with focus"
+msgstr "Skriver fejlsøgningsinformation om det program der har fokus"
+
+#: ../src/orca/default.py:325
+msgid "Switches to the next presentation manager."
+msgstr "Skifter til den næste præsentationshåndtering."
+
+#: ../src/orca/default.py:1200 ../src/orca/default.py:1427
+#: ../src/orca/default.py:2990 ../src/orca/default.py:3124
+#: ../src/orca/default.py:3129 ../src/orca/default.py:3222
+#: ../src/orca/default.py:3227 ../src/orca/Gecko.py:2732
+#: ../src/orca/scripts/Evolution.py:399 ../src/orca/scripts/Evolution.py:884
+#: ../src/orca/scripts/StarOffice.py:1699
+#: ../src/orca/scripts/StarOffice.py:1708 ../src/orca/where_am_I.py:994
+msgid "blank"
+msgstr "tom"
+
+#: ../src/orca/default.py:1280
+msgid "1 space "
+msgstr "1 mellemrum "
+
+#: ../src/orca/default.py:1282
+#, python-format
+msgid "%d spaces "
+msgstr "%d mellemrum "
+
+#: ../src/orca/default.py:1285
+msgid "1 tab "
+msgstr "1 tabulatorindryk "
+
+#: ../src/orca/default.py:1287
+#, python-format
+msgid "%d tabs "
+msgstr "%d tabulatorindryk "
+
+#: ../src/orca/default.py:1681 ../src/orca/where_am_I.py:603
+#, python-format
+msgid "tree level %d"
+msgstr "træniveau %d"
+
+#: ../src/orca/default.py:2086
+msgid "entire document selected"
+msgstr "hele dokumentet markeret"
+
+#: ../src/orca/default.py:2546
+msgid "Speak "
+msgstr "Tal "
+
+#: ../src/orca/default.py:2549
+msgid "row"
+msgstr "række"
+
+#: ../src/orca/default.py:2551 ../src/orca/rolenames.py:470
+#: ../src/orca/rolenames.py:472
+msgid "cell"
+msgstr "celle"
+
+#: ../src/orca/default.py:2600 ../src/orca/where_am_I.py:1050
+msgid "bold"
+msgstr "fed"
+
+#: ../src/orca/default.py:2602
+msgid " pixels"
+msgstr " billedpunkter"
+
+#: ../src/orca/default.py:2716
+msgid "Entering learn mode.  Press any key to hear its function. "
+msgstr "Går i indlæringstilstand.  Tryk en tast for at høre dens funktion. "
+
+#: ../src/orca/default.py:2717
+msgid "To exit learn mode, press the escape key."
+msgstr "Tryk esc for at forlade indlæringstilstand."
+
+#: ../src/orca/default.py:2718
+msgid "Learn mode.  Press escape to exit."
+msgstr "Indlæringstilstand.  Tryk esc for at afslutte."
+
+#: ../src/orca/default.py:2730 ../src/orca/default.py:2731
+msgid "Exiting learn mode."
+msgstr "Afslutter indlæringstilstand."
+
+#: ../src/orca/default.py:2992 ../src/orca/default.py:3131
+msgid "white space"
+msgstr "blanke tegn"
+
+#: ../src/orca/default.py:3344 ../src/orca/default.py:3345
+msgid "string not found"
+msgstr "streng ikke fundet"
+
+#: ../src/orca/espeechfactory.py:94
+# tale^^
+msgid "Emacspeak Speech Services"
+msgstr "Emacspeak taletjenester"
+
+#: ../src/orca/find.py:247
+msgid "Wrapping to Bottom"
+msgstr "Går rundt til bunden"
+
+#: ../src/orca/find.py:253
+msgid "Wrapping to Top"
+msgstr "Går rundt til toppen"
+
+#: ../src/orca/focus_tracking_presenter.py:739
+msgid "No focus"
+msgstr "Intet fokus"
+
+#: ../src/orca/focus_tracking_presenter.py:834
+msgid "Switching to focus tracking mode."
+msgstr "Skifter til fokus-sporingstilstand."
+
+#: ../src/orca/Gecko.py:1240 ../src/orca/rolenames.py:332
+#: ../src/orca/scripts/acroread.py:251 ../src/orca/scripts/StarOffice.py:1018
+msgid "link"
+msgstr "lænke"
+
+#: ../src/orca/Gecko.py:1259
+msgid "Loading.  Please wait."
+msgstr "Indlæser.  Vent venligst."
+
+#: ../src/orca/Gecko.py:1266
+#, python-format
+msgid "Finished loading %s."
+msgstr "Færdig med at indlæse %s."
+
+#: ../src/orca/Gecko.py:1271
+msgid "Finished loading."
+msgstr "Færdig med at indlæse."
+
+#: ../src/orca/Gecko.py:3031 ../src/orca/Gecko.py:3042
+# De her headings er overskrifter
+msgid "No more headings."
+msgstr "Ikke flere overskrifter."
+
+#: ../src/orca/Gecko.py:3053 ../src/orca/Gecko.py:3064
+# En chunk her henviser til en måde at dele teksten op i bidder
+# f.eks. kan et afsnit, en overskrift, en liste være en bid
+msgid "No more chunks."
+msgstr "Ikke flere bidder."
+
+#: ../src/orca/gnomespeechfactory.py:164
+# tale^^
+msgid "GNOME Speech Services"
+msgstr "GNOME taletjenester"
+
+#. # Replace ellipses (both manual and UTF-8) with "dot dot dot"
+#. #
+#: ../src/orca/gnomespeechfactory.py:659 ../src/orca/gnomespeechfactory.py:660
+msgid " dot dot dot"
+msgstr " prik prik prik"
+
+#: ../src/orca/gnomespeechfactory.py:714
+msgid "minus"
+msgstr "minus"
+
+#: ../src/orca/gnomespeechfactory.py:860
+msgid "higher."
+msgstr "højere."
+
+#: ../src/orca/gnomespeechfactory.py:888
+msgid "lower."
+msgstr "lavere."
+
+#: ../src/orca/gnomespeechfactory.py:913
+msgid "faster."
+msgstr "hurtigere."
+
+#: ../src/orca/gnomespeechfactory.py:943
+msgid "slower."
+msgstr "langsommere."
+
+#: ../src/orca/hierarchical_presenter.py:436
+msgid "Switching to hierarchical navigation mode."
+msgstr "Skifter til hierarki-navigeringstilstand."
+
+#: ../src/orca/J2SE-access-bridge.py:74 ../src/orca/speechgenerator.py:955
+#: ../src/orca/util.py:1531
+msgid "selected"
+msgstr "valgt"
+
+#: ../src/orca/J2SE-access-bridge.py:78 ../src/orca/util.py:1539
+msgid "unselected"
+msgstr "ikke valgt"
+
+#. KeyBindings from the default script, in default.py (Orca's default)
+#.
+#: ../src/orca/keybindings.py:107 ../src/orca/orca_gui_prefs.py:1087
+#: ../src/orca/orca_gui_prefs.py:1171
+msgid "Orca"
+msgstr "Orca"
+
+#: ../src/orca/keybindings.py:111
+msgid "Alt_R"
+msgstr "Alt_R"
+
+#: ../src/orca/keybindings.py:113
+msgid "Super"
+msgstr "Super"
+
+#: ../src/orca/keybindings.py:115
+msgid "Meta2"
+msgstr "Meta2"
+
+#: ../src/orca/keybindings.py:119
+msgid "Alt_L"
+msgstr "Alt_L"
+
+#: ../src/orca/keybindings.py:121
+msgid "Ctrl"
+msgstr "Ctrl"
+
+#: ../src/orca/keybindings.py:123 ../src/orca/orca.py:600
+msgid "Caps_Lock"
+msgstr "Caps_Lock"
+
+#: ../src/orca/keybindings.py:125
+msgid "Shift"
+msgstr "Skift"
+
+#: ../src/orca/keynames.py:38 ../src/orca/keynames.py:41
+msgid "left shift"
+msgstr "venstre skift"
+
+#: ../src/orca/keynames.py:39
+msgid "left alt"
+msgstr "venstre alt"
+
+#: ../src/orca/keynames.py:40
+msgid "left control"
+msgstr "venstre ctrl"
+
+#: ../src/orca/keynames.py:42
+msgid "right shift"
+msgstr "højre skift"
+
+#: ../src/orca/keynames.py:43
+msgid "right alt"
+msgstr "højre alt"
+
+#: ../src/orca/keynames.py:44
+msgid "right control"
+msgstr "højre ctrl"
+
+#: ../src/orca/keynames.py:45
+msgid "left meta"
+msgstr "venstre meta"
+
+#: ../src/orca/keynames.py:46
+msgid "right meta"
+msgstr "højre meta"
+
+#: ../src/orca/keynames.py:47
+msgid "num lock"
+msgstr "num lock"
+
+#: ../src/orca/keynames.py:48
+msgid "caps lock"
+msgstr "caps lock"
+
+#: ../src/orca/keynames.py:49
+msgid "scroll lock"
+msgstr "scroll lock"
+
+#: ../src/orca/keynames.py:50
+msgid "page up"
+msgstr "page up"
+
+#: ../src/orca/keynames.py:51
+msgid "page down"
+msgstr "page down"
+
+#: ../src/orca/keynames.py:52
+msgid "left tab"
+msgstr "venstre tab"
+
+#: ../src/orca/keynames.py:53
+msgid "F 11"
+msgstr "F11"
+
+#: ../src/orca/keynames.py:54
+msgid "F 12"
+msgstr "F12"
+
+#: ../src/orca/orca_console_prefs.py:103 ../src/orca/orca_console_prefs.py:119
+# tale^^
+msgid "Speech is unavailable."
+msgstr "Tale er ikke tilgængelig."
+
+#: ../src/orca/orca_console_prefs.py:107
+msgid "Welcome to Orca setup."
+msgstr "Velkommen til Orca opsætning."
+
+#: ../src/orca/orca_console_prefs.py:122
+# tale^^
+msgid "Select desired speech system:"
+msgstr "Vælg det ønskede talesystem:"
+
+#: ../src/orca/orca_console_prefs.py:127 ../src/orca/orca_console_prefs.py:148
+#: ../src/orca/orca_console_prefs.py:175
+#, python-format
+msgid "%d. %s"
+msgstr "%d. %s"
+
+#: ../src/orca/orca_console_prefs.py:130 ../src/orca/orca_console_prefs.py:151
+#: ../src/orca/orca_console_prefs.py:182 ../src/orca/orca_console_prefs.py:309
+msgid "Enter choice: "
+msgstr "Skriv valg: "
+
+#: ../src/orca/orca_console_prefs.py:132 ../src/orca/orca_console_prefs.py:140
+#: ../src/orca/orca_console_prefs.py:153 ../src/orca/orca_console_prefs.py:162
+#: ../src/orca/orca_console_prefs.py:187
+# tale^^
+msgid "Speech will not be used.\n"
+msgstr "Tale vil ikke blive brugt.\n"
+
+#: ../src/orca/orca_console_prefs.py:139
+msgid "No servers available.\n"
+msgstr "Ingen servere tilgængelige.\n"
+
+#: ../src/orca/orca_console_prefs.py:143
+# tale^^
+msgid "Select desired speech server."
+msgstr "Vælg den ønskede taleserver."
+
+#: ../src/orca/orca_console_prefs.py:161
+msgid "No voices available.\n"
+msgstr "Ingen stemmer tilgængelige.\n"
+
+#: ../src/orca/orca_console_prefs.py:165
+msgid "Select desired voice:"
+msgstr "Vælg den ønskede stemme:"
+
+#. Ask the user if they would like to enable echoing by word.
+#.
+#: ../src/orca/orca_console_prefs.py:220
+# I denne og alle andre strenge der indeholder enter y or n gælder at,
+# indtil videre er y og n hardcoded så derfor har jeg gjort det på denne måde
+# med det ændrer sig måske i fremtiden
+msgid "Enable echo by word?  Enter y or n: "
+msgstr "Slå ordvist ekko til?  Tast y(ja) eller n(nej): "
+
+#. Ask the user if they would like to enable key echo. If they say
+#. yes, then for each of the five different types of keys, ask the
+#. user if they would like to enable them.
+#.
+#. These key types are:
+#.
+#. o Alphanumeric and punctuation keys
+#.
+#. o Modifier keys: CTRL, ALT, Shift, Insert, and "Fn" on laptops.
+#.
+#. o Locking keys: Caps Lock, Num Lock, Scroll Lock, etc.
+#.
+#. o Function keys: The keys at the top of the keyboard.
+#.
+#. o Action keys: space, enter, escape, tab, backspace, delete, arrow
+#. keys, page up, page down, etc.
+#.
+#: ../src/orca/orca_console_prefs.py:245
+msgid "Enable key echo?  Enter y or n: "
+msgstr "Slå tegnvis ekko til?  Tast y(ja) eller n(nej): "
+
+#: ../src/orca/orca_console_prefs.py:252
+msgid "Enable alphanumeric and punctuation keys?  Enter y or n: "
+msgstr "Slå til for alfanumeriske- og tegnsætnings-taster?  Tast y(ja) eller n(nej): "
+
+#: ../src/orca/orca_console_prefs.py:260
+msgid "Enable modifier keys?  Enter y or n: "
+msgstr "Slå til for modificerings-taster?  Tast y(ja) eller n(nej): "
+
+#: ../src/orca/orca_console_prefs.py:268
+msgid "Enable locking keys?  Enter y or n: "
+msgstr "Slå til for låsetaster?  Tast y(ja) eller n(nej): "
+
+#: ../src/orca/orca_console_prefs.py:276
+msgid "Enable function keys?  Enter y or n: "
+msgstr "Slå til for funktions-taster?  tast y(ja) eller n(nej): "
+
+#: ../src/orca/orca_console_prefs.py:284
+msgid "Enable action keys?  Enter y or n: "
+msgstr "Slå til for handlingstaster?  Tast y(ja) eller n(nej): "
+
+#: ../src/orca/orca_console_prefs.py:300
+msgid "Select desired keyboard layout."
+msgstr "Vælg det ønskede tastaturlayout."
+
+#: ../src/orca/orca_console_prefs.py:307
+# Eftersom næste streng er Laptop går jeg ud fra et der her menes en stationær computer
+msgid "1. Desktop"
+msgstr "1. Stationær"
+
+#: ../src/orca/orca_console_prefs.py:308
+msgid "2. Laptop"
+msgstr "2. Bærbar"
+
+#: ../src/orca/orca_console_prefs.py:317
+msgid "Invalid choice. Selecting desktop keyboard layout.\n"
+msgstr "Ugyldigt valg. Vælger tastaturlayout for stationær.\n"
+
+#: ../src/orca/orca_console_prefs.py:346
+msgid "Enable Braille?  Enter y or n: "
+msgstr "Slå blindeskrift til?  Tast y(ja) eller n(nej): "
+
+#: ../src/orca/orca_console_prefs.py:354
+msgid "Enable Braille Monitor?  Enter y or n: "
+msgstr "Slå blindeskrift-skærm til?  Tast y(ja) eller n(nej): "
+
+#: ../src/orca/orca_console_prefs.py:364
+msgid "Accessibility support for GNOME has just been enabled. "
+msgstr "Tilgængeligheds-støtte i GNOME er netop blevet slået til. "
+
+#: ../src/orca/orca_console_prefs.py:369
+msgid "You need to log out and log back in for the change to take effect. "
+msgstr "Du er nødt til at logge ud og ind igen for at ændringerne træder i kraft. "
+
+#: ../src/orca/orca_console_prefs.py:376
+msgid "Do you want to logout now?  Enter y or n: "
+msgstr "Ønsker du at logge ud nu?  Tast y(ja) eller n(nej): "
+
+#: ../src/orca/orca_console_prefs.py:382
+msgid "Setup complete. Logging out now."
+msgstr "Opsætning færdig. Logger ud nu."
+
+#: ../src/orca/orca_console_prefs.py:396
+msgid "Setup complete.  Press Return to continue."
+msgstr "Opsætning færdig.  Tryk enter for at fortsætte."
+
+#: ../src/orca/orca-find.glade.h:1
+msgid "<b>Start from:</b>"
+msgstr "<b>Start fra:</b>"
+
+#: ../src/orca/orca-find.glade.h:2 ../src/orca/orca_gui_find.py:127
+msgid "C_urrent location"
+msgstr "N_uværende sted"
+
+#: ../src/orca/orca-find.glade.h:3
+msgid "Close"
+msgstr "Luk"
+
+#: ../src/orca/orca-find.glade.h:4
+msgid "Match _entire word only"
+msgstr "Træf kun på _hele ordet"
+
+#: ../src/orca/orca-find.glade.h:5
+msgid "Orca Find"
+msgstr "Orca søg"
+
+#: ../src/orca/orca-find.glade.h:6
+msgid "Orca Find Dialog"
+msgstr "Orca søgedialog"
+
+#: ../src/orca/orca-find.glade.h:7
+msgid "Search _backwards"
+msgstr "Søg _baglæns"
+
+#: ../src/orca/orca-find.glade.h:8
+msgid "Search for:"
+msgstr "Søg efter:"
+
+#: ../src/orca/orca-find.glade.h:9
+msgid "Start from:"
+msgstr "Start fra:"
+
+#: ../src/orca/orca-find.glade.h:10
+msgid "Top of window"
+msgstr "Top af vindue"
+
+#: ../src/orca/orca-find.glade.h:11
+msgid "_Match case"
+msgstr "_Træf versalfølsomt"
+
+#: ../src/orca/orca-find.glade.h:12
+msgid "_Search for:"
+msgstr "_Søg efter:"
+
+#: ../src/orca/orca-find.glade.h:13
+msgid "_Top of window"
+msgstr "_Top af vindue"
+
+#: ../src/orca/orca-find.glade.h:14
+msgid "_Wrap around"
+msgstr "_Ombryd"
+
+#. Treeview Column Implementation:
+#. (HANDLER,    DESCRIP,
+#. MOD_MASK1,  MOD_USED1,  KEY1,   TEXT1,
+#. MOD_MASK2,  MOD_USED2,  KEY2,   TEXT2,
+#. MODIF,      EDITABLE)
+#. HANDLER
+#.
+#: ../src/orca/orca_gui_prefs.py:103
+msgid "Handler"
+msgstr "Håndtering"
+
+#: ../src/orca/orca_gui_prefs.py:115
+msgid "Function"
+msgstr "Funktion"
+
+#. MOD_MASK1
+#.
+#: ../src/orca/orca_gui_prefs.py:123
+msgid "Mod.Mask 1"
+msgstr "Ændringsmaske 1"
+
+#. MOD_USED1
+#.
+#: ../src/orca/orca_gui_prefs.py:133
+msgid "Use Mod.1"
+msgstr "Brug ændringsmaske 1"
+
+#. KEY1
+#.
+#: ../src/orca/orca_gui_prefs.py:143
+msgid "Key1"
+msgstr "Tast1"
+
+#: ../src/orca/orca_gui_prefs.py:161
+msgid "Key Binding"
+msgstr "Tastaturbinding"
+
+#. MOD_MASK2
+#.
+#: ../src/orca/orca_gui_prefs.py:171
+msgid "Mod.Mask 2"
+msgstr "Ændringsmaske 2"
+
+#. MOD_USED2
+#.
+#: ../src/orca/orca_gui_prefs.py:181
+msgid "Use Mod.2"
+msgstr "Brug ændringsmaske 2"
+
+#. KEY2
+#.
+#: ../src/orca/orca_gui_prefs.py:191
+msgid "Key2"
+msgstr "Tast2"
+
+#: ../src/orca/orca_gui_prefs.py:207
+msgid "Alternate"
+msgstr "Alternativ"
+
+#: ../src/orca/orca_gui_prefs.py:222 ../src/orca/orca_gui_prefs.py:235
+msgid "Modified"
+msgstr "Modificeret"
+
+#: ../src/orca/orca_gui_prefs.py:271 ../src/orca/orca_gui_prefs.py:296
+msgid "Default"
+msgstr "Forvalgt"
+
+#: ../src/orca/orca_gui_prefs.py:273 ../src/orca/orca_gui_prefs.py:298
+msgid "Uppercase"
+msgstr "Store bogstaver"
+
+#: ../src/orca/orca_gui_prefs.py:275 ../src/orca/orca_gui_prefs.py:304
+msgid "Hyperlink"
+msgstr "Internet-henvisning"
+
+#: ../src/orca/orca_gui_prefs.py:497 ../src/orca/orca_gui_prefs.py:569
+#: ../src/orca/orca_gui_prefs.py:643
+# tale^^
+msgid "Speech not available."
+msgstr "Tale er ikke tilgængelig."
+
+#: ../src/orca/orca_gui_prefs.py:868 ../src/orca/orca_gui_prefs.py:872
+#: ../src/orca/orca_gui_prefs.py:1771
+msgid "Bilinear"
+msgstr "Bilineær"
+
+#: ../src/orca/orca_gui_prefs.py:870 ../src/orca/orca_gui_prefs.py:883
+#: ../src/orca/orca_gui_prefs.py:1773 ../src/orca/orca_gui_prefs.py:1796
+msgid "None"
+msgstr "Ingen"
+
+#: ../src/orca/orca_gui_prefs.py:881 ../src/orca/orca_gui_prefs.py:889
+#: ../src/orca/orca_gui_prefs.py:1790
+msgid "Centered"
+msgstr "Centreret"
+
+#: ../src/orca/orca_gui_prefs.py:885 ../src/orca/orca_gui_prefs.py:1794
+msgid "Proportional"
+msgstr "Proportional"
+
+#: ../src/orca/orca_gui_prefs.py:887 ../src/orca/orca_gui_prefs.py:1792
+msgid "Push"
+msgstr "Tryk"
+
+#. Braille Bindings from default script, in default.py
+#.
+#: ../src/orca/orca_gui_prefs.py:1121 ../src/orca/orca_gui_prefs.py:1189
+msgid "Braille Bindings"
+msgstr "Blindeskrifts-bindinger"
+
+#: ../src/orca/orca_gui_prefs.py:1493 ../src/orca/orca-setup.glade.h:70
+msgid "_None"
+msgstr "_Ingen"
+
+#: ../src/orca/orca_gui_prefs.py:1496 ../src/orca/orca-setup.glade.h:52
+msgid "So_me"
+msgstr "_Nogle"
+
+#: ../src/orca/orca_gui_prefs.py:1499 ../src/orca/orca-setup.glade.h:39
+msgid "M_ost"
+msgstr "_Fleste"
+
+#: ../src/orca/orca_gui_prefs.py:1519 ../src/orca/orca_gui_prefs.py:1574
+#: ../src/orca/orca-setup.glade.h:10
+msgid "Brie_f"
+msgstr "_Kort"
+
+#: ../src/orca/orca_gui_prefs.py:1539 ../src/orca/orca-setup.glade.h:55
+msgid "Speak current _cell"
+msgstr "Læs nuværende _celle op"
+
+#: ../src/orca/orca_gui_prefs.py:1824
+msgid "enter new key"
+msgstr "tryk ny tast"
+
+#: ../src/orca/orca_gui_prefs.py:1849
+#, python-format
+msgid "The new key is: %s"
+msgstr "Den nye tast er: %s"
+
+#: ../src/orca/orca_gui_prefs.py:1852
+msgid "The key entered is the same. Nothing changed."
+msgstr "Den opgivne tast er den samme. Ingeting er ændret."
+
+# Her henvises til en type af tastatur, altså hvorvidt man har et keypad til højre for
+#: ../src/orca/orca_gui_prefs.py:1922 ../src/orca/orca-setup.glade.h:66
+msgid "_Desktop"
+msgstr "_Stationær"
+
+#: ../src/orca/orca_gui_prefs.py:1976
+msgid "Accessibility support for GNOME has just been enabled."
+msgstr "Tilgængeligheds-støtte i GNOME er netop blevet slået til."
+
+#: ../src/orca/orca_gui_prefs.py:1977
+msgid "You need to log out and log back in for the change to take effect."
+msgstr "Du er nødt til at logge ud og ind igen for at ændringen kan træde i kraft."
+
+#: ../src/orca/orca-mainwin.glade.h:1
+msgid "Orca Screen Reader / Magnifier"
+msgstr "Orca skærmlæser / forstørrelsesglas"
+
+#: ../src/orca/orca-mainwin.glade.h:2
+msgid "Preferences"
+msgstr "Indstillinger"
+
+#: ../src/orca/orca-mainwin.glade.h:3
+msgid "Quit"
+msgstr "Afslut"
+
+#: ../src/orca/orca.py:231
+msgid "User logged out - shutting down."
+msgstr "Bruger logget ud - lukker ned."
+
+#: ../src/orca/orca.py:395
+msgid "Debug level all."
+msgstr "Fejlsøgningsniveau alt."
+
+#: ../src/orca/orca.py:397
+msgid "Debug level finest."
+msgstr "Fejlsøgningsniveau fineste."
+
+#: ../src/orca/orca.py:399
+msgid "Debug level finer."
+msgstr "Fejlsøgningsniveau finere."
+
+#: ../src/orca/orca.py:602
+msgid " off"
+msgstr " fra"
+
+#: ../src/orca/orca.py:604
+msgid " on"
+msgstr " til"
+
+#: ../src/orca/orca.py:606
+msgid "Num_Lock"
+msgstr "Num_lock"
+
+#: ../src/orca/orca.py:661
+#, python-format
+msgid "Key captured: %s. Press enter to confirm."
+msgstr "Tast bundet: %s. Tryk enter for at bekræfte."
+
+#: ../src/orca/orca.py:816
+# tale^^
+msgid "Speech enabled."
+msgstr "Tale slået til."
+
+#: ../src/orca/orca.py:818
+# tale^^
+msgid "Speech disabled."
+msgstr "Tale slået fra."
+
+#: ../src/orca/orca.py:866
+msgid "Orca user settings reloaded."
+msgstr "Orca brugerindstillinger genindlæst."
+
+#: ../src/orca/orca.py:1071 ../src/orca/orca.py:1072
+msgid "Welcome to Orca."
+msgstr "Velkommen til Orca."
+
+#: ../src/orca/orca.py:1128
+msgid "goodbye."
+msgstr "farvel."
+
+#: ../src/orca/orca.py:1129
+msgid "Goodbye."
+msgstr "Farvel."
+
+#: ../src/orca/orca.py:1209
+msgid "Usage: orca [OPTION...]"
+msgstr "Brug: orca [tilvalg...]"
+
+#: ../src/orca/orca.py:1211
+msgid "-?, --help                   Show this help message"
+msgstr "-?, --help                   Vis denne hjælpetekst"
+
+#: ../src/orca/orca.py:1212
+#, python-format
+msgid "-v, --version                %s"
+msgstr "-v, --version                %s"
+
+#: ../src/orca/orca.py:1213
+msgid "-s, --setup, --gui-setup     Set up user preferences"
+msgstr "-s, --setup, --gui-setup     Konfigurér brugerindstillinger"
+
+#: ../src/orca/orca.py:1214
+msgid "-t, --text-setup             Set up user preferences (text version)"
+msgstr "-t, --text-setup             Konfigurér brugerindstillinger (tekstversion)"
+
+#: ../src/orca/orca.py:1215
+msgid "-n, --no-setup               Skip set up of user preferences"
+msgstr "-n, --no-setup               Spring over konfiguration af brugerindstillinger"
+
+#: ../src/orca/orca.py:1216
+msgid "-u, --user-prefs-dir=dirname Use alternate directory for user preferences"
+msgstr "-u, --user-prefs-dir=dirname Brug alternativ mappe til brugerindstillinger"
+
+#: ../src/orca/orca.py:1217
+msgid ""
+"-e, --enable=[speech|braille|braille-monitor|magnifier|main-window] Force "
+"use of option"
+msgstr "-e, --enable=[speech|braille|braille-monitor|magnifier|main-window] Påtving brug af tilvalg"
+
+#: ../src/orca/orca.py:1218
+msgid ""
+"-d, --disable=[speech|braille|braille-monitor|magnifier|main-window] Prevent "
+"use of option"
+msgstr "-d, --disable=[speech|braille|braille-monitor|magnifier|main-window] Forhindre brug af tilvalg"
+
+#: ../src/orca/orca.py:1219
+msgid "-q, --quit                   Quits Orca (if shell script used)"
+msgstr "-q, --quit                   Afslutter Orca (hvis skalskript bruges)"
+
+#: ../src/orca/orca.py:1221
+msgid ""
+"If Orca has not been previously set up by the user, Orca\n"
+"will automatically launch the preferences set up unless\n"
+"the -n or --no-setup option is used."
+msgstr ""
+"Hvis Orca ikke tidligere er blevet sat op af brugeren vil Orca automatisk\n"
+"starte indstillingsvinduet op, med mindre enten -n eller --no-setup tilvalget\n"
+"er sat."
+
+#: ../src/orca/orca.py:1223
+msgid "Report bugs to orca-list@gnome.org."
+msgstr "Rapportér fejl til orca-list@gnome.org."
+
+#: ../src/orca/orca-quit.glade.h:1
+msgid "Do you really want to quit Orca?"
+msgstr "Ønsker du virkelig at afslutte Orca?"
+
+#: ../src/orca/orca-quit.glade.h:2
+msgid "Question"
+msgstr "Spørgsmål"
+
+#: ../src/orca/orca-setup.glade.h:1
+msgid "<b>Cross-hair Settings</b>"
+msgstr "<b>Indstillinger for sigtelinjer</b>"
+
+#: ../src/orca/orca-setup.glade.h:2
+msgid "<b>Cursor Settings</b>"
+msgstr "<b>Markørindstillinger</b>"
+
+#: ../src/orca/orca-setup.glade.h:3
+msgid "<b>Keyboard Layout</b>"
+msgstr "<b>Tastatur-layout</b>"
+
+#: ../src/orca/orca-setup.glade.h:4
+msgid "<b>Punctuation Level</b>"
+msgstr "<b>Tegnsætningsniveau</b>"
+
+#: ../src/orca/orca-setup.glade.h:5
+msgid "<b>Table Row Speech</b>"
+msgstr "<b>Tabel-rækkeoplæsning</b>"
+
+#: ../src/orca/orca-setup.glade.h:6
+msgid "<b>Verbosity</b>"
+msgstr "<b>Detaljegrad</b>"
+
+#: ../src/orca/orca-setup.glade.h:7
+msgid "<b>Zoomer Position</b>"
+msgstr "<b>Zoomer position</b>"
+
+#: ../src/orca/orca-setup.glade.h:8
+msgid "<b>Zoomer Settings</b>"
+msgstr "<b>Zoomerindstillinger</b>"
+
+#: ../src/orca/orca-setup.glade.h:9
+msgid "Braille"
+msgstr "Blindeskrift"
+
+#: ../src/orca/orca-setup.glade.h:11
+msgid ""
+"Centered\n"
+"None\n"
+"Proportional\n"
+"Push"
+msgstr ""
+"Centreret\n"
+"Ingen\n"
+"Proportional\n"
+"Tryk"
+
+#: ../src/orca/orca-setup.glade.h:15
+msgid "Color:"
+msgstr "Farve:"
+
+#: ../src/orca/orca-setup.glade.h:16
+msgid "Custom siz_e"
+msgstr "Tilpasset størrels_e"
+
+#: ../src/orca/orca-setup.glade.h:17
+msgid ""
+"Default\n"
+"Uppercase\n"
+"Hyperlink"
+msgstr ""
+"Forvalgt\n"
+"Store bogstaver\n"
+"Internet-henvisning"
+
+#: ../src/orca/orca-setup.glade.h:20
+msgid "Disable gksu _keyboard grab"
+msgstr "Slå fang g_ksu tastatur fra"
+
+#: ../src/orca/orca-setup.glade.h:21
+msgid "Enable Braille _monitor"
+msgstr "Slå blindeskriftskær_m til"
+
+#: ../src/orca/orca-setup.glade.h:22
+msgid "Enable Braille _support"
+msgstr "Slå blindeskriftsunder_støttelse til"
+
+#: ../src/orca/orca-setup.glade.h:23
+msgid "Enable _alphanumeric and punctuation keys"
+msgstr "Slå _alfanumeriske taster og tegnsætningstaster til"
+
+#: ../src/orca/orca-setup.glade.h:24
+msgid "Enable _function keys"
+msgstr "Slå _funktionstaster til"
+
+#: ../src/orca/orca-setup.glade.h:25
+msgid "Enable _key echo"
+msgstr "Slå tegnvis _ekko til"
+
+#: ../src/orca/orca-setup.glade.h:26
+msgid "Enable _magnifier"
+msgstr "Slå _forstørrelse til"
+
+#: ../src/orca/orca-setup.glade.h:27
+msgid "Enable _modifier keys"
+msgstr "Slå _modifikationstaster til"
+
+#: ../src/orca/orca-setup.glade.h:28
+msgid "Enable ac_tion keys"
+msgstr "Slå handlings_taster til"
+
+#: ../src/orca/orca-setup.glade.h:29
+msgid "Enable c_ursor"
+msgstr "Slå m_arkør til"
+
+#: ../src/orca/orca-setup.glade.h:30
+msgid "Enable cross-h_air"
+msgstr "Slå sigtelin_jer til"
+
+#: ../src/orca/orca-setup.glade.h:31
+msgid "Enable cross-hair cli_p"
+msgstr "Slå sigtelinje-kl_ip til"
+
+#: ../src/orca/orca-setup.glade.h:32
+msgid "Enable echo by _word"
+msgstr "Slå _ordvist ekko til"
+
+#: ../src/orca/orca-setup.glade.h:33
+msgid "Enable lockin_g keys"
+msgstr "Slå l_åsetaster til"
+
+#: ../src/orca/orca-setup.glade.h:34
+msgid "General"
+msgstr "Generelt"
+
+#: ../src/orca/orca-setup.glade.h:35
+msgid "In_vert colors"
+msgstr "In_vertér farver"
+
+#: ../src/orca/orca-setup.glade.h:36
+msgid "Key Binding List"
+msgstr "Liste over tastaturbindinger"
+
+#: ../src/orca/orca-setup.glade.h:37
+msgid "Key Bindings"
+msgstr "Tastaturbindinger"
+
+#: ../src/orca/orca-setup.glade.h:38
+msgid "Key Echo"
+msgstr "Tegnvis ekko"
+
+#: ../src/orca/orca-setup.glade.h:40
+msgid "Magnifier"
+msgstr "Forstørrelsesglas"
+
+#: ../src/orca/orca-setup.glade.h:41
+msgid "Mouse trac_king mode:"
+msgstr "Muse_sporings-tilstand:"
+
+#: ../src/orca/orca-setup.glade.h:42
+msgid ""
+"None\n"
+"Bilinear"
+msgstr ""
+"Ingen\n"
+"Bilineær"
+
+#: ../src/orca/orca-setup.glade.h:44
+msgid "Orca Modifier Keys"
+msgstr "Modifikationstaster for Orca"
+
+#: ../src/orca/orca-setup.glade.h:45
+msgid "Orca Preferences"
+msgstr "Indstillinger for Orca"
+
+#: ../src/orca/orca-setup.glade.h:46
+msgid "Orca _Modifier Key(s):"
+msgstr "_Modifikationstast(er) for Orca:"
+
+#: ../src/orca/orca-setup.glade.h:47
+msgid "Pi_tch:"
+msgstr "Tone_højde:"
+
+#: ../src/orca/orca-setup.glade.h:48
+msgid "S_ource display:"
+msgstr "_Kildevisning:"
+
+#: ../src/orca/orca-setup.glade.h:49
+msgid "Scale _factor:"
+msgstr "Skalerings_faktor:"
+
+#: ../src/orca/orca-setup.glade.h:50
+msgid "Show Orca _main window"
+msgstr "Vis _hovedvindue for Orca"
+
+#: ../src/orca/orca-setup.glade.h:51
+msgid "Si_ze:"
+msgstr "St_ørrelse:"
+
+#: ../src/orca/orca-setup.glade.h:53
+msgid "Speak _indentation and justification"
+msgstr "Læs _indrykning og justering op"
+
+#: ../src/orca/orca-setup.glade.h:54
+msgid "Speak blank lines"
+msgstr "Læs tomme linjer op"
+
+#: ../src/orca/orca-setup.glade.h:56
+msgid "Speak current ro_w"
+msgstr "Læs nuværende r_ække op"
+
+#: ../src/orca/orca-setup.glade.h:57
+msgid "Speech"
+msgstr "Tale"
+
+#: ../src/orca/orca-setup.glade.h:58
+# tale^^
+msgid "Speech _system:"
+msgstr "Tale_system:"
+
+#: ../src/orca/orca-setup.glade.h:59
+# tale^^
+msgid "Speech synthesi_zer:"
+msgstr "Talesynthesi_zer:"
+
+#: ../src/orca/orca-setup.glade.h:60
+msgid "Tar_get display:"
+msgstr "_Målskærm:"
+
+#: ../src/orca/orca-setup.glade.h:61
+msgid "Ver_bose"
+msgstr "_Uddybende"
+
+#: ../src/orca/orca-setup.glade.h:62
+msgid "Vo_lume:"
+msgstr "_Lydstyrke:"
+
+#: ../src/orca/orca-setup.glade.h:63
+msgid "_Abbreviated role names"
+msgstr "_Forkortede rollenavne"
+
+#: ../src/orca/orca-setup.glade.h:64
+msgid "_All"
+msgstr "_Alle"
+
+#: ../src/orca/orca-setup.glade.h:65
+msgid "_Bottom:"
+msgstr "_Bund:"
+
+#: ../src/orca/orca-setup.glade.h:67
+# tale^^
+msgid "_Enable speech"
+msgstr "_Slå tale til"
+
+#: ../src/orca/orca-setup.glade.h:68
+msgid "_Laptop"
+msgstr "_Bærbar"
+
+#: ../src/orca/orca-setup.glade.h:69
+msgid "_Left:"
+msgstr "_Venstre:"
+
+#: ../src/orca/orca-setup.glade.h:71
+msgid "_Person:"
+msgstr "_Person:"
+
+#: ../src/orca/orca-setup.glade.h:72
+msgid "_Rate:"
+msgstr "_Hastighed:"
+
+#: ../src/orca/orca-setup.glade.h:73
+msgid "_Right:"
+msgstr "_Højre:"
+
+#: ../src/orca/orca-setup.glade.h:74
+msgid "_Smoothing:"
+msgstr "_Udglatning:"
+
+#: ../src/orca/orca-setup.glade.h:75
+msgid "_Top:"
+msgstr "_Top:"
+
+#: ../src/orca/orca-setup.glade.h:76
+msgid "_Voice settings:"
+msgstr "_Stemmeindstillinger:"
+
+#: ../src/orca/orca-setup.glade.h:77
+msgid "_Width:"
+msgstr "_Bredde:"
+
+#: ../src/orca/orca-setup.glade.h:78
+msgid "pixels"
+msgstr "piksler"
+
+#: ../src/orca/phonnames.py:36
+msgid "alpha"
+msgstr "alpha"
+
+#: ../src/orca/phonnames.py:37
+msgid "bravo"
+msgstr "bravo"
+
+#: ../src/orca/phonnames.py:38
+msgid "charlie"
+msgstr "charlie"
+
+#: ../src/orca/phonnames.py:39
+msgid "delta"
+msgstr "delta"
+
+#: ../src/orca/phonnames.py:40
+msgid "echo"
+msgstr "echo"
+
+#: ../src/orca/phonnames.py:41
+msgid "foxtrot"
+msgstr "foxtrot"
+
+#: ../src/orca/phonnames.py:42
+msgid "golf"
+msgstr "golf"
+
+#: ../src/orca/phonnames.py:43
+msgid "hotel"
+msgstr "hotel"
+
+#: ../src/orca/phonnames.py:44
+msgid "india"
+msgstr "india"
+
+#: ../src/orca/phonnames.py:45
+msgid "juliet"
+msgstr "juliet"
+
+#: ../src/orca/phonnames.py:46
+msgid "kilo"
+msgstr "kilo"
+
+#: ../src/orca/phonnames.py:47
+msgid "lima"
+msgstr "lima"
+
+#: ../src/orca/phonnames.py:48
+msgid "mike"
+msgstr "mike"
+
+#: ../src/orca/phonnames.py:49
+msgid "november"
+msgstr "november"
+
+#: ../src/orca/phonnames.py:50
+msgid "oscar"
+msgstr "oscar"
+
+#: ../src/orca/phonnames.py:51
+msgid "papa"
+msgstr "papa"
+
+#: ../src/orca/phonnames.py:52
+msgid "quebec"
+msgstr "quebec"
+
+#: ../src/orca/phonnames.py:53
+msgid "romeo"
+msgstr "romeo"
+
+#: ../src/orca/phonnames.py:54
+msgid "sierra"
+msgstr "sierra"
+
+#: ../src/orca/phonnames.py:55
+msgid "tango"
+msgstr "tango"
+
+#: ../src/orca/phonnames.py:56
+msgid "uniform"
+msgstr "uniform"
+
+#: ../src/orca/phonnames.py:57
+msgid "victor"
+msgstr "victor"
+
+#: ../src/orca/phonnames.py:58
+msgid "whiskey"
+msgstr "whiskey"
+
+#: ../src/orca/phonnames.py:59
+msgid "xray"
+msgstr "xray"
+
+#: ../src/orca/phonnames.py:60
+msgid "yankee"
+msgstr "yankee"
+
+#: ../src/orca/phonnames.py:61
+msgid "zulu"
+msgstr "zulu"
+
+#: ../src/orca/pronunciation_dict.py:38
+msgid "ASAP"
+msgstr "ASAP"
+
+#: ../src/orca/pronunciation_dict.py:38
+# jeg har valgt ikke at oversætte den her efter som det er en streng
+# der illustrerer udtalen af en engelsk forkortelse
+msgid "as soon as possible"
+msgstr "as soon as possible"
+
+#: ../src/orca/pronunciation_dict.py:39
+msgid "GHz"
+msgstr "GHz"
+
+#: ../src/orca/pronunciation_dict.py:39
+msgid "gigahertz"
+msgstr "gigahertz"
+
+#: ../src/orca/pronunciation_dict.py:40
+msgid "IMAP"
+msgstr "IMAP"
+
+#: ../src/orca/pronunciation_dict.py:40
+# jeg har valgt ikke at oversætte den her efter som det er en streng
+# der illustrerer udtalen af en engelsk forkortelse
+msgid "eye map"
+msgstr "eye map"
+
+#: ../src/orca/pronunciation_dict.py:41
+msgid "LDAP"
+msgstr "LDAP"
+
+#: ../src/orca/pronunciation_dict.py:41
+# jeg har valgt ikke at oversætte den her efter som det er en streng
+# der illustrerer udtalen af en engelsk forkortelse
+msgid "ell dap"
+msgstr "ell dap"
+
+#: ../src/orca/pronunciation_dict.py:42
+msgid "LOL"
+msgstr "LOL"
+
+#: ../src/orca/pronunciation_dict.py:42
+# jeg har valgt ikke at oversætte den her efter som det er en streng
+# der illustrerer udtalen af en engelsk forkortelse
+msgid "laughing out loud"
+msgstr "laughing out loud"
+
+#: ../src/orca/pronunciation_dict.py:43
+msgid "MHz"
+msgstr "MHz"
+
+#: ../src/orca/pronunciation_dict.py:43
+msgid "megahertz"
+msgstr "megahertz"
+
+#: ../src/orca/pronunciation_dict.py:44
+msgid "strikethrough"
+msgstr "overstreget"
+
+#: ../src/orca/pronunciation_dict.py:44
+msgid "strike through"
+msgstr "streg over"
+
+#: ../src/orca/pronunciation_dict.py:45
+msgid "SELinux"
+msgstr "SELinux"
+
+#: ../src/orca/pronunciation_dict.py:45
+# jeg har valgt ikke at oversætte den her efter som det er en streng
+# der illustrerer udtalen af en engelsk forkortelse
+msgid "ess ee linux"
+msgstr "ess ee linux"
+
+#: ../src/orca/rolenames.py:155
+msgid "???"
+msgstr "???"
+
+#: ../src/orca/rolenames.py:156
+msgid "Invalid"
+msgstr "Ugyldig"
+
+#: ../src/orca/rolenames.py:157
+msgid "invalid"
+msgstr "ugyldig"
+
+#: ../src/orca/rolenames.py:160
+#I alle de følgende sæt af tre strenge er forkortelsen en der skal
+#vises på en blindeskrifts-skærm. Der er derfor ingen regler for
+#hvordan forkortelserne skal laves andet end at de skal holdes korte
+#fordi der ikke er så meget plads på sådan et display. For at gøre
+#forkortelserne så brugbare som muligt har jeg tænkte mig at lave et
+#system for hvordan man danner dem. Derfor har jeg her nedenunder lavet
+#en liste over alle de ord der skal sættes sammen med andre og hvordan
+#de forkortes alt efter hvor i forkortelsen de står. Alle de ord der
+#kun optræder alene er forkortet med unikke trebogstavs forkortelser.
+#
+#		Forkortelse afhængigt af hvor i det
+#		Sammensatte ord det står
+#Dansk ord       Først		Midt		Sidst	Alene
+#======================================================================
+#afkrydsnings-	ak
+#billed		bl					bld
+#bjælke						bj
+#boks						b
+#element			e		el
+#farve		fa
+#felt						f
+#fil		fil
+#faneblads-	fb
+#glas		gl
+#indstillings-	ins
+#knap						kn
+#kombinations-	km
+#kolonne	kol
+#lag-		lag
+#linje						l
+#liste		lst				lst	lst
+#mappe		ma
+#menu		mnu		mnu		m	mnu
+#område						om
+#overskift					os	os
+#panel						p	pnl
+#pop-op		pop
+#radio		rad
+#redigerings-	reg
+#rod		rod
+#rulle		rl
+#række		rk
+#skifte-	skf
+#skrifttype	st
+#split		spl
+#status		stat
+#tabel						ta
+#tekst						te	tek
+#træ		tr
+#va		va
+#visnings	vsn
+#vælger						v
+#værktøjs	vrk
+msgid "acc"
+msgstr "acc"
+
+#: ../src/orca/rolenames.py:161
+msgid "Accelerator"
+msgstr "Accelerator"
+
+#: ../src/orca/rolenames.py:162
+msgid "accelerator"
+msgstr "accelerator"
+
+#: ../src/orca/rolenames.py:165 ../src/orca/rolenames.py:167
+msgid "alert"
+msgstr "alarm"
+
+#: ../src/orca/rolenames.py:166
+msgid "Alert"
+msgstr "Alarm"
+
+#: ../src/orca/rolenames.py:170
+msgid "Anim"
+msgstr "Ani"
+
+#: ../src/orca/rolenames.py:171
+msgid "Animation"
+msgstr "Animation"
+
+#: ../src/orca/rolenames.py:172
+msgid "animation"
+msgstr "animation"
+
+#: ../src/orca/rolenames.py:175 ../src/orca/rolenames.py:177
+msgid "arrow"
+msgstr "pil"
+
+#: ../src/orca/rolenames.py:176
+msgid "Arrow"
+msgstr "Pil"
+
+#: ../src/orca/rolenames.py:180
+msgid "cal"
+msgstr "kal"
+
+#: ../src/orca/rolenames.py:181
+msgid "Calendar"
+msgstr "Kalender"
+
+#: ../src/orca/rolenames.py:182
+msgid "calendar"
+msgstr "kalender"
+
+#: ../src/orca/rolenames.py:185
+msgid "cnv"
+msgstr "kan"
+
+#: ../src/orca/rolenames.py:186
+msgid "Canvas"
+msgstr "Lærred"
+
+#: ../src/orca/rolenames.py:187
+msgid "canvas"
+msgstr "lærred"
+
+#: ../src/orca/rolenames.py:190
+msgid "cptn"
+msgstr "blte"
+
+#: ../src/orca/rolenames.py:191
+msgid "Caption"
+msgstr "Billedtekst"
+
+#: ../src/orca/rolenames.py:192
+msgid "caption"
+msgstr "billedtekst"
+
+#: ../src/orca/rolenames.py:195 ../src/orca/rolenames.py:200
+msgid "chk"
+msgstr "akf"
+
+#: ../src/orca/rolenames.py:196
+msgid "CheckBox"
+msgstr "Afkrydsningsfelt"
+
+#: ../src/orca/rolenames.py:197
+msgid "check box"
+msgstr "afkrydsningsfelt"
+
+#: ../src/orca/rolenames.py:201
+msgid "CheckItem"
+msgstr "Afkrydsningselement"
+
+#: ../src/orca/rolenames.py:202
+msgid "check item"
+msgstr "afkrydsningselement"
+
+#: ../src/orca/rolenames.py:205
+msgid "ckm"
+msgstr "akm"
+
+#: ../src/orca/rolenames.py:206
+msgid "CheckMenu"
+msgstr "Afkrydsningsmenu"
+
+#: ../src/orca/rolenames.py:207
+msgid "check menu"
+msgstr "afkrydsningsmenu"
+
+#: ../src/orca/rolenames.py:210
+msgid "clrchsr"
+msgstr "fav"
+
+#: ../src/orca/rolenames.py:211
+msgid "ColorChooser"
+msgstr "Farvevælger"
+
+#: ../src/orca/rolenames.py:212
+msgid "color chooser"
+msgstr "farvevælger"
+
+#: ../src/orca/rolenames.py:215 ../src/orca/rolenames.py:475
+msgid "colhdr"
+msgstr "kolos"
+
+#: ../src/orca/rolenames.py:216 ../src/orca/rolenames.py:476
+msgid "ColumnHeader"
+msgstr "Kolonneoverskift"
+
+#: ../src/orca/rolenames.py:217 ../src/orca/rolenames.py:477
+msgid "column header"
+msgstr "kolonneoverskift"
+
+#: ../src/orca/rolenames.py:220
+msgid "cbo"
+msgstr "kmb"
+
+#: ../src/orca/rolenames.py:221
+msgid "Combo"
+msgstr "Kombinationsboks"
+
+#: ../src/orca/rolenames.py:222
+msgid "combo box"
+msgstr "kombinationsboks"
+
+#: ../src/orca/rolenames.py:225
+msgid "dat"
+msgstr "dat"
+
+#: ../src/orca/rolenames.py:226
+msgid "DateEditor"
+msgstr "Dataredigering"
+
+#: ../src/orca/rolenames.py:227
+msgid "date editor"
+msgstr "dataredigering"
+
+#: ../src/orca/rolenames.py:230 ../src/orca/rolenames.py:305
+#: ../src/orca/rolenames.py:307
+msgid "icon"
+msgstr "ikon"
+
+#: ../src/orca/rolenames.py:231
+msgid "DesktopIcon"
+msgstr "Skrivebordsikon"
+
+#: ../src/orca/rolenames.py:232
+msgid "desktop icon"
+msgstr "skrivebordsikon"
+
+#: ../src/orca/rolenames.py:235 ../src/orca/rolenames.py:287
+#: ../src/orca/rolenames.py:315
+msgid "frame"
+msgstr "ramme"
+
+#: ../src/orca/rolenames.py:236
+msgid "DesktopFrame"
+msgstr "Skrivebordsramme"
+
+#: ../src/orca/rolenames.py:237
+msgid "desktop frame"
+msgstr "skrivebordsramme"
+
+#: ../src/orca/rolenames.py:240 ../src/orca/rolenames.py:242
+msgid "dial"
+msgstr "ring"
+
+#: ../src/orca/rolenames.py:241
+msgid "Dial"
+msgstr "Ring"
+
+#: ../src/orca/rolenames.py:245
+msgid "dlg"
+msgstr "dlg"
+
+#: ../src/orca/rolenames.py:246
+msgid "Dialog"
+msgstr "Dialog"
+
+#: ../src/orca/rolenames.py:247
+msgid "dialog"
+msgstr "dialog"
+
+#: ../src/orca/rolenames.py:250
+msgid "dip"
+msgstr "map"
+
+#: ../src/orca/rolenames.py:251
+msgid "DirectoryPane"
+msgstr "Mappepanel"
+
+#: ../src/orca/rolenames.py:252
+msgid "directory pane"
+msgstr "mappepanel"
+
+#: ../src/orca/rolenames.py:255 ../src/orca/rolenames.py:300
+msgid "html"
+msgstr "html"
+
+#: ../src/orca/rolenames.py:256
+msgid "HtmlPane"
+msgstr "HtmlPanel"
+
+#: ../src/orca/rolenames.py:257
+msgid "html content"
+msgstr "html indhold"
+
+#: ../src/orca/rolenames.py:260
+msgid "draw"
+msgstr "tegn"
+
+#: ../src/orca/rolenames.py:261
+msgid "DrawingArea"
+msgstr "Tegneområde"
+
+#: ../src/orca/rolenames.py:262
+msgid "drawing area"
+msgstr "tegneområde"
+
+#: ../src/orca/rolenames.py:265
+msgid "fchsr"
+msgstr "filv"
+
+#: ../src/orca/rolenames.py:266
+msgid "FileChooser"
+msgstr "Filvælger"
+
+#: ../src/orca/rolenames.py:267
+msgid "file chooser"
+msgstr "filvælger"
+
+#: ../src/orca/rolenames.py:270
+msgid "flr"
+msgstr "udf"
+
+#: ../src/orca/rolenames.py:271
+msgid "Filler"
+msgstr "Udfylder"
+
+#: ../src/orca/rolenames.py:272
+msgid "filler"
+msgstr "udfylder"
+
+#: ../src/orca/rolenames.py:275
+msgid "fnt"
+msgstr "stv"
+
+#: ../src/orca/rolenames.py:276
+msgid "FontChooser"
+msgstr "Skrifttypevælger"
+
+#: ../src/orca/rolenames.py:277
+msgid "font chooser"
+msgstr "skrifttypevælger"
+
+#: ../src/orca/rolenames.py:280 ../src/orca/rolenames.py:282
+msgid "form"
+msgstr "formular"
+
+#: ../src/orca/rolenames.py:281
+msgid "Form"
+msgstr "Formular"
+
+#: ../src/orca/rolenames.py:285
+msgid "frm"
+msgstr "ram"
+
+#: ../src/orca/rolenames.py:286
+msgid "Frame"
+msgstr "Ramme"
+
+#: ../src/orca/rolenames.py:290
+msgid "gpn"
+msgstr "glp"
+
+#: ../src/orca/rolenames.py:291
+msgid "GlassPane"
+msgstr "Glaspanel"
+
+#: ../src/orca/rolenames.py:292
+msgid "glass pane"
+msgstr "glaspanel"
+
+#: ../src/orca/rolenames.py:295
+msgid "hdng"
+msgstr "os"
+
+#: ../src/orca/rolenames.py:296
+msgid "Heading"
+msgstr "Overskift"
+
+#: ../src/orca/rolenames.py:297
+msgid "heading"
+msgstr "overskrift"
+
+#: ../src/orca/rolenames.py:301
+msgid "HtmlContainer"
+msgstr "Html-felt"
+
+#: ../src/orca/rolenames.py:302
+msgid "h t m l container"
+msgstr "h t m l-felt"
+
+#: ../src/orca/rolenames.py:306
+msgid "Icon"
+msgstr "Ikon"
+
+#: ../src/orca/rolenames.py:310
+msgid "img"
+msgstr "bld"
+
+#: ../src/orca/rolenames.py:311
+msgid "Image"
+msgstr "Billede"
+
+#: ../src/orca/rolenames.py:312
+msgid "image"
+msgstr "billede"
+
+#: ../src/orca/rolenames.py:316
+msgid "InternalFrame"
+msgstr "InternRamme"
+
+#: ../src/orca/rolenames.py:317
+msgid "internal frame"
+msgstr "intern ramme"
+
+#: ../src/orca/rolenames.py:320
+msgid "lbl"
+msgstr "etk"
+
+#: ../src/orca/rolenames.py:321
+msgid "Label"
+msgstr "Etikette"
+
+#: ../src/orca/rolenames.py:322
+msgid "label"
+msgstr "etikette"
+
+#: ../src/orca/rolenames.py:325
+msgid "lyrdpn"
+msgstr "lagp"
+
+#: ../src/orca/rolenames.py:326
+msgid "LayeredPane"
+msgstr "Lagpanel"
+
+#: ../src/orca/rolenames.py:327
+msgid "layered pane"
+msgstr "lagpanel"
+
+#: ../src/orca/rolenames.py:330 ../src/orca/scripts/acroread.py:249
+msgid "lnk"
+msgstr "lnk"
+
+#: ../src/orca/rolenames.py:331 ../src/orca/scripts/acroread.py:250
+msgid "Link"
+msgstr "Lænke"
+
+#: ../src/orca/rolenames.py:335
+msgid "lst"
+msgstr "lst"
+
+#: ../src/orca/rolenames.py:336
+msgid "List"
+msgstr "Liste"
+
+#: ../src/orca/rolenames.py:337
+msgid "list"
+msgstr "liste"
+
+#: ../src/orca/rolenames.py:340
+msgid "lstitm"
+msgstr "lstel"
+
+#: ../src/orca/rolenames.py:341
+msgid "ListItem"
+msgstr "Listeelement"
+
+#: ../src/orca/rolenames.py:342
+msgid "list item"
+msgstr "listeelement"
+
+#: ../src/orca/rolenames.py:345
+msgid "mnu"
+msgstr "mnu"
+
+#: ../src/orca/rolenames.py:346
+msgid "Menu"
+msgstr "Menu"
+
+#: ../src/orca/rolenames.py:347
+msgid "menu"
+msgstr "menu"
+
+#: ../src/orca/rolenames.py:350
+msgid "mnubr"
+msgstr "mnul"
+
+#: ../src/orca/rolenames.py:351
+msgid "MenuBar"
+msgstr "Menulinje"
+
+#: ../src/orca/rolenames.py:352
+msgid "menu bar"
+msgstr "menulinje"
+
+#: ../src/orca/rolenames.py:355
+msgid "mnuitm"
+msgstr "mnuel"
+
+#: ../src/orca/rolenames.py:356
+msgid "MenuItem"
+msgstr "Menuelement"
+
+#: ../src/orca/rolenames.py:357
+msgid "menu item"
+msgstr "menuelement"
+
+#: ../src/orca/rolenames.py:360
+msgid "optnpn"
+msgstr "vap"
+
+#: ../src/orca/rolenames.py:361
+msgid "OptionPane"
+msgstr "Valgspanel"
+
+#: ../src/orca/rolenames.py:362
+msgid "option pane"
+msgstr "valgpanel"
+
+#: ../src/orca/rolenames.py:365 ../src/orca/rolenames.py:367
+msgid "page"
+msgstr "side"
+
+#: ../src/orca/rolenames.py:366
+msgid "Page"
+msgstr "Side"
+
+#: ../src/orca/rolenames.py:370
+msgid "tblst"
+msgstr "fblst"
+
+#: ../src/orca/rolenames.py:371
+msgid "TabList"
+msgstr "Fanebladsliste"
+
+#: ../src/orca/rolenames.py:372
+msgid "tab list"
+msgstr "fanebladsliste"
+
+#: ../src/orca/rolenames.py:375
+msgid "pnl"
+msgstr "pnl"
+
+#: ../src/orca/rolenames.py:376
+msgid "Panel"
+msgstr "Panel"
+
+#: ../src/orca/rolenames.py:377
+msgid "panel"
+msgstr "panel"
+
+#: ../src/orca/rolenames.py:380
+msgid "pwd"
+msgstr "agk"
+
+#: ../src/orca/rolenames.py:381
+msgid "Password"
+msgstr "Adgangskode"
+
+#: ../src/orca/rolenames.py:382
+msgid "password"
+msgstr "adgangskode"
+
+#: ../src/orca/rolenames.py:385
+msgid "popmnu"
+msgstr "popm"
+
+#: ../src/orca/rolenames.py:386
+msgid "PopupMenu"
+msgstr "Pop op-menu"
+
+#: ../src/orca/rolenames.py:387
+msgid "popup menu"
+msgstr "pop op-menu"
+
+#: ../src/orca/rolenames.py:390
+msgid "pgbar"
+msgstr "statl"
+
+#: ../src/orca/rolenames.py:391
+msgid "Progress"
+msgstr "Statuslinje"
+
+#: ../src/orca/rolenames.py:392
+msgid "progress bar"
+msgstr "statuslinje"
+
+#: ../src/orca/rolenames.py:395
+msgid "btn"
+msgstr "knp"
+
+#: ../src/orca/rolenames.py:396
+msgid "Button"
+msgstr "Knap"
+
+#: ../src/orca/rolenames.py:397
+msgid "button"
+msgstr "knap"
+
+#: ../src/orca/rolenames.py:400
+msgid "radio"
+msgstr "radio"
+
+#: ../src/orca/rolenames.py:401
+msgid "RadioButton"
+msgstr "Radioknap"
+
+#: ../src/orca/rolenames.py:402
+msgid "radio button"
+msgstr "radioknap"
+
+#: ../src/orca/rolenames.py:405
+msgid "rdmnuitm"
+msgstr "radmnuel"
+
+#: ../src/orca/rolenames.py:406
+msgid "RadioItem"
+msgstr "Radiomenuelement"
+
+#: ../src/orca/rolenames.py:407
+msgid "radio menu item"
+msgstr "radiomenuelement"
+
+#: ../src/orca/rolenames.py:410
+msgid "rdmnu"
+msgstr "ram"
+
+#: ../src/orca/rolenames.py:411
+msgid "RadioMenu"
+msgstr "Radiomenu"
+
+#: ../src/orca/rolenames.py:412
+msgid "radio menu"
+msgstr "radiomenu"
+
+#: ../src/orca/rolenames.py:415
+msgid "rtpn"
+msgstr "rodp"
+
+#: ../src/orca/rolenames.py:416
+msgid "RootPane"
+msgstr "Rodpanel"
+
+#: ../src/orca/rolenames.py:417
+msgid "root pane"
+msgstr "rodpanel"
+
+#: ../src/orca/rolenames.py:420 ../src/orca/rolenames.py:480
+msgid "rwhdr"
+msgstr "rkos"
+
+#: ../src/orca/rolenames.py:421 ../src/orca/rolenames.py:481
+msgid "RowHeader"
+msgstr "Rækkeoverskrift"
+
+#: ../src/orca/rolenames.py:422 ../src/orca/rolenames.py:482
+msgid "row header"
+msgstr "rækkeoverskrift"
+
+#: ../src/orca/rolenames.py:425
+msgid "scbr"
+msgstr "rlbj"
+
+#: ../src/orca/rolenames.py:426
+msgid "ScrollBar"
+msgstr "Rullebjælke"
+
+#: ../src/orca/rolenames.py:427
+msgid "scroll bar"
+msgstr "rullebjælke"
+
+#: ../src/orca/rolenames.py:430
+msgid "scpn"
+msgstr "rlp"
+
+#: ../src/orca/rolenames.py:431
+msgid "ScrollPane"
+msgstr "Rullepanel"
+
+#: ../src/orca/rolenames.py:432
+msgid "scroll pane"
+msgstr "rullepanel"
+
+#: ../src/orca/rolenames.py:435
+msgid "sctn"
+msgstr "sek"
+
+#: ../src/orca/rolenames.py:436
+msgid "Section"
+msgstr "Sektion"
+
+#: ../src/orca/rolenames.py:437
+msgid "section"
+msgstr "sektion"
+
+#: ../src/orca/rolenames.py:440
+msgid "seprtr"
+msgstr "sept"
+
+#: ../src/orca/rolenames.py:441
+msgid "Separator"
+msgstr "Separator"
+
+#: ../src/orca/rolenames.py:442
+msgid "separator"
+msgstr "separator"
+
+#: ../src/orca/rolenames.py:445
+msgid "sldr"
+msgstr "gldr"
+
+#: ../src/orca/rolenames.py:446
+msgid "Slider"
+msgstr "Glider"
+
+#: ../src/orca/rolenames.py:447
+msgid "slider"
+msgstr "glider"
+
+#: ../src/orca/rolenames.py:450
+msgid "spltpn"
+msgstr "splp"
+
+#: ../src/orca/rolenames.py:451
+msgid "SplitPane"
+msgstr "Splitpanel"
+
+#: ../src/orca/rolenames.py:452
+msgid "split pane"
+msgstr "splitpanel"
+
+#: ../src/orca/rolenames.py:455
+msgid "spin"
+msgstr "snur"
+
+#: ../src/orca/rolenames.py:456
+msgid "SpinButton"
+msgstr "Snurreknap"
+
+#: ../src/orca/rolenames.py:457
+msgid "spin button"
+msgstr "snurreknap"
+
+#: ../src/orca/rolenames.py:460
+msgid "statbr"
+msgstr "statl"
+
+#: ../src/orca/rolenames.py:461
+msgid "StatusBar"
+msgstr "Statuslinje"
+
+#: ../src/orca/rolenames.py:462
+msgid "status bar"
+msgstr "statuslinje"
+
+#: ../src/orca/rolenames.py:465
+msgid "tbl"
+msgstr "tbl"
+
+#: ../src/orca/rolenames.py:466
+msgid "Table"
+msgstr "Tabel"
+
+#: ../src/orca/rolenames.py:467
+msgid "table"
+msgstr "tabel"
+
+#: ../src/orca/rolenames.py:471 ../src/orca/where_am_I.py:521
+#: ../src/orca/where_am_I.py:630
+msgid "Cell"
+msgstr "Celle"
+
+#: ../src/orca/rolenames.py:485
+msgid "tomnuitm"
+msgstr "tamnuel"
+
+#: ../src/orca/rolenames.py:486
+msgid "TearOffMenuItem"
+msgstr "TagAfMenuelement"
+
+#: ../src/orca/rolenames.py:487 ../src/orca/speechgenerator.py:1353
+msgid "tear off menu item"
+msgstr "tag-af-menuelement"
+
+#: ../src/orca/rolenames.py:490
+msgid "term"
+msgstr "term"
+
+#: ../src/orca/rolenames.py:491
+msgid "Terminal"
+msgstr "Terminal"
+
+#: ../src/orca/rolenames.py:492
+msgid "terminal"
+msgstr "terminal"
+
+#: ../src/orca/rolenames.py:495
+msgid "txt"
+msgstr "tek"
+
+#: ../src/orca/rolenames.py:496
+msgid "Text"
+msgstr "Tekst"
+
+#: ../src/orca/rolenames.py:497
+msgid "text"
+msgstr "tekst"
+
+#: ../src/orca/rolenames.py:502
+msgid "tglbtn"
+msgstr "skfkn"
+
+#: ../src/orca/rolenames.py:503
+msgid "ToggleButton"
+msgstr "Skifte-knap"
+
+#: ../src/orca/rolenames.py:504
+msgid "toggle button"
+msgstr "skifte-knap"
+
+#: ../src/orca/rolenames.py:507
+msgid "tbar"
+msgstr "vrkl"
+
+#: ../src/orca/rolenames.py:508
+msgid "ToolBar"
+msgstr "Værktøjslinje"
+
+#: ../src/orca/rolenames.py:509
+msgid "tool bar"
+msgstr "værktøjslinje"
+
+#: ../src/orca/rolenames.py:512
+msgid "tip"
+msgstr "tip"
+
+#: ../src/orca/rolenames.py:513
+msgid "ToolTip"
+msgstr "Værktøjstip"
+
+#: ../src/orca/rolenames.py:514
+msgid "tool tip"
+msgstr "værktøjstip"
+
+#: ../src/orca/rolenames.py:517 ../src/orca/rolenames.py:519
+msgid "tree"
+msgstr "træ"
+
+#: ../src/orca/rolenames.py:518
+msgid "Tree"
+msgstr "Træ"
+
+#: ../src/orca/rolenames.py:522
+msgid "trtbl"
+msgstr "trtb"
+
+#: ../src/orca/rolenames.py:523
+msgid "TreeTable"
+msgstr "Trætabel"
+
+#: ../src/orca/rolenames.py:524
+msgid "tree table"
+msgstr "trætabel"
+
+#: ../src/orca/rolenames.py:527
+msgid "unk"
+msgstr "ukn"
+
+#: ../src/orca/rolenames.py:528
+msgid "Unknown"
+msgstr "Ukendt"
+
+#: ../src/orca/rolenames.py:529
+msgid "unknown"
+msgstr "ukendt"
+
+#: ../src/orca/rolenames.py:532
+msgid "vwprt"
+msgstr "vsnom"
+
+#: ../src/orca/rolenames.py:533
+msgid "Viewport"
+msgstr "Visningsområde"
+
+#: ../src/orca/rolenames.py:534
+msgid "viewport"
+msgstr "visningsområde"
+
+#: ../src/orca/rolenames.py:537
+msgid "wnd"
+msgstr "vnd"
+
+#: ../src/orca/rolenames.py:538
+msgid "Window"
+msgstr "Vindue"
+
+#: ../src/orca/rolenames.py:539
+msgid "window"
+msgstr "vindue"
+
+#: ../src/orca/rolenames.py:542
+msgid "hdr"
+msgstr "shd"
+
+#: ../src/orca/rolenames.py:543
+# Jeg skrev til udviklerne for at finde ud af om dette var overskrift eller sidehoved
+# han var ikke sikker men mente sidehoved
+msgid "Header"
+msgstr "Sidehoved"
+
+#: ../src/orca/rolenames.py:544
+# Jeg skrev til udviklerne for at finde ud af om dette var overskrift eller sidehoved
+# han var ikke sikker men mente sidehoved
+msgid "header"
+msgstr "sidehoved"
+
+#: ../src/orca/rolenames.py:547
+msgid "ftr"
+msgstr "sfd"
+
+#: ../src/orca/rolenames.py:548
+# Samme kommantar som med header
+msgid "Footer"
+msgstr "Sidefod"
+
+#: ../src/orca/rolenames.py:549
+# Samme kommantar som med header
+msgid "footer"
+msgstr "sidefod"
+
+#: ../src/orca/rolenames.py:552
+msgid "para"
+msgstr "afsn"
+
+#: ../src/orca/rolenames.py:553
+msgid "Paragraph"
+msgstr "Afsnit"
+
+#: ../src/orca/rolenames.py:554
+msgid "paragraph"
+msgstr "afsnit"
+
+#: ../src/orca/rolenames.py:557
+msgid "app"
+msgstr "prg"
+
+#: ../src/orca/rolenames.py:558
+msgid "Application"
+msgstr "Program"
+
+#: ../src/orca/rolenames.py:559
+msgid "application"
+msgstr "program"
+
+#: ../src/orca/rolenames.py:562
+msgid "auto"
+msgstr "auto"
+
+#: ../src/orca/rolenames.py:563
+msgid "AutoComplete"
+msgstr "Autofuldførelse"
+
+#: ../src/orca/rolenames.py:564
+msgid "autocomplete"
+msgstr "autofuldførelse"
+
+#: ../src/orca/rolenames.py:567
+msgid "edtbr"
+msgstr "regl"
+
+#: ../src/orca/rolenames.py:568
+msgid "EditBar"
+msgstr "Redigeringslinje"
+
+#: ../src/orca/rolenames.py:569
+msgid "edit bar"
+msgstr "redigeringslinje"
+
+#: ../src/orca/rolenames.py:572
+msgid "emb"
+msgstr "inl"
+
+#: ../src/orca/rolenames.py:573
+msgid "EmbeddedComponent"
+msgstr "IndlejretKomponent"
+
+#: ../src/orca/rolenames.py:574
+msgid "embedded component"
+msgstr "indlejret komponent"
+
+#: ../src/orca/scripts/acroread.py:242
+msgid "doc"
+msgstr "dok"
+
+#: ../src/orca/scripts/acroread.py:243
+msgid "Document"
+msgstr "Dokument"
+
+#: ../src/orca/scripts/acroread.py:244
+msgid "document"
+msgstr "dokument"
+
+#. We've entered a table.  Announce the dimensions.
+#.
+#: ../src/orca/scripts/acroread.py:290 ../src/orca/scripts/StarOffice.py:727
+#, python-format
+msgid "table with %d rows and %d columns."
+msgstr "tabel med %d rækker og %d kolonner."
+
+#. We've left a table.  Announce this fact.
+#.
+#: ../src/orca/scripts/acroread.py:297 ../src/orca/scripts/StarOffice.py:730
+msgid "leaving table."
+msgstr "forlader tabel."
+
+#. We can't count on being in the first/last cell
+#. of the new row -- only the first/last cell of
+#. the new row that contains data.
+#.
+#: ../src/orca/scripts/acroread.py:312
+#, python-format
+msgid "row %d, column %d"
+msgstr "række %d, kolonne %d"
+
+#: ../src/orca/scripts/acroread.py:315 ../src/orca/where_am_I.py:524
+#, python-format
+msgid "column %d"
+msgstr "kolonne %d"
+
+#: ../src/orca/scripts/Evolution.py:92
+msgid "calv"
+msgstr "kavn"
+
+#: ../src/orca/scripts/Evolution.py:93
+msgid "CalendarView"
+msgstr "Kalendervisning"
+
+#: ../src/orca/scripts/Evolution.py:94
+msgid "calendar view"
+msgstr "kalendervisning"
+
+#: ../src/orca/scripts/Evolution.py:99
+msgid "cale"
+msgstr "kahn"
+
+#: ../src/orca/scripts/Evolution.py:100
+msgid "CalendarEvent"
+msgstr "Kalenderhændelse"
+
+#: ../src/orca/scripts/Evolution.py:101
+msgid "calendar event"
+msgstr "kalenderhændelse"
+
+#: ../src/orca/scripts/Evolution.py:119
+msgid "Toggle whether we present new mail if we are not the active script."
+msgstr "Slå til eller fra om vi viser ny e-post hvis dette ikke er det aktive skript."
+
+#: ../src/orca/scripts/Evolution.py:149
+msgid "present new mail if this script is not active."
+msgstr "vis ny e-post hvis dette skript ikke er aktivt."
+
+#: ../src/orca/scripts/Evolution.py:152
+msgid "do not present new mail if this script is not active."
+msgstr "vis ikke ny e-post hvis dette skript ikke er aktivt"
+
+#: ../src/orca/scripts/Evolution.py:199
+msgid " screen"
+msgstr " skærm"
+
+#. Most of the Setup Assistant screens have a useful piece
+#. of text starting with the word "Please". We want to speak
+#. these. For the first screen, the useful piece of text
+#. starts with "Welcome". For the last screen, it starts
+#. with "Congratulations". Speak those too.
+#.
+#: ../src/orca/scripts/Evolution.py:228
+msgid "Please"
+msgstr "Venligst"
+
+#: ../src/orca/scripts/Evolution.py:229
+msgid "Welcome"
+msgstr "Velkommen"
+
+#: ../src/orca/scripts/Evolution.py:230
+msgid "Congratulations"
+msgstr "Tillykke"
+
+#: ../src/orca/scripts/Evolution.py:563 ../src/orca/scripts/Evolution.py:610
+msgid "Status"
+msgstr "Status"
+
+#: ../src/orca/scripts/Evolution.py:611
+msgid "unread"
+msgstr "ulæst"
+
+#: ../src/orca/scripts/Evolution.py:615
+msgid "Attachment"
+msgstr "Bilag"
+
+#: ../src/orca/scripts/Evolution.py:776
+msgid "No appointments"
+msgstr "Ingen aftaler"
+
+#: ../src/orca/scripts/Evolution.py:850
+msgid "Directories button"
+msgstr "Mappeknap"
+
+#: ../src/orca/scripts/Evolution.py:997 ../src/orca/scripts/Evolution.py:1115
+msgid "Assistant"
+msgstr "Assistent"
+
+#: ../src/orca/scripts/gaim.py:150
+msgid "Toggle whether we prefix chat room messages with the name of the chat room."
+msgstr "Slå til eller fra om vi begynder beskeder fra et samtale-rum med navnet på samtale-rummet."
+
+#: ../src/orca/scripts/gaim.py:155
+msgid "Speak and braille a previous chat room message."
+msgstr "Læs en tidligere samtalerums-besked op og vis med blindeskrift."
+
+#: ../src/orca/scripts/gaim.py:196
+msgid "speak chat room name."
+msgstr "læs samtalerums-navn op."
+
+#: ../src/orca/scripts/gaim.py:199
+msgid "Do not speak chat room name."
+msgstr "Læs ikke samtalerums-navn op."
+
+#: ../src/orca/scripts/gaim.py:217
+msgid "Message from chat room "
+msgstr "Besked fra samtalerum "
+
+#: ../src/orca/scripts/gedit.py:138
+msgid "Change to:"
+msgstr "Ændr til:"
+
+#: ../src/orca/scripts/gedit.py:139
+msgid "Misspelled word:"
+msgstr "Fejlstavet ord:"
+
+#. The indication that spell checking is complete is when the
+#. "misspelt" word is set to "Completed spell checking". Ugh!
+#. Try to detect this and let the user know.
+#: ../src/orca/scripts/gedit.py:168
+msgid "Completed spell checking"
+msgstr "Stavekontrol fuldført"
+
+#: ../src/orca/scripts/gedit.py:169
+msgid "Spell checking is complete."
+msgstr "Stavekontrol er fuldført."
+
+#: ../src/orca/scripts/gedit.py:171
+msgid "Press Tab and Return to terminate."
+msgstr "Tryk tabulatorknap eller enter for at afslutte."
+
+#. Check to see if we have just had an "object:state-changed:showing"
+#. event for the Find button. If the name is "Find", and one of its
+#. states is VISIBLE and we are currently searching, that means we
+#. have just stopped a search. Inform the user that the search is
+#. complete and tell them how many files were found.
+#.
+#: ../src/orca/scripts/gedit.py:214 ../src/orca/scripts/gedit.py:216
+#: ../src/orca/scripts/gnome-search-tool.py:152
+msgid "Find"
+msgstr "Find"
+
+#: ../src/orca/scripts/gedit.py:285 ../src/orca/scripts/gedit.py:339
+msgid "Check Spelling"
+msgstr "Stavekontrol"
+
+#. Fall-thru to process the event with the default handler.
+#. 2) find dialog - phrase not found.
+#.
+#. If we've received an "object:property-change:accessible-name" for
+#. the status bar and the current locus of focus is on the Find
+#. button on the Find dialog or the combo box in the Find dialog
+#. and the last input event was a Return and the name for the current
+#. event source is "Phrase not found", then speak it.
+#.
+#. [[[TODO: richb - "Phrase not found" is spoken twice because we
+#. apparently get two identical "object:property-change:accessible-name"
+#. events.]]]
+#: ../src/orca/scripts/gedit.py:361
+msgid "Phrase not found"
+msgstr "Frase ikke fundet"
+
+#: ../src/orca/scripts/gedit.py:424
+msgid "Phrase found."
+msgstr "Frase fundet."
+
+#: ../src/orca/scripts/gnome-search-tool.py:94
+msgid "Searching."
+msgstr "Søger."
+
+#. Check to see if we have just had an "object:state-changed:showing"
+#. event for the Stop button. If the name is "Stop", and one of its
+#. states is VISIBLE, that means we have started a search. As the
+#. search progresses, regularly inform the user of this by speaking
+#. "Searching" (assuming the search tool has focus).
+#.
+#: ../src/orca/scripts/gnome-search-tool.py:128
+msgid "Stop"
+msgstr "Stop"
+
+#: ../src/orca/scripts/gnome-search-tool.py:158
+msgid "Search complete."
+msgstr "Søgning fuldført."
+
+#: ../src/orca/scripts/gnome-search-tool.py:163
+msgid " files found"
+msgstr " filer fundet"
+
+#: ../src/orca/scripts/gnome-search-tool.py:165
+msgid "No files found."
+msgstr "Ingen filer fundet."
+
+#: ../src/orca/scripts/liferea.py:123
+msgid "Work online / offline"
+msgstr "Arbejd tilkoblet / afkoblet"
+
+#. Note to translators: the "Workspace " and "Desk " strings
+#. are the prefix of what metacity shows when you press
+#. Ctrl+Alt and the left or right arrow keys to switch between
+#. workspaces.  The goal here is to find a match with that
+#. prefix.
+#.
+#: ../src/orca/scripts/metacity.py:123
+msgid "Workspace "
+msgstr "Skrivebord "
+
+#: ../src/orca/scripts/metacity.py:123
+msgid "Desk "
+msgstr "Skrivebord"
+
+#: ../src/orca/scripts/metacity.py:126
+msgid "inaccessible"
+msgstr "utilgængeligt"
+
+#: ../src/orca/scripts/planner.py:77 ../src/orca/scripts/planner.py:138
+msgid "Display more options"
+msgstr "Vis flere muligheder"
+
+#: ../src/orca/scripts/planner.py:142 ../src/orca/scripts/planner.py:150
+#: ../src/orca/scripts/planner.py:176 ../src/orca/scripts/planner.py:184
+#: ../src/orca/speechgenerator.py:1403
+msgid "pressed"
+msgstr "trykket"
+
+#: ../src/orca/scripts/planner.py:144 ../src/orca/scripts/planner.py:152
+#: ../src/orca/scripts/planner.py:178 ../src/orca/scripts/planner.py:186
+#: ../src/orca/speechgenerator.py:1405
+msgid "not pressed"
+msgstr "ikke trykket"
+
+#: ../src/orca/scripts/StarOffice.py:185
+msgid "Calc"
+msgstr "Calc"
+
+#: ../src/orca/scripts/StarOffice.py:653
+msgid "Speaks the contents of the input line."
+msgstr "Læser indholdet af indskrivningsfeltet op."
+
+#: ../src/orca/scripts/StarOffice.py:658
+msgid "Set the row to use as dynamic column headers when speaking calc cells."
+msgstr "Sæt række som skal bruges som dynamisk kolonneoverskrift når indholdet i regnearksceller udtales."
+
+#: ../src/orca/scripts/StarOffice.py:663
+msgid "Set the column to use as dynamic row headers to use when speaking calc cells."
+msgstr "Sæt kolonne som skal bruges som dynamisk rækkeoverskrift når indholdet i regnearksceller udtales."
+
+#: ../src/orca/scripts/StarOffice.py:752
+msgid "empty"
+msgstr "tom"
+
+#: ../src/orca/scripts/StarOffice.py:821
+msgid "Dynamic column header cleared."
+msgstr "Dynamisk kolonneoverskrift tømt."
+
+#: ../src/orca/scripts/StarOffice.py:828
+msgid "Dynamic column header set for row "
+msgstr "Dynamisk kolonneoverskrift sat for række "
+
+#: ../src/orca/scripts/StarOffice.py:884
+msgid "Dynamic row header cleared."
+msgstr "Dynamisk rækkeoverskrift tømt."
+
+#: ../src/orca/scripts/StarOffice.py:891
+#, python-format
+msgid "Dynamic row header set for column %s"
+msgstr "Dynamisk rækkeoverskrift sat for kolonne %s"
+
+#: ../src/orca/scripts/StarOffice.py:1036
+msgid "Welcome to StarOffice"
+msgstr "Velkommen til StarOffice"
+
+#: ../src/orca/scripts/StarOffice.py:1131
+msgid "Text Document"
+msgstr "Tekstdokument"
+
+#: ../src/orca/scripts/StarOffice.py:1191
+#: ../src/orca/scripts/StarOffice.py:1413
+msgid "Spellcheck:"
+msgstr "Stavekontrol:"
+
+#: ../src/orca/scripts/StarOffice.py:1219
+msgid "Note that the Scroll Down button has to be pressed numerous times."
+msgstr "Bemærk at rul ned-knappen skal trykkes ned adskillige gange."
+
+#: ../src/orca/scripts/StarOffice.py:1233
+msgid "License Agreement Accept button now has focus."
+msgstr "Knappen som accepterer licensaftalen har nu fokus."
+
+#: ../src/orca/scripts/StarOffice.py:1256
+msgid "First name"
+msgstr "Fornavn"
+
+#: ../src/orca/scripts/StarOffice.py:1327
+msgid "Move to cell"
+msgstr "Flyt til celle"
+
+#: ../src/orca/scripts/StarOffice.py:1469
+# Denne her er det sidste ord i vinduetitlen for staroffice
+# ligesom OpenOffice.org Writer. Jeg synes at eks. Writer i
+# OpenOffice.org Writer er lige på grænsen mellem at være en programtitel
+# som ikke skal oversættes og en forklaring af dets formål, som bør oversættes
+# men eftersom jeg kan se at eks. det ikke er oversat i OO lader jeg den stå som engelsk
+msgid "Writer"
+msgstr "Writer"
+
+#: ../src/orca/scripts/StarOffice.py:1589
+msgid " has formula"
+msgstr " har formel"
+
+#: ../src/orca/scripts/StarOffice.py:1635
+msgid "Cell "
+msgstr "Celle "
+
+#: ../src/orca/scripts/Thunderbird.py:125
+#: ../src/orca/scripts/Thunderbird.py:130
+#: ../src/orca/scripts/Thunderbird.py:498
+#: ../src/orca/scripts/Thunderbird.py:503
+#, python-format
+msgid "%s text %s %s"
+msgstr "%s tekst %s %s"
+
+#: ../src/orca/scripts/Thunderbird.py:127
+#: ../src/orca/scripts/Thunderbird.py:500
+#, python-format
+msgid "%s text %s"
+msgstr "%s tekst %s"
+
+#: ../src/orca/scripts/Thunderbird.py:132
+#: ../src/orca/scripts/Thunderbird.py:505
+#, python-format
+msgid "text %s %s"
+msgstr "tekst %s %s"
+
+#: ../src/orca/scripts/Thunderbird.py:194
+msgid ":"
+msgstr ":"
+
+#. Don't speak chrome URLs.
+#: ../src/orca/scripts/Thunderbird.py:339
+#: ../src/orca/scripts/Thunderbird.py:425
+#: ../src/orca/scripts/Thunderbird.py:440
+msgid "chrome://"
+msgstr "chrome://"
+
+#: ../src/orca/scripts/Thunderbird.py:432
+#: ../src/orca/scripts/Thunderbird.py:447
+#, python-format
+msgid "%s panel"
+msgstr "%s panel"
+
+#. Note to translators: the regular expression here represents a
+#. string to match in the localized application name as seen by
+#. at-poke.  For most cases, the application name is the name of
+#. the binary used to start the application, but this is an
+#. unreliable assumption.  The only reliable way to do the
+#. translation is by running the application and then viewing its
+#. name in the main window of at-poke.
+#.
+#: ../src/orca/settings.py:539
+msgid "[\\S\\s]*StarOffice[\\s\\S]*"
+msgstr "[\\S\\s]*StarOffice[\\s\\S]*"
+
+#: ../src/orca/settings.py:540
+msgid "soffice.bin"
+msgstr "soffice.bin"
+
+#: ../src/orca/settings.py:541
+msgid "[Ee]volution"
+msgstr "[Ee]volution"
+
+#: ../src/orca/settings.py:542
+msgid "Deer Park"
+msgstr "Deer Park"
+
+#: ../src/orca/settings.py:543
+msgid "yelp"
+msgstr "yelp"
+
+#: ../src/orca/settings.py:544
+msgid "Bon Echo"
+msgstr "Bon Echo"
+
+#: ../src/orca/settings.py:545
+msgid "Minefield"
+msgstr "Minefelt"
+
+#: ../src/orca/settings.py:546
+msgid "bug-buddy"
+msgstr "Fejl-Frede"
+
+#: ../src/orca/settings.py:547
+msgid "vte"
+msgstr "vte"
+
+#: ../src/orca/settings.py:548
+msgid "time-admin"
+msgstr "time-admin"
+
+#: ../src/orca/speechgenerator.py:375 ../src/orca/where_am_I.py:185
+#: ../src/orca/where_am_I.py:225 ../src/orca/where_am_I.py:923
+msgid "checked"
+msgstr "markeret"
+
+#: ../src/orca/speechgenerator.py:377 ../src/orca/where_am_I.py:187
+#: ../src/orca/where_am_I.py:227 ../src/orca/where_am_I.py:925
+msgid "not checked"
+msgstr "ikke markeret"
+
+#: ../src/orca/speechgenerator.py:703 ../src/orca/speechgenerator.py:1189
+#: ../src/orca/speechgenerator.py:1239
+msgid "0 items"
+msgstr "0 objekter"
+
+#: ../src/orca/speechgenerator.py:957
+msgid "not selected"
+msgstr "ikke valgt"
+
+#: ../src/orca/speechgenerator.py:1355
+msgid "tear off"
+msgstr "tag af"
+
+#: ../src/orca/util.py:575
+msgid "Misspelled word: "
+msgstr "Fejlstavet ord: "
+
+#: ../src/orca/util.py:576
+msgid " Context is "
+msgstr " Sammenhængen er "
+
+#: ../src/orca/util.py:691
+#, python-format
+msgid " %d %s characters "
+msgstr " %d %s tegn "
+
+#: ../src/orca/util.py:1474
+msgid "page selected from cursor position"
+msgstr "side valgt fra markørposition"
+
+#: ../src/orca/util.py:1478
+msgid "page selected to cursor position"
+msgstr "side valgt indtil markørposition"
+
+#: ../src/orca/util.py:1482
+msgid "line selected down from cursor position"
+msgstr "linje valgt ned fra markørposition"
+
+#: ../src/orca/util.py:1486
+msgid "line selected up from cursor position"
+msgstr "linje valgt op fra markørposition"
+
+#: ../src/orca/util.py:1490
+msgid "document selected to cursor position"
+msgstr "dokument valgt indtil markørposition"
+
+#: ../src/orca/util.py:1494
+msgid "document selected from cursor position"
+msgstr "dokument valgt fra markørposition"
+
+#. child(0) is the popup list
+#. parent is the page tab list
+#: ../src/orca/where_am_I.py:181 ../src/orca/where_am_I.py:190
+#: ../src/orca/where_am_I.py:211 ../src/orca/where_am_I.py:215
+#: ../src/orca/where_am_I.py:218 ../src/orca/where_am_I.py:221
+#: ../src/orca/where_am_I.py:231 ../src/orca/where_am_I.py:234
+#: ../src/orca/where_am_I.py:254 ../src/orca/where_am_I.py:257
+#: ../src/orca/where_am_I.py:262 ../src/orca/where_am_I.py:263
+#: ../src/orca/where_am_I.py:268 ../src/orca/where_am_I.py:272
+#: ../src/orca/where_am_I.py:275 ../src/orca/where_am_I.py:294
+#: ../src/orca/where_am_I.py:297 ../src/orca/where_am_I.py:305
+#: ../src/orca/where_am_I.py:323 ../src/orca/where_am_I.py:326
+#: ../src/orca/where_am_I.py:329 ../src/orca/where_am_I.py:349
+#: ../src/orca/where_am_I.py:352 ../src/orca/where_am_I.py:356
+#: ../src/orca/where_am_I.py:359 ../src/orca/where_am_I.py:380
+#: ../src/orca/where_am_I.py:385 ../src/orca/where_am_I.py:386
+#: ../src/orca/where_am_I.py:389 ../src/orca/where_am_I.py:392
+#: ../src/orca/where_am_I.py:395 ../src/orca/where_am_I.py:400
+#: ../src/orca/where_am_I.py:401 ../src/orca/where_am_I.py:404
+#: ../src/orca/where_am_I.py:423 ../src/orca/where_am_I.py:430
+#: ../src/orca/where_am_I.py:431 ../src/orca/where_am_I.py:434
+#: ../src/orca/where_am_I.py:435 ../src/orca/where_am_I.py:441
+#: ../src/orca/where_am_I.py:467 ../src/orca/where_am_I.py:470
+#: ../src/orca/where_am_I.py:482 ../src/orca/where_am_I.py:493
+#: ../src/orca/where_am_I.py:496 ../src/orca/where_am_I.py:558
+#: ../src/orca/where_am_I.py:561 ../src/orca/where_am_I.py:636
+#: ../src/orca/where_am_I.py:639 ../src/orca/where_am_I.py:657
+#: ../src/orca/where_am_I.py:670 ../src/orca/where_am_I.py:684
+#: ../src/orca/where_am_I.py:799 ../src/orca/where_am_I.py:814
+#: ../src/orca/where_am_I.py:827 ../src/orca/where_am_I.py:919
+#: ../src/orca/where_am_I.py:928 ../src/orca/where_am_I.py:1137
+#: ../src/orca/where_am_I.py:1140 ../src/orca/where_am_I.py:1174
+#: ../src/orca/where_am_I.py:1177 ../src/orca/where_am_I.py:1263
+#: ../src/orca/where_am_I.py:1268 ../src/orca/where_am_I.py:1287
+#, python-format
+msgid "%s"
+msgstr "%s"
+
+#: ../src/orca/where_am_I.py:357
+#, python-format
+msgid "%s percent"
+msgstr "%s procent"
+
+#: ../src/orca/where_am_I.py:427 ../src/orca/where_am_I.py:438
+#, python-format
+msgid "%s page"
+msgstr "%s side"
+
+#: ../src/orca/where_am_I.py:526
+#, python-format
+msgid "row %d"
+msgstr "række %d"
+
+#: ../src/orca/where_am_I.py:571 ../src/orca/where_am_I.py:591
+#, python-format
+msgid "row %d of %d"
+msgstr "række %d af %d"
+
+#: ../src/orca/where_am_I.py:682 ../src/orca/where_am_I.py:801
+#, python-format
+msgid "%s %s"
+msgstr "%s %s"
+
+#: ../src/orca/where_am_I.py:745 ../src/orca/where_am_I.py:785
+#, python-format
+msgid "item %d of %d"
+msgstr "objekt %d af %d"
+
+#: ../src/orca/where_am_I.py:904
+msgid "Read"
+msgstr "Læst"
