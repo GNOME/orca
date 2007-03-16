@@ -1,5 +1,12 @@
 2007-03-16  Willie Walker <william.walker@sun.com>
 
+	* bugs/bugs.html: move rest of bugs to the Orca WIKI.
+	This file is now obsolete and all bugs should be put
+	in the appropriate spots on the WIKI.  	We'll keep 
+	this file in case anyone has links to it.
+
+2007-03-16  Willie Walker <william.walker@sun.com>
+
 	* bugs/bugs.html: move Firefox and Thunderbird bugs to
 	http://live.gnome.org/Orca/MozillaBugs
 	
