@@ -1,3 +1,8 @@
+2007-03-16  Willie Walker <william.walker@sun.com>
+
+	* bugs/bugs.html: move Firefox and Thunderbird bugs to
+	http://live.gnome.org/Orca/MozillaBugs
+	
 2007-03-16  Joanmarie Diggs <j-diggs@comcast.net>
 
 	* src/orca/scripts/acroread.py: fix for bug 419006 -
