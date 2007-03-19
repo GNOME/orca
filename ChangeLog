@@ -1,3 +1,9 @@
+2007-03-19  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/keybindings.py:
+          Fix for bug #420173 - Escape becomes bound to exitting learn mode.
+          (Fix from Joanie - thanks!).
+
 2007-03-16  Willie Walker <william.walker@sun.com>
 
 	* bugs/bugs.html: move rest of bugs to the Orca WIKI.
