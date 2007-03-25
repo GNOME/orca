@@ -12,7 +12,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-03-10 15:20+0100\n"
 "PO-Revision-Date: 2007-03-10 15:20+0100\n"
-"Last-Translator: Hendrik Richter <hendrikr@gnome.org>\n"
+"Last-Translator: Jochen Skulj <jochen@jochenskulj.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2219,11 +2219,11 @@ msgstr "radio"
 
 #: ../src/orca/rolenames.py:401
 msgid "RadioButton"
-msgstr "MonoauswahlSchalter"
+msgstr "Auswahlknopf"
 
 #: ../src/orca/rolenames.py:402
 msgid "radio button"
-msgstr "Monoauswahlschalter"
+msgstr "Auswahlknopf"
 
 #: ../src/orca/rolenames.py:405
 msgid "rdmnuitm"
@@ -2231,11 +2231,11 @@ msgstr "rdmnuitm"
 
 #: ../src/orca/rolenames.py:406
 msgid "RadioItem"
-msgstr "MonoauswahlEintrag"
+msgstr "Auswahlobjekt"
 
 #: ../src/orca/rolenames.py:407
 msgid "radio menu item"
-msgstr "Monoauswahleintrag"
+msgstr "Auswahlmenüeintrag"
 
 #: ../src/orca/rolenames.py:410
 msgid "rdmnu"
@@ -2243,11 +2243,11 @@ msgstr "monomnü"
 
 #: ../src/orca/rolenames.py:411
 msgid "RadioMenu"
-msgstr "MonoauswahlMenü"
+msgstr "Auswahlmenü"
 
 #: ../src/orca/rolenames.py:412
 msgid "radio menu"
-msgstr "Monoauswahlmenü"
+msgstr "Auswahlmenü"
 
 #: ../src/orca/rolenames.py:415
 msgid "rtpn"
@@ -2452,11 +2452,11 @@ msgstr "tip"
 
 #: ../src/orca/rolenames.py:513
 msgid "ToolTip"
-msgstr "Kurztipp"
+msgstr "Minihilfe"
 
 #: ../src/orca/rolenames.py:514
 msgid "tool tip"
-msgstr "Kurztipp"
+msgstr "Minihilfe"
 
 #: ../src/orca/rolenames.py:517 ../src/orca/rolenames.py:519
 msgid "tree"
