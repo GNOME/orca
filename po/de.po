@@ -11,13 +11,13 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-03-10 15:19+0100\n"
-"PO-Revision-Date: 2007-03-10 15:20+0100\n"
-"Last-Translator: Hendrik Richter <hendrikr@gnome.org>\n"
+"PO-Revision-Date: 2007-03-25 15:20+0200\n"
+"Last-Translator: Jochen Skulj <jochen@jochenskulj.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);"
 
 #: ../orca.desktop.in.h:1
 msgid "Orca Screen Reader and Magnifier"
@@ -1112,7 +1112,7 @@ msgstr ""
 
 #: ../src/orca/orca_gui_prefs.py:2029
 msgid "Starting Orca Preferences. This may take a while."
-msgstr ""
+msgstr "Orca-Einstellungen werden gestartet. Dies kann etwas Zeit in Anspruch nehmen."
 
 #: ../src/orca/orca-mainwin.glade.h:1
 msgid "Orca Screen Reader / Magnifier"
@@ -2260,11 +2260,11 @@ msgstr "radio"
 
 #: ../src/orca/rolenames.py:401
 msgid "RadioButton"
-msgstr "MonoauswahlSchalter"
+msgstr "Auswahlknopf"
 
 #: ../src/orca/rolenames.py:402
 msgid "radio button"
-msgstr "Monoauswahlschalter"
+msgstr "Auswahlknopf"
 
 #: ../src/orca/rolenames.py:405
 msgid "rdmnuitm"
@@ -2272,11 +2272,11 @@ msgstr "rdmnuitm"
 
 #: ../src/orca/rolenames.py:406
 msgid "RadioItem"
-msgstr "MonoauswahlEintrag"
+msgstr "Auswahleintrag"
 
 #: ../src/orca/rolenames.py:407
 msgid "radio menu item"
-msgstr "Monoauswahleintrag"
+msgstr "Auswahlmenüeintrag"
 
 #: ../src/orca/rolenames.py:410
 msgid "rdmnu"
@@ -2284,11 +2284,11 @@ msgstr "monomnü"
 
 #: ../src/orca/rolenames.py:411
 msgid "RadioMenu"
-msgstr "MonoauswahlMenü"
+msgstr "Auswahlmenü"
 
 #: ../src/orca/rolenames.py:412
 msgid "radio menu"
-msgstr "Monoauswahlmenü"
+msgstr "Auswahlmenü"
 
 #: ../src/orca/rolenames.py:415
 msgid "rtpn"
@@ -2493,11 +2493,11 @@ msgstr "tip"
 
 #: ../src/orca/rolenames.py:513
 msgid "ToolTip"
-msgstr "Kurztipp"
+msgstr "Minihilfe"
 
 #: ../src/orca/rolenames.py:514
 msgid "tool tip"
-msgstr "Kurztipp"
+msgstr "Minihilfe"
 
 #: ../src/orca/rolenames.py:517 ../src/orca/rolenames.py:519
 msgid "tree"
@@ -2890,10 +2890,10 @@ msgid "inaccessible"
 msgstr "unzugänglich"
 
 #: ../src/orca/scripts/nautilus.py:104
-#, fuzzy, python-format
+#, python-format
 msgid "%d item"
 msgid_plural "%d items"
-msgstr[0] "0 Objekte"
+msgstr[0] "%d Objekte"
 msgstr[1] "0 Objekte"
 
 #: ../src/orca/scripts/planner.py:76 ../src/orca/scripts/planner.py:137
