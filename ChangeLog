@@ -1,3 +1,8 @@
+2007-03-26  Joanmarie Diggs <j-diggs@comcast.net>
+
+	* src/orca/Gecko.py: fix for bug 423009 – Orca should not 
+        speak the rolename "list item" on web pages.
+
 2007-03-25  Mike Pedersen <michael.pedersen@sun.com> 
 
         * docs/doc-set/ue_requirements.sgml,

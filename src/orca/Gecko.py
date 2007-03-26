@@ -406,6 +406,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         if obj.role in [rolenames.ROLE_PARAGRAPH,
                         rolenames.ROLE_SECTION,
                         rolenames.ROLE_LABEL,
+                        rolenames.ROLE_LIST_ITEM,
                         rolenames.ROLE_UNKNOWN]:
             return []
         else:
