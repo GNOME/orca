@@ -25,6 +25,7 @@ import signal
 import sys
 import time
 
+import orca.debug
 import orca.atspi
 
 # Maximum time, in seconds, to sleep.  This allows us to compress the
@@ -32,9 +33,19 @@ import orca.atspi
 #
 MAX_SLEEP = 5.0
 
-# Minimum time to sleep between arrow key navigation
+# Minimum time to sleep between navigation key presses.
 #
-MIN_SLEEP = 1.0
+MIN_SLEEP = 3.0
+
+navKeys = [ "(Tab)", "(ISO_Left_Tab)", \
+            "(F1)", "(F4)", "(F6)", "(F7)", "(F10)", \
+            "(Return)", "(Escape)", \
+            "(Down)", "(Up)", "(KP_Down)", "(KP_Up)", \
+            "(Right)", "(Left)", "(KP_Right)", "(KP_Left)", \
+            "(Page_Up)", "(Page_Down)", "(KP_Page_Up)", "(KP_Page_Down)", \
+            "(Begin)", "(KP_Begin)", "(Home)", "(KP_Home)", \
+            "(+)", "(-)" ]
+
 
 # Factor to speed up the playback.  This will compress time by the
 # given amount.  For example, 2.0 will play the events back twice
@@ -71,12 +82,11 @@ def go():
             line = raw_input() # modifiers
             line = raw_input() # event_string
 
-            arrowKeyPressed = False
+            navKeyPressed = False
             keyString = line[line.index("=") + 1 :]
-            if type == 0 and \
-                   (keyString == "(Down)" or keyString == "(Up)" or \
-                    keyString == "(Right)" or keyString == "(Left)"):
-                arrowKeyPressed = True
+            if (type == 0) and (navKeys.count(keyString) > 0):
+                # A navigation key was pressed.
+                navKeyPressed = True
 
             line = raw_input() # is_text
             
@@ -87,15 +97,19 @@ def go():
                 lastTime = event_time
 
             delta = min(MAX_SLEEP, (event_time - lastTime) / SPEED_UP)
-            if arrowKeyPressed:
+
+            if navKeyPressed:
                 # Make sure there is sufficient delay between
-                # arrow key pressed.
+                # navitation key presses.
                 delta = max(MIN_SLEEP, delta)
 
             if delta > 0:
                 time.sleep(delta)
             lastTime = event_time
 
+            # if type == 0:
+            #    orca.debug.println(orca.debug.LEVEL_ALL, "%s" % event_string)
+                               
             d.generateKeyboardEvent(hw_code, "", type)
 
 def main():

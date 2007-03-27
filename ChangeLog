@@ -1,3 +1,26 @@
+2007-03-26  Lynn Monsanto <lynn.monsanto@sun.com>
+
+        * test/harness/runone.sh, test/harness/runall.sh,
+	src/tools/play_keystrokes.py: bug #405061 - Adjusted
+	keystroke playback timing for navigation keys. There
+	are still minor diffs between non-OpenOffice runs
+	of runall.sh. This is probably okay for regression
+	testing, but it does require someone to manually
+	check the diffs every morning to verify there are
+	no significant changes between runs.
+
+	Note that there are still significant diffs between
+	OpenOffice Writer and Calc runs. These are due
+	to real bugs that need to be fixed.
+
+	To Do: I need to modify runone.sh so that the user
+	doen't need to specify whether code-coverage testing
+	is done (1) or not done (0). Right not, you need to
+	add a 0 or 1 at the end of the runone.sh command
+	arguments. The runall.sh script always specifies a 
+	0 or 1.
+	
+
 2007-03-26  Joanmarie Diggs <j-diggs@comcast.net>
 
 	* src/orca/Gecko.py: fix for bug 423009 – Orca should not 

@@ -13,13 +13,14 @@ harnessDir=`cd $foo; pwd`
 keystrokesDir=$harnessDir/../keystrokes
 resultsDir=$harnessDir/../results
 
-# number of seconds to wait for application to finish shutting down
-SHUT_DOWN_WAIT_TIME=5
+# Number of seconds to wait 
+REGRESSION_WAIT_TIME=20
+COVERAGE_WAIT_TIME=10
 
-# OpenOffice 2.1 executables are installed in 
-# /opt/openoffice.org2.1/program/
+# OpenOffice 2.2 executables are installed in 
+# /usr/lib/openoffice/program
 #
-export PATH=$PATH:/opt/openoffice.org2.1/program
+export PATH=$PATH:/usr/lib/openoffice/program
 
 coverageMode=0
 
@@ -70,6 +71,13 @@ process_cl () {
 # Process the users command line options.
 #
 process_cl "${@}"
+if [ "$coverageMode" -eq "1" ]
+then
+    WAIT_TIME=$COVERAGE_WAIT_TIME
+else
+    WAIT_TIME=$REGRESSION_WAIT_TIME
+fi
+
 
 if [ "$coverageMode" -eq 1 ]
 then 	 
@@ -77,7 +85,7 @@ then
     coverageDir=../coverage/`date +%Y-%m-%d_%H:%M:%S`
     trace2html.py -o $coverageDir -w orca -r runorca.py &
     trace_pid=$!
-    sleep 5 	 
+    sleep $WAIT_TIME 	 
     echo ...finished generating coverage map.
 fi
 
@@ -152,14 +160,19 @@ do
           fi
         fi
 
-	# wait for application to finish shutting down
-        sleep $SHUT_DOWN_WAIT_TIME
+        # Wait for application to finish shutting down.
+        sleep $WAIT_TIME
 
+        # Copy the results (.orca) file to the output directory.
+        # This is the file that will be used for regression
+        # testing. 
         newResultsFile=`basename $testFile .keys`.orca
         mkdir -p $currentdir/$outputdir
         cp $newResultsFile $currentdir/$outputdir
-        expectedResultsFile=$resultsDir/$application/$newResultsFile
+
+        # Compare the results file with the golden results file.
         echo Comparing results for $testFile
+        expectedResultsFile=$resultsDir/$application/$newResultsFile
         diff -s $expectedResultsFile $newResultsFile
         echo Finished running $testFile.
         if [ "x$stepMode" == "x1" ]
