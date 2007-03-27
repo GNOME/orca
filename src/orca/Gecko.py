@@ -79,7 +79,6 @@ OBJECT_ROLES = [rolenames.ROLE_CHECK_BOX,
                 rolenames.ROLE_ICON,
                 rolenames.ROLE_IMAGE,
                 rolenames.ROLE_LABEL,
-                rolenames.ROLE_LIST_ITEM,
                 rolenames.ROLE_MENU,
                 rolenames.ROLE_MENU_ITEM,
                 rolenames.ROLE_PAGE_TAB,
@@ -759,6 +758,18 @@ class Script(default.Script):
         self._structuralNavigationFunctions = \
             [Script.goNextHeading,
              Script.goPreviousHeading,
+             Script.goNextHeading1,
+             Script.goPreviousHeading1,
+             Script.goNextHeading2,
+             Script.goPreviousHeading2,
+             Script.goNextHeading3,
+             Script.goPreviousHeading3,
+             Script.goNextHeading4,
+             Script.goPreviousHeading4,
+             Script.goNextHeading5,
+             Script.goPreviousHeading5,
+             Script.goNextHeading6,
+             Script.goPreviousHeading6,
              Script.goNextChunk,
              Script.goPreviousChunk,
              Script.goNextList,
@@ -766,7 +777,15 @@ class Script(default.Script):
              Script.goNextUnvisitedLink,
              Script.goPreviousUnvisitedLink,
              Script.goNextVisitedLink,
-             Script.goPreviousVisitedLink]
+             Script.goPreviousVisitedLink,
+             Script.goNextTable,
+             Script.goPreviousTable,
+             Script.goCellLeft,
+             Script.goCellRight,
+             Script.goCellUp,
+             Script.goCellDown,
+             Script.goCellFirst,
+             Script.goCellLast]
 
         if controlCaretNavigation:
             debug.println(debug.LEVEL_CONFIGURATION,
@@ -841,6 +860,36 @@ class Script(default.Script):
                 Script.goPreviousLine,
                 "Goes to previous line.")
 
+        self.inputEventHandlers["goCellLeftHandler"] = \
+            input_event.InputEventHandler(
+                Script.goCellLeft,
+                "Goes left one cell.")
+
+        self.inputEventHandlers["goCellRightHandler"] = \
+            input_event.InputEventHandler(
+                Script.goCellRight,
+                "Goes right one cell.")
+
+        self.inputEventHandlers["goCellDownHandler"] = \
+            input_event.InputEventHandler(
+                Script.goCellDown,
+                "Goes down one cell.")
+
+        self.inputEventHandlers["goCellUpHandler"] = \
+            input_event.InputEventHandler(
+                Script.goCellUp,
+                "Goes up one cell.")
+
+        self.inputEventHandlers["goCellFirstHandler"] = \
+            input_event.InputEventHandler(
+                Script.goCellFirst,
+                "Goes to the first cell in a table.")
+
+        self.inputEventHandlers["goCellLastHandler"] = \
+            input_event.InputEventHandler(
+                Script.goCellLast,
+                "Goes to the last cell in a table.")
+
         self.inputEventHandlers["goPreviousHeadingHandler"] = \
             input_event.InputEventHandler(
                 Script.goPreviousHeading,
@@ -850,6 +899,66 @@ class Script(default.Script):
             input_event.InputEventHandler(
                 Script.goNextHeading,
                 "Goes to next heading.")
+
+        self.inputEventHandlers["goPreviousHeading1Handler"] = \
+            input_event.InputEventHandler(
+                Script.goPreviousHeading1,
+                "Goes to previous heading at level 1.")
+
+        self.inputEventHandlers["goNextHeading1Handler"] = \
+            input_event.InputEventHandler(
+                Script.goNextHeading1,
+                "Goes to next heading at level 1.")
+
+        self.inputEventHandlers["goPreviousHeading2Handler"] = \
+            input_event.InputEventHandler(
+                Script.goPreviousHeading2,
+                "Goes to previous heading at level 2.")
+
+        self.inputEventHandlers["goNextHeading2Handler"] = \
+            input_event.InputEventHandler(
+                Script.goNextHeading2,
+                "Goes to next heading at level 2.")
+
+        self.inputEventHandlers["goPreviousHeading3Handler"] = \
+            input_event.InputEventHandler(
+                Script.goPreviousHeading3,
+                "Goes to previous heading at level 3.")
+
+        self.inputEventHandlers["goNextHeading3Handler"] = \
+            input_event.InputEventHandler(
+                Script.goNextHeading3,
+                "Goes to next heading at level 3.")
+
+        self.inputEventHandlers["goPreviousHeading4Handler"] = \
+            input_event.InputEventHandler(
+                Script.goPreviousHeading4,
+                "Goes to previous heading at level 4.")
+
+        self.inputEventHandlers["goNextHeading4Handler"] = \
+            input_event.InputEventHandler(
+                Script.goNextHeading4,
+                "Goes to next heading at level 4.")
+
+        self.inputEventHandlers["goPreviousHeading5Handler"] = \
+            input_event.InputEventHandler(
+                Script.goPreviousHeading5,
+                "Goes to previous heading at level 5.")
+
+        self.inputEventHandlers["goNextHeading5Handler"] = \
+            input_event.InputEventHandler(
+                Script.goNextHeading5,
+                "Goes to next heading at level 5.")
+
+        self.inputEventHandlers["goPreviousHeading6Handler"] = \
+            input_event.InputEventHandler(
+                Script.goPreviousHeading6,
+                "Goes to previous heading at level 6.")
+
+        self.inputEventHandlers["goNextHeading6Handler"] = \
+            input_event.InputEventHandler(
+                Script.goNextHeading6,
+                "Goes to next heading at level 6.")
 
         self.inputEventHandlers["goPreviousChunkHandler"] = \
             input_event.InputEventHandler(
@@ -891,6 +1000,16 @@ class Script(default.Script):
                 Script.goNextVisitedLink,
                 "Goes to next visited link.")
 
+        self.inputEventHandlers["goPreviousTableHandler"] = \
+            input_event.InputEventHandler(
+                Script.goPreviousTable,
+                "Goes to previous table.")
+
+        self.inputEventHandlers["goNextTableHandler"] = \
+            input_event.InputEventHandler(
+                Script.goNextTable,
+                "Goes to next table.")
+
         self.inputEventHandlers["toggleCaretNavigationHandler"] = \
             input_event.InputEventHandler(
                 Script.toggleCaretNavigation,
@@ -929,44 +1048,116 @@ class Script(default.Script):
         keyBindings.add(
             keybindings.KeyBinding(
                 "Right",
-                1 << atspi.Accessibility.MODIFIER_CONTROL,
+                (1 << atspi.Accessibility.MODIFIER_CONTROL \
+                 | 1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT),
                 0,
                 self.inputEventHandlers["goNextCharacterHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Left",
-                1 << atspi.Accessibility.MODIFIER_CONTROL,
+                (1 << atspi.Accessibility.MODIFIER_CONTROL \
+                 | 1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT),
                 0,
                 self.inputEventHandlers["goPreviousCharacterHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Right",
-                1 << atspi.Accessibility.MODIFIER_CONTROL,
+                (1 << atspi.Accessibility.MODIFIER_CONTROL \
+                 | 1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT),
                 1 << atspi.Accessibility.MODIFIER_CONTROL,
                 self.inputEventHandlers["goNextWordHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Left",
-                1 << atspi.Accessibility.MODIFIER_CONTROL,
+                (1 << atspi.Accessibility.MODIFIER_CONTROL \
+                 | 1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT),
                 1 << atspi.Accessibility.MODIFIER_CONTROL,
                 self.inputEventHandlers["goPreviousWordHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Up",
-                0,
+                (1 << atspi.Accessibility.MODIFIER_CONTROL \
+                 | 1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT),
                 0,
                 self.inputEventHandlers["goPreviousLineHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "Down",
-                0,
+                (1 << atspi.Accessibility.MODIFIER_CONTROL \
+                 | 1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT),
                 0,
                 self.inputEventHandlers["goNextLineHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "Right",
+                (1 << atspi.Accessibility.MODIFIER_CONTROL \
+                 | 1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT),
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT),
+                self.inputEventHandlers["goCellRightHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "Left",
+                (1 << atspi.Accessibility.MODIFIER_CONTROL \
+                 | 1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT),
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT),
+                self.inputEventHandlers["goCellLeftHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "Up",
+                (1 << atspi.Accessibility.MODIFIER_CONTROL \
+                 | 1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT),
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT),
+                self.inputEventHandlers["goCellUpHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "Down",
+                (1 << atspi.Accessibility.MODIFIER_CONTROL \
+                 | 1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT),
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT),
+                self.inputEventHandlers["goCellDownHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "Home",
+                (1 << atspi.Accessibility.MODIFIER_CONTROL \
+                 | 1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT),
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT),
+                self.inputEventHandlers["goCellFirstHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "End",
+                (1 << atspi.Accessibility.MODIFIER_CONTROL \
+                 | 1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT),
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT),
+                self.inputEventHandlers["goCellLastHandler"]))
 
         return keyBindings
 
@@ -998,6 +1189,114 @@ class Script(default.Script):
                  | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 0,
                 self.inputEventHandlers["goNextHeadingHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "1",
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT \
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                self.inputEventHandlers["goPreviousHeading1Handler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "1",
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT \
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                0,
+                self.inputEventHandlers["goNextHeading1Handler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "2",
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT \
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                self.inputEventHandlers["goPreviousHeading2Handler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "2",
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT \
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                0,
+                self.inputEventHandlers["goNextHeading2Handler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "3",
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT \
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                self.inputEventHandlers["goPreviousHeading3Handler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "3",
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT \
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                0,
+                self.inputEventHandlers["goNextHeading3Handler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "4",
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT \
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                self.inputEventHandlers["goPreviousHeading4Handler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "4",
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT \
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                0,
+                self.inputEventHandlers["goNextHeading4Handler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "5",
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT \
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                0,
+                self.inputEventHandlers["goNextHeading5Handler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "5",
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT \
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                self.inputEventHandlers["goPreviousHeading5Handler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "6",
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT \
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                self.inputEventHandlers["goPreviousHeading6Handler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "6",
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT \
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                0,
+                self.inputEventHandlers["goNextHeading6Handler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
@@ -1070,6 +1369,24 @@ class Script(default.Script):
                  | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 0,
                 self.inputEventHandlers["goNextVisitedLinkHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "t",
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT \
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                self.inputEventHandlers["goPreviousTableHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "t",
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT \
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                0,
+                self.inputEventHandlers["goNextTableHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
@@ -2338,19 +2655,78 @@ class Script(default.Script):
 
         return [0, 0]
 
-    def getCellHeaders(self, obj):
-        """Returns the [rowHeader, colHeader] of a ROLE_TABLE_CELL or
-        [None, None] if the headers cannot be found.
+    def isHeader(self, obj):
+        """Returns True if the table cell is a header"""
+
+        if obj.attributes:
+            for attribute in obj.attributes:
+                if attribute == "tag:TH":
+                    return True
+
+    def getRowHeader(self, obj):
+        """Returns the row header of a ROLE_TABLE_CELL or None if the
+        header cannot be found.
         """
 
+        rowHeader = None
         parent = obj.parent
         if parent and parent.table:
             [row, col] = self.getCellCoordinates(obj)
-            rowHeader = parent.table.getRowDescription(row)
-            colHeader = parent.table.getColumnDescription(col)
-            return [rowHeader, colHeader]
+            # Theoretically, we should be able to quickly get the text
+            # of a {row, column}Header via get{Row,Column}Description().
+            # Mozilla doesn't expose the information that way, however.
+            # get{Row, Column}Header seems to work sometimes.
+            #
+            accRowHeader = parent.table.getRowHeader(row)
+            if accRowHeader:
+                rowHeader = atspi.Accessible.makeAccessible(accRowHeader)
+                rowHeader = rowHeader.text.getText(0, -1)
 
-        return [None, None]
+            # Headers that are strictly marked up with <th> do not seem
+            # to be exposed through get{Row, Column}Header.
+            #
+            else:
+                for col in range(0, parent.table.nColumns - 1):
+                    accCell = parent.table.getAccessibleAt(row, col)
+                    cell = atspi.Accessible.makeAccessible(accCell)
+                    if self.isHeader(cell) and cell.text:
+                        rowHeader = cell.text.getText(0, -1)
+                        break
+
+        return rowHeader
+
+    def getColumnHeader(self, obj):
+        """Returns the column header of a ROLE_TABLE_CELL or None if the
+        header cannot be found.
+        """
+
+        colHeader = None
+        parent = obj.parent
+        if parent and parent.table:
+            [row, col] = self.getCellCoordinates(obj)
+            # Theoretically, we should be able to quickly get the text
+            # of a {row, column}Header via get{Row,Column}Description().
+            # Mozilla doesn't expose the information that way, however.
+            # If the column header is in a <thead>, we can get it with
+            # getColumnHeader.
+            #
+            accColHeader = parent.table.getColumnHeader(col)
+            if accColHeader:
+                colHeader = atspi.Accessible.makeAccessible(accColHeader)
+                colHeader = colHeader.text.getText(0, -1)
+
+            # Headers that are strictly marked up with <th> do not seem
+            # to be exposed through get{Row, Column}Header.
+            #
+            else:
+                for row in range(0, parent.table.nRows - 1):
+                    accCell = parent.table.getAccessibleAt(row, col)
+                    cell = atspi.Accessible.makeAccessible(accCell)
+                    if self.isHeader(cell) and cell.text:
+                        colHeader = cell.text.getText(0, -1)
+                        break
+
+        return colHeader
 
     def getTableCaption(self, obj):
         """Returns the ROLE_CAPTION object of a ROLE_TABLE object or None
@@ -2470,6 +2846,21 @@ class Script(default.Script):
             pursue = obj == documentFrame
 
         return pursue
+
+    def getHeadingLevel(self, obj):
+        """Determines the heading level of the given object.  A value
+        of 0 means there is no heading level."""
+
+        level = 0
+
+        if obj.role == rolenames.ROLE_HEADING:
+            attributes = obj.attributes
+            for attribute in attributes:
+                if attribute.startswith("level:"):
+                    level = int(attribute.split(":")[1])
+                    break
+
+        return level
 
     ####################################################################
     #                                                                  #
@@ -2814,7 +3205,7 @@ class Script(default.Script):
         [currentObj, characterOffset] = self.getCaretContext()
 
         ancestors = []
-        nestableRoles = [rolenames.ROLE_LIST]
+        nestableRoles = [rolenames.ROLE_LIST, rolenames.ROLE_TABLE]
         obj = currentObj.parent
         while obj:
             ancestors.append(obj)
@@ -3118,6 +3509,7 @@ class Script(default.Script):
                                     rolenames.ROLE_TABLE_CELL]:
                     strings.extend(\
                         self.speechGenerator._getSpeechForObjectRole(obj))
+
             elif self.isLayoutOnly(obj):
                 continue
             else:
@@ -3125,6 +3517,12 @@ class Script(default.Script):
 
             for string in strings:
                 utterances.append([string, self.getACSS(obj, string)])
+
+            if obj.role == rolenames.ROLE_HEADING:
+                level = self.getHeadingLevel(obj)
+                if level:
+                    utterances.append([" ", self.getACSS(obj, " ")])
+                    utterances.append([_("level %d") % level, None])
 
         return utterances
 
@@ -3531,6 +3929,80 @@ class Script(default.Script):
         else:
             speech.speak(_("No more headings."))
 
+    def goPreviousHeadingAtLevel(self, inputEvent, desiredLevel):
+        found = False
+        level = 0
+        [obj, characterOffset] = self.getCaretContext()
+        if obj.parent.role == rolenames.ROLE_HEADING:
+            obj = obj.parent
+        while obj and not found:
+            obj = self.findPreviousObject(obj)
+            if obj and (obj.role == rolenames.ROLE_HEADING):
+                level = self.getHeadingLevel(obj)
+                if level == desiredLevel:
+                    found = True
+        if obj:
+            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
+            self.setCaretPosition(obj, characterOffset)
+            self.speakContents(self.getLineContentsAtOffset(obj,
+                                                            characterOffset))
+        else:
+            speech.speak(_("No more headings at level %d.") % desiredLevel)
+
+    def goNextHeadingAtLevel(self, inputEvent, desiredLevel):
+        found = False
+        level = 0
+        [obj, characterOffset] = self.getCaretContext()
+        while obj and not found:
+            obj = self.findNextObject(obj)
+            if obj and (obj.role == rolenames.ROLE_HEADING):
+                level = self.getHeadingLevel(obj)
+                if level == desiredLevel:
+                    found = True
+        if obj:
+            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
+            self.setCaretPosition(obj, characterOffset)
+            self.speakContents(self.getLineContentsAtOffset(obj,
+                                                            characterOffset))
+        else:
+            speech.speak(_("No more headings at level %d.") % desiredLevel)
+
+    def goNextHeading1(self, inputEvent):
+        self.goNextHeadingAtLevel(inputEvent, 1)
+
+    def goPreviousHeading1(self, inputEvent):
+        self.goPreviousHeadingAtLevel(inputEvent, 1)
+
+    def goNextHeading2(self, inputEvent):
+        self.goNextHeadingAtLevel(inputEvent, 2)
+
+    def goPreviousHeading2(self, inputEvent):
+        self.goPreviousHeadingAtLevel(inputEvent, 2)
+
+    def goNextHeading3(self, inputEvent):
+        self.goNextHeadingAtLevel(inputEvent, 3)
+
+    def goPreviousHeading3(self, inputEvent):
+        self.goPreviousHeadingAtLevel(inputEvent, 3)
+
+    def goNextHeading4(self, inputEvent):
+        self.goNextHeadingAtLevel(inputEvent, 4)
+
+    def goPreviousHeading4(self, inputEvent):
+        self.goPreviousHeadingAtLevel(inputEvent, 4)
+
+    def goNextHeading5(self, inputEvent):
+        self.goNextHeadingAtLevel(inputEvent, 5)
+
+    def goPreviousHeading5(self, inputEvent):
+        self.goPreviousHeadingAtLevel(inputEvent, 5)
+
+    def goNextHeading6(self, inputEvent):
+        self.goNextHeadingAtLevel(inputEvent, 6)
+
+    def goPreviousHeading6(self, inputEvent):
+        self.goPreviousHeadingAtLevel(inputEvent, 6)
+
     def goPreviousChunk(self, inputEvent):
         [obj, characterOffset] = self.findPreviousRole(OBJECT_ROLES)
         if obj:
@@ -3564,8 +4036,8 @@ class Script(default.Script):
             for i in range(0, parent.childCount):
                 if parent.child(i).role == rolenames.ROLE_LIST_ITEM:
                     nItems += 1
-            itemString = ngettext("List with %d item", 
-                                  "List with %d items", 
+            itemString = ngettext("List with %d item",
+                                  "List with %d items",
                                   nItems) % nItems
             speech.speak(itemString)
             nestingLevel = 0
@@ -3592,8 +4064,8 @@ class Script(default.Script):
             for i in range(0, parent.childCount):
                 if parent.child(i).role == rolenames.ROLE_LIST_ITEM:
                     nItems += 1
-            itemString = ngettext("List with %d item", 
-                                  "List with %d items", 
+            itemString = ngettext("List with %d item",
+                                  "List with %d items",
                                   nItems) % nItems
             speech.speak(itemString)
             nestingLevel = 0
@@ -3692,6 +4164,197 @@ class Script(default.Script):
                                                               characterOffset))
         else:
             speech.speak(_("No more visited links."))
+
+    def goPreviousTable(self, inputEvent):
+        [obj, characterOffset] = self.findPreviousRole([rolenames.ROLE_TABLE])
+        if obj:
+            nRows = obj.table.nRows
+            nColumns = obj.table.nColumns
+            rowString = ngettext("Table with %d row",
+                                 "Table with %d rows",
+                                  nRows) % nRows
+            colString = ngettext(" and %d column",
+                                 " and %d columns",
+                                  nColumns) % nColumns
+            speech.speak(rowString + colString)
+            caption = self.getTableCaption(obj)
+            if caption and caption.text:
+                speech.speak(caption.text.getText(0, -1))
+            cell = obj.table.getAccessibleAt(0, 0)
+            obj = atspi.Accessible.makeAccessible(cell)
+            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
+            self.setCaretPosition(obj, characterOffset)
+            self.updateBraille(obj)
+            contents = self.getObjectContentsAtOffset(obj, characterOffset)
+            firstCellContents = contents[0][0].text
+            if firstCellContents:
+                self.speakContents(contents)
+            else:
+                speech.speak(_("blank"))
+        else:
+            speech.speak(_("No more tables."))
+
+    def goNextTable(self, inputEvent):
+        [obj, characterOffset] = self.findNextRole([rolenames.ROLE_TABLE])
+        if obj:
+            nRows = obj.table.nRows
+            nColumns = obj.table.nColumns
+            rowString = ngettext("Table with %d row",
+                                 "Table with %d rows",
+                                  nRows) % nRows
+            colString = ngettext(" and %d column",
+                                 " and %d columns",
+                                  nColumns) % nColumns
+            speech.speak(rowString + colString)
+            caption = self.getTableCaption(obj)
+            if caption and caption.text:
+                speech.speak(caption.text.getText(0, -1))
+            cell = obj.table.getAccessibleAt(0, 0)
+            obj = atspi.Accessible.makeAccessible(cell)
+            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
+            self.setCaretPosition(obj, characterOffset)
+            self.updateBraille(obj)
+            contents = self.getObjectContentsAtOffset(obj, characterOffset)
+            firstCellContents = contents[0][0].text
+            if firstCellContents:
+                self.speakContents(contents)
+            else:
+                speech.speak(_("blank"))
+        else:
+            speech.speak(_("No more tables."))
+
+    def goCellLeft(self, inputEvent):
+        [obj, characterOffset] = self.getCaretContext()
+        while obj and (obj != obj.parent) and \
+              (obj.role != rolenames.ROLE_TABLE_CELL):
+            obj = obj.parent
+        if obj and (obj.role == rolenames.ROLE_TABLE_CELL):
+            [row, col] = self.getCellCoordinates(obj)
+            if col > 0:
+                cell = obj.parent.table.getAccessibleAt(row, col - 1)
+                obj = atspi.Accessible.makeAccessible(cell)
+                [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
+                colHeader = self.getColumnHeader(obj)
+                if colHeader and not self.isHeader(obj):
+                    speech.speak(colHeader)
+                self.setCaretPosition(obj, characterOffset)
+                self.updateBraille(obj)
+                self.speakContents( \
+                        self.getObjectContentsAtOffset(obj, characterOffset))
+            else:
+                speech.speak(_("Beginning of row."))
+        else:
+            speech.speak(_("Not in a table."))
+
+    def goCellRight(self, inputEvent):
+        [obj, characterOffset] = self.getCaretContext()
+        while obj and (obj != obj.parent) and \
+              (obj.role != rolenames.ROLE_TABLE_CELL):
+            obj = obj.parent
+        if obj and (obj.role == rolenames.ROLE_TABLE_CELL):
+            [row, col] = self.getCellCoordinates(obj)
+            if col < obj.parent.table.nColumns - 1:
+                cell = obj.parent.table.getAccessibleAt(row, col + 1)
+                obj = atspi.Accessible.makeAccessible(cell)
+                colHeader = self.getColumnHeader(obj)
+                if colHeader and not self.isHeader(obj):
+                    speech.speak(colHeader)
+                [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
+                self.setCaretPosition(obj, characterOffset)
+                self.updateBraille(obj)
+                self.speakContents( \
+                        self.getObjectContentsAtOffset(obj, characterOffset))
+            else:
+                speech.speak(_("End of row."))
+        else:
+            speech.speak(_("Not in a table."))
+
+    def goCellUp(self, inputEvent):
+        [obj, characterOffset] = self.getCaretContext()
+        while obj and (obj != obj.parent) and \
+              (obj.role != rolenames.ROLE_TABLE_CELL):
+            obj = obj.parent
+        if obj and (obj.role == rolenames.ROLE_TABLE_CELL):
+            [row, col] = self.getCellCoordinates(obj)
+            if row > 0:
+                cell = obj.parent.table.getAccessibleAt(row - 1, col)
+                obj = atspi.Accessible.makeAccessible(cell)
+                rowHeader = self.getRowHeader(obj)
+                if rowHeader and not self.isHeader(obj):
+                    speech.speak(rowHeader)
+                [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
+                self.setCaretPosition(obj, characterOffset)
+                self.updateBraille(obj)
+                self.speakContents( \
+                        self.getObjectContentsAtOffset(obj, characterOffset))
+            else:
+                speech.speak(_("Top of column."))
+        else:
+            speech.speak(_("Not in a table."))
+
+    def goCellDown(self, inputEvent):
+        [obj, characterOffset] = self.getCaretContext()
+        while obj and (obj != obj.parent) and \
+              (obj.role != rolenames.ROLE_TABLE_CELL):
+            obj = obj.parent
+        if obj and (obj.role == rolenames.ROLE_TABLE_CELL):
+            [row, col] = self.getCellCoordinates(obj)
+            if row < obj.parent.table.nRows - 1:
+                cell = obj.parent.table.getAccessibleAt(row + 1, col)
+                obj = atspi.Accessible.makeAccessible(cell)
+                rowHeader = self.getRowHeader(obj)
+                if rowHeader and not self.isHeader(obj):
+                    speech.speak(rowHeader)
+                [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
+                self.setCaretPosition(obj, characterOffset)
+                self.updateBraille(obj)
+                self.speakContents( \
+                        self.getObjectContentsAtOffset(obj, characterOffset))
+            else:
+                speech.speak(_("Bottom of column."))
+        else:
+            speech.speak(_("Not in a table."))
+
+    def goCellFirst(self, inputEvent):
+        [obj, characterOffset] = self.getCaretContext()
+        while obj and (obj != obj.parent) and \
+              (obj.role != rolenames.ROLE_TABLE):
+            obj = obj.parent
+        if obj and (obj.role == rolenames.ROLE_TABLE):
+            cell = obj.table.getAccessibleAt(0, 0)
+            obj = atspi.Accessible.makeAccessible(cell)
+            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
+            if obj:
+                [row, col] = self.getCellCoordinates(obj)
+                speech.speak(_("Row %d, column %d.") % (row + 1, col + 1))
+                self.setCaretPosition(obj, characterOffset)
+                self.updateBraille(obj)
+                self.speakContents( \
+                        self.getObjectContentsAtOffset(obj, characterOffset))
+
+        else:
+            speech.speak(_("Not in a table."))
+
+    def goCellLast(self, inputEvent):
+        [obj, characterOffset] = self.getCaretContext()
+        while obj and (obj != obj.parent) and \
+              (obj.role != rolenames.ROLE_TABLE):
+            obj = obj.parent
+        if obj and (obj.role == rolenames.ROLE_TABLE):
+            cell = obj.table.getAccessibleAt(obj.table.nRows - 1,
+                                             obj.table.nColumns - 1)
+            obj = atspi.Accessible.makeAccessible(cell)
+            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
+            if obj:
+                [row, col] = self.getCellCoordinates(obj)
+                speech.speak(_("Row %d, column %d.") % (row + 1, col + 1))
+                self.setCaretPosition(obj, characterOffset)
+                self.updateBraille(obj)
+                self.speakContents( \
+                        self.getObjectContentsAtOffset(obj, characterOffset))
+
+        else:
+            speech.speak(_("Not in a table."))
 
     def toggleCaretNavigation(self, inputEvent):
         """Toggles between Firefox native and Orca caret navigation."""

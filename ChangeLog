@@ -1,3 +1,19 @@
+2007-03-27  Joanmarie Diggs <j-diggs@comcast.net>
+
+	* src/orca/Gecko.py: Added more structural navigation: You can
+        now use 1 through 6 and Shift+1 through Shift+6 to navigate among
+        headings by level (see bug #423214).  In addition, I checked in
+        Will's related partial patch for bug #414926 (Orca should announce
+        the level of headings in Firefox).  We still need to provide that
+        information via braille.  Structural navigation for HTML tables has
+        been added:  T and Shift+T move you among tables.  Alt+Shift+the
+        arrow keys will move you among table cells, and Alt+Shift+Home/End
+        will move you to the top/bottom of the current table (see bug 
+        #422924).  Finally list items are no longer considered "large 
+        objects" for the purpose of navigating with O/Shift+O due to the 
+        prevalence of lists of links in sidebars, etc. (see bug #423404)
+        We will add I and Shift+I for list item navigation soon.
+
 2007-03-27  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
