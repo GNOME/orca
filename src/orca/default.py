@@ -1474,13 +1474,14 @@ class Script(script.Script):
         obj = orca_state.locusOfFocus
         self.updateBraille(obj)
 
+        self.whereAmI = where_am_I.WhereAmI(self)
         if inputEvent and orca_state.lastInputEvent \
            and isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
             string = atspi.KeystrokeListener.keyEventToString(inputEvent)
             debug.println(debug.LEVEL_FINEST, "default.whereAmI: %s" % string)
         else:
             context = self.speechGenerator.getSpeechContext(obj)
-            return where_am_I.whereAmI(obj, context, False, False)
+            return self.whereAmI.whereAmI(obj, context, False, False)
 
         orcaKey = False
         if settings.keyboardLayout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
@@ -1495,7 +1496,7 @@ class Script(script.Script):
 
         context = self.speechGenerator.getSpeechContext(obj)
 
-        return where_am_I.whereAmI(obj, context, doubleClick, orcaKey)
+        return self.whereAmI.whereAmI(obj, context, doubleClick, orcaKey)
 
     def findCommonAncestor(self, a, b):
         """Finds the common ancestor between Accessible a and Accessible b.

@@ -1,5 +1,13 @@
 2007-03-27  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/default.py:
+          src/orca/where_am_I.py:
+          Refactored the where_am_I.whereAmI() routines. They are now in
+          a WhereAmI class in the where_am_I.py file. the current script
+          is passed into the __init__() method. All references to
+          orca_state.activeScript have been replaced with self._script.
+          Removed extra blank lines and spurious whitespace.
+
         * src/orca/scripts/StarOffice.py:
           Fixed bug #419089 – Refactor StarOffice.py script.
           Now that we have self._script available to the SpeechGenerator
