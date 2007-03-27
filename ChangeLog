@@ -1,3 +1,11 @@
+2007-03-27  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/scripts/StarOffice.py:
+          Fixed bug #419089 – Refactor StarOffice.py script.
+          Now that we have self._script available to the SpeechGenerator
+          and BrailleGenerator classes, the StarOffice.py scripts needed to
+          be adjusted to move all the global routines into the Script() class.
+
 2007-03-26  Lynn Monsanto <lynn.monsanto@sun.com>
 
         * test/harness/runone.sh, test/harness/runall.sh,

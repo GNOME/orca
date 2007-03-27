@@ -42,152 +42,6 @@ import orca.keybindings as keybindings
 
 from orca.orca_i18n import _ # for gettext support
 
-inputLineForCell = None
-
-# Dictionaries for the calc dynamic row and column headers.
-#
-dynamicColumnHeaders = {}
-dynamicRowHeaders = {}
-
-def adjustForWriterTable(obj):
-    """Check to see if we are in Writer, where the object with focus is a
-    paragraph, and the parent is the table cell. If it is, then, return the
-    parent table cell otherwise return the current object.
-
-    Arguments:
-    - obj: the accessible object to check.
-
-    Returns parent table cell (if in a Writer table ) or the current object.
-    """
-
-    if obj.role == rolenames.ROLE_PARAGRAPH and \
-       obj.parent.role == rolenames.ROLE_TABLE_CELL:
-        return obj.parent
-    else:
-        return obj
-
-def getTable(obj):
-    """Get the table that this table cell is in.
-
-    Arguments:
-    - obj: the table cell.
-
-    Return the table that this table cell is in, or None if this object
-    isn't in a table.
-    """
-
-    table = None
-    obj = adjustForWriterTable(obj)
-    if obj.role == rolenames.ROLE_TABLE_CELL and obj.parent:
-        table = obj.parent.table
-
-    return table
-
-def getDynamicColumnHeaderCell(obj, column):
-    """Given a table cell, return the dynamic column header cell associated
-    with it.
-
-    Arguments:
-    - obj: the table cell.
-    - column: the column that this dynamic header is on.
-
-    Return the dynamic column header cell associated with the given table cell.
-    """
-
-    obj = adjustForWriterTable(obj)
-    accCell = None
-    parent = obj.parent
-    if parent and parent.table:
-        row = parent.table.getRowAtIndex(obj.index)
-        cell = parent.table.getAccessibleAt(row, column)
-        accCell = atspi.Accessible.makeAccessible(cell)
-
-    return accCell
-
-def getDynamicRowHeaderCell(obj, row):
-    """Given a table cell, return the dynamic row header cell associated
-    with it.
-
-    Arguments:
-    - obj: the table cell.
-    - row: the row that this dynamic header is on.
-
-    Return the dynamic row header cell associated with the given table cell.
-    """
-
-    obj = adjustForWriterTable(obj)
-    accCell = None
-    parent = obj.parent
-    if parent and parent.table:
-        column = parent.table.getColumnAtIndex(obj.index)
-        cell = parent.table.getAccessibleAt(row, column)
-        accCell = atspi.Accessible.makeAccessible(cell)
-
-    return accCell
-
-def locateInputLine(obj):
-    """Return the spread sheet input line. This only needs to be found
-    the very first time a spread sheet table cell gets focus. We use the
-    table cell to work back up the component hierarchy until we have found
-    the common panel that both it and the input line reside in. We then
-    use that as the base component to search for a component which has a
-    paragraph role. This will be the input line.
-
-    Arguments:
-    - obj: the spread sheet table cell that has just got focus.
-
-    Returns the spread sheet input line component.
-    """
-
-    inputLine = None
-    panel = obj.parent.parent.parent.parent
-    if panel and panel.role == rolenames.ROLE_PANEL:
-        allParagraphs = orca_state.activeScript.findByRole(panel, \
-                                                     rolenames.ROLE_PARAGRAPH)
-        if len(allParagraphs) == 1:
-            inputLine = allParagraphs[0]
-        else:
-            debug.println(debug.LEVEL_SEVERE,
-                  "StarOffice: locateInputLine: incorrect paragraph count.")
-    else:
-        debug.println(debug.LEVEL_SEVERE,
-                  "StarOffice: locateInputLine: couldn't find common panel.")
-
-    return inputLine
-
-def isSpreadSheetCell(obj):
-    """Return an indication of whether the given obj is a spread sheet
-    table cell.
-
-    Arguments:
-    - obj: the object to check.
-
-    Returns True if this is a table cell, False otherwise.
-    """
-
-    found = False
-    rolesList = [rolenames.ROLE_TABLE_CELL, \
-                 rolenames.ROLE_TABLE, \
-                 rolenames.ROLE_UNKNOWN, \
-                 rolenames.ROLE_SCROLL_PANE, \
-                 rolenames.ROLE_PANEL, \
-                 rolenames.ROLE_ROOT_PANE, \
-                 rolenames.ROLE_FRAME, \
-                 rolenames.ROLE_APPLICATION]
-    if orca_state.activeScript.isDesiredFocusedItem(obj, rolesList):
-        # We've found a table cell with the correct hierarchy. Now check
-        # that we are in a spreadsheet as opposed to the writer application.
-        # See bug #382408.
-        #
-        current = obj.parent
-        while current.role != rolenames.ROLE_APPLICATION:
-            if current.role == rolenames.ROLE_FRAME and \
-               (current.name and current.name.endswith(_("Calc"))):
-                found = True
-            current = current.parent
-
-    return found
-
 class BrailleGenerator(braillegenerator.BrailleGenerator):
     """Overrides _getBrailleRegionsForTableCellRow so that , when we are
     in a spread sheet, we can braille the dynamic row and column headers
@@ -211,9 +65,6 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         and the second element is the Region which should get focus.
         """
 
-        global dynamicColumnHeaders, dynamicRowHeaders
-        global getColumnHeaderCell, getRowHeaderCell, isSpreadSheetCell
-
         regions = []
 
         # Check to see if this spread sheet cell has either a dynamic
@@ -221,14 +72,14 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         # If it does, then braille those first before brailling the
         # cell contents.
         #
-        table = getTable(obj)
+        table = self._script.getTable(obj)
         parent = obj.parent
 
         if parent.__dict__.has_key("lastColumn") and \
            parent.lastColumn != parent.table.getColumnAtIndex(obj.index):
-            if dynamicColumnHeaders.has_key(table):
-                row = dynamicColumnHeaders[table]
-                header = getDynamicRowHeaderCell(obj, row)
+            if self._script.dynamicColumnHeaders.has_key(table):
+                row = self._script.dynamicColumnHeaders[table]
+                header = self._script.getDynamicRowHeaderCell(obj, row)
                 if header.childCount > 0:
                     for i in range(0, header.childCount):
                         child = header.child(i)
@@ -242,9 +93,9 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
 
         if parent.__dict__.has_key("lastRow") and \
            parent.lastRow != parent.table.getRowAtIndex(obj.index):
-            if dynamicRowHeaders.has_key(table):
-                column = dynamicRowHeaders[table]
-                header = getDynamicColumnHeaderCell(obj, column)
+            if self._script.dynamicRowHeaders.has_key(table):
+                column = self._script.dynamicRowHeaders[table]
+                header = self._script.getDynamicColumnHeaderCell(obj, column)
                 if header.childCount > 0:
                     for i in range(0, header.childCount):
                         child = header.child(i)
@@ -256,7 +107,7 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
                     if text:
                         regions.append(braille.Region(" " + text + " "))
 
-        if isSpreadSheetCell(obj):
+        if self._script.isSpreadSheetCell(obj):
 
             # Adding in a check here to make sure that the parent is a
             # valid table. It's possible that the parent could be a
@@ -331,11 +182,10 @@ class BrailleGenerator(braillegenerator.BrailleGenerator):
         and the second element is the Region which should get focus.
         """
 
-        global inputLineForCell, isSpreadSheetCell, locateInputLine
-
-        if isSpreadSheetCell(obj):
-            if inputLineForCell == None:
-                inputLineForCell = locateInputLine(obj)
+        if self._script.isSpreadSheetCell(obj):
+            if self._script.inputLineForCell == None:
+                self._script.inputLineForCell = \
+                            self._script.locateInputLine(obj)
 
             regions = []
             text = self._script.getDisplayedText(obj)
@@ -446,9 +296,6 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         Returns a list of utterances to be spoken for the object.
         """
 
-        global dynamicColumnHeaders, dynamicRowHeaders
-        global getColumnHeaderCell, getRowHeaderCell, isSpreadSheetCell
-
         utterances = []
 
         if not already_focused:
@@ -458,15 +305,15 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             # If it does, then speak those first before speaking the cell
             # contents.
             #
-            table = getTable(obj)
+            table = self._script.getTable(obj)
             parent = obj.parent
 
             if parent.__dict__.has_key("lastColumn") and \
                parent.lastColumn != \
                parent.table.getColumnAtIndex(obj.index):
-                if dynamicColumnHeaders.has_key(table):
-                    row = dynamicColumnHeaders[table]
-                    header = getDynamicRowHeaderCell(obj, row)
+                if self._script.dynamicColumnHeaders.has_key(table):
+                    row = self._script.dynamicColumnHeaders[table]
+                    header = self._script.getDynamicRowHeaderCell(obj, row)
                     if header.childCount > 0:
                         for i in range(0, header.childCount):
                             child = header.child(i)
@@ -480,9 +327,10 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
             if parent.__dict__.has_key("lastRow") and \
                parent.lastRow != parent.table.getRowAtIndex(obj.index):
-                if dynamicRowHeaders.has_key(table):
-                    column = dynamicRowHeaders[table]
-                    header = getDynamicColumnHeaderCell(obj, column)
+                if self._script.dynamicRowHeaders.has_key(table):
+                    column = self._script.dynamicRowHeaders[table]
+                    header = self._script.getDynamicColumnHeaderCell(obj, 
+                                                                     column)
                     if header.childCount > 0:
                         for i in range(0, header.childCount):
                             child = header.child(i)
@@ -494,7 +342,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                         if text:
                             utterances.append(text)
 
-        if isSpreadSheetCell(obj):
+        if self._script.isSpreadSheetCell(obj):
             if not already_focused:
                 if settings.readTableCellRow:
                     parent = obj.parent
@@ -547,13 +395,12 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         Returns a list of utterances to be spoken for the object.
         """
 
-        global inputLineForCell, isSpreadSheetCell, locateInputLine
-
-        if isSpreadSheetCell(obj):
+        if self._script.isSpreadSheetCell(obj):
             utterances = []
 
-            if inputLineForCell == None:
-                inputLineForCell = locateInputLine(obj)
+            if self._script.inputLineForCell == None:
+                self._script.inputLineForCell = \
+                            self._script.locateInputLine(obj)
 
             if obj.text:
                 objectText = self._script.getText(obj, 0, -1)
@@ -661,6 +508,15 @@ class Script(default.Script):
         #
         self.lastCell = None
 
+        # The spreadsheet input line.
+        #
+        self.inputLineForCell = None
+
+        # Dictionaries for the calc dynamic row and column headers.
+        #
+        self.dynamicColumnHeaders = {}
+        self.dynamicRowHeaders = {}
+
         # The following variables will be used to try to determine if we've
         # already handled this misspelt word (see readMisspeltWord() for
         # more details.
@@ -766,6 +622,147 @@ class Script(default.Script):
 
         return keyBindings
 
+    def adjustForWriterTable(self, obj):
+        """Check to see if we are in Writer, where the object with focus 
+        is a paragraph, and the parent is the table cell. If it is, then, 
+        return the parent table cell otherwise return the current object.
+
+        Arguments:
+        - obj: the accessible object to check.
+
+        Returns parent table cell (if in a Writer table ) or the current 
+        object.
+        """
+
+        if obj.role == rolenames.ROLE_PARAGRAPH and \
+           obj.parent.role == rolenames.ROLE_TABLE_CELL:
+            return obj.parent
+        else:
+            return obj
+
+    def getTable(self, obj):
+        """Get the table that this table cell is in.
+
+        Arguments:
+        - obj: the table cell.
+
+        Return the table that this table cell is in, or None if this object
+        isn't in a table.
+        """
+
+        table = None
+        obj = self.adjustForWriterTable(obj)
+        if obj.role == rolenames.ROLE_TABLE_CELL and obj.parent:
+            table = obj.parent.table
+
+        return table
+
+    def getDynamicColumnHeaderCell(self, obj, column):
+        """Given a table cell, return the dynamic column header cell 
+        associated with it.
+
+        Arguments:
+        - obj: the table cell.
+        - column: the column that this dynamic header is on.
+
+        Return the dynamic column header cell associated with the given 
+        table cell.
+        """
+
+        obj = self.adjustForWriterTable(obj)
+        accCell = None
+        parent = obj.parent
+        if parent and parent.table:
+            row = parent.table.getRowAtIndex(obj.index)
+            cell = parent.table.getAccessibleAt(row, column)
+            accCell = atspi.Accessible.makeAccessible(cell)
+
+        return accCell
+
+    def getDynamicRowHeaderCell(self, obj, row):
+        """Given a table cell, return the dynamic row header cell 
+        associated with it.
+
+        Arguments:
+        - obj: the table cell.
+        - row: the row that this dynamic header is on.
+
+        Return the dynamic row header cell associated with the given 
+        table cell.
+        """
+
+        obj = self.adjustForWriterTable(obj)
+        accCell = None
+        parent = obj.parent
+        if parent and parent.table:
+            column = parent.table.getColumnAtIndex(obj.index)
+            cell = parent.table.getAccessibleAt(row, column)
+            accCell = atspi.Accessible.makeAccessible(cell)
+    
+        return accCell
+
+    def locateInputLine(self, obj):
+        """Return the spread sheet input line. This only needs to be found
+        the very first time a spread sheet table cell gets focus. We use the
+        table cell to work back up the component hierarchy until we have found
+        the common panel that both it and the input line reside in. We then
+        use that as the base component to search for a component which has a
+        paragraph role. This will be the input line.
+
+        Arguments:
+        - obj: the spread sheet table cell that has just got focus.
+
+        Returns the spread sheet input line component.
+        """
+
+        inputLine = None 
+        panel = obj.parent.parent.parent.parent
+        if panel and panel.role == rolenames.ROLE_PANEL:
+            allParagraphs = self.findByRole(panel, rolenames.ROLE_PARAGRAPH)
+            if len(allParagraphs) == 1:
+                inputLine = allParagraphs[0]
+            else:
+                debug.println(debug.LEVEL_SEVERE,
+                    "StarOffice: locateInputLine: incorrect paragraph count.")
+        else: 
+            debug.println(debug.LEVEL_SEVERE,
+                  "StarOffice: locateInputLine: couldn't find common panel.")
+
+        return inputLine
+
+    def isSpreadSheetCell(self, obj):
+        """Return an indication of whether the given obj is a spread sheet
+        table cell.
+
+        Arguments:
+        - obj: the object to check.
+
+        Returns True if this is a table cell, False otherwise.
+        """
+
+        found = False
+        rolesList = [rolenames.ROLE_TABLE_CELL, \
+                     rolenames.ROLE_TABLE, \
+                     rolenames.ROLE_UNKNOWN, \
+                     rolenames.ROLE_SCROLL_PANE, \
+                     rolenames.ROLE_PANEL, \
+                     rolenames.ROLE_ROOT_PANE, \
+                     rolenames.ROLE_FRAME, \
+                     rolenames.ROLE_APPLICATION]
+        if self.isDesiredFocusedItem(obj, rolesList):
+            # We've found a table cell with the correct hierarchy. Now check
+            # that we are in a spreadsheet as opposed to the writer application.
+            # See bug #382408.
+            #
+            current = obj.parent
+            while current.role != rolenames.ROLE_APPLICATION:
+                if current.role == rolenames.ROLE_FRAME and \
+                   (current.name and current.name.endswith(_("Calc"))):
+                    found = True
+                current = current.parent
+
+        return found
+
     def checkForTableBoundry(self, oldFocus, newFocus):
         """Check to see if we've entered or left a table.
         When entering a table, announce the table dimensions.
@@ -817,9 +814,9 @@ class Script(default.Script):
 
         # Check to see if the current focus is a table cell.
         #
-        if isSpreadSheetCell(orca_state.locusOfFocus):
-            if inputLineForCell and inputLineForCell.text:
-                inputLine = self.getText(inputLineForCell, 0, -1)
+        if self.isSpreadSheetCell(orca_state.locusOfFocus):
+            if self.inputLineForCell and self.inputLineForCell.text:
+                inputLine = self.getText(self.inputLineForCell, 0, -1)
                 if not inputLine:
                     inputLine = _("empty")
                 debug.println(self.debugLevel,
@@ -837,7 +834,7 @@ class Script(default.Script):
         """
 
         row = None
-        cell = adjustForWriterTable(cell)
+        cell = self.adjustForWriterTable(cell)
         if cell.role == rolenames.ROLE_TABLE_CELL:
             parent = cell.parent
             if parent and parent.table:
@@ -856,7 +853,7 @@ class Script(default.Script):
         """
 
         column = None
-        cell = adjustForWriterTable(cell)
+        cell = self.adjustForWriterTable(cell)
         if cell.role == rolenames.ROLE_TABLE_CELL:
             parent = cell.parent
             if parent and parent.table:
@@ -879,24 +876,22 @@ class Script(default.Script):
         - inputEvent: if not None, the input event that caused this action.
         """
 
-        global dynamicColumnHeaders, getTable
-
         debug.println(self.debugLevel, "StarOffice.setDynamicColumnHeaders.")
 
         clickCount = self.getClickCount(self.lastDynamicEvent, inputEvent)
-        table = getTable(orca_state.locusOfFocus)
+        table = self.getTable(orca_state.locusOfFocus)
         if table:
             row = self.getTableRow(orca_state.locusOfFocus)
             if clickCount == 2:
                 try:
-                    del dynamicColumnHeaders[table]
+                    del self.dynamicColumnHeaders[table]
                     line = _("Dynamic column header cleared.")
                     speech.speak(line)
                     braille.displayMessage(line)
                 except:
                     pass
             else:
-                dynamicColumnHeaders[table] = row
+                self.dynamicColumnHeaders[table] = row
                 line = _("Dynamic column header set for row ") + str(row+1)
                 speech.speak(line)
                 braille.displayMessage(line)
@@ -942,24 +937,22 @@ class Script(default.Script):
         - inputEvent: if not None, the input event that caused this action.
         """
 
-        global dynamicRowHeaders, getTable
-
         debug.println(self.debugLevel, "StarOffice.setDynamicRowHeaders.")
 
         clickCount = self.getClickCount(self.lastDynamicEvent, inputEvent)
-        table = getTable(orca_state.locusOfFocus)
+        table = self.getTable(orca_state.locusOfFocus)
         if table:
             column = self.getTableColumn(orca_state.locusOfFocus)
             if clickCount == 2:
                 try:
-                    del dynamicRowHeaders[table]
+                    del self.dynamicRowHeaders[table]
                     line = _("Dynamic row header cleared.")
                     speech.speak(line)
                     braille.displayMessage(line)
                 except:
                     pass
             else:
-                dynamicRowHeaders[table] = column
+                self.dynamicRowHeaders[table] = column
                 line = _("Dynamic row header set for column %s") % \
                        self.columnConvert(column+1)
                 speech.speak(line)
@@ -1689,8 +1682,9 @@ class Script(default.Script):
                     if cell.text:
                         cellText = self.getText(cell, 0, -1)
                         if cellText and len(cellText):
-                            if inputLineForCell and inputLineForCell.text:
-                                inputLine = self.getText(inputLineForCell,0,-1)
+                            if self.inputLineForCell and \
+                               self.inputLineForCell.text:
+                                inputLine = self.getText(self.inputLineForCell,0,-1)
                                 if inputLine and \
                                     (len(inputLine) > 1) and \
                                     (inputLine[0] == "="):
