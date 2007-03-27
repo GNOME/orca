@@ -862,7 +862,7 @@ class WhereAmI:
             return ""
 
         descendant = self._script.getRealActiveDescendant(obj)
-        text = self_script.getDisplayedText(descendant)
+        text = self._script.getDisplayedText(descendant)
 
         # For Evolution mail header list.
         if self._getAppName().startswith("evolution") and text == "Status":
