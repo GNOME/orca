@@ -538,8 +538,16 @@ class WhereAmI:
 
         if obj.state.count(atspi.Accessibility.STATE_EXPANDABLE):
             if obj.state.count(atspi.Accessibility.STATE_EXPANDED):
+                # Translators: this represents the state of a node in a tree.
+                # 'expanded' means the children are showing.
+                # 'collapsed' means the children are not showing.
+                #
                 text = _("expanded")
             else:
+                # Translators: this represents the state of a node in a tree.
+                # 'expanded' means the children are showing.
+                # 'collapsed' means the children are not showing.
+                #
                 text = _("collapsed")
                 utterances.append(text)
 

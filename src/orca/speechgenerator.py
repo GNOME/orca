@@ -194,6 +194,9 @@ class SpeechGenerator:
         Returns a list of utterances to be spoken.
         """
         if obj.state.count(atspi.Accessibility.STATE_SENSITIVE) == 0:
+            # Translators: this represents an item on the screen that has
+            # been set insensitive (or grayed out).
+            #
             return [_("grayed")]
         else:
             return []
@@ -1227,8 +1230,16 @@ class SpeechGenerator:
         #
         if obj.state.count(atspi.Accessibility.STATE_EXPANDABLE):
             if obj.state.count(atspi.Accessibility.STATE_EXPANDED):
+                # Translators: this represents the state of a node in a tree.
+                # 'expanded' means the children are showing.
+                # 'collapsed' means the children are not showing.
+                #
                 utterances.append(_("expanded"))
             else:
+                # Translators: this represents the state of a node in a tree.
+                # 'expanded' means the children are showing.
+                # 'collapsed' means the children are not showing.
+                #
                 utterances.append(_("collapsed"))
 
             # If this is an expandable table cell with no children, then

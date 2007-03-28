@@ -65,9 +65,17 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
         obj.was_selected = False
         if obj.state.count(Accessibility.STATE_EXPANDED) != 0:
+            # Translators: this represents the state of a node in a tree.
+            # 'expanded' means the children are showing.
+            # 'collapsed' means the children are not showing.
+            #
             utterances.append(_("expanded"))
         elif obj.state.count(Accessibility.STATE_EXPANDED) == 0 and \
                 obj.state.count(Accessibility.STATE_EXPANDABLE) != 0:
+            # Translators: this represents the state of a node in a tree.
+            # 'expanded' means the children are showing.
+            # 'collapsed' means the children are not showing.
+            #
             utterances.append(_("collapsed"))
         elif obj.state.count(Accessibility.STATE_SELECTED) != 0:
             utterances.append(_("selected"))

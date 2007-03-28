@@ -158,12 +158,50 @@ BRL_FLG_REPEAT_DELAY  = 0x400000
 # ATM, the ones used in default.py are:
 #
 command_name = {}
+
+# Translators: this is a command for a button on a refreshable braille
+# display (an external hardware device used by people who are blind).
+# When pressing the button, the display scrolls to the left.
+#
 command_name[CMD_FWINLT]   = _("Line Left")
+
+# Translators: this is a command for a button on a refreshable braille
+# display (an external hardware device used by people who are blind).
+# When pressing the button, the display scrolls to the right.
+#
 command_name[CMD_FWINRT]   = _("Line Right")
+
+# Translators: this is a command for a button on a refreshable braille
+# display (an external hardware device used by people who are blind).
+# When pressing the button, the display scrolls up.
+#
 command_name[CMD_LNUP]     = _("Line Up")
+
+# Translators: this is a command for a button on a refreshable braille
+# display (an external hardware device used by people who are blind).
+# When pressing the button, the display scrolls down.
+#
 command_name[CMD_LNDN]     = _("Line Down")
+
+# Translators: this is a command for a button on a refreshable braille
+# display (an external hardware device used by people who are blind).
+# When pressing the button, the display scrolls to the top left of the
+# window.
+#
 command_name[CMD_TOP_LEFT] = _("Top Left")
+
+# Translators: this is a command for a button on a refreshable braille
+# display (an external hardware device used by people who are blind).
+# When pressing the button, the display scrolls to the bottom right of
+# the window.
+#
 command_name[CMD_BOT_LEFT] = _("Bottom Right")
+
+# Translators: this is a command for a button on a refreshable braille
+# display (an external hardware device used by people who are blind).
+# When pressing the button, the display scrolls to position containing
+# the cursor.
+#
 command_name[CMD_HOME]     = _("Cursor Position")
 
 # The size of the physical display (width, height).  The coordinate system of

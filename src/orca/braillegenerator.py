@@ -193,6 +193,9 @@ class BrailleGenerator:
         """
 
         if obj.state.count(atspi.Accessibility.STATE_SENSITIVE) == 0:
+            # Translators: this represents an item on the screen that has
+            # been set insensitive (or grayed out).
+            #
             return _("grayed")
         else:
             return None
@@ -1063,12 +1066,23 @@ class BrailleGenerator:
         #
         if obj.state.count(atspi.Accessibility.STATE_EXPANDABLE):
             if obj.state.count(atspi.Accessibility.STATE_EXPANDED):
+                # Translators: this represents the state of a node in a tree.
+                # 'expanded' means the children are showing.
+                # 'collapsed' means the children are not showing.
+                #
                 regions[0].append(braille.Region(" " + _("expanded")))
             else:
+                # Translators: this represents the state of a node in a tree.
+                # 'expanded' means the children are showing.
+                # 'collapsed' means the children are not showing.
+                #
                 regions[0].append(braille.Region(" " + _("collapsed")))
 
         level = self._script.getNodeLevel(obj)
         if level >= 0:
+            # Translators: this represents the depth of a node in a tree
+            # view (i.e., how many ancestors a node has).
+            #
             regions[0].append(braille.Region(" " + _("TREE LEVEL %d") \
                                              % (level + 1)))
 
