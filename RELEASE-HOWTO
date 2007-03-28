@@ -7,17 +7,16 @@ The general instructions for a release are here:
 
 Here's a summary for Orca:
 
-
 PREPARE SOURCES FOR THE RELEASE:
 -------------------------------
 
 Modify these lines in ./configure.in:
 
-  ORCA_MAJOR_VERSION=0
-  ORCA_MINOR_VERSION=2
-  ORCA_MICRO_VERSION=5
+  ORCA_MAJOR_VERSION=2
+  ORCA_MINOR_VERSION=19
+  ORCA_MICRO_VERSION=0
 
-Modify ./README to make sure is has the right Orca version.
+Modify ./README to make sure it has the right Orca version.
 
 Update ./NEWS based upon entries in ./ChangeLog
 
@@ -35,8 +34,8 @@ TEST THE CANDIDATE:
 ------------------
 
 cd /tmp
-unzip -c orca-0.2.5.tar.gz | tar xvf -
-cd orca-0.2.5
+gunzip -c orca-2.19.0.tar.gz | tar xvf -
+cd orca-2.19.0
 ./configure --prefix=/usr
 make
 sudo make install
@@ -46,20 +45,18 @@ orca
 TAG THE RELEASE:
 ---------------
 
-#cvs commit
-#cvs tag ORCA_0_2_5
-
 While in the trunk directory:
 
-svn cp . svn+ssh://wwalker@svn.gnome.org/svn/orca/tags/ORCA_0_2_5 
+svn commit
+svn cp . svn+ssh://wwalker@svn.gnome.org/svn/orca/tags/ORCA_2_19_0
 
 
 UPLOAD THE RELEASE:
 ------------------
 
-scp orca-0.2.5.tar.gz wwalker@master.gnome.org:
+scp orca-2.19.0.tar.gz wwalker@master.gnome.org:
 ssh master.gnome.org
-install-module orca-0.2.5.tar.gz
+install-module orca-2.19.0.tar.gz
 
 You should also:
 
@@ -73,54 +70,52 @@ make
  do the same thing on http://live.gnome.org/Orca/>
 
 
-ANNOUNCE THE RELEASE to gnome-announce-list@gnome.org:
------------------------------------------------------
+IDENTIFY TRUNK AS "PRE":
+------------------------
 
-Subject: orca-0.2.5
+Modify these lines in ./configure.in:
 
-==============
-* What is it ?
-==============
+  ORCA_MAJOR_VERSION=2
+  ORCA_MINOR_VERSION=19
+  ORCA_MICRO_VERSION=1pre
 
-Orca is a scriptable screen reader for the GNOME desktop for people
-with visual impairments.
+Modify ./README to make sure it has the right "pre" version.
 
 
-==================
-* What's changed ?
-==================
+ANNOUNCE THE RELEASE
+--------------------
 
-==========
-Orca 0.2.5
-==========
+To: gnome-announce-list@gnome.org:
+Subject: Announcing Orca v2.19.0
 
-Code changes
-        * Yadda yadda yadda (Joe)
+===============
+* What is Orca?
+===============
 
-Bugfixes
-        * Yadda yadda yadda (Joe) [#123456]
+Orca is a free, open source, flexible, and extensible screen reader
+that provides access to the graphical desktop via user-customizable
+combinations of speech, braille, and/or magnification.  Orca
+development has been led by the Sun Microsystems, Inc., Accessibility
+Program Office via continued engagement with its end users and
+contributions from wonderful community members.
+
+You can also read more about Orca at http://live.gnome.org/Orca.
+
+==================================
+* What's changed for Orca v2.19.0?
+==================================
+
+<<<INSERT NEWS HERE>>>
 
 ======================
 * Where can I get it ?
 ======================
 
-Source code:
-http://download.gnome.org/sources/orca/2.17/orca-2.17.92.tar.bz2
-http://download.gnome.org/sources/orca/2.17/orca-2.17.92.tar.gz
+You can obtain Orca v2.19.0 in source code form at the following:
 
-Enjoy.
+http://download.gnome.org/sources/orca/2.19/orca-2.19.0.tar.gz
+http://download.gnome.org/sources/orca/2.19/orca-2.19.0.tar.bz2
 
-Will, Mike, Rich, Lynn, and the Orca community
+Enjoy!
 
-
-MAKE AN RPM (IF YOU WANT TO)
-----------------------------
-
-See http://www.linux.org/docs/ldp/howto/RPM-HOWTO/
-
-Copy orca.spec and tarball to /usr/src/redhat and do it as root,
-or make $HOME/.rpmmacros (I never got this to work):
-
-%_topdir: /home/wwalker/work/fedora/gnome-head/orca/rpm-build
-
-rpmbuild -ba orca.spec
+The Orca Team
