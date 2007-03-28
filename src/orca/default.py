@@ -1474,7 +1474,6 @@ class Script(script.Script):
         obj = orca_state.locusOfFocus
         self.updateBraille(obj)
 
-        self.whereAmI = where_am_I.WhereAmI(self)
         if inputEvent and orca_state.lastInputEvent \
            and isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
             string = atspi.KeystrokeListener.keyEventToString(inputEvent)

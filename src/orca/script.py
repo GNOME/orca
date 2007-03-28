@@ -46,6 +46,7 @@ import keybindings
 import orca_state
 import settings
 import speechgenerator
+import where_am_I
 
 class Script:
     """The specific focus tracking scripts for applications.
@@ -82,6 +83,7 @@ class Script:
 
         self.brailleGenerator = self.getBrailleGenerator()
         self.speechGenerator = self.getSpeechGenerator()
+        self.whereAmI = self.getWhereAmI()
         self.voices = settings.voices
 
         self.flatReviewContextClass = flat_review.Context
@@ -173,6 +175,11 @@ class Script:
         """Returns the speech generator for this script.
         """
         return speechgenerator.SpeechGenerator(self)
+
+    def getWhereAmI(self):
+        """Returns the "where am I" class for this script.
+        """
+        return where_am_I.WhereAmI(self)
 
     # [[[WDW - There is a circular reference going on somewhere (see
     # bug 333168).  In the presence of this reference, the existence

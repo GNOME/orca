@@ -1,3 +1,19 @@
+2007-03-28  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/script.py:
+          src/orca/default.py:
+          src/orca/where_am_I.py:
+          src/orca/scripts/StarOffice.py:
+          Fixed bug #423011 – Need to refactor where_am_I.py
+          Further changes to move the StarOffice specific code into a
+          subclass of the WhereAmI class in the StarOffice.py script.
+
+          Removed four routines that weren't being used:
+          _getCalcFrameAndSheet(self, obj)
+          _speakCalcStatusBar(self)
+          _getPositionInComboBox(self, obj, name)
+          _getCheckBox(self, obj)
+
 2007-03-28  Willie Walker <william.walker@sun.com>
 
 	* configure.in, README: mark as v2.19.1pre.

@@ -97,15 +97,7 @@ class WhereAmI:
         role = obj.role
 
         if orcaKey:
-            # Handle the Orca modifier key being pressed.
-            if self._getAppName() == "soffice.bin":
-                top = self._script.getTopLevel(obj)
-                if top and top.name.endswith(" Calc"):
-                    self._handleCalcOrcaKey(obj, doubleClick)
-                else:
-                    self._handleOrcaKey(obj, doubleClick)
-            else:
-                self._handleOrcaKey(obj, doubleClick)
+            self._processOrcaKey(obj, doubleClick)
 
         elif role == rolenames.ROLE_CHECK_BOX:
             self._speakCheckBox(obj, doubleClick)
@@ -141,15 +133,18 @@ class WhereAmI:
             self._speakText(obj, doubleClick)
 
         elif role == rolenames.ROLE_TABLE_CELL:
-            if self._getAppName() == "soffice.bin":
-                self._speakCalcTableCell(obj, doubleClick)
-            else:
-                self._speakTableCell(obj, doubleClick)
+            self._speakTableCell(obj, doubleClick)
 
         elif role == rolenames.ROLE_PARAGRAPH:
             self._speakParagraph(obj, doubleClick)
 
         return True
+
+    def _processOrcaKey(self, obj, doubleClick):
+        """Test to see if the Orca modifier key has been pressed.
+        """
+
+        self._handleOrcaKey(obj, doubleClick)
 
     def _getAppName(self):
         """Returns the application name.
@@ -485,37 +480,6 @@ class WhereAmI:
                       utterances)
         speech.speakUtterances(utterances)
 
-    def _speakCalcTableCell(self, obj, doubleClick):
-        """Given the nature of OpenOffice Calc, Orca should override the
-        default KP_Enter behavior when the item with focus is a cell
-        within Calc. In this instance, the following information should
-        be spoken/displayed:
-
-        1. "Cell"
-        2. the cell coordinates
-        3. the cell contents:
-            A. if the cell is empty, "blank"
-            B. if the cell is being edited AND if some text within the cell
-            is selected, the selected text followed by "selected"
-            C. otherwise, the full contents of the cell
-        """
-
-        utterances = []
-        utterances.append(_("Cell"))
-
-        table = obj.parent.table
-        text = _("column %d") % (table.getColumnAtIndex(obj.index) + 1)
-        utterances.append(text)
-        text = _("row %d") % (table.getRowAtIndex(obj.index) + 1)
-        utterances.append(text)
-
-        text = obj.text.getText(0, -1)
-        utterances.append(text)
-
-        debug.println(self._debugLevel, "calc table cell utterances=%s" % \
-                      utterances)
-        speech.speakUtterances(utterances)
-
     def _speakTableCell(self, obj, doubleClick):
         """Tree Tables present the following information (an example is
         'Tree table, Mike Pedersen, item 8 of 10, tree level 2'):
@@ -588,38 +552,10 @@ class WhereAmI:
         speech.speakUtterances(utterances)
 
     def _speakParagraph(self, obj, doubleClick):
-        """OpenOffice Calc cells have the role "paragraph" when
-        they are being edited.
+        """Speak a paragraph object.
         """
 
-        if self._getAppName() == "soffice.bin":
-            top = self._script.getTopLevel(obj)
-            if top and top.name.endswith(" Calc"):
-                self._speakCalc(obj, doubleClick)
-
-            elif top and top.name.endswith(" Writer"):
-                self._speakText(obj, doubleClick)
-
-    def _speakCalc(self, obj, doubleClick):
-        """Speak a OpenOffice Calc cell.
-        """
-
-        utterances = []
-        utterances.append(_("Cell"))
-
-        # No way to get cell coordinates?
-
-        [textContents, startOffset, endOffset, selected] = \
-            self._getTextContents(obj, doubleClick)
-        text = _("%s") % textContents
-        utterances.append(text)
-        if selected:
-            text = _("%s") % "selected"
-            utterances.append(text)
-
-        debug.println(self._debugLevel, "editable table cell utterances=%s" % \
-                      utterances)
-        speech.speakUtterances(utterances)
+        self._speakText(obj, doubleClick)
 
     def _getObjName(self, obj):
         """Returns the name to speak for an object.
@@ -720,13 +656,6 @@ class WhereAmI:
             text += _("item %d of %d") % (position, total)
 
         return text
-
-    def _getPositionInComboBox(self, obj, name):
-        """Returns the relative position of an object in a combo box.
-        """
-
-        # The only child of a combo box is the popup menu
-        return self._getPositionInList(obj.child(0), name)
 
     def _getPositionInList(self, obj, name):
         """Returns the relative position of an object in a list.
@@ -871,29 +800,6 @@ class WhereAmI:
         debug.println(self._debugLevel, "cell=<%s>" % text)
 
         return text
-
-    def _getCheckBox(self, obj):
-        """Returns utterences for a check box.
-        """
-
-        utterances = []
-
-        text = self._getObjLabelAndName(obj)
-        utterances.append(text)
-
-        text = _("%s") % rolenames.getSpeechForRoleName(obj)
-        utterances.append(text)
-
-        if obj.state.count(atspi.Accessibility.STATE_CHECKED):
-            text = _("checked")
-        else:
-            text = _("not checked")
-        utterances.append(text)
-
-        text = _("%s") % self._getObjMnemonic(obj)
-        utterances.append(text)
-
-        return utterances
 
     def _getTextContents(self, obj, doubleClick):
         """Returns utterences for text.
@@ -1100,41 +1006,6 @@ class WhereAmI:
                           utterances)
             speech.speakUtterances(utterances)
 
-    def _handleCalcOrcaKey(self, obj, doubleClick):
-        """Handle the Orca modifier key being pressed.
-
-        Calc-Specific Handling: If Insert+KP_Enter is pressed a single time
-        while focus is on a cell within OpenOffice Calc, Orca will speak the
-        following information:
-
-        1. The contents of the title bar of the application main window
-        2. The title of the current worksheet
-
-        Note that if the application with focus is Calc, but a cell does not
-        have focus, the default behavior should be used.
-        """
-
-        utterances = []
-
-        list = self._getCalcFrameAndSheet(obj)
-        if doubleClick:
-            if list[0]:
-                self._statusBar = None
-                self._getStatusBar(list[0])
-                if self._statusBar:
-                    self._speakCalcStatusBar()
-        else:
-            if list[0]:
-                text = _("%s") % self._getObjLabelAndName(list[0])
-                utterances.append(text)
-            if list[1]:
-                text = _("%s") % self._getObjLabelAndName(list[1])
-                utterances.append(text)
-
-            debug.println(self._debugLevel,
-                          "Calc titlebar and sheet utterances=%s" % utterances)
-            speech.speakUtterances(utterances)
-
     def _getFrameAndDialog(self, obj):
         """Returns the frame and (possibly) the dialog containing
         the object.
@@ -1150,25 +1021,6 @@ class WhereAmI:
             if parent.role == rolenames.ROLE_FRAME:
                 list[0] = parent
             if parent.role == rolenames.ROLE_DIALOG:
-                list[1] = parent
-            parent = parent.parent
-
-        return list
-
-    def _getCalcFrameAndSheet(self, obj):
-        """Returns the Calc frame and sheet
-        """
-
-        list = [None, None]
-
-        parent = obj.parent
-        while parent and (parent.parent != parent):
-            # debug.println(self._debugLevel,
-            #               "_getCalcFrameAndSheet: parent=%s, %s" % \
-            #               (parent.role, self._getObjLabelAndName(parent)))
-            if parent.role == rolenames.ROLE_FRAME:
-                list[0] = parent
-            if parent.role == rolenames.ROLE_TABLE:
                 list[1] = parent
             parent = parent.parent
 
@@ -1219,22 +1071,5 @@ class WhereAmI:
                 utterances.append(text)
 
         debug.println(self._debugLevel, "statusbar utterances=%s" % \
-                      utterances)
-        speech.speakUtterances(utterances)
-
-    def _speakCalcStatusBar(self):
-        """Speaks the OpenOffice Calc statusbar.
-        """
-
-        if not self._statusBar:
-            return
-
-        utterances = []
-        for i in range(0, self._statusBar.childCount):
-            child = self._statusBar.child(i)
-            text = _("%s") % self._getObjName(child)
-            utterances.append(text)
-
-        debug.println(self._debugLevel, "Calc statusbar utterances=%s" % \
                       utterances)
         speech.speakUtterances(utterances)

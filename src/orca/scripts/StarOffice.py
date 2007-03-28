@@ -39,8 +39,123 @@ import orca.speech as speech
 import orca.speechgenerator as speechgenerator
 import orca.settings as settings
 import orca.keybindings as keybindings
+import orca.where_am_I as where_am_I
 
 from orca.orca_i18n import _ # for gettext support
+
+class WhereAmI(where_am_I.WhereAmI):
+
+    def _processOrcaKey(self, obj, doubleClick):
+        """Test to see if the Orca modifier key has been pressed.
+        """
+
+        # Handle the Orca modifier key being pressed.
+        if self._getAppName() == "soffice.bin":
+            top = self._script.getTopLevel(obj)
+            if top and top.name.endswith(" Calc"):
+                self._handleOrcaKey(obj, doubleClick)
+            else:
+                where_am_I.WhereAmI._handleOrcaKey(self, obj, doubleClick)
+        else:
+            where_am_I.WhereAmI_handleOrcaKey(self, obj, doubleClick)
+
+    def _speakTableCell(self, obj, doubleClick):
+        """Given the nature of OpenOffice Calc, Orca should override the
+        default KP_Enter behavior when the item with focus is a cell
+        within Calc. In this instance, the following information should
+        be spoken/displayed:
+
+        1. "Cell"
+        2. the cell coordinates
+        3. the cell contents:
+            A. if the cell is empty, "blank"
+            B. if the cell is being edited AND if some text within the cell
+            is selected, the selected text followed by "selected"
+            C. otherwise, the full contents of the cell
+        """
+
+        utterances = []
+        utterances.append(_("Cell"))
+
+        table = obj.parent.table
+        text = _("column %d") % (table.getColumnAtIndex(obj.index) + 1)
+        utterances.append(text)
+        text = _("row %d") % (table.getRowAtIndex(obj.index) + 1)
+        utterances.append(text)
+
+        text = obj.text.getText(0, -1)
+        utterances.append(text)
+
+        debug.println(self._debugLevel, "calc table cell utterances=%s" % \
+                      utterances)
+        speech.speakUtterances(utterances)
+
+    def _speakParagraph(self, obj, doubleClick):
+        """OpenOffice Calc cells have the role "paragraph" when
+        they are being edited.
+        """
+
+        top = self._script.getTopLevel(obj)
+        if top and top.name.endswith(" Calc"):
+            self._speakCalc(obj, doubleClick)
+        elif top and top.name.endswith(" Writer"):
+            self._speakText(obj, doubleClick)
+
+    def _speakCalc(self, obj, doubleClick):
+        """Speak a OpenOffice Calc cell.
+        """
+
+        utterances = []
+        utterances.append(_("Cell"))
+
+        # No way to get cell coordinates?
+
+        [textContents, startOffset, endOffset, selected] = \
+            self._getTextContents(obj, doubleClick)
+        text = _("%s") % textContents
+        utterances.append(text)
+        if selected:
+            text = _("%s") % "selected"
+            utterances.append(text)
+
+        debug.println(self._debugLevel, "editable table cell utterances=%s" % \
+                      utterances)
+        speech.speakUtterances(utterances)
+
+    def _handleOrcaKey(self, obj, doubleClick):
+        """Handle the Orca modifier key being pressed.
+
+        Calc-Specific Handling: If Insert+KP_Enter is pressed a single time
+        while focus is on a cell within OpenOffice Calc, Orca will speak the
+        following information:
+
+        1. The contents of the title bar of the application main window
+        2. The title of the current worksheet
+
+        Note that if the application with focus is Calc, but a cell does not
+        have focus, the default behavior should be used.
+        """
+
+        utterances = []
+
+        list = self._getCalcFrameAndSheet(obj)
+        if doubleClick:
+            if list[0]:
+                self._statusBar = None
+                self._getStatusBar(list[0])
+                if self._statusBar:
+                    self._speakCalcStatusBar()
+        else:
+            if list[0]:
+                text = _("%s") % self._getObjLabelAndName(list[0])
+                utterances.append(text)
+            if list[1]:
+                text = _("%s") % self._getObjLabelAndName(list[1])
+                utterances.append(text)
+
+            debug.println(self._debugLevel,
+                          "Calc titlebar and sheet utterances=%s" % utterances)
+            speech.speakUtterances(utterances)
 
 class BrailleGenerator(braillegenerator.BrailleGenerator):
     """Overrides _getBrailleRegionsForTableCellRow so that , when we are
@@ -565,6 +680,12 @@ class Script(default.Script):
         """
 
         return SpeechGenerator(self)
+
+    def getWhereAmI(self):
+        """Returns the "where am I" class for this script.
+        """
+
+        return WhereAmI(self)
 
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
