@@ -1919,6 +1919,9 @@ class Script(default.Script):
 
                 # Speak a blank line, if appropriate.
                 if self.speakBlankLine(event.source):
+                    # Translators: "blank" is a short word to mean the
+                    # user has navigated to an empty line.
+                    #
                     speech.speak(_("blank"), None, False)
                 return
 
@@ -1928,6 +1931,9 @@ class Script(default.Script):
 
         # Speak a blank line, if appropriate.
         if self.speakBlankLine(event.source):
+            # Translators: "blank" is a short word to mean the
+            # user has navigated to an empty line.
+            #
             speech.speak(_("blank"), None, False)
 
         default.Script.onCaretMoved(self, event)

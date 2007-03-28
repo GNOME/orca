@@ -3575,6 +3575,9 @@ class Script(default.Script):
 
         if (len(clumped) == 1) and (clumped[0][0] == "\n"):
             if settings.speakBlankLines:
+                # Translators: "blank" is a short word to mean the
+                # user has navigated to an empty line.
+                #
                 speech.speak(_("blank"), clumped[0][1], False)
         else:
             for [string, acss] in clumped:
@@ -4248,6 +4251,9 @@ class Script(default.Script):
             if firstCellContents:
                 self.speakContents(contents)
             else:
+                # Translators: "blank" is a short word to mean the
+                # user has navigated to an empty line.
+                #
                 speech.speak(_("blank"))
         else:
             speech.speak(_("No more tables."))
@@ -4277,6 +4283,9 @@ class Script(default.Script):
             if firstCellContents:
                 self.speakContents(contents)
             else:
+                # Translators: "blank" is a short word to mean the
+                # user has navigated to an empty line.
+                #
                 speech.speak(_("blank"))
         else:
             speech.speak(_("No more tables."))

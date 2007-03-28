@@ -869,6 +869,9 @@ class WhereAmI:
 
                 if char[0] == "\n" and startOffset == caretOffset \
                        and settings.speakBlankLines:
+                    # Translators: "blank" is a short word to mean the
+                    # user has navigated to an empty line.
+                    #
                     textContents = (_("blank"))
 
         return [textContents, startOffset, endOffset, selected]

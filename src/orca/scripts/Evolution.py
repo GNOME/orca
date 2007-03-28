@@ -394,6 +394,9 @@ class Script(default.Script):
                 speech.speak(chnames.getCharacterName("\n"), None, False)
  
             if self.speakBlankLine(event.source):
+                # Translators: "blank" is a short word to mean the
+                # user has navigated to an empty line.
+                #
                 speech.speak(_("blank"), None, False)
             else:
                 speech.speak(line, None, False)
@@ -879,7 +882,10 @@ class Script(default.Script):
 
 
             if self.speakBlankLine(event.source):
-                 speech.speak(_("blank"), None, False)
+                # Translators: "blank" is a short word to mean the
+                # user has navigated to an empty line.
+                #
+                speech.speak(_("blank"), None, False)
 
                 
         # 9) Spell Checking Dialog

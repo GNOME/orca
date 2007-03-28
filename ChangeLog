@@ -1,5 +1,10 @@
 2007-03-28  Willie Walker <william.walker@sun.com>
 
+	* src/orca/scripts/Evolution.py, src/orca/scripts/StarOffice.py,
+	src/orca/default.py, src/orca/Gecko.py, src/orca/where_am_I.py:
+	more comments for translators for bug 412200 and also unmark some
+	debug strings as being marked for translation.
+
 	* src/orca/braillegenerator.py, src/orca/speechgenerator.py,
 	src/orca/chnames.py, src/orca/J2SE-access-bridge.py,
 	src/orca/where_am_I.py, src/orca/braille.py: start adding
