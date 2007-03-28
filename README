@@ -1,4 +1,4 @@
-Orca v2.19.0pre
+Orca v2.19.0
 
 Introduction
 ========================================================================
@@ -137,11 +137,6 @@ Insert+down_arrow:  decrease speech pitch
 Insert+f:           read the text attributes at the caret position
 Insert+q:           quit Orca
 
-More details on all of Orca's keystrokes are available at the
-following URL:
-
-http://cvs.gnome.org/viewcvs/*checkout*/orca/docs/doc-set/orca.html#GESTURES
-
 Furthermore, to get help while running Orca, press "Insert+F1".  This
 will enable "learn mode", which provides a spoken and brailled
 description of what various keyboard and braille input device actions
@@ -151,3 +146,7 @@ keyboard binding for Orca.
 
 To quit Orca, you can press "Insert+q" as shown above, or run 
 "orca --quit" from the command line.
+
+More details are available on the Orca WIKI:
+
+http://live.gnome.org/Orca

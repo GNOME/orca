@@ -1,3 +1,99 @@
+2.19.0 - 27-Mar-2007
+
+* Fix for bug 410302 to provide support for the gnome-mud application.
+  (Thanks to community member Javier for this contribution!!!).
+
+* Fix for bug 349394 to roll in experimental speech dispatcher
+  support.  NOTE: SPEECH DISPATCHER IS STILL UNSUPPORTED AT THIS TIME.
+  USE AT YOUR OWN RISK.  (Thanks to community member Tomas Cerha for
+  this contribution!!!).
+
+* Fix for bug 395548 to refactor util.py into default.py.  This allows
+  subclasses to more easily provide specialized behavior.
+
+* Fix for bug 402494 to refactor how 'for' statements are used.
+
+* Fix for bug 419089 to refactor speech and braille generators in
+  StarOffice.py script to use self._script.
+
+* Fix for bug 419006 to refactor acroread.py to remove global methods.
+  This also takes care of a side effect of the refactoring work done
+  in bug 395548.
+
+* Work on bug 423011 to refactor the where_am_I module to know about 
+  the script that is using it.
+
+* Fix for bug 319778 to remove hierarchical_presenter (we'll rely on
+  an external utility, such as Accerciser, to provide this functionality).
+	
+* Fix for bug 420173 to prevent the Escape key from becoming bound
+  when exiting learn mode.
+
+* Fix for bug 423009 to prevent Orca from speaking the role name 
+  "list item" on web pages.
+
+* Fix for bug 418430 to handle empty sections in Firefox.  
+
+* Fix for bug 423214 to use 1 through 6 and Shift+1 through Shift+6 to
+  navigate among headings by level.
+
+* Work on bug 414926 to speak heading levels in Firefox (still need
+  to add braille).
+
+* Fix for bug 422924 to add table navigation in Firefox.  T and
+  Shift+T move you among tables.  Alt+Shift+{Left,Right,Up,Down} will
+  move you among table cells. Alt+Shift+{Home,End} will move you to
+  the{top,bottom} of the current table.
+
+* Fix for bug 417001 to add link structural navigation. U moves you to
+  the next unvisited link; Shift U to the previous unvisited link; V
+  to the next visited link; Shift V to the previous visited link.
+
+* Fix for bug 416853 to prevent structural navigation keys from
+  interfering with shortcuts. Ctrl+o and Ctrl+h now work as expected.
+
+* Fix for bug 416908 to add list structural navigation.  L moves you
+  to the next list; Shift L moves you to the previous list.
+
+* Fix for bug 416857 to reposition caret better in HTML content after
+  leaving and returning to the content (e.g., opening a separate
+  dialog and then closing it).
+	
+* Fix problem with SayAll where the speech engine might not give us a
+  callback if we pass it nothing or text that is just whitespace.
+	
+* Fix for bug 416964 to account for "no break space" character in word
+  delimiters.
+
+* Fix for bug 404052 to let the user know the Preferences dialog is
+  loading.
+
+* Fix for bug 402192 to speak text that is pasted in by a middle mouse
+  click.
+
+* Fix for bug 392939 so that the dash character ("-") is spoken when
+  used as a negative sign at "some" punctuation.
+
+* Fix for bug 350674 to announce when a new folder is opened and
+  announce number of items.
+
+* Work on bug 415061 to help make regression test results repeatable.
+
+* Work on bug 412837 and bug 416332 to measure and increase testing
+  coverage.
+
+* Updates to the specification.
+
+* New and updated translations (THANKS EVERYONE!!!):
+
+    ca      Catalan              Gil Forcada and Josep Puigdemont i Casamajó
+    da      Danish               Peter Bach
+    de      German               Hendrik Richter and Jochen Skulj
+    en_GB   English/British      David Lodge and Gareth Owen
+    nb      Norwegian Bokmål     Kjartan Maraas and Sigurd Gartmann
+
+==========
+
 2.18.0 - 12-Mar-2007
 
 * See http://live.gnome.org/TwoPointSeventeen/ReleaseNotes/Orca for a 
