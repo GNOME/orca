@@ -3967,8 +3967,8 @@ class Script(script.Script):
         # word plus the context where it is used (upto five words
         # to either side of it).
         #
-        for token in allTokens:
-            if token.startswith(badWord):
+        for i in range(0, len(allTokens)):
+            if allTokens[i].startswith(badWord):
                 min = i - 5
                 if min < 0:
                     min = 0

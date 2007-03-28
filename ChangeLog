@@ -1,3 +1,10 @@
+2007-03-27  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/default.py:
+          Further fixup to bug #402494 – For statement refactoring.
+          Needed to reinstate the old code in the speakMisspeltWord()
+          routine, as the variable "i" was being used.
+
 2007-03-27  Willie Walker <william.walker@sun.com>
 
 	* README, NEWS: initial prep for v2.19.0.
