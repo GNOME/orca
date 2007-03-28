@@ -1,5 +1,9 @@
 2007-03-28  Willie Walker <william.walker@sun.com>
 
+	* configure.in, NEWS: final prep for v2.19.0.
+	
+2007-03-28  Willie Walker <william.walker@sun.com>
+
 	* po/POTFILES.in: more work on bug 319778 to remove
 	hierarchical_presenter.
 	

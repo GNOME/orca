@@ -55,10 +55,16 @@
 * Fix for bug 416908 to add list structural navigation.  L moves you
   to the next list; Shift L moves you to the previous list.
 
+* Fix for bug 423537 to add list item structural navigtion.  I and
+  Shift I move you among list items.
+
 * Fix for bug 416857 to reposition caret better in HTML content after
   leaving and returning to the content (e.g., opening a separate
   dialog and then closing it).
 	
+* Fix for bug 423531 so O and Shift O do not stop on images and now
+  say "large objects" instead of "chunks".
+
 * Fix problem with SayAll where the speech engine might not give us a
   callback if we pass it nothing or text that is just whitespace.
 	
