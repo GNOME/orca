@@ -12,7 +12,6 @@ src/orca/find.py
 src/orca/focus_tracking_presenter.py
 src/orca/Gecko.py
 src/orca/gnomespeechfactory.py
-src/orca/hierarchical_presenter.py
 src/orca/J2SE-access-bridge.py
 src/orca/keybindings.py
 src/orca/keynames.py

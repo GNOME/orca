@@ -1,6 +1,11 @@
+2007-03-28  Willie Walker <william.walker@sun.com>
+
+	* po/POTFILES.in: more work on bug 319778 to remove
+	hierarchical_presenter.
+	
 2007-03-27  Lynn Monsanto <lynn.monsanto@sun.com>
 
-        * src/tools/play_keystrokes.py: bug #405061 - Modified 
+        * src/tools/play_keystrokes.py: bug #415061 - Modified 
 	keystroke playback to pause before each key press. This
 	takes keystroke modifier keys and chords into account.
 
@@ -75,7 +80,7 @@
 2007-03-26  Lynn Monsanto <lynn.monsanto@sun.com>
 
         * test/harness/runone.sh, test/harness/runall.sh,
-	src/tools/play_keystrokes.py: bug #405061 - Adjusted
+	src/tools/play_keystrokes.py: bug #415061 - Adjusted
 	keystroke playback timing for navigation keys. There
 	are still minor diffs between non-OpenOffice runs
 	of runall.sh. This is probably okay for regression
@@ -222,7 +227,7 @@
 2007-03-13  Lynn Monsanto <lynn.monsanto@sun.com>
 
         * test/harness/runone.sh, test/harness/runall.sh: Partial 
-	fix for bug #405061. Fixed merge problem that caused .orca
+	fix for bug #415061. Fixed merge problem that caused .orca
 	files to not be generated.	
 
 2007-03-12  Willie Walker <william.walker@sun.com>
@@ -343,10 +348,10 @@
 2007-03-06  Lynn Monsanto <lynn.monsanto@sun.com>
 
         * test/harness/runone.sh, test/harness/runall.sh: Partial 
-	fix for bug #405061. Made delay after starting orca and
+	fix for bug #415061. Made delay after starting orca and
 	test applications configurable. 
 	
-	* src/tools/play_keystrokes.py: Partial fix for bug #405061. 
+	* src/tools/play_keystrokes.py: Partial fix for bug #415061. 
 	Made delay between arrow navigation keystrokes configurable.
 
 
