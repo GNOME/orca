@@ -7,6 +7,11 @@
 	
 2007-03-28  Rich Burridge <rich.burridge@sun.com>
 
+        * src/orca/scripts/Evolution.py:
+          Fixed bug #422487 – Ability to jump to the start of the message
+          in Evolution. Focus (and text caret) are now moved to the first
+          line of the mail message. That first lines is brailled and spoken.
+
         * src/orca/script.py:
           src/orca/default.py:
           src/orca/where_am_I.py:
