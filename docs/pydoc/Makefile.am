@@ -20,7 +20,6 @@ DOC_FILES = \
 	orca.focus_tracking_presenter \
 	orca.Gecko \
 	orca.gnomespeechfactory \
-	orca.hierarchical_presenter \
 	orca.httpserver \
 	orca.input_event \
 	orca.J2SE-access-bridge \

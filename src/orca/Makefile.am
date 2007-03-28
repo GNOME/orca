@@ -24,7 +24,6 @@ orca_python_PYTHON = \
 	focus_tracking_presenter.py \
 	Gecko.py \
 	gnomespeechfactory.py \
-	hierarchical_presenter.py \
 	httpserver.py \
 	input_event.py \
 	J2SE-access-bridge.py \

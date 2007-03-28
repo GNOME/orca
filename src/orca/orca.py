@@ -1047,18 +1047,6 @@ def start(registry):
         signal.alarm(settings.timeoutTime)
 
     if not _PRESENTATION_MANAGERS:
-
-        # [[[WDW - comment out hierarchical_presenter for now.  It
-        # relies on the list of known applications, and we've disabled
-        # that due to a hang in a call to getChildAtIndex in
-        # Script.getKnownApplications.]]]
-        #
-        #import focus_tracking_presenter
-        #import hierarchical_presenter
-        #_PRESENTATION_MANAGERS = \
-        #    [focus_tracking_presenter.FocusTrackingPresenter(),
-        #     hierarchical_presenter.HierarchicalPresenter()]
-
         import focus_tracking_presenter
         _PRESENTATION_MANAGERS = \
             [focus_tracking_presenter.FocusTrackingPresenter()]
