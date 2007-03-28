@@ -63,7 +63,8 @@ import speechserver
 import string
 import where_am_I
 
-from orca_i18n import _                          # for gettext support
+from orca_i18n import _         # for gettext support
+from orca_i18n import ngettext  # for ngettext support
 
 ########################################################################
 #                                                                      #
@@ -1606,17 +1607,21 @@ class Script(script.Script):
             else:
                 break
 
-        utterance = ''
+        utterance = ""
         if spaceCount:
-            if spaceCount == 1:
-                utterance += _("1 space ")
-            else:
-                utterance += (_("%d spaces ") % spaceCount)
+            # Translators: this is the number of space characters on a line
+            # of text.
+            #
+            utterance += ngettext("%d space",
+                                  "%d spaces",
+                                  spaceCount) % spaceCount + " "
         if tabCount:
-            if tabCount == 1:
-                utterance += _("1 tab ")
-            else:
-                utterance += (_("%d tabs ") % tabCount)
+            # Translators: this is the number of tab characters on a line
+            # of text.
+            #
+            utterance += ngettext("%d tab",
+                                  "%d tabs",
+                                  tabCount) % tabCount + " "
         if len(utterance):
             speech.speak(utterance)
 

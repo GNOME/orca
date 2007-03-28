@@ -1,5 +1,8 @@
 2007-03-28  Willie Walker <william.walker@sun.com>
 
+	* src/orca/default.py: work on bug 412200 to use ngettext for
+	presentation of number of tabs and spaces on a line.
+	
 	* src/orca/scripts/Evolution.py, src/orca/scripts/StarOffice.py,
 	src/orca/default.py, src/orca/Gecko.py, src/orca/where_am_I.py:
 	more comments for translators for bug 412200 and also unmark some
