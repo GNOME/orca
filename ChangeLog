@@ -25,6 +25,13 @@
 	
 2007-03-28  Rich Burridge <rich.burridge@sun.com>
 
+        * docs/man/orca.1:
+          Fixed bug #414981 – Orca manual pages for 2.18.
+          Actually the manual pages for beyond 2.18. Revised to just give
+          name, synopsis, brief description, command line options, author
+          and see also, which gives pointers to the Orca wiki and mailing 
+          list.
+
         * src/orca/scripts/Evolution.py:
           Fixed bug #422487 – Ability to jump to the start of the message
           in Evolution. Focus (and text caret) are now moved to the first
