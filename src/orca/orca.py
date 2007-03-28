@@ -1328,10 +1328,8 @@ def main():
     # setting is typically not set since the gdm user does not
     # have a home.
     #
-    import commands
-    a11yEnabled = commands.getoutput(\
-        "gconftool-2 --get /desktop/gnome/interface/accessibility")
-    if (not bypassSetup) and (a11yEnabled != "true"):
+    a11yEnabled = settings.isAccessibilityEnabled()
+    if (not bypassSetup) and (not a11yEnabled):
         _showPreferencesConsole()
         abort()
 

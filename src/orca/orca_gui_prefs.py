@@ -31,7 +31,6 @@ __copyright__ = "Copyright (c) 2005-2006 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import os
-import commands
 import sys
 import debug
 import gettext
@@ -902,12 +901,8 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         #
         self.showMainWindowCheckButton.set_active(prefs["showMainWindow"])
 
-        self.disableKeyGrabPref = commands.getoutput( \
-                              "gconftool-2 --get /apps/gksu/disable-grab")
-        if self.disableKeyGrabPref == "true":
-            self.disableKeyGrabCheckButton.set_active(True)
-        else:
-            self.disableKeyGrabCheckButton.set_active(False)
+        self.disableKeyGrabPref = settings.isGKSUGrabDisabled()
+        self.disableKeyGrabCheckButton.set_active(self.disableKeyGrabPref)
 
         if prefs["keyboardLayout"] == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
             self.generalDesktopButton.set_active(True)
@@ -1965,12 +1960,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
             settings.HYPERLINK_VOICE : acss.ACSS(self.hyperlinkVoice)
         }
 
-        if self.disableKeyGrabPref:
-            keyGrabState = "true"
-        else:
-            keyGrabState = "false"
-        os.system("gconftool-2 --type bool --set " \
-                  + "/apps/gksu/disable-grab " + keyGrabState)
+        settings.setGKSUGrabDisabled(self.disableKeyGrabPref)
 
         if orca_prefs.writePreferences(self.prefsDict, self.keyBindingsModel):
             self._say(_("Accessibility support for GNOME has just been enabled."))

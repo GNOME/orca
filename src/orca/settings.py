@@ -59,6 +59,12 @@ try:
 except:
     pass
 
+try:
+    import gconf
+    gconfClient = gconf.client_get_default()
+except:
+    gconfClient = None
+
 import debug
 from acss import ACSS
 from orca_i18n import _           # for gettext support
@@ -452,6 +458,38 @@ timeoutCallback         = None # Set by orca.py:init to orca.timeout
 # spells the current word rather than speaks it).
 #
 doubleClickTimeout = 0.5
+
+# Obtain/set information regarding whether accessibility is enabled
+# or not.
+#
+def isAccessibilityEnabled():
+    try:
+        return gconfClient.get_bool("/desktop/gnome/interface/accessibility")
+    except:
+        return False
+
+def setAccessibilityEnabled(enable):
+    try:
+        return gconfClient.set_bool("/desktop/gnome/interface/accessibility",
+                                    enable)
+    except:
+        return False
+
+# Obtain/set information regarding whether the gksu keyboard grab is enabled
+# or not.
+#
+def isGKSUGrabDisabled():
+    try:
+        return gconfClient.get_bool("/apps/gksu/disable-grab")
+    except:
+        return False
+
+def setGKSUGrabDisabled(disable):
+    try:
+        return gconfClient.set_bool("/apps/gksu/disable-grab",
+                                    disable)
+    except:
+        return False
 
 # Allow for the customization of key bindings.
 #

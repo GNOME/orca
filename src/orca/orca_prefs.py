@@ -26,7 +26,6 @@ __copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import os
-import commands
 import pprint
 import settings
 
@@ -119,13 +118,11 @@ def _enableAccessibility():
     set prior to this call).
     """
 
-    alreadyEnabled = commands.getoutput(\
-        "gconftool-2 --get /desktop/gnome/interface/accessibility")
-    if alreadyEnabled != "true":
-        os.system("gconftool-2 --type bool --set " \
-                  + "/desktop/gnome/interface/accessibility true")
+    alreadyEnabled = settings.isAccessibilityEnabled()
+    if not alreadyEnabled:
+        settings.setAccessibilityEnabled(True)
 
-    return alreadyEnabled != "true"
+    return not alreadyEnabled
 
 def _getDisplayString(display):
     """Returns a string that represents the source or taget magnifier display.
