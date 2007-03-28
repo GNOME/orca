@@ -37,15 +37,13 @@ MAX_SLEEP = 5.0
 #
 MIN_SLEEP = 3.0
 
-navKeys = [ "(Tab)", "(ISO_Left_Tab)", \
-            "(F1)", "(F4)", "(F6)", "(F7)", "(F10)", \
-            "(Return)", "(Escape)", \
-            "(Down)", "(Up)", "(KP_Down)", "(KP_Up)", \
-            "(Right)", "(Left)", "(KP_Right)", "(KP_Left)", \
-            "(Page_Up)", "(Page_Down)", "(KP_Page_Up)", "(KP_Page_Down)", \
-            "(Begin)", "(KP_Begin)", "(Home)", "(KP_Home)", \
-            "(+)", "(-)" ]
-
+# Keystroke modifier keys.
+#
+# ToDo (LMS) make sure the list is complete. Meta keys are defined
+# in the AT-SPI, but I don't know what they map to, except for Esc.
+#
+modifierKeys = [ "(Control_L)", "(Shift_L)", "(Alt_L)", \
+                 "(Control_R)", "(Shift_R)", "(Alt_R)" ]
 
 # Factor to speed up the playback.  This will compress time by the
 # given amount.  For example, 2.0 will play the events back twice
@@ -70,6 +68,7 @@ def go():
     d = orca.atspi.Registry().registry.getDeviceEventController()
 
     lastTime = None
+    keyPressCount = 0
     
     while True:
         line = raw_input()
@@ -81,12 +80,14 @@ def go():
                 
             line = raw_input() # modifiers
             line = raw_input() # event_string
-
-            navKeyPressed = False
             keyString = line[line.index("=") + 1 :]
-            if (type == 0) and (navKeys.count(keyString) > 0):
-                # A navigation key was pressed.
-                navKeyPressed = True
+
+            if modifierKeys.count(keyString) == 0:
+                # Keep track of the number of keys pressed down.
+                if type == 0:
+                    keyPressCount = keyPressCount + 1
+                else:
+                    keyPressCount = keyPressCount - 1
 
             line = raw_input() # is_text
             
@@ -98,18 +99,15 @@ def go():
 
             delta = min(MAX_SLEEP, (event_time - lastTime) / SPEED_UP)
 
-            if navKeyPressed:
-                # Make sure there is sufficient delay between
-                # navitation key presses.
+            if type == 0 and keyPressCount == 1:
+                # Make sure there is sufficient delay between key presses,
+                # but avoid pausing when a key is pressed.
                 delta = max(MIN_SLEEP, delta)
 
             if delta > 0:
                 time.sleep(delta)
             lastTime = event_time
 
-            # if type == 0:
-            #    orca.debug.println(orca.debug.LEVEL_ALL, "%s" % event_string)
-                               
             d.generateKeyboardEvent(hw_code, "", type)
 
 def main():

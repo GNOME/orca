@@ -1,3 +1,9 @@
+2007-03-27  Lynn Monsanto <lynn.monsanto@sun.com>
+
+        * src/tools/play_keystrokes.py: bug #405061 - Modified 
+	keystroke playback to pause before each key press. This
+	takes keystroke modifier keys and chords into account.
+
 2007-03-27  Joanmarie Diggs <j-diggs@comcast.net>
 
 	* src/orca/Gecko.py: Change to getCellCoordinates().  Seems like
