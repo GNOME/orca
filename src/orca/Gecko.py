@@ -77,7 +77,6 @@ OBJECT_ROLES = [rolenames.ROLE_CHECK_BOX,
                 rolenames.ROLE_ENTRY,
                 rolenames.ROLE_HEADING,
                 rolenames.ROLE_ICON,
-                rolenames.ROLE_IMAGE,
                 rolenames.ROLE_LABEL,
                 rolenames.ROLE_MENU,
                 rolenames.ROLE_MENU_ITEM,
@@ -753,7 +752,7 @@ class Script(default.Script):
 
         # _structuralNavigationFunctions are functions that represent
         # more complex navigation functions (e.g., moving by heading,
-        # chunk, etc.).
+        # large object, etc.).
         #
         self._structuralNavigationFunctions = \
             [Script.goNextHeading,
@@ -774,6 +773,8 @@ class Script(default.Script):
              Script.goPreviousChunk,
              Script.goNextList,
              Script.goPreviousList,
+             Script.goNextListItem,
+             Script.goPreviousListItem,
              Script.goNextUnvisitedLink,
              Script.goPreviousUnvisitedLink,
              Script.goNextVisitedLink,
@@ -963,12 +964,12 @@ class Script(default.Script):
         self.inputEventHandlers["goPreviousChunkHandler"] = \
             input_event.InputEventHandler(
                 Script.goPreviousChunk,
-                "Goes to previous chunk.")
+                "Goes to previous large object.")
 
         self.inputEventHandlers["goNextChunkHandler"] = \
             input_event.InputEventHandler(
                 Script.goNextChunk,
-                "Goes to next chunk.")
+                "Goes to next large object.")
 
         self.inputEventHandlers["goPreviousListHandler"] = \
             input_event.InputEventHandler(
@@ -979,6 +980,16 @@ class Script(default.Script):
             input_event.InputEventHandler(
                 Script.goNextList,
                 "Goes to next list.")
+
+        self.inputEventHandlers["goPreviousListItemHandler"] = \
+            input_event.InputEventHandler(
+                Script.goPreviousListItem,
+                "Goes to previous list item.")
+
+        self.inputEventHandlers["goNextListItemHandler"] = \
+            input_event.InputEventHandler(
+                Script.goNextListItem,
+                "Goes to next list item.")
 
         self.inputEventHandlers["goPreviousUnvisitedLinkHandler"] = \
             input_event.InputEventHandler(
@@ -1333,6 +1344,24 @@ class Script(default.Script):
                  | 1 << atspi.Accessibility.MODIFIER_CONTROL),
                 0,
                 self.inputEventHandlers["goNextListHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "i",
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT \
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                1 << atspi.Accessibility.MODIFIER_SHIFT,
+                self.inputEventHandlers["goPreviousListItemHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "i",
+                (1 << atspi.Accessibility.MODIFIER_SHIFT \
+                 | 1 << atspi.Accessibility.MODIFIER_ALT \
+                 | 1 << atspi.Accessibility.MODIFIER_CONTROL),
+                0,
+                self.inputEventHandlers["goNextListItemHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
@@ -3913,6 +3942,7 @@ class Script(default.Script):
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
+            self.updateBraille(obj)
             self.speakContents(self.getLineContentsAtOffset(obj,
                                                             characterOffset))
         else:
@@ -3944,6 +3974,7 @@ class Script(default.Script):
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
+            self.updateBraille(obj)
             self.speakContents(self.getLineContentsAtOffset(obj,
                                                             characterOffset))
         else:
@@ -3962,6 +3993,7 @@ class Script(default.Script):
         if obj:
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             self.setCaretPosition(obj, characterOffset)
+            self.updateBraille(obj)
             self.speakContents(self.getLineContentsAtOffset(obj,
                                                             characterOffset))
         else:
@@ -4012,7 +4044,7 @@ class Script(default.Script):
             self.speakContents(self.getObjectContentsAtOffset(obj,
                                                               characterOffset))
         else:
-            speech.speak(_("No more chunks."))
+            speech.speak(_("No more large objects."))
 
     def goNextChunk(self, inputEvent):
         [obj, characterOffset] = self.findNextRole(OBJECT_ROLES)
@@ -4023,7 +4055,7 @@ class Script(default.Script):
             self.speakContents(self.getObjectContentsAtOffset(obj,
                                                               characterOffset))
         else:
-            speech.speak(_("No more chunks."))
+            speech.speak(_("No more large objects."))
 
     def goPreviousList(self, inputEvent):
         [obj, characterOffset] = self.findPreviousRole([rolenames.ROLE_LIST])
@@ -4080,6 +4112,29 @@ class Script(default.Script):
                                                             characterOffset))
         else:
             speech.speak(_("No more lists."))
+
+    def goPreviousListItem(self, inputEvent):
+        [obj, characterOffset] = self.findPreviousRole(
+            [rolenames.ROLE_LIST_ITEM])
+        if obj:
+            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
+            self.setCaretPosition(obj, characterOffset)
+            self.updateBraille(obj)
+            self.speakContents(self.getLineContentsAtOffset(obj,
+                                                            characterOffset))
+        else:
+            speech.speak(_("No more list items."))
+
+    def goNextListItem(self, inputEvent):
+        [obj, characterOffset] = self.findNextRole([rolenames.ROLE_LIST_ITEM])
+        if obj:
+            [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
+            self.setCaretPosition(obj, characterOffset)
+            self.updateBraille(obj)
+            self.speakContents(self.getLineContentsAtOffset(obj,
+                                                            characterOffset))
+        else:
+            speech.speak(_("No more list items."))
 
     def goPreviousUnvisitedLink(self, inputEvent):
         # If the currentObject has a link in its ancestry, we've

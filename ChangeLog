@@ -1,3 +1,15 @@
+2007-03-27  Joanmarie Diggs <j-diggs@comcast.net>
+
+	* src/orca/Gecko.py: Added list item structural navigation now
+        that list items are no longer considered to be "large objects".
+        I and Shift+I move you among list items. (See bug #423537).
+        Speaking of large objects, according to bug #423531, O/Shift+O
+        should not stop on images and Orca should say "large objects"
+        instead of chunks.  Done. :-)  Finally, it seems that a few
+        of the structural navigation commands were not updating the
+        braille display when going to the previous <whatever>.  This
+        is also fixed.
+
 2007-03-27  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/default.py:
