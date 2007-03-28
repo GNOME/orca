@@ -1,5 +1,12 @@
 2007-03-27  Joanmarie Diggs <j-diggs@comcast.net>
 
+	* src/orca/Gecko.py: Change to getCellCoordinates().  Seems like
+        we're getting correct info from Firefox now.  AND the old work
+        around is causing us to have incorrect coordinates when tables have
+        captions.
+
+2007-03-27  Joanmarie Diggs <j-diggs@comcast.net>
+
 	* src/orca/Gecko.py: Added list item structural navigation now
         that list items are no longer considered to be "large objects".
         I and Shift+I move you among list items. (See bug #423537).

@@ -2670,17 +2670,20 @@ class Script(default.Script):
         #
         parent = obj.parent
         if parent and parent.table:
-            row = obj.index / parent.table.nColumns
-            col = obj.index % parent.table.nColumns
-            return [row, col]
-
+            # row = obj.index / parent.table.nColumns
+            # col = obj.index % parent.table.nColumns
+            # return [row, col]
+            #
             # By the way, here's the proper way to do it, since we
             # cannot always depend upon the ordering of the children.
             # Easy if it works...
             #
-            # row = parent.table.getRowAtIndex(obj.index)
-            # col = parent.table.getColumnAtIndex(obj.index)
-            # return [row, col]
+            # NOTE from Joanie:  Seems like the proper way works now.
+            # Leaving the above in for now until we know for certain.
+            #
+            row = parent.table.getRowAtIndex(obj.index)
+            col = parent.table.getColumnAtIndex(obj.index)
+            return [row, col]
 
         return [0, 0]
 
