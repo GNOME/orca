@@ -553,6 +553,9 @@ class WhereAmI:
 
         level = self._script.getNodeLevel(orca_state.locusOfFocus)
         if level >= 0:
+            # Translators: this represents the depth of a node in a tree
+            # view (i.e., how many ancestors a node has).
+            #
             utterances.append(_("tree level %d") % (level + 1))
 
         debug.println(self._debugLevel, "third table cell utterances=%s" % \

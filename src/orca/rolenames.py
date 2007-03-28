@@ -151,30 +151,59 @@ class Rolename:
 #
 rolenames = {}
 
-rolenames[ROLE_INVALID] = Rolename(ROLE_INVALID,
-                                   _("???"),
-                                   _("Invalid"),
-                                   _("invalid"))
+rolenames[ROLE_INVALID] = Rolename(\
+    ROLE_INVALID,
+    # Translators: short braille for the rolename of an invalid object
+    #
+    _("???"),
+    # Translators: long braille for the rolename of an invalid object
+    #
+    _("Invalid"),
+    # Translators: spoken words for the rolename of an invalid object
+    #
+    _("invalid"))
 
-rolenames[ROLE_ACCEL_LABEL] = Rolename(ROLE_ACCEL_LABEL,
-                                       _("acc"),
-                                       _("Accelerator"),
-                                       _("accelerator"))
+rolenames[ROLE_ACCEL_LABEL] = Rolename(
+    ROLE_ACCEL_LABEL,
+    # Translators: short braille for an accelerator (what you see in a menu)
+    #
+    _("acc"),
+    # Translators: long braille for an accelerator (what you see in a menu)
+    #
+    _("Accelerator"),
+    # Translators: spoken words for an accelerator (what you see in a menu)
+    #
+    _("accelerator"))
 
-rolenames[ROLE_ALERT] = Rolename(ROLE_ALERT,
-                                 _("alert"),
-                                 _("Alert"),
-                                 _("alert"))
+rolenames[ROLE_ALERT] = Rolename(
+    ROLE_ALERT,
+    # Translators: short braille for the rolename of an alert dialog
+    #
+    _("alert"),
+    # Translators: long braille for the rolename of an alert dialog
+    #
+    _("Alert"),
+    # Translators: spoken words for the rolename of an alert dialog
+    #
+    _("alert"))
 
-rolenames[ROLE_ANIMATION] = Rolename(ROLE_ANIMATION,
-                                     _("Anim"),
-                                     _("Animation"),
-                                     _("animation"))
+rolenames[ROLE_ANIMATION] = Rolename(
+    ROLE_ANIMATION,
+    # Translators: short braille for the rolename of an animation widget
+    #
+    _("anim"),
+    # Translators: long braille for the rolename of an animation widget
+    #
+    _("Animation"),
+    # Translators: spoken words for the rolename of an animation widget
+    #
+    _("animation"))
 
-rolenames[ROLE_ARROW] = Rolename(ROLE_ARROW,
-                                 _("arrow"),
-                                 _("Arrow"),
-                                 _("arrow"))
+rolenames[ROLE_ARROW] = Rolename(
+    ROLE_ARROW,
+    _("arrow"),
+    _("Arrow"),
+    _("arrow"))
 
 rolenames[ROLE_CALENDAR] = Rolename(ROLE_CALENDAR,
                                     _("cal"),

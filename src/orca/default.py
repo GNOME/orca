@@ -451,7 +451,7 @@ class Script(script.Script):
         self.inputEventHandlers["toggleTableCellReadModeHandler"] = \
             input_event.InputEventHandler(
                 Script.toggleTableCellReadMode,
-                # Translators: when a user is navigating a table, they
+                # Translators: when users are navigating a table, they
                 # sometimes want the entire row of a table read, or
                 # they just want the current cell to be presented to them.
                 #
@@ -2018,6 +2018,9 @@ class Script(script.Script):
             #
             if (oldNodeLevel != newNodeLevel) \
                and (newNodeLevel >= 0):
+                # Translators: this represents the depth of a node in a tree
+                # view (i.e., how many ancestors a node has).
+                #
                 utterances.append(_("tree level %d") % (newNodeLevel + 1))
 
             # We might be automatically speaking the unbound labels
@@ -2423,6 +2426,9 @@ class Script(script.Script):
                 [startSelOffset, endSelOffset] = text.getSelection(i)
                 if text.caretOffset == 0 and \
                    startSelOffset == 0 and endSelOffset == charCount:
+                    # Translators: this means the user has selected
+                    # all the text in a document (e.g., Ctrl+a in gedit).
+                    #
                     speech.speak(_("entire document selected"))
 
     def onCaretMoved(self, event):
@@ -2893,12 +2899,19 @@ class Script(script.Script):
         """Toggles an indicator for whether we should just read the current
         table cell or read the whole row."""
 
-        line = _("Speak ")
         settings.readTableCellRow = not settings.readTableCellRow
         if settings.readTableCellRow:
-            line += _("row")
+            # Translators: when users are navigating a table, they
+            # sometimes want the entire row of a table read, or
+            # they just want the current cell to be presented to them.
+            #
+            line = _("Speak row")
         else:
-            line += _("cell")
+            # Translators: when users are navigating a table, they
+            # sometimes want the entire row of a table read, or
+            # they just want the current cell to be presented to them.
+            #
+            line = _("Speak cell")
 
         speech.speak(line)
 
@@ -2946,9 +2959,17 @@ class Script(script.Script):
                     # speak it as bold, otherwise speak the weight.
                     #
                     if key == "weight" and int(attribute) > 400:
+                        # Translators: bold as in the font sense.
+                        #
                         line = _("bold")
                     elif key == "left-margin" or key == "right-margin":
-                        line = key + " " + attribute + _(" pixels")
+                        # Translators: these represent the number of pixels
+                        # for the left or right margins in a document.  We
+                        # are hesitant to interpret the values -- they are
+                        # given to us in some unknown form by the application,
+                        # so we leave things in plural form here.
+                        #
+                        line = _("%s %s pixels") % (key, attribute)
                     else:
                         line = key + " " + attribute
                     speech.speak(line)
@@ -3061,8 +3082,25 @@ class Script(script.Script):
         self.keyBindings.add(self.exitLearnModeKeyBinding)
 
         speech.speak(
-            _("Entering learn mode.  Press any key to hear its function. " \
-              + "To exit learn mode, press the escape key."))
+            # Translators: Orca has a "Learn Mode" that will allow
+            # the user to type any key on the keyboard and hear what
+            # the effects of that key would be.  The effects might
+            # be what Orca would do if it had a handler for the
+            # particular key combination, or they might just be to
+            # echo the name of the key if Orca doesn't have a handler.
+            # This text here is what is spoken to the user.
+            #
+            _("Entering learn mode.  Press any key to hear its function.  To exit learn mode, press the escape key."))
+        
+        # Translators: Orca has a "Learn Mode" that will allow
+        # the user to type any key on the keyboard and hear what
+        # the effects of that key would be.  The effects might
+        # be what Orca would do if it had a handler for the
+        # particular key combination, or they might just be to
+        # echo the name of the key if Orca doesn't have a handler.
+        # This text here is what is to be presented on the braille
+        # display.
+        #
         braille.displayMessage(_("Learn mode.  Press escape to exit."))
         settings.learnModeEnabled = True
         return True
@@ -3075,8 +3113,18 @@ class Script(script.Script):
 
         self.keyBindings.remove(self.exitLearnModeKeyBinding)
 
-        speech.speak(_("Exiting learn mode."))
-        braille.displayMessage(_("Exiting learn mode."))
+        # Translators: Orca has a "Learn Mode" that will allow
+        # the user to type any key on the keyboard and hear what
+        # the effects of that key would be.  The effects might
+        # be what Orca would do if it had a handler for the
+        # particular key combination, or they might just be to
+        # echo the name of the key if Orca doesn't have a handler.
+        # Exiting learn mode puts the user back in normal operating
+        # mode.
+        #
+        message = _("Exiting learn mode.")
+        speech.speak(message)
+        braille.displayMessage(message)
         self.whereAmI(None)
         return True
 
@@ -3715,8 +3763,15 @@ class Script(script.Script):
             context = self.getFlatReviewContext()
             location = query.findQuery(context, self.justEnteredFlatReviewMode)
             if not location:
-                braille.displayMessage(_("string not found"))
-                speech.speak(_("string not found"))
+                # Translators: the Orca "Find" dialog allows a user to
+                # search for text in a window and then move focus to
+                # that text.  For example, they may want to find the
+                # "OK" button.  This message lets them know a string
+                # they were searching for was not found.
+                #
+                message = _("string not found")
+                braille.displayMessage(message)
+                speech.speak(message)
             else:
                 context.setCurrent(location.lineIndex, location.zoneIndex, \
                                    location.wordIndex, location.charIndex)
@@ -4300,8 +4355,20 @@ class Script(script.Script):
                 if max > (len(allTokens) - 1):
                     max = len(allTokens) - 1
 
-                utterances = [_("Misspelled word: "), badWord, \
-                              _(" Context is ")] + allTokens[min:max+1]
+                # Translators: Orca will provide more compelling output of
+                # the spell checking dialog in some applications.  The first
+                # thing it does is let them know what the misspelled word
+                # is.
+                #
+                utterances = [_("Misspelled word: %s") % badWord]
+
+                # Translators: Orca will provide more compelling output of
+                # the spell checking dialog in some applications.  The second
+                # thing it does is give the phrase containing the misspelled
+                # word in the document.  This is known as the context.
+                #
+                contextPhrase = " ".join(allTokens[min:max+1])
+                utterances.append(_("Context is %s") % contextPhrase)
 
                 # Turn the list of utterances into a string.
                 text = " ".join(utterances)
@@ -4416,7 +4483,14 @@ class Script(script.Script):
             if (not respectPunctuation) \
                or (isPunctChar and (style <= level)):
                 repeatChar = chnames.getCharacterName(segment[0])
-                line += _(" %d %s characters ") % (count, repeatChar)
+                # Translators: Orca will tell you how many characters
+                # are repeated on a line of text.  For example: "22
+                # space characters".  The %d is the number and the %s
+                # is the spoken word for the character.
+                #
+                line += " " + ngettext("%d %s character",
+                                       "%d %s characters",
+                                       count) % (count, repeatChar)
             else:
                 line += segment
         else:
@@ -5206,26 +5280,50 @@ class Script(script.Script):
         specialCaseFound = False
         if (eventStr == "Page_Down") and isShiftKey and not isControlKey:
             specialCaseFound = True
+            # Translators: when the user selects (highlights) text in
+            # a document, Orca will speak information about what they
+            # have selected.
+            #
             line = _("page selected from cursor position")
 
         elif (eventStr == "Page_Up") and isShiftKey and not isControlKey:
             specialCaseFound = True
+            # Translators: when the user selects (highlights) text in
+            # a document, Orca will speak information about what they
+            # have selected.
+            #
             line = _("page selected to cursor position")
 
         elif (eventStr == "Down") and isShiftKey and isControlKey:
             specialCaseFound = True
+            # Translators: when the user selects (highlights) text in
+            # a document, Orca will speak information about what they
+            # have selected.
+            #
             line = _("line selected down from cursor position")
 
         elif (eventStr == "Up") and isShiftKey and isControlKey:
             specialCaseFound = True
+            # Translators: when the user selects (highlights) text in
+            # a document, Orca will speak information about what they
+            # have selected.
+            #
             line = _("line selected up from cursor position")
 
         elif (eventStr == "Home") and isShiftKey and isControlKey:
             specialCaseFound = True
+            # Translators: when the user selects (highlights) text in
+            # a document, Orca will speak information about what they
+            # have selected.
+            #
             line = _("document selected to cursor position")
 
         elif (eventStr == "End") and isShiftKey and isControlKey:
             specialCaseFound = True
+            # Translators: when the user selects (highlights) text in
+            # a document, Orca will speak information about what they
+            # have selected.
+            #
             line = _("document selected from cursor position")
 
         if specialCaseFound:
@@ -5264,6 +5362,9 @@ class Script(script.Script):
             debug.printException(debug.LEVEL_FINEST)
 
         if self.isTextSelected(obj, startOffset, endOffset):
+            # Translators: when the user selects (highlights) text in
+            # a document, Orca lets them know this.
+            #
             speech.speak(_("selected"), None, False)
         else:
             if obj.__dict__.has_key("lastSelections"):
@@ -5272,6 +5373,10 @@ class Script(script.Script):
                     endSelOffset = obj.lastSelections[0][1]
                     if (startOffset >= startSelOffset) \
                         and (endOffset <= endSelOffset):
+                        # Translators: when the user unselects
+                        # (unhighlights) text in a document, Orca lets
+                        # them know this.
+                        #
                         speech.speak(_("unselected"), None, False)
                         break
 
