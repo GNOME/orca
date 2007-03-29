@@ -3,6 +3,12 @@
         * docs/man/orca.sgml:  (removed).
           Part of the fix for bug #414981 – Orca manual pages for 2.18.
 
+        * src/orca/orca-find.glade:
+          src/orca/orca-quit.glade:
+          src/orca/orca-setup.glade:
+          Fixed bug #413109 – HIG violations. Revamped Glade files from
+          Calum Benson (thanks!)
+
 2007-03-28  Willie Walker <william.walker@sun.com>
 
 	* src/orca/default.py, src/orca/rolenames.py, src/orca/where_am_I.py:
