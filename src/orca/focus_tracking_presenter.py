@@ -751,6 +751,10 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                 if noFocus:
                     if settings.gilSleepTime:
                         time.sleep(settings.gilSleepTime)
+                    # Translators: this is intended to be a short phrase to
+                    # speak and braille to tell the user that no component
+                    # has keyboard focus.
+                    #
                     message = _("No focus")
                     if settings.brailleVerbosityLevel == \
                         settings.VERBOSITY_LEVEL_VERBOSE:

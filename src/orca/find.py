@@ -244,12 +244,30 @@ class SearchQuery:
                         doneWithLine = False
                         wrappedYet = True
                         if self.searchBackwards:
+                            # Translators: the Orca "Find" dialog
+                            # allows a user to search for text in a
+                            # window and then move focus to that text.
+                            # For example, they may want to find the
+                            # "OK" button.  This message indicates
+                            # that a find operation in the reverse
+                            # direction is wrapping from the top of
+                            # the window down to the bottom.
+                            #
                             speech.speak(_("Wrapping to Bottom"))
                             moved = context.goPrevious( \
                                     flat_review.Context.LINE, \
                                     flat_review.Context.WRAP_ALL)
                             self.debugContext(context, "[3] go previous")
                         else:
+                            # Translators: the Orca "Find" dialog
+                            # allows a user to search for text in a
+                            # window and then move focus to that text.
+                            # For example, they may want to find the
+                            # "OK" button.  This message indicates
+                            # that a find operation in the forward
+                            # direction is wrapping from the bottom of
+                            # the window up to the top.
+                            #
                             speech.speak(_("Wrapping to Top"))
                             moved = context.goNext( \
                                     flat_review.Context.LINE, \

@@ -91,6 +91,10 @@ class SpeechServer(speechserver.SpeechServer):
 
     def getFactoryName():
         """Returns a localized name describing this factory."""
+        # Translators: this refers to the speech synthesis services
+        # provided by the separate emacspeak utility available at
+        # http://emacspeak.sourceforge.net/.
+        #
         return _("Emacspeak Speech Services")
 
     getFactoryName = staticmethod(getFactoryName)

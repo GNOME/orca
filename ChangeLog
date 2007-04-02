@@ -1,5 +1,10 @@
 2007-04-02  Willie Walker <william.walker@sun.com>
 
+	* src/orca/espeechfactory.py, src/orca/find.py,
+	src/orca/focus_tracking_presenter.py: work on bug 412200 to
+	provide more comments for translators.  The next big beast
+	in line is Gecko.py.
+	
 	* src/orca/acss.py: fix problem where the name of an ACSS
 	wasn't being properly updated.
 	
