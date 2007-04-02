@@ -1,3 +1,14 @@
+2007-04-02  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/settings.py:
+          src/orca/orca-setup.glade:
+          src/orca/orca.py:
+          src/orca/default.py:
+          src/orca/orca_gui_main.py:
+          src/orca/orca_gui_prefs.py:
+          Fixed bug #425498 – option to allow Orca to quit without 
+          confirmation when user presses Insert-q.
+
 2007-04-02  Joanmarie Diggs <j-diggs@comcast.net>
 
 	* src/orca/Gecko.py: Partial fix for bug #416971 Orca does not 

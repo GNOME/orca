@@ -82,7 +82,7 @@ class orcaMainGUI(orca_glade.GladeWrapper):
         - widget: the component that generated the signal.
         """
 
-        orca._showQuitGUI()
+        orca.quitOrca()
 
     def preferencesButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the preferencesButton
@@ -107,7 +107,7 @@ class orcaMainGUI(orca_glade.GladeWrapper):
         global OS
 
         OS = None
-        orca._showQuitGUI()
+        orca.quitOrca()
 
 def showMainUI():
     global OS

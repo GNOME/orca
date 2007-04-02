@@ -946,21 +946,25 @@ def _showPreferencesConsole(script=None, inputEvent=None):
 
     return True
 
-def _showQuitGUI(script=None, inputEvent=None):
-    """Displays the user interace to quit Orca.
+def quitOrca(script=None, inputEvent=None):
+    """Quit Orca. Check if the user wants to confirm this action.
+    If so, show the confirmation GUI otherwise just shutdown.
 
     Returns True to indicate the input event has been consumed.
     """
 
-    try:
-        module = __import__(settings.quitModule,
-                            globals(),
-                            locals(),
-                            [''])
-        module.showQuitUI()
-    except:
-        debug.printException(debug.LEVEL_SEVERE)
-        pass
+    if settings.quitOrcaNoConfirmation:
+        shutdown()
+    else:
+        try:
+            module = __import__(settings.quitModule,
+                                globals(),
+                                locals(),
+                                [''])
+            module.showQuitUI()
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
+            pass
 
     return True
 

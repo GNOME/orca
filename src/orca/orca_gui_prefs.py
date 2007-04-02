@@ -900,6 +900,7 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         # General pane.
         #
         self.showMainWindowCheckButton.set_active(prefs["showMainWindow"])
+        self.confirmQuitCheckButton.set_active(prefs["quitOrcaNoConfirmation"])
 
         self.disableKeyGrabPref = settings.isGKSUGrabDisabled()
         self.disableKeyGrabCheckButton.set_active(self.disableKeyGrabPref)
@@ -1886,6 +1887,19 @@ class orcaSetupGUI(orca_glade.GladeWrapper):
         """
 
         self.prefsDict["showMainWindow"] = widget.get_active()
+
+    def confirmQuitChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           confirmQuitCheckButton GtkCheckButton widget.
+           The user has [un]checked the 'Quit Orca without 
+           confirmation' checkbox. Set the 'quitOrcaNoConfirmation' 
+           preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        self.prefsDict["quitOrcaNoConfirmation"] = widget.get_active()
 
     def disableKeyGrabChecked(self, widget):
         """Signal handler for the "toggled" signal for the

@@ -594,7 +594,7 @@ class Script(script.Script):
 
         self.inputEventHandlers["shutdownHandler"] = \
             input_event.InputEventHandler(
-                orca._showQuitGUI,
+                orca.quitOrca,
                 _("Quits Orca"))
 
         self.inputEventHandlers["keystrokeRecordingHandler"] = \

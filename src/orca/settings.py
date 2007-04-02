@@ -112,6 +112,7 @@ userCustomizableSettings = [
     "magTargetDisplay",
     "verbalizePunctuationStyle",
     "showMainWindow",
+    "quitOrcaNoConfirmation",
     "keyboardLayout",
     "speakBlankLines",
 ]
@@ -345,6 +346,11 @@ enableActionKeys        = True
 # If True, show the main Orca window.
 #
 showMainWindow          = True
+
+# If True, quit Orca without confirmation when the user presses
+# <Orca-modifier>-q.
+#
+quitOrcaNoConfirmation  = False
 
 # Keyboard layout options (see keyboardLayout).
 #
