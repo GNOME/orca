@@ -3431,6 +3431,13 @@ class Script(default.Script):
                     lineExtents = self.getBoundary(lineExtents, extents)
                     [lastObj, lastCharacterOffset] = [obj, characterOffset]
 
+            # [[[TODO: JD - HACK. The numbers/bullets of a list item will
+            # have extents of (0, 0, 0, 0).  We need to work around this
+            # for now.  See bug #416971.]]]
+            #
+            elif obj.role == rolenames.ROLE_LIST_ITEM:
+                [lastObj, lastCharacterOffset] = [obj, characterOffset]
+
         # [[[TODO: WDW - efficiency alert - we could always start from
         # what was passed in rather than starting at the beginning of
         # the line.  I just want to make this work for now, though.]]]
@@ -3456,6 +3463,19 @@ class Script(default.Script):
                                      characterOffset,
                                      characterOffset + 1])
                 lineExtents = self.getBoundary(lineExtents, extents)
+                [lastObj, lastCharacterOffset] = [obj, characterOffset]
+
+            # [[[TODO: JD - HACK. The numbers/bullets of a list item will
+            # have extents of (0, 0, 0, 0).  We need to work around this
+            # for now.  See bug #416971.]]]
+            #
+            elif (obj.role == rolenames.ROLE_LIST_ITEM) and (lastObj == obj):
+                if len(contents):
+                    contents[-1][2] = characterOffset + 1
+                else:
+                    contents.append([obj,
+                                     characterOffset,
+                                     characterOffset + 1])
                 [lastObj, lastCharacterOffset] = [obj, characterOffset]
 
             [obj, characterOffset] = \
@@ -3843,6 +3863,21 @@ class Script(default.Script):
 
         if arrowToLineBeginning:
             [lastObj, lastCharacterOffset, endOffset] = contents[0]
+            # [[[TODO: JD - HACK. Our work-around for the problem of
+            # list numbers/bullets having extents of (0, 0, 0, 0) means
+            # that lastCharacterOffset is the unfocusable number/bullet.
+            # Move back to the first character in the list before setting
+            # the caret position.
+            #
+            if lastObj.role == rolenames.ROLE_LIST_ITEM:
+                extents = self.getExtents(lastObj,
+                                          lastCharacterOffset,
+                                          lastCharacterOffset + 1)
+                while extents == (0, 0, 0, 0):
+                    lastCharacterOffset += 1
+                    extents = self.getExtents(lastObj,
+                                              lastCharacterOffset,
+                                              lastCharacterOffset + 1)
 
         self.setCaretPosition(lastObj, lastCharacterOffset)
         self.updateBraille(lastObj)

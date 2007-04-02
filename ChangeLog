@@ -1,3 +1,8 @@
+2007-04-02  Joanmarie Diggs <j-diggs@comcast.net>
+
+	* src/orca/Gecko.py: Partial fix for bug #416971 Orca does not 
+        speak or braille numbers/bullets of list items in Firefox.
+
 2007-03-29  Rich Burridge <rich.burridge@sun.com>
 
         * docs/man/orca.sgml:  (removed).
