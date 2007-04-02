@@ -1,5 +1,9 @@
 2007-04-02  Willie Walker <william.walker@sun.com>
 
+        * docs/planning.ods: update to include bugs as of this morning
+
+2007-04-02  Willie Walker <william.walker@sun.com>
+
 	* src/orca/espeechfactory.py, src/orca/find.py,
 	src/orca/focus_tracking_presenter.py: work on bug 412200 to
 	provide more comments for translators.  The next big beast
