@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2006 Google Inc.
+# Copyright 2005-2007 Google Inc.
 # Portions Copyright 2007, Sun Microsystems, Inc.
 #
 # This library is free software; you can redistribute it and/or
@@ -30,7 +30,7 @@ __id__ = "$Id$"
 __author__ = "T. V. Raman"
 __version__ = "$Revision$"
 __date__ = "$Date$"
-__copyright__ = "Copyright (c) 2005 Google Inc."
+__copyright__ = "Copyright (c) 2005-2007 Google Inc."
 __license__ = "LGPL"
 
 class ACSS(dict):
@@ -74,20 +74,19 @@ class ACSS(dict):
                         self[k][j] = props[k][j]
                 else:
                     self[k] = props[k]
-        self.updateName()
 
     def __setitem__ (self, key, value):
         """Update name when we change values."""
         dict.__setitem__(self, key, value)
-        self.updateName()
 
     def __delitem__(self, key):
         """Update name if we delete a key."""
         dict.__delitem__(self,key)
-        self.updateName()
 
     def updateName(self):
         """Update name based on settings."""
+
+    def name(self):
         _name='acss-'
         names = self.keys()
         if names:
@@ -95,5 +94,4 @@ class ACSS(dict):
             for  k in names:
                 _name += "%s-%s:" % (k, self[k])
         self._name = _name[:-1]
-
-    def name(self): return self._name
+        return self._name
