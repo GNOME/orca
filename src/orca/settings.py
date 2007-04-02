@@ -465,6 +465,10 @@ timeoutCallback         = None # Set by orca.py:init to orca.timeout
 #
 doubleClickTimeout = 0.5
 
+# Whether tool tips can be presented.
+#
+presentToolTips = False
+
 # Obtain/set information regarding whether accessibility is enabled
 # or not.
 #

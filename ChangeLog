@@ -1,3 +1,11 @@
+2007-04-02  Lynn Monsanto <lynn.monsanto@sun.com>
+
+        * src/orca/focus-tracking-presenter.py, src/orca/orca.py,
+	src/orca/settings.py, src/orca/scripts/gnome-panel.py,
+	src/orca/scripts/Makefile.am: Fix for Bug 368626 - [blocked] 
+	Orca accessing tool tips from gnome-panel causes gnome-panel 
+	to crash.
+
 2007-04-02  Willie Walker <william.walker@sun.com>
 
         * docs/planning.ods: update to include bugs as of this morning

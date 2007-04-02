@@ -387,7 +387,11 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         #
         try:
             if event.source.role == rolenames.ROLE_TOOL_TIP:
-                return
+                # Check that it's okay to present tool tips. There
+                # is a bug in GTK versions prior to 2.10.11 that
+                # caused gnome-panel to crash.
+                if not settings.presentToolTips:
+                    return
         except:
             pass
 

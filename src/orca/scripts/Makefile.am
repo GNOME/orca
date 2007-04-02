@@ -11,6 +11,7 @@ orca_python_PYTHON = \
 	gnome_segv2.py \
 	gnome-mud.py \
 	gnome-keyring-ask.py \
+	gnome-panel.py \
 	gnome-power-manager.py \
 	gnome-search-tool.py \
 	gnome-terminal.py \

@@ -1032,6 +1032,18 @@ def init(registry):
     if settings.timeoutCallback and (settings.timeoutTime > 0):
         signal.alarm(0)
 
+    # The bug that caused gnome-panel to crash is fixed in GTK 2.10.11.
+    minimum_gtk_version = (100000 * 2) + \
+                         (1000 * 10) + \
+                          11
+
+    current_gtk_version  = (100000 * gtk.gtk_version[0]) + \
+                           (1000 * gtk.gtk_version[1]) + \
+                            gtk.gtk_version[2]
+                           
+
+    settings.presentToolTips = (current_gtk_version >= minimum_gtk_version)
+                                 
     _initialized = True
     return True
 
