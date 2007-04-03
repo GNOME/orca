@@ -164,15 +164,6 @@ class Script(script.Script):
                 #
                 _("Performs the where am I operation."))
 
-        self.inputEventHandlers["presentTooltip"] = \
-            input_event.InputEventHandler(
-                Script.presentTooltip,
-                # Translators: the "present tooltip" feature of Orca
-                # allows a user to press a key and then have the
-                # tooltip for an object spoken and brailled to them.
-                #
-                _("Presents the tooltip."))
-
         self.inputEventHandlers["findHandler"] = \
             input_event.InputEventHandler(
                 orca._showFindGUI,
@@ -1268,13 +1259,6 @@ class Script(script.Script):
 
         keyBindings.add(
             keybindings.KeyBinding(
-                "F1",
-                (1 << atspi.Accessibility.MODIFIER_CONTROL),
-                (1 << atspi.Accessibility.MODIFIER_CONTROL),
-                self.inputEventHandlers["presentTooltip"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
                 "Left",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
@@ -1787,7 +1771,7 @@ class Script(script.Script):
         self.speakTextSelectionState(obj, startOffset, endOffset)
 
 
-    def presentTooltip(self, inputEvent):
+    def presentTooltip(self, obj):
         """
         Speaks the tooltip for the current object of interest. 
         """
@@ -1796,14 +1780,13 @@ class Script(script.Script):
         # the description is not set, present the text that is
         # spoken when the object receives keyboard focus.
         #
-        obj = orca_state.locusOfFocus
         text = ""
         
         if obj.description:
             text = obj.description
         else:
             # Reuse the "where am I" algorithm.
-            text = whereAmI._getObjLabelAndName(obj)
+            text = self.whereAmI._getObjLabelAndName(obj)
 
         debug.println(debug.LEVEL_FINEST, "presentTooltip: text='%s'" % text)
         if text != "":
@@ -2758,6 +2741,22 @@ class Script(script.Script):
                 #else:
                 #    orca.setLocusOfFocus(event, None)
                 return
+
+        # Handle tooltip popups.
+        #
+        if event.source.role == rolenames.ROLE_TOOL_TIP:
+            obj = event.source
+            
+            if event.type == "object:state-changed:showing" and \
+               event.detail1 == 1:
+                self.presentTooltip(obj)
+
+            # Delete the cached accessible to force the AT-SPI to update
+            # the accessible cache. Otherwise, the event references the
+            # previous popup object.
+            atspi.Accessible.deleteAccessible(obj._acc)
+
+            return
 
         if state_change_notifiers.has_key(event.source.role):
             notifiers = state_change_notifiers[event.source.role]

@@ -1,8 +1,34 @@
+2007-04-03  Lynn Monsanto <lynn.monsanto@sun.com>
+	* src/orca/default.py: Removed Orca control-F1 keybinding which
+	overroad the Gnome control-F1 binding. With this change, 
+	control-F1 causes a modal change. When control-F1 is first pressed,
+	tooltips are always displayed when the user navigates to the next
+	object that supports tooltips. Orca first reads the object name, 
+	then the tooltip. Pressing control-F1 a second time causes the
+	application to exit "tooltip displayed mode." Navigating to the
+	next object that supports tooltips causes Orca to just speak
+	the object name.
+
+	Bug #3980009 - Orca should be able to tooltip text for an object
+
 2007-04-03  Willie Walker <william.walker@sun.com>
 
         * docs/planning.ods: update to include rough prioritization
 	based upon input from team and conversation with Mike.
 	
+2007-04-03  Lynn Monsanto <lynn.monsanto@sun.com>
+	* src/orca/default.py: Removed Orca control-F1 keybinding which
+	overroad the Gnome control-F1 binding. With this change, 
+	control-F1 causes a modal change. When control-F1 is first pressed,
+	tooltips are always displayed when the user navigates to the next
+	object that supports tooltips. Orca first reads the object name, 
+	then the tooltip. Pressing control-F1 a second time causes the
+	application to exit "tooltip displayed mode." Navigating to the
+	next object that supports tooltips causes Orca to just speak
+	the object name.
+
+	Bug #3980009 - Orca should be able to tooltip text for an object
+
 2007-04-03  Lynn Monsanto <lynn.monsanto@sun.com>
 
         * src/orca/orca.py, src/orca/settings.py: Additional fix for 
