@@ -1,3 +1,8 @@
+2007-04-02  Willie Walker <william.walker@sun.com>
+
+	* src/orca/Gecko.py: work on bug 412200 to provide more comments
+	for translators.  The next file is gnomespeechfactory.py.
+	
 2007-04-02  Lynn Monsanto <lynn.monsanto@sun.com>
 
         * src/orca/focus-tracking-presenter.py, src/orca/orca.py,

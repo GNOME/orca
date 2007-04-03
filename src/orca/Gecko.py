@@ -834,197 +834,308 @@ class Script(default.Script):
         self.inputEventHandlers["goNextCharacterHandler"] = \
             input_event.InputEventHandler(
                 Script.goNextCharacter,
-                "Goes to next character.")
+                # Translators: this is for navigating HTML content one
+                # character at a time.
+                #
+                _("Goes to next character."))
 
         self.inputEventHandlers["goPreviousCharacterHandler"] = \
             input_event.InputEventHandler(
                 Script.goPreviousCharacter,
-                "Goes to previous character.")
+                # Translators: this is for navigating HTML content one
+                # character at a time.
+                #
+               _( "Goes to previous character."))
 
         self.inputEventHandlers["goNextWordHandler"] = \
             input_event.InputEventHandler(
                 Script.goNextWord,
-                "Goes to next word.")
+                # Translators: this is for navigating HTML content one
+                # word at a time.
+                #
+                _("Goes to next word."))
 
         self.inputEventHandlers["goPreviousWordHandler"] = \
             input_event.InputEventHandler(
                 Script.goPreviousWord,
-                "Goes to previous word.")
+                # Translators: this is for navigating HTML content one
+                # word at a time.
+                #
+                _("Goes to previous word."))
 
         self.inputEventHandlers["goNextLineHandler"] = \
             input_event.InputEventHandler(
                 Script.goNextLine,
-                "Goes to next line.")
+                # Translators: this is for navigating HTML content one
+                # line at a time.
+                #
+                _("Goes to next line."))
 
         self.inputEventHandlers["goPreviousLineHandler"] = \
             input_event.InputEventHandler(
                 Script.goPreviousLine,
-                "Goes to previous line.")
+                # Translators: this is for navigating HTML content one
+                # line at a time.
+                #
+                _("Goes to previous line."))
 
         self.inputEventHandlers["goCellLeftHandler"] = \
             input_event.InputEventHandler(
                 Script.goCellLeft,
-                "Goes left one cell.")
+                # Translators: this is for navigating inside HTML tables.
+                #
+                _("Goes left one cell."))
 
         self.inputEventHandlers["goCellRightHandler"] = \
             input_event.InputEventHandler(
                 Script.goCellRight,
-                "Goes right one cell.")
+                # Translators: this is for navigating inside HTML tables.
+                #
+                _("Goes right one cell."))
 
         self.inputEventHandlers["goCellDownHandler"] = \
             input_event.InputEventHandler(
                 Script.goCellDown,
-                "Goes down one cell.")
+                # Translators: this is for navigating inside HTML tables.
+                #
+                _("Goes down one cell."))
 
         self.inputEventHandlers["goCellUpHandler"] = \
             input_event.InputEventHandler(
                 Script.goCellUp,
-                "Goes up one cell.")
+                # Translators: this is for navigating inside HTML tables.
+                #
+                _("Goes up one cell."))
 
         self.inputEventHandlers["goCellFirstHandler"] = \
             input_event.InputEventHandler(
                 Script.goCellFirst,
-                "Goes to the first cell in a table.")
+                # Translators: this is for navigating inside HTML tables.
+                #
+                _("Goes to the first cell in a table."))
 
         self.inputEventHandlers["goCellLastHandler"] = \
             input_event.InputEventHandler(
                 Script.goCellLast,
-                "Goes to the last cell in a table.")
+                # Translators: this is for navigating inside HTML tables.
+                #
+                _("Goes to the last cell in a table."))
 
         self.inputEventHandlers["goPreviousHeadingHandler"] = \
             input_event.InputEventHandler(
                 Script.goPreviousHeading,
-                "Goes to previous heading.")
+                # Translators: this is for navigating HTML by headers
+                # (e.g., <h1>).
+                #
+                _("Goes to previous heading."))
 
         self.inputEventHandlers["goNextHeadingHandler"] = \
             input_event.InputEventHandler(
                 Script.goNextHeading,
-                "Goes to next heading.")
+                # Translators: this is for navigating HTML by headers
+                # (e.g., <h1>).
+                #
+                _("Goes to next heading."))
 
         self.inputEventHandlers["goPreviousHeading1Handler"] = \
             input_event.InputEventHandler(
                 Script.goPreviousHeading1,
-                "Goes to previous heading at level 1.")
+                # Translators: this is for navigating HTML by headers
+                # (e.g., <h1>).
+                #
+                _("Goes to previous heading at level 1."))
 
         self.inputEventHandlers["goNextHeading1Handler"] = \
             input_event.InputEventHandler(
                 Script.goNextHeading1,
-                "Goes to next heading at level 1.")
+                # Translators: this is for navigating HTML by headers
+                # (e.g., <h1>).
+                #
+                _("Goes to next heading at level 1."))
 
         self.inputEventHandlers["goPreviousHeading2Handler"] = \
             input_event.InputEventHandler(
                 Script.goPreviousHeading2,
-                "Goes to previous heading at level 2.")
+                # Translators: this is for navigating HTML by headers
+                # (e.g., <h2>).
+                #
+                _("Goes to previous heading at level 2."))
 
         self.inputEventHandlers["goNextHeading2Handler"] = \
             input_event.InputEventHandler(
                 Script.goNextHeading2,
-                "Goes to next heading at level 2.")
+                # Translators: this is for navigating HTML by headers
+                # (e.g., <h2>).
+                #
+                _("Goes to next heading at level 2."))
 
         self.inputEventHandlers["goPreviousHeading3Handler"] = \
             input_event.InputEventHandler(
                 Script.goPreviousHeading3,
-                "Goes to previous heading at level 3.")
+                # Translators: this is for navigating HTML by headers
+                # (e.g., <h3>).
+                #
+                _("Goes to previous heading at level 3."))
 
         self.inputEventHandlers["goNextHeading3Handler"] = \
             input_event.InputEventHandler(
                 Script.goNextHeading3,
-                "Goes to next heading at level 3.")
+                # Translators: this is for navigating HTML by headers
+                # (e.g., <h3>).
+                #
+                _("Goes to next heading at level 3."))
 
         self.inputEventHandlers["goPreviousHeading4Handler"] = \
             input_event.InputEventHandler(
                 Script.goPreviousHeading4,
-                "Goes to previous heading at level 4.")
+                # Translators: this is for navigating HTML by headers
+                # (e.g., <h4>).
+                #
+                _("Goes to previous heading at level 4."))
 
         self.inputEventHandlers["goNextHeading4Handler"] = \
             input_event.InputEventHandler(
                 Script.goNextHeading4,
-                "Goes to next heading at level 4.")
+                # Translators: this is for navigating HTML by headers
+                # (e.g., <h4>).
+                #
+                _("Goes to next heading at level 4."))
 
         self.inputEventHandlers["goPreviousHeading5Handler"] = \
             input_event.InputEventHandler(
                 Script.goPreviousHeading5,
-                "Goes to previous heading at level 5.")
+                # Translators: this is for navigating HTML by headers
+                # (e.g., <h5>).
+                #
+                _("Goes to previous heading at level 5."))
 
         self.inputEventHandlers["goNextHeading5Handler"] = \
             input_event.InputEventHandler(
                 Script.goNextHeading5,
-                "Goes to next heading at level 5.")
+                # Translators: this is for navigating HTML by headers
+                # (e.g., <h5>).
+                #
+                _("Goes to next heading at level 5."))
 
         self.inputEventHandlers["goPreviousHeading6Handler"] = \
             input_event.InputEventHandler(
                 Script.goPreviousHeading6,
-                "Goes to previous heading at level 6.")
+                # Translators: this is for navigating HTML by headers
+                # (e.g., <h6>).
+                #
+                _("Goes to previous heading at level 6."))
 
         self.inputEventHandlers["goNextHeading6Handler"] = \
             input_event.InputEventHandler(
                 Script.goNextHeading6,
-                "Goes to next heading at level 6.")
+                # Translators: this is for navigating HTML by headers
+                # (e.g., <h6>).
+                #
+                _("Goes to next heading at level 6."))
 
         self.inputEventHandlers["goPreviousChunkHandler"] = \
             input_event.InputEventHandler(
                 Script.goPreviousChunk,
-                "Goes to previous large object.")
+                # Translators: this is for navigating HTML in a structural
+                # manner, where a 'large object' is a logical chunk of
+                # text, such as a paragraph, a list, a table, etc.
+                #
+                _("Goes to previous large object."))
 
         self.inputEventHandlers["goNextChunkHandler"] = \
             input_event.InputEventHandler(
                 Script.goNextChunk,
-                "Goes to next large object.")
+                # Translators: this is for navigating HTML in a structural
+                # manner, where a 'large object' is a logical chunk of
+                # text, such as a paragraph, a list, a table, etc.
+                #
+                _("Goes to next large object."))
 
         self.inputEventHandlers["goPreviousListHandler"] = \
             input_event.InputEventHandler(
                 Script.goPreviousList,
-                "Goes to previous list.")
+                # Translators: this is for navigating between bulleted/numbered
+                # lists in HTML
+                #
+                _("Goes to previous list."))
 
         self.inputEventHandlers["goNextListHandler"] = \
             input_event.InputEventHandler(
                 Script.goNextList,
-                "Goes to next list.")
+                # Translators: this is for navigating between bulleted/numbered
+                # lists in HTML
+                #
+                _("Goes to next list."))
 
         self.inputEventHandlers["goPreviousListItemHandler"] = \
             input_event.InputEventHandler(
                 Script.goPreviousListItem,
-                "Goes to previous list item.")
+                # Translators: this is for navigating between bulleted/numbered
+                # list items in HTML
+                #
+                _("Goes to previous list item."))
 
         self.inputEventHandlers["goNextListItemHandler"] = \
             input_event.InputEventHandler(
                 Script.goNextListItem,
-                "Goes to next list item.")
+                # Translators: this is for navigating between bulleted/numbered
+                # list items in HTML
+                #
+                _("Goes to next list item."))
 
         self.inputEventHandlers["goPreviousUnvisitedLinkHandler"] = \
             input_event.InputEventHandler(
                 Script.goPreviousUnvisitedLink,
-                "Goes to previous unvisited link.")
+                # Translators: this is for navigating between links in HTML
+                #
+                _("Goes to previous unvisited link."))
 
         self.inputEventHandlers["goNextUnvisitedLinkHandler"] = \
             input_event.InputEventHandler(
                 Script.goNextUnvisitedLink,
-                "Goes to next unvisited link.")
+                # Translators: this is for navigating between links in HTML
+                #
+               _("Goes to next unvisited link."))
 
         self.inputEventHandlers["goPreviousVisitedLinkHandler"] = \
             input_event.InputEventHandler(
                 Script.goPreviousVisitedLink,
-                "Goes to previous visited link.")
+                # Translators: this is for navigating between links in HTML
+                #
+                _("Goes to previous visited link."))
 
         self.inputEventHandlers["goNextVisitedLinkHandler"] = \
             input_event.InputEventHandler(
                 Script.goNextVisitedLink,
-                "Goes to next visited link.")
+                # Translators: this is for navigating between links in HTML
+                #
+                _("Goes to next visited link."))
 
         self.inputEventHandlers["goPreviousTableHandler"] = \
             input_event.InputEventHandler(
                 Script.goPreviousTable,
-                "Goes to previous table.")
+                # Translators: this is for navigating between tables in HTML
+                #
+                _("Goes to previous table."))
 
         self.inputEventHandlers["goNextTableHandler"] = \
             input_event.InputEventHandler(
                 Script.goNextTable,
-                "Goes to next table.")
+                # Translators: this is for navigating between tables in HTML
+                #
+                _("Goes to next table."))
 
         self.inputEventHandlers["toggleCaretNavigationHandler"] = \
             input_event.InputEventHandler(
                 Script.toggleCaretNavigation,
-                "Switches between Firefox native and Orca caret navigation.")
+                # Translators: Gecko native caret navigation is where
+                # Firefox itself controls how the arrow keys move the caret
+                # around HTML content.  It's often broken, so Orca needs
+                # to provide its own support.  As such, Orca offers the user
+                # the ability to switch between the Firefox mode and the
+                # Orca mode.
+                #
+                _("Switches between Gecko native and Orca caret navigation."))
 
     def getListeners(self):
         """Sets up the AT-SPI event listeners for this script.
@@ -1758,7 +1869,8 @@ class Script(default.Script):
             linkText = self.getText(event.source, 0, -1)
             speech.speak(linkText, self.voices[settings.HYPERLINK_VOICE])
         else:
-            speech.speak(_("link"), self.voices[settings.HYPERLINK_VOICE])
+            speech.speak(rolenames.getSpeechForRoleName(event.source),
+                         self.voices[settings.HYPERLINK_VOICE])
 
         self.updateBraille(event.source)
 
@@ -1777,18 +1889,24 @@ class Script(default.Script):
                 and (event.source.role == rolenames.ROLE_DOCUMENT_FRAME):
                 if event.detail1:
                     self._loadingDocumentContent = True
+                    # Translators: this is in reference to loading a web page.
+                    #
                     message = _("Loading.  Please wait.")
                     braille.displayMessage(message)
                     speech.stop()
                     speech.speak(message)
                 elif event.source.name:
                     self._loadingDocumentContent = False
+                    # Translators: this is in reference to loading a web page.
+                    #
                     message = _("Finished loading %s.") % event.source.name
                     braille.displayMessage(message)
                     speech.stop()
                     speech.speak(message)
                 else:
                     self._loadingDocumentContent = False
+                    # Translators: this is in reference to loading a web page.
+                    #
                     message = _("Finished loading.")
                     braille.displayMessage(message)
                     speech.stop()
@@ -3574,6 +3692,9 @@ class Script(default.Script):
                 level = self.getHeadingLevel(obj)
                 if level:
                     utterances.append([" ", self.getACSS(obj, " ")])
+                    # Translators: this is in reference to a heading level
+                    # in HTML (e.g., For <h3>, the level is 3).
+                    #
                     utterances.append([_("level %d") % level, None])
 
         return utterances
@@ -3987,6 +4108,9 @@ class Script(default.Script):
             self.speakContents(self.getLineContentsAtOffset(obj,
                                                             characterOffset))
         else:
+            # Translators: this is in reference to navigating HTML content
+            # by heading (e.g., <h1>).
+            #
             speech.speak(_("No more headings."))
 
     def goNextHeading(self, inputEvent):
@@ -3998,6 +4122,9 @@ class Script(default.Script):
             self.speakContents(self.getLineContentsAtOffset(obj,
                                                             characterOffset))
         else:
+            # Translators: this is in reference to navigating HTML content
+            # by heading (e.g., <h1>).
+            #
             speech.speak(_("No more headings."))
 
     def goPreviousHeadingAtLevel(self, inputEvent, desiredLevel):
@@ -4019,6 +4146,9 @@ class Script(default.Script):
             self.speakContents(self.getLineContentsAtOffset(obj,
                                                             characterOffset))
         else:
+            # Translators: this is in reference to navigating HTML content
+            # by heading (e.g., <h1>).
+            #
             speech.speak(_("No more headings at level %d.") % desiredLevel)
 
     def goNextHeadingAtLevel(self, inputEvent, desiredLevel):
@@ -4038,6 +4168,9 @@ class Script(default.Script):
             self.speakContents(self.getLineContentsAtOffset(obj,
                                                             characterOffset))
         else:
+            # Translators: this is in reference to navigating HTML content
+            # by heading (e.g., <h1>).
+            #
             speech.speak(_("No more headings at level %d.") % desiredLevel)
 
     def goNextHeading1(self, inputEvent):
@@ -4085,6 +4218,10 @@ class Script(default.Script):
             self.speakContents(self.getObjectContentsAtOffset(obj,
                                                               characterOffset))
         else:
+            # Translators: this is for navigating HTML in a structural
+            # manner, where a 'large object' is a logical chunk of
+            # text, such as a paragraph, a list, a table, etc.
+            #
             speech.speak(_("No more large objects."))
 
     def goNextChunk(self, inputEvent):
@@ -4096,6 +4233,10 @@ class Script(default.Script):
             self.speakContents(self.getObjectContentsAtOffset(obj,
                                                               characterOffset))
         else:
+            # Translators: this is for navigating HTML in a structural
+            # manner, where a 'large object' is a logical chunk of
+            # text, such as a paragraph, a list, a table, etc.
+            #
             speech.speak(_("No more large objects."))
 
     def goPreviousList(self, inputEvent):
@@ -4109,6 +4250,8 @@ class Script(default.Script):
             for i in range(0, parent.childCount):
                 if parent.child(i).role == rolenames.ROLE_LIST_ITEM:
                     nItems += 1
+            # Translators: this represents a list in HTML.
+            #
             itemString = ngettext("List with %d item",
                                   "List with %d items",
                                   nItems) % nItems
@@ -4118,12 +4261,20 @@ class Script(default.Script):
                 nestingLevel += 1
                 parent = parent.parent
             if nestingLevel:
+                # Translators: this represents a list item in HTML.
+                # The nesting level is how 'deep' the item is (e.g.,
+                # a level of 2 represents a list item inside a list
+                # that's inside another list).
+                #
                 speech.speak(_("Nesting level %d") % nestingLevel)
             self.setCaretPosition(obj, characterOffset)
             self.updateBraille(obj)
             self.speakContents(self.getLineContentsAtOffset(obj,
                                                             characterOffset))
         else:
+            # Translators: this is for navigating HTML content by moving
+            # from bulleted/numbered list to bulleted/numbered list.
+            #
             speech.speak(_("No more lists."))
 
     def goNextList(self, inputEvent):
@@ -4152,6 +4303,9 @@ class Script(default.Script):
             self.speakContents(self.getLineContentsAtOffset(obj,
                                                             characterOffset))
         else:
+            # Translators: this is for navigating HTML content by moving
+            # from bulleted/numbered list to bulleted/numbered list.
+            #
             speech.speak(_("No more lists."))
 
     def goPreviousListItem(self, inputEvent):
@@ -4164,6 +4318,10 @@ class Script(default.Script):
             self.speakContents(self.getLineContentsAtOffset(obj,
                                                             characterOffset))
         else:
+            # Translators: this is for navigating HTML content by
+            # moving from bulleted/numbered list item to
+            # bulleted/numbered list item.
+            #
             speech.speak(_("No more list items."))
 
     def goNextListItem(self, inputEvent):
@@ -4175,6 +4333,10 @@ class Script(default.Script):
             self.speakContents(self.getLineContentsAtOffset(obj,
                                                             characterOffset))
         else:
+            # Translators: this is for navigating HTML content by
+            # moving from bulleted/numbered list item to
+            # bulleted/numbered list item.
+            #
             speech.speak(_("No more list items."))
 
     def goPreviousUnvisitedLink(self, inputEvent):
@@ -4201,6 +4363,9 @@ class Script(default.Script):
             self.speakContents(self.getObjectContentsAtOffset(obj,
                                                               characterOffset))
         else:
+            # Translators: this is for navigating HTML content by
+            # moving from link to link.
+            #
             speech.speak(_("No more unvisited links."))
 
     def goNextUnvisitedLink(self, inputEvent):
@@ -4218,6 +4383,9 @@ class Script(default.Script):
             self.speakContents(self.getObjectContentsAtOffset(obj,
                                                               characterOffset))
         else:
+            # Translators: this is for navigating HTML content by
+            # moving from link to link.
+            #
             speech.speak(_("No more unvisited links."))
 
     def goPreviousVisitedLink(self, inputEvent):
@@ -4243,6 +4411,9 @@ class Script(default.Script):
             self.speakContents(self.getObjectContentsAtOffset(obj,
                                                               characterOffset))
         else:
+            # Translators: this is for navigating HTML content by
+            # moving from link to link.
+            #
             speech.speak(_("No more visited links."))
 
     def goNextVisitedLink(self, inputEvent):
@@ -4259,6 +4430,9 @@ class Script(default.Script):
             self.speakContents(self.getObjectContentsAtOffset(obj,
                                                               characterOffset))
         else:
+            # Translators: this is for navigating HTML content by
+            # moving from link to link.
+            #
             speech.speak(_("No more visited links."))
 
     def goPreviousTable(self, inputEvent):
@@ -4266,13 +4440,17 @@ class Script(default.Script):
         if obj:
             nRows = obj.table.nRows
             nColumns = obj.table.nColumns
+            # Translators: this represents the number of rows in an HTML table.
+            #
             rowString = ngettext("Table with %d row",
                                  "Table with %d rows",
                                   nRows) % nRows
-            colString = ngettext(" and %d column",
-                                 " and %d columns",
+            # Translators: this represents the number of cols in an HTML table.
+            #
+            colString = ngettext("%d column",
+                                 "%d columns",
                                   nColumns) % nColumns
-            speech.speak(rowString + colString)
+            speech.speak(rowString + " " + colString)
             caption = self.getTableCaption(obj)
             if caption and caption.text:
                 speech.speak(caption.text.getText(0, -1))
@@ -4291,6 +4469,9 @@ class Script(default.Script):
                 #
                 speech.speak(_("blank"))
         else:
+            # Translators: this is for navigating HTML content by
+            # moving from table to table.
+            #
             speech.speak(_("No more tables."))
 
     def goNextTable(self, inputEvent):
@@ -4298,13 +4479,17 @@ class Script(default.Script):
         if obj:
             nRows = obj.table.nRows
             nColumns = obj.table.nColumns
+            # Translators: this represents the number of rows in an HTML table.
+            #
             rowString = ngettext("Table with %d row",
                                  "Table with %d rows",
                                   nRows) % nRows
-            colString = ngettext(" and %d column",
-                                 " and %d columns",
+            # Translators: this represents the number of cols in an HTML table.
+            #
+            colString = ngettext("%d column",
+                                 "%d columns",
                                   nColumns) % nColumns
-            speech.speak(rowString + colString)
+            speech.speak(rowString + " " + colString)
             caption = self.getTableCaption(obj)
             if caption and caption.text:
                 speech.speak(caption.text.getText(0, -1))
@@ -4323,6 +4508,9 @@ class Script(default.Script):
                 #
                 speech.speak(_("blank"))
         else:
+            # Translators: this is for navigating HTML content by
+            # moving from table to table.
+            #
             speech.speak(_("No more tables."))
 
     def goCellLeft(self, inputEvent):
@@ -4344,8 +4532,14 @@ class Script(default.Script):
                 self.speakContents( \
                         self.getObjectContentsAtOffset(obj, characterOffset))
             else:
+                # Translators: this is for navigating HTML content by
+                # moving from table cell to table cell.
+                #
                 speech.speak(_("Beginning of row."))
         else:
+            # Translators: this is for navigating HTML content by
+            # moving from table cell to table cell.
+            #
             speech.speak(_("Not in a table."))
 
     def goCellRight(self, inputEvent):
@@ -4367,8 +4561,14 @@ class Script(default.Script):
                 self.speakContents( \
                         self.getObjectContentsAtOffset(obj, characterOffset))
             else:
+                # Translators: this is for navigating HTML content by
+                # moving from table cell to table cell.
+                #
                 speech.speak(_("End of row."))
         else:
+            # Translators: this is for navigating HTML content by
+            # moving from table cell to table cell.
+            #
             speech.speak(_("Not in a table."))
 
     def goCellUp(self, inputEvent):
@@ -4390,8 +4590,14 @@ class Script(default.Script):
                 self.speakContents( \
                         self.getObjectContentsAtOffset(obj, characterOffset))
             else:
+                # Translators: this is for navigating HTML content by
+                # moving from table cell to table cell.
+                #
                 speech.speak(_("Top of column."))
         else:
+            # Translators: this is for navigating HTML content by
+            # moving from table cell to table cell.
+            #
             speech.speak(_("Not in a table."))
 
     def goCellDown(self, inputEvent):
@@ -4413,8 +4619,14 @@ class Script(default.Script):
                 self.speakContents( \
                         self.getObjectContentsAtOffset(obj, characterOffset))
             else:
+                # Translators: this is for navigating HTML content by
+                # moving from table cell to table cell.
+                #
                 speech.speak(_("Bottom of column."))
         else:
+            # Translators: this is for navigating HTML content by
+            # moving from table cell to table cell.
+            #
             speech.speak(_("Not in a table."))
 
     def goCellFirst(self, inputEvent):
@@ -4428,6 +4640,9 @@ class Script(default.Script):
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             if obj:
                 [row, col] = self.getCellCoordinates(obj)
+                # Translators: this represents the (row, col) position of
+                # a cell in a table.
+                #
                 speech.speak(_("Row %d, column %d.") % (row + 1, col + 1))
                 self.setCaretPosition(obj, characterOffset)
                 self.updateBraille(obj)
@@ -4435,6 +4650,9 @@ class Script(default.Script):
                         self.getObjectContentsAtOffset(obj, characterOffset))
 
         else:
+            # Translators: this is for navigating HTML content by
+            # moving from table cell to table cell.
+            #
             speech.speak(_("Not in a table."))
 
     def goCellLast(self, inputEvent):
@@ -4449,6 +4667,9 @@ class Script(default.Script):
             [obj, characterOffset] = self.findFirstCaretContext(obj, 0)
             if obj:
                 [row, col] = self.getCellCoordinates(obj)
+                # Translators: this represents the (row, col) position of
+                # a cell in a table.
+                #
                 speech.speak(_("Row %d, column %d.") % (row + 1, col + 1))
                 self.setCaretPosition(obj, characterOffset)
                 self.updateBraille(obj)
@@ -4456,6 +4677,9 @@ class Script(default.Script):
                         self.getObjectContentsAtOffset(obj, characterOffset))
 
         else:
+            # Translators: this is for navigating HTML content by
+            # moving from table cell to table cell.
+            #
             speech.speak(_("Not in a table."))
 
     def toggleCaretNavigation(self, inputEvent):
@@ -4467,12 +4691,26 @@ class Script(default.Script):
             for keyBinding in self.__getArrowBindings().keyBindings:
                 self.keyBindings.removeByHandler(keyBinding.handler)
             controlCaretNavigation = False
-            string = "Gecko is controlling the caret."
+            # Translators: Gecko native caret navigation is where
+            # Firefox itself controls how the arrow keys move the caret
+            # around HTML content.  It's often broken, so Orca needs
+            # to provide its own support.  As such, Orca offers the user
+            # the ability to switch between the Firefox mode and the
+            # Orca mode.
+            #
+            string = _("Gecko is controlling the caret.")
         else:
             controlCaretNavigation = True
             for keyBinding in self.__getArrowBindings().keyBindings:
                 self.keyBindings.add(keyBinding)
-            string = "Orca is controlling the caret."
+            # Translators: Gecko native caret navigation is where
+            # Firefox itself controls how the arrow keys move the caret
+            # around HTML content.  It's often broken, so Orca needs
+            # to provide its own support.  As such, Orca offers the user
+            # the ability to switch between the Firefox mode and the
+            # Orca mode.
+            #
+            string = _("Orca is controlling the caret.")
 
         debug.println(debug.LEVEL_CONFIGURATION, string)
         speech.speak(string)
