@@ -164,6 +164,15 @@ class Script(script.Script):
                 #
                 _("Performs the where am I operation."))
 
+        self.inputEventHandlers["presentTooltip"] = \
+            input_event.InputEventHandler(
+                Script.presentTooltip,
+                # Translators: the "present tooltip" feature of Orca
+                # allows a user to press a key and then have the
+                # tooltip for an object spoken and brailled to them.
+                #
+                _("Presents the tooltip."))
+
         self.inputEventHandlers["findHandler"] = \
             input_event.InputEventHandler(
                 orca._showFindGUI,
@@ -1259,6 +1268,13 @@ class Script(script.Script):
 
         keyBindings.add(
             keybindings.KeyBinding(
+                "F1",
+                (1 << atspi.Accessibility.MODIFIER_CONTROL),
+                (1 << atspi.Accessibility.MODIFIER_CONTROL),
+                self.inputEventHandlers["presentTooltip"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
                 "Left",
                 1 << settings.MODIFIER_ORCA,
                 1 << settings.MODIFIER_ORCA,
@@ -1770,6 +1786,30 @@ class Script(script.Script):
 
         self.speakTextSelectionState(obj, startOffset, endOffset)
 
+
+    def presentTooltip(self, inputEvent):
+        """
+        Speaks the tooltip for the current object of interest. 
+        """
+
+        # The tooltip is generally the accessible description. If
+        # the description is not set, present the text that is
+        # spoken when the object receives keyboard focus.
+        #
+        obj = orca_state.locusOfFocus
+        text = ""
+        
+        if obj.description:
+            text = obj.description
+        else:
+            # Reuse the "where am I" algorithm.
+            text = whereAmI._getObjLabelAndName(obj)
+
+        debug.println(debug.LEVEL_FINEST, "presentTooltip: text='%s'" % text)
+        if text != "":
+            braille.displayMessage(text)
+            speech.speak(text)
+            
 
     def whereAmI(self, inputEvent):
         """

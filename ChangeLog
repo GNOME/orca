@@ -1,3 +1,14 @@
+2007-04-02  Lynn Monsanto <lynn.monsanto@sun.com>
+	* src/orca/default.py: Added a "present tooltip" keybinding 
+	which is mapped to control-F1. Pressing control-F1 causes
+	Orca to speak and braille the tooltip for the object that
+	has keyboard focus. This has only been tested with gedit. 
+	For example, pressing control-F1 when a "Replace" button has 
+	focus, causes Orca to speak and braille "Search for and 
+	replace text".
+
+	Bug #3980009 - Orca should be able to tooltip text for an object
+
 2007-04-02  Willie Walker <william.walker@sun.com>
 
 	* src/orca/gnomespeechfactory.py, src/orca/Gecko.py: work on bug
