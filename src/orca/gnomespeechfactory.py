@@ -656,8 +656,12 @@ class SpeechServer(speechserver.SpeechServer):
         Returns a text string with the punctuation symbols adjusted accordingly.
         """
 
-        ## Replace ellipses (both manual and UTF-8) with "dot dot dot"
-        ##
+        # Translators: we replace the ellipses (both manual and UTF-8)
+        # with a spoken string.  The extra space you see at the beginning
+        # is because we need the speech synthesis engine to speak the
+        # new string well.  For example, "Open..." turns into
+        # "Open dot dot dot".
+        #
         oldText = oldText.replace("...", _(" dot dot dot"), 1)
         oldText = oldText.replace("\342\200\246",  _(" dot dot dot"), 1)
         oldText = oldText.decode("UTF-8")
@@ -717,6 +721,13 @@ class SpeechServer(speechserver.SpeechServer):
                    prevCharMatches and nextCharMatches:
                     if isPrev:
                         newText += " "
+                    # Translators: this is to be sent to a speech synthesis
+                    # engine to prefix a negative number (e.g., "-56" turns
+                    # into "minus 56".  We cannot always be sure of the type
+                    # of the number (floating point, integer, mixed with other
+                    # odd characters, etc.), so we need to unfortunately
+                    # build up the utterance in this manner.
+                    #
                     newText += _("minus")
                 elif (len(oldText) == 1) or isSpecial or (style <= level):
                     if isPrev:
@@ -864,6 +875,9 @@ class SpeechServer(speechserver.SpeechServer):
             debug.println(debug.LEVEL_CONFIGURATION,
                           "speech.increaseSpeechPitch: pitch is now " \
                           " %d" % pitch)
+            # Translators: this is a short string saying that the speech
+            # synthesis engine is now speaking in a higher pitch.
+            #
             self.speak(_("higher."))
         except:
             debug.printException(debug.LEVEL_SEVERE)
@@ -892,6 +906,9 @@ class SpeechServer(speechserver.SpeechServer):
             debug.println(debug.LEVEL_CONFIGURATION,
                           "speech.decreaseSpeechPitch: pitch is now " \
                           " %d" % pitch)
+            # Translators: this is a short string saying that the speech
+            # synthesis engine is now speaking in a lower pitch.
+            #
             self.speak(_("lower."))
         except:
             debug.printException(debug.LEVEL_SEVERE)
@@ -917,6 +934,10 @@ class SpeechServer(speechserver.SpeechServer):
             debug.println(debug.LEVEL_CONFIGURATION,
                           "speech.increaseSpeechRate: rate is now " \
                           " %d" % rate)
+            # Translators: this is a short string saying that the speech
+            # synthesis engine is now speaking at a faster rate (words
+            # per minute).
+            #
             self.speak(_("faster."))
         except:
             debug.printException(debug.LEVEL_SEVERE)
@@ -947,6 +968,10 @@ class SpeechServer(speechserver.SpeechServer):
             debug.println(debug.LEVEL_CONFIGURATION,
                           "speech.decreaseSpeechRate: rate is now " \
                           " %d" % rate)
+            # Translators: this is a short string saying that the speech
+            # synthesis engine is now speaking at a slower rate (words
+            # per minute).
+            #
             self.speak(_("slower."))
         except:
             debug.printException(debug.LEVEL_SEVERE)
