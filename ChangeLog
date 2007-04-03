@@ -1,3 +1,9 @@
+2007-04-03  Rich Burridge <rich.burridge@sun.com>
+
+        * src/orca/orca-setup.glade:
+          Further fixup for bug #413109 from Joanie (thanks!)
+          Adds combo box and slider mnemonics to Orca preferences.
+
 2007-04-02  Lynn Monsanto <lynn.monsanto@sun.com>
 	* src/orca/default.py: Added a "present tooltip" keybinding 
 	which is mapped to control-F1. Pressing control-F1 causes

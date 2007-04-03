@@ -366,6 +366,7 @@
 			      <property name="yalign">0.5</property>
 			      <property name="xpad">0</property>
 			      <property name="ypad">0</property>
+			      <property name="mnemonic_widget">speechSystems</property>
 			      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
 			      <property name="width_chars">-1</property>
 			      <property name="single_line_mode">False</property>
@@ -418,6 +419,7 @@
 			      <property name="yalign">0.5</property>
 			      <property name="xpad">0</property>
 			      <property name="ypad">0</property>
+			      <property name="mnemonic_widget">speechServers</property>
 			      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
 			      <property name="width_chars">-1</property>
 			      <property name="single_line_mode">False</property>
@@ -449,6 +451,7 @@
 			      <property name="yalign">0.5</property>
 			      <property name="xpad">0</property>
 			      <property name="ypad">0</property>
+			      <property name="mnemonic_widget">voiceTypes</property>
 			      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
 			      <property name="width_chars">-1</property>
 			      <property name="single_line_mode">False</property>
@@ -513,6 +516,7 @@
 				<atkrelation target="pitchLabel" type="labelled-by"/>
 			      </accessibility>
 			      <signal name="value_changed" handler="pitchValueChanged" last_modification_time="Wed, 26 Apr 2006 18:48:18 GMT"/>
+			      <accelerator key="t" modifiers="GDK_MOD1_MASK" signal="grab_focus"/>
 			    </widget>
 			    <packing>
 			      <property name="left_attach">1</property>
@@ -1019,6 +1023,7 @@ Hyperlink</property>
 			      <property name="yalign">0.5</property>
 			      <property name="xpad">0</property>
 			      <property name="ypad">0</property>
+			      <property name="mnemonic_widget">speechFamilies</property>
 			      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
 			      <property name="width_chars">-1</property>
 			      <property name="single_line_mode">False</property>
@@ -1083,6 +1088,7 @@ Hyperlink</property>
 				    <atkrelation target="rateLabel" type="labelled-by"/>
 				  </accessibility>
 				  <signal name="value_changed" handler="rateValueChanged" last_modification_time="Wed, 26 Apr 2006 18:48:00 GMT"/>
+				  <accelerator key="r" modifiers="GDK_MOD1_MASK" signal="grab_focus"/>
 				</widget>
 			      </child>
 			    </widget>
@@ -1110,6 +1116,7 @@ Hyperlink</property>
 				<atkrelation target="volumeLabel" type="labelled-by"/>
 			      </accessibility>
 			      <signal name="value_changed" handler="volumeValueChanged" last_modification_time="Wed, 26 Apr 2006 18:48:39 GMT"/>
+			      <accelerator key="l" modifiers="GDK_MOD1_MASK" signal="grab_focus"/>
 			    </widget>
 			    <packing>
 			      <property name="left_attach">1</property>
