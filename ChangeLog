@@ -1,3 +1,8 @@
+2007-04-03  Willie Walker <william.walker@sun.com>
+
+        * docs/planning.ods: update to include rough prioritization
+	based upon input from team and conversation with Mike.
+	
 2007-04-03  Lynn Monsanto <lynn.monsanto@sun.com>
 
         * src/orca/orca.py, src/orca/settings.py: Additional fix for 
