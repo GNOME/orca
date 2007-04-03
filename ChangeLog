@@ -1,3 +1,13 @@
+2007-04-03  Lynn Monsanto <lynn.monsanto@sun.com>
+
+        * src/orca/orca.py, src/orca/settings.py: Additional fix for 
+	Bug 368626 - [blocked] Orca accessing tool tips from gnome-panel 
+	causes gnome-panel to crash.
+
+	Moved setting of settings.presentTooltips from orca.py to
+	settings.py. This makes it possible for users to override
+	the setting.
+
 2007-04-03  Rich Burridge <rich.burridge@sun.com>
 
         * src/orca/orca-setup.glade:

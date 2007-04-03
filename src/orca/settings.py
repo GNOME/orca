@@ -35,6 +35,10 @@ screenWidth = 640
 screenHeight = 480
 tty = 7
 
+# Whether tool tips can be presented.
+#
+presentToolTips = False
+
 try:
     # This can fail due to gtk not being available.  We want to
     # be able to recover from that if possible.  The main driver
@@ -56,6 +60,19 @@ try:
     #
     (atom, format, data) = _root_window.property_get("XFree86_VT")
     tty = data[0]
+
+    # The bug that caused gnome-panel to crash is fixed in GTK 2.10.11.
+    minimum_gtk_version = (100000 * 2) + \
+                          (1000 * 10) + \
+                           11
+
+    current_gtk_version  = (100000 * gtk.gtk_version[0]) + \
+                           (1000 * gtk.gtk_version[1]) + \
+                            gtk.gtk_version[2]
+                           
+
+    presentToolTips = (current_gtk_version >= minimum_gtk_version)
+                                 
 except:
     pass
 
@@ -464,10 +481,6 @@ timeoutCallback         = None # Set by orca.py:init to orca.timeout
 # spells the current word rather than speaks it).
 #
 doubleClickTimeout = 0.5
-
-# Whether tool tips can be presented.
-#
-presentToolTips = False
 
 # Obtain/set information regarding whether accessibility is enabled
 # or not.
