@@ -2745,7 +2745,10 @@ class Script(script.Script):
             if event.type == "object:state-changed:showing":
                 if event.detail1 == 1:
                     self.presentTooltip(obj)
-                elif orca_state.locusOfFocus:
+                elif orca_state.locusOfFocus \
+                    and isinstance(orca_state.lastInputEvent,
+                                   input_event.KeyboardEvent) \
+                    and (orca_state.lastInputEvent.event_string == "F1"):
                     self.updateBraille(orca_state.locusOfFocus)
                     speech.speakUtterances(self.speechGenerator.getSpeech(
                         orca_state.locusOfFocus,
