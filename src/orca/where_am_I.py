@@ -454,7 +454,7 @@ class WhereAmI:
         if doubleClick:
             # Speak character attributes.
             textContents = \
-                self._insertAttributes(obj, startOffset, 
+                self._insertAttributes(obj, startOffset,
                                        endOffset, textContents)
             savedStyle = settings.verbalizePunctuationStyle
             settings.verbalizePunctuationStyle = settings.PUNCTUATION_STYLE_SOME
@@ -613,7 +613,7 @@ class WhereAmI:
 
             debug.println(self._debugLevel, "%s text=<%s>" % (obj.role, string))
 
-        return text
+        return text.strip()
 
     def _getGroupLabel(self, obj):
         """Returns the label for a group of components.

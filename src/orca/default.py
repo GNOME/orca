@@ -76,7 +76,7 @@ class Script(script.Script):
 
     EMBEDDED_OBJECT_CHARACTER = u'\ufffc'
     NO_BREAK_SPACE_CHARACTER  = u'\u00a0'
-    
+
     def __init__(self, app):
         """Creates a new script for the given application.
 
@@ -95,7 +95,7 @@ class Script(script.Script):
         #
         self.lastWhereAmIEvent = None
 
-        # Unicode currency symbols (populated by the 
+        # Unicode currency symbols (populated by the
         # getUnicodeCurrencySymbols() routine).
         #
         self._unicodeCurrencySymbols = []
@@ -1532,7 +1532,6 @@ class Script(script.Script):
                 #
                 speech.speak(_("blank"))
 
-
     def sayWord(self, obj):
         """Speaks the word at the caret.  [[[TODO: WDW - what if there is no
         word at the caret?]]]
@@ -1770,10 +1769,9 @@ class Script(script.Script):
 
         self.speakTextSelectionState(obj, startOffset, endOffset)
 
-
     def presentTooltip(self, obj):
         """
-        Speaks the tooltip for the current object of interest. 
+        Speaks the tooltip for the current object of interest.
         """
 
         # The tooltip is generally the accessible description. If
@@ -1781,7 +1779,7 @@ class Script(script.Script):
         # spoken when the object receives keyboard focus.
         #
         text = ""
-        
+
         if obj.description:
             text = obj.description
         else:
@@ -1792,7 +1790,6 @@ class Script(script.Script):
         if text != "":
             braille.displayMessage(text)
             speech.speak(text)
-            
 
     def whereAmI(self, inputEvent):
         """
@@ -2662,7 +2659,6 @@ class Script(script.Script):
         if not event.source.state.count(atspi.Accessibility.STATE_FOCUSED):
             return
 
-
         # There can be cases when the object that fires an
         # active-descendant-changed event has no children. In this case,
         # use the object that fired the event, otherwise, use the child.
@@ -2705,7 +2701,6 @@ class Script(script.Script):
         #    orca.setLocusOfFocus(event, event.source)
         orca.setLocusOfFocus(event, event.source)
 
-
     def onStateChanged(self, event):
         """Called whenever an object's state changes.
 
@@ -2746,10 +2741,15 @@ class Script(script.Script):
         #
         if event.source.role == rolenames.ROLE_TOOL_TIP:
             obj = event.source
-            
-            if event.type == "object:state-changed:showing" and \
-               event.detail1 == 1:
-                self.presentTooltip(obj)
+
+            if event.type == "object:state-changed:showing":
+                if event.detail1 == 1:
+                    self.presentTooltip(obj)
+                elif orca_state.locusOfFocus:
+                    self.updateBraille(orca_state.locusOfFocus)
+                    speech.speakUtterances(self.speechGenerator.getSpeech(
+                        orca_state.locusOfFocus,
+                        False))
 
             # Delete the cached accessible to force the AT-SPI to update
             # the accessible cache. Otherwise, the event references the
@@ -3130,7 +3130,7 @@ class Script(script.Script):
             # This text here is what is spoken to the user.
             #
             _("Entering learn mode.  Press any key to hear its function.  To exit learn mode, press the escape key."))
-        
+
         # Translators: Orca has a "Learn Mode" that will allow
         # the user to type any key on the keyboard and hear what
         # the effects of that key would be.  The effects might
@@ -3868,8 +3868,8 @@ class Script(script.Script):
     def printAncestryHandler(self, script=None, inputEvent=None):
         """Prints the ancestry for the current locusOfFocus"""
         self.printAncestry(orca_state.locusOfFocus)
-        return True 
-    
+        return True
+
     def printHierarchyHandler(self, script=None, inputEvent=None):
         """Prints the application for the current locusOfFocus"""
         if orca_state.locusOfFocus:
@@ -3879,7 +3879,7 @@ class Script(script.Script):
 
 # Routines that were previously in util.py, but that have now been moved
 # here so that they can be customized in application scripts if so desired.
-# 
+#
 
     def isSameObject(self, obj1, obj2):
         if (obj1 == obj2):
@@ -3894,7 +3894,7 @@ class Script(script.Script):
             # When we're looking at children of objects that manage
             # their descendants, we will often get different objects
             # that point to the same logical child.  We want to be able
-            # to determine if two objects are in fact pointing to the 
+            # to determine if two objects are in fact pointing to the
             # same child.
             # If we cannot do so easily (i.e., object equivalence), we examine
             # the hierarchy and the object index at each level.
@@ -3937,7 +3937,7 @@ class Script(script.Script):
         """Appends the newText to the given text with the delimiter in between
         and returns the new string.  Edge cases, such as no initial text or
         no newText, are handled gracefully."""
-    
+
         if (not newText) or (len(newText) == 0):
             return text
         elif text and len(text):
@@ -3961,10 +3961,9 @@ class Script(script.Script):
         for relation in relations:
             if relation.getRelationType() \
                    == atspi.Accessibility.RELATION_LABEL_FOR:
-                return True    
+                return True
 
         return False
-
 
     def __isLabeling(self, label, object):
         """Check if label is connected via  LABEL_FOR relation with object
@@ -3999,18 +3998,18 @@ class Script(script.Script):
 
     def getUnicodeCurrencySymbols(self):
         """Return a list of the unicode currency symbols, populating the list
-        if this is the first time that this routine has been called. 
-    
+        if this is the first time that this routine has been called.
+
         Returns a list of unicode currency symbols.
         """
-    
+
         if not self._unicodeCurrencySymbols:
             self._unicodeCurrencySymbols = [ \
                 u'\u0024',     # dollar sign
                 u'\u00A2',     # cent sign
                 u'\u00A3',     # pound sign
                 u'\u00A4',     # currency sign
-                u'\u00A5',     # yen sign 
+                u'\u00A5',     # yen sign
                 u'\u0192',     # latin small letter f with hook
                 u'\u060B',     # afghani sign
                 u'\u09F2',     # bengali rupee mark
@@ -4038,10 +4037,10 @@ class Script(script.Script):
         """If there is an object labelling the given object, return the
         text being displayed for the object labelling this object.
         Otherwise, return None.
-    
+
         Argument:
         - object: the object in question
-    
+
         Returns the string of the object labelling this object, or None
         if there is nothing of interest here.
         """
@@ -4423,20 +4422,20 @@ class Script(script.Script):
         Returns an iterator that produces elements of the form:
         [SayAllContext, acss], where SayAllContext has the text to be
         spoken and acss is an ACSS instance for speaking the text.
-        """ 
+        """
         if not obj:
             return
 
-        text = obj.text 
+        text = obj.text
         if not text:
-            return 
+            return
 
         length = text.characterCount
         offset = text.caretOffset
 
         # Get the next line of text to read
         #
-        done = False 
+        done = False
         while not done:
             lastEndOffset = -1
             while offset < length:
@@ -4460,7 +4459,7 @@ class Script(script.Script):
                 # the current line).  So...we hack.  The whole 'max' deal
                 # is to account for lines that might be a brazillion lines
                 # long.]]]
-                # 
+                #
                 if endOffset == lastEndOffset:
                     offset = max(offset + 1, lastEndOffset + 1)
                     lastEndOffset = endOffset
@@ -4751,7 +4750,7 @@ class Script(script.Script):
         #
         if text.caretOffset == text.characterCount:
             caretOffset = max(0, text.caretOffset - 1)
-            character = text.getText(caretOffset, 
+            character = text.getText(caretOffset,
                                      caretOffset + 1).decode("UTF-8")
         else:
             caretOffset = text.caretOffset
@@ -5051,7 +5050,7 @@ class Script(script.Script):
           print ancestor.toString(indent + "+-", False)
           indent += "  "
 
-    def printHierarchy(self, root, ooi, indent="", 
+    def printHierarchy(self, root, ooi, indent="",
                        onlyShowing=True, omitManaged=True):
         """Prints the accessible hierarchy of all children
 
@@ -5217,10 +5216,10 @@ class Script(script.Script):
         # Erase the old rectangle.
         #
         if self._visibleRectangle and erasePrevious:
-            self.drawOutline(self._visibleRectangle[0], 
+            self.drawOutline(self._visibleRectangle[0],
                              self._visibleRectangle[1],
-                             self._visibleRectangle[2], 
-                             self._visibleRectangle[3], 
+                             self._visibleRectangle[2],
+                             self._visibleRectangle[3],
                              False)
             self._visibleRectangle = None
 
@@ -5370,8 +5369,8 @@ class Script(script.Script):
             return
 
         try:
-            # If we are selecting by word, then there possibly will be 
-            # whitespace characters on either end of the text. We adjust 
+            # If we are selecting by word, then there possibly will be
+            # whitespace characters on either end of the text. We adjust
             # the startOffset and endOffset to exclude them.
             #
             try:
@@ -5380,7 +5379,7 @@ class Script(script.Script):
                 str = u''
             n = len(str)
 
-            # Don't strip whitespace if string length is one (might be a 
+            # Don't strip whitespace if string length is one (might be a
             # space).
             #
             if n > 1:
