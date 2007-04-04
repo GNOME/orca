@@ -1,5 +1,11 @@
 2007-04-04  Willie Walker <william.walker@sun.com>
 
+	* docs/planning.ods: well...I didn't get much of a chance
+	to do too much with this today, but I'm checking what I 
+	was able to do between phone calls.
+	
+2007-04-04  Willie Walker <william.walker@sun.com>
+
 	* src/orca/default.py: more work on bug 398009 to reduce
 	chattiness when moving across objects in a toolbar while
 	tooltips are up.
