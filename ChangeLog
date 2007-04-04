@@ -6,7 +6,7 @@
 	
 2007-04-03  Mike Pedersen <michael.pedersen@sun.com> 
 
-        * src/orca/src/Gecko.py
+        * src/orca/Gecko.py
           Cleaned up what is considered a large object.
 
 2007-04-03  Lynn Monsanto <lynn.monsanto@sun.com>
