@@ -125,6 +125,42 @@ class WhereAmI(where_am_I.WhereAmI):
                       utterances)
         speech.speakUtterances(utterances)
 
+    def _getCalcFrameAndSheet(self, obj):
+        """Returns the Calc frame and sheet
+        """
+
+        list = [None, None]
+
+        parent = obj.parent
+        while parent and (parent.parent != parent):
+            # debug.println(self._debugLevel,
+            #               "_getCalcFrameAndSheet: parent=%s, %s" % \
+            #               (parent.role, self._getObjLabelAndName(parent)))
+            if parent.role == rolenames.ROLE_FRAME:
+                list[0] = parent
+            if parent.role == rolenames.ROLE_TABLE:
+                list[1] = parent
+            parent = parent.parent
+
+        return list
+
+    def _speakCalcStatusBar(self):
+        """Speaks the OpenOffice Calc statusbar.
+        """
+
+        if not self._statusBar:
+            return
+
+        utterances = []
+        for i in range(0, self._statusBar.childCount):
+            child = self._statusBar.child(i)
+            text = _("%s") % self._getObjName(child)
+            utterances.append(text)
+
+        debug.println(self._debugLevel, "Calc statusbar utterances=%s" % \
+                      utterances)
+        speech.speakUtterances(utterances)
+
     def _handleOrcaKey(self, obj, doubleClick):
         """Handle the Orca modifier key being pressed.
 
