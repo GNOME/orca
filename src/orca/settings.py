@@ -65,14 +65,10 @@ try:
     minimum_gtk_version = (100000 * 2) + \
                           (1000 * 10) + \
                            11
-
     current_gtk_version  = (100000 * gtk.gtk_version[0]) + \
                            (1000 * gtk.gtk_version[1]) + \
                             gtk.gtk_version[2]
-                           
-
     presentToolTips = (current_gtk_version >= minimum_gtk_version)
-                                 
 except:
     pass
 

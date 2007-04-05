@@ -20,9 +20,9 @@
 """ Custom script for gnome-panel
 """
 
-__id__        = ""
-__version__   = ""
-__date__      = ""
+__id__        = "$Id: gnome-panel.py 2251 2007-04-05 01:42:41Z lmonsanto $"
+__version__   = "$Revision: 2251 $"
+__date__      = "$Date: 2007-04-04 18:42:41 -0700 (Wed, 04 Apr 2007) $"
 __copyright__ = "Copyright (c) 2005-2007 Sun Microsystems Inc."
 __license__   = "LGPL"
 
@@ -55,16 +55,14 @@ class Script(default.Script):
         # Set the debug level for all the methods in this script.
         #
         self.debugLevel = debug.LEVEL_FINEST
-        self._debug("__init__")
 
+        self._debug("__init__")
         default.Script.__init__(self, app)
-        
 
     def _debug(self, msg):
         """ Convenience method for printing debug messages
         """
         debug.println(self.debugLevel, "gnome-panel.py: "+msg)
-
 
     def onStateChanged(self, event):
         """Called whenever an object's state changes.
@@ -73,7 +71,7 @@ class Script(default.Script):
         - event: the Event
         """
         obj = event.source
-        
+
         self._debug("onStateChanged: '%s' %s (%d, %d)" % \
                     (obj.name, event.type, event.detail1, event.detail2))
 
@@ -91,6 +89,3 @@ class Script(default.Script):
             atspi.Accessible.deleteAccessible(obj._acc)
         else:
             default.Script.onStateChanged(self, event)
-
-
-        

@@ -1,3 +1,8 @@
+2007-04-05  Lynn Monsanto <lynn.monsanto@sun.com>
+	* src/orca/default.py, src/orca/settings.py, 
+	src/orca/scripts/gnome-panel.py: removed extra double-space
+	and trailing-whitespace from files.
+
 2007-04-05  Joanmarie Diggs <j-diggs@comcast.net>
 
 	* src/orca/Gecko.py: Fix for bug #423198 – Orca should not speak

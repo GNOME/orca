@@ -1779,7 +1779,6 @@ class Script(script.Script):
         # spoken when the object receives keyboard focus.
         #
         text = ""
-
         if obj.description:
             text = obj.description
         else:
@@ -2758,7 +2757,6 @@ class Script(script.Script):
             # the accessible cache. Otherwise, the event references the
             # previous popup object.
             atspi.Accessible.deleteAccessible(obj._acc)
-
             return
 
         if state_change_notifiers.has_key(event.source.role):
